@@ -1,1 +1,1 @@
-# public_health_bioinformatics
+# Public Health Bioinformatics (PHB)
