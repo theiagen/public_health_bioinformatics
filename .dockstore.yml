@@ -1,0 +1,12 @@
+version: 1.2
+workflows:
+ - name: TheiaEuk_PE
+   subclass: WDL
+   primaryDescriptorPath: /workflows/wf_theiaeuk.wdl
+   testParameterFiles:
+    - empty.json
+ - name: TheiaCauris_PE
+   subclass: WDL
+   primaryDescriptorPath: /workflows/wf_theiacauris_pe.wdl
+   testParameterFiles:
+    - empty.json
