@@ -1,143 +1,78 @@
 version 1.0
 
-task trimmomatic_pe {
+import "../tasks/quality_control/task_trimmomatic.wdl" as trimmomatic
+import "../tasks/quality_control/task_bbduk.wdl" as bbduk
+import "../tasks/quality_control/task_fastq_scan.wdl" as fastq_scan
+import "../tasks/taxon_id/task_midas.wdl" as midas
+
+workflow read_QC_trim {
+  meta {
+    description: "Runs basic QC (fastq_scan), trimming (Trimmomatic), and adapter removal (bbduk) on illumina PE reads"
+  }
+
   input {
-    File  read1
-    File  read2
     String  samplename
-    String  docker = "quay.io/staphb/trimmomatic:0.39"
-    Int?  trimmomatic_minlen = 15
-    Int?  trimmomatic_window_size = 4
-    Int?  trimmomatic_quality_trim_score = 30
-    Int?  threads = 4
+    File    read1_raw
+    File    read2_raw
+    Int?    trimmomatic_minlen = 75
+    Int?    trimmomatic_quality_trim_score = 20
+    Int?    trimmomatic_window_size = 10
+    Int     bbduk_mem = 8
+    Boolean call_midas = false
+    File?    midas_db
   }
-  command <<<
-    # date and version control
-    date | tee DATE
-    trimmomatic -version > VERSION && sed -i -e 's/^/Trimmomatic /' VERSION
+  call trimmomatic.trimmomatic_pe {
+    input:
+      samplename = samplename,
+      read1 = read1_raw,
+      read2 = read2_raw,
+      trimmomatic_minlen = trimmomatic_minlen,
+      trimmomatic_quality_trim_score = trimmomatic_quality_trim_score,
+      trimmomatic_window_size = trimmomatic_window_size
+  }
+  call bbduk.bbduk_pe {
+    input:
+      samplename = samplename,
+      read1_trimmed = trimmomatic_pe.read1_trimmed,
+      read2_trimmed = trimmomatic_pe.read2_trimmed,
+      mem_size_gb = bbduk_mem
+  }
+  call fastq_scan.fastq_scan_pe as fastq_scan_raw {
+    input:
+      read1 = read1_raw,
+      read2 = read2_raw,
+  }
+  call fastq_scan.fastq_scan_pe as fastq_scan_clean {
+    input:
+      read1 = bbduk_pe.read1_clean,
+      read2 = bbduk_pe.read2_clean
+  }
+  if (call_midas) {
+    call midas.midas as midas {
+      input:
+        samplename = samplename,
+        read1 = read1_raw,
+        read2 = read2_raw,
+        midas_db = midas_db
+    }
+  }
 
-    trimmomatic PE \
-    -threads ~{threads} \
-    ~{read1} ~{read2} \
-    -baseout ~{samplename}.fastq.gz \
-    SLIDINGWINDOW:~{trimmomatic_window_size}:~{trimmomatic_quality_trim_score} \
-    MINLEN:~{trimmomatic_minlen} > ~{samplename}.trim.stats.txt
-  >>>
   output {
-    File read1_trimmed = "~{samplename}_1P.fastq.gz"
-    File read2_trimmed = "~{samplename}_2P.fastq.gz"
-    File trimmomatic_stats = "~{samplename}.trim.stats.txt"
-    String version = read_string("VERSION")
-    String pipeline_date = read_string("DATE")
-  }
-  runtime {
-    docker: "~{docker}"
-    memory: "8 GB"
-    cpu: 4
-    disks: "local-disk 100 SSD"
-    preemptible:  0
-  }
-}
-task trimmomatic_se {
-  input {
-    File read1
-    String samplename
-    String docker="quay.io/staphb/trimmomatic:0.39"
-    Int? trimmomatic_minlen = 25
-    Int? trimmomatic_window_size=4
-    Int? trimmomatic_quality_trim_score=30
-    Int? threads = 4
-  }
-  command <<<
-    # date and version control
-    date | tee DATE
-    trimmomatic -version > VERSION && sed -i -e 's/^/Trimmomatic /' VERSION
-
-    trimmomatic SE \
-    -threads ~{threads} \
-    ~{read1} \
-    ~{samplename}_trimmed.fastq.gz \
-    SLIDINGWINDOW:~{trimmomatic_window_size}:~{trimmomatic_quality_trim_score} \
-    MINLEN:~{trimmomatic_minlen} > ~{samplename}.trim.stats.txt
-  >>>
-  output {
-    File read1_trimmed = "${samplename}_trimmed.fastq.gz"
-    File trimmomatic_stats = "${samplename}.trim.stats.txt"
-    String version = read_string("VERSION")
-    String pipeline_date = read_string("DATE")
-  }
-  runtime {
-    docker: "~{docker}"
-    memory: "8 GB"
-    cpu: 4
-    disks: "local-disk 100 SSD"
-    preemptible: 0
-  }
-}
-task bbduk_pe {
-  input {
-    File read1_trimmed
-    File read2_trimmed
-    String samplename
-    Int mem_size_gb=8
-    String docker = "quay.io/staphb/bbtools:38.76"
-  }
-  command <<<
-    # date and version control
-    date | tee DATE
-
-    repair.sh in1=~{read1_trimmed} in2=~{read2_trimmed} out1=~{samplename}.paired_1.fastq.gz out2=~{samplename}.paired_2.fastq.gz
-
-    bbduk.sh in1=~{samplename}.paired_1.fastq.gz in2=~{samplename}.paired_2.fastq.gz out1=~{samplename}.rmadpt_1.fastq.gz out2=~{samplename}.rmadpt_2.fastq.gz ref=/bbmap/resources/adapters.fa stats=~{samplename}.adapters.stats.txt ktrim=r k=23 mink=11 hdist=1 tpe tbo
-
-    bbduk.sh in1=~{samplename}.rmadpt_1.fastq.gz in2=~{samplename}.rmadpt_2.fastq.gz out1=~{samplename}_1.clean.fastq.gz out2=~{samplename}_2.clean.fastq.gz outm=~{samplename}.matched_phix.fq ref=/bbmap/resources/phix174_ill.ref.fa.gz k=31 hdist=1 stats=~{samplename}.phix.stats.txt
-
-  >>>
-  output {
-    File read1_clean = "~{samplename}_1.clean.fastq.gz"
-    File read2_clean = "~{samplename}_2.clean.fastq.gz"
-    File adapter_stats = "~{samplename}.adapters.stats.txt"
-    File phiX_stats = "~{samplename}.phix.stats.txt"
-    String bbduk_docker = docker
-    String pipeline_date = read_string("DATE")
-  }
-  runtime {
-    docker: "~{docker}"
-    memory: "~{mem_size_gb} GB"
-    cpu: 4
-    disks: "local-disk 100 SSD"
-    preemptible: 0
-    maxRetries: 3
-  }
-}
-task bbduk_se {
-  input {
-    File read1_trimmed
-    String samplename
-    Int mem_size_gb=8
-    String docker="quay.io/staphb/bbtools:38.76"
-  }
-  command <<<
-    # date and version control
-    date | tee DATE
-
-    bbduk.sh in1=~{read1_trimmed} out1=~{samplename}.rmadpt_1.fastq.gz ref=/bbmap/resources/adapters.fa stats=~{samplename}.adapters.stats.txt ktrim=r k=23 mink=11 hdist=1 tpe tbo
-
-    bbduk.sh in1=~{read1_trimmed} out1=~{samplename}_1.clean.fastq.gz outm=~{samplename}.matched_phix.fq ref=/bbmap/resources/phix174_ill.ref.fa.gz k=31 hdist=1 stats=~{samplename}.phix.stats.txt
-  >>>
-  output {
-    File read1_clean = "~{samplename}_1.clean.fastq.gz"
-    File adapter_stats = "~{samplename}.adapters.stats.txt"
-    File phiX_stats = "~{samplename}.phix.stats.txt"
-    String bbduk_docker = docker
-    String pipeline_date = read_string("DATE")
-  }
-  runtime {
-    docker: "~{docker}"
-    memory: "~{mem_size_gb} GB"
-    cpu: 4
-    disks: "local-disk 100 SSD"
-    preemptible: 0
-    maxRetries: 3
+    File	read1_clean	=	bbduk_pe.read1_clean
+    File	read2_clean	=	bbduk_pe.read2_clean
+    Int	fastq_scan_raw1	=	fastq_scan_raw.read1_seq
+    Int	fastq_scan_raw2	=	fastq_scan_raw.read2_seq
+    String	fastq_scan_raw_pairs	=	fastq_scan_raw.read_pairs
+    Int	fastq_scan_clean1	=	fastq_scan_clean.read1_seq
+    Int	fastq_scan_clean2	=	fastq_scan_clean.read2_seq
+    String	fastq_scan_clean_pairs	=	fastq_scan_clean.read_pairs
+    String	fastq_scan_version	=	fastq_scan_raw.version
+    String	bbduk_docker	=	bbduk_pe.bbduk_docker
+    String	trimmomatic_version	=	trimmomatic_pe.version
+    String? midas_docker = midas.midas_docker
+    File? midas_report = midas.midas_report
+    String? midas_primary_genus = midas.midas_primary_genus
+    String? midas_secondary_genus = midas.midas_secondary_genus
+    String? midas_secondary_genus_coverage = midas.midas_secondary_genus_coverage
   }
 }
