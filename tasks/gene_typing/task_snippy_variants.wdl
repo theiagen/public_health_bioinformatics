@@ -61,7 +61,7 @@ task snippy_variants {
    if [ -f snippy_variant_hits_tmp ]; then
      paste -s -d, snippy_variant_hits_tmp > SNIPPY_VARIANT_HITS
    else
-     echo "No hits identified" > SNIPPY_VARIANT_HITS
+     echo "No variants identified in quieried genes (${qgene})" > SNIPPY_VARIANT_HITS
    fi
   >>>
   output {
