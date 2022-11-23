@@ -8,8 +8,8 @@ task snippy_variants {
     String? query_gene
     String samplename
     String docker = "staphb/snippy:4.6.0"
-    Int cpus = 16
-    Int memory = 64
+    Int cpus = 2
+    Int memory = 8
     # Paramters 
     # --map_qual: Minimum read mapping quality to consider (default '60')
     # --base_quality: Minimum base quality to consider (default '13')
@@ -32,6 +32,12 @@ task snippy_variants {
     else 
       reads="--R1 ~{read1} --R2 ~{read2}"
     fi
+    # set no_hit var
+    if [ -z "~{query_gene}" ]; then 
+     no_hit="NA: No query gene was provided"
+   else 
+    no_hit="No variants identified in quieried genes (~{query_gene})" 
+    fi
     # call snippy
       snippy \
       --reference ~{reference} \
@@ -47,30 +53,34 @@ task snippy_variants {
       ~{'--minqual ' + min_quality} \
       ~{'--maxsoft ' + maxsoft}
     # parse gene-specific outputs from snps.tab
-    echo -e "samplename\t$(head -n 1 ./~{samplename}/~{samplename}.tab)" > ./gene_query.tsv
+    echo -e "samplename,$(head -n 1 ./~{samplename}/~{samplename}.csv)" > ./gene_query.csv
     for qgene in $(echo "~{query_gene}" | sed "s/,/ /g");
       # capture queried hits to single file 
       do 
-        if grep -q  "${qgene}" ./~{samplename}/~{samplename}.tab; then 
-          grep ${qgene} ./~{samplename}/~{samplename}.tab | awk '{print "'~{samplename}'\t" $0}' >> ./gene_query.tsv
+        if grep -q  "${qgene}" ./~{samplename}/~{samplename}.csv; then 
+          grep "${qgene}" ./~{samplename}/~{samplename}.csv | awk '{print "'~{samplename}'," $0}' >> ./gene_query.csv
           # curate relevant columns of quieried hits to single output
-          grep "${qgene}" ./gene_query.tsv | awk -F"\t" '{print "'${qgene}': "$15" ("$12"; "$7")"}' >> snippy_variant_hits_tmp
+          grep "${qgene}" ./gene_query.csv | awk -F"," '{print "'${qgene}': "$15" ("$12"; "$7")"}' >> snippy_variant_hits_tmp
         fi
      done
    # convert newlines to comma
+
    if [ -f snippy_variant_hits_tmp ]; then
      paste -s -d, snippy_variant_hits_tmp > SNIPPY_VARIANT_HITS
    else
-     echo "No variants identified in quieried genes (~{query_gene})" > SNIPPY_VARIANT_HITS
+     echo "${no_hit}" > SNIPPY_VARIANT_HITS
    fi
   >>>
   output {
     String snippy_variants_version = read_string("VERSION")
     String snippy_variants_query = "~{query_gene}"
     String snippy_variants_hits = read_string("SNIPPY_VARIANT_HITS")
-    File snippy_variants_gene_query_results = "./gene_query.tsv"
+    File snippy_variants_gene_query_results = "./gene_query.csv"
     Array[File] snippy_outputs =  glob("~{samplename}/~{samplename}*")
     File snippy_variants_results = "~{samplename}/~{samplename}.csv"
+    File snippy_variants_bam = "~{samplename}/~{samplename}.bam"
+    File snippy_variants_bai ="~{samplename}/~{samplename}.bam.bai"
+    File snippy_variants_summary = "~{samplename}/~{samplename}.txt"
   }
   runtime {
       docker: "~{docker}"
