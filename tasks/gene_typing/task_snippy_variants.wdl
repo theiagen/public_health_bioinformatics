@@ -49,11 +49,14 @@ task snippy_variants {
     # parse gene-specific outputs from snps.tab
     echo -e "sample\t$(head -n 1 ./~{samplename}/~{samplename}.tab)" > ./gene_query.tsv
     for qgene in $(echo "~{query_gene}" | sed "s/,/ /g");
-      # capture queried hits to single file
-      do echo -e "samplename\t$(grep ${qgene} ./~{samplename}/~{samplename}.tab)" >> ./gene_query.tsv
-      # curate relevant columns of quieried hits to single output
-      grep "${qgene}" ./gene_query.tsv | awk -F"\t" '{print "'${qgene}': "$15" ("$12"; "$7")"}' >> snippy_variant_hits_tmp
-   done
+      # capture queried hits to single file 
+      do 
+        if grep -q  "${qgene}" ./~{samplename}/~{samplename}.tab; then 
+          echo -e "samplename\t$(grep ${qgene} ./~{samplename}/~{samplename}.tab)" >> ./gene_query.tsv
+          # curate relevant columns of quieried hits to single output
+          grep "${qgene}" ./gene_query.tsv | awk -F"\t" '{print "'${qgene}': "$15" ("$12"; "$7")"}' >> snippy_variant_hits_tmp
+        fi
+     done
    # convert newlines to comma
    paste -s -d, snippy_variant_hits_tmp > SNIPPY_VARIANT_HITS
   >>>
