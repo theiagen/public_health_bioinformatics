@@ -1,6 +1,6 @@
 version 1.0
 
-task snippy_pe {
+task snippy_variants {
   input {
     File reference
     File read1
