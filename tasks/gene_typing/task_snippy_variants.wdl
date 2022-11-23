@@ -8,8 +8,8 @@ task snippy_variants {
     String? query_gene
     String samplename
     String docker = "staphb/snippy:4.6.0"
-    Int cpus = 2
-    Int memory = 8
+    Int cpus = 4
+    Int memory = 16
     # Paramters 
     # --map_qual: Minimum read mapping quality to consider (default '60')
     # --base_quality: Minimum base quality to consider (default '13')
