@@ -5,6 +5,11 @@ workflows:
    primaryDescriptorPath: /workflows/wf_theiaeuk.wdl
    testParameterFiles:
     - empty.json
+ - name: TheiaCauris_PE
+   subclass: WDL
+   primaryDescriptorPath: /workflows/wf_theiacauris_pe.wdl
+   testParameterFiles:
+    - empty.json
  - name: Snippy_Variants
    subclass: WDL
    primaryDescriptorPath: /workflows/wf_snippy_pe.wdl
