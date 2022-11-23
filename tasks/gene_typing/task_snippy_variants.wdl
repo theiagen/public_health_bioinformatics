@@ -52,16 +52,16 @@ task snippy_variants {
       # capture queried hits to single file
       do echo -e "samplename\t$(grep ${qgene} ./~{samplename}/~{samplename}.tab)" >> ./gene_query.tsv
       # curate relevant columns of quieried hits to single output
-      grep "${qgene}" ./gene_query.tsv | awk -F"\t" '{print "'${qgene}': "$14" ("$11"; "$6")"}' >> snippy_variant_hits_tmp
+      grep "${qgene}" ./gene_query.tsv | awk -F"\t" '{print "'${qgene}': "$15" ("$12"; "$7")"}' >> snippy_variant_hits_tmp
    done
    # convert newlines to comma
    paste -s -d, snippy_variant_hits_tmp > SNIPPY_VARIANT_HITS
   >>>
   output {
-    String snippy_variant_version = read_string("VERSION")
-    String snippy_variant_query = "~{query_gene}"
-    String snippy_variant_hits = read_string("SNIPPY_VARIANT_HITS")
-    File snippy_variant_gene_query_results = "./gene_query.tsv"
+    String snippy_variants_version = read_string("VERSION")
+    String snippy_variants_query = "~{query_gene}"
+    String snippy_variants_hits = read_string("SNIPPY_VARIANT_HITS")
+    File snippy_variants_gene_query_results = "./gene_query.tsv"
     Array[File] snippy_outputs =  glob("~{samplename}/~{samplename}*")
     File snippy_variants_results = "~{samplename}/~{samplename}.csv"
   }
