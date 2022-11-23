@@ -1,6 +1,6 @@
 version 1.0
 
-import"../tasks/species_typing/task_cauris_cladetyper.wdl" as gambit_cladetyper
+import "../tasks/species_typing/task_cauris_cladetyper.wdl" as gambit_cladetyper
 import "../tasks/task_versioning.wdl" as versioning
 
 workflow theiacauris_pe {
