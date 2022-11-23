@@ -47,12 +47,12 @@ task snippy_variants {
       ~{'--minqual ' + min_quality} \
       ~{'--maxsoft ' + maxsoft}
     # parse gene-specific outputs from snps.tab
-    echo -e "sample\t$(head -n 1 ./~{samplename}/~{samplename}.tab)" > ./gene_query.tsv
+    echo -e "samplename\t$(head -n 1 ./~{samplename}/~{samplename}.tab)" > ./gene_query.tsv
     for qgene in $(echo "~{query_gene}" | sed "s/,/ /g");
       # capture queried hits to single file 
       do 
         if grep -q  "${qgene}" ./~{samplename}/~{samplename}.tab; then 
-          echo -e "samplename\t$(grep ${qgene} ./~{samplename}/~{samplename}.tab)" >> ./gene_query.tsv
+          grep ${qgene} ./~{samplename}/~{samplename}.tab | awk '{print "'~{samplename}'\t" $0}' >> ./gene_query.tsv
           # curate relevant columns of quieried hits to single output
           grep "${qgene}" ./gene_query.tsv | awk -F"\t" '{print "'${qgene}': "$15" ("$12"; "$7")"}' >> snippy_variant_hits_tmp
         fi
