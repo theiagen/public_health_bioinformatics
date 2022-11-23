@@ -23,22 +23,32 @@ task cauris_cladetyper {
     # date and version control
     date | tee DATE
     gambit --version | tee VERSION
-
+    # create gambit signature file for five clades + input assembly
     gambit signatures create -o my-signatures.h5 -k ~{kmer_size} -p ATGAC ~{ref_clade1} ~{ref_clade2} ~{ref_clade3} ~{ref_clade4} ~{ref_clade5} ~{assembly_fasta}
+    # calculate distance matrix for all six signatures
     gambit dist --qs my-signatures.h5 --square -o ~{samplename}_matrix.csv
-
-    cat ~{samplename}_matrix.csv | sort -k7 -t ',' | head -3 | tail -1 | rev | cut -d '/' -f1 | rev | cut -d ',' -f1 | cut -d '_' -f2 | tee CLADETYPE
-    clade_type=$(cat CLADETYPE)
-    if [ "$clade_type" == "Clade1" ] ; then
+    # parse matrix to see closest clade to input assembly
+    ## sort by 7th column (distance against input sequence)
+    ## take top three columns: header, header, top hit
+    ## take bottom of these three rows (top hit)
+    ## grab only file name
+    top_clade=$(sort -k7 -t ',' "~{samplename}_matrix.csv" | head -3 | tail -n-1 | awk -F',' '{print$1}')
+    #clade_type=$(cat CLADETYPE)
+    if [ "${top_clade}" == "~{ref_clade1}" ] ; then
       echo "~{ref_clade1_annotated}" > CLADEREF
-    elif [ "$clade_type" == "Clade2" ] ; then
+      echo "Clade1" > CLADETYPE
+    elif [ "${top_clade}" == "~{ref_clade2}" ] ; then
       echo "~{ref_clade2_annotated}" > CLADEREF
-    elif [ "$clade_type" == "Clade3" ] ; then
+      echo "Clade2" > CLADETYPE
+    elif [ "${top_clade}" == "~{ref_clade3}" ] ; then
       echo "~{ref_clade3_annotated}" > CLADEREF
-    elif [ "$clade_type" == "Clade4" ] ; then
+      echo "Clade3" > CLADETYPE
+    elif [ "${top_clade}" == "~{ref_clade4}" ] ; then
       echo "~{ref_clade4_annotated}" > CLADEREF
-    elif [ "$clade_type" == "Clade5" ] ; then
+      echo "Clade4" > CLADETYPE
+    elif [ "${top_clade}" == "~{ref_clade5}" ] ; then
       echo "~{ref_clade5_annotated}" > CLADEREF
+      echo "Clade5" > CLADETYPE
     else
       echo "None" > CLADEREF
     fi
