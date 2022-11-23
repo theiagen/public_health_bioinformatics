@@ -58,7 +58,11 @@ task snippy_variants {
         fi
      done
    # convert newlines to comma
-   paste -s -d, snippy_variant_hits_tmp > SNIPPY_VARIANT_HITS
+   if [ -f snippy_variant_hits_tmp ]; then
+     paste -s -d, snippy_variant_hits_tmp > SNIPPY_VARIANT_HITS
+   else
+     echo "No hits identified" > SNIPPY_VARIANT_HITS
+   fi
   >>>
   output {
     String snippy_variants_version = read_string("VERSION")
