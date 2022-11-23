@@ -4,7 +4,7 @@ task gambit {
   input {
     File assembly
     String samplename
-    String docker = "quay.io/staphb/gambit:0.4.0"
+    String docker = "quay.io/staphb/gambit:0.5.0"
     File? gambit_db_genomes
     File? gambit_db_signatures
   }
@@ -76,16 +76,16 @@ task gambit {
     # Next taxon
     with open('NEXT_TAXON', 'w') as f:
       if next_taxon is None:
-        f.write(predicted['name'])
+        f.write('NA')
       elif next_taxon['name'] is None:
-        f.write(predicted['name'])
+        f.write('NA')
       else:
         f.write(next_taxon['name'])
     with open('NEXT_TAXON_RANK', 'w') as f:
       if next_taxon is None:
-        f.write(predicted['rank'])
+        f.write('NA')
       elif next_taxon['rank'] is None:
-        f.write(predicted['rank'])
+        f.write('NA')
       else:
         f.write(next_taxon['rank'])
     with open('NEXT_TAXON_THRESHOLD', 'w') as f:
@@ -136,6 +136,8 @@ task gambit {
       merlin_tag="Haemophilus"
     elif [[ ${predicted_taxon} == *"Klebsiella"* ]]; then 
       merlin_tag="Klebsiella"
+    elif [[ ${predicted_taxon} == *"Acinetobacter baumannii"* ]]; then 
+      merlin_tag="Acinetobacter baumannii"
     elif [[ ${predicted_taxon} == *"Legionella pneumophila"* ]]; then 
       merlin_tag="Legionella pneumophila"
     elif [[ ${predicted_taxon} == *"Listeria"* ]]; then 
@@ -150,6 +152,10 @@ task gambit {
       merlin_tag="Staphylococcus"
     elif [[ ${predicted_taxon} == *"Streptococcus"* ]]; then 
       merlin_tag="Streptococcus"
+      # set to pneumoniae if gambit calls the species
+      if [[ ${predicted_taxon} == *"Streptococcus pneumoniae"* ]]; then 
+        merlin_tag="Streptococcus pneumoniae"
+      fi
     else 
       merlin_tag="None"
     fi

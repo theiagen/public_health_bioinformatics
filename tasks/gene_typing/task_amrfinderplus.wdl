@@ -8,16 +8,21 @@ task amrfinderplus_nuc {
     # --indent_min Minimum DNA %identity [0-1]; default is 0.9 (90%) or curated threshold if it exists
     # --mincov Minimum DNA %coverage [0-1]; default is 0.5 (50%)
     String? organism # make optional?
-    Int? minid
-    Int? mincov
+    Float? minid
+    Float? mincov
+    Boolean detailed_drug_class = false
     Int cpu = 4
-    String docker = "quay.io/staphb/ncbi-amrfinderplus:3.10.24"
+    String docker = "staphb/ncbi-amrfinderplus:3.10.42"
+    Boolean hide_point_mutations = false
   }
   command <<<
     # logging info
     date | tee DATE
     amrfinder --version | tee AMRFINDER_VERSION
     
+    # capture the database version; strip out unnecessary output, remove "Database version: " that prints in front of the actual database version
+    amrfinder --database_version 2>/dev/null | grep "Database version" | sed 's|Database version: ||' | tee AMRFINDER_DB_VERSION
+
     ### set $amrfinder_organism BASH variable based on gambit_predicted_taxon or user-defined input string
     ### final variable has strict syntax/spelling based on list from amrfinder --list_organisms
     # there may be other Acinetobacter species to add later, like those in the A. baumannii-calcoaceticus species complex
@@ -68,7 +73,6 @@ task amrfinderplus_nuc {
     # if amrfinder_organism variable is set, use --organism flag, otherwise do not use --organism flag
     if [[ -v amrfinder_organism ]] ; then
       # always use --plus flag, others may be left out if param is optional and not supplied 
-      # send STDOUT/ERR to log file for capturing database version
       amrfinder --plus \
         --organism ${amrfinder_organism} \
         ~{'--name ' + samplename} \
@@ -76,21 +80,23 @@ task amrfinderplus_nuc {
         ~{'-o ' + samplename + '_amrfinder_all.tsv'} \
         ~{'--threads ' + cpu} \
         ~{'--coverage_min ' + mincov} \
-        ~{'--ident_min ' + minid} 2>&1 | tee amrfinder.STDOUT-and-STDERR.log
+        ~{'--ident_min ' + minid}
     else 
       # always use --plus flag, others may be left out if param is optional and not supplied 
-      # send STDOUT/ERR to log file for capturing database version
       amrfinder --plus \
         ~{'--name ' + samplename} \
         ~{'--nucleotide ' + assembly} \
         ~{'-o ' + samplename + '_amrfinder_all.tsv'} \
         ~{'--threads ' + cpu} \
         ~{'--coverage_min ' + mincov} \
-        ~{'--ident_min ' + minid} 2>&1 | tee amrfinder.STDOUT-and-STDERR.log
+        ~{'--ident_min ' + minid}
     fi
 
-    # capture the database version from the stdout and stderr file that was just created
-    grep "Database version:" amrfinder.STDOUT-and-STDERR.log | sed 's|Database version: ||' >AMRFINDER_DB_VERSION
+    # remove mutations where Element subtype is "POINT"
+    if [[ "~{hide_point_mutations}" == "true" ]]; then
+      awk -F "\t" '$11 != "POINT"' ~{samplename}_amrfinder_all.tsv >> temp.tsv
+      mv temp.tsv ~{samplename}_amrfinder_all.tsv
+    fi
 
     # Element Type possibilities: AMR, STRESS, and VIRULENCE 
     # create headers for 3 output files; tee to 3 files and redirect STDOUT to dev null so it doesn't print to log file
@@ -105,6 +111,16 @@ task amrfinderplus_nuc {
     amr_genes=$(awk -F '\t' '{ print $7 }' ~{samplename}_amrfinder_amr.tsv | tail -n+2 | tr '\n' ', ' | sed 's/.$//')
     stress_genes=$(awk -F '\t' '{ print $7 }' ~{samplename}_amrfinder_stress.tsv | tail -n+2 | tr '\n' ', ' | sed 's/.$//')
     virulence_genes=$(awk -F '\t' '{ print $7 }' ~{samplename}_amrfinder_virulence.tsv | tail -n+2 | tr '\n' ', ' | sed 's/.$//')
+    
+    if [[ "~{detailed_drug_class}" == "true" ]]; then
+      # create string outputs for AMR drug classes
+      amr_classes=$(awk -F '\t' 'BEGIN{OFS=":"} {print $7,$12}' ~{samplename}_amrfinder_amr.tsv | tail -n+2 | tr '\n' ', ' | sed 's/.$//')
+      # create string outputs for AMR drug subclasses
+      amr_subclasses=$(awk -F '\t' 'BEGIN{OFS=":"} {print $7,$13}' ~{samplename}_amrfinder_amr.tsv | tail -n+2 | tr '\n' ', ' | sed 's/.$//')
+    else
+      amr_classes=$(awk -F '\t' '{ print $12 }' ~{samplename}_amrfinder_amr.tsv | tail -n+2 | sort | uniq | tr '\n' ', ' | sed 's/.$//')
+      amr_subclasses=$(awk -F '\t' '{ print $13 }' ~{samplename}_amrfinder_amr.tsv | tail -n+2 | sort | uniq | tr '\n' ', ' | sed 's/.$//')
+    fi
 
     # if variable for list of genes is EMPTY, write string saying it is empty to float to Terra table
     if [ -z "${amr_genes}" ]; then
@@ -116,11 +132,19 @@ task amrfinderplus_nuc {
     if [ -z "${virulence_genes}" ]; then
        virulence_genes="No VIRULENCE genes detected by NCBI-AMRFinderPlus"
     fi 
+    if [ -z "${amr_classes}" ]; then
+       amr_classes="No AMR genes detected by NCBI-AMRFinderPlus"
+    fi 
+    if [ -z "${amr_subclasses}" ]; then
+       amr_subclasses="No AMR genes detected by NCBI-AMRFinderPlus"
+    fi 
 
     # create final output strings
     echo "${amr_genes}" > AMR_GENES
     echo "${stress_genes}" > STRESS_GENES
     echo "${virulence_genes}" > VIRULENCE_GENES
+    echo "${amr_classes}" > AMR_CLASSES
+    echo "${amr_subclasses}" > AMR_SUBCLASSES
   >>>
   output {
     File amrfinderplus_all_report = "~{samplename}_amrfinder_all.tsv"
@@ -130,6 +154,8 @@ task amrfinderplus_nuc {
     String amrfinderplus_amr_genes = read_string("AMR_GENES")
     String amrfinderplus_stress_genes = read_string("STRESS_GENES")
     String amrfinderplus_virulence_genes = read_string("VIRULENCE_GENES")
+    String amrfinderplus_amr_classes = read_string("AMR_CLASSES")
+    String amrfinderplus_amr_subclasses = read_string("AMR_SUBCLASSES")
     String amrfinderplus_version = read_string("AMRFINDER_VERSION")
     String amrfinderplus_db_version = read_string("AMRFINDER_DB_VERSION")
   }
