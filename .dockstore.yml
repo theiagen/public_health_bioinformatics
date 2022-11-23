@@ -1,0 +1,12 @@
+version: 1.2
+workflows:
+ - name: TheiaEuk_PE
+   subclass: WDL
+   primaryDescriptorPath: /workflows/wf_theiaeuk.wdl
+   testParameterFiles:
+    - empty.json
+ - name: Cauris_CladeTyper
+   subclass: WDL
+   primaryDescriptorPath: /workflows/wf_cauris_cladetyper.wdl
+   testParameterFiles:
+    - empty.json
