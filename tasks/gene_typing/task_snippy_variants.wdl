@@ -1,0 +1,75 @@
+version 1.0
+
+task snippy_pe {
+  input {
+    File reference
+    File read1
+    File? read2
+    String? query_gene
+    String samplename
+    String docker = "staphb/snippy:4.6.0"
+    Int cpus = 16
+    Int memory = 64
+    # Paramters 
+    # --map_qual: Minimum read mapping quality to consider (default '60')
+    # --base_quality: Minimum base quality to consider (default '13')
+    # --min_coverage: Minimum site depth to for calling alleles (default '10' 
+    # --min_frac: Minumum proportion for variant evidence (0=AUTO) (default '0')
+    # --min_quality: Minumum QUALITY in VCF column 6 (default '100')
+    # --maxsoft: Maximum soft clipping to allow (default '10')
+    Int? map_qual
+    Int? base_quality
+    Int? min_coverage
+    Float? min_frac
+    Int? min_quality
+    Int? maxsoft
+  }
+  command <<<
+    snippy --version | head -1 | tee VERSION
+    # set reads var
+    if [ -z "~{read2}" ]; then
+      reads="--se ~{read1}"
+    else 
+      reads="--R1 ~{read1} --R2 ~{read2}"
+    fi
+    # call snippy
+      snippy \
+      --reference ~{reference} \
+      --outdir ~{samplename} \
+      ${reads} \
+      --cpus ~{cpus} \
+      --ram ~{memory} \
+      --prefix ~{samplename} \
+      ~{'--mapqual ' + map_qual} \
+      ~{'--basequal ' + base_quality} \
+      ~{'--mincov ' + min_coverage} \
+      ~{'--minfrac ' + min_frac} \
+      ~{'--minqual ' + min_quality} \
+      ~{'--maxsoft ' + maxsoft}
+    # parse gene-specific outputs from snps.tab
+    echo -e "sample\t$(head -n 1 ./~{samplename}/~{samplename}.tab)" > ./gene_query.tsv
+    for qgene in $(echo "~{query_gene}" | sed "s/,/ /g");
+      # capture queried hits to single file
+      do echo -e "samplename\t$(grep ${qgene} ./~{samplename}/~{samplename}.tab)" >> ./gene_query.tsv
+      # curate relevant columns of quieried hits to single output
+      grep "${qgene}" ./gene_query.tsv | awk -F"\t" '{print "'${qgene}': "$14" ("$11"; "$6")"}' >> snippy_variant_hits_tmp
+   done
+   # convert newlines to comma
+   paste -s -d, snippy_variant_hits_tmp > SNIPPY_VARIANT_HITS
+  >>>
+  output {
+    String snippy_variant_version = read_string("VERSION")
+    String snippy_variant_query = "~{query_gene}"
+    String snippy_variant_hits = read_string("SNIPPY_VARIANT_HITS")
+    File snippy_variant_gene_query_results = "./gene_query.tsv"
+    Array[File] snippy_outputs =  glob("~{samplename}/~{samplename}*")
+    File snippy_variants_results = "~{samplename}/~{samplename}.csv"
+  }
+  runtime {
+      docker: "~{docker}"
+      memory: "~{memory} GB"
+      cpu: "~{cpus}"
+      disks: "local-disk 100 SSD"
+      preemptible: 0
+  }
+}
