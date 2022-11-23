@@ -8,7 +8,6 @@ task cauris_cladetyper {
     String docker_image = "quay.io/biocontainers/hesslab-gambit:0.5.1--py37h8902056_0"
     Int memory = 16
     Int cpu = 8
-    Int disk_size = 100
     File ref_clade1 = "gs://theiagen-public-files/terra/candida_auris_refs/Cauris_Clade1_reference.fasta"
     String ref_clade1_annotated = "gs://theiagen-public-files/terra/candida_auris_refs/Cauris_Clade1_GCA_002759435_Cauris_B8441_V2_genomic.gbff"
     File ref_clade2 = "gs://theiagen-public-files/terra/candida_auris_refs/Cauris_Clade2_reference.fasta"
@@ -27,10 +26,23 @@ task cauris_cladetyper {
 
     gambit signatures create -o my-signatures.h5 -k ~{kmer_size} -p ATGAC ~{ref_clade1} ~{ref_clade2} ~{ref_clade3} ~{ref_clade4} ~{ref_clade5} ~{assembly_fasta}
     gambit dist --qs my-signatures.h5 --square -o ~{samplename}_matrix.csv
-    
+
     cat ~{samplename}_matrix.csv | sort -k7 -t ',' | head -3 | tail -1 | rev | cut -d '/' -f1 | rev | cut -d ',' -f1 | cut -d '_' -f2 | tee CLADETYPE
-    
-    if [$CLADETYPE  
+    clade_type=$(cat CLADETYPE)
+    if [ "$clade_type" == "Clade1" ] ; then
+      echo "~{ref_clade1_annotated}" > CLADEREF
+    elif [ "$clade_type" == "Clade2" ] ; then
+      echo "~{ref_clade2_annotated}" > CLADEREF
+    elif [ "$clade_type" == "Clade3" ] ; then
+      echo "~{ref_clade3_annotated}" > CLADEREF
+    elif [ "$clade_type" == "Clade4" ] ; then
+      echo "~{ref_clade4_annotated}" > CLADEREF
+    elif [ "$clade_type" == "Clade5" ] ; then
+      echo "~{ref_clade5_annotated}" > CLADEREF
+    else
+      echo "None" > CLADEREF
+    fi
+
   >>>
   output {
     String gambit_cladetype = read_string("CLADETYPE")
