@@ -25,3 +25,4 @@ task version_capture {
     dx_instance_type: "mem1_ssd1_v2_x2" 
   }
 }
+

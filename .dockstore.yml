@@ -5,8 +5,8 @@ workflows:
    primaryDescriptorPath: /workflows/wf_theiaeuk.wdl
    testParameterFiles:
     - empty.json
- - name: TheiaCauris_PE
+ - name: Cauris_CladeTyper
    subclass: WDL
-   primaryDescriptorPath: /workflows/wf_theiacauris_pe.wdl
+   primaryDescriptorPath: /workflows/wf_cauris_cladetyper.wdl
    testParameterFiles:
     - empty.json
