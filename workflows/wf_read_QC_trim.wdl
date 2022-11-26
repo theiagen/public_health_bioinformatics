@@ -76,3 +76,4 @@ workflow read_QC_trim {
     String? midas_secondary_genus_coverage = midas.midas_secondary_genus_coverage
   }
 }
+
