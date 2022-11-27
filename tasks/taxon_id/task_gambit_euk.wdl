@@ -5,8 +5,8 @@ task gambit {
     File assembly
     String samplename
     String docker = "quay.io/staphb/gambit:0.5.0"
-    File gambit_db_genomes = "gs://gambit_dev/database_redux/220831-theiagen-fungal-db.tar.gz"
-    File gambit_db_signatures = "gs://gambit_dev/database_redux/fungal-signatures.h5" 
+    File gambit_db_genomes = "gs://fc-1162d2b8-109d-42a8-b1b0-c05141aa98ad/gambit/221006-theiagen-fungal-v0.1.db"
+    File gambit_db_signatures = "gs://fc-1162d2b8-109d-42a8-b1b0-c05141aa98ad/gambit/221006-theiagen-fungal-v0.1.h5" 
   }
   # If "File" type is used Cromwell attempts to localize it, which fails because it doesn't exist yet.
   String report_path = "~{samplename}_gambit.json"
