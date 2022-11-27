@@ -6,7 +6,7 @@ import "../tasks/assembly/task_shovill.wdl" as shovill
 import "../tasks/quality_control/task_quast.wdl" as quast
 import "../tasks/quality_control/task_cg_pipeline.wdl" as cg_pipeline
 import "../tasks/quality_control/task_screen.wdl" as screen
-import "../tasks/taxon_id/task_gambit.wdl" as gambit
+import "../tasks/taxon_id/task_gambit_euk.wdl" as gambit
 import "../tasks/species_typing/task_ts_mlst.wdl" as ts_mlst
 import "../tasks/task_versioning.wdl" as versioning
 
