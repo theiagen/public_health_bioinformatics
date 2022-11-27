@@ -32,7 +32,7 @@ workflow merlin_magic {
   String? clade_typer_version = cladetyper.version
   String? cladetyper_docker_image = cladetyper.gambit_cladetyper_docker_image
   String? cladetype_annotated_ref = cladetyper.clade_spec_ref
-  String snippy_version = read_string("VERSION")
+#   String snippy_version = read_string("VERSION")
 #   File? snippy_aligned_fasta = snippy_task.snippy_aligned_fasta
 #   File? snippy_bam = snippy_task.snippy_bam
 #   File? snippy_bai = snippy_task.snippy_bai
