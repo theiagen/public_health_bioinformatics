@@ -14,9 +14,9 @@ workflow merlin_magic {
     String samplename
     String merlin_tag
     File assembly
-    File read1
-    File? read2
-    Boolean paired_end = true
+    # File read1
+    # File? read2
+    # Boolean paired_end = true
   }
   if (merlin_tag == "Candida") {
     call cauris_cladetyper.cauris_cladetyper as cladetyper {
