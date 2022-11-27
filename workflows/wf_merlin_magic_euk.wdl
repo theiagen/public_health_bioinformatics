@@ -23,7 +23,7 @@ workflow merlin_magic {
       input: 
         assembly_fasta = assembly,
         samplename = samplename
-    }
+        }
     }
   output {
   # Candida Typing
