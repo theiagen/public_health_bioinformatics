@@ -1,6 +1,6 @@
 version 1.0
 
-task gambit {
+task gambit_euk {
   input {
     File assembly
     String samplename

@@ -81,7 +81,7 @@ workflow theiaeuk_illumina_pe {
           samplename = samplename,
           genome_length = clean_check_reads.est_genome_length
       }
-      call gambit.gambit {
+      call gambit.gambit_euk as gambit {
         input:
           assembly = shovill_pe.assembly_fasta,
           samplename = samplename
