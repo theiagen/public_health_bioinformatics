@@ -95,7 +95,7 @@ task check_reads {
           fi
           mash sketch -o test -k 31 ${M} -r ~{read1} ~{read2} > mash-output.txt 2>&1
           grep "Estimated genome size:" mash-output.txt | \
-            awk '{if($4){printf("%d", $4)}} END {if (!NR) print "0"}' > genome_size_output
+            awk '{if($4){printf("%5.0f\n", $4)}} END {if (!NR) print "0"}' > genome_size_output
           grep "Estimated coverage:" mash-output.txt | \
             awk '{if($3){printf("%d", $3)}} END {if (!NR) print "0"}' > coverage_output
           rm -rf test.msh
