@@ -22,7 +22,7 @@ workflow theiaeuk_illumina_pe {
     Int min_reads = 10000
     #Edited default values
     Int min_basepairs = 2241820
-    Int min_genome_size = 100000
+    Int min_genome_size = 10000000
     Int max_genome_size = 25000000
     Int min_coverage = 10
     Int min_proportion = 50
