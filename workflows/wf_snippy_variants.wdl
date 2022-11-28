@@ -32,5 +32,6 @@ workflow snippy_variants_wf {
     File snippy_results = snippy_variants.snippy_variants_results
     File snippy_bam = snippy_variants.snippy_variants_bam
     File snippy_bai = snippy_variants.snippy_variants_bai
+    File snippy_variants_summary = snippy_variants.snippy_variants_summary
   }
 }
