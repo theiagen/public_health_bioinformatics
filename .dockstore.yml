@@ -10,3 +10,8 @@ workflows:
    primaryDescriptorPath: /workflows/wf_cauris_cladetyper.wdl
    testParameterFiles:
     - empty.json
+ - name: Snippy_Variants
+   subclass: WDL
+   primaryDescriptorPath: /workflows/wf_snippy_variants.wdl
+   testParameterFiles:
+    - empty.json
