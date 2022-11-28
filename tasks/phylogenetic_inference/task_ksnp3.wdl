@@ -6,6 +6,7 @@ task ksnp3 {
     Array[String] samplename
     String cluster_name
     Int kmer_size = 19
+    String? ksnp3_args = "" # add -ML to calculate a maximum likelihood tree or -NJ to calculate a neighbor-joining tree
     String docker_image = "quay.io/staphb/ksnp3:3.1"
     Int memory = 8
     Int cpu = 4
@@ -31,18 +32,33 @@ task ksnp3 {
     echo -e "${assembly}\t${samplename}" >> ksnp3_input.tsv
   done
   # run ksnp3 on input assemblies
-  kSNP3 -in ksnp3_input.tsv -outdir ksnp3 -k ~{kmer_size} -core -vcf
+  kSNP3 -in ksnp3_input.tsv -outdir ksnp3 -k ~{kmer_size} -core -vcf ~{ksnp3_args}
   
   # rename ksnp3 outputs with cluster name 
-  mv ksnp3/core_SNPs_matrix.fasta ~{cluster_name}_core_SNPs_matrix.fasta
-  mv ksnp3/tree.core.tre ~{cluster_name}_core.tree
-  mv ksnp3/VCF.*.vcf ~{cluster_name}_core.vcf
+  mv -v ksnp3/core_SNPs_matrix.fasta ksnp3/~{cluster_name}_core_SNPs_matrix.fasta
+  mv -v ksnp3/tree.core.tre ksnp3/~{cluster_name}_core.nwk
+  mv -v ksnp3/VCF.*.vcf ksnp3/~{cluster_name}_core.vcf
+  mv -v ksnp3/SNPs_all_matrix.fasta ksnp3/~{cluster_name}_pan_SNPs_matrix.fasta
+  mv -v ksnp3/tree.parsimony.tre ksnp3/~{cluster_name}_pan_parsimony.nwk
+
+  if [ -f ksnp3/tree.ML.tre ]; then  
+    mv -v ksnp3/tree.ML.tre ksnp3/~{cluster_name}_ML.nwk
+  fi 
+  if [ -f ksnp3/tree.NJ.tre ]; then  
+    mv -v ksnp3/tree.NJ.tre ksnp3/~{cluster_name}_NJ.nwk
+  fi 
 
   >>>
   output {
-    File ksnp3_matrix = "${cluster_name}_core_SNPs_matrix.fasta"
-    File ksnp3_tree = "${cluster_name}_core.tree"
-    File ksnp3_vcf = "${cluster_name}_core.vcf"
+    File ksnp3_core_matrix = "ksnp3/${cluster_name}_core_SNPs_matrix.fasta"
+    File ksnp3_core_tree = "ksnp3/${cluster_name}_core.nwk"
+    File ksnp3_core_vcf = "ksnp3/${cluster_name}_core.vcf"
+    File ksnp3_pan_matrix = "ksnp3/~{cluster_name}_pan_SNPs_matrix.fasta"
+    File ksnp3_pan_parsimony_tree = "ksnp3/~{cluster_name}_pan_parsimony.nwk"
+    File? ksnp3_ml_tree = "ksnp3/~{cluster_name}_ML.nwk"
+    File? ksnp3_nj_tree = "ksnp3/~{cluster_name}_NJ.nwk"
+    File number_snps = "ksnp3/COUNT_SNPs"
+    Array[File] ksnp_outs = glob("ksnp3/*")
     String ksnp3_docker_image = docker_image
   }
   runtime {

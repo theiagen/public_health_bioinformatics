@@ -23,10 +23,14 @@ task lissero {
       ~{'--min_cov ' + min_cov} \
       ~{assembly} \
       > ~{samplename}.tsv
+
+    # pull out serotype
+    tail -n+2 ~{samplename}.tsv | cut -f2 | tee SEROTYPE
   >>>
   output {
     File lissero_results = "~{samplename}.tsv"
     String lissero_version = read_string("VERSION")
+    String lissero_serotype = read_string("SEROTYPE")
   }
   runtime {
     docker: "~{docker}"
