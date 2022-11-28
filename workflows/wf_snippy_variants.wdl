@@ -30,5 +30,7 @@ workflow snippy_variants_wf {
     String snippy_variant_hits = snippy_variants.snippy_variants_hits
     File snippy_variant_gene_query_results = snippy_variants.snippy_variants_gene_query_results
     File snippy_results = snippy_variants.snippy_variants_results
+    File snippy_bam = snippy_variants.snippy_variants_bam
+    File snippy_bai = snippy_variants.snippy_variants_bai
   }
 }
