@@ -151,5 +151,11 @@ workflow theiaeuk_illumina_pe {
     String? theiaeuk_ts_mlst_predicted_st = ts_mlst.ts_mlst_predicted_st
     String? theiaeuk_ts_mlst_version = ts_mlst.ts_mlst_version
     String? theiaeuk_ts_mlst_pubmlst_scheme = ts_mlst.ts_mlst_pubmlst_scheme
+    # Cladetyper Outputs
+    String? clade_type = merlin_magic.clade_type
+    String? cladetyper_analysis_date = merlin_magic.cladetyper_analysis_date
+    String? cladetyper_version = merlin_magic.cladetyper_version
+    String? cladetyper_docker_image = merlin_magic.cladetyper_docker_image
+    String? cladetype_annotated_ref = merlin_magic.cladetype_annotated_ref
   }
 }
