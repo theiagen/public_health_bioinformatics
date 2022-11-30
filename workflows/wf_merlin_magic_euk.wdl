@@ -16,6 +16,7 @@ workflow merlin_magic {
     File assembly
     File read1
     File? read2
+    File? ann_ref
     # Boolean paired_end = true
   }
   if (merlin_tag == "Candida auris") {
@@ -24,14 +25,14 @@ workflow merlin_magic {
         assembly_fasta = assembly,
         samplename = samplename
         }
-    call snippy.snippy_variants as snippy {
+    call snippy.snippy_variants {
       input:
-        reference
-        read1
-        read2
-        query_gene
-        samplename
-    }
+        reference = cladetyper.clade_spec_ref,
+        read1 = read1,
+        read2 = read2,
+        query_gene = "FKS1",
+        samplename = samplename
+        }
     }
   output {
   # Candida Typing
@@ -40,24 +41,14 @@ workflow merlin_magic {
   String? cladetyper_version = cladetyper.version
   String? cladetyper_docker_image = cladetyper.gambit_cladetyper_docker_image
   String? cladetype_annotated_ref = cladetyper.clade_spec_ref
-#   String snippy_version = read_string("VERSION")
-#   File? snippy_aligned_fasta = snippy_task.snippy_aligned_fasta
-#   File? snippy_bam = snippy_task.snippy_bam
-#   File? snippy_bai = snippy_task.snippy_bai
-#   File? snippy_bed = snippy_task.snippy_bed
-#   File? snippy_consensus_fasta = snippy_task.snippy_consensus_fasta
-#   File? snippy_subs_fasta = snippy_task.snippy_subs_fasta
-#   File? snippy_csv = snippy_task.snippy_csv
-#   File? snippy_filtered_vcf = snippy_task.snippy_filtered_vcf
-#   File? snippy_gff = snippy_task.snippy_gff
-#   File? snippy_html_report = snippy_task.snippy_html_report
-#   File? snippy_log = snippy_task.snippy_log
-#   File? snippy_raw_vcf = snippy_task.snippy_raw_vcf
-#   File? snippy_subs_vcf = snippy_task.snippy_subs_vcf
-#   File? snippy_tsv = snippy_task.snippy_tsv
-#   File? snippy_txt = snippy_task.snippy_txt
-#   File? snippy_vcf = snippy_task.snippy_vcf
-#   File? snippy_vcf_gz = snippy_task.snippy_vcf_gz
-#   File? snippy_vcf_gz_csi = snippy_task.snippy_vcf_gz_csi
+  String snippy_variants_version = snippy_variants.snippy_variants_version
+  String snippy_variants_query = snippy_variants.snippy_variants_query
+  String snippy_variants_hits = snippy_variants.snippy_variants_hits
+  File snippy_variants_gene_query_results = snippy_variants.
+  Array[File] snippy_outputs = snippy_variants.snippy_outputs
+  File snippy_variants_results = snippy_variants.snippy_variants_results
+  File snippy_variants_bam = snippy_variants.snippy_variants_bam
+  File snippy_variants_bai = snippy_variants.snippy_variants_bai
+  File snippy_variants_summary = snippy_variants.snippy_variants_summary
  }
 }
