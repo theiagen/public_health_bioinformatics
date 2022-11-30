@@ -28,8 +28,8 @@ workflow merlin_magic {
   output {
   # Candida Typing
   String? clade_type = cladetyper.gambit_cladetype
-  String? clade_type_analysis_date = cladetyper.date
-  String? clade_typer_version = cladetyper.version
+  String? cladetyper_analysis_date = cladetyper.date
+  String? cladetyper_version = cladetyper.version
   String? cladetyper_docker_image = cladetyper.gambit_cladetyper_docker_image
   String? cladetype_annotated_ref = cladetyper.clade_spec_ref
 #   String snippy_version = read_string("VERSION")
