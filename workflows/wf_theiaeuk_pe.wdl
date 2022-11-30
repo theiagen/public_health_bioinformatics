@@ -157,5 +157,15 @@ workflow theiaeuk_illumina_pe {
     String? cladetyper_version = merlin_magic.cladetyper_version
     String? cladetyper_docker_image = merlin_magic.cladetyper_docker_image
     String? cladetype_annotated_ref = merlin_magic.cladetype_annotated_ref
+    # Snippy Outputs
+    String? snippy_variants_version = merlin_magic.snippy_variants_version
+    String? snippy_variants_query = merlin_magic.snippy_variants_query
+    String? snippy_variants_hits = merlin_magic.snippy_variants_hits
+    File? snippy_variants_gene_query_results = merlin_magic.snippy_variants_gene_query_results
+    Array[File]? snippy_outputs = merlin_magic.snippy_outputs
+    File? snippy_variants_results = merlin_magic.snippy_variants_results
+    File? snippy_variants_bam = merlin_magic.snippy_variants_bam
+    File? snippy_variants_bai = merlin_magic.snippy_variants_bai
+    File? snippy_variants_summary = merlin_magic.snippy_variants_summary
   }
 }

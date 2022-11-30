@@ -16,7 +16,6 @@ workflow merlin_magic {
     File assembly
     File read1
     File? read2
-    File? ann_ref
     # Boolean paired_end = true
   }
   if (merlin_tag == "Candida auris") {
