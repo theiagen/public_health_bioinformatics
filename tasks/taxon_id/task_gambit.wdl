@@ -314,6 +314,10 @@ task gambit_euk {
     predicted_taxon=$(cat PREDICTED_TAXON)
     if [[ ${predicted_taxon} == *"Candida auris"* ]] ; then 
       merlin_tag="Candida auris"
+    if [[ ${predicted_taxon} == *"Candida albicans"* ]] ; then 
+      merlin_tag="Candida albicans"
+    if [[ ${predicted_taxon} == *"Aspergillus fumigatus"* ]] ; then 
+      merlin_tag="Aspergillus fumigatus"
     else 
       merlin_tag="None"
     fi
