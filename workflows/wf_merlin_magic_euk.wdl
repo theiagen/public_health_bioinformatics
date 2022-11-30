@@ -1,7 +1,7 @@
 version 1.0
 
 import "../tasks/species_typing/task_cauris_cladetyper.wdl" as cauris_cladetyper
-# import "../tasks/phylogenetic_inference/task_snippy.wdl" as snippy
+import "../tasks/gene_typing/task_snippy_variants.wdl" as snippy
 # import "../tasks/assembly/task_mycosnp_consensus_assembly.wdl" as mycosnp
   # ADD SNIPPY TASK
   # Maybe add Mycosnp task?
@@ -14,8 +14,8 @@ workflow merlin_magic {
     String samplename
     String merlin_tag
     File assembly
-    # File read1
-    # File? read2
+    File read1
+    File? read2
     # Boolean paired_end = true
   }
   if (merlin_tag == "Candida auris") {
@@ -24,6 +24,14 @@ workflow merlin_magic {
         assembly_fasta = assembly,
         samplename = samplename
         }
+    call snippy.snippy_variants as snippy {
+      input:
+        reference
+        read1
+        read2
+        query_gene
+        samplename
+    }
     }
   output {
   # Candida Typing
