@@ -36,7 +36,7 @@ workflow merlin_magic {
   if (merlin_tag == "Candida albicans") {
     call snippy.snippy_variants {
       input:
-        reference = cladetyper.clade_spec_ref,
+        reference = "gs://theiagen-public-files/terra/theiaeuk_files/Candida_albicans_GCF_000182965.3_ASM18296v3_genomic.gbff",
         read1 = read1,
         read2 = read2,
         query_gene = "ERG11",
@@ -46,7 +46,7 @@ workflow merlin_magic {
   if (merlin_tag == "Aspergillus fumigatus") {
     call snippy.snippy_variants {
       input:
-        reference = cladetyper.clade_spec_ref,
+        reference = "gs://theiagen-public-files/terra/theiaeuk_files/Aspergillus_fumigatus_GCF_000002655.1_ASM265v1_genomic.gbff",
         read1 = read1,
         read2 = read2,
         query_gene = "CYP51a",
