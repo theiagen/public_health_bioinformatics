@@ -18,7 +18,7 @@ workflow merlin_magic {
     # File? read2
     # Boolean paired_end = true
   }
-  if (merlin_tag == "Candida") {
+  if (merlin_tag == "Candida auris") {
     call cauris_cladetyper.cauris_cladetyper as cladetyper {
       input: 
         assembly_fasta = assembly,
