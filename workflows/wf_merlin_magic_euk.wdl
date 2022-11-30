@@ -41,14 +41,14 @@ workflow merlin_magic {
   String? cladetyper_version = cladetyper.version
   String? cladetyper_docker_image = cladetyper.gambit_cladetyper_docker_image
   String? cladetype_annotated_ref = cladetyper.clade_spec_ref
-  String snippy_variants_version = snippy_variants.snippy_variants_version
-  String snippy_variants_query = snippy_variants.snippy_variants_query
-  String snippy_variants_hits = snippy_variants.snippy_variants_hits
-  File snippy_variants_gene_query_results = snippy_variants.
-  Array[File] snippy_outputs = snippy_variants.snippy_outputs
-  File snippy_variants_results = snippy_variants.snippy_variants_results
-  File snippy_variants_bam = snippy_variants.snippy_variants_bam
-  File snippy_variants_bai = snippy_variants.snippy_variants_bai
-  File snippy_variants_summary = snippy_variants.snippy_variants_summary
+  String? snippy_variants_version = snippy_variants.snippy_variants_version
+  String? snippy_variants_query = snippy_variants.snippy_variants_query
+  String? snippy_variants_hits = snippy_variants.snippy_variants_hits
+  File? snippy_variants_gene_query_results = snippy_variants.snippy_variants_gene_query_results
+  Array[File]? snippy_outputs = snippy_variants.snippy_outputs
+  File? snippy_variants_results = snippy_variants.snippy_variants_results
+  File? snippy_variants_bam = snippy_variants.snippy_variants_bam
+  File? snippy_variants_bai = snippy_variants.snippy_variants_bai
+  File? snippy_variants_summary = snippy_variants.snippy_variants_summary
  }
 }
