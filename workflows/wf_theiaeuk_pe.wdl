@@ -96,8 +96,8 @@ workflow theiaeuk_illumina_pe {
           merlin_tag = gambit.merlin_tag,
           assembly = shovill_pe.assembly_fasta,
           samplename = samplename,
-        #   read1 = read_QC_trim.read1_clean,
-        #   read2 = read_QC_trim.read2_clean
+          read1 = read_QC_trim.read1_clean,
+          read2 = read_QC_trim.read2_clean
       }
     }
   }
