@@ -33,6 +33,26 @@ workflow merlin_magic {
         samplename = samplename
         }
     }
+  if (merlin_tag == "Candida albicans") {
+    call snippy.snippy_variants {
+      input:
+        reference = cladetyper.clade_spec_ref,
+        read1 = read1,
+        read2 = read2,
+        query_gene = "ERG11",
+        samplename = samplename
+        }
+    }
+  if (merlin_tag == "Aspergillus fumigatus") {
+    call snippy.snippy_variants {
+      input:
+        reference = cladetyper.clade_spec_ref,
+        read1 = read1,
+        read2 = read2,
+        query_gene = "CYP51a",
+        samplename = samplename
+        }
+    }
   output {
   # Candida Typing
   String? clade_type = cladetyper.gambit_cladetype
