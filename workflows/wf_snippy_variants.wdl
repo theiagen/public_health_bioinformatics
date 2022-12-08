@@ -24,7 +24,7 @@ workflow snippy_variants_wf {
     input:
   }
   output {
-    Array[File] snippy_outputs =  snippy_variant.snippy_outputs
+    Array[File] snippy_outputs =  snippy_variants.snippy_outputs
     String snippy_variants_wf_version = version_capture.phbg_version
     String snippy_version = snippy_variants.snippy_variants_version
     String snippy_variant_query = snippy_variants.snippy_variants_query
