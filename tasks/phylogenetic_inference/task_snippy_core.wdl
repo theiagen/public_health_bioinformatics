@@ -2,7 +2,7 @@ version 1.0
 
 task snippy_core {
   input {
-    Array[File] snippy_outputs
+    Array[File] snippy_output_tarball_array
     String treename
     String docker = "staphb/snippy:4.6.0"
     File reference
@@ -12,6 +12,10 @@ task snippy_core {
     # version control
    snippy --version | head -1 | tee VERSION
    
+   tarball_array=(~{sep=" " snippy_output_tarball_array})
+
+    # iteratively untar and create list for input to snippy core
+   for i in ${tarball_array[@]}; do echo $i | cut -d "." -f1 >> ; do tar -xf $i; done
    # run snippy core
    snippy-core \
    --prefix ~{treename} \
