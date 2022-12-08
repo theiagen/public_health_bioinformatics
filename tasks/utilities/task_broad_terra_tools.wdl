@@ -177,6 +177,7 @@ task export_taxon_tables {
     String? midas_primary_genus
     String? midas_secondary_genus
     String? midas_secondary_genus_coverage
+    Array[File]? snippy_outputs
   }
   command <<<
   
