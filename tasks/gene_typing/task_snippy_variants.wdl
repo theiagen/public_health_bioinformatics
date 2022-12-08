@@ -76,6 +76,7 @@ task snippy_variants {
     String snippy_variants_query = "~{query_gene}"
     String snippy_variants_hits = read_string("SNIPPY_VARIANT_HITS")
     File snippy_variants_gene_query_results = "./gene_query.csv"
+    Array[File] snippy_output_dirs =  glob("../~{samplename}")
     Array[File] snippy_outputs =  glob("~{samplename}/~{samplename}*")
     File snippy_variants_results = "~{samplename}/~{samplename}.csv"
     File snippy_variants_bam = "~{samplename}/~{samplename}.bam"
