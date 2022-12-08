@@ -8,8 +8,8 @@ task snippy_variants {
     String? query_gene
     String samplename
     String docker = "staphb/snippy:4.6.0"
-    Int cpus = 4
-    Int memory = 16
+    Int cpus = 8
+    Int memory = 32
     # Paramters 
     # --map_qual: Minimum read mapping quality to consider (default '60')
     # --base_quality: Minimum base quality to consider (default '13')
@@ -70,14 +70,17 @@ task snippy_variants {
    else
      echo "${no_hit}" > SNIPPY_VARIANT_HITS
    fi
+    # Compress output dir
+    tar -cvzf "./~{samplename}_snippy_outdir.tar" "./~{samplename}/*"
   >>>
   output {
     String snippy_variants_version = read_string("VERSION")
     String snippy_variants_query = "~{query_gene}"
     String snippy_variants_hits = read_string("SNIPPY_VARIANT_HITS")
+    File snippy_outdir_tarball = "./~{samplename}_snippy_outdir.tar"
     File snippy_variants_gene_query_results = "./gene_query.csv"
     Array[File] snippy_output_dirs =  glob("../~{samplename}")
-    Array[File] snippy_outputs =  glob("~{samplename}/~{samplename}*")
+    Array[File] snippy_outputs = glob("~{samplename}/~{samplename}*")
     File snippy_variants_results = "~{samplename}/~{samplename}.csv"
     File snippy_variants_bam = "~{samplename}/~{samplename}.bam"
     File snippy_variants_bai ="~{samplename}/~{samplename}.bam.bai"
