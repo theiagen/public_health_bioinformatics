@@ -64,7 +64,7 @@ workflow merlin_magic {
   String? snippy_variants_query = select_first([snippy_cauris.snippy_variants_query, snippy_calbicans.snippy_variants_query, snippy_afumigatus.snippy_variants_query])
   String? snippy_variants_hits = select_first([snippy_cauris.snippy_variants_hits, snippy_calbicans.snippy_variants_hits, snippy_afumigatus.snippy_variants_hits])
   File? snippy_variants_gene_query_results = select_first([snippy_cauris.snippy_variants_gene_query_results, snippy_calbicans.snippy_variants_gene_query_results, snippy_afumigatus.snippy_variants_gene_query_results])
-  Array[File]? snippy_outputs = select_first([snippy_cauris.snippy_outputs, snippy_calbicans.snippy_outputs, snippy_afumigatus.snippy_outputs])
+  # Array[File]? snippy_outputs = select_first([snippy_cauris.snippy_outputs, snippy_calbicans.snippy_outputs, snippy_afumigatus.snippy_outputs])
   File? snippy_variants_results = select_first([snippy_cauris.snippy_variants_results, snippy_calbicans.snippy_variants_results, snippy_afumigatus.snippy_variants_results])
   File? snippy_variants_bam = select_first([snippy_cauris.snippy_variants_bam, snippy_calbicans.snippy_variants_bam, snippy_afumigatus.snippy_variants_bam])
   File? snippy_variants_bai = select_first([snippy_cauris.snippy_variants_bai, snippy_calbicans.snippy_variants_bai, snippy_afumigatus.snippy_variants_bai])
