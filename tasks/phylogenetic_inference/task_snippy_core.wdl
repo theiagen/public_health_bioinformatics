@@ -4,7 +4,7 @@ task snippy_core {
   input {
     Array[File] snippy_output_tarball_array
     Array[String] samplenames
-    String treename
+    String tree_name
     String docker = "staphb/snippy:4.6.0"
     File reference
     File? bed_file
@@ -22,25 +22,25 @@ task snippy_core {
 
    # run snippy core
    snippy-core \
-   --prefix ~{treename} \
+   --prefix ~{tree_name} \
    ~{'--mask ' + bed_file} \
    --ref ~{reference} \
    "${samplename_array[@]}"
 
    # run snippy clean
    snippy-clean_full_aln \
-   ~{treename}.full.aln > ~{treename}_snippy_clean_full.aln
+   ~{tree_name}.full.aln > ~{tree_name}_snippy_clean_full.aln
 
   >>>
   output {
-   String snippy_variants_version = read_string("VERSION")
-   File snippy_core_alignment = "~{treename}.aln"
-   File snippy_full_alignment = "~{treename}.full.aln"
-   File snippy_full_alignment_clean = "~{treename}_snippy_clean_full.aln"
-   File snippy_ref = "~{treename}.ref.fa"
-   File snippy_core_tab = "~{treename}.tab"
-   File snippy_txt = "~{treename}.txt"
-   File snippy_vcf = "~{treename}.vcf"
+   String snippy_version = read_string("VERSION")
+   File snippy_core_alignment = "~{tree_name}.aln"
+   File snippy_full_alignment = "~{tree_name}.full.aln"
+   File snippy_full_alignment_clean = "~{tree_name}_snippy_clean_full.aln"
+   File snippy_ref = "~{tree_name}.ref.fa"
+   File snippy_core_tab = "~{tree_name}.tab"
+   File snippy_txt = "~{tree_name}.txt"
+   File snippy_vcf = "~{tree_name}.vcf"
    String snippy_docker_image = docker
   }
   runtime {
