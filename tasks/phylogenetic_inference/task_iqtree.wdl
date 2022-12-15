@@ -16,7 +16,7 @@ task iqtree {
     iqtree --version | grep version | sed 's/.*version/version/;s/ for Linux.*//' | tee VERSION
 
     numGenomes=`grep -o '>' ~{alignment} | wc -l`
-    if [ $numGenomes -gt 3 ]
+    if [ "$numGenomes" -gt 3 ]
     then
       cp ~{alignment} ./msa.fasta
       iqtree \
