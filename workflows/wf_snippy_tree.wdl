@@ -1,32 +1,54 @@
 version 1.0
 
-import "../tasks/phylogenetic_inference/task_iqtree.wdl" as iq_tree
-import "../tasks/phylogenetic_inference/task_snp_dists.wdl" as snpdists
+import "../tasks/phylogenetic_inference/task_snippy_core.wdl" as snippy_core
+import "../tasks/phylogenetic_inference/task_iqtree.wdl" as iqtree
+import "../tasks/phylogenetic_inference/task_snp_dists.wdl" as snp_dists
+import "../tasks/task_versioning.wdl" as versioning
 
 workflow snippy_tree_wf {
   meta {
     description: "Perform phylogenetic tree inference using iqtree (default) or snp-dist"
   }
   input {
-    File alignment
-    String cluster_name
-
+    String tree_name
+    Array[File] snippy_output_tarball_array
+    Array[String] samplenames
+    File reference
   }
-  call iq_tree.iqtree {
+  call snippy_core.snippy_core {
     input:
-      alignment = alignment,
-      cluster_name = cluster_name
+      snippy_output_tarball_array = snippy_output_tarball_array,
+      samplenames = samplenames,
+      reference = reference,
+      tree_name = tree_name
   }
-  call snpdists.snp_dists{
+  call iqtree.iqtree {
     input:
-      alignment = alignment,
-      cluster_name = cluster_name
+      alignment = snippy_core.snippy_full_alignment_clean,
+      cluster_name = tree_name
+  }
+  call snp_dists.snp_dists{
+    input:
+      alignment = snippy_core.snippy_full_alignment_clean,
+      cluster_name = tree_name
+  }
+  	call versioning.version_capture{
+    input:
   }
   output {
-    File snippy_iqtree = iqtree.ml_tree
-    String snippy_iqtree_version = iqtree.version
-    String snippy_snpdists_version = snp_dists.version
-    File snippy_snpdists_matrix = snp_dists.snp_matrix
-    File snippy_snpdists_molten_ordered = snp_dists.snp_dists_molten_ordered
+    String snippy_tree_version = version_capture.phbg_version
+    String snippy_tree_snippy_version = snippy_core.snippy_version
+    File snippy_tree_alignment = snippy_core.snippy_core_alignment
+    File snippy_tree_full_alignment = snippy_core.snippy_full_alignment
+    File snippy_tree_full_alignment_clean = snippy_core.snippy_full_alignment_clean
+    File snippy_tree_ref = snippy_core.snippy_ref
+    File snippy_tree_tab = snippy_core.snippy_core_tab
+    File snippy_tree_txt = snippy_core.snippy_txt
+    File snippy_tree_vcf = snippy_core.snippy_vcf
+    File snippy_tree_iqtree = iqtree.ml_tree
+    String snippy_tree_iqtree_version = iqtree.version
+    String snippy_tree_snpdists_version = snp_dists.version
+    File snippy_tree_snpdists_matrix = snp_dists.snp_matrix
+    File snippy_tree_snpdists_molten_ordered = snp_dists.snp_dists_molten_ordered
   }
 }
