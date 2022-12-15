@@ -24,13 +24,11 @@ workflow snippy_variants_wf {
     input:
   }
   output {
-    # Array[File] snippy_outputs = snippy_variants.snippy_outputs
-    # Array[File] snippy_output_dirs = snippy_variants.snippy_output_dirs
     String snippy_variants_wf_version = version_capture.phbg_version
     String snippy_version = snippy_variants.snippy_variants_version
-    String snippy_variant_query = snippy_variants.snippy_variants_query
-    String snippy_variant_hits = snippy_variants.snippy_variants_hits
-    File snippy_variant_gene_query_results = snippy_variants.snippy_variants_gene_query_results
+    String snippy_variants_query = snippy_variants.snippy_variants_query
+    String snippy_variants_hits = snippy_variants.snippy_variants_hits
+    File snippy_variants_gene_query_results = snippy_variants.snippy_variants_gene_query_results
     File snippy_results = snippy_variants.snippy_variants_results
     File snippy_bam = snippy_variants.snippy_variants_bam
     File snippy_bai = snippy_variants.snippy_variants_bai
