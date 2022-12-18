@@ -19,11 +19,11 @@ workflow theiaeuk_illumina_pe {
     String seq_method = "ILLUMINA"
     File read1_raw
     File read2_raw
-    Int min_reads = 10000
+    Int min_reads = 30000
     #Edited default values
-    Int min_basepairs = 2241820
-    Int min_genome_size = 100000
-    Int max_genome_size = 50000000
+    Int min_basepairs = 90000000
+    Int min_genome_size = 9000000
+    Int max_genome_size = 178000000
     Int min_coverage = 10
     Int min_proportion = 50
     Boolean skip_screen = false 
