@@ -70,14 +70,14 @@ workflow merlin_magic {
   String? cladetyper_version = cladetyper.version
   String? cladetyper_docker_image = cladetyper.gambit_cladetyper_docker_image
   String? cladetype_annotated_ref = cladetyper.clade_spec_ref
-  String snippy_variants_version = select_first([snippy_cauris.snippy_variants_version, snippy_calbicans.snippy_variants_version, snippy_afumigatus.snippy_variants_version])
-  String snippy_variants_query = select_first([snippy_cauris.snippy_variants_query, snippy_calbicans.snippy_variants_query, snippy_afumigatus.snippy_variants_query])
-  String snippy_variants_hits = select_first([snippy_cauris.snippy_variants_hits, snippy_calbicans.snippy_variants_hits, snippy_afumigatus.snippy_variants_hits])
-  File snippy_variants_gene_query_results = select_first([snippy_cauris.snippy_variants_gene_query_results, snippy_calbicans.snippy_variants_gene_query_results, snippy_afumigatus.snippy_variants_gene_query_results])
-  Array[File] snippy_outputs = select_first([snippy_cauris.snippy_outputs, snippy_calbicans.snippy_outputs, snippy_afumigatus.snippy_outputs])
-  File snippy_variants_results = select_first([snippy_cauris.snippy_variants_results, snippy_calbicans.snippy_variants_results, snippy_afumigatus.snippy_variants_results])
-  File snippy_variants_bam = select_first([snippy_cauris.snippy_variants_bam, snippy_calbicans.snippy_variants_bam, snippy_afumigatus.snippy_variants_bam])
-  File snippy_variants_bai = select_first([snippy_cauris.snippy_variants_bai, snippy_calbicans.snippy_variants_bai, snippy_afumigatus.snippy_variants_bai])
-  File snippy_variants_summary = select_first([snippy_cauris.snippy_variants_summary, snippy_calbicans.snippy_variants_summary, snippy_afumigatus.snippy_variants_summary])
+  String snippy_variants_version = select_first([snippy_cauris.snippy_variants_version, snippy_calbicans.snippy_variants_version, snippy_afumigatus.snippy_variants_version, snippy_crypto.snippy_variants_version])
+  String snippy_variants_query = select_first([snippy_cauris.snippy_variants_query, snippy_calbicans.snippy_variants_query, snippy_afumigatus.snippy_variants_query, snippy_crypto.snippy_variants_query])
+  String snippy_variants_hits = select_first([snippy_cauris.snippy_variants_hits, snippy_calbicans.snippy_variants_hits, snippy_afumigatus.snippy_variants_hits, snippy_crypto.snippy_variants_hits])
+  File snippy_variants_gene_query_results = select_first([snippy_cauris.snippy_variants_gene_query_results, snippy_calbicans.snippy_variants_gene_query_results, snippy_afumigatus.snippy_variants_gene_query_results, snippy_crypto.snippy_variants_gene_query_results])
+  Array[File] snippy_outputs = select_first([snippy_cauris.snippy_outputs, snippy_calbicans.snippy_outputs, snippy_afumigatus.snippy_outputs, snippy_crypto.snippy_outputs])
+  File snippy_variants_results = select_first([snippy_cauris.snippy_variants_results, snippy_calbicans.snippy_variants_results, snippy_afumigatus.snippy_variants_results, snippy_crypto.snippy_variants_results])
+  File snippy_variants_bam = select_first([snippy_cauris.snippy_variants_bam, snippy_calbicans.snippy_variants_bam, snippy_afumigatus.snippy_variants_bam, snippy_crypto.snippy_variants_bam])
+  File snippy_variants_bai = select_first([snippy_cauris.snippy_variants_bai, snippy_calbicans.snippy_variants_bai, snippy_afumigatus.snippy_variants_bai, snippy_crypto.snippy_variants_bai])
+  File snippy_variants_summary = select_first([snippy_cauris.snippy_variants_summary, snippy_calbicans.snippy_variants_summary, snippy_afumigatus.snippy_variants_summary, snippy_crypto.snippy_variants_summary])
  }
 }
