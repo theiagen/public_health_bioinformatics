@@ -29,7 +29,7 @@ workflow merlin_magic {
         reference = cladetyper.clade_spec_ref,
         read1 = read1,
         read2 = read2,
-        query_gene = "FKS1",
+        query_gene = "FKS1,ERG11,FUR1",
         samplename = samplename
         }
     }
@@ -39,7 +39,7 @@ workflow merlin_magic {
         reference = "gs://theiagen-public-files/terra/theiaeuk_files/Candida_albicans_GCF_000182965.3_ASM18296v3_genomic.gbff",
         read1 = read1,
         read2 = read2,
-        query_gene = "ERG11",
+        query_gene = "ERG11,FKS1,FUR1,RTA2",
         samplename = samplename
         }
     }
@@ -49,10 +49,20 @@ workflow merlin_magic {
         reference = "gs://theiagen-public-files/terra/theiaeuk_files/Aspergillus_fumigatus_GCF_000002655.1_ASM265v1_genomic.gbff",
         read1 = read1,
         read2 = read2,
-        query_gene = "CYP51a",
+        query_gene = "CYP51a,HAPE,COX10",
         samplename = samplename
         }
     }
+  if (merlin_tag == "Cryptococcus neoformans") {
+    call snippy.snippy_variants as snippy_crypto {
+      input:
+        reference = "gs://theiagen-public-files/terra/theiaeuk_files/Aspergillus_fumigatus_GCF_000002655.1_ASM265v1_genomic.gbff",
+        read1 = read1,
+        read2 = read2,
+        query_gene = "ERG11",
+        samplename = samplename
+    }
+  }
   output {
   # Candida Typing
   String? clade_type = cladetyper.gambit_cladetype
