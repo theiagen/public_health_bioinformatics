@@ -33,6 +33,6 @@ workflow snippy_variants_wf {
     File snippy_bam = snippy_variants.snippy_variants_bam
     File snippy_bai = snippy_variants.snippy_variants_bai
     File snippy_variants_summary = snippy_variants.snippy_variants_summary
-    File snippy_outdir_tarball = snippy_variants.snippy_outdir_tarball
+    File snippy_variants_outdir_tarball = snippy_variants.snippy_variants_outdir_tarball
   }
 }

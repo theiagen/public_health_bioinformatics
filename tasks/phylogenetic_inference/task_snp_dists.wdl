@@ -100,7 +100,7 @@ task snp_dists {
     String date = read_string("DATE")
     String version = read_string("VERSION")
     File snp_matrix = "${cluster_name}_snp_distance_matrix.tsv"
-    File snp_dists_molten_ordered = "snp-dists-molten-ordered.tsv"
+    File snp_dists_molten_ordered = "${cluster_name}_snp-dists_list.tsv"
   }
   runtime {
     docker: "quay.io/staphb/snp-dists:0.8.2"

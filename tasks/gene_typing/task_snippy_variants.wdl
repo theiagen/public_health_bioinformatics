@@ -36,7 +36,7 @@ task snippy_variants {
     if [ -z "~{query_gene}" ]; then 
      no_hit="NA: No query gene was provided"
    else 
-    no_hit="No variants identified in quieried genes (~{query_gene})" 
+    no_hit="No variants identified in queried genes (~{query_gene})" 
     fi
     # call snippy
       snippy \
@@ -71,13 +71,13 @@ task snippy_variants {
      echo "${no_hit}" > SNIPPY_VARIANT_HITS
    fi
     # Compress output dir
-    tar -cvzf "./~{samplename}_snippy_outdir.tar" "./~{samplename}"
+    tar -cvzf "./~{samplename}_snippy_variants_outdir.tar" "./~{samplename}"
   >>>
   output {
     String snippy_variants_version = read_string("VERSION")
     String snippy_variants_query = "~{query_gene}"
     String snippy_variants_hits = read_string("SNIPPY_VARIANT_HITS")
-    File snippy_outdir_tarball = "./~{samplename}_snippy_outdir.tar"
+    File snippy_variants_outdir_tarball = "./~{samplename}_snippy_variants_outdir.tar"
     File snippy_variants_gene_query_results = "./gene_query.csv"
     File snippy_variants_results = "~{samplename}/~{samplename}.csv"
     File snippy_variants_bam = "~{samplename}/~{samplename}.bam"

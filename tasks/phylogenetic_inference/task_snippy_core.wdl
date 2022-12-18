@@ -2,7 +2,7 @@ version 1.0
 
 task snippy_core {
   input {
-    Array[File] snippy_output_tarball_array
+    Array[File] snippy_variants_outdir_tarball
     Array[String] samplenames
     String tree_name
     String docker = "staphb/snippy:4.6.0"
@@ -13,7 +13,7 @@ task snippy_core {
     # version control
    snippy --version | head -1 | tee VERSION
    
-   tarball_array=(~{sep=" " snippy_output_tarball_array})
+   tarball_array=(~{sep=" " snippy_variants_outdir_tarball})
    samplename_array=(~{sep=" " samplenames})
 
     # iteratively untar
@@ -34,12 +34,12 @@ task snippy_core {
   >>>
   output {
    String snippy_version = read_string("VERSION")
-   File snippy_core_alignment = "~{tree_name}.aln"
-   File snippy_full_alignment = "~{tree_name}.full.aln"
+   File snippy_core_alignment = "~{tree_name}_core.aln"
+   File snippy_full_alignment = "~{tree_name}_full.aln"
    File snippy_full_alignment_clean = "~{tree_name}_snippy_clean_full.aln"
    File snippy_ref = "~{tree_name}.ref.fa"
-   File snippy_core_tab = "~{tree_name}.tab"
-   File snippy_txt = "~{tree_name}.txt"
+   File snippy_core_tab = "~{tree_name}_all_snps.tsv"
+   File snippy_txt = "~{tree_name}_snps_summary.txt"
    File snippy_vcf = "~{tree_name}.vcf"
    String snippy_docker_image = docker
   }
