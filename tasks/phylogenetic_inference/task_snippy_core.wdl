@@ -10,14 +10,13 @@ task snippy_core {
     File? bed_file
   }
   command <<<
-    # version control
+   # version control
    snippy --version | head -1 | tee VERSION
    
    tarball_array=(~{sep=" " snippy_variants_outdir_tarball})
    samplename_array=(~{sep=" " samplenames})
 
-    # iteratively untar
-   #for i in ${tarball_array[@]}; do tar -xf $i && mv ./${i/_snippy_outdir.tar/} $i"_inputdir"; done
+   # iteratively untar
    for i in ${tarball_array[@]}; do tar -xf $i; done
 
    # run snippy core
