@@ -30,6 +30,10 @@ task snippy_core {
    snippy-clean_full_aln \
    ~{tree_name}.full.aln > ~{tree_name}_snippy_clean_full.aln
 
+   mv ~{tree_name}.aln ~{tree_name}_core.aln
+   mv ~{tree_name}.full.aln ~{tree_name}_full.aln
+   mv ~{tree_name}.tab ~{tree_name}_all_snps.tsv
+   mv ~{tree_name}.txt ~{tree_name}_snps_summary.txt
   >>>
   output {
    String snippy_version = read_string("VERSION")
