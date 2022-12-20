@@ -94,7 +94,9 @@ task snp_dists {
     z.close()
     print "Matrix has been created in current directory as '~{cluster_name}_snp_distance_matrix.tsv.'"
 
-    CODE
+  CODE
+  cp snp-dists-molten-ordered.tsv ~{cluster_name}_snp-dists_list.tsv
+  cp snp-dists-matrix.tsv ~{cluster_name}_snp_distance_matrix.tsv
   >>>
   output {
     String date = read_string("DATE")

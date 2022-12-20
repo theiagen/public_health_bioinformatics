@@ -27,7 +27,7 @@ task iqtree {
       -alrt ~{alrt} \
       ~{iqtree_opts}
 
-      cp msa.fasta.contree ~{cluster_name}_msa.tree
+      cp msa.fasta.contree ~{cluster_name}_iqtree.tree
     fi
   >>>
   output {
