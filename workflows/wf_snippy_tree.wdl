@@ -3,6 +3,7 @@ version 1.0
 import "../tasks/phylogenetic_inference/task_snippy_core.wdl" as snippy_core
 import "../tasks/phylogenetic_inference/task_iqtree.wdl" as iqtree
 import "../tasks/phylogenetic_inference/task_snp_dists.wdl" as snp_dists
+import "../tasks/phylogenetic_inference/task_gubbins.wdl" as gubbins
 import "../tasks/task_versioning.wdl" as versioning
 
 workflow snippy_tree_wf {
@@ -32,6 +33,11 @@ workflow snippy_tree_wf {
       alignment = snippy_core.snippy_full_alignment_clean,
       cluster_name = tree_name
   }
+  call gubbins.gubbins {
+    input:
+      alignment = snippy_core.snippy_full_alignment_clean,
+      cluster_name = tree_name
+  }
   	call versioning.version_capture{
     input:
   }
@@ -50,5 +56,11 @@ workflow snippy_tree_wf {
     String snippy_tree_snpdists_version = snp_dists.version
     File snippy_tree_snpdists_matrix = snp_dists.snp_matrix
     File snippy_tree_snpdists_list = snp_dists.snp_dists_molten_ordered
+    File snippy_tree_gubbins_tree = gubbins.gubbins_final_tree
+    File snippy_tree_gubbins_labelled_tree = gubbins.gubbins_final_labelled_tree
+    File snippy_tree_gubbins_polymorphic_fasta = gubbins.gubbins_polymorphic_fasta
+    File snippy_tree_gubbins_recombination_gff = gubbins.gubbins_recombination_gff
+    File snippy_tree_gubbins_branch_stats = gubbins.gubbins_branch_stats
+    String snippy_tree_gubbins_version = gubbins.version
   }
 }
