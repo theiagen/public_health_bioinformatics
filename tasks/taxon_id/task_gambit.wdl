@@ -318,6 +318,8 @@ task gambit_euk {
       merlin_tag="Candida albicans"
     elif [[ ${predicted_taxon} == *"Aspergillus fumigatus"* ]] ; then 
       merlin_tag="Aspergillus fumigatus"
+    elif [[ ${predicted_taxon} == *"Cryptococcus neoformans"* ]] ; then
+      merlin_tag="Cryptococcus neoformans"
     else 
       merlin_tag="None"
     fi
