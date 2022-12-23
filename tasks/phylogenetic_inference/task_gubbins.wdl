@@ -8,7 +8,7 @@ task gubbins {
     Int? filter_percent = 25 #default is 25%
     Int? iterations = 5
     String? tree_builder = "raxml"
-    String? tree_args = [""]
+    String? tree_args
     String? nuc_subst_model = "GTRCAT"
     Boolean? best_nuc_subst_model = false
     Int? bootstrap = 0
