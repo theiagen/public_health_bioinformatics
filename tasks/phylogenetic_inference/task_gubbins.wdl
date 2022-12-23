@@ -12,6 +12,7 @@ task gubbins {
     String? nuc_subst_model = "GTRCAT"
     Boolean? best_nuc_subst_model = false
     Int? bootstrap = 0
+    String? outgroup
     File? dates_file
   }
   command <<<
@@ -29,6 +30,7 @@ task gubbins {
     ~{true="--best-model" false="" best_nuc_subst_model} \
     ~{'--model ' + nuc_subst_model} \
     --bootstrap ~{bootstrap} \
+    ~{'--outgroup ' + outgroup} \
     ~{'--date ' + dates_file} \
     --threads 2
   >>>
