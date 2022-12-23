@@ -7,14 +7,10 @@ task gubbins {
     String docker = "sangerpathogens/gubbins"
     Int? filter_percent = 25 #default is 25%
     Int? iterations = 5
-    String? first_tree_nuc_subst_model = "GTRGAMMA"
-    Array[String]? first_tree_args
     String? tree_builder = "raxml"
-    Array[String]? tree_args
-    String? nuc_subst_model = "GTRGAMMA"
-    Array[String]? nuc_subst_model_args = ["4"]
-    String? best_nuc_subst_model
-    Array[String]? outgroup
+    Array[String]? tree_args = [""]
+    String? nuc_subst_model = "GTRCAT"
+    Boolean? best_nuc_subst_model = false
     Int? bootstrap = 0
     File? dates_file
   }
@@ -26,18 +22,13 @@ task gubbins {
     run_gubbins.py \
     ~{alignment} \
     --prefix ~{cluster_name} \
-    --first-tree-builder fasttree \
     --filter-percentage ~{filter_percent} \
     --iterations ~{iterations} \
-    --first-model ~{first_tree_nuc_subst_model} \
-    ~{'--first-tree-args ' + first_tree_args} \
     --tree-builder ~{tree_builder} \
     ~{'--tree-args ' + tree_args} \
-    ~{'--best-model ' + best_nuc_subst_model} \
-    --model ~{nuc_subst_model} \
-    --model-args ~{sep="," nuc_subst_model_args} \
+    ~{true="--best-model" false="" best_nuc_subst_model} \
+    ~{'--model ' + nuc_subst_model} \
     --bootstrap ~{bootstrap} \
-    ~{'--outgroup ' + outgroup} \
     ~{'--date ' + dates_file} \
     --threads 2
   >>>
