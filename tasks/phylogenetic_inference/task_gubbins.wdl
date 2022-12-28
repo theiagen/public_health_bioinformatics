@@ -9,8 +9,7 @@ task gubbins {
     Int? iterations = 5
     String? tree_builder = "raxml"
     String? tree_args
-    String? nuc_subst_model = "GTRCAT"
-    Boolean? best_nuc_subst_model = false
+    String? nuc_subst_model = "GTRGAMMA"
     Int? bootstrap = 0
     String? outgroup
     File? dates_file
@@ -27,7 +26,6 @@ task gubbins {
     --iterations ~{iterations} \
     --tree-builder ~{tree_builder} \
     ~{'--tree-args ' + tree_args} \
-    ~{true="--best-model" false="" best_nuc_subst_model} \
     ~{'--model ' + nuc_subst_model} \
     --bootstrap ~{bootstrap} \
     ~{'--outgroup ' + outgroup} \
