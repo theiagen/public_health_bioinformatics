@@ -108,49 +108,49 @@ workflow theiaeuk_illumina_pe {
     # Read Metadata
     String seq_platform = seq_method
     # Sample Screening
-    String theiaeuk_raw_read_screen = raw_check_reads.read_screen
-    String? theiaeuk_clean_read_screen = clean_check_reads.read_screen
+    String raw_read_screen = raw_check_reads.read_screen
+    String? clean_read_screen = clean_check_reads.read_screen
     # Read QC
-    Int? theiaeuk_num_reads_raw1 = read_QC_trim.fastq_scan_raw1
-    Int? theiaeuk_num_reads_raw2 = read_QC_trim.fastq_scan_raw2
-    String? theiaeuk_num_reads_raw_pairs = read_QC_trim.fastq_scan_raw_pairs
-    String? theiaeuk_fastq_scan_version = read_QC_trim.fastq_scan_version
-    Int? theiaeuk_num_reads_clean1 = read_QC_trim.fastq_scan_clean1
-    Int? theiaeuk_num_reads_clean2 = read_QC_trim.fastq_scan_clean2
-    String? theiaeuk_num_reads_clean_pairs = read_QC_trim.fastq_scan_clean_pairs
-    String? theiaeuk_trimmomatic_version = read_QC_trim.trimmomatic_version
-    String? theiaeuk_bbduk_docker = read_QC_trim.bbduk_docker
-    Float? theiaeuk_r1_mean_q = cg_pipeline.r1_mean_q
-    Float? theiaeuk_r2_mean_q = cg_pipeline.r2_mean_q
-    File? theiaeuk_read1_clean = read_QC_trim.read1_clean
-    File? theiaeuk_read2_clean = read_QC_trim.read2_clean
+    Int? num_reads_raw1 = read_QC_trim.fastq_scan_raw1
+    Int? num_reads_raw2 = read_QC_trim.fastq_scan_raw2
+    String? num_reads_raw_pairs = read_QC_trim.fastq_scan_raw_pairs
+    String? fastq_scan_version = read_QC_trim.fastq_scan_version
+    Int? num_reads_clean1 = read_QC_trim.fastq_scan_clean1
+    Int? num_reads_clean2 = read_QC_trim.fastq_scan_clean2
+    String? num_reads_clean_pairs = read_QC_trim.fastq_scan_clean_pairs
+    String? trimmomatic_version = read_QC_trim.trimmomatic_version
+    String? bbduk_docker = read_QC_trim.bbduk_docker
+    Float? r1_mean_q = cg_pipeline.r1_mean_q
+    Float? r2_mean_q = cg_pipeline.r2_mean_q
+    File? read1_clean = read_QC_trim.read1_clean
+    File? read2_clean = read_QC_trim.read2_clean
     #Assembly and Assembly QC
-    File? theiaeuk_assembly_fasta = shovill_pe.assembly_fasta
-    File? theiaeuk_contigs_gfa = shovill_pe.contigs_gfa
-    File? theiaeuk_contigs_fastg = shovill_pe.contigs_fastg
-    File? theiaeuk_contigs_lastgraph = shovill_pe.contigs_lastgraph
-    String? theiaeuk_shovill_pe_version = shovill_pe.shovill_version
-    File? theiaeuk_quast_report = quast.quast_report
-    String? theiaeuk_quast_version = quast.version
-    Int? theiaeuk_genome_length = quast.genome_length
-    Int? theiaeuk_number_contigs = quast.number_contigs
-    Int? theiaeuk_n50_value = quast.n50_value
-    File? theiaeuk_cg_pipeline_report = cg_pipeline.cg_pipeline_report
-    String? theiaeuk_cg_pipeline_docker = cg_pipeline.cg_pipeline_docker
-    Float? theiaeuk_est_coverage = cg_pipeline.est_coverage
+    File? assembly_fasta = shovill_pe.assembly_fasta
+    File? contigs_gfa = shovill_pe.contigs_gfa
+    File? contigs_fastg = shovill_pe.contigs_fastg
+    File? contigs_lastgraph = shovill_pe.contigs_lastgraph
+    String? shovill_pe_version = shovill_pe.shovill_version
+    File? quast_report = quast.quast_report
+    String? quast_version = quast.version
+    Int? genome_length = quast.genome_length
+    Int? number_contigs = quast.number_contigs
+    Int? n50_value = quast.n50_value
+    File? cg_pipeline_report = cg_pipeline.cg_pipeline_report
+    String? cg_pipeline_docker = cg_pipeline.cg_pipeline_docker
+    Float? est_coverage = cg_pipeline.est_coverage
     # Taxon ID
-    File? theiaeuk_gambit_report = gambit.gambit_report_file
-    File? theiaeuk_gambit_closest_genomes = gambit.gambit_closest_genomes_file
-    String? theiaeuk_gambit_predicted_taxon = gambit.gambit_predicted_taxon
-    String? theiaeuk_gambit_predicted_taxon_rank = gambit.gambit_predicted_taxon_rank
-    String? theiaeuk_gambit_version = gambit.gambit_version
-    String? theiaeuk_gambit_db_version = gambit.gambit_db_version
-    String? theiaeuk_gambit_docker = gambit.gambit_docker
+    File? gambit_report = gambit.gambit_report_file
+    File? gambit_closest_genomes = gambit.gambit_closest_genomes_file
+    String? gambit_predicted_taxon = gambit.gambit_predicted_taxon
+    String? gambit_predicted_taxon_rank = gambit.gambit_predicted_taxon_rank
+    String? gambit_version = gambit.gambit_version
+    String? gambit_db_version = gambit.gambit_db_version
+    String? gambit_docker = gambit.gambit_docker
     # MLST Typing
-    File? theiaeuk_ts_mlst_results = ts_mlst.ts_mlst_results
-    String? theiaeuk_ts_mlst_predicted_st = ts_mlst.ts_mlst_predicted_st
-    String? theiaeuk_ts_mlst_version = ts_mlst.ts_mlst_version
-    String? theiaeuk_ts_mlst_pubmlst_scheme = ts_mlst.ts_mlst_pubmlst_scheme
+    File? ts_mlst_results = ts_mlst.ts_mlst_results
+    String? ts_mlst_predicted_st = ts_mlst.ts_mlst_predicted_st
+    String? ts_mlst_version = ts_mlst.ts_mlst_version
+    String? ts_mlst_pubmlst_scheme = ts_mlst.ts_mlst_pubmlst_scheme
     # Cladetyper Outputs
     String? clade_type = merlin_magic.clade_type
     String? cladetyper_analysis_date = merlin_magic.cladetyper_analysis_date
@@ -158,14 +158,14 @@ workflow theiaeuk_illumina_pe {
     String? cladetyper_docker_image = merlin_magic.cladetyper_docker_image
     String? cladetype_annotated_ref = merlin_magic.cladetype_annotated_ref
     # Snippy Outputs
-    String? snippy_variants_version = merlin_magic.snippy_variants_version
-    String? snippy_variants_query = merlin_magic.snippy_variants_query
-    String? snippy_variants_hits = merlin_magic.snippy_variants_hits
-    File? snippy_variants_gene_query_results = merlin_magic.snippy_variants_gene_query_results
+    String? theiaeuk_snippy_variants_version = merlin_magic.snippy_variants_version
+    String? theiaeuk_snippy_variants_query = merlin_magic.snippy_variants_query
+    String? theiaeuk_snippy_variants_hits = merlin_magic.snippy_variants_hits
+    File? theiaeuk_snippy_variants_gene_query_results = merlin_magic.snippy_variants_gene_query_results
     # Array[File]? snippy_outputs = merlin_magic.snippy_outputs
-    File? snippy_variants_results = merlin_magic.snippy_variants_results
-    File? snippy_variants_bam = merlin_magic.snippy_variants_bam
-    File? snippy_variants_bai = merlin_magic.snippy_variants_bai
-    File? snippy_variants_summary = merlin_magic.snippy_variants_summary
+    File? theiaeuk_snippy_variants_results = merlin_magic.snippy_variants_results
+    File? theiaeuk_snippy_variants_bam = merlin_magic.snippy_variants_bam
+    File? theiaeuk_snippy_variants_bai = merlin_magic.snippy_variants_bai
+    File? theiaeuk_snippy_variants_summary = merlin_magic.snippy_variants_summary
   }
 }
