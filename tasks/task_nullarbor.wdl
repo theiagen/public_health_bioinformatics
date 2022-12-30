@@ -59,15 +59,15 @@ task nullarbor_tsv {
       exit 1
     fi
 
-  # create file of filenames for kSNP3 input
-  touch nullarbor_input.tsv
+    # create file of filenames for nullarbor input
+    touch nullarbor_input.tsv
     for index in ${!read1_array[@]}; do
-    read1=${read1_array[$index]}
-    read2=${read2_array[$index]}
-    samplename=${samplename_array[$index]}
+      read1=${read1_array[$index]}
+      read2=${read2_array[$index]}
+      samplename=${samplename_array[$index]}
     
-    echo -e "${samplename}\t${read1}\t${read2}" >> nullarbor_input.tsv
-  done
+      echo -e "${samplename}\t${read1}\t${read2}" >> nullarbor_input.tsv
+    done
     # Run Nullarbor on the input assembly with the --all flag
     nullarbor.pl \
         --name ~{run_name} \
