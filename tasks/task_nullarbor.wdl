@@ -70,14 +70,14 @@ task nullarbor_tsv {
     done
     # Run Nullarbor on the input assembly with the --all flag
     nullarbor.pl \
-        --name ~{run_name} \
-        --ref ~{ref_genome} \
-        --input nullarbor_input.tsv \
-        --outdir nullarbor_outdir \
-        --assembler ~{assembler} \
-        --treebuilder ~{tree_builder} \
-        --taxoner ~{taxoner} \
-        --verbose
+      --name ~{run_name} \
+      --ref ~{ref_genome} \
+      --input nullarbor_input.tsv \
+      --outdir nullarbor_outdir \
+      --assembler ~{assembler} \
+      --treebuilder ~{tree_builder} \
+      --taxoner ~{taxoner} \
+      --verbose
     #Run makefile
     make preview -C nullarbor_outdir/
     nice make all -j 2 -l 4 -C nullarbor_outdir/ 2>&1 | tee -a nullarbor_outdir/nullarbor.log
