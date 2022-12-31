@@ -90,5 +90,6 @@ task snippy_variants {
       cpu: "~{cpus}"
       disks: "local-disk 100 SSD"
       preemptible: 0
+      maxRetries: 3
   }
 }

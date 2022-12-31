@@ -2,7 +2,7 @@ version: 1.2
 workflows:
  - name: TheiaEuk_PE
    subclass: WDL
-   primaryDescriptorPath: /workflows/wf_theiaeuk.wdl
+   primaryDescriptorPath: /workflows/wf_theiaeuk_pe.wdl
    testParameterFiles:
     - empty.json
  - name: Cauris_CladeTyper
@@ -18,5 +18,10 @@ workflows:
  - name: Snippy_Tree
    subclass: WDL
    primaryDescriptorPath: /workflows/wf_snippy_tree.wdl
+   testParameterFiles:
+    - empty.json
+ - name: Nullarbor
+   subclass: WDL
+   primaryDescriptorPath: /workflows/wf_nullarbor.wdl
    testParameterFiles:
     - empty.json
