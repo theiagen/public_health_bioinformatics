@@ -94,13 +94,15 @@ task snp_dists {
     z.close()
     print "Matrix has been created in current directory as '~{cluster_name}_snp_distance_matrix.tsv.'"
 
-    CODE
+  CODE
+  cp snp-dists-molten-ordered.tsv ~{cluster_name}_snp-dists_list.tsv
+  cp snp-dists-matrix.tsv ~{cluster_name}_snp_distance_matrix.tsv
   >>>
   output {
     String date = read_string("DATE")
     String version = read_string("VERSION")
     File snp_matrix = "${cluster_name}_snp_distance_matrix.tsv"
-    File snp_dists_molten_ordered = "snp-dists-molten-ordered.tsv"
+    File snp_dists_molten_ordered = "${cluster_name}_snp-dists_list.tsv"
   }
   runtime {
     docker: "quay.io/staphb/snp-dists:0.8.2"

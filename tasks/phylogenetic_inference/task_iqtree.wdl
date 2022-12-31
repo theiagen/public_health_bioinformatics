@@ -16,7 +16,7 @@ task iqtree {
     iqtree --version | grep version | sed 's/.*version/version/;s/ for Linux.*//' | tee VERSION
 
     numGenomes=`grep -o '>' ~{alignment} | wc -l`
-    if [ $numGenomes -gt 3 ]
+    if [ "$numGenomes" -gt 3 ]
     then
       cp ~{alignment} ./msa.fasta
       iqtree \
@@ -27,13 +27,13 @@ task iqtree {
       -alrt ~{alrt} \
       ~{iqtree_opts}
 
-      cp msa.fasta.contree ~{cluster_name}_msa.tree
+      cp msa.fasta.contree ~{cluster_name}_iqtree.tree
     fi
   >>>
   output {
     String date = read_string("DATE")
     String version = read_string("VERSION")
-    File ml_tree = "~{cluster_name}_msa.tree"
+    File ml_tree = "~{cluster_name}_iqtree.tree"
   }
   runtime {
     docker: "~{docker}"

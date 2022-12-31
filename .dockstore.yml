@@ -15,6 +15,11 @@ workflows:
    primaryDescriptorPath: /workflows/wf_snippy_variants.wdl
    testParameterFiles:
     - empty.json
+ - name: Snippy_Tree
+   subclass: WDL
+   primaryDescriptorPath: /workflows/wf_snippy_tree.wdl
+   testParameterFiles:
+    - empty.json
  - name: Nullarbor
    subclass: WDL
    primaryDescriptorPath: /workflows/wf_nullarbor.wdl
