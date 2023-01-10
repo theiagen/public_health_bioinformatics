@@ -8,14 +8,14 @@ task version_capture {
     volatile: true
   }
   command {
-    PHBG_Version="PHBG v1.0.0"
+    PHB_Version="PHB lyvset-dev"
     ~{default='' 'export TZ=' + timezone}
     date +"%Y-%m-%d" > TODAY
     echo "$PHBG_Version" > PHBG_VERSION
   }
   output {
     String date = read_string("TODAY")
-    String phbg_version = read_string("PHBG_VERSION")
+    String phb_version = read_string("PHBG_VERSION")
   }
   runtime {
     memory: "1 GB"
