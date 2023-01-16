@@ -102,8 +102,8 @@ task lyvset {
     # cleanup
     rmdir interleaved
     mkdir ~{dataset_name}/ref/
-    cp ~{reference_genome} ~{dataset_name}/ref/
-    launch_set.pl --numcpus 8 -ref yourProject/ref/reference.fasta ~{dataset_name}
+    cp ~{reference_genome} ~{dataset_name}/ref/reference.fasta
+    launch_set.pl --numcpus 8 -ref ~{dataset_name}/ref/reference.fasta ~{dataset_name}
 
   >>>
   output {
