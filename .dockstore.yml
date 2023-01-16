@@ -25,3 +25,8 @@ workflows:
    primaryDescriptorPath: /workflows/wf_nullarbor.wdl
    testParameterFiles:
     - empty.json
+ - name: Lyve_SET
+   subclass: WDL
+   primaryDescriptorPath: /workflows/wf_lyveset.wdl
+   testParameterFiles:
+    - empty.json
