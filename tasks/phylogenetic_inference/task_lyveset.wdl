@@ -85,12 +85,12 @@ task lyveset {
     set_manage.pl --create ~{dataset_name}
     #shuffle paired end reads
     for index in ${!read1_array[@]}; do
-      ln -s ${read1_array[$index]} . && ln -s ${read2_array[$index]} .
+      mv ${read1_array[$index]} . && mv ${read2_array[$index]} . # move reads to cwd
     done
     ls
     ls ./*.fastq*
 
-    shuffleSplitReads.pl --numcpus ~{cpu} -o ./interleaved *.fastq.gz
+    shuffleSplitReads.pl --numcpus ~{cpu} -o ./interleaved *.fastq.gz 
     
     #for index in ${!read1_array[@]}; do
     #  shuffleSplitReads.pl --numcpus ~{cpu} -o ./interleaved ${read1_array[$index]} ${read2_array[$index]}
@@ -106,7 +106,7 @@ task lyveset {
   >>>
   output {
     String lyveset_docker_image = docker_image
-    Array[File] lyveset_outs = glob("~{dataset_name}/*")
+    Array[File] lyveset_outs = glob("~{dataset_name}/*/*")
     File lyveset_distance_matrix = "~{dataset_name}/msa/out.pairwiseMatrix.tsv"
     File lyveset_raxml_tree = "~{dataset_name}/msa/out.RAxML_bipartitions"
   }
