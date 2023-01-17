@@ -1,6 +1,6 @@
 version 1.0
 
-task lyvset {
+task lyveset {
   input {
     Array[File] read1
     Array[File] read2
@@ -81,22 +81,20 @@ task lyvset {
       exit 1
     fi
 
-    echo "before symlinks:"
-    ls ./
-
-
-
-    echo "after symlinks:"
-    ls ./
-
     # create lyvset project
     set_manage.pl --create ~{dataset_name}
     #shuffle paired end reads
-    echo "YOUUO"
     for index in ${!read1_array[@]}; do
-      shuffleSplitReads.pl --numcpus ~{cpu} -o ./interleaved ${read1_array[$index]} ${read2_array[$index]}
+      ln -s ${read1_array[$index]} . && ln -s ${read2_array[$index]} .
     done
-    echo "YUP!"
+    ls
+    ls ./*.fastq*
+
+    shuffleSplitReads.pl --numcpus ~{cpu} -o ./interleaved *.fastq.gz
+    
+    #for index in ${!read1_array[@]}; do
+    #  shuffleSplitReads.pl --numcpus ~{cpu} -o ./interleaved ${read1_array[$index]} ${read2_array[$index]}
+    #done
     # then moved into your project dir
     mv ./interleaved/*.fastq.gz ~{dataset_name}/reads/
     # cleanup
@@ -107,8 +105,10 @@ task lyvset {
 
   >>>
   output {
-    
     String lyveset_docker_image = docker_image
+    Array[File] lyveset_outs = glob("~{dataset_name}/*")
+    File lyveset_distance_matrix = "~{dataset_name}/msa/out.pairwiseMatrix.tsv"
+    File lyveset_raxml_tree = "~{dataset_name}/msa/out.RAxML_bipartitions"
   }
   runtime {
     docker: docker_image
