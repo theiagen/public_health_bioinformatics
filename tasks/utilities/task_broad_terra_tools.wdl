@@ -381,7 +381,7 @@ task export_taxon_tables {
     "midas_report": "~{midas_report}",
     "midas_primary_genus": "~{midas_primary_genus}",
     "midas_secondary_genus": "~{midas_secondary_genus}",
-    "midas_secondary_genus_coverage": "~{midas_secondary_genus_coverage}",
+    "midas_secondary_genus_coverage": "~{midas_secondary_genus_coverage}"
 #    "snippy_variants_outdir_tarball": "~{sep="*" snippy_variants_outdir_tarball}".split("*") # syntax required to make an array. I have 0 idea how this will upload btw
   }
 
