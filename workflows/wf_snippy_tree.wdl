@@ -17,7 +17,6 @@ workflow snippy_tree_wf {
     Array[String] samplenames
     File reference
     Boolean use_gubbins = false
-    Boolean perform_data_summary = false
     String? data_summary_terra_project
     String? data_summary_terra_workspace
     String? data_summary_terra_table
@@ -66,7 +65,7 @@ workflow snippy_tree_wf {
         cluster_name = tree_name 
     }
   }
-  if (perform_data_summary) {
+  if (defined(data_summary_column_names)) {
     call data_summary.summarize_data {
       input:
         sample_names = samplenames,
@@ -94,10 +93,8 @@ workflow snippy_tree_wf {
     File snippy_tree_vcf = snippy_core.snippy_vcf
     # iqtree outputs
     String? snippy_tree_iqtree_version = iqtree.version
-    File? snippy_tree_iqtree = iqtree.ml_tree
     # gubbins outputs
     String? snippy_tree_gubbins_version = gubbins.version
-    File? snippy_tree_gubbins_tree = gubbins.gubbins_final_tree
     File? snippy_tree_gubbins_labelled_tree = gubbins.gubbins_final_labelled_tree
     File? snippy_tree_gubbins_polymorphic_fasta = gubbins.gubbins_polymorphic_fasta
     File? snippy_tree_gubbins_recombination_gff = gubbins.gubbins_recombination_gff
@@ -107,12 +104,10 @@ workflow snippy_tree_wf {
     # snpdists outputs
     String snippy_tree_snpdists_version = select_first([snp_dists_gubbins.version, snp_dists_iqtree.version])
     # reorder matrix outputs
-    File? snippy_tree_gubbins_matrix = reorder_matrix_gubbins.ordered_matrix
-    File? snippy_tree_gubbins_midpoint_matrix = reorder_matrix_gubbins.ordered_midpoint_matrix
-    File? snippy_tree_gubbins_midpoint_rooted_tree = reorder_matrix_gubbins.midpoint_rooted_tree
-    File? snippy_tree_iqtree_matrix = reorder_matrix_iqtree.ordered_matrix
-    File? snippy_tree_iqtree_midpoint_matrix = reorder_matrix_iqtree.ordered_midpoint_matrix
-    File? snippy_tree_iqtree_midpoint_rooted_tree = reorder_matrix_iqtree.midpoint_rooted_tree
+    File? snippy_tree_gubbins_matrix = reorder_matrix_gubbins.ordered_midpoint_matrix
+    File? snippy_tree_gubbins_tree = reorder_matrix_gubbins.midpoint_rooted_tree
+    File? snippy_tree_iqtree_matrix = reorder_matrix_iqtree.ordered_midpoint_matrix
+    File? snippy_tree_iqtree_tree = reorder_matrix_iqtree.midpoint_rooted_tree
     # data summary outputs
     File? snippy_tree_summarized_data = summarize_data.summarized_data
     
