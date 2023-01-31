@@ -38,8 +38,8 @@ task summarize_data {
   # extract the samples for upload from the entire table
   table = table[table["~{terra_table}_id"].isin("~{sep='*' sample_names}".split("*"))]
 
-  # split column list into an array
-  columns = "~{column_names}".split(" ")
+  # split comma-separated column list into an array
+  columns = "~{column_names}".split(",")
 
   temporarylist = []
   temporarylist.append("~{terra_table}_id")
