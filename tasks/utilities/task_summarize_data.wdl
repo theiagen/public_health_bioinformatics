@@ -6,7 +6,7 @@ task summarize_data {
     String? terra_project
     String? terra_workspace
     String? terra_table
-    String? column_names # string of space delimited column names
+    String? column_names # string of comma-delimited column names
     
     Int disk_size = 100
     File? input_table
@@ -33,7 +33,7 @@ task summarize_data {
 
   # read exported Terra table into pandas
   tablename = "~{terra_table}-data.tsv" 
-  table = pd.read_csv(tablename, delimiter='\t', header=0, dtype={"~{terra_table}_id": 'str'}) # ensure sample_id is always a string
+  table = pd.read_csv(tablename, delimiter='\t', header=0, index_col=False, dtype={"~{terra_table}_id": 'str'}) # ensure sample_id is always a string
 
   # extract the samples for upload from the entire table
   table = table[table["~{terra_table}_id"].isin("~{sep='*' sample_names}".split("*"))]

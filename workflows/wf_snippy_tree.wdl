@@ -20,7 +20,7 @@ workflow snippy_tree_wf {
     String? data_summary_terra_project
     String? data_summary_terra_workspace
     String? data_summary_terra_table
-    String? data_summary_column_names # space delimited
+    String? data_summary_column_names # comma delimited
   }
   call snippy_core.snippy_core {
     input:
@@ -42,7 +42,7 @@ workflow snippy_tree_wf {
     }
     call snp_dists.reorder_matrix as reorder_matrix_gubbins {
       input:
-        tree = gubbins.gubbins_final_labelled_tree,
+        input_tree = gubbins.gubbins_final_labelled_tree,
         matrix = snp_dists_gubbins.snp_matrix,
         cluster_name = tree_name 
     }
@@ -60,7 +60,7 @@ workflow snippy_tree_wf {
     }
     call snp_dists.reorder_matrix as reorder_matrix_iqtree {
       input:
-        tree = iqtree.ml_tree,
+        input_tree = iqtree.ml_tree,
         matrix = snp_dists_iqtree.snp_matrix,
         cluster_name = tree_name 
     }
@@ -104,10 +104,10 @@ workflow snippy_tree_wf {
     # snpdists outputs
     String snippy_tree_snpdists_version = select_first([snp_dists_gubbins.version, snp_dists_iqtree.version])
     # reorder matrix outputs
-    File? snippy_tree_gubbins_matrix = reorder_matrix_gubbins.ordered_midpoint_matrix
-    File? snippy_tree_gubbins_tree = reorder_matrix_gubbins.midpoint_rooted_tree
-    File? snippy_tree_iqtree_matrix = reorder_matrix_iqtree.ordered_midpoint_matrix
-    File? snippy_tree_iqtree_tree = reorder_matrix_iqtree.midpoint_rooted_tree
+    File? snippy_tree_gubbins_matrix = reorder_matrix_gubbins.ordered_matrix
+    File? snippy_tree_gubbins_tree = reorder_matrix_gubbins.tree
+    File? snippy_tree_iqtree_matrix = reorder_matrix_iqtree.ordered_matrix
+    File? snippy_tree_iqtree_tree = reorder_matrix_iqtree.tree
     # data summary outputs
     File? snippy_tree_summarized_data = summarize_data.summarized_data
     
