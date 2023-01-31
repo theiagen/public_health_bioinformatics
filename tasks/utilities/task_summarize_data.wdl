@@ -28,6 +28,7 @@ task summarize_data {
 
     python3 <<CODE 
   import pandas as pd
+  import numpy as np
   import itertools
   import os
   import re
