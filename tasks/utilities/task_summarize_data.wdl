@@ -7,7 +7,8 @@ task summarize_data {
     String? terra_workspace
     String? terra_table
     String? column_names # string of comma-delimited column names
-    
+    String? output_prefix
+
     Int disk_size = 100
     File? input_table
     Boolean phandango_coloring = true
@@ -94,12 +95,12 @@ task summarize_data {
   # dropping columns of interest so only true/false ones remain
   table.drop(columns,axis=1,inplace=True)
 
-  table.to_csv("summarized_data.csv", sep=',', index=False)
+  table.to_csv("~{output_prefix}_summarized_data.csv", sep=',', index=False)
 
   CODE
   >>>
   output {
-    File summarized_data = "summarized_data.csv"
+    File summarized_data = "~{output_prefix}_summarized_data.csv"
   }
   runtime {
     docker: "broadinstitute/terra-tools:tqdm"

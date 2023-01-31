@@ -72,7 +72,8 @@ workflow snippy_tree_wf {
         terra_project = data_summary_terra_project,
         terra_workspace = data_summary_terra_workspace,
         terra_table = data_summary_terra_table,
-        column_names = data_summary_column_names
+        column_names = data_summary_column_names,
+        output_prefix = tree_name
     }
   }
   call versioning.version_capture{
