@@ -160,7 +160,7 @@ workflows:
    primaryDescriptorPath: /workflows/standalone_modules/wf_gambit_query.wdl
    testParameterFiles:
     - empty.json
-- name: Kleborate_PHB
+ - name: Kleborate_PHB
    subclass: WDL
    primaryDescriptorPath: /workflows/standalone_modules/wf_kleborate.wdl
    testParameterFiles:
@@ -180,12 +180,12 @@ workflows:
    primaryDescriptorPath: /workflows/standalone_modules/wf_tbprofiler_ont.wdl
    testParameterFiles:
     - empty.json
-- name: NCBI-AMRFinderPlus_PHB
+ - name: NCBI-AMRFinderPlus_PHB
    subclass: WDL
    primaryDescriptorPath: /workflows/standalone_modules/wf_amrfinderplus.wdl
    testParameterFiles:
     - empty.json
-- name: Kraken2_PE_PHB
+ - name: Kraken2_PE_PHB
    subclass: WDL
    primaryDescriptorPath: /workflows/standalone_modules/wf_kraken2_pe.wdl
    testParameterFiles:
@@ -195,7 +195,7 @@ workflows:
    primaryDescriptorPath: /workflows/standalone_modules/wf_kraken2_se.wdl
    testParameterFiles:
     - empty.json
-- name: RASUSA_PHB
+ - name: RASUSA_PHB
    subclass: WDL
    primaryDescriptorPath: /workflows/utilities/wf_rasusa.wdl
    testParameterFiles:
