@@ -1,0 +1,131 @@
+version 1.0
+
+task nextclade_one_sample {
+    meta {
+        description: "Nextclade classification of one sample. Leaving optional inputs unspecified will use SARS-CoV-2 defaults."
+    }
+    input {
+      File genome_fasta
+      File? root_sequence
+      File? auspice_reference_tree_json
+      File? qc_config_json
+      File? gene_annotations_json
+      File? pcr_primers_csv
+      File? virus_properties
+      String docker = "nextstrain/nextclade:2.6.0"
+      String dataset_name
+      String dataset_reference
+      String dataset_tag
+      Int disk_size = 50
+    }
+    String basename = basename(genome_fasta, ".fasta")
+    command <<<
+        NEXTCLADE_VERSION="$(nextclade --version)"
+        echo $NEXTCLADE_VERSION > NEXTCLADE_VERSION
+
+        nextclade dataset get --name="~{dataset_name}" --reference="~{dataset_reference}" --tag="~{dataset_tag}" -o nextclade_dataset_dir --verbose
+        set -e
+        nextclade run \
+            --input-dataset=nextclade_dataset_dir/ \
+            ~{"--input-root-seq " + root_sequence} \
+            ~{"--input-tree " + auspice_reference_tree_json} \
+            ~{"--input-qc-config " + qc_config_json} \
+            ~{"--input-gene-map " + gene_annotations_json} \
+            ~{"--input-pcr-primers " + pcr_primers_csv} \
+            ~{"--input-virus-properties " + virus_properties}  \
+            --output-json "~{basename}".nextclade.json \
+            --output-tsv  "~{basename}".nextclade.tsv \
+            --output-tree "~{basename}".nextclade.auspice.json \
+            --output-all=. \
+            "~{genome_fasta}"
+    >>>
+    runtime {
+      docker: "~{docker}"
+      memory: "4 GB"
+      cpu: 2
+      disks:  "local-disk " + disk_size + " SSD"
+      disk: disk_size + " GB" # TES
+      dx_instance_type: "mem1_ssd1_v2_x2"
+      maxRetries: 3 
+    }
+    output {
+      String nextclade_version = read_string("NEXTCLADE_VERSION")
+      File nextclade_json = "~{basename}.nextclade.json"
+      File auspice_json = "~{basename}.nextclade.auspice.json"
+      File nextclade_tsv = "~{basename}.nextclade.tsv"
+      String nextclade_docker = docker
+    }
+}
+
+task nextclade_output_parser_one_sample {
+    meta {
+      description: "Python and bash codeblocks for parsing the output files from Nextclade."
+    }
+    input {
+      File nextclade_tsv
+      String docker = "python:slim"
+      Int disk_size = 50
+    }
+    command <<<
+      # Set WDL input variable to input.tsv file
+      cat "~{nextclade_tsv}" > input.tsv
+      # Parse outputs using python3
+      python3 <<CODE
+      import csv
+      import codecs
+      with codecs.open("./input.tsv",'r') as tsv_file:
+        tsv_reader=csv.reader(tsv_file, delimiter="\t")
+        tsv_data=list(tsv_reader)
+
+        if len(tsv_data)==1:
+          tsv_data.append(['NA']*len(tsv_data[0]))
+        tsv_dict=dict(zip(tsv_data[0], tsv_data[1]))
+        with codecs.open ("NEXTCLADE_CLADE", 'wt') as Nextclade_Clade:
+          nc_clade=tsv_dict['clade']
+          if nc_clade=='':
+            nc_clade='NA'
+          else:
+            nc_clade=nc_clade
+          Nextclade_Clade.write(nc_clade)
+        with codecs.open ("NEXTCLADE_AASUBS", 'wt') as Nextclade_AA_Subs:
+          nc_aa_subs=tsv_dict['aaSubstitutions']
+          if nc_aa_subs=='':
+            nc_aa_subs='NA'
+          else:
+            nc_aa_subs=nc_aa_subs
+          Nextclade_AA_Subs.write(nc_aa_subs)
+        with codecs.open ("NEXTCLADE_AADELS", 'wt') as Nextclade_AA_Dels:
+          nc_aa_dels=tsv_dict['aaDeletions']
+          if nc_aa_dels=='':
+            nc_aa_dels='NA'
+          else:
+            nc_aa_dels=nc_aa_dels
+          Nextclade_AA_Dels.write(nc_aa_dels)
+        with codecs.open ("NEXTCLADE_LINEAGE", 'wt') as Nextclade_Lineage:
+          if 'lineage' in tsv_dict:
+            nc_lineage=tsv_dict['lineage']
+            if nc_lineage is None:
+              nc_lineage=""
+            else:
+              nc_lineage=nc_lineage
+          else:
+            nc_lineage=""
+          Nextclade_Lineage.write(nc_lineage)
+      CODE
+    >>>
+    runtime {
+      docker: "~{docker}"
+      memory: "4 GB"
+      cpu: 2
+      disks:  "local-disk " + disk_size + " SSD"
+      disk: disk_size + " GB" # TES
+      dx_instance_type: "mem1_ssd1_v2_x2"
+      maxRetries: 3
+    }
+    output {
+      String nextclade_clade = read_string("NEXTCLADE_CLADE")
+      String nextclade_aa_subs = read_string("NEXTCLADE_AASUBS")
+      String nextclade_aa_dels = read_string("NEXTCLADE_AADELS")
+      String nextclade_lineage = read_string("NEXTCLADE_LINEAGE")
+    }
+}
