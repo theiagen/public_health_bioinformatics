@@ -13,6 +13,7 @@ task amrfinderplus_nuc {
     Boolean detailed_drug_class = false
     Int cpu = 4
     String docker = "staphb/ncbi-amrfinderplus:3.10.42"
+    Int disk_size = 100
     Boolean hide_point_mutations = false
   }
   command <<<
@@ -163,7 +164,8 @@ task amrfinderplus_nuc {
     memory: "8 GB"
     cpu: cpu
     docker: docker
-    disks: "local-disk 100 SSD"
+    disks:  "local-disk " + disk_size + " SSD"
+    disk: disk_size + " GB"
     preemptible: 0
     maxRetries: 3
   }

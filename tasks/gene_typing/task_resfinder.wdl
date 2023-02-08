@@ -6,11 +6,11 @@ task resfinder {
     String samplename
     String? organism # Species in the sample, species should be entered with their full scientific names (e.g. "escherichia coli"), using quotation marks
     Boolean acquired = true # Run resfinder for acquired resistance genes
-    Float? min_cov = 0.6 # Minimum (breadth-of) coverage of ResFinder
-    Float? threshold = 0.9 # Threshold for identity of ResFinder
+    Float min_cov = 0.6 # Minimum (breadth-of) coverage of ResFinder
+    Float threshold = 0.9 # Threshold for identity of ResFinder
     Boolean point = false # Run pointfinder for chromosomal mutations
     String docker = "staphb/resfinder:4.1.11"
-
+    Int disk_size = 100
   }
   command <<<
     date | tee DATE
@@ -100,6 +100,7 @@ task resfinder {
     memory: "8 GB"
     cpu: 4
     docker: docker
-    disks: "local-disk 100 HDD"
-  }
+    disks: "local-disk " + disk_size + " SSD"
+    disk: disk_size + " GB"
+    maxRetries: 3  }
 }

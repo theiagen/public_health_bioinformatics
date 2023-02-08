@@ -5,6 +5,7 @@ task gambit {
     File assembly
     String samplename
     String docker = "quay.io/staphb/gambit:0.5.0"
+    Int disk_size = 100
     File? gambit_db_genomes
     File? gambit_db_signatures
   }
@@ -130,8 +131,13 @@ task gambit {
     EOF
     # set merlin tags
     predicted_taxon=$(cat PREDICTED_TAXON)
+    # if predicted taxon contains either Escherichia or Shigella, set merlin_tag to Escherichia
     if [[ ${predicted_taxon} == *"Escherichia"* ]] || [[ ${predicted_taxon} == *"Shigella"* ]] ; then 
       merlin_tag="Escherichia"
+      # if predicted taxon is Shigella sonnei, reset merlin_tag to Shigella_sonnei
+      if [[ ${predicted_taxon} == *"Shigella sonnei"* ]]; then 
+        merlin_tag="Shigella_sonnei"
+      fi
     elif [[ ${predicted_taxon} == *"Haemophilus"* ]]; then 
       merlin_tag="Haemophilus"
     elif [[ ${predicted_taxon} == *"Klebsiella"* ]]; then 
@@ -140,6 +146,8 @@ task gambit {
       merlin_tag="Acinetobacter baumannii"
     elif [[ ${predicted_taxon} == *"Legionella pneumophila"* ]]; then 
       merlin_tag="Legionella pneumophila"
+    elif [[ ${predicted_taxon} == *"Pseudomonas aeruginosa"* ]]; then
+      merlin_tag="Pseudomonas aeruginosa"
     elif [[ ${predicted_taxon} == *"Listeria"* ]]; then 
       merlin_tag="Listeria"
     elif [[ ${predicted_taxon} == *"Mycobacterium tuberculosis"* ]]; then 
@@ -177,7 +185,9 @@ task gambit {
     docker:  "~{docker}"
     memory:  "16 GB"
     cpu:   8
-    disks: "local-disk 100 SSD"
+    disks: "local-disk " + disk_size + " SSD"
+    disk: disk_size + " GB"
+    maxRetries: 3
     preemptible:  0
   }
 }
@@ -187,6 +197,7 @@ task gambit_euk {
     File assembly
     String samplename
     String docker = "quay.io/staphb/gambit:0.5.0"
+    Int disk_size = 100
     File gambit_db_genomes = "gs://theiagen-public-files/terra/candida_auris_refs/221006-theiagen-fungal-v0.1.db"
     File gambit_db_signatures = "gs://theiagen-public-files/terra/candida_auris_refs/221006-theiagen-fungal-v0.1.h5" 
   }
@@ -341,7 +352,9 @@ task gambit_euk {
     docker:  "~{docker}"
     memory:  "16 GB"
     cpu:   8
-    disks: "local-disk 100 SSD"
+    disks: "local-disk " + disk_size + " SSD"
+    disk: disk_size + " GB"
+    maxRetries: 3
     preemptible:  0
   }
 }
