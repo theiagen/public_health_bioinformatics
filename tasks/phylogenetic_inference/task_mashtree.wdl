@@ -12,6 +12,7 @@ task mashtree_fasta {
     Int sketchsize = 10000
     Int cpu = 16
     Int memory = 64
+    Int disk_size = 100
   }
   command <<<
     # date and version control
@@ -45,7 +46,9 @@ task mashtree_fasta {
     docker: "quay.io/staphb/mashtree:1.2.0"
     memory: "~{memory} GB"
     cpu: cpu
-    disks: "local-disk 100 SSD"
+    disks: "local-disk " + disk_size + " SSD"
+    disk: disk_size + " GB"
+    maxRetries: 3
     preemptible: 0
   }
 }

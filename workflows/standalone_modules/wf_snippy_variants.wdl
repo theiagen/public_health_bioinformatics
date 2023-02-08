@@ -1,7 +1,7 @@
 version 1.0
 
-import "../tasks/gene_typing/task_snippy_variants.wdl" as snippy
-import "../tasks/task_versioning.wdl" as versioning
+import "../../tasks/gene_typing/task_snippy_variants.wdl" as snippy
+import "../../tasks/task_versioning.wdl" as versioning
 
 workflow snippy_variants_wf {
   meta {
@@ -24,7 +24,7 @@ workflow snippy_variants_wf {
     input:
   }
   output {
-    String snippy_variants_wf_version = version_capture.phbg_version
+    String snippy_variants_wf_version = version_capture.phb_version
     String snippy_version = snippy_variants.snippy_variants_version
     String snippy_variants_query = snippy_variants.snippy_variants_query
     String snippy_variants_hits = snippy_variants.snippy_variants_hits

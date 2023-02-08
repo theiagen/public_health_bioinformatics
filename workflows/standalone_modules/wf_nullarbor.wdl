@@ -1,6 +1,6 @@
 version 1.0
 
-import "../tasks/task_nullarbor.wdl" as nullarbor
+import "../../tasks/utilities/task_nullarbor.wdl" as nullarbor
 
 workflow nullarbor_workflow {
   meta {

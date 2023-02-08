@@ -1,7 +1,7 @@
 version 1.0
 
-import "../tasks/gene_typing/task_amrfinderplus.wdl" as amrfindertask
-import "../tasks/task_versioning.wdl" as versioning
+import "../../tasks/gene_typing/task_amrfinderplus.wdl" as amrfindertask
+import "../../tasks/task_versioning.wdl" as versioning
 
 workflow amrfinderplus_wf {
   input {
@@ -19,7 +19,7 @@ workflow amrfinderplus_wf {
   output {
     String amrfinderplus_version = amrfinderplus_nuc.amrfinderplus_version
     String amrfinderplus_db_version = amrfinderplus_nuc.amrfinderplus_db_version
-    String amrfinderplus_wf_version = version_capture.phbg_version
+    String amrfinderplus_wf_version = version_capture.phb_version
     String amrfinderplus_wf_analysis_date = version_capture.date
     File amrfinderplus_all_report = amrfinderplus_nuc.amrfinderplus_all_report
     File amrfinderplus_amr_report = amrfinderplus_nuc.amrfinderplus_amr_report

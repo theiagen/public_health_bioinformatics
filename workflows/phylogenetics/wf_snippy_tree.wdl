@@ -1,11 +1,11 @@
 version 1.0
 
-import "../tasks/phylogenetic_inference/task_snippy_core.wdl" as snippy_core
-import "../tasks/phylogenetic_inference/task_iqtree.wdl" as iqtree
-import "../tasks/phylogenetic_inference/task_snp_dists.wdl" as snp_dists
-import "../tasks/phylogenetic_inference/task_gubbins.wdl" as gubbins
-import "../tasks/utilities/task_summarize_data.wdl" as data_summary
-import "../tasks/task_versioning.wdl" as versioning
+import "../../tasks/phylogenetic_inference/task_snippy_core.wdl" as snippy_core_task
+import "../../tasks/phylogenetic_inference/task_iqtree.wdl" as iqtree_task
+import "../../tasks/phylogenetic_inference/task_snp_dists.wdl" as snp_dists
+import "../../tasks/phylogenetic_inference/task_gubbins.wdl" as gubbins_task
+import "../../tasks/utilities/task_summarize_data.wdl" as data_summary
+import "../../tasks/task_versioning.wdl" as versioning
 
 workflow snippy_tree_wf {
   meta {
@@ -22,7 +22,7 @@ workflow snippy_tree_wf {
     String? data_summary_terra_table
     String? data_summary_column_names # comma delimited
   }
-  call snippy_core.snippy_core {
+  call snippy_core_task.snippy_core {
     input:
       snippy_variants_outdir_tarball = snippy_variants_outdir_tarball,
       samplenames = samplenames,
@@ -30,7 +30,7 @@ workflow snippy_tree_wf {
       tree_name = tree_name
   }
   if (use_gubbins) {
-    call gubbins.gubbins {
+    call gubbins_task.gubbins {
       input:
         alignment = snippy_core.snippy_full_alignment_clean,
         cluster_name = tree_name
@@ -48,7 +48,7 @@ workflow snippy_tree_wf {
     }
   }
   if (!use_gubbins) {
-    call iqtree.iqtree {
+    call iqtree_task.iqtree {
       input:
         alignment = snippy_core.snippy_full_alignment_clean,
         cluster_name = tree_name
@@ -111,6 +111,5 @@ workflow snippy_tree_wf {
     File? snippy_tree_iqtree_tree = reorder_matrix_iqtree.tree
     # data summary outputs
     File? snippy_tree_summarized_data = summarize_data.summarized_data
-    
     }
 }

@@ -1,7 +1,7 @@
 version 1.0
 
-import "../tasks/utilities/task_rasusa.wdl" as rasusa
-import "../tasks/task_versioning.wdl" as versioning
+import "../../tasks/utilities/task_rasusa.wdl" as rasusa
+import "../../tasks/task_versioning.wdl" as versioning
 
 workflow rasusa_workflow {
   input {
@@ -23,7 +23,7 @@ workflow rasusa_workflow {
     input:
   }
   output {
-    String rasusa_wf_version = version_capture.phbg_version
+    String rasusa_wf_version = version_capture.phb_version
     String rasusa_wf_analysis_date = version_capture.date
 
     String rasusa_version = rasusa_task.rasusa_version

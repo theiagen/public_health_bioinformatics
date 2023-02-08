@@ -67,11 +67,11 @@ task kraken2_se {
     String samplename
     String docker = "quay.io/staphb/kraken2:2.1.2-no-db"
 
-    String? kraken2_args = ""
-    String? classified_out = "classified.fastq"
-    String? unclassified_out = "unclassified.fastq"
-    Int? memory = 32
-    Int? cpu = 4
+    String kraken2_args = ""
+    String classified_out = "classified.fastq"
+    String unclassified_out = "unclassified.fastq"
+    Int memory = 32
+    Int cpu = 4
   }
   command <<<
     echo $(kraken2 --version 2>&1) | sed 's/^.*Kraken version //;s/ .*$//' | tee VERSION

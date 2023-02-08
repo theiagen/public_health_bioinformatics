@@ -5,7 +5,7 @@ import "../tasks/quality_control/task_bbduk.wdl" as bbduk
 import "../tasks/quality_control/task_fastq_scan.wdl" as fastq_scan
 import "../tasks/taxon_id/task_midas.wdl" as midas_task
 
-workflow read_QC_trim {
+workflow read_QC_trim_pe {
   meta {
     description: "Runs basic QC (fastq_scan), trimming (Trimmomatic), and adapter removal (bbduk) on illumina PE reads"
   }

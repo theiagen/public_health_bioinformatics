@@ -1,14 +1,14 @@
 version 1.0
 
-import "wf_read_QC_trim_pe_theiaeuk.wdl" as read_qc
-import "wf_merlin_magic_euk.wdl" as merlin_magic
-import "../tasks/assembly/task_shovill.wdl" as shovill
-import "../tasks/quality_control/task_quast.wdl" as quast
-import "../tasks/quality_control/task_cg_pipeline.wdl" as cg_pipeline
-import "../tasks/quality_control/task_screen.wdl" as screen
-import "../tasks/taxon_id/task_gambit.wdl" as gambit
-import "../tasks/species_typing/task_ts_mlst.wdl" as ts_mlst
-import "../tasks/task_versioning.wdl" as versioning
+import "../utilities/wf_read_QC_trim_pe_theiaeuk.wdl" as read_qc
+import "../utilities/wf_merlin_magic_euk.wdl" as merlin_magic_workflow
+import "../../tasks/assembly/task_shovill.wdl" as shovill
+import "../../tasks/quality_control/task_quast.wdl" as quast_task
+import "../../tasks/quality_control/task_cg_pipeline.wdl" as cg_pipeline_task
+import "../../tasks/quality_control/task_screen.wdl" as screen
+import "../../tasks/taxon_id/task_gambit.wdl" as gambit_task
+import "../../tasks/species_typing/task_ts_mlst.wdl" as ts_mlst_task
+import "../../tasks/task_versioning.wdl" as versioning
 
 workflow theiaeuk_illumina_pe {
   meta {
@@ -69,29 +69,29 @@ workflow theiaeuk_illumina_pe {
           read1_cleaned = read_QC_trim.read1_clean,
           read2_cleaned = read_QC_trim.read2_clean
       }
-      call quast.quast {
+      call quast_task.quast {
         input:
           assembly = shovill_pe.assembly_fasta,
           samplename = samplename
       }
-      call cg_pipeline.cg_pipeline {
+      call cg_pipeline_task.cg_pipeline {
         input:
           read1 = read1_raw,
           read2 = read2_raw,
           samplename = samplename,
           genome_length = clean_check_reads.est_genome_length
       }
-      call gambit.gambit_euk as gambit {
+      call gambit_task.gambit_euk as gambit {
         input:
           assembly = shovill_pe.assembly_fasta,
           samplename = samplename
       }
-      call ts_mlst.ts_mlst {
+      call ts_mlst_task.ts_mlst {
         input: 
           assembly = shovill_pe.assembly_fasta,
           samplename = samplename
       }
-      call merlin_magic.merlin_magic {
+      call merlin_magic_workflow.merlin_magic {
         input:
           merlin_tag = gambit.merlin_tag,
           assembly = shovill_pe.assembly_fasta,
@@ -103,7 +103,7 @@ workflow theiaeuk_illumina_pe {
   }
   output {
     # Version Captures
-    String theiaeuk_illumina_pe_version = version_capture.phbg_version
+    String theiaeuk_illumina_pe_version = version_capture.phb_version
     String theiaeuk_illumina_pe_analysis_date = version_capture.date
     # Read Metadata
     String seq_platform = seq_method

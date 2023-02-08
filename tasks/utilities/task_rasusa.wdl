@@ -9,6 +9,7 @@ task rasusa {
     File? read2
     String samplename
     String docker = "staphb/rasusa:0.7.0"
+    Int disk_size = 100
     Int cpu = 4
     # RASUA Parameters
     #  --bases [STRING] Explicitly set the number of bases required e.g., 4.3kb, 7Tb, 9000, 4.1MB. If this option is given, --coverage and --genome-size are ignored
@@ -57,7 +58,9 @@ task rasusa {
     docker: "~{docker}"
     memory: "8 GB"
     cpu: cpu
-    disks: "local-disk 50 SSD"
+    disks: "local-disk " + disk_size + " SSD"
+    disk: disk_size + " GB"
+    maxRetries: 3
     preemptible: 0
   }
 }
