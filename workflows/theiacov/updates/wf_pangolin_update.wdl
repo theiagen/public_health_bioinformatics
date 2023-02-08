@@ -1,7 +1,7 @@
 version 1.0
 
-import "../tasks/task_taxonID.wdl" as taxon_ID
-import "../tasks/task_versioning.wdl" as versioning
+import "../../tasks/species_typing/task_pangolin.wdl" as pangolin
+import "../../tasks/task_versioning.wdl" as versioning
 
 workflow pangolin_update {
   input {
@@ -15,13 +15,13 @@ workflow pangolin_update {
     String? timezone
     File? lineage_log
   }
-  call taxon_ID.pangolin4 {
+  call pangolin.pangolin4 {
     input:
       samplename = samplename,
       fasta = assembly,
       docker = updated_pangolin_docker
   }
-  call taxon_ID.pangolin_update_log {
+  call pangolin.pangolin_update_log {
     input:
       samplename = samplename,
       current_lineage = current_lineage,
@@ -41,7 +41,7 @@ workflow pangolin_update {
   }
   output {
     # Version Capture
-    String pangolin_update_version = version_capture.phvg_version
+    String pangolin_update_version = version_capture.phb_version
     String pangolin_update_analysis_date = version_capture.date
     # Pangolin Assignments
     String pango_lineage = pangolin4.pangolin_lineage

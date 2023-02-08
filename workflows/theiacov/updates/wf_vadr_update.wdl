@@ -1,7 +1,7 @@
 version 1.0
 
-import "../tasks/task_ncbi.wdl" as ncbi
-import "../tasks/task_versioning.wdl" as versioning
+import "../../tasks/quality_control/task_vadr.wdl" as vadr_task
+import "../../tasks/task_versioning.wdl" as versioning
 
 workflow vadr_update {
   input {
@@ -9,7 +9,7 @@ workflow vadr_update {
     String docker
     Int assembly_length_unambiguous
   }
-  call ncbi.vadr {
+  call vadr_task.vadr {
     input:
       genome_fasta = genome_fasta,
       docker = docker,
@@ -20,7 +20,7 @@ workflow vadr_update {
   }
   output {
     # Version Capture
-    String vadr_update_version = version_capture.phvg_version
+    String vadr_update_version = version_capture.phb_version
     String vadr_update_analysis_date = version_capture.date
     # VADR Annotation QC
     File? vadr_alerts_list = vadr.alerts_list
