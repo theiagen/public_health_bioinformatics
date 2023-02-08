@@ -1,20 +1,20 @@
 version 1.0
 
-import "../tasks/task_read_clean.wdl" as read_clean
-import "../tasks/task_taxonID.wdl" as taxonID
-import "../tasks/task_versioning.wdl" as versioning
+import "../../tasks/quality_control/task_ncbi_scrub.wdl" as ncbi_scrub
+import "../../tasks/taxon_id/task_kraken2.wdl" as kraken
+import "../../tasks/task_versioning.wdl" as versioning
 
 workflow dehost_se {
   input {
     String samplename
     File reads
   }
-  call read_clean.ncbi_scrub_se {
+  call ncbi_scrub.ncbi_scrub_se {
     input:
       samplename = samplename,
       read1 = reads
   }
-  call taxonID.kraken2 {
+  call kraken.kraken2_theiacov as kraken2 {
     input:
       samplename = samplename,
       read1 = ncbi_scrub_se.read1_dehosted
@@ -23,7 +23,7 @@ workflow dehost_se {
     input:
   }
   output {
-    String ncbi_scrub_se_version = version_capture.phvg_version
+    String ncbi_scrub_se_version = version_capture.phb_version
     String ncbi_scrub_se_analysis_date = version_capture.date
     File reads_dehosted = ncbi_scrub_se.read1_dehosted
     String ncbi_scrub_docker = ncbi_scrub_se.ncbi_scrub_docker
