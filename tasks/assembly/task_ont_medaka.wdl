@@ -1,33 +1,6 @@
 version 1.0
 
-task demultiplexing {
-  input {
-    Array[File] basecalled_reads
-    String run_prefix = "artic_ncov2019"
-    Int normalise = 200
-    Int cpu = 8
-    Int disk_size = 100
-    
-  }
-  command <<<
-    guppy_barcoder -t \~cpu --require_barcodes_both_ends -i . -s . --arrangements_files "barcode_arrs_nb12.cfg barcode_arrs_nb24.cfg  barcode_arrs_nb96.cfg" -q 0 -r
-
-  >>>
-  output {
-    Array[File] demultiplexed_reads = glob("*.fq.gz")
-  }
-  runtime {
-    docker: "genomicpariscentre/guppy"
-    memory: "16 GB"
-    cpu: 8
-    disks:  "local-disk " + disk_size + " SSD"
-    disk: disk_size + " GB" # TES
-    preemptible: 0
-    maxRetries: 3
-  }
-}
-
-task read_filtering {
+task read_filtering { # in use
   input {
     File demultiplexed_reads
     String samplename
@@ -59,7 +32,7 @@ task read_filtering {
   }
 }
 
-task consensus {
+task consensus { # in use
   input {
     String samplename
     String? organism

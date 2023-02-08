@@ -1,9 +1,11 @@
+
 version 1.0
 
-import "../tasks/task_taxonID.wdl" as taxon_ID
-import "../tasks/task_ncbi.wdl" as ncbi
-import "../tasks/quality_control/task_consensus_qc.wdl" as consensus_qc_task
-import "../tasks/task_versioning.wdl" as versioning
+import "../../tasks/quality_control/task_vadr.wdl" as vadr_task
+import "../../tasks/quality_control/task_consensus_qc.wdl" as consensus_qc_task
+import "../../tasks/taxon_id/task_nextclade.wdl" as nextclade
+import "../../tasks/species_typing/task_pangolin.wdl" as pangolin
+import "../../tasks/task_versioning.wdl" as versioning
 
 workflow theiacov_fasta {
   meta {
@@ -25,7 +27,7 @@ workflow theiacov_fasta {
   }
   if (organism == "sars-cov-2") {
     # sars-cov-2 specific tasks
-    call taxon_ID.pangolin4 {
+    call pangolin.pangolin4 {
       input:
         samplename = samplename,
         fasta = assembly_fasta
@@ -39,21 +41,21 @@ workflow theiacov_fasta {
   }
   if (organism == "MPXV" || organism == "sars-cov-2"){
     # tasks specific to either MPXV or sars-cov-2 
-    call taxon_ID.nextclade_one_sample {
+    call nextclade.nextclade_one_sample {
       input:
       genome_fasta = assembly_fasta,
       dataset_name = select_first([nextclade_dataset_name, organism]),
       dataset_reference = nextclade_dataset_reference,
       dataset_tag = nextclade_dataset_tag
     }
-    call taxon_ID.nextclade_output_parser_one_sample {
+    call nextclade.nextclade_output_parser_one_sample {
       input:
       nextclade_tsv = nextclade_one_sample.nextclade_tsv
     }
   }
   if (organism == "MPXV" || organism == "sars-cov-2" || organism == "WNV"){ 
     # tasks specific to MPXV, sars-cov-2, and WNV
-    call ncbi.vadr {
+    call vadr_task.vadr {
       input:
         genome_fasta = assembly_fasta,
         assembly_length_unambiguous = consensus_qc.number_ATCG
@@ -64,7 +66,7 @@ workflow theiacov_fasta {
   }
   output {
     # Version Capture
-    String theiacov_fasta_version = version_capture.phvg_version
+    String theiacov_fasta_version = version_capture.phb_version
     String theiacov_fasta_analysis_date = version_capture.date
     # Read & Assembly Metadata
     String seq_platform = seq_method

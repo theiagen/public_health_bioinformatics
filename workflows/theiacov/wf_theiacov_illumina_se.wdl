@@ -1,15 +1,17 @@
 version 1.0
 
-import "wf_read_QC_trim_se.wdl" as read_qc
-import "../tasks/task_alignment.wdl" as align
-import "../tasks/task_consensus_call.wdl" as consensus_call
-import "../tasks/quality_control/task_assembly_metrics.wdl" as assembly_metrics
-import "../tasks/task_taxonID.wdl" as taxon_ID
-import "../tasks/task_ncbi.wdl" as ncbi
-import "../tasks/task_versioning.wdl" as versioning
-import "../tasks/quality_control/task_consensus_qc.wdl" as consensus_qc_task
-import "../tasks/task_sc2_gene_coverage.wdl" as sc2_calculation
-
+import "../utilities/wf_read_QC_trim_se_theiacov.wdl" as read_qc
+import "../../tasks/alignment/task_bwa.wdl" as bwa_task
+import "../../tasks/assembly/task_ivar_consensus.wdl" as consensus_task
+import "../../tasks/assembly/task_ivar_primer_trim.wdl" as primer_trim_task
+import "../../tasks/assembly/task_ivar_variant_call.wdl" as variant_call_task
+import "../../tasks/quality_control/task_assembly_metrics.wdl" as assembly_metrics
+import "../../tasks/quality_control/task_vadr.wdl" as vadr_task
+import "../../tasks/quality_control/task_consensus_qc.wdl" as consensus_qc_task
+import "../../tasks/taxon_id/task_nextclade.wdl" as nextclade
+import "../../tasks/species_typing/task_pangolin.wdl" as pangolin
+import "../../tasks/species_typing/task_sc2_gene_coverage.wdl" as sc2_calculation
+import "../../tasks/task_versioning.wdl" as versioning
 
 workflow theiacov_illumina_se {
   meta {
@@ -30,21 +32,21 @@ workflow theiacov_illumina_se {
     File? adapters
     File? phix
   }
-  call read_qc.read_QC_trim {
+  call read_qc.read_QC_trim_se as read_QC_trim {
     input:
       samplename = samplename,
       read1_raw = read1_raw,
       adapters = adapters,
       phix = phix
   }
-  call align.bwa {
+  call bwa_task.bwa {
     input:
       samplename = samplename,
       read1 = read_QC_trim.read1_clean,
       reference_genome = reference_genome
   }
   if (trim_primers){
-    call consensus_call.primer_trim {
+    call primer_trim_task.primer_trim {
       input:
         samplename = samplename,
         primer_bed = select_first([primer_bed]),
@@ -56,14 +58,14 @@ workflow theiacov_illumina_se {
       bamfile = primer_trim.trim_sorted_bam
   }
   }
-  call consensus_call.variant_call {
+  call variant_call_task.variant_call {
     input:
       samplename = samplename,
       bamfile = select_first([primer_trim.trim_sorted_bam,bwa.sorted_bam]),
       reference_genome = reference_genome,
       variant_min_depth = min_depth
   }
-  call consensus_call.consensus {
+  call consensus_task.consensus {
     input:
       samplename = samplename,
       bamfile = select_first([primer_trim.trim_sorted_bam,bwa.sorted_bam]),
@@ -82,7 +84,7 @@ workflow theiacov_illumina_se {
   }
   if (organism == "sars-cov-2") {
     # sars-cov-2 specific tasks
-    call taxon_ID.pangolin4 {
+    call pangolin.pangolin4 {
       input:
         samplename = samplename,
         fasta = consensus.consensus_seq
@@ -102,21 +104,21 @@ workflow theiacov_illumina_se {
   }
   if (organism == "MPXV" || organism == "sars-cov-2"){
     # tasks specific to either MPXV or sars-cov-2
-    call taxon_ID.nextclade_one_sample {
+    call nextclade.nextclade_one_sample {
       input:
       genome_fasta = consensus.consensus_seq,
       dataset_name = select_first([nextclade_dataset_name, organism,]),
       dataset_reference = nextclade_dataset_reference,
       dataset_tag = nextclade_dataset_tag
     }
-    call taxon_ID.nextclade_output_parser_one_sample {
+    call nextclade.nextclade_output_parser_one_sample {
       input:
       nextclade_tsv = nextclade_one_sample.nextclade_tsv
     }
   }
   if (organism == "MPXV" || organism == "sars-cov-2" || organism == "WNV"){ 
     # tasks specific to MPXV, sars-cov-2, and WNV
-    call ncbi.vadr {
+    call vadr_task.vadr {
       input:
         genome_fasta = consensus.consensus_seq,
         assembly_length_unambiguous = consensus_qc.number_ATCG
@@ -127,7 +129,7 @@ workflow theiacov_illumina_se {
   }
   output {
     # Version Capture
-    String theiacov_illumina_se_version = version_capture.phvg_version
+    String theiacov_illumina_se_version = version_capture.phb_version
     String theiacov_illumina_se_analysis_date = version_capture.date
     # Read Metadata
     String seq_platform = seq_method
@@ -151,7 +153,7 @@ workflow theiacov_illumina_se {
     String bwa_version = bwa.bwa_version
     String samtools_version = bwa.sam_version
     File read1_aligned = bwa.read1_aligned
-    String assembly_method = "TheiaCoV (~{version_capture.phvg_version}): ~{bwa.bwa_version}; ~{primer_trim.ivar_version}"
+    String assembly_method = "TheiaCoV (~{version_capture.phb_version}): ~{bwa.bwa_version}; ~{primer_trim.ivar_version}"
     File aligned_bam = select_first([primer_trim.trim_sorted_bam,bwa.sorted_bam])
     File aligned_bai =select_first([primer_trim.trim_sorted_bai,bwa.sorted_bai])
     Float? primer_trimmed_read_percent = primer_trim.primer_trimmed_read_percent

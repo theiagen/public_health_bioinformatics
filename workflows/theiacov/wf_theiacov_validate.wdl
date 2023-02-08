@@ -1,7 +1,7 @@
 version 1.0
 
-import "../tasks/task_validate.wdl" as validation
-import "../tasks/task_versioning.wdl" as versioning
+import "../../tasks/utilities/task_validate.wdl" as validation
+import "../../tasks/task_versioning.wdl" as versioning
 
 workflow theiacov_validate {
   input {
@@ -30,7 +30,7 @@ workflow theiacov_validate {
     input:
   }
   output {
-    String theiacov_validation_version = version_capture.phvg_version
+    String theiacov_validation_version = version_capture.phb_version
     String theiacov_validation_date = version_capture.date
     File theiacov_validation_report_pdf = compare_two_tsvs.pdf_report
     File theiacov_validation_report_xl = compare_two_tsvs.xl_report

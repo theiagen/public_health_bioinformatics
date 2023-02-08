@@ -6,7 +6,7 @@ import "wf_theiacov_clearlabs.wdl" as clearlabs
 import "wf_theiacov_illumina_pe.wdl" as illumina_pe
 import "wf_theiacov_illumina_se.wdl" as illumina_se
 import "wf_theiacov_ont.wdl" as ont
-import "../tasks/task_theiacov_summary.wdl" as summary
+import "../../tasks/utilities/task_theiacov_summary.wdl" as summary
 
 struct parseJSON {
   String sample

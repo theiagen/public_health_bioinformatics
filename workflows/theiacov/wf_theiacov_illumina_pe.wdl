@@ -1,18 +1,20 @@
 version 1.0
 
-import "wf_read_QC_trim.wdl" as read_qc
-import "../tasks/task_alignment.wdl" as align
-import "../tasks/task_consensus_call.wdl" as consensus_call
-import "../tasks/quality_control/task_assembly_metrics.wdl" as assembly_metrics
-import "../tasks/task_taxonID.wdl" as taxon_ID
-import "../tasks/task_ncbi.wdl" as ncbi
-import "../tasks/task_versioning.wdl" as versioning
-import "../tasks/quality_control/task_consensus_qc.wdl" as consensus_qc_task
-import "../tasks/task_sc2_gene_coverage.wdl" as sc2_calculation
-import "../tasks/task_irma.wdl" as irma
-import "../tasks/task_abricate_flu.wdl" as abricate_flu
-import "../tasks/task_quasitools.wdl" as quasitools
-
+import "../utilities/wf_read_QC_trim_pe_theiacov.wdl" as read_qc
+import "../../tasks/alignment/task_bwa.wdl" as bwa_task
+import "../../tasks/assembly/task_ivar_consensus.wdl" as consensus_task
+import "../../tasks/assembly/task_ivar_primer_trim.wdl" as primer_trim_task
+import "../../tasks/assembly/task_ivar_variant_call.wdl" as variant_call_task
+import "../../tasks/assembly/task_irma.wdl" as irma_task
+import "../../tasks/quality_control/task_assembly_metrics.wdl" as assembly_metrics
+import "../../tasks/quality_control/task_vadr.wdl" as vadr_task
+import "../../tasks/quality_control/task_consensus_qc.wdl" as consensus_qc_task
+import "../../tasks/taxon_id/task_nextclade.wdl" as nextclade
+import "../../tasks/species_typing/task_pangolin.wdl" as pangolin
+import "../../tasks/species_typing/task_sc2_gene_coverage.wdl" as sc2_calculation
+import "../../tasks/species_typing/task_quasitools.wdl" as quasitools
+import "../../tasks/gene_typing/task_abricate.wdl" as abricate
+import "../../tasks/task_versioning.wdl" as versioning
 
 workflow theiacov_illumina_pe {
   meta {
@@ -40,7 +42,7 @@ workflow theiacov_illumina_pe {
     String nextclade_flu_yam_tag = "2022-07-27T12:00:00Z"
     Int? genome_length
   }
-  call read_qc.read_QC_trim {
+  call read_qc.read_QC_trim_pe as read_QC_trim {
     input:
       samplename = samplename,
       read1_raw = read1_raw,
@@ -50,7 +52,7 @@ workflow theiacov_illumina_pe {
   }
   # assembly via bwa and ivar for non-flu data
   if (organism != "flu"){
-    call align.bwa {
+    call bwa_task.bwa {
       input:
         samplename = samplename,
         read1 = read_QC_trim.read1_clean,
@@ -58,7 +60,7 @@ workflow theiacov_illumina_pe {
         reference_genome = reference_genome
     }
     if (trim_primers){
-      call consensus_call.primer_trim {
+      call primer_trim_task.primer_trim {
         input:
           samplename = samplename,
           primer_bed = select_first([primer_bed]),
@@ -70,7 +72,7 @@ workflow theiacov_illumina_pe {
         bamfile = primer_trim.trim_sorted_bam,
       }
     }
-    call consensus_call.variant_call {
+    call variant_call_task.variant_call {
       input:
         samplename = samplename,
         bamfile = select_first([primer_trim.trim_sorted_bam,bwa.sorted_bam]),
@@ -78,7 +80,7 @@ workflow theiacov_illumina_pe {
         reference_genome = reference_genome,
         variant_min_depth = min_depth
     }
-    call consensus_call.consensus {
+    call consensus_task.consensus {
       input:
         samplename = samplename,
         bamfile = select_first([primer_trim.trim_sorted_bam,bwa.sorted_bam]),
@@ -95,14 +97,14 @@ workflow theiacov_illumina_pe {
   # assembly via irma for flu organisms
   if (organism == "flu"){
     # flu-specific tasks
-    call irma.irma {
+    call irma_task.irma {
       input:
         read1 = read_QC_trim.read1_clean,
         read2 = read_QC_trim.read2_clean,
         samplename = samplename,
     }
     if (defined(irma.irma_assemblies)) {
-      call abricate_flu.abricate_flu {
+      call abricate.abricate_flu {
         input:
           assembly = select_first([irma.irma_assembly_fasta]),
           samplename = samplename,
@@ -122,21 +124,21 @@ workflow theiacov_illumina_pe {
   # run organism-specific typing
   if (organism == "MPXV" || organism == "sars-cov-2" || organism == "flu" && select_first([abricate_flu.run_nextclade]) ) { 
     # tasks specific to either MPXV, sars-cov-2, or flu
-    call taxon_ID.nextclade_one_sample {
+    call nextclade.nextclade_one_sample {
       input:
         genome_fasta = select_first([consensus.consensus_seq, irma.seg4_ha_assembly]),
         dataset_name = select_first([abricate_flu.nextclade_name, nextclade_dataset_name, organism]),
         dataset_reference = select_first([abricate_flu.nextclade_ref, nextclade_dataset_reference]),
         dataset_tag = select_first([abricate_flu.nextclade_ds_tag, nextclade_dataset_tag])
     }
-    call taxon_ID.nextclade_output_parser_one_sample {
+    call nextclade.nextclade_output_parser_one_sample {
       input:
       nextclade_tsv = nextclade_one_sample.nextclade_tsv
     }
   }
   if (organism == "sars-cov-2") {
     # sars-cov-2 specific tasks
-    call taxon_ID.pangolin4 {
+    call pangolin.pangolin4 {
       input:
         samplename = samplename,
         fasta = select_first([consensus.consensus_seq])
@@ -150,7 +152,7 @@ workflow theiacov_illumina_pe {
   }
   if (organism == "MPXV" || organism == "sars-cov-2" || organism == "WNV"){ 
     # tasks specific to MPXV, sars-cov-2, and WNV
-    call ncbi.vadr {
+    call vadr_task.vadr {
       input:
         genome_fasta = select_first([consensus.consensus_seq]),
         assembly_length_unambiguous = consensus_qc.number_ATCG
@@ -169,7 +171,7 @@ workflow theiacov_illumina_pe {
   }
   output {
     # Version Capture
-    String theiacov_illumina_pe_version = version_capture.phvg_version
+    String theiacov_illumina_pe_version = version_capture.phb_version
     String theiacov_illumina_pe_analysis_date = version_capture.date
     # Read Metadata
     String  seq_platform = seq_method
@@ -202,7 +204,7 @@ workflow theiacov_illumina_pe {
     String? samtools_version = bwa.sam_version
     File? read1_aligned = bwa.read1_aligned
     File? read2_aligned = bwa.read2_aligned
-    String assembly_method = "TheiaCoV (~{version_capture.phvg_version}): " + select_first([assembly_method_nonflu,irma.irma_version])
+    String assembly_method = "TheiaCoV (~{version_capture.phb_version}): " + select_first([assembly_method_nonflu,irma.irma_version])
     String aligned_bam =  select_first([primer_trim.trim_sorted_bam,bwa.sorted_bam,""]) # set default values for select_first() to avoid workflow failures
     String aligned_bai = select_first([primer_trim.trim_sorted_bai,bwa.sorted_bai,""])
     Float? primer_trimmed_read_percent = primer_trim.primer_trimmed_read_percent

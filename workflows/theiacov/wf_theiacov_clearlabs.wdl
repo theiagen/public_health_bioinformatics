@@ -1,14 +1,17 @@
 version 1.0
 
-import "../tasks/task_ont_medaka.wdl" as medaka
-import "../tasks/quality_control/task_assembly_metrics.wdl" as assembly_metrics
-import "../tasks/task_taxonID.wdl" as taxon_ID
-import "../tasks/task_ncbi.wdl" as ncbi
-import "../tasks/task_read_clean.wdl" as read_clean
-import "../tasks/quality_control/task_fastq_scan.wdl" as fastq_scan
-import "../tasks/quality_control/task_consensus_qc.wdl" as consensus_qc_task
-import "../tasks/task_versioning.wdl" as versioning
-import "../tasks/task_sc2_gene_coverage.wdl" as sc2_calculation
+import "../../tasks/assembly/task_ont_medaka.wdl" as medaka
+import "../../tasks/quality_control/task_assembly_metrics.wdl" as assembly_metrics
+import "../../tasks/quality_control/task_ncbi_scrub.wdl" as ncbi_scrub
+import "../../tasks/quality_control/task_vadr.wdl" as vadr_task
+import "../../tasks/quality_control/task_fastq_scan.wdl" as fastq_scan
+import "../../tasks/quality_control/task_consensus_qc.wdl" as consensus_qc_task
+import "../../tasks/taxon_id/task_kraken2.wdl" as kraken2
+import "../../tasks/taxon_id/task_nextclade.wdl" as nextclade
+import "../../tasks/species_typing/task_pangolin.wdl" as pangolin
+import "../../tasks/species_typing/task_sc2_gene_coverage.wdl" as sc2_calculation
+import "../../tasks/task_versioning.wdl" as versioning
+
 
 workflow theiacov_clearlabs {
   meta {
@@ -32,7 +35,7 @@ workflow theiacov_clearlabs {
     input:
       read1 = clear_lab_fastq
   }
-  call read_clean.ncbi_scrub_se {
+  call ncbi_scrub.ncbi_scrub_se {
     input:
       samplename = samplename,
       read1 = clear_lab_fastq
@@ -41,13 +44,13 @@ workflow theiacov_clearlabs {
     input:
       read1 = ncbi_scrub_se.read1_dehosted
   }
-  call taxon_ID.kraken2 as kraken2_raw {
+  call kraken2.kraken2_theiacov as kraken2_raw {
     input:
       samplename = samplename,
       read1 = clear_lab_fastq,
       target_org = target_org
   }  
-  call taxon_ID.kraken2 as kraken2_dehosted {
+  call kraken2.kraken2_theiacov as kraken2_dehosted {
     input:
       samplename = samplename,
       read1 = ncbi_scrub_se.read1_dehosted,
@@ -80,7 +83,7 @@ workflow theiacov_clearlabs {
   }
   if (organism == "sars-cov-2") {
     # sars-cov-2 specific tasks
-    call taxon_ID.pangolin4 {
+    call pangolin.pangolin4 {
       input:
         samplename = samplename,
         fasta = consensus.consensus_seq
@@ -97,18 +100,18 @@ workflow theiacov_clearlabs {
   }
   if (organism == "MPXV" || organism == "sars-cov-2"){
     # tasks specific to either MPXV or sars-cov-2
-    call taxon_ID.nextclade_one_sample {
+    call nextclade.nextclade_one_sample {
       input:
       genome_fasta = consensus.consensus_seq,
       dataset_name = select_first([nextclade_dataset_name, organism]),
       dataset_reference = nextclade_dataset_reference,
       dataset_tag = nextclade_dataset_tag
     }
-    call taxon_ID.nextclade_output_parser_one_sample {
+    call nextclade.nextclade_output_parser_one_sample {
       input:
       nextclade_tsv = nextclade_one_sample.nextclade_tsv
     }
-    call ncbi.vadr {
+    call vadr_task.vadr {
       input:
         genome_fasta = consensus.consensus_seq,
         assembly_length_unambiguous = consensus_qc.number_ATCG
@@ -119,7 +122,7 @@ workflow theiacov_clearlabs {
   }
   output {
     # Version Capture
-    String theiacov_clearlabs_version = version_capture.phvg_version
+    String theiacov_clearlabs_version = version_capture.phb_version
     String theiacov_clearlabs_analysis_date = version_capture.date
     # Read Metadata
     String seq_platform = seq_method
@@ -147,7 +150,7 @@ workflow theiacov_clearlabs {
     String medaka_reference = consensus.medaka_reference
     String primer_bed_name = consensus.primer_bed_name
     File assembly_fasta = consensus.consensus_seq
-    String assembly_method = "TheiaCoV (~{version_capture.phvg_version}): ~{consensus.artic_pipeline_version}"
+    String assembly_method = "TheiaCoV (~{version_capture.phb_version}): ~{consensus.artic_pipeline_version}"
     File? reads_aligned = consensus.reads_aligned
     # Assembly QC
     Int number_N = consensus_qc.number_N
