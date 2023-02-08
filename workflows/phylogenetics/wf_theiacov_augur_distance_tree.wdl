@@ -1,9 +1,9 @@
 version 1.0
 
-import "../tasks/tasks_nextstrain.wdl" as nextstrain
-import "../tasks/tasks_utils.wdl" as utils
-import "../tasks/task_phylo.wdl" as phylo
-import "../tasks/task_versioning.wdl" as versioning
+import "../../tasks/utilities/task_augur_utilities.wdl" as utils
+import "../../tasks/phylogenetic_inference/task_nextstrain_augur.wdl" as nextstrain
+import "../../tasks/phylogenetic_inference/task_snp_dists.wdl" as snp_dists_task
+import "../../tasks/task_versioning.wdl" as versioning
 
 workflow theiacov_distance_tree {
   meta {
@@ -105,7 +105,7 @@ workflow theiacov_distance_tree {
     input:
      msa_or_vcf = augur_mask_sites.masked_sequences
   }
-  call phylo.snp_dists {
+  call snp_dists_task.snp_dists {
     input:
       cluster_name = build_name,
       alignment = select_first([subsample.subsampled_msa, mafft.aligned_sequences])
@@ -115,7 +115,7 @@ workflow theiacov_distance_tree {
   }
   output {
     # Version Capture
-    String TheiaCoV_Augur_DistanceTree_version = version_capture.phvg_version
+    String TheiaCoV_Augur_DistanceTree_version = version_capture.phb_version
     String TheiaCoV_Augur_DistanceTree_analysis_date = version_capture.date
     # Tree, Intermediates, and Metadata
     File combined_assemblies = filter_sequences_by_length.filtered_fasta

@@ -1,8 +1,8 @@
 version 1.0
 
 import "wf_sarscov2_nextstrain_modified.wdl" as augur
-import "../tasks/task_phylo.wdl" as phylo
-import "../tasks/task_versioning.wdl" as versioning
+import "../../tasks/phylogenetic_inference/task_snp_dists.wdl" as snp_dists_task
+import "../../tasks/task_versioning.wdl" as versioning
 
 workflow theiacov_augur_run {
   meta {
@@ -26,12 +26,12 @@ workflow theiacov_augur_run {
     }
   }
   call augur.sarscov2_nextstrain {
-  input:
-    assembly_fastas = assembly_fastas,
-    sample_metadata_tsvs = sample_metadata_tsvs,
-    build_name = build_name
-  }
-  call phylo.snp_dists {
+    input:
+      assembly_fastas = assembly_fastas,
+      sample_metadata_tsvs = sample_metadata_tsvs,
+      build_name = build_name
+  } 
+  call snp_dists_task.snp_dists {
     input:
       cluster_name = build_name,
       alignment = sarscov2_nextstrain.mafft_alignment
@@ -41,7 +41,7 @@ workflow theiacov_augur_run {
   }
   output {
     # Version Capture
-    String theiacov_augur_run_version = version_capture.phvg_version
+    String theiacov_augur_run_version = version_capture.phb_version
     String theiacov_augur_run_analysis_date = version_capture.date
     # Augur outputs
     File combined_assemblies = sarscov2_nextstrain.combined_assemblies
