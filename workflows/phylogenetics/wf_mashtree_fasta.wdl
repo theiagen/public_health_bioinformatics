@@ -1,9 +1,9 @@
 version 1.0
 
-import "../tasks/phylogenetic_inference/task_mashtree.wdl" as mashtree
-import "../tasks/phylogenetic_inference/task_snp_dists.wdl" as snp_dists
-import "../tasks/utilities/task_summarize_data.wdl" as data_summary
-import "../tasks/task_versioning.wdl" as versioning
+import "../../tasks/phylogenetic_inference/task_mashtree.wdl" as mashtree
+import "../../tasks/phylogenetic_inference/task_snp_dists.wdl" as snp_dists
+import "../../tasks/utilities/task_summarize_data.wdl" as data_summary
+import "../../tasks/task_versioning.wdl" as versioning
 
 workflow mashtree_fasta {
   input {
