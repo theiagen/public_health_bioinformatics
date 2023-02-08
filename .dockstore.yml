@@ -10,7 +10,6 @@ workflows:
    primaryDescriptorPath: /workflows/theiaeuk/wf_cauris_cladetyper.wdl
    testParameterFiles:
     - empty.json
-
  - name: Snippy_Variants
    subclass: WDL
    primaryDescriptorPath: /workflows/standalone_modules/wf_snippy_variants.wdl
@@ -26,7 +25,6 @@ workflows:
    primaryDescriptorPath: /workflows/standalone_modules/wf_nullarbor.wdl
    testParameterFiles:
     - empty.json
-
  - name: TheiaCoV_ClearLabs_PHB
    subclass: WDL
    primaryDescriptorPath: /workflows/theiacov/wf_theiacov_clearlabs.wdl
@@ -57,7 +55,6 @@ workflows:
    primaryDescriptorPath: /workflows/theiacov/wf_theiacov_validate.wdl
    testParameterFiles:
     - empty.json
-
  - name: Mercury_PE_Prep_PHB
    subclass: WDL
    primaryDescriptorPath: /workflows/mercury/wf_mercury_pe_prep.wdl
@@ -78,7 +75,6 @@ workflows:
    primaryDescriptorPath: /workflows/mercury/wf_mercury_prep_n_batch.wdl
    testParameterFiles:
     - empty.json
-
  - name: TheiaCoV_Augur_Prep_PHB
    subclass: WDL
    primaryDescriptorPath: /workflows/phylogenetics/wf_theiacov_augur_prep.wdl
@@ -94,7 +90,6 @@ workflows:
    primaryDescriptorPath: /workflows/phylogenetics/wf_theiacov_augur_distance_tree.wdl
    testParameterFiles:
     - empty.json
-
  - name: Pangolin_Update_PHB
    subclass: WDL
    primaryDescriptorPath: /workflows/theiacov/updates/wf_pangolin_update.wdl
@@ -115,7 +110,6 @@ workflows:
    primaryDescriptorPath: /workflows/theiacov/updates/wf_ncbi_scrub_pe.wdl
    testParameterFiles:
     - empty.json
-
  - name: Freyja_FASTQ_PHB
    subclass: WDL
    primaryDescriptorPath: /workflows/freyja/wf_freyja_fastq.wdl
@@ -136,7 +130,6 @@ workflows:
    primaryDescriptorPath: /workflows/freyja/wf_freyja_update.wdl
    testParameterFiles:
     - empty.json
-
  - name: kSNP3_PHB
    subclass: WDL
    primaryDescriptorPath: /workflows/phylogenetics/wf_ksnp3.wdl
@@ -152,7 +145,6 @@ workflows:
    primaryDescriptorPath: /workflows/phylogenetics/wf_core_gene_snp.wdl
    testParameterFiles:
     - empty.json
-
  - name: TheiaProk_Illumina_PE_PHB
    subclass: WDL
    primaryDescriptorPath: /workflows/theiaprok/wf_theiaprok_illumina_pe.wdl
@@ -163,7 +155,6 @@ workflows:
    primaryDescriptorPath: /workflows/theiaprok/wf_theiaprok_illumina_se.wdl
    testParameterFiles:
     - empty.json
-
  - name: Gambit_Query_PHB
    subclass: WDL
    primaryDescriptorPath: /workflows/standalone_modules/wf_gambit_query.wdl
@@ -204,7 +195,6 @@ workflows:
    primaryDescriptorPath: /workflows/standalone_modules/wf_kraken2_se.wdl
    testParameterFiles:
     - empty.json
-
 - name: RASUSA_PHB
    subclass: WDL
    primaryDescriptorPath: /workflows/utilities/wf_rasusa.wdl
