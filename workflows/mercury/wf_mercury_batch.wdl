@@ -1,7 +1,7 @@
 version 1.0
 
-import "../tasks/task_versioning.wdl" as versioning
-import "../tasks/task_pub_repo_prep.wdl" as submission_prep
+import "../../tasks/task_versioning.wdl" as versioning
+import "../../tasks/utilities/task_pub_repo_prep.wdl" as submission_prep
 
 workflow mercury_batch {
   input {
@@ -20,6 +20,9 @@ workflow mercury_batch {
     Int disk_size = 100
     Int memory = 8
     String? gcp_bucket
+  }
+  call versioning.version_capture{
+    input:
   }
   call submission_prep.compile_assembly_n_meta as genbank_compile {
     input:
@@ -62,12 +65,9 @@ workflow mercury_batch {
       disk_size = disk_size,
       memory = memory
   }
-  call versioning.version_capture{
-    input:
-  }
   output {
     # Version Capture
-    String mercury_batch_version = version_capture.phvg_version
+    String mercury_batch_version = version_capture.phb_version
     String mercury_batch_analysis_date = version_capture.date
     # GenBank Submission Files
     File? GenBank_modifier  = genbank_compile.upload_meta

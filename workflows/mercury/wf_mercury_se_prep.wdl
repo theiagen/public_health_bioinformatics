@@ -1,7 +1,7 @@
 version 1.0
 
-import "../tasks/task_versioning.wdl" as versioning
-import "../tasks/task_pub_repo_prep.wdl" as submission_prep
+import "../../tasks/task_versioning.wdl" as versioning
+import "../../tasks/utilities/task_pub_repo_prep.wdl" as submission_prep
 
 workflow mercury_se_prep {
   input {
@@ -125,7 +125,7 @@ workflow mercury_se_prep {
   }
   output {
     # Version Capture
-    String mercury_pe_prep_version = version_capture.phvg_version
+    String mercury_pe_prep_version = version_capture.phb_version
     String mercury_pe_prep_analysis_date = version_capture.date
     # NCBI Submission Files
     File? biosample_attributes = ncbi_prep_one_sample_se.biosample_attributes
