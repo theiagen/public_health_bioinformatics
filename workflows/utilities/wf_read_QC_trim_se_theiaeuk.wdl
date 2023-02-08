@@ -32,7 +32,7 @@ workflow read_QC_trim_se {
     input:
       samplename = samplename,
       read1_trimmed = trimmomatic_se.read1_trimmed,
-      mem_size_gb = bbduk_mem
+      memory = bbduk_mem
   }
   call fastq_scan.fastq_scan_se as fastq_scan_raw {
     input:
@@ -43,7 +43,7 @@ workflow read_QC_trim_se {
       read1 = bbduk_se.read1_clean
   }
   if (call_midas) {
-    call midas_task.midas {
+    call midas_task.midas_theiaeuk as midas {
       input:
         samplename = samplename,
         read1 = read1_raw,

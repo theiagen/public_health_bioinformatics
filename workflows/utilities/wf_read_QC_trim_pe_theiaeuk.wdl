@@ -1,9 +1,9 @@
 version 1.0
 
-import "../tasks/quality_control/task_trimmomatic.wdl" as trimmomatic
-import "../tasks/quality_control/task_bbduk.wdl" as bbduk
-import "../tasks/quality_control/task_fastq_scan.wdl" as fastq_scan
-import "../tasks/taxon_id/task_midas.wdl" as midas_task
+import "../../tasks/quality_control/task_trimmomatic.wdl" as trimmomatic
+import "../../tasks/quality_control/task_bbduk.wdl" as bbduk
+import "../../tasks/quality_control/task_fastq_scan.wdl" as fastq_scan
+import "../../tasks/taxon_id/task_midas.wdl" as midas_task
 
 workflow read_QC_trim_pe {
   meta {

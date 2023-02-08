@@ -1,7 +1,7 @@
 version 1.0
 
-import "../tasks/species_typing/task_cauris_cladetyper.wdl" as cauris_cladetyper
-import "../tasks/gene_typing/task_snippy_variants.wdl" as snippy
+import "../../tasks/species_typing/task_cauris_cladetyper.wdl" as cauris_cladetyper
+import "../../tasks/gene_typing/task_snippy_variants.wdl" as snippy
 # import "../tasks/assembly/task_mycosnp_consensus_assembly.wdl" as mycosnp
 # Maybe add Mycosnp task?
 
