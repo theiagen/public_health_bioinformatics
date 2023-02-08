@@ -1,10 +1,10 @@
 version 1.0
 
-import "../tasks/task_taxonID.wdl" as taxon_id
-import "wf_read_QC_trim.wdl" as read_qc
-import "../tasks/task_alignment.wdl" as align
-import "../tasks/task_consensus_call.wdl" as consensus_call
-import "../tasks/task_versioning.wdl" as versioning
+import "../../tasks/taxon_id/task_freyja_one_sample.wdl" as freyja
+import "../utilities/wf_read_QC_trim_pe_theiacov.wdl" as read_qc
+import "../../tasks/task_alignment.wdl" as align
+import "../../tasks/task_consensus_call.wdl" as consensus_call
+import "../../tasks/task_versioning.wdl" as versioning
 
 workflow freyja_fastq {
   input {
@@ -35,7 +35,7 @@ workflow freyja_fastq {
       primer_bed = primer_bed,
       bamfile = bwa.sorted_bam
   }
-  call taxon_id.freyja_one_sample as freyja {
+  call freyja.freyja_one_sample as freyja {
     input:
       primer_trimmed_bam = primer_trim.trim_sorted_bam,
       samplename = samplename,

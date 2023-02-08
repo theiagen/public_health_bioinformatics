@@ -1,8 +1,9 @@
 version 1.0
 
-import "../tasks/quality_control/task_fastq_scan.wdl" as fastq_scan
-import "../tasks/task_read_clean.wdl" as read_clean
-import "../tasks/task_taxonID.wdl" as taxonID
+import "../../tasks/quality_control/task_fastq_scan.wdl" as fastq_scan
+import "../../tasks/quality_control/task_trimmomatic.wdl" as trimmomatic
+import "../../tasks/quality_control/task_bbduk.wdl" as bbduk_task
+import "../../tasks/taxon_id/task_kraken2.wdl" as kraken
 
 workflow read_QC_trim_se {
   meta {
@@ -11,9 +12,9 @@ workflow read_QC_trim_se {
   input {
     String samplename
     File read1_raw
-    Int? trimmomatic_minlen = 25
-    Int? trimmomatic_quality_trim_score = 30
-    Int? trimmomatic_window_size = 4
+    Int trimmomatic_minlen = 25
+    Int trimmomatic_quality_trim_score = 30
+    Int trimmomatic_window_size = 4
     Int  bbduk_mem = 8
     String? target_org
     File? adapters
@@ -26,7 +27,7 @@ workflow read_QC_trim_se {
 #      samplename = samplename,
 #      read1 = read1_raw
 #  }
-  call read_clean.trimmomatic_se {
+  call trimmomatic.trimmomatic_se {
     input:
       samplename = samplename,
       read1 = read1_raw,
@@ -35,7 +36,7 @@ workflow read_QC_trim_se {
       trimmomatic_window_size = trimmomatic_window_size,
       trimmomatic_args = trim_args
   }
-  call read_clean.bbduk_se {
+  call bbduk_task.bbduk_se {
     input:
       samplename = samplename,
       read1_trimmed = trimmomatic_se.read1_trimmed,
@@ -51,7 +52,7 @@ workflow read_QC_trim_se {
     input:
       read1 = bbduk_se.read1_clean
   }
-  call taxonID.kraken2 as kraken2_raw {
+  call kraken.kraken2_theiacov as kraken2_raw {
     input:
       samplename = samplename,
       read1 = bbduk_se.read1_clean,
