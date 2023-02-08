@@ -5,6 +5,7 @@ task serotypefinder {
     File assembly
     String samplename
     String docker = "quay.io/staphb/serotypefinder:2.0.1"
+    Int disk_size = 100
   }
   command <<<
     # capture date and version
@@ -52,7 +53,8 @@ task serotypefinder {
     docker: "~{docker}"
     memory: "8 GB"
     cpu: 2
-    disks: "local-disk 100 SSD"
+    disks: "local-disk " + disk_size + " SSD"
+    disk: disk_size + " GB"
     preemptible:  0
   }
 }

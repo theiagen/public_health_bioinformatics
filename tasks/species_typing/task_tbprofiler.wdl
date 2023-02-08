@@ -7,16 +7,15 @@ task tbprofiler {
     File? read2
     String samplename
     String tbprofiler_docker_image = "quay.io/biocontainers/tb-profiler:3.0.8--pypyh5e36f6f_0"
-    String? mapper = "bwa"
-    String? caller = "bcftools"
-    Int? min_depth = 10
-    Float? min_af = 0.1
-    Float? min_af_pred = 0.1
-    Int? cov_frac_threshold = 1
+    Int disk_size = 100
+    String mapper = "bwa"
+    String caller = "bcftools"
+    Int min_depth = 10
+    Float min_af = 0.1
+    Float min_af_pred = 0.1
+    Int cov_frac_threshold = 1
   }
   command <<<
-    # update TBDB
-    # tb-profiler update_tbdb
     # Print and save date
     date | tee DATE
     # Print and save version
@@ -28,7 +27,7 @@ task tbprofiler {
       INPUT_READS="-1 ~{read1} -2 ~{read2}"
     fi
 
-    # Run Kleborate on the input assembly with the --all flag and output with samplename prefix
+    # Run TB Profiler on the input sample
     tb-profiler profile \
       ${INPUT_READS} \
       --prefix ~{samplename} \
@@ -41,7 +40,7 @@ task tbprofiler {
       --coverage_fraction_threshold ~{cov_frac_threshold} \
       --csv --txt
 
-    #Collate results
+    # Collate results
     tb-profiler collate --prefix ~{samplename}
 
     python3 <<CODE
@@ -92,7 +91,8 @@ task tbprofiler {
     docker: "~{tbprofiler_docker_image}"
     memory: "16 GB"
     cpu: 8
-    disks: "local-disk 100 SSD"
+    disks: "local-disk " + disk_size + " SSD"
+    disk: disk_size + " GB"
   }
 }
 
@@ -102,24 +102,24 @@ task tbprofiler_ont {
     File reads
     String samplename
     String tbprofiler_docker_image = "quay.io/biocontainers/tb-profiler:3.0.8--pypyh5e36f6f_0"
-    String? mapper = "bwa"
-    String? caller = "bcftools"
-    Int? min_depth = 10
-    Float? min_af = 0.1
-    Float? min_af_pred = 0.1
-    Int? cov_frac_threshold = 1
+    Int disk_size = 100
+    String mapper = "bwa"
+    String caller = "bcftools"
+    Int min_depth = 10
+    Float min_af = 0.1
+    Float min_af_pred = 0.1
+    Int cov_frac_threshold = 1
   }
   command <<<
-    # update TBDB
-    # tb-profiler update_tbdb
     # Print and save date
     date | tee DATE
     # Print and save version
     tb-profiler --version > VERSION && sed -i -e 's/^/TBProfiler version /' VERSION
+    
     # Run TBProfiler on the input sample
     tb-profiler profile --platform nanopore -1 ~{reads} --prefix ~{samplename} --mapper ~{mapper} --caller ~{caller} --min_depth ~{min_depth} --af ~{min_af} --reporting_af ~{min_af_pred} --coverage_fraction_threshold ~{cov_frac_threshold} --csv --txt
 
-    #Collate results
+    # Collate results
     tb-profiler collate --prefix ~{samplename}
 
     python3 <<CODE
@@ -170,7 +170,8 @@ task tbprofiler_ont {
     docker: "~{tbprofiler_docker_image}"
     memory: "16 GB"
     cpu: 8
-    disks: "local-disk 100 SSD"
+    disks: "local-disk " + disk_size + " SSD"
+    disk: disk_size + " GB"
     maxRetries: 3
   }
 }

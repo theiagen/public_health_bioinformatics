@@ -6,6 +6,7 @@ task kaptive {
     File assembly
     String samplename
     String kaptive_docker_image = "quay.io/staphb/kaptive:2.0.3"
+    Int disk_size = 100
     Int cpu = 4
     # Parameters
     Int start_end_margin = 10 # determines flexibility in identifying the start and end of a locus - if this value is 10, a locus match that is missing the first 8 base pairs will still count as capturing the start of the locus (default: 10) 
@@ -15,16 +16,17 @@ task kaptive {
     #Int min_assembly_piece = 100 # smallest piece of the assembly (measured in bases) that will be included in the output FASTA files (default: 100)
     #Int gap_fill_size = 100 # size of assembly gaps to be filled in when producing the output FASTA files
   }
-
   command <<<
     #find absolute path of kaptive directory
     KAPTIVE_DIR=$(dirname "$(which kaptive.py)")
-    # capture date and version
+    
     # Print and save date
     date | tee DATE
+    
     # Print and save version
     kaptive.py --version | tee VERSION 
-    # Run Kaptive on the input assembly with the --all flag and output with samplename prefix
+    
+    # Run Kaptive on the input assembly for the K locus
     kaptive.py \
     -t ~{cpu} \
     ~{'--start_end_margin ' + start_end_margin} \
@@ -36,6 +38,7 @@ task kaptive {
     --out ~{samplename}_kaptive_out_k \
     --assembly ~{assembly} \
     --k_refs ${KAPTIVE_DIR}/reference_database/Acinetobacter_baumannii_k_locus_primary_reference.gbk
+    
     # parse outputs
     python3 <<CODE
     import csv
@@ -77,6 +80,8 @@ task kaptive {
         other_out_k=tsv_dict['Expected genes outside locus, details']
         Other_Outside_K.write(other_out_k)
     CODE
+    
+    # Run Kaptive on the input assembly for the OC locus
     kaptive.py \
     -t ~{cpu} \
     ~{'--start_end_margin ' + start_end_margin} \
@@ -88,6 +93,7 @@ task kaptive {
     --out ~{samplename}_kaptive_out_oc \
     --assembly ~{assembly} \
     --k_refs ${KAPTIVE_DIR}/reference_database/Acinetobacter_baumannii_OC_locus_primary_reference.gbk
+    
     python3 <<CODE
     import csv
     with open("./~{samplename}_kaptive_out_oc_table.txt",'r') as tsv_file:
@@ -128,6 +134,7 @@ task kaptive {
         other_out_oc=tsv_dict['Expected genes outside locus, details']
         Other_Outside_OC.write(other_out_oc)
     CODE
+
     mv -v ~{samplename}_kaptive_out_k_table.txt ~{samplename}_kaptive_out_k_table.tsv
     mv -v ~{samplename}_kaptive_out_oc_table.txt ~{samplename}_kaptive_out_oc_table.tsv
   >>>
@@ -162,6 +169,8 @@ task kaptive {
     docker: "~{kaptive_docker_image}"
     memory: "8 GB"
     cpu: cpu
-    disks: "local-disk 100 SSD"
+    disks: "local-disk " + disk_size + " SSD"
+    disk: disk_size + " GB"
+    maxRetries: 3
   }
 }

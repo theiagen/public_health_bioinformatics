@@ -6,6 +6,7 @@ task seroba {
     File? read2
     String samplename
     String docker = "staphb/seroba:1.0.2"
+    Int disk_size = 100
   }
   command <<<
     # grab version
@@ -39,6 +40,7 @@ task seroba {
     docker: "~{docker}"
     memory: "16 GB"
     cpu: 8
-    disks: "local-disk 100 SSD"
-  }
+    disks: "local-disk " + disk_size + " SSD"
+    disk: disk_size + " GB"
+    maxRetries: 3  }
 }

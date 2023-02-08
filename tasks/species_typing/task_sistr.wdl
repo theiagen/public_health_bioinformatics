@@ -8,7 +8,8 @@ task sistr {
     File assembly
     String samplename
     String docker = "quay.io/biocontainers/sistr_cmd:1.1.1--pyh864c0ab_2"
-    Int? cpu = 4
+    Int cpu = 4
+    Int disk_size = 100
 
     # Parameters
     # --use-full-cgmlst-db  Use the full set of cgMLST alleles which can include highly similar alleles. By default the smaller "centroid" alleles or representative alleles are used for each marker. 
@@ -45,7 +46,9 @@ task sistr {
     docker: "~{docker}"
     memory: "8 GB"
     cpu: 4
-    disks: "local-disk 50 SSD"
+    disks: "local-disk " + disk_size + " SSD"
+    disk: disk_size + " GB"
     preemptible: 0
+    maxRetries: 3
   }
 }

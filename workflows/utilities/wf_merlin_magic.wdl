@@ -1,19 +1,23 @@
 version 1.0
 
-import "../tasks/species_typing/task_serotypefinder.wdl" as serotypefinder
-import "../tasks/species_typing/task_ectyper.wdl" as ectyper
-import "../tasks/species_typing/task_lissero.wdl" as lissero
-import "../tasks/species_typing/task_sistr.wdl" as sistr
-import "../tasks/species_typing/task_seqsero2.wdl" as seqsero2
-import "../tasks/species_typing/task_kleborate.wdl" as kleborate
-import "../tasks/species_typing/task_tbprofiler.wdl" as tbprofiler
-import "../tasks/species_typing/task_legsta.wdl" as legsta
-import "../tasks/species_typing/task_genotyphi.wdl" as genotyphi
-import "../tasks/species_typing/task_kaptive.wdl" as kaptive
-import "../tasks/species_typing/task_seroba.wdl" as seroba
-import "../tasks/species_typing/task_pbptyper.wdl" as pbptyper
-import "../tasks/species_typing/task_poppunk_streppneumo.wdl" as poppunk_spneumo
-import "../tasks/gene_typing/task_abricate.wdl" as abricate_task
+import "../../tasks/species_typing/task_serotypefinder.wdl" as serotypefinder_task
+import "../../tasks/species_typing/task_ectyper.wdl" as ectyper_task
+import "../../tasks/species_typing/task_shigatyper.wdl" as shigatyper_task
+import "../../tasks/species_typing/task_shigeifinder.wdl" as shigeifinder_task
+import "../../tasks/species_typing/task_sonneityping.wdl" as sonneityping_task
+import "../../tasks/species_typing/task_lissero.wdl" as lissero_task
+import "../../tasks/species_typing/task_sistr.wdl" as sistr_task
+import "../../tasks/species_typing/task_seqsero2.wdl" as seqsero2_task
+import "../../tasks/species_typing/task_kleborate.wdl" as kleborate_task
+import "../../tasks/species_typing/task_tbprofiler.wdl" as tbprofiler_task
+import "../../tasks/species_typing/task_legsta.wdl" as legsta_task
+import "../../tasks/species_typing/task_genotyphi.wdl" as genotyphi
+import "../../tasks/species_typing/task_kaptive.wdl" as kaptive_task
+import "../../tasks/species_typing/task_seroba.wdl" as seroba
+import "../../tasks/species_typing/task_pbptyper.wdl" as pbptyper
+import "../../tasks/species_typing/task_poppunk_streppneumo.wdl" as poppunk_spneumo
+import "../../tasks/species_typing/task_pasty.wdl" as pasty_task
+import "../../tasks/gene_typing/task_abricate.wdl" as abricate_task
 
 workflow merlin_magic {
   meta {
@@ -25,11 +29,17 @@ workflow merlin_magic {
     File assembly
     File read1
     File? read2
+    Int? pasty_min_pident
+    Int? pasty_min_coverage
+    String? pasty_docker_image
+    String? shigeifinder_docker_image
     Boolean paired_end = true
     Boolean call_poppunk = true
+    Boolean read1_is_ont = false
+    Boolean call_shigeifinder_reads_input = false
   }
     if (merlin_tag == "Acinetobacter baumannii") {
-    call kaptive.kaptive {
+    call kaptive_task.kaptive {
       input:
         assembly = assembly,
         samplename = samplename
@@ -42,32 +52,66 @@ workflow merlin_magic {
         minid = 95 # strict threshold of 95% identity for typing purposes
     }
   }
-  if (merlin_tag == "Escherichia") {
-    call serotypefinder.serotypefinder {
+  if (merlin_tag == "Escherichia" || merlin_tag == "Shigella_sonnei" ) {
+    # tools specific to all Escherichia and Shigella species
+    call serotypefinder_task.serotypefinder {
       input:
         assembly = assembly,
         samplename = samplename
     }
-    call ectyper.ectyper {
+    call ectyper_task.ectyper {
       input:
         assembly = assembly,
         samplename = samplename
+    }
+    call shigatyper_task.shigatyper {
+      input:
+        read1 = read1,
+        read2 = read2,
+        samplename = samplename,
+        read1_is_ont = read1_is_ont
+    }
+    call shigeifinder_task.shigeifinder {
+      input:
+        assembly = assembly,
+        samplename = samplename,
+        docker = shigeifinder_docker_image
+    }
+    if (call_shigeifinder_reads_input) {
+    call shigeifinder_task.shigeifinder_reads as shigeifinder_reads {
+      input:
+        read1 = read1,
+        read2 = read2,
+        samplename = samplename,
+        docker = shigeifinder_docker_image,
+        paired_end = paired_end
+    }
+    }
+  }
+  if (merlin_tag == "Shigella_sonnei") {
+    # Shigella sonnei specific tasks
+    call sonneityping_task.sonneityping {
+      input:
+        read1 = read1,
+        read2 = read2,
+        samplename = samplename,
+        ont_data = read1_is_ont
     }
   }
   if (merlin_tag == "Listeria") {
-    call lissero.lissero {
+    call lissero_task.lissero {
       input:
         assembly = assembly,
         samplename = samplename
     }
   }
   if (merlin_tag == "Salmonella") {
-    call sistr.sistr {
+    call sistr_task.sistr {
       input: 
         assembly = assembly,
         samplename = samplename
     }
-    call seqsero2.seqsero2 as seqsero2 {
+    call seqsero2_task.seqsero2 {
       input: 
         read1 = read1,
         read2 = read2,
@@ -84,14 +128,24 @@ workflow merlin_magic {
     }
   }
   if (merlin_tag == "Klebsiella") {
-    call kleborate.kleborate {
+    call kleborate_task.kleborate {
       input:
         assembly = assembly,
         samplename = samplename
     }
   }
+  if (merlin_tag == "Pseudomonas aeruginosa") {
+    call pasty_task.pasty {
+      input:
+        assembly = assembly,
+        samplename = samplename,
+        min_pident = pasty_min_pident,
+        min_coverage = pasty_min_coverage,
+        docker = pasty_docker_image
+    }
+  }
   if (merlin_tag == "Mycobacterium tuberculosis") {
-    call tbprofiler.tbprofiler {
+    call tbprofiler_task.tbprofiler {
       input:
         read1 = read1,
         read2 = read2,
@@ -99,7 +153,7 @@ workflow merlin_magic {
     }
   }
   if (merlin_tag == "Legionella pneumophila") {
-    call legsta.legsta {
+    call legsta_task.legsta {
       input:
         assembly = assembly,
         samplename = samplename
@@ -127,7 +181,6 @@ workflow merlin_magic {
       }  
     }
   }
-
   output {
   # Ecoli Typing
   File? serotypefinder_report = serotypefinder.serotypefinder_report
@@ -136,10 +189,58 @@ workflow merlin_magic {
   File? ectyper_results = ectyper.ectyper_results
   String? ectyper_version = ectyper.ectyper_version
   String? ectyper_predicted_serotype = ectyper.ectyper_predicted_serotype
+  String? shigatyper_predicted_serotype = shigatyper.shigatyper_predicted_serotype
+  String? shigatyper_ipaB_presence_absence = shigatyper.shigatyper_ipaB_presence_absence
+  String? shigatyper_notes = shigatyper.shigatyper_notes
+  File? shigatyper_hits_tsv = shigatyper.shigatyper_hits_tsv
+  File? shigatyper_summary_tsv = shigatyper.shigatyper_summary_tsv
+  String? shigatyper_version = shigatyper.shigatyper_version
+  String? shigatyper_docker = shigatyper.shigatyper_docker
+  File? shigeifinder_report = shigeifinder.shigeifinder_report
+  String? shigeifinder_docker = shigeifinder.shigeifinder_docker
+  String? shigeifinder_version = shigeifinder.shigeifinder_version
+  String? shigeifinder_ipaH_presence_absence = shigeifinder.shigeifinder_ipaH_presence_absence
+  String? shigeifinder_num_virulence_plasmid_genes = shigeifinder.shigeifinder_num_virulence_plasmid_genes
+  String? shigeifinder_cluster = shigeifinder.shigeifinder_cluster
+  String? shigeifinder_serotype = shigeifinder.shigeifinder_serotype
+  String? shigeifinder_O_antigen = shigeifinder.shigeifinder_O_antigen
+  String? shigeifinder_H_antigen = shigeifinder.shigeifinder_H_antigen
+  String? shigeifinder_notes = shigeifinder.shigeifinder_notes
+  # ShigeiFinder outputs but for task that uses reads instead of assembly as input
+  File? shigeifinder_report_reads = shigeifinder_reads.shigeifinder_report
+  String? shigeifinder_docker_reads = shigeifinder_reads.shigeifinder_docker
+  String? shigeifinder_version_reads = shigeifinder_reads.shigeifinder_version
+  String? shigeifinder_ipaH_presence_absence_reads = shigeifinder_reads.shigeifinder_ipaH_presence_absence
+  String? shigeifinder_num_virulence_plasmid_genes_reads = shigeifinder_reads.shigeifinder_num_virulence_plasmid_genes
+  String? shigeifinder_cluster_reads = shigeifinder_reads.shigeifinder_cluster
+  String? shigeifinder_serotype_reads = shigeifinder_reads.shigeifinder_serotype
+  String? shigeifinder_O_antigen_reads = shigeifinder_reads.shigeifinder_O_antigen
+  String? shigeifinder_H_antigen_reads = shigeifinder_reads.shigeifinder_H_antigen
+  String? shigeifinder_notes_reads = shigeifinder_reads.shigeifinder_notes
+  # Shigella sonnei Typing
+  File? sonneityping_mykrobe_report_csv = sonneityping.sonneityping_mykrobe_report_csv
+  File? sonneityping_mykrobe_report_json = sonneityping.sonneityping_mykrobe_report_json
+  File? sonneityping_final_report_tsv = sonneityping.sonneityping_final_report_tsv
+  String? sonneityping_mykrobe_version = sonneityping.sonneityping_mykrobe_version
+  String? sonneityping_mykrobe_docker = sonneityping.sonneityping_mykrobe_docker
+  String? sonneityping_species = sonneityping.sonneityping_species
+  String? sonneityping_final_genotype = sonneityping.sonneityping_final_genotype
+  String? sonneityping_genotype_confidence = sonneityping.sonneityping_genotype_confidence
+  String? sonneityping_genotype_name = sonneityping.sonneityping_genotype_name
   # Listeria Typing
   File? lissero_results = lissero.lissero_results
   String? lissero_version = lissero.lissero_version
   String? lissero_serotype = lissero.lissero_serotype
+  # Pseudomonas Aeruginosa Typing
+  String? pasty_serogroup = pasty.pasty_serogroup
+  Float? pasty_serogroup_coverage = pasty.pasty_serogroup_coverage
+  Int? pasty_serogroup_fragments = pasty.pasty_serogroup_fragments
+  File? pasty_summary_tsv = pasty.pasty_summary_tsv
+  File? pasty_blast_hits = pasty.pasty_blast_hits
+  File? pasty_all_serogroups = pasty.pasty_all_serogroups
+  String? pasty_version = pasty.pasty_version
+  String? pasty_docker = pasty.pasty_docker
+  String? pasty_comment = pasty.pasty_comment
   # Salmonella Typing
   File? sistr_results = sistr.sistr_results
   File? sistr_allele_json = sistr.sistr_allele_json

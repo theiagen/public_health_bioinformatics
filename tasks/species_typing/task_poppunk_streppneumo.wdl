@@ -8,6 +8,7 @@ task poppunk {
     File assembly
     String samplename
     String docker = "staphb/poppunk:2.4.0"
+    Int disk_size = 100
     Int cpus = 4
     # database/reference files currently hosted on a public, requester-pays GCP bucket
     # hosting individually for speed purposes. Unzipping one big 20GB zip archive takes a long time, longer than downloading the files individually (which total 22GB uncompressed)
@@ -88,7 +89,8 @@ task poppunk {
     # poppunk with the GPS v6 db used upwards of 12GB ram at times
     memory: "16 GB"
     cpu: cpus
-    disks: "local-disk 100 SSD"
-    preemptible: 0
+    disks: "local-disk " + disk_size + " SSD"
+    disk: disk_size + " GB"
+    maxRetries: 3    preemptible: 0
   }
 }
