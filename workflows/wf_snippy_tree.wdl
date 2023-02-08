@@ -81,7 +81,7 @@ workflow snippy_tree_wf {
   }
   output {
     # version capture
-    String snippy_tree_version = version_capture.phbg_version
+    String snippy_tree_version = version_capture.phb_version
     String snippy_tree_analysis_date = version_capture.date
     # snippy core outputs
     String snippy_tree_snippy_version = snippy_core.snippy_version
