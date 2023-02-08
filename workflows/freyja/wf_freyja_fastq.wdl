@@ -1,9 +1,9 @@
 version 1.0
 
-import "../../tasks/taxon_id/task_freyja_one_sample.wdl" as freyja
+import "../../tasks/taxon_id/task_freyja_one_sample.wdl" as freyja_task
 import "../utilities/wf_read_QC_trim_pe_theiacov.wdl" as read_qc
-import "../../tasks/task_alignment.wdl" as align
-import "../../tasks/task_consensus_call.wdl" as consensus_call
+import "../../tasks/alignment/task_bwa.wdl" as align
+import "../../tasks/assembly/task_ivar_primer_trim.wdl" as trim_primers
 import "../../tasks/task_versioning.wdl" as versioning
 
 workflow freyja_fastq {
@@ -15,7 +15,7 @@ workflow freyja_fastq {
     Int trimmomatic_minlen = 25
     String samplename
   }
-  call read_qc.read_QC_trim {
+  call read_qc.read_QC_trim_pe as read_QC_trim {
     input:
       samplename = samplename,
       read1_raw  = read1_raw,
@@ -29,13 +29,13 @@ workflow freyja_fastq {
       read1 = read_QC_trim.read1_clean,
       read2 = read_QC_trim.read2_clean
   }
-  call consensus_call.primer_trim {
+  call trim_primers.primer_trim {
     input:
       samplename = samplename,
       primer_bed = primer_bed,
       bamfile = bwa.sorted_bam
   }
-  call freyja.freyja_one_sample as freyja {
+  call freyja_task.freyja_one_sample as freyja {
     input:
       primer_trimmed_bam = primer_trim.trim_sorted_bam,
       samplename = samplename,
@@ -46,7 +46,7 @@ workflow freyja_fastq {
   }
   output {
     # Version Capture
-    String freyja_fastq_wf_version = version_capture.phvg_version
+    String freyja_fastq_wf_version = version_capture.phb_version
     String freyja_fastq_wf_analysis_date = version_capture.date
     # Raw Read QC
     File read1_dehosted = read_QC_trim.read1_dehosted
@@ -63,7 +63,7 @@ workflow freyja_fastq {
     String num_reads_clean_pairs = read_QC_trim.fastq_scan_clean_pairs
     String trimmomatic_version = read_QC_trim.trimmomatic_version
     String bbduk_docker = read_QC_trim.bbduk_docker
-    # Contaminent Check
+    # Contamination Check
     String kraken_version = read_QC_trim.kraken_version
     Float kraken_human = read_QC_trim.kraken_human
     Float kraken_sc2 = read_QC_trim.kraken_sc2

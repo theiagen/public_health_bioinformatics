@@ -1,6 +1,6 @@
 version 1.0
 
-import "../tasks/task_versioning.wdl" as versioning
+import "../../tasks/task_versioning.wdl" as versioning
 
 workflow freyja_plot {
   input {
@@ -21,7 +21,7 @@ workflow freyja_plot {
   }
   output {
     # Version Capture
-    String freyja_plot_wf_version = version_capture.phvg_version
+    String freyja_plot_wf_version = version_capture.phb_version
     String freyja_plot_wf_analysis_date = version_capture.date
     # Freyja Plot Visualization
     String freyja_plot_version = freyja_plot_task.freyja_plot_version
