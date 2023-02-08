@@ -177,7 +177,6 @@ task export_taxon_tables {
     String? midas_primary_genus
     String? midas_secondary_genus
     String? midas_secondary_genus_coverage
- #   Array[File]? snippy_variants_outdir_tarball - commented out because I'm not totally sure how uploading this would work in this new format
   }
   command <<<
   
@@ -382,7 +381,6 @@ task export_taxon_tables {
     "midas_primary_genus": "~{midas_primary_genus}",
     "midas_secondary_genus": "~{midas_secondary_genus}",
     "midas_secondary_genus_coverage": "~{midas_secondary_genus_coverage}"
-#    "snippy_variants_outdir_tarball": "~{sep="*" snippy_variants_outdir_tarball}".split("*") # syntax required to make an array. I have 0 idea how this will upload btw
   }
 
   with open("~{samplename}_terra_table.tsv", "w") as outfile:

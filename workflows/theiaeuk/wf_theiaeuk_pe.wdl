@@ -1,6 +1,6 @@
 version 1.0
 
-import "wf_read_QC_trim.wdl" as read_qc
+import "wf_read_QC_trim_pe_theiaeuk.wdl" as read_qc
 import "wf_merlin_magic_euk.wdl" as merlin_magic
 import "../tasks/assembly/task_shovill.wdl" as shovill
 import "../tasks/quality_control/task_quast.wdl" as quast
@@ -44,7 +44,7 @@ workflow theiaeuk_illumina_pe {
       skip_screen = skip_screen
   }
   if (raw_check_reads.read_screen=="PASS") {
-    call read_qc.read_QC_trim {
+    call read_qc.read_QC_trim_pe as read_QC_trim {
       input:
         samplename = samplename,
         read1_raw = read1_raw,
