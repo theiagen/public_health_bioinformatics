@@ -65,7 +65,6 @@ task kraken2_theiacov {
 }
 
 # standalone version (no default database included)
-
 task kraken2_standalone {
   input {
     File read1
