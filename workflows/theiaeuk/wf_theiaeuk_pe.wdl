@@ -1,7 +1,7 @@
 version 1.0
 
-import "../utilities/wf_read_QC_trim_pe_theiaeuk.wdl" as read_qc
-import "../utilities/wf_merlin_magic_euk.wdl" as merlin_magic_workflow
+import "../utilities/wf_read_QC_trim_pe.wdl" as read_qc
+import "../utilities/wf_merlin_magic.wdl" as merlin_magic_workflow
 import "../../tasks/assembly/task_shovill.wdl" as shovill
 import "../../tasks/quality_control/task_quast.wdl" as quast_task
 import "../../tasks/quality_control/task_cg_pipeline.wdl" as cg_pipeline_task
@@ -20,7 +20,7 @@ workflow theiaeuk_illumina_pe {
     File read1_raw
     File read2_raw
     Int min_reads = 30000
-    #Edited default values
+    # Edited default values
     Int min_basepairs = 90000000
     Int min_genome_size = 9000000
     Int max_genome_size = 178000000

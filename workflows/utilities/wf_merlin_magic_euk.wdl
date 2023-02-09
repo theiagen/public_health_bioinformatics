@@ -2,8 +2,6 @@ version 1.0
 
 import "../../tasks/species_typing/task_cauris_cladetyper.wdl" as cauris_cladetyper
 import "../../tasks/gene_typing/task_snippy_variants.wdl" as snippy
-# import "../tasks/assembly/task_mycosnp_consensus_assembly.wdl" as mycosnp
-# Maybe add Mycosnp task?
 
 workflow merlin_magic {
   meta {
@@ -66,7 +64,7 @@ workflow merlin_magic {
     String snippy_variants_none = "No matching taxon detected"
     File snippy_variants_none_file = "gs://theiagen-public-files/terra/theiaeuk_files/no_match_detected.txt"
     Array[File] snippy_outputs_none = []
-        }
+  }
   output {
   # Typing
   String? clade_type = cladetyper.gambit_cladetype

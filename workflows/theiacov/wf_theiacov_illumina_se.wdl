@@ -1,6 +1,6 @@
 version 1.0
 
-import "../utilities/wf_read_QC_trim_se_theiacov.wdl" as read_qc
+import "../utilities/wf_read_QC_trim_se.wdl" as read_qc
 import "../../tasks/alignment/task_bwa.wdl" as bwa_task
 import "../../tasks/assembly/task_ivar_consensus.wdl" as consensus_task
 import "../../tasks/assembly/task_ivar_primer_trim.wdl" as primer_trim_task
@@ -37,7 +37,8 @@ workflow theiacov_illumina_se {
       samplename = samplename,
       read1_raw = read1_raw,
       adapters = adapters,
-      phix = phix
+      phix = phix,
+      workflow_series = "theiacov"
   }
   call bwa_task.bwa {
     input:
@@ -61,14 +62,14 @@ workflow theiacov_illumina_se {
   call variant_call_task.variant_call {
     input:
       samplename = samplename,
-      bamfile = select_first([primer_trim.trim_sorted_bam,bwa.sorted_bam]),
+      bamfile = select_first([primer_trim.trim_sorted_bam, bwa.sorted_bam]),
       reference_genome = reference_genome,
       variant_min_depth = min_depth
   }
   call consensus_task.consensus {
     input:
       samplename = samplename,
-      bamfile = select_first([primer_trim.trim_sorted_bam,bwa.sorted_bam]),
+      bamfile = select_first([primer_trim.trim_sorted_bam, bwa.sorted_bam]),
       reference_genome = reference_genome,
       consensus_min_depth = min_depth
   }
@@ -135,27 +136,24 @@ workflow theiacov_illumina_se {
     String seq_platform = seq_method
     # Read QC
     File read1_clean = read_QC_trim.read1_clean
-    Int num_reads_raw = read_QC_trim.fastq_scan_number_reads
+    Int num_reads_raw = read_QC_trim.fastq_scan_raw_number_reads
     String fastq_scan_version = read_QC_trim.fastq_scan_version
     Int num_reads_clean = read_QC_trim.fastq_scan_clean_number_reads
-    String trimmomatic_version = read_QC_trim.trimmomatic_version
+    String? trimmomatic_version = read_QC_trim.trimmomatic_version
     String bbduk_docker = read_QC_trim.bbduk_docker
-    Float kraken_human = read_QC_trim.kraken_human
-    Float kraken_sc2 = read_QC_trim.kraken_sc2
+    Float? kraken_human = read_QC_trim.kraken_human
+    Float? kraken_sc2 = read_QC_trim.kraken_sc2
     String? kraken_target_org = read_QC_trim.kraken_target_org
     String? kraken_target_org_name = read_QC_trim.kraken_target_org_name
-    String kraken_version = read_QC_trim.kraken_version
-    File kraken_report = read_QC_trim.kraken_report
-#    Float    kraken_human_dehosted  = read_QC_trim.kraken_human_dehosted
-#    Float    kraken_sc2_dehosted    = read_QC_trim.kraken_sc2_dehosted
-#    String   kraken_report_dehosted = read_QC_trim.kraken_report_dehosted
+    String? kraken_version = read_QC_trim.kraken_version
+    File? kraken_report = read_QC_trim.kraken_report
     # Read Alignment
     String bwa_version = bwa.bwa_version
     String samtools_version = bwa.sam_version
     File read1_aligned = bwa.read1_aligned
     String assembly_method = "TheiaCoV (~{version_capture.phb_version}): ~{bwa.bwa_version}; ~{primer_trim.ivar_version}"
-    File aligned_bam = select_first([primer_trim.trim_sorted_bam,bwa.sorted_bam])
-    File aligned_bai =select_first([primer_trim.trim_sorted_bai,bwa.sorted_bai])
+    File aligned_bam = select_first([primer_trim.trim_sorted_bam, bwa.sorted_bam])
+    File aligned_bai =select_first([primer_trim.trim_sorted_bai, bwa.sorted_bai])
     Float? primer_trimmed_read_percent = primer_trim.primer_trimmed_read_percent
     String? ivar_version_primtrim = primer_trim.ivar_version
     String? samtools_version_primtrim = primer_trim.samtools_version

@@ -1,6 +1,6 @@
 version 1.0
 
-import "../utilities/wf_read_QC_trim_pe_theiacov.wdl" as read_qc
+import "../utilities/wf_read_QC_trim_pe.wdl" as read_qc
 import "../../tasks/alignment/task_bwa.wdl" as bwa_task
 import "../../tasks/assembly/task_ivar_consensus.wdl" as consensus_task
 import "../../tasks/assembly/task_ivar_primer_trim.wdl" as primer_trim_task
@@ -48,7 +48,8 @@ workflow theiacov_illumina_pe {
       read1_raw = read1_raw,
       read2_raw = read2_raw,
       adapters = adapters,
-      phix = phix
+      phix = phix,
+      workflow_series = "theiacov"
   }
   # assembly via bwa and ivar for non-flu data
   if (organism != "flu"){
@@ -75,7 +76,7 @@ workflow theiacov_illumina_pe {
     call variant_call_task.variant_call {
       input:
         samplename = samplename,
-        bamfile = select_first([primer_trim.trim_sorted_bam,bwa.sorted_bam]),
+        bamfile = select_first([primer_trim.trim_sorted_bam, bwa.sorted_bam]),
         reference_gff = reference_gff,
         reference_genome = reference_genome,
         variant_min_depth = min_depth
@@ -83,7 +84,7 @@ workflow theiacov_illumina_pe {
     call consensus_task.consensus {
       input:
         samplename = samplename,
-        bamfile = select_first([primer_trim.trim_sorted_bam,bwa.sorted_bam]),
+        bamfile = select_first([primer_trim.trim_sorted_bam, bwa.sorted_bam]),
         reference_genome = reference_genome,
         consensus_min_depth = min_depth
     }
@@ -176,8 +177,8 @@ workflow theiacov_illumina_pe {
     # Read Metadata
     String  seq_platform = seq_method
     # Read QC
-    File read1_dehosted = read_QC_trim.read1_dehosted
-    File read2_dehosted = read_QC_trim.read2_dehosted
+    File? read1_dehosted = read_QC_trim.read1_dehosted
+    File? read2_dehosted = read_QC_trim.read2_dehosted
     File read1_clean = read_QC_trim.read1_clean
     File read2_clean = read_QC_trim.read2_clean
     Int num_reads_raw1 = read_QC_trim.fastq_scan_raw1
@@ -187,26 +188,26 @@ workflow theiacov_illumina_pe {
     Int num_reads_clean1 = read_QC_trim.fastq_scan_clean1
     Int num_reads_clean2 = read_QC_trim.fastq_scan_clean2
     String num_reads_clean_pairs = read_QC_trim.fastq_scan_clean_pairs
-    String trimmomatic_version = read_QC_trim.trimmomatic_version
+    String? trimmomatic_version = read_QC_trim.trimmomatic_version
     String bbduk_docker = read_QC_trim.bbduk_docker
-    String kraken_version = read_QC_trim.kraken_version
-    Float kraken_human = read_QC_trim.kraken_human
-    Float kraken_sc2 = read_QC_trim.kraken_sc2
+    String? kraken_version = read_QC_trim.kraken_version
+    Float? kraken_human = read_QC_trim.kraken_human
+    Float? kraken_sc2 = read_QC_trim.kraken_sc2
     String? kraken_target_org = read_QC_trim.kraken_target_org
     String? kraken_target_org_name = read_QC_trim.kraken_target_org_name
-    File kraken_report = read_QC_trim.kraken_report
-    Float kraken_human_dehosted = read_QC_trim.kraken_human_dehosted
-    Float kraken_sc2_dehosted = read_QC_trim.kraken_sc2_dehosted
+    File? kraken_report = read_QC_trim.kraken_report
+    Float? kraken_human_dehosted = read_QC_trim.kraken_human_dehosted
+    Float? kraken_sc2_dehosted = read_QC_trim.kraken_sc2_dehosted
     String? kraken_target_org_dehosted =read_QC_trim.kraken_target_org_dehosted
-    File kraken_report_dehosted = read_QC_trim.kraken_report_dehosted
+    File? kraken_report_dehosted = read_QC_trim.kraken_report_dehosted
     # Read Alignment
     String? bwa_version = bwa.bwa_version
     String? samtools_version = bwa.sam_version
     File? read1_aligned = bwa.read1_aligned
     File? read2_aligned = bwa.read2_aligned
-    String assembly_method = "TheiaCoV (~{version_capture.phb_version}): " + select_first([assembly_method_nonflu,irma.irma_version])
-    String aligned_bam =  select_first([primer_trim.trim_sorted_bam,bwa.sorted_bam,""]) # set default values for select_first() to avoid workflow failures
-    String aligned_bai = select_first([primer_trim.trim_sorted_bai,bwa.sorted_bai,""])
+    String assembly_method = "TheiaCoV (~{version_capture.phb_version}): " + select_first([assembly_method_nonflu, irma.irma_version])
+    String aligned_bam =  select_first([primer_trim.trim_sorted_bam, bwa.sorted_bam, ""]) # set default values for select_first() to avoid workflow failures
+    String aligned_bai = select_first([primer_trim.trim_sorted_bai, bwa.sorted_bai, ""])
     Float? primer_trimmed_read_percent = primer_trim.primer_trimmed_read_percent
     String? ivar_version_primtrim = primer_trim.ivar_version
     String? samtools_version_primtrim = primer_trim.samtools_version
@@ -245,15 +246,15 @@ workflow theiacov_illumina_pe {
     String? pangolin_docker = pangolin4.pangolin_docker
     String? pangolin_versions = pangolin4.pangolin_versions
     # Clade Assigment
-    String nextclade_json = select_first([nextclade_one_sample.nextclade_json,""])
-    String auspice_json = select_first([ nextclade_one_sample.auspice_json,""])
-    String nextclade_tsv = select_first([nextclade_one_sample.nextclade_tsv,""])
-    String nextclade_version = select_first([nextclade_one_sample.nextclade_version,""])
-    String nextclade_docker = select_first([nextclade_one_sample.nextclade_docker,""])
-    String nextclade_ds_tag = select_first([abricate_flu.nextclade_ds_tag, nextclade_dataset_tag,""])
-    String nextclade_aa_subs = select_first([nextclade_output_parser_one_sample.nextclade_aa_subs,""])
-    String nextclade_aa_dels = select_first([nextclade_output_parser_one_sample.nextclade_aa_dels,""])
-    String nextclade_clade = select_first([nextclade_output_parser_one_sample.nextclade_clade,""])
+    String nextclade_json = select_first([nextclade_one_sample.nextclade_json, ""])
+    String auspice_json = select_first([ nextclade_one_sample.auspice_json, ""])
+    String nextclade_tsv = select_first([nextclade_one_sample.nextclade_tsv, ""])
+    String nextclade_version = select_first([nextclade_one_sample.nextclade_version, ""])
+    String nextclade_docker = select_first([nextclade_one_sample.nextclade_docker, ""])
+    String nextclade_ds_tag = select_first([abricate_flu.nextclade_ds_tag, nextclade_dataset_tag, ""])
+    String nextclade_aa_subs = select_first([nextclade_output_parser_one_sample.nextclade_aa_subs, ""])
+    String nextclade_aa_dels = select_first([nextclade_output_parser_one_sample.nextclade_aa_dels, ""])
+    String nextclade_clade = select_first([nextclade_output_parser_one_sample.nextclade_clade, ""])
     String? nextclade_lineage = nextclade_output_parser_one_sample.nextclade_lineage
     # VADR Annotation QC
     File? vadr_alerts_list = vadr.alerts_list

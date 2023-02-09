@@ -1,6 +1,6 @@
 version 1.0
 
-import "../utilities/wf_read_QC_trim_se_theiaprok.wdl" as read_qc
+import "../utilities/wf_read_QC_trim_se.wdl" as read_qc
 import "../utilities/wf_merlin_magic.wdl" as merlin_magic_workflow
 import "../../tasks/assembly/task_shovill.wdl" as shovill
 import "../../tasks/quality_control/task_quast.wdl" as quast_task
@@ -61,7 +61,7 @@ workflow theiaprok_illumina_se {
       skip_screen = skip_screen
   }
   if (raw_check_reads.read_screen=="PASS") {
-    call read_qc.read_QC_trim {
+    call read_qc.read_QC_trim_se as read_QC_trim {
       input:
         samplename = samplename,
         read1_raw = read1_raw
