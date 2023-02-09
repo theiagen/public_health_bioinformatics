@@ -11,9 +11,9 @@ import "../../tasks/quality_control/task_vadr.wdl" as vadr_task
 import "../../tasks/quality_control/task_consensus_qc.wdl" as consensus_qc_task
 import "../../tasks/taxon_id/task_nextclade.wdl" as nextclade
 import "../../tasks/species_typing/task_pangolin.wdl" as pangolin
-import "../../tasks/species_typing/task_sc2_gene_coverage.wdl" as sc2_calculation
 import "../../tasks/species_typing/task_quasitools.wdl" as quasitools
 import "../../tasks/gene_typing/task_abricate.wdl" as abricate
+import "../../tasks/gene_typing/task_sc2_gene_coverage.wdl" as sc2_calculation
 import "../../tasks/task_versioning.wdl" as versioning
 
 workflow theiacov_illumina_pe {
@@ -160,7 +160,7 @@ workflow theiacov_illumina_pe {
     }
   }
   if (organism == "HIV") {
-    call quasitools.quasitools_illumina_pe {
+    call quasitools.quasitools as quasitools_illumina_pe {
       input:
         read1 = read_QC_trim.read1_clean,
         read2 = read_QC_trim.read2_clean,

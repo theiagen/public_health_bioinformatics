@@ -9,10 +9,9 @@ import "../../tasks/quality_control/task_consensus_qc.wdl" as consensus_qc_task
 import "../../tasks/taxon_id/task_kraken2.wdl" as kraken2
 import "../../tasks/taxon_id/task_nextclade.wdl" as nextclade
 import "../../tasks/species_typing/task_pangolin.wdl" as pangolin
-import "../../tasks/species_typing/task_sc2_gene_coverage.wdl" as sc2_calculation
 import "../../tasks/species_typing/task_quasitools.wdl" as quasitools
+import "../../tasks/gene_typing/task_sc2_gene_coverage.wdl" as sc2_calculation
 import "../../tasks/task_versioning.wdl" as versioning
-
 
 workflow theiacov_ont {
   meta {
@@ -132,7 +131,7 @@ workflow theiacov_ont {
     }
   }
   if (organism == "HIV") {
-    call quasitools.quasitools_ont {
+    call quasitools.quasitools as quasitools_ont {
       input:
         read1 = read_filtering.filtered_reads,
         samplename = samplename
