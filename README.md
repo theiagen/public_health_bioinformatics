@@ -1,7 +1,7 @@
 # Public Health Bioinformatics (PHB)
 Bioinformatics workflows for characterization, epidemiology and sharing of pathogen genomes. 
 
-### More information about the steps undertaken in these workflows is available via the [Theiagen Public Resources Documentation](https://theiagen.notion.site/Theiagen-Public-Health-Resources-a4bd134b0c5c4fe39870e21029a30566). 
+**More information about the steps undertaken in these workflows is available via the [Theiagen Public Resources Documentation](https://theiagen.notion.site/Theiagen-Public-Health-Resources-a4bd134b0c5c4fe39870e21029a30566).**
 
 Support for running these workflows can be sought by raising a [GitHub issue](https://github.com/theiagen/public_health_bioinformatics/issues/new) or by contacting Theiagen at support@theiagen.com.
 
@@ -11,7 +11,7 @@ These workflows are written in [WDL](https://github.com/openwdl/wdl), a language
 * Based on collaborative work with Andrew Lang, PhD & his [Genomic Analysis WDL workflows](https://github.com/AndrewLangvt/genomic_analyses)
 * Workflows and task development influenced by The Broad's [Viral Pipes](https://github.com/broadinstitute/viral-pipelines)
 * TheiaCoV workflows for viral genomic characterization influenced by UPHL's [Cecret](https://github.com/UPHL-BioNGS/Cecret) & StaPH-B's [Monroe](https://staph-b.github.io/staphb_toolkit/workflow_docs/monroe/)
-* TheiaProk workflows for bacterial genomic characterization influence by Robert Petit's [bactopia](https://github.com/bactopia/bactopia)
+* TheiaProk workflows for bacterial genomic characterization influenced by Robert Petit's [bactopia](https://github.com/bactopia/bactopia)
 * The PHB workflow user community. To provide feedback, please raise a GitHub issue [GitHub issue](https://github.com/theiagen/public_health_vioinformatics/issues/new).
 
 ### Contributing to the PHB workflows
