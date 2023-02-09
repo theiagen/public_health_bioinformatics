@@ -81,10 +81,12 @@ workflow theiaeuk_illumina_pe {
           samplename = samplename,
           genome_length = clean_check_reads.est_genome_length
       }
-      call gambit_task.gambit_euk as gambit {
+      call gambit_task.gambit {
         input:
           assembly = shovill_pe.assembly_fasta,
-          samplename = samplename
+          samplename = samplename,
+          gambit_db_genomes = "gs://theiagen-public-files/terra/candida_auris_refs/221006-theiagen-fungal-v0.1.db",
+          gambit_db_signatures = "gs://theiagen-public-files/terra/candida_auris_refs/221006-theiagen-fungal-v0.1.h5" 
       }
       call ts_mlst_task.ts_mlst {
         input: 
