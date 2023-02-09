@@ -56,7 +56,7 @@ workflow merlin_magic {
   if (merlin_tag == "Cryptococcus neoformans") {
     call snippy.snippy_variants as snippy_crypto {
       input:
-        reference = "gs://theiagen-public-files/terra/theiaeuk_files/Aspergillus_fumigatus_GCF_000002655.1_ASM265v1_genomic.gbff",
+        reference = "gs://theiagen-public-files/terra/theiaeuk_files/Cryptococcus_neoformans_GCF_000091045.1_ASM9104v1_genomic.gbff",
         read1 = read1,
         read2 = read2,
         query_gene = "ERG11",
@@ -64,7 +64,8 @@ workflow merlin_magic {
     }
   }
   if (merlin_tag == "None") {
-    String snippy_variants_none = ""
+    String snippy_variants_none = "No matching taxon detected"
+    File snippy_variants_none_file = "gs://theiagen-public-files/terra/theiaeuk_files/no_match_detected.txt"
     Array[File] snippy_outputs_none = []
         }
   output {
@@ -77,11 +78,11 @@ workflow merlin_magic {
   String snippy_variants_version = select_first([snippy_cauris.snippy_variants_version, snippy_calbicans.snippy_variants_version, snippy_afumigatus.snippy_variants_version, snippy_crypto.snippy_variants_version, snippy_variants_none])
   String snippy_variants_query = select_first([snippy_cauris.snippy_variants_query, snippy_calbicans.snippy_variants_query, snippy_afumigatus.snippy_variants_query, snippy_crypto.snippy_variants_query, snippy_variants_none])
   String snippy_variants_hits = select_first([snippy_cauris.snippy_variants_hits, snippy_calbicans.snippy_variants_hits, snippy_afumigatus.snippy_variants_hits, snippy_crypto.snippy_variants_hits, snippy_variants_none])
-  File snippy_variants_gene_query_results = select_first([snippy_cauris.snippy_variants_gene_query_results, snippy_calbicans.snippy_variants_gene_query_results, snippy_afumigatus.snippy_variants_gene_query_results, snippy_crypto.snippy_variants_gene_query_results, snippy_variants_none])
+  File snippy_variants_gene_query_results = select_first([snippy_cauris.snippy_variants_gene_query_results, snippy_calbicans.snippy_variants_gene_query_results, snippy_afumigatus.snippy_variants_gene_query_results, snippy_crypto.snippy_variants_gene_query_results, snippy_variants_none_file])
   Array[File] snippy_outputs = select_first([snippy_cauris.snippy_outputs, snippy_calbicans.snippy_outputs, snippy_afumigatus.snippy_outputs, snippy_crypto.snippy_outputs, snippy_outputs_none])
-  File snippy_variants_results = select_first([snippy_cauris.snippy_variants_results, snippy_calbicans.snippy_variants_results, snippy_afumigatus.snippy_variants_results, snippy_crypto.snippy_variants_results, snippy_variants_none])
-  File snippy_variants_bam = select_first([snippy_cauris.snippy_variants_bam, snippy_calbicans.snippy_variants_bam, snippy_afumigatus.snippy_variants_bam, snippy_crypto.snippy_variants_bam, snippy_variants_none])
-  File snippy_variants_bai = select_first([snippy_cauris.snippy_variants_bai, snippy_calbicans.snippy_variants_bai, snippy_afumigatus.snippy_variants_bai, snippy_crypto.snippy_variants_bai, snippy_variants_none])
-  File snippy_variants_summary = select_first([snippy_cauris.snippy_variants_summary, snippy_calbicans.snippy_variants_summary, snippy_afumigatus.snippy_variants_summary, snippy_crypto.snippy_variants_summary, snippy_variants_none])
+  File snippy_variants_results = select_first([snippy_cauris.snippy_variants_results, snippy_calbicans.snippy_variants_results, snippy_afumigatus.snippy_variants_results, snippy_crypto.snippy_variants_results, snippy_variants_none_file])
+  File snippy_variants_bam = select_first([snippy_cauris.snippy_variants_bam, snippy_calbicans.snippy_variants_bam, snippy_afumigatus.snippy_variants_bam, snippy_crypto.snippy_variants_bam, snippy_variants_none_file])
+  File snippy_variants_bai = select_first([snippy_cauris.snippy_variants_bai, snippy_calbicans.snippy_variants_bai, snippy_afumigatus.snippy_variants_bai, snippy_crypto.snippy_variants_bai, snippy_variants_none_file])
+  File snippy_variants_summary = select_first([snippy_cauris.snippy_variants_summary, snippy_calbicans.snippy_variants_summary, snippy_afumigatus.snippy_variants_summary, snippy_crypto.snippy_variants_summary, snippy_variants_none_file])
  }
 }

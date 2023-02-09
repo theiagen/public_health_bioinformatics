@@ -8,7 +8,7 @@ task version_capture {
     volatile: true
   }
   command {
-    PHB_Version="PHB lyvset-dev"
+    PHBG_Version="PHB v0.1.0"
     ~{default='' 'export TZ=' + timezone}
     date +"%Y-%m-%d" > TODAY
     echo "$PHBG_Version" > PHBG_VERSION
