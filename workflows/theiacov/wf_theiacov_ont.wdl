@@ -1,6 +1,7 @@
 version 1.0
 
-import "../../tasks/assembly/task_ont_medaka.wdl" as medaka
+import "../../tasks/assembly/task_artic_consensus.wdl" as artic_consensus
+import "../../tasks/quality_control/task_artic_guppyplex.wdl" as artic_guppyplex
 import "../../tasks/quality_control/task_assembly_metrics.wdl" as assembly_metrics
 import "../../tasks/quality_control/task_ncbi_scrub.wdl" as ncbi_scrub
 import "../../tasks/quality_control/task_vadr.wdl" as vadr_task
@@ -41,7 +42,7 @@ workflow theiacov_ont {
       samplename = samplename,
       read1 = demultiplexed_reads
   }
-  call medaka.read_filtering {
+  call artic_guppyplex.read_filtering {
     input:
       demultiplexed_reads = ncbi_scrub_se.read1_dehosted,
       samplename = samplename,
@@ -64,7 +65,7 @@ workflow theiacov_ont {
       read1 = ncbi_scrub_se.read1_dehosted,
       target_org = target_org
   }
-  call medaka.consensus {
+  call artic_consensus.consensus {
     input:
       samplename = samplename,
       organism = organism,

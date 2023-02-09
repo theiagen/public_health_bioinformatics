@@ -1,6 +1,6 @@
 version 1.0
 
-import "../../tasks/assembly/task_ont_medaka.wdl" as medaka
+import "../../tasks/assembly/task_artic_consensus.wdl" as artic_consensus
 import "../../tasks/quality_control/task_assembly_metrics.wdl" as assembly_metrics
 import "../../tasks/quality_control/task_ncbi_scrub.wdl" as ncbi_scrub
 import "../../tasks/quality_control/task_vadr.wdl" as vadr_task
@@ -56,7 +56,7 @@ workflow theiacov_clearlabs {
       read1 = ncbi_scrub_se.read1_dehosted,
       target_org = target_org
   }
-  call medaka.consensus {
+  call artic_consensus.consensus {
     input:
       samplename = samplename,
       filtered_reads = ncbi_scrub_se.read1_dehosted,
