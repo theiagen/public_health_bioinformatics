@@ -65,7 +65,7 @@ workflow read_QC_trim_pe {
     }
   }
   if (read_processing == "fastp"){
-    call fastp_task.fastp_pe_theiaprok as fastp {
+    call fastp_task.fastp_pe as fastp {
       input:
         samplename = samplename,
         read1 = select_first([ncbi_scrub_pe.read1_dehosted, read1_raw]),

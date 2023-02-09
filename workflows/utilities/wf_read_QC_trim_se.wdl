@@ -40,7 +40,7 @@ workflow read_QC_trim_se {
     }
   }
   if (read_processing == "fastp"){
-    call fastp_task.fastp_se_theiaprok as fastp_se {
+    call fastp_task.fastp_se {
       input:
         samplename = samplename,
         read1 = read1_raw,
