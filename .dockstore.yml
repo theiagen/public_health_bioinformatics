@@ -1,26 +1,26 @@
 version: 1.2
 workflows:
- - name: TheiaEuk_PE
+ - name: TheiaEuk_PE_PHB
    subclass: WDL
    primaryDescriptorPath: /workflows/theiaeuk/wf_theiaeuk_pe.wdl
    testParameterFiles:
     - empty.json
- - name: Cauris_CladeTyper
+ - name: Cauris_CladeTyper_PHB
    subclass: WDL
    primaryDescriptorPath: /workflows/theiaeuk/wf_cauris_cladetyper.wdl
    testParameterFiles:
     - empty.json
- - name: Snippy_Variants
+ - name: Snippy_Variants_PHB
    subclass: WDL
    primaryDescriptorPath: /workflows/standalone_modules/wf_snippy_variants.wdl
    testParameterFiles:
     - empty.json
- - name: Snippy_Tree
+ - name: Snippy_Tree_PHB
    subclass: WDL
    primaryDescriptorPath: /workflows/phylogenetics/wf_snippy_tree.wdl
    testParameterFiles:
     - empty.json
- - name: Nullarbor
+ - name: Nullarbor_PHB
    subclass: WDL
    primaryDescriptorPath: /workflows/standalone_modules/wf_nullarbor.wdl
    testParameterFiles:
