@@ -55,21 +55,6 @@ workflows:
    primaryDescriptorPath: /workflows/theiacov/wf_theiacov_validate.wdl
    testParameterFiles:
     - empty.json
- - name: Mercury_PE_Prep_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/mercury/wf_mercury_pe_prep.wdl
-   testParameterFiles:
-    - empty.json
- - name: Mercury_SE_Prep_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/mercury/wf_mercury_se_prep.wdl
-   testParameterFiles:
-    - empty.json
- - name: Mercury_Batch_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/mercury/wf_mercury_batch.wdl
-   testParameterFiles:
-    - empty.json
  - name: Mercury_Prep_N_Batch_PHB
    subclass: WDL
    primaryDescriptorPath: /workflows/mercury/wf_mercury_prep_n_batch.wdl
