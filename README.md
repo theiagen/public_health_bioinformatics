@@ -9,7 +9,7 @@ These workflows are written in [WDL](https://github.com/openwdl/wdl), a language
 * TheiaCoV workflows for genomic characterization influenced by UPHL's [Cecret](https://github.com/UPHL-BioNGS/Cecret) & StaPH-B's [Monroe](https://staph-b.github.io/staphb_toolkit/workflow_docs/monroe/)
 * The TheiaCoV workflow user community. To provide feedback, please raise a GitHub issue [GitHub issue](https://github.com/theiagen/public_health_viral_genomics/issues/new).
 
-### Contributing to the PHVG workflows
+### Contributing to the PHB workflows
 Contributions to the workflows contained in this repository are warmly welcomed. Our style guide may be found below for convenience of formatting.
 
 2-space indents (no tabs), no line break for openning braces, single space when defining input/output variables & runtime attributes, single-line breaks between non-intended constructs, and task commands enclosed with triple braces (`<<< ... >>>`). 
