@@ -75,7 +75,7 @@ workflow read_QC_trim_se {
     }
   }
   if (call_midas) {
-    call midas_task.midas_theiaprok as midas {
+    call midas_task.midas {
       input:
         samplename = samplename,
         read1 = read1_raw,
