@@ -11,6 +11,7 @@ task abricate {
     Int? minid
     Int? mincov
     Int cpu = 2
+    Int disk_size = 100
     String docker = "staphb/abricate:1.0.1-abaum-plasmid"
   }
   command <<<
@@ -49,7 +50,8 @@ task abricate {
     memory: "8 GB"
     cpu: cpu
     docker: docker
-    disks: "local-disk 100 HDD"
+    disks:  "local-disk " + disk_size + " SSD"
+    disk: disk_size + " GB"
   }
 }
 
@@ -110,23 +112,22 @@ task abricate_flu {
     echo ${run_nextclade} > RUN_NEXTCLADE
   >>>
   output {
-      String abricate_flu_type = read_string("FLU_TYPE")
-      String abricate_flu_subtype = read_string("FLU_SUBTYPE")
-      File abricate_flu_results = "~{samplename}_abricate_hits.tsv"
-      String abricate_flu_database = database
-      String abricate_flu_version = read_string("ABRICATE_VERSION")
-      Boolean run_nextclade = read_boolean("RUN_NEXTCLADE")
-      String nextclade_ref = read_string("NEXTCLADE_REF")
-      String nextclade_name = read_string("NEXTCLADE_NAME")
-      String nextclade_ds_tag = read_string("NEXTCLADE_DS_TAG")
-
+    String abricate_flu_type = read_string("FLU_TYPE")
+    String abricate_flu_subtype = read_string("FLU_SUBTYPE")
+    File abricate_flu_results = "~{samplename}_abricate_hits.tsv"
+    String abricate_flu_database = database
+    String abricate_flu_version = read_string("ABRICATE_VERSION")
+    Boolean run_nextclade = read_boolean("RUN_NEXTCLADE")
+    String nextclade_ref = read_string("NEXTCLADE_REF")
+    String nextclade_name = read_string("NEXTCLADE_NAME")
+    String nextclade_ds_tag = read_string("NEXTCLADE_DS_TAG")
   }
   runtime {
-      docker: "~{docker}"
-      memory: "~{memory} GB"
-      cpu: cpu
-      disks:  "local-disk " + disk_size + " SSD"
-      disk: disk_size + " GB"
-      preemptible:  0
+    docker: "~{docker}"
+    memory: "~{memory} GB"
+    cpu: cpu
+    disks:  "local-disk " + disk_size + " SSD"
+    disk: disk_size + " GB"
+    preemptible:  0
   }
 }
