@@ -1,11 +1,7 @@
 version 1.0
 
 import "../utilities/wf_read_QC_trim_se.wdl" as read_qc
-import "../../tasks/alignment/task_bwa.wdl" as bwa_task
-import "../../tasks/assembly/task_ivar_consensus.wdl" as consensus_task
-import "../../tasks/assembly/task_ivar_primer_trim.wdl" as primer_trim_task
-import "../../tasks/assembly/task_ivar_variant_call.wdl" as variant_call_task
-import "../../tasks/quality_control/task_assembly_metrics.wdl" as assembly_metrics
+import "../utilities/wf_ivar_consensus.wdl" as consensus_call
 import "../../tasks/quality_control/task_vadr.wdl" as vadr_task
 import "../../tasks/quality_control/task_consensus_qc.wdl" as consensus_qc_task
 import "../../tasks/taxon_id/task_nextclade.wdl" as nextclade
@@ -40,60 +36,31 @@ workflow theiacov_illumina_se {
       phix = phix,
       workflow_series = "theiacov"
   }
-  call bwa_task.bwa {
+  call consensus_call.ivar_consensus {
     input:
       samplename = samplename,
       read1 = read_QC_trim.read1_clean,
-      reference_genome = reference_genome
-  }
-  if (trim_primers){
-    call primer_trim_task.primer_trim {
-      input:
-        samplename = samplename,
-        primer_bed = select_first([primer_bed]),
-        bamfile = bwa.sorted_bam
+      reference_genome = reference_genome,
+      primer_bed = primer_bed,
+      min_depth = min_depth,
+      trim_primers = trim_primers
     }
-    call assembly_metrics.stats_n_coverage as stats_n_coverage_primtrim {
-    input:
-      samplename = samplename,
-      bamfile = primer_trim.trim_sorted_bam
-  }
-  }
-  call variant_call_task.variant_call {
-    input:
-      samplename = samplename,
-      bamfile = select_first([primer_trim.trim_sorted_bam, bwa.sorted_bam]),
-      reference_genome = reference_genome,
-      variant_min_depth = min_depth
-  }
-  call consensus_task.consensus {
-    input:
-      samplename = samplename,
-      bamfile = select_first([primer_trim.trim_sorted_bam, bwa.sorted_bam]),
-      reference_genome = reference_genome,
-      consensus_min_depth = min_depth
-  }
   call consensus_qc_task.consensus_qc {
     input:
-      assembly_fasta = consensus.consensus_seq,
+      assembly_fasta = ivar_consensus.assembly_fasta,
       reference_genome = reference_genome
-  }
-  call assembly_metrics.stats_n_coverage {
-    input:
-      samplename = samplename,
-      bamfile = bwa.sorted_bam
   }
   if (organism == "sars-cov-2") {
     # sars-cov-2 specific tasks
     call pangolin.pangolin4 {
       input:
         samplename = samplename,
-        fasta = consensus.consensus_seq
+        fasta = ivar_consensus.assembly_fasta
     }
     call sc2_calculation.sc2_gene_coverage {
       input: 
         samplename = samplename,
-        bamfile = bwa.sorted_bam,
+        bamfile = ivar_consensus.aligned_bam,
         min_depth = min_depth
     }
   }
@@ -107,7 +74,7 @@ workflow theiacov_illumina_se {
     # tasks specific to either MPXV or sars-cov-2
     call nextclade.nextclade_one_sample {
       input:
-      genome_fasta = consensus.consensus_seq,
+      genome_fasta = ivar_consensus.assembly_fasta,
       dataset_name = select_first([nextclade_dataset_name, organism,]),
       dataset_reference = nextclade_dataset_reference,
       dataset_tag = nextclade_dataset_tag
@@ -121,7 +88,7 @@ workflow theiacov_illumina_se {
     # tasks specific to MPXV, sars-cov-2, and WNV
     call vadr_task.vadr {
       input:
-        genome_fasta = consensus.consensus_seq,
+        genome_fasta = ivar_consensus.assembly_fasta,
         assembly_length_unambiguous = consensus_qc.number_ATCG
     }
   }
@@ -148,23 +115,23 @@ workflow theiacov_illumina_se {
     String? kraken_version = read_QC_trim.kraken_version
     File? kraken_report = read_QC_trim.kraken_report
     # Read Alignment
-    String bwa_version = bwa.bwa_version
-    String samtools_version = bwa.sam_version
-    File read1_aligned = bwa.read1_aligned
-    String assembly_method = "TheiaCoV (~{version_capture.phb_version}): ~{bwa.bwa_version}; ~{primer_trim.ivar_version}"
-    File aligned_bam = select_first([primer_trim.trim_sorted_bam, bwa.sorted_bam])
-    File aligned_bai =select_first([primer_trim.trim_sorted_bai, bwa.sorted_bai])
-    Float? primer_trimmed_read_percent = primer_trim.primer_trimmed_read_percent
-    String? ivar_version_primtrim = primer_trim.ivar_version
-    String? samtools_version_primtrim = primer_trim.samtools_version
-    String? primer_bed_name = primer_trim.primer_bed_name
-    File ivar_tsv = variant_call.sample_variants_tsv
-    File ivar_vcf = variant_call.sample_variants_vcf
-    String ivar_variant_version = variant_call.ivar_version
+    String bwa_version = ivar_consensus.bwa_version
+    String samtools_version = ivar_consensus.samtools_version
+    File read1_aligned = ivar_consensus.read1_aligned
+    String assembly_method = ivar_consensus.assembly_method_nonflu
+    File aligned_bam = ivar_consensus.aligned_bam
+    File aligned_bai = ivar_consensus.aligned_bai
+    Float? primer_trimmed_read_percent = ivar_consensus.primer_trimmed_read_percent
+    String? ivar_version_primtrim = ivar_consensus.ivar_version_primtrim
+    String? samtools_version_primtrim = ivar_consensus.samtools_version_primtrim
+    String? primer_bed_name = ivar_consensus.primer_bed_name
+    File ivar_tsv = ivar_consensus.ivar_tsv
+    File ivar_vcf = ivar_consensus.ivar_vcf
+    String ivar_variant_version = ivar_consensus.ivar_variant_version
     # Assembly QC
-    File assembly_fasta = consensus.consensus_seq
-    String ivar_version_consensus = consensus.ivar_version
-    String samtools_version_consensus = consensus.samtools_version
+    File assembly_fasta = ivar_consensus.assembly_fasta
+    String ivar_version_consensus = ivar_consensus.ivar_version_consensus
+    String samtools_version_consensus = ivar_consensus.samtools_version_consensus
     Int number_N = consensus_qc.number_N
     Int assembly_length_unambiguous = consensus_qc.number_ATCG
     Int number_Degenerate = consensus_qc.number_Degenerate
@@ -172,12 +139,12 @@ workflow theiacov_illumina_se {
     Float percent_reference_coverage = consensus_qc.percent_reference_coverage
     Int consensus_n_variant_min_depth = min_depth
    # Alignment QC
-    File consensus_stats = stats_n_coverage.stats
-    File consensus_flagstat = stats_n_coverage.flagstat
-    Float meanbaseq_trim = select_first([stats_n_coverage_primtrim.meanbaseq, stats_n_coverage.meanbaseq])
-    Float meanmapq_trim = select_first([stats_n_coverage_primtrim.meanmapq, stats_n_coverage.meanmapq])
-    Float assembly_mean_coverage = select_first([stats_n_coverage_primtrim.depth, stats_n_coverage.depth])
-    String samtools_version_stats = stats_n_coverage.samtools_version
+    File consensus_stats = ivar_consensus.consensus_stats
+    File consensus_flagstat = ivar_consensus.consensus_flagstat
+    Float meanbaseq_trim = ivar_consensus.meanbaseq_trim
+    Float meanmapq_trim = ivar_consensus.meanmapq_trim
+    Float assembly_mean_coverage = ivar_consensus.assembly_mean_coverage
+    String samtools_version_stats = ivar_consensus.samtools_version_stats
     # SC2 specific
     Float? sc2_s_gene_mean_coverage = sc2_gene_coverage.sc2_s_gene_depth
     Float? sc2_s_gene_percent_coverage = sc2_gene_coverage.sc2_s_gene_percent_coverage
