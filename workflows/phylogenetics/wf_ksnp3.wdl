@@ -2,6 +2,7 @@ version 1.0
 
 import "../../tasks/phylogenetic_inference/task_ksnp3.wdl" as ksnp3
 import "../../tasks/phylogenetic_inference/task_snp_dists.wdl" as snp_dists
+import "../../tasks/phylogenetic_inference/task_reorder_matrix.wdl" as reorder_matrix
 import "../../tasks/utilities/task_summarize_data.wdl" as data_summary
 import "../../tasks/task_versioning.wdl" as versioning
 
@@ -31,13 +32,13 @@ workflow ksnp3_workflow {
       cluster_name = cluster_name,
       alignment = ksnp3_task.ksnp3_pan_matrix
   }
-  call snp_dists.reorder_matrix as core_reorder_matrix {
+  call reorder_matrix.reorder_matrix as core_reorder_matrix {
     input:
       input_tree = ksnp3_task.ksnp3_core_tree,
       matrix = core_snp_dists.snp_matrix,
       cluster_name = cluster_name + "_core"
   }
-  call snp_dists.reorder_matrix as pan_reorder_matrix {
+  call reorder_matrix.reorder_matrix as pan_reorder_matrix {
     input:
       input_tree = ksnp3_task.ksnp3_pan_parsimony_tree,
       matrix = pan_snp_dists.snp_matrix,

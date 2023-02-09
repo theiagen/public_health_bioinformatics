@@ -1,7 +1,7 @@
 version 1.0
 
 import "../../tasks/phylogenetic_inference/task_mashtree.wdl" as mashtree
-import "../../tasks/phylogenetic_inference/task_snp_dists.wdl" as snp_dists
+import "../../tasks/phylogenetic_inference/task_reorder_matrix.wdl" as reorder_matrix_task
 import "../../tasks/utilities/task_summarize_data.wdl" as data_summary
 import "../../tasks/task_versioning.wdl" as versioning
 
@@ -20,7 +20,7 @@ workflow mashtree_fasta {
       assembly_fasta = assembly_fasta,
       cluster_name = cluster_name
     }
-  call snp_dists.reorder_matrix {
+  call reorder_matrix_task.reorder_matrix {
     input:
       input_tree = mashtree_task.mashtree_tree,
       matrix = mashtree_task.mashtree_matrix,

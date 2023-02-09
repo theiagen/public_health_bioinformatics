@@ -3,6 +3,7 @@ version 1.0
 import "../../tasks/phylogenetic_inference/task_snippy_core.wdl" as snippy_core_task
 import "../../tasks/phylogenetic_inference/task_iqtree.wdl" as iqtree_task
 import "../../tasks/phylogenetic_inference/task_snp_dists.wdl" as snp_dists
+import "../../tasks/phylogenetic_inference/task_reorder_matrix.wdl" as reorder_matrix
 import "../../tasks/phylogenetic_inference/task_gubbins.wdl" as gubbins_task
 import "../../tasks/utilities/task_summarize_data.wdl" as data_summary
 import "../../tasks/task_versioning.wdl" as versioning
@@ -40,7 +41,7 @@ workflow snippy_tree_wf {
         alignment = gubbins.gubbins_polymorphic_fasta,
         cluster_name = tree_name
     }
-    call snp_dists.reorder_matrix as reorder_matrix_gubbins {
+    call reorder_matrix.reorder_matrix as reorder_matrix_gubbins {
       input:
         input_tree = gubbins.gubbins_final_labelled_tree,
         matrix = snp_dists_gubbins.snp_matrix,
@@ -58,7 +59,7 @@ workflow snippy_tree_wf {
         alignment = snippy_core.snippy_full_alignment_clean,
         cluster_name = tree_name
     }
-    call snp_dists.reorder_matrix as reorder_matrix_iqtree {
+    call reorder_matrix.reorder_matrix as reorder_matrix_iqtree {
       input:
         input_tree = iqtree.ml_tree,
         matrix = snp_dists_iqtree.snp_matrix,
