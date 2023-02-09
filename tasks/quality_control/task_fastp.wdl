@@ -21,12 +21,8 @@ task fastp_pe {
     fastp \
     --in1 ~{read1} --in2 ~{read2} \
     --out1 ~{samplename}_1P.fastq.gz --out2 ~{samplename}_2P.fastq.gz \
-<<<<<<< HEAD
     --unpaired1 ~{samplename}_1U.fastq.gz --unpaired2 ~{samplename}_2U.fastq.gz \
     --cut_right --cut_right_window_size ~{fastp_window_size} --cut_right_mean_quality ~{fastp_quality_trim_score} \
-=======
-    --cut_right --cut_window_size ~{fastp_window_size} --cut_mean_quality ~{fastp_quality_trim_score} \
->>>>>>> 732de07db4b341d591ffd656ec0ec60cbdd2e6b7
     --length_required ~{fastp_minlen} \
     --thread ~{threads} \
     ~{fastp_args} \
