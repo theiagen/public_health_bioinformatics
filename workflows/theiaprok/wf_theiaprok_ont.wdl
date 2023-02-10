@@ -27,7 +27,6 @@ workflow theiaprok_ont {
     String samplename
     String seq_method = "ONT"
     File read1_raw
-    File read2_raw
     Int? genome_size
     String? run_id
     String? collection_date
@@ -102,7 +101,6 @@ workflow theiaprok_ont {
       call cg_pipeline.cg_pipeline as cg_pipeline_raw {
         input:
           read1 = read1_raw,
-          read2 = read2_raw,
           samplename = samplename,
           genome_length = select_first([genome_size, quast.genome_length])
       }
