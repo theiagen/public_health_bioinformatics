@@ -60,9 +60,9 @@ task lyveset {
     Boolean fast = false
     Boolean downsample = false
     Boolean sample_sites = false
-    String read_cleaner = "none"
-    String mapper = "smalt"
-    String snpcaller = "varscan"
+    String? read_cleaner
+    String? mapper
+    String? snpcaller
   }
   command <<<
     date | tee DATE
@@ -83,7 +83,7 @@ task lyveset {
 
     #shuffle paired end reads
     for index in ${!read1_array[@]}; do
-      mv ${read1_array[$index]} . && mv ${read2_array[$index]} . # move reads to cwd
+      cp ${read1_array[$index]} . && cp ${read2_array[$index]} . # move reads to cwd
     done
 
     shuffleSplitReads.pl --numcpus ~{cpu} -o ./interleaved *.fastq.gz 
@@ -108,9 +108,9 @@ task lyveset {
     ~{true='--fast' false='' fast} \
     ~{true='--downsample' false='' downsample} \
     ~{true='--sample_sites' false='' sample_sites} \
-    --read_cleaner ~{read_cleaner} \
-    --mapper ~{mapper} \
-    --snpcaller ~{snpcaller} \
+    ~{'--read_cleaner ' + presets} \
+    ~{'--mapper ' + mapper} \
+    ~{'--snpcaller ' + snpcaller} \
      -ref ~{dataset_name}/ref/reference.fasta ~{dataset_name}
   >>>
   output {
