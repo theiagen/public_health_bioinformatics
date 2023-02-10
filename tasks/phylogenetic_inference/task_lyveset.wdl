@@ -58,7 +58,7 @@ task lyveset {
     Boolean nomatrix = false
     Boolean nomsa = false
     Boolean notrees = false
-    Boolean singleend = false
+    # Boolean singleend = false -- currently written for PE read data only
     Boolean fast = false
     Boolean downsample = false
     Boolean sample_sites = false
@@ -87,22 +87,30 @@ task lyveset {
     for index in ${!read1_array[@]}; do
       mv ${read1_array[$index]} . && mv ${read2_array[$index]} . # move reads to cwd
     done
-    ls
-    ls ./*.fastq*
-
     shuffleSplitReads.pl --numcpus ~{cpu} -o ./interleaved *.fastq.gz 
-    
-    #for index in ${!read1_array[@]}; do
-    #  shuffleSplitReads.pl --numcpus ~{cpu} -o ./interleaved ${read1_array[$index]} ${read2_array[$index]}
-    #done
     # then moved into your project dir
     mv ./interleaved/*.fastq.gz ~{dataset_name}/reads/
     # cleanup
     rmdir interleaved
     mkdir ~{dataset_name}/ref/
     cp ~{reference_genome} ~{dataset_name}/ref/reference.fasta
-    launch_set.pl --numcpus 8 -ref ~{dataset_name}/ref/reference.fasta ~{dataset_name}
-
+    launch_set.pl --numcpus ~{cpu} \
+    --allowedFlanking ~{allowedFlanking} \
+    --min_alt_frac ~{min_alt_frac} \
+    --min_coverage ~{min_coverage} \
+    ~{'--presets ' + presets} \
+    ~{true='--mask_phages' false='' mask_phages} \
+    ~{true='--mask_cliffs' false='' mask_cliffs} \
+    ~{true='--nomatrix' false='' nomatrix} \
+    ~{true='--nomsa' false='' nomsa} \
+    ~{true='--notrees' false='' notrees} \
+    ~{true='--fast' false='' fast} \
+    ~{true='--downsample' false='' downsample} \
+    ~{true='--sample_sites' false='' sample_sites} \
+    --read_cleaner ~{read_cleaner} \
+    --mapper ~{mapper} \
+    --snpcaller ~{snpcaller} \
+     -ref ~{dataset_name}/ref/reference.fasta ~{dataset_name}
   >>>
   output {
     String lyveset_docker_image = docker_image
