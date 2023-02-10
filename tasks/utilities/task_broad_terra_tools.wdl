@@ -24,6 +24,10 @@ task export_taxon_tables {
     String? theiaprok_illumina_pe_analysis_date
     String? theiaprok_illumina_se_version
     String? theiaprok_illumina_se_analysis_date
+    String? theiaprok_ont_version
+    String? theiaprok_ont_analysis_date
+    String? theiaprok_fasta_version
+    String? theiaprok_fasta_analysis_date
     String seq_platform
     Int num_reads_raw1
     Int? num_reads_raw2
@@ -293,6 +297,10 @@ task export_taxon_tables {
       "theiaprok_illumina_pe_analysis_date": "~{theiaprok_illumina_pe_analysis_date}",
       "theiaprok_illumina_se_version": "~{theiaprok_illumina_se_version}",
       "theiaprok_illumina_se_analysis_date": "~{theiaprok_illumina_se_analysis_date}",
+      "theiaprok_fasta_version": "~{theiaprok_fasta_version}",
+      "theiaprok_fasta_analysis_date": "~{theiaprok_fasta_analysis_date}",
+      "theiaprok_ont_version": "~{theiaprok_ont_version}",
+      "theiaprok_ont_analysis_date": "~{theiaprok_ont_analysis_date}",
       "seq_platform": "~{seq_platform}",
       "num_reads_raw1": "~{num_reads_raw1}",
       "num_reads_raw2": "~{num_reads_raw2}",

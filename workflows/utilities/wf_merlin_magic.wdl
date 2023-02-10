@@ -32,7 +32,7 @@ workflow merlin_magic {
     String samplename
     String merlin_tag
     File assembly
-    File read1
+    File? read1
     File? read2
     Int? pasty_min_pident
     Int? pasty_min_coverage
@@ -42,6 +42,7 @@ workflow merlin_magic {
     Boolean call_poppunk = true
     Boolean read1_is_ont = false
     Boolean call_shigeifinder_reads_input = false
+    Boolean assembly_only = false
   }
   # theiaprok
   if (merlin_tag == "Acinetobacter baumannii") {
@@ -70,12 +71,14 @@ workflow merlin_magic {
         assembly = assembly,
         samplename = samplename
     }
-    call shigatyper_task.shigatyper {
-      input:
-        read1 = read1,
-        read2 = read2,
-        samplename = samplename,
-        read1_is_ont = read1_is_ont
+    if (!assembly_only){
+      call shigatyper_task.shigatyper {
+        input:
+          read1 = select_first([read1]),
+          read2 = read2,
+          samplename = samplename,
+          read1_is_ont = read1_is_ont
+      }
     }
     call shigeifinder_task.shigeifinder {
       input:
@@ -83,25 +86,27 @@ workflow merlin_magic {
         samplename = samplename,
         docker = shigeifinder_docker_image
     }
-    if (call_shigeifinder_reads_input) {
-    call shigeifinder_task.shigeifinder_reads as shigeifinder_reads {
-      input:
-        read1 = read1,
-        read2 = read2,
-        samplename = samplename,
-        docker = shigeifinder_docker_image,
-        paired_end = paired_end
-    }
+    if (call_shigeifinder_reads_input && !assembly_only) {
+      call shigeifinder_task.shigeifinder_reads as shigeifinder_reads {
+        input:
+          read1 = select_first([read1]),
+          read2 = read2,
+          samplename = samplename,
+          docker = shigeifinder_docker_image,
+          paired_end = paired_end
+      }
     }
   }
   if (merlin_tag == "Shigella_sonnei") {
     # Shigella sonnei specific tasks
-    call sonneityping_task.sonneityping {
-      input:
-        read1 = read1,
-        read2 = read2,
-        samplename = samplename,
-        ont_data = read1_is_ont
+    if (!assembly_only) {
+      call sonneityping_task.sonneityping {
+        input:
+          read1 = select_first([read1]),
+          read2 = read2,
+          samplename = samplename,
+          ont_data = read1_is_ont
+      }
     }
   }
   if (merlin_tag == "Listeria") {
@@ -117,19 +122,21 @@ workflow merlin_magic {
         assembly = assembly,
         samplename = samplename
     }
-    call seqsero2_task.seqsero2 {
-      input: 
-        read1 = read1,
-        read2 = read2,
-        samplename = samplename,
-        paired_end = paired_end
-    }
-    if( seqsero2.seqsero2_predicted_serotype == "Typhi" || sistr.sistr_predicted_serotype == "Typhi" ) {
-      call genotyphi.genotyphi as genotyphi_task {
+    if (!assembly_only){
+      call seqsero2_task.seqsero2 {
         input: 
-          read1 = read1,
+          read1 = select_first([read1]),
           read2 = read2,
-          samplename = samplename
+          samplename = samplename,
+          paired_end = paired_end
+      }
+      if( seqsero2.seqsero2_predicted_serotype == "Typhi" || sistr.sistr_predicted_serotype == "Typhi" ) {
+        call genotyphi.genotyphi as genotyphi_task {
+          input: 
+            read1 = select_first([read1]),
+            read2 = read2,
+            samplename = samplename
+        }
       }
     }
   }
@@ -151,11 +158,13 @@ workflow merlin_magic {
     }
   }
   if (merlin_tag == "Mycobacterium tuberculosis") {
-    call tbprofiler_task.tbprofiler {
-      input:
-        read1 = read1,
-        read2 = read2,
-        samplename = samplename
+    if (!assembly_only) {
+      call tbprofiler_task.tbprofiler {
+        input:
+          read1 = select_first([read1]),
+          read2 = read2,
+          samplename = samplename
+      }
     }
   }
   if (merlin_tag == "Legionella pneumophila") {
@@ -169,7 +178,7 @@ workflow merlin_magic {
     if (paired_end) {
       call seroba.seroba as seroba_task {
         input:
-          read1 = read1,
+          read1 = select_first([read1]),
           read2 = read2,
           samplename = samplename
       }
@@ -195,43 +204,51 @@ workflow merlin_magic {
         assembly_fasta = assembly,
         samplename = samplename
     }
-    call snippy.snippy_variants as snippy_cauris {
-      input:
-        reference = cladetyper.clade_spec_ref,
-        read1 = read1,
-        read2 = read2,
-        query_gene = "FKS1,ERG11,FUR1",
-        samplename = samplename
+    if (!assembly_only) {
+      call snippy.snippy_variants as snippy_cauris {
+        input:
+          reference = cladetyper.clade_spec_ref,
+          read1 = select_first([read1]),
+          read2 = read2,
+          query_gene = "FKS1,ERG11,FUR1",
+          samplename = samplename
+      }
     }
   }
   if (merlin_tag == "Candida albicans") {
-    call snippy.snippy_variants as snippy_calbicans {
-      input:
-        reference = "gs://theiagen-public-files/terra/theiaeuk_files/Candida_albicans_GCF_000182965.3_ASM18296v3_genomic.gbff",
-        read1 = read1,
-        read2 = read2,
-        query_gene = "ERG11,FKS1,FUR1,RTA2",
-        samplename = samplename
+    if (!assembly_only) {
+      call snippy.snippy_variants as snippy_calbicans {
+        input:
+          reference = "gs://theiagen-public-files/terra/theiaeuk_files/Candida_albicans_GCF_000182965.3_ASM18296v3_genomic.gbff",
+          read1 = select_first([read1]),
+          read2 = read2,
+          query_gene = "ERG11,FKS1,FUR1,RTA2",
+          samplename = samplename
+      }
     }
   }
   if (merlin_tag == "Aspergillus fumigatus") {
-    call snippy.snippy_variants as snippy_afumigatus {
-      input:
-        reference = "gs://theiagen-public-files/terra/theiaeuk_files/Aspergillus_fumigatus_GCF_000002655.1_ASM265v1_genomic.gbff",
-        read1 = read1,
-        read2 = read2,
-        query_gene = "CYP51a,HAPE,COX10",
-        samplename = samplename
+    if (!assembly_only) {
+      call snippy.snippy_variants as snippy_afumigatus {
+        input:
+          reference = "gs://theiagen-public-files/terra/theiaeuk_files/Aspergillus_fumigatus_GCF_000002655.1_ASM265v1_genomic.gbff",
+          read1 = select_first([read1]),
+          read2 = read2,
+          query_gene = "CYP51a,HAPE,COX10",
+          samplename = samplename
+      }
     }
   }
   if (merlin_tag == "Cryptococcus neoformans") {
-    call snippy.snippy_variants as snippy_crypto {
-      input:
-        reference = "gs://theiagen-public-files/terra/theiaeuk_files/Cryptococcus_neoformans_GCF_000091045.1_ASM9104v1_genomic.gbff",
-        read1 = read1,
-        read2 = read2,
-        query_gene = "ERG11",
-        samplename = samplename
+    if (!assembly_only) {
+      call snippy.snippy_variants as snippy_crypto {
+        input:
+          reference = "gs://theiagen-public-files/terra/theiaeuk_files/Cryptococcus_neoformans_GCF_000091045.1_ASM9104v1_genomic.gbff",
+          read1 = select_first([read1]),
+          read2 = read2,
+          query_gene = "ERG11",
+          samplename = samplename
+      }
     }
   }
   if (merlin_tag == "None") {
