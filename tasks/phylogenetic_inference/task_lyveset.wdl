@@ -10,7 +10,6 @@ task lyveset {
     Int memory = 16
     Int cpu = 4
     Int disk_size = 100
-
     # Lyve-SET Parameters
     ##COMMON OPTIONS
     ##--allowedFlanking  0              allowed flanking distance in bp.
@@ -48,7 +47,6 @@ task lyveset {
     ##--read_cleaner none            Which read cleaner? Choices: none, CGP, BayesHammer
     ##--mapper       smalt           Which mapper? Choices: smalt, snap
     ##--snpcaller    varscan         Which SNP caller? Choices: varscan, vcftools
-    
     Int allowedFlanking = 0
     Float min_alt_frac = 0.75
     Int min_coverage = 10
@@ -65,17 +63,16 @@ task lyveset {
     String read_cleaner = "none"
     String mapper = "smalt"
     String snpcaller = "varscan"
-
   }
   command <<<
     date | tee DATE
 
+    # set bash arrays based on inputs to ensure read arrays are of equal length
     read1_array=(~{sep=' ' read1})
     read1_array_len=$(echo "${#read1[@]}")
     read2_array=(~{sep=' ' read2})
     read2_array_len=$(echo "${#read2[@]}")
 
-    # Ensure read arrays are of equal length
     if [ "$read1_array_len" -ne "$read2_index_array_len" ]; then
       echo "read1 array (length: $read1_array_len) and read2 index array (length: $read2_array_len) are of unequal length." >&2
       exit 1
@@ -83,13 +80,17 @@ task lyveset {
 
     # create lyvset project
     set_manage.pl --create ~{dataset_name}
+
     #shuffle paired end reads
     for index in ${!read1_array[@]}; do
       mv ${read1_array[$index]} . && mv ${read2_array[$index]} . # move reads to cwd
     done
+
     shuffleSplitReads.pl --numcpus ~{cpu} -o ./interleaved *.fastq.gz 
+
     # then moved into your project dir
     mv ./interleaved/*.fastq.gz ~{dataset_name}/reads/
+    
     # cleanup
     rmdir interleaved
     mkdir ~{dataset_name}/ref/
