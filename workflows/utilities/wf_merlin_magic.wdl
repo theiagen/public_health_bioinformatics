@@ -72,7 +72,7 @@ workflow merlin_magic {
         samplename = samplename
     }
     if (!assembly_only){
-      call shigatyper_task.shigatyper {
+      call shigatyper_task.shigatyper { # test ONT compatibility
         input:
           read1 = select_first([read1]),
           read2 = read2,
@@ -86,7 +86,7 @@ workflow merlin_magic {
         samplename = samplename,
         docker = shigeifinder_docker_image
     }
-    if (call_shigeifinder_reads_input && !assembly_only) {
+    if (call_shigeifinder_reads_input && !assembly_only) { # illumina only
       call shigeifinder_task.shigeifinder_reads as shigeifinder_reads {
         input:
           read1 = select_first([read1]),
@@ -100,7 +100,7 @@ workflow merlin_magic {
   if (merlin_tag == "Shigella_sonnei") {
     # Shigella sonnei specific tasks
     if (!assembly_only) {
-      call sonneityping_task.sonneityping {
+      call sonneityping_task.sonneityping { # test ONT compatibility
         input:
           read1 = select_first([read1]),
           read2 = read2,
@@ -123,15 +123,15 @@ workflow merlin_magic {
         samplename = samplename
     }
     if (!assembly_only){
-      call seqsero2_task.seqsero2 {
-        input: 
+      call seqsero2_task.seqsero2 { # use -5 for nanopore reads; may be bad though
+        input:                      # or give it an assembly with -4
           read1 = select_first([read1]),
           read2 = read2,
           samplename = samplename,
           paired_end = paired_end
       }
       if( seqsero2.seqsero2_predicted_serotype == "Typhi" || sistr.sistr_predicted_serotype == "Typhi" ) {
-        call genotyphi.genotyphi as genotyphi_task {
+        call genotyphi.genotyphi as genotyphi_task { # confirm ONT data; has ont_data option but unsure if works
           input: 
             read1 = select_first([read1]),
             read2 = read2,
@@ -159,7 +159,7 @@ workflow merlin_magic {
   }
   if (merlin_tag == "Mycobacterium tuberculosis") {
     if (!assembly_only) {
-      call tbprofiler_task.tbprofiler {
+      call tbprofiler_task.tbprofiler { # add platform var to enable ont
         input:
           read1 = select_first([read1]),
           read2 = read2,
@@ -175,7 +175,7 @@ workflow merlin_magic {
     }
   }
   if (merlin_tag == "Streptococcus pneumoniae") {
-    if (paired_end) {
+    if (paired_end) { # cannot use ONT
       call seroba.seroba as seroba_task {
         input:
           read1 = select_first([read1]),
@@ -205,7 +205,7 @@ workflow merlin_magic {
         samplename = samplename
     }
     if (!assembly_only) {
-      call snippy.snippy_variants as snippy_cauris {
+      call snippy.snippy_variants as snippy_cauris { # no ONT support right now
         input:
           reference = cladetyper.clade_spec_ref,
           read1 = select_first([read1]),
