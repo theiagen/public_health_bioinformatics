@@ -402,9 +402,9 @@ workflow theiaprok_ont {
     # Read Metadata
     String seq_platform = seq_method
     # Read QC
-    Int? num_reads_raw1 = read_QC_trim.fastq_scan_raw1
+    Int? num_reads_raw = read_QC_trim.fastq_scan_raw1
     String? fastq_scan_version = read_QC_trim.fastq_scan_version
-    Int? num_reads_clean1 = read_QC_trim.fastq_scan_clean1
+    Int? num_reads_clean = read_QC_trim.fastq_scan_clean1
     String? trimmomatic_version = read_QC_trim.trimmomatic_version
     String? fastp_version = read_QC_trim.fastp_version
     String? bbduk_docker = read_QC_trim.bbduk_docker
