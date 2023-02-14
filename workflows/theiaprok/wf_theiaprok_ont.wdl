@@ -184,7 +184,8 @@ workflow theiaprok_ont {
           merlin_tag = gambit.merlin_tag,
           assembly = fake_assembly_fasta,
           samplename = samplename,
-          read1 = read_QC_trim.reads_clean
+          read1 = read_QC_trim.reads_clean,
+          assembly_only = true
       }
       if (defined(taxon_tables)) {
         call terra_tools.export_taxon_tables {
