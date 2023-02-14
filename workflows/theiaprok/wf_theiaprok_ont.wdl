@@ -83,7 +83,9 @@ workflow theiaprok_ont {
         skip_screen = skip_screen
     }
     if (clean_check_reads.read_screen == "PASS") {
-    # dragonflye for assembly
+      
+      # dragonflye for assembly
+
       call quast_task.quast {
         input:
           assembly = fake_assembly_fasta,
@@ -125,11 +127,11 @@ workflow theiaprok_ont {
           organism = gambit.gambit_predicted_taxon
       }
       if (call_resfinder) {
-      call resfinder.resfinder as resfinder_task {
-        input:
-          assembly = fake_assembly_fasta,
-          samplename = samplename,
-          organism = gambit.gambit_predicted_taxon
+        call resfinder.resfinder as resfinder_task {
+          input:
+            assembly = fake_assembly_fasta,
+            samplename = samplename,
+            organism = gambit.gambit_predicted_taxon
         }
       }
       call ts_mlst_task.ts_mlst {
