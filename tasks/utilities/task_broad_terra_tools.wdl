@@ -2,11 +2,11 @@ version 1.0
 
 task export_taxon_tables {
   input {
-    String terra_project
-    String terra_workspace
-    String sample_taxon
+    String? terra_project
+    String? terra_workspace
+    String? sample_taxon
     File? taxon_tables
-    String samplename
+    String? samplename
     Int disk_size = 100
     # TheiaProk Outputs
     File? reads
@@ -28,18 +28,18 @@ task export_taxon_tables {
     String? theiaprok_ont_analysis_date
     String? theiaprok_fasta_version
     String? theiaprok_fasta_analysis_date
-    String seq_platform
-    Int num_reads_raw1
+    String? seq_platform
+    Int? num_reads_raw1
     Int? num_reads_raw2
     String? num_reads_raw_pairs
-    String fastq_scan_version
-    Int num_reads_clean1
+    String? fastq_scan_version
+    Int? num_reads_clean1
     Int? num_reads_clean2
     String? num_reads_clean_pairs
     String? trimmomatic_version
     String? fastp_version
-    String bbduk_docker
-    Float r1_mean_q_raw
+    String? bbduk_docker
+    Float? r1_mean_q_raw
     Float? r2_mean_q_raw
     Float? r1_mean_q_clean
     Float? combined_mean_q_raw
@@ -49,48 +49,48 @@ task export_taxon_tables {
     Float? combined_mean_readlength_raw 
     Float? combined_mean_readlength_clean 
     Float? r1_mean_readlength_clean
-    File assembly_fasta
+    File? assembly_fasta
     File? contigs_gfa
     String? shovill_pe_version
     String? shovill_se_version
-    File quast_report
-    String quast_version
-    Float quast_gc_percent
-    Int assembly_length
-    Int number_contigs
-    Int n50_value
-    File cg_pipeline_report_raw
-    File cg_pipeline_report_clean
-    String cg_pipeline_docker
-    Float est_coverage_raw
-    Float est_coverage_clean
-    File gambit_report
-    String gambit_predicted_taxon
-    String gambit_predicted_taxon_rank
-    File gambit_closest_genomes
-    String gambit_version
-    String gambit_db_version
-    String gambit_docker
-    String busco_version
-    String busco_database
-    String busco_results
+    File? quast_report
+    String? quast_version
+    Float? quast_gc_percent
+    Int? assembly_length
+    Int? number_contigs
+    Int? n50_value
+    File? cg_pipeline_report_raw
+    File? cg_pipeline_report_clean
+    String? cg_pipeline_docker
+    Float? est_coverage_raw
+    Float? est_coverage_clean
+    File? gambit_report
+    String? gambit_predicted_taxon
+    String? gambit_predicted_taxon_rank
+    File? gambit_closest_genomes
+    String? gambit_version
+    String? gambit_db_version
+    String? gambit_docker
+    String? busco_version
+    String? busco_database
+    String? busco_results
     File? busco_report
     Float? ani_highest_percent
     Float? ani_highest_percent_bases_aligned 
     File? ani_output_tsv
     String? ani_top_species_match 
     String? ani_mummer_version
-    File amrfinderplus_all_report
-    File amrfinderplus_amr_report
-    File amrfinderplus_stress_report
-    File amrfinderplus_virulence_report
-    String amrfinderplus_amr_genes
-    String amrfinderplus_stress_genes
-    String amrfinderplus_virulence_genes
-    String amrfinderplus_amr_classes
-    String amrfinderplus_amr_subclasses
-    String amrfinderplus_version
-    String amrfinderplus_db_version
+    File? amrfinderplus_all_report
+    File? amrfinderplus_amr_report
+    File? amrfinderplus_stress_report
+    File? amrfinderplus_virulence_report
+    String? amrfinderplus_amr_genes
+    String? amrfinderplus_stress_genes
+    String? amrfinderplus_virulence_genes
+    String? amrfinderplus_amr_classes
+    String? amrfinderplus_amr_subclasses
+    String? amrfinderplus_version
+    String? amrfinderplus_db_version
     File? resfinder_pheno_table 
     File? resfinder_pheno_table_species
     File? resfinder_seqs 
@@ -99,11 +99,11 @@ task export_taxon_tables {
     File? resfinder_pointfinder_results 
     String? resfinder_db_version 
     String? resfinder_docker 
-    String ts_mlst_results
-    String ts_mlst_predicted_st
-    String ts_mlst_pubmlst_scheme
+    String? ts_mlst_results
+    String? ts_mlst_predicted_st
+    String? ts_mlst_pubmlst_scheme
     String? ts_mlst_novel_alleles
-    String ts_mlst_version
+    String? ts_mlst_version
     File? serotypefinder_report
     String? serotypefinder_docker
     String? serotypefinder_serotype
