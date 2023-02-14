@@ -36,8 +36,8 @@ workflow theiaprok_illumina_pe {
     String? county
     String? zip
     File? taxon_tables
-    String terra_project="NA"
-    String terra_workspace="NA"
+    String terra_project = "NA"
+    String terra_workspace = "NA"
     # by default do not call ANI task, but user has ability to enable this task if working with enteric pathogens or supply their own high-quality reference genome
     Boolean call_ani = false
     Int min_reads = 7472
@@ -67,7 +67,7 @@ workflow theiaprok_illumina_pe {
       min_proportion = min_proportion,
       skip_screen = skip_screen
   }
-  if (raw_check_reads.read_screen=="PASS") {
+  if (raw_check_reads.read_screen == "PASS") {
     call read_qc.read_QC_trim_pe as read_QC_trim {
       input:
         samplename = samplename,
@@ -86,7 +86,7 @@ workflow theiaprok_illumina_pe {
         min_proportion = min_proportion,
         skip_screen = skip_screen
     }
-    if (clean_check_reads.read_screen=="PASS") {
+    if (clean_check_reads.read_screen == "PASS") {
       call shovill.shovill_pe {
         input:
           samplename = samplename,

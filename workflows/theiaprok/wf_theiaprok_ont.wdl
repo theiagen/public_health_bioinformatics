@@ -1,10 +1,11 @@
 version 1.0
 
-import "../utilities/wf_read_QC_trim_pe.wdl" as read_qc
+import "../utilities/wf_read_QC_trim_ont.wdl" as read_qc
 import "../utilities/wf_merlin_magic.wdl" as merlin_magic_workflow
 import "../../tasks/assembly/task_shovill.wdl" as shovill
 import "../../tasks/quality_control/task_quast.wdl" as quast_task
 import "../../tasks/quality_control/task_cg_pipeline.wdl" as cg_pipeline
+import "../../tasks/quality_control/task_screen.wdl" as screen
 import "../../tasks/quality_control/task_busco.wdl" as busco_task
 import "../../tasks/taxon_id/task_gambit.wdl" as gambit_task
 import "../../tasks/quality_control/task_mummer_ani.wdl" as ani_task
@@ -25,7 +26,7 @@ workflow theiaprok_ont {
   input {
     String samplename
     String seq_method = "ONT"
-    File read1_raw
+    File reads
     Int? genome_size
     String? run_id
     String? collection_date
@@ -34,117 +35,125 @@ workflow theiaprok_ont {
     String? county
     String? zip
     File? taxon_tables
-    String terra_project="NA"
-    String terra_workspace="NA"
+    String terra_project = "NA"
+    String terra_workspace = "NA"
     # by default do not call ANI task, but user has ability to enable this task if working with enteric pathogens or supply their own high-quality reference genome
     Boolean call_ani = false
-    Int min_reads = 7472
-    Int min_basepairs = 2241820
+    Int min_reads = 0 # placeholder value
+    Int min_basepairs = 0 # placeholder value
     Int min_genome_size = 100000
-    Int max_genome_size = 18040666
-    Int min_coverage = 10
-    Int min_proportion = 40
+    Int max_genome_size = 18040666 
+    Int min_coverage = 0 # placeholder value
     Boolean call_resfinder = false
     Boolean skip_screen = false 
     String genome_annotation = "prokka"
     File? qc_check_table
     String? expected_taxon
+
+    # placeholder ILLUMINA assembly_fasta to ensure this workflow can run
+    File fake_assembly_fasta = "gs://fc-d2e28cc7-df60-4b3c-91b2-ebc5d39e880a/submissions/7795499c-2cd0-4eda-b0d4-3889ed5ea360/theiaprok_illumina_pe/e3feb60b-13fe-4adf-af72-2a21db5e7f0d/call-cacheCopy/out/SRR1258442_contigs.fasta"
   }
   call versioning.version_capture{
     input:
   }
   call screen.check_reads_ont as raw_check_reads {
     input:
-      
+      read1 = reads,
+      min_reads = min_reads,
+      min_basepairs = min_basepairs,
+      min_genome_size = min_genome_size,
+      max_genome_size = max_genome_size,
+      min_coverage = min_coverage,
+      skip_screen = skip_screen
   }
   if (raw_check_reads.read_screen == "PASS") {
-    call read_qc.read_QC_trim_pe as read_QC_trim {
-      # read screen for ONT
-      # fastq-scan
-      # nanoplot
-      # tiptoft
-      # porechop? (optional)
-      # nanoq/filtlong (default min length 500)
-      # rasusa for random downsampling
+    call read_qc.read_QC_trim_ont as read_QC_trim {
       input:
         samplename = samplename,
-        read1_raw = read1_raw
+        reads = reads
     }
     call screen.check_reads_ont as clean_check_reads {
-
+      input:
+        read1 = reads,
+        min_reads = min_reads,
+        min_basepairs = min_basepairs,
+        min_genome_size = min_genome_size,
+        max_genome_size = max_genome_size,
+        min_coverage = min_coverage,
+        skip_screen = skip_screen
     }
     if (clean_check_reads.read_screen == "PASS") {
     # dragonflye for assembly
       call quast_task.quast {
         input:
-          assembly = shovill_pe.assembly_fasta,
+          assembly = fake_assembly_fasta,
           samplename = samplename
       }
       call cg_pipeline.cg_pipeline as cg_pipeline_raw {
         input:
-          read1 = read1_raw,
+          read1 = reads,
           samplename = samplename,
           genome_length = select_first([genome_size, quast.genome_length])
       }
       call cg_pipeline.cg_pipeline as cg_pipeline_clean {
         input:
-          read1 = read_QC_trim.read1_clean,
+          read1 = read_QC_trim.reads_clean,
           samplename = samplename,
           genome_length = select_first([genome_size, quast.genome_length])
       }
       call gambit_task.gambit {
         input:
-          assembly = shovill_pe.assembly_fasta,
+          assembly = fake_assembly_fasta,
           samplename = samplename
       }
       call busco_task.busco {
         input:
-          assembly = shovill_pe.assembly_fasta,
+          assembly = fake_assembly_fasta,
           samplename = samplename
       }
       if (call_ani) {
         call ani_task.animummer as ani {
           input:
-            assembly = shovill_pe.assembly_fasta,
+            assembly = fake_assembly_fasta,
             samplename = samplename
         }
       }
       call amrfinderplus.amrfinderplus_nuc as amrfinderplus_task {
         input:
-          assembly = shovill_pe.assembly_fasta,
+          assembly = fake_assembly_fasta,
           samplename = samplename,
           organism = gambit.gambit_predicted_taxon
       }
       if (call_resfinder) {
       call resfinder.resfinder as resfinder_task {
         input:
-          assembly = shovill_pe.assembly_fasta,
+          assembly = fake_assembly_fasta,
           samplename = samplename,
           organism = gambit.gambit_predicted_taxon
         }
       }
       call ts_mlst_task.ts_mlst {
         input: 
-          assembly = shovill_pe.assembly_fasta,
+          assembly = fake_assembly_fasta,
           samplename = samplename
       }
       if (genome_annotation == "prokka") {
         call prokka_task.prokka {
           input:
-            assembly = shovill_pe.assembly_fasta,
+            assembly = fake_assembly_fasta,
             samplename = samplename
         }
       }
       if (genome_annotation == "bakta") {
         call bakta_task.bakta {
           input:
-            assembly = shovill_pe.assembly_fasta,
+            assembly = fake_assembly_fasta,
             samplename = samplename
         }
       }
       call plasmidfinder_task.plasmidfinder {
         input:
-          assembly = shovill_pe.assembly_fasta,
+          assembly = fake_assembly_fasta,
           samplename = samplename
       }
       if(defined(qc_check_table)) {
@@ -154,14 +163,11 @@ workflow theiaprok_ont {
             expected_taxon = expected_taxon,
             gambit_predicted_taxon = gambit.gambit_predicted_taxon,
             r1_mean_q_raw = cg_pipeline_raw.r1_mean_q,
-            r2_mean_q_raw = cg_pipeline_raw.r2_mean_q,
             r1_mean_readlength_raw = cg_pipeline_raw.r1_mean_readlength,
-            r2_mean_readlength_raw = cg_pipeline_raw.r2_mean_readlength,  
             r1_mean_q_clean = cg_pipeline_clean.r1_mean_q,
             r1_mean_readlength_clean = cg_pipeline_clean.r1_mean_readlength,
             est_coverage_raw = cg_pipeline_raw.est_coverage,
             est_coverage_clean = cg_pipeline_clean.est_coverage,
-            midas_secondary_genus_abundance = read_QC_trim.midas_secondary_genus_abundance,
             assembly_length = quast.genome_length,
             number_contigs = quast.number_contigs,
             n50_value = quast.n50_value,
@@ -174,9 +180,9 @@ workflow theiaprok_ont {
       call merlin_magic_workflow.merlin_magic {
         input:
           merlin_tag = gambit.merlin_tag,
-          assembly = shovill_pe.assembly_fasta,
+          assembly = fake_assembly_fasta,
           samplename = samplename,
-          read1 = read_QC_trim.read1_clean
+          read1 = read_QC_trim.reads_clean
       }
       if (defined(taxon_tables)) {
         call terra_tools.export_taxon_tables {
@@ -186,28 +192,23 @@ workflow theiaprok_ont {
             sample_taxon = gambit.gambit_predicted_taxon,
             taxon_tables = taxon_tables,
             samplename = samplename,
-            read1 = read1_raw,
-            read1_clean = read_QC_trim.read1_clean,
+            reads = reads,
+            reads_clean = read_QC_trim.reads_clean,
             run_id = run_id,
             collection_date = collection_date,
             originating_lab = originating_lab,
             city = city,
             county = county,
             zip = zip,
-            theiaprok_illumina_pe_version = version_capture.phb_version,
-            theiaprok_illumina_pe_analysis_date = version_capture.date,
+            theiaprok_ont_version = version_capture.phb_version,
+            theiaprok_ont_analysis_date = version_capture.date,
             seq_platform = seq_method,
-            num_reads_raw1 = read_QC_trim.fastq_scan_raw1,
+            num_reads_raw = read_QC_trim.number_raw_reads,
             fastq_scan_version = read_QC_trim.fastq_scan_version,
-            num_reads_clean1 = read_QC_trim.fastq_scan_clean1,
-            trimmomatic_version = read_QC_trim.trimmomatic_version,
-            fastp_version = read_QC_trim.fastp_version,
-            bbduk_docker = read_QC_trim.bbduk_docker,
-            r1_mean_q_raw = cg_pipeline_raw.r1_mean_q,
+            num_reads_clean = read_QC_trim.number_clean_reads,
+            r1_mean_q_raw = cg_pipeline_raw.r1_mean_q, 
             r1_mean_readlength_raw = cg_pipeline_raw.r1_mean_readlength,
-            assembly_fasta = shovill_pe.assembly_fasta,
-            contigs_gfa = shovill_pe.contigs_gfa,
-            shovill_pe_version = shovill_pe.shovill_version,
+            assembly_fasta = fake_assembly_fasta,
             quast_report = quast.quast_report,
             quast_version = quast.version,
             assembly_length = quast.genome_length,
@@ -282,16 +283,6 @@ workflow theiaprok_ont {
             shigeifinder_O_antigen = merlin_magic.shigeifinder_O_antigen,
             shigeifinder_H_antigen = merlin_magic.shigeifinder_H_antigen,
             shigeifinder_notes = merlin_magic.shigeifinder_notes,
-            shigeifinder_report_reads = merlin_magic.shigeifinder_report_reads,
-            shigeifinder_docker_reads = merlin_magic.shigeifinder_docker_reads,
-            shigeifinder_version_reads = merlin_magic.shigeifinder_version_reads,
-            shigeifinder_ipaH_presence_absence_reads = merlin_magic.shigeifinder_ipaH_presence_absence_reads,
-            shigeifinder_num_virulence_plasmid_genes_reads = merlin_magic.shigeifinder_num_virulence_plasmid_genes_reads,
-            shigeifinder_cluster_reads = merlin_magic.shigeifinder_cluster_reads,
-            shigeifinder_serotype_reads = merlin_magic.shigeifinder_serotype_reads,
-            shigeifinder_O_antigen_reads = merlin_magic.shigeifinder_O_antigen_reads,
-            shigeifinder_H_antigen_reads = merlin_magic.shigeifinder_H_antigen_reads,
-            shigeifinder_notes_reads = merlin_magic.shigeifinder_notes_reads,
             sonneityping_mykrobe_report_csv = merlin_magic.sonneityping_mykrobe_report_csv,
             sonneityping_mykrobe_report_json = merlin_magic.sonneityping_mykrobe_report_json,
             sonneityping_final_report_tsv = merlin_magic.sonneityping_final_report_tsv,
@@ -380,17 +371,6 @@ workflow theiaprok_ont {
             poppunk_GPS_db_version = merlin_magic.poppunk_gps_external_cluster_csv,
             poppunk_version = merlin_magic.poppunk_version,
             poppunk_docker = merlin_magic.poppunk_docker,
-            seroba_version = merlin_magic.seroba_version,
-            seroba_docker = merlin_magic.seroba_docker,
-            seroba_serotype = merlin_magic.seroba_serotype,
-            seroba_ariba_serotype = merlin_magic.seroba_ariba_serotype,
-            seroba_ariba_identity = merlin_magic.seroba_ariba_identity,
-            seroba_details = merlin_magic.seroba_details,
-            midas_docker = read_QC_trim.midas_docker,
-            midas_report = read_QC_trim.midas_report,
-            midas_primary_genus = read_QC_trim.midas_primary_genus,
-            midas_secondary_genus = read_QC_trim.midas_secondary_genus,
-            midas_secondary_genus_abundance = read_QC_trim.midas_secondary_genus_abundance,
             pasty_serogroup = merlin_magic.pasty_serogroup,
             pasty_serogroup_coverage = merlin_magic.pasty_serogroup_coverage,
             pasty_serogroup_fragments = merlin_magic.pasty_serogroup_fragments,
@@ -403,6 +383,7 @@ workflow theiaprok_ont {
             qc_check = qc_check_task.qc_check,
             qc_standard = qc_check_task.qc_standard
         }
+      }
     }
   }
   output {
@@ -412,21 +393,14 @@ workflow theiaprok_ont {
     # Read Metadata
     String seq_platform = seq_method
     # Read QC
-    Int? num_reads_raw = read_QC_trim.fastq_scan_raw1
+    Int? num_reads_raw = read_QC_trim.number_raw_reads
     String? fastq_scan_version = read_QC_trim.fastq_scan_version
-    Int? num_reads_clean = read_QC_trim.fastq_scan_clean1
-    String? trimmomatic_version = read_QC_trim.trimmomatic_version
-    String? fastp_version = read_QC_trim.fastp_version
-    String? bbduk_docker = read_QC_trim.bbduk_docker
+    Int? num_reads_clean = read_QC_trim.number_clean_reads
     Float? r1_mean_q_raw = cg_pipeline_raw.r1_mean_q
     Float? r1_mean_readlength_raw = cg_pipeline_raw.r1_mean_readlength
-    File? read1_clean = read_QC_trim.read1_clean
+    File? reads_clean = read_QC_trim.reads_clean
     # Assembly and Assembly QC
-    File? assembly_fasta = shovill_pe.assembly_fasta
-    File? contigs_gfa = shovill_pe.contigs_gfa
-    File? contigs_fastg = shovill_pe.contigs_fastg
-    File? contigs_lastgraph = shovill_pe.contigs_lastgraph
-    String? shovill_pe_version = shovill_pe.shovill_version
+    File? assembly_fasta = fake_assembly_fasta
     File? quast_report = quast.quast_report
     String? quast_version = quast.version
     Int? assembly_length = quast.genome_length
@@ -523,17 +497,6 @@ workflow theiaprok_ont {
     String? shigeifinder_O_antigen = merlin_magic.shigeifinder_O_antigen
     String? shigeifinder_H_antigen = merlin_magic.shigeifinder_H_antigen
     String? shigeifinder_notes = merlin_magic.shigeifinder_notes
-    # ShigeiFinder outputs but for task that uses reads instead of assembly as input
-    File? shigeifinder_report_reads = merlin_magic.shigeifinder_report
-    String? shigeifinder_docker_reads = merlin_magic.shigeifinder_docker
-    String? shigeifinder_version_reads = merlin_magic.shigeifinder_version
-    String? shigeifinder_ipaH_presence_absence_reads = merlin_magic.shigeifinder_ipaH_presence_absence
-    String? shigeifinder_num_virulence_plasmid_genes_reads = merlin_magic.shigeifinder_num_virulence_plasmid_genes
-    String? shigeifinder_cluster_reads = merlin_magic.shigeifinder_cluster
-    String? shigeifinder_serotype_reads = merlin_magic.shigeifinder_serotype
-    String? shigeifinder_O_antigen_reads = merlin_magic.shigeifinder_O_antigen
-    String? shigeifinder_H_antigen_reads = merlin_magic.shigeifinder_H_antigen
-    String? shigeifinder_notes_reads = merlin_magic.shigeifinder_notes
     # Shigella sonnei Typing
     File? sonneityping_mykrobe_report_csv = merlin_magic.sonneityping_mykrobe_report_csv
     File? sonneityping_mykrobe_report_json = merlin_magic.sonneityping_mykrobe_report_json
@@ -628,11 +591,5 @@ workflow theiaprok_ont {
     String? poppunk_GPS_db_version = merlin_magic.poppunk_GPS_db_version
     String? poppunk_version = merlin_magic.poppunk_version
     String? poppunk_docker = merlin_magic.poppunk_docker
-    String? seroba_version = merlin_magic.seroba_version
-    String? seroba_docker = merlin_magic.seroba_docker
-    String? seroba_serotype = merlin_magic.seroba_serotype
-    String? seroba_ariba_serotype = merlin_magic.seroba_ariba_serotype
-    String? seroba_ariba_identity = merlin_magic.seroba_ariba_identity
-    File? seroba_details = merlin_magic.seroba_details
   }
 }
