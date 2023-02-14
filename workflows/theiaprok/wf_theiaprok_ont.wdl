@@ -51,7 +51,7 @@ workflow theiaprok_ont {
     String? expected_taxon
 
     # placeholder ILLUMINA assembly_fasta to ensure this workflow can run
-    File fake_assembly_fasta = "gs://fc-d2e28cc7-df60-4b3c-91b2-ebc5d39e880a/submissions/7795499c-2cd0-4eda-b0d4-3889ed5ea360/theiaprok_illumina_pe/e3feb60b-13fe-4adf-af72-2a21db5e7f0d/call-cacheCopy/out/SRR1258442_contigs.fasta"
+    File fake_assembly_fasta = "gs://theiagen-public-files/terra/theiaprok-files/Abaumanni_GCF_008632635.1_ASM863263v1_genomic.fna"
   }
   call versioning.version_capture{
     input:
