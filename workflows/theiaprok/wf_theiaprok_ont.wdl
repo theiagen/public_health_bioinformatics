@@ -53,345 +53,356 @@ workflow theiaprok_ont {
   call versioning.version_capture{
     input:
   }
-  call read_qc.read_QC_trim_pe as read_QC_trim {
-    # fastq-scan
-    # nanoplot
-    # tiptoft
-    # porechop? (optional)
-    # nanoq/filtlong (default min length 500)
-    # rasusa for random downsampling
+  call screen.check_reads_ont as raw_check_reads {
     input:
-      samplename = samplename,
-      read1_raw = read1_raw
+      
   }
-  # dragonflye for assembly
-  call quast_task.quast {
-    input:
-      assembly = shovill_pe.assembly_fasta,
-      samplename = samplename
-  }
-  call cg_pipeline.cg_pipeline as cg_pipeline_raw {
-    input:
-      read1 = read1_raw,
-      samplename = samplename,
-      genome_length = select_first([genome_size, quast.genome_length])
-  }
-  call cg_pipeline.cg_pipeline as cg_pipeline_clean {
-    input:
-      read1 = read_QC_trim.read1_clean,
-      samplename = samplename,
-      genome_length = select_first([genome_size, quast.genome_length])
-  }
-  call gambit_task.gambit {
-    input:
-      assembly = shovill_pe.assembly_fasta,
-      samplename = samplename
-  }
-  call busco_task.busco {
-    input:
-      assembly = shovill_pe.assembly_fasta,
-      samplename = samplename
-  }
-  if (call_ani) {
-  call ani_task.animummer as ani {
-    input:
-      assembly = shovill_pe.assembly_fasta,
-      samplename = samplename
-  }
-  }
-  call amrfinderplus.amrfinderplus_nuc as amrfinderplus_task {
-    input:
-      assembly = shovill_pe.assembly_fasta,
-      samplename = samplename,
-      organism = gambit.gambit_predicted_taxon
-  }
-  if (call_resfinder) {
-  call resfinder.resfinder as resfinder_task {
-    input:
-      assembly = shovill_pe.assembly_fasta,
-      samplename = samplename,
-      organism = gambit.gambit_predicted_taxon
-    }
-  }
-  call ts_mlst_task.ts_mlst {
-    input: 
-      assembly = shovill_pe.assembly_fasta,
-      samplename = samplename
-  }
-  if (genome_annotation == "prokka") {
-    call prokka_task.prokka {
+  if (raw_check_reads.read_screen == "PASS") {
+    call read_qc.read_QC_trim_pe as read_QC_trim {
+      # read screen for ONT
+      # fastq-scan
+      # nanoplot
+      # tiptoft
+      # porechop? (optional)
+      # nanoq/filtlong (default min length 500)
+      # rasusa for random downsampling
       input:
-        assembly = shovill_pe.assembly_fasta,
-        samplename = samplename
-    }
-  }
-  if (genome_annotation == "bakta") {
-    call bakta_task.bakta {
-      input:
-        assembly = shovill_pe.assembly_fasta,
-        samplename = samplename
-    }
-  }
-  call plasmidfinder_task.plasmidfinder {
-    input:
-      assembly = shovill_pe.assembly_fasta,
-      samplename = samplename
-  }
-  if(defined(qc_check_table)) {
-    call qc_check.qc_check as qc_check_task {
-      input:
-        qc_check_table = qc_check_table,
-        expected_taxon = expected_taxon,
-        gambit_predicted_taxon = gambit.gambit_predicted_taxon,
-        r1_mean_q_raw = cg_pipeline_raw.r1_mean_q,
-        r2_mean_q_raw = cg_pipeline_raw.r2_mean_q,
-        r1_mean_readlength_raw = cg_pipeline_raw.r1_mean_readlength,
-        r2_mean_readlength_raw = cg_pipeline_raw.r2_mean_readlength,  
-        r1_mean_q_clean = cg_pipeline_clean.r1_mean_q,
-        r1_mean_readlength_clean = cg_pipeline_clean.r1_mean_readlength,
-        est_coverage_raw = cg_pipeline_raw.est_coverage,
-        est_coverage_clean = cg_pipeline_clean.est_coverage,
-        midas_secondary_genus_abundance = read_QC_trim.midas_secondary_genus_abundance,
-        assembly_length = quast.genome_length,
-        number_contigs = quast.number_contigs,
-        n50_value = quast.n50_value,
-        busco_results = busco.busco_results,
-        ani_highest_percent = ani.ani_highest_percent,
-        ani_highest_percent_bases_aligned = ani.ani_highest_percent_bases_aligned,
-        ani_top_species_match = ani.ani_top_species_match
-    }
-  }
-  call merlin_magic_workflow.merlin_magic {
-    input:
-      merlin_tag = gambit.merlin_tag,
-      assembly = shovill_pe.assembly_fasta,
-      samplename = samplename,
-      read1 = read_QC_trim.read1_clean
-  }
-  if(defined(taxon_tables)) {
-    call terra_tools.export_taxon_tables {
-      input:
-        terra_project = terra_project,
-        terra_workspace = terra_workspace,
-        sample_taxon = gambit.gambit_predicted_taxon,
-        taxon_tables = taxon_tables,
         samplename = samplename,
-        read1 = read1_raw,
-        read1_clean = read_QC_trim.read1_clean,
-        run_id = run_id,
-        collection_date = collection_date,
-        originating_lab = originating_lab,
-        city = city,
-        county = county,
-        zip = zip,
-        theiaprok_illumina_pe_version = version_capture.phb_version,
-        theiaprok_illumina_pe_analysis_date = version_capture.date,
-        seq_platform = seq_method,
-        num_reads_raw1 = read_QC_trim.fastq_scan_raw1,
-        fastq_scan_version = read_QC_trim.fastq_scan_version,
-        num_reads_clean1 = read_QC_trim.fastq_scan_clean1,
-        trimmomatic_version = read_QC_trim.trimmomatic_version,
-        fastp_version = read_QC_trim.fastp_version,
-        bbduk_docker = read_QC_trim.bbduk_docker,
-        r1_mean_q_raw = cg_pipeline_raw.r1_mean_q,
-        r1_mean_readlength_raw = cg_pipeline_raw.r1_mean_readlength,
-        assembly_fasta = shovill_pe.assembly_fasta,
-        contigs_gfa = shovill_pe.contigs_gfa,
-        shovill_pe_version = shovill_pe.shovill_version,
-        quast_report = quast.quast_report,
-        quast_version = quast.version,
-        assembly_length = quast.genome_length,
-        number_contigs = quast.number_contigs,
-        n50_value = quast.n50_value,
-        quast_gc_percent = quast.gc_percent,
-        cg_pipeline_report_raw = cg_pipeline_raw.cg_pipeline_report,
-        cg_pipeline_docker = cg_pipeline_raw.cg_pipeline_docker,
-        est_coverage_raw = cg_pipeline_raw.est_coverage,
-        cg_pipeline_report_clean = cg_pipeline_clean.cg_pipeline_report,
-        est_coverage_clean = cg_pipeline_clean.est_coverage,
-        gambit_report = gambit.gambit_report_file,
-        gambit_predicted_taxon = gambit.gambit_predicted_taxon,
-        gambit_predicted_taxon_rank = gambit.gambit_predicted_taxon_rank,
-        gambit_closest_genomes = gambit.gambit_closest_genomes_file,
-        gambit_version = gambit.gambit_version,
-        gambit_db_version = gambit.gambit_db_version,
-        gambit_docker = gambit.gambit_docker,
-        busco_version = busco.busco_version,
-        busco_database = busco.busco_database,
-        busco_results = busco.busco_results,
-        busco_report = busco.busco_report,
-        ani_highest_percent = ani.ani_highest_percent,
-        ani_highest_percent_bases_aligned = ani.ani_highest_percent_bases_aligned,
-        ani_output_tsv = ani.ani_output_tsv,
-        ani_top_species_match = ani.ani_top_species_match,
-        ani_mummer_version = ani.ani_mummer_version,
-        amrfinderplus_all_report = amrfinderplus_task.amrfinderplus_all_report,
-        amrfinderplus_amr_report = amrfinderplus_task.amrfinderplus_amr_report,
-        amrfinderplus_stress_report = amrfinderplus_task.amrfinderplus_stress_report,
-        amrfinderplus_virulence_report = amrfinderplus_task.amrfinderplus_virulence_report,
-        amrfinderplus_amr_genes = amrfinderplus_task.amrfinderplus_amr_genes,
-        amrfinderplus_stress_genes = amrfinderplus_task.amrfinderplus_stress_genes,
-        amrfinderplus_virulence_genes = amrfinderplus_task.amrfinderplus_virulence_genes,
-        amrfinderplus_amr_classes = amrfinderplus_task.amrfinderplus_amr_classes,
-        amrfinderplus_amr_subclasses = amrfinderplus_task.amrfinderplus_amr_subclasses,
-        amrfinderplus_version = amrfinderplus_task.amrfinderplus_version,
-        amrfinderplus_db_version = amrfinderplus_task.amrfinderplus_db_version,
-        resfinder_pheno_table = resfinder_task.resfinder_pheno_table,
-        resfinder_pheno_table_species = resfinder_task.resfinder_pheno_table_species,
-        resfinder_seqs = resfinder_task.resfinder_hit_in_genome_seq,
-        resfinder_results = resfinder_task.resfinder_results_tab,
-        resfinder_pointfinder_pheno_table = resfinder_task.pointfinder_pheno_table,
-        resfinder_pointfinder_results = resfinder_task.pointfinder_results,
-        resfinder_db_version = resfinder_task.resfinder_db_version,
-        resfinder_docker = resfinder_task.resfinder_docker,
-        ts_mlst_results = ts_mlst.ts_mlst_results,
-        ts_mlst_predicted_st = ts_mlst.ts_mlst_predicted_st,
-        ts_mlst_pubmlst_scheme = ts_mlst.ts_mlst_pubmlst_scheme,
-        ts_mlst_version = ts_mlst.ts_mlst_version,
-        ts_mlst_novel_alleles = ts_mlst.ts_mlst_novel_alleles,
-        serotypefinder_report = merlin_magic.serotypefinder_report,
-        serotypefinder_docker = merlin_magic.serotypefinder_docker,
-        serotypefinder_serotype = merlin_magic.serotypefinder_serotype,
-        ectyper_results = merlin_magic.ectyper_results,
-        ectyper_version = merlin_magic.ectyper_version,
-        ectyper_predicted_serotype = merlin_magic.ectyper_predicted_serotype,
-        shigatyper_predicted_serotype = merlin_magic.shigatyper_predicted_serotype,
-        shigatyper_ipaB_presence_absence = merlin_magic.shigatyper_ipaB_presence_absence,
-        shigatyper_notes = merlin_magic.shigatyper_notes,
-        shigatyper_hits_tsv = merlin_magic.shigatyper_hits_tsv,
-        shigatyper_summary_tsv = merlin_magic.shigatyper_summary_tsv,
-        shigatyper_version = merlin_magic.shigatyper_version,
-        shigatyper_docker = merlin_magic.shigatyper_docker,
-        shigeifinder_report = merlin_magic.shigeifinder_report,
-        shigeifinder_docker = merlin_magic.shigeifinder_docker,
-        shigeifinder_version = merlin_magic.shigeifinder_version,
-        shigeifinder_ipaH_presence_absence = merlin_magic.shigeifinder_ipaH_presence_absence,
-        shigeifinder_num_virulence_plasmid_genes = merlin_magic.shigeifinder_num_virulence_plasmid_genes,
-        shigeifinder_cluster = merlin_magic.shigeifinder_cluster,
-        shigeifinder_serotype = merlin_magic.shigeifinder_serotype,
-        shigeifinder_O_antigen = merlin_magic.shigeifinder_O_antigen,
-        shigeifinder_H_antigen = merlin_magic.shigeifinder_H_antigen,
-        shigeifinder_notes = merlin_magic.shigeifinder_notes,
-        shigeifinder_report_reads = merlin_magic.shigeifinder_report_reads,
-        shigeifinder_docker_reads = merlin_magic.shigeifinder_docker_reads,
-        shigeifinder_version_reads = merlin_magic.shigeifinder_version_reads,
-        shigeifinder_ipaH_presence_absence_reads = merlin_magic.shigeifinder_ipaH_presence_absence_reads,
-        shigeifinder_num_virulence_plasmid_genes_reads = merlin_magic.shigeifinder_num_virulence_plasmid_genes_reads,
-        shigeifinder_cluster_reads = merlin_magic.shigeifinder_cluster_reads,
-        shigeifinder_serotype_reads = merlin_magic.shigeifinder_serotype_reads,
-        shigeifinder_O_antigen_reads = merlin_magic.shigeifinder_O_antigen_reads,
-        shigeifinder_H_antigen_reads = merlin_magic.shigeifinder_H_antigen_reads,
-        shigeifinder_notes_reads = merlin_magic.shigeifinder_notes_reads,
-        sonneityping_mykrobe_report_csv = merlin_magic.sonneityping_mykrobe_report_csv,
-        sonneityping_mykrobe_report_json = merlin_magic.sonneityping_mykrobe_report_json,
-        sonneityping_final_report_tsv = merlin_magic.sonneityping_final_report_tsv,
-        sonneityping_mykrobe_version = merlin_magic.sonneityping_mykrobe_version,
-        sonneityping_mykrobe_docker = merlin_magic.sonneityping_mykrobe_docker,
-        sonneityping_species = merlin_magic.sonneityping_species,
-        sonneityping_final_genotype = merlin_magic.sonneityping_final_genotype,
-        sonneityping_genotype_confidence = merlin_magic.sonneityping_genotype_confidence,
-        sonneityping_genotype_name = merlin_magic.sonneityping_genotype_name,
-        lissero_results = merlin_magic.lissero_results,
-        lissero_version = merlin_magic.lissero_version,
-        lissero_serotype = merlin_magic.lissero_serotype,
-        sistr_results = merlin_magic.sistr_results,
-        sistr_allele_json = merlin_magic.sistr_allele_json,
-        sister_allele_fasta = merlin_magic.sistr_allele_fasta,
-        sistr_cgmlst = merlin_magic.sistr_cgmlst,
-        sistr_version = merlin_magic.sistr_version,
-        sistr_predicted_serotype = merlin_magic.sistr_predicted_serotype,
-        seqsero2_report = merlin_magic.seqsero2_report,
-        seqsero2_version = merlin_magic.seqsero2_version,
-        seqsero2_predicted_antigenic_profile = merlin_magic.seqsero2_predicted_antigenic_profile,
-        seqsero2_predicted_serotype = merlin_magic.seqsero2_predicted_serotype,
-        seqsero2_predicted_contamination = merlin_magic.seqsero2_predicted_contamination,
-        genotyphi_report_tsv = merlin_magic.genotyphi_report_tsv,
-        genotyphi_mykrobe_json = merlin_magic.genotyphi_mykrobe_json,
-        genotyphi_version = merlin_magic.genotyphi_version,
-        genotyphi_species = merlin_magic.genotyphi_species,
-        genotyphi_st_probes_percent_coverage = merlin_magic.genotyphi_st_probes_percent_coverage,
-        genotyphi_final_genotype = merlin_magic.genotyphi_final_genotype,
-        genotyphi_genotype_confidence = merlin_magic.genotyphi_genotype_confidence,
-        kleborate_output_file = merlin_magic.kleborate_output_file,
-        kleborate_version = merlin_magic.kleborate_version,
-        kleborate_docker = merlin_magic.kleborate_docker,
-        kleborate_key_resistance_genes = merlin_magic.kleborate_key_resistance_genes,
-        kleborate_genomic_resistance_mutations = merlin_magic.kleborate_genomic_resistance_mutations,
-        kleborate_mlst_sequence_type = merlin_magic.kleborate_mlst_sequence_type,
-        kleborate_klocus = merlin_magic.kleborate_klocus,
-        kleborate_ktype = merlin_magic.kleborate_ktype,
-        kleborate_olocus = merlin_magic.kleborate_olocus,
-        kleborate_otype = merlin_magic.kleborate_otype,
-        kleborate_klocus_confidence = merlin_magic.kleborate_klocus_confidence,
-        kleborate_olocus_confidence = merlin_magic.kleborate_olocus_confidence,
-        kaptive_output_file_k = merlin_magic.kaptive_output_file_k,
-        kaptive_output_file_oc = merlin_magic.kaptive_output_file_oc,
-        kaptive_version = merlin_magic.kaptive_version,
-        kaptive_k_locus = merlin_magic.kaptive_k_match,
-        kaptive_k_type = merlin_magic.kaptive_k_type,
-        kaptive_kl_confidence = merlin_magic.kaptive_k_confidence,
-        kaptive_oc_locus = merlin_magic.kaptive_oc_match,
-        kaptive_ocl_confidence = merlin_magic.kaptive_oc_confidence,
-        abricate_abaum_plasmid_tsv = merlin_magic.abricate_results,
-        abricate_abaum_plasmid_type_genes = merlin_magic.abricate_genes,
-        abricate_database = merlin_magic.abricate_database,
-        abricate_version = merlin_magic.abricate_version,
-        abricate_docker = merlin_magic.abricate_docker,
-        tbprofiler_output_file = merlin_magic.tbprofiler_output_file,
-        tbprofiler_output_bam = merlin_magic.tbprofiler_output_bam,
-        tbprofiler_output_bai = merlin_magic.tbprofiler_output_bai,
-        tbprofiler_version = merlin_magic.tbprofiler_version,
-        tbprofiler_main_lineage = merlin_magic.tbprofiler_main_lineage,
-        tbprofiler_sub_lineage = merlin_magic.tbprofiler_sub_lineage,
-        tbprofiler_dr_type = merlin_magic.tbprofiler_dr_type,
-        tbprofiler_resistance_genes = merlin_magic.tbprofiler_resistance_genes,
-        legsta_results = merlin_magic.legsta_results,
-        legsta_predicted_sbt = merlin_magic.legsta_predicted_sbt,
-        legsta_version = merlin_magic.legsta_version,
-        prokka_gff = prokka.prokka_gff,
-        prokka_gbk = prokka.prokka_gbk,
-        prokka_sqn = prokka.prokka_sqn,
-        bakta_gbff = bakta.bakta_gbff,
-        bakta_gff3 = bakta.bakta_gff3,
-        bakta_tsv = bakta.bakta_tsv,
-        bakta_summary = bakta.bakta_txt,
-        bakta_version = bakta.bakta_version,
-        plasmidfinder_plasmids = plasmidfinder.plasmidfinder_plasmids,
-        plasmidfinder_results = plasmidfinder.plasmidfinder_results,
-        plasmidfinder_seqs = plasmidfinder.plasmidfinder_seqs,
-        plasmidfinder_docker = plasmidfinder.plasmidfinder_docker,
-        plasmidfinder_db_version = plasmidfinder.plasmidfinder_db_version,
-        pbptyper_predicted_1A_2B_2X = merlin_magic.pbptyper_predicted_1A_2B_2X,
-        pbptyper_pbptype_predicted_tsv = merlin_magic.pbptyper_pbptype_predicted_tsv,
-        pbptyper_version = merlin_magic.pbptyper_version,
-        pbptyper_docker = merlin_magic.pbptyper_docker,
-        poppunk_gps_cluster = merlin_magic.poppunk_gps_cluster,
-        poppunk_gps_external_cluster_csv = merlin_magic.poppunk_gps_external_cluster_csv,
-        poppunk_GPS_db_version = merlin_magic.poppunk_gps_external_cluster_csv,
-        poppunk_version = merlin_magic.poppunk_version,
-        poppunk_docker = merlin_magic.poppunk_docker,
-        seroba_version = merlin_magic.seroba_version,
-        seroba_docker = merlin_magic.seroba_docker,
-        seroba_serotype = merlin_magic.seroba_serotype,
-        seroba_ariba_serotype = merlin_magic.seroba_ariba_serotype,
-        seroba_ariba_identity = merlin_magic.seroba_ariba_identity,
-        seroba_details = merlin_magic.seroba_details,
-        midas_docker = read_QC_trim.midas_docker,
-        midas_report = read_QC_trim.midas_report,
-        midas_primary_genus = read_QC_trim.midas_primary_genus,
-        midas_secondary_genus = read_QC_trim.midas_secondary_genus,
-        midas_secondary_genus_abundance = read_QC_trim.midas_secondary_genus_abundance,
-        pasty_serogroup = merlin_magic.pasty_serogroup,
-        pasty_serogroup_coverage = merlin_magic.pasty_serogroup_coverage,
-        pasty_serogroup_fragments = merlin_magic.pasty_serogroup_fragments,
-        pasty_summary_tsv = merlin_magic.pasty_summary_tsv,
-        pasty_blast_hits = merlin_magic.pasty_blast_hits,
-        pasty_all_serogroups = merlin_magic.pasty_all_serogroups,
-        pasty_version = merlin_magic.pasty_version,
-        pasty_docker = merlin_magic.pasty_docker,
-        pasty_comment = merlin_magic.pasty_comment,
-        qc_check = qc_check_task.qc_check,
-        qc_standard = qc_check_task.qc_standard
+        read1_raw = read1_raw
+    }
+    call screen.check_reads_ont as clean_check_reads {
+
+    }
+    if (clean_check_reads.read_screen == "PASS") {
+    # dragonflye for assembly
+      call quast_task.quast {
+        input:
+          assembly = shovill_pe.assembly_fasta,
+          samplename = samplename
+      }
+      call cg_pipeline.cg_pipeline as cg_pipeline_raw {
+        input:
+          read1 = read1_raw,
+          samplename = samplename,
+          genome_length = select_first([genome_size, quast.genome_length])
+      }
+      call cg_pipeline.cg_pipeline as cg_pipeline_clean {
+        input:
+          read1 = read_QC_trim.read1_clean,
+          samplename = samplename,
+          genome_length = select_first([genome_size, quast.genome_length])
+      }
+      call gambit_task.gambit {
+        input:
+          assembly = shovill_pe.assembly_fasta,
+          samplename = samplename
+      }
+      call busco_task.busco {
+        input:
+          assembly = shovill_pe.assembly_fasta,
+          samplename = samplename
+      }
+      if (call_ani) {
+        call ani_task.animummer as ani {
+          input:
+            assembly = shovill_pe.assembly_fasta,
+            samplename = samplename
+        }
+      }
+      call amrfinderplus.amrfinderplus_nuc as amrfinderplus_task {
+        input:
+          assembly = shovill_pe.assembly_fasta,
+          samplename = samplename,
+          organism = gambit.gambit_predicted_taxon
+      }
+      if (call_resfinder) {
+      call resfinder.resfinder as resfinder_task {
+        input:
+          assembly = shovill_pe.assembly_fasta,
+          samplename = samplename,
+          organism = gambit.gambit_predicted_taxon
+        }
+      }
+      call ts_mlst_task.ts_mlst {
+        input: 
+          assembly = shovill_pe.assembly_fasta,
+          samplename = samplename
+      }
+      if (genome_annotation == "prokka") {
+        call prokka_task.prokka {
+          input:
+            assembly = shovill_pe.assembly_fasta,
+            samplename = samplename
+        }
+      }
+      if (genome_annotation == "bakta") {
+        call bakta_task.bakta {
+          input:
+            assembly = shovill_pe.assembly_fasta,
+            samplename = samplename
+        }
+      }
+      call plasmidfinder_task.plasmidfinder {
+        input:
+          assembly = shovill_pe.assembly_fasta,
+          samplename = samplename
+      }
+      if(defined(qc_check_table)) {
+        call qc_check.qc_check as qc_check_task {
+          input:
+            qc_check_table = qc_check_table,
+            expected_taxon = expected_taxon,
+            gambit_predicted_taxon = gambit.gambit_predicted_taxon,
+            r1_mean_q_raw = cg_pipeline_raw.r1_mean_q,
+            r2_mean_q_raw = cg_pipeline_raw.r2_mean_q,
+            r1_mean_readlength_raw = cg_pipeline_raw.r1_mean_readlength,
+            r2_mean_readlength_raw = cg_pipeline_raw.r2_mean_readlength,  
+            r1_mean_q_clean = cg_pipeline_clean.r1_mean_q,
+            r1_mean_readlength_clean = cg_pipeline_clean.r1_mean_readlength,
+            est_coverage_raw = cg_pipeline_raw.est_coverage,
+            est_coverage_clean = cg_pipeline_clean.est_coverage,
+            midas_secondary_genus_abundance = read_QC_trim.midas_secondary_genus_abundance,
+            assembly_length = quast.genome_length,
+            number_contigs = quast.number_contigs,
+            n50_value = quast.n50_value,
+            busco_results = busco.busco_results,
+            ani_highest_percent = ani.ani_highest_percent,
+            ani_highest_percent_bases_aligned = ani.ani_highest_percent_bases_aligned,
+            ani_top_species_match = ani.ani_top_species_match
+        }
+      }
+      call merlin_magic_workflow.merlin_magic {
+        input:
+          merlin_tag = gambit.merlin_tag,
+          assembly = shovill_pe.assembly_fasta,
+          samplename = samplename,
+          read1 = read_QC_trim.read1_clean
+      }
+      if (defined(taxon_tables)) {
+        call terra_tools.export_taxon_tables {
+          input:
+            terra_project = terra_project,
+            terra_workspace = terra_workspace,
+            sample_taxon = gambit.gambit_predicted_taxon,
+            taxon_tables = taxon_tables,
+            samplename = samplename,
+            read1 = read1_raw,
+            read1_clean = read_QC_trim.read1_clean,
+            run_id = run_id,
+            collection_date = collection_date,
+            originating_lab = originating_lab,
+            city = city,
+            county = county,
+            zip = zip,
+            theiaprok_illumina_pe_version = version_capture.phb_version,
+            theiaprok_illumina_pe_analysis_date = version_capture.date,
+            seq_platform = seq_method,
+            num_reads_raw1 = read_QC_trim.fastq_scan_raw1,
+            fastq_scan_version = read_QC_trim.fastq_scan_version,
+            num_reads_clean1 = read_QC_trim.fastq_scan_clean1,
+            trimmomatic_version = read_QC_trim.trimmomatic_version,
+            fastp_version = read_QC_trim.fastp_version,
+            bbduk_docker = read_QC_trim.bbduk_docker,
+            r1_mean_q_raw = cg_pipeline_raw.r1_mean_q,
+            r1_mean_readlength_raw = cg_pipeline_raw.r1_mean_readlength,
+            assembly_fasta = shovill_pe.assembly_fasta,
+            contigs_gfa = shovill_pe.contigs_gfa,
+            shovill_pe_version = shovill_pe.shovill_version,
+            quast_report = quast.quast_report,
+            quast_version = quast.version,
+            assembly_length = quast.genome_length,
+            number_contigs = quast.number_contigs,
+            n50_value = quast.n50_value,
+            quast_gc_percent = quast.gc_percent,
+            cg_pipeline_report_raw = cg_pipeline_raw.cg_pipeline_report,
+            cg_pipeline_docker = cg_pipeline_raw.cg_pipeline_docker,
+            est_coverage_raw = cg_pipeline_raw.est_coverage,
+            cg_pipeline_report_clean = cg_pipeline_clean.cg_pipeline_report,
+            est_coverage_clean = cg_pipeline_clean.est_coverage,
+            gambit_report = gambit.gambit_report_file,
+            gambit_predicted_taxon = gambit.gambit_predicted_taxon,
+            gambit_predicted_taxon_rank = gambit.gambit_predicted_taxon_rank,
+            gambit_closest_genomes = gambit.gambit_closest_genomes_file,
+            gambit_version = gambit.gambit_version,
+            gambit_db_version = gambit.gambit_db_version,
+            gambit_docker = gambit.gambit_docker,
+            busco_version = busco.busco_version,
+            busco_database = busco.busco_database,
+            busco_results = busco.busco_results,
+            busco_report = busco.busco_report,
+            ani_highest_percent = ani.ani_highest_percent,
+            ani_highest_percent_bases_aligned = ani.ani_highest_percent_bases_aligned,
+            ani_output_tsv = ani.ani_output_tsv,
+            ani_top_species_match = ani.ani_top_species_match,
+            ani_mummer_version = ani.ani_mummer_version,
+            amrfinderplus_all_report = amrfinderplus_task.amrfinderplus_all_report,
+            amrfinderplus_amr_report = amrfinderplus_task.amrfinderplus_amr_report,
+            amrfinderplus_stress_report = amrfinderplus_task.amrfinderplus_stress_report,
+            amrfinderplus_virulence_report = amrfinderplus_task.amrfinderplus_virulence_report,
+            amrfinderplus_amr_genes = amrfinderplus_task.amrfinderplus_amr_genes,
+            amrfinderplus_stress_genes = amrfinderplus_task.amrfinderplus_stress_genes,
+            amrfinderplus_virulence_genes = amrfinderplus_task.amrfinderplus_virulence_genes,
+            amrfinderplus_amr_classes = amrfinderplus_task.amrfinderplus_amr_classes,
+            amrfinderplus_amr_subclasses = amrfinderplus_task.amrfinderplus_amr_subclasses,
+            amrfinderplus_version = amrfinderplus_task.amrfinderplus_version,
+            amrfinderplus_db_version = amrfinderplus_task.amrfinderplus_db_version,
+            resfinder_pheno_table = resfinder_task.resfinder_pheno_table,
+            resfinder_pheno_table_species = resfinder_task.resfinder_pheno_table_species,
+            resfinder_seqs = resfinder_task.resfinder_hit_in_genome_seq,
+            resfinder_results = resfinder_task.resfinder_results_tab,
+            resfinder_pointfinder_pheno_table = resfinder_task.pointfinder_pheno_table,
+            resfinder_pointfinder_results = resfinder_task.pointfinder_results,
+            resfinder_db_version = resfinder_task.resfinder_db_version,
+            resfinder_docker = resfinder_task.resfinder_docker,
+            ts_mlst_results = ts_mlst.ts_mlst_results,
+            ts_mlst_predicted_st = ts_mlst.ts_mlst_predicted_st,
+            ts_mlst_pubmlst_scheme = ts_mlst.ts_mlst_pubmlst_scheme,
+            ts_mlst_version = ts_mlst.ts_mlst_version,
+            ts_mlst_novel_alleles = ts_mlst.ts_mlst_novel_alleles,
+            serotypefinder_report = merlin_magic.serotypefinder_report,
+            serotypefinder_docker = merlin_magic.serotypefinder_docker,
+            serotypefinder_serotype = merlin_magic.serotypefinder_serotype,
+            ectyper_results = merlin_magic.ectyper_results,
+            ectyper_version = merlin_magic.ectyper_version,
+            ectyper_predicted_serotype = merlin_magic.ectyper_predicted_serotype,
+            shigatyper_predicted_serotype = merlin_magic.shigatyper_predicted_serotype,
+            shigatyper_ipaB_presence_absence = merlin_magic.shigatyper_ipaB_presence_absence,
+            shigatyper_notes = merlin_magic.shigatyper_notes,
+            shigatyper_hits_tsv = merlin_magic.shigatyper_hits_tsv,
+            shigatyper_summary_tsv = merlin_magic.shigatyper_summary_tsv,
+            shigatyper_version = merlin_magic.shigatyper_version,
+            shigatyper_docker = merlin_magic.shigatyper_docker,
+            shigeifinder_report = merlin_magic.shigeifinder_report,
+            shigeifinder_docker = merlin_magic.shigeifinder_docker,
+            shigeifinder_version = merlin_magic.shigeifinder_version,
+            shigeifinder_ipaH_presence_absence = merlin_magic.shigeifinder_ipaH_presence_absence,
+            shigeifinder_num_virulence_plasmid_genes = merlin_magic.shigeifinder_num_virulence_plasmid_genes,
+            shigeifinder_cluster = merlin_magic.shigeifinder_cluster,
+            shigeifinder_serotype = merlin_magic.shigeifinder_serotype,
+            shigeifinder_O_antigen = merlin_magic.shigeifinder_O_antigen,
+            shigeifinder_H_antigen = merlin_magic.shigeifinder_H_antigen,
+            shigeifinder_notes = merlin_magic.shigeifinder_notes,
+            shigeifinder_report_reads = merlin_magic.shigeifinder_report_reads,
+            shigeifinder_docker_reads = merlin_magic.shigeifinder_docker_reads,
+            shigeifinder_version_reads = merlin_magic.shigeifinder_version_reads,
+            shigeifinder_ipaH_presence_absence_reads = merlin_magic.shigeifinder_ipaH_presence_absence_reads,
+            shigeifinder_num_virulence_plasmid_genes_reads = merlin_magic.shigeifinder_num_virulence_plasmid_genes_reads,
+            shigeifinder_cluster_reads = merlin_magic.shigeifinder_cluster_reads,
+            shigeifinder_serotype_reads = merlin_magic.shigeifinder_serotype_reads,
+            shigeifinder_O_antigen_reads = merlin_magic.shigeifinder_O_antigen_reads,
+            shigeifinder_H_antigen_reads = merlin_magic.shigeifinder_H_antigen_reads,
+            shigeifinder_notes_reads = merlin_magic.shigeifinder_notes_reads,
+            sonneityping_mykrobe_report_csv = merlin_magic.sonneityping_mykrobe_report_csv,
+            sonneityping_mykrobe_report_json = merlin_magic.sonneityping_mykrobe_report_json,
+            sonneityping_final_report_tsv = merlin_magic.sonneityping_final_report_tsv,
+            sonneityping_mykrobe_version = merlin_magic.sonneityping_mykrobe_version,
+            sonneityping_mykrobe_docker = merlin_magic.sonneityping_mykrobe_docker,
+            sonneityping_species = merlin_magic.sonneityping_species,
+            sonneityping_final_genotype = merlin_magic.sonneityping_final_genotype,
+            sonneityping_genotype_confidence = merlin_magic.sonneityping_genotype_confidence,
+            sonneityping_genotype_name = merlin_magic.sonneityping_genotype_name,
+            lissero_results = merlin_magic.lissero_results,
+            lissero_version = merlin_magic.lissero_version,
+            lissero_serotype = merlin_magic.lissero_serotype,
+            sistr_results = merlin_magic.sistr_results,
+            sistr_allele_json = merlin_magic.sistr_allele_json,
+            sister_allele_fasta = merlin_magic.sistr_allele_fasta,
+            sistr_cgmlst = merlin_magic.sistr_cgmlst,
+            sistr_version = merlin_magic.sistr_version,
+            sistr_predicted_serotype = merlin_magic.sistr_predicted_serotype,
+            seqsero2_report = merlin_magic.seqsero2_report,
+            seqsero2_version = merlin_magic.seqsero2_version,
+            seqsero2_predicted_antigenic_profile = merlin_magic.seqsero2_predicted_antigenic_profile,
+            seqsero2_predicted_serotype = merlin_magic.seqsero2_predicted_serotype,
+            seqsero2_predicted_contamination = merlin_magic.seqsero2_predicted_contamination,
+            genotyphi_report_tsv = merlin_magic.genotyphi_report_tsv,
+            genotyphi_mykrobe_json = merlin_magic.genotyphi_mykrobe_json,
+            genotyphi_version = merlin_magic.genotyphi_version,
+            genotyphi_species = merlin_magic.genotyphi_species,
+            genotyphi_st_probes_percent_coverage = merlin_magic.genotyphi_st_probes_percent_coverage,
+            genotyphi_final_genotype = merlin_magic.genotyphi_final_genotype,
+            genotyphi_genotype_confidence = merlin_magic.genotyphi_genotype_confidence,
+            kleborate_output_file = merlin_magic.kleborate_output_file,
+            kleborate_version = merlin_magic.kleborate_version,
+            kleborate_docker = merlin_magic.kleborate_docker,
+            kleborate_key_resistance_genes = merlin_magic.kleborate_key_resistance_genes,
+            kleborate_genomic_resistance_mutations = merlin_magic.kleborate_genomic_resistance_mutations,
+            kleborate_mlst_sequence_type = merlin_magic.kleborate_mlst_sequence_type,
+            kleborate_klocus = merlin_magic.kleborate_klocus,
+            kleborate_ktype = merlin_magic.kleborate_ktype,
+            kleborate_olocus = merlin_magic.kleborate_olocus,
+            kleborate_otype = merlin_magic.kleborate_otype,
+            kleborate_klocus_confidence = merlin_magic.kleborate_klocus_confidence,
+            kleborate_olocus_confidence = merlin_magic.kleborate_olocus_confidence,
+            kaptive_output_file_k = merlin_magic.kaptive_output_file_k,
+            kaptive_output_file_oc = merlin_magic.kaptive_output_file_oc,
+            kaptive_version = merlin_magic.kaptive_version,
+            kaptive_k_locus = merlin_magic.kaptive_k_match,
+            kaptive_k_type = merlin_magic.kaptive_k_type,
+            kaptive_kl_confidence = merlin_magic.kaptive_k_confidence,
+            kaptive_oc_locus = merlin_magic.kaptive_oc_match,
+            kaptive_ocl_confidence = merlin_magic.kaptive_oc_confidence,
+            abricate_abaum_plasmid_tsv = merlin_magic.abricate_results,
+            abricate_abaum_plasmid_type_genes = merlin_magic.abricate_genes,
+            abricate_database = merlin_magic.abricate_database,
+            abricate_version = merlin_magic.abricate_version,
+            abricate_docker = merlin_magic.abricate_docker,
+            tbprofiler_output_file = merlin_magic.tbprofiler_output_file,
+            tbprofiler_output_bam = merlin_magic.tbprofiler_output_bam,
+            tbprofiler_output_bai = merlin_magic.tbprofiler_output_bai,
+            tbprofiler_version = merlin_magic.tbprofiler_version,
+            tbprofiler_main_lineage = merlin_magic.tbprofiler_main_lineage,
+            tbprofiler_sub_lineage = merlin_magic.tbprofiler_sub_lineage,
+            tbprofiler_dr_type = merlin_magic.tbprofiler_dr_type,
+            tbprofiler_resistance_genes = merlin_magic.tbprofiler_resistance_genes,
+            legsta_results = merlin_magic.legsta_results,
+            legsta_predicted_sbt = merlin_magic.legsta_predicted_sbt,
+            legsta_version = merlin_magic.legsta_version,
+            prokka_gff = prokka.prokka_gff,
+            prokka_gbk = prokka.prokka_gbk,
+            prokka_sqn = prokka.prokka_sqn,
+            bakta_gbff = bakta.bakta_gbff,
+            bakta_gff3 = bakta.bakta_gff3,
+            bakta_tsv = bakta.bakta_tsv,
+            bakta_summary = bakta.bakta_txt,
+            bakta_version = bakta.bakta_version,
+            plasmidfinder_plasmids = plasmidfinder.plasmidfinder_plasmids,
+            plasmidfinder_results = plasmidfinder.plasmidfinder_results,
+            plasmidfinder_seqs = plasmidfinder.plasmidfinder_seqs,
+            plasmidfinder_docker = plasmidfinder.plasmidfinder_docker,
+            plasmidfinder_db_version = plasmidfinder.plasmidfinder_db_version,
+            pbptyper_predicted_1A_2B_2X = merlin_magic.pbptyper_predicted_1A_2B_2X,
+            pbptyper_pbptype_predicted_tsv = merlin_magic.pbptyper_pbptype_predicted_tsv,
+            pbptyper_version = merlin_magic.pbptyper_version,
+            pbptyper_docker = merlin_magic.pbptyper_docker,
+            poppunk_gps_cluster = merlin_magic.poppunk_gps_cluster,
+            poppunk_gps_external_cluster_csv = merlin_magic.poppunk_gps_external_cluster_csv,
+            poppunk_GPS_db_version = merlin_magic.poppunk_gps_external_cluster_csv,
+            poppunk_version = merlin_magic.poppunk_version,
+            poppunk_docker = merlin_magic.poppunk_docker,
+            seroba_version = merlin_magic.seroba_version,
+            seroba_docker = merlin_magic.seroba_docker,
+            seroba_serotype = merlin_magic.seroba_serotype,
+            seroba_ariba_serotype = merlin_magic.seroba_ariba_serotype,
+            seroba_ariba_identity = merlin_magic.seroba_ariba_identity,
+            seroba_details = merlin_magic.seroba_details,
+            midas_docker = read_QC_trim.midas_docker,
+            midas_report = read_QC_trim.midas_report,
+            midas_primary_genus = read_QC_trim.midas_primary_genus,
+            midas_secondary_genus = read_QC_trim.midas_secondary_genus,
+            midas_secondary_genus_abundance = read_QC_trim.midas_secondary_genus_abundance,
+            pasty_serogroup = merlin_magic.pasty_serogroup,
+            pasty_serogroup_coverage = merlin_magic.pasty_serogroup_coverage,
+            pasty_serogroup_fragments = merlin_magic.pasty_serogroup_fragments,
+            pasty_summary_tsv = merlin_magic.pasty_summary_tsv,
+            pasty_blast_hits = merlin_magic.pasty_blast_hits,
+            pasty_all_serogroups = merlin_magic.pasty_all_serogroups,
+            pasty_version = merlin_magic.pasty_version,
+            pasty_docker = merlin_magic.pasty_docker,
+            pasty_comment = merlin_magic.pasty_comment,
+            qc_check = qc_check_task.qc_check,
+            qc_standard = qc_check_task.qc_standard
+        }
     }
   }
   output {

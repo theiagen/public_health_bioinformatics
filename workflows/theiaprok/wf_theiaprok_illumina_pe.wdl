@@ -124,11 +124,11 @@ workflow theiaprok_illumina_pe {
           samplename = samplename
       }
       if (call_ani) {
-      call ani_task.animummer as ani {
-        input:
-          assembly = shovill_pe.assembly_fasta,
-          samplename = samplename
-      }
+        call ani_task.animummer as ani {
+          input:
+            assembly = shovill_pe.assembly_fasta,
+            samplename = samplename
+        }
       }
       call amrfinderplus.amrfinderplus_nuc as amrfinderplus_task {
         input:
@@ -206,7 +206,7 @@ workflow theiaprok_illumina_pe {
           read1 = read_QC_trim.read1_clean,
           read2 = read_QC_trim.read2_clean
       }
-      if(defined(taxon_tables)) {
+      if (defined(taxon_tables)) {
         call terra_tools.export_taxon_tables {
           input:
             terra_project = terra_project,
