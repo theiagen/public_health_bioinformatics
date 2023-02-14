@@ -140,6 +140,11 @@ workflows:
    primaryDescriptorPath: /workflows/theiaprok/wf_theiaprok_illumina_se.wdl
    testParameterFiles:
     - empty.json
+ - name: TheiaProk_FASTA_PHB
+   subclass: WDL
+   primaryDescriptorPath: /workflows/theiaprok/wf_theiaprok_fasta.wdl
+   testParameterFiles:
+    - empty.json
  - name: Gambit_Query_PHB
    subclass: WDL
    primaryDescriptorPath: /workflows/standalone_modules/wf_gambit_query.wdl
