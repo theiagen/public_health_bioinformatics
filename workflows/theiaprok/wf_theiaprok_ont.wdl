@@ -5,7 +5,6 @@ import "../utilities/wf_merlin_magic.wdl" as merlin_magic_workflow
 import "../../tasks/assembly/task_shovill.wdl" as shovill
 import "../../tasks/quality_control/task_quast.wdl" as quast_task
 import "../../tasks/quality_control/task_cg_pipeline.wdl" as cg_pipeline
-import "../../tasks/quality_control/task_screen.wdl" as screen
 import "../../tasks/quality_control/task_busco.wdl" as busco_task
 import "../../tasks/taxon_id/task_gambit.wdl" as gambit_task
 import "../../tasks/quality_control/task_mummer_ani.wdl" as ani_task
