@@ -160,7 +160,7 @@ workflow theiaprok_ont {
           samplename = samplename
       }
       if(defined(qc_check_table)) {
-        call qc_check.qc_check as qc_check_task {
+        call qc_check.qc_check as qc_check_task { # will request shelly's help in the future to make this applicable
           input:
             qc_check_table = qc_check_table,
             expected_taxon = expected_taxon,
@@ -186,10 +186,10 @@ workflow theiaprok_ont {
           assembly = fake_assembly_fasta,
           samplename = samplename,
           read1 = read_QC_trim.reads_clean,
-          assembly_only = true
+          assembly_only = true # adjust/test internal tasks for ONT compatiblity
       }
       if (defined(taxon_tables)) {
-        call terra_tools.export_taxon_tables {
+        call terra_tools.export_taxon_tables { # add the new stuff here too
           input:
             terra_project = terra_project,
             terra_workspace = terra_workspace,
