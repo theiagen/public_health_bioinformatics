@@ -396,13 +396,27 @@ workflow theiaprok_ont {
     String theiaprok_illumina_pe_analysis_date = version_capture.date
     # Read Metadata
     String seq_platform = seq_method
-    # Read QC
+    # Read QC - fastq_scan and nanoq outputs
+    File? reads_clean = read_QC_trim.reads_clean
     Int? num_reads_raw = read_QC_trim.number_raw_reads
-    String? fastq_scan_version = read_QC_trim.fastq_scan_version
     Int? num_reads_clean = read_QC_trim.number_clean_reads
+    String? fastq_scan_version = read_QC_trim.fastq_scan_version
+    String? nanoq_version = read_QC_trim.nanoq_version
+    # Read QC - nanoplot outputs
+    File? nanoplot_html = read_QC_trim.nanoplot_html
+    String? nanoplot_version = read_QC_trim.nanoplot_version
+    # Read QC - kmc outputs
+    String? kmc_est_genome_size = read_QC_trim.est_genome_size
+    String? kmc_version = read_QC_trim.kmc_version
+    # Read QC - rasusa outputs
+    String? rasusa_version = read_QC_trim.rasusa_version
+    # Read QC - tiptoft outputs
+    File? tiptoft_plasmid_replicon_fastq = read_QC_trim.tiptoft_plasmid_replicon_fastq
+    String? tiptoft_plasmid_replicon_genes = read_QC_trim.tiptoft_plasmid_replicon_genes
+    String? tiptoft_version = read_QC_trim.tiptoft_version
+    # Read QC - cg pipeline outputs
     Float? r1_mean_q_raw = cg_pipeline_raw.r1_mean_q
     Float? r1_mean_readlength_raw = cg_pipeline_raw.r1_mean_readlength
-    File? reads_clean = read_QC_trim.reads_clean
     # Assembly and Assembly QC
     File? assembly_fasta = fake_assembly_fasta
     File? quast_report = quast.quast_report

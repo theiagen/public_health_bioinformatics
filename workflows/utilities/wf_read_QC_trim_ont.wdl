@@ -68,9 +68,9 @@ workflow read_QC_trim_ont {
     Int number_raw_reads = fastq_scan_raw.read1_seq
 
     # fastq scan clean outputs
+    Int number_clean_reads = fastq_scan_clean.read1_seq
     File fastq_scan_report = fastq_scan_clean.fastq_scan_report
     String fastq_scan_version = fastq_scan_clean.version
-    Int number_clean_reads = fastq_scan_clean.read1_seq
 
     # nanoplot outputs    
     File nanoplot_html = nanoplot.nanoplot_html
