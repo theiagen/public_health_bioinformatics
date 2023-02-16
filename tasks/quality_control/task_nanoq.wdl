@@ -15,10 +15,10 @@ task nanoq {
     # capture date and version
     nanoq --version | grep nanoq | tee VERSION
 
-    nanoq -i ~{reads} --min-len ~{min_read_length} --max-len ~{max_read_length} --min-qual ~{min_read_qual} --max-qual ~{max_read_qual} -o ~{samplename}_reads.fq.gz
+    nanoq -i ~{reads} --min-len ~{min_read_length} --max-len ~{max_read_length} --min-qual ~{min_read_qual} --max-qual ~{max_read_qual} -o ~{samplename}_reads.fastq.gz
   >>>
   output {
-    File filtered_reads = "${samplename}_reads.fq.gz"
+    File filtered_reads = "${samplename}_reads.fastq.gz"
     String version = read_string("VERSION")
   }
   runtime {

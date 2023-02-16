@@ -278,6 +278,8 @@ task check_reads_ont { # placeholder task
   command <<<
     flag="PASS"
 
+    # add KMC for estimated_genome_size
+
     # estimated_genome_size=0
     # if [[ "~{skip_screen}" = "false" ]] ; then
       

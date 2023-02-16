@@ -1,6 +1,7 @@
 version 1.0
 
 import "../../tasks/quality_control/task_fastq_scan.wdl" as fastq_scan
+import "../../tasks/quality_control/task_nanoplot.wdl" as nanoplot_task
 import "../../tasks/utilities/task_rasusa.wdl" as rasusa_task
 import "../../tasks/quality_control/task_nanoq.wdl" as nanoq_task
 
@@ -19,10 +20,11 @@ workflow read_QC_trim_ont {
       read1_name = samplename
   }
   # nanoplot
-  # call nanoplot_task.nanplot {
-
-  # }
-
+  call nanoplot_task.nanoplot {
+    input:
+      reads = reads,
+      samplename = samplename
+  }
   # rasusa for random downsampling
   call rasusa_task.rasusa { # placeholder task
     input:
@@ -63,6 +65,10 @@ workflow read_QC_trim_ont {
     String fastq_scan_version = fastq_scan_clean.version
     Int number_clean_reads = fastq_scan_clean.read1_seq
 
+    # nanoplot outputs    
+    File nanoplot_html = nanoplot.nanoplot_html
+    String nanoplot_version = nanoplot.nanoplot_version
+    
     # rasusa outputs
     String rasusa_version = rasusa.rasusa_version    
   }
