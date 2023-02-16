@@ -3,6 +3,7 @@ version 1.0
 import "../../tasks/quality_control/task_fastq_scan.wdl" as fastq_scan
 import "../../tasks/quality_control/task_nanoplot.wdl" as nanoplot_task
 import "../../tasks/utilities/task_rasusa.wdl" as rasusa_task
+import "../../tasks/utilities/task_kmc.wdl" as kmc_task
 import "../../tasks/quality_control/task_nanoq.wdl" as nanoq_task
 
 workflow read_QC_trim_ont {
@@ -25,13 +26,18 @@ workflow read_QC_trim_ont {
       reads = reads,
       samplename = samplename
   }
+  # kmc for genome size estimation
+  call kmc_task.kmc {
+    input:
+      read1 = reads
+  }
   # rasusa for random downsampling
   call rasusa_task.rasusa { # placeholder task
     input:
       read1 = reads,
       samplename = samplename,
       coverage = 150,
-      genome_size = 5000000 # placeholder values
+      genome_size = kmc.genome_size
   }
 
   # tiptoft
@@ -64,12 +70,15 @@ workflow read_QC_trim_ont {
     File fastq_scan_report = fastq_scan_clean.fastq_scan_report
     String fastq_scan_version = fastq_scan_clean.version
     Int number_clean_reads = fastq_scan_clean.read1_seq
+    
+    # kmc outputs
+    String kmc_version = kmc.kmc_version
 
     # nanoplot outputs    
     File nanoplot_html = nanoplot.nanoplot_html
     String nanoplot_version = nanoplot.nanoplot_version
     
     # rasusa outputs
-    String rasusa_version = rasusa.rasusa_version    
+    String rasusa_version = rasusa.rasusa_version   
   }
 }
