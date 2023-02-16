@@ -2,6 +2,7 @@ version 1.0
 
 import "../../tasks/quality_control/task_fastq_scan.wdl" as fastq_scan
 import "../../tasks/utilities/task_rasusa.wdl" as rasusa_task
+import "../../tasks/quality_control/task_nanoq.wdl" as nanoq_task
 
 workflow read_QC_trim_ont {
   meta {
@@ -40,24 +41,29 @@ workflow read_QC_trim_ont {
 
   # }
   # nanoq/filtlong (default min length 500)
-  # call nanoq_task.nanoq {
-
-  # }
- 
+  call nanoq_task.nanoq {
+    input:
+      reads = rasusa.read1_subsampled, # will need to update to tiptoft output
+      samplename = samplename
+  }
   # perform fastq_scan again after cleaning for comparison
   call fastq_scan.fastq_scan_se as fastq_scan_clean {
     input:
-      read1 = reads,
+      read1 = nanoq.filtered_reads,
       read1_name = samplename
   }
   output {
-    # placeholder outputs
-    File reads_clean = reads # we're not cleaning anything, so return the input reads
+    # nanoq outputs
+    File reads_clean = nanoq.filtered_reads # is this the final one?
+    String nanoq_version = nanoq.version
+
+    # fastq scan outputs
     Int number_raw_reads = fastq_scan_raw.read1_seq
     File fastq_scan_report = fastq_scan_clean.fastq_scan_report
     String fastq_scan_version = fastq_scan_clean.version
     Int number_clean_reads = fastq_scan_clean.read1_seq
-    String rasusa_version = rasusa.rasusa_version
-    
+
+    # rasusa outputs
+    String rasusa_version = rasusa.rasusa_version    
   }
 }
