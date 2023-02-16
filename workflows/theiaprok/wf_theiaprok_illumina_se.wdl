@@ -364,7 +364,7 @@ workflow theiaprok_illumina_se {
             pbptyper_docker = merlin_magic.pbptyper_docker,
             poppunk_gps_cluster = merlin_magic.poppunk_gps_cluster,
             poppunk_gps_external_cluster_csv = merlin_magic.poppunk_gps_external_cluster_csv,
-            poppunk_GPS_db_version = merlin_magic.poppunk_gps_external_cluster_csv,
+            poppunk_GPS_db_version = merlin_magic.poppunk_GPS_db_version,
             poppunk_version = merlin_magic.poppunk_version,
             poppunk_docker = merlin_magic.poppunk_docker,
             midas_docker = read_QC_trim.midas_docker,
@@ -616,5 +616,7 @@ workflow theiaprok_illumina_se {
     String? poppunk_GPS_db_version = merlin_magic.poppunk_GPS_db_version
     String? poppunk_version = merlin_magic.poppunk_version
     String? poppunk_docker = merlin_magic.poppunk_docker
+    # export taxon table output
+    String? taxon_table_status = export_taxon_tables.status
   }
 }

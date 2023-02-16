@@ -52,6 +52,16 @@ task export_taxon_tables {
     Float? combined_mean_readlength_raw 
     Float? combined_mean_readlength_clean 
     Float? r1_mean_readlength_clean
+    String? nanoq_version
+    File? nanoplot_html
+    String? nanoplot_version
+    String? kmc_est_genome_size
+    File? kmc_kmer_stats
+    String? kmc_version
+    String? rasusa_version
+    File? tiptoft_plasmid_replicon_fastq
+    String? tiptoft_plasmid_replicon_genes
+    String? tiptoft_version
     File? assembly_fasta
     File? contigs_gfa
     String? shovill_pe_version
@@ -102,10 +112,10 @@ task export_taxon_tables {
     File? resfinder_pointfinder_results 
     String? resfinder_db_version 
     String? resfinder_docker 
-    String? ts_mlst_results
+    File? ts_mlst_results
     String? ts_mlst_predicted_st
     String? ts_mlst_pubmlst_scheme
-    String? ts_mlst_novel_alleles
+    File? ts_mlst_novel_alleles
     String? ts_mlst_version
     File? serotypefinder_report
     String? serotypefinder_docker
@@ -328,6 +338,16 @@ task export_taxon_tables {
       "combined_mean_readlength_raw": "~{combined_mean_readlength_raw}",
       "combined_mean_readlength_clean": "~{combined_mean_readlength_clean}",
       "r1_mean_readlength_clean": "~{r1_mean_readlength_clean}",
+      "nanoq_version": "~{nanoq_version}",
+      "nanoplot_html": "~{nanoplot_html}",
+      "nanoplot_version": "~{nanoplot_version}",
+      "kmc_est_genome_size": "~{kmc_est_genome_size}",
+      "kmc_kmer_stats": "~{kmc_kmer_stats}",
+      "kmc_version": "~{kmc_version}",
+      "rasusa_version": "~{rasusa_version}",
+      "tiptoft_plasmid_replicon_fastq": "~{tiptoft_plasmid_replicon_fastq}",
+      "tiptoft_plasmid_replicon_genes": "~{tiptoft_plasmid_replicon_genes}",
+      "tiptoft_version": "~{tiptoft_version}",
       "assembly_fasta": "~{assembly_fasta}",
       "contigs_gfa": "~{contigs_gfa}",
       "shovill_pe_version": "~{shovill_pe_version}",
@@ -539,8 +559,10 @@ task export_taxon_tables {
       sed -i 's/\/cromwell_root\//gs:\/\//g' ~{samplename}_terra_table.tsv
       # export table 
       python3 /scripts/import_large_tsv/import_large_tsv.py --project "~{terra_project}" --workspace "~{terra_workspace}" --tsv ~{samplename}_terra_table.tsv
+
+      echo "~{samplename} was added to the ${sample_table} table" > STATUS
     else
-      echo "Table not defined for ~{sample_taxon}"
+      echo "Table not defined for ~{sample_taxon}" > STATUS
     fi
   >>>
   runtime {
@@ -553,6 +575,7 @@ task export_taxon_tables {
     maxRetries: 3
   }
   output {
+    String status = read_string("STATUS")
     File? datatable1_tsv = "~{samplename}_terra_table.tsv"
   }
 }

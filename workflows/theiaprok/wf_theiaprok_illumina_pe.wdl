@@ -417,7 +417,7 @@ workflow theiaprok_illumina_pe {
             pbptyper_docker = merlin_magic.pbptyper_docker,
             poppunk_gps_cluster = merlin_magic.poppunk_gps_cluster,
             poppunk_gps_external_cluster_csv = merlin_magic.poppunk_gps_external_cluster_csv,
-            poppunk_GPS_db_version = merlin_magic.poppunk_gps_external_cluster_csv,
+            poppunk_GPS_db_version = merlin_magic.poppunk_GPS_db_version,
             poppunk_version = merlin_magic.poppunk_version,
             poppunk_docker = merlin_magic.poppunk_docker,
             seroba_version = merlin_magic.seroba_version,
@@ -697,5 +697,7 @@ workflow theiaprok_illumina_pe {
     String? seroba_ariba_serotype = merlin_magic.seroba_ariba_serotype
     String? seroba_ariba_identity = merlin_magic.seroba_ariba_identity
     File? seroba_details = merlin_magic.seroba_details
+    # export taxon table output
+    String? taxon_table_status = export_taxon_tables.status
   }
 }

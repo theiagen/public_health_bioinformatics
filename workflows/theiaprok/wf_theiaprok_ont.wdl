@@ -212,6 +212,16 @@ workflow theiaprok_ont {
             num_reads_clean = read_QC_trim.number_clean_reads,
             r1_mean_q_raw = cg_pipeline_raw.r1_mean_q, 
             r1_mean_readlength_raw = cg_pipeline_raw.r1_mean_readlength,
+            nanoq_version = read_QC_trim.nanoq_version,
+            nanoplot_html = read_QC_trim.nanoplot_html,
+            nanoplot_version = read_QC_trim.nanoplot_version,
+            kmc_est_genome_size = read_QC_trim.est_genome_size,
+            kmc_kmer_stats = read_QC_trim.kmc_kmer_stats,
+            kmc_version = read_QC_trim.kmc_version,
+            rasusa_version = read_QC_trim.rasusa_version,
+            tiptoft_plasmid_replicon_fastq = read_QC_trim.tiptoft_plasmid_replicon_fastq,
+            tiptoft_plasmid_replicon_genes = read_QC_trim.tiptoft_plasmid_replicon_genes,
+            tiptoft_version = read_QC_trim.tiptoft_version,
             assembly_fasta = fake_assembly_fasta,
             quast_report = quast.quast_report,
             quast_version = quast.version,
@@ -372,7 +382,7 @@ workflow theiaprok_ont {
             pbptyper_docker = merlin_magic.pbptyper_docker,
             poppunk_gps_cluster = merlin_magic.poppunk_gps_cluster,
             poppunk_gps_external_cluster_csv = merlin_magic.poppunk_gps_external_cluster_csv,
-            poppunk_GPS_db_version = merlin_magic.poppunk_gps_external_cluster_csv,
+            poppunk_GPS_db_version = merlin_magic.poppunk_GPS_db_version,
             poppunk_version = merlin_magic.poppunk_version,
             poppunk_docker = merlin_magic.poppunk_docker,
             pasty_serogroup = merlin_magic.pasty_serogroup,
@@ -610,5 +620,7 @@ workflow theiaprok_ont {
     String? poppunk_GPS_db_version = merlin_magic.poppunk_GPS_db_version
     String? poppunk_version = merlin_magic.poppunk_version
     String? poppunk_docker = merlin_magic.poppunk_docker
+    # export taxon table output
+    String? taxon_table_status = export_taxon_tables.status
   }
 }
