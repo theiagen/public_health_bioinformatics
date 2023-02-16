@@ -407,6 +407,7 @@ workflow theiaprok_ont {
     String? nanoplot_version = read_QC_trim.nanoplot_version
     # Read QC - kmc outputs
     String? kmc_est_genome_size = read_QC_trim.est_genome_size
+    File? kmc_kmer_stats = read_QC_trim.kmc_kmer_stats
     String? kmc_version = read_QC_trim.kmc_version
     # Read QC - rasusa outputs
     String? rasusa_version = read_QC_trim.rasusa_version
