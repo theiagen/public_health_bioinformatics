@@ -278,7 +278,8 @@ task check_reads_ont { # placeholder task
   command <<<
     flag="PASS"
 
-    # add KMC for estimated_genome_size
+    # add KMC for estimated_genome_size??
+    # mash DOES have a nanopore option if we want to continue to use that here?
 
     # estimated_genome_size=0
     # if [[ "~{skip_screen}" = "false" ]] ; then
