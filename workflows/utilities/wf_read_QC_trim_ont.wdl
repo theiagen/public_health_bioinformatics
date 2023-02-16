@@ -1,6 +1,7 @@
 version 1.0
 
 import "../../tasks/quality_control/task_fastq_scan.wdl" as fastq_scan
+import "../../tasks/quality_control/task_nanoplot.wdl" as nanoplot_task
 # import "../../tasks/utilities/task_rasusa.wdl" as rasusa_task
 
 workflow read_QC_trim_ont {
@@ -18,9 +19,11 @@ workflow read_QC_trim_ont {
       read1_name = samplename
   }
   # nanoplot
-  # call nanoplot_task.nanplot {
-
-  # }
+  call nanoplot_task.nanoplot {
+    input:
+      reads = reads,
+      samplename = samplename
+  }
   # tiptoft
   # call tiptoft_task.tiptoft {
 
@@ -54,6 +57,8 @@ workflow read_QC_trim_ont {
     File fastq_scan_report = fastq_scan_clean.fastq_scan_report
     String fastq_scan_version = fastq_scan_clean.version
     Int number_clean_reads = fastq_scan_clean.read1_seq
+    File nanoplot_html = nanoplot.nanoplot_html
+    String nanoplot_version = nanoplot.nanoplot_version
     # String rasusa_version = rasusa.rasusa_version
   }
 }
