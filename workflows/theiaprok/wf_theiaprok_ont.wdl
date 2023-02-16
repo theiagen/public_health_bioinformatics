@@ -2,7 +2,7 @@ version 1.0
 
 import "../utilities/wf_read_QC_trim_ont.wdl" as read_qc
 import "../utilities/wf_merlin_magic.wdl" as merlin_magic_workflow
-import "../../tasks/assembly/task_shovill.wdl" as shovill
+import "../../tasks/assembly/task_dragonflye.wdl" as dragonflye_task
 import "../../tasks/quality_control/task_quast.wdl" as quast_task
 import "../../tasks/quality_control/task_cg_pipeline.wdl" as cg_pipeline
 import "../../tasks/quality_control/task_screen.wdl" as screen
@@ -74,7 +74,7 @@ workflow theiaprok_ont {
     }
     call screen.check_reads_ont as clean_check_reads {
       input:
-        read1 = reads,
+        read1 = read_QC_trim.reads_clean,
         min_reads = min_reads,
         min_basepairs = min_basepairs,
         min_genome_size = min_genome_size,
@@ -84,6 +84,9 @@ workflow theiaprok_ont {
     }
     if (clean_check_reads.read_screen == "PASS") {
       
+      call dragonflye_task.dragonflye {
+
+      }
       # dragonflye for assembly
 
       call quast_task.quast {
@@ -93,7 +96,7 @@ workflow theiaprok_ont {
       }
       call cg_pipeline.cg_pipeline as cg_pipeline_raw {
         input:
-          read1 = reads,
+          read1 = read_QC_trim.reads_clean,
           samplename = samplename,
           genome_length = select_first([genome_size, quast.genome_length])
       }

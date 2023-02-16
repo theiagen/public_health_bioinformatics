@@ -60,8 +60,17 @@ workflow read_QC_trim_ont {
       read1_name = samplename
   }
   output {
+    # nanoq outputs
+    File reads_clean = nanoq.filtered_reads
+    String nanoq_version = nanoq.version
+
     # fastq scan raw outputs
     Int number_raw_reads = fastq_scan_raw.read1_seq
+
+    # fastq scan clean outputs
+    File fastq_scan_report = fastq_scan_clean.fastq_scan_report
+    String fastq_scan_version = fastq_scan_clean.version
+    Int number_clean_reads = fastq_scan_clean.read1_seq
 
     # nanoplot outputs    
     File nanoplot_html = nanoplot.nanoplot_html
@@ -80,14 +89,5 @@ workflow read_QC_trim_ont {
     File tiptoft_result_tsv = tiptoft.tiptoft_tsv
     String tiptoft_plasmid_replicon_genes = tiptoft.plasmid_replicon_genes
     String tiptoft_version = tiptoft.tiptoft_version
-
-    # nanoq outputs
-    File reads_clean = nanoq.filtered_reads
-    String nanoq_version = nanoq.version
-
-    # fastq scan clean outputs
-    File fastq_scan_report = fastq_scan_clean.fastq_scan_report
-    String fastq_scan_version = fastq_scan_clean.version
-    Int number_clean_reads = fastq_scan_clean.read1_seq
   }
 }
