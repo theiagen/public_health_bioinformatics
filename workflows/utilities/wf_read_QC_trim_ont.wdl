@@ -2,6 +2,7 @@ version 1.0
 
 import "../../tasks/quality_control/task_fastq_scan.wdl" as fastq_scan
 import "../../tasks/utilities/task_rasusa.wdl" as rasusa_task
+import "../../tasks/utilities/task_kmc.wdl" as kmc_task
 
 workflow read_QC_trim_ont {
   meta {
@@ -22,13 +23,19 @@ workflow read_QC_trim_ont {
 
   # }
 
+  # kmc for genome size estimation
+  call kmc_task.kmc {
+    input:
+      read1 = reads
+  }
+
   # rasusa for random downsampling
   call rasusa_task.rasusa { # placeholder task
     input:
       read1 = reads,
       samplename = samplename,
       coverage = 150,
-      genome_size = 5000000 # placeholder values
+      genome_size = kmc.genome_size
   }
 
   # tiptoft
@@ -58,6 +65,7 @@ workflow read_QC_trim_ont {
     String fastq_scan_version = fastq_scan_clean.version
     Int number_clean_reads = fastq_scan_clean.read1_seq
     String rasusa_version = rasusa.rasusa_version
-    
+    String kmc_version = kmc.kmc_version
+
   }
 }
