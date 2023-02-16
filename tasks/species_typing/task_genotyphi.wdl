@@ -5,7 +5,7 @@ task genotyphi {
   input {
     File read1
     File? read2
-    Boolean ont_data=false
+    Boolean ont_data = false
     String samplename
     String genotyphi_docker_image = "staphb/mykrobe:0.11.0"
     Int disk_size = 100

@@ -186,10 +186,10 @@ workflow theiaprok_ont {
           assembly = fake_assembly_fasta,
           samplename = samplename,
           read1 = read_QC_trim.reads_clean,
-          assembly_only = true # adjust/test internal tasks for ONT compatiblity
+          ont_data = true
       }
       if (defined(taxon_tables)) {
-        call terra_tools.export_taxon_tables { # add the new stuff here too
+        call terra_tools.export_taxon_tables {
           input:
             terra_project = terra_project,
             terra_workspace = terra_workspace,

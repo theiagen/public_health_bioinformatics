@@ -40,7 +40,7 @@ workflow merlin_magic {
     String? shigeifinder_docker_image
     Boolean paired_end = true
     Boolean call_poppunk = true
-    Boolean read1_is_ont = false
+    Boolean ont_data = false
     Boolean call_shigeifinder_reads_input = false
     Boolean assembly_only = false
   }
@@ -77,7 +77,7 @@ workflow merlin_magic {
           read1 = select_first([read1]),
           read2 = read2,
           samplename = samplename,
-          read1_is_ont = read1_is_ont
+          read1_is_ont = ont_data
       }
     }
     call shigeifinder_task.shigeifinder {
@@ -86,7 +86,7 @@ workflow merlin_magic {
         samplename = samplename,
         docker = shigeifinder_docker_image
     }
-    if (call_shigeifinder_reads_input && !assembly_only) { # illumina only
+    if (call_shigeifinder_reads_input && !assembly_only && !ont_data) { # illumina only
       call shigeifinder_task.shigeifinder_reads as shigeifinder_reads {
         input:
           read1 = select_first([read1]),
@@ -105,7 +105,7 @@ workflow merlin_magic {
           read1 = select_first([read1]),
           read2 = read2,
           samplename = samplename,
-          ont_data = read1_is_ont
+          ont_data = ont_data
       }
     }
   }
@@ -128,14 +128,16 @@ workflow merlin_magic {
           read1 = select_first([read1]),
           read2 = read2,
           samplename = samplename,
-          paired_end = paired_end
+          paired_end = paired_end,
+          ont_data = ont_data
       }
       if( seqsero2.seqsero2_predicted_serotype == "Typhi" || sistr.sistr_predicted_serotype == "Typhi" ) {
         call genotyphi.genotyphi as genotyphi_task { # confirm ONT data; has ont_data option but unsure if works
           input: 
             read1 = select_first([read1]),
             read2 = read2,
-            samplename = samplename
+            samplename = samplename,
+            ont_data = ont_data
         }
       }
     }
@@ -163,7 +165,8 @@ workflow merlin_magic {
         input:
           read1 = select_first([read1]),
           read2 = read2,
-          samplename = samplename
+          samplename = samplename,
+          ont_data = ont_data 
       }
     }
   }
@@ -175,7 +178,7 @@ workflow merlin_magic {
     }
   }
   if (merlin_tag == "Streptococcus pneumoniae") {
-    if (paired_end) { # cannot use ONT
+    if (paired_end && !ont_data) { # cannot use ONT
       call seroba.seroba as seroba_task {
         input:
           read1 = select_first([read1]),

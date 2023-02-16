@@ -6,10 +6,11 @@ task seqsero2 {
     File read1
     File? read2
     String samplename
-    String mode ="a"
+    String mode = "a"
     String seqsero2_docker_image = "quay.io/staphb/seqsero2:1.2.1"
     Int disk_size = 100
     Boolean paired_end
+    Boolean ont_data
   }
   command <<<
     # Print and save date
@@ -18,10 +19,20 @@ task seqsero2 {
     # Print and save version
     SeqSero2_package.py --version | tee VERSION
     
+    if [ "~{paired_end}" = true ]; then 
+      DATATYPE='-t 2' 
+    else 
+      DATATYPE='-t 3'
+    fi 
+
+    if [ "~{ont_data}" = true ]; then 
+      DATATYPE='-t 5'
+    fi
+
     # Run SeqSero2 on the input read data
     SeqSero2_package.py \
     -p 8 \
-    ~{true='-t 2' false='-t 3' paired_end} \
+    "${DATATYPE}" \
     -m ~{mode} \
     -n ~{samplename} \
     -d ~{samplename}_seqseqro2_output_dir \
