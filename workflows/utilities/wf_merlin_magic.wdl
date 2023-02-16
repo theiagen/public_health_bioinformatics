@@ -123,8 +123,8 @@ workflow merlin_magic {
         samplename = samplename
     }
     if (!assembly_only){
-      call seqsero2_task.seqsero2 { # use -5 for nanopore reads; may be bad though
-        input:                      # or give it an assembly with -4
+      call seqsero2_task.seqsero2 { # needs testing
+        input:
           read1 = select_first([read1]),
           read2 = read2,
           samplename = samplename,
@@ -132,7 +132,7 @@ workflow merlin_magic {
           ont_data = ont_data
       }
       if( seqsero2.seqsero2_predicted_serotype == "Typhi" || sistr.sistr_predicted_serotype == "Typhi" ) {
-        call genotyphi.genotyphi as genotyphi_task { # confirm ONT data; has ont_data option but unsure if works
+        call genotyphi.genotyphi as genotyphi_task { # needs testing
           input: 
             read1 = select_first([read1]),
             read2 = read2,
@@ -161,7 +161,7 @@ workflow merlin_magic {
   }
   if (merlin_tag == "Mycobacterium tuberculosis") {
     if (!assembly_only) {
-      call tbprofiler_task.tbprofiler { # add platform var to enable ont
+      call tbprofiler_task.tbprofiler { # needs testing
         input:
           read1 = select_first([read1]),
           read2 = read2,
@@ -178,7 +178,7 @@ workflow merlin_magic {
     }
   }
   if (merlin_tag == "Streptococcus pneumoniae") {
-    if (paired_end && !ont_data) { # cannot use ONT
+    if (paired_end && !ont_data) {
       call seroba.seroba as seroba_task {
         input:
           read1 = select_first([read1]),
