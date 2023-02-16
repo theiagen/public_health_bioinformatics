@@ -35,9 +35,9 @@ task kmc {
       . \
       > LOG
 
-    # kmc_outputs generates a mess of files that are not human readable
+    # kmc_outputs is a mess of files that are not human readable
     # however, the stdout does produce some useful stats. 
-    #  the # unique counted k-mers can be used as an estimate of genome size
+    #  the no. of unique counted k-mers can be used as an estimate of genome size
     grep "unique counted k" LOG | tr -s ' ' | cut -d ' ' -f8 > UNIQUE_COUNTED
 
     # extracting only the kmer statistics and writing to file:
