@@ -14,7 +14,6 @@ task tiptoft {
     Int? min_perc_coverage # default is 85
     Int? min_kmers_for_onex_pass # default is 10
     String docker = "staphb/tiptoft:1.0.2"
-
   }
   command <<<
     # capture version
