@@ -13,7 +13,6 @@ task nanoq {
   }
   command <<<
     # capture date and version
-    date | tee DATE
     nanoq --version | grep nanoq | tee VERSION
 
     nanoq -i ~{reads} --min-len ~{min_read_length} --max-len ~{max_read_length} --min-qual ~{min_read_qual} --max-qual ~{max_read_qual} -o ~{samplename}_reads.fq.gz
@@ -21,7 +20,6 @@ task nanoq {
   output {
     File filtered_reads = "${samplename}_reads.fq.gz"
     String version = read_string("VERSION")
-    String pipeline_date = read_string("DATE")
   }
   runtime {
     docker:  "~{docker}"
