@@ -1,7 +1,7 @@
 version 1.0
 
 import "../../tasks/quality_control/task_fastq_scan.wdl" as fastq_scan
-# import "../../tasks/utilities/task_rasusa.wdl" as rasusa_task
+import "../../tasks/utilities/task_rasusa.wdl" as rasusa_task
 
 workflow read_QC_trim_ont {
   meta {
@@ -21,6 +21,16 @@ workflow read_QC_trim_ont {
   # call nanoplot_task.nanplot {
 
   # }
+
+  # rasusa for random downsampling
+  call rasusa_task.rasusa { # placeholder task
+    input:
+      read1 = reads,
+      samplename = samplename,
+      coverage = 150,
+      genome_size = 5000000 # placeholder values
+  }
+
   # tiptoft
   # call tiptoft_task.tiptoft {
 
@@ -33,14 +43,7 @@ workflow read_QC_trim_ont {
   # call nanoq_task.nanoq {
 
   # }
-  # rasusa for random downsampling
-  # call rasusa_task.rasusa { # placeholder task
-  #   input:
-  #     read1 = reads,
-  #     samplename = samplename,
-  #     coverage = 0, # placeholder values
-  #     genome_size = 0 # placeholder values
-  # }
+ 
   # perform fastq_scan again after cleaning for comparison
   call fastq_scan.fastq_scan_se as fastq_scan_clean {
     input:
@@ -54,6 +57,7 @@ workflow read_QC_trim_ont {
     File fastq_scan_report = fastq_scan_clean.fastq_scan_report
     String fastq_scan_version = fastq_scan_clean.version
     Int number_clean_reads = fastq_scan_clean.read1_seq
-    # String rasusa_version = rasusa.rasusa_version
+    String rasusa_version = rasusa.rasusa_version
+    
   }
 }
