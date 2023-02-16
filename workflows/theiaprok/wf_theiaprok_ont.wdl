@@ -51,7 +51,7 @@ workflow theiaprok_ont {
     String? expected_taxon
 
     # placeholder ILLUMINA assembly_fasta to ensure this workflow can run
-    File dragonflye.assembly_fasta = "gs://fc-d2e28cc7-df60-4b3c-91b2-ebc5d39e880a/submissions/7795499c-2cd0-4eda-b0d4-3889ed5ea360/theiaprok_illumina_pe/e3feb60b-13fe-4adf-af72-2a21db5e7f0d/call-shovill_pe/cacheCopy/out/SRR1258442_contigs.fasta"
+    File fake_assembly_fasta = "gs://fc-d2e28cc7-df60-4b3c-91b2-ebc5d39e880a/submissions/7795499c-2cd0-4eda-b0d4-3889ed5ea360/theiaprok_illumina_pe/e3feb60b-13fe-4adf-af72-2a21db5e7f0d/call-shovill_pe/cacheCopy/out/SRR1258442_contigs.fasta"
   }
   call versioning.version_capture{
     input:
@@ -83,14 +83,13 @@ workflow theiaprok_ont {
         skip_screen = skip_screen
     }
     if (clean_check_reads.read_screen == "PASS") {
-      
-      call dragonflye_task.dragonflye {
-        input:
-          reads = read_QC_trim.reads_clean
-      }
+      # call dragonflye_task.dragonflye {
+      #   input:
+      #     reads = read_QC_trim.reads_clean
+      # }
       call quast_task.quast {
         input:
-          assembly = dragonflye.assembly_fasta,
+          assembly = fake_assembly_fasta,
           samplename = samplename
       }
       call cg_pipeline.cg_pipeline as cg_pipeline_raw {
@@ -107,57 +106,57 @@ workflow theiaprok_ont {
       }
       call gambit_task.gambit {
         input:
-          assembly = dragonflye.assembly_fasta,
+          assembly = fake_assembly_fasta,
           samplename = samplename
       }
       call busco_task.busco {
         input:
-          assembly = dragonflye.assembly_fasta,
+          assembly = fake_assembly_fasta,
           samplename = samplename
       }
       if (call_ani) {
         call ani_task.animummer as ani {
           input:
-            assembly = dragonflye.assembly_fasta,
+            assembly = fake_assembly_fasta,
             samplename = samplename
         }
       }
       call amrfinderplus.amrfinderplus_nuc as amrfinderplus_task {
         input:
-          assembly = dragonflye.assembly_fasta,
+          assembly = fake_assembly_fasta,
           samplename = samplename,
           organism = gambit.gambit_predicted_taxon
       }
       if (call_resfinder) {
         call resfinder.resfinder as resfinder_task {
           input:
-            assembly = dragonflye.assembly_fasta,
+            assembly = fake_assembly_fasta,
             samplename = samplename,
             organism = gambit.gambit_predicted_taxon
         }
       }
       call ts_mlst_task.ts_mlst {
         input: 
-          assembly = dragonflye.assembly_fasta,
+          assembly = fake_assembly_fasta,
           samplename = samplename
       }
       if (genome_annotation == "prokka") {
         call prokka_task.prokka {
           input:
-            assembly = dragonflye.assembly_fasta,
+            assembly = fake_assembly_fasta,
             samplename = samplename
         }
       }
       if (genome_annotation == "bakta") {
         call bakta_task.bakta {
           input:
-            assembly = dragonflye.assembly_fasta,
+            assembly = fake_assembly_fasta,
             samplename = samplename
         }
       }
       call plasmidfinder_task.plasmidfinder {
         input:
-          assembly = dragonflye.assembly_fasta,
+          assembly = fake_assembly_fasta,
           samplename = samplename
       }
       if(defined(qc_check_table)) {
@@ -184,7 +183,7 @@ workflow theiaprok_ont {
       call merlin_magic_workflow.merlin_magic {
         input:
           merlin_tag = gambit.merlin_tag,
-          assembly = dragonflye.assembly_fasta,
+          assembly = fake_assembly_fasta,
           samplename = samplename,
           read1 = read_QC_trim.reads_clean,
           assembly_only = true
@@ -213,7 +212,7 @@ workflow theiaprok_ont {
             num_reads_clean = read_QC_trim.number_clean_reads,
             r1_mean_q_raw = cg_pipeline_raw.r1_mean_q, 
             r1_mean_readlength_raw = cg_pipeline_raw.r1_mean_readlength,
-            assembly_fasta = dragonflye.assembly_fasta,
+            assembly_fasta = fake_assembly_fasta,
             quast_report = quast.quast_report,
             quast_version = quast.version,
             assembly_length = quast.genome_length,
@@ -405,7 +404,7 @@ workflow theiaprok_ont {
     Float? r1_mean_readlength_raw = cg_pipeline_raw.r1_mean_readlength
     File? reads_clean = read_QC_trim.reads_clean
     # Assembly and Assembly QC
-    File? assembly_fasta = dragonflye.assembly_fasta
+    File? assembly_fasta = fake_assembly_fasta
     File? quast_report = quast.quast_report
     String? quast_version = quast.version
     Int? assembly_length = quast.genome_length
