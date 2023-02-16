@@ -2,7 +2,7 @@ version 1.0
 
 import "../utilities/wf_read_QC_trim_ont.wdl" as read_qc
 import "../utilities/wf_merlin_magic.wdl" as merlin_magic_workflow
-import "../../tasks/assembly/task_dragonflye.wdl" as dragonflye_task
+#import "../../tasks/assembly/task_dragonflye.wdl" as dragonflye_task
 import "../../tasks/quality_control/task_quast.wdl" as quast_task
 import "../../tasks/quality_control/task_cg_pipeline.wdl" as cg_pipeline
 import "../../tasks/quality_control/task_screen.wdl" as screen
