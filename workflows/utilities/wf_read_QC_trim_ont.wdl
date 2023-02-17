@@ -14,6 +14,7 @@ workflow read_QC_trim_ont {
   input {
     String samplename
     File reads
+    Int? genome_size
   }
   # perform fastq-scan on raw reads
   call fastq_scan.fastq_scan_se as fastq_scan_raw {
@@ -39,7 +40,7 @@ workflow read_QC_trim_ont {
       read1 = reads,
       samplename = samplename,
       coverage = 150,
-      genome_size = kmc.est_genome_size
+      genome_size = select_first([genome_size, kmc.est_genome_size])
   }
   # tiptoft
   call tiptoft_task.tiptoft {

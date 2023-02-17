@@ -67,7 +67,8 @@ workflow theiaprok_ont {
     call read_qc_workflow.read_QC_trim_ont as read_QC_trim {
       input:
         samplename = samplename,
-        reads = reads
+        reads = reads,
+        genome_size = genome_size
     }
     call screen_task.check_reads_ont as clean_check_reads {
       input:
@@ -83,7 +84,7 @@ workflow theiaprok_ont {
        call dragonflye_task.dragonflye {
          input:
            reads = read_QC_trim.reads_clean,
-           genome_size = read_QC_trim.est_genome_size,
+           genome_size = select_first([genome_size, read_QC_trim.est_genome_size]),
            samplename = samplename
        }
       call quast_task.quast {
