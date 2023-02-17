@@ -26,7 +26,6 @@ task dragonflye {
   >>>
   output {
     File assembly_fasta = "dragonflye/~{samplename}.fa"
-    File assembly_gfa = "dragonflye/~{samplename}.gfa"
     String dragonflye_version = read_string("VERSION")
   }
   runtime {

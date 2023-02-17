@@ -105,57 +105,57 @@ workflow theiaprok_ont {
       }
       call gambit_task.gambit {
         input:
-          assembly = fake_assembly_fasta,
+          assembly = dragonflye.assembly_fasta,
           samplename = samplename
       }
       call busco_task.busco {
         input:
-          assembly = fake_assembly_fasta,
+          assembly = dragonflye.assembly_fasta,
           samplename = samplename
       }
       if (call_ani) {
         call ani_task.animummer as ani {
           input:
-            assembly = fake_assembly_fasta,
+            assembly = dragonflye.assembly_fasta,
             samplename = samplename
         }
       }
       call amrfinderplus.amrfinderplus_nuc as amrfinderplus_task {
         input:
-          assembly = fake_assembly_fasta,
+          assembly = dragonflye.assembly_fasta,
           samplename = samplename,
           organism = gambit.gambit_predicted_taxon
       }
       if (call_resfinder) {
         call resfinder.resfinder as resfinder_task {
           input:
-            assembly = fake_assembly_fasta,
+            assembly = dragonflye.assembly_fasta,
             samplename = samplename,
             organism = gambit.gambit_predicted_taxon
         }
       }
       call ts_mlst_task.ts_mlst {
         input: 
-          assembly = fake_assembly_fasta,
+          assembly = dragonflye.assembly_fasta,
           samplename = samplename
       }
       if (genome_annotation == "prokka") {
         call prokka_task.prokka {
           input:
-            assembly = fake_assembly_fasta,
+            assembly = dragonflye.assembly_fasta,
             samplename = samplename
         }
       }
       if (genome_annotation == "bakta") {
         call bakta_task.bakta {
           input:
-            assembly = fake_assembly_fasta,
+            assembly = dragonflye.assembly_fasta,
             samplename = samplename
         }
       }
       call plasmidfinder_task.plasmidfinder {
         input:
-          assembly = fake_assembly_fasta,
+          assembly = dragonflye.assembly_fasta,
           samplename = samplename
       }
       if(defined(qc_check_table)) {
@@ -182,7 +182,7 @@ workflow theiaprok_ont {
       call merlin_magic_workflow.merlin_magic {
         input:
           merlin_tag = gambit.merlin_tag,
-          assembly = fake_assembly_fasta,
+          assembly = dragonflye.assembly_fasta,
           samplename = samplename,
           read1 = read_QC_trim.reads_clean,
           ont_data = true
@@ -221,7 +221,7 @@ workflow theiaprok_ont {
             tiptoft_plasmid_replicon_fastq = read_QC_trim.tiptoft_plasmid_replicon_fastq,
             tiptoft_plasmid_replicon_genes = read_QC_trim.tiptoft_plasmid_replicon_genes,
             tiptoft_version = read_QC_trim.tiptoft_version,
-            assembly_fasta = fake_assembly_fasta,
+            assembly_fasta = dragonflye.assembly_fasta,
             quast_report = quast.quast_report,
             quast_version = quast.version,
             assembly_length = quast.genome_length,
