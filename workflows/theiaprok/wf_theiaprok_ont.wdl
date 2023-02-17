@@ -1,23 +1,23 @@
 version 1.0
 
-import "../utilities/wf_read_QC_trim_ont.wdl" as read_qc
+import "../utilities/wf_read_QC_trim_ont.wdl" as read_qc_workflow
 import "../utilities/wf_merlin_magic.wdl" as merlin_magic_workflow
 import "../../tasks/assembly/task_dragonflye.wdl" as dragonflye_task
 import "../../tasks/quality_control/task_quast.wdl" as quast_task
-import "../../tasks/quality_control/task_cg_pipeline.wdl" as cg_pipeline
-import "../../tasks/quality_control/task_screen.wdl" as screen
+import "../../tasks/quality_control/task_cg_pipeline.wdl" as cg_pipeline_task
+import "../../tasks/quality_control/task_screen.wdl" as screen_task
 import "../../tasks/quality_control/task_busco.wdl" as busco_task
 import "../../tasks/taxon_id/task_gambit.wdl" as gambit_task
 import "../../tasks/quality_control/task_mummer_ani.wdl" as ani_task
-import "../../tasks/gene_typing/task_amrfinderplus.wdl" as amrfinderplus
-import "../../tasks/gene_typing/task_resfinder.wdl" as resfinder
+import "../../tasks/gene_typing/task_amrfinderplus.wdl" as amrfinderplus_task
+import "../../tasks/gene_typing/task_resfinder.wdl" as resfinder_task
 import "../../tasks/species_typing/task_ts_mlst.wdl" as ts_mlst_task
 import "../../tasks/gene_typing/task_bakta.wdl" as bakta_task
 import "../../tasks/gene_typing/task_prokka.wdl" as prokka_task
 import "../../tasks/gene_typing/task_plasmidfinder.wdl" as plasmidfinder_task
-import "../../tasks/quality_control/task_qc_check.wdl" as qc_check
-import "../../tasks/task_versioning.wdl" as versioning
-import "../../tasks/utilities/task_broad_terra_tools.wdl" as terra_tools
+import "../../tasks/quality_control/task_qc_check.wdl" as qc_check_task
+import "../../tasks/task_versioning.wdl" as versioning_task
+import "../../tasks/utilities/task_broad_terra_tools.wdl" as terra_tools_task
 
 workflow theiaprok_ont {
   meta {
@@ -50,10 +50,10 @@ workflow theiaprok_ont {
     File? qc_check_table
     String? expected_taxon
   }
-  call versioning.version_capture{
+  call versioning_task.version_capture{
     input:
   }
-  call screen.check_reads_ont as raw_check_reads {
+  call screen_task.check_reads_ont as raw_check_reads {
     input:
       read1 = reads,
       min_reads = min_reads,
@@ -64,12 +64,12 @@ workflow theiaprok_ont {
       skip_screen = skip_screen
   }
   if (raw_check_reads.read_screen == "PASS") {
-    call read_qc.read_QC_trim_ont as read_QC_trim {
+    call read_qc_workflow.read_QC_trim_ont as read_QC_trim {
       input:
         samplename = samplename,
         reads = reads
     }
-    call screen.check_reads_ont as clean_check_reads {
+    call screen_task.check_reads_ont as clean_check_reads {
       input:
         read1 = read_QC_trim.reads_clean,
         min_reads = min_reads,
@@ -91,13 +91,13 @@ workflow theiaprok_ont {
           assembly = dragonflye.assembly_fasta,
           samplename = samplename
       }
-      call cg_pipeline.cg_pipeline as cg_pipeline_raw {
+      call cg_pipeline_task.cg_pipeline as cg_pipeline_raw {
         input:
           read1 = read_QC_trim.reads_clean,
           samplename = samplename,
           genome_length = select_first([genome_size, quast.genome_length])
       }
-      call cg_pipeline.cg_pipeline as cg_pipeline_clean {
+      call cg_pipeline_task.cg_pipeline as cg_pipeline_clean {
         input:
           read1 = read_QC_trim.reads_clean,
           samplename = samplename,
@@ -120,14 +120,14 @@ workflow theiaprok_ont {
             samplename = samplename
         }
       }
-      call amrfinderplus.amrfinderplus_nuc as amrfinderplus_task {
+      call amrfinderplus_task.amrfinderplus_nuc as amrfinderplus {
         input:
           assembly = dragonflye.assembly_fasta,
           samplename = samplename,
           organism = gambit.gambit_predicted_taxon
       }
       if (call_resfinder) {
-        call resfinder.resfinder as resfinder_task {
+        call resfinder_task.resfinder {
           input:
             assembly = dragonflye.assembly_fasta,
             samplename = samplename,
@@ -159,7 +159,7 @@ workflow theiaprok_ont {
           samplename = samplename
       }
       if(defined(qc_check_table)) {
-        call qc_check.qc_check as qc_check_task { # will request shelly's help in the future to make this applicable
+        call qc_check_task.qc_check { # will request shelly's help in the future to make this applicable
           input:
             qc_check_table = qc_check_table,
             expected_taxon = expected_taxon,
@@ -188,7 +188,7 @@ workflow theiaprok_ont {
           ont_data = true
       }
       if (defined(taxon_tables)) {
-        call terra_tools.export_taxon_tables {
+        call terra_tools_task.export_taxon_tables {
           input:
             terra_project = terra_project,
             terra_workspace = terra_workspace,
@@ -222,6 +222,7 @@ workflow theiaprok_ont {
             tiptoft_plasmid_replicon_genes = read_QC_trim.tiptoft_plasmid_replicon_genes,
             tiptoft_version = read_QC_trim.tiptoft_version,
             assembly_fasta = dragonflye.assembly_fasta,
+            dragonflye_version = dragonflye.dragonflye_version,
             quast_report = quast.quast_report,
             quast_version = quast.version,
             assembly_length = quast.genome_length,
@@ -249,25 +250,25 @@ workflow theiaprok_ont {
             ani_output_tsv = ani.ani_output_tsv,
             ani_top_species_match = ani.ani_top_species_match,
             ani_mummer_version = ani.ani_mummer_version,
-            amrfinderplus_all_report = amrfinderplus_task.amrfinderplus_all_report,
-            amrfinderplus_amr_report = amrfinderplus_task.amrfinderplus_amr_report,
-            amrfinderplus_stress_report = amrfinderplus_task.amrfinderplus_stress_report,
-            amrfinderplus_virulence_report = amrfinderplus_task.amrfinderplus_virulence_report,
-            amrfinderplus_amr_genes = amrfinderplus_task.amrfinderplus_amr_genes,
-            amrfinderplus_stress_genes = amrfinderplus_task.amrfinderplus_stress_genes,
-            amrfinderplus_virulence_genes = amrfinderplus_task.amrfinderplus_virulence_genes,
-            amrfinderplus_amr_classes = amrfinderplus_task.amrfinderplus_amr_classes,
-            amrfinderplus_amr_subclasses = amrfinderplus_task.amrfinderplus_amr_subclasses,
-            amrfinderplus_version = amrfinderplus_task.amrfinderplus_version,
-            amrfinderplus_db_version = amrfinderplus_task.amrfinderplus_db_version,
-            resfinder_pheno_table = resfinder_task.resfinder_pheno_table,
-            resfinder_pheno_table_species = resfinder_task.resfinder_pheno_table_species,
-            resfinder_seqs = resfinder_task.resfinder_hit_in_genome_seq,
-            resfinder_results = resfinder_task.resfinder_results_tab,
-            resfinder_pointfinder_pheno_table = resfinder_task.pointfinder_pheno_table,
-            resfinder_pointfinder_results = resfinder_task.pointfinder_results,
-            resfinder_db_version = resfinder_task.resfinder_db_version,
-            resfinder_docker = resfinder_task.resfinder_docker,
+            amrfinderplus_all_report = amrfinderplus.amrfinderplus_all_report,
+            amrfinderplus_amr_report = amrfinderplus.amrfinderplus_amr_report,
+            amrfinderplus_stress_report = amrfinderplus.amrfinderplus_stress_report,
+            amrfinderplus_virulence_report = amrfinderplus.amrfinderplus_virulence_report,
+            amrfinderplus_amr_genes = amrfinderplus.amrfinderplus_amr_genes,
+            amrfinderplus_stress_genes = amrfinderplus.amrfinderplus_stress_genes,
+            amrfinderplus_virulence_genes = amrfinderplus.amrfinderplus_virulence_genes,
+            amrfinderplus_amr_classes = amrfinderplus.amrfinderplus_amr_classes,
+            amrfinderplus_amr_subclasses = amrfinderplus.amrfinderplus_amr_subclasses,
+            amrfinderplus_version = amrfinderplus.amrfinderplus_version,
+            amrfinderplus_db_version = amrfinderplus.amrfinderplus_db_version,
+            resfinder_pheno_table = resfinder.resfinder_pheno_table,
+            resfinder_pheno_table_species = resfinder.resfinder_pheno_table_species,
+            resfinder_seqs = resfinder.resfinder_hit_in_genome_seq,
+            resfinder_results = resfinder.resfinder_results_tab,
+            resfinder_pointfinder_pheno_table = resfinder.pointfinder_pheno_table,
+            resfinder_pointfinder_results = resfinder.pointfinder_results,
+            resfinder_db_version = resfinder.resfinder_db_version,
+            resfinder_docker = resfinder.resfinder_docker,
             ts_mlst_results = ts_mlst.ts_mlst_results,
             ts_mlst_predicted_st = ts_mlst.ts_mlst_predicted_st,
             ts_mlst_pubmlst_scheme = ts_mlst.ts_mlst_pubmlst_scheme,
@@ -393,8 +394,8 @@ workflow theiaprok_ont {
             pasty_version = merlin_magic.pasty_version,
             pasty_docker = merlin_magic.pasty_docker,
             pasty_comment = merlin_magic.pasty_comment,
-            qc_check = qc_check_task.qc_check,
-            qc_standard = qc_check_task.qc_standard
+            qc_check = qc_check.qc_check,
+            qc_standard = qc_check.qc_standard
         }
       }
     }
@@ -427,24 +428,28 @@ workflow theiaprok_ont {
     # Read QC - cg pipeline outputs
     Float? r1_mean_q_raw = cg_pipeline_raw.r1_mean_q
     Float? r1_mean_readlength_raw = cg_pipeline_raw.r1_mean_readlength
-    # Assembly and Assembly QC
+    # Assembly - dragonflye outputs
     File? assembly_fasta = dragonflye.assembly_fasta
+    String? dragonflye_version = dragonflye.dragonflye_version
+    # Assembly QC - quast outputs
     File? quast_report = quast.quast_report
     String? quast_version = quast.version
     Int? assembly_length = quast.genome_length
     Int? number_contigs = quast.number_contigs
     Int? n50_value = quast.n50_value
     Float? quast_gc_percent = quast.gc_percent
+    # Assembly QC - cg pipeline outputs
     File? cg_pipeline_report_raw = cg_pipeline_raw.cg_pipeline_report
     String? cg_pipeline_docker = cg_pipeline_raw.cg_pipeline_docker
     Float? est_coverage_raw = cg_pipeline_raw.est_coverage
     File? cg_pipeline_report_clean = cg_pipeline_clean.cg_pipeline_report
     Float? est_coverage_clean = cg_pipeline_clean.est_coverage
+    # Assembly QC - busco outputs
     String? busco_version = busco.busco_version
     String? busco_database = busco.busco_database
     String? busco_results = busco.busco_results
     File? busco_report = busco.busco_report
-    # Taxon ID
+    # Taxon ID - gambit outputs
     File? gambit_report = gambit.gambit_report_file
     File? gambit_closest_genomes = gambit.gambit_closest_genomes_file
     String? gambit_predicted_taxon = gambit.gambit_predicted_taxon
@@ -452,33 +457,33 @@ workflow theiaprok_ont {
     String? gambit_version = gambit.gambit_version
     String? gambit_db_version = gambit.gambit_db_version
     String? gambit_docker = gambit.gambit_docker
-    # ani-mummer
+    # ani-mummer outputs
     Float? ani_highest_percent = ani.ani_highest_percent
     Float? ani_highest_percent_bases_aligned = ani.ani_highest_percent_bases_aligned
     File? ani_output_tsv = ani.ani_output_tsv
     String? ani_top_species_match = ani.ani_top_species_match
     String? ani_mummer_version = ani.ani_mummer_version
     # NCBI-AMRFinderPlus Outputs
-    File? amrfinderplus_all_report = amrfinderplus_task.amrfinderplus_all_report
-    File? amrfinderplus_amr_report = amrfinderplus_task.amrfinderplus_amr_report
-    File? amrfinderplus_stress_report = amrfinderplus_task.amrfinderplus_stress_report
-    File? amrfinderplus_virulence_report = amrfinderplus_task.amrfinderplus_virulence_report
-    String? amrfinderplus_amr_genes = amrfinderplus_task.amrfinderplus_amr_genes
-    String? amrfinderplus_stress_genes = amrfinderplus_task.amrfinderplus_stress_genes
-    String? amrfinderplus_virulence_genes = amrfinderplus_task.amrfinderplus_virulence_genes
-    String? amrfinderplus_amr_classes = amrfinderplus_task.amrfinderplus_amr_classes
-    String? amrfinderplus_amr_subclasses = amrfinderplus_task.amrfinderplus_amr_subclasses
-    String? amrfinderplus_version = amrfinderplus_task.amrfinderplus_version
-    String? amrfinderplus_db_version = amrfinderplus_task.amrfinderplus_db_version
+    File? amrfinderplus_all_report = amrfinderplus.amrfinderplus_all_report
+    File? amrfinderplus_amr_report = amrfinderplus.amrfinderplus_amr_report
+    File? amrfinderplus_stress_report = amrfinderplus.amrfinderplus_stress_report
+    File? amrfinderplus_virulence_report = amrfinderplus.amrfinderplus_virulence_report
+    String? amrfinderplus_amr_genes = amrfinderplus.amrfinderplus_amr_genes
+    String? amrfinderplus_stress_genes = amrfinderplus.amrfinderplus_stress_genes
+    String? amrfinderplus_virulence_genes = amrfinderplus.amrfinderplus_virulence_genes
+    String? amrfinderplus_amr_classes = amrfinderplus.amrfinderplus_amr_classes
+    String? amrfinderplus_amr_subclasses = amrfinderplus.amrfinderplus_amr_subclasses
+    String? amrfinderplus_version = amrfinderplus.amrfinderplus_version
+    String? amrfinderplus_db_version = amrfinderplus.amrfinderplus_db_version
     # Resfinder Outputs
-    File? resfinder_pheno_table = resfinder_task.resfinder_pheno_table
-    File? resfinder_pheno_table_species = resfinder_task.resfinder_pheno_table_species
-    File? resfinder_seqs = resfinder_task.resfinder_hit_in_genome_seq
-    File? resfinder_results = resfinder_task.resfinder_results_tab
-    File? resfinder_pointfinder_pheno_table = resfinder_task.pointfinder_pheno_table
-    File? resfinder_pointfinder_results = resfinder_task.pointfinder_results
-    String? resfinder_db_version = resfinder_task.resfinder_db_version
-    String? resfinder_docker = resfinder_task.resfinder_docker
+    File? resfinder_pheno_table = resfinder.resfinder_pheno_table
+    File? resfinder_pheno_table_species = resfinder.resfinder_pheno_table_species
+    File? resfinder_seqs = resfinder.resfinder_hit_in_genome_seq
+    File? resfinder_results = resfinder.resfinder_results_tab
+    File? resfinder_pointfinder_pheno_table = resfinder.pointfinder_pheno_table
+    File? resfinder_pointfinder_results = resfinder.pointfinder_results
+    String? resfinder_db_version = resfinder.resfinder_db_version
+    String? resfinder_docker = resfinder.resfinder_docker
     # MLST Typing
     File? ts_mlst_results = ts_mlst.ts_mlst_results
     String? ts_mlst_predicted_st = ts_mlst.ts_mlst_predicted_st
