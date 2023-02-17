@@ -1,6 +1,6 @@
 version 1.0
 
-import "../../tasks/task_versioning.wdl" as versioning_task
+import "../../../tasks/task_versioning.wdl" as versioning_task
 
 workflow basespace_fetch {
   input {
@@ -31,6 +31,7 @@ workflow basespace_fetch {
     File? read2 = fetch_bs.read2
   }
 }
+
 task fetch_bs {
   input {
     String sample_name
