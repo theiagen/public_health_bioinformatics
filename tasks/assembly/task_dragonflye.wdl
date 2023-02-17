@@ -8,6 +8,8 @@ task dragonflye {
     String? assembler_options # default ''
     String? genome_size # default autodetect
     Int? polishing_rounds # default 1
+    Boolean use_racon = false # use medaka polishing by default
+    String medaka_model = "r941_min_hac_g507"
     String docker = "quay.io/biocontainers/dragonflye:1.0.14--hdfd78af_0"
     Int disk_size = 100
     Int cpu = 4
@@ -15,6 +17,15 @@ task dragonflye {
   command <<<
     # get version information
     dragonflye --version | tee VERSION
+
+    # determine polishing parameter
+    if [ "~{use_racon}" = true ]; then 
+      # --racon indicates number of polishing rounds to conduct with Racon
+      POLISHER="--racon ~{polishing_rounds}"
+    else
+      # --medaka indicates number of polishing rounds to conduct with medaka using medaka_model
+      POLISHER="--model ~{medaka_model} --medaka ~{polishing_rounds}"
+    fi
 
     # run dragonflye
     # --reads for input nanopore fastq
@@ -26,7 +37,7 @@ task dragonflye {
     # --nofilter disables read length filtering (performed with nanoq already)
     # --assembler has three options: raven, miniasm, flye (default: flye)
     # --opts enables extra assembler options in quotes
-    # --racon indicates number of polishing rounds to conduct with Racon
+    # see above for polisher input explanation
     dragonflye \
       --reads ~{reads} \
       --depth 0 \
@@ -37,7 +48,7 @@ task dragonflye {
       --nofilter \
       ~{'--assembler ' + assembler} \
       ~{'--opts "' + assembler_options + '"'} \
-      ~{'--racon ' + polishing_rounds} 
+      ${POLISHER}
 
     # rename final output file to have .fasta ending instead of .fa
     mv dragonflye/contigs.fa ~{samplename}.fasta
