@@ -2,7 +2,7 @@ version 1.0
 
 import "../utilities/wf_read_QC_trim_ont.wdl" as read_qc
 import "../utilities/wf_merlin_magic.wdl" as merlin_magic_workflow
-#import "../../tasks/assembly/task_dragonflye.wdl" as dragonflye_task
+import "../../tasks/assembly/task_dragonflye.wdl" as dragonflye_task
 import "../../tasks/quality_control/task_quast.wdl" as quast_task
 import "../../tasks/quality_control/task_cg_pipeline.wdl" as cg_pipeline
 import "../../tasks/quality_control/task_screen.wdl" as screen
@@ -49,9 +49,6 @@ workflow theiaprok_ont {
     String genome_annotation = "prokka"
     File? qc_check_table
     String? expected_taxon
-
-    # placeholder ILLUMINA assembly_fasta to ensure this workflow can run
-    File fake_assembly_fasta = "gs://fc-d2e28cc7-df60-4b3c-91b2-ebc5d39e880a/submissions/7795499c-2cd0-4eda-b0d4-3889ed5ea360/theiaprok_illumina_pe/e3feb60b-13fe-4adf-af72-2a21db5e7f0d/call-shovill_pe/cacheCopy/out/SRR1258442_contigs.fasta"
   }
   call versioning.version_capture{
     input:
@@ -83,13 +80,15 @@ workflow theiaprok_ont {
         skip_screen = skip_screen
     }
     if (clean_check_reads.read_screen == "PASS") {
-      # call dragonflye_task.dragonflye {
-      #   input:
-      #     reads = read_QC_trim.reads_clean
-      # }
+       call dragonflye_task.dragonflye {
+         input:
+           reads = read_QC_trim.reads_clean,
+           genome_size = read_QC_trim.est_genome_size,
+           samplename = samplename
+       }
       call quast_task.quast {
         input:
-          assembly = fake_assembly_fasta,
+          assembly = dragonflye.assembly_fasta,
           samplename = samplename
       }
       call cg_pipeline.cg_pipeline as cg_pipeline_raw {
@@ -429,7 +428,7 @@ workflow theiaprok_ont {
     Float? r1_mean_q_raw = cg_pipeline_raw.r1_mean_q
     Float? r1_mean_readlength_raw = cg_pipeline_raw.r1_mean_readlength
     # Assembly and Assembly QC
-    File? assembly_fasta = fake_assembly_fasta
+    File? assembly_fasta = dragonflye.assembly_fasta
     File? quast_report = quast.quast_report
     String? quast_version = quast.version
     Int? assembly_length = quast.genome_length
