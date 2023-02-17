@@ -7,7 +7,7 @@ task dragonflye {
     String? assembler # default is flye
     String? assembler_options # default ''
     String? genome_size # default autodetect
-    Int? polishing_rounds # default 1
+    Int polishing_rounds = 1 # default 1
     Boolean use_racon = false # use medaka polishing by default
     String medaka_model = "r941_min_hac_g507"
     String docker = "quay.io/biocontainers/dragonflye:1.0.14--hdfd78af_0"
