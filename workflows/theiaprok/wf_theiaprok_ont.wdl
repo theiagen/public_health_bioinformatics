@@ -21,7 +21,7 @@ import "../../tasks/utilities/task_broad_terra_tools.wdl" as terra_tools
 
 workflow theiaprok_ont {
   meta {
-    description: "De-novo genome assembly, taxonomic ID, and QC of paired-end bacterial NGS data"
+    description: "De-novo genome assembly, taxonomic ID, and QC of ONT bacterial NGS data"
   }
   input {
     String samplename
