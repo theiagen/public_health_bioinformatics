@@ -9,8 +9,8 @@ task kmc {
     String samplename
     String docker = "quay.io/biocontainers/kmc:3.2.1--h9ee0642_0"
     Int disk_size = 100
-    Int cpu = 4 
-    Int mem = 4
+    Int cpu = 8
+    Int mem = 32
     Int kmer_length = 21
     Int min_kmer_count = 10
   }
