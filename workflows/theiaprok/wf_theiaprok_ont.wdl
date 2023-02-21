@@ -407,6 +407,9 @@ workflow theiaprok_ont {
     String theiaprok_ont_analysis_date = version_capture.date
     # Read Metadata
     String seq_platform = seq_method
+    # Sample Screening
+    String raw_read_screen = raw_check_reads.read_screen
+    String? clean_read_screen = clean_check_reads.read_screen
     # Read QC - fastq_scan and nanoq outputs
     File? read1_clean = read_QC_trim.read1_clean
     Int? num_reads_raw1 = read_QC_trim.number_raw_reads
