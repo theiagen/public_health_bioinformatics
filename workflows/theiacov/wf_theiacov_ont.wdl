@@ -148,9 +148,9 @@ workflow theiacov_ont {
     # Read Metadata
     String seq_platform = seq_method
     # Read QC
-    File reads_dehosted = ncbi_scrub_se.read1_dehosted
-    Int num_reads_raw = fastq_scan_raw_reads.read1_seq
-    Int num_reads_clean = fastq_scan_clean_reads.read1_seq
+    File read1_dehosted = ncbi_scrub_se.read1_dehosted
+    Int num_reads_raw1 = fastq_scan_raw_reads.read1_seq
+    Int num_reads_clean1 = fastq_scan_clean_reads.read1_seq
     String fastq_scan_version = fastq_scan_clean_reads.version
     String kraken_version = kraken2_raw.version
     Float kraken_human = kraken2_raw.percent_human
@@ -173,7 +173,7 @@ workflow theiacov_ont {
     File assembly_fasta = consensus.consensus_seq
     String assembly_method = "TheiaCoV (~{version_capture.phb_version}): ~{consensus.artic_pipeline_version}"
 
-    File? reads_aligned = consensus.reads_aligned
+    File? read1_aligned = consensus.reads_aligned
     File? trim_fastq = consensus.trim_fastq
     # Assembly QC
     Int number_N = consensus_qc.number_N
