@@ -26,7 +26,7 @@ workflow theiaprok_ont {
   input {
     String samplename
     String seq_method = "ONT"
-    File reads
+    File read1
     Int? genome_size
     String? run_id
     String? collection_date
@@ -55,7 +55,7 @@ workflow theiaprok_ont {
   }
   call screen_task.check_reads_ont as raw_check_reads {
     input:
-      read1 = reads,
+      read1 = read1,
       min_reads = min_reads,
       min_basepairs = min_basepairs,
       min_genome_size = min_genome_size,
@@ -67,12 +67,12 @@ workflow theiaprok_ont {
     call read_qc_workflow.read_QC_trim_ont as read_QC_trim {
       input:
         samplename = samplename,
-        reads = reads,
+        read1 = read1,
         genome_size = genome_size
     }
     call screen_task.check_reads_ont as clean_check_reads {
       input:
-        read1 = read_QC_trim.reads_clean,
+        read1 = read_QC_trim.read1_clean,
         min_reads = min_reads,
         min_basepairs = min_basepairs,
         min_genome_size = min_genome_size,
@@ -83,7 +83,7 @@ workflow theiaprok_ont {
     if (clean_check_reads.read_screen == "PASS") {
        call dragonflye_task.dragonflye {
          input:
-           reads = read_QC_trim.reads_clean,
+           read1 = read_QC_trim.read1_clean,
            genome_size = select_first([genome_size, read_QC_trim.est_genome_size]),
            samplename = samplename
        }
@@ -94,13 +94,13 @@ workflow theiaprok_ont {
       }
       call cg_pipeline_task.cg_pipeline as cg_pipeline_raw {
         input:
-          read1 = read_QC_trim.reads_clean,
+          read1 = read_QC_trim.read1_clean,
           samplename = samplename,
           genome_length = select_first([genome_size, quast.genome_length])
       }
       call cg_pipeline_task.cg_pipeline as cg_pipeline_clean {
         input:
-          read1 = read_QC_trim.reads_clean,
+          read1 = read_QC_trim.read1_clean,
           samplename = samplename,
           genome_length = select_first([genome_size, quast.genome_length])
       }
@@ -185,7 +185,7 @@ workflow theiaprok_ont {
           merlin_tag = gambit.merlin_tag,
           assembly = dragonflye.assembly_fasta,
           samplename = samplename,
-          read1 = read_QC_trim.reads_clean,
+          read1 = read_QC_trim.read1_clean,
           ont_data = true
       }
       if (defined(taxon_tables)) {
@@ -196,8 +196,8 @@ workflow theiaprok_ont {
             sample_taxon = gambit.gambit_predicted_taxon,
             taxon_tables = taxon_tables,
             samplename = samplename,
-            reads = reads,
-            reads_clean = read_QC_trim.reads_clean,
+            read1 = read1,
+            read1_clean = read_QC_trim.read1_clean,
             run_id = run_id,
             collection_date = collection_date,
             originating_lab = originating_lab,
@@ -207,9 +207,9 @@ workflow theiaprok_ont {
             theiaprok_ont_version = version_capture.phb_version,
             theiaprok_ont_analysis_date = version_capture.date,
             seq_platform = seq_method,
-            num_reads_raw = read_QC_trim.number_raw_reads,
+            num_reads_raw1 = read_QC_trim.number_raw_reads,
             fastq_scan_version = read_QC_trim.fastq_scan_version,
-            num_reads_clean = read_QC_trim.number_clean_reads,
+            num_reads_clean1 = read_QC_trim.number_clean_reads,
             r1_mean_q_raw = cg_pipeline_raw.r1_mean_q, 
             r1_mean_readlength_raw = cg_pipeline_raw.r1_mean_readlength,
             nanoq_version = read_QC_trim.nanoq_version,
@@ -403,14 +403,14 @@ workflow theiaprok_ont {
   }
   output {
     # Version Captures
-    String theiaprok_illumina_pe_version = version_capture.phb_version
-    String theiaprok_illumina_pe_analysis_date = version_capture.date
+    String theiaprok_ont_version = version_capture.phb_version
+    String theiaprok_ont_analysis_date = version_capture.date
     # Read Metadata
     String seq_platform = seq_method
     # Read QC - fastq_scan and nanoq outputs
-    File? reads_clean = read_QC_trim.reads_clean
-    Int? num_reads_raw = read_QC_trim.number_raw_reads
-    Int? num_reads_clean = read_QC_trim.number_clean_reads
+    File? read1_clean = read_QC_trim.read1_clean
+    Int? num_reads_raw1 = read_QC_trim.number_raw_reads
+    Int? num_reads_clean1 = read_QC_trim.number_clean_reads
     String? fastq_scan_version = read_QC_trim.fastq_scan_version
     String? nanoq_version = read_QC_trim.nanoq_version
     # Read QC - nanoplot outputs

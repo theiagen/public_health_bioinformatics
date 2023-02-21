@@ -2,7 +2,7 @@ version 1.0
 
 task nanoplot {
   input {
-    File reads
+    File read1 # intended for ONT data only
     String samplename
     Int max_length = 100000
     Int disk_size = 100
@@ -19,7 +19,7 @@ task nanoplot {
     # --tsv_stats to output the stats file in TSV format
     # --maxlength to hide reads longer than this
     NanoPlot \
-      --fastq ~{reads} \
+      --fastq ~{read1} \
       --prefix "~{samplename}_" \
       --threads 4 \
       --N50 \

@@ -13,31 +13,31 @@ workflow read_QC_trim_ont {
   }
   input {
     String samplename
-    File reads
+    File read1
     Int? genome_size
   }
   # perform fastq-scan on raw reads
   call fastq_scan.fastq_scan_se as fastq_scan_raw {
     input:
-      read1 = reads,
+      read1 = read1,
       read1_name = samplename
   }
   # nanoplot
   call nanoplot_task.nanoplot {
     input:
-      reads = reads,
+      read1 = read1,
       samplename = samplename
   }
   # kmc for genome size estimation
   call kmc_task.kmc {
     input:
-      read1 = reads,
+      read1 = read1,
       samplename = samplename
   }
   # rasusa for random downsampling
   call rasusa_task.rasusa {
     input:
-      read1 = reads,
+      read1 = read1,
       samplename = samplename,
       coverage = 150,
       genome_size = select_first([genome_size, kmc.est_genome_size])
@@ -45,24 +45,24 @@ workflow read_QC_trim_ont {
   # tiptoft
   call tiptoft_task.tiptoft {
     input:
-      reads = reads,
+      read1 = read1,
       samplename = samplename
   }
   # nanoq/filtlong (default min length 500)
   call nanoq_task.nanoq {
     input:
-      reads = rasusa.read1_subsampled,
+      read1 = rasusa.read1_subsampled,
       samplename = samplename
   }
   # perform fastq_scan again after cleaning for comparison
   call fastq_scan.fastq_scan_se as fastq_scan_clean {
     input:
-      read1 = nanoq.filtered_reads,
+      read1 = nanoq.filtered_read1,
       read1_name = samplename
   }
   output {
     # nanoq outputs
-    File reads_clean = nanoq.filtered_reads
+    File read1_clean = nanoq.filtered_read1
     String nanoq_version = nanoq.version
 
     # fastq scan raw outputs

@@ -3,7 +3,7 @@ version 1.0
 task tiptoft {
   input {
     String samplename
-    File reads
+    File read1 # intended for ONT data only
     Int disk_size = 100
     Int cpu = 2
     Int? kmer_size # default is 13
@@ -21,7 +21,7 @@ task tiptoft {
 
     # run TipToft on FASTQ file; leave all options as default, but allow user to adjust if necessary
     tiptoft \
-      ~{reads} \
+      ~{read1} \
       ~{'--kmer ' + kmer_size} \
       ~{'--max_gap ' + max_gap} \
       ~{'--margin ' + margin} \

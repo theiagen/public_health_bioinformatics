@@ -2,7 +2,7 @@ version 1.0
 
 task nanoq {
   input {
-    File reads
+    File read1 # intended for ONT data only
     String samplename
     String docker = "quay.io/biocontainers/nanoq:0.9.0--hec16e2b_1"
     Int disk_size = 100
@@ -15,10 +15,10 @@ task nanoq {
     # capture date and version
     nanoq --version | grep nanoq | tee VERSION
 
-    nanoq -i ~{reads} --min-len ~{min_read_length} --max-len ~{max_read_length} --min-qual ~{min_read_qual} --max-qual ~{max_read_qual} -o ~{samplename}_reads.fastq.gz
+    nanoq -i ~{read1} --min-len ~{min_read_length} --max-len ~{max_read_length} --min-qual ~{min_read_qual} --max-qual ~{max_read_qual} -o ~{samplename}_read1.fastq.gz
   >>>
   output {
-    File filtered_reads = "${samplename}_reads.fastq.gz"
+    File filtered_read1 = "${samplename}_read1.fastq.gz"
     String version = read_string("VERSION")
   }
   runtime {

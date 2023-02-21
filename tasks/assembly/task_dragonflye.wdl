@@ -2,7 +2,7 @@ version 1.0
 
 task dragonflye {
   input {
-    File reads
+    File read1 # intended for ONT data only
     String samplename
     String? assembler # default is flye
     String? assembler_options # default ''
@@ -39,7 +39,7 @@ task dragonflye {
     # --opts enables extra assembler options in quotes
     # see above for polisher input explanation
     dragonflye \
-      --reads ~{reads} \
+      --reads ~{read1} \
       --depth 0 \
       --outdir dragonflye \
       ~{'--gsize ' + genome_size} \
