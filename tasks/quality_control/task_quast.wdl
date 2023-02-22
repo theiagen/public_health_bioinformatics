@@ -45,7 +45,7 @@ task quast {
   }
   runtime {
     docker:  "~{docker}"
-    memory:  "~{memory}"
+    memory:  "~{memory} GB"
     cpu: "~{cpu}"
     disks: "local-disk 100 SSD"
     preemptible:  0
