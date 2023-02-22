@@ -7,7 +7,7 @@ import "../tasks/quality_control/task_quast.wdl" as quast
 import "../tasks/quality_control/task_cg_pipeline.wdl" as cg_pipeline
 import "../tasks/quality_control/task_screen.wdl" as screen
 import "../tasks/taxon_id/task_gambit.wdl" as gambit
-import "../tasks/species_typing/task_ts_mlst.wdl" as ts_mlst
+# import "../tasks/species_typing/task_ts_mlst.wdl" as ts_mlst
 import "../tasks/task_versioning.wdl" as versioning
 
 workflow theiaeuk_illumina_pe {
@@ -97,11 +97,11 @@ workflow theiaeuk_illumina_pe {
           cpu = cpu,
           memory = memory
       }
-      call ts_mlst.ts_mlst {
-        input: 
-          assembly = shovill_pe.assembly_fasta,
-          samplename = samplename
-      }
+      # call ts_mlst.ts_mlst {
+      #   input: 
+      #     assembly = shovill_pe.assembly_fasta,
+      #     samplename = samplename
+      # }
       call merlin_magic.merlin_magic {
         input:
           merlin_tag = gambit.merlin_tag,
@@ -158,10 +158,10 @@ workflow theiaeuk_illumina_pe {
     String? gambit_db_version = gambit.gambit_db_version
     String? gambit_docker = gambit.gambit_docker
     # MLST Typing
-    File? ts_mlst_results = ts_mlst.ts_mlst_results
-    String? ts_mlst_predicted_st = ts_mlst.ts_mlst_predicted_st
-    String? ts_mlst_version = ts_mlst.ts_mlst_version
-    String? ts_mlst_pubmlst_scheme = ts_mlst.ts_mlst_pubmlst_scheme
+    # File? ts_mlst_results = ts_mlst.ts_mlst_results
+    # String? ts_mlst_predicted_st = ts_mlst.ts_mlst_predicted_st
+    # String? ts_mlst_version = ts_mlst.ts_mlst_version
+    # String? ts_mlst_pubmlst_scheme = ts_mlst.ts_mlst_pubmlst_scheme
     # Cladetyper Outputs
     String? clade_type = merlin_magic.clade_type
     String? cladetyper_analysis_date = merlin_magic.cladetyper_analysis_date
