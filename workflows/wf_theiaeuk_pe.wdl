@@ -26,7 +26,9 @@ workflow theiaeuk_illumina_pe {
     Int max_genome_size = 178000000
     Int min_coverage = 10
     Int min_proportion = 50
-    Boolean skip_screen = false 
+    Boolean skip_screen = false
+    Int cpu = 8
+    Int memory = 16
   }
   call versioning.version_capture{
     input:
@@ -67,24 +69,33 @@ workflow theiaeuk_illumina_pe {
         input:
           samplename = samplename,
           read1_cleaned = read_QC_trim.read1_clean,
-          read2_cleaned = read_QC_trim.read2_clean
+          read2_cleaned = read_QC_trim.read2_clean,
+          cpu = cpu,
+          memory = memory
       }
       call quast.quast {
         input:
           assembly = shovill_pe.assembly_fasta,
-          samplename = samplename
+          samplename = samplename,
+          cpu = cpu,
+          memory = memory
+
       }
       call cg_pipeline.cg_pipeline {
         input:
           read1 = read1_raw,
           read2 = read2_raw,
           samplename = samplename,
-          genome_length = clean_check_reads.est_genome_length
+          genome_length = clean_check_reads.est_genome_length,
+          cpu = cpu,
+          memory = memory
       }
       call gambit.gambit_euk as gambit {
         input:
           assembly = shovill_pe.assembly_fasta,
-          samplename = samplename
+          samplename = samplename,
+          cpu = cpu,
+          memory = memory
       }
       call ts_mlst.ts_mlst {
         input: 

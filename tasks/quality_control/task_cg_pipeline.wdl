@@ -8,6 +8,8 @@ task cg_pipeline {
     String docker="quay.io/staphb/lyveset:1.1.4f"
     String cg_pipe_opts="--fast"
     Int genome_length
+    Int memory
+    Int cpu
   }
   command <<<
     # date and version control
@@ -62,8 +64,8 @@ task cg_pipeline {
   }
   runtime {
     docker: "~{docker}"
-    memory: "8 GB"
-    cpu: 4
+    memory: "~{memory}"
+    cpu: "~{cpu}"
     disks: "local-disk 100 SSD"
     preemptible: 0
   }

@@ -7,6 +7,8 @@ task gambit {
     String docker = "quay.io/staphb/gambit:0.5.0"
     File? gambit_db_genomes
     File? gambit_db_signatures
+    Int memory
+    Int cpu
   }
   # If "File" type is used Cromwell attempts to localize it, which fails because it doesn't exist yet.
   String report_path = "~{samplename}_gambit.json"
@@ -175,10 +177,10 @@ task gambit {
   }
   runtime {
     docker:  "~{docker}"
-    memory:  "16 GB"
-    cpu:   8
+    memory: "~{memory}"
+    cpu: "~{cpu}"
     disks: "local-disk 100 SSD"
-    preemptible:  0
+    preemptible: 0
   }
 }
 
@@ -189,6 +191,8 @@ task gambit_euk {
     String docker = "quay.io/staphb/gambit:0.5.0"
     File gambit_db_genomes = "gs://theiagen-public-files/terra/candida_auris_refs/221006-theiagen-fungal-v0.1.db"
     File gambit_db_signatures = "gs://theiagen-public-files/terra/candida_auris_refs/221006-theiagen-fungal-v0.1.h5" 
+    Int memory
+    Int cpu
   }
   # If "File" type is used Cromwell attempts to localize it, which fails because it doesn't exist yet.
   String report_path = "~{samplename}_gambit.json"
@@ -339,9 +343,9 @@ task gambit_euk {
   }
   runtime {
     docker:  "~{docker}"
-    memory:  "16 GB"
-    cpu:   8
+    memory: "~{memory}"
+    cpu: "~{cpu}"
     disks: "local-disk 100 SSD"
-    preemptible:  0
+    preemptible: 0
   }
 }

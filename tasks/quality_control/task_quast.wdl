@@ -5,6 +5,8 @@ task quast {
     File assembly
     String samplename
     String docker="quay.io/staphb/quast:5.0.2"
+    Int memory
+    Int cpu
   }
   command <<<
     # capture date and version
@@ -43,8 +45,8 @@ task quast {
   }
   runtime {
     docker:  "~{docker}"
-    memory:  "2 GB"
-    cpu:   2
+    memory:  "~{memory}"
+    cpu: "~{cpu}"
     disks: "local-disk 100 SSD"
     preemptible:  0
   }
