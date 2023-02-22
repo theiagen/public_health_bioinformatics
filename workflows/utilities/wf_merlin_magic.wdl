@@ -43,6 +43,7 @@ workflow merlin_magic {
     Boolean ont_data = false
     Boolean call_shigeifinder_reads_input = false
     Boolean assembly_only = false
+    Boolean theiaeuk = false
   }
   # theiaprok
   if (merlin_tag == "Acinetobacter baumannii") {
@@ -201,63 +202,60 @@ workflow merlin_magic {
   }
   
   # theiaeuk
-  if (merlin_tag == "Candida auris") {
-    call cauris_cladetyper.cauris_cladetyper as cladetyper {
-      input: 
-        assembly_fasta = assembly,
-        samplename = samplename
+  if (theiaeuk) {
+    if (merlin_tag == "Candida auris") {
+      call cauris_cladetyper.cauris_cladetyper as cladetyper {
+        input: 
+          assembly_fasta = assembly,
+          samplename = samplename
+      }
+      if (!assembly_only && !ont_data) {
+        call snippy.snippy_variants as snippy_cauris { # no ONT support right now
+          input:
+            reference = cladetyper.clade_spec_ref,
+            read1 = select_first([read1]),
+            read2 = read2,
+            query_gene = "FKS1,ERG11,FUR1",
+            samplename = samplename
+        }
+      }
     }
-  #   if (!assembly_only && !ont_data) {
-  #     call snippy.snippy_variants as snippy_cauris { # no ONT support right now
-  #       input:
-  #         reference = cladetyper.clade_spec_ref,
-  #         read1 = select_first([read1]),
-  #         read2 = read2,
-  #         query_gene = "FKS1,ERG11,FUR1",
-  #         samplename = samplename
-  #     }
-  #   }
-  # }
-  # if (merlin_tag == "Candida albicans") {
-  #   if (!assembly_only && !ont_data) {
-  #     call snippy.snippy_variants as snippy_calbicans {
-  #       input:
-  #         reference = "gs://theiagen-public-files/terra/theiaeuk_files/Candida_albicans_GCF_000182965.3_ASM18296v3_genomic.gbff",
-  #         read1 = select_first([read1]),
-  #         read2 = read2,
-  #         query_gene = "ERG11,FKS1,FUR1,RTA2",
-  #         samplename = samplename
-  #     }
-  #   }
-  # }
-  # if (merlin_tag == "Aspergillus fumigatus") {
-  #   if (!assembly_only && !ont_data) {
-  #     call snippy.snippy_variants as snippy_afumigatus {
-  #       input:
-  #         reference = "gs://theiagen-public-files/terra/theiaeuk_files/Aspergillus_fumigatus_GCF_000002655.1_ASM265v1_genomic.gbff",
-  #         read1 = select_first([read1]),
-  #         read2 = read2,
-  #         query_gene = "CYP51a,HAPE,COX10",
-  #         samplename = samplename
-  #     }
-  #   }
-  # }
-  # if (merlin_tag == "Cryptococcus neoformans") {
-  #   if (!assembly_only && !ont_data) {
-  #     call snippy.snippy_variants as snippy_crypto {
-  #       input:
-  #         reference = "gs://theiagen-public-files/terra/theiaeuk_files/Cryptococcus_neoformans_GCF_000091045.1_ASM9104v1_genomic.gbff",
-  #         read1 = select_first([read1]),
-  #         read2 = read2,
-  #         query_gene = "ERG11",
-  #         samplename = samplename
-  #     }
-  #   }
-  # }
-  # if (merlin_tag == "None") { # this doesn't seem to work ?
-  #   String snippy_variants_none = "No matching taxon detected"
-  #   File snippy_variants_none_file = "gs://theiagen-public-files/terra/theiaeuk_files/no_match_detected.txt"
-  #   Array[File] snippy_outputs_none = [] # this causes failure
+    if (merlin_tag == "Candida albicans") {
+      if (!assembly_only && !ont_data) {
+        call snippy.snippy_variants as snippy_calbicans {
+          input:
+            reference = "gs://theiagen-public-files/terra/theiaeuk_files/Candida_albicans_GCF_000182965.3_ASM18296v3_genomic.gbff",
+            read1 = select_first([read1]),
+            read2 = read2,
+            query_gene = "ERG11,FKS1,FUR1,RTA2",
+            samplename = samplename
+        }
+      }
+    }
+    if (merlin_tag == "Aspergillus fumigatus") {
+      if (!assembly_only && !ont_data) {
+        call snippy.snippy_variants as snippy_afumigatus {
+          input:
+            reference = "gs://theiagen-public-files/terra/theiaeuk_files/Aspergillus_fumigatus_GCF_000002655.1_ASM265v1_genomic.gbff",
+            read1 = select_first([read1]),
+            read2 = read2,
+            query_gene = "CYP51a,HAPE,COX10",
+            samplename = samplename
+        }
+      }
+    }
+    if (merlin_tag == "Cryptococcus neoformans") {
+      if (!assembly_only && !ont_data) {
+        call snippy.snippy_variants as snippy_crypto {
+          input:
+            reference = "gs://theiagen-public-files/terra/theiaeuk_files/Cryptococcus_neoformans_GCF_000091045.1_ASM9104v1_genomic.gbff",
+            read1 = select_first([read1]),
+            read2 = read2,
+            query_gene = "ERG11",
+            samplename = samplename
+        }
+      }
+    }
   }
   output {
     # theiaprok
@@ -409,14 +407,14 @@ workflow merlin_magic {
     String? cladetyper_docker_image = cladetyper.gambit_cladetyper_docker_image
     String? cladetype_annotated_ref = cladetyper.clade_spec_ref
     # snippy variants
-    # String snippy_variants_version = select_first([snippy_cauris.snippy_variants_version, snippy_calbicans.snippy_variants_version, snippy_afumigatus.snippy_variants_version, snippy_crypto.snippy_variants_version, snippy_variants_none])
-    # String snippy_variants_query = select_first([snippy_cauris.snippy_variants_query, snippy_calbicans.snippy_variants_query, snippy_afumigatus.snippy_variants_query, snippy_crypto.snippy_variants_query, snippy_variants_none])
-    # String snippy_variants_hits = select_first([snippy_cauris.snippy_variants_hits, snippy_calbicans.snippy_variants_hits, snippy_afumigatus.snippy_variants_hits, snippy_crypto.snippy_variants_hits, snippy_variants_none])
-    # File snippy_variants_gene_query_results = select_first([snippy_cauris.snippy_variants_gene_query_results, snippy_calbicans.snippy_variants_gene_query_results, snippy_afumigatus.snippy_variants_gene_query_results, snippy_crypto.snippy_variants_gene_query_results, snippy_variants_none_file])
-    # Array[File] snippy_outputs = select_first([snippy_cauris.snippy_outputs, snippy_calbicans.snippy_outputs, snippy_afumigatus.snippy_outputs, snippy_crypto.snippy_outputs, snippy_outputs_none])
-    # File snippy_variants_results = select_first([snippy_cauris.snippy_variants_results, snippy_calbicans.snippy_variants_results, snippy_afumigatus.snippy_variants_results, snippy_crypto.snippy_variants_results, snippy_variants_none_file])
-    # File snippy_variants_bam = select_first([snippy_cauris.snippy_variants_bam, snippy_calbicans.snippy_variants_bam, snippy_afumigatus.snippy_variants_bam, snippy_crypto.snippy_variants_bam, snippy_variants_none_file])
-    # File snippy_variants_bai = select_first([snippy_cauris.snippy_variants_bai, snippy_calbicans.snippy_variants_bai, snippy_afumigatus.snippy_variants_bai, snippy_crypto.snippy_variants_bai, snippy_variants_none_file])
-    # File snippy_variants_summary = select_first([snippy_cauris.snippy_variants_summary, snippy_calbicans.snippy_variants_summary, snippy_afumigatus.snippy_variants_summary, snippy_crypto.snippy_variants_summary, snippy_variants_none_file])
+    String? snippy_variants_version = select_first([snippy_cauris.snippy_variants_version, snippy_calbicans.snippy_variants_version, snippy_afumigatus.snippy_variants_version, snippy_crypto.snippy_variants_version])
+    String? snippy_variants_query = select_first([snippy_cauris.snippy_variants_query, snippy_calbicans.snippy_variants_query, snippy_afumigatus.snippy_variants_query, snippy_crypto.snippy_variants_query])
+    String? snippy_variants_hits = select_first([snippy_cauris.snippy_variants_hits, snippy_calbicans.snippy_variants_hits, snippy_afumigatus.snippy_variants_hits, snippy_crypto.snippy_variants_hits])
+    File? snippy_variants_gene_query_results = select_first([snippy_cauris.snippy_variants_gene_query_results, snippy_calbicans.snippy_variants_gene_query_results, snippy_afumigatus.snippy_variants_gene_query_results, snippy_crypto.snippy_variants_gene_query_results])
+    File? snippy_variants_outdir_tarball = select_first([snippy_cauris.snippy_variants_outdir_tarball, snippy_calbicans.snippy_variants_outdir_tarball, snippy_afumigatus.snippy_variants_outdir_tarball, snippy_crypto.snippy_variants_outdir_tarball])
+    File? snippy_variants_results = select_first([snippy_cauris.snippy_variants_results, snippy_calbicans.snippy_variants_results, snippy_afumigatus.snippy_variants_results, snippy_crypto.snippy_variants_results])
+    File? snippy_variants_bam = select_first([snippy_cauris.snippy_variants_bam, snippy_calbicans.snippy_variants_bam, snippy_afumigatus.snippy_variants_bam, snippy_crypto.snippy_variants_bam])
+    File? snippy_variants_bai = select_first([snippy_cauris.snippy_variants_bai, snippy_calbicans.snippy_variants_bai, snippy_afumigatus.snippy_variants_bai, snippy_crypto.snippy_variants_bai])
+    File? snippy_variants_summary = select_first([snippy_cauris.snippy_variants_summary, snippy_calbicans.snippy_variants_summary, snippy_afumigatus.snippy_variants_summary, snippy_crypto.snippy_variants_summary])
   }
 }
