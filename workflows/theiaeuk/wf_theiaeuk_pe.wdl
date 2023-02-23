@@ -99,7 +99,8 @@ workflow theiaeuk_illumina_pe {
           assembly = shovill_pe.assembly_fasta,
           samplename = samplename,
           read1 = read_QC_trim.read1_clean,
-          read2 = read_QC_trim.read2_clean
+          read2 = read_QC_trim.read2_clean,
+          theiaeuk = true
       }
     }
   }
