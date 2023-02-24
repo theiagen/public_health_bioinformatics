@@ -22,10 +22,10 @@ workflow lyvset_workflow {
   }
   output {
     String lyveset_wf_version = version_capture.phb_version
-    String lyvset_wf_analysis_date = version_capture.date
+    String lyveset_wf_analysis_date = version_capture.date
 
-    String lyvset_docker_image = lyveset.lyveset_docker_image
+    String lyveset_docker_image = lyveset.lyveset_docker_image
     File lyveset_distance_matrix = lyveset.lyveset_distance_matrix
-    File lyvset_raxml_tree = lyveset.lyveset_raxml_tree
+    File lyveset_raxml_tree = lyveset.lyveset_raxml_tree
   }
 }
