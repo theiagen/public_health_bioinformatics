@@ -26,6 +26,6 @@ workflow lyvset_workflow {
 
     String lyvset_docker_image = lyveset.lyveset_docker_image
     File lyveset_distance_matrix = lyveset.lyveset_distance_matrix
-    File lyvset_raxmpl_tree = lyveset.lyveset_raxml_tree
+    File lyvset_raxml_tree = lyveset.lyveset_raxml_tree
   }
 }
