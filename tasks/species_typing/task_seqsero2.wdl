@@ -20,13 +20,13 @@ task seqsero2 {
     SeqSero2_package.py --version | tee VERSION
     
     if [ "~{paired_end}" = true ]; then 
-      DATATYPE='-t 2' 
+      DATATYPE='-t2' 
     else 
-      DATATYPE='-t 3'
+      DATATYPE='-t3'
     fi 
 
     if [ "~{ont_data}" = true ]; then 
-      DATATYPE='-t 5'
+      DATATYPE='-t5'
     fi
 
     # Run SeqSero2 on the input read data
