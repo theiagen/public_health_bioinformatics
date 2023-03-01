@@ -19,6 +19,14 @@ task seqsero2 {
     SeqSero2_package.py --version | tee VERSION
 
     # Run SeqSero2 on the input read data
+    # explanation of parameters:
+    # -p <int> (number of threads for allele mode)
+    # -m <string> (which workflow to apply, either 'a' for raw reads allele micro-assembly 
+    #              or 'k' for raw reads and genome assembly k-mer; default=a)
+    # -t <int> (input data type; '2' for separated paired-end reads, '3' for single reads)
+    # -n <string> (optional, to specify sample name in report output)
+    # -d <string> (output directory name)
+    # -i <file> (path to input file(s))
     SeqSero2_package.py \
       -p 8 \
       -m ~{mode} \
@@ -87,8 +95,15 @@ task seqsero2_assembly {
     SeqSero2_package.py --version | tee VERSION
 
     # Run SeqSero2 on the input assembly fastas
+    # explanation of parameters:
+    # -p <int> (number of threads; 4 is the max that can be used for assembly data)
+    # -m <string> ('k' for raw reads and genome assembly k-mer; required when t=4)
+    # -t <int> (input data type; '4' for genome assembly)
+    # -n <string> (optional, to specify sample name in report output)
+    # -d <string> (output directory name)
+    # -i <file> (path to input file)
     SeqSero2_package.py \
-      -p 8 \
+      -p 4 \
       -m k \
       -t 4 \
       -n ~{samplename} \
@@ -96,6 +111,7 @@ task seqsero2_assembly {
       -i ~{assembly_fasta}
 
     # Run a python block to parse output file for terra data tables
+    # contamination is not predicted when assembly data is used
     python3 <<CODE
     import csv
     with open("./~{samplename}_seqsero2_output_dir/SeqSero_result.tsv",'r') as tsv_file:
