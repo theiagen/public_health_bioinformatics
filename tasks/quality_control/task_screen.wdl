@@ -140,7 +140,6 @@ task check_reads {
   }
 }
 
-
 task check_reads_se {
   input {
     File read1
@@ -278,8 +277,6 @@ task check_reads_ont {
   command <<<
     flag="PASS"
 
-   flag="PASS"
-    estimated_genome_size=0
     if [[ "~{skip_screen}" = "false" ]] ; then
       
       # set cat command based on compression
