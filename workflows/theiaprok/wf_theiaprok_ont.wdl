@@ -39,11 +39,11 @@ workflow theiaprok_ont {
     String terra_workspace = "NA"
     # by default do not call ANI task, but user has ability to enable this task if working with enteric pathogens or supply their own high-quality reference genome
     Boolean call_ani = false
-    Int min_reads = 7472
+    Int min_reads = 5000 # reduced from 7472 because less reads are needed to get to higher coverage due to longer read length
     Int min_basepairs = 2241820
     Int min_genome_size = 100000
     Int max_genome_size = 18040666 
-    Int min_coverage = 10
+    Int min_coverage = 5 # reduced from 10 because some institutions sequence at lower depth because of longer read length
     Boolean call_resfinder = false
     Boolean skip_screen = false 
     String genome_annotation = "prokka"
