@@ -123,23 +123,29 @@ workflow merlin_magic {
         assembly = assembly,
         samplename = samplename
     }
-    if (!assembly_only){
-      call seqsero2_task.seqsero2 { # needs testing
+    if (!ont_data && !assembly_only) {
+      call seqsero2_task.seqsero2 { 
         input:
           read1 = select_first([read1]),
           read2 = read2,
           samplename = samplename,
-          paired_end = paired_end,
-          ont_data = ont_data
+          paired_end = paired_end
       }
-      if( seqsero2.seqsero2_predicted_serotype == "Typhi" || sistr.sistr_predicted_serotype == "Typhi" ) {
-        call genotyphi.genotyphi as genotyphi_task { # needs testing
-          input: 
-            read1 = select_first([read1]),
-            read2 = read2,
-            samplename = samplename,
-            ont_data = ont_data
-        }
+    }
+    if (ont_data) {
+      call seqsero2_task.seqsero2_assembly {
+        input:
+          assembly_fasta = assembly,
+          samplename = samplename
+      }
+    }
+    if (select_first([seqsero2.seqsero2_predicted_serotype, seqsero2_assembly.seqsero2_predicted_serotype]) == "Typhi" || sistr.sistr_predicted_serotype == "Typhi" && !assembly_only) {
+      call genotyphi.genotyphi as genotyphi_task { # needs testing
+        input: 
+          read1 = select_first([read1]),
+          read2 = read2,
+          samplename = samplename,
+          ont_data = ont_data
       }
     }
   }
@@ -325,10 +331,10 @@ workflow merlin_magic {
     File? sistr_cgmlst = sistr.sistr_cgmlst
     String? sistr_version = sistr.sistr_version
     String? sistr_predicted_serotype = sistr.sistr_predicted_serotype
-    File? seqsero2_report = seqsero2.seqsero2_report
-    String? seqsero2_version = seqsero2.seqsero2_version
-    String? seqsero2_predicted_antigenic_profile = seqsero2.seqsero2_predicted_antigenic_profile
-    String? seqsero2_predicted_serotype = seqsero2.seqsero2_predicted_serotype
+    File seqsero2_report = select_first([seqsero2.seqsero2_report, seqsero2_assembly.seqsero2_report, ""])
+    String seqsero2_version = select_first([seqsero2.seqsero2_version, seqsero2_assembly.seqsero2_version, ""])
+    String seqsero2_predicted_antigenic_profile = select_first([seqsero2.seqsero2_predicted_antigenic_profile, seqsero2_assembly.seqsero2_predicted_antigenic_profile, ""])
+    String seqsero2_predicted_serotype = select_first([seqsero2.seqsero2_predicted_serotype, seqsero2_assembly.seqsero2_predicted_serotype, ""])
     String? seqsero2_predicted_contamination = seqsero2.seqsero2_predicted_contamination
     # Salmonella serotype Typhi typing
     File? genotyphi_report_tsv = genotyphi_task.genotyphi_report_tsv 
