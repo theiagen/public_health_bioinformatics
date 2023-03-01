@@ -72,7 +72,7 @@ workflow merlin_magic {
         assembly = assembly,
         samplename = samplename
     }
-    if (!assembly_only){
+    if (!assembly_only) {
       call shigatyper_task.shigatyper { # test ONT compatibility
         input:
           read1 = select_first([read1]),
