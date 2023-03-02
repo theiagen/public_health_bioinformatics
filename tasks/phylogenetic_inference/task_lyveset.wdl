@@ -126,7 +126,7 @@ task lyveset {
     Array[File] lyveset_msa_outputs = glob("~{dataset_name}/msa/*")
     File? lyveset_distance_matrix = "~{dataset_name}/msa/~{dataset_name}_pairwiseMatrix.tsv"
     File? lyveset_raxml_tree = "~{dataset_name}/msa/~{dataset_name}_RAxML_bipartitions.nwk"
-    File lyveset_log = "~{dataset_name}/msa/~{dataset_name}_RAxML_bipartitions.nwk"
+    File lyveset_log = stdout()
   }
   runtime {
     docker: docker_image
