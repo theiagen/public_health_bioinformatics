@@ -94,7 +94,7 @@ workflow theiaprok_ont {
       }
       call cg_pipeline_task.cg_pipeline as cg_pipeline_raw {
         input:
-          read1 = read_QC_trim.read1_clean,
+          read1 = read1,
           samplename = samplename,
           genome_length = select_first([genome_size, quast.genome_length])
       }
