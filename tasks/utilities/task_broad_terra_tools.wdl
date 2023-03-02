@@ -165,7 +165,7 @@ task export_taxon_tables {
     File? sistr_cgmlst
     String? sistr_version
     String? sistr_predicted_serotype
-    File? seqsero2_report
+    String? seqsero2_report
     String? seqsero2_version
     String? seqsero2_predicted_antigenic_profile
     String? seqsero2_predicted_serotype

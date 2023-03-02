@@ -132,7 +132,7 @@ workflow merlin_magic {
           paired_end = paired_end
       }
     }
-    if (ont_data) {
+    if (ont_data || assembly_only) {
       call seqsero2_task.seqsero2_assembly {
         input:
           assembly_fasta = assembly,
@@ -331,7 +331,7 @@ workflow merlin_magic {
     File? sistr_cgmlst = sistr.sistr_cgmlst
     String? sistr_version = sistr.sistr_version
     String? sistr_predicted_serotype = sistr.sistr_predicted_serotype
-    File seqsero2_report = select_first([seqsero2.seqsero2_report, seqsero2_assembly.seqsero2_report, ""])
+    String seqsero2_report = select_first([seqsero2.seqsero2_report, seqsero2_assembly.seqsero2_report, ""])
     String seqsero2_version = select_first([seqsero2.seqsero2_version, seqsero2_assembly.seqsero2_version, ""])
     String seqsero2_predicted_antigenic_profile = select_first([seqsero2.seqsero2_predicted_antigenic_profile, seqsero2_assembly.seqsero2_predicted_antigenic_profile, ""])
     String seqsero2_predicted_serotype = select_first([seqsero2.seqsero2_predicted_serotype, seqsero2_assembly.seqsero2_predicted_serotype, ""])

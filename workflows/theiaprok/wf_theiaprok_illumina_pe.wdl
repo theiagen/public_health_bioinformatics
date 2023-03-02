@@ -636,7 +636,7 @@ workflow theiaprok_illumina_pe {
     File? sistr_cgmlst = merlin_magic.sistr_cgmlst
     String? sistr_version = merlin_magic.sistr_version
     String? sistr_predicted_serotype = merlin_magic.sistr_predicted_serotype
-    File? seqsero2_report = merlin_magic.seqsero2_report
+    String? seqsero2_report = merlin_magic.seqsero2_report
     String? seqsero2_version = merlin_magic.seqsero2_version
     String? seqsero2_predicted_antigenic_profile = merlin_magic.seqsero2_predicted_antigenic_profile
     String? seqsero2_predicted_serotype = merlin_magic.seqsero2_predicted_serotype
