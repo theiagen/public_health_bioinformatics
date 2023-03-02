@@ -112,7 +112,7 @@ task check_reads {
           flag="FAIL; the genome size is estimated (${estimated_genome_size}) to be smaller than the minimum of ~{min_genome_size} bps"
         else
           flag="PASS"   
-          if [ "${estimated_coverage}" -le "~{min_coverage}" ] ; then
+          if [ "${estimated_coverage}" -lt "~{min_coverage}" ] ; then
             flag="FAIL; the estimated coverage (${estimated_coverage}) is less than the minimum of ~{min_coverage}x"
           else
             flag="PASS"
@@ -235,7 +235,7 @@ task check_reads_se {
           flag="FAIL; the genome size (${estimated_genome_size}) is estimated to be smaller than the minimum of ~{min_genome_size} bps"
         else
           flag="PASS"   
-          if [ "${estimated_coverage}" -le "~{min_coverage}" ] ; then
+          if [ "${estimated_coverage}" -lt "~{min_coverage}" ] ; then
             flag="FAIL; the estimated coverage (${estimated_coverage}) is less than the minimum of ~{min_coverage}x"
           else
             flag="PASS"
@@ -358,7 +358,7 @@ task check_reads_ont {
           flag="FAIL; the genome size is estimated (${estimated_genome_size}) to be smaller than the minimum of ~{min_genome_size} bps"
         else
           flag="PASS"   
-          if [ "${estimated_coverage}" -le "~{min_coverage}" ] ; then
+          if [ "${estimated_coverage}" -lt "~{min_coverage}" ] ; then
             flag="FAIL; the estimated coverage (${estimated_coverage}) is less than the minimum of ~{min_coverage}x"
           else
             flag="PASS"
