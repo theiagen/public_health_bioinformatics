@@ -1,8 +1,8 @@
 version: 1.2
 workflows:
- - name: TheiaEuk_PE_PHB
+ - name: TheiaEuk_Illumina_PE_PHB
    subclass: WDL
-   primaryDescriptorPath: /workflows/theiaeuk/wf_theiaeuk_pe.wdl
+   primaryDescriptorPath: /workflows/theiaeuk/wf_theiaeuk_illumina_pe.wdl
    testParameterFiles:
     - empty.json
  - name: Cauris_CladeTyper_PHB
