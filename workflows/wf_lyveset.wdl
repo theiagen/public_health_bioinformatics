@@ -3,7 +3,7 @@ version 1.0
 import "../tasks/phylogenetic_inference/task_lyveset.wdl" as lyveset
 import "../tasks/task_versioning.wdl" as versioning
 
-workflow lyvset_workflow {
+workflow lyveset_workflow {
   input {
     Array[File] read1
     Array[File] read2
