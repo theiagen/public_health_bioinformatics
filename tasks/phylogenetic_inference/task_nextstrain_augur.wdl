@@ -1,6 +1,6 @@
 version 1.0
 
-task derived_cols { # in use
+task derived_cols { # not used
     meta {
         description: "Create derivative columns in nextstrain metadata file (optionally). TSV input and output files may be gzipped."
     }
@@ -123,7 +123,7 @@ task derived_cols { # in use
     }
 }
 
-task nextstrain_build_subsample { # in use
+task nextstrain_build_subsample { # not used 
     meta {
         description: "Filter and subsample a sequence set using a Nextstrain 'build.yaml' file. See https://docs.nextstrain.org/en/latest/tutorials/SARS-CoV-2/steps/customizing-analysis.html#custom-subsampling-schemes"
     }
@@ -262,7 +262,7 @@ task nextstrain_build_subsample { # in use
     }
 }
 
-task nextstrain_ncov_defaults { # in use
+task nextstrain_ncov_defaults { # not used
     input {
         String nextstrain_ncov_repo_commit = "cf79e41d4178608bda4b084080f0ffff5b3da61c"
         String docker                      = "nextstrain/base:build-20220111T004537Z"
@@ -293,7 +293,7 @@ task nextstrain_ncov_defaults { # in use
     }
 }
 
-task nextstrain_deduplicate_sequences { # in use
+task nextstrain_deduplicate_sequences { # not used
     meta {
         description: "This uses the Nextstrain sanitize_sequences.py script to deduplicate sequences by sequence ID. If the sequences themselves differ, and error is optionally raised. See: https://github.com/nextstrain/ncov/blob/c4747c1f53cd84baaeacdbd044390604d1af2cfc/scripts/sanitize_sequences.py"
     }
@@ -347,7 +347,7 @@ task nextstrain_deduplicate_sequences { # in use
     }
 }
 
-task mafft_one_chr_chunked { # in use
+task mafft_one_chr_chunked { # not used
     meta {
         description: "Align multiple sequences from FASTA. Only appropriate for closely related (within 99% nucleotide conservation) genomes. See https://mafft.cbrc.jp/alignment/software/closelyrelatedviralgenomes.html"
     }
@@ -455,11 +455,11 @@ task mafft_one_chr_chunked { # in use
     }
 }
 
-task snp_sites { # in use
+task snp_sites { # remade
     input {
-        File    msa_fasta
+        File msa_fasta
         Boolean allow_wildcard_bases = true
-        String  docker = "quay.io/biocontainers/snp-sites:2.5.1--hed695b0_0"
+        String  docker = "staphb/snp-sites:2.5.1"
         Int disk_size = 100
     }
     String out_basename = basename(msa_fasta, ".fasta")
@@ -483,7 +483,7 @@ task snp_sites { # in use
     }
 }
 
-task augur_mask_sites { # in use
+task augur_mask_sites { # not used
     meta {
         description: "Mask unwanted positions from alignment or SNP table. See https://nextstrain-augur.readthedocs.io/en/stable/usage/cli/mask.html"
     }
@@ -535,7 +535,7 @@ task augur_mask_sites { # in use
     }
 }
 
-task draft_augur_tree { # in use
+task draft_augur_tree { # remade
     meta {
         description: "Build a tree using iqTree. See https://nextstrain-augur.readthedocs.io/en/stable/usage/cli/tree.html"
     }
@@ -593,7 +593,7 @@ task draft_augur_tree { # in use
     }
 }
 
-task refine_augur_tree { # in use
+task refine_augur_tree { # remade
     meta {
         description: "Refine an initial tree using sequence metadata and Treetime. See https://nextstrain-augur.readthedocs.io/en/stable/usage/cli/refine.html"
     }
@@ -677,7 +677,7 @@ task refine_augur_tree { # in use
     }
 }
 
-task ancestral_traits { # in use
+task ancestral_traits { # skipped
     meta {
         description: "Infer ancestral traits based on a tree. See https://nextstrain-augur.readthedocs.io/en/stable/usage/cli/traits.html"
     }
@@ -837,7 +837,7 @@ task translate_augur_tree { # in use
     }
 }
 
-task tip_frequencies { # in use
+task tip_frequencies { # remade
     meta {
         description: "Estimating frequencies for tips. See https://docs.nextstrain.org/projects/augur/en/stable/usage/cli/frequencies.html"
     }
