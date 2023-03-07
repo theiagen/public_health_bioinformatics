@@ -23,6 +23,8 @@ version 1.0
     # assign clades to nodes (augur clades) - takes in refined tree, inferred ancestral nucleotide mutations, translated aa mutations, reference fasta, and expected clade definitions
     # augur export v2 to create the auspice json file
 
+
+
 task augur_align {
   input {
     File assembly_fasta
@@ -33,7 +35,8 @@ task augur_align {
     Int disk_size = 750
   }
   command <<<
-    augur align --sequences ~{assembly_fasta} \
+    augur align \
+      --sequences ~{assembly_fasta} \
       --nthreads ~{cpus} \
       --reference-sequence ~{reference_fasta} \
       ~{true="--fill-gaps" false="" fill_gaps}
@@ -67,17 +70,15 @@ task augur_tree {
     Int disk_size = 750
   }
   command <<<
-    set -e
-    augur version > VERSION
-
-    AUGUR_RECURSION_LIMIT=10000 augur tree --alignment "~{aligned_fasta}" \
-        --output "~{build_name}_~{method}.nwk" \
-        --method "~{method}" \
-        --substitution-model ~{substitution_model} \
-        ~{"--exclude-sites " + exclude_sites} \
-        ~{"--tree-builder-args " + tree_builder_args} \
-        ~{true="--override-default-args" false="" override_default_args} \
-        --nthreads auto
+    AUGUR_RECURSION_LIMIT=10000 augur tree \
+      --alignment "~{aligned_fasta}" \
+      --output "~{build_name}_~{method}.nwk" \
+      --method "~{method}" \
+      --substitution-model ~{substitution_model} \
+      ~{"--exclude-sites " + exclude_sites} \
+      ~{"--tree-builder-args " + tree_builder_args} \
+      ~{true="--override-default-args" false="" override_default_args} \
+      --nthreads auto
   >>>
   output {
     File aligned_tree  = "~{build_name}_~{method}.nwk"
@@ -120,9 +121,6 @@ task augur_refine {
     Int disk_size = 100
   }
   command <<<
-    set -e
-    augur version > VERSION
-
     AUGUR_RECURSION_LIMIT=10000 augur refine \
       --tree "~{draft_augur_tree}" \
       --alignment "~{aligned_fasta}" \
@@ -186,9 +184,6 @@ task augur_frequencies {
     Int disk_size = 100
   }
   command <<<
-    set -e
-    augur version > VERSION
-
     AUGUR_RECURSION_LIMIT=10000 augur frequencies \
       --method "~{method}" \
       --tree "~{refined_tree}" \
@@ -219,7 +214,144 @@ task augur_frequencies {
     disks: "local-disk " + disk_size + " HDD"
     disk: disk_size + " GB" # TES
     dx_instance_type: "mem3_ssd2_x4"
-    preemptible: 1
-    maxRetries: 2
+    preemptible: 0
+    maxRetries: 3
   }
 }
+
+task augur_ancestral {
+  input {
+    File refined_tree
+    File aligned_fasta
+    String build_name
+
+    String inference = "joint" # options: joint, marginal
+    Boolean keep_ambiguous = false # do not infer nucleotides at ambiguous (N) sites
+    Boolean infer_ambiguous = false # infer nucleotides at ambiguous sites and replace with most likely
+    Boolean keep_overhangs = false # do not infer nucleotides for gaps on either side of the alignment
+
+    Int disk_size = 50
+  }
+  command <<<
+    AUGUR_RECURSION_LIMIT=10000 augur ancestral \
+      --tree "~{refined_tree}" \
+      --alignment "~{aligned_fasta}" \
+      --output-node-data "~{build_name}_nt_muts.json" \
+      --output-sequences "~{build_name}_ancestral_sequences.fasta" \
+      --inference ~{default="joint" inference} \
+      ~{true="--keep-ambiguous" false="" keep_ambiguous} \
+      ~{true="--infer-ambiguous" false="" infer_ambiguous} \
+      ~{true="--keep-overhangs" false="" keep_overhangs} 
+  >>>
+  output {
+    File ancestral_nt_muts_json = "~{build_name}_nt_muts.json"
+    File ancestral_sequences = "~{build_name}_ancestral_sequences.fasta"
+  }
+  runtime {
+    docker: "staphb/augur:16.0.3"
+    memory: "50 GB"
+    cpu: 4
+    disks: "local-disk " + disk_size + " HDD"
+    disk: disk_size + " GB" 
+    dx_instance_type: "mem3_ssd1_v2_x8"
+    preemptible: 0
+    maxRetries: 3
+  }
+}
+
+task augur_translate {
+  input {
+    File refined_tree
+    File ancestral_nt_muts_json
+    File reference_genbank
+    String build_name
+
+    File? genes # a file containing list of genes to translate (from nucleotides to amino acids)
+
+    Int disk_size = 50
+  }
+  command <<<
+    AUGUR_RECURSION_LIMIT=10000 augur translate \
+      --tree "~{refined_tree}" \
+      --ancestral-sequences "~{ancestral_nt_muts_json}" \
+      --reference-sequence "~{reference_genbank}" \
+      ~{"--genes " + genes} \
+      --output-node-data "~{build_name}_aa_muts.json"
+  >>>
+  output {
+    File translated_aa_muts_json = "~{build_name}_aa_muts.json"
+  }
+  runtime {
+    docker: "staphb/augur:16.0.3"
+    memory: "2 GB"
+    cpu : 1
+    disks: "local-disk " + disk_size + " HDD"
+    disk: disk_size + " GB"
+    dx_instance_type: "mem1_ssd1_v2_x2"
+    preemptible: 0
+    maxRetries: 3
+  }
+}
+
+task augur_clades {
+  input {
+    File refined_tree
+    File ancestral_nt_muts_json
+    File translated_aa_muts_json
+    File reference_fasta
+    String build_name
+
+    File clades_tsv # tsv file containing clade definitions by amino acid
+    Int disk_size = 50
+  }
+  command <<<
+    AUGUR_RECURSION_LIMIT=10000 augur clades \
+      --tree "~{refined_tree}" \
+      --mutations "~{ancestral_nt_muts_json}" "~{translated_aa_muts_json}" \
+      --reference "~{reference_fasta}" \
+      --clades "~{clades_tsv}" \
+      --output-node-data "~{build_name}_clades.json"
+  >>>
+  output {
+    File clade_assignments_json = "~{build_name}_clades.json"
+  }
+  runtime {
+    docker: "staphb/augur:16.0.3"
+    memory: "2 GB"
+    cpu :   1
+    disks:  "local-disk " + disk_size + " HDD"
+    disk: disk_size + " GB" 
+    dx_instance_type: "mem1_ssd1_v2_x2"
+    preemptible: 0
+    maxRetries: 3
+  }
+}
+
+task augur_export {
+  input {
+    File refined_tree
+    File metadata
+    Array[File] node_data_jsons
+    String build_name
+
+    File? auspice_config # auspice configuration file
+    String? title # title to be displayed by Auspice
+    Array[String]? maintainers # analysis maintained by this list of people
+    Array[String]? geo_resoltuions # geographic traits to be displayed on map
+    File? description_md # markdown file with description of build and/or acknowledgements
+    Array[String]? color_by_metadata # metadata columns to include as coloring options
+    File? colors_tsv # custom color definitions, one per line
+    File? lat_longs_tsv # latitudes and longitudes for geography traits
+    Boolean include_root_sequence = true #export an additional json containing the root sequence used to identify mutations
+  }
+  command <<<
+
+  >>>
+  output {
+
+  }
+  runtime {
+
+  }
+}
+
