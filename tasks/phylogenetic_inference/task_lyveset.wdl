@@ -123,7 +123,7 @@ task lyveset {
   >>>
   output {
     String lyveset_docker_image = docker_image
-    Array[File] lyveset_msa_outputs = glob("~{dataset_name}/msa/*")
+    Array[File]? lyveset_msa_outputs = glob("~{dataset_name}/*/*")
     File? lyveset_distance_matrix = "~{dataset_name}/msa/~{dataset_name}_pairwiseMatrix.tsv"
     File? lyveset_raxml_tree = "~{dataset_name}/msa/~{dataset_name}_RAxML_bipartitions.nwk"
     File lyveset_log = stdout()
