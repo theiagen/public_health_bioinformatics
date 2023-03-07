@@ -13,11 +13,13 @@ workflow augur {
     Array[File]+ sample_metadata_tsvs
     File? reference_fasta
     File? reference_genbank
-    File? clades_tsv
     String build_name
     Int min_num_unambig
     Boolean use_sc2_defaults = false
-    File? lat_longs_tsv
+
+    # these following inputs should be optional, but I'm worried the select_first will make them "not optional"
+    File? clades_tsv
+    File? lat_longs_tsv 
     File? auspice_config
     Float? min_frequency_date
   }
@@ -27,7 +29,7 @@ workflow augur {
       concatenated_file_name = "~{build_name}_concatenated.fasta"
   }
   if (use_sc2_defaults) {
-    call augur_utils.set_sc2_defaults as sc2_defaults {
+    call augur_utils.set_sc2_defaults as sc2_defaults { # establish default parameters for sars-cov-2
       input:
     }
   }
@@ -39,7 +41,7 @@ workflow augur {
   call augur_tasks.augur_align { # perform mafft alignment on the sequences
     input: 
       assembly_fasta = filter_sequences_by_length.filtered_fasta,
-      reference_fasta = select_first([reference_fasta, sc2_defaults.reference_fasta]) # make select first later
+      reference_fasta = select_first([reference_fasta, sc2_defaults.reference_fasta])
   }
   call augur_utils.tsv_join { # merge the metadata files
     input:
@@ -121,12 +123,12 @@ workflow augur {
       lat_longs_tsv = select_first([lat_longs_tsv, sc2_defaults.lat_longs_tsv]),
       auspice_config = select_first([auspice_config, sc2_defaults.auspice_config])
   }
-  call snp_dists_task.snp_dists {
+  call snp_dists_task.snp_dists { # create a snp matrix
     input:
       cluster_name = build_name,
       alignment = augur_align.aligned_fasta
   }
-  call versioning.version_capture {
+  call versioning.version_capture { # capture the version
     input:
   }
   output {
@@ -141,6 +143,8 @@ workflow augur {
     File aligned_fastas = augur_align.aligned_fasta
     File combined_assemblies = cat_files.concatenated_files
     File metadata_merged = tsv_join.out_tsv
+    
+    # not sure if wanting to keep the tasks that make these
     File keep_list = fasta_to_ids.ids_txt
     File? unmasked_snps = snp_sites.snp_sites_vcf
   
