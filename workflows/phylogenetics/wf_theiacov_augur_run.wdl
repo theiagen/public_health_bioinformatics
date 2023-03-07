@@ -36,7 +36,7 @@ workflow theiacov_augur_run {
       cluster_name = build_name,
       alignment = sarscov2_nextstrain.mafft_alignment
   }
-  call versioning.version_capture{
+  call versioning.version_capture {
     input:
   }
   output {

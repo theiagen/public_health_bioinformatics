@@ -204,7 +204,7 @@ task augur_frequencies {
       --output "~{build_name}_tip-frequencies.json"
   >>>
   output {
-    File node_data_json = "~{build_name}_tip-frequencies.json"
+    File tip_frequencies_json = "~{build_name}_tip-frequencies.json"
     String augur_version  = read_string("VERSION")
   }
   runtime {
@@ -336,22 +336,45 @@ task augur_export {
 
     File? auspice_config # auspice configuration file
     String? title # title to be displayed by Auspice
-    Array[String]? maintainers # analysis maintained by this list of people
-    Array[String]? geo_resoltuions # geographic traits to be displayed on map
+    Array[String] maintainers = [] # analysis maintained by this list of people
+    Array[String] geo_resolutions = [] # geographic traits to be displayed on map
     File? description_md # markdown file with description of build and/or acknowledgements
-    Array[String]? color_by_metadata # metadata columns to include as coloring options
+    Array[String] color_by_metadata = [] # metadata columns to include as coloring options
     File? colors_tsv # custom color definitions, one per line
     File? lat_longs_tsv # latitudes and longitudes for geography traits
-    Boolean include_root_sequence = true #export an additional json containing the root sequence used to identify mutations
+    Boolean include_root_sequence = false # export an additional json containing the root sequence used to identify mutations
+  
+    Int disk_size = 100
   }
   command <<<
-
+    export AUGUR_RECURSION_LIMIT=10000 augur export v2 \
+      --tree ~{refined_tree} \
+      --metadata ~{metadata} \
+      --node-data ~{sep=' ' node_data_jsons} \
+      --output ~{build_name}_auspice \
+      ~{"--auspice-config " + auspice_config} \
+      ~{"--title " + title} \
+      --maintainers ~{sep=' ' maintainers} \
+      --geo-resolutions ~{sep= ' ' geo_resolutions} \
+      ~{"--description " + description_md} \
+      --color-by-metadata ~{sep=' ' color_by_metadata} \
+      ~{"--colors " + colors_tsv} \
+      ~{"--lat-longs " + lat_longs_tsv} \
+      ~{true="--include-root-sequence " false=""  include_root_sequence}
   >>>
   output {
-
+    File auspice_json = "~{build_name}_auspice.json"
+    File? root_sequence_json = "~{build_name}_auspice_root-sequence.json"
   }
   runtime {
-
+    docker: "staphb/augur:16.0.3"
+    memory: "64 GB"
+    cpu :   4
+    disks:  "local-disk " + disk_size + " HDD"
+    disk: disk_size + " GB"
+    dx_instance_type: "mem3_ssd1_v2_x4"
+    preemptible: 0
+    maxRetries: 3
   }
 }
 
