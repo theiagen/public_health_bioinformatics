@@ -1,6 +1,6 @@
 version 1.0
 
-task zcat { # in use
+task zcat { # in use in old augur workflows
   meta {
     description: "Glue together a bunch of text files that may or may not be compressed (autodetect among gz,xz,bz2,lz4,zst or uncompressed inputs). Optionally compress the output (depending on requested file extension)"
   }
@@ -314,5 +314,36 @@ task filter_sequences_by_length { # in use
     Int  sequences_in      = read_int("IN_COUNT")
     Int  sequences_dropped = read_int("DROP_COUNT")
     Int  sequences_out     = read_int("OUT_COUNT")
+  }
+}
+
+task set_sc2_defaults { # establish sars-cov-2 default values for augur
+  input {
+    String nextstrain_ncov_repo_commit = "23d1243127e8838a61b7e5c1a72bc419bf8c5a0d" # last updated on 2023-03-07
+    Int disk_size = 50
+  }
+  command <<<
+    wget -q "https://github.com/nextstrain/ncov/archive/~{nextstrain_ncov_repo_commit}.tar.gz"
+    tar -xf "~{nextstrain_ncov_repo_commit}.tar.gz" --strip-components=1
+  >>>
+  output {
+    Int min_num_unambig = 27000
+    File clades_tsv = "defaults/clades.tsv"
+    File lat_longs_tsv = "defaults/lat_longs.tsv"
+    File reference_fasta = "defaults/reference_seq.fasta"
+    File reference_genbank = "defaults/reference_seq.gb"
+    File auspice_config = "defaults/auspice_config.json"
+    Float min_date = 2020.0
+    Int pivot_interval = 1
+    String pivot_interval_units = "weeks"
+    Float narrow_bandwidth = 0.05
+    Float proportion_wide = 0.0
+  }
+  runtime {
+    docker: "staphb/augur:16.0.3"
+    memory: "1 GB"
+    cpu:   1
+    disks:  "local-disk " + disk_size + " HDD"
+    disk: disk_size + " GB"
   }
 }
