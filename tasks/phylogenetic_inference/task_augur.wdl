@@ -1,30 +1,5 @@
 version 1.0
 
-
-   # regular pipeline works as follows:
-    # concatenate assembly fastas with a ridiculously complicated (due to ability to read in multiple zipped file types) zcat method
-    # download SC2 specific defaults -- clades, lat_longs, reference fasta and genbank, and auspice_config
-    # deduplicate sequences - uses specific script made by nextstrain (https://github.com/nextstrain/ncov/blob/c4747c1f53cd84baaeacdbd044390604d1af2cfc/scripts/sanitize_sequences.py)
-    # remove any sequences with more than 27000 non-Ns (SC2-specific)
-    # mafft_one_chr_chunked -- very complicated version of our mafft task that uses a reference which is good, and then concatenates all of the files together after individually aligning each sample to reference
-    # merge metadata tsvs with a ridiculously complicated (due to ability to read in multiple zipped file types) left-join method
-    # derived cols workflow -- this actually doesn't do anything in current implementation
-    # optionally subsample -- requires a "builds.yaml" file
-    # return the headers from the fasta file -- used for listing which samples were kept in the output tree
-    # run snp-sites -- returned as unmasked_snps vcf output
-    # mask sites -- this actually doesn't do anything in current implementation (no masked bed provided)
-    # draft augur tree (no metadata; outputs a nwk)
-    # augur refine (takes in the merged metadata; also outputs a nwk)
-    # optionally infer ancestral traits (augur traits) -- requires an input list of ancestral traits to infer
-    # estimate augur tip frequencies -- only used for a final output json file
-    ####### i left off here:
-    # infer ancestral sequences (augur ancestral) -- produces a nucleotide mutation file that is used in final tree
-    # translate outputs into tree (takes in refined tree, inferred ancestral nucleotide mutations, and a reference genbank file)
-    # assign clades to nodes (augur clades) - takes in refined tree, inferred ancestral nucleotide mutations, translated aa mutations, reference fasta, and expected clade definitions
-    # augur export v2 to create the auspice json file
-
-
-
 task augur_align {
   input {
     File assembly_fasta
