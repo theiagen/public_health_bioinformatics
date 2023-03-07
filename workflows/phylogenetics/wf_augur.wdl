@@ -10,13 +10,19 @@ workflow augur {
     Array[File]+ assembly_fastas
     Array[File]+ sample_metadata_tsvs
     File reference_fasta
+    File reference_genbank
+    File? clades_tsv
     String build_name
     Int min_num_unambig
+    Boolean use_sc2_defaults = false
   }
   call file_handling.cat_files { # concatenate all of the input fasta files together
     input:
       files_to_cat = assembly_fastas,
       concatenated_file_name = "~{build_name}_concatenated.fasta"
+  }
+  if (use_sc2_defaults) {
+    # call get sc2 defaults
   }
   call augur_utils.filter_sequences_by_length { # remove any sequences that do not meet the quality threshold
     input:
@@ -26,7 +32,7 @@ workflow augur {
   call augur_tasks.augur_align { # perform mafft alignment on the sequences
     input: 
       assembly_fasta = filter_sequences_by_length.filtered_fasta,
-      reference_fasta = reference_fasta
+      reference_fasta = reference_fasta # make select first later
   }
   call augur_utils.tsv_join { # merge the metadata files
     input:
@@ -67,9 +73,32 @@ workflow augur {
       # narrow_bandwidth = 0.05,
       # proportion_wide = 0.0,
   }
-  # infer ancestral sequences (augur ancestral) -- produces a nucleotide mutation file that is used in final tree
-  # translate outputs into tree (takes in refined tree, inferred ancestral nucleotide mutations, and a reference genbank file)
-  # assign clades to nodes (augur clades) - takes in refined tree, inferred ancestral nucleotide mutations, translated aa mutations, reference fasta, and expected clade definitions
+  call augur_tasks.augur_ancestral { # infer ancestral sequences
+    input:
+      refined_tree = augur_refine.refined_tree,
+      aligned_fasta = augur_align.aligned_fasta,
+      build_name = build_name
+  }
+  call augur_tasks.augur_translate { 
+    input:
+      refined_tree = augur_refine.refined_tree,
+      ancestral_nt_muts_json = augur_ancestral.ancestral_nt_muts_json,
+      reference_genbank = reference_genbank, # make into select first later
+      build_name = build_name
+  }
+  if (defined(clades_tsv)) {
+    call augur_tasks.augur_clades {
+      input: 
+        refined_tree = augur_refine.refined_tree,
+        ancestral_nt_muts_json = augur_ancestral.ancestral_nt_muts_json,
+        translated_aa_muts_json = augur_translate.translated_aa_muts_json,
+        reference_fasta = reference_fasta, # make into select first
+        build_name = build_name,
+        clades_tsv = select_first([clades_tsv,""]) # make into select first
+    }
+  }
+  
+  
   # augur export v2 to create the auspice json file
 
 
