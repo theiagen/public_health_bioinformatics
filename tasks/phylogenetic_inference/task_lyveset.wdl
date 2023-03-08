@@ -113,19 +113,21 @@ task lyveset {
     ~{'--snpcaller ' + snpcaller} \
      -ref ~{dataset_name}/ref/reference.fasta ~{dataset_name}
     
-    # rename output files
-    if [ -f ~{dataset_name}/msa/out.pairwiseMatrix.tsv ]; then  
-      mv ~{dataset_name}/msa/out.pairwiseMatrix.tsv ~{dataset_name}/msa/~{dataset_name}_pairwiseMatrix.tsv
-    fi
+    # rename tree file to nwk file ending
     if [ -f ~{dataset_name}/msa/out.RAxML_bipartitions ]; then
-      mv ~{dataset_name}/msa/out.RAxML_bipartitions ~{dataset_name}/msa/~{dataset_name}_RAxML_bipartitions.nwk
+      mv ~{dataset_name}/msa/out.RAxML_bipartitions ~{dataset_name}/msa/out.RAxML_bipartitions.nwk
     fi
+
   >>>
   output {
     String lyveset_docker_image = docker_image
+    Array[File]? lyveset_msa_outputs = glob("~{dataset_name}/msa/out.pooled*")
+    Array[File]? lyveset_log_outputs = glob("~{dataset_name}/log/*")
+    Array[File]? lyveset_reference_outputs = glob("~{dataset_name}/reference/*")
+    Array[File]? lyveset_bam_outputs = glob("~{dataset_name}/bam/*.bam*")
     Array[File]? lyveset_vcf_outputs = glob("~{dataset_name}/vcf/*.vcf*")
-    File? lyveset_distance_matrix = "~{dataset_name}/msa/~{dataset_name}_pairwiseMatrix.tsv"
-    File? lyveset_raxml_tree = "~{dataset_name}/msa/~{dataset_name}_RAxML_bipartitions.nwk"
+    File? lyveset_distance_matrix = "~{dataset_name}/msa/out.pairwiseMatrix.tsv"
+    File? lyveset_raxml_tree = "~{dataset_name}/msa/out.RAxML_bipartitions.nwk"
     File lyveset_log = stdout()
   }
   runtime {
