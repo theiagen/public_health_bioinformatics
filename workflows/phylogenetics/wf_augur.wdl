@@ -1,19 +1,21 @@
 version 1.0
 
-import "../../utilities/task_file_handling.wdl" as file_handling
-import "../../utilities/task_augur_utilities.wdl" as augur_utils
-import "../../phylogenetic_inference/task_augur.wdl" as augur_tasks
-import "../../phylogenetic_inference/task_snp_sites.wdl" as snp_sites_task
+import "../../tasks/utilities/task_file_handling.wdl" as file_handling
+import "../../tasks/utilities/task_augur_utilities.wdl" as augur_utils
+import "../../tasks/phylogenetic_inference/task_augur.wdl" as augur_tasks
+import "../../tasks/phylogenetic_inference/task_snp_sites.wdl" as snp_sites_task
 import "../../tasks/phylogenetic_inference/task_snp_dists.wdl" as snp_dists_task
+import "../../tasks/phylogenetic_inference/task_reorder_matrix.wdl" as reorder_matrix_task
+
 import "../../tasks/task_versioning.wdl" as versioning
 
 workflow augur {
   input {
     Array[File]+ assembly_fastas
     Array[File]+ sample_metadata_tsvs
+    String build_name
     File? reference_fasta
     File? reference_genbank
-    String build_name
     Int min_num_unambig
     Boolean use_sc2_defaults = false
 
@@ -36,7 +38,7 @@ workflow augur {
   call augur_utils.filter_sequences_by_length { # remove any sequences that do not meet the quality threshold
     input:
       sequences_fasta = cat_files.concatenated_files,
-      min_non_N = select_first([min_num_unambig, sc2_defaults.min_num_unambig])
+      min_non_N = select_first([sc2_defaults.min_num_unambig, min_num_unambig])
   }
   call augur_tasks.augur_align { # perform mafft alignment on the sequences
     input: 
@@ -79,7 +81,7 @@ workflow augur {
       refined_tree = augur_refine.refined_tree,
       metadata = tsv_join.out_tsv,
       build_name = build_name,
-      min_date = select_first([min_frequency_date, sc2_defaults.min_date]), # not sure if this one will work
+      min_date = select_first([sc2_defaults.min_date, min_frequency_date]), 
       pivot_interval = select_first([sc2_defaults.pivot_interval, 3]),
       pivot_interval_units = select_first([sc2_defaults.pivot_interval_units, "months"]),
       narrow_bandwidth = select_first([sc2_defaults.narrow_bandwidth, 0.08333333333333333]),
@@ -115,7 +117,6 @@ workflow augur {
       metadata = tsv_join.out_tsv,
       node_data_jsons = select_all([
                           augur_refine.branch_lengths,
-                          augur_frequencies.tip_frequencies_json,
                           augur_ancestral.ancestral_nt_muts_json,
                           augur_translate.translated_aa_muts_json,
                           augur_clades.clade_assignments_json]),
@@ -123,10 +124,16 @@ workflow augur {
       lat_longs_tsv = select_first([lat_longs_tsv, sc2_defaults.lat_longs_tsv]),
       auspice_config = select_first([auspice_config, sc2_defaults.auspice_config])
   }
-  call snp_dists_task.snp_dists { # create a snp matrix
+  call snp_dists_task.snp_dists { # create a snp matrix from the alignment
     input:
       cluster_name = build_name,
       alignment = augur_align.aligned_fasta
+  }
+  call reorder_matrix_task.reorder_matrix { # reorder snp matrix to match distance tree
+    input:
+      input_tree = augur_tree.aligned_tree,
+      matrix = snp_dists.snp_matrix,
+      cluster_name = build_name
   }
   call versioning.version_capture { # capture the version
     input:
@@ -135,6 +142,7 @@ workflow augur {
     # version capture
     String augur_phb_version = version_capture.phb_version
     String augur_phb_analysis_date = version_capture.date
+    String augur_version = augur_align.augur_version
 
     # augur outputs
     File auspice_input_json = augur_export.auspice_json
@@ -149,6 +157,6 @@ workflow augur {
     File? unmasked_snps = snp_sites.snp_sites_vcf
   
     # snp matrix output
-    File snp_matrix = snp_dists.snp_matrix
+    File snp_matrix = reorder_matrix.ordered_matrix
   }
 }

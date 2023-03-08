@@ -10,6 +10,10 @@ task augur_align {
     Int disk_size = 750
   }
   command <<<
+    # capture version information
+    augur version > VERSION
+
+    # run augur align
     augur align \
       --sequences ~{assembly_fasta} \
       --nthreads ~{cpus} \
@@ -18,6 +22,7 @@ task augur_align {
   >>>
   output {
     File aligned_fasta = "alignment.fasta"
+    String augur_version = read_string("VERSION")
   }
   runtime {
     docker: "staphb/augur:16.0.3"
@@ -57,7 +62,6 @@ task augur_tree {
   >>>
   output {
     File aligned_tree  = "~{build_name}_~{method}.nwk"
-    String augur_version = read_string("VERSION")
   }
   runtime {
     docker: "staphb/augur:16.0.3"
@@ -121,7 +125,6 @@ task augur_refine {
   output {
     File refined_tree   = "~{build_name}_timetree.nwk"
     File branch_lengths = "~{build_name}_branch_lengths.json"
-    String augur_version  = read_string("VERSION")
   }
   runtime {
     docker: "staphb/augur:16.0.3"
@@ -180,7 +183,6 @@ task augur_frequencies {
   >>>
   output {
     File tip_frequencies_json = "~{build_name}_tip-frequencies.json"
-    String augur_version  = read_string("VERSION")
   }
   runtime {
     docker: "staphb/augur:16.0.3"
@@ -311,10 +313,7 @@ task augur_export {
 
     File? auspice_config # auspice configuration file
     String? title # title to be displayed by Auspice
-    Array[String] maintainers = [] # analysis maintained by this list of people
-    Array[String] geo_resolutions = [] # geographic traits to be displayed on map
     File? description_md # markdown file with description of build and/or acknowledgements
-    Array[String] color_by_metadata = [] # metadata columns to include as coloring options
     File? colors_tsv # custom color definitions, one per line
     File? lat_longs_tsv # latitudes and longitudes for geography traits
     Boolean include_root_sequence = false # export an additional json containing the root sequence used to identify mutations
@@ -322,17 +321,14 @@ task augur_export {
     Int disk_size = 100
   }
   command <<<
-    export AUGUR_RECURSION_LIMIT=10000 augur export v2 \
+    augur export v2 \
       --tree ~{refined_tree} \
       --metadata ~{metadata} \
       --node-data ~{sep=' ' node_data_jsons} \
-      --output ~{build_name}_auspice \
+      --output ~{build_name}_auspice.json \
       ~{"--auspice-config " + auspice_config} \
       ~{"--title " + title} \
-      --maintainers ~{sep=' ' maintainers} \
-      --geo-resolutions ~{sep= ' ' geo_resolutions} \
       ~{"--description " + description_md} \
-      --color-by-metadata ~{sep=' ' color_by_metadata} \
       ~{"--colors " + colors_tsv} \
       ~{"--lat-longs " + lat_longs_tsv} \
       ~{true="--include-root-sequence " false=""  include_root_sequence}
