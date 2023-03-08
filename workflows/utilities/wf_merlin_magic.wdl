@@ -139,7 +139,7 @@ workflow merlin_magic {
           samplename = samplename
       }
     }
-    if (select_first([seqsero2.seqsero2_predicted_serotype, seqsero2_assembly.seqsero2_predicted_serotype]) == "Typhi" || sistr.sistr_predicted_serotype == "Typhi" && !assembly_only) {
+    if ((select_first([seqsero2.seqsero2_predicted_serotype, seqsero2_assembly.seqsero2_predicted_serotype]) == "Typhi" || sistr.sistr_predicted_serotype == "Typhi") && !assembly_only) {
       call genotyphi.genotyphi as genotyphi_task { # needs testing
         input: 
           read1 = select_first([read1]),
