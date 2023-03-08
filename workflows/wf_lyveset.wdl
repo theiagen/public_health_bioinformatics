@@ -26,6 +26,8 @@ workflow lyveset_workflow {
     String lyveset_docker_image = lyveset.lyveset_docker_image
     File? lyveset_distance_matrix = lyveset.lyveset_distance_matrix
     File? lyveset_raxml_tree = lyveset.lyveset_raxml_tree
+    File? lyveset_pooled_snps_vcf = lyveset.lyveset_pooled_snps_vcf
+    File? lyveset_alignment_fasta = lyveset.lyveset_alignment_fasta 
     File lyveset_log = lyveset.lyveset_log
   }
 }
