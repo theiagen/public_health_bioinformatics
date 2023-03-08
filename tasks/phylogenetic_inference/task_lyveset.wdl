@@ -121,7 +121,7 @@ task lyveset {
   >>>
   output {
     String lyveset_docker_image = docker_image
-    Array[File]? lyveset_msa_outputs = glob("~{dataset_name}/msa/out.pooled*")
+    Array[File]? lyveset_msa_outputs = glob("~{dataset_name}/msa/out*")
     Array[File]? lyveset_log_outputs = glob("~{dataset_name}/log/*")
     Array[File]? lyveset_reference_outputs = glob("~{dataset_name}/reference/*")
     Array[File]? lyveset_bam_outputs = glob("~{dataset_name}/bam/*.bam*")
