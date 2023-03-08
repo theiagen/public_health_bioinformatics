@@ -121,10 +121,12 @@ task lyveset {
   >>>
   output {
     String lyveset_docker_image = docker_image
-    File? lyveset_distance_matrix = "~{dataset_name}/msa/out.pairwiseMatrix.tsv"
+    File? lyveset_pairwise_matrix = "~{dataset_name}/msa/out.pairwiseMatrix.tsv"
     File? lyveset_raxml_tree = "~{dataset_name}/msa/out.RAxML_bipartitions.nwk"
     File? lyveset_pooled_snps_vcf = "~{dataset_name}/msa/out.pooled.snps.vcf.gz"
+    File? lyveset_filtered_matrix = "~{dataset_name}/msa/out.filteredMatrix.tsv"
     File? lyveset_alignment_fasta = "~{dataset_name}/msa/out.aln.fas"
+    File? lyveset_reference_fasta = "~{dataset_name}/reference/reference.fasta"
     File? lyveset_masked_regions = "~{dataset_name}/reference/maskedRegions.bed"
     Array[File]? lyveset_msa_outputs = glob("~{dataset_name}/msa/out*")
     Array[File]? lyveset_log_outputs = glob("~{dataset_name}/log/*")
