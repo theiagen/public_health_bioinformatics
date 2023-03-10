@@ -1,33 +1,32 @@
 version 1.0
 
-import "../utilities/wf_read_QC_trim_pe.wdl" as read_qc
+import "../utilities/wf_read_QC_trim_ont.wdl" as read_qc_workflow
 import "../utilities/wf_merlin_magic.wdl" as merlin_magic_workflow
-import "../../tasks/assembly/task_shovill.wdl" as shovill
+import "../../tasks/assembly/task_dragonflye.wdl" as dragonflye_task
 import "../../tasks/quality_control/task_quast.wdl" as quast_task
-import "../../tasks/quality_control/task_cg_pipeline.wdl" as cg_pipeline
-import "../../tasks/quality_control/task_screen.wdl" as screen
+import "../../tasks/quality_control/task_cg_pipeline.wdl" as cg_pipeline_task
+import "../../tasks/quality_control/task_screen.wdl" as screen_task
 import "../../tasks/quality_control/task_busco.wdl" as busco_task
 import "../../tasks/taxon_id/task_gambit.wdl" as gambit_task
 import "../../tasks/quality_control/task_mummer_ani.wdl" as ani_task
-import "../../tasks/gene_typing/task_amrfinderplus.wdl" as amrfinderplus
-import "../../tasks/gene_typing/task_resfinder.wdl" as resfinder
+import "../../tasks/gene_typing/task_amrfinderplus.wdl" as amrfinderplus_task
+import "../../tasks/gene_typing/task_resfinder.wdl" as resfinder_task
 import "../../tasks/species_typing/task_ts_mlst.wdl" as ts_mlst_task
 import "../../tasks/gene_typing/task_bakta.wdl" as bakta_task
 import "../../tasks/gene_typing/task_prokka.wdl" as prokka_task
 import "../../tasks/gene_typing/task_plasmidfinder.wdl" as plasmidfinder_task
-import "../../tasks/quality_control/task_qc_check.wdl" as qc_check
-import "../../tasks/task_versioning.wdl" as versioning
-import "../../tasks/utilities/task_broad_terra_tools.wdl" as terra_tools
+import "../../tasks/quality_control/task_qc_check.wdl" as qc_check_task
+import "../../tasks/task_versioning.wdl" as versioning_task
+import "../../tasks/utilities/task_broad_terra_tools.wdl" as terra_tools_task
 
-workflow theiaprok_illumina_pe {
+workflow theiaprok_ont {
   meta {
-    description: "De-novo genome assembly, taxonomic ID, and QC of paired-end bacterial NGS data"
+    description: "De-novo genome assembly, taxonomic ID, and QC of ONT bacterial NGS data"
   }
   input {
     String samplename
-    String seq_method = "ILLUMINA"
-    File read1_raw
-    File read2_raw
+    String seq_method = "ONT"
+    File read1
     Int? genome_size
     String? run_id
     String? collection_date
@@ -40,155 +39,138 @@ workflow theiaprok_illumina_pe {
     String terra_workspace = "NA"
     # by default do not call ANI task, but user has ability to enable this task if working with enteric pathogens or supply their own high-quality reference genome
     Boolean call_ani = false
-    Int min_reads = 7472
+    Int min_reads = 5000 # reduced from 7472 because less reads are needed to get to higher coverage due to longer read length
     Int min_basepairs = 2241820
     Int min_genome_size = 100000
-    Int max_genome_size = 18040666
-    Int min_coverage = 10
-    Int min_proportion = 40
+    Int max_genome_size = 18040666 
+    Int min_coverage = 5 # reduced from 10 because some institutions sequence at lower depth because of longer read length
     Boolean call_resfinder = false
     Boolean skip_screen = false 
     String genome_annotation = "prokka"
     File? qc_check_table
     String? expected_taxon
   }
-  call versioning.version_capture{
+  call versioning_task.version_capture{
     input:
   }
-  call screen.check_reads as raw_check_reads {
+  call screen_task.check_reads_ont as raw_check_reads {
     input:
-      read1 = read1_raw,
-      read2 = read2_raw,
+      read1 = read1,
       min_reads = min_reads,
       min_basepairs = min_basepairs,
       min_genome_size = min_genome_size,
       max_genome_size = max_genome_size,
       min_coverage = min_coverage,
-      min_proportion = min_proportion,
       skip_screen = skip_screen
   }
   if (raw_check_reads.read_screen == "PASS") {
-    call read_qc.read_QC_trim_pe as read_QC_trim {
+    call read_qc_workflow.read_QC_trim_ont as read_QC_trim {
       input:
         samplename = samplename,
-        read1_raw = read1_raw,
-        read2_raw = read2_raw
+        read1 = read1,
+        genome_size = genome_size
     }
-    call screen.check_reads as clean_check_reads {
+    call screen_task.check_reads_ont as clean_check_reads {
       input:
         read1 = read_QC_trim.read1_clean,
-        read2 = read_QC_trim.read2_clean,
         min_reads = min_reads,
         min_basepairs = min_basepairs,
         min_genome_size = min_genome_size,
         max_genome_size = max_genome_size,
         min_coverage = min_coverage,
-        min_proportion = min_proportion,
         skip_screen = skip_screen
     }
     if (clean_check_reads.read_screen == "PASS") {
-      call shovill.shovill_pe {
-        input:
-          samplename = samplename,
-          read1_cleaned = read_QC_trim.read1_clean,
-          read2_cleaned = read_QC_trim.read2_clean,
-          genome_size = select_first([genome_size, clean_check_reads.est_genome_length])
-      }
+       call dragonflye_task.dragonflye {
+         input:
+           read1 = read_QC_trim.read1_clean,
+           genome_size = select_first([genome_size, read_QC_trim.est_genome_size]),
+           samplename = samplename
+       }
       call quast_task.quast {
         input:
-          assembly = shovill_pe.assembly_fasta,
+          assembly = dragonflye.assembly_fasta,
           samplename = samplename
       }
-      call cg_pipeline.cg_pipeline as cg_pipeline_raw {
+      call cg_pipeline_task.cg_pipeline as cg_pipeline_raw {
         input:
-          read1 = read1_raw,
-          read2 = read2_raw,
+          read1 = read1,
           samplename = samplename,
           genome_length = select_first([genome_size, quast.genome_length])
       }
-      call cg_pipeline.cg_pipeline as cg_pipeline_clean {
+      call cg_pipeline_task.cg_pipeline as cg_pipeline_clean {
         input:
           read1 = read_QC_trim.read1_clean,
-          read2 = read_QC_trim.read2_clean,
           samplename = samplename,
           genome_length = select_first([genome_size, quast.genome_length])
       }
       call gambit_task.gambit {
         input:
-          assembly = shovill_pe.assembly_fasta,
+          assembly = dragonflye.assembly_fasta,
           samplename = samplename
       }
       call busco_task.busco {
         input:
-          assembly = shovill_pe.assembly_fasta,
+          assembly = dragonflye.assembly_fasta,
           samplename = samplename
       }
       if (call_ani) {
         call ani_task.animummer as ani {
           input:
-            assembly = shovill_pe.assembly_fasta,
+            assembly = dragonflye.assembly_fasta,
             samplename = samplename
         }
       }
-      call amrfinderplus.amrfinderplus_nuc as amrfinderplus_task {
+      call amrfinderplus_task.amrfinderplus_nuc as amrfinderplus {
         input:
-          assembly = shovill_pe.assembly_fasta,
+          assembly = dragonflye.assembly_fasta,
           samplename = samplename,
           organism = gambit.gambit_predicted_taxon
       }
       if (call_resfinder) {
-      call resfinder.resfinder as resfinder_task {
-        input:
-          assembly = shovill_pe.assembly_fasta,
-          samplename = samplename,
-          organism = gambit.gambit_predicted_taxon
+        call resfinder_task.resfinder {
+          input:
+            assembly = dragonflye.assembly_fasta,
+            samplename = samplename,
+            organism = gambit.gambit_predicted_taxon
         }
       }
       call ts_mlst_task.ts_mlst {
         input: 
-          assembly = shovill_pe.assembly_fasta,
+          assembly = dragonflye.assembly_fasta,
           samplename = samplename
       }
       if (genome_annotation == "prokka") {
         call prokka_task.prokka {
           input:
-            assembly = shovill_pe.assembly_fasta,
+            assembly = dragonflye.assembly_fasta,
             samplename = samplename
         }
       }
       if (genome_annotation == "bakta") {
         call bakta_task.bakta {
           input:
-            assembly = shovill_pe.assembly_fasta,
+            assembly = dragonflye.assembly_fasta,
             samplename = samplename
         }
       }
       call plasmidfinder_task.plasmidfinder {
         input:
-          assembly = shovill_pe.assembly_fasta,
+          assembly = dragonflye.assembly_fasta,
           samplename = samplename
       }
       if(defined(qc_check_table)) {
-        call qc_check.qc_check as qc_check_task {
+        call qc_check_task.qc_check { # will request shelly's help in the future to make this applicable
           input:
             qc_check_table = qc_check_table,
             expected_taxon = expected_taxon,
             gambit_predicted_taxon = gambit.gambit_predicted_taxon,
             r1_mean_q_raw = cg_pipeline_raw.r1_mean_q,
-            r2_mean_q_raw = cg_pipeline_raw.r2_mean_q,
-            combined_mean_q_raw = cg_pipeline_raw.combined_mean_q,
             r1_mean_readlength_raw = cg_pipeline_raw.r1_mean_readlength,
-            r2_mean_readlength_raw = cg_pipeline_raw.r2_mean_readlength,  
-            combined_mean_readlength_raw = cg_pipeline_raw.combined_mean_readlength,
             r1_mean_q_clean = cg_pipeline_clean.r1_mean_q,
-            r2_mean_q_clean = cg_pipeline_clean.r2_mean_q,
-            combined_mean_q_clean = cg_pipeline_clean.combined_mean_q,
             r1_mean_readlength_clean = cg_pipeline_clean.r1_mean_readlength,
-            r2_mean_readlength_clean = cg_pipeline_clean.r2_mean_readlength,  
-            combined_mean_readlength_clean = cg_pipeline_clean.combined_mean_readlength,    
             est_coverage_raw = cg_pipeline_raw.est_coverage,
             est_coverage_clean = cg_pipeline_clean.est_coverage,
-            midas_secondary_genus_abundance = read_QC_trim.midas_secondary_genus_abundance,
             assembly_length = quast.genome_length,
             number_contigs = quast.number_contigs,
             n50_value = quast.n50_value,
@@ -201,53 +183,47 @@ workflow theiaprok_illumina_pe {
       call merlin_magic_workflow.merlin_magic {
         input:
           merlin_tag = gambit.merlin_tag,
-          assembly = shovill_pe.assembly_fasta,
+          assembly = dragonflye.assembly_fasta,
           samplename = samplename,
           read1 = read_QC_trim.read1_clean,
-          read2 = read_QC_trim.read2_clean
+          ont_data = true
       }
       if (defined(taxon_tables)) {
-        call terra_tools.export_taxon_tables {
+        call terra_tools_task.export_taxon_tables {
           input:
             terra_project = terra_project,
             terra_workspace = terra_workspace,
             sample_taxon = gambit.gambit_predicted_taxon,
             taxon_tables = taxon_tables,
             samplename = samplename,
-            read1 = read1_raw,
-            read2 = read2_raw,
+            read1 = read1,
             read1_clean = read_QC_trim.read1_clean,
-            read2_clean = read_QC_trim.read2_clean,
             run_id = run_id,
             collection_date = collection_date,
             originating_lab = originating_lab,
             city = city,
             county = county,
             zip = zip,
-            theiaprok_illumina_pe_version = version_capture.phb_version,
-            theiaprok_illumina_pe_analysis_date = version_capture.date,
+            theiaprok_ont_version = version_capture.phb_version,
+            theiaprok_ont_analysis_date = version_capture.date,
             seq_platform = seq_method,
-            num_reads_raw1 = read_QC_trim.fastq_scan_raw1,
-            num_reads_raw2 = read_QC_trim.fastq_scan_raw2,
-            num_reads_raw_pairs = read_QC_trim.fastq_scan_raw_pairs,
+            num_reads_raw1 = read_QC_trim.number_raw_reads,
             fastq_scan_version = read_QC_trim.fastq_scan_version,
-            num_reads_clean1 = read_QC_trim.fastq_scan_clean1,
-            num_reads_clean2 = read_QC_trim.fastq_scan_clean2,
-            num_reads_clean_pairs = read_QC_trim.fastq_scan_clean_pairs,
-            trimmomatic_version = read_QC_trim.trimmomatic_version,
-            fastp_version = read_QC_trim.fastp_version,
-            bbduk_docker = read_QC_trim.bbduk_docker,
-            r1_mean_q_raw = cg_pipeline_raw.r1_mean_q,
-            r2_mean_q_raw = cg_pipeline_raw.r2_mean_q,
-            combined_mean_q_raw = cg_pipeline_raw.combined_mean_q,
-            combined_mean_q_clean = cg_pipeline_clean.combined_mean_q,
+            num_reads_clean1 = read_QC_trim.number_clean_reads,
+            r1_mean_q_raw = cg_pipeline_raw.r1_mean_q, 
             r1_mean_readlength_raw = cg_pipeline_raw.r1_mean_readlength,
-            r2_mean_readlength_raw = cg_pipeline_raw.r2_mean_readlength,
-            combined_mean_readlength_raw = cg_pipeline_raw.combined_mean_readlength,
-            combined_mean_readlength_clean = cg_pipeline_clean.combined_mean_readlength,
-            assembly_fasta = shovill_pe.assembly_fasta,
-            contigs_gfa = shovill_pe.contigs_gfa,
-            shovill_pe_version = shovill_pe.shovill_version,
+            nanoq_version = read_QC_trim.nanoq_version,
+            nanoplot_html = read_QC_trim.nanoplot_html,
+            nanoplot_version = read_QC_trim.nanoplot_version,
+            kmc_est_genome_size = read_QC_trim.est_genome_size,
+            kmc_kmer_stats = read_QC_trim.kmc_kmer_stats,
+            kmc_version = read_QC_trim.kmc_version,
+            rasusa_version = read_QC_trim.rasusa_version,
+            tiptoft_plasmid_replicon_fastq = read_QC_trim.tiptoft_plasmid_replicon_fastq,
+            tiptoft_plasmid_replicon_genes = read_QC_trim.tiptoft_plasmid_replicon_genes,
+            tiptoft_version = read_QC_trim.tiptoft_version,
+            assembly_fasta = dragonflye.assembly_fasta,
+            dragonflye_version = dragonflye.dragonflye_version,
             quast_report = quast.quast_report,
             quast_version = quast.version,
             assembly_length = quast.genome_length,
@@ -275,25 +251,25 @@ workflow theiaprok_illumina_pe {
             ani_output_tsv = ani.ani_output_tsv,
             ani_top_species_match = ani.ani_top_species_match,
             ani_mummer_version = ani.ani_mummer_version,
-            amrfinderplus_all_report = amrfinderplus_task.amrfinderplus_all_report,
-            amrfinderplus_amr_report = amrfinderplus_task.amrfinderplus_amr_report,
-            amrfinderplus_stress_report = amrfinderplus_task.amrfinderplus_stress_report,
-            amrfinderplus_virulence_report = amrfinderplus_task.amrfinderplus_virulence_report,
-            amrfinderplus_amr_genes = amrfinderplus_task.amrfinderplus_amr_genes,
-            amrfinderplus_stress_genes = amrfinderplus_task.amrfinderplus_stress_genes,
-            amrfinderplus_virulence_genes = amrfinderplus_task.amrfinderplus_virulence_genes,
-            amrfinderplus_amr_classes = amrfinderplus_task.amrfinderplus_amr_classes,
-            amrfinderplus_amr_subclasses = amrfinderplus_task.amrfinderplus_amr_subclasses,
-            amrfinderplus_version = amrfinderplus_task.amrfinderplus_version,
-            amrfinderplus_db_version = amrfinderplus_task.amrfinderplus_db_version,
-            resfinder_pheno_table = resfinder_task.resfinder_pheno_table,
-            resfinder_pheno_table_species = resfinder_task.resfinder_pheno_table_species,
-            resfinder_seqs = resfinder_task.resfinder_hit_in_genome_seq,
-            resfinder_results = resfinder_task.resfinder_results_tab,
-            resfinder_pointfinder_pheno_table = resfinder_task.pointfinder_pheno_table,
-            resfinder_pointfinder_results = resfinder_task.pointfinder_results,
-            resfinder_db_version = resfinder_task.resfinder_db_version,
-            resfinder_docker = resfinder_task.resfinder_docker,
+            amrfinderplus_all_report = amrfinderplus.amrfinderplus_all_report,
+            amrfinderplus_amr_report = amrfinderplus.amrfinderplus_amr_report,
+            amrfinderplus_stress_report = amrfinderplus.amrfinderplus_stress_report,
+            amrfinderplus_virulence_report = amrfinderplus.amrfinderplus_virulence_report,
+            amrfinderplus_amr_genes = amrfinderplus.amrfinderplus_amr_genes,
+            amrfinderplus_stress_genes = amrfinderplus.amrfinderplus_stress_genes,
+            amrfinderplus_virulence_genes = amrfinderplus.amrfinderplus_virulence_genes,
+            amrfinderplus_amr_classes = amrfinderplus.amrfinderplus_amr_classes,
+            amrfinderplus_amr_subclasses = amrfinderplus.amrfinderplus_amr_subclasses,
+            amrfinderplus_version = amrfinderplus.amrfinderplus_version,
+            amrfinderplus_db_version = amrfinderplus.amrfinderplus_db_version,
+            resfinder_pheno_table = resfinder.resfinder_pheno_table,
+            resfinder_pheno_table_species = resfinder.resfinder_pheno_table_species,
+            resfinder_seqs = resfinder.resfinder_hit_in_genome_seq,
+            resfinder_results = resfinder.resfinder_results_tab,
+            resfinder_pointfinder_pheno_table = resfinder.pointfinder_pheno_table,
+            resfinder_pointfinder_results = resfinder.pointfinder_results,
+            resfinder_db_version = resfinder.resfinder_db_version,
+            resfinder_docker = resfinder.resfinder_docker,
             ts_mlst_results = ts_mlst.ts_mlst_results,
             ts_mlst_predicted_st = ts_mlst.ts_mlst_predicted_st,
             ts_mlst_pubmlst_scheme = ts_mlst.ts_mlst_pubmlst_scheme,
@@ -322,16 +298,6 @@ workflow theiaprok_illumina_pe {
             shigeifinder_O_antigen = merlin_magic.shigeifinder_O_antigen,
             shigeifinder_H_antigen = merlin_magic.shigeifinder_H_antigen,
             shigeifinder_notes = merlin_magic.shigeifinder_notes,
-            shigeifinder_report_reads = merlin_magic.shigeifinder_report_reads,
-            shigeifinder_docker_reads = merlin_magic.shigeifinder_docker_reads,
-            shigeifinder_version_reads = merlin_magic.shigeifinder_version_reads,
-            shigeifinder_ipaH_presence_absence_reads = merlin_magic.shigeifinder_ipaH_presence_absence_reads,
-            shigeifinder_num_virulence_plasmid_genes_reads = merlin_magic.shigeifinder_num_virulence_plasmid_genes_reads,
-            shigeifinder_cluster_reads = merlin_magic.shigeifinder_cluster_reads,
-            shigeifinder_serotype_reads = merlin_magic.shigeifinder_serotype_reads,
-            shigeifinder_O_antigen_reads = merlin_magic.shigeifinder_O_antigen_reads,
-            shigeifinder_H_antigen_reads = merlin_magic.shigeifinder_H_antigen_reads,
-            shigeifinder_notes_reads = merlin_magic.shigeifinder_notes_reads,
             sonneityping_mykrobe_report_csv = merlin_magic.sonneityping_mykrobe_report_csv,
             sonneityping_mykrobe_report_json = merlin_magic.sonneityping_mykrobe_report_json,
             sonneityping_final_report_tsv = merlin_magic.sonneityping_final_report_tsv,
@@ -420,17 +386,6 @@ workflow theiaprok_illumina_pe {
             poppunk_GPS_db_version = merlin_magic.poppunk_GPS_db_version,
             poppunk_version = merlin_magic.poppunk_version,
             poppunk_docker = merlin_magic.poppunk_docker,
-            seroba_version = merlin_magic.seroba_version,
-            seroba_docker = merlin_magic.seroba_docker,
-            seroba_serotype = merlin_magic.seroba_serotype,
-            seroba_ariba_serotype = merlin_magic.seroba_ariba_serotype,
-            seroba_ariba_identity = merlin_magic.seroba_ariba_identity,
-            seroba_details = merlin_magic.seroba_details,
-            midas_docker = read_QC_trim.midas_docker,
-            midas_report = read_QC_trim.midas_report,
-            midas_primary_genus = read_QC_trim.midas_primary_genus,
-            midas_secondary_genus = read_QC_trim.midas_secondary_genus,
-            midas_secondary_genus_abundance = read_QC_trim.midas_secondary_genus_abundance,
             pasty_serogroup = merlin_magic.pasty_serogroup,
             pasty_serogroup_coverage = merlin_magic.pasty_serogroup_coverage,
             pasty_serogroup_fragments = merlin_magic.pasty_serogroup_fragments,
@@ -440,58 +395,46 @@ workflow theiaprok_illumina_pe {
             pasty_version = merlin_magic.pasty_version,
             pasty_docker = merlin_magic.pasty_docker,
             pasty_comment = merlin_magic.pasty_comment,
-            qc_check = qc_check_task.qc_check,
-            qc_standard = qc_check_task.qc_standard
+            qc_check = qc_check.qc_check,
+            qc_standard = qc_check.qc_standard
         }
       }
     }
   }
   output {
     # Version Captures
-    String theiaprok_illumina_pe_version = version_capture.phb_version
-    String theiaprok_illumina_pe_analysis_date = version_capture.date
+    String theiaprok_ont_version = version_capture.phb_version
+    String theiaprok_ont_analysis_date = version_capture.date
     # Read Metadata
     String seq_platform = seq_method
     # Sample Screening
     String raw_read_screen = raw_check_reads.read_screen
     String? clean_read_screen = clean_check_reads.read_screen
-    # Read QC - fastq_scan outputs
-    Int? num_reads_raw1 = read_QC_trim.fastq_scan_raw1
-    Int? num_reads_raw2 = read_QC_trim.fastq_scan_raw2
-    String? num_reads_raw_pairs = read_QC_trim.fastq_scan_raw_pairs
-    String? fastq_scan_version = read_QC_trim.fastq_scan_version
-    Int? num_reads_clean1 = read_QC_trim.fastq_scan_clean1
-    Int? num_reads_clean2 = read_QC_trim.fastq_scan_clean2
-    String? num_reads_clean_pairs = read_QC_trim.fastq_scan_clean_pairs
-    # Read QC - trimmomatic outputs
-    String? trimmomatic_version = read_QC_trim.trimmomatic_version
-    # Read QC - fastp outputs
-    String? fastp_version = read_QC_trim.fastp_version
-    # Read QC - bbduk outputs
+    # Read QC - fastq_scan and nanoq outputs
     File? read1_clean = read_QC_trim.read1_clean
-    File? read2_clean = read_QC_trim.read2_clean
-    String? bbduk_docker = read_QC_trim.bbduk_docker
+    Int? num_reads_raw1 = read_QC_trim.number_raw_reads
+    Int? num_reads_clean1 = read_QC_trim.number_clean_reads
+    String? fastq_scan_version = read_QC_trim.fastq_scan_version
+    String? nanoq_version = read_QC_trim.nanoq_version
+    # Read QC - nanoplot outputs
+    File? nanoplot_html = read_QC_trim.nanoplot_html
+    String? nanoplot_version = read_QC_trim.nanoplot_version
+    # Read QC - kmc outputs
+    String? kmc_est_genome_size = read_QC_trim.est_genome_size
+    File? kmc_kmer_stats = read_QC_trim.kmc_kmer_stats
+    String? kmc_version = read_QC_trim.kmc_version
+    # Read QC - rasusa outputs
+    String? rasusa_version = read_QC_trim.rasusa_version
+    # Read QC - tiptoft outputs
+    File? tiptoft_plasmid_replicon_fastq = read_QC_trim.tiptoft_plasmid_replicon_fastq
+    String? tiptoft_plasmid_replicon_genes = read_QC_trim.tiptoft_plasmid_replicon_genes
+    String? tiptoft_version = read_QC_trim.tiptoft_version
     # Read QC - cg pipeline outputs
     Float? r1_mean_q_raw = cg_pipeline_raw.r1_mean_q
-    Float? r2_mean_q_raw = cg_pipeline_raw.r2_mean_q
-    Float? combined_mean_q_raw = cg_pipeline_raw.combined_mean_q
-    Float? combined_mean_q_clean = cg_pipeline_clean.combined_mean_q
     Float? r1_mean_readlength_raw = cg_pipeline_raw.r1_mean_readlength
-    Float? r2_mean_readlength_raw = cg_pipeline_raw.r2_mean_readlength
-    Float? combined_mean_readlength_raw = cg_pipeline_raw.combined_mean_readlength
-    Float? combined_mean_readlength_clean = cg_pipeline_clean.combined_mean_readlength
-    # Read QC - midas outputs
-    String? midas_docker = read_QC_trim.midas_docker
-    File? midas_report = read_QC_trim.midas_report
-    String? midas_primary_genus = read_QC_trim.midas_primary_genus
-    String? midas_secondary_genus = read_QC_trim.midas_secondary_genus
-    Float? midas_secondary_genus_abundance = read_QC_trim.midas_secondary_genus_abundance
-    # Assembly - shovill outputs 
-    File? assembly_fasta = shovill_pe.assembly_fasta
-    File? contigs_gfa = shovill_pe.contigs_gfa
-    File? contigs_fastg = shovill_pe.contigs_fastg
-    File? contigs_lastgraph = shovill_pe.contigs_lastgraph
-    String? shovill_pe_version = shovill_pe.shovill_version
+    # Assembly - dragonflye outputs
+    File? assembly_fasta = dragonflye.assembly_fasta
+    String? dragonflye_version = dragonflye.dragonflye_version
     # Assembly QC - quast outputs
     File? quast_report = quast.quast_report
     String? quast_version = quast.version
@@ -525,26 +468,26 @@ workflow theiaprok_illumina_pe {
     String? ani_top_species_match = ani.ani_top_species_match
     String? ani_mummer_version = ani.ani_mummer_version
     # NCBI-AMRFinderPlus Outputs
-    File? amrfinderplus_all_report = amrfinderplus_task.amrfinderplus_all_report
-    File? amrfinderplus_amr_report = amrfinderplus_task.amrfinderplus_amr_report
-    File? amrfinderplus_stress_report = amrfinderplus_task.amrfinderplus_stress_report
-    File? amrfinderplus_virulence_report = amrfinderplus_task.amrfinderplus_virulence_report
-    String? amrfinderplus_amr_genes = amrfinderplus_task.amrfinderplus_amr_genes
-    String? amrfinderplus_stress_genes = amrfinderplus_task.amrfinderplus_stress_genes
-    String? amrfinderplus_virulence_genes = amrfinderplus_task.amrfinderplus_virulence_genes
-    String? amrfinderplus_amr_classes = amrfinderplus_task.amrfinderplus_amr_classes
-    String? amrfinderplus_amr_subclasses = amrfinderplus_task.amrfinderplus_amr_subclasses
-    String? amrfinderplus_version = amrfinderplus_task.amrfinderplus_version
-    String? amrfinderplus_db_version = amrfinderplus_task.amrfinderplus_db_version
+    File? amrfinderplus_all_report = amrfinderplus.amrfinderplus_all_report
+    File? amrfinderplus_amr_report = amrfinderplus.amrfinderplus_amr_report
+    File? amrfinderplus_stress_report = amrfinderplus.amrfinderplus_stress_report
+    File? amrfinderplus_virulence_report = amrfinderplus.amrfinderplus_virulence_report
+    String? amrfinderplus_amr_genes = amrfinderplus.amrfinderplus_amr_genes
+    String? amrfinderplus_stress_genes = amrfinderplus.amrfinderplus_stress_genes
+    String? amrfinderplus_virulence_genes = amrfinderplus.amrfinderplus_virulence_genes
+    String? amrfinderplus_amr_classes = amrfinderplus.amrfinderplus_amr_classes
+    String? amrfinderplus_amr_subclasses = amrfinderplus.amrfinderplus_amr_subclasses
+    String? amrfinderplus_version = amrfinderplus.amrfinderplus_version
+    String? amrfinderplus_db_version = amrfinderplus.amrfinderplus_db_version
     # Resfinder Outputs
-    File? resfinder_pheno_table = resfinder_task.resfinder_pheno_table
-    File? resfinder_pheno_table_species = resfinder_task.resfinder_pheno_table_species
-    File? resfinder_seqs = resfinder_task.resfinder_hit_in_genome_seq
-    File? resfinder_results = resfinder_task.resfinder_results_tab
-    File? resfinder_pointfinder_pheno_table = resfinder_task.pointfinder_pheno_table
-    File? resfinder_pointfinder_results = resfinder_task.pointfinder_results
-    String? resfinder_db_version = resfinder_task.resfinder_db_version
-    String? resfinder_docker = resfinder_task.resfinder_docker
+    File? resfinder_pheno_table = resfinder.resfinder_pheno_table
+    File? resfinder_pheno_table_species = resfinder.resfinder_pheno_table_species
+    File? resfinder_seqs = resfinder.resfinder_hit_in_genome_seq
+    File? resfinder_results = resfinder.resfinder_results_tab
+    File? resfinder_pointfinder_pheno_table = resfinder.pointfinder_pheno_table
+    File? resfinder_pointfinder_results = resfinder.pointfinder_results
+    String? resfinder_db_version = resfinder.resfinder_db_version
+    String? resfinder_docker = resfinder.resfinder_docker
     # MLST Typing
     File? ts_mlst_results = ts_mlst.ts_mlst_results
     String? ts_mlst_predicted_st = ts_mlst.ts_mlst_predicted_st
@@ -567,9 +510,6 @@ workflow theiaprok_illumina_pe {
     File? plasmidfinder_seqs = plasmidfinder.plasmidfinder_seqs
     String? plasmidfinder_docker = plasmidfinder.plasmidfinder_docker
     String? plasmidfinder_db_version = plasmidfinder.plasmidfinder_db_version
-    # QC_Check Results
-    String? qc_check = qc_check_task.qc_check
-    File? qc_standard = qc_check_task.qc_standard
     # Ecoli Typing
     File? serotypefinder_report = merlin_magic.serotypefinder_report
     String? serotypefinder_docker = merlin_magic.serotypefinder_docker
@@ -594,17 +534,6 @@ workflow theiaprok_illumina_pe {
     String? shigeifinder_O_antigen = merlin_magic.shigeifinder_O_antigen
     String? shigeifinder_H_antigen = merlin_magic.shigeifinder_H_antigen
     String? shigeifinder_notes = merlin_magic.shigeifinder_notes
-    # ShigeiFinder outputs but for task that uses reads instead of assembly as input
-    File? shigeifinder_report_reads = merlin_magic.shigeifinder_report
-    String? shigeifinder_docker_reads = merlin_magic.shigeifinder_docker
-    String? shigeifinder_version_reads = merlin_magic.shigeifinder_version
-    String? shigeifinder_ipaH_presence_absence_reads = merlin_magic.shigeifinder_ipaH_presence_absence
-    String? shigeifinder_num_virulence_plasmid_genes_reads = merlin_magic.shigeifinder_num_virulence_plasmid_genes
-    String? shigeifinder_cluster_reads = merlin_magic.shigeifinder_cluster
-    String? shigeifinder_serotype_reads = merlin_magic.shigeifinder_serotype
-    String? shigeifinder_O_antigen_reads = merlin_magic.shigeifinder_O_antigen
-    String? shigeifinder_H_antigen_reads = merlin_magic.shigeifinder_H_antigen
-    String? shigeifinder_notes_reads = merlin_magic.shigeifinder_notes
     # Shigella sonnei Typing
     File? sonneityping_mykrobe_report_csv = merlin_magic.sonneityping_mykrobe_report_csv
     File? sonneityping_mykrobe_report_json = merlin_magic.sonneityping_mykrobe_report_json
@@ -699,12 +628,6 @@ workflow theiaprok_illumina_pe {
     String? poppunk_GPS_db_version = merlin_magic.poppunk_GPS_db_version
     String? poppunk_version = merlin_magic.poppunk_version
     String? poppunk_docker = merlin_magic.poppunk_docker
-    String? seroba_version = merlin_magic.seroba_version
-    String? seroba_docker = merlin_magic.seroba_docker
-    String? seroba_serotype = merlin_magic.seroba_serotype
-    String? seroba_ariba_serotype = merlin_magic.seroba_ariba_serotype
-    String? seroba_ariba_identity = merlin_magic.seroba_ariba_identity
-    File? seroba_details = merlin_magic.seroba_details
     # export taxon table output
     String? taxon_table_status = export_taxon_tables.status
   }

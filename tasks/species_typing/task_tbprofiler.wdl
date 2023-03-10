@@ -14,7 +14,7 @@ task tbprofiler {
     Float min_af = 0.1
     Float min_af_pred = 0.1
     Int cov_frac_threshold = 1
-    String? platform
+    Boolean ont_data = false
   }
   command <<<
     # Print and save date
@@ -28,7 +28,7 @@ task tbprofiler {
       INPUT_READS="-1 ~{read1} -2 ~{read2}"
     fi
     
-    if [ "~{platform}" = "ont" ]; then
+    if [ "~{ont_data}" = true ]; then
       mode="--platform nanopore"
     fi
 

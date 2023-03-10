@@ -364,7 +364,7 @@ workflow theiaprok_illumina_se {
             pbptyper_docker = merlin_magic.pbptyper_docker,
             poppunk_gps_cluster = merlin_magic.poppunk_gps_cluster,
             poppunk_gps_external_cluster_csv = merlin_magic.poppunk_gps_external_cluster_csv,
-            poppunk_GPS_db_version = merlin_magic.poppunk_gps_external_cluster_csv,
+            poppunk_GPS_db_version = merlin_magic.poppunk_GPS_db_version,
             poppunk_version = merlin_magic.poppunk_version,
             poppunk_docker = merlin_magic.poppunk_docker,
             midas_docker = read_QC_trim.midas_docker,
@@ -394,43 +394,51 @@ workflow theiaprok_illumina_se {
     # Sample Screening
     String raw_read_screen = raw_check_reads.read_screen
     String? clean_read_screen = clean_check_reads.read_screen
-    # Read QC
+    # Read QC - fastq_scan outputs
     Int? num_reads_raw1 = read_QC_trim.fastq_scan_raw_number_reads
     String? fastq_scan_version = read_QC_trim.fastq_scan_version
     Int? num_reads_clean1 = read_QC_trim.fastq_scan_clean_number_reads
+    # Read QC - trimmomatic outputs
     String? trimmomatic_version = read_QC_trim.trimmomatic_version
+    # Read QC - fastp outputs
     String? fastp_version = read_QC_trim.fastp_version
+    # Read QC - bbduk outputs
+    File? read1_clean = read_QC_trim.read1_clean
     String? bbduk_docker = read_QC_trim.bbduk_docker
+    # Read QC - cg pipeline outputs
     Float? r1_mean_q_raw = cg_pipeline_raw.r1_mean_q
     Float? r1_mean_q_clean = cg_pipeline_clean.r1_mean_q
     Float? r1_mean_readlength_raw = cg_pipeline_raw.r1_mean_readlength
     Float? r1_mean_readlength_clean = cg_pipeline_clean.r1_mean_readlength
-    File? read1_clean = read_QC_trim.read1_clean
+    # Read QC - midas outputs
     String? midas_docker = read_QC_trim.midas_docker
     File? midas_report = read_QC_trim.midas_report
     String? midas_primary_genus = read_QC_trim.midas_primary_genus
     String? midas_secondary_genus = read_QC_trim.midas_secondary_genus
     Float? midas_secondary_genus_abundance = read_QC_trim.midas_secondary_genus_abundance
-    #Assembly and Assembly QC
+    #Assembly - shovill outputs
     File? assembly_fasta = shovill_se.assembly_fasta
     File? contigs_gfa = shovill_se.contigs_gfa
     String? shovill_se_version = shovill_se.shovill_version
+    # Assembly QC - quast outputs
     File? quast_report = quast.quast_report
     String? quast_version = quast.version
     Int? assembly_length = quast.genome_length
     Int? number_contigs = quast.number_contigs
     Int? n50_value = quast.n50_value
     Float? quast_gc_percent = quast.gc_percent
+    # Assembly QC - cg pipeline outputs
     File? cg_pipeline_report_raw = cg_pipeline_raw.cg_pipeline_report
     String? cg_pipeline_docker = cg_pipeline_raw.cg_pipeline_docker
     Float? est_coverage_raw = cg_pipeline_raw.est_coverage
     File? cg_pipeline_report_clean = cg_pipeline_clean.cg_pipeline_report
     Float? est_coverage_clean = cg_pipeline_clean.est_coverage
+    # Assembly QC - busco outputs
     String? busco_version = busco.busco_version
     String? busco_database = busco.busco_database
     String? busco_results = busco.busco_results
     File? busco_report = busco.busco_report
-    # Taxon ID
+    # Taxon ID - gambit outputs
     File? gambit_report = gambit.gambit_report_file
     File? gambit_closest_genomes = gambit.gambit_closest_genomes_file
     String? gambit_predicted_taxon = gambit.gambit_predicted_taxon
@@ -438,7 +446,7 @@ workflow theiaprok_illumina_se {
     String? gambit_version = gambit.gambit_version
     String? gambit_db_version = gambit.gambit_db_version
     String? gambit_docker = gambit.gambit_docker
-    # ani-mummer
+    # ani-mummer outputs
     Float? ani_highest_percent = ani.ani_highest_percent
     Float? ani_highest_percent_bases_aligned = ani.ani_highest_percent_bases_aligned
     File? ani_output_tsv = ani.ani_output_tsv
@@ -553,7 +561,7 @@ workflow theiaprok_illumina_se {
     File? sistr_cgmlst = merlin_magic.sistr_cgmlst
     String? sistr_version = merlin_magic.sistr_version
     String? sistr_predicted_serotype = merlin_magic.sistr_predicted_serotype
-    File? seqsero2_report = merlin_magic.seqsero2_report
+    String? seqsero2_report = merlin_magic.seqsero2_report
     String? seqsero2_version = merlin_magic.seqsero2_version
     String? seqsero2_predicted_antigenic_profile = merlin_magic.seqsero2_predicted_antigenic_profile
     String? seqsero2_predicted_serotype = merlin_magic.seqsero2_predicted_serotype
@@ -616,5 +624,7 @@ workflow theiaprok_illumina_se {
     String? poppunk_GPS_db_version = merlin_magic.poppunk_GPS_db_version
     String? poppunk_version = merlin_magic.poppunk_version
     String? poppunk_docker = merlin_magic.poppunk_docker
+    # export taxon table output
+    String? taxon_table_status = export_taxon_tables.status
   }
 }

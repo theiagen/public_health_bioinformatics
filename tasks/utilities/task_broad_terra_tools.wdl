@@ -9,10 +9,8 @@ task export_taxon_tables {
     String? samplename
     Int disk_size = 100
     # TheiaProk Outputs
-    File? reads
     File? read1
     File? read2
-    File? reads_clean
     File? read1_clean
     File? read2_clean
     String? run_id
@@ -30,12 +28,10 @@ task export_taxon_tables {
     String? theiaprok_fasta_version
     String? theiaprok_fasta_analysis_date
     String? seq_platform
-    Int? num_reads_raw
     Int? num_reads_raw1
     Int? num_reads_raw2
     String? num_reads_raw_pairs
     String? fastq_scan_version
-    Int? num_reads_clean
     Int? num_reads_clean1
     Int? num_reads_clean2
     String? num_reads_clean_pairs
@@ -169,7 +165,7 @@ task export_taxon_tables {
     File? sistr_cgmlst
     String? sistr_version
     String? sistr_predicted_serotype
-    File? seqsero2_report
+    String? seqsero2_report
     String? seqsero2_version
     String? seqsero2_predicted_antigenic_profile
     String? seqsero2_predicted_serotype
@@ -296,10 +292,8 @@ task export_taxon_tables {
     # create dictionary with all values      
     new_table = {
       "entity:${sample_table}_id": "~{samplename}",
-      "reads": "~{reads}",
       "read1": "~{read1}",
       "read2": "~{read2}",
-      "reads_clean": "~{reads_clean}",
       "read1_clean": "~{read1_clean}",
       "read2_clean": "~{read2_clean}",
       "run_id": "~{run_id}",
@@ -317,12 +311,10 @@ task export_taxon_tables {
       "theiaprok_ont_version": "~{theiaprok_ont_version}",
       "theiaprok_ont_analysis_date": "~{theiaprok_ont_analysis_date}",
       "seq_platform": "~{seq_platform}",
-      "num_reads_raw": "~{num_reads_raw}",
       "num_reads_raw1": "~{num_reads_raw1}",
       "num_reads_raw2": "~{num_reads_raw2}",
       "num_reads_raw_pairs": "~{num_reads_raw_pairs}",
       "fastq_scan_version": "~{fastq_scan_version}",
-      "num_reads_clean": "~{num_reads_clean}",
       "num_reads_clean1": "~{num_reads_clean1}",
       "num_reads_clean2": "~{num_reads_clean2}",
       "num_reads_clean_pairs": "~{num_reads_clean_pairs}",

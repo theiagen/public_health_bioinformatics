@@ -1,8 +1,8 @@
 version: 1.2
 workflows:
- - name: TheiaEuk_PE_PHB
+ - name: TheiaEuk_Illumina_PE_PHB
    subclass: WDL
-   primaryDescriptorPath: /workflows/theiaeuk/wf_theiaeuk_pe.wdl
+   primaryDescriptorPath: /workflows/theiaeuk/wf_theiaeuk_illumina_pe.wdl
    testParameterFiles:
     - empty.json
  - name: Cauris_CladeTyper_PHB
@@ -140,6 +140,16 @@ workflows:
    primaryDescriptorPath: /workflows/theiaprok/wf_theiaprok_illumina_se.wdl
    testParameterFiles:
     - empty.json
+ - name: TheiaProk_FASTA_PHB
+   subclass: WDL
+   primaryDescriptorPath: /workflows/theiaprok/wf_theiaprok_fasta.wdl
+   testParameterFiles:
+    - empty.json
+ - name: TheiaProk_ONT_PHB
+   subclass: WDL
+   primaryDescriptorPath: /workflows/theiaprok/wf_theiaprok_ont.wdl
+   testParameterFiles:
+    - empty.json
  - name: Gambit_Query_PHB
    subclass: WDL
    primaryDescriptorPath: /workflows/standalone_modules/wf_gambit_query.wdl
@@ -190,7 +200,7 @@ workflows:
    primaryDescriptorPath: /workflows/utilities/data_import/wf_basespace_fetch.wdl
    testParameterFiles:
     - empty.json
-- name: SRA_Fetch_PHB
+ - name: SRA_Fetch_PHB
    subclass: WDL
    primaryDescriptorPath: /workflows/utilities/data_import/wf_sra_fetch.wdl
    testParameterFiles:
