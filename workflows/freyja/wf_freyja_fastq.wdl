@@ -88,9 +88,9 @@ workflow freyja_fastq {
     File freyja_demixed = freyja.freyja_demixed
     String freyja_barcode_version = freyja.freyja_barcode_version
     String freyja_metadata_version = freyja.freyja_metadata_version
-    File? freyja_boostrap_lineages = freyja.freyja_boostrap_lineages
-    File? freyja_boostrap_lineages_pdf = freyja.freyja_boostrap_lineages_pdf
-    File? freyja_boostrap_summary = freyja.freyja_boostrap_summary
-    File? freyja_boostrap_summary_pdf = freyja.freyja_boostrap_summary_pdf
+    File? freyja_bootstrap_lineages = freyja.freyja_bootstrap_lineages
+    File? freyja_bootstrap_lineages_pdf = freyja.freyja_bootstrap_lineages_pdf
+    File? freyja_bootstrap_summary = freyja.freyja_bootstrap_summary
+    File? freyja_bootstrap_summary_pdf = freyja.freyja_bootstrap_summary_pdf
     }
 }

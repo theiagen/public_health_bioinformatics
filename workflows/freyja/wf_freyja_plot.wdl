@@ -43,6 +43,7 @@ task freyja_plot_task {
     String freyja_plot_name
     String docker = "quay.io/staphb/freyja:1.3.10"
     Int disk_size = 100
+    Int mincov = 60
   }
   command <<<
   # capture version
@@ -98,6 +99,7 @@ task freyja_plot_task {
   echo "Running: freyja plot demixed_aggregate.tsv --output ~{freyja_plot_name}.pdf ${plot_options}"
   freyja plot \
       ~{true='--lineages' false ='' plot_lineages} \
+      --mincov ~{mincov} \
       demixed_aggregate.tsv \
       --output ~{freyja_plot_name}.pdf \
       ${plot_options}
