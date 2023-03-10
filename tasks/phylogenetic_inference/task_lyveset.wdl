@@ -60,7 +60,7 @@ task lyveset {
     Boolean fast = false
     Boolean downsample = false
     Boolean sample_sites = false
-    String? read_cleaner = CGP
+    String? read_cleaner = 'CGP'
     String? mapper
     String? snpcaller
   }
