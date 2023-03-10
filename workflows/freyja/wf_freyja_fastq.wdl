@@ -1,7 +1,7 @@
 version 1.0
 
 import "../../tasks/taxon_id/task_freyja_one_sample.wdl" as freyja_task
-import "../utilities/wf_read_QC_trim_pe_theiacov.wdl" as read_qc
+import "../utilities/wf_read_QC_trim_pe.wdl" as read_qc
 import "../../tasks/alignment/task_bwa.wdl" as align
 import "../../tasks/assembly/task_ivar_primer_trim.wdl" as trim_primers
 import "../../tasks/task_versioning.wdl" as versioning
@@ -20,7 +20,8 @@ workflow freyja_fastq {
       samplename = samplename,
       read1_raw  = read1_raw,
       read2_raw  = read2_raw,
-      trimmomatic_minlen = trimmomatic_minlen
+      trim_minlen = trimmomatic_minlen,
+      workflow_series = "theiacov"
   }
   call align.bwa {
     input:
@@ -49,8 +50,8 @@ workflow freyja_fastq {
     String freyja_fastq_wf_version = version_capture.phb_version
     String freyja_fastq_wf_analysis_date = version_capture.date
     # Raw Read QC
-    File read1_dehosted = read_QC_trim.read1_dehosted
-    File read2_dehosted = read_QC_trim.read2_dehosted
+    File?read1_dehosted = read_QC_trim.read1_dehosted
+    File? read2_dehosted = read_QC_trim.read2_dehosted
     File read1_clean = read_QC_trim.read1_clean
     File read2_clean = read_QC_trim.read2_clean
     Int num_reads_raw1 = read_QC_trim.fastq_scan_raw1
@@ -61,16 +62,16 @@ workflow freyja_fastq {
     Int num_reads_clean1 = read_QC_trim.fastq_scan_clean1
     Int num_reads_clean2 = read_QC_trim.fastq_scan_clean2
     String num_reads_clean_pairs = read_QC_trim.fastq_scan_clean_pairs
-    String trimmomatic_version = read_QC_trim.trimmomatic_version
+    String? trimmomatic_version = read_QC_trim.trimmomatic_version
     String bbduk_docker = read_QC_trim.bbduk_docker
     # Contamination Check
-    String kraken_version = read_QC_trim.kraken_version
-    Float kraken_human = read_QC_trim.kraken_human
-    Float kraken_sc2 = read_QC_trim.kraken_sc2
-    String kraken_report = read_QC_trim.kraken_report
-    Float kraken_human_dehosted = read_QC_trim.kraken_human_dehosted
-    Float kraken_sc2_dehosted = read_QC_trim.kraken_sc2_dehosted
-    String kraken_report_dehosted = read_QC_trim.kraken_report_dehosted
+    String? kraken_version = read_QC_trim.kraken_version
+    Float? kraken_human = read_QC_trim.kraken_human
+    Float? kraken_sc2 = read_QC_trim.kraken_sc2
+    File? kraken_report = read_QC_trim.kraken_report
+    Float? kraken_human_dehosted = read_QC_trim.kraken_human_dehosted
+    Float? kraken_sc2_dehosted = read_QC_trim.kraken_sc2_dehosted
+    File? kraken_report_dehosted = read_QC_trim.kraken_report_dehosted
     # Mapping and Alignment
     String bwa_version = bwa.bwa_version
     String samtools_version = bwa.sam_version
@@ -92,5 +93,5 @@ workflow freyja_fastq {
     File? freyja_bootstrap_lineages_pdf = freyja.freyja_bootstrap_lineages_pdf
     File? freyja_bootstrap_summary = freyja.freyja_bootstrap_summary
     File? freyja_bootstrap_summary_pdf = freyja.freyja_bootstrap_summary_pdf
-    }
+  }
 }
