@@ -24,7 +24,7 @@ workflow theiacov_clearlabs {
     File primer_bed
     Int normalise = 20000
     String nextclade_dataset_reference = "MN908947"
-    String nextclade_dataset_tag = "2022-12-14T12:00:00Z"
+    String nextclade_dataset_tag = "2023-02-25T12:00:00Z"
     String medaka_docker = "quay.io/staphb/artic-ncov2019:1.3.0-medaka-1.4.3"
     String? nextclade_dataset_name
     File? reference_genome
@@ -109,7 +109,8 @@ workflow theiacov_clearlabs {
     }
     call nextclade.nextclade_output_parser_one_sample {
       input:
-      nextclade_tsv = nextclade_one_sample.nextclade_tsv
+      nextclade_tsv = nextclade_one_sample.nextclade_tsv,
+      organism = organism
     }
     call vadr_task.vadr {
       input:

@@ -17,7 +17,7 @@ workflow theiacov_fasta {
     String seq_method
     String input_assembly_method
     String nextclade_dataset_reference = "MN908947"
-    String nextclade_dataset_tag = "2022-12-14T12:00:00Z"
+    String nextclade_dataset_tag = "2023-02-25T12:00:00Z"
     String? nextclade_dataset_name
     String organism = "sars-cov-2"
   }
@@ -50,7 +50,8 @@ workflow theiacov_fasta {
     }
     call nextclade.nextclade_output_parser_one_sample {
       input:
-      nextclade_tsv = nextclade_one_sample.nextclade_tsv
+      nextclade_tsv = nextclade_one_sample.nextclade_tsv,
+      organism = organism
     }
   }
   if (organism == "MPXV" || organism == "sars-cov-2" || organism == "WNV"){ 
