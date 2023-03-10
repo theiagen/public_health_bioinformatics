@@ -108,7 +108,7 @@ task lyveset {
     ~{true='--fast' false='' fast} \
     ~{true='--downsample' false='' downsample} \
     ~{true='--sample_sites' false='' sample_sites} \
-    ~{'--read-cleaner ' + read_cleaner} \
+    ~{'--read_cleaner ' + read_cleaner} \
     ~{'--mapper ' + mapper} \
     ~{'--snpcaller ' + snpcaller} \
      -ref ~{dataset_name}/ref/reference.fasta ~{dataset_name}
