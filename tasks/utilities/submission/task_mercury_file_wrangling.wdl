@@ -14,6 +14,9 @@ task sm_metadata_wrangling { # the sm stands for supermassive
     Int number_N_threshold = 5000 # only for SC2
     Boolean skip_county
     Boolean skip_ncbi
+    Boolean using_clearlabs_data = false
+    Boolean using_reads_dehosted = false
+    Boolean usa_territory = false # only for SC2; uses territory name (in state column) for country in GISAID submissions 
     Int disk_size = 100
   }
   command <<<
@@ -35,6 +38,27 @@ task sm_metadata_wrangling { # the sm stands for supermassive
       export skip_ncbi="true"
     else 
       export skip_ncbi="false"
+    fi
+
+    # transform boolean using_clearlabs_data into string for python comparison
+    if ~{using_clearlabs_data}; then
+      export using_clearlabs_data="true"
+    else 
+      export using_clearlabs_data="false"
+    fi
+
+    # transform boolean using_clearlabs_data into string for python comparison
+    if ~{using_reads_dehosted}; then
+      export using_reads_dehosted="true"
+    else 
+      export using_reads_dehosted="false"
+    fi
+
+    # transform boolean usa_territory into string for python comparison
+    if ~{usa_territory}; then
+      export usa_territory="true"
+    else 
+      export usa_territory="false"
     fi
 
     echo "DEBUG: Now entering Python block to perform parsing of metadata"
@@ -67,9 +91,25 @@ task sm_metadata_wrangling { # the sm stands for supermassive
 
       return table, excluded_samples
 
+    # set the data file names
+    read1_column_name = "read1_dehosted"
+    read2_column_name = "read2_dehosted"
+    assembly_fasta_column_name = "assembly_fasta"
+    assembly_mean_coverage_column_name = "assembly_mean_coverage"
+
+    # if want to upload clearlabs-generated data and metrics:
+    if (os.environ["using_clearlabs_data"] == "true"):
+      read1_column_name = "clearlabs_fastq_gz"
+      assembly_fasta_column_name = "clearlabs_fasta"
+      assembly_mean_coverage_column_name = "clearlabs_assembly_coverage"
+
+    # if want to upload reads_dehosted instead:
+    if (os.environ["using_reads_dehosted"] == "true"):
+      read1_column_name = "reads_dehosted"
+
     # read exported Terra table into pandas
     tablename = "~{table_name}-data.tsv" 
-    table = pd.read_csv(tablename, delimiter='\t', header=0)
+    table = pd.read_csv(tablename, delimiter='\t', header=0, dtype={"~{table_name}_id": 'str'}) # ensure sample_id is always a string
 
     # extract the samples for upload from the entire table
     table = table[table["~{table_name}_id"].isin("~{sep='*' sample_names}".split("*"))]
@@ -118,17 +158,20 @@ task sm_metadata_wrangling { # the sm stands for supermassive
 
       # set default values
       table["gisaid_organism"] = "hCoV-19"
-      table["gisaid_virus_name"] = (table["gisaid_organism"] + "/" + table["country"] + "/" + table["submission_id"] + "/" + table["year"])
+      if (os.environ["usa_territory"] == "false"):
+        table["gisaid_virus_name"] = (table["gisaid_organism"] + "/" + table["country"] + "/" + table["submission_id"] + "/" + table["year"])
+      else: # if usa territory, use "state" (e.g., Puerto Rico) instead of country (USA)
+        table["gisaid_virus_name"] = (table["gisaid_organism"] + "/" + table["state"] + "/" + table["submission_id"] + "/" + table["year"])
 
       # set required and optional metadata fields
       if (os.environ["skip_ncbi"] == "false"):
         biosample_required = ["submission_id", "bioproject_accession", "organism", "collecting_lab", "collection_date", "country", "state", "host_sci_name", "host_disease", "isolation_source"]
         biosample_optional = ["isolate", "treatment", "gisaid_accession", "gisaid_virus_name", "patient_age", "patient_gender", "purpose_of_sampling", "purpose_of_sequencing"]
   
-        sra_required = ["bioproject_accession", "submission_id", "library_id", "organism", "isolation_source", "library_strategy", "library_source", "library_selection", "library_layout", "seq_platform", "instrument_model", "filetype", "read1_dehosted"]
-        sra_optional = ["design_description", "read2_dehosted", "amplicon_primer_scheme", "amplicon_size", "assembly_method", "dehosting_method", "submitter_email"]
+        sra_required = ["bioproject_accession", "submission_id", "library_id", "organism", "isolation_source", "library_strategy", "library_source", "library_selection", "library_layout", "seq_platform", "instrument_model", "filetype", read1_column_name]
+        sra_optional = ["design_description", read2_column_name, "amplicon_primer_scheme", "amplicon_size", "assembly_method", "dehosting_method", "submitter_email"]
 
-        genbank_required = ["submission_id", "country", "host_sci_name", "collection_date", "isolation_source", "biosample_accession", "bioproject_accession", "assembly_fasta"]
+        genbank_required = ["submission_id", "country", "host_sci_name", "collection_date", "isolation_source", "biosample_accession", "bioproject_accession", assembly_fasta_column_name]
         genbank_optional = ["isolate"]
       else: # if skip_ncbi is true
         biosample_required = []
@@ -137,7 +180,7 @@ task sm_metadata_wrangling { # the sm stands for supermassive
         sra_optional = []
         genbank_required = []
       
-      gisaid_required = ["gisaid_submitter", "submission_id", "collection_date", "continent", "country", "state", "host", "seq_platform", "assembly_fasta", "assembly_method", "assembly_mean_coverage", "collecting_lab", "collecting_lab_address", "submitting_lab", "submitting_lab_address", "authors"]
+      gisaid_required = ["gisaid_submitter", "submission_id", "collection_date", "continent", "country", "state", "host", "seq_platform", assembly_fasta_column_name, "assembly_method", assembly_mean_coverage_column_name, "collecting_lab", "collecting_lab_address", "submitting_lab", "submitting_lab_address", "authors"]
       gisaid_optional = ["gisaid_virus_name", "additional_host_information", "county", "purpose_of_sequencing", "patient_gender", "patient_age", "patient_status", "specimen_source", "outbreak", "last_vaccinated", "treatment"]
 
       required_metadata = biosample_required + sra_required + genbank_required + gisaid_required
@@ -146,6 +189,10 @@ task sm_metadata_wrangling { # the sm stands for supermassive
       with open("~{output_name}_excluded_samples.tsv", "a") as exclusions:
         exclusions.write("\nSamples excluded for missing required metadata (will have empty values in indicated columns):\n")
       excluded_samples.to_csv("~{output_name}_excluded_samples.tsv", mode='a', sep='\t')
+
+      # test if table is size 0 do not continue
+      if table.empty:
+        sys.exit("DEBUG: all samples were removed due to either missing variables or failing to meet quality thresholds. Please investigate the excluded_samples.tsv file for more information.")
 
       # SC2 BIOSAMPLE
       if (os.environ["skip_ncbi"] == "false"):
@@ -177,14 +224,14 @@ task sm_metadata_wrangling { # the sm stands for supermassive
 
         # prettify the filenames and rename them to be sra compatible; write out copy commands to a file to rename and move later
         sra_metadata["filename"] = sra_metadata["sample_name"] + "_R1.fastq.gz"
-        sra_metadata["copy_command_r1"] = "gsutil -m cp " + sra_metadata["read1_dehosted"] + " " + "~{gcp_bucket_uri}" + "/" + sra_metadata["filename"]
+        sra_metadata["copy_command_r1"] = "gsutil -m cp " + sra_metadata[read1_column_name] + " " + "~{gcp_bucket_uri}" + "/" + sra_metadata["filename"]
         sra_metadata["copy_command_r1"].to_csv("sra-file-transfer.sh", index=False, header=False)
-        sra_metadata.drop(["copy_command_r1", "read1_dehosted"], axis=1, inplace=True)
-        if "read2_dehosted" in table.columns: # enable optional single end submission
+        sra_metadata.drop(["copy_command_r1", read1_column_name], axis=1, inplace=True)
+        if read2_column_name in table.columns: # enable optional single end submission
           sra_metadata["filename2"] = sra_metadata["sample_name"] + "_R2.fastq.gz"
-          sra_metadata["copy_command_r2"] = "gsutil -m cp " + sra_metadata["read2_dehosted"] + " " + "~{gcp_bucket_uri}" + "/" + sra_metadata["filename2"]
+          sra_metadata["copy_command_r2"] = "gsutil -m cp " + sra_metadata[read2_column_name] + " " + "~{gcp_bucket_uri}" + "/" + sra_metadata["filename2"]
           sra_metadata["copy_command_r2"].to_csv("sra-file-transfer.sh", mode='a', index=False, header=False)
-          sra_metadata.drop(["copy_command_r2", "read2_dehosted"], axis=1, inplace=True)
+          sra_metadata.drop(["copy_command_r2", read2_column_name], axis=1, inplace=True)
 
         sra_metadata.to_csv("~{output_name}_sra_metadata.tsv", sep='\t', index=False)
 
@@ -202,8 +249,8 @@ task sm_metadata_wrangling { # the sm stands for supermassive
         # prep for file manipulation and manuevering 
         genbank_metadata["cp"] = "gsutil cp"
         genbank_metadata["fn"] = genbank_metadata["Sequence_ID"] + "_genbank_untrimmed.fasta"
-        genbank_metadata.to_csv("genbank-file-transfer.sh", sep=' ', header=False, index=False, columns = ["cp", "assembly_fasta", "fn"], quoting=csv.QUOTE_NONE, escapechar=" ")
-        genbank_metadata.drop(["cp", "assembly_fasta"], axis=1, inplace=True)
+        genbank_metadata.to_csv("genbank-file-transfer.sh", sep=' ', header=False, index=False, columns = ["cp", assembly_fasta_column_name, "fn"], quoting=csv.QUOTE_NONE, escapechar=" ")
+        genbank_metadata.drop(["cp", assembly_fasta_column_name], axis=1, inplace=True)
 
         # replace the first line of every fasta file (>Sample_ID) with the gisaid virus name instead (>covv_virus_name)
         # since gisaid virus name includes '/', use '|' in sed command instead
@@ -225,7 +272,10 @@ task sm_metadata_wrangling { # the sm stands for supermassive
           gisaid_metadata[column] = "" 
 
       # create gisaid-specific variables; drop variables that are not included in gisaid metadata
-      gisaid_metadata["covv_location"] = (gisaid_metadata["continent"] + " / " + gisaid_metadata["country"] + " / " + gisaid_metadata["state"]) 
+      if (os.environ["usa_territory"] == "false"):
+        gisaid_metadata["covv_location"] = (gisaid_metadata["continent"] + " / " + gisaid_metadata["country"] + " / " + gisaid_metadata["state"]) 
+      else: # if a usa territory
+        gisaid_metadata["covv_location"] = (gisaid_metadata["continent"] + " / " + gisaid_metadata["state"]) 
       gisaid_metadata.drop(["continent", "country", "state"], axis=1, inplace=True)
 
       # add county to covv_location if county is present
@@ -262,8 +312,8 @@ task sm_metadata_wrangling { # the sm stands for supermassive
 
       # write out the command to rename the assembly files to a file for bash to move about
       gisaid_metadata["cp"] = "gsutil cp"
-      gisaid_metadata.to_csv("gisaid-file-transfer.sh", sep=' ', header=False, index=False, columns = ["cp", "assembly_fasta", "fn"], quoting=csv.QUOTE_NONE, escapechar=" ")
-      gisaid_metadata.drop(["cp", "assembly_fasta"], axis=1, inplace=True)
+      gisaid_metadata.to_csv("gisaid-file-transfer.sh", sep=' ', header=False, index=False, columns = ["cp", assembly_fasta_column_name, "fn"], quoting=csv.QUOTE_NONE, escapechar=" ")
+      gisaid_metadata.drop(["cp", assembly_fasta_column_name], axis=1, inplace=True)
 
       # replace the first line of every fasta file (>Sample_ID) with the gisaid virus name instead (>covv_virus_name)
       # since gisaid virus name includes '/', use '|' in sed command instead
@@ -273,7 +323,7 @@ task sm_metadata_wrangling { # the sm stands for supermassive
 
       # make dictionary for renaming headers
       # format: {original : new} or {metadata_formatter : gisaid_format}
-      gisaid_rename_headers = {"gisaid_virus_name" : "covv_virus_name", "additional_host_information" : "covv_add_host_info", "gisaid_submitter" : "submitter", "collection_date" : "covv_collection_date", "seq_platform" : "covv_seq_technology", "host" : "covv_host", "assembly_method" : "covv_assembly_method", "assembly_mean_coverage" : "covv_coverage", "collecting_lab" : "covv_orig_lab", "collecting_lab_address" : "covv_orig_lab_addr", "submitting_lab" : "covv_subm_lab", "submitting_lab_address" : "covv_subm_lab_addr", "authors" : "covv_authors", "purpose_of_sequencing" : "covv_sampling_strategy", "patient_gender" : "covv_gender", "patient_age" : "covv_patient_age", "patient_status" : "covv_patient_status", "specimen_source" : "covv_specimen", "outbreak" : "covv_outbreak", "last_vaccinated" : "covv_last_vaccinated", "treatment" : "covv_treatment"}
+      gisaid_rename_headers = {"gisaid_virus_name" : "covv_virus_name", "additional_host_information" : "covv_add_host_info", "gisaid_submitter" : "submitter", "collection_date" : "covv_collection_date", "seq_platform" : "covv_seq_technology", "host" : "covv_host", "assembly_method" : "covv_assembly_method", assembly_mean_coverage_column_name : "covv_coverage", "collecting_lab" : "covv_orig_lab", "collecting_lab_address" : "covv_orig_lab_addr", "submitting_lab" : "covv_subm_lab", "submitting_lab_address" : "covv_subm_lab_addr", "authors" : "covv_authors", "purpose_of_sequencing" : "covv_sampling_strategy", "patient_gender" : "covv_gender", "patient_age" : "covv_patient_age", "patient_status" : "covv_patient_status", "specimen_source" : "covv_specimen", "outbreak" : "covv_outbreak", "last_vaccinated" : "covv_last_vaccinated", "treatment" : "covv_treatment"}
       
       # rename columns
       gisaid_metadata.rename(columns=gisaid_rename_headers, inplace=True)
@@ -290,10 +340,10 @@ task sm_metadata_wrangling { # the sm stands for supermassive
         biosample_required = ["submission_id", "organism", "collecting_lab", "collection_date",  "country", "state", "host_sci_name", "host_disease", "isolation_source", "lat_lon", "bioproject_accession", "isolation_type"]
         biosample_optional = ["sample_title", "strain", "isolate", "culture_collection", "genotype", "patient_age", "host_description", "host_disease_outcome", "host_disease_stage", "host_health_state", "patient_gender", "host_subject_id", "host_tissue_sampled", "passage_history", "pathotype", "serotype", "serovar", "specimen_voucher", "subgroup", "subtype", "description"] 
 
-        sra_required = ["bioproject_accession", "submission_id", "library_id", "organism", "isolation_source", "library_strategy", "library_source", "library_selection", "library_layout", "seq_platform", "instrument_model", "design_description", "filetype", "read1_dehosted"]
-        sra_optional = ["read2_dehosted", "amplicon_primer_scheme", "amplicon_size", "assembly_method", "dehosting_method", "submitter_email"]
+        sra_required = ["bioproject_accession", "submission_id", "library_id", "organism", "isolation_source", "library_strategy", "library_source", "library_selection", "library_layout", "seq_platform", "instrument_model", "design_description", "filetype", read1_column_name]
+        sra_optional = [read2_column_name, "amplicon_primer_scheme", "amplicon_size", "assembly_method", "dehosting_method", "submitter_email"]
 
-        bankit_required = ["submission_id", "collection_date", "country", "host", "assembly_fasta"]
+        bankit_required = ["submission_id", "collection_date", "country", "host", assembly_fasta_column_name]
         bankit_optional = ["isolate", "isolation_source"]
       else: # skip_ncbi is true
         biosample_required = []
@@ -303,7 +353,7 @@ task sm_metadata_wrangling { # the sm stands for supermassive
         bankit_required = []
         bankit_optional = []
 
-      gisaid_required = ["gisaid_submitter", "gisaid_virus_name", "submission_id", "collection_date", "continent", "country", "state", "host", "seq_platform", "assembly_fasta", "assembly_method", "assembly_mean_coverage", "collecting_lab", "collecting_lab_address", "submitting_lab", "submitting_lab_address", "authors"]
+      gisaid_required = ["gisaid_submitter", "gisaid_virus_name", "submission_id", "collection_date", "continent", "country", "state", "host", "seq_platform", assembly_fasta_column_name, "assembly_method", assembly_mean_coverage_column_name, "collecting_lab", "collecting_lab_address", "submitting_lab", "submitting_lab_address", "authors"]
       gisaid_optional = ["county", "purpose_of_sequencing", "patient_gender", "patient_age", "patient_status", "specimen_source", "outbreak", "last_vaccinated", "treatment"]
 
       print("DEBUG: removing rows with NAs in required columns...")
@@ -315,6 +365,9 @@ task sm_metadata_wrangling { # the sm stands for supermassive
         exclusions.write("\nSamples excluded for missing required metadata (will have empty values in indicated columns):\n")
       excluded_samples.to_csv("~{output_name}_excluded_samples.tsv", mode='a', sep='\t')
      
+      if table.empty:
+        sys.exit("DEBUG: all samples were removed due to either missing variables or failing to meet quality thresholds. Please investigate the excluded_samples.tsv file for more information.")
+      
       if (os.environ["skip_ncbi"] == "false"):
         # BIOSAMPLE
         print("DEBUG: creating biosample metadata table...")
@@ -345,14 +398,14 @@ task sm_metadata_wrangling { # the sm stands for supermassive
         
         # prettify the filenames and rename them to be sra compatible
         sra_metadata["filename"] = sra_metadata["sample_name"] + "_R1.fastq.gz"
-        sra_metadata["copy_command_r1"] = "gsutil -m cp " + sra_metadata["read1_dehosted"] + " " + "~{gcp_bucket_uri}" + "/" + sra_metadata["filename"]
+        sra_metadata["copy_command_r1"] = "gsutil -m cp " + sra_metadata[read1_column_name] + " " + "~{gcp_bucket_uri}" + "/" + sra_metadata["filename"]
         sra_metadata["copy_command_r1"].to_csv("sra-file-transfer.sh", index=False, header=False)
-        sra_metadata.drop(["copy_command_r1", "read1_dehosted"], axis=1, inplace=True)
-        if "read2_dehosted" in table.columns: # enable optional single end submission
+        sra_metadata.drop(["copy_command_r1", read1_column_name], axis=1, inplace=True)
+        if read2_column_name in table.columns: # enable optional single end submission
           sra_metadata["filename2"] = sra_metadata["sample_name"] + "_R2.fastq.gz"
-          sra_metadata["copy_command_r2"] = "gsutil -m cp " + sra_metadata["read2_dehosted"] + " " + "~{gcp_bucket_uri}" + "/" + sra_metadata["filename2"]
+          sra_metadata["copy_command_r2"] = "gsutil -m cp " + sra_metadata[read2_column_name] + " " + "~{gcp_bucket_uri}" + "/" + sra_metadata["filename2"]
           sra_metadata["copy_command_r2"].to_csv("sra-file-transfer.sh", mode='a', index=False, header=False)
-          sra_metadata.drop(["copy_command_r2", "read2_dehosted"], axis=1, inplace=True)
+          sra_metadata.drop(["copy_command_r2", read2_column_name], axis=1, inplace=True)
 
         sra_metadata.to_csv("~{output_name}_sra_metadata.tsv", sep='\t', index=False)
 
@@ -368,8 +421,8 @@ task sm_metadata_wrangling { # the sm stands for supermassive
 
         bankit_metadata["cp"] = "gsutil cp"
         bankit_metadata["fn"] = bankit_metadata["Sequence_ID"] + "_bankit.fasta"
-        bankit_metadata.to_csv("bankit-file-transfer.sh", sep=' ', header=False, index=False, columns = ["cp", "assembly_fasta", "fn"], quoting=csv.QUOTE_NONE, escapechar=" ")
-        bankit_metadata.drop(["cp", "assembly_fasta"], axis=1, inplace=True)
+        bankit_metadata.to_csv("bankit-file-transfer.sh", sep=' ', header=False, index=False, columns = ["cp", assembly_fasta_column_name, "fn"], quoting=csv.QUOTE_NONE, escapechar=" ")
+        bankit_metadata.drop(["cp", assembly_fasta_column_name], axis=1, inplace=True)
 
         # replace the first line of every fasta file (>Sample_ID) with the gisaid virus name instead (>covv_virus_name)
         # since gisaid virus name includes '/', use '|' in sed command instead
@@ -429,14 +482,14 @@ task sm_metadata_wrangling { # the sm stands for supermassive
 
       # make dictionary for renaming headers
       # format: {original : new} or {metadata_formatter : gisaid_format}
-      gisaid_rename_headers = {"gisaid_virus_name" : "pox_virus_name", "gisaid_submitter" : "submitter", "passage_details" : "pox_passage", "collection_date" : "pox_collection_date", "seq_platform" : "pox_seq_technology", "host" : "pox_host", "assembly_method" : "pox_assembly_method", "assembly_mean_coverage" : "pox_coverage", "collecting_lab" : "pox_orig_lab", "collecting_lab_address" : "pox_orig_lab_addr", "submitting_lab" : "pos_subm_lab", "submitting_lab_address" : "pox_subm_lab_addr", "authors" : "pox_authors", "purpose_of_sequencing" : "pox_sampling_strategy", "patient_gender" : "pox_gender", "patient_age" : "pox_patient_age", "patient_status" : "pox_patient_status", "specimen_source" : "pox_specimen_source", "outbreak" : "pox_outbreak", "last_vaccinated" : "pox_last_vaccinated", "treatment" : "pox_treatment"}
+      gisaid_rename_headers = {"gisaid_virus_name" : "pox_virus_name", "gisaid_submitter" : "submitter", "passage_details" : "pox_passage", "collection_date" : "pox_collection_date", "seq_platform" : "pox_seq_technology", "host" : "pox_host", "assembly_method" : "pox_assembly_method", assembly_mean_coverage_column_name : "pox_coverage", "collecting_lab" : "pox_orig_lab", "collecting_lab_address" : "pox_orig_lab_addr", "submitting_lab" : "pos_subm_lab", "submitting_lab_address" : "pox_subm_lab_addr", "authors" : "pox_authors", "purpose_of_sequencing" : "pox_sampling_strategy", "patient_gender" : "pox_gender", "patient_age" : "pox_patient_age", "patient_status" : "pox_patient_status", "specimen_source" : "pox_specimen_source", "outbreak" : "pox_outbreak", "last_vaccinated" : "pox_last_vaccinated", "treatment" : "pox_treatment"}
       
       # rename columns
       gisaid_metadata.rename(columns=gisaid_rename_headers, inplace=True)
 
       gisaid_metadata.to_csv("~{output_name}_gisaid_metadata.csv", sep=',', index=False)      
     else:
-      raise Exception('Only "SARS-CoV-2" and "MPXV" are supported as acceptable input for the \'organism\' variable at this time. You entered "~{organism}".')
+      raise Exception('Only "sars-cov-2" and "mpox" are supported as acceptable input for the \'organism\' variable at this time. You entered "~{organism}".')
   
     CODE
 
