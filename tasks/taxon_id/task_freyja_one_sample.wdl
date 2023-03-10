@@ -13,7 +13,7 @@ task freyja_one_sample {
     Boolean bootstrap = false
     Int? number_bootstraps
     Int memory = 4
-    String docker = "staphb/freyja:1.3.10"
+    String docker = "staphb/freyja:1.3.11"
     Int disk_size = 100
   }
   command <<<
@@ -98,10 +98,10 @@ task freyja_one_sample {
     File freyja_depths = "~{samplename}_freyja_depths.tsv"
     File freyja_demixed = "~{samplename}_freyja_demixed.tsv"
     File? freyja_update_log = "freyja_update.log"
-    File? freyja_boostrap_lineages = "~{samplename}_lineages.csv"
-    File? freyja_boostrap_lineages_pdf = "~{samplename}_lineages.pdf"
-    File? freyja_boostrap_summary = "~{samplename}_summarized.csv"
-    File? freyja_boostrap_summary_pdf = "~{samplename}_summarized.pdf"
+    File? freyja_bootstrap_lineages = "~{samplename}_lineages.csv"
+    File? freyja_bootstrap_lineages_pdf = "~{samplename}_lineages.pdf"
+    File? freyja_bootstrap_summary = "~{samplename}_summarized.csv"
+    File? freyja_bootstrap_summary_pdf = "~{samplename}_summarized.pdf"
     String freyja_barcode_version = read_string("FREYJA_BARCODES")
     String freyja_metadata_version = read_string("FREYJA_METADATA")
     String freyja_version = read_string("FREYJA_VERSION")
