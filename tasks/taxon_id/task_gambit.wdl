@@ -189,8 +189,8 @@ task gambit_euk {
     File assembly
     String samplename
     String docker = "quay.io/staphb/gambit:0.5.0"
-    File gambit_db_genomes = "gs://theiagen-public-files/terra/candida_auris_refs/221006-theiagen-fungal-v0.1.db"
-    File gambit_db_signatures = "gs://theiagen-public-files/terra/candida_auris_refs/221006-theiagen-fungal-v0.1.h5" 
+    File gambit_db_genomes = "gs://theiagen-public-files-rp/terra/theiaeuk-files/gambit/221130-theiagen-fungal-v0.2.db"
+    File gambit_db_signatures = "gs://theiagen-public-files-rp/terra/theiaeuk-files/gambit/221130-theiagen-fungal-v0.2.h5" 
     Int memory
     Int cpu
   }
