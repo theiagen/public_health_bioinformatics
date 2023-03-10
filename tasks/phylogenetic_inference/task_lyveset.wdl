@@ -60,7 +60,7 @@ task lyveset {
     Boolean fast = false
     Boolean downsample = false
     Boolean sample_sites = false
-    String? read_cleaner
+    String? read_cleaner = CGP
     String? mapper
     String? snpcaller
   }
@@ -108,7 +108,7 @@ task lyveset {
     ~{true='--fast' false='' fast} \
     ~{true='--downsample' false='' downsample} \
     ~{true='--sample_sites' false='' sample_sites} \
-    ~{'--read_cleaner ' + presets} \
+    ~{'--read-cleaner ' + read_cleaner} \
     ~{'--mapper ' + mapper} \
     ~{'--snpcaller ' + snpcaller} \
      -ref ~{dataset_name}/ref/reference.fasta ~{dataset_name}
