@@ -127,11 +127,13 @@ workflow theiacov_clearlabs {
     String theiacov_clearlabs_analysis_date = version_capture.date
     # Read Metadata
     String seq_platform = seq_method
-    # Read QC
+    # Read QC - dehosting outputs
     File read1_dehosted = ncbi_scrub_se.read1_dehosted
+    # Read QC - fastq_scan outputs
     Int num_reads_raw1 = fastq_scan_raw_reads.read1_seq
     Int num_reads_clean1 = fastq_scan_clean_reads.read1_seq
     String fastq_scan_version = fastq_scan_raw_reads.version
+    # Read QC - kraken outputs
     String kraken_version = kraken2_raw.version
     Float kraken_human = kraken2_raw.percent_human
     Float kraken_sc2 = kraken2_raw.percent_sc2
@@ -142,24 +144,36 @@ workflow theiacov_clearlabs {
     Float kraken_sc2_dehosted = kraken2_dehosted.percent_sc2
     String? kraken_target_org_dehosted = kraken2_dehosted.percent_target_org
     File kraken_report_dehosted = kraken2_dehosted.kraken_report
-    # Read Alignment
+    # Read Alignment - Artic consensus outputs
     File aligned_bam = consensus.trim_sorted_bam
     File aligned_bai = consensus.trim_sorted_bai
     File variants_from_ref_vcf = consensus.medaka_pass_vcf
+    File assembly_fasta = consensus.consensus_seq
+    File? read1_aligned = consensus.reads_aligned
+    # Read Alignment - Artic consensus versioning outputs
     String artic_version = consensus.artic_pipeline_version
     String artic_docker = consensus.artic_pipeline_docker
     String medaka_reference = consensus.medaka_reference
     String primer_bed_name = consensus.primer_bed_name
-    File assembly_fasta = consensus.consensus_seq
     String assembly_method = "TheiaCoV (~{version_capture.phb_version}): ~{consensus.artic_pipeline_version}"
-    File? read1_aligned = consensus.reads_aligned
-    # Assembly QC
+    # Read Alignment - consensus assembly qc outputs
+    File consensus_stats = stats_n_coverage.stats
+    File consensus_flagstat = stats_n_coverage.flagstat
+    Float meanbaseq_trim = stats_n_coverage_primtrim.meanbaseq
+    Float meanmapq_trim = stats_n_coverage_primtrim.meanmapq
+    Float assembly_mean_coverage = stats_n_coverage_primtrim.depth
+    String samtools_version_stats = stats_n_coverage.samtools_version
+    # Read Alignment - consensus assembly summary outputs
     Int number_N = consensus_qc.number_N
     Int assembly_length_unambiguous = consensus_qc.number_ATCG
     Int number_Degenerate = consensus_qc.number_Degenerate
     Int number_Total = consensus_qc.number_Total
     Float percent_reference_coverage = consensus_qc.percent_reference_coverage
-    # Lineage Assignment
+    # SC2 specific coverage outputs
+    Float? sc2_s_gene_mean_coverage = sc2_gene_coverage.sc2_s_gene_depth
+    Float? sc2_s_gene_percent_coverage = sc2_gene_coverage.sc2_s_gene_percent_coverage
+    File? sc2_all_genes_percent_coverage = sc2_gene_coverage.sc2_all_genes_percent_coverage
+    # Pangolin outputs
     String? pango_lineage = pangolin4.pangolin_lineage
     String? pango_lineage_expanded = pangolin4.pangolin_lineage_expanded
     String? pangolin_conflicts = pangolin4.pangolin_conflicts
@@ -168,18 +182,7 @@ workflow theiacov_clearlabs {
     File? pango_lineage_report= pangolin4.pango_lineage_report
     String? pangolin_docker = pangolin4.pangolin_docker
     String? pangolin_versions = pangolin4.pangolin_versions
-    # Alignment QC
-    File consensus_stats = stats_n_coverage.stats
-    File consensus_flagstat = stats_n_coverage.flagstat
-    Float meanbaseq_trim = stats_n_coverage_primtrim.meanbaseq
-    Float meanmapq_trim = stats_n_coverage_primtrim.meanmapq
-    Float assembly_mean_coverage = stats_n_coverage_primtrim.depth
-    String samtools_version_stats = stats_n_coverage.samtools_version
-    # SC2 specific
-    Float? sc2_s_gene_mean_coverage = sc2_gene_coverage.sc2_s_gene_depth
-    Float? sc2_s_gene_percent_coverage = sc2_gene_coverage.sc2_s_gene_percent_coverage
-    File? sc2_all_genes_percent_coverage = sc2_gene_coverage.sc2_all_genes_percent_coverage
-    # Clade Assigment
+    # Nextclade outputs
     File? nextclade_json = nextclade.nextclade_json
     File? auspice_json = nextclade.auspice_json
     File? nextclade_tsv = nextclade.nextclade_tsv

@@ -169,11 +169,7 @@ workflow theiacov_illumina_pe {
     String theiacov_illumina_pe_analysis_date = version_capture.date
     # Read Metadata
     String  seq_platform = seq_method
-    # Read QC
-    File? read1_dehosted = read_QC_trim.read1_dehosted
-    File? read2_dehosted = read_QC_trim.read2_dehosted
-    File read1_clean = read_QC_trim.read1_clean
-    File read2_clean = read_QC_trim.read2_clean
+    # Read QC - fastq_scan outputs
     Int num_reads_raw1 = read_QC_trim.fastq_scan_raw1
     Int num_reads_raw2 = read_QC_trim.fastq_scan_raw2
     String num_reads_raw_pairs = read_QC_trim.fastq_scan_raw_pairs
@@ -181,8 +177,16 @@ workflow theiacov_illumina_pe {
     Int num_reads_clean1 = read_QC_trim.fastq_scan_clean1
     Int num_reads_clean2 = read_QC_trim.fastq_scan_clean2
     String num_reads_clean_pairs = read_QC_trim.fastq_scan_clean_pairs
+    # Read QC - trimmomatic outputs
     String? trimmomatic_version = read_QC_trim.trimmomatic_version
+    # Read QC - bbduk outputs
+    File read1_clean = read_QC_trim.read1_clean
+    File read2_clean = read_QC_trim.read2_clean
     String bbduk_docker = read_QC_trim.bbduk_docker
+    # Read QC - dehosting outputs
+    File? read1_dehosted = read_QC_trim.read1_dehosted
+    File? read2_dehosted = read_QC_trim.read2_dehosted
+    # Read QC - kraken outputs
     String? kraken_version = read_QC_trim.kraken_version
     Float? kraken_human = read_QC_trim.kraken_human
     Float? kraken_sc2 = read_QC_trim.kraken_sc2
@@ -193,43 +197,46 @@ workflow theiacov_illumina_pe {
     Float? kraken_sc2_dehosted = read_QC_trim.kraken_sc2_dehosted
     String? kraken_target_org_dehosted =read_QC_trim.kraken_target_org_dehosted
     File? kraken_report_dehosted = read_QC_trim.kraken_report_dehosted
-    # Read Alignment
+    # Read Alignment - bwa outputs
     String? bwa_version = ivar_consensus.bwa_version
     String? samtools_version = ivar_consensus.samtools_version
     File? read1_aligned = ivar_consensus.read1_aligned
     File? read2_aligned = ivar_consensus.read2_aligned
-    String assembly_method = "TheiaCoV (~{version_capture.phb_version}): " + select_first([ivar_consensus.assembly_method_nonflu, irma.irma_version])
     String aligned_bam = select_first([ivar_consensus.aligned_bam, ""])
     String aligned_bai = select_first([ivar_consensus.aligned_bai, ""])
+    # Read Alignment - primer trimming outputs
     Float? primer_trimmed_read_percent = ivar_consensus.primer_trimmed_read_percent
     String? ivar_version_primtrim = ivar_consensus.ivar_version_primtrim
     String? samtools_version_primtrim = ivar_consensus.samtools_version
     String? primer_bed_name = ivar_consensus.primer_bed_name
+    # Read Alignment - variant call outputs
     File? ivar_tsv = ivar_consensus.ivar_tsv
     File? ivar_vcf = ivar_consensus.ivar_vcf
     String? ivar_variant_version = ivar_consensus.ivar_variant_version
-    # Assembly QC
+    # Read Alignment - assembly outputs
+    String assembly_method = "TheiaCoV (~{version_capture.phb_version}): " + select_first([ivar_consensus.assembly_method_nonflu, irma.irma_version])
     String assembly_fasta = select_first([ivar_consensus.assembly_fasta, irma.irma_assembly_fasta, ""])
     String? ivar_version_consensus = ivar_consensus.ivar_version_consensus
     String? samtools_version_consensus = ivar_consensus.samtools_version_consensus
-    Int number_N = consensus_qc.number_N
-    Int assembly_length_unambiguous = consensus_qc.number_ATCG
-    Int number_Degenerate =  consensus_qc.number_Degenerate
-    Int number_Total = consensus_qc.number_Total
-    Float percent_reference_coverage =  consensus_qc.percent_reference_coverage
+    # Read Alignment - consensus assembly qc outputs
     Int consensus_n_variant_min_depth = min_depth
-    # Alignment QC
     File? consensus_stats = ivar_consensus.consensus_stats
     File? consensus_flagstat = ivar_consensus.consensus_flagstat
     String meanbaseq_trim = select_first([ivar_consensus.meanbaseq_trim, ""])
     String meanmapq_trim = select_first([ivar_consensus.meanmapq_trim, ""])
     String assembly_mean_coverage = select_first([ivar_consensus.assembly_mean_coverage, ""])
     String? samtools_version_stats = ivar_consensus.samtools_version_stats
-    # SC2 specific
+    # Read Alignment - consensus assembly summary outputs
+    Int number_N = consensus_qc.number_N
+    Int assembly_length_unambiguous = consensus_qc.number_ATCG
+    Int number_Degenerate =  consensus_qc.number_Degenerate
+    Int number_Total = consensus_qc.number_Total
+    Float percent_reference_coverage =  consensus_qc.percent_reference_coverage
+    # SC2 specific coverage outputs
     Float? sc2_s_gene_mean_coverage = sc2_gene_coverage.sc2_s_gene_depth
     Float? sc2_s_gene_percent_coverage = sc2_gene_coverage.sc2_s_gene_percent_coverage
     File? sc2_all_genes_percent_coverage = sc2_gene_coverage.sc2_all_genes_percent_coverage
-    # SC2 Lineage Assignment
+    # Pangolin outputs
     String? pango_lineage = pangolin4.pangolin_lineage
     String? pango_lineage_expanded = pangolin4.pangolin_lineage_expanded
     String? pangolin_conflicts = pangolin4.pangolin_conflicts
@@ -238,7 +245,7 @@ workflow theiacov_illumina_pe {
     File? pango_lineage_report = pangolin4.pango_lineage_report
     String? pangolin_docker = pangolin4.pangolin_docker
     String? pangolin_versions = pangolin4.pangolin_versions
-    # Clade Assigment
+    # Nextclade outputs
     String nextclade_json = select_first([nextclade.nextclade_json, ""])
     String auspice_json = select_first([ nextclade.auspice_json, ""])
     String nextclade_tsv = select_first([nextclade.nextclade_tsv, ""])
@@ -249,7 +256,7 @@ workflow theiacov_illumina_pe {
     String nextclade_aa_dels = select_first([ha_na_nextclade_aa_dels, nextclade_output_parser.nextclade_aa_dels, ""])
     String nextclade_clade = select_first([nextclade_output_parser.nextclade_clade, ""])
     String? nextclade_lineage = nextclade_output_parser.nextclade_lineage
-    # NA specific columns - tamiflu mutation
+    # Nextclade Flu outputs - NA specific columns - tamiflu mutation
     String? nextclade_tamiflu_resistance_aa_subs = nextclade_output_parser_flu_na.nextclade_tamiflu_aa_subs
     # VADR Annotation QC
     File? vadr_alerts_list = vadr.alerts_list
@@ -260,6 +267,8 @@ workflow theiacov_illumina_pe {
     String? irma_version = irma.irma_version
     String? irma_type = irma.irma_type
     String? irma_subtype = irma.irma_subtype
+    File? irma_ha_segment = irma.seg_ha_assembly
+    File? irma_na_segment = irma.seg_na_assembly
     String? abricate_flu_type = abricate_flu.abricate_flu_type
     String? abricate_flu_subtype =  abricate_flu.abricate_flu_subtype
     File? abricate_flu_results = abricate_flu.abricate_flu_results

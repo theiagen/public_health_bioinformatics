@@ -72,13 +72,13 @@ workflow theiacov_fasta {
     # Read & Assembly Metadata
     String seq_platform = seq_method
     String assembly_method = input_assembly_method
-    # Assembly QC
+    # Assembly QC - consensus assembly summary statistics
     Int number_N = consensus_qc.number_N
     Int assembly_length_unambiguous = consensus_qc.number_ATCG
     Int number_Degenerate = consensus_qc.number_Degenerate
     Int number_Total = consensus_qc.number_Total
     Float percent_reference_coverage = consensus_qc.percent_reference_coverage
-    # Lineage Assignment
+    # Pangolin outputs
     String? pango_lineage = pangolin4.pangolin_lineage
     String? pango_lineage_expanded = pangolin4.pangolin_lineage_expanded
     String? pangolin_conflicts = pangolin4.pangolin_conflicts
@@ -87,7 +87,7 @@ workflow theiacov_fasta {
     File? pango_lineage_report = pangolin4.pango_lineage_report
     String? pangolin_docker = pangolin4.pangolin_docker
     String? pangolin_versions = pangolin4.pangolin_versions
-    # Clade Assigment
+    # Nextclade outputs
     File? nextclade_json = nextclade.nextclade_json
     File? auspice_json = nextclade.auspice_json
     File? nextclade_tsv = nextclade.nextclade_tsv
