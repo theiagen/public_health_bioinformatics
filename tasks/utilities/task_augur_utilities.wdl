@@ -350,24 +350,71 @@ task set_sc2_defaults { # establish sars-cov-2 default values for augur
 
 task set_flu_defaults { # establish flu default values for augur
   input {
-    String nextstrain_ncov_repo_commit = "23d1243127e8838a61b7e5c1a72bc419bf8c5a0d" # last updated on 2023-03-07
+    String flu_segment
+    String? flu_subtype
+
     Int disk_size = 50
   }
   command <<<
-    wget -q "https://github.com/nextstrain/ncov/archive/~{nextstrain_ncov_repo_commit}.tar.gz"
-    tar -xf "~{nextstrain_ncov_repo_commit}.tar.gz" --strip-components=1
+    # set h1n1 defaults
+    if [ ~{flu_subtype} == "h1n1" ]; then
+      if [ ~{flu_segment} == "ha" ]; then
+        echo "gs://theiagen-public-files-rp/terra/flu-references/reference_h1n1pdm_ha.gb" | tee FLU_REFERENCE_FASTA
+        echo "gs://theiagen-public-files-rp/terra/flu-references/clades_h1n1pdm_ha.tsv" | tee FLU_CLADE_FILE
+      elif [ ~{flu_segment} == "na" ]; then
+        echo "gs://theiagen-public-files-rp/terra/flu-references/reference_h1n1pdm_na.gb" | tee FLU_REFERENCE_FASTA
+      fi
+      echo "gs://theiagen-public-files-rp/terra/flu-references/auspice_config_h1n1pdm.json" | tee AUSPICE_CONFIG
+    fi
+    # set h3n2 defaults
+    if [ ~{flu_subtype} == "h3n2" ]; then
+      if [ ~{flu_segment} == "ha" ]; then
+        echo "gs://theiagen-public-files-rp/terra/flu-references/reference_h3n2_ha.gb" | tee FLU_REFERENCE_FASTA
+        echo "gs://theiagen-public-files-rp/terra/flu-references/clades_h3n2_ha.tsv" | tee FLU_CLADE_FILE
+      elif [ ~{flu_segment} == "na" ]; then
+        echo "gs://theiagen-public-files-rp/terra/flu-references/reference_h3n2_na.gb" | tee FLU_REFERENCE_FASTA
+      fi
+      echo "gs://theiagen-public-files-rp/terra/flu-references/auspice_config_h3n2.json" | tee AUSPICE_CONFIG
+    fi
+    # set vic defaults
+    if [ ~{flu_subtype} == "vic" ]; then
+      if [ ~{flu_segment} == "ha" ]; then
+        echo "gs://theiagen-public-files-rp/terra/flu-references/reference_vic_ha.gb" | tee FLU_REFERENCE_FASTA
+        echo "gs://theiagen-public-files-rp/terra/flu-references/clades_vic_ha.tsv" | tee FLU_CLADE_FILE
+      elif [ ~{flu_segment} == "na" ]; then
+        echo "gs://theiagen-public-files-rp/terra/flu-references/reference_vic_na.gb" | tee FLU_REFERENCE_FASTA
+      fi
+      echo "gs://theiagen-public-files-rp/terra/flu-references/auspice_config_vic.json" | tee AUSPICE_CONFIG
+    fi
+    # set yam defaults
+    if [ ~{flu_subtype} == "yam" ]; then
+      if [ ~{flu_segment} == "ha" ]; then
+        echo "gs://theiagen-public-files-rp/terra/flu-references/reference_yam_ha.gb" | tee FLU_REFERENCE_FASTA
+        echo "gs://theiagen-public-files-rp/terra/flu-references/clades_yam_ha.tsv" | tee FLU_CLADE_FILE
+      elif [ ~{flu_segment} == "na" ]; then
+        echo "gs://theiagen-public-files-rp/terra/flu-references/reference_yam_na.gb" | tee FLU_REFERENCE_FASTA
+      fi
+      echo "gs://theiagen-public-files-rp/terra/flu-references/auspice_config_yam.json" | tee AUSPICE_CONFIG
+    fi
+
+    # throw error if no subtype provided
+    if [ ~{flu_subtype} == "" ]; then
+      echo "Uh oh! You must provide a flu subtype!"
+      exit 1
+    fi
+
   >>>
   output {
-    Int min_num_unambig = 27000
-    File clades_tsv = "defaults/clades.tsv"
-    File lat_longs_tsv = "defaults/lat_longs.tsv"
-    File reference_fasta = "defaults/reference_seq.fasta"
-    File reference_genbank = "defaults/reference_seq.gb"
-    File auspice_config = "defaults/auspice_config.json"
+    Int min_num_unambig = 900
+    File? clades_tsv = read_string("FLU_CLADE_FILE")
+    File lat_longs_tsv = "gs://theiagen-public-files-rp/terra/flu-references//lat_longs.tsv"
+    File reference_fasta = read_string("FLU_REFERENCE_FASTA")
+    File reference_genbank = read_string("FLU_REFERENCE_FASTA")
+    File auspice_config = read_string("AUSPICE_CONFIG")
+     # the following values were set to match the nextstrain build: https://github.com/nextstrain/seasonal-flu/blob/fa7a3d323a7e193f1ba1ae5b3e40249edb87c491/Snakefile_base#L713
     Float min_date = 2020.0
     Int pivot_interval = 1
-    String pivot_interval_units = "weeks"
-    Float narrow_bandwidth = 0.05
+    Float narrow_bandwidth = 0.1666667
     Float proportion_wide = 0.0
   }
   runtime {
