@@ -4,7 +4,7 @@ import "../utilities/wf_read_QC_trim_se.wdl" as read_qc
 import "../utilities/wf_ivar_consensus.wdl" as consensus_call
 import "../../tasks/quality_control/task_vadr.wdl" as vadr_task
 import "../../tasks/quality_control/task_consensus_qc.wdl" as consensus_qc_task
-import "../../tasks/taxon_id/task_nextclade.wdl" as nextclade
+import "../../tasks/taxon_id/task_nextclade.wdl" as nextclade_task
 import "../../tasks/species_typing/task_pangolin.wdl" as pangolin
 import "../../tasks/gene_typing/task_sc2_gene_coverage.wdl" as sc2_calculation
 import "../../tasks/task_versioning.wdl" as versioning
@@ -72,16 +72,16 @@ workflow theiacov_illumina_se {
   }
   if (organism == "MPXV" || organism == "sars-cov-2"){
     # tasks specific to either MPXV or sars-cov-2
-    call nextclade.nextclade_one_sample {
+    call nextclade_task.nextclade {
       input:
       genome_fasta = ivar_consensus.assembly_fasta,
       dataset_name = select_first([nextclade_dataset_name, organism,]),
       dataset_reference = nextclade_dataset_reference,
       dataset_tag = nextclade_dataset_tag
     }
-    call nextclade.nextclade_output_parser_one_sample {
+    call nextclade_task.nextclade_output_parser {
       input:
-      nextclade_tsv = nextclade_one_sample.nextclade_tsv,
+      nextclade_tsv = nextclade.nextclade_tsv,
       organism = organism
     }
   }
@@ -160,16 +160,16 @@ workflow theiacov_illumina_se {
     String? pangolin_docker = pangolin4.pangolin_docker
     String? pangolin_versions = pangolin4.pangolin_versions
     # Clade Assigment
-    File? nextclade_json = nextclade_one_sample.nextclade_json
-    File? auspice_json = nextclade_one_sample.auspice_json
-    File? nextclade_tsv = nextclade_one_sample.nextclade_tsv
-    String? nextclade_version = nextclade_one_sample.nextclade_version
-    String? nextclade_docker = nextclade_one_sample.nextclade_docker
+    File? nextclade_json = nextclade.nextclade_json
+    File? auspice_json = nextclade.auspice_json
+    File? nextclade_tsv = nextclade.nextclade_tsv
+    String? nextclade_version = nextclade.nextclade_version
+    String? nextclade_docker = nextclade.nextclade_docker
     String nextclade_ds_tag = nextclade_dataset_tag
-    String? nextclade_aa_subs = nextclade_output_parser_one_sample.nextclade_aa_subs
-    String? nextclade_aa_dels = nextclade_output_parser_one_sample.nextclade_aa_dels
-    String? nextclade_clade = nextclade_output_parser_one_sample.nextclade_clade
-    String? nextclade_lineage = nextclade_output_parser_one_sample.nextclade_lineage
+    String? nextclade_aa_subs = nextclade_output_parser.nextclade_aa_subs
+    String? nextclade_aa_dels = nextclade_output_parser.nextclade_aa_dels
+    String? nextclade_clade = nextclade_output_parser.nextclade_clade
+    String? nextclade_lineage = nextclade_output_parser.nextclade_lineage
     # VADR Annotation QC
     File? vadr_alerts_list = vadr.alerts_list
     String? vadr_num_alerts = vadr.num_alerts

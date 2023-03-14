@@ -5,7 +5,7 @@ import "../utilities/wf_ivar_consensus.wdl" as consensus_call
 import "../../tasks/assembly/task_irma.wdl" as irma_task
 import "../../tasks/quality_control/task_vadr.wdl" as vadr_task
 import "../../tasks/quality_control/task_consensus_qc.wdl" as consensus_qc_task
-import "../../tasks/taxon_id/task_nextclade.wdl" as nextclade
+import "../../tasks/taxon_id/task_nextclade.wdl" as nextclade_task
 import "../../tasks/species_typing/task_pangolin.wdl" as pangolin
 import "../../tasks/species_typing/task_quasitools.wdl" as quasitools
 import "../../tasks/gene_typing/task_abricate.wdl" as abricate
@@ -97,38 +97,38 @@ workflow theiacov_illumina_pe {
   # run organism-specific typing
   if (organism == "MPXV" || organism == "sars-cov-2" || organism == "flu" && select_first([abricate_flu.run_nextclade]) ) { 
     # tasks specific to either MPXV, sars-cov-2, or flu
-    call nextclade.nextclade_one_sample {
+    call nextclade_task.nextclade {
       input:
         genome_fasta = select_first([ivar_consensus.assembly_fasta, irma.seg_ha_assembly]),
         dataset_name = select_first([abricate_flu.nextclade_name_ha, nextclade_dataset_name, organism]),
         dataset_reference = select_first([abricate_flu.nextclade_ref_ha, nextclade_dataset_reference]),
         dataset_tag = select_first([abricate_flu.nextclade_ds_tag_ha, nextclade_dataset_tag])
     }
-    call nextclade.nextclade_output_parser_one_sample {
+    call nextclade_task.nextclade_output_parser {
       input:
-        nextclade_tsv = nextclade_one_sample.nextclade_tsv,
+        nextclade_tsv = nextclade.nextclade_tsv,
         organism = organism
     }
   }
   if (organism == "flu" &&  select_first([abricate_flu.run_nextclade]) && defined(irma.seg_na_assembly)) { 
     # tasks specific to flu NA - run nextclade a second time
-    call nextclade.nextclade_one_sample as nextclade_one_sample_flu_na {
+    call nextclade_task.nextclade as nextclade_flu_na {
       input:
         genome_fasta = select_first([irma.seg_na_assembly]),
         dataset_name = select_first([abricate_flu.nextclade_name_na, nextclade_dataset_name, organism]),
         dataset_reference = select_first([abricate_flu.nextclade_ref_na, nextclade_dataset_reference]),
         dataset_tag = select_first([abricate_flu.nextclade_ds_tag_na, nextclade_dataset_tag])
     }
-    call nextclade.nextclade_output_parser_one_sample as nextclade_output_parser_one_sample_flu_na {
+    call nextclade_task.nextclade_output_parser as nextclade_output_parser_flu_na {
       input:
-        nextclade_tsv = nextclade_one_sample_flu_na.nextclade_tsv,
+        nextclade_tsv = nextclade_flu_na.nextclade_tsv,
         organism = organism,
         NA_segment = true
     }
     # concatenate tag, aa subs and aa dels for HA and NA segments
     String ha_na_nextclade_ds_tag= "~{abricate_flu.nextclade_ds_tag_ha + ',' + abricate_flu.nextclade_ds_tag_na}"
-    String ha_na_nextclade_aa_subs= "~{nextclade_output_parser_one_sample.nextclade_aa_subs + ',' + nextclade_output_parser_one_sample_flu_na.nextclade_aa_subs}"
-    String ha_na_nextclade_aa_dels= "~{nextclade_output_parser_one_sample.nextclade_aa_dels + ',' + nextclade_output_parser_one_sample_flu_na.nextclade_aa_dels}"
+    String ha_na_nextclade_aa_subs= "~{nextclade_output_parser.nextclade_aa_subs + ',' + nextclade_output_parser_flu_na.nextclade_aa_subs}"
+    String ha_na_nextclade_aa_dels= "~{nextclade_output_parser.nextclade_aa_dels + ',' + nextclade_output_parser_flu_na.nextclade_aa_dels}"
   }
   if (organism == "sars-cov-2") {
     # sars-cov-2 specific tasks
@@ -239,18 +239,18 @@ workflow theiacov_illumina_pe {
     String? pangolin_docker = pangolin4.pangolin_docker
     String? pangolin_versions = pangolin4.pangolin_versions
     # Clade Assigment
-    String nextclade_json = select_first([nextclade_one_sample.nextclade_json, ""])
-    String auspice_json = select_first([ nextclade_one_sample.auspice_json, ""])
-    String nextclade_tsv = select_first([nextclade_one_sample.nextclade_tsv, ""])
-    String nextclade_version = select_first([nextclade_one_sample.nextclade_version, ""])
-    String nextclade_docker = select_first([nextclade_one_sample.nextclade_docker, ""])
+    String nextclade_json = select_first([nextclade.nextclade_json, ""])
+    String auspice_json = select_first([ nextclade.auspice_json, ""])
+    String nextclade_tsv = select_first([nextclade.nextclade_tsv, ""])
+    String nextclade_version = select_first([nextclade.nextclade_version, ""])
+    String nextclade_docker = select_first([nextclade.nextclade_docker, ""])
     String nextclade_ds_tag = select_first([ha_na_nextclade_ds_tag, abricate_flu.nextclade_ds_tag_ha, nextclade_dataset_tag, ""])
-    String nextclade_aa_subs = select_first([ha_na_nextclade_aa_subs, nextclade_output_parser_one_sample.nextclade_aa_subs, ""])
-    String nextclade_aa_dels = select_first([ha_na_nextclade_aa_dels, nextclade_output_parser_one_sample.nextclade_aa_dels, ""])
-    String nextclade_clade = select_first([nextclade_output_parser_one_sample.nextclade_clade, ""])
-    String? nextclade_lineage = nextclade_output_parser_one_sample.nextclade_lineage
+    String nextclade_aa_subs = select_first([ha_na_nextclade_aa_subs, nextclade_output_parser.nextclade_aa_subs, ""])
+    String nextclade_aa_dels = select_first([ha_na_nextclade_aa_dels, nextclade_output_parser.nextclade_aa_dels, ""])
+    String nextclade_clade = select_first([nextclade_output_parser.nextclade_clade, ""])
+    String? nextclade_lineage = nextclade_output_parser.nextclade_lineage
     # NA specific columns - tamiflu mutation
-    String? nextclade_tamiflu_resistance_aa_subs = nextclade_output_parser_one_sample_flu_na.nextclade_tamiflu_aa_subs
+    String? nextclade_tamiflu_resistance_aa_subs = nextclade_output_parser_flu_na.nextclade_tamiflu_aa_subs
     # VADR Annotation QC
     File? vadr_alerts_list = vadr.alerts_list
     String? vadr_num_alerts = vadr.num_alerts
