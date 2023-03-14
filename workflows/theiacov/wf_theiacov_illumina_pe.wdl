@@ -168,7 +168,7 @@ workflow theiacov_illumina_pe {
     String theiacov_illumina_pe_version = version_capture.phb_version
     String theiacov_illumina_pe_analysis_date = version_capture.date
     # Read Metadata
-    String  seq_platform = seq_method
+    String seq_platform = seq_method
     # Read QC - fastq_scan outputs
     Int num_reads_raw1 = read_QC_trim.fastq_scan_raw1
     Int num_reads_raw2 = read_QC_trim.fastq_scan_raw2
