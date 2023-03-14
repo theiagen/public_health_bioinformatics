@@ -11,7 +11,7 @@ import "../../tasks/task_versioning.wdl" as versioning
 
 workflow augur {
   input {
-    Array[File]+ assembly_fastas
+    Array[File]+ assembly_fastas # use ha vs na segments
     Array[File]+ sample_metadata_tsvs
     String build_name
     File? reference_fasta
