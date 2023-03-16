@@ -75,7 +75,7 @@ task irma {
        sed "1s/>/>~{samplename}:/" "~{samplename}"_NA*.fasta > "~{samplename}"_NA.fasta
     fi
 
-    if [[ -n "${subtype}" ]]; then 
+    if ! [ -z "${subtype}" ]; then 
       echo "${subtype}" > IRMA_SUBTYPE
     else
       echo "No subtype predicted by IRMA" > IRMA_SUBTYPE
