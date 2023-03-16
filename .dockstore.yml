@@ -75,6 +75,11 @@ workflows:
    primaryDescriptorPath: /workflows/phylogenetics/wf_theiacov_augur_distance_tree.wdl
    testParameterFiles:
     - empty.json
+ - name: Augur_PHB
+   subclass: WDL
+   primaryDescriptorPath: /workflows/phylogenetics/wf_augur.wdl
+   testParameterFiles:
+    - empty.json
  - name: Pangolin_Update_PHB
    subclass: WDL
    primaryDescriptorPath: /workflows/theiacov/updates/wf_pangolin_update.wdl
