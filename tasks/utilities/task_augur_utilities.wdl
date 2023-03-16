@@ -425,3 +425,47 @@ task set_flu_defaults { # establish flu default values for augur
     disk: disk_size + " GB"
   }
 }
+
+task prep_augur_metadata { # in use
+  input {
+    File assembly
+    String collection_date
+    String country
+    String state
+    String continent
+
+    String organism = "sars-cov-2" # options: "flu" or "sars-cov-2"
+    String county = ""
+    String? pango_lineage
+
+    Int disk_size = 10
+  }
+  command <<<
+    # set strain name by assembly header
+    assembly_header=$(grep -e ">" ~{assembly} | sed 's/\s.*$//' |  sed 's/>//g' )
+
+    if [ "~{organism}" == "sars-cov-2" ]; then # keep pango lineage
+      # use pango lineage
+      echo -e "strain\tvirus\tdate\tregion\tcountry\tdivision\tlocation\tpango_lineage" > augur_metadata.tsv
+      echo -e "\"$assembly_header\"\t\"ncov\"\t\"~{collection_date}\"\t\"~{continent}\" \t\"~{country}\"\t\"~{state}\"\t\"~{county}\"\t\"~{pango_lineage}\"" >> augur_metadata.tsv
+
+    elif [ "~{organism}" == "flu" ]; then # skip pango lineage
+      # skip pango lineage
+      echo -e "strain\tvirus\tdate\tregion\tcountry\tdivision\tlocation" > augur_metadata.tsv
+      echo -e "\"$assembly_header\"\t\"ncov\"\t\"~{collection_date}\"\t\"~{continent}\" \t\"~{country}\"\t\"~{state}\"\t\"~{county}\"" >> augur_metadata.tsv
+
+    fi
+  >>>
+  output {
+    File augur_metadata = "augur_metadata.tsv"
+  }
+  runtime {
+      docker: "quay.io/theiagen/utility:1.1"
+      memory: "3 GB"
+      cpu: 1
+      disks: "local-disk ~{disk_size} SSD"
+      disk: disk_size + " GB"
+      preemptible: 0
+      maxRetries: 3
+  }
+}
