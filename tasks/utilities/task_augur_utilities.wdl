@@ -426,7 +426,7 @@ task set_flu_defaults { # establish flu default values for augur
   }
 }
 
-task prep_augur_metadata { # in use
+task prep_augur_metadata {
   input {
     File assembly
     String collection_date
@@ -434,7 +434,7 @@ task prep_augur_metadata { # in use
     String state
     String continent
 
-    String organism = "sars-cov-2" # options: "flu" or "sars-cov-2"
+    String organism
     String county = ""
     String? pango_lineage
 
