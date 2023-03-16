@@ -66,16 +66,16 @@ task irma {
       if [[ "$(ls ~{samplename}_HA*.fasta)" == *"HA_H"* ]]; then # if so, grab H-type if one is identified in assembly header
         subtype="$(basename ~{samplename}_HA*.fasta | awk -F _ '{print $NF}' | cut -d. -f1)" # grab H-type from last value in under-score-delimited filename
       fi
-      # format HA segment to target output name
-      mv "~{samplename}"_HA*.fasta "~{samplename}"_HA.fasta
+      # format HA segment to target output name and rename header to include the samplename
+      sed "1s/>/>~{samplename}:/" "~{samplename}"_HA*.fasta > "~{samplename}"_HA.fasta
     fi
     if compgen -G "~{samplename}_NA*.fasta" && [[ "$(ls ~{samplename}_NA*.fasta)" == *"NA_N"* ]]; then # check if NA segment exists with an N-type identified in header
        subtype+="$(basename ~{samplename}_NA*.fasta | awk -F _ '{print $NF}' | cut -d. -f1)" # grab N-type from last value in under-score-delimited filename 
-       # format NA segment to target output name
-       mv "~{samplename}"_NA*.fasta "~{samplename}"_NA.fasta    
+       # format NA segment to target output name and rename header to include the samplename
+       sed "1s/>/>~{samplename}:/" "~{samplename}"_NA*.fasta > "~{samplename}"_NA.fasta
     fi
 
-    if ! [ -z "${subtype}" ]; then 
+    if [[ -n "${subtype}" ]]; then 
       echo "${subtype}" > IRMA_SUBTYPE
     else
       echo "No subtype predicted by IRMA" > IRMA_SUBTYPE
