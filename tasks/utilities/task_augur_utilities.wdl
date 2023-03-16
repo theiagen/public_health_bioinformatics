@@ -428,7 +428,7 @@ task set_flu_defaults { # establish flu default values for augur
 
 task prep_augur_metadata {
   input {
-    File assembly
+    String samplename
     String collection_date
     String country
     String state
@@ -442,17 +442,17 @@ task prep_augur_metadata {
   }
   command <<<
     # set strain name by assembly header
-    assembly_header=$(grep -e ">" ~{assembly} | sed 's/\s.*$//' |  sed 's/>//g' )
+    #assembly_header=$(grep -e ">" ~{assembly} | sed 's/\s.*$//' |  sed 's/>//g' )
 
     if [ "~{organism}" == "sars-cov-2" ]; then # keep pango lineage
       # use pango lineage
       echo -e "strain\tvirus\tdate\tregion\tcountry\tdivision\tlocation\tpango_lineage" > augur_metadata.tsv
-      echo -e "\"$assembly_header\"\t\"ncov\"\t\"~{collection_date}\"\t\"~{continent}\" \t\"~{country}\"\t\"~{state}\"\t\"~{county}\"\t\"~{pango_lineage}\"" >> augur_metadata.tsv
+      echo -e "\"~{samplename}\"\t\"ncov\"\t\"~{collection_date}\"\t\"~{continent}\" \t\"~{country}\"\t\"~{state}\"\t\"~{county}\"\t\"~{pango_lineage}\"" >> augur_metadata.tsv
 
     elif [ "~{organism}" == "flu" ]; then # skip pango lineage
       # skip pango lineage
       echo -e "strain\tvirus\tdate\tregion\tcountry\tdivision\tlocation" > augur_metadata.tsv
-      echo -e "\"$assembly_header\"\t\"ncov\"\t\"~{collection_date}\"\t\"~{continent}\" \t\"~{country}\"\t\"~{state}\"\t\"~{county}\"" >> augur_metadata.tsv
+      echo -e "\"~{samplename}\"\t\"ncov\"\t\"~{collection_date}\"\t\"~{continent}\" \t\"~{country}\"\t\"~{state}\"\t\"~{county}\"" >> augur_metadata.tsv
 
     fi
   >>>
