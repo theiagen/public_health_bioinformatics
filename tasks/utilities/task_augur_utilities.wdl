@@ -456,7 +456,7 @@ task prep_augur_metadata {
     pangolin_header=""
 
     # if pango_lineage defined, add to metadata
-    if [[ -n ~{pango_lineage} ]] ; then 
+    if [[ ~{pango_lineage} ]] ; then 
       pangolin_header="pango_lineage"
     fi
 
