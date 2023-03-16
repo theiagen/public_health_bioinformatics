@@ -428,30 +428,31 @@ task set_flu_defaults { # establish flu default values for augur
 
 task prep_augur_metadata {
   input {
-    String samplename
+    File assembly
     String collection_date
     String country
     String state
     String continent
 
-    String organism
     String county = ""
     String? pango_lineage
 
     Int disk_size = 10
   }
   command <<<   
-    if [ "~{organism}" == "sars-cov-2" ]; then # keep pango lineage
-      # use pango lineage
-      echo -e "strain\tvirus\tdate\tregion\tcountry\tdivision\tlocation\tpango_lineage" > augur_metadata.tsv
-      echo -e "\"~{samplename}\"\t\"ncov\"\t\"~{collection_date}\"\t\"~{continent}\" \t\"~{country}\"\t\"~{state}\"\t\"~{county}\"\t\"~{pango_lineage}\"" >> augur_metadata.tsv
+    # Set strain name by assembly header
+    assembly_header=$(grep -e ">" ~{assembly} | sed 's/\s.*$//' |  sed 's/>//g' )
 
-    elif [ "~{organism}" == "flu" ]; then # skip pango lineage
-      # skip pango lineage
-      echo -e "strain\tvirus\tdate\tregion\tcountry\tdivision\tlocation" > augur_metadata.tsv
-      echo -e "\"~{samplename}\"\t\"flu\"\t\"~{collection_date}\"\t\"~{continent}\" \t\"~{country}\"\t\"~{state}\"\t\"~{county}\"" >> augur_metadata.tsv
+    pangolin_header=""
 
+    # if pango_lineage defined, add to metadata
+    if [[ -n ~{pango_lineage} ]] ; then 
+      pangolin_header="pango_lineage"
     fi
+
+    echo -e "strain\tvirus\tdate\tregion\tcountry\tdivision\tlocation\t${pangolin_header}" > augur_metadata.tsv
+    echo -e "\"${assembly_header}\"\t\"ncov\"\t\"~{collection_date}\"\t\"~{continent}\" \t\"~{country}\"\t\"~{state}\"\t\"~{county}\"\t\"~{pango_lineage}\"" >> augur_metadata.tsv
+
   >>>
   output {
     File augur_metadata = "augur_metadata.tsv"

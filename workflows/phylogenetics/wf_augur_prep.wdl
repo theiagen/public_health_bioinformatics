@@ -5,7 +5,7 @@ import "../../tasks/task_versioning.wdl" as versioning
 
 workflow augur_prep {
   input {
-    String samplename
+    File assembly
     String collection_date
     String country
     String state
@@ -16,12 +16,11 @@ workflow augur_prep {
   }
   call augur_utils.prep_augur_metadata {
     input:
-      samplename = samplename,
+      assembly = assembly,
       collection_date = collection_date,
       country = country,
       state = state,
       continent = continent,
-      organism = organism,
       pango_lineage = pango_lineage,
       county = county
   }
