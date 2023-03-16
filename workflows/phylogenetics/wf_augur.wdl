@@ -16,7 +16,7 @@ workflow augur {
     String build_name
     File? reference_fasta
     File? reference_genbank
-    Int min_num_unambig
+    Int? min_num_unambig
     String organism = "sars-cov-2" # options: sars-cov-2 or flu
     String flu_segment = "ha" # options: ha or na
     String? flu_subtype # options: "vic" "yam" "h3n2" "h1n1"
