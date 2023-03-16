@@ -10,7 +10,6 @@ workflow augur_prep {
     String country
     String state
     String continent
-    String organism = "sars-cov-2" # options: "flu" or "sars-cov-2"
     String? pango_lineage
     String? county
   }
