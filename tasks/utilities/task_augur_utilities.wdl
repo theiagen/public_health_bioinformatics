@@ -417,7 +417,7 @@ task set_flu_defaults { # establish flu default values for augur
   output {
     Int min_num_unambig = 900
     File? clades_tsv = read_string("FLU_CLADE_FILE")
-    File lat_longs_tsv = "gs://theiagen-public-files-rp/terra/flu-references//lat_longs.tsv"
+    File lat_longs_tsv = "gs://theiagen-public-files-rp/terra/flu-references/lat_longs.tsv"
     File reference_fasta = read_string("FLU_REFERENCE_FASTA")
     File reference_genbank = read_string("FLU_REFERENCE_FASTA")
     File auspice_config = read_string("AUSPICE_CONFIG")
