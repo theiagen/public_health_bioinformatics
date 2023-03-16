@@ -440,9 +440,7 @@ task prep_augur_metadata {
 
     Int disk_size = 10
   }
-  command <<<
-    # set strain name by assembly header
-    
+  command <<<   
     if [ "~{organism}" == "sars-cov-2" ]; then # keep pango lineage
       # use pango lineage
       echo -e "strain\tvirus\tdate\tregion\tcountry\tdivision\tlocation\tpango_lineage" > augur_metadata.tsv
