@@ -340,7 +340,7 @@ task set_sc2_defaults { # establish sars-cov-2 default values for augur
     Float proportion_wide = 0.0
   }
   runtime {
-    docker: "staphb/augur:16.0.3"
+    docker: "quay.io/staphb/augur:16.0.3"
     memory: "1 GB"
     cpu:   1
     disks:  "local-disk " + disk_size + " HDD"
@@ -418,7 +418,7 @@ task set_flu_defaults { # establish flu default values for augur
     Float proportion_wide = 0.0
   }
   runtime {
-    docker: "staphb/augur:16.0.3"
+    docker: "quay.io/staphb/augur:16.0.3"
     memory: "1 GB"
     cpu:   1
     disks:  "local-disk " + disk_size + " HDD"

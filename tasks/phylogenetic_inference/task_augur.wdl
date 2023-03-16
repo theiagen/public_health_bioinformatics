@@ -25,7 +25,7 @@ task augur_align {
     String augur_version = read_string("VERSION")
   }
   runtime {
-    docker: "staphb/augur:16.0.3"
+    docker: "quay.io/staphb/augur:16.0.3"
     memory: mem_size + " GB"
     cpu :   cpus
     disks:  "local-disk " + disk_size + " LOCAL"
@@ -64,7 +64,7 @@ task augur_tree {
     File aligned_tree  = "~{build_name}_~{method}.nwk"
   }
   runtime {
-    docker: "staphb/augur:16.0.3"
+    docker: "quay.io/staphb/augur:16.0.3"
     memory: "32 GB"
     cpu: cpus
     disks: "local-disk " + disk_size + " LOCAL"
@@ -127,7 +127,7 @@ task augur_refine {
     File branch_lengths = "~{build_name}_branch_lengths.json"
   }
   runtime {
-    docker: "staphb/augur:16.0.3"
+    docker: "quay.io/staphb/augur:16.0.3"
     memory: "50 GB"
     cpu : 2
     disks: "local-disk " + disk_size + " HDD"
@@ -185,7 +185,7 @@ task augur_frequencies {
     File tip_frequencies_json = "~{build_name}_tip-frequencies.json"
   }
   runtime {
-    docker: "staphb/augur:16.0.3"
+    docker: "quay.io/staphb/augur:16.0.3"
     memory: mem_size + " GB"
     cpu: 4
     disks: "local-disk " + disk_size + " HDD"
@@ -225,7 +225,7 @@ task augur_ancestral {
     File ancestral_sequences = "~{build_name}_ancestral_sequences.fasta"
   }
   runtime {
-    docker: "staphb/augur:16.0.3"
+    docker: "quay.io/staphb/augur:16.0.3"
     memory: "50 GB"
     cpu: 4
     disks: "local-disk " + disk_size + " HDD"
@@ -259,7 +259,7 @@ task augur_translate {
     File translated_aa_muts_json = "~{build_name}_aa_muts.json"
   }
   runtime {
-    docker: "staphb/augur:16.0.3"
+    docker: "quay.io/staphb/augur:16.0.3"
     memory: "2 GB"
     cpu : 1
     disks: "local-disk " + disk_size + " HDD"
@@ -293,7 +293,7 @@ task augur_clades {
     File clade_assignments_json = "~{build_name}_clades.json"
   }
   runtime {
-    docker: "staphb/augur:16.0.3"
+    docker: "quay.io/staphb/augur:16.0.3"
     memory: "2 GB"
     cpu :   1
     disks:  "local-disk " + disk_size + " HDD"
@@ -338,7 +338,7 @@ task augur_export {
     File? root_sequence_json = "~{build_name}_auspice_root-sequence.json"
   }
   runtime {
-    docker: "staphb/augur:16.0.3"
+    docker: "quay.io/staphb/augur:16.0.3"
     memory: "64 GB"
     cpu :   4
     disks:  "local-disk " + disk_size + " HDD"
