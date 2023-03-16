@@ -449,7 +449,7 @@ task prep_augur_metadata {
     elif [ "~{organism}" == "flu" ]; then # skip pango lineage
       # skip pango lineage
       echo -e "strain\tvirus\tdate\tregion\tcountry\tdivision\tlocation" > augur_metadata.tsv
-      echo -e "\"~{samplename}\"\t\"ncov\"\t\"~{collection_date}\"\t\"~{continent}\" \t\"~{country}\"\t\"~{state}\"\t\"~{county}\"" >> augur_metadata.tsv
+      echo -e "\"~{samplename}\"\t\"flu\"\t\"~{collection_date}\"\t\"~{continent}\" \t\"~{country}\"\t\"~{state}\"\t\"~{county}\"" >> augur_metadata.tsv
 
     fi
   >>>
