@@ -442,8 +442,7 @@ task prep_augur_metadata {
   }
   command <<<
     # set strain name by assembly header
-    #assembly_header=$(grep -e ">" ~{assembly} | sed 's/\s.*$//' |  sed 's/>//g' )
-
+    
     if [ "~{organism}" == "sars-cov-2" ]; then # keep pango lineage
       # use pango lineage
       echo -e "strain\tvirus\tdate\tregion\tcountry\tdivision\tlocation\tpango_lineage" > augur_metadata.tsv
