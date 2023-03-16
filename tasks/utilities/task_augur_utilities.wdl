@@ -357,49 +357,59 @@ task set_flu_defaults { # establish flu default values for augur
   }
   command <<<
     # set h1n1 defaults
-    if [ ~{flu_subtype} == "h1n1" ]; then
-      if [ ~{flu_segment} == "ha" ]; then
+    if [ ~{flu_subtype} == "H1N1" ]; then
+      if [ ~{flu_segment} == "HA" ]; then
         echo "gs://theiagen-public-files-rp/terra/flu-references/reference_h1n1pdm_ha.gb" | tee FLU_REFERENCE_FASTA
         echo "gs://theiagen-public-files-rp/terra/flu-references/clades_h1n1pdm_ha.tsv" | tee FLU_CLADE_FILE
-      elif [ ~{flu_segment} == "na" ]; then
+      elif [ ~{flu_segment} == "NA" ]; then
         echo "gs://theiagen-public-files-rp/terra/flu-references/reference_h1n1pdm_na.gb" | tee FLU_REFERENCE_FASTA
+      else 
+        echo "Uh oh! Your flu segment was not recognized. The only accepted options are \"HA\" or \"NA\"! You provided: \"~{flu_segment}\"."
+        exit 1
       fi
       echo "gs://theiagen-public-files-rp/terra/flu-references/auspice_config_h1n1pdm.json" | tee AUSPICE_CONFIG
-    fi
+
     # set h3n2 defaults
-    if [ ~{flu_subtype} == "h3n2" ]; then
-      if [ ~{flu_segment} == "ha" ]; then
+    elif [ ~{flu_subtype} == "H3N2" ]; then
+      if [ ~{flu_segment} == "HA" ]; then
         echo "gs://theiagen-public-files-rp/terra/flu-references/reference_h3n2_ha.gb" | tee FLU_REFERENCE_FASTA
         echo "gs://theiagen-public-files-rp/terra/flu-references/clades_h3n2_ha.tsv" | tee FLU_CLADE_FILE
-      elif [ ~{flu_segment} == "na" ]; then
+      elif [ ~{flu_segment} == "NA" ]; then
         echo "gs://theiagen-public-files-rp/terra/flu-references/reference_h3n2_na.gb" | tee FLU_REFERENCE_FASTA
+      else 
+        echo "Uh oh! Your flu segment was not recognized. The only accepted options are \"HA\" or \"NA\"! You provided: \"~{flu_segment}\"."
+        exit 1
       fi
       echo "gs://theiagen-public-files-rp/terra/flu-references/auspice_config_h3n2.json" | tee AUSPICE_CONFIG
-    fi
+
     # set vic defaults
-    if [ ~{flu_subtype} == "vic" ]; then
-      if [ ~{flu_segment} == "ha" ]; then
+    elif [ ~{flu_subtype} == "Victoria" ]; then
+      if [ ~{flu_segment} == "HA" ]; then
         echo "gs://theiagen-public-files-rp/terra/flu-references/reference_vic_ha.gb" | tee FLU_REFERENCE_FASTA
         echo "gs://theiagen-public-files-rp/terra/flu-references/clades_vic_ha.tsv" | tee FLU_CLADE_FILE
-      elif [ ~{flu_segment} == "na" ]; then
+      elif [ ~{flu_segment} == "NA" ]; then
         echo "gs://theiagen-public-files-rp/terra/flu-references/reference_vic_na.gb" | tee FLU_REFERENCE_FASTA
+      else 
+        echo "Uh oh! Your flu segment was not recognized. The only accepted options are \"HA\" or \"NA\"! You provided: \"~{flu_segment}\"."
+        exit 1
       fi
       echo "gs://theiagen-public-files-rp/terra/flu-references/auspice_config_vic.json" | tee AUSPICE_CONFIG
-    fi
+
     # set yam defaults
-    if [ ~{flu_subtype} == "yam" ]; then
-      if [ ~{flu_segment} == "ha" ]; then
+    elif [ ~{flu_subtype} == "Yamagata" ]; then
+      if [ ~{flu_segment} == "HA" ]; then
         echo "gs://theiagen-public-files-rp/terra/flu-references/reference_yam_ha.gb" | tee FLU_REFERENCE_FASTA
         echo "gs://theiagen-public-files-rp/terra/flu-references/clades_yam_ha.tsv" | tee FLU_CLADE_FILE
-      elif [ ~{flu_segment} == "na" ]; then
+      elif [ ~{flu_segment} == "NA" ]; then
         echo "gs://theiagen-public-files-rp/terra/flu-references/reference_yam_na.gb" | tee FLU_REFERENCE_FASTA
+      else 
+        echo "Uh oh! Your flu segment was not recognized. The only accepted options are \"HA\" or \"NA\"! You provided: \"~{flu_segment}\"."
+        exit 1
       fi
       echo "gs://theiagen-public-files-rp/terra/flu-references/auspice_config_yam.json" | tee AUSPICE_CONFIG
-    fi
 
-    # throw error if no subtype provided
-    if [ ~{flu_subtype} == "" ]; then
-      echo "Uh oh! You must provide a flu subtype!"
+    else 
+      echo "Uh oh! Your flu subtype was not recognized. The only accepted options are \"H1N1\", \"H3N2\", \"Victoria\", or \"Yamagata\"! You provided: \"~{flu_subtype}\"."
       exit 1
     fi
 

@@ -11,15 +11,15 @@ import "../../tasks/task_versioning.wdl" as versioning
 
 workflow augur {
   input {
-    Array[File]+ assembly_fastas # use ha vs na segments for flu
+    Array[File]+ assembly_fastas # use ha or na segments for flu
     Array[File]+ sample_metadata_tsvs
     String build_name
     File? reference_fasta
     File? reference_genbank
     Int? min_num_unambig
     String organism = "sars-cov-2" # options: sars-cov-2 or flu
-    String flu_segment = "ha" # options: ha or na
-    String? flu_subtype # options: "vic" "yam" "h3n2" "h1n1"
+    String flu_segment = "HA" # options: HA or NA
+    String? flu_subtype # options: "Victoria" "Yamagata" "H3N2" "H1N1"
 
     # these following inputs should be optional, but I'm worried the select_first will make them "not optional"
     File? clades_tsv
