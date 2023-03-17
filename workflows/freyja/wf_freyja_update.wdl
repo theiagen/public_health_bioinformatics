@@ -19,7 +19,7 @@ workflow freyja_update {
 }
 task freyja_update_refs {
   input {
-    String docker = "staphb/freyja:1.3.4"
+    String docker = "quay.io/staphb/freyja:1.3.4"
     Int disk_size = 100
   }
   meta {

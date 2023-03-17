@@ -8,7 +8,7 @@ task shigatyper {
     File read1 
     File? read2
     String samplename
-    String docker = "staphb/shigatyper:2.0.3"
+    String docker = "quay.io/staphb/shigatyper:2.0.3"
     Int disk_size = 100
     Int cpus = 4
     Boolean read1_is_ont = false

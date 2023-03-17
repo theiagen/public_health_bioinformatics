@@ -4,7 +4,7 @@ task shigeifinder {
   input {
     File assembly
     String samplename
-    String docker = "staphb/shigeifinder:1.3.3"
+    String docker = "quay.io/staphb/shigeifinder:1.3.3"
     Int disk_size = 100
     Int cpu = 2
   }
@@ -83,7 +83,7 @@ task shigeifinder_reads {
     File read1
     File? read2
     String samplename
-    String docker = "staphb/shigeifinder:1.3.3"
+    String docker = "quay.io/staphb/shigeifinder:1.3.3"
     Int disk_size = 100
     Int cpu = 4
     Boolean paired_end = true

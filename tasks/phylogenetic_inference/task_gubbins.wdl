@@ -4,7 +4,7 @@ task gubbins {
   input {
     File alignment
     String cluster_name
-    String docker = "sangerpathogens/gubbins"
+    String docker = "quay.io/sangerpathogens/gubbins"
     Int? filter_percent = 25 #default is 25%
     Int? iterations = 5
     String? tree_builder = "raxml"

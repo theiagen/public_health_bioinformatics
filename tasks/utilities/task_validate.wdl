@@ -14,7 +14,7 @@ task export_two_tsvs {
     python3 /scripts/export_large_tsv/export_large_tsv.py --project ~{terra_project} --workspace ~{terra_workspace} --entity_type ~{datatable2} --tsv_filename ~{datatable2}
   >>>
   runtime {
-    docker: "broadinstitute/terra-tools:tqdm"
+    docker: "quay.io/theiagen/terra-tools:2023-03-16"
     memory: "1 GB"
     cpu: 1
     disks:  "local-disk " + disk_size + " HDD"

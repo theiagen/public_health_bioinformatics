@@ -405,7 +405,7 @@ task qc_check {
     String date = read_string("DATE")
   }
   runtime {
-    docker: "broadinstitute/terra-tools:tqdm"
+    docker: "quay.io/theiagen/terra-tools:2023-03-16"
     memory: "8 GB"
     cpu: 4
     disks: "local-disk " + disk_size + " SSD"

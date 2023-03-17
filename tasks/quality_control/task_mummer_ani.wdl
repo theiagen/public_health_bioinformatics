@@ -6,7 +6,7 @@ task animummer {
     String samplename
     File? ref_genome
     Float mash_filter = 0.9
-    String docker="staphb/mummer:4.0.0-rgdv2"
+    String docker="quay.io/staphb/mummer:4.0.0-rgdv2"
     Int disk_size = 100
   }
   command <<<

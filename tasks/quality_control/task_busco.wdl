@@ -7,7 +7,7 @@ task busco {
   input {
     File assembly
     String samplename
-    String docker = "ezlabgva/busco:v5.3.2_cv1"
+    String docker = "ezlabgva/busco:v5.3.2_cv1" # not available on quay.io
     Int disk_size = 100
     Boolean eukaryote = false
   }
