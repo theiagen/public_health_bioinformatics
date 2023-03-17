@@ -1,6 +1,7 @@
 version 1.0
 
 workflow terra_2_bq {
+
     input {
       Array[String]  terra_projects
       Array[String]  workspace_names
@@ -9,6 +10,7 @@ workflow terra_2_bq {
       Array[String]  gcs_uris
       Array[String]  output_filename_prefixs
     }
+
     call terra_to_bigquery {
       input:
         terra_projects=terra_projects,
@@ -18,6 +20,7 @@ workflow terra_2_bq {
         gcs_uri_prefixs=gcs_uris,
         output_filename_prefix=output_filename_prefixs
     }
+
 }
 
 task terra_to_bigquery {
@@ -28,13 +31,14 @@ task terra_to_bigquery {
     Array[String]  table_ids
     Array[String]  gcs_uri_prefixs
     Array[String]  output_filename_prefix
-    String  docker = "quay.io/theiagen/terra-tools:2023-03-16"
+    String  docker = "broadinstitute/terra-tools:tqdm"
     Int page_size = 5000
     Int mem_size_gb = 32
     Int CPUs = 8
     Int disk_size = 100
     String sleep_time = "15m"
   }
+
   meta {
     volatile: true
   }
@@ -313,12 +317,14 @@ task terra_to_bigquery {
   done
   echo "Loop exited"
   >>>
+
   runtime {
     docker: docker
     memory: "~{mem_size_gb} GB"
     cpu: CPUs
     disks: "local-disk ~{disk_size} SSD"
   }
+
   output {
     ## add outputs for all intermediate files
   }
