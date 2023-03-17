@@ -2,7 +2,16 @@ version 1.0
 
 import "../../tasks/utilities/task_file_handling.wdl" as file_handling
 import "../../tasks/utilities/task_augur_utilities.wdl" as augur_utils
-import "../../tasks/phylogenetic_inference/task_augur.wdl" as augur_tasks
+
+import "../../tasks/phylogenetic_inference/augur/task_augur_align.wdl" as align_task
+import "../../tasks/phylogenetic_inference/augur/task_augur_ancestral.wdl" as ancestral_task
+import "../../tasks/phylogenetic_inference/augur/task_augur_clades.wdl" as clades_task
+import "../../tasks/phylogenetic_inference/augur/task_augur_export.wdl" as export_task
+import "../../tasks/phylogenetic_inference/augur/task_augur_frequencies.wdl" as frequencies_task
+import "../../tasks/phylogenetic_inference/augur/task_augur_refine.wdl" as refine_task
+import "../../tasks/phylogenetic_inference/augur/task_augur_translate.wdl" as translate_task
+import "../../tasks/phylogenetic_inference/augur/task_augur_tree.wdl" as tree_task
+
 import "../../tasks/phylogenetic_inference/task_snp_sites.wdl" as snp_sites_task
 import "../../tasks/phylogenetic_inference/task_snp_dists.wdl" as snp_dists_task
 import "../../tasks/phylogenetic_inference/task_reorder_matrix.wdl" as reorder_matrix_task
@@ -21,7 +30,8 @@ workflow augur {
     String flu_segment = "HA" # options: HA or NA
     String? flu_subtype # options: "Victoria" "Yamagata" "H3N2" "H1N1"
 
-    # these following inputs should be optional, but I'm worried the select_first will make them "not optional"
+    # these following inputs should be optional, but I'm worried the select_first will make them "not optional" 
+    # this is especially the case if organism is not given
     File? clades_tsv
     File? lat_longs_tsv 
     File? auspice_config
@@ -49,7 +59,7 @@ workflow augur {
       sequences_fasta = cat_files.concatenated_files,
       min_non_N = select_first([sc2_defaults.min_num_unambig, flu_defaults.min_num_unambig, min_num_unambig])
   }
-  call augur_tasks.augur_align { # perform mafft alignment on the sequences
+  call align_task.augur_align { # perform mafft alignment on the sequences
     input: 
       assembly_fasta = filter_sequences_by_length.filtered_fasta,
       reference_fasta = select_first([reference_fasta, sc2_defaults.reference_fasta, flu_defaults.reference_fasta])
@@ -73,19 +83,19 @@ workflow augur {
   }
   ## keep the preceeding two tasks???
 
-  call augur_tasks.augur_tree { # create a draft augur tree
+  call tree_task.augur_tree { # create a draft augur tree
     input:
       aligned_fasta = augur_align.aligned_fasta,
       build_name = build_name
   }
-  call augur_tasks.augur_refine { # create a timetree (aka, refine augur tree)
+  call refine_task.augur_refine { # create a timetree (aka, refine augur tree)
     input:
       aligned_fasta = augur_align.aligned_fasta,
       draft_augur_tree = augur_tree.aligned_tree,
       metadata = tsv_join.out_tsv,
       build_name = build_name
   }
-  call augur_tasks.augur_frequencies { # calculate tip frequencies
+  call frequencies_task.augur_frequencies { # calculate tip frequencies
     input: 
       refined_tree = augur_refine.refined_tree,
       metadata = tsv_join.out_tsv,
@@ -96,13 +106,13 @@ workflow augur {
       narrow_bandwidth = select_first([sc2_defaults.narrow_bandwidth, flu_defaults.narrow_bandwidth, 0.08333333333333333]),
       proportion_wide = select_first([sc2_defaults.proportion_wide, flu_defaults.proportion_wide, 0.2])
   }
-  call augur_tasks.augur_ancestral { # infer ancestral sequences
+  call ancestral_task.augur_ancestral { # infer ancestral sequences
     input:
       refined_tree = augur_refine.refined_tree,
       aligned_fasta = augur_align.aligned_fasta,
       build_name = build_name
   }
-  call augur_tasks.augur_translate { # translate gene regions from nucleotides to amino acids
+  call translate_task.augur_translate { # translate gene regions from nucleotides to amino acids
     input:
       refined_tree = augur_refine.refined_tree,
       ancestral_nt_muts_json = augur_ancestral.ancestral_nt_muts_json,
@@ -110,7 +120,7 @@ workflow augur {
       build_name = build_name
   }
   if (flu_segment == "ha") { # only have clade information for ha segments
-    call augur_tasks.augur_clades { # assign clades to nodes based on amino-acid or nucleotide signatures
+    call clades_task.augur_clades { # assign clades to nodes based on amino-acid or nucleotide signatures
       input: 
         refined_tree = augur_refine.refined_tree,
         ancestral_nt_muts_json = augur_ancestral.ancestral_nt_muts_json,
@@ -120,7 +130,7 @@ workflow augur {
         clades_tsv = select_first([clades_tsv, sc2_defaults.clades_tsv, flu_defaults.clades_tsv])
     }
   }
-  call augur_tasks.augur_export { # export json files suitable for auspice visualization
+  call export_task.augur_export { # export json files suitable for auspice visualization
     input:
       refined_tree = augur_refine.refined_tree,
       metadata = tsv_join.out_tsv,
