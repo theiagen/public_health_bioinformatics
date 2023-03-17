@@ -172,7 +172,7 @@ workflow augur {
     File? time_tree = augur_refine.refined_tree
     File distance_tree = augur_tree.aligned_tree
     File aligned_fastas = augur_align.aligned_fasta
-    File combined_assemblies = cat_files.concatenated_files
+    File combined_assemblies = filter_sequences_by_length.filtered_fasta
     File metadata_merged = tsv_join.out_tsv
     
     # not sure if wanting to keep the tasks that make these
