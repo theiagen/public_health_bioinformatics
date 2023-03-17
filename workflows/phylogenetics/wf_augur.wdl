@@ -36,6 +36,8 @@ workflow augur {
     File? lat_longs_tsv 
     File? auspice_config
     Float? min_frequency_date
+
+    Boolean distance_tree_only = false
   }
   call file_handling.cat_files { # concatenate all of the input fasta files together
     input:
@@ -83,65 +85,67 @@ workflow augur {
   }
   ## keep the preceeding two tasks???
 
-  call tree_task.augur_tree { # create a draft augur tree
+  call tree_task.augur_tree { # create a "draft" augur tree
     input:
       aligned_fasta = augur_align.aligned_fasta,
       build_name = build_name
   }
-  call refine_task.augur_refine { # create a timetree (aka, refine augur tree)
-    input:
-      aligned_fasta = augur_align.aligned_fasta,
-      draft_augur_tree = augur_tree.aligned_tree,
-      metadata = tsv_join.out_tsv,
-      build_name = build_name
-  }
-  call frequencies_task.augur_frequencies { # calculate tip frequencies
-    input: 
-      refined_tree = augur_refine.refined_tree,
-      metadata = tsv_join.out_tsv,
-      build_name = build_name,
-      min_date = select_first([sc2_defaults.min_date, flu_defaults.min_date, min_frequency_date]), 
-      pivot_interval = select_first([sc2_defaults.pivot_interval, flu_defaults.pivot_interval, 3]),
-      pivot_interval_units = select_first([sc2_defaults.pivot_interval_units, "months"]),
-      narrow_bandwidth = select_first([sc2_defaults.narrow_bandwidth, flu_defaults.narrow_bandwidth, 0.08333333333333333]),
-      proportion_wide = select_first([sc2_defaults.proportion_wide, flu_defaults.proportion_wide, 0.2])
-  }
-  call ancestral_task.augur_ancestral { # infer ancestral sequences
-    input:
-      refined_tree = augur_refine.refined_tree,
-      aligned_fasta = augur_align.aligned_fasta,
-      build_name = build_name
-  }
-  call translate_task.augur_translate { # translate gene regions from nucleotides to amino acids
-    input:
-      refined_tree = augur_refine.refined_tree,
-      ancestral_nt_muts_json = augur_ancestral.ancestral_nt_muts_json,
-      reference_genbank = select_first([reference_genbank, sc2_defaults.reference_genbank, flu_defaults.reference_genbank]),
-      build_name = build_name
-  }
-  if (flu_segment == "ha") { # only have clade information for ha segments
-    call clades_task.augur_clades { # assign clades to nodes based on amino-acid or nucleotide signatures
-      input: 
+  if (! distance_tree_only) { # by default, continue
+    call refine_task.augur_refine { # create a timetree (aka, refine augur tree)
+      input:
+        aligned_fasta = augur_align.aligned_fasta,
+        draft_augur_tree = augur_tree.aligned_tree,
+        metadata = tsv_join.out_tsv,
+        build_name = build_name
+    }
+    # call frequencies_task.augur_frequencies { # calculate tip frequencies
+    #   input: 
+    #     refined_tree = augur_refine.refined_tree,
+    #     metadata = tsv_join.out_tsv,
+    #     build_name = build_name,
+    #     min_date = select_first([sc2_defaults.min_date, flu_defaults.min_date, min_frequency_date]), 
+    #     pivot_interval = select_first([sc2_defaults.pivot_interval, flu_defaults.pivot_interval, 3]),
+    #     pivot_interval_units = select_first([sc2_defaults.pivot_interval_units, "months"]),
+    #     narrow_bandwidth = select_first([sc2_defaults.narrow_bandwidth, flu_defaults.narrow_bandwidth, 0.08333333333333333]),
+    #     proportion_wide = select_first([sc2_defaults.proportion_wide, flu_defaults.proportion_wide, 0.2])
+    # }
+    call ancestral_task.augur_ancestral { # infer ancestral sequences
+      input:
+        refined_tree = augur_refine.refined_tree,
+        aligned_fasta = augur_align.aligned_fasta,
+        build_name = build_name
+    }
+    call translate_task.augur_translate { # translate gene regions from nucleotides to amino acids
+      input:
         refined_tree = augur_refine.refined_tree,
         ancestral_nt_muts_json = augur_ancestral.ancestral_nt_muts_json,
-        translated_aa_muts_json = augur_translate.translated_aa_muts_json,
-        reference_fasta = select_first([reference_fasta, sc2_defaults.reference_fasta, flu_defaults.reference_fasta]),
-        build_name = build_name,
-        clades_tsv = select_first([clades_tsv, sc2_defaults.clades_tsv, flu_defaults.clades_tsv])
+        reference_genbank = select_first([reference_genbank, sc2_defaults.reference_genbank, flu_defaults.reference_genbank]),
+        build_name = build_name
     }
-  }
-  call export_task.augur_export { # export json files suitable for auspice visualization
-    input:
-      refined_tree = augur_refine.refined_tree,
-      metadata = tsv_join.out_tsv,
-      node_data_jsons = select_all([
-                          augur_refine.branch_lengths,
-                          augur_ancestral.ancestral_nt_muts_json,
-                          augur_translate.translated_aa_muts_json,
-                          augur_clades.clade_assignments_json]),
-      build_name = build_name,
-      lat_longs_tsv = select_first([lat_longs_tsv, sc2_defaults.lat_longs_tsv, flu_defaults.lat_longs_tsv]),
-      auspice_config = select_first([auspice_config, sc2_defaults.auspice_config, flu_defaults.auspice_config])
+    if (flu_segment == "ha") { # only have clade information for ha segments
+      call clades_task.augur_clades { # assign clades to nodes based on amino-acid or nucleotide signatures
+        input: 
+          refined_tree = augur_refine.refined_tree,
+          ancestral_nt_muts_json = augur_ancestral.ancestral_nt_muts_json,
+          translated_aa_muts_json = augur_translate.translated_aa_muts_json,
+          reference_fasta = select_first([reference_fasta, sc2_defaults.reference_fasta, flu_defaults.reference_fasta]),
+          build_name = build_name,
+          clades_tsv = select_first([clades_tsv, sc2_defaults.clades_tsv, flu_defaults.clades_tsv])
+      }
+    }
+    call export_task.augur_export { # export json files suitable for auspice visualization
+      input:
+        refined_tree = augur_refine.refined_tree,
+        metadata = tsv_join.out_tsv,
+        node_data_jsons = select_all([
+                            augur_refine.branch_lengths,
+                            augur_ancestral.ancestral_nt_muts_json,
+                            augur_translate.translated_aa_muts_json,
+                            augur_clades.clade_assignments_json]),
+        build_name = build_name,
+        lat_longs_tsv = select_first([lat_longs_tsv, sc2_defaults.lat_longs_tsv, flu_defaults.lat_longs_tsv]),
+        auspice_config = select_first([auspice_config, sc2_defaults.auspice_config, flu_defaults.auspice_config])
+    }
   }
   call snp_dists_task.snp_dists { # create a snp matrix from the alignment
     input:
@@ -164,8 +168,8 @@ workflow augur {
     String augur_version = augur_align.augur_version
 
     # augur outputs
-    File auspice_input_json = augur_export.auspice_json
-    File time_tree = augur_refine.refined_tree
+    File? auspice_input_json = augur_export.auspice_json
+    File? time_tree = augur_refine.refined_tree
     File distance_tree = augur_tree.aligned_tree
     File aligned_fastas = augur_align.aligned_fasta
     File combined_assemblies = cat_files.concatenated_files
