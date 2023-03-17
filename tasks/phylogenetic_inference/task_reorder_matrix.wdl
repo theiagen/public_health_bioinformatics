@@ -55,7 +55,7 @@ task reorder_matrix {
     File tree = "~{cluster_name}_tree.nwk"
   }
   runtime {
-    docker: "staphb/mykrobe:0.12.1" # used because it contains both biopython and pandas
+    docker: "quay.io/staphb/mykrobe:0.12.1" # used because it contains both biopython and pandas
     memory: "2 GB"
     cpu: 2
     disks: "local-disk " + disk_size + " SSD"

@@ -538,7 +538,7 @@ task sm_metadata_wrangling { # the sm stands for supermassive
     File gisaid_fasta = "~{output_name}_gisaid.fasta"
   }
   runtime {
-    docker: "broadinstitute/terra-tools:tqdm"
+    docker: "quay.io/theiagen/terra-tools:2023-03-16"
     memory: "8 GB"
     cpu: 4
     disks:  "local-disk " + disk_size + " SSD"
@@ -608,7 +608,7 @@ task table2asn {
     File sqn_file = "~{output_name}.sqn"
   }
   runtime {
-    docker: "staphb/ncbi-table2asn:1.26.678"
+    docker: "quay.io/staphb/ncbi-table2asn:1.26.678"
     memory: "1 GB"
     cpu: 1
     disks:  "local-disk " + disk_size + " SSD"

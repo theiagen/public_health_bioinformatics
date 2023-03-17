@@ -6,7 +6,7 @@ task pasty {
     String  samplename
     Int min_pident = 95
     Int min_coverage = 95
-    String docker = "staphb/pasty:1.0.2"
+    String docker = "quay.io/staphb/pasty:1.0.2"
     Int disk_size = 100
   }
   command <<<

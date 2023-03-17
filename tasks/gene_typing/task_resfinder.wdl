@@ -9,7 +9,7 @@ task resfinder {
     Float min_cov = 0.6 # Minimum (breadth-of) coverage of ResFinder
     Float threshold = 0.9 # Threshold for identity of ResFinder
     Boolean point = false # Run pointfinder for chromosomal mutations
-    String docker = "staphb/resfinder:4.1.11"
+    String docker = "quay.io/staphb/resfinder:4.1.11"
     Int disk_size = 100
   }
   command <<<
