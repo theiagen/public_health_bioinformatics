@@ -17,35 +17,41 @@ These workflows are written in [WDL](https://github.com/openwdl/wdl), a language
 ### Contributing to the PHB workflows
 Contributions to the workflows contained in this repository are warmly welcomed. Our style guide may be found below for convenience of formatting.
 
-2-space indents (no tabs), no line break for openning braces, single space when defining input/output variables & runtime attributes, single-line breaks between non-intended constructs, and task commands enclosed with triple braces (`<<< ... >>>`). 
+2-space indents (no tabs), no line break for opening braces, single space when defining input/output variables & runtime attributes, single-line breaks between non-intended constructs, and task commands enclosed with triple braces (`<<< ... >>>`).
+
+Put tasks and workflows in separate files. When a workflow imports a task, make sure that it is imported under a different name than the task it is calling.
 
 <em>E.g.</em>:
 ```
+import "../tasks/task_task1.wdl" as task1_task
+import "../tasks/task_task2.wdl" as task2_task
+
 workflow w {
   input {
     String input
   }
-  call task_01 {
+  call task1_task.task1 {
     input:
       input = input
   }
-  call task_02 {
+  call task2_task.task2 {
     input: 
       input = input
   }
   output {
-    File task_01_out = task_01.output
-    File task_02_out = task_02.output 
+    File task1_out = task1.output
+    File task2_out = task2.output 
   }      
 }
-
+```
+```
 task task1 {
   input {
     String input
-    String docker = "theiagen/utility:1.1"
+    String docker = "quay.io/theiagen/utility:1.1"
   }
   command <<<
-    echo '~{input}' > output.txt
+    echo "~{input}" > output.txt
   >>>
   output {
     File output = "output.txt"
@@ -54,19 +60,21 @@ task task1 {
     docker: docker
     memory: "8 GB"
     cpu: 2
-    disks "local-disk 100 SSD"
+    disks: "local-disk 100 SSD"
+    disk: "100 GB" # for Azure compatibility
     preemptible: 0
     maxRetries: 0
   }
 }
-
-task task_02 {
-  input{
+```
+```
+task task2_echo {
+  input {
     String input
-    String docker = "theiagen/utility:1.1"
+    String docker = "quay.io/theiagen/utility:1.1"
   }
   command <<<
-    echo '~{input}' > output.txt
+    echo "~{input}" > output.txt
   >>>
   output {
     File output = "output.txt"
@@ -75,7 +83,8 @@ task task_02 {
     docker: docker
     memory: "8 GB"
     cpu: 2
-    disks "local-disk 100 SSD"
+    disks: "local-disk 100 SSD"
+    disk: "100 GB" # for Azure compatibility
     preemptible: 0
     maxRetries: 0
   }
