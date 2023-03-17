@@ -1,11 +1,11 @@
 # Public Health Bioinformatics (PHB)
-Bioinformatics workflows for characterization, epidemiology and sharing of pathogen genomes. 
+Bioinformatics workflows for characterization, epidemiology and sharing of pathogen genomes.
 
 **More information about the steps undertaken in these workflows is available via the [Theiagen Public Resources Documentation](https://theiagen.notion.site/Theiagen-Public-Health-Resources-a4bd134b0c5c4fe39870e21029a30566).**
 
 Support for running these workflows can be sought by raising a [GitHub issue](https://github.com/theiagen/public_health_bioinformatics/issues/new) or by contacting Theiagen at support@theiagen.com.
 
-These workflows are written in [WDL](https://github.com/openwdl/wdl), a language for specifying data processing workflows with a human-readable and writeable syntax. They have been developed by [Theiagen Genomics](https://theiagen.com/) to primarily run on the [Terra.bio](https://terra.bio/) platform but can be run locally or on an HPC system at the command-line with Cromwell or miniWDL. 
+These workflows are written in [WDL](https://github.com/openwdl/wdl), a language for specifying data processing workflows with a human-readable and writeable syntax. They have been developed by [Theiagen Genomics](https://theiagen.com/) to primarily run on the [Terra.bio](https://terra.bio/) platform but can be run locally or on an HPC system at the command-line with Cromwell or miniWDL.
 
 ### Contributors & Influence
 * Based on collaborative work with Andrew Lang, PhD & his [Genomic Analysis WDL workflows](https://github.com/AndrewLangvt/genomic_analyses)
@@ -68,7 +68,7 @@ task task1 {
 }
 ```
 ```
-task task2_echo {
+task task2 {
   input {
     String input
     String docker = "quay.io/theiagen/utility:1.1"
