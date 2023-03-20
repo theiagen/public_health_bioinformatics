@@ -11,6 +11,8 @@ task check_reads {
     Int min_coverage
     Int min_proportion
     Boolean skip_screen
+    String workflow_series = "theiaprok" # default to theiaprok so we don't have to change those workflows
+    String? organism
     Int disk_size = 100
   }
   command <<<
@@ -76,41 +78,63 @@ task check_reads {
       #checks four and five: estimated genome size and coverage
       if [ "${flag}" = "PASS" ]; then
         # determine genome size
-              
-        # First Pass; assuming average depth
-        mash sketch -o test -k 31 -m 3 -r ~{read1} ~{read2} > mash-output.txt 2>&1
-        grep "Estimated genome size:" mash-output.txt | \
-          awk '{if($4){printf("%5.0f\n", $4)}} END {if (!NR) print "0"}' > genome_size_output
-        grep "Estimated coverage:" mash-output.txt | \
-          awk '{if($3){printf("%d", $3)}} END {if (!NR) print "0"}' > coverage_output
-        rm -rf test.msh
-        rm -rf mash-output.txt
-        estimated_genome_size=`head -n1 genome_size_output`
-        estimated_coverage=`head -n1 coverage_output`
-
-        # Check if second pass is needed
-        if [ ${estimated_genome_size} -gt "~{max_genome_size}" ] || [ ${estimated_genome_size} -lt "~{min_genome_size}" ] ; then
-          # Probably high coverage, try increasing number of kmer copies to 10
-          M="-m 10"
-          if [ ${estimated_genome_size} -lt "~{min_genome_size}" ]; then
-            # Probably low coverage, try decreasing the number of kmer copies to 1
-            M="-m 1"
-          fi
-          mash sketch -o test -k 31 ${M} -r ~{read1} ~{read2} > mash-output.txt 2>&1
+        if [ "~{workflow_series}" == "theiaprok" ]; then        
+          # First Pass; assuming average depth
+          mash sketch -o test -k 31 -m 3 -r ~{read1} ~{read2} > mash-output.txt 2>&1
           grep "Estimated genome size:" mash-output.txt | \
             awk '{if($4){printf("%5.0f\n", $4)}} END {if (!NR) print "0"}' > genome_size_output
           grep "Estimated coverage:" mash-output.txt | \
             awk '{if($3){printf("%d", $3)}} END {if (!NR) print "0"}' > coverage_output
           rm -rf test.msh
           rm -rf mash-output.txt
-        fi
-        
-        estimated_genome_size=`head -n1 genome_size_output`
-        estimated_coverage=`head -n1 coverage_output`
+          estimated_genome_size=`head -n1 genome_size_output`
+          estimated_coverage=`head -n1 coverage_output`
 
-        if [ "${estimated_genome_size}" -ge "~{max_genome_size}" ] ; then
+          # Check if second pass is needed
+          if [ ${estimated_genome_size} -gt "~{max_genome_size}" ] || [ ${estimated_genome_size} -lt "~{min_genome_size}" ] ; then
+            # Probably high coverage, try increasing number of kmer copies to 10
+            M="-m 10"
+            if [ ${estimated_genome_size} -lt "~{min_genome_size}" ]; then
+              # Probably low coverage, try decreasing the number of kmer copies to 1
+              M="-m 1"
+            fi
+            mash sketch -o test -k 31 ${M} -r ~{read1} ~{read2} > mash-output.txt 2>&1
+            grep "Estimated genome size:" mash-output.txt | \
+              awk '{if($4){printf("%5.0f\n", $4)}} END {if (!NR) print "0"}' > genome_size_output
+            grep "Estimated coverage:" mash-output.txt | \
+              awk '{if($3){printf("%d", $3)}} END {if (!NR) print "0"}' > coverage_output
+            rm -rf test.msh
+            rm -rf mash-output.txt
+          fi
+          
+          estimated_genome_size=`head -n1 genome_size_output`
+          estimated_coverage=`head -n1 coverage_output`
+        elif [ "~{workflow_series}" == "theiacov" ]; then
+          if [ "~{organism}" == "sars-cov-2" ]; then
+            estimated_genome_size=29903 # size taken from https://www.ncbi.nlm.nih.gov/nuccore/NC_045512.2
+          elif [ "~{organism}" == "MPXV" ]; then
+            estimated_genome_size=197209 # size of 2022 virus taken from https://www.ncbi.nlm.nih.gov/nuccore/NC_063383.1
+          elif [ "~{organism}" == "flu" ]; then
+            estimated_genome_size=14000 # 500 bp over the CDC's approximate full genome size of 13500 (see https://www.cdc.gov/flu/about/professionals/genetic-characterization.htm)
+          elif [ "~{organism}" == "HIV" ]; then
+            estimated_genome_size=9181 # size taken from https://www.ncbi.nlm.nih.gov/nuccore/NC_001802.1 
+          elif [ "~{organism}" == "WNV" ]; then
+            estimated_genome_size=11092 # WNV lineage 1 size from https://www.ncbi.nlm.nih.gov/nuccore/NC_009942.1
+          else
+            flag="FAIL; the organism tag provided (~{organism}) is not valid."
+          fi
+
+          # coverage is calculated here by N/G where N is number of bases, and G is genome length
+          # this will nearly always be an overestimation
+          estimated_coverage=$(python3 -c "print(round(($read1_bp+$read2_bp)/$estimated_genome_size))")
+        else # workflow series was not provided; default to fail
+          estimated_genome_size=0
+          estimated_coverage=0
+        fi
+
+        if [ "${estimated_genome_size}" -ge "~{max_genome_size}" ] && [ "~{workflow_series}" == "theiaprok" ] ; then
           flag="FAIL; the estimated genome size (${estimated_genome_size}) is larger than the maximum of ~{max_genome_size} bps"
-        elif [ "${estimated_genome_size}" -le "~{min_genome_size}" ] ; then
+        elif [ "${estimated_genome_size}" -le "~{min_genome_size}" ] && [ "~{workflow_series}" == "theiaprok" ] ; then
           flag="FAIL; the estimated genome size (${estimated_genome_size}) is smaller than the minimum of ~{min_genome_size} bps"
         else
           flag="PASS"   
@@ -151,6 +175,8 @@ task check_reads_se {
     Int max_genome_size 
     Int min_coverage
     Boolean skip_screen 
+    String workflow_series = "theiaprok" # default to theiaprok so we don't have to change those workflows
+    String? organism
     Int disk_size = 100
   }
   command <<<
@@ -160,7 +186,6 @@ task check_reads_se {
     estimated_genome_size=0
 
     if [[ "~{skip_screen}" = "false" ]] ; then
-      
       # set cat command based on compression
       if [[ "~{read1}" == *".gz" ]] ; then
         cat_reads="zcat"
@@ -202,31 +227,9 @@ task check_reads_se {
       #checks four and five: estimated genome size and coverage
       if [ "${flag}" = "PASS" ]; then
         # determine genome size
-              
-        # First Pass; assuming average depth
-        mash sketch -o test -k 31 -m 3 -r ~{read1} > mash-output.txt 2>&1
-        grep "Estimated genome size:" mash-output.txt | \
-          awk '{if($4){printf("%d", $4)}} END {if (!NR) print "0"}' > genome_size_output
-        grep "Estimated coverage:" mash-output.txt | \
-          awk '{if($3){printf("%d", $3)}} END {if (!NR) print "0"}' > coverage_output
-        
-        # remove mash outputs
-        rm -rf test.msh
-        rm -rf mash-output.txt
-        
-        estimated_genome_size=`head -n1 genome_size_output`
-        estimated_coverage=`head -n1 coverage_output`
-
-        # Check if second pass is needed
-        if [ ${estimated_genome_size} -gt "~{max_genome_size}" ] || [ ${estimated_genome_size} -lt "~{min_genome_size}" ] ; then
-          # Probably high coverage, try increasing number of kmer copies to 10
-          M="-m 10"
-          if [ ${estimated_genome_size} -lt "~{min_genome_size}" ]; then
-            # Probably low coverage, try decreasing the number of kmer copies to 1
-            M="-m 1"
-          fi
-
-          mash sketch -o test -k 31 ${M} -r ~{read1} > mash-output.txt 2>&1
+        if [ "~{workflow_series}" == "theiaprok" ]; then                      
+          # First Pass; assuming average depth
+          mash sketch -o test -k 31 -m 3 -r ~{read1} > mash-output.txt 2>&1
           grep "Estimated genome size:" mash-output.txt | \
             awk '{if($4){printf("%d", $4)}} END {if (!NR) print "0"}' > genome_size_output
           grep "Estimated coverage:" mash-output.txt | \
@@ -235,11 +238,54 @@ task check_reads_se {
           # remove mash outputs
           rm -rf test.msh
           rm -rf mash-output.txt
-        fi
-        
-        estimated_genome_size=`head -n1 genome_size_output`
-        estimated_coverage=`head -n1 coverage_output`
+          
+          estimated_genome_size=`head -n1 genome_size_output`
+          estimated_coverage=`head -n1 coverage_output`
 
+          # Check if second pass is needed
+          if [ ${estimated_genome_size} -gt "~{max_genome_size}" ] || [ ${estimated_genome_size} -lt "~{min_genome_size}" ] ; then
+            # Probably high coverage, try increasing number of kmer copies to 10
+            M="-m 10"
+            if [ ${estimated_genome_size} -lt "~{min_genome_size}" ]; then
+              # Probably low coverage, try decreasing the number of kmer copies to 1
+              M="-m 1"
+            fi
+
+            mash sketch -o test -k 31 ${M} -r ~{read1} > mash-output.txt 2>&1
+            grep "Estimated genome size:" mash-output.txt | \
+              awk '{if($4){printf("%d", $4)}} END {if (!NR) print "0"}' > genome_size_output
+            grep "Estimated coverage:" mash-output.txt | \
+              awk '{if($3){printf("%d", $3)}} END {if (!NR) print "0"}' > coverage_output
+            
+            # remove mash outputs
+            rm -rf test.msh
+            rm -rf mash-output.txt
+          fi
+          
+          estimated_genome_size=`head -n1 genome_size_output`
+          estimated_coverage=`head -n1 coverage_output`
+        elif [ "~{workflow_series}" == "theiacov" ]; then
+          if [ "~{organism}" == "sars-cov-2" ]; then
+            estimated_genome_size=29903 # size taken from https://www.ncbi.nlm.nih.gov/nuccore/NC_045512.2
+          elif [ "~{organism}" == "MPXV" ]; then
+            estimated_genome_size=197209 # size of 2022 virus taken from https://www.ncbi.nlm.nih.gov/nuccore/NC_063383.1
+          elif [ "~{organism}" == "flu" ]; then
+            estimated_genome_size=14000 # 500 bp over the CDC's approximate full genome size of 13500 (see https://www.cdc.gov/flu/about/professionals/genetic-characterization.htm)
+          elif [ "~{organism}" == "HIV" ]; then
+            estimated_genome_size=9181 # size taken from https://www.ncbi.nlm.nih.gov/nuccore/NC_001802.1 
+          elif [ "~{organism}" == "WNV" ]; then
+            estimated_genome_size=11092 # WNV lineage 1 size from https://www.ncbi.nlm.nih.gov/nuccore/NC_009942.1
+          else
+            flag="FAIL; the organism tag provided (~{organism}) is not valid."
+          fi
+
+          # coverage is calculated here by N/G where N is number of bases, and G is genome length
+          # this will nearly always be an overestimation
+          estimated_coverage=$(python3 -c "print(round(($read1_bp)/$estimated_genome_size))")
+        else # workflow series was not provided; default to fail
+          estimated_genome_size=0
+          estimated_coverage=0
+        fi
         if [ "${estimated_genome_size}" -ge "~{max_genome_size}" ] ; then
           flag="FAIL; the estimated genome size (${estimated_genome_size}) is larger than the maximum of ~{max_genome_size} bps"
         elif [ "${estimated_genome_size}" -le "~{min_genome_size}" ] ; then

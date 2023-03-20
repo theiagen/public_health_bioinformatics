@@ -54,7 +54,9 @@ workflow theiacov_ont {
       min_genome_size = min_genome_size,
       max_genome_size = max_genome_size,
       min_coverage = min_coverage,
-      skip_screen = skip_screen
+      skip_screen = skip_screen,
+      workflow_series = "theiacov",
+      organism = organism
   }
   if (raw_check_reads.read_screen == "PASS") {
     call ncbi_scrub.ncbi_scrub_se {
@@ -77,7 +79,9 @@ workflow theiacov_ont {
         min_genome_size = min_genome_size,
         max_genome_size = max_genome_size,
         min_coverage = min_coverage,
-        skip_screen = skip_screen
+        skip_screen = skip_screen,
+        workflow_series = "theiacov",
+        organism = organism
     }
     if (clean_check_reads.read_screen == "PASS") {
       call fastq_scan.fastq_scan_se as fastq_scan_raw_reads {

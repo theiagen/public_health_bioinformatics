@@ -65,7 +65,9 @@ workflow theiacov_illumina_pe {
       max_genome_size = max_genome_size,
       min_coverage = min_coverage,
       min_proportion = min_proportion,
-      skip_screen = skip_screen
+      skip_screen = skip_screen,
+      workflow_series = "theiacov",
+      organism = organism
   }
   if (raw_check_reads.read_screen == "PASS") {
     call read_qc.read_QC_trim_pe as read_QC_trim {
@@ -87,7 +89,9 @@ workflow theiacov_illumina_pe {
         max_genome_size = max_genome_size,
         min_coverage = min_coverage,
         min_proportion = min_proportion,
-        skip_screen = skip_screen
+        skip_screen = skip_screen,
+        workflow_series = "theiacov",
+        organism = organism
     }
     if (clean_check_reads.read_screen == "PASS") {
       # assembly via bwa and ivar for non-flu data

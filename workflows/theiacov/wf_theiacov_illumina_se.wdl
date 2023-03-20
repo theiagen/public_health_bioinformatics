@@ -48,7 +48,9 @@ workflow theiacov_illumina_se {
       min_genome_size = min_genome_size,
       max_genome_size = max_genome_size,
       min_coverage = min_coverage,
-      skip_screen = skip_screen
+      skip_screen = skip_screen,
+      workflow_series = "theiacov",
+      organism = organism
   }
   if (raw_check_reads.read_screen == "PASS") {
     call read_qc.read_QC_trim_se as read_QC_trim {
@@ -67,7 +69,9 @@ workflow theiacov_illumina_se {
         min_genome_size = min_genome_size,
         max_genome_size = max_genome_size,
         min_coverage = min_coverage,
-        skip_screen = skip_screen
+        skip_screen = skip_screen,
+        workflow_series = "theiacov",
+        organism = organism
     }
     if (clean_check_reads.read_screen == "PASS") {
       call consensus_call.ivar_consensus {
