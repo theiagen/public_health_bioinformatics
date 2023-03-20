@@ -57,7 +57,6 @@ workflow snippy_tree_wf {
         input:
           msa_fasta = snippy_core.snippy_full_alignment_clean,
           output_name = tree_name,
-          output_vcf = false,
           output_multifasta = true
       }
     }
