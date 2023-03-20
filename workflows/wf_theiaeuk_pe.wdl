@@ -79,7 +79,6 @@ workflow theiaeuk_illumina_pe {
           samplename = samplename,
           cpu = cpu,
           memory = memory
-
       }
       call cg_pipeline.cg_pipeline {
         input:
