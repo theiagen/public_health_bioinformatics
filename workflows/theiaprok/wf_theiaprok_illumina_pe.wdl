@@ -29,6 +29,7 @@ workflow theiaprok_illumina_pe {
     File read1_raw
     File read2_raw
     Int? genome_size
+    # export taxon table parameters
     String? run_id
     String? collection_date
     String? originating_lab
@@ -38,17 +39,19 @@ workflow theiaprok_illumina_pe {
     File? taxon_tables
     String terra_project = "NA"
     String terra_workspace = "NA"
-    # by default do not call ANI task, but user has ability to enable this task if working with enteric pathogens or supply their own high-quality reference genome
-    Boolean call_ani = false
+    # read screen parameters
+    Boolean skip_screen = false 
     Int min_reads = 7472
     Int min_basepairs = 2241820
     Int min_genome_size = 100000
     Int max_genome_size = 18040666
     Int min_coverage = 10
     Int min_proportion = 40
+    # module options
+    Boolean call_ani = false # by default do not call ANI task, but user has ability to enable this task if working with enteric pathogens or supply their own high-quality reference genome
     Boolean call_resfinder = false
-    Boolean skip_screen = false 
-    String genome_annotation = "prokka"
+    String genome_annotation = "prokka" # options: "prokka" or "bakta"
+    # qc check parameters
     File? qc_check_table
     String? expected_taxon
   }
