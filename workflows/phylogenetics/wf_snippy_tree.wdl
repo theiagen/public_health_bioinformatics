@@ -43,9 +43,12 @@ workflow snippy_tree_wf {
         input:
           msa_fasta = gubbins.gubbins_polymorphic_fasta,
           output_name = tree_name,
-          output_vcf = false,
           output_multifasta = true
       }
+      #if (!defined(snp_sites_gubbins.snp_sites_multifasta)) {
+        # if snp_sites task fails, execution of the workflow stops
+        #sys.exit(1) - TODO
+      #}
     }
   }
   if (!use_gubbins) {
