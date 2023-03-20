@@ -7,7 +7,7 @@ import "../../tasks/phylogenetic_inference/augur/task_augur_align.wdl" as align_
 import "../../tasks/phylogenetic_inference/augur/task_augur_ancestral.wdl" as ancestral_task
 import "../../tasks/phylogenetic_inference/augur/task_augur_clades.wdl" as clades_task
 import "../../tasks/phylogenetic_inference/augur/task_augur_export.wdl" as export_task
-import "../../tasks/phylogenetic_inference/augur/task_augur_frequencies.wdl" as frequencies_task
+# import "../../tasks/phylogenetic_inference/augur/task_augur_frequencies.wdl" as frequencies_task
 import "../../tasks/phylogenetic_inference/augur/task_augur_refine.wdl" as refine_task
 import "../../tasks/phylogenetic_inference/augur/task_augur_translate.wdl" as translate_task
 import "../../tasks/phylogenetic_inference/augur/task_augur_tree.wdl" as tree_task
@@ -20,8 +20,8 @@ import "../../tasks/task_versioning.wdl" as versioning
 
 workflow augur {
   input {
-    Array[File]+ assembly_fastas # use ha or na segments for flu
-    Array[File]+ sample_metadata_tsvs
+    Array[File]+ assembly_fastas # use the HA or NA segment files for flu
+    Array[File]+ sample_metadata_tsvs # created with Augur_Prep
     String build_name
     File? reference_fasta
     File? reference_genbank
@@ -30,14 +30,14 @@ workflow augur {
     String flu_segment = "HA" # options: HA or NA
     String? flu_subtype # options: "Victoria" "Yamagata" "H3N2" "H1N1"
 
-    # these following inputs should be optional, but I'm worried the select_first will make them "not optional" 
+    # these following inputs should truly be optional, but I'm worried the select_first will make them "not optional" 
     # this is especially the case if organism is not given
     File? clades_tsv
-    File? lat_longs_tsv 
+    File? lat_longs_tsv
     File? auspice_config
-    Float? min_frequency_date
+    # Float? min_frequency_date # only used in the augur_frequencies task
 
-    Boolean distance_tree_only = false
+    Boolean distance_tree_only = false # by default, do not skip making a time tree
   }
   call file_handling.cat_files { # concatenate all of the input fasta files together
     input:
@@ -59,7 +59,7 @@ workflow augur {
   call augur_utils.filter_sequences_by_length { # remove any sequences that do not meet the quality threshold
     input:
       sequences_fasta = cat_files.concatenated_files,
-      min_non_N = select_first([sc2_defaults.min_num_unambig, flu_defaults.min_num_unambig, min_num_unambig])
+      min_non_N = select_first([min_num_unambig, sc2_defaults.min_num_unambig, flu_defaults.min_num_unambig])
   }
   call align_task.augur_align { # perform mafft alignment on the sequences
     input: 
@@ -85,7 +85,7 @@ workflow augur {
   }
   ## keep the preceeding two tasks???
 
-  call tree_task.augur_tree { # create a "draft" augur tree
+  call tree_task.augur_tree { # create a "draft" (or distance) augur tree
     input:
       aligned_fasta = augur_align.aligned_fasta,
       build_name = build_name
@@ -98,6 +98,7 @@ workflow augur {
         metadata = tsv_join.out_tsv,
         build_name = build_name
     }
+    # commented this section out because its outputs were not used
     # call frequencies_task.augur_frequencies { # calculate tip frequencies
     #   input: 
     #     refined_tree = augur_refine.refined_tree,
@@ -122,7 +123,7 @@ workflow augur {
         reference_genbank = select_first([reference_genbank, sc2_defaults.reference_genbank, flu_defaults.reference_genbank]),
         build_name = build_name
     }
-    if (flu_segment == "ha") { # only have clade information for ha segments
+    if (flu_segment == "HA") { # we only have clade information for HA segments (but SC2 defaults will be selected first)
       call clades_task.augur_clades { # assign clades to nodes based on amino-acid or nucleotide signatures
         input: 
           refined_tree = augur_refine.refined_tree,
@@ -152,7 +153,7 @@ workflow augur {
       cluster_name = build_name,
       alignment = augur_align.aligned_fasta
   }
-  call reorder_matrix_task.reorder_matrix { # reorder snp matrix to match distance tree
+  call reorder_matrix_task.reorder_matrix { # reorder snp matrix to match distance tree 
     input:
       input_tree = augur_tree.aligned_tree,
       matrix = snp_dists.snp_matrix,
@@ -181,5 +182,6 @@ workflow augur {
   
     # snp matrix output
     File snp_matrix = reorder_matrix.ordered_matrix
+    # currently not outputting the midpoint-rooted distance tree (even though this matrix matches that)
   }
 }
