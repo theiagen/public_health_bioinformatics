@@ -243,7 +243,7 @@ workflow theiacov_illumina_pe {
     String? samtools_version = ivar_consensus.samtools_version
     File? read1_aligned = ivar_consensus.read1_aligned
     File? read2_aligned = ivar_consensus.read2_aligned
-    String? assembly_method = "TheiaCoV (~{version_capture.phb_version}): " + select_first([ivar_consensus.assembly_method_nonflu, irma.irma_version])
+    String assembly_method = "TheiaCoV (~{version_capture.phb_version}): " + select_first([ivar_consensus.assembly_method_nonflu, irma.irma_version, ""])
     String aligned_bam = select_first([ivar_consensus.aligned_bam, ""])
     String aligned_bai = select_first([ivar_consensus.aligned_bai, ""])
     Float? primer_trimmed_read_percent = ivar_consensus.primer_trimmed_read_percent
