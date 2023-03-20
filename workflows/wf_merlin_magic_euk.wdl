@@ -29,7 +29,7 @@ workflow merlin_magic {
         reference = cladetyper.clade_spec_ref,
         read1 = read1,
         read2 = read2,
-        query_gene = "FKS1,ERG11,FUR1",
+        query_gene = "FKS1,'lanosterol 14-alpha demethylase',FUR1",
         samplename = samplename
         }
     }
