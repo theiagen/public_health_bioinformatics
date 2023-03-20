@@ -211,6 +211,9 @@ workflow theiacov_illumina_pe {
     String theiacov_illumina_pe_analysis_date = version_capture.date
     # Read Metadata
     String  seq_platform = seq_method
+    # Sample Screening
+    String raw_read_screen = raw_check_reads.read_screen
+    String? clean_read_screen = clean_check_reads.read_screen
     # Read QC
     File? read1_dehosted = read_QC_trim.read1_dehosted
     File? read2_dehosted = read_QC_trim.read2_dehosted

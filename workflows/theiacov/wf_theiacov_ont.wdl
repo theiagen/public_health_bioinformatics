@@ -185,6 +185,9 @@ workflow theiacov_ont {
     String theiacov_ont_analysis_date = version_capture.date
     # Read Metadata
     String seq_platform = seq_method
+    # Sample Screening
+    String raw_read_screen = raw_check_reads.read_screen
+    String? clean_read_screen = clean_check_reads.read_screen
     # Read QC
     File? read1_dehosted = ncbi_scrub_se.read1_dehosted
     Int? num_reads_raw1 = fastq_scan_raw_reads.read1_seq

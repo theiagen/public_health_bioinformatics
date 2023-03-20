@@ -12,7 +12,6 @@ import "../../tasks/species_typing/task_pangolin.wdl" as pangolin
 import "../../tasks/gene_typing/task_sc2_gene_coverage.wdl" as sc2_calculation
 import "../../tasks/task_versioning.wdl" as versioning
 
-
 workflow theiacov_clearlabs {
   meta {
     description: "Reference-based consensus calling for viral amplicon ont sequencing data generated on the Clear Labs platform."

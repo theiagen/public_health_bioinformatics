@@ -138,6 +138,9 @@ workflow theiacov_illumina_se {
     String theiacov_illumina_se_analysis_date = version_capture.date
     # Read Metadata
     String seq_platform = seq_method
+    # Sample Screening
+    String raw_read_screen = raw_check_reads.read_screen
+    String? clean_read_screen = clean_check_reads.read_screen
     # Read QC
     File? read1_clean = read_QC_trim.read1_clean
     Int? num_reads_raw = read_QC_trim.fastq_scan_raw_number_reads
