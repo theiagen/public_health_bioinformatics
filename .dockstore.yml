@@ -60,11 +60,6 @@ workflows:
    primaryDescriptorPath: /workflows/mercury/wf_mercury_prep_n_batch.wdl
    testParameterFiles:
     - empty.json
- - name: TheiaCoV_Augur_DistanceTree_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/phylogenetics/wf_theiacov_augur_distance_tree.wdl
-   testParameterFiles:
-    - empty.json
  - name: Augur_PHB
    subclass: WDL
    primaryDescriptorPath: /workflows/phylogenetics/wf_augur.wdl
