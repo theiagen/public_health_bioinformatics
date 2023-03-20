@@ -27,6 +27,9 @@ workflow theiaeuk_illumina_pe {
     Int min_coverage = 10
     Int min_proportion = 50
     Boolean skip_screen = false 
+    # default gambit outputs
+    File gambit_db_genomes = "gs://theiagen-public-files/terra/candida_auris_refs/221006-theiagen-fungal-v0.1.db"
+    File gambit_db_signatures = "gs://theiagen-public-files/terra/candida_auris_refs/221006-theiagen-fungal-v0.1.h5"
   }
   call versioning.version_capture{
     input:
@@ -85,8 +88,8 @@ workflow theiaeuk_illumina_pe {
         input:
           assembly = shovill_pe.assembly_fasta,
           samplename = samplename,
-          gambit_db_genomes = "gs://theiagen-public-files/terra/candida_auris_refs/221006-theiagen-fungal-v0.1.db",
-          gambit_db_signatures = "gs://theiagen-public-files/terra/candida_auris_refs/221006-theiagen-fungal-v0.1.h5" 
+          gambit_db_genomes = gambit_db_genomes,
+          gambit_db_signatures = gambit_db_signatures 
       }
       call ts_mlst_task.ts_mlst {
         input: 
