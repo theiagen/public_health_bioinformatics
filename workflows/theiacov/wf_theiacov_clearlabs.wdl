@@ -20,15 +20,20 @@ workflow theiacov_clearlabs {
   input {
     String samplename
     File clear_lab_fastq
+    String organism = "sars-cov-2"
+    # sequencing values
     String seq_method = "OXFORD_NANOPORE"
     File primer_bed
+    # assembly parameters
     Int normalise = 20000
+    String medaka_docker = "quay.io/staphb/artic-ncov2019:1.3.0-medaka-1.4.3"
+    # reference values
+    File? reference_genome
+    # nextclade inputs
     String nextclade_dataset_reference = "MN908947"
     String nextclade_dataset_tag = "2023-02-25T12:00:00Z"
-    String medaka_docker = "quay.io/staphb/artic-ncov2019:1.3.0-medaka-1.4.3"
     String? nextclade_dataset_name
-    File? reference_genome
-    String organism = "sars-cov-2"
+    # kraken parameters
     String? target_org
   }
   call fastq_scan.fastq_scan_se as fastq_scan_raw_reads {

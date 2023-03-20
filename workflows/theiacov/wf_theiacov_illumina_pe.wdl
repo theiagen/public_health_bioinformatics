@@ -5,6 +5,7 @@ import "../utilities/wf_ivar_consensus.wdl" as consensus_call
 import "../../tasks/assembly/task_irma.wdl" as irma_task
 import "../../tasks/quality_control/task_vadr.wdl" as vadr_task
 import "../../tasks/quality_control/task_consensus_qc.wdl" as consensus_qc_task
+import "../../tasks/quality_control/task_screen.wdl" as screen
 import "../../tasks/taxon_id/task_nextclade.wdl" as nextclade
 import "../../tasks/species_typing/task_pangolin.wdl" as pangolin
 import "../../tasks/species_typing/task_quasitools.wdl" as quasitools
@@ -18,20 +19,26 @@ workflow theiacov_illumina_pe {
   }
   input {
     String samplename
-    String seq_method = "ILLUMINA"
+    String organism = "sars-cov-2" # options: "sars-cov-2", "HIV", "WNV", "MPXV", "flu"
     File read1_raw
     File read2_raw
+    # sequencing values
+    String seq_method = "ILLUMINA"
     File? primer_bed
-    String nextclade_dataset_reference = "MN908947"
-    String nextclade_dataset_tag = "2023-02-25T12:00:00Z"
-    String? nextclade_dataset_name
-    File? reference_gff
-    File? reference_genome
-    Int min_depth = 100
-    String organism = "sars-cov-2"
     Boolean trim_primers = true
     File? adapters
     File? phix
+    # reference values
+    File? reference_gff
+    File? reference_genome
+    Int? genome_length 
+    # assembly parameters
+    Int min_depth = 100  # the minimum depth to use for consensus and variant calling
+    # nextclade inputs
+    String nextclade_dataset_reference = "MN908947"
+    String nextclade_dataset_tag = "2023-02-25T12:00:00Z"
+    String? nextclade_dataset_name
+    # nextclade flu inputs
     String nextclade_flu_h1n1_ha_tag = "2023-01-27T12:00:00Z"
     String nextclade_flu_h1n1_na_tag = "2023-01-27T12:00:00Z"
     String nextclade_flu_h3n2_ha_tag = "2023-02-01T12:00:00Z"
@@ -39,125 +46,160 @@ workflow theiacov_illumina_pe {
     String nextclade_flu_vic_ha_tag = "2023-02-01T12:00:00Z"
     String nextclade_flu_vic_na_tag = "2023-01-27T12:00:00Z"
     String nextclade_flu_yam_tag = "2022-07-27T12:00:00Z"
-    Int? genome_length
+    # read screen parameters
+    Int min_reads = 113 # min basepairs / 300 (which is the longest available read length of an Illumina product)
+    Int min_basepairs = 34000 # 20x coverage of hepatitis delta virus
+    Int min_genome_size = 1700 # size of hepatitis delta virus
+    Int max_genome_size = 2673870 # size of Pandoravirus salinus + 200 kb
+    Int min_coverage = 10
+    Int min_proportion = 40
+    Boolean skip_screen = false
   }
-  call read_qc.read_QC_trim_pe as read_QC_trim {
+  call screen.check_reads as raw_check_reads {
     input:
-      samplename = samplename,
-      read1_raw = read1_raw,
-      read2_raw = read2_raw,
-      adapters = adapters,
-      phix = phix,
-      workflow_series = "theiacov"
+      read1 = read1_raw,
+      read2 = read2_raw,
+      min_reads = min_reads,
+      min_basepairs = min_basepairs,
+      min_genome_size = min_genome_size,
+      max_genome_size = max_genome_size,
+      min_coverage = min_coverage,
+      min_proportion = min_proportion,
+      skip_screen = skip_screen
   }
-  # assembly via bwa and ivar for non-flu data
-  if (organism != "flu"){
-    call consensus_call.ivar_consensus {
+  if (raw_check_reads.read_screen == "PASS") {
+    call read_qc.read_QC_trim_pe as read_QC_trim {
       input:
         samplename = samplename,
-        read1 = read_QC_trim.read1_clean,
-        read2 = read_QC_trim.read2_clean,
-        reference_genome = reference_genome,
-        primer_bed = primer_bed,
-        reference_gff = reference_gff,
-        min_depth = min_depth,
-        trim_primers = trim_primers
+        read1_raw = read1_raw,
+        read2_raw = read2_raw,
+        adapters = adapters,
+        phix = phix,
+        workflow_series = "theiacov"
     }
-  }
-  # assembly via irma for flu organisms
-  if (organism == "flu"){
-    # flu-specific tasks
-    call irma_task.irma {
+    call screen.check_reads as clean_check_reads {
       input:
         read1 = read_QC_trim.read1_clean,
         read2 = read_QC_trim.read2_clean,
-        samplename = samplename,
+        min_reads = min_reads,
+        min_basepairs = min_basepairs,
+        min_genome_size = min_genome_size,
+        max_genome_size = max_genome_size,
+        min_coverage = min_coverage,
+        min_proportion = min_proportion,
+        skip_screen = skip_screen
     }
-    if (defined(irma.irma_assemblies)) {
-      call abricate.abricate_flu {
-        input:
-          assembly = select_first([irma.irma_assembly_fasta]),
-          samplename = samplename,
-          nextclade_flu_h1n1_ha_tag = nextclade_flu_h1n1_ha_tag,
-          nextclade_flu_h1n1_na_tag = nextclade_flu_h1n1_na_tag,
-          nextclade_flu_h3n2_ha_tag = nextclade_flu_h3n2_ha_tag,
-          nextclade_flu_h3n2_na_tag = nextclade_flu_h3n2_na_tag,
-          nextclade_flu_vic_ha_tag = nextclade_flu_vic_ha_tag,
-          nextclade_flu_vic_na_tag = nextclade_flu_vic_na_tag,
-          nextclade_flu_yam_tag = nextclade_flu_yam_tag,
+    if (clean_check_reads.read_screen == "PASS") {
+      # assembly via bwa and ivar for non-flu data
+      if (organism != "flu"){
+        call consensus_call.ivar_consensus {
+          input:
+            samplename = samplename,
+            read1 = read_QC_trim.read1_clean,
+            read2 = read_QC_trim.read2_clean,
+            reference_genome = reference_genome,
+            primer_bed = primer_bed,
+            reference_gff = reference_gff,
+            min_depth = min_depth,
+            trim_primers = trim_primers
+        }
       }
-    }
-  }
-  call consensus_qc_task.consensus_qc {
-    input:
-      assembly_fasta =  select_first([ivar_consensus.assembly_fasta,irma.irma_assembly_fasta]),
-      reference_genome = reference_genome,
-      genome_length = genome_length
-  }
-  # run organism-specific typing
-  if (organism == "MPXV" || organism == "sars-cov-2" || organism == "flu" && select_first([abricate_flu.run_nextclade]) ) { 
-    # tasks specific to either MPXV, sars-cov-2, or flu
-    call nextclade.nextclade_one_sample {
-      input:
-        genome_fasta = select_first([ivar_consensus.assembly_fasta, irma.seg_ha_assembly]),
-        dataset_name = select_first([abricate_flu.nextclade_name_ha, nextclade_dataset_name, organism]),
-        dataset_reference = select_first([abricate_flu.nextclade_ref_ha, nextclade_dataset_reference]),
-        dataset_tag = select_first([abricate_flu.nextclade_ds_tag_ha, nextclade_dataset_tag])
-    }
-    call nextclade.nextclade_output_parser_one_sample {
-      input:
-        nextclade_tsv = nextclade_one_sample.nextclade_tsv,
-        organism = organism
-    }
-  }
-  if (organism == "flu" &&  select_first([abricate_flu.run_nextclade]) && defined(irma.seg_na_assembly)) { 
-    # tasks specific to flu NA - run nextclade a second time
-    call nextclade.nextclade_one_sample as nextclade_one_sample_flu_na {
-      input:
-        genome_fasta = select_first([irma.seg_na_assembly]),
-        dataset_name = select_first([abricate_flu.nextclade_name_na, nextclade_dataset_name, organism]),
-        dataset_reference = select_first([abricate_flu.nextclade_ref_na, nextclade_dataset_reference]),
-        dataset_tag = select_first([abricate_flu.nextclade_ds_tag_na, nextclade_dataset_tag])
-    }
-    call nextclade.nextclade_output_parser_one_sample as nextclade_output_parser_one_sample_flu_na {
-      input:
-        nextclade_tsv = nextclade_one_sample_flu_na.nextclade_tsv,
-        organism = organism,
-        NA_segment = true
-    }
-    # concatenate tag, aa subs and aa dels for HA and NA segments
-    String ha_na_nextclade_ds_tag= "~{abricate_flu.nextclade_ds_tag_ha + ',' + abricate_flu.nextclade_ds_tag_na}"
-    String ha_na_nextclade_aa_subs= "~{nextclade_output_parser_one_sample.nextclade_aa_subs + ',' + nextclade_output_parser_one_sample_flu_na.nextclade_aa_subs}"
-    String ha_na_nextclade_aa_dels= "~{nextclade_output_parser_one_sample.nextclade_aa_dels + ',' + nextclade_output_parser_one_sample_flu_na.nextclade_aa_dels}"
-  }
-  if (organism == "sars-cov-2") {
-    # sars-cov-2 specific tasks
-    call pangolin.pangolin4 {
-      input:
-        samplename = samplename,
-        fasta = select_first([ivar_consensus.assembly_fasta])
-  }
-    call sc2_calculation.sc2_gene_coverage {
-      input: 
-        samplename = samplename,
-        bamfile = select_first([ivar_consensus.aligned_bam]),
-        min_depth = min_depth
-    }
-  }
-  if (organism == "MPXV" || organism == "sars-cov-2" || organism == "WNV"){ 
-    # tasks specific to MPXV, sars-cov-2, and WNV
-    call vadr_task.vadr {
-      input:
-        genome_fasta = select_first([ivar_consensus.assembly_fasta]),
-        assembly_length_unambiguous = consensus_qc.number_ATCG
-    }
-  }
-  if (organism == "HIV") {
-    call quasitools.quasitools as quasitools_illumina_pe {
-      input:
-        read1 = read_QC_trim.read1_clean,
-        read2 = read_QC_trim.read2_clean,
-        samplename = samplename
+      # assembly via irma for flu organisms
+      if (organism == "flu"){
+        # flu-specific tasks
+        call irma_task.irma {
+          input:
+            read1 = read_QC_trim.read1_clean,
+            read2 = read_QC_trim.read2_clean,
+            samplename = samplename,
+        }
+        if (defined(irma.irma_assemblies)) {
+          call abricate.abricate_flu {
+            input:
+              assembly = select_first([irma.irma_assembly_fasta]),
+              samplename = samplename,
+              nextclade_flu_h1n1_ha_tag = nextclade_flu_h1n1_ha_tag,
+              nextclade_flu_h1n1_na_tag = nextclade_flu_h1n1_na_tag,
+              nextclade_flu_h3n2_ha_tag = nextclade_flu_h3n2_ha_tag,
+              nextclade_flu_h3n2_na_tag = nextclade_flu_h3n2_na_tag,
+              nextclade_flu_vic_ha_tag = nextclade_flu_vic_ha_tag,
+              nextclade_flu_vic_na_tag = nextclade_flu_vic_na_tag,
+              nextclade_flu_yam_tag = nextclade_flu_yam_tag,
+          }
+        }
+      }
+      call consensus_qc_task.consensus_qc {
+        input:
+          assembly_fasta =  select_first([ivar_consensus.assembly_fasta,irma.irma_assembly_fasta]),
+          reference_genome = reference_genome,
+          genome_length = genome_length
+      }
+      # run organism-specific typing
+      if (organism == "MPXV" || organism == "sars-cov-2" || organism == "flu" && select_first([abricate_flu.run_nextclade]) ) { 
+        # tasks specific to either MPXV, sars-cov-2, or flu
+        call nextclade.nextclade_one_sample {
+          input:
+            genome_fasta = select_first([ivar_consensus.assembly_fasta, irma.seg_ha_assembly]),
+            dataset_name = select_first([abricate_flu.nextclade_name_ha, nextclade_dataset_name, organism]),
+            dataset_reference = select_first([abricate_flu.nextclade_ref_ha, nextclade_dataset_reference]),
+            dataset_tag = select_first([abricate_flu.nextclade_ds_tag_ha, nextclade_dataset_tag])
+        }
+        call nextclade.nextclade_output_parser_one_sample {
+          input:
+            nextclade_tsv = nextclade_one_sample.nextclade_tsv,
+            organism = organism
+        }
+      }
+      if (organism == "flu" &&  select_first([abricate_flu.run_nextclade]) && defined(irma.seg_na_assembly)) { 
+        # tasks specific to flu NA - run nextclade a second time
+        call nextclade.nextclade_one_sample as nextclade_one_sample_flu_na {
+          input:
+            genome_fasta = select_first([irma.seg_na_assembly]),
+            dataset_name = select_first([abricate_flu.nextclade_name_na, nextclade_dataset_name, organism]),
+            dataset_reference = select_first([abricate_flu.nextclade_ref_na, nextclade_dataset_reference]),
+            dataset_tag = select_first([abricate_flu.nextclade_ds_tag_na, nextclade_dataset_tag])
+        }
+        call nextclade.nextclade_output_parser_one_sample as nextclade_output_parser_one_sample_flu_na {
+          input:
+            nextclade_tsv = nextclade_one_sample_flu_na.nextclade_tsv,
+            organism = organism,
+            NA_segment = true
+        }
+        # concatenate tag, aa subs and aa dels for HA and NA segments
+        String ha_na_nextclade_ds_tag= "~{abricate_flu.nextclade_ds_tag_ha + ',' + abricate_flu.nextclade_ds_tag_na}"
+        String ha_na_nextclade_aa_subs= "~{nextclade_output_parser_one_sample.nextclade_aa_subs + ',' + nextclade_output_parser_one_sample_flu_na.nextclade_aa_subs}"
+        String ha_na_nextclade_aa_dels= "~{nextclade_output_parser_one_sample.nextclade_aa_dels + ',' + nextclade_output_parser_one_sample_flu_na.nextclade_aa_dels}"
+      }
+      if (organism == "sars-cov-2") {
+        # sars-cov-2 specific tasks
+        call pangolin.pangolin4 {
+          input:
+            samplename = samplename,
+            fasta = select_first([ivar_consensus.assembly_fasta])
+      }
+        call sc2_calculation.sc2_gene_coverage {
+          input: 
+            samplename = samplename,
+            bamfile = select_first([ivar_consensus.aligned_bam]),
+            min_depth = min_depth
+        }
+      }
+      if (organism == "MPXV" || organism == "sars-cov-2" || organism == "WNV"){ 
+        # tasks specific to MPXV, sars-cov-2, and WNV
+        call vadr_task.vadr {
+          input:
+            genome_fasta = select_first([ivar_consensus.assembly_fasta]),
+            assembly_length_unambiguous = consensus_qc.number_ATCG
+        }
+      }
+      if (organism == "HIV") {
+        call quasitools.quasitools as quasitools_illumina_pe {
+          input:
+            read1 = read_QC_trim.read1_clean,
+            read2 = read_QC_trim.read2_clean,
+            samplename = samplename
+        }
+      }
     }
   }
   call versioning.version_capture{
@@ -172,17 +214,17 @@ workflow theiacov_illumina_pe {
     # Read QC
     File? read1_dehosted = read_QC_trim.read1_dehosted
     File? read2_dehosted = read_QC_trim.read2_dehosted
-    File read1_clean = read_QC_trim.read1_clean
-    File read2_clean = read_QC_trim.read2_clean
-    Int num_reads_raw1 = read_QC_trim.fastq_scan_raw1
-    Int num_reads_raw2 = read_QC_trim.fastq_scan_raw2
-    String num_reads_raw_pairs = read_QC_trim.fastq_scan_raw_pairs
-    String fastq_scan_version = read_QC_trim.fastq_scan_version
-    Int num_reads_clean1 = read_QC_trim.fastq_scan_clean1
-    Int num_reads_clean2 = read_QC_trim.fastq_scan_clean2
-    String num_reads_clean_pairs = read_QC_trim.fastq_scan_clean_pairs
+    File? read1_clean = read_QC_trim.read1_clean
+    File? read2_clean = read_QC_trim.read2_clean
+    Int? num_reads_raw1 = read_QC_trim.fastq_scan_raw1
+    Int? num_reads_raw2 = read_QC_trim.fastq_scan_raw2
+    String? num_reads_raw_pairs = read_QC_trim.fastq_scan_raw_pairs
+    String? fastq_scan_version = read_QC_trim.fastq_scan_version
+    Int? num_reads_clean1 = read_QC_trim.fastq_scan_clean1
+    Int? num_reads_clean2 = read_QC_trim.fastq_scan_clean2
+    String? num_reads_clean_pairs = read_QC_trim.fastq_scan_clean_pairs
     String? trimmomatic_version = read_QC_trim.trimmomatic_version
-    String bbduk_docker = read_QC_trim.bbduk_docker
+    String? bbduk_docker = read_QC_trim.bbduk_docker
     String? kraken_version = read_QC_trim.kraken_version
     Float? kraken_human = read_QC_trim.kraken_human
     Float? kraken_sc2 = read_QC_trim.kraken_sc2
@@ -212,11 +254,11 @@ workflow theiacov_illumina_pe {
     String assembly_fasta = select_first([ivar_consensus.assembly_fasta, irma.irma_assembly_fasta, ""])
     String? ivar_version_consensus = ivar_consensus.ivar_version_consensus
     String? samtools_version_consensus = ivar_consensus.samtools_version_consensus
-    Int number_N = consensus_qc.number_N
-    Int assembly_length_unambiguous = consensus_qc.number_ATCG
-    Int number_Degenerate =  consensus_qc.number_Degenerate
-    Int number_Total = consensus_qc.number_Total
-    Float percent_reference_coverage =  consensus_qc.percent_reference_coverage
+    Int? number_N = consensus_qc.number_N
+    Int? assembly_length_unambiguous = consensus_qc.number_ATCG
+    Int? number_Degenerate =  consensus_qc.number_Degenerate
+    Int? number_Total = consensus_qc.number_Total
+    Float? percent_reference_coverage =  consensus_qc.percent_reference_coverage
     Int consensus_n_variant_min_depth = min_depth
     # Alignment QC
     File? consensus_stats = ivar_consensus.consensus_stats
