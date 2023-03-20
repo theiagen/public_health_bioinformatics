@@ -5,9 +5,10 @@ task genotyphi {
   input {
     File read1
     File? read2
-    Boolean ont_data=false
+    Boolean ont_data = false
     String samplename
-    String genotyphi_docker_image = "staphb/mykrobe:0.11.0"
+    String genotyphi_docker_image = "quay.io/staphb/mykrobe:0.11.0"
+    Int disk_size = 100
     Int cpu = 4
   }
   command <<<
@@ -61,11 +62,12 @@ task genotyphi {
     String genotyphi_genotype_confidence = read_string("CONFIDENCE")
   }
   runtime {
-    docker:       "~{genotyphi_docker_image}"
-    memory:       "8 GB"
-    cpu:          cpu
-    disks:        "local-disk 100 SSD"
+    docker: "~{genotyphi_docker_image}"
+    memory: "8 GB"
+    cpu: cpu
+    disks: "local-disk " + disk_size + " SSD"
+    disk: disk_size + " GB"
     preemptible:  0
-    maxRetries:   3
+    maxRetries: 3
   }
 }

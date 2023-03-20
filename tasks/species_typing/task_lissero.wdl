@@ -8,7 +8,8 @@ task lissero {
     File assembly
     String samplename
     String docker = "quay.io/biocontainers/lissero:0.4.9--py_0"
-    Int? cpu = 2
+    Int disk_size = 100
+    Int cpu = 2
 
     # Parameters
     # --min_id     Minimum percent identity to accept a match [Default 95.0]
@@ -35,8 +36,9 @@ task lissero {
   runtime {
     docker: "~{docker}"
     memory: "8 GB"
-    cpu: 2
-    disks: "local-disk 50 SSD"
+    cpu: cpu
+    disks: "local-disk " + disk_size + " SSD"
+    disk: disk_size + " GB"
     preemptible: 0
   }
 }

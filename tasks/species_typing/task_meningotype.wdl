@@ -8,7 +8,7 @@ task meningotype {
     File assembly
     String samplename
     String docker = "quay.io/biocontainers/meningotype:0.8.5--pyhdfd78af_0"
-    Int? cpu = 2
+    Int cpu = 2
 
     # Parameters
     # --finetype      perform porA and fetA fine typing (default=off)

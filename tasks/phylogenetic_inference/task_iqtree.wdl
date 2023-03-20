@@ -5,10 +5,11 @@ task iqtree {
     File alignment
     String cluster_name
     String iqtree_model = "GTR+I+G" # For comparison to other tools use HKY for bactopia, GTR+F+I for grandeur, GTR+G4 for nullarbor, GTR+G for dryad
-    String iqtree_bootstraps = 1000 #  Ultrafast bootstrap replicates
-    String alrt = 1000 # SH-like approximate likelihood ratio test (SH-aLRT) replicates
-    String? iqtree_opts = ""
-    String docker = "staphb/iqtree:1.6.7"
+    Int iqtree_bootstraps = 1000 #  Ultrafast bootstrap replicates
+    Int alrt = 1000 # SH-like approximate likelihood ratio test (SH-aLRT) replicates
+    String iqtree_opts = ""
+    String docker = "quay.io/staphb/iqtree:1.6.7"
+    Int disk_size = 100
   }
   command <<<
     # date and version control
@@ -39,8 +40,8 @@ task iqtree {
     docker: "~{docker}"
     memory: "32 GB"
     cpu: 4
-    disks: "local-disk 100 SSD"
-    preemptible: 0
+    disks: "local-disk " + disk_size + " SSD"
+    disk: disk_size + " GB" # TES    preemptible: 0
     maxRetries: 3
   }
 }

@@ -4,7 +4,8 @@ task quast {
   input {
     File assembly
     String samplename
-    String docker="quay.io/staphb/quast:5.0.2"
+    String docker = "quay.io/staphb/quast:5.0.2"
+    Int disk_size = 100
   }
   command <<<
     # capture date and version
@@ -29,6 +30,9 @@ task quast {
           if "N50" in line[0]:
             with open("N50_VALUE", 'wt') as n50_value:
               n50_value.write(line[1])
+          if "GC" in line[0]:
+            with open("GC_PERCENT", 'wt') as gc_percent:
+              gc_percent.write(line[1])       
 
     CODE
 
@@ -40,12 +44,15 @@ task quast {
     Int genome_length = read_int("GENOME_LENGTH")
     Int number_contigs = read_int("NUMBER_CONTIGS")
     Int n50_value = read_int("N50_VALUE")
+    Float gc_percent = read_float("GC_PERCENT")    
   }
   runtime {
     docker:  "~{docker}"
     memory:  "2 GB"
     cpu:   2
-    disks: "local-disk 100 SSD"
+    disks: "local-disk " + disk_size + " SSD"
+    disk: disk_size + " GB"
+    maxRetries: 3
     preemptible:  0
   }
 }

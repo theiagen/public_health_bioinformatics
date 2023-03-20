@@ -5,7 +5,7 @@ task snippy_core {
     Array[File] snippy_variants_outdir_tarball
     Array[String] samplenames
     String tree_name
-    String docker = "staphb/snippy:4.6.0"
+    String docker = "quay.io/staphb/snippy:4.6.0"
     File reference
     File? bed_file
   }

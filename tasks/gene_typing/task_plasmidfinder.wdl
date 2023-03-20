@@ -6,7 +6,8 @@ task plasmidfinder {
     String samplename
     Int cpu = 8
     Int memory = 16
-    String docker = "staphb/plasmidfinder:2.1.6"
+    String docker = "quay.io/staphb/plasmidfinder:2.1.6"
+    Int disk_size = 100
     String? database
     String? database_path
     String? method_path
@@ -14,7 +15,6 @@ task plasmidfinder {
     Float? min_cov 
     # minimum blast identity threshold
     Float? threshold
-
   }
   command <<<  
   date | tee DATE
@@ -63,6 +63,8 @@ task plasmidfinder {
     memory: "~{memory} GB"
     cpu: cpu
     docker: "~{docker}"
-    disks: "local-disk 100 HDD"
+    disks: "local-disk " + disk_size + " SSD"
+    disk: disk_size + " GB"
+    maxRetries: 3
   }
 }
