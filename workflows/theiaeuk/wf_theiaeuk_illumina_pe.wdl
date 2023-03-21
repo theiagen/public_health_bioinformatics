@@ -27,6 +27,7 @@ workflow theiaeuk_illumina_pe {
     Int min_coverage = 10
     Int min_proportion = 50
     Boolean skip_screen = false 
+    Int? genome_size
   }
   call versioning.version_capture{
     input:
@@ -41,7 +42,8 @@ workflow theiaeuk_illumina_pe {
       max_genome_size = max_genome_size,
       min_coverage = min_coverage,
       min_proportion = min_proportion,
-      skip_screen = skip_screen
+      skip_screen = skip_screen,
+      expected_genome_size = genome_size
   }
   if (raw_check_reads.read_screen=="PASS") {
     call read_qc.read_QC_trim_pe as read_QC_trim {
@@ -60,7 +62,8 @@ workflow theiaeuk_illumina_pe {
         max_genome_size = max_genome_size,
         min_coverage = min_coverage,
         min_proportion = min_proportion,
-        skip_screen = skip_screen
+        skip_screen = skip_screen,
+        expected_genome_size = genome_size
     }
     if (clean_check_reads.read_screen=="PASS") {
       call shovill.shovill_pe {
