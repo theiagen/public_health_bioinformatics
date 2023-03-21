@@ -8,10 +8,10 @@ task cauris_cladetyper {
     String docker_image = "quay.io/biocontainers/hesslab-gambit:0.5.1--py37h8902056_0"
     Int memory = 16
     Int cpu = 8
-    File ref_clade1 = "gs://theiagen-public-files/terra/candida_auris_refs/Cauris_Clade1_GCA_002759435.2_Cand_auris_B8441_V2_genomic.fna"
+    File ref_clade1 = "gs://theiagen-public-files/terra/candida_auris_refs/Cauris_Clade1_GCA_002759435.2_Cand_auris_B8441_V2_genomic.fasta"
     String ref_clade1_annotated = "gs://theiagen-public-files/terra/candida_auris_refs/Cauris_Clade1_GCA_002759435_Cauris_B8441_V2_genomic.gbff"
-    File ref_clade2 = "gs://theiagen-public-files/terra/candida_auris_refs/Cauris_Clade2_reference.fasta"
-    String ref_clade2_annotated = "gs://theiagen-public-files/terra/candida_auris_refs/Cauris_Clade2_CP043531.1.B11220.gb"
+    File ref_clade2 = "gs://theiagen-public-files/terra/candida_auris_refs/Cauris_Clade2_GCA_003013715.2_ASM301371v2_genomic.fasta"
+    String ref_clade2_annotated = "gs://theiagen-public-files/terra/candida_auris_refs/Cauris_Clade2_GCA_003013715.2_ASM301371v2_genomic.gbff"
     File ref_clade3 = "gs://theiagen-public-files/terra/candida_auris_refs/Cauris_Clade3_reference.fasta"
     String ref_clade3_annotated = "gs://theiagen-public-files/terra/candida_auris_refs/Cauris_Clade3_GCF_002775015.1_Cand_auris_B11221_V1_genomic.gbff"
     File ref_clade4 = "gs://theiagen-public-files/terra/candida_auris_refs/Cauris_Clade4_reference.fasta"
