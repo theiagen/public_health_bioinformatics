@@ -16,8 +16,8 @@ task cauris_cladetyper {
     String ref_clade3_annotated = "gs://theiagen-public-files/terra/candida_auris_refs/Cauris_Clade3_GCF_002775015.1_Cand_auris_B11221_V1_genomic.gbff"
     File ref_clade4 = "gs://theiagen-public-files/terra/candida_auris_refs/Cauris_Clade4_reference.fasta"
     String ref_clade4_annotated = "gs://theiagen-public-files/terra/candida_auris_refs/Cauris_Clade4_GCA_003014415.1_Cand_auris_B11243_genomic.gbff"
-    File ref_clade5 = "gs://theiagen-public-files/terra/candida_auris_refs/Cauris_Clade5_reference.fasta"
-    String ref_clade5_annotated = "gs://theiagen-public-files/terra/candida_auris_refs/Cauris_Clade5_GCA_003013715.2_ASM301371v2_genomic.gbff"
+    File ref_clade5 = "gs://theiagen-public-files/terra/candida_auris_refs/Cauris_Clade5_GCA_016809505.1_ASM1680950v1_genomic.fasta"
+    String ref_clade5_annotated = "gs://theiagen-public-files/terra/candida_auris_refs/Cauris_Clade5_GCA_016809505.1_ASM1680950v1_genomic.gbff"
   }
   command <<<
     # date and version control
