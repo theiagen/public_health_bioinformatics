@@ -73,10 +73,12 @@ task fetch_bs {
       echo "dataset_id: ${dataset_id_array[*]}"
     else 
       #Try Grabbing BaseSpace Dataset ID from project name
+      echo "Could not locate a run_id via Basespace runs, attempting to search Basespace projects now..."
       project_id=$(${bs_command} list project | grep "~{basespace_collection_id}" | awk -F "|" '{ print $3 }' | awk '{$1=$1;print}' )
       echo "project_id: ${project_id}" 
       if [[ ! -z "${project_id}" ]]
       then 
+        echo "project_id identified via Basespace, now searching for dataset_id within project_id ${project_id}..."
         dataset_id_array=($(${bs_command} list dataset --project-id=${run_id} | grep "${dataset_name}" | awk -F "|" '{ print $3 }' )) 
         echo "dataset_id: ${dataset_id_array[*]}"
       else       
@@ -91,13 +93,18 @@ task fetch_bs {
       mkdir ./dataset_${dataset_id} && cd ./dataset_${dataset_id}
       echo "dataset download: ${bs_command} download dataset -i ${dataset_id} -o . --retry"
       ${bs_command} download dataset -i ${dataset_id} -o . --retry && cd ..
-      echo -e "downladed data: $(ls ./dataset_*/*)"
+      echo -e "downladed data: \n $(ls ./dataset_*/*)"
     done
+
+    # rename FASTQ files to add back in underscores that Illumina/Basespace changed into hyphens
+    echo "Concatenating and renaming FASTQ files to add back underscores in basespace_sample_name"
+    # setting a new bash variable to use for renaming during concatenation of FASTQs
+    SAMPLENAME_HYPHEN_INSTEAD_OF_UNDERSCORES=$(echo $sample_identifier | sed 's|_|-|g')
 
     #Combine non-empty read files into single file without BaseSpace filename cruft
     ##FWD Read
     lane_count=0
-    for fwd_read in ./dataset_*/${sample_identifier}_*R1_*.fastq.gz; do
+    for fwd_read in ./dataset_*/${SAMPLENAME_HYPHEN_INSTEAD_OF_UNDERSCORES}_*R1_*.fastq.gz; do
       if [[ -s $fwd_read ]]; then
         echo "cat fwd reads: cat $fwd_read >> ~{sample_name}_R1.fastq.gz" 
         cat $fwd_read >> ~{sample_name}_R1.fastq.gz
@@ -105,7 +112,7 @@ task fetch_bs {
       fi
     done
     ##REV Read
-    for rev_read in ./dataset_*/${sample_identifier}_*R2_*.fastq.gz; do
+    for rev_read in ./dataset_*/${SAMPLENAME_HYPHEN_INSTEAD_OF_UNDERSCORES}_*R2_*.fastq.gz; do
       if [[ -s $rev_read ]]; then 
         echo "cat rev reads: cat $rev_read >> ~{sample_name}_R2.fastq.gz" 
         cat $rev_read >> ~{sample_name}_R2.fastq.gz
