@@ -7,12 +7,10 @@ import "../../tasks/phylogenetic_inference/augur/task_augur_align.wdl" as align_
 import "../../tasks/phylogenetic_inference/augur/task_augur_ancestral.wdl" as ancestral_task
 import "../../tasks/phylogenetic_inference/augur/task_augur_clades.wdl" as clades_task
 import "../../tasks/phylogenetic_inference/augur/task_augur_export.wdl" as export_task
-# import "../../tasks/phylogenetic_inference/augur/task_augur_frequencies.wdl" as frequencies_task
 import "../../tasks/phylogenetic_inference/augur/task_augur_refine.wdl" as refine_task
 import "../../tasks/phylogenetic_inference/augur/task_augur_translate.wdl" as translate_task
 import "../../tasks/phylogenetic_inference/augur/task_augur_tree.wdl" as tree_task
 
-import "../../tasks/phylogenetic_inference/task_snp_sites.wdl" as snp_sites_task
 import "../../tasks/phylogenetic_inference/task_snp_dists.wdl" as snp_dists_task
 import "../../tasks/phylogenetic_inference/task_reorder_matrix.wdl" as reorder_matrix_task
 
@@ -30,12 +28,10 @@ workflow augur {
     String flu_segment = "HA" # options: HA or NA
     String? flu_subtype # options: "Victoria" "Yamagata" "H3N2" "H1N1"
 
-    # these following inputs should truly be optional, but I'm worried the select_first will make them "not optional" 
-    # this is especially the case if organism is not given
     File? clades_tsv
-    File? lat_longs_tsv
-    File? auspice_config
-    # Float? min_frequency_date # only used in the augur_frequencies task
+    # these are very minimal files that hopefully will prevent workflow failure but will not provide any useful information
+    File lat_longs_tsv = "gs://theiagen-public-files-rp/terra/augur-defaults/minimal-lat-longs.tsv"
+    File auspice_config = "gs://theiagen-public-files-rp/terra/augur-defaults/minimal-auspice-config.json"
 
     Boolean distance_tree_only = false # by default, do not skip making a time tree
   }
@@ -72,19 +68,10 @@ workflow augur {
       id_col = "strain",
       out_basename = "metadata-merged"
   }
-
-  ## keep the following two tasks???
   call augur_utils.fasta_to_ids { # extract list of remaining sequences (so we know which ones were dropped)
     input:
       sequences_fasta = augur_align.aligned_fasta
   }
-  call snp_sites_task.snp_sites { # call variants in aligned_fasta file
-    input: 
-      msa_fasta = augur_align.aligned_fasta,
-      output_name = build_name
-  }
-  ## keep the preceeding two tasks???
-
   call tree_task.augur_tree { # create a "draft" (or distance) augur tree
     input:
       aligned_fasta = augur_align.aligned_fasta,
@@ -98,18 +85,6 @@ workflow augur {
         metadata = tsv_join.out_tsv,
         build_name = build_name
     }
-    # commented this section out because its outputs were not used
-    # call frequencies_task.augur_frequencies { # calculate tip frequencies
-    #   input: 
-    #     refined_tree = augur_refine.refined_tree,
-    #     metadata = tsv_join.out_tsv,
-    #     build_name = build_name,
-    #     min_date = select_first([sc2_defaults.min_date, flu_defaults.min_date, min_frequency_date]), 
-    #     pivot_interval = select_first([sc2_defaults.pivot_interval, flu_defaults.pivot_interval, 3]),
-    #     pivot_interval_units = select_first([sc2_defaults.pivot_interval_units, "months"]),
-    #     narrow_bandwidth = select_first([sc2_defaults.narrow_bandwidth, flu_defaults.narrow_bandwidth, 0.08333333333333333]),
-    #     proportion_wide = select_first([sc2_defaults.proportion_wide, flu_defaults.proportion_wide, 0.2])
-    # }
     call ancestral_task.augur_ancestral { # infer ancestral sequences
       input:
         refined_tree = augur_refine.refined_tree,
@@ -124,14 +99,16 @@ workflow augur {
         build_name = build_name
     }
     if (flu_segment == "HA") { # we only have clade information for HA segments (but SC2 defaults will be selected first)
-      call clades_task.augur_clades { # assign clades to nodes based on amino-acid or nucleotide signatures
-        input: 
-          refined_tree = augur_refine.refined_tree,
-          ancestral_nt_muts_json = augur_ancestral.ancestral_nt_muts_json,
-          translated_aa_muts_json = augur_translate.translated_aa_muts_json,
-          reference_fasta = select_first([reference_fasta, sc2_defaults.reference_fasta, flu_defaults.reference_fasta]),
-          build_name = build_name,
-          clades_tsv = select_first([clades_tsv, sc2_defaults.clades_tsv, flu_defaults.clades_tsv])
+      if (defined(clades_tsv) || defined(sc2_defaults.clades_tsv) || defined(flu_defaults.clades_tsv)) { # one of these must be present
+        call clades_task.augur_clades { # assign clades to nodes based on amino-acid or nucleotide signatures
+          input: 
+            refined_tree = augur_refine.refined_tree,
+            ancestral_nt_muts_json = augur_ancestral.ancestral_nt_muts_json,
+            translated_aa_muts_json = augur_translate.translated_aa_muts_json,
+            reference_fasta = select_first([reference_fasta, sc2_defaults.reference_fasta, flu_defaults.reference_fasta]),
+            build_name = build_name,
+            clades_tsv = select_first([clades_tsv, sc2_defaults.clades_tsv, flu_defaults.clades_tsv])
+        }
       }
     }
     call export_task.augur_export { # export json files suitable for auspice visualization
@@ -144,8 +121,8 @@ workflow augur {
                             augur_translate.translated_aa_muts_json,
                             augur_clades.clade_assignments_json]),
         build_name = build_name,
-        lat_longs_tsv = select_first([lat_longs_tsv, sc2_defaults.lat_longs_tsv, flu_defaults.lat_longs_tsv]),
-        auspice_config = select_first([auspice_config, sc2_defaults.auspice_config, flu_defaults.auspice_config])
+        lat_longs_tsv = select_first([sc2_defaults.lat_longs_tsv, flu_defaults.lat_longs_tsv, lat_longs_tsv]),
+        auspice_config = select_first([sc2_defaults.auspice_config, flu_defaults.auspice_config, auspice_config])
     }
   }
   call snp_dists_task.snp_dists { # create a snp matrix from the alignment
@@ -175,13 +152,11 @@ workflow augur {
     File aligned_fastas = augur_align.aligned_fasta
     File combined_assemblies = filter_sequences_by_length.filtered_fasta
     File metadata_merged = tsv_join.out_tsv
-    
-    # not sure if wanting to keep the tasks that make these
+
+    # list of samples that were kept and met the length filters    
     File keep_list = fasta_to_ids.ids_txt
-    File? unmasked_snps = snp_sites.snp_sites_vcf
   
     # snp matrix output
     File snp_matrix = reorder_matrix.ordered_matrix
-    # currently not outputting the midpoint-rooted distance tree (even though this matrix matches that)
   }
 }
