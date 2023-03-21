@@ -331,6 +331,7 @@ task prep_augur_metadata {
 
     String county = ""
     String? pango_lineage
+    String? organism = "sars-cov-2"
 
     Int disk_size = 10
   }
@@ -341,13 +342,19 @@ task prep_augur_metadata {
     pangolin_header=""
 
     # if pango_lineage defined, add to metadata
-    if [[ "~{pango_lineage}" ]] ; then 
+    if [[ "~{pango_lineage}" ]]; then 
       pangolin_header="pango_lineage"
+    fi
+
+    if [[ "~{organism}" == "sars-cov-2" ]]; then
+      virus="ncov"
+    else
+      virus="~{organism}"
     fi
 
     # write everything to a file
     echo -e "strain\tvirus\tdate\tregion\tcountry\tdivision\tlocation\t${pangolin_header}" > augur_metadata.tsv
-    echo -e "\"${assembly_header}\"\t\"ncov\"\t\"~{collection_date}\"\t\"~{continent}\"\t\"~{country}\"\t\"~{state}\"\t\"~{county}\"\t\"~{pango_lineage}\"" >> augur_metadata.tsv
+    echo -e "\"${assembly_header}\"\t\"${virus}\"\t\"~{collection_date}\"\t\"~{continent}\"\t\"~{country}\"\t\"~{state}\"\t\"~{county}\"\t\"~{pango_lineage}\"" >> augur_metadata.tsv
   >>>
   output {
     File augur_metadata = "augur_metadata.tsv"
