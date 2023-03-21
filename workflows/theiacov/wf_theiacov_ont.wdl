@@ -36,6 +36,7 @@ workflow theiacov_ont {
     String? nextclade_dataset_name
     # reference values
     File? reference_genome
+    Int? genome_length
     # kraken inputs
     String? target_org
     # read screen parameters
@@ -56,7 +57,8 @@ workflow theiacov_ont {
       min_coverage = min_coverage,
       skip_screen = skip_screen,
       workflow_series = "theiacov",
-      organism = organism
+      organism = organism,
+      expected_genome_size = genome_length
   }
   if (raw_check_reads.read_screen == "PASS") {
     call ncbi_scrub.ncbi_scrub_se {
@@ -81,7 +83,8 @@ workflow theiacov_ont {
         min_coverage = min_coverage,
         skip_screen = skip_screen,
         workflow_series = "theiacov",
-        organism = organism
+        organism = organism,
+        expected_genome_size = genome_length
     }
     if (clean_check_reads.read_screen == "PASS") {
       call fastq_scan.fastq_scan_se as fastq_scan_raw_reads {

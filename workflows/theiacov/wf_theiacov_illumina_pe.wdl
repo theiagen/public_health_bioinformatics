@@ -67,7 +67,8 @@ workflow theiacov_illumina_pe {
       min_proportion = min_proportion,
       skip_screen = skip_screen,
       workflow_series = "theiacov",
-      organism = organism
+      organism = organism,
+      expected_genome_size = genome_length
   }
   if (raw_check_reads.read_screen == "PASS") {
     call read_qc.read_QC_trim_pe as read_QC_trim {
@@ -91,7 +92,8 @@ workflow theiacov_illumina_pe {
         min_proportion = min_proportion,
         skip_screen = skip_screen,
         workflow_series = "theiacov",
-        organism = organism
+        organism = organism,
+        expected_genome_size = genome_length
     }
     if (clean_check_reads.read_screen == "PASS") {
       # assembly via bwa and ivar for non-flu data

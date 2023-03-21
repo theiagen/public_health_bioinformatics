@@ -13,6 +13,7 @@ task check_reads {
     Boolean skip_screen
     String workflow_series = "theiaprok" # default to theiaprok so we don't have to change those workflows
     String? organism
+    Int? expected_genome_size # user-provided
     Int disk_size = 100
   }
   command <<<
@@ -20,7 +21,7 @@ task check_reads {
 
     # initalize estimated genome size
     estimated_genome_size=0
-    if [[ "~{skip_screen}" = "false" ]] ; then
+    if [[ "~{skip_screen}" == "false" ]] ; then
       
       # set cat command based on compression
       if [[ "~{read1}" == *".gz" ]] ; then
@@ -43,7 +44,7 @@ task check_reads {
       fi
 
       # checks two and three: number of basepairs and proportion of sequence
-      if [ "${flag}" = "PASS" ]; then
+      if [ "${flag}" == "PASS" ]; then
         # count number of basepairs
         # this only works if the fastq has 4 lines per read, so this might fail one day
         read1_bp=`eval "${cat_reads} ~{read1}" | paste - - - - | cut -f2 | tr -d '\n' | wc -c`
@@ -66,7 +67,7 @@ task check_reads {
           flag="PASS"
         fi
 
-        if [ "$flag" = "PASS" ] ; then
+        if [ "$flag" == "PASS" ] ; then
           if [ "${read1_bp}" -le "~{min_basepairs}" ] || [ "${read2_bp}" -le "~{min_basepairs}" ] ; then
             flag="FAIL; the number of basepairs (either ${read1_bp} or ${read2_bp}) is below the minimum of ~{min_basepairs}"
           else
@@ -76,9 +77,9 @@ task check_reads {
       fi
 
       #checks four and five: estimated genome size and coverage
-      if [ "${flag}" = "PASS" ]; then
-        # determine genome size
-        if [ "~{workflow_series}" == "theiaprok" ]; then        
+      if [ "${flag}" == "PASS" ]; then
+        # estimate genome size if theiaprok AND expected_genome_size was not provided
+        if [ "~{workflow_series}" == "theiaprok" ] && [[ -z "~{expected_genome_size}" ]]; then        
           # First Pass; assuming average depth
           mash sketch -o test -k 31 -m 3 -r ~{read1} ~{read2} > mash-output.txt 2>&1
           grep "Estimated genome size:" mash-output.txt | \
@@ -109,8 +110,12 @@ task check_reads {
           
           estimated_genome_size=`head -n1 genome_size_output`
           estimated_coverage=`head -n1 coverage_output`
-        elif [ "~{workflow_series}" == "theiacov" ]; then
-          if [ "~{organism}" == "sars-cov-2" ]; then
+        
+        # estimate coverage if theiacov OR expected_genome_size was provided
+        elif [ "~{workflow_series}" == "theiacov" ] || [ "~{expected_genome_size}" ]; then
+          if [ "~{expected_genome_size}" ]; then
+            estimated_genome_size=~{expected_genome_size} # use user-provided expected_genome_size
+          elif [ "~{organism}" == "sars-cov-2" ]; then
             estimated_genome_size=29903 # size taken from https://www.ncbi.nlm.nih.gov/nuccore/NC_045512.2
           elif [ "~{organism}" == "MPXV" ]; then
             estimated_genome_size=197209 # size of 2022 virus taken from https://www.ncbi.nlm.nih.gov/nuccore/NC_063383.1
@@ -121,12 +126,16 @@ task check_reads {
           elif [ "~{organism}" == "WNV" ]; then
             estimated_genome_size=11092 # WNV lineage 1 size from https://www.ncbi.nlm.nih.gov/nuccore/NC_009942.1
           else
-            flag="FAIL; the organism tag provided (~{organism}) is not valid."
+            flag="FAIL; the organism tag provided (~{organism}) is not valid and no expected_genome_size was provided."
           fi
 
           # coverage is calculated here by N/G where N is number of bases, and G is genome length
           # this will nearly always be an overestimation
-          estimated_coverage=$(python3 -c "print(round(($read1_bp+$read2_bp)/$estimated_genome_size))")
+          if [ $estimated_genome_size -ne 0 ]; then # prevent divided by zero errors
+            estimated_coverage=$(python3 -c "print(round(($read1_bp+$read2_bp)/$estimated_genome_size))")
+          else # they provided 0 for estimated_genome_size, nice
+            estimated_coverage=0
+          fi
         else # workflow series was not provided; default to fail
           estimated_genome_size=0
           estimated_coverage=0
@@ -177,6 +186,7 @@ task check_reads_se {
     Boolean skip_screen 
     String workflow_series = "theiaprok" # default to theiaprok so we don't have to change those workflows
     String? organism
+    Int? expected_genome_size
     Int disk_size = 100
   }
   command <<<
@@ -185,7 +195,7 @@ task check_reads_se {
     # initalize estimated genome size
     estimated_genome_size=0
 
-    if [[ "~{skip_screen}" = "false" ]] ; then
+    if [[ "~{skip_screen}" == "false" ]] ; then
       # set cat command based on compression
       if [[ "~{read1}" == *".gz" ]] ; then
         cat_reads="zcat"
@@ -206,7 +216,7 @@ task check_reads_se {
       fi
 
       # checks two and three: number of basepairs and proportion of sequence
-      if [ "${flag}" = "PASS" ]; then
+      if [ "${flag}" == "PASS" ]; then
         # count number of basepairs
         # this only works if the fastq has 4 lines per read, so this might fail one day
         read1_bp=`eval "${cat_reads} ~{read1}" | paste - - - - | cut -f2 | tr -d '\n' | wc -c`
@@ -215,7 +225,7 @@ task check_reads_se {
         # tr -d '\n' removes line endings
         # wc -c counts characters
 
-        if [ "$flag" = "PASS" ] ; then
+        if [ "$flag" == "PASS" ] ; then
           if [ "${read1_bp}" -le "~{min_basepairs}" ] ; then
             flag="FAIL; the number of basepairs (${read1_bp}) is below the minimum of ~{min_basepairs}"
           else
@@ -226,8 +236,8 @@ task check_reads_se {
 
       #checks four and five: estimated genome size and coverage
       if [ "${flag}" = "PASS" ]; then
-        # determine genome size
-        if [ "~{workflow_series}" == "theiaprok" ]; then                      
+        # estimate genome size if theiaprok AND expected_genome_size was not provided
+        if [ "~{workflow_series}" == "theiaprok" ] && [[ -z "~{expected_genome_size}" ]]; then            
           # First Pass; assuming average depth
           mash sketch -o test -k 31 -m 3 -r ~{read1} > mash-output.txt 2>&1
           grep "Estimated genome size:" mash-output.txt | \
@@ -264,8 +274,12 @@ task check_reads_se {
           
           estimated_genome_size=`head -n1 genome_size_output`
           estimated_coverage=`head -n1 coverage_output`
-        elif [ "~{workflow_series}" == "theiacov" ]; then
-          if [ "~{organism}" == "sars-cov-2" ]; then
+
+        # estimate coverage if theiacov OR expected_genome_size was provided
+        elif [ "~{workflow_series}" == "theiacov" ] || [ "~{expected_genome_size}" ]; then
+          if [ "~{expected_genome_size}" ]; then
+            estimated_genome_size=~{expected_genome_size} # use user-provided expected_genome_size
+          elif [ "~{organism}" == "sars-cov-2" ]; then
             estimated_genome_size=29903 # size taken from https://www.ncbi.nlm.nih.gov/nuccore/NC_045512.2
           elif [ "~{organism}" == "MPXV" ]; then
             estimated_genome_size=197209 # size of 2022 virus taken from https://www.ncbi.nlm.nih.gov/nuccore/NC_063383.1
@@ -276,12 +290,16 @@ task check_reads_se {
           elif [ "~{organism}" == "WNV" ]; then
             estimated_genome_size=11092 # WNV lineage 1 size from https://www.ncbi.nlm.nih.gov/nuccore/NC_009942.1
           else
-            flag="FAIL; the organism tag provided (~{organism}) is not valid."
+            flag="FAIL; the organism tag provided (~{organism}) is not valid and no expected_genome_size was provided."
           fi
 
           # coverage is calculated here by N/G where N is number of bases, and G is genome length
           # this will nearly always be an overestimation
-          estimated_coverage=$(python3 -c "print(round(($read1_bp)/$estimated_genome_size))")
+          if [ $estimated_genome_size -ne 0 ]; then # prevent divided by zero errors
+            estimated_coverage=$(python3 -c "print(round(($read1_bp)/$estimated_genome_size))")
+          else # they provided 0 for estimated_genome_size, nice
+            estimated_coverage=0
+          fi
         else # workflow series was not provided; default to fail
           estimated_genome_size=0
           estimated_coverage=0

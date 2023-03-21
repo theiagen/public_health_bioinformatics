@@ -64,7 +64,8 @@ workflow theiaprok_ont {
       min_genome_size = min_genome_size,
       max_genome_size = max_genome_size,
       min_coverage = min_coverage,
-      skip_screen = skip_screen
+      skip_screen = skip_screen,
+      expected_genome_size = genome_size
   }
   if (raw_check_reads.read_screen == "PASS") {
     call read_qc_workflow.read_QC_trim_ont as read_QC_trim {
@@ -81,7 +82,8 @@ workflow theiaprok_ont {
         min_genome_size = min_genome_size,
         max_genome_size = max_genome_size,
         min_coverage = min_coverage,
-        skip_screen = skip_screen
+        skip_screen = skip_screen,
+        expected_genome_size = genome_size
     }
     if (clean_check_reads.read_screen == "PASS") {
        call dragonflye_task.dragonflye {

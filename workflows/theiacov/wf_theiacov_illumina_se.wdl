@@ -30,6 +30,7 @@ workflow theiacov_illumina_se {
     String? nextclade_dataset_name
     # reference values
     File? reference_genome
+    Int? genome_length
     # assembly parameters
     Int min_depth = 100
     # read screen parameters
@@ -50,7 +51,8 @@ workflow theiacov_illumina_se {
       min_coverage = min_coverage,
       skip_screen = skip_screen,
       workflow_series = "theiacov",
-      organism = organism
+      organism = organism,
+      expected_genome_size = genome_length
   }
   if (raw_check_reads.read_screen == "PASS") {
     call read_qc.read_QC_trim_se as read_QC_trim {
@@ -71,7 +73,8 @@ workflow theiacov_illumina_se {
         min_coverage = min_coverage,
         skip_screen = skip_screen,
         workflow_series = "theiacov",
-        organism = organism
+        organism = organism,
+        expected_genome_size = genome_length
     }
     if (clean_check_reads.read_screen == "PASS") {
       call consensus_call.ivar_consensus {
