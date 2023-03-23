@@ -7,6 +7,8 @@ task shovill_pe {
     String samplename
     String docker = "quay.io/staphb/shovill:1.1.0"
     Int disk_size = 100
+    Int cpu = 4
+    Int memory = 16
 
     ## SHOVILL optional parameters
     ##  --depth [INT]           Sub-sample --R1/--R2 to this depth. Disable with --depth 0 (default: 150)
@@ -71,8 +73,8 @@ task shovill_pe {
   }
   runtime {
     docker: "~{docker}"
-    memory: "16 GB"
-    cpu: 4
+    memory: "~{memory} GB"
+    cpu: "~{cpu}"
     disks:  "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
     maxRetries: 3

@@ -5,9 +5,11 @@ task gambit {
     File assembly
     String samplename
     String docker = "quay.io/staphb/gambit:0.5.0"
-    Int disk_size = 100
     File? gambit_db_genomes
     File? gambit_db_signatures
+    Int disk_size = 100
+    Int memory = 16 # set default
+    Int cpu = 8 # set default
   }
   # If "File" type is used Cromwell attempts to localize it, which fails because it doesn't exist yet.
   String report_path = "~{samplename}_gambit.json"
@@ -192,8 +194,8 @@ task gambit {
   }
   runtime {
     docker:  "~{docker}"
-    memory:  "16 GB"
-    cpu:   8
+    memory:  "~{memory} GB"
+    cpu:   "~{cpu}"
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
     maxRetries: 3
