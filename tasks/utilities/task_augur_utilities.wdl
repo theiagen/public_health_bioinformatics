@@ -243,6 +243,7 @@ task set_flu_defaults { # establish flu default values for augur
   }
   command <<<
     # set h1n1 defaults
+    touch FLU_CLADE_FILE
     if [ ~{flu_subtype} == "H1N1" ]; then
       if [ ~{flu_segment} == "HA" ]; then
         echo "gs://theiagen-public-files-rp/terra/flu-references/reference_h1n1pdm_ha.gb" | tee FLU_REFERENCE_FASTA
