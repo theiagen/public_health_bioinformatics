@@ -10,9 +10,9 @@ task pbptyper {
     String? db # A path to a directory containing FASTA files for 1A, 2B, and 2X proteins. In most cases using the default value will be all that is needed.
     Int min_pident = 95 # Minimum percent identity to count a hit [default: 95]
     Int min_coverage = 95 # Minimum percent coverage to count a hit [default: 95]  
-    String docker = "staphb/pbptyper:1.0.4"
+    String docker = "quay.io/staphb/pbptyper:1.0.4"
+    Int disk_size = 100
     Int cpus = 4
-
   }
   command <<<
     # get version information
@@ -29,7 +29,6 @@ task pbptyper {
 
     # parse output tsv for pbptype
     cut -f 2 ~{samplename}.tsv | tail -n 1 > pbptype.txt
-
   >>>
   output {
     String pbptyper_predicted_1A_2B_2X = read_string("pbptype.txt")
@@ -44,7 +43,8 @@ task pbptyper {
     docker: "~{docker}"
     memory: "16 GB"
     cpu: cpus
-    disks: "local-disk 100 SSD"
-    preemptible: 0
+    disks: "local-disk " + disk_size + " SSD"
+    disk: disk_size + " GB"
+    maxRetries: 3    preemptible: 0
   }
 }

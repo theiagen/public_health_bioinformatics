@@ -6,7 +6,8 @@ task prokka {
     String samplename
     Int cpu = 8
     Int memory = 16
-    String docker = "staphb/prokka:1.14.5"
+    String docker = "quay.io/staphb/prokka:1.14.5"
+    Int disk_size = 100
     # Parameters 
     #  proteins recommended: when you have good quality reference genomes and want to ensure gene naming is consistent [false]
     #  prodigal_tf: prodigal training file
@@ -28,7 +29,6 @@ task prokka {
     ~{true='--proteins' false='' proteins} \
     ~{'--prodigaltf ' + prodigal_tf} \
     ~{assembly}
-  
     
   >>>
   output {
@@ -42,6 +42,8 @@ task prokka {
     memory: "~{memory} GB"
     cpu: cpu
     docker: docker
-    disks: "local-disk 100 HDD"
+    disks: "local-disk " + disk_size + " SSD"
+    disk: disk_size + " GB"
+    maxRetries: 3
   }
 }

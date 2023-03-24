@@ -6,29 +6,24 @@ task kleborate {
     File assembly
     String samplename
     String kleborate_docker_image = "quay.io/staphb/kleborate:2.2.0"
+    Int disk_size = 100
     
     # Parameters
-    # --resistance                      Turn on resistance genes screening (default: no resistance gene screening)
-    # --kaptive                         Equivalent to --kaptive_k --kaptive_
-    # --min_identity MIN_IDENTITY           Minimum alignment percent identity for main results (default: 90.0)
-    # --min_coverage MIN_COVERAGE           Minimum alignment percent coverage for main results (default: 80.0)
-    # --min_spurious_identity MIN_SPURIOUS_IDENTITY  Minimum alignment percent identity for spurious results (default: 80.0)
-    # --min_spurious_coverage MIN_SPURIOUS_COVERAGE  Minimum alignment percent coverage for spurious results (default: 40.0)
-    # --min_kaptive_confidence {None,Low,Good,High,Very_high,Perfect}  Minimum Kaptive confidence to call K/O loci - confidence levels below this will be reported as unknown (default: Good)
-    Boolean skip_resistance = false
-    Boolean skip_kaptive = false
-    Float min_identity = 90.0
-    Float min_coverage = 80.0
-    Float min_spurious_identity = 80.0
-    Float min_spurious_coverage = 40.0
-    String min_kaptive_confidence = "Good"
+    Boolean skip_resistance = false # Turn on resistance genes screening (default: no resistance gene screening)
+    Boolean skip_kaptive = false # Equivalent to --kaptive_k --kaptive_
+    Float min_identity = 90.0 # Minimum alignment percent identity for main results (default: 90.0)
+    Float min_coverage = 80.0 #  Minimum alignment percent coverage for main results (default: 80.0)
+    Float min_spurious_identity = 80.0 # Minimum alignment percent identity for spurious results (default: 80.0)
+    Float min_spurious_coverage = 40.0 #  Minimum alignment percent coverage for spurious results (default: 40.0)
+    String min_kaptive_confidence = "Good" # {None,Low,Good,High,Very_high,Perfect} Minimum Kaptive confidence to call K/O loci - confidence levels below this will be reported as unknown (default: Good)
   }
   command <<<
-    # capture date and version
     # Print and save date
     date | tee DATE
+    
     # Print and save version
     kleborate --version | tee VERSION 
+
     # Run Kleborate on the input assembly with the --all flag and output with samplename prefix
     kleborate \
     ~{true="" false="--resistance" skip_resistance} \
@@ -41,6 +36,7 @@ task kleborate {
     --outfile ~{samplename}_kleborate_out.tsv \
     --assemblies ~{assembly} \
     --all
+    
     # parse outputs
     python3 <<CODE
     import csv
@@ -129,15 +125,17 @@ task kleborate {
     String kleborate_genomic_resistance_mutations = read_string("GENOMIC_RESISTANCE_MUTATIONS")
     String kleborate_klocus = read_string("K_LOCUS")
     String kleborate_ktype = read_string("K_TYPE")
-    String kleborate_otype = read_string("O_TYPE")
     String kleborate_olocus = read_string("O_LOCUS")
+    String kleborate_otype = read_string("O_TYPE")
     String kleborate_klocus_confidence = read_string("K_LOCUS_CONFIDENCE")
     String kleborate_olocus_confidence = read_string("O_LOCUS_CONFIDENCE")
   }
   runtime {
-    docker:       "~{kleborate_docker_image}"
-    memory:       "16 GB"
-    cpu:          8
-    disks:        "local-disk 100 SSD"
+    docker: "~{kleborate_docker_image}"
+    memory: "16 GB"
+    cpu: 8
+    disks: "local-disk " + disk_size + " SSD"
+    disk: disk_size + " GB"
+    maxRetries: 3
   }
 }

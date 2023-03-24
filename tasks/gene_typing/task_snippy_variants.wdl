@@ -7,7 +7,7 @@ task snippy_variants {
     File? read2
     String? query_gene
     String samplename
-    String docker = "staphb/snippy:4.6.0"
+    String docker = "quay.io/staphb/snippy:4.6.0"
     Int cpus = 8
     Int memory = 32
     # Paramters 
