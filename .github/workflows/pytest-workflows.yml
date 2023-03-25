@@ -25,7 +25,15 @@ jobs:
       - uses: dorny/paths-filter@v2
         id: filter
         with:
-          filters: "tests/config/**/pytest_filter.yml"
+          filters: |
+            - 'tests/config/freyja/pytest_filter.yml'
+            - 'tests/config/phylogenetics/pytest_filter.yml'
+            - 'tests/config/standalone_modules/pytest_filter.yml'
+            - 'tests/config/submission/pytest_filter.yml'
+            - 'tests/config/theiacov/pytest_filter.yml'
+            - 'tests/config/theiaeuk/pytest_filter.yml'
+            - 'tests/config/theiaprok/pytest_filter.yml'
+            - 'tests/config/utilities/pytest_filter.yml'
 
   check:
     runs-on: ubuntu-20.04
