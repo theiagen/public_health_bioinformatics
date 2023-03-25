@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       # Expose workflows with changes
-      workflows: ${{ steps.filter.outputs.yamls }}
+      workflows: ${{ steps.filter.outputs.changes }}
     steps:
       # Checkout the repo
       - uses: actions/checkout@v3
@@ -25,15 +25,7 @@ jobs:
       - uses: dorny/paths-filter@v2
         id: filter
         with:
-          filters: |
-            yamls:
-              - 'tests/config/phylogenetics/pytest_filter.yml'
-              - 'tests/config/standalone_modules/pytest_filter.yml'
-              - 'tests/config/submission/pytest_filter.yml'
-              - 'tests/config/theiacov/pytest_filter.yml'
-              - 'tests/config/theiaeuk/pytest_filter.yml'
-              - 'tests/config/theiaprok/pytest_filter.yml'
-              - 'tests/config/utilities/pytest_filter.yml'
+          filters: "tests/config/pytest_filter.yml"
 
   check:
     runs-on: ubuntu-20.04
