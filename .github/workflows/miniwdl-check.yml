@@ -36,7 +36,7 @@ jobs:
     runs-on: ubuntu-20.04
     name: ${{ matrix.wf }}
     needs: changes
-    if: ${{ needs.changes.outputs.workflows != '[]' && needs.changes.outputs.workflows != '' }}
+    if: ${{ needs.changes.outputs.workflows != '' && toJson(fromJson(needs.changes.outputs.workflows)) != '[]' }}
     strategy:
       fail-fast: false
       matrix:
