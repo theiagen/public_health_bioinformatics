@@ -25,7 +25,7 @@ jobs:
       - uses: dorny/paths-filter@v2
         id: filter
         with:
-          filters: "tests/config/pytest_filter.yml"
+          filters: "tests/config/**/pytest_filter.yml"
 
   check:
     runs-on: ubuntu-20.04
