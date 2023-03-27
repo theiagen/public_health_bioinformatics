@@ -154,10 +154,21 @@ task gambit {
       merlin_tag="Mycobacterium tuberculosis"
     elif [[ ${predicted_taxon} == *"Neisseria"* ]]; then 
       merlin_tag="Neisseria"
+      # if predicted taxon is Neisseria gonorrhoeae, reset merlin_tag to Neisseria gonorrhoeae
+      if [[ ${predicted_taxon} == *"Neisseria gonorrhoeae"* ]]; then 
+        merlin_tag="Neisseria gonorrhoeae"
+      # if predicted taxon is Neisseria meningitidis, reset merlin_tag to Neisseria meningitidis
+      elif [[ ${predicted_taxon} == *"Neisseria meningitidis"* ]]; then
+        merlin_tag="Neisseria meningitidis"
+      fi
     elif [[ ${predicted_taxon} == *"Salmonella"* ]]; then 
       merlin_tag="Salmonella"
     elif [[ ${predicted_taxon} == *"Staphylococcus"* ]]; then 
       merlin_tag="Staphylococcus"
+      # set to aureus if gambit calls the species
+      if [[ ${predicted_taxon} == *"Staphylococcus aureus"* ]]; then 
+        merlin_tag="Staphylococcus aureus"
+      fi
     elif [[ ${predicted_taxon} == *"Streptococcus"* ]]; then 
       merlin_tag="Streptococcus"
       # set to pneumoniae if gambit calls the species

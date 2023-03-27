@@ -156,6 +156,7 @@ workflow theiaprok_fasta {
         ts_mlst_results = ts_mlst.ts_mlst_results,
         ts_mlst_predicted_st = ts_mlst.ts_mlst_predicted_st,
         ts_mlst_pubmlst_scheme = ts_mlst.ts_mlst_pubmlst_scheme,
+        ts_mlst_allelic_profile = ts_mlst.ts_mlst_allelic_profile,
         ts_mlst_version = ts_mlst.ts_mlst_version,
         ts_mlst_novel_alleles = ts_mlst.ts_mlst_novel_alleles,
         serotypefinder_report = merlin_magic.serotypefinder_report,
@@ -233,6 +234,29 @@ workflow theiaprok_fasta {
         kleborate_otype = merlin_magic.kleborate_otype,
         kleborate_klocus_confidence = merlin_magic.kleborate_klocus_confidence,
         kleborate_olocus_confidence = merlin_magic.kleborate_olocus_confidence,
+        ngmaster_tsv = merlin_magic.ngmaster_tsv,
+        ngmaster_version = merlin_magic.ngmaster_version,
+        ngmaster_ngmast_sequence_type = merlin_magic.ngmaster_ngmast_sequence_type,
+        ngmaster_ngmast_porB_allele = merlin_magic.ngmaster_ngmast_porB_allele,
+        ngmaster_ngmast_tbpB_allele = merlin_magic.ngmaster_ngmast_tbpB_allele,
+        ngmaster_ngstar_sequence_type = merlin_magic.ngmaster_ngstar_sequence_type,
+        ngmaster_ngstar_penA_allele = merlin_magic.ngmaster_ngstar_penA_allele,
+        ngmaster_ngstar_mtrR_allele = merlin_magic.ngmaster_ngstar_mtrR_allele,
+        ngmaster_ngstar_porB_allele = merlin_magic.ngmaster_ngstar_porB_allele,
+        ngmaster_ngstar_ponA_allele = merlin_magic.ngmaster_ngstar_ponA_allele,
+        ngmaster_ngstar_gyrA_allele = merlin_magic.ngmaster_ngstar_gyrA_allele,
+        ngmaster_ngstar_parC_allele = merlin_magic.ngmaster_ngstar_parC_allele,
+        ngmaster_ngstar_23S_allele = merlin_magic.ngmaster_ngstar_23S_allele,
+        meningotype_tsv = merlin_magic.meningotype_tsv,
+        meningotype_version = merlin_magic.meningotype_version,
+        meningotype_serogroup = merlin_magic.meningotype_serogroup,
+        meningotype_PorA = merlin_magic.meningotype_PorA,
+        meningotype_FetA = merlin_magic.meningotype_FetA,
+        meningotype_PorB = merlin_magic.meningotype_PorB,
+        meningotype_fHbp = merlin_magic.meningotype_fHbp,
+        meningotype_NHBA = merlin_magic.meningotype_NHBA,
+        meningotype_NadA = merlin_magic.meningotype_NadA,
+        meningotype_BAST = merlin_magic.meningotype_BAST,
         kaptive_output_file_k = merlin_magic.kaptive_output_file_k,
         kaptive_output_file_oc = merlin_magic.kaptive_output_file_oc,
         kaptive_version = merlin_magic.kaptive_version,
@@ -279,6 +303,25 @@ workflow theiaprok_fasta {
         poppunk_GPS_db_version = merlin_magic.poppunk_gps_external_cluster_csv,
         poppunk_version = merlin_magic.poppunk_version,
         poppunk_docker = merlin_magic.poppunk_docker,
+        spatyper_tsv = merlin_magic.spatyper_tsv,
+        spatyper_docker = merlin_magic.spatyper_docker,
+        spatyper_repeats = merlin_magic.spatyper_repeats,
+        spatyper_type = merlin_magic.spatyper_type,
+        spatyper_version = merlin_magic.spatyper_version,
+        staphopiasccmec_results_tsv = merlin_magic.staphopiasccmec_results_tsv,
+        staphopiasccmec_hamming_distance_tsv = merlin_magic.staphopiasccmec_hamming_distance_tsv,
+        staphopiasccmec_types_and_mecA_presence = merlin_magic.staphopiasccmec_types_and_mecA_presence,
+        staphopiasccmec_version = merlin_magic.staphopiasccmec_version,
+        staphopiasccmec_docker = merlin_magic.staphopiasccmec_docker,
+        agrvate_summary = merlin_magic.agrvate_summary,
+        agrvate_results = merlin_magic.agrvate_results,
+        agrvate_agr_group = merlin_magic.agrvate_agr_group,
+        agrvate_agr_match_score = merlin_magic.agrvate_agr_match_score,
+        agrvate_agr_canonical = merlin_magic.agrvate_agr_canonical,
+        agrvate_agr_multiple = merlin_magic.agrvate_agr_multiple,
+        agrvate_agr_num_frameshifts = merlin_magic.agrvate_agr_num_frameshifts,
+        agrvate_version = merlin_magic.agrvate_version,
+        agrvate_docker = merlin_magic.agrvate_docker,
         seroba_version = merlin_magic.seroba_version,
         seroba_docker = merlin_magic.seroba_docker,
         seroba_serotype = merlin_magic.seroba_serotype,
@@ -346,6 +389,7 @@ workflow theiaprok_fasta {
     File ts_mlst_results = ts_mlst.ts_mlst_results
     String ts_mlst_predicted_st = ts_mlst.ts_mlst_predicted_st
     String ts_mlst_pubmlst_scheme = ts_mlst.ts_mlst_pubmlst_scheme
+    String ts_mlst_allelic_profile = ts_mlst.ts_mlst_allelic_profile
     String ts_mlst_version = ts_mlst.ts_mlst_version
     File? ts_mlst_novel_alleles = ts_mlst.ts_mlst_novel_alleles
     # Prokka Results
@@ -415,6 +459,31 @@ workflow theiaprok_fasta {
     String? kleborate_otype = merlin_magic.kleborate_otype
     String? kleborate_klocus_confidence = merlin_magic.kleborate_klocus_confidence
     String? kleborate_olocus_confidence = merlin_magic.kleborate_olocus_confidence
+    # Neisseria gonorrhoeae Typing
+    File? ngmaster_tsv = merlin_magic.ngmaster_tsv
+    String? ngmaster_version = merlin_magic.ngmaster_version
+    String? ngmaster_ngmast_sequence_type = merlin_magic.ngmaster_ngmast_sequence_type
+    String? ngmaster_ngmast_porB_allele = merlin_magic.ngmaster_ngmast_porB_allele
+    String? ngmaster_ngmast_tbpB_allele = merlin_magic.ngmaster_ngmast_tbpB_allele
+    String? ngmaster_ngstar_sequence_type = merlin_magic.ngmaster_ngstar_sequence_type
+    String? ngmaster_ngstar_penA_allele = merlin_magic.ngmaster_ngstar_penA_allele
+    String? ngmaster_ngstar_mtrR_allele = merlin_magic.ngmaster_ngstar_mtrR_allele
+    String? ngmaster_ngstar_porB_allele = merlin_magic.ngmaster_ngstar_porB_allele
+    String? ngmaster_ngstar_ponA_allele = merlin_magic.ngmaster_ngstar_ponA_allele
+    String? ngmaster_ngstar_gyrA_allele = merlin_magic.ngmaster_ngstar_gyrA_allele
+    String? ngmaster_ngstar_parC_allele = merlin_magic.ngmaster_ngstar_parC_allele
+    String? ngmaster_ngstar_23S_allele = merlin_magic.ngmaster_ngstar_23S_allele
+    # Neisseria meningitidis Typing
+    File? meningotype_tsv = merlin_magic.meningotype_tsv
+    String? meningotype_version = merlin_magic.meningotype_version
+    String? meningotype_serogroup = merlin_magic.meningotype_serogroup
+    String? meningotype_PorA = merlin_magic.meningotype_PorA
+    String? meningotype_FetA = merlin_magic.meningotype_FetA
+    String? meningotype_PorB = merlin_magic.meningotype_PorB
+    String? meningotype_fHbp = merlin_magic.meningotype_fHbp
+    String? meningotype_NHBA = merlin_magic.meningotype_NHBA
+    String? meningotype_NadA = merlin_magic.meningotype_NadA
+    String? meningotype_BAST = merlin_magic.meningotype_BAST
     # Acinetobacter Typing
     File? kaptive_output_file_k = merlin_magic.kaptive_output_file_k
     File? kaptive_output_file_oc = merlin_magic.kaptive_output_file_oc
@@ -433,6 +502,26 @@ workflow theiaprok_fasta {
     File? legsta_results = merlin_magic.legsta_results
     String? legsta_predicted_sbt = merlin_magic.legsta_predicted_sbt
     String? legsta_version = merlin_magic.legsta_version
+    # Staphylococcus aureus
+    File? spatyper_tsv = merlin_magic.spatyper_tsv
+    String? spatyper_docker = merlin_magic.spatyper_docker
+    String? spatyper_repeats = merlin_magic.spatyper_repeats
+    String? spatyper_type = merlin_magic.spatyper_type
+    String? spatyper_version = merlin_magic.spatyper_version
+    File? staphopiasccmec_results_tsv = merlin_magic.staphopiasccmec_results_tsv
+    File? staphopiasccmec_hamming_distance_tsv = merlin_magic.staphopiasccmec_hamming_distance_tsv
+    String? staphopiasccmec_types_and_mecA_presence = merlin_magic.staphopiasccmec_types_and_mecA_presence
+    String? staphopiasccmec_version = merlin_magic.staphopiasccmec_version
+    String? staphopiasccmec_docker = merlin_magic.staphopiasccmec_docker
+    File? agrvate_summary = merlin_magic.agrvate_summary
+    File? agrvate_results = merlin_magic.agrvate_results
+    String? agrvate_agr_group = merlin_magic.agrvate_agr_group
+    String? agrvate_agr_match_score = merlin_magic.agrvate_agr_match_score
+    String? agrvate_agr_canonical = merlin_magic.agrvate_agr_canonical
+    String? agrvate_agr_multiple = merlin_magic.agrvate_agr_multiple
+    String? agrvate_agr_num_frameshifts = merlin_magic.agrvate_agr_num_frameshifts
+    String? agrvate_version = merlin_magic.agrvate_version
+    String? agrvate_docker = merlin_magic.agrvate_docker
     # Streptococcus pneumoniae Typing
     String? pbptyper_predicted_1A_2B_2X = merlin_magic.pbptyper_predicted_1A_2B_2X
     File? pbptyper_pbptype_predicted_tsv = merlin_magic.pbptyper_pbptype_predicted_tsv
@@ -443,5 +532,7 @@ workflow theiaprok_fasta {
     String? poppunk_GPS_db_version = merlin_magic.poppunk_GPS_db_version
     String? poppunk_version = merlin_magic.poppunk_version
     String? poppunk_docker = merlin_magic.poppunk_docker
+    # export taxon table output
+    String? taxon_table_status = export_taxon_tables.status
   }
 }
