@@ -7,7 +7,7 @@ import "../../tasks/quality_control/task_quast.wdl" as quast_task
 import "../../tasks/quality_control/task_cg_pipeline.wdl" as cg_pipeline_task
 import "../../tasks/quality_control/task_screen.wdl" as screen
 import "../../tasks/taxon_id/task_gambit.wdl" as gambit_task
-import "../../tasks/species_typing/task_ts_mlst.wdl" as ts_mlst_task
+# import "../../tasks/species_typing/task_ts_mlst.wdl" as ts_mlst_task
 import "../../tasks/task_versioning.wdl" as versioning
 
 workflow theiaeuk_illumina_pe {
@@ -27,6 +27,11 @@ workflow theiaeuk_illumina_pe {
     Int min_coverage = 10
     Int min_proportion = 50
     Boolean skip_screen = false 
+    Int cpu = 8
+    Int memory = 16
+    # default gambit outputs
+    File gambit_db_genomes = "gs://theiagen-public-files-rp/terra/theiaeuk-files/gambit/221130-theiagen-fungal-v0.2.db"
+    File gambit_db_signatures = "gs://theiagen-public-files-rp/terra/theiaeuk-files/gambit/221130-theiagen-fungal-v0.2.h5"
   }
   call versioning.version_capture{
     input:
@@ -67,32 +72,40 @@ workflow theiaeuk_illumina_pe {
         input:
           samplename = samplename,
           read1_cleaned = read_QC_trim.read1_clean,
-          read2_cleaned = read_QC_trim.read2_clean
+          read2_cleaned = read_QC_trim.read2_clean,
+          cpu = cpu,
+          memory = memory
       }
       call quast_task.quast {
         input:
           assembly = shovill_pe.assembly_fasta,
-          samplename = samplename
+          samplename = samplename,
+          cpu = cpu,
+          memory = memory
       }
       call cg_pipeline_task.cg_pipeline {
         input:
           read1 = read1_raw,
           read2 = read2_raw,
           samplename = samplename,
-          genome_length = clean_check_reads.est_genome_length
+          genome_length = clean_check_reads.est_genome_length,
+          cpu = cpu,
+          memory = memory
       }
       call gambit_task.gambit {
         input:
           assembly = shovill_pe.assembly_fasta,
           samplename = samplename,
-          gambit_db_genomes = "gs://theiagen-public-files/terra/candida_auris_refs/221006-theiagen-fungal-v0.1.db",
-          gambit_db_signatures = "gs://theiagen-public-files/terra/candida_auris_refs/221006-theiagen-fungal-v0.1.h5" 
+          gambit_db_genomes = gambit_db_genomes,
+          gambit_db_signatures = gambit_db_signatures,
+          cpu = cpu,
+          memory = memory
       }
-      call ts_mlst_task.ts_mlst {
-        input: 
-          assembly = shovill_pe.assembly_fasta,
-          samplename = samplename
-      }
+      # call ts_mlst_task.ts_mlst {
+      #   input: 
+      #     assembly = shovill_pe.assembly_fasta,
+      #     samplename = samplename
+      # }
       call merlin_magic_workflow.merlin_magic {
         input:
           merlin_tag = gambit.merlin_tag,
@@ -150,10 +163,10 @@ workflow theiaeuk_illumina_pe {
     String? gambit_db_version = gambit.gambit_db_version
     String? gambit_docker = gambit.gambit_docker
     # MLST Typing
-    File? ts_mlst_results = ts_mlst.ts_mlst_results
-    String? ts_mlst_predicted_st = ts_mlst.ts_mlst_predicted_st
-    String? ts_mlst_version = ts_mlst.ts_mlst_version
-    String? ts_mlst_pubmlst_scheme = ts_mlst.ts_mlst_pubmlst_scheme
+    # File? ts_mlst_results = ts_mlst.ts_mlst_results
+    # String? ts_mlst_predicted_st = ts_mlst.ts_mlst_predicted_st
+    # String? ts_mlst_version = ts_mlst.ts_mlst_version
+    # String? ts_mlst_pubmlst_scheme = ts_mlst.ts_mlst_pubmlst_scheme
     # Cladetyper Outputs
     String? clade_type = merlin_magic.clade_type
     String? cladetyper_analysis_date = merlin_magic.cladetyper_analysis_date
