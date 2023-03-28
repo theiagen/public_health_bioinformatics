@@ -141,6 +141,6 @@ task lyveset {
     cpu: cpu
     disks: "local-disk ~{disk_size} SSD"
     preemptible: 0
-    maxRetries: 0
+    maxRetries: 2
   }
 }
