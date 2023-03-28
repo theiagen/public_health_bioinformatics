@@ -225,4 +225,8 @@ workflows:
    primaryDescriptorPath: /workflows/utilities/file_handling/wf_zip_column.wdl
    testParameterFiles:
     - empty.json
-    
+ - name: Lyve_SET_PHB
+   subclass: WDL
+   primaryDescriptorPath: /workflows/phylogenetics/wf_lyveset.wdl
+   testParameterFiles:
+    - empty.json
