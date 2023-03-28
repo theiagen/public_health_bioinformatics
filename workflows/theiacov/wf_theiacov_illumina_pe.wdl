@@ -51,7 +51,7 @@ workflow theiacov_illumina_pe {
       read2_raw = read2_raw,
       trim_minlen = trim_minlen,
       trim_quality_trim_score = trim_quality_trim_score,
-      trim_window_size = trim_window_size
+      trim_window_size = trim_window_size,
       adapters = adapters,
       phix = phix,
       workflow_series = "theiacov"
