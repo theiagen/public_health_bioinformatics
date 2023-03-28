@@ -1,7 +1,7 @@
 version 1.0
 
-import "../tasks/phylogenetic_inference/task_lyveset.wdl" as lyveset
-import "../tasks/task_versioning.wdl" as versioning
+import "../../tasks/phylogenetic_inference/task_lyveset.wdl" as lyveset
+import "../../tasks/task_versioning.wdl" as versioning
 
 workflow lyveset_workflow {
   input {
