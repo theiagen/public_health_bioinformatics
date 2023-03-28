@@ -21,11 +21,14 @@ workflow theiaeuk_illumina_pe {
     File read2_raw
     Int min_reads = 30000
     # Edited default values
-    Int min_basepairs = 90000000
+    Int min_basepairs = 45000000
     Int min_genome_size = 9000000
     Int max_genome_size = 178000000
     Int min_coverage = 10
-    Int min_proportion = 50
+    Int min_proportion = 40
+    Int trim_minlen = 75
+    Int trim_quality_trim_score = 20
+    Int trim_window_size = 10
     Boolean skip_screen = false 
     Int cpu = 8
     Int memory = 16
@@ -53,7 +56,10 @@ workflow theiaeuk_illumina_pe {
       input:
         samplename = samplename,
         read1_raw = read1_raw,
-        read2_raw = read2_raw
+        read2_raw = read2_raw,
+        trim_minlen = trim_minlen,
+        trim_quality_trim_score = trim_quality_trim_score,
+        trim_window_size = trim_window_size
     }
     call screen.check_reads as clean_check_reads {
       input:

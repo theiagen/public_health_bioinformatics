@@ -38,20 +38,20 @@ task shovill_pe {
   command <<<
     shovill --version | head -1 | tee VERSION
     shovill \
-    --outdir out \
-    --R1 ~{read1_cleaned} \
-    --R2 ~{read2_cleaned} \
-    --minlen ~{min_contig_length} \
-    ~{'--depth ' + depth} \
-    ~{'--gsize ' + genome_size} \
-    ~{'--mincov ' + min_coverage} \
-    ~{'--assembler ' + assembler} \
-    ~{'--opts ' + assembler_options} \
-    ~{'--kmers ' + kmers} \
-    ~{true='--trim' false='' trim} \
-    ~{true='--noreadcorr' false='' noreadcorr} \
-    ~{true='--nostitch' false='' nostitch} \
-    ~{true='--nocorr' false='' nocorr}
+      --outdir out \
+      --R1 ~{read1_cleaned} \
+      --R2 ~{read2_cleaned} \
+      --minlen ~{min_contig_length} \
+      ~{'--depth ' + depth} \
+      ~{'--gsize ' + genome_size} \
+      ~{'--mincov ' + min_coverage} \
+      ~{'--assembler ' + assembler} \
+      ~{'--opts ' + assembler_options} \
+      ~{'--kmers ' + kmers} \
+      ~{true='--trim' false='' trim} \
+      ~{true='--noreadcorr' false='' noreadcorr} \
+      ~{true='--nostitch' false='' nostitch} \
+      ~{true='--nocorr' false='' nocorr}
 
     mv out/contigs.fa out/~{samplename}_contigs.fasta
 
@@ -62,7 +62,6 @@ task shovill_pe {
     elif [ "~{assembler}" == "velvet" ] ; then
       mv out/contigs.LastGraph out/~{samplename}_contigs.LastGraph
     fi
-    
   >>>
   output {
     File assembly_fasta = "out/~{samplename}_contigs.fasta"
@@ -105,7 +104,7 @@ task shovill_se {
     String? genome_size
     Int min_contig_length = 200
     Float? min_coverage
-    String assembler = "spades"
+    String assembler = "skesa"
     String? assembler_options
     String? kmers
     Boolean trim = false
@@ -115,18 +114,18 @@ task shovill_se {
   command <<<
     shovill-se --version | head -1 | tee VERSION
     shovill-se \
-    --outdir out \
-    --se ~{read1_cleaned} 
-    --minlen ~{min_contig_length} \
-    ~{'--depth ' + depth} \
-    ~{'--gsize ' + genome_size} \
-    ~{'--mincov ' + min_coverage} \
-    ~{'--assembler ' + assembler} \
-    ~{'--opts ' + assembler_options} \
-    ~{'--kmers ' + kmers} \
-    ~{true='--trim' false='' trim} \
-    ~{true='--noreadcorr' false='' noreadcorr} \
-    ~{true='--nocorr' false='' nocorr}
+      --outdir out \
+      --se ~{read1_cleaned} 
+      --minlen ~{min_contig_length} \
+      ~{'--depth ' + depth} \
+      ~{'--gsize ' + genome_size} \
+      ~{'--mincov ' + min_coverage} \
+      ~{'--assembler ' + assembler} \
+      ~{'--opts ' + assembler_options} \
+      ~{'--kmers ' + kmers} \
+      ~{true='--trim' false='' trim} \
+      ~{true='--noreadcorr' false='' noreadcorr} \
+      ~{true='--nocorr' false='' nocorr}
 
     mv out/contigs.fa out/~{samplename}_contigs.fasta
 

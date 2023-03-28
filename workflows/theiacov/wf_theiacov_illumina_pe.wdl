@@ -30,6 +30,9 @@ workflow theiacov_illumina_pe {
     Int min_depth = 100
     String organism = "sars-cov-2"
     Boolean trim_primers = true
+    Int trim_minlen = 75
+    Int trim_quality_trim_score = 30
+    Int trim_window_size = 4
     File? adapters
     File? phix
     String nextclade_flu_h1n1_ha_tag = "2023-01-27T12:00:00Z"
@@ -46,6 +49,9 @@ workflow theiacov_illumina_pe {
       samplename = samplename,
       read1_raw = read1_raw,
       read2_raw = read2_raw,
+      trim_minlen = trim_minlen,
+      trim_quality_trim_score = trim_quality_trim_score,
+      trim_window_size = trim_window_size,
       adapters = adapters,
       phix = phix,
       workflow_series = "theiacov"

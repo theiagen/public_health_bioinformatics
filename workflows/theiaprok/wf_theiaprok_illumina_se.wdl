@@ -43,6 +43,9 @@ workflow theiaprok_illumina_se {
     Int min_genome_size = 100000
     Int max_genome_size = 18040666
     Int min_coverage = 10
+    Int trim_minlen = 25
+    Int trim_quality_trim_score = 30
+    Int trim_window_size = 4
     Boolean call_resfinder = false
     Boolean skip_screen = false 
     String genome_annotation = "prokka"
@@ -64,7 +67,10 @@ workflow theiaprok_illumina_se {
     call read_qc.read_QC_trim_se as read_QC_trim {
       input:
         samplename = samplename,
-        read1_raw = read1_raw
+        read1_raw = read1_raw,
+        trim_minlen = trim_minlen,
+        trim_quality_trim_score = trim_quality_trim_score,
+        trim_window_size = trim_window_size
     }
     call screen.check_reads_se as clean_check_reads {
       input:
