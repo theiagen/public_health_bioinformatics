@@ -7,8 +7,8 @@ task lyveset {
     File reference_genome
     String dataset_name
     String docker_image = "quay.io/staphb/lyveset:1.1.4f"
-    Int memory = 16
-    Int cpu = 4
+    Int memory = 64
+    Int cpu = 16
     Int disk_size = 100
     # Lyve-SET Parameters
     ##COMMON OPTIONS
