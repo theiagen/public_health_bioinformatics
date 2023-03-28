@@ -227,6 +227,6 @@ workflows:
     - empty.json
  - name: Lyve_SET_PHB
    subclass: WDL
-   primaryDescriptorPath: /workflows/wf_lyveset.wdl
+   primaryDescriptorPath: /workflows/phylogenetic_inference/wf_lyveset.wdl
    testParameterFiles:
     - empty.json
