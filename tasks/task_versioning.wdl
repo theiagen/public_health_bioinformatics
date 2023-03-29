@@ -20,7 +20,7 @@ task version_capture {
   runtime {
     memory: "1 GB"
     cpu: 1
-    docker: "quay.io/theiagen/utility:1.1"
+    docker: "ubuntu:jammy"
     disks: "local-disk 10 HDD"
     dx_instance_type: "mem1_ssd1_v2_x2" 
   }

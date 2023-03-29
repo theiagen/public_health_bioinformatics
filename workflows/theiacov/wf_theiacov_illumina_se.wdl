@@ -4,7 +4,7 @@ import "../utilities/wf_read_QC_trim_se.wdl" as read_qc
 import "../utilities/wf_ivar_consensus.wdl" as consensus_call
 import "../../tasks/quality_control/task_vadr.wdl" as vadr_task
 import "../../tasks/quality_control/task_consensus_qc.wdl" as consensus_qc_task
-import "../../tasks/taxon_id/task_nextclade.wdl" as nextclade
+import "../../tasks/taxon_id/task_nextclade.wdl" as nextclade_task
 import "../../tasks/species_typing/task_pangolin.wdl" as pangolin
 import "../../tasks/gene_typing/task_sc2_gene_coverage.wdl" as sc2_calculation
 import "../../tasks/task_versioning.wdl" as versioning
@@ -25,6 +25,9 @@ workflow theiacov_illumina_se {
     Int min_depth = 100
     String organism = "sars-cov-2"
     Boolean trim_primers = true
+    Int trim_minlen = 25
+    Int trim_quality_trim_score = 30
+    Int trim_window_size = 4
     File? adapters
     File? phix
   }
@@ -32,6 +35,9 @@ workflow theiacov_illumina_se {
     input:
       samplename = samplename,
       read1_raw = read1_raw,
+      trim_minlen = trim_minlen,
+      trim_quality_trim_score = trim_quality_trim_score,
+      trim_window_size = trim_window_size,
       adapters = adapters,
       phix = phix,
       workflow_series = "theiacov"
@@ -72,16 +78,16 @@ workflow theiacov_illumina_se {
   }
   if (organism == "MPXV" || organism == "sars-cov-2"){
     # tasks specific to either MPXV or sars-cov-2
-    call nextclade.nextclade_one_sample {
+    call nextclade_task.nextclade {
       input:
       genome_fasta = ivar_consensus.assembly_fasta,
       dataset_name = select_first([nextclade_dataset_name, organism,]),
       dataset_reference = nextclade_dataset_reference,
       dataset_tag = nextclade_dataset_tag
     }
-    call nextclade.nextclade_output_parser_one_sample {
+    call nextclade_task.nextclade_output_parser {
       input:
-      nextclade_tsv = nextclade_one_sample.nextclade_tsv,
+      nextclade_tsv = nextclade.nextclade_tsv,
       organism = organism
     }
   }
@@ -102,55 +108,61 @@ workflow theiacov_illumina_se {
     String theiacov_illumina_se_analysis_date = version_capture.date
     # Read Metadata
     String seq_platform = seq_method
-    # Read QC
-    File read1_clean = read_QC_trim.read1_clean
+    # Read QC - fastq_scan outputs
     Int num_reads_raw = read_QC_trim.fastq_scan_raw_number_reads
     String fastq_scan_version = read_QC_trim.fastq_scan_version
     Int num_reads_clean = read_QC_trim.fastq_scan_clean_number_reads
+    # Read QC - trimmomatic outputs
     String? trimmomatic_version = read_QC_trim.trimmomatic_version
+    # Read QC - bbduk outputs
+    File read1_clean = read_QC_trim.read1_clean
     String bbduk_docker = read_QC_trim.bbduk_docker
+    # Read QC - kraken outputs
     Float? kraken_human = read_QC_trim.kraken_human
     Float? kraken_sc2 = read_QC_trim.kraken_sc2
     String? kraken_target_org = read_QC_trim.kraken_target_org
     String? kraken_target_org_name = read_QC_trim.kraken_target_org_name
     String? kraken_version = read_QC_trim.kraken_version
     File? kraken_report = read_QC_trim.kraken_report
-    # Read Alignment
+    # Read Alignment - bwa outputs
     String bwa_version = ivar_consensus.bwa_version
     String samtools_version = ivar_consensus.samtools_version
     File read1_aligned = ivar_consensus.read1_aligned
     String assembly_method = ivar_consensus.assembly_method_nonflu
     File aligned_bam = ivar_consensus.aligned_bam
     File aligned_bai = ivar_consensus.aligned_bai
+    # Read Alignment - primer trimming outputs
     Float? primer_trimmed_read_percent = ivar_consensus.primer_trimmed_read_percent
     String? ivar_version_primtrim = ivar_consensus.ivar_version_primtrim
     String? samtools_version_primtrim = ivar_consensus.samtools_version_primtrim
     String? primer_bed_name = ivar_consensus.primer_bed_name
+    # Read Alignment - variant call outputs
     File ivar_tsv = ivar_consensus.ivar_tsv
     File ivar_vcf = ivar_consensus.ivar_vcf
     String ivar_variant_version = ivar_consensus.ivar_variant_version
-    # Assembly QC
+    # Read Alignment - assembly outputs
     File assembly_fasta = ivar_consensus.assembly_fasta
     String ivar_version_consensus = ivar_consensus.ivar_version_consensus
     String samtools_version_consensus = ivar_consensus.samtools_version_consensus
-    Int number_N = consensus_qc.number_N
-    Int assembly_length_unambiguous = consensus_qc.number_ATCG
-    Int number_Degenerate = consensus_qc.number_Degenerate
-    Int number_Total = consensus_qc.number_Total
-    Float percent_reference_coverage = consensus_qc.percent_reference_coverage
+    # Read Alignment - consensus assembly qc outputs
     Int consensus_n_variant_min_depth = min_depth
-   # Alignment QC
     File consensus_stats = ivar_consensus.consensus_stats
     File consensus_flagstat = ivar_consensus.consensus_flagstat
     Float meanbaseq_trim = ivar_consensus.meanbaseq_trim
     Float meanmapq_trim = ivar_consensus.meanmapq_trim
     Float assembly_mean_coverage = ivar_consensus.assembly_mean_coverage
     String samtools_version_stats = ivar_consensus.samtools_version_stats
-    # SC2 specific
+    # Read Alignment - consensus assembly summary outputs
+    Int number_N = consensus_qc.number_N
+    Int assembly_length_unambiguous = consensus_qc.number_ATCG
+    Int number_Degenerate = consensus_qc.number_Degenerate
+    Int number_Total = consensus_qc.number_Total
+    Float percent_reference_coverage = consensus_qc.percent_reference_coverage
+    # SC2 specific coverage outputs
     Float? sc2_s_gene_mean_coverage = sc2_gene_coverage.sc2_s_gene_depth
     Float? sc2_s_gene_percent_coverage = sc2_gene_coverage.sc2_s_gene_percent_coverage
     File? sc2_all_genes_percent_coverage = sc2_gene_coverage.sc2_all_genes_percent_coverage
-    # Lineage Assignment
+    # Pangolin outputs
     String? pango_lineage = pangolin4.pangolin_lineage
     String? pango_lineage_expanded = pangolin4.pangolin_lineage_expanded
     String? pangolin_conflicts = pangolin4.pangolin_conflicts
@@ -159,17 +171,17 @@ workflow theiacov_illumina_se {
     File? pango_lineage_report = pangolin4.pango_lineage_report
     String? pangolin_docker = pangolin4.pangolin_docker
     String? pangolin_versions = pangolin4.pangolin_versions
-    # Clade Assigment
-    File? nextclade_json = nextclade_one_sample.nextclade_json
-    File? auspice_json = nextclade_one_sample.auspice_json
-    File? nextclade_tsv = nextclade_one_sample.nextclade_tsv
-    String? nextclade_version = nextclade_one_sample.nextclade_version
-    String? nextclade_docker = nextclade_one_sample.nextclade_docker
+    # Nextclade outputs
+    File? nextclade_json = nextclade.nextclade_json
+    File? auspice_json = nextclade.auspice_json
+    File? nextclade_tsv = nextclade.nextclade_tsv
+    String? nextclade_version = nextclade.nextclade_version
+    String? nextclade_docker = nextclade.nextclade_docker
     String nextclade_ds_tag = nextclade_dataset_tag
-    String? nextclade_aa_subs = nextclade_output_parser_one_sample.nextclade_aa_subs
-    String? nextclade_aa_dels = nextclade_output_parser_one_sample.nextclade_aa_dels
-    String? nextclade_clade = nextclade_output_parser_one_sample.nextclade_clade
-    String? nextclade_lineage = nextclade_output_parser_one_sample.nextclade_lineage
+    String? nextclade_aa_subs = nextclade_output_parser.nextclade_aa_subs
+    String? nextclade_aa_dels = nextclade_output_parser.nextclade_aa_dels
+    String? nextclade_clade = nextclade_output_parser.nextclade_clade
+    String? nextclade_lineage = nextclade_output_parser.nextclade_lineage
     # VADR Annotation QC
     File? vadr_alerts_list = vadr.alerts_list
     String? vadr_num_alerts = vadr.num_alerts

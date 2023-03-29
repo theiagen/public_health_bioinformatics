@@ -6,6 +6,8 @@ task quast {
     String samplename
     String docker = "quay.io/staphb/quast:5.0.2"
     Int disk_size = 100
+    Int memory = 2 # added default value
+    Int cpu = 2 # added default value
   }
   command <<<
     # capture date and version
@@ -48,8 +50,8 @@ task quast {
   }
   runtime {
     docker:  "~{docker}"
-    memory:  "2 GB"
-    cpu:   2
+    memory:  "~{memory} GB"
+    cpu:   "~{cpu}"
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
     maxRetries: 3
