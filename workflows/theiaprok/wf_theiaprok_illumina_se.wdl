@@ -44,6 +44,10 @@ workflow theiaprok_illumina_se {
     Int min_genome_size = 100000
     Int max_genome_size = 18040666
     Int min_coverage = 10
+    # trimming parameters
+    Int trim_minlen = 25
+    Int trim_quality_trim_score = 30
+    Int trim_window_size = 4
     # module options
     Boolean call_ani = false # by default do not call ANI task, but user has ability to enable this task if working with enteric pathogens or supply their own high-quality reference genome
     Boolean call_resfinder = false
@@ -67,7 +71,10 @@ workflow theiaprok_illumina_se {
     call read_qc.read_QC_trim_se as read_QC_trim {
       input:
         samplename = samplename,
-        read1_raw = read1_raw
+        read1_raw = read1_raw,
+        trim_minlen = trim_minlen,
+        trim_quality_trim_score = trim_quality_trim_score,
+        trim_window_size = trim_window_size
     }
     call screen.check_reads_se as clean_check_reads {
       input:

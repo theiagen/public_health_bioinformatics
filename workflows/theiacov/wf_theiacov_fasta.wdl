@@ -3,7 +3,7 @@ version 1.0
 
 import "../../tasks/quality_control/task_vadr.wdl" as vadr_task
 import "../../tasks/quality_control/task_consensus_qc.wdl" as consensus_qc_task
-import "../../tasks/taxon_id/task_nextclade.wdl" as nextclade
+import "../../tasks/taxon_id/task_nextclade.wdl" as nextclade_task
 import "../../tasks/species_typing/task_pangolin.wdl" as pangolin
 import "../../tasks/task_versioning.wdl" as versioning
 
@@ -43,16 +43,16 @@ workflow theiacov_fasta {
   }
   if (organism == "MPXV" || organism == "sars-cov-2"){
     # tasks specific to either MPXV or sars-cov-2 
-    call nextclade.nextclade_one_sample {
+    call nextclade_task.nextclade {
       input:
       genome_fasta = assembly_fasta,
       dataset_name = select_first([nextclade_dataset_name, organism]),
       dataset_reference = nextclade_dataset_reference,
       dataset_tag = nextclade_dataset_tag
     }
-    call nextclade.nextclade_output_parser_one_sample {
+    call nextclade_task.nextclade_output_parser {
       input:
-      nextclade_tsv = nextclade_one_sample.nextclade_tsv,
+      nextclade_tsv = nextclade.nextclade_tsv,
       organism = organism
     }
   }
@@ -74,13 +74,13 @@ workflow theiacov_fasta {
     # Read & Assembly Metadata
     String seq_platform = seq_method
     String assembly_method = input_assembly_method
-    # Assembly QC
+    # Assembly QC - consensus assembly summary statistics
     Int number_N = consensus_qc.number_N
     Int assembly_length_unambiguous = consensus_qc.number_ATCG
     Int number_Degenerate = consensus_qc.number_Degenerate
     Int number_Total = consensus_qc.number_Total
     Float percent_reference_coverage = consensus_qc.percent_reference_coverage
-    # Lineage Assignment
+    # Pangolin outputs
     String? pango_lineage = pangolin4.pangolin_lineage
     String? pango_lineage_expanded = pangolin4.pangolin_lineage_expanded
     String? pangolin_conflicts = pangolin4.pangolin_conflicts
@@ -89,17 +89,17 @@ workflow theiacov_fasta {
     File? pango_lineage_report = pangolin4.pango_lineage_report
     String? pangolin_docker = pangolin4.pangolin_docker
     String? pangolin_versions = pangolin4.pangolin_versions
-    # Clade Assigment
-    File? nextclade_json = nextclade_one_sample.nextclade_json
-    File? auspice_json = nextclade_one_sample.auspice_json
-    File? nextclade_tsv = nextclade_one_sample.nextclade_tsv
-    String? nextclade_version = nextclade_one_sample.nextclade_version
-    String? nextclade_docker = nextclade_one_sample.nextclade_docker
+    # Nextclade outputs
+    File? nextclade_json = nextclade.nextclade_json
+    File? auspice_json = nextclade.auspice_json
+    File? nextclade_tsv = nextclade.nextclade_tsv
+    String? nextclade_version = nextclade.nextclade_version
+    String? nextclade_docker = nextclade.nextclade_docker
     String nextclade_ds_tag = nextclade_dataset_tag
-    String? nextclade_clade = nextclade_output_parser_one_sample.nextclade_clade
-    String? nextclade_aa_subs = nextclade_output_parser_one_sample.nextclade_aa_subs
-    String? nextclade_aa_dels = nextclade_output_parser_one_sample.nextclade_aa_dels
-    String? nextclade_lineage = nextclade_output_parser_one_sample.nextclade_lineage
+    String? nextclade_clade = nextclade_output_parser.nextclade_clade
+    String? nextclade_aa_subs = nextclade_output_parser.nextclade_aa_subs
+    String? nextclade_aa_dels = nextclade_output_parser.nextclade_aa_dels
+    String? nextclade_lineage = nextclade_output_parser.nextclade_lineage
     # VADR Annotation QC
     File?  vadr_alerts_list = vadr.alerts_list
     String? vadr_num_alerts = vadr.num_alerts

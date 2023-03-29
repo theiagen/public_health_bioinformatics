@@ -6,9 +6,11 @@ task cg_pipeline {
     File? read2
     String samplename
     String docker = "quay.io/staphb/lyveset:1.1.4f"
-    Int disk_size = 100
     String cg_pipe_opts = "--fast"
     Int genome_length
+    Int disk_size = 100
+    Int memory = 8 # added a default value here
+    Int cpu = 4 # added a default value here
   }
   command <<<
     # date and version control
@@ -96,8 +98,8 @@ task cg_pipeline {
   }
   runtime {
     docker: "~{docker}"
-    memory: "8 GB"
-    cpu: 4
+    memory: "~{memory} GB"
+    cpu: "~{cpu}"
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
     maxRetries: 3
