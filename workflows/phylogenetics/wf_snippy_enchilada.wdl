@@ -2,6 +2,7 @@ version 1.0
 
 import "../../workflows/standalone_modules/wf_snippy_variants.wdl" as snippy_variants_workflow
 import "../../workflows/phylogenetics/wf_snippy_tree.wdl" as snippy_tree_workflow
+import "../../tasks/phylogenetic_inference/task_centroid.wdl" as centroid_task
 import "../../tasks/task_versioning.wdl" as versioning
 
 # input is arrays
@@ -20,9 +21,10 @@ workflow snippy_enchilada {
     String tree_name
   }
 
-  # call centroid {
-  #   # add that here once merged
-  # }
+  call centroid_task.centroid {
+    input:
+      assembly_fasta = assembly_fasta
+  }
   # call reference_seeker {
   #   # add once merged
   # }
@@ -30,7 +32,7 @@ workflow snippy_enchilada {
   #   # add once merged 
   # }
 
-  # see https://github.com/openwdl/wdl/issues/279 for syntax
+  # see https://github.com/openwdl/wdl/issues/279 for syntax explanation
   scatter (triplet in zip(zip(read1, read2), samplenames)) {
     call snippy_variants_workflow.snippy_variants_wf {
       input:
@@ -54,12 +56,18 @@ workflow snippy_enchilada {
     # version capture
     String snippy_enchilada_version = version_capture.phb_version
     String snippy_enchilada_analysis_date = version_capture.date
-
+    # centroid outputs
+    String snippy_enchilada_centroid_genome_filename = centroid.centroid_genome_fasta_filename
+    File snippy_enchilada_centroid_mash_tsv = centroid.centroid_mash_tsv
+    # snippy_tree version
     String snippy_enchilada_snippy_version = snippy_tree_wf.snippy_tree_snippy_version
+    # snippy_tree alignments
     File snippy_enchilada_core_alignment = snippy_tree_wf.snippy_tree_core_alignment
     File snippy_enchilada_full_alignment = snippy_tree_wf.snippy_tree_full_alignment
     File snippy_enchilada_clean_full_alignment = snippy_tree_wf.snippy_tree_clean_full_alignment
+    # snippy_tree reference file
     File snippy_enchilada_ref = snippy_tree_wf.snippy_tree_ref
+    # snippy_tree variant outputs
     File snippy_enchilada_all_snps = snippy_tree_wf.snippy_tree_all_snps
     File snippy_enchilada_snps_summary = snippy_tree_wf.snippy_tree_snps_summary
     File snippy_enchilada_vcf = snippy_tree_wf.snippy_tree_vcf
