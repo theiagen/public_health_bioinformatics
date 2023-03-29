@@ -266,7 +266,7 @@ workflow merlin_magic {
             reference = cladetyper.clade_spec_ref,
             read1 = select_first([read1]),
             read2 = read2,
-            query_gene = "FKS1,ERG11,FUR1",
+            query_gene = "FKS1,'lanosterol 14-alpha demethylase','lanosterol_14-alpha_demethylase',FUR1,'uracil_phosphoribosyltransferase','uracil phosphoribosyltransferase'",
             samplename = samplename
         }
       }
@@ -278,7 +278,7 @@ workflow merlin_magic {
             reference = "gs://theiagen-public-files/terra/theiaeuk_files/Candida_albicans_GCF_000182965.3_ASM18296v3_genomic.gbff",
             read1 = select_first([read1]),
             read2 = read2,
-            query_gene = "ERG11,FKS1,FUR1,RTA2",
+            query_gene = "'lanosterol 14-alpha demethylase','lanosterol_14-alpha_demethylase',FKS1,FUR1,'uracil_phosphoribosyltransferase',RTA2",
             samplename = samplename
         }
       }
