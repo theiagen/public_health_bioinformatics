@@ -64,9 +64,9 @@ workflow theiacov_illumina_se {
         samplename = samplename,
         read1_raw = read1_raw,
         trim_minlen = trim_minlen,
-      trim_quality_trim_score = trim_quality_trim_score,
-      trim_window_size = trim_window_size,
-      adapters = adapters,
+        trim_quality_trim_score = trim_quality_trim_score,
+        trim_window_size = trim_window_size,
+        adapters = adapters,
         phix = phix,
         workflow_series = "theiacov"
     }
