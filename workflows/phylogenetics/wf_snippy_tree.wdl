@@ -1,9 +1,10 @@
 version 1.0
 
 import "../../tasks/phylogenetic_inference/task_snippy_core.wdl" as snippy_core_task
+import "../../tasks/phylogenetic_inference/task_snp_sites.wdl" as snp_sites_task
 import "../../tasks/phylogenetic_inference/task_iqtree.wdl" as iqtree_task
-import "../../tasks/phylogenetic_inference/task_snp_dists.wdl" as snp_dists
-import "../../tasks/phylogenetic_inference/task_reorder_matrix.wdl" as reorder_matrix
+import "../../tasks/phylogenetic_inference/task_snp_dists.wdl" as snp_dists_task
+import "../../tasks/phylogenetic_inference/task_reorder_matrix.wdl" as reorder_matrix_task
 import "../../tasks/phylogenetic_inference/task_gubbins.wdl" as gubbins_task
 import "../../tasks/utilities/task_summarize_data.wdl" as data_summary
 import "../../tasks/task_versioning.wdl" as versioning
@@ -17,7 +18,8 @@ workflow snippy_tree_wf {
     Array[File] snippy_variants_outdir_tarball
     Array[String] samplenames
     File reference
-    Boolean use_gubbins = false
+    Boolean use_gubbins = true
+    Boolean core_genome = true
     String? data_summary_terra_project
     String? data_summary_terra_workspace
     String? data_summary_terra_table
@@ -36,35 +38,40 @@ workflow snippy_tree_wf {
         alignment = snippy_core.snippy_full_alignment_clean,
         cluster_name = tree_name
     }
-    call snp_dists.snp_dists as snp_dists_gubbins {
-      input:
-        alignment = gubbins.gubbins_polymorphic_fasta,
-        cluster_name = tree_name
-    }
-    call reorder_matrix.reorder_matrix as reorder_matrix_gubbins {
-      input:
-        input_tree = gubbins.gubbins_final_labelled_tree,
-        matrix = snp_dists_gubbins.snp_matrix,
-        cluster_name = tree_name 
+    if (core_genome) {
+      call snp_sites_task.snp_sites as snp_sites_gubbins {
+        input:
+          msa_fasta = gubbins.gubbins_polymorphic_fasta,
+          output_name = tree_name,
+          output_multifasta = true
+      }
     }
   }
   if (!use_gubbins) {
-    call iqtree_task.iqtree {
-      input:
-        alignment = snippy_core.snippy_full_alignment_clean,
-        cluster_name = tree_name
+    if (core_genome) {
+      call snp_sites_task.snp_sites as snp_sites_no_gubbins {
+        input:
+          msa_fasta = snippy_core.snippy_full_alignment_clean,
+          output_name = tree_name,
+          output_multifasta = true
+      }
     }
-    call snp_dists.snp_dists as snp_dists_iqtree {
-      input:
-        alignment = snippy_core.snippy_full_alignment_clean,
-        cluster_name = tree_name
-    }
-    call reorder_matrix.reorder_matrix as reorder_matrix_iqtree {
-      input:
-        input_tree = iqtree.ml_tree,
-        matrix = snp_dists_iqtree.snp_matrix,
-        cluster_name = tree_name 
-    }
+  }
+  call iqtree_task.iqtree {
+    input:
+      alignment = select_first([snp_sites_gubbins.snp_sites_multifasta, gubbins.gubbins_polymorphic_fasta, snp_sites_no_gubbins.snp_sites_multifasta, snippy_core.snippy_full_alignment_clean]),
+      cluster_name = tree_name
+  }
+  call snp_dists_task.snp_dists {
+    input:
+      alignment = select_first([snp_sites_gubbins.snp_sites_multifasta, gubbins.gubbins_polymorphic_fasta, snp_sites_no_gubbins.snp_sites_multifasta, snippy_core.snippy_full_alignment_clean]),
+      cluster_name = tree_name
+  }
+  call reorder_matrix_task.reorder_matrix {
+    input:
+      input_tree = iqtree.ml_tree,
+      matrix = snp_dists.snp_matrix,
+      cluster_name = tree_name 
   }
   if (defined(data_summary_column_names)) {
     call data_summary.summarize_data {
@@ -94,7 +101,9 @@ workflow snippy_tree_wf {
     File snippy_tree_snps_summary = snippy_core.snippy_txt
     File snippy_tree_vcf = snippy_core.snippy_vcf
     # iqtree outputs
-    String? snippy_tree_iqtree_version = iqtree.version
+    String snippy_tree_iqtree_version = iqtree.version
+    # snp_sites outputs
+    String snp_sites_version = select_first([snp_sites_gubbins.snp_sites_version, snp_sites_no_gubbins.snp_sites_version, ''])
     # gubbins outputs
     String? snippy_tree_gubbins_version = gubbins.version
     File? snippy_tree_gubbins_labelled_tree = gubbins.gubbins_final_labelled_tree
@@ -104,13 +113,11 @@ workflow snippy_tree_wf {
     File? snippy_tree_gubbins_timetree = gubbins.gubbins_timetree
     File? snippy_tree_gubbins_timetree_stats = gubbins.gubbins_timetree_stats
     # snpdists outputs
-    String snippy_tree_snpdists_version = select_first([snp_dists_gubbins.version, snp_dists_iqtree.version])
+    String snippy_tree_snpdists_version = snp_dists.version
     # reorder matrix outputs
-    File? snippy_tree_gubbins_matrix = reorder_matrix_gubbins.ordered_matrix
-    File? snippy_tree_gubbins_tree = reorder_matrix_gubbins.tree
-    File? snippy_tree_iqtree_matrix = reorder_matrix_iqtree.ordered_matrix
-    File? snippy_tree_iqtree_tree = reorder_matrix_iqtree.tree
+    File snippy_tree_matrix = reorder_matrix.ordered_matrix
+    File snippy_tree_tree = reorder_matrix.tree
     # data summary outputs
     File? snippy_tree_summarized_data = summarize_data.summarized_data
-    }
+  }
 }

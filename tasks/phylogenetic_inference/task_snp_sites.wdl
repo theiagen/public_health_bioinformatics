@@ -10,7 +10,7 @@ task snp_sites {
     Boolean output_multifasta = false
     Boolean output_pseudo_ref = false
     Boolean output_monomorphic = false
-    String docker = "staphb/snp-sites:2.5.1"
+    String docker = "quay.io/staphb/snp-sites:2.5.1"
     Int disk_size = 100
   }
   command <<< 
