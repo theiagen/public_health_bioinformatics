@@ -1,6 +1,6 @@
 version 1.0
 
-task nextclade_one_sample {
+task nextclade {
     meta {
       description: "Nextclade classification of one sample. Leaving optional inputs unspecified will use SARS-CoV-2 defaults."
     }
@@ -57,7 +57,7 @@ task nextclade_one_sample {
     }
 }
 
-task nextclade_output_parser_one_sample {
+task nextclade_output_parser {
     meta {
       description: "Python and bash codeblocks for parsing the output files from Nextclade."
     }
