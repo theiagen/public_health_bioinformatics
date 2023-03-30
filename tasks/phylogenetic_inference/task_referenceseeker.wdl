@@ -4,7 +4,7 @@ task referenceseeker {
   input {
     File assembly_fasta
     String samplename
-    File referenceseeker_db = "gs://theiagen-public-files-rp/terra/theiaprok-files/referenceseekser-bacteria-refseq.tar.gz"
+    File referenceseeker_db = "gs://theiagen-public-files-rp/terra/theiaprok-files/referenceseeker-bacteria-refseq.tar.gz"
     Float referenceseeker_ani_threshold = 0.95
     Float referenceseeker_conserved_dna_threshold = 0.69
     Int disk_size = 200 
@@ -19,7 +19,7 @@ task referenceseeker {
     # get DB and uncompress
     echo "Uncompressing referenceseeker DB..."
     mkdir db
-    tar -C ./db/ -xzf ~{referenceseeker_db} 
+    tar -C ./db/ -xzf  ~{referenceseeker_db} --strip-components 1
 
     # run referenceseeker
     echo "Running referenceseeker..."
