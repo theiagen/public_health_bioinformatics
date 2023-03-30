@@ -12,11 +12,15 @@ task centroid {
     ln -s ~{sep=' ' assembly_fasta} INPUT_DIR
     
     # centroid.py expects a positional argument with a path to a directory of FASTA files
-    # cromwell localises files to PWD, so just using . as the location
     centroid.py INPUT_DIR/
+
+    # rename the centroid genome so it can be accessed outside this task
+    mv -v $(ls */* | grep $(cat centroid_out.txt)) centroid.fasta
+
   >>>
   output {
     String centroid_genome_fasta_filename = read_string("centroid_out.txt")
+    File centroid_genome_fasta_file = "centroid.fasta"
     File centroid_mash_tsv = "mash-results.tsv"
   }
   runtime {
