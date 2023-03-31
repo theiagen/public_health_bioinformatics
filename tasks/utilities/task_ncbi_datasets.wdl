@@ -29,7 +29,7 @@ task ncbi_datasets_download_genome_accession {
 
   >>>
   output {
-    File assembly_fasta = read_string("ASSEMBLY_FASTA")
+    File ncbi_datasets_assembly_fasta = read_string("ASSEMBLY_FASTA")
     String ncbi_datasets_version = read_string("DATASETS_VERSION")
     String ncbi_datasets_docker = docker
   }
