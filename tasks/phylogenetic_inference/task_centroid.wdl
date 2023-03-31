@@ -26,7 +26,7 @@ task centroid {
   >>>
   output {
     String centroid_genome_samplename = read_string("CENTROID_GENOME_SAMPLENAME")
-    File centroid_genome_fasta_file = "centroid.fasta"
+    File centroid_genome_fasta = "centroid.fasta"
     File centroid_mash_tsv = "mash-results.tsv"
   }
   runtime {
