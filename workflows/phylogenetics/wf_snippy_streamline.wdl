@@ -4,6 +4,7 @@ import "../../workflows/standalone_modules/wf_snippy_variants.wdl" as snippy_var
 import "../../workflows/phylogenetics/wf_snippy_tree.wdl" as snippy_tree_workflow
 import "../../tasks/phylogenetic_inference/task_centroid.wdl" as centroid_task
 import "../../tasks/phylogenetic_inference/task_referenceseeker.wdl" as referenceseeker_task
+import "../../tasks/utilities/task_ncbi_datasets.wdl" as ncbi_datasets_task
 import "../../tasks/task_versioning.wdl" as versioning
 
 # input is arrays
@@ -28,12 +29,13 @@ workflow snippy_streamline {
   }
   call referenceseeker_task.referenceseeker {
     input:
-      assembly_fasta = centroid.centroid_genome_fasta_file,
-      samplename = centroid.centroid_genome_fasta_filename
+      assembly_fasta = centroid.centroid_genome_fasta,
+      samplename = centroid.centroid_genome_samplename
   }
-  # call ncbi_download {
-  #   # add once merged 
-  # }
+  call ncbi_datasets_task.ncbi_datasets_download_genome_accession {
+    input:
+      ncbi_accession = referenceseeker.referenceseeker_top_hit_ncbi_accession
+  }
 
   # see https://github.com/openwdl/wdl/issues/279 for syntax explanation
   # see also https://github.com/openwdl/wdl/blob/main/versions/1.1/SPEC.md#arraypairxy-ziparrayx-arrayy for zip explanation
@@ -42,7 +44,7 @@ workflow snippy_streamline {
       input:
         read1 = triplet.left.left, # access the left-most object (read 1)
         read2 = triplet.left.right, # access the right-side object on the left (read 2)
-        reference = ncbi_download.reference, 
+        reference = ncbi_datasets_download_genome_accession.ncbi_datasets_assembly_fasta, 
         samplename = triplet.right # access the right-most object (samplename)
     }
   }
@@ -51,7 +53,7 @@ workflow snippy_streamline {
       tree_name = tree_name,
       snippy_variants_outdir_tarball = snippy_variants_wf.snippy_variants_outdir_tarball,
       samplenames = samplenames,
-      reference = ncbi_download.reference
+      reference = ncbi_datasets_download_genome_accession.ncbi_datasets_assembly_fasta
   }
   call versioning.version_capture {
     input:
@@ -61,8 +63,19 @@ workflow snippy_streamline {
     String snippy_streamline_version = version_capture.phb_version
     String snippy_streamline_analysis_date = version_capture.date
     # centroid outputs
-    String snippy_streamline_centroid_genome_filename = centroid.centroid_genome_fasta_filename
+    String snippy_streamline_centroid_genome_samplename = centroid.centroid_genome_samplename
+    File snippy_streamline_centroid_genome_fasta = centroid.centroid_genome_fasta
     File snippy_streamline_centroid_mash_tsv = centroid.centroid_mash_tsv
+    # referenceseeker outputs
+    String snippy_streamline_referenceseeker_top_hit_ncbi_accession = referenceseeker.referenceseeker_top_hit_ncbi_accession
+    String snippy_streamline_referenceseeker_version = referenceseeker.referenceseeker_version
+    File snippy_streamline_referenceseeker_tsv = referenceseeker.referenceseeker_tsv
+    String snippy_streamline_referenceseeker_docker = referenceseeker.referenceseeker_docker
+    String snippy_streamline_referenceseeker_database = referenceseeker.referenceseeker_database
+    # ncbi datasets outputs
+    File snippy_streamline_ncbi_datasets_assembly_fasta = ncbi_datasets_download_genome_accession.ncbi_datasets_assembly_fasta 
+    String snippy_streamline_ncbi_datasets_version = ncbi_datasets_download_genome_accession.ncbi_datasets_version
+    String snippy_streamline_ncbi_datasets_docker = ncbi_datasets_download_genome_accession.ncbi_datasets_docker
     # snippy_variants output
     Array[File] snippy_streamline_snippy_variants_outdir_tarball = snippy_variants_wf.snippy_variants_outdir_tarball
     # snippy_tree version
