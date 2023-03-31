@@ -9,17 +9,23 @@ task centroid {
   }
   command <<<
     mkdir INPUT_DIR
-    ln -s ~{sep=' ' assembly_fasta} INPUT_DIR
+    # copy all asms to a single directory
+    cp -v ~{sep=' ' assembly_fasta} INPUT_DIR
     
     # centroid.py expects a positional argument with a path to a directory of FASTA files
     centroid.py INPUT_DIR/
+    
+    # set bash variable which ONLY has the filename, e.g. "SAMN19774644_contigs.fasta"
+    CENTROID_FASTA_FILENAME=$(cat centroid_out.txt)
 
     # rename the centroid genome so it can be accessed outside this task
-    mv -v $(ls */* | grep $(cat centroid_out.txt)) centroid.fasta
+    mv -v INPUT_DIR/"$CENTROID_FASTA_FILENAME" centroid.fasta
 
+    # capture samplename of centroid genome for use downstream
+    cut -d '_' -f 1 centroid_out.txt | tee CENTROID_GENOME_SAMPLENAME
   >>>
   output {
-    String centroid_genome_fasta_filename = read_string("centroid_out.txt")
+    String centroid_genome_samplename = read_string("CENTROID_GENOME_SAMPLENAME")
     File centroid_genome_fasta_file = "centroid.fasta"
     File centroid_mash_tsv = "mash-results.tsv"
   }
