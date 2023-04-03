@@ -6,6 +6,7 @@ import "../../tasks/assembly/task_shovill.wdl" as shovill
 import "../../tasks/quality_control/task_quast.wdl" as quast_task
 import "../../tasks/quality_control/task_cg_pipeline.wdl" as cg_pipeline_task
 import "../../tasks/quality_control/task_screen.wdl" as screen
+import "../../tasks/quality_control/task_busco.wdl" as busco_task
 import "../../tasks/taxon_id/task_gambit.wdl" as gambit_task
 # import "../../tasks/species_typing/task_ts_mlst.wdl" as ts_mlst_task
 import "../../tasks/task_versioning.wdl" as versioning
@@ -107,6 +108,12 @@ workflow theiaeuk_illumina_pe {
           cpu = cpu,
           memory = memory
       }
+      call busco_task.busco {
+        input:
+          assembly = shovill_pe.assembly_fasta,
+          samplename = samplename,
+          eukaryote = true
+      }
       # call ts_mlst_task.ts_mlst {
       #   input: 
       #     assembly = shovill_pe.assembly_fasta,
@@ -146,20 +153,27 @@ workflow theiaeuk_illumina_pe {
     Float? r2_mean_q = cg_pipeline.r2_mean_q
     File? read1_clean = read_QC_trim.read1_clean
     File? read2_clean = read_QC_trim.read2_clean
-    #Assembly and Assembly QC
+    # Assembly - shovill outputs and Assembly QC
     File? assembly_fasta = shovill_pe.assembly_fasta
     File? contigs_gfa = shovill_pe.contigs_gfa
     File? contigs_fastg = shovill_pe.contigs_fastg
     File? contigs_lastgraph = shovill_pe.contigs_lastgraph
     String? shovill_pe_version = shovill_pe.shovill_version
+    # Assembly QC - quast outputs
     File? quast_report = quast.quast_report
     String? quast_version = quast.version
     Int? genome_length = quast.genome_length
     Int? number_contigs = quast.number_contigs
     Int? n50_value = quast.n50_value
+    # Assembly QC - cg pipeline outputs
     File? cg_pipeline_report = cg_pipeline.cg_pipeline_report
     String? cg_pipeline_docker = cg_pipeline.cg_pipeline_docker
     Float? est_coverage = cg_pipeline.est_coverage
+    # Assembly QC - busco outputs
+    String? busco_version = busco.busco_version
+    String? busco_database = busco.busco_database
+    String? busco_results = busco.busco_results
+    File? busco_report = busco.busco_report
     # Taxon ID
     File? gambit_report = gambit.gambit_report_file
     File? gambit_closest_genomes = gambit.gambit_closest_genomes_file
