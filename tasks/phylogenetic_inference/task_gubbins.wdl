@@ -4,15 +4,16 @@ task gubbins {
   input {
     File alignment
     String cluster_name
-    String docker = "quay.io/sangerpathogens/gubbins"
-    Int? filter_percent = 25 #default is 25%
-    Int? iterations = 5
-    String? tree_builder = "raxml"
+    String docker = "quay.io/biocontainers/gubbins:3.3--py310pl5321h8472f5a_0"
+    Int filter_percent = 25 #default is 25%
+    Int iterations = 5
+    String tree_builder = "raxml"
     String? tree_args
-    String? nuc_subst_model = "GTRGAMMA"
-    Int? bootstrap = 0
+    String nuc_subst_model = "GTRGAMMA"
+    Int bootstrap = 0
     String? outgroup
     File? dates_file
+    Int cpu = 4
   }
   command <<<
     # date and version control
@@ -30,11 +31,12 @@ task gubbins {
     --bootstrap ~{bootstrap} \
     ~{'--outgroup ' + outgroup} \
     ~{'--date ' + dates_file} \
-    --threads 2
+    --threads ~{cpu}
   >>>
   output {
     String date = read_string("DATE")
     String version = read_string("VERSION")
+    String gubbins_docker = docker
     File gubbins_final_tree = "~{cluster_name}.final_tree.tre"
     File gubbins_final_labelled_tree = "~{cluster_name}.node_labelled.final_tree.tre"
     File gubbins_polymorphic_fasta = "~{cluster_name}.filtered_polymorphic_sites.fasta"
@@ -46,7 +48,7 @@ task gubbins {
   runtime {
     docker: "~{docker}"
     memory: "32 GB"
-    cpu: 4
+    cpu: cpu
     disks: "local-disk 100 SSD"
     preemptible: 0
     maxRetries: 1
