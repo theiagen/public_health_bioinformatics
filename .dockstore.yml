@@ -225,3 +225,8 @@ workflows:
    primaryDescriptorPath: /workflows/phylogenetics/wf_lyveset.wdl
    testParameterFiles:
     - empty.json
+ - name: Snippy_Streamline_PHB
+   subclass: WDL
+   primaryDescriptorPath: /workflows/phylogenetics/wf_snippy_streamline.wdl
+   testParameterFiles:
+    - empty.json

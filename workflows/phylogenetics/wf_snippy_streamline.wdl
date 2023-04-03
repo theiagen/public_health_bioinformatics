@@ -21,8 +21,10 @@ workflow snippy_streamline {
     Array[File] assembly_fasta
     Array[String] samplenames
     String tree_name
+    File? reference_genome_fasta
   }
-
+  # if user does not provide reference genome fasta, determine one for the user by running, centroid, referenceseeker and ncbi datasets to acquire one
+  if(defined(reference_genome_fasta)){
   call centroid_task.centroid {
     input:
       assembly_fasta = assembly_fasta
@@ -36,7 +38,7 @@ workflow snippy_streamline {
     input:
       ncbi_accession = referenceseeker.referenceseeker_top_hit_ncbi_accession
   }
-
+  }
   # see https://github.com/openwdl/wdl/issues/279 for syntax explanation
   # see also https://github.com/openwdl/wdl/blob/main/versions/1.1/SPEC.md#arraypairxy-ziparrayx-arrayy for zip explanation
   scatter (triplet in zip(zip(read1, read2), samplenames)) {
@@ -44,7 +46,7 @@ workflow snippy_streamline {
       input:
         read1 = triplet.left.left, # access the left-most object (read 1)
         read2 = triplet.left.right, # access the right-side object on the left (read 2)
-        reference = ncbi_datasets_download_genome_accession.ncbi_datasets_assembly_fasta, 
+        reference = select_first([reference_genome_fasta,ncbi_datasets_download_genome_accession.ncbi_datasets_assembly_fasta]),
         samplename = triplet.right # access the right-most object (samplename)
     }
   }
@@ -53,7 +55,7 @@ workflow snippy_streamline {
       tree_name = tree_name,
       snippy_variants_outdir_tarball = snippy_variants_wf.snippy_variants_outdir_tarball,
       samplenames = samplenames,
-      reference = ncbi_datasets_download_genome_accession.ncbi_datasets_assembly_fasta
+      reference = select_first([reference_genome_fasta,ncbi_datasets_download_genome_accession.ncbi_datasets_assembly_fasta])
   }
   call versioning.version_capture {
     input:
@@ -63,19 +65,19 @@ workflow snippy_streamline {
     String snippy_streamline_version = version_capture.phb_version
     String snippy_streamline_analysis_date = version_capture.date
     # centroid outputs
-    String snippy_streamline_centroid_genome_samplename = centroid.centroid_genome_samplename
-    File snippy_streamline_centroid_genome_fasta = centroid.centroid_genome_fasta
-    File snippy_streamline_centroid_mash_tsv = centroid.centroid_mash_tsv
+    String? snippy_streamline_centroid_genome_samplename = centroid.centroid_genome_samplename
+    File? snippy_streamline_centroid_genome_fasta = centroid.centroid_genome_fasta
+    File? snippy_streamline_centroid_mash_tsv = centroid.centroid_mash_tsv
     # referenceseeker outputs
-    String snippy_streamline_referenceseeker_top_hit_ncbi_accession = referenceseeker.referenceseeker_top_hit_ncbi_accession
-    String snippy_streamline_referenceseeker_version = referenceseeker.referenceseeker_version
-    File snippy_streamline_referenceseeker_tsv = referenceseeker.referenceseeker_tsv
-    String snippy_streamline_referenceseeker_docker = referenceseeker.referenceseeker_docker
-    String snippy_streamline_referenceseeker_database = referenceseeker.referenceseeker_database
+    String? snippy_streamline_referenceseeker_top_hit_ncbi_accession = referenceseeker.referenceseeker_top_hit_ncbi_accession
+    String? snippy_streamline_referenceseeker_version = referenceseeker.referenceseeker_version
+    File? snippy_streamline_referenceseeker_tsv = referenceseeker.referenceseeker_tsv
+    String? snippy_streamline_referenceseeker_docker = referenceseeker.referenceseeker_docker
+    String? snippy_streamline_referenceseeker_database = referenceseeker.referenceseeker_database
     # ncbi datasets outputs
-    File snippy_streamline_ncbi_datasets_assembly_fasta = ncbi_datasets_download_genome_accession.ncbi_datasets_assembly_fasta 
-    String snippy_streamline_ncbi_datasets_version = ncbi_datasets_download_genome_accession.ncbi_datasets_version
-    String snippy_streamline_ncbi_datasets_docker = ncbi_datasets_download_genome_accession.ncbi_datasets_docker
+    File? snippy_streamline_ncbi_datasets_assembly_fasta = ncbi_datasets_download_genome_accession.ncbi_datasets_assembly_fasta 
+    String? snippy_streamline_ncbi_datasets_version = ncbi_datasets_download_genome_accession.ncbi_datasets_version
+    String? snippy_streamline_ncbi_datasets_docker = ncbi_datasets_download_genome_accession.ncbi_datasets_docker
     # snippy_variants output
     Array[File] snippy_streamline_snippy_variants_outdir_tarball = snippy_variants_wf.snippy_variants_outdir_tarball
     # snippy_tree version
