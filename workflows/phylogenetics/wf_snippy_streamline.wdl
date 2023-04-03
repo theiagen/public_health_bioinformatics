@@ -24,7 +24,7 @@ workflow snippy_streamline {
     File? reference_genome_fasta
   }
   # if user does not provide reference genome fasta, determine one for the user by running, centroid, referenceseeker and ncbi datasets to acquire one
-  if(defined(reference_genome_fasta)){
+  if(! defined(reference_genome_fasta)){
   call centroid_task.centroid {
     input:
       assembly_fasta = assembly_fasta
