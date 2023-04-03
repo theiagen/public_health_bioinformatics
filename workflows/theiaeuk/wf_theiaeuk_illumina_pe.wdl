@@ -90,12 +90,21 @@ workflow theiaeuk_illumina_pe {
           cpu = cpu,
           memory = memory
       }
-      call cg_pipeline_task.cg_pipeline {
+      call cg_pipeline_task.cg_pipeline as cg_pipeline_raw {
         input:
           read1 = read1_raw,
           read2 = read2_raw,
           samplename = samplename,
-          genome_length = clean_check_reads.est_genome_length,
+          genome_length = select_first([quast.genome_length,clean_check_reads.est_genome_length]),
+          cpu = cpu,
+          memory = memory
+      }
+      call cg_pipeline_task.cg_pipeline as cg_pipeline_clean {
+        input:
+          read1 = read_QC_trim.read1_clean,
+          read2 = read_QC_trim.read2_clean,
+          samplename = samplename,
+          genome_length = select_first([quast.genome_length,clean_check_reads.est_genome_length]),
           cpu = cpu,
           memory = memory
       }
@@ -139,7 +148,7 @@ workflow theiaeuk_illumina_pe {
     # Sample Screening
     String raw_read_screen = raw_check_reads.read_screen
     String? clean_read_screen = clean_check_reads.read_screen
-    # Read QC
+    # Read QC - fastq_scan outputs
     Int? num_reads_raw1 = read_QC_trim.fastq_scan_raw1
     Int? num_reads_raw2 = read_QC_trim.fastq_scan_raw2
     String? num_reads_raw_pairs = read_QC_trim.fastq_scan_raw_pairs
@@ -147,12 +156,21 @@ workflow theiaeuk_illumina_pe {
     Int? num_reads_clean1 = read_QC_trim.fastq_scan_clean1
     Int? num_reads_clean2 = read_QC_trim.fastq_scan_clean2
     String? num_reads_clean_pairs = read_QC_trim.fastq_scan_clean_pairs
+    # Read QC - trimmomatic outputs
     String? trimmomatic_version = read_QC_trim.trimmomatic_version
+    # Read QC - bbduk outputs
     String? bbduk_docker = read_QC_trim.bbduk_docker
-    Float? r1_mean_q = cg_pipeline.r1_mean_q
-    Float? r2_mean_q = cg_pipeline.r2_mean_q
     File? read1_clean = read_QC_trim.read1_clean
     File? read2_clean = read_QC_trim.read2_clean
+    # Read QC - cg pipeline outputs
+    Float? r1_mean_q_raw = cg_pipeline_raw.r1_mean_q
+    Float? r2_mean_q_raw = cg_pipeline_raw.r2_mean_q
+    Float? combined_mean_q_raw = cg_pipeline_raw.combined_mean_q
+    Float? combined_mean_q_clean = cg_pipeline_clean.combined_mean_q
+    Float? r1_mean_readlength_raw = cg_pipeline_raw.r1_mean_readlength
+    Float? r2_mean_readlength_raw = cg_pipeline_raw.r2_mean_readlength
+    Float? combined_mean_readlength_raw = cg_pipeline_raw.combined_mean_readlength
+    Float? combined_mean_readlength_clean = cg_pipeline_clean.combined_mean_readlength
     # Assembly - shovill outputs and Assembly QC
     File? assembly_fasta = shovill_pe.assembly_fasta
     File? contigs_gfa = shovill_pe.contigs_gfa
@@ -166,9 +184,11 @@ workflow theiaeuk_illumina_pe {
     Int? number_contigs = quast.number_contigs
     Int? n50_value = quast.n50_value
     # Assembly QC - cg pipeline outputs
-    File? cg_pipeline_report = cg_pipeline.cg_pipeline_report
-    String? cg_pipeline_docker = cg_pipeline.cg_pipeline_docker
-    Float? est_coverage = cg_pipeline.est_coverage
+    File? cg_pipeline_report_raw = cg_pipeline_raw.cg_pipeline_report
+    String? cg_pipeline_docker = cg_pipeline_raw.cg_pipeline_docker
+    Float? est_coverage_raw = cg_pipeline_raw.est_coverage
+    File? cg_pipeline_report_clean = cg_pipeline_clean.cg_pipeline_report
+    Float? est_coverage_clean = cg_pipeline_clean.est_coverage
     # Assembly QC - busco outputs
     String? busco_version = busco.busco_version
     String? busco_database = busco.busco_database
