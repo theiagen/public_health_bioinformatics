@@ -21,15 +21,15 @@ task ncbi_datasets_download_genome_accession {
     --filename ~{ncbi_accession}.zip \
     --assembly-version latest
 
-  # unzip the archive and copy to PWD 
+  # unzip the archive and copy FASTA and JSON to PWD, rename in the process so output filenames are predictable 
   unzip ~{ncbi_accession}.zip
-  cp -v ncbi_dataset/data/~{ncbi_accession}*/~{ncbi_accession}*.fna .
-  # find .fna file in PWD, strip out leading ./ and save .fna filename to txt file ASSEMBLY_FASTA
-  find . -maxdepth 1 -iname "*.fna" | sed 's|\./||' | tee ASSEMBLY_FASTA
+  cp -v ncbi_dataset/data/~{ncbi_accession}*/~{ncbi_accession}*.fna ./~{ncbi_accession}.fasta
+  cp -v ncbi_dataset/data/assembly_data_report.jsonl ./~{ncbi_accession}.data_report.jsonl
 
   >>>
   output {
-    File ncbi_datasets_assembly_fasta = read_string("ASSEMBLY_FASTA")
+    File ncbi_datasets_assembly_fasta = "~{ncbi_accession}.fasta"
+    File ncbi_datasets_assembly_data_report_json = "~{ncbi_accession}.data_report.jsonl"
     String ncbi_datasets_version = read_string("DATASETS_VERSION")
     String ncbi_datasets_docker = docker
   }
