@@ -112,6 +112,7 @@ task export_taxon_tables {
     File? ts_mlst_results
     String? ts_mlst_predicted_st
     String? ts_mlst_pubmlst_scheme
+    String? ts_mlst_allelic_profile
     File? ts_mlst_novel_alleles
     String? ts_mlst_version
     File? serotypefinder_report
@@ -197,6 +198,29 @@ task export_taxon_tables {
     String? kaptive_kl_confidence
     String? kaptive_oc_locus
     String? kaptive_ocl_confidence
+    File? ngmaster_tsv
+    String? ngmaster_version
+    String? ngmaster_ngmast_sequence_type
+    String? ngmaster_ngmast_porB_allele
+    String? ngmaster_ngmast_tbpB_allele
+    String? ngmaster_ngstar_sequence_type
+    String? ngmaster_ngstar_penA_allele
+    String? ngmaster_ngstar_mtrR_allele
+    String? ngmaster_ngstar_porB_allele
+    String? ngmaster_ngstar_ponA_allele
+    String? ngmaster_ngstar_gyrA_allele
+    String? ngmaster_ngstar_parC_allele
+    String? ngmaster_ngstar_23S_allele
+    File? meningotype_tsv
+    String? meningotype_version
+    String? meningotype_serogroup
+    String? meningotype_PorA
+    String? meningotype_FetA
+    String? meningotype_PorB
+    String? meningotype_fHbp
+    String? meningotype_NHBA
+    String? meningotype_NadA
+    String? meningotype_BAST
     File? abricate_abaum_plasmid_tsv
     String? abricate_abaum_plasmid_type_genes
     String? abricate_database
@@ -210,6 +234,12 @@ task export_taxon_tables {
     String? tbprofiler_sub_lineage
     String? tbprofiler_dr_type
     String? tbprofiler_resistance_genes
+    File? tbprofiler_additional_outputs_csv
+    File? tbprofiler_laboratorian_report_csv
+    String? tbprofiler_gene_name
+    String? tbprofiler_locus_tag
+    String? tbprofiler_variant_substitutions
+    String? tbprofiler_output_seq_method_type
     File? legsta_results
     String? legsta_predicted_sbt
     String? legsta_version
@@ -257,6 +287,25 @@ task export_taxon_tables {
     String? pasty_comment
     String? qc_check
     File? qc_standard
+    File? spatyper_tsv
+    String? spatyper_docker
+    String? spatyper_repeats
+    String? spatyper_type
+    String? spatyper_version
+    File? staphopiasccmec_results_tsv
+    File? staphopiasccmec_hamming_distance_tsv
+    String? staphopiasccmec_types_and_mecA_presence
+    String? staphopiasccmec_version
+    String? staphopiasccmec_docker
+    File? agrvate_summary
+    File? agrvate_results
+    String? agrvate_agr_group
+    String? agrvate_agr_match_score
+    String? agrvate_agr_canonical
+    String? agrvate_agr_multiple
+    String? agrvate_agr_num_frameshifts
+    String? agrvate_version
+    String? agrvate_docker
   }
   command <<<
   
@@ -371,6 +420,7 @@ task export_taxon_tables {
       "ts_mlst_results": "~{ts_mlst_results}",
       "ts_mlst_predicted_st": "~{ts_mlst_predicted_st}",
       "ts_mlst_pubmlst_scheme": "~{ts_mlst_pubmlst_scheme}",
+      "ts_mlst_allelic_profile": "~{ts_mlst_allelic_profile}",
       "ts_mlst_novel_alleles": "~{ts_mlst_novel_alleles}",
       "ts_mlst_version": "~{ts_mlst_version}",
       "serotypefinder_report": "~{serotypefinder_report}",
@@ -441,6 +491,29 @@ task export_taxon_tables {
       "kleborate_otype": "~{kleborate_otype}",
       "kleborate_klocus_confidence": "~{kleborate_klocus_confidence}",
       "kleborate_olocus_confidence": "~{kleborate_olocus_confidence}",
+      "ngmaster_tsv": "~{ngmaster_tsv}",
+      "ngmaster_version": "~{ngmaster_version}",
+      "ngmaster_ngmast_sequence_type": "~{ngmaster_ngmast_sequence_type}",
+      "ngmaster_ngmast_porB_allele": "~{ngmaster_ngmast_porB_allele}",
+      "ngmaster_ngmast_tbpB_allele": "~{ngmaster_ngmast_tbpB_allele}",
+      "ngmaster_ngstar_sequence_type": "~{ngmaster_ngstar_sequence_type}",
+      "ngmaster_ngstar_penA_allele": "~{ngmaster_ngstar_penA_allele}",
+      "ngmaster_ngstar_mtrR_allele": "~{ngmaster_ngstar_mtrR_allele}",
+      "ngmaster_ngstar_porB_allele": "~{ngmaster_ngstar_porB_allele}",
+      "ngmaster_ngstar_ponA_allele": "~{ngmaster_ngstar_ponA_allele}",
+      "ngmaster_ngstar_gyrA_allele": "~{ngmaster_ngstar_gyrA_allele}",
+      "ngmaster_ngstar_parC_allele": "~{ngmaster_ngstar_parC_allele}",
+      "ngmaster_ngstar_23S_allele": "~{ngmaster_ngstar_23S_allele}",
+      "meningotype_tsv": "~{meningotype_tsv}",
+      "meningotype_version": "~{meningotype_version}",
+      "meningotype_serogroup": "~{meningotype_serogroup}",
+      "meningotype_PorA": "~{meningotype_PorA}",
+      "meningotype_FetA": "~{meningotype_FetA}",
+      "meningotype_PorB": "~{meningotype_PorB}",
+      "meningotype_fHbp": "~{meningotype_fHbp}",
+      "meningotype_NHBA": "~{meningotype_NHBA}",
+      "meningotype_NadA": "~{meningotype_NadA}",
+      "meningotype_BAST": "~{meningotype_BAST}",
       "kaptive_version": "~{kaptive_version}",
       "kaptive_output_file_k": "~{kaptive_output_file_k}",
       "kaptive_output_file_oc": "~{kaptive_output_file_oc}",
@@ -465,6 +538,12 @@ task export_taxon_tables {
       "tbprofiler_sub_lineage": "~{tbprofiler_sub_lineage}",
       "tbprofiler_dr_type": "~{tbprofiler_dr_type}",
       "tbprofiler_resistance_genes": "~{tbprofiler_resistance_genes}",
+      "tbprofiler_additional_outputs_csv": "~{tbprofiler_additional_outputs_csv}",
+      "tbprofiler_laboratorian_report_csv": "~{tbprofiler_laboratorian_report_csv}",
+      "tbprofiler_gene_name": "~{tbprofiler_gene_name}",
+      "tbprofiler_locus_tag": "~{tbprofiler_locus_tag}",
+      "tbprofiler_variant_substitutions": "~{tbprofiler_variant_substitutions}",
+      "tbprofiler_output_seq_method_type": "~{tbprofiler_output_seq_method_type}",
       "amrfinderplus_all_report": "~{amrfinderplus_all_report}",
       "amrfinderplus_amr_report": "~{amrfinderplus_amr_report}",
       "amrfinderplus_stress_report": "~{amrfinderplus_stress_report}",
@@ -539,7 +618,26 @@ task export_taxon_tables {
       "pasty_docker": "~{pasty_docker}",
       "pasty_comment": "~{pasty_comment}",
       "qc_check": "~{qc_check}",
-      "qc_standard": "~{qc_standard}"
+      "qc_standard": "~{qc_standard}",
+      "spatyper_tsv": "~{spatyper_tsv}",
+      "spatyper_docker": "~{spatyper_docker}",
+      "spatyper_repeats": "~{spatyper_repeats}",
+      "spatyper_type": "~{spatyper_type}",
+      "spatyper_version": "~{spatyper_version}",
+      "staphopiasccmec_results_tsv": "~{staphopiasccmec_results_tsv}",
+      "staphopiasccmec_hamming_distance_tsv": "~{staphopiasccmec_hamming_distance_tsv}",
+      "staphopiasccmec_types_and_mecA_presence": "~{staphopiasccmec_types_and_mecA_presence}",
+      "staphopiasccmec_version": "~{staphopiasccmec_version}",
+      "staphopiasccmec_docker ": "~{staphopiasccmec_docker}",
+      "agrvate_summary": "~{agrvate_summary}",
+      "agrvate_results": "~{agrvate_results}",
+      "agrvate_agr_group": "~{agrvate_agr_group}",
+      "agrvate_agr_match_score": "~{agrvate_agr_match_score}",
+      "agrvate_agr_canonical": "~{agrvate_agr_canonical}",
+      "agrvate_agr_multiple": "~{agrvate_agr_multiple}",
+      "agrvate_agr_num_frameshifts": "~{agrvate_agr_num_frameshifts}",
+      "agrvate_version": "~{agrvate_version}",
+      "agrvate_docker": "~{agrvate_docker}"
     }
 
     with open("~{samplename}_terra_table.tsv", "w") as outfile:
