@@ -8,6 +8,7 @@ import "../../tasks/quality_control/task_cg_pipeline.wdl" as cg_pipeline_task
 import "../../tasks/quality_control/task_screen.wdl" as screen
 import "../../tasks/quality_control/task_busco.wdl" as busco_task
 import "../../tasks/taxon_id/task_gambit.wdl" as gambit_task
+import "../../tasks/quality_control/task_qc_check.wdl" as qc_check
 # import "../../tasks/species_typing/task_ts_mlst.wdl" as ts_mlst_task
 import "../../tasks/task_versioning.wdl" as versioning
 
@@ -31,6 +32,8 @@ workflow theiaeuk_illumina_pe {
     Int trim_quality_trim_score = 20
     Int trim_window_size = 10
     Boolean skip_screen = false 
+    File? qc_check_table
+    String? expected_taxon
     Int cpu = 8
     Int memory = 16
     # default gambit outputs
@@ -128,6 +131,32 @@ workflow theiaeuk_illumina_pe {
       #     assembly = shovill_pe.assembly_fasta,
       #     samplename = samplename
       # }
+      if(defined(qc_check_table)) {
+        call qc_check.qc_check as qc_check_task {
+          input:
+            qc_check_table = qc_check_table,
+            expected_taxon = expected_taxon,
+            gambit_predicted_taxon = gambit.gambit_predicted_taxon,
+            r1_mean_q_raw = cg_pipeline_raw.r1_mean_q,
+            r2_mean_q_raw = cg_pipeline_raw.r2_mean_q,
+            combined_mean_q_raw = cg_pipeline_raw.combined_mean_q,
+            r1_mean_readlength_raw = cg_pipeline_raw.r1_mean_readlength,
+            r2_mean_readlength_raw = cg_pipeline_raw.r2_mean_readlength,  
+            combined_mean_readlength_raw = cg_pipeline_raw.combined_mean_readlength,
+            r1_mean_q_clean = cg_pipeline_clean.r1_mean_q,
+            r2_mean_q_clean = cg_pipeline_clean.r2_mean_q,
+            combined_mean_q_clean = cg_pipeline_clean.combined_mean_q,
+            r1_mean_readlength_clean = cg_pipeline_clean.r1_mean_readlength,
+            r2_mean_readlength_clean = cg_pipeline_clean.r2_mean_readlength,  
+            combined_mean_readlength_clean = cg_pipeline_clean.combined_mean_readlength,    
+            est_coverage_raw = cg_pipeline_raw.est_coverage,
+            est_coverage_clean = cg_pipeline_clean.est_coverage,
+            assembly_length = quast.genome_length,
+            number_contigs = quast.number_contigs,
+            n50_value = quast.n50_value,
+            busco_results = busco.busco_results
+        }
+      }
       call merlin_magic_workflow.merlin_magic {
         input:
           merlin_tag = gambit.merlin_tag,
@@ -202,6 +231,9 @@ workflow theiaeuk_illumina_pe {
     String? gambit_version = gambit.gambit_version
     String? gambit_db_version = gambit.gambit_db_version
     String? gambit_docker = gambit.gambit_docker
+    # QC_Check Results
+    String? qc_check = qc_check_task.qc_check
+    File? qc_standard = qc_check_task.qc_standard
     # MLST Typing
     # File? ts_mlst_results = ts_mlst.ts_mlst_results
     # String? ts_mlst_predicted_st = ts_mlst.ts_mlst_predicted_st
