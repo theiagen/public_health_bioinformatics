@@ -254,6 +254,7 @@ workflow theiaeuk_illumina_pe {
     File? theiaeuk_snippy_variants_results = merlin_magic.snippy_variants_results
     File? theiaeuk_snippy_variants_bam = merlin_magic.snippy_variants_bam
     File? theiaeuk_snippy_variants_bai = merlin_magic.snippy_variants_bai
+    File? theiaeuk_snippy_variants_outdir_tarball = merlin_magic.snippy_variants_outdir_tarball
     File? theiaeuk_snippy_variants_summary = merlin_magic.snippy_variants_summary
   }
 }
