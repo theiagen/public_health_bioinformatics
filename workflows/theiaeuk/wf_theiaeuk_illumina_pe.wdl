@@ -209,9 +209,9 @@ workflow theiaeuk_illumina_pe {
     # Assembly QC - quast outputs
     File? quast_report = quast.quast_report
     String? quast_version = quast.version
-    Int? quast_assembly_length = quast.genome_length
-    Int? quast_number_contigs = quast.number_contigs
-    Int? quast_n50_value = quast.n50_value
+    Int? assembly_length = quast.genome_length
+    Int? number_contigs = quast.number_contigs
+    Int? n50_value = quast.n50_value
     # Assembly QC - cg pipeline outputs
     File? cg_pipeline_report_raw = cg_pipeline_raw.cg_pipeline_report
     String? cg_pipeline_docker = cg_pipeline_raw.cg_pipeline_docker
