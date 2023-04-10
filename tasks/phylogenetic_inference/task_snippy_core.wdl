@@ -8,6 +8,8 @@ task snippy_core {
     String docker = "quay.io/staphb/snippy:4.6.0"
     File reference
     File? bed_file
+    Int disk_size = 100
+    Int cpu = 8
   }
   command <<<
    # version control
@@ -48,9 +50,10 @@ task snippy_core {
   }
   runtime {
     docker: "~{docker}"
-    memory: "8 GB"
-    cpu: 4
-    disks: "local-disk 100 SSD"
+    memory: "16 GB"
+    cpu: cpu
+    disks: "local-disk " + disk_size + " SSD"
+    disk: disk_size + " GB"
     preemptible: 0
   }
 }

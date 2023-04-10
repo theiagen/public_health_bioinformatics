@@ -14,6 +14,7 @@ task gubbins {
     String? outgroup
     File? dates_file
     Int cpu = 4
+    Int disk_size = 100
   }
   command <<<
     # date and version control
@@ -60,8 +61,9 @@ task gubbins {
     docker: "~{docker}"
     memory: "32 GB"
     cpu: cpu
-    disks: "local-disk 100 SSD"
+    disks: "local-disk " + disk_size + " SSD"
+    disk: disk_size + " GB"
     preemptible: 0
-    maxRetries: 1
+    maxRetries: 3
   }
 }

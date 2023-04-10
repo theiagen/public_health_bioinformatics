@@ -29,6 +29,10 @@ workflow snippy_tree_wf {
     String? docker_snp_sites
     String? docker_iqtree
     String? docker_snp_dists
+    Int? snippy_core_cpu 
+    Int? snippy_core_disk_size
+    Int? gubbins_disk_size
+    Int? iqtree_cpu
   }
   call snippy_core_task.snippy_core {
     input:
@@ -36,14 +40,17 @@ workflow snippy_tree_wf {
       samplenames = samplenames,
       reference = reference,
       tree_name = tree_name,
-      docker = docker_snippy
+      docker = docker_snippy,
+      cpu = snippy_core_cpu,
+      disk_size = snippy_core_disk_size
   }
   if (use_gubbins) {
     call gubbins_task.gubbins {
       input:
         alignment = snippy_core.snippy_full_alignment_clean,
         cluster_name = tree_name,
-        docker = docker_gubbins
+        docker = docker_gubbins,
+        disk_size = gubbins_disk_size
     }
   }
   if (core_genome) {
@@ -59,7 +66,8 @@ workflow snippy_tree_wf {
     input:
       alignment = select_first([snp_sites.snp_sites_multifasta, gubbins.gubbins_polymorphic_fasta, snippy_core.snippy_full_alignment_clean]),
       cluster_name = tree_name,
-      docker = docker_iqtree
+      docker = docker_iqtree,
+      cpu = iqtree_cpu
   }
   call snp_dists_task.snp_dists {
     input:
