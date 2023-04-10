@@ -12,13 +12,15 @@ workflow snippy_variants_wf {
     File read1
     File? read2
     String samplename
+    String? docker
   }
   call snippy.snippy_variants {
     input:
       samplename = samplename,
       read1 = read1,
       read2 = read2,
-      reference = reference
+      reference = reference,
+      docker = docker
   }
   call versioning.version_capture{
     input:
