@@ -24,26 +24,34 @@ workflow snippy_tree_wf {
     String? data_summary_terra_workspace
     String? data_summary_terra_table
     String? data_summary_column_names # comma delimited
+    String? docker_snippy
+    String? docker_gubbins
+    String? docker_snp_sites
+    String? docker_iqtree
+    String? docker_snp_dists
   }
   call snippy_core_task.snippy_core {
     input:
       snippy_variants_outdir_tarball = snippy_variants_outdir_tarball,
       samplenames = samplenames,
       reference = reference,
-      tree_name = tree_name
+      tree_name = tree_name,
+      docker = docker_snippy
   }
   if (use_gubbins) {
     call gubbins_task.gubbins {
       input:
         alignment = snippy_core.snippy_full_alignment_clean,
-        cluster_name = tree_name
+        cluster_name = tree_name,
+        docker = docker_gubbins
     }
     if (core_genome) {
       call snp_sites_task.snp_sites as snp_sites_gubbins {
         input:
           msa_fasta = gubbins.gubbins_polymorphic_fasta,
           output_name = tree_name,
-          output_multifasta = true
+          output_multifasta = true,
+          docker = docker_snp_sites
       }
     }
   }
@@ -53,19 +61,22 @@ workflow snippy_tree_wf {
         input:
           msa_fasta = snippy_core.snippy_full_alignment_clean,
           output_name = tree_name,
-          output_multifasta = true
+          output_multifasta = true,
+          docker = docker_snp_sites
       }
     }
   }
   call iqtree_task.iqtree {
     input:
       alignment = select_first([snp_sites_gubbins.snp_sites_multifasta, gubbins.gubbins_polymorphic_fasta, snp_sites_no_gubbins.snp_sites_multifasta, snippy_core.snippy_full_alignment_clean]),
-      cluster_name = tree_name
+      cluster_name = tree_name,
+      docker = docker_iqtree
   }
   call snp_dists_task.snp_dists {
     input:
       alignment = select_first([snp_sites_gubbins.snp_sites_multifasta, gubbins.gubbins_polymorphic_fasta, snp_sites_no_gubbins.snp_sites_multifasta, snippy_core.snippy_full_alignment_clean]),
-      cluster_name = tree_name
+      cluster_name = tree_name,
+      docker = docker_snp_dists
   }
   call reorder_matrix_task.reorder_matrix {
     input:
