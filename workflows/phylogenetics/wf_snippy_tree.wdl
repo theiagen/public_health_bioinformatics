@@ -45,36 +45,25 @@ workflow snippy_tree_wf {
         cluster_name = tree_name,
         docker = docker_gubbins
     }
-    if (core_genome) {
-      call snp_sites_task.snp_sites as snp_sites_gubbins {
-        input:
-          msa_fasta = gubbins.gubbins_polymorphic_fasta,
-          output_name = tree_name,
-          output_multifasta = true,
-          docker = docker_snp_sites
-      }
-    }
   }
-  if (!use_gubbins) {
-    if (core_genome) {
-      call snp_sites_task.snp_sites as snp_sites_no_gubbins {
+  if (core_genome) {
+      call snp_sites_task.snp_sites as snp_sites {
         input:
-          msa_fasta = snippy_core.snippy_full_alignment_clean,
+          msa_fasta = select_first([gubbins.gubbins_polymorphic_fasta,snippy_core.snippy_full_alignment_clean]),
           output_name = tree_name,
           output_multifasta = true,
           docker = docker_snp_sites
       }
-    }
   }
   call iqtree_task.iqtree {
     input:
-      alignment = select_first([snp_sites_gubbins.snp_sites_multifasta, gubbins.gubbins_polymorphic_fasta, snp_sites_no_gubbins.snp_sites_multifasta, snippy_core.snippy_full_alignment_clean]),
+      alignment = select_first([snp_sites.snp_sites_multifasta, gubbins.gubbins_polymorphic_fasta, snippy_core.snippy_full_alignment_clean]),
       cluster_name = tree_name,
       docker = docker_iqtree
   }
   call snp_dists_task.snp_dists {
     input:
-      alignment = select_first([snp_sites_gubbins.snp_sites_multifasta, gubbins.gubbins_polymorphic_fasta, snp_sites_no_gubbins.snp_sites_multifasta, snippy_core.snippy_full_alignment_clean]),
+      alignment = select_first([snp_sites.snp_sites_multifasta, gubbins.gubbins_polymorphic_fasta, snippy_core.snippy_full_alignment_clean]),
       cluster_name = tree_name,
       docker = docker_snp_dists
   }
@@ -114,7 +103,7 @@ workflow snippy_tree_wf {
     # iqtree outputs
     String snippy_tree_iqtree_version = iqtree.version
     # snp_sites outputs
-    String snp_sites_version = select_first([snp_sites_gubbins.snp_sites_version, snp_sites_no_gubbins.snp_sites_version, ''])
+    String snp_sites_version = select_first([snp_sites.snp_sites_version, ''])
     # gubbins outputs
     String? snippy_tree_gubbins_version = gubbins.version
     File? snippy_tree_gubbins_labelled_tree = gubbins.gubbins_final_labelled_tree
