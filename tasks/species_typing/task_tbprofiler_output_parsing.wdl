@@ -171,7 +171,30 @@ task tbprofiler_output_parsing {
                 mutations_dict[name] = mutations_dict[name] + ';' + substitution
 
       return mutations_dict
-    
+
+
+    def rank_annotation(annotation):
+      if annotation == "Assoc w R":
+        return 1
+      elif annotation == "Assoc w R - interim":
+        return 2
+      elif annotation == "Uncertain significance":
+        return 3
+      else:
+        return 4
+
+    def translate(annotation, drug):
+      if annotation == "Not assoc w R":
+        return "No resistance to {} detected".format(drug)
+      elif annotation == "Uncertain significance":
+        return "The detected genetic determinant(s) have uncertain significance, resistance to {} cannot be rulled out".format(drug)
+      elif annotation == "Assoc w R - interim":
+        return "The detected genetic determinant(s) have uncertain significance, resistance to {} cannot be rulled out".format(drug)
+      elif annotation == "Assoc w R":
+        return "Genetic determinant(s) associated with resistance to {} detected".format(drug)
+      else:
+        return "No resistance to {} detected".format(drug)
+
     def parse_json_resistance(json_file):
       resistance_dict = {}
 
@@ -180,23 +203,31 @@ task tbprofiler_output_parsing {
         for dr_variant in results_json["dr_variants"]:  # reported mutation by tb-profiler, all confering resistance
           for antimicrobial in dr_variant["gene_associated_drugs"]:
             if antimicrobial not in resistance_dict.keys():
-              resistance_dict[antimicrobial] = "R"  # if it shows up it's resistant.. for now
+              resistance_dict[antimicrobial] = "Assoc w R"
             
         for other_variant in results_json["other_variants"]:  # mutations not reported by tb-profiler
           if other_variant["type"] != "synonymous_variant":  # report all non-synonymous mutations
-              for antimicrobial in other_variant["gene_associated_drugs"]:
-                if antimicrobial not in resistance_dict.keys():
-                  resistance_dict[antimicrobial] = "R"  # if it shows up it's resistant.. for now
-
+              if "annotation" in other_variant.keys():
+                for annotation in other_variant["annotation"]:
+                  drug = annotation["drug"]
+                  resistance = annotation["who_confidence"]
+                if drug not in resistance_dict.keys():
+                  resistance_dict[antimicrobial] = resistance
+                else:
+                  if rank_annotation(resistance_dict[antimicrobial]) < rank_annotation(resistance):
+                    resistance_dict[antimicrobial] = resistance
       return resistance_dict
     
 
     def get_lineage(json_file):
       with open(json_file) as js_fh:
         results_json = json.load(js_fh)
-        return results_json["main_lin"]
+        if results_json["main_lin"] != "":
+          return "DNA of M. tuberculosis complex detected (not M. bovis)"
+        else:
+          return "DNA of M. bovis detected"
 
-    # lookup dictionary - antimicrobial name to code
+    # lookup dictionary - antimicrobial code to name
     antimicrobial_dict = {"M_DST_B01_INH": "isoniazid", "M_DST_C01_ETO": "ethionamide",
                           "M_DST_D01_RIF": "rifampicin", "M_DST_E01_PZA": "pyrazinamide",
                           "M_DST_F01_EMB": "ethambutol","M_DST_G01_STM": "sulfamethazine",
@@ -239,14 +270,14 @@ task tbprofiler_output_parsing {
 
     for antimicrobial, genes in gene_dict.items():
       if antimicrobial_dict[antimicrobial] in resistance.keys():
-        df_lims[antimicrobial] = resistance[antimicrobial_dict[antimicrobial]]
+        df_lims[antimicrobial] = translate(resistance[antimicrobial_dict[antimicrobial]], antimicrobial)
       else:
-        df_lims[antimicrobial] = ""
+        df_lims[antimicrobial] = "No resistance to {} detected".format(antimicrobial) # what to write when no resistance is reported?
       for gene_name, gene_id in genes.items():
         if gene_name in mutations.keys():
           df_lims[gene_id] = mutations[gene_name]
         else:
-          df_lims[gene_id] = ""
+          df_lims[gene_id] = "No mutations detected"
     
     df_lims.to_csv("tbprofiler_lims_report.csv", index=False)
     CODE
