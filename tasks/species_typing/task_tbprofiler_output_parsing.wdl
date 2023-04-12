@@ -272,7 +272,7 @@ task tbprofiler_output_parsing {
       if antimicrobial_dict[antimicrobial] in resistance.keys():
         df_lims[antimicrobial] = translate(resistance[antimicrobial_dict[antimicrobial]], antimicrobial_dict[antimicrobial])
       else:
-        df_lims[antimicrobial] = "No resistance to {} detected".format(antimicrobial) # what to write when no resistance is reported?
+        df_lims[antimicrobial] = "No resistance to {} detected".format(antimicrobial_dict[antimicrobial]) # what to write when no resistance is reported?
       for gene_name, gene_id in genes.items():
         if gene_name in mutations.keys():
           df_lims[gene_id] = mutations[gene_name]
