@@ -7,6 +7,8 @@ task shovill_pe {
     String samplename
     String docker = "quay.io/staphb/shovill:1.1.0"
     Int disk_size = 100
+    Int cpu = 4
+    Int memory = 16
 
     ## SHOVILL optional parameters
     ##  --depth [INT]           Sub-sample --R1/--R2 to this depth. Disable with --depth 0 (default: 150)
@@ -36,20 +38,20 @@ task shovill_pe {
   command <<<
     shovill --version | head -1 | tee VERSION
     shovill \
-    --outdir out \
-    --R1 ~{read1_cleaned} \
-    --R2 ~{read2_cleaned} \
-    --minlen ~{min_contig_length} \
-    ~{'--depth ' + depth} \
-    ~{'--gsize ' + genome_size} \
-    ~{'--mincov ' + min_coverage} \
-    ~{'--assembler ' + assembler} \
-    ~{'--opts ' + assembler_options} \
-    ~{'--kmers ' + kmers} \
-    ~{true='--trim' false='' trim} \
-    ~{true='--noreadcorr' false='' noreadcorr} \
-    ~{true='--nostitch' false='' nostitch} \
-    ~{true='--nocorr' false='' nocorr}
+      --outdir out \
+      --R1 ~{read1_cleaned} \
+      --R2 ~{read2_cleaned} \
+      --minlen ~{min_contig_length} \
+      ~{'--depth ' + depth} \
+      ~{'--gsize ' + genome_size} \
+      ~{'--mincov ' + min_coverage} \
+      ~{'--assembler ' + assembler} \
+      ~{'--opts ' + assembler_options} \
+      ~{'--kmers ' + kmers} \
+      ~{true='--trim' false='' trim} \
+      ~{true='--noreadcorr' false='' noreadcorr} \
+      ~{true='--nostitch' false='' nostitch} \
+      ~{true='--nocorr' false='' nocorr}
 
     mv out/contigs.fa out/~{samplename}_contigs.fasta
 
@@ -60,7 +62,6 @@ task shovill_pe {
     elif [ "~{assembler}" == "velvet" ] ; then
       mv out/contigs.LastGraph out/~{samplename}_contigs.LastGraph
     fi
-    
   >>>
   output {
     File assembly_fasta = "out/~{samplename}_contigs.fasta"
@@ -71,8 +72,8 @@ task shovill_pe {
   }
   runtime {
     docker: "~{docker}"
-    memory: "16 GB"
-    cpu: 4
+    memory: "~{memory} GB"
+    cpu: "~{cpu}"
     disks:  "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
     maxRetries: 3
@@ -103,7 +104,7 @@ task shovill_se {
     String? genome_size
     Int min_contig_length = 200
     Float? min_coverage
-    String assembler = "spades"
+    String assembler = "skesa"
     String? assembler_options
     String? kmers
     Boolean trim = false
@@ -113,18 +114,18 @@ task shovill_se {
   command <<<
     shovill-se --version | head -1 | tee VERSION
     shovill-se \
-    --outdir out \
-    --se ~{read1_cleaned} \
-    --minlen ~{min_contig_length} \
-    ~{'--depth ' + depth} \
-    ~{'--gsize ' + genome_size} \
-    ~{'--mincov ' + min_coverage} \
-    ~{'--assembler ' + assembler} \
-    ~{'--opts ' + assembler_options} \
-    ~{'--kmers ' + kmers} \
-    ~{true='--trim' false='' trim} \
-    ~{true='--noreadcorr' false='' noreadcorr} \
-    ~{true='--nocorr' false='' nocorr}
+      --outdir out \
+      --se ~{read1_cleaned} \
+      --minlen ~{min_contig_length} \
+      ~{'--depth ' + depth} \
+      ~{'--gsize ' + genome_size} \
+      ~{'--mincov ' + min_coverage} \
+      ~{'--assembler ' + assembler} \
+      ~{'--opts ' + assembler_options} \
+      ~{'--kmers ' + kmers} \
+      ~{true='--trim' false='' trim} \
+      ~{true='--noreadcorr' false='' noreadcorr} \
+      ~{true='--nocorr' false='' nocorr}
 
     mv out/contigs.fa out/~{samplename}_contigs.fasta
 

@@ -14,6 +14,11 @@ import "../../tasks/species_typing/task_tbprofiler.wdl" as tbprofiler_task
 import "../../tasks/species_typing/task_legsta.wdl" as legsta_task
 import "../../tasks/species_typing/task_genotyphi.wdl" as genotyphi
 import "../../tasks/species_typing/task_kaptive.wdl" as kaptive_task
+import "../../tasks/species_typing/task_ngmaster.wdl" as ngmaster_task
+import "../../tasks/species_typing/task_meningotype.wdl" as meningotype_task
+import "../../tasks/species_typing/task_spatyper.wdl" as spatyper_task
+import "../../tasks/species_typing/task_staphopiasccmec.wdl" as staphopia_sccmec_task
+import "../../tasks/species_typing/task_agrvate.wdl" as agrvate_task
 import "../../tasks/species_typing/task_seroba.wdl" as seroba
 import "../../tasks/species_typing/task_pbptyper.wdl" as pbptyper
 import "../../tasks/species_typing/task_poppunk_streppneumo.wdl" as poppunk_spneumo
@@ -38,12 +43,16 @@ workflow merlin_magic {
     Int? pasty_min_coverage
     String? pasty_docker_image
     String? shigeifinder_docker_image
+    String? staphopia_sccmec_docker_image
+    String? agrvate_docker_image
     Boolean paired_end = true
     Boolean call_poppunk = true
     Boolean ont_data = false
     Boolean call_shigeifinder_reads_input = false
     Boolean assembly_only = false
     Boolean theiaeuk = false
+    Boolean tbprofiler_additional_outputs = false
+    String output_seq_method_type = "WGS"
   }
   # theiaprok
   if (merlin_tag == "Acinetobacter baumannii") {
@@ -156,6 +165,20 @@ workflow merlin_magic {
         samplename = samplename
     }
   }
+  if (merlin_tag == "Neisseria gonorrhoeae") {
+    call ngmaster_task.ngmaster {
+      input:
+        assembly = assembly,
+        samplename = samplename
+    }
+  }
+  if (merlin_tag == "Neisseria meningitidis") {
+    call meningotype_task.meningotype {
+      input:
+        assembly = assembly,
+        samplename = samplename
+    }
+  }
   if (merlin_tag == "Pseudomonas aeruginosa") {
     call pasty_task.pasty {
       input:
@@ -173,7 +196,9 @@ workflow merlin_magic {
           read1 = select_first([read1]),
           read2 = read2,
           samplename = samplename,
-          ont_data = ont_data 
+          ont_data = ont_data,
+          tbprofiler_additional_outputs = tbprofiler_additional_outputs,
+          output_seq_method_type = output_seq_method_type 
       }
     }
   }
@@ -183,6 +208,26 @@ workflow merlin_magic {
         assembly = assembly,
         samplename = samplename
     }
+  }
+  if (merlin_tag == "Staphylococcus aureus") {
+      call spatyper_task.spatyper {
+        input:
+          assembly = assembly,
+          samplename = samplename
+      }
+
+    call staphopia_sccmec_task.staphopiasccmec {
+        input:
+          assembly = assembly,
+          samplename = samplename,
+          docker = staphopia_sccmec_docker_image
+      }
+    call agrvate_task.agrvate {
+        input:
+          assembly = assembly,
+          samplename = samplename,
+          docker = agrvate_docker_image
+      }
   }
   if (merlin_tag == "Streptococcus pneumoniae") {
     if (paired_end && !ont_data) {
@@ -221,7 +266,7 @@ workflow merlin_magic {
             reference = cladetyper.clade_spec_ref,
             read1 = select_first([read1]),
             read2 = read2,
-            query_gene = "FKS1,ERG11,FUR1",
+            query_gene = "FKS1,'lanosterol 14-alpha demethylase','lanosterol_14-alpha_demethylase',FUR1,'uracil_phosphoribosyltransferase','uracil phosphoribosyltransferase'",
             samplename = samplename
         }
       }
@@ -233,7 +278,7 @@ workflow merlin_magic {
             reference = "gs://theiagen-public-files/terra/theiaeuk_files/Candida_albicans_GCF_000182965.3_ASM18296v3_genomic.gbff",
             read1 = select_first([read1]),
             read2 = read2,
-            query_gene = "ERG11,FKS1,FUR1,RTA2",
+            query_gene = "'lanosterol 14-alpha demethylase','lanosterol_14-alpha_demethylase',FKS1,FUR1,'uracil_phosphoribosyltransferase',RTA2",
             samplename = samplename
         }
       }
@@ -357,6 +402,31 @@ workflow merlin_magic {
     String? kleborate_otype = kleborate.kleborate_otype
     String? kleborate_klocus_confidence = kleborate.kleborate_klocus_confidence
     String? kleborate_olocus_confidence = kleborate.kleborate_olocus_confidence
+    # Neisseria gonorrhoeae Typing
+    File? ngmaster_tsv = ngmaster.ngmaster_tsv
+    String? ngmaster_version = ngmaster.ngmaster_version
+    String? ngmaster_ngmast_sequence_type = ngmaster.ngmaster_ngmast_sequence_type
+    String? ngmaster_ngmast_porB_allele = ngmaster.ngmaster_ngmast_porB_allele
+    String? ngmaster_ngmast_tbpB_allele = ngmaster.ngmaster_ngmast_tbpB_allele
+    String? ngmaster_ngstar_sequence_type = ngmaster.ngmaster_ngstar_sequence_type
+    String? ngmaster_ngstar_penA_allele = ngmaster.ngmaster_ngstar_penA_allele
+    String? ngmaster_ngstar_mtrR_allele = ngmaster.ngmaster_ngstar_mtrR_allele
+    String? ngmaster_ngstar_porB_allele = ngmaster.ngmaster_ngstar_porB_allele
+    String? ngmaster_ngstar_ponA_allele = ngmaster.ngmaster_ngstar_ponA_allele
+    String? ngmaster_ngstar_gyrA_allele = ngmaster.ngmaster_ngstar_gyrA_allele
+    String? ngmaster_ngstar_parC_allele = ngmaster.ngmaster_ngstar_parC_allele
+    String? ngmaster_ngstar_23S_allele = ngmaster.ngmaster_ngstar_23S_allele
+    # Neisseria meningitidis Typing
+    File? meningotype_tsv = meningotype.meningotype_tsv
+    String? meningotype_version = meningotype.meningotype_version
+    String? meningotype_serogroup = meningotype.meningotype_serogroup
+    String? meningotype_PorA = meningotype.meningotype_PorA
+    String? meningotype_FetA = meningotype.meningotype_FetA
+    String? meningotype_PorB = meningotype.meningotype_PorB
+    String? meningotype_fHbp = meningotype.meningotype_fHbp
+    String? meningotype_NHBA = meningotype.meningotype_NHBA
+    String? meningotype_NadA = meningotype.meningotype_NadA
+    String? meningotype_BAST = meningotype.meningotype_BAST
     # Acinetobacter Typing
     File? kaptive_output_file_k = kaptive.kaptive_output_file_k
     File? kaptive_output_file_oc = kaptive.kaptive_output_file_oc
@@ -381,10 +451,36 @@ workflow merlin_magic {
     String? tbprofiler_sub_lineage = tbprofiler.tbprofiler_sub_lineage
     String? tbprofiler_dr_type = tbprofiler.tbprofiler_dr_type
     String? tbprofiler_resistance_genes = tbprofiler.tbprofiler_resistance_genes
+    File? tbprofiler_additional_outputs_csv = tbprofiler.tbprofiler_additional_outputs_csv
+    File? tbprofiler_laboratorian_report_csv = tbprofiler.tbprofiler_laboratorian_report_csv
+    String? tbprofiler_gene_name = tbprofiler.tbprofiler_gene_name
+    String? tbprofiler_locus_tag = tbprofiler.tbprofiler_locus_tag
+    String? tbprofiler_variant_substitutions = tbprofiler.tbprofiler_variant_substitutions
+    String? tbprofiler_output_seq_method_type = tbprofiler.tbprofiler_output_seq_method_type
     # Legionella pneumophila Typing
     File? legsta_results = legsta.legsta_results
     String? legsta_predicted_sbt = legsta.legsta_predicted_sbt
     String? legsta_version = legsta.legsta_version
+    # Staphylococcus aureus
+    File? spatyper_tsv = spatyper.spatyper_tsv
+    String? spatyper_docker = spatyper.spatyper_docker
+    String? spatyper_repeats = spatyper.spatyper_repeats
+    String? spatyper_type = spatyper.spatyper_type
+    String? spatyper_version = spatyper.spatyper_version
+    File? staphopiasccmec_results_tsv = staphopiasccmec.staphopiasccmec_results_tsv
+    File? staphopiasccmec_hamming_distance_tsv = staphopiasccmec.staphopiasccmec_hamming_distance_tsv
+    String? staphopiasccmec_types_and_mecA_presence = staphopiasccmec.staphopiasccmec_types_and_mecA_presence
+    String? staphopiasccmec_version = staphopiasccmec.staphopiasccmec_version
+    String? staphopiasccmec_docker = staphopiasccmec.staphopiasccmec_docker
+    File? agrvate_summary = agrvate.agrvate_summary
+    File? agrvate_results = agrvate.agrvate_results
+    String? agrvate_agr_group = agrvate.agrvate_agr_group
+    String? agrvate_agr_match_score = agrvate.agrvate_agr_match_score
+    String? agrvate_agr_canonical = agrvate.agrvate_agr_canonical
+    String? agrvate_agr_multiple = agrvate.agrvate_agr_multiple
+    String? agrvate_agr_num_frameshifts = agrvate.agrvate_agr_num_frameshifts
+    String? agrvate_version = agrvate.agrvate_version
+    String? agrvate_docker = agrvate.agrvate_docker
     # Streptococcus pneumoniae Typing
     String? pbptyper_predicted_1A_2B_2X = pbptyper_task.pbptyper_predicted_1A_2B_2X
     File? pbptyper_pbptype_predicted_tsv = pbptyper_task.pbptyper_pbptype_predicted_tsv
