@@ -14,12 +14,14 @@ workflow theiacov_fasta {
   input {
     String samplename
     File assembly_fasta
+    String organism = "sars-cov-2"
+    # sequencing values
     String seq_method
     String input_assembly_method
+    # nextclade inputs
     String nextclade_dataset_reference = "MN908947"
     String nextclade_dataset_tag = "2023-02-25T12:00:00Z"
     String? nextclade_dataset_name
-    String organism = "sars-cov-2"
   }
   call consensus_qc_task.consensus_qc {
     input:

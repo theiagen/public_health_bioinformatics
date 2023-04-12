@@ -30,6 +30,7 @@ workflow theiaeuk_illumina_pe {
     Int trim_quality_trim_score = 20
     Int trim_window_size = 10
     Boolean skip_screen = false 
+    Int? genome_size
     Int cpu = 8
     Int memory = 16
     # default gambit outputs
@@ -49,7 +50,8 @@ workflow theiaeuk_illumina_pe {
       max_genome_size = max_genome_size,
       min_coverage = min_coverage,
       min_proportion = min_proportion,
-      skip_screen = skip_screen
+      skip_screen = skip_screen,
+      expected_genome_size = genome_size
   }
   if (raw_check_reads.read_screen=="PASS") {
     call read_qc.read_QC_trim_pe as read_QC_trim {
@@ -71,7 +73,8 @@ workflow theiaeuk_illumina_pe {
         max_genome_size = max_genome_size,
         min_coverage = min_coverage,
         min_proportion = min_proportion,
-        skip_screen = skip_screen
+        skip_screen = skip_screen,
+        expected_genome_size = genome_size
     }
     if (clean_check_reads.read_screen=="PASS") {
       call shovill.shovill_pe {

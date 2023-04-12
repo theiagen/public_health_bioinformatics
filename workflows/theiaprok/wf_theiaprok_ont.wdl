@@ -28,6 +28,7 @@ workflow theiaprok_ont {
     String seq_method = "ONT"
     File read1
     Int? genome_size
+    # export taxon table parameters
     String? run_id
     String? collection_date
     String? originating_lab
@@ -37,23 +38,25 @@ workflow theiaprok_ont {
     File? taxon_tables
     String terra_project = "NA"
     String terra_workspace = "NA"
-    # by default do not call ANI task, but user has ability to enable this task if working with enteric pathogens or supply their own high-quality reference genome
-    Boolean call_ani = false
+    # read screen parameters
+    Boolean skip_screen = false 
     Int min_reads = 5000 # reduced from 7472 because less reads are needed to get to higher coverage due to longer read length
     Int min_basepairs = 2241820
     Int min_genome_size = 100000
     Int max_genome_size = 18040666 
     Int min_coverage = 5 # reduced from 10 because some institutions sequence at lower depth because of longer read length
+    # module options
+    Boolean call_ani = false # by default do not call ANI task, but user has ability to enable this task if working with enteric pathogens or supply their own high-quality reference genome
     Boolean call_resfinder = false
-    Boolean skip_screen = false 
-    String genome_annotation = "prokka"
+    String genome_annotation = "prokka" # options: "prokka" or "bakta"
+    # qc check parameters
     File? qc_check_table
     String? expected_taxon
   }
   call versioning_task.version_capture{
     input:
   }
-  call screen_task.check_reads_ont as raw_check_reads {
+  call screen_task.check_reads_se as raw_check_reads {
     input:
       read1 = read1,
       min_reads = min_reads,
@@ -61,7 +64,8 @@ workflow theiaprok_ont {
       min_genome_size = min_genome_size,
       max_genome_size = max_genome_size,
       min_coverage = min_coverage,
-      skip_screen = skip_screen
+      skip_screen = skip_screen,
+      expected_genome_size = genome_size
   }
   if (raw_check_reads.read_screen == "PASS") {
     call read_qc_workflow.read_QC_trim_ont as read_QC_trim {
@@ -70,7 +74,7 @@ workflow theiaprok_ont {
         read1 = read1,
         genome_size = genome_size
     }
-    call screen_task.check_reads_ont as clean_check_reads {
+    call screen_task.check_reads_se as clean_check_reads {
       input:
         read1 = read_QC_trim.read1_clean,
         min_reads = min_reads,
@@ -78,7 +82,8 @@ workflow theiaprok_ont {
         min_genome_size = min_genome_size,
         max_genome_size = max_genome_size,
         min_coverage = min_coverage,
-        skip_screen = skip_screen
+        skip_screen = skip_screen,
+        expected_genome_size = genome_size
     }
     if (clean_check_reads.read_screen == "PASS") {
        call dragonflye_task.dragonflye {
