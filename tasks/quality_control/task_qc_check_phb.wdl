@@ -5,8 +5,27 @@ task qc_check_phb {
     File? qc_check_table
     String? gambit_predicted_taxon
     String? expected_taxon
-    Int? assembly_length
+    Float? r1_mean_q_raw
+    Float? r2_mean_q_raw
+    Float? combined_mean_q_raw
+    Float? r1_mean_readlength_raw
+    Float? r2_mean_readlength_raw    
+    Float? combined_mean_readlength_raw 
+    Float? r1_mean_q_clean
+    Float? r2_mean_q_clean
+    Float? combined_mean_q_clean
+    Float? r1_mean_readlength_clean
+    Float? r2_mean_readlength_clean    
+    Float? combined_mean_readlength_clean 
     Float? est_coverage_raw
+    Float? est_coverage_clean 
+    String? midas_secondary_genus_abundance 
+    Int? assembly_length
+    Int? number_contigs 
+    Int? n50_value 
+    Float? ani_highest_percent 
+    Float? ani_highest_percent_bases_aligned
+    String? busco_results
     Int disk_size = 100
   }
   command <<<
@@ -132,18 +151,111 @@ task qc_check_phb {
         qc_check_metrics = taxon_df.columns.values.tolist()
         #print(qc_check_metrics)
 
-        if ("assembly_length_min" in qc_check_metrics) and ("assembly_length_max" in qc_check_metrics):
-          if (~{assembly_length}):
-            qc_note, qc_status = compare(qc_note, "assembly_length", int(~{assembly_length}), ">=", int(taxon_df["assembly_length_min"][0]), "<=", int(taxon_df["assembly_length_max"][0]))
-            qc_check_metrics.remove("assembly_length_min")
-            qc_check_metrics.remove("assembly_length_max")
+        if ("r1_mean_q_raw" in qc_check_metrics): # if this var is in the qc_check_metrics,
+          if (~{r1_mean_q_raw}): # if r1_mean_q_raw variable exists,
+            qc_note, qc_status = compare(qc_note, "r1_mean_q_raw", float(~{r1_mean_q_raw}), ">=", float(taxon_df["r1_mean_q_raw"][0]))
+            qc_check_metrics.remove("r1_mean_q_raw")
+
+        if ("r2_mean_q_raw" in qc_check_metrics): # if this var is in the qc_check_metrics,
+          if (~{r2_mean_q_raw}): # if r2_mean_q_raw variable exists,
+            qc_note, qc_status = compare(qc_note, "r2_mean_q_raw", float(~{r2_mean_q_raw}), ">=", float(taxon_df["r2_mean_q_raw"][0]))
+            qc_check_metrics.remove("r2_mean_q_raw")
+
+        if ("combined_mean_q_raw" in qc_check_metrics): # if this var is in the qc_check_metrics,
+          if (~{combined_mean_q_raw}): # if combined_mean_q_raw variable exists,
+            qc_note, qc_status = compare(qc_note, "combined_mean_q_raw", float(~{combined_mean_q_raw}), ">=", float(taxon_df["combined_mean_q_raw"][0]))
+            qc_check_metrics.remove("combined_mean_q_raw")
+
+        if ("r1_mean_readlength_raw" in qc_check_metrics): # if this var is in the qc_check_metrics,
+          if (~{r1_mean_readlength_raw}): # if r1_mean_readlength_raw variable exists,
+            qc_note, qc_status = compare(qc_note, "r1_mean_readlength_raw", float(~{r1_mean_readlength_raw}), ">=", float(taxon_df["r1_mean_readlength_raw"][0]))
+            qc_check_metrics.remove("r1_mean_readlength_raw")
+
+        if ("r2_mean_readlength_raw" in qc_check_metrics): # if this var is in the qc_check_metrics,
+          if (~{r2_mean_readlength_raw}): # if r2_mean_readlength_raw variable exists,
+            qc_note, qc_status = compare(qc_note, "r2_mean_readlength_raw", float(~{r2_mean_readlength_raw}), ">=", float(taxon_df["r2_mean_readlength_raw"][0]))
+            qc_check_metrics.remove("r2_mean_readlength_raw")
+
+        if ("combined_mean_readlength_raw" in qc_check_metrics): # if this var is in the qc_check_metrics,
+          if (~{combined_mean_readlength_raw}): # if combined_mean_readlength_raw variable exists,
+            qc_note, qc_status = compare(qc_note, "combined_mean_readlength_raw", float(~{combined_mean_readlength_raw}), ">=", float(taxon_df["combined_mean_readlength_raw"][0]))
+            qc_check_metrics.remove("combined_mean_readlength_raw")
+
+        if ("r1_mean_q_clean" in qc_check_metrics): # if this var is in the qc_check_metrics,
+          if (~{r1_mean_q_clean}): # if r1_mean_q_clean variable exists,
+            qc_note, qc_status = compare(qc_note, "r1_mean_q_clean", float(~{r1_mean_q_clean}), ">=", float(taxon_df["r1_mean_q_clean"][0]))
+            qc_check_metrics.remove("r1_mean_q_clean")
+
+        if ("r2_mean_q_clean" in qc_check_metrics): # if this var is in the qc_check_metrics,
+          if (~{r2_mean_q_clean}): # if r2_mean_q_clean variable exists,
+            qc_note, qc_status = compare(qc_note, "r2_mean_q_clean", float(~{r2_mean_q_clean}), ">=", float(taxon_df["r2_mean_q_clean"][0]))
+            qc_check_metrics.remove("r2_mean_q_clean")
+
+        if ("combined_mean_q_clean" in qc_check_metrics): # if this var is in the qc_check_metrics,
+          if (~{combined_mean_q_clean}): # if combined_mean_q_clean variable exists,
+            qc_note, qc_status = compare(qc_note, "combined_mean_q_clean", float(~{combined_mean_q_clean}), ">=", float(taxon_df["combined_mean_q_clean"][0]))
+            qc_check_metrics.remove("combined_mean_q_clean")
+
+        if ("r1_mean_readlength_clean" in qc_check_metrics): # if this var is in the qc_check_metrics,
+          if (~{r1_mean_readlength_clean}): # if r1_mean_readlength_clean variable exists,
+            qc_note, qc_status = compare(qc_note, "r1_mean_readlength_clean", float(~{r1_mean_readlength_clean}), ">=", float(taxon_df["r1_mean_readlength_clean"][0]))
+            qc_check_metrics.remove("r1_mean_readlength_clean")
+
+        if ("r2_mean_readlength_clean" in qc_check_metrics): # if this var is in the qc_check_metrics,
+          if (~{r2_mean_readlength_clean}): # if r2_mean_readlength_clean variable exists,
+            qc_note, qc_status = compare(qc_note, "r2_mean_readlength_clean", float(~{r2_mean_readlength_clean}), ">=", float(taxon_df["r2_mean_readlength_clean"][0]))
+            qc_check_metrics.remove("r2_mean_readlength_clean")
+
+        if ("combined_mean_readlength_clean" in qc_check_metrics): # if this var is in the qc_check_metrics,
+          if (~{combined_mean_readlength_clean}): # if combined_mean_readlength_clean variable exists,
+            qc_note, qc_status = compare(qc_note, "combined_mean_readlength_clean", float(~{combined_mean_readlength_clean}), ">=", float(taxon_df["combined_mean_readlength_clean"][0]))
+            qc_check_metrics.remove("combined_mean_readlength_clean")
 
         if ("est_coverage_raw" in qc_check_metrics): # if this var is in the qc_check_metrics,
           if (~{est_coverage_raw}): # if est_coverage_raw variable exists,
             qc_note, qc_status = compare(qc_note, "est_coverage_raw", float(~{est_coverage_raw}), ">=", float(taxon_df["est_coverage_raw"][0]))
             qc_check_metrics.remove("est_coverage_raw")
 
-        # add more measures here
+        if ("est_coverage_clean" in qc_check_metrics): # if this var is in the qc_check_metrics,
+          if (~{est_coverage_clean}): # if est_coverage_clean variable exists,
+            qc_note, qc_status = compare(qc_note, "est_coverage_clean", float(~{est_coverage_clean}), ">=", float(taxon_df["est_coverage_clean"][0]))
+            qc_check_metrics.remove("est_coverage_clean")
+
+        if ("midas_secondary_genus_abundance" in qc_check_metrics): # if this var is in the qc_check_metrics,
+          if (~{midas_secondary_genus_abundance}): # if midas_secondary_genus_abundance variable exists,
+            qc_note, qc_status = compare(qc_note, "midas_secondary_genus_abundance", float(~{midas_secondary_genus_abundance}), "<", float(taxon_df["midas_secondary_genus_abundance"][0]))
+            qc_check_metrics.remove("midas_secondary_genus_abundance")
+
+        if ("assembly_length_min" in qc_check_metrics) and ("assembly_length_max" in qc_check_metrics):
+          if (~{assembly_length}):
+            qc_note, qc_status = compare(qc_note, "assembly_length", int(~{assembly_length}), ">=", int(taxon_df["assembly_length_min"][0]), "<=", int(taxon_df["assembly_length_max"][0]))
+            qc_check_metrics.remove("assembly_length_min")
+            qc_check_metrics.remove("assembly_length_max")     
+
+        if ("number_contigs" in qc_check_metrics): # if this var is in the qc_check_metrics,
+          if (~{number_contigs}): # if number_contigs variable exists,
+            qc_note, qc_status = compare(qc_note, "number_contigs", float(~{number_contigs}), "<=", float(taxon_df["number_contigs"][0]))
+            qc_check_metrics.remove("number_contigs")
+
+        if ("n50_value" in qc_check_metrics): # if this var is in the qc_check_metrics,
+          if (~{n50_value}): # if n50_value variable exists,
+            qc_note, qc_status = compare(qc_note, "n50_value", float(~{n50_value}), ">=", float(taxon_df["n50_value"][0]))
+            qc_check_metrics.remove("n50_value")
+
+        if ("ani_highest_percent" in qc_check_metrics): # if this var is in the qc_check_metrics,
+          if (~{ani_highest_percent}): # if ani_highest_percent variable exists,
+            qc_note, qc_status = compare(qc_note, "ani_highest_percent", float(~{ani_highest_percent}), ">=", float(taxon_df["ani_highest_percent"][0]))
+            qc_check_metrics.remove("ani_highest_percent")
+
+        if ("ani_highest_percent_bases_aligned" in qc_check_metrics): # if this var is in the qc_check_metrics,
+          if (~{ani_highest_percent_bases_aligned}): # if ani_highest_percent_bases_aligned variable exists,
+            qc_note, qc_status = compare(qc_note, "ani_highest_percent_bases_aligned", float(~{ani_highest_percent_bases_aligned}), ">=", float(taxon_df["ani_highest_percent_bases_aligned"][0]))
+            qc_check_metrics.remove("ani_highest_percent_bases_aligned")
+
+        if ("busco_results" in qc_check_metrics): # if this var is in the qc_check_metrics,
+          if (~{busco_results}): # if busco_results variable exists,
+            qc_note, qc_status = compare(qc_note, "busco_results", float(~{busco_results}), ">=", float(taxon_df["busco_results"][0]))
+            qc_check_metrics.remove("busco_results")
 
         if (len(qc_check_metrics) > 0):
           qc_status = "QC_ALERT"
