@@ -207,8 +207,7 @@ workflow theiaprok_illumina_pe {
             n50_value = quast.n50_value,
             busco_results = busco.busco_results,
             ani_highest_percent = ani.ani_highest_percent,
-            ani_highest_percent_bases_aligned = ani.ani_highest_percent_bases_aligned,
-            ani_top_species_match = ani.ani_top_species_match
+            ani_highest_percent_bases_aligned = ani.ani_highest_percent_bases_aligned
         }
       }
       call merlin_magic_workflow.merlin_magic {
