@@ -15,7 +15,7 @@ import "../../tasks/species_typing/task_ts_mlst.wdl" as ts_mlst_task
 import "../../tasks/gene_typing/task_bakta.wdl" as bakta_task
 import "../../tasks/gene_typing/task_prokka.wdl" as prokka_task
 import "../../tasks/gene_typing/task_plasmidfinder.wdl" as plasmidfinder_task
-import "../../tasks/quality_control/task_qc_check.wdl" as qc_check
+import "../../tasks/quality_control/task_qc_check_phb.wdl" as qc_check
 import "../../tasks/task_versioning.wdl" as versioning
 import "../../tasks/utilities/task_broad_terra_tools.wdl" as terra_tools
 
