@@ -171,7 +171,7 @@ workflow theiaprok_illumina_se {
           samplename = samplename
       }
       if(defined(qc_check_table)) {
-        call qc_check.qc_check as qc_check_task {
+        call qc_check.qc_check_phb as qc_check_task {
           input:
             qc_check_table = qc_check_table,
             expected_taxon = expected_taxon,
