@@ -15,7 +15,7 @@ import "../../tasks/species_typing/task_ts_mlst.wdl" as ts_mlst_task
 import "../../tasks/gene_typing/task_bakta.wdl" as bakta_task
 import "../../tasks/gene_typing/task_prokka.wdl" as prokka_task
 import "../../tasks/gene_typing/task_plasmidfinder.wdl" as plasmidfinder_task
-import "../../tasks/quality_control/task_qc_check.wdl" as qc_check_task
+import "../../tasks/quality_control/task_qc_check_phb.wdl" as qc_check
 import "../../tasks/task_versioning.wdl" as versioning_task
 import "../../tasks/utilities/task_broad_terra_tools.wdl" as terra_tools_task
 
@@ -165,7 +165,7 @@ workflow theiaprok_ont {
           samplename = samplename
       }
       if(defined(qc_check_table)) {
-        call qc_check_task.qc_check { # will request shelly's help in the future to make this applicable
+        call qc_check.qc_check_phb as qc_check_task { 
           input:
             qc_check_table = qc_check_table,
             expected_taxon = expected_taxon,
@@ -181,8 +181,7 @@ workflow theiaprok_ont {
             n50_value = quast.n50_value,
             busco_results = busco.busco_results,
             ani_highest_percent = ani.ani_highest_percent,
-            ani_highest_percent_bases_aligned = ani.ani_highest_percent_bases_aligned,
-            ani_top_species_match = ani.ani_top_species_match
+            ani_highest_percent_bases_aligned = ani.ani_highest_percent_bases_aligned
         }
       }
       call merlin_magic_workflow.merlin_magic {
@@ -443,8 +442,8 @@ workflow theiaprok_ont {
             pasty_version = merlin_magic.pasty_version,
             pasty_docker = merlin_magic.pasty_docker,
             pasty_comment = merlin_magic.pasty_comment,
-            qc_check = qc_check.qc_check,
-            qc_standard = qc_check.qc_standard
+            qc_check = qc_check_task.qc_check,
+            qc_standard = qc_check_task.qc_standard
         }
       }
     }
@@ -559,6 +558,9 @@ workflow theiaprok_ont {
     File? plasmidfinder_seqs = plasmidfinder.plasmidfinder_seqs
     String? plasmidfinder_docker = plasmidfinder.plasmidfinder_docker
     String? plasmidfinder_db_version = plasmidfinder.plasmidfinder_db_version
+    # QC_Check Results
+    String? qc_check = qc_check_task.qc_check
+    File? qc_standard = qc_check_task.qc_standard
     # Ecoli Typing
     File? serotypefinder_report = merlin_magic.serotypefinder_report
     String? serotypefinder_docker = merlin_magic.serotypefinder_docker

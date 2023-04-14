@@ -10,6 +10,7 @@ import "../../tasks/species_typing/task_ts_mlst.wdl" as ts_mlst_task
 import "../../tasks/gene_typing/task_bakta.wdl" as bakta_task
 import "../../tasks/gene_typing/task_prokka.wdl" as prokka_task
 import "../../tasks/gene_typing/task_plasmidfinder.wdl" as plasmidfinder_task
+import "../../tasks/quality_control/task_qc_check_phb.wdl" as qc_check
 import "../../tasks/task_versioning.wdl" as versioning
 import "../../tasks/utilities/task_broad_terra_tools.wdl" as terra_tools
 
@@ -35,6 +36,9 @@ workflow theiaprok_fasta {
     Boolean call_ani = false # by default do not call ANI task, but user has ability to enable this task if working with enteric pathogens or supply their own high-quality reference genome
     Boolean call_resfinder = false
     String genome_annotation = "prokka" # options: "prokka" or "bakta"
+    # qc check parameters
+    File? qc_check_table
+    String? expected_taxon
   }
   call versioning.version_capture{
     input:
@@ -101,6 +105,20 @@ workflow theiaprok_fasta {
       samplename = samplename,
       assembly_only = true,
       paired_end = false
+  }
+  if(defined(qc_check_table)) {
+    call qc_check.qc_check_phb as qc_check_task {
+      input:
+        qc_check_table = qc_check_table,
+        expected_taxon = expected_taxon,
+        gambit_predicted_taxon = gambit.gambit_predicted_taxon,
+        #assembly_length = quast.genome_length,
+        #number_contigs = quast.number_contigs,
+        #n50_value = quast.n50_value,
+        busco_results = busco.busco_results,
+        ani_highest_percent = ani.ani_highest_percent,
+        ani_highest_percent_bases_aligned = ani.ani_highest_percent_bases_aligned
+    }
   }
   if(defined(taxon_tables)) {
     call terra_tools.export_taxon_tables {
@@ -337,7 +355,9 @@ workflow theiaprok_fasta {
         pasty_all_serogroups = merlin_magic.pasty_all_serogroups,
         pasty_version = merlin_magic.pasty_version,
         pasty_docker = merlin_magic.pasty_docker,
-        pasty_comment = merlin_magic.pasty_comment
+        pasty_comment = merlin_magic.pasty_comment,
+        qc_check = qc_check_task.qc_check,
+        qc_standard = qc_check_task.qc_standard
     }
   }   
   output {
@@ -409,6 +429,9 @@ workflow theiaprok_fasta {
     File plasmidfinder_seqs = plasmidfinder.plasmidfinder_seqs
     String plasmidfinder_docker = plasmidfinder.plasmidfinder_docker
     String plasmidfinder_db_version = plasmidfinder.plasmidfinder_db_version
+    # QC_Check Results
+    String? qc_check = qc_check_task.qc_check
+    File? qc_standard = qc_check_task.qc_standard
     # Ecoli Typing
     File? serotypefinder_report = merlin_magic.serotypefinder_report
     String? serotypefinder_docker = merlin_magic.serotypefinder_docker
