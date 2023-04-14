@@ -253,10 +253,10 @@ task qc_check_phb {
             qc_check_metrics.remove("ani_highest_percent_bases_aligned")
 
         if ("busco_completeness" in qc_check_metrics): # if this var is in the qc_check_metrics,
-          if (~{busco_results}): # if busco_results variable exists,
+          if ("~{busco_results}"): # if busco_results variable exists, quotes are necessary because of invalid syntax error
             # parse busco_results string into busco completeness value only
-            busco_completeness = busco_results.split("C:")[1].split("%")[0]
-            qc_note, qc_status = compare(qc_note, "busco_results", float(busco_completeness), ">=", float(taxon_df["busco_completeness"][0]))
+            busco_completeness = "~{busco_results}".split("C:")[1].split("%")[0]
+            qc_note, qc_status = compare(qc_note, "busco_completeness", float(busco_completeness), ">=", float(taxon_df["busco_completeness"][0]))
             qc_check_metrics.remove("busco_completeness")
 
         if (len(qc_check_metrics) > 0):
