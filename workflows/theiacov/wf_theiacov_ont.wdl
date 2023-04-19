@@ -302,7 +302,7 @@ workflow theiacov_ont {
     File? quasitools_hydra_vcf = quasitools_ont.hydra_vcf
     File? quasitools_mutations_report = quasitools_ont.mutations_report
     # QC_Check Results
-    String? qc_check = qc_check_task.qc_check_phb
+    String? qc_check = qc_check_task.qc_check
     File? qc_standard = qc_check_task.qc_standard
   }
 }
