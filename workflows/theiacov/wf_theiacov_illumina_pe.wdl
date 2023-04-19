@@ -11,6 +11,7 @@ import "../../tasks/species_typing/task_pangolin.wdl" as pangolin
 import "../../tasks/species_typing/task_quasitools.wdl" as quasitools
 import "../../tasks/gene_typing/task_abricate.wdl" as abricate
 import "../../tasks/gene_typing/task_sc2_gene_coverage.wdl" as sc2_calculation
+import "../../tasks/quality_control/task_qc_check_phb.wdl" as qc_check
 import "../../tasks/task_versioning.wdl" as versioning
 
 workflow theiacov_illumina_pe {
@@ -58,6 +59,8 @@ workflow theiacov_illumina_pe {
     Int min_coverage = 10
     Int min_proportion = 40
     Boolean skip_screen = false
+    # qc check parameters
+    File? qc_check_table
   }
   call screen.check_reads as raw_check_reads {
     input:
@@ -213,6 +216,32 @@ workflow theiacov_illumina_pe {
             samplename = samplename
         }
       }
+      if(defined(qc_check_table)) {
+        call qc_check.qc_check_phb as qc_check_task {
+          input:
+            qc_check_table = qc_check_table,
+            expected_taxon = organism,
+            num_reads_raw1 = read_QC_trim.fastq_scan_raw1,
+            num_reads_raw2 = read_QC_trim.fastq_scan_raw2,
+            num_reads_clean1 = read_QC_trim.fastq_scan_clean1,
+            num_reads_clean2 = read_QC_trim.fastq_scan_clean2,
+            kraken_human = read_QC_trim.kraken_human,
+            kraken_sc2 = read_QC_trim.kraken_sc2,
+            kraken_target_org = read_QC_trim.kraken_target_org,
+            kraken_human_dehosted = read_QC_trim.kraken_human_dehosted,
+            kraken_sc2_dehosted = read_QC_trim.kraken_sc2_dehosted,
+            kraken_target_org_dehosted =read_QC_trim.kraken_target_org_dehosted,
+            meanbaseq_trim = ivar_consensus.meanbaseq_trim,
+            assembly_mean_coverage = ivar_consensus.assembly_mean_coverage,
+            number_N = consensus_qc.number_N,
+            assembly_length_unambiguous = consensus_qc.number_ATCG,
+            number_Degenerate =  consensus_qc.number_Degenerate,
+            percent_reference_coverage =  consensus_qc.percent_reference_coverage,
+            sc2_s_gene_mean_coverage = sc2_gene_coverage.sc2_s_gene_depth,
+            sc2_s_gene_percent_coverage = sc2_gene_coverage.sc2_s_gene_percent_coverage,
+            vadr_num_alerts = vadr.num_alerts
+        }
+      }
     }
   }
   call versioning.version_capture{
@@ -339,5 +368,8 @@ workflow theiacov_illumina_pe {
     File? quasitools_dr_report = quasitools_illumina_pe.dr_report
     File? quasitools_hydra_vcf = quasitools_illumina_pe.hydra_vcf
     File? quasitools_mutations_report = quasitools_illumina_pe.mutations_report
+    # QC_Check Results
+    String? qc_check = qc_check_task.qc_check_phb
+    File? qc_standard = qc_check_task.qc_standard
   }
 }

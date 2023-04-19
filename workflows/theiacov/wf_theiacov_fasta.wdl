@@ -5,6 +5,7 @@ import "../../tasks/quality_control/task_vadr.wdl" as vadr_task
 import "../../tasks/quality_control/task_consensus_qc.wdl" as consensus_qc_task
 import "../../tasks/taxon_id/task_nextclade.wdl" as nextclade_task
 import "../../tasks/species_typing/task_pangolin.wdl" as pangolin
+import "../../tasks/quality_control/task_qc_check_phb.wdl" as qc_check
 import "../../tasks/task_versioning.wdl" as versioning
 
 workflow theiacov_fasta {
@@ -22,6 +23,8 @@ workflow theiacov_fasta {
     String nextclade_dataset_reference = "MN908947"
     String nextclade_dataset_tag = "2023-02-25T12:00:00Z"
     String? nextclade_dataset_name
+    # qc check parameters
+    File? qc_check_table
   }
   call consensus_qc_task.consensus_qc {
     input:
@@ -62,6 +65,18 @@ workflow theiacov_fasta {
       input:
         genome_fasta = assembly_fasta,
         assembly_length_unambiguous = consensus_qc.number_ATCG
+    }
+  }
+  if(defined(qc_check_table)) {
+    call qc_check.qc_check_phb as qc_check_task {
+      input:
+        qc_check_table = qc_check_table,
+        expected_taxon = organism,
+        number_N = consensus_qc.number_N,
+        assembly_length_unambiguous = consensus_qc.number_ATCG,
+        number_Degenerate =  consensus_qc.number_Degenerate,
+        percent_reference_coverage =  consensus_qc.percent_reference_coverage,
+        vadr_num_alerts = vadr.num_alerts
     }
   }
   call versioning.version_capture{
@@ -105,5 +120,8 @@ workflow theiacov_fasta {
     String? vadr_num_alerts = vadr.num_alerts
     String? vadr_docker = vadr.vadr_docker
     File? vadr_fastas_zip_archive = vadr.vadr_fastas_zip_archive
+    # QC_Check Results
+    String? qc_check = qc_check_task.qc_check_phb
+    File? qc_standard = qc_check_task.qc_standard
   }
 }

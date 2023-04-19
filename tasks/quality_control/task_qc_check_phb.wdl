@@ -2,9 +2,11 @@ version 1.0
 
 task qc_check_phb {
   input {
+    # workflow agnotic inputs
     File? qc_check_table
     String? gambit_predicted_taxon
     String? expected_taxon
+    # theiaprok and theiaeuk inputs
     Float? r1_mean_q_raw
     Float? r2_mean_q_raw
     Float? combined_mean_q_raw
@@ -19,13 +21,34 @@ task qc_check_phb {
     Float? combined_mean_readlength_clean 
     Float? est_coverage_raw
     Float? est_coverage_clean 
-    String? midas_secondary_genus_abundance 
     Int? assembly_length
     Int? number_contigs 
     Int? n50_value 
+    String? busco_results
+    # theiaprok only inputs
+    String? midas_secondary_genus_abundance 
     Float? ani_highest_percent 
     Float? ani_highest_percent_bases_aligned
-    String? busco_results
+    # theiacov inputs
+    Int? num_reads_raw1
+    Int? num_reads_raw2
+    Int? num_reads_clean1
+    Int? num_reads_clean2
+    Float? kraken_human 
+    Float? kraken_human_dehosted
+    Float? kraken_sc2
+    Float? kraken_sc2_dehosted
+    Float? kraken_target_org
+    Float? kraken_target_org_dehosted
+    String? meanbaseq_trim
+    Float? assembly_mean_coverage
+    Int? number_N
+    Int? number_Degenerate
+    Int? assembly_length_unambiguous
+    Float? percent_reference_coverage
+    Float? sc2_s_gene_mean_coverage
+    Float? sc2_s_gene_percent_coverage
+    String? vadr_num_alerts
     Int disk_size = 100
   }
   command <<<
@@ -258,6 +281,101 @@ task qc_check_phb {
             busco_completeness = "~{busco_results}".split("C:")[1].split("%")[0]
             qc_note, qc_status = compare(qc_note, "busco_completeness", float(busco_completeness), ">=", float(taxon_df["busco_completeness"][0]))
             qc_check_metrics.remove("busco_completeness")
+        
+        if ("num_reads_raw1" in qc_check_metrics): # if this var is in the qc_check_metrics,
+          if (~{num_reads_raw1}): # if num_reads_raw1 variable exists,
+            qc_note, qc_status = compare(qc_note, "num_reads_raw1", float(~{num_reads_raw1}), ">=", float(taxon_df["num_reads_raw1"][0]))
+            qc_check_metrics.remove("num_reads_raw1")
+
+        if ("num_reads_raw2" in qc_check_metrics): # if this var is in the qc_check_metrics,
+          if (~{num_reads_raw2}): # if num_reads_raw2 variable exists,
+            qc_note, qc_status = compare(qc_note, "num_reads_raw2", float(~{num_reads_raw2}), ">=", float(taxon_df["num_reads_raw2"][0]))
+            qc_check_metrics.remove("num_reads_raw2") 
+
+        if ("num_reads_clean1" in qc_check_metrics): # if this var is in the qc_check_metrics,
+          if (~{num_reads_clean1}): # if num_reads_clean1 variable exists,
+            qc_note, qc_status = compare(qc_note, "num_reads_clean1", float(~{num_reads_clean1}), ">=", float(taxon_df["num_reads_clean1"][0]))
+            qc_check_metrics.remove("num_reads_clean1")
+
+        if ("num_reads_clean2" in qc_check_metrics): # if this var is in the qc_check_metrics,
+          if (~{num_reads_clean2}): # if num_reads_clean2 variable exists,
+            qc_note, qc_status = compare(qc_note, "num_reads_clean2", float(~{num_reads_clean2}), ">=", float(taxon_df["num_reads_clean2"][0]))
+            qc_check_metrics.remove("num_reads_clean2")
+
+        if ("kraken_human" in qc_check_metrics): # if this var is in the qc_check_metrics,
+          if (~{kraken_human}): # if kraken_human variable exists,
+            qc_note, qc_status = compare(qc_note, "kraken_human", float(~{kraken_human}), "<=", float(taxon_df["kraken_human"][0]))
+            qc_check_metrics.remove("kraken_human")
+
+        if ("kraken_human_dehosted" in qc_check_metrics): # if this var is in the qc_check_metrics,
+          if (~{kraken_human_dehosted}): # if kraken_human_dehosted variable exists,
+            qc_note, qc_status = compare(qc_note, "kraken_human_dehosted", float(~{kraken_human_dehosted}), "<=", float(taxon_df["kraken_human_dehosted"][0]))
+            qc_check_metrics.remove("kraken_human_dehosted")
+
+        if ("kraken_sc2" in qc_check_metrics): # if this var is in the qc_check_metrics,
+          if (~{kraken_sc2}): # if kraken_sc2 variable exists,
+            qc_note, qc_status = compare(qc_note, "kraken_sc2", float(~{kraken_sc2}), ">=", float(taxon_df["kraken_sc2"][0]))
+            qc_check_metrics.remove("kraken_sc2") 
+
+        if ("kraken_sc2_dehosted" in qc_check_metrics): # if this var is in the qc_check_metrics,
+          if (~{kraken_sc2_dehosted}): # if kraken_sc2_dehosted variable exists,
+            qc_note, qc_status = compare(qc_note, "kraken_sc2_dehosted", float(~{kraken_sc2_dehosted}), ">=", float(taxon_df["kraken_sc2_dehosted"][0]))
+            qc_check_metrics.remove("kraken_sc2_dehosted")   
+
+        if ("kraken_target_org" in qc_check_metrics): # if this var is in the qc_check_metrics,
+          if (~{kraken_target_org}): # if kraken_target_org variable exists,
+            qc_note, qc_status = compare(qc_note, "kraken_target_org", float(~{kraken_target_org}), ">=", float(taxon_df["kraken_target_org"][0]))
+            qc_check_metrics.remove("kraken_target_org") 
+
+        if ("kraken_target_org_dehosted" in qc_check_metrics): # if this var is in the qc_check_metrics,
+          if (~{kraken_target_org_dehosted}): # if kraken_target_org_dehosted variable exists,
+            qc_note, qc_status = compare(qc_note, "kraken_target_org_dehosted", float(~{kraken_target_org_dehosted}), ">=", float(taxon_df["kraken_target_org_dehosted"][0]))
+            qc_check_metrics.remove("kraken_target_org_dehosted")   
+
+        if ("meanbaseq_trim" in qc_check_metrics): # if this var is in the qc_check_metrics,
+          if (~{meanbaseq_trim}): # if meanbaseq_trim variable exists,
+            qc_note, qc_status = compare(qc_note, "meanbaseq_trim", float(~{meanbaseq_trim}), ">=", float(taxon_df["meanbaseq_trim"][0]))
+            qc_check_metrics.remove("meanbaseq_trim")  
+
+        if ("assembly_mean_coverage" in qc_check_metrics): # if this var is in the qc_check_metrics,
+          if (~{assembly_mean_coverage}): # if assembly_mean_coverage variable exists,
+            qc_note, qc_status = compare(qc_note, "assembly_mean_coverage", float(~{assembly_mean_coverage}), ">=", float(taxon_df["assembly_mean_coverage"][0]))
+            qc_check_metrics.remove("assembly_mean_coverage")  
+
+        if ("number_N" in qc_check_metrics): # if this var is in the qc_check_metrics,
+          if (~{number_N}): # if number_N variable exists,
+            qc_note, qc_status = compare(qc_note, "number_N", float(~{number_N}), "<=", float(taxon_df["number_N"][0]))
+            qc_check_metrics.remove("number_N") 
+
+        if ("number_Degenerate" in qc_check_metrics): # if this var is in the qc_check_metrics,
+          if (~{number_Degenerate}): # if number_Degenerate variable exists,
+            qc_note, qc_status = compare(qc_note, "number_Degenerate", float(~{number_Degenerate}), "<=", float(taxon_df["number_Degenerate"][0]))
+            qc_check_metrics.remove("number_Degenerate") 
+
+        if ("assembly_length_unambiguous" in qc_check_metrics): # if this var is in the qc_check_metrics,
+          if (~{assembly_length_unambiguous}): # if assembly_length_unambiguous variable exists,
+            qc_note, qc_status = compare(qc_note, "assembly_length_unambiguous", float(~{assembly_length_unambiguous}), ">=", float(taxon_df["assembly_length_unambiguous"][0]))
+            qc_check_metrics.remove("assembly_length_unambiguous") 
+
+        if ("percent_reference_coverage" in qc_check_metrics): # if this var is in the qc_check_metrics,
+          if (~{percent_reference_coverage}): # if percent_reference_coverage variable exists,
+            qc_note, qc_status = compare(qc_note, "percent_reference_coverage", float(~{percent_reference_coverage}), ">=", float(taxon_df["percent_reference_coverage"][0]))
+            qc_check_metrics.remove("percent_reference_coverage") 
+
+        if ("sc2_s_gene_mean_coverage" in qc_check_metrics): # if this var is in the qc_check_metrics,
+          if (~{sc2_s_gene_mean_coverage}): # if sc2_s_gene_mean_coverage variable exists,
+            qc_note, qc_status = compare(qc_note, "sc2_s_gene_mean_coverage", float(~{sc2_s_gene_mean_coverage}), ">=", float(taxon_df["sc2_s_gene_mean_coverage"][0]))
+            qc_check_metrics.remove("sc2_s_gene_mean_coverage") 
+
+        if ("sc2_s_gene_percent_coverage" in qc_check_metrics): # if this var is in the qc_check_metrics,
+          if (~{sc2_s_gene_percent_coverage}): # if sc2_s_gene_percent_coverage variable exists,
+            qc_note, qc_status = compare(qc_note, "sc2_s_gene_percent_coverage", float(~{sc2_s_gene_percent_coverage}), ">=", float(taxon_df["sc2_s_gene_percent_coverage"][0]))
+            qc_check_metrics.remove("sc2_s_gene_percent_coverage") 
+
+        if ("vadr_num_alerts" in qc_check_metrics): # if this var is in the qc_check_metrics,
+          if (~{vadr_num_alerts}): # if vadr_num_alerts variable exists,
+            qc_note, qc_status = compare(qc_note, "vadr_num_alerts", float(~{vadr_num_alerts}), ">=", float(taxon_df["vadr_num_alerts"][0]))
+            qc_check_metrics.remove("vadr_num_alerts") 
 
         if (len(qc_check_metrics) > 0):
           qc_status = "QC_ALERT"

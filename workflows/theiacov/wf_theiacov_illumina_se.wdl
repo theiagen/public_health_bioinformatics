@@ -8,6 +8,7 @@ import "../../tasks/quality_control/task_screen.wdl" as screen
 import "../../tasks/taxon_id/task_nextclade.wdl" as nextclade_task
 import "../../tasks/species_typing/task_pangolin.wdl" as pangolin
 import "../../tasks/gene_typing/task_sc2_gene_coverage.wdl" as sc2_calculation
+import "../../tasks/quality_control/task_qc_check_phb.wdl" as qc_check
 import "../../tasks/task_versioning.wdl" as versioning
 
 workflow theiacov_illumina_se {
@@ -44,6 +45,8 @@ workflow theiacov_illumina_se {
     Int max_genome_size = 2673870 # size of Pandoravirus salinus + 200 kb
     Int min_coverage = 10
     Boolean skip_screen = false
+    # qc check parameters
+    File? qc_check_table
   }
   call screen.check_reads_se as raw_check_reads {
     input:
@@ -141,6 +144,30 @@ workflow theiacov_illumina_se {
             assembly_length_unambiguous = consensus_qc.number_ATCG
         }
       }
+      if(defined(qc_check_table)) {
+        call qc_check.qc_check_phb as qc_check_task {
+          input:
+            qc_check_table = qc_check_table,
+            expected_taxon = organism,
+            num_reads_raw1 = read_QC_trim.fastq_scan_raw_number_reads,
+            num_reads_clean1 = read_QC_trim.fastq_scan_clean_number_reads,
+            kraken_human = read_QC_trim.kraken_human,
+            kraken_sc2 = read_QC_trim.kraken_sc2,
+            kraken_target_org = read_QC_trim.kraken_target_org,
+            # kraken_human_dehosted = read_QC_trim.kraken_human_dehosted,
+            # kraken_sc2_dehosted = read_QC_trim.kraken_sc2_dehosted,
+            # kraken_target_org_dehosted =read_QC_trim.kraken_target_org_dehosted,
+            meanbaseq_trim = ivar_consensus.meanbaseq_trim,
+            assembly_mean_coverage = ivar_consensus.assembly_mean_coverage,
+            number_N = consensus_qc.number_N,
+            assembly_length_unambiguous = consensus_qc.number_ATCG,
+            number_Degenerate =  consensus_qc.number_Degenerate,
+            percent_reference_coverage =  consensus_qc.percent_reference_coverage,
+            sc2_s_gene_mean_coverage = sc2_gene_coverage.sc2_s_gene_depth,
+            sc2_s_gene_percent_coverage = sc2_gene_coverage.sc2_s_gene_percent_coverage,
+            vadr_num_alerts = vadr.num_alerts
+        }
+      }
     }
   }
   call versioning.version_capture{
@@ -234,5 +261,8 @@ workflow theiacov_illumina_se {
     String? vadr_num_alerts = vadr.num_alerts
     String? vadr_docker = vadr.vadr_docker
     File? vadr_fastas_zip_archive = vadr.vadr_fastas_zip_archive
+    # QC_Check Results
+    String? qc_check = qc_check_task.qc_check_phb
+    File? qc_standard = qc_check_task.qc_standard
   }
 }
