@@ -39,6 +39,8 @@ workflow theiacov_illumina_pe {
     Int trim_window_size = 4
     # assembly parameters
     Int min_depth = 100  # the minimum depth to use for consensus and variant calling
+    Float consensus_min_freq = 0.6 # minimum frequency for a variant to be called as SNP in consensus genome
+    Float variant_min_freq = 0.6 # minimum frequency for a variant to be reported in ivar outputs
     # nextclade inputs
     String nextclade_dataset_reference = "MN908947"
     String nextclade_dataset_tag = "2023-02-25T12:00:00Z"
@@ -117,6 +119,8 @@ workflow theiacov_illumina_pe {
             primer_bed = primer_bed,
             reference_gff = reference_gff,
             min_depth = min_depth,
+            consensus_min_freq = consensus_min_freq,
+            variant_min_freq = variant_min_freq,
             trim_primers = trim_primers
         }
       }

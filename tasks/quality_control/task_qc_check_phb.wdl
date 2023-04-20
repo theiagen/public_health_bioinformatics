@@ -352,10 +352,11 @@ task qc_check_phb {
             qc_note, qc_status = compare(qc_note, "number_Degenerate", float(~{number_Degenerate}), "<=", float(taxon_df["number_Degenerate"][0]))
             qc_check_metrics.remove("number_Degenerate") 
 
-        if ("assembly_length_unambiguous" in qc_check_metrics): # if this var is in the qc_check_metrics,
-          if (~{assembly_length_unambiguous}): # if assembly_length_unambiguous variable exists,
-            qc_note, qc_status = compare(qc_note, "assembly_length_unambiguous", float(~{assembly_length_unambiguous}), ">=", float(taxon_df["assembly_length_unambiguous"][0]))
-            qc_check_metrics.remove("assembly_length_unambiguous") 
+        if ("assembly_length_unambiguous_min" in qc_check_metrics) and ("assembly_length_unambiguous_max" in qc_check_metrics):
+          if (~{assembly_length}):
+            qc_note, qc_status = compare(qc_note, "assembly_length_unambiguous", int(~{assembly_length_unambiguous}), ">=", int(taxon_df["assembly_length_unambiguous_min"][0]), "<=", int(taxon_df["assembly_length_unambiguous_max"][0]))
+            qc_check_metrics.remove("assembly_length_unambiguous_min")
+            qc_check_metrics.remove("assembly_length_unambiguous_max")     
 
         if ("percent_reference_coverage" in qc_check_metrics): # if this var is in the qc_check_metrics,
           if (~{percent_reference_coverage}): # if percent_reference_coverage variable exists,
