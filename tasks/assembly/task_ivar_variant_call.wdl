@@ -51,7 +51,7 @@ task variant_call {
     ivar variants \
     -p ~{samplename}.variants \
     -q ~{min_qual} \
-    -t ~{min_freq} \
+    -t ~{variant_min_freq} \
     -m ~{variant_min_depth} \
     -r ${ref_genome} \
     -g ${ref_gff}

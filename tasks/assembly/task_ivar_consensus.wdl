@@ -42,7 +42,7 @@ task consensus {
     ivar consensus \
     -p ~{samplename}.consensus \
     -q ~{min_qual} \
-    -t ~{min_freq} \
+    -t ~{consensus_min_freq} \
     -m ~{consensus_min_depth} \
     -n ~{char_unknown}
 
