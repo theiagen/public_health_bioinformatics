@@ -22,6 +22,7 @@ task tbprofiler_output_parsing {
       confidence = []
       depth = []
       frequency = []
+      rule = []
 
       with open(json_file) as results_json_fh:
         results_json = json.load(results_json_fh)
@@ -31,6 +32,7 @@ task tbprofiler_output_parsing {
           variant_substitutions.append(dr_variant["type"] + ":" + dr_variant["nucleotide_change"] + "(" + dr_variant["protein_change"] + ")")  # mutation_type:nt_sub(aa_sub)
           depth.append(dr_variant["depth"])
           frequency.append(dr_variant["freq"])
+          rule.append("WHO classification")
           if "annotation" in dr_variant:
             try:  # sometimes annotation is an empty list
               if dr_variant["annotation"][0]["who_confidence"] == "":
@@ -50,6 +52,7 @@ task tbprofiler_output_parsing {
               variant_substitutions.append(other_variant["type"] + ":" + other_variant["nucleotide_change"] + "(" + other_variant["protein_change"] + ")")  # mutation_type:nt_sub(aa_sub)
               depth.append(other_variant["depth"])
               frequency.append(other_variant["freq"])
+              rule.append("Expert rule")
               if "annotation" in other_variant:
                 try:  # sometimes annotation is an empty list
                   if other_variant["annotation"][0]["who_confidence"] == "":
@@ -70,19 +73,20 @@ task tbprofiler_output_parsing {
                     depth.append(other_variant["depth"])
                     frequency.append(other_variant["freq"])
                     confidence.append(annotation["who_confidence"])
+                    rule.append("Expert rule")
 
         with open("tbprofiler_laboratorian_report.csv", "wt") as report_fh:
-          report_fh.write("tbprofiler_gene_name,tbprofiler_locus_tag,tbprofiler_variant_substitutions,confidence,depth,frequency,read_support,warning\n")
+          report_fh.write("tbprofiler_gene_name,tbprofiler_locus_tag,tbprofiler_variant_substitutions,confidence,depth,frequency,read_support,rationale,warning\n")
           for i in range(0, len(gene_name)):
             if not depth[i]:  # for cases when depth is null, it gets converted to 0
               depth[i] = 0
             warning = "Low depth coverage" if  depth[i] < int('~{min_depth}') else "" # warning when coverage is lower than the defined 'min_depth' times
-            report_fh.write(gene_name[i] + ',' + locus_tag[i] + ',' + variant_substitutions[i] + ',' + confidence[i] + ',' + str(depth[i]) + ',' + str(frequency[i]) + ',' + str(int(depth[i]*frequency[i])) + ',' + warning + '\n')
+            report_fh.write(gene_name[i] + ',' + locus_tag[i] + ',' + variant_substitutions[i] + ',' + confidence[i] + ',' + str(depth[i]) + ',' + str(frequency[i]) + ',' + str(int(depth[i]*frequency[i])) + ',' + rule[i] + ',' + warning +'\n')
 
     parse_json_lab_report("~{json}")
 
     """
-    ## LIMS ingestion report generation
+    ## Looker ingestion report generation
     gene_dict={'Sample': '~{samplename}',
                'gyrB': '', 'gyrA': '', 'fgd1': '', 'mshA': '', 'ccsA': '', 'rpoB': '', 'rpoC': '', 'mmpL5': '', 'mmpS5': '', 'mmpR5': '', 'rpsL': '', 'rplC': '', 'fbiC': '', 'Rv1258c': '', 'embR': '',
                'atpE': '', 'rrs': '', 'rrl': '', 'fabG1': '', 'inhA': '', 'rpsA': '', 'tlyA': '', 'ndh': '', 'katG': '', 'PPE35': '', 'Rv1979c': '', 'pncA': '', 'kasA': '', 'eis': '', 'ahpC': '', 'folC': '',
@@ -222,10 +226,12 @@ task tbprofiler_output_parsing {
     def get_lineage(json_file):
       with open(json_file) as js_fh:
         results_json = json.load(js_fh)
-        if results_json["main_lin"] != "":
-          return "DNA of M. tuberculosis complex detected (not M. bovis)"
+        if results_json["main_lin"] == "":
+          return "DNA of M. tuberculosis complex not detected"
+        elif results_json["main_lin"] == "M.bovis":
+          return "DNA of M. tuberculosis complex detected (M. bovis)"
         else:
-          return "DNA of M. bovis detected"
+          return "DNA of M. tuberculosis complex detected (not M. bovis)"
 
     # lookup dictionary - antimicrobial code to name
     antimicrobial_dict = {"M_DST_B01_INH": "isoniazid", "M_DST_C01_ETO": "ethionamide",
@@ -272,7 +278,7 @@ task tbprofiler_output_parsing {
       if antimicrobial_dict[antimicrobial] in resistance.keys():
         df_lims[antimicrobial] = translate(resistance[antimicrobial_dict[antimicrobial]], antimicrobial_dict[antimicrobial])
       else:
-        df_lims[antimicrobial] = "No resistance to {} detected".format(antimicrobial_dict[antimicrobial]) # what to write when no resistance is reported?
+        df_lims[antimicrobial] = "No resistance to {} detected".format(antimicrobial_dict[antimicrobial])
       for gene_name, gene_id in genes.items():
         if gene_name in mutations.keys():
           df_lims[gene_id] = mutations[gene_name]
