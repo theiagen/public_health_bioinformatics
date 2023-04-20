@@ -24,6 +24,7 @@ import "../../tasks/species_typing/task_pbptyper.wdl" as pbptyper
 import "../../tasks/species_typing/task_poppunk_streppneumo.wdl" as poppunk_spneumo
 import "../../tasks/species_typing/task_pasty.wdl" as pasty_task
 import "../../tasks/gene_typing/task_abricate.wdl" as abricate_task
+import "../../tasks/species_typing/task_srst2_vibrio.wdl" as srst2_vibrio_task
 
 # theiaeuk
 import "../../tasks/species_typing/task_cauris_cladetyper.wdl" as cauris_cladetyper
@@ -53,6 +54,11 @@ workflow merlin_magic {
     Boolean theiaeuk = false
     Boolean tbprofiler_additional_outputs = false
     String output_seq_method_type = "WGS"
+    Int srst2_min_cov = 80
+    Int srst2_max_divergence = 20
+    Int srst2_min_depth = 5
+    Int srst2_min_edge_depth = 2
+    Int srst2_gene_max_mismatch = 2000
   }
   # theiaprok
   if (merlin_tag == "Acinetobacter baumannii") {
@@ -249,6 +255,19 @@ workflow merlin_magic {
           assembly = assembly,
           samplename = samplename
       }  
+    }
+  }
+  if (merlin_tag == "Vibrio") {
+    call srst2_vibrio_task.srst2_vibrio {
+      input:
+        reads1 = select_first([read1]),
+        reads2 = read2,
+        samplename = samplename,
+        srst2_min_cov = srst2_min_cov,
+        srst2_max_divergence = srst2_max_divergence,
+        srst2_min_depth = srst2_min_depth,
+        srst2_min_edge_depth = srst2_min_edge_depth,
+        srst2_gene_max_mismatch = srst2_gene_max_mismatch
     }
   }
   
@@ -500,7 +519,15 @@ workflow merlin_magic {
     String? seroba_ariba_serotype = seroba_task.seroba_ariba_serotype
     String? seroba_ariba_identity = seroba_task.seroba_ariba_identity
     File? seroba_details = seroba_task.seroba_details
-  
+    # Vibrio
+    File? srst2_vibrio_detailed_tsv = srst2_vibrio.srst2_detailed_tsv
+    String? srst2_vibrio_version = srst2_vibrio.srst2_version
+    String? srst2_vibrio_ctxA = srst2_vibrio.srst2_vibrio_ctxA
+    String? srst2_vibrio_ompW = srst2_vibrio.srst2_vibrio_ompW
+    String? srst2_vibrio_toxR = srst2_vibrio.srst2_vibrio_toxR
+    String? srst2_vibrio_serogroup = srst2_vibrio.srst2_vibrio_serogroup
+    String? srst2_vibrio_biotype = srst2_vibrio.srst2_vibrio_biotype
+    
     # theiaeuk
     # c auris 
     String? clade_type = cladetyper.gambit_cladetype

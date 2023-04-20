@@ -434,7 +434,14 @@ workflow theiaprok_illumina_se {
             pasty_all_serogroups = merlin_magic.pasty_all_serogroups,
             pasty_version = merlin_magic.pasty_version,
             pasty_docker = merlin_magic.pasty_docker,
-            pasty_comment = merlin_magic.pasty_comment
+            pasty_comment = merlin_magic.pasty_comment,
+            srst2_vibrio_detailed_tsv = merlin_magic.srst2_vibrio_detailed_tsv,
+            srst2_vibrio_version = merlin_magic.srst2_vibrio_version,
+            srst2_vibrio_ctxA = merlin_magic.srst2_vibrio_ctxA,
+            srst2_vibrio_ompW = merlin_magic.srst2_vibrio_ompW,
+            srst2_vibrio_toxR = merlin_magic.srst2_vibrio_toxR,
+            srst2_vibrio_serogroup = merlin_magic.srst2_vibrio_serogroup,
+            srst2_vibrio_biotype = merlin_magic.srst2_vibrio_biotype
         }
       }
     }
@@ -730,6 +737,14 @@ workflow theiaprok_illumina_se {
     String? poppunk_GPS_db_version = merlin_magic.poppunk_GPS_db_version
     String? poppunk_version = merlin_magic.poppunk_version
     String? poppunk_docker = merlin_magic.poppunk_docker
+    # Vibrio Typing
+    File? srst2_vibrio_detailed_tsv = merlin_magic.srst2_vibrio_detailed_tsv
+    String? srst2_vibrio_version = merlin_magic.srst2_vibrio_version
+    String? srst2_vibrio_ctxA = merlin_magic.srst2_vibrio_ctxA
+    String? srst2_vibrio_ompW = merlin_magic.srst2_vibrio_ompW
+    String? srst2_vibrio_toxR = merlin_magic.srst2_vibrio_toxR
+    String? srst2_vibrio_biotype = merlin_magic.srst2_vibrio_biotype
+    String? srst2_vibrio_serogroup = merlin_magic.srst2_vibrio_serogroup
     # export taxon table output
     String? taxon_table_status = export_taxon_tables.status
   }
