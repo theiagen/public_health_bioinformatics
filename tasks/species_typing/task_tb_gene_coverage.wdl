@@ -135,64 +135,64 @@ task tb_gene_coverage {
 
     echo -e "#NOTE: THE VALUES BELOW ASSUME TBPROFILER (H37Rv) REFERENCE GENOME" > ~{samplename}.percent_gene_coverage.tsv
     echo -e "Gene\tPercent_Coverage" >> ~{samplename}.percent_gene_coverage.tsv
-    echo -e "gyrB\t" $gyrB_pc >> ~{samplename}.percent_gene_coverage.tsv
-    echo -e "gyrA\t" $gyrA_pc >> ~{samplename}.percent_gene_coverage.tsv
-    echo -e "fgd1\t" $fgd1_pc >> ~{samplename}.percent_gene_coverage.tsv
-    echo -e "mshA\t" $mshA_pc >> ~{samplename}.percent_gene_coverage.tsv
-    echo -e "ccsA\t" $ccsA_pc >> ~{samplename}.percent_gene_coverage.tsv
-    echo -e "rpoB\t" $rpoB_pc >> ~{samplename}.percent_gene_coverage.tsv
-    echo -e "rpoC\t" $rpoC_pc >> ~{samplename}.percent_gene_coverage.tsv
-    echo -e "mmpL5\t" $mmpL5_pc >> ~{samplename}.percent_gene_coverage.tsv
-    echo -e "mmpS5\t" $mmpS5_pc >> ~{samplename}.percent_gene_coverage.tsv
-    echo -e "mmpR5\t" $mmpR5_pc >> ~{samplename}.percent_gene_coverage.tsv
-    echo -e "rpsL\t" $rpsL_pc >> ~{samplename}.percent_gene_coverage.tsv
-    echo -e "rplC\t" $rplC_pc >> ~{samplename}.percent_gene_coverage.tsv
-    echo -e "fbiC\t" $fbiC_pc >> ~{samplename}.percent_gene_coverage.tsv
-    echo -e "Rv1258c\t" $Rv1258c_pc >> ~{samplename}.percent_gene_coverage.tsv
-    echo -e "embR\t" $embR_pc >> ~{samplename}.percent_gene_coverage.tsv
-    echo -e "atpE\t" $atpE_pc >> ~{samplename}.percent_gene_coverage.tsv
-    echo -e "rrs\t" $rrs_pc >> ~{samplename}.percent_gene_coverage.tsv
-    echo -e "rrl\t" $rrl_pc >> ~{samplename}.percent_gene_coverage.tsv
-    echo -e "fabG1\t" $fabG1_pc >> ~{samplename}.percent_gene_coverage.tsv
-    echo -e "inhA\t" $inhA_pc >> ~{samplename}.percent_gene_coverage.tsv
-    echo -e "rpsA\t" $rpsA_pc >> ~{samplename}.percent_gene_coverage.tsv
-    echo -e "tlyA\t" $tlyA_pc >> ~{samplename}.percent_gene_coverage.tsv
-    echo -e "ndh\t" $ndh_pc >> ~{samplename}.percent_gene_coverage.tsv
-    echo -e "katG\t" $katG_pc >> ~{samplename}.percent_gene_coverage.tsv
-    echo -e "PPE35\t" $PPE35_pc >> ~{samplename}.percent_gene_coverage.tsv
-    echo -e "Rv1979c\t" $Rv1979c_pc >> ~{samplename}.percent_gene_coverage.tsv
-    echo -e "pncA\t" $pncA_pc >> ~{samplename}.percent_gene_coverage.tsv
-    echo -e "kasA\t" $kasA_pc >> ~{samplename}.percent_gene_coverage.tsv
-    echo -e "eis\t" $eis_pc >> ~{samplename}.percent_gene_coverage.tsv
-    echo -e "ahpC\t" $ahpC_pc >> ~{samplename}.percent_gene_coverage.tsv
-    echo -e "folC\t" $folC_pc >> ~{samplename}.percent_gene_coverage.tsv
-    echo -e "pepQ\t" $pepQ_pc >> ~{samplename}.percent_gene_coverage.tsv
-    echo -e "ribD\t" $ribD_pc >> ~{samplename}.percent_gene_coverage.tsv
-    echo -e "Rv2752c\t" $Rv2752c_pc >> ~{samplename}.percent_gene_coverage.tsv
-    echo -e "thyX\t" $thyX_pc >> ~{samplename}.percent_gene_coverage.tsv
-    echo -e "thyA\t" $thyA_pc >> ~{samplename}.percent_gene_coverage.tsv
-    echo -e "ald\t" $ald_pc >> ~{samplename}.percent_gene_coverage.tsv
-    echo -e "fbiD\t" $fbiD_pc >> ~{samplename}.percent_gene_coverage.tsv
-    echo -e "Rv3083\t" $Rv3083_pc >> ~{samplename}.percent_gene_coverage.tsv
-    echo -e "fprA\t" $fprA_pc >> ~{samplename}.percent_gene_coverage.tsv
-    echo -e "whiB7\t" $whiB7_pc >> ~{samplename}.percent_gene_coverage.tsv
-    echo -e "Rv3236c\t" $Rv3236c_pc >> ~{samplename}.percent_gene_coverage.tsv
-    echo -e "fbiA\t" $fbiA_pc >> ~{samplename}.percent_gene_coverage.tsv
-    echo -e "fbiB\t" $fbiB_pc >> ~{samplename}.percent_gene_coverage.tsv
-    echo -e "alr\t" $alr_pc >> ~{samplename}.percent_gene_coverage.tsv
-    echo -e "rpoA\t" $rpoA_pc >> ~{samplename}.percent_gene_coverage.tsv
-    echo -e "ddn\t" $ddn_pc >> ~{samplename}.percent_gene_coverage.tsv
-    echo -e "clpC1\t" $clpC1_pc >> ~{samplename}.percent_gene_coverage.tsv
-    echo -e "panD\t" $panD_pc >> ~{samplename}.percent_gene_coverage.tsv
-    echo -e "embC\t" $embC_pc >> ~{samplename}.percent_gene_coverage.tsv
-    echo -e "embA\t" $embA_pc >> ~{samplename}.percent_gene_coverage.tsv
-    echo -e "embB\t" $embB_pc >> ~{samplename}.percent_gene_coverage.tsv
-    echo -e "aftB\t" $aftB_pc >> ~{samplename}.percent_gene_coverage.tsv
-    echo -e "ubiA\t" $ubiA_pc >> ~{samplename}.percent_gene_coverage.tsv
-    echo -e "ethA\t" $ethA_pc >> ~{samplename}.percent_gene_coverage.tsv
-    echo -e "ethR\t" $ethR_pc >> ~{samplename}.percent_gene_coverage.tsv
-    echo -e "whiB6\t" $whiB6_pc >> ~{samplename}.percent_gene_coverage.tsv
-    echo -e "gid\t" $gid_pc >> ~{samplename}.percent_gene_coverage.tsv
+    echo -e "gyrB\t"$gyrB_pc >> ~{samplename}.percent_gene_coverage.tsv
+    echo -e "gyrA\t"$gyrA_pc >> ~{samplename}.percent_gene_coverage.tsv
+    echo -e "fgd1\t"$fgd1_pc >> ~{samplename}.percent_gene_coverage.tsv
+    echo -e "mshA\t"$mshA_pc >> ~{samplename}.percent_gene_coverage.tsv
+    echo -e "ccsA\t"$ccsA_pc >> ~{samplename}.percent_gene_coverage.tsv
+    echo -e "rpoB\t"$rpoB_pc >> ~{samplename}.percent_gene_coverage.tsv
+    echo -e "rpoC\t"$rpoC_pc >> ~{samplename}.percent_gene_coverage.tsv
+    echo -e "mmpL5\t"$mmpL5_pc >> ~{samplename}.percent_gene_coverage.tsv
+    echo -e "mmpS5\t"$mmpS5_pc >> ~{samplename}.percent_gene_coverage.tsv
+    echo -e "mmpR5\t"$mmpR5_pc >> ~{samplename}.percent_gene_coverage.tsv
+    echo -e "rpsL\t"$rpsL_pc >> ~{samplename}.percent_gene_coverage.tsv
+    echo -e "rplC\t"$rplC_pc >> ~{samplename}.percent_gene_coverage.tsv
+    echo -e "fbiC\t"$fbiC_pc >> ~{samplename}.percent_gene_coverage.tsv
+    echo -e "Rv1258c\t"$Rv1258c_pc >> ~{samplename}.percent_gene_coverage.tsv
+    echo -e "embR\t"$embR_pc >> ~{samplename}.percent_gene_coverage.tsv
+    echo -e "atpE\t"$atpE_pc >> ~{samplename}.percent_gene_coverage.tsv
+    echo -e "rrs\t"$rrs_pc >> ~{samplename}.percent_gene_coverage.tsv
+    echo -e "rrl\t"$rrl_pc >> ~{samplename}.percent_gene_coverage.tsv
+    echo -e "fabG1\t"$fabG1_pc >> ~{samplename}.percent_gene_coverage.tsv
+    echo -e "inhA\t"$inhA_pc >> ~{samplename}.percent_gene_coverage.tsv
+    echo -e "rpsA\t"$rpsA_pc >> ~{samplename}.percent_gene_coverage.tsv
+    echo -e "tlyA\t"$tlyA_pc >> ~{samplename}.percent_gene_coverage.tsv
+    echo -e "ndh\t"$ndh_pc >> ~{samplename}.percent_gene_coverage.tsv
+    echo -e "katG\t"$katG_pc >> ~{samplename}.percent_gene_coverage.tsv
+    echo -e "PPE35\t"$PPE35_pc >> ~{samplename}.percent_gene_coverage.tsv
+    echo -e "Rv1979c\t"$Rv1979c_pc >> ~{samplename}.percent_gene_coverage.tsv
+    echo -e "pncA\t"$pncA_pc >> ~{samplename}.percent_gene_coverage.tsv
+    echo -e "kasA\t"$kasA_pc >> ~{samplename}.percent_gene_coverage.tsv
+    echo -e "eis\t"$eis_pc >> ~{samplename}.percent_gene_coverage.tsv
+    echo -e "ahpC\t"$ahpC_pc >> ~{samplename}.percent_gene_coverage.tsv
+    echo -e "folC\t"$folC_pc >> ~{samplename}.percent_gene_coverage.tsv
+    echo -e "pepQ\t"$pepQ_pc >> ~{samplename}.percent_gene_coverage.tsv
+    echo -e "ribD\t"$ribD_pc >> ~{samplename}.percent_gene_coverage.tsv
+    echo -e "Rv2752c\t"$Rv2752c_pc >> ~{samplename}.percent_gene_coverage.tsv
+    echo -e "thyX\t"$thyX_pc >> ~{samplename}.percent_gene_coverage.tsv
+    echo -e "thyA\t"$thyA_pc >> ~{samplename}.percent_gene_coverage.tsv
+    echo -e "ald\t"$ald_pc >> ~{samplename}.percent_gene_coverage.tsv
+    echo -e "fbiD\t"$fbiD_pc >> ~{samplename}.percent_gene_coverage.tsv
+    echo -e "Rv3083\t"$Rv3083_pc >> ~{samplename}.percent_gene_coverage.tsv
+    echo -e "fprA\t"$fprA_pc >> ~{samplename}.percent_gene_coverage.tsv
+    echo -e "whiB7\t"$whiB7_pc >> ~{samplename}.percent_gene_coverage.tsv
+    echo -e "Rv3236c\t"$Rv3236c_pc >> ~{samplename}.percent_gene_coverage.tsv
+    echo -e "fbiA\t"$fbiA_pc >> ~{samplename}.percent_gene_coverage.tsv
+    echo -e "fbiB\t"$fbiB_pc >> ~{samplename}.percent_gene_coverage.tsv
+    echo -e "alr\t"$alr_pc >> ~{samplename}.percent_gene_coverage.tsv
+    echo -e "rpoA\t"$rpoA_pc >> ~{samplename}.percent_gene_coverage.tsv
+    echo -e "ddn\t"$ddn_pc >> ~{samplename}.percent_gene_coverage.tsv
+    echo -e "clpC1\t"$clpC1_pc >> ~{samplename}.percent_gene_coverage.tsv
+    echo -e "panD\t"$panD_pc >> ~{samplename}.percent_gene_coverage.tsv
+    echo -e "embC\t"$embC_pc >> ~{samplename}.percent_gene_coverage.tsv
+    echo -e "embA\t"$embA_pc >> ~{samplename}.percent_gene_coverage.tsv
+    echo -e "embB\t"$embB_pc >> ~{samplename}.percent_gene_coverage.tsv
+    echo -e "aftB\t"$aftB_pc >> ~{samplename}.percent_gene_coverage.tsv
+    echo -e "ubiA\t"$ubiA_pc >> ~{samplename}.percent_gene_coverage.tsv
+    echo -e "ethA\t"$ethA_pc >> ~{samplename}.percent_gene_coverage.tsv
+    echo -e "ethR\t"$ethR_pc >> ~{samplename}.percent_gene_coverage.tsv
+    echo -e "whiB6\t"$whiB6_pc >> ~{samplename}.percent_gene_coverage.tsv
+    echo -e "gid\t"$gid_pc >> ~{samplename}.percent_gene_coverage.tsv
 
   >>>
   output {
