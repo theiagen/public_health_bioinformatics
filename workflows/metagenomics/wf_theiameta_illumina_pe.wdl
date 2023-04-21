@@ -1,6 +1,8 @@
 version 1.0
 
 import "../utilities/wf_read_QC_trim_pe.wdl" as read_qc_wf
+import "../../tasks/quality_control/task_retrieve_mapped.wdl" as retrieve_unmapped_task
+import "../../tasks/assembly/task_shovill.wdl" as shovill_task
 import "../../tasks/task_versioning.wdl" as versioning
 
 workflow theiameta_ilumina_pe {
@@ -11,6 +13,7 @@ workflow theiameta_ilumina_pe {
     File read1
     File read2
     String samplename
+    File reference
     Int trim_minlen = 75
     Int trim_quality_trim_score = 30
     Int trim_window_size = 4
@@ -24,6 +27,20 @@ workflow theiameta_ilumina_pe {
         trim_minlen = trim_minlen,
         trim_quality_trim_score = trim_quality_trim_score,
         trim_window_size = trim_window_size
+    }
+    call retrieve_unmapped_task.bowtie_retrieve_mapped_pe {
+      input:
+        read1 = select_first([read_QC_trim.read1_dehosted, read1]),
+        read2 = select_first([read_QC_trim.read2_dehosted, read2]),
+        samplename = samplename,
+        reference = reference
+    }
+    call shovill_task.shovill_pe {
+      input:
+        read1_cleaned = bowtie_retrieve_mapped_pe.read1_mapped,
+        read2_cleaned = bowtie_retrieve_mapped_pe.read2_mapped,
+        samplename = samplename,
+        assembler = "megahit"
     }
     call versioning.version_capture{
     input:
@@ -60,5 +77,11 @@ workflow theiameta_ilumina_pe {
     Float? kraken_sc2_dehosted = read_QC_trim.kraken_sc2_dehosted
     String? kraken_target_org_dehosted =read_QC_trim.kraken_target_org_dehosted
     File? kraken_report_dehosted = read_QC_trim.kraken_report_dehosted
+    # Assembly - shovill outputs 
+    File? assembly_fasta = shovill_pe.assembly_fasta
+    File? contigs_gfa = shovill_pe.contigs_gfa
+    File? contigs_fastg = shovill_pe.contigs_fastg
+    File? contigs_lastgraph = shovill_pe.contigs_lastgraph
+    String? shovill_pe_version = shovill_pe.shovill_version
     }
 }
