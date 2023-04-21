@@ -52,7 +52,10 @@ task tbprofiler_output_parsing {
               variant_substitutions.append(other_variant["type"] + ":" + other_variant["nucleotide_change"] + "(" + other_variant["protein_change"] + ")")  # mutation_type:nt_sub(aa_sub)
               depth.append(other_variant["depth"])
               frequency.append(other_variant["freq"])
-              rule.append("Uncertain significance based on expert rule")
+              if other_variant["gene"] == "rpoB":
+                rule.append("Resistant based on expert rule")
+              else:
+                rule.append("Uncertain significance based on expert rule")
               if "annotation" in other_variant:
                 try:  # sometimes annotation is an empty list
                   if other_variant["annotation"][0]["who_confidence"] == "":
@@ -73,7 +76,7 @@ task tbprofiler_output_parsing {
                     depth.append(other_variant["depth"])
                     frequency.append(other_variant["freq"])
                     confidence.append(annotation["who_confidence"])
-                    rule.append("Expert rule")
+                    rule.append("Uncertain significance based on expert rule")
 
         with open("tbprofiler_laboratorian_report.csv", "wt") as report_fh:
           report_fh.write("tbprofiler_gene_name,tbprofiler_locus_tag,tbprofiler_variant_substitutions,confidence,depth,frequency,read_support,rationale,warning\n")
