@@ -59,6 +59,7 @@ workflow snippy_tree_wf {
           msa_fasta = select_first([gubbins.gubbins_polymorphic_fasta,snippy_core.snippy_full_alignment_clean]),
           output_name = tree_name,
           output_multifasta = true,
+          allow_wildcard_bases = false,
           docker = docker_snp_sites
       }
   }
