@@ -13,7 +13,7 @@ workflow theiameta_ilumina_pe {
     File read1
     File read2
     String samplename
-    File reference
+    File? reference
     Int trim_minlen = 75
     Int trim_quality_trim_score = 30
     Int trim_window_size = 4
