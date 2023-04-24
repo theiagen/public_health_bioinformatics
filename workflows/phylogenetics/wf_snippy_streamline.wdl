@@ -85,15 +85,15 @@ workflow snippy_streamline {
     # snippy_tree version
     String snippy_streamline_snippy_version = snippy_tree_wf.snippy_tree_snippy_version
     # snippy_tree alignments
-    File snippy_streamline_core_alignment = snippy_tree_wf.snippy_tree_core_alignment
-    File snippy_streamline_full_alignment = snippy_tree_wf.snippy_tree_full_alignment
-    File snippy_streamline_clean_full_alignment = snippy_tree_wf.snippy_tree_clean_full_alignment
+    #File snippy_streamline_core_alignment = snippy_tree_wf.snippy_tree_core_alignment
+    #File snippy_streamline_full_alignment = snippy_tree_wf.snippy_tree_full_alignment
+    #File snippy_streamline_clean_full_alignment = snippy_tree_wf.snippy_tree_clean_full_alignment
     # snippy_tree reference file
     File snippy_streamline_ref = snippy_tree_wf.snippy_tree_ref
     # snippy_tree variant outputs
-    File snippy_streamline_all_snps = snippy_tree_wf.snippy_tree_all_snps
+    #File snippy_streamline_all_snps = snippy_tree_wf.snippy_tree_all_snps
     File snippy_streamline_snps_summary = snippy_tree_wf.snippy_tree_snps_summary
-    File snippy_streamline_vcf = snippy_tree_wf.snippy_tree_vcf
+    #File snippy_streamline_vcf = snippy_tree_wf.snippy_tree_vcf
     # iqtree outputs
     String snippy_streamline_iqtree_version = snippy_tree_wf.snippy_tree_iqtree_version
     # snp_sites outputs
