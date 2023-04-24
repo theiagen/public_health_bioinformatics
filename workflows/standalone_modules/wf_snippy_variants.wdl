@@ -12,7 +12,17 @@ workflow snippy_variants_wf {
     File read1
     File? read2
     String samplename
+    # optional inputs are exposed here so that they can be set by user in higher-level workflows. example: snippy_streamline
+    # a bit of duplicate code, but done for a reason!
     String? docker
+    Int? cpus
+    Int? memory
+    Int? map_qual
+    Int? base_quality
+    Int? min_coverage
+    Float? min_frac
+    Int? min_quality
+    Int? maxsoft
   }
   call snippy.snippy_variants {
     input:
@@ -20,7 +30,15 @@ workflow snippy_variants_wf {
       read1 = read1,
       read2 = read2,
       reference = reference,
-      docker = docker
+      docker = docker,
+      cpus = cpus,
+      memory = memory,
+      map_qual = map_qual,
+      base_quality = base_quality,
+      min_coverage = min_coverage,
+      min_frac = min_frac,
+      min_quality = min_quality,
+      maxsoft = maxsoft
   }
   call versioning.version_capture{
     input:
