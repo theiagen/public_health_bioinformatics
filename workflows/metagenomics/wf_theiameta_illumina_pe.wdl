@@ -7,7 +7,7 @@ import "../../tasks/task_versioning.wdl" as versioning
 
 workflow theiameta_ilumina_pe {
   meta {
-    description: "Reference-based consensus calling for viral metagenomic sequencing data"
+    description: "Reference-based consensus calling or de novo assembly for viral metagenomic sequencing data"
   }
   input {
     File read1
