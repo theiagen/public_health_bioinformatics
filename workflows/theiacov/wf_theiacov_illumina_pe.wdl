@@ -246,7 +246,7 @@ workflow theiacov_illumina_pe {
               vadr_num_alerts = vadr.num_alerts
           }
         }
-        else {
+        if (organism != "sars-cov-2") {
           call qc_check.qc_check_phb as qc_check_task {
             input:
               qc_check_table = qc_check_table,
@@ -269,7 +269,6 @@ workflow theiacov_illumina_pe {
           }
         }
       }
-
     }
   }
   call versioning.version_capture{
