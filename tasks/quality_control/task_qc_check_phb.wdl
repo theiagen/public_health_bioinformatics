@@ -69,7 +69,7 @@ task qc_check_phb {
       qc_status = ""
 
       # check if input value exists
-      if (input_value):
+      if (input_value): 
         # perform check on every possible operator
         if expectation == ">":
           if (input_value > standard):
@@ -257,12 +257,12 @@ task qc_check_phb {
 
         if ("number_contigs" in qc_check_metrics): # if this var is in the qc_check_metrics,
           if (~{number_contigs}): # if number_contigs variable exists,
-            qc_note, qc_status = compare(qc_note, "number_contigs", float(~{number_contigs}), "<=", float(taxon_df["number_contigs"][0]))
+            qc_note, qc_status = compare(qc_note, "number_contigs", int(~{number_contigs}), "<=", int(taxon_df["number_contigs"][0]))
             qc_check_metrics.remove("number_contigs")
 
         if ("n50_value" in qc_check_metrics): # if this var is in the qc_check_metrics,
           if (~{n50_value}): # if n50_value variable exists,
-            qc_note, qc_status = compare(qc_note, "n50_value", float(~{n50_value}), ">=", float(taxon_df["n50_value"][0]))
+            qc_note, qc_status = compare(qc_note, "n50_value", int(~{n50_value}), ">=", int(taxon_df["n50_value"][0]))
             qc_check_metrics.remove("n50_value")
 
         if ("ani_highest_percent" in qc_check_metrics): # if this var is in the qc_check_metrics,
@@ -289,17 +289,17 @@ task qc_check_phb {
 
         if ("num_reads_raw2" in qc_check_metrics): # if this var is in the qc_check_metrics,
           if (~{num_reads_raw2}): # if num_reads_raw2 variable exists,
-            qc_note, qc_status = compare(qc_note, "num_reads_raw2", float(~{num_reads_raw2}), ">=", float(taxon_df["num_reads_raw2"][0]))
+            qc_note, qc_status = compare(qc_note, "num_reads_raw2", int(~{num_reads_raw2}), ">=", int(taxon_df["num_reads_raw2"][0]))
             qc_check_metrics.remove("num_reads_raw2") 
 
         if ("num_reads_clean1" in qc_check_metrics): # if this var is in the qc_check_metrics,
           if (~{num_reads_clean1}): # if num_reads_clean1 variable exists,
-            qc_note, qc_status = compare(qc_note, "num_reads_clean1", float(~{num_reads_clean1}), ">=", float(taxon_df["num_reads_clean1"][0]))
+            qc_note, qc_status = compare(qc_note, "num_reads_clean1", int(~{num_reads_clean1}), ">=", int(taxon_df["num_reads_clean1"][0]))
             qc_check_metrics.remove("num_reads_clean1")
 
         if ("num_reads_clean2" in qc_check_metrics): # if this var is in the qc_check_metrics,
           if (~{num_reads_clean2}): # if num_reads_clean2 variable exists,
-            qc_note, qc_status = compare(qc_note, "num_reads_clean2", float(~{num_reads_clean2}), ">=", float(taxon_df["num_reads_clean2"][0]))
+            qc_note, qc_status = compare(qc_note, "num_reads_clean2", int(~{num_reads_clean2}), ">=", int(taxon_df["num_reads_clean2"][0]))
             qc_check_metrics.remove("num_reads_clean2")
 
         if ("kraken_human" in qc_check_metrics): # if this var is in the qc_check_metrics,
@@ -344,12 +344,12 @@ task qc_check_phb {
 
         if ("number_N" in qc_check_metrics): # if this var is in the qc_check_metrics,
           if (~{number_N}): # if number_N variable exists,
-            qc_note, qc_status = compare(qc_note, "number_N", float(~{number_N}), "<=", float(taxon_df["number_N"][0]))
+            qc_note, qc_status = compare(qc_note, "number_N", int(~{number_N}), "<=", int(taxon_df["number_N"][0]))
             qc_check_metrics.remove("number_N") 
 
         if ("number_Degenerate" in qc_check_metrics): # if this var is in the qc_check_metrics,
           if (~{number_Degenerate}): # if number_Degenerate variable exists,
-            qc_note, qc_status = compare(qc_note, "number_Degenerate", float(~{number_Degenerate}), "<=", float(taxon_df["number_Degenerate"][0]))
+            qc_note, qc_status = compare(qc_note, "number_Degenerate", int(~{number_Degenerate}), "<=", int(taxon_df["number_Degenerate"][0]))
             qc_check_metrics.remove("number_Degenerate") 
 
         if ("assembly_length_unambiguous_min" in qc_check_metrics) and ("assembly_length_unambiguous_max" in qc_check_metrics):
@@ -375,7 +375,7 @@ task qc_check_phb {
 
         if ("vadr_num_alerts" in qc_check_metrics): # if this var is in the qc_check_metrics,
           if (~{vadr_num_alerts}): # if vadr_num_alerts variable exists,
-            qc_note, qc_status = compare(qc_note, "vadr_num_alerts", float(~{vadr_num_alerts}), ">=", float(taxon_df["vadr_num_alerts"][0]))
+            qc_note, qc_status = compare(qc_note, "vadr_num_alerts", int(~{vadr_num_alerts}), ">=", int(taxon_df["vadr_num_alerts"][0]))
             qc_check_metrics.remove("vadr_num_alerts") 
 
         if (len(qc_check_metrics) > 0):
