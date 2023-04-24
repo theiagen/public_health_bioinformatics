@@ -10,6 +10,7 @@ task snippy_core {
     File? bed_file
     Int disk_size = 100
     Int cpu = 8
+    Int memory = 16
   }
   command <<<
    # version control
@@ -50,7 +51,7 @@ task snippy_core {
   }
   runtime {
     docker: "~{docker}"
-    memory: "16 GB"
+    memory: memory + " GB"
     cpu: cpu
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"

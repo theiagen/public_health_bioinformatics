@@ -31,6 +31,7 @@ workflow snippy_tree_wf {
     String? docker_snp_dists
     Int? snippy_core_cpu 
     Int? snippy_core_disk_size
+    Int? snippy_core_memory
     Int? gubbins_disk_size
     Int? iqtree_cpu
   }
@@ -42,7 +43,8 @@ workflow snippy_tree_wf {
       tree_name = tree_name,
       docker = docker_snippy,
       cpu = snippy_core_cpu,
-      disk_size = snippy_core_disk_size
+      disk_size = snippy_core_disk_size,
+      memory = snippy_core_memory
   }
   if (use_gubbins) {
     call gubbins_task.gubbins {
