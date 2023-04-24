@@ -38,6 +38,7 @@ task iqtree2 {
     String date = read_string("DATE")
     String version = read_string("VERSION")
     File ml_tree = "~{cluster_name}_iqtree.nwk"
+    String iqtree2_docker = docker
   }
   runtime {
     docker: "~{docker}"
