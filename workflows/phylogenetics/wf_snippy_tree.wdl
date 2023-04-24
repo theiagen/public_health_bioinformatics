@@ -17,7 +17,7 @@ workflow snippy_tree_wf {
     String tree_name
     Array[File] snippy_variants_outdir_tarball
     Array[String] samplenames
-    File reference
+    File reference_genome_file
     Boolean use_gubbins = true
     Boolean core_genome = true
     String? data_summary_terra_project
@@ -39,7 +39,7 @@ workflow snippy_tree_wf {
     input:
       snippy_variants_outdir_tarball = snippy_variants_outdir_tarball,
       samplenames = samplenames,
-      reference = reference,
+      reference_genome_file = reference_genome_file,
       tree_name = tree_name,
       docker = docker_snippy,
       cpu = snippy_core_cpu,

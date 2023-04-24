@@ -2,7 +2,7 @@ version 1.0
 
 task snippy_variants {
   input {
-    File reference
+    File reference_genome_file
     File read1
     File? read2
     String? query_gene
@@ -40,7 +40,7 @@ task snippy_variants {
     fi
     # call snippy
       snippy \
-      --reference ~{reference} \
+      --reference ~{reference_genome_file} \
       --outdir ~{samplename} \
       ${reads} \
       --cpus ~{cpus} \

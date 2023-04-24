@@ -6,7 +6,7 @@ task snippy_core {
     Array[String] samplenames
     String tree_name
     String docker = "quay.io/staphb/snippy:4.6.0"
-    File reference
+    File reference_genome_file
     File? bed_file
     Int disk_size = 100
     Int cpu = 8
@@ -26,7 +26,7 @@ task snippy_core {
    snippy-core \
    --prefix ~{tree_name} \
    ~{'--mask ' + bed_file} \
-   --ref ~{reference} \
+   --ref ~{reference_genome_file} \
    "${samplename_array[@]}"
 
    # run snippy clean

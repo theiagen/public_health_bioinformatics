@@ -21,10 +21,11 @@ workflow snippy_streamline {
     Array[File] assembly_fasta
     Array[String] samplenames
     String tree_name
-    File? reference_genome_fasta
+    # this input file can be a FASTA or GBK
+    File? reference_genome_file
   }
   # if user does not provide reference genome fasta, determine one for the user by running, centroid, referenceseeker and ncbi datasets to acquire one
-  if(! defined(reference_genome_fasta)){
+  if(! defined(reference_genome_file)){
   call centroid_task.centroid {
     input:
       assembly_fasta = assembly_fasta
@@ -46,7 +47,7 @@ workflow snippy_streamline {
       input:
         read1 = triplet.left.left, # access the left-most object (read 1)
         read2 = triplet.left.right, # access the right-side object on the left (read 2)
-        reference = select_first([reference_genome_fasta,ncbi_datasets_download_genome_accession.ncbi_datasets_assembly_fasta]),
+        reference_genome_file = select_first([reference_genome_file,ncbi_datasets_download_genome_accession.ncbi_datasets_assembly_fasta]),
         samplename = triplet.right # access the right-most object (samplename)
     }
   }
@@ -55,7 +56,7 @@ workflow snippy_streamline {
       tree_name = tree_name,
       snippy_variants_outdir_tarball = snippy_variants_wf.snippy_variants_outdir_tarball,
       samplenames = samplenames,
-      reference = select_first([reference_genome_fasta,ncbi_datasets_download_genome_accession.ncbi_datasets_assembly_fasta])
+      reference_genome_file = select_first([reference_genome_file,ncbi_datasets_download_genome_accession.ncbi_datasets_assembly_fasta])
   }
   call versioning.version_capture {
     input:

@@ -8,7 +8,7 @@ workflow snippy_variants_wf {
     description: "Perform SNP analysis using snippy"
   }
   input {
-    File reference
+    File reference_genome_file
     File read1
     File? read2
     String samplename
@@ -29,7 +29,7 @@ workflow snippy_variants_wf {
       samplename = samplename,
       read1 = read1,
       read2 = read2,
-      reference = reference,
+      reference_genome_file = reference_genome_file,
       docker = docker,
       cpus = cpus,
       memory = memory,
