@@ -126,12 +126,11 @@ workflow snippy_tree_wf {
 
     # gubbins outputs
     String? snippy_tree_gubbins_version = gubbins.version
-    File? snippy_tree_gubbins_labelled_tree = gubbins.gubbins_final_labelled_tree
-    File? snippy_tree_gubbins_polymorphic_fasta = gubbins.gubbins_polymorphic_fasta
+    ### commenting out because these are intermediate files and not useful to the user ###
+    #File? snippy_tree_gubbins_labelled_tree = gubbins.gubbins_final_labelled_tree
+    #File? snippy_tree_gubbins_polymorphic_fasta = gubbins.gubbins_polymorphic_fasta
     File? snippy_tree_gubbins_recombination_gff = gubbins.gubbins_recombination_gff
     File? snippy_tree_gubbins_branch_stats = gubbins.gubbins_branch_stats
-    File? snippy_tree_gubbins_timetree = gubbins.gubbins_timetree
-    File? snippy_tree_gubbins_timetree_stats = gubbins.gubbins_timetree_stats
 
     # snpdists outputs
     String snippy_tree_snpdists_version = snp_dists.version

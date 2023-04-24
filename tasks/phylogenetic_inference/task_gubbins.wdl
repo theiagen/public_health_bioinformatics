@@ -10,9 +10,6 @@ task gubbins {
     String tree_builder = "raxml"
     String? tree_args
     String nuc_subst_model = "GTRGAMMA"
-    Int bootstrap = 0
-    String? outgroup
-    File? dates_file
     Int cpu = 4
     Int disk_size = 100
     Int memory = 32
@@ -30,20 +27,12 @@ task gubbins {
     --tree-builder ~{tree_builder} \
     ~{'--tree-args ' + tree_args} \
     ~{'--model ' + nuc_subst_model} \
-    --bootstrap ~{bootstrap} \
-    ~{'--outgroup ' + outgroup} \
-    ~{'--date ' + dates_file} \
     --threads ~{cpu}
 
     # rename newick files, TSV file, and text file to have matching and appropriate file endings
     mv -v ~{cluster_name}.node_labelled.final_tree.tre ~{cluster_name}.node_labelled.final_tree.nwk
     mv -v ~{cluster_name}.per_branch_statistics.csv ~{cluster_name}.per_branch_statistics.tsv
     mv -v ~{cluster_name}.final_tree.tre ~{cluster_name}.final_tree.nwk
-    
-    # rename optional output files to have appropriate file endings
-    # echo if file not found to prevent throwing error codes
-    mv -v ~{cluster_name}.final_tree.timetree.tre ~{cluster_name}.final_tree.timetree.nwk || echo "No timetree .nwk file created, skipping renaming"
-    mv -v ~{cluster_name}.lsd.out ~{cluster_name}.lsd.out.txt || echo "No treetime .lsd.out file created, skipping renaming"
 
   >>>
   output {
@@ -55,8 +44,6 @@ task gubbins {
     File gubbins_polymorphic_fasta = "~{cluster_name}.filtered_polymorphic_sites.fasta"
     File gubbins_recombination_gff = "~{cluster_name}.recombination_predictions.gff"
     File gubbins_branch_stats = "~{cluster_name}.per_branch_statistics.tsv"
-    File? gubbins_timetree = "~{cluster_name}.final_tree.timetree.nwk"
-    File? gubbins_timetree_stats = "~{cluster_name}.lsd.out.txt"
   }
   runtime {
     docker: "~{docker}"
