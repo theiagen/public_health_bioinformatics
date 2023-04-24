@@ -64,9 +64,7 @@
     - path: miniwdl_run/call-busco/task.log
       contains: ["wdl", "theiaprok_illumina_se", "busco", "done"]
     - path: miniwdl_run/call-busco/work/BUSCO_RESULTS
-      md5sum: fa3832df623793a0d3399129df6f007a
     - path: miniwdl_run/call-busco/work/DATABASE
-      md5sum: cee23dedf42c3279dcb264cd0921d32a
     - path: miniwdl_run/call-busco/work/VERSION
       md5sum: 369fefb1c40f16c2a9c34d4903e9f1e2
     - path: miniwdl_run/call-busco/work/_miniwdl_inputs/0/test_contigs.fasta

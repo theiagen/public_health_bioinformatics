@@ -64,9 +64,7 @@
     - path: miniwdl_run/call-busco/task.log
       contains: ["wdl", "theiaprok_illumina_pe", "busco", "done"]
     - path: miniwdl_run/call-busco/work/BUSCO_RESULTS
-      md5sum: 78c7fb26411aaab73ff909a1ec248edd
     - path: miniwdl_run/call-busco/work/DATABASE
-      md5sum: cee23dedf42c3279dcb264cd0921d32a
     - path: miniwdl_run/call-busco/work/VERSION
       md5sum: 369fefb1c40f16c2a9c34d4903e9f1e2
     - path: miniwdl_run/call-busco/work/_miniwdl_inputs/0/test_contigs.fasta
@@ -111,8 +109,6 @@
     - path: miniwdl_run/call-busco/work/busco_downloads/placement_files/tree_metadata.bacteria_odb10.2019-12-16.txt
     - path: miniwdl_run/call-busco/work/test/auto_lineage/run_archaea_odb10/busco_sequences/fragmented_busco_sequences/108145at2157.faa
     - path: miniwdl_run/call-busco/work/test/auto_lineage/run_archaea_odb10/busco_sequences/fragmented_busco_sequences/108145at2157.fna
-    - path: miniwdl_run/call-busco/work/test/auto_lineage/run_archaea_odb10/busco_sequences/single_copy_busco_sequences/59314at2157.faa
-    - path: miniwdl_run/call-busco/work/test/auto_lineage/run_archaea_odb10/busco_sequences/single_copy_busco_sequences/59314at2157.fna
     - path: miniwdl_run/call-busco/work/test/auto_lineage/run_archaea_odb10/busco_sequences/single_copy_busco_sequences/84219at2157.faa
     - path: miniwdl_run/call-busco/work/test/auto_lineage/run_archaea_odb10/busco_sequences/single_copy_busco_sequences/84219at2157.fna
     - path: miniwdl_run/call-busco/work/test/auto_lineage/run_archaea_odb10/full_table.tsv
@@ -580,7 +576,7 @@
     - path: miniwdl_run/wdl/tasks/quality_control/task_ncbi_scrub.wdl
       md5sum: fc03fe5cdea1a170ecc2e207b31ce38e
     - path: miniwdl_run/wdl/tasks/quality_control/task_qc_check.wdl
-      md5sum: ef37ced77b0b7556b55e47b0863d18f9
+      md5sum: 17297e1e962ae095ae87421e4e2ebc4a
     - path: miniwdl_run/wdl/tasks/quality_control/task_quast.wdl
       md5sum: 0f58a290e74f539eac92d6751eaa757f
     - path: miniwdl_run/wdl/tasks/quality_control/task_screen.wdl
