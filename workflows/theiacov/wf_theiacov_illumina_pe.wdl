@@ -220,32 +220,56 @@ workflow theiacov_illumina_pe {
             samplename = samplename
         }
       }
-      if(defined(qc_check_table)) {
-        call qc_check.qc_check_phb as qc_check_task {
-          input:
-            qc_check_table = qc_check_table,
-            expected_taxon = organism,
-            num_reads_raw1 = read_QC_trim.fastq_scan_raw1,
-            num_reads_raw2 = read_QC_trim.fastq_scan_raw2,
-            num_reads_clean1 = read_QC_trim.fastq_scan_clean1,
-            num_reads_clean2 = read_QC_trim.fastq_scan_clean2,
-            kraken_human = read_QC_trim.kraken_human,
-            kraken_sc2 = read_QC_trim.kraken_sc2,
-            kraken_target_org = read_QC_trim.kraken_target_org,
-            kraken_human_dehosted = read_QC_trim.kraken_human_dehosted,
-            kraken_sc2_dehosted = read_QC_trim.kraken_sc2_dehosted,
-            kraken_target_org_dehosted =read_QC_trim.kraken_target_org_dehosted,
-            meanbaseq_trim = ivar_consensus.meanbaseq_trim,
-            assembly_mean_coverage = ivar_consensus.assembly_mean_coverage,
-            number_N = consensus_qc.number_N,
-            assembly_length_unambiguous = consensus_qc.number_ATCG,
-            number_Degenerate =  consensus_qc.number_Degenerate,
-            percent_reference_coverage =  consensus_qc.percent_reference_coverage,
-            sc2_s_gene_mean_coverage = sc2_gene_coverage.sc2_s_gene_depth,
-            sc2_s_gene_percent_coverage = sc2_gene_coverage.sc2_s_gene_percent_coverage,
-            vadr_num_alerts = vadr.num_alerts
+      if (defined(qc_check_table)) {
+        # empty strings for kraken outputs throw an error so qc check must be split by organism
+        if (organism == "sars-cov-2") {
+          call qc_check.qc_check_phb as qc_check_task {
+            input:
+              qc_check_table = qc_check_table,
+              expected_taxon = organism,
+              num_reads_raw1 = read_QC_trim.fastq_scan_raw1,
+              num_reads_raw2 = read_QC_trim.fastq_scan_raw2,
+              num_reads_clean1 = read_QC_trim.fastq_scan_clean1,
+              num_reads_clean2 = read_QC_trim.fastq_scan_clean2,
+              kraken_human = read_QC_trim.kraken_human,
+              kraken_sc2 = read_QC_trim.kraken_sc2,
+              kraken_human_dehosted = read_QC_trim.kraken_human_dehosted,
+              kraken_sc2_dehosted = read_QC_trim.kraken_sc2_dehosted,
+              meanbaseq_trim = ivar_consensus.meanbaseq_trim,
+              assembly_mean_coverage = ivar_consensus.assembly_mean_coverage,
+              number_N = consensus_qc.number_N,
+              assembly_length_unambiguous = consensus_qc.number_ATCG,
+              number_Degenerate =  consensus_qc.number_Degenerate,
+              percent_reference_coverage =  consensus_qc.percent_reference_coverage,
+              sc2_s_gene_mean_coverage = sc2_gene_coverage.sc2_s_gene_depth,
+              sc2_s_gene_percent_coverage = sc2_gene_coverage.sc2_s_gene_percent_coverage,
+              vadr_num_alerts = vadr.num_alerts
+          }
+        }
+        else {
+          call qc_check.qc_check_phb as qc_check_task {
+            input:
+              qc_check_table = qc_check_table,
+              expected_taxon = organism,
+              num_reads_raw1 = read_QC_trim.fastq_scan_raw1,
+              num_reads_raw2 = read_QC_trim.fastq_scan_raw2,
+              num_reads_clean1 = read_QC_trim.fastq_scan_clean1,
+              num_reads_clean2 = read_QC_trim.fastq_scan_clean2,
+              kraken_human = read_QC_trim.kraken_human,
+              kraken_target_org = read_QC_trim.kraken_target_org,
+              kraken_human_dehosted = read_QC_trim.kraken_human_dehosted,
+              kraken_target_org_dehosted = read_QC_trim.kraken_target_org_dehosted,
+              meanbaseq_trim = ivar_consensus.meanbaseq_trim,
+              assembly_mean_coverage = ivar_consensus.assembly_mean_coverage,
+              number_N = consensus_qc.number_N,
+              assembly_length_unambiguous = consensus_qc.number_ATCG,
+              number_Degenerate =  consensus_qc.number_Degenerate,
+              percent_reference_coverage =  consensus_qc.percent_reference_coverage,
+              vadr_num_alerts = vadr.num_alerts
+          }
         }
       }
+
     }
   }
   call versioning.version_capture{
