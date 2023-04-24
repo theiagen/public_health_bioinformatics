@@ -18,7 +18,8 @@ task bowtie_retrieve_mapped_pe {
     bowtie2-build "~{reference}" "~{reference}"
 
     # Map paired-end reads to reference genome using bowtie2
-    bowtie2 -x "~{reference}" -1 "~{read1}" -2 "~{read1}" -S mapped_reads.sam --no-unal
+    #bowtie2 -x "~{reference}" -1 "~{read1}" -2 "~{read2}" -S mapped_reads.sam --no-unal
+    bowtie2 -x "~{reference}" -1 "~{read1}" -2 "~{read2}" p 4 --un-conc-gz "unmapped.fastq.gz" -S "mapped_reads.sam" --no-mixed --no-discordant
 
     # Convert SAM file to BAM file using samtools
     samtools view -Sb mapped_reads.sam > mapped_reads.bam
