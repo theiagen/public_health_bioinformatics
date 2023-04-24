@@ -102,19 +102,24 @@ workflow snippy_tree_wf {
     # version capture
     String snippy_tree_version = version_capture.phb_version
     String snippy_tree_analysis_date = version_capture.date
-    # snippy core outputs
+
+    ### snippy core outputs ###
     String snippy_tree_snippy_version = snippy_core.snippy_version
-    File snippy_tree_core_alignment = snippy_core.snippy_core_alignment
-    File snippy_tree_full_alignment = snippy_core.snippy_full_alignment
-    File snippy_tree_clean_full_alignment = snippy_core.snippy_full_alignment_clean
+    # commenting out these outputs out because these are intermediate files and do not consist of final snps or alignments used to generate the tree.
+    #File snippy_tree_core_alignment = snippy_core.snippy_core_alignment
+    #File snippy_tree_full_alignment = snippy_core.snippy_full_alignment
+    #File snippy_tree_clean_full_alignment = snippy_core.snippy_full_alignment_clean
     File snippy_tree_ref = snippy_core.snippy_ref
-    File snippy_tree_all_snps = snippy_core.snippy_core_tab
+    #File snippy_tree_all_snps = snippy_core.snippy_core_tab
     File snippy_tree_snps_summary = snippy_core.snippy_txt
-    File snippy_tree_vcf = snippy_core.snippy_vcf
-    # iqtree outputs
+    #File snippy_tree_vcf = snippy_core.snippy_vcf
+
+    ### iqtree outputs ###
     String snippy_tree_iqtree_version = iqtree.version
+
     # snp_sites outputs
     String snp_sites_version = select_first([snp_sites.snp_sites_version, ''])
+
     # gubbins outputs
     String? snippy_tree_gubbins_version = gubbins.version
     File? snippy_tree_gubbins_labelled_tree = gubbins.gubbins_final_labelled_tree
@@ -123,11 +128,14 @@ workflow snippy_tree_wf {
     File? snippy_tree_gubbins_branch_stats = gubbins.gubbins_branch_stats
     File? snippy_tree_gubbins_timetree = gubbins.gubbins_timetree
     File? snippy_tree_gubbins_timetree_stats = gubbins.gubbins_timetree_stats
+
     # snpdists outputs
     String snippy_tree_snpdists_version = snp_dists.version
+
     # reorder matrix outputs
     File snippy_tree_matrix = reorder_matrix.ordered_matrix
     File snippy_tree_tree = reorder_matrix.tree
+    
     # data summary outputs
     File? snippy_tree_summarized_data = summarize_data.summarized_data
   }
