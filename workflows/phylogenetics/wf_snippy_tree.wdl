@@ -33,6 +33,8 @@ workflow snippy_tree_wf {
     Int? snippy_core_disk_size
     Int? snippy_core_memory
     Int? gubbins_disk_size
+    Int? gubbins_memory
+    Int? gubbins_cpu
     Int? iqtree_cpu
   }
   call snippy_core_task.snippy_core {
@@ -52,7 +54,9 @@ workflow snippy_tree_wf {
         alignment = snippy_core.snippy_full_alignment_clean,
         cluster_name = tree_name,
         docker = docker_gubbins,
-        disk_size = gubbins_disk_size
+        disk_size = gubbins_disk_size,
+        memory = gubbins_memory,
+        cpu = gubbins_cpu
     }
   }
   if (core_genome) {
@@ -135,7 +139,7 @@ workflow snippy_tree_wf {
     # reorder matrix outputs
     File snippy_tree_matrix = reorder_matrix.ordered_matrix
     File snippy_tree_tree = reorder_matrix.tree
-    
+
     # data summary outputs
     File? snippy_tree_summarized_data = summarize_data.summarized_data
   }

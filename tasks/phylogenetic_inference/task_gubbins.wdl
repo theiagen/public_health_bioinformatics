@@ -15,6 +15,7 @@ task gubbins {
     File? dates_file
     Int cpu = 4
     Int disk_size = 100
+    Int memory = 32
   }
   command <<<
     # date and version control
@@ -59,7 +60,7 @@ task gubbins {
   }
   runtime {
     docker: "~{docker}"
-    memory: "32 GB"
+    memory: memory + " GB"
     cpu: cpu
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
