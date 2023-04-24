@@ -192,8 +192,8 @@ workflow theiacov_ont {
             num_reads_raw1 = fastq_scan_raw_reads.read1_seq,
             num_reads_clean1 = fastq_scan_clean_reads.read1_seq,
             kraken_human = kraken2_raw.percent_human,
-            kraken_sc2 = kraken2_raw.percent_sc2,
-            kraken_target_org = kraken2_raw.percent_target_org,
+            # kraken_sc2 = kraken2_raw.percent_sc2,
+            # kraken_target_org = kraken2_raw.percent_target_org,
             # kraken_human_dehosted = read_QC_trim.kraken_human_dehosted,
             # kraken_sc2_dehosted = read_QC_trim.kraken_sc2_dehosted,
             # kraken_target_org_dehosted =read_QC_trim.kraken_target_org_dehosted,
@@ -203,8 +203,8 @@ workflow theiacov_ont {
             assembly_length_unambiguous = consensus_qc.number_ATCG,
             number_Degenerate =  consensus_qc.number_Degenerate,
             percent_reference_coverage =  consensus_qc.percent_reference_coverage,
-            sc2_s_gene_mean_coverage = sc2_gene_coverage.sc2_s_gene_depth,
-            sc2_s_gene_percent_coverage = sc2_gene_coverage.sc2_s_gene_percent_coverage,
+            # sc2_s_gene_mean_coverage = sc2_gene_coverage.sc2_s_gene_depth,
+            # sc2_s_gene_percent_coverage = sc2_gene_coverage.sc2_s_gene_percent_coverage,
             vadr_num_alerts = vadr.num_alerts
         }
       }

@@ -152,8 +152,8 @@ workflow theiacov_illumina_se {
             num_reads_raw1 = read_QC_trim.fastq_scan_raw_number_reads,
             num_reads_clean1 = read_QC_trim.fastq_scan_clean_number_reads,
             kraken_human = read_QC_trim.kraken_human,
-            kraken_sc2 = read_QC_trim.kraken_sc2,
-            kraken_target_org = read_QC_trim.kraken_target_org,
+            # kraken_sc2 = read_QC_trim.kraken_sc2,
+            # kraken_target_org = read_QC_trim.kraken_target_org,
             # kraken_human_dehosted = read_QC_trim.kraken_human_dehosted,
             # kraken_sc2_dehosted = read_QC_trim.kraken_sc2_dehosted,
             # kraken_target_org_dehosted =read_QC_trim.kraken_target_org_dehosted,
@@ -163,8 +163,8 @@ workflow theiacov_illumina_se {
             assembly_length_unambiguous = consensus_qc.number_ATCG,
             number_Degenerate =  consensus_qc.number_Degenerate,
             percent_reference_coverage =  consensus_qc.percent_reference_coverage,
-            sc2_s_gene_mean_coverage = sc2_gene_coverage.sc2_s_gene_depth,
-            sc2_s_gene_percent_coverage = sc2_gene_coverage.sc2_s_gene_percent_coverage,
+            # sc2_s_gene_mean_coverage = sc2_gene_coverage.sc2_s_gene_depth,
+            # sc2_s_gene_percent_coverage = sc2_gene_coverage.sc2_s_gene_percent_coverage,
             vadr_num_alerts = vadr.num_alerts
         }
       }
