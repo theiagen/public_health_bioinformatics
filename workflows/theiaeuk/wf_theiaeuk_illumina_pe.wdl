@@ -215,6 +215,7 @@ workflow theiaeuk_illumina_pe {
     Int? assembly_length = quast.genome_length
     Int? number_contigs = quast.number_contigs
     Int? n50_value = quast.n50_value
+    Float? quast_gc_percent = quast.gc_percent
     # Assembly QC - cg pipeline outputs
     File? cg_pipeline_report_raw = cg_pipeline_raw.cg_pipeline_report
     String? cg_pipeline_docker = cg_pipeline_raw.cg_pipeline_docker
