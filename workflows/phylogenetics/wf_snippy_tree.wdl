@@ -43,7 +43,8 @@ workflow snippy_tree_wf {
         input:
           msa_fasta = gubbins.gubbins_polymorphic_fasta,
           output_name = tree_name,
-          output_multifasta = true
+          output_multifasta = true,
+          allow_wildcard_bases = false
       }
     }
   }
@@ -53,7 +54,8 @@ workflow snippy_tree_wf {
         input:
           msa_fasta = snippy_core.snippy_full_alignment_clean,
           output_name = tree_name,
-          output_multifasta = true
+          output_multifasta = true,
+          allow_wildcard_bases = false
       }
     }
   }
