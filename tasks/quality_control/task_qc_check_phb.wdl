@@ -64,9 +64,7 @@ task qc_check_phb {
     # input: input value to examine (already cast to intended type)
     # expectation: should this input be >, >=, =, <, <= to the standard
     # standard: the value to compare the input to
-    # second_expectation: should this input be >, >=, =, <, <= to the second_standard
-    # second_standard: in case there are two values to compare (e.g., upper/lower boundary)
-    def compare(qc_note, variable_name, input_value, expectation, standard, second_expectation=None, second_standard=None):
+    def compare(qc_note, variable_name, input_value, expectation, standard):
       # create empty variable to return
       qc_status = ""
 
@@ -76,8 +74,6 @@ task qc_check_phb {
         if expectation == ">":
           if (input_value > standard):
             print("DEBUG: " + variable_name + " (" + str(input_value) + ") was greater than the threshold of " + str(standard))
-            if (second_standard): # if a second boundary exists, recursively add to the qc_note line
-              qc_note += compare(qc_note, variable_name, input_value, second_expectation, second_standard)[0]
           else:
             print("DEBUG: " + variable_name + " (" + str(input_value) + ") was not greater than the threshold of " + str(standard))
             qc_note += variable_name + " (" + str(input_value) + ") was less than or equal to the minimum threshold of " + str(standard) + "; "
@@ -85,8 +81,6 @@ task qc_check_phb {
         elif expectation == ">=":
           if (input_value >= standard):
             print("DEBUG: " + variable_name + " (" + str(input_value) + ") was greater than or equal to the threshold of " + str(standard))
-            if (second_standard): # if a second boundary exists, recursively add to the qc_note line
-              qc_note += compare(qc_note, variable_name, input_value, second_expectation, second_standard)[0]
           else:
             print("DEBUG: " + variable_name + " (" + str(input_value) + ") was not greater than or equal to the threshold of " + str(standard))
             qc_note += variable_name + " (" + str(input_value) + ") was less than the minimum threshold of " + str(standard) + "; "
@@ -94,8 +88,6 @@ task qc_check_phb {
         elif expectation == "=":
           if (input_value == standard):
             print("DEBUG: " + variable_name + " (" + str(input_value) + ") was equal to the threshold of " + str(standard))
-            if (second_standard): # if a second boundary exists, recursively add to the qc_note line
-              qc_note += compare(qc_note, variable_name, input_value, second_expectation, second_standard)[0]
           else:
             print("DEBUG: " + variable_name + " (" + str(input_value) + ") was not equal to the threshold of " + str(standard))
             qc_note += variable_name + " (" + str(input_value) + ") was not equal to the threshold of " + str(standard) + "; "
@@ -103,8 +95,6 @@ task qc_check_phb {
         elif expectation == "<":
           if (input_value < standard):
             print("DEBUG: " + variable_name + " (" + str(input_value) + ") was less than the threshold of " + str(standard))
-            if (second_standard): # if a second boundary exists, recursively add to the qc_note line
-              qc_note += compare(qc_note, variable_name, input_value, second_expectation, second_standard)[0]
           else:
             print("DEBUG: " + variable_name + " (" + str(input_value) + ") was not less than the threshold of " + str(standard))
             qc_note += variable_name + " (" + str(input_value) + ") was greater than or equal to the maximum threshold of " + str(standard) + "; "
@@ -112,8 +102,6 @@ task qc_check_phb {
         elif expectation == "<=":
           if (input_value <= standard):
             print("DEBUG: " + variable_name + " (" + str(input_value) + ") was less than or equal to the threshold of " + str(standard))
-            if (second_standard): # if a second boundary exists, recursively add to the qc_note line
-              qc_note += compare(qc_note, variable_name, input_value, second_expectation, second_standard)[0]
           else:
             print("DEBUG: " + variable_name + " (" + str(input_value) + ") was not less or equal to the threshold of " + str(standard))
             qc_note += variable_name + " (" + str(input_value) + ") was greater than the maximum threshold of " + str(standard) + "; "
@@ -249,13 +237,17 @@ task qc_check_phb {
         if ("midas_secondary_genus_abundance" in qc_check_metrics): # if this var is in the qc_check_metrics,
           if ("~{midas_secondary_genus_abundance}"): # if midas_secondary_genus_abundance variable exists,
             qc_note, qc_status = compare(qc_note, "midas_secondary_genus_abundance", float(~{midas_secondary_genus_abundance}), "<", float(taxon_df["midas_secondary_genus_abundance"][0]))
-            qc_check_metrics.remove("midas_secondary_genus_abundance")
+            qc_check_metrics.remove("midas_secondary_genus_abundance")  
 
-        if ("assembly_length_min" in qc_check_metrics) and ("assembly_length_max" in qc_check_metrics):
+        if ("assembly_length_min" in qc_check_metrics):
           if ("~{assembly_length}"):
-            qc_note, qc_status = compare(qc_note, "assembly_length", int(~{assembly_length}), ">=", int(taxon_df["assembly_length_min"][0]), "<=", int(taxon_df["assembly_length_max"][0]))
+            qc_note, qc_status = compare(qc_note, "assembly_length", int(~{assembly_length}), ">=", int(taxon_df["assembly_length_min"][0]))
             qc_check_metrics.remove("assembly_length_min")
-            qc_check_metrics.remove("assembly_length_max")     
+
+        if ("assembly_length_max" in qc_check_metrics):
+          if ("~{assembly_length}"):
+            qc_note, qc_status = compare(qc_note, "assembly_length", int(~{assembly_length}),"<=", int(taxon_df["assembly_length_max"][0]))
+            qc_check_metrics.remove("assembly_length_max")  
 
         if ("number_contigs" in qc_check_metrics): # if this var is in the qc_check_metrics,
           if ("~{number_contigs}"): # if number_contigs variable exists,
@@ -267,11 +259,15 @@ task qc_check_phb {
             qc_note, qc_status = compare(qc_note, "n50_value", int(~{n50_value}), ">=", int(taxon_df["n50_value"][0]))
             qc_check_metrics.remove("n50_value")
 
-        if ("quast_gc_percent_min" in qc_check_metrics) and ("quast_gc_percent_max" in qc_check_metrics):
+        if ("quast_gc_percent_min" in qc_check_metrics):
           if ("~{quast_gc_percent}"):
-            qc_note, qc_status = compare(qc_note, "quast_gc_percent", int(~{quast_gc_percent}), ">=", int(taxon_df["quast_gc_percent_min"][0]), "<=", int(taxon_df["quast_gc_percent_max"][0]))
-            qc_check_metrics.remove("quast_gc_percent_min")
-            qc_check_metrics.remove("quast_gc_percent_max")     
+            qc_note, qc_status = compare(qc_note, "quast_gc_percent", int(~{quast_gc_percent}), ">=", int(taxon_df["quast_gc_percent_min"][0]))
+            qc_check_metrics.remove("quast_gc_percent_min")   
+
+        if ("quast_gc_percent_max" in qc_check_metrics):
+          if ("~{quast_gc_percent}"):
+            qc_note, qc_status = compare(qc_note, "quast_gc_percent", int(~{quast_gc_percent}), "<=", int(taxon_df["quast_gc_percent_max"][0]))
+            qc_check_metrics.remove("quast_gc_percent_max")   
 
         if ("ani_highest_percent" in qc_check_metrics): # if this var is in the qc_check_metrics,
           if ("~{ani_highest_percent}"): # if ani_highest_percent variable exists,
@@ -350,6 +346,16 @@ task qc_check_phb {
             qc_note, qc_status = compare(qc_note, "assembly_mean_coverage", float(~{assembly_mean_coverage}), ">=", float(taxon_df["assembly_mean_coverage"][0]))
             qc_check_metrics.remove("assembly_mean_coverage")  
 
+        if ("assembly_length_unambiguous_min" in qc_check_metrics):
+          if ("~{assembly_length_unambiguous}"):
+            qc_note, qc_status = compare(qc_note, "assembly_length_unambiguous", int(~{assembly_length_unambiguous}), ">=", int(taxon_df["assembly_length_unambiguous_min"][0]))
+            qc_check_metrics.remove("assembly_length_unambiguous_min")
+
+        if ("assembly_length_unambiguous_max" in qc_check_metrics):
+          if ("~{assembly_length_unambiguous}"):
+            qc_note, qc_status = compare(qc_note, "assembly_length_unambiguous", int(~{assembly_length_unambiguous}), "<=", int(taxon_df["assembly_length_unambiguous_max"][0]))
+            qc_check_metrics.remove("assembly_length_unambiguous_max")  
+
         if ("number_N" in qc_check_metrics): # if this var is in the qc_check_metrics,
           if ("~{number_N}"): # if number_N variable exists,
             qc_note, qc_status = compare(qc_note, "number_N", int(~{number_N}), "<=", int(taxon_df["number_N"][0]))
@@ -358,13 +364,7 @@ task qc_check_phb {
         if ("number_Degenerate" in qc_check_metrics): # if this var is in the qc_check_metrics,
           if ("~{number_Degenerate}"): # if number_Degenerate variable exists,
             qc_note, qc_status = compare(qc_note, "number_Degenerate", int(~{number_Degenerate}), "<=", int(taxon_df["number_Degenerate"][0]))
-            qc_check_metrics.remove("number_Degenerate") 
-
-        if ("assembly_length_unambiguous_min" in qc_check_metrics) and ("assembly_length_unambiguous_max" in qc_check_metrics):
-          if ("~{assembly_length_unambiguous}"):
-            qc_note, qc_status = compare(qc_note, "assembly_length_unambiguous", int(~{assembly_length_unambiguous}), ">=", int(taxon_df["assembly_length_unambiguous_min"][0]), "<=", int(taxon_df["assembly_length_unambiguous_max"][0]))
-            qc_check_metrics.remove("assembly_length_unambiguous_min")
-            qc_check_metrics.remove("assembly_length_unambiguous_max")     
+            qc_check_metrics.remove("number_Degenerate")    
 
         if ("percent_reference_coverage" in qc_check_metrics): # if this var is in the qc_check_metrics,
           if ("~{percent_reference_coverage}"): # if percent_reference_coverage variable exists,
