@@ -1,0 +1,91 @@
+# 
+# This workflow will run on Pushes and Pull Requests against the main branch. It
+# will run pytest with MiniWDL and Cromwell for any workflows with a change to 
+# them or associated tasks.
+#
+name: Pytest Workflows
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  changes:
+    name: Check for changes
+    runs-on: ubuntu-latest
+    outputs:
+      # Expose workflows with changes
+      workflows: ${{ steps.filter.outputs.changes }}
+    steps:
+      # Checkout the repo
+      - uses: actions/checkout@v3
+
+      # Select workflows with changes
+      - uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters: "tests/config/pytest_filter.yml"
+
+  check:
+    runs-on: ubuntu-20.04
+    name: ${{ matrix.tag }} ${{ matrix.engine }}
+    needs: changes
+    if: ${{ needs.changes.outputs.workflows != '[]' && needs.changes.outputs.workflows != '' }}
+    strategy:
+      fail-fast: false
+      matrix:
+        # For every workflow, test it with MiniWDL and Cromwell
+        tag: ["${{ fromJson(needs.changes.outputs.workflows) }}"]
+        engine: ["miniwdl", "cromwell"]
+    defaults:
+      run:
+        # Play nicely with miniconda
+        shell: bash -l {0}
+    steps:
+      # Checkout the repo
+      - name: Checkout theiagen/public_health_bacterial_genomics
+        uses: actions/checkout@v3
+
+      # Import test data
+      - name: Pull Test Data from bactopia/bactopia-tests
+        uses: actions/checkout@v3
+        with:
+          repository: bactopia/bactopia-tests
+          path: bactopia-tests
+
+      # Setup Miniconda3
+      - name: Setup miniconda
+        uses: conda-incubator/setup-miniconda@v2
+        with:
+          activate-environment: actions
+          auto-activate-base: false
+
+      # Depends and env info (mostly for debug)
+      - name: Install Dependencies
+        run: |
+          conda install -y -c conda-forge -c bioconda cromwell miniwdl=1.5.2 'python>=3.7' pytest pytest-workflow 'importlib-metadata<=4.13.0'
+          uname -a && env
+
+      - name: Test ${{ matrix.tag }}
+        run: TMPDIR=~ pytest --tag ${{ matrix.tag }}_${{ matrix.engine }} --symlink --kwdof --color=yes
+
+      - name: Upload logs on failure
+        if: failure()
+        uses: actions/upload-artifact@v3
+        with:
+          name: logs-${{ matrix.engine }}
+          path: |
+            /home/runner/pytest_workflow_*/**/stdout*
+            /home/runner/pytest_workflow_*/**/stderr*
+            /home/runner/pytest_workflow_*/**/script*
+            /home/runner/pytest_workflow_*/**/rc
+            /home/runner/pytest_workflow_*/**/command
+            /home/runner/pytest_workflow_*/**/*.txt
+            /home/runner/pytest_workflow_*/**/*.log
+            /home/runner/pytest_workflow_*/**/*.out
+            /home/runner/pytest_workflow_*/**/*.err
+            /home/runner/pytest_workflow_*/**/DATE
+            /home/runner/pytest_workflow_*/**/VERSION
+            !/home/runner/pytest_workflow_*/**/*.bam*
+            !/home/runner/pytest_workflow_*/**/*.fastq.gz
