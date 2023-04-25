@@ -38,6 +38,8 @@ workflow theiacov_illumina_se {
     Int? genome_length
     # assembly parameters
     Int min_depth = 100
+    Float consensus_min_freq = 0.6 # minimum frequency for a variant to be called as SNP in consensus genome
+    Float variant_min_freq = 0.6 # minimum frequency for a variant to be reported in ivar outputs
     # read screen parameters
     Int min_reads = 113 # min basepairs / 300 (which is the longest available read length of an Illumina product)
     Int min_basepairs = 34000 # 20x coverage of hepatitis delta virus
@@ -94,6 +96,8 @@ workflow theiacov_illumina_se {
           reference_genome = reference_genome,
           primer_bed = primer_bed,
           min_depth = min_depth,
+          consensus_min_freq = consensus_min_freq,
+          variant_min_freq = variant_min_freq,
           trim_primers = trim_primers
         }
       call consensus_qc_task.consensus_qc {
