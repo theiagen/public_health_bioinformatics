@@ -179,6 +179,7 @@ workflow theiaprok_ont {
             assembly_length = quast.genome_length,
             number_contigs = quast.number_contigs,
             n50_value = quast.n50_value,
+            quast_gc_percent = quast.gc_percent,
             busco_results = busco.busco_results,
             ani_highest_percent = ani.ani_highest_percent,
             ani_highest_percent_bases_aligned = ani.ani_highest_percent_bases_aligned

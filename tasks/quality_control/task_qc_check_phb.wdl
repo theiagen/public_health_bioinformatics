@@ -24,6 +24,7 @@ task qc_check_phb {
     Int? assembly_length
     Int? number_contigs 
     Int? n50_value 
+    Float? quast_gc_percent
     String? busco_results
     # theiaprok only inputs
     String? midas_secondary_genus_abundance 
@@ -264,6 +265,12 @@ task qc_check_phb {
           if ("~{n50_value}"): # if n50_value variable exists,
             qc_note, qc_status = compare(qc_note, "n50_value", int(~{n50_value}), ">=", int(taxon_df["n50_value"][0]))
             qc_check_metrics.remove("n50_value")
+
+        if ("quast_gc_percent_min" in qc_check_metrics) and ("quast_gc_percent_max" in qc_check_metrics):
+          if ("~{quast_gc_percent}"):
+            qc_note, qc_status = compare(qc_note, "quast_gc_percent", int(~{quast_gc_percent}), ">=", int(taxon_df["quast_gc_percent_min"][0]), "<=", int(taxon_df["quast_gc_percent_max"][0]))
+            qc_check_metrics.remove("quast_gc_percent_min")
+            qc_check_metrics.remove("quast_gc_percent_max")     
 
         if ("ani_highest_percent" in qc_check_metrics): # if this var is in the qc_check_metrics,
           if ("~{ani_highest_percent}"): # if ani_highest_percent variable exists,

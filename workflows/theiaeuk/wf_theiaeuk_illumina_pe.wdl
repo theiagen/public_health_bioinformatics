@@ -157,6 +157,7 @@ workflow theiaeuk_illumina_pe {
             assembly_length = quast.genome_length,
             number_contigs = quast.number_contigs,
             n50_value = quast.n50_value,
+            quast_gc_percent = quast.gc_percent,
             busco_results = busco.busco_results
         }
       }
