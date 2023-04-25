@@ -1,6 +1,7 @@
 version 1.0
 
 import "../utilities/wf_merlin_magic.wdl" as merlin_magic_workflow
+import "../../tasks/quality_control/task_quast.wdl" as quast_task
 import "../../tasks/quality_control/task_busco.wdl" as busco_task
 import "../../tasks/taxon_id/task_gambit.wdl" as gambit_task
 import "../../tasks/quality_control/task_mummer_ani.wdl" as ani_task
@@ -42,6 +43,11 @@ workflow theiaprok_fasta {
   }
   call versioning.version_capture{
     input:
+  }
+  call quast_task.quast {
+    input:
+      assembly = assembly_fasta,
+      samplename = samplename
   }
   call gambit_task.gambit {
     input:
@@ -112,9 +118,9 @@ workflow theiaprok_fasta {
         qc_check_table = qc_check_table,
         expected_taxon = expected_taxon,
         gambit_predicted_taxon = gambit.gambit_predicted_taxon,
-        #assembly_length = quast.genome_length,
-        #number_contigs = quast.number_contigs,
-        #n50_value = quast.n50_value,
+        assembly_length = quast.genome_length,
+        number_contigs = quast.number_contigs,
+        n50_value = quast.n50_value,
         busco_results = busco.busco_results,
         ani_highest_percent = ani.ani_highest_percent,
         ani_highest_percent_bases_aligned = ani.ani_highest_percent_bases_aligned
@@ -137,6 +143,12 @@ workflow theiaprok_fasta {
         theiaprok_fasta_version = version_capture.phb_version,
         theiaprok_fasta_analysis_date = version_capture.date,
         seq_platform = seq_method,
+        quast_report = quast.quast_report,
+        quast_version = quast.version,
+        assembly_length = quast.genome_length,
+        number_contigs = quast.number_contigs,
+        n50_value = quast.n50_value,
+        quast_gc_percent = quast.gc_percent,
         gambit_report = gambit.gambit_report_file,
         gambit_predicted_taxon = gambit.gambit_predicted_taxon,
         gambit_predicted_taxon_rank = gambit.gambit_predicted_taxon_rank,
@@ -366,7 +378,14 @@ workflow theiaprok_fasta {
     String theiaprok_fasta_analysis_date = version_capture.date
     # Read Metadata
     String seq_platform = seq_method
-    #Assembly QC
+    # Assembly QC - quast outputs
+    File? quast_report = quast.quast_report
+    String? quast_version = quast.version
+    Int? assembly_length = quast.genome_length
+    Int? number_contigs = quast.number_contigs
+    Int? n50_value = quast.n50_value
+    Float? quast_gc_percent = quast.gc_percent
+    # Assembly QC - BUSCO outputs
     String busco_version = busco.busco_version
     String busco_database = busco.busco_database
     String busco_results = busco.busco_results
