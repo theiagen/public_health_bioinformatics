@@ -176,6 +176,8 @@ workflow theiaprok_illumina_se {
             qc_check_table = qc_check_table,
             expected_taxon = expected_taxon,
             gambit_predicted_taxon = gambit.gambit_predicted_taxon,
+            num_reads_raw1 = read_QC_trim.fastq_scan_raw_number_reads,
+            num_reads_clean1 = read_QC_trim.fastq_scan_clean_number_reads,
             r1_mean_q_raw = cg_pipeline_raw.r1_mean_q,
             r1_mean_readlength_raw = cg_pipeline_raw.r1_mean_readlength,
             r1_mean_q_clean = cg_pipeline_clean.r1_mean_q,

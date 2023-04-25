@@ -2,10 +2,15 @@ version 1.0
 
 task qc_check_phb {
   input {
-    # workflow agnotic inputs
+    # core inputs
     File? qc_check_table
-    String? gambit_predicted_taxon
     String? expected_taxon
+    String? gambit_predicted_taxon
+    # workflow agnostic inputs
+    Int? num_reads_raw1
+    Int? num_reads_raw2
+    Int? num_reads_clean1
+    Int? num_reads_clean2
     # theiaprok and theiaeuk inputs
     Float? r1_mean_q_raw
     Float? r2_mean_q_raw
@@ -31,10 +36,6 @@ task qc_check_phb {
     Float? ani_highest_percent 
     Float? ani_highest_percent_bases_aligned
     # theiacov inputs
-    Int? num_reads_raw1
-    Int? num_reads_raw2
-    Int? num_reads_clean1
-    Int? num_reads_clean2
     Float? kraken_human 
     Float? kraken_human_dehosted
     Float? kraken_sc2
