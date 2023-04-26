@@ -34,7 +34,10 @@ task quast {
               n50_value.write(line[1])
           if "GC" in line[0]:
             with open("GC_PERCENT", 'wt') as gc_percent:
-              gc_percent.write(line[1])       
+              gc_percent.write(line[1])
+          if "Largest contig" in line[0]:
+            with open("LARGEST_CONTIG", 'wt') as largest_contig:
+              largest_contig.write(line[1])       
 
     CODE
 
@@ -46,7 +49,8 @@ task quast {
     Int genome_length = read_int("GENOME_LENGTH")
     Int number_contigs = read_int("NUMBER_CONTIGS")
     Int n50_value = read_int("N50_VALUE")
-    Float gc_percent = read_float("GC_PERCENT")    
+    Float gc_percent = read_float("GC_PERCENT")
+    Int largest_contig = read_int("LARGEST_CONTIG")    
   }
   runtime {
     docker:  "~{docker}"

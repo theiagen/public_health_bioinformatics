@@ -102,6 +102,7 @@ workflow theiameta_ilumina_pe {
     File? assembly_fasta = select_first([ivar_consensus.assembly_fasta, shovil_denovo.assembly_fasta])
     String? assembly_length = select_first([consensus_qc.number_Total, quast.genome_length])
     String? shovill_pe_version = shovil_denovo.shovill_version
+    Int? largest_contig = quast.largest_contig
     String? ivar_version_consensus = ivar_consensus.ivar_version_consensus
     String? samtools_version_consensus = ivar_consensus.samtools_version_consensus
     }
