@@ -575,7 +575,7 @@
       md5sum: 95913bd94bdcc8fd0e356b784df656ec
     - path: miniwdl_run/wdl/tasks/quality_control/task_ncbi_scrub.wdl
       md5sum: fc03fe5cdea1a170ecc2e207b31ce38e
-    - path: miniwdl_run/wdl/tasks/quality_control/task_qc_check.wdl
+    - path: miniwdl_run/wdl/tasks/quality_control/task_qc_check_phb.wdl
       contains: ["version", "qc_check_table", "date", "output"]
     - path: miniwdl_run/wdl/tasks/quality_control/task_quast.wdl
       md5sum: 0f58a290e74f539eac92d6751eaa757f
