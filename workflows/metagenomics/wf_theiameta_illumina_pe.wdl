@@ -2,7 +2,9 @@ version 1.0
 
 import "../utilities/wf_read_QC_trim_pe.wdl" as read_qc_wf
 import "../utilities/wf_ivar_consensus.wdl" as consensus_call
+import "../../tasks/quality_control/task_consensus_qc.wdl" as consensus_qc_task
 import "../../tasks/assembly/task_shovill.wdl" as shovill_task
+import "../../tasks/quality_control/task_quast.wdl" as quast_task
 import "../../tasks/task_versioning.wdl" as versioning
 
 workflow theiameta_ilumina_pe {
@@ -40,6 +42,11 @@ workflow theiameta_ilumina_pe {
           min_depth = min_depth,
           trim_primers = false
         }
+      call consensus_qc_task.consensus_qc {
+        input:
+          assembly_fasta =  ivar_consensus.assembly_fasta,
+          reference_genome = reference
+      }
     }
     # otherwise, perform de novo assembly with megahit
     if (!defined(reference)) {
@@ -49,6 +56,11 @@ workflow theiameta_ilumina_pe {
           read2_cleaned = read_QC_trim.read2_clean,
           samplename = samplename,
           assembler = "megahit"
+      }
+      call quast_task.quast {
+        input:
+          assembly = shovil_denovo.assembly_fasta,
+          samplename = samplename
       }
     }
     call versioning.version_capture{
@@ -88,6 +100,7 @@ workflow theiameta_ilumina_pe {
     File? kraken_report_dehosted = read_QC_trim.kraken_report_dehosted
     # Assembly - shovill/ivar outputs 
     File? assembly_fasta = select_first([ivar_consensus.assembly_fasta, shovil_denovo.assembly_fasta])
+    String? assembly_length = select_first([consensus_qc.number_Total, quast.genome_length])
     String? shovill_pe_version = shovil_denovo.shovill_version
     String? ivar_version_consensus = ivar_consensus.ivar_version_consensus
     String? samtools_version_consensus = ivar_consensus.samtools_version_consensus
