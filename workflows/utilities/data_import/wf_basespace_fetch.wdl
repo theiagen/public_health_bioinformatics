@@ -40,7 +40,7 @@ task fetch_bs {
     String basespace_collection_id
     String api_server
     String access_token
-    Int mem_size_gb=8
+    Int mem_size_gb = 8
     Int CPUs = 2
     Int disk_size = 100
     Int Preemptible = 1
@@ -93,7 +93,7 @@ task fetch_bs {
       mkdir ./dataset_${dataset_id} && cd ./dataset_${dataset_id}
       echo "dataset download: ${bs_command} download dataset -i ${dataset_id} -o . --retry"
       ${bs_command} download dataset -i ${dataset_id} -o . --retry && cd ..
-      echo -e "downladed data: \n $(ls ./dataset_*/*)"
+      echo -e "downloaded data: \n $(ls ./dataset_*/*)"
     done
 
     # rename FASTQ files to add back in underscores that Illumina/Basespace changed into hyphens
