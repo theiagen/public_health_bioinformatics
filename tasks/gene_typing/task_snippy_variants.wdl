@@ -32,12 +32,7 @@ task snippy_variants {
     else 
       reads="--R1 ~{read1} --R2 ~{read2}"
     fi
-    # set no_hit var
-    if [ -z "~{query_gene}" ]; then 
-     no_hit="NA: No query gene was provided"
-   else 
-    no_hit="No variants identified in queried genes (~{query_gene})" 
-    fi
+    
     # call snippy
       snippy \
       --reference ~{reference} \
@@ -52,34 +47,14 @@ task snippy_variants {
       ~{'--minfrac ' + min_frac} \
       ~{'--minqual ' + min_quality} \
       ~{'--maxsoft ' + maxsoft}
-    # parse gene-specific outputs from snps.tab
-    echo -e "samplename,$(head -n 1 ./~{samplename}/~{samplename}.csv)" > ./gene_query.csv
-    for qgene in $(echo "~{query_gene}" | sed "s/,/ /g");
-      # capture queried hits to single file 
-      do 
-        if grep -q  "${qgene}" ./~{samplename}/~{samplename}.csv; then 
-          grep "${qgene}" ./~{samplename}/~{samplename}.csv | awk '{print "'~{samplename}'," $0}' >> ./gene_query.csv
-          # curate relevant columns of quieried hits to single output
-          grep "${qgene}" ./gene_query.csv | awk -F"," '{print "'${qgene}': "$15" ("$12"; "$7")"}' >> snippy_variant_hits_tmp
-        fi
-     done
-   # convert newlines to comma
 
-   if [ -f snippy_variant_hits_tmp ]; then
-     paste -s -d, snippy_variant_hits_tmp > SNIPPY_VARIANT_HITS
-   else
-     echo "${no_hit}" > SNIPPY_VARIANT_HITS
-   fi
     # Compress output dir
     tar -cvzf "./~{samplename}_snippy_variants_outdir.tar" "./~{samplename}"
   >>>
   output {
     String snippy_variants_version = read_string("VERSION")
-    String snippy_variants_query = "~{query_gene}"
-    String snippy_variants_hits = read_string("SNIPPY_VARIANT_HITS")
     File snippy_variants_outdir_tarball = "./~{samplename}_snippy_variants_outdir.tar"
     Array[File] snippy_outputs = glob("~{samplename}/~{samplename}*")
-    File snippy_variants_gene_query_results = "./gene_query.csv"
     File snippy_variants_results = "~{samplename}/~{samplename}.csv"
     File snippy_variants_bam = "~{samplename}/~{samplename}.bam"
     File snippy_variants_bai ="~{samplename}/~{samplename}.bam.bai"
