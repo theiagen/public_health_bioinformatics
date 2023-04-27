@@ -28,10 +28,11 @@ import "../../tasks/gene_typing/task_abricate.wdl" as abricate_task
 # theiaeuk
 import "../../tasks/species_typing/task_cauris_cladetyper.wdl" as cauris_cladetyper
 import "../../tasks/gene_typing/task_snippy_variants.wdl" as snippy
+import "../../tasks/gene_typing/task_snippy_gene_query.wdl" as snippy_gene_query
 
 workflow merlin_magic {
   meta {
-    description: "Workflow for bacterial species typing; based on the Bactopia subworkflow Merlin (https://bactopia.github.io/bactopia-tools/merlin/)"
+    description: "Workflow for bacterial and fungal species typing; based on the Bactopia subworkflow Merlin (https://bactopia.github.io/bactopia-tools/merlin/)"
   }
   input {
     String samplename
@@ -53,6 +54,7 @@ workflow merlin_magic {
     Boolean theiaeuk = false
     Boolean tbprofiler_additional_outputs = false
     String output_seq_method_type = "WGS"
+    String? snippy_query_gene
   }
   # theiaprok
   if (merlin_tag == "Acinetobacter baumannii") {
@@ -266,8 +268,14 @@ workflow merlin_magic {
             reference = cladetyper.clade_spec_ref,
             read1 = select_first([read1]),
             read2 = read2,
-            query_gene = "FKS1,'lanosterol 14-alpha demethylase','lanosterol_14-alpha_demethylase',FUR1,'uracil_phosphoribosyltransferase','uracil phosphoribosyltransferase'",
             samplename = samplename
+        }
+        call snippy_gene_query.snippy_gene_query as snippy_gene_query_cauris {
+          input:
+            samplename = samplename,
+            snippy_variants_results = snippy_cauris.snippy_variants_results,
+            reference = cladetyper.clade_spec_ref,
+            query_gene = select_first([snippy_query_gene,"FKS1,'lanosterol 14-alpha demethylase','lanosterol_14-alpha_demethylase',FUR1,'uracil_phosphoribosyltransferase','uracil phosphoribosyltransferase'"]),
         }
       }
     }
@@ -278,8 +286,14 @@ workflow merlin_magic {
             reference = "gs://theiagen-public-files/terra/theiaeuk_files/Candida_albicans_GCF_000182965.3_ASM18296v3_genomic.gbff",
             read1 = select_first([read1]),
             read2 = read2,
-            query_gene = "'lanosterol 14-alpha demethylase','lanosterol_14-alpha_demethylase',FKS1,FUR1,'uracil_phosphoribosyltransferase',RTA2",
             samplename = samplename
+        }
+        call snippy_gene_query.snippy_gene_query as snippy_gene_query_calbicans {
+          input:
+            samplename = samplename,
+            snippy_variants_results = snippy_calbicans.snippy_variants_results,
+            reference = "gs://theiagen-public-files/terra/theiaeuk_files/Candida_albicans_GCF_000182965.3_ASM18296v3_genomic.gbff",
+            query_gene = select_first([snippy_query_gene,"'lanosterol 14-alpha demethylase','lanosterol_14-alpha_demethylase',FKS1,FUR1,'uracil_phosphoribosyltransferase',RTA2"]),
         }
       }
     }
@@ -290,8 +304,14 @@ workflow merlin_magic {
             reference = "gs://theiagen-public-files/terra/theiaeuk_files/Aspergillus_fumigatus_GCF_000002655.1_ASM265v1_genomic.gbff",
             read1 = select_first([read1]),
             read2 = read2,
-            query_gene = "CYP51a,HAPE,COX10",
             samplename = samplename
+        }
+        call snippy_gene_query.snippy_gene_query as snippy_gene_query_afumigatus {
+          input:
+            samplename = samplename,
+            snippy_variants_results = snippy_afumigatus.snippy_variants_results,
+            reference = "gs://theiagen-public-files/terra/theiaeuk_files/Aspergillus_fumigatus_GCF_000002655.1_ASM265v1_genomic.gbff",
+            query_gene = select_first([snippy_query_gene,"CYP51a,HAPE,COX10"]),
         }
       }
     }
@@ -304,6 +324,13 @@ workflow merlin_magic {
             read2 = read2,
             query_gene = "ERG11",
             samplename = samplename
+        }
+        call snippy_gene_query.snippy_gene_query as snippy_gene_query_crypto {
+          input:
+            samplename = samplename,
+            snippy_variants_results = snippy_crypto.snippy_variants_results,
+            reference = "gs://theiagen-public-files/terra/theiaeuk_files/Cryptococcus_neoformans_GCF_000091045.1_ASM9104v1_genomic.gbff",
+            query_gene = select_first([snippy_query_gene,"ERG11"]),
         }
       }
     }
