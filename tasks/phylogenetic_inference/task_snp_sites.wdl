@@ -39,6 +39,7 @@ task snp_sites {
     File? snp_sites_phylip = "~{output_name}.phylip"
     File? snp_sites_multifasta = "~{output_name}.snp_sites.aln"
     String snp_sites_version = read_string("VERSION")
+    String snp_sites_docker = docker
   }
   runtime {
     docker: docker
