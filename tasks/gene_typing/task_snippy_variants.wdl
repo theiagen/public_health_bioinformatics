@@ -75,6 +75,7 @@ task snippy_variants {
   >>>
   output {
     String snippy_variants_version = read_string("VERSION")
+    String snippy_docker = docker
     String snippy_variants_query = "~{query_gene}"
     String snippy_variants_hits = read_string("SNIPPY_VARIANT_HITS")
     File snippy_variants_outdir_tarball = "./~{samplename}_snippy_variants_outdir.tar"
