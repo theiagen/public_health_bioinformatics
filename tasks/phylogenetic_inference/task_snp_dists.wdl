@@ -17,7 +17,8 @@ task snp_dists {
   >>>
   output {
     String date = read_string("DATE")
-    String version = read_string("VERSION")
+    String snp_dists_version = read_string("VERSION")
+    String snp_dists_docker = docker
     File snp_matrix = "~{cluster_name}_snp_distance_matrix.tsv"
   }
   runtime {
