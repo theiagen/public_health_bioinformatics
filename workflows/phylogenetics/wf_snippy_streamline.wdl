@@ -62,57 +62,51 @@ workflow snippy_streamline {
     input:
   }
   output {
-    # version capture
+    ### version capture ###
     String snippy_streamline_version = version_capture.phb_version
     String snippy_streamline_analysis_date = version_capture.date
-    # centroid outputs
-    String? snippy_streamline_centroid_genome_samplename = centroid.centroid_genome_samplename
+
+    ### centroid outputs ###
+    String? ss_centroid_genome_samplename = centroid.centroid_genome_samplename
     File? snippy_streamline_centroid_genome_fasta = centroid.centroid_genome_fasta
     File? snippy_streamline_centroid_mash_tsv = centroid.centroid_mash_tsv
-    # referenceseeker outputs
+    
+    ### referenceseeker outputs ###
     String? snippy_streamline_referenceseeker_top_hit_ncbi_accession = referenceseeker.referenceseeker_top_hit_ncbi_accession
     String? snippy_streamline_referenceseeker_version = referenceseeker.referenceseeker_version
     File? snippy_streamline_referenceseeker_tsv = referenceseeker.referenceseeker_tsv
     String? snippy_streamline_referenceseeker_docker = referenceseeker.referenceseeker_docker
     String? snippy_streamline_referenceseeker_database = referenceseeker.referenceseeker_database
-    # ncbi datasets outputs
+
+    ### ncbi datasets outputs ###
     File? snippy_streamline_ncbi_datasets_assembly_data_report_json = ncbi_datasets_download_genome_accession.ncbi_datasets_assembly_data_report_json
     File? snippy_streamline_ncbi_datasets_assembly_fasta = ncbi_datasets_download_genome_accession.ncbi_datasets_assembly_fasta 
     String? snippy_streamline_ncbi_datasets_version = ncbi_datasets_download_genome_accession.ncbi_datasets_version
     String? snippy_streamline_ncbi_datasets_docker = ncbi_datasets_download_genome_accession.ncbi_datasets_docker
-    # snippy_variants output
-    Array[File] snippy_streamline_snippy_variants_outdir_tarball = snippy_variants_wf.snippy_variants_outdir_tarball
-    # snippy_tree version
-    String snippy_streamline_snippy_version = snippy_tree_wf.snippy_tree_snippy_version
-    # snippy_tree alignments
-    #File snippy_streamline_core_alignment = snippy_tree_wf.snippy_tree_core_alignment
-    #File snippy_streamline_full_alignment = snippy_tree_wf.snippy_tree_full_alignment
-    #File snippy_streamline_clean_full_alignment = snippy_tree_wf.snippy_tree_clean_full_alignment
-    # snippy_tree reference file
-    File snippy_streamline_ref = snippy_tree_wf.snippy_tree_ref
-    # snippy_tree variant outputs
-    #File snippy_streamline_all_snps = snippy_tree_wf.snippy_tree_all_snps
-    File snippy_streamline_snps_summary = snippy_tree_wf.snippy_tree_snps_summary
-    #File snippy_streamline_vcf = snippy_tree_wf.snippy_tree_vcf
-    # iqtree outputs
-    String snippy_streamline_iqtree_version = snippy_tree_wf.snippy_tree_iqtree_version
-    # snp_sites outputs
-    String snp_sites_version = snippy_tree_wf.snp_sites_version
-    # gubbins outputs
-    String? snippy_streamline_gubbins_version = snippy_tree_wf.snippy_tree_gubbins_version
-    File? snippy_streamline_gubbins_labelled_tree = snippy_tree_wf.snippy_tree_gubbins_labelled_tree
-    File? snippy_streamline_gubbins_polymorphic_fasta = snippy_tree_wf.snippy_tree_gubbins_polymorphic_fasta
-    File? snippy_streamline_gubbins_recombination_gff = snippy_tree_wf.snippy_tree_gubbins_recombination_gff
-    File? snippy_streamline_gubbins_branch_stats = snippy_tree_wf.snippy_tree_gubbins_branch_stats
-    File? snippy_streamline_gubbins_timetree = snippy_tree_wf.snippy_tree_gubbins_timetree
-    File? snippy_streamline_gubbins_timetree_stats = snippy_tree_wf.snippy_tree_gubbins_timetree_stats
-    # snpdists outputs
-    String snippy_streamline_snpdists_version = snippy_tree_wf.snippy_tree_snpdists_version
-    # reorder matrix outputs
-    File snippy_streamline_matrix = snippy_tree_wf.snippy_tree_matrix
-    File snippy_streamline_tree = snippy_tree_wf.snippy_tree_tree
-    # data summary outputs
-    File? snippy_streamline_summarized_data = snippy_tree_wf.snippy_tree_summarized_data
-  }
 
+    ### snippy_variants wf outputs ###
+    Array[File] snippy_variants_outdir_tarball = snippy_variants_wf.snippy_variants_outdir_tarball
+    Array[String] snippy_variants_snippy_version = snippy_variants_wf.snippy_version
+    Array[String] snippy_variants_snippy_docker = snippy_variants_wf.snippy_docker
+
+    ### snippy_tree wf outputs ###
+    String snippy_tree_snippy_version = snippy_tree_wf.snippy_tree_snippy_version
+    String snippy_tree_snippy_docker = snippy_tree_wf.snippy_tree_snippy_docker
+    String snippy_iqtree2_docker = snippy_tree_wf.snippy_iqtree2_docker
+    String snippy_iqtree2_version = snippy_tree_wf.snippy_iqtree2_version
+    File snippy_final_alignment = snippy_tree_wf.snippy_final_alignment
+    File snippy_final_tree = snippy_tree_wf.snippy_final_tree
+    File snippy_ref = snippy_tree_wf.snippy_ref
+    File snippy_msa_snps_summary = snippy_tree_wf.snippy_msa_snps_summary
+    String? snippy_snp_sites_version = snippy_tree_wf.snippy_snp_sites_version
+    String? snippy_snp_sites_docker = snippy_tree_wf.snippy_snp_sites_docker
+    String? snippy_gubbins_version = snippy_tree_wf.snippy_gubbins_version
+    String? snippy_gubbins_docker = snippy_tree_wf.snippy_gubbins_docker
+    File? snippy_gubbins_recombination_gff = snippy_tree_wf.snippy_gubbins_recombination_gff
+    File? snippy_gubbins_branch_stats = snippy_tree_wf.snippy_gubbins_branch_stats
+    String snippy_snp_dists_version = snippy_tree_wf.snippy_snp_dists_version
+    String snippy_snp_dists_docker = snippy_tree_wf.snippy_snp_dists_docker
+    File snippy_snp_matrix = snippy_tree_wf.snippy_snp_matrix
+    File? snippy_summarized_data = snippy_tree_wf.snippy_summarized_data
+  }
 }

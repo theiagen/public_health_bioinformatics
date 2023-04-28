@@ -2,7 +2,7 @@ version 1.0
 
 import "../../tasks/phylogenetic_inference/task_snippy_core.wdl" as snippy_core_task
 import "../../tasks/phylogenetic_inference/task_snp_sites.wdl" as snp_sites_task
-import "../../tasks/phylogenetic_inference/task_iqtree.wdl" as iqtree_task
+import "../../tasks/phylogenetic_inference/task_iqtree2.wdl" as iqtree2_task
 import "../../tasks/phylogenetic_inference/task_snp_dists.wdl" as snp_dists_task
 import "../../tasks/phylogenetic_inference/task_reorder_matrix.wdl" as reorder_matrix_task
 import "../../tasks/phylogenetic_inference/task_gubbins.wdl" as gubbins_task
@@ -35,7 +35,10 @@ workflow snippy_tree_wf {
     Int? gubbins_disk_size
     Int? gubbins_memory
     Int? gubbins_cpu
-    Int? iqtree_cpu
+    Int? iqtree2_cpu
+    Int? iqtree2_memory
+    Int? iqtree2_disk_size
+    String? iqtree2_model
   }
   call snippy_core_task.snippy_core {
     input:
@@ -69,13 +72,17 @@ workflow snippy_tree_wf {
           docker = docker_snp_sites
       }
   }
-  call iqtree_task.iqtree {
+  call iqtree2_task.iqtree2 {
     input:
       alignment = select_first([snp_sites.snp_sites_multifasta, gubbins.gubbins_polymorphic_fasta, snippy_core.snippy_full_alignment_clean]),
       cluster_name = tree_name,
       docker = docker_iqtree,
-      cpu = iqtree_cpu
+      cpu = iqtree2_cpu,
+      memory = iqtree2_memory,
+      disk_size = iqtree2_disk_size,
+      iqtree2_model = iqtree2_model
   }
+  
   call snp_dists_task.snp_dists {
     input:
       alignment = select_first([snp_sites.snp_sites_multifasta, gubbins.gubbins_polymorphic_fasta, snippy_core.snippy_full_alignment_clean]),
@@ -84,7 +91,7 @@ workflow snippy_tree_wf {
   }
   call reorder_matrix_task.reorder_matrix {
     input:
-      input_tree = iqtree.ml_tree,
+      input_tree = iqtree2.ml_tree,
       matrix = snp_dists.snp_matrix,
       cluster_name = tree_name 
   }
@@ -109,37 +116,36 @@ workflow snippy_tree_wf {
 
     ### snippy core outputs ###
     String snippy_tree_snippy_version = snippy_core.snippy_version
-    # commenting out these outputs out because these are intermediate files and do not consist of final snps or alignments used to generate the tree.
-    #File snippy_tree_core_alignment = snippy_core.snippy_core_alignment
-    #File snippy_tree_full_alignment = snippy_core.snippy_full_alignment
-    #File snippy_tree_clean_full_alignment = snippy_core.snippy_full_alignment_clean
-    File snippy_tree_ref = snippy_core.snippy_ref
-    #File snippy_tree_all_snps = snippy_core.snippy_core_tab
-    File snippy_tree_snps_summary = snippy_core.snippy_txt
-    #File snippy_tree_vcf = snippy_core.snippy_vcf
-
-    ### iqtree outputs ###
-    String snippy_tree_iqtree_version = iqtree.version
-
-    # snp_sites outputs
-    String snp_sites_version = select_first([snp_sites.snp_sites_version, ''])
+    String snippy_tree_snippy_docker = snippy_core.snippy_docker_image
+    File snippy_ref = snippy_core.snippy_ref
+    File snippy_msa_snps_summary = snippy_core.snippy_txt
 
     # gubbins outputs
-    String? snippy_tree_gubbins_version = gubbins.version
-    ### commenting out because these are intermediate files and not useful to the user ###
-    #File? snippy_tree_gubbins_labelled_tree = gubbins.gubbins_final_labelled_tree
-    #File? snippy_tree_gubbins_polymorphic_fasta = gubbins.gubbins_polymorphic_fasta
-    File? snippy_tree_gubbins_recombination_gff = gubbins.gubbins_recombination_gff
-    File? snippy_tree_gubbins_branch_stats = gubbins.gubbins_branch_stats
+    String? snippy_gubbins_version = gubbins.version
+    String? snippy_gubbins_docker = gubbins.gubbins_docker
+    File? snippy_gubbins_recombination_gff = gubbins.gubbins_recombination_gff
+    File? snippy_gubbins_branch_stats = gubbins.gubbins_branch_stats
+
+    ### snp_sites outputs ###
+    String? snippy_snp_sites_version = snp_sites.snp_sites_version
+    String? snippy_snp_sites_docker = snp_sites.snp_sites_docker
+
+    ### iqtree outputs ###
+    String snippy_iqtree2_version = iqtree2.version
+    String snippy_iqtree2_docker = iqtree2.iqtree2_docker
 
     # snpdists outputs
-    String snippy_tree_snpdists_version = snp_dists.version
+    String snippy_snp_dists_version = snp_dists.snp_dists_version
+    String snippy_snp_dists_docker = snp_dists.snp_dists_docker
 
     # reorder matrix outputs
-    File snippy_tree_matrix = reorder_matrix.ordered_matrix
-    File snippy_tree_tree = reorder_matrix.tree
+    File snippy_snp_matrix = reorder_matrix.ordered_matrix
+    File snippy_final_tree = reorder_matrix.tree # this is same output tree from iqtree2, but it is midpoint rooted 
 
     # data summary outputs
-    File? snippy_tree_summarized_data = summarize_data.summarized_data
+    File? snippy_summarized_data = summarize_data.summarized_data
+
+    # set final alignment from 3 possible task outputs
+    File snippy_final_alignment = select_first([snp_sites.snp_sites_multifasta,gubbins.gubbins_polymorphic_fasta,snippy_core.snippy_full_alignment_clean])
   }
 }
