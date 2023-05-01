@@ -24,24 +24,26 @@ workflow snippy_tree_wf {
     String? data_summary_terra_workspace
     String? data_summary_terra_table
     String? data_summary_column_names # comma delimited
-    String? docker_snippy
-    String? docker_gubbins
-    String? docker_snp_sites
-    String? docker_iqtree
-    String? docker_snp_dists
+    String? snippy_core_docker
     Int? snippy_core_cpu 
     Int? snippy_core_disk_size
     Int? snippy_core_memory
     Int? gubbins_disk_size
     Int? gubbins_memory
     Int? gubbins_cpu
+    String? gubbins_docker
     Int? iqtree2_cpu
     Int? iqtree2_memory
     Int? iqtree2_disk_size
+    String? iqtree2_opts
+    String? iqtree2_docker
+    String? iqtree2_bootstraps
     String? iqtree2_model
+    String? snp_dists_docker
     Int? snp_sites_cpus
     Int? snp_sites_disk_size
     Int? snp_sites_memory
+    String? snp_sites_docker
   }
   call snippy_core_task.snippy_core {
     input:
@@ -49,7 +51,7 @@ workflow snippy_tree_wf {
       samplenames = samplenames,
       reference_genome_file = reference_genome_file,
       tree_name = tree_name,
-      docker = docker_snippy,
+      docker = snippy_core_docker,
       cpu = snippy_core_cpu,
       disk_size = snippy_core_disk_size,
       memory = snippy_core_memory
@@ -59,7 +61,7 @@ workflow snippy_tree_wf {
       input:
         alignment = snippy_core.snippy_full_alignment_clean,
         cluster_name = tree_name,
-        docker = docker_gubbins,
+        docker = gubbins_docker,
         disk_size = gubbins_disk_size,
         memory = gubbins_memory,
         cpu = gubbins_cpu
@@ -73,7 +75,7 @@ workflow snippy_tree_wf {
           output_name = tree_name,
           output_multifasta = true,
           allow_wildcard_bases = false,
-          docker = docker_snp_sites,
+          docker = snp_sites_docker,
           output_vcf = false,
           output_phylip = false,
           output_pseudo_ref = false,
@@ -87,19 +89,21 @@ workflow snippy_tree_wf {
     input:
       alignment = select_first([snp_sites.snp_sites_multifasta, gubbins.gubbins_polymorphic_fasta, snippy_core.snippy_full_alignment_clean]),
       cluster_name = tree_name,
-      docker = docker_iqtree,
+      docker = iqtree2_docker,
       cpu = iqtree2_cpu,
       memory = iqtree2_memory,
       disk_size = iqtree2_disk_size,
       iqtree2_model = iqtree2_model,
-      core_genome = core_genome
+      core_genome = core_genome,
+      iqtree2_opts = iqtree2_opts,
+      iqtree2_bootstraps = iqtree2_bootstraps
   }
   
   call snp_dists_task.snp_dists {
     input:
       alignment = select_first([snp_sites.snp_sites_multifasta, gubbins.gubbins_polymorphic_fasta, snippy_core.snippy_full_alignment_clean]),
       cluster_name = tree_name,
-      docker = docker_snp_dists
+      docker = snp_dists_docker
   }
   call reorder_matrix_task.reorder_matrix {
     input:

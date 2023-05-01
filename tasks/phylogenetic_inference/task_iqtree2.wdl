@@ -5,9 +5,9 @@ task iqtree2 {
     File alignment
     String cluster_name
     String? iqtree2_model # For comparison to other tools use HKY for bactopia, GTR+F+I for grandeur, GTR+G4 for nullarbor, GTR+G for dryad
-    Int iqtree_bootstraps = 1000 #  Ultrafast bootstrap replicates
+    Int iqtree2_bootstraps = 1000 #  Ultrafast bootstrap replicates
     Int alrt = 1000 # SH-like approximate likelihood ratio test (SH-aLRT) replicates
-    String? iqtree_opts
+    String? iqtree2_opts
     String docker = "quay.io/staphb/iqtree2:2.1.2"
     Int disk_size = 100
     Int cpu = 4
@@ -55,15 +55,15 @@ task iqtree2 {
           -nt AUTO \
           -s msa.fasta \
           -m ${IQTREE2_MODEL} \
-          -bb ~{iqtree_bootstraps} \
-          -alrt ~{alrt} ~{iqtree_opts}
+          -bb ~{iqtree2_bootstraps} \
+          -alrt ~{alrt} ~{iqtree2_opts}
       else
         echo "running iqtree2 without the -m flag for providing a model. Will default to iqtree2 defaults"
         iqtree2 \
           -nt AUTO \
           -s msa.fasta \
-          -bb ~{iqtree_bootstraps} \
-          -alrt ~{alrt} ~{iqtree_opts}
+          -bb ~{iqtree2_bootstraps} \
+          -alrt ~{alrt} ~{iqtree2_opts}
       fi
 
       # rename the final output newick file
