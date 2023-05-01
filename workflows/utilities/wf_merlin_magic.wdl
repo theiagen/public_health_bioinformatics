@@ -275,7 +275,7 @@ workflow merlin_magic {
             samplename = samplename,
             snippy_variants_results = snippy_cauris.snippy_variants_results,
             reference = cladetyper.clade_spec_ref,
-            query_gene = select_first([snippy_query_gene,"FKS1,'lanosterol 14-alpha demethylase','lanosterol_14-alpha_demethylase',FUR1,'uracil_phosphoribosyltransferase','uracil phosphoribosyltransferase'"]),
+            query_gene = select_first([snippy_query_gene,"FKS1,lanosterol.14-alpha.demethylase,uracil.phosphoribosyltransferase"]),
         }
       }
     }
@@ -293,7 +293,7 @@ workflow merlin_magic {
             samplename = samplename,
             snippy_variants_results = snippy_calbicans.snippy_variants_results,
             reference = "gs://theiagen-public-files/terra/theiaeuk_files/Candida_albicans_GCF_000182965.3_ASM18296v3_genomic.gbff",
-            query_gene = select_first([snippy_query_gene,"'lanosterol 14-alpha demethylase','lanosterol_14-alpha_demethylase',FKS1,FUR1,'uracil_phosphoribosyltransferase',RTA2"]),
+            query_gene = select_first([snippy_query_gene,"GCS1,ERG11,FUR1,RTA2"]), # GCS1 is another name for FKS1
         }
       }
     }
@@ -311,7 +311,7 @@ workflow merlin_magic {
             samplename = samplename,
             snippy_variants_results = snippy_afumigatus.snippy_variants_results,
             reference = "gs://theiagen-public-files/terra/theiaeuk_files/Aspergillus_fumigatus_GCF_000002655.1_ASM265v1_genomic.gbff",
-            query_gene = select_first([snippy_query_gene,"CYP51a,HAPE,COX10"]),
+            query_gene = select_first([snippy_query_gene,"Cyp51A,HapE,AFUA_4G08340"]), # AFUA_4G08340 is COX10 according to MARDy
         }
       }
     }
@@ -322,7 +322,6 @@ workflow merlin_magic {
             reference = "gs://theiagen-public-files/terra/theiaeuk_files/Cryptococcus_neoformans_GCF_000091045.1_ASM9104v1_genomic.gbff",
             read1 = select_first([read1]),
             read2 = read2,
-            query_gene = "ERG11",
             samplename = samplename
         }
         call snippy_gene_query.snippy_gene_query as snippy_gene_query_crypto {
@@ -330,7 +329,7 @@ workflow merlin_magic {
             samplename = samplename,
             snippy_variants_results = snippy_crypto.snippy_variants_results,
             reference = "gs://theiagen-public-files/terra/theiaeuk_files/Cryptococcus_neoformans_GCF_000091045.1_ASM9104v1_genomic.gbff",
-            query_gene = select_first([snippy_query_gene,"ERG11"]),
+            query_gene = select_first([snippy_query_gene,"CNA00300"]), # CNA00300 is ERG11 for this reference genome
         }
       }
     }
