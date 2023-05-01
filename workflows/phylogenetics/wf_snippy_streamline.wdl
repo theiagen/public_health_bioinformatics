@@ -94,6 +94,7 @@ workflow snippy_streamline {
     String snippy_tree_snippy_docker = snippy_tree_wf.snippy_tree_snippy_docker
     String snippy_iqtree2_docker = snippy_tree_wf.snippy_iqtree2_docker
     String snippy_iqtree2_version = snippy_tree_wf.snippy_iqtree2_version
+    String snippy_iqtree2_model_used = snippy_tree_wf.snippy_iqtree2_model_used
     File snippy_final_alignment = snippy_tree_wf.snippy_final_alignment
     File snippy_final_tree = snippy_tree_wf.snippy_final_tree
     File snippy_ref = snippy_tree_wf.snippy_ref

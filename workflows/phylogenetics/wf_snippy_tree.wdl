@@ -146,9 +146,10 @@ workflow snippy_tree_wf {
     String? snippy_snp_sites_version = snp_sites.snp_sites_version
     String? snippy_snp_sites_docker = snp_sites.snp_sites_docker
 
-    ### iqtree outputs ###
+    ### iqtree2 outputs ###
     String snippy_iqtree2_version = iqtree2.version
     String snippy_iqtree2_docker = iqtree2.iqtree2_docker
+    String snippy_iqtree2_model_used = iqtree2.iqtree2_model_used
 
     # snpdists outputs
     String snippy_snp_dists_version = snp_dists.snp_dists_version

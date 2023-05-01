@@ -57,6 +57,10 @@ task iqtree2 {
           -m ${IQTREE2_MODEL} \
           -bb ~{iqtree2_bootstraps} \
           -alrt ~{alrt} ~{iqtree2_opts}
+
+      # write the iqtree2_model used to a txt file for output as a string
+      echo ${IQTREE2_MODEL} | tee tee IQTREE2_MODEL.TXT
+
       else
         echo "running iqtree2 without the -m flag for providing a model. Will default to iqtree2 defaults"
         iqtree2 \
@@ -64,6 +68,11 @@ task iqtree2 {
           -s msa.fasta \
           -bb ~{iqtree2_bootstraps} \
           -alrt ~{alrt} ~{iqtree2_opts}
+
+        # for scenario where user did not specify iqtree2_model input nor core_genome boolean input, determine iqtree2_model used by parsing log file
+        # first sed is to remove "Best-fit model: " and second sed is to remove anything after the word "chosen *", leaving only the name of the model
+        grep "Best-fit model" msa.fasta.log | sed 's|Best-fit model: ||g;s|chosen.*||' | tee IQTREE2_MODEL.TXT
+
       fi
 
       # rename the final output newick file
@@ -74,6 +83,7 @@ task iqtree2 {
     String date = read_string("DATE")
     String version = read_string("VERSION")
     File ml_tree = "~{cluster_name}_iqtree.nwk"
+    String iqtree2_model_used = read_string("IQTREE2_MODEL.TXT")
     String iqtree2_docker = docker
   }
   runtime {
