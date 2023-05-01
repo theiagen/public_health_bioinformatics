@@ -39,6 +39,9 @@ workflow snippy_tree_wf {
     Int? iqtree2_memory
     Int? iqtree2_disk_size
     String? iqtree2_model
+    Int? snp_sites_cpus
+    Int? snp_sites_disk_size
+    Int? snp_sites_memory
   }
   call snippy_core_task.snippy_core {
     input:
@@ -65,11 +68,19 @@ workflow snippy_tree_wf {
   if (core_genome) {
       call snp_sites_task.snp_sites as snp_sites {
         input:
+          # hardcoding some of the snp-sites optional outputs to false, 
           msa_fasta = select_first([gubbins.gubbins_polymorphic_fasta,snippy_core.snippy_full_alignment_clean]),
           output_name = tree_name,
           output_multifasta = true,
           allow_wildcard_bases = false,
-          docker = docker_snp_sites
+          docker = docker_snp_sites,
+          output_vcf = false,
+          output_phylip = false,
+          output_pseudo_ref = false,
+          output_monomorphic = false,
+          cpus = snp_sites_cpus,
+          memory = snp_sites_memory,
+          disk_size = snp_sites_disk_size
       }
   }
   call iqtree2_task.iqtree2 {

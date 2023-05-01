@@ -12,6 +12,8 @@ task snp_sites {
     Boolean output_monomorphic = false
     String docker = "quay.io/staphb/snp-sites:2.5.1"
     Int disk_size = 100
+    Int cpus = 1
+    Int memory = 4
   }
   command <<< 
     snp-sites -V > VERSION
@@ -43,8 +45,8 @@ task snp_sites {
   }
   runtime {
     docker: docker
-    memory: "31 GB"
-    cpu :   2
+    memory: memory + " GB"
+    cpu :  cpus
     disks:  "local-disk " + disk_size + " HDD"
     disk: disk_size + " GB" # TES
     preemptible: 0
