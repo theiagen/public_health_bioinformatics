@@ -80,7 +80,8 @@ workflow snippy_tree_wf {
       cpu = iqtree2_cpu,
       memory = iqtree2_memory,
       disk_size = iqtree2_disk_size,
-      iqtree2_model = iqtree2_model
+      iqtree2_model = iqtree2_model,
+      core_genome = core_genome
   }
   
   call snp_dists_task.snp_dists {
