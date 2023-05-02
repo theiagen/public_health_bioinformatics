@@ -256,14 +256,27 @@ task tbprofiler_output_parsing {
     
       df_lims.to_csv("tbprofiler_lims_report.csv", index=False)
     
-    def parse_laboratorian_report(mutation):
+    def parse_laboratorian_report(mutations):
       """
       This function parses the laboratorian report for a given mutation and 
       returns the associated WHO annotation and frequency
       """
       df = pd.read_csv('tbprofiler_laboratorian_report.csv', dtype="str")
-      return df.loc[df['tbprofiler_variant_substitutions'] == mutation, 'confidence'].values, df.loc[df['tbprofiler_variant_substitutions'] == mutation, 'frequency'].values
-    
+      confidences = []
+      frequencies = []
+      for mutation in mutations.split(';'):
+        confidence = df.loc[df['tbprofiler_variant_substitutions'] == mutation, 'confidence']
+        frequency = df.loc[df['tbprofiler_variant_substitutions'] == mutation, 'frequency']
+        if len(confidence) > 0:
+          confidences.append(confidence.array[0])
+        else:
+          confidences.append("No annotation")
+        if len(frequency) > 0:
+          frequencies.append(frequency.array[0])
+        else:
+          frequencies.append("1")
+      return confidences, frequencies
+
     def parse_json_looker_report(json_file):
       """
       This function recieves the tbprofiler output json file and
@@ -278,7 +291,7 @@ task tbprofiler_output_parsing {
       lineage = get_lineage("~{json}")
       mutations = parse_json_mutations("~{json}")
       resistance = parse_json_resistance("~{json}")
-      df_looker = pd.DataFrame({"MDL sample accession numbers":"~{samplename}", "M_DST_A01_ID": lineage},index=[0])
+      df_looker = pd.DataFrame({"MDL sample accession numbers":"~{samplename}", "Sequencing method": "~{output_seq_method_type}", "M_DST_A01_ID": lineage},index=[0])
 
       for antimicrobial, genes in gene_dict.items():
         if antimicrobial_dict[antimicrobial] in resistance.keys():
@@ -288,15 +301,13 @@ task tbprofiler_output_parsing {
         for gene_name, gene_id in genes.items():
           if gene_name in mutations.keys():
             df_looker[gene_id] = mutations[gene_name]
-            for mutation in mutations[gene_name].split(';'):
-              print(mutation)
-              who_confidence, frequency = parse_laboratorian_report(mutation)
+            who_confidence, frequency = parse_laboratorian_report(mutations[gene_name])
             df_looker[gene_id + "_WHO_Confidence"] = ';'.join(who_confidence)
             df_looker[gene_id + "_Frequency"] = ';'.join(frequency)
           else:
             df_looker[gene_id] = "No mutations detected"
             df_looker[gene_id + "_WHO_Confidence"] = "WT" # what to report when no mutations are found?
-            df_looker[gene_id + "_Frequency"] = "100"
+            df_looker[gene_id + "_Frequency"] = "1"
     
       df_looker.to_csv("tbprofiler_looker.csv", index=False)
 
