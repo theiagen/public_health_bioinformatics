@@ -7,7 +7,7 @@ import "../../tasks/assembly/task_shovill.wdl" as shovill_task
 import "../../tasks/quality_control/task_quast.wdl" as quast_task
 import "../../tasks/task_versioning.wdl" as versioning
 
-workflow theiameta_ilumina_pe {
+workflow theiameta_illumina_pe {
   meta {
     description: "Reference-based consensus calling or de novo assembly for viral metagenomic sequencing data"
   }
