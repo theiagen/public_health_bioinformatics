@@ -6,7 +6,7 @@ task minimap2 {
   }
   input {
     File query
-    File reference
+    File? reference
     String samplename
     String docker = "staphb/minimap2:2.22" # newer versions seem to be bugged (infinite loop)
     String mode = "asm20"

@@ -4,6 +4,9 @@ import "../utilities/wf_read_QC_trim_pe.wdl" as read_qc_wf
 import "../utilities/wf_ivar_consensus.wdl" as consensus_call
 import "../../tasks/quality_control/task_consensus_qc.wdl" as consensus_qc_task
 import "../../tasks/assembly/task_shovill.wdl" as shovill_task
+import "../../tasks/alignment/task_minimap2.wdl" as minimap2_task
+import "../../tasks/utilities/task_parse_paf.wdl" as parse_paf_task
+import "../../tasks/utilities/task_compare_assemblies.wdl" as compare_assemblies_task
 import "../../tasks/quality_control/task_quast.wdl" as quast_task
 import "../../tasks/task_versioning.wdl" as versioning
 
@@ -42,9 +45,34 @@ workflow theiameta_illumina_pe {
           min_depth = min_depth,
           trim_primers = false
         }
+      call shovill_task.shovill_pe as shovil_consensus {
+        input:
+          read1_cleaned = read_QC_trim.read1_clean,
+          read2_cleaned = read_QC_trim.read2_clean,
+          samplename = samplename,
+          assembler = "megahit"
+      }
+      call minimap2_task.minimap2 {
+        input:
+          query = shovil_consensus.assembly_fasta,
+          reference = reference,
+          samplename = samplename
+      }
+      call parse_paf_task.parse_paf {
+        input:
+          paf = minimap2.minimap2_paf,
+          assembly = shovil_consensus.assembly_fasta,
+          samplename = samplename
+      }
+      call compare_assemblies_task.compare_assemblies {
+        input:
+          assembly_denovo = parse_paf.parse_paf_contigs,
+          assembly_consensus = ivar_consensus.assembly_fasta,
+          samplename = samplename
+      }
       call consensus_qc_task.consensus_qc {
         input:
-          assembly_fasta =  ivar_consensus.assembly_fasta,
+          assembly_fasta =  compare_assemblies.final_assembly,
           reference_genome = reference
       }
     }
@@ -99,7 +127,7 @@ workflow theiameta_illumina_pe {
     String? kraken_target_org_dehosted =read_QC_trim.kraken_target_org_dehosted
     File? kraken_report_dehosted = read_QC_trim.kraken_report_dehosted
     # Assembly - shovill/ivar outputs 
-    File? assembly_fasta = select_first([ivar_consensus.assembly_fasta, shovil_denovo.assembly_fasta])
+    File? assembly_fasta = select_first([compare_assemblies.final_assembly, shovil_denovo.assembly_fasta])
     String? assembly_length = select_first([consensus_qc.number_Total, quast.genome_length])
     String? shovill_pe_version = shovil_denovo.shovill_version
     Int? largest_contig = quast.largest_contig
