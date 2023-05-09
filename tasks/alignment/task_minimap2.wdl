@@ -15,9 +15,11 @@ task minimap2 {
     Int mem = 8
   }
   command <<<
+    # Preset options - https://lh3.github.io/minimap2/minimap2.html
+    # Version capture
     minimap2 --version | tee VERSION
 
-    # run minimap2
+    # Run minimap2
     minimap2 \
       -x "~{mode}" \
       -t "~{cpu}" \
