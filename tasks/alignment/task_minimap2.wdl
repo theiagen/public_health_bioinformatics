@@ -2,7 +2,7 @@ version 1.0
 
 task minimap2 {
   meta {
-    description: "Align contigs to a reference genome with minimap2"
+    description: "Align a query genome to a reference with minimap2"
   }
   input {
     File query
