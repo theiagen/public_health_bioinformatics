@@ -55,7 +55,7 @@ workflow theiameta_illumina_pe {
       call minimap2_task.minimap2 {
         input:
           query = shovil_consensus.assembly_fasta,
-          reference = reference,
+          reference = select_first([reference]),
           samplename = samplename
       }
       call parse_paf_task.parse_paf {
