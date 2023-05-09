@@ -1,5 +1,6 @@
 version 1.0
 
+import "../../tasks/utilities/task_rasusa.wdl" as rasusa
 import "../utilities/wf_read_QC_trim_pe.wdl" as read_qc
 import "../utilities/wf_merlin_magic.wdl" as merlin_magic_workflow
 import "../../tasks/assembly/task_shovill.wdl" as shovill
@@ -21,6 +22,7 @@ workflow theiaeuk_illumina_pe {
     String seq_method = "ILLUMINA"
     File read1_raw
     File read2_raw
+    Boolean call_rasusa = true
     Int min_reads = 30000
     # Edited default values
     Int min_basepairs = 45000000
@@ -34,7 +36,8 @@ workflow theiaeuk_illumina_pe {
     Boolean skip_screen = false 
     File? qc_check_table
     String? expected_taxon
-    Int? genome_size
+    Int genome_size = 12000000 # default genome size is Candida auris
+    Float subsample_coverage = 150 # default coverage for RASUSA is set to 150X
     Int cpu = 8
     Int memory = 16
     # default gambit outputs
@@ -44,10 +47,20 @@ workflow theiaeuk_illumina_pe {
   call versioning.version_capture{
     input:
   }
+  if (call_rasusa) {
+    call rasusa.rasusa as rasusa_task {
+      input:
+        read1 = read1_raw,
+        read2 = read2_raw,
+        samplename = samplename,
+        genome_size = genome_size,
+        coverage = subsample_coverage
+    }
+  }  
   call screen.check_reads as raw_check_reads {
     input:
-      read1 = read1_raw,
-      read2 = read2_raw,
+      read1 = select_first([rasusa_task.read1_subsampled,read1_raw]),
+      read2 = select_first([rasusa_task.read2_subsampled,read2_raw]),
       min_reads = min_reads,
       min_basepairs = min_basepairs,
       min_genome_size = min_genome_size,
@@ -61,8 +74,8 @@ workflow theiaeuk_illumina_pe {
     call read_qc.read_QC_trim_pe as read_QC_trim {
       input:
         samplename = samplename,
-        read1_raw = read1_raw,
-        read2_raw = read2_raw,
+        read1_raw = select_first([rasusa_task.read1_subsampled,read1_raw]),
+        read2_raw = select_first([rasusa_task.read2_subsampled,read2_raw]),
         trim_minlen = trim_minlen,
         trim_quality_trim_score = trim_quality_trim_score,
         trim_window_size = trim_window_size
@@ -98,8 +111,8 @@ workflow theiaeuk_illumina_pe {
       }
       call cg_pipeline_task.cg_pipeline as cg_pipeline_raw {
         input:
-          read1 = read1_raw,
-          read2 = read2_raw,
+          read1 = select_first([rasusa_task.read1_subsampled,read1_raw]),
+          read2 = select_first([rasusa_task.read2_subsampled,read2_raw]),
           samplename = samplename,
           genome_length = select_first([quast.genome_length,clean_check_reads.est_genome_length]),
           cpu = cpu,
@@ -175,6 +188,10 @@ workflow theiaeuk_illumina_pe {
     # Version Captures
     String theiaeuk_illumina_pe_version = version_capture.phb_version
     String theiaeuk_illumina_pe_analysis_date = version_capture.date
+    # RASUSA
+    String? rasusa_version = rasusa_task.rasusa_version
+    File? read1_subsampled = rasusa_task.read1_subsampled
+    File? read2_subsampled = rasusa_task.read2_subsampled
     # Read Metadata
     String seq_platform = seq_method
     # Sample Screening
