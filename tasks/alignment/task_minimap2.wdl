@@ -9,7 +9,7 @@ task minimap2 {
     File reference
     String samplename
     String docker = "staphb/minimap2:2.22" # newer versions seem to be bugged (infinite loop)
-    String mode = "asm5"
+    String mode = "asm20"
     Int disk_size = 100
     Int cpu = 2
     Int mem = 8
@@ -19,7 +19,7 @@ task minimap2 {
 
     # run minimap2
     minimap2 \
-      -ax "~{mode}" \
+      -x "~{mode}" \
       -t "~{cpu}" \
       "~{reference}" \
       "~{query}" > "~{samplename}"_minimap2.paf
