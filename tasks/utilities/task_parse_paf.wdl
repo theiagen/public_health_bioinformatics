@@ -22,7 +22,7 @@ task parse_paf {
 
   >>>
   output {
-    File parse_paf_contigs = "~{samplename}_mapped_contigs .fasta"
+    File parse_paf_contigs = "~{samplename}_mapped_contigs.fasta"
   }
   runtime {
     docker: "~{docker}"
