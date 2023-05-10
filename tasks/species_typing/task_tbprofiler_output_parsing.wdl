@@ -210,10 +210,10 @@ task tbprofiler_output_parsing {
                   drug = annotation["drug"]
                   resistance = annotation["who_confidence"]
                 if drug not in resistance_dict.keys():
-                  resistance_dict[antimicrobial] = resistance
+                  resistance_dict[drug] = resistance
                 else:
-                  if rank_annotation(resistance_dict[antimicrobial]) < rank_annotation(resistance):
-                    resistance_dict[antimicrobial] = resistance
+                  if rank_annotation(resistance_dict[drug]) < rank_annotation(resistance):
+                    resistance_dict[drug] = resistance
       return resistance_dict
     
 
