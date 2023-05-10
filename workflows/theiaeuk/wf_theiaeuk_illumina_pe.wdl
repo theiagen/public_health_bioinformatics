@@ -36,7 +36,7 @@ workflow theiaeuk_illumina_pe {
     Boolean skip_screen = false 
     File? qc_check_table
     String? expected_taxon
-    Int genome_size = 12000000 # default genome size is Candida auris
+    Int? genome_size 
     Float subsample_coverage = 150 # default coverage for RASUSA is set to 150X
     Int cpu = 8
     Int memory = 16
@@ -46,21 +46,11 @@ workflow theiaeuk_illumina_pe {
   }
   call versioning.version_capture{
     input:
-  }
-  if (call_rasusa) {
-    call rasusa.rasusa as rasusa_task {
-      input:
-        read1 = read1_raw,
-        read2 = read2_raw,
-        samplename = samplename,
-        genome_size = genome_size,
-        coverage = subsample_coverage
-    }
-  }  
+  } 
   call screen.check_reads as raw_check_reads {
     input:
-      read1 = select_first([rasusa_task.read1_subsampled,read1_raw]),
-      read2 = select_first([rasusa_task.read2_subsampled,read2_raw]),
+      read1 = read1_raw,
+      read2 = read2_raw,
       min_reads = min_reads,
       min_basepairs = min_basepairs,
       min_genome_size = min_genome_size,
@@ -70,6 +60,16 @@ workflow theiaeuk_illumina_pe {
       skip_screen = skip_screen,
       expected_genome_size = genome_size
   }
+  if (call_rasusa) {
+    call rasusa.rasusa as rasusa_task {
+      input:
+        read1 = read1_raw,
+        read2 = read2_raw,
+        samplename = samplename,
+        genome_size = select_first([genome_size,raw_check_reads.est_genome_length]),
+        coverage = subsample_coverage
+    }
+  }  
   if (raw_check_reads.read_screen=="PASS") {
     call read_qc.read_QC_trim_pe as read_QC_trim {
       input:
@@ -111,8 +111,8 @@ workflow theiaeuk_illumina_pe {
       }
       call cg_pipeline_task.cg_pipeline as cg_pipeline_raw {
         input:
-          read1 = select_first([rasusa_task.read1_subsampled,read1_raw]),
-          read2 = select_first([rasusa_task.read2_subsampled,read2_raw]),
+          read1 = read1_raw,
+          read2 = read2_raw,
           samplename = samplename,
           genome_length = select_first([quast.genome_length,clean_check_reads.est_genome_length]),
           cpu = cpu,
