@@ -59,7 +59,7 @@ task iqtree2 {
           -alrt ~{alrt} ~{iqtree2_opts}
 
       # write the iqtree2_model used to a txt file for output as a string
-      echo ${IQTREE2_MODEL} | tee tee IQTREE2_MODEL.TXT
+      echo ${IQTREE2_MODEL} | tee IQTREE2_MODEL.TXT
 
       else
         echo "running iqtree2 without the -m flag for providing a model. Will default to iqtree2 defaults"
