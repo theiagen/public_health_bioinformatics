@@ -68,11 +68,12 @@ task tbprofiler_output_parsing {
         - rationale
         - warning
       """
-
+      sample_id = []
       gene_name = []
       locus_tag = []
       variant_substitutions = []
       confidence = []
+      resistance = []
       depth = []
       frequency = []
       rule = []
@@ -80,12 +81,14 @@ task tbprofiler_output_parsing {
       with open(json_file) as results_json_fh:
         results_json = json.load(results_json_fh)
         for dr_variant in results_json["dr_variants"]:  # reported mutation by tb-profiler, all confering resistance
+          sample_id.append("~{samplename}")
           gene_name.append(dr_variant["gene"])
           locus_tag.append(dr_variant["locus_tag"])  
           variant_substitutions.append(dr_variant["type"] + ":" + dr_variant["nucleotide_change"] + "(" + dr_variant["protein_change"] + ")")  # mutation_type:nt_sub(aa_sub)
           depth.append(dr_variant["depth"])
           frequency.append(dr_variant["freq"])
           rule.append("WHO classification")
+          resistance.append(dr_variant["gene_associated_drugs"][0])
           if "annotation" in dr_variant:
             try:  # sometimes annotation is an empty list
               if dr_variant["annotation"][0]["who_confidence"] == "":
@@ -100,11 +103,13 @@ task tbprofiler_output_parsing {
         for other_variant in results_json["other_variants"]:  # mutations not reported by tb-profiler
           if other_variant["type"] != "synonymous_variant":
             if other_variant["gene"] == "katG" or other_variant["gene"] == "pncA" or other_variant["gene"] == "rpoB" or other_variant["gene"] == "ethA" or other_variant["gene"] == "gid":  # hardcoded for genes of interest that are reported to always confer resistance when mutated
+              sample_id.append("~{samplename}")
               gene_name.append(other_variant["gene"])
               locus_tag.append(other_variant["locus_tag"])  
               variant_substitutions.append(other_variant["type"] + ":" + other_variant["nucleotide_change"] + "(" + other_variant["protein_change"] + ")")  # mutation_type:nt_sub(aa_sub)
               depth.append(other_variant["depth"])
               frequency.append(other_variant["freq"])
+              resistance.append(other_variant["gene_associated_drugs"][0])
               if other_variant["gene"] == "rpoB":
                 rule.append("Resistant based on expert rule")
               else:
@@ -123,6 +128,7 @@ task tbprofiler_output_parsing {
               if "annotation" in other_variant:  # check if who annotation field is present
                 for annotation in other_variant["annotation"]:
                   if annotation["who_confidence"] != "Not assoc w R" or annotation["who_confidence"] != "":
+                    sample_id.append("~{samplename}")
                     gene_name.append(other_variant["gene"])
                     locus_tag.append(other_variant["locus_tag"])  
                     variant_substitutions.append(other_variant["type"] + ":" + other_variant["nucleotide_change"] + "(" + other_variant["protein_change"] + ")")  # mutation_type:nt_sub(aa_sub)
@@ -130,23 +136,27 @@ task tbprofiler_output_parsing {
                     frequency.append(other_variant["freq"])
                     confidence.append(annotation["who_confidence"])
                     rule.append("Uncertain significance based on expert rule")
+                    resistance.append(annotation["drug"])
 
         with open("tbprofiler_laboratorian_report.csv", "wt") as report_fh:
-          report_fh.write("tbprofiler_gene_name,tbprofiler_locus_tag,tbprofiler_variant_substitutions,confidence,depth,frequency,read_support,rationale,warning\n")
+          report_fh.write("sample_id,tbprofiler_gene_name,tbprofiler_locus_tag,tbprofiler_variant_substitutions,confidence,antimicrobial,depth,frequency,read_support,rationale,warning\n")
           for i in range(0, len(gene_name)):
             if not depth[i]:  # for cases when depth is null, it gets converted to 0
               depth[i] = 0
             warning = "Low depth coverage" if  depth[i] < int('~{min_depth}') else "" # warning when coverage is lower than the defined 'min_depth' times
-            report_fh.write(gene_name[i] + ',' + locus_tag[i] + ',' + variant_substitutions[i] + ',' + confidence[i] + ',' + str(depth[i]) + ',' + str(frequency[i]) + ',' + str(int(depth[i]*frequency[i])) + ',' + rule[i] + ',' + warning +'\n')
+            report_fh.write(sample_id[i] + ',' + gene_name[i] + ',' + locus_tag[i] + ',' + variant_substitutions[i] + ',' + confidence[i] + ',' + resistance[i] + ',' + str(depth[i]) + ',' + str(frequency[i]) + ',' + str(int(depth[i]*frequency[i])) + ',' + rule[i] + ',' + warning +'\n')
 
     def parse_json_mutations(json_file):
+      """
+      TODO
+      """
       mutations_dict = {}
 
       with open(json_file) as js_fh:
         results_json = json.load(js_fh)
         for dr_variant in results_json["dr_variants"]:  # reported mutation by tb-profiler, all confering resistance
           name = dr_variant["gene"]
-          substitution =str(dr_variant["type"] + ":" + dr_variant["nucleotide_change"] + "(" + dr_variant["protein_change"] + ")")  # mutation_type:nt_sub(aa_sub)
+          substitution =str(dr_variant["nucleotide_change"] + "(" + dr_variant["protein_change"] + ")")  # mutation_type:nt_sub(aa_sub)
           if name not in mutations_dict.keys():
             mutations_dict[name] = substitution
           else:
@@ -154,7 +164,7 @@ task tbprofiler_output_parsing {
         for other_variant in results_json["other_variants"]:  # mutations not reported by tb-profiler
           if other_variant["type"] != "synonymous_variant":  # report all non-synonymous mutations
               name = other_variant["gene"]
-              substitution =str(other_variant["type"] + ":" + other_variant["nucleotide_change"] + "(" + other_variant["protein_change"] + ")")  # mutation_type:nt_sub(aa_sub)
+              substitution =str(other_variant["nucleotide_change"] + "(" + other_variant["protein_change"] + ")")  # mutation_type:nt_sub(aa_sub)
               if name not in mutations_dict.keys():
                 mutations_dict[name] = substitution
               else:
