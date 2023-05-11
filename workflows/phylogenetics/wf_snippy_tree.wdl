@@ -19,7 +19,7 @@ workflow snippy_tree_wf {
     Array[String] samplenames
     File reference_genome_file
     Boolean use_gubbins = true
-    Boolean core_genome = true
+    Boolean? core_genome
     String? data_summary_terra_project
     String? data_summary_terra_workspace
     String? data_summary_terra_table
@@ -37,7 +37,7 @@ workflow snippy_tree_wf {
     Int? iqtree2_disk_size
     String? iqtree2_opts
     String? iqtree2_docker
-    String? iqtree2_bootstraps
+    Int? iqtree2_bootstraps
     String? iqtree2_model
     String? snp_dists_docker
     Int? snp_sites_cpus
