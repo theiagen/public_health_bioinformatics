@@ -1,0 +1,63 @@
+# 
+# This workflow will run on Pushes and Pull Requests against the main branch. It
+# will only run "miniwdl check" on wdl files that have had a change in the push 
+# or PR.
+#
+name: MiniWDL Check
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  changes:
+    name: Check for changes
+    runs-on: ubuntu-latest
+    outputs:
+      # Expose workflows with changes
+      workflows: ${{ steps.filter.outputs.wf }}
+      workflows_files: ${{ steps.filter.outputs.wf_files }}
+    steps:
+      # Checkout the repo
+      - uses: actions/checkout@v3
+
+      # Select wdl files with changes
+      - uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters: |
+            wf:  
+              - 'tasks/**'
+              - 'workflows/**'
+          list-files: json
+
+  check:
+    runs-on: ubuntu-20.04
+    name: ${{ matrix.wf }}
+    needs: changes
+    if: ${{ needs.changes.outputs.workflows != '' && toJson(fromJson(needs.changes.outputs.workflows)) != '[]' }}
+    strategy:
+      fail-fast: false
+      matrix:
+        wf: ${{ fromJson(needs.changes.outputs.workflows_files) }}
+    steps:
+      # Checkout the repo
+      - uses: actions/checkout@v3
+
+      # Install a version of Python3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.x"
+      
+      # Install MiniWDL (WDL syntax) and ShellCheck (shell syntax)
+      - name: install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get -y install shellcheck
+          pip3 -q install miniwdl 'importlib-metadata==4.13.0'
+
+      # Run MiniWDL check on each of the changed WDLs
+      - name: MiniWDL Check ${{ matrix.wf }}
+        run: miniwdl check ${{ matrix.wf }}

@@ -12,6 +12,8 @@ task snp_sites {
     Boolean output_monomorphic = false
     String docker = "quay.io/staphb/snp-sites:2.5.1"
     Int disk_size = 100
+    Int cpus = 1
+    Int memory = 4
   }
   command <<< 
     snp-sites -V > VERSION
@@ -39,11 +41,12 @@ task snp_sites {
     File? snp_sites_phylip = "~{output_name}.phylip"
     File? snp_sites_multifasta = "~{output_name}.snp_sites.aln"
     String snp_sites_version = read_string("VERSION")
+    String snp_sites_docker = docker
   }
   runtime {
     docker: docker
-    memory: "31 GB"
-    cpu :   2
+    memory: memory + " GB"
+    cpu :  cpus
     disks:  "local-disk " + disk_size + " HDD"
     disk: disk_size + " GB" # TES
     preemptible: 0

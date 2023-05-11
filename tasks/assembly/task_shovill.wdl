@@ -115,7 +115,7 @@ task shovill_se {
     shovill-se --version | head -1 | tee VERSION
     shovill-se \
       --outdir out \
-      --se ~{read1_cleaned} 
+      --se ~{read1_cleaned} \
       --minlen ~{min_contig_length} \
       ~{'--depth ' + depth} \
       ~{'--gsize ' + genome_size} \

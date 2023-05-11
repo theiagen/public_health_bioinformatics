@@ -2,7 +2,7 @@ version 1.0
 
 task snippy_variants {
   input {
-    File reference
+    File reference_genome_file
     File read1
     File? read2
     String? query_gene
@@ -40,7 +40,7 @@ task snippy_variants {
     fi
     # call snippy
       snippy \
-      --reference ~{reference} \
+      --reference ~{reference_genome_file} \
       --outdir ~{samplename} \
       ${reads} \
       --cpus ~{cpus} \
@@ -75,6 +75,7 @@ task snippy_variants {
   >>>
   output {
     String snippy_variants_version = read_string("VERSION")
+    String snippy_docker = docker
     String snippy_variants_query = "~{query_gene}"
     String snippy_variants_hits = read_string("SNIPPY_VARIANT_HITS")
     File snippy_variants_outdir_tarball = "./~{samplename}_snippy_variants_outdir.tar"
