@@ -319,7 +319,7 @@ task qc_check {
             print("number_contigs passed qc_check")
           else:
             qc_status = "QC_ALERT"
-            qc_note = f"{qc_note} number_contigs ({mumber_contigs}) was greater than maximum threshold of {number_contigs_metric};"
+            qc_note = f"{qc_note} number_contigs ({number_contigs}) was greater than maximum threshold of {number_contigs_metric};"
           qc_check_metrics.remove("number_contigs")
       else:
         print("number_contigs not detected in qc_check_table")
