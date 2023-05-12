@@ -10,7 +10,7 @@ task consensus {
     Boolean disable_baq = true
     Int min_bq = "0"
     Int min_qual = "20"
-    Float min_freq = "0.6"
+    Float? consensus_min_freq 
     Int? consensus_min_depth
     String char_unknown = "N"
     Int disk_size = 100
@@ -42,7 +42,7 @@ task consensus {
     ivar consensus \
     -p ~{samplename}.consensus \
     -q ~{min_qual} \
-    -t ~{min_freq} \
+    -t ~{consensus_min_freq} \
     -m ~{consensus_min_depth} \
     -n ~{char_unknown}
 
