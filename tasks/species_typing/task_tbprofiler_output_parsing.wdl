@@ -148,7 +148,8 @@ task tbprofiler_output_parsing {
 
     def parse_json_mutations(json_file):
       """
-      TODO
+      Function to parse the TBProfiler json file and store the found
+      mutations into a dictionary
       """
       mutations_dict = {}
 
