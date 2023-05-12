@@ -24,6 +24,12 @@ task tbprofiler_output_parsing {
                           "M_DST_L01_LFX": "levofloxacin", "M_DST_M01_BDQ": "bedaquiline",
                           "M_DST_N01_CFZ": "clofazimine", "M_DST_o01_LZD": "linezolid" 
                          }
+    
+    # Lookup list - antimicrobials
+    antimicrobial_list = ["isoniazid", "ethionamide", "rifampicin", "pyrazinamide", "ethambutol",
+                          "sulfamethazine", "amikacin", "kanamycin", "capreomycin", "moxifloxacin",
+                          "levofloxacin", "bedaquiline", "clofazimine", "linezolid"
+                         ]
 
     # lookup dictionary - gene name to gene column name
     gene_dict = {"M_DST_B01_INH": {"katG": "M_DST_B02_katG", "fabG1": "M_DST_B03_fabG1", 
@@ -146,6 +152,7 @@ task tbprofiler_output_parsing {
             warning = "Low depth coverage" if  depth[i] < int('~{min_depth}') else "" # warning when coverage is lower than the defined 'min_depth' times
             report_fh.write(sample_id[i] + ',' + gene_name[i] + ',' + locus_tag[i] + ',' + variant_substitutions[i] + ',' + confidence[i] + ',' + resistance[i] + ',' + str(depth[i]) + ',' + str(frequency[i]) + ',' + str(int(depth[i]*frequency[i])) + ',' + rule[i] + ',' + warning +'\n')
 
+
     def parse_json_mutations(json_file):
       """
       Function to parse the TBProfiler json file and store the found
@@ -188,6 +195,7 @@ task tbprofiler_output_parsing {
       else:
         return 4
 
+
     def translate(annotation, drug):
       """
       This function takes the annotation of resistance by tbprofiler and the target drug
@@ -203,6 +211,24 @@ task tbprofiler_output_parsing {
         return "Genetic determinant(s) associated with resistance to {} detected".format(drug)
       else:
         return "No resistance to {} detected".format(drug)
+
+
+    def decipher(annotation):
+      """
+      This function takes the annotation of resistance by TBProfiler and 
+      returns simple R (resistant) and S (susceptible) notations
+      """
+      if annotation == "Not assoc w R":
+        return "S"
+      elif annotation == "Uncertain significance":
+        return "S"
+      elif annotation == "Assoc w R - interim":
+        return "R"
+      elif annotation == "Assoc w R":
+        return "R"
+      else:
+        return "S"
+    
 
     def parse_json_resistance(json_file):
       resistance_dict = {}
@@ -243,7 +269,7 @@ task tbprofiler_output_parsing {
       This function recieves the tbprofiler output json file and
       writes the LIMS report that includes the following information
       per sample: 
-        - MDL sample accession numbers: includes sample same
+        - MDL sample accession numbers: includes sample name
         - M_DST_A01_ID - includes lineage
         - The set of information in gene_dict dictionary with target drug resistance information
         in layman's terms, and the mutations responsible for the predicted phenotype 
@@ -291,34 +317,21 @@ task tbprofiler_output_parsing {
     def parse_json_looker_report(json_file):
       """
       This function recieves the tbprofiler output json file and
-      writes the LIMS report that includes the following information
+      writes the Looker report that includes the following information
       per sample: 
-        - MDL sample accession numbers: includes sample same
-        - M_DST_A01_ID - includes lineage
-        - The set of information in gene_dict dictionary with target drug resistance information
-        in layman's terms, and the mutations responsible for the predicted phenotype
-        - for each gene, the WHO confidence and the frequency of each mutation 
+        - sample_id: includes sample name
+        - for each antimicrobial, indication if its resistant (R) or susceptible (S)
       """
-      lineage = get_lineage("~{json}")
-      mutations = parse_json_mutations("~{json}")
       resistance = parse_json_resistance("~{json}")
-      df_looker = pd.DataFrame({"MDL sample accession numbers":"~{samplename}", "Sequencing method": "~{output_seq_method_type}", "M_DST_A01_ID": lineage},index=[0])
+      print(resistance)
+      df_looker = pd.DataFrame({"sample_id":"~{samplename}"},index=[0])
 
-      for antimicrobial, genes in gene_dict.items():
-        if antimicrobial_dict[antimicrobial] in resistance.keys():
-          df_looker[antimicrobial] = translate(resistance[antimicrobial_dict[antimicrobial]], antimicrobial_dict[antimicrobial])
+      for antimicrobial in antimicrobial_list:
+        print(antimicrobial)
+        if antimicrobial in resistance.keys():
+          df_looker[antimicrobial] = decipher(resistance[antimicrobial])
         else:
-          df_looker[antimicrobial] = "No resistance to {} detected".format(antimicrobial_dict[antimicrobial])
-        for gene_name, gene_id in genes.items():
-          if gene_name in mutations.keys():
-            df_looker[gene_id] = mutations[gene_name]
-            who_confidence, frequency = parse_laboratorian_report(mutations[gene_name])
-            df_looker[gene_id + "_WHO_Confidence"] = ';'.join(who_confidence)
-            df_looker[gene_id + "_Frequency"] = ';'.join(frequency)
-          else:
-            df_looker[gene_id] = "No mutations detected"
-            df_looker[gene_id + "_WHO_Confidence"] = "WT" # what to report when no mutations are found?
-            df_looker[gene_id + "_Frequency"] = "1"
+          df_looker[antimicrobial] = "S"
     
       df_looker.to_csv("tbprofiler_looker.csv", index=False)
 
