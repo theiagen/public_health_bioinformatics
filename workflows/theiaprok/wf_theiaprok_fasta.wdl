@@ -21,6 +21,7 @@ workflow theiaprok_fasta {
     String samplename
     String seq_method = ""
     File assembly_fasta
+    # export taxon table parameters
     String? run_id
     String? collection_date
     String? originating_lab
@@ -30,10 +31,10 @@ workflow theiaprok_fasta {
     File? taxon_tables
     String terra_project="NA"
     String terra_workspace="NA"
-    # by default do not call ANI task, but user has ability to enable this task if working with enteric pathogens or supply their own high-quality reference genome
-    Boolean call_ani = false
+    # module options
+    Boolean call_ani = false # by default do not call ANI task, but user has ability to enable this task if working with enteric pathogens or supply their own high-quality reference genome
     Boolean call_resfinder = false
-    String genome_annotation = "prokka"
+    String genome_annotation = "prokka" # options: "prokka" or "bakta"
   }
   call versioning.version_capture{
     input:

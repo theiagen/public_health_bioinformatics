@@ -27,6 +27,7 @@ workflow theiaprok_illumina_se {
     String seq_method = "ILLUMINA"
     File read1_raw
     Int? genome_size
+    # export taxon table parameters
     String? run_id
     String? collection_date
     String? originating_lab
@@ -36,19 +37,21 @@ workflow theiaprok_illumina_se {
     File? taxon_tables
     String terra_project="NA"
     String terra_workspace="NA"
-    # by default do not call ANI task, but user has ability to enable this task if working with enteric pathogens or supply their own high-quality reference genome
-    Boolean call_ani = false
+    # read screen paramaters
+    Boolean skip_screen = false 
     Int min_reads = 7472
     Int min_basepairs = 2241820
     Int min_genome_size = 100000
     Int max_genome_size = 18040666
     Int min_coverage = 10
+    # trimming parameters
     Int trim_minlen = 25
     Int trim_quality_trim_score = 30
     Int trim_window_size = 4
+    # module options
+    Boolean call_ani = false # by default do not call ANI task, but user has ability to enable this task if working with enteric pathogens or supply their own high-quality reference genome
     Boolean call_resfinder = false
-    Boolean skip_screen = false 
-    String genome_annotation = "prokka"
+    String genome_annotation = "prokka" # options: "prokka" or "bakta"
   }
   call versioning.version_capture{
     input:
@@ -61,7 +64,8 @@ workflow theiaprok_illumina_se {
       min_genome_size = min_genome_size,
       max_genome_size = max_genome_size,
       min_coverage = min_coverage,
-      skip_screen = skip_screen
+      skip_screen = skip_screen,
+      expected_genome_size = genome_size
   }
   if (raw_check_reads.read_screen=="PASS") {
     call read_qc.read_QC_trim_se as read_QC_trim {
@@ -80,7 +84,8 @@ workflow theiaprok_illumina_se {
         min_genome_size = min_genome_size,
         max_genome_size = max_genome_size,
         min_coverage = min_coverage,
-        skip_screen = skip_screen
+        skip_screen = skip_screen,
+        expected_genome_size = genome_size
     }
     if (clean_check_reads.read_screen=="PASS") {
       call shovill.shovill_se {
