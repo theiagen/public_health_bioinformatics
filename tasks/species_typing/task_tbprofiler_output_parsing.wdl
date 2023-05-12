@@ -324,7 +324,7 @@ task tbprofiler_output_parsing {
       """
       resistance = parse_json_resistance("~{json}")
       print(resistance)
-      df_looker = pd.DataFrame({"sample_id":"~{samplename}"},index=[0])
+      df_looker = pd.DataFrame({"sample_id":"~{samplename}", "output_seq_method_type": "~{output_seq_method_type}"},index=[0])
 
       for antimicrobial in antimicrobial_list:
         print(antimicrobial)
