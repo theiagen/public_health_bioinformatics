@@ -1,6 +1,7 @@
 version 1.0
 
 import "../utilities/wf_merlin_magic.wdl" as merlin_magic_workflow
+import "../../tasks/quality_control/task_quast.wdl" as quast_task
 import "../../tasks/quality_control/task_busco.wdl" as busco_task
 import "../../tasks/taxon_id/task_gambit.wdl" as gambit_task
 import "../../tasks/quality_control/task_mummer_ani.wdl" as ani_task
@@ -10,6 +11,7 @@ import "../../tasks/species_typing/task_ts_mlst.wdl" as ts_mlst_task
 import "../../tasks/gene_typing/task_bakta.wdl" as bakta_task
 import "../../tasks/gene_typing/task_prokka.wdl" as prokka_task
 import "../../tasks/gene_typing/task_plasmidfinder.wdl" as plasmidfinder_task
+import "../../tasks/quality_control/task_qc_check_phb.wdl" as qc_check
 import "../../tasks/task_versioning.wdl" as versioning
 import "../../tasks/utilities/task_broad_terra_tools.wdl" as terra_tools
 
@@ -35,9 +37,17 @@ workflow theiaprok_fasta {
     Boolean call_ani = false # by default do not call ANI task, but user has ability to enable this task if working with enteric pathogens or supply their own high-quality reference genome
     Boolean call_resfinder = false
     String genome_annotation = "prokka" # options: "prokka" or "bakta"
+    # qc check parameters
+    File? qc_check_table
+    String? expected_taxon
   }
   call versioning.version_capture{
     input:
+  }
+  call quast_task.quast {
+    input:
+      assembly = assembly_fasta,
+      samplename = samplename
   }
   call gambit_task.gambit {
     input:
@@ -102,6 +112,21 @@ workflow theiaprok_fasta {
       assembly_only = true,
       paired_end = false
   }
+  if(defined(qc_check_table)) {
+    call qc_check.qc_check_phb as qc_check_task {
+      input:
+        qc_check_table = qc_check_table,
+        expected_taxon = expected_taxon,
+        gambit_predicted_taxon = gambit.gambit_predicted_taxon,
+        assembly_length = quast.genome_length,
+        number_contigs = quast.number_contigs,
+        n50_value = quast.n50_value,
+        quast_gc_percent = quast.gc_percent,
+        busco_results = busco.busco_results,
+        ani_highest_percent = ani.ani_highest_percent,
+        ani_highest_percent_bases_aligned = ani.ani_highest_percent_bases_aligned
+    }
+  }
   if(defined(taxon_tables)) {
     call terra_tools.export_taxon_tables {
       input:
@@ -119,6 +144,12 @@ workflow theiaprok_fasta {
         theiaprok_fasta_version = version_capture.phb_version,
         theiaprok_fasta_analysis_date = version_capture.date,
         seq_platform = seq_method,
+        quast_report = quast.quast_report,
+        quast_version = quast.version,
+        assembly_length = quast.genome_length,
+        number_contigs = quast.number_contigs,
+        n50_value = quast.n50_value,
+        quast_gc_percent = quast.gc_percent,
         gambit_report = gambit.gambit_report_file,
         gambit_predicted_taxon = gambit.gambit_predicted_taxon,
         gambit_predicted_taxon_rank = gambit.gambit_predicted_taxon_rank,
@@ -337,7 +368,9 @@ workflow theiaprok_fasta {
         pasty_all_serogroups = merlin_magic.pasty_all_serogroups,
         pasty_version = merlin_magic.pasty_version,
         pasty_docker = merlin_magic.pasty_docker,
-        pasty_comment = merlin_magic.pasty_comment
+        pasty_comment = merlin_magic.pasty_comment,
+        qc_check = qc_check_task.qc_check,
+        qc_standard = qc_check_task.qc_standard
     }
   }   
   output {
@@ -346,7 +379,14 @@ workflow theiaprok_fasta {
     String theiaprok_fasta_analysis_date = version_capture.date
     # Read Metadata
     String seq_platform = seq_method
-    #Assembly QC
+    # Assembly QC - quast outputs
+    File? quast_report = quast.quast_report
+    String? quast_version = quast.version
+    Int? assembly_length = quast.genome_length
+    Int? number_contigs = quast.number_contigs
+    Int? n50_value = quast.n50_value
+    Float? quast_gc_percent = quast.gc_percent
+    # Assembly QC - BUSCO outputs
     String busco_version = busco.busco_version
     String busco_database = busco.busco_database
     String busco_results = busco.busco_results
@@ -409,6 +449,9 @@ workflow theiaprok_fasta {
     File plasmidfinder_seqs = plasmidfinder.plasmidfinder_seqs
     String plasmidfinder_docker = plasmidfinder.plasmidfinder_docker
     String plasmidfinder_db_version = plasmidfinder.plasmidfinder_db_version
+    # QC_Check Results
+    String? qc_check = qc_check_task.qc_check
+    File? qc_standard = qc_check_task.qc_standard
     # Ecoli Typing
     File? serotypefinder_report = merlin_magic.serotypefinder_report
     String? serotypefinder_docker = merlin_magic.serotypefinder_docker

@@ -15,7 +15,7 @@ import "../../tasks/species_typing/task_ts_mlst.wdl" as ts_mlst_task
 import "../../tasks/gene_typing/task_bakta.wdl" as bakta_task
 import "../../tasks/gene_typing/task_prokka.wdl" as prokka_task
 import "../../tasks/gene_typing/task_plasmidfinder.wdl" as plasmidfinder_task
-import "../../tasks/quality_control/task_qc_check.wdl" as qc_check
+import "../../tasks/quality_control/task_qc_check_phb.wdl" as qc_check
 import "../../tasks/task_versioning.wdl" as versioning
 import "../../tasks/utilities/task_broad_terra_tools.wdl" as terra_tools
 
@@ -182,11 +182,15 @@ workflow theiaprok_illumina_pe {
           samplename = samplename
       }
       if(defined(qc_check_table)) {
-        call qc_check.qc_check as qc_check_task {
+        call qc_check.qc_check_phb as qc_check_task {
           input:
             qc_check_table = qc_check_table,
             expected_taxon = expected_taxon,
             gambit_predicted_taxon = gambit.gambit_predicted_taxon,
+            num_reads_raw1 = read_QC_trim.fastq_scan_raw1,
+            num_reads_raw2 = read_QC_trim.fastq_scan_raw2,
+            num_reads_clean1 = read_QC_trim.fastq_scan_clean1,
+            num_reads_clean2 = read_QC_trim.fastq_scan_clean2,
             r1_mean_q_raw = cg_pipeline_raw.r1_mean_q,
             r2_mean_q_raw = cg_pipeline_raw.r2_mean_q,
             combined_mean_q_raw = cg_pipeline_raw.combined_mean_q,
@@ -205,10 +209,10 @@ workflow theiaprok_illumina_pe {
             assembly_length = quast.genome_length,
             number_contigs = quast.number_contigs,
             n50_value = quast.n50_value,
+            quast_gc_percent = quast.gc_percent,
             busco_results = busco.busco_results,
             ani_highest_percent = ani.ani_highest_percent,
-            ani_highest_percent_bases_aligned = ani.ani_highest_percent_bases_aligned,
-            ani_top_species_match = ani.ani_top_species_match
+            ani_highest_percent_bases_aligned = ani.ani_highest_percent_bases_aligned
         }
       }
       call merlin_magic_workflow.merlin_magic {

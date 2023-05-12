@@ -1,5 +1,5 @@
 wf_theiaprok_illumina_pe:
-  - workflows/wf_theiaprok_illumina_pe.wdl
+  - workflows/theiaprok/wf_theiaprok_illumina_pe.wdl
   - tasks/assembly/task_shovill.wdl
   - tasks/taxon_id/task_gambit.wdl
   - tasks/gene_typing/task_abricate.wdl
@@ -10,7 +10,7 @@ wf_theiaprok_illumina_pe:
   - tasks/gene_typing/task_plasmidfinder.wdl
   - tasks/task_versioning.wdl
   - tasks/utilities/task_broad_terra_tools.wdl
-  - workflows/wf_read_QC_trim_pe.wdl
+  - workflows/utilities/wf_read_QC_trim_pe.wdl
   - tasks/quality_control/task_bbduk.wdl
   - tasks/quality_control/task_busco.wdl
   - tasks/quality_control/task_cg_pipeline.wdl
@@ -22,7 +22,7 @@ wf_theiaprok_illumina_pe:
   - tasks/quality_control/task_quast.wdl
   - tasks/quality_control/task_screen.wdl
   - tasks/quality_control/task_trimmomatic.wdl
-  - workflows/wf_merlin_magic.wdl
+  - workflows/utilities/wf_merlin_magic.wdl
   - tasks/species_typing/task_ectyper.wdl
   - tasks/species_typing/task_genotyphi.wdl
   - tasks/species_typing/task_kaptive.wdl
@@ -45,7 +45,7 @@ wf_theiaprok_illumina_pe:
   - tasks/taxon_id/task_midas.wdl
 
 wf_theiaprok_illumina_se:
-  - workflows/wf_theiaprok_illumina_se.wdl
+  - workflows/theiaprok/wf_theiaprok_illumina_se.wdl
   - tasks/assembly/task_shovill.wdl
   - tasks/taxon_id/task_gambit.wdl
   - tasks/gene_typing/task_abricate.wdl
@@ -56,7 +56,7 @@ wf_theiaprok_illumina_se:
   - tasks/gene_typing/task_plasmidfinder.wdl
   - tasks/task_versioning.wdl
   - tasks/utilities/task_broad_terra_tools.wdl
-  - workflows/wf_read_QC_trim_se.wdl
+  - workflows/utilities/wf_read_QC_trim_se.wdl
   - tasks/quality_control/task_bbduk.wdl
   - tasks/quality_control/task_busco.wdl
   - tasks/quality_control/task_cg_pipeline.wdl
@@ -68,7 +68,7 @@ wf_theiaprok_illumina_se:
   - tasks/quality_control/task_quast.wdl
   - tasks/quality_control/task_screen.wdl
   - tasks/quality_control/task_trimmomatic.wdl
-  - workflows/wf_merlin_magic.wdl
+  - workflows/utilities/wf_merlin_magic.wdl
   - tasks/species_typing/task_ectyper.wdl
   - tasks/species_typing/task_genotyphi.wdl
   - tasks/species_typing/task_kaptive.wdl
