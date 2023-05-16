@@ -52,21 +52,21 @@ workflow theiameta_illumina_pe {
           samplename = samplename,
           assembler = "megahit"
       }
-      call minimap2_task.minimap2 {
+      call minimap2_task.minimap2 as minimap2_assembly {
         input:
-          query = shovil_consensus.assembly_fasta,
+          query1 = shovil_consensus.assembly_fasta,
           reference = select_first([reference]),
           samplename = samplename
       }
-      call parse_paf_task.parse_paf {
+      call parse_paf_task.retrieve_aligned_contig_paf {
         input:
-          paf = minimap2.minimap2_paf,
+          paf = minimap2_assembly.minimap2_out,
           assembly = shovil_consensus.assembly_fasta,
           samplename = samplename
       }
       call compare_assemblies_task.compare_assemblies {
         input:
-          assembly_denovo = parse_paf.parse_paf_contigs,
+          assembly_denovo = retrieve_aligned_contig_paf.parse_paf_contigs,
           assembly_consensus = ivar_consensus.assembly_fasta,
           samplename = samplename
       }
@@ -74,6 +74,25 @@ workflow theiameta_illumina_pe {
         input:
           assembly_fasta =  compare_assemblies.final_assembly,
           reference_genome = reference
+      }
+      call minimap2_task.minimap2 as minimap2_reads {
+        input:
+          query1 = read_QC_trim.read1_clean,
+          query2 = read_QC_trim.read2_clean, 
+          reference = compare_assemblies.final_assembly,
+          samplename = samplename,
+          mode = "sr",
+          output_sam = true
+      }
+      call parse_paf_task.retrieve_unaligned_pe_reads_sam {
+        input:
+          sam = minimap2_reads.minimap2_out,
+          samplename = samplename
+      }
+      call parse_paf_task.bam2fastq {
+        input:
+          bam = retrieve_unaligned_pe_reads_sam.unmapped_bam,
+          samplename = samplename
       }
     }
     # otherwise, perform de novo assembly with megahit
@@ -133,5 +152,7 @@ workflow theiameta_illumina_pe {
     Int? largest_contig = quast.largest_contig
     String? ivar_version_consensus = ivar_consensus.ivar_version_consensus
     String? samtools_version_consensus = ivar_consensus.samtools_version_consensus
+    File? read1_unmapped = bam2fastq.read1
+    File? read2_unmapped = bam2fastq.read2
     }
 }
