@@ -80,7 +80,7 @@ workflow snippy_streamline {
 
     ### ncbi datasets outputs ###
     # output reference FASTA file now consolidated to File snippy_ref
-    File? snippy_streamline_ncbi_datasets_assembly_data_report_json = ncbi_datasets_download_genome_accession.ncbi_datasets_assembly_data_report_json
+    File? snippy_streamline_ref_metadata_json = ncbi_datasets_download_genome_accession.ncbi_datasets_assembly_data_report_json
     String? snippy_streamline_ncbi_datasets_version = ncbi_datasets_download_genome_accession.ncbi_datasets_version
     String? snippy_streamline_ncbi_datasets_docker = ncbi_datasets_download_genome_accession.ncbi_datasets_docker
 
