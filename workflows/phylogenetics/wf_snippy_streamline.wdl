@@ -79,8 +79,8 @@ workflow snippy_streamline {
     String? snippy_streamline_referenceseeker_database = referenceseeker.referenceseeker_database
 
     ### ncbi datasets outputs ###
+    # output reference FASTA file now consolidated to File snippy_ref
     File? snippy_streamline_ncbi_datasets_assembly_data_report_json = ncbi_datasets_download_genome_accession.ncbi_datasets_assembly_data_report_json
-    File? snippy_streamline_ncbi_datasets_assembly_fasta = ncbi_datasets_download_genome_accession.ncbi_datasets_assembly_fasta 
     String? snippy_streamline_ncbi_datasets_version = ncbi_datasets_download_genome_accession.ncbi_datasets_version
     String? snippy_streamline_ncbi_datasets_docker = ncbi_datasets_download_genome_accession.ncbi_datasets_docker
 
@@ -97,7 +97,7 @@ workflow snippy_streamline {
     String snippy_iqtree2_model_used = snippy_tree_wf.snippy_iqtree2_model_used
     File snippy_final_alignment = snippy_tree_wf.snippy_final_alignment
     File snippy_final_tree = snippy_tree_wf.snippy_final_tree
-    File snippy_ref = snippy_tree_wf.snippy_ref
+    File snippy_ref = select_first([snippy_tree_wf.snippy_ref, ncbi_datasets_download_genome_accession.ncbi_datasets_assembly_fasta])
     File snippy_msa_snps_summary = snippy_tree_wf.snippy_msa_snps_summary
     String? snippy_snp_sites_version = snippy_tree_wf.snippy_snp_sites_version
     String? snippy_snp_sites_docker = snippy_tree_wf.snippy_snp_sites_docker
