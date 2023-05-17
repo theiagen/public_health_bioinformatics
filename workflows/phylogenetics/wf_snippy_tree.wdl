@@ -67,7 +67,10 @@ workflow snippy_tree_wf {
         cpu = gubbins_cpu
     }
   }
-  if (core_genome) {
+  # select first here is so that the optional boolean input 'core_genome' is coerced into being required
+  # if user does not specify core_genome or they specify false, this block will be skipped
+  # if user DOES specify core_genome as true, then the snp_sites task will be called/utilized
+  if (select_first([core_genome, false])) {
       call snp_sites_task.snp_sites as snp_sites {
         input:
           # hardcoding some of the snp-sites optional outputs to false, 

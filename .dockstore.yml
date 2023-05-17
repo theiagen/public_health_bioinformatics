@@ -230,3 +230,8 @@ workflows:
    primaryDescriptorPath: /workflows/phylogenetics/wf_snippy_streamline.wdl
    testParameterFiles:
     - empty.json
+ - name: Assembly_Fetch_PHB
+   subclass: WDL
+   primaryDescriptorPath: /workflows/utilities/data_import/wf_assembly_fetch.wdl
+   testParameterFiles:
+    - empty.json
