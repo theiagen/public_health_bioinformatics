@@ -469,7 +469,7 @@ workflow theiaprok_illumina_se {
             srst2_vibrio_ompW = merlin_magic.srst2_vibrio_ompW,
             srst2_vibrio_toxR = merlin_magic.srst2_vibrio_toxR,
             srst2_vibrio_serogroup = merlin_magic.srst2_vibrio_serogroup,
-            srst2_vibrio_biotype = merlin_magic.srst2_vibrio_biotype
+            srst2_vibrio_biotype = merlin_magic.srst2_vibrio_biotype,
             qc_check = qc_check_task.qc_check,
             qc_standard = qc_check_task.qc_standard
 
