@@ -48,52 +48,12 @@ task retrieve_unaligned_pe_reads_sam {
     Int mem = 8
   }
   command <<<
-    # Convert SAM to BAM
-    samtools view -Sb "~{sam}" > mapped_reads.bam
+    # Convert SAM to BAM, and sort it based on read name
+    samtools sort -n "~{sam}" -O BAM > mapped_name_sorted_reads.bam
 
-    # Sort the BAM file
-    samtools sort -o mapped_reads.sorted.bam mapped_reads.bam
-    
-    # Index the sorted BAM file
-    samtools index mapped_reads.sorted.bam
-    
-    # Extract the unmapped reads
-    samtools view -b -f 4 -F 264 mapped_reads.sorted.bam > unmapped_reads.bam
-
-  >>>
-  output {
-    File unmapped_bam = "unmapped_reads.bam"
-  }
-  runtime {
-    docker: "~{docker}"
-    memory: mem + " GB"
-    cpu: cpu
-    disks: "local-disk " + disk_size + " SSD"
-    disk: disk_size + " GB"
-    maxRetries: 0
-    preemptible: 0
-  }
-}
-
-task bam2fastq {
-  meta {
-    description: "Convert bam to FASTQ file with bedtools "
-  }
-  input {
-    File bam
-    String samplename
-    String docker = "staphb/bedtools:2.30.0"
-    Int disk_size = 100
-    Int cpu = 2
-    Int mem = 8
-  }
-  command <<<
-
-    # Convert unmapped reads to FASTQ
-    bedtools bamtofastq -i "~{bam}" -fq "~{samplename}"_1.fq -fq2 "~{samplename}"_2.fq
-
-    # Compress fq files
-    gzip "~{samplename}"_1.fq "~{samplename}"_2.fq
+    # Convert unmapped reads (SAM flag 4) to fastq.gz, discarding the singleton reads
+    samtools fastq -f 4 -1 "~{samplename}"_1.fq.gz -2 "~{samplename}"_2.fq.gz \
+    -s singleton.fq.gz mapped_name_sorted_reads.bam
   >>>
   output {
     File read1 = "~{samplename}_1.fq.gz"

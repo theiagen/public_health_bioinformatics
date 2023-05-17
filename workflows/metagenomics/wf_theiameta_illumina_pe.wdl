@@ -75,25 +75,6 @@ workflow theiameta_illumina_pe {
           assembly_fasta =  compare_assemblies.final_assembly,
           reference_genome = reference
       }
-      call minimap2_task.minimap2 as minimap2_reads {
-        input:
-          query1 = read_QC_trim.read1_clean,
-          query2 = read_QC_trim.read2_clean, 
-          reference = compare_assemblies.final_assembly,
-          samplename = samplename,
-          mode = "sr",
-          output_sam = true
-      }
-      call parse_paf_task.retrieve_unaligned_pe_reads_sam {
-        input:
-          sam = minimap2_reads.minimap2_out,
-          samplename = samplename
-      }
-      call parse_paf_task.bam2fastq {
-        input:
-          bam = retrieve_unaligned_pe_reads_sam.unmapped_bam,
-          samplename = samplename
-      }
     }
     # otherwise, perform de novo assembly with megahit
     if (!defined(reference)) {
@@ -109,6 +90,20 @@ workflow theiameta_illumina_pe {
           assembly = shovil_denovo.assembly_fasta,
           samplename = samplename
       }
+    }
+    call minimap2_task.minimap2 as minimap2_reads {
+      input:
+        query1 = read_QC_trim.read1_clean,
+        query2 = read_QC_trim.read2_clean, 
+        reference = select_first([compare_assemblies.final_assembly, shovil_denovo.assembly_fasta]),
+        samplename = samplename,
+        mode = "sr",
+        output_sam = true
+    }
+    call parse_paf_task.retrieve_unaligned_pe_reads_sam {
+      input:
+        sam = minimap2_reads.minimap2_out,
+        samplename = samplename
     }
     call versioning.version_capture{
     input:
@@ -152,7 +147,7 @@ workflow theiameta_illumina_pe {
     Int? largest_contig = quast.largest_contig
     String? ivar_version_consensus = ivar_consensus.ivar_version_consensus
     String? samtools_version_consensus = ivar_consensus.samtools_version_consensus
-    File? read1_unmapped = bam2fastq.read1
-    File? read2_unmapped = bam2fastq.read2
+    File? read1_unmapped = retrieve_unaligned_pe_reads_sam.read1
+    File? read2_unmapped = retrieve_unaligned_pe_reads_sam.read2
     }
 }
