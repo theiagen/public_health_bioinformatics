@@ -72,17 +72,17 @@ workflow snippy_streamline {
     File? snippy_centroid_mash_tsv = centroid.centroid_mash_tsv
     
     ### referenceseeker outputs ###
-    String? snippy_streamline_referenceseeker_top_hit_ncbi_accession = referenceseeker.referenceseeker_top_hit_ncbi_accession
-    String? snippy_streamline_referenceseeker_version = referenceseeker.referenceseeker_version
-    File? snippy_streamline_referenceseeker_tsv = referenceseeker.referenceseeker_tsv
-    String? snippy_streamline_referenceseeker_docker = referenceseeker.referenceseeker_docker
-    String? snippy_streamline_referenceseeker_database = referenceseeker.referenceseeker_database
+    String? snippy_referenceseeker_top_hit_ncbi_accession = referenceseeker.referenceseeker_top_hit_ncbi_accession
+    String? snippy_referenceseeker_version = referenceseeker.referenceseeker_version
+    File? snippy_referenceseeker_tsv = referenceseeker.referenceseeker_tsv
+    String? snippy_referenceseeker_docker = referenceseeker.referenceseeker_docker
+    String? snippy_referenceseeker_database = referenceseeker.referenceseeker_database
 
     ### ncbi datasets outputs ###
     # output reference FASTA file now consolidated to File snippy_ref
-    File? snippy_streamline_ref_metadata_json = ncbi_datasets_download_genome_accession.ncbi_datasets_assembly_data_report_json
-    String? snippy_streamline_ncbi_datasets_version = ncbi_datasets_download_genome_accession.ncbi_datasets_version
-    String? snippy_streamline_ncbi_datasets_docker = ncbi_datasets_download_genome_accession.ncbi_datasets_docker
+    File? snippy_ref_metadata_json = ncbi_datasets_download_genome_accession.ncbi_datasets_assembly_data_report_json
+    String? snippy_ncbi_datasets_version = ncbi_datasets_download_genome_accession.ncbi_datasets_version
+    String? snippy_ncbi_datasets_docker = ncbi_datasets_download_genome_accession.ncbi_datasets_docker
 
     ### snippy_variants wf outputs ###
     Array[File] snippy_variants_outdir_tarball = snippy_variants_wf.snippy_variants_outdir_tarball
