@@ -6,9 +6,11 @@ task centroid {
     Int disk_size = 50
     Int cpu = 1
     Int memory = 4
-    String docker = "quay.io/theiagen/centroid:latest"
+    String docker = "quay.io/theiagen/centroid:0.1.0"
   }
   command <<<
+    centroid.py --version | tee CENTROID_VER
+    
     mkdir INPUT_DIR
     # copy all asms to a single directory
     cp -v ~{sep=' ' assembly_fasta} INPUT_DIR
@@ -29,6 +31,8 @@ task centroid {
     String centroid_genome_samplename = read_string("CENTROID_GENOME_SAMPLENAME")
     File centroid_genome_fasta = "centroid.fasta"
     File centroid_mash_tsv = "mash-results.tsv"
+    String centroid_docker = docker
+    String centroid_verison = read_string("CENTROID_VER")
   }
   runtime {
     docker: docker
