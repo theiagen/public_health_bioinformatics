@@ -32,7 +32,7 @@ task centroid {
     File centroid_genome_fasta = "centroid.fasta"
     File centroid_mash_tsv = "mash-results.tsv"
     String centroid_docker = docker
-    String centroid_verison = read_string("CENTROID_VER")
+    String centroid_version = read_string("CENTROID_VER")
   }
   runtime {
     docker: docker
