@@ -67,9 +67,9 @@ workflow snippy_streamline {
     String snippy_streamline_analysis_date = version_capture.date
 
     ### centroid outputs ###
-    String? ss_centroid_genome_samplename = centroid.centroid_genome_samplename
-    File? snippy_streamline_centroid_genome_fasta = centroid.centroid_genome_fasta
-    File? snippy_streamline_centroid_mash_tsv = centroid.centroid_mash_tsv
+    String? snippy_centroid_samplename = centroid.centroid_genome_samplename
+    File? snippy_centroid_fasta = centroid.centroid_genome_fasta
+    File? snippy_centroid_mash_tsv = centroid.centroid_mash_tsv
     
     ### referenceseeker outputs ###
     String? snippy_streamline_referenceseeker_top_hit_ncbi_accession = referenceseeker.referenceseeker_top_hit_ncbi_accession
