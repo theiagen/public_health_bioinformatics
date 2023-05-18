@@ -214,7 +214,7 @@
       md5sum: 32c0be4fb7f3030bf9c74c0a836d4f2e
     - path: miniwdl_run/call-clean_check_reads/work/_miniwdl_inputs/0/test_1.clean.fastq.gz
     - path: miniwdl_run/call-gambit/command
-      md5sum: 2d06de9fe8a844c4c8b5e59642687833
+      md5sum: 6904c8cf6c794400a2a7f4e1e6fb4d1f
     - path: miniwdl_run/call-gambit/inputs.json
       contains: ["assembly", "fasta", "samplename", "test"]
     - path: miniwdl_run/call-gambit/outputs.json
@@ -541,6 +541,8 @@
       md5sum: bd50800dc3fc84649802bd0fa2acc092
     - path: miniwdl_run/wdl/tasks/quality_control/task_mummer_ani.wdl
       md5sum: 95913bd94bdcc8fd0e356b784df656ec
+    - path: miniwdl_run/wdl/tasks/quality_control/task_qc_check_phb.wdl
+      contains: ["version", "qc_check_table", "output"]
     - path: miniwdl_run/wdl/tasks/quality_control/task_quast.wdl
       md5sum: 0f58a290e74f539eac92d6751eaa757f
     - path: miniwdl_run/wdl/tasks/quality_control/task_screen.wdl
@@ -588,17 +590,17 @@
     - path: miniwdl_run/wdl/tasks/task_versioning.wdl
       md5sum: c56fb29430dbc7d5f42d10b34c1802a6
     - path: miniwdl_run/wdl/tasks/taxon_id/task_gambit.wdl
-      md5sum: 60ac7f5d73c92090b0541846cd5ed183
+      md5sum: 2d3cbc0adea159481c76188f9fec87d9
     - path: miniwdl_run/wdl/tasks/taxon_id/task_kraken2.wdl
       md5sum: c3dbae850a60adb9aae7d39e8ff0dc81
     - path: miniwdl_run/wdl/tasks/taxon_id/task_midas.wdl
       md5sum: b30cef6a483c778b858337ec1b833d68
     - path: miniwdl_run/wdl/tasks/utilities/task_broad_terra_tools.wdl
-      md5sum: c8197a23ac6b51a1190f189b017348f7
+      md5sum: cc5d91f454455d0751357573325c676e
     - path: miniwdl_run/wdl/workflows/theiaprok/wf_theiaprok_illumina_se.wdl
-      md5sum: 95275e0377b7dc5d29e6ee1ae9ec196d
+      md5sum: 7eb0c0dd25f09d8ceaec04e0301505da
     - path: miniwdl_run/wdl/workflows/utilities/wf_merlin_magic.wdl
-      md5sum: 1731f982d5e592f56f1ada85870633b3
+      md5sum: 7befc85f0a100d18ac110f8734817971
     - path: miniwdl_run/wdl/workflows/utilities/wf_read_QC_trim_se.wdl
       md5sum: 53d322d895837c0bcb049786572e944d
     - path: miniwdl_run/workflow.log
