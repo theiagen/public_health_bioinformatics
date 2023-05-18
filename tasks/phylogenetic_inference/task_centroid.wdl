@@ -6,6 +6,7 @@ task centroid {
     Int disk_size = 50
     Int cpu = 1
     Int memory = 4
+    String docker = "quay.io/theiagen/centroid:latest"
   }
   command <<<
     mkdir INPUT_DIR
@@ -30,8 +31,7 @@ task centroid {
     File centroid_mash_tsv = "mash-results.tsv"
   }
   runtime {
-    # hardcoding docker as I do not expect updates to occur to Centroid in the future
-    docker: "quay.io/theiagen/centroid:latest"
+    docker: docker
     cpu: cpu
     memory: memory + " GB"
     disks:  "local-disk " + disk_size + " SSD"
