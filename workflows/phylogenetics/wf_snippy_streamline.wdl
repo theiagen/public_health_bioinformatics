@@ -70,6 +70,8 @@ workflow snippy_streamline {
     String? snippy_centroid_samplename = centroid.centroid_genome_samplename
     File? snippy_centroid_fasta = centroid.centroid_genome_fasta
     File? snippy_centroid_mash_tsv = centroid.centroid_mash_tsv
+    String? snippy_centroid_docker = centroid.centroid_docker
+    String? snippy_centroid_version = centroid.centroid_version
     
     ### referenceseeker outputs ###
     String? snippy_referenceseeker_top_hit_ncbi_accession = referenceseeker.referenceseeker_top_hit_ncbi_accession
