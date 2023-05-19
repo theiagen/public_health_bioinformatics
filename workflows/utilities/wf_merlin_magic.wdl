@@ -24,6 +24,8 @@ import "../../tasks/species_typing/task_pbptyper.wdl" as pbptyper
 import "../../tasks/species_typing/task_poppunk_streppneumo.wdl" as poppunk_spneumo
 import "../../tasks/species_typing/task_pasty.wdl" as pasty_task
 import "../../tasks/gene_typing/task_abricate.wdl" as abricate_task
+import "../../tasks/species_typing/task_emmtypingtool.wdl" as emmtypingtool_task
+import "../../tasks/species_typing/task_hicap.wdl" as hicap_task
 
 # theiaeuk
 import "../../tasks/species_typing/task_cauris_cladetyper.wdl" as cauris_cladetyper
@@ -249,6 +251,23 @@ workflow merlin_magic {
           assembly = assembly,
           samplename = samplename
       }  
+    }
+  }
+  if (merlin_tag == "Streptococcus pyogenes") {
+    if (paired_end && !ont_data) {
+      call emmtypingtool_task.emmtypingtool {
+        input:
+          read1 = select_first([read1]),
+          read2 = read2,
+          samplename = samplename
+      }
+    }
+  }
+  if (merlin_tag == "Haemophilus influenzae") {
+    call hicap_task.hicap {
+      input:
+        assembly = assembly,
+        samplename = samplename
     }
   }
   
@@ -500,7 +519,16 @@ workflow merlin_magic {
     String? seroba_ariba_serotype = seroba_task.seroba_ariba_serotype
     String? seroba_ariba_identity = seroba_task.seroba_ariba_identity
     File? seroba_details = seroba_task.seroba_details
-  
+    # Streptococcus pyogenes Typing
+    String? emmtypingtool_results = emmtypingtool.emmtypingtool_results
+    File? emmtypingtool_xml = emmtypingtool.emmtypingtool_xml
+    String? emmtypingtool_version = emmtypingtool.emmtypingtool_version
+    # Haemophilus influenzae Typing
+    String? hicap_serotype = hicap.hicap_serotype
+    String? hicap_genes = hicap.hicap_genes
+    File? hicap_output = hicap.hicap_output
+    String? hicap_version = hicap.hicap_version
+
     # theiaeuk
     # c auris 
     String? clade_type = cladetyper.gambit_cladetype

@@ -486,6 +486,13 @@ workflow theiaprok_illumina_pe {
             seroba_ariba_serotype = merlin_magic.seroba_ariba_serotype,
             seroba_ariba_identity = merlin_magic.seroba_ariba_identity,
             seroba_details = merlin_magic.seroba_details,
+            emmtypingtool_results = merlin_magic.emmtypingtool_results,
+            emmtypingtool_xml = merlin_magic.emmtypingtool_xml,
+            emmtypingtool_version = merlin_magic.emmtypingtool_version,
+            hicap_serotype = merlin_magic.hicap_serotype,
+            hicap_genes = merlin_magic.hicap_genes,
+            hicap_output = merlin_magic.hicap_output,
+            hicap_version = merlin_magic.hicap_version,
             midas_docker = read_QC_trim.midas_docker,
             midas_report = read_QC_trim.midas_report,
             midas_primary_genus = read_QC_trim.midas_primary_genus,
@@ -817,6 +824,15 @@ workflow theiaprok_illumina_pe {
     String? seroba_ariba_serotype = merlin_magic.seroba_ariba_serotype
     String? seroba_ariba_identity = merlin_magic.seroba_ariba_identity
     File? seroba_details = merlin_magic.seroba_details
+    # Streptococcus pyogenes Typing
+    String? emmtypingtool_results = merlin_magic.emmtypingtool_results
+    File? emmtypingtool_xml = merlin_magic.emmtypingtool_xml
+    String? emmtypingtool_version = merlin_magic.emmtypingtool_version
+    # Haemophilus influenzae Typing
+    String? hicap_serotype = merlin_magic.hicap_serotype
+    String? hicap_genes = merlin_magic.hicap_genes
+    File? hicap_output = merlin_magic.hicap_output
+    String? hicap_version = merlin_magic.hicap_version
     # export taxon table output
     String? taxon_table_status = export_taxon_tables.status
   }
