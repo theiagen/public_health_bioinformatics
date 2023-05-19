@@ -109,7 +109,8 @@ task amrfinderplus_nuc {
     grep 'AMR' ~{samplename}_amrfinder_all.tsv >> ~{samplename}_amrfinder_amr.tsv || true
 
     # create string outputs for all genes identified in AMR, STRESS, VIRULENCE
-    amr_genes=$(awk -F '\t' '{ print $7 }' ~{samplename}_amrfinder_amr.tsv | tail -n+2 | tr '\n' ', ' | sed 's/.$//')
+    amr_core_genes=$(awk -F '\t' '{ if($9 == "core") { print $7}}'  sample_amrfinder_amr.tsv | tr '\n' ', ' | sed 's/.$//')
+    amr_plus_genes=$(awk -F '\t' '{ if($9 != "core") { print $7}}'  sample_amrfinder_amr.tsv | tail -n+2 | tr '\n' ', ' | sed 's/.$//')
     stress_genes=$(awk -F '\t' '{ print $7 }' ~{samplename}_amrfinder_stress.tsv | tail -n+2 | tr '\n' ', ' | sed 's/.$//')
     virulence_genes=$(awk -F '\t' '{ print $7 }' ~{samplename}_amrfinder_virulence.tsv | tail -n+2 | tr '\n' ', ' | sed 's/.$//')
     
@@ -124,8 +125,11 @@ task amrfinderplus_nuc {
     fi
 
     # if variable for list of genes is EMPTY, write string saying it is empty to float to Terra table
-    if [ -z "${amr_genes}" ]; then
-       amr_genes="No AMR genes detected by NCBI-AMRFinderPlus"
+    if [ -z "${amr_core_genes}" ]; then
+       amr_core_genes="No core AMR genes detected by NCBI-AMRFinderPlus"
+    fi 
+    if [ -z "${amr_plus_genes}" ]; then
+       amr_plus_genes="No plus AMR genes detected by NCBI-AMRFinderPlus"
     fi 
     if [ -z "${stress_genes}" ]; then
        stress_genes="No STRESS genes detected by NCBI-AMRFinderPlus"
@@ -141,7 +145,8 @@ task amrfinderplus_nuc {
     fi 
 
     # create final output strings
-    echo "${amr_genes}" > AMR_GENES
+    echo "${amr_core_genes}" > AMR_CORE_GENES
+    echo "${amr_plus_genes}" > AMR_PLUS_GENES
     echo "${stress_genes}" > STRESS_GENES
     echo "${virulence_genes}" > VIRULENCE_GENES
     echo "${amr_classes}" > AMR_CLASSES
@@ -152,7 +157,8 @@ task amrfinderplus_nuc {
     File amrfinderplus_amr_report = "~{samplename}_amrfinder_amr.tsv"
     File amrfinderplus_stress_report = "~{samplename}_amrfinder_stress.tsv"
     File amrfinderplus_virulence_report = "~{samplename}_amrfinder_virulence.tsv"
-    String amrfinderplus_amr_genes = read_string("AMR_GENES")
+    String amrfinderplus_amr_core_genes = read_string("AMR_CORE_GENES")
+    String amrfinderplus_amr_plus_genes = read_string("AMR_PLUS_GENES")
     String amrfinderplus_stress_genes = read_string("STRESS_GENES")
     String amrfinderplus_virulence_genes = read_string("VIRULENCE_GENES")
     String amrfinderplus_amr_classes = read_string("AMR_CLASSES")
