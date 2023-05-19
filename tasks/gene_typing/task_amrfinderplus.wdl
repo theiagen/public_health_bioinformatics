@@ -109,8 +109,8 @@ task amrfinderplus_nuc {
     grep 'AMR' ~{samplename}_amrfinder_all.tsv >> ~{samplename}_amrfinder_amr.tsv || true
 
     # create string outputs for all genes identified in AMR, STRESS, VIRULENCE
-    amr_core_genes=$(awk -F '\t' '{ if($9 == "core") { print $7}}'  sample_amrfinder_amr.tsv | tr '\n' ', ' | sed 's/.$//')
-    amr_plus_genes=$(awk -F '\t' '{ if($9 != "core") { print $7}}'  sample_amrfinder_amr.tsv | tail -n+2 | tr '\n' ', ' | sed 's/.$//')
+    amr_core_genes=$(awk -F '\t' '{ if($9 == "core") { print $7}}' ~{samplename}_amrfinder_amr.tsv | tr '\n' ', ' | sed 's/.$//')
+    amr_plus_genes=$(awk -F '\t' '{ if($9 != "core") { print $7}}' ~{samplename}_amrfinder_amr.tsv | tail -n+2 | tr '\n' ', ' | sed 's/.$//')
     stress_genes=$(awk -F '\t' '{ print $7 }' ~{samplename}_amrfinder_stress.tsv | tail -n+2 | tr '\n' ', ' | sed 's/.$//')
     virulence_genes=$(awk -F '\t' '{ print $7 }' ~{samplename}_amrfinder_virulence.tsv | tail -n+2 | tr '\n' ', ' | sed 's/.$//')
     
