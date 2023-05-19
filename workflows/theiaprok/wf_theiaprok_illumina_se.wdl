@@ -467,8 +467,16 @@ workflow theiaprok_illumina_se {
             hicap_genes = merlin_magic.hicap_genes,
             hicap_output = merlin_magic.hicap_output,
             hicap_version = merlin_magic.hicap_version,
+            srst2_vibrio_detailed_tsv = merlin_magic.srst2_vibrio_detailed_tsv,
+            srst2_vibrio_version = merlin_magic.srst2_vibrio_version,
+            srst2_vibrio_ctxA = merlin_magic.srst2_vibrio_ctxA,
+            srst2_vibrio_ompW = merlin_magic.srst2_vibrio_ompW,
+            srst2_vibrio_toxR = merlin_magic.srst2_vibrio_toxR,
+            srst2_vibrio_serogroup = merlin_magic.srst2_vibrio_serogroup,
+            srst2_vibrio_biotype = merlin_magic.srst2_vibrio_biotype,
             qc_check = qc_check_task.qc_check,
             qc_standard = qc_check_task.qc_standard
+
         }
       }
     }
@@ -772,6 +780,14 @@ workflow theiaprok_illumina_se {
     String? hicap_genes = merlin_magic.hicap_genes
     File? hicap_output = merlin_magic.hicap_output
     String? hicap_version = merlin_magic.hicap_version
+    # Vibrio Typing
+    File? srst2_vibrio_detailed_tsv = merlin_magic.srst2_vibrio_detailed_tsv
+    String? srst2_vibrio_version = merlin_magic.srst2_vibrio_version
+    String? srst2_vibrio_ctxA = merlin_magic.srst2_vibrio_ctxA
+    String? srst2_vibrio_ompW = merlin_magic.srst2_vibrio_ompW
+    String? srst2_vibrio_toxR = merlin_magic.srst2_vibrio_toxR
+    String? srst2_vibrio_biotype = merlin_magic.srst2_vibrio_biotype
+    String? srst2_vibrio_serogroup = merlin_magic.srst2_vibrio_serogroup
     # export taxon table output
     String? taxon_table_status = export_taxon_tables.status
   }
