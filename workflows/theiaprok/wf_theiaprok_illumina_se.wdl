@@ -463,6 +463,10 @@ workflow theiaprok_illumina_se {
             pasty_version = merlin_magic.pasty_version,
             pasty_docker = merlin_magic.pasty_docker,
             pasty_comment = merlin_magic.pasty_comment,
+            hicap_serotype = merlin_magic.hicap_serotype,
+            hicap_genes = merlin_magic.hicap_genes,
+            hicap_output = merlin_magic.hicap_output,
+            hicap_version = merlin_magic.hicap_version,
             qc_check = qc_check_task.qc_check,
             qc_standard = qc_check_task.qc_standard
         }
@@ -763,6 +767,11 @@ workflow theiaprok_illumina_se {
     String? poppunk_GPS_db_version = merlin_magic.poppunk_GPS_db_version
     String? poppunk_version = merlin_magic.poppunk_version
     String? poppunk_docker = merlin_magic.poppunk_docker
+    # Haemophilus influenzae Typing
+    String? hicap_serotype = merlin_magic.hicap_serotype
+    String? hicap_genes = merlin_magic.hicap_genes
+    File? hicap_output = merlin_magic.hicap_output
+    String? hicap_version = merlin_magic.hicap_version
     # export taxon table output
     String? taxon_table_status = export_taxon_tables.status
   }
