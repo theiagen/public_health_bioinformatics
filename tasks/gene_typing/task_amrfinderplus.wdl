@@ -7,13 +7,14 @@ task amrfinderplus_nuc {
     # Parameters 
     # --indent_min Minimum DNA %identity [0-1]; default is 0.9 (90%) or curated threshold if it exists
     # --mincov Minimum DNA %coverage [0-1]; default is 0.5 (50%)
-    String? organism # make optional?
+    String? organism 
     Float? minid
     Float? mincov
     Boolean detailed_drug_class = false
     Int cpu = 4
-    String docker = "quay.io/staphb/ncbi-amrfinderplus:3.10.42"
+    String docker = "quay.io/staphb/ncbi-amrfinderplus:3.11.11-2023-04-17.1"
     Int disk_size = 100
+    Int memory = 16
     Boolean hide_point_mutations = false
   }
   command <<<
@@ -29,10 +30,19 @@ task amrfinderplus_nuc {
     # there may be other Acinetobacter species to add later, like those in the A. baumannii-calcoaceticus species complex
     if [[ "~{organism}" == *"Acinetobacter"*"baumannii"* ]]; then
       amrfinder_organism="Acinetobacter_baumannii"
+    # use Burkholderia_cepacia for Burkholderia cepacia species complex as per amrfinderplus wiki
+    elif [[ "~{organism}" == *"Burkholderia"*"cepacia"* ]]; then
+      amrfinder_organism="Burkholderia_cepacia"
+    elif [[ "~{organism}" == *"Burkholderia"*"pseudomallei"* ]]; then
+      amrfinder_organism="Burkholderia_pseudomallei"
     elif [[ "~{organism}" == *"Campylobacter"*"coli"* ]] || [[ "~{organism}" == *"Campylobacter"*"jejuni"* ]]; then
       amrfinder_organism="Campylobacter"
+    elif [[ "~{organism}" == *"Citrobacter"*"freundii"* ]]; then
+      amrfinder_organism="Citrobacter_freundii"
     elif [[ "~{organism}" == *"Clostridioides"*"difficile"* ]]; then
       amrfinder_organism="Clostridioides_difficile"
+    elif [[ "~{organism}" == *"Enterobacter"*"cloacae"* ]]; then 
+      amrfinder_organism="Enterobacter_cloacae"
     elif [[ "~{organism}" == *"Enterococcus"*"faecalis"* ]]; then 
       amrfinder_organism="Enterococcus_faecalis"
     elif [[ "~{organism}" == *"Enterococcus"*"faecium"* ]] || [[ "~{organism}" == *"Enterococcus"*"hirae"* ]]; then 
@@ -40,9 +50,12 @@ task amrfinderplus_nuc {
     # should capture all Shigella and Escherichia species
     elif [[ "~{organism}" == *"Escherichia"* ]] || [[ "~{organism}" == *"Shigella"* ]]; then 
       amrfinder_organism="Escherichia"
-    # add other Klebsiella species later? Cannot use K. oxytoca as per amrfinderplus wiki
-    elif [[ "~{organism}" == *"Klebsiella"*"aerogenes"* ]] || [[ "~{organism}" == *"Klebsiella"*"pnemoniae"* ]]; then 
-      amrfinder_organism="Klebsiella"
+    # Klebsiella_pneumoniae can be used for K. pneumoniae species complex and K. aerogenes as per amrfinderplus wiki
+    elif [[ "~{organism}" == *"Klebsiella"*"aerogenes"* ]] || [[ "~{organism}" == *"Klebsiella"*"pneumoniae"* ]]; then 
+      amrfinder_organism="Klebsiella_pneumoniae"
+    # K. oxytoca has it's own option now
+    elif [[ "~{organism}" == *"Klebsiella"*"oxytoca"* ]]; then
+      amrfinder_organism="Klebsiella_oxytoca"
     # because some people spell the species 'gonorrhea' differently
     elif [[ "~{organism}" == *"Neisseria"*"gonorrhea"* ]] || [[ "~{organism}" == *"Neisseria"*"gonorrhoeae"* ]] || [[ "~{organism}" == *"Neisseria"*"meningitidis"* ]]; then 
       amrfinder_organism="Neisseria"
@@ -57,6 +70,7 @@ task amrfinderplus_nuc {
       amrfinder_organism="Staphylococcus_pseudintermedius"
     elif [[ "~{organism}" == *"Streptococcus"*"agalactiae"* ]]; then 
       amrfinder_organism="Streptococcus_agalactiae"
+    # use Streptococcus_pneumoniae for both S. pneumoniae and S. mitis as per amrfinderplus wiki
     elif [[ "~{organism}" == *"Streptococcus"*"pneumoniae"* ]] || [[ "~{organism}" == *"Streptococcus"*"mitis"* ]]; then 
       amrfinder_organism="Streptococcus_pneumoniae"
     elif [[ "~{organism}" == *"Streptococcus"*"pyogenes"* ]]; then 
@@ -161,7 +175,7 @@ task amrfinderplus_nuc {
     String amrfinderplus_db_version = read_string("AMRFINDER_DB_VERSION")
   }
   runtime {
-    memory: "8 GB"
+    memory: "~{memory} GB"
     cpu: cpu
     docker: docker
     disks:  "local-disk " + disk_size + " SSD"
