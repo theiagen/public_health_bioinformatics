@@ -6,7 +6,7 @@ task emmtypingtool {
   }
   input {
     File read1
-    File read2
+    File? read2
     String samplename
     String docker = "staphb/emmtypingtool:0.0.1"
     Int cpu = 2
