@@ -132,6 +132,8 @@ task gambit {
         ])
     EOF
     # set merlin tags
+    # The purpose of the merlin_tag output is for use as a trigger for organism-specific or taxon-specific workflows
+    # One primary & important example is running NCBI amrfinderplus with the appropriate 'amrfinder --organism <organism>' option
     predicted_taxon=$(cat PREDICTED_TAXON)
     # if predicted taxon contains either Escherichia or Shigella, set merlin_tag to Escherichia
     if [[ ${predicted_taxon} == *"Escherichia"* ]] || [[ ${predicted_taxon} == *"Shigella"* ]] ; then 
@@ -144,6 +146,16 @@ task gambit {
       merlin_tag="Haemophilus"
     elif [[ ${predicted_taxon} == *"Klebsiella"* ]]; then 
       merlin_tag="Klebsiella"
+      # if predicted taxon is Klebsiella pneumoniae, reset merlin_tag to Klebsiella pneumoniae
+      if [[ ${predicted_taxon} == *"Klebsiella pneumoniae"* ]]; then 
+        merlin_tag="Klebsiella pneumoniae"
+      # if predicted taxon is Klebsiella oxytoca, reset merlin_tag to Klebsiella oxytoca
+      elif [[ ${predicted_taxon} == *"Klebsiella oxytoca"* ]]; then
+        merlin_tag="Klebsiella oxytoca"
+      # if predicted taxon is Klebsiella aerogenes, reset merlin_tag to Klebsiella aerogenes
+      elif [[ ${predicted_taxon} == *"Klebsiella aerogenes"* ]]; then
+        merlin_tag="Klebsiella aerogenes"
+      fi
     elif [[ ${predicted_taxon} == *"Acinetobacter baumannii"* ]]; then 
       merlin_tag="Acinetobacter baumannii"
     elif [[ ${predicted_taxon} == *"Legionella pneumophila"* ]]; then 
@@ -170,15 +182,27 @@ task gambit {
       # set to aureus if gambit calls the species
       if [[ ${predicted_taxon} == *"Staphylococcus aureus"* ]]; then 
         merlin_tag="Staphylococcus aureus"
+      # set to pseudintermedius if gambit calls the species (there is a specific amrfinderplus option for this species)
+      elif [[ ${predicted_taxon} == *"Staphylococcus pseudintermedius"* ]]; then 
+        merlin_tag="Staphylococcus pseudintermedius"
       fi
     elif [[ ${predicted_taxon} == *"Streptococcus"* ]]; then 
       merlin_tag="Streptococcus"
       # set to pneumoniae if gambit calls the species
       if [[ ${predicted_taxon} == *"Streptococcus pneumoniae"* ]]; then 
         merlin_tag="Streptococcus pneumoniae"
+      # set to agalactiae if gambit calls the species
+      elif [[ ${predicted_taxon} == *"Streptococcus agalactiae"* ]]; then 
+        merlin_tag="Streptococcus agalactiae"
+      elif [[ ${predicted_taxon} == *"Streptococcus pyogenes"* ]]; then 
+        merlin_tag="Streptococcus pyogenes"
       fi
     elif [[ ${predicted_taxon} == *"Vibrio"* ]]; then 
       merlin_tag="Vibrio"
+      # set to cholerae if gambit calls the species
+      if [[ ${predicted_taxon} == *"Vibrio cholerae"* ]]; then 
+        merlin_tag="Vibrio cholerae"
+      fi
     # theiaeuk
     elif [[ ${predicted_taxon} == *"Candida auris"* ]] ; then 
       merlin_tag="Candida auris"
@@ -188,6 +212,29 @@ task gambit {
       merlin_tag="Aspergillus fumigatus"
     elif [[ ${predicted_taxon} == *"Cryptococcus neoformans"* ]] ; then
       merlin_tag="Cryptococcus neoformans"
+    # other bacterial species that have the --organism option available in NCBI amrfinderplus
+    elif [[ ${predicted_taxon} == *"Burkholderia cepacia"* ]] ; then
+      merlin_tag="Burkholderia cepacia"
+    elif [[ ${predicted_taxon} == *"Burkholderia pseudomallei"* ]] ; then
+      merlin_tag="Burkholderia pseudomallei"
+    elif [[ ${predicted_taxon} == *"Campylobacter coli"* ]] ; then
+      merlin_tag="Campylobacter coli"
+    elif [[ ${predicted_taxon} == *"Campylobacter jejuni"* ]] ; then
+      merlin_tag="Campylobacter jejuni"
+    elif [[ ${predicted_taxon} == *"Citrobacter freundii"* ]] ; then
+      merlin_tag="Citrobacter freundii"
+    elif [[ ${predicted_taxon} == *"Clostridioides difficile"* ]] ; then
+      merlin_tag="Clostridioides difficile"
+    elif [[ ${predicted_taxon} == *"Enterobacter cloacae"* ]] ; then
+      merlin_tag="Enterobacter cloacae"
+    elif [[ ${predicted_taxon} == *"Enterococcus faecalis"* ]] ; then
+      merlin_tag="Enterococcus faecalis"
+    elif [[ ${predicted_taxon} == *"Enterococcus hirae"* ]] ; then
+      merlin_tag="Enterococcus hirae"
+    elif [[ ${predicted_taxon} == *"Enterococcus faecium"* ]] ; then
+      merlin_tag="Enterococcus faecium"
+    elif [[ ${predicted_taxon} == *"Serratia marcescens"* ]] ; then
+      merlin_tag="Serratia marcescens"
     else 
       merlin_tag="None"
     fi
