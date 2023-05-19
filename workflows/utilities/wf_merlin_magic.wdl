@@ -274,6 +274,8 @@ workflow merlin_magic {
       input:
         assembly = assembly,
         samplename = samplename
+    }
+  }
   if (merlin_tag == "Vibrio") {
     call srst2_vibrio_task.srst2_vibrio {
       input:
