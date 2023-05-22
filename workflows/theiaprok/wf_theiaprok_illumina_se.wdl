@@ -778,8 +778,9 @@ workflow theiaprok_illumina_se {
     # Haemophilus influenzae Typing
     String? hicap_serotype = merlin_magic.hicap_serotype
     String? hicap_genes = merlin_magic.hicap_genes
-    File? hicap_output = merlin_magic.hicap_output
+    File? hicap_results_tsv = merlin_magic.hicap_results_tsv
     String? hicap_version = merlin_magic.hicap_version
+    String? hicap_docker = merlin_magic.hicap_docker
     # Vibrio Typing
     File? srst2_vibrio_detailed_tsv = merlin_magic.srst2_vibrio_detailed_tsv
     String? srst2_vibrio_version = merlin_magic.srst2_vibrio_version
