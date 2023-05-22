@@ -180,8 +180,8 @@ task sm_metadata_wrangling { # the sm stands for supermassive
         sra_optional = []
         genbank_required = []
       
-      gisaid_required = ["gisaid_submitter", "submission_id", "collection_date", "continent", "country", "state", "host", "seq_platform", assembly_fasta_column_name, "assembly_method", assembly_mean_coverage_column_name, "collecting_lab", "collecting_lab_address", "submitting_lab", "submitting_lab_address", "authors", "consortium"]
-      gisaid_optional = ["gisaid_virus_name", "additional_host_information", "county", "purpose_of_sequencing", "patient_gender", "patient_age", "patient_status", "specimen_source", "outbreak", "last_vaccinated", "treatment"]
+      gisaid_required = ["gisaid_submitter", "submission_id", "collection_date", "continent", "country", "state", "host", "seq_platform", assembly_fasta_column_name, "assembly_method", assembly_mean_coverage_column_name, "collecting_lab", "collecting_lab_address", "submitting_lab", "submitting_lab_address", "authors"]
+      gisaid_optional = ["gisaid_virus_name", "additional_host_information", "county", "purpose_of_sequencing", "patient_gender", "patient_age", "patient_status", "specimen_source", "outbreak", "last_vaccinated", "treatment", "consortium"]
 
       required_metadata = biosample_required + sra_required + genbank_required + gisaid_required
      
