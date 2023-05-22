@@ -180,7 +180,7 @@ task sm_metadata_wrangling { # the sm stands for supermassive
         sra_optional = []
         genbank_required = []
       
-      gisaid_required = ["gisaid_submitter", "submission_id", "collection_date", "continent", "country", "state", "host", "seq_platform", assembly_fasta_column_name, "assembly_method", assembly_mean_coverage_column_name, "collecting_lab", "collecting_lab_address", "submitting_lab", "submitting_lab_address", "authors"]
+      gisaid_required = ["gisaid_submitter", "submission_id", "collection_date", "continent", "country", "state", "host", "seq_platform", assembly_fasta_column_name, "assembly_method", assembly_mean_coverage_column_name, "collecting_lab", "collecting_lab_address", "submitting_lab", "submitting_lab_address", "authors", "consortium"]
       gisaid_optional = ["gisaid_virus_name", "additional_host_information", "county", "purpose_of_sequencing", "patient_gender", "patient_age", "patient_status", "specimen_source", "outbreak", "last_vaccinated", "treatment"]
 
       required_metadata = biosample_required + sra_required + genbank_required + gisaid_required
@@ -323,7 +323,7 @@ task sm_metadata_wrangling { # the sm stands for supermassive
 
       # make dictionary for renaming headers
       # format: {original : new} or {metadata_formatter : gisaid_format}
-      gisaid_rename_headers = {"gisaid_virus_name" : "covv_virus_name", "additional_host_information" : "covv_add_host_info", "gisaid_submitter" : "submitter", "collection_date" : "covv_collection_date", "seq_platform" : "covv_seq_technology", "host" : "covv_host", "assembly_method" : "covv_assembly_method", assembly_mean_coverage_column_name : "covv_coverage", "collecting_lab" : "covv_orig_lab", "collecting_lab_address" : "covv_orig_lab_addr", "submitting_lab" : "covv_subm_lab", "submitting_lab_address" : "covv_subm_lab_addr", "authors" : "covv_authors", "purpose_of_sequencing" : "covv_sampling_strategy", "patient_gender" : "covv_gender", "patient_age" : "covv_patient_age", "patient_status" : "covv_patient_status", "specimen_source" : "covv_specimen", "outbreak" : "covv_outbreak", "last_vaccinated" : "covv_last_vaccinated", "treatment" : "covv_treatment"}
+      gisaid_rename_headers = {"gisaid_virus_name" : "covv_virus_name", "additional_host_information" : "covv_add_host_info", "gisaid_submitter" : "submitter", "collection_date" : "covv_collection_date", "seq_platform" : "covv_seq_technology", "host" : "covv_host", "assembly_method" : "covv_assembly_method", assembly_mean_coverage_column_name : "covv_coverage", "collecting_lab" : "covv_orig_lab", "collecting_lab_address" : "covv_orig_lab_addr", "submitting_lab" : "covv_subm_lab", "submitting_lab_address" : "covv_subm_lab_addr", "authors" : "covv_authors", "purpose_of_sequencing" : "covv_sampling_strategy", "patient_gender" : "covv_gender", "patient_age" : "covv_patient_age", "patient_status" : "covv_patient_status", "specimen_source" : "covv_specimen", "outbreak" : "covv_outbreak", "last_vaccinated" : "covv_last_vaccinated", "treatment" : "covv_treatment", "consortium" : "covv_consortium"}
       
       # rename columns
       gisaid_metadata.rename(columns=gisaid_rename_headers, inplace=True)
