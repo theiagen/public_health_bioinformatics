@@ -539,14 +539,16 @@ workflow merlin_magic {
     String? seroba_ariba_identity = seroba_task.seroba_ariba_identity
     File? seroba_details = seroba_task.seroba_details
     # Streptococcus pyogenes Typing
-    String? emmtypingtool_results = emmtypingtool.emmtypingtool_results
-    File? emmtypingtool_xml = emmtypingtool.emmtypingtool_xml
+    String? emmtypingtool_emm_type = emmtypingtool.emmtypingtool_emm_type
+    File? emmtypingtool_results_xml = emmtypingtool.emmtypingtool_results_xml
     String? emmtypingtool_version = emmtypingtool.emmtypingtool_version
+    String? emmtypingtool_docker = emmtypingtool.emmtypingtool_docker
     # Haemophilus influenzae Typing
     String? hicap_serotype = hicap.hicap_serotype
     String? hicap_genes = hicap.hicap_genes
-    File? hicap_output = hicap.hicap_output
+    File? hicap_results_tsv = hicap.hicap_results_tsv
     String? hicap_version = hicap.hicap_version
+    String? hicap_docker = hicap.hicap_docker
     # Vibrio
     File? srst2_vibrio_detailed_tsv = srst2_vibrio.srst2_detailed_tsv
     String? srst2_vibrio_version = srst2_vibrio.srst2_version
