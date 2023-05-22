@@ -31,12 +31,13 @@ task emmtypingtool {
 
     grep "version" output_dir/*.results.xml | sed -n 's/.*version="\([^"]*\)".*/\1/p' | tee VERSION
     grep "Final_EMM_type" output_dir/*.results.xml | sed -n 's/.*value="\([^"]*\)".*/\1/p' | tee EMM_type
-    mv output_dir/*.results.xml ~{samplename}.xml
+    mv output_dir/*.results.xml ~{samplename}.emmtypingtool.xml
   >>>
   output {
-    String emmtypingtool_results = read_string("EMM_type")
-    File emmtypingtool_xml = "~{samplename}.xml"
+    String emmtypingtool_emm_type = read_string("EMM_type")
+    File emmtypingtool_results_xml = "~{samplename}.emmtypingtool.xml"
     String emmtypingtool_version = read_string("VERSION")
+    String emmtypingtool_docker = docker
   }
   runtime {
     docker: "~{docker}"

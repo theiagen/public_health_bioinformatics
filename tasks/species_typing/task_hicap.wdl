@@ -52,8 +52,9 @@ task hicap {
   output {
     String hicap_serotype = read_string("hicap_serotype")
     String hicap_genes = read_string("hicap_genes")
-    File hicap_output = "~{samplename}.hicap.tsv"
+    File hicap_results_tsv = "~{samplename}.hicap.tsv"
     String hicap_version = read_string("VERSION")
+    String hicap_docker = docker
   }
   runtime {
     docker: "~{docker}"
