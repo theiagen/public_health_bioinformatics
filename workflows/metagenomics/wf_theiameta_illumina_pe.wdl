@@ -44,9 +44,8 @@ workflow theiameta_illumina_pe {
           reference_genome = reference,
           min_depth = min_depth,
           trim_primers = false,
-          variant_min_freq = 10,
-          consensus_min_freq = 10,
-          skip_N = false
+          variant_min_freq = 1,
+          consensus_min_freq = 1
         }
       call shovill_task.shovill_pe as shovil_consensus {
         input:
