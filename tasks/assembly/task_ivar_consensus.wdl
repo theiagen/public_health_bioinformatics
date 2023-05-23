@@ -13,6 +13,7 @@ task consensus {
     Float? consensus_min_freq 
     Int? consensus_min_depth
     String char_unknown = "N"
+    Boolean skip_N = false
     Int disk_size = 100
   }
   command <<<
@@ -44,7 +45,8 @@ task consensus {
     -q ~{min_qual} \
     -t ~{consensus_min_freq} \
     -m ~{consensus_min_depth} \
-    -n ~{char_unknown}
+    -n ~{char_unknown} \
+    ~{true = "-k" false = "" skip_N} 
 
     # clean up fasta header
     echo ">~{samplename}" > ~{samplename}.ivar.consensus.fasta
