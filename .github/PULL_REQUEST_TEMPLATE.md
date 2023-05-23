@@ -10,7 +10,7 @@ Please delete all text within '<>'.
 -->
 Closes <Issue number>
 
-## :hammer_and_wrench: Changes being made
+## :hammer_and_wrench: Changes Being Made
 
 <!--Here give examples of the changes you've made to this pull request. Include an itemized list if you can. It'll help the reviewer-->
 
@@ -25,7 +25,6 @@ Closes <Issue number>
 ### Inputs
 
 <!--What are the mandatory and optional inputs of your workflow/task?-->
-
 
 ### Outputs
 
