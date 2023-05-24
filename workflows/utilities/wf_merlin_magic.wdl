@@ -44,7 +44,9 @@ workflow merlin_magic {
     File? read2
     Int? pasty_min_pident
     Int? pasty_min_coverage
+    String? hicap_docker_image
     String? pasty_docker_image
+    String? emmtypingtool_docker_image
     String? shigeifinder_docker_image
     String? staphopia_sccmec_docker_image
     String? agrvate_docker_image
@@ -265,7 +267,8 @@ workflow merlin_magic {
         input:
           read1 = select_first([read1]),
           read2 = read2,
-          samplename = samplename
+          samplename = samplename,
+          docker = emmtypingtool_docker_image
       }
     }
   }
@@ -273,7 +276,8 @@ workflow merlin_magic {
     call hicap_task.hicap {
       input:
         assembly = assembly,
-        samplename = samplename
+        samplename = samplename,
+        docker = hicap_docker_image
     }
   }
   if (merlin_tag == "Vibrio") {
