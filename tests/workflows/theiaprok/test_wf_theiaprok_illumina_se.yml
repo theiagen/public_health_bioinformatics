@@ -600,7 +600,7 @@
     - path: miniwdl_run/wdl/workflows/theiaprok/wf_theiaprok_illumina_se.wdl
       md5sum: 34bfe00fcc819a570efdac6f592dd7b7
     - path: miniwdl_run/wdl/workflows/utilities/wf_merlin_magic.wdl
-      md5sum: f49d7691e7f8ae62f5e8930a7ff9c0ab
+      md5sum: fb592158f127b5335a0e8b21100503ec
     - path: miniwdl_run/wdl/workflows/utilities/wf_read_QC_trim_se.wdl
       md5sum: 53d322d895837c0bcb049786572e944d
     - path: miniwdl_run/workflow.log
