@@ -45,8 +45,8 @@ workflow snippy_variants_wf {
   }
   output {
     String snippy_variants_wf_version = version_capture.phb_version
-    String snippy_version = snippy_variants.snippy_variants_version
-    String snippy_docker = snippy_variants.snippy_docker
+    String snippy_variants_version = snippy_variants.snippy_variants_version
+    String snippy_variants_docker = snippy_variants.snippy_variants_docker
     String snippy_variants_query = snippy_variants.snippy_variants_query
     String snippy_variants_hits = snippy_variants.snippy_variants_hits
     File snippy_variants_gene_query_results = snippy_variants.snippy_variants_gene_query_results

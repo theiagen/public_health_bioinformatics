@@ -7,13 +7,6 @@ import "../../tasks/phylogenetic_inference/task_referenceseeker.wdl" as referenc
 import "../../tasks/utilities/task_ncbi_datasets.wdl" as ncbi_datasets_task
 import "../../tasks/task_versioning.wdl" as versioning
 
-# input is arrays
-# centroid takes in an array of assemblies
-# reference seeker takes in one sample -- result from centroid
-# get reference seeker genome
-# scatter all input read arrays to snippy_variants
-# gather outputs of snippy_variants as input to snippy_tree to run with reference seeker genome
-
 workflow snippy_streamline {
   input {
     Array[File] read1
@@ -25,20 +18,20 @@ workflow snippy_streamline {
     File? reference_genome_file
   }
   # if user does not provide reference genome fasta, determine one for the user by running, centroid, referenceseeker and ncbi datasets to acquire one
-  if(! defined(reference_genome_file)){
-  call centroid_task.centroid {
-    input:
-      assembly_fasta = assembly_fasta
-  }
-  call referenceseeker_task.referenceseeker {
-    input:
-      assembly_fasta = centroid.centroid_genome_fasta,
-      samplename = centroid.centroid_genome_samplename
-  }
-  call ncbi_datasets_task.ncbi_datasets_download_genome_accession {
-    input:
-      ncbi_accession = referenceseeker.referenceseeker_top_hit_ncbi_accession
-  }
+  if (! defined(reference_genome_file)) {
+    call centroid_task.centroid {
+      input:
+        assembly_fasta = assembly_fasta
+    }
+    call referenceseeker_task.referenceseeker {
+      input:
+        assembly_fasta = centroid.centroid_genome_fasta,
+        samplename = centroid.centroid_genome_samplename
+    }
+    call ncbi_datasets_task.ncbi_datasets_download_genome_accession {
+      input:
+        ncbi_accession = referenceseeker.referenceseeker_top_hit_ncbi_accession
+    }
   }
   # see https://github.com/openwdl/wdl/issues/279 for syntax explanation
   # see also https://github.com/openwdl/wdl/blob/main/versions/1.1/SPEC.md#arraypairxy-ziparrayx-arrayy for zip explanation
@@ -47,7 +40,7 @@ workflow snippy_streamline {
       input:
         read1 = triplet.left.left, # access the left-most object (read 1)
         read2 = triplet.left.right, # access the right-side object on the left (read 2)
-        reference_genome_file = select_first([reference_genome_file,ncbi_datasets_download_genome_accession.ncbi_datasets_assembly_fasta]),
+        reference_genome_file = select_first([reference_genome_file, ncbi_datasets_download_genome_accession.ncbi_datasets_assembly_fasta]),
         samplename = triplet.right # access the right-most object (samplename)
     }
   }
@@ -56,7 +49,7 @@ workflow snippy_streamline {
       tree_name = tree_name,
       snippy_variants_outdir_tarball = snippy_variants_wf.snippy_variants_outdir_tarball,
       samplenames = samplenames,
-      reference_genome_file = select_first([reference_genome_file,ncbi_datasets_download_genome_accession.ncbi_datasets_assembly_fasta])
+      reference_genome_file = select_first([reference_genome_file, ncbi_datasets_download_genome_accession.ncbi_datasets_assembly_fasta])
   }
   call versioning.version_capture {
     input:
@@ -81,15 +74,14 @@ workflow snippy_streamline {
     String? snippy_referenceseeker_database = referenceseeker.referenceseeker_database
 
     ### ncbi datasets outputs ###
-    # output reference FASTA file now consolidated to File snippy_ref
     File? snippy_ref_metadata_json = ncbi_datasets_download_genome_accession.ncbi_datasets_assembly_data_report_json
     String? snippy_ncbi_datasets_version = ncbi_datasets_download_genome_accession.ncbi_datasets_version
     String? snippy_ncbi_datasets_docker = ncbi_datasets_download_genome_accession.ncbi_datasets_docker
 
     ### snippy_variants wf outputs ###
     Array[File] snippy_variants_outdir_tarball = snippy_variants_wf.snippy_variants_outdir_tarball
-    Array[String] snippy_variants_snippy_version = snippy_variants_wf.snippy_version
-    Array[String] snippy_variants_snippy_docker = snippy_variants_wf.snippy_docker
+    Array[String] snippy_variants_snippy_version = snippy_variants_wf.snippy_variants_version
+    Array[String] snippy_variants_snippy_docker = snippy_variants_wf.snippy_variants_docker
 
     ### snippy_tree wf outputs ###
     String snippy_tree_snippy_version = snippy_tree_wf.snippy_tree_snippy_version

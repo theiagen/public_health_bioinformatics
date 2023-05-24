@@ -71,22 +71,22 @@ workflow snippy_tree_wf {
   # if user does not specify core_genome or they specify false, this block will be skipped
   # if user DOES specify core_genome as true, then the snp_sites task will be called/utilized
   if (select_first([core_genome, false])) {
-      call snp_sites_task.snp_sites as snp_sites {
-        input:
-          # hardcoding some of the snp-sites optional outputs to false, 
-          msa_fasta = select_first([gubbins.gubbins_polymorphic_fasta,snippy_core.snippy_full_alignment_clean]),
-          output_name = tree_name,
-          output_multifasta = true,
-          allow_wildcard_bases = false,
-          docker = snp_sites_docker,
-          output_vcf = false,
-          output_phylip = false,
-          output_pseudo_ref = false,
-          output_monomorphic = false,
-          cpus = snp_sites_cpus,
-          memory = snp_sites_memory,
-          disk_size = snp_sites_disk_size
-      }
+    call snp_sites_task.snp_sites as snp_sites {
+      input:
+        # hardcoding some of the snp-sites optional outputs to false, 
+        msa_fasta = select_first([gubbins.gubbins_polymorphic_fasta,snippy_core.snippy_full_alignment_clean]),
+        output_name = tree_name,
+        output_multifasta = true,
+        allow_wildcard_bases = false,
+        docker = snp_sites_docker,
+        output_vcf = false,
+        output_phylip = false,
+        output_pseudo_ref = false,
+        output_monomorphic = false,
+        cpus = snp_sites_cpus,
+        memory = snp_sites_memory,
+        disk_size = snp_sites_disk_size
+    }
   }
   call iqtree2_task.iqtree2 {
     input:
@@ -101,7 +101,6 @@ workflow snippy_tree_wf {
       iqtree2_opts = iqtree2_opts,
       iqtree2_bootstraps = iqtree2_bootstraps
   }
-  
   call snp_dists_task.snp_dists {
     input:
       alignment = select_first([snp_sites.snp_sites_multifasta, gubbins.gubbins_polymorphic_fasta, snippy_core.snippy_full_alignment_clean]),
@@ -133,24 +132,24 @@ workflow snippy_tree_wf {
     String snippy_tree_version = version_capture.phb_version
     String snippy_tree_analysis_date = version_capture.date
 
-    ### snippy core outputs ###
-    String snippy_tree_snippy_version = snippy_core.snippy_version
-    String snippy_tree_snippy_docker = snippy_core.snippy_docker_image
+    ### snippy core outputs
+    String snippy_tree_snippy_version = snippy_core.snippy_core_version
+    String snippy_tree_snippy_docker = snippy_core.snippy_core_docker_image
     File snippy_ref = snippy_core.snippy_ref
     File snippy_msa_snps_summary = snippy_core.snippy_txt
 
     # gubbins outputs
-    String? snippy_gubbins_version = gubbins.version
+    String? snippy_gubbins_version = gubbins.gubbins_version
     String? snippy_gubbins_docker = gubbins.gubbins_docker
     File? snippy_gubbins_recombination_gff = gubbins.gubbins_recombination_gff
     File? snippy_gubbins_branch_stats = gubbins.gubbins_branch_stats
 
-    ### snp_sites outputs ###
+    ### snp_sites outputs
     String? snippy_snp_sites_version = snp_sites.snp_sites_version
     String? snippy_snp_sites_docker = snp_sites.snp_sites_docker
 
-    ### iqtree2 outputs ###
-    String snippy_iqtree2_version = iqtree2.version
+    ### iqtree2 outputs
+    String snippy_iqtree2_version = iqtree2.iqtree2_version
     String snippy_iqtree2_docker = iqtree2.iqtree2_docker
     String snippy_iqtree2_model_used = iqtree2.iqtree2_model_used
 
@@ -166,6 +165,6 @@ workflow snippy_tree_wf {
     File? snippy_summarized_data = summarize_data.summarized_data
 
     # set final alignment from 3 possible task outputs
-    File snippy_final_alignment = select_first([snp_sites.snp_sites_multifasta,gubbins.gubbins_polymorphic_fasta,snippy_core.snippy_full_alignment_clean])
+    File snippy_final_alignment = select_first([snp_sites.snp_sites_multifasta, gubbins.gubbins_polymorphic_fasta, snippy_core.snippy_full_alignment_clean])
   }
 }

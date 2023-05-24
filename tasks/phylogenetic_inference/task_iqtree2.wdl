@@ -8,15 +8,17 @@ task iqtree2 {
     Int iqtree2_bootstraps = 1000 #  Ultrafast bootstrap replicates
     Int alrt = 1000 # SH-like approximate likelihood ratio test (SH-aLRT) replicates
     String? iqtree2_opts
+    Boolean? core_genome
+
     String docker = "quay.io/staphb/iqtree2:2.1.2"
     Int disk_size = 100
     Int cpu = 4
     Int memory = 32
-    Boolean? core_genome
   }
   command <<<
     # date and version control
     date | tee DATE
+
     # multiple sed statements to get down to a string that is just "version 2.1.2"
     iqtree2 --version | grep version | sed 's|.*version|version|;s| COVID-edition for Linux.*||' | tee VERSION
 
@@ -44,13 +46,16 @@ task iqtree2 {
     echo "IQTREE2_MODEL is set to:" ${IQTREE2_MODEL}
 
     numGenomes=`grep -o '>' ~{alignment} | wc -l`
-    if [ "$numGenomes" -gt 3 ]
-    then
+    if [ "$numGenomes" -gt 3 ]; then
       cp ~{alignment} ./msa.fasta
 
       # run iqtree2
-      # if IQTREE2_MODEL bash variable is set, use -m flag, otherwise do not use -m flag
-      if [[ -v IQTREE2_MODEL ]] ; then
+      #   -nt : number of CPU cores for multicore version
+      #   -s : input alignment file
+      #   -m : model
+      #   -bb : number of bootstrap replicates
+      #   -alrt : number of replicates to perform SH-like approximate likelihood ration test  
+      if [[ -v IQTREE2_MODEL ]] ; then # iqtree2 model set; use -m tag
         iqtree2 \
           -nt AUTO \
           -s msa.fasta \
@@ -58,11 +63,11 @@ task iqtree2 {
           -bb ~{iqtree2_bootstraps} \
           -alrt ~{alrt} ~{iqtree2_opts}
 
-      # write the iqtree2_model used to a txt file for output as a string
-      echo ${IQTREE2_MODEL} | tee IQTREE2_MODEL.TXT
+        # write the iqtree2_model used to a txt file for output as a string
+        echo ${IQTREE2_MODEL} | tee IQTREE2_MODEL.TXT
 
-      else
-        echo "running iqtree2 without the -m flag for providing a model. Will default to iqtree2 defaults"
+      else # iqtree model is not set; do not use -m tag
+        echo "running iqtree2 without the -m flag for providing a model. Will default to iqtree2 default; for DNA this is HKY+F"
         iqtree2 \
           -nt AUTO \
           -s msa.fasta \
@@ -81,7 +86,7 @@ task iqtree2 {
   >>>
   output {
     String date = read_string("DATE")
-    String version = read_string("VERSION")
+    String iqtree2_version = read_string("VERSION")
     File ml_tree = "~{cluster_name}_iqtree.nwk"
     String iqtree2_model_used = read_string("IQTREE2_MODEL.TXT")
     String iqtree2_docker = docker
@@ -91,7 +96,7 @@ task iqtree2 {
     memory: memory + " GB"
     cpu: cpu
     disks: "local-disk " + disk_size + " SSD"
-    disk: disk_size + " GB" # TES
+    disk: disk_size + " GB"
     preemptible: 0
     maxRetries: 3
   }

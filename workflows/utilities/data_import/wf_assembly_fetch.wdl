@@ -4,28 +4,23 @@ import "../../../tasks/phylogenetic_inference/task_referenceseeker.wdl" as refer
 import "../../../tasks/utilities/task_ncbi_datasets.wdl" as ncbi_datasets_task
 import "../../../tasks/task_versioning.wdl" as versioning
 
-# input is user-defined bacterial assembly_fasta file
-# reference seeker takes in one sample
-# get referenceseeker genome accession
-# use ncbi datasets task to download reference genome fasta file
-
 workflow assembly_fetch {
   input {
     String samplename
     File? assembly_fasta
     String? ncbi_accession
   }
-  # if user does not provide reference genome fasta, determine one for the user by running referenceseeker and ncbi datasets to acquire one
+  # if user does not provide reference genome, determine one for the user by running referenceseeker and ncbi datasets on a provided genome to acquire one
   if(! defined(ncbi_accession) && defined(assembly_fasta)){
-  call referenceseeker_task.referenceseeker {
-    input:
-      assembly_fasta = select_first([assembly_fasta,""]), # to avoid error with required task input
-      samplename = samplename
-  }
+    call referenceseeker_task.referenceseeker {
+      input:
+        assembly_fasta = select_first([assembly_fasta, ""]), # to avoid error with required task input
+        samplename = samplename
+    }
   }
   call ncbi_datasets_task.ncbi_datasets_download_genome_accession {
     input:
-      ncbi_accession = select_first([ncbi_accession,referenceseeker.referenceseeker_top_hit_ncbi_accession])
+      ncbi_accession = select_first([ncbi_accession, referenceseeker.referenceseeker_top_hit_ncbi_accession])
   }
   call versioning.version_capture {
     input:

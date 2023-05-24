@@ -5,7 +5,7 @@ task gubbins {
     File alignment
     String cluster_name
     String docker = "quay.io/biocontainers/gubbins:3.3--py310pl5321h8472f5a_0"
-    Int filter_percent = 25 #default is 25%
+    Int filter_percent = 25 # default is 25%
     Int iterations = 5
     String tree_builder = "raxml"
     String? tree_args
@@ -20,14 +20,14 @@ task gubbins {
     run_gubbins.py --version | tee VERSION
 
     run_gubbins.py \
-    ~{alignment} \
-    --prefix ~{cluster_name} \
-    --filter-percentage ~{filter_percent} \
-    --iterations ~{iterations} \
-    --tree-builder ~{tree_builder} \
-    ~{'--tree-args ' + tree_args} \
-    ~{'--model ' + nuc_subst_model} \
-    --threads ~{cpu}
+      ~{alignment} \
+      --prefix ~{cluster_name} \
+      --filter-percentage ~{filter_percent} \
+      --iterations ~{iterations} \
+      --tree-builder ~{tree_builder} \
+      ~{'--tree-args ' + tree_args} \
+      ~{'--model ' + nuc_subst_model} \
+      --threads ~{cpu}
 
     # rename newick files, TSV file, and text file to have matching and appropriate file endings
     mv -v ~{cluster_name}.node_labelled.final_tree.tre ~{cluster_name}.node_labelled.final_tree.nwk
@@ -37,7 +37,7 @@ task gubbins {
   >>>
   output {
     String date = read_string("DATE")
-    String version = read_string("VERSION")
+    String gubbins_version = read_string("VERSION")
     String gubbins_docker = docker
     File gubbins_final_tree = "~{cluster_name}.final_tree.nwk"
     File gubbins_final_labelled_tree = "~{cluster_name}.node_labelled.final_tree.nwk"

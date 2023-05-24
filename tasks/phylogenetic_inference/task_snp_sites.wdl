@@ -45,12 +45,12 @@ task snp_sites {
       ~{true="-b" false="" output_monomorphic} \
       -o "~{output_name}" "~{msa_fasta}"
 
-      # if the output alignment file is named after ~{output_name}; then rename file to end in .snp_sites.aln
-      # see comments above for explanation on why this is necessary
-      if [ -f "~{output_name}" ]; then
-        echo "renaming output alignment file to end in .snp_sites.aln..."
-        mv -v ~{output_name} ~{output_name}.snp_sites.aln
-      fi
+    # if the output alignment file is named after ~{output_name}; then rename file to end in .snp_sites.aln
+    # see comments above for explanation on why this is necessary
+    if [ -f "~{output_name}" ]; then
+      echo "renaming output alignment file to end in .snp_sites.aln..."
+      mv -v ~{output_name} ~{output_name}.snp_sites.aln
+    fi
   >>>
   output {
     File? snp_sites_vcf = "~{output_name}.vcf"
