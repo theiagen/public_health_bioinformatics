@@ -18,7 +18,7 @@
     - wf_theiaprok_illumina_pe_miniwdl
   files:
     - path: miniwdl_run/call-amrfinderplus_task/command
-      md5sum: 4a9639d03cb645e573de2be85be52396
+      md5sum: 597ed16e333748dd62b4df39e2798adb
     - path: miniwdl_run/call-amrfinderplus_task/inputs.json
       contains: ["assembly", "fasta", "organism", "test"]
     - path: miniwdl_run/call-amrfinderplus_task/outputs.json
@@ -35,7 +35,9 @@
       md5sum: 6206889552f40d7ea91f1d9ae025f23d
     - path: miniwdl_run/call-amrfinderplus_task/work/AMR_CLASSES
       md5sum: b6017eebef847ac2471107ca6197b5c5
-    - path: miniwdl_run/call-amrfinderplus_task/work/AMR_GENES
+    - path: miniwdl_run/call-amrfinderplus_task/work/AMR_CORE_GENES
+      md5sum: b6017eebef847ac2471107ca6197b5c5
+    - path: miniwdl_run/call-amrfinderplus_task/work/AMR_PLUS_GENES
       md5sum: b6017eebef847ac2471107ca6197b5c5
     - path: miniwdl_run/call-amrfinderplus_task/work/AMR_SUBCLASSES
       md5sum: b6017eebef847ac2471107ca6197b5c5
@@ -550,7 +552,7 @@
     - path: miniwdl_run/wdl/tasks/gene_typing/task_abricate.wdl
       md5sum: d8e4646c2780945c7a10674e7f748a65
     - path: miniwdl_run/wdl/tasks/gene_typing/task_amrfinderplus.wdl
-      md5sum: 00afe7fdfaecf9af6027b6f8ee05759f
+      md5sum: 7678439e06ac720a26ec8229377ce5c9
     - path: miniwdl_run/wdl/tasks/gene_typing/task_bakta.wdl
       md5sum: a25a79957f3c51a46a698171ab5b9f9b
     - path: miniwdl_run/wdl/tasks/gene_typing/task_plasmidfinder.wdl
@@ -630,9 +632,9 @@
     - path: miniwdl_run/wdl/tasks/taxon_id/task_midas.wdl
       md5sum: b30cef6a483c778b858337ec1b833d68
     - path: miniwdl_run/wdl/tasks/utilities/task_broad_terra_tools.wdl
-      md5sum: cc5d91f454455d0751357573325c676e
+      md5sum: 441524661da23fcec188cf3dbb944ca3
     - path: miniwdl_run/wdl/workflows/theiaprok/wf_theiaprok_illumina_pe.wdl
-      md5sum: 448bbab9b4a7f30f4373906056525b64
+      md5sum: 72b363e75bf54c6612fbb7c987d1639f
     - path: miniwdl_run/wdl/workflows/utilities/wf_merlin_magic.wdl
       md5sum: 7befc85f0a100d18ac110f8734817971
     - path: miniwdl_run/wdl/workflows/utilities/wf_read_QC_trim_pe.wdl
