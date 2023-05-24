@@ -24,8 +24,9 @@ task centroid {
     # rename the centroid genome so it can be accessed outside this task
     mv -v INPUT_DIR/"$CENTROID_FASTA_FILENAME" centroid.fasta
 
-    # capture samplename of centroid genome for use downstream
-    cut -d '_' -f 1 centroid_out.txt | tee CENTROID_GENOME_SAMPLENAME
+    # capture samplename of centroid genome for use downstream without file extension
+    # e.g. "SAMN19774644_contigs.fasta" -> "SAMN19774644_contigs", and "sample_01.fasta" -> "sample_01"
+    cat centroid_out.txt | rev | cut -d '.' -f2- | rev | tee CENTROID_GENOME_SAMPLENAME
   >>>
   output {
     String centroid_genome_samplename = read_string("CENTROID_GENOME_SAMPLENAME")
