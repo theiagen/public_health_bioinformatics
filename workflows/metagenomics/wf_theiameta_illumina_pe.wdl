@@ -1,12 +1,10 @@
 version 1.0
 
 import "../utilities/wf_read_QC_trim_pe.wdl" as read_qc_wf
-import "../utilities/wf_ivar_consensus.wdl" as consensus_call
 import "../../tasks/quality_control/task_consensus_qc.wdl" as consensus_qc_task
 import "../../tasks/assembly/task_shovill.wdl" as shovill_task
 import "../../tasks/alignment/task_minimap2.wdl" as minimap2_task
 import "../../tasks/utilities/task_parse_paf.wdl" as parse_paf_task
-import "../../tasks/utilities/task_compare_assemblies.wdl" as compare_assemblies_task
 import "../../tasks/quality_control/task_quast.wdl" as quast_task
 import "../../tasks/task_versioning.wdl" as versioning
 
@@ -22,8 +20,8 @@ workflow theiameta_illumina_pe {
     Int trim_minlen = 75
     Int trim_quality_trim_score = 30
     Int trim_window_size = 4
-    Int min_depth = 10  # the minimum depth to use for consensus and variant calling
   }
+  # have a new workflow series for theiameta?
   call read_qc_wf.read_QC_trim_pe as read_QC_trim {
       input:
         samplename = samplename,
@@ -36,17 +34,6 @@ workflow theiameta_illumina_pe {
     }
     # if reference is provided, perform consensus assembly with ivar
     if (defined(reference)){
-      call consensus_call.ivar_consensus {
-        input:
-          samplename = samplename,
-          read1 = read_QC_trim.read1_clean,
-          read2 = read_QC_trim.read2_clean,
-          reference_genome = reference,
-          min_depth = min_depth,
-          trim_primers = false,
-          variant_min_freq = 1,
-          consensus_min_freq = 1
-        }
       call shovill_task.shovill_pe as shovil_consensus {
         input:
           read1_cleaned = read_QC_trim.read1_clean,
@@ -66,15 +53,10 @@ workflow theiameta_illumina_pe {
           assembly = shovil_consensus.assembly_fasta,
           samplename = samplename
       }
-      call compare_assemblies_task.compare_assemblies {
-        input:
-          assembly_denovo = retrieve_aligned_contig_paf.parse_paf_contigs,
-          assembly_consensus = ivar_consensus.assembly_fasta,
-          samplename = samplename
-      }
+      # substitute with quast?
       call consensus_qc_task.consensus_qc {
         input:
-          assembly_fasta =  compare_assemblies.final_assembly,
+          assembly_fasta =  retrieve_aligned_contig_paf.parse_paf_contigs,
           reference_genome = reference
       }
     }
@@ -97,7 +79,7 @@ workflow theiameta_illumina_pe {
       input:
         query1 = read_QC_trim.read1_clean,
         query2 = read_QC_trim.read2_clean, 
-        reference = select_first([compare_assemblies.final_assembly, shovil_denovo.assembly_fasta]),
+        reference = select_first([retrieve_aligned_contig_paf.parse_paf_contigs, shovil_denovo.assembly_fasta]),
         samplename = samplename,
         mode = "sr",
         output_sam = true
@@ -143,12 +125,10 @@ workflow theiameta_illumina_pe {
     String? kraken_target_org_dehosted =read_QC_trim.kraken_target_org_dehosted
     File? kraken_report_dehosted = read_QC_trim.kraken_report_dehosted
     # Assembly - shovill/ivar outputs 
-    File? assembly_fasta = select_first([compare_assemblies.final_assembly, shovil_denovo.assembly_fasta])
+    File? assembly_fasta = select_first([retrieve_aligned_contig_paf.parse_paf_contigs, shovil_denovo.assembly_fasta])
     String? assembly_length = select_first([consensus_qc.number_Total, quast.genome_length])
     String? shovill_pe_version = shovil_denovo.shovill_version
     Int? largest_contig = quast.largest_contig
-    String? ivar_version_consensus = ivar_consensus.ivar_version_consensus
-    String? samtools_version_consensus = ivar_consensus.samtools_version_consensus
     File? read1_unmapped = retrieve_unaligned_pe_reads_sam.read1
     File? read2_unmapped = retrieve_unaligned_pe_reads_sam.read2
     }

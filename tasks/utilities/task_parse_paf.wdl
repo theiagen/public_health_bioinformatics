@@ -18,11 +18,11 @@ task retrieve_aligned_contig_paf {
     cut -f1 "~{paf}" > contig_names.txt
     
     # extract mapped contigs in FASTA format
-    seqkit grep -f contig_names.txt "~{assembly}" > "~{samplename}"_mapped_contigs.fasta
+    seqkit grep -f contig_names.txt "~{assembly}" > "~{samplename}".fasta
 
   >>>
   output {
-    File parse_paf_contigs = "~{samplename}_mapped_contigs.fasta"
+    File parse_paf_contigs = "~{samplename}.fasta"
   }
   runtime {
     docker: "~{docker}"
