@@ -263,7 +263,7 @@ workflow theiaprok_ont {
             amrfinderplus_stress_report = amrfinderplus.amrfinderplus_stress_report,
             amrfinderplus_virulence_report = amrfinderplus.amrfinderplus_virulence_report,
             amrfinderplus_amr_core_genes = amrfinderplus.amrfinderplus_amr_core_genes,
-            amrfinderplus_amr_core_genes = amrfinderplus.amrfinderplus_amr_plus_genes,
+            amrfinderplus_amr_plus_genes = amrfinderplus.amrfinderplus_amr_plus_genes,
             amrfinderplus_stress_genes = amrfinderplus.amrfinderplus_stress_genes,
             amrfinderplus_virulence_genes = amrfinderplus.amrfinderplus_virulence_genes,
             amrfinderplus_amr_classes = amrfinderplus.amrfinderplus_amr_classes,
