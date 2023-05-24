@@ -36,9 +36,9 @@
     - path: miniwdl_run/call-amrfinderplus_task/work/AMR_CLASSES
       md5sum: b6017eebef847ac2471107ca6197b5c5
     - path: miniwdl_run/call-amrfinderplus_task/work/AMR_CORE_GENES
-      md5sum: b6017eebef847ac2471107ca6197b5c5
+      md5sum: 6dc8f4dbf50f1f19d5d780562168f490
     - path: miniwdl_run/call-amrfinderplus_task/work/AMR_PLUS_GENES
-      md5sum: b6017eebef847ac2471107ca6197b5c5
+      md5sum: c36903f7be16a68f69470cb6f48b277a
     - path: miniwdl_run/call-amrfinderplus_task/work/AMR_SUBCLASSES
       md5sum: b6017eebef847ac2471107ca6197b5c5
     - path: miniwdl_run/call-amrfinderplus_task/work/DATE
