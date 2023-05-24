@@ -75,8 +75,8 @@ task prune_table {
 
    
     elif ("~{biosample_type}" == "Pathogen") or ("~{biosample_type}" == "pathogen") or ("Pathogen.cl" in "~{biosample_type}") or ("pathogen.cl" in "~{biosample_type}"):
-      required_metadata = ["submission_id", "organism", "collected_by", "collection_date", "geo_loc_name", "host", "host_disease", "isolation_source", "lat_lon", "isolation_type"]
-      optional_metadata = ["sample_title", "bioproject_accession", "attribute_package", "strain", "isolate", "culture_collection", "genotype", "host_age", "host_description", "host_disease_outcome", "host_disease_stage", "host_health_state", "host_sex", "host_subject_id", "host_tissue_sampled", "passage_history", "pathotype", "serotype", "serovar", "specimen_voucher", "subgroup", "subtype", "description"] 
+      required_metadata = ["submission_id", "organism", "collected_by", "collection_date", "geo_loc_name", "host", "host_disease", "isolation_source", "lat_lon"]
+      optional_metadata = ["sample_title", "isolation_type", "bioproject_accession", "attribute_package", "strain", "isolate", "culture_collection", "genotype", "host_age", "host_description", "host_disease_outcome", "host_disease_stage", "host_health_state", "host_sex", "host_subject_id", "host_tissue_sampled", "passage_history", "pathotype", "serotype", "serovar", "specimen_voucher", "subgroup", "subtype", "description"] 
       # add a column for biosample package -- required for XML submission
       table["attribute_package"] = "Pathogen.cl"
       # future qc checks:
@@ -87,8 +87,8 @@ task prune_table {
       #if "mean_coverage_depth" in table.columns:
       #  table = table[(table.mean_coverage_depth > 20)]
     elif ("Pathogen.env" in "~{biosample_type}") or ("pathogen.env" in "~{biosample_type}"):
-      required_metadata = ["submission_id", "organism", "collected_by", "collection_date", "geo_loc_name", "isolation_source", "lat_lon", "isolation_type"]
-      optional_metadata = ["host", "host_disease", "sample_title", "bioproject_accession", "attribute_package", "strain", "isolate", "culture_collection", "genotype", "host_age", "host_description", "host_disease_outcome", "host_disease_stage", "host_health_state", "host_sex", "host_subject_id", "host_tissue_sampled", "passage_history", "pathotype", "serotype", "serovar", "specimen_voucher", "subgroup", "subtype", "description"] 
+      required_metadata = ["submission_id", "organism", "collected_by", "collection_date", "geo_loc_name", "isolation_source", "lat_lon"]
+      optional_metadata = ["host", "host_disease", "isolation_type", "sample_title", "bioproject_accession", "attribute_package", "strain", "isolate", "culture_collection", "genotype", "host_age", "host_description", "host_disease_outcome", "host_disease_stage", "host_health_state", "host_sex", "host_subject_id", "host_tissue_sampled", "passage_history", "pathotype", "serotype", "serovar", "specimen_voucher", "subgroup", "subtype", "description"] 
       # add a column for biosample package -- required for XML submission
       table["attribute_package"] = "Pathogen.env.1.0"
       # future qc checks:
