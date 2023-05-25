@@ -300,6 +300,13 @@ task export_taxon_tables {
     String? agrvate_agr_num_frameshifts
     String? agrvate_version
     String? agrvate_docker
+    File? srst2_vibrio_detailed_tsv
+    String? srst2_vibrio_version
+    String? srst2_vibrio_ctxA
+    String? srst2_vibrio_ompW
+    String? srst2_vibrio_toxR
+    String? srst2_vibrio_serogroup
+    String? srst2_vibrio_biotype
   }
   command <<<
   
@@ -625,7 +632,14 @@ task export_taxon_tables {
       "agrvate_agr_multiple": "~{agrvate_agr_multiple}",
       "agrvate_agr_num_frameshifts": "~{agrvate_agr_num_frameshifts}",
       "agrvate_version": "~{agrvate_version}",
-      "agrvate_docker": "~{agrvate_docker}"
+      "agrvate_docker": "~{agrvate_docker}",
+      "srst2_vibrio_detailed_tsv": "~{srst2_vibrio_detailed_tsv}",
+      "srst2_vibrio_version": "~{srst2_vibrio_version}",
+      "srst2_vibrio_ctxA": "~{srst2_vibrio_ctxA}",
+      "srst2_vibrio_ompW": "~{srst2_vibrio_ompW}",
+      "srst2_vibrio_toxR": "~{srst2_vibrio_toxR}",
+      "srst2_vibrio_serogroup": "~{srst2_vibrio_serogroup}",
+      "srst2_vibrio_biotype": "~{srst2_vibrio_biotype}"
     }
 
     with open("~{samplename}_terra_table.tsv", "w") as outfile:

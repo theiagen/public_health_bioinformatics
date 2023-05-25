@@ -177,6 +177,8 @@ task gambit {
       if [[ ${predicted_taxon} == *"Streptococcus pneumoniae"* ]]; then 
         merlin_tag="Streptococcus pneumoniae"
       fi
+    elif [[ ${predicted_taxon} == *"Vibrio"* ]]; then 
+      merlin_tag="Vibrio"
     # theiaeuk
     elif [[ ${predicted_taxon} == *"Candida auris"* ]] ; then 
       merlin_tag="Candida auris"
