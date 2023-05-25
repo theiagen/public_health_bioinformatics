@@ -48,8 +48,7 @@ workflow snippy_variants_wf {
         samplename = samplename,
         snippy_variants_results = snippy_variants.snippy_variants_results,
         reference = reference_genome_file,
-        query_gene = query_gene,
-        docker = docker
+        query_gene = query_gene
     }
   }
   call versioning.version_capture{

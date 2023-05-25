@@ -6,7 +6,7 @@ task snippy_gene_query {
     File snippy_variants_results
     String? query_gene
     File? reference
-    String docker = "quay.io/staphb/snippy:4.6.0"
+    String docker = "quay.io/theiagen/utility:1.2"
     Int cpus = 8
     Int memory = 32
   }
@@ -38,15 +38,14 @@ task snippy_gene_query {
 
     # parse gene-specific outputs from snps.tab
     echo -e "samplename,$(head -n 1 ~{snippy_variants_results})" > ./gene_query.csv
-    for qgene in $(echo "~{query_gene}" | sed "s/,/ /g");
+    for qgene in $(echo "~{query_gene}" | sed "s/,/ /g"); do
       # capture queried hits to single file 
-      do 
-        if grep -q  "${qgene}" ~{snippy_variants_results}; then 
-          grep "${qgene}" ~{snippy_variants_results} | awk '{print "'~{samplename}'," $0}' >> ./gene_query.csv
-          # curate relevant columns of queried hits to single output
-          grep "${qgene}" ./gene_query.csv | awk -F"," '{print "'${qgene}': "$15" ("$12"; "$7")"}' >> snippy_variant_hits_tmp
-        fi
-     done
+      if grep -q  "${qgene}" ~{snippy_variants_results}; then 
+        grep "${qgene}" ~{snippy_variants_results} | awk '{print "'~{samplename}'," $0}' >> ./gene_query.csv
+        # curate relevant columns of queried hits to single output
+        grep "${qgene}" ./gene_query.csv | awk -F"," '{print "'${qgene}': "$15" ("$12"; "$7")"}' >> snippy_variant_hits_tmp
+      fi
+    done
 
     # convert newlines to comma
     if [ -f snippy_variant_hits_tmp ]; then
