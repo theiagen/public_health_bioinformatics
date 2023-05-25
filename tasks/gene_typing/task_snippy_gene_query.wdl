@@ -48,12 +48,12 @@ task snippy_gene_query {
         fi
      done
 
-   # convert newlines to comma
-   if [ -f snippy_variant_hits_tmp ]; then
-     paste -s -d, snippy_variant_hits_tmp > SNIPPY_VARIANT_HITS
-   else
-     echo "${no_hit}" > SNIPPY_VARIANT_HITS
-   fi
+    # convert newlines to comma
+    if [ -f snippy_variant_hits_tmp ]; then
+      paste -s -d, snippy_variant_hits_tmp > SNIPPY_VARIANT_HITS
+    else
+      echo "${no_hit}" > SNIPPY_VARIANT_HITS
+    fi
 
   >>>
   output {
@@ -63,11 +63,11 @@ task snippy_gene_query {
     File snippy_variants_gene_query_results = "./gene_query.csv"
   }
   runtime {
-      docker: "~{docker}"
-      memory: "~{memory} GB"
-      cpu: "~{cpus}"
-      disks: "local-disk 100 SSD"
-      preemptible: 0
-      maxRetries: 3
+    docker: "~{docker}"
+    memory: "~{memory} GB"
+    cpu: "~{cpus}"
+    disks: "local-disk 100 SSD"
+    preemptible: 0
+    maxRetries: 3
   }
 }
