@@ -48,7 +48,4 @@ Pull Request (PR) checklist:
 - [ ] Include a description of what is in this pull request in this message.
 - [ ] The workflow/task has been tested locally and on Terra
 - [ ] The CI/CD has been adjusted and tests are passing
-- [ ] If it's a task or a workflow, it includes a descriptive section
-- [ ] Ensure all docker images are using quay.io if possible
-- [ ] The docker image is modifiable, and saved as a String output
 - [ ] Everything follows the [style guide](https://theiagen.notion.site/Style-Guide-WDL-Workflow-Development-bb456f34322d4f4db699d4029050481c)
