@@ -34,48 +34,39 @@ workflow theiameta_illumina_pe {
         trim_window_size = trim_window_size,
         kraken2_db = kraken2_db
     }
-    # if reference is provided, perform consensus assembly with ivar
-    if (defined(reference)){
-      call shovill_task.shovill_pe as shovil_consensus {
-        input:
-          read1_cleaned = read_QC_trim.read1_clean,
-          read2_cleaned = read_QC_trim.read2_clean,
-          samplename = samplename,
-          assembler = "megahit"
+    call shovill_task.shovill_pe as shovil {
+      input:
+        read1_cleaned = read_QC_trim.read1_clean,
+        read2_cleaned = read_QC_trim.read2_clean,
+        samplename = samplename,
+        assembler = "megahit"
       }
+    # if reference is provided, perform mapping of assembled contigs to 
+    # reference with minimap2, and extract those as final assembly
+    if (defined(reference)){
       call minimap2_task.minimap2 as minimap2_assembly {
         input:
-          query1 = shovil_consensus.assembly_fasta,
+          query1 = shovil.assembly_fasta,
           reference = select_first([reference]),
           samplename = samplename
       }
       call parse_paf_task.retrieve_aligned_contig_paf {
         input:
           paf = minimap2_assembly.minimap2_out,
-          assembly = shovil_consensus.assembly_fasta,
+          assembly = shovil.assembly_fasta,
           samplename = samplename
-      }
-    }
-    # otherwise, perform de novo assembly with megahit
-    if (!defined(reference)) {
-      call shovill_task.shovill_pe as shovil_denovo {
-        input:
-          read1_cleaned = read_QC_trim.read1_clean,
-          read2_cleaned = read_QC_trim.read2_clean,
-          samplename = samplename,
-          assembler = "megahit"
       }
     }
     call quast_task.quast {
       input:
-        assembly = select_first([retrieve_aligned_contig_paf.parse_paf_contigs, shovil_denovo.assembly_fasta]),
+        assembly = select_first([retrieve_aligned_contig_paf.parse_paf_contigs, shovil.assembly_fasta]),
         samplename = samplename
       }
     call minimap2_task.minimap2 as minimap2_reads {
       input:
         query1 = read_QC_trim.read1_clean,
         query2 = read_QC_trim.read2_clean, 
-        reference = select_first([retrieve_aligned_contig_paf.parse_paf_contigs, shovil_denovo.assembly_fasta]),
+        reference = select_first([retrieve_aligned_contig_paf.parse_paf_contigs, shovil.assembly_fasta]),
         samplename = samplename,
         mode = "sr",
         output_sam = true
@@ -114,9 +105,9 @@ workflow theiameta_illumina_pe {
     File? kraken_report = read_QC_trim.kraken_report
     File? kraken_report_dehosted = read_QC_trim.kraken_report_dehosted
     # Assembly - shovill/ivar outputs 
-    File? assembly_fasta = select_first([retrieve_aligned_contig_paf.parse_paf_contigs, shovil_denovo.assembly_fasta])
+    File? assembly_fasta = select_first([retrieve_aligned_contig_paf.parse_paf_contigs, shovil.assembly_fasta])
     String? assembly_length = quast.genome_length
-    String? shovill_pe_version = shovil_denovo.shovill_version
+    String? shovill_pe_version = shovil.shovill_version
     Int? largest_contig = quast.largest_contig
     File? read1_unmapped = retrieve_unaligned_pe_reads_sam.read1
     File? read2_unmapped = retrieve_unaligned_pe_reads_sam.read2
