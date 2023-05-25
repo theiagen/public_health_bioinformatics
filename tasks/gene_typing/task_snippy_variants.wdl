@@ -2,10 +2,9 @@ version 1.0
 
 task snippy_variants {
   input {
-    File reference
+    File reference_genome_file
     File read1
     File? read2
-    String? query_gene
     String samplename
     String docker = "quay.io/staphb/snippy:4.6.0"
     Int cpus = 8
@@ -13,7 +12,7 @@ task snippy_variants {
     # Paramters 
     # --map_qual: Minimum read mapping quality to consider (default '60')
     # --base_quality: Minimum base quality to consider (default '13')
-    # --min_coverage: Minimum site depth to for calling alleles (default '10' 
+    # --min_coverage: Minimum site depth to for calling alleles (default '10') 
     # --min_frac: Minumum proportion for variant evidence (0=AUTO) (default '0')
     # --min_quality: Minumum QUALITY in VCF column 6 (default '100')
     # --maxsoft: Maximum soft clipping to allow (default '10')
@@ -26,6 +25,7 @@ task snippy_variants {
   }
   command <<<
     snippy --version | head -1 | tee VERSION
+
     # set reads var
     if [ -z "~{read2}" ]; then
       reads="--se ~{read1}"
@@ -34,8 +34,8 @@ task snippy_variants {
     fi
     
     # call snippy
-      snippy \
-      --reference ~{reference} \
+    snippy \
+      --reference ~{reference_genome_file} \
       --outdir ~{samplename} \
       ${reads} \
       --cpus ~{cpus} \
@@ -54,7 +54,7 @@ task snippy_variants {
   output {
     String snippy_variants_version = read_string("VERSION")
     File snippy_variants_outdir_tarball = "./~{samplename}_snippy_variants_outdir.tar"
-    Array[File] snippy_outputs = glob("~{samplename}/~{samplename}*")
+    Array[File] snippy_variants_outputs = glob("~{samplename}/~{samplename}*")
     File snippy_variants_results = "~{samplename}/~{samplename}.csv"
     File snippy_variants_bam = "~{samplename}/~{samplename}.bam"
     File snippy_variants_bai ="~{samplename}/~{samplename}.bam.bai"
