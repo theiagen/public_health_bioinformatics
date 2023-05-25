@@ -48,7 +48,8 @@ workflow snippy_variants_wf {
         samplename = samplename,
         snippy_variants_results = snippy_variants.snippy_variants_results,
         reference = reference_genome_file,
-        query_gene = query_gene
+        query_gene = query_gene,
+        docker = docker
     }
   }
   call versioning.version_capture{
@@ -57,6 +58,7 @@ workflow snippy_variants_wf {
   output {
     String snippy_variants_wf_version = version_capture.phb_version
     String snippy_variants_version = snippy_variants.snippy_variants_version
+    String snippy_variants_docker = snippy_variants.snippy_variants_docker
     File snippy_variants_results = snippy_variants.snippy_variants_results
     File snippy_variants_bam = snippy_variants.snippy_variants_bam
     File snippy_variants_bai = snippy_variants.snippy_variants_bai
