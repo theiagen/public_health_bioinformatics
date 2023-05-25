@@ -20,6 +20,7 @@ workflow theiameta_illumina_pe {
     Int trim_minlen = 75
     Int trim_quality_trim_score = 30
     Int trim_window_size = 4
+    File kraken2_db = "gs://theiagen-public-files-rp/terra/theiaprok-files/k2_standard_8gb_20210517.tar.gz"
   }
   # have a new workflow series for theiameta?
   call read_qc_wf.read_QC_trim_pe as read_QC_trim {
@@ -27,10 +28,11 @@ workflow theiameta_illumina_pe {
         samplename = samplename,
         read1_raw = read1,
         read2_raw = read2,
-        workflow_series = "theiacov",
+        workflow_series = "theiameta",
         trim_minlen = trim_minlen,
         trim_quality_trim_score = trim_quality_trim_score,
-        trim_window_size = trim_window_size
+        trim_window_size = trim_window_size,
+        kraken2_db = kraken2_db
     }
     # if reference is provided, perform consensus assembly with ivar
     if (defined(reference)){
@@ -53,12 +55,6 @@ workflow theiameta_illumina_pe {
           assembly = shovil_consensus.assembly_fasta,
           samplename = samplename
       }
-      # substitute with quast?
-      call consensus_qc_task.consensus_qc {
-        input:
-          assembly_fasta =  retrieve_aligned_contig_paf.parse_paf_contigs,
-          reference_genome = reference
-      }
     }
     # otherwise, perform de novo assembly with megahit
     if (!defined(reference)) {
@@ -69,12 +65,12 @@ workflow theiameta_illumina_pe {
           samplename = samplename,
           assembler = "megahit"
       }
-      call quast_task.quast {
-        input:
-          assembly = shovil_denovo.assembly_fasta,
-          samplename = samplename
-      }
     }
+    call quast_task.quast {
+      input:
+        assembly = select_first([retrieve_aligned_contig_paf.parse_paf_contigs, shovil_denovo.assembly_fasta]),
+        samplename = samplename
+      }
     call minimap2_task.minimap2 as minimap2_reads {
       input:
         query1 = read_QC_trim.read1_clean,
@@ -115,18 +111,11 @@ workflow theiameta_illumina_pe {
     File? read2_dehosted = read_QC_trim.read2_dehosted
     # Read QC - kraken outputs
     String? kraken_version = read_QC_trim.kraken_version
-    Float? kraken_human = read_QC_trim.kraken_human
-    Float? kraken_sc2 = read_QC_trim.kraken_sc2
-    String? kraken_target_org = read_QC_trim.kraken_target_org
-    String? kraken_target_org_name = read_QC_trim.kraken_target_org_name
     File? kraken_report = read_QC_trim.kraken_report
-    Float? kraken_human_dehosted = read_QC_trim.kraken_human_dehosted
-    Float? kraken_sc2_dehosted = read_QC_trim.kraken_sc2_dehosted
-    String? kraken_target_org_dehosted =read_QC_trim.kraken_target_org_dehosted
     File? kraken_report_dehosted = read_QC_trim.kraken_report_dehosted
     # Assembly - shovill/ivar outputs 
     File? assembly_fasta = select_first([retrieve_aligned_contig_paf.parse_paf_contigs, shovil_denovo.assembly_fasta])
-    String? assembly_length = select_first([consensus_qc.number_Total, quast.genome_length])
+    String? assembly_length = quast.genome_length
     String? shovill_pe_version = shovil_denovo.shovill_version
     Int? largest_contig = quast.largest_contig
     File? read1_unmapped = retrieve_unaligned_pe_reads_sam.read1

@@ -20,6 +20,7 @@ workflow read_QC_trim_pe {
     Int trim_quality_trim_score = 30
     Int trim_window_size = 4
     Int bbduk_mem = 8
+    File? kraken2_db
     Boolean call_midas = false
     File? midas_db
     String? target_org
@@ -30,26 +31,45 @@ workflow read_QC_trim_pe {
     String? trimmomatic_args
     String fastp_args = "--detect_adapter_for_pe -g -5 20 -3 20"
   }
-  if ("~{workflow_series}" == "theiacov") {
+  if (("~{workflow_series}" == "theiacov") || ("~{workflow_series}" == "theiameta")) {
     call ncbi_scrub.ncbi_scrub_pe {
       input:
         samplename = samplename,
         read1 = read1_raw,
         read2 = read2_raw
     }
-    call kraken.kraken2_theiacov as kraken2_raw {
+  }
+  if ("~{workflow_series}" == "theiacov") {
+    call kraken.kraken2_theiacov as kraken2_theiacov_raw {
       input:
         samplename = samplename,
         read1 = read1_raw,
         read2 = read2_raw,
         target_org = target_org
     }
-    call kraken.kraken2_theiacov as kraken2_dehosted {
+    call kraken.kraken2_theiacov as kraken2_theiacov_dehosted {
       input:
         samplename = samplename,
-        read1 = ncbi_scrub_pe.read1_dehosted,
+        read1 = select_first([ncbi_scrub_pe.read1_dehosted]),
         read2 = ncbi_scrub_pe.read2_dehosted,
         target_org = target_org
+    }
+  }
+  if ("~{workflow_series}" == "theiameta") {
+
+    call kraken.kraken2_standalone as kraken2_theiameta_raw {
+      input:
+        samplename = samplename,
+        read1 = read1_raw,
+        read2 = read2_raw,
+        kraken2_db = select_first([kraken2_db])
+    }
+    call kraken.kraken2_standalone as kraken2_theiameta_dehosted {
+      input:
+        samplename = samplename,
+        read1 = select_first([ncbi_scrub_pe.read1_dehosted]),
+        read2 = ncbi_scrub_pe.read2_dehosted,
+        kraken2_db = select_first([kraken2_db])
     }
   }
   if (read_processing == "trimmomatic"){
@@ -126,16 +146,16 @@ workflow read_QC_trim_pe {
     String fastq_scan_version = fastq_scan_raw.version
     
     # kraken2
-    String? kraken_version = kraken2_raw.version
-    Float? kraken_human = kraken2_raw.percent_human
-    Float? kraken_sc2 = kraken2_raw.percent_sc2
-    String? kraken_target_org = kraken2_raw.percent_target_org
-    File? kraken_report = kraken2_raw.kraken_report
-    Float? kraken_human_dehosted = kraken2_dehosted.percent_human
-    Float? kraken_sc2_dehosted = kraken2_dehosted.percent_sc2
-    String? kraken_target_org_dehosted = kraken2_dehosted.percent_target_org
+    String? kraken_version = select_first([kraken2_theiameta_raw.kraken2_version, kraken2_theiacov_raw.version])
+    Float? kraken_human = kraken2_theiacov_raw.percent_human
+    Float? kraken_sc2 = kraken2_theiacov_raw.percent_sc2
+    String? kraken_target_org = kraken2_theiacov_raw.percent_target_org
+    File? kraken_report = select_first([kraken2_theiameta_raw.kraken2_report, kraken2_theiacov_raw.kraken_report])
+    Float? kraken_human_dehosted = kraken2_theiacov_dehosted.percent_human
+    Float? kraken_sc2_dehosted = kraken2_theiacov_dehosted.percent_sc2
+    String? kraken_target_org_dehosted = kraken2_theiacov_dehosted.percent_target_org
     String? kraken_target_org_name = target_org
-    File? kraken_report_dehosted = kraken2_dehosted.kraken_report
+    File? kraken_report_dehosted = select_first([kraken2_theiameta_dehosted.kraken2_report, kraken2_theiacov_dehosted.kraken_report])
     
     # trimming versioning
     String? trimmomatic_version = trimmomatic_pe.version
