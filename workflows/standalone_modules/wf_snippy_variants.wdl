@@ -62,6 +62,7 @@ workflow snippy_variants_wf {
     File snippy_variants_bai = snippy_variants.snippy_variants_bai
     File snippy_variants_summary = snippy_variants.snippy_variants_summary
     File snippy_variants_outdir_tarball = snippy_variants.snippy_variants_outdir_tarball
+    # snippy gene query outputs
     String? snippy_variants_query = snippy_gene_query.snippy_variants_query
     String? snippy_variants_query_check = snippy_gene_query.snippy_variants_query_check
     String? snippy_variants_hits = snippy_gene_query.snippy_variants_hits
