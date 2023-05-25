@@ -2,7 +2,7 @@ version 1.0
 
 task snippy_variants {
   input {
-    File reference
+    File reference_genome_file
     File read1
     File? read2
     String? query_gene
@@ -13,7 +13,7 @@ task snippy_variants {
     # Paramters 
     # --map_qual: Minimum read mapping quality to consider (default '60')
     # --base_quality: Minimum base quality to consider (default '13')
-    # --min_coverage: Minimum site depth to for calling alleles (default '10' 
+    # --min_coverage: Minimum site depth to for calling alleles (default '10') 
     # --min_frac: Minumum proportion for variant evidence (0=AUTO) (default '0')
     # --min_quality: Minumum QUALITY in VCF column 6 (default '100')
     # --maxsoft: Maximum soft clipping to allow (default '10')
@@ -26,6 +26,7 @@ task snippy_variants {
   }
   command <<<
     snippy --version | head -1 | tee VERSION
+
     # set reads var
     if [ -z "~{read2}" ]; then
       reads="--se ~{read1}"
@@ -34,13 +35,14 @@ task snippy_variants {
     fi
     # set no_hit var
     if [ -z "~{query_gene}" ]; then 
-     no_hit="NA: No query gene was provided"
-   else 
-    no_hit="No variants identified in queried genes (~{query_gene})" 
+      no_hit="NA: No query gene was provided"
+    else 
+      no_hit="No variants identified in queried genes (~{query_gene})" 
     fi
+
     # call snippy
-      snippy \
-      --reference ~{reference} \
+    snippy \
+      --reference ~{reference_genome_file} \
       --outdir ~{samplename} \
       ${reads} \
       --cpus ~{cpus} \
@@ -52,33 +54,35 @@ task snippy_variants {
       ~{'--minfrac ' + min_frac} \
       ~{'--minqual ' + min_quality} \
       ~{'--maxsoft ' + maxsoft}
+
     # parse gene-specific outputs from snps.tab
     echo -e "samplename,$(head -n 1 ./~{samplename}/~{samplename}.csv)" > ./gene_query.csv
-    for qgene in $(echo "~{query_gene}" | sed "s/,/ /g");
+    for qgene in $(echo "~{query_gene}" | sed "s/,/ /g"); do 
       # capture queried hits to single file 
-      do 
-        if grep -q  "${qgene}" ./~{samplename}/~{samplename}.csv; then 
-          grep "${qgene}" ./~{samplename}/~{samplename}.csv | awk '{print "'~{samplename}'," $0}' >> ./gene_query.csv
-          # curate relevant columns of quieried hits to single output
-          grep "${qgene}" ./gene_query.csv | awk -F"," '{print "'${qgene}': "$15" ("$12"; "$7")"}' >> snippy_variant_hits_tmp
-        fi
-     done
-   # convert newlines to comma
+      if grep -q  "${qgene}" ./~{samplename}/~{samplename}.csv; then 
+        grep "${qgene}" ./~{samplename}/~{samplename}.csv | awk '{print "'~{samplename}'," $0}' >> ./gene_query.csv
+        # curate relevant columns of quieried hits to single output
+        grep "${qgene}" ./gene_query.csv | awk -F"," '{print "'${qgene}': "$15" ("$12"; "$7")"}' >> snippy_variant_hits_tmp
+      fi
+    done
 
-   if [ -f snippy_variant_hits_tmp ]; then
-     paste -s -d, snippy_variant_hits_tmp > SNIPPY_VARIANT_HITS
-   else
-     echo "${no_hit}" > SNIPPY_VARIANT_HITS
-   fi
+    # convert newlines to comma
+    if [ -f snippy_variant_hits_tmp ]; then
+      paste -s -d, snippy_variant_hits_tmp > SNIPPY_VARIANT_HITS
+    else
+      echo "${no_hit}" > SNIPPY_VARIANT_HITS
+    fi
+
     # Compress output dir
     tar -cvzf "./~{samplename}_snippy_variants_outdir.tar" "./~{samplename}"
   >>>
   output {
     String snippy_variants_version = read_string("VERSION")
+    String snippy_variants_docker = docker
     String snippy_variants_query = "~{query_gene}"
     String snippy_variants_hits = read_string("SNIPPY_VARIANT_HITS")
     File snippy_variants_outdir_tarball = "./~{samplename}_snippy_variants_outdir.tar"
-    Array[File] snippy_outputs = glob("~{samplename}/~{samplename}*")
+    Array[File] snippy_variants_outputs = glob("~{samplename}/~{samplename}*")
     File snippy_variants_gene_query_results = "./gene_query.csv"
     File snippy_variants_results = "~{samplename}/~{samplename}.csv"
     File snippy_variants_bam = "~{samplename}/~{samplename}.bam"

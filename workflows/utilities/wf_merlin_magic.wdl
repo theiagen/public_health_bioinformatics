@@ -305,7 +305,7 @@ workflow merlin_magic {
       if (!assembly_only && !ont_data) {
         call snippy.snippy_variants as snippy_cauris { # no ONT support right now
           input:
-            reference = cladetyper.clade_spec_ref,
+            reference_genome_file = cladetyper.clade_spec_ref,
             read1 = select_first([read1]),
             read2 = read2,
             query_gene = "FKS1,'lanosterol 14-alpha demethylase','lanosterol_14-alpha_demethylase',FUR1,'uracil_phosphoribosyltransferase','uracil phosphoribosyltransferase'",
@@ -317,7 +317,7 @@ workflow merlin_magic {
       if (!assembly_only && !ont_data) {
         call snippy.snippy_variants as snippy_calbicans {
           input:
-            reference = "gs://theiagen-public-files/terra/theiaeuk_files/Candida_albicans_GCF_000182965.3_ASM18296v3_genomic.gbff",
+            reference_genome_file = "gs://theiagen-public-files/terra/theiaeuk_files/Candida_albicans_GCF_000182965.3_ASM18296v3_genomic.gbff",
             read1 = select_first([read1]),
             read2 = read2,
             query_gene = "'lanosterol 14-alpha demethylase','lanosterol_14-alpha_demethylase',FKS1,FUR1,'uracil_phosphoribosyltransferase',RTA2",
@@ -329,7 +329,7 @@ workflow merlin_magic {
       if (!assembly_only && !ont_data) {
         call snippy.snippy_variants as snippy_afumigatus {
           input:
-            reference = "gs://theiagen-public-files/terra/theiaeuk_files/Aspergillus_fumigatus_GCF_000002655.1_ASM265v1_genomic.gbff",
+            reference_genome_file = "gs://theiagen-public-files/terra/theiaeuk_files/Aspergillus_fumigatus_GCF_000002655.1_ASM265v1_genomic.gbff",
             read1 = select_first([read1]),
             read2 = read2,
             query_gene = "CYP51a,HAPE,COX10",
@@ -341,7 +341,7 @@ workflow merlin_magic {
       if (!assembly_only && !ont_data) {
         call snippy.snippy_variants as snippy_crypto {
           input:
-            reference = "gs://theiagen-public-files/terra/theiaeuk_files/Cryptococcus_neoformans_GCF_000091045.1_ASM9104v1_genomic.gbff",
+            reference_genome_file = "gs://theiagen-public-files/terra/theiaeuk_files/Cryptococcus_neoformans_GCF_000091045.1_ASM9104v1_genomic.gbff",
             read1 = select_first([read1]),
             read2 = read2,
             query_gene = "ERG11",
