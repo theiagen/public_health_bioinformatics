@@ -269,6 +269,15 @@ task export_taxon_tables {
     String? seroba_ariba_serotype
     String? seroba_ariba_identity
     File? seroba_details
+    String? emmtypingtool_emm_type
+    File? emmtypingtool_results_xml
+    String? emmtypingtool_version
+    String? emmtypingtool_docker
+    String? hicap_serotype
+    String? hicap_genes
+    File? hicap_results_tsv
+    String? hicap_version
+    String? hicap_docker
     String? midas_docker 
     File? midas_report 
     String? midas_primary_genus
@@ -611,6 +620,15 @@ task export_taxon_tables {
       "seroba_ariba_serotype": "~{seroba_ariba_serotype}",
       "seroba_ariba_identity": "~{seroba_ariba_identity}",
       "seroba_details": "~{seroba_details}",
+      "emmtypingtool_emm_type": "~{emmtypingtool_emm_type}",
+      "emmtypingtool_reults_xml": "~{emmtypingtool_results_xml}",
+      "emmtypingtool_version": "~{emmtypingtool_version}",
+      "emmtypingtool_docker": "~{emmtypingtool_docker}",
+      "hicap_serotype": "~{hicap_serotype}",
+      "hicap_genes": "~{hicap_genes}",
+      "hicap_results_tsv": "~{hicap_results_tsv}",
+      "hicap_version": "~{hicap_version}",
+      "hicap_docker": "~{hicap_docker}",
       "midas_docker": "~{midas_docker}",
       "midas_report": "~{midas_report}",
       "midas_primary_genus": "~{midas_primary_genus}",

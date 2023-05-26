@@ -24,6 +24,8 @@ import "../../tasks/species_typing/task_pbptyper.wdl" as pbptyper
 import "../../tasks/species_typing/task_poppunk_streppneumo.wdl" as poppunk_spneumo
 import "../../tasks/species_typing/task_pasty.wdl" as pasty_task
 import "../../tasks/gene_typing/task_abricate.wdl" as abricate_task
+import "../../tasks/species_typing/task_emmtypingtool.wdl" as emmtypingtool_task
+import "../../tasks/species_typing/task_hicap.wdl" as hicap_task
 import "../../tasks/species_typing/task_srst2_vibrio.wdl" as srst2_vibrio_task
 import "../../tasks/species_typing/task_virulencefinder.wdl" as virulencefinder_task
 
@@ -44,7 +46,9 @@ workflow merlin_magic {
     File? read2
     Int? pasty_min_pident
     Int? pasty_min_coverage
+    String? hicap_docker_image
     String? pasty_docker_image
+    String? emmtypingtool_docker_image
     String? shigeifinder_docker_image
     String? staphopia_sccmec_docker_image
     String? agrvate_docker_image
@@ -271,6 +275,25 @@ workflow merlin_magic {
           assembly = assembly,
           samplename = samplename
       }  
+    }
+  }
+  if (merlin_tag == "Streptococcus pyogenes") {
+    if (paired_end && !ont_data) {
+      call emmtypingtool_task.emmtypingtool {
+        input:
+          read1 = select_first([read1]),
+          read2 = read2,
+          samplename = samplename,
+          docker = emmtypingtool_docker_image
+      }
+    }
+  }
+  if (merlin_tag == "Haemophilus influenzae") {
+    call hicap_task.hicap {
+      input:
+        assembly = assembly,
+        samplename = samplename,
+        docker = hicap_docker_image
     }
   }
   if (merlin_tag == "Vibrio") {
@@ -563,6 +586,17 @@ workflow merlin_magic {
     String? seroba_ariba_serotype = seroba_task.seroba_ariba_serotype
     String? seroba_ariba_identity = seroba_task.seroba_ariba_identity
     File? seroba_details = seroba_task.seroba_details
+    # Streptococcus pyogenes Typing
+    String? emmtypingtool_emm_type = emmtypingtool.emmtypingtool_emm_type
+    File? emmtypingtool_results_xml = emmtypingtool.emmtypingtool_results_xml
+    String? emmtypingtool_version = emmtypingtool.emmtypingtool_version
+    String? emmtypingtool_docker = emmtypingtool.emmtypingtool_docker
+    # Haemophilus influenzae Typing
+    String? hicap_serotype = hicap.hicap_serotype
+    String? hicap_genes = hicap.hicap_genes
+    File? hicap_results_tsv = hicap.hicap_results_tsv
+    String? hicap_version = hicap.hicap_version
+    String? hicap_docker = hicap.hicap_docker
     # Vibrio
     File? srst2_vibrio_detailed_tsv = srst2_vibrio.srst2_detailed_tsv
     String? srst2_vibrio_version = srst2_vibrio.srst2_version
@@ -571,7 +605,6 @@ workflow merlin_magic {
     String? srst2_vibrio_toxR = srst2_vibrio.srst2_vibrio_toxR
     String? srst2_vibrio_serogroup = srst2_vibrio.srst2_vibrio_serogroup
     String? srst2_vibrio_biotype = srst2_vibrio.srst2_vibrio_biotype
-    
     # theiaeuk
     # c auris 
     String? clade_type = cladetyper.gambit_cladetype
