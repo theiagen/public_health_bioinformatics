@@ -1,0 +1,78 @@
+version 1.0
+
+task virulencefinder {
+  input {
+    File? assembly
+    File? read1
+    File? read2
+    String samplename
+    String docker = "quay.io/staphb/virulencefinder:2.0.4"
+    Int disk_size = 100
+    Int mem = 8
+    Int cpu = 2
+    # determine what version of the software to run
+    Boolean paired_end
+    Boolean assembly_only
+    Boolean ont_data
+  }
+  command <<<
+    # capture date and version
+    date | tee DATE
+
+    # create temporary intermediate file directory
+    mkdir tmp
+
+    # run virulence finder
+    #  -i input file(s)
+    #  -o output directory
+    #  -x extended output (needed to make the results_tab file)
+    #  -tmp temporary directory for intermediate results
+    if ~{assembly_only} || ! ~{paired_end} || ~{ont_data}; then
+      # run assembly version if SE, ONT, or assembly
+      virulencefinder.py \
+        -i ~{assembly} \
+        -o . \
+        -tmp tmp \
+        -x 
+    else 
+      # run the reads version if PE data
+      virulencefinder.py \
+        -i ~{read1} ~{read2} \
+        -o . \
+        -tmp tmp \
+        -x
+    fi
+   
+    # rename output file
+    mv results_tab.tsv ~{samplename}_results_tab.tsv
+
+    # parse 2nd column (Virulence factor) of _tab.tsv file into a comma-separated string
+    #   tail -n+2 -> all but header column
+    #   awk '{print $2}' -> extracts 2nd column (the virulence factor)
+    #   uniq -> removes duplicate factors (occasionally some factors show up twice with different accessions)
+    #   paste -s -d, - -> write the stdin (-) serially (-s) with comma-delimiters (-d,)
+    #   tee VIRULENCE_FACTORS -> copy the stdin to both stdout and a file named VIRULENCE_FACTORS
+    tail -n+2 ~{samplename}_results_tab.tsv | awk '{print $2}' | uniq | paste -s -d, - | tee VIRULENCE_FACTORS
+
+    # if virulencefinder fails/no hits are found, the results_tab.tsv file will still exist but only be the header
+    # check to see if VIRULENCE_FACTORS is just whitespace
+    # if so, say that no virulence factors were found instead
+    if ! grep -q '[^[:space:]]' VIRULENCE_FACTORS ; then 
+      echo "No virulence factors found" | tee VIRULENCE_FACTORS
+    fi
+   
+  >>>
+  output {
+    File virulencefinder_report = "~{samplename}_results_tab.tsv"
+    String virulencefinder_docker = docker
+    String virulencefinder_factors = read_string("VIRULENCE_FACTORS")
+  }
+  runtime {
+    docker: "~{docker}"
+    memory: mem + " GB"
+    cpu: cpu
+    disks: "local-disk " + disk_size + " SSD"
+    disk: disk_size + " GB"
+    preemptible:  0
+  }
+}
