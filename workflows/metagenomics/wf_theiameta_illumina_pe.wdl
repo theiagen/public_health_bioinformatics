@@ -1,7 +1,6 @@
 version 1.0
 
 import "../utilities/wf_read_QC_trim_pe.wdl" as read_qc_wf
-import "../../tasks/quality_control/task_consensus_qc.wdl" as consensus_qc_task
 import "../../tasks/assembly/task_shovill.wdl" as shovill_task
 import "../../tasks/alignment/task_minimap2.wdl" as minimap2_task
 import "../../tasks/utilities/task_parse_paf.wdl" as parse_paf_task
@@ -22,7 +21,6 @@ workflow theiameta_illumina_pe {
     Int trim_window_size = 4
     File kraken2_db = "gs://theiagen-public-files-rp/terra/theiaprok-files/k2_standard_8gb_20210517.tar.gz"
   }
-  # have a new workflow series for theiameta?
   call read_qc_wf.read_QC_trim_pe as read_QC_trim {
       input:
         samplename = samplename,
@@ -103,7 +101,6 @@ workflow theiameta_illumina_pe {
     # Read QC - kraken outputs
     String? kraken_version = read_QC_trim.kraken_version
     File? kraken_report = read_QC_trim.kraken_report
-    File? kraken_report_dehosted = read_QC_trim.kraken_report_dehosted
     # Assembly - shovill/ivar outputs 
     File? assembly_fasta = select_first([retrieve_aligned_contig_paf.parse_paf_contigs, shovil.assembly_fasta])
     String? assembly_length = quast.genome_length

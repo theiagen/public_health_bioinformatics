@@ -64,13 +64,6 @@ workflow read_QC_trim_pe {
         read2 = read2_raw,
         kraken2_db = select_first([kraken2_db])
     }
-    call kraken.kraken2_standalone as kraken2_theiameta_dehosted {
-      input:
-        samplename = samplename,
-        read1 = select_first([ncbi_scrub_pe.read1_dehosted]),
-        read2 = ncbi_scrub_pe.read2_dehosted,
-        kraken2_db = select_first([kraken2_db])
-    }
   }
   if (read_processing == "trimmomatic"){
     call trimmomatic.trimmomatic_pe {
@@ -155,7 +148,7 @@ workflow read_QC_trim_pe {
     Float? kraken_sc2_dehosted = kraken2_theiacov_dehosted.percent_sc2
     String? kraken_target_org_dehosted = kraken2_theiacov_dehosted.percent_target_org
     String? kraken_target_org_name = target_org
-    File? kraken_report_dehosted = select_first([kraken2_theiameta_dehosted.kraken2_report, kraken2_theiacov_dehosted.kraken_report])
+    File? kraken_report_dehosted = kraken2_theiacov_dehosted.kraken_report
     
     # trimming versioning
     String? trimmomatic_version = trimmomatic_pe.version
