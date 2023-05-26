@@ -9,7 +9,7 @@ import "../../tasks/task_versioning.wdl" as versioning
 
 workflow theiameta_illumina_pe {
   meta {
-    description: "Reference-based consensus calling or de novo assembly for viral metagenomic sequencing data"
+    description: "Reference-based consensus calling or de novo assembly for metagenomic sequencing data"
   }
   input {
     File read1
@@ -101,7 +101,7 @@ workflow theiameta_illumina_pe {
     # Read QC - kraken outputs
     String? kraken_version = read_QC_trim.kraken_version
     File? kraken_report = read_QC_trim.kraken_report
-    # Assembly - shovill/ivar outputs 
+    # Assembly - shovill outputs 
     File? assembly_fasta = select_first([retrieve_aligned_contig_paf.parse_paf_contigs, shovil.assembly_fasta])
     String? assembly_length = quast.genome_length
     String? shovill_pe_version = shovil.shovill_version
