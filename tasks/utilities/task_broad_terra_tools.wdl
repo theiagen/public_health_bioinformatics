@@ -148,6 +148,9 @@ task export_taxon_tables {
     String? shigeifinder_O_antigen_reads
     String? shigeifinder_H_antigen_reads
     String? shigeifinder_notes_reads
+    File? virulencefinder_report
+    String? virulencefinder_docker
+    String? virulencefinder_factors
     File? sonneityping_mykrobe_report_csv
     File? sonneityping_mykrobe_report_json
     File? sonneityping_final_report_tsv
@@ -463,6 +466,9 @@ task export_taxon_tables {
       "shigeifinder_O_antigen_reads": "~{shigeifinder_O_antigen_reads}",
       "shigeifinder_H_antigen_reads": "~{shigeifinder_H_antigen_reads}",
       "shigeifinder_notes_reads": "~{shigeifinder_notes_reads}",
+      "virulencefinder_report": "~{virulencefinder_report}",
+      "virulencefinder_docker": "~{virulencefinder_docker}",
+      "virulencefinder_factors": "~{virulencefinder_factors}",
       "sonneityping_mykrobe_report_csv": "~{sonneityping_mykrobe_report_csv}",
       "sonneityping_mykrobe_report_json": "~{sonneityping_mykrobe_report_json}",
       "sonneityping_final_report_tsv": "~{sonneityping_final_report_tsv}",

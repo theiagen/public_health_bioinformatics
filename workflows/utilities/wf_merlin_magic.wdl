@@ -25,6 +25,7 @@ import "../../tasks/species_typing/task_poppunk_streppneumo.wdl" as poppunk_spne
 import "../../tasks/species_typing/task_pasty.wdl" as pasty_task
 import "../../tasks/gene_typing/task_abricate.wdl" as abricate_task
 import "../../tasks/species_typing/task_srst2_vibrio.wdl" as srst2_vibrio_task
+import "../../tasks/species_typing/task_virulencefinder.wdl" as virulencefinder_task
 
 # theiaeuk
 import "../../tasks/species_typing/task_cauris_cladetyper.wdl" as cauris_cladetyper
@@ -113,6 +114,19 @@ workflow merlin_magic {
           docker = shigeifinder_docker_image,
           paired_end = paired_end
       }
+    }
+  }
+  if (merlin_tag == "Escherichia" ) {
+    # E coli specific tasks
+    call virulencefinder_task.virulencefinder {
+      input:
+        read1 = read1,
+        read2 = read2,
+        assembly = assembly,
+        samplename = samplename,
+        paired_end = paired_end,
+        assembly_only = assembly_only,
+        ont_data = ont_data
     }
   }
   if (merlin_tag == "Shigella_sonnei") {
@@ -390,6 +404,10 @@ workflow merlin_magic {
     String? shigeifinder_O_antigen_reads = shigeifinder_reads.shigeifinder_O_antigen
     String? shigeifinder_H_antigen_reads = shigeifinder_reads.shigeifinder_H_antigen
     String? shigeifinder_notes_reads = shigeifinder_reads.shigeifinder_notes
+    # E coli only typing
+    File? virulencefinder_report = virulencefinder.virulencefinder_report
+    String? virulencefinder_docker = virulencefinder.virulencefinder_docker
+    String? virulencefinder_factors = virulencefinder.virulencefinder_factors
     # Shigella sonnei Typing
     File? sonneityping_mykrobe_report_csv = sonneityping.sonneityping_mykrobe_report_csv
     File? sonneityping_mykrobe_report_json = sonneityping.sonneityping_mykrobe_report_json
