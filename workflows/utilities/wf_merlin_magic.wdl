@@ -52,6 +52,7 @@ workflow merlin_magic {
     String? shigeifinder_docker_image
     String? staphopia_sccmec_docker_image
     String? agrvate_docker_image
+    String? virulencefinder_docker_image
     Boolean paired_end = true
     Boolean call_poppunk = true
     Boolean ont_data = false
@@ -130,7 +131,8 @@ workflow merlin_magic {
         samplename = samplename,
         paired_end = paired_end,
         assembly_only = assembly_only,
-        ont_data = ont_data
+        ont_data = ont_data,
+        docker = virulencefinder_docker_image
     }
   }
   if (merlin_tag == "Shigella_sonnei") {
