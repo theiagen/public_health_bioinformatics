@@ -141,7 +141,7 @@ task tbprofiler_output_parsing {
               depth.append(other_variant["depth"])
               frequency.append(other_variant["freq"])
               resistance.append(other_variant["gene_associated_drugs"][0])
-              rule.append("Uncertain significance based on expert rule") # TODO: keep this? OR change to "Resistant based on expert rule"?
+              rule.append("Resistant based on expert rule")
               if "annotation" in other_variant:
                 try:  # sometimes annotation is an empty list
                   if other_variant["annotation"][0]["who_confidence"] == "":
@@ -164,7 +164,7 @@ task tbprofiler_output_parsing {
               depth.append(other_variant["depth"])
               frequency.append(other_variant["freq"])
               resistance.append(other_variant["gene_associated_drugs"][0])
-              if 426 <= position <= 452:  # considered resistant based on expert rule - TODO: Keep all or just the ones within the codons?
+              if 426 <= position <= 452:  # considered resistant based on expert rule
                 rule.append("Resistant based on expert rule")
               else:
                 rule.append("Uncertain significance based on expert rule")
