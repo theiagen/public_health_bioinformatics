@@ -90,7 +90,6 @@ task tbprofiler_output_parsing {
         - rationale
         - warning
       """
-      sample_id = []
       gene_name = []
       locus_tag = []
       variant_substitutions_type = []
@@ -105,10 +104,8 @@ task tbprofiler_output_parsing {
       with open(json_file) as results_json_fh:
         results_json = json.load(results_json_fh)
         for dr_variant in results_json["dr_variants"]:  # reported mutation by tb-profiler, all confering resistance
-          sample_id.append("~{samplename}")
           gene_name.append(dr_variant["gene"])
           locus_tag.append(dr_variant["locus_tag"])  
-          #variant_substitutions.append(dr_variant["type"] + ":" + dr_variant["nucleotide_change"] + "(" + dr_variant["protein_change"] + ")") 
           variant_substitutions_type.append(dr_variant["type"])
           variant_substitutions_nt.append(dr_variant["nucleotide_change"])
           variant_substitutions_aa.append(dr_variant["protein_change"] if dr_variant["protein_change"] != "" else "NA")
@@ -130,11 +127,9 @@ task tbprofiler_output_parsing {
         for other_variant in results_json["other_variants"]:  # mutations not reported by tb-profiler
           if other_variant["type"] != "synonymous_variant":
             if other_variant["gene"] == "katG" or other_variant["gene"] == "pncA" or other_variant["gene"] == "ethA" or other_variant["gene"] == "gid":  # Expert rule: hardcoded for genes of interest that are reported to always confer resistance when mutated
-              # report as uncertain significance based on expert rule
-              sample_id.append("~{samplename}")
+              # report as resistant based on expert rule
               gene_name.append(other_variant["gene"])
               locus_tag.append(other_variant["locus_tag"])  
-              #variant_substitutions.append(other_variant["type"] + ":" + other_variant["nucleotide_change"] + "(" + other_variant["protein_change"] + ")")  # mutation_type:nt_sub(aa_sub)
               variant_substitutions_type.append(other_variant["type"])
               variant_substitutions_nt.append(other_variant["nucleotide_change"])
               variant_substitutions_aa.append(other_variant["protein_change"] if other_variant["protein_change"] != "" else "NA")
@@ -154,7 +149,6 @@ task tbprofiler_output_parsing {
                 confidence.append("No WHO annotation")
             if other_variant["gene"] == "rpoB":  # Expert rule: in case mutation occurs between codons 426 and 452 of rpoB gene, classify as resistant
               position = get_codon(other_variant["protein_change"])
-              sample_id.append("~{samplename}")
               gene_name.append(other_variant["gene"])
               locus_tag.append(other_variant["locus_tag"])  
               #variant_substitutions.append(other_variant["type"] + ":" + other_variant["nucleotide_change"] + "(" + other_variant["protein_change"] + ")")  # mutation_type:nt_sub(aa_sub)
@@ -164,18 +158,19 @@ task tbprofiler_output_parsing {
               depth.append(other_variant["depth"])
               frequency.append(other_variant["freq"])
               resistance.append(other_variant["gene_associated_drugs"][0])
+              confidence.append("No WHO annotation")
               if 426 <= position <= 452:  # considered resistant based on expert rule
                 rule.append("Resistant based on expert rule")
               else:
                 rule.append("Uncertain significance based on expert rule")
-            
+   
         with open("tbprofiler_laboratorian_report.csv", "wt") as report_fh:
           report_fh.write("sample_id,tbprofiler_gene_name,tbprofiler_locus_tag,tbprofiler_variant_substitution_type,tbprofiler_variant_substitution_nt,tbprofiler_variant_substitution_aa,confidence,antimicrobial,depth,frequency,read_support,rationale,warning\n")
           for i in range(0, len(gene_name)):
             if not depth[i]:  # for cases when depth is null, it gets converted to 0
               depth[i] = 0
             warning = "Low depth coverage" if  depth[i] < int('~{min_depth}') else "" # warning when coverage is lower than the defined 'min_depth' times
-            report_fh.write(sample_id[i] + ',' + gene_name[i] + ',' + locus_tag[i] + ',' + variant_substitutions_type[i] + ',' + variant_substitutions_nt[i] + ',' + variant_substitutions_aa[i] + ',' + confidence[i] + ',' + resistance[i] + ',' + str(depth[i]) + ',' + str(frequency[i]) + ',' + str(int(depth[i]*frequency[i])) + ',' + rule[i] + ',' + warning +'\n')
+            report_fh.write("~{samplename}" + ',' + gene_name[i] + ',' + locus_tag[i] + ',' + variant_substitutions_type[i] + ',' + variant_substitutions_nt[i] + ',' + variant_substitutions_aa[i] + ',' + confidence[i] + ',' + resistance[i] + ',' + str(depth[i]) + ',' + str(frequency[i]) + ',' + str(int(depth[i]*frequency[i])) + ',' + rule[i] + ',' + warning +'\n')
 
 
     def parse_json_mutations(json_file):
