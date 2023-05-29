@@ -11,6 +11,7 @@ task tbprofiler_output_parsing {
     python3 <<CODE
     import csv
     import json
+    import re
     import pandas as pd
 
     ## Lookup Dictionaries ##
@@ -58,6 +59,21 @@ task tbprofiler_output_parsing {
                 }
 
     ## Auxiliary Functions ##
+
+    def get_codon(protein_mut):
+      """
+      This function recieves a protein mutation (e.g. 'p.Met291Ile')
+      and returns the codon (numerical part) where that mutation occurs
+      in Int format.
+      """
+      pattern = r"\.\D+(\d+)"
+
+      match = re.search(pattern, protein_mut)
+      if match:
+        position = match.group(1)
+        return int(position)
+      return 0
+
 
     def parse_json_lab_report(json_file):
       """
@@ -113,7 +129,7 @@ task tbprofiler_output_parsing {
 
         for other_variant in results_json["other_variants"]:  # mutations not reported by tb-profiler
           if other_variant["type"] != "synonymous_variant":
-            if other_variant["gene"] == "katG" or other_variant["gene"] == "pncA" or other_variant["gene"] == "rpoB" or other_variant["gene"] == "ethA" or other_variant["gene"] == "gid":  # hardcoded for genes of interest that are reported to always confer resistance when mutated
+            if other_variant["gene"] == "katG" or other_variant["gene"] == "pncA" or other_variant["gene"] == "ethA" or other_variant["gene"] == "gid":  # Expert rule: hardcoded for genes of interest that are reported to always confer resistance when mutated
               # report as uncertain significance based on expert rule
               sample_id.append("~{samplename}")
               gene_name.append(other_variant["gene"])
@@ -125,10 +141,7 @@ task tbprofiler_output_parsing {
               depth.append(other_variant["depth"])
               frequency.append(other_variant["freq"])
               resistance.append(other_variant["gene_associated_drugs"][0])
-              if other_variant["gene"] == "rpoB":
-                rule.append("Resistant based on expert rule")
-              else:
-                rule.append("Uncertain significance based on expert rule")
+              rule.append("Uncertain significance based on expert rule") # TODO: keep this? OR change to "Resistant based on expert rule"?
               if "annotation" in other_variant:
                 try:  # sometimes annotation is an empty list
                   if other_variant["annotation"][0]["who_confidence"] == "":
@@ -139,23 +152,23 @@ task tbprofiler_output_parsing {
                   confidence.append("No WHO annotation")
               else:
                 confidence.append("No WHO annotation")
-            else:
-              if "annotation" in other_variant:  # check if who annotation field is present
-                for annotation in other_variant["annotation"]:
-                  if annotation["who_confidence"] != "Not assoc w R" or annotation["who_confidence"] != "":
-                    sample_id.append("~{samplename}")
-                    gene_name.append(other_variant["gene"])
-                    locus_tag.append(other_variant["locus_tag"])  
-                    #variant_substitutions.append(other_variant["type"] + ":" + other_variant["nucleotide_change"] + "(" + other_variant["protein_change"] + ")")  # mutation_type:nt_sub(aa_sub)
-                    variant_substitutions_type.append(other_variant["type"])
-                    variant_substitutions_nt.append(other_variant["nucleotide_change"])
-                    variant_substitutions_aa.append(other_variant["protein_change"] if other_variant["protein_change"] != "" else "NA")
-                    depth.append(other_variant["depth"])
-                    frequency.append(other_variant["freq"])
-                    confidence.append(annotation["who_confidence"])
-                    rule.append("Uncertain significance based on expert rule")
-                    resistance.append(annotation["drug"])
-
+            if other_variant["gene"] == "rpoB":  # Expert rule: in case mutation occurs between codons 426 and 452 of rpoB gene, classify as resistant
+              position = get_codon(other_variant["protein_change"])
+              sample_id.append("~{samplename}")
+              gene_name.append(other_variant["gene"])
+              locus_tag.append(other_variant["locus_tag"])  
+              #variant_substitutions.append(other_variant["type"] + ":" + other_variant["nucleotide_change"] + "(" + other_variant["protein_change"] + ")")  # mutation_type:nt_sub(aa_sub)
+              variant_substitutions_type.append(other_variant["type"])
+              variant_substitutions_nt.append(other_variant["nucleotide_change"])
+              variant_substitutions_aa.append(other_variant["protein_change"] if other_variant["protein_change"] != "" else "NA")
+              depth.append(other_variant["depth"])
+              frequency.append(other_variant["freq"])
+              resistance.append(other_variant["gene_associated_drugs"][0])
+              if 426 <= position <= 452:  # considered resistant based on expert rule - TODO: Keep all or just the ones within the codons?
+                rule.append("Resistant based on expert rule")
+              else:
+                rule.append("Uncertain significance based on expert rule")
+            
         with open("tbprofiler_laboratorian_report.csv", "wt") as report_fh:
           report_fh.write("sample_id,tbprofiler_gene_name,tbprofiler_locus_tag,tbprofiler_variant_substitution_type,tbprofiler_variant_substitution_nt,tbprofiler_variant_substitution_aa,confidence,antimicrobial,depth,frequency,read_support,rationale,warning\n")
           for i in range(0, len(gene_name)):
