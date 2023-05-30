@@ -20,6 +20,11 @@ task retrieve_aligned_contig_paf {
     # extract mapped contigs in FASTA format
     seqkit grep -f contig_names.txt "~{assembly}" > "~{samplename}".fasta
 
+    echo "Original contig number:"
+    cat ~{assembly} | grep ">" | wc -l 
+    
+    echo "Filtered contig number:"
+    cat "~{samplename}".fasta | grep ">" | wc -l 
   >>>
   output {
     File parse_paf_contigs = "~{samplename}.fasta"

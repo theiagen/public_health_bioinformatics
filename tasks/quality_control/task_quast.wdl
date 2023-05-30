@@ -5,6 +5,7 @@ task quast {
     File assembly
     String samplename
     String docker = "quay.io/staphb/quast:5.0.2"
+    Int min_contig_len = 500
     Int disk_size = 100
     Int memory = 2 # added default value
     Int cpu = 2 # added default value
@@ -14,7 +15,7 @@ task quast {
     date | tee DATE
     quast.py --version | grep QUAST | tee VERSION
 
-    quast.py ~{assembly} -o .
+    quast.py ~{assembly} -o . --min-contig ~{min_contig_len}
     mv report.tsv ~{samplename}_report.tsv
     
     python <<CODE

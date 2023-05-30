@@ -58,7 +58,8 @@ workflow theiameta_illumina_pe {
     call quast_task.quast {
       input:
         assembly = select_first([retrieve_aligned_contig_paf.parse_paf_contigs, shovil.assembly_fasta]),
-        samplename = samplename
+        samplename = samplename,
+        min_contig_len = 1
       }
     call minimap2_task.minimap2 as minimap2_reads {
       input:
