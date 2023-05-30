@@ -108,9 +108,9 @@ task kraken2_standalone {
     gzip *.fastq
     gzip ~{samplename}.classifiedreads.txt
 
-    # Report human 
-    percentage_human=$(grep "Homo sapiens" ~{samplename}_kraken2_report.txt | cut -f 1)
-    #if [ -z "$percentage_human" ] ; then percentage_human="0" ; fi
+    # Report percentage of human reads
+    percentage_human=$(grep "Homo sapiens" ~{samplename}.report.txt | cut -f 1)
+    if [ -z "$percentage_human" ] ; then percentage_human="0" ; fi
     echo $percentage_human | tee PERCENT_HUMAN
   >>>
   output {
