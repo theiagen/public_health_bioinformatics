@@ -57,7 +57,12 @@ workflows:
     - empty.json
  - name: Mercury_Prep_N_Batch_PHB
    subclass: WDL
-   primaryDescriptorPath: /workflows/mercury/wf_mercury_prep_n_batch.wdl
+   primaryDescriptorPath: /workflows/submission/wf_mercury_prep_n_batch.wdl
+   testParameterFiles:
+    - empty.json
+ - name: Terra_2_NCBI_PHB
+   subclass: WDL
+   primaryDescriptorPath: /workflows/submission/wf_terra_2_ncbi.wdl
    testParameterFiles:
     - empty.json
  - name: Augur_PHB
@@ -223,5 +228,15 @@ workflows:
  - name: Lyve_SET_PHB
    subclass: WDL
    primaryDescriptorPath: /workflows/phylogenetics/wf_lyveset.wdl
+   testParameterFiles:
+    - empty.json
+ - name: Snippy_Streamline_PHB
+   subclass: WDL
+   primaryDescriptorPath: /workflows/phylogenetics/wf_snippy_streamline.wdl
+   testParameterFiles:
+    - empty.json
+ - name: Assembly_Fetch_PHB
+   subclass: WDL
+   primaryDescriptorPath: /workflows/utilities/data_import/wf_assembly_fetch.wdl
    testParameterFiles:
     - empty.json
