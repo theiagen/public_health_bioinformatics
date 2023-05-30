@@ -221,7 +221,7 @@
     - path: miniwdl_run/call-clean_check_reads/work/_miniwdl_inputs/0/test_1.clean.fastq.gz
     - path: miniwdl_run/call-clean_check_reads/work/_miniwdl_inputs/0/test_2.clean.fastq.gz
     - path: miniwdl_run/call-gambit/command
-      md5sum: 6904c8cf6c794400a2a7f4e1e6fb4d1f
+      md5sum: a0b838651b051f942bd7b1dfcb4c44bf
     - path: miniwdl_run/call-gambit/inputs.json
       contains: ["assembly", "fasta", "samplename", "test"]
     - path: miniwdl_run/call-gambit/outputs.json
@@ -562,7 +562,7 @@
     - path: miniwdl_run/wdl/tasks/gene_typing/task_resfinder.wdl
       md5sum: b50d1c42e23fe6643e127c539d03eda3
     - path: miniwdl_run/wdl/tasks/gene_typing/task_snippy_variants.wdl
-      md5sum: 6ff9df2e05a12553cdbe2e631932b10f
+      md5sum: 138cac57599c2fff7c6646d60033d2ec
     - path: miniwdl_run/wdl/tasks/quality_control/task_bbduk.wdl
       md5sum: 501ac92b8a4a605ec178d879e40e9b00
     - path: miniwdl_run/wdl/tasks/quality_control/task_busco.wdl
@@ -626,17 +626,17 @@
     - path: miniwdl_run/wdl/tasks/task_versioning.wdl
       md5sum: c56fb29430dbc7d5f42d10b34c1802a6
     - path: miniwdl_run/wdl/tasks/taxon_id/task_gambit.wdl
-      md5sum: 2d3cbc0adea159481c76188f9fec87d9
+      md5sum: 939f3ea920e49661390ec1005b080513
     - path: miniwdl_run/wdl/tasks/taxon_id/task_kraken2.wdl
       md5sum: c3dbae850a60adb9aae7d39e8ff0dc81
     - path: miniwdl_run/wdl/tasks/taxon_id/task_midas.wdl
       md5sum: b30cef6a483c778b858337ec1b833d68
     - path: miniwdl_run/wdl/tasks/utilities/task_broad_terra_tools.wdl
-      md5sum: 441524661da23fcec188cf3dbb944ca3
+      md5sum: 8a5b20722ae3d27818d0aa20a1254e73
     - path: miniwdl_run/wdl/workflows/theiaprok/wf_theiaprok_illumina_pe.wdl
-      md5sum: 72b363e75bf54c6612fbb7c987d1639f
+      md5sum: e07e3afe6ac43b1ff33e2571ac2440dc
     - path: miniwdl_run/wdl/workflows/utilities/wf_merlin_magic.wdl
-      md5sum: 7befc85f0a100d18ac110f8734817971
+      md5sum: a92876a63f3fc41f8932ddf611bd859c
     - path: miniwdl_run/wdl/workflows/utilities/wf_read_QC_trim_pe.wdl
       md5sum: 40d4e09a82030c8219b37f883cddaca4
     - path: miniwdl_run/workflow.log
