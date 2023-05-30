@@ -350,9 +350,9 @@ workflow theiaprok_illumina_pe {
             shigeifinder_O_antigen_reads = merlin_magic.shigeifinder_O_antigen_reads,
             shigeifinder_H_antigen_reads = merlin_magic.shigeifinder_H_antigen_reads,
             shigeifinder_notes_reads = merlin_magic.shigeifinder_notes_reads,
-            virulencefinder_report = merlin_magic.virulencefinder_report,
+            virulencefinder_report_tsv = merlin_magic.virulencefinder_report_tsv,
             virulencefinder_docker = merlin_magic.virulencefinder_docker,
-            virulencefinder_factors = merlin_magic.virulencefinder_factors,
+            virulencefinder_hits = merlin_magic.virulencefinder_hits,
             sonneityping_mykrobe_report_csv = merlin_magic.sonneityping_mykrobe_report_csv,
             sonneityping_mykrobe_report_json = merlin_magic.sonneityping_mykrobe_report_json,
             sonneityping_final_report_tsv = merlin_magic.sonneityping_final_report_tsv,
@@ -686,9 +686,9 @@ workflow theiaprok_illumina_pe {
     String? shigeifinder_H_antigen_reads = merlin_magic.shigeifinder_H_antigen
     String? shigeifinder_notes_reads = merlin_magic.shigeifinder_notes
     # E coli only typing
-    File? virulencefinder_report = merlin_magic.virulencefinder_report
+    File? virulencefinder_report_tsv = merlin_magic.virulencefinder_report_tsv
     String? virulencefinder_docker = merlin_magic.virulencefinder_docker
-    String? virulencefinder_factors = merlin_magic.virulencefinder_factors
+    String? virulencefinder_hits = merlin_magic.virulencefinder_hits
     # Shigella sonnei Typing
     File? sonneityping_mykrobe_report_csv = merlin_magic.sonneityping_mykrobe_report_csv
     File? sonneityping_mykrobe_report_json = merlin_magic.sonneityping_mykrobe_report_json

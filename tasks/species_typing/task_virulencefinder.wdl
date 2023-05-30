@@ -63,9 +63,9 @@ task virulencefinder {
    
   >>>
   output {
-    File virulencefinder_report = "~{samplename}_results_tab.tsv"
+    File virulencefinder_report_tsv = "~{samplename}_results_tab.tsv"
     String virulencefinder_docker = docker
-    String virulencefinder_factors = read_string("VIRULENCE_FACTORS")
+    String virulencefinder_hits = read_string("VIRULENCE_FACTORS")
   }
   runtime {
     docker: "~{docker}"

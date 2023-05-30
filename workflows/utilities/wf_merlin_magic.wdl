@@ -430,9 +430,9 @@ workflow merlin_magic {
     String? shigeifinder_H_antigen_reads = shigeifinder_reads.shigeifinder_H_antigen
     String? shigeifinder_notes_reads = shigeifinder_reads.shigeifinder_notes
     # E coli only typing
-    File? virulencefinder_report = virulencefinder.virulencefinder_report
+    File? virulencefinder_report_tsv = virulencefinder.virulencefinder_report_tsv
     String? virulencefinder_docker = virulencefinder.virulencefinder_docker
-    String? virulencefinder_factors = virulencefinder.virulencefinder_factors
+    String? virulencefinder_hits = virulencefinder.virulencefinder_hits
     # Shigella sonnei Typing
     File? sonneityping_mykrobe_report_csv = sonneityping.sonneityping_mykrobe_report_csv
     File? sonneityping_mykrobe_report_json = sonneityping.sonneityping_mykrobe_report_json
