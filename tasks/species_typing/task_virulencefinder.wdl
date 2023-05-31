@@ -10,6 +10,9 @@ task virulencefinder {
     Int disk_size = 100
     Int mem = 8
     Int cpu = 2
+    Float? coverage_threshold
+    Float? identity_threshold
+    String database = "virulence_ecoli"
     # determine what version of the software to run
     Boolean paired_end
     Boolean assembly_only
@@ -27,12 +30,18 @@ task virulencefinder {
     #  -o output directory
     #  -x extended output (needed to make the results_tab file)
     #  -tmp temporary directory for intermediate results
+    #  -l sets threshold for min coverage
+    #  -t sets threshold for min blast identity
+    #  -d sets a specific database
     if ~{assembly_only} || ! ~{paired_end} || ~{ont_data}; then
       # run assembly version if SE, ONT, or assembly
       virulencefinder.py \
         -i ~{assembly} \
         -o . \
         -tmp tmp \
+        ~{'-l ' + coverage_threshold} \
+        ~{'-t ' + identity_threshold} \
+        ~{'-d' + database} \
         -x 
     else 
       # run the reads version if PE data

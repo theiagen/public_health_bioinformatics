@@ -67,6 +67,9 @@ workflow merlin_magic {
     Int srst2_min_depth = 5
     Int srst2_min_edge_depth = 2
     Int srst2_gene_max_mismatch = 2000
+    Float? virulencefinder_coverage_threshold
+    Float? virulencefinder_identity_threshold
+    String? virulencefinder_database
   }
   # theiaprok
   if (merlin_tag == "Acinetobacter baumannii") {
@@ -132,7 +135,10 @@ workflow merlin_magic {
         paired_end = paired_end,
         assembly_only = assembly_only,
         ont_data = ont_data,
-        docker = virulencefinder_docker_image
+        docker = virulencefinder_docker_image.
+        coverage_threshold = virulencefinder_coverage_threshold,
+        identity_threshold = virulencefinder_identity_threshold,
+        database = virulencefinder_database
     }
   }
   if (merlin_tag == "Shigella_sonnei") {
