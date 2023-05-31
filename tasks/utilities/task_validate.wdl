@@ -33,7 +33,7 @@ task compare_two_tsvs {
     File datatable1_tsv
     String datatable2
     File datatable2_tsv
-    File validation_criteria_tsv
+    File? validation_criteria_tsv
     String columns_to_compare
     String output_prefix
 
@@ -41,12 +41,16 @@ task compare_two_tsvs {
   }
   command <<<
 
+    pip install pretty_html_table
+
     python3 <<CODE
   import pandas as pd
   import numpy as np
   import os
   import sys
+  import re
   import pdfkit as pdf
+  from pretty_html_table import build_table
 
   def read_tsv(tsv_file):
     # Read TSV and change first column to 'samples'
@@ -65,9 +69,15 @@ task compare_two_tsvs {
 
   # read in the list of columns to compare
   comparison_columns = "~{columns_to_compare}".split(",")
-  print(comparison_columns)
+
+  # add the "samples" column to the comparison_columns list
+  comparison_columns.append("samples")
 
   # remove columns that we will not compare from the two data tables
+  # initalize drop lists:
+  drop_list1 = []
+  drop_list2 = []
+
   for item in df1.columns:
     if item not in comparison_columns:
       drop_list1.append(item)
@@ -80,7 +90,7 @@ task compare_two_tsvs {
 
   # initialize a list of new columns found
   new_columns_df1 = []
-  new columns_df2 = []
+  new_columns_df2 = []
 
   # identify any columns that do not appear in a data table
   for column in comparison_columns:
@@ -97,13 +107,19 @@ task compare_two_tsvs {
   df1_populated_rows = pd.DataFrame(df1.count(), columns = ['Number of samples populated in ~{datatable1}'])
   df2_populated_rows = pd.DataFrame(df2.count(), columns = ['Number of samples populated in ~{datatable2}'])
   
+  # remove the sample name rows from the summary_output table (should be identical, no point checking here)
+  df1_populated_rows.drop("samples", axis=0, inplace=True)
+  df2_populated_rows.drop("samples", axis=0, inplace=True)
+
   # make a union of the two tables along the rows 
   summary_output = pd.concat([df1_populated_rows, df2_populated_rows], join="outer", axis=1)
 
   # count the number of differences using exact match
   # temporarily make NaNs Null since NaN != NaN for the pd.DataFrame.eq() function
   number_of_differences = pd.DataFrame((~df1.fillna("NULL").eq(df2.fillna("NULL"))).sum(), columns = ['Number of differences (exact match)'])
-
+  # remove the sample name row 
+  number_of_differences.drop("samples", axis=0, inplace=True)
+  
   # add the number of differences to the summary output table
   summary_output = pd.concat([summary_output, number_of_differences], join="outer", axis=1)
 
@@ -115,27 +131,48 @@ task compare_two_tsvs {
   # replace matching values (NAs) with blanks
   df_comparison.fillna('')
 
+  # perform validation from validation tsv
+  # validation_criteria = pd.read_csv("~{validation_criteria_tsv}", sep='\t')
+
 
   out_xlsx_name = "~{output_prefix}.xlsx"
   out_html_name = "~{output_prefix}.html"
   out_pdf_name = "~{output_prefix}.pdf"
 
-  pd.set_option('display.max_colwidth', 20)
+  
+  pd.set_option('display.max_colwidth', None)
   df_comparison.to_excel(out_xlsx_name)
-  df_val_cnts.to_html(out_html_name)
 
+  # make pretty html table
+  html_table_light_grey = build_table(summary_output, 
+    'grey_light', 
+    index=True, 
+    text_align='center',
+    # conditions={
+    #   'Number of differences (exact match)': {
+    #     'min': 1,
+    #     'max': 0,
+    #     'min_color': 'black',
+    #     'max_color': 'red'
+    #   }
+    # }
+  )
+
+  # save to html file
+  with open(out_html_name, 'w') as outfile:
+    outfile.write(html_table_light_grey)
+
+  # convert to pdf
   options = {
-  'page-width': '10000mm',
-  'title': '~{datatable1} vs. ~{datatable2}',
-  'margin-top': '0.25in',
-  'margin-right': '0.25in',
-  'margin-bottom': '0.25in',
-  'margin-left': '0.25in'}
-  out_pdf_var=out_html_name
-  pdf1 = pdf.from_file(out_html_name, out_pdf_name, options=options)
+    'page-size': 'Letter',
+    'title': '~{datatable1} vs. ~{datatable2}',
+    'margin-top': '0.25in',
+    'margin-right': '0.25in',
+    'margin-bottom': '0.25in',
+    'margin-left': '0.25in'
+  }
 
-
-  print(df_comp1)
+  output_pdf = pdf.from_file(out_html_name, out_pdf_name, options=options)
 
   CODE
   >>>
@@ -146,10 +183,9 @@ task compare_two_tsvs {
     disks:  "local-disk " + disk_size + " HDD"
     disk: disk_size + " GB" # TES
     dx_instance_type: "mem1_ssd1_v2_x2"
-    maxRetries: 3
   }
   output {
-    File pdf_report = "~{out_dir}/~{out_prefix}.pdf"
-    File xl_report = "~{out_dir}/~{out_prefix}.xlsx"
+    File pdf_report = "~{output_prefix}.pdf"
+    File excel_report = "~{output_prefix}.xlsx"
   }
 }
