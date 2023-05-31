@@ -262,7 +262,8 @@ workflow theiaprok_ont {
             amrfinderplus_amr_report = amrfinderplus.amrfinderplus_amr_report,
             amrfinderplus_stress_report = amrfinderplus.amrfinderplus_stress_report,
             amrfinderplus_virulence_report = amrfinderplus.amrfinderplus_virulence_report,
-            amrfinderplus_amr_genes = amrfinderplus.amrfinderplus_amr_genes,
+            amrfinderplus_amr_core_genes = amrfinderplus.amrfinderplus_amr_core_genes,
+            amrfinderplus_amr_plus_genes = amrfinderplus.amrfinderplus_amr_plus_genes,
             amrfinderplus_stress_genes = amrfinderplus.amrfinderplus_stress_genes,
             amrfinderplus_virulence_genes = amrfinderplus.amrfinderplus_virulence_genes,
             amrfinderplus_amr_classes = amrfinderplus.amrfinderplus_amr_classes,
@@ -525,7 +526,8 @@ workflow theiaprok_ont {
     File? amrfinderplus_amr_report = amrfinderplus.amrfinderplus_amr_report
     File? amrfinderplus_stress_report = amrfinderplus.amrfinderplus_stress_report
     File? amrfinderplus_virulence_report = amrfinderplus.amrfinderplus_virulence_report
-    String? amrfinderplus_amr_genes = amrfinderplus.amrfinderplus_amr_genes
+    String? amrfinderplus_amr_core_genes = amrfinderplus.amrfinderplus_amr_core_genes
+    String? amrfinderplus_amr_plus_genes = amrfinderplus.amrfinderplus_amr_plus_genes
     String? amrfinderplus_stress_genes = amrfinderplus.amrfinderplus_stress_genes
     String? amrfinderplus_virulence_genes = amrfinderplus.amrfinderplus_virulence_genes
     String? amrfinderplus_amr_classes = amrfinderplus.amrfinderplus_amr_classes

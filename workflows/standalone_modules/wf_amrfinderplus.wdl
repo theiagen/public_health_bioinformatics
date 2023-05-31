@@ -25,7 +25,8 @@ workflow amrfinderplus_wf {
     File amrfinderplus_amr_report = amrfinderplus_nuc.amrfinderplus_amr_report
     File amrfinderplus_stress_report = amrfinderplus_nuc.amrfinderplus_stress_report
     File amrfinderplus_virulence_report = amrfinderplus_nuc.amrfinderplus_virulence_report
-    String amrfinderplus_amr_genes = amrfinderplus_nuc.amrfinderplus_amr_genes
+    String amrfinderplus_amr_core_genes = amrfinderplus_nuc.amrfinderplus_amr_core_genes
+    String amrfinderplus_amr_plus_genes = amrfinderplus_nuc.amrfinderplus_amr_plus_genes
     String amrfinderplus_stress_genes = amrfinderplus_nuc.amrfinderplus_stress_genes
     String amrfinderplus_virulence_genes = amrfinderplus_nuc.amrfinderplus_virulence_genes
     String amrfinderplus_amr_classes = amrfinderplus_nuc.amrfinderplus_amr_classes
