@@ -170,7 +170,8 @@ workflow theiaprok_fasta {
         amrfinderplus_amr_report = amrfinderplus_task.amrfinderplus_amr_report,
         amrfinderplus_stress_report = amrfinderplus_task.amrfinderplus_stress_report,
         amrfinderplus_virulence_report = amrfinderplus_task.amrfinderplus_virulence_report,
-        amrfinderplus_amr_genes = amrfinderplus_task.amrfinderplus_amr_genes,
+        amrfinderplus_amr_core_genes = amrfinderplus_task.amrfinderplus_amr_core_genes,
+        amrfinderplus_amr_plus_genes = amrfinderplus_task.amrfinderplus_amr_plus_genes,
         amrfinderplus_stress_genes = amrfinderplus_task.amrfinderplus_stress_genes,
         amrfinderplus_virulence_genes = amrfinderplus_task.amrfinderplus_virulence_genes,
         amrfinderplus_amr_classes = amrfinderplus_task.amrfinderplus_amr_classes,
@@ -410,7 +411,8 @@ workflow theiaprok_fasta {
     File amrfinderplus_amr_report = amrfinderplus_task.amrfinderplus_amr_report
     File amrfinderplus_stress_report = amrfinderplus_task.amrfinderplus_stress_report
     File amrfinderplus_virulence_report = amrfinderplus_task.amrfinderplus_virulence_report
-    String amrfinderplus_amr_genes = amrfinderplus_task.amrfinderplus_amr_genes
+    String amrfinderplus_amr_core_genes = amrfinderplus_task.amrfinderplus_amr_core_genes
+    String amrfinderplus_amr_plus_genes = amrfinderplus_task.amrfinderplus_amr_plus_genes
     String amrfinderplus_stress_genes = amrfinderplus_task.amrfinderplus_stress_genes
     String amrfinderplus_virulence_genes = amrfinderplus_task.amrfinderplus_virulence_genes
     String amrfinderplus_amr_classes = amrfinderplus_task.amrfinderplus_amr_classes
