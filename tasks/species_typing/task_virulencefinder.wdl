@@ -49,6 +49,9 @@ task virulencefinder {
         -i ~{read1} ~{read2} \
         -o . \
         -tmp tmp \
+        ~{'-l ' + coverage_threshold} \
+        ~{'-t ' + identity_threshold} \
+        ~{'-d' + database} \
         -x
     fi
    
