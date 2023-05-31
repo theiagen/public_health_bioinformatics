@@ -25,6 +25,11 @@ task retrieve_aligned_contig_paf {
     
     echo "Filtered contig number:"
     cat "~{samplename}".fasta | grep ">" | wc -l 
+
+    #if [ ! -s "~{samplename}".fasta ]; then
+    #  echo "Filtered assembly file is empty! Removing..."
+    #  rm "~{samplename}".fasta
+    #fi
   >>>
   output {
     File parse_paf_contigs = "~{samplename}.fasta"
