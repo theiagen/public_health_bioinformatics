@@ -29,10 +29,13 @@ task export_two_tsvs {
 
 task compare_two_tsvs {
   input {
+    String datatable1
     File datatable1_tsv
+    String datatable2
     File datatable2_tsv
     File validation_criteria_tsv
     String columns_to_compare
+    String output_prefix
 
     Int disk_size = 10
   }
@@ -90,53 +93,40 @@ task compare_two_tsvs {
       # add the column to data table
       df2[column] = np.nan
   
-  # get count of nans per column
-  df1_nan_counts = pd.DataFrame(df1.isna().sum(axis = 0), columns = ['sum'])
-  df2_nan_counts = pd.DataFrame(df2.isna().sum(axis = 0), columns = ['sum'])
+  # get count of populated cells per column
+  df1_populated_rows = pd.DataFrame(df1.count(), columns = ['Number of samples populated in ~{datatable1}'])
+  df2_populated_rows = pd.DataFrame(df2.count(), columns = ['Number of samples populated in ~{datatable2}'])
   
+  # make a union of the two tables along the rows 
+  summary_output = pd.concat([df1_populated_rows, df2_populated_rows], join="outer", axis=1)
 
-  # Perform comparison
-  df_comp1 = df1.compare(df2, align_axis=1, keep_shape=True, keep_equal=False)
-  # Count non-NA values in each columns
-  val_cnts = df_comp1.count()
-  df_val_cnts=val_cnts.to_frame()
-  df_val_cnts.columns = ['Number of Diffs']
-  print(df_val_cnts)
-  # Replace NAs with "EXACT_MATCH"
-  df_comp1.fillna(value='EXACT_MATCH', method=None, axis=None, inplace=True, limit=None, downcast=None)
+  # count the number of differences using exact match
+  # temporarily make NaNs Null since NaN != NaN for the pd.DataFrame.eq() function
+  number_of_differences = pd.DataFrame((~df1.fillna("NULL").eq(df2.fillna("NULL"))).sum(), columns = ['Number of differences (exact match)'])
 
-  # Get the side-by-side comparison of the TSVs
-  # df_diff_vert = df1.compare(df2, align_axis = 0, keep_shape=True, keep_equal=True).transpose()
-  # df_comp_bool = df1.where()
-  #missing_samples = []
+  # add the number of differences to the summary output table
+  summary_output = pd.concat([summary_output, number_of_differences], join="outer", axis=1)
 
-  # Compare samples
-  #print(df1.samples.values)
-  #print('column\tis_same\ttsv1\ttsv2')
-  #print(f'filename\t{args.tsv1==args.tsv2}\t{args.tsv1}\t{args.tsv2}')
-  #for i, data in df_diff_vert.iterrows():
-  #    if data[0]['self'] != data[0]['other']:
-  #        print(f"{data.name}\t{data[0]['self'] == data[0]['other']}\t{data[0]['self']}\t{data[0]['other']}")
+  # get table of self-other differences
+  # also: temporarily drop the sample name column for the comparison and then set it as the index for the output data frame
+  df_comparison = df1.drop('samples', axis=1).compare(df2.drop('samples', axis=1), keep_shape=True).set_index(df1['samples'])
+  # rename the self and other with table names
+  df_comparison = df_comparison.rename(columns={'self': '~{datatable1}', 'other': '~{datatable2}'}, level=-1)
+  # replace matching values (NAs) with blanks
+  df_comparison.fillna('')
 
 
-  count_dict={}
-  for i in df_comp1.columns:
-    count_dict[i]=df_comp1[i].value_counts()
-  counts_df=pd.DataFrame.from_dict(count_dict, orient='columns', dtype=None, columns=None)
-  print(counts_df)
-
-
-  out_xlsx_name=f'{args.outdir}/{args.prefix}.xlsx'
-  out_html_name=f'{args.outdir}/{args.prefix}.html'
-  out_pdf_name=f'{args.outdir}/{args.prefix}.pdf'
+  out_xlsx_name = "~{output_prefix}.xlsx"
+  out_html_name = "~{output_prefix}.html"
+  out_pdf_name = "~{output_prefix}.pdf"
 
   pd.set_option('display.max_colwidth', 20)
-  df_comp1.to_excel(out_xlsx_name)
+  df_comparison.to_excel(out_xlsx_name)
   df_val_cnts.to_html(out_html_name)
 
   options = {
   'page-width': '10000mm',
-  'title': 'Validation Report',
+  'title': '~{datatable1} vs. ~{datatable2}',
   'margin-top': '0.25in',
   'margin-right': '0.25in',
   'margin-bottom': '0.25in',
