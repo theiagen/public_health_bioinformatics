@@ -18,7 +18,7 @@ Closes <Issue number>
 
 <!--What's the context of the changes? Where there any trade-offs you had to consider?-->
 
-## :ladder: Workflow/Task Steps
+## :clipboard: Workflow/Task Steps
 
 <!--What are the main steps of your workflow/task? Make it explicit enough so that someone who doesn't have deep knowledge of the workflow/task can understand how the rationale was implemented.-->
 
