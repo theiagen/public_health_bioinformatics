@@ -12,6 +12,11 @@ task compare_assemblies {
   }
   command <<<
     python3 <<CODE
+    import os
+
+    # Auxiliary functions
+    def file_is_empty(path):
+        return os.stat(path).st_size==0
 
     def count_bases(file_name):
         """Count the number of bases in a FASTA file."""
@@ -24,10 +29,12 @@ task compare_assemblies {
             seq = seq.replace("N","")  # ignore uncalled bases
             return len(seq)
     
+    # File comparison
     denovo_base_count = count_bases("~{assembly_denovo}")
     consensus_base_count = count_bases("~{assembly_consensus}")
 
-    if denovo_base_count > consensus_base_count:
+
+    if denovo_base_count >= consensus_base_count:
         input_file = "~{assembly_denovo}"
     else:
         input_file = "~{assembly_consensus}"
@@ -36,6 +43,15 @@ task compare_assemblies {
         with open(input_file, 'r') as in_f:
             for line in in_f:
                 out_f.write(line)
+    
+    # File validations
+    if file_is_empty("~{samplename}_highest.fasta"):
+        print("Assembly file is empty! Removing it...")
+        os.remove("~{samplename}_highest.fasta")
+    
+    if input_file == "~{assembly_consensus}" and consensus_base_count == 0:
+        print("Assembly file contains just uncalled bases! Removing it...")
+        os.remove("~{samplename}_highest.fasta")
 
     CODE
   >>>
