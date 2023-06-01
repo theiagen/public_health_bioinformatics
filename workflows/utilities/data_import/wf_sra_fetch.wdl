@@ -7,6 +7,7 @@ workflow fetch_sra_to_fastq {
     Int? disk_size
     Int? memory
     Int? cpus
+    String? fastq_dl_opts
   }
   call fastq_dl_sra {
     input:
@@ -14,7 +15,8 @@ workflow fetch_sra_to_fastq {
       docker = docker,
       disk_size = disk_size,
       cpus = cpus,
-      memory = memory
+      memory = memory,
+      fastq_dl_opts = fastq_dl_opts
   }
   output {
     File read1 = fastq_dl_sra.read1
@@ -29,10 +31,11 @@ task fastq_dl_sra {
     Int disk_size = 100
     Int cpus = 2
     Int memory = 8
+    String? fastq_dl_opts
   }
   command <<<
     fastq-dl --version | tee VERSION
-    fastq-dl -a ~{sra_accession}
+    fastq-dl -a ~{sra_accession} ~{fastq_dl_opts}
 
     # tag single-end reads with _1
     if [ -f "~{sra_accession}.fastq.gz" ] && [ ! -f "~{sra_accession}_1.fastq.gz" ]; then

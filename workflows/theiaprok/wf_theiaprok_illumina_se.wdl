@@ -265,7 +265,8 @@ workflow theiaprok_illumina_se {
             amrfinderplus_amr_report = amrfinderplus_task.amrfinderplus_amr_report,
             amrfinderplus_stress_report = amrfinderplus_task.amrfinderplus_stress_report,
             amrfinderplus_virulence_report = amrfinderplus_task.amrfinderplus_virulence_report,
-            amrfinderplus_amr_genes = amrfinderplus_task.amrfinderplus_amr_genes,
+            amrfinderplus_amr_core_genes = amrfinderplus_task.amrfinderplus_amr_core_genes,
+            amrfinderplus_amr_plus_genes = amrfinderplus_task.amrfinderplus_amr_plus_genes,
             amrfinderplus_stress_genes = amrfinderplus_task.amrfinderplus_stress_genes,
             amrfinderplus_virulence_genes = amrfinderplus_task.amrfinderplus_virulence_genes,
             amrfinderplus_amr_classes = amrfinderplus_task.amrfinderplus_amr_classes,
@@ -463,6 +464,11 @@ workflow theiaprok_illumina_se {
             pasty_version = merlin_magic.pasty_version,
             pasty_docker = merlin_magic.pasty_docker,
             pasty_comment = merlin_magic.pasty_comment,
+            hicap_serotype = merlin_magic.hicap_serotype,
+            hicap_genes = merlin_magic.hicap_genes,
+            hicap_results_tsv = merlin_magic.hicap_results_tsv,
+            hicap_version = merlin_magic.hicap_version,
+            hicap_docker = merlin_magic.hicap_docker,
             srst2_vibrio_detailed_tsv = merlin_magic.srst2_vibrio_detailed_tsv,
             srst2_vibrio_version = merlin_magic.srst2_vibrio_version,
             srst2_vibrio_ctxA = merlin_magic.srst2_vibrio_ctxA,
@@ -549,7 +555,8 @@ workflow theiaprok_illumina_se {
     File? amrfinderplus_amr_report = amrfinderplus_task.amrfinderplus_amr_report
     File? amrfinderplus_stress_report = amrfinderplus_task.amrfinderplus_stress_report
     File? amrfinderplus_virulence_report = amrfinderplus_task.amrfinderplus_virulence_report
-    String? amrfinderplus_amr_genes = amrfinderplus_task.amrfinderplus_amr_genes
+    String? amrfinderplus_amr_core_genes = amrfinderplus_task.amrfinderplus_amr_core_genes
+    String? amrfinderplus_amr_plus_genes = amrfinderplus_task.amrfinderplus_amr_plus_genes
     String? amrfinderplus_stress_genes = amrfinderplus_task.amrfinderplus_stress_genes
     String? amrfinderplus_virulence_genes = amrfinderplus_task.amrfinderplus_virulence_genes
     String? amrfinderplus_amr_classes = amrfinderplus_task.amrfinderplus_amr_classes
@@ -771,6 +778,12 @@ workflow theiaprok_illumina_se {
     String? poppunk_GPS_db_version = merlin_magic.poppunk_GPS_db_version
     String? poppunk_version = merlin_magic.poppunk_version
     String? poppunk_docker = merlin_magic.poppunk_docker
+    # Haemophilus influenzae Typing
+    String? hicap_serotype = merlin_magic.hicap_serotype
+    String? hicap_genes = merlin_magic.hicap_genes
+    File? hicap_results_tsv = merlin_magic.hicap_results_tsv
+    String? hicap_version = merlin_magic.hicap_version
+    String? hicap_docker = merlin_magic.hicap_docker
     # Vibrio Typing
     File? srst2_vibrio_detailed_tsv = merlin_magic.srst2_vibrio_detailed_tsv
     String? srst2_vibrio_version = merlin_magic.srst2_vibrio_version

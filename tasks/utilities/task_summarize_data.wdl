@@ -10,7 +10,8 @@ task summarize_data {
     String? output_prefix
 
     Int disk_size = 100
-    File? input_table
+    # commenting out this option since it's for local dev. Prefer this option to not appear in Terra
+    #File? input_table
     Boolean phandango_coloring = true
   }
   command <<<   
@@ -18,7 +19,8 @@ task summarize_data {
     python3 /scripts/export_large_tsv/export_large_tsv.py --project "~{terra_project}" --workspace "~{terra_workspace}" --entity_type ~{terra_table} --tsv_filename ~{terra_table}-data.tsv 
     
     # when running locally, use the input_table in place of downloading from Terra
-    #cp ~{input_table} ~{terra_table}-data.tsv
+    # TO RENABLE: uncomment line below, and add back tilde in front of {input_table}
+    #cp {input_table} ~{terra_table}-data.tsv
     
     if ~{phandango_coloring}; then
       export phandango_coloring="true"

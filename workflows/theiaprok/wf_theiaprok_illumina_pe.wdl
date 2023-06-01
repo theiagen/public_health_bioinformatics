@@ -296,7 +296,8 @@ workflow theiaprok_illumina_pe {
             amrfinderplus_amr_report = amrfinderplus_task.amrfinderplus_amr_report,
             amrfinderplus_stress_report = amrfinderplus_task.amrfinderplus_stress_report,
             amrfinderplus_virulence_report = amrfinderplus_task.amrfinderplus_virulence_report,
-            amrfinderplus_amr_genes = amrfinderplus_task.amrfinderplus_amr_genes,
+            amrfinderplus_amr_core_genes = amrfinderplus_task.amrfinderplus_amr_core_genes,
+            amrfinderplus_amr_plus_genes = amrfinderplus_task.amrfinderplus_amr_plus_genes,
             amrfinderplus_stress_genes = amrfinderplus_task.amrfinderplus_stress_genes,
             amrfinderplus_virulence_genes = amrfinderplus_task.amrfinderplus_virulence_genes,
             amrfinderplus_amr_classes = amrfinderplus_task.amrfinderplus_amr_classes,
@@ -486,6 +487,15 @@ workflow theiaprok_illumina_pe {
             seroba_ariba_serotype = merlin_magic.seroba_ariba_serotype,
             seroba_ariba_identity = merlin_magic.seroba_ariba_identity,
             seroba_details = merlin_magic.seroba_details,
+            emmtypingtool_emm_type = merlin_magic.emmtypingtool_emm_type,
+            emmtypingtool_results_xml = merlin_magic.emmtypingtool_results_xml,
+            emmtypingtool_version = merlin_magic.emmtypingtool_version,
+            emmtypingtool_docker = merlin_magic.emmtypingtool_docker,
+            hicap_serotype = merlin_magic.hicap_serotype,
+            hicap_genes = merlin_magic.hicap_genes,
+            hicap_results_tsv = merlin_magic.hicap_results_tsv,
+            hicap_version = merlin_magic.hicap_version,
+            hicap_docker = merlin_magic.hicap_docker,
             midas_docker = read_QC_trim.midas_docker,
             midas_report = read_QC_trim.midas_report,
             midas_primary_genus = read_QC_trim.midas_primary_genus,
@@ -596,7 +606,8 @@ workflow theiaprok_illumina_pe {
     File? amrfinderplus_amr_report = amrfinderplus_task.amrfinderplus_amr_report
     File? amrfinderplus_stress_report = amrfinderplus_task.amrfinderplus_stress_report
     File? amrfinderplus_virulence_report = amrfinderplus_task.amrfinderplus_virulence_report
-    String? amrfinderplus_amr_genes = amrfinderplus_task.amrfinderplus_amr_genes
+    String? amrfinderplus_amr_core_genes = amrfinderplus_task.amrfinderplus_amr_core_genes
+    String? amrfinderplus_amr_plus_genes = amrfinderplus_task.amrfinderplus_amr_plus_genes
     String? amrfinderplus_stress_genes = amrfinderplus_task.amrfinderplus_stress_genes
     String? amrfinderplus_virulence_genes = amrfinderplus_task.amrfinderplus_virulence_genes
     String? amrfinderplus_amr_classes = amrfinderplus_task.amrfinderplus_amr_classes
@@ -824,6 +835,17 @@ workflow theiaprok_illumina_pe {
     String? seroba_ariba_serotype = merlin_magic.seroba_ariba_serotype
     String? seroba_ariba_identity = merlin_magic.seroba_ariba_identity
     File? seroba_details = merlin_magic.seroba_details
+    # Streptococcus pyogenes Typing
+    String? emmtypingtool_emm_type = merlin_magic.emmtypingtool_emm_type
+    File? emmtypingtool_results_xml = merlin_magic.emmtypingtool_results_xml
+    String? emmtypingtool_version = merlin_magic.emmtypingtool_version
+    String? emmtypingtool_docker = merlin_magic.emmtypingtool_docker
+    # Haemophilus influenzae Typing
+    String? hicap_serotype = merlin_magic.hicap_serotype
+    String? hicap_genes = merlin_magic.hicap_genes
+    File? hicap_results_tsv = merlin_magic.hicap_results_tsv
+    String? hicap_version = merlin_magic.hicap_version
+    String? hicap_docker = merlin_magic.hicap_docker
     # Vibrio Typing
     File? srst2_vibrio_detailed_tsv = merlin_magic.srst2_vibrio_detailed_tsv
     String? srst2_vibrio_version = merlin_magic.srst2_vibrio_version
