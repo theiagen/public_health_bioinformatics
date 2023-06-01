@@ -59,7 +59,7 @@ task compare_two_tsvs {
     df.columns.values[0] = "samples"
     
     # replace blank cells with NaNs 
-    df.replace(r'^\s+$', np.nan, regex=True)
+    df = df.replace(r'^\s+$', np.nan, regex=True)
 
     return [df, c1_name]
 
@@ -132,7 +132,45 @@ task compare_two_tsvs {
   df_comparison.fillna('')
 
   # perform validation from validation tsv
-  # validation_criteria = pd.read_csv("~{validation_criteria_tsv}", sep='\t')
+  validation_criteria = pd.read_csv("~{validation_criteria_tsv}", sep='\t', index_col=0)
+  validation_criteria = validation_criteria.transpose()
+  # correct dtypes - convert to numeric first, and then to strings
+  validation_criteria = validation_criteria.apply(pd.to_numeric, errors='ignore').convert_dtypes()
+
+  # calculate percent difference
+  def percent_difference(col1, col2):
+    return np.absolute(((col2.sub(col1))).div(col1))
+
+def validate(series, df1, df2):
+  print(series)
+  print(series[0])
+  print(series.name)
+  if  pd.api.types.is_string_dtype(series) == True:
+    if series[0] == "EXACT":
+      # count number of exact match differences
+      return ("EXACT", (~df1[series.name].fillna("NULL").eq(df2[series.name].fillna("NULL"))).sum())
+    elif series[0] == "IGNORE":
+      # do not check
+      return ("IGNORE", 0)
+    else:
+      return("String value not recognized", np.nan)
+  elif pd.api.types.is_float_dtype(series) == True:
+    # calculate percent difference; compare percent difference to series[0] and return total count where it is greater than
+    return(format(series[0], '.2%'), percent_difference(df1[series.name], df2[series.name]).gt(series[0]).sum())
+  elif pd.api.types.is_datetime64_any_dtype(series) == True:
+    # do not check
+    return("DATE VALUE; IGNORED", 0)
+  elif pd.api.types.is_integer_dtype(series) == True:
+    # do something? we haven't decided yet.
+    return("INTEGER; IGNORED FOR NOW", 0)
+  else:
+    return("OBJECT TYPE VALUE; IGNORED FOR NOW", 0)
+    # it's an object type so idk what to do 
+
+  summary_output[["Validation Criteria", "Number of samples failing validation"]] = validation_criteria.apply(lambda x: validate(x, df1, df2), result_type="expand")
+  
+
+    
 
 
   out_xlsx_name = "~{output_prefix}.xlsx"
