@@ -184,7 +184,7 @@ task compare_two_tsvs {
           # Overall: converts each column value into a set and then compares set contents 
           # thanks ChatGPT for transforming the original (below) into something more readable
           # df1[series.name].fillna("NULL").apply(lambda x: set(x.split(","))).eq(df2[series.name].fillna("NULL").apply(lambda x: set(x.split(","))))
-          return("SET", (df1[series.name].fillna("NULL").str.split(",").apply(set) == df2[series.name].fillna("NULL").str.split(",").apply(set)))
+          return("SET", (df1[series.name].fillna("NULL").str.split(",").apply(set) == df2[series.name].fillna("NULL").str.split(",").apply(set)).sum())
         else: # a different value was offered
           return("String value not recognized", np.nan)
       elif pd.api.types.is_float_dtype(series) == True: # if a float,
