@@ -14,9 +14,9 @@ task export_two_tsvs {
     python3 /scripts/export_large_tsv/export_large_tsv.py --project ~{terra_project} --workspace ~{terra_workspace} --entity_type ~{datatable2} --tsv_filename ~{datatable2}
 
     if [[ $(wc -l ~{datatable1} | cut -f1 -d' ') -eq $(wc -l ~{datatable2} | cut -f1 -d' ') ]]; then
-      echo true | CONTINUE
+      echo true | tee CONTINUE
     else 
-      echo false | CONTINUE
+      echo false | tee CONTINUE
     fi
   >>>
   runtime {
