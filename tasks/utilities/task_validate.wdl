@@ -153,9 +153,12 @@ task compare_two_tsvs {
     # perform validation from validation tsv
     validation_criteria = pd.read_csv("~{validation_criteria_tsv}", sep='\t', index_col=0)
     validation_criteria = validation_criteria.transpose()
+
     # correct dtypes - convert to numeric first, and then to strings
     validation_criteria = validation_criteria.apply(pd.to_numeric, errors='ignore').convert_dtypes()
-
+    df1 = df1.apply(pd.to_numeric, errors='ignore').convert_dtypes()
+    df2 = df2.apply(pd.to_numeric, errors='ignore').convert_dtypes()
+    
     # calculate percent difference with mean
     def percent_difference(col1, col2):
       # |x-y|/((x+y)/2)
