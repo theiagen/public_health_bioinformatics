@@ -19,7 +19,7 @@ task tbprofiler_output_parsing {
     # lookup dictionary - antimicrobial code to name
     antimicrobial_dict = {"M_DST_B01_INH": "isoniazid", "M_DST_C01_ETO": "ethionamide",
                           "M_DST_D01_RIF": "rifampicin", "M_DST_E01_PZA": "pyrazinamide",
-                          "M_DST_F01_EMB": "ethambutol","M_DST_G01_STM": "sulfamethazine",
+                          "M_DST_F01_EMB": "ethambutol","M_DST_G01_STM": "streptomycin",
                           "M_DST_H01_AMK": "amikacin", "M_DST_I01_KAN": "kanamycin",
                           "M_DST_J01_CAP": "capreomycin", "M_DST_K01_MFX": "moxifloxacin",
                           "M_DST_L01_LFX": "levofloxacin", "M_DST_M01_BDQ": "bedaquiline",
@@ -28,7 +28,7 @@ task tbprofiler_output_parsing {
     
     # Lookup list - antimicrobials
     antimicrobial_list = ["isoniazid", "ethionamide", "rifampicin", "pyrazinamide", "ethambutol",
-                          "sulfamethazine", "amikacin", "kanamycin", "capreomycin", "moxifloxacin",
+                          "streptomycin", "amikacin", "kanamycin", "capreomycin", "moxifloxacin",
                           "levofloxacin", "bedaquiline", "clofazimine", "linezolid"
                          ]
 
@@ -125,7 +125,7 @@ task tbprofiler_output_parsing {
             confidence.append("No WHO annotation")
 
         for other_variant in results_json["other_variants"]:  # mutations not reported by tb-profiler
-          if other_variant["type"] != "synonymous_variant":
+          if other_variant["type"] != "synonymous_variant": 
             if other_variant["gene"] == "katG" or other_variant["gene"] == "pncA" or other_variant["gene"] == "ethA" or other_variant["gene"] == "gid":  # Expert rule: hardcoded for genes of interest that are reported to always confer resistance when mutated
               # report as resistant based on expert rule
               gene_name.append(other_variant["gene"])
