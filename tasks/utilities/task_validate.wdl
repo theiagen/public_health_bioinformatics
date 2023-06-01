@@ -33,7 +33,7 @@ task compare_two_tsvs {
     File datatable1_tsv
     String datatable2
     File datatable2_tsv
-    File? validation_criteria_tsv
+    File validation_criteria_tsv
     String columns_to_compare
     String output_prefix
 
@@ -137,47 +137,40 @@ task compare_two_tsvs {
   # correct dtypes - convert to numeric first, and then to strings
   validation_criteria = validation_criteria.apply(pd.to_numeric, errors='ignore').convert_dtypes()
 
-  # calculate percent difference
+  # calculate percent difference with mean
   def percent_difference(col1, col2):
-    return np.absolute(((col2.sub(col1))).div(col1))
+    # |x-y|/((x+y)/2)
+    return np.absolute(col2.sub(col1)).div((col2.add(col1))/2)
 
-def validate(series, df1, df2):
-  print(series)
-  print(series[0])
-  print(series.name)
-  if  pd.api.types.is_string_dtype(series) == True:
-    if series[0] == "EXACT":
-      # count number of exact match differences
-      return ("EXACT", (~df1[series.name].fillna("NULL").eq(df2[series.name].fillna("NULL"))).sum())
-    elif series[0] == "IGNORE":
-      # do not check
-      return ("IGNORE", 0)
-    else:
-      return("String value not recognized", np.nan)
-  elif pd.api.types.is_float_dtype(series) == True:
-    # calculate percent difference; compare percent difference to series[0] and return total count where it is greater than
-    return(format(series[0], '.2%'), percent_difference(df1[series.name], df2[series.name]).gt(series[0]).sum())
-  elif pd.api.types.is_datetime64_any_dtype(series) == True:
-    # do not check
-    return("DATE VALUE; IGNORED", 0)
-  elif pd.api.types.is_integer_dtype(series) == True:
-    # do something? we haven't decided yet.
-    return("INTEGER; IGNORED FOR NOW", 0)
-  else:
-    return("OBJECT TYPE VALUE; IGNORED FOR NOW", 0)
-    # it's an object type so idk what to do 
+  # perform validation checks
+  def validate(series, df1, df2):
+    if  pd.api.types.is_string_dtype(series) == True:
+      if series[0] == "EXACT": # count number of exact match differences
+        return ("EXACT", (~df1[series.name].fillna("NULL").eq(df2[series.name].fillna("NULL"))).sum())
+      elif series[0] == "IGNORE": # do not check
+        return ("IGNORE", 0)
+      else:
+        return("String value not recognized", np.nan)
+    elif pd.api.types.is_float_dtype(series) == True:
+      # calculate percent difference; compare percent difference to series[0] and return total count where it is greater than
+      percent_difference(df1[series.name], df2[series.name]).gt(series[0]).sum()
+      return(format(series[0], '.2%'), percent_difference(df1[series.name], df2[series.name]).gt(series[0]).sum())
+    elif pd.api.types.is_datetime64_any_dtype(series) == True: # do not check
+      return("DATE VALUE; IGNORED", 0)
+    elif pd.api.types.is_integer_dtype(series) == True: # do something? we haven't decided yet.
+      return("INTEGER; IGNORED FOR NOW", 0)
+    else: # it's an object type
+      return("OBJECT TYPE VALUE; IGNORED FOR NOW", 0)
 
-  summary_output[["Validation Criteria", "Number of samples failing validation"]] = validation_criteria.apply(lambda x: validate(x, df1, df2), result_type="expand")
-  
+  # perform check and add to the summary output table
+  summary_output[["Validation Criteria", "Number of samples failing the validation criteria"]] = pd.DataFrame(validation_criteria.apply(lambda x: validate(x, df1, df2), result_type="expand")).transpose()
 
-    
-
+  print("successful 170")
 
   out_xlsx_name = "~{output_prefix}.xlsx"
   out_html_name = "~{output_prefix}.html"
   out_pdf_name = "~{output_prefix}.pdf"
 
-  
   pd.set_option('display.max_colwidth', None)
   df_comparison.to_excel(out_xlsx_name)
 
