@@ -240,3 +240,8 @@ workflows:
    primaryDescriptorPath: /workflows/utilities/data_import/wf_assembly_fetch.wdl
    testParameterFiles:
     - empty.json
+ - name: TheiaValidate_PHB
+   subclass: WDL
+   primaryDescriptorPath: /workflows/utilities/wf_theiavalidate.wdl
+   testParameterFiles:
+    - empty.json
