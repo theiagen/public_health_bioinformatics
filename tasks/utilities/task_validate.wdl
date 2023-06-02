@@ -74,10 +74,9 @@ task compare_two_tsvs {
     df = pd.read_csv(tsv_file, sep='\t')
     c1_name = df.columns.values[0]
     df.columns.values[0] = "samples"
-    
-    # replace blank cells with NaNs 
-    df = df.replace(r'^\s+$', np.nan, regex=True)
 
+    # replace blank cells with NaNs 
+    df = df.replace("None", np.nan)
     return [df, c1_name]
 
   # Read in TSVs and keep table name
@@ -120,6 +119,9 @@ task compare_two_tsvs {
       # add the column to data table
       df2[column] = np.nan
   
+  # reorder the second table to have matching column order
+  df2 = df2[df1.columns]
+
   # get count of populated cells per column
   df1_populated_rows = pd.DataFrame(df1.count(), columns = ['Number of samples populated in ~{datatable1}'])
   df2_populated_rows = pd.DataFrame(df2.count(), columns = ['Number of samples populated in ~{datatable2}'])
@@ -158,7 +160,7 @@ task compare_two_tsvs {
     validation_criteria = validation_criteria.apply(pd.to_numeric, errors='ignore').convert_dtypes()
     df1 = df1.apply(pd.to_numeric, errors='ignore').convert_dtypes()
     df2 = df2.apply(pd.to_numeric, errors='ignore').convert_dtypes()
-    
+
     # calculate percent difference with mean
     def percent_difference(col1, col2):
       # |x-y|/((x+y)/2)
@@ -186,8 +188,8 @@ task compare_two_tsvs {
           # == performs the comparison of equality
           # Overall: converts each column value into a set and then compares set contents 
           # thanks ChatGPT for transforming the original (below) into something more readable
-          # df1[series.name].fillna("NULL").apply(lambda x: set(x.split(","))).eq(df2[series.name].fillna("NULL").apply(lambda x: set(x.split(","))))
-          return("SET", (df1[series.name].fillna("NULL").str.split(",").apply(set) == df2[series.name].fillna("NULL").str.split(",").apply(set)).sum())
+          # ~df1[series.name].fillna("NULL").apply(lambda x: set(x.split(","))).eq(df2[series.name].fillna("NULL").apply(lambda x: set(x.split(","))))
+          return("SET", (~df1[series.name].fillna("NULL").apply(lambda x: set(x.split(","))).eq(df2[series.name].fillna("NULL").apply(lambda x: set(x.split(","))))).sum())
         else: # a different value was offered
           return("String value not recognized", np.nan)
       elif pd.api.types.is_float_dtype(series) == True: # if a float,
