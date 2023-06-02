@@ -2,16 +2,32 @@ version 1.0
 
 task export_two_tsvs {
   input {
-    String terra_project
-    String terra_workspace
+    String terra_project1
+    String? terra_project2
+    String terra_workspace1
+    String? terra_workspace2
     String datatable1
     String datatable2
     Int disk_size = 10
   }
   command <<<
-    python3 /scripts/export_large_tsv/export_large_tsv.py --project ~{terra_project} --workspace ~{terra_workspace} --entity_type ~{datatable1} --tsv_filename ~{datatable1}
+    python3 /scripts/export_large_tsv/export_large_tsv.py --project ~{terra_project1} --workspace ~{terra_workspace1} --entity_type ~{datatable1} --tsv_filename ~{datatable1}
 
-    python3 /scripts/export_large_tsv/export_large_tsv.py --project ~{terra_project} --workspace ~{terra_workspace} --entity_type ~{datatable2} --tsv_filename ~{datatable2}
+    # check if second project is provided; if not, use first
+    if [[ -z "~{terra_project2}" ]]; then
+      PROJECT2="~{terra_project2}"
+    else
+      PROJECT2="~{terra_project1}"
+    fi
+
+    # check if second workspace is provided; if not, use first
+    if [[ -z "~{terra_workspace2}" ]]; then
+      WORKSPACE2="~{terra_workspace2}"
+    else
+      WORKSPACE2="~{terra_workspace1}"
+    fi
+
+    python3 /scripts/export_large_tsv/export_large_tsv.py --project ${PROJECT2} --workspace ${WORKSPACE2} --entity_type ~{datatable2} --tsv_filename ~{datatable2}
 
     if [[ $(wc -l ~{datatable1} | cut -f1 -d' ') -eq $(wc -l ~{datatable2} | cut -f1 -d' ') ]]; then
       echo true | tee CONTINUE
