@@ -37,11 +37,11 @@ task compare_assemblies {
     if denovo_base_count >= consensus_base_count:
         input_file = "~{assembly_denovo}"
         with open("NUMBER_ATCG", "w") as number_ATCG:
-          num_ACTG.write(denovo_base_count)
+          number_ATCG.write(str(denovo_base_count))
     else:
         input_file = "~{assembly_consensus}"
         with open("NUMBER_ATCG", "w") as number_ATCG:
-          num_ACTG.write(consensus_base_count)
+          number_ATCG.write(str(consensus_base_count))
 
     with open("~{samplename}_highest.fasta", 'w') as out_f:
         with open(input_file, 'r') as in_f:
