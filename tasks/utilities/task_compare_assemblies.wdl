@@ -61,7 +61,7 @@ task compare_assemblies {
   >>>
   output {
     File final_assembly = "~{samplename}_highest.fasta"
-    Int number_ATCG = read_int("NUMBER_ATCG")
+    String number_ATCG = read_string("NUMBER_ATCG")
   }
   runtime {
     docker: "quay.io/theiagen/terra-tools:2023-03-16"
