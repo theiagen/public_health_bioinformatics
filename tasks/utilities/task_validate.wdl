@@ -15,16 +15,16 @@ task export_two_tsvs {
 
     # check if second project is provided; if not, use first
     if [[ -z "~{terra_project2}" ]]; then
-      PROJECT2="~{terra_project2}"
-    else
       PROJECT2="~{terra_project1}"
+    else
+      PROJECT2="~{terra_project2}"
     fi
 
     # check if second workspace is provided; if not, use first
     if [[ -z "~{terra_workspace2}" ]]; then
-      WORKSPACE2="~{terra_workspace2}"
-    else
       WORKSPACE2="~{terra_workspace1}"
+    else
+      WORKSPACE2="~{terra_workspace2}"
     fi
 
     python3 /scripts/export_large_tsv/export_large_tsv.py --project ${PROJECT2} --workspace ${WORKSPACE2} --entity_type ~{datatable2} --tsv_filename ~{datatable2}
