@@ -199,12 +199,13 @@ task compare_two_tsvs {
         elif series[0] == "SET": # check list items for identical content
           # df1[series.name] extracts the column of interest
           # .fillna("NULL") replaces all NaN values with NULL
-          # .str.split(",") splits the values on commas
-          # .apply(set) turns each item into a set
-          # == performs the comparison of equality
+          # .apply(lambda x: function) applys a specific function on each column (x)
+          # x.split(",") splits the item on the comma
+          # set() turns the list into a set
+          # .eq() asks for equivalence between each value; this demands equivalent indexes between two data frames
+          # .sum() counts all times .eq() returns a True
+          # ~ asks for the total count where there are differences (when .eq() is False)
           # Overall: converts each column value into a set and then compares set contents 
-          # thanks ChatGPT for transforming the original (below) into something more readable
-          # ~df1[series.name].fillna("NULL").apply(lambda x: set(x.split(","))).eq(df2[series.name].fillna("NULL").apply(lambda x: set(x.split(","))))
           return("SET", (~df1[series.name].fillna("NULL").apply(lambda x: set(x.split(","))).eq(df2[series.name].fillna("NULL").apply(lambda x: set(x.split(","))))).sum())
         else: # a different value was offered
           return("String value not recognized", np.nan)
