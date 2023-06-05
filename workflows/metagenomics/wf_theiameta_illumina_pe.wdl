@@ -1,7 +1,7 @@
 version 1.0
 
 import "../utilities/wf_read_QC_trim_pe.wdl" as read_qc_wf
-import "../../tasks/assembly/task_shovill.wdl" as shovill_task
+import "../../tasks/assembly/task_megahit.wdl" as megahit_task
 import "../../tasks/alignment/task_minimap2.wdl" as minimap2_task
 import "../../tasks/utilities/task_parse_paf.wdl" as parse_paf_task
 import "../../tasks/alignment/task_bwa.wdl" as bwa_task
@@ -35,27 +35,25 @@ workflow theiameta_illumina_pe {
         trim_window_size = trim_window_size,
         kraken2_db = kraken2_db
     }
-    call shovill_task.shovill_pe as shovil {
+    call megahit_task.megahit_pe as megahit {
       input:
         read1_cleaned = read_QC_trim.read1_clean,
         read2_cleaned = read_QC_trim.read2_clean,
-        samplename = samplename,
-        assembler = "megahit",
-        min_contig_length = 0
+        samplename = samplename
       }
     # if reference is provided, perform mapping of assembled contigs to 
     # reference with minimap2, and extract those as final assembly
     if (defined(reference)){
       call minimap2_task.minimap2 as minimap2_assembly {
         input:
-          query1 = shovil.assembly_fasta,
+          query1 = megahit.assembly_fasta,
           reference = select_first([reference]),
           samplename = samplename
       }
       call parse_paf_task.retrieve_aligned_contig_paf {
         input:
           paf = minimap2_assembly.minimap2_out,
-          assembly = shovil.assembly_fasta,
+          assembly = megahit.assembly_fasta,
           samplename = samplename
       }
       call bwa_task.bwa {
@@ -96,7 +94,7 @@ workflow theiameta_illumina_pe {
     }
     call quast_task.quast {
       input:
-        assembly = select_first([compare_assemblies.final_assembly, shovil.assembly_fasta]),
+        assembly = select_first([compare_assemblies.final_assembly, megahit.assembly_fasta]),
         samplename = samplename,
         min_contig_len = 1
       }
@@ -104,7 +102,7 @@ workflow theiameta_illumina_pe {
       input:
         query1 = read_QC_trim.read1_clean,
         query2 = read_QC_trim.read2_clean, 
-        reference = select_first([compare_assemblies.final_assembly, shovil.assembly_fasta]),
+        reference = select_first([compare_assemblies.final_assembly, megahit.assembly_fasta]),
         samplename = samplename,
         mode = "sr",
         output_sam = true
@@ -142,12 +140,13 @@ workflow theiameta_illumina_pe {
     String? kraken_version = read_QC_trim.kraken_version
     File? kraken_report = read_QC_trim.kraken_report
     Float? kraken_percent_human = read_QC_trim.kraken_human
-    # Assembly - shovill outputs 
-    File? assembly_fasta = select_first([compare_assemblies.final_assembly, shovil.assembly_fasta])
-    String? assembly_length = quast.genome_length
-    String? shovill_pe_version = shovil.shovill_version
+    # Assembly - megahit outputs 
+    File? assembly_fasta = select_first([compare_assemblies.final_assembly, megahit.assembly_fasta])
+    String? assembly_length_unambiguous = select_first([compare_assemblies.number_ATCG, quast.genome_length])
+    String? megahit_pe_version = megahit.megahit_version
     Int? largest_contig = quast.largest_contig
     File? read1_unmapped = retrieve_unaligned_pe_reads_sam.read1
     File? read2_unmapped = retrieve_unaligned_pe_reads_sam.read2
+    Float? uncalled_bases_per_100kb = quast.uncalled_bases
     }
 }

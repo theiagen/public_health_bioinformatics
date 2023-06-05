@@ -64,7 +64,7 @@ task megahit_pe {
   >>>
   output {
     File assembly_fasta = "~{samplename}_contigs.fasta"
-    String shovill_version = read_string("VERSION")
+    String megahit_version = read_string("VERSION")
   }
   runtime {
     docker: "~{docker}"

@@ -36,8 +36,12 @@ task compare_assemblies {
 
     if denovo_base_count >= consensus_base_count:
         input_file = "~{assembly_denovo}"
+        with open("NUMBER_ATCG", "w") as number_ATCG:
+          num_ACTG.write(denovo_base_count)
     else:
         input_file = "~{assembly_consensus}"
+        with open("NUMBER_ATCG", "w") as number_ATCG:
+          num_ACTG.write(consensus_base_count)
 
     with open("~{samplename}_highest.fasta", 'w') as out_f:
         with open(input_file, 'r') as in_f:
@@ -57,6 +61,7 @@ task compare_assemblies {
   >>>
   output {
     File final_assembly = "~{samplename}_highest.fasta"
+    Int number_ATCG = read_int("NUMBER_ATCG")
   }
   runtime {
     docker: "quay.io/theiagen/terra-tools:2023-03-16"
