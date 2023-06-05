@@ -18,7 +18,7 @@
     - wf_theiaprok_illumina_pe_miniwdl
   files:
     - path: miniwdl_run/call-amrfinderplus_task/command
-      md5sum: 4a9639d03cb645e573de2be85be52396
+      md5sum: 597ed16e333748dd62b4df39e2798adb
     - path: miniwdl_run/call-amrfinderplus_task/inputs.json
       contains: ["assembly", "fasta", "organism", "test"]
     - path: miniwdl_run/call-amrfinderplus_task/outputs.json
@@ -35,8 +35,10 @@
       md5sum: 6206889552f40d7ea91f1d9ae025f23d
     - path: miniwdl_run/call-amrfinderplus_task/work/AMR_CLASSES
       md5sum: b6017eebef847ac2471107ca6197b5c5
-    - path: miniwdl_run/call-amrfinderplus_task/work/AMR_GENES
-      md5sum: b6017eebef847ac2471107ca6197b5c5
+    - path: miniwdl_run/call-amrfinderplus_task/work/AMR_CORE_GENES
+      md5sum: 6dc8f4dbf50f1f19d5d780562168f490
+    - path: miniwdl_run/call-amrfinderplus_task/work/AMR_PLUS_GENES
+      md5sum: c36903f7be16a68f69470cb6f48b277a
     - path: miniwdl_run/call-amrfinderplus_task/work/AMR_SUBCLASSES
       md5sum: b6017eebef847ac2471107ca6197b5c5
     - path: miniwdl_run/call-amrfinderplus_task/work/DATE
@@ -550,7 +552,7 @@
     - path: miniwdl_run/wdl/tasks/gene_typing/task_abricate.wdl
       md5sum: d8e4646c2780945c7a10674e7f748a65
     - path: miniwdl_run/wdl/tasks/gene_typing/task_amrfinderplus.wdl
-      md5sum: 00afe7fdfaecf9af6027b6f8ee05759f
+      md5sum: 7678439e06ac720a26ec8229377ce5c9
     - path: miniwdl_run/wdl/tasks/gene_typing/task_bakta.wdl
       md5sum: a25a79957f3c51a46a698171ab5b9f9b
     - path: miniwdl_run/wdl/tasks/gene_typing/task_plasmidfinder.wdl

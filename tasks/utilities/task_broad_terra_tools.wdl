@@ -94,7 +94,8 @@ task export_taxon_tables {
     File? amrfinderplus_amr_report
     File? amrfinderplus_stress_report
     File? amrfinderplus_virulence_report
-    String? amrfinderplus_amr_genes
+    String? amrfinderplus_amr_core_genes
+    String? amrfinderplus_amr_plus_genes
     String? amrfinderplus_stress_genes
     String? amrfinderplus_virulence_genes
     String? amrfinderplus_amr_classes
@@ -554,7 +555,8 @@ task export_taxon_tables {
       "amrfinderplus_virulence_report": "~{amrfinderplus_virulence_report}",
       "amrfinderplus_version": "~{amrfinderplus_version}",
       "amrfinderplus_db_version": "~{amrfinderplus_db_version}",
-      "amrfinderplus_amr_genes": "~{amrfinderplus_amr_genes}",
+      "amrfinderplus_amr_core_genes": "~{amrfinderplus_amr_core_genes}",
+      "amrfinderplus_amr_plus_genes": "~{amrfinderplus_amr_plus_genes}",
       "amrfinderplus_stress_genes": "~{amrfinderplus_stress_genes}",
       "amrfinderplus_virulence_genes": "~{amrfinderplus_virulence_genes}",
       "amrfinderplus_amr_classes": "~{amrfinderplus_amr_classes}",
