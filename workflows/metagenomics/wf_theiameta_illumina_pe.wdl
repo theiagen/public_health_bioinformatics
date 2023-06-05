@@ -143,6 +143,7 @@ workflow theiameta_illumina_pe {
     # Assembly - megahit outputs 
     File? assembly_fasta = select_first([compare_assemblies.final_assembly, megahit.assembly_fasta])
     String? assembly_length_unambiguous = select_first([compare_assemblies.number_ATCG, quast.genome_length])
+    Int? contig_number = quast.number_contigs
     String? megahit_pe_version = megahit.megahit_version
     Int? largest_contig = quast.largest_contig
     File? read1_unmapped = retrieve_unaligned_pe_reads_sam.read1
