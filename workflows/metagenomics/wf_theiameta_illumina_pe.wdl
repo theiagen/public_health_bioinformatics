@@ -147,7 +147,6 @@ workflow theiameta_illumina_pe {
     String? assembly_length = quast.genome_length
     String? shovill_pe_version = shovil.shovill_version
     Int? largest_contig = quast.largest_contig
-    Float? uncalled_bases_per_100kb = quast.uncalled_bases
     File? read1_unmapped = retrieve_unaligned_pe_reads_sam.read1
     File? read2_unmapped = retrieve_unaligned_pe_reads_sam.read2
     }
