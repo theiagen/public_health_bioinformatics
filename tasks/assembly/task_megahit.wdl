@@ -56,7 +56,7 @@ task megahit_pe {
       --min-contig-len ~{min_contig_length} \
       ~{'--k-list ' + kmers} \
       ~{true='--keep-tmp-files' false='' keep_temp_files} \
-      -m ~{memory}
+      -m ~{memory} \
       -t ~{cpu}
 
     mv megahit_out/final.contigs.fa ~{samplename}_contigs.fasta
