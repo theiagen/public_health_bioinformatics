@@ -216,11 +216,11 @@ task compare_two_tsvs {
         # Overall: determines if percent difference between two values is greater than a provided threshold
         return(format(series[0], '.2%'), percent_difference(df1[series.name], df2[series.name]).gt(series[0]).sum())
       elif pd.api.types.is_datetime64_any_dtype(series) == True: # if a date, do not check
-        return("DATE VALUE; IGNORED", 0)
+        return("DATE VALUE; IGNORED", np.nan)
       elif pd.api.types.is_integer_dtype(series) == True: # if an integer, do not check
-        return("INTEGER; IGNORED FOR NOW", 0)
+        return("INTEGER; IGNORED FOR NOW", np.nan)
       else: # it's an object type, do not check
-        return("OBJECT TYPE VALUE; IGNORED FOR NOW", 0)
+        return("OBJECT TYPE VALUE; IGNORED FOR NOW", np.nan)
 
     # perform check and add to the summary output table
     # pd.DataFrame() converts the output of the .apply() function into a Data Frame
