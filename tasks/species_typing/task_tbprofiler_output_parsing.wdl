@@ -19,11 +19,11 @@ task tbprofiler_output_parsing {
     # lookup dictionary - antimicrobial code to name
     antimicrobial_dict = {"M_DST_B01_INH": "isoniazid", "M_DST_C01_ETO": "ethionamide",
                           "M_DST_D01_RIF": "rifampicin", "M_DST_E01_PZA": "pyrazinamide",
-                          "M_DST_F01_EMB": "ethambutol","M_DST_G01_STM": "streptomycin",
-                          "M_DST_H01_AMK": "amikacin", "M_DST_I01_KAN": "kanamycin",
-                          "M_DST_J01_CAP": "capreomycin", "M_DST_K01_MFX": "moxifloxacin",
-                          "M_DST_L01_LFX": "levofloxacin", "M_DST_M01_BDQ": "bedaquiline",
-                          "M_DST_N01_CFZ": "clofazimine", "M_DST_o01_LZD": "linezolid" 
+                          "M_DST_F01_EMB": "ethambutol","M_DST_H01_AMK": "amikacin", 
+                          "M_DST_I01_KAN": "kanamycin","M_DST_J01_CAP": "capreomycin", 
+                          "M_DST_K01_MFX": "moxifloxacin","M_DST_L01_LFX": "levofloxacin", 
+                          "M_DST_M01_BDQ": "bedaquiline","M_DST_N01_CFZ": "clofazimine", 
+                          "M_DST_o01_LZD": "linezolid" 
                          }
     
     # Lookup list - antimicrobials
@@ -34,17 +34,12 @@ task tbprofiler_output_parsing {
 
     # lookup dictionary - gene name to gene column name
     gene_dict = {"M_DST_B01_INH": {"katG": "M_DST_B02_katG", "fabG1": "M_DST_B03_fabG1", 
-                                   "inhA": "M_DST_B04_inhA","ahpC": "M_DST_B05_ahpC"},
+                                   "inhA": "M_DST_B04_inhA"},
                  "M_DST_C01_ETO": {"ethA": "M_DST_C02_ethA", "fabG1": "M_DST_C03_fabG1",
                                    "inhA": "M_DST_C04_inhA"},
                  "M_DST_D01_RIF": {"rpoB": "M_DST_D02_rpoB"},
-                 "M_DST_E01_PZA": {"pncA": "M_DST_E02_pncA", "panD": "M_DST_E03_panD",
-                                   "clpC1": "M_DST_E04_clpC1"},
-                 "M_DST_F01_EMB": {"embA": "M_DST_F02_embA", "embB": "M_DST_F03_embB",
-                                   "embC": "M_DST_F04_embC"},
-                 "M_DST_G01_STM": {"rrs": "M_DST_G02_rrs", "rpsL": "M_DST_G03_rpsL",
-                                   "gid": "M_DST_G04_gid", "whiB7": "M_DST_G05_whiB7",
-                                   "Rv1258c": "M_DST_G06_Rv1258c"},
+                 "M_DST_E01_PZA": {"pncA": "M_DST_E02_pncA"},
+                 "M_DST_F01_EMB": {"embA": "M_DST_F02_embA", "embB": "M_DST_F03_embB"},
                  "M_DST_H01_AMK": {"rrs": "M_DST_H02_rrs", "eis": "M_DST_H03_eis"},
                  "M_DST_I01_KAN": {"rrs": "M_DST_I02_rrs", "eis": "M_DST_I03_eis"},
                  "M_DST_J01_CAP": {"rrs": "M_DST_J02_rrs", "tlyA": "M_DST_J03_tlyA"},
@@ -57,6 +52,24 @@ task tbprofiler_output_parsing {
                                    "mmpL5":"M_DST_N04_mmpL5", "mmpS5": "M_DST_N05_mmpS5"},
                  "M_DST_o01_LZD": {"rrl": "M_DST_o02_rrl", "rplC": "M_DST_o03_rplC"}
                 }
+
+    # lookup dictionary - gene to resistance 
+    gene_to_resistance = {"ahpC":["isoniazid"], "ald":["cycloserine"], "alr": ["cycloserine"],
+                          "ddn": ["delamanid"], "eis": ["amikacin", "kanamycin"], "embA": ["ethambutol"],
+                          "embB": ["ethambutol"], "embC": ["ethambutol"], "embR": ["ethambutol"],
+                          "ethA": ["ethionamide"], "ethR": ["ethionamide"], "fabG1": ["ethionamide", "isoniazid"],
+                          "fbiA": ["delamanid"], "fgd1": ["delamanid"], "folC": ["para-aminosalicylic_acid"],
+                          "gid": ["streptomycin"], "gyrA": ["ciprofloxacin", "fluoroquinolones", "levofloxacin",
+                          "moxifloxacin", "ofloxacin"], "gyrB": ["moxifloxacin","ciprofloxacin","fluoroquinolones",
+                          "levofloxacin", "ofloxacin"], "inhA": ["ethionamide", "isoniazid"],
+                          "kasA": ["isoniazid"], "katG": ["isoniazid"], "panD": ["pyrazinamide"],
+                          "pncA": ["pyrazinamide"], "ribD": ["para-aminosalicylic_acid"], "rplC": ["linezolid"],
+                          "rpoB": ["rifampicin"], "rpoC": ["rifampicin"], "rpsA": ["pyrazinamide"],
+                          "rpsL": ["streptomycin"], "rrl": ["linezolid"], "rrs": ["streptomycin", "amikacin",
+                          "aminoglycosides", "capreomycin", "kanamycin"], "Rv0678": ["bedaquiline",
+                          "clofazimine"], "thyA": ["para-aminosalicylic_acid"], "thyX": ["para-aminosalicylic_acid"],
+                          "tlyA": ["capreomycin"]
+                         }
 
     ## Auxiliary Functions ##
 
@@ -171,7 +184,10 @@ task tbprofiler_output_parsing {
               depth[i] = 0
             warning = "Low depth coverage" if  depth[i] < int('~{min_depth}') else "" # warning when coverage is lower than the defined 'min_depth' times
             report_fh.write("~{samplename}" + ',' + gene_name[i] + ',' + locus_tag[i] + ',' + variant_substitutions_type[i] + ',' + variant_substitutions_nt[i] + ',' + variant_substitutions_aa[i] + ',' + confidence[i] + ',' + resistance[i] + ',' + str(depth[i]) + ',' + str(frequency[i]) + ',' + str(int(depth[i]*frequency[i])) + ',' + rule[i] + ',' + warning +'\n')
-
+          for gene, resistance_list in gene_to_resistance.items():
+            for resistance in resistance_list:
+              if gene not in gene_name:
+                report_fh.write("~{samplename}" + ',' + gene + ',' + 'NA' + ',' + 'WT' + ',' + 'NA' + ',' + 'NA' + ',' + 'NA' + ',' + resistance + ',' + 'NA' + ',' + 'NA' + ',' + 'NA' + ',' + 'NA' + ',' + 'NA' +'\n')
 
     def parse_json_mutations(json_file):
       """
