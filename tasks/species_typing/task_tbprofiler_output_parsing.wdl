@@ -306,11 +306,11 @@ task tbprofiler_output_parsing {
           row["antimicrobial"] = ",".join(dr_variant["gene_associated_drugs"])
           row["looker_interpretation"] = decipher_looker(row["confidence"])
           row["mdl_interpretation"] = decipher_MDL(row["confidence"])
-          row["depth"] = dr_variant["depth"]
+          row["depth"] = int(dr_variant["depth"] or 0)
           row["frequency"] = dr_variant["freq"]
-          row["read_support"] = dr_variant["depth"]*dr_variant["freq"]
+          row["read_support"] = row["depth"]*row["frequency"] 
           row["rationale"] = "WHO classification"
-          row["warning"] = "Low depth coverage" if dr_variant["depth"] < int('~{min_depth}') else ""
+          row["warning"] = "Low depth coverage" if row["depth"] < int('~{min_depth}') else ""
           genes_reported.append(dr_variant["gene"])
           row_list.append(row)
       
@@ -343,11 +343,11 @@ task tbprofiler_output_parsing {
             row["antimicrobial"] = ",".join(other_variant["gene_associated_drugs"])
             row["looker_interpretation"] = decipher_looker(row["confidence"])
             row["mdl_interpretation"] = decipher_MDL(row["confidence"])
-            row["depth"] = other_variant["depth"]
+            row["depth"] = int(other_variant["depth"] or 0)
             row["frequency"] = other_variant["freq"]
-            row["read_support"] = other_variant["depth"]*other_variant["freq"]
+            row["read_support"] = row["depth"]*row["frequency"]
             row["rationale"] = "Resistant based on expert rule"
-            row["warning"] = "Low depth coverage" if other_variant["depth"] < int('~{min_depth}') else ""
+            row["warning"] = "Low depth coverage" if row["depth"] < int('~{min_depth}') else ""
             genes_reported.append(other_variant["gene"])
             row_list.append(row)
           
@@ -365,11 +365,11 @@ task tbprofiler_output_parsing {
             row["antimicrobial"] = ",".join(other_variant["gene_associated_drugs"])
             row["looker_interpretation"] = decipher_looker(row["confidence"])
             row["mdl_interpretation"] = decipher_MDL(row["confidence"])
-            row["depth"] = other_variant["depth"]
+            row["depth"] = int(other_variant["depth"] or 0)
             row["frequency"] = other_variant["freq"]
-            row["read_support"] = other_variant["depth"]*other_variant["freq"]
+            row["read_support"] = row["depth"]*row["frequency"]
             row["rationale"] = "Resistant based on expert rule" if 426 <= position <= 452 else "Uncertain significance based on expert rule"
-            row["warning"] = "Low depth coverage" if other_variant["depth"] < int('~{min_depth}') else ""
+            row["warning"] = "Low depth coverage" if row["depth"] < int('~{min_depth}') else ""
             genes_reported.append(other_variant["gene"])
             row_list.append(row)
       
