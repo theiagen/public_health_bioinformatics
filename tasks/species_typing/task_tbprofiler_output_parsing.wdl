@@ -72,18 +72,18 @@ task tbprofiler_output_parsing {
                          }
 
     # lookup dictionary - gene to locus tag (https://github.com/jodyphelan/TBProfiler/blob/master/db/tbdb.bed)
-    gene_to_locus_tag = {"ahpC":["Rv2428"], "ald":["Rv2780"], "alr": ["Rv3423c"],
-                          "ddn": ["Rv3547"], "eis": ["Rv2416c"], "embA": ["Rv3794"],
-                          "embB": ["Rv3795"], "embC": ["Rv3793"], "embR": ["Rv1267c"],
-                          "ethA": ["Rv3854c"], "ethR": ["Rv3855"], "fabG1": ["Rv1483"],
-                          "fbiA": ["Rv3261"], "fgd1": ["Rv0407"], "folC": ["Rv2447c"],
-                          "gid": ["Rv3919c"], "gyrA": ["Rv0006"], "gyrB": ["Rv0005"],
-                          "inhA": ["Rv1484"],"kasA": ["Rv2245"], "katG": ["Rv1908c"], 
-                          "panD": ["Rv3601c"], "pncA": ["Rv2043c"], "ribD": ["Rv2671"],
-                          "rplC": ["Rv0701"], "rpoB": ["Rv0667"], "rpoC": ["Rv0668"], 
-                          "rpsA": ["Rv1630"], "rpsL": ["Rv0682"], "rrl": ["EBG00000313339"], 
-                          "rrs": ["EBG00000313325"], "Rv0678": ["Rv0678"], "thyA": ["Rv2764c"],
-                          "thyX": ["Rv2754c"], "tlyA": ["Rv1694"]
+    gene_to_locus_tag = {"ahpC":"Rv2428", "ald":"Rv2780", "alr": "Rv3423c",
+                          "ddn": "Rv3547", "eis": "Rv2416c", "embA": "Rv3794",
+                          "embB": "Rv3795", "embC": "Rv3793", "embR": "Rv1267c",
+                          "ethA": "Rv3854c", "ethR": "Rv3855", "fabG1": "Rv1483",
+                          "fbiA": "Rv3261", "fgd1": "Rv0407", "folC": "Rv2447c",
+                          "gid": "Rv3919c", "gyrA": "Rv0006", "gyrB": "Rv0005",
+                          "inhA": "Rv1484","kasA": "Rv2245", "katG": "Rv1908c", 
+                          "panD": "Rv3601c", "pncA": "Rv2043c", "ribD": "Rv2671",
+                          "rplC": "Rv0701", "rpoB": "Rv0667", "rpoC": "Rv0668", 
+                          "rpsA": "Rv1630", "rpsL": "Rv0682", "rrl": "EBG00000313339", 
+                          "rrs": "EBG00000313325", "Rv0678": "Rv0678", "thyA": "Rv2764c",
+                          "thyX": "Rv2754c", "tlyA": "Rv1694"
                          }
 
     ## Auxiliary Functions ##
