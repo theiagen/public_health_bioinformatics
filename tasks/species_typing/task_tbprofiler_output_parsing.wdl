@@ -405,7 +405,9 @@ task tbprofiler_output_parsing {
         - MDL sample accession numbers: includes sample name
         - M_DST_A01_ID - includes lineage
         - The set of information in gene_dict dictionary with target drug resistance information
-        in layman's terms, and the mutations responsible for the predicted phenotype 
+        in layman's terms, and the mutations responsible for the predicted phenotype
+        - Date of analysis in YYYY-MM-DD HH:SS format
+        - Operator information
       """
     
       lineage = get_lineage("~{json}")
