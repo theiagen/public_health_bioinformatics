@@ -61,6 +61,7 @@ workflow merlin_magic {
     Boolean theiaeuk = false
     Boolean tbprofiler_additional_outputs = false
     String output_seq_method_type = "WGS"
+    String operator = "Default"
     String? snippy_query_gene
     Int srst2_min_cov = 80
     Int srst2_max_divergence = 20
@@ -217,6 +218,7 @@ workflow merlin_magic {
           input:
             json = tbprofiler.tbprofiler_output_json,
             output_seq_method_type = output_seq_method_type,
+            operator = operator,
             samplename = samplename
         }
         call tb_gene_coverage_task.tb_gene_coverage {

@@ -4,6 +4,7 @@ task tbprofiler_output_parsing {
   input {
     File json
     String output_seq_method_type
+    String operator
     String samplename
     Int min_depth = 10
   }
@@ -344,6 +345,7 @@ task tbprofiler_output_parsing {
             df_lims[gene_id] = "No mutations detected"
 
       df_lims["Analysis date"] = formatted_time
+      df_lims["Operator"] = "~{operator}"
       df_lims.to_csv("tbprofiler_lims_report.csv", index=False)
     
     def parse_laboratorian_report(mutations):
