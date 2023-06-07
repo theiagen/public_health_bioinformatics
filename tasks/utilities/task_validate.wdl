@@ -174,8 +174,8 @@ task compare_two_tsvs {
 
     # correct dtypes - convert to numeric first, and then to strings
     validation_criteria = validation_criteria.apply(pd.to_numeric, errors='ignore').convert_dtypes()
-    df1 = df1.apply(pd.to_numeric, errors='ignore').convert_dtypes()
-    df2 = df2.apply(pd.to_numeric, errors='ignore').convert_dtypes()
+    #df1 = df1.apply(pd.to_numeric, errors='ignore').convert_dtypes()
+    #df2 = df2.apply(pd.to_numeric, errors='ignore').convert_dtypes()
 
     # calculate percent difference with mean
     def percent_difference(col1, col2):
@@ -185,7 +185,7 @@ task compare_two_tsvs {
     # perform validation checks
     def validate(series, df1, df2):
       # check the data type of the validation criteria; based on its type, we can assume the comparison to perform
-      if  pd.api.types.is_string_dtype(series) == True: # if a string,
+      if pd.api.types.is_string_dtype(series) == True: # if a string,
         if series[0] == "EXACT": # count number of exact match failures/differences
           # df1[series.name] extracts the column of interest (identified by the name of the series, which is the specific column of the validation criteria tsv)
           # .fillna("NULL") replaces all NaN values with NULL because in Pandas, NaN != Nan but we would like it to
@@ -206,7 +206,7 @@ task compare_two_tsvs {
           # .sum() counts all times .eq() returns a True
           # ~ asks for the total count where there are differences (when .eq() is False)
           # Overall: converts each column value into a set and then compares set contents 
-          return("SET", (~df1[series.name].fillna("NULL").apply(lambda x: set(x.split(","))).eq(df2[series.name].fillna("NULL").apply(lambda x: set(x.split(","))))).sum())
+          return("SET", (~df1[series.name].fillna("NULL").convert_dtypes().apply(lambda x: set(x.split(","))).eq(df2[series.name].fillna("NULL").convert_dtypes().apply(lambda x: set(x.split(","))))).sum())
         else: # a different value was offered
           return("String value not recognized", np.nan)
       elif pd.api.types.is_float_dtype(series) == True: # if a float,
