@@ -206,7 +206,7 @@ task compare_two_tsvs {
           # .sum() counts all times .eq() returns a True
           # ~ asks for the total count where there are differences (when .eq() is False)
           # Overall: converts each column value into a set and then compares set contents 
-          return("SET", (~df1[series.name].fillna("NULL").convert_dtypes().apply(lambda x: set(x.split(","))).eq(df2[series.name].fillna("NULL").convert_dtypes().apply(lambda x: set(x.split(","))))).sum())
+          return("SET", (~df1[series.name].fillna("NULL").apply(lambda x: set(x.split(","))).eq(df2[series.name].fillna("NULL").apply(lambda x: set(x.split(","))))).sum())
         else: # a different value was offered
           return("String value not recognized", np.nan)
       elif pd.api.types.is_float_dtype(series) == True: # if a float,
