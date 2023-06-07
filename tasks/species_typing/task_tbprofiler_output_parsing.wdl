@@ -225,117 +225,177 @@ task tbprofiler_output_parsing {
                   if rank_annotation(resistance_dict[drug]) < rank_annotation(resistance):
                     resistance_dict[drug] = resistance
       return resistance_dict
+    
+    def parse_laboratorian_report(mutations):
+      """
+      This function parses the laboratorian report for a given mutation and 
+      returns the associated WHO annotation and frequency
+      """
+      df = pd.read_csv('tbprofiler_laboratorian_report.csv', dtype="str")
+      confidences = []
+      frequencies = []
+      for mutation in mutations.split(';'):
+        confidence = df.loc[df['tbprofiler_variant_substitutions'] == mutation, 'confidence']
+        frequency = df.loc[df['tbprofiler_variant_substitutions'] == mutation, 'frequency']
+        if len(confidence) > 0:
+          confidences.append(confidence.array[0])
+        else:
+          confidences.append("No annotation")
+        if len(frequency) > 0:
+          frequencies.append(frequency.array[0])
+        else:
+          frequencies.append("1")
+      return confidences, frequencies
 
     ## Main Parsing Functions ## 
 
     def parse_json_lab_report(json_file):
       """
-      This function recieves the tbprofiler output json file and
-      writes the laboratorian report that includes the following information
+      This function recieved the tbprofiler output json file and
+      writes the Laboratorian report that includes the following information
       per mutation:
-        - tbprofiler_gene_name
-        - tbprofiler_locus_tag
-        - tbprofiler_variant_substitutions
-        - confidence
-        - depth
-        - frequency
-        - read_support
-        - rationale
-        - warning
+        - sample_id: inclides sample name
+        - tbprofiler_gene_name: gene name
+        - tbprofiler_locus_tag: locus tag
+        - tbprofiler_variant_substitution_type: variant substitution type (missense_variant, upstream_gene_variant...)
+        - tbprofiler_variant_substitution_nt: nucleotide substitution (c.1349C>G)
+        - tbprofiler_variant_substitution_aa: aminoacid substitution (p.Ser450Trp)
+        - confidence: tbprofiler annotation regarding resistance (Not assoc w R, Uncertain significance...)
+        - antimicrobial: antimicrobial the mutation is confering resistance to (streptomycin, rifampicin...)
+        - looker_interpretation: interpretation of resistance for Looker report (R, S, U, R-interim)
+        - mdl_interpretation: MDL interpretation of resistance (R,S,U)
+        - depth: depth of coverage at the mutation site (100)
+        - frequency: frequency of mutation at the site (1)
+        - read_support: number of reads supporting the mutation (100, depth*frequency)
+        - rationale: rationale for resistance calling (WHO classification, Expert rule)
+        - warning: column reserved for warnings such as low depth of coverage
       """
-      gene_name = []
-      locus_tag = []
-      variant_substitutions_type = []
-      variant_substitutions_nt = []
-      variant_substitutions_aa = []
-      confidence = []
-      resistance = []
-      looker_interpretation = []
-      mdl_interpretation = []
-      depth = []
-      frequency = []
-      rule = []
+
+      df_laboratorian = pd.DataFrame(columns = ["sample_id","tbprofiler_gene_name","tbprofiler_locus_tag",
+                                                "tbprofiler_variant_substitution_type","tbprofiler_variant_substitution_nt",
+                                                "tbprofiler_variant_substitution_aa","confidence","antimicrobial",
+                                                "looker_interpretation","mdl_interpretation","depth","frequency",
+                                                "read_support","rationale","warning"])
+      
+      row_list = []
+      genes_reported = []
 
       with open(json_file) as results_json_fh:
         results_json = json.load(results_json_fh)
-        for dr_variant in results_json["dr_variants"]:  # reported mutation by tb-profiler, all confering resistance
-          gene_name.append(dr_variant["gene"])
-          locus_tag.append(dr_variant["locus_tag"])  
-          variant_substitutions_type.append(dr_variant["type"])
-          variant_substitutions_nt.append(dr_variant["nucleotide_change"])
-          variant_substitutions_aa.append(dr_variant["protein_change"] if dr_variant["protein_change"] != "" else "NA")
-          depth.append(dr_variant["depth"])
-          frequency.append(dr_variant["freq"])
-          rule.append("WHO classification")
-          resistance.append(dr_variant["gene_associated_drugs"][0])
+
+        # reported mutation by tb-profiler, all confering resistance by WHO criteria
+        for dr_variant in results_json["dr_variants"]: 
           if "annotation" in dr_variant:
             try:  # sometimes annotation is an empty list
               if dr_variant["annotation"][0]["who_confidence"] == "":
-                confidence.append("No WHO annotation")
+                confidence = "No WHO annotation"
               else:
-                confidence.append(dr_variant["annotation"][0]["who_confidence"])
+                confidence = dr_variant["annotation"][0]["who_confidence"]
             except:
-              confidence.append("No WHO annotation")
+              confidence = "No WHO annotation"
           else:
-            confidence.append("No WHO annotation")
-          looker_interpretation.append(decipher_looker(confidence[-1]))
-          mdl_interpretation.append(decipher_MDL(confidence[-1]))
+            confidence = "No WHO annotation"
+          row = {}
+          row["sample_id"] = "~{samplename}"
+          row["tbprofiler_gene_name"] = dr_variant["gene"]
+          row["tbprofiler_locus_tag"] = dr_variant["locus_tag"]
+          row["tbprofiler_variant_substitution_type"] = dr_variant["type"]
+          row["tbprofiler_variant_substitution_nt"] = dr_variant["nucleotide_change"]
+          row["tbprofiler_variant_substitution_aa"] = dr_variant["protein_change"] if dr_variant["protein_change"] != "" else "NA"
+          row["confidence"] = confidence
+          row["antimicrobial"] = ",".join(dr_variant["gene_associated_drugs"])
+          row["looker_interpretation"] = decipher_looker(row["confidence"])
+          row["mdl_interpretation"] = decipher_MDL(row["confidence"])
+          row["depth"] = dr_variant["depth"]
+          row["frequency"] = dr_variant["freq"]
+          row["read_support"] = dr_variant["depth"]*dr_variant["freq"]
+          row["rationale"] = "WHO classification"
+          row["warning"] = "Low depth coverage" if dr_variant["depth"] < int('~{min_depth}') else ""
+          genes_reported.append(dr_variant["gene"])
+          row_list.append(row)
+      
+      # mutations not reported by tb-profiler - application of expert rules to determine resistance
+      for other_variant in results_json["other_variants"]: 
 
-        for other_variant in results_json["other_variants"]:  # mutations not reported by tb-profiler
-          if other_variant["type"] != "synonymous_variant": 
-            if other_variant["gene"] == "katG" or other_variant["gene"] == "pncA" or other_variant["gene"] == "ethA" or other_variant["gene"] == "gid":  # Expert rule: hardcoded for genes of interest that are reported to always confer resistance when mutated
-              # report as resistant based on expert rule
-              gene_name.append(other_variant["gene"])
-              locus_tag.append(other_variant["locus_tag"])  
-              variant_substitutions_type.append(other_variant["type"])
-              variant_substitutions_nt.append(other_variant["nucleotide_change"])
-              variant_substitutions_aa.append(other_variant["protein_change"] if other_variant["protein_change"] != "" else "NA")
-              depth.append(other_variant["depth"])
-              frequency.append(other_variant["freq"])
-              resistance.append(other_variant["gene_associated_drugs"][0])
-              rule.append("Resistant based on expert rule")
-              if "annotation" in other_variant:
-                try:  # sometimes annotation is an empty list
-                  if other_variant["annotation"][0]["who_confidence"] == "":
-                    confidence.append("No WHO annotation")
-                  else:
-                    confidence.append(other_variant["annotation"][0]["who_confidence"])
-                except:
-                  confidence.append("No WHO annotation")
-              else:
-                confidence.append("No WHO annotation")
-              looker_interpretation.append(decipher_looker(confidence[-1]))
-              mdl_interpretation.append(decipher_MDL(confidence[-1]))
-            if other_variant["gene"] == "rpoB":  # Expert rule: in case mutation occurs between codons 426 and 452 of rpoB gene, classify as resistant
-              position = get_codon(other_variant["protein_change"])
-              gene_name.append(other_variant["gene"])
-              locus_tag.append(other_variant["locus_tag"])  
-              #variant_substitutions.append(other_variant["type"] + ":" + other_variant["nucleotide_change"] + "(" + other_variant["protein_change"] + ")")  # mutation_type:nt_sub(aa_sub)
-              variant_substitutions_type.append(other_variant["type"])
-              variant_substitutions_nt.append(other_variant["nucleotide_change"])
-              variant_substitutions_aa.append(other_variant["protein_change"] if other_variant["protein_change"] != "" else "NA")
-              depth.append(other_variant["depth"])
-              frequency.append(other_variant["freq"])
-              resistance.append(other_variant["gene_associated_drugs"][0])
-              confidence.append("No WHO annotation")
-              looker_interpretation.append(decipher_looker(confidence[-1]))
-              mdl_interpretation.append(decipher_MDL(confidence[-1]))
-              if 426 <= position <= 452:  # considered resistant based on expert rule
-                rule.append("Resistant based on expert rule")
-              else:
-                rule.append("Uncertain significance based on expert rule")
-   
-        with open("tbprofiler_laboratorian_report.csv", "wt") as report_fh:
-          report_fh.write("sample_id,tbprofiler_gene_name,tbprofiler_locus_tag,tbprofiler_variant_substitution_type,tbprofiler_variant_substitution_nt,tbprofiler_variant_substitution_aa,confidence,antimicrobial,looker_interpretation,mdl_interpretation,depth,frequency,read_support,rationale,warning\n")
-          for i in range(0, len(gene_name)):
-            if not depth[i]:  # for cases when depth is null, it gets converted to 0
-              depth[i] = 0
-            warning = "Low depth coverage" if  depth[i] < int('~{min_depth}') else "" # warning when coverage is lower than the defined 'min_depth' times
-            report_fh.write("~{samplename}" + ',' + gene_name[i] + ',' + locus_tag[i] + ',' + variant_substitutions_type[i] + ',' + variant_substitutions_nt[i] + ',' + variant_substitutions_aa[i] + ',' + confidence[i] + ',' + resistance[i] + ',' + looker_interpretation[i] + ',' + mdl_interpretation[i] + ',' + str(depth[i]) + ',' + str(frequency[i]) + ',' + str(int(depth[i]*frequency[i])) + ',' + rule[i] + ',' + warning +'\n')
-          for gene, resistance_list in gene_to_resistance.items():
-            for resistance in resistance_list:
-              if gene not in gene_name:
-                report_fh.write("~{samplename}" + ',' + gene + ',' + gene_to_locus_tag[gene] + ',' + 'WT' + ',' + 'NA' + ',' + 'NA' + ',' + 'NA' + ',' + resistance + ',' + 'NA' + ',' + 'NA' + ',' + 'NA' + ',' + 'NA' + ',' + 'NA' + ',' + 'NA' + ',' + 'NA' +'\n')
+        # report only mutations that are NOT synonymous
+        if other_variant["type"] != "synonymous_variant":
+
+          # Expert rule: mutations in katG, pncA, ethA or gid, classify as resistant
+          if other_variant["gene"] == "katG" or other_variant["gene"] == "pncA" or other_variant["gene"] == "ethA" or other_variant["gene"] == "gid":
+            if "annotation" in other_variant:
+              try:  # sometimes annotation is an empty list
+                if other_variant["annotation"][0]["who_confidence"] == "":
+                  confidence = "No WHO annotation"
+                else:
+                  confidence = other_variant["annotation"][0]["who_confidence"]
+              except:
+                confidence = "No WHO annotation"
+            else:
+              confidence = "No WHO annotation"
+            row = {}
+            row["sample_id"] = "~{samplename}"
+            row["tbprofiler_gene_name"] = other_variant["gene"]
+            row["tbprofiler_locus_tag"] = other_variant["locus_tag"]
+            row["tbprofiler_variant_substitution_type"] = other_variant["type"]
+            row["tbprofiler_variant_substitution_nt"] = other_variant["nucleotide_change"]
+            row["tbprofiler_variant_substitution_aa"] = other_variant["protein_change"] if other_variant["protein_change"] != "" else "NA"
+            row["confidence"] = confidence
+            row["antimicrobial"] = ",".join(other_variant["gene_associated_drugs"])
+            row["looker_interpretation"] = decipher_looker(row["confidence"])
+            row["mdl_interpretation"] = decipher_MDL(row["confidence"])
+            row["depth"] = other_variant["depth"]
+            row["frequency"] = other_variant["freq"]
+            row["read_support"] = other_variant["depth"]*other_variant["freq"]
+            row["rationale"] = "Resistant based on expert rule"
+            row["warning"] = "Low depth coverage" if other_variant["depth"] < int('~{min_depth}') else ""
+            genes_reported.append(other_variant["gene"])
+            row_list.append(row)
+          
+          # Expert rule: in case mutation occurs between codons 426 and 452 of rpoB gene, classify as resistant
+          if other_variant["gene"] == "rpoB": 
+            position = get_codon(other_variant["protein_change"])
+            row = {}
+            row["sample_id"] = "~{samplename}"
+            row["tbprofiler_gene_name"] = other_variant["gene"]
+            row["tbprofiler_locus_tag"] = other_variant["locus_tag"]
+            row["tbprofiler_variant_substitution_type"] = other_variant["type"]
+            row["tbprofiler_variant_substitution_nt"] = other_variant["nucleotide_change"]
+            row["tbprofiler_variant_substitution_aa"] = other_variant["protein_change"] if other_variant["protein_change"] != "" else "NA"
+            row["confidence"] = "No WHO annotation"
+            row["antimicrobial"] = ",".join(other_variant["gene_associated_drugs"])
+            row["looker_interpretation"] = decipher_looker(row["confidence"])
+            row["mdl_interpretation"] = decipher_MDL(row["confidence"])
+            row["depth"] = other_variant["depth"]
+            row["frequency"] = other_variant["freq"]
+            row["read_support"] = other_variant["depth"]*other_variant["freq"]
+            row["rationale"] = "Resistant based on expert rule" if 426 <= position <= 452 else "Uncertain significance based on expert rule"
+            row["warning"] = "Low depth coverage" if other_variant["depth"] < int('~{min_depth}') else ""
+            genes_reported.append(other_variant["gene"])
+            row_list.append(row)
+      
+      for gene, resistance_list in gene_to_resistance.items():
+        for resistance in resistance_list:
+          if gene not in genes_reported:
+            row = {}
+            row["sample_id"] = "~{samplename}"
+            row["tbprofiler_gene_name"] = gene
+            row["tbprofiler_locus_tag"] = gene_to_locus_tag[gene]
+            row["tbprofiler_variant_substitution_type"] = "WT"
+            row["tbprofiler_variant_substitution_nt"] = "NA"
+            row["tbprofiler_variant_substitution_aa"] = "NA"
+            row["confidence"] = "NA"
+            row["antimicrobial"] = resistance
+            row["looker_interpretation"] = "NA"
+            row["mdl_interpretation"] = "NA"
+            row["depth"] = "NA"
+            row["frequency"] = "NA"
+            row["read_support"] = "NA"
+            row["rationale"] = "NA"
+            row["warning"] = "NA"
+            row_list.append(row)
+      
+      df_laboratorian = df_laboratorian.append(row_list, ignore_index=True)
+      df_laboratorian.to_csv("tbprofiler_laboratorian_report.csv", index=False)
     
     def parse_json_lims_report(json_file, formatted_time):
       """
@@ -368,27 +428,6 @@ task tbprofiler_output_parsing {
       df_lims["Operator"] = "~{operator}"
       df_lims.to_csv("tbprofiler_lims_report.csv", index=False)
     
-    def parse_laboratorian_report(mutations):
-      """
-      This function parses the laboratorian report for a given mutation and 
-      returns the associated WHO annotation and frequency
-      """
-      df = pd.read_csv('tbprofiler_laboratorian_report.csv', dtype="str")
-      confidences = []
-      frequencies = []
-      for mutation in mutations.split(';'):
-        confidence = df.loc[df['tbprofiler_variant_substitutions'] == mutation, 'confidence']
-        frequency = df.loc[df['tbprofiler_variant_substitutions'] == mutation, 'frequency']
-        if len(confidence) > 0:
-          confidences.append(confidence.array[0])
-        else:
-          confidences.append("No annotation")
-        if len(frequency) > 0:
-          frequencies.append(frequency.array[0])
-        else:
-          frequencies.append("1")
-      return confidences, frequencies
-
     def parse_json_looker_report(json_file, current_time):
       """
       This function recieves the tbprofiler output json file and
