@@ -163,6 +163,7 @@ workflow snippy_tree_wf {
 
     # data summary outputs
     File? snippy_summarized_data = summarize_data.summarized_data
+    File? snippy_filtered_metadata = summarize_data.filtered_metadata
 
     # set final alignment from 3 possible task outputs
     File snippy_final_alignment = select_first([snp_sites.snp_sites_multifasta, gubbins.gubbins_polymorphic_fasta, snippy_core.snippy_full_alignment_clean])

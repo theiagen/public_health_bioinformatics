@@ -42,6 +42,8 @@ task summarize_data {
   # extract the samples for upload from the entire table
   table = table[table["~{terra_table}_id"].isin("~{sep='*' sample_names}".split("*"))]
 
+  table.to_csv("~{output_prefix}_filtered_metadata.tsv", sep='\t', index=False)
+
   # split comma-separated column list into an array
   columns = "~{column_names}".split(",")
 
@@ -104,6 +106,7 @@ task summarize_data {
   >>>
   output {
     File summarized_data = "~{output_prefix}_summarized_data.csv"
+    File filtered_metadata = "~{output_prefix}_filtered_metadata.tsv"
   }
   runtime {
     docker: "quay.io/theiagen/terra-tools:2023-03-16"
