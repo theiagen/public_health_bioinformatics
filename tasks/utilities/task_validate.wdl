@@ -11,7 +11,7 @@ task export_two_tsvs {
     Int disk_size = 10
   }
   command <<<
-    python3 /scripts/export_large_tsv/export_large_tsv.py --project ~{terra_project1} --workspace ~{terra_workspace1} --entity_type ~{datatable1} --tsv_filename ~{datatable1}
+    python3 /scripts/export_large_tsv/export_large_tsv.py --project ~{terra_project1} --workspace ~{terra_workspace1} --entity_type ~{datatable1} --tsv_filename "~{datatable1}.tsv"
 
     # check if second project is provided; if not, use first
     if [[ -z "~{terra_project2}" ]]; then
@@ -27,7 +27,7 @@ task export_two_tsvs {
       WORKSPACE2="~{terra_workspace2}"
     fi
 
-    python3 /scripts/export_large_tsv/export_large_tsv.py --project ${PROJECT2} --workspace ${WORKSPACE2} --entity_type ~{datatable2} --tsv_filename ~{datatable2}
+    python3 /scripts/export_large_tsv/export_large_tsv.py --project ${PROJECT2} --workspace ${WORKSPACE2} --entity_type ~{datatable2} --tsv_filename "~{datatable2}.tsv"
 
     if [[ $(wc -l ~{datatable1} | cut -f1 -d' ') -eq $(wc -l ~{datatable2} | cut -f1 -d' ') ]]; then
       echo true | tee CONTINUE
@@ -44,8 +44,8 @@ task export_two_tsvs {
     dx_instance_type: "mem1_ssd1_v2_x2"
   }
   output {
-    File datatable1_tsv = "~{datatable1}"
-    File datatable2_tsv = "~{datatable2}"
+    File datatable1_tsv = "~{datatable1}.tsv"
+    File datatable2_tsv = "~{datatable2}.tsv"
     Boolean same_table_length = read_boolean("CONTINUE")
   }
 }
