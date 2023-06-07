@@ -13,6 +13,7 @@ task tbprofiler_output_parsing {
     import json
     import re
     import pandas as pd
+    import datetime
 
     ## Lookup Dictionaries ##
 
@@ -315,7 +316,7 @@ task tbprofiler_output_parsing {
         else:
           return "DNA of M. tuberculosis complex detected (not M. bovis)"
 
-    def parse_json_lims_report(json_file):
+    def parse_json_lims_report(json_file, formatted_time):
       """
       This function recieves the tbprofiler output json file and
       writes the LIMS report that includes the following information
@@ -341,7 +342,8 @@ task tbprofiler_output_parsing {
             df_lims[gene_id] = mutations[gene_name]
           else:
             df_lims[gene_id] = "No mutations detected"
-    
+
+      df_lims["Analysis date"] = formatted_time
       df_lims.to_csv("tbprofiler_lims_report.csv", index=False)
     
     def parse_laboratorian_report(mutations):
@@ -389,11 +391,16 @@ task tbprofiler_output_parsing {
 
     ### Report Generation ###
 
+    # get timestamp in YYYY-MM-DD HH:MM:SS format
+    current_time = datetime.datetime.now()
+    formatted_time = current_time.strftime('%Y-%m-%d %H:%M:%S.%f')
+    formatted_time = formatted_time[:-3]
+
     # Laboratorian report generation
     parse_json_lab_report("~{json}")
 
     # LIMS report generation
-    parse_json_lims_report("~{json}")
+    parse_json_lims_report("~{json}", formatted_time)
 
     # LOOKER report generation
     parse_json_looker_report("~{json}")
