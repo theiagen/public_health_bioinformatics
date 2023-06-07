@@ -3,8 +3,8 @@ version 1.0
 task virulencefinder {
   input {
     File? assembly
-    File? read1
-    File? read2
+    #File? read1
+    #File? read2
     String samplename
     String docker = "quay.io/staphb/virulencefinder:2.0.4"
     Int disk_size = 100
@@ -14,9 +14,9 @@ task virulencefinder {
     Float? identity_threshold
     String database = "virulence_ecoli"
     # determine what version of the software to run
-    Boolean paired_end
-    Boolean assembly_only
-    Boolean ont_data
+    #Boolean paired_end
+    #Boolean assembly_only
+    #Boolean ont_data
   }
   command <<<
     # capture date and version
@@ -33,27 +33,28 @@ task virulencefinder {
     #  -l sets threshold for min coverage
     #  -t sets threshold for min blast identity
     #  -d sets a specific database
-    if ~{assembly_only} || ! ~{paired_end} || ~{ont_data}; then
+
+    # if {assembly_only} || ! {paired_end} || {ont_data}; then
       # run assembly version if SE, ONT, or assembly
-      virulencefinder.py \
-        -i ~{assembly} \
-        -o . \
-        -tmp tmp \
-        ~{'-l ' + coverage_threshold} \
-        ~{'-t ' + identity_threshold} \
-        ~{'-d' + database} \
-        -x 
-    else 
-      # run the reads version if PE data
-      virulencefinder.py \
-        -i ~{read1} ~{read2} \
-        -o . \
-        -tmp tmp \
-        ~{'-l ' + coverage_threshold} \
-        ~{'-t ' + identity_threshold} \
-        ~{'-d' + database} \
-        -x
-    fi
+    virulencefinder.py \
+      -i ~{assembly} \
+      -o . \
+      -tmp tmp \
+      ~{'-l ' + coverage_threshold} \
+      ~{'-t ' + identity_threshold} \
+      ~{'-d' + database} \
+      -x 
+    # else 
+    #   # run the reads version if PE data
+    #   virulencefinder.py \
+    #     -i {read1} {read2} \
+    #     -o . \
+    #     -tmp tmp \
+    #     ~{'-l ' + coverage_threshold} \
+    #     ~{'-t ' + identity_threshold} \
+    #     ~{'-d' + database} \
+    #     -x
+    # fi
    
     # rename output file
     mv results_tab.tsv ~{samplename}_results_tab.tsv

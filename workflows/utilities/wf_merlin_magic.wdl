@@ -128,13 +128,13 @@ workflow merlin_magic {
     # E coli specific tasks
     call virulencefinder_task.virulencefinder {
       input:
-        read1 = read1,
-        read2 = read2,
+      #  read1 = read1,
+      #  read2 = read2,
         assembly = assembly,
         samplename = samplename,
-        paired_end = paired_end,
-        assembly_only = assembly_only,
-        ont_data = ont_data,
+      #  paired_end = paired_end,
+      #  assembly_only = assembly_only,
+      #  ont_data = ont_data,
         docker = virulencefinder_docker_image,
         coverage_threshold = virulencefinder_coverage_threshold,
         identity_threshold = virulencefinder_identity_threshold,
