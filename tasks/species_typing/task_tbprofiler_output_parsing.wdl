@@ -53,7 +53,7 @@ task tbprofiler_output_parsing {
                  "M_DST_o01_LZD": {"rrl": "M_DST_o02_rrl", "rplC": "M_DST_o03_rplC"}
                 }
 
-    # lookup dictionary - gene to resistance 
+    # lookup dictionary - gene to resistance (https://github.com/jodyphelan/tbdb/blob/master/tbdb.csv)
     gene_to_resistance = {"ahpC":["isoniazid"], "ald":["cycloserine"], "alr": ["cycloserine"],
                           "ddn": ["delamanid"], "eis": ["amikacin", "kanamycin"], "embA": ["ethambutol"],
                           "embB": ["ethambutol"], "embC": ["ethambutol"], "embR": ["ethambutol"],
