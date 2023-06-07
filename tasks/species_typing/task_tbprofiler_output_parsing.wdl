@@ -393,16 +393,14 @@ task tbprofiler_output_parsing {
 
     ### Report Generation ###
 
-    # get timestamp in YYYY-MM-DD HH:MM:SS format
-    current_time = datetime.datetime.now()
-    formatted_time = current_time.strftime('%Y-%m-%d %H:%M:%S.%f')
-    formatted_time = formatted_time[:-3]
+    # get timestamp in YYYY-MM-DD HH:MM format
+    current_time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M')
 
     # Laboratorian report generation
     parse_json_lab_report("~{json}")
 
     # LIMS report generation
-    parse_json_lims_report("~{json}", formatted_time)
+    parse_json_lims_report("~{json}", current_time)
 
     # LOOKER report generation
     parse_json_looker_report("~{json}")
