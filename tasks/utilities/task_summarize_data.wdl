@@ -42,8 +42,6 @@ task summarize_data {
   # extract the samples for upload from the entire table
   table = table[table["~{terra_table}_id"].isin("~{sep='*' sample_names}".split("*"))]
 
-  table.to_csv("~{output_prefix}_filtered_metadata.tsv", sep='\t', index=False)
-
   # split comma-separated column list into an array
   columns = "~{column_names}".split(",")
 
@@ -55,6 +53,7 @@ task summarize_data {
 
   # create a table to search through containing only columns of interest
   searchtable = table[columns].copy()
+  searchtable.to_csv("~{output_prefix}_filtered_metadata.tsv", sep='\t', index=False)
 
   # iterate through the columns of interest and combine into a single list
   genes = []
