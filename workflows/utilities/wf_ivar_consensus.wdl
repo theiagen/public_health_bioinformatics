@@ -50,7 +50,6 @@ workflow ivar_consensus {
       reference_genome = reference_genome,
       variant_min_depth = min_depth,
       variant_min_freq = variant_min_freq
-
   }
   call consensus_task.consensus {
     input:
@@ -83,6 +82,7 @@ workflow ivar_consensus {
     # variant call outputs
     File ivar_tsv = variant_call.sample_variants_tsv
     File ivar_vcf = variant_call.sample_variants_vcf
+    String ivar_variant_proportion_intermediate = variant_call.variant_proportion_intermediate
     String ivar_variant_version = variant_call.ivar_version
 
     # assembly outputs
