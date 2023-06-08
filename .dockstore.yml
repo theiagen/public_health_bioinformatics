@@ -155,26 +155,6 @@ workflows:
    primaryDescriptorPath: /workflows/standalone_modules/wf_gambit_query.wdl
    testParameterFiles:
     - empty.json
- - name: Kleborate_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/standalone_modules/wf_kleborate.wdl
-   testParameterFiles:
-    - empty.json
- - name: SerotypeFinder_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/standalone_modules/wf_serotypefinder.wdl
-   testParameterFiles:
-    - empty.json
- - name: TBProfiler_Illumina_PE_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/standalone_modules/wf_tbprofiler_pe.wdl
-   testParameterFiles:
-    - empty.json
- - name: TBProfiler_ONT_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/standalone_modules/wf_tbprofiler_ont.wdl
-   testParameterFiles:
-    - empty.json
  - name: NCBI-AMRFinderPlus_PHB
    subclass: WDL
    primaryDescriptorPath: /workflows/standalone_modules/wf_amrfinderplus.wdl
