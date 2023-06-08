@@ -195,9 +195,9 @@ task tbprofiler_output_parsing {
       if annotation == "Not assoc w R":
         return "No resistance to {} detected".format(drug)
       elif annotation == "Uncertain significance":
-        return "The detected genetic determinant(s) have uncertain significance, resistance to {} cannot be rulled out".format(drug)
+        return "The detected genetic determinant(s) have uncertain significance, resistance to {} cannot be ruled out".format(drug)
       elif annotation == "Assoc w R - interim":
-        return "The detected genetic determinant(s) have uncertain significance, resistance to {} cannot be rulled out".format(drug)
+        return "The detected genetic determinant(s) have uncertain significance, resistance to {} cannot be ruled out".format(drug)
       elif annotation == "Assoc w R":
         return "Genetic determinant(s) associated with resistance to {} detected".format(drug)
       else:
