@@ -171,10 +171,6 @@ task compare_two_tsvs {
     # correct dtypes - convert to numeric first, and then to strings
     validation_criteria = validation_criteria.apply(pd.to_numeric, errors='ignore').convert_dtypes()
 
-    print(df1["assembly_length"])
-    print(df1.dtypes)
-    print(df2["assembly_length"])
-    print(df2.dtypes)
     # calculate percent difference with mean
     def percent_difference(col1, col2):
       col1 = col1.apply(pd.to_numeric)
@@ -184,7 +180,6 @@ task compare_two_tsvs {
 
     # perform validation checks
     def validate(series, df1, df2):
-      print(series.name)
       # check the data type of the validation criteria; based on its type, we can assume the comparison to perform
       if pd.api.types.is_string_dtype(series) == True: # if a string,
         if series[0] == "EXACT": # count number of exact match failures/differences
