@@ -61,11 +61,6 @@ task virulencefinder {
     mv results_tab.tsv ~{samplename}_results_tab.tsv
 
     # parse 2nd column (Virulence factor) of _tab.tsv file into a comma-separated string
-    #   tail -n+2 -> all but header column
-    #   awk '{print $2}' -> extracts 2nd column (the virulence factor)
-    #   uniq -> removes duplicate factors (occasionally some factors show up twice with different accessions)
-    #   paste -s -d, - -> write the stdin (-) serially (-s) with comma-delimiters (-d,)
-    #   tee VIRULENCE_FACTORS -> copy the stdin to both stdout and a file named VIRULENCE_FACTORS
     tail -n+2 ~{samplename}_results_tab.tsv | awk '{print $2}' | uniq | paste -s -d, - | tee VIRULENCE_FACTORS
 
     # if virulencefinder fails/no hits are found, the results_tab.tsv file will still exist but only be the header
@@ -74,7 +69,6 @@ task virulencefinder {
     if ! grep -q '[^[:space:]]' VIRULENCE_FACTORS ; then 
       echo "No virulence factors found" | tee VIRULENCE_FACTORS
     fi
-   
   >>>
   output {
     File virulencefinder_report_tsv = "~{samplename}_results_tab.tsv"
