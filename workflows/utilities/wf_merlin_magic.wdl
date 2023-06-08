@@ -24,14 +24,18 @@ import "../../tasks/species_typing/task_pbptyper.wdl" as pbptyper
 import "../../tasks/species_typing/task_poppunk_streppneumo.wdl" as poppunk_spneumo
 import "../../tasks/species_typing/task_pasty.wdl" as pasty_task
 import "../../tasks/gene_typing/task_abricate.wdl" as abricate_task
+import "../../tasks/species_typing/task_emmtypingtool.wdl" as emmtypingtool_task
+import "../../tasks/species_typing/task_hicap.wdl" as hicap_task
+import "../../tasks/species_typing/task_srst2_vibrio.wdl" as srst2_vibrio_task
 
 # theiaeuk
 import "../../tasks/species_typing/task_cauris_cladetyper.wdl" as cauris_cladetyper
 import "../../tasks/gene_typing/task_snippy_variants.wdl" as snippy
+import "../../tasks/gene_typing/task_snippy_gene_query.wdl" as snippy_gene_query
 
 workflow merlin_magic {
   meta {
-    description: "Workflow for bacterial species typing; based on the Bactopia subworkflow Merlin (https://bactopia.github.io/bactopia-tools/merlin/)"
+    description: "Workflow for bacterial and fungal species typing; based on the Bactopia subworkflow Merlin (https://bactopia.github.io/bactopia-tools/merlin/)"
   }
   input {
     String samplename
@@ -41,7 +45,9 @@ workflow merlin_magic {
     File? read2
     Int? pasty_min_pident
     Int? pasty_min_coverage
+    String? hicap_docker_image
     String? pasty_docker_image
+    String? emmtypingtool_docker_image
     String? shigeifinder_docker_image
     String? staphopia_sccmec_docker_image
     String? agrvate_docker_image
@@ -53,6 +59,12 @@ workflow merlin_magic {
     Boolean theiaeuk = false
     Boolean tbprofiler_additional_outputs = false
     String output_seq_method_type = "WGS"
+    String? snippy_query_gene
+    Int srst2_min_cov = 80
+    Int srst2_max_divergence = 20
+    Int srst2_min_depth = 5
+    Int srst2_min_edge_depth = 2
+    Int srst2_gene_max_mismatch = 2000
   }
   # theiaprok
   if (merlin_tag == "Acinetobacter baumannii") {
@@ -251,6 +263,38 @@ workflow merlin_magic {
       }  
     }
   }
+  if (merlin_tag == "Streptococcus pyogenes") {
+    if (paired_end && !ont_data) {
+      call emmtypingtool_task.emmtypingtool {
+        input:
+          read1 = select_first([read1]),
+          read2 = read2,
+          samplename = samplename,
+          docker = emmtypingtool_docker_image
+      }
+    }
+  }
+  if (merlin_tag == "Haemophilus influenzae") {
+    call hicap_task.hicap {
+      input:
+        assembly = assembly,
+        samplename = samplename,
+        docker = hicap_docker_image
+    }
+  }
+  if (merlin_tag == "Vibrio") {
+    call srst2_vibrio_task.srst2_vibrio {
+      input:
+        reads1 = select_first([read1]),
+        reads2 = read2,
+        samplename = samplename,
+        srst2_min_cov = srst2_min_cov,
+        srst2_max_divergence = srst2_max_divergence,
+        srst2_min_depth = srst2_min_depth,
+        srst2_min_edge_depth = srst2_min_edge_depth,
+        srst2_gene_max_mismatch = srst2_gene_max_mismatch
+    }
+  }
   
   # theiaeuk
   if (theiaeuk) {
@@ -263,11 +307,17 @@ workflow merlin_magic {
       if (!assembly_only && !ont_data) {
         call snippy.snippy_variants as snippy_cauris { # no ONT support right now
           input:
-            reference = cladetyper.clade_spec_ref,
+            reference_genome_file = cladetyper.clade_spec_ref,
             read1 = select_first([read1]),
             read2 = read2,
-            query_gene = "FKS1,'lanosterol 14-alpha demethylase','lanosterol_14-alpha_demethylase',FUR1,'uracil_phosphoribosyltransferase','uracil phosphoribosyltransferase'",
             samplename = samplename
+        }
+        call snippy_gene_query.snippy_gene_query as snippy_gene_query_cauris {
+          input:
+            samplename = samplename,
+            snippy_variants_results = snippy_cauris.snippy_variants_results,
+            reference = cladetyper.clade_spec_ref,
+            query_gene = select_first([snippy_query_gene,"FKS1,lanosterol.14-alpha.demethylase,uracil.phosphoribosyltransferase"]),
         }
       }
     }
@@ -275,11 +325,17 @@ workflow merlin_magic {
       if (!assembly_only && !ont_data) {
         call snippy.snippy_variants as snippy_calbicans {
           input:
-            reference = "gs://theiagen-public-files/terra/theiaeuk_files/Candida_albicans_GCF_000182965.3_ASM18296v3_genomic.gbff",
+            reference_genome_file = "gs://theiagen-public-files/terra/theiaeuk_files/Candida_albicans_GCF_000182965.3_ASM18296v3_genomic.gbff",
             read1 = select_first([read1]),
             read2 = read2,
-            query_gene = "'lanosterol 14-alpha demethylase','lanosterol_14-alpha_demethylase',FKS1,FUR1,'uracil_phosphoribosyltransferase',RTA2",
             samplename = samplename
+        }
+        call snippy_gene_query.snippy_gene_query as snippy_gene_query_calbicans {
+          input:
+            samplename = samplename,
+            snippy_variants_results = snippy_calbicans.snippy_variants_results,
+            reference = "gs://theiagen-public-files/terra/theiaeuk_files/Candida_albicans_GCF_000182965.3_ASM18296v3_genomic.gbff",
+            query_gene = select_first([snippy_query_gene,"GCS1,ERG11,FUR1,RTA2"]), # GCS1 is another name for FKS1
         }
       }
     }
@@ -287,11 +343,17 @@ workflow merlin_magic {
       if (!assembly_only && !ont_data) {
         call snippy.snippy_variants as snippy_afumigatus {
           input:
-            reference = "gs://theiagen-public-files/terra/theiaeuk_files/Aspergillus_fumigatus_GCF_000002655.1_ASM265v1_genomic.gbff",
+            reference_genome_file = "gs://theiagen-public-files/terra/theiaeuk_files/Aspergillus_fumigatus_GCF_000002655.1_ASM265v1_genomic.gbff",
             read1 = select_first([read1]),
             read2 = read2,
-            query_gene = "CYP51a,HAPE,COX10",
             samplename = samplename
+        }
+        call snippy_gene_query.snippy_gene_query as snippy_gene_query_afumigatus {
+          input:
+            samplename = samplename,
+            snippy_variants_results = snippy_afumigatus.snippy_variants_results,
+            reference = "gs://theiagen-public-files/terra/theiaeuk_files/Aspergillus_fumigatus_GCF_000002655.1_ASM265v1_genomic.gbff",
+            query_gene = select_first([snippy_query_gene,"Cyp51A,HapE,AFUA_4G08340"]), # AFUA_4G08340 is COX10 according to MARDy
         }
       }
     }
@@ -299,11 +361,17 @@ workflow merlin_magic {
       if (!assembly_only && !ont_data) {
         call snippy.snippy_variants as snippy_crypto {
           input:
-            reference = "gs://theiagen-public-files/terra/theiaeuk_files/Cryptococcus_neoformans_GCF_000091045.1_ASM9104v1_genomic.gbff",
+            reference_genome_file = "gs://theiagen-public-files/terra/theiaeuk_files/Cryptococcus_neoformans_GCF_000091045.1_ASM9104v1_genomic.gbff",
             read1 = select_first([read1]),
             read2 = read2,
-            query_gene = "ERG11",
             samplename = samplename
+        }
+        call snippy_gene_query.snippy_gene_query as snippy_gene_query_crypto {
+          input:
+            samplename = samplename,
+            snippy_variants_results = snippy_crypto.snippy_variants_results,
+            reference = "gs://theiagen-public-files/terra/theiaeuk_files/Cryptococcus_neoformans_GCF_000091045.1_ASM9104v1_genomic.gbff",
+            query_gene = select_first([snippy_query_gene,"CNA00300"]), # CNA00300 is ERG11 for this reference genome
         }
       }
     }
@@ -500,7 +568,25 @@ workflow merlin_magic {
     String? seroba_ariba_serotype = seroba_task.seroba_ariba_serotype
     String? seroba_ariba_identity = seroba_task.seroba_ariba_identity
     File? seroba_details = seroba_task.seroba_details
-  
+    # Streptococcus pyogenes Typing
+    String? emmtypingtool_emm_type = emmtypingtool.emmtypingtool_emm_type
+    File? emmtypingtool_results_xml = emmtypingtool.emmtypingtool_results_xml
+    String? emmtypingtool_version = emmtypingtool.emmtypingtool_version
+    String? emmtypingtool_docker = emmtypingtool.emmtypingtool_docker
+    # Haemophilus influenzae Typing
+    String? hicap_serotype = hicap.hicap_serotype
+    String? hicap_genes = hicap.hicap_genes
+    File? hicap_results_tsv = hicap.hicap_results_tsv
+    String? hicap_version = hicap.hicap_version
+    String? hicap_docker = hicap.hicap_docker
+    # Vibrio
+    File? srst2_vibrio_detailed_tsv = srst2_vibrio.srst2_detailed_tsv
+    String? srst2_vibrio_version = srst2_vibrio.srst2_version
+    String? srst2_vibrio_ctxA = srst2_vibrio.srst2_vibrio_ctxA
+    String? srst2_vibrio_ompW = srst2_vibrio.srst2_vibrio_ompW
+    String? srst2_vibrio_toxR = srst2_vibrio.srst2_vibrio_toxR
+    String? srst2_vibrio_serogroup = srst2_vibrio.srst2_vibrio_serogroup
+    String? srst2_vibrio_biotype = srst2_vibrio.srst2_vibrio_biotype
     # theiaeuk
     # c auris 
     String? clade_type = cladetyper.gambit_cladetype
@@ -510,9 +596,10 @@ workflow merlin_magic {
     String? cladetype_annotated_ref = cladetyper.clade_spec_ref
     # snippy variants
     String snippy_variants_version = select_first([snippy_cauris.snippy_variants_version, snippy_calbicans.snippy_variants_version, snippy_afumigatus.snippy_variants_version, snippy_crypto.snippy_variants_version, "No matching taxon detected"])
-    String snippy_variants_query = select_first([snippy_cauris.snippy_variants_query, snippy_calbicans.snippy_variants_query, snippy_afumigatus.snippy_variants_query, snippy_crypto.snippy_variants_query, "No matching taxon detected"])
-    String snippy_variants_hits = select_first([snippy_cauris.snippy_variants_hits, snippy_calbicans.snippy_variants_hits, snippy_afumigatus.snippy_variants_hits, snippy_crypto.snippy_variants_hits, "No matching taxon detected"])
-    File snippy_variants_gene_query_results = select_first([snippy_cauris.snippy_variants_gene_query_results, snippy_calbicans.snippy_variants_gene_query_results, snippy_afumigatus.snippy_variants_gene_query_results, snippy_crypto.snippy_variants_gene_query_results, "gs://theiagen-public-files/terra/theiaeuk_files/no_match_detected.txt"])
+    String snippy_variants_query = select_first([snippy_gene_query_cauris.snippy_variants_query, snippy_gene_query_calbicans.snippy_variants_query, snippy_gene_query_afumigatus.snippy_variants_query, snippy_gene_query_crypto.snippy_variants_query, "No matching taxon detected"])
+    String snippy_variants_query_check = select_first([snippy_gene_query_cauris.snippy_variants_query_check, snippy_gene_query_calbicans.snippy_variants_query_check, snippy_gene_query_afumigatus.snippy_variants_query_check, snippy_gene_query_crypto.snippy_variants_query_check, "No matching taxon detected"])
+    String snippy_variants_hits = select_first([snippy_gene_query_cauris.snippy_variants_hits, snippy_gene_query_calbicans.snippy_variants_hits, snippy_gene_query_afumigatus.snippy_variants_hits, snippy_gene_query_crypto.snippy_variants_hits, "No matching taxon detected"])
+    File snippy_variants_gene_query_results = select_first([snippy_gene_query_cauris.snippy_variants_gene_query_results, snippy_gene_query_calbicans.snippy_variants_gene_query_results, snippy_gene_query_afumigatus.snippy_variants_gene_query_results, snippy_gene_query_crypto.snippy_variants_gene_query_results, "gs://theiagen-public-files/terra/theiaeuk_files/no_match_detected.txt"])
     File snippy_variants_outdir_tarball = select_first([snippy_cauris.snippy_variants_outdir_tarball, snippy_calbicans.snippy_variants_outdir_tarball, snippy_afumigatus.snippy_variants_outdir_tarball, snippy_crypto.snippy_variants_outdir_tarball, "gs://theiagen-public-files/terra/theiaeuk_files/no_match_detected.txt"])
     File snippy_variants_results = select_first([snippy_cauris.snippy_variants_results, snippy_calbicans.snippy_variants_results, snippy_afumigatus.snippy_variants_results, snippy_crypto.snippy_variants_results, "gs://theiagen-public-files/terra/theiaeuk_files/no_match_detected.txt"])
     File snippy_variants_bam = select_first([snippy_cauris.snippy_variants_bam, snippy_calbicans.snippy_variants_bam, snippy_afumigatus.snippy_variants_bam, snippy_crypto.snippy_variants_bam, "gs://theiagen-public-files/terra/theiaeuk_files/no_match_detected.txt"])

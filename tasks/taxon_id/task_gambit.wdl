@@ -137,38 +137,42 @@ task gambit {
     if [[ ${predicted_taxon} == *"Escherichia"* ]] || [[ ${predicted_taxon} == *"Shigella"* ]] ; then 
       merlin_tag="Escherichia"
       # if predicted taxon is Shigella sonnei, reset merlin_tag to Shigella_sonnei
-      if [[ ${predicted_taxon} == *"Shigella sonnei"* ]]; then 
+      if [[ ${predicted_taxon} == *"Shigella sonnei"* ]]; then
         merlin_tag="Shigella_sonnei"
       fi
-    elif [[ ${predicted_taxon} == *"Haemophilus"* ]]; then 
+    elif [[ ${predicted_taxon} == *"Haemophilus"* ]]; then
       merlin_tag="Haemophilus"
+       # set t o Haemophilus influenzae if gambit calls the species
+      if [[ ${predicted_taxon} == *"Haemophilus influenzae"* ]]; then
+        merlin_tag="Haemophilus influenzae"
+      fi
     elif [[ ${predicted_taxon} == *"Klebsiella"* ]]; then 
       merlin_tag="Klebsiella"
-    elif [[ ${predicted_taxon} == *"Acinetobacter baumannii"* ]]; then 
+    elif [[ ${predicted_taxon} == *"Acinetobacter baumannii"* ]]; then
       merlin_tag="Acinetobacter baumannii"
-    elif [[ ${predicted_taxon} == *"Legionella pneumophila"* ]]; then 
+    elif [[ ${predicted_taxon} == *"Legionella pneumophila"* ]]; then
       merlin_tag="Legionella pneumophila"
     elif [[ ${predicted_taxon} == *"Pseudomonas aeruginosa"* ]]; then
       merlin_tag="Pseudomonas aeruginosa"
     elif [[ ${predicted_taxon} == *"Listeria"* ]]; then 
       merlin_tag="Listeria"
-    elif [[ ${predicted_taxon} == *"Mycobacterium tuberculosis"* ]]; then 
+    elif [[ ${predicted_taxon} == *"Mycobacterium tuberculosis"* ]]; then
       merlin_tag="Mycobacterium tuberculosis"
-    elif [[ ${predicted_taxon} == *"Neisseria"* ]]; then 
+    elif [[ ${predicted_taxon} == *"Neisseria"* ]]; then
       merlin_tag="Neisseria"
       # if predicted taxon is Neisseria gonorrhoeae, reset merlin_tag to Neisseria gonorrhoeae
-      if [[ ${predicted_taxon} == *"Neisseria gonorrhoeae"* ]]; then 
+      if [[ ${predicted_taxon} == *"Neisseria gonorrhoeae"* ]]; then
         merlin_tag="Neisseria gonorrhoeae"
       # if predicted taxon is Neisseria meningitidis, reset merlin_tag to Neisseria meningitidis
       elif [[ ${predicted_taxon} == *"Neisseria meningitidis"* ]]; then
         merlin_tag="Neisseria meningitidis"
       fi
-    elif [[ ${predicted_taxon} == *"Salmonella"* ]]; then 
+    elif [[ ${predicted_taxon} == *"Salmonella"* ]]; then
       merlin_tag="Salmonella"
-    elif [[ ${predicted_taxon} == *"Staphylococcus"* ]]; then 
+    elif [[ ${predicted_taxon} == *"Staphylococcus"* ]]; then
       merlin_tag="Staphylococcus"
       # set to aureus if gambit calls the species
-      if [[ ${predicted_taxon} == *"Staphylococcus aureus"* ]]; then 
+      if [[ ${predicted_taxon} == *"Staphylococcus aureus"* ]]; then
         merlin_tag="Staphylococcus aureus"
       fi
     elif [[ ${predicted_taxon} == *"Streptococcus"* ]]; then 
@@ -177,6 +181,12 @@ task gambit {
       if [[ ${predicted_taxon} == *"Streptococcus pneumoniae"* ]]; then 
         merlin_tag="Streptococcus pneumoniae"
       fi
+      # set to pyogenes if gambit calls the species
+      if [[ ${predicted_taxon} == *"Streptococcus pyogenes"* ]]; then 
+        merlin_tag="Streptococcus pyogenes"
+      fi
+    elif [[ ${predicted_taxon} == *"Vibrio"* ]]; then 
+      merlin_tag="Vibrio"
     # theiaeuk
     elif [[ ${predicted_taxon} == *"Candida auris"* ]] ; then 
       merlin_tag="Candida auris"

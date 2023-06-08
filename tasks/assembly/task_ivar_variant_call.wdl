@@ -11,7 +11,7 @@ task variant_call {
     Boolean disable_baq = true
     Int min_bq = "0"
     Int min_qual = "20"
-    Float min_freq = "0.6"
+    Float? variant_min_freq 
     Int? variant_min_depth 
     Int disk_size = 100
   }
@@ -51,7 +51,7 @@ task variant_call {
     ivar variants \
     -p ~{samplename}.variants \
     -q ~{min_qual} \
-    -t ~{min_freq} \
+    -t ~{variant_min_freq} \
     -m ~{variant_min_depth} \
     -r ${ref_genome} \
     -g ${ref_gff}

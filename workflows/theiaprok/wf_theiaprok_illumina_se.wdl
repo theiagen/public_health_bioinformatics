@@ -15,6 +15,7 @@ import "../../tasks/species_typing/task_ts_mlst.wdl" as ts_mlst_task
 import "../../tasks/gene_typing/task_bakta.wdl" as bakta_task
 import "../../tasks/gene_typing/task_prokka.wdl" as prokka_task
 import "../../tasks/gene_typing/task_plasmidfinder.wdl" as plasmidfinder_task
+import "../../tasks/quality_control/task_qc_check_phb.wdl" as qc_check
 import "../../tasks/task_versioning.wdl" as versioning
 import "../../tasks/utilities/task_broad_terra_tools.wdl" as terra_tools
 
@@ -52,6 +53,9 @@ workflow theiaprok_illumina_se {
     Boolean call_ani = false # by default do not call ANI task, but user has ability to enable this task if working with enteric pathogens or supply their own high-quality reference genome
     Boolean call_resfinder = false
     String genome_annotation = "prokka" # options: "prokka" or "bakta"
+    # qc check parameters
+    File? qc_check_table
+    String? expected_taxon
   }
   call versioning.version_capture{
     input:
@@ -166,6 +170,30 @@ workflow theiaprok_illumina_se {
           assembly = shovill_se.assembly_fasta,
           samplename = samplename
       }
+      if(defined(qc_check_table)) {
+        call qc_check.qc_check_phb as qc_check_task {
+          input:
+            qc_check_table = qc_check_table,
+            expected_taxon = expected_taxon,
+            gambit_predicted_taxon = gambit.gambit_predicted_taxon,
+            num_reads_raw1 = read_QC_trim.fastq_scan_raw_number_reads,
+            num_reads_clean1 = read_QC_trim.fastq_scan_clean_number_reads,
+            r1_mean_q_raw = cg_pipeline_raw.r1_mean_q,
+            r1_mean_readlength_raw = cg_pipeline_raw.r1_mean_readlength,
+            r1_mean_q_clean = cg_pipeline_clean.r1_mean_q,
+            r1_mean_readlength_clean = cg_pipeline_clean.r1_mean_readlength,   
+            est_coverage_raw = cg_pipeline_raw.est_coverage,
+            est_coverage_clean = cg_pipeline_clean.est_coverage,
+            midas_secondary_genus_abundance = read_QC_trim.midas_secondary_genus_abundance,
+            assembly_length = quast.genome_length,
+            number_contigs = quast.number_contigs,
+            n50_value = quast.n50_value,
+            quast_gc_percent = quast.gc_percent,
+            busco_results = busco.busco_results,
+            ani_highest_percent = ani.ani_highest_percent,
+            ani_highest_percent_bases_aligned = ani.ani_highest_percent_bases_aligned
+        }
+      }
       call merlin_magic_workflow.merlin_magic {
         input:
           merlin_tag = gambit.merlin_tag,
@@ -237,7 +265,8 @@ workflow theiaprok_illumina_se {
             amrfinderplus_amr_report = amrfinderplus_task.amrfinderplus_amr_report,
             amrfinderplus_stress_report = amrfinderplus_task.amrfinderplus_stress_report,
             amrfinderplus_virulence_report = amrfinderplus_task.amrfinderplus_virulence_report,
-            amrfinderplus_amr_genes = amrfinderplus_task.amrfinderplus_amr_genes,
+            amrfinderplus_amr_core_genes = amrfinderplus_task.amrfinderplus_amr_core_genes,
+            amrfinderplus_amr_plus_genes = amrfinderplus_task.amrfinderplus_amr_plus_genes,
             amrfinderplus_stress_genes = amrfinderplus_task.amrfinderplus_stress_genes,
             amrfinderplus_virulence_genes = amrfinderplus_task.amrfinderplus_virulence_genes,
             amrfinderplus_amr_classes = amrfinderplus_task.amrfinderplus_amr_classes,
@@ -434,7 +463,22 @@ workflow theiaprok_illumina_se {
             pasty_all_serogroups = merlin_magic.pasty_all_serogroups,
             pasty_version = merlin_magic.pasty_version,
             pasty_docker = merlin_magic.pasty_docker,
-            pasty_comment = merlin_magic.pasty_comment
+            pasty_comment = merlin_magic.pasty_comment,
+            hicap_serotype = merlin_magic.hicap_serotype,
+            hicap_genes = merlin_magic.hicap_genes,
+            hicap_results_tsv = merlin_magic.hicap_results_tsv,
+            hicap_version = merlin_magic.hicap_version,
+            hicap_docker = merlin_magic.hicap_docker,
+            srst2_vibrio_detailed_tsv = merlin_magic.srst2_vibrio_detailed_tsv,
+            srst2_vibrio_version = merlin_magic.srst2_vibrio_version,
+            srst2_vibrio_ctxA = merlin_magic.srst2_vibrio_ctxA,
+            srst2_vibrio_ompW = merlin_magic.srst2_vibrio_ompW,
+            srst2_vibrio_toxR = merlin_magic.srst2_vibrio_toxR,
+            srst2_vibrio_serogroup = merlin_magic.srst2_vibrio_serogroup,
+            srst2_vibrio_biotype = merlin_magic.srst2_vibrio_biotype,
+            qc_check = qc_check_task.qc_check,
+            qc_standard = qc_check_task.qc_standard
+
         }
       }
     }
@@ -511,7 +555,8 @@ workflow theiaprok_illumina_se {
     File? amrfinderplus_amr_report = amrfinderplus_task.amrfinderplus_amr_report
     File? amrfinderplus_stress_report = amrfinderplus_task.amrfinderplus_stress_report
     File? amrfinderplus_virulence_report = amrfinderplus_task.amrfinderplus_virulence_report
-    String? amrfinderplus_amr_genes = amrfinderplus_task.amrfinderplus_amr_genes
+    String? amrfinderplus_amr_core_genes = amrfinderplus_task.amrfinderplus_amr_core_genes
+    String? amrfinderplus_amr_plus_genes = amrfinderplus_task.amrfinderplus_amr_plus_genes
     String? amrfinderplus_stress_genes = amrfinderplus_task.amrfinderplus_stress_genes
     String? amrfinderplus_virulence_genes = amrfinderplus_task.amrfinderplus_virulence_genes
     String? amrfinderplus_amr_classes = amrfinderplus_task.amrfinderplus_amr_classes
@@ -550,6 +595,9 @@ workflow theiaprok_illumina_se {
     File? plasmidfinder_seqs = plasmidfinder.plasmidfinder_seqs
     String? plasmidfinder_docker = plasmidfinder.plasmidfinder_docker
     String? plasmidfinder_db_version = plasmidfinder.plasmidfinder_db_version   
+    # QC_Check Results
+    String? qc_check = qc_check_task.qc_check
+    File? qc_standard = qc_check_task.qc_standard
     # Ecoli Typing
     File? serotypefinder_report = merlin_magic.serotypefinder_report
     String? serotypefinder_docker = merlin_magic.serotypefinder_docker
@@ -730,6 +778,20 @@ workflow theiaprok_illumina_se {
     String? poppunk_GPS_db_version = merlin_magic.poppunk_GPS_db_version
     String? poppunk_version = merlin_magic.poppunk_version
     String? poppunk_docker = merlin_magic.poppunk_docker
+    # Haemophilus influenzae Typing
+    String? hicap_serotype = merlin_magic.hicap_serotype
+    String? hicap_genes = merlin_magic.hicap_genes
+    File? hicap_results_tsv = merlin_magic.hicap_results_tsv
+    String? hicap_version = merlin_magic.hicap_version
+    String? hicap_docker = merlin_magic.hicap_docker
+    # Vibrio Typing
+    File? srst2_vibrio_detailed_tsv = merlin_magic.srst2_vibrio_detailed_tsv
+    String? srst2_vibrio_version = merlin_magic.srst2_vibrio_version
+    String? srst2_vibrio_ctxA = merlin_magic.srst2_vibrio_ctxA
+    String? srst2_vibrio_ompW = merlin_magic.srst2_vibrio_ompW
+    String? srst2_vibrio_toxR = merlin_magic.srst2_vibrio_toxR
+    String? srst2_vibrio_biotype = merlin_magic.srst2_vibrio_biotype
+    String? srst2_vibrio_serogroup = merlin_magic.srst2_vibrio_serogroup
     # export taxon table output
     String? taxon_table_status = export_taxon_tables.status
   }
