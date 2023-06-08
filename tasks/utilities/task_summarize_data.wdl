@@ -51,9 +51,11 @@ task summarize_data {
 
   table = table[temporarylist].copy()
 
+
   # create a table to search through containing only columns of interest
   searchtable = table[columns].copy()
-  searchtable.to_csv("~{output_prefix}_filtered_metadata.tsv", sep='\t', index=False)
+  filteredmetadate = searchtable.set_index(table["~{terra_table}_id"])
+  filteredmetadate.to_csv("~{output_prefix}_filtered_metadata.tsv", sep='\t', index=True)
 
   # iterate through the columns of interest and combine into a single list
   genes = []
