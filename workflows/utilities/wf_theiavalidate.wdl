@@ -54,6 +54,8 @@ workflow theiavalidate {
     String theiavalidate_date = version_capture.date
     File? validation_report = compare_two_tsvs.pdf_report
     File? validation_differences_table = compare_two_tsvs.excel_report
+    File? input_table1 = compare_two_tsvs.input_table1
+    File? input_table2 = compare_two_tsvs.input_table2
     String validation_status = select_first([validation_failure, validation_attempted])
   }
 }

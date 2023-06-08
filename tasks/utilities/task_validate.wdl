@@ -80,24 +80,22 @@ task compare_two_tsvs {
   import pandas as pd
   import numpy as np
   import os
-  import sys
-  import re
   import pdfkit as pdf
+  from datetime import date
   from pretty_html_table import build_table
 
   def read_tsv(tsv_file):
     # Read TSV and change first column to 'samples'
     df = pd.read_csv(tsv_file, sep='\t')
-    c1_name = df.columns.values[0]
     df.columns.values[0] = "samples"
 
     # replace blank cells with NaNs 
     df = df.replace("None", np.nan)
-    return [df, c1_name]
+    return df
 
   # Read in TSVs and keep table name
-  df1, df1_c1_name = read_tsv("~{datatable1_tsv}")
-  df2, df2_c1_name = read_tsv("~{datatable2_tsv}")
+  df1 = read_tsv("~{datatable1_tsv}")
+  df2 = read_tsv("~{datatable2_tsv}")
 
   # read in the list of columns to compare
   comparison_columns = "~{columns_to_compare}".split(",")
@@ -120,23 +118,21 @@ task compare_two_tsvs {
       drop_list2.append(item)
   df2.drop(drop_list2, axis='columns', inplace=True)
 
-  # initialize a list of new columns found -- currently nothing is done with these
-  new_columns_df1 = []
-  new_columns_df2 = []
-
   # identify any columns that do not appear in a data table
   for column in comparison_columns:
     if column not in df1.columns:
-      new_columns_df1.append(column)
       # add the column to data table
       df1[column] = np.nan
     if column not in df2.columns:
-      new_columns_df2.append(column)
       # add the column to data table
       df2[column] = np.nan
   
   # reorder the second table to have matching column order
   df2 = df2[df1.columns]
+  
+  # output the filtered df1 and df2 tables 
+  df1.to_csv("~{output_prefix}-~{datatable1}.tsv", sep='\t', index=False)
+  df2.to_csv("~{output_prefix}-~{datatable2}.tsv", sep='\t', index=False)
 
   # get count of populated cells per column
   df1_populated_rows = pd.DataFrame(df1.count(), columns = ['Number of samples populated in ~{datatable1}'])
@@ -174,16 +170,21 @@ task compare_two_tsvs {
 
     # correct dtypes - convert to numeric first, and then to strings
     validation_criteria = validation_criteria.apply(pd.to_numeric, errors='ignore').convert_dtypes()
-    #df1 = df1.apply(pd.to_numeric, errors='ignore').convert_dtypes()
-    #df2 = df2.apply(pd.to_numeric, errors='ignore').convert_dtypes()
 
+    print(df1["assembly_length"])
+    print(df1.dtypes)
+    print(df2["assembly_length"])
+    print(df2.dtypes)
     # calculate percent difference with mean
     def percent_difference(col1, col2):
+      col1 = col1.apply(pd.to_numeric)
+      col2 = col2.apply(pd.to_numeric)
       # |x-y|/((x+y)/2)
       return np.absolute(col2.sub(col1)).div((col2.add(col1))/2)
 
     # perform validation checks
     def validate(series, df1, df2):
+      print(series.name)
       # check the data type of the validation criteria; based on its type, we can assume the comparison to perform
       if pd.api.types.is_string_dtype(series) == True: # if a string,
         if series[0] == "EXACT": # count number of exact match failures/differences
@@ -214,7 +215,7 @@ task compare_two_tsvs {
         # .gt() compares percent difference to series[0] (which is the percent threshold in decimal format) and spits out True or False
         # .sum() adds the total count where the % difference is greater (cases where .gt() = True)
         # Overall: determines if percent difference between two values is greater than a provided threshold
-        return(format(series[0], '.2%'), percent_difference(df1[series.name], df2[series.name]).gt(series[0]).sum())
+        return("PERCENT_DIFF: " + format(series[0], '.2%'), percent_difference(df1[series.name], df2[series.name]).gt(series[0]).sum())
       elif pd.api.types.is_datetime64_any_dtype(series) == True: # if a date, do not check
         return("DATE VALUE; IGNORED", np.nan)
       elif pd.api.types.is_integer_dtype(series) == True: # if an integer, do not check
@@ -254,8 +255,20 @@ task compare_two_tsvs {
 
   # save to html file
   with open(out_html_name, 'w') as outfile:
+    outfile.write("<p>Validation analysis performed on " + str(date.today().isoformat()) + ".</p>")
     outfile.write(html_table_light_grey)
-
+    outfile.write("<p>Validation Criteria:</p>")
+    outfile.write("<ul>")
+    outfile.write(" <dt>EXACT</dt>")
+    outfile.write(" <dd>Performs an exact string match</dd>")
+    outfile.write(" <dt>IGNORE</dt>")
+    outfile.write(" <dd>Ignores the values; indicates 0 failures</dd>")
+    outfile.write(" <dt>SET</dt>")
+    outfile.write(" <dd>Compares items in a list without regard to order</dd>")
+    outfile.write(" <dt>PERCENT_DIFF</dt>")
+    outfile.write(" <dd>Tests if two values are more than the indicated percent difference (must be in decimal format)</dd>")
+    outfile.write("</ul>")
+    
   # convert to pdf
   options = {
     'page-size': 'Letter',
@@ -281,5 +294,7 @@ task compare_two_tsvs {
   output {
     File pdf_report = "~{output_prefix}.pdf"
     File excel_report = "~{output_prefix}.xlsx"
+    File input_table1 = "~{output_prefix}-~{datatable1}.tsv"
+    File input_table2 = "~{output_prefix}-~{datatable2}.tsv"
   }
 }
