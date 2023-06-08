@@ -50,5 +50,6 @@ workflow mashtree_fasta {
     String mashtree_version = mashtree_task.version
     # Data Summary Out
     File? mashtree_summarized_data = summarize_data.summarized_data
+    File? mashtree_filtered_metadata = summarize_data.filtered_metadata
   }
 }
