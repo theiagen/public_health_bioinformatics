@@ -23,14 +23,30 @@ task ksnp3 {
     echo "Assembly array (length: $assembly_array_len) and samplename array (length: $samplename_array_len) are of unequal length." >&2
     exit 1
   fi
+  # ensure kSNP file naming convention is met
+  assembly_renamed_array=()
+  for index in ${!assembly_array[@]}; do
+      assembly=${assembly_array[$index]}
+      # ensure kSNP file naming convention is met by removing non-id, dot-separated info, 
+      # e.g. sample01.ivar.consensus.fasta will be renamed to sample01.fasta
+      assembly_renamed=$(echo $assembly | sed 's/\.\(.*\)\././')
+      echo "ASSEMBLY: $assembly"
+      echo "ASSEMBLY_RENAMED: $assembly_renamed"
+      mv $assembly $assembly_renamed
+      assembly_renamed_array+=($assembly_renamed)
+  done
 
   # create file of filenames for kSNP3 input
   touch ksnp3_input.tsv
-  for index in ${!assembly_array[@]}; do
-    assembly=${assembly_array[$index]}
+  for index in ${!assembly_renamed_array[@]}; do
+    assembly=${assembly_renamed_array[$index]}
     samplename=${samplename_array[$index]}
     echo -e "${assembly}\t${samplename}" >> ksnp3_input.tsv
   done
+  
+  echo "ksnp3_input.tsv:: "
+  cat ksnp3_input.tsv
+
   # run ksnp3 on input assemblies
   kSNP3 -in ksnp3_input.tsv -outdir ksnp3 -k ~{kmer_size} -core -vcf ~{ksnp3_args}
   
@@ -58,6 +74,7 @@ task ksnp3 {
     File? ksnp3_ml_tree = "ksnp3/~{cluster_name}_ML.nwk"
     File? ksnp3_nj_tree = "ksnp3/~{cluster_name}_NJ.nwk"
     File number_snps = "ksnp3/COUNT_SNPs"
+    File ksnp3_input = "ksnp3_input.tsv"
     Array[File] ksnp_outs = glob("ksnp3/*")
     String ksnp3_docker_image = docker_image
   }
@@ -67,6 +84,6 @@ task ksnp3 {
     cpu: cpu
     disks: "local-disk ~{disk_size} SSD"
     preemptible: 0
-    maxRetries: 3
+    maxRetries: 0
   }
 }
