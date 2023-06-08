@@ -3,6 +3,7 @@ version 1.0
 task virulencefinder {
   input {
     File? assembly
+    ## only allowing assembly input as CGE web app functionality for read inputs cannot be recreated with current staphb docker
     #File? read1
     #File? read2
     String samplename
