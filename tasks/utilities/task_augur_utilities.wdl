@@ -334,6 +334,7 @@ task prep_augur_metadata {
 
     String county = ""
     String? pango_lineage
+    String? nextclade_clade
     String? organism = "sars-cov-2"
 
     Int disk_size = 10
@@ -343,10 +344,15 @@ task prep_augur_metadata {
     assembly_header=$(grep -e ">" ~{assembly} | sed 's/\s.*$//' |  sed 's/>//g' )
 
     pangolin_header=""
+    nextclade_header=""
 
     # if pango_lineage defined, add to metadata
     if [[ "~{pango_lineage}" ]]; then 
       pangolin_header="pango_lineage"
+    fi
+    # if pango_lineage defined, add to metadata
+    if [[ "~{nextclade_clade}" ]]; then 
+      nextclade_header="pango_lineage"
     fi
 
     if [[ "~{organism}" == "sars-cov-2" ]]; then
@@ -356,8 +362,8 @@ task prep_augur_metadata {
     fi
 
     # write everything to a file
-    echo -e "strain\tvirus\tdate\tregion\tcountry\tdivision\tlocation\t${pangolin_header}" > augur_metadata.tsv
-    echo -e "\"${assembly_header}\"\t\"${virus}\"\t\"~{collection_date}\"\t\"~{continent}\"\t\"~{country}\"\t\"~{state}\"\t\"~{county}\"\t\"~{pango_lineage}\"" >> augur_metadata.tsv
+    echo -e "strain\tvirus\tdate\tregion\tcountry\tdivision\tlocation\t${pangolin_header}\t${nextclade_header}" > augur_metadata.tsv
+    echo -e "\"${assembly_header}\"\t\"${virus}\"\t\"~{collection_date}\"\t\"~{continent}\"\t\"~{country}\"\t\"~{state}\"\t\"~{county}\"\t\"~{pango_lineage}\"\t\"~{nextclade_clade}\"" >> augur_metadata.tsv
   >>>
   output {
     File augur_metadata = "augur_metadata.tsv"

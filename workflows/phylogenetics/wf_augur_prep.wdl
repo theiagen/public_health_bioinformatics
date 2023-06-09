@@ -11,6 +11,7 @@ workflow augur_prep {
     String state
     String continent
     String? pango_lineage
+    String? nextclade_clade
     String? county
   }
   call augur_utils.prep_augur_metadata {
@@ -21,6 +22,7 @@ workflow augur_prep {
       state = state,
       continent = continent,
       pango_lineage = pango_lineage,
+      nextclade_clade = nextclade_clade,
       county = county
   }
   call versioning.version_capture {
