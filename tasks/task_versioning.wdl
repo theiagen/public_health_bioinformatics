@@ -8,7 +8,7 @@ task version_capture {
     volatile: true
   }
   command {
-    PHB_Version="PHB v0.1.0: merge"
+    PHB_Version="PHB v0.2.0"
     ~{default='' 'export TZ=' + timezone}
     date +"%Y-%m-%d" > TODAY
     echo "$PHB_Version" > PHB_VERSION
