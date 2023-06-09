@@ -225,6 +225,9 @@ workflow theiaprok_fasta {
         shigeifinder_O_antigen_reads = merlin_magic.shigeifinder_O_antigen_reads,
         shigeifinder_H_antigen_reads = merlin_magic.shigeifinder_H_antigen_reads,
         shigeifinder_notes_reads = merlin_magic.shigeifinder_notes_reads,
+        virulencefinder_report_tsv = merlin_magic.virulencefinder_report_tsv,
+        virulencefinder_docker = merlin_magic.virulencefinder_docker,
+        virulencefinder_hits = merlin_magic.virulencefinder_hits,
         sonneityping_mykrobe_report_csv = merlin_magic.sonneityping_mykrobe_report_csv,
         sonneityping_mykrobe_report_json = merlin_magic.sonneityping_mykrobe_report_json,
         sonneityping_final_report_tsv = merlin_magic.sonneityping_final_report_tsv,
@@ -471,6 +474,10 @@ workflow theiaprok_fasta {
     String? shigeifinder_O_antigen = merlin_magic.shigeifinder_O_antigen
     String? shigeifinder_H_antigen = merlin_magic.shigeifinder_H_antigen
     String? shigeifinder_notes = merlin_magic.shigeifinder_notes
+    # E coli only typing
+    File? virulencefinder_report_tsv = merlin_magic.virulencefinder_report_tsv
+    String? virulencefinder_docker = merlin_magic.virulencefinder_docker
+    String? virulencefinder_hits = merlin_magic.virulencefinder_hits
     # Listeria Typing
     File? lissero_results = merlin_magic.lissero_results
     String? lissero_version = merlin_magic.lissero_version

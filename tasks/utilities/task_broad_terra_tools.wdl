@@ -149,6 +149,9 @@ task export_taxon_tables {
     String? shigeifinder_O_antigen_reads
     String? shigeifinder_H_antigen_reads
     String? shigeifinder_notes_reads
+    File? virulencefinder_report_tsv
+    String? virulencefinder_docker
+    String? virulencefinder_hits
     File? sonneityping_mykrobe_report_csv
     File? sonneityping_mykrobe_report_json
     File? sonneityping_final_report_tsv
@@ -235,12 +238,6 @@ task export_taxon_tables {
     String? tbprofiler_sub_lineage
     String? tbprofiler_dr_type
     String? tbprofiler_resistance_genes
-    File? tbprofiler_additional_outputs_csv
-    File? tbprofiler_laboratorian_report_csv
-    String? tbprofiler_gene_name
-    String? tbprofiler_locus_tag
-    String? tbprofiler_variant_substitutions
-    String? tbprofiler_output_seq_method_type
     File? legsta_results
     String? legsta_predicted_sbt
     String? legsta_version
@@ -473,6 +470,9 @@ task export_taxon_tables {
       "shigeifinder_O_antigen_reads": "~{shigeifinder_O_antigen_reads}",
       "shigeifinder_H_antigen_reads": "~{shigeifinder_H_antigen_reads}",
       "shigeifinder_notes_reads": "~{shigeifinder_notes_reads}",
+      "virulencefinder_report_tsv": "~{virulencefinder_report_tsv}",
+      "virulencefinder_docker": "~{virulencefinder_docker}",
+      "virulencefinder_hits": "~{virulencefinder_hits}",
       "sonneityping_mykrobe_report_csv": "~{sonneityping_mykrobe_report_csv}",
       "sonneityping_mykrobe_report_json": "~{sonneityping_mykrobe_report_json}",
       "sonneityping_final_report_tsv": "~{sonneityping_final_report_tsv}",
@@ -555,12 +555,6 @@ task export_taxon_tables {
       "tbprofiler_sub_lineage": "~{tbprofiler_sub_lineage}",
       "tbprofiler_dr_type": "~{tbprofiler_dr_type}",
       "tbprofiler_resistance_genes": "~{tbprofiler_resistance_genes}",
-      "tbprofiler_additional_outputs_csv": "~{tbprofiler_additional_outputs_csv}",
-      "tbprofiler_laboratorian_report_csv": "~{tbprofiler_laboratorian_report_csv}",
-      "tbprofiler_gene_name": "~{tbprofiler_gene_name}",
-      "tbprofiler_locus_tag": "~{tbprofiler_locus_tag}",
-      "tbprofiler_variant_substitutions": "~{tbprofiler_variant_substitutions}",
-      "tbprofiler_output_seq_method_type": "~{tbprofiler_output_seq_method_type}",
       "amrfinderplus_all_report": "~{amrfinderplus_all_report}",
       "amrfinderplus_amr_report": "~{amrfinderplus_amr_report}",
       "amrfinderplus_stress_report": "~{amrfinderplus_stress_report}",
