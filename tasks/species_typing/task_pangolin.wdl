@@ -82,14 +82,14 @@ task pangolin4 {
 task pangolin_update_log {
   input {
     String samplename
-    String current_lineage
-    String current_pangolin_docker
-    String current_pangolin_assignment_version
-    String current_pangolin_versions
-    String updated_lineage
-    String updated_pangolin_docker
-    String updated_pangolin_assignment_version
-    String updated_pangolin_versions
+    String old_lineage
+    String old_pangolin_docker
+    String old_pangolin_assignment_version
+    String old_pangolin_versions
+    String new_lineage
+    String new_pangolin_docker
+    String new_pangolin_assignment_version
+    String new_pangolin_versions
     String? timezone
     File? lineage_log
     Int disk_size = 100
@@ -100,11 +100,11 @@ task pangolin_update_log {
     DATE=$(date +"%Y-%m-%d")
 
     #check if lineage has been modified
-    if [[ "~{current_lineage}" == "~{updated_lineage}" ]]
+    if [[ "~{old_lineage}" == "~{new_lineage}" ]]
     then
-      UPDATE_STATUS="pango lineage unchanged: ~{updated_lineage}"
+      UPDATE_STATUS="pango lineage unchanged: ~{new_lineage}"
     else
-      UPDATE_STATUS="pango lineage modified: ~{current_lineage} -> ~{updated_lineage}"
+      UPDATE_STATUS="pango lineage modified: ~{old_lineage} -> ~{new_lineage}"
     fi
 
     #if a lineage log not provided, create one with headers
@@ -123,11 +123,11 @@ task pangolin_update_log {
       fi
    else
      echo "Creating new lineage log file as none was provided"
-     echo -e "analysis_date\tmodification_status\tprevious_lineage\tprevious_pangolin_docker\tprevious_pangolin_assignment_version\tprevious_pangolin_versions\tupdated_lineage\tupdated_pangolin_docker\tupdated_pangolin_assignment_version\tupdated_pangolin_versions" > ${lineage_log_file}
+     echo -e "analysis_date\tmodification_status\tprevious_lineage\tprevious_pangolin_docker\tprevious_pangolin_assignment_version\tprevious_pangolin_versions\tcurrent_lineage\tcurrent_pangolin_docker\tcurrent_pangolin_assignment_version\tcurrent_pangolin_versions" > ${lineage_log_file}
    fi
 
      #populate lineage log file
-     echo -e "${DATE}\t${UPDATE_STATUS}\t~{current_lineage}\t~{current_pangolin_docker}\t~{current_pangolin_assignment_version}\t~{current_pangolin_versions}\t~{updated_lineage}\t~{updated_pangolin_docker}\t~{updated_pangolin_assignment_version}\t~{updated_pangolin_versions}" >> "${lineage_log_file}"
+     echo -e "${DATE}\t${UPDATE_STATUS}\t~{old_lineage}\t~{old_pangolin_docker}\t~{old_pangolin_assignment_version}\t~{old_pangolin_versions}\t~{new_lineage}\t~{new_pangolin_docker}\t~{new_pangolin_assignment_version}\t~{new_pangolin_versions}" >> "${lineage_log_file}"
 
     echo "${UPDATE_STATUS} (${DATE})"  | tee PANGOLIN_UPDATE
   >>>

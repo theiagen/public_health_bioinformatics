@@ -29,6 +29,7 @@ import "../../tasks/gene_typing/task_abricate.wdl" as abricate_task
 import "../../tasks/species_typing/task_emmtypingtool.wdl" as emmtypingtool_task
 import "../../tasks/species_typing/task_hicap.wdl" as hicap_task
 import "../../tasks/species_typing/task_srst2_vibrio.wdl" as srst2_vibrio_task
+import "../../tasks/species_typing/task_virulencefinder.wdl" as virulencefinder_task
 
 # theiaeuk
 import "../../tasks/species_typing/task_cauris_cladetyper.wdl" as cauris_cladetyper
@@ -53,6 +54,7 @@ workflow merlin_magic {
     String? shigeifinder_docker_image
     String? staphopia_sccmec_docker_image
     String? agrvate_docker_image
+    String? virulencefinder_docker_image
     Boolean paired_end = true
     Boolean call_poppunk = true
     Boolean ont_data = false
@@ -68,6 +70,9 @@ workflow merlin_magic {
     Int srst2_min_depth = 5
     Int srst2_min_edge_depth = 2
     Int srst2_gene_max_mismatch = 2000
+    Float? virulencefinder_coverage_threshold
+    Float? virulencefinder_identity_threshold
+    String? virulencefinder_database
   }
   # theiaprok
   if (merlin_tag == "Acinetobacter baumannii") {
@@ -120,6 +125,23 @@ workflow merlin_magic {
           docker = shigeifinder_docker_image,
           paired_end = paired_end
       }
+    }
+  }
+  if (merlin_tag == "Escherichia" ) {
+    # E coli specific tasks
+    call virulencefinder_task.virulencefinder {
+      input:
+      #  read1 = read1,
+      #  read2 = read2,
+        assembly = assembly,
+        samplename = samplename,
+      #  paired_end = paired_end,
+      #  assembly_only = assembly_only,
+      #  ont_data = ont_data,
+        docker = virulencefinder_docker_image,
+        coverage_threshold = virulencefinder_coverage_threshold,
+        identity_threshold = virulencefinder_identity_threshold,
+        database = virulencefinder_database
     }
   }
   if (merlin_tag == "Shigella_sonnei") {
@@ -429,6 +451,10 @@ workflow merlin_magic {
     String? shigeifinder_O_antigen_reads = shigeifinder_reads.shigeifinder_O_antigen
     String? shigeifinder_H_antigen_reads = shigeifinder_reads.shigeifinder_H_antigen
     String? shigeifinder_notes_reads = shigeifinder_reads.shigeifinder_notes
+    # E coli only typing
+    File? virulencefinder_report_tsv = virulencefinder.virulencefinder_report_tsv
+    String? virulencefinder_docker = virulencefinder.virulencefinder_docker
+    String? virulencefinder_hits = virulencefinder.virulencefinder_hits
     # Shigella sonnei Typing
     File? sonneityping_mykrobe_report_csv = sonneityping.sonneityping_mykrobe_report_csv
     File? sonneityping_mykrobe_report_json = sonneityping.sonneityping_mykrobe_report_json

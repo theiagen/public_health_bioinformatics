@@ -103,5 +103,6 @@ workflow snippy_streamline {
     String snippy_snp_dists_docker = snippy_tree_wf.snippy_snp_dists_docker
     File snippy_snp_matrix = snippy_tree_wf.snippy_snp_matrix
     File? snippy_summarized_data = snippy_tree_wf.snippy_summarized_data
+    File? snippy_filtered_metadata = snippy_tree_wf.snippy_filtered_metadata
   }
 }
