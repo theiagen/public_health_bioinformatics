@@ -167,7 +167,7 @@ workflows:
     - empty.json
  - name: RASUSA_PHB
    subclass: WDL
-   primaryDescriptorPath: /workflows/utilities/wf_rasusa.wdl
+   primaryDescriptorPath: /workflows/standalone_modules/wf_rasusa.wdl
    testParameterFiles:
     - empty.json
  - name: BaseSpace_Fetch_PHB
