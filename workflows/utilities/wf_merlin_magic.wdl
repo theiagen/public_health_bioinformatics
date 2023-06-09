@@ -11,6 +11,8 @@ import "../../tasks/species_typing/task_sistr.wdl" as sistr_task
 import "../../tasks/species_typing/task_seqsero2.wdl" as seqsero2_task
 import "../../tasks/species_typing/task_kleborate.wdl" as kleborate_task
 import "../../tasks/species_typing/task_tbprofiler.wdl" as tbprofiler_task
+import "../../tasks/species_typing/task_tbprofiler_output_parsing.wdl" as tbprofiler_output_parsing_task
+import "../../tasks/species_typing/task_tb_gene_coverage.wdl" as tb_gene_coverage_task
 import "../../tasks/species_typing/task_legsta.wdl" as legsta_task
 import "../../tasks/species_typing/task_genotyphi.wdl" as genotyphi
 import "../../tasks/species_typing/task_kaptive.wdl" as kaptive_task
@@ -60,7 +62,8 @@ workflow merlin_magic {
     Boolean assembly_only = false
     Boolean theiaeuk = false
     Boolean tbprofiler_additional_outputs = false
-    String output_seq_method_type = "WGS"
+    String tbprofiler_output_seq_method_type = "WGS"
+    String tbprofiler_operator = "Default"
     String? snippy_query_gene
     Int srst2_min_cov = 80
     Int srst2_max_divergence = 20
@@ -230,9 +233,22 @@ workflow merlin_magic {
           read1 = select_first([read1]),
           read2 = read2,
           samplename = samplename,
-          ont_data = ont_data,
-          tbprofiler_additional_outputs = tbprofiler_additional_outputs,
-          output_seq_method_type = output_seq_method_type 
+          ont_data = ont_data
+      }
+      if (tbprofiler_additional_outputs) {
+        call tbprofiler_output_parsing_task.tbprofiler_output_parsing{
+          input:
+            json = tbprofiler.tbprofiler_output_json,
+            output_seq_method_type = tbprofiler_output_seq_method_type,
+            operator = tbprofiler_operator,
+            samplename = samplename
+        }
+        call tb_gene_coverage_task.tb_gene_coverage {
+          input:
+            bamfile = tbprofiler.tbprofiler_output_bam,
+            bamindex = tbprofiler.tbprofiler_output_bai,
+            samplename = samplename
+        }
       }
     }
   }
@@ -545,12 +561,10 @@ workflow merlin_magic {
     String? tbprofiler_sub_lineage = tbprofiler.tbprofiler_sub_lineage
     String? tbprofiler_dr_type = tbprofiler.tbprofiler_dr_type
     String? tbprofiler_resistance_genes = tbprofiler.tbprofiler_resistance_genes
-    File? tbprofiler_additional_outputs_csv = tbprofiler.tbprofiler_additional_outputs_csv
-    File? tbprofiler_laboratorian_report_csv = tbprofiler.tbprofiler_laboratorian_report_csv
-    String? tbprofiler_gene_name = tbprofiler.tbprofiler_gene_name
-    String? tbprofiler_locus_tag = tbprofiler.tbprofiler_locus_tag
-    String? tbprofiler_variant_substitutions = tbprofiler.tbprofiler_variant_substitutions
-    String? tbprofiler_output_seq_method_type = tbprofiler.tbprofiler_output_seq_method_type
+    File? tbprofiler_lims_report_csv = tbprofiler_output_parsing.tbprofiler_lims_report_csv
+    File? tbprofiler_laboratorian_report_csv = tbprofiler_output_parsing.tbprofiler_laboratorian_report_csv
+    File? tbprofiler_looker_csv = tbprofiler_output_parsing.tbprofiler_looker_csv
+    File? tb_resistance_genes_percent_coverage = tb_gene_coverage.tb_resistance_genes_percent_coverage
     # Legionella pneumophila Typing
     File? legsta_results = legsta.legsta_results
     String? legsta_predicted_sbt = legsta.legsta_predicted_sbt
