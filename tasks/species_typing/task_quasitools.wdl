@@ -4,7 +4,6 @@ task quasitools {
   input {
     File read1
     File? read2
-    File mutation_db = "gs://theiagen-public-files/terra/hivgc-files/mutation_db.tsv"
     String samplename
     String docker = "quay.io/biocontainers/quasitools:0.7.0--pyh864c0ab_1"
   }
@@ -44,6 +43,8 @@ task quasitools {
     # -md : the minimum read depth for observed nucleotide variants to be included
     # -ma : the minimum allele count for observed variants to be included
     # -me : indicates that the median score will be used as a cutoff for read filtering
+
+    # the ${ont} needs to be on the same line as a different variable or it will fail
     set -e
     quasitools hydra \
       -mf 0.05 ${ont} \
