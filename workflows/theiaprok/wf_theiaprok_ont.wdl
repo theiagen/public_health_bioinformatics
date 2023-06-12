@@ -262,7 +262,8 @@ workflow theiaprok_ont {
             amrfinderplus_amr_report = amrfinderplus.amrfinderplus_amr_report,
             amrfinderplus_stress_report = amrfinderplus.amrfinderplus_stress_report,
             amrfinderplus_virulence_report = amrfinderplus.amrfinderplus_virulence_report,
-            amrfinderplus_amr_genes = amrfinderplus.amrfinderplus_amr_genes,
+            amrfinderplus_amr_core_genes = amrfinderplus.amrfinderplus_amr_core_genes,
+            amrfinderplus_amr_plus_genes = amrfinderplus.amrfinderplus_amr_plus_genes,
             amrfinderplus_stress_genes = amrfinderplus.amrfinderplus_stress_genes,
             amrfinderplus_virulence_genes = amrfinderplus.amrfinderplus_virulence_genes,
             amrfinderplus_amr_classes = amrfinderplus.amrfinderplus_amr_classes,
@@ -306,6 +307,9 @@ workflow theiaprok_ont {
             shigeifinder_O_antigen = merlin_magic.shigeifinder_O_antigen,
             shigeifinder_H_antigen = merlin_magic.shigeifinder_H_antigen,
             shigeifinder_notes = merlin_magic.shigeifinder_notes,
+            virulencefinder_report_tsv = merlin_magic.virulencefinder_report_tsv,
+            virulencefinder_docker = merlin_magic.virulencefinder_docker,
+            virulencefinder_hits = merlin_magic.virulencefinder_hits,
             sonneityping_mykrobe_report_csv = merlin_magic.sonneityping_mykrobe_report_csv,
             sonneityping_mykrobe_report_json = merlin_magic.sonneityping_mykrobe_report_json,
             sonneityping_final_report_tsv = merlin_magic.sonneityping_final_report_tsv,
@@ -522,7 +526,8 @@ workflow theiaprok_ont {
     File? amrfinderplus_amr_report = amrfinderplus.amrfinderplus_amr_report
     File? amrfinderplus_stress_report = amrfinderplus.amrfinderplus_stress_report
     File? amrfinderplus_virulence_report = amrfinderplus.amrfinderplus_virulence_report
-    String? amrfinderplus_amr_genes = amrfinderplus.amrfinderplus_amr_genes
+    String? amrfinderplus_amr_core_genes = amrfinderplus.amrfinderplus_amr_core_genes
+    String? amrfinderplus_amr_plus_genes = amrfinderplus.amrfinderplus_amr_plus_genes
     String? amrfinderplus_stress_genes = amrfinderplus.amrfinderplus_stress_genes
     String? amrfinderplus_virulence_genes = amrfinderplus.amrfinderplus_virulence_genes
     String? amrfinderplus_amr_classes = amrfinderplus.amrfinderplus_amr_classes
@@ -588,6 +593,9 @@ workflow theiaprok_ont {
     String? shigeifinder_O_antigen = merlin_magic.shigeifinder_O_antigen
     String? shigeifinder_H_antigen = merlin_magic.shigeifinder_H_antigen
     String? shigeifinder_notes = merlin_magic.shigeifinder_notes
+    File? virulencefinder_report_tsv = merlin_magic.virulencefinder_report_tsv
+    String? virulencefinder_docker = merlin_magic.virulencefinder_docker
+    String? virulencefinder_hits = merlin_magic.virulencefinder_hits
     # Shigella sonnei Typing
     File? sonneityping_mykrobe_report_csv = merlin_magic.sonneityping_mykrobe_report_csv
     File? sonneityping_mykrobe_report_json = merlin_magic.sonneityping_mykrobe_report_json
@@ -693,12 +701,10 @@ workflow theiaprok_ont {
     String? tbprofiler_sub_lineage = merlin_magic.tbprofiler_sub_lineage
     String? tbprofiler_dr_type = merlin_magic.tbprofiler_dr_type
     String? tbprofiler_resistance_genes = merlin_magic.tbprofiler_resistance_genes
-    File? tbprofiler_additional_outputs_csv = merlin_magic.tbprofiler_additional_outputs_csv
     File? tbprofiler_laboratorian_report_csv = merlin_magic.tbprofiler_laboratorian_report_csv
-    String? tbprofiler_gene_name = merlin_magic.tbprofiler_gene_name
-    String? tbprofiler_locus_tag = merlin_magic.tbprofiler_locus_tag
-    String? tbprofiler_variant_substitutions = merlin_magic.tbprofiler_variant_substitutions
-    String? tbprofiler_output_seq_method_type = merlin_magic.tbprofiler_output_seq_method_type
+    File? tbprofiler_lims_report_csv = merlin_magic.tbprofiler_lims_report_csv
+    File? tbprofiler_looker_csv = merlin_magic.tbprofiler_looker_csv
+    File? tbprofiler_resistance_genes_percent_coverage = merlin_magic.tb_resistance_genes_percent_coverage
     # Legionella pneumophila typing
     File? legsta_results = merlin_magic.legsta_results
     String? legsta_predicted_sbt = merlin_magic.legsta_predicted_sbt

@@ -265,7 +265,8 @@ workflow theiaprok_illumina_se {
             amrfinderplus_amr_report = amrfinderplus_task.amrfinderplus_amr_report,
             amrfinderplus_stress_report = amrfinderplus_task.amrfinderplus_stress_report,
             amrfinderplus_virulence_report = amrfinderplus_task.amrfinderplus_virulence_report,
-            amrfinderplus_amr_genes = amrfinderplus_task.amrfinderplus_amr_genes,
+            amrfinderplus_amr_core_genes = amrfinderplus_task.amrfinderplus_amr_core_genes,
+            amrfinderplus_amr_plus_genes = amrfinderplus_task.amrfinderplus_amr_plus_genes,
             amrfinderplus_stress_genes = amrfinderplus_task.amrfinderplus_stress_genes,
             amrfinderplus_virulence_genes = amrfinderplus_task.amrfinderplus_virulence_genes,
             amrfinderplus_amr_classes = amrfinderplus_task.amrfinderplus_amr_classes,
@@ -319,6 +320,9 @@ workflow theiaprok_illumina_se {
             shigeifinder_O_antigen_reads = merlin_magic.shigeifinder_O_antigen_reads,
             shigeifinder_H_antigen_reads = merlin_magic.shigeifinder_H_antigen_reads,
             shigeifinder_notes_reads = merlin_magic.shigeifinder_notes_reads,
+            virulencefinder_report_tsv = merlin_magic.virulencefinder_report_tsv,
+            virulencefinder_docker = merlin_magic.virulencefinder_docker,
+            virulencefinder_hits = merlin_magic.virulencefinder_hits,
             sonneityping_mykrobe_report_csv = merlin_magic.sonneityping_mykrobe_report_csv,
             sonneityping_mykrobe_report_json = merlin_magic.sonneityping_mykrobe_report_json,
             sonneityping_final_report_tsv = merlin_magic.sonneityping_final_report_tsv,
@@ -463,6 +467,11 @@ workflow theiaprok_illumina_se {
             pasty_version = merlin_magic.pasty_version,
             pasty_docker = merlin_magic.pasty_docker,
             pasty_comment = merlin_magic.pasty_comment,
+            hicap_serotype = merlin_magic.hicap_serotype,
+            hicap_genes = merlin_magic.hicap_genes,
+            hicap_results_tsv = merlin_magic.hicap_results_tsv,
+            hicap_version = merlin_magic.hicap_version,
+            hicap_docker = merlin_magic.hicap_docker,
             srst2_vibrio_detailed_tsv = merlin_magic.srst2_vibrio_detailed_tsv,
             srst2_vibrio_version = merlin_magic.srst2_vibrio_version,
             srst2_vibrio_ctxA = merlin_magic.srst2_vibrio_ctxA,
@@ -549,7 +558,8 @@ workflow theiaprok_illumina_se {
     File? amrfinderplus_amr_report = amrfinderplus_task.amrfinderplus_amr_report
     File? amrfinderplus_stress_report = amrfinderplus_task.amrfinderplus_stress_report
     File? amrfinderplus_virulence_report = amrfinderplus_task.amrfinderplus_virulence_report
-    String? amrfinderplus_amr_genes = amrfinderplus_task.amrfinderplus_amr_genes
+    String? amrfinderplus_amr_core_genes = amrfinderplus_task.amrfinderplus_amr_core_genes
+    String? amrfinderplus_amr_plus_genes = amrfinderplus_task.amrfinderplus_amr_plus_genes
     String? amrfinderplus_stress_genes = amrfinderplus_task.amrfinderplus_stress_genes
     String? amrfinderplus_virulence_genes = amrfinderplus_task.amrfinderplus_virulence_genes
     String? amrfinderplus_amr_classes = amrfinderplus_task.amrfinderplus_amr_classes
@@ -626,6 +636,10 @@ workflow theiaprok_illumina_se {
     String? shigeifinder_O_antigen_reads = merlin_magic.shigeifinder_O_antigen
     String? shigeifinder_H_antigen_reads = merlin_magic.shigeifinder_H_antigen
     String? shigeifinder_notes_reads = merlin_magic.shigeifinder_notes
+    # E coli only typing
+    File? virulencefinder_report_tsv = merlin_magic.virulencefinder_report_tsv
+    String? virulencefinder_docker = merlin_magic.virulencefinder_docker
+    String? virulencefinder_hits = merlin_magic.virulencefinder_hits
     # Shigella sonnei Typing
     File? sonneityping_mykrobe_report_csv = merlin_magic.sonneityping_mykrobe_report_csv
     File? sonneityping_mykrobe_report_json = merlin_magic.sonneityping_mykrobe_report_json
@@ -731,12 +745,10 @@ workflow theiaprok_illumina_se {
     String? tbprofiler_sub_lineage = merlin_magic.tbprofiler_sub_lineage
     String? tbprofiler_dr_type = merlin_magic.tbprofiler_dr_type
     String? tbprofiler_resistance_genes = merlin_magic.tbprofiler_resistance_genes
-    File? tbprofiler_additional_outputs_csv = merlin_magic.tbprofiler_additional_outputs_csv
+    File? tbprofiler_lims_report_csv = merlin_magic.tbprofiler_lims_report_csv
     File? tbprofiler_laboratorian_report_csv = merlin_magic.tbprofiler_laboratorian_report_csv
-    String? tbprofiler_gene_name = merlin_magic.tbprofiler_gene_name
-    String? tbprofiler_locus_tag = merlin_magic.tbprofiler_locus_tag
-    String? tbprofiler_variant_substitutions = merlin_magic.tbprofiler_variant_substitutions
-    String? tbprofiler_output_seq_method_type = merlin_magic.tbprofiler_output_seq_method_type
+    File? tbprofiler_looker_csv = merlin_magic.tbprofiler_looker_csv
+    File? tbprofiler_resistance_genes_percent_coverage = merlin_magic.tb_resistance_genes_percent_coverage
     # Legionella pneumophila typing
     File? legsta_results = merlin_magic.legsta_results
     String? legsta_predicted_sbt = merlin_magic.legsta_predicted_sbt
@@ -771,6 +783,12 @@ workflow theiaprok_illumina_se {
     String? poppunk_GPS_db_version = merlin_magic.poppunk_GPS_db_version
     String? poppunk_version = merlin_magic.poppunk_version
     String? poppunk_docker = merlin_magic.poppunk_docker
+    # Haemophilus influenzae Typing
+    String? hicap_serotype = merlin_magic.hicap_serotype
+    String? hicap_genes = merlin_magic.hicap_genes
+    File? hicap_results_tsv = merlin_magic.hicap_results_tsv
+    String? hicap_version = merlin_magic.hicap_version
+    String? hicap_docker = merlin_magic.hicap_docker
     # Vibrio Typing
     File? srst2_vibrio_detailed_tsv = merlin_magic.srst2_vibrio_detailed_tsv
     String? srst2_vibrio_version = merlin_magic.srst2_vibrio_version

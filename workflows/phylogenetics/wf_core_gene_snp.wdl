@@ -98,7 +98,7 @@ workflow core_gene_snp_workflow {
     File? pirate_presence_absence_csv = pirate.pirate_presence_absence_csv
     String pirate_docker_image = pirate.pirate_docker_image
     # snp_dists outputs
-    String? pirate_snps_dists_version = select_first([core_snp_dists.version,pan_snp_dists.version,""])
+    String? pirate_snps_dists_version = select_first([core_snp_dists.snp_dists_version,pan_snp_dists.snp_dists_version,""])
     # iqtree outputs
     String? pirate_iqtree_version = select_first([core_iqtree.version,pan_iqtree.version,""])
     # reorder matrix outputs
@@ -108,5 +108,6 @@ workflow core_gene_snp_workflow {
     File? pirate_iqtree_pan_tree = pan_reorder_matrix.tree
     # Data summary outputs
     File? pirate_summarized_data = summarize_data.summarized_data
+    File? pirate_filtered_metadata = summarize_data.filtered_metadata
   }
 }
