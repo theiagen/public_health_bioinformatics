@@ -321,7 +321,7 @@ workflow merlin_magic {
     }
   }
   if (merlin_tag == "Vibrio") {
-    if (!assembly_only) {
+    if (!assembly_only && !ont_data) {
       call srst2_vibrio_task.srst2_vibrio {
         input:
           read1 = select_first([read1]),
