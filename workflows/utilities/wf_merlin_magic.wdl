@@ -321,16 +321,18 @@ workflow merlin_magic {
     }
   }
   if (merlin_tag == "Vibrio") {
-    call srst2_vibrio_task.srst2_vibrio {
-      input:
-        reads1 = select_first([read1]),
-        reads2 = read2,
-        samplename = samplename,
-        srst2_min_cov = srst2_min_cov,
-        srst2_max_divergence = srst2_max_divergence,
-        srst2_min_depth = srst2_min_depth,
-        srst2_min_edge_depth = srst2_min_edge_depth,
-        srst2_gene_max_mismatch = srst2_gene_max_mismatch
+    if (!assembly_only) {
+      call srst2_vibrio_task.srst2_vibrio {
+        input:
+          read1 = select_first([read1]),
+          read2 = read2,
+          samplename = samplename,
+          srst2_min_cov = srst2_min_cov,
+          srst2_max_divergence = srst2_max_divergence,
+          srst2_min_depth = srst2_min_depth,
+          srst2_min_edge_depth = srst2_min_edge_depth,
+          srst2_gene_max_mismatch = srst2_gene_max_mismatch
+      }
     }
   }
   
