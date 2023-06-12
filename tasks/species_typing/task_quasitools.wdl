@@ -46,8 +46,7 @@ task quasitools {
     # -me : indicates that the median score will be used as a cutoff for read filtering
     set -e
     quasitools hydra \
-      -mf 0.05 \
-      "${ont}" \
+      -mf 0.05 ${ont} \
       -sc 7 \
       -lc 50 \
       -vq 7 \
