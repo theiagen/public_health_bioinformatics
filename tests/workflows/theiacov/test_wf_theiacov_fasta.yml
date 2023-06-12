@@ -38,7 +38,7 @@
       md5sum: 6808ca805661622ad65ae014a4b2a094
     - path: miniwdl_run/call-consensus_qc/work/_miniwdl_inputs/0/clearlabs.fasta.gz
     - path: miniwdl_run/call-nextclade/command
-      md5sum: 820bc1075f1361d8c27ff64682ddb156
+      md5sum: 1e444a392979a2714273e075d347d6ab
     - path: miniwdl_run/call-nextclade/inputs.json
     - path: miniwdl_run/call-nextclade/outputs.json
     - path: miniwdl_run/call-nextclade/stderr.txt
@@ -46,16 +46,16 @@
     - path: miniwdl_run/call-nextclade/stdout.txt
     - path: miniwdl_run/call-nextclade/task.log
     - path: miniwdl_run/call-nextclade/work/NEXTCLADE_VERSION
-      md5sum: 4fb409910709639211b716abe239ecc1
+      md5sum: d5f4e83525024cba7eb7489cd5209e7d
     - path: miniwdl_run/call-nextclade/work/_miniwdl_inputs/0/clearlabs.fasta.gz
     - path: miniwdl_run/call-nextclade/work/clearlabs.fasta.gz.nextclade.auspice.json
     - path: miniwdl_run/call-nextclade/work/clearlabs.fasta.gz.nextclade.json
     - path: miniwdl_run/call-nextclade/work/clearlabs.fasta.gz.nextclade.tsv
-      md5sum: 5b8b228b338388fb2e33756b46d35828
+      md5sum: bf7f0a9f7d6d82c0e4ff8b57bad7c3bf
     - path: miniwdl_run/call-nextclade/work/nextclade.aligned.fasta
       md5sum: bf487271d506418ea23fe30fc033e44d
     - path: miniwdl_run/call-nextclade/work/nextclade.csv
-      md5sum: f24670ef2c2d5eb86fb7ca173d9b40a5
+      md5sum: 4f03efb394202722d0df3d935595266e
     - path: miniwdl_run/call-nextclade/work/nextclade.errors.csv
       md5sum: 483415f75e782897d83fc1305f793e21
     - path: miniwdl_run/call-nextclade/work/nextclade.insertions.csv
@@ -69,11 +69,11 @@
     - path: miniwdl_run/call-nextclade/work/nextclade_dataset_dir/reference.fasta
       md5sum: c7ce05f28e4ec0322c96f24e064ef55c
     - path: miniwdl_run/call-nextclade/work/nextclade_dataset_dir/sequences.fasta
-      md5sum: 154d65f2491793dbb5e74b14a55309b4
+      md5sum: bb6b4e9e91304a396724bcb6344b8a5d
     - path: miniwdl_run/call-nextclade/work/nextclade_dataset_dir/tag.json
-      md5sum: 296a21dfbe992929d0786ff5d660cae6
+      md5sum: ba7478797610757d3aec9c01e5562a6c
     - path: miniwdl_run/call-nextclade/work/nextclade_dataset_dir/tree.json
-      md5sum: da66edbb4609b4dcadf2e56aebea598f
+      md5sum: d4e194602e5f84e129ee4c17802586da
     - path: miniwdl_run/call-nextclade/work/nextclade_dataset_dir/virus_properties.json
     - path: miniwdl_run/call-nextclade/work/nextclade_gene_E.translation.fasta
       md5sum: dc43b1e98245a25c142aec52b29a07df
@@ -120,7 +120,7 @@
     - path: miniwdl_run/call-nextclade_output_parser/work/_miniwdl_inputs/0/clearlabs.fasta.gz.nextclade.tsv
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     - path: miniwdl_run/call-nextclade_output_parser/work/input.tsv
-      md5sum: 5b8b228b338388fb2e33756b46d35828
+      md5sum: bf7f0a9f7d6d82c0e4ff8b57bad7c3bf
     - path: miniwdl_run/call-pangolin4/command
       md5sum: 85d3001929bde4169a11947fb38fb693
     - path: miniwdl_run/call-pangolin4/inputs.json
@@ -139,12 +139,12 @@
     - path: miniwdl_run/call-pangolin4/work/PANGOLIN_NOTES
       md5sum: 71eba5c871bca955ab2a69dbd2c3c62e
     - path: miniwdl_run/call-pangolin4/work/PANGO_ASSIGNMENT_VERSION
-      md5sum: 8cc18cbc333ec72ad126e6794752e2b3
+      md5sum: 38e84b4b2aac06e6ecfd73cd9cd746b4
     - path: miniwdl_run/call-pangolin4/work/VERSION_PANGOLIN_ALL
-      md5sum: 73197f226b6f9ce6f0090d3eb41a9861
+      md5sum: a312e4195e9c6b670410743f84366ff5
     - path: miniwdl_run/call-pangolin4/work/_miniwdl_inputs/0/clearlabs.fasta.gz
     - path: miniwdl_run/call-pangolin4/work/fasta.pangolin_report.csv
-      md5sum: 2dff04292da76407e6ae537b5abc663b
+      md5sum: e069b8633ba8f83ff55e4ce15b1d9fa5
     - path: miniwdl_run/call-vadr/command
       md5sum: f4ad614b7ad39f28a8145cec280a93c0
     - path: miniwdl_run/call-vadr/inputs.json
@@ -165,13 +165,13 @@
     - path: miniwdl_run/wdl/tasks/quality_control/task_vadr.wdl
       md5sum: 2e39a52cb00c6832bb2cc87f572ca6a5
     - path: miniwdl_run/wdl/tasks/species_typing/task_pangolin.wdl
-      md5sum: 35d86d56cef885fabe51dcece6d93ff2
+      md5sum: 7905964a1a946eab9c6e017362b84471
     - path: miniwdl_run/wdl/tasks/task_versioning.wdl
-      md5sum: c56fb29430dbc7d5f42d10b34c1802a6
+      md5sum: 0700ec2fe03ba61c41aacee093028ca3
     - path: miniwdl_run/wdl/tasks/taxon_id/task_nextclade.wdl
-      md5sum: f165aee52822653ec90c07b8e4db7c06
+      md5sum: 62292e7f0b27847a9c17063e30910721
     - path: miniwdl_run/wdl/workflows/theiacov/wf_theiacov_fasta.wdl
-      md5sum: fa6643d48f4ff4d0873978a08995b919
+      md5sum: 2e39c5e356be03cc06963e99c591483f
     - path: miniwdl_run/inputs.json
       contains: ["theiacov_fasta", "samplename", "seq_method"]
     - path: miniwdl_run/outputs.json
