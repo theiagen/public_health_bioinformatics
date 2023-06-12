@@ -11,7 +11,7 @@ workflow snippy_streamline {
   input {
     Array[File] read1
     Array[File] read2
-    Array[File] assembly_fasta
+    Array[File]? assembly_fasta
     Array[String] samplenames
     String tree_name
     # this input file can be a FASTA or GBK
@@ -21,7 +21,7 @@ workflow snippy_streamline {
   if (! defined(reference_genome_file)) {
     call centroid_task.centroid {
       input:
-        assembly_fasta = assembly_fasta
+        assembly_fasta = select_first([assembly_fasta])
     }
     call referenceseeker_task.referenceseeker {
       input:
