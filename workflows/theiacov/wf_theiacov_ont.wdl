@@ -50,6 +50,9 @@ workflow theiacov_ont {
     # qc check parameters
     File? qc_check_table
   }
+  if (organism == "HIV") { # set HIV specific artic version
+    String run_prefix = "artic_hiv"
+  }
   call screen.check_reads_se as raw_check_reads {
     input:
       read1 = demultiplexed_reads,
@@ -74,7 +77,8 @@ workflow theiacov_ont {
         demultiplexed_reads = ncbi_scrub_se.read1_dehosted,
         samplename = samplename,
         min_length = min_length,
-        max_length = max_length
+        max_length = max_length,
+        run_prefix = run_prefix
     }
     call screen.check_reads_se as clean_check_reads {
       input:
