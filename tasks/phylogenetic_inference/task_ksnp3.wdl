@@ -55,7 +55,7 @@ task ksnp3 {
   mv -v ksnp3/core_SNPs_matrix.fasta ksnp3/~{cluster_name}_core_SNPs_matrix.fasta
   mv -v ksnp3/tree.core.tre ksnp3/~{cluster_name}_core.nwk
 
-  if [ -s ~{cluster_name}_core_SNPs_matrix.fasta ]; then # is the file not-empty?
+  if [ -s ksnp3/~{cluster_name}_core_SNPs_matrix.fasta ]; then # is the file not-empty?
     echo "The core SNP matrix was produced" | tee SKIP_SNP_DIST # then do NOT skip
   else
     echo "The core SNP matrix could not be produced" | tee SKIP_SNP_DIST # otherwise, skip
