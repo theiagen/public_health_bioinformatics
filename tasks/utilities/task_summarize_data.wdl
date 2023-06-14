@@ -42,6 +42,9 @@ task summarize_data {
   # extract the samples for upload from the entire table
   table = table[table["~{terra_table}_id"].isin("~{sep='*' sample_names}".split("*"))]
 
+  # cast entire table as str
+  table = table.astype(str)
+  
   # split comma-separated column list into an array
   columns = "~{column_names}".split(",")
 
@@ -70,7 +73,7 @@ task summarize_data {
       if (i < 10):
         newgroup = [] # create a new temporary sublist
         for item in group: # for every item in a column, 
-          newitem = item + ":o" + str(i) # add a unique :o coloring (as indicated by the str(i))
+          newitem = str(item) + ":o" + str(i) # add a unique :o coloring (as indicated by the str(i))
           newgroup.append(newitem) # add phandango-suffixed item to the new sublist
         newgenes.append(newgroup) # add the new sublist to the new list
         i += 1 # increment the i value so each column gets its own coloring     
