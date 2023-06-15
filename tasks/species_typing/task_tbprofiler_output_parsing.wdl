@@ -286,39 +286,64 @@ task tbprofiler_output_parsing {
         # reported mutation by tb-profiler, all confering resistance by WHO criteria
         for dr_variant in results_json["dr_variants"]: 
           if "annotation" in dr_variant:
-            try:  # sometimes annotation is an empty list
-              if dr_variant["annotation"][0]["who_confidence"] == "":
-                confidence = "No WHO annotation"
-              else:
-                confidence = dr_variant["annotation"][0]["who_confidence"]
-            except:
-              confidence = "No WHO annotation"
-          else:
-            confidence = "No WHO annotation"
-          row = {}
-          row["sample_id"] = "~{samplename}"
-          row["tbprofiler_gene_name"] = dr_variant["gene"]
-          row["tbprofiler_locus_tag"] = dr_variant["locus_tag"]
-          row["tbprofiler_variant_substitution_type"] = dr_variant["type"]
-          row["tbprofiler_variant_substitution_nt"] = dr_variant["nucleotide_change"]
-          row["tbprofiler_variant_substitution_aa"] = dr_variant["protein_change"] if dr_variant["protein_change"] != "" else "NA"
-          row["confidence"] = confidence
-          row["antimicrobial"] = ",".join(dr_variant["gene_associated_drugs"])
-          row["looker_interpretation"] = decipher_looker(row["confidence"])
-          row["mdl_interpretation"] = decipher_MDL(row["confidence"])
-          row["depth"] = int(dr_variant["depth"] or 0)
-          row["frequency"] = dr_variant["freq"]
-          row["read_support"] = row["depth"]*row["frequency"] 
-          row["rationale"] = "WHO classification"
-          row["warning"] = "Low depth coverage" if row["depth"] < int('~{min_depth}') else ""
-          genes_reported.append(dr_variant["gene"])
-          row_list.append(row)
+            for annotation in dr_variant["annotation"]:
+              drug = annotation["drug"]
+              annotation_who = "No WHO annotation" if annotation["who_confidence"] == "" else annotation["who_confidence"]
+              row = {}
+              row["sample_id"] = "~{samplename}"
+              row["tbprofiler_gene_name"] = dr_variant["gene"]
+              row["tbprofiler_locus_tag"] = dr_variant["locus_tag"]
+              row["tbprofiler_variant_substitution_type"] = dr_variant["type"]
+              row["tbprofiler_variant_substitution_nt"] = dr_variant["nucleotide_change"]
+              row["tbprofiler_variant_substitution_aa"] = dr_variant["protein_change"] if dr_variant["protein_change"] != "" else "NA"
+              row["confidence"] = annotation_who
+              row["antimicrobial"] = drug
+              row["looker_interpretation"] = decipher_looker(row["confidence"])
+              row["mdl_interpretation"] = decipher_MDL(row["confidence"])
+              row["depth"] = int(dr_variant["depth"] or 0)
+              row["frequency"] = dr_variant["freq"]
+              row["read_support"] = row["depth"]*row["frequency"] 
+              row["rationale"] = "WHO classification"
+              row["warning"] = "Low depth coverage" if row["depth"] < int('~{min_depth}') else ""
+              genes_reported.append(dr_variant["gene"])
+              row_list.append(row)
       
       # mutations not reported by tb-profiler - application of expert rules to determine resistance
       for other_variant in results_json["other_variants"]: 
 
         # report only mutations that are NOT synonymous
         if other_variant["type"] != "synonymous_variant":
+
+          # Expert rule: mutations in Rv0678, atpE, pepQ, mmpL5, mmpS5, rrl amd rplC
+          if other_variant["gene"] == "Rv0678" or other_variant["gene"] == "atpE" or other_variant["gene"] == "pepQ" or other_variant["gene"] == "mmpL5" or other_variant["gene"] == "mmpS5" or other_variant["gene"] == "rrl" or other_variant["gene"] == "rplC":
+            if "annotation" in other_variant:
+              try:  # sometimes annotation is an empty list
+                if other_variant["annotation"][0]["who_confidence"] == "":
+                  confidence = "No WHO annotation"
+                else:
+                  confidence = other_variant["annotation"][0]["who_confidence"]
+              except:
+                confidence = "No WHO annotation"
+            else:
+              confidence = "No WHO annotation"
+            row = {}
+            row["sample_id"] = "~{samplename}"
+            row["tbprofiler_gene_name"] = other_variant["gene"]
+            row["tbprofiler_locus_tag"] = other_variant["locus_tag"]
+            row["tbprofiler_variant_substitution_type"] = other_variant["type"]
+            row["tbprofiler_variant_substitution_nt"] = other_variant["nucleotide_change"]
+            row["tbprofiler_variant_substitution_aa"] = other_variant["protein_change"] if other_variant["protein_change"] != "" else "NA"
+            row["confidence"] = confidence
+            row["antimicrobial"] = ",".join(other_variant["gene_associated_drugs"])
+            row["looker_interpretation"] = decipher_looker(row["confidence"])
+            row["mdl_interpretation"] = decipher_MDL(row["confidence"])
+            row["depth"] = int(other_variant["depth"] or 0)
+            row["frequency"] = other_variant["freq"]
+            row["read_support"] = row["depth"]*row["frequency"]
+            row["rationale"] = "Resistant based on expert rule"
+            row["warning"] = "Low depth coverage" if row["depth"] < int('~{min_depth}') else ""
+            genes_reported.append(other_variant["gene"])
+            row_list.append(row)
 
           # Expert rule: mutations in katG, pncA, ethA or gid, classify as resistant
           if other_variant["gene"] == "katG" or other_variant["gene"] == "pncA" or other_variant["gene"] == "ethA" or other_variant["gene"] == "gid":
