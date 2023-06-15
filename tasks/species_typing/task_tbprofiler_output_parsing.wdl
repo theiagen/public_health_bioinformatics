@@ -118,18 +118,14 @@ task tbprofiler_output_parsing {
       elif annotation == "Assoc w R":
         return "R"
       else:
-        return "S"
+        return "S" # missing S-interim?
     
     def decipher_MDL(annotation):
       """
       This function takes the annotation of resistance by TBProfiler and 
       returns simple R (resistant), U (uncertain) and S (susceptible) notations
       """
-      if annotation == "Not assoc w R":
-        return "S"
-      elif annotation == "Uncertain significance":
-        return "S"
-      elif annotation == "Assoc w R - interim":
+      if annotation == "Assoc w R - interim":
         return "U"
       elif annotation == "Assoc w R":
         return "R"
@@ -149,7 +145,7 @@ task tbprofiler_output_parsing {
     def parse_json_mutations(json_file):
       """
       Function to parse the TBProfiler json file and store the found
-      mutations into a dictionary
+      mutations into a dictionary - LIMS Report
       """
       mutations_dict = {}
 
@@ -204,6 +200,9 @@ task tbprofiler_output_parsing {
         return "No resistance to {} detected".format(drug)
 
     def parse_json_resistance(json_file):
+      """
+      TODO - Comment
+      """
       resistance_dict = {}
 
       with open(json_file) as js_fh:
@@ -225,27 +224,6 @@ task tbprofiler_output_parsing {
                   if rank_annotation(resistance_dict[drug]) < rank_annotation(resistance):
                     resistance_dict[drug] = resistance
       return resistance_dict
-    
-    def parse_laboratorian_report(mutations):
-      """
-      This function parses the laboratorian report for a given mutation and 
-      returns the associated WHO annotation and frequency
-      """
-      df = pd.read_csv('tbprofiler_laboratorian_report.csv', dtype="str")
-      confidences = []
-      frequencies = []
-      for mutation in mutations.split(';'):
-        confidence = df.loc[df['tbprofiler_variant_substitutions'] == mutation, 'confidence']
-        frequency = df.loc[df['tbprofiler_variant_substitutions'] == mutation, 'frequency']
-        if len(confidence) > 0:
-          confidences.append(confidence.array[0])
-        else:
-          confidences.append("No annotation")
-        if len(frequency) > 0:
-          frequencies.append(frequency.array[0])
-        else:
-          frequencies.append("1")
-      return confidences, frequencies
 
     ## Main Parsing Functions ## 
 
