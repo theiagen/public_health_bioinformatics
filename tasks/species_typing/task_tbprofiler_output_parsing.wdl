@@ -298,6 +298,24 @@ task tbprofiler_output_parsing {
       
       return resistance_dict
 
+    def variant_to_row(variant):
+      """
+      """
+      row = {}
+
+      row["sample_id"] = "~{samplename}"
+      row["tbprofiler_gene_name"] = variant["gene"]
+      row["tbprofiler_locus_tag"] = variant["locus_tag"]
+      row["tbprofiler_variant_substitution_type"] = variant["type"]
+      row["tbprofiler_variant_substitution_nt"] = variant["nucleotide_change"]
+      row["tbprofiler_variant_substitution_aa"] = variant["protein_change"] if variant["protein_change"] != "" else "NA"
+      row["depth"] = int(variant["depth"] or 0)
+      row["frequency"] = variant["freq"]
+      row["read_support"] = row["depth"]*row["frequency"]
+      row["warning"] = "Low depth coverage" if row["depth"] < int('~{min_depth}') else ""
+
+      return row
+
     ## Main Parsing Functions ## 
 
     def parse_json_lab_report(json_file):
@@ -336,30 +354,34 @@ task tbprofiler_output_parsing {
 
         # reported mutation by tb-profiler, all confering resistance by WHO criteria
         for dr_variant in results_json["dr_variants"]: 
-          if "annotation" in dr_variant: # only ouput if annotation is present - to keep?
+          genes_reported.append(dr_variant["gene"])
+          if "annotation" in dr_variant:
+            # case: annotation field is present but it's an empty list 
             if len(dr_variant["annotation"]) == 0:
               print(dr_variant)
+              row = variant_to_row(dr_variant)
+              row["confidence"] = "No WHO annotation"
+              row["looker_interpretation"] = apply_expert_rules(dr_variant["nucleotide_change"], dr_variant["protein_change"], dr_variant["gene"], dr_variant["type"], "looker")
+              row["mdl_interpretation"] = apply_expert_rules(dr_variant["nucleotide_change"], dr_variant["protein_change"], dr_variant["gene"], dr_variant["type"], "MDL")
+              row["rationale"] = "Expert rule applied"
+              row_list.append(row)
+            # case: drug confers resistance to multiple drugs
             for annotation in dr_variant["annotation"]:
-              row = {}
-              row["sample_id"] = "~{samplename}"
-              row["tbprofiler_gene_name"] = dr_variant["gene"]
-              row["tbprofiler_locus_tag"] = dr_variant["locus_tag"]
-              row["tbprofiler_variant_substitution_type"] = dr_variant["type"]
-              row["tbprofiler_variant_substitution_nt"] = dr_variant["nucleotide_change"]
-              row["tbprofiler_variant_substitution_aa"] = dr_variant["protein_change"] if dr_variant["protein_change"] != "" else "NA"
+              row = variant_to_row(dr_variant)
               row["confidence"] = "No WHO annotation" if annotation["who_confidence"] == "" else annotation["who_confidence"]
               row["antimicrobial"] = annotation["drug"]
               row["looker_interpretation"] = annotation_to_looker(row["confidence"]) if row["confidence"] != "No WHO annotation" else apply_expert_rules(dr_variant["nucleotide_change"], dr_variant["protein_change"], dr_variant["gene"], dr_variant["type"], "looker")
               row["mdl_interpretation"] = annotation_to_MDL(row["confidence"]) if row["confidence"] != "No WHO annotation" else apply_expert_rules(dr_variant["nucleotide_change"], dr_variant["protein_change"], dr_variant["gene"], dr_variant["type"], "MDL")
-              row["depth"] = int(dr_variant["depth"] or 0)
-              row["frequency"] = dr_variant["freq"]
-              row["read_support"] = row["depth"]*row["frequency"] 
               row["rationale"] = "WHO classification"  if row["confidence"] != "No WHO annotation" else "Expert rule applied"
-              row["warning"] = "Low depth coverage" if row["depth"] < int('~{min_depth}') else ""
-              genes_reported.append(dr_variant["gene"])
               row_list.append(row)
+          # case: annotation field is not present
           else:
-            print(dr_variant)
+            row = variant_to_row(dr_variant)
+            row["confidence"] = "No WHO annotation"
+            row["looker_interpretation"] = apply_expert_rules(dr_variant["nucleotide_change"], dr_variant["protein_change"], dr_variant["gene"], dr_variant["type"], "looker")
+            row["mdl_interpretation"] = apply_expert_rules(dr_variant["nucleotide_change"], dr_variant["protein_change"], dr_variant["gene"], dr_variant["type"], "MDL")
+            row["rationale"] = "Expert rule applied"
+            row_list.append(row)
       
         # mutations not reported by tb-profiler - application of expert rules to determine resistance
         for other_variant in results_json["other_variants"]: 
