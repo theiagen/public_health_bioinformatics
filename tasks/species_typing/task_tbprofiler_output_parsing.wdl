@@ -376,12 +376,14 @@ task tbprofiler_output_parsing {
               row_list.append(row)
           # case: annotation field is not present, expert rule is applied directly
           else:
-            row = variant_to_row(dr_variant)
-            row["confidence"] = "No WHO annotation"
-            row["looker_interpretation"] = apply_expert_rules(dr_variant["nucleotide_change"], dr_variant["protein_change"], dr_variant["gene"], dr_variant["type"], "looker")
-            row["mdl_interpretation"] = apply_expert_rules(dr_variant["nucleotide_change"], dr_variant["protein_change"], dr_variant["gene"], dr_variant["type"], "MDL")
-            row["rationale"] = "Expert rule applied"
-            row_list.append(row)
+            for drug in dr_variant["gene_associated_drugs"]:
+              row = variant_to_row(dr_variant)
+              row["confidence"] = "No WHO annotation"
+              row["looker_interpretation"] = apply_expert_rules(dr_variant["nucleotide_change"], dr_variant["protein_change"], dr_variant["gene"], dr_variant["type"], "looker")
+              row["mdl_interpretation"] = apply_expert_rules(dr_variant["nucleotide_change"], dr_variant["protein_change"], dr_variant["gene"], dr_variant["type"], "MDL")
+              row["rationale"] = "Expert rule applied"
+              row["antimicrobial"] = drug
+              row_list.append(row)
       
         # mutations not reported by tb-profiler
         for other_variant in results_json["other_variants"]: 
@@ -405,13 +407,14 @@ task tbprofiler_output_parsing {
               row["rationale"] = "WHO classification"  if row["confidence"] != "No WHO annotation" else "Expert rule applied"
               row_list.append(row)
           else:
-            print(other_variant)
-            row = variant_to_row(dr_variant)
-            row["confidence"] = "No WHO annotation"
-            row["looker_interpretation"] = apply_expert_rules(dr_variant["nucleotide_change"], dr_variant["protein_change"], dr_variant["gene"], dr_variant["type"], "looker")
-            row["mdl_interpretation"] = apply_expert_rules(dr_variant["nucleotide_change"], dr_variant["protein_change"], dr_variant["gene"], dr_variant["type"], "MDL")
-            row["rationale"] = "Expert rule applied"
-            row_list.append(row)
+            for drug in other_variant["gene_associated_drugs"]:
+              row = variant_to_row(other_variant)
+              row["confidence"] = "No WHO annotation"
+              row["looker_interpretation"] = apply_expert_rules(other_variant["nucleotide_change"], other_variant["protein_change"], other_variant["gene"], other_variant["type"], "looker")
+              row["mdl_interpretation"] = apply_expert_rules(other_variant["nucleotide_change"], other_variant["protein_change"], other_variant["gene"], other_variant["type"], "MDL")
+              row["rationale"] = "Expert rule applied"
+              row["antimicrobial"] = drug
+              row_list.append(row)
       
       for gene, resistance_list in gene_to_resistance.items():
         for resistance in resistance_list:
