@@ -49,6 +49,7 @@ workflow theiaprok_ont {
     Boolean call_ani = false # by default do not call ANI task, but user has ability to enable this task if working with enteric pathogens or supply their own high-quality reference genome
     Boolean call_resfinder = false
     String genome_annotation = "prokka" # options: "prokka" or "bakta"
+    String? amrfinder_organism # allow user to provide organism (e.g. "Clostridioides_difficile") string to amrfinder. Useful when gambit does not predict the correct species
     # qc check parameters
     File? qc_check_table
     String? expected_taxon
@@ -137,7 +138,7 @@ workflow theiaprok_ont {
           input:
             assembly = dragonflye.assembly_fasta,
             samplename = samplename,
-            organism = gambit.gambit_predicted_taxon
+            organism = select_first([amrfinder_organism,gambit.gambit_predicted_taxon])
         }
       }
       call ts_mlst_task.ts_mlst {
