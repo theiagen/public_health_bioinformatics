@@ -56,14 +56,18 @@ task amrfinderplus_nuc {
     # K. oxytoca has it's own option now
     elif [[ "~{organism}" == *"Klebsiella"*"oxytoca"* ]]; then
       amrfinder_organism="Klebsiella_oxytoca"
-    # because some people spell the species 'gonorrhea' differently
-    elif [[ "~{organism}" == *"Neisseria"*"gonorrhea"* ]] || [[ "~{organism}" == *"Neisseria"*"gonorrhoeae"* ]] || [[ "~{organism}" == *"Neisseria"*"meningitidis"* ]]; then 
-      amrfinder_organism="Neisseria"
+    # because some people spell the species 'gonorrhoeae' differently
+    elif [[ "~{organism}" == *"Neisseria"*"gonorrhea"* ]] || [[ "~{organism}" == *"Neisseria"*"gonorrhoeae"* ]]; then 
+      amrfinder_organism="Neisseria_gonorrhoeae"
+    elif [[ "~{organism}" == *"Neisseria"*"meningitidis"* ]]; then 
+      amrfinder_organism="Neisseria_meningitidis"
     elif [[ "~{organism}" == *"Pseudomonas"*"aeruginosa"* ]]; then 
       amrfinder_organism="Pseudomonas_aeruginosa"
     # pretty broad, could work on Salmonella bongori and other species
     elif [[ "~{organism}" == *"Salmonella"* ]]; then 
       amrfinder_organism="Salmonella"
+    elif [[ "~{organism}" == *"Serratia"*"marcescens"* ]]; then 
+      amrfinder_organism="Serratia_marcescens"
     elif [[ "~{organism}" == *"Staphylococcus"*"aureus"* ]]; then 
       amrfinder_organism="Staphylococcus_aureus"
     elif [[ "~{organism}" == *"Staphylococcus"*"pseudintermedius"* ]]; then 
