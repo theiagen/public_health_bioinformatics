@@ -150,18 +150,21 @@ task tbprofiler_output_parsing {
       else:
         return "S"
 
-    def apply_expert_rules(nucleotide_change, gene, substitution_type, interpretation_destination):
+    def apply_expert_rules(nucleotide_change, protein_change, gene, substitution_type, interpretation_destination):
       """
       """
-      position = get_position(nucleotide_change)
+
+      position_nt = get_position(nucleotide_change)
+      position_aa = get_position(protein_change)
+
       if gene in ["Rv0678", "atpE", "pepQ", "rplC", "mmpL5", "mmpS5"]: # apply expert rules 1.2
-        if gene == "Rv0678" and (position >= -84 and position <= -1): # promoter region
+        if gene == "Rv0678" and (position_nt >= -84 and position_nt <= -1): # promoter region
           return "U"
-        elif gene == "atpE" and (position >= -48 and position <= -1):
+        elif gene == "atpE" and (position_nt >= -48 and position_nt <= -1):
           return "U"
-        elif gene == "pepQ" and (position >= -33 and position <= -1):
+        elif gene == "pepQ" and (position_nt >= -33 and position_nt <= -1):
           return "U"
-        elif gene == "rplC" and (position >= -18 and position <= -1):
+        elif gene == "rplC" and (position_nt >= -18 and position_nt <= -1):
           return "U"
         else: # apply expert rules 1.2
           if not any(non_ORF in nucleotide_change for non_ORF in ["+", "-", "*"]) or nucleotide_change.endswith("*"): 
@@ -172,7 +175,7 @@ task tbprofiler_output_parsing {
             else:
               return "S"
       elif gene == "rrl": # apply expert rules 1.2
-        if (position >= 2003 and position <= 2367) or (position >= 2449 and position <= 3056):
+        if (position_nt >= 2003 and position_nt <= 2367) or (position_nt >= 2449 and position_nt <= 3056):
           return "U"
         else:
           return "S" if interpretation_destination == "MDL" else "U"
@@ -185,7 +188,7 @@ task tbprofiler_output_parsing {
             else:
               return "S"        
       elif gene == "rpoB": # apply expert rules 2.2.2
-        if (position >= 426 and position <= 452):
+        if (position_aa >= 426 and position_aa <= 452):
             if substitution_type != "synonymous_variant":
               return "R"
             else:
@@ -334,6 +337,8 @@ task tbprofiler_output_parsing {
         # reported mutation by tb-profiler, all confering resistance by WHO criteria
         for dr_variant in results_json["dr_variants"]: 
           if "annotation" in dr_variant: # only ouput if annotation is present - to keep?
+            if len(dr_variant["annotation"]) == 0:
+              print(dr_variant)
             for annotation in dr_variant["annotation"]:
               row = {}
               row["sample_id"] = "~{samplename}"
@@ -344,8 +349,8 @@ task tbprofiler_output_parsing {
               row["tbprofiler_variant_substitution_aa"] = dr_variant["protein_change"] if dr_variant["protein_change"] != "" else "NA"
               row["confidence"] = "No WHO annotation" if annotation["who_confidence"] == "" else annotation["who_confidence"]
               row["antimicrobial"] = annotation["drug"]
-              row["looker_interpretation"] = annotation_to_looker(row["confidence"]) if row["confidence"] != "No WHO annotation" else apply_expert_rules(dr_variant["nucleotide_change"], dr_variant["gene"], dr_variant["type"], "looker")
-              row["mdl_interpretation"] = annotation_to_MDL(row["confidence"]) if row["confidence"] != "No WHO annotation" else apply_expert_rules(dr_variant["nucleotide_change"], dr_variant["gene"], dr_variant["type"], "looker")
+              row["looker_interpretation"] = annotation_to_looker(row["confidence"]) if row["confidence"] != "No WHO annotation" else apply_expert_rules(dr_variant["nucleotide_change"], dr_variant["protein_change"], dr_variant["gene"], dr_variant["type"], "looker")
+              row["mdl_interpretation"] = annotation_to_MDL(row["confidence"]) if row["confidence"] != "No WHO annotation" else apply_expert_rules(dr_variant["nucleotide_change"], dr_variant["protein_change"], dr_variant["gene"], dr_variant["type"], "MDL")
               row["depth"] = int(dr_variant["depth"] or 0)
               row["frequency"] = dr_variant["freq"]
               row["read_support"] = row["depth"]*row["frequency"] 
@@ -370,8 +375,8 @@ task tbprofiler_output_parsing {
                 row["tbprofiler_variant_substitution_aa"] = other_variant["protein_change"] if other_variant["protein_change"] != "" else "NA"
                 row["confidence"] = "No WHO annotation" if annotation["who_confidence"] == "" else annotation["who_confidence"]
                 row["antimicrobial"] = annotation["drug"]
-                row["looker_interpretation"] = annotation_to_looker(row["confidence"])  if row["confidence"] != "No WHO annotation" else apply_expert_rules(other_variant["nucleotide_change"], other_variant["gene"], other_variant["type"], "looker")
-                row["mdl_interpretation"] = annotation_to_MDL(row["confidence"]) if row["confidence"] != "No WHO annotation" else apply_expert_rules(other_variant["nucleotide_change"], other_variant["gene"], other_variant["type"], "looker")
+                row["looker_interpretation"] = annotation_to_looker(row["confidence"])  if row["confidence"] != "No WHO annotation" else apply_expert_rules(other_variant["nucleotide_change"], other_variant["protein_change"], other_variant["gene"], other_variant["type"], "looker")
+                row["mdl_interpretation"] = annotation_to_MDL(row["confidence"]) if row["confidence"] != "No WHO annotation" else apply_expert_rules(other_variant["nucleotide_change"],other_variant["protein_change"], other_variant["gene"], other_variant["type"], "MDL")
                 row["depth"] = int(other_variant["depth"] or 0)
                 row["frequency"] = other_variant["freq"]
                 row["read_support"] = row["depth"]*row["frequency"] 
@@ -452,7 +457,7 @@ task tbprofiler_output_parsing {
 
       for antimicrobial in resistance_name_list:
         if antimicrobial in resistance.keys():
-          df_looker[antimicrobial] = annotation_to_looker(resistance[antimicrobial]) if resistance[antimicrobial] != "" else apply_expert_rules(other_variant["nucleotide_change"], other_variant["gene"], other_variant["type"], "looker")
+          df_looker[antimicrobial] = annotation_to_looker(resistance[antimicrobial]) if resistance[antimicrobial] != "" else apply_expert_rules(other_variant["nucleotide_change"], other_variant["protein_change"], other_variant["gene"], other_variant["type"], "looker")
         else:
           df_looker[antimicrobial] = "S"
       
