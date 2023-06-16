@@ -83,6 +83,9 @@ task bcftools_consensus {
     bcftools index -t ~{vcf}
     bcftools consensus -f ~{reference} --mask ~{mask} --mask-with N --mark-del - ~{vcf} > "~{samplename}"_consensus.fasta
     sed -i -e 's/^>\(.*\)/>~{samplename}/' "~{samplename}"_consensus.fasta
+    # remove non-ATCGN bases and replace them with N
+    sed '/^[^>]/s/[R|Y|W|S|M|K|H|B|V|D|-]/N/g' "~{samplename}"_consensus.fasta > "~{samplename}"_consensus.fasta
+
   >>>
   output {
     File bcftools_consensus_fasta = "~{samplename}_consensus.fasta"
