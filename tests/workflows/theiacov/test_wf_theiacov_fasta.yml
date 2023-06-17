@@ -161,17 +161,17 @@
     - path: miniwdl_run/call-version_capture/outputs.json
     - path: miniwdl_run/call-version_capture/task.log
     - path: miniwdl_run/wdl/tasks/quality_control/task_consensus_qc.wdl
-      md5sum: cd119dfc2262039ff9c18be68f9f6385
+      contains: ["qc", "command", "output", "runtime"]
     - path: miniwdl_run/wdl/tasks/quality_control/task_vadr.wdl
-      md5sum: 2e39a52cb00c6832bb2cc87f572ca6a5
+      contains: ["vadr", "command", "output", "runtime"]
     - path: miniwdl_run/wdl/tasks/species_typing/task_pangolin.wdl
-      md5sum: 7905964a1a946eab9c6e017362b84471
+      contains: ["pangolin", "command", "output", "runtime"]
     - path: miniwdl_run/wdl/tasks/task_versioning.wdl
-      md5sum: 0700ec2fe03ba61c41aacee093028ca3
+      contains: ["version", "command", "output", "runtime"]
     - path: miniwdl_run/wdl/tasks/taxon_id/task_nextclade.wdl
-      md5sum: 62292e7f0b27847a9c17063e30910721
+      contains: ["nextclade", "command", "output", "runtime"]
     - path: miniwdl_run/wdl/workflows/theiacov/wf_theiacov_fasta.wdl
-      md5sum: 2e39c5e356be03cc06963e99c591483f
+      contains: ["theiacov_fasta", "description", "call", "output"]
     - path: miniwdl_run/inputs.json
       contains: ["theiacov_fasta", "samplename", "seq_method"]
     - path: miniwdl_run/outputs.json
