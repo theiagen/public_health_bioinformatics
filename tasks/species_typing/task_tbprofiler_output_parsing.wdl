@@ -365,15 +365,24 @@ task tbprofiler_output_parsing {
               row["mdl_interpretation"] = apply_expert_rules(dr_variant["nucleotide_change"], dr_variant["protein_change"], dr_variant["gene"], dr_variant["type"], "MDL")
               row["rationale"] = "Expert rule applied"
               row_list.append(row)
-            # case: drug confers resistance to multiple drugs
+            # case: drug confers resistance to multiple drugs - if the same drug shows multiple times, save only the most severe annotation
+            drugs_to_row = {}
             for annotation in dr_variant["annotation"]:
-              row = variant_to_row(dr_variant)
-              row["confidence"] = "No WHO annotation" if annotation["who_confidence"] == "" else annotation["who_confidence"]
-              row["antimicrobial"] = annotation["drug"]
-              row["looker_interpretation"] = annotation_to_looker(row["confidence"]) if row["confidence"] != "No WHO annotation" else apply_expert_rules(dr_variant["nucleotide_change"], dr_variant["protein_change"], dr_variant["gene"], dr_variant["type"], "looker")
-              row["mdl_interpretation"] = annotation_to_MDL(row["confidence"], dr_variant["gene"]) if row["confidence"] != "No WHO annotation" else apply_expert_rules(dr_variant["nucleotide_change"], dr_variant["protein_change"], dr_variant["gene"], dr_variant["type"], "MDL")
+              if annotation["drug"] not in drugs_to_row:
+                drugs_to_row[annotation["drug"]] = {"other_variant": dr_variant, "who_confidence": annotation["who_confidence"], "drug": annotation["drug"], "nucleotide_change": dr_variant["nucleotide_change"],"protein_change": dr_variant["protein_change"], "gene": dr_variant["gene"], "type": dr_variant["type"]}
+              else:
+                if rank_annotation(drugs_to_row[annotation["drug"]]["who_confidence"]) > rank_annotation(annotation["who_confidence"]):
+                  drugs_to_row[annotation["drug"]] = {"other_variant": dr_variant, "who_confidence": annotation["who_confidence"], "drug": annotation["drug"], "nucleotide_change": dr_variant["nucleotide_change"],"protein_change": dr_variant["protein_change"], "gene": dr_variant["gene"], "type": dr_variant["type"]}
+            
+            for drug in drugs_to_row:
+              row = variant_to_row(drugs_to_row[drug]["other_variant"])
+              row["confidence"] = "No WHO annotation" if drugs_to_row[drug]["who_confidence"] == "" else drugs_to_row[drug]["who_confidence"]
+              row["antimicrobial"] = drugs_to_row[drug]["drug"]
+              row["looker_interpretation"] = annotation_to_looker(row["confidence"])  if row["confidence"] != "No WHO annotation" else apply_expert_rules(drugs_to_row[drug]["nucleotide_change"], drugs_to_row[drug]["protein_change"], drugs_to_row[drug]["gene"], drugs_to_row[drug]["type"], "looker")
+              row["mdl_interpretation"] = annotation_to_MDL(row["confidence"], drugs_to_row[drug]["gene"]) if row["confidence"] != "No WHO annotation" else apply_expert_rules(drugs_to_row[drug]["nucleotide_change"],drugs_to_row[drug]["protein_change"], drugs_to_row[drug]["gene"], drugs_to_row[drug]["type"], "MDL")
               row["rationale"] = "WHO classification"  if row["confidence"] != "No WHO annotation" else "Expert rule applied"
               row_list.append(row)
+
           # case: annotation field is not present, expert rule is applied directly
           else:
             for drug in dr_variant["gene_associated_drugs"]:
@@ -397,13 +406,21 @@ task tbprofiler_output_parsing {
               row["mdl_interpretation"] = apply_expert_rules(other_variant["nucleotide_change"], other_variant["protein_change"], other_variant["gene"], other_variant["type"], "MDL")
               row["rationale"] = "Expert rule applied"
               row_list.append(row)
-            # case: drug confers resistance to multiple drugs
+            # case: drug confers resistance to multiple drugs - if the same drug shows multiple times, save only the most severe annotation
+            drugs_to_row = {}
             for annotation in other_variant["annotation"]:
-              row = variant_to_row(other_variant)
-              row["confidence"] = "No WHO annotation" if annotation["who_confidence"] == "" else annotation["who_confidence"]
-              row["antimicrobial"] = annotation["drug"]
-              row["looker_interpretation"] = annotation_to_looker(row["confidence"])  if row["confidence"] != "No WHO annotation" else apply_expert_rules(other_variant["nucleotide_change"], other_variant["protein_change"], other_variant["gene"], other_variant["type"], "looker")
-              row["mdl_interpretation"] = annotation_to_MDL(row["confidence"], dr_variant["gene"]) if row["confidence"] != "No WHO annotation" else apply_expert_rules(other_variant["nucleotide_change"],other_variant["protein_change"], other_variant["gene"], other_variant["type"], "MDL")
+              if annotation["drug"] not in drugs_to_row:
+                drugs_to_row[annotation["drug"]] = {"other_variant": other_variant, "who_confidence": annotation["who_confidence"], "drug": annotation["drug"], "nucleotide_change": other_variant["nucleotide_change"],"protein_change": other_variant["protein_change"], "gene": other_variant["gene"], "type": other_variant["type"]}
+              else:
+                if rank_annotation(drugs_to_row[annotation["drug"]]["who_confidence"]) > rank_annotation(annotation["who_confidence"]):
+                    drugs_to_row[annotation["drug"]] = {"other_variant": other_variant, "who_confidence": annotation["who_confidence"], "drug": annotation["drug"], "nucleotide_change": other_variant["nucleotide_change"],"protein_change": other_variant["protein_change"], "gene": other_variant["gene"], "type": other_variant["type"]}
+
+            for drug in drugs_to_row:
+              row = variant_to_row(drugs_to_row[drug]["other_variant"])
+              row["confidence"] = "No WHO annotation" if drugs_to_row[drug]["who_confidence"] == "" else drugs_to_row[drug]["who_confidence"]
+              row["antimicrobial"] = drugs_to_row[drug]["drug"]
+              row["looker_interpretation"] = annotation_to_looker(row["confidence"])  if row["confidence"] != "No WHO annotation" else apply_expert_rules(drugs_to_row[drug]["nucleotide_change"], drugs_to_row[drug]["protein_change"], drugs_to_row[drug]["gene"], drugs_to_row[drug]["type"], "looker")
+              row["mdl_interpretation"] = annotation_to_MDL(row["confidence"], drugs_to_row[drug]["gene"]) if row["confidence"] != "No WHO annotation" else apply_expert_rules(drugs_to_row[drug]["nucleotide_change"],drugs_to_row[drug]["protein_change"], drugs_to_row[drug]["gene"], drugs_to_row[drug]["type"], "MDL")
               row["rationale"] = "WHO classification"  if row["confidence"] != "No WHO annotation" else "Expert rule applied"
               row_list.append(row)
           else:
