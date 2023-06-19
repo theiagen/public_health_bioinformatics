@@ -108,7 +108,7 @@ task tbprofiler_output_parsing {
         return int(position)
       return 0
 
-    def annotation_to_looker(annotation, gene = ""):
+    def annotation_to_looker(annotation):
       """
       1.1: This function takes the WHO-annotation of resistance by TBProfiler and 
       returns simple R (resistant), U (uncertain) and S (susceptible) notations
@@ -123,8 +123,8 @@ task tbprofiler_output_parsing {
         return "S"
       elif annotation == "Not assoc w R - Interim":
         return "S-Interim"
-      elif (annotation == "No WHO annotation") and (gene != ""):
-        return "S" # Sage: what did you wanted to do here?
+      else:
+        return "S"
     
     def annotation_to_MDL(annotation, gene = ""):
       """
@@ -371,7 +371,7 @@ task tbprofiler_output_parsing {
               row["confidence"] = "No WHO annotation" if annotation["who_confidence"] == "" else annotation["who_confidence"]
               row["antimicrobial"] = annotation["drug"]
               row["looker_interpretation"] = annotation_to_looker(row["confidence"]) if row["confidence"] != "No WHO annotation" else apply_expert_rules(dr_variant["nucleotide_change"], dr_variant["protein_change"], dr_variant["gene"], dr_variant["type"], "looker")
-              row["mdl_interpretation"] = annotation_to_MDL(row["confidence"]) if row["confidence"] != "No WHO annotation" else apply_expert_rules(dr_variant["nucleotide_change"], dr_variant["protein_change"], dr_variant["gene"], dr_variant["type"], "MDL")
+              row["mdl_interpretation"] = annotation_to_MDL(row["confidence"], dr_variant["gene"]) if row["confidence"] != "No WHO annotation" else apply_expert_rules(dr_variant["nucleotide_change"], dr_variant["protein_change"], dr_variant["gene"], dr_variant["type"], "MDL")
               row["rationale"] = "WHO classification"  if row["confidence"] != "No WHO annotation" else "Expert rule applied"
               row_list.append(row)
           # case: annotation field is not present, expert rule is applied directly
@@ -403,7 +403,7 @@ task tbprofiler_output_parsing {
               row["confidence"] = "No WHO annotation" if annotation["who_confidence"] == "" else annotation["who_confidence"]
               row["antimicrobial"] = annotation["drug"]
               row["looker_interpretation"] = annotation_to_looker(row["confidence"])  if row["confidence"] != "No WHO annotation" else apply_expert_rules(other_variant["nucleotide_change"], other_variant["protein_change"], other_variant["gene"], other_variant["type"], "looker")
-              row["mdl_interpretation"] = annotation_to_MDL(row["confidence"]) if row["confidence"] != "No WHO annotation" else apply_expert_rules(other_variant["nucleotide_change"],other_variant["protein_change"], other_variant["gene"], other_variant["type"], "MDL")
+              row["mdl_interpretation"] = annotation_to_MDL(row["confidence"], dr_variant["gene"]) if row["confidence"] != "No WHO annotation" else apply_expert_rules(other_variant["nucleotide_change"],other_variant["protein_change"], other_variant["gene"], other_variant["type"], "MDL")
               row["rationale"] = "WHO classification"  if row["confidence"] != "No WHO annotation" else "Expert rule applied"
               row_list.append(row)
           else:
