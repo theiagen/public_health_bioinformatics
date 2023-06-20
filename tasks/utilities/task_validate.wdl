@@ -67,7 +67,7 @@ task compare_two_tsvs {
     pip install pretty_html_table
 
     # check if a validation criteria table was provided
-    if [[ ! -f ~{validation_criteria_tsv} ]]; then
+    if [[ ! -f "~{validation_criteria_tsv}" ]]; then
       export SKIP_VALIDATION="true"
     else
       export SKIP_VALIDATION="false"
