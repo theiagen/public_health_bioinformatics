@@ -288,15 +288,15 @@ task tbprofiler_output_parsing {
         
         for other_variant in results_json["other_variants"]:  # mutations not reported by tb-profiler
           if other_variant["type"] != "synonymous_variant":  # report all non-synonymous mutations
-              if "annotation" in other_variant.keys():
-                for annotation in other_variant["annotation"]:
-                  antimicrobial = annotation["drug"]
-                  resistance = annotation["who_confidence"]
-                  if antimicrobial not in resistance_dict.keys():
+            if "annotation" in other_variant.keys():
+              for annotation in other_variant["annotation"]:
+                antimicrobial = annotation["drug"]
+                resistance = annotation["who_confidence"]
+                if antimicrobial not in resistance_dict.keys():
+                  resistance_dict[antimicrobial] = resistance
+                else:
+                  if rank_annotation(resistance_dict[antimicrobial]) < rank_annotation(resistance):
                     resistance_dict[antimicrobial] = resistance
-                  else:
-                    if rank_annotation(resistance_dict[antimicrobial]) < rank_annotation(resistance):
-                      resistance_dict[antimicrobial] = resistance
       return resistance_dict
 
     def variant_to_row(variant):
@@ -369,10 +369,10 @@ task tbprofiler_output_parsing {
             drugs_to_row = {}
             for annotation in dr_variant["annotation"]:
               if annotation["drug"] not in drugs_to_row:
-                drugs_to_row[annotation["drug"]] = {"other_variant": dr_variant, "who_confidence": annotation["who_confidence"], "drug": annotation["drug"], "nucleotide_change": dr_variant["nucleotide_change"],"protein_change": dr_variant["protein_change"], "gene": dr_variant["gene"], "type": dr_variant["type"]}
+                drugs_to_row[annotation["drug"]] = {"other_variant": dr_variant, "who_confidence": annotation["who_confidence"], "drug": annotation["drug"], "nucleotide_change": dr_variant["nucleotide_change"], "protein_change": dr_variant["protein_change"], "gene": dr_variant["gene"], "type": dr_variant["type"]}
               else:
                 if rank_annotation(drugs_to_row[annotation["drug"]]["who_confidence"]) > rank_annotation(annotation["who_confidence"]):
-                  drugs_to_row[annotation["drug"]] = {"other_variant": dr_variant, "who_confidence": annotation["who_confidence"], "drug": annotation["drug"], "nucleotide_change": dr_variant["nucleotide_change"],"protein_change": dr_variant["protein_change"], "gene": dr_variant["gene"], "type": dr_variant["type"]}
+                  drugs_to_row[annotation["drug"]] = {"other_variant": dr_variant, "who_confidence": annotation["who_confidence"], "drug": annotation["drug"], "nucleotide_change": dr_variant["nucleotide_change"], "protein_change": dr_variant["protein_change"], "gene": dr_variant["gene"], "type": dr_variant["type"]}
             
             for drug in drugs_to_row:
               row = variant_to_row(drugs_to_row[drug]["other_variant"])
