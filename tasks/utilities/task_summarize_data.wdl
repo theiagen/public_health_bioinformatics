@@ -8,6 +8,7 @@ task summarize_data {
     String? terra_table
     String? column_names # string of comma-delimited column names
     String? output_prefix
+    String? id_column_name
 
     Int disk_size = 100
     # commenting out this option since it's for local dev. Prefer this option to not appear in Terra
@@ -28,6 +29,13 @@ task summarize_data {
       export phandango_coloring="false"
     fi
 
+    # indicate if a different id_column should be used than the default
+    if [[ -z ~{id_column_name} ]]; then
+      export default_column="true"
+    else
+      export default_column="false"
+    fi
+
     python3 <<CODE 
   import pandas as pd
   import numpy as np
@@ -40,7 +48,10 @@ task summarize_data {
   table = pd.read_csv(tablename, delimiter='\t', header=0, index_col=False, dtype={"~{terra_table}_id": 'str'}) # ensure sample_id is always a string
 
   # extract the samples for upload from the entire table
-  table = table[table["~{terra_table}_id"].isin("~{sep='*' sample_names}".split("*"))]
+  if (os.environ["default_column"] == "true"):
+    table = table[table["~{terra_table}_id"].isin("~{sep='*' sample_names}".split("*"))]
+  else:
+    table = table[table["~{id_column_name}"].isin("~{sep='*' sample_names}".split("*"))] 
 
   # cast entire table as str
   table = table.astype(str)
