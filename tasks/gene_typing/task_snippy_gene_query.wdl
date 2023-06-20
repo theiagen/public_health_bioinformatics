@@ -41,10 +41,10 @@ task snippy_gene_query {
     for qgene in $(echo "~{query_gene}" | sed "s/,/ /g"); do
       # capture queried hits to single file 
       if grep -q  "${qgene}" ~{snippy_variants_results}; then 
-        grep "${qgene}" ~{snippy_variants_results} | awk '{print "~{samplename}," $0}' >> ./gene_query.csv
+        grep "${qgene}" ~{snippy_variants_results} | awk '{print "'~{samplename}'," $0}' >> ./gene_query.csv
         # curate relevant columns of queried hits to single output
         # awk syntax: see https://stackoverflow.com/questions/29642102/how-to-make-awk-ignore-the-field-delimiter-inside-double-quotes?noredirect=1&lq=1
-        grep "${qgene}" ./gene_query.csv | awk -vFPAT='([^,]*)|("[^"]+")' -vOFS=, '{print "${qgene}: "$15" ("$12"; "$7")"}' >> snippy_variant_hits_tmp
+        grep "${qgene}" ./gene_query.csv | awk -vFPAT='([^,]*)|("[^"]+")' -vOFS=, '{print "'${qgene}': "$15" ("$12"; "$7")"}' >> snippy_variant_hits_tmp
       fi
     done
 
