@@ -60,7 +60,10 @@ task summarize_data {
   columns = "~{column_names}".split(",")
 
   temporarylist = []
-  temporarylist.append("~{terra_table}_id")
+  if (os.environ["default_column"] == "true"):
+    temporarylist.append("~{terra_table}_id")
+  else:
+    temporarylist.append("~{id_column_name}")
   temporarylist += columns
 
   table = table[temporarylist].copy()
@@ -68,7 +71,11 @@ task summarize_data {
 
   # create a table to search through containing only columns of interest
   searchtable = table[columns].copy()
-  filteredmetadata = searchtable.set_index(table["~{terra_table}_id"])
+
+  if (os.environ["default_column"] == "true"):
+    filteredmetadata = searchtable.set_index(table["~{terra_table}_id"])
+  else:
+    filteredmetadata = searchtable.set_index(table["~{id_column_name}"])
   filteredmetadata.to_csv("~{output_prefix}_filtered_metadata.tsv", sep='\t', index=True)
 
   # iterate through the columns of interest and combine into a single list
