@@ -54,6 +54,7 @@ task snippy_variants {
   output {
     String snippy_variants_version = read_string("VERSION")
     String snippy_variants_docker = docker
+    File snippy_variants_reference_genome = "~{reference_genome_file}"
     File snippy_variants_outdir_tarball = "./~{samplename}_snippy_variants_outdir.tar"
     Array[File] snippy_variants_outputs = glob("~{samplename}/~{samplename}*")
     File snippy_variants_results = "~{samplename}/~{samplename}.csv"
