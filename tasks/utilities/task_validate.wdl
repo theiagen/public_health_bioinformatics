@@ -67,7 +67,7 @@ task compare_two_tsvs {
     pip install pretty_html_table
 
     # check if a validation criteria table was provided
-    if [[ ! -f ~{validation_criteria_tsv} ]]; then
+    if [[ ! -f "~{validation_criteria_tsv}" ]]; then
       export SKIP_VALIDATION="true"
     else
       export SKIP_VALIDATION="false"
@@ -150,8 +150,10 @@ task compare_two_tsvs {
 
   # count the number of differences using exact match
   # temporarily make NaNs Null since NaN != NaN for the pd.DataFrame.eq() function
-  number_of_differences = pd.DataFrame((~df1.fillna("NULL").eq(df2.fillna("NULL"))).sum(), columns = ['Number of differences (exact match)'])
+  print('before .eq')
+  number_of_differences = pd.DataFrame((~df1.fillna("NULL").astype(str).eq(df2.fillna("NULL").astype(str))).sum(), columns = ['Number of differences (exact match)'])
   # remove the sample name row 
+  print('after .eq')
   number_of_differences.drop("samples", axis=0, inplace=True)
   
   # add the number of differences to the summary output table
