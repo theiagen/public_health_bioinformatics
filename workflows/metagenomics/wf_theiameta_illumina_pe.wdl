@@ -4,9 +4,6 @@ import "../utilities/wf_read_QC_trim_pe.wdl" as read_qc_wf
 import "../../tasks/assembly/task_megahit.wdl" as megahit_task
 import "../../tasks/alignment/task_minimap2.wdl" as minimap2_task
 import "../../tasks/utilities/task_parse_paf.wdl" as parse_paf_task
-import "../../tasks/alignment/task_bwa.wdl" as bwa_task
-import "../../tasks/alignment/task_bcftools.wdl" as bcftools_task
-import "../../tasks/utilities/task_compare_assemblies.wdl" as compare_assemblies_task
 import "../../tasks/quality_control/task_quast.wdl" as quast_task
 import "../../tasks/task_versioning.wdl" as versioning
 
@@ -56,45 +53,10 @@ workflow theiameta_illumina_pe {
           assembly = megahit.assembly_fasta,
           samplename = samplename
       }
-      call bwa_task.bwa {
-        input:
-          read1 = read_QC_trim.read1_clean,
-          read2 = read_QC_trim.read2_clean,
-          samplename = samplename,
-          reference_genome = select_first([reference])
-      }
-      call bcftools_task.bcftools_mpileup {
-        input:
-          bam = bwa.sorted_bam,
-          bai = bwa.sorted_bai,
-          reference = select_first([reference]),
-          samplename = samplename
-      }
-      call bcftools_task.bedtools_mask {
-        input:
-          bam = bwa.sorted_bam,
-          bai = bwa.sorted_bai,
-          variants = bcftools_mpileup.bcftools_variants_bed,
-          samplename = samplename
-      }
-      call bcftools_task.bcftools_consensus {
-        input:
-          vcf = bcftools_mpileup.bcftools_vcf,
-          mask = bedtools_mask.bedtools_mask_bed,
-          reference = select_first([reference]),
-          samplename = samplename
-      }
-      call compare_assemblies_task.compare_assemblies {
-        input:
-          assembly_denovo = retrieve_aligned_contig_paf.parse_paf_contigs,
-          assembly_consensus = bcftools_consensus.bcftools_consensus_fasta,
-          samplename = samplename
-      }
-
     }
     call quast_task.quast {
       input:
-        assembly = select_first([compare_assemblies.final_assembly, megahit.assembly_fasta]),
+        assembly = select_first([retrieve_aligned_contig_paf.final_assembly, megahit.assembly_fasta]),
         samplename = samplename,
         min_contig_len = 1
       }
@@ -102,7 +64,7 @@ workflow theiameta_illumina_pe {
       input:
         query1 = read_QC_trim.read1_clean,
         query2 = read_QC_trim.read2_clean, 
-        reference = select_first([compare_assemblies.final_assembly, megahit.assembly_fasta]),
+        reference = select_first([retrieve_aligned_contig_paf.final_assembly, megahit.assembly_fasta]),
         samplename = samplename,
         mode = "sr",
         output_sam = true
@@ -141,13 +103,12 @@ workflow theiameta_illumina_pe {
     File? kraken_report = read_QC_trim.kraken_report
     Float? kraken_percent_human = read_QC_trim.kraken_human
     # Assembly - megahit outputs 
-    File? assembly_fasta = select_first([compare_assemblies.final_assembly, megahit.assembly_fasta])
-    String? assembly_length_unambiguous = select_first([compare_assemblies.number_ATCG, quast.genome_length])
+    File? assembly_fasta = select_first([retrieve_aligned_contig_paf.final_assembly, megahit.assembly_fasta])
+    Int? assembly_length = quast.genome_length
     Int? contig_number = quast.number_contigs
     String? megahit_pe_version = megahit.megahit_version
     Int? largest_contig = quast.largest_contig
     File? read1_unmapped = retrieve_unaligned_pe_reads_sam.read1
     File? read2_unmapped = retrieve_unaligned_pe_reads_sam.read2
-    Float? uncalled_bases_per_100kb = quast.uncalled_bases
     }
 }

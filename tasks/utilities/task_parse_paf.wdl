@@ -32,7 +32,7 @@ task retrieve_aligned_contig_paf {
     #fi
   >>>
   output {
-    File parse_paf_contigs = "~{samplename}.fasta"
+    File final_assembly = "~{samplename}.fasta"
   }
   runtime {
     docker: "~{docker}"
