@@ -195,7 +195,8 @@ workflow merlin_magic {
       }
     }
   }
-  if (merlin_tag == "Klebsiella") {
+  # see here for appropriate Klebsiella species & subspecies to be analyzed w Kleborate: https://github.com/klebgenomics/Kleborate/wiki/Species-detection
+  if (merlin_tag == "Klebsiella pneumoniae" || merlin_tag == "Klebsiella variicola" || merlin_tag == "Klebsiella aerogenes" || merlin_tag == "Klebsiella oxytoca") {
     call kleborate_task.kleborate {
       input:
         assembly = assembly,
