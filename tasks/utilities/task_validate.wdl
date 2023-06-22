@@ -85,11 +85,14 @@ task compare_two_tsvs {
   from pretty_html_table import build_table
 
   def read_tsv(tsv_file):
+    # the default NaN values, excluded "NA"
+    na_values =  ['-1.#IND', '1.#QNAN', '1.#IND', '-1.#QNAN', '#N/A N/A', '#N/A', 'N/A', 'n/a', '', '#NA', 'NULL', 'null', 'NaN', '-NaN', 'nan', '-nan', 'None']
+
     # Read TSV and change first column to 'samples'
-    df = pd.read_csv(tsv_file, sep='\t')
+    df = pd.read_csv(tsv_file, sep='\t', keep_default_na = False, na_values = na_values)
     df.columns.values[0] = "samples"
 
-    # replace blank cells with NaNs 
+    # replace "None" string cells with NaNs 
     df = df.replace("None", np.nan)
     return df
 
