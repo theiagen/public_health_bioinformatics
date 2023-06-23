@@ -50,8 +50,8 @@ task amrfinderplus_nuc {
     # should capture all Shigella and Escherichia species
     elif [[ "~{organism}" == *"Escherichia"* ]] || [[ "~{organism}" == *"Shigella"* ]]; then 
       amrfinder_organism="Escherichia"
-    # Klebsiella_pneumoniae can be used for K. pneumoniae species complex and K. aerogenes as per amrfinderplus wiki
-    elif [[ "~{organism}" == *"Klebsiella"*"aerogenes"* ]] || [[ "~{organism}" == *"Klebsiella"*"pneumoniae"* ]]; then 
+    # Klebsiella_pneumoniae can be used for K. pneumoniae species complex and K. aerogenes as per amrfinderplus wiki; K. variicola is part of KPSC
+    elif [[ "~{organism}" == *"Klebsiella"*"aerogenes"* ]] || [[ "~{organism}" == *"Klebsiella"*"pneumoniae"* ]] || [[ "~{organism}" == *"Klebsiella"*"variicola"* ]]; then 
       amrfinder_organism="Klebsiella_pneumoniae"
     # K. oxytoca has it's own option now
     elif [[ "~{organism}" == *"Klebsiella"*"oxytoca"* ]]; then
