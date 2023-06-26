@@ -236,17 +236,18 @@ workflow merlin_magic {
           ont_data = ont_data
       }
       if (tbprofiler_additional_outputs) {
+        call tb_gene_coverage_task.tb_gene_coverage {
+          input:
+            bamfile = tbprofiler.tbprofiler_output_bam,
+            bamindex = tbprofiler.tbprofiler_output_bai,
+            samplename = samplename
+        }
         call tbprofiler_output_parsing_task.tbprofiler_output_parsing{
           input:
             json = tbprofiler.tbprofiler_output_json,
             output_seq_method_type = tbprofiler_output_seq_method_type,
             operator = tbprofiler_operator,
-            samplename = samplename
-        }
-        call tb_gene_coverage_task.tb_gene_coverage {
-          input:
-            bamfile = tbprofiler.tbprofiler_output_bam,
-            bamindex = tbprofiler.tbprofiler_output_bai,
+            gene_coverage = tb_gene_coverage.tb_resistance_genes_percent_coverage,
             samplename = samplename
         }
       }
