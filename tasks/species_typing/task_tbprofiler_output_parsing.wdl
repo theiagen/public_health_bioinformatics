@@ -3,6 +3,7 @@ version 1.0
 task tbprofiler_output_parsing {
   input {
     File json
+    File gene_coverage
     String output_seq_method_type
     String operator
     String samplename
@@ -17,6 +18,9 @@ task tbprofiler_output_parsing {
     import datetime
 
     ## Lookup Data Structures ##
+
+    # gene coverage as a dictionary
+    gene_coverage_dict = pd.read_csv("~{gene_coverage}", delimiter="\t", skip_blank_lines=True).to_dict()[0]
 
     # lookup dictionary - antimicrobial code to name
     antimicrobial_code_to_resistance = {"M_DST_B01_INH": "isoniazid", "M_DST_C01_ETO": "ethionamide",
@@ -206,7 +210,7 @@ task tbprofiler_output_parsing {
       return ""
 
 
-    def get_lineage_for_LIMS(json_file):
+    def get_lineage(json_file):
       """
       """
       with open(json_file) as js_fh:
@@ -215,6 +219,8 @@ task tbprofiler_output_parsing {
           return "DNA of M. tuberculosis complex not detected"
         elif results_json["main_lin"] == "M.bovis":
           return "DNA of M. tuberculosis complex detected (M. bovis)"
+        elif results_json["main_lin"] == "M.tb":
+          return "DNA of M. tuberculosis complex detected (M.tb)" # not sure exactly what wording she wants here.
         else:
           return "DNA of M. tuberculosis complex detected (not M. bovis)"
 
@@ -229,19 +235,19 @@ task tbprofiler_output_parsing {
         results_json = json.load(js_fh)
         for dr_variant in results_json["dr_variants"]:  # reported mutation by tb-profiler, all confering resistance
           name = dr_variant["gene"]
-          substitution = str(dr_variant["nucleotide_change"] + "(" + dr_variant["protein_change"] + ")")  # mutation_type:nt_sub(aa_sub)
+          substitution = str(dr_variant["nucleotide_change"] + " (" + dr_variant["protein_change"] + ")")  # mutation_type:nt_sub (aa_sub)
           if name not in mutations_dict.keys():
             mutations_dict[name] = substitution
           else:
-            mutations_dict[name] = mutations_dict[name] + ';' + substitution
+            mutations_dict[name] = mutations_dict[name] + '; ' + substitution
         for other_variant in results_json["other_variants"]:  # mutations not reported by tb-profiler
           if other_variant["type"] != "synonymous_variant":  # report all non-synonymous mutations
               name = other_variant["gene"]
-              substitution =str(other_variant["nucleotide_change"] + "(" + other_variant["protein_change"] + ")")  # mutation_type:nt_sub(aa_sub)
+              substitution =str(other_variant["nucleotide_change"] + " (" + other_variant["protein_change"] + ")")  # mutation_type:nt_sub (aa_sub)
               if name not in mutations_dict.keys():
                 mutations_dict[name] = substitution
               else:
-                mutations_dict[name] = mutations_dict[name] + ';' + substitution
+                mutations_dict[name] = mutations_dict[name] + '; ' + substitution
 
       return mutations_dict
 
@@ -436,23 +442,29 @@ task tbprofiler_output_parsing {
       for gene, resistance_list in gene_to_resistance.items():
         for resistance in resistance_list:
           if gene not in genes_reported:
-            row = {}
-            row["sample_id"] = "~{samplename}"
-            row["tbprofiler_gene_name"] = gene
-            row["tbprofiler_locus_tag"] = gene_to_locus_tag[gene]
-            row["tbprofiler_variant_substitution_type"] = "WT"
-            row["tbprofiler_variant_substitution_nt"] = "NA"
-            row["tbprofiler_variant_substitution_aa"] = "NA"
-            row["confidence"] = "NA"
-            row["antimicrobial"] = resistance
-            row["looker_interpretation"] = "NA"
-            row["mdl_interpretation"] = "NA"
-            row["depth"] = "NA"
-            row["frequency"] = "NA"
-            row["read_support"] = "NA"
-            row["rationale"] = "NA"
-            row["warning"] = "NA"
-            row_list.append(row)
+
+              row = {}
+              row["sample_id"] = "~{samplename}"
+              row["tbprofiler_gene_name"] = gene
+              row["tbprofiler_locus_tag"] = gene_to_locus_tag[gene]
+              if gene_coverage_dict[gene] >= threshold: ########################################i don't know what the threshold should be ################
+                row["tbprofiler_variant_substitution_type"] = "WT"
+                row["looker_interpretation"] = "S"
+                row["mdl_interpretation"] = "S"
+              else:
+                row["tbprofiler_variant_substitution_type"] = "Insufficient Coverage"
+                row["looker_interpretation"] = "NA"
+                row["mdl_interpretation"] = "NA"
+              row["tbprofiler_variant_substitution_nt"] = "NA"
+              row["tbprofiler_variant_substitution_aa"] = "NA"
+              row["confidence"] = "NA"
+              row["antimicrobial"] = resistance
+              row["depth"] = "NA"
+              row["frequency"] = "NA"
+              row["read_support"] = "NA"
+              row["rationale"] = "NA"
+              row["warning"] = "NA"
+              row_list.append(row)
       
       df_laboratorian = df_laboratorian.append(row_list, ignore_index=True)
       df_laboratorian.to_csv("tbprofiler_laboratorian_report.csv", index=False)
@@ -470,7 +482,7 @@ task tbprofiler_output_parsing {
         - Operator information
       """
     
-      lineage = get_lineage_for_LIMS("~{json}")
+      lineage = get_lineage("~{json}")
       mutations = parse_json_mutations_for_LIMS("~{json}")
       resistance = parse_json_resistance("~{json}")
       df_lims = pd.DataFrame({"MDL sample accession numbers":"~{samplename}", "M_DST_A01_ID": lineage}, index=[0])
@@ -480,6 +492,9 @@ task tbprofiler_output_parsing {
           df_lims[antimicrobial] = annotation_to_LIMS(resistance[antimicrobial_code_to_resistance[antimicrobial]], antimicrobial_code_to_resistance[antimicrobial])
         else:
           df_lims[antimicrobial] = "No resistance to {} detected".format(antimicrobial_code_to_resistance[antimicrobial])
+
+        # if antimicrobial
+        
         for gene_name, gene_id in genes.items():
           if gene_name in mutations.keys():
             df_lims[gene_id] = mutations[gene_name]
@@ -498,6 +513,8 @@ task tbprofiler_output_parsing {
         - sample_id: includes sample name
         - for each antimicrobial, indication if its resistant (R) or susceptible (S)
       """
+
+      lineage = get_lineage("~{json}")
       resistance = parse_json_resistance("~{json}")
       df_looker = pd.DataFrame({"sample_id":"~{samplename}", "output_seq_method_type": "~{output_seq_method_type}"},index=[0])
 
@@ -507,6 +524,7 @@ task tbprofiler_output_parsing {
         else:
           df_looker[antimicrobial] = "S"
       
+      df_looker["lineage"] = lineage ## adjust the language here - I don't know what she wants ###################################################
       df_looker["analysis_date"] = current_time
       df_looker["operator"] = "~{operator}"
     
