@@ -8,6 +8,7 @@ task tbprofiler_output_parsing {
     String operator
     String samplename
     Int min_depth = 10
+    Int coverage_threshold = 100
   }
   command <<<
     python3 <<CODE
@@ -219,10 +220,12 @@ task tbprofiler_output_parsing {
           return "DNA of M. tuberculosis complex not detected"
         elif results_json["main_lin"] == "M.bovis":
           return "DNA of M. tuberculosis complex detected (M. bovis)"
+        elif "bcg" in results_json["main_lin"]:
+          return "DNA of M. tuberculosis complex detected (M. bovis)"
         elif results_json["main_lin"] == "M.tb":
-          return "DNA of M. tuberculosis complex detected (M.tb)" # not sure exactly what wording she wants here.
+          return "DNA of M. tuberculosis complex detected (M. tb)"
         else:
-          return "DNA of M. tuberculosis complex detected (not M. bovis)"
+          return "DNA of M. tuberculosis complex detected (not M. bovis and not M. tb)"
 
     def parse_json_mutations_for_LIMS(json_file):
       """
@@ -241,14 +244,16 @@ task tbprofiler_output_parsing {
           else:
             mutations_dict[name] = mutations_dict[name] + '; ' + substitution
         for other_variant in results_json["other_variants"]:  # mutations not reported by tb-profiler
-          if other_variant["type"] != "synonymous_variant":  # report all non-synonymous mutations
-              name = other_variant["gene"]
-              substitution =str(other_variant["nucleotide_change"] + " (" + other_variant["protein_change"] + ")")  # mutation_type:nt_sub (aa_sub)
-              if name not in mutations_dict.keys():
-                mutations_dict[name] = substitution
-              else:
-                mutations_dict[name] = mutations_dict[name] + '; ' + substitution
-
+          aa_position = get_position(other_variant["protein_change"])
+          if other_variant["type"] != "synonymous_variant" or (other_variant["gene"] == "rpoB" and (aa_position >= 426 and aa_position <= 452)):  # report all non-synonymous mutations, unless rpoB RRDR
+            name = other_variant["gene"]
+            substitution = str(other_variant["nucleotide_change"] + " (" + other_variant["protein_change"] + ")")  # mutation_type:nt_sub (aa_sub)
+            if other_variant["type"] == "synonymous_variant": # rpoB RRDR
+              substituion = subtitution + " [synonymous]"
+            if name not in mutations_dict.keys():
+              mutations_dict[name] = substitution
+            else:
+              mutations_dict[name] = mutations_dict[name] + '; ' + substitution
       return mutations_dict
 
     def rank_annotation(annotation):
@@ -275,7 +280,7 @@ task tbprofiler_output_parsing {
       elif (annotation == "Assoc w R - interim") or (annotation == "Uncertain significance"):
         return "The detected genetic determinant(s) have uncertain significance, resistance to {} cannot be ruled out".format(drug)
       else: # "Not assoc w R" and "Not assoc w R - Interim" and anything else
-        return "No resistance to {} detected".format(drug)
+        return "No genetic determinants associated with resistance to {} detected".format(drug)
 
     def parse_json_resistance(json_file):
       """
@@ -447,10 +452,10 @@ task tbprofiler_output_parsing {
               row["sample_id"] = "~{samplename}"
               row["tbprofiler_gene_name"] = gene
               row["tbprofiler_locus_tag"] = gene_to_locus_tag[gene]
-              if gene_coverage_dict[gene] >= threshold: ########################################i don't know what the threshold should be ################
+              if int(gene_coverage_dict[gene]) >= ~{coverage_threshold}:
                 row["tbprofiler_variant_substitution_type"] = "WT"
                 row["looker_interpretation"] = "S"
-                row["mdl_interpretation"] = "S"
+                row["mdl_interpretation"] = "WT"
               else:
                 row["tbprofiler_variant_substitution_type"] = "Insufficient Coverage"
                 row["looker_interpretation"] = "NA"
@@ -491,13 +496,27 @@ task tbprofiler_output_parsing {
         if antimicrobial_code_to_resistance[antimicrobial] in resistance.keys():
           df_lims[antimicrobial] = annotation_to_LIMS(resistance[antimicrobial_code_to_resistance[antimicrobial]], antimicrobial_code_to_resistance[antimicrobial])
         else:
-          df_lims[antimicrobial] = "No resistance to {} detected".format(antimicrobial_code_to_resistance[antimicrobial])
+          df_lims[antimicrobial] = "No genetic determinants associated with resistance to {} detected".format(antimicrobial_code_to_resistance[antimicrobial])
 
-        # if antimicrobial
-        
         for gene_name, gene_id in genes.items():
           if gene_name in mutations.keys():
             df_lims[gene_id] = mutations[gene_name]
+            
+            if gene_name == "rpoB": # rule 5.2.1.2
+              if df_lims[antimicrobial] == "No genetic determinants associated with resistance to {} detected".format(antimicrobial_code_to_resistance[antimicrobial]):
+                if len(mutations) > 0:
+                  non_synomynous_count = 0
+                  for mutation in mutations:
+                    if "synonymous" not in mutation: # if no other nonsynymous mutations were identified
+                      non_synomynous_count += 1
+                  if non_synomynous_count == 0:
+                    df_lims[antimicrobial] = "No genetic determinants associated with resistance to rifampin detected. The detected synonymous mutation(s) do not confer resistance but may result in false-resistance in PCR-based assays targeting the rpoB RRDR."
+            
+            if gene_name == "rrl": # Rule 5.2.2
+              if df_lims[antimicrobial] == "No genetic determinants associated with resistance to {} detected".format(antimicrobial_code_to_resistance[antimicrobial]):
+                df_lims[gene_id] = "No high confidence mutations detected"
+          elif int(gene_coverage_dict[gene_name]) >= ~{coverage_threshold}:
+            df_lims[gene_id] = "Insufficient Coverage"
           else:
             df_lims[gene_id] = "No mutations detected"
 
