@@ -108,6 +108,10 @@ task kraken2_standalone {
     gzip *.fastq
     gzip ~{samplename}.classifiedreads.txt
 
+    # Report percentage of human reads
+    percentage_human=$(grep "Homo sapiens" ~{samplename}.report.txt | cut -f 1)
+    if [ -z "$percentage_human" ] ; then percentage_human="0" ; fi
+    echo $percentage_human | tee PERCENT_HUMAN
   >>>
   output {
     String kraken2_version = read_string("VERSION")
@@ -119,6 +123,7 @@ task kraken2_standalone {
     File kraken2_unclassified_read2 = "~{samplename}.unclassified_2.fastq.gz"
     File kraken2_classified_read1 = "~{samplename}.classified_1.fastq.gz"
     File kraken2_classified_read2 = "~{samplename}.classified_2.fastq.gz"
+    Float kraken2_percent_human = read_float("PERCENT_HUMAN")
   }
   runtime {
       docker: "~{docker}"
