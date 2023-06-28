@@ -34,7 +34,7 @@ task augur_export {
     File? root_sequence_json = "~{build_name}_auspice_root-sequence.json"
   }
   runtime {
-    docker: "quay.io/staphb/augur:16.0.3"
+    docker: "quay.io/biocontainers/augur:22.0.2--pyhdfd78af_0"
     memory: "64 GB"
     cpu :   4
     disks:  "local-disk " + disk_size + " HDD"
