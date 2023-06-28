@@ -31,7 +31,7 @@ workflow theiacov_illumina_se {
     Int trim_window_size = 4
     # nextclade inputs
     String nextclade_dataset_reference = "MN908947"
-    String nextclade_dataset_tag = "2023-02-25T12:00:00Z"
+    String nextclade_dataset_tag = "2023-04-18T12:00:00Z"
     String? nextclade_dataset_name
     # reference values
     File? reference_genome

@@ -33,7 +33,7 @@ workflow theiacov_ont {
     Int min_length = 400
     # nextclade inputs
     String nextclade_dataset_reference = "MN908947"
-    String nextclade_dataset_tag = "2023-02-25T12:00:00Z"
+    String nextclade_dataset_tag = "2023-04-18T12:00:00Z"
     String? nextclade_dataset_name
     # reference values
     File? reference_genome
@@ -49,6 +49,9 @@ workflow theiacov_ont {
     Boolean skip_screen = false
     # qc check parameters
     File? qc_check_table
+  }
+  if (organism == "HIV") { # set HIV specific artic version
+    String run_prefix = "artic_hiv"
   }
   call screen.check_reads_se as raw_check_reads {
     input:
@@ -74,7 +77,8 @@ workflow theiacov_ont {
         demultiplexed_reads = ncbi_scrub_se.read1_dehosted,
         samplename = samplename,
         min_length = min_length,
-        max_length = max_length
+        max_length = max_length,
+        run_prefix = run_prefix
     }
     call screen.check_reads_se as clean_check_reads {
       input:

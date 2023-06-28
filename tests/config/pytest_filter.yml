@@ -1,3 +1,84 @@
+wf_theiacov_clearlabs:
+  - workflows/theiacov/wf_theiacov_clearlabs.wdl
+  - tasks/assembly/task_artic_consensus.wdl
+  - tasks/quality_control/task_assembly_metrics.wdl
+  - tasks/quality_control/task_ncbi_scrub.wdl
+  - tasks/quality_control/task_vadr.wdl
+  - tasks/quality_control/task_fastq_scan.wdl
+  - tasks/quality_control/task_consensus_qc.wdl
+  - tasks/taxon_id/task_kraken2.wdl
+  - tasks/taxon_id/task_nextclade.wdl
+  - tasks/species_typing/task_pangolin.wdl
+  - tasks/gene_typing/task_sc2_gene_coverage.wdl
+  - tasks/task_versioning.wdl
+
+wf_theiacov_fasta:
+  - workflows/theiacov/wf_theiacov_fasta.wdl
+  - tasks/quality_control/task_vadr.wdl
+  - tasks/quality_control/task_consensus_qc.wdl
+  - tasks/taxon_id/task_nextclade.wdl
+  - tasks/species_typing/task_pangolin.wdl
+  - tasks/task_versioning.wdl
+
+wf_theiacov_illumina_pe:
+  - workflows/theiacov/wf_theiacov_illumina_pe.wdl
+  - workflows/utilities/wf_read_QC_trim.wdl
+  - workflows/utilities/wf_ivar_consensus.wdl
+  - tasks/alignment/task_bwa.wdl
+  - tasks/assembly/task_ivar_consensus.wdl
+  - tasks/assembly/task_ivar_primer_trim.wdl
+  - tasks/assembly/task_ivar_variant_call.wdl
+  - tasks/quality_control/task_assembly_metrics.wdl
+  - tasks/assembly/task_irma.wdl
+  - tasks/quality_control/task_vadr.wdl
+  - tasks/quality_control/task_consensus_qc.wdl
+  - tasks/quality_control/task_screen.wdl
+  - tasks/taxon_id/task_nextclade.wdl
+  - tasks/species_typing/task_pangolin.wdl
+  - tasks/species_typing/task_quasitools.wdl
+  - tasks/gene_typing/task_abricate.wdl
+  - tasks/gene_typing/task_sc2_gene_coverage.wdl
+  - tasks/task_versioning.wdl
+
+wf_theiacov_illumina_se:
+  - workflows/theiacov/wf_theiacov_illumina_se.wdl
+  - workflows/utilities/wf_read_QC_trim_se.wdl
+  - workflows/utilities/wf_ivar_consensus.wdl
+  - tasks/alignment/task_bwa.wdl
+  - tasks/assembly/task_ivar_consensus.wdl
+  - tasks/assembly/task_ivar_primer_trim.wdl
+  - tasks/assembly/task_ivar_variant_call.wdl
+  - tasks/quality_control/task_assembly_metrics.wdl
+  - tasks/assembly/task_irma.wdl
+  - tasks/quality_control/task_vadr.wdl
+  - tasks/quality_control/task_consensus_qc.wdl
+  - tasks/quality_control/task_screen.wdl
+  - tasks/taxon_id/task_nextclade.wdl
+  - tasks/species_typing/task_pangolin.wdl
+  - tasks/gene_typing/task_sc2_gene_coverage.wdl
+  - tasks/task_versioning.wdl
+
+wf_theiacov_ont:
+  - workflows/theiacov/wf_theiacov_ont.wdl
+  - tasks/assembly/task_artic_consensus.wdl
+  - tasks/quality_control/task_artic_guppyplex.wdl
+  - tasks/quality_control/task_assembly_metrics.wdl
+  - tasks/quality_control/task_ncbi_scrub.wdl
+  - tasks/quality_control/task_vadr.wdl
+  - tasks/quality_control/task_fastq_scan.wdl
+  - tasks/quality_control/task_consensus_qc.wdl
+  - tasks/quality_control/task_screen.wdl
+  - tasks/taxon_id/task_kraken2.wdl
+  - tasks/taxon_id/task_nextclade.wdl
+  - tasks/species_typing/task_pangolin.wdl
+  - tasks/species_typing/task_quasitools.wdl
+  - tasks/gene_typing/task_sc2_gene_coverage.wdl
+  - tasks/task_versioning.wdl
+
+wf_theiacov_validate:
+  - tasks/utilities/task_validate.wdl
+  - tasks/task_versioning.wdl
+
 wf_theiaprok_illumina_pe:
   - workflows/theiaprok/wf_theiaprok_illumina_pe.wdl
   - tasks/assembly/task_shovill.wdl

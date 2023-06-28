@@ -1,0 +1,5 @@
+{
+    "theiacov_illumina_se.samplename": "ERR6319327",
+    "theiacov_illumina_se.read1_raw": "tests/data/theiacov/fastqs/illumina_se/ERR6319327.fastq.gz",
+    "theiacov_illumina_se.primer_bed": "tests/data/theiacov/primers/artic-v3.primers.bed"
+}

@@ -180,44 +180,47 @@ task compare_two_tsvs {
 
     # perform validation checks
     def validate(series, df1, df2):
-      # check the data type of the validation criteria; based on its type, we can assume the comparison to perform
-      if pd.api.types.is_string_dtype(series) == True: # if a string,
-        if series[0] == "EXACT": # count number of exact match failures/differences
-          # df1[series.name] extracts the column of interest (identified by the name of the series, which is the specific column of the validation criteria tsv)
-          # .fillna("NULL") replaces all NaN values with NULL because in Pandas, NaN != Nan but we would like it to
-          # .eq() asks for equivalence between each value; this demands equivalent indexes between two data frames
-          # {~} asks .eq() to spit out "TRUE" for when they DON'T match
-          # .sum() counts the number of instances of TRUE present (which in this case, is when there is NOT an exact string match)
-          # Overall: compares each column for exact string matches
-          return ("EXACT", (~df1[series.name].fillna("NULL").eq(df2[series.name].fillna("NULL"))).sum())
-        elif series[0] == "IGNORE": # do not check; there are no failures (0)
-          return ("IGNORE", 0)
-        elif series[0] == "SET": # check list items for identical content
-          # df1[series.name] extracts the column of interest
-          # .fillna("NULL") replaces all NaN values with NULL
-          # .apply(lambda x: function) applys a specific function on each column (x)
-          # x.split(",") splits the item on the comma
-          # set() turns the list into a set
-          # .eq() asks for equivalence between each value; this demands equivalent indexes between two data frames
-          # .sum() counts all times .eq() returns a True
-          # ~ asks for the total count where there are differences (when .eq() is False)
-          # Overall: converts each column value into a set and then compares set contents 
-          return("SET", (~df1[series.name].fillna("NULL").apply(lambda x: set(x.split(","))).eq(df2[series.name].fillna("NULL").apply(lambda x: set(x.split(","))))).sum())
-        else: # a different value was offered
-          return("String value not recognized", np.nan)
-      elif pd.api.types.is_float_dtype(series) == True: # if a float,
-        # percent_difference(): function that calculates percent difference;
-        # .gt() compares percent difference to series[0] (which is the percent threshold in decimal format) and spits out True or False
-        # .sum() adds the total count where the % difference is greater (cases where .gt() = True)
-        # Overall: determines if percent difference between two values is greater than a provided threshold
-        return("PERCENT_DIFF: " + format(series[0], '.2%'), percent_difference(df1[series.name], df2[series.name]).gt(series[0]).sum())
-      elif pd.api.types.is_datetime64_any_dtype(series) == True: # if a date, do not check
-        return("DATE VALUE; IGNORED", np.nan)
-      elif pd.api.types.is_integer_dtype(series) == True: # if an integer, do not check
-        return("INTEGER; IGNORED FOR NOW", np.nan)
-      else: # it's an object type, do not check
-        return("OBJECT TYPE VALUE; IGNORED FOR NOW", np.nan)
-
+      if series.name in df1.columns:
+        # check the data type of the validation criteria; based on its type, we can assume the comparison to perform
+        if pd.api.types.is_string_dtype(series) == True: # if a string,
+          if series[0] == "EXACT": # count number of exact match failures/differences
+            # df1[series.name] extracts the column of interest (identified by the name of the series, which is the specific column of the validation criteria tsv)
+            # .fillna("NULL") replaces all NaN values with NULL because in Pandas, NaN != Nan but we would like it to
+            # .eq() asks for equivalence between each value; this demands equivalent indexes between two data frames
+            # {~} asks .eq() to spit out "TRUE" for when they DON'T match
+            # .sum() counts the number of instances of TRUE present (which in this case, is when there is NOT an exact string match)
+            # Overall: compares each column for exact string matches
+            return ("EXACT", (~df1[series.name].fillna("NULL").eq(df2[series.name].fillna("NULL"))).sum())
+          elif series[0] == "IGNORE": # do not check; there are no failures (0)
+            return ("IGNORE", 0)
+          elif series[0] == "SET": # check list items for identical content
+            # df1[series.name] extracts the column of interest
+            # .fillna("NULL") replaces all NaN values with NULL
+            # .apply(lambda x: function) applys a specific function on each column (x)
+            # x.split(",") splits the item on the comma
+            # set() turns the list into a set
+            # .eq() asks for equivalence between each value; this demands equivalent indexes between two data frames
+            # .sum() counts all times .eq() returns a True
+            # ~ asks for the total count where there are differences (when .eq() is False)
+            # Overall: converts each column value into a set and then compares set contents 
+            return("SET", (~df1[series.name].fillna("NULL").apply(lambda x: set(x.split(","))).eq(df2[series.name].fillna("NULL").apply(lambda x: set(x.split(","))))).sum())
+          else: # a different value was offered
+            return("String value not recognized", np.nan)
+        elif pd.api.types.is_float_dtype(series) == True: # if a float,
+          # percent_difference(): function that calculates percent difference;
+          # .gt() compares percent difference to series[0] (which is the percent threshold in decimal format) and spits out True or False
+          # .sum() adds the total count where the % difference is greater (cases where .gt() = True)
+          # Overall: determines if percent difference between two values is greater than a provided threshold
+          return("PERCENT_DIFF: " + format(series[0], '.2%'), percent_difference(df1[series.name], df2[series.name]).gt(series[0]).sum())
+        elif pd.api.types.is_datetime64_any_dtype(series) == True: # if a date, do not check
+          return("DATE VALUE; IGNORED", np.nan)
+        elif pd.api.types.is_integer_dtype(series) == True: # if an integer, do not check
+          return("INTEGER; IGNORED FOR NOW", np.nan)
+        else: # it's an object type, do not check
+          return("OBJECT TYPE VALUE; IGNORED FOR NOW", np.nan)
+      else:
+        return("COLUMN " + series.name + " NOT FOUND" , np.nan)
+    
     # perform check and add to the summary output table
     # pd.DataFrame() converts the output of the .apply() function into a Data Frame
     # .apply(lambda x: function) applys a specific function on each column (x)
