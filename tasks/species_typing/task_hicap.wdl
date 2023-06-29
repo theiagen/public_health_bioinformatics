@@ -2,57 +2,64 @@ version 1.0
 
 task hicap {
   meta {
-    description: "Identify cap locus serotype and structure in your Haemophilus influenzae assemblies"
+    description: "cap locus typing for H. influenzae assembly into serotypes a-f"
   }
   input {
     File assembly
     String samplename
     String docker = "quay.io/biocontainers/hicap:1.0.3--py_0"
-    Int? cpu = 4
+    Int cpu = 2
 
-    # Parameters
-    # --gene_coverage GENE_COVERAGE                 Minimum percentage coverage to consider a single gene complete. [default: 0.80]
-    # --gene_identity GENE_IDENTITY                 Minimum percentage identity to consider a single gene complete. [default: 0.70]
-    # --broken_gene_length BROKEN_GENE_LENGTH       Minimum length to consider a broken gene. [default: 60]
-    # --broken_gene_identity BROKEN_GENE_IDENTITY   Minimum percentage identity to consider a broken gene. [default: 0.80]
-    Float gene_coverage = 0.8
-    Float gene_identity = 0.7
-    Int broken_gene_length = 60
-    Float broken_gene_identity = 0.8
-    Boolean full_sequence = false
-    Boolean debug = false
+    #Parameters
+    #-q QUERY_FP, --query_fp QUERY_FP              Input FASTA query
+    #-o OUTPUT_DIR, --output_dir OUTPUT_DIR        Output directory
+    #-d DATABASE_DIR, --database_dir DATABASE_DIR  Directory containing locus database. [default: /usr/local/lib/python3.6/site-
+    #                                              packages/hicap/database]
+    #-m MODEL_FP, --model_fp MODEL_FP              Path to prodigal model. [default: /usr/local/lib/python3.6/site-
+    #                                              packages/hicap/model/prodigal_hi.bin]
+    #-s, --full_sequence                           Write the full input sequence out to the genbank file rather than just the region
+    #                                              surrounding and including the locus
+    #--gene_coverage GENE_COVERAGE                 Minimum percentage coverage to consider a single gene complete. [default: 0.80]
+    #--gene_identity GENE_IDENTITY                 Minimum percentage identity to consider a single gene complete. [default: 0.70]
+    #--broken_gene_length BROKEN_GENE_LENGTH       Minimum length to consider a broken gene. [default: 60]
+    #--broken_gene_identity BROKEN_GENE_IDENTITY   Minimum percentage identity to consider a broken gene. [default: 0.80]
+    #--threads THREADS                             Threads to use for BLAST+. [default: 1]
+    #--log_fp LOG_FP                               Record logging messages to file
+    #--debug                                       Print debug messages
   }
   command <<<
-    echo $( hicap --version 2>&1 ) | sed 's/^.*hicap //' | tee VERSION
-    hicap \
-      --query_fp ~{assembly} \
-      ~{'--gene_coverage' + gene_coverage} \
-      ~{'--gene_identity' + gene_identity} \
-      ~{'--broken_gene_length' + broken_gene_length} \
-      ~{'--broken_gene_identity' + broken_gene_identity} \
-      ~{true="--full_sequence" false="" full_sequence} \
-      ~{true="--debug" false="" debug} \
-      --threads ~{cpu} \
-      -o ./
+    echo $(hicap --version 2>&1) | sed 's/^hicap //' | tee VERSION
 
-    if [ ! -f ${samplename}.tsv ]; then
-      # No hits, make a file to say so for downstream merging
-      echo "isolate<TAB>predicted_serotype<TAB>attributes<TAB>genes_identified<TAB>locus_location<TAB>region_I_genes<TAB>region_II_genes<TAB>region_III_genes<TAB>IS1016_hits" | sed 's/<TAB>/\t/g' > ${samplename}.tsv
-      echo "~{samplename}<TAB>cap_not_found<TAB>-<TAB>-<TAB>-<TAB>-<TAB>-<TAB>-<TAB>-" | sed 's/<TAB>/\t/g' >> ~{samplename}.tsv
+    mkdir output_dir
+
+    hicap \
+      -q ~{assembly} \
+      -o output_dir
+
+    filename=$(basename ~{assembly})
+
+    # if there are no hits for a cap locus, no file is produced
+    if [ ! -f ./output_dir/${filename%.*}.tsv ]; then
+      echo "No_hits" > hicap_serotype
+      echo "No_hits" > hicap_genes
+      touch ~{samplename}.hicap.tsv
     else
-      sed -i 's/#isolate/isolate/' ~{samplename}.tsv
+      tail -n1 ./output_dir/${filename%.*}.tsv | cut -f 2 > hicap_serotype
+      tail -n1 ./output_dir/${filename%.*}.tsv | cut -f 4 > hicap_genes
+      mv ./output_dir/${filename%.*}.tsv ~{samplename}.hicap.tsv
     fi
   >>>
   output {
-    File hicap_results = "~{samplename}.tsv"
-    File hicap_genbank = "~{samplename}.gbk"
-    File hicap_image = "~{samplename}.svg"
+    String hicap_serotype = read_string("hicap_serotype")
+    String hicap_genes = read_string("hicap_genes")
+    File hicap_results_tsv = "~{samplename}.hicap.tsv"
     String hicap_version = read_string("VERSION")
+    String hicap_docker = docker
   }
   runtime {
     docker: "~{docker}"
     memory: "8 GB"
-    cpu: 4
+    cpu: cpu
     disks: "local-disk 50 SSD"
     preemptible: 0
   }

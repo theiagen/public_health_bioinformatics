@@ -50,14 +50,14 @@ workflows:
    primaryDescriptorPath: /workflows/theiacov/wf_theiacov_fasta.wdl
    testParameterFiles:
     - empty.json
- - name: TheiaCoV_Validate_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/theiacov/wf_theiacov_validate.wdl
-   testParameterFiles:
-    - empty.json
  - name: Mercury_Prep_N_Batch_PHB
    subclass: WDL
-   primaryDescriptorPath: /workflows/mercury/wf_mercury_prep_n_batch.wdl
+   primaryDescriptorPath: /workflows/submission/wf_mercury_prep_n_batch.wdl
+   testParameterFiles:
+    - empty.json
+ - name: Terra_2_NCBI_PHB
+   subclass: WDL
+   primaryDescriptorPath: /workflows/submission/wf_terra_2_ncbi.wdl
    testParameterFiles:
     - empty.json
  - name: Augur_PHB
@@ -150,26 +150,6 @@ workflows:
    primaryDescriptorPath: /workflows/standalone_modules/wf_gambit_query.wdl
    testParameterFiles:
     - empty.json
- - name: Kleborate_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/standalone_modules/wf_kleborate.wdl
-   testParameterFiles:
-    - empty.json
- - name: SerotypeFinder_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/standalone_modules/wf_serotypefinder.wdl
-   testParameterFiles:
-    - empty.json
- - name: TBProfiler_Illumina_PE_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/standalone_modules/wf_tbprofiler_pe.wdl
-   testParameterFiles:
-    - empty.json
- - name: TBProfiler_ONT_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/standalone_modules/wf_tbprofiler_ont.wdl
-   testParameterFiles:
-    - empty.json
  - name: NCBI-AMRFinderPlus_PHB
    subclass: WDL
    primaryDescriptorPath: /workflows/standalone_modules/wf_amrfinderplus.wdl
@@ -187,7 +167,7 @@ workflows:
     - empty.json
  - name: RASUSA_PHB
    subclass: WDL
-   primaryDescriptorPath: /workflows/utilities/wf_rasusa.wdl
+   primaryDescriptorPath: /workflows/standalone_modules/wf_rasusa.wdl
    testParameterFiles:
     - empty.json
  - name: BaseSpace_Fetch_PHB
@@ -228,5 +208,20 @@ workflows:
  - name: TheiaMeta_Illumina_PE_PHB
    subclass: WDL
    primaryDescriptorPath: /workflows/metagenomics/wf_theiameta_illumina_pe.wdl
+   testParameterFiles:
+    - empty.json
+ - name: Snippy_Streamline_PHB
+   subclass: WDL
+   primaryDescriptorPath: /workflows/phylogenetics/wf_snippy_streamline.wdl
+   testParameterFiles:
+    - empty.json
+ - name: Assembly_Fetch_PHB
+   subclass: WDL
+   primaryDescriptorPath: /workflows/utilities/data_import/wf_assembly_fetch.wdl
+   testParameterFiles:
+    - empty.json
+ - name: TheiaValidate_PHB
+   subclass: WDL
+   primaryDescriptorPath: /workflows/utilities/wf_theiavalidate.wdl
    testParameterFiles:
     - empty.json

@@ -22,21 +22,23 @@ workflow ksnp3_workflow {
       samplename = samplename,
       cluster_name = cluster_name
   }
-  call snp_dists.snp_dists as core_snp_dists {
-    input:
-      cluster_name = cluster_name,
-      alignment = ksnp3_task.ksnp3_core_matrix
+  if (ksnp3_task.skip_core_snp_dists == "The core SNP matrix was produced") {
+    call snp_dists.snp_dists as core_snp_dists {
+      input:
+        cluster_name = cluster_name,
+        alignment = ksnp3_task.ksnp3_core_matrix
+    }
+    call reorder_matrix.reorder_matrix as core_reorder_matrix {
+      input:
+        input_tree = ksnp3_task.ksnp3_core_tree,
+        matrix = core_snp_dists.snp_matrix,
+        cluster_name = cluster_name + "_core"
+    }
   }
   call snp_dists.snp_dists as pan_snp_dists {
     input:
       cluster_name = cluster_name,
       alignment = ksnp3_task.ksnp3_pan_matrix
-  }
-  call reorder_matrix.reorder_matrix as core_reorder_matrix {
-    input:
-      input_tree = ksnp3_task.ksnp3_core_tree,
-      matrix = core_snp_dists.snp_matrix,
-      cluster_name = cluster_name + "_core"
   }
   call reorder_matrix.reorder_matrix as pan_reorder_matrix {
     input:
@@ -64,11 +66,12 @@ workflow ksnp3_workflow {
     String ksnp3_wf_analysis_date = version_capture.date
     String ksnp3_docker = ksnp3_task.ksnp3_docker_image
     # ksnp3_outputs
-    String ksnp3_snp_dists_version = pan_snp_dists.version
+    String ksnp3_snp_dists_version = pan_snp_dists.snp_dists_version
     File ksnp3_core_vcf = ksnp3_task.ksnp3_core_vcf
+    String ksnp3_core_snp_matrix_status = ksnp3_task.skip_core_snp_dists
     # ordered matrixes and reordered trees
-    File ksnp3_core_snp_matrix = core_reorder_matrix.ordered_matrix
-    File ksnp3_core_tree = core_reorder_matrix.tree
+    File? ksnp3_core_snp_matrix = core_reorder_matrix.ordered_matrix
+    File? ksnp3_core_tree = core_reorder_matrix.tree
     File ksnp3_pan_snp_matrix = pan_reorder_matrix.ordered_matrix
     File ksnp3_pan_tree = pan_reorder_matrix.tree
     # optional tree outputs
@@ -76,5 +79,6 @@ workflow ksnp3_workflow {
     File? ksnp3_nj_tree = ksnp3_task.ksnp3_nj_tree
     # data summary output 
     File? ksnp3_summarized_data = summarize_data.summarized_data
+    File? ksnp3_filtered_metadata = summarize_data.filtered_metadata
   }
 }

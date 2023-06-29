@@ -4,7 +4,6 @@ task quasitools {
   input {
     File read1
     File? read2
-    File mutation_db = "gs://theiagen-public-files/terra/hivgc-files/mutation_db.tsv"
     String samplename
     String docker = "quay.io/biocontainers/quasitools:0.7.0--pyh864c0ab_1"
   }
@@ -20,9 +19,8 @@ task quasitools {
     fi
     read1_unzip=r1.fastq
 
-    # do the same on read2
-    # unzip file if necessary
-    if ~ [ -z ~{read2} ]; then
+    # do the same on read2 if exists & unzip file if necessary
+    if [[ -e "~{read2}" ]]; then
       if [[ "~{read2}" == *.gz ]]; then
         gunzip -c ~{read2} > r2.fastq
       else
@@ -30,7 +28,7 @@ task quasitools {
       fi
       read2_unzip=r2.fastq
     else
-      ont="-rt 5"
+      ont="-rt 5" # set the minimum number of observations in the read data to 5 instead of the default of 1 if ONT data
     fi
 
 
@@ -38,16 +36,25 @@ task quasitools {
     quasitools --version > QUASITOOLS_VERSION && sed -i -e 's/^/quasitools /' QUASITOOLS_VERSION
 
     # Run hydra
+    # -mf : the minimum frequency for observed variant to be included for processing
+    # -sc : reads that have a median/mean quality score less than this cutoff will be filtered out
+    # -lc : reads which fall short of this length will be filtered out
+    # -vq : minimum quality for an amino acid variant to be included
+    # -md : the minimum read depth for observed nucleotide variants to be included
+    # -ma : the minimum allele count for observed variants to be included
+    # -me : indicates that the median score will be used as a cutoff for read filtering
+
+    # the ${ont} needs to be on the same line as a different variable or it will fail
     set -e
     quasitools hydra \
-      -mf 0.05 \
-      "${ont}" \
+      -mf 0.05 ${ont} \
       -sc 7 \
       -lc 50 \
       -vq 7 \
       -md 10 \
       -ma 1 \
-      -me ${read1_unzip} ${read2_unzip} \
+      -me \
+      ${read1_unzip} ${read2_unzip} \
       -o "~{samplename}"
   >>>
   runtime {

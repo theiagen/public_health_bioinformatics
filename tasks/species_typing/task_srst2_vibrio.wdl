@@ -5,8 +5,8 @@ task srst2_vibrio {
     description: "Use of SRST2 to identify sequences of interest from a database of curated Vibrio sequences"
   }
   input {
-    File reads1
-    File? reads2
+    File read1
+    File? read2
     String samplename
     Int srst2_min_cov
     Int srst2_max_divergence
@@ -18,12 +18,12 @@ task srst2_vibrio {
     Int cpu = 4
   }
   command <<<
-    if [ -z "~{reads2}" ] ; then
-      INPUT_READS="--input_se ~{reads1}"
+    if [ -z "~{read2}" ] ; then
+      INPUT_READS="--input_se ~{read1}"
     else
       # This task expects/requires that input FASTQ files end in "_1.clean.fastq.gz" and "_2.clean.fastq.gz"
       # which is the syntax from TheiaProk read cleaning tasks
-      INPUT_READS="--input_pe ~{reads1} ~{reads2} --forward _1.clean --reverse _2.clean"
+      INPUT_READS="--input_pe ~{read1} ~{read2} --forward _1.clean --reverse _2.clean"
     fi
 
     srst2 --version 2>&1 | tee VERSION

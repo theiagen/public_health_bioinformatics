@@ -1,0 +1,6 @@
+{
+    "theiacov_illumina_pe.samplename": "SRR13687078",
+    "theiacov_illumina_pe.read1_raw": "tests/data/theiacov/fastqs/illumina_pe/SRR13687078_1.fastq.gz",
+    "theiacov_illumina_pe.read2_raw": "tests/data/theiacov/fastqs/illumina_pe/SRR13687078_2.fastq.gz",
+    "theiacov_illumina_pe.primer_bed": "tests/data/theiacov/primers/artic-v3.primers.bed"
+}

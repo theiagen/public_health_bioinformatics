@@ -10,6 +10,7 @@ task iqtree {
     String iqtree_opts = ""
     String docker = "quay.io/staphb/iqtree:1.6.7"
     Int disk_size = 100
+    Int cpu = 4
   }
   command <<<
     # date and version control
@@ -39,9 +40,10 @@ task iqtree {
   runtime {
     docker: "~{docker}"
     memory: "32 GB"
-    cpu: 4
+    cpu: cpu
     disks: "local-disk " + disk_size + " SSD"
-    disk: disk_size + " GB" # TES    preemptible: 0
+    disk: disk_size + " GB" # TES
+    preemptible: 0
     maxRetries: 3
   }
 }

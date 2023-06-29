@@ -73,10 +73,12 @@ task sm_metadata_wrangling { # the sm stands for supermassive
 
     # set a function to grab only the year from the date
     def year_getter(date):
-      r = re.compile('^\d{4}-\d{2}-\d{2}')
-      if r.match(date) is None:
-        print("Incorrect collection date format; collection date must be in YYYY-MM-DD format. Invalid date was: " + date)
-        sys.exit(1)  
+      r = re.compile('^\d{4}-\d{2}-\d{2}')      
+      if pd.isna(date):
+        print("Incorrect collection date format; collection date must be in YYYY-MM-DD format. Invalid date was: NaN")
+      elif r.match(date) is None:
+        print("Incorrect collection date format; collection date must be in YYYY-MM-DD format. Invalid date was: " + str(date))
+        return np.nan
       else:
         return date.split("-")[0]
 
@@ -131,7 +133,6 @@ task sm_metadata_wrangling { # the sm stands for supermassive
     else:
       print("DEBUG: skipping creation of several NCBI-specific variables")
 
-
     # set required and optional metadata fields based on the organism type
     if ("~{organism}" == "sars-cov-2"):
       print("Organism is SARS-CoV-2; performing VADR and Number_N check")
@@ -147,6 +148,9 @@ task sm_metadata_wrangling { # the sm stands for supermassive
         elif int(row["number_n"]) > ~{number_N_threshold}:
           notification="Number of Ns was too high: " + str(row["number_n"]) + " greater than limit of " + str(~{number_N_threshold})
           quality_exclusion = quality_exclusion.append({"sample_name": row["~{table_name}_id".lower()], "message": notification}, ignore_index=True)
+        if pd.isna(row["year"]):
+          notification="The collection date format was incorrect"
+          quality_exclusion = quality_exclusion.append({"sample_name": row["~{table_name}_id".lower()], "message": notification}, ignore_index=True)
 
       with open("~{output_name}_excluded_samples.tsv", "w") as exclusions:
         exclusions.write("Samples excluded for quality thresholds:\n")
@@ -155,6 +159,7 @@ task sm_metadata_wrangling { # the sm stands for supermassive
       table.drop(table.index[table["vadr_num_alerts"].astype(str).str.contains("VADR skipped due to poor assembly")], inplace=True)
       table.drop(table.index[table["vadr_num_alerts"].astype(int) > ~{vadr_alert_limit}], inplace=True)
       table.drop(table.index[table["number_n"].astype(int) > ~{number_N_threshold}], inplace=True)
+      table.drop(table.index[table["year"].isna()], inplace=True)
 
       # set default values
       table["gisaid_organism"] = "hCoV-19"
@@ -181,7 +186,7 @@ task sm_metadata_wrangling { # the sm stands for supermassive
         genbank_required = []
       
       gisaid_required = ["gisaid_submitter", "submission_id", "collection_date", "continent", "country", "state", "host", "seq_platform", assembly_fasta_column_name, "assembly_method", assembly_mean_coverage_column_name, "collecting_lab", "collecting_lab_address", "submitting_lab", "submitting_lab_address", "authors"]
-      gisaid_optional = ["gisaid_virus_name", "additional_host_information", "county", "purpose_of_sequencing", "patient_gender", "patient_age", "patient_status", "specimen_source", "outbreak", "last_vaccinated", "treatment"]
+      gisaid_optional = ["gisaid_virus_name", "additional_host_information", "county", "purpose_of_sequencing", "patient_gender", "patient_age", "patient_status", "specimen_source", "outbreak", "last_vaccinated", "treatment", "consortium"]
 
       required_metadata = biosample_required + sra_required + genbank_required + gisaid_required
      
@@ -323,7 +328,7 @@ task sm_metadata_wrangling { # the sm stands for supermassive
 
       # make dictionary for renaming headers
       # format: {original : new} or {metadata_formatter : gisaid_format}
-      gisaid_rename_headers = {"gisaid_virus_name" : "covv_virus_name", "additional_host_information" : "covv_add_host_info", "gisaid_submitter" : "submitter", "collection_date" : "covv_collection_date", "seq_platform" : "covv_seq_technology", "host" : "covv_host", "assembly_method" : "covv_assembly_method", assembly_mean_coverage_column_name : "covv_coverage", "collecting_lab" : "covv_orig_lab", "collecting_lab_address" : "covv_orig_lab_addr", "submitting_lab" : "covv_subm_lab", "submitting_lab_address" : "covv_subm_lab_addr", "authors" : "covv_authors", "purpose_of_sequencing" : "covv_sampling_strategy", "patient_gender" : "covv_gender", "patient_age" : "covv_patient_age", "patient_status" : "covv_patient_status", "specimen_source" : "covv_specimen", "outbreak" : "covv_outbreak", "last_vaccinated" : "covv_last_vaccinated", "treatment" : "covv_treatment"}
+      gisaid_rename_headers = {"gisaid_virus_name" : "covv_virus_name", "additional_host_information" : "covv_add_host_info", "gisaid_submitter" : "submitter", "collection_date" : "covv_collection_date", "seq_platform" : "covv_seq_technology", "host" : "covv_host", "assembly_method" : "covv_assembly_method", assembly_mean_coverage_column_name : "covv_coverage", "collecting_lab" : "covv_orig_lab", "collecting_lab_address" : "covv_orig_lab_addr", "submitting_lab" : "covv_subm_lab", "submitting_lab_address" : "covv_subm_lab_addr", "authors" : "covv_authors", "purpose_of_sequencing" : "covv_sampling_strategy", "patient_gender" : "covv_gender", "patient_age" : "covv_patient_age", "patient_status" : "covv_patient_status", "specimen_source" : "covv_specimen", "outbreak" : "covv_outbreak", "last_vaccinated" : "covv_last_vaccinated", "treatment" : "covv_treatment", "consortium" : "covv_consortium"}
       
       # rename columns
       gisaid_metadata.rename(columns=gisaid_rename_headers, inplace=True)
@@ -334,6 +339,19 @@ task sm_metadata_wrangling { # the sm stands for supermassive
       print("Organism is mpox, no VADR filtering performed")
       table["gisaid_organism"] = "mpx/A"
       table["gisaid_virus_name"] = (table["organism"] + "/" + table["country"] + "/" + table["submission_id"] + "/" + table["year"])
+      
+      # remove samples with invalid dates
+      quality_exclusion = pd.DataFrame()
+      for index, row in table.iterrows():
+        if pd.isna(row["year"]):
+          notification="The collection date format was incorrect."
+          quality_exclusion = quality_exclusion.append({"sample_name": row["~{table_name}_id".lower()], "message": notification}, ignore_index=True)
+
+      with open("~{output_name}_excluded_samples.tsv", "w") as exclusions:
+        exclusions.write("Samples excluded for bad collection_date format:\n")
+      quality_exclusion.to_csv("~{output_name}_excluded_samples.tsv", mode='a', sep='\t', index=False)
+
+      table.drop(table.index[table["year"].isna()], inplace=True)
 
       # set required and optional variables
       if (os.environ["skip_ncbi"] == "false"):
