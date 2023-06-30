@@ -144,7 +144,7 @@ task tb_gene_coverage {
     echo -e "rpoC\t"$rpoC_pc >> ~{samplename}.percent_gene_coverage.tsv
     echo -e "mmpL5\t"$mmpL5_pc >> ~{samplename}.percent_gene_coverage.tsv
     echo -e "mmpS5\t"$mmpS5_pc >> ~{samplename}.percent_gene_coverage.tsv
-    echo -e "mmpR5\t"$mmpR5_pc >> ~{samplename}.percent_gene_coverage.tsv
+    echo -e "Rv0678\t"$mmpR5_pc >> ~{samplename}.percent_gene_coverage.tsv # Rv0678 is the same as mmpR5
     echo -e "rpsL\t"$rpsL_pc >> ~{samplename}.percent_gene_coverage.tsv
     echo -e "rplC\t"$rplC_pc >> ~{samplename}.percent_gene_coverage.tsv
     echo -e "fbiC\t"$fbiC_pc >> ~{samplename}.percent_gene_coverage.tsv
