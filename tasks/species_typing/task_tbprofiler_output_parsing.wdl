@@ -498,13 +498,13 @@ task tbprofiler_output_parsing {
           df_lims[antimicrobial] = annotation_to_LIMS(resistance[antimicrobial_code_to_resistance[antimicrobial]], antimicrobial_code_to_resistance[antimicrobial])
         else:
           df_lims[antimicrobial] = "No genetic determinants associated with resistance to {} detected".format(antimicrobial_code_to_resistance[antimicrobial])
-
+        
         for gene_name, gene_id in genes.items():
           if gene_name in mutations.keys():
             df_lims[gene_id] = mutations[gene_name]
             
             if gene_name == "rpoB": # rule 5.2.1.2
-              if df_lims[antimicrobial] == "No genetic determinants associated with resistance to {} detected".format(antimicrobial_code_to_resistance[antimicrobial]):
+              if df_lims[antimicrobial][0] == "No genetic determinants associated with resistance to {} detected".format(antimicrobial_code_to_resistance[antimicrobial]):
                 if len(mutations) > 0:
                   non_synomynous_count = 0
                   for mutation in mutations:
