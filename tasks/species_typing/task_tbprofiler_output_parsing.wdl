@@ -502,7 +502,7 @@ task tbprofiler_output_parsing {
         for gene_name, gene_id in genes.items():
           if gene_name in mutations.keys():
             df_lims[gene_id] = mutations[gene_name]
-            
+
             if gene_name == "rpoB": # rule 5.2.1.2
               if df_lims[antimicrobial][0] == "No genetic determinants associated with resistance to {} detected".format(antimicrobial_code_to_resistance[antimicrobial]):
                 if len(mutations) > 0:
@@ -516,8 +516,9 @@ task tbprofiler_output_parsing {
             if gene_name == "rrl": # Rule 5.2.2
               if df_lims[antimicrobial] == "No genetic determinants associated with resistance to {} detected".format(antimicrobial_code_to_resistance[antimicrobial]):
                 df_lims[gene_id] = "No high confidence mutations detected"
-          elif float(gene_coverage_dict[gene_name]) >= ~{coverage_threshold}:
+          elif float(gene_coverage_dict[gene_name]) < ~{coverage_threshold}:
             df_lims[gene_id] = "Insufficient Coverage"
+            df_lims[antimicrobial] = "Pending Retest"
           else:
             df_lims[gene_id] = "No mutations detected"
 
@@ -544,7 +545,7 @@ task tbprofiler_output_parsing {
         else:
           df_looker[antimicrobial] = "S"
       
-      df_looker["lineage"] = lineage ## adjust the language here - I don't know what she wants ###################################################
+      df_looker["lineage"] = lineage 
       df_looker["analysis_date"] = current_time
       df_looker["operator"] = "~{operator}"
     
