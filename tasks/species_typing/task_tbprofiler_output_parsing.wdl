@@ -21,7 +21,8 @@ task tbprofiler_output_parsing {
     ## Lookup Data Structures ##
 
     # gene coverage as a dictionary
-    gene_coverage_dict = pd.read_csv("~{gene_coverage}", delimiter="\t", skip_blank_lines=True).to_dict()[0]
+    gene_coverage_dict = pd.read_csv("~{gene_coverage}", delimiter="\t", skip_blank_lines=True).to_dict()
+    gene_coverage_dict = gene_coverage_dict["#NOTE: THE VALUES BELOW ASSUME TBPROFILER (H37Rv) REFERENCE GENOME"] # skip first line
 
     # lookup dictionary - antimicrobial code to name
     antimicrobial_code_to_resistance = {"M_DST_B01_INH": "isoniazid", "M_DST_C01_ETO": "ethionamide",
@@ -452,7 +453,7 @@ task tbprofiler_output_parsing {
               row["sample_id"] = "~{samplename}"
               row["tbprofiler_gene_name"] = gene
               row["tbprofiler_locus_tag"] = gene_to_locus_tag[gene]
-              if int(gene_coverage_dict[gene]) >= ~{coverage_threshold}:
+              if float(gene_coverage_dict[gene]) >= ~{coverage_threshold}:
                 row["tbprofiler_variant_substitution_type"] = "WT"
                 row["looker_interpretation"] = "S"
                 row["mdl_interpretation"] = "WT"
@@ -515,7 +516,7 @@ task tbprofiler_output_parsing {
             if gene_name == "rrl": # Rule 5.2.2
               if df_lims[antimicrobial] == "No genetic determinants associated with resistance to {} detected".format(antimicrobial_code_to_resistance[antimicrobial]):
                 df_lims[gene_id] = "No high confidence mutations detected"
-          elif int(gene_coverage_dict[gene_name]) >= ~{coverage_threshold}:
+          elif float(gene_coverage_dict[gene_name]) >= ~{coverage_threshold}:
             df_lims[gene_id] = "Insufficient Coverage"
           else:
             df_lims[gene_id] = "No mutations detected"
