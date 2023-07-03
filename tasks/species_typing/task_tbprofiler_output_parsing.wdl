@@ -523,7 +523,7 @@ task tbprofiler_output_parsing {
               df_lims[gene_id] = "No high confidence mutations detected"
           elif float(gene_coverage_dict[gene_name]) < ~{coverage_threshold}: # come back for function
             df_lims[gene_id] = "Insufficient Coverage"
-            if rank_annotation(resistance[antimicrobial_code_to_resistance[antimicrobial]]) > 1:
+            if int(rank_annotation(resistance[antimicrobial_code_to_resistance[antimicrobial]])) > 1:
               df_lims[antimicrobial] = "Pending Retest"
           else:
             df_lims[gene_id] = "No mutations detected"
