@@ -158,6 +158,7 @@ task tbprofiler_output_parsing {
 
     def apply_expert_rules(nucleotide_change, protein_change, gene, substitution_type, interpretation_destination):
       """
+      Apply rules 1-3
       """
 
       position_nt = get_position(nucleotide_change)
@@ -283,7 +284,7 @@ task tbprofiler_output_parsing {
       else: # "Not assoc w R" and "Not assoc w R - Interim" and anything else
         return "No genetic determinants associated with resistance to {} detected".format(drug)
 
-    def parse_json_resistance(json_file):
+    def parse_json_resistance(json_file): # applied 
       """
       This function parses the tbprofiler json report and returns a resistance dictionary
       containing the resistance annotation for each antimicrobial. The annotation corresponds
@@ -514,11 +515,13 @@ task tbprofiler_output_parsing {
                     df_lims[antimicrobial] = "No genetic determinants associated with resistance to rifampin detected. The detected synonymous mutation(s) do not confer resistance but may result in false-resistance in PCR-based assays targeting the rpoB RRDR."
             
             if gene_name == "rrl": # Rule 5.2.2
-              if df_lims[antimicrobial] == "No genetic determinants associated with resistance to {} detected".format(antimicrobial_code_to_resistance[antimicrobial]):
-                df_lims[gene_id] = "No high confidence mutations detected"
-          elif float(gene_coverage_dict[gene_name]) < ~{coverage_threshold}:
+              df_lims[gene_id] = ""
+            if df_lims[antimicrobial] == "No genetic determinants associated with resistance to {} detected".format(antimicrobial_code_to_resistance[antimicrobial]):
+              df_lims[gene_id] = "No high confidence mutations detected"
+          elif float(gene_coverage_dict[gene_name]) < ~{coverage_threshold}: # come back for function
             df_lims[gene_id] = "Insufficient Coverage"
-            df_lims[antimicrobial] = "Pending Retest"
+            if rank_annotation(resistance[antimicrobial_code_to_resistance[antimicrobial]]) > 1:
+              df_lims[antimicrobial] = "Pending Retest"
           else:
             df_lims[gene_id] = "No mutations detected"
 
