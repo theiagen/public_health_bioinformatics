@@ -506,7 +506,6 @@ task tbprofiler_output_parsing {
         for gene_name, gene_id in genes.items():
           if gene_name in mutations.keys():
             df_lims[gene_id] = mutations[gene_name]
-
             if gene_name == "rpoB": # rule 5.2.1.2
               if df_lims[antimicrobial][0] == "No genetic determinants associated with resistance to {} detected".format(antimicrobial_code_to_resistance[antimicrobial]):
                 if len(mutations) > 0:
@@ -519,7 +518,7 @@ task tbprofiler_output_parsing {
             
             if gene_name == "rrl": # Rule 5.2.2
               df_lims[gene_id] = ""
-            if df_lims[antimicrobial] == "No genetic determinants associated with resistance to {} detected".format(antimicrobial_code_to_resistance[antimicrobial]):
+            if df_lims[antimicrobial][0] == "No genetic determinants associated with resistance to {} detected".format(antimicrobial_code_to_resistance[antimicrobial]):
               df_lims[gene_id] = "No high confidence mutations detected"
           elif float(gene_coverage_dict[gene_name]) < ~{coverage_threshold}: # come back for function
             df_lims[gene_id] = "Insufficient Coverage"
