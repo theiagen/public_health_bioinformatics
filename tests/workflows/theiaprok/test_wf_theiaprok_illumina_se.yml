@@ -216,7 +216,7 @@
       md5sum: 32c0be4fb7f3030bf9c74c0a836d4f2e
     - path: miniwdl_run/call-clean_check_reads/work/_miniwdl_inputs/0/test_1.clean.fastq.gz
     - path: miniwdl_run/call-gambit/command
-      md5sum: fc758c4229287de9b95175f88ee07fb5
+      md5sum: bca4a240b67de9ce6e3aeea23ca714db
     - path: miniwdl_run/call-gambit/inputs.json
       contains: ["assembly", "fasta", "samplename", "test"]
     - path: miniwdl_run/call-gambit/outputs.json
@@ -518,7 +518,7 @@
     - path: miniwdl_run/wdl/tasks/assembly/task_shovill.wdl
       md5sum: 85e702088edcfe8ce8fead6c42158f51
     - path: miniwdl_run/wdl/tasks/gene_typing/task_abricate.wdl
-      md5sum: d8e4646c2780945c7a10674e7f748a65
+      md5sum: c903bd663f831d44897b1003e259b81b
     - path: miniwdl_run/wdl/tasks/gene_typing/task_amrfinderplus.wdl
       md5sum: 11e3eaedaf336c750303b1077b7bc48c
     - path: miniwdl_run/wdl/tasks/gene_typing/task_bakta.wdl
@@ -592,7 +592,7 @@
     - path: miniwdl_run/wdl/tasks/task_versioning.wdl
       md5sum: 0700ec2fe03ba61c41aacee093028ca3
     - path: miniwdl_run/wdl/tasks/taxon_id/task_gambit.wdl
-      md5sum: fa86445fc32659dba3635498e9904a51
+      md5sum: 60f76a41dfa8898243a982c336385c3f
     - path: miniwdl_run/wdl/tasks/taxon_id/task_kraken2.wdl
       md5sum: c3dbae850a60adb9aae7d39e8ff0dc81
     - path: miniwdl_run/wdl/tasks/taxon_id/task_midas.wdl
@@ -602,7 +602,7 @@
     - path: miniwdl_run/wdl/workflows/theiaprok/wf_theiaprok_illumina_se.wdl
       md5sum: 30b345106f0925dd1b48f585df8d52bc
     - path: miniwdl_run/wdl/workflows/utilities/wf_merlin_magic.wdl
-      md5sum: 6af584b9d4b71471597f3f693bc5f52e
+      md5sum: 798fd2104838e45e1ca475aba21b0ae7
     - path: miniwdl_run/wdl/workflows/utilities/wf_read_QC_trim_se.wdl
       md5sum: 53d322d895837c0bcb049786572e944d
     - path: miniwdl_run/workflow.log
