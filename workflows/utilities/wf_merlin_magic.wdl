@@ -89,7 +89,7 @@ workflow merlin_magic {
         minid = 95 # strict threshold of 95% identity for typing purposes
     }
   }
-  if (merlin_tag == "Escherichia" || merlin_tag == "Shigella_sonnei" ) {
+  if (merlin_tag == "Escherichia" || merlin_tag == "Shigella sonnei" ) {
     # tools specific to all Escherichia and Shigella species
     call serotypefinder_task.serotypefinder {
       input:
@@ -144,7 +144,7 @@ workflow merlin_magic {
         database = virulencefinder_database
     }
   }
-  if (merlin_tag == "Shigella_sonnei") {
+  if (merlin_tag == "Shigella sonnei") {
     # Shigella sonnei specific tasks
     if (!assembly_only) {
       call sonneityping_task.sonneityping { # test ONT compatibility

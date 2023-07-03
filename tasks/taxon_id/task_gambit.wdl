@@ -140,7 +140,7 @@ task gambit {
       merlin_tag="Escherichia"
       # if predicted taxon is Shigella sonnei, reset merlin_tag to Shigella_sonnei
       if [[ ${predicted_taxon} == *"Shigella sonnei"* ]]; then
-        merlin_tag="Shigella_sonnei"
+        merlin_tag="Shigella sonnei"
       fi
     elif [[ ${predicted_taxon} == *"Haemophilus"* ]]; then
       merlin_tag="Haemophilus"
