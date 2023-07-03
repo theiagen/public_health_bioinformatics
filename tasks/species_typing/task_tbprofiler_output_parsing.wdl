@@ -328,6 +328,9 @@ task tbprofiler_output_parsing {
       row["frequency"] = variant["freq"]
       row["read_support"] = row["depth"]*row["frequency"]
       row["warning"] = "Low depth coverage" if row["depth"] < int('~{min_depth}') else ""
+      if "del" in variant["nucleotide_change"]:
+        row["warning"] = "Low depth coverage (deletion identified)"
+
       return row
 
     ## Main Parsing Functions ## 
@@ -541,6 +544,8 @@ task tbprofiler_output_parsing {
       lineage = get_lineage("~{json}")
       resistance = parse_json_resistance("~{json}")
       df_looker = pd.DataFrame({"sample_id":"~{samplename}", "output_seq_method_type": "~{output_seq_method_type}"},index=[0])
+
+      # indicate warning if any genes failed to achieve 100% coverage_threshold and/or minimum depth (10x) 
 
       for antimicrobial in resistance_name_list:
         if antimicrobial in resistance.keys():
