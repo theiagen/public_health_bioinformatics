@@ -78,7 +78,20 @@ task tbprofiler_output_parsing {
                           "clofazimine"], "thyA": ["para-aminosalicylic_acid"], "thyX": ["para-aminosalicylic_acid"],
                           "tlyA": ["capreomycin"]
                          }
-
+    
+    # lookup dictionary - gene to tier
+    gene_to_tier = {"ahpC": "Tier 1", "inhA": "Tier 1", "katG": "Tier 1", "rpoB": "Tier 1", "embA": "Tier 1", 
+                    "embB": "Tier 1", "embC": "Tier 1", "pncA": "Tier 1", "clpC1": "Tier 1", "panD": "Tier 1", 
+                    "gyrA": "Tier 1", "gyrB": "Tier 1", "pepQ": "Tier 1", "Rv0678": "Tier 1", "mmpL5": "Tier 1", 
+                    "mmpS5": "Tier 1", "atpE": "Tier 1", "rplC": "Tier 1", "rrl": "Tier 1", "fgd1": "Tier 1", 
+                    "ddn": "Tier 1", "fbiA": "Tier 1", "fbiB": "Tier 1", "fbiC": "Tier 1", "Rv2983": "Tier 1", 
+                    "rrs": "Tier 1", "eis": "Tier 1", "whiB7": "Tier 1", "rpsL": "Tier 1", "gid": "Tier 1", 
+                    "Rv1258c": "Tier 1", "ethA": "Tier 1", "tlyA": "Tier 1", "mshA": "Tier 2", "ndh": "Tier 2", 
+                    "Rv2752c": "Tier 2", "rpoA": "Tier 2", "rpoC": "Tier 2", "embR": "Tier 2", "ubiA": "Tier 2", 
+                    "PPE35": "Tier 2", "Rv3236c": "Tier 2", "Rv1979c": "Tier 2", "whiB6": "Tier 2", "ccsA": "Tier 2", 
+                    "fprA": "Tier 2", "aftB": "Tier 2", "ethR": "Tier 2", "Rv3083": "Tier 2"
+                  }
+                  
     # lookup dictionary - gene to locus tag (https://github.com/jodyphelan/TBProfiler/blob/master/db/tbdb.bed)
     gene_to_locus_tag = {"ahpC":"Rv2428", "ald":"Rv2780", "alr": "Rv3423c",
                           "ddn": "Rv3547", "eis": "Rv2416c", "embA": "Rv3794",
@@ -292,7 +305,7 @@ task tbprofiler_output_parsing {
     def parse_json_resistance(json_file):
       """
       This function parses the tbprofiler json report and returns a resistance dictionary
-      containing the resistance annotation for each antimicrobial drug for LIMS and Looker. The annotation corresponds to the highest ranked one regarding severity (R > I > S)
+      containing the WHO resistance annotation for each antimicrobial drug for LIMS and Looker. The annotation corresponds to the highest ranked one regarding severity (R > I > S)
       """
       resistance_dict = {}
 
@@ -310,7 +323,6 @@ task tbprofiler_output_parsing {
                 else: # if the drug has already been seen in either the same variant or a different one,
                   if rank_annotation(resistance_dict[drug]) < rank_annotation(who_annotation): # if current annotation indicates higher severity than any previous annotation,
                     resistance_dict[drug] = who_annotation # overwrite with the who_annotation
-
           
         for other_variant in results_json["other_variants"]:
           if other_variant["type"] != "synonymous_variant":  # report all non-synonymous mutations
@@ -334,6 +346,10 @@ task tbprofiler_output_parsing {
       row = {}
       row["sample_id"] = "~{samplename}"
       row["tbprofiler_gene_name"] = variant["gene"]
+      if variant["gene"] in gene_to_tier.keys():
+        row["gene_tier"] = gene_to_tier[variant["gene"]]
+      else:
+        row["gene_tier"] = "NA"
       row["tbprofiler_locus_tag"] = variant["locus_tag"]
       row["tbprofiler_variant_substitution_type"] = variant["type"]
       row["tbprofiler_variant_substitution_nt"] = variant["nucleotide_change"]
@@ -479,6 +495,10 @@ task tbprofiler_output_parsing {
                 row["tbprofiler_variant_substitution_type"] = "Insufficient Coverage"
                 row["looker_interpretation"] = "NA"
                 row["mdl_interpretation"] = "NA"
+              if gene in gene_to_tier.keys():
+                row["gene_tier"] = gene_to_tier[gene]
+              else:
+                row["gene_tier"] = "NA"
               row["tbprofiler_variant_substitution_nt"] = "NA"
               row["tbprofiler_variant_substitution_aa"] = "NA"
               row["confidence"] = "NA"
@@ -560,12 +580,12 @@ task tbprofiler_output_parsing {
       resistance_annotation = parse_json_resistance("~{json}")
       df_looker = pd.DataFrame({"sample_id":"~{samplename}", "output_seq_method_type": "~{output_seq_method_type}"}, index=[0])
 
-      # indicate warning if any genes failed to achieve 100% coverage_threshold and/or minimum depth (10x) 
+      # indicate warning if any genes failed to achieve 100% coverage_threshold and/or minimum depth  (10x) 
 
       for antimicrobial_drug in antimicrobial_drug_name_list:
         if antimicrobial_drug in resistance_annotation.keys():
           who_annotation = resistance_annotation[antimicrobial_drug]
-          df_looker[antimicrobial_drug] = annotation_to_looker(who_annotation) if who_annotation != "" else apply_expert_rules(other_variant["nucleotide_change"], other_variant["protein_change"], other_variant["gene"], other_variant["type"], "looker")
+          df_looker[antimicrobial_drug] = annotation_to_looker(who_annotation)
         else: # the antimicrobial drug was not present in the results
           df_looker[antimicrobial_drug] = "S"
       
