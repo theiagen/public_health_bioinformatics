@@ -69,10 +69,16 @@ workflow theiameta_illumina_pe {
         mode = "sr",
         output_sam = true
     }
-    call parse_paf_task.retrieve_unaligned_pe_reads_sam {
+    call parse_paf_task.retrieve_pe_reads_sam as retrieve_unaligned_pe_reads_sam {
       input:
         sam = minimap2_reads.minimap2_out,
         samplename = samplename
+    }
+    call parse_paf_task.retrieve_pe_reads_sam as retrieve_aligned_pe_reads_sam {
+      input:
+        sam = minimap2_reads.minimap2_out,
+        samplename = samplename,
+        sam_flag = 2
     }
     call versioning.version_capture{
     input:
@@ -110,5 +116,7 @@ workflow theiameta_illumina_pe {
     Int? largest_contig = quast.largest_contig
     File? read1_unmapped = retrieve_unaligned_pe_reads_sam.read1
     File? read2_unmapped = retrieve_unaligned_pe_reads_sam.read2
+    File? read1_mapped = retrieve_aligned_pe_reads_sam.read1 
+    File? read2_mapped = retrieve_aligned_pe_reads_sam.read2
     }
 }

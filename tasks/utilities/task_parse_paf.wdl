@@ -45,13 +45,14 @@ task retrieve_aligned_contig_paf {
   }
 }
 
-task retrieve_unaligned_pe_reads_sam {
+task retrieve_pe_reads_sam {
   meta {
     description: "Parse minimap2 SAM file and return unaligned paired-end reads in FASTQ format"
   }
   input {
     File sam
     String samplename
+    Int sam_flag = "4" # unmapped reads (SAM flag 4)
     String docker = "staphb/samtools:1.17"
     Int disk_size = 100
     Int cpu = 2
@@ -61,8 +62,8 @@ task retrieve_unaligned_pe_reads_sam {
     # Convert SAM to BAM, and sort it based on read name
     samtools sort -n "~{sam}" -O BAM > mapped_name_sorted_reads.bam
 
-    # Convert unmapped reads (SAM flag 4) to fastq.gz, discarding the singleton reads
-    samtools fastq -f 4 -1 "~{samplename}"_1.fq.gz -2 "~{samplename}"_2.fq.gz \
+    # Convert to fastq.gz, discarding the singleton reads
+    samtools fastq -f "~{sam_flag}" -1 "~{samplename}"_1.fq.gz -2 "~{samplename}"_2.fq.gz \
     -s singleton.fq.gz mapped_name_sorted_reads.bam
   >>>
   output {
