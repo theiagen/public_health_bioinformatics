@@ -224,7 +224,7 @@
     - path: miniwdl_run/call-nextclade/task.log
       contains: ["wdl", "theiacov_clearlabs", "nextclade", "done"]
     - path: miniwdl_run/call-nextclade/work/NEXTCLADE_VERSION
-      md5sum: d5f4e83525024cba7eb7489cd5209e7d
+      md5sum: 91a455762183b41af0d8de5596e28e7f
     - path: miniwdl_run/call-nextclade/work/_miniwdl_inputs/0/clearlabs.medaka.consensus.fasta
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     - path: miniwdl_run/call-nextclade/work/clearlabs.medaka.consensus.nextclade.auspice.json
