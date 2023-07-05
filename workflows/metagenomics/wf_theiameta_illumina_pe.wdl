@@ -73,14 +73,24 @@ workflow theiameta_illumina_pe {
         mode = "sr",
         output_sam = true
     }
-    call parse_paf_task.retrieve_pe_reads_sam as retrieve_unaligned_pe_reads_sam {
+    call parse_paf_task.sam_to_sorted_bam {
       input:
         sam = minimap2_reads.minimap2_out,
         samplename = samplename
     }
-    call parse_paf_task.retrieve_pe_reads_sam as retrieve_aligned_pe_reads_sam {
+    call parse_paf_task.calculate_coverage {
       input:
-        sam = minimap2_reads.minimap2_out,
+        bam = sam_to_sorted_bam.bam,
+        bai = sam_to_sorted_bam.bai
+    }
+    call parse_paf_task.retrieve_pe_reads_bam as retrieve_unaligned_pe_reads_sam {
+      input:
+        bam = sam_to_sorted_bam.bam,
+        samplename = samplename
+    }
+    call parse_paf_task.retrieve_pe_reads_bam as retrieve_aligned_pe_reads_sam {
+      input:
+        bam = sam_to_sorted_bam.bam,
         samplename = samplename,
         sam_flag = 2
     }
@@ -120,6 +130,7 @@ workflow theiameta_illumina_pe {
     Int? contig_number = quast.number_contigs
     Int? largest_contig = quast.largest_contig
     Float? percent_coverage = calculate_coverage_paf.percent_coverage
+    Float? assembly_mean_coverage = calculate_coverage.mean_depth_coverage
     # Read retrieval
     File? read1_unmapped = retrieve_unaligned_pe_reads_sam.read1
     File? read2_unmapped = retrieve_unaligned_pe_reads_sam.read2
