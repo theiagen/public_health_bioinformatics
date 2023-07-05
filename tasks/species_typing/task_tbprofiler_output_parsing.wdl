@@ -238,11 +238,9 @@ task tbprofiler_output_parsing {
         results_json = json.load(js_fh)
         if results_json["main_lin"] == "":
           return "DNA of M. tuberculosis complex not detected"
-        elif results_json["main_lin"] == "M.bovis":
+        elif "La1" in results_json["main_lin"]:
           return "DNA of M. tuberculosis complex detected (M. bovis)"
-        elif "bcg" in results_json["main_lin"]:
-          return "DNA of M. tuberculosis complex detected (M. bovis)"
-        elif results_json["main_lin"] == "M.tb":
+        elif "lineage" in results_json["main_lin"]:
           return "DNA of M. tuberculosis complex detected (M. tb)"
         else:
           return "DNA of M. tuberculosis complex detected (not M. bovis and not M. tb)"
