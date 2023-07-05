@@ -53,6 +53,10 @@ workflow theiameta_illumina_pe {
           assembly = megahit.assembly_fasta,
           samplename = samplename
       }
+      call parse_paf_task.calculate_coverage_paf {
+        input:
+          paf = minimap2_assembly.minimap2_out
+      }
     }
     call quast_task.quast {
       input:
@@ -110,10 +114,13 @@ workflow theiameta_illumina_pe {
     Float? kraken_percent_human = read_QC_trim.kraken_human
     # Assembly - megahit outputs 
     File? assembly_fasta = select_first([retrieve_aligned_contig_paf.final_assembly, megahit.assembly_fasta])
+    String? megahit_pe_version = megahit.megahit_version
+    # Assembly QC
     Int? assembly_length = quast.genome_length
     Int? contig_number = quast.number_contigs
-    String? megahit_pe_version = megahit.megahit_version
     Int? largest_contig = quast.largest_contig
+    Float? percent_coverage = calculate_coverage_paf.percent_coverage
+    # Read retrieval
     File? read1_unmapped = retrieve_unaligned_pe_reads_sam.read1
     File? read2_unmapped = retrieve_unaligned_pe_reads_sam.read2
     File? read1_mapped = retrieve_aligned_pe_reads_sam.read1 

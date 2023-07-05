@@ -45,9 +45,50 @@ task retrieve_aligned_contig_paf {
   }
 }
 
+task calculate_coverage_paf {
+  meta {
+    description: "Parse minimap2 PAF file and return the breadth of coverage"
+  }
+  input {
+    File paf
+    String docker = "quay.io/quay/ubuntu"
+    Int disk_size = 100
+    Int cpu = 2
+    Int mem = 8
+  }
+  command <<<
+
+    apt-get install bc
+
+    # get reference length from paf file
+    ref_len=$(head -n1 ~{paf} | cut -f7 | tee REFERENCE_LENGTH)
+
+    # get sum of contig lengths that align to reference
+    contig_len=$(cat ~{paf} | cut -f2 | awk '{ sum += $1 } END { print sum }' | tee CONTIG_LENGTH)
+
+    result=$(echo "scale=2; ($contig_len / $ref_len)*100" | bc)
+    
+    echo $result | tee PERCENT_COVERAGE
+  >>>
+  output {
+    String reference_length = read_string("REFERENCE_LENGTH")
+    String contig_length = read_string("CONTIG_LENGTH")
+    String percent_coverage = read_string("PERCENT_COVERAGE")
+  }
+  runtime {
+    docker: "~{docker}"
+    memory: mem + " GB"
+    cpu: cpu
+    disks: "local-disk " + disk_size + " SSD"
+    disk: disk_size + " GB"
+    maxRetries: 0
+    preemptible: 0
+  }
+}
+
 task retrieve_pe_reads_sam {
   meta {
-    description: "Parse minimap2 SAM file and return unaligned paired-end reads in FASTQ format"
+    description: "Parse minimap2 SAM file and return paired-end reads in FASTQ format"
   }
   input {
     File sam
@@ -80,3 +121,4 @@ task retrieve_pe_reads_sam {
     preemptible: 0
   }
 }
+
