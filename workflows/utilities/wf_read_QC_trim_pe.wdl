@@ -147,7 +147,7 @@ workflow read_QC_trim_pe {
     
     # kraken2
     String? kraken_version = select_first([kraken2_theiameta_raw.kraken2_version, kraken2_theiacov_raw.version])
-    Float? kraken_human = select_first([kraken2_theiameta_raw.kraken2_percent_human, kraken2_theiacov_raw.percent_human, ""])
+    String? kraken_human = select_first([kraken2_theiameta_raw.kraken2_percent_human, kraken2_theiacov_raw.percent_human, ""])
     Float? kraken_sc2 = kraken2_theiacov_raw.percent_sc2
     String? kraken_target_org = kraken2_theiacov_raw.percent_target_org
     File? kraken_report = select_first([kraken2_theiameta_raw.kraken2_report, kraken2_theiacov_raw.kraken_report])
