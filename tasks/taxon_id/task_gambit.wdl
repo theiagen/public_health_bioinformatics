@@ -53,51 +53,28 @@ task gambit {
     with open('CLOSEST_DISTANCE', 'w') as f:
       f.write(fmt_dist(closest['distance']))
 
+    # output-writing function to reduce redunancy
+    def write_output(file, column, empty_value):
+      with open(file, 'w') as f:
+        if predicted is None:
+          f.write(empty_value)
+        elif predicted[column] is None:
+          f.write(empty_value)
+        else:
+          if str(empty_value) == str(fmt_dist(0)):
+            f.write(fmt_dist(predicted[column]))
+          else:
+            f.write(predicted[column])
+
     # Predicted taxon
-    with open('PREDICTED_TAXON', 'w') as f:
-      if predicted is None:
-        f.write('NA')
-      elif predicted['name'] is None:
-        f.write('NA')
-      else:
-        f.write(predicted['name'])
-    with open('PREDICTED_TAXON_RANK', 'w') as f:
-      if predicted is None:
-        f.write('NA')
-      elif predicted['rank'] is None:
-        f.write('NA')
-      else:
-        f.write(predicted['rank'])
-    with open('PREDICTED_TAXON_THRESHOLD', 'w') as f:
-      if predicted is None:
-        f.write(fmt_dist(0))
-      elif predicted['distance_threshold'] is None:
-        f.write(fmt_dist(0))
-      else:
-        f.write(fmt_dist(predicted['distance_threshold']))
+    write_output('PREDICTED_TAXON', 'name', 'NA')
+    write_output('PREDICTED_TAXON_RANK', 'rank', 'NA')
+    write_output('PREDICTED_TAXON_THRESHOLD', 'distance_threshold', fmt_dist(0))
 
     # Next taxon
-    with open('NEXT_TAXON', 'w') as f:
-      if next_taxon is None:
-        f.write('NA')
-      elif next_taxon['name'] is None:
-        f.write('NA')
-      else:
-        f.write(next_taxon['name'])
-    with open('NEXT_TAXON_RANK', 'w') as f:
-      if next_taxon is None:
-        f.write('NA')
-      elif next_taxon['rank'] is None:
-        f.write('NA')
-      else:
-        f.write(next_taxon['rank'])
-    with open('NEXT_TAXON_THRESHOLD', 'w') as f:
-      if next_taxon is None:
-        f.write(fmt_dist(0))
-      elif next_taxon['distance_threshold'] is None:
-        f.write(fmt_dist(0))
-      else:
-        f.write(fmt_dist(next_taxon['distance_threshold']))
+    write_output('NEXT_TAXON', 'name', 'NA')
+    write_output('NEXT_TAXON_RANK', 'rank', 'NA')
+    write_output('NEXT_TAXON_THRESHOLD', 'distance_threshold', fmt_dist(0))
       
     # Table of closest genomes
     with open('~{closest_genomes_path}', 'w', newline='') as f:
@@ -130,9 +107,22 @@ task gambit {
           '' if match_taxon is None else match_taxon['rank'],
           fmt_dist(0 if match_taxon is None else match_taxon['distance_threshold']),
         ])
+
+    merlin_tag_designations = {"Escherichia" : "Escherichia", "Shigella" : "Escherichia", "Shigella sonnei" : "Shigella sonnei",
+        "Haemophilus" : "Haemophilus", "Haemophilus influenzae" : "Haemophilus influenza", "Klebsiella" : "Klebsiella", 
+        "Acinetobacter baumannii" : "Acinetobacter baumannii", "Legionella pneumophila" : "Legionella pneumophila", 
+        "Pseudomonas aeruginosa" : "Pseudomonas aeruginosa", "Listeria" : "Listeria", "Mycobacterium tuberculosis" : "Mycobacterium tuberculosis",
+        "Neisseria" : "Neisseria", "Neisseria gonorrhoeae" : "Neisseria gonorrhoeae", "Neisseria meningitidis" : "Neisseria meningitidis",
+        "Salmonella" : "Salmonella", "Staphylococcus" : "Staphylococcus", "Staphylococcus aureus" : "Staphylococcus aureus", 
+        "Streptococcus" : "Streptococcus",
+
+    }
+    
+
     EOF
     # set merlin tags
     predicted_taxon=$(cat PREDICTED_TAXON)
+
     # if predicted taxon contains either Escherichia or Shigella, set merlin_tag to Escherichia
     if [[ ${predicted_taxon} == *"Escherichia"* ]] || [[ ${predicted_taxon} == *"Shigella"* ]] ; then 
       merlin_tag="Escherichia"
