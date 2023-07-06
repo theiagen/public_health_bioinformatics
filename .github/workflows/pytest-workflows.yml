@@ -6,6 +6,9 @@
 name: Pytest Workflows
 on:
   push:
+    # remove this section once the miniwdl test is reinstated for TheiaCoV_Illumina_PE/_SE
+    paths-ignore:
+      - 'workflows/theiacov/theiacov_illumina_**'
     branches: [main]
   pull_request:
     branches: [main]
