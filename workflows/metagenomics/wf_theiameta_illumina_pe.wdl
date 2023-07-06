@@ -1,6 +1,7 @@
 version 1.0
 
 import "../utilities/wf_read_QC_trim_pe.wdl" as read_qc_wf
+import "../../tasks/taxon_id/task_kraken2.wdl" as kraken_task
 import "../../tasks/assembly/task_megahit.wdl" as megahit_task
 import "../../tasks/alignment/task_minimap2.wdl" as minimap2_task
 import "../../tasks/utilities/task_parse_paf.wdl" as parse_paf_task
@@ -21,6 +22,13 @@ workflow theiameta_illumina_pe {
     Int trim_window_size = 4
     File kraken2_db = "gs://theiagen-public-files-rp/terra/theiaprok-files/k2_standard_8gb_20210517.tar.gz"
   }
+  call kraken_task.kraken2_standalone {
+    input:
+      samplename = samplename,
+      read1 = read1,
+      read2 = read2,
+      kraken2_db = kraken2_db
+  }
   call read_qc_wf.read_QC_trim_pe as read_QC_trim {
       input:
         samplename = samplename,
@@ -29,8 +37,7 @@ workflow theiameta_illumina_pe {
         workflow_series = "theiameta",
         trim_minlen = trim_minlen,
         trim_quality_trim_score = trim_quality_trim_score,
-        trim_window_size = trim_window_size,
-        kraken2_db = kraken2_db
+        trim_window_size = trim_window_size
     }
     call megahit_task.megahit_pe as megahit {
       input:
@@ -101,6 +108,10 @@ workflow theiameta_illumina_pe {
     # Version Capture
     String theiameta_illumina_pe_version = version_capture.phb_version
     String theiameta_illumina_pe_analysis_date = version_capture.date
+    # Kraken2 outputs
+    String? kraken_version = kraken2_standalone.kraken2_version
+    File? kraken_report = kraken2_standalone.kraken2_report
+    Float? kraken_percent_human = kraken2_standalone.kraken2_percent_human
     # Read QC - fastq_scan outputs
     Int? num_reads_raw1 = read_QC_trim.fastq_scan_raw1
     Int? num_reads_raw2 = read_QC_trim.fastq_scan_raw2
@@ -118,10 +129,6 @@ workflow theiameta_illumina_pe {
     # Read QC - dehosting outputs
     File? read1_dehosted = read_QC_trim.read1_dehosted
     File? read2_dehosted = read_QC_trim.read2_dehosted
-    # Read QC - kraken outputs
-    String? kraken_version = read_QC_trim.kraken_version
-    File? kraken_report = read_QC_trim.kraken_report
-    Float? kraken_percent_human = read_QC_trim.kraken_human
     # Read QC - Read stats
     Float? average_read_length = read_QC_trim.average_read_length
     # Assembly - megahit outputs 
