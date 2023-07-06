@@ -61,6 +61,7 @@ jobs:
           activate-environment: actions
           auto-activate-base: false
 
+      # Depends and env info (mostly for debug)
       # rm -rf commands as recommended here: https://github.com/actions/runner-images/issues/2840#issuecomment-1284059930
       - name: Install Dependencies and create storage space
         run: |

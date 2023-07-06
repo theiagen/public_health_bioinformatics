@@ -614,7 +614,7 @@
     - path: miniwdl_run/wdl/tasks/species_typing/task_shigatyper.wdl
       md5sum: f1a95ab2881ca3911b8773ffb81b2883
     - path: miniwdl_run/wdl/tasks/species_typing/task_shigeifinder.wdl
-      md5sum: fd62e12a2e124eab61c2ff64d3a85186
+      md5sum: fd7f4dbd824d09d69c78cc24c7fb935b
     - path: miniwdl_run/wdl/tasks/species_typing/task_sistr.wdl
       md5sum: 2294dfcb4accdb7cde2fcc64a2da5810
     - path: miniwdl_run/wdl/tasks/species_typing/task_sonneityping.wdl
