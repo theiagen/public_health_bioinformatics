@@ -6,9 +6,6 @@
 name: Pytest Workflows
 on:
   push:
-    # remove this section once the miniwdl test is reinstated for TheiaCoV_Illumina_PE/_SE
-    paths-ignore:
-      - 'workflows/theiacov/theiacov_illumina_**'
     branches: [main]
   pull_request:
     branches: [main]
@@ -41,6 +38,11 @@ jobs:
         # For every workflow, test it with MiniWDL and Cromwell
         tag: ["${{ fromJson(needs.changes.outputs.workflows) }}"]
         engine: ["miniwdl", "cromwell"]
+        exclude:
+          - tag: wf_theiacov_illumina_pe
+            engine: miniwdl
+          - tag: wf_theiacov_illumina_se
+            engine: miniwdl
     defaults:
       run:
         # Play nicely with miniconda
@@ -65,14 +67,10 @@ jobs:
           auto-activate-base: false
 
       # Depends and env info (mostly for debug)
-      # rm -rf commands as recommended here: https://github.com/actions/runner-images/issues/2840#issuecomment-1284059930
-      - name: Install Dependencies and create storage space
+      - name: Install Dependencies
         run: |
           conda install -y -c conda-forge -c bioconda cromwell miniwdl=1.5.2 'python>=3.7' pytest pytest-workflow 'importlib-metadata<=4.13.0'
-          conda clean -a -y
           uname -a && env
-          sudo rm -rf /usr/share/dotnet
-          sudo rm -rf "$AGENT_TOOLSDIRECTORY"
 
       - name: Test ${{ matrix.tag }}
         run: TMPDIR=~ pytest --tag ${{ matrix.tag }}_${{ matrix.engine }} --symlink --kwdof --color=yes
