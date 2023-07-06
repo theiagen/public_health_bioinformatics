@@ -30,9 +30,9 @@
     - path: miniwdl_run/call-amrfinderplus_task/task.log
       contains: ["wdl", "theiaprok_illumina_pe", "amrfinderplus", "done"]
     - path: miniwdl_run/call-amrfinderplus_task/work/AMRFINDER_DB_VERSION
-      md5sum: 6d6543d3aacc310fe866c5e90d1dff77
+      md5sum: 2323ca08d3132d198a68e637becea3db
     - path: miniwdl_run/call-amrfinderplus_task/work/AMRFINDER_VERSION
-      md5sum: 6206889552f40d7ea91f1d9ae025f23d
+      md5sum: df6b62b3e5679b365be6644e8b4882d3
     - path: miniwdl_run/call-amrfinderplus_task/work/AMR_CLASSES
       md5sum: b6017eebef847ac2471107ca6197b5c5
     - path: miniwdl_run/call-amrfinderplus_task/work/AMR_CORE_GENES
@@ -550,9 +550,9 @@
     - path: miniwdl_run/wdl/tasks/assembly/task_shovill.wdl
       md5sum: 85e702088edcfe8ce8fead6c42158f51
     - path: miniwdl_run/wdl/tasks/gene_typing/task_abricate.wdl
-      md5sum: d8e4646c2780945c7a10674e7f748a65
+      md5sum: c903bd663f831d44897b1003e259b81b
     - path: miniwdl_run/wdl/tasks/gene_typing/task_amrfinderplus.wdl
-      md5sum: 7678439e06ac720a26ec8229377ce5c9
+      md5sum: 340aacc58f5ed1aa8af8c697bab98e66
     - path: miniwdl_run/wdl/tasks/gene_typing/task_bakta.wdl
       md5sum: a25a79957f3c51a46a698171ab5b9f9b
     - path: miniwdl_run/wdl/tasks/gene_typing/task_plasmidfinder.wdl
@@ -614,7 +614,7 @@
     - path: miniwdl_run/wdl/tasks/species_typing/task_shigatyper.wdl
       md5sum: f1a95ab2881ca3911b8773ffb81b2883
     - path: miniwdl_run/wdl/tasks/species_typing/task_shigeifinder.wdl
-      md5sum: fd62e12a2e124eab61c2ff64d3a85186
+      md5sum: fd7f4dbd824d09d69c78cc24c7fb935b
     - path: miniwdl_run/wdl/tasks/species_typing/task_sistr.wdl
       md5sum: 2294dfcb4accdb7cde2fcc64a2da5810
     - path: miniwdl_run/wdl/tasks/species_typing/task_sonneityping.wdl
@@ -624,7 +624,7 @@
     - path: miniwdl_run/wdl/tasks/species_typing/task_ts_mlst.wdl
       md5sum: e7608e57ea41f8d0921618c8d168ae09
     - path: miniwdl_run/wdl/tasks/task_versioning.wdl
-      md5sum: c56fb29430dbc7d5f42d10b34c1802a6
+      md5sum: 0700ec2fe03ba61c41aacee093028ca3
     - path: miniwdl_run/wdl/tasks/taxon_id/task_gambit.wdl
       md5sum: 939f3ea920e49661390ec1005b080513
     - path: miniwdl_run/wdl/tasks/taxon_id/task_kraken2.wdl

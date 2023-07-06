@@ -62,10 +62,14 @@ jobs:
           auto-activate-base: false
 
       # Depends and env info (mostly for debug)
-      - name: Install Dependencies
+      # rm -rf commands as recommended here: https://github.com/actions/runner-images/issues/2840#issuecomment-1284059930
+      - name: Install Dependencies and create storage space
         run: |
           conda install -y -c conda-forge -c bioconda cromwell miniwdl=1.5.2 'python>=3.7' pytest pytest-workflow 'importlib-metadata<=4.13.0'
+          conda clean -a -y
           uname -a && env
+          sudo rm -rf /usr/share/dotnet
+          sudo rm -rf "$AGENT_TOOLSDIRECTORY"
 
       - name: Test ${{ matrix.tag }}
         run: TMPDIR=~ pytest --tag ${{ matrix.tag }}_${{ matrix.engine }} --symlink --kwdof --color=yes
