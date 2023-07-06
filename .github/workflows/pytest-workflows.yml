@@ -39,10 +39,10 @@ jobs:
         tag: ["${{ fromJson(needs.changes.outputs.workflows) }}"]
         engine: ["miniwdl", "cromwell"]
         exclude:
-          - tag: wf_theiacov_illumina_pe
-            engine: miniwdl
-          - tag: wf_theiacov_illumina_se
-            engine: miniwdl
+          - tag: "wf_theiacov_illumina_pe"
+            engine: "miniwdl"
+          - tag: "wf_theiacov_illumina_se"
+            engine: "miniwdl"
     defaults:
       run:
         # Play nicely with miniconda
