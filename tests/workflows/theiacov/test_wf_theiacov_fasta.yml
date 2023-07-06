@@ -46,7 +46,7 @@
     - path: miniwdl_run/call-nextclade/stdout.txt
     - path: miniwdl_run/call-nextclade/task.log
     - path: miniwdl_run/call-nextclade/work/NEXTCLADE_VERSION
-      md5sum: 91a455762183b41af0d8de5596e28e7f
+      md5sum: d5f4e83525024cba7eb7489cd5209e7d
     - path: miniwdl_run/call-nextclade/work/_miniwdl_inputs/0/clearlabs.fasta.gz
     - path: miniwdl_run/call-nextclade/work/clearlabs.fasta.gz.nextclade.auspice.json
     - path: miniwdl_run/call-nextclade/work/clearlabs.fasta.gz.nextclade.json
@@ -100,7 +100,7 @@
     - path: miniwdl_run/call-nextclade/work/nextclade_gene_S.translation.fasta
       md5sum: e630a638abbb2c8ab4a8b74455e9668f
     - path: miniwdl_run/call-nextclade_output_parser/command
-      md5sum: 8bab8bc62cb16fff613907f34c54ec51
+      md5sum: 632edfc9ac20d8134d3e22f507de1e08
     - path: miniwdl_run/call-nextclade_output_parser/inputs.json
     - path: miniwdl_run/call-nextclade_output_parser/outputs.json
     - path: miniwdl_run/call-nextclade_output_parser/stderr.txt

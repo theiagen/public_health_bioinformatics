@@ -224,7 +224,7 @@
     - path: miniwdl_run/call-nextclade/task.log
       contains: ["wdl", "theiacov_clearlabs", "nextclade", "done"]
     - path: miniwdl_run/call-nextclade/work/NEXTCLADE_VERSION
-      md5sum: 91a455762183b41af0d8de5596e28e7f
+      md5sum: d5f4e83525024cba7eb7489cd5209e7d
     - path: miniwdl_run/call-nextclade/work/_miniwdl_inputs/0/clearlabs.medaka.consensus.fasta
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     - path: miniwdl_run/call-nextclade/work/clearlabs.medaka.consensus.nextclade.auspice.json
@@ -276,7 +276,7 @@
     - path: miniwdl_run/call-nextclade/work/nextclade_gene_S.translation.fasta
       md5sum: 0ce44a0a8e2784ca4b3e8d8f03211813
     - path: miniwdl_run/call-nextclade_output_parser/command
-      md5sum: 8bab8bc62cb16fff613907f34c54ec51
+      md5sum: 15e4d72fff3a4e2b81ce30a4668266f0
     - path: miniwdl_run/call-nextclade_output_parser/inputs.json
       contains: ["nextclade_tsv", "tsv"]
     - path: miniwdl_run/call-nextclade_output_parser/outputs.json

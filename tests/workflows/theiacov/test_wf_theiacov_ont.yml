@@ -235,7 +235,7 @@
     - path: miniwdl_run/call-nextclade/task.log
       contains: ["wdl", "theiacov_ont", "done"]
     - path: miniwdl_run/call-nextclade/work/NEXTCLADE_VERSION
-      md5sum: 91a455762183b41af0d8de5596e28e7f
+      md5sum: d5f4e83525024cba7eb7489cd5209e7d
     - path: miniwdl_run/call-nextclade/work/_miniwdl_inputs/0/ont.medaka.consensus.fasta
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     - path: miniwdl_run/call-nextclade/work/nextclade.aligned.fasta
@@ -285,7 +285,7 @@
     - path: miniwdl_run/call-nextclade/work/ont.medaka.consensus.nextclade.json
     - path: miniwdl_run/call-nextclade/work/ont.medaka.consensus.nextclade.tsv
     - path: miniwdl_run/call-nextclade_output_parser/command
-      md5sum: 8bab8bc62cb16fff613907f34c54ec51
+      md5sum: 65e8a95529a0466257beed44ec71d2ca
     - path: miniwdl_run/call-nextclade_output_parser/inputs.json
       contains: ["nextclade_tsv", "tsv"]
     - path: miniwdl_run/call-nextclade_output_parser/outputs.json
