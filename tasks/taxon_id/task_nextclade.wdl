@@ -107,14 +107,12 @@ task nextclade_output_parser {
         # combine 'clade_nextstrain' and 'clade_who' column if sars-cov-2, if false then parse 'clade' column
         if ("~{organism}" == "sars-cov-2"):
           with codecs.open("NEXTCLADE_CLADE", 'wt') as Nextclade_Clade:
-            nextstrain_clade = tsv_dict['clade_nextstrain']
+            nc_clade = tsv_dict['clade_nextstrain']
             who_clade = tsv_dict['clade_who']
-            if nextclade_clade != who_clade:
-              nc_clade = nextclade_clade + " (" + who_clade + ")"
-              if nc_clade == '':
-                nc_clade = 'NA'
-            else:  # in the case where both are "recombinant," only print the first
-              nc_clade = nextclade_clade
+            if nc_clade != who_clade:
+              nc_clade = nc_clade + " (" + who_clade + ")"
+            if nc_clade == '':
+              nc_clade = 'NA'
             Nextclade_Clade.write(nc_clade)
         else:
           with codecs.open("NEXTCLADE_CLADE", 'wt') as Nextclade_Clade:
