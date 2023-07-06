@@ -4,6 +4,7 @@ import "../../tasks/quality_control/task_fastq_scan.wdl" as fastq_scan
 import "../../tasks/quality_control/task_trimmomatic.wdl" as trimmomatic
 import "../../tasks/quality_control/task_ncbi_scrub.wdl" as ncbi_scrub
 import "../../tasks/quality_control/task_bbduk.wdl" as bbduk_task
+import "../../tasks/quality_control/task_readlength.wdl" as readlength_task
 import "../../tasks/quality_control/task_fastp.wdl" as fastp_task
 import "../../tasks/taxon_id/task_kraken2.wdl" as kraken
 import "../../tasks/taxon_id/task_midas.wdl" as midas_task
@@ -56,7 +57,6 @@ workflow read_QC_trim_pe {
     }
   }
   if ("~{workflow_series}" == "theiameta") {
-
     call kraken.kraken2_standalone as kraken2_theiameta_raw {
       input:
         samplename = samplename,
@@ -117,6 +117,13 @@ workflow read_QC_trim_pe {
         midas_db = midas_db
     }
   }
+  if ("~{workflow_series}" == "theiameta") {
+    call readlength_task.readlength {
+      input:
+        read1 = bbduk.read1_clean,
+        read2 = bbduk.read2_clean
+    }
+  }
   output {
     # NCBI scrubber
     File? read1_dehosted = ncbi_scrub_pe.read1_dehosted
@@ -140,7 +147,7 @@ workflow read_QC_trim_pe {
     
     # kraken2
     String? kraken_version = select_first([kraken2_theiameta_raw.kraken2_version, kraken2_theiacov_raw.version])
-    Float? kraken_human = select_first([kraken2_theiameta_raw.kraken2_percent_human, kraken2_theiacov_raw.percent_human])
+    Float? kraken_human = select_first([kraken2_theiameta_raw.kraken2_percent_human, kraken2_theiacov_raw.percent_human, ""])
     Float? kraken_sc2 = kraken2_theiacov_raw.percent_sc2
     String? kraken_target_org = kraken2_theiacov_raw.percent_target_org
     File? kraken_report = select_first([kraken2_theiameta_raw.kraken2_report, kraken2_theiacov_raw.kraken_report])
@@ -160,5 +167,8 @@ workflow read_QC_trim_pe {
     String? midas_primary_genus = midas.midas_primary_genus
     String? midas_secondary_genus = midas.midas_secondary_genus
     Float? midas_secondary_genus_abundance = midas.midas_secondary_genus_abundance
+
+    # readlength
+    Float? average_read_length = readlength.average_read_length
   }
 }

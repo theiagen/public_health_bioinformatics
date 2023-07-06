@@ -122,6 +122,8 @@ workflow theiameta_illumina_pe {
     String? kraken_version = read_QC_trim.kraken_version
     File? kraken_report = read_QC_trim.kraken_report
     Float? kraken_percent_human = read_QC_trim.kraken_human
+    # Read QC - Read stats
+    Float? average_read_length = read_QC_trim.average_read_length
     # Assembly - megahit outputs 
     File? assembly_fasta = select_first([retrieve_aligned_contig_paf.final_assembly, megahit.assembly_fasta])
     String? megahit_pe_version = megahit.megahit_version
