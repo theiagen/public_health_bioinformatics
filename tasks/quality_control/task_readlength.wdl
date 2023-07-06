@@ -7,8 +7,6 @@ task readlength {
     Int memory = 8
     String docker = "quay.io/staphb/bbtools:38.76"
     Int disk_size = 100
-    File? adapters
-    File? phix
   }
   command <<<
     # date and version control
