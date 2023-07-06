@@ -109,7 +109,7 @@ task nextclade_output_parser {
           with codecs.open("NEXTCLADE_CLADE", 'wt') as Nextclade_Clade:
             nc_clade = tsv_dict['clade_nextstrain']
             who_clade = tsv_dict['clade_who']
-            if nc_clade != who_clade:
+            if (nc_clade != who_clade) and (nc_clade != ''):
               nc_clade = nc_clade + " (" + who_clade + ")"
             if nc_clade == '':
               nc_clade = 'NA'
