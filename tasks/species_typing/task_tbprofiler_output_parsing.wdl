@@ -232,7 +232,8 @@ task tbprofiler_output_parsing {
 
 
     # there is no "strain" field in the results.json
-    def get_lineage(json_file):
+
+     def get_lineage_LIMS(json_file):
       """
       """
       with open(json_file) as js_fh:
@@ -245,6 +246,35 @@ task tbprofiler_output_parsing {
           return "DNA of M. tuberculosis complex detected (M. tb)"
         else:
           return "DNA of M. tuberculosis complex detected (not M. bovis and not M. tb)"
+    
+    def get_lineage_and_ID(json_file):
+      """
+      """
+      with open(json_file) as js_fh:
+        results_json = json.load(js_fh)
+
+        lineage = "NA"
+        ID = "NA"
+
+        if "lineage" in results_json["sublin"]:
+          lineage = results_json["sublin"]
+          ID = lineage
+        elif results_json["sublin"] == "":
+          ID = "NA"
+
+        if lineage != "NA":
+          if "lineage" in lineage:
+            ID = "MTBC, not M. bovis"
+          elif "BCG" in lineage:
+            ID = "M. bovis BCG"
+          elif "bovis" in lineage and "BCG" not in lineage:
+            ID = "M. bovis, not BCG"  
+      return lineage, ID
+    
+    def get_id_from_lineage(lineage):
+      """
+      """
+
 
     def parse_json_mutations_for_LIMS(json_file):
       """
@@ -532,7 +562,7 @@ task tbprofiler_output_parsing {
         - Operator information
       """
     
-      lineage = get_lineage("~{json}")
+      lineage = get_lineage_LIMS("~{json}")
       mutations = parse_json_mutations_for_LIMS("~{json}")
       resistance_annotation = parse_json_resistance("~{json}")
       df_lims = pd.DataFrame({"MDL sample accession numbers":"~{samplename}", "M_DST_A01_ID": lineage}, index=[0])
@@ -583,7 +613,7 @@ task tbprofiler_output_parsing {
         - for each antimicrobial, indication if its resistant (R) or susceptible (S)
       """
 
-      lineage = get_lineage("~{json}")
+      lineage, ID = get_lineage_and_ID("~{json}")
       resistance_annotation = parse_json_resistance("~{json}")
       df_looker = pd.DataFrame({"sample_id":"~{samplename}", "output_seq_method_type": "~{output_seq_method_type}"}, index=[0])
 
@@ -597,6 +627,7 @@ task tbprofiler_output_parsing {
           df_looker[antimicrobial_drug] = "S"
       
       df_looker["lineage"] = lineage 
+      df_looker["ID"] = ID
       df_looker["analysis_date"] = current_time
       df_looker["operator"] = "~{operator}"
     
