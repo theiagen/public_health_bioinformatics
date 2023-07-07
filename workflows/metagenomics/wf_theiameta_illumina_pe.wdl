@@ -127,7 +127,6 @@ workflow theiameta_illumina_pe {
     # Read QC - bbduk outputs
     File? read1_clean = read_QC_trim.read1_clean
     File? read2_clean = read_QC_trim.read2_clean
-    String? bbduk_docker = read_QC_trim.bbduk_docker
     # Read QC - dehosting outputs
     File? read1_dehosted = read_QC_trim.read1_dehosted
     File? read2_dehosted = read_QC_trim.read2_dehosted
