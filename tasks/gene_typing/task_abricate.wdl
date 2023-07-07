@@ -105,7 +105,7 @@ task abricate_flu {
       echo "~{nextclade_flu_h1n1_na_tag}" > NEXTCLADE_DS_TAG_NA
     elif [ "${flu_subtype}" == "H3N2" ]; then
       echo "flu_h3n2_ha" > NEXTCLADE_NAME_HA
-      echo "EPI1857216" > NEXTCLADE_REF_HA
+      echo "CY163680" > NEXTCLADE_REF_HA
       echo "~{nextclade_flu_h3n2_ha_tag}" > NEXTCLADE_DS_TAG_HA
       echo "flu_h3n2_na" > NEXTCLADE_NAME_NA
       echo "EPI1857215" > NEXTCLADE_REF_NA
