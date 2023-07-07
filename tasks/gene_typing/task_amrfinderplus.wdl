@@ -38,9 +38,10 @@ task amrfinderplus_nuc {
       ["Streptococcus pyogenes"]="Streptococcus_pyogenes" ["Vibrio cholerae"]="Vibrio_cholerae"
       )
 
-
     for key in "${!organisms[@]}"; do
-      if [[ "~{organism}" == *$key* ]]; then
+      if [[ "~{organism}" == $key ]]; then
+        amrfinder_organism=${organisms[$key]}
+      elif [[ "~{organism}" == *$key* ]]; then
         amrfinder_organism=${organisms[$key]}
       fi
     done
