@@ -72,7 +72,6 @@ task kraken2_standalone {
     File kraken2_db
     String samplename
     String docker = "quay.io/staphb/kraken2:2.1.2-no-db"
-
     String kraken2_args = ""
     String classified_out = "classified#.fastq"
     String unclassified_out = "unclassified#.fastq"
