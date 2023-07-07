@@ -54,27 +54,27 @@ task gambit {
       f.write(fmt_dist(closest['distance']))
 
     # output-writing function to reduce redunancy
-    def write_output(file, column, empty_value):
+    def write_output(file, search_item, column, empty_value):
       with open(file, 'w') as f:
-        if predicted is None:
+        if search_item is None:
           f.write(empty_value)
-        elif predicted[column] is None:
+        elif search_item[column] is None:
           f.write(empty_value)
         else:
           if str(empty_value) == str(fmt_dist(0)):
-            f.write(fmt_dist(predicted[column]))
+            f.write(fmt_dist(search_item[column]))
           else:
-            f.write(predicted[column])
+            f.write(search_item[column])
 
     # Predicted taxon
-    write_output('PREDICTED_TAXON', 'name', 'NA')
-    write_output('PREDICTED_TAXON_RANK', 'rank', 'NA')
-    write_output('PREDICTED_TAXON_THRESHOLD', 'distance_threshold', fmt_dist(0))
+    write_output('PREDICTED_TAXON', predicted, 'name', 'NA')
+    write_output('PREDICTED_TAXON_RANK', predicted, 'rank', 'NA')
+    write_output('PREDICTED_TAXON_THRESHOLD', predicted, 'distance_threshold', fmt_dist(0))
 
     # Next taxon
-    write_output('NEXT_TAXON', 'name', 'NA')
-    write_output('NEXT_TAXON_RANK', 'rank', 'NA')
-    write_output('NEXT_TAXON_THRESHOLD', 'distance_threshold', fmt_dist(0))
+    write_output('NEXT_TAXON', next_taxon, 'name', 'NA')
+    write_output('NEXT_TAXON_RANK', next_taxon, 'rank', 'NA')
+    write_output('NEXT_TAXON_THRESHOLD', next_taxon, 'distance_threshold', fmt_dist(0))
       
     # Table of closest genomes
     with open('~{closest_genomes_path}', 'w', newline='') as f:
@@ -109,87 +109,19 @@ task gambit {
         ])
 
     merlin_tag_designations = {"Escherichia" : "Escherichia", "Shigella" : "Escherichia", "Shigella sonnei" : "Shigella sonnei",
-        "Haemophilus" : "Haemophilus", "Haemophilus influenzae" : "Haemophilus influenza", "Klebsiella" : "Klebsiella", 
-        "Acinetobacter baumannii" : "Acinetobacter baumannii", "Legionella pneumophila" : "Legionella pneumophila", 
-        "Pseudomonas aeruginosa" : "Pseudomonas aeruginosa", "Listeria" : "Listeria", "Mycobacterium tuberculosis" : "Mycobacterium tuberculosis",
-        "Neisseria" : "Neisseria", "Neisseria gonorrhoeae" : "Neisseria gonorrhoeae", "Neisseria meningitidis" : "Neisseria meningitidis",
-        "Salmonella" : "Salmonella", "Staphylococcus" : "Staphylococcus", "Staphylococcus aureus" : "Staphylococcus aureus", 
-        "Streptococcus" : "Streptococcus",
-
+        "Klebsiella" : "Klebsiella", "Listeria" : "Listeria", "Salmonella" : "Salmonella", "Vibrio" : "Vibrio"
     }
-    
+
+    merlin_tag = predicted['name']
+
+    reduced_name = [val for key,val in merlin_tag_designations.items() if key in merlin_tag][0]
+    if (reduced_name in merlin_tag_designations.keys()) and (merlin_tag not in merlin_tag_designations.keys()):
+      merlin_tag = reduced_name
+
+    with open('MERLIN_TAG', 'w') as merlin:
+      merlin.write(merlin_tag)
 
     EOF
-    # set merlin tags
-    predicted_taxon=$(cat PREDICTED_TAXON)
-
-    # if predicted taxon contains either Escherichia or Shigella, set merlin_tag to Escherichia
-    if [[ ${predicted_taxon} == *"Escherichia"* ]] || [[ ${predicted_taxon} == *"Shigella"* ]] ; then 
-      merlin_tag="Escherichia"
-      # if predicted taxon is Shigella sonnei, reset merlin_tag to Shigella_sonnei
-      if [[ ${predicted_taxon} == *"Shigella sonnei"* ]]; then
-        merlin_tag="Shigella_sonnei"
-      fi
-    elif [[ ${predicted_taxon} == *"Haemophilus"* ]]; then
-      merlin_tag="Haemophilus"
-       # set t o Haemophilus influenzae if gambit calls the species
-      if [[ ${predicted_taxon} == *"Haemophilus influenzae"* ]]; then
-        merlin_tag="Haemophilus influenzae"
-      fi
-    elif [[ ${predicted_taxon} == *"Klebsiella"* ]]; then 
-      merlin_tag="Klebsiella"
-    elif [[ ${predicted_taxon} == *"Acinetobacter baumannii"* ]]; then
-      merlin_tag="Acinetobacter baumannii"
-    elif [[ ${predicted_taxon} == *"Legionella pneumophila"* ]]; then
-      merlin_tag="Legionella pneumophila"
-    elif [[ ${predicted_taxon} == *"Pseudomonas aeruginosa"* ]]; then
-      merlin_tag="Pseudomonas aeruginosa"
-    elif [[ ${predicted_taxon} == *"Listeria"* ]]; then 
-      merlin_tag="Listeria"
-    elif [[ ${predicted_taxon} == *"Mycobacterium tuberculosis"* ]]; then
-      merlin_tag="Mycobacterium tuberculosis"
-    elif [[ ${predicted_taxon} == *"Neisseria"* ]]; then
-      merlin_tag="Neisseria"
-      # if predicted taxon is Neisseria gonorrhoeae, reset merlin_tag to Neisseria gonorrhoeae
-      if [[ ${predicted_taxon} == *"Neisseria gonorrhoeae"* ]]; then
-        merlin_tag="Neisseria gonorrhoeae"
-      # if predicted taxon is Neisseria meningitidis, reset merlin_tag to Neisseria meningitidis
-      elif [[ ${predicted_taxon} == *"Neisseria meningitidis"* ]]; then
-        merlin_tag="Neisseria meningitidis"
-      fi
-    elif [[ ${predicted_taxon} == *"Salmonella"* ]]; then
-      merlin_tag="Salmonella"
-    elif [[ ${predicted_taxon} == *"Staphylococcus"* ]]; then
-      merlin_tag="Staphylococcus"
-      # set to aureus if gambit calls the species
-      if [[ ${predicted_taxon} == *"Staphylococcus aureus"* ]]; then
-        merlin_tag="Staphylococcus aureus"
-      fi
-    elif [[ ${predicted_taxon} == *"Streptococcus"* ]]; then 
-      merlin_tag="Streptococcus"
-      # set to pneumoniae if gambit calls the species
-      if [[ ${predicted_taxon} == *"Streptococcus pneumoniae"* ]]; then 
-        merlin_tag="Streptococcus pneumoniae"
-      fi
-      # set to pyogenes if gambit calls the species
-      if [[ ${predicted_taxon} == *"Streptococcus pyogenes"* ]]; then 
-        merlin_tag="Streptococcus pyogenes"
-      fi
-    elif [[ ${predicted_taxon} == *"Vibrio"* ]]; then 
-      merlin_tag="Vibrio"
-    # theiaeuk
-    elif [[ ${predicted_taxon} == *"Candida auris"* ]] ; then 
-      merlin_tag="Candida auris"
-    elif [[ ${predicted_taxon} == *"Candida albicans"* ]] ; then 
-      merlin_tag="Candida albicans"
-    elif [[ ${predicted_taxon} == *"Aspergillus fumigatus"* ]] ; then 
-      merlin_tag="Aspergillus fumigatus"
-    elif [[ ${predicted_taxon} == *"Cryptococcus neoformans"* ]] ; then
-      merlin_tag="Cryptococcus neoformans"
-    else 
-      merlin_tag="None"
-    fi
-    echo ${merlin_tag} | tee MERLIN_TAG
   >>>
   output {
     File gambit_report_file = report_path
