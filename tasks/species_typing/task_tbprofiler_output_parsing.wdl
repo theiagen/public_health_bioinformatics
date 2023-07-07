@@ -222,15 +222,16 @@ task tbprofiler_output_parsing {
             else:
               return "S"
 
-      elif gene not in gene_list_combined: # expert rules 3.2
+      elif gene not in gene_list_combined: # expert rules 3.2 --- this is not an expert rule -----------------------------------------------------------------------------------
         if substitution_type != "synonymous_variant":
-          return "S" if interpretation_destination == "MDL" else "U"
+          return "Snoexpert" if interpretation_destination == "MDL" else "U"
         else:
           return "S"
 
       return ""
 
 
+    # there is no "strain" field in the results.json
     def get_lineage(json_file):
       """
       """
@@ -401,6 +402,8 @@ task tbprofiler_output_parsing {
         for dr_variant in results_json["dr_variants"]: 
           genes_reported.append(dr_variant["gene"])
           if "annotation" in dr_variant:
+            # empty dictionary in the case where multiple drugs are identified
+            drugs_to_row = {}
             # case: annotation field is present but it's an empty list, expert rule is applied directly 
             if len(dr_variant["annotation"]) == 0:
               row = variant_to_row(dr_variant)
@@ -408,15 +411,20 @@ task tbprofiler_output_parsing {
               row["looker_interpretation"] = apply_expert_rules(dr_variant["nucleotide_change"], dr_variant["protein_change"], dr_variant["gene"], dr_variant["type"], "looker")
               row["mdl_interpretation"] = apply_expert_rules(dr_variant["nucleotide_change"], dr_variant["protein_change"], dr_variant["gene"], dr_variant["type"], "MDL")
               row["rationale"] = "Expert rule applied"
-              row_list.append(row)
+              #########################################################################################################################################################################
+              ##### there is the "drugs" field which can contain multiple drugs; iterate through them
+              for identified_drug in dr_variant["drugs"]:
+                if identified_drug["drug"] not in drugs_to_row:
+                  drugs_to_row[annotation["drug"]] = {"other_variant": dr_variant, "who_confidence": row["confidence"], "drug": identified_drug["drug"], "nucleotide_change": dr_variant["nucleotide_change"], "protein_change": dr_variant["protein_change"], "gene": dr_variant["gene"], "type": dr_variant["type"]}
+                elif rank_annotation(drugs_to_row[identified_drug["drug"]]["who_confidence"]) > rank_annotation(row["confidence"]): # overwrite entry with the more severe annotation (higher value) if multiple drugs are present
+                  drugs_to_row[annotation["drug"]] = {"other_variant": dr_variant, "who_confidence": row["confidence"], "drug": identified_drug["drug"], "nucleotide_change": dr_variant["nucleotide_change"], "protein_change": dr_variant["protein_change"], "gene": dr_variant["gene"], "type": dr_variant["type"]}
+
             # case: drug confers resistance to multiple drugs - if the same drug shows multiple times in a single mutation, save only the most severe annotation
-            drugs_to_row = {}
             for annotation in dr_variant["annotation"]: # iterate thorugh all possible annotations for the variant
               if annotation["drug"] not in drugs_to_row: # if this is the first time a drug is seen, add to dictionary
                 drugs_to_row[annotation["drug"]] = {"other_variant": dr_variant, "who_confidence": annotation["who_confidence"], "drug": annotation["drug"], "nucleotide_change": dr_variant["nucleotide_change"], "protein_change": dr_variant["protein_change"], "gene": dr_variant["gene"], "type": dr_variant["type"]}
-              else:
-                if rank_annotation(drugs_to_row[annotation["drug"]]["who_confidence"]) > rank_annotation(annotation["who_confidence"]): # overwrite entry with the more severe annotation (higher value) if multiple drugs are present
-                  drugs_to_row[annotation["drug"]] = {"other_variant": dr_variant, "who_confidence": annotation["who_confidence"], "drug": annotation["drug"], "nucleotide_change": dr_variant["nucleotide_change"], "protein_change": dr_variant["protein_change"], "gene": dr_variant["gene"], "type": dr_variant["type"]}
+              elif rank_annotation(drugs_to_row[annotation["drug"]]["who_confidence"]) > rank_annotation(annotation["who_confidence"]): # overwrite entry with the more severe annotation (higher value) if multiple drugs are present
+                drugs_to_row[annotation["drug"]] = {"other_variant": dr_variant, "who_confidence": annotation["who_confidence"], "drug": annotation["drug"], "nucleotide_change": dr_variant["nucleotide_change"], "protein_change": dr_variant["protein_change"], "gene": dr_variant["gene"], "type": dr_variant["type"]}
             
             for drug in drugs_to_row:
               row = variant_to_row(drugs_to_row[drug]["other_variant"])
@@ -455,9 +463,8 @@ task tbprofiler_output_parsing {
             for annotation in other_variant["annotation"]:
               if annotation["drug"] not in drugs_to_row:
                 drugs_to_row[annotation["drug"]] = {"other_variant": other_variant, "who_confidence": annotation["who_confidence"], "drug": annotation["drug"], "nucleotide_change": other_variant["nucleotide_change"],"protein_change": other_variant["protein_change"], "gene": other_variant["gene"], "type": other_variant["type"]}
-              else:
-                if rank_annotation(drugs_to_row[annotation["drug"]]["who_confidence"]) > rank_annotation(annotation["who_confidence"]):
-                    drugs_to_row[annotation["drug"]] = {"other_variant": other_variant, "who_confidence": annotation["who_confidence"], "drug": annotation["drug"], "nucleotide_change": other_variant["nucleotide_change"],"protein_change": other_variant["protein_change"], "gene": other_variant["gene"], "type": other_variant["type"]}
+              elif rank_annotation(drugs_to_row[annotation["drug"]]["who_confidence"]) > rank_annotation(annotation["who_confidence"]):
+                drugs_to_row[annotation["drug"]] = {"other_variant": other_variant, "who_confidence": annotation["who_confidence"], "drug": annotation["drug"], "nucleotide_change": other_variant["nucleotide_change"],"protein_change": other_variant["protein_change"], "gene": other_variant["gene"], "type": other_variant["type"]}
 
             for drug in drugs_to_row:
               row = variant_to_row(drugs_to_row[drug]["other_variant"])
@@ -485,20 +492,22 @@ task tbprofiler_output_parsing {
               row["sample_id"] = "~{samplename}"
               row["tbprofiler_gene_name"] = gene
               row["tbprofiler_locus_tag"] = gene_to_locus_tag[gene]
+              row["tbprofiler_variant_substitution_nt"] = "NA"
+              row["tbprofiler_variant_substitution_aa"] = "NA"
               if float(gene_coverage_dict[gene]) >= ~{coverage_threshold}:
                 row["tbprofiler_variant_substitution_type"] = "WT"
                 row["looker_interpretation"] = "S"
                 row["mdl_interpretation"] = "WT"
+                row["tbprofiler_variant_substitution_nt"] = "WT"
+                row["tbprofiler_variant_substitution_aa"] = "WT"
               else:
                 row["tbprofiler_variant_substitution_type"] = "Insufficient Coverage"
-                row["looker_interpretation"] = "NA"
-                row["mdl_interpretation"] = "NA"
+                row["looker_interpretation"] = "Insufficient Coverage"
+                row["mdl_interpretation"] = "Insufficient Coverage"
               if gene in gene_to_tier.keys():
                 row["gene_tier"] = gene_to_tier[gene]
               else:
                 row["gene_tier"] = "NA"
-              row["tbprofiler_variant_substitution_nt"] = "NA"
-              row["tbprofiler_variant_substitution_aa"] = "NA"
               row["confidence"] = "NA"
               row["antimicrobial"] = drug_name
               row["depth"] = "NA"
