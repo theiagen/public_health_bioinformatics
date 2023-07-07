@@ -8,7 +8,7 @@ task retrieve_aligned_contig_paf {
     File paf
     File assembly
     String samplename
-    String docker = "quay.io/staphb/seqkit:2.3.1"
+    String docker = "staphb/seqkit:2.3.1"
     Int disk_size = 100
     Int cpu = 2
     Int mem = 8
