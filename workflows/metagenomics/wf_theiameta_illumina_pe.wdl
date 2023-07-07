@@ -4,7 +4,7 @@ import "../utilities/wf_read_QC_trim_pe.wdl" as read_qc_wf
 import "../../tasks/taxon_id/task_kraken2.wdl" as kraken_task
 import "../../tasks/assembly/task_megahit.wdl" as megahit_task
 import "../../tasks/alignment/task_minimap2.wdl" as minimap2_task
-import "../../tasks/utilities/task_parse_paf.wdl" as parse_paf_task
+import "../../tasks/utilities/task_parse_mapping.wdl" as parse_mapping_task
 import "../../tasks/quality_control/task_quast.wdl" as quast_task
 import "../../tasks/task_versioning.wdl" as versioning
 
@@ -20,6 +20,7 @@ workflow theiameta_illumina_pe {
     Int trim_minlen = 75
     Int trim_quality_trim_score = 30
     Int trim_window_size = 4
+    String? megahit_opts
     File kraken2_db = "gs://theiagen-public-files-rp/terra/theiaprok-files/k2_standard_8gb_20210517.tar.gz"
   }
   call kraken_task.kraken2_standalone {
@@ -43,7 +44,8 @@ workflow theiameta_illumina_pe {
       input:
         read1_cleaned = read_QC_trim.read1_clean,
         read2_cleaned = read_QC_trim.read2_clean,
-        samplename = samplename
+        samplename = samplename,
+        megahit_opts = megahit_opts
       }
     # if reference is provided, perform mapping of assembled contigs to 
     # reference with minimap2, and extract those as final assembly
@@ -54,13 +56,13 @@ workflow theiameta_illumina_pe {
           reference = select_first([reference]),
           samplename = samplename
       }
-      call parse_paf_task.retrieve_aligned_contig_paf {
+      call parse_mapping_task.retrieve_aligned_contig_paf {
         input:
           paf = minimap2_assembly.minimap2_out,
           assembly = megahit.assembly_fasta,
           samplename = samplename
       }
-      call parse_paf_task.calculate_coverage_paf {
+      call parse_mapping_task.calculate_coverage_paf {
         input:
           paf = minimap2_assembly.minimap2_out
       }
@@ -80,22 +82,22 @@ workflow theiameta_illumina_pe {
         mode = "sr",
         output_sam = true
     }
-    call parse_paf_task.sam_to_sorted_bam {
+    call parse_mapping_task.sam_to_sorted_bam {
       input:
         sam = minimap2_reads.minimap2_out,
         samplename = samplename
     }
-    call parse_paf_task.calculate_coverage {
+    call parse_mapping_task.calculate_coverage {
       input:
         bam = sam_to_sorted_bam.bam,
         bai = sam_to_sorted_bam.bai
     }
-    call parse_paf_task.retrieve_pe_reads_bam as retrieve_unaligned_pe_reads_sam {
+    call parse_mapping_task.retrieve_pe_reads_bam as retrieve_unaligned_pe_reads_sam {
       input:
         bam = sam_to_sorted_bam.bam,
         samplename = samplename
     }
-    call parse_paf_task.retrieve_pe_reads_bam as retrieve_aligned_pe_reads_sam {
+    call parse_mapping_task.retrieve_pe_reads_bam as retrieve_aligned_pe_reads_sam {
       input:
         bam = sam_to_sorted_bam.bam,
         samplename = samplename,
