@@ -47,6 +47,7 @@ task megahit_pe {
     Int min_contig_length = 200
     String? kmers
     Boolean keep_temp_files = false
+    String? megahit_opts
   }
   command <<<
     megahit --version | head -1 | cut -d ' ' -f 2 | tee VERSION
@@ -57,7 +58,8 @@ task megahit_pe {
       ~{'--k-list ' + kmers} \
       ~{true='--keep-tmp-files' false='' keep_temp_files} \
       -m ~{memory} \
-      -t ~{cpu}
+      -t ~{cpu} \
+      ~{megahit_opts}
 
     mv megahit_out/final.contigs.fa ~{samplename}_contigs.fasta
 
