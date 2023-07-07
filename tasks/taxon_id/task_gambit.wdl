@@ -109,15 +109,21 @@ task gambit {
         ])
 
     merlin_tag_designations = {"Escherichia" : "Escherichia", "Shigella" : "Escherichia", "Shigella sonnei" : "Shigella sonnei",
-        "Klebsiella" : "Klebsiella", "Listeria" : "Listeria", "Salmonella" : "Salmonella", "Vibrio" : "Vibrio"
+        "Klebsiella" : "Klebsiella", "Klebsiella pneumoniae" : "Klebsiella pneumoniae", "Klebsiella oxytoca" : "Klebsiella oxytoca", 
+        "Klebsiella aerogenes" : "Klebsiella aerogenes", "Listeria" : "Listeria", "Salmonella" : "Salmonella", "Vibrio" : "Vibrio",
+        "Vibrio cholerae" : "Vibrio cholerae"
     }
 
     merlin_tag = predicted['name']
 
-    reduced_name = [val for key,val in merlin_tag_designations.items() if key in merlin_tag][0]
-    if (reduced_name in merlin_tag_designations.keys()) and (merlin_tag not in merlin_tag_designations.keys()):
-      merlin_tag = reduced_name
+    # see if there is a reduced tag available (use Escherichia for Shigella flexneri)
+    reduced_name = [val for key,val in merlin_tag_designations.items() if key in merlin_tag]
 
+    if len(reduced_name) > 0: # if a reduced tag was identified, check if it should be used
+      if (reduced_name[0] in merlin_tag_designations.keys()) and (merlin_tag not in merlin_tag_designations.keys()):
+        merlin_tag = reduced_name[0]
+
+    print(merlin_tag)
     with open('MERLIN_TAG', 'w') as merlin:
       merlin.write(merlin_tag)
 

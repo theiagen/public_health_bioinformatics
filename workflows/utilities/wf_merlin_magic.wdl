@@ -195,7 +195,7 @@ workflow merlin_magic {
       }
     }
   }
-  if (merlin_tag == "Klebsiella") {
+  if (merlin_tag == "Klebsiella" || merlin_tag == "Klebsiella pneumoniae" || merlin_tag == "Klebsiella variicola" || merlin_tag == "Klebsiella aerogenes" || merlin_tag == "Klebsiella oxytoca") {
     call kleborate_task.kleborate {
       input:
         assembly = assembly,
@@ -320,7 +320,7 @@ workflow merlin_magic {
         docker = hicap_docker_image
     }
   }
-  if (merlin_tag == "Vibrio") {
+  if (merlin_tag == "Vibrio" || merlin_tag == "Vibrio cholerae") {
     if (!assembly_only && !ont_data) {
       call srst2_vibrio_task.srst2_vibrio {
         input:
