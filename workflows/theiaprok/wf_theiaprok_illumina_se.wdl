@@ -71,7 +71,7 @@ workflow theiaprok_illumina_se {
       skip_screen = skip_screen,
       expected_genome_size = genome_size
   }
-  if (raw_check_reads.read_screen=="PASS") {
+  if (raw_check_reads.read_screen == "PASS") {
     call read_qc.read_QC_trim_se as read_QC_trim {
       input:
         samplename = samplename,
@@ -91,7 +91,7 @@ workflow theiaprok_illumina_se {
         skip_screen = skip_screen,
         expected_genome_size = genome_size
     }
-    if (clean_check_reads.read_screen=="PASS") {
+    if (clean_check_reads.read_screen == "PASS") {
       call shovill.shovill_se {
         input:
           samplename = samplename,
@@ -126,11 +126,11 @@ workflow theiaprok_illumina_se {
           samplename = samplename
       }
       if (call_ani) {
-      call ani_task.animummer as ani {
-        input:
-          assembly = shovill_se.assembly_fasta,
-          samplename = samplename
-      }
+        call ani_task.animummer as ani {
+          input:
+            assembly = shovill_se.assembly_fasta,
+            samplename = samplename
+        }
       }
       call amrfinderplus.amrfinderplus_nuc as amrfinderplus_task {
         input:
@@ -143,7 +143,7 @@ workflow theiaprok_illumina_se {
           input:
             assembly = shovill_se.assembly_fasta,
             samplename = samplename,
-            organism = gambit.gambit_predicted_taxon
+            organism = select_first([expected_taxon, gambit.gambit_predicted_taxon])
         }
       }      
       call ts_mlst_task.ts_mlst {
@@ -170,7 +170,7 @@ workflow theiaprok_illumina_se {
           assembly = shovill_se.assembly_fasta,
           samplename = samplename
       }
-      if(defined(qc_check_table)) {
+      if (defined(qc_check_table)) {
         call qc_check.qc_check_phb as qc_check_task {
           input:
             qc_check_table = qc_check_table,
@@ -481,7 +481,6 @@ workflow theiaprok_illumina_se {
             srst2_vibrio_biotype = merlin_magic.srst2_vibrio_biotype,
             qc_check = qc_check_task.qc_check,
             qc_standard = qc_check_task.qc_standard
-
         }
       }
     }

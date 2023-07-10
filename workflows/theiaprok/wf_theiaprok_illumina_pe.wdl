@@ -153,7 +153,7 @@ workflow theiaprok_illumina_pe {
           input:
             assembly = shovill_pe.assembly_fasta,
             samplename = samplename,
-            organism = gambit.gambit_predicted_taxon
+            organism = select_first([expected_taxon, gambit.gambit_predicted_taxon])
         }
       }
       call ts_mlst_task.ts_mlst {
