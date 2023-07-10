@@ -472,6 +472,7 @@ task tbprofiler_output_parsing {
               row["looker_interpretation"] = annotation_to_looker(row["confidence"])  if row["confidence"] != "No WHO annotation" else apply_expert_rules(drugs_to_row[drug]["nucleotide_change"], drugs_to_row[drug]["protein_change"], drugs_to_row[drug]["gene"], drugs_to_row[drug]["type"], "looker")
               row["mdl_interpretation"] = annotation_to_MDL(row["confidence"], drugs_to_row[drug]["gene"]) if row["confidence"] != "No WHO annotation" else apply_expert_rules(drugs_to_row[drug]["nucleotide_change"], drugs_to_row[drug]["protein_change"], drugs_to_row[drug]["gene"], drugs_to_row[drug]["type"], "MDL")
               row["rationale"] = "WHO classification"  if row["confidence"] != "No WHO annotation" else "Expert rule applied"
+              row = remove_no_expert(row)
               row_list.append(row)
 
           # case: annotation field is not present, expert rule is applied directly
@@ -483,6 +484,7 @@ task tbprofiler_output_parsing {
               row["mdl_interpretation"] = apply_expert_rules(dr_variant["nucleotide_change"], dr_variant["protein_change"], dr_variant["gene"], dr_variant["type"], "MDL")
               row["rationale"] = "Expert rule applied"
               row["antimicrobial"] = drug
+              row = remove_no_expert(row)
               row_list.append(row)
       
         # mutations not reported by tb-profiler
@@ -496,6 +498,7 @@ task tbprofiler_output_parsing {
               row["looker_interpretation"] = apply_expert_rules(other_variant["nucleotide_change"], other_variant["protein_change"], other_variant["gene"], other_variant["type"], "looker")
               row["mdl_interpretation"] = apply_expert_rules(other_variant["nucleotide_change"], other_variant["protein_change"], other_variant["gene"], other_variant["type"], "MDL")
               row["rationale"] = "Expert rule applied"
+              row = remove_no_expert(row)
               row_list.append(row)
             # case: drug confers resistance to multiple drugs - if the same drug shows multiple times, save only the most severe annotation
             drugs_to_row = {}
@@ -512,6 +515,7 @@ task tbprofiler_output_parsing {
               row["looker_interpretation"] = annotation_to_looker(row["confidence"])  if row["confidence"] != "No WHO annotation" else apply_expert_rules(drugs_to_row[drug]["nucleotide_change"], drugs_to_row[drug]["protein_change"], drugs_to_row[drug]["gene"], drugs_to_row[drug]["type"], "looker")
               row["mdl_interpretation"] = annotation_to_MDL(row["confidence"], drugs_to_row[drug]["gene"]) if row["confidence"] != "No WHO annotation" else apply_expert_rules(drugs_to_row[drug]["nucleotide_change"],drugs_to_row[drug]["protein_change"], drugs_to_row[drug]["gene"], drugs_to_row[drug]["type"], "MDL")
               row["rationale"] = "WHO classification"  if row["confidence"] != "No WHO annotation" else "Expert rule applied"
+              row = remove_no_expert(row)
               row_list.append(row)
           else:
             for drug in other_variant["gene_associated_drugs"]:
@@ -521,8 +525,9 @@ task tbprofiler_output_parsing {
               row["mdl_interpretation"] = apply_expert_rules(other_variant["nucleotide_change"], other_variant["protein_change"], other_variant["gene"], other_variant["type"], "MDL")
               row["rationale"] = "Expert rule applied"
               row["antimicrobial"] = drug
+              row = remove_no_expert(row)
               row_list.append(row)
-      
+              
       for gene, antimicrobial_drug_names in gene_to_antimicrobial_drug_name.items():
         for drug_name in antimicrobial_drug_names:
           if gene not in genes_reported:
@@ -556,10 +561,6 @@ task tbprofiler_output_parsing {
               row["warning"] = "NA"
               row_list.append(row)
       
-      ## if MDL or Looker interpretation contains "noexpert", replace rationale
-
-
-
       df_laboratorian = df_laboratorian.append(row_list, ignore_index=True)
       df_laboratorian.to_csv("tbprofiler_laboratorian_report.csv", index=False)
     
