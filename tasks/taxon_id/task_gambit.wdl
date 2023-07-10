@@ -114,7 +114,10 @@ task gambit {
         "Vibrio cholerae" : "Vibrio cholerae"
     }
 
-    merlin_tag = predicted['name']
+    try:
+      merlin_tag = predicted['name']
+    except:
+      merlin_tag = "NA"
 
     # see if there is a reduced tag available (use Escherichia for Shigella flexneri)
     reduced_name = [val for key,val in merlin_tag_designations.items() if key in merlin_tag]
@@ -147,7 +150,6 @@ task gambit {
     cpu:   "~{cpu}"
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
-    maxRetries: 3
     preemptible:  0
   }
 }
