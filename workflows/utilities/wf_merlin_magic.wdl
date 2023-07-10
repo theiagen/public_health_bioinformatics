@@ -321,7 +321,7 @@ workflow merlin_magic {
         docker = hicap_docker_image
     }
   }
-  if (merlin_tag == "Vibrio") {
+  if (merlin_tag == "Vibrio" || merlin_tag == "Vibrio cholerae") {
     if (!assembly_only && !ont_data) {
       call srst2_vibrio_task.srst2_vibrio {
         input:
