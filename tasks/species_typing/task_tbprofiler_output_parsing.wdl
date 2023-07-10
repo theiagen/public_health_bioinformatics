@@ -222,7 +222,7 @@ task tbprofiler_output_parsing {
             else:
               return "S"
 
-      elif gene not in gene_list_combined: # NOT EXPERT rule 3.2
+      elif gene not in gene_list_combined: # NOT AN EXPERT RULE: 3.2
         if substitution_type != "synonymous_variant":
           return "Snoexpert" if interpretation_destination == "MDL" else "Unoexpert"
         else:
