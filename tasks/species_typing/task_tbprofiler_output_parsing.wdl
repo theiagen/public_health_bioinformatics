@@ -450,13 +450,13 @@ task tbprofiler_output_parsing {
               row["looker_interpretation"] = apply_expert_rules(dr_variant["nucleotide_change"], dr_variant["protein_change"], dr_variant["gene"], dr_variant["type"], "looker")
               row["mdl_interpretation"] = apply_expert_rules(dr_variant["nucleotide_change"], dr_variant["protein_change"], dr_variant["gene"], dr_variant["type"], "MDL")
               row["rationale"] = "Expert rule applied"
-              #########################################################################################################################################################################
-              ##### there is the "drugs" field which can contain multiple drugs; iterate through them
-              for identified_drug in dr_variant["drugs"]:
-                if identified_drug["drug"] not in drugs_to_row:
-                  drugs_to_row[annotation["drug"]] = {"other_variant": dr_variant, "who_confidence": row["confidence"], "drug": identified_drug["drug"], "nucleotide_change": dr_variant["nucleotide_change"], "protein_change": dr_variant["protein_change"], "gene": dr_variant["gene"], "type": dr_variant["type"]}
-                elif rank_annotation(drugs_to_row[identified_drug["drug"]]["who_confidence"]) > rank_annotation(row["confidence"]): # overwrite entry with the more severe annotation (higher value) if multiple drugs are present
-                  drugs_to_row[annotation["drug"]] = {"other_variant": dr_variant, "who_confidence": row["confidence"], "drug": identified_drug["drug"], "nucleotide_change": dr_variant["nucleotide_change"], "protein_change": dr_variant["protein_change"], "gene": dr_variant["gene"], "type": dr_variant["type"]}
+
+              # iterate through any gene-associated drugs
+              for identified_drug in dr_variant["gene_associated_drugs"]:
+                if identified_drug not in drugs_to_row:
+                  drugs_to_row[identified_drug] = {"other_variant": dr_variant, "who_confidence": row["confidence"], "drug": identified_drug, "nucleotide_change": dr_variant["nucleotide_change"], "protein_change": dr_variant["protein_change"], "gene": dr_variant["gene"], "type": dr_variant["type"]}
+                elif rank_annotation(drugs_to_row[identified_drug]["who_confidence"]) > rank_annotation(row["confidence"]): # overwrite entry with the more severe annotation (higher value) if multiple drugs are present
+                  drugs_to_row[identified_drug] = {"other_variant": dr_variant, "who_confidence": row["confidence"], "drug": identified_drug, "nucleotide_change": dr_variant["nucleotide_change"], "protein_change": dr_variant["protein_change"], "gene": dr_variant["gene"], "type": dr_variant["type"]}
 
             # case: drug confers resistance to multiple drugs - if the same drug shows multiple times in a single mutation, save only the most severe annotation
             for annotation in dr_variant["annotation"]: # iterate thorugh all possible annotations for the variant
