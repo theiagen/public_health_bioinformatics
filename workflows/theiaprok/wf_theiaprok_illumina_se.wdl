@@ -53,10 +53,9 @@ workflow theiaprok_illumina_se {
     Boolean call_ani = false # by default do not call ANI task, but user has ability to enable this task if working with enteric pathogens or supply their own high-quality reference genome
     Boolean call_resfinder = false
     String genome_annotation = "prokka" # options: "prokka" or "bakta"
-    String? amrfinder_organism # allow user to provide organism (e.g. "Clostridioides_difficile") string to amrfinder. Useful when gambit does not predict the correct species
+    String? expected_taxon # allow user to provide organism (e.g. "Clostridioides_difficile") string to amrfinder. Useful when gambit does not predict the correct species
     # qc check parameters
     File? qc_check_table
-    String? expected_taxon
   }
   call versioning.version_capture{
     input:
@@ -137,14 +136,14 @@ workflow theiaprok_illumina_se {
         input:
           assembly = shovill_se.assembly_fasta,
           samplename = samplename,
-          organism = select_first([amrfinder_organism,gambit.gambit_predicted_taxon])
+          organism = select_first([expected_taxon, gambit.gambit_predicted_taxon])
       }
       if (call_resfinder) {
-      call resfinder.resfinder as resfinder_task {
-        input:
-          assembly = shovill_se.assembly_fasta,
-          samplename = samplename,
-          organism = gambit.gambit_predicted_taxon
+        call resfinder.resfinder as resfinder_task {
+          input:
+            assembly = shovill_se.assembly_fasta,
+            samplename = samplename,
+            organism = gambit.gambit_predicted_taxon
         }
       }      
       call ts_mlst_task.ts_mlst {
@@ -197,13 +196,13 @@ workflow theiaprok_illumina_se {
       }
       call merlin_magic_workflow.merlin_magic {
         input:
-          merlin_tag = gambit.merlin_tag,
+          merlin_tag = select_first([expected_taxon, gambit.merlin_tag]),
           assembly = shovill_se.assembly_fasta,
           samplename = samplename,
           read1 = read_QC_trim.read1_clean,
           paired_end = false
       }
-      if(defined(taxon_tables)) {
+      if (defined(taxon_tables)) {
         call terra_tools.export_taxon_tables {
           input:
             terra_project = terra_project,
