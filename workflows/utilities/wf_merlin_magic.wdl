@@ -568,7 +568,7 @@ workflow merlin_magic {
     File? tbprofiler_lims_report_csv = tbprofiler_output_parsing.tbprofiler_lims_report_csv
     File? tbprofiler_laboratorian_report_csv = tbprofiler_output_parsing.tbprofiler_laboratorian_report_csv
     File? tbprofiler_looker_csv = tbprofiler_output_parsing.tbprofiler_looker_csv
-    File? tb_resistance_genes_percent_coverage = tb_gene_coverage.tb_resistance_genes_percent_coverage
+    File? tb_resistance_genes_percent_coverage = tbprofiler_output_parsing.tbprofiler_coverage_report
     # Legionella pneumophila Typing
     File? legsta_results = legsta.legsta_results
     String? legsta_predicted_sbt = legsta.legsta_predicted_sbt
