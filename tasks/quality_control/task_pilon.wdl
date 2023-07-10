@@ -1,0 +1,42 @@
+version 1.0
+
+task pilon {
+  input {
+    File assembly
+    File bam
+    File bai
+    String samplename
+    String docker = "quay.io/biocontainers/pilon:1.24--hdfd78af_0"
+    Int cpu = 4
+    Int memory = 8
+    Int disk_size = 100
+  }
+  command <<<
+    # version capture
+    pilon --version | cut -d' ' -f3 | tee VERSION
+
+    # run pilon
+    pilon \
+    --genome ~{assembly} \
+    --frags ~{bam} \
+    --output ~{samplename} \
+    --outdir pilon \
+    --changes --vcf
+
+  >>>
+  output {
+    File pilon_assembly_fasta = "pilon/~{samplename}.fasta"
+    File pilon_changes = "pilon/~{samplename}.changes"
+    File pilon_vcf = "pilon/~{samplename}.vcf"
+    String version = read_string("VERSION")
+  }
+  runtime {
+    docker: "~{docker}"
+    memory: "~{memory} GB"
+    cpu: cpu
+    disks:  "local-disk " + disk_size + " SSD"
+    disk: disk_size + " GB" # TES
+    preemptible: 0
+    maxRetries: 0
+  }
+}

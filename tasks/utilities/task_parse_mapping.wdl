@@ -8,7 +8,7 @@ task retrieve_aligned_contig_paf {
     File paf
     File assembly
     String samplename
-    String docker = "staphb/seqkit:2.3.1"
+    String docker = "quay.io/biocontainers/seqkit:2.4.0--h9ee0642_0"
     Int disk_size = 100
     Int cpu = 2
     Int mem = 8
@@ -124,6 +124,7 @@ task retrieve_pe_reads_bam {
   input {
     File bam
     String samplename
+    String prefix = ""
     Int sam_flag = "4" # unmapped reads (SAM flag 4)
     String docker = "quay.io/staphb/samtools:1.17"
     Int disk_size = 100
@@ -132,12 +133,12 @@ task retrieve_pe_reads_bam {
   }
   command <<<
     # Convert to fastq.gz, discarding the singleton reads
-    samtools fastq -f "~{sam_flag}" -1 "~{samplename}"_1.fq.gz -2 "~{samplename}"_2.fq.gz \
+    samtools fastq -f "~{sam_flag}" -1 "~{prefix}"_"~{samplename}"_1.fq.gz -2 "~{prefix}"_"~{samplename}"_2.fq.gz \
     -s singleton.fq.gz "~{bam}"
   >>>
   output {
-    File read1 = "~{samplename}_1.fq.gz"
-    File read2 = "~{samplename}_2.fq.gz"
+    File read1 = "~{prefix}_~{samplename}_1.fq.gz"
+    File read2 = "~{prefix}_~{samplename}_2.fq.gz"
   }
   runtime {
     docker: "~{docker}"

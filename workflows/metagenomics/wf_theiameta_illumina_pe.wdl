@@ -2,9 +2,10 @@ version 1.0
 
 import "../utilities/wf_read_QC_trim_pe.wdl" as read_qc_wf
 import "../../tasks/taxon_id/task_kraken2.wdl" as kraken_task
-import "../../tasks/assembly/task_megahit.wdl" as megahit_task
+import "../../tasks/assembly/task_metaspades.wdl" as metaspades_task
 import "../../tasks/alignment/task_minimap2.wdl" as minimap2_task
 import "../../tasks/utilities/task_parse_mapping.wdl" as parse_mapping_task
+import "../../tasks/quality_control/task_pilon.wdl" as pilon_task
 import "../../tasks/quality_control/task_quast.wdl" as quast_task
 import "../../tasks/task_versioning.wdl" as versioning
 
@@ -20,7 +21,7 @@ workflow theiameta_illumina_pe {
     Int trim_minlen = 75
     Int trim_quality_trim_score = 30
     Int trim_window_size = 4
-    String? megahit_opts
+    String? metaspades_opts
     File kraken2_db = "gs://theiagen-public-files-rp/terra/theiaprok-files/k2_standard_8gb_20210517.tar.gz"
   }
   call kraken_task.kraken2_standalone {
@@ -40,26 +41,48 @@ workflow theiameta_illumina_pe {
         trim_quality_trim_score = trim_quality_trim_score,
         trim_window_size = trim_window_size
     }
-    call megahit_task.megahit_pe as megahit {
+    call metaspades_task.metaspades_pe as metaspades {
       input:
         read1_cleaned = read_QC_trim.read1_clean,
         read2_cleaned = read_QC_trim.read2_clean,
         samplename = samplename,
-        megahit_opts = megahit_opts
+        metaspades_opts = metaspades_opts
       }
+
+    call minimap2_task.minimap2 as minimap2_reads_pilon {
+      input:
+        query1 = read_QC_trim.read1_clean,
+        query2 = read_QC_trim.read2_clean, 
+        reference = metaspades.assembly_fasta,
+        samplename = samplename,
+        mode = "sr",
+        output_sam = true
+    }
+    call parse_mapping_task.sam_to_sorted_bam as sam_to_bam_pilon {
+      input:
+        sam = minimap2_reads_pilon.minimap2_out,
+        samplename = samplename
+    }
+    call pilon_task.pilon as pilon {
+      input:
+        assembly = metaspades.assembly_fasta,
+        bam = sam_to_bam_pilon.bam,
+        bai = sam_to_bam_pilon.bai,
+        samplename = samplename
+    }
     # if reference is provided, perform mapping of assembled contigs to 
     # reference with minimap2, and extract those as final assembly
     if (defined(reference)){
       call minimap2_task.minimap2 as minimap2_assembly {
         input:
-          query1 = megahit.assembly_fasta,
+          query1 = pilon.pilon_assembly_fasta,
           reference = select_first([reference]),
           samplename = samplename
       }
       call parse_mapping_task.retrieve_aligned_contig_paf {
         input:
           paf = minimap2_assembly.minimap2_out,
-          assembly = megahit.assembly_fasta,
+          assembly = pilon.pilon_assembly_fasta,
           samplename = samplename
       }
       call parse_mapping_task.calculate_coverage_paf {
@@ -69,7 +92,7 @@ workflow theiameta_illumina_pe {
     }
     call quast_task.quast {
       input:
-        assembly = select_first([retrieve_aligned_contig_paf.final_assembly, megahit.assembly_fasta]),
+        assembly = select_first([retrieve_aligned_contig_paf.final_assembly, pilon.pilon_assembly_fasta]),
         samplename = samplename,
         min_contig_len = 1
       }
@@ -77,7 +100,7 @@ workflow theiameta_illumina_pe {
       input:
         query1 = read_QC_trim.read1_clean,
         query2 = read_QC_trim.read2_clean, 
-        reference = select_first([retrieve_aligned_contig_paf.final_assembly, megahit.assembly_fasta]),
+        reference = select_first([retrieve_aligned_contig_paf.final_assembly, pilon.pilon_assembly_fasta]),
         samplename = samplename,
         mode = "sr",
         output_sam = true
@@ -95,13 +118,15 @@ workflow theiameta_illumina_pe {
     call parse_mapping_task.retrieve_pe_reads_bam as retrieve_unaligned_pe_reads_sam {
       input:
         bam = sam_to_sorted_bam.bam,
-        samplename = samplename
+        samplename = samplename,
+        prefix = "unassembled"
     }
     call parse_mapping_task.retrieve_pe_reads_bam as retrieve_aligned_pe_reads_sam {
       input:
         bam = sam_to_sorted_bam.bam,
         samplename = samplename,
-        sam_flag = 2
+        sam_flag = 2,
+        prefix = "assembled"
     }
     call versioning.version_capture{
     input:
@@ -133,8 +158,8 @@ workflow theiameta_illumina_pe {
     # Read QC - Read stats
     Float? average_read_length = read_QC_trim.average_read_length
     # Assembly - megahit outputs 
-    File? assembly_fasta = select_first([retrieve_aligned_contig_paf.final_assembly, megahit.assembly_fasta])
-    String? megahit_pe_version = megahit.megahit_version
+    File? assembly_fasta = select_first([retrieve_aligned_contig_paf.final_assembly, pilon.pilon_assembly_fasta])
+    String? megahit_pe_version = metaspades.version
     # Assembly QC
     Int? assembly_length = quast.genome_length
     Int? contig_number = quast.number_contigs
