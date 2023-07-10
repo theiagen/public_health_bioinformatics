@@ -24,7 +24,7 @@ task tbprofiler_output_parsing {
     gene_coverage_dict = pd.read_csv("~{gene_coverage}", delimiter="\t", skip_blank_lines=True).to_dict()
     gene_coverage_dict = gene_coverage_dict["#NOTE: THE VALUES BELOW ASSUME TBPROFILER (H37Rv) REFERENCE GENOME"] # skip first line
 
-    # lookup dictionary - antimicrobial code to name
+    # lookup dictionary - antimicrobial code to drug name
     antimicrobial_code_to_drug_name = {"M_DST_B01_INH": "isoniazid", "M_DST_C01_ETO": "ethionamide",
                           "M_DST_D01_RIF": "rifampicin", "M_DST_E01_PZA": "pyrazinamide",
                           "M_DST_F01_EMB": "ethambutol","M_DST_H01_AMK": "amikacin", 
@@ -34,7 +34,7 @@ task tbprofiler_output_parsing {
                           "M_DST_o01_LZD": "linezolid" 
                          }
     
-    # Lookup list - antimicrobials
+    # Lookup list - antimicrobial drug names
     antimicrobial_drug_name_list = ["isoniazid", "ethionamide", "rifampicin", "pyrazinamide", "ethambutol",
                           "streptomycin", "amikacin", "kanamycin", "capreomycin", "moxifloxacin",
                           "levofloxacin", "bedaquiline", "clofazimine", "linezolid"
@@ -61,7 +61,7 @@ task tbprofiler_output_parsing {
                  "M_DST_o01_LZD": {"rrl": "M_DST_o02_rrl", "rplC": "M_DST_o03_rplC"}
                 }
 
-    # lookup dictionary - gene to resistance (https://github.com/jodyphelan/tbdb/blob/master/tbdb.csv)
+    # lookup dictionary - gene to antimicrobial drug name (https://github.com/jodyphelan/tbdb/blob/master/tbdb.csv)
     gene_to_antimicrobial_drug_name = {"ahpC":["isoniazid"], "ald":["cycloserine"], "alr": ["cycloserine"],
                           "ddn": ["delamanid"], "eis": ["amikacin", "kanamycin"], "embA": ["ethambutol"],
                           "embB": ["ethambutol"], "embC": ["ethambutol"], "embR": ["ethambutol"],
@@ -130,7 +130,7 @@ task tbprofiler_output_parsing {
     def annotation_to_looker(annotation):
       """
       1.1: This function takes the WHO-annotation of resistance by TBProfiler and 
-      returns simple R (resistant), U (uncertain) and S (susceptible) notations
+      returns simple R (resistant), U (uncertain) and S (susceptible) notations for Looker
       """
       if annotation == "Assoc w R":
         return "R"
@@ -148,7 +148,7 @@ task tbprofiler_output_parsing {
     def annotation_to_MDL(annotation, gene = ""):
       """
       This function takes the annotation of resistance by TBProfiler and 
-      returns simple R (resistant), U (uncertain) and S (susceptible) notations
+      returns simple R (resistant), U (uncertain) and S (susceptible) notations for MDL
       """
       if annotation == "Assoc w R":
         return "R"
@@ -171,7 +171,7 @@ task tbprofiler_output_parsing {
 
     def apply_expert_rules(nucleotide_change, protein_change, gene, substitution_type, interpretation_destination):
       """
-      Apply rules 1-3
+      Apply rules 1-3ê
       """
 
       position_nt = get_position(nucleotide_change)
@@ -222,19 +222,32 @@ task tbprofiler_output_parsing {
             else:
               return "S"
 
-      elif gene not in gene_list_combined: # expert rules 3.2 --- this is not an expert rule -----------------------------------------------------------------------------------
+      elif gene not in gene_list_combined: # NOT EXPERT rule 3.2
         if substitution_type != "synonymous_variant":
-          return "Snoexpert" if interpretation_destination == "MDL" else "U"
+          return "Snoexpert" if interpretation_destination == "MDL" else "Unoexpert"
         else:
-          return "S"
+          return "Snoexpert"
 
       return ""
 
+    def remove_no_expert(row):
+      if "noexpert" in row["looker_interpretation"]:
+        interpretation = row["looker_interpretation"]
+        row["looker_interpretation"] = interpretation.replace("noexpert", "")
+        row["rationale"] = "No WHO annotation or expert rule"
+      
+      if "noexpert" in row["mdl_interpretation"]:
+        interpretation = row["mdl_interpretation"]
+        row["mdl_interpretation"] = interpretation.replace("noexpert", "")
+        row["rationale"] = "No WHO annotation or expert rule"
+      
+      return row
 
     # there is no "strain" field in the results.json
 
     def get_lineage_LIMS(json_file):
       """
+      This function returns the lineage in English for the LIMS report
       """
       with open(json_file) as js_fh:
         results_json = json.load(js_fh)
@@ -247,8 +260,9 @@ task tbprofiler_output_parsing {
         else:
           return "DNA of M. tuberculosis complex detected (not M. bovis and not M. tb)"
     
-    def get_lineage_and_ID(json_file):
+    def get_lineage_and_ID_Looker(json_file):
       """
+      This function returns the Lineage and ID for Looker
       """
       with open(json_file) as js_fh:
         results_json = json.load(js_fh)
@@ -273,7 +287,7 @@ task tbprofiler_output_parsing {
     def parse_json_mutations_for_LIMS(json_file):
       """
       Function to parse the TBProfiler json file and store the found
-      mutations into a dictionary - LIMS Report
+      mutations into a dictionary for the LIMS Report
       """
       mutations_dict = {}
 
@@ -328,7 +342,8 @@ task tbprofiler_output_parsing {
     def parse_json_resistance(json_file):
       """
       This function parses the tbprofiler json report and returns a resistance dictionary
-      containing the WHO resistance annotation for each antimicrobial drug for LIMS and Looker. The annotation corresponds to the highest ranked one regarding severity (R > I > S)
+      containing the WHO resistance annotation for each antimicrobial drug for LIMS and Looker. 
+      The annotation corresponds to the highest ranked one regarding severity (R > I > S)
       """
       resistance_dict = {}
 
@@ -541,6 +556,10 @@ task tbprofiler_output_parsing {
               row["warning"] = "NA"
               row_list.append(row)
       
+      ## if MDL or Looker interpretation contains "noexpert", replace rationale
+
+
+
       df_laboratorian = df_laboratorian.append(row_list, ignore_index=True)
       df_laboratorian.to_csv("tbprofiler_laboratorian_report.csv", index=False)
     
@@ -607,7 +626,7 @@ task tbprofiler_output_parsing {
         - for each antimicrobial, indication if its resistant (R) or susceptible (S)
       """
 
-      lineage, ID = get_lineage_and_ID("~{json}")
+      lineage, ID = get_lineage_and_ID_Looker("~{json}")
       resistance_annotation = parse_json_resistance("~{json}")
       df_looker = pd.DataFrame({"sample_id":"~{samplename}", "output_seq_method_type": "~{output_seq_method_type}"}, index=[0])
 
