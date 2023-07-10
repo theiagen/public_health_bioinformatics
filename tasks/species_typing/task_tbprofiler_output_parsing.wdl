@@ -171,7 +171,7 @@ task tbprofiler_output_parsing {
 
     def apply_expert_rules(nucleotide_change, protein_change, gene, substitution_type, interpretation_destination):
       """
-      Apply rules 1-3ê
+      Apply rules 1-3
       """
 
       position_nt = get_position(nucleotide_change)
