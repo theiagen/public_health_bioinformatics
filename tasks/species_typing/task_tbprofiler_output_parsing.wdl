@@ -233,7 +233,7 @@ task tbprofiler_output_parsing {
 
     # there is no "strain" field in the results.json
 
-     def get_lineage_LIMS(json_file):
+    def get_lineage_LIMS(json_file):
       """
       """
       with open(json_file) as js_fh:
@@ -253,28 +253,22 @@ task tbprofiler_output_parsing {
       with open(json_file) as js_fh:
         results_json = json.load(js_fh)
 
+        sublineage = results_json["sublin"]
         lineage = "NA"
-        ID = "NA"
 
-        if "lineage" in results_json["sublin"]:
-          lineage = results_json["sublin"]
-          ID = lineage
-        elif results_json["sublin"] == "":
+        if "lineage" in sublineage:
+          lineage = sublineage
+          ID = "MTBC, not M. bovis"
+        elif "BCG" in sublineage:
+          ID = "M. bovis BCG"
+        elif "bovis" in sublineage and "BCG" not in sublineage:
+          ID = "M. bovis, not BCG"  
+        elif sublineage == "":
           ID = "NA"
+        else:
+          ID = sublineage
 
-        if lineage != "NA":
-          if "lineage" in lineage:
-            ID = "MTBC, not M. bovis"
-          elif "BCG" in lineage:
-            ID = "M. bovis BCG"
-          elif "bovis" in lineage and "BCG" not in lineage:
-            ID = "M. bovis, not BCG"  
       return lineage, ID
-    
-    def get_id_from_lineage(lineage):
-      """
-      """
-
 
     def parse_json_mutations_for_LIMS(json_file):
       """
