@@ -90,6 +90,7 @@ workflow merlin_magic {
     }
   }
   if (merlin_tag == "Escherichia" || merlin_tag == "Shigella sonnei" ) {
+  if (merlin_tag == "Escherichia" || merlin_tag == "Shigella sonnei" ) {
     # tools specific to all Escherichia and Shigella species
     call serotypefinder_task.serotypefinder {
       input:

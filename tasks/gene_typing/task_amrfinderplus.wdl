@@ -7,13 +7,14 @@ task amrfinderplus_nuc {
     # Parameters 
     # --indent_min Minimum DNA %identity [0-1]; default is 0.9 (90%) or curated threshold if it exists
     # --mincov Minimum DNA %coverage [0-1]; default is 0.5 (50%)
-    String? organism # make optional?
+    String? organism 
     Float? minid
     Float? mincov
     Boolean detailed_drug_class = false
     Int cpu = 4
     String docker = "quay.io/staphb/ncbi-amrfinderplus:3.11.11-2023-04-17.1"
     Int disk_size = 100
+    Int memory = 16
     Boolean hide_point_mutations = false
   }
   command <<<
@@ -148,7 +149,7 @@ task amrfinderplus_nuc {
     String amrfinderplus_db_version = read_string("AMRFINDER_DB_VERSION")
   }
   runtime {
-    memory: "8 GB"
+    memory: "~{memory} GB"
     cpu: cpu
     docker: docker
     disks:  "local-disk " + disk_size + " SSD"
