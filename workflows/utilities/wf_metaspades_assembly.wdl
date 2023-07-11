@@ -13,12 +13,16 @@ workflow metaspades_assembly_pe {
     String samplename
     File read1
     File read2
+    String? kmers
+    String? metaspades_opts
   }
   call metaspades_task.metaspades_pe as metaspades {
     input:
       read1_cleaned = read1,
       read2_cleaned = read2,
-      samplename = samplename
+      samplename = samplename,
+      kmers = kmers,
+      metaspades_opts = metaspades_opts
   }
 
   call minimap2_task.minimap2 {
