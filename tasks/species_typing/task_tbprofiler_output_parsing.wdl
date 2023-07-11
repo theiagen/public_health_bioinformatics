@@ -243,8 +243,6 @@ task tbprofiler_output_parsing {
       
       return row
 
-    # there is no "strain" field in the results.json
-
     def get_lineage_LIMS(json_file):
       """
       This function returns the lineage in English for the LIMS report
@@ -262,7 +260,7 @@ task tbprofiler_output_parsing {
     
     def get_lineage_and_ID_Looker(json_file):
       """
-      This function returns the Lineage and ID for Looker
+      This function returns the Lineage and ID for Looker from the sublineage field
       """
       with open(json_file) as js_fh:
         results_json = json.load(js_fh)
