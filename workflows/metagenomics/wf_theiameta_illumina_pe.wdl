@@ -21,7 +21,6 @@ workflow theiameta_illumina_pe {
     Int trim_minlen = 75
     Int trim_quality_trim_score = 30
     Int trim_window_size = 4
-    String? metaspades_opts
     File kraken2_db = "gs://theiagen-public-files-rp/terra/theiaprok-files/k2_standard_8gb_20210517.tar.gz"
   }
   call kraken_task.kraken2_standalone {
@@ -45,8 +44,7 @@ workflow theiameta_illumina_pe {
       input:
         read1_cleaned = read_QC_trim.read1_clean,
         read2_cleaned = read_QC_trim.read2_clean,
-        samplename = samplename,
-        metaspades_opts = metaspades_opts
+        samplename = samplename
       }
 
     call minimap2_task.minimap2 as minimap2_reads_pilon {
