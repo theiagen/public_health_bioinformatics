@@ -685,6 +685,8 @@ task tbprofiler_output_parsing {
         for mutation_type_nucleotide in df_lab_report["tbprofiler_variant_substitution_nt"][df_lab_report["tbprofiler_gene_name"] == gene]:
           if "del" in mutation_type_nucleotide:
             warning = "Deletion identified"
+            if float(percent_coverage) == 100:
+              warning = "Deletion identified (upstream)"
         df_coverage = df_coverage.append({"Gene": gene, "Percent_Coverage": percent_coverage, "Warning": warning}, ignore_index=True)
       
       df_coverage.to_csv("tbprofiler_coverage_report.csv", index=False)
