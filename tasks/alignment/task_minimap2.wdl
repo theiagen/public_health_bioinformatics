@@ -39,6 +39,7 @@ task minimap2 {
   output {
     File minimap2_out = "~{samplename}_minimap2.out"
     String minimap2_version = read_string("VERSION")
+    String minimap2_docker = "~{docker}"
   }
   runtime {
     docker: "~{docker}"

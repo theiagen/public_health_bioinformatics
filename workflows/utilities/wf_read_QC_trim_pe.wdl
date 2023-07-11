@@ -120,6 +120,7 @@ workflow read_QC_trim_pe {
     File? read2_dehosted = ncbi_scrub_pe.read2_dehosted
     Int? read1_human_spots_removed = ncbi_scrub_pe.read1_human_spots_removed
     Int? read2_human_spots_removed = ncbi_scrub_pe.read2_human_spots_removed
+    String? ncbi_scrub_docker = ncbi_scrub_pe.ncbi_scrub_docker
 
     # bbduk
     File read1_clean = bbduk.read1_clean
@@ -134,6 +135,7 @@ workflow read_QC_trim_pe {
     Int fastq_scan_clean2 = fastq_scan_clean.read2_seq
     String fastq_scan_clean_pairs = fastq_scan_clean.read_pairs
     String fastq_scan_version = fastq_scan_raw.version
+    String fastq_scan_docker = fastq_scan_raw.fastq_scan_docker
     
     # kraken2
     String? kraken_version = kraken2_theiacov_raw.version
@@ -149,6 +151,7 @@ workflow read_QC_trim_pe {
     
     # trimming versioning
     String? trimmomatic_version = trimmomatic_pe.version
+    String? trimmomatic_docker = trimmomatic_pe.trimmomatic_docker
     String? fastp_version = fastp.version
 
     # midas

@@ -51,6 +51,7 @@ task ncbi_scrub_pe {
     Int read1_human_spots_removed = read_int("FWD_SPOTS_REMOVED")
     Int read2_human_spots_removed = read_int("REV_SPOTS_REMOVED")
     String ncbi_scrub_docker = docker
+
   }
   runtime {
       docker: "~{docker}"

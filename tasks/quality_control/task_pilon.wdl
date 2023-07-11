@@ -25,10 +25,11 @@ task pilon {
 
   >>>
   output {
-    File pilon_assembly_fasta = "pilon/~{samplename}.fasta"
-    File pilon_changes = "pilon/~{samplename}.changes"
-    File pilon_vcf = "pilon/~{samplename}.vcf"
-    String version = read_string("VERSION")
+    File assembly_fasta = "pilon/~{samplename}.fasta"
+    File changes = "pilon/~{samplename}.changes"
+    File vcf = "pilon/~{samplename}.vcf"
+    String pilon_version = read_string("VERSION")
+    String pilon_docker = "~{docker}"
   }
   runtime {
     docker: "~{docker}"

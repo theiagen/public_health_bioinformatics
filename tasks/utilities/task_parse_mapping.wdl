@@ -95,6 +95,9 @@ task sam_to_sorted_bam {
     Int mem = 8
   }
   command <<<
+    # Samtools verion capture
+    samtools --version | head -n1 | cut -d' ' -f2 | tee VERSION
+
     # Convert SAM to BAM, and sort it based on read name
     samtools view -Sb ~{sam} > "~{samplename}".bam
     samtools sort "~{samplename}".bam -o "~{samplename}".sorted.bam
@@ -105,6 +108,8 @@ task sam_to_sorted_bam {
   output {
     File bam = "~{samplename}.sorted.bam"
     File bai = "~{samplename}.sorted.bam.bai"
+    String samtools_version = read_string("VERSION")
+    String samtools_docker = "~{docker}"
   }
   runtime {
     docker: "~{docker}"
@@ -164,6 +169,8 @@ task calculate_coverage {
     Int mem = 8
   }
   command <<<
+    # get version
+    bedtools --version | cut -d' ' -f2 | tee VERSION
 
     bedtools genomecov -d -ibam ~{bam} > coverage_stats.txt
 
@@ -182,6 +189,8 @@ task calculate_coverage {
     String ref_len = read_string("REFERENCE_LENGTH")
     String sum_coverage = read_string("SUM_COVERAGE")
     String mean_depth_coverage = read_string("AVG_DEPTH_COVERAGE")
+    String bedtools_version = read_string("VERSION")
+    String bedtools_docker = docker
   }
   runtime {
     docker: "~{docker}"

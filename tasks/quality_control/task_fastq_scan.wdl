@@ -7,6 +7,7 @@ task fastq_scan_pe {
     String read1_name = basename(basename(basename(read1, ".gz"), ".fastq"), ".fq")
     String read2_name = basename(basename(basename(read2, ".gz"), ".fastq"), ".fq")
     Int disk_size = 100
+    String docker = "quay.io/biocontainers/fastq-scan:0.4.4--h7d875b9_1"
   }
   command <<<
     # capture date and version
@@ -43,9 +44,10 @@ task fastq_scan_pe {
     String read_pairs = read_string("READ_PAIRS")
     String version = read_string("VERSION")
     String pipeline_date = read_string("DATE")
+    String fastq_scan_docker = docker
   }
   runtime {
-    docker: "quay.io/biocontainers/fastq-scan:0.4.4--h7d875b9_1"
+    docker: "~{docker}"
     memory: "2 GB"
     cpu: 2
     disks:  "local-disk " + disk_size + " SSD"
@@ -60,6 +62,7 @@ task fastq_scan_se {
     File read1
     String read1_name = basename(basename(basename(read1, ".gz"), ".fastq"), ".fq")
     Int disk_size = 100
+    String docker = "quay.io/biocontainers/fastq-scan:0.4.4--h7d875b9_1"
   }
   command <<<
     # capture date and version
@@ -81,9 +84,10 @@ task fastq_scan_se {
     Int read1_seq = read_string("READ1_SEQS")
     String version = read_string("VERSION")
     String pipeline_date = read_string("DATE")
+    String fastq_scan_docker = docker
   }
   runtime {
-    docker: "quay.io/biocontainers/fastq-scan:0.4.4--h7d875b9_1"
+    docker: "~{docker}"
     memory: "2 GB"
     cpu: 2
     disks:  "local-disk " + disk_size + " SSD"

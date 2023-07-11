@@ -28,7 +28,8 @@ task metaspades_pe {
   >>>
   output {
     File assembly_fasta = "~{samplename}_contigs.fasta"
-    String version = read_string("VERSION")
+    String metaspades_version = read_string("VERSION")
+    String metaspades_docker = '~{docker}'
   }
   runtime {
     docker: "~{docker}"

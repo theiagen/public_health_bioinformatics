@@ -55,7 +55,8 @@ task quast {
     Int n50_value = read_int("N50_VALUE")
     Float gc_percent = read_float("GC_PERCENT")
     Int largest_contig = read_int("LARGEST_CONTIG")
-    Float uncalled_bases = read_float("UNCALLED_BASES")    
+    Float uncalled_bases = read_float("UNCALLED_BASES")
+    String quast_docker = docker    
   }
   runtime {
     docker:  "~{docker}"
