@@ -17,9 +17,6 @@ workflow theiameta_illumina_pe {
     File read2
     String samplename
     File? reference
-    Int trim_minlen = 75
-    Int trim_quality_trim_score = 30
-    Int trim_window_size = 4
     File kraken2_db = "gs://theiagen-public-files-rp/terra/theiaprok-files/k2_standard_8gb_20210517.tar.gz"
   }
   call kraken_task.kraken2_standalone as kraken2 {
