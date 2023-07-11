@@ -26,7 +26,7 @@
     - path: miniwdl_run/call-amrfinderplus_task/stderr.txt
     - path: miniwdl_run/call-amrfinderplus_task/stderr.txt.offset
     - path: miniwdl_run/call-amrfinderplus_task/stdout.txt
-      contains: ["amrfinder_organsim", "AMRFinder"]
+      contains: ["amrfinder_organism", "AMRFinder"]
     - path: miniwdl_run/call-amrfinderplus_task/task.log
       contains: ["wdl", "theiaprok_illumina_se", "amrfinderplus", "done"]
     - path: miniwdl_run/call-amrfinderplus_task/work/AMRFINDER_DB_VERSION
