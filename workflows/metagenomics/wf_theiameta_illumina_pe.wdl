@@ -31,10 +31,7 @@ workflow theiameta_illumina_pe {
         samplename = samplename,
         read1_raw = read1,
         read2_raw = read2,
-        workflow_series = "theiameta",
-        trim_minlen = trim_minlen,
-        trim_quality_trim_score = trim_quality_trim_score,
-        trim_window_size = trim_window_size
+        workflow_series = "theiameta"
     }
     call metaspades_assembly_wf.metaspades_assembly_pe as metaspades {
       input:
