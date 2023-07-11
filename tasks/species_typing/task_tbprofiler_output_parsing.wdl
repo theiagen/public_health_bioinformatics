@@ -79,6 +79,23 @@ task tbprofiler_output_parsing {
                           "tlyA": ["capreomycin"]
                          }
     
+    # lookup dictionary - antimicrobial drug name to gene name  (https://github.com/jodyphelan/tbdb/blob/master/tbdb.csv)
+    antimicrobial_drug_name_to_gene = { "isoniazid": ["ahpC", "fabG1", "inhA", "kasA", "katG"], 
+                                        "ethionamide": ["ethA", "ethR", "fabG1", "inhA"], 
+                                        "rifampicin": ["rpoB", "rpoC"], 
+                                        "pyrazinamide": ["panD", "pncA", "rpsA"], 
+                                        "ethambutol": ["embA", "embB", "embC", "embR"], 
+                                        "streptomycin": ["gid", "rpsL", "rrs"], 
+                                        "amikacin": ["eis", "rrs"], 
+                                        "kanamycin": ["eis", "rrs"], 
+                                        "capreomycin": ["rrs", "tlyA"], 
+                                        "moxifloxacin": ["gyrA", "gyrB"],
+                                        "levofloxacin": ["gyrA", "gyrB"], 
+                                        "bedaquiline": ["Rv0678"], 
+                                        "clofazimine": ["Rv0678"], 
+                                        "linezolid": ["rplC", "rrl"]
+                                      }
+    
     # lookup dictionary - gene to tier
     gene_to_tier = {"ahpC": "Tier 1", "inhA": "Tier 1", "katG": "Tier 1", "rpoB": "Tier 1", "embA": "Tier 1", 
                     "embB": "Tier 1", "embC": "Tier 1", "pncA": "Tier 1", "clpC1": "Tier 1", "panD": "Tier 1", 
@@ -110,7 +127,7 @@ task tbprofiler_output_parsing {
     gene_list_option_1 = ["Rv0678", "atpE", "pepQ", "mmpL5", "mmpS5", "rrl", "rplC"] # Rv0678 is mmpR
     gene_list_option_2 = ["katG", "pncA", "ethA", "gid", "rpoB"]
     gene_list_combined = ["Rv0678", "atpE", "pepQ", "mmpL5", "mmpS5", "rrl", "rplC", "katG", "pncA", "ethA", "gid", "rpoB"]
-    
+    low_depth_of_coverage_list = []
     ## Auxiliary Functions ##
 
     def get_position(protein_mut):
@@ -393,9 +410,13 @@ task tbprofiler_output_parsing {
       row["depth"] = int(variant["depth"] or 0)
       row["frequency"] = variant["freq"]
       row["read_support"] = row["depth"]*row["frequency"]
-      row["warning"] = "Low depth coverage" if row["depth"] < int('~{min_depth}') else ""
-      if "del" in variant["nucleotide_change"]:
-        row["warning"] = "Low depth coverage (deletion identified)"
+      row["warning"] = ""
+      if row["depth"] < int('~{min_depth}') or float(gene_coverage_dict[variant["gene"]]) < ~{coverage_threshold}:
+        row["warning"] = "Insufficient coverage in locus"
+        if "del" in variant["nucleotide_change"]:
+          row["warning"] = "Insufficient coverage in locus (deletion identified)"
+        else:
+          low_depth_of_coverage_list.append(variant["gene"])
 
       return row
 
@@ -629,12 +650,15 @@ task tbprofiler_output_parsing {
       resistance_annotation = parse_json_resistance("~{json}")
       df_looker = pd.DataFrame({"sample_id":"~{samplename}", "output_seq_method_type": "~{output_seq_method_type}"}, index=[0])
 
-      # indicate warning if any genes failed to achieve 100% coverage_threshold and/or minimum depth  (10x) 
-
       for antimicrobial_drug in antimicrobial_drug_name_list:
         if antimicrobial_drug in resistance_annotation.keys():
           who_annotation = resistance_annotation[antimicrobial_drug]
           df_looker[antimicrobial_drug] = annotation_to_looker(who_annotation)
+          for gene in antimicrobial_drug_name_to_gene[antimicrobial_drug]:
+            # indicate warning if any genes failed to achieve 100% coverage_threshold and/or minimum depth  (10x) 
+            if annotation_to_looker(who_annotation) != "R" and gene in low_depth_of_coverage_list:
+              df_looker[antimicrobial_drug] = "Insufficient coverage for the locus"
+          
         else: # the antimicrobial drug was not present in the results
           df_looker[antimicrobial_drug] = "S"
       
