@@ -630,9 +630,9 @@ task tbprofiler_output_parsing {
               if "del" in mutations[gene_name]:
                 df_lims[gene_column_code] = "Insufficient Coverage (deletion identified)"
             except:
-              df_lims[antimicrobial_code] = "Pending Retest"
+              df_lims[antimicrobial_code] = "Insufficient Coverage" # What should we write here? 
             if drug_name in resistance_annotation.keys() and int(rank_annotation(resistance_annotation[drug_name])) < 4: # in addition, if the indicated annotation for the drug is not resistant (less than 4)
-              df_lims[antimicrobial_code] = "Pending Retest"
+              df_lims[antimicrobial_code] = "Pending retest"
           else: # the gene is not in the mutations list but has decent coverage
             df_lims[gene_column_code] = "No mutations detected"
 
