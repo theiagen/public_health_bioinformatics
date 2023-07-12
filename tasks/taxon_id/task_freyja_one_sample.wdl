@@ -29,6 +29,12 @@ task freyja_one_sample {
         >&2 echo "Killed"
         exit 1
       fi
+      if grep "error" freyja_update.log
+      then
+        grep "error" freyja_update.log | tail -1
+        >&2 echo "Killed"
+        exit 1
+      fi
 
       # can't update barcodes in freyja 1.3.2; will update known issue is closed (https://github.com/andersen-lab/Freyja/issues/33)
       freyja_usher_barcode_version="freyja update: $(date +"%Y-%m-%d")"
