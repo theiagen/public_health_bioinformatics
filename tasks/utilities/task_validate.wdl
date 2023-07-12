@@ -67,7 +67,7 @@ task compare_two_tsvs {
     pip install pretty_html_table
 
     # check if a validation criteria table was provided
-    if [[ ! -f ~{validation_criteria_tsv} ]]; then
+    if [[ ! -f "~{validation_criteria_tsv}" ]]; then
       export SKIP_VALIDATION="true"
     else
       export SKIP_VALIDATION="false"
@@ -85,11 +85,14 @@ task compare_two_tsvs {
   from pretty_html_table import build_table
 
   def read_tsv(tsv_file):
+    # the default NaN values, excluded "NA"
+    na_values =  ['-1.#IND', '1.#QNAN', '1.#IND', '-1.#QNAN', '#N/A N/A', '#N/A', 'N/A', 'n/a', '', '#NA', 'NULL', 'null', 'NaN', '-NaN', 'nan', '-nan', 'None']
+
     # Read TSV and change first column to 'samples'
-    df = pd.read_csv(tsv_file, sep='\t')
+    df = pd.read_csv(tsv_file, sep='\t', keep_default_na = False, na_values = na_values)
     df.columns.values[0] = "samples"
 
-    # replace blank cells with NaNs 
+    # replace "None" string cells with NaNs 
     df = df.replace("None", np.nan)
     return df
 
@@ -147,7 +150,7 @@ task compare_two_tsvs {
 
   # count the number of differences using exact match
   # temporarily make NaNs Null since NaN != NaN for the pd.DataFrame.eq() function
-  number_of_differences = pd.DataFrame((~df1.fillna("NULL").eq(df2.fillna("NULL"))).sum(), columns = ['Number of differences (exact match)'])
+  number_of_differences = pd.DataFrame((~df1.fillna("NULL").astype(str).eq(df2.fillna("NULL").astype(str))).sum(), columns = ['Number of differences (exact match)'])
   # remove the sample name row 
   number_of_differences.drop("samples", axis=0, inplace=True)
   

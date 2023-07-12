@@ -75,10 +75,6 @@ wf_theiacov_ont:
   - tasks/gene_typing/task_sc2_gene_coverage.wdl
   - tasks/task_versioning.wdl
 
-wf_theiacov_validate:
-  - tasks/utilities/task_validate.wdl
-  - tasks/task_versioning.wdl
-
 wf_theiaprok_illumina_pe:
   - workflows/theiaprok/wf_theiaprok_illumina_pe.wdl
   - tasks/assembly/task_shovill.wdl
