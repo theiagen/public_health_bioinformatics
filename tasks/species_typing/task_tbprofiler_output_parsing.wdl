@@ -624,9 +624,6 @@ task tbprofiler_output_parsing {
               df_lims[gene_column_code] = "" # do not report mutations for rrl
             if df_lims[antimicrobial_code][0] == "No genetic determinants associated with resistance to {} detected".format(drug_name): # if the mutations detected were only "S", 
               df_lims[gene_column_code] = "No high confidence mutations detected"
-          print(gene_name)
-          print(gene_coverage_dict[gene_name])
-          print(float(gene_coverage_dict[gene_name]) < ~{coverage_threshold})
           if float(gene_coverage_dict[gene_name]) < ~{coverage_threshold}: # HOWEVER, if the coverage is less than the indicated threshold
             df_lims[gene_column_code] = "Insufficient Coverage"
             try: # catch for when there's no mutation on gene name but coverage is below threshold
