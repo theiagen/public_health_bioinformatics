@@ -396,6 +396,7 @@ task tbprofiler_output_parsing {
       This function recieved a variants dictionary and returns a row dictionary containing the
       basic information for it to be filled in the laboratorian report
       """
+      print(variant)
       row = {}
       row["sample_id"] = "~{samplename}"
       row["tbprofiler_gene_name"] = variant["gene"]
@@ -411,6 +412,7 @@ task tbprofiler_output_parsing {
       row["frequency"] = variant["freq"]
       row["read_support"] = row["depth"]*row["frequency"]
       row["warning"] = ""
+      print(gene_coverage_dict[variant["gene"]])
       if row["depth"] < int('~{min_depth}') or float(gene_coverage_dict[variant["gene"]]) < ~{coverage_threshold}:
         row["warning"] = "Insufficient coverage in locus"
         if "del" in variant["nucleotide_change"]:
@@ -485,7 +487,9 @@ task tbprofiler_output_parsing {
                 drugs_to_row[annotation["drug"]] = {"other_variant": dr_variant, "who_confidence": annotation["who_confidence"], "drug": annotation["drug"], "nucleotide_change": dr_variant["nucleotide_change"], "protein_change": dr_variant["protein_change"], "gene": dr_variant["gene"], "type": dr_variant["type"]}
             
             for drug in drugs_to_row:
+              print(drug)
               row = variant_to_row(drugs_to_row[drug]["other_variant"])
+              print("HERE")
               row["confidence"] = "No WHO annotation" if drugs_to_row[drug]["who_confidence"] == "" else drugs_to_row[drug]["who_confidence"]
               row["antimicrobial"] = drugs_to_row[drug]["drug"]
               row["looker_interpretation"] = annotation_to_looker(row["confidence"])  if row["confidence"] != "No WHO annotation" else apply_expert_rules(drugs_to_row[drug]["nucleotide_change"], drugs_to_row[drug]["protein_change"], drugs_to_row[drug]["gene"], drugs_to_row[drug]["type"], "looker")
