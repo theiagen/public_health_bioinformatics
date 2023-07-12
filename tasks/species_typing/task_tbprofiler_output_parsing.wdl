@@ -606,7 +606,7 @@ task tbprofiler_output_parsing {
           df_lims[antimicrobial_code] = annotation_to_LIMS(resistance_annotation[drug_name], drug_name)
         else: # the drug is not in the results file
           df_lims[antimicrobial_code] = "No genetic determinants associated with resistance to {} detected".format(drug_name)
-        
+
         for gene_name, gene_column_code in genes.items(): # iterate through the genes that are associated with resistance to each drug
           if gene_name in mutations.keys(): # if the gene is mentioned in the mutations
             df_lims[gene_column_code] = mutations[gene_name] # put the formatted mutation as the content for the column
@@ -624,11 +624,17 @@ task tbprofiler_output_parsing {
               df_lims[gene_column_code] = "" # do not report mutations for rrl
             if df_lims[antimicrobial_code][0] == "No genetic determinants associated with resistance to {} detected".format(drug_name): # if the mutations detected were only "S", 
               df_lims[gene_column_code] = "No high confidence mutations detected"
+          print(gene_name)
+          print(gene_coverage_dict[gene_name])
+          print(float(gene_coverage_dict[gene_name]) < ~{coverage_threshold})
           if float(gene_coverage_dict[gene_name]) < ~{coverage_threshold}: # HOWEVER, if the coverage is less than the indicated threshold
             df_lims[gene_column_code] = "Insufficient Coverage"
-            if "del" in mutations[gene_name]:
-              df_lims[gene_column_code] = "Insufficient Coverage (deletion identified)"
-            if int(rank_annotation(resistance_annotation[drug_name])) < 4: # in addition, if the indicated annotation for the drug is not resistant (less than 4)
+            try: # catch for when there's no mutation on gene name but coverage is below threshold
+              if "del" in mutations[gene_name]:
+                df_lims[gene_column_code] = "Insufficient Coverage (deletion identified)"
+            except:
+              df_lims[antimicrobial_code] = "Pending Retest"
+            if drug_name in resistance_annotation.keys() and int(rank_annotation(resistance_annotation[drug_name])) < 4: # in addition, if the indicated annotation for the drug is not resistant (less than 4)
               df_lims[antimicrobial_code] = "Pending Retest"
           else: # the gene is not in the mutations list but has decent coverage
             df_lims[gene_column_code] = "No mutations detected"
