@@ -62,7 +62,7 @@ task amrfinderplus_nuc {
         ~{'--coverage_min ' + mincov} \
         ~{'--ident_min ' + minid}
     else 
-      echo "Either the organism is not supported by NCBI-AMRFinderPlus or the user did not supply an organism as input."
+      echo "Either the organism (~{organism}) is not recognized by NCBI-AMRFinderPlus or the user did not supply an organism as input."
       echo "Skipping the use of amrfinder --organism optional parameter."
       # always use --plus flag, others may be left out if param is optional and not supplied 
       amrfinder --plus \
