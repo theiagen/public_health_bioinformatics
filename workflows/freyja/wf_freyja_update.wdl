@@ -64,7 +64,7 @@ task transfer_files {
   runtime {
     memory: "4 GB"
     cpu: 2
-    docker: "theiagen/utility:1.1"
+    docker: "us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1"
     disks:  "local-disk " + disk_size + " HDD"
     disk: disk_size + " GB" # TES
   }
