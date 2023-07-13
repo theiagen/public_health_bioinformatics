@@ -7,7 +7,7 @@ task tb_gene_coverage {
     String samplename
     Int min_depth = 10
     Int disk_size = 100
-    String docker = "quay.io/staphb/samtools:1.15"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/samtools:1.15"
   }
   command <<<
     chr=$(samtools idxstats ~{bamfile} | cut -f 1 | head -1)

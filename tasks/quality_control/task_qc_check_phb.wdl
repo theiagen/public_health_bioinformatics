@@ -407,7 +407,7 @@ task qc_check_phb {
     File? qc_standard = qc_check_table
   }
   runtime {
-    docker: "quay.io/theiagen/terra-tools:2023-03-16"
+    docker: "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-03-16"
     memory: "8 GB"
     cpu: 4
     disks: "local-disk " + disk_size + " SSD"

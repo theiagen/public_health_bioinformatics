@@ -7,7 +7,7 @@ task seqsero2 {
     File? read2
     String samplename
     String mode = "a"
-    String seqsero2_docker_image = "quay.io/staphb/seqsero2:1.2.1"
+    String seqsero2_docker_image = "us-docker.pkg.dev/general-theiagen/staphb/seqsero2:1.2.1"
     Int disk_size = 100
     Boolean paired_end
   }
@@ -84,7 +84,7 @@ task seqsero2_assembly {
   input {
     File assembly_fasta
     String samplename
-    String seqsero2_docker_image = "quay.io/staphb/seqsero2:1.2.1"
+    String seqsero2_docker_image = "us-docker.pkg.dev/general-theiagen/staphb/seqsero2:1.2.1"
     Int disk_size = 100
   }
   command <<<

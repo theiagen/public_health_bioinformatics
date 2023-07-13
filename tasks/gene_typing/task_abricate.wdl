@@ -12,7 +12,7 @@ task abricate {
     Int? mincov
     Int cpu = 2
     Int disk_size = 100
-    String docker = "quay.io/staphb/abricate:1.0.1-abaum-plasmid"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/abricate:1.0.1-abaum-plasmid"
   }
   command <<<
     date | tee DATE
@@ -71,7 +71,7 @@ task abricate_flu {
     Int mincov =60
     Int cpu = 2
     Int memory = 4
-    String docker = "quay.io/staphb/abricate:1.0.1-insaflu-220727"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/abricate:1.0.1-insaflu-220727"
     Int disk_size = 100
   }
   command <<<

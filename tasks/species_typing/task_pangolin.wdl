@@ -6,7 +6,7 @@ task pangolin4 {
     String samplename
     Int min_length = 10000
     Float max_ambig = 0.5
-    String docker = "quay.io/staphb/pangolin:4.3-pdata-1.20"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/pangolin:4.3-pdata-1.20"
     String? analysis_mode
     Boolean expanded_lineage=true
     Boolean skip_scorpio=false
@@ -136,7 +136,7 @@ task pangolin_update_log {
     File pango_lineage_log = "~{samplename}_pango_lineage_log.tsv"
   }
   runtime {
-    docker: "quay.io/theiagen/utility:1.1"
+    docker: "us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1"
     memory: "8 GB"
     cpu: 4
     disks:  "local-disk " + disk_size + " SSD"

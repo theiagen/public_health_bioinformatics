@@ -23,7 +23,7 @@ task augur_translate {
     File translated_aa_muts_json = "~{build_name}_aa_muts.json"
   }
   runtime {
-    docker: "quay.io/biocontainers/augur:22.0.2--pyhdfd78af_0"
+    docker: "us-docker.pkg.dev/general-theiagen/biocontainers/augur:22.0.2--pyhdfd78af_0"
     memory: "2 GB"
     cpu : 1
     disks: "local-disk " + disk_size + " HDD"

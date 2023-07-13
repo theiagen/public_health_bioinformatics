@@ -7,7 +7,7 @@ task agrvate {
   input {
     File assembly
     String samplename
-    String docker = "quay.io/biocontainers/agrvate:1.0.2--hdfd78af_0"
+    String docker = "us-docker.pkg.dev/general-theiagen/biocontainers/agrvate:1.0.2--hdfd78af_0"
     Int disk_size = 50
     Int cpu = 1
 

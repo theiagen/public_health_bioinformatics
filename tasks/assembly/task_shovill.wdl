@@ -5,7 +5,7 @@ task shovill_pe {
     File read1_cleaned
     File read2_cleaned
     String samplename
-    String docker = "quay.io/staphb/shovill:1.1.0"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/shovill:1.1.0"
     Int disk_size = 100
     Int cpu = 4
     Int memory = 16
@@ -85,7 +85,7 @@ task shovill_se {
   input {
     File read1_cleaned
     String samplename
-    String docker = "quay.io/staphb/shovill-se:1.1.0"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/shovill-se:1.1.0"
     Int disk_size = 100
 
     ## SHOVILL optional parameters

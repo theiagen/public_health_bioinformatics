@@ -6,7 +6,7 @@ task plasmidfinder {
     String samplename
     Int cpu = 8
     Int memory = 16
-    String docker = "quay.io/staphb/plasmidfinder:2.1.6"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/plasmidfinder:2.1.6"
     Int disk_size = 100
     String? database
     String? database_path

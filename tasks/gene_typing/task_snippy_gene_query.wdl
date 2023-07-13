@@ -6,7 +6,7 @@ task snippy_gene_query {
     File snippy_variants_results
     String? query_gene
     File? reference
-    String docker = "quay.io/theiagen/utility:1.2"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/utility:1.2"
     Int cpus = 8
     Int memory = 32
   }

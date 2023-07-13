@@ -165,7 +165,7 @@ task check_reads {
     Int est_genome_length = read_int("EST_GENOME_LENGTH")
   }
   runtime {
-    docker: "quay.io/bactopia/gather_samples:2.0.2"
+    docker: "us-docker.pkg.dev/general-theiagen/bactopia/gather_samples:2.0.2"
     memory: "2 GB"
     cpu: 2
     disks: "local-disk " + disk_size + " SSD"
@@ -328,7 +328,7 @@ task check_reads_se {
     Int est_genome_length = read_int("EST_GENOME_LENGTH")
   }
   runtime {
-    docker: "quay.io/bactopia/gather_samples:2.0.2"
+    docker: "us-docker.pkg.dev/general-theiagen/bactopia/gather_samples:2.0.2"
     memory: "2 GB"
     cpu: 2
     disks: "local-disk " + disk_size + " SSD"

@@ -8,7 +8,7 @@ task iqtree {
     Int iqtree_bootstraps = 1000 #  Ultrafast bootstrap replicates
     Int alrt = 1000 # SH-like approximate likelihood ratio test (SH-aLRT) replicates
     String iqtree_opts = ""
-    String docker = "quay.io/staphb/iqtree:1.6.7"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/iqtree:1.6.7"
     Int disk_size = 100
     Int cpu = 4
   }

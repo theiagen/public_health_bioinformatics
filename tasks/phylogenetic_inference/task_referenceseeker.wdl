@@ -10,7 +10,7 @@ task referenceseeker {
     Int disk_size = 200 
     Int cpu = 4
     Int memory = 16
-    String docker = "quay.io/biocontainers/referenceseeker:1.8.0--pyhdfd78af_0"
+    String docker = "us-docker.pkg.dev/general-theiagen/biocontainers/referenceseeker:1.8.0--pyhdfd78af_0"
   }
   command <<<
     # get version
