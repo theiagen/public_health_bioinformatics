@@ -5,7 +5,7 @@ task ncbi_datasets_download_genome_accession {
     String ncbi_accession
     Int cpu = 1
     Int memory = 4
-    String docker = "staphb/ncbi-datasets:14.13.2" # not the latest version, but it's hard to keep up w/ the frequent releases
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/ncbi-datasets:14.13.2" # not the latest version, but it's hard to keep up w/ the frequent releases
     Int disk_size = 50
     Boolean include_gbff = false
     Boolean include_gff3 = false

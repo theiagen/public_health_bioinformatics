@@ -6,7 +6,7 @@ task tbprofiler {
     File read1
     File? read2
     String samplename
-    String tbprofiler_docker_image = "staphb/tbprofiler:4.4.2"
+    String tbprofiler_docker_image = "us-docker.pkg.dev/general-theiagen/staphb/tbprofiler:4.4.2"
     Int disk_size = 100
     String mapper = "bwa"
     String caller = "bcftools"
