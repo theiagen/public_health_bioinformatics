@@ -4,7 +4,7 @@ task gubbins {
   input {
     File alignment
     String cluster_name
-    String docker = "quay.io/biocontainers/gubbins:3.3--py310pl5321h8472f5a_0"
+    String docker = "us-docker.pkg.dev/general-theiagen/biocontainers/gubbins:3.3--py310pl5321h8472f5a_0"
     Int filter_percent = 25 # default is 25%
     Int iterations = 5
     String tree_builder = "raxml"

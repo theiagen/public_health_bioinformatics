@@ -13,7 +13,7 @@ task freyja_one_sample {
     Boolean bootstrap = false
     Int? number_bootstraps
     Int memory = 4
-    String docker = "quay.io/staphb/freyja:1.3.11"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/freyja:1.3.11"
     Int disk_size = 100
   }
   command <<<

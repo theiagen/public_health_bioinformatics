@@ -26,7 +26,7 @@ workflow theiacov_clearlabs {
     File primer_bed
     # assembly parameters
     Int normalise = 20000
-    String medaka_docker = "quay.io/staphb/artic-ncov2019:1.3.0-medaka-1.4.3"
+    String medaka_docker = "us-docker.pkg.dev/general-theiagen/staphb/artic-ncov2019:1.3.0-medaka-1.4.3"
     # reference values
     File? reference_genome
     # nextclade inputs

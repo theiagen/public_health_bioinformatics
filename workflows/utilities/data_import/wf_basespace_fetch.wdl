@@ -125,7 +125,7 @@ task fetch_bs {
     File? read2 = "~{sample_name}_R2.fastq.gz"
   }
   runtime {
-    docker: "quay.io/theiagen/basespace_cli:1.2.1"
+    docker: "us-docker.pkg.dev/general-theiagen/theiagen/basespace_cli:1.2.1"
     memory: "~{mem_size_gb} GB"
     cpu: CPUs
     disks: "local-disk ~{disk_size} SSD"

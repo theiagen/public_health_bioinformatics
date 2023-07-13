@@ -7,7 +7,7 @@ task ts_mlst {
   input {
     File assembly
     String samplename
-    String docker = "quay.io/staphb/mlst:2.23.0"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/mlst:2.23.0"
     Int disk_size = 100
     Int cpu = 4
     # Parameters

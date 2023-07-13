@@ -13,7 +13,7 @@ task srst2_vibrio {
     Int srst2_min_depth
     Int srst2_min_edge_depth
     Int srst2_gene_max_mismatch
-    String docker = "quay.io/staphb/srst2:0.2.0-vcholerae"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/srst2:0.2.0-vcholerae"
     Int disk_size = 100
     Int cpu = 4
   }

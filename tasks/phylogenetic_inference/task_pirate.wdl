@@ -11,7 +11,7 @@ task pirate {
     String? panopt # additional arguments to pass to pangenome_contruction
     Int memory = 32
     Int cpu = 4
-    String docker_image = "quay.io/biocontainers/pirate:1.0.5--hdfd78af_0"
+    String docker_image = "us-docker.pkg.dev/general-theiagen/biocontainers/pirate:1.0.5--hdfd78af_0"
     Int disk_size = 100
   }
   command <<<

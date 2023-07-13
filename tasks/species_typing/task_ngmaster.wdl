@@ -7,7 +7,7 @@ task ngmaster {
   input {
     File assembly
     String samplename
-    String docker = "quay.io/staphb/ngmaster:1.0.0"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/ngmaster:1.0.0"
     Int disk_size = 100
     Int cpu = 2
   }

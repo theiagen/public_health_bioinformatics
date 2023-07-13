@@ -7,7 +7,7 @@ task legsta {
   input {
     File assembly
     String samplename
-    String docker = "quay.io/biocontainers/legsta:0.5.1--hdfd78af_2"
+    String docker = "us-docker.pkg.dev/general-theiagen/biocontainers/legsta:0.5.1--hdfd78af_2"
     Int disk_size = 100
   }
   command <<<

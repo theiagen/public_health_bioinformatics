@@ -556,7 +556,7 @@ task sm_metadata_wrangling { # the sm stands for supermassive
     File gisaid_fasta = "~{output_name}_gisaid.fasta"
   }
   runtime {
-    docker: "quay.io/theiagen/terra-tools:2023-03-16"
+    docker: "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-03-16"
     memory: "8 GB"
     cpu: 4
     disks:  "local-disk " + disk_size + " SSD"
@@ -585,7 +585,7 @@ task trim_genbank_fastas {
     File genbank_fasta = "~{output_name}_genbank.fasta"
   }
   runtime {
-    docker: "quay.io/staphb/vadr:1.3"
+    docker: "us-docker.pkg.dev/general-theiagen/staphb/vadr:1.3"
     memory: "1 GB"
     cpu: 1    
     disks:  "local-disk " + disk_size + " SSD"
@@ -626,7 +626,7 @@ task table2asn {
     File sqn_file = "~{output_name}.sqn"
   }
   runtime {
-    docker: "quay.io/staphb/ncbi-table2asn:1.26.678"
+    docker: "us-docker.pkg.dev/general-theiagen/staphb/ncbi-table2asn:1.26.678"
     memory: "1 GB"
     cpu: 1
     disks:  "local-disk " + disk_size + " SSD"

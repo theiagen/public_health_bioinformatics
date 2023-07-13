@@ -6,7 +6,7 @@ task snippy_variants {
     File read1
     File? read2
     String samplename
-    String docker = "quay.io/staphb/snippy:4.6.0"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/snippy:4.6.0"
     Int cpus = 8
     Int memory = 32
     # Paramters 

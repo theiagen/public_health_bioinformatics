@@ -33,7 +33,7 @@ task nanoplot {
     String nanoplot_version = read_string("VERSION")
   }
   runtime {
-    docker: "quay.io/staphb/nanoplot:1.40.0"
+    docker: "us-docker.pkg.dev/general-theiagen/staphb/nanoplot:1.40.0"
     memory: "16 GB"
     cpu: 4
     disks: "local-disk " + disk_size + " SSD"

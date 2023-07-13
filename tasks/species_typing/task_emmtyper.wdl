@@ -7,7 +7,7 @@ task emmtyper {
   input {
     File assembly
     String samplename
-    String docker = "quay.io/biocontainers/emmtyper:0.2.0--py_0"
+    String docker = "us-docker.pkg.dev/general-theiagen/biocontainers/emmtyper:0.2.0--py_0"
     Int? cpu = 2
 
     # Parameters
