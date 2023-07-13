@@ -581,7 +581,7 @@ task tbprofiler_output_parsing {
               row_list.append(row)
       
       df_laboratorian = df_laboratorian.append(row_list, ignore_index=True)
-      df_laboratorian.to_csv("tbprofiler_laboratorian_report.csv", index=False)
+      df_laboratorian.to_csv("~{samplename}_tbprofiler_laboratorian_report.csv", index=False)
     
     def parse_json_lims_report(json_file, formatted_time):
       """
@@ -638,7 +638,7 @@ task tbprofiler_output_parsing {
 
       df_lims["Analysis date"] = formatted_time
       df_lims["Operator"] = "~{operator}"
-      df_lims.to_csv("tbprofiler_lims_report.csv", index=False)
+      df_lims.to_csv("~{samplename}_tbprofiler_lims_report.csv", index=False)
     
     def parse_json_looker_report(json_file, current_time):
       """
@@ -670,7 +670,7 @@ task tbprofiler_output_parsing {
       df_looker["analysis_date"] = current_time
       df_looker["operator"] = "~{operator}"
     
-      df_looker.to_csv("tbprofiler_looker.csv", index=False)
+      df_looker.to_csv("~{samplename}_tbprofiler_looker.csv", index=False)
 
     def regenerate_coverage_report(gene_coverage_dict, lab_report):
       """
@@ -697,7 +697,7 @@ task tbprofiler_output_parsing {
           print(gene, df_lab_report["tbprofiler_variant_substitution_nt"][df_lab_report["tbprofiler_gene_name"] == gene])
         df_coverage = df_coverage.append({"Gene": gene, "Percent_Coverage": percent_coverage, "Warning": warning}, ignore_index=True)
       
-      df_coverage.to_csv("tbprofiler_coverage_report.csv", index=False)
+      df_coverage.to_csv("~{samplename}_tbprofiler_coverage_report.csv", index=False)
 
 
     ### Report Generation ###
@@ -715,15 +715,15 @@ task tbprofiler_output_parsing {
     parse_json_looker_report("~{json}", current_time)
 
     # Coverage report generation
-    regenerate_coverage_report(gene_coverage_dict, "tbprofiler_laboratorian_report.csv")
+    regenerate_coverage_report(gene_coverage_dict, "~{samplename}_tbprofiler_laboratorian_report.csv")
 
     CODE
   >>>
   output {
-    File tbprofiler_looker_csv = "tbprofiler_looker.csv"
-    File tbprofiler_laboratorian_report_csv = "tbprofiler_laboratorian_report.csv"
-    File tbprofiler_lims_report_csv = "tbprofiler_lims_report.csv"
-    File tbprofiler_coverage_report = "tbprofiler_coverage_report.csv"
+    File tbprofiler_looker_csv = "~{samplename}_tbprofiler_looker.csv"
+    File tbprofiler_laboratorian_report_csv = "~{samplename}_tbprofiler_laboratorian_report.csv"
+    File tbprofiler_lims_report_csv = "~{samplename}_tbprofiler_lims_report.csv"
+    File tbprofiler_coverage_report = "~{samplename}_tbprofiler_coverage_report.csv"
   }
   runtime {
     docker: "quay.io/theiagen/utility:1.2"
