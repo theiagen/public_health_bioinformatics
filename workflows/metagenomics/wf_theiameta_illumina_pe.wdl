@@ -19,7 +19,7 @@ workflow theiameta_illumina_pe {
     File? reference
     File kraken2_db = "gs://theiagen-public-files-rp/terra/theiaprok-files/k2_standard_8gb_20210517.tar.gz"
   }
-  call kraken_task.kraken2_standalone as kraken2 {
+  call kraken_task.kraken2_standalone as kraken2_raw {
     input:
       samplename = samplename,
       read1 = read1,
@@ -33,13 +33,19 @@ workflow theiameta_illumina_pe {
         read2_raw = read2,
         workflow_series = "theiameta"
     }
-    call metaspades_assembly_wf.metaspades_assembly_pe as metaspades {
-      input:
-        read1 = read_QC_trim.read1_clean,
-        read2 = read_QC_trim.read2_clean,
-        samplename = samplename
-      }
-
+  call kraken_task.kraken2_standalone as kraken2_clean {
+    input:
+      samplename = samplename,
+      read1 = read_QC_trim.read1_clean,
+      read2 = read_QC_trim.read2_clean,
+      kraken2_db = kraken2_db
+  }
+  call metaspades_assembly_wf.metaspades_assembly_pe as metaspades {
+    input:
+      read1 = read_QC_trim.read1_clean,
+      read2 = read_QC_trim.read2_clean,
+      samplename = samplename
+    }
     # if reference is provided, perform mapping of assembled contigs to 
     # reference with minimap2, and extract those as final assembly
     if (defined(reference)){
@@ -106,10 +112,12 @@ workflow theiameta_illumina_pe {
     String theiameta_illumina_pe_version = version_capture.phb_version
     String theiameta_illumina_pe_analysis_date = version_capture.date
     # Kraken2 outputs
-    String kraken2_version = kraken2.kraken2_version
-    String kraken2_docker = kraken2.kraken2_docker
-    File kraken2_report = kraken2.kraken2_report
-    Float kraken2_percent_human = kraken2.kraken2_percent_human
+    String kraken2_version = kraken2_raw.kraken2_version
+    String kraken2_docker = kraken2_raw.kraken2_docker
+    File kraken2_report_raw = kraken2_raw.kraken2_report
+    Float kraken2_percent_human_raw = kraken2_raw.kraken2_percent_human
+    File kraken2_report_clean = kraken2_clean.kraken2_report
+    Float kraken2_percent_human_clean = kraken2_clean.kraken2_percent_human
     # Read QC - dehosting outputs
     File? read1_dehosted = read_QC_trim.read1_dehosted
     File? read2_dehosted = read_QC_trim.read2_dehosted

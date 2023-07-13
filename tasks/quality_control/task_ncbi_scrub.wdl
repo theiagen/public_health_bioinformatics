@@ -5,7 +5,7 @@ task ncbi_scrub_pe {
     File read1
     File read2
     String samplename
-    String docker = "gcr.io/ncbi-sys-gcr-public-research/sra-human-scrubber@sha256:b7dba71079344daea4ea3363e1a67fa54edb7ec65459d039669c68a66d38b140"
+    String docker = "us-docker.pkg.dev/general-theiagen/ncbi/sra-human-scrubber:2.1.0"
     Int disk_size = 100
   }
   String r1_filename = basename(read1)
@@ -24,7 +24,7 @@ task ncbi_scrub_pe {
     fi
 
     # dehost reads
-    /opt/scrubber/scripts/scrub.sh -n ${read1_unzip} |& tail -n1 | awk -F" " '{print $1}' > FWD_SPOTS_REMOVED
+    /opt/scrubber/scripts/scrub.sh -i ${read1_unzip} |& tail -n1 | awk -F" " '{print $1}' > FWD_SPOTS_REMOVED
 
     # gzip dehosted reads
     gzip ${read1_unzip}.clean -c > ~{samplename}_R1_dehosted.fastq.gz
@@ -40,7 +40,7 @@ task ncbi_scrub_pe {
     fi
 
     # dehost reads
-    /opt/scrubber/scripts/scrub.sh -n ${read2_unzip} |& tail -n1 | awk -F" " '{print $1}' > REV_SPOTS_REMOVED
+    /opt/scrubber/scripts/scrub.sh -i ${read2_unzip} |& tail -n1 | awk -F" " '{print $1}' > REV_SPOTS_REMOVED
 
     # gzip dehosted reads
     gzip ${read2_unzip}.clean -c > ~{samplename}_R2_dehosted.fastq.gz
@@ -68,7 +68,7 @@ task ncbi_scrub_se {
   input {
     File read1
     String samplename
-    String docker = "gcr.io/ncbi-sys-gcr-public-research/sra-human-scrubber@sha256:b7dba71079344daea4ea3363e1a67fa54edb7ec65459d039669c68a66d38b140"
+    String docker = "us-docker.pkg.dev/general-theiagen/ncbi/sra-human-scrubber:2.1.0"
     Int disk_size = 100
   }
   String r1_filename = basename(read1)
@@ -86,7 +86,7 @@ task ncbi_scrub_se {
     fi
 
     # dehost reads
-    /opt/scrubber/scripts/scrub.sh -n ${read1_unzip} |& tail -n1 | awk -F" " '{print $1}' > FWD_SPOTS_REMOVED
+    /opt/scrubber/scripts/scrub.sh -i ${read1_unzip} |& tail -n1 | awk -F" " '{print $1}' > FWD_SPOTS_REMOVED
 
     # gzip dehosted reads
     gzip ${read1_unzip}.clean -c > ~{samplename}_R1_dehosted.fastq.gz
