@@ -18,7 +18,7 @@
     - wf_theiaprok_illumina_se_miniwdl
   files:
     - path: miniwdl_run/call-amrfinderplus_task/command
-      md5sum: cdcfa763b8f45daa88db6266ae1b381d
+      md5sum: 5b0429a6e6b0f5fb5e6d6932e8024e5c
     - path: miniwdl_run/call-amrfinderplus_task/inputs.json
       contains: ["assembly", "fasta", "organism", "test"]
     - path: miniwdl_run/call-amrfinderplus_task/outputs.json
@@ -523,7 +523,7 @@
       md5sum: c903bd663f831d44897b1003e259b81b
       md5sum: c903bd663f831d44897b1003e259b81b
     - path: miniwdl_run/wdl/tasks/gene_typing/task_amrfinderplus.wdl
-      md5sum: 619392f1ebb860a18ae4f871b8a1d002
+      md5sum: e650ddbbf7586870da2a0069bdd87493
     - path: miniwdl_run/wdl/tasks/gene_typing/task_bakta.wdl
       md5sum: a25a79957f3c51a46a698171ab5b9f9b
     - path: miniwdl_run/wdl/tasks/gene_typing/task_plasmidfinder.wdl
