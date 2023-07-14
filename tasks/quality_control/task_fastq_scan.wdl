@@ -39,8 +39,8 @@ task fastq_scan_pe {
   output {
     File read1_fastq_scan_report = "~{read1_name}_fastq-scan.json"
     File read2_fastq_scan_report = "~{read2_name}_fastq-scan.json"
-    Int read1_seq = read_string("READ1_SEQS")
-    Int read2_seq = read_string("READ2_SEQS")
+    Int read1_seq = read_int("READ1_SEQS")
+    Int read2_seq = read_int("READ2_SEQS")
     String read_pairs = read_string("READ_PAIRS")
     String version = read_string("VERSION")
     String pipeline_date = read_string("DATE")
@@ -81,7 +81,7 @@ task fastq_scan_se {
   >>>
   output {
     File fastq_scan_report = "~{read1_name}_fastq-scan.json"
-    Int read1_seq = read_string("READ1_SEQS")
+    Int read1_seq = read_int("READ1_SEQS")
     String version = read_string("VERSION")
     String pipeline_date = read_string("DATE")
     String fastq_scan_docker = docker
