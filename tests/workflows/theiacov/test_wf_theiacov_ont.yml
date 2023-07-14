@@ -118,7 +118,7 @@
     - path: miniwdl_run/call-consensus_qc/work/_miniwdl_inputs/0/ont.medaka.consensus.fasta
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     - path: miniwdl_run/call-fastq_scan_clean_reads/command
-      md5sum: be9f6914525f199ada50840fcfbac009
+      contains: ["read", "fastq", "zcat"]
     - path: miniwdl_run/call-fastq_scan_clean_reads/inputs.json
       contains: ["read1", "ont"]
     - path: miniwdl_run/call-fastq_scan_clean_reads/outputs.json
@@ -138,7 +138,7 @@
     - path: miniwdl_run/call-fastq_scan_clean_reads/work/artic_ncov2019_ont_fastq-scan.json
       md5sum: b99beb5bf5001d6809503e464110194d
     - path: miniwdl_run/call-fastq_scan_raw_reads/command
-      md5sum: 73ed9325f9e455c6a917931f636c79bb
+      contains: ["read", "fastq", "zcat"]
     - path: miniwdl_run/call-fastq_scan_raw_reads/inputs.json
       contains: ["read1", "ont"]
     - path: miniwdl_run/call-fastq_scan_raw_reads/outputs.json

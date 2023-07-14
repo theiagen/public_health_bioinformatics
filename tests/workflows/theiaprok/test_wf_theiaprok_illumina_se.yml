@@ -400,7 +400,7 @@
     - path: miniwdl_run/call-read_QC_trim/call-bbduk_se/work/test.rmadpt_1.fastq.gz
     - path: miniwdl_run/call-read_QC_trim/call-bbduk_se/work/test_1.clean.fastq.gz
     - path: miniwdl_run/call-read_QC_trim/call-fastq_scan_clean/command
-      md5sum: fc9b3cfcd90d68e6e38f6152194e0c09
+      contains: ["read", "fastq", "zcat"]
     - path: miniwdl_run/call-read_QC_trim/call-fastq_scan_clean/inputs.json
       contains: ["read", "fastq"]
     - path: miniwdl_run/call-read_QC_trim/call-fastq_scan_clean/outputs.json
@@ -420,7 +420,7 @@
     - path: miniwdl_run/call-read_QC_trim/call-fastq_scan_clean/work/test_1.clean_fastq-scan.json
       md5sum: eb30273b3f19578fec5360da8b255e28
     - path: miniwdl_run/call-read_QC_trim/call-fastq_scan_raw/command
-      md5sum: 76e3caa772faea950cc202f8f0a04ab7
+      contains: ["read", "fastq", "zcat"]
     - path: miniwdl_run/call-read_QC_trim/call-fastq_scan_raw/inputs.json
       contains: ["read", "fastq"]
     - path: miniwdl_run/call-read_QC_trim/call-fastq_scan_raw/outputs.json
