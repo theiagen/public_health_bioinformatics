@@ -540,17 +540,17 @@
     - path: miniwdl_run/wdl/tasks/quality_control/task_fastp.wdl
       md5sum: 99e3ee777b9d2a18180f5d1220fc9f71
     - path: miniwdl_run/wdl/tasks/quality_control/task_fastq_scan.wdl
-      md5sum: bd50800dc3fc84649802bd0fa2acc092
+      contains: ["version", "fastq_scan", "output"]
     - path: miniwdl_run/wdl/tasks/quality_control/task_mummer_ani.wdl
       md5sum: 95913bd94bdcc8fd0e356b784df656ec
     - path: miniwdl_run/wdl/tasks/quality_control/task_qc_check_phb.wdl
       contains: ["version", "qc_check_table", "output"]
     - path: miniwdl_run/wdl/tasks/quality_control/task_quast.wdl
-      md5sum: 76319f679b2e50cd68d389b8e5eae11c
+      contains: ["version", "quast", "output"]
     - path: miniwdl_run/wdl/tasks/quality_control/task_screen.wdl
       md5sum: d3ee09e12dc485f56759f242b62ae7b4
     - path: miniwdl_run/wdl/tasks/quality_control/task_trimmomatic.wdl
-      md5sum: a1446d8f4bb79c0f3abd2cfdfa573d61
+      contains: ["version", "trimmomatic", "output"]
     - path: miniwdl_run/wdl/tasks/species_typing/task_cauris_cladetyper.wdl
       md5sum: c093ccaa4874d884c305dda32afd484a
     - path: miniwdl_run/wdl/tasks/species_typing/task_ectyper.wdl

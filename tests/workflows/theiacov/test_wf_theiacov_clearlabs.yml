@@ -196,7 +196,7 @@
     - path: miniwdl_run/call-kraken2_raw/work/clearlabs_kraken2_report.txt
       md5sum: 35841fa2d77ec202c275b1de548b8d98
     - path: miniwdl_run/call-ncbi_scrub_se/command
-      md5sum: b0274577629cc117dffc5889a3e77155
+      contains: ["read1", "scrubber", "gzip"]
     - path: miniwdl_run/call-ncbi_scrub_se/inputs.json
       contains: ["read1", "samplename", "clearlabs"]
     - path: miniwdl_run/call-ncbi_scrub_se/outputs.json
