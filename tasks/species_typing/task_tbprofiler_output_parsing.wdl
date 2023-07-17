@@ -643,10 +643,16 @@ task tbprofiler_output_parsing {
             try: # catch for when there's no mutation on gene name but coverage is below threshold
               if "del" in mutations[gene_name]:
                 df_lims[gene_column_code] = "Insufficient Coverage (deletion identified)"
+                # if this case is part of rule 2.2.1, output the mutation
+                if gene_name in ["katG", "pncA", "ethA", "gid"]:
+                  df_lims[gene_column_code] = mutations[gene_name]
             except:
               df_lims[antimicrobial_code] = "Insufficient Coverage" # What should we write here? 
             if drug_name in resistance_annotation.keys() and int(rank_annotation(resistance_annotation[drug_name])) < 4: # in addition, if the indicated annotation for the drug is not resistant (less than 4)
-              df_lims[antimicrobial_code] = "Pending Retest"
+              if gene_name not in ["katG", "pncA", "ethA", "gid"] and "del" not in mutations[gene_name]:
+                df_lims[antimicrobial_code] = "Pending Retest"
+              
+
 
       df_lims["Analysis date"] = formatted_time
       df_lims["Operator"] = "~{operator}"
