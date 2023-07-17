@@ -55,6 +55,6 @@ task gisaid_upload {
     memory: "2 GB"
     disks:  "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
-    docker: "quay.io/broadinstitute/gisaid-cli"
+    docker: "quay.io/broadinstitute/gisaid-cli:3.0"
   }
 }
