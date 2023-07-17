@@ -14,6 +14,7 @@ task tb_gene_coverage {
 
     # samtools outputs 3 columns; column 3 is the depth of coverage per nucleotide position, piped to awk to count the positions
     #  above min_depth, then wc -l counts them all
+    #  source: https://github.com/jodyphelan/TBProfiler/blob/master/db/tbdb.bed
     gyrB=$(samtools depth -J -r "${chr}:5040-7467" ~{bamfile} | awk -F "\t" '{if ($3  >= ~{min_depth}) print;}' | wc -l )
     gyrA=$(samtools depth -J -r "${chr}:7102-10018" ~{bamfile} | awk -F "\t" '{if ($3  >= ~{min_depth}) print;}' | wc -l )
     fgd1=$(samtools depth -J -r "${chr}:490583-491993" ~{bamfile} | awk -F "\t" '{if ($3  >= ~{min_depth}) print;}' | wc -l )
