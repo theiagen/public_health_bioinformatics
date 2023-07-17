@@ -638,7 +638,7 @@ task tbprofiler_output_parsing {
             except:
               df_lims[antimicrobial_code] = "Insufficient Coverage" # What should we write here? 
             if drug_name in resistance_annotation.keys() and int(rank_annotation(resistance_annotation[drug_name])) < 4: # in addition, if the indicated annotation for the drug is not resistant (less than 4)
-              df_lims[antimicrobial_code] = "Pending retest"
+              df_lims[antimicrobial_code] = "Pending Retest"
 
       df_lims["Analysis date"] = formatted_time
       df_lims["Operator"] = "~{operator}"
