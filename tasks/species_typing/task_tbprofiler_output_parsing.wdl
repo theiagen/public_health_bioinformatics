@@ -203,6 +203,8 @@ task tbprofiler_output_parsing {
           return "U"
         elif gene == "rplC" and (position_nt >= -18 and position_nt <= -1):
           return "U"
+        elif "upstream_gene_variant" in substitution_type:
+          return "S" if interpretation_destination == "MDL" else "U"
         else: # apply expert rules 1.2
           if not any(non_ORF in nucleotide_change for non_ORF in ["+", "-", "*"]) or nucleotide_change.endswith("*"): 
           # if a position includes either +, *, or - it's not in the ORF 
@@ -224,6 +226,8 @@ task tbprofiler_output_parsing {
         else:
             if substitution_type != "synonymous_variant":
               return "S" if interpretation_destination == "MDL" else "U"
+            elif "upstream_gene_variant" in substitution_type:
+              return "S" if interpretation_destination == "MDL" else "U"
             else:
               return "S"
 
@@ -236,11 +240,15 @@ task tbprofiler_output_parsing {
         else:
             if substitution_type != "synonymous_variant":
               return "S" if interpretation_destination == "MDL" else "U"
+            elif "upstream_gene_variant" in substitution_type:
+              return "S" if interpretation_destination == "MDL" else "U"
             else:
               return "S"
 
       elif gene not in gene_list_combined: # NOT AN EXPERT RULE: 3.2
         if substitution_type != "synonymous_variant":
+          return "Snoexpert" if interpretation_destination == "MDL" else "Unoexpert"
+        elif "upstream_gene_variant" in substitution_type:
           return "Snoexpert" if interpretation_destination == "MDL" else "Unoexpert"
         else:
           return "Snoexpert"
