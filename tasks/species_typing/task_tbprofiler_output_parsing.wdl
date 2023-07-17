@@ -106,7 +106,7 @@ task tbprofiler_output_parsing {
                     "Rv1258c": "Tier 1", "ethA": "Tier 1", "tlyA": "Tier 1", "mshA": "Tier 2", "ndh": "Tier 2", 
                     "Rv2752c": "Tier 2", "rpoA": "Tier 2", "rpoC": "Tier 2", "embR": "Tier 2", "ubiA": "Tier 2", 
                     "PPE35": "Tier 2", "Rv3236c": "Tier 2", "Rv1979c": "Tier 2", "whiB6": "Tier 2", "ccsA": "Tier 2", 
-                    "fprA": "Tier 2", "aftB": "Tier 2", "ethR": "Tier 2", "Rv3083": "Tier 2"
+                    "fprA": "Tier 2", "aftB": "Tier 2", "ethR": "Tier 2", "Rv3083": "Tier 2", "fabG1": "Tier 1"
                   }
                   
     # lookup dictionary - gene to locus tag (https://github.com/jodyphelan/TBProfiler/blob/master/db/tbdb.bed)
