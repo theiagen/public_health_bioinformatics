@@ -76,7 +76,7 @@ task tbprofiler_output_parsing {
                           "rpsL": ["streptomycin"], "rrl": ["linezolid"], "rrs": ["streptomycin", "amikacin",
                           "aminoglycosides", "capreomycin", "kanamycin"], "Rv0678": ["bedaquiline",
                           "clofazimine"], "thyA": ["para-aminosalicylic_acid"], "thyX": ["para-aminosalicylic_acid"],
-                          "tlyA": ["capreomycin"]
+                          "tlyA": ["capreomycin"], "rpoA"
                          }
     
     # lookup dictionary - antimicrobial drug name to gene name  (https://github.com/jodyphelan/tbdb/blob/master/tbdb.csv)
