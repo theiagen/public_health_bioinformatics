@@ -482,14 +482,14 @@ task tbprofiler_output_parsing {
               for identified_drug in dr_variant["gene_associated_drugs"]:
                 if identified_drug not in drugs_to_row:
                   drugs_to_row[identified_drug] = {"other_variant": dr_variant, "who_confidence": row["confidence"], "drug": identified_drug, "nucleotide_change": dr_variant["nucleotide_change"], "protein_change": dr_variant["protein_change"], "gene": dr_variant["gene"], "type": dr_variant["type"]}
-                elif rank_annotation(drugs_to_row[identified_drug]["who_confidence"]) > rank_annotation(row["confidence"]): # overwrite entry with the more severe annotation (higher value) if multiple drugs are present
+                elif rank_annotation(drugs_to_row[identified_drug]["who_confidence"]) < rank_annotation(row["confidence"]): # overwrite entry with the more severe annotation (higher value) if multiple drugs are present
                   drugs_to_row[identified_drug] = {"other_variant": dr_variant, "who_confidence": row["confidence"], "drug": identified_drug, "nucleotide_change": dr_variant["nucleotide_change"], "protein_change": dr_variant["protein_change"], "gene": dr_variant["gene"], "type": dr_variant["type"]}
 
             # case: drug confers resistance to multiple drugs - if the same drug shows multiple times in a single mutation, save only the most severe annotation
             for annotation in dr_variant["annotation"]: # iterate thorugh all possible annotations for the variant
               if annotation["drug"] not in drugs_to_row: # if this is the first time a drug is seen, add to dictionary
                 drugs_to_row[annotation["drug"]] = {"other_variant": dr_variant, "who_confidence": annotation["who_confidence"], "drug": annotation["drug"], "nucleotide_change": dr_variant["nucleotide_change"], "protein_change": dr_variant["protein_change"], "gene": dr_variant["gene"], "type": dr_variant["type"]}
-              elif rank_annotation(drugs_to_row[annotation["drug"]]["who_confidence"]) > rank_annotation(annotation["who_confidence"]): # overwrite entry with the more severe annotation (higher value) if multiple drugs are present
+              elif rank_annotation(drugs_to_row[annotation["drug"]]["who_confidence"]) < rank_annotation(annotation["who_confidence"]): # overwrite entry with the more severe annotation (higher value) if multiple drugs are present
                 drugs_to_row[annotation["drug"]] = {"other_variant": dr_variant, "who_confidence": annotation["who_confidence"], "drug": annotation["drug"], "nucleotide_change": dr_variant["nucleotide_change"], "protein_change": dr_variant["protein_change"], "gene": dr_variant["gene"], "type": dr_variant["type"]}
             
             for drug in drugs_to_row:
@@ -532,7 +532,7 @@ task tbprofiler_output_parsing {
             for annotation in other_variant["annotation"]:
               if annotation["drug"] not in drugs_to_row:
                 drugs_to_row[annotation["drug"]] = {"other_variant": other_variant, "who_confidence": annotation["who_confidence"], "drug": annotation["drug"], "nucleotide_change": other_variant["nucleotide_change"],"protein_change": other_variant["protein_change"], "gene": other_variant["gene"], "type": other_variant["type"]}
-              elif rank_annotation(drugs_to_row[annotation["drug"]]["who_confidence"]) > rank_annotation(annotation["who_confidence"]):
+              elif rank_annotation(drugs_to_row[annotation["drug"]]["who_confidence"]) < rank_annotation(annotation["who_confidence"]):
                 drugs_to_row[annotation["drug"]] = {"other_variant": other_variant, "who_confidence": annotation["who_confidence"], "drug": annotation["drug"], "nucleotide_change": other_variant["nucleotide_change"],"protein_change": other_variant["protein_change"], "gene": other_variant["gene"], "type": other_variant["type"]}
 
             for drug in drugs_to_row:
