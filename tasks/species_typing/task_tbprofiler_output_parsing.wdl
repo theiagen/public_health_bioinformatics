@@ -76,13 +76,13 @@ task tbprofiler_output_parsing {
                           "rpsL": ["streptomycin"], "rrl": ["linezolid"], "rrs": ["streptomycin", "amikacin",
                           "aminoglycosides", "capreomycin", "kanamycin"], "Rv0678": ["bedaquiline",
                           "clofazimine"], "thyA": ["para-aminosalicylic_acid"], "thyX": ["para-aminosalicylic_acid"],
-                          "tlyA": ["capreomycin"], "rpoA"
+                          "tlyA": ["capreomycin"], "rpoA": ["rifampicin"]
                          }
     
     # lookup dictionary - antimicrobial drug name to gene name  (https://github.com/jodyphelan/tbdb/blob/master/tbdb.csv)
     antimicrobial_drug_name_to_gene = { "isoniazid": ["ahpC", "fabG1", "inhA", "kasA", "katG"], 
                                         "ethionamide": ["ethA", "ethR", "fabG1", "inhA"], 
-                                        "rifampicin": ["rpoB", "rpoC"], 
+                                        "rifampicin": ["rpoA", "rpoB", "rpoC"], 
                                         "pyrazinamide": ["panD", "pncA", "rpsA"], 
                                         "ethambutol": ["embA", "embB", "embC", "embR"], 
                                         "streptomycin": ["gid", "rpsL", "rrs"], 
@@ -121,7 +121,7 @@ task tbprofiler_output_parsing {
                           "rplC": "Rv0701", "rpoB": "Rv0667", "rpoC": "Rv0668", 
                           "rpsA": "Rv1630", "rpsL": "Rv0682", "rrl": "EBG00000313339", 
                           "rrs": "EBG00000313325", "Rv0678": "Rv0678", "thyA": "Rv2764c",
-                          "thyX": "Rv2754c", "tlyA": "Rv1694"
+                          "thyX": "Rv2754c", "tlyA": "Rv1694", "rpoA": "Rv3457c"
                          }
 
     gene_list_option_1 = ["Rv0678", "atpE", "pepQ", "mmpL5", "mmpS5", "rrl", "rplC"] # Rv0678 is mmpR
