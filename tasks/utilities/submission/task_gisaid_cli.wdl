@@ -12,7 +12,7 @@ task gisaid_upload {
     # authentication token will either be generated or must be provided
     String? username
     String? password
-    String? authentication_token
+    File? authentication_file
     
     String frameshift_notification = "catch_novel" 
     # options: 
@@ -33,7 +33,7 @@ task gisaid_upload {
         --client_id "~{client_id}" \
         --force > submission_log.txt
     else # otherwise, authentication token must be provided
-      echo ~{authentication_token} > ./gisaid.authtoken
+      cat ~{authentication_file} > ./gisaid.authtoken
     fi
 
     # upload to GISAID
