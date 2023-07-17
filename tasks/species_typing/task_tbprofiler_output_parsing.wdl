@@ -27,11 +27,11 @@ task tbprofiler_output_parsing {
     # lookup dictionary - antimicrobial code to drug name
     antimicrobial_code_to_drug_name = {"M_DST_B01_INH": "isoniazid", "M_DST_C01_ETO": "ethionamide",
                           "M_DST_D01_RIF": "rifampicin", "M_DST_E01_PZA": "pyrazinamide",
-                          "M_DST_F01_EMB": "ethambutol","M_DST_H01_AMK": "amikacin", 
-                          "M_DST_I01_KAN": "kanamycin","M_DST_J01_CAP": "capreomycin", 
-                          "M_DST_K01_MFX": "moxifloxacin","M_DST_L01_LFX": "levofloxacin", 
-                          "M_DST_M01_BDQ": "bedaquiline","M_DST_N01_CFZ": "clofazimine", 
-                          "M_DST_o01_LZD": "linezolid" 
+                          "M_DST_F01_EMB": "ethambutol","M_DST_G01_AMK": "amikacin", 
+                          "M_DST_H01_KAN": "kanamycin","M_DST_I01_CAP": "capreomycin", 
+                          "M_DST_J01_MFX": "moxifloxacin","M_DST_K01_LFX": "levofloxacin", 
+                          "M_DST_L01_BDQ": "bedaquiline","M_DST_M01_CFZ": "clofazimine", 
+                          "M_DST_N01_LZD": "linezolid" 
                          }
     
     # Lookup list - antimicrobial drug names
@@ -48,17 +48,17 @@ task tbprofiler_output_parsing {
                  "M_DST_D01_RIF": {"rpoB": "M_DST_D02_rpoB"},
                  "M_DST_E01_PZA": {"pncA": "M_DST_E02_pncA"},
                  "M_DST_F01_EMB": {"embA": "M_DST_F02_embA", "embB": "M_DST_F03_embB"},
-                 "M_DST_H01_AMK": {"rrs": "M_DST_H02_rrs", "eis": "M_DST_H03_eis"},
-                 "M_DST_I01_KAN": {"rrs": "M_DST_I02_rrs", "eis": "M_DST_I03_eis"},
-                 "M_DST_J01_CAP": {"rrs": "M_DST_J02_rrs", "tlyA": "M_DST_J03_tlyA"},
-                 "M_DST_K01_MFX": {"gyrA": "M_DST_K02_gyrA", "gyrB": "M_DST_K03_gyrB"},
-                 "M_DST_L01_LFX": {"gyrA": "M_DST_L02_gyrA", "gyrB": "M_DST_L03_gyrB"},
-                 "M_DST_M01_BDQ": {"Rv0678": "M_DST_M02_Rv0678", "atpE": "M_DST_M03_atpE",
-                                   "pepQ": "M_DST_M04_pepQ", "mmpL5": "M_DST_M05_mmpL5",
-                                   "mmpS5": "M_DST_M06_mmpS5"},
-                 "M_DST_N01_CFZ": {"Rv0678":"M_DST_N02_Rv0678", "pepQ": "M_DST_N03_pepQ",
-                                   "mmpL5":"M_DST_N04_mmpL5", "mmpS5": "M_DST_N05_mmpS5"},
-                 "M_DST_o01_LZD": {"rrl": "M_DST_o02_rrl", "rplC": "M_DST_o03_rplC"}
+                 "M_DST_G01_AMK": {"rrs": "M_DST_G02_rrs", "eis": "M_DST_G03_eis"},
+                 "M_DST_H01_KAN": {"rrs": "M_DST_H02_rrs", "eis": "M_DST_H03_eis"},
+                 "M_DST_I01_CAP": {"rrs": "M_DST_I02_rrs", "tlyA": "M_DST_I03_tlyA"},
+                 "M_DST_J01_MFX": {"gyrA": "M_DST_J02_gyrA", "gyrB": "M_DST_J03_gyrB"},
+                 "M_DST_K01_LFX": {"gyrA": "M_DST_K02_gyrA", "gyrB": "M_DST_K03_gyrB"},
+                 "M_DST_L01_BDQ": {"Rv0678": "M_DST_L02_Rv0678", "atpE": "M_DST_L03_atpE",
+                                   "pepQ": "M_DST_L04_pepQ", "mmpL5": "M_DST_L05_mmpL5",
+                                   "mmpS5": "M_DST_L06_mmpS5"},
+                 "M_DST_M01_CFZ": {"Rv0678":"M_DST_M02_Rv0678", "pepQ": "M_DST_M03_pepQ",
+                                   "mmpL5":"M_DST_M04_mmpL5", "mmpS5": "M_DST_M05_mmpS5"},
+                 "M_DST_N01_LZD": {"rrl": "M_DST_N02_rrl", "rplC": "M_DST_N03_rplC"}
                 }
 
     # lookup dictionary - gene to antimicrobial drug name (https://github.com/jodyphelan/tbdb/blob/master/tbdb.csv)
