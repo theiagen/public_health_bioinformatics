@@ -624,6 +624,12 @@ task tbprofiler_output_parsing {
               df_lims[gene_column_code] = "" # do not report mutations for rrl
             if df_lims[antimicrobial_code][0] == "No genetic determinants associated with resistance to {} detected".format(drug_name): # if the mutations detected were only "S", 
               df_lims[gene_column_code] = "No high confidence mutations detected"
+          else: # the gene is not in the mutations list but has decent coverage
+            if float(gene_coverage_dict[gene_name]) < ~{coverage_threshold}: 
+              df_lims[gene_column_code] = "Insufficient Coverage"
+            else:
+              df_lims[gene_column_code] = "No mutations detected"
+          
           if float(gene_coverage_dict[gene_name]) < ~{coverage_threshold}: # HOWEVER, if the coverage is less than the indicated threshold
             df_lims[gene_column_code] = "Insufficient Coverage"
             try: # catch for when there's no mutation on gene name but coverage is below threshold
@@ -633,8 +639,6 @@ task tbprofiler_output_parsing {
               df_lims[antimicrobial_code] = "Insufficient Coverage" # What should we write here? 
             if drug_name in resistance_annotation.keys() and int(rank_annotation(resistance_annotation[drug_name])) < 4: # in addition, if the indicated annotation for the drug is not resistant (less than 4)
               df_lims[antimicrobial_code] = "Pending retest"
-          else: # the gene is not in the mutations list but has decent coverage
-            df_lims[gene_column_code] = "No mutations detected"
 
       df_lims["Analysis date"] = formatted_time
       df_lims["Operator"] = "~{operator}"
