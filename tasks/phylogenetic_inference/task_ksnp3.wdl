@@ -7,6 +7,7 @@ task ksnp3 {
     String cluster_name
     Int kmer_size = 19
     String ksnp3_args = "" # add -ML to calculate a maximum likelihood tree or -NJ to calculate a neighbor-joining tree
+    File? all_snps
     String docker_image = "quay.io/staphb/ksnp3:3.1"
     Int memory = 8
     Int cpu = 4
@@ -48,7 +49,13 @@ task ksnp3 {
   cat ksnp3_input.tsv
 
   # run ksnp3 on input assemblies
-  kSNP3 -in ksnp3_input.tsv -outdir ksnp3 -k ~{kmer_size} -core -vcf ~{ksnp3_args}
+  kSNP3 \
+    -in ksnp3_input.tsv \
+    -outdir ksnp3 \
+    -k ~{kmer_size} \
+    -core -vcf \
+    ~{'-SNPs_all ' + all_snps} \
+    ~{ksnp3_args}
   
   # rename ksnp3 outputs with cluster name 
   # sometimes the core nwk and fasta outputs do not have content
