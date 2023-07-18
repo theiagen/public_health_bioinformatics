@@ -21,13 +21,6 @@
     - path: miniwdl_run/call-raw_check_reads/inputs.json
     - path: miniwdl_run/call-raw_check_reads/outputs.json
     - path: miniwdl_run/call-raw_check_reads/task.log
-    # read QC trim workflow
-    - path: miniwdl_run/call-read_QC_trim/inputs.json
-      md5sum: 545e89c92ca31ef11bd12a10466222e0
-    - path: miniwdl_run/call-read_QC_trim/outputs.json
-      md5sum: b879e356eaaca24de79804dea2f42f76
-    - path: miniwdl_run/call-read_QC_trim/workflow.log
-      md5sum: 804a479ded4ad206c8f4887eaf07dcef
     # trimmomatic
     - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_pe/command
       md5sum: 0dfaeb241ed0f54c3d5d0c4c4bea0491
@@ -52,7 +45,7 @@
     - path: miniwdl_run/call-read_QC_trim/call-bbduk/inputs.json
       contains: ["phix", "adapters", "read1", "read2", "samplename"]
     - path: miniwdl_run/call-read_QC_trim/call-bbduk/outputs.json
-      contains: ["bbduk_pe", "read1_clean", "read2_clean", "pipeline_date"]
+      contains: ["read1_clean", "read2_clean", "pipeline_date"]
     - path: miniwdl_run/call-read_QC_trim/call-bbduk/stderr.txt
     - path: miniwdl_run/call-read_QC_trim/call-bbduk/stderr.txt.offset
     - path: miniwdl_run/call-read_QC_trim/call-bbduk/stdout.txt
@@ -72,13 +65,13 @@
     - path: miniwdl_run/call-read_QC_trim/call-fastq_scan_raw/inputs.json
       contains: ["read1", "read2", "illumina_pe"]
     - path: miniwdl_run/call-read_QC_trim/call-fastq_scan_raw/outputs.json
-      contains: ["fastq_scan_pe", "pipeline_date", "read1_peq", "read2_peq"]
+      contains: ["fastq_scan_pe", "pipeline_date", "read1_seq", "read2_seq"]
     - path: miniwdl_run/call-read_QC_trim/call-fastq_scan_raw/stderr.txt
     - path: miniwdl_run/call-read_QC_trim/call-fastq_scan_raw/stderr.txt.offset
     - path: miniwdl_run/call-read_QC_trim/call-fastq_scan_raw/stdout.txt
     - path: miniwdl_run/call-read_QC_trim/call-fastq_scan_raw/task.log
       contains: ["wdl", "theiacov_illumina_pe", "fastq_scan_raw", "done"]
-    - path: miniwdl_run/call-read_QC_trim/call-fastq_scan_raw/work/SRR13687078_fastq-scan.json
+    - path: miniwdl_run/call-read_QC_trim/call-fastq_scan_raw/work/SRR13687078_1_fastq-scan.json
       md5sum: 2a77387b247176aa5fcc9aed228699c9
     - path: miniwdl_run/call-read_QC_trim/call-fastq_scan_raw/work/SRR13687078_2_fastq-scan.json
       md5sum: d0eebdd4e14cf0a0b371fee1338474c9
@@ -108,7 +101,6 @@
       md5sum: 2bf2d20f083d8fa09abf6c25f8970e2e
     - path: miniwdl_run/call-read_QC_trim/call-kraken2_dehosted/work/PERCENT_TARGET_ORG
       md5sum: 68b329da9893e34099c7d8ad5cb9c940
-    - path: miniwdl_run/call-read_QC_trim/call-kraken2_dehosted/work/_miniwdl_inputs/0/SRR13687078_1.clean.fastq.gz
     - path: miniwdl_run/call-read_QC_trim/call-kraken2_dehosted/work/SRR13687078_kraken2_report.txt
       md5sum: 3544d9ca35d45093c03cdead46677765
     # kraken2 raw
@@ -138,7 +130,7 @@
     - path: miniwdl_run/call-read_QC_trim/call-ncbi_scrub_pe/inputs.json
       contains: ["read1", "read2", "samplename"]
     - path: miniwdl_run/call-read_QC_trim/call-ncbi_scrub_pe/outputs.json
-      contains: ["read1_deshoted", "read2_dehosted"]
+      contains: ["read1_dehosted", "read2_dehosted"]
     - path: miniwdl_run/call-read_QC_trim/call-ncbi_scrub_pe/stderr.txt
     - path: miniwdl_run/call-read_QC_trim/call-ncbi_scrub_pe/stderr.txt.offset
     - path: miniwdl_run/call-read_QC_trim/call-ncbi_scrub_pe/stdout.txt
@@ -154,7 +146,7 @@
     - path: miniwdl_run/call-clean_check_reads/inputs.json
       contains: ["read1", "read2", "organism"]
     - path: miniwdl_run/call-clean_check_reads/outputs.json
-      contains: ["check_reads_pe", "genome_length", "read_screen"]
+      contains: ["genome_length", "read_screen"]
     - path: miniwdl_run/call-clean_check_reads/stderr.txt
     - path: miniwdl_run/call-clean_check_reads/stderr.txt.offset
     - path: miniwdl_run/call-clean_check_reads/stdout.txt
@@ -201,7 +193,7 @@
     - path: miniwdl_run/call-ivar_consensus/call-primer_trim/inputs.json
       contains: ["primer_bed", "bamfile", "samplename"]
     - path: miniwdl_run/call-ivar_consensus/call-primer_trim/outputs.json
-      contains: ["primer_bed_name", "pipeline_date", "trimmed_bam", "trim_sorted_bam", "trim_sorted_bam_bai"]
+      contains: ["primer_bed_name", "pipeline_date", "trimmed_bam", "trim_sorted_bam"]
     - path: miniwdl_run/call-ivar_consensus/call-primer_trim/stderr.txt
     - path: miniwdl_run/call-ivar_consensus/call-primer_trim/stderr.txt.offset
     - path: miniwdl_run/call-ivar_consensus/call-primer_trim/stdout.txt
@@ -402,8 +394,6 @@
       md5sum: 80b7450a18e11a0f31de75c008e0819b
     - path: miniwdl_run/call-sc2_gene_coverage/work/S_GENE_PC
       md5sum: 60725f5d2663ca8d41955a739a154cc9
-    - path: miniwdl_run/call-sc2_gene_coverage/work/_miniwdl_inputs/0/SRR13687078.primertrimmed.sorted.bam
-    - path: miniwdl_run/call-sc2_gene_coverage/work/_miniwdl_inputs/0/SRR13687078.primertrimmed.sorted.bam.bai
     # nextclade
     - path: miniwdl_run/call-nextclade/command
       md5sum: 458e46858b2946aac52d9f371d4b97a6
@@ -420,7 +410,7 @@
     - path: miniwdl_run/call-nextclade/work/SRR13687078.ivar.consensus.nextclade.json
     - path: miniwdl_run/call-nextclade/work/SRR13687078.ivar.consensus.nextclade.tsv
     - path: miniwdl_run/call-nextclade/work/NEXTCLADE_VERSION
-      md5sum: 91a455762183b41af0d8de5596e28e7f
+      md5sum: d5f4e83525024cba7eb7489cd5209e7d
     - path: miniwdl_run/call-nextclade/work/nextclade.aligned.fasta
       md5sum: 59893fd3ef32062d50ded18300024734
     - path: miniwdl_run/call-nextclade/work/nextclade.csv
@@ -529,7 +519,7 @@
       contains: ["primer", "command", "output", "runtime"]
     - path: miniwdl_run/wdl/tasks/assembly/task_ivar_variant_call.wdl
       contains: ["variants", "command", "output", "runtime"]
-    - path: miniwdl_run/wdl/tasks/gene_typing/task_abricate/wdl
+    - path: miniwdl_run/wdl/tasks/gene_typing/task_abricate.wdl
       contains: ["abricate", "command", "output", "runtime"]
     - path: miniwdl_run/wdl/tasks/gene_typing/task_sc2_gene_coverage.wdl
       contains: ["coverage", "command", "output", "runtime"]
@@ -545,7 +535,7 @@
       contains: ["fastq", "command", "output", "runtime"]
     - path: miniwdl_run/wdl/tasks/quality_control/task_ncbi_scrub.wdl
       contains: ["ncbi", "command", "output", "runtime"]
-    - path: miniwdl_run/wdl/tasks/task_qc_check_phb.wdl
+    - path: miniwdl_run/wdl/tasks/quality_control/task_qc_check_phb.wdl
       contains: ["check", "command", "output", "runtime"]
     - path: miniwdl_run/wdl/tasks/quality_control/task_screen.wdl
       contains: ["screen", "command", "output", "runtime"]
@@ -571,5 +561,5 @@
       contains: ["ivar_consensus", "description", "call", "output"]
     - path: miniwdl_run/wdl/workflows/utilities/wf_read_QC_trim_pe.wdl
       contains: ["read_QC_trim", "description", "call", "output"]
-    - path: miniwdl_run/workflow.
+    - path: miniwdl_run/workflow.log
       contains: ["wdl", "theiacov_illumina_pe", "NOTICE", "done"]

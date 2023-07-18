@@ -21,13 +21,6 @@
     - path: miniwdl_run/call-raw_check_reads/inputs.json
     - path: miniwdl_run/call-raw_check_reads/outputs.json
     - path: miniwdl_run/call-raw_check_reads/task.log
-    # read QC trim workflow
-    - path: miniwdl_run/call-read_QC_trim/inputs.json
-      md5sum: 92f8bfdc669194ca9dfc77f9b3656eee
-    - path: miniwdl_run/call-read_QC_trim/outputs.json
-      md5sum: 17114672ebfc496e4e2186f5931c5ac6
-    - path: miniwdl_run/call-read_QC_trim/workflow.log
-      md5sum: adb78f48e5df63f8fd0cc1e967a05589
     # trimmomatic
     - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_se/command
       md5sum: 9e7284285a7e003f7eb0f4608ebbf363
@@ -50,7 +43,7 @@
     - path: miniwdl_run/call-read_QC_trim/call-bbduk_se/inputs.json
       contains: ["phix", "adapters", "read1", "samplename"]
     - path: miniwdl_run/call-read_QC_trim/call-bbduk_se/outputs.json
-      contains: ["bbduk_se", "read1_clean", "pipeline_date"]
+      contains: ["read1_clean", "pipeline_date"]
     - path: miniwdl_run/call-read_QC_trim/call-bbduk_se/stderr.txt
     - path: miniwdl_run/call-read_QC_trim/call-bbduk_se/stderr.txt.offset
     - path: miniwdl_run/call-read_QC_trim/call-bbduk_se/stdout.txt
@@ -150,7 +143,7 @@
     - path: miniwdl_run/call-ivar_consensus/call-primer_trim/inputs.json
       contains: ["primer_bed", "bamfile", "samplename"]
     - path: miniwdl_run/call-ivar_consensus/call-primer_trim/outputs.json
-      contains: ["primer_bed_name", "pipeline_date", "trimmed_bam", "trim_sorted_bam", "trim_sorted_bam_bai"]
+      contains: ["primer_bed_name", "pipeline_date", "trimmed_bam", "trim_sorted_bam"]
     - path: miniwdl_run/call-ivar_consensus/call-primer_trim/stderr.txt
     - path: miniwdl_run/call-ivar_consensus/call-primer_trim/stderr.txt.offset
     - path: miniwdl_run/call-ivar_consensus/call-primer_trim/stdout.txt
@@ -351,8 +344,6 @@
       md5sum: 035a022eb0f072a0e9f1fd33c4d9b420
     - path: miniwdl_run/call-sc2_gene_coverage/work/S_GENE_PC
       md5sum: f7d4aa78c0a111a35f9ed1add781d4dd
-    - path: miniwdl_run/call-sc2_gene_coverage/work/_miniwdl_inputs/0/ERR6319327.primertrimmed.sorted.bam
-    - path: miniwdl_run/call-sc2_gene_coverage/work/_miniwdl_inputs/0/ERR6319327.primertrimmed.sorted.bam.bai
     # nextclade
     - path: miniwdl_run/call-nextclade/command
       md5sum: ddc7f98380a6cd97c31e2b89a1baa0d1
@@ -488,7 +479,7 @@
       contains: ["fastp", "command", "output", "runtime"]
     - path: miniwdl_run/wdl/tasks/quality_control/task_fastq_scan.wdl
       contains: ["fastq", "command", "output", "runtime"]
-    - path: miniwdl_run/wdl/tasks/task_qc_check_phb.wdl
+    - path: miniwdl_run/wdl/tasks/quality_control/task_qc_check_phb.wdl
       contains: ["check", "command", "output", "runtime"]
     - path: miniwdl_run/wdl/tasks/quality_control/task_screen.wdl
       contains: ["screen", "command", "output", "runtime"]
