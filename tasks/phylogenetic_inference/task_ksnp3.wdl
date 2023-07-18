@@ -7,7 +7,7 @@ task ksnp3 {
     String cluster_name
     Int kmer_size = 19
     String ksnp3_args = "" # add -ML to calculate a maximum likelihood tree or -NJ to calculate a neighbor-joining tree
-    File? all_snps
+    File? previous_ksnp3_snps
     String docker_image = "quay.io/staphb/ksnp3:3.1"
     Int memory = 8
     Int cpu = 4
@@ -54,7 +54,7 @@ task ksnp3 {
     -outdir ksnp3 \
     -k ~{kmer_size} \
     -core -vcf \
-    ~{'-SNPs_all ' + all_snps} \
+    ~{'-SNPs_all ' + previous_ksnp3_snps} \
     ~{ksnp3_args}
   
   # rename ksnp3 outputs with cluster name 
@@ -92,7 +92,7 @@ task ksnp3 {
     File? ksnp3_ml_tree = "ksnp3/~{cluster_name}_ML.nwk"
     File? ksnp3_nj_tree = "ksnp3/~{cluster_name}_NJ.nwk"
     File number_snps = "ksnp3/COUNT_SNPs"
-    File kspn3_snps_all = "ksnp3/~{cluster_name}_SNPs_all"
+    File ksnp3_snps_all = "ksnp3/~{cluster_name}_SNPs_all"
     File ksnp3_input = "ksnp3_input.tsv"
     String skip_core_snp_dists = read_string("SKIP_SNP_DIST")
     Array[File] ksnp_outs = glob("ksnp3/*")
