@@ -5,11 +5,11 @@
     - wf_theiacov_illumina_pe_cromwell
   files:
     - path: log.err
-      cillumina_peains: ["Successfully released change log lock", "INFO", "WORKFLOW_METADATA_SUMMARY_ENTRY", "liquibase"]
+      contains: ["Successfully released change log lock", "INFO", "WORKFLOW_METADATA_SUMMARY_ENTRY", "liquibase"]
     - path: log.out
-      cillumina_peains: ["workflow finished with status 'Succeeded'", "theiacov_illumina_pe", "Done"]
+      contains: ["workflow finished with status 'Succeeded'", "theiacov_illumina_pe", "Done"]
     - path: metadata.json
-      cillumina_peains: ["outputs", "theiacov_illumina_pe", "Succeeded"]
+      contains: ["outputs", "theiacov_illumina_pe", "Succeeded"]
 
 - name: theiacov_illumina_pe_miniwdl
   command: miniwdl run -i ./tests/inputs/theiacov/wf_theiacov_illumina_pe.json -d miniwdl_run/. --verbose --error-json ./workflows/theiacov/wf_theiacov_illumina_pe.wdl
