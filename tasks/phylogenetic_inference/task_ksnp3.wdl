@@ -54,6 +54,9 @@ task ksnp3 {
   # sometimes the core nwk and fasta outputs do not have content
   mv -v ksnp3/core_SNPs_matrix.fasta ksnp3/~{cluster_name}_core_SNPs_matrix.fasta
   mv -v ksnp3/tree.core.tre ksnp3/~{cluster_name}_core.nwk
+  
+  # to allow appending new genomes to an existing tree, save the SNPs_all file
+  mv -v ksnp3/SNPs_all ksnp3/~{cluster_name}_SNPs_all
 
   if [ -s ksnp3/~{cluster_name}_core_SNPs_matrix.fasta ]; then # is the file not-empty?
     echo "The core SNP matrix was produced" | tee SKIP_SNP_DIST # then do NOT skip
@@ -82,6 +85,7 @@ task ksnp3 {
     File? ksnp3_ml_tree = "ksnp3/~{cluster_name}_ML.nwk"
     File? ksnp3_nj_tree = "ksnp3/~{cluster_name}_NJ.nwk"
     File number_snps = "ksnp3/COUNT_SNPs"
+    File kspn3_snps_all = "ksnp3/~{cluster_name}_SNPs_all"
     File ksnp3_input = "ksnp3_input.tsv"
     String skip_core_snp_dists = read_string("SKIP_SNP_DIST")
     Array[File] ksnp_outs = glob("ksnp3/*")
