@@ -6,7 +6,7 @@ task lyveset {
     Array[File] read2
     File reference_genome
     String dataset_name
-    String docker_image = "quay.io/staphb/lyveset:1.1.4f"
+    String docker_image = "staphb/lyveset:1.1.4f"
     Int memory = 64
     Int cpu = 16
     Int disk_size = 100
