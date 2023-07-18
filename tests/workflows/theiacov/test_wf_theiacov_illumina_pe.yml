@@ -39,7 +39,7 @@
     - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_pe/stderr.txt.offset
     - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_pe/stdout.txt
     - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_pe/task.log
-      contains: ["wdl", "illumina_pe", "trimmomatic" "done"]
+      contains: ["wdl", "illumina_pe", "trimmomatic", "done"]
     - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_pe/work/SRR13687078.trim.stats.txt
       md5sum: 9b28eaac90cbeba38eab41de4d95d564
     - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_pe/work/_miniwdl_inputs/0/SRR13687078_R1_dehosted.fastq.gz
