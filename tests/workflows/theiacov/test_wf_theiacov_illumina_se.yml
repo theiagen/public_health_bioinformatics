@@ -17,7 +17,7 @@
     - wf_theiacov_illumina_se
     - wf_theiacov_illumina_se_miniwdl
   files:
-    # raw check reads
+    # raw read screen
     - path: miniwdl_run/call-raw_check_reads/inputs.json
     - path: miniwdl_run/call-raw_check_reads/outputs.json
     - path: miniwdl_run/call-raw_check_reads/task.log
