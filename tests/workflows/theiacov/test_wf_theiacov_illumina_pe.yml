@@ -159,7 +159,7 @@
     - path: miniwdl_run/call-clean_check_reads/stderr.txt.offset
     - path: miniwdl_run/call-clean_check_reads/stdout.txt
     - path: miniwdl_run/call-clean_check_reads/task.log
-      contains: ["wdl", "illumina_pe", "check_reads, "done"]
+      contains: ["wdl", "illumina_pe", "check_reads", "done"]
     - path: miniwdl_run/call-clean_check_reads/work/EST_GENOME_LENGTH
       md5sum: cd5d3fde6b7f2417ec8ed3e7d5e85b28
     - path: miniwdl_run/call-clean_check_reads/work/FLAG
