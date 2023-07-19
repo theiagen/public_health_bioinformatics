@@ -53,9 +53,9 @@ workflow theiaprok_illumina_se {
     Boolean call_ani = false # by default do not call ANI task, but user has ability to enable this task if working with enteric pathogens or supply their own high-quality reference genome
     Boolean call_resfinder = false
     String genome_annotation = "prokka" # options: "prokka" or "bakta"
+    String? expected_taxon # allow user to provide organism (e.g. "Clostridioides_difficile") string to amrfinder. Useful when gambit does not predict the correct species
     # qc check parameters
     File? qc_check_table
-    String? expected_taxon
   }
   call versioning.version_capture{
     input:
@@ -71,7 +71,7 @@ workflow theiaprok_illumina_se {
       skip_screen = skip_screen,
       expected_genome_size = genome_size
   }
-  if (raw_check_reads.read_screen=="PASS") {
+  if (raw_check_reads.read_screen == "PASS") {
     call read_qc.read_QC_trim_se as read_QC_trim {
       input:
         samplename = samplename,
@@ -91,7 +91,7 @@ workflow theiaprok_illumina_se {
         skip_screen = skip_screen,
         expected_genome_size = genome_size
     }
-    if (clean_check_reads.read_screen=="PASS") {
+    if (clean_check_reads.read_screen == "PASS") {
       call shovill.shovill_se {
         input:
           samplename = samplename,
@@ -126,24 +126,24 @@ workflow theiaprok_illumina_se {
           samplename = samplename
       }
       if (call_ani) {
-      call ani_task.animummer as ani {
-        input:
-          assembly = shovill_se.assembly_fasta,
-          samplename = samplename
-      }
+        call ani_task.animummer as ani {
+          input:
+            assembly = shovill_se.assembly_fasta,
+            samplename = samplename
+        }
       }
       call amrfinderplus.amrfinderplus_nuc as amrfinderplus_task {
         input:
           assembly = shovill_se.assembly_fasta,
           samplename = samplename,
-          organism = gambit.gambit_predicted_taxon
+          organism = select_first([expected_taxon, gambit.gambit_predicted_taxon])
       }
       if (call_resfinder) {
-      call resfinder.resfinder as resfinder_task {
-        input:
-          assembly = shovill_se.assembly_fasta,
-          samplename = samplename,
-          organism = gambit.gambit_predicted_taxon
+        call resfinder.resfinder as resfinder_task {
+          input:
+            assembly = shovill_se.assembly_fasta,
+            samplename = samplename,
+            organism = select_first([expected_taxon, gambit.gambit_predicted_taxon])
         }
       }      
       call ts_mlst_task.ts_mlst {
@@ -170,7 +170,7 @@ workflow theiaprok_illumina_se {
           assembly = shovill_se.assembly_fasta,
           samplename = samplename
       }
-      if(defined(qc_check_table)) {
+      if (defined(qc_check_table)) {
         call qc_check.qc_check_phb as qc_check_task {
           input:
             qc_check_table = qc_check_table,
@@ -196,13 +196,13 @@ workflow theiaprok_illumina_se {
       }
       call merlin_magic_workflow.merlin_magic {
         input:
-          merlin_tag = gambit.merlin_tag,
+          merlin_tag = select_first([expected_taxon, gambit.merlin_tag]),
           assembly = shovill_se.assembly_fasta,
           samplename = samplename,
           read1 = read_QC_trim.read1_clean,
           paired_end = false
       }
-      if(defined(taxon_tables)) {
+      if (defined(taxon_tables)) {
         call terra_tools.export_taxon_tables {
           input:
             terra_project = terra_project,
@@ -481,7 +481,6 @@ workflow theiaprok_illumina_se {
             srst2_vibrio_biotype = merlin_magic.srst2_vibrio_biotype,
             qc_check = qc_check_task.qc_check,
             qc_standard = qc_check_task.qc_standard
-
         }
       }
     }

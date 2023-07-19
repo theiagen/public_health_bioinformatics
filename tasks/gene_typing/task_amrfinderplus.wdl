@@ -7,13 +7,14 @@ task amrfinderplus_nuc {
     # Parameters 
     # --indent_min Minimum DNA %identity [0-1]; default is 0.9 (90%) or curated threshold if it exists
     # --mincov Minimum DNA %coverage [0-1]; default is 0.5 (50%)
-    String? organism # make optional?
+    String? organism 
     Float? minid
     Float? mincov
     Boolean detailed_drug_class = false
     Int cpu = 4
     String docker = "quay.io/staphb/ncbi-amrfinderplus:3.11.11-2023-04-17.1"
     Int disk_size = 100
+    Int memory = 16
     Boolean hide_point_mutations = false
   }
   command <<<
@@ -24,52 +25,30 @@ task amrfinderplus_nuc {
     # capture the database version; strip out unnecessary output, remove "Database version: " that prints in front of the actual database version
     amrfinder --database_version 2>/dev/null | grep "Database version" | sed 's|Database version: ||' | tee AMRFINDER_DB_VERSION
 
-    ### set $amrfinder_organism BASH variable based on gambit_predicted_taxon or user-defined input string
-    ### final variable has strict syntax/spelling based on list from amrfinder --list_organisms
-    # there may be other Acinetobacter species to add later, like those in the A. baumannii-calcoaceticus species complex
-    if [[ "~{organism}" == *"Acinetobacter"*"baumannii"* ]]; then
-      amrfinder_organism="Acinetobacter_baumannii"
-    elif [[ "~{organism}" == *"Campylobacter"*"coli"* ]] || [[ "~{organism}" == *"Campylobacter"*"jejuni"* ]]; then
-      amrfinder_organism="Campylobacter"
-    elif [[ "~{organism}" == *"Clostridioides"*"difficile"* ]]; then
-      amrfinder_organism="Clostridioides_difficile"
-    elif [[ "~{organism}" == *"Enterococcus"*"faecalis"* ]]; then 
-      amrfinder_organism="Enterococcus_faecalis"
-    elif [[ "~{organism}" == *"Enterococcus"*"faecium"* ]] || [[ "~{organism}" == *"Enterococcus"*"hirae"* ]]; then 
-      amrfinder_organism="Enterococcus_faecium"
-    # should capture all Shigella and Escherichia species
-    elif [[ "~{organism}" == *"Escherichia"* ]] || [[ "~{organism}" == *"Shigella"* ]]; then 
-      amrfinder_organism="Escherichia"
-    # add other Klebsiella species later? Cannot use K. oxytoca as per amrfinderplus wiki
-    elif [[ "~{organism}" == *"Klebsiella"*"aerogenes"* ]] || [[ "~{organism}" == *"Klebsiella"*"pnemoniae"* ]]; then 
-      amrfinder_organism="Klebsiella"
-    # because some people spell the species 'gonorrhea' differently
-    elif [[ "~{organism}" == *"Neisseria"*"gonorrhea"* ]] || [[ "~{organism}" == *"Neisseria"*"gonorrhoeae"* ]] || [[ "~{organism}" == *"Neisseria"*"meningitidis"* ]]; then 
-      amrfinder_organism="Neisseria"
-    elif [[ "~{organism}" == *"Pseudomonas"*"aeruginosa"* ]]; then 
-      amrfinder_organism="Pseudomonas_aeruginosa"
-    # pretty broad, could work on Salmonella bongori and other species
-    elif [[ "~{organism}" == *"Salmonella"* ]]; then 
-      amrfinder_organism="Salmonella"
-    elif [[ "~{organism}" == *"Staphylococcus"*"aureus"* ]]; then 
-      amrfinder_organism="Staphylococcus_aureus"
-    elif [[ "~{organism}" == *"Staphylococcus"*"pseudintermedius"* ]]; then 
-      amrfinder_organism="Staphylococcus_pseudintermedius"
-    elif [[ "~{organism}" == *"Streptococcus"*"agalactiae"* ]]; then 
-      amrfinder_organism="Streptococcus_agalactiae"
-    elif [[ "~{organism}" == *"Streptococcus"*"pneumoniae"* ]] || [[ "~{organism}" == *"Streptococcus"*"mitis"* ]]; then 
-      amrfinder_organism="Streptococcus_pneumoniae"
-    elif [[ "~{organism}" == *"Streptococcus"*"pyogenes"* ]]; then 
-      amrfinder_organism="Streptococcus_pyogenes"
-    elif [[ "~{organism}" == *"Vibrio"*"cholerae"* ]]; then 
-      amrfinder_organism="Vibrio_cholerae"
-    else 
-      echo "Either Gambit predicted taxon is not supported by NCBI-AMRFinderPlus or the user did not supply an organism as input."
-      echo "Skipping the use of amrfinder --organism optional parameter."
-    fi
+    ## create associative array
+    declare -A organisms=( ["Acinetobacter baumannii"]="Acinetobacter_baumannii" ["Burkholderia cepacia"]="Burkholderia_cepacia" \
+      ["Burkholderia pseudomallei"]="Burkholderia_pseudomallei" ["Campylobacter coli"]="Campylobacter" ["Campylobacter jejuni"]="Campylobacter" \
+      ["Citrobacter freundii"]="Citrobacter_freundii" ["Clostridioides _difficile"]="Clostridioides_difficile" ["Enterobacter cloacae"]="Enterobacter_cloacae" \
+      ["Enterococcus faecalis"]="Enterococcus_faecalis" ["Enterococcus hirae"]="Enterococcus_faecium" ["Enterococcusfaecium"]="Enterococcus_faecium" \
+      [*"Escherichia"*]="Escherichia" [*"Shigella"*]="Escherichia" ["Klebsiella aerogenes"]="Klebsiella_pneumoniae" ["Klebsiella pneumoniae"]="Klebsiella_pneumoniae" \
+      ["Klebsiella variicola"]="Klebsiella_pneumoniae" ["Klebsiella oxytoca"]="Klebsiella_oxytoca" ["Neisseria gonorrhea"]="Neisseria_gonorrhoeae" \
+      ["Neisseria gonorrhoeae"]="Neisseria_gonorrhoeae" ["Neisseria meningitidis"]="Neisseria_meningitidis" ["Pseudomonas aeruginosa"]="Pseudomonas_aeruginosa" \
+      [*"Salmonella"*]="Salmonella" ["Serratia marcescens"]="Serratia_marcescens" ["Staphylococcus aureus"]="Staphylococcus_aureus" \
+      ["Staphylococcus pseudintermedius"]="Staphylococcus_pseudintermedius" ["Streptococcus agalactiae"]="Streptococcus_agalactiae" \
+      ["Streptococcus pneumoniae"]="Streptococcus_pneumoniae" ["Streptococcus mitis"]="Streptococcus_pneumoniae" \
+      ["Streptococcus pyogenes"]="Streptococcus_pyogenes" ["Vibrio cholerae"]="Vibrio_cholerae"
+      )
+
+    for key in "${!organisms[@]}"; do
+      if [[ "~{organism}" == $key ]]; then
+        amrfinder_organism=${organisms[$key]}
+      elif [[ "~{organism}" == *$key* ]]; then
+        amrfinder_organism=${organisms[$key]}
+      fi
+    done
 
     # checking bash variable
-    echo "amrfinder_organism is set to:" ${amrfinder_organism}
+    echo "amrfinder_organism is set to: " ${amrfinder_organism}
     
     # if amrfinder_organism variable is set, use --organism flag, otherwise do not use --organism flag
     if [[ -v amrfinder_organism ]] ; then
@@ -83,6 +62,8 @@ task amrfinderplus_nuc {
         ~{'--coverage_min ' + mincov} \
         ~{'--ident_min ' + minid}
     else 
+      echo "Either the organism (~{organism}) is not recognized by NCBI-AMRFinderPlus or the user did not supply an organism as input."
+      echo "Skipping the use of amrfinder --organism optional parameter."
       # always use --plus flag, others may be left out if param is optional and not supplied 
       amrfinder --plus \
         ~{'--name ' + samplename} \
@@ -167,7 +148,7 @@ task amrfinderplus_nuc {
     String amrfinderplus_db_version = read_string("AMRFINDER_DB_VERSION")
   }
   runtime {
-    memory: "8 GB"
+    memory: "~{memory} GB"
     cpu: cpu
     docker: docker
     disks:  "local-disk " + disk_size + " SSD"

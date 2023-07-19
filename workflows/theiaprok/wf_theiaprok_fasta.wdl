@@ -37,9 +37,9 @@ workflow theiaprok_fasta {
     Boolean call_ani = false # by default do not call ANI task, but user has ability to enable this task if working with enteric pathogens or supply their own high-quality reference genome
     Boolean call_resfinder = false
     String genome_annotation = "prokka" # options: "prokka" or "bakta"
+    String? expected_taxon # allow user to provide organism (e.g. "Clostridioides_difficile") string to amrfinder. Useful when gambit does not predict the correct species
     # qc check parameters
     File? qc_check_table
-    String? expected_taxon
   }
   call versioning.version_capture{
     input:
@@ -70,14 +70,14 @@ workflow theiaprok_fasta {
     input:
       assembly = assembly_fasta,
       samplename = samplename,
-      organism = gambit.gambit_predicted_taxon
+      organism = select_first([expected_taxon, gambit.gambit_predicted_taxon])
   }
   if (call_resfinder) {
     call resfinder.resfinder as resfinder_task {
       input:
         assembly = assembly_fasta,
         samplename = samplename,
-        organism = gambit.gambit_predicted_taxon
+        organism = select_first([expected_taxon, gambit.gambit_predicted_taxon])
     }
   }
   call ts_mlst_task.ts_mlst {
@@ -106,13 +106,13 @@ workflow theiaprok_fasta {
   }
   call merlin_magic_workflow.merlin_magic {
     input:
-      merlin_tag = gambit.merlin_tag,
+      merlin_tag = select_first([expected_taxon, gambit.merlin_tag]),
       assembly = assembly_fasta,
       samplename = samplename,
       assembly_only = true,
       paired_end = false
   }
-  if(defined(qc_check_table)) {
+  if (defined(qc_check_table)) {
     call qc_check.qc_check_phb as qc_check_task {
       input:
         qc_check_table = qc_check_table,
@@ -127,7 +127,7 @@ workflow theiaprok_fasta {
         ani_highest_percent_bases_aligned = ani.ani_highest_percent_bases_aligned
     }
   }
-  if(defined(taxon_tables)) {
+  if (defined(taxon_tables)) {
     call terra_tools.export_taxon_tables {
       input:
         terra_project = terra_project,
@@ -384,12 +384,12 @@ workflow theiaprok_fasta {
     # Read Metadata
     String seq_platform = seq_method
     # Assembly QC - quast outputs
-    File? quast_report = quast.quast_report
-    String? quast_version = quast.version
-    Int? assembly_length = quast.genome_length
-    Int? number_contigs = quast.number_contigs
-    Int? n50_value = quast.n50_value
-    Float? quast_gc_percent = quast.gc_percent
+    File quast_report = quast.quast_report
+    String quast_version = quast.version
+    Int assembly_length = quast.genome_length
+    Int number_contigs = quast.number_contigs
+    Int n50_value = quast.n50_value
+    Float quast_gc_percent = quast.gc_percent
     # Assembly QC - BUSCO outputs
     String busco_version = busco.busco_version
     String busco_database = busco.busco_database
