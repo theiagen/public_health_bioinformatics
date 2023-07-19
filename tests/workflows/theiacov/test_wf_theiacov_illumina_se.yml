@@ -408,7 +408,7 @@
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     # nextclade output parsing
     - path: miniwdl_run/call-nextclade_output_parser/command
-      md5sum: 3d6a2b8be6a4a7bc7eced0dbbafbc706
+      md5sum: 0b53c38622b0aecf5beacb17622de6d6
     - path: miniwdl_run/call-nextclade_output_parser/inputs.json
       contains: ["nextclade_tsv", "tsv"]
     - path: miniwdl_run/call-nextclade_output_parser/outputs.json
