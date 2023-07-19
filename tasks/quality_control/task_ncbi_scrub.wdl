@@ -5,7 +5,7 @@ task ncbi_scrub_pe {
     File read1
     File read2
     String samplename
-    String docker = "us-docker.pkg.dev/general-theiagen/ncbi/sra-human-scrubber:2.1.0"
+    String docker = "us-docker.pkg.dev/general-theiagen/ncbi/sra-human-scrubber:1.0.2021-05-05"
     Int disk_size = 100
   }
   String r1_filename = basename(read1)
