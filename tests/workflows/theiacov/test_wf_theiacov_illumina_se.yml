@@ -319,9 +319,9 @@
     - path: miniwdl_run/call-pangolin4/work/PANGOLIN_NOTES
       md5sum: 0b1f8fb5b938fe71631f61234cbf7ab3
     - path: miniwdl_run/call-pangolin4/work/PANGO_ASSIGNMENT_VERSION
-      md5sum: bec2c7e924c604b91dd79344f2059c11
+      md5sum: 4f37bb038d973d7e32df5cbbc4067c87
     - path: miniwdl_run/call-pangolin4/work/VERSION_PANGOLIN_ALL
-      md5sum: a312e4195e9c6b670410743f84366ff5
+      md5sum: 6c7f688ada8c1e247782758d7fca08e7
     - path: miniwdl_run/call-pangolin4/work/_miniwdl_inputs/0/ERR6319327.ivar.consensus.fasta
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     # sc2 gene coverage
@@ -346,7 +346,7 @@
       md5sum: f7d4aa78c0a111a35f9ed1add781d4dd
     # nextclade
     - path: miniwdl_run/call-nextclade/command
-      md5sum: ddc7f98380a6cd97c31e2b89a1baa0d1
+      md5sum: ad061b04c32b4a3d11ee156684cac457
     - path: miniwdl_run/call-nextclade/inputs.json
       contains: ["dataset_name", "dataset_tag", "genome_fasta"]
     - path: miniwdl_run/call-nextclade/outputs.json
