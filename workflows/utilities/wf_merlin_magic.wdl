@@ -89,7 +89,7 @@ workflow merlin_magic {
         minid = 95 # strict threshold of 95% identity for typing purposes
     }
   }
-  if (merlin_tag == "Escherichia" || merlin_tag == "Shigella_sonnei" ) {
+  if (merlin_tag == "Escherichia" || merlin_tag == "Shigella sonnei" ) {
     # tools specific to all Escherichia and Shigella species
     call serotypefinder_task.serotypefinder {
       input:
@@ -144,7 +144,7 @@ workflow merlin_magic {
         database = virulencefinder_database
     }
   }
-  if (merlin_tag == "Shigella_sonnei") {
+  if (merlin_tag == "Shigella sonnei") {
     # Shigella sonnei specific tasks
     if (!assembly_only) {
       call sonneityping_task.sonneityping { # test ONT compatibility
@@ -195,7 +195,8 @@ workflow merlin_magic {
       }
     }
   }
-  if (merlin_tag == "Klebsiella") {
+  # see here for appropriate Klebsiella species & subspecies to be analyzed w Kleborate: https://github.com/klebgenomics/Kleborate/wiki/Species-detection
+  if (merlin_tag == "Klebsiella" || merlin_tag == "Klebsiella pneumoniae" || merlin_tag == "Klebsiella variicola" || merlin_tag == "Klebsiella aerogenes" || merlin_tag == "Klebsiella oxytoca") {
     call kleborate_task.kleborate {
       input:
         assembly = assembly,
@@ -320,7 +321,7 @@ workflow merlin_magic {
         docker = hicap_docker_image
     }
   }
-  if (merlin_tag == "Vibrio") {
+  if (merlin_tag == "Vibrio" || merlin_tag == "Vibrio cholerae") {
     if (!assembly_only && !ont_data) {
       call srst2_vibrio_task.srst2_vibrio {
         input:
