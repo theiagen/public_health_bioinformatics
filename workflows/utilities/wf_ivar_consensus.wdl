@@ -29,7 +29,7 @@ workflow ivar_consensus {
       read2 = read2,
       reference_genome = reference_genome
   }
-  if (trim_primers){
+  if (trim_primers) {
     call primer_trim_task.primer_trim {
       input:
         samplename = samplename,
@@ -70,8 +70,8 @@ workflow ivar_consensus {
     String samtools_version = bwa.sam_version
     File read1_aligned = bwa.read1_aligned
     File? read2_aligned = bwa.read2_aligned
-    String aligned_bam =  select_first([primer_trim.trim_sorted_bam, bwa.sorted_bam, ""]) # set default values for select_first() to avoid workflow failures
-    String aligned_bai = select_first([primer_trim.trim_sorted_bai, bwa.sorted_bai, ""])
+    File aligned_bam =  select_first([primer_trim.trim_sorted_bam, bwa.sorted_bam, ""]) # set default values for select_first() to avoid workflow failures
+    File aligned_bai = select_first([primer_trim.trim_sorted_bai, bwa.sorted_bai, ""])
     
     # primer trimming outputs
     Float? primer_trimmed_read_percent = primer_trim.primer_trimmed_read_percent
