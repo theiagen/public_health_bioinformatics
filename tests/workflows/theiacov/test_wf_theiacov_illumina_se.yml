@@ -408,7 +408,7 @@
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     # nextclade output parsing
     - path: miniwdl_run/call-nextclade_output_parser/command
-      md5sum: ec85a4090850b325812dadd048d0433c
+      md5sum: 3d6a2b8be6a4a7bc7eced0dbbafbc706
     - path: miniwdl_run/call-nextclade_output_parser/inputs.json
       contains: ["nextclade_tsv", "tsv"]
     - path: miniwdl_run/call-nextclade_output_parser/outputs.json
@@ -423,7 +423,7 @@
     - path: miniwdl_run/call-nextclade_output_parser/work/NEXTCLADE_AASUBS
       md5sum: b3f2db7e892d3daf50f06ee4a1d81ce3
     - path: miniwdl_run/call-nextclade_output_parser/work/NEXTCLADE_CLADE
-      md5sum: 10f0a753684523e97b88ce4b12d844d9
+      md5sum: 091b0550fbf76caed33736bc66d72644
     - path: miniwdl_run/call-nextclade_output_parser/work/NEXTCLADE_LINEAGE
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     - path: miniwdl_run/call-nextclade_output_parser/work/TAMIFLU_AASUBS

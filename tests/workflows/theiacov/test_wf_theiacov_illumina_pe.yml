@@ -121,7 +121,6 @@
       md5sum: 2bf2d20f083d8fa09abf6c25f8970e2e
     - path: miniwdl_run/call-read_QC_trim/call-kraken2_raw/work/PERCENT_TARGET_ORG
       md5sum: 68b329da9893e34099c7d8ad5cb9c940
-    - path: miniwdl_run/call-read_QC_trim/call-kraken2_raw/work/_miniwdl_inputs/0/SRR13687078_1.clean.fastq.gz
     - path: miniwdl_run/call-read_QC_trim/call-kraken2_raw/work/SRR13687078_kraken2_report.txt
       md5sum: 3544d9ca35d45093c03cdead46677765
     # ncbi scrub
@@ -458,7 +457,7 @@
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     # nextclade output parsing
     - path: miniwdl_run/call-nextclade_output_parser/command
-      md5sum: bde1926eac392031205293433416e991
+      md5sum: 3d6a2b8be6a4a7bc7eced0dbbafbc706
     - path: miniwdl_run/call-nextclade_output_parser/inputs.json
       contains: ["nextclade_tsv", "tsv"]
     - path: miniwdl_run/call-nextclade_output_parser/outputs.json
