@@ -639,6 +639,7 @@ workflow merlin_magic {
     String? cladetyper_docker_image = cladetyper.gambit_cladetyper_docker_image
     String? cladetype_annotated_ref = cladetyper.clade_spec_ref
     # snippy variants
+    String snippy_variants_reference_genome = select_first([snippy_cauris.snippy_variants_reference_genome, snippy_afumigatus.snippy_variants_reference_genome, snippy_crypto.snippy_variants_reference_genome, "No reference genome detected"])
     String snippy_variants_version = select_first([snippy_cauris.snippy_variants_version, snippy_afumigatus.snippy_variants_version, snippy_crypto.snippy_variants_version, "No matching taxon detected"])
     String snippy_variants_query = select_first([snippy_gene_query_cauris.snippy_variants_query, snippy_gene_query_afumigatus.snippy_variants_query, snippy_gene_query_crypto.snippy_variants_query, "No matching taxon detected"])
     String snippy_variants_query_check = select_first([snippy_gene_query_cauris.snippy_variants_query_check, snippy_gene_query_afumigatus.snippy_variants_query_check, snippy_gene_query_crypto.snippy_variants_query_check, "No matching taxon detected"])
