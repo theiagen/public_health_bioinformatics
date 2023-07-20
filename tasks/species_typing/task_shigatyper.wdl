@@ -8,7 +8,7 @@ task shigatyper {
     File read1 
     File? read2
     String samplename
-    String docker = "staphb/shigatyper:2.0.5"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/shigatyper:2.0.5"
     Int disk_size = 100
     Int cpus = 4
     Int memory = 16
