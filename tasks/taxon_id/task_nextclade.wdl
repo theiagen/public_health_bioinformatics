@@ -9,7 +9,7 @@ task nextclade {
       File? root_sequence
       File? auspice_reference_tree_json
       File? qc_config_json
-      File? gene_annotations_json
+      File? gene_annotations_gff
       File? pcr_primers_csv
       File? virus_properties
       String docker = "nextstrain/nextclade:2.14.0"
@@ -30,7 +30,7 @@ task nextclade {
             ~{"--input-root-seq " + root_sequence} \
             ~{"--input-tree " + auspice_reference_tree_json} \
             ~{"--input-qc-config " + qc_config_json} \
-            ~{"--input-gene-map " + gene_annotations_json} \
+            ~{"--input-gene-map " + gene_annotations_gff} \
             ~{"--input-pcr-primers " + pcr_primers_csv} \
             ~{"--input-virus-properties " + virus_properties}  \
             --output-json "~{basename}".nextclade.json \
