@@ -180,7 +180,7 @@ task prune_table {
     File excluded_samples = "excluded_samples.tsv"
   }
   runtime {
-    docker: "quay.io/theiagen/terra-tools:2023-03-16"
+    docker: "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-03-16"
     memory: "8 GB"
     cpu: 4
     disks: "local-disk 100 SSD"
@@ -256,7 +256,7 @@ task add_biosample_accessions {
     Boolean proceed = read_boolean("PROCEED")
   }
   runtime {
-    docker: "quay.io/theiagen/terra-tools:2023-03-16"
+    docker: "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-03-16"
     memory: "8 GB"
     cpu: 4
     disks: "local-disk 100 SSD"

@@ -7,7 +7,7 @@ task hicap {
   input {
     File assembly
     String samplename
-    String docker = "quay.io/biocontainers/hicap:1.0.3--py_0"
+    String docker = "us-docker.pkg.dev/general-theiagen/biocontainers/hicap:1.0.3--py_0"
     Int cpu = 2
 
     #Parameters

@@ -7,7 +7,7 @@ task kmc {
   input {
     File read1
     String samplename
-    String docker = "quay.io/biocontainers/kmc:3.2.1--h9ee0642_0"
+    String docker = "us-docker.pkg.dev/general-theiagen/biocontainers/kmc:3.2.1--h9ee0642_0"
     Int disk_size = 100
     Int cpu = 8
     Int mem = 32

@@ -25,7 +25,7 @@ task augur_align {
     String augur_version = read_string("VERSION")
   }
   runtime {
-    docker: "quay.io/biocontainers/augur:22.0.2--pyhdfd78af_0"
+    docker: "us-docker.pkg.dev/general-theiagen/biocontainers/augur:22.0.2--pyhdfd78af_0"
     memory: mem_size + " GB"
     cpu :   cpus
     disks:  "local-disk " + disk_size + " LOCAL"

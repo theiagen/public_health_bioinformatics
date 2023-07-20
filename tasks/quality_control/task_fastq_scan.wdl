@@ -45,7 +45,7 @@ task fastq_scan_pe {
     String pipeline_date = read_string("DATE")
   }
   runtime {
-    docker: "quay.io/biocontainers/fastq-scan:0.4.4--h7d875b9_1"
+    docker: "us-docker.pkg.dev/general-theiagen/biocontainers/fastq-scan:0.4.4--h7d875b9_1"
     memory: "2 GB"
     cpu: 2
     disks:  "local-disk " + disk_size + " SSD"
@@ -83,7 +83,7 @@ task fastq_scan_se {
     String pipeline_date = read_string("DATE")
   }
   runtime {
-    docker: "quay.io/biocontainers/fastq-scan:0.4.4--h7d875b9_1"
+    docker: "us-docker.pkg.dev/general-theiagen/biocontainers/fastq-scan:0.4.4--h7d875b9_1"
     memory: "2 GB"
     cpu: 2
     disks:  "local-disk " + disk_size + " SSD"

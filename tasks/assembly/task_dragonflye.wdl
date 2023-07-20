@@ -14,7 +14,7 @@ task dragonflye {
     Int polishing_rounds = 1 # default 1
     Boolean use_racon = false # use medaka polishing by default
     String medaka_model = "r941_min_hac_g507"
-    String docker = "quay.io/biocontainers/dragonflye:1.0.14--hdfd78af_0"
+    String docker = "us-docker.pkg.dev/general-theiagen/biocontainers/dragonflye:1.0.14--hdfd78af_0"
     Int disk_size = 100
     Int cpu = 4
   }

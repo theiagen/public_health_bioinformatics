@@ -12,7 +12,7 @@ task nextclade {
       File? gene_annotations_gff
       File? pcr_primers_csv
       File? virus_properties
-      String docker = "nextstrain/nextclade:2.14.0"
+      String docker = "us-docker.pkg.dev/general-theiagen/nextstrain/nextclade:2.14.0"
       String dataset_name
       String dataset_reference
       String dataset_tag

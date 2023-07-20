@@ -43,7 +43,7 @@ task mashtree_fasta {
     File mashtree_tree = "~{cluster_name}.nwk"
   }
   runtime {
-    docker: "quay.io/staphb/mashtree:1.2.0"
+    docker: "us-docker.pkg.dev/general-theiagen/staphb/mashtree:1.2.0"
     memory: "~{memory} GB"
     cpu: cpu
     disks: "local-disk " + disk_size + " SSD"

@@ -7,7 +7,7 @@ task bakta {
     String samplename
     Int cpu = 8
     Int memory = 16
-    String docker = "quay.io/biocontainers/bakta:1.5.1--pyhdfd78af_0"
+    String docker = "us-docker.pkg.dev/general-theiagen/biocontainers/bakta:1.5.1--pyhdfd78af_0"
     Int disk_size = 100
     # Parameters 
     #  proteins: Fasta file of trusted protein sequences for CDS annotation

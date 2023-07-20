@@ -7,7 +7,7 @@ task ectyper {
   input {
     File assembly
     String samplename
-    String docker = "quay.io/biocontainers/ectyper:1.0.0--pyhdfd78af_1"
+    String docker = "us-docker.pkg.dev/general-theiagen/biocontainers/ectyper:1.0.0--pyhdfd78af_1"
     Int disk_size = 100
     Int cpu = 4
 

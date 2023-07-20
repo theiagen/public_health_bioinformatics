@@ -7,7 +7,7 @@ task spatyper {
   input {
     File assembly
     String samplename
-    String docker = "quay.io/biocontainers/spatyper:0.3.3--pyhdfd78af_3"
+    String docker = "us-docker.pkg.dev/general-theiagen/biocontainers/spatyper:0.3.3--pyhdfd78af_3"
     Int disk_size = 100
     Int cpu = 4
 

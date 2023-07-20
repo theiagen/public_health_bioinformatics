@@ -54,7 +54,7 @@ task bwa {
     File? read2_aligned = "~{samplename}_R2.fastq.gz"
   }
   runtime {
-    docker: "quay.io/staphb/ivar:1.3.1-titan"
+    docker: "us-docker.pkg.dev/general-theiagen/staphb/ivar:1.3.1-titan"
     memory: "8 GB"
     cpu: cpu
     disks:  "local-disk " + disk_size + " SSD"

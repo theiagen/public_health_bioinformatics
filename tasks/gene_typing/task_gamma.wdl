@@ -4,7 +4,7 @@ task gamma_one_sample {
   input {
     File assembly_fasta
     String samplename
-    String docker = "quay.io/biocontainers/gamma:1.4--hdfd78af_0"
+    String docker = "us-docker.pkg.dev/general-theiagen/biocontainers/gamma:1.4--hdfd78af_0"
     File gamma_database
   }
   String database_name = basename(gamma_database)

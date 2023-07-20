@@ -7,8 +7,8 @@ task ksnp3 {
     String cluster_name
     Int kmer_size = 19
     String ksnp3_args = "" # add -ML to calculate a maximum likelihood tree or -NJ to calculate a neighbor-joining tree
+    String docker_image = "us-docker.pkg.dev/general-theiagen/staphb/ksnp3:3.1"
     File? previous_ksnp3_snps
-    String docker_image = "quay.io/staphb/ksnp3:3.1"
     Int memory = 8
     Int cpu = 4
     Int disk_size = 100

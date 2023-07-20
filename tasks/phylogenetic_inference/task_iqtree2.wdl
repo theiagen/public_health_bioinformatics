@@ -10,7 +10,7 @@ task iqtree2 {
     String? iqtree2_opts
     Boolean? core_genome
 
-    String docker = "quay.io/staphb/iqtree2:2.1.2"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/iqtree2:2.1.2"
     Int disk_size = 100
     Int cpu = 4
     Int memory = 32
