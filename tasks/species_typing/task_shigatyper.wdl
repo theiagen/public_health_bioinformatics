@@ -11,6 +11,7 @@ task shigatyper {
     String docker = "staphb/shigatyper:2.0.5"
     Int disk_size = 100
     Int cpus = 4
+    Int memory = 16
     Boolean read1_is_ont = false
   }
   command <<<
@@ -63,7 +64,7 @@ task shigatyper {
   }
   runtime {
     docker: "~{docker}"
-    memory: "16 GB"
+    memory: "~{memory} GB"
     cpu: cpus
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
