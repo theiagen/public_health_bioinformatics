@@ -61,6 +61,11 @@ task tbprofiler_output_parsing {
                  "M_DST_N01_LZD": {"rrl": "M_DST_N02_rrl", "rplC": "M_DST_N03_rplC"}
                 }
 
+    # lookup list - the genes to be considered for the LIMS report
+    genes_for_LIMS = ["katG", "fabG1", "inhA", "ethA", "rpoB", "pncA", "embA", "embB", "rrs", "eis", 
+                    "tlyA", "gyrA", "gyrB", "Rv0678", "atpE", "pepQ", "mmpL5", "mmpS5", "rrl", "rplC"
+                    ]
+
     # lookup dictionary - gene to antimicrobial drug name (https://github.com/jodyphelan/tbdb/blob/master/tbdb.csv)
     gene_to_antimicrobial_drug_name = {"ahpC":["isoniazid"], "ald":["cycloserine"], "alr": ["cycloserine"],
                           "ddn": ["delamanid"], "eis": ["amikacin", "kanamycin"], "embA": ["ethambutol"],
@@ -127,7 +132,9 @@ task tbprofiler_output_parsing {
     gene_list_option_1 = ["Rv0678", "atpE", "pepQ", "mmpL5", "mmpS5", "rrl", "rplC"] # Rv0678 is mmpR
     gene_list_option_2 = ["katG", "pncA", "ethA", "gid", "rpoB"]
     gene_list_combined = ["Rv0678", "atpE", "pepQ", "mmpL5", "mmpS5", "rrl", "rplC", "katG", "pncA", "ethA", "gid", "rpoB"]
+    
     low_depth_of_coverage_list = []
+    
     ## Auxiliary Functions ##
 
     def get_position(protein_mut):
@@ -256,6 +263,10 @@ task tbprofiler_output_parsing {
       return ""
 
     def remove_no_expert(row):
+      """
+      This function removes the 'noexpert' suffix in the case where 
+      the logic applied is not considered an expert rule.
+      """
       if "noexpert" in row["looker_interpretation"]:
         interpretation = row["looker_interpretation"]
         row["looker_interpretation"] = interpretation.replace("noexpert", "")
@@ -316,24 +327,32 @@ task tbprofiler_output_parsing {
 
       with open(json_file) as js_fh:
         results_json = json.load(js_fh)
-        for dr_variant in results_json["dr_variants"]:  # reported mutation by tb-profiler, all confering resistance
+        
+        for dr_variant in results_json["dr_variants"]:
           name = dr_variant["gene"]
-          substitution = str(dr_variant["nucleotide_change"] + " (" + dr_variant["protein_change"] + ")")  # mutation_type:nt_sub (aa_sub)
-          if name not in mutations_dict.keys():
-            mutations_dict[name] = substitution
-          else:
-            mutations_dict[name] = mutations_dict[name] + '; ' + substitution
-        for other_variant in results_json["other_variants"]:  # mutations not reported by tb-profiler
-          aa_position = get_position(other_variant["protein_change"])
-          if other_variant["type"] != "synonymous_variant" or (other_variant["gene"] == "rpoB" and (aa_position >= 426 and aa_position <= 452)):  # report all non-synonymous mutations, unless rpoB RRDR
-            name = other_variant["gene"]
-            substitution = str(other_variant["nucleotide_change"] + " (" + other_variant["protein_change"] + ")")  # mutation_type:nt_sub (aa_sub)
-            if other_variant["type"] == "synonymous_variant": # rpoB RRDR
-              substituion = subtitution + " [synonymous]"
+          if name in genes_for_LIMS:
+            substitution = str(dr_variant["nucleotide_change"] + " (" + dr_variant["protein_change"] + ")")
+        
             if name not in mutations_dict.keys():
               mutations_dict[name] = substitution
             else:
               mutations_dict[name] = mutations_dict[name] + '; ' + substitution
+        
+        for other_variant in results_json["other_variants"]:
+          name = other_variant["gene"]
+          if name in genes_for_LIMS:
+            aa_position = get_position(other_variant["protein_change"])
+
+            if other_variant["type"] != "synonymous_variant" or (other_variant["gene"] == "rpoB" and (aa_position >= 426 and aa_position <= 452)):  # report all non-synonymous mutations, unless rpoB RRDR
+              name = other_variant["gene"]
+              substitution = str(other_variant["nucleotide_change"] + " (" + other_variant["protein_change"] + ")")
+
+              if other_variant["type"] == "synonymous_variant": # only catches rpoB RRDR
+                substituion = subtitution + " [synonymous]"      
+              if name not in mutations_dict.keys():
+                mutations_dict[name] = substitution
+              else:
+                mutations_dict[name] = mutations_dict[name] + '; ' + substitution
       return mutations_dict
 
     def rank_annotation(annotation):
@@ -362,7 +381,7 @@ task tbprofiler_output_parsing {
       else: # "Not assoc w R" and "Not assoc w R - Interim" and anything else
         return "No genetic determinants associated with resistance to {} detected".format(drug)
 
-    def parse_json_resistance(json_file):
+    def parse_json_resistance(json_file, destination):
       """
       This function parses the tbprofiler json report and returns a resistance dictionary
       containing the WHO resistance annotation for each antimicrobial drug for LIMS and Looker. 
@@ -374,28 +393,48 @@ task tbprofiler_output_parsing {
         results_json = json.load(js_fh)
 
         for dr_variant in results_json["dr_variants"]: # mutation 
+          name = dr_variant["gene"]
           if dr_variant["type"] != "synonymous_variant":  # report all non-synonymous mutations
+
             if "annotation" in dr_variant.keys(): # if an annotation is present,
               for annotation in dr_variant["annotation"]: # iterate through them
                 drug = annotation["drug"]
                 who_annotation = annotation["who_confidence"]
+
                 if drug not in resistance_dict.keys():
-                  resistance_dict[drug] = who_annotation
+                  if destination == "Looker":
+                    resistance_dict[drug] = who_annotation
+                  elif (name in genes_for_LIMS) and (destination == "LIMS"):
+                    resistance_dict[drug] = who_annotation
+
                 else: # if the drug has already been seen in either the same variant or a different one,
                   if rank_annotation(resistance_dict[drug]) < rank_annotation(who_annotation): # if current annotation indicates higher severity than any previous annotation,
-                    resistance_dict[drug] = who_annotation # overwrite with the who_annotation
+                    if destination == "Looker": 
+                      resistance_dict[drug] = who_annotation # overwrite with more severe annotation
+                    elif (name in genes_for_LIMS) and (destination == "LIMS"):
+                      resistance_dict[drug] = who_annotation # overwrite with more severe annotation
           
         for other_variant in results_json["other_variants"]:
+          name = other_variant["gene"]
           if other_variant["type"] != "synonymous_variant":  # report all non-synonymous mutations
+
             if "annotation" in other_variant.keys(): # if an annotation is present,
               for annotation in other_variant["annotation"]: # iterate through them
                 drug = annotation["drug"]
                 who_annotation = annotation["who_confidence"]
+                
                 if drug not in resistance_dict.keys():
-                  resistance_dict[drug] = who_annotation
+                  if destination == "Looker":
+                    resistance_dict[drug] = who_annotation
+                  elif (name in genes_for_LIMS) and (destination == "LIMS"):
+                    resistance_dict[drug] = who_annotation # only 
+
                 else: # if the drug has already been seen in either the same variant or a different one,
                   if rank_annotation(resistance_dict[drug]) < rank_annotation(who_annotation): # if current annotation indicates higher severity than any previous annotation,
-                    resistance_dict[drug] = who_annotation # overwrite with the who_annotation
+                    if destination == "Looker": 
+                      resistance_dict[drug] = who_annotation # overwrite with more severe annotation
+                    elif (name in genes_for_LIMS) and (destination == "LIMS"):
+                      resistance_dict[drug] = who_annotation # overwrite with more severe annotation
 
       return resistance_dict
 
@@ -605,7 +644,7 @@ task tbprofiler_output_parsing {
     
       lineage = get_lineage_LIMS("~{json}")
       mutations = parse_json_mutations_for_LIMS("~{json}")
-      resistance_annotation = parse_json_resistance("~{json}")
+      resistance_annotation = parse_json_resistance("~{json}", "LIMS")
       df_lims = pd.DataFrame({"MDL sample accession numbers":"~{samplename}", "M_DST_A01_ID": lineage}, index=[0])
 
       for antimicrobial_code, genes in antimicrobial_code_to_genes.items():
@@ -668,7 +707,7 @@ task tbprofiler_output_parsing {
       """
 
       lineage, ID = get_lineage_and_ID_Looker("~{json}")
-      resistance_annotation = parse_json_resistance("~{json}")
+      resistance_annotation = parse_json_resistance("~{json}", "Looker")
       df_looker = pd.DataFrame({"sample_id":"~{samplename}", "output_seq_method_type": "~{output_seq_method_type}"}, index=[0])
 
       for antimicrobial_drug in antimicrobial_drug_name_list:
