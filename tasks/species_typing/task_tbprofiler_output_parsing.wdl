@@ -400,17 +400,16 @@ task tbprofiler_output_parsing {
 
             if "annotation" in dr_variant.keys(): # if an annotation is present,
               if len(dr_variant["annotation"]) == 0:
-                who_annotation = apply_expert_rules(dr_variant["nucleotide_change"], dr_variant["protein_change"], dr_variant["gene"], dr_variant["type"], "LIMS")
-                if drug not in resistance_dict.keys():
-                  if (name in genes_for_LIMS) and (destination == "LIMS"):
-                    print(name)
-                    print(drug)
-                    resistance_dict[drug] = who_annotation # overwrite with more severe annotation
-                else:
-                  print(name, drug)
-                  if rank_annotation(resistance_dict[drug]) < rank_annotation(who_annotation): # if current annotation indicates higher severity than any previous annotation,
+                for identified_drug in dr_variant["gene_associated_drugs"]:
+                  who_annotation = apply_expert_rules(dr_variant["nucleotide_change"], dr_variant["protein_change"], dr_variant["gene"], dr_variant["type"], "LIMS")
+                  print(name, identified_drug)
+                  if identified_drug not in resistance_dict.keys():
                     if (name in genes_for_LIMS) and (destination == "LIMS"):
-                      resistance_dict[drug] = who_annotation # overwrite with more severe annotation
+                      resistance_dict[identified_drug] = who_annotation # overwrite with more severe annotation
+                  else:
+                    if rank_annotation(resistance_dict[identified_drug]) < rank_annotation(who_annotation): # if current annotation indicates higher severity than any previous annotation,
+                      if (name in genes_for_LIMS) and (destination == "LIMS"):
+                        resistance_dict[identified_drug] = who_annotation # overwrite with more severe annotation
 
               for annotation in dr_variant["annotation"]: # iterate through them
                 drug = annotation["drug"]
@@ -428,16 +427,16 @@ task tbprofiler_output_parsing {
                     elif (name in genes_for_LIMS) and (destination == "LIMS"):
                       resistance_dict[drug] = who_annotation # overwrite with more severe annotation
             else:
-              who_annotation = apply_expert_rules(dr_variant["nucleotide_change"], dr_variant["protein_change"], dr_variant["gene"], dr_variant["type"], "LIMS")
-              print(name)
-              print(who_annotation)
-              if drug not in resistance_dict.keys():
-                if (name in genes_for_LIMS) and (destination == "LIMS"):
-                  resistance_dict[drug] = who_annotation # overwrite with more severe annotation
-              else:
-                if rank_annotation(resistance_dict[drug]) < rank_annotation(who_annotation): # if current annotation indicates higher severity than any previous annotation,
+              for identified_drug in dr_variant["gene_associated_drugs"]:
+                who_annotation = apply_expert_rules(dr_variant["nucleotide_change"], dr_variant["protein_change"], dr_variant["gene"], dr_variant["type"], "LIMS")
+                print(name, identified_drug)
+                if identified_drug not in resistance_dict.keys():
                   if (name in genes_for_LIMS) and (destination == "LIMS"):
-                    resistance_dict[drug] = who_annotation # overwrite with more severe annotation
+                    resistance_dict[identified_drug] = who_annotation # overwrite with more severe annotation
+                else:
+                  if rank_annotation(resistance_dict[identified_drug]) < rank_annotation(who_annotation): # if current annotation indicates higher severity than any previous annotation,
+                    if (name in genes_for_LIMS) and (destination == "LIMS"):
+                      resistance_dict[identified_drug] = who_annotation # overwrite with more severe annotation
 
         for other_variant in results_json["other_variants"]:
           name = other_variant["gene"]
@@ -445,16 +444,17 @@ task tbprofiler_output_parsing {
 
             if "annotation" in other_variant.keys(): # if an annotation is present,
               if len(other_variant["annotation"]) == 0:
-                who_annotation = apply_expert_rules(other_variant["nucleotide_change"], other_variant["protein_change"], other_variant["gene"], other_variant["type"], "LIMS")
-                print(name)
-                print(who_annotation)  
-                if drug not in resistance_dict.keys():
-                  if (name in genes_for_LIMS) and (destination == "LIMS"):
-                    resistance_dict[drug] = who_annotation # overwrite with more severe annotation
-                else:
-                  if rank_annotation(resistance_dict[drug]) < rank_annotation(who_annotation): # if current annotation indicates higher severity than any previous annotation,
+                for identified_drug in other_variant["gene_associated_drugs"]:
+                  who_annotation = apply_expert_rules(other_variant["nucleotide_change"], other_variant["protein_change"], other_variant["gene"], other_variant["type"], "LIMS")
+                  print(name)
+                  print(who_annotation)  
+                  if identified_drug not in resistance_dict.keys():
                     if (name in genes_for_LIMS) and (destination == "LIMS"):
-                      resistance_dict[drug] = who_annotation # overwrite with more severe annotation
+                      resistance_dict[identified_drug] = who_annotation # overwrite with more severe annotation
+                  else:
+                    if rank_annotation(resistance_dict[identified_drug]) < rank_annotation(who_annotation): # if current annotation indicates higher severity than any previous annotation,
+                      if (name in genes_for_LIMS) and (destination == "LIMS"):
+                        resistance_dict[identified_drug] = who_annotation # overwrite with more severe annotation
               
               for annotation in other_variant["annotation"]: # iterate through them
                 drug = annotation["drug"]
@@ -473,14 +473,17 @@ task tbprofiler_output_parsing {
                     elif (name in genes_for_LIMS) and (destination == "LIMS"):
                       resistance_dict[drug] = who_annotation # overwrite with more severe annotation
             else:
-              who_annotation = apply_expert_rules(other_variant["nucleotide_change"], other_variant["protein_change"], other_variant["gene"], other_variant["type"], "LIMS")
-              if drug not in resistance_dict.keys():
-                if (name in genes_for_LIMS) and (destination == "LIMS"):
-                  resistance_dict[drug] = who_annotation # overwrite with more severe annotation
-              else:
-                if rank_annotation(resistance_dict[drug]) < rank_annotation(who_annotation): # if current annotation indicates higher severity than any previous annotation,
+              for identified_drug in other_variant["gene_associated_drugs"]:
+                who_annotation = apply_expert_rules(other_variant["nucleotide_change"], other_variant["protein_change"], other_variant["gene"], other_variant["type"], "LIMS")
+                print(name)
+                print(who_annotation)  
+                if identified_drug not in resistance_dict.keys():
                   if (name in genes_for_LIMS) and (destination == "LIMS"):
-                    resistance_dict[drug] = who_annotation # overwrite with more severe annotation
+                    resistance_dict[identified_drug] = who_annotation # overwrite with more severe annotation
+                else:
+                  if rank_annotation(resistance_dict[identified_drug]) < rank_annotation(who_annotation): # if current annotation indicates higher severity than any previous annotation,
+                    if (name in genes_for_LIMS) and (destination == "LIMS"):
+                      resistance_dict[identified_drug] = who_annotation # overwrite with more severe annotation
 
       return resistance_dict
 
