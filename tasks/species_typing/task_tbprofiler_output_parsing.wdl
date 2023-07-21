@@ -203,13 +203,13 @@ task tbprofiler_output_parsing {
 
       if gene in ["Rv0678", "atpE", "pepQ", "rplC", "mmpL5", "mmpS5"]: # apply expert rules 1.2
         if gene == "Rv0678" and (position_nt >= -84 and position_nt <= -1): # promoter regions
-          return "U"
+          return "Uncertain significance" if interpretation_destination == "LIMS" else "U"
         elif gene == "atpE" and (position_nt >= -48 and position_nt <= -1):
-          return "U"
+          return "Uncertain significance" if interpretation_destination == "LIMS" else "U"
         elif gene == "pepQ" and (position_nt >= -33 and position_nt <= -1):
-          return "U"
+          return "Uncertain significance" if interpretation_destination == "LIMS" else "U"
         elif gene == "rplC" and (position_nt >= -18 and position_nt <= -1):
-          return "U"
+          return "Uncertain significance" if interpretation_destination == "LIMS" else "U"
         elif "upstream_gene_variant" in substitution_type:
           return "S" if interpretation_destination == "MDL" else "U"
         else: # apply expert rules 1.2
@@ -217,19 +217,19 @@ task tbprofiler_output_parsing {
           # if a position includes either +, *, or - it's not in the ORF 
           #  UNLESS the * is at the end which means its a premature stop codon
             if substitution_type != "synonymous_variant":
-              return "U"
+              return "Uncertain significance" if interpretation_destination == "LIMS" else "U"
             else:
               return "S"
 
       elif gene == "rrl": # apply expert rules 1.2
         if (position_nt >= 2003 and position_nt <= 2367) or (position_nt >= 2449 and position_nt <= 3056):
-          return "U"
+          return "Uncertain significance" if interpretation_destination == "LIMS" else "U"
         else:
           return "S" if interpretation_destination == "MDL" else "U"
 
       elif gene in ["katG", "pncA", "ethA", "gid"]: # apply expert rules 2.2.1
         if any(indel_or_stop in nucleotide_change for indel_or_stop in ["del", "ins", "fs", "delins", "_"]) or nucleotide_change.endswith("*"):
-          return "U"
+          return "Uncertain significance" if interpretation_destination == "LIMS" else "U"
         else:
             if substitution_type != "synonymous_variant":
               return "S" if interpretation_destination == "MDL" else "U"
@@ -241,7 +241,7 @@ task tbprofiler_output_parsing {
       elif gene == "rpoB": # apply expert rules 2.2.2
         if (position_aa >= 426 and position_aa <= 452):
             if substitution_type != "synonymous_variant":
-              return "R"
+              return "Assoc with R" if interpretation_destination == "LIMS" else "R"
             else:
               return "S"   
         else:
@@ -389,18 +389,32 @@ task tbprofiler_output_parsing {
       """
       resistance_dict = {}
 
+
       with open(json_file) as js_fh:
         results_json = json.load(js_fh)
 
         for dr_variant in results_json["dr_variants"]: # mutation 
           name = dr_variant["gene"]
+
           if dr_variant["type"] != "synonymous_variant":  # report all non-synonymous mutations
 
             if "annotation" in dr_variant.keys(): # if an annotation is present,
+              if len(dr_variant["annotation"]) == 0:
+                who_annotation = apply_expert_rules(dr_variant["nucleotide_change"], dr_variant["protein_change"], dr_variant["gene"], dr_variant["type"], "LIMS")
+                if drug not in resistance_dict.keys():
+                  if (name in genes_for_LIMS) and (destination == "LIMS"):
+                    print(name)
+                    print(drug)
+                    resistance_dict[drug] = who_annotation # overwrite with more severe annotation
+                else:
+                  print(name, drug)
+                  if rank_annotation(resistance_dict[drug]) < rank_annotation(who_annotation): # if current annotation indicates higher severity than any previous annotation,
+                    if (name in genes_for_LIMS) and (destination == "LIMS"):
+                      resistance_dict[drug] = who_annotation # overwrite with more severe annotation
+
               for annotation in dr_variant["annotation"]: # iterate through them
                 drug = annotation["drug"]
                 who_annotation = annotation["who_confidence"]
-
                 if drug not in resistance_dict.keys():
                   if destination == "Looker":
                     resistance_dict[drug] = who_annotation
@@ -413,12 +427,35 @@ task tbprofiler_output_parsing {
                       resistance_dict[drug] = who_annotation # overwrite with more severe annotation
                     elif (name in genes_for_LIMS) and (destination == "LIMS"):
                       resistance_dict[drug] = who_annotation # overwrite with more severe annotation
-          
+            else:
+              who_annotation = apply_expert_rules(dr_variant["nucleotide_change"], dr_variant["protein_change"], dr_variant["gene"], dr_variant["type"], "LIMS")
+              print(name)
+              print(who_annotation)
+              if drug not in resistance_dict.keys():
+                if (name in genes_for_LIMS) and (destination == "LIMS"):
+                  resistance_dict[drug] = who_annotation # overwrite with more severe annotation
+              else:
+                if rank_annotation(resistance_dict[drug]) < rank_annotation(who_annotation): # if current annotation indicates higher severity than any previous annotation,
+                  if (name in genes_for_LIMS) and (destination == "LIMS"):
+                    resistance_dict[drug] = who_annotation # overwrite with more severe annotation
+
         for other_variant in results_json["other_variants"]:
           name = other_variant["gene"]
           if other_variant["type"] != "synonymous_variant":  # report all non-synonymous mutations
 
             if "annotation" in other_variant.keys(): # if an annotation is present,
+              if len(other_variant["annotation"]) == 0:
+                who_annotation = apply_expert_rules(other_variant["nucleotide_change"], other_variant["protein_change"], other_variant["gene"], other_variant["type"], "LIMS")
+                print(name)
+                print(who_annotation)  
+                if drug not in resistance_dict.keys():
+                  if (name in genes_for_LIMS) and (destination == "LIMS"):
+                    resistance_dict[drug] = who_annotation # overwrite with more severe annotation
+                else:
+                  if rank_annotation(resistance_dict[drug]) < rank_annotation(who_annotation): # if current annotation indicates higher severity than any previous annotation,
+                    if (name in genes_for_LIMS) and (destination == "LIMS"):
+                      resistance_dict[drug] = who_annotation # overwrite with more severe annotation
+              
               for annotation in other_variant["annotation"]: # iterate through them
                 drug = annotation["drug"]
                 who_annotation = annotation["who_confidence"]
@@ -435,6 +472,15 @@ task tbprofiler_output_parsing {
                       resistance_dict[drug] = who_annotation # overwrite with more severe annotation
                     elif (name in genes_for_LIMS) and (destination == "LIMS"):
                       resistance_dict[drug] = who_annotation # overwrite with more severe annotation
+            else:
+              who_annotation = apply_expert_rules(other_variant["nucleotide_change"], other_variant["protein_change"], other_variant["gene"], other_variant["type"], "LIMS")
+              if drug not in resistance_dict.keys():
+                if (name in genes_for_LIMS) and (destination == "LIMS"):
+                  resistance_dict[drug] = who_annotation # overwrite with more severe annotation
+              else:
+                if rank_annotation(resistance_dict[drug]) < rank_annotation(who_annotation): # if current annotation indicates higher severity than any previous annotation,
+                  if (name in genes_for_LIMS) and (destination == "LIMS"):
+                    resistance_dict[drug] = who_annotation # overwrite with more severe annotation
 
       return resistance_dict
 
