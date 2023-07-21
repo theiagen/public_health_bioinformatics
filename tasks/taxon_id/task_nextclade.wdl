@@ -9,10 +9,10 @@ task nextclade {
       File? root_sequence
       File? auspice_reference_tree_json
       File? qc_config_json
-      File? gene_annotations_json
+      File? gene_annotations_gff
       File? pcr_primers_csv
       File? virus_properties
-      String docker = "nextstrain/nextclade:2.13.0"
+      String docker = "us-docker.pkg.dev/general-theiagen/nextstrain/nextclade:2.14.0"
       String dataset_name
       String dataset_reference
       String dataset_tag
@@ -30,7 +30,7 @@ task nextclade {
             ~{"--input-root-seq " + root_sequence} \
             ~{"--input-tree " + auspice_reference_tree_json} \
             ~{"--input-qc-config " + qc_config_json} \
-            ~{"--input-gene-map " + gene_annotations_json} \
+            ~{"--input-gene-map " + gene_annotations_gff} \
             ~{"--input-pcr-primers " + pcr_primers_csv} \
             ~{"--input-virus-properties " + virus_properties}  \
             --output-json "~{basename}".nextclade.json \
@@ -91,45 +91,41 @@ task nextclade_output_parser {
 
       tamiflu_aa_subs = tamiflu_aa_subs + "~{tamiflu_aa_substitutions}".split(',')
 
-      print(tamiflu_aa_subs)
-
       def intersection(lst1, lst2):
         # returns intersection between nextclade identified aa substitutions and
         # tamiflu associated aa substitutions
         return list(set(lst1) & set(lst2))
 
       with codecs.open("./input.tsv",'r') as tsv_file:
-        tsv_reader=csv.reader(tsv_file, delimiter="\t")
-        tsv_data=list(tsv_reader)
+        tsv_reader = csv.reader(tsv_file, delimiter="\t")
+        tsv_data = list(tsv_reader)
 
-        if len(tsv_data)==1:
+        if len(tsv_data) == 1:
           tsv_data.append(['NA']*len(tsv_data[0]))
-        tsv_dict=dict(zip(tsv_data[0], tsv_data[1]))
+        tsv_dict = dict(zip(tsv_data[0], tsv_data[1]))
 
-        # parse 'clade_legacy' column if sars-cov-2, if false then parse 'clade' column
+        # combine 'clade_nextstrain' and 'clade_who' column if sars-cov-2, if false then parse 'clade' column
         if ("~{organism}" == "sars-cov-2"):
           with codecs.open("NEXTCLADE_CLADE", 'wt') as Nextclade_Clade:
-            nc_clade=tsv_dict['clade_legacy']
-            if nc_clade=='':
-              nc_clade='NA'
-            else:
-              nc_clade=nc_clade
+            nc_clade = tsv_dict['clade_nextstrain']
+            who_clade = tsv_dict['clade_who']
+            if (nc_clade != who_clade) and (nc_clade != '') and (who_clade != ''):
+              nc_clade = nc_clade + " (" + who_clade + ")"
+            if nc_clade == '':
+              nc_clade = 'NA'
             Nextclade_Clade.write(nc_clade)
         else:
           with codecs.open("NEXTCLADE_CLADE", 'wt') as Nextclade_Clade:
-            nc_clade=tsv_dict['clade']
-            if nc_clade=='':
-              nc_clade='NA'
-            else:
-              nc_clade=nc_clade
+            nc_clade = tsv_dict['clade']
+            if nc_clade == '':
+              nc_clade = 'NA'
             Nextclade_Clade.write(nc_clade)
 
         with codecs.open("NEXTCLADE_AASUBS", 'wt') as Nextclade_AA_Subs:
-          nc_aa_subs=tsv_dict['aaSubstitutions']
-          if nc_aa_subs=='':
-            nc_aa_subs='NA'
+          nc_aa_subs = tsv_dict['aaSubstitutions']
+          if nc_aa_subs == '':
+            nc_aa_subs = 'NA'
           else:
-            nc_aa_subs=nc_aa_subs
             # if organism is flu, return list of aa subs associated with tamiflu resistance
             if ("~{organism}" == "flu" and "~{NA_segment}" == "true"):
               tamiflu_subs = intersection(tamiflu_aa_subs, nc_aa_subs.split(','))
@@ -138,22 +134,18 @@ task nextclade_output_parser {
           Nextclade_AA_Subs.write(nc_aa_subs)
 
         with codecs.open("NEXTCLADE_AADELS", 'wt') as Nextclade_AA_Dels:
-          nc_aa_dels=tsv_dict['aaDeletions']
-          if nc_aa_dels=='':
-            nc_aa_dels='NA'
-          else:
-            nc_aa_dels=nc_aa_dels
+          nc_aa_dels = tsv_dict['aaDeletions']
+          if nc_aa_dels == '':
+            nc_aa_dels = 'NA'
           Nextclade_AA_Dels.write(nc_aa_dels)
 
         with codecs.open("NEXTCLADE_LINEAGE", 'wt') as Nextclade_Lineage:
           if 'lineage' in tsv_dict:
-            nc_lineage=tsv_dict['lineage']
+            nc_lineage = tsv_dict['lineage']
             if nc_lineage is None:
-              nc_lineage=""
-            else:
-              nc_lineage=nc_lineage
+              nc_lineage = ""
           else:
-            nc_lineage=""
+            nc_lineage = ""
           Nextclade_Lineage.write(nc_lineage)
       CODE
     >>>

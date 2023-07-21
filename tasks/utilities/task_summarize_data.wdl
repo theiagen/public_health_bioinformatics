@@ -8,6 +8,7 @@ task summarize_data {
     String? terra_table
     String? column_names # string of comma-delimited column names
     String? output_prefix
+    String? id_column_name
 
     Int disk_size = 100
     # commenting out this option since it's for local dev. Prefer this option to not appear in Terra
@@ -28,6 +29,13 @@ task summarize_data {
       export phandango_coloring="false"
     fi
 
+    # indicate if a different id_column should be used than the default
+    if [[ -z ~{id_column_name} ]]; then
+      export default_column="true"
+    else
+      export default_column="false"
+    fi
+
     python3 <<CODE 
   import pandas as pd
   import numpy as np
@@ -40,13 +48,22 @@ task summarize_data {
   table = pd.read_csv(tablename, delimiter='\t', header=0, index_col=False, dtype={"~{terra_table}_id": 'str'}) # ensure sample_id is always a string
 
   # extract the samples for upload from the entire table
-  table = table[table["~{terra_table}_id"].isin("~{sep='*' sample_names}".split("*"))]
+  if (os.environ["default_column"] == "true"):
+    table = table[table["~{terra_table}_id"].isin("~{sep='*' sample_names}".split("*"))]
+  else:
+    table = table[table["~{id_column_name}"].isin("~{sep='*' sample_names}".split("*"))] 
 
+  # cast entire table as str
+  table = table.astype(str)
+  
   # split comma-separated column list into an array
   columns = "~{column_names}".split(",")
 
   temporarylist = []
-  temporarylist.append("~{terra_table}_id")
+  if (os.environ["default_column"] == "true"):
+    temporarylist.append("~{terra_table}_id")
+  else:
+    temporarylist.append("~{id_column_name}")
   temporarylist += columns
 
   table = table[temporarylist].copy()
@@ -54,7 +71,11 @@ task summarize_data {
 
   # create a table to search through containing only columns of interest
   searchtable = table[columns].copy()
-  filteredmetadata = searchtable.set_index(table["~{terra_table}_id"])
+
+  if (os.environ["default_column"] == "true"):
+    filteredmetadata = searchtable.set_index(table["~{terra_table}_id"])
+  else:
+    filteredmetadata = searchtable.set_index(table["~{id_column_name}"])
   filteredmetadata.to_csv("~{output_prefix}_filtered_metadata.tsv", sep='\t', index=True)
 
   # iterate through the columns of interest and combine into a single list
@@ -70,7 +91,7 @@ task summarize_data {
       if (i < 10):
         newgroup = [] # create a new temporary sublist
         for item in group: # for every item in a column, 
-          newitem = item + ":o" + str(i) # add a unique :o coloring (as indicated by the str(i))
+          newitem = str(item) + ":o" + str(i) # add a unique :o coloring (as indicated by the str(i))
           newgroup.append(newitem) # add phandango-suffixed item to the new sublist
         newgenes.append(newgroup) # add the new sublist to the new list
         i += 1 # increment the i value so each column gets its own coloring     
@@ -110,7 +131,7 @@ task summarize_data {
     File filtered_metadata = "~{output_prefix}_filtered_metadata.tsv"
   }
   runtime {
-    docker: "quay.io/theiagen/terra-tools:2023-03-16"
+    docker: "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-03-16"
     memory: "8 GB"
     cpu: 1
     disks: "local-disk " + disk_size + " SSD"

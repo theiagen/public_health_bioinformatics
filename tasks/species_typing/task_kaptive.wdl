@@ -5,7 +5,7 @@ task kaptive {
   input {
     File assembly
     String samplename
-    String kaptive_docker_image = "quay.io/staphb/kaptive:2.0.3"
+    String kaptive_docker_image = "us-docker.pkg.dev/general-theiagen/staphb/kaptive:2.0.3"
     Int disk_size = 100
     Int cpu = 4
     # Parameters

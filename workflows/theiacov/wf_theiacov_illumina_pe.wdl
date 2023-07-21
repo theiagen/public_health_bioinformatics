@@ -44,15 +44,15 @@ workflow theiacov_illumina_pe {
     # nextclade inputs
     String nextclade_docker_image = "nextstrain/nextclade:2.13.0"
     String nextclade_dataset_reference = "MN908947"
-    String nextclade_dataset_tag = "2023-04-18T12:00:00Z"
+    String nextclade_dataset_tag = "2023-06-16T12:00:00Z"
     String? nextclade_dataset_name
     # nextclade flu inputs
-    String nextclade_flu_h1n1_ha_tag = "2023-01-27T12:00:00Z"
-    String nextclade_flu_h1n1_na_tag = "2023-01-27T12:00:00Z"
-    String nextclade_flu_h3n2_ha_tag = "2023-02-01T12:00:00Z"
-    String nextclade_flu_h3n2_na_tag = "2023-01-27T12:00:00Z"
-    String nextclade_flu_vic_ha_tag = "2023-02-01T12:00:00Z"
-    String nextclade_flu_vic_na_tag = "2023-01-27T12:00:00Z"
+    String nextclade_flu_h1n1_ha_tag = "2023-04-02T12:00:00Z"
+    String nextclade_flu_h1n1_na_tag = "2023-04-02T12:00:00Z"
+    String nextclade_flu_h3n2_ha_tag = "2023-04-02T12:00:00Z"
+    String nextclade_flu_h3n2_na_tag = "2023-04-02T12:00:00Z"
+    String nextclade_flu_vic_ha_tag = "2023-04-02T12:00:00Z"
+    String nextclade_flu_vic_na_tag = "2023-04-02T12:00:00Z"
     String nextclade_flu_yam_tag = "2022-07-27T12:00:00Z"
     # read screen parameters
     Int min_reads = 113 # min basepairs / 300 (which is the longest available read length of an Illumina product)

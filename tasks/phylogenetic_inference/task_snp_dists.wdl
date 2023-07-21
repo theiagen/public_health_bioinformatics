@@ -5,7 +5,7 @@ task snp_dists {
     File alignment
     String cluster_name
     Int disk_size = 50
-    String docker = "quay.io/staphb/snp-dists:0.8.2"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/snp-dists:0.8.2"
   }
   command <<<
     # date and version control

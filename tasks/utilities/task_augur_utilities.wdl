@@ -136,7 +136,7 @@ task tsv_join {
   runtime {
     memory: "~{mem} GB"
     cpu: 2
-    docker: "quay.io/broadinstitute/viral-core:2.1.33"
+    docker: "us-docker.pkg.dev/general-theiagen/broadinstitute/viral-core:2.1.33"
     disks: "local-disk " + disk_size + " HDD"
     disk: disk_size + " GB" # TES
     dx_instance_type: "mem1_ssd1_v2_x2"
@@ -152,7 +152,7 @@ task filter_sequences_by_length {
     File sequences_fasta
     Int min_non_N = 1 # Minimum number of called bases (non-N, non-gap, A, T, C, G, and other non-N ambiguity codes)
 
-    String docker = "quay.io/broadinstitute/viral-core:2.1.33"
+    String docker = "us-docker.pkg.dev/general-theiagen/broadinstitute/viral-core:2.1.33"
     Int disk_size = 300
   }
   String out_fname = sub(basename(sequences_fasta), ".fasta", ".filtered.fasta")
@@ -224,7 +224,7 @@ task set_sc2_defaults { # establish sars-cov-2 default values for augur
     Float proportion_wide = 0.0
   }
   runtime {
-    docker: "quay.io/staphb/augur:16.0.3"
+    docker: "us-docker.pkg.dev/general-theiagen/biocontainers/augur:22.0.2--pyhdfd78af_0"
     memory: "1 GB"
     cpu: 1
     disks: "local-disk " + disk_size + " HDD"
@@ -316,7 +316,7 @@ task set_flu_defaults { # establish flu default values for augur
     Float proportion_wide = 0.0
   }
   runtime {
-    docker: "quay.io/staphb/augur:16.0.3"
+    docker: "us-docker.pkg.dev/general-theiagen/biocontainers/augur:22.0.2--pyhdfd78af_0"
     memory: "1 GB"
     cpu: 1
     disks: "local-disk " + disk_size + " HDD"
@@ -369,7 +369,7 @@ task prep_augur_metadata {
     File augur_metadata = "augur_metadata.tsv"
   }
   runtime {
-      docker: "quay.io/theiagen/utility:1.1"
+      docker: "us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1"
       memory: "3 GB"
       cpu: 1
       disks: "local-disk ~{disk_size} SSD"

@@ -832,7 +832,7 @@ task tbprofiler_output_parsing {
     File tbprofiler_coverage_report = "~{samplename}_tbprofiler_coverage_report.csv"
   }
   runtime {
-    docker: "quay.io/theiagen/utility:1.2"
+    docker: "us-docker.pkg.dev/general-theiagen/theiagen/utility:1.2"
     memory: "4 GB"
     cpu: 1
     disks: "local-disk " + 10 + " SSD"

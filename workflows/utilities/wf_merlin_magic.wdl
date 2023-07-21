@@ -52,6 +52,7 @@ workflow merlin_magic {
     String? pasty_docker_image
     String? emmtypingtool_docker_image
     String? shigeifinder_docker_image
+    String? shigatyper_docker_image
     String? staphopia_sccmec_docker_image
     String? agrvate_docker_image
     String? virulencefinder_docker_image
@@ -89,7 +90,7 @@ workflow merlin_magic {
         minid = 95 # strict threshold of 95% identity for typing purposes
     }
   }
-  if (merlin_tag == "Escherichia" || merlin_tag == "Shigella_sonnei" ) {
+  if (merlin_tag == "Escherichia" || merlin_tag == "Shigella sonnei" ) {
     # tools specific to all Escherichia and Shigella species
     call serotypefinder_task.serotypefinder {
       input:
@@ -107,7 +108,8 @@ workflow merlin_magic {
           read1 = select_first([read1]),
           read2 = read2,
           samplename = samplename,
-          read1_is_ont = ont_data
+          read1_is_ont = ont_data,
+          docker = shigatyper_docker_image
       }
     }
     call shigeifinder_task.shigeifinder {
@@ -144,7 +146,7 @@ workflow merlin_magic {
         database = virulencefinder_database
     }
   }
-  if (merlin_tag == "Shigella_sonnei") {
+  if (merlin_tag == "Shigella sonnei") {
     # Shigella sonnei specific tasks
     if (!assembly_only) {
       call sonneityping_task.sonneityping { # test ONT compatibility
@@ -195,7 +197,8 @@ workflow merlin_magic {
       }
     }
   }
-  if (merlin_tag == "Klebsiella") {
+  # see here for appropriate Klebsiella species & subspecies to be analyzed w Kleborate: https://github.com/klebgenomics/Kleborate/wiki/Species-detection
+  if (merlin_tag == "Klebsiella" || merlin_tag == "Klebsiella pneumoniae" || merlin_tag == "Klebsiella variicola" || merlin_tag == "Klebsiella aerogenes" || merlin_tag == "Klebsiella oxytoca") {
     call kleborate_task.kleborate {
       input:
         assembly = assembly,
@@ -321,7 +324,7 @@ workflow merlin_magic {
         docker = hicap_docker_image
     }
   }
-  if (merlin_tag == "Vibrio") {
+  if (merlin_tag == "Vibrio" || merlin_tag == "Vibrio cholerae") {
     if (!assembly_only && !ont_data) {
       call srst2_vibrio_task.srst2_vibrio {
         input:
@@ -639,6 +642,7 @@ workflow merlin_magic {
     String? cladetyper_docker_image = cladetyper.gambit_cladetyper_docker_image
     String? cladetype_annotated_ref = cladetyper.clade_spec_ref
     # snippy variants
+    String snippy_variants_reference_genome = select_first([snippy_cauris.snippy_variants_reference_genome, snippy_afumigatus.snippy_variants_reference_genome, snippy_crypto.snippy_variants_reference_genome, "No reference genome detected"])
     String snippy_variants_version = select_first([snippy_cauris.snippy_variants_version, snippy_afumigatus.snippy_variants_version, snippy_crypto.snippy_variants_version, "No matching taxon detected"])
     String snippy_variants_query = select_first([snippy_gene_query_cauris.snippy_variants_query, snippy_gene_query_afumigatus.snippy_variants_query, snippy_gene_query_crypto.snippy_variants_query, "No matching taxon detected"])
     String snippy_variants_query_check = select_first([snippy_gene_query_cauris.snippy_variants_query_check, snippy_gene_query_afumigatus.snippy_variants_query_check, snippy_gene_query_crypto.snippy_variants_query_check, "No matching taxon detected"])

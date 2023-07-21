@@ -47,7 +47,7 @@ task augur_frequencies {
     File tip_frequencies_json = "~{build_name}_tip-frequencies.json"
   }
   runtime {
-    docker: "quay.io/staphb/augur:16.0.3"
+    docker: "us-docker.pkg.dev/general-theiagen/biocontainers/augur:22.0.2--pyhdfd78af_0"
     memory: mem_size + " GB"
     cpu: 4
     disks: "local-disk " + disk_size + " HDD"

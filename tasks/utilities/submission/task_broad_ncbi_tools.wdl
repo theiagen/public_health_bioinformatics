@@ -49,7 +49,7 @@ task ncbi_sftp_upload {
     memory: "2 GB"
     disks: "local-disk 100 HDD"
     dx_instance_type: "mem2_ssd1_v2_x2"
-    docker: "quay.io/broadinstitute/ncbi-tools:2.10.7.10"
+    docker: "us-docker.pkg.dev/general-theiagen/broadinstitute/ncbi-tools:2.10.7.10"
     maxRetries: 0
   }
 }
@@ -84,7 +84,7 @@ task sra_tsv_to_xml {
     memory: "2 GB"
     disks: "local-disk 50 HDD"
     dx_instance_type: "mem2_ssd1_v2_x2"
-    docker: "quay.io/broadinstitute/ncbi-tools:2.10.7.10"
+    docker: "us-docker.pkg.dev/general-theiagen/broadinstitute/ncbi-tools:2.10.7.10"
     maxRetries: 2
   }
 }
@@ -160,7 +160,7 @@ task biosample_submit_tsv_ftp_upload {
     memory: "2 GB"
     disks: "local-disk 100 HDD"
     dx_instance_type: "mem2_ssd1_v2_x2"
-    docker: "quay.io/broadinstitute/ncbi-tools:2.10.7.10"
+    docker: "us-docker.pkg.dev/general-theiagen/broadinstitute/ncbi-tools:2.10.7.10"
     maxRetries: 0
   }
 }

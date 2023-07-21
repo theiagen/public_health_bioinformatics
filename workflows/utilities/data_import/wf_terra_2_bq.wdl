@@ -28,7 +28,7 @@ task terra_to_bigquery {
     Array[String]  table_ids
     Array[String]  gcs_uri_prefixs
     Array[String]  output_filename_prefix
-    String  docker = "broadinstitute/terra-tools:tqdm"
+    String  docker = "us-docker.pkg.dev/general-theiagen/broadinstitute/terra-tools:tqdm"
     Int page_size = 5000
     Int mem_size_gb = 32
     Int CPUs = 8

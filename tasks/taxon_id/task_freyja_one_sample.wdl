@@ -13,7 +13,7 @@ task freyja_one_sample {
     Boolean bootstrap = false
     Int? number_bootstraps
     Int memory = 4
-    String docker = "quay.io/staphb/freyja:1.3.11"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/freyja:1.4.4"
     Int disk_size = 100
   }
   command <<<
@@ -26,6 +26,12 @@ task freyja_one_sample {
       if grep "FileNotFoundError.*lineagePaths.*" freyja_update.log
       then 
         echo "Error in attempting to update Freyja files. Try increasing memory"
+        >&2 echo "Killed"
+        exit 1
+      fi
+      if grep "error" freyja_update.log
+      then
+        grep "error" freyja_update.log | tail -1
         >&2 echo "Killed"
         exit 1
       fi

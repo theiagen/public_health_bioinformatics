@@ -12,7 +12,7 @@ task abricate {
     Int? mincov
     Int cpu = 2
     Int disk_size = 100
-    String docker = "quay.io/staphb/abricate:1.0.1-abaum-plasmid"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/abricate:1.0.1-abaum-plasmid"
   }
   command <<<
     date | tee DATE
@@ -71,7 +71,7 @@ task abricate_flu {
     Int mincov =60
     Int cpu = 2
     Int memory = 4
-    String docker = "quay.io/staphb/abricate:1.0.1-insaflu-220727"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/abricate:1.0.1-insaflu-220727"
     Int disk_size = 100
   }
   command <<<
@@ -105,7 +105,7 @@ task abricate_flu {
       echo "~{nextclade_flu_h1n1_na_tag}" > NEXTCLADE_DS_TAG_NA
     elif [ "${flu_subtype}" == "H3N2" ]; then
       echo "flu_h3n2_ha" > NEXTCLADE_NAME_HA
-      echo "EPI1857216" > NEXTCLADE_REF_HA
+      echo "CY163680" > NEXTCLADE_REF_HA
       echo "~{nextclade_flu_h3n2_ha_tag}" > NEXTCLADE_DS_TAG_HA
       echo "flu_h3n2_na" > NEXTCLADE_NAME_NA
       echo "EPI1857215" > NEXTCLADE_REF_NA

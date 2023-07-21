@@ -28,7 +28,7 @@ task augur_tree {
     File aligned_tree  = "~{build_name}_~{method}.nwk"
   }
   runtime {
-    docker: "quay.io/staphb/augur:16.0.3"
+    docker: "us-docker.pkg.dev/general-theiagen/biocontainers/augur:22.0.2--pyhdfd78af_0"
     memory: "32 GB"
     cpu: cpus
     disks: "local-disk " + disk_size + " LOCAL"

@@ -11,7 +11,7 @@ task nullarbor_tsv {
     String tree_builder = "iqtree_fast"
     String assembler = "skesa"
     String taxoner = "kraken2"
-    String docker = "quay.io/biocontainers/nullarbor:2.0.20191013--hdfd78af_3"
+    String docker = "us-docker.pkg.dev/general-theiagen/biocontainers/nullarbor:2.0.20191013--hdfd78af_3"
     Int memory = 128
     Int cpu = 16
     File kraken1_db = "gs://theiagen-public-files/terra/theiaprok-files/minikraken_20171019_8GB_kraken1.tgz"

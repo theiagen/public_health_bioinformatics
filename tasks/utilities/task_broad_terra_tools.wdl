@@ -686,7 +686,7 @@ task export_taxon_tables {
     fi
   >>>
   runtime {
-    docker: "quay.io/theiagen/terra-tools:2023-03-16"
+    docker: "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-03-16"
     memory: "8 GB"
     cpu: 1
     disks: "local-disk " + disk_size + " SSD"

@@ -98,7 +98,7 @@ task variant_call {
     String pipeline_date = read_string("DATE")
   }
   runtime {
-    docker: "quay.io/staphb/ivar:1.3.1-titan"
+    docker: "us-docker.pkg.dev/general-theiagen/staphb/ivar:1.3.1-titan"
     memory: "8 GB"
     cpu: 2
     disks:  "local-disk " + disk_size + " SSD"

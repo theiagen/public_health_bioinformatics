@@ -21,7 +21,7 @@ task mafft {
     File msa = "msa.fasta"
   }
   runtime {
-    docker: "quay.io/staphb/mafft:7.450"
+    docker: "us-docker.pkg.dev/general-theiagen/staphb/mafft:7.450"
     memory: "32 GB"
     cpu: cpu
     disks:  "local-disk " + disk_size + " SSD"

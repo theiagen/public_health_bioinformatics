@@ -4,15 +4,17 @@ task shigeifinder {
   input {
     File assembly
     String samplename
-    String docker = "quay.io/staphb/shigeifinder:1.3.3"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/shigeifinder:1.3.5"
     Int disk_size = 100
     Int cpu = 2
+    Int memory = 8
   }
   command <<<
     # capture date
     date | tee DATE
-    # shigeifinder does not have a --version flag, relying upon the docker image tag for the version - which StaPH-B/Curtis maintains
-    echo "~{docker}" | sed 's|staphb/shigeifinder:||' | tee VERSION.txt
+
+    # version flag added in v1.3.5, so not backwards compatible with older versions
+    shigeifinder --version | tee VERSION.txt
 
     # ShigEiFinder checks that all dependencies are installed before running
     echo "checking for shigeifinder dependencies and running ShigEiFinder..."
@@ -70,7 +72,7 @@ task shigeifinder {
   }
   runtime {
     docker: "~{docker}"
-    memory: "8 GB"
+    memory: "~{memory} GB"
     cpu: cpu
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
@@ -83,16 +85,18 @@ task shigeifinder_reads {
     File read1
     File? read2
     String samplename
-    String docker = "quay.io/staphb/shigeifinder:1.3.3"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/shigeifinder:1.3.5"
     Int disk_size = 100
     Int cpu = 4
+    Int memory = 8
     Boolean paired_end = true
   }
   command <<<
     # capture date
     date | tee DATE
-    # shigeifinder does not have a --version flag, relying upon the docker image tag for the version - which StaPH-B/Curtis maintains
-    echo "~{docker}" | sed 's|staphb/shigeifinder:||' | tee VERSION.txt
+
+    # version flag added in v1.3.5, so not backwards compatible with older versions
+   shigeifinder --version | tee VERSION.txt
 
     # ShigEiFinder checks that all dependencies are installed before running
     echo "checking for shigeifinder dependencies and running ShigEiFinder..."
@@ -151,7 +155,7 @@ task shigeifinder_reads {
   }
   runtime {
     docker: "~{docker}"
-    memory: "8 GB"
+    memory: "~{memory} GB"
     cpu: cpu
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"

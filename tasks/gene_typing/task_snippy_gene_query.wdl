@@ -6,7 +6,7 @@ task snippy_gene_query {
     File snippy_variants_results
     String? query_gene
     File? reference
-    String docker = "quay.io/theiagen/utility:1.2"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-06-21"
     Int cpus = 8
     Int memory = 32
   }
@@ -15,7 +15,7 @@ task snippy_gene_query {
     if [ -z "~{query_gene}" ]; then 
         no_hit="NA: No query gene was provided"
     else 
-        no_hit="No variants identified in queried genes (~{query_gene})" 
+        no_hit="No variants identified in queried genes (~{query_gene}) relative to the reference genome " 
     fi
 
     # if provided, check that query gene strings are present in reference genome
@@ -43,7 +43,8 @@ task snippy_gene_query {
       if grep -q  "${qgene}" ~{snippy_variants_results}; then 
         grep "${qgene}" ~{snippy_variants_results} | awk '{print "'~{samplename}'," $0}' >> ./gene_query.csv
         # curate relevant columns of queried hits to single output
-        grep "${qgene}" ./gene_query.csv | awk -F"," '{print "'${qgene}': "$15" ("$12"; "$7")"}' >> snippy_variant_hits_tmp
+        # awk syntax: see https://stackoverflow.com/questions/29642102/how-to-make-awk-ignore-the-field-delimiter-inside-double-quotes?noredirect=1&lq=1
+        grep "${qgene}" ./gene_query.csv | awk -vFPAT='([^,]*)|("[^"]+")' -vOFS=, '{print "'${qgene}': "$15" ("$12"; "$7")"}' >> snippy_variant_hits_tmp
       fi
     done
 

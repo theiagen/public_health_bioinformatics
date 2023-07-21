@@ -5,7 +5,7 @@ task seroba {
     File read1
     File? read2
     String samplename
-    String docker = "quay.io/staphb/seroba:1.0.2"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/seroba:1.0.2"
     Int disk_size = 100
   }
   command <<<
