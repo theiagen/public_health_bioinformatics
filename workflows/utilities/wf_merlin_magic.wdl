@@ -52,6 +52,7 @@ workflow merlin_magic {
     String? pasty_docker_image
     String? emmtypingtool_docker_image
     String? shigeifinder_docker_image
+    String? shigatyper_docker_image
     String? staphopia_sccmec_docker_image
     String? agrvate_docker_image
     String? virulencefinder_docker_image
@@ -107,7 +108,8 @@ workflow merlin_magic {
           read1 = select_first([read1]),
           read2 = read2,
           samplename = samplename,
-          read1_is_ont = ont_data
+          read1_is_ont = ont_data,
+          docker = shigatyper_docker_image
       }
     }
     call shigeifinder_task.shigeifinder {
