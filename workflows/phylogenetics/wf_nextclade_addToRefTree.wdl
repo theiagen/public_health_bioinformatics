@@ -38,7 +38,7 @@ workflow nextclade_addToRefTree {
         docker = docker,
         dataset_name = dataset_name,
         dataset_reference = dataset_reference,
-        dataset_tag
+        dataset_tag = dataset_tag
     }
     output {
       String treeUpdate_nextclade_version = select_first([nextclade.nextclade_version, ""])
