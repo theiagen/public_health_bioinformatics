@@ -52,15 +52,20 @@ workflow augur {
         flu_subtype = flu_subtype
     }
   }
+  if (organism == "MPXV") {
+    call augur_utils.set_mpxv_defaults as mpxv_defaults { # establish default parameters for mpxv
+      input:
+    }
+  }
   call augur_utils.filter_sequences_by_length { # remove any sequences that do not meet the quality threshold
     input:
       sequences_fasta = cat_files.concatenated_files,
-      min_non_N = select_first([min_num_unambig, sc2_defaults.min_num_unambig, flu_defaults.min_num_unambig])
+      min_non_N = select_first([min_num_unambig, sc2_defaults.min_num_unambig, flu_defaults.min_num_unambig, mpxv_defaults.min_num_unambig]),
   }
   call align_task.augur_align { # perform mafft alignment on the sequences
     input: 
       assembly_fasta = filter_sequences_by_length.filtered_fasta,
-      reference_fasta = select_first([reference_fasta, sc2_defaults.reference_fasta, flu_defaults.reference_fasta])
+      reference_fasta = select_first([reference_fasta, sc2_defaults.reference_fasta, flu_defaults.reference_fasta, mpxv_defaults.reference_fasta]),
   }
   call augur_utils.tsv_join { # merge the metadata files
     input:
@@ -95,19 +100,19 @@ workflow augur {
       input:
         refined_tree = augur_refine.refined_tree,
         ancestral_nt_muts_json = augur_ancestral.ancestral_nt_muts_json,
-        reference_genbank = select_first([reference_genbank, sc2_defaults.reference_genbank, flu_defaults.reference_genbank]),
+        reference_genbank = select_first([reference_genbank, sc2_defaults.reference_genbank, flu_defaults.reference_genbank, mpxv_defaults.reference_genbank]),
         build_name = build_name
     }
     if (flu_segment == "HA") { # we only have clade information for HA segments (but SC2 defaults will be selected first)
-      if (defined(clades_tsv) || defined(sc2_defaults.clades_tsv) || defined(flu_defaults.clades_tsv)) { # one of these must be present
+      if (defined(clades_tsv) || defined(sc2_defaults.clades_tsv) || defined(flu_defaults.clades_tsv) || defined(mpxv_defaults.clades_tsv) ) { # one of these must be present
         call clades_task.augur_clades { # assign clades to nodes based on amino-acid or nucleotide signatures
           input: 
             refined_tree = augur_refine.refined_tree,
             ancestral_nt_muts_json = augur_ancestral.ancestral_nt_muts_json,
             translated_aa_muts_json = augur_translate.translated_aa_muts_json,
-            reference_fasta = select_first([reference_fasta, sc2_defaults.reference_fasta, flu_defaults.reference_fasta]),
+            reference_fasta = select_first([reference_fasta, sc2_defaults.reference_fasta, flu_defaults.reference_fasta, mpxv_defaults.reference_fasta]),
             build_name = build_name,
-            clades_tsv = select_first([clades_tsv, sc2_defaults.clades_tsv, flu_defaults.clades_tsv])
+            clades_tsv = select_first([clades_tsv, sc2_defaults.clades_tsv, flu_defaults.clades_tsv, mpxv_defaults.clades_tsv])
         }
       }
     }
@@ -121,8 +126,8 @@ workflow augur {
                             augur_translate.translated_aa_muts_json,
                             augur_clades.clade_assignments_json]),
         build_name = build_name,
-        lat_longs_tsv = select_first([sc2_defaults.lat_longs_tsv, flu_defaults.lat_longs_tsv, lat_longs_tsv]),
-        auspice_config = select_first([sc2_defaults.auspice_config, flu_defaults.auspice_config, auspice_config])
+        lat_longs_tsv = select_first([sc2_defaults.lat_longs_tsv, flu_defaults.lat_longs_tsv, mpxv_defaults.lat_longs_tsv, lat_longs_tsv]),
+        auspice_config = select_first([sc2_defaults.auspice_config, flu_defaults.auspice_config, mpxv_defaults.auspice_config, auspice_config])
     }
   }
   call snp_dists_task.snp_dists { # create a snp matrix from the alignment

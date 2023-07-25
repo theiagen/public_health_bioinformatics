@@ -342,7 +342,7 @@ task set_mpxv_defaults { # establish mpxv default values for augur
   >>>
   output {
     Int min_num_unambig = 150000
-    File? clades_tsv = mpxv_clades_tsv
+    File clades_tsv = mpxv_clades_tsv
     File lat_longs_tsv = mpxv_lat_longs_tsv
     File reference_fasta = mpxv_reference_fasta
     File reference_genbank = mpxv_reference_genbank
