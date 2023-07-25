@@ -1,7 +1,7 @@
 version 1.0
 
 import "../../tasks/utilities/task_file_handling.wdl" as file_handling
-import "../../tasks/taxon_id/task_nextclade.wdl" as nextclade
+import "../../tasks/taxon_id/task_nextclade.wdl" as nextclade_analysis
 
 workflow nextclade_addToRefTree {
     meta {
@@ -11,9 +11,9 @@ workflow nextclade_addToRefTree {
       Array[File]+ assembly_fastas
       String build_name
       File root_sequence_fasta
+      #File? gene_annotations_gff
       File reference_tree_json
       File? qc_config_json
-      File? gene_annotations_gff
       File? pcr_primers_csv
       File? virus_properties
       String docker = "nextstrain/nextclade:2.13.0"
@@ -26,13 +26,13 @@ workflow nextclade_addToRefTree {
         files_to_cat = assembly_fastas,
         concatenated_file_name = "~{build_name}_concatenated.fasta"
     }
-    call nextclade.nextclade { # nextclade analysis
+    call nextclade_analysis.nextclade { # nextclade analysis
       input:
         genome_fasta = cat_files.concatenated_files,
         root_sequence = root_sequence_fasta,
         auspice_reference_tree_json = reference_tree_json,
         qc_config_json = qc_config_json,
-        gene_annotations_json = gene_annotations_gff,
+        #gene_annotations_json = gene_annotations_gff,
         pcr_primers_csv = pcr_primers_csv,
         virus_properties = virus_properties,
         docker = docker,
