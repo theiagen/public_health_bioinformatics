@@ -222,6 +222,6 @@ workflows:
     - empty.json
  - name: Samples_to_Ref_Tree_PHB
    subclass: WDL
-   primaryDescriptorPath: /workflows/phylogenetics/wf_nextclade_addToRef.wdl
+   primaryDescriptorPath: /workflows/phylogenetics/wf_nextclade_addToRefTree.wdl
    testParameterFiles:
     - empty.json
