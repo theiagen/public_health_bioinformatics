@@ -1,6 +1,5 @@
 version 1.0
 
-import "../../tasks/utilities/task_file_handling.wdl" as file_handling
 import "../../tasks/taxon_id/task_nextclade.wdl" as nextclade_analysis
 
 workflow nextclade_addToRefTree {
@@ -8,7 +7,7 @@ workflow nextclade_addToRefTree {
       description: "Nextclade workflow that adds samples to a curated JSON tree from Augur."
     }
     input {
-      Array[File]+ assembly_fastas
+      File assembly_fastas
       String build_name
       File root_sequence_fasta
       #File? gene_annotations_gff
@@ -21,14 +20,9 @@ workflow nextclade_addToRefTree {
       String dataset_reference = "ancestral"
       String dataset_tag = "2023-01-26T12:00:00Z"
     }
-    call file_handling.cat_files { # concatenate all of the input fasta files together
-      input:
-        files_to_cat = assembly_fastas,
-        concatenated_file_name = "~{build_name}_concatenated.fasta"
-    }
     call nextclade_analysis.nextclade { # nextclade analysis
       input:
-        genome_fasta = cat_files.concatenated_files,
+        genome_fasta = assembly_fastas,
         root_sequence = root_sequence_fasta,
         auspice_reference_tree_json = reference_tree_json,
         qc_config_json = qc_config_json,
