@@ -99,7 +99,7 @@ task fetch_bs {
     # rename FASTQ files to add back in underscores that Illumina/Basespace changed into hyphens
     echo "Concatenating and renaming FASTQ files to add back underscores in basespace_sample_name"
     # setting a new bash variable to use for renaming during concatenation of FASTQs
-    SAMPLENAME_HYPHEN_INSTEAD_OF_UNDERSCORES=$(echo $sample_identifier | sed 's|_|-|g')
+    SAMPLENAME_HYPHEN_INSTEAD_OF_UNDERSCORES=$(echo $sample_identifier | sed 's|_|-|g' | sed 's|\.|-|g')
 
     #Combine non-empty read files into single file without BaseSpace filename cruft
     ##FWD Read
@@ -125,7 +125,7 @@ task fetch_bs {
     File? read2 = "~{sample_name}_R2.fastq.gz"
   }
   runtime {
-    docker: "quay.io/theiagen/basespace_cli:1.2.1"
+    docker: "us-docker.pkg.dev/general-theiagen/theiagen/basespace_cli:1.2.1"
     memory: "~{mem_size_gb} GB"
     cpu: CPUs
     disks: "local-disk ~{disk_size} SSD"

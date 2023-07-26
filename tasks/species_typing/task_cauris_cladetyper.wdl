@@ -5,7 +5,7 @@ task cauris_cladetyper {
     File assembly_fasta
     String samplename
     Int kmer_size = 11
-    String docker_image = "quay.io/biocontainers/hesslab-gambit:0.5.1--py37h8902056_0"
+    String docker_image = "us-docker.pkg.dev/general-theiagen/biocontainers/hesslab-gambit:0.5.1--py37h8902056_0"
     Int memory = 16
     Int cpu = 8
     File ref_clade1 = "gs://theiagen-public-files/terra/candida_auris_refs/Cauris_Clade1_GCA_002759435.2_Cand_auris_B8441_V2_genomic.fasta"

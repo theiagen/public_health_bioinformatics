@@ -8,7 +8,7 @@ task irma {
     Boolean keep_ref_deletions = true
     String irma_module = "FLU"
     String read_basename = basename(read1)
-    String docker = "quay.io/staphb/irma:1.0.3"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/irma:1.0.3"
     Int memory = 8
     Int cpu = 4
     Int disk_size = 100

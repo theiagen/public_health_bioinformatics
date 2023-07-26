@@ -8,7 +8,7 @@ task snippy_core {
     File reference_genome_file
     File? bed_file
 
-    String docker = "quay.io/staphb/snippy:4.6.0"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/snippy:4.6.0"
     Int disk_size = 100
     Int cpu = 8
     Int memory = 16

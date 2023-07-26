@@ -7,7 +7,7 @@ task hpsuissero {
   input {
     File assembly
     String samplename
-    String docker = "quay.io/biocontainers/hpsuissero:1.0.1--hdfd78af_0"
+    String docker = "us-docker.pkg.dev/general-theiagen/biocontainers/hpsuissero:1.0.1--hdfd78af_0"
     Int? cpu = 4
     String version = "1.0.1"
   }

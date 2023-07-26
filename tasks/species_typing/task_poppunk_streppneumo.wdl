@@ -7,7 +7,7 @@ task poppunk {
   input {
     File assembly
     String samplename
-    String docker = "quay.io/staphb/poppunk:2.4.0"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/poppunk:2.4.0"
     Int disk_size = 100
     Int cpus = 4
     # database/reference files currently hosted on a public, requester-pays GCP bucket

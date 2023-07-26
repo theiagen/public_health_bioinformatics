@@ -7,7 +7,7 @@ task lissero {
   input {
     File assembly
     String samplename
-    String docker = "quay.io/biocontainers/lissero:0.4.9--py_0"
+    String docker = "us-docker.pkg.dev/general-theiagen/biocontainers/lissero:0.4.9--py_0"
     Int disk_size = 100
     Int cpu = 2
 

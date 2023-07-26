@@ -52,7 +52,7 @@ task augur_refine {
     File branch_lengths = "~{build_name}_branch_lengths.json"
   }
   runtime {
-    docker: "quay.io/biocontainers/augur:22.0.2--pyhdfd78af_0"
+    docker: "us-docker.pkg.dev/general-theiagen/biocontainers/augur:22.0.2--pyhdfd78af_0"
     memory: "50 GB"
     cpu : 2
     disks: "local-disk " + disk_size + " HDD"

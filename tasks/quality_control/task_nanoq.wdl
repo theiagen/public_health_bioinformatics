@@ -4,7 +4,7 @@ task nanoq {
   input {
     File read1 # intended for ONT data only
     String samplename
-    String docker = "quay.io/biocontainers/nanoq:0.9.0--hec16e2b_1"
+    String docker = "us-docker.pkg.dev/general-theiagen/biocontainers/nanoq:0.9.0--hec16e2b_1"
     Int disk_size = 100
     Int max_read_length = 10000
     Int min_read_length = 500

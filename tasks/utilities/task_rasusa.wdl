@@ -8,7 +8,7 @@ task rasusa {
     File read1
     File? read2
     String samplename
-    String docker = "quay.io/staphb/rasusa:0.7.0"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/rasusa:0.7.0"
     Int disk_size = 100
     Int cpu = 4
     # RASUA Parameters

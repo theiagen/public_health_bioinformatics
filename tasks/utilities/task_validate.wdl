@@ -36,7 +36,7 @@ task export_two_tsvs {
     fi
   >>>
   runtime {
-    docker: "quay.io/theiagen/terra-tools:2023-03-16"
+    docker: "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-03-16"
     memory: "1 GB"
     cpu: 1
     disks:  "local-disk " + disk_size + " HDD"
@@ -285,7 +285,7 @@ task compare_two_tsvs {
   CODE
   >>>
   runtime {
-    docker: "quay.io/theiagen/utility:1.2"
+    docker: "us-docker.pkg.dev/general-theiagen/theiagen/utility:1.2"
     memory: "4 GB"
     cpu: 2
     disks:  "local-disk " + disk_size + " HDD"

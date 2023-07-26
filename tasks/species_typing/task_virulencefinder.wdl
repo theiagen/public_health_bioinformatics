@@ -7,7 +7,7 @@ task virulencefinder {
     #File? read1
     #File? read2
     String samplename
-    String docker = "quay.io/staphb/virulencefinder:2.0.4"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/virulencefinder:2.0.4"
     Int disk_size = 100
     Int mem = 8
     Int cpu = 2

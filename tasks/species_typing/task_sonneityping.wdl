@@ -7,7 +7,7 @@ task sonneityping {
     File? read2
     Boolean ont_data = false
     String samplename
-    String docker = "quay.io/staphb/mykrobe:0.12.1"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/mykrobe:0.12.1"
     Int disk_size = 100
     String? myrkobe_opts
     Int cpu = 4

@@ -6,7 +6,7 @@ task centroid {
     Int disk_size = 50
     Int cpu = 1
     Int memory = 4
-    String docker = "quay.io/theiagen/centroid:0.1.0"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/centroid:0.1.0"
   }
   command <<<
     centroid.py --version | tee CENTROID_VER
