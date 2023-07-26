@@ -329,7 +329,7 @@ task set_mpxv_defaults { # establish mpxv default values for augur
     # in the future we will wget from the repo directly
     File mpxv_lat_longs_tsv = "gs://theiagen-public-files-rp/terra/flu-references/lat_longs.tsv" #more comprehensive
     File mpxv_clades_tsv = "gs://theiagen-public-files-rp/terra/augur-mpox-references/mpox_clades.tsv"
-    File mpxv_reference_fasta = "gs://theiagen-public-files-rp/terra/augur-mpox-references/NC_063383.1_reference.gb"
+    File mpxv_reference_fasta = "gs://theiagen-public-files-rp/terra/augur-mpox-references/reconstructed_ancestral_mpox.fasta"
     File mpxv_reference_genbank = "gs://theiagen-public-files-rp/terra/augur-mpox-references/NC_063383.1_reference.gb"
     File mpxv_auspice_config = "gs://theiagen-public-files-rp/terra/augur-mpox-references/mpox_auspice_config_mpxv.json"
     File mpxv_gene_annotations_gff = "gs://theiagen-public-files-rp/terra/augur-mpox-references/genemap.gff"
