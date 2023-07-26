@@ -10,8 +10,7 @@ task gisaid_upload {
     String client_id
 
     # authentication token will either be generated or must be provided
-    String? username
-    String? password
+    File? gisaid_credentials
     File? authentication_file
     
     String frameshift_notification = "catch_novel" 
@@ -27,9 +26,12 @@ task gisaid_upload {
     cli3 version > GISAID_VERSION
 
     # generate an authentication token if username and password are provided
-    if [[ -n "~{username}" ]]; then
-      cli3 authenticate --username "~{username}" \
-        --password "~{password}" \
+    if [[ -e "~{gisaid_credentials}" ]]; then
+      username=$(cut -f1 "~{gisaid_credentials}")
+      password=$(cut -f2 "~{gisaid_credentials}")
+      
+      cli3 authenticate --username "${username}" \
+        --password "${password}" \
         --client_id "~{client_id}" \
         --force > submission_log.txt
     else # otherwise, authentication token must be provided
