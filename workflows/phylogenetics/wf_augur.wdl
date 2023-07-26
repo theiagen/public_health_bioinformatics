@@ -23,6 +23,8 @@ workflow augur {
     String build_name
     File? reference_fasta
     File? reference_genbank
+    File? genes
+    File? colors
     Int? min_num_unambig
     String organism = "sars-cov-2" # options: sars-cov-2 or flu
     String flu_segment = "HA" # options: HA or NA
@@ -52,7 +54,7 @@ workflow augur {
         flu_subtype = flu_subtype
     }
   }
-  if (organism == "MPXV") {
+  if (organism == "MPXV" || organism == "mpxv" || organism == "monkeypox") {
     call augur_utils.set_mpxv_defaults as mpxv_defaults { # establish default parameters for mpxv
       input:
     }
@@ -101,6 +103,7 @@ workflow augur {
         refined_tree = augur_refine.refined_tree,
         ancestral_nt_muts_json = augur_ancestral.ancestral_nt_muts_json,
         reference_genbank = select_first([reference_genbank, sc2_defaults.reference_genbank, flu_defaults.reference_genbank, mpxv_defaults.reference_genbank]),
+        genes = select_first([genes, mpxv_defaults.genes]),
         build_name = build_name
     }
     if (flu_segment == "HA") { # we only have clade information for HA segments (but SC2 defaults will be selected first)
@@ -126,6 +129,7 @@ workflow augur {
                             augur_translate.translated_aa_muts_json,
                             augur_clades.clade_assignments_json]),
         build_name = build_name,
+        colors_tsv = select_first([colors, mpxv_defaults.colors]),
         lat_longs_tsv = select_first([sc2_defaults.lat_longs_tsv, flu_defaults.lat_longs_tsv, mpxv_defaults.lat_longs_tsv, lat_longs_tsv]),
         auspice_config = select_first([sc2_defaults.auspice_config, flu_defaults.auspice_config, mpxv_defaults.auspice_config, auspice_config])
     }
