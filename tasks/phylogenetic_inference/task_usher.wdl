@@ -47,8 +47,10 @@ task usher {
       wget "https://hgdownload.soe.ucsc.edu/goldenPath/wuhCor1/UShER_SARS-CoV-2/public-latest.version.txt"
       cat public-latest.version.txt > PROTOBUF_VERSION
 
+      pwd 
+      
       # copy the usher SC2 reference to expected name
-      cp test/NC_045512v2.fa reference_genome.fasta
+      cp /HOME/usher/test/NC_045512v2.fa reference_genome.fasta
       echo "DEBUG: finished downloading sars-cov-2 data"
     else
       echo "DEBUG: organism is unknown, assuming user-provided data"
