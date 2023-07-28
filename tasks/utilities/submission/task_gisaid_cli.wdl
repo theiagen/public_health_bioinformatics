@@ -33,19 +33,22 @@ task gisaid_upload {
       
       echo "trying to authenticate..."
       cli3 authenticate --username "${username}" \
+        --token gisaid.authtoken \
         --password "${password}" \
         --client_id "~{client_id}" \
         --force > submission_log.txt
 
-      ls
+      cat submission_log.txt
+
     else # otherwise, authentication token must be provided
-      cat ~{authentication_file} > ./gisaid.authtoken
+      cat ~{authentication_file} > gisaid.authtoken
     fi
 
     ls
 
     # upload to GISAID
     cli3 upload \
+      --token gisaid.authtoken \
       --metadata ~{concatenated_metadata} \
       --fasta ~{concatenated_fastas} \
       --frameshift "~{frameshift_notification}" \
@@ -56,7 +59,7 @@ task gisaid_upload {
   output {
     String gisaid_cli_version = read_string("GISAID_VERSION")
     File gisaid_logs = "submission_log.txt"
-    File failed_uploads = "failed.txt"
+    File? failed_uploads = "failed.txt"
   }
   runtime {
     cpu: 1
