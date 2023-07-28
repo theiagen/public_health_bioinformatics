@@ -402,7 +402,7 @@ task tbprofiler_output_parsing {
               if len(dr_variant["annotation"]) == 0:
                 for identified_drug in dr_variant["gene_associated_drugs"]:
                   who_annotation = apply_expert_rules(dr_variant["nucleotide_change"], dr_variant["protein_change"], dr_variant["gene"], dr_variant["type"], "LIMS")
-                  print(name, identified_drug)
+
                   if identified_drug not in resistance_dict.keys():
                     if (name in genes_for_LIMS) and (destination == "LIMS"):
                       resistance_dict[identified_drug] = who_annotation # overwrite with more severe annotation
@@ -429,7 +429,7 @@ task tbprofiler_output_parsing {
             else:
               for identified_drug in dr_variant["gene_associated_drugs"]:
                 who_annotation = apply_expert_rules(dr_variant["nucleotide_change"], dr_variant["protein_change"], dr_variant["gene"], dr_variant["type"], "LIMS")
-                print(name, identified_drug)
+        
                 if identified_drug not in resistance_dict.keys():
                   if (name in genes_for_LIMS) and (destination == "LIMS"):
                     resistance_dict[identified_drug] = who_annotation # overwrite with more severe annotation
@@ -446,8 +446,7 @@ task tbprofiler_output_parsing {
               if len(other_variant["annotation"]) == 0:
                 for identified_drug in other_variant["gene_associated_drugs"]:
                   who_annotation = apply_expert_rules(other_variant["nucleotide_change"], other_variant["protein_change"], other_variant["gene"], other_variant["type"], "LIMS")
-                  print(name)
-                  print(who_annotation)  
+
                   if identified_drug not in resistance_dict.keys():
                     if (name in genes_for_LIMS) and (destination == "LIMS"):
                       resistance_dict[identified_drug] = who_annotation # overwrite with more severe annotation
@@ -475,8 +474,7 @@ task tbprofiler_output_parsing {
             else:
               for identified_drug in other_variant["gene_associated_drugs"]:
                 who_annotation = apply_expert_rules(other_variant["nucleotide_change"], other_variant["protein_change"], other_variant["gene"], other_variant["type"], "LIMS")
-                print(name)
-                print(who_annotation)  
+
                 if identified_drug not in resistance_dict.keys():
                   if (name in genes_for_LIMS) and (destination == "LIMS"):
                     resistance_dict[identified_drug] = who_annotation # overwrite with more severe annotation
@@ -737,8 +735,11 @@ task tbprofiler_output_parsing {
             except:
               df_lims[antimicrobial_code] = "Insufficient Coverage" # What should we write here? 
             if drug_name in resistance_annotation.keys() and int(rank_annotation(resistance_annotation[drug_name])) < 4: # in addition, if the indicated annotation for the drug is not resistant (less than 4)
-              if gene_name not in ["katG", "pncA", "ethA", "gid"] and "del" not in mutations[gene_name]:
-                df_lims[antimicrobial_code] = "Pending Retest"
+              try: # catch for when there's no mutation on gene name but coverage is below threshold
+                if gene_name not in ["katG", "pncA", "ethA", "gid"] and "del" not in mutations[gene_name]:
+                  df_lims[antimicrobial_code] = "Pending Retest"
+              except: # there are no mutations in the gene
+                df_lims[antimicrobial_code] = "Insufficient Coverage"
               
 
 
@@ -804,7 +805,6 @@ task tbprofiler_output_parsing {
         df_coverage = df_coverage.append({"Gene": gene, "Percent_Coverage": percent_coverage, "Warning": warning}, ignore_index=True)
       
       df_coverage.to_csv("~{samplename}_tbprofiler_coverage_report.csv", index=False)
-
 
     ### Report Generation ###
 
