@@ -59,7 +59,7 @@ task gisaid_upload {
   output {
     String gisaid_cli_version = read_string("GISAID_VERSION")
     File gisaid_logs = "submission_log.txt"
-    File? failed_uploads = "failed.txt"
+    File failed_uploads = "failed.txt"
   }
   runtime {
     cpu: 1
