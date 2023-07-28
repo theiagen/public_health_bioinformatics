@@ -7,7 +7,9 @@ task busco {
   input {
     File assembly
     String samplename
-    String docker = "ezlabgva/busco:v5.3.2_cv1" # not available on us-docker.pkg.dev/general-theiagen
+    String docker = "us-docker.pkg.dev/general-theiagen/ezlabgva/busco:v5.3.2_cv1"
+    Int memory = 8
+    Int cpu = 2
     Int disk_size = 100
     Boolean eukaryote = false
   }
@@ -50,8 +52,8 @@ task busco {
   }
   runtime {
     docker: "~{docker}"
-    memory: "8 GB"
-    cpu: 2
+    memory: "~{memory} GB"
+    cpu: cpu
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
     preemptible: 0
