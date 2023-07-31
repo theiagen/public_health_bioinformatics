@@ -2,7 +2,6 @@ version 1.0
 
 import "../../../tasks/utilities/task_sra_fetch.wdl" as sra_fetch
 
-
 workflow fetch_sra_to_fastq {
   input {
     String sra_accession
