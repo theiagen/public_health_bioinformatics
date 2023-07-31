@@ -19,7 +19,7 @@ task cat_files {
       file=${file_array[$index]}
       cat ${file} >> ~{concatenated_file_name}
     done
->>>
+  >>>
   output {
     File concatenated_files = "~{concatenated_file_name}"
   }
@@ -53,7 +53,7 @@ task zip_files {
     done
     
     zip -r ~{zipped_file_name}.zip ~{zipped_file_name}
->>>
+   >>>
   output {
     File zipped_files = "~{zipped_file_name}.zip"
   }
@@ -81,7 +81,7 @@ task transfer_files {
     
     echo "transferred_files" > transferred_files.tsv
     gsutil ls ~{target_bucket} >> transferred_files.tsv        
->>>
+   >>>
   output {
     File transferred_files = "transferred_files.tsv"
   }
