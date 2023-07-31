@@ -2,7 +2,7 @@ version 1.0
 
 task freyja_update_refs {
   input {
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/freyja:1.3.4"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/freyja:1.4.4"
     Int disk_size = 100
   }
   meta {

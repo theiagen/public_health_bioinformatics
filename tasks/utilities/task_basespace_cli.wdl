@@ -8,10 +8,13 @@ task fetch_bs {
     String basespace_collection_id
     String api_server
     String access_token
+    
     Int mem_size_gb = 8
-    Int CPUs = 2
+    Int cpu = 2
     Int disk_size = 100
-    Int Preemptible = 1
+    Int preemptible = 1
+
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/basespace_cli:1.2.1"
   }
   command <<<
     # set basespace name and id variables
@@ -90,10 +93,10 @@ task fetch_bs {
     File? read2 = "~{sample_name}_R2.fastq.gz"
   }
   runtime {
-    docker: "us-docker.pkg.dev/general-theiagen/theiagen/basespace_cli:1.2.1"
+    docker: docker
     memory: "~{mem_size_gb} GB"
-    cpu: CPUs
+    cpu: cpu
     disks: "local-disk ~{disk_size} SSD"
-    preemptible: Preemptible
+    preemptible: preemptible
   }
 }
