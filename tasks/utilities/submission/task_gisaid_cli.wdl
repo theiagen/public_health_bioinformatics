@@ -27,24 +27,18 @@ task gisaid_upload {
 
     # generate an authentication token if username and password are provided
     if [[ -e "~{gisaid_credentials}" ]]; then
-      echo "here"
       username=$(cut -f1 "~{gisaid_credentials}")
       password=$(cut -f2 "~{gisaid_credentials}")
       
-      echo "trying to authenticate..."
       cli3 authenticate --username "${username}" \
         --token gisaid.authtoken \
         --password "${password}" \
         --client_id "~{client_id}" \
         --force > submission_log.txt
 
-      cat submission_log.txt
-
     else # otherwise, authentication token must be provided
       cat ~{authentication_file} > gisaid.authtoken
     fi
-
-    ls
 
     # upload to GISAID
     cli3 upload \
