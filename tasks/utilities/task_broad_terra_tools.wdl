@@ -238,6 +238,7 @@ task export_taxon_tables {
     String? tbprofiler_sub_lineage
     String? tbprofiler_dr_type
     String? tbprofiler_resistance_genes
+    Float? tbprofiler_genome_percent_coverage
     File? legsta_results
     String? legsta_predicted_sbt
     String? legsta_version
@@ -555,6 +556,7 @@ task export_taxon_tables {
       "tbprofiler_sub_lineage": "~{tbprofiler_sub_lineage}",
       "tbprofiler_dr_type": "~{tbprofiler_dr_type}",
       "tbprofiler_resistance_genes": "~{tbprofiler_resistance_genes}",
+      "tbprofiler_genome_percent_coverage": "~{tbprofiler_genome_percent_coverage}",
       "amrfinderplus_all_report": "~{amrfinderplus_all_report}",
       "amrfinderplus_amr_report": "~{amrfinderplus_amr_report}",
       "amrfinderplus_stress_report": "~{amrfinderplus_stress_report}",
