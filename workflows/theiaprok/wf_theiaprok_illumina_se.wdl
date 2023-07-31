@@ -409,6 +409,7 @@ workflow theiaprok_illumina_se {
             tbprofiler_sub_lineage = merlin_magic.tbprofiler_sub_lineage,
             tbprofiler_dr_type = merlin_magic.tbprofiler_dr_type,
             tbprofiler_resistance_genes = merlin_magic.tbprofiler_resistance_genes,
+            tbprofiler_genome_percent_coverage = merlin_magic.tb_genome_percent_coverage,
             legsta_results = merlin_magic.legsta_results,
             legsta_predicted_sbt = merlin_magic.legsta_predicted_sbt,
             legsta_version = merlin_magic.legsta_version,
@@ -748,6 +749,7 @@ workflow theiaprok_illumina_se {
     File? tbprofiler_laboratorian_report_csv = merlin_magic.tbprofiler_laboratorian_report_csv
     File? tbprofiler_looker_csv = merlin_magic.tbprofiler_looker_csv
     File? tbprofiler_resistance_genes_percent_coverage = merlin_magic.tb_resistance_genes_percent_coverage
+    Float? tbprofiler_genome_percent_coverage = merlin_magic.tb_genome_percent_coverage
     # Legionella pneumophila typing
     File? legsta_results = merlin_magic.legsta_results
     String? legsta_predicted_sbt = merlin_magic.legsta_predicted_sbt

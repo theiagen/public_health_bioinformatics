@@ -74,6 +74,8 @@ task tb_gene_coverage {
     whiB6=$(samtools depth -J -r "${chr}:4337971-4338721" ~{bamfile} | awk -F "\t" '{if ($3  >= ~{min_depth}) print;}' | wc -l )
     gid=$(samtools depth -J -r "${chr}:4407328-4408476" ~{bamfile} | awk -F "\t" '{if ($3  >= ~{min_depth}) print;}' | wc -l )
 
+    genome=$(samtools depth -J ~{bamfile} | awk -F "\t" '{if ($3 >= ~{min_depth}) print;}' | wc -l )
+
     # add one to gene lenth to compensate for subtraction
     gyrB_pc=$(python3 -c "print ( ($gyrB / 2428 ) * 100 )") 
     gyrA_pc=$(python3 -c "print ( ($gyrA / 2917 ) * 100 )") 
@@ -133,6 +135,9 @@ task tb_gene_coverage {
     ethR_pc=$(python3 -c "print ( ($ethR / 1051 ) * 100 )")
     whiB6_pc=$(python3 -c "print ( ($whiB6 / 751 ) * 100 )")
     gid_pc=$(python3 -c "print ( ($gid / 1149 ) * 100 )")
+
+    genome_pc=$(python3 -c "print ( ($genome / 4411532 ) * 100 )")
+    echo "$genome_pc" > GENOME_PC
 
     echo -e "#NOTE: THE VALUES BELOW ASSUME TBPROFILER (H37Rv) REFERENCE GENOME" > ~{samplename}.percent_gene_coverage.tsv
     echo -e "Gene\tPercent_Coverage" >> ~{samplename}.percent_gene_coverage.tsv
@@ -199,6 +204,7 @@ task tb_gene_coverage {
   >>>
   output {
     File tb_resistance_genes_percent_coverage = "~{samplename}.percent_gene_coverage.tsv"
+    Float tb_genome_percent_coverage = read_float("GENOME_PC")
   }
   runtime {
     docker: docker
