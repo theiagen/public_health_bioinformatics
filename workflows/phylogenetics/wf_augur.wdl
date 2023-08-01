@@ -115,19 +115,21 @@ workflow augur {
           input:
             refined_tree = augur_refine.refined_tree,
             metadata = tsv_join.out_tsv,
-            columns = select_first([augur_trait_columns, "pango_lineage,nextclade_clade"]), # default to these columns if none are specified
+            columns = select_first([augur_trait_columns, "pango_lineage,clade_membership"]), # default to these columns if none are specified
             build_name = build_name
         }
       }
-      if (defined(clades_tsv) || defined(sc2_defaults.clades_tsv) || defined(flu_defaults.clades_tsv) || defined(mpxv_defaults.clades_tsv) ) { # one of these must be present
-        call clades_task.augur_clades { # assign clades to nodes based on amino-acid or nucleotide signatures
-          input:
-            refined_tree = augur_refine.refined_tree,
-            ancestral_nt_muts_json = augur_ancestral.ancestral_nt_muts_json,
-            translated_aa_muts_json = augur_translate.translated_aa_muts_json,
-            reference_fasta = select_first([reference_fasta, sc2_defaults.reference_fasta, flu_defaults.reference_fasta, mpxv_defaults.reference_fasta]),
-            build_name = build_name,
-            clades_tsv = select_first([clades_tsv, sc2_defaults.clades_tsv, flu_defaults.clades_tsv, mpxv_defaults.clades_tsv])
+      if (! run_traits) {
+        if (defined(clades_tsv) || defined(sc2_defaults.clades_tsv) || defined(flu_defaults.clades_tsv) || defined(mpxv_defaults.clades_tsv) ) { # one of these must be present
+          call clades_task.augur_clades { # assign clades to nodes based on amino-acid or nucleotide signatures
+            input:
+              refined_tree = augur_refine.refined_tree,
+              ancestral_nt_muts_json = augur_ancestral.ancestral_nt_muts_json,
+              translated_aa_muts_json = augur_translate.translated_aa_muts_json,
+              reference_fasta = select_first([reference_fasta, sc2_defaults.reference_fasta, flu_defaults.reference_fasta, mpxv_defaults.reference_fasta]),
+              build_name = build_name,
+              clades_tsv = select_first([clades_tsv, sc2_defaults.clades_tsv, flu_defaults.clades_tsv, mpxv_defaults.clades_tsv])
+          }
         }
       }
     }
