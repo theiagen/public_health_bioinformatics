@@ -5,6 +5,7 @@ import "../../tasks/utilities/task_augur_utilities.wdl" as augur_utils
 
 import "../../tasks/phylogenetic_inference/augur/task_augur_align.wdl" as align_task
 import "../../tasks/phylogenetic_inference/augur/task_augur_ancestral.wdl" as ancestral_task
+import "../../tasks/phylogenetic_inference/augur/task_augur_traits.wdl" as traits_task
 import "../../tasks/phylogenetic_inference/augur/task_augur_clades.wdl" as clades_task
 import "../../tasks/phylogenetic_inference/augur/task_augur_export.wdl" as export_task
 import "../../tasks/phylogenetic_inference/augur/task_augur_refine.wdl" as refine_task
@@ -31,6 +32,8 @@ workflow augur {
     String? flu_subtype # options: "Victoria" "Yamagata" "H3N2" "H1N1"
 
     File? clades_tsv
+    Boolean run_traits = false # by default, do not run traits
+    String? augur_trait_columns # comma-separated list of columns to use for traits
     # these are very minimal files that hopefully will prevent workflow failure but will not provide any useful information
     File lat_longs_tsv = "gs://theiagen-public-files-rp/terra/augur-defaults/minimal-lat-longs.tsv"
     File auspice_config = "gs://theiagen-public-files-rp/terra/augur-defaults/minimal-auspice-config.json"
@@ -107,9 +110,18 @@ workflow augur {
         build_name = build_name
     }
     if (flu_segment == "HA") { # we only have clade information for HA segments (but SC2 defaults will be selected first)
+      if (run_traits) { # by default do not run traits and clades will be assigned based on the clades_tsv
+        call traits_task.augur_traits {
+          input:
+            refined_tree = augur_refine.refined_tree,
+            metadata = tsv_join.out_tsv,
+            columns = select_first([augur_trait_columns, "lineage, clade, clade_membership"]),
+            build_name = build_name
+        }
+      }
       if (defined(clades_tsv) || defined(sc2_defaults.clades_tsv) || defined(flu_defaults.clades_tsv) || defined(mpxv_defaults.clades_tsv) ) { # one of these must be present
         call clades_task.augur_clades { # assign clades to nodes based on amino-acid or nucleotide signatures
-          input: 
+          input:
             refined_tree = augur_refine.refined_tree,
             ancestral_nt_muts_json = augur_ancestral.ancestral_nt_muts_json,
             translated_aa_muts_json = augur_translate.translated_aa_muts_json,
@@ -161,6 +173,7 @@ workflow augur {
     File aligned_fastas = augur_align.aligned_fasta
     File combined_assemblies = filter_sequences_by_length.filtered_fasta
     File metadata_merged = tsv_join.out_tsv
+    File? traits_json = augur_traits.traits_assignments_json
 
     # list of samples that were kept and met the length filters    
     File keep_list = fasta_to_ids.ids_txt
