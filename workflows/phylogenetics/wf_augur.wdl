@@ -115,7 +115,7 @@ workflow augur {
           input:
             refined_tree = augur_refine.refined_tree,
             metadata = tsv_join.out_tsv,
-            columns = select_first([augur_trait_columns, "lineage, clade, clade_membership"]),
+            columns = select_first([augur_trait_columns, "lineage clade clade_membership"]), # default to these columns if none are specified
             build_name = build_name
         }
       }
@@ -139,7 +139,8 @@ workflow augur {
                             augur_refine.branch_lengths,
                             augur_ancestral.ancestral_nt_muts_json,
                             augur_translate.translated_aa_muts_json,
-                            augur_clades.clade_assignments_json]),
+                            augur_clades.clade_assignments_json,
+                            augur_traits.traits_assignments_json]),
         build_name = build_name,
         colors_tsv = select_first([colors, mpxv_defaults.colors]),
         lat_longs_tsv = select_first([sc2_defaults.lat_longs_tsv, flu_defaults.lat_longs_tsv, mpxv_defaults.lat_longs_tsv, lat_longs_tsv]),

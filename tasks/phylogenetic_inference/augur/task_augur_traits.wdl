@@ -20,7 +20,7 @@ task augur_traits {
       --columns "~{columns}" \
       --confidence \
       ~{'--metadata-id-columns ' + metadata_id_columns} \
-      ~{'--weights ' + weights}
+      ~{'--weights ' + weights} \
       --output-node-data "~{build_name}_traits.json"
   >>>
   output {
