@@ -12,8 +12,8 @@ task usher {
     File? reference_genome
     Int subtree_size = 20 # change value to indicate how many of the closest-related samples you want to show in a subtree
 
-    # what organism to run usher on
-    String organism # options: sars-cov-2, mpox
+    # what organism to run usher on -- the organisms below have default data provided
+    String organism # options: sars-cov-2, mpox, RSV-A, RSV-B
 
     # runtime
     String docker = "us-docker.pkg.dev/general-theiagen/pathogengenomics/usher:0.6.2"
@@ -46,12 +46,40 @@ task usher {
       # download versioning information of protobuf
       wget "https://hgdownload.soe.ucsc.edu/goldenPath/wuhCor1/UShER_SARS-CoV-2/public-latest.version.txt"
       cat public-latest.version.txt > PROTOBUF_VERSION
-
-      pwd 
       
       # copy the usher SC2 reference to expected name
       cp /HOME/usher/test/NC_045512v2.fa reference_genome.fasta
       echo "DEBUG: finished downloading sars-cov-2 data"
+    elif [ "~{organism}" == "RSV-A" ]; then
+      echo "DEBUG: organism is RSV-A, downloading latest UShER data"
+      wget "https://hgdownload.soe.ucsc.edu/hubs/GCF/002/815/475/GCF_002815475.1/UShER_RSV-A/rsvA.latest.pb.gz"
+      # unzip protobuf file into renamed file
+      gunzip -c rsvA.latest.pb.gz > mutation.annotated.tree.pb
+
+      # download versioning information of protobuf
+      wget "https://hgdownload.soe.ucsc.edu/hubs/GCF/002/815/475/GCF_002815475.1/UShER_RSV-A/rsvA.latest.version.txt"
+      cat rsvA.latest.version.txt > PROTOBUF_VERSION
+
+      # download RSV-A reference used to make usher protobuf
+      wget "https://hgdownload.soe.ucsc.edu/hubs/GCF/002/815/475/GCF_002815475.1/GCF_002815475.1.fa.gz"
+      # unzip reference into renamed file
+      gunzip -c GCF_002815475.1.fa.gz > reference_genome.fasta
+      echo "DEBUG: finished downloading RSV-A data"
+    elif [ "~{organism}" == "RSV-B" ]; then
+      echo "DEBUG: organism is RSV-B, downloading latest UShER data"
+      wget "https://hgdownload.soe.ucsc.edu/hubs/GCF/000/855/545/GCF_000855545.1/UShER_RSV-B/rsvB.latest.pb.gz"
+      # unzip protobuf file into renamed file
+      gunzip -c rsvB.latest.pb.gz > mutation.annotated.tree.pb
+
+      # download versioning information of protobuf
+      wget "https://hgdownload.soe.ucsc.edu/hubs/GCF/000/855/545/GCF_000855545.1/UShER_RSV-B/rsvB.latest.version.txt"
+      cat rsvB.latest.version.txt > PROTOBUF_VERSION
+
+      # download RSV-B reference used to make usher protobuf
+      wget "https://hgdownload.soe.ucsc.edu/hubs/GCF/000/855/545/GCF_000855545.1/GCF_000855545.1.fa.gz"
+      # unzip reference into renamed file
+      gunzip -c GCF_000855545.1.fa.gz > reference_genome.fasta
+      echo "DEBUG: finished downloading RSV-B data"
     else
       echo "DEBUG: organism is unknown, assuming user-provided data"
       echo "User-provided protobuf file" > PROTOBUF_VERSION
@@ -85,11 +113,18 @@ task usher {
     echo "DEUBG: UShER finished, renaming files"
     mv uncondensed-final-tree.nh ~{tree_name}_uncondensed-final-tree.nwk
     mv clades.txt ~{tree_name}_clades.txt
+
+    # rename subtree files to .nwk extension
+    for file in *nh; do
+      mv "$file" "$(basename -- "$file" .nh).nwk"
+    done
+
   >>>
   output {
     File usher_uncondensed_tree = "~{tree_name}_uncondensed-final-tree.nwk"
     File usher_clades = "~{tree_name}_clades.txt"
-    Array[File] usher_subtrees = glob("subtree-*.nh")
+    Array[File] usher_subtrees = glob("subtree-*.nwk")
+    Array[File] usher_subtree_mutations = glob("subtree-*-mutations.txt")
     String usher_version = read_string("VERSION")
     String usher_protobuf_version = read_string("PROTOBUF_VERSION")
   }
