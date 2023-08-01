@@ -394,7 +394,7 @@ task prep_augur_metadata {
     fi
     # if pango_lineage defined, add to metadata
     if [[ "~{nextclade_clade}" ]]; then 
-      nextclade_header="nextclade_clade"
+      nextclade_header="clade_membership"
     fi
 
     if [[ "~{organism}" == "sars-cov-2" ]]; then

@@ -17,7 +17,7 @@ task augur_traits {
     AUGUR_RECURSION_LIMIT=10000 augur traits \
       --tree "~{refined_tree}" \
       --metadata "~{metadata}" \
-      ~{'--columns ' + columns} \
+      ~{'--columns {' + columns + '}'} \
       --confidence \
       ~{'--metadata-id-columns ' + metadata_id_columns} \
       ~{'--weights ' + weights} \
