@@ -5,7 +5,7 @@ task augur_traits {
     File refined_tree
     File metadata
     File? weights
-    Boolean confidence = true
+    #Boolean confidence = true
     String? metadata_id_columns
     String columns
     String build_name
@@ -18,7 +18,7 @@ task augur_traits {
       --tree "~{refined_tree}" \
       --metadata "~{metadata}" \
       --columns "~{columns}" \
-      --confidence "~{confidence}" \
+      --confidence \
       ~{'--metadata-id-columns ' + metadata_id_columns} \
       ~{'--weights ' + weights}
       --output-node-data "~{build_name}_traits.json"
