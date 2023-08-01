@@ -115,7 +115,7 @@ workflow augur {
           input:
             refined_tree = augur_refine.refined_tree,
             metadata = tsv_join.out_tsv,
-            columns = select_first([augur_trait_columns, "pango_lineage nextclade_clade"]), # default to these columns if none are specified
+            columns = select_first([augur_trait_columns, "pango_lineage,nextclade_clade"]), # default to these columns if none are specified
             build_name = build_name
         }
       }
