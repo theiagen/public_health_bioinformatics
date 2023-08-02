@@ -7,7 +7,7 @@ task pmga {
   input {
     File assembly
     String samplename
-    String docker = "quay.io/staphb/pmga:3.0.2"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/pmga:3.0.2"
     Int cpu = 4
   }
   command <<<

@@ -9,7 +9,7 @@ task vadr {
     String vadr_opts = "--noseqnamemax --glsearch -s -r --nomisc --mkey sarscov2 --lowsim5seq 6 --lowsim3seq 6 --alt_fail lowscore,insertnn,deletinn --out_allfasta"
     Int assembly_length_unambiguous
     Int skip_length = 10000
-    String docker = "quay.io/staphb/vadr:1.5"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/vadr:1.5"
     Int minlen = 50
     Int maxlen = 30000
     Int cpu = 2

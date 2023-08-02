@@ -276,6 +276,7 @@ workflow theiaeuk_illumina_pe {
     String? theiaeuk_snippy_variants_query = merlin_magic.snippy_variants_query
     String? theiaeuk_snippy_variants_query_check = merlin_magic.snippy_variants_query_check
     String? theiaeuk_snippy_variants_hits = merlin_magic.snippy_variants_hits
+    File? theiaeuk_snippy_variants_reference_genome = merlin_magic.snippy_variants_reference_genome
     File? theiaeuk_snippy_variants_gene_query_results = merlin_magic.snippy_variants_gene_query_results
     # Array[File]? snippy_outputs = merlin_magic.snippy_outputs
     File? theiaeuk_snippy_variants_results = merlin_magic.snippy_variants_results

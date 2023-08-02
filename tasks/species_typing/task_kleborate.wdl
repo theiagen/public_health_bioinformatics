@@ -5,7 +5,7 @@ task kleborate {
   input {
     File assembly
     String samplename
-    String kleborate_docker_image = "quay.io/staphb/kleborate:2.2.0"
+    String kleborate_docker_image = "us-docker.pkg.dev/general-theiagen/staphb/kleborate:2.2.0"
     Int disk_size = 100
     
     # Parameters

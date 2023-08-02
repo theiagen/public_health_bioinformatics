@@ -4,8 +4,8 @@ task quast {
   input {
     File assembly
     String samplename
-    String docker = "quay.io/staphb/quast:5.0.2"
     Int min_contig_len = 500
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/quast:5.0.2"
     Int disk_size = 100
     Int memory = 2 # added default value
     Int cpu = 2 # added default value

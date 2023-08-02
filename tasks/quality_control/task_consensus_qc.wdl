@@ -47,7 +47,7 @@ task consensus_qc {
     Float percent_reference_coverage = read_string("PERCENT_REF_COVERAGE")
   }
   runtime {
-    docker: "quay.io/theiagen/utility:1.1"
+    docker: "us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1"
     memory: "2 GB"
     cpu: 1
     disks:  "local-disk " + disk_size + " SSD"

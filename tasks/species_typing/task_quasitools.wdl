@@ -5,7 +5,7 @@ task quasitools {
     File read1
     File? read2
     String samplename
-    String docker = "quay.io/biocontainers/quasitools:0.7.0--pyh864c0ab_1"
+    String docker = "us-docker.pkg.dev/general-theiagen/biocontainers/quasitools:0.7.0--pyh864c0ab_1"
   }
   command <<<
     # date and version capture

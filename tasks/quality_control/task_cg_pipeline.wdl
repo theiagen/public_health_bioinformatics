@@ -5,7 +5,7 @@ task cg_pipeline {
     File read1
     File? read2
     String samplename
-    String docker = "quay.io/staphb/lyveset:1.1.4f"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/lyveset:1.1.4f"
     String cg_pipe_opts = "--fast"
     Int genome_length
     Int disk_size = 100

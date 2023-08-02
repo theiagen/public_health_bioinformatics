@@ -5,7 +5,7 @@ task trimmomatic_pe {
     File read1
     File read2
     String samplename
-    String docker = "quay.io/staphb/trimmomatic:0.39"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/trimmomatic:0.39"
     Int trimmomatic_minlen = 75
     Int trimmomatic_window_size=4
     Int trimmomatic_quality_trim_score=30
@@ -50,7 +50,7 @@ task trimmomatic_se {
   input {
     File read1
     String samplename
-    String docker = "quay.io/staphb/trimmomatic:0.39"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/trimmomatic:0.39"
     Int trimmomatic_minlen = 25
     Int trimmomatic_window_size = 4
     Int trimmomatic_quality_trim_score = 30

@@ -19,7 +19,7 @@ workflow freyja_update {
 }
 task freyja_update_refs {
   input {
-    String docker = "quay.io/staphb/freyja:1.3.4"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/freyja:1.3.4"
     Int disk_size = 100
   }
   meta {
@@ -64,7 +64,7 @@ task transfer_files {
   runtime {
     memory: "4 GB"
     cpu: 2
-    docker: "theiagen/utility:1.1"
+    docker: "us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1"
     disks:  "local-disk " + disk_size + " HDD"
     disk: disk_size + " GB" # TES
   }

@@ -10,7 +10,7 @@ task pbptyper {
     String? db # A path to a directory containing FASTA files for 1A, 2B, and 2X proteins. In most cases using the default value will be all that is needed.
     Int min_pident = 95 # Minimum percent identity to count a hit [default: 95]
     Int min_coverage = 95 # Minimum percent coverage to count a hit [default: 95]  
-    String docker = "quay.io/staphb/pbptyper:1.0.4"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/pbptyper:1.0.4"
     Int disk_size = 100
     Int cpus = 4
   }

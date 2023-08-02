@@ -44,7 +44,7 @@ task stats_n_coverage {
     Float meanmapq = read_string("MEANMAPQ")
   }
   runtime {
-    docker: "quay.io/staphb/samtools:1.15"
+    docker: "us-docker.pkg.dev/general-theiagen/staphb/samtools:1.15"
     memory: "8 GB"
     cpu: 2
     disks:  "local-disk " + disk_size + " SSD"

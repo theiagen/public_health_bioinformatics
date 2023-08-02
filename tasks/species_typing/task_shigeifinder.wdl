@@ -4,7 +4,7 @@ task shigeifinder {
   input {
     File assembly
     String samplename
-    String docker = "staphb/shigeifinder:1.3.5"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/shigeifinder:1.3.5"
     Int disk_size = 100
     Int cpu = 2
     Int memory = 8
@@ -85,7 +85,7 @@ task shigeifinder_reads {
     File read1
     File? read2
     String samplename
-    String docker = "staphb/shigeifinder:1.3.5"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/shigeifinder:1.3.5"
     Int disk_size = 100
     Int cpu = 4
     Int memory = 8

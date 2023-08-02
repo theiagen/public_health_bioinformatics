@@ -54,7 +54,7 @@ task kraken2_theiacov {
     String? kraken_target_org = target_org
   }
   runtime {
-    docker: "quay.io/staphb/kraken2:2.0.8-beta_hv"
+    docker: "us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.0.8-beta_hv"
     memory: "8 GB"
     cpu: cpu
     disks:  "local-disk " + disk_size + " SSD"
@@ -71,7 +71,7 @@ task kraken2_standalone {
     File? read2
     File kraken2_db
     String samplename
-    String docker = "quay.io/staphb/kraken2:2.1.2-no-db"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.1.2-no-db"
     String kraken2_args = ""
     String classified_out = "classified#.fastq"
     String unclassified_out = "unclassified#.fastq"

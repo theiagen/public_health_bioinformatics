@@ -26,12 +26,12 @@ workflow theiacov_clearlabs {
     File primer_bed
     # assembly parameters
     Int normalise = 20000
-    String medaka_docker = "quay.io/staphb/artic-ncov2019:1.3.0-medaka-1.4.3"
+    String medaka_docker = "us-docker.pkg.dev/general-theiagen/staphb/artic-ncov2019:1.3.0-medaka-1.4.3"
     # reference values
     File? reference_genome
     # nextclade inputs
     String nextclade_dataset_reference = "MN908947"
-    String nextclade_dataset_tag = "2023-04-18T12:00:00Z"
+    String nextclade_dataset_tag = "2023-06-16T12:00:00Z"
     String? nextclade_dataset_name
     # kraken parameters
     String? target_org
