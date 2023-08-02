@@ -11,6 +11,7 @@ task metaspades_pe {
     Int memory = 16
     String? kmers
     String? metaspades_opts
+    Int phred_offset = 33
   }
   command <<<
     metaspades.py --version | head -1 | cut -d ' ' -f 2 | tee VERSION
@@ -21,6 +22,7 @@ task metaspades_pe {
       -m ~{memory} \
       -t ~{cpu} \
       -o metaspades \
+      --phred-offset ~{phred_offset}
       ~{metaspades_opts}
 
     mv metaspades/contigs.fasta ~{samplename}_contigs.fasta
