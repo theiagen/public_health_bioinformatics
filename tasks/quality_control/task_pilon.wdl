@@ -38,6 +38,6 @@ task pilon {
     disks:  "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB" # TES
     preemptible: 0
-    maxRetries: 0
+    maxRetries: 3
   }
 }
