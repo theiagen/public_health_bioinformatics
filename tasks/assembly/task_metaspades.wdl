@@ -22,7 +22,7 @@ task metaspades_pe {
       -m ~{memory} \
       -t ~{cpu} \
       -o metaspades \
-      --phred-offset ~{phred_offset}
+      --phred-offset ~{phred_offset} \
       ~{metaspades_opts}
 
     mv metaspades/contigs.fasta ~{samplename}_contigs.fasta
