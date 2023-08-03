@@ -9,7 +9,7 @@ task minimap2 {
     File? query2
     File reference
     String samplename
-    String docker = "staphb/minimap2:2.22" # newer versions seem to be bugged (infinite loop)
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/minimap2:2.22" # newer versions seem to be bugged (infinite loop)
     String mode = "asm20"
     Boolean output_sam = false
     Int disk_size = 100

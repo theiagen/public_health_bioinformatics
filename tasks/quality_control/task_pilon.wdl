@@ -6,7 +6,7 @@ task pilon {
     File bam
     File bai
     String samplename
-    String docker = "quay.io/biocontainers/pilon:1.24--hdfd78af_0"
+    String docker = "us-docker.pkg.dev/general-theiagen/biocontainers/pilon:1.24--hdfd78af_0"
     Int cpu = 4
     Int memory = 8
     Int disk_size = 100
