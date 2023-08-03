@@ -40,6 +40,7 @@ task mashtree_fasta {
   output {
     String date = read_string("DATE")
     String version = read_string("VERSION")
+    String mashtree_docker = docker
     File mashtree_matrix = "~{cluster_name}.tsv"
     File mashtree_tree = "~{cluster_name}.nwk"
   }
