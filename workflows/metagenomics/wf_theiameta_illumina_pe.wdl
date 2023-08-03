@@ -19,6 +19,7 @@ workflow theiameta_illumina_pe {
     String samplename
     File? reference
     File kraken2_db = "gs://theiagen-public-files-rp/terra/theiaprok-files/k2_standard_8gb_20210517.tar.gz"
+    String read_scrubber = "ncbi"
   }
   call kraken_task.kraken2_standalone as kraken2_raw {
     input:
@@ -32,7 +33,8 @@ workflow theiameta_illumina_pe {
         samplename = samplename,
         read1_raw = read1,
         read2_raw = read2,
-        workflow_series = "theiameta"
+        workflow_series = "theiameta",
+        read_scrubber = read_scrubber
     }
   call kraken_task.kraken2_standalone as kraken2_clean {
     input:
