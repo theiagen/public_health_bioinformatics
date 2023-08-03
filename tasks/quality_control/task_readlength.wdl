@@ -5,7 +5,7 @@ task readlength {
     File read1
     File read2
     Int memory = 8
-    String docker = "quay.io/staphb/bbtools:38.76"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/bbtools:38.76"
     Int disk_size = 100
   }
   command <<<
