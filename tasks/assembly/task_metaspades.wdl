@@ -5,7 +5,7 @@ task metaspades_pe {
     File read1_cleaned
     File read2_cleaned
     String samplename
-    String docker = "quay.io/biocontainers/spades:3.12.0--h9ee0642_3"
+    String docker = "us-docker.pkg.dev/general-theiagen/biocontainers/spades:3.12.0--h9ee0642_3"
     Int disk_size = 100
     Int cpu = 4
     Int memory = 16
