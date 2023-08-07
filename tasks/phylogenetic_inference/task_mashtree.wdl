@@ -13,6 +13,7 @@ task mashtree_fasta {
     Int cpu = 16
     Int memory = 64
     Int disk_size = 100
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/mashtree:1.2.0"
   }
   command <<<
     # date and version control
@@ -39,11 +40,12 @@ task mashtree_fasta {
   output {
     String date = read_string("DATE")
     String version = read_string("VERSION")
+    String mashtree_docker = docker
     File mashtree_matrix = "~{cluster_name}.tsv"
     File mashtree_tree = "~{cluster_name}.nwk"
   }
   runtime {
-    docker: "us-docker.pkg.dev/general-theiagen/staphb/mashtree:1.2.0"
+    docker: docker
     memory: "~{memory} GB"
     cpu: cpu
     disks: "local-disk " + disk_size + " SSD"
