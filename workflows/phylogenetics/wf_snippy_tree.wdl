@@ -26,6 +26,7 @@ workflow snippy_tree_wf {
     String? data_summary_terra_table
     String? data_summary_column_names # comma delimited
 
+    # the following parameters are exposed to allow modification in snippy_streamline
     String? snippy_core_docker
     Int? snippy_core_cpu 
     Int? snippy_core_disk_size
