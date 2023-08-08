@@ -20,7 +20,7 @@ task hostile_pe {
       --fastq2 ~{read2} \
       --aligner ~{aligner}
 
-    # rename output reads
+    # rename output reads - to do: fastq.gz or fq.gz termination
     filename_without_extension_1=$(basename "~{read1}" .fastq.gz)
     filename_without_extension_2=$(basename "~{read2}" .fastq.gz)
 
