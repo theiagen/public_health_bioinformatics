@@ -270,6 +270,8 @@ workflow theiaprok_fasta {
         kleborate_otype = merlin_magic.kleborate_otype,
         kleborate_klocus_confidence = merlin_magic.kleborate_klocus_confidence,
         kleborate_olocus_confidence = merlin_magic.kleborate_olocus_confidence,
+        kleborate_virulence_score = merlin_magic.kleborate_virulence_score,
+        kleborate_resistance_score = merlin_magic.kleborate_resistance_score,
         ngmaster_tsv = merlin_magic.ngmaster_tsv,
         ngmaster_version = merlin_magic.ngmaster_version,
         ngmaster_ngmast_sequence_type = merlin_magic.ngmaster_ngmast_sequence_type,
@@ -512,6 +514,8 @@ workflow theiaprok_fasta {
     String? kleborate_otype = merlin_magic.kleborate_otype
     String? kleborate_klocus_confidence = merlin_magic.kleborate_klocus_confidence
     String? kleborate_olocus_confidence = merlin_magic.kleborate_olocus_confidence
+    String? kleborate_virulence_score = merlin_magic.kleborate_virulence_score
+    String? kleborate_resistance_score = merlin_magic.kleborate_resistance_score
     # Neisseria gonorrhoeae Typing
     File? ngmaster_tsv = merlin_magic.ngmaster_tsv
     String? ngmaster_version = merlin_magic.ngmaster_version
