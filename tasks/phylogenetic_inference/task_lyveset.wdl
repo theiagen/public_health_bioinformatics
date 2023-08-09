@@ -100,14 +100,14 @@ task lyveset {
     --min_alt_frac ~{min_alt_frac} \
     --min_coverage ~{min_coverage} \
     ~{'--presets ' + presets} \
-    ~{true='--mask_phages' false='' mask_phages} \
-    ~{true='--mask_cliffs' false='' mask_cliffs} \
+    ~{true='--mask-phages' false='' mask_phages} \
+    ~{true='--mask-cliffs' false='' mask_cliffs} \
     ~{true='--nomatrix' false='' nomatrix} \
     ~{true='--nomsa' false='' nomsa} \
     ~{true='--notrees' false='' notrees} \
     ~{true='--fast' false='' fast} \
     ~{true='--downsample' false='' downsample} \
-    ~{true='--sample_sites' false='' sample_sites} \
+    ~{true='--sample-sites' false='' sample_sites} \
     ~{'--read_cleaner ' + read_cleaner} \
     ~{'--mapper ' + mapper} \
     ~{'--snpcaller ' + snpcaller} \
