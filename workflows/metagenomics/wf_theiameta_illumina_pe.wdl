@@ -18,6 +18,7 @@ workflow theiameta_illumina_pe {
     String samplename
     File? reference
     File kraken2_db = "gs://theiagen-public-files-rp/terra/theiaprok-files/k2_standard_8gb_20210517.tar.gz"
+    Boolean output_additional_files = false
   }
   call kraken_task.kraken2_standalone as kraken2_raw {
     input:
@@ -72,40 +73,46 @@ workflow theiameta_illumina_pe {
         samplename = samplename,
         min_contig_len = 1
       }
-    call minimap2_task.minimap2 as minimap2_reads {
-      input:
-        query1 = read_QC_trim.read1_clean,
-        query2 = read_QC_trim.read2_clean, 
-        reference = select_first([retrieve_aligned_contig_paf.final_assembly, metaspades.assembly_fasta]),
-        samplename = samplename,
-        mode = "sr",
-        output_sam = true
-    }
-    call parse_mapping_task.sam_to_sorted_bam {
-      input:
-        sam = minimap2_reads.minimap2_out,
-        samplename = samplename
-    }
-    call parse_mapping_task.calculate_coverage {
-      input:
-        bam = sam_to_sorted_bam.bam,
-        bai = sam_to_sorted_bam.bai
-    }
-    call parse_mapping_task.retrieve_pe_reads_bam as retrieve_unaligned_pe_reads_sam {
-      input:
-        bam = sam_to_sorted_bam.bam,
-        samplename = samplename,
-        prefix = "unassembled"
-    }
-    call parse_mapping_task.retrieve_pe_reads_bam as retrieve_aligned_pe_reads_sam {
-      input:
-        bam = sam_to_sorted_bam.bam,
-        samplename = samplename,
-        sam_flag = 2,
-        prefix = "assembled"
+    if (output_additional_files){
+      call minimap2_task.minimap2 as minimap2_reads {
+        input:
+          query1 = read_QC_trim.read1_clean,
+          query2 = read_QC_trim.read2_clean, 
+          reference = select_first([retrieve_aligned_contig_paf.final_assembly, metaspades.assembly_fasta]),
+          samplename = samplename,
+          mode = "sr",
+          output_sam = true
+      }
+      call parse_mapping_task.sam_to_sorted_bam {
+        input:
+          sam = minimap2_reads.minimap2_out,
+          samplename = samplename
+      }
+      call parse_mapping_task.calculate_coverage {
+        input:
+          bam = sam_to_sorted_bam.bam,
+          bai = sam_to_sorted_bam.bai
+      }
+      call parse_mapping_task.retrieve_pe_reads_bam as retrieve_unaligned_pe_reads_sam {
+        input:
+          bam = sam_to_sorted_bam.bam,
+          samplename = samplename,
+          prefix = "unassembled"
+      }
+      call parse_mapping_task.retrieve_pe_reads_bam as retrieve_aligned_pe_reads_sam {
+        input:
+          bam = sam_to_sorted_bam.bam,
+          samplename = samplename,
+          sam_flag = 2,
+          prefix = "assembled"
+      }
+      call parse_mapping_task.assembled_reads_percent {
+        input:
+          bam = sam_to_sorted_bam.bam,
+      } 
     }
     call versioning.version_capture{
-    input:
+      input:
   }
   output {
     # Version capture
@@ -162,13 +169,15 @@ workflow theiameta_illumina_pe {
     # Assembly QC - minimap2
     Float? percent_coverage = calculate_coverage_paf.percent_coverage
     # Assembly QC - bedtools
-    Float assembly_mean_coverage = calculate_coverage.mean_depth_coverage
-    String bedtools_version = calculate_coverage.bedtools_version
-    String bedtools_docker = calculate_coverage.bedtools_docker
+    Float? assembly_mean_coverage = calculate_coverage.mean_depth_coverage
+    String? bedtools_version = calculate_coverage.bedtools_version
+    String? bedtools_docker = calculate_coverage.bedtools_docker
     # Read retrieval
-    File read1_unmapped = retrieve_unaligned_pe_reads_sam.read1
-    File read2_unmapped = retrieve_unaligned_pe_reads_sam.read2
-    File read1_mapped = retrieve_aligned_pe_reads_sam.read1 
-    File read2_mapped = retrieve_aligned_pe_reads_sam.read2
+    File? read1_unmapped = retrieve_unaligned_pe_reads_sam.read1
+    File? read2_unmapped = retrieve_unaligned_pe_reads_sam.read2
+    File? read1_mapped = retrieve_aligned_pe_reads_sam.read1 
+    File? read2_mapped = retrieve_aligned_pe_reads_sam.read2
+    # Assembly stats
+    Float? percentage_mapped_reads = assembled_reads_percent.percentage_mapped
     }
 }
