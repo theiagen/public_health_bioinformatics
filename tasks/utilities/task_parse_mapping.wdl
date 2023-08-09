@@ -203,3 +203,36 @@ task calculate_coverage {
   }
 }
 
+task assembled_reads_percent {
+  input {
+    File bam
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/samtools:1.17"
+    Int disk_size = 100
+    Int cpu = 2
+    Int mem = 8
+  }
+  command <<<
+    # Count the total number of reads
+    total_reads=$(samtools view -c ~{bam})
+
+    # Count the number of mapped reads
+    mapped_reads=$(samtools view -F 4 -c ~{bam})
+
+    # Calculate the percentage of mapped reads using awk
+    percentage_mapped=$(awk -v mapped=$mapped_reads -v total=$total_reads 'BEGIN { print (mapped / total) * 100 }')
+
+    echo $percentage_mapped | tee PERCENTAGE_MAPPED
+  >>>
+  output{
+    String percentage_mapped = read_string("PERCENTAGE_MAPPED")
+  }
+  runtime {
+    docker: "~{docker}"
+    memory: mem + " GB"
+    cpu: cpu
+    disks: "local-disk " + disk_size + " SSD"
+    disk: disk_size + " GB"
+    maxRetries: 0
+    preemptible: 0
+  }
+}
