@@ -24,6 +24,7 @@ workflow usher_workflow {
     File usher_uncondensed_tree = usher.usher_uncondensed_tree
     File usher_clades = usher.usher_clades
     Array[File] usher_subtrees = usher.usher_subtrees
+    Array[File] usher_subtree_mutations = usher.usher_subtree_mutations
     String usher_version  = usher.usher_version
     String usher_protobuf_version = usher.usher_protobuf_version 
     String usher_phb_version = version_capture.phb_version
