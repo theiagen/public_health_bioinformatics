@@ -23,5 +23,8 @@ workflow fetch_sra_to_fastq {
   output {
     File read1 = fastq_dl_sra.read1
     File? read2 = fastq_dl_sra.read2
+    String fastq_dl_version = fastq_dl_sra.fastq_dl_version
+    String fastq_dl_docker = fastq_dl_sra.fastq_dl_docker
+    String fastq_dl_date = fastq_dl_sra.fastq_dl_date
   }
 }
