@@ -33,10 +33,14 @@ task fastq_dl_sra {
     if [ -f "~{sra_accession}.fastq.gz" ] && [ ! -f "~{sra_accession}_1.fastq.gz" ]; then
       mv "~{sra_accession}.fastq.gz" "~{sra_accession}_1.fastq.gz"
     fi
+
+    # rename FASTQ metadata file to include SRR accession
+    mv -v fastq-run-info.tsv ~{sra_accession}.fastq-run-info.tsv
   >>>
   output {
     File read1 = "~{sra_accession}_1.fastq.gz"
     File? read2 = "~{sra_accession}_2.fastq.gz"
+    File fastq_metadata = "~{sra_accession}.fastq-run-info.tsv"
     String fastq_dl_version = read_string("VERSION")
     String fastq_dl_docker = docker
     String fastq_dl_date = read_string("DATE")
