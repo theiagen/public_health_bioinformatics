@@ -4,7 +4,7 @@ version 1.0
 task fastq_dl_sra {
   input {
     String sra_accession
-    String docker = "us-docker.pkg.dev/general-theiagen/biocontainers/fastq-dl:2.0.3--pyhdfd78af_0"
+    String docker = "us-docker.pkg.dev/general-theiagen/biocontainers/fastq-dl:2.0.4--pyhdfd78af_0"
     Int disk_size = 100
     Int cpus = 2
     Int memory = 8
@@ -36,6 +36,7 @@ task fastq_dl_sra {
 
     # rename FASTQ metadata file to include SRR accession
     mv -v fastq-run-info.tsv ~{sra_accession}.fastq-run-info.tsv
+    
   >>>
   output {
     File read1 = "~{sra_accession}_1.fastq.gz"
