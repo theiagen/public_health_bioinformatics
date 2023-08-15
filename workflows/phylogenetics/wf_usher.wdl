@@ -10,7 +10,7 @@ workflow usher_workflow {
   input {
     Array[File] assembly_fasta
     String tree_name
-    String organism # currently available: "sars-cov-2", "mpox"
+    String organism # currently available: "sars-cov-2", "mpox", "RSV-A", "RSV-B"
   }
   call usher_task.usher {
     input: 
