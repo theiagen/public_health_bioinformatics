@@ -22,6 +22,7 @@ task czgenepi_wrangling {
     Int disk_size = 100
   }
   command <<<
+    
   >>>
   output {
     File concatenated_fasta = "file"
