@@ -230,3 +230,8 @@ workflows:
    primaryDescriptorPath: /workflows/phylogenetics/wf_usher.wdl
    testParameterFiles:
     - empty.json
+ - name: CZGenEpi_Prep_PHB
+   subclass: WDL
+   primaryDescriptorPath: /workflows/utilities/file_handling/wf_czgenepi_prep.wdl
+   testParameterFiles:
+    - empty.json
