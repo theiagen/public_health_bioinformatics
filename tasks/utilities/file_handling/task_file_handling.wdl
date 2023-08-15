@@ -5,6 +5,7 @@ task cat_files {
     Array[File] files_to_cat
     String concatenated_file_name
     String docker_image = "us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1"
+    Boolean skip_extra_headers = false
   }
   meta {
     # added so that call caching is always turned off
@@ -17,7 +18,15 @@ task cat_files {
     # cat files one by one and store them in the concatenated_files file
     for index in ${!file_array[@]}; do
       file=${file_array[$index]}
-      cat ${file} >> ~{concatenated_file_name}
+      if ! ~{skip_extra_headers} ; then # act as if the first line of all files is not a header
+        cat ${file} >> ~{concatenated_file_name}
+      else # you want to skip the first line of all files except the first one
+        if [ $index == 0 ]; then # if its the first file, cat the entire thing
+          cat ${file} >> ~{concatenated_file_name}
+        else # otherwise, skip the first line
+          tail -n +2 ${file} >> ~{concatenated_file_name}
+        fi
+      fi
     done
   >>>
   output {
