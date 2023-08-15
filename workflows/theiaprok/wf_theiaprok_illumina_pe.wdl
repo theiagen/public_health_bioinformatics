@@ -17,7 +17,7 @@ import "../../tasks/gene_typing/task_prokka.wdl" as prokka_task
 import "../../tasks/gene_typing/task_plasmidfinder.wdl" as plasmidfinder_task
 import "../../tasks/quality_control/task_qc_check_phb.wdl" as qc_check
 import "../../tasks/task_versioning.wdl" as versioning
-import "../../tasks/utilities/task_broad_terra_tools.wdl" as terra_tools
+import "../../tasks/utilities/data_export/task_broad_terra_tools.wdl" as terra_tools
 
 workflow theiaprok_illumina_pe {
   meta {

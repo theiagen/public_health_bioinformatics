@@ -1,7 +1,7 @@
 version 1.0
 
 import "../../../tasks/phylogenetic_inference/task_referenceseeker.wdl" as referenceseeker_task
-import "../../../tasks/utilities/task_ncbi_datasets.wdl" as ncbi_datasets_task
+import "../../../tasks/utilities/data_import/task_ncbi_datasets.wdl" as ncbi_datasets_task
 import "../../../tasks/task_versioning.wdl" as versioning
 
 workflow assembly_fetch {

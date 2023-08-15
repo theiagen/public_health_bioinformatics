@@ -1,6 +1,6 @@
 version 1.0
 
-import "../../../tasks/utilities/task_file_handling.wdl" as file_handling
+import "../../../tasks/utilities/file_handling/task_file_handling.wdl" as file_handling
 import "../../../tasks/task_versioning.wdl" as versioning
 
 workflow transfer_column_content {

@@ -2,7 +2,7 @@ version 1.0
 
 import "../../tasks/phylogenetic_inference/task_mashtree.wdl" as mashtree
 import "../../tasks/phylogenetic_inference/task_reorder_matrix.wdl" as reorder_matrix_task
-import "../../tasks/utilities/task_summarize_data.wdl" as data_summary
+import "../../tasks/utilities/file_handling/task_summarize_data.wdl" as data_summary
 import "../../tasks/task_versioning.wdl" as versioning
 
 workflow mashtree_fasta {
