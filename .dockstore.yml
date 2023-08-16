@@ -220,3 +220,8 @@ workflows:
    primaryDescriptorPath: /workflows/utilities/wf_theiavalidate.wdl
    testParameterFiles:
     - empty.json
+ - name: Usher_PHB
+   subclass: WDL
+   primaryDescriptorPath: /workflows/phylogenetics/wf_usher.wdl
+   testParameterFiles:
+    - empty.json
