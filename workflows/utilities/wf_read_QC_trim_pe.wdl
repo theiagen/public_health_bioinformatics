@@ -3,6 +3,7 @@ version 1.0
 import "../../tasks/quality_control/task_fastq_scan.wdl" as fastq_scan
 import "../../tasks/quality_control/task_trimmomatic.wdl" as trimmomatic
 import "../../tasks/quality_control/task_ncbi_scrub.wdl" as ncbi_scrub
+import "../../tasks/quality_control/task_hostile.wdl" as hostile_task
 import "../../tasks/quality_control/task_bbduk.wdl" as bbduk_task
 import "../../tasks/quality_control/task_readlength.wdl" as readlength_task
 import "../../tasks/quality_control/task_fastp.wdl" as fastp_task
@@ -28,15 +29,26 @@ workflow read_QC_trim_pe {
     File? phix
     String? workflow_series
     String read_processing = "trimmomatic"
+    String read_scrubber = "ncbi"
     String? trimmomatic_args
     String fastp_args = "--detect_adapter_for_pe -g -5 20 -3 20"
   }
   if (("~{workflow_series}" == "theiacov") || ("~{workflow_series}" == "theiameta")) {
-    call ncbi_scrub.ncbi_scrub_pe {
-      input:
-        samplename = samplename,
-        read1 = read1_raw,
-        read2 = read2_raw
+    if (read_scrubber == "ncbi"){
+      call ncbi_scrub.ncbi_scrub_pe {
+        input:
+          samplename = samplename,
+          read1 = read1_raw,
+          read2 = read2_raw
+      }
+    }
+    if (read_scrubber == "hostile"){
+      call hostile_task.hostile_pe {
+        input:
+          samplename = samplename,
+          read1 = read1_raw,
+          read2 = read2_raw
+      }
     }
   }
   if ("~{workflow_series}" == "theiacov") {
@@ -50,8 +62,8 @@ workflow read_QC_trim_pe {
     call kraken.kraken2_theiacov as kraken2_theiacov_dehosted {
       input:
         samplename = samplename,
-        read1 = select_first([ncbi_scrub_pe.read1_dehosted]),
-        read2 = ncbi_scrub_pe.read2_dehosted,
+        read1 = select_first([ncbi_scrub_pe.read1_dehosted, hostile_pe.read1_dehosted]),
+        read2 = select_first([ncbi_scrub_pe.read2_dehosted, hostile_pe.read2_dehosted]),
         target_org = target_org
     }
   }
@@ -59,8 +71,8 @@ workflow read_QC_trim_pe {
     call trimmomatic.trimmomatic_pe {
       input:
         samplename = samplename,
-        read1 = select_first([ncbi_scrub_pe.read1_dehosted, read1_raw]),
-        read2 = select_first([ncbi_scrub_pe.read2_dehosted, read2_raw]),
+        read1 = select_first([ncbi_scrub_pe.read1_dehosted, hostile_pe.read1_dehosted, read1_raw]),
+        read2 = select_first([ncbi_scrub_pe.read2_dehosted, hostile_pe.read2_dehosted, read2_raw]),
         trimmomatic_window_size = trim_window_size,
         trimmomatic_quality_trim_score = trim_quality_trim_score,
         trimmomatic_minlen = trim_minlen,
@@ -115,12 +127,13 @@ workflow read_QC_trim_pe {
     }
   }
   output {
-    # NCBI scrubber
-    File? read1_dehosted = ncbi_scrub_pe.read1_dehosted
-    File? read2_dehosted = ncbi_scrub_pe.read2_dehosted
+    # NCBI scrubber / hostile
+    File? read1_dehosted = select_first([hostile_pe.read1_dehosted, ncbi_scrub_pe.read1_dehosted])
+    File? read2_dehosted = select_first([hostile_pe.read2_dehosted, ncbi_scrub_pe.read2_dehosted])
     Int? read1_human_spots_removed = ncbi_scrub_pe.read1_human_spots_removed
     Int? read2_human_spots_removed = ncbi_scrub_pe.read2_human_spots_removed
     String? ncbi_scrub_docker = ncbi_scrub_pe.ncbi_scrub_docker
+    String? hostile_docker = hostile_pe.hostile_docker
 
     # bbduk
     File read1_clean = bbduk.read1_clean

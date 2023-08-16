@@ -6,6 +6,7 @@ import "../../tasks/taxon_id/task_kraken2.wdl" as kraken_task
 import "../../tasks/alignment/task_minimap2.wdl" as minimap2_task
 import "../../tasks/utilities/task_parse_mapping.wdl" as parse_mapping_task
 import "../../tasks/quality_control/task_quast.wdl" as quast_task
+import "../../tasks/gene_typing/task_amrfinderplus.wdl" as amrfinderplus_task
 import "../../tasks/task_versioning.wdl" as versioning
 
 workflow theiameta_illumina_pe {
@@ -19,6 +20,7 @@ workflow theiameta_illumina_pe {
     File? reference
     File kraken2_db = "gs://theiagen-public-files-rp/terra/theiaprok-files/k2_standard_8gb_20210517.tar.gz"
     Boolean output_additional_files = false
+    String read_scrubber = "ncbi"
   }
   call kraken_task.kraken2_standalone as kraken2_raw {
     input:
@@ -32,7 +34,8 @@ workflow theiameta_illumina_pe {
         samplename = samplename,
         read1_raw = read1,
         read2_raw = read2,
-        workflow_series = "theiameta"
+        workflow_series = "theiameta",
+        read_scrubber = read_scrubber
     }
   call kraken_task.kraken2_standalone as kraken2_clean {
     input:
@@ -110,6 +113,42 @@ workflow theiameta_illumina_pe {
         input:
           bam = sam_to_sorted_bam.bam,
       } 
+    call amrfinderplus_task.amrfinderplus_nuc {
+      input:
+        assembly = select_first([retrieve_aligned_contig_paf.final_assembly, metaspades.assembly_fasta]),
+        samplename = samplename
+    }
+    call minimap2_task.minimap2 as minimap2_reads {
+      input:
+        query1 = read_QC_trim.read1_clean,
+        query2 = read_QC_trim.read2_clean, 
+        reference = select_first([retrieve_aligned_contig_paf.final_assembly, metaspades.assembly_fasta]),
+        samplename = samplename,
+        mode = "sr",
+        output_sam = true
+    }
+    call parse_mapping_task.sam_to_sorted_bam {
+      input:
+        sam = minimap2_reads.minimap2_out,
+        samplename = samplename
+    }
+    call parse_mapping_task.calculate_coverage {
+      input:
+        bam = sam_to_sorted_bam.bam,
+        bai = sam_to_sorted_bam.bai
+    }
+    call parse_mapping_task.retrieve_pe_reads_bam as retrieve_unaligned_pe_reads_sam {
+      input:
+        bam = sam_to_sorted_bam.bam,
+        samplename = samplename,
+        prefix = "unassembled"
+    }
+    call parse_mapping_task.retrieve_pe_reads_bam as retrieve_aligned_pe_reads_sam {
+      input:
+        bam = sam_to_sorted_bam.bam,
+        samplename = samplename,
+        sam_flag = 2,
+        prefix = "assembled"
     }
     call versioning.version_capture{
       input:
@@ -166,6 +205,19 @@ workflow theiameta_illumina_pe {
     Int largest_contig = quast.largest_contig
     String quast_version = quast.version
     String quast_docker = quast.quast_docker
+    # NCBI-AMRFinderPlus Outputs
+    File? amrfinderplus_all_report = amrfinderplus_nuc.amrfinderplus_all_report
+    File? amrfinderplus_amr_report = amrfinderplus_nuc.amrfinderplus_amr_report
+    File? amrfinderplus_stress_report = amrfinderplus_nuc.amrfinderplus_stress_report
+    File? amrfinderplus_virulence_report = amrfinderplus_nuc.amrfinderplus_virulence_report
+    String? amrfinderplus_amr_core_genes = amrfinderplus_nuc.amrfinderplus_amr_core_genes
+    String? amrfinderplus_amr_plus_genes = amrfinderplus_nuc.amrfinderplus_amr_plus_genes
+    String? amrfinderplus_stress_genes = amrfinderplus_nuc.amrfinderplus_stress_genes
+    String? amrfinderplus_virulence_genes = amrfinderplus_nuc.amrfinderplus_virulence_genes
+    String? amrfinderplus_amr_classes = amrfinderplus_nuc.amrfinderplus_amr_classes
+    String? amrfinderplus_amr_subclasses = amrfinderplus_nuc.amrfinderplus_amr_subclasses
+    String? amrfinderplus_version = amrfinderplus_nuc.amrfinderplus_version
+    String? amrfinderplus_db_version = amrfinderplus_nuc.amrfinderplus_db_version
     # Assembly QC - minimap2
     Float? percent_coverage = calculate_coverage_paf.percent_coverage
     # Assembly QC - bedtools
