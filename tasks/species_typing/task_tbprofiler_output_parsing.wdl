@@ -18,91 +18,132 @@ task tbprofiler_output_parsing {
     import pandas as pd
     import datetime
 
-    ## Lookup Data Structures ##
+    ## Lookup Data Structures - GLOBAL VARIABLES ##
 
     # gene coverage as a dictionary
-    gene_coverage_dict = pd.read_csv("~{gene_coverage}", delimiter="\t", skip_blank_lines=True).to_dict()
-    gene_coverage_dict = gene_coverage_dict["#NOTE: THE VALUES BELOW ASSUME TBPROFILER (H37Rv) REFERENCE GENOME"] # skip first line
+    GENE_COVERAGE_DICT = pd.read_csv("~{gene_coverage}", delimiter="\t", skip_blank_lines=True).to_dict()
+    GENE_COVERAGE_DICT = GENE_COVERAGE_DICT["#NOTE: THE VALUES BELOW ASSUME TBPROFILER (H37Rv) REFERENCE GENOME"] # skip first line
 
     # lookup dictionary - antimicrobial code to drug name
-    antimicrobial_code_to_drug_name = {"M_DST_B01_INH": "isoniazid", "M_DST_C01_ETO": "ethionamide",
-                          "M_DST_D01_RIF": "rifampicin", "M_DST_E01_PZA": "pyrazinamide",
-                          "M_DST_F01_EMB": "ethambutol","M_DST_G01_AMK": "amikacin", 
-                          "M_DST_H01_KAN": "kanamycin","M_DST_I01_CAP": "capreomycin", 
-                          "M_DST_J01_MFX": "moxifloxacin","M_DST_K01_LFX": "levofloxacin", 
-                          "M_DST_L01_BDQ": "bedaquiline","M_DST_M01_CFZ": "clofazimine", 
+    ANTIMICROBIAL_CODE_TO_DRUG_NAME = {"M_DST_B01_INH": "isoniazid", 
+                          "M_DST_C01_ETO": "ethionamide",
+                          "M_DST_D01_RIF": "rifampicin", 
+                          "M_DST_E01_PZA": "pyrazinamide",
+                          "M_DST_F01_EMB": "ethambutol",
+                          "M_DST_G01_AMK": "amikacin", 
+                          "M_DST_H01_KAN": "kanamycin",
+                          "M_DST_I01_CAP": "capreomycin", 
+                          "M_DST_J01_MFX": "moxifloxacin",
+                          "M_DST_K01_LFX": "levofloxacin", 
+                          "M_DST_L01_BDQ": "bedaquiline",
+                          "M_DST_M01_CFZ": "clofazimine", 
                           "M_DST_N01_LZD": "linezolid" 
                          }
     
     # Lookup list - antimicrobial drug names
-    antimicrobial_drug_name_list = ["isoniazid", "ethionamide", "rifampicin", "pyrazinamide", "ethambutol",
+    ANTIMICROBIAL_DRUG_NAME_LIST = ["isoniazid", "ethionamide", "rifampicin", "pyrazinamide", "ethambutol",
                           "streptomycin", "amikacin", "kanamycin", "capreomycin", "moxifloxacin",
                           "levofloxacin", "bedaquiline", "clofazimine", "linezolid"
                          ]
 
     # lookup dictionary - antimicrobial code to gene names to antimicrobial code column names
-    antimicrobial_code_to_genes = {"M_DST_B01_INH": {"katG": "M_DST_B02_katG", "fabG1": "M_DST_B03_fabG1", 
-                                   "inhA": "M_DST_B04_inhA"},
-                 "M_DST_C01_ETO": {"ethA": "M_DST_C02_ethA", "fabG1": "M_DST_C03_fabG1",
-                                   "inhA": "M_DST_C04_inhA"},
-                 "M_DST_D01_RIF": {"rpoB": "M_DST_D02_rpoB"},
-                 "M_DST_E01_PZA": {"pncA": "M_DST_E02_pncA"},
-                 "M_DST_F01_EMB": {"embA": "M_DST_F02_embA", "embB": "M_DST_F03_embB"},
-                 "M_DST_G01_AMK": {"rrs": "M_DST_G02_rrs", "eis": "M_DST_G03_eis"},
-                 "M_DST_H01_KAN": {"rrs": "M_DST_H02_rrs", "eis": "M_DST_H03_eis"},
-                 "M_DST_I01_CAP": {"rrs": "M_DST_I02_rrs", "tlyA": "M_DST_I03_tlyA"},
-                 "M_DST_J01_MFX": {"gyrA": "M_DST_J02_gyrA", "gyrB": "M_DST_J03_gyrB"},
-                 "M_DST_K01_LFX": {"gyrA": "M_DST_K02_gyrA", "gyrB": "M_DST_K03_gyrB"},
-                 "M_DST_L01_BDQ": {"Rv0678": "M_DST_L02_Rv0678", "atpE": "M_DST_L03_atpE",
-                                   "pepQ": "M_DST_L04_pepQ", "mmpL5": "M_DST_L05_mmpL5",
-                                   "mmpS5": "M_DST_L06_mmpS5"},
-                 "M_DST_M01_CFZ": {"Rv0678":"M_DST_M02_Rv0678", "pepQ": "M_DST_M03_pepQ",
-                                   "mmpL5":"M_DST_M04_mmpL5", "mmpS5": "M_DST_M05_mmpS5"},
-                 "M_DST_N01_LZD": {"rrl": "M_DST_N02_rrl", "rplC": "M_DST_N03_rplC"}
+    ANTIMICROBIAL_CODE_TO_GENES = {
+                  "M_DST_B01_INH": {"katG": "M_DST_B02_katG", 
+                                    "fabG1": "M_DST_B03_fabG1",
+                                    "inhA": "M_DST_B04_inhA"},
+                  "M_DST_C01_ETO": {"ethA": "M_DST_C02_ethA", 
+                                    "fabG1": "M_DST_C03_fabG1",
+                                    "inhA": "M_DST_C04_inhA"},
+                  "M_DST_D01_RIF": {"rpoB": "M_DST_D02_rpoB"},
+                  "M_DST_E01_PZA": {"pncA": "M_DST_E02_pncA"},
+                  "M_DST_F01_EMB": {"embA": "M_DST_F02_embA", 
+                                    "embB": "M_DST_F03_embB"},
+                  "M_DST_G01_AMK": {"rrs": "M_DST_G02_rrs", 
+                                    "eis": "M_DST_G03_eis"},
+                  "M_DST_H01_KAN": {"rrs": "M_DST_H02_rrs", 
+                                    "eis": "M_DST_H03_eis"},
+                  "M_DST_I01_CAP": {"rrs": "M_DST_I02_rrs", 
+                                    "tlyA": "M_DST_I03_tlyA"},
+                  "M_DST_J01_MFX": {"gyrA": "M_DST_J02_gyrA", 
+                                    "gyrB": "M_DST_J03_gyrB"},
+                  "M_DST_K01_LFX": {"gyrA": "M_DST_K02_gyrA", 
+                                    "gyrB": "M_DST_K03_gyrB"},
+                  "M_DST_L01_BDQ": {"Rv0678": "M_DST_L02_Rv0678", 
+                                    "atpE": "M_DST_L03_atpE",
+                                    "pepQ": "M_DST_L04_pepQ", 
+                                    "mmpL5": "M_DST_L05_mmpL5",
+                                    "mmpS5": "M_DST_L06_mmpS5"},
+                  "M_DST_M01_CFZ": {"Rv0678":"M_DST_M02_Rv0678", 
+                                    "pepQ": "M_DST_M03_pepQ",
+                                    "mmpL5":"M_DST_M04_mmpL5", 
+                                    "mmpS5": "M_DST_M05_mmpS5"},
+                  "M_DST_N01_LZD": {"rrl": "M_DST_N02_rrl", 
+                                    "rplC": "M_DST_N03_rplC"}
                 }
 
     # lookup list - the genes to be considered for the LIMS report
-    genes_for_LIMS = ["katG", "fabG1", "inhA", "ethA", "rpoB", "pncA", "embA", "embB", "rrs", "eis", 
+    GENES_FOR_LIMS = ["katG", "fabG1", "inhA", "ethA", "rpoB", "pncA", "embA", "embB", "rrs", "eis", 
                     "tlyA", "gyrA", "gyrB", "Rv0678", "atpE", "pepQ", "mmpL5", "mmpS5", "rrl", "rplC"
                     ]
 
     # lookup dictionary - gene to antimicrobial drug name (https://github.com/jodyphelan/tbdb/blob/master/tbdb.csv)
-    gene_to_antimicrobial_drug_name = {"ahpC":["isoniazid"], "ald":["cycloserine"], "alr": ["cycloserine"],
-                          "ddn": ["delamanid"], "eis": ["amikacin", "kanamycin"], "embA": ["ethambutol"],
-                          "embB": ["ethambutol"], "embC": ["ethambutol"], "embR": ["ethambutol"],
-                          "ethA": ["ethionamide"], "ethR": ["ethionamide"], "fabG1": ["ethionamide", "isoniazid"],
-                          "fbiA": ["delamanid"], "fgd1": ["delamanid"], "folC": ["para-aminosalicylic_acid"],
-                          "gid": ["streptomycin"], "gyrA": ["ciprofloxacin", "fluoroquinolones", "levofloxacin",
-                          "moxifloxacin", "ofloxacin"], "gyrB": ["moxifloxacin","ciprofloxacin","fluoroquinolones",
-                          "levofloxacin", "ofloxacin"], "inhA": ["ethionamide", "isoniazid"],
-                          "kasA": ["isoniazid"], "katG": ["isoniazid"], "panD": ["pyrazinamide"],
-                          "pncA": ["pyrazinamide"], "ribD": ["para-aminosalicylic_acid"], "rplC": ["linezolid"],
-                          "rpoB": ["rifampicin"], "rpoC": ["rifampicin"], "rpsA": ["pyrazinamide"],
-                          "rpsL": ["streptomycin"], "rrl": ["linezolid"], "rrs": ["streptomycin", "amikacin",
-                          "aminoglycosides", "capreomycin", "kanamycin"], "Rv0678": ["bedaquiline",
-                          "clofazimine"], "thyA": ["para-aminosalicylic_acid"], "thyX": ["para-aminosalicylic_acid"],
-                          "tlyA": ["capreomycin"], "rpoA": ["rifampicin"]
+    GENE_TO_ANTIMICROBIAL_DRUG_NAME = {"ahpC":["isoniazid"], 
+                                       "ald":["cycloserine"], 
+                                       "alr": ["cycloserine"],
+                                       "ddn": ["delamanid"], 
+                                       "eis": ["amikacin", "kanamycin"], 
+                                       "embA": ["ethambutol"],
+                                       "embB": ["ethambutol"], 
+                                       "embC": ["ethambutol"], 
+                                       "embR": ["ethambutol"],
+                                       "ethA": ["ethionamide"], 
+                                       "ethR": ["ethionamide"], 
+                                       "fabG1": ["ethionamide", "isoniazid"],
+                                       "fbiA": ["delamanid"], 
+                                       "fgd1": ["delamanid"], 
+                                       "folC": ["para-aminosalicylic_acid"],
+                                       "gid": ["streptomycin"], 
+                                       "gyrA": ["ciprofloxacin", "fluoroquinolones", "levofloxacin", "moxifloxacin", "ofloxacin"], 
+                                       "gyrB": ["moxifloxacin","ciprofloxacin","fluoroquinolones", "levofloxacin", "ofloxacin"], 
+                                       "inhA": ["ethionamide", "isoniazid"],
+                                       "kasA": ["isoniazid"], 
+                                       "katG": ["isoniazid"], 
+                                       "panD": ["pyrazinamide"],
+                                       "pncA": ["pyrazinamide"], 
+                                       "ribD": ["para-aminosalicylic_acid"], 
+                                       "rplC": ["linezolid"],
+                                       "rpoB": ["rifampicin"], 
+                                       "rpoC": ["rifampicin"], 
+                                       "rpsA": ["pyrazinamide"],
+                                       "rpsL": ["streptomycin"], 
+                                       "rrl": ["linezolid"], 
+                                       "rrs": ["streptomycin", "amikacin", "aminoglycosides", "capreomycin", "kanamycin"], 
+                                       "Rv0678": ["bedaquiline", "clofazimine"], 
+                                       "thyA": ["para-aminosalicylic_acid"], 
+                                       "thyX": ["para-aminosalicylic_acid"],
+                                       "tlyA": ["capreomycin"], 
+                                       "rpoA": ["rifampicin"] 
                          }
     
     # lookup dictionary - antimicrobial drug name to gene name  (https://github.com/jodyphelan/tbdb/blob/master/tbdb.csv)
-    antimicrobial_drug_name_to_gene = { "isoniazid": ["ahpC", "fabG1", "inhA", "kasA", "katG"], 
-                                        "ethionamide": ["ethA", "ethR", "fabG1", "inhA"], 
-                                        "rifampicin": ["rpoA", "rpoB", "rpoC"], 
-                                        "pyrazinamide": ["panD", "pncA", "rpsA"], 
-                                        "ethambutol": ["embA", "embB", "embC", "embR"], 
-                                        "streptomycin": ["gid", "rpsL", "rrs"], 
-                                        "amikacin": ["eis", "rrs"], 
-                                        "kanamycin": ["eis", "rrs"], 
-                                        "capreomycin": ["rrs", "tlyA"], 
-                                        "moxifloxacin": ["gyrA", "gyrB"],
-                                        "levofloxacin": ["gyrA", "gyrB"], 
+    ANTIMICROBIAL_DRUG_NAME_TO_GENE_NAME = { "amikacin": ["eis", "rrs"], 
                                         "bedaquiline": ["Rv0678"], 
+                                        "capreomycin": ["rrs", "tlyA"], 
                                         "clofazimine": ["Rv0678"], 
-                                        "linezolid": ["rplC", "rrl"]
+                                        "ethambutol": ["embA", "embB", "embC", "embR"], 
+                                        "ethionamide": ["ethA", "ethR", "fabG1", "inhA"], 
+                                        "isoniazid": ["ahpC", "fabG1", "inhA", "kasA", "katG"], 
+                                        "kanamycin": ["eis", "rrs"], 
+                                        "levofloxacin": ["gyrA", "gyrB"], 
+                                        "linezolid": ["rplC", "rrl"],
+                                        "moxifloxacin": ["gyrA", "gyrB"],
+                                        "pyrazinamide": ["panD", "pncA", "rpsA"], 
+                                        "rifampicin": ["rpoA", "rpoB", "rpoC"], 
+                                        "streptomycin": ["gid", "rpsL", "rrs"] 
                                       }
     
     # lookup dictionary - gene to tier
-    gene_to_tier = {"ahpC": "Tier 1", "inhA": "Tier 1", "katG": "Tier 1", "rpoB": "Tier 1", "embA": "Tier 1", 
+    GENE_TO_TIER = {"ahpC": "Tier 1", "inhA": "Tier 1", "katG": "Tier 1", "rpoB": "Tier 1", "embA": "Tier 1", 
                     "embB": "Tier 1", "embC": "Tier 1", "pncA": "Tier 1", "clpC1": "Tier 1", "panD": "Tier 1", 
                     "gyrA": "Tier 1", "gyrB": "Tier 1", "pepQ": "Tier 1", "Rv0678": "Tier 1", "mmpL5": "Tier 1", 
                     "mmpS5": "Tier 1", "atpE": "Tier 1", "rplC": "Tier 1", "rrl": "Tier 1", "fgd1": "Tier 1", 
@@ -115,7 +156,7 @@ task tbprofiler_output_parsing {
                   }
                   
     # lookup dictionary - gene to locus tag (https://github.com/jodyphelan/TBProfiler/blob/master/db/tbdb.bed)
-    gene_to_locus_tag = {"ahpC":"Rv2428", "ald":"Rv2780", "alr": "Rv3423c",
+    GENE_TO_LOCUS_TAG = {"ahpC":"Rv2428", "ald":"Rv2780", "alr": "Rv3423c",
                           "ddn": "Rv3547", "eis": "Rv2416c", "embA": "Rv3794",
                           "embB": "Rv3795", "embC": "Rv3793", "embR": "Rv1267c",
                           "ethA": "Rv3854c", "ethR": "Rv3855", "fabG1": "Rv1483",
@@ -129,11 +170,38 @@ task tbprofiler_output_parsing {
                           "thyX": "Rv2754c", "tlyA": "Rv1694", "rpoA": "Rv3457c"
                          }
 
-    gene_list_option_1 = ["Rv0678", "atpE", "pepQ", "mmpL5", "mmpS5", "rrl", "rplC"] # Rv0678 is mmpR
-    gene_list_option_2 = ["katG", "pncA", "ethA", "gid", "rpoB"]
-    gene_list_combined = ["Rv0678", "atpE", "pepQ", "mmpL5", "mmpS5", "rrl", "rplC", "katG", "pncA", "ethA", "gid", "rpoB"]
+    GENE_LIST_OPTION_1 = ["Rv0678", "atpE", "pepQ", "mmpL5", "mmpS5", "rrl", "rplC"] # Rv0678 is mmpR
+    GENE_LIST_OPTION_2 = ["katG", "pncA", "ethA", "gid", "rpoB"]
     
-    low_depth_of_coverage_list = []
+    # Turning TBProfiler annotations into Looker or MDL interpretations
+    ANNOTATION_TO_INTERPRETATION = {
+      "Assoc w R": {"looker": "R", 
+                    "MDL": "R"},
+      "Assoc w R - interim": {"looker": "R-Interim", 
+                              "MDL": "U"},
+      "Uncertain significance": {"looker": "U", 
+                                 "MDL": "S", 
+                                 "MDL-ingenelist1" : "U"},
+      "Not assoc w R": {"looker": "S", 
+                        "MDL": "S"},
+      "Not assoc w R - Interim": {"looker": "S-Interim", 
+                                  "MDL": "S", 
+                                  "MDL-ingenelist1" : "U"}                              
+    }
+
+    # genes with promoter regions to consider
+    PROMOTER_REGIONS = {"Rv0678": [-84, -1],
+                        "atpE": [-48, -1],
+                        "pepQ": [-33, -1],
+                        "rplC": [-18, -1]
+                        }
+
+    # genes that have positions with special consideration
+    SPECIAL_POSITIONS = {"rrl": {[2003, 2367], [2449, 3056]},
+                         "rpoB": [426, 452]
+                        }
+
+    LOW_DEPTH_OF_COVERAGE_LIST = []
     
     ## Auxiliary Functions ##
 
@@ -151,48 +219,6 @@ task tbprofiler_output_parsing {
         return int(position)
       return 0
 
-    def annotation_to_looker(annotation):
-      """
-      1.1: This function takes the WHO-annotation of resistance by TBProfiler and 
-      returns simple R (resistant), U (uncertain) and S (susceptible) notations for Looker
-      """
-      if annotation == "Assoc w R":
-        return "R"
-      elif annotation == "Assoc w R - interim":
-        return "R-Interim"
-      elif annotation == "Uncertain significance":
-        return "U"
-      elif annotation == "Not assoc w R":
-        return "S"
-      elif annotation == "Not assoc w R - Interim":
-        return "S-Interim"
-      else:
-        return "S"
-    
-    def annotation_to_MDL(annotation, gene = ""):
-      """
-      This function takes the annotation of resistance by TBProfiler and 
-      returns simple R (resistant), U (uncertain) and S (susceptible) notations for MDL
-      """
-      if annotation == "Assoc w R":
-        return "R"
-      elif annotation == "Assoc w R - interim":
-        return "U"
-      elif annotation == "Uncertain significance":
-        if gene in gene_list_option_1:
-          return "U"
-        else:
-          return "S"
-      elif annotation == "Not assoc w R":
-        return "S"
-      elif annotation == "Not assoc w R - Interim":
-        if gene in gene_list_option_1:
-          return "U"
-        else:
-          return "S"
-      else:
-        return "S"
-
     def apply_expert_rules(nucleotide_change, protein_change, gene, substitution_type, interpretation_destination):
       """
       Apply rules 1-3
@@ -201,28 +227,23 @@ task tbprofiler_output_parsing {
       position_nt = get_position(nucleotide_change)
       position_aa = get_position(protein_change)
 
-      if gene in ["Rv0678", "atpE", "pepQ", "rplC", "mmpL5", "mmpS5"]: # apply expert rules 1.2
-        if gene == "Rv0678" and (position_nt >= -84 and position_nt <= -1): # promoter regions
+      if gene in ["Rv0678", "atpE", "pepQ", "rplC", "mmpL5", "mmpS5"]: # apply expert rules 1.2         
+        # check if position within promoter regions
+        if PROMOTER_REGIONS[gene][1] <= position_nt <= PROMOTER_REGIONS[gene][2]: 
           return "Uncertain significance" if interpretation_destination == "LIMS" else "U"
-        elif gene == "atpE" and (position_nt >= -48 and position_nt <= -1):
-          return "Uncertain significance" if interpretation_destination == "LIMS" else "U"
-        elif gene == "pepQ" and (position_nt >= -33 and position_nt <= -1):
-          return "Uncertain significance" if interpretation_destination == "LIMS" else "U"
-        elif gene == "rplC" and (position_nt >= -18 and position_nt <= -1):
-          return "Uncertain significance" if interpretation_destination == "LIMS" else "U"
-        elif "upstream_gene_variant" in substitution_type:
+        elif "upstream_gene_variant" in substitution_type: # otherwise, check if it is an upstream gene variant
           return "S" if interpretation_destination == "MDL" else "U"
-        else: # apply expert rules 1.2
+        else: # otherwise, apply expert rules 1.2
           if not any(non_ORF in nucleotide_change for non_ORF in ["+", "-", "*"]) or nucleotide_change.endswith("*"): 
           # if a position includes either +, *, or - it's not in the ORF 
-          #  UNLESS the * is at the end which means its a premature stop codon
+          # UNLESS the * is at the end which means its a premature stop codon
             if substitution_type != "synonymous_variant":
               return "Uncertain significance" if interpretation_destination == "LIMS" else "U"
             else:
               return "S"
 
       elif gene == "rrl": # apply expert rules 1.2
-        if (position_nt >= 2003 and position_nt <= 2367) or (position_nt >= 2449 and position_nt <= 3056):
+        if (SPECIAL_POSITIONS[gene][1][1] <= position_nt <= SPECIAL_POSITIONS[gene][1][2]) or (SPECIAL_POSITIONS[gene][2][1] <= position_nt <= SPECIAL_POSITIONS[gene][2][2]):
           return "Uncertain significance" if interpretation_destination == "LIMS" else "U"
         else:
           return "S" if interpretation_destination == "MDL" else "U"
@@ -231,31 +252,25 @@ task tbprofiler_output_parsing {
         if any(indel_or_stop in nucleotide_change for indel_or_stop in ["del", "ins", "fs", "delins", "_"]) or nucleotide_change.endswith("*"):
           return "Uncertain significance" if interpretation_destination == "LIMS" else "U"
         else:
-            if substitution_type != "synonymous_variant":
-              return "S" if interpretation_destination == "MDL" else "U"
-            elif "upstream_gene_variant" in substitution_type:
+            if substitution_type != "synonymous_variant" or "upstream_gene_variant" in substitution_type:
               return "S" if interpretation_destination == "MDL" else "U"
             else:
               return "S"
 
       elif gene == "rpoB": # apply expert rules 2.2.2
-        if (position_aa >= 426 and position_aa <= 452):
+        if SPECIAL_POSITIONS[gene][1] <= position_nt <= SPECIAL_POSITIONS[gene][2]:
             if substitution_type != "synonymous_variant":
               return "Assoc with R" if interpretation_destination == "LIMS" else "R"
             else:
               return "S"   
         else:
-            if substitution_type != "synonymous_variant":
-              return "S" if interpretation_destination == "MDL" else "U"
-            elif "upstream_gene_variant" in substitution_type:
+            if substitution_type != "synonymous_variant" or "upstream_gene_variant" in substitution_type:
               return "S" if interpretation_destination == "MDL" else "U"
             else:
               return "S"
 
-      elif gene not in gene_list_combined: # NOT AN EXPERT RULE: 3.2
-        if substitution_type != "synonymous_variant":
-          return "Snoexpert" if interpretation_destination == "MDL" else "Unoexpert"
-        elif "upstream_gene_variant" in substitution_type:
+      elif gene not in GENE_LIST_OPTION_1 or gene not in GENE_LIST_OPTION_2: # NOT AN EXPERT RULE: 3.2
+        if substitution_type != "synonymous_variant" or "upstream_gene_variant" in substitution_type:
           return "Snoexpert" if interpretation_destination == "MDL" else "Unoexpert"
         else:
           return "Snoexpert"
@@ -330,29 +345,31 @@ task tbprofiler_output_parsing {
         
         for dr_variant in results_json["dr_variants"]:
           name = dr_variant["gene"]
-          if name in genes_for_LIMS:
-            substitution = str(dr_variant["nucleotide_change"] + " (" + dr_variant["protein_change"] + ")")
+          if name in GENES_FOR_LIMS:
+            substitution = f"{} ({})".format(dr_variant["nucleotide_change"], dr_variant["protein_change"])
         
             if name not in mutations_dict.keys():
               mutations_dict[name] = substitution
             else:
-              mutations_dict[name] = mutations_dict[name] + '; ' + substitution
+              mutations_dict[name] = f"{}; {}".format(mutations_dict[name], substitution)
         
         for other_variant in results_json["other_variants"]:
           name = other_variant["gene"]
-          if name in genes_for_LIMS:
+          if name in GENES_FOR_LIMS:
             aa_position = get_position(other_variant["protein_change"])
-
-            if other_variant["type"] != "synonymous_variant" or (other_variant["gene"] == "rpoB" and (aa_position >= 426 and aa_position <= 452)):  # report all non-synonymous mutations, unless rpoB RRDR
+            
+            # report all non-synonymous mutations, unless rpoB RRDR
+            if other_variant["type"] != "synonymous_variant" or (other_variant["gene"] == "rpoB" and (SPECIAL_POSITIONS["rpoB"][1] <= position_nt <= SPECIAL_POSITIONS["rpoB"][2])): 
               name = other_variant["gene"]
-              substitution = str(other_variant["nucleotide_change"] + " (" + other_variant["protein_change"] + ")")
+              substitution = f"{} ({})".format(other_variant["nucleotide_change"], other_variant["protein_change"])
 
               if other_variant["type"] == "synonymous_variant": # only catches rpoB RRDR
-                substituion = subtitution + " [synonymous]"      
+                substitution = f"{} [synonymous]".format(substitution)
+                
               if name not in mutations_dict.keys():
                 mutations_dict[name] = substitution
               else:
-                mutations_dict[name] = mutations_dict[name] + '; ' + substitution
+                mutations_dict[name] = f"{}; {}".format(mutations_dict[name], substitution)
       return mutations_dict
 
     def rank_annotation(annotation):
@@ -404,11 +421,12 @@ task tbprofiler_output_parsing {
                   who_annotation = apply_expert_rules(dr_variant["nucleotide_change"], dr_variant["protein_change"], dr_variant["gene"], dr_variant["type"], "LIMS")
 
                   if identified_drug not in resistance_dict.keys():
-                    if (name in genes_for_LIMS) and (destination == "LIMS"):
+                    if (name in GENES_FOR_LIMS) and (destination == "LIMS"):
                       resistance_dict[identified_drug] = who_annotation # overwrite with more severe annotation
                   else:
-                    if rank_annotation(resistance_dict[identified_drug]) < rank_annotation(who_annotation): # if current annotation indicates higher severity than any previous annotation,
-                      if (name in genes_for_LIMS) and (destination == "LIMS"):
+                    # if current annotation indicates higher severity than any previous annotation,
+                    if rank_annotation(resistance_dict[identified_drug]) < rank_annotation(who_annotation): 
+                      if (name in GENES_FOR_LIMS) and (destination == "LIMS"):
                         resistance_dict[identified_drug] = who_annotation # overwrite with more severe annotation
 
               for annotation in dr_variant["annotation"]: # iterate through them
@@ -417,25 +435,27 @@ task tbprofiler_output_parsing {
                 if drug not in resistance_dict.keys():
                   if destination == "Looker":
                     resistance_dict[drug] = who_annotation
-                  elif (name in genes_for_LIMS) and (destination == "LIMS"):
+                  elif (name in GENES_FOR_LIMS) and (destination == "LIMS"):
                     resistance_dict[drug] = who_annotation
 
                 else: # if the drug has already been seen in either the same variant or a different one,
-                  if rank_annotation(resistance_dict[drug]) < rank_annotation(who_annotation): # if current annotation indicates higher severity than any previous annotation,
+                  # if current annotation indicates higher severity than any previous annotation,
+                  if rank_annotation(resistance_dict[drug]) < rank_annotation(who_annotation): 
                     if destination == "Looker": 
                       resistance_dict[drug] = who_annotation # overwrite with more severe annotation
-                    elif (name in genes_for_LIMS) and (destination == "LIMS"):
+                    elif (name in GENES_FOR_LIMS) and (destination == "LIMS"):
                       resistance_dict[drug] = who_annotation # overwrite with more severe annotation
             else:
               for identified_drug in dr_variant["gene_associated_drugs"]:
                 who_annotation = apply_expert_rules(dr_variant["nucleotide_change"], dr_variant["protein_change"], dr_variant["gene"], dr_variant["type"], "LIMS")
         
                 if identified_drug not in resistance_dict.keys():
-                  if (name in genes_for_LIMS) and (destination == "LIMS"):
+                  if (name in GENES_FOR_LIMS) and (destination == "LIMS"):
                     resistance_dict[identified_drug] = who_annotation # overwrite with more severe annotation
                 else:
-                  if rank_annotation(resistance_dict[identified_drug]) < rank_annotation(who_annotation): # if current annotation indicates higher severity than any previous annotation,
-                    if (name in genes_for_LIMS) and (destination == "LIMS"):
+                  # if current annotation indicates higher severity than any previous annotation,
+                  if rank_annotation(resistance_dict[identified_drug]) < rank_annotation(who_annotation): 
+                    if (name in GENES_FOR_LIMS) and (destination == "LIMS"):
                       resistance_dict[identified_drug] = who_annotation # overwrite with more severe annotation
 
         for other_variant in results_json["other_variants"]:
@@ -448,11 +468,12 @@ task tbprofiler_output_parsing {
                   who_annotation = apply_expert_rules(other_variant["nucleotide_change"], other_variant["protein_change"], other_variant["gene"], other_variant["type"], "LIMS")
 
                   if identified_drug not in resistance_dict.keys():
-                    if (name in genes_for_LIMS) and (destination == "LIMS"):
+                    if (name in GENES_FOR_LIMS) and (destination == "LIMS"):
                       resistance_dict[identified_drug] = who_annotation # overwrite with more severe annotation
                   else:
-                    if rank_annotation(resistance_dict[identified_drug]) < rank_annotation(who_annotation): # if current annotation indicates higher severity than any previous annotation,
-                      if (name in genes_for_LIMS) and (destination == "LIMS"):
+                    # if current annotation indicates higher severity than any previous annotation,
+                    if rank_annotation(resistance_dict[identified_drug]) < rank_annotation(who_annotation): 
+                      if (name in GENES_FOR_LIMS) and (destination == "LIMS"):
                         resistance_dict[identified_drug] = who_annotation # overwrite with more severe annotation
               
               for annotation in other_variant["annotation"]: # iterate through them
@@ -462,25 +483,27 @@ task tbprofiler_output_parsing {
                 if drug not in resistance_dict.keys():
                   if destination == "Looker":
                     resistance_dict[drug] = who_annotation
-                  elif (name in genes_for_LIMS) and (destination == "LIMS"):
+                  elif (name in GENES_FOR_LIMS) and (destination == "LIMS"):
                     resistance_dict[drug] = who_annotation # only 
 
                 else: # if the drug has already been seen in either the same variant or a different one,
-                  if rank_annotation(resistance_dict[drug]) < rank_annotation(who_annotation): # if current annotation indicates higher severity than any previous annotation,
+                  # if current annotation indicates higher severity than any previous annotation,
+                  if rank_annotation(resistance_dict[drug]) < rank_annotation(who_annotation): 
                     if destination == "Looker": 
                       resistance_dict[drug] = who_annotation # overwrite with more severe annotation
-                    elif (name in genes_for_LIMS) and (destination == "LIMS"):
+                    elif (name in GENES_FOR_LIMS) and (destination == "LIMS"):
                       resistance_dict[drug] = who_annotation # overwrite with more severe annotation
             else:
               for identified_drug in other_variant["gene_associated_drugs"]:
                 who_annotation = apply_expert_rules(other_variant["nucleotide_change"], other_variant["protein_change"], other_variant["gene"], other_variant["type"], "LIMS")
 
                 if identified_drug not in resistance_dict.keys():
-                  if (name in genes_for_LIMS) and (destination == "LIMS"):
+                  if (name in GENES_FOR_LIMS) and (destination == "LIMS"):
                     resistance_dict[identified_drug] = who_annotation # overwrite with more severe annotation
                 else:
-                  if rank_annotation(resistance_dict[identified_drug]) < rank_annotation(who_annotation): # if current annotation indicates higher severity than any previous annotation,
-                    if (name in genes_for_LIMS) and (destination == "LIMS"):
+                  # if current annotation indicates higher severity than any previous annotation,
+                  if rank_annotation(resistance_dict[identified_drug]) < rank_annotation(who_annotation): 
+                    if (name in GENES_FOR_LIMS) and (destination == "LIMS"):
                       resistance_dict[identified_drug] = who_annotation # overwrite with more severe annotation
 
       return resistance_dict
@@ -493,8 +516,8 @@ task tbprofiler_output_parsing {
       row = {}
       row["sample_id"] = "~{samplename}"
       row["tbprofiler_gene_name"] = variant["gene"]
-      if variant["gene"] in gene_to_tier.keys():
-        row["gene_tier"] = gene_to_tier[variant["gene"]]
+      if variant["gene"] in GENE_TO_TIER.keys():
+        row["gene_tier"] = GENE_TO_TIER[variant["gene"]]
       else:
         row["gene_tier"] = "NA"
       row["tbprofiler_locus_tag"] = variant["locus_tag"]
@@ -505,12 +528,12 @@ task tbprofiler_output_parsing {
       row["frequency"] = variant["freq"]
       row["read_support"] = row["depth"]*row["frequency"]
       row["warning"] = ""
-      if row["depth"] < int('~{min_depth}') or float(gene_coverage_dict[variant["gene"]]) < ~{coverage_threshold}:
+      if row["depth"] < int('~{min_depth}') or float(GENE_COVERAGE_DICT[variant["gene"]]) < ~{coverage_threshold}:
         row["warning"] = "Insufficient coverage in locus"
         if "del" in variant["nucleotide_change"]:
           row["warning"] = "Insufficient coverage in locus (deletion identified)"
         else:
-          low_depth_of_coverage_list.append(variant["gene"])
+          LOW_DEPTH_OF_COVERAGE_LIST.append(variant["gene"])
 
       return row
 
@@ -518,7 +541,7 @@ task tbprofiler_output_parsing {
 
     def parse_json_lab_report(json_file):
       """
-      This function recieves the tbprofiler output json file and
+      This function receives the tbprofiler output json file and
       writes the Laboratorian report that includes the following information
       per mutation:
         - sample_id: includes sample name
@@ -567,24 +590,64 @@ task tbprofiler_output_parsing {
               # iterate through any gene-associated drugs
               for identified_drug in dr_variant["gene_associated_drugs"]:
                 if identified_drug not in drugs_to_row:
-                  drugs_to_row[identified_drug] = {"other_variant": dr_variant, "who_confidence": row["confidence"], "drug": identified_drug, "nucleotide_change": dr_variant["nucleotide_change"], "protein_change": dr_variant["protein_change"], "gene": dr_variant["gene"], "type": dr_variant["type"]}
-                elif rank_annotation(drugs_to_row[identified_drug]["who_confidence"]) < rank_annotation(row["confidence"]): # overwrite entry with the more severe annotation (higher value) if multiple drugs are present
-                  drugs_to_row[identified_drug] = {"other_variant": dr_variant, "who_confidence": row["confidence"], "drug": identified_drug, "nucleotide_change": dr_variant["nucleotide_change"], "protein_change": dr_variant["protein_change"], "gene": dr_variant["gene"], "type": dr_variant["type"]}
+                  drugs_to_row[identified_drug] = {"other_variant": dr_variant, 
+                                                   "who_confidence": row["confidence"], 
+                                                   "drug": identified_drug, 
+                                                   "nucleotide_change": dr_variant["nucleotide_change"], 
+                                                   "protein_change": dr_variant["protein_change"], 
+                                                   "gene": dr_variant["gene"], 
+                                                   "type": dr_variant["type"]}
+                # overwrite entry with the more severe annotation (higher value) if multiple drugs are present
+                elif rank_annotation(drugs_to_row[identified_drug]["who_confidence"]) < rank_annotation(row["confidence"]): 
+                  drugs_to_row[identified_drug] = {"other_variant": dr_variant, 
+                                                   "who_confidence": row["confidence"], 
+                                                   "drug": identified_drug, 
+                                                   "nucleotide_change": dr_variant["nucleotide_change"], 
+                                                   "protein_change": dr_variant["protein_change"], 
+                                                   "gene": dr_variant["gene"], 
+                                                   "type": dr_variant["type"]}
 
             # case: drug confers resistance to multiple drugs - if the same drug shows multiple times in a single mutation, save only the most severe annotation
-            for annotation in dr_variant["annotation"]: # iterate thorugh all possible annotations for the variant
-              if annotation["drug"] not in drugs_to_row: # if this is the first time a drug is seen, add to dictionary
-                drugs_to_row[annotation["drug"]] = {"other_variant": dr_variant, "who_confidence": annotation["who_confidence"], "drug": annotation["drug"], "nucleotide_change": dr_variant["nucleotide_change"], "protein_change": dr_variant["protein_change"], "gene": dr_variant["gene"], "type": dr_variant["type"]}
-              elif rank_annotation(drugs_to_row[annotation["drug"]]["who_confidence"]) < rank_annotation(annotation["who_confidence"]): # overwrite entry with the more severe annotation (higher value) if multiple drugs are present
-                drugs_to_row[annotation["drug"]] = {"other_variant": dr_variant, "who_confidence": annotation["who_confidence"], "drug": annotation["drug"], "nucleotide_change": dr_variant["nucleotide_change"], "protein_change": dr_variant["protein_change"], "gene": dr_variant["gene"], "type": dr_variant["type"]}
+            # iterate thorugh all possible annotations for the variant
+            for annotation in dr_variant["annotation"]: 
+              # if this is the first time a drug is seen, add to dictionary
+              if annotation["drug"] not in drugs_to_row: 
+                drugs_to_row[annotation["drug"]] = {"other_variant": dr_variant, 
+                                                    "who_confidence": annotation["who_confidence"], 
+                                                    "drug": annotation["drug"], 
+                                                    "nucleotide_change": dr_variant["nucleotide_change"], 
+                                                    "protein_change": dr_variant["protein_change"], 
+                                                    "gene": dr_variant["gene"], 
+                                                    "type": dr_variant["type"]}
+              # overwrite entry with the more severe annotation (higher value) if multiple drugs are present
+              elif rank_annotation(drugs_to_row[annotation["drug"]]["who_confidence"]) < rank_annotation(annotation["who_confidence"]): 
+                drugs_to_row[annotation["drug"]] = {"other_variant": dr_variant, 
+                                                    "who_confidence": annotation["who_confidence"], 
+                                                    "drug": annotation["drug"], 
+                                                    "nucleotide_change": dr_variant["nucleotide_change"], 
+                                                    "protein_change": dr_variant["protein_change"], 
+                                                    "gene": dr_variant["gene"], 
+                                                    "type": dr_variant["type"]}
             
             for drug in drugs_to_row:
+              gene = drugs_to_row[drug]["gene"]
+
               row = variant_to_row(drugs_to_row[drug]["other_variant"])
+
               row["confidence"] = "No WHO annotation" if drugs_to_row[drug]["who_confidence"] == "" else drugs_to_row[drug]["who_confidence"]
+              
               row["antimicrobial"] = drugs_to_row[drug]["drug"]
-              row["looker_interpretation"] = annotation_to_looker(row["confidence"])  if row["confidence"] != "No WHO annotation" else apply_expert_rules(drugs_to_row[drug]["nucleotide_change"], drugs_to_row[drug]["protein_change"], drugs_to_row[drug]["gene"], drugs_to_row[drug]["type"], "looker")
-              row["mdl_interpretation"] = annotation_to_MDL(row["confidence"], drugs_to_row[drug]["gene"]) if row["confidence"] != "No WHO annotation" else apply_expert_rules(drugs_to_row[drug]["nucleotide_change"], drugs_to_row[drug]["protein_change"], drugs_to_row[drug]["gene"], drugs_to_row[drug]["type"], "MDL")
-              row["rationale"] = "WHO classification"  if row["confidence"] != "No WHO annotation" else "Expert rule applied"
+
+              # annotation to interpretation logic
+              if row["confidence"] != "No WHO annotation":
+                row["looker_interpretation"] = ANNOTATION_TO_INTERPRETATION[row["confidence"]]["looker"]
+                row["mdl_interpretation"] = ANNOTATION_TO_INTERPRETATION[row["confidence"]["MDL" if gene not in GENE_LIST_OPTION_1 else "MDL-ingenelist1"]
+                row["rationale"] = "WHO classification"
+              else:
+                row["looker_interpretation"] = apply_expert_rules(drugs_to_row[drug]["nucleotide_change"], drugs_to_row[drug]["protein_change"], gene, drugs_to_row[drug]["type"], "looker")
+                row["mdl_interpretation"] = apply_expert_rules(drugs_to_row[drug]["nucleotide_change"], drugs_to_row[drug]["protein_change"], gene, drugs_to_row[drug]["type"], "MDL")
+                row["rationale"] = "Expert rule applied"
+              
               row = remove_no_expert(row)
               row_list.append(row)
 
@@ -617,17 +680,38 @@ task tbprofiler_output_parsing {
             drugs_to_row = {}
             for annotation in other_variant["annotation"]:
               if annotation["drug"] not in drugs_to_row:
-                drugs_to_row[annotation["drug"]] = {"other_variant": other_variant, "who_confidence": annotation["who_confidence"], "drug": annotation["drug"], "nucleotide_change": other_variant["nucleotide_change"],"protein_change": other_variant["protein_change"], "gene": other_variant["gene"], "type": other_variant["type"]}
+                drugs_to_row[annotation["drug"]] = {"other_variant": other_variant, 
+                                                    "who_confidence": annotation["who_confidence"], 
+                                                    "drug": annotation["drug"], 
+                                                    "nucleotide_change": other_variant["nucleotide_change"],
+                                                    "protein_change": other_variant["protein_change"], 
+                                                    "gene": other_variant["gene"], 
+                                                    "type": other_variant["type"]}
               elif rank_annotation(drugs_to_row[annotation["drug"]]["who_confidence"]) < rank_annotation(annotation["who_confidence"]):
-                drugs_to_row[annotation["drug"]] = {"other_variant": other_variant, "who_confidence": annotation["who_confidence"], "drug": annotation["drug"], "nucleotide_change": other_variant["nucleotide_change"],"protein_change": other_variant["protein_change"], "gene": other_variant["gene"], "type": other_variant["type"]}
+                drugs_to_row[annotation["drug"]] = {"other_variant": other_variant, 
+                                                    "who_confidence": annotation["who_confidence"], 
+                                                    "drug": annotation["drug"], 
+                                                    "nucleotide_change": other_variant["nucleotide_change"],
+                                                    "protein_change": other_variant["protein_change"], 
+                                                    "gene": other_variant["gene"], 
+                                                    "type": other_variant["type"]}
 
             for drug in drugs_to_row:
               row = variant_to_row(drugs_to_row[drug]["other_variant"])
+              
               row["confidence"] = "No WHO annotation" if drugs_to_row[drug]["who_confidence"] == "" else drugs_to_row[drug]["who_confidence"]
               row["antimicrobial"] = drugs_to_row[drug]["drug"]
-              row["looker_interpretation"] = annotation_to_looker(row["confidence"])  if row["confidence"] != "No WHO annotation" else apply_expert_rules(drugs_to_row[drug]["nucleotide_change"], drugs_to_row[drug]["protein_change"], drugs_to_row[drug]["gene"], drugs_to_row[drug]["type"], "looker")
-              row["mdl_interpretation"] = annotation_to_MDL(row["confidence"], drugs_to_row[drug]["gene"]) if row["confidence"] != "No WHO annotation" else apply_expert_rules(drugs_to_row[drug]["nucleotide_change"],drugs_to_row[drug]["protein_change"], drugs_to_row[drug]["gene"], drugs_to_row[drug]["type"], "MDL")
-              row["rationale"] = "WHO classification"  if row["confidence"] != "No WHO annotation" else "Expert rule applied"
+              
+              # annotation to interpretation logic
+              if row["confidence"] != "No WHO annotation":
+                row["looker_interpretation"] = ANNOTATION_TO_INTERPRETATION[row["confidence"]]["looker"]
+                row["mdl_interpretation"] = ANNOTATION_TO_INTERPRETATION[row["confidence"]["MDL" if gene not in GENE_LIST_OPTION_1 else "MDL-ingenelist1"]
+                row["rationale"] = "WHO classification"
+              else:
+                row["looker_interpretation"] = apply_expert_rules(drugs_to_row[drug]["nucleotide_change"], drugs_to_row[drug]["protein_change"], gene, drugs_to_row[drug]["type"], "looker")
+                row["mdl_interpretation"] = apply_expert_rules(drugs_to_row[drug]["nucleotide_change"], drugs_to_row[drug]["protein_change"], gene, drugs_to_row[drug]["type"], "MDL")
+                row["rationale"] = "Expert rule applied"
+              
               row = remove_no_expert(row)
               row_list.append(row)
           else:
@@ -641,17 +725,17 @@ task tbprofiler_output_parsing {
               row = remove_no_expert(row)
               row_list.append(row)
               
-      for gene, antimicrobial_drug_names in gene_to_antimicrobial_drug_name.items():
+      for gene, antimicrobial_drug_names in GENE_TO_ANTIMICROBIAL_DRUG_NAME.items():
         for drug_name in antimicrobial_drug_names:
           if gene not in genes_reported:
 
               row = {}
               row["sample_id"] = "~{samplename}"
               row["tbprofiler_gene_name"] = gene
-              row["tbprofiler_locus_tag"] = gene_to_locus_tag[gene]
+              row["tbprofiler_locus_tag"] = GENE_TO_LOCUS_TAG[gene]
               row["tbprofiler_variant_substitution_nt"] = "NA"
               row["tbprofiler_variant_substitution_aa"] = "NA"
-              if float(gene_coverage_dict[gene]) >= ~{coverage_threshold}:
+              if float(GENE_COVERAGE_DICT[gene]) >= ~{coverage_threshold}:
                 row["tbprofiler_variant_substitution_type"] = "WT"
                 row["looker_interpretation"] = "S"
                 row["mdl_interpretation"] = "WT"
@@ -661,8 +745,8 @@ task tbprofiler_output_parsing {
                 row["tbprofiler_variant_substitution_type"] = "Insufficient Coverage"
                 row["looker_interpretation"] = "Insufficient Coverage"
                 row["mdl_interpretation"] = "Insufficient Coverage"
-              if gene in gene_to_tier.keys():
-                row["gene_tier"] = gene_to_tier[gene]
+              if gene in GENE_TO_TIER.keys():
+                row["gene_tier"] = GENE_TO_TIER[gene]
               else:
                 row["gene_tier"] = "NA"
               row["confidence"] = "NA"
@@ -684,7 +768,7 @@ task tbprofiler_output_parsing {
       per sample: 
         - MDL sample accession numbers: includes sample name
         - M_DST_A01_ID - includes lineage
-        - The set of information in antimicrobial_code_to_genes dictionary with target drug resistance information in layman's terms, and the mutations responsible for the predicted phenotype
+        - The set of information in ANTIMICROBIAL_CODE_TO_GENES dictionary with target drug resistance information in layman's terms, and the mutations responsible for the predicted phenotype
         - Date of analysis in YYYY-MM-DD HH:SS format
         - Operator information
       """
@@ -694,48 +778,66 @@ task tbprofiler_output_parsing {
       resistance_annotation = parse_json_resistance("~{json}", "LIMS")
       df_lims = pd.DataFrame({"MDL sample accession numbers":"~{samplename}", "M_DST_A01_ID": lineage}, index=[0])
 
-      for antimicrobial_code, genes in antimicrobial_code_to_genes.items():
-        drug_name = antimicrobial_code_to_drug_name[antimicrobial_code]
-        if drug_name in resistance_annotation.keys(): # if the drug has been mentioned in the results file
+      for antimicrobial_code, genes in ANTIMICROBIAL_CODE_TO_GENES.items():
+        drug_name = ANTIMICROBIAL_CODE_TO_DRUG_NAME[antimicrobial_code]
+        # if the drug has been mentioned in the results file
+        if drug_name in resistance_annotation.keys(): 
           df_lims[antimicrobial_code] = annotation_to_LIMS(resistance_annotation[drug_name], drug_name)
         else: # the drug is not in the results file
           df_lims[antimicrobial_code] = "No genetic determinants associated with resistance to {} detected".format(drug_name)
 
-        for gene_name, gene_column_code in genes.items(): # iterate through the genes that are associated with resistance to each drug
-          if gene_name in mutations.keys(): # if the gene is mentioned in the mutations
-            df_lims[gene_column_code] = mutations[gene_name] # put the formatted mutation as the content for the column
+        # iterate through the genes that are associated with resistance to each drug
+        for gene_name, gene_column_code in genes.items():
+          # if the gene is mentioned in the mutations
+          if gene_name in mutations.keys():
+            # put the formatted mutation as the content for the column
+            df_lims[gene_column_code] = mutations[gene_name]
             if gene_name == "rpoB": # rule 5.2.1.2
               if df_lims[antimicrobial_code][0] == "No genetic determinants associated with resistance to {} detected".format(drug_name):
-                if len(mutations) > 0: # if any mutations are present
+                # if any mutations are present
+                if len(mutations) > 0: 
                   non_synomynous_count = 0
-                  for mutation in mutations: # check if that mutation is synonymous (only output if rpoB RRDR -- see the parse_json_mutations_for_LIMS function)
-                    if "synonymous" not in mutation: # if any nonsynymous mutations were identified.
-                      non_synomynous_count += 1 # keep the original output for the antimicrobial code
-                  if non_synomynous_count == 0: # otherwise, the only synonymous mutations were identified in rpoB RRDR
+                  # check if that mutation is synonymous 
+                  # (only output if rpoB RRDR -- see the parse_json_mutations_for_LIMS function)
+                  for mutation in mutations: 
+                    # if any nonsynymous mutations were identified.
+                    if "synonymous" not in mutation: 
+                      # keep the original output for the antimicrobial code
+                      non_synomynous_count += 1 
+                  # otherwise, the only synonymous mutations were identified in rpoB RRDR
+                  if non_synomynous_count == 0: 
                     df_lims[antimicrobial_code] = "No genetic determinants associated with resistance to rifampin detected. The detected synonymous mutation(s) do not confer resistance but may result in false-resistance in PCR-based assays targeting the rpoB RRDR."
             
             if gene_name == "rrl": # Rule 5.2.2
-              df_lims[gene_column_code] = "" # do not report mutations for rrl
-            if df_lims[antimicrobial_code][0] == "No genetic determinants associated with resistance to {} detected".format(drug_name): # if the mutations detected were only "S", 
+              # do not report mutations for rrl
+              df_lims[gene_column_code] = "" 
+              
+            # if the mutations detected were only "S", 
+            if df_lims[antimicrobial_code][0] == "No genetic determinants associated with resistance to {} detected".format(drug_name): 
               df_lims[gene_column_code] = "No high confidence mutations detected"
           else: # the gene is not in the mutations list but has decent coverage
-            if float(gene_coverage_dict[gene_name]) < ~{coverage_threshold}: 
+            if float(GENE_COVERAGE_DICT[gene_name]) < ~{coverage_threshold}: 
               df_lims[gene_column_code] = "Insufficient Coverage"
             else:
               df_lims[gene_column_code] = "No mutations detected"
-          
-          if float(gene_coverage_dict[gene_name]) < ~{coverage_threshold}: # HOWEVER, if the coverage is less than the indicated threshold
+
+          # HOWEVER, if the coverage is less than the indicated threshold
+          if float(GENE_COVERAGE_DICT[gene_name]) < ~{coverage_threshold}: 
             df_lims[gene_column_code] = "Insufficient Coverage"
-            try: # catch for when there's no mutation on gene name but coverage is below threshold
+            # catch for when there's no mutation on gene name but coverage is below threshold
+            try: 
               if "del" in mutations[gene_name]:
                 df_lims[gene_column_code] = "Insufficient Coverage (deletion identified)"
                 # if this case is part of rule 2.2.1, output the mutation
                 if gene_name in ["katG", "pncA", "ethA", "gid"]:
                   df_lims[gene_column_code] = mutations[gene_name]
             except:
-              df_lims[antimicrobial_code] = "Insufficient Coverage" # What should we write here? 
-            if drug_name in resistance_annotation.keys() and int(rank_annotation(resistance_annotation[drug_name])) < 4: # in addition, if the indicated annotation for the drug is not resistant (less than 4)
-              try: # catch for when there's no mutation on gene name but coverage is below threshold
+              df_lims[antimicrobial_code] = "Insufficient Coverage" 
+            
+            # in addition, if the indicated annotation for the drug is not resistant (less than 4)
+            if drug_name in resistance_annotation.keys() and int(rank_annotation(resistance_annotation[drug_name])) < 4:
+              # catch for when there's no mutation on gene name but coverage is below threshold
+              try: 
                 if gene_name not in ["katG", "pncA", "ethA", "gid"] and "del" not in mutations[gene_name]:
                   df_lims[antimicrobial_code] = "Pending Retest"
               except: # there are no mutations in the gene
@@ -760,13 +862,13 @@ task tbprofiler_output_parsing {
       resistance_annotation = parse_json_resistance("~{json}", "Looker")
       df_looker = pd.DataFrame({"sample_id":"~{samplename}", "output_seq_method_type": "~{output_seq_method_type}"}, index=[0])
 
-      for antimicrobial_drug in antimicrobial_drug_name_list:
+      for antimicrobial_drug in ANTIMICROBIAL_DRUG_NAME_LIST:
         if antimicrobial_drug in resistance_annotation.keys():
           who_annotation = resistance_annotation[antimicrobial_drug]
-          df_looker[antimicrobial_drug] = annotation_to_looker(who_annotation)
-          for gene in antimicrobial_drug_name_to_gene[antimicrobial_drug]:
+          df_looker[antimicrobial_drug] = ANNOTATION_TO_INTERPRETATION[who_annotation]["looker"]
+          for gene in ANTIMICROBIAL_DRUG_NAME_TO_GENE_NAME[antimicrobial_drug]:
             # indicate warning if any genes failed to achieve 100% coverage_threshold and/or minimum depth  (10x) 
-            if annotation_to_looker(who_annotation) != "R" and gene in low_depth_of_coverage_list:
+            if df_looker[antimicrobial_drug] != "R" and gene in LOW_DEPTH_OF_COVERAGE_LIST:
               df_looker[antimicrobial_drug] = "Insufficient coverage for the locus"
           
         else: # the antimicrobial drug was not present in the results
@@ -779,7 +881,7 @@ task tbprofiler_output_parsing {
     
       df_looker.to_csv("~{samplename}_tbprofiler_looker.csv", index=False)
 
-    def regenerate_coverage_report(gene_coverage_dict, lab_report):
+    def regenerate_coverage_report(GENE_COVERAGE_DICT, lab_report):
       """
       This function takes the information generated previously regarding
       breadth of coverage for each gene associated with resistance and 
@@ -788,7 +890,7 @@ task tbprofiler_output_parsing {
       df_lab_report = pd.read_csv(lab_report, skip_blank_lines=True)
       df_coverage = pd.DataFrame(columns=["Gene", "Percent_Coverage","Warning"])
       
-      for gene, percent_coverage in gene_coverage_dict.items():
+      for gene, percent_coverage in GENE_COVERAGE_DICT.items():
         if gene == "Gene":
           continue
         warning = ""
@@ -821,7 +923,7 @@ task tbprofiler_output_parsing {
     parse_json_looker_report("~{json}", current_time)
 
     # Coverage report generation
-    regenerate_coverage_report(gene_coverage_dict, "~{samplename}_tbprofiler_laboratorian_report.csv")
+    regenerate_coverage_report(GENE_COVERAGE_DICT, "~{samplename}_tbprofiler_laboratorian_report.csv")
 
     CODE
   >>>
