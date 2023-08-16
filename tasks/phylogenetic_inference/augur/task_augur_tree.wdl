@@ -14,6 +14,9 @@ task augur_tree {
     Int disk_size = 750
   }
   command <<<
+    # capture version information
+    augur version > VERSION
+
     AUGUR_RECURSION_LIMIT=10000 augur tree \
       --alignment "~{aligned_fasta}" \
       --output "~{build_name}_~{method}.nwk" \
@@ -26,6 +29,7 @@ task augur_tree {
   >>>
   output {
     File aligned_tree  = "~{build_name}_~{method}.nwk"
+    String augur_version = read_string("VERSION")
   }
   runtime {
     docker: "us-docker.pkg.dev/general-theiagen/biocontainers/augur:22.0.2--pyhdfd78af_0"
