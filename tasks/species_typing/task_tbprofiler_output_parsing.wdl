@@ -197,7 +197,7 @@ task tbprofiler_output_parsing {
                         }
 
     # genes that have positions with special consideration
-    SPECIAL_POSITIONS = {"rrl": {[2003, 2367], [2449, 3056]},
+    SPECIAL_POSITIONS = {"rrl": [[2003, 2367], [2449, 3056]],
                          "rpoB": [426, 452]
                         }
 
