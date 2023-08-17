@@ -57,6 +57,7 @@ workflow czgenepi_prep {
   }
   call concatenate_column.cat_files {
     input:
+      # the following is a yellow squiggle because we're coercing gsuris to files
       files_to_cat = czgenepi_wrangling.fastas,
       concatenated_file_name = "czgenepi_prep_" + version_capture.date + ".fasta"
   }
