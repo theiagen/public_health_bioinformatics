@@ -641,7 +641,7 @@ task tbprofiler_output_parsing {
               # annotation to interpretation logic
               if row["confidence"] != "No WHO annotation":
                 row["looker_interpretation"] = ANNOTATION_TO_INTERPRETATION[row["confidence"]]["looker"]
-                row["mdl_interpretation"] = ANNOTATION_TO_INTERPRETATION[row["confidence"]["MDL" if gene not in GENE_LIST_OPTION_1 else "MDL-ingenelist1"]
+                row["mdl_interpretation"] = ANNOTATION_TO_INTERPRETATION[row["confidence"]["MDL" if gene not in GENE_LIST_OPTION_1 else "MDL-ingenelist1"]]
                 row["rationale"] = "WHO classification"
               else:
                 row["looker_interpretation"] = apply_expert_rules(drugs_to_row[drug]["nucleotide_change"], drugs_to_row[drug]["protein_change"], gene, drugs_to_row[drug]["type"], "looker")
@@ -705,7 +705,7 @@ task tbprofiler_output_parsing {
               # annotation to interpretation logic
               if row["confidence"] != "No WHO annotation":
                 row["looker_interpretation"] = ANNOTATION_TO_INTERPRETATION[row["confidence"]]["looker"]
-                row["mdl_interpretation"] = ANNOTATION_TO_INTERPRETATION[row["confidence"]["MDL" if gene not in GENE_LIST_OPTION_1 else "MDL-ingenelist1"]
+                row["mdl_interpretation"] = ANNOTATION_TO_INTERPRETATION[row["confidence"]["MDL" if gene not in GENE_LIST_OPTION_1 else "MDL-ingenelist1"]]
                 row["rationale"] = "WHO classification"
               else:
                 row["looker_interpretation"] = apply_expert_rules(drugs_to_row[drug]["nucleotide_change"], drugs_to_row[drug]["protein_change"], gene, drugs_to_row[drug]["type"], "looker")
