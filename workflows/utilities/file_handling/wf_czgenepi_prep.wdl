@@ -56,14 +56,8 @@ workflow czgenepi_prep {
       sequencing_date_column_name = sequencing_date_column_name,
       sample_is_private_column_name = sample_is_private_column_name
   }
-  call concatenate_column.cat_files {
-    input:
-      # the following is a yellow squiggle because we're coercing gsuris to files
-      files_to_cat = czgenepi_wrangling.fastas,
-      concatenated_file_name = "czgenepi_prep_" + version_capture.date + ".fasta"
-  }
   output {
-    File concatenated_czgenepi_fasta = cat_files.concatenated_files
+    File concatenated_czgenepi_fasta = czgenepi_wrangling.concatenated_fasta
     File concatenated_czgenepi_metadata = czgenepi_wrangling.concatenated_metadata
     String czgenepi_prep_version = version_capture.phb_version
     String czgenepi_prep_analysis_date = version_capture.date
