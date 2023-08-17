@@ -43,6 +43,7 @@ workflow czgenepi_prep {
     input:
       full_terra_table = download_terra_table.terra_table,
       sample_names = sample_names,
+      terra_table_name = terra_table_name,
       assembly_fasta_column_name = assembly_fasta_column_name,
       collection_date_column_name = collection_date_column_name,
       private_id_column_name = private_id_column_name,
