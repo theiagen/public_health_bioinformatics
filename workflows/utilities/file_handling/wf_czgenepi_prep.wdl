@@ -2,7 +2,6 @@ version 1.0
 
 import "../../../tasks/utilities/file_handling/task_czgenepi_wrangling.wdl" as czgenepi_wrangling_task
 import "../../../tasks/utilities/data_export/task_download_terra_table.wdl" as download_table
-import "../../../tasks/utilities/file_handling/task_file_handling.wdl" as concatenate_column
 import "../../../tasks/task_versioning.wdl" as versioning
 
 workflow czgenepi_prep {
