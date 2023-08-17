@@ -194,6 +194,8 @@ task export_taxon_tables {
     String? kleborate_otype
     String? kleborate_klocus_confidence
     String? kleborate_olocus_confidence
+    String? kleborate_virulence_score
+    String? kleborate_resistance_score
     File? kaptive_output_file_k
     File? kaptive_output_file_oc
     String? kaptive_version
@@ -508,6 +510,8 @@ task export_taxon_tables {
       "kleborate_otype": "~{kleborate_otype}",
       "kleborate_klocus_confidence": "~{kleborate_klocus_confidence}",
       "kleborate_olocus_confidence": "~{kleborate_olocus_confidence}",
+      "kleborate_virulence_score": "~{kleborate_virulence_score}",
+      "kleborate_resistance_score": "~{kleborate_resistance_score}",
       "ngmaster_tsv": "~{ngmaster_tsv}",
       "ngmaster_version": "~{ngmaster_version}",
       "ngmaster_ngmast_sequence_type": "~{ngmaster_ngmast_sequence_type}",

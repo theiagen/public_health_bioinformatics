@@ -48,6 +48,7 @@ workflow mashtree_fasta {
     File mashtree_matrix = reorder_matrix.ordered_matrix
     File mashtree_tree = reorder_matrix.tree
     String mashtree_version = mashtree_task.version
+    String mashtree_docker = mashtree_task.mashtree_docker
     # Data Summary Out
     File? mashtree_summarized_data = summarize_data.summarized_data
     File? mashtree_filtered_metadata = summarize_data.filtered_metadata
