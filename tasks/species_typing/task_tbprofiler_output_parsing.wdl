@@ -346,12 +346,12 @@ task tbprofiler_output_parsing {
         for dr_variant in results_json["dr_variants"]:
           name = dr_variant["gene"]
           if name in GENES_FOR_LIMS:
-            substitution = f"{} ({})".format(dr_variant["nucleotide_change"], dr_variant["protein_change"])
-        
+            substitution = "{} ({})".format(dr_variant["nucleotide_change"], dr_variant["protein_change"])
+
             if name not in mutations_dict.keys():
               mutations_dict[name] = substitution
             else:
-              mutations_dict[name] = f"{}; {}".format(mutations_dict[name], substitution)
+              mutations_dict[name] = "{}; {}".format(mutations_dict[name], substitution)
         
         for other_variant in results_json["other_variants"]:
           name = other_variant["gene"]
@@ -361,15 +361,15 @@ task tbprofiler_output_parsing {
             # report all non-synonymous mutations, unless rpoB RRDR
             if other_variant["type"] != "synonymous_variant" or (other_variant["gene"] == "rpoB" and (SPECIAL_POSITIONS["rpoB"][1] <= position_nt <= SPECIAL_POSITIONS["rpoB"][2])): 
               name = other_variant["gene"]
-              substitution = f"{} ({})".format(other_variant["nucleotide_change"], other_variant["protein_change"])
+              substitution = "{} ({})".format(other_variant["nucleotide_change"], other_variant["protein_change"])
 
               if other_variant["type"] == "synonymous_variant": # only catches rpoB RRDR
-                substitution = f"{} [synonymous]".format(substitution)
+                substitution = "{} [synonymous]".format(substitution)
                 
               if name not in mutations_dict.keys():
                 mutations_dict[name] = substitution
               else:
-                mutations_dict[name] = f"{}; {}".format(mutations_dict[name], substitution)
+                mutations_dict[name] = "{}; {}".format(mutations_dict[name], substitution)
       return mutations_dict
 
     def rank_annotation(annotation):
