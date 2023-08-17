@@ -14,17 +14,18 @@ workflow czgenepi_prep {
     String terra_workspace_name
     String terra_table_name
     
+    # required columns
     String assembly_fasta_column_name = "assembly_fasta"
     String collection_date_column_name = "collection_date"
     String private_id_column_name = terra_table_name + "_id"
 
-    # collection location
+    # collection location - required
     String continent_column_name = "continent"
     String country_column_name = "country"
     String state_column_name = "state"
     String county_column_name = "county"
 
-    # optional inputs
+    # optional columns
     String gisaid_id_column_name = "gisaid_accession"
     String genbank_accession_column_name = "genbank_accession"
     String sequencing_date_column_name = "sequencing_date"

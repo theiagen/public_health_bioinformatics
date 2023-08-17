@@ -27,7 +27,6 @@ task czgenepi_wrangling {
     Int disk_size = 100
   }
   command <<<
-
     # parse terra table for data
     python3 <<CODE
     import pandas as pd
@@ -79,7 +78,6 @@ task czgenepi_wrangling {
     metadata["Collection Location"] = metadata.apply(lambda x: x["Collection Location"] + "/" + x["county"] if len(x["county"]) > 0 else x["Collection Location"], axis=1)
 
     # rename headers to match CZGenEpi's expected format
-    # CAUTION: ASSUMES 
     metadata.rename(columns={"~{terra_table_name}_id": "Sample Name (from FASTA)", 
                              "~{private_id_column_name}": "Private ID",
                              "~{gisaid_id_column_name}": "GISAID ID (Public ID) - Optional",  
