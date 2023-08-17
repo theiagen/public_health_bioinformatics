@@ -60,7 +60,7 @@ task lyveset {
     Boolean fast = false
     Boolean downsample = false
     Boolean sample_sites = false
-    String? read_cleaner = 'CGP'
+    String read_cleaner = "CGP"
     String? mapper
     String? snpcaller
   }
@@ -73,7 +73,7 @@ task lyveset {
     read2_array=(~{sep=' ' read2})
     read2_array_len=$(echo "${#read2[@]}")
 
-    if [ "$read1_array_len" -ne "$read2_index_array_len" ]; then
+    if [ "$read1_array_len" -ne "$read2_array_len" ]; then
       echo "read1 array (length: $read1_array_len) and read2 index array (length: $read2_array_len) are of unequal length." >&2
       exit 1
     fi
@@ -81,20 +81,46 @@ task lyveset {
     # create lyvset project
     set_manage.pl --create ~{dataset_name}
 
-    #shuffle paired end reads
-    for index in ${!read1_array[@]}; do
-      cp ${read1_array[$index]} . && cp ${read2_array[$index]} . # move reads to cwd
+    # This FASTQ file re-naming strategy is necessary due to filename parsing in shuffleSplitReads.pl here: https://github.com/lskatz/lyve-SET/blob/v1.1.4f/scripts/shuffleSplitReads.pl#L34
+    # Curtis' interpretation of perl code:
+    # It first checks for a pattern like '_R1_' or '_R2_', and if found, sets the $readNumber variable to 1 or 2 respectively.
+    # If that pattern is not found, it checks for a pattern like '_1.f' or '_2.f', again setting the $readNumber accordingly.
+    # If neither pattern is matched, it raises an error indicating that the read number could not be parsed from the filename.
+
+    mkdir input-fastqs
+
+    # copy FASTQs to input-fastqs/; rename if files end in "_R1.fastq.gz" or "_R2.fastq.gz"
+    # read1
+    for index in "${!read1_array[@]}"; do
+      # if the R1 FASTQ filenames end in "_R1.fastq.gz"  rename the files to match lyveset naming convention
+      if [[ ${read1_array[$index]} =~ _R1.fastq.gz$ ]]; then
+        FASTQ_BASENAME=$(basename "${read1_array[$index]}")
+        echo "DEBUG: renaming ${read1_array[$index]} to ${read1_array[$index]//_R1.fastq.gz/_1.fastq.gz}"
+        cp -v "${read1_array[$index]}" "input-fastqs/${FASTQ_BASENAME//_R1.fastq.gz/_1.fastq.gz}"
+      else
+        cp -v "${read1_array[$index]}" input-fastqs/
+      fi
     done
 
-    shuffleSplitReads.pl --numcpus ~{cpu} -o ./interleaved *.fastq.gz 
+    # read2
+    for index in "${!read2_array[@]}"; do
+      if [[ ${read2_array[$index]} =~ _R2.fastq.gz$ ]]; then
+        FASTQ_BASENAME=$(basename "${read2_array[$index]}")
+        echo "DEBUG: renaming ${read2_array[$index]} to ${read2_array[$index]//_R2.fastq.gz/_2.fastq.gz}"
+        cp -v "${read2_array[$index]}" "input-fastqs/${FASTQ_BASENAME//_R2.fastq.gz/_2.fastq.gz}"
+      else
+        cp -v "${read2_array[$index]}" input-fastqs/
+      fi
+    done
 
-    # then moved into your project dir
-    mv ./interleaved/*.fastq.gz ~{dataset_name}/reads/
+    echo "DEBUG: merging R1 and R2 FASTQ files into interleaved FASTQ files with shuffleSplitReads.pl now..."
+    shuffleSplitReads.pl --numcpus ~{cpu} -o "./~{dataset_name}/reads" input-fastqs/*.fastq.gz
     
-    # cleanup
-    rmdir interleaved
-    mkdir ~{dataset_name}/ref/
-    cp ~{reference_genome} ~{dataset_name}/ref/reference.fasta
+    # make directory for reference genome and copy reference genome into it. Also rename to reference.fasta
+    mkdir -v ~{dataset_name}/ref/
+    cp -v ~{reference_genome} ~{dataset_name}/ref/reference.fasta
+
+    # launch lyveSET workflow now that everything is set up
     launch_set.pl --numcpus ~{cpu} \
     --allowedFlanking ~{allowedFlanking} \
     --min_alt_frac ~{min_alt_frac} \
@@ -126,8 +152,9 @@ task lyveset {
     File? lyveset_pooled_snps_vcf = "~{dataset_name}/msa/out.pooled.snps.vcf.gz"
     File? lyveset_filtered_matrix = "~{dataset_name}/msa/out.filteredMatrix.tsv"
     File? lyveset_alignment_fasta = "~{dataset_name}/msa/out.aln.fas"
-    File? lyveset_reference_fasta = "~{dataset_name}/reference/reference.fasta"
+    File? lyveset_reference_fasta = "~{dataset_name}/ref/reference.fasta"
     File? lyveset_masked_regions = "~{dataset_name}/reference/maskedRegions.bed"
+    #TODO CHECK THESE OUTPUT FILES, MAKE SURE THEY ARE CORRECT
     Array[File]? lyveset_msa_outputs = glob("~{dataset_name}/msa/out*")
     Array[File]? lyveset_log_outputs = glob("~{dataset_name}/log/*")
     Array[File]? lyveset_reference_outputs = glob("~{dataset_name}/reference/*")
