@@ -868,9 +868,8 @@ task tbprofiler_output_parsing {
           df_looker[antimicrobial_drug] = ANNOTATION_TO_INTERPRETATION[who_annotation]["looker"]
           for gene in ANTIMICROBIAL_DRUG_NAME_TO_GENE_NAME[antimicrobial_drug]:
             # indicate warning if any genes failed to achieve 100% coverage_threshold and/or minimum depth  (10x) 
-            if df_looker[antimicrobial_drug] != "R" and gene in LOW_DEPTH_OF_COVERAGE_LIST:
+            if df_looker[antimicrobial_drug][0] != "R" and gene in LOW_DEPTH_OF_COVERAGE_LIST:
               df_looker[antimicrobial_drug] = "Insufficient coverage for the locus"
-          
         else: # the antimicrobial drug was not present in the results
           df_looker[antimicrobial_drug] = "S"
       
