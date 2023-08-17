@@ -95,7 +95,7 @@ task lyveset {
       # if the R1 FASTQ filenames end in "_R1.fastq.gz"  rename the files to match lyveset naming convention
       if [[ ${read1_array[$index]} =~ _R1.fastq.gz$ ]]; then
         FASTQ_BASENAME=$(basename "${read1_array[$index]}")
-        echo "DEBUG: renaming ${read1_array[$index]} to ${read1_array[$index]//_R1.fastq.gz/_1.fastq.gz}"
+        echo "DEBUG: renaming ${FASTQ_BASENAME} to ${FASTQ_BASENAME//_R1.fastq.gz/_1.fastq.gz}"
         cp -v "${read1_array[$index]}" "input-fastqs/${FASTQ_BASENAME//_R1.fastq.gz/_1.fastq.gz}"
       else
         cp -v "${read1_array[$index]}" input-fastqs/
@@ -106,7 +106,7 @@ task lyveset {
     for index in "${!read2_array[@]}"; do
       if [[ ${read2_array[$index]} =~ _R2.fastq.gz$ ]]; then
         FASTQ_BASENAME=$(basename "${read2_array[$index]}")
-        echo "DEBUG: renaming ${read2_array[$index]} to ${read2_array[$index]//_R2.fastq.gz/_2.fastq.gz}"
+        echo "DEBUG: renaming ${FASTQ_BASENAME} to ${FASTQ_BASENAME//_R2.fastq.gz/_2.fastq.gz}"
         cp -v "${read2_array[$index]}" "input-fastqs/${FASTQ_BASENAME//_R2.fastq.gz/_2.fastq.gz}"
       else
         cp -v "${read2_array[$index]}" input-fastqs/
