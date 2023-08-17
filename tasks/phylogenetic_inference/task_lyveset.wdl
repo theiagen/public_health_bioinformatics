@@ -153,11 +153,10 @@ task lyveset {
     File? lyveset_filtered_matrix = "~{dataset_name}/msa/out.filteredMatrix.tsv"
     File? lyveset_alignment_fasta = "~{dataset_name}/msa/out.aln.fas"
     File? lyveset_reference_fasta = "~{dataset_name}/ref/reference.fasta"
-    File? lyveset_masked_regions = "~{dataset_name}/reference/maskedRegions.bed"
-    #TODO CHECK THESE OUTPUT FILES, MAKE SURE THEY ARE CORRECT
+    File? lyveset_masked_regions = "~{dataset_name}/ref/maskedRegions.bed"
     Array[File]? lyveset_msa_outputs = glob("~{dataset_name}/msa/out*")
     Array[File]? lyveset_log_outputs = glob("~{dataset_name}/log/*")
-    Array[File]? lyveset_reference_outputs = glob("~{dataset_name}/reference/*")
+    Array[File]? lyveset_reference_outputs = glob("~{dataset_name}/ref/*")
     Array[File]? lyveset_bam_outputs = glob("~{dataset_name}/bam/*.bam*")
     Array[File]? lyveset_vcf_outputs = glob("~{dataset_name}/vcf/*.vcf*")
     File lyveset_log = stdout()
