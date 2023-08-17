@@ -40,7 +40,7 @@ task tb_gene_coverage {
         gene = line[4]
 
         # get depth for region in bed file 
-        cmd = "samtools depth -J -r \"" + CHR + ":" + start + "-" + end + "\" ~{bamfile} | awk -F '\t' '{if ($3 >= ~{min_depth}) print;}' | wc -l"
+        cmd = "samtools depth -J -r \"" + CHR + ":" + start + "-" + end + "\" ~{bamfile} | awk -F '\t' '{if (\$3 >= ~{min_depth}) print;}' | wc -l"
         print(cmd) 
         depth = subprocess.Popen(cmd, stdout=subprocess.PIPE).communicate()[0]
         print(gene + "\t" + depth)
