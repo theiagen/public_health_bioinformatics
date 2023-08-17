@@ -1,11 +1,12 @@
 version 1.0
 
-import "../../tasks/quality_control/task_fastq_scan.wdl" as fastq_scan
-import "../../tasks/quality_control/task_nanoplot.wdl" as nanoplot_task
-import "../../tasks/quality_control/task_nanoq.wdl" as nanoq_task
+
+import "../../tasks/gene_typing/task_tiptoft.wdl" as tiptoft_task
+import "../../tasks/quality_control/basic_statistics/task_fastq_scan.wdl" as fastq_scan
+import "../../tasks/quality_control/basic_statistics/task_nanoplot.wdl" as nanoplot_task
+import "../../tasks/quality_control/read_filtering/task_nanoq.wdl" as nanoq_task
 import "../../tasks/utilities/task_rasusa.wdl" as rasusa_task
 import "../../tasks/utilities/task_kmc.wdl" as kmc_task
-import "../../tasks/gene_typing/task_tiptoft.wdl" as tiptoft_task
 
 workflow read_QC_trim_ont {
   meta {

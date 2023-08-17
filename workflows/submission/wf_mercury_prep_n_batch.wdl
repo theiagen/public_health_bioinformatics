@@ -1,7 +1,7 @@
 version 1.0
 
-import "../../tasks/utilities/submission/task_mercury_file_wrangling.wdl" as submission
 import "../../tasks/task_versioning.wdl" as versioning
+import "../../tasks/utilities/submission/task_mercury_file_wrangling.wdl" as submission
 
 workflow mercury_prep_n_batch {
   input {

@@ -1,7 +1,7 @@
 version 1.0
 
-import "../../tasks/utilities/task_augur_utilities.wdl" as augur_utils
 import "../../tasks/task_versioning.wdl" as versioning
+import "../../tasks/utilities/task_augur_utilities.wdl" as augur_utils
 
 workflow augur_prep {
   input {

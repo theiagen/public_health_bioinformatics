@@ -4,7 +4,7 @@ import "../../tasks/alignment/task_bwa.wdl" as bwa_task
 import "../../tasks/assembly/task_ivar_consensus.wdl" as consensus_task
 import "../../tasks/assembly/task_ivar_primer_trim.wdl" as primer_trim_task
 import "../../tasks/assembly/task_ivar_variant_call.wdl" as variant_call_task
-import "../../tasks/quality_control/task_assembly_metrics.wdl" as assembly_metrics
+import "../../tasks/quality_control/basic_statistics/task_assembly_metrics.wdl" as assembly_metrics
 
 workflow ivar_consensus {
   meta {

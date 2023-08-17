@@ -1,21 +1,20 @@
 version 1.0
 
 import "../../tasks/assembly/task_artic_consensus.wdl" as artic_consensus
-import "../../tasks/quality_control/task_artic_guppyplex.wdl" as artic_guppyplex
-import "../../tasks/quality_control/task_assembly_metrics.wdl" as assembly_metrics
-import "../../tasks/quality_control/task_ncbi_scrub.wdl" as ncbi_scrub
-import "../../tasks/quality_control/task_vadr.wdl" as vadr_task
-import "../../tasks/quality_control/task_fastq_scan.wdl" as fastq_scan
-import "../../tasks/quality_control/task_consensus_qc.wdl" as consensus_qc_task
-import "../../tasks/quality_control/task_screen.wdl" as screen
+import "../../tasks/gene_typing/task_sc2_gene_coverage.wdl" as sc2_calculation
+import "../../tasks/quality_control/advanced_metrics/task_vadr.wdl" as vadr_task
+import "../../tasks/quality_control/basic_statistics/task_assembly_metrics.wdl" as assembly_metrics
+import "../../tasks/quality_control/basic_statistics/task_consensus_qc.wdl" as consensus_qc_task
+import "../../tasks/quality_control/basic_statistics/task_fastq_scan.wdl" as fastq_scan
+import "../../tasks/quality_control/comparison/task_qc_check_phb.wdl" as qc_check
+import "../../tasks/quality_control/comparison/task_screen.wdl" as screen
+import "../../tasks/quality_control/read_filtering/task_artic_guppyplex.wdl" as artic_guppyplex
+import "../../tasks/quality_control/read_filtering/task_ncbi_scrub.wdl" as ncbi_scrub
+import "../../tasks/species_typing/betacoronavirus/task_pangolin.wdl" as pangolin
+import "../../tasks/species_typing/lentivirus/task_quasitools.wdl" as quasitools
+import "../../tasks/task_versioning.wdl" as versioning
 import "../../tasks/taxon_id/task_kraken2.wdl" as kraken2
 import "../../tasks/taxon_id/task_nextclade.wdl" as nextclade_task
-import "../../tasks/species_typing/task_pangolin.wdl" as pangolin
-import "../../tasks/species_typing/task_quasitools.wdl" as quasitools
-import "../../tasks/gene_typing/task_sc2_gene_coverage.wdl" as sc2_calculation
-import "../../tasks/quality_control/task_qc_check_phb.wdl" as qc_check
-import "../../tasks/task_versioning.wdl" as versioning
-
 workflow theiacov_ont {
   meta {
     description: "Reference-based consensus calling for viral amplicon sequencing data generated on ONT NGS platforms."

@@ -3,8 +3,8 @@ version 1.0
 import "../../tasks/phylogenetic_inference/task_ksnp3.wdl" as ksnp3
 import "../../tasks/phylogenetic_inference/task_snp_dists.wdl" as snp_dists
 import "../../tasks/phylogenetic_inference/task_reorder_matrix.wdl" as reorder_matrix
-import "../../tasks/utilities/task_summarize_data.wdl" as data_summary
 import "../../tasks/task_versioning.wdl" as versioning
+import "../../tasks/utilities/task_summarize_data.wdl" as data_summary
 
 workflow ksnp3_workflow {
   input {

@@ -1,40 +1,40 @@
 version 1.0
 
 # theiaprok
-import "../../tasks/species_typing/task_serotypefinder.wdl" as serotypefinder_task
-import "../../tasks/species_typing/task_ectyper.wdl" as ectyper_task
-import "../../tasks/species_typing/task_shigatyper.wdl" as shigatyper_task
-import "../../tasks/species_typing/task_shigeifinder.wdl" as shigeifinder_task
-import "../../tasks/species_typing/task_sonneityping.wdl" as sonneityping_task
-import "../../tasks/species_typing/task_lissero.wdl" as lissero_task
-import "../../tasks/species_typing/task_sistr.wdl" as sistr_task
-import "../../tasks/species_typing/task_seqsero2.wdl" as seqsero2_task
-import "../../tasks/species_typing/task_kleborate.wdl" as kleborate_task
-import "../../tasks/species_typing/task_tbprofiler.wdl" as tbprofiler_task
-import "../../tasks/species_typing/task_tbprofiler_output_parsing.wdl" as tbprofiler_output_parsing_task
-import "../../tasks/species_typing/task_tb_gene_coverage.wdl" as tb_gene_coverage_task
-import "../../tasks/species_typing/task_legsta.wdl" as legsta_task
-import "../../tasks/species_typing/task_genotyphi.wdl" as genotyphi
-import "../../tasks/species_typing/task_kaptive.wdl" as kaptive_task
-import "../../tasks/species_typing/task_ngmaster.wdl" as ngmaster_task
-import "../../tasks/species_typing/task_meningotype.wdl" as meningotype_task
-import "../../tasks/species_typing/task_spatyper.wdl" as spatyper_task
-import "../../tasks/species_typing/task_staphopiasccmec.wdl" as staphopia_sccmec_task
-import "../../tasks/species_typing/task_agrvate.wdl" as agrvate_task
-import "../../tasks/species_typing/task_seroba.wdl" as seroba
-import "../../tasks/species_typing/task_pbptyper.wdl" as pbptyper
-import "../../tasks/species_typing/task_poppunk_streppneumo.wdl" as poppunk_spneumo
-import "../../tasks/species_typing/task_pasty.wdl" as pasty_task
 import "../../tasks/gene_typing/task_abricate.wdl" as abricate_task
-import "../../tasks/species_typing/task_emmtypingtool.wdl" as emmtypingtool_task
-import "../../tasks/species_typing/task_hicap.wdl" as hicap_task
-import "../../tasks/species_typing/task_srst2_vibrio.wdl" as srst2_vibrio_task
-import "../../tasks/species_typing/task_virulencefinder.wdl" as virulencefinder_task
+import "../../tasks/species_typing/acinetobacter/task_kaptive.wdl" as kaptive_task
+import "../../tasks/species_typing/escherichia_shigella/task_ectyper.wdl" as ectyper_task
+import "../../tasks/species_typing/escherichia_shigella/task_serotypefinder.wdl" as serotypefinder_task
+import "../../tasks/species_typing/escherichia_shigella/task_shigatyper.wdl" as shigatyper_task
+import "../../tasks/species_typing/escherichia_shigella/task_shigeifinder.wdl" as shigeifinder_task
+import "../../tasks/species_typing/escherichia_shigella/task_sonneityping.wdl" as sonneityping_task
+import "../../tasks/species_typing/escherichia_shigella/task_virulencefinder.wdl" as virulencefinder_task
+import "../../tasks/species_typing/haemophilus/task_hicap.wdl" as hicap_task
+import "../../tasks/species_typing/klebsiella/task_kleborate.wdl" as kleborate_task
+import "../../tasks/species_typing/legionella/task_legsta.wdl" as legsta_task
+import "../../tasks/species_typing/listeria/task_lissero.wdl" as lissero_task
+import "../../tasks/species_typing/mycobacterium/task_tb_gene_coverage.wdl" as tb_gene_coverage_task
+import "../../tasks/species_typing/mycobacterium/task_tbprofiler_output_parsing.wdl" as tbprofiler_output_parsing_task
+import "../../tasks/species_typing/mycobacterium/task_tbprofiler.wdl" as tbprofiler_task
+import "../../tasks/species_typing/neisseria/task_ngmaster.wdl" as ngmaster_task
+import "../../tasks/species_typing/neisseria/task_meningotype.wdl" as meningotype_task
+import "../../tasks/species_typing/pseudomonas/task_pasty.wdl" as pasty_task
+import "../../tasks/species_typing/salmonella/task_genotyphi.wdl" as genotyphi_task
+import "../../tasks/species_typing/salmonella/task_seqsero2.wdl" as seqsero2_task
+import "../../tasks/species_typing/salmonella/task_sistr.wdl" as sistr_task
+import "../../tasks/species_typing/staphylococcus/task_agrvate.wdl" as agrvate_task
+import "../../tasks/species_typing/staphylococcus/task_spatyper.wdl" as spatyper_task
+import "../../tasks/species_typing/staphylococcus/task_staphopiasccmec.wdl" as staphopia_sccmec_task
+import "../../tasks/species_typing/streptococcus/task_emmtypingtool.wdl" as emmtypingtool_task
+import "../../tasks/species_typing/streptococcus/task_pbptyper.wdl" as pbptyper_task
+import "../../tasks/species_typing/streptococcus/task_poppunk_streppneumo.wdl" as poppunk_spneumo
+import "../../tasks/species_typing/streptococcus/task_seroba.wdl" as seroba_task
+import "../../tasks/species_typing/vibrio/task_srst2_vibrio.wdl" as srst2_vibrio_task
 
 # theiaeuk
-import "../../tasks/species_typing/task_cauris_cladetyper.wdl" as cauris_cladetyper
-import "../../tasks/gene_typing/task_snippy_variants.wdl" as snippy
 import "../../tasks/gene_typing/task_snippy_gene_query.wdl" as snippy_gene_query
+import "../../tasks/gene_typing/task_snippy_variants.wdl" as snippy
+import "../../tasks/species_typing/candida/task_cauris_cladetyper.wdl" as cauris_cladetyper
 
 workflow merlin_magic {
   meta {
@@ -188,7 +188,7 @@ workflow merlin_magic {
       }
     }
     if ((select_first([seqsero2.seqsero2_predicted_serotype, seqsero2_assembly.seqsero2_predicted_serotype]) == "Typhi" || sistr.sistr_predicted_serotype == "Typhi") && !assembly_only) {
-      call genotyphi.genotyphi as genotyphi_task { # needs testing
+      call genotyphi_task.genotyphi { # needs testing
         input: 
           read1 = select_first([read1]),
           read2 = read2,
@@ -284,20 +284,20 @@ workflow merlin_magic {
   }
   if (merlin_tag == "Streptococcus pneumoniae") {
     if (paired_end && !ont_data) {
-      call seroba.seroba as seroba_task {
+      call seroba_task.seroba {
         input:
           read1 = select_first([read1]),
           read2 = read2,
           samplename = samplename
       }
     }
-    call pbptyper.pbptyper as pbptyper_task {
+    call pbptyper_task.pbptyper {
       input:
         assembly = assembly,
         samplename = samplename
     }      
     if (call_poppunk) {
-      call poppunk_spneumo.poppunk as poppunk_task {
+      call poppunk_spneumo.poppunk {
         input:
           assembly = assembly,
           samplename = samplename
@@ -498,13 +498,13 @@ workflow merlin_magic {
     String seqsero2_predicted_serotype = select_first([seqsero2.seqsero2_predicted_serotype, seqsero2_assembly.seqsero2_predicted_serotype, ""])
     String? seqsero2_predicted_contamination = seqsero2.seqsero2_predicted_contamination
     # Salmonella serotype Typhi typing
-    File? genotyphi_report_tsv = genotyphi_task.genotyphi_report_tsv 
-    File? genotyphi_mykrobe_json = genotyphi_task.genotyphi_mykrobe_json
-    String? genotyphi_version = genotyphi_task.genotyphi_version
-    String? genotyphi_species = genotyphi_task.genotyphi_species
-    Float? genotyphi_st_probes_percent_coverage = genotyphi_task.genotyphi_st_probes_percent_coverage
-    String? genotyphi_final_genotype = genotyphi_task.genotyphi_final_genotype
-    String? genotyphi_genotype_confidence = genotyphi_task.genotyphi_genotype_confidence
+    File? genotyphi_report_tsv = genotyphi.genotyphi_report_tsv 
+    File? genotyphi_mykrobe_json = genotyphi.genotyphi_mykrobe_json
+    String? genotyphi_version = genotyphi.genotyphi_version
+    String? genotyphi_species = genotyphi.genotyphi_species
+    Float? genotyphi_st_probes_percent_coverage = genotyphi.genotyphi_st_probes_percent_coverage
+    String? genotyphi_final_genotype = genotyphi.genotyphi_final_genotype
+    String? genotyphi_genotype_confidence = genotyphi.genotyphi_genotype_confidence
     # Klebsiella Typing
     File? kleborate_output_file = kleborate.kleborate_output_file
     String? kleborate_version = kleborate.kleborate_version
@@ -598,24 +598,24 @@ workflow merlin_magic {
     String? agrvate_version = agrvate.agrvate_version
     String? agrvate_docker = agrvate.agrvate_docker
     # Streptococcus pneumoniae Typing
-    String? pbptyper_predicted_1A_2B_2X = pbptyper_task.pbptyper_predicted_1A_2B_2X
-    File? pbptyper_pbptype_predicted_tsv = pbptyper_task.pbptyper_pbptype_predicted_tsv
-    File? pbptyper_pbptype_1A_tsv = pbptyper_task.pbptyper_pbptype_1A_tsv
-    File? pbptyper_pbptype_2B_tsv = pbptyper_task.pbptyper_pbptype_2B_tsv
-    File? pbptyper_pbptype_2X_tsv = pbptyper_task.pbptyper_pbptype_2X_tsv
-    String? pbptyper_version = pbptyper_task.pbptyper_version
-    String? pbptyper_docker = pbptyper_task.pbptyper_docker
-    String? poppunk_gps_cluster = poppunk_task.poppunk_gps_cluster
-    File? poppunk_gps_external_cluster_csv = poppunk_task.poppunk_gps_external_cluster_csv
-    String? poppunk_GPS_db_version = poppunk_task.poppunk_GPS_db_version
-    String? poppunk_version = poppunk_task.poppunk_version
-    String? poppunk_docker = poppunk_task.poppunk_docker
-    String? seroba_version = seroba_task.seroba_version
-    String? seroba_docker = seroba_task.seroba_docker
-    String? seroba_serotype = seroba_task.seroba_serotype
-    String? seroba_ariba_serotype = seroba_task.seroba_ariba_serotype
-    String? seroba_ariba_identity = seroba_task.seroba_ariba_identity
-    File? seroba_details = seroba_task.seroba_details
+    String? pbptyper_predicted_1A_2B_2X = pbptyper.pbptyper_predicted_1A_2B_2X
+    File? pbptyper_pbptype_predicted_tsv = pbptyper.pbptyper_pbptype_predicted_tsv
+    File? pbptyper_pbptype_1A_tsv = pbptyper.pbptyper_pbptype_1A_tsv
+    File? pbptyper_pbptype_2B_tsv = pbptyper.pbptyper_pbptype_2B_tsv
+    File? pbptyper_pbptype_2X_tsv = pbptyper.pbptyper_pbptype_2X_tsv
+    String? pbptyper_version = pbptyper.pbptyper_version
+    String? pbptyper_docker = pbptyper.pbptyper_docker
+    String? poppunk_gps_cluster = poppunk.poppunk_gps_cluster
+    File? poppunk_gps_external_cluster_csv = poppunk.poppunk_gps_external_cluster_csv
+    String? poppunk_GPS_db_version = poppunk.poppunk_GPS_db_version
+    String? poppunk_version = poppunk.poppunk_version
+    String? poppunk_docker = poppunk.poppunk_docker
+    String? seroba_version = seroba.seroba_version
+    String? seroba_docker = seroba.seroba_docker
+    String? seroba_serotype = seroba.seroba_serotype
+    String? seroba_ariba_serotype = seroba.seroba_ariba_serotype
+    String? seroba_ariba_identity = seroba.seroba_ariba_identity
+    File? seroba_details = seroba.seroba_details
     # Streptococcus pyogenes Typing
     String? emmtypingtool_emm_type = emmtypingtool.emmtypingtool_emm_type
     File? emmtypingtool_results_xml = emmtypingtool.emmtypingtool_results_xml

@@ -1,17 +1,17 @@
 version 1.0
 
-import "../../tasks/utilities/task_rasusa.wdl" as rasusa
-import "../utilities/wf_read_QC_trim_pe.wdl" as read_qc
-import "../utilities/wf_merlin_magic.wdl" as merlin_magic_workflow
 import "../../tasks/assembly/task_shovill.wdl" as shovill
-import "../../tasks/quality_control/task_quast.wdl" as quast_task
-import "../../tasks/quality_control/task_cg_pipeline.wdl" as cg_pipeline_task
-import "../../tasks/quality_control/task_screen.wdl" as screen
-import "../../tasks/quality_control/task_busco.wdl" as busco_task
-import "../../tasks/taxon_id/task_gambit.wdl" as gambit_task
-import "../../tasks/quality_control/task_qc_check_phb.wdl" as qc_check
-# import "../../tasks/species_typing/task_ts_mlst.wdl" as ts_mlst_task
+import "../../tasks/quality_control/advanced_metrics/task_busco.wdl" as busco_task
+import "../../tasks/quality_control/basic_statistics/task_cg_pipeline.wdl" as cg_pipeline_task
+import "../../tasks/quality_control/basic_statistics/task_quast.wdl" as quast_task
+import "../../tasks/quality_control/comparison/task_qc_check_phb.wdl" as qc_check
+import "../../tasks/quality_control/comparison/task_screen.wdl" as screen
+# import "../../tasks/species_typing/multi/task_ts_mlst.wdl" as ts_mlst_task
 import "../../tasks/task_versioning.wdl" as versioning
+import "../../tasks/taxon_id/task_gambit.wdl" as gambit_task
+import "../../tasks/utilities/task_rasusa.wdl" as rasusa
+import "../utilities/wf_merlin_magic.wdl" as merlin_magic_workflow
+import "../utilities/wf_read_QC_trim_pe.wdl" as read_qc
 
 workflow theiaeuk_illumina_pe {
   meta {

@@ -1,15 +1,15 @@
 version 1.0
 
-import "../utilities/wf_read_QC_trim_se.wdl" as read_qc
-import "../utilities/wf_ivar_consensus.wdl" as consensus_call
-import "../../tasks/quality_control/task_vadr.wdl" as vadr_task
-import "../../tasks/quality_control/task_consensus_qc.wdl" as consensus_qc_task
-import "../../tasks/quality_control/task_screen.wdl" as screen
-import "../../tasks/taxon_id/task_nextclade.wdl" as nextclade_task
-import "../../tasks/species_typing/task_pangolin.wdl" as pangolin
 import "../../tasks/gene_typing/task_sc2_gene_coverage.wdl" as sc2_calculation
-import "../../tasks/quality_control/task_qc_check_phb.wdl" as qc_check
+import "../../tasks/quality_control/advanced_metrics/task_vadr.wdl" as vadr_task
+import "../../tasks/quality_control/basic_statistics/task_consensus_qc.wdl" as consensus_qc_task
+import "../../tasks/quality_control/comparison/task_qc_check_phb.wdl" as qc_check
+import "../../tasks/quality_control/comparison/task_screen.wdl" as screen
+import "../../tasks/species_typing/betacoronavirus/task_pangolin.wdl" as pangolin
 import "../../tasks/task_versioning.wdl" as versioning
+import "../../tasks/taxon_id/task_nextclade.wdl" as nextclade_task
+import "../utilities/wf_ivar_consensus.wdl" as consensus_call
+import "../utilities/wf_read_QC_trim_se.wdl" as read_qc
 
 workflow theiacov_illumina_se {
   meta {

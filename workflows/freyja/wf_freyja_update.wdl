@@ -1,7 +1,7 @@
 version 1.0
 
-import "../../tasks/taxon_id/freyja_utilities/task_freyja_update.wdl" as update
 import "../../tasks/taxon_id/freyja_utilities/task_freyja_transfer.wdl" as transfer
+import "../../tasks/taxon_id/freyja_utilities/task_freyja_update.wdl" as update
 
 workflow freyja_update {
   input {

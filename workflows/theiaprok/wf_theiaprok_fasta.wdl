@@ -1,19 +1,19 @@
 version 1.0
 
-import "../utilities/wf_merlin_magic.wdl" as merlin_magic_workflow
-import "../../tasks/quality_control/task_quast.wdl" as quast_task
-import "../../tasks/quality_control/task_busco.wdl" as busco_task
-import "../../tasks/taxon_id/task_gambit.wdl" as gambit_task
-import "../../tasks/quality_control/task_mummer_ani.wdl" as ani_task
 import "../../tasks/gene_typing/task_amrfinderplus.wdl" as amrfinderplus
-import "../../tasks/gene_typing/task_resfinder.wdl" as resfinder
-import "../../tasks/species_typing/task_ts_mlst.wdl" as ts_mlst_task
 import "../../tasks/gene_typing/task_bakta.wdl" as bakta_task
-import "../../tasks/gene_typing/task_prokka.wdl" as prokka_task
 import "../../tasks/gene_typing/task_plasmidfinder.wdl" as plasmidfinder_task
-import "../../tasks/quality_control/task_qc_check_phb.wdl" as qc_check
+import "../../tasks/gene_typing/task_prokka.wdl" as prokka_task
+import "../../tasks/gene_typing/task_resfinder.wdl" as resfinder
+import "../../tasks/quality_control/advanced_metrics/task_busco.wdl" as busco_task
+import "../../tasks/quality_control/advanced_metrics/task_mummer_ani.wdl" as ani_task
+import "../../tasks/quality_control/basic_statistics/task_quast.wdl" as quast_task
+import "../../tasks/quality_control/comparison/task_qc_check_phb.wdl" as qc_check
+import "../../tasks/species_typing/multi/task_ts_mlst.wdl" as ts_mlst_task
 import "../../tasks/task_versioning.wdl" as versioning
+import "../../tasks/taxon_id/task_gambit.wdl" as gambit_task
 import "../../tasks/utilities/task_broad_terra_tools.wdl" as terra_tools
+import "../utilities/wf_merlin_magic.wdl" as merlin_magic_workflow
 
 workflow theiaprok_fasta {
   meta {
