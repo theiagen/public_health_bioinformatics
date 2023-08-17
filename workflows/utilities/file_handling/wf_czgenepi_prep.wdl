@@ -1,42 +1,69 @@
 version 1.0
 
 import "../../../tasks/utilities/file_handling/task_czgenepi_wrangling.wdl" as czgenepi_wrangling_task
-
+import "../../../tasks/utilities/data_export/task_download_terra_table.wdl" as download_table
+import "../../../tasks/utilities/file_handling/task_file_handling.wdl" as concatenate_column
+import "../../../tasks/task_versioning.wdl" as versioning
 
 workflow czgenepi_prep {
   input {
     Array[String] sample_names
-    Array[File] assembly_fasta
-    Array[String] collection_date
-    Array[String] private_id
+
+    # downloading table information
+    String terra_project_name
+    String terra_workspace_name
+    String terra_table_name
+    
+    String assembly_fasta_column_name = "assembly_fasta"
+    String collection_date_column_name = "collection_date"
+    String private_id_column_name = terra_table_name + "_id"
 
     # collection location
-    Array[String] continent
-    Array[String] country
-    Array[String] state
-    Array[String]? county
+    String continent_column_name = "continent"
+    String country_column_name = "country"
+    String state_column_name = "state"
+    String county_column_name = "county"
 
     # optional inputs
-    Array[String]? gisaid_virus_name
-    Array[String]? sequencing_date
-    Array[String]? sample_is_private
+    String gisaid_id_column_name = "gisaid_accession"
+    String genbank_accession_column_name = "genbank_accession"
+    String sequencing_date_column_name = "sequencing_date"
+    String sample_is_private_column_name = "sample_is_private"
+  }
+  call versioning.version_capture{
+    input:
+  }
+  call download_table.download_terra_table {
+    input:
+      terra_project_name = terra_project_name,
+      terra_workspace_name = terra_workspace_name,
+      terra_table_name = terra_table_name
   }
   call czgenepi_wrangling_task.czgenepi_wrangling {
     input:
+      full_terra_table = download_terra_table.terra_table,
       sample_names = sample_names,
-      assembly_fasta = assembly_fasta,
-      collection_date = collection_date,
-      private_id = private_id,
-      continent = continent,
-      country = country,
-      state = state,
-      county = county,
-      gisaid_virus_name = gisaid_virus_name,
-      sequencing_date = sequencing_date,
-      sample_is_private = sample_is_private
+      assembly_fasta_column_name = assembly_fasta_column_name,
+      collection_date_column_name = collection_date_column_name,
+      private_id_column_name = private_id_column_name,
+      continent_column_name = continent_column_name,
+      country_column_name = country_column_name,
+      state_column_name = state_column_name,
+      county_column_name = county_column_name,
+      gisaid_id_column_name = gisaid_id_column_name,
+      genbank_accession_column_name = genbank_accession_column_name,
+      sequencing_date_column_name = sequencing_date_column_name,
+      sample_is_private_column_name = sample_is_private_column_name
+  }
+  call concatenate_column.cat_files {
+    input:
+      files_to_cat = czgenepi_wrangling.fastas,
+      concatenated_file_name = "czgenepi_prep_" + version_capture.date + ".fasta"
   }
   output {
-    File concatenated_fasta = czgenepi_wrangling.concatenated_fasta
-    File concatenated_metadata = czgenepi_wrangling.concatenated_metadata
+    File concatenated_czgenepi_fasta = cat_files.concatenated_files
+    File concatenated_czgenepi_metadata = czgenepi_wrangling.concatenated_metadata
+    String czgenepi_prep_version = version_capture.phb_version
+    String czgenepi_prep_analysis_date = version_capture.date
   }
 }
