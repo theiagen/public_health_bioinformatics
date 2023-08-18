@@ -31,8 +31,8 @@ task nextclade {
           --verbose
         
         # If no referece sequence is provided, use the reference tree from the dataset
-        if [ ! -z "~{reference_tree_json}" ]; then
-          echo "Default reference tree JSON will be used"
+        if [ -z "~{reference_tree_json}" ]; then
+          echo "Default dataset reference tree JSON will be used"
           cp nextclade_dataset_dir/tree.json reference_tree.json
           tree_json="reference_tree.json"
         else
@@ -66,10 +66,10 @@ task nextclade {
     }
     output {
       String nextclade_version = read_string("NEXTCLADE_VERSION")
-      File nextclade_json = "~{basename}.nextclade.json"
-      File auspice_json = "~{basename}.nextclade.auspice.json"
-      File nextclade_tsv = "~{basename}.nextclade.tsv"
+      #File nextclade_json = "~{basename}.nextclade.json"
+      #File auspice_json = "~{basename}.nextclade.auspice.json"
+      #File nextclade_tsv = "~{basename}.nextclade.tsv"
       String nextclade_docker = docker
-      File nextclade_ref_tree_json = "reference_tree.json"
+      #File nextclade_ref_tree_json = select_first(["~{reference_tree_json}","reference_tree.json"])
     }
 }
