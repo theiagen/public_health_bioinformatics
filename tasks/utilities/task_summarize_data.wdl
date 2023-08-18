@@ -30,7 +30,7 @@ task summarize_data {
     fi
 
     # indicate if a different id_column should be used than the default
-    if [[ -z ~{id_column_name} ]]; then
+    if [[ -z "~{id_column_name}" ]]; then
       export default_column="true"
     else
       export default_column="false"

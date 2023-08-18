@@ -1,4 +1,5 @@
 # Public Health Bioinformatics (PHB)
+
 Bioinformatics workflows for characterization, epidemiology and sharing of pathogen genomes.
 
 **More information about the steps undertaken in these workflows is available via the [Theiagen Public Resources Documentation](https://theiagen.notion.site/Theiagen-Public-Health-Resources-a4bd134b0c5c4fe39870e21029a30566).**
@@ -17,3 +18,12 @@ These workflows are written in [WDL](https://github.com/openwdl/wdl), a language
 ### Contributing to the PHB workflows
 Contributions to the workflows contained in this repository are warmly welcomed. Our style guide may be found [here](https://theiagen.notion.site/Style-Guide-WDL-Workflow-Development-bb456f34322d4f4db699d4029050481c) for convenience of formatting.
 
+### Citation
+
+Please cite this paper if publishing work using any workflows:
+
+Libuit, Kevin G., Emma L. Doughty, James R. Otieno, Frank Ambrosio, Curtis J. Kapsak, Emily A. Smith, Sage M. Wright, et al. 2023. “Accelerating Bioinformatics Implementation in Public Health.” Microbial Genomics 9 (7). https://doi.org/10.1099/mgen.0.001051.
+
+Alternatively, please cite this paper if using the TheiaEuk workflow:
+
+Ambrosio, Frank, Michelle Scribner, Sage Wright, James Otieno, Emma Doughty, Andrew Gorzalski, Danielle Siao, et al. 2023. “TheiaEuk: A Species-Agnostic Bioinformatics Workflow for Fungal Genomic Characterization.” Frontiers in Public Health 11. https://doi.org/10.3389/fpubh.2023.1198213.

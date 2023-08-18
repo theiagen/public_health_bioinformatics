@@ -519,6 +519,8 @@ workflow merlin_magic {
     String? kleborate_otype = kleborate.kleborate_otype
     String? kleborate_klocus_confidence = kleborate.kleborate_klocus_confidence
     String? kleborate_olocus_confidence = kleborate.kleborate_olocus_confidence
+    String? kleborate_virulence_score = kleborate.kleborate_virulence_score
+    String? kleborate_resistance_score = kleborate.kleborate_resistance_score
     # Neisseria gonorrhoeae Typing
     File? ngmaster_tsv = ngmaster.ngmaster_tsv
     String? ngmaster_version = ngmaster.ngmaster_version
