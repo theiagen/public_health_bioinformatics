@@ -1,11 +1,11 @@
 version 1.0
 
-import "../../workflows/standalone_modules/wf_snippy_variants.wdl" as snippy_variants_workflow
-import "../../workflows/phylogenetics/wf_snippy_tree.wdl" as snippy_tree_workflow
 import "../../tasks/phylogenetic_inference/task_centroid.wdl" as centroid_task
 import "../../tasks/phylogenetic_inference/task_referenceseeker.wdl" as referenceseeker_task
-import "../../tasks/utilities/task_ncbi_datasets.wdl" as ncbi_datasets_task
 import "../../tasks/task_versioning.wdl" as versioning
+import "../../tasks/utilities/task_ncbi_datasets.wdl" as ncbi_datasets_task
+import "../../workflows/phylogenetics/wf_snippy_tree.wdl" as snippy_tree_workflow
+import "../../workflows/standalone_modules/wf_snippy_variants.wdl" as snippy_variants_workflow
 
 workflow snippy_streamline {
   input {

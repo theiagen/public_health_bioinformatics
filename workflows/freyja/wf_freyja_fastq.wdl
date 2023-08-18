@@ -2,8 +2,8 @@ version 1.0
 
 import "../../tasks/alignment/task_bwa.wdl" as align
 import "../../tasks/assembly/task_ivar_primer_trim.wdl" as trim_primers
-import "../../tasks/taxon_id/task_freyja_one_sample.wdl" as freyja_task
 import "../../tasks/task_versioning.wdl" as versioning
+import "../../tasks/taxon_id/task_freyja_one_sample.wdl" as freyja_task
 import "../utilities/wf_read_QC_trim_pe.wdl" as read_qc
 
 workflow freyja_fastq {

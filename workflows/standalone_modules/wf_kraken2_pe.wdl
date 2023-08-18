@@ -1,7 +1,7 @@
 version 1.0
 
-import "../../tasks/taxon_id/task_kraken2.wdl" as kraken2
 import "../../tasks/task_versioning.wdl" as versioning
+import "../../tasks/taxon_id/task_kraken2.wdl" as kraken2
 
 workflow kraken2_pe_wf {
   meta {

@@ -8,13 +8,13 @@ import "../../tasks/phylogenetic_inference/augur/task_augur_refine.wdl" as refin
 import "../../tasks/phylogenetic_inference/augur/task_augur_translate.wdl" as translate_task
 import "../../tasks/phylogenetic_inference/augur/task_augur_tree.wdl" as tree_task
 
-import "../../tasks/phylogenetic_inference/task_snp_dists.wdl" as snp_dists_task
 import "../../tasks/phylogenetic_inference/task_reorder_matrix.wdl" as reorder_matrix_task
+import "../../tasks/phylogenetic_inference/task_snp_dists.wdl" as snp_dists_task
 
 import "../../tasks/task_versioning.wdl" as versioning
 
-import "../../tasks/utilities/task_file_handling.wdl" as file_handling
 import "../../tasks/utilities/task_augur_utilities.wdl" as augur_utils
+import "../../tasks/utilities/task_file_handling.wdl" as file_handling
 
 
 workflow augur {
