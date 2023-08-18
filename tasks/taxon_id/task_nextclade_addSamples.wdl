@@ -31,14 +31,17 @@ task nextclade {
           --verbose
         
         # If no referece sequence is provided, use the reference tree from the dataset
-        if [ -z "~{reference_tree_json}" ]; then
+        if [[ ! -z "~{reference_tree_json}" ]]; then
           reference_tree_json=nextclade_dataset_dir/tree.json
+        else
+          reference_tree_json="~{reference_tree_json}"
         fi
+
         set -e
         nextclade run \
             --input-dataset=nextclade_dataset_dir/ \
             ~{"--input-root-seq " + root_sequence} \
-            --input-tree ~{reference_tree_json} \
+            --input-tree ${reference_tree_json} \
             ~{"--input-qc-config " + qc_config_json} \
             ~{"--input-gene-map " + gene_annotations_gff} \
             ~{"--input-pcr-primers " + pcr_primers_csv} \
