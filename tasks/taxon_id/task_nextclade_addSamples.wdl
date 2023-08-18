@@ -34,11 +34,12 @@ task nextclade {
         if [ -z "~{reference_tree_json}" ]; then
           echo "Default dataset reference tree JSON will be used"
           cp nextclade_dataset_dir/tree.json reference_tree.json
-          tree_json="reference_tree.json"
         else
           echo "User reference tree JSON will be used"
-          tree_json="~{reference_tree_json}"
+          cp ~{reference_tree_json} reference_tree.json
         fi
+
+        tree_json="reference_tree.json"
 
         set -e
         nextclade run \
@@ -69,9 +70,7 @@ task nextclade {
       File nextclade_json = "~{basename}.nextclade.json"
       File auspice_json = "~{basename}.nextclade.auspice.json"
       File nextclade_tsv = "~{basename}.nextclade.tsv"
-      #File nextclade_json = "reference_tree.json"
-      #File auspice_json = "reference_tree.json"
-      #File nextclade_tsv = "reference_tree.json"
       String nextclade_docker = docker
+      File netclade_ref_tree = "reference_tree.json"
     }
 }
