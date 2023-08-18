@@ -1,6 +1,6 @@
 version 1.0
 
-import "../../tasks/taxon_id/task_nextclade_addSamples.wdl" as nextclade_analysis
+import "../../tasks/taxon_id/task_nextclade_add_ref.wdl" as nextclade_analysis
 
 workflow nextclade_addToRefTree {
     meta {
