@@ -40,20 +40,20 @@ task nextclade {
           tree_json="~{reference_tree_json}"
         fi
 
-       # set -e
-       # nextclade run \
-       #     --input-dataset=nextclade_dataset_dir/ \
-       #     ~{"--input-root-seq " + root_sequence} \
-       #     --input-tree ${reference_tree_json} \
-       #     ~{"--input-qc-config " + qc_config_json} \
-       #     ~{"--input-gene-map " + gene_annotations_gff} \
-       #     ~{"--input-pcr-primers " + pcr_primers_csv} \
-       #     ~{"--input-virus-properties " + virus_properties}  \
-       #     --output-json "~{basename}".nextclade.json \
-       #     --output-tsv  "~{basename}".nextclade.tsv \
-       #     --output-tree "~{basename}".nextclade.auspice.json \
-       #     --output-all=. \
-       #     "~{genome_fasta}"
+        set -e
+        nextclade run \
+            --input-dataset=nextclade_dataset_dir/ \
+            ~{"--input-root-seq " + root_sequence} \
+            --input-tree ${tree_json} \
+            ~{"--input-qc-config " + qc_config_json} \
+            ~{"--input-gene-map " + gene_annotations_gff} \
+            ~{"--input-pcr-primers " + pcr_primers_csv} \
+            ~{"--input-virus-properties " + virus_properties}  \
+            --output-json "~{basename}".nextclade.json \
+            --output-tsv  "~{basename}".nextclade.tsv \
+            --output-tree "~{basename}".nextclade.auspice.json \
+            --output-all=. \
+            "~{genome_fasta}"
     >>>
     runtime {
       docker: "~{docker}"
@@ -66,13 +66,12 @@ task nextclade {
     }
     output {
       String nextclade_version = read_string("NEXTCLADE_VERSION")
-      #File nextclade_json = "~{basename}.nextclade.json"
-      #File auspice_json = "~{basename}.nextclade.auspice.json"
-      #File nextclade_tsv = "~{basename}.nextclade.tsv"
-      File nextclade_json = "reference_tree.json"
-      File auspice_json = "reference_tree.json"
-      File nextclade_tsv = "reference_tree.json"
+      File nextclade_json = "~{basename}.nextclade.json"
+      File auspice_json = "~{basename}.nextclade.auspice.json"
+      File nextclade_tsv = "~{basename}.nextclade.tsv"
+      #File nextclade_json = "reference_tree.json"
+      #File auspice_json = "reference_tree.json"
+      #File nextclade_tsv = "reference_tree.json"
       String nextclade_docker = docker
-      #File nextclade_ref_tree_json = select_first(["~{reference_tree_json}","reference_tree.json"])
     }
 }
