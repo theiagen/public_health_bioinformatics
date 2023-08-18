@@ -2,7 +2,7 @@ version 1.0
 
 task nextclade {
     meta {
-      description: "Nextclade classification of one sample. Leaving optional inputs unspecified will use SARS-CoV-2 defaults."
+      description: "Nextclade task to add samples to either a user specified or a nextclade reference tree."
     }
     input {
       File genome_fasta
