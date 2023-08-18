@@ -31,26 +31,29 @@ task nextclade {
           --verbose
         
         # If no referece sequence is provided, use the reference tree from the dataset
-        if [[ ! -z "~{reference_tree_json}" ]]; then
-          reference_tree_json=nextclade_dataset_dir/tree.json
+        if [ ! -z "~{reference_tree_json}" ]; then
+          echo "Default reference tree JSON will be used"
+          cp nextclade_dataset_dir/tree.json reference_tree.json
+          tree_json="reference_tree.json"
         else
-          reference_tree_json="~{reference_tree_json}"
+          echo "User reference tree JSON will be used"
+          tree_json="~{reference_tree_json}"
         fi
 
-        set -e
-        nextclade run \
-            --input-dataset=nextclade_dataset_dir/ \
-            ~{"--input-root-seq " + root_sequence} \
-            --input-tree ${reference_tree_json} \
-            ~{"--input-qc-config " + qc_config_json} \
-            ~{"--input-gene-map " + gene_annotations_gff} \
-            ~{"--input-pcr-primers " + pcr_primers_csv} \
-            ~{"--input-virus-properties " + virus_properties}  \
-            --output-json "~{basename}".nextclade.json \
-            --output-tsv  "~{basename}".nextclade.tsv \
-            --output-tree "~{basename}".nextclade.auspice.json \
-            --output-all=. \
-            "~{genome_fasta}"
+       # set -e
+       # nextclade run \
+       #     --input-dataset=nextclade_dataset_dir/ \
+       #     ~{"--input-root-seq " + root_sequence} \
+       #     --input-tree ${reference_tree_json} \
+       #     ~{"--input-qc-config " + qc_config_json} \
+       #     ~{"--input-gene-map " + gene_annotations_gff} \
+       #     ~{"--input-pcr-primers " + pcr_primers_csv} \
+       #     ~{"--input-virus-properties " + virus_properties}  \
+       #     --output-json "~{basename}".nextclade.json \
+       #     --output-tsv  "~{basename}".nextclade.tsv \
+       #     --output-tree "~{basename}".nextclade.auspice.json \
+       #     --output-all=. \
+       #     "~{genome_fasta}"
     >>>
     runtime {
       docker: "~{docker}"
@@ -67,5 +70,6 @@ task nextclade {
       File auspice_json = "~{basename}.nextclade.auspice.json"
       File nextclade_tsv = "~{basename}.nextclade.tsv"
       String nextclade_docker = docker
+      File nextclade_ref_tree_json = "reference_tree.json"
     }
 }
