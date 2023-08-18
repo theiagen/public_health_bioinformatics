@@ -69,6 +69,9 @@ task nextclade {
       #File nextclade_json = "~{basename}.nextclade.json"
       #File auspice_json = "~{basename}.nextclade.auspice.json"
       #File nextclade_tsv = "~{basename}.nextclade.tsv"
+      File nextclade_json = read_string("test")
+      File auspice_json = read_string("test")
+      File nextclade_tsv = read_string("test")
       String nextclade_docker = docker
       #File nextclade_ref_tree_json = select_first(["~{reference_tree_json}","reference_tree.json"])
     }
