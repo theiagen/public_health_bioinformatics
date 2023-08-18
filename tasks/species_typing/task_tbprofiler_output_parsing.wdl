@@ -86,7 +86,9 @@ task tbprofiler_output_parsing {
                     "tlyA", "gyrA", "gyrB", "Rv0678", "atpE", "pepQ", "mmpL5", "mmpS5", "rrl", "rplC"
                     ]
 
-    # lookup dictionary - gene to antimicrobial drug name (https://github.com/jodyphelan/tbdb/blob/master/tbdb.csv)
+    # lookup dictionary - gene to antimicrobial drug name, including genes in watchlist
+    # (https://github.com/jodyphelan/tbdb/blob/master/tbdb.csv)
+    # (https://github.com/jodyphelan/tbdb/blob/master/tbdb.watchlist.csv)
     GENE_TO_ANTIMICROBIAL_DRUG_NAME = {"ahpC":["isoniazid"], 
                                        "ald":["cycloserine"], 
                                        "alr": ["cycloserine"],
@@ -122,7 +124,16 @@ task tbprofiler_output_parsing {
                                        "thyA": ["para-aminosalicylic_acid"], 
                                        "thyX": ["para-aminosalicylic_acid"],
                                        "tlyA": ["capreomycin"], 
-                                       "rpoA": ["rifampicin"] 
+                                       "rpoA": ["rifampicin"],
+                                       "fgd1": ["delamanid"],
+                                       "fbiB": ["delamanid"],
+                                       "fbiC": ["delamanid"],
+                                       "ddn": ["delamanid"],
+                                       "ubiA": ["ethambutol"],
+                                       "atpE": ["bedaquiline"],
+                                       "mshA": ["ethionamide"],
+                                       "pepQ": ["bedaquiline", "clofazimine"],
+                                       "fbiD": ["delamanid"]
                          }
     
     # lookup dictionary - antimicrobial drug name to gene name  (https://github.com/jodyphelan/tbdb/blob/master/tbdb.csv)
@@ -167,7 +178,10 @@ task tbprofiler_output_parsing {
                           "rplC": "Rv0701", "rpoB": "Rv0667", "rpoC": "Rv0668", 
                           "rpsA": "Rv1630", "rpsL": "Rv0682", "rrl": "EBG00000313339", 
                           "rrs": "EBG00000313325", "Rv0678": "Rv0678", "thyA": "Rv2764c",
-                          "thyX": "Rv2754c", "tlyA": "Rv1694", "rpoA": "Rv3457c"
+                          "thyX": "Rv2754c", "tlyA": "Rv1694", "rpoA": "Rv3457c",
+                          "fgd1": "Rv0407", "fbiB": "Rv3262", "fbiC": "Rv1173",
+                          "ddn": "Rv3547", "ubiA": "Rv3806c", "atpE": "Rv1305",
+                          "mshA": "Rv0486", "pepQ": "Rv2535c", "fbiD": "Rv2983"
                          }
 
     GENE_LIST_OPTION_1 = ["Rv0678", "atpE", "pepQ", "mmpL5", "mmpS5", "rrl", "rplC"] # Rv0678 is mmpR
