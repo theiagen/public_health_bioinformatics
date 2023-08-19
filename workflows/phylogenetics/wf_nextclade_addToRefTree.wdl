@@ -1,6 +1,6 @@
 version 1.0
 
-import "../../tasks/taxon_id/task_nextclade_add_ref.wdl" as nextclade_analysis
+import "../../tasks/taxon_id/task_nextclade.wdl" as nextclade_analysis
 
 workflow nextclade_addToRefTree {
     meta {
@@ -18,7 +18,7 @@ workflow nextclade_addToRefTree {
       String? dataset_reference
       String? dataset_tag
     }
-    call nextclade_analysis.nextclade { # nextclade analysis
+    call nextclade_analysis.nextclade_add_ref { # nextclade analysis
       input:
         genome_fasta = assembly_fastas,
         root_sequence = root_sequence_fasta,
@@ -32,10 +32,10 @@ workflow nextclade_addToRefTree {
         dataset_tag = dataset_tag
     }
     output {
-      String treeUpdate_nextclade_version = select_first([nextclade.nextclade_version, ""])
-      File treeUpdate_nextclade_json = select_first([nextclade.nextclade_json, ""])
-      File treeUpdate_auspice_json = select_first([nextclade.auspice_json, ""])
-      File treeUpdate_nextclade_tsv = select_first([nextclade.nextclade_tsv, ""])
-      String treeUpdate_nextclade_docker = select_first([nextclade.nextclade_docker, ""])
+      String treeUpdate_nextclade_version = select_first([nextclade_add_ref.nextclade_version, ""])
+      File treeUpdate_nextclade_json = select_first([nextclade_add_ref.nextclade_json, ""])
+      File treeUpdate_auspice_json = select_first([nextclade_add_ref.auspice_json, ""])
+      File treeUpdate_nextclade_tsv = select_first([nextclade_add_ref.nextclade_tsv, ""])
+      String treeUpdate_nextclade_docker = select_first([nextclade_add_ref.nextclade_docker, ""])
     }
 }
