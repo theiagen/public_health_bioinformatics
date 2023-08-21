@@ -35,8 +35,6 @@ task fastq_dl_sra {
       mv "~{sra_accession}.fastq.gz" "~{sra_accession}_1.fastq.gz"
     fi
 
-    # rename FASTQ metadata file to include SRR accession
-    #mv -v fastq-run-info.tsv ~{sra_accession}.fastq-run-info.tsv
     
   >>>
   output {
