@@ -9,7 +9,7 @@ task fastq_dl_sra {
     Int cpus = 2
     Int memory = 8
     # default set to force the use of SRA instead of ENA due to SRA Lite FASTQ file format issues
-    String fastq_dl_opts = "--provider sra --only-provider"
+    String fastq_dl_opts = "--provider sra"
   }
   meta {
     # so that call caching is always turned off
