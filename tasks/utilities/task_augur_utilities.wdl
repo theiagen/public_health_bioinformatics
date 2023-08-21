@@ -33,7 +33,7 @@ task tsv_join {
     Array[File]+ input_tsvs
     String id_col
     String out_basename = "merged"
-    String out_suffix = ".txt"
+    String out_suffix = ".tsv"
     Int mem = 7
     Int disk_size = 100
   }

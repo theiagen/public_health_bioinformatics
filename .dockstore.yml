@@ -225,3 +225,8 @@ workflows:
    primaryDescriptorPath: /workflows/submission/wf_terra_2_gisaid.wdl
    testParameterFiles:
     - empty.json
+ - name: Usher_PHB
+   subclass: WDL
+   primaryDescriptorPath: /workflows/phylogenetics/wf_usher.wdl
+   testParameterFiles:
+    - empty.json
