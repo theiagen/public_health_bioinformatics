@@ -33,6 +33,7 @@ task nanoplot {
   >>>
   output {
     File nanoplot_html = "~{samplename}_NanoPlot-report.html"
+    File nanoplot_tsv = "~{samplename}_NanoStats.txt"
     String nanoplot_version = read_string("VERSION")
     String nanoplot_docker = docker
   }
