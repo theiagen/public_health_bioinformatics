@@ -76,6 +76,7 @@ workflow read_QC_trim_ont {
     # nanoplot outputs    
     File nanoplot_html = nanoplot.nanoplot_html
     String nanoplot_version = nanoplot.nanoplot_version
+    String nanoplot_docker = nanoplot.nanoplot_docker
     
     # kmc outputs
     String est_genome_size = kmc.est_genome_size

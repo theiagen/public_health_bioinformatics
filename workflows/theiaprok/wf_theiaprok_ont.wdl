@@ -475,6 +475,7 @@ workflow theiaprok_ont {
     # Read QC - nanoplot outputs
     File? nanoplot_html = read_QC_trim.nanoplot_html
     String? nanoplot_version = read_QC_trim.nanoplot_version
+    String? nanoplot_docker = read_QC_trim.nanoplot_docker
     # Read QC - kmc outputs
     String? kmc_est_genome_size = read_QC_trim.est_genome_size
     File? kmc_kmer_stats = read_QC_trim.kmc_kmer_stats
