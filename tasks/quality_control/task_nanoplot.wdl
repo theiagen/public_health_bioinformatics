@@ -29,11 +29,20 @@ task nanoplot {
       --loglength \
       --tsv_stats \
       --maxlength ~{max_length}
+
+    # grep read statistics from tsv stats file
+    cat ~{samplename}_NanoStats.txt | grep number_of_reads | cut -f 2 | tee NUMBER_OF_READS
+    cat ~{samplename}_NanoStats.txt | grep median_read_length | cut -f 2 | tee MEDIAN_READ_LENGTH
+    cat ~{samplename}_NanoStats.txt | grep mean_qual | cut -f 2 | tee MEAN_QUAL
+
    
   >>>
   output {
     File nanoplot_html = "~{samplename}_NanoPlot-report.html"
     File nanoplot_tsv = "~{samplename}_NanoStats.txt"
+    Int number_of_reads = read_int("NUMBER_OF_READS")
+    Float median_read_length = read_float("MEDIAN_READ_LENGTH")
+    Float mean_qual = read_float("MEAN_QUAL")
     String nanoplot_version = read_string("VERSION")
     String nanoplot_docker = docker
   }
