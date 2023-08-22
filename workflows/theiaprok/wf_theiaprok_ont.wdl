@@ -233,6 +233,7 @@ workflow theiaprok_ont {
             tiptoft_plasmid_replicon_genes = read_QC_trim.tiptoft_plasmid_replicon_genes,
             tiptoft_version = read_QC_trim.tiptoft_version,
             assembly_fasta = dragonflye.assembly_fasta,
+            contigs_gfa = dragonflye.contigs_gfa,
             dragonflye_version = dragonflye.dragonflye_version,
             quast_report = quast.quast_report,
             quast_version = quast.version,
@@ -493,6 +494,7 @@ workflow theiaprok_ont {
     Float? r1_mean_readlength_raw = cg_pipeline_raw.r1_mean_readlength
     # Assembly - dragonflye outputs
     File? assembly_fasta = dragonflye.assembly_fasta
+    File? contigs_gfa = dragonflye.contigs_gfa
     String? dragonflye_version = dragonflye.dragonflye_version
     # Assembly QC - quast outputs
     File? quast_report = quast.quast_report
