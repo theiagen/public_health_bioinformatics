@@ -6,6 +6,9 @@ task nanoplot {
     String samplename
     Int max_length = 100000
     Int disk_size = 100
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/nanoplot:1.40.0"
+    Int memory = 16
+    Int cpu = 4
   }
   command <<<
     # get version
@@ -31,11 +34,12 @@ task nanoplot {
   output {
     File nanoplot_html = "~{samplename}_NanoPlot-report.html"
     String nanoplot_version = read_string("VERSION")
+    String nanoplot_docker = docker
   }
   runtime {
-    docker: "us-docker.pkg.dev/general-theiagen/staphb/nanoplot:1.40.0"
-    memory: "16 GB"
-    cpu: 4
+    docker: docker
+    memory: "~{memory} GB"
+    cpu: cpu
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
     preemptible: 0
