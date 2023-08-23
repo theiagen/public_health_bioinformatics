@@ -75,6 +75,7 @@ workflow read_QC_trim_ont {
 
     # nanoplot outputs    
     File nanoplot_html = nanoplot.nanoplot_html
+    File nanoplot_tsv = nanoplot.nanoplot_tsv
     String nanoplot_version = nanoplot.nanoplot_version
     String nanoplot_docker = nanoplot.nanoplot_docker
     
