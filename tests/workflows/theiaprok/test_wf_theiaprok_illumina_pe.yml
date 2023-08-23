@@ -560,7 +560,7 @@
     - path: miniwdl_run/wdl/tasks/gene_typing/task_prokka.wdl
       md5sum: 8e8423b99d5cd3e92bb89b3c3211d432
     - path: miniwdl_run/wdl/tasks/gene_typing/task_resfinder.wdl
-      md5sum: 18d0dd6560f88ed2541ad342e12412e8
+      md5sum: 3ec9414a79c4067078fdff600e4c75fd
     - path: miniwdl_run/wdl/tasks/gene_typing/task_snippy_variants.wdl
       md5sum: bc048390626650b6a939fd740c1aaf13
     - path: miniwdl_run/wdl/tasks/quality_control/task_bbduk.wdl
