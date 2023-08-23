@@ -221,6 +221,8 @@ workflow theiaprok_ont {
             r1_mean_readlength_raw = cg_pipeline_raw.r1_mean_readlength,
             nanoq_version = read_QC_trim.nanoq_version,
             nanoplot_html = read_QC_trim.nanoplot_html,
+            nanoplot_tsv = read_QC_trim.nanoplot_tsv,
+            nanoplot_docker = read_QC_trim.nanoplot_docker,
             nanoplot_version = read_QC_trim.nanoplot_version,
             kmc_est_genome_size = read_QC_trim.est_genome_size,
             kmc_kmer_stats = read_QC_trim.kmc_kmer_stats,
@@ -474,6 +476,7 @@ workflow theiaprok_ont {
     String? nanoq_version = read_QC_trim.nanoq_version
     # Read QC - nanoplot outputs
     File? nanoplot_html = read_QC_trim.nanoplot_html
+    File? nanoplot_tsv = read_QC_trim.nanoplot_tsv
     String? nanoplot_version = read_QC_trim.nanoplot_version
     String? nanoplot_docker = read_QC_trim.nanoplot_docker
     # Read QC - kmc outputs
