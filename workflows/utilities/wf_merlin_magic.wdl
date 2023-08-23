@@ -103,7 +103,7 @@ workflow merlin_magic {
         samplename = samplename
     }
     if (!assembly_only) {
-      call shigatyper_task.shigatyper { # test ONT compatibility
+      call shigatyper_task.shigatyper {
         input:
           read1 = select_first([read1]),
           read2 = read2,
@@ -149,7 +149,7 @@ workflow merlin_magic {
   if (merlin_tag == "Shigella sonnei") {
     # Shigella sonnei specific tasks
     if (!assembly_only) {
-      call sonneityping_task.sonneityping { # test ONT compatibility
+      call sonneityping_task.sonneityping {
         input:
           read1 = select_first([read1]),
           read2 = read2,
@@ -188,7 +188,7 @@ workflow merlin_magic {
       }
     }
     if ((select_first([seqsero2.seqsero2_predicted_serotype, seqsero2_assembly.seqsero2_predicted_serotype]) == "Typhi" || sistr.sistr_predicted_serotype == "Typhi") && !assembly_only) {
-      call genotyphi_task.genotyphi { # needs testing
+      call genotyphi_task.genotyphi {
         input: 
           read1 = select_first([read1]),
           read2 = read2,
@@ -231,7 +231,7 @@ workflow merlin_magic {
   }
   if (merlin_tag == "Mycobacterium tuberculosis") {
     if (!assembly_only) {
-      call tbprofiler_task.tbprofiler { # needs testing
+      call tbprofiler_task.tbprofiler {
         input:
           read1 = select_first([read1]),
           read2 = read2,
@@ -239,7 +239,7 @@ workflow merlin_magic {
           ont_data = ont_data
       }
       if (tbprofiler_additional_outputs) {
-        call tbprofiler_output_parsing_task.tbprofiler_output_parsing{
+        call tbprofiler_output_parsing_task.tbprofiler_output_parsing {
           input:
             json = tbprofiler.tbprofiler_output_json,
             output_seq_method_type = tbprofiler_output_seq_method_type,
