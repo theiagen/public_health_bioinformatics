@@ -4,7 +4,7 @@ import "../utilities/wf_read_QC_trim_ont.wdl" as read_qc_workflow
 import "../utilities/wf_merlin_magic.wdl" as merlin_magic_workflow
 import "../../tasks/assembly/task_dragonflye.wdl" as dragonflye_task
 import "../../tasks/quality_control/task_quast.wdl" as quast_task
-import "../../tasks/quality_control/task_cg_pipeline.wdl" as cg_pipeline_task
+#import "../../tasks/quality_control/task_cg_pipeline.wdl" as cg_pipeline_task
 import "../../tasks/quality_control/task_screen.wdl" as screen_task
 import "../../tasks/quality_control/task_busco.wdl" as busco_task
 import "../../tasks/taxon_id/task_gambit.wdl" as gambit_task
@@ -97,18 +97,18 @@ workflow theiaprok_ont {
           assembly = dragonflye.assembly_fasta,
           samplename = samplename
       }
-      call cg_pipeline_task.cg_pipeline as cg_pipeline_raw {
-        input:
-          read1 = read1,
-          samplename = samplename,
-          genome_length = select_first([genome_size, quast.genome_length])
-      }
-      call cg_pipeline_task.cg_pipeline as cg_pipeline_clean {
-        input:
-          read1 = read_QC_trim.read1_clean,
-          samplename = samplename,
-          genome_length = select_first([genome_size, quast.genome_length])
-      }
+      # call cg_pipeline_task.cg_pipeline as cg_pipeline_raw {
+      #   input:
+      #     read1 = read1,
+      #     samplename = samplename,
+      #     genome_length = select_first([genome_size, quast.genome_length])
+      # }
+      # call cg_pipeline_task.cg_pipeline as cg_pipeline_clean {
+      #   input:
+      #     read1 = read_QC_trim.read1_clean,
+      #     samplename = samplename,
+      #     genome_length = select_first([genome_size, quast.genome_length])
+      # }
       call gambit_task.gambit {
         input:
           assembly = dragonflye.assembly_fasta,
@@ -176,8 +176,8 @@ workflow theiaprok_ont {
             r1_mean_readlength_raw = read_QC_trim.r1_mean_readlength_raw,
             r1_mean_q_clean = read_QC_trim.r1_mean_q_raw,
             r1_mean_readlength_clean = read_QC_trim.r1_mean_readlength_raw,
-            est_coverage_raw = cg_pipeline_raw.est_coverage,
-            est_coverage_clean = cg_pipeline_clean.est_coverage,
+            # est_coverage_raw = cg_pipeline_raw.est_coverage,
+            # est_coverage_clean = cg_pipeline_clean.est_coverage,
             assembly_length = quast.genome_length,
             number_contigs = quast.number_contigs,
             n50_value = quast.n50_value,
@@ -239,11 +239,11 @@ workflow theiaprok_ont {
             number_contigs = quast.number_contigs,
             n50_value = quast.n50_value,
             quast_gc_percent = quast.gc_percent,
-            cg_pipeline_report_raw = cg_pipeline_raw.cg_pipeline_report,
-            cg_pipeline_docker = cg_pipeline_raw.cg_pipeline_docker,
-            est_coverage_raw = cg_pipeline_raw.est_coverage,
-            cg_pipeline_report_clean = cg_pipeline_clean.cg_pipeline_report,
-            est_coverage_clean = cg_pipeline_clean.est_coverage,
+            # cg_pipeline_report_raw = cg_pipeline_raw.cg_pipeline_report,
+            # cg_pipeline_docker = cg_pipeline_raw.cg_pipeline_docker,
+            # est_coverage_raw = cg_pipeline_raw.est_coverage,
+            # cg_pipeline_report_clean = cg_pipeline_clean.cg_pipeline_report,
+            # est_coverage_clean = cg_pipeline_clean.est_coverage,
             gambit_report = gambit.gambit_report_file,
             gambit_predicted_taxon = gambit.gambit_predicted_taxon,
             gambit_predicted_taxon_rank = gambit.gambit_predicted_taxon_rank,
