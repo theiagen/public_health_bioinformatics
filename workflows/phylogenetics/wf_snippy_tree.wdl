@@ -6,7 +6,7 @@ import "../../tasks/phylogenetic_inference/task_iqtree2.wdl" as iqtree2_task
 import "../../tasks/phylogenetic_inference/task_snp_dists.wdl" as snp_dists_task
 import "../../tasks/phylogenetic_inference/task_reorder_matrix.wdl" as reorder_matrix_task
 import "../../tasks/phylogenetic_inference/task_gubbins.wdl" as gubbins_task
-import "../../tasks/utilities/task_summarize_data.wdl" as data_summary
+import "../../tasks/utilities/file_handling/task_summarize_data.wdl" as data_summary
 import "../../tasks/task_versioning.wdl" as versioning
 
 workflow snippy_tree_wf {

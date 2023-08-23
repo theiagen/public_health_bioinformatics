@@ -1,6 +1,6 @@
 version 1.0
 
-import "../../tasks/utilities/task_file_handling.wdl" as file_handling
+import "../../tasks/utilities/file_handling/task_file_handling.wdl" as file_handling
 import "../../tasks/utilities/task_augur_utilities.wdl" as augur_utils
 
 import "../../tasks/phylogenetic_inference/augur/task_augur_align.wdl" as align_task

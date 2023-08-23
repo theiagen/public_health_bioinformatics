@@ -1,6 +1,6 @@
 version 1.0
 
-import "../../../tasks/utilities/task_terra_2_bq.wdl" as terra_2_bq_task
+import "../../../tasks/utilities/data_import/task_terra_2_bq.wdl" as terra_2_bq_task
 
 workflow terra_2_bq {
     input {
