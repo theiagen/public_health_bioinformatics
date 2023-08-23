@@ -212,7 +212,8 @@ task tbprofiler_output_parsing {
 
     # genes that have positions with special consideration
     SPECIAL_POSITIONS = {"rrl": [[2003, 2367], [2449, 3056]],
-                         "rpoB": [426, 452]
+                         "rpoB": [426, 452],
+                         "rss": [1401, 1402, 1484]
                         }
 
     LOW_DEPTH_OF_COVERAGE_LIST = []
@@ -284,7 +285,12 @@ task tbprofiler_output_parsing {
               return "S"
 
       elif gene not in GENE_LIST_OPTION_1 or gene not in GENE_LIST_OPTION_2: # NOT AN EXPERT RULE: 3.2
-        if substitution_type != "synonymous_variant" or "upstream_gene_variant" in substitution_type:
+        if gene == "rrs": # apply rule 3.2.1
+          if position_nt in SPECIAL_POSITIONS[gene]:
+            return "Unoexpert"
+          else:
+            return "Snoexpert" if interpretation_destination == "MDL" else "Unoexpert"
+        elif substitution_type != "synonymous_variant" or "upstream_gene_variant" in substitution_type:
           return "Snoexpert" if interpretation_destination == "MDL" else "Unoexpert"
         else:
           return "Snoexpert"
@@ -410,7 +416,7 @@ task tbprofiler_output_parsing {
       elif (annotation == "Assoc w R - interim") or (annotation == "Uncertain significance"):
         return "The detected genetic determinant(s) have uncertain significance. Resistance to {} cannot be ruled out".format(drug)
       else: # "Not assoc w R" and "Not assoc w R - Interim" and anything else
-        return "No genetic determinants associated with resistance to {} detected".format(drug)
+        return "No mutations associated with resistance to {} detected".format(drug)
 
     def parse_json_resistance(json_file, destination):
       """
@@ -798,7 +804,7 @@ task tbprofiler_output_parsing {
         if drug_name in resistance_annotation.keys(): 
           df_lims[antimicrobial_code] = annotation_to_LIMS(resistance_annotation[drug_name], drug_name)
         else: # the drug is not in the results file
-          df_lims[antimicrobial_code] = "No genetic determinants associated with resistance to {} detected".format(drug_name)
+          df_lims[antimicrobial_code] = "No mutations associated with resistance to {} detected".format(drug_name)
 
         # iterate through the genes that are associated with resistance to each drug
         for gene_name, gene_column_code in genes.items():
@@ -807,7 +813,7 @@ task tbprofiler_output_parsing {
             # put the formatted mutation as the content for the column
             df_lims[gene_column_code] = mutations[gene_name]
             if gene_name == "rpoB": # rule 5.2.1.2
-              if df_lims[antimicrobial_code][0] == "No genetic determinants associated with resistance to {} detected".format(drug_name):
+              if df_lims[antimicrobial_code][0] == "No mutations associated with resistance to {} detected".format(drug_name):
                 # if any mutations are present
                 if len(mutations) > 0: 
                   non_synomynous_count = 0
@@ -820,18 +826,18 @@ task tbprofiler_output_parsing {
                       non_synomynous_count += 1 
                   # otherwise, the only synonymous mutations were identified in rpoB RRDR
                   if non_synomynous_count == 0: 
-                    df_lims[antimicrobial_code] = "No genetic determinants associated with resistance to rifampin detected. The detected synonymous mutation(s) do not confer resistance but may result in false-resistance in PCR-based assays targeting the rpoB RRDR."
+                    df_lims[antimicrobial_code] = "No mutations associated with resistance to rifampin detected. The detected synonymous mutation(s) do not confer resistance but may result in false-resistance in PCR-based assays targeting the rpoB RRDR."
             
             if gene_name == "rrl": # Rule 5.2.2
               # do not report mutations for rrl
               df_lims[gene_column_code] = "" 
               
             # if the mutations detected were only "S", 
-            if df_lims[antimicrobial_code][0] == "No genetic determinants associated with resistance to {} detected".format(drug_name): 
+            if df_lims[antimicrobial_code][0] == "No mutations associated with resistance to {} detected".format(drug_name): 
               df_lims[gene_column_code] = "No high confidence mutations detected"
           else: # the gene is not in the mutations list but has decent coverage
             if float(GENE_COVERAGE_DICT[gene_name]) < ~{coverage_threshold}: 
-              df_lims[gene_column_code] = "Insufficient Coverage"
+              df_lims[gene_column_code] = "No sequence"
             else:
               df_lims[gene_column_code] = "No mutations detected"
 
