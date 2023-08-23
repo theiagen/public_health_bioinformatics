@@ -73,8 +73,7 @@ task dragonflye {
 
     # rename final output file to have .fasta ending instead of .fa
     mv dragonflye/contigs.fa ~{samplename}.fasta
-
-    mv dragonflye/contigs.gfa ~{samplename}_contigs.gfa
+    mv dragonflye/*.gfa ~{samplename}_contigs.gfa
   >>>
   output {
     File assembly_fasta = "~{samplename}.fasta"
