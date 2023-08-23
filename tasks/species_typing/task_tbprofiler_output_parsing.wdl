@@ -321,13 +321,20 @@ task tbprofiler_output_parsing {
       with open(json_file) as js_fh:
         results_json = json.load(js_fh)
         if results_json["main_lin"] == "":
-          return "No main lineage could be identified"
+          # if 90% of genes have coverage above threshold:
+            # return "DNA of Mycobacterium tuberculosis complex detected"
+          # else:
+            # return "DNA of Mycobacterium tuberculosis complex NOT detected"
         elif "La1" in results_json["main_lin"]:
           return "DNA of M. tuberculosis complex detected (M. bovis)"
         elif "lineage" in results_json["main_lin"]:
-          return "DNA of M. tuberculosis complex detected (M. tb)"
+          return "DNA of Mycobacterium tuberculosis species detected"
+        elif "BCG" in results_json["main_lin"]:
+          return "DNA of Mycobacterium bovis BCG detected"
+        elif "bovis" in results_json["main_lin"]:
+          return "DNA of non-BCG Mycobacterium bovis detected"
         else:
-          return "DNA of M. tuberculosis complex detected (not M. bovis and not M. tb)"
+          return "DNA of Mycobacterium tuberculosis complex detected (not M. bovis and not M. tb)"
     
     def get_lineage_and_ID_Looker(json_file):
       """
