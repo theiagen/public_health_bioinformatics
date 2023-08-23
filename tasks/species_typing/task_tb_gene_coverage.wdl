@@ -26,8 +26,6 @@ task tb_gene_coverage {
     print(CHR)
 
     coverage_file = open("~{samplename}.percent_gene_coverage.tsv", "w")
-    coverage_file.write("#NOTE: THE VALUES BELOW ASSUME TBPROFILER (H37Rv) REFERENCE GENOME" + "\n")
-    coverage_file.write("Gene\tPercent_Coverage" + "\n")
 
     with open("tbdb.bed", "r") as bedfile_fh:
       

@@ -21,9 +21,12 @@ task tbprofiler_output_parsing {
     ## Lookup Data Structures - GLOBAL VARIABLES ##
 
     # gene coverage as a dictionary
-    GENE_COVERAGE_DICT = pd.read_csv("~{gene_coverage}", delimiter="\t", skip_blank_lines=True).to_dict()
-    GENE_COVERAGE_DICT = GENE_COVERAGE_DICT["#NOTE: THE VALUES BELOW ASSUME TBPROFILER (H37Rv) REFERENCE GENOME"] # skip first line
+    GENE_COVERAGE_DICT = pd.read_csv("~{gene_coverage}", header=None, delimiter="\t", skip_blank_lines=True, index_col=0, squeeze=True).to_dict()
+    GENE_COVERAGE_DICT["Rv0678"] = GENE_COVERAGE_DICT["mmpR5"]
 
+    # calculate number of genes >= coverage threshold
+    NUM_GENES_AT_COVERAGE_THRESHOLD = sum(int(value) >= ~{coverage_threshold} for value in GENE_COVERAGE_DICT.values())
+    print(NUM_GENES_AT_COVERAGE_THRESHOLD)
     # lookup dictionary - antimicrobial code to drug name
     ANTIMICROBIAL_CODE_TO_DRUG_NAME = {"M_DST_B01_INH": "isoniazid", 
                           "M_DST_C01_ETO": "ethionamide",
@@ -89,51 +92,65 @@ task tbprofiler_output_parsing {
     # lookup dictionary - gene to antimicrobial drug name, including genes in watchlist
     # (https://github.com/jodyphelan/tbdb/blob/master/tbdb.csv)
     # (https://github.com/jodyphelan/tbdb/blob/master/tbdb.watchlist.csv)
-    GENE_TO_ANTIMICROBIAL_DRUG_NAME = {"ahpC":["isoniazid"],
-                                        "ald":["cycloserine"],
-                                        "alr": ["cycloserine"],
-                                        "atpE": ["bedaquiline"],
-                                        "ddn": ["delamanid"],
-                                        "ddn": ["delamanid"],
-                                        "eis": ["amikacin", "kanamycin"],
-                                        "embA": ["ethambutol"],
-                                        "embB": ["ethambutol"],
-                                        "embC": ["ethambutol"],
-                                        "embR": ["ethambutol"],
-                                        "ethA": ["ethionamide"],
-                                        "ethR": ["ethionamide"],
-                                        "fabG1": ["ethionamide", "isoniazid"],
-                                        "fbiA": ["delamanid"],
-                                        "fbiB": ["delamanid"],
-                                        "fbiC": ["delamanid"],
-                                        "fbiD": ["delamanid"],
-                                        "fgd1": ["delamanid"],
-                                        "fgd1": ["delamanid"],
-                                        "folC": ["para-aminosalicylic_acid"],
-                                        "gid": ["streptomycin"],
-                                        "gyrA": ["ciprofloxacin", "fluoroquinolones", "levofloxacin", "moxifloxacin", "ofloxacin"],
-                                        "gyrB": ["moxifloxacin","ciprofloxacin","fluoroquinolones", "levofloxacin", "ofloxacin"],
-                                        "inhA": ["ethionamide", "isoniazid"],
-                                        "kasA": ["isoniazid"],
-                                        "katG": ["isoniazid"],
-                                        "mshA": ["ethionamide"],
-                                        "panD": ["pyrazinamide"],
-                                        "pepQ": ["bedaquiline", "clofazimine"],
-                                        "pncA": ["pyrazinamide"],
-                                        "ribD": ["para-aminosalicylic_acid"],
-                                        "rplC": ["linezolid"],
-                                        "rpoA": ["rifampicin"],
-                                        "rpoB": ["rifampicin"],
-                                        "rpoC": ["rifampicin"],
-                                        "rpsA": ["pyrazinamide"],
-                                        "rpsL": ["streptomycin"],
-                                        "rrl": ["linezolid"],
-                                        "rrs": ["streptomycin", "amikacin", "aminoglycosides", "capreomycin", "kanamycin"],
-                                        "Rv0678": ["bedaquiline", "clofazimine"],
-                                        "thyA": ["para-aminosalicylic_acid"],
-                                        "thyX": ["para-aminosalicylic_acid"],
-                                        "tlyA": ["capreomycin"],
-                                        "ubiA": ["ethambutol"]
+    GENE_TO_ANTIMICROBIAL_DRUG_NAME = {"gyrB": ["fluoroquinolones", "moxifloxacin", "levofloxacin", "ciprofloxacin", "ofloxacin"],
+                                      "gyrA": ["fluoroquinolones", "moxifloxacin", "levofloxacin", "ciprofloxacin", "ofloxacin"],
+                                      "fgd1": ["delamanid"],
+                                      "mshA": ["ethionamide", "isoniazid"],
+                                      "ccsA": ["capreomycin", "amikacin"],
+                                      "rpoB": ["rifampicin"],
+                                      "rpoC": ["rifampicin"],
+                                      "mmpL5": ["clofazimine", "bedaquiline"],
+                                      "mmpS5": ["clofazimine", "bedaquiline"],
+                                      "mmpR5": ["clofazimine", "bedaquiline"],
+                                      "Rv0678": ["clofazimine", "bedaquiline"],
+                                      "rpsL": ["streptomycin"],
+                                      "rplC": ["linezolid"],
+                                      "fbiC": ["delamanid"],
+                                      "Rv1258c": ["streptomycin", "pyrazinamide", "isoniazid"],
+                                      "embR": ["ethambutol"],
+                                      "atpE": ["bedaquiline"],
+                                      "rrs": ["linezolid", "kanamycin", "capreomycin", "amikacin", "aminoglycosides"],
+                                      "rrl": ["linezolid"],
+                                      "fabG1": ["ethionamide", "isoniazid"],
+                                      "inhA": ["ethionamide", "isoniazid"],
+                                      "rpsA": ["pyrazinamide"],
+                                      "tlyA": ["capreomycin"],
+                                      "ndh": ["ethionamide", "isoniazid"],
+                                      "katG": ["isoniazid"],
+                                      "PPE35": ["pyrazinamide"],
+                                      "Rv1979c": ["clofazimine", "bedaquiline"],
+                                      "pncA": ["pyrazinamide"],
+                                      "kasA": ["isoniazid"],
+                                      "eis": ["kanamycin", "amikacin"],
+                                      "ahpC": ["isoniazid"],
+                                      "folC": ["para-aminosalicylic_acid"],
+                                      "pepQ": ["clofazimine", "bedaquiline"],
+                                      "ribD": ["para-aminosalicylic_acid"],
+                                      "Rv2752c": ["rifampicin", "isoniazid"],
+                                      "thyX": ["para-aminosalicylic_acid"],
+                                      "thyA": ["para-aminosalicylic_acid"],
+                                      "ald": ["cycloserine"],
+                                      "fbiD": ["delamanid"],
+                                      "Rv3083": ["ethionamide"],
+                                      "fprA": ["capreomycin", "amikacin"],
+                                      "whiB7": ["streptomycin", "kanamycin", "amikacin"],
+                                      "Rv3236c": ["pyrazinamide"],
+                                      "fbiA": ["delamanid"],
+                                      "fbiB": ["delamanid"],
+                                      "alr": ["cycloserine"],
+                                      "rpoA": ["rifampicin"],
+                                      "ddn": ["delamanid"],
+                                      "clpC1": ["pyrazinamide"],
+                                      "panD": ["pyrazinamide"],
+                                      "embC": ["ethambutol"],
+                                      "embA": ["ethambutol"],
+                                      "embB": ["ethambutol"],
+                                      "aftB": ["capreomycin", "amikacin"],
+                                      "ubiA": ["ethambutol"],
+                                      "ethA": ["ethionamide"],
+                                      "ethR": ["ethionamide"],
+                                      "whiB6": ["streptomycin", "capreomycin", "amikacin"],
+                                      "gid": ["streptomycin"]
                          }
     
     # lookup dictionary - antimicrobial drug name to gene name  (https://github.com/jodyphelan/tbdb/blob/master/tbdb.csv)
@@ -167,21 +184,65 @@ task tbprofiler_output_parsing {
                   }
                   
     # lookup dictionary - gene to locus tag (https://github.com/jodyphelan/TBProfiler/blob/master/db/tbdb.bed)
-    GENE_TO_LOCUS_TAG = {"ahpC":"Rv2428", "ald":"Rv2780", "alr": "Rv3423c",
-                          "ddn": "Rv3547", "eis": "Rv2416c", "embA": "Rv3794",
-                          "embB": "Rv3795", "embC": "Rv3793", "embR": "Rv1267c",
-                          "ethA": "Rv3854c", "ethR": "Rv3855", "fabG1": "Rv1483",
-                          "fbiA": "Rv3261", "fgd1": "Rv0407", "folC": "Rv2447c",
-                          "gid": "Rv3919c", "gyrA": "Rv0006", "gyrB": "Rv0005",
-                          "inhA": "Rv1484","kasA": "Rv2245", "katG": "Rv1908c", 
-                          "panD": "Rv3601c", "pncA": "Rv2043c", "ribD": "Rv2671",
-                          "rplC": "Rv0701", "rpoB": "Rv0667", "rpoC": "Rv0668", 
-                          "rpsA": "Rv1630", "rpsL": "Rv0682", "rrl": "EBG00000313339", 
-                          "rrs": "EBG00000313325", "Rv0678": "Rv0678", "thyA": "Rv2764c",
-                          "thyX": "Rv2754c", "tlyA": "Rv1694", "rpoA": "Rv3457c",
-                          "fgd1": "Rv0407", "fbiB": "Rv3262", "fbiC": "Rv1173",
-                          "ddn": "Rv3547", "ubiA": "Rv3806c", "atpE": "Rv1305",
-                          "mshA": "Rv0486", "pepQ": "Rv2535c", "fbiD": "Rv2983"
+    GENE_TO_LOCUS_TAG = {"gyrB": "Rv0005",
+                          "gyrA": "Rv0006",
+                          "fgd1": "Rv0407",
+                          "mshA": "Rv0486",
+                          "ccsA": "Rv0529",
+                          "rpoB": "Rv0667",
+                          "rpoC": "Rv0668",
+                          "mmpL5": "Rv0676c",
+                          "mmpS5": "Rv0677c",
+                          "mmpR5": "Rv0678",
+                          "Rv0678" : "Rv0678",
+                          "rpsL": "Rv0682",
+                          "rplC": "Rv0701",
+                          "fbiC": "Rv1173",
+                          "Rv1258c": "Rv1258c",
+                          "embR": "Rv1267c",
+                          "atpE": "Rv1305",
+                          "rrs": "EBG00000313325",
+                          "rrl": "EBG00000313339",
+                          "fabG1": "Rv1483",
+                          "inhA": "Rv1484",
+                          "rpsA": "Rv1630",
+                          "tlyA": "Rv1694",
+                          "ndh": "Rv1854c",
+                          "katG": "Rv1908c",
+                          "PPE35": "Rv1918c",
+                          "Rv1979c": "Rv1979c",
+                          "pncA": "Rv2043c",
+                          "kasA": "Rv2245",
+                          "eis": "Rv2416c",
+                          "ahpC": "Rv2428",
+                          "folC": "Rv2447c",
+                          "pepQ": "Rv2535c",
+                          "ribD": "Rv2671",
+                          "Rv2752c": "Rv2752c",
+                          "thyX": "Rv2754c",
+                          "thyA": "Rv2764c",
+                          "ald": "Rv2780",
+                          "fbiD": "Rv2983",
+                          "Rv3083": "Rv3083",
+                          "fprA": "Rv3106",
+                          "whiB7": "Rv3197A",
+                          "Rv3236c": "Rv3236c",
+                          "fbiA": "Rv3261",
+                          "fbiB": "Rv3262",
+                          "alr": "Rv3423c",
+                          "rpoA": "Rv3457c",
+                          "ddn": "Rv3547",
+                          "clpC1": "Rv3596c",
+                          "panD": "Rv3601c",
+                          "embC": "Rv3793",
+                          "embA": "Rv3794",
+                          "embB": "Rv3795",
+                          "aftB": "Rv3805c",
+                          "ubiA": "Rv3806c",
+                          "ethA": "Rv3854c",
+                          "ethR": "Rv3855",
+                          "whiB6": "Rv3862c",
+                          "gid": "Rv3919c"
                          }
 
     GENE_LIST_OPTION_1 = ["Rv0678", "atpE", "pepQ", "mmpL5", "mmpS5", "rrl", "rplC"] # Rv0678 is mmpR
@@ -213,7 +274,7 @@ task tbprofiler_output_parsing {
     # genes that have positions with special consideration
     SPECIAL_POSITIONS = {"rrl": [[2003, 2367], [2449, 3056]],
                          "rpoB": [426, 452],
-                         "rss": [1401, 1402, 1484]
+                         "rrs": [1401, 1402, 1484]
                         }
 
     LOW_DEPTH_OF_COVERAGE_LIST = []
@@ -325,6 +386,10 @@ task tbprofiler_output_parsing {
             # return "DNA of Mycobacterium tuberculosis complex detected"
           # else:
             # return "DNA of Mycobacterium tuberculosis complex NOT detected"
+          if NUM_GENES_AT_COVERAGE_THRESHOLD >= 0.9*len(GENE_COVERAGE_DICT):
+            return "DNA of Mycobacterium tuberculosis complex detected"
+          else:
+            return "DNA of Mycobacterium tuberculosis complex NOT detected"
         elif "La1" in results_json["main_lin"]:
           return "DNA of M. tuberculosis complex detected (M. bovis)"
         elif "lineage" in results_json["main_lin"]:
@@ -917,8 +982,6 @@ task tbprofiler_output_parsing {
       df_coverage = pd.DataFrame(columns=["Gene", "Percent_Coverage","Warning"])
       
       for gene, percent_coverage in GENE_COVERAGE_DICT.items():
-        if gene == "Gene":
-          continue
         warning = ""
         # sometimes no mutations were identified for a given gene, in those cases, ignore them
         # and save them to stdout
