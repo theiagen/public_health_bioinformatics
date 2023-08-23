@@ -1,8 +1,8 @@
 version 1.0
 
-import "../../../tasks/utilities/task_czgenepi_wrangling.wdl" as czgenepi_wrangling_task
-import "../../../tasks/utilities/task_download_terra_table.wdl" as download_table
-import "../../../tasks/task_versioning.wdl" as versioning
+import "../../tasks/utilities/task_czgenepi_wrangling.wdl" as czgenepi_wrangling_task
+import "../../tasks/utilities/task_download_terra_table.wdl" as download_table
+import "../../tasks/task_versioning.wdl" as versioning
 
 workflow czgenepi_prep {
   input {
