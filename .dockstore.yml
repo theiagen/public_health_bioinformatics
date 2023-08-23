@@ -220,6 +220,11 @@ workflows:
    primaryDescriptorPath: /workflows/utilities/wf_theiavalidate.wdl
    testParameterFiles:
     - empty.json
+ - name: Terra_2_GISAID_PHB
+   subclass: WDL
+   primaryDescriptorPath: /workflows/submission/wf_terra_2_gisaid.wdl
+   testParameterFiles:
+    - empty.json
  - name: Usher_PHB
    subclass: WDL
    primaryDescriptorPath: /workflows/phylogenetics/wf_usher.wdl
