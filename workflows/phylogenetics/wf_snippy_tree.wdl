@@ -7,7 +7,7 @@ import "../../tasks/phylogenetic_inference/task_snippy_core.wdl" as snippy_core_
 import "../../tasks/phylogenetic_inference/task_snp_dists.wdl" as snp_dists_task
 import "../../tasks/phylogenetic_inference/task_snp_sites.wdl" as snp_sites_task
 import "../../tasks/task_versioning.wdl" as versioning
-import "../../tasks/utilities/task_summarize_data.wdl" as data_summary
+import "../../tasks/utilities/data_handling/task_summarize_data.wdl" as data_summary
 
 workflow snippy_tree_wf {
   meta {

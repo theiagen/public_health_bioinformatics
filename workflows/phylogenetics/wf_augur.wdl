@@ -13,8 +13,8 @@ import "../../tasks/phylogenetic_inference/task_snp_dists.wdl" as snp_dists_task
 
 import "../../tasks/task_versioning.wdl" as versioning
 
+import "../../tasks/utilities/file_handling/task_cat_files.wdl" as file_handling
 import "../../tasks/utilities/task_augur_utilities.wdl" as augur_utils
-import "../../tasks/utilities/task_file_handling.wdl" as file_handling
 
 
 workflow augur {

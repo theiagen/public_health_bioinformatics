@@ -12,7 +12,7 @@ import "../../tasks/quality_control/comparison/task_qc_check_phb.wdl" as qc_chec
 import "../../tasks/species_typing/multi/task_ts_mlst.wdl" as ts_mlst_task
 import "../../tasks/task_versioning.wdl" as versioning
 import "../../tasks/taxon_id/task_gambit.wdl" as gambit_task
-import "../../tasks/utilities/task_broad_terra_tools.wdl" as terra_tools
+import "../../tasks/utilities/data_export/task_broad_terra_tools.wdl" as terra_tools
 import "../utilities/wf_merlin_magic.wdl" as merlin_magic_workflow
 
 workflow theiaprok_fasta {

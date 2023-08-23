@@ -1,6 +1,6 @@
 version 1.0
 
-import "../../tasks/phylogenetic_inference/task_lyveset.wdl" as lyveset
+import "../../tasks/phylogenetic_inference/task_lyveset.wdl" as lyveset_task
 import "../../tasks/task_versioning.wdl" as versioning
 
 workflow lyveset_workflow {
@@ -10,7 +10,7 @@ workflow lyveset_workflow {
     String dataset_name
     File reference_genome
   }
-  call lyveset.lyveset {
+  call lyveset_task.lyveset {
     input:
       read1 = read1,
       read2 = read2,

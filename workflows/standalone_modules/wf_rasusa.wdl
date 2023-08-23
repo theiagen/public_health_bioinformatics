@@ -1,7 +1,7 @@
 version 1.0
 
-import "../../tasks/utilities/task_rasusa.wdl" as rasusa
 import "../../tasks/task_versioning.wdl" as versioning
+import "../../tasks/utilities/task_rasusa.wdl" as rasusa
 
 workflow rasusa_workflow {
   input {

@@ -5,7 +5,7 @@ import "../../tasks/phylogenetic_inference/task_pirate.wdl" as pirate_task
 import "../../tasks/phylogenetic_inference/task_reorder_matrix.wdl" as reorder_matrix
 import "../../tasks/phylogenetic_inference/task_snp_dists.wdl" as snp_dists
 import "../../tasks/task_versioning.wdl" as versioning
-import "../../tasks/utilities/task_summarize_data.wdl" as data_summary
+import "../../tasks/utilities/data_handling/task_summarize_data.wdl" as data_summary
 
 
 workflow core_gene_snp_workflow {

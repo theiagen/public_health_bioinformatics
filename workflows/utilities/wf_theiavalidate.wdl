@@ -1,7 +1,8 @@
 version 1.0
 
-import "../../tasks/utilities/task_validate.wdl" as validate
 import "../../tasks/task_versioning.wdl" as versioning
+import "../../tasks/utilities/data_export/task_export_two_tsvs.wdl" as export
+import "../../tasks/utilities/data_handling/task_validate.wdl" as validate_task
 
 workflow theiavalidate {
   input {
@@ -21,7 +22,7 @@ workflow theiavalidate {
     # criteria to test (optional)
     File? validation_criteria_tsv
   }
-  call validate.export_two_tsvs {
+  call export.export_two_tsvs {
     input:
       datatable1 = table1,
       terra_workspace1 = terra_workspace1_name,
@@ -35,7 +36,7 @@ workflow theiavalidate {
   }
   if (export_two_tsvs.same_table_length) {
     String validation_attempted = "Validation attempted"
-    call validate.compare_two_tsvs{
+    call validate_task.validate{
       input:
         datatable1 = table1,
         datatable1_tsv = export_two_tsvs.datatable1_tsv,
@@ -52,10 +53,10 @@ workflow theiavalidate {
   output {
     String theiavalidate_version = version_capture.phb_version
     String theiavalidate_date = version_capture.date
-    File? validation_report = compare_two_tsvs.pdf_report
-    File? validation_differences_table = compare_two_tsvs.excel_report
-    File? input_table1 = compare_two_tsvs.input_table1
-    File? input_table2 = compare_two_tsvs.input_table2
+    File? validation_report = validate.pdf_report
+    File? validation_differences_table = validate.excel_report
+    File? input_table1 = validate.input_table1
+    File? input_table2 = validate.input_table2
     String validation_status = select_first([validation_failure, validation_attempted])
   }
 }
