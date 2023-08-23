@@ -23,7 +23,7 @@ workflow read_QC_trim_ont {
       read1_name = samplename
   }
   # nanoplot
-  call nanoplot_task.nanoplot {
+  call nanoplot_task.nanoplot as nanoplot_raw {
     input:
       read1 = read1,
       samplename = samplename
@@ -60,6 +60,12 @@ workflow read_QC_trim_ont {
       read1 = nanoq.filtered_read1,
       read1_name = samplename
   }
+  # perform nanoplot again after cleaning for comparison
+  call nanoplot_task.nanoplot as nanoplot_clean {
+    input:
+      read1 = nanoq.filtered_read1,
+      samplename = samplename
+  }
   output {
     # nanoq outputs
     File read1_clean = nanoq.filtered_read1
@@ -74,11 +80,21 @@ workflow read_QC_trim_ont {
     String fastq_scan_version = fastq_scan_clean.version
 
     # nanoplot outputs    
-    File nanoplot_html = nanoplot.nanoplot_html
-    File nanoplot_tsv = nanoplot.nanoplot_tsv
-    String nanoplot_version = nanoplot.nanoplot_version
-    String nanoplot_docker = nanoplot.nanoplot_docker
-    
+    String nanoplot_version = nanoplot_raw.nanoplot_version
+    String nanoplot_docker = nanoplot_raw.nanoplot_docker
+    # nanoplot raw outputs
+    File nanoplot_html_raw = nanoplot_raw.nanoplot_html
+    File nanoplot_tsv_raw = nanoplot_raw.nanoplot_tsv
+    Int num_reads_raw1 = nanoplot_raw.num_reads
+    Float r1_mean_readlength_raw = nanoplot_raw.mean_readlength
+    Float r1_mean_q_raw = nanoplot_raw.mean_q
+    # nanoplot clean outputs
+    File nanoplot_html_clean = nanoplot_clean.nanoplot_html
+    File nanoplot_tsv_clean = nanoplot_clean.nanoplot_tsv
+    Int num_reads_clean1 = nanoplot_clean.num_reads
+    Float r1_mean_readlength_clean = nanoplot_clean.mean_readlength
+    Float r1_mean_q_clean = nanoplot_clean.mean_q
+
     # kmc outputs
     String est_genome_size = kmc.est_genome_size
     File kmc_kmer_stats = kmc.kmer_stats

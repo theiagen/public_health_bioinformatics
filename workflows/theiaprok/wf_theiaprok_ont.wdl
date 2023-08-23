@@ -172,10 +172,10 @@ workflow theiaprok_ont {
             gambit_predicted_taxon = gambit.gambit_predicted_taxon,
             num_reads_raw1 = read_QC_trim.number_raw_reads,
             num_reads_clean1 = read_QC_trim.number_clean_reads,
-            r1_mean_q_raw = cg_pipeline_raw.r1_mean_q,
-            r1_mean_readlength_raw = cg_pipeline_raw.r1_mean_readlength,
-            r1_mean_q_clean = cg_pipeline_clean.r1_mean_q,
-            r1_mean_readlength_clean = cg_pipeline_clean.r1_mean_readlength,
+            r1_mean_q_raw = read_QC_trim.r1_mean_q_raw,
+            r1_mean_readlength_raw = read_QC_trim.r1_mean_readlength_raw,
+            r1_mean_q_clean = read_QC_trim.r1_mean_q_raw,
+            r1_mean_readlength_clean = read_QC_trim.r1_mean_readlength_raw,
             est_coverage_raw = cg_pipeline_raw.est_coverage,
             est_coverage_clean = cg_pipeline_clean.est_coverage,
             assembly_length = quast.genome_length,
@@ -217,11 +217,11 @@ workflow theiaprok_ont {
             num_reads_raw1 = read_QC_trim.number_raw_reads,
             fastq_scan_version = read_QC_trim.fastq_scan_version,
             num_reads_clean1 = read_QC_trim.number_clean_reads,
-            r1_mean_q_raw = cg_pipeline_raw.r1_mean_q, 
-            r1_mean_readlength_raw = cg_pipeline_raw.r1_mean_readlength,
+            r1_mean_q_raw = read_QC_trim.r1_mean_q_raw, 
+            r1_mean_readlength_raw = read_QC_trim.r1_mean_readlength_raw,
             nanoq_version = read_QC_trim.nanoq_version,
-            nanoplot_html = read_QC_trim.nanoplot_html,
-            nanoplot_tsv = read_QC_trim.nanoplot_tsv,
+            nanoplot_html = read_QC_trim.nanoplot_html_raw,
+            nanoplot_tsv = read_QC_trim.nanoplot_tsv_raw,
             nanoplot_docker = read_QC_trim.nanoplot_docker,
             nanoplot_version = read_QC_trim.nanoplot_version,
             kmc_est_genome_size = read_QC_trim.est_genome_size,
@@ -474,9 +474,19 @@ workflow theiaprok_ont {
     Int? num_reads_clean1 = read_QC_trim.number_clean_reads
     String? fastq_scan_version = read_QC_trim.fastq_scan_version
     String? nanoq_version = read_QC_trim.nanoq_version
-    # Read QC - nanoplot outputs
-    File? nanoplot_html = read_QC_trim.nanoplot_html
-    File? nanoplot_tsv = read_QC_trim.nanoplot_tsv
+    # Read QC - nanoplot raw outputs
+    File? nanoplot_html_raw = read_QC_trim.nanoplot_html_raw
+    File? nanoplot_tsv_raw = read_QC_trim.nanoplot_tsv_raw
+    Int? num_reads_raw1_nanoplot = read_QC_trim.num_reads_raw1
+    Float? r1_mean_readlength_raw = read_QC_trim.r1_mean_readlength_raw
+    Float? r1_mean_q_raw = read_QC_trim.r1_mean_q_raw
+    # Read QC - nanoplot clean outputs
+    File? nanoplot_html_clean = read_QC_trim.nanoplot_html_clean
+    File? nanoplot_tsv_clean = read_QC_trim.nanoplot_tsv_clean
+    Int? num_reads_clean1_nanoplot = read_QC_trim.num_reads_clean1
+    Float? r1_mean_readlength_clean = read_QC_trim.r1_mean_readlength_clean
+    Float? r1_mean_q_clean = read_QC_trim.r1_mean_q_clean
+
     String? nanoplot_version = read_QC_trim.nanoplot_version
     String? nanoplot_docker = read_QC_trim.nanoplot_docker
     # Read QC - kmc outputs
@@ -489,9 +499,6 @@ workflow theiaprok_ont {
     File? tiptoft_plasmid_replicon_fastq = read_QC_trim.tiptoft_plasmid_replicon_fastq
     String? tiptoft_plasmid_replicon_genes = read_QC_trim.tiptoft_plasmid_replicon_genes
     String? tiptoft_version = read_QC_trim.tiptoft_version
-    # Read QC - cg pipeline outputs
-    Float? r1_mean_q_raw = cg_pipeline_raw.r1_mean_q
-    Float? r1_mean_readlength_raw = cg_pipeline_raw.r1_mean_readlength
     # Assembly - dragonflye outputs
     File? assembly_fasta = dragonflye.assembly_fasta
     String? dragonflye_version = dragonflye.dragonflye_version
@@ -503,11 +510,11 @@ workflow theiaprok_ont {
     Int? n50_value = quast.n50_value
     Float? quast_gc_percent = quast.gc_percent
     # Assembly QC - cg pipeline outputs
-    File? cg_pipeline_report_raw = cg_pipeline_raw.cg_pipeline_report
-    String? cg_pipeline_docker = cg_pipeline_raw.cg_pipeline_docker
-    Float? est_coverage_raw = cg_pipeline_raw.est_coverage
-    File? cg_pipeline_report_clean = cg_pipeline_clean.cg_pipeline_report
-    Float? est_coverage_clean = cg_pipeline_clean.est_coverage
+    # File? cg_pipeline_report_raw = cg_pipeline_raw.cg_pipeline_report
+    # String? cg_pipeline_docker = cg_pipeline_raw.cg_pipeline_docker
+    # Float? est_coverage_raw = cg_pipeline_raw.est_coverage
+    # File? cg_pipeline_report_clean = cg_pipeline_clean.cg_pipeline_report
+    # Float? est_coverage_clean = cg_pipeline_clean.est_coverage
     # Assembly QC - busco outputs
     String? busco_version = busco.busco_version
     String? busco_database = busco.busco_database
