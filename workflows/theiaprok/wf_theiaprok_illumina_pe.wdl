@@ -220,7 +220,7 @@ workflow theiaprok_illumina_pe {
             quast_gc_percent = quast.gc_percent,
             busco_results = busco.busco_results,
             ani_highest_percent = ani.ani_highest_percent,
-            ani_highest_percent_bases_aligned = ani.ani_highest_percent_bases_aligned
+            ani_highest_percent_bases_aligned = ani.ani_highest_percent_bases_aligned,
         }
       }
       call merlin_magic_workflow.merlin_magic {
@@ -300,6 +300,7 @@ workflow theiaprok_illumina_pe {
             ani_output_tsv = ani.ani_output_tsv,
             ani_top_species_match = ani.ani_top_species_match,
             ani_mummer_version = ani.ani_mummer_version,
+            ani_docker = ani.ani_docker,
             kmerfinder_docker = kmerfinder.kmerfinder_docker,
             kmerfinder_results_tsv = kmerfinder.kmerfinder_results_tsv,
             kmerfinder_top_hit = kmerfinder.kmerfinder_top_hit,
@@ -621,6 +622,7 @@ workflow theiaprok_illumina_pe {
     File? ani_output_tsv = ani.ani_output_tsv
     String? ani_top_species_match = ani.ani_top_species_match
     String? ani_mummer_version = ani.ani_mummer_version
+    String? ani_mummer_docker = ani.ani_docker
     # kmerfinder outputs
     String? kmerfinder_docker = kmerfinder.kmerfinder_docker
     File? kmerfinder_results_tsv = kmerfinder.kmerfinder_results_tsv
