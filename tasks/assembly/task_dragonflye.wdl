@@ -73,11 +73,9 @@ task dragonflye {
 
     # rename final output file to have .fasta ending instead of .fa
     mv dragonflye/contigs.fa ~{samplename}.fasta
-    mv dragonflye/*.gfa ~{samplename}_contigs.gfa
   >>>
   output {
     File assembly_fasta = "~{samplename}.fasta"
-    File contigs_gfa = "~{samplename}_contigs.gfa"
     String dragonflye_version = read_string("VERSION")
   }
   runtime {

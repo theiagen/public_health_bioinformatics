@@ -136,7 +136,7 @@ task check_reads {
           else # they provided 0 for estimated_genome_size, nice
             estimated_coverage=0
           fi
-        else # workflow series was not provided or no est genome size was provided; default to fail
+        else # workflow series was not provided; default to fail
           estimated_genome_size=0
           estimated_coverage=0
         fi
@@ -184,7 +184,6 @@ task check_reads_se {
     Int max_genome_size 
     Int min_coverage
     Boolean skip_screen 
-    Boolean skip_mash
     String workflow_series = "theiaprok" # default to theiaprok so we don't have to change those workflows
     String? organism
     Int? expected_genome_size
@@ -236,7 +235,7 @@ task check_reads_se {
       fi
 
       #checks four and five: estimated genome size and coverage
-      if [ "${flag}" == "PASS" ] && [ "~{skip_mash}" == "false" ]; then
+      if [ "${flag}" = "PASS" ]; then
         # estimate genome size if theiaprok AND expected_genome_size was not provided
         if [ "~{workflow_series}" == "theiaprok" ] && [[ -z "~{expected_genome_size}" ]]; then            
           # First Pass; assuming average depth
