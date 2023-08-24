@@ -1,15 +1,11 @@
 version 1.0
 
 import "../../tasks/assembly/task_artic_consensus.wdl" as artic_consensus
-import "../../tasks/quality_control/task_artic_guppyplex.wdl" as artic_guppyplex
 import "../../tasks/quality_control/task_assembly_metrics.wdl" as assembly_metrics
-import "../../tasks/quality_control/task_ncbi_scrub.wdl" as ncbi_scrub
 import "../../tasks/quality_control/task_vadr.wdl" as vadr_task
-import "../../tasks/quality_control/task_fastq_scan.wdl" as fastq_scan
 import "../../tasks/quality_control/task_consensus_qc.wdl" as consensus_qc_task
 import "../../tasks/quality_control/task_screen.wdl" as screen
 import "../../tasks/quality_control/task_nanoplot.wdl" as nanoplot_task
-import "../../tasks/taxon_id/task_kraken2.wdl" as kraken2_task
 import "../../tasks/taxon_id/task_nextclade.wdl" as nextclade_task
 import "../../tasks/species_typing/task_pangolin.wdl" as pangolin
 import "../../tasks/species_typing/task_quasitools.wdl" as quasitools
