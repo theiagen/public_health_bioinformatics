@@ -90,6 +90,7 @@ task export_taxon_tables {
     File? ani_output_tsv
     String? ani_top_species_match 
     String? ani_mummer_version
+    String? ani_docker
     File? amrfinderplus_all_report
     File? amrfinderplus_amr_report
     File? amrfinderplus_stress_report
@@ -583,6 +584,7 @@ task export_taxon_tables {
       "ani_output_tsv": "~{ani_output_tsv}",
       "ani_top_species_match": "~{ani_top_species_match}",
       "ani_mummer_version": "~{ani_mummer_version}",
+      "ani_docker": "~{ani_docker}",
       "resfinder_pheno_table": "~{resfinder_pheno_table}",
       "resfinder_pheno_table_species": "~{resfinder_pheno_table_species}",
       "resfinder_seqs": "~{resfinder_seqs}",
