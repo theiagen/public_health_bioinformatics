@@ -40,6 +40,7 @@ workflow theiaprok_ont {
     String terra_workspace = "NA"
     # read screen parameters
     Boolean skip_screen = false 
+    Boolean skip_mash = true
     Int min_reads = 5000 # reduced from 7472 because less reads are needed to get to higher coverage due to longer read length
     Int min_basepairs = 2241820
     Int min_genome_size = 100000
@@ -65,6 +66,7 @@ workflow theiaprok_ont {
       max_genome_size = max_genome_size,
       min_coverage = min_coverage,
       skip_screen = skip_screen,
+      skip_mash = skip_mash,
       expected_genome_size = genome_size
   }
   if (raw_check_reads.read_screen == "PASS") {
@@ -83,6 +85,7 @@ workflow theiaprok_ont {
         max_genome_size = max_genome_size,
         min_coverage = min_coverage,
         skip_screen = skip_screen,
+        skip_mash = skip_mash,
         expected_genome_size = genome_size
     }
     if (clean_check_reads.read_screen == "PASS") {
@@ -230,6 +233,7 @@ workflow theiaprok_ont {
             tiptoft_plasmid_replicon_genes = read_QC_trim.tiptoft_plasmid_replicon_genes,
             tiptoft_version = read_QC_trim.tiptoft_version,
             assembly_fasta = dragonflye.assembly_fasta,
+            contigs_gfa = dragonflye.contigs_gfa,
             dragonflye_version = dragonflye.dragonflye_version,
             quast_report = quast.quast_report,
             quast_version = quast.version,
@@ -491,6 +495,7 @@ workflow theiaprok_ont {
     Float? r1_mean_readlength_raw = cg_pipeline_raw.r1_mean_readlength
     # Assembly - dragonflye outputs
     File? assembly_fasta = dragonflye.assembly_fasta
+    File? contigs_gfa = dragonflye.contigs_gfa
     String? dragonflye_version = dragonflye.dragonflye_version
     # Assembly QC - quast outputs
     File? quast_report = quast.quast_report

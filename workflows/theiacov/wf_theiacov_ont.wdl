@@ -47,6 +47,7 @@ workflow theiacov_ont {
     Int max_genome_size = 2673870 # size of Pandoravirus salinus + 200 kb
     Int min_coverage = 10
     Boolean skip_screen = false
+    Boolean skip_mash = false
     # qc check parameters
     File? qc_check_table
   }
@@ -62,6 +63,7 @@ workflow theiacov_ont {
       max_genome_size = max_genome_size,
       min_coverage = min_coverage,
       skip_screen = skip_screen,
+      skip_mash = skip_mash,
       workflow_series = "theiacov",
       organism = organism,
       expected_genome_size = genome_length
@@ -89,6 +91,7 @@ workflow theiacov_ont {
         max_genome_size = max_genome_size,
         min_coverage = min_coverage,
         skip_screen = skip_screen,
+        skip_mash = skip_mash,
         workflow_series = "theiacov",
         organism = organism,
         expected_genome_size = genome_length
