@@ -5,6 +5,8 @@ task nanoplot {
     File read1 # intended for ONT data only
     String samplename
     Int max_length = 100000
+    Int est_genome_size
+
     Int disk_size = 100
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/nanoplot:1.40.0"
     Int memory = 16
@@ -31,18 +33,23 @@ task nanoplot {
       --maxlength ~{max_length}
 
     # grep read statistics from tsv stats file
-    cat ~{samplename}_NanoStats.txt | grep number_of_reads | cut -f 2 | tee NUMBER_OF_READS
-    cat ~{samplename}_NanoStats.txt | grep median_read_length | cut -f 2 | tee MEDIAN_READ_LENGTH
-    cat ~{samplename}_NanoStats.txt | grep mean_qual | cut -f 2 | tee MEAN_QUAL
+    NUM_READS=$(grep "number_of_reads" ~{samplename}_NanoStats.txt | cut -f 2 | tee NUMBER_OF_READS)
+    MEAN_LENGTH=$(grep "mean_read_length" ~{samplename}_NanoStats.txt | cut -f 2 | tee MEAN_READ_LENGTH)
+    grep "mean_qual" ~{samplename}_NanoStats.txt | cut -f 2 | tee MEAN_QUAL
 
-   
+    # estimate coverage
+    # using math: C = LN / G where L is read length, N is number of reads, and G is estimated genome size 
+    python3 -c "print(round(${MEAN_LENGTH} * ${NUM_READS} / ~{est_genome_size}, 2))" | tee EST_COVERAGE
+
+
   >>>
   output {
     File nanoplot_html = "~{samplename}_NanoPlot-report.html"
     File nanoplot_tsv = "~{samplename}_NanoStats.txt"
     Int num_reads = read_int("NUMBER_OF_READS")
-    Float mean_readlength = read_float("MEDIAN_READ_LENGTH")
+    Float mean_readlength = read_float("MEAN_READ_LENGTH")
     Float mean_q = read_float("MEAN_QUAL")
+    Float est_coverage = read_float("EST_COVERAGE")
     String nanoplot_version = read_string("VERSION")
     String nanoplot_docker = docker
   }

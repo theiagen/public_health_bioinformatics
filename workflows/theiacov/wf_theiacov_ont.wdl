@@ -90,17 +90,6 @@ workflow theiacov_ont {
         expected_genome_size = genome_length
     }
     if (clean_check_reads.read_screen == "PASS") {
-      # nanoplot for basic QC metrics
-      call nanoplot_task.nanoplot as nanoplot_raw {
-        input:
-          read1 = demultiplexed_reads,
-          samplename = samplename
-      }
-      call nanoplot_task.nanoplot as nanoplot_clean {
-        input:
-          read1 = read_qc_trim.read1_clean,
-          samplename = samplename
-      }
       call artic_consensus.consensus {
         input:
           samplename = samplename,
@@ -114,6 +103,19 @@ workflow theiacov_ont {
         input:
           assembly_fasta = consensus.consensus_seq,
           reference_genome = reference_genome
+      }
+      # nanoplot for basic QC metrics
+      call nanoplot_task.nanoplot as nanoplot_raw {
+        input:
+          read1 = demultiplexed_reads,
+          samplename = samplename,
+          est_genome_size = select_first([genome_length, consensus_qc.number_Total])
+      }
+      call nanoplot_task.nanoplot as nanoplot_clean {
+        input:
+          read1 = read_qc_trim.read1_clean,
+          samplename = samplename,
+          est_genome_size = select_first([genome_length, consensus_qc.number_Total])
       }
       call assembly_metrics.stats_n_coverage {
         input:
@@ -269,6 +271,9 @@ workflow theiacov_ont {
     Int? number_Degenerate = consensus_qc.number_Degenerate
     Int? number_Total = consensus_qc.number_Total
     Float? percent_reference_coverage = consensus_qc.percent_reference_coverage
+    # Assembly QC - nanoplot outputs
+    Float? est_coverage_raw = nanoplot_raw.est_coverage
+    Float? est_coverage_clean = nanoplot_clean.est_coverage
     # SC2 specific coverage outputs
     Float? sc2_s_gene_mean_coverage = sc2_gene_coverage.sc2_s_gene_depth
     Float? sc2_s_gene_percent_coverage = sc2_gene_coverage.sc2_s_gene_percent_coverage
