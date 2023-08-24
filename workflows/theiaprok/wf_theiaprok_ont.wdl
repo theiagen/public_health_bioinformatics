@@ -470,8 +470,8 @@ workflow theiaprok_ont {
     String? clean_read_screen = clean_check_reads.read_screen
     # Read QC - fastq_scan and nanoq outputs
     File? read1_clean = read_QC_trim.read1_clean
-    Int? num_reads_raw1 = read_QC_trim.number_raw_reads
-    Int? num_reads_clean1 = read_QC_trim.number_clean_reads
+    Int? fastq_scan_num_reads_raw1 = read_QC_trim.number_raw_reads
+    Int? fastq_scan_num_reads_clean1 = read_QC_trim.number_clean_reads
     String? fastq_scan_version = read_QC_trim.fastq_scan_version
     String? nanoq_version = read_QC_trim.nanoq_version
     # Read QC - nanoplot raw outputs
