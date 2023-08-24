@@ -33,13 +33,14 @@ task nanoplot {
       --maxlength ~{max_length}
 
     # grep read statistics from tsv stats file
-    NUM_READS=$(grep "number_of_reads" ~{samplename}_NanoStats.txt | cut -f 2 | tee NUMBER_OF_READS)
-    MEAN_LENGTH=$(grep "mean_read_length" ~{samplename}_NanoStats.txt | cut -f 2 | tee MEAN_READ_LENGTH)
+    grep "number_of_reads" ~{samplename}_NanoStats.txt | cut -f 2 | tee NUMBER_OF_READS
+    NUM_BASES=$(grep "number_of_bases" ~{samplename}_NanoStats.txt | cut -f 2 | tee NUMBER_OF_BASES)
+    grep "mean_read_length" ~{samplename}_NanoStats.txt | cut -f 2 | tee MEAN_READ_LENGTH
     grep "mean_qual" ~{samplename}_NanoStats.txt | cut -f 2 | tee MEAN_QUAL
 
     # estimate coverage
-    # using math: C = N / G where N is number of reads, and G is estimated genome size 
-    python3 -c "print(round(${NUM_READS} / ~{est_genome_size}, 2))" | tee EST_COVERAGE
+    # using math: C = N / G where N is number of bases, and G is estimated genome size 
+    python3 -c "print(round(${NUM_BASES} / ~{est_genome_size}, 2))" | tee EST_COVERAGE
   >>>
   output {
     File nanoplot_html = "~{samplename}_NanoPlot-report.html"
