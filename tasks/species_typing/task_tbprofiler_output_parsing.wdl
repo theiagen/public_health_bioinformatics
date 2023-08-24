@@ -23,6 +23,7 @@ task tbprofiler_output_parsing {
     # gene coverage as a dictionary
     GENE_COVERAGE_DICT = pd.read_csv("~{gene_coverage}", header=None, delimiter="\t", skip_blank_lines=True, index_col=0, squeeze=True).to_dict()
     GENE_COVERAGE_DICT["Rv0678"] = GENE_COVERAGE_DICT["mmpR5"]
+    GENE_COVERAGE_DICT["Rv2983"] = GENE_COVERAGE_DICT["fbiD"]
 
     # calculate number of genes >= coverage threshold
     NUM_GENES_AT_COVERAGE_THRESHOLD = sum(int(value) >= ~{coverage_threshold} for value in GENE_COVERAGE_DICT.values())
@@ -30,7 +31,7 @@ task tbprofiler_output_parsing {
     # lookup dictionary - antimicrobial code to drug name
     ANTIMICROBIAL_CODE_TO_DRUG_NAME = {"M_DST_B01_INH": "isoniazid", 
                           "M_DST_C01_ETO": "ethionamide",
-                          "M_DST_D01_RIF": "rifampicin", 
+                          "M_DST_D01_RIF": "rifampin", 
                           "M_DST_E01_PZA": "pyrazinamide",
                           "M_DST_F01_EMB": "ethambutol",
                           "M_DST_G01_AMK": "amikacin", 
@@ -44,9 +45,9 @@ task tbprofiler_output_parsing {
                          }
     
     # Lookup list - antimicrobial drug names
-    ANTIMICROBIAL_DRUG_NAME_LIST = ["isoniazid", "ethionamide", "rifampicin", "pyrazinamide", "ethambutol",
-                          "streptomycin", "amikacin", "kanamycin", "capreomycin", "moxifloxacin",
-                          "levofloxacin", "bedaquiline", "clofazimine", "linezolid"
+    ANTIMICROBIAL_DRUG_NAME_LIST = ["amikacin", "bedaquiline", "capreomycin", "clofazimine", "ethambutol",
+                                    "ethionamide", "isoniazid", "kanamycin", "levofloxacin", "linezolid",
+                                    "moxifloxacin", "pyrazinamide", "rifampin", "streptomycin"
                          ]
 
     # lookup dictionary - antimicrobial code to gene names to antimicrobial code column names
@@ -85,72 +86,71 @@ task tbprofiler_output_parsing {
                 }
 
     # lookup list - the genes to be considered for the LIMS report
-    GENES_FOR_LIMS = ["katG", "fabG1", "inhA", "ethA", "rpoB", "pncA", "embA", "embB", "rrs", "eis", 
-                    "tlyA", "gyrA", "gyrB", "Rv0678", "atpE", "pepQ", "mmpL5", "mmpS5", "rrl", "rplC"
+    GENES_FOR_LIMS = ["atpE", "eis", "embA", "embB", "ethA", "fabG1", "gyrA", "gyrB", "inhA", "katG", 
+                      "mmpL5", "mmpS5", "pepQ", "pncA", "rplC", "rpoB", "rrl", "rrs", "Rv0678", "tlyA"
                     ]
 
     # lookup dictionary - gene to antimicrobial drug name, including genes in watchlist
     # (https://github.com/jodyphelan/tbdb/blob/master/tbdb.csv)
     # (https://github.com/jodyphelan/tbdb/blob/master/tbdb.watchlist.csv)
-    GENE_TO_ANTIMICROBIAL_DRUG_NAME = {"gyrB": ["fluoroquinolones", "moxifloxacin", "levofloxacin", "ciprofloxacin", "ofloxacin"],
-                                      "gyrA": ["fluoroquinolones", "moxifloxacin", "levofloxacin", "ciprofloxacin", "ofloxacin"],
-                                      "fgd1": ["delamanid"],
-                                      "mshA": ["ethionamide", "isoniazid"],
-                                      "ccsA": ["capreomycin", "amikacin"],
-                                      "rpoB": ["rifampicin"],
-                                      "rpoC": ["rifampicin"],
-                                      "mmpL5": ["clofazimine", "bedaquiline"],
-                                      "mmpS5": ["clofazimine", "bedaquiline"],
-                                      "mmpR5": ["clofazimine", "bedaquiline"],
-                                      "Rv0678": ["clofazimine", "bedaquiline"],
-                                      "rpsL": ["streptomycin"],
-                                      "rplC": ["linezolid"],
-                                      "fbiC": ["delamanid"],
-                                      "Rv1258c": ["streptomycin", "pyrazinamide", "isoniazid"],
-                                      "embR": ["ethambutol"],
-                                      "atpE": ["bedaquiline"],
-                                      "rrs": ["linezolid", "kanamycin", "capreomycin", "amikacin", "aminoglycosides"],
-                                      "rrl": ["linezolid"],
-                                      "fabG1": ["ethionamide", "isoniazid"],
-                                      "inhA": ["ethionamide", "isoniazid"],
-                                      "rpsA": ["pyrazinamide"],
-                                      "tlyA": ["capreomycin"],
-                                      "ndh": ["ethionamide", "isoniazid"],
-                                      "katG": ["isoniazid"],
-                                      "PPE35": ["pyrazinamide"],
-                                      "Rv1979c": ["clofazimine", "bedaquiline"],
-                                      "pncA": ["pyrazinamide"],
-                                      "kasA": ["isoniazid"],
-                                      "eis": ["kanamycin", "amikacin"],
+    GENE_TO_ANTIMICROBIAL_DRUG_NAME = {"aftB": ["capreomycin", "amikacin"],
                                       "ahpC": ["isoniazid"],
-                                      "folC": ["para-aminosalicylic_acid"],
-                                      "pepQ": ["clofazimine", "bedaquiline"],
-                                      "ribD": ["para-aminosalicylic_acid"],
-                                      "Rv2752c": ["rifampicin", "isoniazid"],
-                                      "thyX": ["para-aminosalicylic_acid"],
-                                      "thyA": ["para-aminosalicylic_acid"],
                                       "ald": ["cycloserine"],
-                                      "fbiD": ["delamanid"],
-                                      "Rv3083": ["ethionamide"],
-                                      "fprA": ["capreomycin", "amikacin"],
-                                      "whiB7": ["streptomycin", "kanamycin", "amikacin"],
-                                      "Rv3236c": ["pyrazinamide"],
-                                      "fbiA": ["delamanid"],
-                                      "fbiB": ["delamanid"],
                                       "alr": ["cycloserine"],
-                                      "rpoA": ["rifampicin"],
-                                      "ddn": ["delamanid"],
+                                      "atpE": ["bedaquiline"],
+                                      "ccsA": ["capreomycin", "amikacin"],
                                       "clpC1": ["pyrazinamide"],
-                                      "panD": ["pyrazinamide"],
-                                      "embC": ["ethambutol"],
+                                      "ddn": ["delamanid"],
+                                      "eis": ["kanamycin", "amikacin"],
                                       "embA": ["ethambutol"],
                                       "embB": ["ethambutol"],
-                                      "aftB": ["capreomycin", "amikacin"],
-                                      "ubiA": ["ethambutol"],
+                                      "embC": ["ethambutol"],
+                                      "embR": ["ethambutol"],
                                       "ethA": ["ethionamide"],
                                       "ethR": ["ethionamide"],
+                                      "fabG1": ["ethionamide", "isoniazid"],
+                                      "fbiA": ["delamanid"],
+                                      "fbiB": ["delamanid"],
+                                      "fbiC": ["delamanid"],
+                                      "Rv2983": ["delamanid"],
+                                      "fgd1": ["delamanid"],
+                                      "folC": ["para-aminosalicylic_acid"],
+                                      "fprA": ["capreomycin", "amikacin"],
+                                      "gid": ["streptomycin"],
+                                      "gyrA": ["fluoroquinolones", "moxifloxacin", "levofloxacin", "ciprofloxacin", "ofloxacin"],
+                                      "gyrB": ["fluoroquinolones", "moxifloxacin", "levofloxacin", "ciprofloxacin", "ofloxacin"],
+                                      "inhA": ["ethionamide", "isoniazid"],
+                                      "kasA": ["isoniazid"],
+                                      "katG": ["isoniazid"],
+                                      "mmpL5": ["clofazimine", "bedaquiline"],
+                                      "mmpS5": ["clofazimine", "bedaquiline"],
+                                      "mshA": ["ethionamide", "isoniazid"],
+                                      "ndh": ["ethionamide", "isoniazid"],
+                                      "panD": ["pyrazinamide"],
+                                      "pepQ": ["clofazimine", "bedaquiline"],
+                                      "pncA": ["pyrazinamide"],
+                                      "PPE35": ["pyrazinamide"],
+                                      "ribD": ["para-aminosalicylic_acid"],
+                                      "rplC": ["linezolid"],
+                                      "rpoA": ["rifampin"],
+                                      "rpoB": ["rifampin"],
+                                      "rpoC": ["rifampin"],
+                                      "rpsA": ["pyrazinamide"],
+                                      "rpsL": ["streptomycin"],
+                                      "rrl": ["linezolid"],
+                                      "rrs": ["linezolid", "kanamycin", "capreomycin", "amikacin", "aminoglycosides"],
+                                      "Rv0678": ["clofazimine", "bedaquiline"],
+                                      "Rv1258c": ["streptomycin", "pyrazinamide", "isoniazid"],
+                                      "Rv1979c": ["clofazimine", "bedaquiline"],
+                                      "Rv2752c": ["rifampin", "isoniazid"],
+                                      "Rv3083": ["ethionamide"],
+                                      "Rv3236c": ["pyrazinamide"],
+                                      "thyA": ["para-aminosalicylic_acid"],
+                                      "thyX": ["para-aminosalicylic_acid"],
+                                      "tlyA": ["capreomycin"],
+                                      "ubiA": ["ethambutol"],
                                       "whiB6": ["streptomycin", "capreomycin", "amikacin"],
-                                      "gid": ["streptomycin"]
+                                      "whiB7": ["streptomycin", "kanamycin", "amikacin"]
                          }
     
     # lookup dictionary - antimicrobial drug name to gene name  (https://github.com/jodyphelan/tbdb/blob/master/tbdb.csv)
@@ -166,87 +166,89 @@ task tbprofiler_output_parsing {
                                         "linezolid": ["rplC", "rrl"],
                                         "moxifloxacin": ["gyrA", "gyrB"],
                                         "pyrazinamide": ["panD", "pncA", "rpsA"], 
-                                        "rifampicin": ["rpoA", "rpoB", "rpoC"], 
+                                        "rifampin": ["rpoA", "rpoB", "rpoC"], 
                                         "streptomycin": ["gid", "rpsL", "rrs"] 
                                       }
     
     # lookup dictionary - gene to tier
-    GENE_TO_TIER = {"ahpC": "Tier 1", "inhA": "Tier 1", "katG": "Tier 1", "rpoB": "Tier 1", "embA": "Tier 1", 
-                    "embB": "Tier 1", "embC": "Tier 1", "pncA": "Tier 1", "clpC1": "Tier 1", "panD": "Tier 1", 
-                    "gyrA": "Tier 1", "gyrB": "Tier 1", "pepQ": "Tier 1", "Rv0678": "Tier 1", "mmpL5": "Tier 1", 
-                    "mmpS5": "Tier 1", "atpE": "Tier 1", "rplC": "Tier 1", "rrl": "Tier 1", "fgd1": "Tier 1", 
-                    "ddn": "Tier 1", "fbiA": "Tier 1", "fbiB": "Tier 1", "fbiC": "Tier 1", "Rv2983": "Tier 1", 
-                    "rrs": "Tier 1", "eis": "Tier 1", "whiB7": "Tier 1", "rpsL": "Tier 1", "gid": "Tier 1", 
-                    "Rv1258c": "Tier 1", "ethA": "Tier 1", "tlyA": "Tier 1", "mshA": "Tier 2", "ndh": "Tier 2", 
-                    "Rv2752c": "Tier 2", "rpoA": "Tier 2", "rpoC": "Tier 2", "embR": "Tier 2", "ubiA": "Tier 2", 
-                    "PPE35": "Tier 2", "Rv3236c": "Tier 2", "Rv1979c": "Tier 2", "whiB6": "Tier 2", "ccsA": "Tier 2", 
-                    "fprA": "Tier 2", "aftB": "Tier 2", "ethR": "Tier 2", "Rv3083": "Tier 2", "fabG1": "Tier 1"
+    GENE_TO_TIER = {"aftB": "Tier 2", "ahpC": "Tier 1", "atpE": "Tier 1", "ccsA": "Tier 2",
+                    "clpC1": "Tier 1", "ddn": "Tier 1", "eis": "Tier 1", "embA": "Tier 1",
+                    "embB": "Tier 1", "embC": "Tier 1", "embR": "Tier 2", "ethA": "Tier 1",
+                    "ethR": "Tier 2", "fabG1": "Tier 1", "fbiA": "Tier 1", "fbiB": "Tier 1",
+                    "fbiC": "Tier 1", "fgd1": "Tier 1", "fprA": "Tier 2", "gid": "Tier 1",
+                    "gyrA": "Tier 1", "gyrB": "Tier 1", "inhA": "Tier 1", "katG": "Tier 1",
+                    "mmpL5": "Tier 1", "mmpS5": "Tier 1", "mshA": "Tier 2", "ndh": "Tier 2",
+                    "panD": "Tier 1", "pepQ": "Tier 1", "pncA": "Tier 1", "PPE35": "Tier 2",
+                    "rplC": "Tier 1", "rpoA": "Tier 2", "rpoB": "Tier 1", "rpoC": "Tier 2",
+                    "rpsL": "Tier 1", "rrl": "Tier 1", "rrs": "Tier 1", "Rv0678": "Tier 1",
+                    "Rv1258c": "Tier 1", "Rv1979c": "Tier 2", "Rv2752c": "Tier 2",
+                    "Rv2983": "Tier 1", "Rv3083": "Tier 2", "Rv3236c": "Tier 2",
+                    "tlyA": "Tier 1", "ubiA": "Tier 2", "whiB6": "Tier 2", "whiB7": "Tier 1"
                   }
                   
     # lookup dictionary - gene to locus tag (https://github.com/jodyphelan/TBProfiler/blob/master/db/tbdb.bed)
-    GENE_TO_LOCUS_TAG = {"gyrB": "Rv0005",
-                          "gyrA": "Rv0006",
-                          "fgd1": "Rv0407",
-                          "mshA": "Rv0486",
-                          "ccsA": "Rv0529",
-                          "rpoB": "Rv0667",
-                          "rpoC": "Rv0668",
-                          "mmpL5": "Rv0676c",
-                          "mmpS5": "Rv0677c",
-                          "mmpR5": "Rv0678",
-                          "Rv0678" : "Rv0678",
-                          "rpsL": "Rv0682",
-                          "rplC": "Rv0701",
-                          "fbiC": "Rv1173",
-                          "Rv1258c": "Rv1258c",
-                          "embR": "Rv1267c",
-                          "atpE": "Rv1305",
-                          "rrs": "EBG00000313325",
-                          "rrl": "EBG00000313339",
-                          "fabG1": "Rv1483",
-                          "inhA": "Rv1484",
-                          "rpsA": "Rv1630",
-                          "tlyA": "Rv1694",
-                          "ndh": "Rv1854c",
-                          "katG": "Rv1908c",
-                          "PPE35": "Rv1918c",
-                          "Rv1979c": "Rv1979c",
-                          "pncA": "Rv2043c",
-                          "kasA": "Rv2245",
-                          "eis": "Rv2416c",
-                          "ahpC": "Rv2428",
-                          "folC": "Rv2447c",
-                          "pepQ": "Rv2535c",
-                          "ribD": "Rv2671",
-                          "Rv2752c": "Rv2752c",
-                          "thyX": "Rv2754c",
-                          "thyA": "Rv2764c",
-                          "ald": "Rv2780",
-                          "fbiD": "Rv2983",
-                          "Rv3083": "Rv3083",
-                          "fprA": "Rv3106",
-                          "whiB7": "Rv3197A",
-                          "Rv3236c": "Rv3236c",
-                          "fbiA": "Rv3261",
-                          "fbiB": "Rv3262",
-                          "alr": "Rv3423c",
-                          "rpoA": "Rv3457c",
-                          "ddn": "Rv3547",
-                          "clpC1": "Rv3596c",
-                          "panD": "Rv3601c",
-                          "embC": "Rv3793",
-                          "embA": "Rv3794",
-                          "embB": "Rv3795",
-                          "aftB": "Rv3805c",
-                          "ubiA": "Rv3806c",
-                          "ethA": "Rv3854c",
-                          "ethR": "Rv3855",
-                          "whiB6": "Rv3862c",
-                          "gid": "Rv3919c"
+    GENE_TO_LOCUS_TAG = {"aftB": "Rv3805c",
+                        "ahpC": "Rv2428",
+                        "ald": "Rv2780",
+                        "alr": "Rv3423c",
+                        "atpE": "Rv1305",
+                        "ccsA": "Rv0529",
+                        "clpC1": "Rv3596c",
+                        "ddn": "Rv3547",
+                        "eis": "Rv2416c",
+                        "embA": "Rv3794",
+                        "embB": "Rv3795",
+                        "embC": "Rv3793",
+                        "embR": "Rv1267c",
+                        "ethA": "Rv3854c",
+                        "ethR": "Rv3855",
+                        "fabG1": "Rv1483",
+                        "fbiA": "Rv3261",
+                        "fbiB": "Rv3262",
+                        "fbiC": "Rv1173",
+                        "Rv2983": "Rv2983",
+                        "fgd1": "Rv0407",
+                        "folC": "Rv2447c",
+                        "fprA": "Rv3106",
+                        "gid": "Rv3919c",
+                        "gyrA": "Rv0006",
+                        "gyrB": "Rv0005",
+                        "inhA": "Rv1484",
+                        "kasA": "Rv2245",
+                        "katG": "Rv1908c",
+                        "mmpL5": "Rv0676c",
+                        "mmpS5": "Rv0677c",
+                        "mshA": "Rv0486",
+                        "ndh": "Rv1854c",
+                        "panD": "Rv3601c",
+                        "pepQ": "Rv2535c",
+                        "pncA": "Rv2043c",
+                        "PPE35": "Rv1918c",
+                        "ribD": "Rv2671",
+                        "rplC": "Rv0701",
+                        "rpoA": "Rv3457c",
+                        "rpoB": "Rv0667",
+                        "rpoC": "Rv0668",
+                        "rpsA": "Rv1630",
+                        "rpsL": "Rv0682",
+                        "rrl": "EBG00000313339",
+                        "rrs": "EBG00000313325",
+                        "Rv0678" : "Rv0678",
+                        "Rv1258c": "Rv1258c",
+                        "Rv1979c": "Rv1979c",
+                        "Rv2752c": "Rv2752c",
+                        "Rv3083": "Rv3083",
+                        "Rv3236c": "Rv3236c",
+                        "thyA": "Rv2764c",
+                        "thyX": "Rv2754c",
+                        "tlyA": "Rv1694",
+                        "ubiA": "Rv3806c",
+                        "whiB6": "Rv3862c",
+                        "whiB7": "Rv3197A"
                          }
 
-    GENE_LIST_OPTION_1 = ["Rv0678", "atpE", "pepQ", "mmpL5", "mmpS5", "rrl", "rplC"] # Rv0678 is mmpR
-    GENE_LIST_OPTION_2 = ["katG", "pncA", "ethA", "gid", "rpoB"]
+    GENE_LIST_OPTION_1 = ["atpE", "mmpL5", "mmpS5", "pepQ", "rplC", "rrl", "Rv0678"] # Rv0678 is mmpR
+    GENE_LIST_OPTION_2 = ["ethA", "gid", "katG", "pncA", "rpoB"]
     
     # Turning TBProfiler annotations into Looker or MDL interpretations
     ANNOTATION_TO_INTERPRETATION = {
@@ -265,15 +267,15 @@ task tbprofiler_output_parsing {
     }
 
     # genes with promoter regions to consider
-    PROMOTER_REGIONS = {"Rv0678": [-84, -1],
-                        "atpE": [-48, -1],
+    PROMOTER_REGIONS = {"atpE": [-48, -1],
                         "pepQ": [-33, -1],
-                        "rplC": [-18, -1]
+                        "rplC": [-18, -1],
+                        "Rv0678": [-84, -1]
                         }
 
     # genes that have positions with special consideration
-    SPECIAL_POSITIONS = {"rrl": [[2003, 2367], [2449, 3056]],
-                         "rpoB": [426, 452],
+    SPECIAL_POSITIONS = {"rpoB": [426, 452],
+                         "rrl": [[2003, 2367], [2449, 3056]],
                          "rrs": [1401, 1402, 1484]
                         }
 
@@ -309,16 +311,15 @@ task tbprofiler_output_parsing {
           return "Uncertain significance" if interpretation_destination == "LIMS" else "U"
         elif "upstream_gene_variant" in substitution_type: # otherwise, check if it is an upstream gene variant
           return "S" if interpretation_destination == "MDL" else "U"
-        else: # otherwise, apply expert rules 1.2
-          if not any(non_ORF in nucleotide_change for non_ORF in ["+", "-", "*"]) or nucleotide_change.endswith("*"): 
+        elif not any(non_ORF in nucleotide_change for non_ORF in ["+", "-", "*"]) or nucleotide_change.endswith("*"): 
           # if a position includes either +, *, or - it's not in the ORF 
           # UNLESS the * is at the end which means its a premature stop codon
-            if substitution_type != "synonymous_variant":
-              return "Uncertain significance" if interpretation_destination == "LIMS" else "U"
-            else:
-              return "S"
+          if substitution_type != "synonymous_variant":
+            return "Uncertain significance" if interpretation_destination == "LIMS" else "U"
+          else:
+            return "S"
 
-      elif gene == "rrl": # apply expert rules 1.2
+      elif gene == "rrl":
         if (SPECIAL_POSITIONS[gene][1][1] <= position_nt <= SPECIAL_POSITIONS[gene][1][2]) or (SPECIAL_POSITIONS[gene][2][1] <= position_nt <= SPECIAL_POSITIONS[gene][2][2]):
           return "Uncertain significance" if interpretation_destination == "LIMS" else "U"
         else:
@@ -327,11 +328,10 @@ task tbprofiler_output_parsing {
       elif gene in ["katG", "pncA", "ethA", "gid"]: # apply expert rules 2.2.1
         if any(indel_or_stop in nucleotide_change for indel_or_stop in ["del", "ins", "fs", "delins", "_"]) or nucleotide_change.endswith("*"):
           return "Uncertain significance" if interpretation_destination == "LIMS" else "U"
+        elif (substitution_type != "synonymous_variant") or ("upstream_gene_variant" in substitution_type):
+          return "S" if interpretation_destination == "MDL" else "U"
         else:
-            if substitution_type != "synonymous_variant" or "upstream_gene_variant" in substitution_type:
-              return "S" if interpretation_destination == "MDL" else "U"
-            else:
-              return "S"
+          return "S"
 
       elif gene == "rpoB": # apply expert rules 2.2.2
         if SPECIAL_POSITIONS[gene][1] <= position_nt <= SPECIAL_POSITIONS[gene][2]:
@@ -339,11 +339,10 @@ task tbprofiler_output_parsing {
               return "Assoc with R" if interpretation_destination == "LIMS" else "R"
             else:
               return "S"   
+        elif (substitution_type != "synonymous_variant") or ("upstream_gene_variant" in substitution_type):
+          return "S" if interpretation_destination == "MDL" else "U"
         else:
-            if substitution_type != "synonymous_variant" or "upstream_gene_variant" in substitution_type:
-              return "S" if interpretation_destination == "MDL" else "U"
-            else:
-              return "S"
+          return "S"
 
       elif gene not in GENE_LIST_OPTION_1 or gene not in GENE_LIST_OPTION_2: # NOT AN EXPERT RULE: 3.2
         if gene == "rrs": # apply rule 3.2.1
@@ -351,7 +350,7 @@ task tbprofiler_output_parsing {
             return "Unoexpert"
           else:
             return "Snoexpert" if interpretation_destination == "MDL" else "Unoexpert"
-        elif substitution_type != "synonymous_variant" or "upstream_gene_variant" in substitution_type:
+        elif (substitution_type != "synonymous_variant") or ("upstream_gene_variant" in substitution_type):
           return "Snoexpert" if interpretation_destination == "MDL" else "Unoexpert"
         else:
           return "Snoexpert"
@@ -484,9 +483,9 @@ task tbprofiler_output_parsing {
       and returns the LIMS' report file appropriate annotation.
       """
       if annotation == "Assoc w R":
-        return "Genetic determinant(s) associated with resistance to {} detected".format(drug)
+        return "Mutation(s) associated with resistance to {} detected".format(drug)
       elif (annotation == "Assoc w R - interim") or (annotation == "Uncertain significance"):
-        return "The detected genetic determinant(s) have uncertain significance. Resistance to {} cannot be ruled out".format(drug)
+        return "The detected mutation(s) have uncertain significance. Resistance to {} cannot be ruled out".format(drug)
       else: # "Not assoc w R" and "Not assoc w R - Interim" and anything else
         return "No mutations associated with resistance to {} detected".format(drug)
 
@@ -643,7 +642,7 @@ task tbprofiler_output_parsing {
         - tbprofiler_variant_substitution_nt: nucleotide substitution (c.1349C>G)
         - tbprofiler_variant_substitution_aa: aminoacid substitution (p.Ser450Trp)
         - confidence: tbprofiler annotation regarding resistance (Not assoc w R, Uncertain significance...)
-        - antimicrobial: antimicrobial the mutation is confering resistance to (streptomycin, rifampicin...)
+        - antimicrobial: antimicrobial the mutation is confering resistance to (streptomycin, rifampin...)
         - looker_interpretation: interpretation of resistance for Looker report (R, R-interim, U, S, S-interim)
         - mdl_interpretation: MDL interpretation of resistance (R, S, U)
         - depth: depth of coverage at the mutation site (100)
@@ -860,7 +859,8 @@ task tbprofiler_output_parsing {
       per sample: 
         - MDL sample accession numbers: includes sample name
         - M_DST_A01_ID - includes lineage
-        - The set of information in ANTIMICROBIAL_CODE_TO_GENES dictionary with target drug resistance information in layman's terms, and the mutations responsible for the predicted phenotype
+        - The set of information in ANTIMICROBIAL_CODE_TO_GENES dictionary with target drug resistance information in layman's terms, 
+          and the mutations responsible for the predicted phenotype
         - Date of analysis in YYYY-MM-DD HH:SS format
         - Operator information
       """
