@@ -76,7 +76,7 @@ task animummer {
         if [[ -n "~{ani_threshold}" ]]; then
           echo "Comparing user-defined ANI threshold to highest ANI value..."
           # compare ANI_HIGHEST_PERCENT to ani_threshold using awk
-          if ! awk "BEGIN{ exit ($ANI_HIGHEST_PERCENT < ~{ani_threshold} )"; then
+          if ! awk "BEGIN{ exit ($ANI_HIGHEST_PERCENT < ~{ani_threshold} )}"; then
             echo "The highest ANI value $ANI_HIGHEST_PERCENT is less than the user-defined threshold of ~{ani_threshold}"
             echo "The ANI top species match did not surpass the user-defined threshold of ~{ani_threshold}" > ANI_TOP_SPECIES_MATCH.txt
           else
