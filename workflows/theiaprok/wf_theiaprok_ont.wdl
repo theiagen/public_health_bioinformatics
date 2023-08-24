@@ -477,16 +477,16 @@ workflow theiaprok_ont {
     # Read QC - nanoplot raw outputs
     File? nanoplot_html_raw = read_QC_trim.nanoplot_html_raw
     File? nanoplot_tsv_raw = read_QC_trim.nanoplot_tsv_raw
-    Int? num_reads_raw1_nanoplot = read_QC_trim.num_reads_raw1
-    Float? r1_mean_readlength_raw = read_QC_trim.r1_mean_readlength_raw
-    Float? r1_mean_q_raw = read_QC_trim.r1_mean_q_raw
+    Int? nanoplot_num_reads_raw1 = read_QC_trim.num_reads_raw1
+    Float? nanoplot_r1_mean_readlength_raw = read_QC_trim.r1_mean_readlength_raw
+    Float? nanoplot_r1_mean_q_raw = read_QC_trim.r1_mean_q_raw
     # Read QC - nanoplot clean outputs
     File? nanoplot_html_clean = read_QC_trim.nanoplot_html_clean
     File? nanoplot_tsv_clean = read_QC_trim.nanoplot_tsv_clean
-    Int? num_reads_clean1_nanoplot = read_QC_trim.num_reads_clean1
-    Float? r1_mean_readlength_clean = read_QC_trim.r1_mean_readlength_clean
-    Float? r1_mean_q_clean = read_QC_trim.r1_mean_q_clean
-
+    Int? nanoplot_num_reads_clean1 = read_QC_trim.num_reads_clean1
+    Float? nanoplot_r1_mean_readlength_clean = read_QC_trim.r1_mean_readlength_clean
+    Float? nanoplot_r1_mean_q_clean = read_QC_trim.r1_mean_q_clean
+    # Read QC - nanoplot general outputs
     String? nanoplot_version = read_QC_trim.nanoplot_version
     String? nanoplot_docker = read_QC_trim.nanoplot_docker
     # Read QC - kmc outputs
