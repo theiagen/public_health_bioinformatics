@@ -574,7 +574,7 @@
     - path: miniwdl_run/wdl/tasks/quality_control/task_fastq_scan.wdl
       md5sum: 65bd7b4ef51b04df67aaf9276ff0918a
     - path: miniwdl_run/wdl/tasks/quality_control/task_mummer_ani.wdl
-      md5sum: 21e8b1cbe4c8be26d1ac8b8013970166
+      md5sum: 33a111c260b2fb0b6db6d9ed77ec8e87
     - path: miniwdl_run/wdl/tasks/quality_control/task_ncbi_scrub.wdl
       md5sum: f41beadaf9d24ae77b05ac3b962127a8
     - path: miniwdl_run/wdl/tasks/quality_control/task_qc_check_phb.wdl
@@ -632,9 +632,9 @@
     - path: miniwdl_run/wdl/tasks/taxon_id/task_midas.wdl
       md5sum: 024971d1439dff7d59c0a26a824bd2c6
     - path: miniwdl_run/wdl/tasks/utilities/task_broad_terra_tools.wdl
-      md5sum: 499eb797a809306edf7e97005f67f8f2
+      md5sum: 227ee827aca5f05b23eaa608119ddc9a
     - path: miniwdl_run/wdl/workflows/theiaprok/wf_theiaprok_illumina_pe.wdl
-      md5sum: a76d59109075ce8b861e63ffe70d7c77
+      md5sum: 084648227cdc63e06e10ec27e728bdc6
     - path: miniwdl_run/wdl/workflows/utilities/wf_merlin_magic.wdl
       md5sum: 53555c2f3e144e55f362080c5e75e434
     - path: miniwdl_run/wdl/workflows/utilities/wf_read_QC_trim_pe.wdl
