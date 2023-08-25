@@ -261,6 +261,7 @@ workflow theiaprok_illumina_se {
             ani_output_tsv = ani.ani_output_tsv,
             ani_top_species_match = ani.ani_top_species_match,
             ani_mummer_version = ani.ani_mummer_version,
+            ani_docker = ani.ani_docker,
             amrfinderplus_all_report = amrfinderplus_task.amrfinderplus_all_report,
             amrfinderplus_amr_report = amrfinderplus_task.amrfinderplus_amr_report,
             amrfinderplus_stress_report = amrfinderplus_task.amrfinderplus_stress_report,
@@ -554,6 +555,7 @@ workflow theiaprok_illumina_se {
     File? ani_output_tsv = ani.ani_output_tsv
     String? ani_top_species_match = ani.ani_top_species_match
     String? ani_mummer_version = ani.ani_mummer_version
+    String? ani_mummer_docker = ani.ani_docker
     # NCBI-AMRFinderPlus Outputs
     File? amrfinderplus_all_report = amrfinderplus_task.amrfinderplus_all_report
     File? amrfinderplus_amr_report = amrfinderplus_task.amrfinderplus_amr_report
