@@ -17,6 +17,7 @@ task dragonflye {
     String docker = "us-docker.pkg.dev/general-theiagen/biocontainers/dragonflye:1.0.14--hdfd78af_0"
     Int disk_size = 100
     Int cpu = 4
+    Int memory = 16
   }
   command <<<
     # get version information
@@ -64,7 +65,7 @@ task dragonflye {
       --outdir dragonflye \
       ~{'--gsize ' + genome_size} \
       --cpus ~{cpu} \
-      --ram 8 \
+      --ram ~{mem} \
       --nofilter \
       ~{'--assembler ' + assembler} \
       ~{'--opts "' + assembler_options + '"'} \
@@ -80,7 +81,7 @@ task dragonflye {
   }
   runtime {
     docker: "~{docker}"
-    memory: "16 GB"
+    memory: "~{memory} GB"
     cpu: cpu
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
