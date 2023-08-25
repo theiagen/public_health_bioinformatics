@@ -200,7 +200,7 @@
     - path: miniwdl_run/call-cg_pipeline_raw/work/test_readMetrics.tsv
       contains: ["File", "fastq", "coverage"]
     - path: miniwdl_run/call-clean_check_reads/command
-      md5sum: 4b95154c6899fca54541d412b63fcb65
+      md5sum: 4c2982bbbadc5e5420a69e4c5ecd68b2
     - path: miniwdl_run/call-clean_check_reads/inputs.json
       contains: ["read1", "fastq", "skip_screen", "true"]
     - path: miniwdl_run/call-clean_check_reads/outputs.json
@@ -361,7 +361,7 @@
     - path: miniwdl_run/call-quast/work/transposed_report.txt
       contains: ["Assembly", "length", "contigs", "test"]
     - path: miniwdl_run/call-raw_check_reads/command
-      md5sum: eba0e27254df0ddaba0ae05e08c71027
+      md5sum: 42fd97b20d28fea6be743dbf5e58667b
     - path: miniwdl_run/call-raw_check_reads/inputs.json
       contains: ["read1", "fastq", "skip_screen", "true"]
     - path: miniwdl_run/call-raw_check_reads/outputs.json
@@ -550,7 +550,7 @@
     - path: miniwdl_run/wdl/tasks/quality_control/task_quast.wdl
       md5sum: 884d99106ba32d6508d30dec4b78c04c
     - path: miniwdl_run/wdl/tasks/quality_control/task_screen.wdl
-      md5sum: 19fe4b646274e39d9e2cf48a06f5da92
+      md5sum: c1f2f5cef67a0bd0cbc9da2a834d40e4
     - path: miniwdl_run/wdl/tasks/quality_control/task_trimmomatic.wdl
       md5sum: 6efbb44a314c5d7604031ebfd774e10f
     - path: miniwdl_run/wdl/tasks/species_typing/task_cauris_cladetyper.wdl
@@ -602,7 +602,7 @@
     - path: miniwdl_run/wdl/tasks/utilities/task_broad_terra_tools.wdl
       md5sum: 0236363c7f0694cd3f96416aa43e2f91
     - path: miniwdl_run/wdl/workflows/theiaprok/wf_theiaprok_illumina_se.wdl
-      md5sum: c6ab2e13cf4802664b1c93e40a1cd5ba
+      md5sum: 858d33eb64b9bda618a47a999f370df5
     - path: miniwdl_run/wdl/workflows/utilities/wf_merlin_magic.wdl
       md5sum: 53555c2f3e144e55f362080c5e75e434
     - path: miniwdl_run/wdl/workflows/utilities/wf_read_QC_trim_se.wdl
