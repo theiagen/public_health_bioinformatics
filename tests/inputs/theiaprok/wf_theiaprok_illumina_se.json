@@ -33,5 +33,5 @@
     "theiaprok_illumina_se.merlin_magic.cladetyper.ref_clade4_annotated" : "./tests/inputs/empty-for-test.txt",
     "theiaprok_illumina_se.merlin_magic.cladetyper.ref_clade5" : "./tests/inputs/empty-for-test.txt",
     "theiaprok_illumina_se.merlin_magic.cladetyper.ref_clade5_annotated" : "./tests/inputs/empty-for-test.txt",
-    "theiaprok_illumina_se.bakta.bakta_db" : "./tests/inputs/empty-for-test.txt"
+    "theiaprok_illumina_se.bakta.bakta_db" : "./tests/inputs/completely-empty-for-test.txt"
 }
