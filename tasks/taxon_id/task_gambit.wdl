@@ -20,7 +20,8 @@ task gambit {
     gambit --version | tee GAMBIT_VERSION
     
     # set gambit reference dir; will assume that gambit genomes and signatures will be provided by user in tandem or not at all
-    if [[ ! -z "~{gambit_db_genomes}" ]]; then 
+    # -s evaluates to TRUE if the file exists and has a size greater than zero
+    if [[ -s "~{gambit_db_genomes}" ]]; then 
       echo "User gabmit db identified; ~{gambit_db_genomes} will be utilized for alignment"
       gambit_db_version="$(basename -- '~{gambit_db_genomes}'); $(basename -- '~{gambit_db_signatures}')"
       gambit_db_dir="${PWD}/gambit_database"
