@@ -211,7 +211,7 @@ workflow theiaprok_illumina_pe {
             quast_gc_percent = quast.gc_percent,
             busco_results = busco.busco_results,
             ani_highest_percent = ani.ani_highest_percent,
-            ani_highest_percent_bases_aligned = ani.ani_highest_percent_bases_aligned,
+            ani_highest_percent_bases_aligned = ani.ani_highest_percent_bases_aligned
         }
       }
       call merlin_magic_workflow.merlin_magic {
