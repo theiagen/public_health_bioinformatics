@@ -17,7 +17,7 @@ task dragonflye {
     String docker = "us-docker.pkg.dev/general-theiagen/biocontainers/dragonflye:1.0.14--hdfd78af_0"
     Int disk_size = 100
     Int cpu = 4
-    Int memory = 16
+    Int memory = 32
   }
   command <<<
     # get version information
