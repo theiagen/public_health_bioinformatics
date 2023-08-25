@@ -68,7 +68,7 @@ task dragonflye {
       --outdir dragonflye \
       ~{'--gsize ' + genome_size} \
       --cpus ~{cpu} \
-      --ram mem \
+      --ram ${mem} \
       --nofilter \
       ~{'--assembler ' + assembler} \
       ~{'--opts "' + assembler_options + '"'} \
