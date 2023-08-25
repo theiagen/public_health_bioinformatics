@@ -47,6 +47,9 @@ task dragonflye {
       ILLUMINA_POLISHER=""
     fi
 
+    # reduce requested memory to prevent out of memory errors
+    mem=$(( ~{memory}-1 ))
+
     # run dragonflye
     # --reads for input nanopore fastq
     # --depth 0 disables sub-sampling of reads (performed with rasusa already)
@@ -65,7 +68,7 @@ task dragonflye {
       --outdir dragonflye \
       ~{'--gsize ' + genome_size} \
       --cpus ~{cpu} \
-      --ram ~{memory} \
+      --ram mem \
       --nofilter \
       ~{'--assembler ' + assembler} \
       ~{'--opts "' + assembler_options + '"'} \
