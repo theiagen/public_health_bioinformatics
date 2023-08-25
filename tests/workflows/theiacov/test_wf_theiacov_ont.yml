@@ -329,9 +329,9 @@
     - path: miniwdl_run/call-pangolin4/work/PANGOLIN_NOTES
       md5sum: 35aa27af5fb90d54561ee9d45a3163d5
     - path: miniwdl_run/call-pangolin4/work/PANGO_ASSIGNMENT_VERSION
-      md5sum: 4f37bb038d973d7e32df5cbbc4067c87
+      md5sum: edfb0c7ebdbf598df19861b650ee904a
     - path: miniwdl_run/call-pangolin4/work/VERSION_PANGOLIN_ALL
-      md5sum: 6c7f688ada8c1e247782758d7fca08e7
+      md5sum: ef9c730f9b45d2fc284575c13fe7c920
     - path: miniwdl_run/call-pangolin4/work/_miniwdl_inputs/0/ont.medaka.consensus.fasta
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     - path: miniwdl_run/call-pangolin4/work/ont.pangolin_report.csv
