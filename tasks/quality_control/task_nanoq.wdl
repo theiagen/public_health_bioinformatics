@@ -6,7 +6,7 @@ task nanoq {
     String samplename
     String docker = "us-docker.pkg.dev/general-theiagen/biocontainers/nanoq:0.9.0--hec16e2b_1"
     Int disk_size = 100
-    Int max_read_length = 10000
+    Int max_read_length = 100000
     Int min_read_length = 500
     Int max_read_qual = 40
     Int min_read_qual = 10

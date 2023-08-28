@@ -4,7 +4,7 @@ import "../utilities/wf_read_QC_trim_ont.wdl" as read_qc_workflow
 import "../utilities/wf_merlin_magic.wdl" as merlin_magic_workflow
 import "../../tasks/assembly/task_dragonflye.wdl" as dragonflye_task
 import "../../tasks/quality_control/task_quast.wdl" as quast_task
-import "../../tasks/quality_control/task_cg_pipeline.wdl" as cg_pipeline_task
+import "../../tasks/quality_control/task_nanoplot.wdl" as nanoplot_task
 import "../../tasks/quality_control/task_screen.wdl" as screen_task
 import "../../tasks/quality_control/task_busco.wdl" as busco_task
 import "../../tasks/taxon_id/task_gambit.wdl" as gambit_task
@@ -40,6 +40,7 @@ workflow theiaprok_ont {
     String terra_workspace = "NA"
     # read screen parameters
     Boolean skip_screen = false 
+    Boolean skip_mash = true
     Int min_reads = 5000 # reduced from 7472 because less reads are needed to get to higher coverage due to longer read length
     Int min_basepairs = 2241820
     Int min_genome_size = 100000
@@ -65,31 +66,34 @@ workflow theiaprok_ont {
       max_genome_size = max_genome_size,
       min_coverage = min_coverage,
       skip_screen = skip_screen,
+      skip_mash = skip_mash,
       expected_genome_size = genome_size
   }
   if (raw_check_reads.read_screen == "PASS") {
-    call read_qc_workflow.read_QC_trim_ont as read_QC_trim {
+    call read_qc_workflow.read_QC_trim_ont as read_qc_trim {
       input:
         samplename = samplename,
         read1 = read1,
-        genome_size = genome_size
+        genome_size = genome_size,
+        workflow_series = "theiaprok"
     }
     call screen_task.check_reads_se as clean_check_reads {
       input:
-        read1 = read_QC_trim.read1_clean,
+        read1 = read_qc_trim.read1_clean,
         min_reads = min_reads,
         min_basepairs = min_basepairs,
         min_genome_size = min_genome_size,
         max_genome_size = max_genome_size,
         min_coverage = min_coverage,
         skip_screen = skip_screen,
+        skip_mash = skip_mash,
         expected_genome_size = genome_size
     }
     if (clean_check_reads.read_screen == "PASS") {
        call dragonflye_task.dragonflye {
          input:
-           read1 = read_QC_trim.read1_clean,
-           genome_size = select_first([genome_size, read_QC_trim.est_genome_size]),
+           read1 = read_qc_trim.read1_clean,
+           genome_size = select_first([genome_size, read_qc_trim.est_genome_size]),
            samplename = samplename
        }
       call quast_task.quast {
@@ -97,17 +101,18 @@ workflow theiaprok_ont {
           assembly = dragonflye.assembly_fasta,
           samplename = samplename
       }
-      call cg_pipeline_task.cg_pipeline as cg_pipeline_raw {
+      # nanoplot for basic QC metrics
+      call nanoplot_task.nanoplot as nanoplot_raw {
         input:
           read1 = read1,
           samplename = samplename,
-          genome_length = select_first([genome_size, quast.genome_length])
+          est_genome_size = select_first([genome_size, quast.genome_length])
       }
-      call cg_pipeline_task.cg_pipeline as cg_pipeline_clean {
+      call nanoplot_task.nanoplot as nanoplot_clean {
         input:
-          read1 = read_QC_trim.read1_clean,
+          read1 = read_qc_trim.read1_clean,
           samplename = samplename,
-          genome_length = select_first([genome_size, quast.genome_length])
+          est_genome_size = select_first([genome_size, quast.genome_length])
       }
       call gambit_task.gambit {
         input:
@@ -170,14 +175,14 @@ workflow theiaprok_ont {
             qc_check_table = qc_check_table,
             expected_taxon = expected_taxon,
             gambit_predicted_taxon = gambit.gambit_predicted_taxon,
-            num_reads_raw1 = read_QC_trim.number_raw_reads,
-            num_reads_clean1 = read_QC_trim.number_clean_reads,
-            r1_mean_q_raw = cg_pipeline_raw.r1_mean_q,
-            r1_mean_readlength_raw = cg_pipeline_raw.r1_mean_readlength,
-            r1_mean_q_clean = cg_pipeline_clean.r1_mean_q,
-            r1_mean_readlength_clean = cg_pipeline_clean.r1_mean_readlength,
-            est_coverage_raw = cg_pipeline_raw.est_coverage,
-            est_coverage_clean = cg_pipeline_clean.est_coverage,
+            num_reads_raw1 = nanoplot_raw.num_reads,
+            num_reads_clean1 = nanoplot_clean.num_reads,
+            r1_mean_q_raw = nanoplot_raw.mean_q,
+            r1_mean_readlength_raw = nanoplot_raw.mean_readlength,
+            r1_mean_q_clean = nanoplot_clean.mean_q,
+            r1_mean_readlength_clean = nanoplot_clean.mean_readlength,
+            est_coverage_raw = nanoplot_raw.est_coverage,
+            est_coverage_clean = nanoplot_clean.est_coverage,
             assembly_length = quast.genome_length,
             number_contigs = quast.number_contigs,
             n50_value = quast.n50_value,
@@ -192,7 +197,7 @@ workflow theiaprok_ont {
           merlin_tag = select_first([expected_taxon, gambit.merlin_tag]),
           assembly = dragonflye.assembly_fasta,
           samplename = samplename,
-          read1 = read_QC_trim.read1_clean,
+          read1 = read_qc_trim.read1_clean,
           ont_data = true
       }
       if (defined(taxon_tables)) {
@@ -204,7 +209,7 @@ workflow theiaprok_ont {
             taxon_tables = taxon_tables,
             samplename = samplename,
             read1 = read1,
-            read1_clean = read_QC_trim.read1_clean,
+            read1_clean = read_qc_trim.read1_clean,
             run_id = run_id,
             collection_date = collection_date,
             originating_lab = originating_lab,
@@ -214,22 +219,24 @@ workflow theiaprok_ont {
             theiaprok_ont_version = version_capture.phb_version,
             theiaprok_ont_analysis_date = version_capture.date,
             seq_platform = seq_method,
-            num_reads_raw1 = read_QC_trim.number_raw_reads,
-            fastq_scan_version = read_QC_trim.fastq_scan_version,
-            num_reads_clean1 = read_QC_trim.number_clean_reads,
-            r1_mean_q_raw = cg_pipeline_raw.r1_mean_q, 
-            r1_mean_readlength_raw = cg_pipeline_raw.r1_mean_readlength,
-            nanoq_version = read_QC_trim.nanoq_version,
-            nanoplot_html = read_QC_trim.nanoplot_html,
-            nanoplot_version = read_QC_trim.nanoplot_version,
-            kmc_est_genome_size = read_QC_trim.est_genome_size,
-            kmc_kmer_stats = read_QC_trim.kmc_kmer_stats,
-            kmc_version = read_QC_trim.kmc_version,
-            rasusa_version = read_QC_trim.rasusa_version,
-            tiptoft_plasmid_replicon_fastq = read_QC_trim.tiptoft_plasmid_replicon_fastq,
-            tiptoft_plasmid_replicon_genes = read_QC_trim.tiptoft_plasmid_replicon_genes,
-            tiptoft_version = read_QC_trim.tiptoft_version,
+            num_reads_raw1 =  nanoplot_raw.num_reads,
+            num_reads_clean1 = nanoplot_clean.num_reads,
+            r1_mean_q_raw = nanoplot_clean.mean_q, 
+            r1_mean_readlength_raw = nanoplot_raw.mean_readlength,
+            nanoq_version = read_qc_trim.nanoq_version,
+            nanoplot_html = nanoplot_raw.nanoplot_html,
+            nanoplot_tsv = nanoplot_raw.nanoplot_tsv,
+            nanoplot_docker = nanoplot_raw.nanoplot_docker,
+            nanoplot_version = nanoplot_raw.nanoplot_version,
+            kmc_est_genome_size = read_qc_trim.est_genome_size,
+            kmc_kmer_stats = read_qc_trim.kmc_kmer_stats,
+            kmc_version = read_qc_trim.kmc_version,
+            rasusa_version = read_qc_trim.rasusa_version,
+            tiptoft_plasmid_replicon_fastq = read_qc_trim.tiptoft_plasmid_replicon_fastq,
+            tiptoft_plasmid_replicon_genes = read_qc_trim.tiptoft_plasmid_replicon_genes,
+            tiptoft_version = read_qc_trim.tiptoft_version,
             assembly_fasta = dragonflye.assembly_fasta,
+            contigs_gfa = dragonflye.contigs_gfa,
             dragonflye_version = dragonflye.dragonflye_version,
             quast_report = quast.quast_report,
             quast_version = quast.version,
@@ -237,11 +244,8 @@ workflow theiaprok_ont {
             number_contigs = quast.number_contigs,
             n50_value = quast.n50_value,
             quast_gc_percent = quast.gc_percent,
-            cg_pipeline_report_raw = cg_pipeline_raw.cg_pipeline_report,
-            cg_pipeline_docker = cg_pipeline_raw.cg_pipeline_docker,
-            est_coverage_raw = cg_pipeline_raw.est_coverage,
-            cg_pipeline_report_clean = cg_pipeline_clean.cg_pipeline_report,
-            est_coverage_clean = cg_pipeline_clean.est_coverage,
+            est_coverage_raw = nanoplot_raw.est_coverage,
+            est_coverage_clean = nanoplot_clean.est_coverage,
             gambit_report = gambit.gambit_report_file,
             gambit_predicted_taxon = gambit.gambit_predicted_taxon,
             gambit_predicted_taxon_rank = gambit.gambit_predicted_taxon_rank,
@@ -466,30 +470,37 @@ workflow theiaprok_ont {
     # Sample Screening
     String raw_read_screen = raw_check_reads.read_screen
     String? clean_read_screen = clean_check_reads.read_screen
-    # Read QC - fastq_scan and nanoq outputs
-    File? read1_clean = read_QC_trim.read1_clean
-    Int? num_reads_raw1 = read_QC_trim.number_raw_reads
-    Int? num_reads_clean1 = read_QC_trim.number_clean_reads
-    String? fastq_scan_version = read_QC_trim.fastq_scan_version
-    String? nanoq_version = read_QC_trim.nanoq_version
-    # Read QC - nanoplot outputs
-    File? nanoplot_html = read_QC_trim.nanoplot_html
-    String? nanoplot_version = read_QC_trim.nanoplot_version
+    # Read QC - nanoq outputs
+    File? read1_clean = read_qc_trim.read1_clean
+    String? nanoq_version = read_qc_trim.nanoq_version
+    # Read QC - nanoplot raw outputs
+    File? nanoplot_html_raw = nanoplot_raw.nanoplot_html
+    File? nanoplot_tsv_raw = nanoplot_raw.nanoplot_tsv
+    Int? nanoplot_num_reads_raw1 = nanoplot_raw.num_reads
+    Float? nanoplot_r1_mean_readlength_raw = nanoplot_raw.mean_readlength
+    Float? nanoplot_r1_mean_q_raw = nanoplot_raw.mean_q
+    # Read QC - nanoplot clean outputs
+    File? nanoplot_html_clean = nanoplot_clean.nanoplot_html
+    File? nanoplot_tsv_clean = nanoplot_clean.nanoplot_tsv
+    Int? nanoplot_num_reads_clean1 = nanoplot_clean.num_reads
+    Float? nanoplot_r1_mean_readlength_clean = nanoplot_clean.mean_readlength
+    Float? nanoplot_r1_mean_q_clean = nanoplot_clean.mean_q
+    # Read QC - nanoplot general outputs
+    String? nanoplot_version = nanoplot_raw.nanoplot_version
+    String? nanoplot_docker = nanoplot_raw.nanoplot_docker
     # Read QC - kmc outputs
-    String? kmc_est_genome_size = read_QC_trim.est_genome_size
-    File? kmc_kmer_stats = read_QC_trim.kmc_kmer_stats
-    String? kmc_version = read_QC_trim.kmc_version
+    String? kmc_est_genome_size = read_qc_trim.est_genome_size
+    File? kmc_kmer_stats = read_qc_trim.kmc_kmer_stats
+    String? kmc_version = read_qc_trim.kmc_version
     # Read QC - rasusa outputs
-    String? rasusa_version = read_QC_trim.rasusa_version
+    String? rasusa_version = read_qc_trim.rasusa_version
     # Read QC - tiptoft outputs
-    File? tiptoft_plasmid_replicon_fastq = read_QC_trim.tiptoft_plasmid_replicon_fastq
-    String? tiptoft_plasmid_replicon_genes = read_QC_trim.tiptoft_plasmid_replicon_genes
-    String? tiptoft_version = read_QC_trim.tiptoft_version
-    # Read QC - cg pipeline outputs
-    Float? r1_mean_q_raw = cg_pipeline_raw.r1_mean_q
-    Float? r1_mean_readlength_raw = cg_pipeline_raw.r1_mean_readlength
+    File? tiptoft_plasmid_replicon_fastq = read_qc_trim.tiptoft_plasmid_replicon_fastq
+    String? tiptoft_plasmid_replicon_genes = read_qc_trim.tiptoft_plasmid_replicon_genes
+    String? tiptoft_version = read_qc_trim.tiptoft_version
     # Assembly - dragonflye outputs
     File? assembly_fasta = dragonflye.assembly_fasta
+    File? contigs_gfa = dragonflye.contigs_gfa
     String? dragonflye_version = dragonflye.dragonflye_version
     # Assembly QC - quast outputs
     File? quast_report = quast.quast_report
@@ -498,12 +509,9 @@ workflow theiaprok_ont {
     Int? number_contigs = quast.number_contigs
     Int? n50_value = quast.n50_value
     Float? quast_gc_percent = quast.gc_percent
-    # Assembly QC - cg pipeline outputs
-    File? cg_pipeline_report_raw = cg_pipeline_raw.cg_pipeline_report
-    String? cg_pipeline_docker = cg_pipeline_raw.cg_pipeline_docker
-    Float? est_coverage_raw = cg_pipeline_raw.est_coverage
-    File? cg_pipeline_report_clean = cg_pipeline_clean.cg_pipeline_report
-    Float? est_coverage_clean = cg_pipeline_clean.est_coverage
+    # Assembly QC - nanoplot outputs
+    Float? est_coverage_raw = nanoplot_raw.est_coverage
+    Float? est_coverage_clean = nanoplot_clean.est_coverage
     # Assembly QC - busco outputs
     String? busco_version = busco.busco_version
     String? busco_database = busco.busco_database

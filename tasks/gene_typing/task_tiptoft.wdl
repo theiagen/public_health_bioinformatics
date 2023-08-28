@@ -34,7 +34,9 @@ task tiptoft {
 
     # gzip output filtered FASTQ; output filename will be ~{samplename}.tiptoft.fastq.gz
     # could change this to pigz if we include it in the docker image
-    gzip ~{samplename}.tiptoft.fastq
+    if [ -f ~{samplename}.tiptoft.fastq ]; then
+      gzip ~{samplename}.tiptoft.fastq
+    fi
 
     # parse tiptoft output TSV
     # parse out gene names into list of strings, comma-separated, final comma at end removed by sed
@@ -44,8 +46,8 @@ task tiptoft {
   >>>
   output {
     File tiptoft_tsv = "~{samplename}.tiptoft.tsv"
-    File tiptoft_plasmid_replicon_fastq = "~{samplename}.tiptoft.fastq.gz"
-    String plasmid_replicon_genes = read_string("PLASMID_REPLICON_GENES.txt")
+    File? tiptoft_plasmid_replicon_fastq = "~{samplename}.tiptoft.fastq.gz"
+    String? plasmid_replicon_genes = read_string("PLASMID_REPLICON_GENES.txt")
     String tiptoft_version = read_string("VERSION")
     String tiptoft_docker = docker
   }

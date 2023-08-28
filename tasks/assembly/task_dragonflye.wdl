@@ -17,6 +17,7 @@ task dragonflye {
     String docker = "us-docker.pkg.dev/general-theiagen/biocontainers/dragonflye:1.0.14--hdfd78af_0"
     Int disk_size = 100
     Int cpu = 4
+    Int memory = 32
   }
   command <<<
     # get version information
@@ -46,6 +47,9 @@ task dragonflye {
       ILLUMINA_POLISHER=""
     fi
 
+    # reduce requested memory to prevent out of memory errors
+    mem=$(( ~{memory}-1 ))
+
     # run dragonflye
     # --reads for input nanopore fastq
     # --depth 0 disables sub-sampling of reads (performed with rasusa already)
@@ -64,7 +68,7 @@ task dragonflye {
       --outdir dragonflye \
       ~{'--gsize ' + genome_size} \
       --cpus ~{cpu} \
-      --ram 8 \
+      --ram ${mem} \
       --nofilter \
       ~{'--assembler ' + assembler} \
       ~{'--opts "' + assembler_options + '"'} \
@@ -73,14 +77,16 @@ task dragonflye {
 
     # rename final output file to have .fasta ending instead of .fa
     mv dragonflye/contigs.fa ~{samplename}.fasta
+    mv dragonflye/*.gfa ~{samplename}_contigs.gfa
   >>>
   output {
     File assembly_fasta = "~{samplename}.fasta"
+    File contigs_gfa = "~{samplename}_contigs.gfa"
     String dragonflye_version = read_string("VERSION")
   }
   runtime {
     docker: "~{docker}"
-    memory: "16 GB"
+    memory: "~{memory} GB"
     cpu: cpu
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
