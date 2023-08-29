@@ -9,7 +9,7 @@ task lyveset {
     String docker_image = "us-docker.pkg.dev/general-theiagen/staphb/lyveset:1.1.4f"
     Int memory = 64
     Int cpu = 16
-    Int disk_size = 100
+    Int disk_size = 250
     # Lyve-SET Parameters
     ##COMMON OPTIONS
     ##--allowedFlanking  0              allowed flanking distance in bp.
@@ -81,37 +81,51 @@ task lyveset {
     # create lyvset project
     set_manage.pl --create ~{dataset_name}
 
+    ### PREFACE ###
     # This FASTQ file re-naming strategy is necessary due to filename parsing in shuffleSplitReads.pl here: https://github.com/lskatz/lyve-SET/blob/v1.1.4f/scripts/shuffleSplitReads.pl#L34
     # Curtis' interpretation of perl code:
     # It first checks for a pattern like '_R1_' or '_R2_', and if found, sets the $readNumber variable to 1 or 2 respectively.
     # If that pattern is not found, it checks for a pattern like '_1.f' or '_2.f', again setting the $readNumber accordingly.
     # If neither pattern is matched, it raises an error indicating that the read number could not be parsed from the filename.
+    ### END PREFACE ###
 
-    mkdir input-fastqs
+    mkdir -v input-fastqs
 
-    # copy FASTQs to input-fastqs/; rename if files end in "_R1.fastq.gz" or "_R2.fastq.gz"
+    # Firstly, rename read1 and read2 so that underscores are replaced with dashes except any underscores surrounding R1 or R2
+    # Also, place files within input-fastqs/ directory
+    echo "DEBUG: FASTQ file renaming. Replacing underscores with dashes, except underscores surrounding R1 or R2"
+    for FASTQ in "${!read1_array[@]}"; do 
+      FASTQ_BASENAME=$(basename "${read1_array[$FASTQ]}")
+      # sed line replaces underscores with dashes, except surrounding R1 or R2
+      mv -v ${read1_array[$FASTQ]} input-fastqs/$(echo "${FASTQ_BASENAME}" | sed -E 's/([^R])_+/\1-/g; s/-+(R1|R2)/_\1/g; s/(R1|R2)-+/\1_/g')
+    done
+    # do the same for read2
+    for FASTQ in "${!read2_array[@]}"; do 
+      FASTQ_BASENAME=$(basename "${read2_array[$FASTQ]}")
+      # sed line replaces underscores with dashes, except surrounding R1 or R2
+      mv -v ${read2_array[$FASTQ]} input-fastqs/$(echo "${FASTQ_BASENAME}" | sed -E 's/([^R])_+/\1-/g; s/-+(R1|R2)/_\1/g; s/(R1|R2)-+/\1_/g')
+    done
+
+    ### renaming FASTQs ending with _R1.fastq.gz or _R2.fastq.gz (i.e. those downloaded w/ SRA_Fetch or Basespace_Fetch wfs) ###
     # read1
-    for index in "${!read1_array[@]}"; do
+    for FASTQ in input-fastqs/*; do
+      FASTQ_BASENAME=$(basename ${FASTQ})
       # if the R1 FASTQ filenames end in "_R1.fastq.gz"  rename the files to match lyveset naming convention
-      if [[ ${read1_array[$index]} =~ _R1.fastq.gz$ ]]; then
-        FASTQ_BASENAME=$(basename "${read1_array[$index]}")
+      if [[ ${FASTQ} =~ _R1.fastq.gz$ ]]; then
         echo "DEBUG: renaming ${FASTQ_BASENAME} to ${FASTQ_BASENAME//_R1.fastq.gz/_1.fastq.gz}"
-        cp -v "${read1_array[$index]}" "input-fastqs/${FASTQ_BASENAME//_R1.fastq.gz/_1.fastq.gz}"
+        mv -v "${FASTQ}" "input-fastqs/${FASTQ_BASENAME//_R1.fastq.gz/_1.fastq.gz}"
+      # if the R2 FASTQ filenames end in "_R2.fastq.gz"  rename the files to match lyveset naming convention
+      elif [[ ${FASTQ} =~ _R2.fastq.gz$ ]]; then
+        echo "DEBUG: renaming ${FASTQ_BASENAME} to ${FASTQ_BASENAME//_R2.fastq.gz/_2.fastq.gz}"
+        mv -v "${FASTQ}" "input-fastqs/${FASTQ_BASENAME//_R2.fastq.gz/_2.fastq.gz}"
       else
-        cp -v "${read1_array[$index]}" input-fastqs/
+        echo "DEBUG: did not detect any FASTQ files ending in _R1.fastq.gz or _R2.fastq.gz"
       fi
     done
 
-    # read2
-    for index in "${!read2_array[@]}"; do
-      if [[ ${read2_array[$index]} =~ _R2.fastq.gz$ ]]; then
-        FASTQ_BASENAME=$(basename "${read2_array[$index]}")
-        echo "DEBUG: renaming ${FASTQ_BASENAME} to ${FASTQ_BASENAME//_R2.fastq.gz/_2.fastq.gz}"
-        cp -v "${read2_array[$index]}" "input-fastqs/${FASTQ_BASENAME//_R2.fastq.gz/_2.fastq.gz}"
-      else
-        cp -v "${read2_array[$index]}" input-fastqs/
-      fi
-    done
+    echo "DEBUG: here's the final FASTQ filenames, prior to shuffling:"
+    ls -lh input-fastqs/
+    echo
 
     echo "DEBUG: merging R1 and R2 FASTQ files into interleaved FASTQ files with shuffleSplitReads.pl now..."
     shuffleSplitReads.pl --numcpus ~{cpu} -o "./~{dataset_name}/reads" input-fastqs/*.fastq.gz
