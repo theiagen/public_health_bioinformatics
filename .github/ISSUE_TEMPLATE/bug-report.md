@@ -15,6 +15,12 @@ assignees: ''
 
 ### :repeat: How to Reproduce
 
+- Was this run on the Terra platform?
+  - Terra on GCP or Azure?
+- Or were the workflows run locally using `miniwdl` or `cromwell`?
+  - **What was the exact command was used to launch the workflow?**
+- If possible, we may ask you to share your Terra workspace with us. Usually READER access is sufficient, but we may ask for WRITER access if we need to make changes to the workspace to reproduce the issue.
+
 <!-- Please describe the steps needed to reproduce the observed behavior. -->
 
 ### :fishing_pole_and_fish: Expected Behavior
