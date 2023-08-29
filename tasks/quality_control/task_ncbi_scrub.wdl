@@ -24,7 +24,7 @@ task ncbi_scrub_pe {
     fi
 
     # dehost reads
-    /opt/scrubber/scripts/scrub.sh -n ${read1_unzip} |& tail -n1 | awk -F" " '{print $1}' > FWD_SPOTS_REMOVED
+    /opt/scrubber/scripts/scrub.sh -i ${read1_unzip} |& tail -n1 | awk -F" " '{print $1}' > FWD_SPOTS_REMOVED
 
     # gzip dehosted reads
     gzip ${read1_unzip}.clean -c > ~{samplename}_R1_dehosted.fastq.gz
@@ -40,7 +40,7 @@ task ncbi_scrub_pe {
     fi
 
     # dehost reads
-    /opt/scrubber/scripts/scrub.sh -n ${read2_unzip} |& tail -n1 | awk -F" " '{print $1}' > REV_SPOTS_REMOVED
+    /opt/scrubber/scripts/scrub.sh -i ${read2_unzip} |& tail -n1 | awk -F" " '{print $1}' > REV_SPOTS_REMOVED
 
     # gzip dehosted reads
     gzip ${read2_unzip}.clean -c > ~{samplename}_R2_dehosted.fastq.gz
@@ -85,7 +85,7 @@ task ncbi_scrub_se {
     fi
 
     # dehost reads
-    /opt/scrubber/scripts/scrub.sh -n ${read1_unzip} |& tail -n1 | awk -F" " '{print $1}' > FWD_SPOTS_REMOVED
+    /opt/scrubber/scripts/scrub.sh -i ${read1_unzip} |& tail -n1 | awk -F" " '{print $1}' > FWD_SPOTS_REMOVED
 
     # gzip dehosted reads
     gzip ${read1_unzip}.clean -c > ~{samplename}_R1_dehosted.fastq.gz
