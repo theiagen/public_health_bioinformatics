@@ -278,6 +278,15 @@ task tbprofiler_output_parsing {
                          "rrl": [[2003, 2367], [2449, 3056]],
                          "rrs": [1401, 1402, 1484]
                         }
+    
+    RPOB_MUTATIONS = ["Leu430Pro",
+                      "Asp435Tyr",
+                      "His445Asn",
+                      "His445Cys",
+                      "His445Leu",
+                      "His445Ser",
+                      "Leu452Pro",
+                      "Ile491Phe"]
 
     LOW_DEPTH_OF_COVERAGE_LIST = []
     
@@ -729,6 +738,11 @@ task tbprofiler_output_parsing {
               
               row["antimicrobial"] = drugs_to_row[drug]["drug"]
 
+              if "del" not in drugs_to_row[drug]["nucleotide_change"] and float(GENE_COVERAGE_DICT[gene]) < ~{coverage_threshold}:
+                row["warning"] = "Insufficient coverage in locus"
+                row["looker_interpretation"] = "Insufficient coverage"
+                row["mdl_interpretation"] = "Insufficient coverage"
+
               # annotation to interpretation logic
               if row["confidence"] != "No WHO annotation":
                 row["looker_interpretation"] = ANNOTATION_TO_INTERPRETATION[row["confidence"]]["looker"]
@@ -818,14 +832,21 @@ task tbprofiler_output_parsing {
               
       for gene, antimicrobial_drug_names in GENE_TO_ANTIMICROBIAL_DRUG_NAME.items():
         for drug_name in antimicrobial_drug_names:
+          # No mutations detected in current gene
           if gene not in genes_reported:
-
               row = {}
               row["sample_id"] = "~{samplename}"
               row["tbprofiler_gene_name"] = gene
               row["tbprofiler_locus_tag"] = GENE_TO_LOCUS_TAG[gene]
               row["tbprofiler_variant_substitution_nt"] = "NA"
               row["tbprofiler_variant_substitution_aa"] = "NA"
+              row["confidence"] = "NA"
+              row["antimicrobial"] = drug_name
+              row["depth"] = "NA"
+              row["frequency"] = "NA"
+              row["read_support"] = "NA"
+              row["rationale"] = "NA"
+              row["warning"] = "NA"
               if float(GENE_COVERAGE_DICT[gene]) >= ~{coverage_threshold}:
                 row["tbprofiler_variant_substitution_type"] = "WT"
                 row["looker_interpretation"] = "S"
@@ -836,17 +857,11 @@ task tbprofiler_output_parsing {
                 row["tbprofiler_variant_substitution_type"] = "Insufficient Coverage"
                 row["looker_interpretation"] = "Insufficient Coverage"
                 row["mdl_interpretation"] = "Insufficient Coverage"
+                row["warning"] = "Insufficient coverage for the locus"
               if gene in GENE_TO_TIER.keys():
                 row["gene_tier"] = GENE_TO_TIER[gene]
               else:
                 row["gene_tier"] = "NA"
-              row["confidence"] = "NA"
-              row["antimicrobial"] = drug_name
-              row["depth"] = "NA"
-              row["frequency"] = "NA"
-              row["read_support"] = "NA"
-              row["rationale"] = "NA"
-              row["warning"] = "NA"
               row_list.append(row)
       
       df_laboratorian = df_laboratorian.append(row_list, ignore_index=True)
@@ -885,6 +900,14 @@ task tbprofiler_output_parsing {
             # put the formatted mutation as the content for the column
             df_lims[gene_column_code] = mutations[gene_name]
             if gene_name == "rpoB": # rule 5.2.1.2
+              # HERE WE ARE
+              # if mutation in RPOB_MUTATIONS list
+              if df_lims[antimicrobial_code][0] == "Mutation(s) associated with resistance to {} detected".format(drug_name):
+                resistance_mutations_counter = 0
+                for mutation in mutations:
+                  if mutation not in RPOB_MUTATIONS:
+                    resistance_mutations_counter += 1
+
               if df_lims[antimicrobial_code][0] == "No mutations associated with resistance to {} detected".format(drug_name):
                 # if any mutations are present
                 if len(mutations) > 0: 
