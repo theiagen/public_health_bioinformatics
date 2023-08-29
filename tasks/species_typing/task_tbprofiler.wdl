@@ -22,7 +22,7 @@ task tbprofiler {
     date | tee DATE
 
     # Print and save version
-    tb-profiler --version > VERSION && sed -i -e 's/^/TBProfiler version /' VERSION
+    tb-profiler version > VERSION && sed -i -e 's/^/TBProfiler version /' VERSION
     
     if [ -z "~{read2}" ] ; then
       INPUT_READS="-1 ~{read1}"
@@ -92,7 +92,7 @@ task tbprofiler {
       with open ("MEDIAN_COVERAGE", 'wt') as Median_Coverage:
         median_coverage=tsv_dict['median_coverage']
         Median_Coverage.write(median_coverage)
-      with open ("PCT_READS_MAPPED", 'wt" as Pct_Reads_Mapped:
+      with open ("PCT_READS_MAPPED", 'wt') as Pct_Reads_Mapped:
         pct_reads_mapped=tsv_dict['pct_reads_mapped']
         Pct_Reads_Mapped.write(pct_reads_mapped)
     CODE
