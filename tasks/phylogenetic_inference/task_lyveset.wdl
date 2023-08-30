@@ -4,6 +4,7 @@ task lyveset {
   input {
     Array[File] read1
     Array[File] read2
+    Array[String] samplename
     File reference_genome
     String dataset_name
     String docker_image = "us-docker.pkg.dev/general-theiagen/staphb/lyveset:1.1.4f"
@@ -67,14 +68,21 @@ task lyveset {
   command <<<
     date | tee DATE
 
-    # set bash arrays based on inputs to ensure read arrays are of equal length
+    # set bash arrays based on inputs to ensure read and sample arrays are of equal length
     read1_array=(~{sep=' ' read1})
     read1_array_len=$(echo "${#read1[@]}")
     read2_array=(~{sep=' ' read2})
     read2_array_len=$(echo "${#read2[@]}")
+    samplename_array=(~{sep=' ' samplename})
+    samplename_array_len=$(echo "${#samplename[@]}")
 
     if [ "$read1_array_len" -ne "$read2_array_len" ]; then
       echo "read1 array (length: $read1_array_len) and read2 index array (length: $read2_array_len) are of unequal length." >&2
+      exit 1
+    fi
+
+    if [ "$read1_array_len" -ne "$samplename_array_len" ]; then
+      echo "read1 array (length: $read1_array_len) and samplename index array (length: $samplename_array_len) are of unequal length." >&2
       exit 1
     fi
 
@@ -91,9 +99,12 @@ task lyveset {
 
     mkdir -v input-fastqs
 
-    # Firstly, rename read1 and read2 so that underscores are replaced with dashes except any underscores surrounding R1 or R2
+    # Firstly, rename samplename so that underscores are replaced with dashes 
+    # Then, rename read files with samplenames followed by "_R#.fastq.gz"
     # Also, place files within input-fastqs/ directory
-    echo "DEBUG: FASTQ file renaming. Replacing underscores with dashes, except underscores surrounding R1 or R2"
+
+    # Shelly stopped here
+    echo "DEBUG: FASTQ file renaming. Replacing underscores with dashes in sample name"
     for FASTQ in "${!read1_array[@]}"; do 
       FASTQ_BASENAME=$(basename "${read1_array[$FASTQ]}")
       # sed line replaces underscores with dashes, except surrounding R1 or R2

@@ -7,6 +7,7 @@ workflow lyveset_workflow {
   input {
     Array[File] read1
     Array[File] read2
+    Array[String] samplename
     String dataset_name
     File reference_genome
   }
@@ -14,6 +15,7 @@ workflow lyveset_workflow {
     input:
       read1 = read1,
       read2 = read2,
+      samplename = samplename,
       dataset_name = dataset_name,
       reference_genome = reference_genome
   }
