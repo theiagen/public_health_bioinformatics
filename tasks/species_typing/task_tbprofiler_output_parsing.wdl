@@ -386,26 +386,23 @@ task tbprofiler_output_parsing {
     def get_lineage_LIMS(json_file):
       """
       This function returns the lineage in English for the LIMS report
+      Corresponds to item 5.4 of interpretation logic document.
       """
       with open(json_file) as js_fh:
         results_json = json.load(js_fh)
         if results_json["main_lin"] == "":
-          # if 90% of genes have coverage above threshold:
-            # return "DNA of Mycobacterium tuberculosis complex detected"
-          # else:
-            # return "DNA of Mycobacterium tuberculosis complex NOT detected"
           if NUM_GENES_AT_COVERAGE_THRESHOLD >= 0.9*len(GENE_COVERAGE_DICT):
             return "DNA of Mycobacterium tuberculosis complex detected"
           else:
             return "DNA of Mycobacterium tuberculosis complex NOT detected"
-        elif "La1" in results_json["main_lin"]:
-          return "DNA of M. tuberculosis complex detected (M. bovis)"
         elif "lineage" in results_json["main_lin"]:
           return "DNA of Mycobacterium tuberculosis species detected"
         elif "BCG" in results_json["main_lin"]:
           return "DNA of Mycobacterium bovis BCG detected"
         elif "bovis" in results_json["main_lin"]:
           return "DNA of non-BCG Mycobacterium bovis detected"
+        elif "La1" in results_json["main_lin"]:
+          return "DNA of M. tuberculosis complex detected (M. bovis)"
         else:
           return "DNA of Mycobacterium tuberculosis complex detected (not M. bovis and not M. tb)"
     
@@ -610,16 +607,22 @@ task tbprofiler_output_parsing {
 
     def variant_to_row(variant):
       """
-      This function recieved a variants dictionary and returns a row dictionary containing the
-      basic information for it to be filled in the laboratorian report
+      This function recieves a dictionary of the 'variant', containing information
+      directly from the input JSON file and returns a reformatted dictionary 
+      that contains the basic information needed for a 'row' in the laboratorian report
       """
+      # Initialize row dictionary
       row = {}
+      # add sample name and gene name
       row["sample_id"] = "~{samplename}"
       row["tbprofiler_gene_name"] = variant["gene"]
+      # add gene tier if present in the GENE_TO_TIER look-up dictionary
       if variant["gene"] in GENE_TO_TIER.keys():
         row["gene_tier"] = GENE_TO_TIER[variant["gene"]]
       else:
         row["gene_tier"] = "NA"
+      
+      # fill in the rest of the values needd in the row according to the tbprofiler output contents
       row["tbprofiler_locus_tag"] = variant["locus_tag"]
       row["tbprofiler_variant_substitution_type"] = variant["type"]
       row["tbprofiler_variant_substitution_nt"] = variant["nucleotide_change"]
@@ -628,8 +631,11 @@ task tbprofiler_output_parsing {
       row["frequency"] = variant["freq"]
       row["read_support"] = row["depth"]*row["frequency"]
       row["warning"] = ""
+      # Set a warning if the coverage level is below the pre-determined threshold
+      # if the mutation is not a deletion, then add the gene to the low coverage list
       if row["depth"] < int('~{min_depth}') or float(GENE_COVERAGE_DICT[variant["gene"]]) < ~{coverage_threshold}:
         row["warning"] = "Insufficient coverage in locus"
+        # I am not sure if this outcome is still wanted
         if "del" in variant["nucleotide_change"]:
           row["warning"] = "Insufficient coverage in locus (deletion identified)"
         else:
@@ -638,6 +644,114 @@ task tbprofiler_output_parsing {
       return row
 
     ## Main Parsing Functions ## 
+
+    def parse_variant_section(variant_section, genes_reported, row_list):
+      """
+      This function parses the variant sections of the tbprofiler json report
+      """
+      # iterate through each variant
+      for variant in variant_section:
+        # add this gene to the reported genes list 
+        genes_reported.apppend(variant["gene"])
+        
+        # create a dictionary called "drugs_to_row" so we can make rows for each drug
+        drugs_to_row = {}
+
+        # variants can either (1) have an annotation field and it be (a) empty, or (b) full, or (2) not have an annotation field
+        # we need to account for all of these possibilities
+
+        # first: check for possibility (1): if the variant has an annotation fielde
+        if "annotation" in variant and len(variant["annotation"]) > 0:
+          # check for possibility (b): if the annotation field is present we want to look at each one
+          # also, if the drug confers resistance to multiple drugs, mulitple annotations will be found
+          # we want to save only the most severe annotation
+          for annotation in variant["annotation"]: 
+            # if this is the first time a drug is seen, add it to a dictionary
+            # it is possible the same drug can show up twice within the annotation section for a single variant
+            if annotation["drug"] not in drugs_to_row: 
+              drugs_to_row[annotation["drug"]] = {"other_variant": variant, 
+                                                  "who_confidence": annotation["who_confidence"], 
+                                                  "drug": annotation["drug"], 
+                                                  "nucleotide_change": variant["nucleotide_change"], 
+                                                  "protein_change": variant["protein_change"], 
+                                                  "gene": variant["gene"], 
+                                                  "type": variant["type"]}
+            # save only the annotation with the more severe annotation (higher value) if the same drug is identified
+            elif rank_annotation(drugs_to_row[annotation["drug"]]["who_confidence"]) < rank_annotation(annotation["who_confidence"]): 
+              drugs_to_row[annotation["drug"]] = {"other_variant": variant, 
+                                                  "who_confidence": annotation["who_confidence"], 
+                                                  "drug": annotation["drug"], 
+                                                  "nucleotide_change": variant["nucleotide_change"], 
+                                                  "protein_change": variant["protein_change"], 
+                                                  "gene": variant["gene"], 
+                                                  "type": variant["type"]}
+          
+        # possibility (2) or (1a): there is no annotation field present or the field is empty
+        # in this case, we want to apply the expert rules directly because there is no WHO annotation
+        else:
+          # in this case, we want to apply expert rules directly because there is no WHO annotation 
+          # initalize the dictionary containing the variant information using the "variant_to_row" function
+          row = variant_to_row(variant)
+          # there is not annotation value, so set confidence to no WHO annotation
+          row["confidence"] = "No WHO annotation"
+          # apply the expert rules since there is no WHO annotation
+          row["looker_interpretation"] = apply_expert_rules(variant["nucleotide_change"], variant["protein_change"], variant["gene"], variant["type"], "looker")
+          row["mdl_interpretation"] = apply_expert_rules(variant["nucleotide_change"], variant["protein_change"], variant["gene"], variant["type"], "MDL")
+          # by default, set rationale to Expert rule applied even if the rule is not considered "expert"
+          # later, we will adjust this if the looker/mdl_interpretation value has the "noexpert" string included
+          row["rationale"] = "Expert rule applied"
+
+          # since there is not an annotation field, we don't know what drug the variant affects
+          # because of this, we will iterate through the gene-associated drugs field
+          for identified_drug in variant["gene_associated_drugs"]:
+            # create an item in the drugs_to_row dictionary for the gene-associated drug
+            drugs_to_row[identified_drug] = {"other_variant": variant, 
+                                              "who_confidence": row["confidence"], 
+                                              "drug": identified_drug, 
+                                              "nucleotide_change": variant["nucleotide_change"], 
+                                              "protein_change": variant["protein_change"], 
+                                              "gene": variant["gene"], 
+                                              "type": variant["type"]}
+
+        # after iterating through all of the annotations for a variant, we want to iterate through the various drugs identified
+        for drug in drugs_to_row:
+          gene = drugs_to_row[drug]["gene"]
+
+          # convert each drug into its own row for the variant
+          row = variant_to_row(drugs_to_row[drug]["other_variant"])
+
+          row["confidence"] = "No WHO annotation" if drugs_to_row[drug]["who_confidence"] == "" else drugs_to_row[drug]["who_confidence"]
+          
+          row["antimicrobial"] = drugs_to_row[drug]["drug"]
+
+          # # Apply instructions 4 from interpretation logic document regarding the reporting of remaining scenarios (QC-related)
+          # # if the gene locus failes QC based on coverage report and is NOT a deletion
+          # if "del" not in drugs_to_row[drug]["nucleotide_change"] and float(GENE_COVERAGE_DICT[gene]) < ~{coverage_threshold}:
+          #   # also, if the mutation is NOT an "R" mutation
+          #   row["warning"] = "Insufficient coverage for the locus"
+          #   row["looker_interpretation"] = "Insufficient coverage"
+          #   row["mdl_interpretation"] = "Insufficient coverage"
+          #   # set everything else to "NA"
+
+          # convert the annotation into the intended interpretation logic
+          if row["confidence"] != "No WHO annotation":
+            # WHO annotation identified: convert to interpretation logic
+            row["looker_interpretation"] = ANNOTATION_TO_INTERPRETATION[row["confidence"]]["looker"]
+            row["mdl_interpretation"] = ANNOTATION_TO_INTERPRETATION[row["confidence"]]["MDL" if gene not in GENE_LIST_OPTION_1 else "MDL-ingenelist1"]
+            row["rationale"] = "WHO classification"
+          else:
+            # WHO annotation not identified: convert with expert rule
+            row["looker_interpretation"] = apply_expert_rules(drugs_to_row[drug]["nucleotide_change"], drugs_to_row[drug]["protein_change"], gene, drugs_to_row[drug]["type"], "looker")
+            row["mdl_interpretation"] = apply_expert_rules(drugs_to_row[drug]["nucleotide_change"], drugs_to_row[drug]["protein_change"], gene, drugs_to_row[drug]["type"], "MDL")
+            row["rationale"] = "Expert rule applied"
+          
+          # remove any "noexpert" caveats and adjust the rationale if so
+          row = remove_no_expert(row)
+          row_list.append(row)
+
+      return row_list, genes_reported
+       
+
 
     def parse_json_lab_report(json_file):
       """
@@ -661,178 +775,26 @@ task tbprofiler_output_parsing {
         - warning: column reserved for warnings such as low depth of coverage
       """
 
-      df_laboratorian = pd.DataFrame(columns = ["sample_id","tbprofiler_gene_name","tbprofiler_locus_tag",
-                                                "tbprofiler_variant_substitution_type","tbprofiler_variant_substitution_nt",
-                                                "tbprofiler_variant_substitution_aa","confidence","antimicrobial",
-                                                "looker_interpretation","mdl_interpretation","depth","frequency",
-                                                "read_support","rationale","warning"])
+      df_laboratorian = pd.DataFrame(columns = ["sample_id", "tbprofiler_gene_name", "tbprofiler_locus_tag",
+                                                "tbprofiler_variant_substitution_type", "tbprofiler_variant_substitution_nt",
+                                                "tbprofiler_variant_substitution_aa", "confidence", "antimicrobial",
+                                                "looker_interpretation", "mdl_interpretation", "depth", "frequency",
+                                                "read_support", "rationale", "warning"])
       
       row_list = []
       genes_reported = []
 
       with open(json_file) as results_json_fh:
         results_json = json.load(results_json_fh)
-
-        # reported mutation by tb-profiler, all confering resistance by WHO criteria
-        for dr_variant in results_json["dr_variants"]: 
-          genes_reported.append(dr_variant["gene"])
-          if "annotation" in dr_variant:
-            # empty dictionary in the case where multiple drugs are identified
-            drugs_to_row = {}
-            # case: annotation field is present but it's an empty list, expert rule is applied directly 
-            if len(dr_variant["annotation"]) == 0:
-              row = variant_to_row(dr_variant)
-              row["confidence"] = "No WHO annotation"
-              row["looker_interpretation"] = apply_expert_rules(dr_variant["nucleotide_change"], dr_variant["protein_change"], dr_variant["gene"], dr_variant["type"], "looker")
-              row["mdl_interpretation"] = apply_expert_rules(dr_variant["nucleotide_change"], dr_variant["protein_change"], dr_variant["gene"], dr_variant["type"], "MDL")
-              row["rationale"] = "Expert rule applied"
-
-              # iterate through any gene-associated drugs
-              for identified_drug in dr_variant["gene_associated_drugs"]:
-                if identified_drug not in drugs_to_row:
-                  drugs_to_row[identified_drug] = {"other_variant": dr_variant, 
-                                                   "who_confidence": row["confidence"], 
-                                                   "drug": identified_drug, 
-                                                   "nucleotide_change": dr_variant["nucleotide_change"], 
-                                                   "protein_change": dr_variant["protein_change"], 
-                                                   "gene": dr_variant["gene"], 
-                                                   "type": dr_variant["type"]}
-                # overwrite entry with the more severe annotation (higher value) if multiple drugs are present
-                elif rank_annotation(drugs_to_row[identified_drug]["who_confidence"]) < rank_annotation(row["confidence"]): 
-                  drugs_to_row[identified_drug] = {"other_variant": dr_variant, 
-                                                   "who_confidence": row["confidence"], 
-                                                   "drug": identified_drug, 
-                                                   "nucleotide_change": dr_variant["nucleotide_change"], 
-                                                   "protein_change": dr_variant["protein_change"], 
-                                                   "gene": dr_variant["gene"], 
-                                                   "type": dr_variant["type"]}
-
-            # case: drug confers resistance to multiple drugs - if the same drug shows multiple times in a single mutation, save only the most severe annotation
-            # iterate thorugh all possible annotations for the variant
-            for annotation in dr_variant["annotation"]: 
-              # if this is the first time a drug is seen, add to dictionary
-              if annotation["drug"] not in drugs_to_row: 
-                drugs_to_row[annotation["drug"]] = {"other_variant": dr_variant, 
-                                                    "who_confidence": annotation["who_confidence"], 
-                                                    "drug": annotation["drug"], 
-                                                    "nucleotide_change": dr_variant["nucleotide_change"], 
-                                                    "protein_change": dr_variant["protein_change"], 
-                                                    "gene": dr_variant["gene"], 
-                                                    "type": dr_variant["type"]}
-              # overwrite entry with the more severe annotation (higher value) if multiple drugs are present
-              elif rank_annotation(drugs_to_row[annotation["drug"]]["who_confidence"]) < rank_annotation(annotation["who_confidence"]): 
-                drugs_to_row[annotation["drug"]] = {"other_variant": dr_variant, 
-                                                    "who_confidence": annotation["who_confidence"], 
-                                                    "drug": annotation["drug"], 
-                                                    "nucleotide_change": dr_variant["nucleotide_change"], 
-                                                    "protein_change": dr_variant["protein_change"], 
-                                                    "gene": dr_variant["gene"], 
-                                                    "type": dr_variant["type"]}
-            
-            for drug in drugs_to_row:
-              gene = drugs_to_row[drug]["gene"]
-
-              row = variant_to_row(drugs_to_row[drug]["other_variant"])
-
-              row["confidence"] = "No WHO annotation" if drugs_to_row[drug]["who_confidence"] == "" else drugs_to_row[drug]["who_confidence"]
-              
-              row["antimicrobial"] = drugs_to_row[drug]["drug"]
-
-              if "del" not in drugs_to_row[drug]["nucleotide_change"] and float(GENE_COVERAGE_DICT[gene]) < ~{coverage_threshold}:
-                row["warning"] = "Insufficient coverage in locus"
-                row["looker_interpretation"] = "Insufficient coverage"
-                row["mdl_interpretation"] = "Insufficient coverage"
-
-              # annotation to interpretation logic
-              if row["confidence"] != "No WHO annotation":
-                row["looker_interpretation"] = ANNOTATION_TO_INTERPRETATION[row["confidence"]]["looker"]
-                row["mdl_interpretation"] = ANNOTATION_TO_INTERPRETATION[row["confidence"]]["MDL" if gene not in GENE_LIST_OPTION_1 else "MDL-ingenelist1"]
-                row["rationale"] = "WHO classification"
-              else:
-                row["looker_interpretation"] = apply_expert_rules(drugs_to_row[drug]["nucleotide_change"], drugs_to_row[drug]["protein_change"], gene, drugs_to_row[drug]["type"], "looker")
-                row["mdl_interpretation"] = apply_expert_rules(drugs_to_row[drug]["nucleotide_change"], drugs_to_row[drug]["protein_change"], gene, drugs_to_row[drug]["type"], "MDL")
-                row["rationale"] = "Expert rule applied"
-              
-              row = remove_no_expert(row)
-              row_list.append(row)
-
-          # case: annotation field is not present, expert rule is applied directly
-          else:
-            for drug in dr_variant["gene_associated_drugs"]:
-              row = variant_to_row(dr_variant)
-              row["confidence"] = "No WHO annotation"
-              row["looker_interpretation"] = apply_expert_rules(dr_variant["nucleotide_change"], dr_variant["protein_change"], dr_variant["gene"], dr_variant["type"], "looker")
-              row["mdl_interpretation"] = apply_expert_rules(dr_variant["nucleotide_change"], dr_variant["protein_change"], dr_variant["gene"], dr_variant["type"], "MDL")
-              row["rationale"] = "Expert rule applied"
-              row["antimicrobial"] = drug
-              row = remove_no_expert(row)
-              row_list.append(row)
-      
-        # mutations not reported by tb-profiler
-        for other_variant in results_json["other_variants"]: 
-          genes_reported.append(other_variant["gene"])
-          if "annotation" in other_variant:
-            # case: annotation field is present but it's an empty list 
-            if len(other_variant["annotation"]) == 0:
-              row = variant_to_row(other_variant)
-              row["confidence"] = "No WHO annotation"
-              row["looker_interpretation"] = apply_expert_rules(other_variant["nucleotide_change"], other_variant["protein_change"], other_variant["gene"], other_variant["type"], "looker")
-              row["mdl_interpretation"] = apply_expert_rules(other_variant["nucleotide_change"], other_variant["protein_change"], other_variant["gene"], other_variant["type"], "MDL")
-              row["rationale"] = "Expert rule applied"
-              row = remove_no_expert(row)
-              row_list.append(row)
-            # case: drug confers resistance to multiple drugs - if the same drug shows multiple times, save only the most severe annotation
-            drugs_to_row = {}
-            for annotation in other_variant["annotation"]:
-              if annotation["drug"] not in drugs_to_row:
-                drugs_to_row[annotation["drug"]] = {"other_variant": other_variant, 
-                                                    "who_confidence": annotation["who_confidence"], 
-                                                    "drug": annotation["drug"], 
-                                                    "nucleotide_change": other_variant["nucleotide_change"],
-                                                    "protein_change": other_variant["protein_change"], 
-                                                    "gene": other_variant["gene"], 
-                                                    "type": other_variant["type"]}
-              elif rank_annotation(drugs_to_row[annotation["drug"]]["who_confidence"]) < rank_annotation(annotation["who_confidence"]):
-                drugs_to_row[annotation["drug"]] = {"other_variant": other_variant, 
-                                                    "who_confidence": annotation["who_confidence"], 
-                                                    "drug": annotation["drug"], 
-                                                    "nucleotide_change": other_variant["nucleotide_change"],
-                                                    "protein_change": other_variant["protein_change"], 
-                                                    "gene": other_variant["gene"], 
-                                                    "type": other_variant["type"]}
-
-            for drug in drugs_to_row:
-              row = variant_to_row(drugs_to_row[drug]["other_variant"])
-              
-              row["confidence"] = "No WHO annotation" if drugs_to_row[drug]["who_confidence"] == "" else drugs_to_row[drug]["who_confidence"]
-              row["antimicrobial"] = drugs_to_row[drug]["drug"]
-              
-              # annotation to interpretation logic
-              if row["confidence"] != "No WHO annotation":
-                row["looker_interpretation"] = ANNOTATION_TO_INTERPRETATION[row["confidence"]]["looker"]
-                row["mdl_interpretation"] = ANNOTATION_TO_INTERPRETATION[row["confidence"]]["MDL" if gene not in GENE_LIST_OPTION_1 else "MDL-ingenelist1"]
-                row["rationale"] = "WHO classification"
-              else:
-                row["looker_interpretation"] = apply_expert_rules(drugs_to_row[drug]["nucleotide_change"], drugs_to_row[drug]["protein_change"], gene, drugs_to_row[drug]["type"], "looker")
-                row["mdl_interpretation"] = apply_expert_rules(drugs_to_row[drug]["nucleotide_change"], drugs_to_row[drug]["protein_change"], gene, drugs_to_row[drug]["type"], "MDL")
-                row["rationale"] = "Expert rule applied"
-              
-              row = remove_no_expert(row)
-              row_list.append(row)
-          else:
-            for drug in other_variant["gene_associated_drugs"]:
-              row = variant_to_row(other_variant)
-              row["confidence"] = "No WHO annotation"
-              row["looker_interpretation"] = apply_expert_rules(other_variant["nucleotide_change"], other_variant["protein_change"], other_variant["gene"], other_variant["type"], "looker")
-              row["mdl_interpretation"] = apply_expert_rules(other_variant["nucleotide_change"], other_variant["protein_change"], other_variant["gene"], other_variant["type"], "MDL")
-              row["rationale"] = "Expert rule applied"
-              row["antimicrobial"] = drug
-              row = remove_no_expert(row)
-              row_list.append(row)
-              
+        # mutations reported by tb-profiler come in two sections: "dr_variants" and "other_variants"
+        # we will iterate through "dr_variants" first
+        row_list, genes_reported = parse_variant_section(results_json["dr_variants"], genes_reported, row_list)
+        # then we will iterate through "other_variants"
+        row_list, genes_reported = parse_variant_section(results_json["other_variants"], genes_reported, row_list)
+        
       for gene, antimicrobial_drug_names in GENE_TO_ANTIMICROBIAL_DRUG_NAME.items():
         for drug_name in antimicrobial_drug_names:
-          # No mutations detected in current gene
+          # in this case, no mutations detected in current gene
           if gene not in genes_reported:
               row = {}
               row["sample_id"] = "~{samplename}"
@@ -846,24 +808,72 @@ task tbprofiler_output_parsing {
               row["frequency"] = "NA"
               row["read_support"] = "NA"
               row["rationale"] = "NA"
-              row["warning"] = "NA"
-              if float(GENE_COVERAGE_DICT[gene]) >= ~{coverage_threshold}:
-                row["tbprofiler_variant_substitution_type"] = "WT"
-                row["looker_interpretation"] = "S"
-                row["mdl_interpretation"] = "WT"
-                row["tbprofiler_variant_substitution_nt"] = "WT"
-                row["tbprofiler_variant_substitution_aa"] = "WT"
-              else:
-                row["tbprofiler_variant_substitution_type"] = "Insufficient Coverage"
-                row["looker_interpretation"] = "Insufficient Coverage"
-                row["mdl_interpretation"] = "Insufficient Coverage"
-                row["warning"] = "Insufficient coverage for the locus"
+              row["warning"] = "NA"            
+              # add gene tier information
               if gene in GENE_TO_TIER.keys():
                 row["gene_tier"] = GENE_TO_TIER[gene]
               else:
                 row["gene_tier"] = "NA"
+              # apply instructions 4.1 and part of 4.2 in the interpretation logic document
+              if float(GENE_COVERAGE_DICT[gene]) >= ~{coverage_threshold}:
+                row["tbprofiler_variant_substitution_type"] = "WT"
+                row["tbprofiler_variant_substitution_nt"] = "WT"
+                row["tbprofiler_variant_substitution_aa"] = "WT"
+                row["looker_interpretation"] = "S"
+                row["mdl_interpretation"] = "WT"
+              else:
+                row["warning"] = "Insufficient coverage for the locus"
+                row["tbprofiler_variant_substitution_type"] = "Insufficient Coverage"
+                row["looker_interpretation"] = "Insufficient Coverage"
+                row["mdl_interpretation"] = "Insufficient Coverage"
+
               row_list.append(row)
-      
+          else:
+            # if the gene is reported, check that there is at least an R mutation for the gene
+            # applying the second part of 4.2 in the interpretation logic document
+            no_r_mutations = ()
+            for row in row_list:
+              if row["gene"] == gene:
+                if row["looker_interpretation"] != "R" and "deletion" not in row["warning"]:
+                  # if there is no R interpretation for the gene, add it to the no_r_mutations 
+                  # set, where we will add in the insufficient coverage warning
+                  no_r_mutations.append(row["gene"])
+    
+                # if there is an R interpretation for the gene (or a deletion), we don't want it in the no_r_mutations set
+                else:
+                  no_r_mutations.discard(row["gene"])
+
+            # check the gene if it passes qc
+            # if no_r_mutations has a gene in it, we want to edit it
+            if len(no_r_mutations) > 0: 
+              if gene in LOW_DEPTH_OF_COVERAGE_LIST:
+                # remove all rows in the row_list entity that belong to this gene
+                row_list = [row for row in row_list if row["gene"] != gene]
+                # re-add the row, but with correct information as of 4.2
+                row = {}
+                row["sample_id"] = "~{samplename}"
+                row["tbprofiler_gene_name"] = gene
+                row["tbprofiler_locus_tag"] = GENE_TO_LOCUS_TAG[gene]
+                row["tbprofiler_variant_substitution_nt"] = "NA"
+                row["tbprofiler_variant_substitution_aa"] = "NA"
+                row["confidence"] = "NA"
+                row["antimicrobial"] = drug_name
+                row["depth"] = "NA"
+                row["frequency"] = "NA"
+                row["read_support"] = "NA"
+                row["rationale"] = "NA"
+                row["warning"] = "Insufficient coverage for the locus"        
+                # add gene tier information
+                if gene in GENE_TO_TIER.keys():
+                  row["gene_tier"] = GENE_TO_TIER[gene]
+                else:
+                  row["gene_tier"] = "NA"
+                row["looker_interpretation"] = "Insufficient coverage"
+                row["mdl_interpretation"] = "Insufficient coverage"
+
+                row_list.append(row)
+            
+
       df_laboratorian = df_laboratorian.append(row_list, ignore_index=True)
       df_laboratorian.to_csv("~{samplename}_tbprofiler_laboratorian_report.csv", index=False)
     
