@@ -100,38 +100,18 @@ task lyveset {
     mkdir -v input-fastqs
 
     # Firstly, rename samplename so that underscores are replaced with dashes 
-    # Then, rename read files with samplenames followed by "_R#.fastq.gz"
+    # Then, rename read files with samplenames followed by "_[1,2].fastq.gz"
     # Also, place files within input-fastqs/ directory
 
-    # Shelly stopped here
-    echo "DEBUG: FASTQ file renaming. Replacing underscores with dashes in sample name"
-    for FASTQ in "${!read1_array[@]}"; do 
-      FASTQ_BASENAME=$(basename "${read1_array[$FASTQ]}")
+    echo "DEBUG: FASTQ file renaming. Renaming FASTQs to match lyveset naming convention..."
+    # for every sample in the samplename array, move and rename the read1 and read2 files
+    for SAMPLENAME in "${!samplename_array[@]}"; do 
+      SAMPLENAME_NO_UNDERSCORES=$(echo "${samplename_array[$SAMPLENAME]}" | sed -E 's/_/-/g')
       # sed line replaces underscores with dashes, except surrounding R1 or R2
-      mv -v ${read1_array[$FASTQ]} input-fastqs/$(echo "${FASTQ_BASENAME}" | sed -E 's/([^R])_+/\1-/g; s/-+(R1|R2)/_\1/g; s/(R1|R2)-+/\1_/g')
-    done
-    # do the same for read2
-    for FASTQ in "${!read2_array[@]}"; do 
-      FASTQ_BASENAME=$(basename "${read2_array[$FASTQ]}")
-      # sed line replaces underscores with dashes, except surrounding R1 or R2
-      mv -v ${read2_array[$FASTQ]} input-fastqs/$(echo "${FASTQ_BASENAME}" | sed -E 's/([^R])_+/\1-/g; s/-+(R1|R2)/_\1/g; s/(R1|R2)-+/\1_/g')
-    done
-
-    ### renaming FASTQs ending with _R1.fastq.gz or _R2.fastq.gz (i.e. those downloaded w/ SRA_Fetch or Basespace_Fetch wfs) ###
-    # read1
-    for FASTQ in input-fastqs/*; do
-      FASTQ_BASENAME=$(basename ${FASTQ})
-      # if the R1 FASTQ filenames end in "_R1.fastq.gz"  rename the files to match lyveset naming convention
-      if [[ ${FASTQ} =~ _R1.fastq.gz$ ]]; then
-        echo "DEBUG: renaming ${FASTQ_BASENAME} to ${FASTQ_BASENAME//_R1.fastq.gz/_1.fastq.gz}"
-        mv -v "${FASTQ}" "input-fastqs/${FASTQ_BASENAME//_R1.fastq.gz/_1.fastq.gz}"
-      # if the R2 FASTQ filenames end in "_R2.fastq.gz"  rename the files to match lyveset naming convention
-      elif [[ ${FASTQ} =~ _R2.fastq.gz$ ]]; then
-        echo "DEBUG: renaming ${FASTQ_BASENAME} to ${FASTQ_BASENAME//_R2.fastq.gz/_2.fastq.gz}"
-        mv -v "${FASTQ}" "input-fastqs/${FASTQ_BASENAME//_R2.fastq.gz/_2.fastq.gz}"
-      else
-        echo "DEBUG: did not detect any FASTQ files ending in _R1.fastq.gz or _R2.fastq.gz"
-      fi
+      echo "DEBUG: SAMPLENAME_NO_UNDERSCORES= ${SAMPLENAME_NO_UNDERSCORES}"
+      mv -v ${read1_array[$SAMPLENAME]} input-fastqs/${SAMPLENAME_NO_UNDERSCORES}_1.fastq.gz
+      echo 
+      mv -v ${read2_array[$SAMPLENAME]} input-fastqs/${SAMPLENAME_NO_UNDERSCORES}_2.fastq.gz
     done
 
     echo "DEBUG: here's the final FASTQ filenames, prior to shuffling:"
