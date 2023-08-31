@@ -343,7 +343,7 @@ task tbprofiler_output_parsing {
           return "S"
 
       elif gene == "rpoB": # apply expert rules 2.2.2
-        if SPECIAL_POSITIONS[gene][1] <= position_nt <= SPECIAL_POSITIONS[gene][2]:
+        if SPECIAL_POSITIONS[gene][1] <= position_aa <= SPECIAL_POSITIONS[gene][2]:
             if substitution_type != "synonymous_variant":
               return "Assoc with R" if interpretation_destination == "LIMS" else "R"
             else:
