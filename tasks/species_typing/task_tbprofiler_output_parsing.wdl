@@ -652,7 +652,7 @@ task tbprofiler_output_parsing {
       # iterate through each variant
       for variant in variant_section:
         # add this gene to the reported genes list 
-        genes_reported.apppend(variant["gene"])
+        genes_reported.append(variant["gene"])
         
         # create a dictionary called "drugs_to_row" so we can make rows for each drug
         drugs_to_row = {}
