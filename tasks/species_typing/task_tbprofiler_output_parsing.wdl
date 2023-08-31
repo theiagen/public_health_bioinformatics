@@ -837,24 +837,24 @@ task tbprofiler_output_parsing {
           else:
             # if the gene is reported, check that there is at least an R mutation for the gene
             # applying the second part of 4.2 in the interpretation logic document
-            no_r_mutations = ()
+            no_r_mutations = set()
             for row in row_list:
-              if row["gene"] == gene:
+              if row["tbprofiler_gene_name"] == gene:
                 if row["looker_interpretation"] != "R" and "deletion" not in row["warning"]:
                   # if there is no R interpretation for the gene, add it to the no_r_mutations 
                   # set, where we will add in the insufficient coverage warning
-                  no_r_mutations.append(row["gene"])
+                  no_r_mutations.add(row["tbprofiler_gene_name"])
     
                 # if there is an R interpretation for the gene (or a deletion), we don't want it in the no_r_mutations set
                 else:
-                  no_r_mutations.discard(row["gene"])
+                  no_r_mutations.discard(row["tbprofiler_gene_name"])
 
             # check the gene if it passes qc
             # if no_r_mutations has a gene in it, we want to edit it
             if len(no_r_mutations) > 0: 
               if gene in LOW_DEPTH_OF_COVERAGE_LIST:
                 # remove all rows in the row_list entity that belong to this gene
-                row_list = [row for row in row_list if row["gene"] != gene]
+                row_list = [row for row in row_list if row["tbprofiler_gene_name"] != gene]
                 # re-add the row, but with correct information as of 4.2
                 row = {}
                 row["sample_id"] = "~{samplename}"
