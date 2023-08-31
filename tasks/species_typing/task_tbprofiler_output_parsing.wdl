@@ -27,7 +27,6 @@ task tbprofiler_output_parsing {
 
     # calculate number of genes >= coverage threshold
     NUM_GENES_AT_COVERAGE_THRESHOLD = sum(int(value) >= ~{coverage_threshold} for value in GENE_COVERAGE_DICT.values())
-    print(NUM_GENES_AT_COVERAGE_THRESHOLD)
     # lookup dictionary - antimicrobial code to drug name
     ANTIMICROBIAL_CODE_TO_DRUG_NAME = {"M_DST_B01_INH": "isoniazid", 
                           "M_DST_C01_ETO": "ethionamide",
@@ -260,7 +259,8 @@ task tbprofiler_output_parsing {
                                  "MDL": "S", 
                                  "MDL-ingenelist1" : "U"},
       "Not assoc w R": {"looker": "S", 
-                        "MDL": "S"},
+                        "MDL": "S",
+                        "MDL-ingenelist1" : "S"}, # SAGE! HAD TO ADD THIS; DOES IT MAKE SENSE?
       "Not assoc w R - Interim": {"looker": "S-Interim", 
                                   "MDL": "S", 
                                   "MDL-ingenelist1" : "U"}                              
@@ -723,6 +723,12 @@ task tbprofiler_output_parsing {
           row["confidence"] = "No WHO annotation" if drugs_to_row[drug]["who_confidence"] == "" else drugs_to_row[drug]["who_confidence"]
           
           row["antimicrobial"] = drugs_to_row[drug]["drug"]
+
+          #print("HERE", gene)
+          #if gene in GENE_LIST_OPTION_1:
+          #  print("LIST OPTION 1")
+          #  print(row["confidence"])
+          #  print(ANNOTATION_TO_INTERPRETATION[row["confidence"]])
 
           # # Apply instructions 4 from interpretation logic document regarding the reporting of remaining scenarios (QC-related)
           # # if the gene locus failes QC based on coverage report and is NOT a deletion
