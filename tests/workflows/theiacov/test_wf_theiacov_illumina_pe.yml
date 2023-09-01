@@ -141,7 +141,7 @@
       md5sum: 897316929176464ebc9ad085f31e7284
     # clean read screen
     - path: miniwdl_run/call-clean_check_reads/command
-      md5sum: 7b889616aa2220b8c7f8413cc59a8c73
+      md5sum: 38e0fccd1a5689a1c19c4dfe3826f854
     - path: miniwdl_run/call-clean_check_reads/inputs.json
       contains: ["read1", "read2", "organism"]
     - path: miniwdl_run/call-clean_check_reads/outputs.json
@@ -368,9 +368,9 @@
     - path: miniwdl_run/call-pangolin4/work/PANGOLIN_NOTES
       md5sum: e98d2fc28664c0622f6b490433286e32
     - path: miniwdl_run/call-pangolin4/work/PANGO_ASSIGNMENT_VERSION
-      md5sum: 4f37bb038d973d7e32df5cbbc4067c87
+      md5sum: edfb0c7ebdbf598df19861b650ee904a
     - path: miniwdl_run/call-pangolin4/work/VERSION_PANGOLIN_ALL
-      md5sum: 6c7f688ada8c1e247782758d7fca08e7
+      md5sum: ef9c730f9b45d2fc284575c13fe7c920
     - path: miniwdl_run/call-pangolin4/work/_miniwdl_inputs/0/SRR13687078.ivar.consensus.fasta
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     # sc2 gene coverage
@@ -395,7 +395,7 @@
       md5sum: 60725f5d2663ca8d41955a739a154cc9
     # nextclade
     - path: miniwdl_run/call-nextclade/command
-      md5sum: 2a8dd9cf4d9d3a6b10d034a44c91c4c0
+      md5sum: 25c2a637dcab6e9204192a1fe6386a1b
     - path: miniwdl_run/call-nextclade/inputs.json
       contains: ["dataset_name", "dataset_tag", "genome_fasta"]
     - path: miniwdl_run/call-nextclade/outputs.json
@@ -409,7 +409,7 @@
     - path: miniwdl_run/call-nextclade/work/SRR13687078.ivar.consensus.nextclade.json
     - path: miniwdl_run/call-nextclade/work/SRR13687078.ivar.consensus.nextclade.tsv
     - path: miniwdl_run/call-nextclade/work/NEXTCLADE_VERSION
-      md5sum: d5f4e83525024cba7eb7489cd5209e7d
+      md5sum: 91a455762183b41af0d8de5596e28e7f
     - path: miniwdl_run/call-nextclade/work/nextclade.aligned.fasta
       md5sum: 59893fd3ef32062d50ded18300024734
     - path: miniwdl_run/call-nextclade/work/nextclade.csv

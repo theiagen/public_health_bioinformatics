@@ -200,7 +200,7 @@
     - path: miniwdl_run/call-cg_pipeline_raw/work/test_readMetrics.tsv
       contains: ["File", "fastq", "coverage"]
     - path: miniwdl_run/call-clean_check_reads/command
-      md5sum: 4b95154c6899fca54541d412b63fcb65
+      md5sum: 4c2982bbbadc5e5420a69e4c5ecd68b2
     - path: miniwdl_run/call-clean_check_reads/inputs.json
       contains: ["read1", "fastq", "skip_screen", "true"]
     - path: miniwdl_run/call-clean_check_reads/outputs.json
@@ -218,7 +218,7 @@
       md5sum: 32c0be4fb7f3030bf9c74c0a836d4f2e
     - path: miniwdl_run/call-clean_check_reads/work/_miniwdl_inputs/0/test_1.clean.fastq.gz
     - path: miniwdl_run/call-gambit/command
-      md5sum: bb2310e55a3d567803fab009dd101fe9
+      md5sum: eeec5cfb3590f2bea525d5eec943d440
     - path: miniwdl_run/call-gambit/inputs.json
       contains: ["assembly", "fasta", "samplename", "test"]
     - path: miniwdl_run/call-gambit/outputs.json
@@ -232,9 +232,9 @@
     - path: miniwdl_run/call-gambit/work/CLOSEST_DISTANCE
     - path: miniwdl_run/call-gambit/work/DATE
     - path: miniwdl_run/call-gambit/work/GAMBIT_DB_VERSION
-      md5sum: fcc8f3e34197b01a79929281c2bc93e6
+      md5sum: 9b822b93497f0e02e1ef00f60db5850e
     - path: miniwdl_run/call-gambit/work/GAMBIT_VERSION
-      md5sum: f04975119234de325222289d81748e6d
+      md5sum: 42a2713399a2aea74a7cb6889caf3fdb
     - path: miniwdl_run/call-gambit/work/MERLIN_TAG
       md5sum: d4cd0dabcf4caa22ad92fab40844c786
     - path: miniwdl_run/call-gambit/work/NEXT_TAXON
@@ -361,7 +361,7 @@
     - path: miniwdl_run/call-quast/work/transposed_report.txt
       contains: ["Assembly", "length", "contigs", "test"]
     - path: miniwdl_run/call-raw_check_reads/command
-      md5sum: eba0e27254df0ddaba0ae05e08c71027
+      md5sum: 42fd97b20d28fea6be743dbf5e58667b
     - path: miniwdl_run/call-raw_check_reads/inputs.json
       contains: ["read1", "fastq", "skip_screen", "true"]
     - path: miniwdl_run/call-raw_check_reads/outputs.json
@@ -550,7 +550,7 @@
     - path: miniwdl_run/wdl/tasks/quality_control/task_quast.wdl
       contains: ["version", "quast", "output"]
     - path: miniwdl_run/wdl/tasks/quality_control/task_screen.wdl
-      md5sum: 19fe4b646274e39d9e2cf48a06f5da92
+      md5sum: c1f2f5cef67a0bd0cbc9da2a834d40e4
     - path: miniwdl_run/wdl/tasks/quality_control/task_trimmomatic.wdl
       contains: ["version", "trimmomatic", "output"]
     - path: miniwdl_run/wdl/tasks/species_typing/task_cauris_cladetyper.wdl
@@ -592,17 +592,17 @@
     - path: miniwdl_run/wdl/tasks/species_typing/task_ts_mlst.wdl
       md5sum: 550791ca5faf11a5f75b6be18739ae01
     - path: miniwdl_run/wdl/tasks/task_versioning.wdl
-      md5sum: 01b9f9c265b15ae776a9fe86efdf59f5
+      md5sum: c178145bad99e3858a1327b3774177f3
     - path: miniwdl_run/wdl/tasks/taxon_id/task_gambit.wdl
-      md5sum: c7f16907ef2bde7ae0e142ae685e19da
+      md5sum: 08987d952c67c6ff6debf6898af15f9a
     - path: miniwdl_run/wdl/tasks/taxon_id/task_kraken2.wdl
       md5sum: 7e6242668b3ee8726ad15e0d07f88446
     - path: miniwdl_run/wdl/tasks/taxon_id/task_midas.wdl
       md5sum: 024971d1439dff7d59c0a26a824bd2c6
     - path: miniwdl_run/wdl/tasks/utilities/task_broad_terra_tools.wdl
-      md5sum: 499eb797a809306edf7e97005f67f8f2
+      md5sum: 0236363c7f0694cd3f96416aa43e2f91
     - path: miniwdl_run/wdl/workflows/theiaprok/wf_theiaprok_illumina_se.wdl
-      md5sum: c6ab2e13cf4802664b1c93e40a1cd5ba
+      md5sum: 858d33eb64b9bda618a47a999f370df5
     - path: miniwdl_run/wdl/workflows/utilities/wf_merlin_magic.wdl
       md5sum: 53555c2f3e144e55f362080c5e75e434
     - path: miniwdl_run/wdl/workflows/utilities/wf_read_QC_trim_se.wdl

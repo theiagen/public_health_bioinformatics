@@ -42,9 +42,9 @@ workflow theiacov_illumina_pe {
     Float consensus_min_freq = 0.6 # minimum frequency for a variant to be called as SNP in consensus genome
     Float variant_min_freq = 0.6 # minimum frequency for a variant to be reported in ivar outputs
     # nextclade inputs
-    String nextclade_docker_image = "nextstrain/nextclade:2.13.0"
+    String nextclade_docker_image = "nextstrain/nextclade:2.14.0"
     String nextclade_dataset_reference = "MN908947"
-    String nextclade_dataset_tag = "2023-06-16T12:00:00Z"
+    String nextclade_dataset_tag = "2023-08-17T12:00:00Z"
     String? nextclade_dataset_name
     # nextclade flu inputs
     String nextclade_flu_h1n1_ha_tag = "2023-04-02T12:00:00Z"

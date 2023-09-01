@@ -4,9 +4,9 @@ task gambit {
   input {
     File assembly
     String samplename
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/gambit:0.5.0"
-    File? gambit_db_genomes
-    File? gambit_db_signatures
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/gambit:1.0.0"
+    File gambit_db_genomes = "gs://theiagen-public-files/terra/gambit_files/1.1.0/gambit-metadata-1.1-230417.gdb"
+    File gambit_db_signatures = "gs://theiagen-public-files/terra/gambit_files/1.1.0/gambit-signatures-1.1-230417.gs"
     Int disk_size = 100
     Int memory = 16 # set default
     Int cpu = 8 # set default
@@ -20,7 +20,8 @@ task gambit {
     gambit --version | tee GAMBIT_VERSION
     
     # set gambit reference dir; will assume that gambit genomes and signatures will be provided by user in tandem or not at all
-    if [[ ! -z "~{gambit_db_genomes}" ]]; then 
+    # -s evaluates to TRUE if the file exists and has a size greater than zero
+    if [[ -s "~{gambit_db_genomes}" ]]; then 
       echo "User gabmit db identified; ~{gambit_db_genomes} will be utilized for alignment"
       gambit_db_version="$(basename -- '~{gambit_db_genomes}'); $(basename -- '~{gambit_db_signatures}')"
       gambit_db_dir="${PWD}/gambit_database"

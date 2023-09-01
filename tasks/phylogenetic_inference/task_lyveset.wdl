@@ -4,12 +4,13 @@ task lyveset {
   input {
     Array[File] read1
     Array[File] read2
+    Array[String] samplename
     File reference_genome
     String dataset_name
     String docker_image = "us-docker.pkg.dev/general-theiagen/staphb/lyveset:1.1.4f"
     Int memory = 64
     Int cpu = 16
-    Int disk_size = 100
+    Int disk_size = 250
     # Lyve-SET Parameters
     ##COMMON OPTIONS
     ##--allowedFlanking  0              allowed flanking distance in bp.
@@ -60,54 +61,84 @@ task lyveset {
     Boolean fast = false
     Boolean downsample = false
     Boolean sample_sites = false
-    String? read_cleaner = 'CGP'
+    String read_cleaner = "CGP"
     String? mapper
     String? snpcaller
   }
   command <<<
     date | tee DATE
 
-    # set bash arrays based on inputs to ensure read arrays are of equal length
+    # set bash arrays based on inputs to ensure read and sample arrays are of equal length
     read1_array=(~{sep=' ' read1})
     read1_array_len=$(echo "${#read1[@]}")
     read2_array=(~{sep=' ' read2})
     read2_array_len=$(echo "${#read2[@]}")
+    samplename_array=(~{sep=' ' samplename})
+    samplename_array_len=$(echo "${#samplename[@]}")
 
-    if [ "$read1_array_len" -ne "$read2_index_array_len" ]; then
+    if [ "$read1_array_len" -ne "$read2_array_len" ]; then
       echo "read1 array (length: $read1_array_len) and read2 index array (length: $read2_array_len) are of unequal length." >&2
+      exit 1
+    fi
+
+    if [ "$read1_array_len" -ne "$samplename_array_len" ]; then
+      echo "read1 array (length: $read1_array_len) and samplename index array (length: $samplename_array_len) are of unequal length." >&2
       exit 1
     fi
 
     # create lyvset project
     set_manage.pl --create ~{dataset_name}
 
-    #shuffle paired end reads
-    for index in ${!read1_array[@]}; do
-      cp ${read1_array[$index]} . && cp ${read2_array[$index]} . # move reads to cwd
+    ### PREFACE ###
+    # This FASTQ file re-naming strategy is necessary due to filename parsing in shuffleSplitReads.pl here: https://github.com/lskatz/lyve-SET/blob/v1.1.4f/scripts/shuffleSplitReads.pl#L34
+    # Curtis' interpretation of perl code:
+    # It first checks for a pattern like '_R1_' or '_R2_', and if found, sets the $readNumber variable to 1 or 2 respectively.
+    # If that pattern is not found, it checks for a pattern like '_1.f' or '_2.f', again setting the $readNumber accordingly.
+    # If neither pattern is matched, it raises an error indicating that the read number could not be parsed from the filename.
+    ### END PREFACE ###
+
+    mkdir -v input-fastqs
+
+    # Firstly, rename samplename so that underscores are replaced with dashes 
+    # Then, rename read files with samplenames followed by "_[1,2].fastq.gz"
+    # Also, place files within input-fastqs/ directory
+
+    echo "DEBUG: FASTQ file renaming. Renaming FASTQs to match lyveset naming convention..."
+    # for every sample in the samplename array, move and rename the read1 and read2 files
+    for SAMPLENAME in "${!samplename_array[@]}"; do 
+      SAMPLENAME_NO_UNDERSCORES=$(echo "${samplename_array[$SAMPLENAME]}" | sed -E 's/_/-/g')
+      # sed line replaces underscores with dashes, except surrounding R1 or R2
+      echo "DEBUG: SAMPLENAME_NO_UNDERSCORES= ${SAMPLENAME_NO_UNDERSCORES}"
+      mv -v ${read1_array[$SAMPLENAME]} input-fastqs/${SAMPLENAME_NO_UNDERSCORES}_1.fastq.gz
+      echo 
+      mv -v ${read2_array[$SAMPLENAME]} input-fastqs/${SAMPLENAME_NO_UNDERSCORES}_2.fastq.gz
     done
 
-    shuffleSplitReads.pl --numcpus ~{cpu} -o ./interleaved *.fastq.gz 
+    echo "DEBUG: here's the final FASTQ filenames, prior to shuffling:"
+    ls -lh input-fastqs/
+    echo
 
-    # then moved into your project dir
-    mv ./interleaved/*.fastq.gz ~{dataset_name}/reads/
+    echo "DEBUG: merging R1 and R2 FASTQ files into interleaved FASTQ files with shuffleSplitReads.pl now..."
+    shuffleSplitReads.pl --numcpus ~{cpu} -o "./~{dataset_name}/reads" input-fastqs/*.fastq.gz
     
-    # cleanup
-    rmdir interleaved
-    mkdir ~{dataset_name}/ref/
-    cp ~{reference_genome} ~{dataset_name}/ref/reference.fasta
+    # make directory for reference genome and copy reference genome into it. Also rename to reference.fasta
+    mkdir -v ~{dataset_name}/ref/
+    cp -v ~{reference_genome} ~{dataset_name}/ref/reference.fasta
+
+    # launch lyveSET workflow now that everything is set up
     launch_set.pl --numcpus ~{cpu} \
     --allowedFlanking ~{allowedFlanking} \
     --min_alt_frac ~{min_alt_frac} \
     --min_coverage ~{min_coverage} \
     ~{'--presets ' + presets} \
-    ~{true='--mask_phages' false='' mask_phages} \
-    ~{true='--mask_cliffs' false='' mask_cliffs} \
+    ~{true='--mask-phages' false='' mask_phages} \
+    ~{true='--mask-cliffs' false='' mask_cliffs} \
     ~{true='--nomatrix' false='' nomatrix} \
     ~{true='--nomsa' false='' nomsa} \
     ~{true='--notrees' false='' notrees} \
     ~{true='--fast' false='' fast} \
     ~{true='--downsample' false='' downsample} \
-    ~{true='--sample_sites' false='' sample_sites} \
+    ~{true='--sample-sites' false='' sample_sites} \
     ~{'--read_cleaner ' + read_cleaner} \
     ~{'--mapper ' + mapper} \
     ~{'--snpcaller ' + snpcaller} \
@@ -126,11 +157,11 @@ task lyveset {
     File? lyveset_pooled_snps_vcf = "~{dataset_name}/msa/out.pooled.snps.vcf.gz"
     File? lyveset_filtered_matrix = "~{dataset_name}/msa/out.filteredMatrix.tsv"
     File? lyveset_alignment_fasta = "~{dataset_name}/msa/out.aln.fas"
-    File? lyveset_reference_fasta = "~{dataset_name}/reference/reference.fasta"
-    File? lyveset_masked_regions = "~{dataset_name}/reference/maskedRegions.bed"
+    File? lyveset_reference_fasta = "~{dataset_name}/ref/reference.fasta"
+    File? lyveset_masked_regions = "~{dataset_name}/ref/maskedRegions.bed"
     Array[File]? lyveset_msa_outputs = glob("~{dataset_name}/msa/out*")
     Array[File]? lyveset_log_outputs = glob("~{dataset_name}/log/*")
-    Array[File]? lyveset_reference_outputs = glob("~{dataset_name}/reference/*")
+    Array[File]? lyveset_reference_outputs = glob("~{dataset_name}/ref/*")
     Array[File]? lyveset_bam_outputs = glob("~{dataset_name}/bam/*.bam*")
     Array[File]? lyveset_vcf_outputs = glob("~{dataset_name}/vcf/*.vcf*")
     File lyveset_log = stdout()

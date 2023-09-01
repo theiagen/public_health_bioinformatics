@@ -250,7 +250,7 @@
     - path: miniwdl_run/call-nextclade/work/nextclade_dataset_dir/tag.json
     - path: miniwdl_run/call-nextclade/work/nextclade_dataset_dir/tree.json
     - path: miniwdl_run/call-nextclade/work/nextclade_dataset_dir/virus_properties.json
-      md5sum: 1567bbba6ac947a96db159df7fd102dd
+      md5sum: c0aa53e26cea703a0e7dc8d292ff5c89
     - path: miniwdl_run/call-nextclade/work/nextclade_gene_E.translation.fasta
       md5sum: 14808ad8b34c8bac7de500707400250e
     - path: miniwdl_run/call-nextclade/work/nextclade_gene_M.translation.fasta
@@ -318,15 +318,15 @@
     - path: miniwdl_run/call-pangolin4/work/PANGOLIN_LINEAGE
       md5sum: 717da6cd0df2d2f1d00461f3498aaca9
     - path: miniwdl_run/call-pangolin4/work/PANGOLIN_NOTES
-      md5sum: 3cf7fd185fe58af5952d52e91d4805c0
+      md5sum: 59478efddde2191ead1b46b1f121bbc9
     - path: miniwdl_run/call-pangolin4/work/PANGO_ASSIGNMENT_VERSION
-      md5sum: 4f37bb038d973d7e32df5cbbc4067c87
+      md5sum: edfb0c7ebdbf598df19861b650ee904a
     - path: miniwdl_run/call-pangolin4/work/VERSION_PANGOLIN_ALL
-      md5sum: 6c7f688ada8c1e247782758d7fca08e7
+      md5sum: ef9c730f9b45d2fc284575c13fe7c920
     - path: miniwdl_run/call-pangolin4/work/_miniwdl_inputs/0/clearlabs.medaka.consensus.fasta
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     - path: miniwdl_run/call-pangolin4/work/clearlabs.pangolin_report.csv
-      md5sum: e0512d549aa89d290f6aee20b63cbb63
+      md5sum: 58773dc8fca41e521ec7ab24df371365
     - path: miniwdl_run/call-sc2_gene_coverage/command
       md5sum: e44c070a15a0f8d42348103b0440f691
     - path: miniwdl_run/call-sc2_gene_coverage/inputs.json

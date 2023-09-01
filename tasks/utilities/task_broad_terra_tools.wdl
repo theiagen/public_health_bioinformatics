@@ -50,6 +50,8 @@ task export_taxon_tables {
     Float? r1_mean_readlength_clean
     String? nanoq_version
     File? nanoplot_html
+    File? nanoplot_tsv
+    String? nanoplot_docker
     String? nanoplot_version
     String? kmc_est_genome_size
     File? kmc_kmer_stats
@@ -398,6 +400,8 @@ task export_taxon_tables {
       "r1_mean_readlength_clean": "~{r1_mean_readlength_clean}",
       "nanoq_version": "~{nanoq_version}",
       "nanoplot_html": "~{nanoplot_html}",
+      "nanoplot_tsv": "~{nanoplot_tsv}",
+      "nanoplot_docker": "~{nanoplot_docker}",
       "nanoplot_version": "~{nanoplot_version}",
       "kmc_est_genome_size": "~{kmc_est_genome_size}",
       "kmc_kmer_stats": "~{kmc_kmer_stats}",
