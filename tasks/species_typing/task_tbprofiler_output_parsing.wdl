@@ -883,9 +883,10 @@ task tbprofiler_output_parsing {
       df_laboratorian = df_laboratorian.append(row_list, ignore_index=True)
       df_laboratorian.to_csv("~{samplename}_tbprofiler_laboratorian_report.csv", index=False)
     
-    def parse_json_lims_report(json_file, formatted_time):
+    def parse_json_lims_report(json_file, lab_report, formatted_time):
       """
       This function recieves the tbprofiler output json file and
+      the laboratorian report and
       writes the LIMS report that includes the following information
       per sample: 
         - MDL sample accession numbers: includes sample name
@@ -895,86 +896,113 @@ task tbprofiler_output_parsing {
         - Date of analysis in YYYY-MM-DD HH:SS format
         - Operator information
       """
-    
+      # get the lineage information 
       lineage = get_lineage_LIMS("~{json}")
-      mutations = parse_json_mutations_for_LIMS("~{json}")
+      
+      # get a dictionary with the higest ranked annotation for each drug 
       resistance_annotation = parse_json_resistance("~{json}", "LIMS")
+      print(resistance_annotation)
+
       df_lims = pd.DataFrame({"MDL sample accession numbers":"~{samplename}", "M_DST_A01_ID": lineage}, index=[0])
 
-      for antimicrobial_code, genes in ANTIMICROBIAL_CODE_TO_GENES.items():
+      #mutations = parse_json_mutations_for_LIMS("~{json}")
+
+      # open laboratorian report as dataframe
+      df_lab_report = pd.read_csv(lab_report, skip_blank_lines=True)
+
+      # iterate through the antimicrobial drugs
+      for antimicrobial_code, gene_dict in ANTIMICROBIAL_CODE_TO_GENES.items():
         drug_name = ANTIMICROBIAL_CODE_TO_DRUG_NAME[antimicrobial_code]
-        # if the drug has been mentioned in the results file
+
+        # check if drug has been reported in the resistance_annotation dictionary
         if drug_name in resistance_annotation.keys(): 
           df_lims[antimicrobial_code] = annotation_to_LIMS(resistance_annotation[drug_name], drug_name)
         else: # the drug is not in the results file
           df_lims[antimicrobial_code] = "No mutations associated with resistance to {} detected".format(drug_name)
+        
+        
+        mutations = {}
+        for gene, gene_code in gene_dict.items():
+          # can be considered similar to the "mutations" dictionary
+          mutations[gene] = df_lab_report["tbprofiler_variant_substitution_nt"][df_lab_report["tbprofiler_gene_name"] == gene].unique()
+          # check if list only contains "WT"
+          # if len(substitution_list) == 1 and substitution_list[0] == "WT":
+          #   df_lims[antimicrobial_code] = "No mutations associated with resistance to {} detected".format(drug_name)
+          #   df_lims[gene_code] = "No mutations detected"
+          
 
-        # iterate through the genes that are associated with resistance to each drug
-        for gene_name, gene_column_code in genes.items():
-          # if the gene is mentioned in the mutations
-          if gene_name in mutations.keys():
-            # put the formatted mutation as the content for the column
-            df_lims[gene_column_code] = mutations[gene_name]
-            if gene_name == "rpoB": # rule 5.2.1.2
-              # HERE WE ARE
-              # if mutation in RPOB_MUTATIONS list
-              if df_lims[antimicrobial_code][0] == "Mutation(s) associated with resistance to {} detected".format(drug_name):
-                resistance_mutations_counter = 0
-                for mutation in mutations:
-                  if mutation not in RPOB_MUTATIONS:
-                    resistance_mutations_counter += 1
+      # for antimicrobial_code, genes in ANTIMICROBIAL_CODE_TO_GENES.items():
+      #   drug_name = ANTIMICROBIAL_CODE_TO_DRUG_NAME[antimicrobial_code]
+      #   # if the drug has been mentioned in the results file
+      #   if drug_name in resistance_annotation.keys(): 
+      #     df_lims[antimicrobial_code] = annotation_to_LIMS(resistance_annotation[drug_name], drug_name)
+      #   else: # the drug is not in the results file
+      #     df_lims[antimicrobial_code] = "No mutations associated with resistance to {} detected".format(drug_name)
 
-              if df_lims[antimicrobial_code][0] == "No mutations associated with resistance to {} detected".format(drug_name):
-                # if any mutations are present
-                if len(mutations) > 0: 
-                  non_synomynous_count = 0
-                  # check if that mutation is synonymous 
-                  # (only output if rpoB RRDR -- see the parse_json_mutations_for_LIMS function)
-                  for mutation in mutations: 
-                    # if any nonsynymous mutations were identified.
-                    if "synonymous" not in mutation: 
-                      # keep the original output for the antimicrobial code
-                      non_synomynous_count += 1 
-                  # otherwise, the only synonymous mutations were identified in rpoB RRDR
-                  if non_synomynous_count == 0: 
-                    df_lims[antimicrobial_code] = "No mutations associated with resistance to rifampin detected. The detected synonymous mutation(s) do not confer resistance but may result in false-resistance in PCR-based assays targeting the rpoB RRDR."
+      #   # iterate through the genes that are associated with resistance to each drug
+      #   for gene_name, gene_column_code in genes.items():
+      #     # if the gene is mentioned in the mutations
+      #     if gene_name in mutations.keys():
+      #       # put the formatted mutation as the content for the column
+      #       df_lims[gene_column_code] = mutations[gene_name]
+      #       if gene_name == "rpoB": # rule 5.2.1.2
+      #         # HERE WE ARE
+      #         # if mutation in RPOB_MUTATIONS list
+      #         if df_lims[antimicrobial_code][0] == "Mutation(s) associated with resistance to {} detected".format(drug_name):
+      #           resistance_mutations_counter = 0
+      #           for mutation in mutations:
+      #             if mutation not in RPOB_MUTATIONS:
+      #               resistance_mutations_counter += 1
+
+      #         if df_lims[antimicrobial_code][0] == "No mutations associated with resistance to {} detected".format(drug_name):
+      #           # if any mutations are present
+      #           if len(mutations) > 0: 
+      #             non_synomynous_count = 0
+      #             # check if that mutation is synonymous 
+      #             # (only output if rpoB RRDR -- see the parse_json_mutations_for_LIMS function)
+      #             for mutation in mutations: 
+      #               # if any nonsynymous mutations were identified.
+      #               if "synonymous" not in mutation: 
+      #                 # keep the original output for the antimicrobial code
+      #                 non_synomynous_count += 1 
+      #             # otherwise, the only synonymous mutations were identified in rpoB RRDR
+      #             if non_synomynous_count == 0: 
+      #               df_lims[antimicrobial_code] = "No mutations associated with resistance to rifampin detected. The detected synonymous mutation(s) do not confer resistance but may result in false-resistance in PCR-based assays targeting the rpoB RRDR."
             
-            if gene_name == "rrl": # Rule 5.2.2
-              # do not report mutations for rrl
-              df_lims[gene_column_code] = "" 
+      #       if gene_name == "rrl": # Rule 5.2.2
+      #         # do not report mutations for rrl
+      #         df_lims[gene_column_code] = "" 
               
-            # if the mutations detected were only "S", 
-            if df_lims[antimicrobial_code][0] == "No mutations associated with resistance to {} detected".format(drug_name): 
-              df_lims[gene_column_code] = "No high confidence mutations detected"
-          else: # the gene is not in the mutations list but has decent coverage
-            if float(GENE_COVERAGE_DICT[gene_name]) < ~{coverage_threshold}: 
-              df_lims[gene_column_code] = "No sequence"
-            else:
-              df_lims[gene_column_code] = "No mutations detected"
+      #       # if the mutations detected were only "S", 
+      #       if df_lims[antimicrobial_code][0] == "No mutations associated with resistance to {} detected".format(drug_name): 
+      #         df_lims[gene_column_code] = "No high confidence mutations detected"
+      #     else: # the gene is not in the mutations list but has decent coverage
+      #       if float(GENE_COVERAGE_DICT[gene_name]) < ~{coverage_threshold}: 
+      #         df_lims[gene_column_code] = "No sequence"
+      #       else:
+      #         df_lims[gene_column_code] = "No mutations detected"
 
-          # HOWEVER, if the coverage is less than the indicated threshold
-          if float(GENE_COVERAGE_DICT[gene_name]) < ~{coverage_threshold}: 
-            df_lims[gene_column_code] = "Insufficient Coverage"
-            # catch for when there's no mutation on gene name but coverage is below threshold
-            try: 
-              if "del" in mutations[gene_name]:
-                df_lims[gene_column_code] = "Insufficient Coverage (deletion identified)"
-                # if this case is part of rule 2.2.1, output the mutation
-                if gene_name in ["katG", "pncA", "ethA", "gid"]:
-                  df_lims[gene_column_code] = mutations[gene_name]
-            except:
-              df_lims[antimicrobial_code] = "Insufficient Coverage" 
+      #     # HOWEVER, if the coverage is less than the indicated threshold
+      #     if float(GENE_COVERAGE_DICT[gene_name]) < ~{coverage_threshold}: 
+      #       df_lims[gene_column_code] = "Insufficient Coverage"
+      #       # catch for when there's no mutation on gene name but coverage is below threshold
+      #       try: 
+      #         if "del" in mutations[gene_name]:
+      #           df_lims[gene_column_code] = "Insufficient Coverage (deletion identified)"
+      #           # if this case is part of rule 2.2.1, output the mutation
+      #           if gene_name in ["katG", "pncA", "ethA", "gid"]:
+      #             df_lims[gene_column_code] = mutations[gene_name]
+      #       except:
+      #         df_lims[antimicrobial_code] = "Insufficient Coverage" 
             
-            # in addition, if the indicated annotation for the drug is not resistant (less than 4)
-            if drug_name in resistance_annotation.keys() and int(rank_annotation(resistance_annotation[drug_name])) < 4:
-              # catch for when there's no mutation on gene name but coverage is below threshold
-              try: 
-                if gene_name not in ["katG", "pncA", "ethA", "gid"] and "del" not in mutations[gene_name]:
-                  df_lims[antimicrobial_code] = "Pending Retest"
-              except: # there are no mutations in the gene
-                df_lims[antimicrobial_code] = "Insufficient Coverage"
-              
-
+      #       # in addition, if the indicated annotation for the drug is not resistant (less than 4)
+      #       if drug_name in resistance_annotation.keys() and int(rank_annotation(resistance_annotation[drug_name])) < 4:
+      #         # catch for when there's no mutation on gene name but coverage is below threshold
+      #         try: 
+      #           if gene_name not in ["katG", "pncA", "ethA", "gid"] and "del" not in mutations[gene_name]:
+      #             df_lims[antimicrobial_code] = "Pending Retest"
+      #         except: # there are no mutations in the gene
+      #           df_lims[antimicrobial_code] = "Insufficient Coverage"
 
       df_lims["Analysis date"] = formatted_time
       df_lims["Operator"] = "~{operator}"
@@ -1024,6 +1052,7 @@ task tbprofiler_output_parsing {
         warning = ""
         # sometimes no mutations were identified for a given gene, in those cases, ignore them
         # and save them to stdout
+        # SAGE! We might have a problem here
         try: 
           for mutation_type_nucleotide in df_lab_report["tbprofiler_variant_substitution_nt"][df_lab_report["tbprofiler_gene_name"] == gene]:
             if "del" in mutation_type_nucleotide:
@@ -1045,7 +1074,7 @@ task tbprofiler_output_parsing {
     parse_json_lab_report("~{json}")
 
     # LIMS report generation
-    parse_json_lims_report("~{json}", current_time)
+    parse_json_lims_report("~{json}", "~{samplename}_tbprofiler_laboratorian_report.csv", current_time)
 
     # LOOKER report generation
     parse_json_looker_report("~{json}", current_time)
