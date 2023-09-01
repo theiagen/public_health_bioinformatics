@@ -202,7 +202,7 @@
     - path: miniwdl_run/call-cg_pipeline_raw/work/test_readMetrics.tsv
       contains: ["File", "fastq", "coverage"]
     - path: miniwdl_run/call-clean_check_reads/command
-      md5sum: 6b7e661ab2b1278fa43f7264c53a832a
+      md5sum: aab0121590d0bd1e244e932bfcb39852
     - path: miniwdl_run/call-clean_check_reads/inputs.json
       contains: ["read1", "fastq", "skip_screen", "true"]
     - path: miniwdl_run/call-clean_check_reads/outputs.json
@@ -221,7 +221,7 @@
     - path: miniwdl_run/call-clean_check_reads/work/_miniwdl_inputs/0/test_1.clean.fastq.gz
     - path: miniwdl_run/call-clean_check_reads/work/_miniwdl_inputs/0/test_2.clean.fastq.gz
     - path: miniwdl_run/call-gambit/command
-      md5sum: bb2310e55a3d567803fab009dd101fe9
+      md5sum: eeec5cfb3590f2bea525d5eec943d440
     - path: miniwdl_run/call-gambit/inputs.json
       contains: ["assembly", "fasta", "samplename", "test"]
     - path: miniwdl_run/call-gambit/outputs.json
@@ -235,9 +235,9 @@
     - path: miniwdl_run/call-gambit/work/CLOSEST_DISTANCE
     - path: miniwdl_run/call-gambit/work/DATE
     - path: miniwdl_run/call-gambit/work/GAMBIT_DB_VERSION
-      md5sum: fcc8f3e34197b01a79929281c2bc93e6
+      md5sum: 9b822b93497f0e02e1ef00f60db5850e
     - path: miniwdl_run/call-gambit/work/GAMBIT_VERSION
-      md5sum: f04975119234de325222289d81748e6d
+      md5sum: 42a2713399a2aea74a7cb6889caf3fdb
     - path: miniwdl_run/call-gambit/work/MERLIN_TAG
       md5sum: d4cd0dabcf4caa22ad92fab40844c786
     - path: miniwdl_run/call-gambit/work/NEXT_TAXON
@@ -365,7 +365,7 @@
     - path: miniwdl_run/call-quast/work/transposed_report.txt
       contains: ["Assembly", "length", "contigs", "test"]
     - path: miniwdl_run/call-raw_check_reads/command
-      md5sum: 9c72950c964c4898dde51d0d575c7452
+      md5sum: b0cdeab40636fd679a3d79a3e831dde1
     - path: miniwdl_run/call-raw_check_reads/inputs.json
       contains: ["read1", "fastq", "skip_screen", "true"]
     - path: miniwdl_run/call-raw_check_reads/outputs.json
@@ -582,7 +582,7 @@
     - path: miniwdl_run/wdl/tasks/quality_control/task_quast.wdl
       md5sum: 884d99106ba32d6508d30dec4b78c04c
     - path: miniwdl_run/wdl/tasks/quality_control/task_screen.wdl
-      md5sum: 19fe4b646274e39d9e2cf48a06f5da92
+      md5sum: c1f2f5cef67a0bd0cbc9da2a834d40e4
     - path: miniwdl_run/wdl/tasks/quality_control/task_trimmomatic.wdl
       md5sum: 6efbb44a314c5d7604031ebfd774e10f
     - path: miniwdl_run/wdl/tasks/species_typing/task_cauris_cladetyper.wdl
@@ -624,9 +624,9 @@
     - path: miniwdl_run/wdl/tasks/species_typing/task_ts_mlst.wdl
       md5sum: 550791ca5faf11a5f75b6be18739ae01
     - path: miniwdl_run/wdl/tasks/task_versioning.wdl
-      md5sum: 01b9f9c265b15ae776a9fe86efdf59f5
+      md5sum: c178145bad99e3858a1327b3774177f3
     - path: miniwdl_run/wdl/tasks/taxon_id/task_gambit.wdl
-      md5sum: c7f16907ef2bde7ae0e142ae685e19da
+      md5sum: 08987d952c67c6ff6debf6898af15f9a
     - path: miniwdl_run/wdl/tasks/taxon_id/task_kraken2.wdl
       md5sum: f06823a409a087441c8e70e46f7dfc29
     - path: miniwdl_run/wdl/tasks/taxon_id/task_midas.wdl

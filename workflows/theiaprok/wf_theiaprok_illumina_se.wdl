@@ -40,6 +40,7 @@ workflow theiaprok_illumina_se {
     String terra_workspace="NA"
     # read screen paramaters
     Boolean skip_screen = false 
+    Boolean skip_mash = false
     Int min_reads = 7472
     Int min_basepairs = 2241820
     Int min_genome_size = 100000
@@ -69,6 +70,7 @@ workflow theiaprok_illumina_se {
       max_genome_size = max_genome_size,
       min_coverage = min_coverage,
       skip_screen = skip_screen,
+      skip_mash = skip_mash,
       expected_genome_size = genome_size
   }
   if (raw_check_reads.read_screen == "PASS") {
@@ -89,6 +91,7 @@ workflow theiaprok_illumina_se {
         max_genome_size = max_genome_size,
         min_coverage = min_coverage,
         skip_screen = skip_screen,
+        skip_mash = skip_mash,
         expected_genome_size = genome_size
     }
     if (clean_check_reads.read_screen == "PASS") {
