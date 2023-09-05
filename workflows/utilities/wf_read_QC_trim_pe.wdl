@@ -108,8 +108,7 @@ workflow read_QC_trim_pe {
     # NCBI scrubber
     File? read1_dehosted = ncbi_scrub_pe.read1_dehosted
     File? read2_dehosted = ncbi_scrub_pe.read2_dehosted
-    Int? read1_human_spots_removed = ncbi_scrub_pe.read1_human_spots_removed
-    Int? read2_human_spots_removed = ncbi_scrub_pe.read2_human_spots_removed
+    Int? human_spots_removed = ncbi_scrub_pe.human_spots_removed
 
     # bbduk
     File read1_clean = bbduk.read1_clean
