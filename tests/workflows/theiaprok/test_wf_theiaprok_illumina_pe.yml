@@ -576,7 +576,7 @@
     - path: miniwdl_run/wdl/tasks/quality_control/task_mummer_ani.wdl
       md5sum: 21e8b1cbe4c8be26d1ac8b8013970166
     - path: miniwdl_run/wdl/tasks/quality_control/task_ncbi_scrub.wdl
-      md5sum: f95b97f0f7b2c8f663bfb186196d4d4e
+      md5sum: 23be04916fc39b25b9c964c48604d9f1
     - path: miniwdl_run/wdl/tasks/quality_control/task_qc_check_phb.wdl
       contains: ["version", "qc_check_table", "output"]
     - path: miniwdl_run/wdl/tasks/quality_control/task_quast.wdl
@@ -638,6 +638,6 @@
     - path: miniwdl_run/wdl/workflows/utilities/wf_merlin_magic.wdl
       md5sum: 53555c2f3e144e55f362080c5e75e434
     - path: miniwdl_run/wdl/workflows/utilities/wf_read_QC_trim_pe.wdl
-      md5sum: 40d4e09a82030c8219b37f883cddaca4
+      md5sum: 3a076c804dcda32b8886ad3c702afe0b
     - path: miniwdl_run/workflow.log
       contains: ["wdl", "theiaprok_illumina_pe", "NOTICE", "done"]
