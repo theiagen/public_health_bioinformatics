@@ -9,7 +9,7 @@ task tbprofiler {
     String tbprofiler_docker_image = "us-docker.pkg.dev/general-theiagen/staphb/tbprofiler:4.4.2"
     Int disk_size = 100
     String mapper = "bwa"
-    String caller = "bcftools"
+    String caller = "freebayes"
     Int min_depth = 10
     Float min_af = 0.1
     Float min_af_pred = 0.1
@@ -22,7 +22,7 @@ task tbprofiler {
     date | tee DATE
 
     # Print and save version
-    tb-profiler --version > VERSION && sed -i -e 's/^/TBProfiler version /' VERSION
+    tb-profiler version > VERSION && sed -i -e 's/^/TBProfiler version /' VERSION
     
     if [ -z "~{read2}" ] ; then
       INPUT_READS="-1 ~{read1}"
@@ -89,6 +89,12 @@ task tbprofiler {
             res_genes.append(tsv_dict[i])
         res_genes_string=';'.join(res_genes)
         Resistance_Genes.write(res_genes_string)
+      with open ("MEDIAN_COVERAGE", 'wt') as Median_Coverage:
+        median_coverage=tsv_dict['median_coverage']
+        Median_Coverage.write(median_coverage)
+      with open ("PCT_READS_MAPPED", 'wt') as Pct_Reads_Mapped:
+        pct_reads_mapped=tsv_dict['pct_reads_mapped']
+        Pct_Reads_Mapped.write(pct_reads_mapped)
     CODE
   >>>
   output {
@@ -104,6 +110,8 @@ task tbprofiler {
     String tbprofiler_num_dr_variants = read_string("NUM_DR_VARIANTS")
     String tbprofiler_num_other_variants = read_string("NUM_OTHER_VARIANTS")
     String tbprofiler_resistance_genes = read_string("RESISTANCE_GENES")
+    Int tbprofiler_median_coverage = read_int("MEDIAN_COVERAGE")
+    Float tbprofiler_pct_reads_mapped = read_float("PCT_READS_MAPPED")
   }
   runtime {
     docker: "~{tbprofiler_docker_image}"
