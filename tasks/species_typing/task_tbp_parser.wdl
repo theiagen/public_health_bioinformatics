@@ -20,10 +20,10 @@ task tbp_parser {
   }
   command <<<
     # get version
-    python3 tbp-parser/tbp_parser/tbp_parser.py --version | tee VERSION
+    python3 /tbp-parser/tbp_parser/tbp_parser.py --version | tee VERSION
 
     # run tbp-parser
-    python3 tbp-parser/tbp_parser/tbp_parser.py ~{tbprofiler_json} ~{tbprofiler_bam} \
+    python3 /tbp-parser/tbp_parser/tbp_parser.py ~{tbprofiler_json} ~{tbprofiler_bam} \
       ~{"--sequencing_method" + sequencing_method} \
       ~{"--operator" + operator} \
       ~{"--min_depth" + min_depth} \
