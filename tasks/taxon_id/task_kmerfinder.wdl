@@ -4,7 +4,6 @@ task kmerfinder {
   input {
     File assembly
     File kmerfinder_db
-    String kmerfinder_db_name # allowed: archea, bacteria, fungi, protozoa, virus, typestrain
     String samplename
     String docker = "us-docker.pkg.dev/general-theiagen/biocontainers/kmerfinder:3.0.2--hdfd78af_0"
     Int memory = 32
@@ -18,7 +17,7 @@ task kmerfinder {
 
     # Run kmerfinder
     kmerfinder.py \
-        -db ./db/~{kmerfinder_db_name} \
+        -db ./db/ \
         -i ~{assembly} \
         -o ~{samplename} \
         ~{kmerfinder_args} \
