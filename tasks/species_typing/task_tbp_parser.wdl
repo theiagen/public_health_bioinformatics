@@ -13,7 +13,7 @@ task tbp_parser {
     Int coverage_threshold = 100
     Boolean tbp_parser_debug = false
 
-    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:0.0.1"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:0.0.2"
     Int disk_size = 100
     Int memory = 4
     Int cpu = 1
@@ -24,10 +24,10 @@ task tbp_parser {
 
     # run tbp-parser
     python3 /tbp-parser/tbp_parser/tbp_parser.py ~{tbprofiler_json} ~{tbprofiler_bam} \
-      ~{"--sequencing_method" + sequencing_method} \
-      ~{"--operator" + operator} \
-      ~{"--min_depth" + min_depth} \
-      ~{"--coverage_threshold" + coverage_threshold} \
+      ~{"--sequencing_method " + sequencing_method} \
+      ~{"--operator " + operator} \
+      ~{"--min_depth " + min_depth} \
+      ~{"--coverage_threshold " + coverage_threshold} \
       --output_prefix ~{samplename} \
       ~{true="--debug" false="--verbose" tbp_parser_debug}
 
