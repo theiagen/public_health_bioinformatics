@@ -75,7 +75,7 @@ task kraken2_standalone {
     String kraken2_args = ""
     String classified_out = "classified#.fastq"
     String unclassified_out = "unclassified#.fastq"
-    Int memory = 32
+    Int mem = 32
     Int cpu = 4
   }
   command <<<
@@ -126,7 +126,7 @@ task kraken2_standalone {
   }
   runtime {
       docker: "~{docker}"
-      memory: "~{memory} GB"
+      memory: "~{mem} GB"
       cpu: cpu
       disks: "local-disk 100 SSD"
       preemptible: 0
