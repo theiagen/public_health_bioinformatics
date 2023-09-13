@@ -17,7 +17,8 @@ task kmerfinder {
 
     # Run kmerfinder
     kmerfinder.py \
-        -db ./db/ \
+        -db ./db/* \
+        -tax ./db/*/*.tax \
         -i ~{assembly} \
         -o ~{samplename} \
         ~{kmerfinder_args} \
