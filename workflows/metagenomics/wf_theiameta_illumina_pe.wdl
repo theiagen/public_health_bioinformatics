@@ -60,7 +60,9 @@ workflow theiameta_illumina_pe {
         input:
           query1 = metaspades.assembly_fasta,
           reference = select_first([reference]),
-          samplename = samplename
+          samplename = samplename,
+          mode = "asm20",
+          output_sam = false
       }
       call parse_mapping_task.retrieve_aligned_contig_paf {
         input:
@@ -103,7 +105,8 @@ workflow theiameta_illumina_pe {
         input:
           bam = sam_to_sorted_bam.bam,
           samplename = samplename,
-          prefix = "unassembled"
+          prefix = "unassembled",
+          sam_flag = 4
       }
       call parse_mapping_task.retrieve_pe_reads_bam as retrieve_aligned_pe_reads_sam {
         input:
