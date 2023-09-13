@@ -25,7 +25,10 @@ workflow theiameta_illumina_pe {
       samplename = samplename,
       read1 = read1,
       read2 = read2,
-      kraken2_db = kraken2_db
+      kraken2_db = kraken2_db,
+      kraken2_args = "",
+      classified_out = "classified#.fastq",
+      unclassified_out = "unclassified#.fastq"
   }
   call read_qc_wf.read_QC_trim_pe as read_QC_trim {
       input:
@@ -39,7 +42,10 @@ workflow theiameta_illumina_pe {
       samplename = samplename,
       read1 = read_QC_trim.read1_clean,
       read2 = read_QC_trim.read2_clean,
-      kraken2_db = kraken2_db
+      kraken2_db = kraken2_db,
+      kraken2_args = "",
+      classified_out = "classified#.fastq",
+      unclassified_out = "unclassified#.fastq"
   }
   call metaspades_assembly_wf.metaspades_assembly_pe as metaspades {
     input:
