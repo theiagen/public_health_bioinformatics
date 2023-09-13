@@ -1,9 +1,9 @@
 version 1.0
 
-task kmerfinder {
+task kmerfinder_bacteria {
   input {
     File assembly
-    File kmerfinder_db
+    File kmerfinder_db = "gs://theiagen-public-files-rp/terra/theiaprok-files/kmerfinder_bacteria.tar.gz"
     String samplename
     String docker = "us-docker.pkg.dev/general-theiagen/biocontainers/kmerfinder:3.0.2--hdfd78af_0"
     Int memory = 32
@@ -17,8 +17,8 @@ task kmerfinder {
 
     # Run kmerfinder
     kmerfinder.py \
-        -db ./db/* \
-        -tax ./db/*/*.tax \
+        -db ./db/bacteria/bacteria.ATG \
+        -tax ./db/bacteria/bacteria.tax \
         -i ~{assembly} \
         -o ~{samplename} \
         ~{kmerfinder_args} \
