@@ -3,11 +3,12 @@ version 1.0
 task kmerfinder_bacteria {
   input {
     File assembly
-    File kmerfinder_db = "gs://theiagen-public-files-rp/terra/theiaprok-files/kmerfinder_bacteria.tar.gz"
     String samplename
+    File kmerfinder_db = "gs://theiagen-public-files-rp/terra/theiaprok-files/kmerfinder_bacteria.tar.gz"
     String docker = "us-docker.pkg.dev/general-theiagen/biocontainers/kmerfinder:3.0.2--hdfd78af_0"
     Int memory = 32
     Int cpu = 4
+    Int disk_size = 100
     String kmerfinder_args = ""
   }
   command <<<
@@ -31,20 +32,20 @@ task kmerfinder_bacteria {
         if [ "$PF" == "" ]; then
           PF="No hit detected in database"
         fi
-      mv ~{samplename}/results.txt ~{samplename}_kmerfinder.txt  
+      mv -v ~{samplename}/results.txt ~{samplename}_kmerfinder.tsv
     fi
     echo $PF | tee TOP_HIT
   >>>
   output {
     String kmerfinder_docker = docker
-    File? kmerfinder_txt = "~{samplename}_kmerfinder.txt"
+    File? kmerfinder_results_tsv = "~{samplename}_kmerfinder.tsv"
     String kmerfinder_top_hit = read_string("TOP_HIT")
   }
   runtime {
     docker: docker
     memory: "~{memory} GB"
     cpu: cpu
-    disks: "local-disk 100 SSD"
+    disks: "local-disk ~{disk_size} SSD"
     preemptible: 0
   }
 }
