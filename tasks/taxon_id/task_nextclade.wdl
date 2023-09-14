@@ -54,6 +54,7 @@ task nextclade {
       File auspice_json = "~{basename}.nextclade.auspice.json"
       File nextclade_tsv = "~{basename}.nextclade.tsv"
       String nextclade_docker = docker
+      String nextclade_dataset_tag = "~{dataset_tag}"
     }
 }
 
