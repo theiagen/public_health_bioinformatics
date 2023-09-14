@@ -30,17 +30,14 @@ task kmerfinder_bacteria {
       PF="$(cat ~{samplename}/results.txt | head -n 2 | tail -n 1 | cut -f 19)"
         if [ "$PF" == "" ]; then
           PF="No hit detected in database"
-        fi  
+        fi
+      mv ~{samplename}/results.txt ~{samplename}_kmerfinder.txt  
     fi
     echo $PF | tee TOP_HIT
-    
-    mv ~{samplename}/results.txt ~{samplename}_kmerfinder.txt
-
-    # extract the top result
   >>>
   output {
     String kmerfinder_docker = docker
-    File kmerfinder_txt = "~{samplename}_kmerfinder.txt"
+    File? kmerfinder_txt = "~{samplename}_kmerfinder.txt"
     String kmerfinder_top_hit = read_string("TOP_HIT")
   }
   runtime {
