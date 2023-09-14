@@ -11,7 +11,7 @@ task kmerfinder_bacteria {
     String kmerfinder_args = ""
   }
   command <<<
-    # Decompress the kmerfinder database
+    # Decompress the kmerfinder bacterial qdatabase
     mkdir db
     tar -C ./db/ -xzvf ~{kmerfinder_db}  
 
@@ -21,12 +21,15 @@ task kmerfinder_bacteria {
         -tax ./db/bacteria/bacteria.tax \
         -i ~{assembly} \
         -o ~{samplename} \
-        ~{kmerfinder_args} \
-        -x
+        ~{kmerfinder_args} 
 
+    mv ~{samplename}/results.txt ~{samplename}_kmerfinder.txt
+
+    # extract the top result
   >>>
   output {
     String kmerfinder_docker = docker
+    File kmerfinder_txt = "~{samplename}_kmerfinder.txt"
   }
   runtime {
     docker: docker
