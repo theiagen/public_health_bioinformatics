@@ -22,7 +22,7 @@ task tbprofiler {
     date | tee DATE
 
     # Print and save version
-    tb-profiler version > VERSION && sed -i -e 's/^/TBProfiler version /' VERSION
+    tb-profiler version > VERSION && sed -i -e 's/TBProfiler version //' VERSION && sed -n -i '$p' VERSION
     
     if [ -z "~{read2}" ] ; then
       INPUT_READS="-1 ~{read1}"
@@ -119,6 +119,7 @@ task tbprofiler {
     cpu: cpu
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
-    maxRetries: 3 
+    maxRetries: 3
+    preemptible: 1
   }
 }
