@@ -108,6 +108,14 @@ task kraken2_standalone {
     gzip *.fastq
     gzip ~{samplename}.classifiedreads.txt
 
+    # rename classified and unclassified read files if SE
+    if [ -e "~{samplename}.classified#.fastq.gz" ]; then
+      mv "~{samplename}.classified#.fastq.gz" ~{samplename}.classified_1.fastq.gz
+    fi
+    if [ -e "~{samplename}.unclassified#.fastq.gz" ]; then
+      mv "~{samplename}.unclassified#.fastq.gz" ~{samplename}.unclassified_1.fastq.gz
+    fi
+
   >>>
   output {
     String kraken2_version = read_string("VERSION")
@@ -116,9 +124,9 @@ task kraken2_standalone {
     File kraken2_report = "~{samplename}.report.txt"
     File kraken2_classified_report = "~{samplename}.classifiedreads.txt.gz"
     File kraken2_unclassified_read1 = "~{samplename}.unclassified_1.fastq.gz"
-    File kraken2_unclassified_read2 = "~{samplename}.unclassified_2.fastq.gz"
+    File? kraken2_unclassified_read2 = "~{samplename}.unclassified_2.fastq.gz"
     File kraken2_classified_read1 = "~{samplename}.classified_1.fastq.gz"
-    File kraken2_classified_read2 = "~{samplename}.classified_2.fastq.gz"
+    File? kraken2_classified_read2 = "~{samplename}.classified_2.fastq.gz"
   }
   runtime {
       docker: "~{docker}"
