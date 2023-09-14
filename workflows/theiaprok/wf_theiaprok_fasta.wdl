@@ -5,6 +5,7 @@ import "../../tasks/quality_control/task_quast.wdl" as quast_task
 import "../../tasks/quality_control/task_busco.wdl" as busco_task
 import "../../tasks/taxon_id/task_gambit.wdl" as gambit_task
 import "../../tasks/quality_control/task_mummer_ani.wdl" as ani_task
+import "../../tasks/taxon_id/task_kmerfinder.wdl" as kmerfinder_task
 import "../../tasks/gene_typing/task_amrfinderplus.wdl" as amrfinderplus
 import "../../tasks/gene_typing/task_resfinder.wdl" as resfinder
 import "../../tasks/species_typing/task_ts_mlst.wdl" as ts_mlst_task
@@ -35,6 +36,7 @@ workflow theiaprok_fasta {
     String terra_workspace="NA"
     # module options
     Boolean call_ani = false # by default do not call ANI task, but user has ability to enable this task if working with enteric pathogens or supply their own high-quality reference genome
+    Boolean call_kmerfinder = false
     Boolean call_resfinder = false
     String genome_annotation = "prokka" # options: "prokka" or "bakta"
     String? expected_taxon # allow user to provide organism (e.g. "Clostridioides_difficile") string to amrfinder. Useful when gambit does not predict the correct species
@@ -61,6 +63,13 @@ workflow theiaprok_fasta {
   }
   if (call_ani) {
     call ani_task.animummer as ani {
+      input:
+        assembly = assembly_fasta,
+        samplename = samplename
+    }
+  }
+  if (call_kmerfinder) {
+    call kmerfinder_task.kmerfinder_bacteria as kmerfinder {
       input:
         assembly = assembly_fasta,
         samplename = samplename
@@ -166,6 +175,9 @@ workflow theiaprok_fasta {
         ani_output_tsv = ani.ani_output_tsv,
         ani_top_species_match = ani.ani_top_species_match,
         ani_mummer_version = ani.ani_mummer_version,
+        kmerfinder_docker = kmerfinder.kmerfinder_docker,
+        kmerfinder_results_tsv = kmerfinder.kmerfinder_results_tsv,
+        kmerfinder_top_hit = kmerfinder.kmerfinder_top_hit,
         amrfinderplus_all_report = amrfinderplus_task.amrfinderplus_all_report,
         amrfinderplus_amr_report = amrfinderplus_task.amrfinderplus_amr_report,
         amrfinderplus_stress_report = amrfinderplus_task.amrfinderplus_stress_report,
@@ -411,6 +423,10 @@ workflow theiaprok_fasta {
     File? ani_output_tsv = ani.ani_output_tsv
     String? ani_top_species_match = ani.ani_top_species_match
     String? ani_mummer_version = ani.ani_mummer_version
+    # kmerfinder outputs
+    String? kmerfinder_docker = kmerfinder.kmerfinder_docker
+    File? kmerfinder_results_tsv = kmerfinder.kmerfinder_results_tsv
+    String? kmerfinder_top_hit = kmerfinder.kmerfinder_top_hit
     # NCBI-AMRFinderPlus Outputs
     File amrfinderplus_all_report = amrfinderplus_task.amrfinderplus_all_report
     File amrfinderplus_amr_report = amrfinderplus_task.amrfinderplus_amr_report
