@@ -3,7 +3,7 @@ version 1.0
 import "../../tasks/utilities/task_augur_utilities.wdl" as assembly_fasta_utils
 import "../../tasks/task_versioning.wdl" as versioning
 
-workflow augur_prep {
+workflow theiacov_fasta_prep {
   input {
     File assembly
     String seq_method
