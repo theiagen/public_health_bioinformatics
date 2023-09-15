@@ -4,10 +4,10 @@ task plasmidfinder {
   input {
     File assembly
     String samplename
-    Int cpu = 8
-    Int memory = 16
+    Int cpu = 2
+    Int memory = 8
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/plasmidfinder:2.1.6"
-    Int disk_size = 100
+    Int disk_size = 50
     String? database
     String? database_path
     String? method_path
@@ -41,15 +41,15 @@ task plasmidfinder {
   if [ ! -f results_tab.tsv ]; then
     PF="No plasmids detected in database"
   else
-    PF="$(tail -n +2 results_tab.tsv | cut -f 2 | sort | uniq -u | paste -s -d, - )"
+    PF="$(tail -n +2 results_tab.tsv | uniq | cut -f 2 | sort | paste -s -d, - )"
       if [ "$PF" == "" ]; then
         PF="No plasmids detected in database"
       fi  
   fi
-  echo $PF | tee PLASMIDS
+  echo "$PF" | tee PLASMIDS
 
-  mv results_tab.tsv ~{samplename}_results.tsv
-  mv Hit_in_genome_seq.fsa ~{samplename}_seqs.fsa
+  mv -v results_tab.tsv ~{samplename}_results.tsv
+  mv -v Hit_in_genome_seq.fsa ~{samplename}_seqs.fsa
 
   >>>
   output {
