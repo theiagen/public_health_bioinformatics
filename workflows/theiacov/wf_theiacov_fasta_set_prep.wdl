@@ -1,0 +1,31 @@
+version 1.0
+
+import "../../tasks/utilities/task_augur_utilities.wdl" as augur_utils
+import "../../tasks/task_versioning.wdl" as versioning
+
+workflow augur_prep {
+  input {
+    File assembly
+    String seq_method
+    String assembly_method
+  }
+  call augur_utils.prep_augur_metadata {
+    input:
+      assembly = assembly,
+      collection_date = collection_date,
+      country = country,
+      state = state,
+      continent = continent,
+      pango_lineage = pango_lineage,
+      nextclade_clade = nextclade_clade,
+      county = county
+  }
+  call versioning.version_capture {
+    input:
+  }
+  output {
+    String augur_prep_phb_version = version_capture.phb_version
+    String augur_prep_phb_analysis_date = version_capture.date
+    File augur_metadata = prep_augur_metadata.augur_metadata
+  }
+}
