@@ -1,6 +1,6 @@
 version 1.0
 
-import "../../tasks/utilities/task_augur_utilities.wdl" as augur_utils
+import "../../tasks/utilities/task_augur_utilities.wdl" as assembly_fasta_utils
 import "../../tasks/task_versioning.wdl" as versioning
 
 workflow augur_prep {
@@ -8,24 +8,23 @@ workflow augur_prep {
     File assembly
     String seq_method
     String assembly_method
+    String organism
+    String flu_segment
   }
-  call augur_utils.prep_augur_metadata {
+  call assembly_fasta_utils.prep_theiacov_fasta_metadata {
     input:
       assembly = assembly,
-      collection_date = collection_date,
-      country = country,
-      state = state,
-      continent = continent,
-      pango_lineage = pango_lineage,
-      nextclade_clade = nextclade_clade,
-      county = county
+      seq_method = seq_method,
+      assembly_method = assembly_method,
+      organism = organism,
+      flu_segment = flu_segment
   }
   call versioning.version_capture {
     input:
   }
   output {
-    String augur_prep_phb_version = version_capture.phb_version
-    String augur_prep_phb_analysis_date = version_capture.date
-    File augur_metadata = prep_augur_metadata.augur_metadata
+    String theaicov_fasta_set_prep_version = version_capture.phb_version
+    String theaicov_fasta_set_prep_analysis_date = version_capture.date
+    File theaicov_fasta_set_metadata = prep_theiacov_fasta_metadata.theaicov_fasta_set_metadata
   }
 }
