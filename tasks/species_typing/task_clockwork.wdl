@@ -9,6 +9,7 @@ task clockwork_decon_reads {
     Int disk_size = 200
     Int cpu = 16
     Int mem = 64
+    String docker = "us-docker.pkg.dev/general-theiagen/cdcgov/varpipe_wgs_with_refs:2bc7234074bd53d9e92a1048b0485763cd9bbf6f4d12d5a1cc82bfec8ca7d75e"
     }
 
   command <<<
@@ -33,13 +34,16 @@ task clockwork_decon_reads {
     "./clockwork_cleaned_~{samplename}_R1.fastq.gz" \
     "./clockwork_cleaned_~{samplename}_R2.fastq.gz"
 
+    # Clean up files
+    rm "~{samplename}.sam"
+
   >>>
   output {
     File clockwork_cleaned_read1 = "./clockwork_cleaned_~{samplename}_R1.fastq.gz"
     File clockwork_cleaned_read2 = "./clockwork_cleaned_~{samplename}_R2.fastq.gz"
   }
   runtime {
-    docker: "us-docker.pkg.dev/general-theiagen/cdcgov/varpipe_wgs_with_refs:2bc7234074bd53d9e92a1048b0485763cd9bbf6f4d12d5a1cc82bfec8ca7d75e"
+    docker: docker
     memory: "~{mem} GB"
     cpu: cpu
     disks: "local-disk " + disk_size + " SSD"
