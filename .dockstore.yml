@@ -230,12 +230,12 @@ workflows:
    primaryDescriptorPath: /workflows/phylogenetics/wf_usher.wdl
    testParameterFiles:
     - empty.json
- - name: TheiaCoV_Fasta_Prep_PHB
+ - name: TheiaCoV_FASTA_Prep_PHB
    subclass: WDL
    primaryDescriptorPath: /workflows/theiacov/wf_theiacov_FASTA_prep.wdl
    testParameterFiles:
     - empty.json
- - name: TheiaCoV_Fasta_Set_PHB
+ - name: TheiaCoV_FASTA_Set_PHB
    subclass: WDL
    primaryDescriptorPath: /workflows/theiacov/wf_theiacov_FASTA_set.wdl
    testParameterFiles:
