@@ -1,5 +1,6 @@
 
 version 1.0
+import "../../tasks/utilities/task_file_handling.wdl" as file_handling
 
 import "../../tasks/quality_control/task_vadr.wdl" as vadr_task
 import "../../tasks/quality_control/task_consensus_qc.wdl" as consensus_qc_task
@@ -8,14 +9,14 @@ import "../../tasks/species_typing/task_pangolin.wdl" as pangolin
 import "../../tasks/quality_control/task_qc_check_phb.wdl" as qc_check
 import "../../tasks/task_versioning.wdl" as versioning
 
-workflow theiacov_fasta {
+workflow theiacov_fasta_set {
   meta {
     description: "Assessment of the quality of a consensus assembly fasta file for sars-cov-2, MPXV, WNV, flu, or RSV"
   }
   input {
-    String samplename
-    File assembly_fasta
-    String organism = "sars-cov-2" # options: "sars-cov-2" "MPXV" "WNV" "flu" "rsv_a" "rsv_b
+    Array[File]+ assembly_fastas # use the HA or NA segment files for flu
+    Array[File]+ sample_metadata_tsvs # created with theiacov_fasta_Prep
+    String build_name
     File? reference_genome
     # reference genomes for various pathogens
     File ref_sars_cov_2 = "gs://theiagen-public-files-rp/terra/augur-sars-cov-2-references/MN908947.fasta"
@@ -55,6 +56,11 @@ workflow theiacov_fasta {
     File? qc_check_table
     # vadr parameters
     Int? maxlen
+  }
+  call file_handling.cat_files { # concatenate all of the input fasta files together
+    input:
+      files_to_cat = assembly_fastas,
+      concatenated_file_name = "~{build_name}_concatenated.fasta"
   }
   # sars-cov-2 specific tasks
   if (organism == "sars-cov-2") {
