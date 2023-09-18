@@ -10,6 +10,7 @@ import "../../tasks/species_typing/task_lissero.wdl" as lissero_task
 import "../../tasks/species_typing/task_sistr.wdl" as sistr_task
 import "../../tasks/species_typing/task_seqsero2.wdl" as seqsero2_task
 import "../../tasks/species_typing/task_kleborate.wdl" as kleborate_task
+import "../../tasks/species_typing/task_clockwork.wdl" as clockwork_task
 import "../../tasks/species_typing/task_tbprofiler.wdl" as tbprofiler_task
 import "../../tasks/species_typing/task_tbp_parser.wdl" as tbp_parser_task
 import "../../tasks/species_typing/task_legsta.wdl" as legsta_task
@@ -234,14 +235,19 @@ workflow merlin_magic {
   }
   if (merlin_tag == "Mycobacterium tuberculosis") {
     if (!assembly_only) {
-      call tbprofiler_task.tbprofiler { # needs testing
+      call clockwork_task.clockwork_decon_reads {
         input:
           read1 = select_first([read1]),
           read2 = read2,
-          samplename = samplename,
-          ont_data = ont_data
+          samplename = samplename
       }
-      if (tbprofiler_additional_outputs) {
+      call tbprofiler_task.tbprofiler { # needs testing
+        input:
+          read1 = clockwork_decon_reads.clockwork_cleaned_read1,
+          read2 = clockwork_decon_reads.clockwork_cleaned_read2,
+          samplename = samplename
+      }
+      if (tbprofiler_additional_outputs) { #needs ONT support
         call tbp_parser_task.tbp_parser {
           input:
             tbprofiler_json = tbprofiler.tbprofiler_output_json,
@@ -581,6 +587,9 @@ workflow merlin_magic {
     File? tbp_parser_looker_report_csv = tbp_parser.tbp_parser_looker_report_csv
     File? tbp_parser_coverage_report = tbp_parser.tbp_parser_coverage_report
     Float? tbp_parser_genome_percent_coverage = tbp_parser.tbp_parser_genome_percent_coverage
+    File? clockwork_cleaned_read1 = clockwork_decon_reads.clockwork_cleaned_read1
+    File? clockwork_cleaned_read2 = clockwork_decon_reads.clockwork_cleaned_read2
+
     # Legionella pneumophila Typing
     File? legsta_results = legsta.legsta_results
     String? legsta_predicted_sbt = legsta.legsta_predicted_sbt
