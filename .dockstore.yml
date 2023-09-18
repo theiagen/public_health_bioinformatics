@@ -232,11 +232,11 @@ workflows:
     - empty.json
  - name: TheiaCoV_Fasta_Prep_PHB
    subclass: WDL
-   primaryDescriptorPath: /workflows/theiacov/wf_theiacov_fasta_prep.wdl
+   primaryDescriptorPath: /workflows/theiacov/wf_theiacov_FASTA_prep.wdl
    testParameterFiles:
     - empty.json
  - name: TheiaCoV_Fasta_Set_PHB
    subclass: WDL
-   primaryDescriptorPath: /workflows/theiacov/wf_theiacov_fasta_set.wdl
+   primaryDescriptorPath: /workflows/theiacov/wf_theiacov_FASTA_set.wdl
    testParameterFiles:
     - empty.json
