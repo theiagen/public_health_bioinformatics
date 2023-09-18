@@ -12,7 +12,7 @@ task kmerfinder_bacteria {
     String kmerfinder_args = ""
   }
   command <<<
-    # Decompress the kmerfinder bacterial qdatabase
+    # Decompress the kmerfinder bacterial database
     mkdir db
     tar -C ./db/ -xzvf ~{kmerfinder_db}  
 
