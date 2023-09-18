@@ -8,7 +8,7 @@ task clockwork_decon_reads {
     String samplename
     Int disk_size = 200
     Int cpu = 16
-    Int mem = 32
+    Int mem = 64
     }
 
   command <<<
