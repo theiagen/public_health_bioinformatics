@@ -36,5 +36,5 @@
     "theiaprok_illumina_se.bakta.bakta_db" : "./tests/inputs/empty-for-test.txt",
     "theiaprok_illumina_se.gambit.gambit_db_signatures" : "./tests/inputs/completely-empty-for-test.txt",
     "theiaprok_illumina_se.gambit.gambit_db_genomes" : "./tests/inputs/completely-empty-for-test.txt",
-    "theiaprok_illumina_pe.kmerfinder.kmerfinder_db" : "./tests/inputs/completely-empty-for-test.txt"
+    "theiaprok_illumina_se.kmerfinder.kmerfinder_db" : "./tests/inputs/completely-empty-for-test.txt"
 }
