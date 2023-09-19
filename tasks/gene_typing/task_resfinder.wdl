@@ -91,6 +91,17 @@ task resfinder {
       mv -v PointFinder_results.txt ~{samplename}_PointFinder_results.tsv
     fi
 
+    # parse ~{samplename}_pheno_table.tsv for predicted phenotypes and genes associated
+    # strip off 18 lines from top of file (18th line is the header with the columns: antimicrobial, class, WGS-predicted phenotype, Match, Genetic Background)
+    tail +18 ~{samplename}_pheno_table.tsv > ~{samplename}_pheno_table.headerless.tsv
+    
+    # convert all letters in first column (antibiotic) to uppercase. For readability of output string
+    awk -F '\t' 'BEGIN{OFS="\t"} { $1=toupper($1) } 1' ~{samplename}_pheno_table.headerless.tsv > ~{samplename}_pheno_table.headerless.uppercase.tsv
+
+    # if column 3 shows 'Resistant', then print list of drugs followed by the genes/point mutations responsible
+    awk -F '\t' 'BEGIN{OFS=":"; ORS="; "} { if($3 == "Resistant") {print $1,$5}}' ~{samplename}_pheno_table.headerless.uppercase.tsv \
+    | sed 's/..$//' > RESFINDER_PREDICTED_PHENO_RESISTANCE.txt
+
   >>>
   output {
     File resfinder_pheno_table = "~{samplename}_pheno_table.tsv"
@@ -100,6 +111,7 @@ task resfinder {
     File resfinder_results_tab = "~{samplename}_ResFinder_results_tab.tsv"
     File? pointfinder_pheno_table = "~{samplename}_PointFinder_prediction.tsv"
     File? pointfinder_results = "~{samplename}_PointFinder_results.tsv"
+    String resfinder_predicted_pheno_resistance = read_string("RESFINDER_PREDICTED_PHENO_RESISTANCE.txt")
     String resfinder_docker = "~{docker}"
     String resfinder_version = read_string("RESFINDER_VERSION")
     String resfinder_db_version = read_string("RESFINDER_DB_VERSION")
