@@ -95,6 +95,7 @@ task export_taxon_tables {
     String? kmerfinder_docker
     File? kmerfinder_results_tsv
     String? kmerfinder_top_hit
+    String? kmerfinder_query_coverage
     File? amrfinderplus_all_report
     File? amrfinderplus_amr_report
     File? amrfinderplus_stress_report
@@ -593,6 +594,7 @@ task export_taxon_tables {
       "kmerfinder_docker": "~{kmerfinder_docker}",
       "kmerfinder_results_tsv": "~{kmerfinder_results_tsv}",
       "kmerfinder_top_hit": "~{kmerfinder_top_hit}",
+      "kmerfinder_query_coverage": "~{kmerfinder_query_coverage}",
       "resfinder_pheno_table": "~{resfinder_pheno_table}",
       "resfinder_pheno_table_species": "~{resfinder_pheno_table_species}",
       "resfinder_seqs": "~{resfinder_seqs}",

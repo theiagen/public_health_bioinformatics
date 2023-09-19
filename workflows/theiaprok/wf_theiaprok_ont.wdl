@@ -274,6 +274,7 @@ workflow theiaprok_ont {
             kmerfinder_docker = kmerfinder.kmerfinder_docker,
             kmerfinder_results_tsv = kmerfinder.kmerfinder_results_tsv,
             kmerfinder_top_hit = kmerfinder.kmerfinder_top_hit,
+            kmerfinder_query_coverage = kmerfinder.kmerfinder_query_coverage,
             amrfinderplus_all_report = amrfinderplus.amrfinderplus_all_report,
             amrfinderplus_amr_report = amrfinderplus.amrfinderplus_amr_report,
             amrfinderplus_stress_report = amrfinderplus.amrfinderplus_stress_report,
@@ -547,6 +548,7 @@ workflow theiaprok_ont {
     String? kmerfinder_docker = kmerfinder.kmerfinder_docker
     File? kmerfinder_results_tsv = kmerfinder.kmerfinder_results_tsv
     String? kmerfinder_top_hit = kmerfinder.kmerfinder_top_hit
+    String? kmerfinder_query_coverage = kmerfinder.kmerfinder_query_coverage
     # NCBI-AMRFinderPlus Outputs
     File? amrfinderplus_all_report = amrfinderplus.amrfinderplus_all_report
     File? amrfinderplus_amr_report = amrfinderplus.amrfinderplus_amr_report
