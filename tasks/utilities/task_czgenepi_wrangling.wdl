@@ -79,7 +79,7 @@ task czgenepi_wrangling {
 
     print("DEBUG: checking if private_id column was set")
     if "~{private_id_column_name}" == "~{terra_table_name}_id":
-      metadata["Private ID"] = metadata["~{private_id_column_name}"]
+      metadata["Private ID"] = metadata.loc[:, "~{private_id_column_name}"]
     else:
       metadata.rename(columns={"~{private_id_column_name}": "Private ID"}, inplace=True)
     
