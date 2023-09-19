@@ -50,6 +50,7 @@ task tbp_parser {
     cpu: cpu
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
-    maxRetries: 3 
+    maxRetries: 3
+    preemptible: 1
   }
 }
