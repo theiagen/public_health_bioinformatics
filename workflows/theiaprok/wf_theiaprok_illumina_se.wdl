@@ -353,7 +353,7 @@ workflow theiaprok_illumina_se {
             lissero_serotype = merlin_magic.lissero_serotype,
             sistr_results = merlin_magic.sistr_results,
             sistr_allele_json = merlin_magic.sistr_allele_json,
-            sister_allele_fasta = merlin_magic.sistr_allele_fasta,
+            sistr_allele_fasta = merlin_magic.sistr_allele_fasta,
             sistr_cgmlst = merlin_magic.sistr_cgmlst,
             sistr_version = merlin_magic.sistr_version,
             sistr_predicted_serotype = merlin_magic.sistr_predicted_serotype,
@@ -689,7 +689,7 @@ workflow theiaprok_illumina_se {
     # Salmonella Typing
     File? sistr_results = merlin_magic.sistr_results
     File? sistr_allele_json = merlin_magic.sistr_allele_json
-    File? sister_allele_fasta = merlin_magic.sistr_allele_fasta
+    File? sistr_allele_fasta = merlin_magic.sistr_allele_fasta
     File? sistr_cgmlst = merlin_magic.sistr_cgmlst
     String? sistr_version = merlin_magic.sistr_version
     String? sistr_predicted_serotype = merlin_magic.sistr_predicted_serotype
