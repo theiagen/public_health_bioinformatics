@@ -102,6 +102,25 @@ task resfinder {
     awk -F '\t' 'BEGIN{OFS=":"; ORS="; "} { if($3 == "Resistant") {print $1,$5}}' ~{samplename}_pheno_table.headerless.uppercase.tsv \
     | sed 's/..$//' > RESFINDER_PREDICTED_PHENO_RESISTANCE.txt
 
+    # check for XDR Shigella status, based on CDC definition here: https://emergency.cdc.gov/han/2023/han00486.asp
+    # requirements:
+    # organism input (i.e. gambit_predicted_taxon) must contain "Shigella"
+    # predicted resistance to antimicrobials must include ALL: "ceftriaxone", "azithromycin", "ciprofloxacin", "trimethoprim", "sulfamethoxazole", and "ampicillin"
+    if [[ "~{organism}" == *"Shigella"* ]] && \
+    grep -qi "ceftriaxone" RESFINDER_PREDICTED_PHENO_RESISTANCE.txt && \
+    grep -qi "azithromycin" RESFINDER_PREDICTED_PHENO_RESISTANCE.txt && \
+    grep -qi "ciprofloxacin" RESFINDER_PREDICTED_PHENO_RESISTANCE.txt && \
+    grep -qi "trimethoprim" RESFINDER_PREDICTED_PHENO_RESISTANCE.txt && \
+    grep -qi "sulfamethoxazole" RESFINDER_PREDICTED_PHENO_RESISTANCE.txt && \
+    grep -qi "ampicillin" RESFINDER_PREDICTED_PHENO_RESISTANCE.txt; then
+      echo "XDR Shigella based on predicted resistance to ceftriazone, azithromycin, ciprofloxacin, trimethoprim, sulfamethoxazole, and ampicillin. Please verify by reviewing ~{samplename}_pheno_table.tsv and ~{samplename}_ResFinder_results_tab.tsv"
+      echo "XDR Shigella based on predicted resistance to ceftriazone, azithromycin, ciprofloxacin, trimethoprim, sulfamethoxazole, and ampicillin. Please verify by reviewing ~{samplename}_pheno_table.tsv and ~{samplename}_ResFinder_results_tab.tsv" > RESFINDER_PREDICTED_XDR_SHIGELLA.txt
+    else
+      echo "Not predicted as XDR Shigella"
+      echo "Not predicted as XDR Shigella" > RESFINDER_PREDICTED_XDR_SHIGELLA.txt
+    fi
+
+
   >>>
   output {
     File resfinder_pheno_table = "~{samplename}_pheno_table.tsv"
@@ -112,6 +131,7 @@ task resfinder {
     File? pointfinder_pheno_table = "~{samplename}_PointFinder_prediction.tsv"
     File? pointfinder_results = "~{samplename}_PointFinder_results.tsv"
     String resfinder_predicted_pheno_resistance = read_string("RESFINDER_PREDICTED_PHENO_RESISTANCE.txt")
+    String resfinder_predicted_xdr_shigella = read_string("RESFINDER_PREDICTED_XDR_SHIGELLA.txt")
     String resfinder_docker = "~{docker}"
     String resfinder_version = read_string("RESFINDER_VERSION")
     String resfinder_db_version = read_string("RESFINDER_DB_VERSION")
