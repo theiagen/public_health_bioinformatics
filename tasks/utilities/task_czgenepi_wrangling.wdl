@@ -54,13 +54,14 @@ task czgenepi_wrangling {
     table = table.fillna("")
 
     # extract metadata to new table
-    print("DEBUG: copying required metadata columns")
+    print("DEBUG: copying require metadata columns")
     metadata = table[REQUIRED_COLUMNS].copy()
 
     print("DEBUG: copying optional metadata columns")
     for column in OPTIONAL_COLUMNS:
       if column in table.columns:
         metadata[column] = table[column]
+
       else:
         if column == "sample_is_private":
           # by default, all samples will be set as private
@@ -79,6 +80,8 @@ task czgenepi_wrangling {
 
     print("DEBUG: checking if private_id column was set")
     if "~{private_id_column_name}" == "~{terra_table_name}_id":
+      print("DEBUG: removing duplicated column")
+      metadata = metadata.loc[:, ~metadata.columns.duplicated()].copy()
       metadata["Private ID"] = metadata.loc[:, "~{private_id_column_name}"]
     else:
       metadata.rename(columns={"~{private_id_column_name}": "Private ID"}, inplace=True)
