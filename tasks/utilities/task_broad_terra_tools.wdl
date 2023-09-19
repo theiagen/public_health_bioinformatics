@@ -172,7 +172,7 @@ task export_taxon_tables {
     String? lissero_serotype
     File? sistr_results
     File? sistr_allele_json
-    File? sister_allele_fasta
+    File? sistr_allele_fasta
     File? sistr_cgmlst
     String? sistr_version
     String? sistr_predicted_serotype
@@ -497,7 +497,7 @@ task export_taxon_tables {
       "lissero_serotype": "~{lissero_serotype}",
       "sistr_results": "~{sistr_results}",
       "sistr_allele_json": "~{sistr_allele_json}",
-      "sister_allele_fasta": "~{sister_allele_fasta}",
+      "sistr_allele_fasta": "~{sistr_allele_fasta}",
       "sistr_cgmlst": "~{sistr_cgmlst}",
       "sistr_version": "~{sistr_version}",
       "sistr_predicted_serotype": "~{sistr_predicted_serotype}",
