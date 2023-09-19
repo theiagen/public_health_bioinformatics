@@ -2,7 +2,6 @@
     "theiaprok_illumina_se.samplename": "test",
     "theiaprok_illumina_se.read1_raw": "bactopia-tests/data/species/portiera/illumina/SRR2838702_R1.fastq.gz",
     "theiaprok_illumina_se.skip_screen": true,
-    "theiaprok_illumina_pe.call_kmerfinder": false,
     "theiaprok_illumina_se.read_QC_trim.read_processing": "trimmomatic",
     "theiaprok_illumina_se.read_QC_trim.call_midas": false,
     "theiaprok_illumina_se.read_QC_trim.midas.midas_db" : "./tests/inputs/empty-for-test.txt",
