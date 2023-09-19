@@ -77,9 +77,15 @@ task czgenepi_wrangling {
     # add county to the location if the length of the county is > 0
     metadata["Collection Location"] = metadata.apply(lambda x: x["Collection Location"] + "/" + x["county"] if len(x["county"]) > 0 else x["Collection Location"], axis=1)
 
+    print("DEBUG: checking if private_id column was set")
+    if "~{private_id_column_name}" == "~{terra_table_name}_id":
+      metadata["Private ID"] = metadata["~{private_id_column_name}"]
+    else:
+      metadata.rename(columns={"~{private_id_column_name}": "Private ID"}, inplace=True)
+    
+    print("DEBUG: renaming the rest of the headers")
     # rename headers to match CZGenEpi's expected format
     metadata.rename(columns={"~{terra_table_name}_id": "Sample Name (from FASTA)", 
-                             "~{private_id_column_name}": "Private ID",
                              "~{gisaid_id_column_name}": "GISAID ID (Public ID) - Optional",  
                              "~{genbank_accession_column_name}": "GenBank Accession (Public ID) - Optional",
                              "~{collection_date_column_name}": "Collection Date",
