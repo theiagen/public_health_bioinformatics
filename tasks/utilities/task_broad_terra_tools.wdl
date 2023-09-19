@@ -110,6 +110,8 @@ task export_taxon_tables {
     File? resfinder_results 
     File? resfinder_pointfinder_pheno_table 
     File? resfinder_pointfinder_results 
+    String? resfinder_predicted_pheno_resistance
+    String? resfinder_predicted_xdr_shigella
     String? resfinder_db_version 
     String? resfinder_docker 
     File? ts_mlst_results
@@ -593,6 +595,8 @@ task export_taxon_tables {
       "resfinder_results": "~{resfinder_results}",
       "resfinder_pointfinder_pheno_table": "~{resfinder_pointfinder_pheno_table}",
       "resfinder_pointfinder_results": "~{resfinder_pointfinder_results}",
+      "resfinder_predicted_pheno_resistance": "~{resfinder_predicted_pheno_resistance}",
+      "resfinder_predicted_xdr_shigella": "~{resfinder_predicted_xdr_shigella}",
       "resfinder_db_version": "~{resfinder_db_version}",
       "resfinder_docker": "~{resfinder_docker}",
       "prokka_gff": "~{prokka_gff}",
