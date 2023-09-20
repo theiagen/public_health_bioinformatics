@@ -113,8 +113,8 @@ task resfinder {
     grep -qi "trimethoprim" RESFINDER_PREDICTED_PHENO_RESISTANCE.txt && \
     grep -qi "sulfamethoxazole" RESFINDER_PREDICTED_PHENO_RESISTANCE.txt && \
     grep -qi "ampicillin" RESFINDER_PREDICTED_PHENO_RESISTANCE.txt; then
-      echo "XDR Shigella based on predicted resistance to ceftriazone, azithromycin, ciprofloxacin, trimethoprim, sulfamethoxazole, and ampicillin. Please verify by reviewing ~{samplename}_pheno_table.tsv and ~{samplename}_ResFinder_results_tab.tsv"
-      echo "XDR Shigella based on predicted resistance to ceftriazone, azithromycin, ciprofloxacin, trimethoprim, sulfamethoxazole, and ampicillin. Please verify by reviewing ~{samplename}_pheno_table.tsv and ~{samplename}_ResFinder_results_tab.tsv" > RESFINDER_PREDICTED_XDR_SHIGELLA.txt
+      echo "XDR Shigella based on predicted resistance to ceftriaxone, azithromycin, ciprofloxacin, trimethoprim, sulfamethoxazole, and ampicillin. Please verify by reviewing ~{samplename}_pheno_table.tsv and ~{samplename}_ResFinder_results_tab.tsv"
+      echo "XDR Shigella based on predicted resistance to ceftriaxone, azithromycin, ciprofloxacin, trimethoprim, sulfamethoxazole, and ampicillin. Please verify by reviewing ~{samplename}_pheno_table.tsv and ~{samplename}_ResFinder_results_tab.tsv" > RESFINDER_PREDICTED_XDR_SHIGELLA.txt
     else
       echo "Not predicted as XDR Shigella"
       echo "Not predicted as XDR Shigella" > RESFINDER_PREDICTED_XDR_SHIGELLA.txt
