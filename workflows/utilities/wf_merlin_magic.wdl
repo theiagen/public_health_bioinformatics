@@ -241,13 +241,13 @@ workflow merlin_magic {
           read2 = read2,
           samplename = samplename
       }
-      call tbprofiler_task.tbprofiler { # needs testing
+      call tbprofiler_task.tbprofiler {
         input:
           read1 = clockwork_decon_reads.clockwork_cleaned_read1,
           read2 = clockwork_decon_reads.clockwork_cleaned_read2,
           samplename = samplename
       }
-      if (tbprofiler_additional_outputs) { #needs ONT support
+      if (tbprofiler_additional_outputs) {
         call tbp_parser_task.tbp_parser {
           input:
             tbprofiler_json = tbprofiler.tbprofiler_output_json,

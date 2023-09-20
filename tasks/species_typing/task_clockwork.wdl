@@ -3,7 +3,7 @@ version 1.0
 task clockwork_decon_reads {
   input {
     File read1
-    File read2
+    File? read2 # only optional to not fail in merlin_magic
     String samplename
     Int disk_size = 200
     Int cpu = 16

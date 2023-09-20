@@ -806,7 +806,6 @@ workflow theiaprok_illumina_pe {
     Float? tbp_parser_genome_percent_coverage = merlin_magic.tbp_parser_genome_percent_coverage
     File? clockwork_decontaminated_read1 = merlin_magic.clockwork_cleaned_read1
     File? clockwork_decontaminated_read2 = merlin_magic.clockwork_cleaned_read2
-
     # Legionella pneumophila typing
     File? legsta_results = merlin_magic.legsta_results
     String? legsta_predicted_sbt = merlin_magic.legsta_predicted_sbt
