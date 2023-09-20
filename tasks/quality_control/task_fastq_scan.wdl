@@ -7,6 +7,7 @@ task fastq_scan_pe {
     String read1_name = basename(basename(basename(read1, ".gz"), ".fastq"), ".fq")
     String read2_name = basename(basename(basename(read2, ".gz"), ".fastq"), ".fq")
     Int disk_size = 100
+    String docker = "quay.io/biocontainers/fastq-scan:0.4.4--h7d875b9_1"
   }
   command <<<
     # capture date and version
@@ -21,9 +22,11 @@ task fastq_scan_pe {
     fi
 
     # capture forward read stats
-    eval "${cat_reads} ~{read1}" | fastq-scan | tee ~{read1_name}_fastq-scan.json >(jq .qc_stats.read_total > READ1_SEQS)
+    eval "${cat_reads} ~{read1}" | fastq-scan | tee ~{read1_name}_fastq-scan.json
+    cat ~{read1_name}_fastq-scan.json | jq .qc_stats.read_total | tee READ1_SEQS
     read1_seqs=$(cat READ1_SEQS)
-    eval "${cat_reads} ~{read2}" | fastq-scan | tee ~{read2_name}_fastq-scan.json >(jq .qc_stats.read_total > READ2_SEQS)
+    eval "${cat_reads} ~{read2}" | fastq-scan | tee ~{read2_name}_fastq-scan.json
+    cat ~{read2_name}_fastq-scan.json | jq .qc_stats.read_total | tee READ2_SEQS
     read2_seqs=$(cat READ2_SEQS)
 
     # capture number of read pairs
@@ -38,11 +41,12 @@ task fastq_scan_pe {
   output {
     File read1_fastq_scan_report = "~{read1_name}_fastq-scan.json"
     File read2_fastq_scan_report = "~{read2_name}_fastq-scan.json"
-    Int read1_seq = read_string("READ1_SEQS")
-    Int read2_seq = read_string("READ2_SEQS")
+    Int read1_seq = read_int("READ1_SEQS")
+    Int read2_seq = read_int("READ2_SEQS")
     String read_pairs = read_string("READ_PAIRS")
     String version = read_string("VERSION")
     String pipeline_date = read_string("DATE")
+    String fastq_scan_docker = docker
   }
   runtime {
     docker: "us-docker.pkg.dev/general-theiagen/biocontainers/fastq-scan:0.4.4--h7d875b9_1"
@@ -60,6 +64,7 @@ task fastq_scan_se {
     File read1
     String read1_name = basename(basename(basename(read1, ".gz"), ".fastq"), ".fq")
     Int disk_size = 100
+    String docker = "quay.io/biocontainers/fastq-scan:0.4.4--h7d875b9_1"
   }
   command <<<
     # capture date and version
@@ -74,13 +79,15 @@ task fastq_scan_se {
     fi
 
     # capture forward read stats
-    eval "${cat_reads} ~{read1}" | fastq-scan | tee ~{read1_name}_fastq-scan.json >(jq .qc_stats.read_total > READ1_SEQS)
+    eval "${cat_reads} ~{read1}" | fastq-scan | tee ~{read1_name}_fastq-scan.json
+    cat ~{read1_name}_fastq-scan.json | jq .qc_stats.read_total | tee READ1_SEQS
   >>>
   output {
     File fastq_scan_report = "~{read1_name}_fastq-scan.json"
-    Int read1_seq = read_string("READ1_SEQS")
+    Int read1_seq = read_int("READ1_SEQS")
     String version = read_string("VERSION")
     String pipeline_date = read_string("DATE")
+    String fastq_scan_docker = docker
   }
   runtime {
     docker: "us-docker.pkg.dev/general-theiagen/biocontainers/fastq-scan:0.4.4--h7d875b9_1"

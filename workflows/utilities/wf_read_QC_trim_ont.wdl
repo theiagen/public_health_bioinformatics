@@ -84,7 +84,7 @@ workflow read_QC_trim_ont {
   }
   output { 
     # kmc outputs
-    Int est_genome_size = kmc.est_genome_size
+    String est_genome_size = kmc.est_genome_size
     File kmc_kmer_stats = kmc.kmer_stats
     String kmc_version = kmc.kmc_version
 

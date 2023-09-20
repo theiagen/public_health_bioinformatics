@@ -489,7 +489,7 @@ workflow theiaprok_ont {
     String? nanoplot_version = nanoplot_raw.nanoplot_version
     String? nanoplot_docker = nanoplot_raw.nanoplot_docker
     # Read QC - kmc outputs
-    Int? kmc_est_genome_size = read_qc_trim.est_genome_size
+    String? kmc_est_genome_size = read_qc_trim.est_genome_size
     File? kmc_kmer_stats = read_qc_trim.kmc_kmer_stats
     String? kmc_version = read_qc_trim.kmc_version
     # Read QC - rasusa outputs
