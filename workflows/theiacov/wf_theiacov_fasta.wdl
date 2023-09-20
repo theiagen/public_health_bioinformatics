@@ -41,14 +41,22 @@ workflow theiacov_fasta {
     String nextclade_mpxv_tag = "2023-08-01T12:00:00Z"
     String nextclade_rsv_a_tag = "2023-02-03T12:00:00Z"
     String nextclade_rsv_b_tag = "2023-02-03T12:00:00Z"
-    # nextclade flu inputs
-    String nextclade_flu_h1n1_ha_tag = "2023-08-10T12:00:00Z"
-    String nextclade_flu_h1n1_na_tag = "2023-08-10T12:00:00Z"
-    String nextclade_flu_h3n2_ha_tag = "2023-08-10T12:00:00Z"
-    String nextclade_flu_h3n2_na_tag = "2023-08-10T12:00:00Z"
-    String nextclade_flu_vic_ha_tag = "2023-08-10T12:00:00Z"
-    String nextclade_flu_vic_na_tag = "2023-08-10T12:00:00Z"
+    # nextclade flu old inputs
+    String nextclade_flu_h1n1_ha_tag = "2023-04-02T12:00:00Z"
+    String nextclade_flu_h1n1_na_tag = "2023-04-02T12:00:00Z"
+    String nextclade_flu_h3n2_ha_tag = "2023-04-02T12:00:00Z"
+    String nextclade_flu_h3n2_na_tag = "2023-04-02T12:00:00Z"
+    String nextclade_flu_vic_ha_tag = "2023-04-02T12:00:00Z"
+    String nextclade_flu_vic_na_tag = "2023-04-02T12:00:00Z"
     String nextclade_flu_yam_tag = "2022-07-27T12:00:00Z"
+    # nextclade flu inputs
+    #String nextclade_flu_h1n1_ha_tag = "2023-08-10T12:00:00Z"
+    #String nextclade_flu_h1n1_na_tag = "2023-08-10T12:00:00Z"
+    #String nextclade_flu_h3n2_ha_tag = "2023-08-10T12:00:00Z"
+    #String nextclade_flu_h3n2_na_tag = "2023-08-10T12:00:00Z"
+    #String nextclade_flu_vic_ha_tag = "2023-08-10T12:00:00Z"
+    #String nextclade_flu_vic_na_tag = "2023-08-10T12:00:00Z"
+    #String nextclade_flu_yam_tag = "2022-07-27T12:00:00Z"
     # sequencing values
     String seq_method
     String input_assembly_method
