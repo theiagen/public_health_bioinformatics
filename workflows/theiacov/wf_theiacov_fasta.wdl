@@ -65,6 +65,9 @@ workflow theiacov_fasta {
     # vadr parameters
     Int? maxlen
   }
+  # create empty file for nextclade when flu is untyped
+  File empty_nextclade = "empty_nextclade.tsv"
+
   # sars-cov-2 specific tasks
   if (organism == "sars-cov-2") {
     Int sars_cov_2_maxlen = 30000
@@ -328,7 +331,7 @@ workflow theiacov_fasta {
     # Nextclade outputs
     File? nextclade_json = select_first([sarscov2_nextclade.nextclade_json, mpxv_nextclade.nextclade_json, rsv_a_nextclade.nextclade_json, rsv_b_nextclade.nextclade_json, flu_h1n1_ha_nextclade.nextclade_json, flu_h1n1_na_nextclade.nextclade_json, flu_h3n2_ha_nextclade.nextclade_json, flu_h3n2_na_nextclade.nextclade_json, flu_yam_ha_nextclade.nextclade_json, flu_vic_ha_nextclade.nextclade_json, flu_vic_na_nextclade.nextclade_json, "not applicable"])
     File? auspice_json = select_first([sarscov2_nextclade.auspice_json, mpxv_nextclade.auspice_json, rsv_a_nextclade.auspice_json, rsv_b_nextclade.auspice_json, flu_h1n1_ha_nextclade.auspice_json, flu_h1n1_na_nextclade.auspice_json, flu_h3n2_ha_nextclade.auspice_json, flu_h3n2_na_nextclade.auspice_json, flu_yam_ha_nextclade.auspice_json, flu_vic_ha_nextclade.auspice_json, flu_vic_na_nextclade.auspice_json, "not applicable"])
-    File? nextclade_tsv = select_first([sarscov2_nextclade.nextclade_tsv, mpxv_nextclade.nextclade_tsv, rsv_a_nextclade.nextclade_tsv, rsv_b_nextclade.nextclade_tsv, flu_h1n1_ha_nextclade.nextclade_tsv, flu_h1n1_na_nextclade.nextclade_tsv, flu_h3n2_ha_nextclade.nextclade_tsv, flu_h3n2_na_nextclade.nextclade_tsv, flu_yam_ha_nextclade.nextclade_tsv, flu_vic_ha_nextclade.nextclade_tsv, flu_vic_na_nextclade.nextclade_tsv, "not applicable"])
+    File? nextclade_tsv = select_first([sarscov2_nextclade.nextclade_tsv, mpxv_nextclade.nextclade_tsv, rsv_a_nextclade.nextclade_tsv, rsv_b_nextclade.nextclade_tsv, flu_h1n1_ha_nextclade.nextclade_tsv, flu_h1n1_na_nextclade.nextclade_tsv, flu_h3n2_ha_nextclade.nextclade_tsv, flu_h3n2_na_nextclade.nextclade_tsv, flu_yam_ha_nextclade.nextclade_tsv, flu_vic_ha_nextclade.nextclade_tsv, flu_vic_na_nextclade.nextclade_tsv, "${empty_nextclade}"])
     String? nextclade_version = select_first([sarscov2_nextclade.nextclade_version, mpxv_nextclade.nextclade_version, rsv_a_nextclade.nextclade_version, rsv_b_nextclade.nextclade_version, flu_h1n1_ha_nextclade.nextclade_version, flu_h1n1_na_nextclade.nextclade_version, flu_h3n2_ha_nextclade.nextclade_version, flu_h3n2_na_nextclade.nextclade_version, flu_yam_ha_nextclade.nextclade_version, flu_vic_ha_nextclade.nextclade_version, flu_vic_na_nextclade.nextclade_version, "not applicable"])
     String? nextclade_docker = select_first([sarscov2_nextclade.nextclade_docker, mpxv_nextclade.nextclade_docker, rsv_a_nextclade.nextclade_docker, rsv_b_nextclade.nextclade_docker, flu_h1n1_ha_nextclade.nextclade_docker, flu_h1n1_na_nextclade.nextclade_docker, flu_h3n2_ha_nextclade.nextclade_docker, flu_h3n2_na_nextclade.nextclade_docker, flu_yam_ha_nextclade.nextclade_docker, flu_vic_ha_nextclade.nextclade_docker, flu_vic_na_nextclade.nextclade_docker, "not applicable"])
     String nextclade_ds_tag = select_first([sarscov2_nextclade.nextclade_dataset_tag, mpxv_nextclade.nextclade_dataset_tag, rsv_a_nextclade.nextclade_dataset_tag, rsv_b_nextclade.nextclade_dataset_tag, flu_h1n1_ha_nextclade.nextclade_dataset_tag, flu_h1n1_na_nextclade.nextclade_dataset_tag, flu_h3n2_ha_nextclade.nextclade_dataset_tag, flu_h3n2_na_nextclade.nextclade_dataset_tag, flu_yam_ha_nextclade.nextclade_dataset_tag, flu_vic_ha_nextclade.nextclade_dataset_tag, flu_vic_na_nextclade.nextclade_dataset_tag, "not applicable"])
