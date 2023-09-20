@@ -1,6 +1,7 @@
 
 version 1.0
 
+import "../../tasks/utilities/task_theiacov_fasta_utilities.wdl" as fasta_utilities
 import "../../tasks/quality_control/task_vadr.wdl" as vadr_task
 import "../../tasks/quality_control/task_consensus_qc.wdl" as consensus_qc_task
 import "../../tasks/gene_typing/task_abricate.wdl" as abricate
@@ -64,6 +65,9 @@ workflow theiacov_fasta {
     File? qc_check_table
     # vadr parameters
     Int? maxlen
+  }
+  call fasta_utilities.create_dummy_file {
+    input:
   }
   # sars-cov-2 specific tasks
   if (organism == "sars-cov-2") {
@@ -326,9 +330,9 @@ workflow theiacov_fasta {
     String? pangolin_docker = pangolin4.pangolin_docker
     String? pangolin_versions = pangolin4.pangolin_versions
     # Nextclade outputs
-    File? nextclade_json = select_first([sarscov2_nextclade.nextclade_json, mpxv_nextclade.nextclade_json, rsv_a_nextclade.nextclade_json, rsv_b_nextclade.nextclade_json, flu_h1n1_ha_nextclade.nextclade_json, flu_h1n1_na_nextclade.nextclade_json, flu_h3n2_ha_nextclade.nextclade_json, flu_h3n2_na_nextclade.nextclade_json, flu_yam_ha_nextclade.nextclade_json, flu_vic_ha_nextclade.nextclade_json, flu_vic_na_nextclade.nextclade_json, ref_flu_h1n1_ha])
-    File? auspice_json = select_first([sarscov2_nextclade.auspice_json, mpxv_nextclade.auspice_json, rsv_a_nextclade.auspice_json, rsv_b_nextclade.auspice_json, flu_h1n1_ha_nextclade.auspice_json, flu_h1n1_na_nextclade.auspice_json, flu_h3n2_ha_nextclade.auspice_json, flu_h3n2_na_nextclade.auspice_json, flu_yam_ha_nextclade.auspice_json, flu_vic_ha_nextclade.auspice_json, flu_vic_na_nextclade.auspice_json, ref_flu_h1n1_ha])
-    File? nextclade_tsv = select_first([sarscov2_nextclade.nextclade_tsv, mpxv_nextclade.nextclade_tsv, rsv_a_nextclade.nextclade_tsv, rsv_b_nextclade.nextclade_tsv, flu_h1n1_ha_nextclade.nextclade_tsv, flu_h1n1_na_nextclade.nextclade_tsv, flu_h3n2_ha_nextclade.nextclade_tsv, flu_h3n2_na_nextclade.nextclade_tsv, flu_yam_ha_nextclade.nextclade_tsv, flu_vic_ha_nextclade.nextclade_tsv, flu_vic_na_nextclade.nextclade_tsv, ref_flu_h1n1_ha])
+    File? nextclade_json = select_first([sarscov2_nextclade.nextclade_json, mpxv_nextclade.nextclade_json, rsv_a_nextclade.nextclade_json, rsv_b_nextclade.nextclade_json, flu_h1n1_ha_nextclade.nextclade_json, flu_h1n1_na_nextclade.nextclade_json, flu_h3n2_ha_nextclade.nextclade_json, flu_h3n2_na_nextclade.nextclade_json, flu_yam_ha_nextclade.nextclade_json, flu_vic_ha_nextclade.nextclade_json, flu_vic_na_nextclade.nextclade_json, create_dummy_file.outputFile])
+    File? auspice_json = select_first([sarscov2_nextclade.auspice_json, mpxv_nextclade.auspice_json, rsv_a_nextclade.auspice_json, rsv_b_nextclade.auspice_json, flu_h1n1_ha_nextclade.auspice_json, flu_h1n1_na_nextclade.auspice_json, flu_h3n2_ha_nextclade.auspice_json, flu_h3n2_na_nextclade.auspice_json, flu_yam_ha_nextclade.auspice_json, flu_vic_ha_nextclade.auspice_json, flu_vic_na_nextclade.auspice_json, create_dummy_file.outputFile])
+    File? nextclade_tsv = select_first([sarscov2_nextclade.nextclade_tsv, mpxv_nextclade.nextclade_tsv, rsv_a_nextclade.nextclade_tsv, rsv_b_nextclade.nextclade_tsv, flu_h1n1_ha_nextclade.nextclade_tsv, flu_h1n1_na_nextclade.nextclade_tsv, flu_h3n2_ha_nextclade.nextclade_tsv, flu_h3n2_na_nextclade.nextclade_tsv, flu_yam_ha_nextclade.nextclade_tsv, flu_vic_ha_nextclade.nextclade_tsv, flu_vic_na_nextclade.nextclade_tsv, create_dummy_file.outputFile])
     String? nextclade_version = select_first([sarscov2_nextclade.nextclade_version, mpxv_nextclade.nextclade_version, rsv_a_nextclade.nextclade_version, rsv_b_nextclade.nextclade_version, flu_h1n1_ha_nextclade.nextclade_version, flu_h1n1_na_nextclade.nextclade_version, flu_h3n2_ha_nextclade.nextclade_version, flu_h3n2_na_nextclade.nextclade_version, flu_yam_ha_nextclade.nextclade_version, flu_vic_ha_nextclade.nextclade_version, flu_vic_na_nextclade.nextclade_version, "not applicable"])
     String? nextclade_docker = select_first([sarscov2_nextclade.nextclade_docker, mpxv_nextclade.nextclade_docker, rsv_a_nextclade.nextclade_docker, rsv_b_nextclade.nextclade_docker, flu_h1n1_ha_nextclade.nextclade_docker, flu_h1n1_na_nextclade.nextclade_docker, flu_h3n2_ha_nextclade.nextclade_docker, flu_h3n2_na_nextclade.nextclade_docker, flu_yam_ha_nextclade.nextclade_docker, flu_vic_ha_nextclade.nextclade_docker, flu_vic_na_nextclade.nextclade_docker, "not applicable"])
     String nextclade_ds_tag = select_first([sarscov2_nextclade.nextclade_dataset_tag, mpxv_nextclade.nextclade_dataset_tag, rsv_a_nextclade.nextclade_dataset_tag, rsv_b_nextclade.nextclade_dataset_tag, flu_h1n1_ha_nextclade.nextclade_dataset_tag, flu_h1n1_na_nextclade.nextclade_dataset_tag, flu_h3n2_ha_nextclade.nextclade_dataset_tag, flu_h3n2_na_nextclade.nextclade_dataset_tag, flu_yam_ha_nextclade.nextclade_dataset_tag, flu_vic_ha_nextclade.nextclade_dataset_tag, flu_vic_na_nextclade.nextclade_dataset_tag, "not applicable"])

@@ -56,3 +56,24 @@ task prep_theiacov_fasta_metadata {
       maxRetries: 3
   }
 }
+
+task create_dummy_file {
+  input {
+  Int disk_size = 10
+  }
+  command <<<
+    echo "This is the content of my file." > output.txt
+  >>>
+  output {
+    File outputFile = "output.txt"
+  }
+  runtime {
+      docker: "us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1"
+      memory: "2 GB"
+      cpu: 1
+      disks: "local-disk ~{disk_size} SSD"
+      disk: disk_size + " GB"
+      preemptible: 0
+      maxRetries: 3
+  }
+}
