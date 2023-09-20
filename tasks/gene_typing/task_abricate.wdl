@@ -94,11 +94,12 @@ task abricate_flu {
     if [[ ! (-z "${HA_hit}")  &&  ! (-z "${NA_hit}") ]]; then
       flu_subtype="${HA_hit}${NA_hit}" && echo "$flu_subtype" >  FLU_SUBTYPE
     fi
-    if [[ ! (-z "${HA_hit}") && (-z "${NA_hit}") ]]; then
-      flu_subtype="${HA_hit}" && echo "$flu_subtype" >  FLU_SUBTYPE
-    fi
-    if [[ (-z "${HA_hit}") && ! (-z "${NA_hit}") ]]; then
+    if [[ -z "${HA_hit}" ]]; then
       flu_subtype="${NA_hit}" && echo "$flu_subtype" >  FLU_SUBTYPE
+    elif [[ -z "${NA_hit}" ]]; then
+      flu_subtype="${HA_hit}" && echo "$flu_subtype" >  FLU_SUBTYPE
+    else
+      flu_subtype="${HA_hit}${NA_hit}" && echo "$flu_subtype" >  FLU_SUBTYPE
     fi
     #flu_subtype="${HA_hit}${NA_hit}" && echo "$flu_subtype" >  FLU_SUBTYPE
 
