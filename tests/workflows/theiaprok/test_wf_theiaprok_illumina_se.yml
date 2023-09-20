@@ -261,7 +261,7 @@
     - path: miniwdl_run/call-merlin_magic/workflow.log
       contains: ["wdl", "theiaprok_illumina_se", "merlin", "done"]
     - path: miniwdl_run/call-plasmidfinder/command
-      md5sum: 61f7be9cfd36e3a48585e7f64cbcfe35
+      md5sum: 3b70033058bf91c04337e38bfd038b5a
     - path: miniwdl_run/call-plasmidfinder/inputs.json
     - path: miniwdl_run/call-plasmidfinder/outputs.json
     - path: miniwdl_run/call-plasmidfinder/stderr.txt
@@ -526,7 +526,7 @@
     - path: miniwdl_run/wdl/tasks/gene_typing/task_bakta.wdl
       md5sum: 0bed8fb60786095843a67b1ad03051dc
     - path: miniwdl_run/wdl/tasks/gene_typing/task_plasmidfinder.wdl
-      md5sum: 6ca295b4dcdbe95dd86516ba0a4073f8
+      md5sum: 8730e07b1c7ab9d2434a7838ddb1fc72
     - path: miniwdl_run/wdl/tasks/gene_typing/task_prokka.wdl
       md5sum: 8e8423b99d5cd3e92bb89b3c3211d432
     - path: miniwdl_run/wdl/tasks/gene_typing/task_resfinder.wdl
