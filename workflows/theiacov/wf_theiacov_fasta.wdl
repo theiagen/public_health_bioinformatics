@@ -136,111 +136,115 @@ workflow theiacov_fasta {
   # flu specific tasks
   if (organism == "flu") {
     if (flu_segment == "HA") {
-      if (flu_subtype == "H1N1") {
-        call consensus_qc_task.consensus_qc as flu_h1n1_ha_consensus_qc {
-          input:
-            assembly_fasta = assembly_fasta,
-            reference_genome = select_first([reference_genome,ref_flu_h1n1_ha])
+      if (defined(flu_subtype)) {
+        if (flu_subtype == "H1N1") {
+          call consensus_qc_task.consensus_qc as flu_h1n1_ha_consensus_qc {
+            input:
+              assembly_fasta = assembly_fasta,
+              reference_genome = select_first([reference_genome,ref_flu_h1n1_ha])
+          }
+          call nextclade_task.nextclade as flu_h1n1_ha_nextclade {
+            input:
+              genome_fasta = assembly_fasta,
+              dataset_name = "flu_h1n1pdm_ha",
+              dataset_reference = "MW626062",
+              dataset_tag = nextclade_flu_h1n1_ha_tag
+          }
         }
-        call nextclade_task.nextclade as flu_h1n1_ha_nextclade {
-          input:
-            genome_fasta = assembly_fasta,
-            dataset_name = "flu_h1n1pdm_ha",
-            dataset_reference = "MW626062",
-            dataset_tag = nextclade_flu_h1n1_ha_tag
+        if (flu_subtype == "H3N2") {
+          call consensus_qc_task.consensus_qc as flu_h3n2_ha_consensus_qc {
+            input:
+              assembly_fasta = assembly_fasta,
+              reference_genome = select_first([reference_genome,ref_flu_h3n2_ha])
+          }
+          call nextclade_task.nextclade as flu_h3n2_ha_nextclade {
+            input:
+              genome_fasta = assembly_fasta,
+              dataset_name = "flu_h3n2_ha",
+              dataset_reference = "EPI1857216",
+              dataset_tag = nextclade_flu_h3n2_ha_tag
+          }
         }
-      }
-      if (flu_subtype == "H3N2") {
-        call consensus_qc_task.consensus_qc as flu_h3n2_ha_consensus_qc {
-          input:
-            assembly_fasta = assembly_fasta,
-            reference_genome = select_first([reference_genome,ref_flu_h3n2_ha])
+        if (flu_subtype == "Yamagata") {
+          call consensus_qc_task.consensus_qc as flu_yam_ha_consensus_qc {
+            input:
+              assembly_fasta = assembly_fasta,
+              reference_genome = select_first([reference_genome,ref_flu_yam_ha])
+          }
+          call nextclade_task.nextclade as flu_yam_ha_nextclade {
+            input:
+              genome_fasta = assembly_fasta,
+              dataset_name = "flu_yam_ha",
+              dataset_reference = "JN993010",
+              dataset_tag = nextclade_flu_yam_tag
+          }
         }
-        call nextclade_task.nextclade as flu_h3n2_ha_nextclade {
-          input:
-            genome_fasta = assembly_fasta,
-            dataset_name = "flu_h3n2_ha",
-            dataset_reference = "EPI1857216",
-            dataset_tag = nextclade_flu_h3n2_ha_tag
-        }
-      }
-      if (flu_subtype == "Yamagata") {
-        call consensus_qc_task.consensus_qc as flu_yam_ha_consensus_qc {
-          input:
-            assembly_fasta = assembly_fasta,
-            reference_genome = select_first([reference_genome,ref_flu_yam_ha])
-        }
-        call nextclade_task.nextclade as flu_yam_ha_nextclade {
-          input:
-            genome_fasta = assembly_fasta,
-            dataset_name = "flu_yam_ha",
-            dataset_reference = "JN993010",
-            dataset_tag = nextclade_flu_yam_tag
-        }
-      }
-      if (flu_subtype == "Victoria") {
-        call consensus_qc_task.consensus_qc as flu_vic_ha_consensus_qc {
-          input:
-            assembly_fasta = assembly_fasta,
-            reference_genome = select_first([reference_genome,ref_flu_vic_ha])
-        }
-        call nextclade_task.nextclade as flu_vic_ha_nextclade {
-          input:
-            genome_fasta = assembly_fasta,
-            dataset_name = "flu_vic_ha",
-            dataset_reference = "KX058884",
-            dataset_tag = nextclade_flu_vic_ha_tag
+        if (flu_subtype == "Victoria") {
+          call consensus_qc_task.consensus_qc as flu_vic_ha_consensus_qc {
+            input:
+              assembly_fasta = assembly_fasta,
+              reference_genome = select_first([reference_genome,ref_flu_vic_ha])
+          }
+          call nextclade_task.nextclade as flu_vic_ha_nextclade {
+            input:
+              genome_fasta = assembly_fasta,
+              dataset_name = "flu_vic_ha",
+              dataset_reference = "KX058884",
+              dataset_tag = nextclade_flu_vic_ha_tag
+          }
         }
       }
     }
     if (flu_segment == "NA") {
-      if (flu_subtype == "H1N1") {
-        call consensus_qc_task.consensus_qc as flu_h1n1_na_consensus_qc {
-          input:
-            assembly_fasta = assembly_fasta,
-            reference_genome = select_first([reference_genome,ref_flu_h1n1_na])
+      if (defined(flu_subtype)) {
+        if (flu_subtype == "H1N1") {
+          call consensus_qc_task.consensus_qc as flu_h1n1_na_consensus_qc {
+            input:
+              assembly_fasta = assembly_fasta,
+              reference_genome = select_first([reference_genome,ref_flu_h1n1_na])
+          }
+          call nextclade_task.nextclade as flu_h1n1_na_nextclade {
+            input:
+              genome_fasta = assembly_fasta,
+              dataset_name = "flu_h1n1pdm_na",
+              dataset_reference = "MW626056",
+              dataset_tag = nextclade_flu_h1n1_na_tag
+          }
         }
-        call nextclade_task.nextclade as flu_h1n1_na_nextclade {
-          input:
-            genome_fasta = assembly_fasta,
-            dataset_name = "flu_h1n1pdm_na",
-            dataset_reference = "MW626056",
-            dataset_tag = nextclade_flu_h1n1_na_tag
+        if (flu_subtype == "H3N2") {
+          call consensus_qc_task.consensus_qc as flu_h3n2_na_consensus_qc {
+            input:
+              assembly_fasta = assembly_fasta,
+              reference_genome = select_first([reference_genome,ref_flu_h3n2_na])
+          }
+          call nextclade_task.nextclade as flu_h3n2_na_nextclade {
+            input:
+              genome_fasta = assembly_fasta,
+              dataset_name = "flu_h3n2_na",
+              dataset_reference = "EPI1857215",
+              dataset_tag = nextclade_flu_h3n2_na_tag
+          }
         }
-      }
-      if (flu_subtype == "H3N2") {
-        call consensus_qc_task.consensus_qc as flu_h3n2_na_consensus_qc {
-          input:
-            assembly_fasta = assembly_fasta,
-            reference_genome = select_first([reference_genome,ref_flu_h3n2_na])
+        if (flu_subtype == "Yamagata") {
+          call consensus_qc_task.consensus_qc as flu_yam_na_consensus_qc {
+            input:
+              assembly_fasta = assembly_fasta,
+              reference_genome = select_first([reference_genome,ref_flu_yam_na])
+          }
         }
-        call nextclade_task.nextclade as flu_h3n2_na_nextclade {
-          input:
-            genome_fasta = assembly_fasta,
-            dataset_name = "flu_h3n2_na",
-            dataset_reference = "EPI1857215",
-            dataset_tag = nextclade_flu_h3n2_na_tag
-        }
-      }
-      if (flu_subtype == "Yamagata") {
-        call consensus_qc_task.consensus_qc as flu_yam_na_consensus_qc {
-          input:
-            assembly_fasta = assembly_fasta,
-            reference_genome = select_first([reference_genome,ref_flu_yam_na])
-        }
-      }
-      if (flu_subtype == "Victoria") {
-        call consensus_qc_task.consensus_qc as flu_vic_na_consensus_qc {
-          input:
-            assembly_fasta = assembly_fasta,
-            reference_genome = select_first([reference_genome,ref_flu_vic_na])
-        }
-        call nextclade_task.nextclade as flu_vic_na_nextclade {
-          input:
-            genome_fasta = assembly_fasta,
-            dataset_name = "flu_vic_na",
-            dataset_reference = "CY073894",
-            dataset_tag = nextclade_flu_vic_na_tag
+        if (flu_subtype == "Victoria") {
+          call consensus_qc_task.consensus_qc as flu_vic_na_consensus_qc {
+            input:
+              assembly_fasta = assembly_fasta,
+              reference_genome = select_first([reference_genome,ref_flu_vic_na])
+          }
+          call nextclade_task.nextclade as flu_vic_na_nextclade {
+            input:
+              genome_fasta = assembly_fasta,
+              dataset_name = "flu_vic_na",
+              dataset_reference = "CY073894",
+              dataset_tag = nextclade_flu_vic_na_tag
+          }
         }
       }
     }
