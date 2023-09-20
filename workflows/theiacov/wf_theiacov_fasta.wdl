@@ -153,7 +153,7 @@ workflow theiacov_fasta {
       String abricate_subtype = abricate_flu.abricate_flu_subtype
     }
     if (flu_segment == "HA") {
-        if (flu_subtype == "H1N1" || abricate_subtype == "H1N1") {
+        if ((defined(flu_subtype) && flu_subtype == "H1N1") || (defined(abricate_subtype) && abricate_subtype == "H1N1")) {
           call consensus_qc_task.consensus_qc as flu_h1n1_ha_consensus_qc {
             input:
               assembly_fasta = assembly_fasta,
@@ -167,7 +167,7 @@ workflow theiacov_fasta {
               dataset_tag = nextclade_flu_h1n1_ha_tag
           }
         }
-        if (flu_subtype == "H3N2" || abricate_subtype == "H3N2") {
+        if ((defined(flu_subtype) && flu_subtype == "H3N2") || (defined(abricate_subtype) && abricate_subtype == "H3N2")) {
           call consensus_qc_task.consensus_qc as flu_h3n2_ha_consensus_qc {
             input:
               assembly_fasta = assembly_fasta,
@@ -181,7 +181,7 @@ workflow theiacov_fasta {
               dataset_tag = nextclade_flu_h3n2_ha_tag
           }
         }
-        if (flu_subtype == "Yamagata" || abricate_subtype == "Yamagata") {
+        if ((defined(flu_subtype) && flu_subtype == "Yamagata") || (defined(abricate_subtype) && abricate_subtype == "Yamagata")) {
           call consensus_qc_task.consensus_qc as flu_yam_ha_consensus_qc {
             input:
               assembly_fasta = assembly_fasta,
@@ -195,7 +195,7 @@ workflow theiacov_fasta {
               dataset_tag = nextclade_flu_yam_tag
           }
         }
-        if (flu_subtype == "Victoria" || abricate_subtype == "Victoria") {
+        if ((defined(flu_subtype) && flu_subtype == "Victoria") || (defined(abricate_subtype) && abricate_subtype == "Victoria")) {
           call consensus_qc_task.consensus_qc as flu_vic_ha_consensus_qc {
             input:
               assembly_fasta = assembly_fasta,
@@ -211,7 +211,7 @@ workflow theiacov_fasta {
         }
     }
     if (flu_segment == "NA") {
-      if (flu_subtype == "H1N1" || abricate_subtype == "H1N1") {
+      if ((defined(flu_subtype) && flu_subtype == "H1N1") || (defined(abricate_subtype) && abricate_subtype == "H1N1")) {
         call consensus_qc_task.consensus_qc as flu_h1n1_na_consensus_qc {
           input:
             assembly_fasta = assembly_fasta,
@@ -225,7 +225,7 @@ workflow theiacov_fasta {
             dataset_tag = nextclade_flu_h1n1_na_tag
         }
       }
-      if (flu_subtype == "H3N2" || abricate_subtype == "H3N2") {
+      if ((defined(flu_subtype) && flu_subtype == "H3N2") || (defined(abricate_subtype) && abricate_subtype == "H3N2")) {
         call consensus_qc_task.consensus_qc as flu_h3n2_na_consensus_qc {
           input:
             assembly_fasta = assembly_fasta,
@@ -239,14 +239,14 @@ workflow theiacov_fasta {
             dataset_tag = nextclade_flu_h3n2_na_tag
         }
       }
-      if (flu_subtype == "Yamagata" || abricate_subtype == "Yamagata") {
+      if ((defined(flu_subtype) && flu_subtype == "Yamagata") || (defined(abricate_subtype) && abricate_subtype == "Yamagata")) {
         call consensus_qc_task.consensus_qc as flu_yam_na_consensus_qc {
           input:
             assembly_fasta = assembly_fasta,
             reference_genome = select_first([reference_genome,ref_flu_yam_na])
         }
       }
-      if (flu_subtype == "Victoria" || abricate_subtype == "Victoria") {
+      if ((defined(flu_subtype) && flu_subtype == "Victoria") || (defined(abricate_subtype) && abricate_subtype == "Victoria")) {
         call consensus_qc_task.consensus_qc as flu_vic_na_consensus_qc {
           input:
             assembly_fasta = assembly_fasta,
