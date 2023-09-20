@@ -282,6 +282,8 @@ workflow theiaprok_illumina_se {
             resfinder_results = resfinder_task.resfinder_results_tab,
             resfinder_pointfinder_pheno_table = resfinder_task.pointfinder_pheno_table,
             resfinder_pointfinder_results = resfinder_task.pointfinder_results,
+            resfinder_predicted_pheno_resistance = resfinder_task.resfinder_predicted_pheno_resistance,
+            resfinder_predicted_xdr_shigella = resfinder_task.resfinder_predicted_xdr_shigella,
             resfinder_db_version = resfinder_task.resfinder_db_version,
             resfinder_docker = resfinder_task.resfinder_docker,
             ts_mlst_results = ts_mlst.ts_mlst_results,
@@ -577,6 +579,8 @@ workflow theiaprok_illumina_se {
     File? resfinder_results = resfinder_task.resfinder_results_tab
     File? resfinder_pointfinder_pheno_table = resfinder_task.pointfinder_pheno_table
     File? resfinder_pointfinder_results = resfinder_task.pointfinder_results
+    String? resfinder_predicted_pheno_resistance = resfinder_task.resfinder_predicted_pheno_resistance
+    String? resfinder_predicted_xdr_shigella = resfinder_task.resfinder_predicted_xdr_shigella
     String? resfinder_db_version = resfinder_task.resfinder_db_version
     String? resfinder_docker = resfinder_task.resfinder_docker
     # MLST Typing
