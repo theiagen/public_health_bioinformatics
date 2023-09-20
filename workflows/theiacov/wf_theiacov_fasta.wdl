@@ -161,7 +161,7 @@ workflow theiacov_fasta {
       String abricate_subtype = abricate_flu.abricate_flu_subtype
     }
     if (flu_segment == "HA") {
-        if ((defined(flu_subtype) && flu_subtype == "H1N1") || (defined(abricate_subtype) && abricate_subtype == "H1N1")) {
+        if ((defined(flu_subtype) && flu_subtype == "H1N1") || (defined(abricate_subtype) && (abricate_subtype == "H1N1" || abricate_subtype == "H1"))) {
           call consensus_qc_task.consensus_qc as flu_h1n1_ha_consensus_qc {
             input:
               assembly_fasta = assembly_fasta,
@@ -175,7 +175,7 @@ workflow theiacov_fasta {
               dataset_tag = nextclade_flu_h1n1_ha_tag
           }
         }
-        if ((defined(flu_subtype) && flu_subtype == "H3N2") || (defined(abricate_subtype) && abricate_subtype == "H3N2")) {
+        if ((defined(flu_subtype) && flu_subtype == "H3N2") || (defined(abricate_subtype) && (abricate_subtype == "H3N2" || abricate_subtype == "H3"))) {
           call consensus_qc_task.consensus_qc as flu_h3n2_ha_consensus_qc {
             input:
               assembly_fasta = assembly_fasta,
@@ -219,7 +219,7 @@ workflow theiacov_fasta {
         }
     }
     if (flu_segment == "NA") {
-      if ((defined(flu_subtype) && flu_subtype == "H1N1") || (defined(abricate_subtype) && abricate_subtype == "H1N1")) {
+      if ((defined(flu_subtype) && flu_subtype == "H1N1") || (defined(abricate_subtype) && (abricate_subtype == "H1N1" || abricate_subtype == "N1"))) {
         call consensus_qc_task.consensus_qc as flu_h1n1_na_consensus_qc {
           input:
             assembly_fasta = assembly_fasta,
@@ -233,7 +233,7 @@ workflow theiacov_fasta {
             dataset_tag = nextclade_flu_h1n1_na_tag
         }
       }
-      if ((defined(flu_subtype) && flu_subtype == "H3N2") || (defined(abricate_subtype) && abricate_subtype == "H3N2")) {
+      if ((defined(flu_subtype) && flu_subtype == "H3N2") || (defined(abricate_subtype) && (abricate_subtype == "H3N2" || abricate_subtype == "N2"))) {
         call consensus_qc_task.consensus_qc as flu_h3n2_na_consensus_qc {
           input:
             assembly_fasta = assembly_fasta,
