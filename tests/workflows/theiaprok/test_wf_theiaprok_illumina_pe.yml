@@ -628,7 +628,7 @@
     - path: miniwdl_run/wdl/tasks/taxon_id/task_gambit.wdl
       md5sum: 08987d952c67c6ff6debf6898af15f9a
     - path: miniwdl_run/wdl/tasks/taxon_id/task_kraken2.wdl
-      md5sum: 94707d34f6683294e5364e83920c8c92
+      md5sum: a1f287e6e6feaf2d7d3c74a70e3b5a28
     - path: miniwdl_run/wdl/tasks/taxon_id/task_midas.wdl
       md5sum: 024971d1439dff7d59c0a26a824bd2c6
     - path: miniwdl_run/wdl/tasks/utilities/task_broad_terra_tools.wdl
