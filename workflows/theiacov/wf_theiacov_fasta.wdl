@@ -162,7 +162,7 @@ workflow theiacov_fasta {
                 nextclade_flu_vic_na_tag = nextclade_flu_vic_na_tag,
                 nextclade_flu_yam_tag = nextclade_flu_yam_tag
       }
-      String abricate_subtype = abricate_flu.abricate_flu_subtype
+      String? abricate_subtype = abricate_flu.abricate_flu_subtype
     }
     if (flu_segment == "HA") {
         if ((defined(flu_subtype) && flu_subtype == "H1N1") || (defined(abricate_subtype) && (abricate_subtype == "H1N1" || abricate_subtype == "H1"))) {
