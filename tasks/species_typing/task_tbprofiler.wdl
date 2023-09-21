@@ -24,7 +24,8 @@ task tbprofiler {
     # Print and save version
     tb-profiler version > VERSION && sed -i -e 's/TBProfiler version //' VERSION && sed -n -i '$p' VERSION
     
-    if [ -z "~{read2}" ] ; then
+    # check if file is non existant or non empty
+    if [ -z "~{read2}" ] || [ ! -s "~{read2}" ] ; then
       INPUT_READS="-1 ~{read1}"
     else
       INPUT_READS="-1 ~{read1} -2 ~{read2}"
