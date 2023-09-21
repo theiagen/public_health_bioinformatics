@@ -62,7 +62,7 @@ task create_dummy_file {
   Int disk_size = 10
   }
   command <<<
-    echo "This is the content of my file." > output.txt
+    echo "Untyped flu or nextclade not run for pathogen" > output.txt
   >>>
   output {
     File outputFile = "output.txt"
