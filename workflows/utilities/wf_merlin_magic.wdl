@@ -246,7 +246,7 @@ workflow merlin_magic {
       call tbprofiler_task.tbprofiler {
         input:
           read1 = select_first([clockwork_decon_reads.clockwork_cleaned_read1,read1]),
-          read2 = select_first([clockwork_decon_reads.clockwork_cleaned_read2,read2]),
+          read2 = select_first([clockwork_decon_reads.clockwork_cleaned_read2,read2,'']),
           samplename = samplename
       }
       if (tbprofiler_additional_outputs) {
