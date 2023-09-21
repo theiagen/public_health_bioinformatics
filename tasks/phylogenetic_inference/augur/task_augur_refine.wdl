@@ -19,7 +19,7 @@ task augur_refine {
     String date_inference = "marginal" # assign internal nodes to their marginally most likley dates (joint, marginal)
     String? branch_length_inference # branch length mode of treetime to use (auto, joint, marginal, input; default: auto)
     String? coalescent # coalescent time scale in units of inverse clock rate (float), optimize as scalar ("opt") or skyline (skyline)
-    Int clock_filter_iqd = 4 # remove tips that deviate more than n_iqd interquartile ranges from the root-to-tip vs time regression
+    Int? clock_filter_iqd # remove tips that deviate more than n_iqd interquartile ranges from the root-to-tip vs time regression
     String divergence_units = "mutations" # units in which sequence divergences is exported ("mutations" or "mutations-per-site")
 
     Int disk_size = 100

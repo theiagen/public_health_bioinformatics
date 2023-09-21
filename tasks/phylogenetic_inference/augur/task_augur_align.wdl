@@ -6,7 +6,7 @@ task augur_align {
     File reference_fasta
     Boolean fill_gaps = false
     Int cpus = 64
-    Int mem_size = 32
+    Int mem_size = 128
     Int disk_size = 750
   }
   command <<<
