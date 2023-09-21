@@ -235,16 +235,18 @@ workflow merlin_magic {
   }
   if (merlin_tag == "Mycobacterium tuberculosis") {
     if (!assembly_only) {
-      call clockwork_task.clockwork_decon_reads {
-        input:
-          read1 = select_first([read1]),
-          read2 = read2,
-          samplename = samplename
+      if (paired_end && !ont_data) {
+        call clockwork_task.clockwork_decon_reads {
+          input:
+            read1 = select_first([read1]),
+            read2 = read2,
+            samplename = samplename
+        }
       }
       call tbprofiler_task.tbprofiler {
         input:
-          read1 = clockwork_decon_reads.clockwork_cleaned_read1,
-          read2 = clockwork_decon_reads.clockwork_cleaned_read2,
+          read1 = select_first([clockwork_decon_reads.clockwork_cleaned_read1,read1]),
+          read2 = select_first([clockwork_decon_reads.clockwork_cleaned_read2,read2]),
           samplename = samplename
       }
       if (tbprofiler_additional_outputs) {
