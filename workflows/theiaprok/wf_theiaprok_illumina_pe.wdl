@@ -799,10 +799,13 @@ workflow theiaprok_illumina_pe {
     String? tbprofiler_sub_lineage = merlin_magic.tbprofiler_sub_lineage
     String? tbprofiler_dr_type = merlin_magic.tbprofiler_dr_type
     String? tbprofiler_resistance_genes = merlin_magic.tbprofiler_resistance_genes
-    File? tbprofiler_lims_report_csv = merlin_magic.tbprofiler_lims_report_csv
-    File? tbprofiler_looker_csv = merlin_magic.tbprofiler_looker_csv
-    File? tbprofiler_laboratorian_report_csv = merlin_magic.tbprofiler_laboratorian_report_csv
-    File? tbprofiler_resistance_genes_percent_coverage = merlin_magic.tb_resistance_genes_percent_coverage
+    File? tbp_parser_lims_report_csv = merlin_magic.tbp_parser_lims_report_csv
+    File? tbp_parser_looker_report_csv = merlin_magic.tbp_parser_looker_report_csv
+    File? tbp_parser_laboratorian_report_csv = merlin_magic.tbp_parser_laboratorian_report_csv
+    File? tbp_parser_coverage_report = merlin_magic.tbp_parser_coverage_report
+    Float? tbp_parser_genome_percent_coverage = merlin_magic.tbp_parser_genome_percent_coverage
+    File? clockwork_decontaminated_read1 = merlin_magic.clockwork_cleaned_read1
+    File? clockwork_decontaminated_read2 = merlin_magic.clockwork_cleaned_read2
     # Legionella pneumophila typing
     File? legsta_results = merlin_magic.legsta_results
     String? legsta_predicted_sbt = merlin_magic.legsta_predicted_sbt
