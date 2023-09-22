@@ -304,6 +304,7 @@ workflow theiaprok_illumina_pe {
             kmerfinder_results_tsv = kmerfinder.kmerfinder_results_tsv,
             kmerfinder_top_hit = kmerfinder.kmerfinder_top_hit,
             kmerfinder_query_coverage = kmerfinder.kmerfinder_query_coverage,
+            kmerfinder_template_coverage = kmerfinder.kmerfinder_template_coverage,
             amrfinderplus_all_report = amrfinderplus_task.amrfinderplus_all_report,
             amrfinderplus_amr_report = amrfinderplus_task.amrfinderplus_amr_report,
             amrfinderplus_stress_report = amrfinderplus_task.amrfinderplus_stress_report,
@@ -623,6 +624,7 @@ workflow theiaprok_illumina_pe {
     File? kmerfinder_results_tsv = kmerfinder.kmerfinder_results_tsv
     String? kmerfinder_top_hit = kmerfinder.kmerfinder_top_hit
     String? kmerfinder_query_coverage = kmerfinder.kmerfinder_query_coverage
+    String? kmerfinder_template_coverage = kmerfinder.kmerfinder_template_coverage
     # NCBI-AMRFinderPlus Outputs
     File? amrfinderplus_all_report = amrfinderplus_task.amrfinderplus_all_report
     File? amrfinderplus_amr_report = amrfinderplus_task.amrfinderplus_amr_report

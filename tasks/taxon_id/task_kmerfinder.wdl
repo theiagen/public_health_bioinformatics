@@ -28,23 +28,28 @@ task kmerfinder_bacteria {
     if [ ! -f ~{samplename}/results.txt ]; then
       PF="No hit detected in database"
       QC="No hit detected in database"
+      TC="No hit detected in database"
     else
       PF="$(cat ~{samplename}/results.txt | head -n 2 | tail -n 1 | cut -f 19)"
       QC="$(cat ~{samplename}/results.txt | head -n 2 | tail -n 1 | cut -f 6)"
+      TC="$(cat ~{samplename}/results.txt | head -n 2 | tail -n 1 | cut -f 7)"
         if [ "$PF" == "" ]; then
           PF="No hit detected in database"
           QC="No hit detected in database"
+          TC="No hit detected in database"
         fi
       mv -v ~{samplename}/results.txt ~{samplename}_kmerfinder.tsv
     fi
     echo $PF | tee TOP_HIT
     echo $QC | tee QC_METRIC
+    echo $TC | tee TEMPLATE_COVERAGE
   >>>
   output {
     String kmerfinder_docker = docker
     File? kmerfinder_results_tsv = "~{samplename}_kmerfinder.tsv"
     String kmerfinder_top_hit = read_string("TOP_HIT")
     String kmerfinder_query_coverage = read_string("QC_METRIC")
+    String kmerfinder_template_coverage = read_string("TEMPLATE_COVERAGE")
   }
   runtime {
     docker: docker
