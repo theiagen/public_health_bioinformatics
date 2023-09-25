@@ -503,7 +503,7 @@ workflow theiaprok_ont {
     String? nanoplot_version = nanoplot_raw.nanoplot_version
     String? nanoplot_docker = nanoplot_raw.nanoplot_docker
     # Read QC - kmc outputs
-    String? kmc_est_genome_size = read_qc_trim.est_genome_size
+    Int? kmc_est_genome_size = read_qc_trim.est_genome_size
     File? kmc_kmer_stats = read_qc_trim.kmc_kmer_stats
     String? kmc_version = read_qc_trim.kmc_version
     # Read QC - rasusa outputs
@@ -733,11 +733,12 @@ workflow theiaprok_ont {
     String? tbprofiler_sub_lineage = merlin_magic.tbprofiler_sub_lineage
     String? tbprofiler_dr_type = merlin_magic.tbprofiler_dr_type
     String? tbprofiler_resistance_genes = merlin_magic.tbprofiler_resistance_genes
-    File? tbprofiler_laboratorian_report_csv = merlin_magic.tbprofiler_laboratorian_report_csv
-    File? tbprofiler_lims_report_csv = merlin_magic.tbprofiler_lims_report_csv
-    File? tbprofiler_looker_csv = merlin_magic.tbprofiler_looker_csv
-    File? tbprofiler_resistance_genes_percent_coverage = merlin_magic.tb_resistance_genes_percent_coverage
-    # Legionella pneumophila typing
+    File? tbp_parser_lims_report_csv = merlin_magic.tbp_parser_lims_report_csv
+    File? tbp_parser_looker_report_csv = merlin_magic.tbp_parser_looker_report_csv
+    File? tbp_parser_laboratorian_report_csv = merlin_magic.tbp_parser_laboratorian_report_csv
+    File? tbp_parser_coverage_report = merlin_magic.tbp_parser_coverage_report
+    Float? tbp_parser_genome_percent_coverage = merlin_magic.tbp_parser_genome_percent_coverage
+     # Legionella pneumophila typing
     File? legsta_results = merlin_magic.legsta_results
     String? legsta_predicted_sbt = merlin_magic.legsta_predicted_sbt
     String? legsta_version = merlin_magic.legsta_version

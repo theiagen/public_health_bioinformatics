@@ -21,6 +21,7 @@ workflow ivar_consensus {
     Float variant_min_freq 
     Float consensus_min_freq 
     File? primer_bed
+    Boolean? skip_N
   }
   call bwa_task.bwa {
     input:
@@ -50,6 +51,7 @@ workflow ivar_consensus {
       reference_genome = reference_genome,
       variant_min_depth = min_depth,
       variant_min_freq = variant_min_freq
+
   }
   call consensus_task.consensus {
     input:
@@ -57,7 +59,8 @@ workflow ivar_consensus {
       bamfile = select_first([primer_trim.trim_sorted_bam, bwa.sorted_bam]),
       reference_genome = reference_genome,
       consensus_min_depth = min_depth,
-      consensus_min_freq = consensus_min_freq
+      consensus_min_freq = consensus_min_freq,
+      skip_N = skip_N
   }
   call assembly_metrics.stats_n_coverage {
     input:

@@ -31,6 +31,7 @@ workflow snippy_tree_wf {
     Int? snippy_core_cpu 
     Int? snippy_core_disk_size
     Int? snippy_core_memory
+    File? snippy_core_bed
     
     Int? gubbins_disk_size
     Int? gubbins_memory
@@ -61,7 +62,8 @@ workflow snippy_tree_wf {
       docker = snippy_core_docker,
       cpu = snippy_core_cpu,
       disk_size = snippy_core_disk_size,
-      memory = snippy_core_memory
+      memory = snippy_core_memory,
+      bed_file = snippy_core_bed
   }
   if (use_gubbins) {
     call gubbins_task.gubbins {
