@@ -71,6 +71,7 @@ task ts_mlst {
     String ts_mlst_allelic_profile = read_string("ALLELIC_PROFILE.txt")
     File? ts_mlst_novel_alleles = "~{samplename}_novel_mlst_alleles.fasta"
     String ts_mlst_version = read_string("VERSION")
+    String ts_mlst_docker = docker
   }
   runtime {
     docker: "~{docker}"

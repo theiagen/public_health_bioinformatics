@@ -192,6 +192,7 @@ workflow theiaprok_fasta {
         ts_mlst_allelic_profile = ts_mlst.ts_mlst_allelic_profile,
         ts_mlst_version = ts_mlst.ts_mlst_version,
         ts_mlst_novel_alleles = ts_mlst.ts_mlst_novel_alleles,
+        ts_mlst_docker = ts_mlst.ts_mlst_docker,
         serotypefinder_report = merlin_magic.serotypefinder_report,
         serotypefinder_docker = merlin_magic.serotypefinder_docker,
         serotypefinder_serotype = merlin_magic.serotypefinder_serotype,
@@ -440,6 +441,7 @@ workflow theiaprok_fasta {
     String ts_mlst_allelic_profile = ts_mlst.ts_mlst_allelic_profile
     String ts_mlst_version = ts_mlst.ts_mlst_version
     File? ts_mlst_novel_alleles = ts_mlst.ts_mlst_novel_alleles
+    String ts_mlst_docker = ts_mlst.ts_mlst_docker
     # Prokka Results
     File? prokka_gff = prokka.prokka_gff
     File? prokka_gbk = prokka.prokka_gbk
