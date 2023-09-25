@@ -13,7 +13,7 @@ task tbp_parser {
     Int coverage_threshold = 100
     Boolean tbp_parser_debug = false
 
-    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:0.0.12"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:0.0.13"
     Int disk_size = 100
     Int memory = 4
     Int cpu = 1
