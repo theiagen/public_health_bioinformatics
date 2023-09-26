@@ -406,7 +406,6 @@ task prep_augur_metadata {
 
     if [[ "${lowercase_organism}" == "sars-cov-2" ]]; then
       virus="ncov"
-    # Your code here
     elif [[ "~{organism}" == "flu" || "~{organism}" == "influenza" ]]; then
       virus="flu"
     elif [[ "~{organism}" == "mpox" || "~{organism}" == "mpxv" || "~{organism}" == "monkeypox" ]]; then
@@ -445,7 +444,6 @@ task format_organism {
 
     if [[ "${lowercase_organism}" == "sars-cov-2" ]]; then
       echo "sars-cov-2" > VIRUS
-    # Your code here
     elif [[ "~{organism}" == "flu" || "~{organism}" == "influenza" ]]; then
       echo "flu" > VIRUS
     elif [[ "~{organism}" == "mpox" || "~{organism}" == "mpxv" || "~{organism}" == "monkeypox" ]]; then
