@@ -377,7 +377,7 @@ task prep_augur_metadata {
     String county = ""
     String? pango_lineage
     String? nextclade_clade
-    String? organism = "sars-cov-2"
+    String organism = "sars-cov-2"
 
     Int disk_size = 10
   }
@@ -397,7 +397,7 @@ task prep_augur_metadata {
       nextclade_header="clade_membership"
     fi
 
-    if [[ "~{organism}" == "sars-cov-2" ]]; then
+    if [[ "~{organism}" == "sars-cov-2" || "~{organism}" == "SARS-CoV-2" ]]; then
       virus="ncov"
     else
       virus="~{organism}"
