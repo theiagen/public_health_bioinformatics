@@ -42,19 +42,24 @@ workflow augur {
 
     Boolean distance_tree_only = false # by default, do not skip making a time tree
   }
-  if (organism == "sars-cov-2") {
+  # format organism to desired name
+  call augur_utils.format_organism {
+    input:
+      organism = organism
+  }
+  if (format_organism.augur_organism == "sars-cov-2") {
     call augur_utils.set_sc2_defaults as sc2_defaults { # establish default parameters for sars-cov-2
       input:
     }
   }
-  if (organism == "flu") {
+  if (format_organism.augur_organism == "flu") {
     call augur_utils.set_flu_defaults as flu_defaults { # establish default parameters for flu
       input:
         flu_segment = flu_segment,
         flu_subtype = flu_subtype
     }
   }
-  if (organism == "MPXV" || organism == "mpxv" || organism == "monkeypox") {
+  if (format_organism.augur_organism == "mpxv") {
     call augur_utils.set_mpxv_defaults as mpxv_defaults { # establish default parameters for mpxv
       input:
     }

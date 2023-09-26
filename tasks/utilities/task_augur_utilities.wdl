@@ -236,9 +236,7 @@ task set_flu_defaults { # establish flu default values for augur
   input {
     String flu_segment
     String? flu_subtype
-
     File flu_lat_longs_tsv = "gs://theiagen-public-files-rp/terra/flu-references/lat_longs.tsv"
-
     Int disk_size = 50
   }
   command <<<
@@ -250,8 +248,10 @@ task set_flu_defaults { # establish flu default values for augur
       if [ ~{flu_segment} == "HA" ]; then
         echo "gs://theiagen-public-files-rp/terra/flu-references/reference_h1n1pdm_ha.gb" | tee FLU_REFERENCE_FASTA
         echo "gs://theiagen-public-files-rp/terra/flu-references/clades_h1n1pdm_ha.tsv" | tee FLU_CLADE_FILE
+        echo "gs://theiagen-public-files-rp/terra/flu-references/subclades_h1n1pdm_ha.tsv" | tee FLU_SUBCLADE_FILE
       elif [ ~{flu_segment} == "NA" ]; then
         echo "gs://theiagen-public-files-rp/terra/flu-references/reference_h1n1pdm_na.gb" | tee FLU_REFERENCE_FASTA
+        echo "gs://theiagen-public-files-rp/terra/flu-references/subclades_h1n1pdm_na.tsv" | tee FLU_SUBCLADE_FILE
       else 
         echo "Uh oh! Your flu segment was not recognized. The only accepted options are \"HA\" or \"NA\"! You provided: \"~{flu_segment}\"."
         exit 1
@@ -263,8 +263,10 @@ task set_flu_defaults { # establish flu default values for augur
       if [ ~{flu_segment} == "HA" ]; then
         echo "gs://theiagen-public-files-rp/terra/flu-references/reference_h3n2_ha.gb" | tee FLU_REFERENCE_FASTA
         echo "gs://theiagen-public-files-rp/terra/flu-references/clades_h3n2_ha.tsv" | tee FLU_CLADE_FILE
+        echo "gs://theiagen-public-files-rp/terra/flu-references/subclades_h3n2_ha.tsv" | tee FLU_SUBCLADE_FILE
       elif [ ~{flu_segment} == "NA" ]; then
         echo "gs://theiagen-public-files-rp/terra/flu-references/reference_h3n2_na.gb" | tee FLU_REFERENCE_FASTA
+        echo "gs://theiagen-public-files-rp/terra/flu-references/subclades_h3n2_na.tsv" | tee FLU_SUBCLADE_FILE
       else 
         echo "Uh oh! Your flu segment was not recognized. The only accepted options are \"HA\" or \"NA\"! You provided: \"~{flu_segment}\"."
         exit 1
@@ -276,8 +278,10 @@ task set_flu_defaults { # establish flu default values for augur
       if [ ~{flu_segment} == "HA" ]; then
         echo "gs://theiagen-public-files-rp/terra/flu-references/reference_vic_ha.gb" | tee FLU_REFERENCE_FASTA
         echo "gs://theiagen-public-files-rp/terra/flu-references/clades_vic_ha.tsv" | tee FLU_CLADE_FILE
+        echo "gs://theiagen-public-files-rp/terra/flu-references/subclades_vic_ha.tsv" | tee FLU_SUBCLADE_FILE
       elif [ ~{flu_segment} == "NA" ]; then
         echo "gs://theiagen-public-files-rp/terra/flu-references/reference_vic_na.gb" | tee FLU_REFERENCE_FASTA
+        echo "gs://theiagen-public-files-rp/terra/flu-references/subclades_vic_na.tsv" | tee FLU_SUBCLADE_FILE
       else 
         echo "Uh oh! Your flu segment was not recognized. The only accepted options are \"HA\" or \"NA\"! You provided: \"~{flu_segment}\"."
         exit 1
@@ -289,6 +293,7 @@ task set_flu_defaults { # establish flu default values for augur
       if [ ~{flu_segment} == "HA" ]; then
         echo "gs://theiagen-public-files-rp/terra/flu-references/reference_yam_ha.gb" | tee FLU_REFERENCE_FASTA
         echo "gs://theiagen-public-files-rp/terra/flu-references/clades_yam_ha.tsv" | tee FLU_CLADE_FILE
+        echo "gs://theiagen-public-files-rp/terra/flu-references/subclades_yam_ha.tsv" | tee FLU_SUBCLADE_FILE
       elif [ ~{flu_segment} == "NA" ]; then
         echo "gs://theiagen-public-files-rp/terra/flu-references/reference_yam_na.gb" | tee FLU_REFERENCE_FASTA
       else 
@@ -305,6 +310,7 @@ task set_flu_defaults { # establish flu default values for augur
   output {
     Int min_num_unambig = 900
     File? clades_tsv = read_string("FLU_CLADE_FILE")
+    File? subclades_tsv = read_string("FLU_SUBCLADE_FILE")
     File lat_longs_tsv = flu_lat_longs_tsv
     File reference_fasta = read_string("FLU_REFERENCE_FASTA")
     File reference_genbank = read_string("FLU_REFERENCE_FASTA")
@@ -329,7 +335,7 @@ task set_mpxv_defaults { # establish mpxv default values for augur
     # in the future we will wget from the repo directly
     File mpxv_lat_longs_tsv = "gs://theiagen-public-files-rp/terra/flu-references/lat_longs.tsv" #more comprehensive
     File mpxv_clades_tsv = "gs://theiagen-public-files-rp/terra/augur-mpox-references/mpox_clades.tsv"
-    File mpxv_reference_fasta = "gs://theiagen-public-files-rp/terra/augur-mpox-references/reconstructed_ancestral_mpox.fasta"
+    File mpxv_reference_fasta = "gs://theiagen-public-files-rp/terra/augur-mpox-references/NC_063383.1.reference.fasta"
     File mpxv_reference_genbank = "gs://theiagen-public-files-rp/terra/augur-mpox-references/NC_063383.1_reference.gb"
     File mpxv_auspice_config = "gs://theiagen-public-files-rp/terra/augur-mpox-references/mpox_auspice_config_mpxv.json"
     File mpxv_gene_annotations_gff = "gs://theiagen-public-files-rp/terra/augur-mpox-references/genemap.gff"
@@ -397,8 +403,16 @@ task prep_augur_metadata {
       nextclade_header="clade_membership"
     fi
 
-    if [[ "~{organism}" == "sars-cov-2" || "~{organism}" == "SARS-CoV-2" ]]; then
+    # Convert the organism variable to lowercase
+    lowercase_organism=$(echo "~{organism}" | tr '[:upper:]' '[:lower:]')
+
+    if [[ "${lowercase_organism}" == "sars-cov-2" ]]; then
       virus="ncov"
+    # Your code here
+    elif [[ "~{organism}" == "flu" || "~{organism}" == "influenza" ]]; then
+      virus="flu"
+    elif [[ "~{organism}" == "mpox" || "~{organism}" == "mpxv" || "~{organism}" == "monkeypox" ]]; then
+      virus="mpxv"
     else
       virus="~{organism}"
     fi
@@ -413,6 +427,41 @@ task prep_augur_metadata {
   runtime {
       docker: "us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1"
       memory: "3 GB"
+      cpu: 1
+      disks: "local-disk ~{disk_size} SSD"
+      disk: disk_size + " GB"
+      preemptible: 0
+      maxRetries: 3
+  }
+}
+
+task format_organism {
+  input {
+    String organism = "sars-cov-2"
+
+    Int disk_size = 10
+  }
+  command <<<
+    # Convert the organism variable to lowercase
+    lowercase_organism=$(echo "~{organism}" | tr '[:upper:]' '[:lower:]')
+
+    if [[ "${lowercase_organism}" == "sars-cov-2" ]]; then
+      echo "sars-cov-2" > VIRUS
+    # Your code here
+    elif [[ "~{organism}" == "flu" || "~{organism}" == "influenza" ]]; then
+      echo "flu" > VIRUS
+    elif [[ "~{organism}" == "mpox" || "~{organism}" == "mpxv" || "~{organism}" == "monkeypox" ]]; then
+      echo "mpxv" > VIRUS
+    else
+      echo "~{organism}" > VIRUS
+    fi
+  >>>
+  output {
+    String augur_organism = read_string("VIRUS")
+  }
+  runtime {
+      docker: "us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1"
+      memory: "1 GB"
       cpu: 1
       disks: "local-disk ~{disk_size} SSD"
       disk: disk_size + " GB"
