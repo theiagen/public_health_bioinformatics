@@ -16,7 +16,7 @@ task tbprofiler {
     Int cov_frac_threshold = 1
     Int cpu = 8 
     Boolean ont_data = false
-    File tbprofiler_custom_db = "gs://theiagen-public-files/terra/theiaprok-files/tbdb_varpipe_combined.tar.gz"
+    File? tbprofiler_custom_db
     Boolean tbprofiler_run_custom_db = false
   }
   command <<<
@@ -41,14 +41,14 @@ task tbprofiler {
     fi
 
     # check if new database file is provided and not empty
-    if [ "~{tbprofiler_custom_db}" = true ] ; then
+    if [ "~{tbprofiler_run_custom_db}" = true ] ; then
 
-      echo "Found new database file ~{tbprofiler_tbdb}"
-      prefix=$(basename "~{tbprofiler_tbdb}" | sed 's/\.tar\.gz$//')
+      echo "Found new database file ~{tbprofiler_custom_db}"
+      prefix=$(basename "~{tbprofiler_custom_db}" | sed 's/\.tar\.gz$//')
       echo "New database will be created with prefix $prefix"
 
       echo "Inflating the new database..."
-      tar xfv ~{tbprofiler_tbdb}
+      tar xfv ~{tbprofiler_custom_db}
 
       tb-profiler load_library ./"$prefix"/"$prefix"
 
