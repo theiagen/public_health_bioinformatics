@@ -16,6 +16,7 @@ task tbprofiler {
     Int cov_frac_threshold = 1
     Int cpu = 8 
     Boolean ont_data = false
+    File tbdb = "gs://theiagen-public-files/terra/theiaprok-files/tbdb_varpipe_combined.tar.gz"
   }
   command <<<
     # Print and save date
@@ -38,6 +39,26 @@ task tbprofiler {
       export ont_data="false"
     fi
 
+    # check if new database file is provided and not empty
+    if [ ! -z "~{tbdb}" ] || [ -s "~{tbdb}" ] ; then
+
+      echo "Found new database file ~{tbdb}"
+      prefix=$(basename "~{tbdb}" | sed 's/\.tar\.gz$//')
+      echo "New database will be created with prefix $prefix"
+
+      echo "Inflating the new database..."
+      tar xfv ~{tbdb}
+
+      tb-profiler load_library ./"$prefix"/"$prefix"
+
+      TBDB=$prefix
+      
+    else
+
+      TBDB=""
+
+    fi
+
     # Run tb-profiler on the input reads with samplename prefix
     tb-profiler profile \
       ${mode} \
@@ -50,7 +71,8 @@ task tbprofiler {
       --reporting_af \
       ~{min_af_pred} \
       --coverage_fraction_threshold ~{cov_frac_threshold} \
-      --csv --txt
+      --csv --txt \
+      --db $TBDB
 
     # Collate results
     tb-profiler collate --prefix ~{samplename}
