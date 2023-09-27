@@ -51,8 +51,8 @@ task tbprofiler {
 
       tb-profiler load_library ./"$prefix"/"$prefix"
 
-      TBDB=$prefix
-      
+      TBDB="--db $prefix"
+
     else
 
       TBDB=""
@@ -72,7 +72,7 @@ task tbprofiler {
       ~{min_af_pred} \
       --coverage_fraction_threshold ~{cov_frac_threshold} \
       --csv --txt \
-      --db $TBDB
+      $TBDB
 
     # Collate results
     tb-profiler collate --prefix ~{samplename}
