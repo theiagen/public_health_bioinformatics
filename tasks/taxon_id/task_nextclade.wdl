@@ -167,3 +167,24 @@ task nextclade_output_parser {
       String nextclade_lineage = read_string("NEXTCLADE_LINEAGE")
     }
 }
+
+task create_dummy_file {
+  input {
+  Int disk_size = 10
+  }
+  command <<<
+    echo "Untyped flu or nextclade not run for pathogen" > output.txt
+  >>>
+  output {
+    File outputFile = "output.txt"
+  }
+  runtime {
+      docker: "us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1"
+      memory: "2 GB"
+      cpu: 1
+      disks: "local-disk ~{disk_size} SSD"
+      disk: disk_size + " GB"
+      preemptible: 0
+      maxRetries: 3
+  }
+}

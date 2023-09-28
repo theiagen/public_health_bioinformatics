@@ -1,7 +1,6 @@
 
 version 1.0
 
-import "../../tasks/utilities/task_theiacov_fasta_utilities.wdl" as fasta_utilities
 import "../../tasks/quality_control/task_vadr.wdl" as vadr_task
 import "../../tasks/quality_control/task_consensus_qc.wdl" as consensus_qc_task
 import "../../tasks/gene_typing/task_abricate.wdl" as abricate
@@ -66,7 +65,7 @@ workflow theiacov_fasta {
     # vadr parameters
     Int? maxlen
   }
-  call fasta_utilities.create_dummy_file {
+  call nextclade_task.create_dummy_file {
     input:
   }
   # sars-cov-2 specific tasks
