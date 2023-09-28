@@ -622,7 +622,7 @@
     - path: miniwdl_run/wdl/tasks/species_typing/task_tbprofiler.wdl
       md5sum: f3c9cdca6d49878ab2be31aff128e1b4
     - path: miniwdl_run/wdl/tasks/species_typing/task_ts_mlst.wdl
-      md5sum: 550791ca5faf11a5f75b6be18739ae01
+      md5sum: d49ae0b02e798af0636eb2721bb434b4
     - path: miniwdl_run/wdl/tasks/task_versioning.wdl
       md5sum: c178145bad99e3858a1327b3774177f3
     - path: miniwdl_run/wdl/tasks/taxon_id/task_gambit.wdl

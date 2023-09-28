@@ -124,6 +124,7 @@ task export_taxon_tables {
     String? ts_mlst_allelic_profile
     File? ts_mlst_novel_alleles
     String? ts_mlst_version
+    String? ts_mlst_docker
     File? serotypefinder_report
     String? serotypefinder_docker
     String? serotypefinder_serotype
@@ -449,6 +450,7 @@ task export_taxon_tables {
       "ts_mlst_allelic_profile": "~{ts_mlst_allelic_profile}",
       "ts_mlst_novel_alleles": "~{ts_mlst_novel_alleles}",
       "ts_mlst_version": "~{ts_mlst_version}",
+      "ts_mlst_docker": "~{ts_mlst_docker}",	
       "serotypefinder_report": "~{serotypefinder_report}",
       "serotypefinder_docker": "~{serotypefinder_docker}",
       "serotypefinder_serotype": "~{serotypefinder_serotype}",
