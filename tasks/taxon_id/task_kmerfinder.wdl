@@ -4,7 +4,7 @@ task kmerfinder_bacteria {
   input {
     File assembly
     String samplename
-    File kmerfinder_db = "gs://theiagen-public-files-rp/terra/theiaprok-files/kmerfinder_bacteria.tar.gz"
+    File kmerfinder_db = "gs://theiagen-public-files-rp/terra/theiaprok-files/kmerfinder_bacteria_20230911.tar.gz"
     String docker = "us-docker.pkg.dev/general-theiagen/biocontainers/kmerfinder:3.0.2--hdfd78af_0"
     Int memory = 32
     Int cpu = 4
@@ -43,6 +43,10 @@ task kmerfinder_bacteria {
     echo $PF | tee TOP_HIT
     echo $QC | tee QC_METRIC
     echo $TC | tee TEMPLATE_COVERAGE
+
+    # extract database name
+    DB=$(basename ~{kmerfinder_db} | sed 's/\.tar\.gz$//')
+    echo $DB | tee DATABASE
   >>>
   output {
     String kmerfinder_docker = docker
@@ -50,6 +54,7 @@ task kmerfinder_bacteria {
     String kmerfinder_top_hit = read_string("TOP_HIT")
     String kmerfinder_query_coverage = read_string("QC_METRIC")
     String kmerfinder_template_coverage = read_string("TEMPLATE_COVERAGE")
+    String kmerfinder_database = read_string("DATABASE")
   }
   runtime {
     docker: docker
