@@ -27,12 +27,6 @@ workflow read_QC_trim_ont {
     # kraken inputs
     String? target_org
   }
-  # kmc for genome size estimation
-  call kmc_task.kmc {
-    input:
-      read1 = read1,
-      samplename = samplename
-  }
   if ("~{workflow_series}" == "theiacov") {
     call ncbi_scrub.ncbi_scrub_se {
       input:
@@ -61,6 +55,12 @@ workflow read_QC_trim_ont {
     }
   }
   if ("~{workflow_series}" == "theiaprok") {
+    # kmc for genome size estimation
+    call kmc_task.kmc {
+      input:
+        read1 = read1,
+        samplename = samplename
+    }
     # rasusa for random downsampling
     call rasusa_task.rasusa {
       input:
@@ -83,11 +83,6 @@ workflow read_QC_trim_ont {
     }
   }
   output { 
-    # kmc outputs
-    String est_genome_size = kmc.est_genome_size
-    File kmc_kmer_stats = kmc.kmer_stats
-    String kmc_version = kmc.kmc_version
-
     # theiacov outputs
     # ncbi scrub outputs
     File? read1_dehosted = ncbi_scrub_se.read1_dehosted
@@ -109,6 +104,11 @@ workflow read_QC_trim_ont {
     File? kraken_report_dehosted = kraken2_dehosted.kraken_report
    
     # theiaprok outputs
+    # kmc outputs
+    Int? est_genome_size = kmc.est_genome_size
+    File? kmc_kmer_stats = kmc.kmer_stats
+    String? kmc_version = kmc.kmc_version
+    
     # nanoq outputs
     File read1_clean = select_first([nanoq.filtered_read1, read_filtering.filtered_reads])
     String? nanoq_version = nanoq.version

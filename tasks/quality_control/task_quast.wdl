@@ -4,9 +4,10 @@ task quast {
   input {
     File assembly
     String samplename
+    Int min_contig_len = 500
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/quast:5.0.2"
     Int disk_size = 100
-    Int memory = 2 # added default value
+    Int mem = 2 # added default value
     Int cpu = 2 # added default value
   }
   command <<<
@@ -14,7 +15,7 @@ task quast {
     date | tee DATE
     quast.py --version | grep QUAST | tee VERSION
 
-    quast.py ~{assembly} -o .
+    quast.py ~{assembly} -o . --min-contig ~{min_contig_len}
     mv report.tsv ~{samplename}_report.tsv
     
     python <<CODE
@@ -34,7 +35,13 @@ task quast {
               n50_value.write(line[1])
           if "GC" in line[0]:
             with open("GC_PERCENT", 'wt') as gc_percent:
-              gc_percent.write(line[1])       
+              gc_percent.write(line[1])
+          if "Largest contig" in line[0]:
+            with open("LARGEST_CONTIG", 'wt') as largest_contig:
+              largest_contig.write(line[1])
+          if "# N's per 100 kbp" in line[0]:
+            with open("UNCALLED_BASES", "wt") as uncalled_bases:
+              uncalled_bases.write(line[1])
 
     CODE
 
@@ -46,11 +53,14 @@ task quast {
     Int genome_length = read_int("GENOME_LENGTH")
     Int number_contigs = read_int("NUMBER_CONTIGS")
     Int n50_value = read_int("N50_VALUE")
-    Float gc_percent = read_float("GC_PERCENT")    
+    Float gc_percent = read_float("GC_PERCENT")
+    Int largest_contig = read_int("LARGEST_CONTIG")
+    Float uncalled_bases = read_float("UNCALLED_BASES")
+    String quast_docker = docker    
   }
   runtime {
     docker:  "~{docker}"
-    memory:  "~{memory} GB"
+    memory:  "~{mem} GB"
     cpu:   "~{cpu}"
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"

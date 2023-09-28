@@ -4,6 +4,7 @@ import "../../tasks/quality_control/task_fastq_scan.wdl" as fastq_scan
 import "../../tasks/quality_control/task_trimmomatic.wdl" as trimmomatic
 import "../../tasks/quality_control/task_ncbi_scrub.wdl" as ncbi_scrub
 import "../../tasks/quality_control/task_bbduk.wdl" as bbduk_task
+import "../../tasks/quality_control/task_readlength.wdl" as readlength_task
 import "../../tasks/quality_control/task_fastp.wdl" as fastp_task
 import "../../tasks/taxon_id/task_kraken2.wdl" as kraken
 import "../../tasks/taxon_id/task_midas.wdl" as midas_task
@@ -30,24 +31,26 @@ workflow read_QC_trim_pe {
     String? trimmomatic_args
     String fastp_args = "--detect_adapter_for_pe -g -5 20 -3 20"
   }
-  if ("~{workflow_series}" == "theiacov") {
+  if (("~{workflow_series}" == "theiacov") || ("~{workflow_series}" == "theiameta")) {
     call ncbi_scrub.ncbi_scrub_pe {
       input:
         samplename = samplename,
         read1 = read1_raw,
         read2 = read2_raw
     }
-    call kraken.kraken2_theiacov as kraken2_raw {
+  }
+  if ("~{workflow_series}" == "theiacov") {
+    call kraken.kraken2_theiacov as kraken2_theiacov_raw {
       input:
         samplename = samplename,
         read1 = read1_raw,
         read2 = read2_raw,
         target_org = target_org
     }
-    call kraken.kraken2_theiacov as kraken2_dehosted {
+    call kraken.kraken2_theiacov as kraken2_theiacov_dehosted {
       input:
         samplename = samplename,
-        read1 = ncbi_scrub_pe.read1_dehosted,
+        read1 = select_first([ncbi_scrub_pe.read1_dehosted]),
         read2 = ncbi_scrub_pe.read2_dehosted,
         target_org = target_org
     }
@@ -104,12 +107,20 @@ workflow read_QC_trim_pe {
         midas_db = midas_db
     }
   }
+  if ("~{workflow_series}" == "theiameta") {
+    call readlength_task.readlength {
+      input:
+        read1 = bbduk.read1_clean,
+        read2 = bbduk.read2_clean
+    }
+  }
   output {
     # NCBI scrubber
     File? read1_dehosted = ncbi_scrub_pe.read1_dehosted
     File? read2_dehosted = ncbi_scrub_pe.read2_dehosted
     Int? read1_human_spots_removed = ncbi_scrub_pe.read1_human_spots_removed
     Int? read2_human_spots_removed = ncbi_scrub_pe.read2_human_spots_removed
+    String? ncbi_scrub_docker = ncbi_scrub_pe.ncbi_scrub_docker
 
     # bbduk
     File read1_clean = bbduk.read1_clean
@@ -124,21 +135,23 @@ workflow read_QC_trim_pe {
     Int fastq_scan_clean2 = fastq_scan_clean.read2_seq
     String fastq_scan_clean_pairs = fastq_scan_clean.read_pairs
     String fastq_scan_version = fastq_scan_raw.version
+    String fastq_scan_docker = fastq_scan_raw.fastq_scan_docker
     
     # kraken2
-    String? kraken_version = kraken2_raw.version
-    Float? kraken_human = kraken2_raw.percent_human
-    Float? kraken_sc2 = kraken2_raw.percent_sc2
-    String? kraken_target_org = kraken2_raw.percent_target_org
-    File? kraken_report = kraken2_raw.kraken_report
-    Float? kraken_human_dehosted = kraken2_dehosted.percent_human
-    Float? kraken_sc2_dehosted = kraken2_dehosted.percent_sc2
-    String? kraken_target_org_dehosted = kraken2_dehosted.percent_target_org
+    String? kraken_version = kraken2_theiacov_raw.version
+    Float? kraken_human =  kraken2_theiacov_raw.percent_human
+    Float? kraken_sc2 = kraken2_theiacov_raw.percent_sc2
+    String? kraken_target_org = kraken2_theiacov_raw.percent_target_org
+    File? kraken_report = kraken2_theiacov_raw.kraken_report
+    Float? kraken_human_dehosted = kraken2_theiacov_dehosted.percent_human
+    Float? kraken_sc2_dehosted = kraken2_theiacov_dehosted.percent_sc2
+    String? kraken_target_org_dehosted = kraken2_theiacov_dehosted.percent_target_org
     String? kraken_target_org_name = target_org
-    File? kraken_report_dehosted = kraken2_dehosted.kraken_report
+    File? kraken_report_dehosted = kraken2_theiacov_dehosted.kraken_report
     
     # trimming versioning
     String? trimmomatic_version = trimmomatic_pe.version
+    String? trimmomatic_docker = trimmomatic_pe.trimmomatic_docker
     String? fastp_version = fastp.version
 
     # midas
@@ -147,5 +160,8 @@ workflow read_QC_trim_pe {
     String? midas_primary_genus = midas.midas_primary_genus
     String? midas_secondary_genus = midas.midas_secondary_genus
     Float? midas_secondary_genus_abundance = midas.midas_secondary_genus_abundance
+
+    # readlength
+    Float? average_read_length = readlength.average_read_length
   }
 }

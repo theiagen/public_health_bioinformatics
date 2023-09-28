@@ -10,9 +10,9 @@ import "../../tasks/species_typing/task_lissero.wdl" as lissero_task
 import "../../tasks/species_typing/task_sistr.wdl" as sistr_task
 import "../../tasks/species_typing/task_seqsero2.wdl" as seqsero2_task
 import "../../tasks/species_typing/task_kleborate.wdl" as kleborate_task
+import "../../tasks/species_typing/task_clockwork.wdl" as clockwork_task
 import "../../tasks/species_typing/task_tbprofiler.wdl" as tbprofiler_task
-import "../../tasks/species_typing/task_tbprofiler_output_parsing.wdl" as tbprofiler_output_parsing_task
-import "../../tasks/species_typing/task_tb_gene_coverage.wdl" as tb_gene_coverage_task
+import "../../tasks/species_typing/task_tbp_parser.wdl" as tbp_parser_task
 import "../../tasks/species_typing/task_legsta.wdl" as legsta_task
 import "../../tasks/species_typing/task_genotyphi.wdl" as genotyphi
 import "../../tasks/species_typing/task_kaptive.wdl" as kaptive_task
@@ -63,8 +63,12 @@ workflow merlin_magic {
     Boolean assembly_only = false
     Boolean theiaeuk = false
     Boolean tbprofiler_additional_outputs = false
-    String tbprofiler_output_seq_method_type = "WGS"
-    String tbprofiler_operator = "Default"
+    String tbp_parser_output_seq_method_type = "WGS"
+    String? tbp_parser_operator
+    Int? tbp_parser_min_depth
+    Int? tbp_parser_coverage_threshold
+    Boolean? tbp_parser_debug
+    String? tbp_parser_docker_image
     String? snippy_query_gene
     Int srst2_min_cov = 80
     Int srst2_max_divergence = 20
@@ -231,26 +235,33 @@ workflow merlin_magic {
   }
   if (merlin_tag == "Mycobacterium tuberculosis") {
     if (!assembly_only) {
-      call tbprofiler_task.tbprofiler { # needs testing
-        input:
-          read1 = select_first([read1]),
-          read2 = read2,
-          samplename = samplename,
-          ont_data = ont_data
-      }
-      if (tbprofiler_additional_outputs) {
-        call tbprofiler_output_parsing_task.tbprofiler_output_parsing{
+      if (paired_end && !ont_data) {
+        call clockwork_task.clockwork_decon_reads {
           input:
-            json = tbprofiler.tbprofiler_output_json,
-            output_seq_method_type = tbprofiler_output_seq_method_type,
-            operator = tbprofiler_operator,
+            read1 = select_first([read1]),
+            read2 = read2,
             samplename = samplename
         }
-        call tb_gene_coverage_task.tb_gene_coverage {
+      }
+      call tbprofiler_task.tbprofiler {
+        input:
+          read1 = select_first([clockwork_decon_reads.clockwork_cleaned_read1, read1]),
+          read2 = select_first([clockwork_decon_reads.clockwork_cleaned_read2, read2, "gs://theiagen-public-files/terra/theiaprok-files/no-read2.txt"]),
+          samplename = samplename
+      }
+      if (tbprofiler_additional_outputs) {
+        call tbp_parser_task.tbp_parser {
           input:
-            bamfile = tbprofiler.tbprofiler_output_bam,
-            bamindex = tbprofiler.tbprofiler_output_bai,
-            samplename = samplename
+            tbprofiler_json = tbprofiler.tbprofiler_output_json,
+            tbprofiler_bam = tbprofiler.tbprofiler_output_bam,
+            tbprofiler_bai = tbprofiler.tbprofiler_output_bai,
+            samplename = samplename, 
+            sequencing_method = tbp_parser_output_seq_method_type,
+            operator = tbp_parser_operator,
+            min_depth = tbp_parser_min_depth,
+            coverage_threshold = tbp_parser_coverage_threshold,
+            tbp_parser_debug = tbp_parser_debug,
+            docker = tbp_parser_docker_image
         }
       }
     }
@@ -569,10 +580,18 @@ workflow merlin_magic {
     String? tbprofiler_sub_lineage = tbprofiler.tbprofiler_sub_lineage
     String? tbprofiler_dr_type = tbprofiler.tbprofiler_dr_type
     String? tbprofiler_resistance_genes = tbprofiler.tbprofiler_resistance_genes
-    File? tbprofiler_lims_report_csv = tbprofiler_output_parsing.tbprofiler_lims_report_csv
-    File? tbprofiler_laboratorian_report_csv = tbprofiler_output_parsing.tbprofiler_laboratorian_report_csv
-    File? tbprofiler_looker_csv = tbprofiler_output_parsing.tbprofiler_looker_csv
-    File? tb_resistance_genes_percent_coverage = tb_gene_coverage.tb_resistance_genes_percent_coverage
+    Int? tbprofiler_median_coverage = tbprofiler.tbprofiler_median_coverage
+    Float? tbprofiler_pct_reads_mapped = tbprofiler.tbprofiler_pct_reads_mapped
+    String? tbp_parser_version = tbp_parser.tbp_parser_version
+    String? tbp_parser_docker = tbp_parser.tbp_parser_docker
+    File? tbp_parser_lims_report_csv = tbp_parser.tbp_parser_lims_report_csv
+    File? tbp_parser_laboratorian_report_csv = tbp_parser.tbp_parser_laboratorian_report_csv
+    File? tbp_parser_looker_report_csv = tbp_parser.tbp_parser_looker_report_csv
+    File? tbp_parser_coverage_report = tbp_parser.tbp_parser_coverage_report
+    Float? tbp_parser_genome_percent_coverage = tbp_parser.tbp_parser_genome_percent_coverage
+    File? clockwork_cleaned_read1 = clockwork_decon_reads.clockwork_cleaned_read1
+    File? clockwork_cleaned_read2 = clockwork_decon_reads.clockwork_cleaned_read2
+
     # Legionella pneumophila Typing
     File? legsta_results = legsta.legsta_results
     String? legsta_predicted_sbt = legsta.legsta_predicted_sbt
