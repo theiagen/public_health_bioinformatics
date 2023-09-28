@@ -77,7 +77,7 @@ jobs:
           sudo rm -rf "$AGENT_TOOLSDIRECTORY"
 
       - name: Test ${{ matrix.tag }}
-        run: TMPDIR=~ pytest --tag ${{ matrix.tag }}_${{ matrix.engine }} --symlink --kwdof --color=yes
+        run: TMPDIR=~ pytest --tag ${{ matrix.tag }}_${{ matrix.engine }} --symlink --kwdof --color=yes --git-aware
 
       - name: Upload logs on failure
         if: failure()
