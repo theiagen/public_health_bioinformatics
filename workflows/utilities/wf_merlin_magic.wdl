@@ -62,6 +62,8 @@ workflow merlin_magic {
     Boolean call_shigeifinder_reads_input = false
     Boolean assembly_only = false
     Boolean theiaeuk = false
+    Boolean tbprofiler_run_custom_db = false
+    File tbprofiler_custom_db = "gs://theiagen-public-files/terra/theiaprok-files/tbdb_varpipe_combined_nodups.tar.gz"
     Boolean tbprofiler_additional_outputs = false
     String tbp_parser_output_seq_method_type = "WGS"
     String? tbp_parser_operator
@@ -247,7 +249,9 @@ workflow merlin_magic {
         input:
           read1 = select_first([clockwork_decon_reads.clockwork_cleaned_read1, read1]),
           read2 = select_first([clockwork_decon_reads.clockwork_cleaned_read2, read2, "gs://theiagen-public-files/terra/theiaprok-files/no-read2.txt"]),
-          samplename = samplename
+          samplename = samplename,
+          tbprofiler_run_custom_db = tbprofiler_run_custom_db,
+          tbprofiler_custom_db = tbprofiler_custom_db
       }
       if (tbprofiler_additional_outputs) {
         call tbp_parser_task.tbp_parser {
