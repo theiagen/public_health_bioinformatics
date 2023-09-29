@@ -89,6 +89,8 @@ jobs:
           micromamba clean -a -y
           uname -a && env
           sudo rm -rf /usr/share/dotnet
+          sudo rm -rf /opt/ghc
+          sudo rm -rf "/usr/local/share/boost"
           sudo rm -rf "$AGENT_TOOLSDIRECTORY"
           df -h
           du -sch /*
