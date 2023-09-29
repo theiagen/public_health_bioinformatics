@@ -324,6 +324,48 @@ task set_flu_defaults { # establish flu default values for augur
   }
 }
 
+task set_mpxv_defaults { # establish mpxv default values for augur
+  input {
+    # in the future we will wget from the repo directly
+    File mpxv_lat_longs_tsv = "gs://theiagen-public-files-rp/terra/flu-references/lat_longs.tsv" #more comprehensive
+    File mpxv_clades_tsv = "gs://theiagen-public-files-rp/terra/augur-mpox-references/mpox_clades.tsv"
+    File mpxv_reference_fasta = "gs://theiagen-public-files-rp/terra/augur-mpox-references/reconstructed_ancestral_mpox.fasta"
+    File mpxv_reference_genbank = "gs://theiagen-public-files-rp/terra/augur-mpox-references/NC_063383.1_reference.gb"
+    File mpxv_auspice_config = "gs://theiagen-public-files-rp/terra/augur-mpox-references/mpox_auspice_config_mpxv.json"
+    File mpxv_gene_annotations_gff = "gs://theiagen-public-files-rp/terra/augur-mpox-references/genemap.gff"
+    File mpxv_colors = "gs://theiagen-public-files-rp/terra/augur-mpox-references/colors_mpxv.tsv"
+
+    Int disk_size = 50
+  }
+  command <<<
+    # nothing to do here for now
+    echo "working...very hard"
+
+  >>>
+  output {
+    Int min_num_unambig = 150000
+    File clades_tsv = mpxv_clades_tsv
+    File lat_longs_tsv = mpxv_lat_longs_tsv
+    File reference_fasta = mpxv_reference_fasta
+    File reference_genbank = mpxv_reference_genbank
+    File auspice_config = mpxv_auspice_config
+    File genes = mpxv_gene_annotations_gff
+    File colors = mpxv_colors
+    # inherited from flu defaults
+    Float min_date = 2020.0
+    Int pivot_interval = 1
+    Float narrow_bandwidth = 0.1666667
+    Float proportion_wide = 0.0
+  }
+  runtime {
+    docker: "us-docker.pkg.dev/general-theiagen/biocontainers/augur:22.0.2--pyhdfd78af_0"
+    memory: "1 GB"
+    cpu: 1
+    disks: "local-disk " + disk_size + " HDD"
+    disk: disk_size + " GB"
+  }
+}
+
 task prep_augur_metadata {
   input {
     File assembly
@@ -352,7 +394,7 @@ task prep_augur_metadata {
     fi
     # if pango_lineage defined, add to metadata
     if [[ "~{nextclade_clade}" ]]; then 
-      nextclade_header="pango_lineage"
+      nextclade_header="clade_membership"
     fi
 
     if [[ "~{organism}" == "sars-cov-2" ]]; then

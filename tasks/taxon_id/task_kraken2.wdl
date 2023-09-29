@@ -72,11 +72,10 @@ task kraken2_standalone {
     File kraken2_db
     String samplename
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.1.2-no-db"
-
     String kraken2_args = ""
     String classified_out = "classified#.fastq"
     String unclassified_out = "unclassified#.fastq"
-    Int memory = 32
+    Int mem = 32
     Int cpu = 4
   }
   command <<<
@@ -108,6 +107,19 @@ task kraken2_standalone {
     gzip *.fastq
     gzip ~{samplename}.classifiedreads.txt
 
+    # Report percentage of human reads
+    percentage_human=$(grep "Homo sapiens" ~{samplename}.report.txt | cut -f 1)
+    if [ -z "$percentage_human" ] ; then percentage_human="0" ; fi
+    echo $percentage_human | tee PERCENT_HUMAN
+    
+    # rename classified and unclassified read files if SE
+    if [ -e "~{samplename}.classified#.fastq.gz" ]; then
+      mv "~{samplename}.classified#.fastq.gz" ~{samplename}.classified_1.fastq.gz
+    fi
+    if [ -e "~{samplename}.unclassified#.fastq.gz" ]; then
+      mv "~{samplename}.unclassified#.fastq.gz" ~{samplename}.unclassified_1.fastq.gz
+    fi
+
   >>>
   output {
     String kraken2_version = read_string("VERSION")
@@ -116,13 +128,14 @@ task kraken2_standalone {
     File kraken2_report = "~{samplename}.report.txt"
     File kraken2_classified_report = "~{samplename}.classifiedreads.txt.gz"
     File kraken2_unclassified_read1 = "~{samplename}.unclassified_1.fastq.gz"
-    File kraken2_unclassified_read2 = "~{samplename}.unclassified_2.fastq.gz"
+    File? kraken2_unclassified_read2 = "~{samplename}.unclassified_2.fastq.gz"
     File kraken2_classified_read1 = "~{samplename}.classified_1.fastq.gz"
-    File kraken2_classified_read2 = "~{samplename}.classified_2.fastq.gz"
+    Float kraken2_percent_human = read_float("PERCENT_HUMAN")
+    File? kraken2_classified_read2 = "~{samplename}.classified_2.fastq.gz"
   }
   runtime {
       docker: "~{docker}"
-      memory: "~{memory} GB"
+      memory: "~{mem} GB"
       cpu: cpu
       disks: "local-disk 100 SSD"
       preemptible: 0

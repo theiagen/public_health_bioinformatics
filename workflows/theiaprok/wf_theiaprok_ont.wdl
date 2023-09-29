@@ -288,6 +288,7 @@ workflow theiaprok_ont {
             ts_mlst_allelic_profile = ts_mlst.ts_mlst_allelic_profile,
             ts_mlst_version = ts_mlst.ts_mlst_version,
             ts_mlst_novel_alleles = ts_mlst.ts_mlst_novel_alleles,
+            ts_mlst_docker = ts_mlst.ts_mlst_docker,
             serotypefinder_report = merlin_magic.serotypefinder_report,
             serotypefinder_docker = merlin_magic.serotypefinder_docker,
             serotypefinder_serotype = merlin_magic.serotypefinder_serotype,
@@ -489,7 +490,7 @@ workflow theiaprok_ont {
     String? nanoplot_version = nanoplot_raw.nanoplot_version
     String? nanoplot_docker = nanoplot_raw.nanoplot_docker
     # Read QC - kmc outputs
-    String? kmc_est_genome_size = read_qc_trim.est_genome_size
+    Int? kmc_est_genome_size = read_qc_trim.est_genome_size
     File? kmc_kmer_stats = read_qc_trim.kmc_kmer_stats
     String? kmc_version = read_qc_trim.kmc_version
     # Read QC - rasusa outputs
@@ -560,6 +561,7 @@ workflow theiaprok_ont {
     String? ts_mlst_allelic_profile = ts_mlst.ts_mlst_allelic_profile
     String? ts_mlst_version = ts_mlst.ts_mlst_version
     File? ts_mlst_novel_alleles = ts_mlst.ts_mlst_novel_alleles
+    String? ts_mlst_docker = ts_mlst.ts_mlst_docker
     # Prokka Results
     File? prokka_gff = prokka.prokka_gff
     File? prokka_gbk = prokka.prokka_gbk
