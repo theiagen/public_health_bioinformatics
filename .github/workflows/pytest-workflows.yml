@@ -71,7 +71,7 @@ jobs:
         with:
           # the create command looks like this:
           # `micromamba create -n test-env python=3.10 numpy`
-          environment-name: base
+          environment-name: pytest-env
           condarc: |
             channels:
               - conda-forge
