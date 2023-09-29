@@ -69,21 +69,7 @@ jobs:
       # attempting micromamba install instead of miniconda3 in order to save on disk space
       - uses: mamba-org/setup-micromamba@v1
         with:
-          # the create command looks like this:
-          # `micromamba create -n test-env python=3.10 numpy`
-          environment-name: pytest-env
-          condarc: |
-            channels:
-              - conda-forge
-              - bioconda
-              - defaults
-          create-args: >-
-            'python>=3.7'
-            cromwell
-            miniwdl=1.5.2
-            pytest
-            pytest-workflow
-            'importlib-metadata<=4.13.0'
+          environment-file: test/config/environment.yml
 
       # # Depends and env info (mostly for debug)
       # # rm -rf commands as recommended here: https://github.com/actions/runner-images/issues/2840#issuecomment-1284059930
