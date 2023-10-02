@@ -18,7 +18,7 @@ task kmc {
     kmc | head -n 1 | tee VERSION
 
     # initialize kmc output
-    echo 0 > UNIQUE_COUNTED
+    echo -n 0 > UNIQUE_COUNTED
 
     # run kmc
     # kmc [options] <input_file> <output_file> <working_dir>

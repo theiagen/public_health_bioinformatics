@@ -3,6 +3,7 @@ version 1.0
 task version_capture {
   input {
     String? timezone
+    String docker = "us-docker.pkg.dev/general-theiagen/ubuntu/ubuntu:jammy-20230816"
   }
   meta {
     volatile: true
@@ -20,7 +21,7 @@ task version_capture {
   runtime {
     memory: "1 GB"
     cpu: 1
-    docker: "ubuntu:jammy"
+    docker: docker
     disks: "local-disk 10 HDD"
     dx_instance_type: "mem1_ssd1_v2_x2" 
   }
