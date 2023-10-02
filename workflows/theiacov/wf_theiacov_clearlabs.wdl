@@ -31,7 +31,7 @@ workflow theiacov_clearlabs {
     File? reference_genome
     # nextclade inputs
     String nextclade_dataset_reference = "MN908947"
-    String nextclade_dataset_tag = "2023-08-17T12:00:00Z"
+    String nextclade_dataset_tag = "2023-09-21T12:00:00Z"
     String? nextclade_dataset_name
     # kraken parameters
     String? target_org
