@@ -33,7 +33,8 @@ task kmerfinder_bacteria {
       PF="$(cat ~{samplename}/results.txt | head -n 2 | tail -n 1 | cut -f 19)"
       QC="$(cat ~{samplename}/results.txt | head -n 2 | tail -n 1 | cut -f 6)"
       TC="$(cat ~{samplename}/results.txt | head -n 2 | tail -n 1 | cut -f 7)"
-        if [ "$PF" == "" ]; then
+        # String is empty or just contains the header
+        if [ "$PF" == "" ] || [ "$PF" == "Species" ]; then
           PF="No hit detected in database"
           QC="No hit detected in database"
           TC="No hit detected in database"
