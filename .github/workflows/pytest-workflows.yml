@@ -59,22 +59,41 @@ jobs:
           repository: bactopia/bactopia-tests
           path: bactopia-tests
 
-      # Setup Miniconda3
-      - name: Setup miniconda
-        uses: conda-incubator/setup-miniconda@v2
-        with:
-          activate-environment: actions
-          auto-activate-base: false
+      # # Setup Miniconda3
+      # - name: Setup miniconda
+      #   uses: conda-incubator/setup-miniconda@v2
+      #   with:
+      #     activate-environment: actions
+      #     auto-activate-base: false
 
-      # Depends and env info (mostly for debug)
+      # attempting micromamba install instead of miniconda3 in order to save on disk space
+      - uses: mamba-org/setup-micromamba@v1
+        with:
+          environment-file: tests/config/environment.yml
+
+      # # Depends and env info (mostly for debug)
+      # # rm -rf commands as recommended here: https://github.com/actions/runner-images/issues/2840#issuecomment-1284059930
+      # - name: Install Dependencies and create storage space
+      #   run: |
+      #     conda install -y -c conda-forge -c bioconda cromwell miniwdl=1.5.2 'python>=3.7' pytest pytest-workflow 'importlib-metadata<=4.13.0'
+      #     conda clean -a -y
+      #     uname -a && env
+      #     sudo rm -rf /usr/share/dotnet
+      #     sudo rm -rf "$AGENT_TOOLSDIRECTORY"
+
+      # env info (mostly for debug)
       # rm -rf commands as recommended here: https://github.com/actions/runner-images/issues/2840#issuecomment-1284059930
-      - name: Install Dependencies and create storage space
+      - name: Env info and create storage space
         run: |
-          conda install -y -c conda-forge -c bioconda cromwell miniwdl=1.5.2 'python>=3.7' pytest pytest-workflow 'importlib-metadata<=4.13.0'
-          conda clean -a -y
+          micromamba list
+          micromamba clean -a -y
           uname -a && env
           sudo rm -rf /usr/share/dotnet
+          sudo rm -rf /opt/ghc
+          sudo rm -rf "/usr/local/share/boost"
           sudo rm -rf "$AGENT_TOOLSDIRECTORY"
+          sudo rm -rf /usr/local/lib/android
+          df -h
 
       - name: Test ${{ matrix.tag }}
         run: TMPDIR=~ pytest --tag ${{ matrix.tag }}_${{ matrix.engine }} --symlink --kwdof --color=yes

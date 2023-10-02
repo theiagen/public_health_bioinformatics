@@ -592,7 +592,7 @@
     - path: miniwdl_run/wdl/tasks/species_typing/task_ts_mlst.wdl
       md5sum: d49ae0b02e798af0636eb2721bb434b4
     - path: miniwdl_run/wdl/tasks/task_versioning.wdl
-      md5sum: c178145bad99e3858a1327b3774177f3
+      md5sum: 2ed48e1b2d6e69fac4b2888f18b3c0c8
     - path: miniwdl_run/wdl/tasks/taxon_id/task_gambit.wdl
       md5sum: 08987d952c67c6ff6debf6898af15f9a
     - path: miniwdl_run/wdl/tasks/taxon_id/task_kraken2.wdl
