@@ -24,7 +24,7 @@ task ncbi_scrub_pe {
     fi
 
     # dehost reads
-    /opt/scrubber/scripts/scrub.sh -i ${read1_unzip} |& tail -n1 | awk -F" " '{print $1}' > FWD_SPOTS_REMOVED
+    /opt/scrubber/scripts/scrub.sh -n ${read1_unzip} |& tail -n1 | awk -F" " '{print $1}' > FWD_SPOTS_REMOVED
 
     # gzip dehosted reads
     gzip ${read1_unzip}.clean -c > ~{samplename}_R1_dehosted.fastq.gz
@@ -40,7 +40,7 @@ task ncbi_scrub_pe {
     fi
 
     # dehost reads
-    /opt/scrubber/scripts/scrub.sh -i ${read2_unzip} |& tail -n1 | awk -F" " '{print $1}' > REV_SPOTS_REMOVED
+    /opt/scrubber/scripts/scrub.sh -n ${read2_unzip} |& tail -n1 | awk -F" " '{print $1}' > REV_SPOTS_REMOVED
 
     # gzip dehosted reads
     gzip ${read2_unzip}.clean -c > ~{samplename}_R2_dehosted.fastq.gz
@@ -51,7 +51,6 @@ task ncbi_scrub_pe {
     Int read1_human_spots_removed = read_int("FWD_SPOTS_REMOVED")
     Int read2_human_spots_removed = read_int("REV_SPOTS_REMOVED")
     String ncbi_scrub_docker = docker
-
   }
   runtime {
       docker: "~{docker}"
@@ -68,7 +67,7 @@ task ncbi_scrub_se {
   input {
     File read1
     String samplename
-    String docker = "us-docker.pkg.dev/general-theiagen/ncbi/sra-human-scrubber:2.1.0"
+    String docker = "us-docker.pkg.dev/general-theiagen/ncbi/sra-human-scrubber:1.0.2021-05-05"
     Int disk_size = 100
   }
   String r1_filename = basename(read1)
@@ -86,7 +85,7 @@ task ncbi_scrub_se {
     fi
 
     # dehost reads
-    /opt/scrubber/scripts/scrub.sh -i ${read1_unzip} |& tail -n1 | awk -F" " '{print $1}' > FWD_SPOTS_REMOVED
+    /opt/scrubber/scripts/scrub.sh -n ${read1_unzip} |& tail -n1 | awk -F" " '{print $1}' > FWD_SPOTS_REMOVED
 
     # gzip dehosted reads
     gzip ${read1_unzip}.clean -c > ~{samplename}_R1_dehosted.fastq.gz
