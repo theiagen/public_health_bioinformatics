@@ -71,7 +71,15 @@ task ksnp3 {
     echo "The core SNP matrix could not be produced" | tee SKIP_SNP_DIST # otherwise, skip
   fi
 
-  mv -v ksnp3/VCF.*.vcf ksnp3/~{cluster_name}_core.vcf
+  # rename the 2 vcf files by appending ~{cluster_name}; use bash shell expansion to rename VCF file, but keep the ref genome samplename
+  # I think the for loop is required because the bash variable is necessary for parameter expansion
+  for file in ksnp3/VCF.*; do
+    mv -v "$file" "${file/VCF/~{cluster_name}_VCF}"
+  done
+  # because we cannot predict the filename, use these strings to capture the output filenames
+  ls ksnp3/~{cluster_name}_VCF.*.vcf > VCF_REF_GENOME_FILE
+  ls ksnp3/~{cluster_name}_VCF.SNPsNotinRef.* > VCF_SNPS_NOT_IN_REF_FILE
+
   mv -v ksnp3/SNPs_all_matrix.fasta ksnp3/~{cluster_name}_pan_SNPs_matrix.fasta
   mv -v ksnp3/tree.parsimony.tre ksnp3/~{cluster_name}_pan_parsimony.nwk
 
@@ -84,9 +92,10 @@ task ksnp3 {
 
   >>>
   output {
-    File ksnp3_core_matrix = "ksnp3/${cluster_name}_core_SNPs_matrix.fasta"
-    File ksnp3_core_tree = "ksnp3/${cluster_name}_core.nwk"
-    File ksnp3_core_vcf = "ksnp3/${cluster_name}_core.vcf"
+    File ksnp3_core_matrix = "ksnp3/~{cluster_name}_core_SNPs_matrix.fasta"
+    File ksnp3_core_tree = "ksnp3/~{cluster_name}_core.nwk"
+    File ksnp3_vcf_ref_genome = read_string("VCF_REF_GENOME_FILE")
+    File ksnp3_vcf_snps_not_in_ref = read_string("VCF_SNPS_NOT_IN_REF_FILE")
     File ksnp3_pan_matrix = "ksnp3/~{cluster_name}_pan_SNPs_matrix.fasta"
     File ksnp3_pan_parsimony_tree = "ksnp3/~{cluster_name}_pan_parsimony.nwk"
     File? ksnp3_ml_tree = "ksnp3/~{cluster_name}_ML.nwk"

@@ -67,7 +67,8 @@ workflow ksnp3_workflow {
     String ksnp3_docker = ksnp3_task.ksnp3_docker_image
     # ksnp3_outputs
     String ksnp3_snp_dists_version = pan_snp_dists.snp_dists_version
-    File ksnp3_core_vcf = ksnp3_task.ksnp3_core_vcf
+    File ksnp3_vcf_ref_genome = ksnp3_task.ksnp3_vcf_ref_genome
+    File ksnp3_vcf_snps_not_in_ref = ksnp3_task.ksnp3_vcf_snps_not_in_ref
     String ksnp3_core_snp_matrix_status = ksnp3_task.skip_core_snp_dists
     File ksnp3_snps = ksnp3_task.ksnp3_snps_all
     # ordered matrixes and reordered trees
