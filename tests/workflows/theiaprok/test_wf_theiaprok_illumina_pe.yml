@@ -582,7 +582,7 @@
     - path: miniwdl_run/wdl/tasks/quality_control/task_quast.wdl
       contains: ["version", "quast", "output"]
     - path: miniwdl_run/wdl/tasks/quality_control/task_screen.wdl
-      md5sum: c1f2f5cef67a0bd0cbc9da2a834d40e4
+      md5sum: 882518e2ec0f296d3f6759081f476386
     - path: miniwdl_run/wdl/tasks/quality_control/task_trimmomatic.wdl
       contains: ["version", "trimmomatic", "output"]
     - path: miniwdl_run/wdl/tasks/species_typing/task_cauris_cladetyper.wdl
