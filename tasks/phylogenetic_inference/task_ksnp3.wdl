@@ -53,7 +53,8 @@ task ksnp3 {
     -in ksnp3_input.tsv \
     -outdir ksnp3 \
     -k ~{kmer_size} \
-    -core -vcf \
+    -core \
+    -vcf \
     ~{'-SNPs_all ' + previous_ksnp3_snps} \
     ~{ksnp3_args}
   
@@ -71,14 +72,12 @@ task ksnp3 {
     echo "The core SNP matrix could not be produced" | tee SKIP_SNP_DIST # otherwise, skip
   fi
 
-  # rename the 2 vcf files by appending ~{cluster_name}; use bash shell expansion to rename VCF file, but keep the ref genome samplename
-  # I think the for loop is required because the bash variable is necessary for parameter expansion
-  for file in ksnp3/VCF.*; do
-    mv -v "$file" "${file/VCF/~{cluster_name}_VCF}"
-  done
-  # because we cannot predict the filename, use these strings to capture the output filenames
-  ls ksnp3/~{cluster_name}_VCF.*.vcf > VCF_REF_GENOME_FILE
-  ls ksnp3/~{cluster_name}_VCF.SNPsNotinRef.* > VCF_SNPS_NOT_IN_REF_FILE
+  # capture sample name of genome used as reference
+  ls ksnp3/*.vcf | cut -d '.' -f 2 | tee KSNP3_VCF_REF_SAMPLENAME.txt
+
+  # rename the 2 vcf files by appending ~{cluster_name} and removing the ref genome name to make final filenames predictable
+  mv -v ksnp3/VCF.*.vcf ksnp3/~{cluster_name}_VCF.reference_genome.vcf
+  mv -v ksnp3/VCF.SNPsNotinRef.* ksnp3/~{cluster_name}_VCF_.SNPsNotinRef.tsv
 
   mv -v ksnp3/SNPs_all_matrix.fasta ksnp3/~{cluster_name}_pan_SNPs_matrix.fasta
   mv -v ksnp3/tree.parsimony.tre ksnp3/~{cluster_name}_pan_parsimony.nwk
@@ -94,8 +93,9 @@ task ksnp3 {
   output {
     File ksnp3_core_matrix = "ksnp3/~{cluster_name}_core_SNPs_matrix.fasta"
     File ksnp3_core_tree = "ksnp3/~{cluster_name}_core.nwk"
-    File ksnp3_vcf_ref_genome = read_string("VCF_REF_GENOME_FILE")
-    File ksnp3_vcf_snps_not_in_ref = read_string("VCF_SNPS_NOT_IN_REF_FILE")
+    File ksnp3_vcf_ref_genome = "ksnp3/~{cluster_name}_VCF.reference_genome.vcf"
+    File ksnp3_vcf_snps_not_in_ref = "ksnp3/~{cluster_name}_VCF_.SNPsNotinRef.tsv"
+    String ksnp3_vcf_ref_samplename = read_string("KSNP3_VCF_REF_SAMPLENAME.txt")
     File ksnp3_pan_matrix = "ksnp3/~{cluster_name}_pan_SNPs_matrix.fasta"
     File ksnp3_pan_parsimony_tree = "ksnp3/~{cluster_name}_pan_parsimony.nwk"
     File? ksnp3_ml_tree = "ksnp3/~{cluster_name}_ML.nwk"
