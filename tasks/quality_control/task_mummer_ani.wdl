@@ -80,13 +80,13 @@ task animummer {
           echo "Comparing user-defined ANI threshold to highest ANI value..."
           # compare ANI_HIGHEST_PERCENT to ani_threshold using awk
           if ! awk "BEGIN{ exit ($ANI_HIGHEST_PERCENT < ~{ani_threshold} )}"; then
-            echo "The highest ANI value $ANI_HIGHEST_PERCENT is less than the user-defined threshold of ~{ani_threshold}"
-            echo "ANI top species match did not surpass the user-defined threshold of ~{ani_threshold}" > ANI_TOP_SPECIES_MATCH.txt
+            echo "The highest ANI value $ANI_HIGHEST_PERCENT is less than the user-defined ANI threshold of ~{ani_threshold}"
+            echo "ANI top species match did not surpass the user-defined ANI threshold of ~{ani_threshold}" > ANI_TOP_SPECIES_MATCH.txt
           # else if: compare percent_bases_aligned_threshold to ANI_HIGHEST_PERCENT_BASES_ALIGNED using awk
           elif ! awk "BEGIN{ exit (${ANI_HIGHEST_PERCENT_BASES_ALIGNED} < ~{percent_bases_aligned_threshold} )}"; then
             echo "The highest ANI percent bases aligned value ${ANI_HIGHEST_PERCENT_BASES_ALIGNED} is less than the user-defined threshold of ~{percent_bases_aligned_threshold}"
             # overwrite ANI_TOP_SPECIES_MATCH.txt when percent_bases_aligned threshold is not surpassed
-            echo "ANI percent bases aligned did not surpass the user-defined threshold of ~{percent_bases_aligned_threshold}" > ANI_TOP_SPECIES_MATCH.txt 
+            echo "ANI top species match did not surpass the user-defined percent bases aligned threshold of ~{percent_bases_aligned_threshold}" > ANI_TOP_SPECIES_MATCH.txt 
           else
             echo "The highest ANI value ${ANI_HIGHEST_PERCENT} is greater than the user-defined threshold ~{ani_threshold}"
             echo "The highest percent bases aligned value ${ANI_HIGHEST_PERCENT_BASES_ALIGNED} is greater than the user-defined threshold ~{percent_bases_aligned_threshold}"
