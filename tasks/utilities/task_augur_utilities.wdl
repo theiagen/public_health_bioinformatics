@@ -332,8 +332,6 @@ task set_mpxv_defaults { # establish mpxv default values for augur
     File mpxv_reference_fasta = "gs://theiagen-public-files-rp/terra/augur-mpox-references/reconstructed_ancestral_mpox.fasta"
     File mpxv_reference_genbank = "gs://theiagen-public-files-rp/terra/augur-mpox-references/NC_063383.1_reference.gb"
     File mpxv_auspice_config = "gs://theiagen-public-files-rp/terra/augur-mpox-references/mpox_auspice_config_mpxv.json"
-    File mpxv_gene_annotations_gff = "gs://theiagen-public-files-rp/terra/augur-mpox-references/genemap.gff"
-    File mpxv_colors = "gs://theiagen-public-files-rp/terra/augur-mpox-references/colors_mpxv.tsv"
 
     Int disk_size = 50
   }
@@ -349,8 +347,6 @@ task set_mpxv_defaults { # establish mpxv default values for augur
     File reference_fasta = mpxv_reference_fasta
     File reference_genbank = mpxv_reference_genbank
     File auspice_config = mpxv_auspice_config
-    File genes = mpxv_gene_annotations_gff
-    File colors = mpxv_colors
     # inherited from flu defaults
     Float min_date = 2020.0
     Int pivot_interval = 1
