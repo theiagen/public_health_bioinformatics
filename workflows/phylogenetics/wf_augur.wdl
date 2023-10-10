@@ -24,8 +24,6 @@ workflow augur {
     String build_name
     File? reference_fasta
     File? reference_genbank
-    File? genes
-    File? colors
     Int? min_num_unambig
     String organism = "sars-cov-2" # options: sars-cov-2 or flu or mpxv
     String flu_segment = "HA" # options: HA or NA
@@ -39,6 +37,8 @@ workflow augur {
     # these are very minimal files that hopefully will prevent workflow failure but will not provide any useful information
     File lat_longs_tsv = "gs://theiagen-public-files-rp/terra/augur-defaults/minimal-lat-longs.tsv"
     File auspice_config = "gs://theiagen-public-files-rp/terra/augur-defaults/minimal-auspice-config.json"
+    File genes = "gs://theiagen-public-files-rp/terra/augur-defaults/minimal-genes.tsv"
+    File colors = "gs://theiagen-public-files-rp/terra/augur-defaults/minimal-colors.tsv"
 
     Boolean distance_tree_only = false # by default, do not skip making a time tree
   }
@@ -112,7 +112,7 @@ workflow augur {
         refined_tree = augur_refine.refined_tree,
         ancestral_nt_muts_json = augur_ancestral.ancestral_nt_muts_json,
         reference_genbank = select_first([reference_genbank, sc2_defaults.reference_genbank, flu_defaults.reference_genbank, mpxv_defaults.reference_genbank]),
-        genes = select_first([genes, mpxv_defaults.genes]),
+        genes = select_first([mpxv_defaults.genes, genes]),
         build_name = build_name
     }
     if (flu_segment == "HA") { # we only have clade information for HA segments (but SC2 defaults will be selected first)
@@ -126,7 +126,7 @@ workflow augur {
         }
       }
       if (! run_traits) {
-        if (defined(clades_tsv) || defined(sc2_defaults.clades_tsv) || defined(flu_defaults.clades_tsv) || defined(mpxv_defaults.clades_tsv) ) { # one of these must be present
+        if (defined(clades_tsv) || defined(sc2_defaults.clades_tsv) || defined(flu_defaults.clades_tsv) || defined(mpxv_defaults.clades_tsv)) { # one of these must be present
           call clades_task.augur_clades { # assign clades to nodes based on amino-acid or nucleotide signatures
             input:
               refined_tree = augur_refine.refined_tree,
@@ -150,7 +150,7 @@ workflow augur {
                             augur_clades.clade_assignments_json,
                             augur_traits.traits_assignments_json]),
         build_name = build_name,
-        colors_tsv = select_first([colors, mpxv_defaults.colors]),
+        colors_tsv = select_first([mpxv_defaults.colors, colors]),
         lat_longs_tsv = select_first([sc2_defaults.lat_longs_tsv, flu_defaults.lat_longs_tsv, mpxv_defaults.lat_longs_tsv, lat_longs_tsv]),
         auspice_config = select_first([sc2_defaults.auspice_config, flu_defaults.auspice_config, mpxv_defaults.auspice_config, auspice_config])
     }
