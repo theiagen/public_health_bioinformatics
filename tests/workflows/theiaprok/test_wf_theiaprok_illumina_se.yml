@@ -544,8 +544,7 @@
     - path: miniwdl_run/wdl/tasks/quality_control/task_fastq_scan.wdl
       contains: ["version", "fastq_scan", "output"]
     - path: miniwdl_run/wdl/tasks/quality_control/task_mummer_ani.wdl
-      md5sum: 33a111c260b2fb0b6db6d9ed77ec8e87
-      md5sum: 33a111c260b2fb0b6db6d9ed77ec8e87
+      md5sum: b578e00dc2dd8a978718e0b67ee9330a
     - path: miniwdl_run/wdl/tasks/quality_control/task_qc_check_phb.wdl
       contains: ["version", "qc_check_table", "output"]
     - path: miniwdl_run/wdl/tasks/quality_control/task_quast.wdl
@@ -601,9 +600,9 @@
     - path: miniwdl_run/wdl/tasks/taxon_id/task_midas.wdl
       md5sum: 024971d1439dff7d59c0a26a824bd2c6
     - path: miniwdl_run/wdl/tasks/utilities/task_broad_terra_tools.wdl
-      md5sum: 1d7365ed0f29a7632568a37bfce0f1b6
+      md5sum: 26ac9a20c8043a28d373bfe0ca361cc6
     - path: miniwdl_run/wdl/workflows/theiaprok/wf_theiaprok_illumina_se.wdl
-      md5sum: d144cb871c175029a34107a369e70c5d
+      md5sum: 68a10e1e76ba0d7ec4c119e4f5fc3ecd
     - path: miniwdl_run/wdl/workflows/utilities/wf_merlin_magic.wdl
       md5sum: 2614fac622fa2035b80a7b220b1aed86
     - path: miniwdl_run/wdl/workflows/utilities/wf_read_QC_trim_se.wdl
