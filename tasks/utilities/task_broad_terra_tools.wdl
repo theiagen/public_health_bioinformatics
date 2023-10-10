@@ -99,6 +99,7 @@ task export_taxon_tables {
     String? kmerfinder_query_coverage
     String? kmerfinder_template_coverage
     String? kmerfinder_database
+    String? ani_docker
     File? amrfinderplus_all_report
     File? amrfinderplus_amr_report
     File? amrfinderplus_stress_report
@@ -603,6 +604,7 @@ task export_taxon_tables {
       "kmerfinder_query_coverage": "~{kmerfinder_query_coverage}",
       "kmerfinder_template_coverage": "~{kmerfinder_template_coverage}",
       "kmerfinder_database": "~{kmerfinder_database}",
+      "ani_docker": "~{ani_docker}",
       "resfinder_pheno_table": "~{resfinder_pheno_table}",
       "resfinder_pheno_table_species": "~{resfinder_pheno_table_species}",
       "resfinder_seqs": "~{resfinder_seqs}",
