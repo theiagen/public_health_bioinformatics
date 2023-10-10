@@ -280,7 +280,6 @@ workflow theiaprok_illumina_se {
             kmerfinder_query_coverage = kmerfinder.kmerfinder_query_coverage,
             kmerfinder_template_coverage = kmerfinder.kmerfinder_template_coverage,
             kmerfinder_database = kmerfinder.kmerfinder_database,
-            ani_docker = ani.ani_docker,
             amrfinderplus_all_report = amrfinderplus_task.amrfinderplus_all_report,
             amrfinderplus_amr_report = amrfinderplus_task.amrfinderplus_amr_report,
             amrfinderplus_stress_report = amrfinderplus_task.amrfinderplus_stress_report,
@@ -583,7 +582,6 @@ workflow theiaprok_illumina_se {
     String? kmerfinder_query_coverage = kmerfinder.kmerfinder_query_coverage
     String? kmerfinder_template_coverage = kmerfinder.kmerfinder_template_coverage
     String? kmerfinder_database = kmerfinder.kmerfinder_database
-    String? ani_mummer_docker = ani.ani_docker
     # NCBI-AMRFinderPlus Outputs
     File? amrfinderplus_all_report = amrfinderplus_task.amrfinderplus_all_report
     File? amrfinderplus_amr_report = amrfinderplus_task.amrfinderplus_amr_report
