@@ -624,7 +624,7 @@
     - path: miniwdl_run/wdl/tasks/species_typing/task_ts_mlst.wdl
       md5sum: d49ae0b02e798af0636eb2721bb434b4
     - path: miniwdl_run/wdl/tasks/task_versioning.wdl
-      md5sum: c178145bad99e3858a1327b3774177f3
+      md5sum: 9c02b95d23a602d9842fdeac883037b1
     - path: miniwdl_run/wdl/tasks/taxon_id/task_gambit.wdl
       md5sum: 08987d952c67c6ff6debf6898af15f9a
     - path: miniwdl_run/wdl/tasks/taxon_id/task_kraken2.wdl
@@ -632,9 +632,9 @@
     - path: miniwdl_run/wdl/tasks/taxon_id/task_midas.wdl
       md5sum: 024971d1439dff7d59c0a26a824bd2c6
     - path: miniwdl_run/wdl/tasks/utilities/task_broad_terra_tools.wdl
-      md5sum: 7cffaf4d159b65fbcf9091dd8477500a
+      md5sum: 43ef050bde1fb8755f38e697a1794918
     - path: miniwdl_run/wdl/workflows/theiaprok/wf_theiaprok_illumina_pe.wdl
-      md5sum: ca8825e5cc5a6d910e0368fcb6992905
+      md5sum: 6dc6c393281a19e8dcbcc15964b8e08a
     - path: miniwdl_run/wdl/workflows/utilities/wf_merlin_magic.wdl
       md5sum: 2614fac622fa2035b80a7b220b1aed86
     - path: miniwdl_run/wdl/workflows/utilities/wf_read_QC_trim_pe.wdl
