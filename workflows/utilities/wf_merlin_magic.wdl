@@ -593,6 +593,7 @@ workflow merlin_magic {
     File? tbp_parser_looker_report_csv = tbp_parser.tbp_parser_looker_report_csv
     File? tbp_parser_coverage_report = tbp_parser.tbp_parser_coverage_report
     Float? tbp_parser_genome_percent_coverage = tbp_parser.tbp_parser_genome_percent_coverage
+    Float? tbp_parser_average_genome_depth = tbp_parser.tbp_parser_average_genome_depth
     File? clockwork_cleaned_read1 = clockwork_decon_reads.clockwork_cleaned_read1
     File? clockwork_cleaned_read2 = clockwork_decon_reads.clockwork_cleaned_read2
 
