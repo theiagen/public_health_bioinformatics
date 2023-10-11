@@ -13,7 +13,7 @@ task tbp_parser {
     Int coverage_threshold = 100
     Boolean tbp_parser_debug = false
 
-    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:1.0.1"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:1.0.5"
     Int disk_size = 100
     Int memory = 4
     Int cpu = 1
@@ -34,6 +34,9 @@ task tbp_parser {
     # get genome percent coverage for the entire reference genome length over min_depth
     genome=$(samtools depth -J ~{tbprofiler_bam} | awk -F "\t" '{if ($3 >= ~{min_depth}) print;}' | wc -l )
     python3 -c "print ( ($genome / 4411532 ) * 100 )" | tee GENOME_PC
+
+    # get genome average depth
+    samtools depth -J ~{tbprofiler_bam} | awk -F "\t" '{sum+=$3} END { print sum/NR }' | tee AVG_DEPTH
   >>>
   output {
     File tbp_parser_looker_report_csv = "~{samplename}.looker_report.csv"
@@ -41,6 +44,7 @@ task tbp_parser {
     File tbp_parser_lims_report_csv = "~{samplename}.lims_report.csv"
     File tbp_parser_coverage_report = "~{samplename}.percent_gene_coverage.csv"
     Float tbp_parser_genome_percent_coverage = read_float("GENOME_PC")
+    Float tbp_parser_average_genome_depth = read_float("AVG_DEPTH")
     String tbp_parser_version = read_string("VERSION")
     String tbp_parser_docker = docker
   }
