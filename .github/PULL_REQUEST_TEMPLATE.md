@@ -1,5 +1,5 @@
 <!--
-Thank your for contributing to Theiagen's Public Health Bioinformatics repository!
+Thank you for contributing to Theiagen's Public Health Bioinformatics repository!
 Please fill in the appropriate checklist below and delete whatever is not relevant.
 
 Documentation on how to contribute can be found at https://github.com/theiagen/public_health_bioinformatics#contributing-to-the-phb-workflows
