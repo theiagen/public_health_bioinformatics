@@ -31,6 +31,10 @@ task tbp_parser {
       --output_prefix ~{samplename} \
       ~{true="--debug" false="--verbose" tbp_parser_debug}
 
+    # set default genome percent coverage and average depth to 0 to prevent failures
+    echo 0.0 > GENOME_PC
+    echo 0.0 > AVG_DEPTH
+
     # get genome percent coverage for the entire reference genome length over min_depth
     genome=$(samtools depth -J ~{tbprofiler_bam} | awk -F "\t" '{if ($3 >= ~{min_depth}) print;}' | wc -l )
     python3 -c "print ( ($genome / 4411532 ) * 100 )" | tee GENOME_PC
