@@ -37,8 +37,10 @@ task check_reads {
       # key assumption: in fastq there will be four lines per read
       # sometimes fastqs do not have 4 lines per read, so this might fail one day
 
-      if [ "${read1_num}" -le "~{min_reads}" ] || [ "${read2_num}" -le "~{min_reads}" ]; then
-        flag="FAIL; the number of reads (either ${read1_num} or ${read2_num}) is below the minimum of ~{min_reads}"
+      reads_total=$(expr $read1_num + $read2_num)
+
+      if [ "${reads_total}" -le "~{min_reads}" ]; then
+        flag="FAIL; the total number of reads is below the minimum of ~{min_reads}"
       else
         flag="PASS"
       fi
@@ -67,9 +69,12 @@ task check_reads {
           flag="PASS"
         fi
 
+        # check total number of basepairs 
         if [ "$flag" == "PASS" ] ; then
-          if [ "${read1_bp}" -le "~{min_basepairs}" ] || [ "${read2_bp}" -le "~{min_basepairs}" ] ; then
-            flag="FAIL; the number of basepairs (either ${read1_bp} or ${read2_bp}) is below the minimum of ~{min_basepairs}"
+          bp_total=$(expr $read1_bp + $read2_bp)
+
+          if [ "${bp_total}" -le "~{min_basepairs}" ]; then
+            flag="FAIL; the total number of basepairs is below the minimum of ~{min_basepairs}"
           else
             flag="PASS"
           fi
