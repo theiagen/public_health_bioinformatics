@@ -202,7 +202,7 @@
     - path: miniwdl_run/call-cg_pipeline_raw/work/test_readMetrics.tsv
       contains: ["File", "fastq", "coverage"]
     - path: miniwdl_run/call-clean_check_reads/command
-      md5sum: 4361141e468787303611e0f4bf87bae5
+      md5sum: c1e24d45bfa60a32fd7d9d60229d1bc4
     - path: miniwdl_run/call-clean_check_reads/inputs.json
       contains: ["read1", "fastq", "skip_screen", "true"]
     - path: miniwdl_run/call-clean_check_reads/outputs.json
@@ -365,7 +365,7 @@
     - path: miniwdl_run/call-quast/work/transposed_report.txt
       contains: ["Assembly", "length", "contigs", "test"]
     - path: miniwdl_run/call-raw_check_reads/command
-      md5sum: e44aba2580234bcf53492343a57934be
+      md5sum: 56dc92860246f373f62d8ead7fc4b4e3
     - path: miniwdl_run/call-raw_check_reads/inputs.json
       contains: ["read1", "fastq", "skip_screen", "true"]
     - path: miniwdl_run/call-raw_check_reads/outputs.json
@@ -582,7 +582,7 @@
     - path: miniwdl_run/wdl/tasks/quality_control/task_quast.wdl
       contains: ["version", "quast", "output"]
     - path: miniwdl_run/wdl/tasks/quality_control/task_screen.wdl
-      md5sum: 882518e2ec0f296d3f6759081f476386
+      md5sum: b1aa33ab328b26aa1ecad344ea1fd7b5
     - path: miniwdl_run/wdl/tasks/quality_control/task_trimmomatic.wdl
       contains: ["version", "trimmomatic", "output"]
     - path: miniwdl_run/wdl/tasks/species_typing/task_cauris_cladetyper.wdl
