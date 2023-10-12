@@ -251,7 +251,8 @@ workflow merlin_magic {
           read2 = select_first([clockwork_decon_reads.clockwork_cleaned_read2, read2, "gs://theiagen-public-files/terra/theiaprok-files/no-read2.txt"]),
           samplename = samplename,
           tbprofiler_run_custom_db = tbprofiler_run_custom_db,
-          tbprofiler_custom_db = tbprofiler_custom_db
+          tbprofiler_custom_db = tbprofiler_custom_db,
+          ont_data = ont_data
       }
       if (tbprofiler_additional_outputs) {
         call tbp_parser_task.tbp_parser {
