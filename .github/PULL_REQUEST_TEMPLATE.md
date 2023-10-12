@@ -20,7 +20,7 @@ Closes <Issue number>
 
 ## :brain: Context and Rationale
 
-<!--What's the context of the changes? Where there any trade-offs you had to consider?-->
+<!--What's the context of the changes? Were there any trade-offs you had to consider?-->
 
 ## :clipboard: Workflow/Task Steps
 
