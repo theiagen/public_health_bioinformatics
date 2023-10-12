@@ -14,6 +14,10 @@ Closes <Issue number>
 
 <!--Here give examples of the changes you've made to this pull request. Include an itemized list if you can. It'll help the reviewer-->
 
+### Impacted Workflows/Tasks
+
+<!--List the workflows and/or tasks that will be affected by this change-->
+
 ## :brain: Context and Rationale
 
 <!--What's the context of the changes? Where there any trade-offs you had to consider?-->
@@ -29,6 +33,10 @@ Closes <Issue number>
 ### Outputs
 
 <!--What are the outputs of your workflow/task?-->
+
+### Impacted Outputs
+
+<!--List any existing outputs that will be affected by this change-->
 
 ## :test_tube: Testing
 
