@@ -541,6 +541,11 @@ task sm_metadata_wrangling { # the sm stands for supermassive
     bash gisaid-fasta-manipulation.sh
     cat *_gisaid.fasta > ~{output_name}_gisaid.fasta
 
+
+    # print the excluded samples file
+    echo "DEBUG: printing excluded samples file"
+    cat ~{output_name}_excluded_samples.tsv
+    
     unset CLOUDSDK_PYTHON   # reset env var
 
   >>>
