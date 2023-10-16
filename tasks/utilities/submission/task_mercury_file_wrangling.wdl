@@ -229,12 +229,12 @@ task sm_metadata_wrangling { # the sm stands for supermassive
 
         # prettify the filenames and rename them to be sra compatible; write out copy commands to a file to rename and move later
         sra_metadata["filename"] = sra_metadata["sample_name"] + "_R1.fastq.gz"
-        sra_metadata["copy_command_r1"] = "gsutil -m cp " + sra_metadata[read1_column_name] + " " + "~{gcp_bucket_uri}" + "/" + sra_metadata["filename"]
+        sra_metadata["copy_command_r1"] = "gcloud storage cp " + sra_metadata[read1_column_name] + " " + "~{gcp_bucket_uri}" + "/" + sra_metadata["filename"]
         sra_metadata["copy_command_r1"].to_csv("sra-file-transfer.sh", index=False, header=False)
         sra_metadata.drop(["copy_command_r1", read1_column_name], axis=1, inplace=True)
         if read2_column_name in table.columns: # enable optional single end submission
           sra_metadata["filename2"] = sra_metadata["sample_name"] + "_R2.fastq.gz"
-          sra_metadata["copy_command_r2"] = "gsutil -m cp " + sra_metadata[read2_column_name] + " " + "~{gcp_bucket_uri}" + "/" + sra_metadata["filename2"]
+          sra_metadata["copy_command_r2"] = "gcloud storage cp " + sra_metadata[read2_column_name] + " " + "~{gcp_bucket_uri}" + "/" + sra_metadata["filename2"]
           sra_metadata["copy_command_r2"].to_csv("sra-file-transfer.sh", mode='a', index=False, header=False)
           sra_metadata.drop(["copy_command_r2", read2_column_name], axis=1, inplace=True)
 
@@ -252,7 +252,7 @@ task sm_metadata_wrangling { # the sm stands for supermassive
         genbank_metadata.rename(columns={"submission_id" : "Sequence_ID", "host_sci_name" : "host", "collection_date" : "collection-date", "isolation_source" : "isolation-source", "biosample_accession" : "BioSample", "bioproject_accession" : "BioProject"}, inplace=True)
 
         # prep for file manipulation and manuevering 
-        genbank_metadata["cp"] = "gsutil cp"
+        genbank_metadata["cp"] = "gcloud storage cp"
         genbank_metadata["fn"] = genbank_metadata["Sequence_ID"] + "_genbank_untrimmed.fasta"
         genbank_metadata.to_csv("genbank-file-transfer.sh", sep=' ', header=False, index=False, columns = ["cp", assembly_fasta_column_name, "fn"], quoting=csv.QUOTE_NONE, escapechar=" ")
         genbank_metadata.drop(["cp", assembly_fasta_column_name], axis=1, inplace=True)
@@ -316,7 +316,7 @@ task sm_metadata_wrangling { # the sm stands for supermassive
       gisaid_metadata.drop("submission_id", axis=1, inplace=True)
 
       # write out the command to rename the assembly files to a file for bash to move about
-      gisaid_metadata["cp"] = "gsutil cp"
+      gisaid_metadata["cp"] = "gcloud storage cp"
       gisaid_metadata.to_csv("gisaid-file-transfer.sh", sep=' ', header=False, index=False, columns = ["cp", assembly_fasta_column_name, "fn"], quoting=csv.QUOTE_NONE, escapechar=" ")
       gisaid_metadata.drop(["cp", assembly_fasta_column_name], axis=1, inplace=True)
 
@@ -416,12 +416,12 @@ task sm_metadata_wrangling { # the sm stands for supermassive
         
         # prettify the filenames and rename them to be sra compatible
         sra_metadata["filename"] = sra_metadata["sample_name"] + "_R1.fastq.gz"
-        sra_metadata["copy_command_r1"] = "gsutil -m cp " + sra_metadata[read1_column_name] + " " + "~{gcp_bucket_uri}" + "/" + sra_metadata["filename"]
+        sra_metadata["copy_command_r1"] = "gcloud storage cp " + sra_metadata[read1_column_name] + " " + "~{gcp_bucket_uri}" + "/" + sra_metadata["filename"]
         sra_metadata["copy_command_r1"].to_csv("sra-file-transfer.sh", index=False, header=False)
         sra_metadata.drop(["copy_command_r1", read1_column_name], axis=1, inplace=True)
         if read2_column_name in table.columns: # enable optional single end submission
           sra_metadata["filename2"] = sra_metadata["sample_name"] + "_R2.fastq.gz"
-          sra_metadata["copy_command_r2"] = "gsutil -m cp " + sra_metadata[read2_column_name] + " " + "~{gcp_bucket_uri}" + "/" + sra_metadata["filename2"]
+          sra_metadata["copy_command_r2"] = "gcloud storage cp " + sra_metadata[read2_column_name] + " " + "~{gcp_bucket_uri}" + "/" + sra_metadata["filename2"]
           sra_metadata["copy_command_r2"].to_csv("sra-file-transfer.sh", mode='a', index=False, header=False)
           sra_metadata.drop(["copy_command_r2", read2_column_name], axis=1, inplace=True)
 
@@ -437,7 +437,7 @@ task sm_metadata_wrangling { # the sm stands for supermassive
             bankit_metadata[column] = ""
         bankit_metadata.rename(columns={"submission_id" : "Sequence_ID", "isolate" : "Isolate", "collection_date" : "Collection_date", "country" : "Country", "host" : "Host", "isolation_source" : "Isolation_source"}, inplace=True)
 
-        bankit_metadata["cp"] = "gsutil cp"
+        bankit_metadata["cp"] = "gcloud storage cp"
         bankit_metadata["fn"] = bankit_metadata["Sequence_ID"] + "_bankit.fasta"
         bankit_metadata.to_csv("bankit-file-transfer.sh", sep=' ', header=False, index=False, columns = ["cp", assembly_fasta_column_name, "fn"], quoting=csv.QUOTE_NONE, escapechar=" ")
         bankit_metadata.drop(["cp", assembly_fasta_column_name], axis=1, inplace=True)
@@ -479,7 +479,7 @@ task sm_metadata_wrangling { # the sm stands for supermassive
       gisaid_metadata.drop("submission_id", axis=1, inplace=True)
 
       # write out the command to rename the assembly files to a file for bash to move about
-      gisaid_metadata["cp"] = "gsutil cp"
+      gisaid_metadata["cp"] = "gcloud storage cp"
       gisaid_metadata.to_csv("gisaid-file-transfer.sh", sep=' ', header=False, index=False, columns = ["cp", "assembly_fasta", "fn"], quoting=csv.QUOTE_NONE, escapechar=" ")
       gisaid_metadata.drop(["cp", "assembly_fasta"], axis=1, inplace=True)
 
