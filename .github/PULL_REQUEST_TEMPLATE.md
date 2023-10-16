@@ -1,5 +1,5 @@
 <!--
-Thank your for contributing to Theiagen's Public Health Bioinformatics repository!
+Thank you for contributing to Theiagen's Public Health Bioinformatics repository!
 Please fill in the appropriate checklist below and delete whatever is not relevant.
 
 Documentation on how to contribute can be found at https://github.com/theiagen/public_health_bioinformatics#contributing-to-the-phb-workflows
@@ -14,9 +14,13 @@ Closes <Issue number>
 
 <!--Here give examples of the changes you've made to this pull request. Include an itemized list if you can. It'll help the reviewer-->
 
+### Impacted Workflows/Tasks
+
+<!--List the workflows and/or tasks that will be affected by this change-->
+
 ## :brain: Context and Rationale
 
-<!--What's the context of the changes? Where there any trade-offs you had to consider?-->
+<!--What's the context of the changes? Were there any trade-offs you had to consider?-->
 
 ## :clipboard: Workflow/Task Steps
 
@@ -29,6 +33,10 @@ Closes <Issue number>
 ### Outputs
 
 <!--What are the outputs of your workflow/task?-->
+
+### Impacted Outputs
+
+<!--List any existing outputs that will be affected by this change-->
 
 ## :test_tube: Testing
 

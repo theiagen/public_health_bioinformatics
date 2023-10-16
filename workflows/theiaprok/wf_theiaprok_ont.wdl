@@ -9,6 +9,7 @@ import "../../tasks/quality_control/task_screen.wdl" as screen_task
 import "../../tasks/quality_control/task_busco.wdl" as busco_task
 import "../../tasks/taxon_id/task_gambit.wdl" as gambit_task
 import "../../tasks/quality_control/task_mummer_ani.wdl" as ani_task
+import "../../tasks/taxon_id/task_kmerfinder.wdl" as kmerfinder_task
 import "../../tasks/gene_typing/task_amrfinderplus.wdl" as amrfinderplus_task
 import "../../tasks/gene_typing/task_resfinder.wdl" as resfinder_task
 import "../../tasks/species_typing/task_ts_mlst.wdl" as ts_mlst_task
@@ -48,6 +49,7 @@ workflow theiaprok_ont {
     Int min_coverage = 5 # reduced from 10 because some institutions sequence at lower depth because of longer read length
     # module options
     Boolean call_ani = false # by default do not call ANI task, but user has ability to enable this task if working with enteric pathogens or supply their own high-quality reference genome
+    Boolean call_kmerfinder = false
     Boolean call_resfinder = false
     String genome_annotation = "prokka" # options: "prokka" or "bakta"
     String? expected_taxon # allow user to provide organism (e.g. "Clostridioides_difficile") string to amrfinder. Useful when gambit does not predict the correct species
@@ -126,6 +128,13 @@ workflow theiaprok_ont {
       }
       if (call_ani) {
         call ani_task.animummer as ani {
+          input:
+            assembly = dragonflye.assembly_fasta,
+            samplename = samplename
+        }
+      }
+      if (call_kmerfinder) {
+        call kmerfinder_task.kmerfinder_bacteria as kmerfinder {
           input:
             assembly = dragonflye.assembly_fasta,
             samplename = samplename
@@ -262,6 +271,12 @@ workflow theiaprok_ont {
             ani_output_tsv = ani.ani_output_tsv,
             ani_top_species_match = ani.ani_top_species_match,
             ani_mummer_version = ani.ani_mummer_version,
+            kmerfinder_docker = kmerfinder.kmerfinder_docker,
+            kmerfinder_results_tsv = kmerfinder.kmerfinder_results_tsv,
+            kmerfinder_top_hit = kmerfinder.kmerfinder_top_hit,
+            kmerfinder_query_coverage = kmerfinder.kmerfinder_query_coverage,
+            kmerfinder_template_coverage = kmerfinder.kmerfinder_template_coverage,
+            kmerfinder_database = kmerfinder.kmerfinder_database,
             amrfinderplus_all_report = amrfinderplus.amrfinderplus_all_report,
             amrfinderplus_amr_report = amrfinderplus.amrfinderplus_amr_report,
             amrfinderplus_stress_report = amrfinderplus.amrfinderplus_stress_report,
@@ -290,6 +305,7 @@ workflow theiaprok_ont {
             ts_mlst_allelic_profile = ts_mlst.ts_mlst_allelic_profile,
             ts_mlst_version = ts_mlst.ts_mlst_version,
             ts_mlst_novel_alleles = ts_mlst.ts_mlst_novel_alleles,
+            ts_mlst_docker = ts_mlst.ts_mlst_docker,
             serotypefinder_report = merlin_magic.serotypefinder_report,
             serotypefinder_docker = merlin_magic.serotypefinder_docker,
             serotypefinder_serotype = merlin_magic.serotypefinder_serotype,
@@ -330,7 +346,7 @@ workflow theiaprok_ont {
             lissero_serotype = merlin_magic.lissero_serotype,
             sistr_results = merlin_magic.sistr_results,
             sistr_allele_json = merlin_magic.sistr_allele_json,
-            sister_allele_fasta = merlin_magic.sistr_allele_fasta,
+            sistr_allele_fasta = merlin_magic.sistr_allele_fasta,
             sistr_cgmlst = merlin_magic.sistr_cgmlst,
             sistr_version = merlin_magic.sistr_version,
             sistr_predicted_serotype = merlin_magic.sistr_predicted_serotype,
@@ -533,6 +549,13 @@ workflow theiaprok_ont {
     File? ani_output_tsv = ani.ani_output_tsv
     String? ani_top_species_match = ani.ani_top_species_match
     String? ani_mummer_version = ani.ani_mummer_version
+    # kmerfinder outputs
+    String? kmerfinder_docker = kmerfinder.kmerfinder_docker
+    File? kmerfinder_results_tsv = kmerfinder.kmerfinder_results_tsv
+    String? kmerfinder_top_hit = kmerfinder.kmerfinder_top_hit
+    String? kmerfinder_query_coverage = kmerfinder.kmerfinder_query_coverage
+    String? kmerfinder_template_coverage = kmerfinder.kmerfinder_template_coverage
+    String? kmerfinder_database = kmerfinder.kmerfinder_database
     # NCBI-AMRFinderPlus Outputs
     File? amrfinderplus_all_report = amrfinderplus.amrfinderplus_all_report
     File? amrfinderplus_amr_report = amrfinderplus.amrfinderplus_amr_report
@@ -564,6 +587,7 @@ workflow theiaprok_ont {
     String? ts_mlst_allelic_profile = ts_mlst.ts_mlst_allelic_profile
     String? ts_mlst_version = ts_mlst.ts_mlst_version
     File? ts_mlst_novel_alleles = ts_mlst.ts_mlst_novel_alleles
+    String? ts_mlst_docker = ts_mlst.ts_mlst_docker
     # Prokka Results
     File? prokka_gff = prokka.prokka_gff
     File? prokka_gbk = prokka.prokka_gbk
@@ -637,7 +661,7 @@ workflow theiaprok_ont {
     # Salmonella Typing
     File? sistr_results = merlin_magic.sistr_results
     File? sistr_allele_json = merlin_magic.sistr_allele_json
-    File? sister_allele_fasta = merlin_magic.sistr_allele_fasta
+    File? sistr_allele_fasta = merlin_magic.sistr_allele_fasta
     File? sistr_cgmlst = merlin_magic.sistr_cgmlst
     String? sistr_version = merlin_magic.sistr_version
     String? sistr_predicted_serotype = merlin_magic.sistr_predicted_serotype
@@ -717,10 +741,12 @@ workflow theiaprok_ont {
     String? tbprofiler_sub_lineage = merlin_magic.tbprofiler_sub_lineage
     String? tbprofiler_dr_type = merlin_magic.tbprofiler_dr_type
     String? tbprofiler_resistance_genes = merlin_magic.tbprofiler_resistance_genes
-    File? tbprofiler_laboratorian_report_csv = merlin_magic.tbprofiler_laboratorian_report_csv
-    File? tbprofiler_lims_report_csv = merlin_magic.tbprofiler_lims_report_csv
-    File? tbprofiler_looker_csv = merlin_magic.tbprofiler_looker_csv
-    File? tbprofiler_resistance_genes_percent_coverage = merlin_magic.tb_resistance_genes_percent_coverage
+    File? tbp_parser_lims_report_csv = merlin_magic.tbp_parser_lims_report_csv
+    File? tbp_parser_looker_report_csv = merlin_magic.tbp_parser_looker_report_csv
+    File? tbp_parser_laboratorian_report_csv = merlin_magic.tbp_parser_laboratorian_report_csv
+    File? tbp_parser_coverage_report = merlin_magic.tbp_parser_coverage_report
+    Float? tbp_parser_genome_percent_coverage = merlin_magic.tbp_parser_genome_percent_coverage
+    Float? tbp_parser_average_genome_depth = merlin_magic.tbp_parser_average_genome_depth
     # Legionella pneumophila typing
     File? legsta_results = merlin_magic.legsta_results
     String? legsta_predicted_sbt = merlin_magic.legsta_predicted_sbt

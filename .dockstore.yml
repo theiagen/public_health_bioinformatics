@@ -205,6 +205,11 @@ workflows:
    primaryDescriptorPath: /workflows/phylogenetics/wf_lyveset.wdl
    testParameterFiles:
     - empty.json
+ - name: TheiaMeta_Illumina_PE_PHB
+   subclass: WDL
+   primaryDescriptorPath: /workflows/metagenomics/wf_theiameta_illumina_pe.wdl
+   testParameterFiles:
+    - empty.json
  - name: Snippy_Streamline_PHB
    subclass: WDL
    primaryDescriptorPath: /workflows/phylogenetics/wf_snippy_streamline.wdl
@@ -220,6 +225,9 @@ workflows:
    primaryDescriptorPath: /workflows/utilities/wf_theiavalidate.wdl
    testParameterFiles:
     - empty.json
+ - name: Samples_to_Ref_Tree_PHB
+   subclass: WDL
+   primaryDescriptorPath: /workflows/phylogenetics/wf_nextclade_addToRefTree.wdl
  - name: Terra_2_GISAID_PHB
    subclass: WDL
    primaryDescriptorPath: /workflows/submission/wf_terra_2_gisaid.wdl
@@ -228,5 +236,10 @@ workflows:
  - name: Usher_PHB
    subclass: WDL
    primaryDescriptorPath: /workflows/phylogenetics/wf_usher.wdl
+   testParameterFiles:
+    - empty.json
+ - name: CZGenEpi_Prep_PHB
+   subclass: WDL
+   primaryDescriptorPath: /workflows/utilities/wf_czgenepi_prep.wdl
    testParameterFiles:
     - empty.json

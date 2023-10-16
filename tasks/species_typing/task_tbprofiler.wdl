@@ -9,22 +9,25 @@ task tbprofiler {
     String tbprofiler_docker_image = "us-docker.pkg.dev/general-theiagen/staphb/tbprofiler:4.4.2"
     Int disk_size = 100
     String mapper = "bwa"
-    String caller = "bcftools"
+    String caller = "freebayes"
     Int min_depth = 10
     Float min_af = 0.1
     Float min_af_pred = 0.1
     Int cov_frac_threshold = 1
     Int cpu = 8 
     Boolean ont_data = false
+    File? tbprofiler_custom_db
+    Boolean tbprofiler_run_custom_db = false
   }
   command <<<
     # Print and save date
     date | tee DATE
 
     # Print and save version
-    tb-profiler --version > VERSION && sed -i -e 's/^/TBProfiler version /' VERSION
+    tb-profiler version > VERSION && sed -i -e 's/TBProfiler version //' VERSION && sed -n -i '$p' VERSION
     
-    if [ -z "~{read2}" ] ; then
+    # check if file is non existant or non empty
+    if [ -z "~{read2}" ] || [ ! -s "~{read2}" ] ; then
       INPUT_READS="-1 ~{read1}"
     else
       INPUT_READS="-1 ~{read1} -2 ~{read2}"
@@ -35,6 +38,26 @@ task tbprofiler {
       export ont_data="true"
     else
       export ont_data="false"
+    fi
+
+    # check if new database file is provided and not empty
+    if [ "~{tbprofiler_run_custom_db}" = true ] ; then
+
+      echo "Found new database file ~{tbprofiler_custom_db}"
+      prefix=$(basename "~{tbprofiler_custom_db}" | sed 's/\.tar\.gz$//')
+      echo "New database will be created with prefix $prefix"
+
+      echo "Inflating the new database..."
+      tar xfv ~{tbprofiler_custom_db}
+
+      tb-profiler load_library ./"$prefix"/"$prefix"
+
+      TBDB="--db $prefix"
+
+    else
+
+      TBDB=""
+
     fi
 
     # Run tb-profiler on the input reads with samplename prefix
@@ -49,7 +72,8 @@ task tbprofiler {
       --reporting_af \
       ~{min_af_pred} \
       --coverage_fraction_threshold ~{cov_frac_threshold} \
-      --csv --txt
+      --csv --txt \
+      $TBDB
 
     # Collate results
     tb-profiler collate --prefix ~{samplename}
@@ -89,6 +113,12 @@ task tbprofiler {
             res_genes.append(tsv_dict[i])
         res_genes_string=';'.join(res_genes)
         Resistance_Genes.write(res_genes_string)
+      with open ("MEDIAN_COVERAGE", 'wt') as Median_Coverage:
+        median_coverage=tsv_dict['median_coverage']
+        Median_Coverage.write(median_coverage)
+      with open ("PCT_READS_MAPPED", 'wt') as Pct_Reads_Mapped:
+        pct_reads_mapped=tsv_dict['pct_reads_mapped']
+        Pct_Reads_Mapped.write(pct_reads_mapped)
     CODE
   >>>
   output {
@@ -104,6 +134,8 @@ task tbprofiler {
     String tbprofiler_num_dr_variants = read_string("NUM_DR_VARIANTS")
     String tbprofiler_num_other_variants = read_string("NUM_OTHER_VARIANTS")
     String tbprofiler_resistance_genes = read_string("RESISTANCE_GENES")
+    Int tbprofiler_median_coverage = read_int("MEDIAN_COVERAGE")
+    Float tbprofiler_pct_reads_mapped = read_float("PCT_READS_MAPPED")
   }
   runtime {
     docker: "~{tbprofiler_docker_image}"
@@ -111,6 +143,7 @@ task tbprofiler {
     cpu: cpu
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
-    maxRetries: 3 
+    maxRetries: 3
+    preemptible: 1
   }
 }

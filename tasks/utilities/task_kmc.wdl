@@ -17,6 +17,9 @@ task kmc {
   command <<<
     kmc | head -n 1 | tee VERSION
 
+    # initialize kmc output
+    echo -n 0 > UNIQUE_COUNTED
+
     # run kmc
     # kmc [options] <input_file> <output_file> <working_dir>
     # -sm - uses strict memory mode (memory from -m<size> switch will not be exceeded)
@@ -38,7 +41,7 @@ task kmc {
     # kmc_outputs is a mess of files that are not human readable
     # however, the stdout does produce some useful stats. 
     #  the no. of unique counted k-mers can be used as an estimate of genome size
-    grep "unique counted k" LOG | tr -s ' ' | cut -d ' ' -f8 > UNIQUE_COUNTED
+    grep "unique counted k" LOG | tr -s ' ' | cut -d ' ' -f8 >> UNIQUE_COUNTED
 
     # extracting only the kmer statistics and writing to file:
     tail -n8 LOG > ~{samplename}_kmer_stats.txt

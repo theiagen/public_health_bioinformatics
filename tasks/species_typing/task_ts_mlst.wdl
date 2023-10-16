@@ -7,7 +7,7 @@ task ts_mlst {
   input {
     File assembly
     String samplename
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/mlst:2.23.0"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/mlst:2.23.0-2023-08"
     Int disk_size = 100
     Int cpu = 4
     # Parameters
@@ -71,6 +71,7 @@ task ts_mlst {
     String ts_mlst_allelic_profile = read_string("ALLELIC_PROFILE.txt")
     File? ts_mlst_novel_alleles = "~{samplename}_novel_mlst_alleles.fasta"
     String ts_mlst_version = read_string("VERSION")
+    String ts_mlst_docker = docker
   }
   runtime {
     docker: "~{docker}"

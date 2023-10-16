@@ -33,6 +33,7 @@ task trimmomatic_pe {
     File trimmomatic_stats = "~{samplename}.trim.stats.txt"
     String version = read_string("VERSION")
     String pipeline_date = read_string("DATE")
+    String trimmomatic_docker = docker
   }
   runtime {
     docker: "~{docker}"
@@ -75,6 +76,7 @@ task trimmomatic_se {
     File trimmomatic_stats = "~{samplename}.trim.stats.txt"
     String version = read_string("VERSION")
     String pipeline_date = read_string("DATE")
+    String trimmomatic_docker = docker
   }
   runtime {
     docker: "~{docker}"
