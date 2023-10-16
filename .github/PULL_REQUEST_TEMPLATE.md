@@ -48,6 +48,10 @@ Closes <Issue number>
 
 <!--Please show, with screenshots when possible and/or a URL to the job execution, that your changes pass the execution of the workflow on Terra.bio-->
 
+### Scenarios for Reviewer to Test
+
+<!--Please list any potential scenarios that the reviewer should test, such as edge-cases or data types-->
+
 ## :microscope: Quality checks
 
 <!--Please ensure that your changes respect the following quality checks.-->
