@@ -513,9 +513,6 @@ task sm_metadata_wrangling { # the sm stands for supermassive
 
     echo "DEBUG: performing file transfers and manipulations"
      
-    # this version of gsutil only works on python2.7
-    export CLOUDSDK_PYTHON=python2.7
-
     if ~{skip_ncbi}; then
       echo "Skipping NCBI file manipulations..."
     else
@@ -545,8 +542,6 @@ task sm_metadata_wrangling { # the sm stands for supermassive
     # print the excluded samples file
     echo "DEBUG: printing excluded samples file"
     cat ~{output_name}_excluded_samples.tsv
-    
-    unset CLOUDSDK_PYTHON   # reset env var
 
   >>>
   output {
@@ -561,7 +556,7 @@ task sm_metadata_wrangling { # the sm stands for supermassive
     File gisaid_fasta = "~{output_name}_gisaid.fasta"
   }
   runtime {
-    docker: "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-03-16"
+    docker: "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-08-28-v4"
     memory: "8 GB"
     cpu: 4
     disks:  "local-disk " + disk_size + " SSD"
