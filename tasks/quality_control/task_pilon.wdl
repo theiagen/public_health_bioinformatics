@@ -7,8 +7,8 @@ task pilon {
     File bai
     String samplename
     String docker = "us-docker.pkg.dev/general-theiagen/biocontainers/pilon:1.24--hdfd78af_0"
-    Int cpu = 4
-    Int memory = 8
+    Int cpu = 8
+    Int memory = 32
     Int disk_size = 100
   }
   command <<<
