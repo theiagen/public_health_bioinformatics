@@ -78,9 +78,9 @@ task tbprofiler {
     touch GENE_NAME LOCUS_TAG VARIANT_SUBSTITUTIONS OUTPUT_SEQ_METHOD_TYPE
 
     # merge all vcf files if multiple are present
-    bcftools convert -O b ./vcf/~{samplename}.targets.csq.vcf > ./vcf/~{samplename}.targets.csq.bcf
-    bcftools index *bcf
-    bcftools merge --force-samples *bcf > ./vcf/~{samplename}.targets.csq.merged.vcf
+    bcftools index ./vcf/*bcf
+    bcftools index ./vcf/*gz
+    bcftools merge --force-samples ./vcf/*bcf ./vcf/*gz > ./vcf/~{samplename}.targets.csq.merged.vcf
 
     python3 <<CODE
     import csv
