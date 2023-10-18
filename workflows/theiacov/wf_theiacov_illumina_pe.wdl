@@ -57,8 +57,8 @@ workflow theiacov_illumina_pe {
     # read screen parameters
     Int min_reads = 113 # min basepairs / 300 (which is the longest available read length of an Illumina product)
     Int min_basepairs = 34000 # 20x coverage of hepatitis delta virus
-    Int min_genome_size = 1700 # size of hepatitis delta virus
-    Int max_genome_size = 2673870 # size of Pandoravirus salinus + 200 kb
+    Int min_genome_length = 1700 # size of hepatitis delta virus
+    Int max_genome_length = 2673870 # size of Pandoravirus salinus + 200 kb
     Int min_coverage = 10
     Int min_proportion = 40
     Boolean skip_screen = false
@@ -71,14 +71,14 @@ workflow theiacov_illumina_pe {
       read2 = read2_raw,
       min_reads = min_reads,
       min_basepairs = min_basepairs,
-      min_genome_size = min_genome_size,
-      max_genome_size = max_genome_size,
+      min_genome_length = min_genome_length,
+      max_genome_length = max_genome_length,
       min_coverage = min_coverage,
       min_proportion = min_proportion,
       skip_screen = skip_screen,
       workflow_series = "theiacov",
       organism = organism,
-      expected_genome_size = genome_length
+      expected_genome_length = genome_length
   }
   if (raw_check_reads.read_screen == "PASS") {
     call read_qc.read_QC_trim_pe as read_QC_trim {
@@ -99,14 +99,14 @@ workflow theiacov_illumina_pe {
         read2 = read_QC_trim.read2_clean,
         min_reads = min_reads,
         min_basepairs = min_basepairs,
-        min_genome_size = min_genome_size,
-        max_genome_size = max_genome_size,
+        min_genome_length = min_genome_length,
+        max_genome_length = max_genome_length,
         min_coverage = min_coverage,
         min_proportion = min_proportion,
         skip_screen = skip_screen,
         workflow_series = "theiacov",
         organism = organism,
-        expected_genome_size = genome_length
+        expected_genome_length = genome_length
     }
     if (clean_check_reads.read_screen == "PASS") {
       # assembly via bwa and ivar for non-flu data
