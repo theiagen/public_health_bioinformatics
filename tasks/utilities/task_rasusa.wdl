@@ -14,13 +14,13 @@ task rasusa {
     # RASUA Parameters
     #  --bases [STRING] Explicitly set the number of bases required e.g., 4.3kb, 7Tb, 9000, 4.1MB. If this option is given, --coverage and --genome-size are ignored
     #  --coverage [FLOAT] The desired coverage to sub-sample the reads to. If --bases is not provided, this option and --genome-size are required
-    #  --genome_size [STRING] Genome size to calculate coverage with respect to. e.g., 4.3kb, 7Tb, 9000, 4.1MB
+    #  --genome-size [STRING] Genome size to calculate coverage with respect to. e.g., 4.3kb, 7Tb, 9000, 4.1MB
     #  --seed [INTERGER] Random seed to use
     #  --frac [FLOAT] Subsample to a fraction of the reads - e.g., 0.5 samples half the reads
     #  --num [INTEGER] Subsample to a specific number of reads
     String? bases
     Float coverage 
-    String genome_size
+    String genome_length
     Int? seed
     Float? frac
     Int? num 
@@ -35,7 +35,7 @@ task rasusa {
     fi
     # ignore coverage values if frac input provided
     if [ -z "~{frac}" ]; then
-      COVERAGE="--coverage ~{coverage} --genome-size ~{genome_size}"
+      COVERAGE="--coverage ~{coverage} --genome-size ~{genome_length}"
     else
       COVERAGE=""
     fi

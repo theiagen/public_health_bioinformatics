@@ -5,7 +5,7 @@ task nanoplot {
     File read1 # intended for ONT data only
     String samplename
     Int max_length = 100000
-    Int est_genome_size
+    Int est_genome_length
 
     Int disk_size = 100
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/nanoplot:1.40.0"
@@ -40,7 +40,7 @@ task nanoplot {
 
     # estimate coverage
     # using math: C = N / G where N is number of bases, and G is estimated genome size 
-    python3 -c "print(round(${NUM_BASES} / ~{est_genome_size}, 2))" | tee EST_COVERAGE
+    python3 -c "print(round(${NUM_BASES} / ~{est_genome_length}, 2))" | tee EST_COVERAGE
   >>>
   output {
     File nanoplot_html = "~{samplename}_NanoPlot-report.html"

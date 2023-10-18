@@ -53,7 +53,7 @@ task export_taxon_tables {
     File? nanoplot_tsv
     String? nanoplot_docker
     String? nanoplot_version
-    String? kmc_est_genome_size
+    String? kmc_est_genome_length
     File? kmc_kmer_stats
     String? kmc_version
     String? rasusa_version
@@ -410,7 +410,7 @@ task export_taxon_tables {
       "nanoplot_tsv": "~{nanoplot_tsv}",
       "nanoplot_docker": "~{nanoplot_docker}",
       "nanoplot_version": "~{nanoplot_version}",
-      "kmc_est_genome_size": "~{kmc_est_genome_size}",
+      "kmc_est_genome_length": "~{kmc_est_genome_length}",
       "kmc_kmer_stats": "~{kmc_kmer_stats}",
       "kmc_version": "~{kmc_version}",
       "rasusa_version": "~{rasusa_version}",

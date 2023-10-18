@@ -6,21 +6,21 @@ task check_reads {
     File read2
     Int min_reads
     Int min_basepairs
-    Int min_genome_size
-    Int max_genome_size
+    Int min_genome_length
+    Int max_genome_length
     Int min_coverage
     Int min_proportion
     Boolean skip_screen
     String workflow_series = "theiaprok" # default to theiaprok so we don't have to change those workflows
     String? organism
-    Int? expected_genome_size # user-provided
+    Int? expected_genome_length # user-provided
     Int disk_size = 100
   }
   command <<<
     flag="PASS"
 
     # initalize estimated genome size
-    estimated_genome_size=0
+    estimated_genome_length=0
     if [[ "~{skip_screen}" == "false" ]] ; then
       
       # set cat command based on compression
@@ -78,87 +78,87 @@ task check_reads {
 
       #checks four and five: estimated genome size and coverage
       if [ "${flag}" == "PASS" ]; then
-        # estimate genome size if theiaprok AND expected_genome_size was not provided
-        if [ "~{workflow_series}" == "theiaprok" ] && [[ -z "~{expected_genome_size}" ]]; then        
+        # estimate genome size if theiaprok AND expected_genome_length was not provided
+        if [ "~{workflow_series}" == "theiaprok" ] && [[ -z "~{expected_genome_length}" ]]; then        
           # First Pass; assuming average depth
           mash sketch -o test -k 31 -m 3 -r ~{read1} ~{read2} > mash-output.txt 2>&1
           grep "Estimated genome size:" mash-output.txt | \
-            awk '{if($4){printf("%5.0f\n", $4)}} END {if (!NR) print "0"}' > genome_size_output
+            awk '{if($4){printf("%5.0f\n", $4)}} END {if (!NR) print "0"}' > genome_length_output
           grep "Estimated coverage:" mash-output.txt | \
             awk '{if($3){printf("%d", $3)}} END {if (!NR) print "0"}' > coverage_output
           rm -rf test.msh
           rm -rf mash-output.txt
-          estimated_genome_size=`head -n1 genome_size_output`
+          estimated_genome_length=`head -n1 genome_length_output`
           estimated_coverage=`head -n1 coverage_output`
 
           # Check if second pass is needed
-          if [ ${estimated_genome_size} -gt "~{max_genome_size}" ] || [ ${estimated_genome_size} -lt "~{min_genome_size}" ] ; then
+          if [ ${estimated_genome_length} -gt "~{max_genome_length}" ] || [ ${estimated_genome_length} -lt "~{min_genome_length}" ] ; then
             # Probably high coverage, try increasing number of kmer copies to 10
             M="-m 10"
-            if [ ${estimated_genome_size} -lt "~{min_genome_size}" ]; then
+            if [ ${estimated_genome_length} -lt "~{min_genome_length}" ]; then
               # Probably low coverage, try decreasing the number of kmer copies to 1
               M="-m 1"
             fi
             mash sketch -o test -k 31 ${M} -r ~{read1} ~{read2} > mash-output.txt 2>&1
             grep "Estimated genome size:" mash-output.txt | \
-              awk '{if($4){printf("%5.0f\n", $4)}} END {if (!NR) print "0"}' > genome_size_output
+              awk '{if($4){printf("%5.0f\n", $4)}} END {if (!NR) print "0"}' > genome_length_output
             grep "Estimated coverage:" mash-output.txt | \
               awk '{if($3){printf("%d", $3)}} END {if (!NR) print "0"}' > coverage_output
             rm -rf test.msh
             rm -rf mash-output.txt
           fi
           
-          estimated_genome_size=`head -n1 genome_size_output`
+          estimated_genome_length=`head -n1 genome_length_output`
           estimated_coverage=`head -n1 coverage_output`
         
-        # estimate coverage if theiacov OR expected_genome_size was provided
-        elif [ "~{workflow_series}" == "theiacov" ] || [ "~{expected_genome_size}" ]; then
-          if [ "~{expected_genome_size}" ]; then
-            estimated_genome_size=~{expected_genome_size} # use user-provided expected_genome_size
+        # estimate coverage if theiacov OR expected_genome_length was provided
+        elif [ "~{workflow_series}" == "theiacov" ] || [ "~{expected_genome_length}" ]; then
+          if [ "~{expected_genome_length}" ]; then
+            estimated_genome_length=~{expected_genome_length} # use user-provided expected_genome_length
           elif [ "~{organism}" == "sars-cov-2" ]; then
-            estimated_genome_size=29903 # size taken from https://www.ncbi.nlm.nih.gov/nuccore/NC_045512.2
+            estimated_genome_length=29903 # size taken from https://www.ncbi.nlm.nih.gov/nuccore/NC_045512.2
           elif [ "~{organism}" == "MPXV" ]; then
-            estimated_genome_size=197209 # size of 2022 virus taken from https://www.ncbi.nlm.nih.gov/nuccore/NC_063383.1
+            estimated_genome_length=197209 # size of 2022 virus taken from https://www.ncbi.nlm.nih.gov/nuccore/NC_063383.1
           elif [ "~{organism}" == "flu" ]; then
-            estimated_genome_size=14000 # 500 bp over the CDC's approximate full genome size of 13500 (see https://www.cdc.gov/flu/about/professionals/genetic-characterization.htm)
+            estimated_genome_length=14000 # 500 bp over the CDC's approximate full genome size of 13500 (see https://www.cdc.gov/flu/about/professionals/genetic-characterization.htm)
           elif [ "~{organism}" == "HIV" ]; then
-            estimated_genome_size=9181 # size taken from https://www.ncbi.nlm.nih.gov/nuccore/NC_001802.1 
+            estimated_genome_length=9181 # size taken from https://www.ncbi.nlm.nih.gov/nuccore/NC_001802.1 
           elif [ "~{organism}" == "WNV" ]; then
-            estimated_genome_size=11092 # WNV lineage 1 size from https://www.ncbi.nlm.nih.gov/nuccore/NC_009942.1
+            estimated_genome_length=11092 # WNV lineage 1 size from https://www.ncbi.nlm.nih.gov/nuccore/NC_009942.1
           else
-            flag="FAIL; the organism tag provided (~{organism}) is not valid and no expected_genome_size was provided."
+            flag="FAIL; the organism tag provided (~{organism}) is not valid and no expected_genome_length was provided."
           fi
 
           # coverage is calculated here by N/G where N is number of bases, and G is genome length
           # this will nearly always be an overestimation
-          if [ $estimated_genome_size -ne 0 ]; then # prevent divided by zero errors
-            estimated_coverage=$(python3 -c "print(round(($read1_bp+$read2_bp)/$estimated_genome_size))")
-          else # they provided 0 for estimated_genome_size, nice
+          if [ $estimated_genome_length -ne 0 ]; then # prevent divided by zero errors
+            estimated_coverage=$(python3 -c "print(round(($read1_bp+$read2_bp)/$estimated_genome_length))")
+          else # they provided 0 for estimated_genome_length, nice
             estimated_coverage=0
           fi
         else # workflow series was not provided or no est genome size was provided; default to fail
-          estimated_genome_size=0
+          estimated_genome_length=0
           estimated_coverage=0
         fi
 
-        if [ "${estimated_genome_size}" -ge "~{max_genome_size}" ] && [ "~{workflow_series}" == "theiaprok" ] ; then
-          flag="FAIL; the estimated genome size (${estimated_genome_size}) is larger than the maximum of ~{max_genome_size} bps"
-        elif [ "${estimated_genome_size}" -le "~{min_genome_size}" ] && [ "~{workflow_series}" == "theiaprok" ] ; then
-          flag="FAIL; the estimated genome size (${estimated_genome_size}) is smaller than the minimum of ~{min_genome_size} bps"
+        if [ "${estimated_genome_length}" -ge "~{max_genome_length}" ] && [ "~{workflow_series}" == "theiaprok" ] ; then
+          flag="FAIL; the estimated genome size (${estimated_genome_length}) is larger than the maximum of ~{max_genome_length} bps"
+        elif [ "${estimated_genome_length}" -le "~{min_genome_length}" ] && [ "~{workflow_series}" == "theiaprok" ] ; then
+          flag="FAIL; the estimated genome size (${estimated_genome_length}) is smaller than the minimum of ~{min_genome_length} bps"
         else
           flag="PASS"   
           if [ "${estimated_coverage}" -lt "~{min_coverage}" ] ; then
             flag="FAIL; the estimated coverage (${estimated_coverage}) is less than the minimum of ~{min_coverage}x"
           else
             flag="PASS"
-            echo $estimated_genome_size | tee EST_GENOME_LENGTH
+            echo $estimated_genome_length | tee EST_GENOME_LENGTH
           fi 
         fi
       fi 
     fi 
     
     echo $flag | tee FLAG
-    echo $estimated_genome_size | tee EST_GENOME_LENGTH
+    echo $estimated_genome_length | tee EST_GENOME_LENGTH
   >>>
   output {
     String read_screen = read_string("FLAG")
@@ -180,21 +180,21 @@ task check_reads_se {
     File read1
     Int min_reads
     Int min_basepairs
-    Int min_genome_size
-    Int max_genome_size 
+    Int min_genome_length
+    Int max_genome_length 
     Int min_coverage
     Boolean skip_screen 
     Boolean skip_mash
     String workflow_series = "theiaprok" # default to theiaprok so we don't have to change those workflows
     String? organism
-    Int? expected_genome_size
+    Int? expected_genome_length
     Int disk_size = 100
   }
   command <<<
     flag="PASS"
 
     # initalize estimated genome size
-    estimated_genome_size=0
+    estimated_genome_length=0
 
     if [[ "~{skip_screen}" == "false" ]] ; then
       # set cat command based on compression
@@ -237,12 +237,12 @@ task check_reads_se {
 
       #checks four and five: estimated genome size and coverage
       if [ "${flag}" == "PASS" ] && [ "~{skip_mash}" == "false" ]; then
-        # estimate genome size if theiaprok AND expected_genome_size was not provided
-        if [ "~{workflow_series}" == "theiaprok" ] && [[ -z "~{expected_genome_size}" ]]; then            
+        # estimate genome size if theiaprok AND expected_genome_length was not provided
+        if [ "~{workflow_series}" == "theiaprok" ] && [[ -z "~{expected_genome_length}" ]]; then            
           # First Pass; assuming average depth
           mash sketch -o test -k 31 -m 3 -r ~{read1} > mash-output.txt 2>&1
           grep "Estimated genome size:" mash-output.txt | \
-            awk '{if($4){printf("%d", $4)}} END {if (!NR) print "0"}' > genome_size_output
+            awk '{if($4){printf("%d", $4)}} END {if (!NR) print "0"}' > genome_length_output
           grep "Estimated coverage:" mash-output.txt | \
             awk '{if($3){printf("%d", $3)}} END {if (!NR) print "0"}' > coverage_output
           
@@ -250,21 +250,21 @@ task check_reads_se {
           rm -rf test.msh
           rm -rf mash-output.txt
           
-          estimated_genome_size=`head -n1 genome_size_output`
+          estimated_genome_length=`head -n1 genome_length_output`
           estimated_coverage=`head -n1 coverage_output`
 
           # Check if second pass is needed
-          if [ ${estimated_genome_size} -gt "~{max_genome_size}" ] || [ ${estimated_genome_size} -lt "~{min_genome_size}" ] ; then
+          if [ ${estimated_genome_length} -gt "~{max_genome_length}" ] || [ ${estimated_genome_length} -lt "~{min_genome_length}" ] ; then
             # Probably high coverage, try increasing number of kmer copies to 10
             M="-m 10"
-            if [ ${estimated_genome_size} -lt "~{min_genome_size}" ]; then
+            if [ ${estimated_genome_length} -lt "~{min_genome_length}" ]; then
               # Probably low coverage, try decreasing the number of kmer copies to 1
               M="-m 1"
             fi
 
             mash sketch -o test -k 31 ${M} -r ~{read1} > mash-output.txt 2>&1
             grep "Estimated genome size:" mash-output.txt | \
-              awk '{if($4){printf("%d", $4)}} END {if (!NR) print "0"}' > genome_size_output
+              awk '{if($4){printf("%d", $4)}} END {if (!NR) print "0"}' > genome_length_output
             grep "Estimated coverage:" mash-output.txt | \
               awk '{if($3){printf("%d", $3)}} END {if (!NR) print "0"}' > coverage_output
             
@@ -273,56 +273,56 @@ task check_reads_se {
             rm -rf mash-output.txt
           fi
           
-          estimated_genome_size=`head -n1 genome_size_output`
+          estimated_genome_length=`head -n1 genome_length_output`
           estimated_coverage=`head -n1 coverage_output`
 
-        # estimate coverage if theiacov OR expected_genome_size was provided
-        elif [ "~{workflow_series}" == "theiacov" ] || [ "~{expected_genome_size}" ]; then
-          if [ "~{expected_genome_size}" ]; then
-            estimated_genome_size=~{expected_genome_size} # use user-provided expected_genome_size
+        # estimate coverage if theiacov OR expected_genome_length was provided
+        elif [ "~{workflow_series}" == "theiacov" ] || [ "~{expected_genome_length}" ]; then
+          if [ "~{expected_genome_length}" ]; then
+            estimated_genome_length=~{expected_genome_length} # use user-provided expected_genome_length
           elif [ "~{organism}" == "sars-cov-2" ]; then
-            estimated_genome_size=29903 # size taken from https://www.ncbi.nlm.nih.gov/nuccore/NC_045512.2
+            estimated_genome_length=29903 # size taken from https://www.ncbi.nlm.nih.gov/nuccore/NC_045512.2
           elif [ "~{organism}" == "MPXV" ]; then
-            estimated_genome_size=197209 # size of 2022 virus taken from https://www.ncbi.nlm.nih.gov/nuccore/NC_063383.1
+            estimated_genome_length=197209 # size of 2022 virus taken from https://www.ncbi.nlm.nih.gov/nuccore/NC_063383.1
           elif [ "~{organism}" == "flu" ]; then
-            estimated_genome_size=14000 # 500 bp over the CDC's approximate full genome size of 13500 (see https://www.cdc.gov/flu/about/professionals/genetic-characterization.htm)
+            estimated_genome_length=14000 # 500 bp over the CDC's approximate full genome size of 13500 (see https://www.cdc.gov/flu/about/professionals/genetic-characterization.htm)
           elif [ "~{organism}" == "HIV" ]; then
-            estimated_genome_size=9181 # size taken from https://www.ncbi.nlm.nih.gov/nuccore/NC_001802.1 
+            estimated_genome_length=9181 # size taken from https://www.ncbi.nlm.nih.gov/nuccore/NC_001802.1 
           elif [ "~{organism}" == "WNV" ]; then
-            estimated_genome_size=11092 # WNV lineage 1 size from https://www.ncbi.nlm.nih.gov/nuccore/NC_009942.1
+            estimated_genome_length=11092 # WNV lineage 1 size from https://www.ncbi.nlm.nih.gov/nuccore/NC_009942.1
           else
-            flag="FAIL; the organism tag provided (~{organism}) is not valid and no expected_genome_size was provided."
+            flag="FAIL; the organism tag provided (~{organism}) is not valid and no expected_genome_length was provided."
           fi
 
           # coverage is calculated here by N/G where N is number of bases, and G is genome length
           # this will nearly always be an overestimation
-          if [ $estimated_genome_size -ne 0 ]; then # prevent divided by zero errors
-            estimated_coverage=$(python3 -c "print(round(($read1_bp)/$estimated_genome_size))")
-          else # they provided 0 for estimated_genome_size, nice
+          if [ $estimated_genome_length -ne 0 ]; then # prevent divided by zero errors
+            estimated_coverage=$(python3 -c "print(round(($read1_bp)/$estimated_genome_length))")
+          else # they provided 0 for estimated_genome_length, nice
             estimated_coverage=0
           fi
         else # workflow series was not provided; default to fail
-          estimated_genome_size=0
+          estimated_genome_length=0
           estimated_coverage=0
         fi
-        if [ "${estimated_genome_size}" -ge "~{max_genome_size}" ] ; then
-          flag="FAIL; the estimated genome size (${estimated_genome_size}) is larger than the maximum of ~{max_genome_size} bps"
-        elif [ "${estimated_genome_size}" -le "~{min_genome_size}" ] ; then
-          flag="FAIL; the estimated genome size (${estimated_genome_size}) is smaller than the minimum of ~{min_genome_size} bps"
+        if [ "${estimated_genome_length}" -ge "~{max_genome_length}" ] ; then
+          flag="FAIL; the estimated genome size (${estimated_genome_length}) is larger than the maximum of ~{max_genome_length} bps"
+        elif [ "${estimated_genome_length}" -le "~{min_genome_length}" ] ; then
+          flag="FAIL; the estimated genome size (${estimated_genome_length}) is smaller than the minimum of ~{min_genome_length} bps"
         else
           flag="PASS"   
           if [ "${estimated_coverage}" -lt "~{min_coverage}" ] ; then
             flag="FAIL; the estimated coverage (${estimated_coverage}) is less than the minimum of ~{min_coverage}x"
           else
             flag="PASS"
-            echo $estimated_genome_size | tee EST_GENOME_LENGTH
+            echo $estimated_genome_length | tee EST_GENOME_LENGTH
           fi 
         fi
       fi 
     fi 
     
     echo $flag | tee FLAG
-    echo $estimated_genome_size | tee EST_GENOME_LENGTH
+    echo $estimated_genome_length | tee EST_GENOME_LENGTH
   >>>
   output {
     String read_screen = read_string("FLAG")
