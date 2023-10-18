@@ -26,7 +26,7 @@ workflow theiacov_ont {
     String organism = "sars-cov-2" # options: "sars-cov-2", "HIV", "flu"
     # sequencing values
     String seq_method = "OXFORD_NANOPORE"
-    File primer_bed
+    File? primer_bed
     # assembly parameters
     Int normalise = 200
     Int max_length = 700
@@ -108,6 +108,28 @@ workflow theiacov_ont {
         expected_genome_length = genome_length
     }
     if (clean_check_reads.read_screen == "PASS") {
+      # assembly via artic_consensus for sars-cov-2 and HIV
+      if (organism != "flu") {
+        call artic_consensus.consensus {
+          input:
+            samplename = samplename,
+            organism = organism,
+            filtered_reads = read_qc_trim.read1_clean,
+            primer_bed = select_first([primer_bed]),
+            normalise = normalise,
+            reference_genome = reference_genome
+        }
+        call assembly_metrics.stats_n_coverage {
+          input:
+            samplename = samplename,
+            bamfile = consensus.sorted_bam
+        }
+        call assembly_metrics.stats_n_coverage as stats_n_coverage_primtrim {
+          input:
+            samplename = samplename,
+            bamfile = consensus.trim_sorted_bam
+        }
+      }
       # assembly via irma for flu organisms
       if (organism == "flu") {
         call irma_task.irma_ont {
@@ -128,28 +150,6 @@ workflow theiacov_ont {
               nextclade_flu_vic_na_tag = nextclade_flu_vic_na_tag,
               nextclade_flu_yam_tag = nextclade_flu_yam_tag,
           }
-        }
-      }
-      # assembly via artic_consensus for sars-cov-2 and HIV
-      if (organism == "sars-cov-2" || organism == "HIV") {
-        call artic_consensus.consensus {
-          input:
-            samplename = samplename,
-            organism = organism,
-            filtered_reads = read_qc_trim.read1_clean,
-            primer_bed = primer_bed,
-            normalise = normalise,
-            reference_genome = reference_genome
-        }
-        call assembly_metrics.stats_n_coverage {
-          input:
-            samplename = samplename,
-            bamfile = consensus.sorted_bam
-        }
-        call assembly_metrics.stats_n_coverage as stats_n_coverage_primtrim {
-          input:
-            samplename = samplename,
-            bamfile = consensus.trim_sorted_bam
         }
       }
       # consensus QC check
