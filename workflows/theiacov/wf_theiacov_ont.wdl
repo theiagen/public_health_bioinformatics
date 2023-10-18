@@ -311,12 +311,12 @@ workflow theiacov_ont {
     String? kraken_target_org_dehosted = read_qc_trim.kraken_target_org_dehosted
     File? kraken_report_dehosted = read_qc_trim.kraken_report_dehosted
     # Read Alignment - Artic consensus outputs
-    File? aligned_bam = select_first([consensus.trim_sorted_bam, ""])
-    File? aligned_bai = select_first([consensus.trim_sorted_bai, ""])
-    File? medaka_vcf = consensus.medaka_pass_vcf
     File? assembly_fasta = select_first([consensus.consensus_seq, irma_ont.irma_assembly_fasta, ""])
-    File? read1_aligned = select_first([consensus.reads_aligned, ""])
-    File? read1_trimmed = select_first([consensus.trim_fastq, ""])
+    File? aligned_bam = select_first([irma_ont.irma_bams, consensus.trim_sorted_bam, ""])
+    File? aligned_bai = consensus.trim_sorted_bai
+    File? medaka_vcf = consensus.medaka_pass_vcf
+    File? read1_aligned = consensus.reads_aligned
+    File? read1_trimmed = consensus.trim_fastq
     # Read Alignment - Artic consensus versioning outputs
     String? artic_version = consensus.artic_pipeline_version
     String? artic_docker = consensus.artic_pipeline_docker
