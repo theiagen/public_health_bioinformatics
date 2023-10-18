@@ -26,7 +26,7 @@ workflow theiaprok_ont {
   }
   input {
     String samplename
-    String seq_method = "ONT"
+    String seq_method = "OXFORD_NANOPORE"
     File read1
     Int? genome_length
     # export taxon table parameters
