@@ -33,8 +33,8 @@ workflow kraken2_pe_wf {
     File kraken2_report = kraken2_pe.kraken2_report
     File kraken2_classified_report = kraken2_pe.kraken2_classified_report
     File kraken2_unclassified_read1 = kraken2_pe.kraken2_unclassified_read1
-    File kraken2_unclassified_read2 = kraken2_pe.kraken2_unclassified_read2
+    File? kraken2_unclassified_read2 = kraken2_pe.kraken2_unclassified_read2
     File kraken2_classified_read1 = kraken2_pe.kraken2_classified_read1
-    File kraken2_classified_read2 = kraken2_pe.kraken2_classified_read2
+    File? kraken2_classified_read2 = kraken2_pe.kraken2_classified_read2
   }
 }
