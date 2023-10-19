@@ -312,7 +312,7 @@ workflow theiacov_ont {
     File? kraken_report_dehosted = read_qc_trim.kraken_report_dehosted
     # Read Alignment - Artic consensus outputs
     File? assembly_fasta = select_first([consensus.consensus_seq, irma_ont.irma_assembly_fasta, ""])
-    File? aligned_bam = select_first([irma_ont.irma_bams, consensus.trim_sorted_bam, ""])
+    File? aligned_bam = consensus.trim_sorted_bam
     File? aligned_bai = consensus.trim_sorted_bai
     File? medaka_vcf = consensus.medaka_pass_vcf
     File? read1_aligned = consensus.reads_aligned
