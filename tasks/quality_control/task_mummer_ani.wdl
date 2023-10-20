@@ -7,7 +7,7 @@ task animummer {
     File? ref_genome
     Float mash_filter = 0.9
     # these 2 thresholds were set as they are used by CDC enterics lab/PulseNet for ANI thresholds
-    Float ani_threshold = 85.0
+    Float ani_threshold = 80.0
     Float percent_bases_aligned_threshold = 70.0
     String docker= "us-docker.pkg.dev/general-theiagen/staphb/mummer:4.0.0-rgdv2"
     Int cpus = 4
