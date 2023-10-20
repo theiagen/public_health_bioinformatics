@@ -251,7 +251,8 @@ workflow merlin_magic {
           read2 = select_first([clockwork_decon_reads.clockwork_cleaned_read2, read2, "gs://theiagen-public-files/terra/theiaprok-files/no-read2.txt"]),
           samplename = samplename,
           tbprofiler_run_custom_db = tbprofiler_run_custom_db,
-          tbprofiler_custom_db = tbprofiler_custom_db
+          tbprofiler_custom_db = tbprofiler_custom_db,
+          ont_data = ont_data
       }
       if (tbprofiler_additional_outputs) {
         call tbp_parser_task.tbp_parser {
@@ -593,6 +594,7 @@ workflow merlin_magic {
     File? tbp_parser_looker_report_csv = tbp_parser.tbp_parser_looker_report_csv
     File? tbp_parser_coverage_report = tbp_parser.tbp_parser_coverage_report
     Float? tbp_parser_genome_percent_coverage = tbp_parser.tbp_parser_genome_percent_coverage
+    Float? tbp_parser_average_genome_depth = tbp_parser.tbp_parser_average_genome_depth
     File? clockwork_cleaned_read1 = clockwork_decon_reads.clockwork_cleaned_read1
     File? clockwork_cleaned_read2 = clockwork_decon_reads.clockwork_cleaned_read2
 

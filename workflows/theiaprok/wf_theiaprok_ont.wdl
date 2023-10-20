@@ -744,7 +744,8 @@ workflow theiaprok_ont {
     File? tbp_parser_laboratorian_report_csv = merlin_magic.tbp_parser_laboratorian_report_csv
     File? tbp_parser_coverage_report = merlin_magic.tbp_parser_coverage_report
     Float? tbp_parser_genome_percent_coverage = merlin_magic.tbp_parser_genome_percent_coverage
-     # Legionella pneumophila typing
+    Float? tbp_parser_average_genome_depth = merlin_magic.tbp_parser_average_genome_depth
+    # Legionella pneumophila typing
     File? legsta_results = merlin_magic.legsta_results
     String? legsta_predicted_sbt = merlin_magic.legsta_predicted_sbt
     String? legsta_version = merlin_magic.legsta_version
