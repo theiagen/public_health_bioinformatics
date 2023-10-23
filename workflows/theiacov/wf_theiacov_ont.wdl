@@ -353,12 +353,12 @@ workflow theiacov_ont {
     String? pangolin_docker = pangolin4.pangolin_docker
     String? pangolin_versions = pangolin4.pangolin_versions
     # Nextclade outputs
-    File? nextclade_json = select_first([nextclade.nextclade_json])
-    File? auspice_json = select_first([ nextclade.auspice_json])
-    File? nextclade_tsv = select_first([nextclade.nextclade_tsv])
+    String? nextclade_json = select_first([nextclade.nextclade_json, ""])
+    String? auspice_json = select_first([ nextclade.auspice_json, ""])
+    String? nextclade_tsv = select_first([nextclade.nextclade_tsv, ""])
     String? nextclade_version = select_first([nextclade.nextclade_version, ""])
     String? nextclade_docker = select_first([nextclade.nextclade_docker, ""])
-    String nextclade_ds_tag = select_first([ha_na_nextclade_ds_tag, abricate_flu.nextclade_ds_tag_ha, nextclade_dataset_tag, ""])
+    String? nextclade_ds_tag = select_first([ha_na_nextclade_ds_tag, abricate_flu.nextclade_ds_tag_ha, nextclade_dataset_tag, ""])
     String? nextclade_aa_subs = select_first([ha_na_nextclade_aa_subs, nextclade_output_parser.nextclade_aa_subs, ""])
     String? nextclade_aa_dels = select_first([ha_na_nextclade_aa_dels, nextclade_output_parser.nextclade_aa_dels, ""])
     String? nextclade_clade = select_first([nextclade_output_parser.nextclade_clade, ""])
