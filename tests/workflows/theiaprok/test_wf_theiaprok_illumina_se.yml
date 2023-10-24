@@ -550,7 +550,7 @@
     - path: miniwdl_run/wdl/tasks/quality_control/task_quast.wdl
       contains: ["version", "quast", "output"]
     - path: miniwdl_run/wdl/tasks/quality_control/task_screen.wdl
-      md5sum: c1f2f5cef67a0bd0cbc9da2a834d40e4
+      md5sum: b1aa33ab328b26aa1ecad344ea1fd7b5
     - path: miniwdl_run/wdl/tasks/quality_control/task_trimmomatic.wdl
       contains: ["version", "trimmomatic", "output"]
     - path: miniwdl_run/wdl/tasks/species_typing/task_cauris_cladetyper.wdl
@@ -602,9 +602,9 @@
     - path: miniwdl_run/wdl/tasks/utilities/task_broad_terra_tools.wdl
       md5sum: 43ef050bde1fb8755f38e697a1794918
     - path: miniwdl_run/wdl/workflows/theiaprok/wf_theiaprok_illumina_se.wdl
-      md5sum: 24bfd35867f4ae864364e24195bf7f6f
+      md5sum: e1d9e75dae5176ceeb95b88a5d3bbba7
     - path: miniwdl_run/wdl/workflows/utilities/wf_merlin_magic.wdl
-      md5sum: 2614fac622fa2035b80a7b220b1aed86
+      md5sum: 00bd2489b2a7aa5b88340a940961a857
     - path: miniwdl_run/wdl/workflows/utilities/wf_read_QC_trim_se.wdl
       md5sum: 53d322d895837c0bcb049786572e944d
     - path: miniwdl_run/workflow.log
