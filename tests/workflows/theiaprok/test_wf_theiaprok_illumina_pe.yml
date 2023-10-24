@@ -30,9 +30,9 @@
     - path: miniwdl_run/call-amrfinderplus_task/task.log
       contains: ["wdl", "theiaprok_illumina_pe", "amrfinderplus", "done"]
     - path: miniwdl_run/call-amrfinderplus_task/work/AMRFINDER_DB_VERSION
-      md5sum: 2323ca08d3132d198a68e637becea3db
+      md5sum: 54ebef28014734172bfeeb798d0e7873
     - path: miniwdl_run/call-amrfinderplus_task/work/AMRFINDER_VERSION
-      md5sum: df6b62b3e5679b365be6644e8b4882d3
+      md5sum: 8e8e52e7e47bb3f44f866b41fe825422
     - path: miniwdl_run/call-amrfinderplus_task/work/AMR_CLASSES
       md5sum: b6017eebef847ac2471107ca6197b5c5
     - path: miniwdl_run/call-amrfinderplus_task/work/AMR_CORE_GENES
@@ -552,7 +552,7 @@
     - path: miniwdl_run/wdl/tasks/gene_typing/task_abricate.wdl
       md5sum: 8ea4befaa7a09b0def8d033cb9b806d1
     - path: miniwdl_run/wdl/tasks/gene_typing/task_amrfinderplus.wdl
-      md5sum: 6d851255fd3132c8ecda764cb2bc0911
+      md5sum: 249db321d15832002c4945394ae9af76
     - path: miniwdl_run/wdl/tasks/gene_typing/task_bakta.wdl
       md5sum: 0bed8fb60786095843a67b1ad03051dc
     - path: miniwdl_run/wdl/tasks/gene_typing/task_plasmidfinder.wdl
@@ -624,7 +624,7 @@
     - path: miniwdl_run/wdl/tasks/species_typing/task_ts_mlst.wdl
       md5sum: d49ae0b02e798af0636eb2721bb434b4
     - path: miniwdl_run/wdl/tasks/task_versioning.wdl
-      md5sum: 9c02b95d23a602d9842fdeac883037b1
+      md5sum: 3469cf6787f279ffa81fa50f6257fcd7
     - path: miniwdl_run/wdl/tasks/taxon_id/task_gambit.wdl
       md5sum: 08987d952c67c6ff6debf6898af15f9a
     - path: miniwdl_run/wdl/tasks/taxon_id/task_kraken2.wdl
