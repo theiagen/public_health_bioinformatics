@@ -243,7 +243,7 @@
     - path: miniwdl_run/call-nextclade/work/nextclade_dataset_dir/primers.csv
       md5sum: 5990c3483bf66ce607aeb90a44e7ef2e
     - path: miniwdl_run/call-nextclade/work/nextclade_dataset_dir/qc.json
-      md5sum: 6587a54553ad565d5f8ea7d214a797d4
+      md5sum: b01f4491a54941fea12ec5b04a10fb8c
     - path: miniwdl_run/call-nextclade/work/nextclade_dataset_dir/reference.fasta
       md5sum: c7ce05f28e4ec0322c96f24e064ef55c
     - path: miniwdl_run/call-nextclade/work/nextclade_dataset_dir/sequences.fasta

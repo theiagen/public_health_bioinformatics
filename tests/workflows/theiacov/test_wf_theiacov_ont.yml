@@ -18,7 +18,7 @@
     - wf_theiacov_ont_miniwdl
   files:
     - path: miniwdl_run/call-clean_check_reads/command
-      md5sum: 3b1ec8ea1879fc101d233f552fa4419f
+      md5sum: fcf7535cf6898bbd9ddc3b8c0539873f
     - path: miniwdl_run/call-clean_check_reads/inputs.json
     - path: miniwdl_run/call-clean_check_reads/outputs.json
     - path: miniwdl_run/call-clean_check_reads/stderr.txt
@@ -143,7 +143,7 @@
     - path: miniwdl_run/call-nextclade/work/nextclade_dataset_dir/primers.csv
       md5sum: 5990c3483bf66ce607aeb90a44e7ef2e
     - path: miniwdl_run/call-nextclade/work/nextclade_dataset_dir/qc.json
-      md5sum: 6587a54553ad565d5f8ea7d214a797d4
+      md5sum: b01f4491a54941fea12ec5b04a10fb8c
     - path: miniwdl_run/call-nextclade/work/nextclade_dataset_dir/reference.fasta
       md5sum: c7ce05f28e4ec0322c96f24e064ef55c
     - path: miniwdl_run/call-nextclade/work/nextclade_dataset_dir/sequences.fasta
@@ -229,7 +229,7 @@
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     - path: miniwdl_run/call-pangolin4/work/ont.pangolin_report.csv
     - path: miniwdl_run/call-raw_check_reads/command
-      md5sum: 5a9ed8f4856b36fd75d3e83dbde4ecfd
+      md5sum: e7f4775489e063c10d4c7c1827214e22
     - path: miniwdl_run/call-raw_check_reads/inputs.json
     - path: miniwdl_run/call-raw_check_reads/outputs.json
     - path: miniwdl_run/call-raw_check_reads/stderr.txt

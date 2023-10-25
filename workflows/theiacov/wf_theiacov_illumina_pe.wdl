@@ -44,7 +44,7 @@ workflow theiacov_illumina_pe {
     # nextclade inputs
     String nextclade_docker_image = "nextstrain/nextclade:2.14.0"
     String nextclade_dataset_reference = "MN908947"
-    String nextclade_dataset_tag = "2023-08-17T12:00:00Z"
+    String nextclade_dataset_tag = "2023-09-21T12:00:00Z"
     String? nextclade_dataset_name
     # nextclade flu inputs
     String nextclade_flu_h1n1_ha_tag = "2023-04-02T12:00:00Z"
