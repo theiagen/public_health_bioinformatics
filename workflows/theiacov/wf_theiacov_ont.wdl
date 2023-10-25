@@ -132,15 +132,16 @@ workflow theiacov_ont {
       }
       # assembly via irma for flu organisms
       if (organism == "flu") {
-        call irma_task.irma_ont {
+        call irma_task.irma {
           input:
             read1 = read_qc_trim.read1_clean,
             samplename = samplename,
+            seq_method = seq_method
         }
-        if (defined(irma_ont.irma_assemblies)) {
+        if (defined(irma.irma_assemblies)) {
           call abricate.abricate_flu {
             input:
-              assembly = select_first([irma_ont.irma_assembly_fasta]),
+              assembly = select_first([irma.irma_assembly_fasta]),
               samplename = samplename,
               nextclade_flu_h1n1_ha_tag = nextclade_flu_h1n1_ha_tag,
               nextclade_flu_h1n1_na_tag = nextclade_flu_h1n1_na_tag,
@@ -148,14 +149,14 @@ workflow theiacov_ont {
               nextclade_flu_h3n2_na_tag = nextclade_flu_h3n2_na_tag,
               nextclade_flu_vic_ha_tag = nextclade_flu_vic_ha_tag,
               nextclade_flu_vic_na_tag = nextclade_flu_vic_na_tag,
-              nextclade_flu_yam_tag = nextclade_flu_yam_tag,
+              nextclade_flu_yam_tag = nextclade_flu_yam_tag
           }
         }
       }
       # consensus QC check
       call consensus_qc_task.consensus_qc {
         input:
-          assembly_fasta =  select_first([irma_ont.irma_assembly_fasta, consensus.consensus_seq]),
+          assembly_fasta =  select_first([irma.irma_assembly_fasta, consensus.consensus_seq]),
           reference_genome = reference_genome,
           genome_length = genome_length
       }
@@ -198,7 +199,7 @@ workflow theiacov_ont {
         call nextclade_task.nextclade {
           input:
           docker = nextclade_docker_image,
-          genome_fasta = select_first([consensus.consensus_seq, irma_ont.seg_ha_assembly]),
+          genome_fasta = select_first([consensus.consensus_seq, irma.seg_ha_assembly]),
           dataset_name = select_first([abricate_flu.nextclade_name_ha, nextclade_dataset_name, organism]),
           dataset_reference = select_first([abricate_flu.nextclade_ref_ha, nextclade_dataset_reference]),
           dataset_tag = select_first([abricate_flu.nextclade_ds_tag_ha, nextclade_dataset_tag])
@@ -209,12 +210,12 @@ workflow theiacov_ont {
           organism = organism
         }
       }
-      if (organism == "flu" &&  select_first([abricate_flu.run_nextclade]) && defined(irma_ont.seg_na_assembly)) { 
+      if (organism == "flu" &&  select_first([abricate_flu.run_nextclade]) && defined(irma.seg_na_assembly)) { 
         # tasks specific to flu NA - run nextclade a second time
         call nextclade_task.nextclade as nextclade_flu_na {
           input:
             docker = nextclade_docker_image,
-            genome_fasta = select_first([irma_ont.seg_na_assembly]),
+            genome_fasta = select_first([irma.seg_na_assembly]),
             dataset_name = select_first([abricate_flu.nextclade_name_na, nextclade_dataset_name, organism]),
             dataset_reference = select_first([abricate_flu.nextclade_ref_na, nextclade_dataset_reference]),
             dataset_tag = select_first([abricate_flu.nextclade_ds_tag_na, nextclade_dataset_tag])
@@ -311,7 +312,7 @@ workflow theiacov_ont {
     String? kraken_target_org_dehosted = read_qc_trim.kraken_target_org_dehosted
     File? kraken_report_dehosted = read_qc_trim.kraken_report_dehosted
     # Read Alignment - Artic consensus outputs
-    File? assembly_fasta = select_first([consensus.consensus_seq, irma_ont.irma_assembly_fasta, ""])
+    File? assembly_fasta = select_first([consensus.consensus_seq, irma.irma_assembly_fasta, ""])
     File? aligned_bam = consensus.trim_sorted_bam
     File? aligned_bai = consensus.trim_sorted_bai
     File? medaka_vcf = consensus.medaka_pass_vcf
@@ -322,7 +323,7 @@ workflow theiacov_ont {
     String? artic_docker = consensus.artic_pipeline_docker
     String? medaka_reference = consensus.medaka_reference
     String? primer_bed_name = consensus.primer_bed_name
-    String? assembly_method = "TheiaCoV (~{version_capture.phb_version}): " + select_first([consensus.artic_pipeline_version, irma_ont.irma_version, ""])
+    String? assembly_method = "TheiaCoV (~{version_capture.phb_version}): " + select_first([consensus.artic_pipeline_version, irma.irma_version, ""])
     # Assembly QC - consensus assembly qc outputs
     File? consensus_stats = stats_n_coverage.stats
     File? consensus_flagstat = stats_n_coverage.flagstat
@@ -381,11 +382,11 @@ workflow theiacov_ont {
     String? qc_check = qc_check_task.qc_check
     File? qc_standard = qc_check_task.qc_standard
     # Flu Outputs
-    String? irma_version = irma_ont.irma_version
-    String? irma_type = irma_ont.irma_type
-    String? irma_subtype = irma_ont.irma_subtype
-    File? irma_ha_segment = irma_ont.seg_ha_assembly
-    File? irma_na_segment = irma_ont.seg_na_assembly
+    String? irma_version = irma.irma_version
+    String? irma_type = irma.irma_type
+    String? irma_subtype = irma.irma_subtype
+    File? irma_ha_segment = irma.seg_ha_assembly
+    File? irma_na_segment = irma.seg_na_assembly
     String? abricate_flu_type = abricate_flu.abricate_flu_type
     String? abricate_flu_subtype =  abricate_flu.abricate_flu_subtype
     File? abricate_flu_results = abricate_flu.abricate_flu_results
