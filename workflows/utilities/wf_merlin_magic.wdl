@@ -580,6 +580,7 @@ workflow merlin_magic {
     File? tbprofiler_output_file = tbprofiler.tbprofiler_output_csv
     File? tbprofiler_output_bam = tbprofiler.tbprofiler_output_bam
     File? tbprofiler_output_bai = tbprofiler.tbprofiler_output_bai
+    File? tbprofiler_output_vcf = tbprofiler.tbprofiler_output_vcf
     String? tbprofiler_version = tbprofiler.version
     String? tbprofiler_main_lineage = tbprofiler.tbprofiler_main_lineage
     String? tbprofiler_sub_lineage = tbprofiler.tbprofiler_sub_lineage

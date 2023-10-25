@@ -732,6 +732,7 @@ workflow theiaprok_ont {
     File? tbprofiler_output_file = merlin_magic.tbprofiler_output_file
     File? tbprofiler_output_bam = merlin_magic.tbprofiler_output_bam
     File? tbprofiler_output_bai = merlin_magic.tbprofiler_output_bai
+    File? tbprofiler_output_vcf = merlin_magic.tbprofiler_output_vcf
     String? tbprofiler_version = merlin_magic.tbprofiler_version
     String? tbprofiler_main_lineage = merlin_magic.tbprofiler_main_lineage
     String? tbprofiler_sub_lineage = merlin_magic.tbprofiler_sub_lineage

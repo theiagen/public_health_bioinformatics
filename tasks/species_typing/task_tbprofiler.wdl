@@ -42,7 +42,6 @@ task tbprofiler {
 
     # check if new database file is provided and not empty
     if [ "~{tbprofiler_run_custom_db}" = true ] ; then
-
       echo "Found new database file ~{tbprofiler_custom_db}"
       prefix=$(basename "~{tbprofiler_custom_db}" | sed 's/\.tar\.gz$//')
       echo "New database will be created with prefix $prefix"
@@ -53,11 +52,8 @@ task tbprofiler {
       tb-profiler load_library ./"$prefix"/"$prefix"
 
       TBDB="--db $prefix"
-
     else
-
       TBDB=""
-
     fi
 
     # Run tb-profiler on the input reads with samplename prefix
@@ -80,6 +76,11 @@ task tbprofiler {
 
     # touch optional output files because wdl
     touch GENE_NAME LOCUS_TAG VARIANT_SUBSTITUTIONS OUTPUT_SEQ_METHOD_TYPE
+
+    # merge all vcf files if multiple are present
+    bcftools index ./vcf/*bcf
+    bcftools index ./vcf/*gz
+    bcftools merge --force-samples ./vcf/*bcf ./vcf/*gz > ./vcf/~{samplename}.targets.csq.merged.vcf
 
     python3 <<CODE
     import csv
@@ -127,6 +128,7 @@ task tbprofiler {
     File tbprofiler_output_json = "./results/~{samplename}.results.json"
     File tbprofiler_output_bam = "./bam/~{samplename}.bam"
     File tbprofiler_output_bai = "./bam/~{samplename}.bam.bai"
+    File tbprofiler_output_vcf = "./vcf/~{samplename}.targets.csq.merged.vcf"
     String version = read_string("VERSION")
     String tbprofiler_main_lineage = read_string("MAIN_LINEAGE")
     String tbprofiler_sub_lineage = read_string("SUB_LINEAGE")
