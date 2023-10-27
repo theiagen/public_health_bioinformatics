@@ -24,7 +24,7 @@ task sm_metadata_wrangling { # the sm stands for supermassive
     python3 /scripts/export_large_tsv/export_large_tsv.py --project "~{project_name}" --workspace "~{workspace_name}" --entity_type ~{table_name} --tsv_filename ~{table_name}-data.tsv
     
     # when running locally, use the input_table in place of downloading from Terra
-    #cp ~{input_table} ~{table_name}-data.tsv
+    #cp -v ~{input_table} ~{table_name}-data.tsv
 
     # transform boolean skip_county into string for python comparison
     if ~{skip_county}; then
@@ -141,16 +141,16 @@ task sm_metadata_wrangling { # the sm stands for supermassive
       for index, row in table.iterrows():
         if ("VADR skipped due to poor assembly") in str(row["vadr_num_alerts"]):
           notification = "VADR skipped due to poor assembly"
-          quality_exclusion = quality_exclusion.append({"sample_name": row["~{table_name}_id".lower()], "message": notification}, ignore_index=True)
+          quality_exclusion = pd.concat([quality_exclusion, pd.Series({"sample_name": row["~{table_name}_id".lower()], "message": notification}).to_frame().T], ignore_index=True)
         elif int(row["vadr_num_alerts"]) > ~{vadr_alert_limit}:
           notification = "VADR number alerts too high: " + str(row["vadr_num_alerts"]) + " greater than limit of " + str(~{vadr_alert_limit})
-          quality_exclusion = quality_exclusion.append({"sample_name": row["~{table_name}_id".lower()], "message": notification}, ignore_index=True)
+          quality_exclusion = pd.concat([quality_exclusion, pd.Series({"sample_name": row["~{table_name}_id".lower()], "message": notification}).to_frame().T], ignore_index=True)
         elif int(row["number_n"]) > ~{number_N_threshold}:
           notification="Number of Ns was too high: " + str(row["number_n"]) + " greater than limit of " + str(~{number_N_threshold})
-          quality_exclusion = quality_exclusion.append({"sample_name": row["~{table_name}_id".lower()], "message": notification}, ignore_index=True)
+          quality_exclusion = pd.concat([quality_exclusion, pd.Series({"sample_name": row["~{table_name}_id".lower()], "message": notification}).to_frame().T], ignore_index=True)
         if pd.isna(row["year"]):
           notification="The collection date format was incorrect"
-          quality_exclusion = quality_exclusion.append({"sample_name": row["~{table_name}_id".lower()], "message": notification}, ignore_index=True)
+          quality_exclusion = pd.concat([quality_exclusion, pd.Series({"sample_name": row["~{table_name}_id".lower()], "message": notification}).to_frame().T], ignore_index=True)
 
       with open("~{output_name}_excluded_samples.tsv", "w") as exclusions:
         exclusions.write("Samples excluded for quality thresholds:\n")
@@ -345,7 +345,7 @@ task sm_metadata_wrangling { # the sm stands for supermassive
       for index, row in table.iterrows():
         if pd.isna(row["year"]):
           notification="The collection date format was incorrect."
-          quality_exclusion = quality_exclusion.append({"sample_name": row["~{table_name}_id".lower()], "message": notification}, ignore_index=True)
+          quality_exclusion = pd.concat([quality_exclusion, pd.Series({"sample_name": row["~{table_name}_id".lower()], "message": notification}).to_frame().T], ignore_index=True)
 
       with open("~{output_name}_excluded_samples.tsv", "w") as exclusions:
         exclusions.write("Samples excluded for bad collection_date format:\n")
