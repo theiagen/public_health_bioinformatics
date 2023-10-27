@@ -232,7 +232,7 @@ task sm_metadata_wrangling { # the sm stands for supermassive
         sra_metadata["copy_command_r1"] = "gcloud storage cp " + sra_metadata[read1_column_name] + " " + "~{gcp_bucket_uri}" + "/" + sra_metadata["filename"]
         sra_metadata["copy_command_r1"].to_csv("sra-file-transfer.sh", index=False, header=False)
         sra_metadata.drop(["copy_command_r1", read1_column_name], axis=1, inplace=True)
-        if read2_column_name in table.columns: # enable optional single end submission
+        if read2_column_name in table.columns and using_clearlabs_data == false and using_reads_dehosted == false: # enable optional single end submission
           sra_metadata["filename2"] = sra_metadata["sample_name"] + "_R2.fastq.gz"
           sra_metadata["copy_command_r2"] = "gcloud storage cp " + sra_metadata[read2_column_name] + " " + "~{gcp_bucket_uri}" + "/" + sra_metadata["filename2"]
           sra_metadata["copy_command_r2"].to_csv("sra-file-transfer.sh", mode='a', index=False, header=False)
