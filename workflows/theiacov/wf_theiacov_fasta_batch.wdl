@@ -1,8 +1,9 @@
 version 1.0
 
+import "../../tasks/utilities/task_file_handling.wdl" as concatenate
 import "../../tasks/species_typing/task_pangolin.wdl" as pangolin_task
 import "../../tasks/taxon_id/task_nextclade.wdl" as nextclade_task
-import "../../tasks/utilities/task_file_handling.wdl" as concatenate
+import "../../tasks/utilities/task_theiacov_fasta_batch.wdl" as theiacov_fasta_wrangling_task
 import "../../tasks/task_versioning.wdl" as versioning
 
 workflow theiacov_fasta_batch {
@@ -43,6 +44,13 @@ workflow theiacov_fasta_batch {
       dataset_reference = nextclade_dataset_reference,
       dataset_tag = nextclade_dataset_tag
     }
+  }
+  call theiacov_fasta_wrangling_task.theiacov_fasta_batch {
+    input:
+      samplenames = samplenames,
+      organism = organism,
+      pangolin_lineage_report = pangolin4.pango_lineage_report,
+      nextclade_tsv = nextclade.nextclade_tsv,
   }
   call versioning.version_capture{
     input:
