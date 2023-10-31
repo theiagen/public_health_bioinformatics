@@ -77,7 +77,7 @@ task sm_theiacov_fasta_wrangling { # the sm stands for supermassive
           if nextclade["seqName"].str.contains(assembly_name).any():
             nc_clade = str(nextclade.loc[nextclade["seqName"] == assembly_name]["clade_nextstrain"].item())
             who_clade = str(nextclade.loc[nextclade["seqName"] == assembly_name]["clade_who"].item())
-            if (nc_clade != who_clade) and (nc_clade != "") and (who_clade != ""):
+            if (nc_clade != who_clade) and (nc_clade != "") and (who_clade != "") and (who_clade != "nan"):
               nc_clade = nc_clade + " (" + who_clade + ")"
             if nc_clade == "":
               nc_clade = "NA"
