@@ -1,10 +1,10 @@
-version 1.0
+version 1.1
 
-import "../../tasks/utilities/task_file_handling.wdl" as concatenate
 import "../../tasks/species_typing/task_pangolin.wdl" as pangolin_task
-import "../../tasks/taxon_id/task_nextclade.wdl" as nextclade_task
-import "../../tasks/utilities/task_theiacov_fasta_batch.wdl" as theiacov_fasta_wrangling_task
 import "../../tasks/task_versioning.wdl" as versioning
+import "../../tasks/taxon_id/task_nextclade.wdl" as nextclade_task
+import "../../tasks/utilities/task_file_handling.wdl" as concatenate
+import "../../tasks/utilities/task_theiacov_fasta_batch.wdl" as theiacov_fasta_wrangling_task
 
 workflow theiacov_fasta_batch {
   meta {
@@ -21,6 +21,10 @@ workflow theiacov_fasta_batch {
     String nextclade_dataset_reference = "MN908947"
     String nextclade_dataset_tag = "2023-09-21T12:00:00Z"
     String? nextclade_dataset_name
+    # workspace values
+    String table_name
+    String workspace_name
+    String project_name
   }
   call concatenate.cat_files {
     input: 
@@ -31,7 +35,7 @@ workflow theiacov_fasta_batch {
     # sars-cov-2 specific tasks
     call pangolin_task.pangolin4 {
       input:
-        samplename = "placeholder", # what should go here?
+        samplename = "all_samples",
         fasta = cat_files.concatenated_files
     }
   }
@@ -45,12 +49,16 @@ workflow theiacov_fasta_batch {
       dataset_tag = nextclade_dataset_tag
     }
   }
-  call theiacov_fasta_wrangling_task.theiacov_fasta_batch {
+  call theiacov_fasta_wrangling_task.sm_theiacov_fasta_wrangling {
     input:
+      table_name = table_name,
+      workspace_name = workspace_name,
+      project_name = project_name,
       samplenames = samplenames,
       organism = organism,
-      pangolin_lineage_report = pangolin4.pango_lineage_report,
+      pango_lineage_report = pangolin4.pango_lineage_report,
       nextclade_tsv = nextclade.nextclade_tsv,
+      sample_to_fasta = as_map(zip(samplenames, assembly_fastas))
   }
   call versioning.version_capture{
     input:
@@ -68,5 +76,7 @@ workflow theiacov_fasta_batch {
     File? nextclade_json = nextclade.nextclade_json
     File? auspice_json = nextclade.auspice_json
     File? nextclade_tsv = nextclade.nextclade_tsv
+    # success
+    Boolean success = sm_theiacov_fasta_wrangling.success
   }
 }
