@@ -79,13 +79,13 @@ task sm_theiacov_fasta_wrangling { # the sm stands for supermassive
       upload_table["nextclade_docker"] = "~{nextclade_docker}"
       upload_table["nextclade_ds_tag"] = "~{nextclade_ds_tag}"
       
-      if ("~{organism}" == "sars-cov-2"):
-        for sample_name in sample_name_array:        
-          print("DEBUG: the sample_name is {}".format(sample_name))
-          assembly_name = sample_to_assembly[sample_name]
-          print("DEBUG: the assembly_name is {}".format(assembly_name))
+      for sample_name in sample_name_array:        
+        print("DEBUG: the sample_name is {}".format(sample_name))
+        assembly_name = sample_to_assembly[sample_name]
+        print("DEBUG: the assembly_name is {}".format(assembly_name))
 
-          if nextclade["seqName"].str.contains(assembly_name).any():
+        if nextclade["seqName"].str.contains(assembly_name).any():
+          if ("~{organism}" == "sars-cov-2"):
             nc_clade = str(nextclade.loc[nextclade["seqName"] == assembly_name]["clade_nextstrain"].item())
             who_clade = str(nextclade.loc[nextclade["seqName"] == assembly_name]["clade_who"].item())
             if (nc_clade != who_clade) and (nc_clade != "") and (who_clade != "") and (who_clade != "nan"):
