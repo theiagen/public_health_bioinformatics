@@ -55,10 +55,15 @@ workflow theiacov_fasta_batch {
       workspace_name = workspace_name,
       project_name = project_name,
       samplenames = samplenames,
+      sample_to_fasta = as_map(zip(samplenames, assembly_fastas)),
       organism = organism,
-      pango_lineage_report = pangolin4.pango_lineage_report,
       nextclade_tsv = nextclade.nextclade_tsv,
-      sample_to_fasta = as_map(zip(samplenames, assembly_fastas))
+      nextclade_docker = nextclade.nextclade_docker,
+      nextclade_version = nextclade.nextclade_version,
+      nextclade_ds_tag = nextclade_dataset_tag,
+      nextclade_json = nextclade.nextclade_json,
+      pango_lineage_report = pangolin4.pango_lineage_report,
+      pangolin_docker = pangolin4.pangolin_docker
   }
   call versioning.version_capture{
     input:
