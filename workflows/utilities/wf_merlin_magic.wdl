@@ -262,9 +262,9 @@ workflow merlin_magic {
           mapper = tbp_mapper,
           caller = tbp_caller,
           min_depth = tbp_min_depth,
-          min_ag = tbp_min_af,
+          min_af = tbp_min_af,
           min_af_pred = tbp_min_af_pred,
-          tbp_cov_frac_threshold
+          cov_frac_threshold = tbp_cov_frac_threshold
       }
       if (tbprofiler_additional_outputs) {
         call tbp_parser_task.tbp_parser {
