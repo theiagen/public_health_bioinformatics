@@ -34,7 +34,7 @@ task sm_theiacov_fasta_wrangling { # the sm stands for supermassive
     
     # using "tmp" and will want to change that
     # this line splits into individual json files
-    jq -c '.results = (.results[] | [.]) ' concatenated_assemblies.nextclade.json | awk '{ print > "tmp" NR ".json"}'
+    jq -c '.results = (.results[] | [.]) ' ~{nextclade_json} | awk '{ print > "tmp" NR ".json"}'
     # to-do: use gcloud storage cp to transfer to ~{bucket_name} location
     # split pangolin into individual csv files
     # and do the same thing with cp-ing
