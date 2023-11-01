@@ -26,6 +26,9 @@ workflow theiacov_fasta_batch {
     String workspace_name
     String project_name
   }
+  call versioning.version_capture{
+    input:
+  }
   call concatenate.cat_files {
     input: 
       files_to_cat = assembly_fastas,
@@ -63,15 +66,16 @@ workflow theiacov_fasta_batch {
       nextclade_ds_tag = nextclade_dataset_tag,
       nextclade_json = nextclade.nextclade_json,
       pango_lineage_report = pangolin4.pango_lineage_report,
-      pangolin_docker = pangolin4.pangolin_docker
-  }
-  call versioning.version_capture{
-    input:
+      pangolin_docker = pangolin4.pangolin_docker,
+      seq_platform = seq_method,
+      assembly_method = input_assembly_method,
+      theiacov_fasta_analysis_date = version_capture.date,
+      theiacov_fasta_version = version_capture.phb_version
   }
   output {
     # Version Capture
-    String theiacov_fasta_version = version_capture.phb_version
-    String theiacov_fasta_analysis_date = version_capture.date
+    String theiacov_fasta_batch_version = version_capture.phb_version
+    String theiacov_fasta_batch_analysis_date = version_capture.date
     # Read & Assembly Metadata
     String seq_platform = seq_method
     String assembly_method = input_assembly_method

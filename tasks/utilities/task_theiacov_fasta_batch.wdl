@@ -9,7 +9,6 @@ task sm_theiacov_fasta_wrangling { # the sm stands for supermassive
     Array[String] samplenames
     Map[String, File] sample_to_fasta
     String organism = "sars-cov-2"
-    
 
     File? nextclade_tsv
     File? nextclade_json
@@ -19,6 +18,11 @@ task sm_theiacov_fasta_wrangling { # the sm stands for supermassive
 
     File? pango_lineage_report
     String? pangolin_docker
+
+    String seq_platform
+    String assembly_method
+    String theiacov_fasta_analysis_date
+    String theiacov_fasta_version
     
     Int disk_size = 100
   }
@@ -58,6 +62,10 @@ task sm_theiacov_fasta_wrangling { # the sm stands for supermassive
     upload_table = pd.DataFrame(sample_name_array, columns=["entity:~{table_name}_id"])
     print(upload_table)
 
+    upload_table["seq_platform"] = "~{seq_platform}"
+    upload_table["assembly_method"] = "~{assembly_method}"
+    upload_table["theiacov_fasta_analysis_date"] = "~{theiacov_fasta_analysis_date}"
+    upload_table["theiacov_fasta_version"] = "~{theiacov_fasta_version}"
 
     # parse the NextClade output into an individual dataframe if a NextClade file exists
     if os.path.exists("~{nextclade_tsv}"):
