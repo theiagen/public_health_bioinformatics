@@ -25,6 +25,7 @@ workflow theiacov_fasta_batch {
     String table_name
     String workspace_name
     String project_name
+    String bucket_name
   }
   call versioning.version_capture{
     input:
@@ -57,6 +58,7 @@ workflow theiacov_fasta_batch {
       table_name = table_name,
       workspace_name = workspace_name,
       project_name = project_name,
+      bucket_name = bucket_name,
       samplenames = samplenames,
       sample_to_fasta = as_map(zip(samplenames, assembly_fastas)),
       organism = organism,
