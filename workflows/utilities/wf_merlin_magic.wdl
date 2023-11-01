@@ -62,6 +62,12 @@ workflow merlin_magic {
     Boolean call_shigeifinder_reads_input = false
     Boolean assembly_only = false
     Boolean theiaeuk = false
+    String? tbp_mapper
+    String? tbp_caller
+    Int? tbp_min_depth
+    Float? tbp_min_af
+    Float? tbp_min_af_pred
+    Int? tbp_cov_frac_threshold
     Boolean tbprofiler_run_custom_db = false
     File tbprofiler_custom_db = "gs://theiagen-public-files/terra/theiaprok-files/tbdb_varpipe_combined_nodups.tar.gz"
     Boolean tbprofiler_additional_outputs = false
@@ -252,7 +258,13 @@ workflow merlin_magic {
           samplename = samplename,
           tbprofiler_run_custom_db = tbprofiler_run_custom_db,
           tbprofiler_custom_db = tbprofiler_custom_db,
-          ont_data = ont_data
+          ont_data = ont_data,
+          mapper = tbp_mapper,
+          caller = tbp_caller,
+          min_depth = tbp_min_depth,
+          min_ag = tbp_min_af,
+          min_af_pred = tbp_min_af_pred,
+          tbp_cov_frac_threshold
       }
       if (tbprofiler_additional_outputs) {
         call tbp_parser_task.tbp_parser {
