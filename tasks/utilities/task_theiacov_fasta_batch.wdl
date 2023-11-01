@@ -5,7 +5,8 @@ task sm_theiacov_fasta_wrangling { # the sm stands for supermassive
     String table_name
     String workspace_name
     String project_name
-    File? input_table
+    String bucket_name
+
     Array[String] samplenames
     Map[String, File] sample_to_fasta
     String organism = "sars-cov-2"
@@ -27,16 +28,18 @@ task sm_theiacov_fasta_wrangling { # the sm stands for supermassive
     Int disk_size = 100
   }
   command <<<
-    # when running on terra, comment out all input_table mentions
-    #python3 /scripts/export_large_tsv/export_large_tsv.py --project "~{project_name}" --workspace "~{workspace_name}" --entity_type ~{table_name} --tsv_filename ~{table_name}-data.tsv
-    
-    # when running locally, use the input_table in place of downloading from Terra
-    # cp ~{input_table} ~{table_name}-data.tsv
-
     # convert the map into a JSON file for use in the python block
     # example map: {ERR4439752.test: /mnt/miniwdl_task_container/work/_miniwdl_inputs/0/ERR4439752.ivar.consensus.fasta}
     cp -v ~{write_json(sample_to_fasta)} sample_to_fasta.json
     
+    # using "tmp" and will want to change that
+    # this line splits into individual json files
+    jq -c '.results = (.results[] | [.]) ' concatenated_assemblies.nextclade.json | awk '{ print > "tmp" NR ".json"}'
+    # to-do: use gcloud storage cp to transfer to ~{bucket_name} location
+    # split pangolin into individual csv files
+    # and do the same thing with cp-ing
+    # keep those filepaths, and save to table
+
     echo "DEBUG: Now entering Python block to perform parsing of data for populating sample-level table"
 
     python3 <<CODE 
