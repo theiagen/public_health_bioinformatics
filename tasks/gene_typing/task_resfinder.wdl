@@ -6,7 +6,7 @@ task resfinder {
     String samplename
     String? organism # Species in the sample, species should be entered with their full scientific names (e.g. "escherichia coli"), using quotation marks
     Boolean acquired = true # Run resfinder for acquired resistance genes
-    Float min_cov = 0.6 # Minimum (breadth-of) coverage of ResFinder
+    Float min_cov = 0.5 # Minimum (breadth-of) coverage of ResFinder
     Float min_id = 0.9 # Threshold for identity of ResFinder
     Boolean call_PointFinder = false # Run pointfinder for chromosomal mutations
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/resfinder:4.1.11"
@@ -114,12 +114,51 @@ task resfinder {
     grep -qi "sulfamethoxazole" RESFINDER_PREDICTED_PHENO_RESISTANCE.txt && \
     grep -qi "ampicillin" RESFINDER_PREDICTED_PHENO_RESISTANCE.txt; then
       echo "XDR Shigella based on predicted resistance to ceftriaxone, azithromycin, ciprofloxacin, trimethoprim, sulfamethoxazole, and ampicillin. Please verify by reviewing ~{samplename}_pheno_table.tsv and ~{samplename}_ResFinder_results_tab.tsv"
-      echo "XDR Shigella based on predicted resistance to ceftriaxone, azithromycin, ciprofloxacin, trimethoprim, sulfamethoxazole, and ampicillin. Please verify by reviewing ~{samplename}_pheno_table.tsv and ~{samplename}_ResFinder_results_tab.tsv" > RESFINDER_PREDICTED_XDR_SHIGELLA.txt
+      echo "XDR" > RESFINDER_PREDICTED_XDR_SHIGELLA.txt
     else
-      echo "Not predicted as XDR Shigella"
-      echo "Not predicted as XDR Shigella" > RESFINDER_PREDICTED_XDR_SHIGELLA.txt
+      echo "Not XDR"
+      echo "Not XDR" > RESFINDER_PREDICTED_XDR_SHIGELLA.txt
     fi
 
+    # set output strings for Resistance or no Resistance predicted for each of 6 drugs
+    # if grep finds the drug in the RESFINDER_PREDICTED_PHENO_RESISTANCE.txt file, then set the output string to "R"
+    # if grep does not find the drug in the RESFINDER_PREDICTED_PHENO_RESISTANCE.txt file, then set the output string to "Not predicted"
+    # ampicillin
+    if grep -qi "ampicillin" RESFINDER_PREDICTED_PHENO_RESISTANCE.txt; then
+      echo "R" > RESFINDER_PREDICTED_RESISTANCE_AMP.txt
+    else
+      echo "Not predicted" > RESFINDER_PREDICTED_RESISTANCE_AMP.txt
+    fi
+    # azithromycin
+    if grep -qi "azithromycin" RESFINDER_PREDICTED_PHENO_RESISTANCE.txt; then
+      echo "R" > RESFINDER_PREDICTED_RESISTANCE_AZM.txt
+    else
+      echo "Not predicted" > RESFINDER_PREDICTED_RESISTANCE_AZM.txt
+    fi
+    # ceftriaxone
+    if grep -qi "ceftriaxone" RESFINDER_PREDICTED_PHENO_RESISTANCE.txt; then
+      echo "R" > RESFINDER_PREDICTED_RESISTANCE_AXO.txt
+    else
+      echo "Not predicted" > RESFINDER_PREDICTED_RESISTANCE_AXO.txt
+    fi
+    # ciprofloxacin
+    if grep -qi "ciprofloxacin" RESFINDER_PREDICTED_PHENO_RESISTANCE.txt; then
+      echo "R" > RESFINDER_PREDICTED_RESISTANCE_CIP.txt
+    else
+      echo "Not predicted" > RESFINDER_PREDICTED_RESISTANCE_CIP.txt
+    fi
+    # sulfamethoxazole
+    if grep -qi "sulfamethoxazole" RESFINDER_PREDICTED_PHENO_RESISTANCE.txt; then
+      echo "R" > Resfinder_PREDICTED_RESISTANCE_SMX.txt
+    else
+      echo "Not predicted" > RESFINDER_PREDICTED_RESISTANCE_SMX.txt
+    fi
+    # trimethoprim
+    if grep -qi "trimethoprim" RESFINDER_PREDICTED_PHENO_RESISTANCE.txt; then
+      echo "R" > Resfinder_PREDICTED_RESISTANCE_TMP.txt
+    else
+      echo "Not predicted" > RESFINDER_PREDICTED_RESISTANCE_TMP.txt
+    fi
 
   >>>
   output {
@@ -132,6 +171,12 @@ task resfinder {
     File? pointfinder_results = "~{samplename}_PointFinder_results.tsv"
     String resfinder_predicted_pheno_resistance = read_string("RESFINDER_PREDICTED_PHENO_RESISTANCE.txt")
     String resfinder_predicted_xdr_shigella = read_string("RESFINDER_PREDICTED_XDR_SHIGELLA.txt")
+    String resfinder_predicted_resistance_Amp = read_string("RESFINDER_PREDICTED_RESISTANCE_AMP.txt")
+    String resfinder_predicted_resistance_Azm = read_string("RESFINDER_PREDICTED_RESISTANCE_AZM.txt")
+    String resfinder_predicted_resistance_Axo = read_string("RESFINDER_PREDICTED_RESISTANCE_AXO.txt")
+    String resfinder_predicted_resistance_Cip = read_string("RESFINDER_PREDICTED_RESISTANCE_CIP.txt")
+    String resfinder_predicted_resistance_Smx = read_string("Resfinder_PREDICTED_RESISTANCE_SMX.txt")
+    String resfinder_predicted_resistance_Tmp = read_string("Resfinder_PREDICTED_RESISTANCE_TMP.txt")
     String resfinder_docker = "~{docker}"
     String resfinder_version = read_string("RESFINDER_VERSION")
     String resfinder_db_version = read_string("RESFINDER_DB_VERSION")
