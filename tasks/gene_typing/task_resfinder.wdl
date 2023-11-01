@@ -114,10 +114,10 @@ task resfinder {
     grep -qi "sulfamethoxazole" RESFINDER_PREDICTED_PHENO_RESISTANCE.txt && \
     grep -qi "ampicillin" RESFINDER_PREDICTED_PHENO_RESISTANCE.txt; then
       echo "XDR Shigella based on predicted resistance to ceftriaxone, azithromycin, ciprofloxacin, trimethoprim, sulfamethoxazole, and ampicillin. Please verify by reviewing ~{samplename}_pheno_table.tsv and ~{samplename}_ResFinder_results_tab.tsv"
-      echo "XDR" > RESFINDER_PREDICTED_XDR_SHIGELLA.txt
+      echo "XDR Shigella" > RESFINDER_PREDICTED_XDR_SHIGELLA.txt
     else
-      echo "Not XDR"
-      echo "Not XDR" > RESFINDER_PREDICTED_XDR_SHIGELLA.txt
+      echo "Not XDR Shigella"
+      echo "Not XDR Shigella" > RESFINDER_PREDICTED_XDR_SHIGELLA.txt
     fi
 
     # set output strings for Resistance or no Resistance predicted for each of 6 drugs
