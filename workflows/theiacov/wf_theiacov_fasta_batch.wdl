@@ -87,5 +87,6 @@ workflow theiacov_fasta_batch {
     File? nextclade_tsv = nextclade.nextclade_tsv
     # success
     Boolean success = sm_theiacov_fasta_wrangling.success
+    File datatable = sm_theiacov_fasta_wrangling.terra_table
   }
 }

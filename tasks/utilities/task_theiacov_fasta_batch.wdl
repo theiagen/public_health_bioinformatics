@@ -59,7 +59,7 @@ task sm_theiacov_fasta_wrangling { # the sm stands for supermassive
 
 
     # create a sample-level table to upload to terra
-    upload_table = pd.DataFrame(sample_name_array, columns=["entity:~{table_name}_id"])
+    upload_table = pd.DataFrame(sample_name_array, columns=["entity:~{table_name}_id"]).set_index("entity:~{table_name}_id")
     print(upload_table)
 
     upload_table["seq_platform"] = "~{seq_platform}"
@@ -169,60 +169,8 @@ task sm_theiacov_fasta_wrangling { # the sm stands for supermassive
           upload_table["pangolin_notes"] = ""
         upload_table.at[sample_name, "pangolin_notes"] = pangolin_notes
     
-
-    # if ("~{organism}" == "sars-cov-2"):
-    #   # TODO: Assuming nextclade and pango lineage reports exist for all SARS-CoV-2 samples
-    #   print("DEBUG: Organism is SARS-CoV-2; now parsing NextClade and Pangolin lineage reports") # missing VADR
-      
-    #   for sample_name in sample_name_array:        
-    #     # NEXTCLADE PARSING BLOCK
-    #     # TODO - missing output files: nextclade_json, auspice_json, nextclade_tsv
-    #     #   One file for all samples, would have to split into multiple files, upload to bucket
-    #     # TODO - missing output strings: nextclade_version, nextclade_docker, nextclade_ds_tag
-    #     assembly_name = sample_to_assembly[sample_name]
-
-
-    #     # PANGO LINEAGE PARSING BLOCK
-    #     # TODO: missing output files: pango_lineage_report
-
-    #     # parse pangolin_version from pango lineage report
-    #     pangolin_version = pango_lineage_report.loc[pango_lineage_report["taxon"] == assembly_name]["pangolin_version"].item()
-    #     version = pango_lineage_report.loc[pango_lineage_report["taxon"] == assembly_name]["version"].item()
-    #     assignment_version = "pangolin {pangolin_version}; {version}".format(pangolin_version=pangolin_version, version=version)
-    #     # replace pangolin_version in datatable if exists, if not, create it
-    #     if "pangolin_version" not in table.columns:
-    #       table["pangolin_version"] = ""
-    #     table["pangolin_version"][index] = assignment_version
-
-    #     # parse pango_lineage from pango lineage report
-    #     pango_lineage = pango_lineage_report.loc[pango_lineage_report["taxon"] == assembly_name]["lineage"].item()
-    #     if "pango_lineage" not in table.columns:
-    #       table["pango_lineage"] = ""
-    #     table["pango_lineage"][index] = pango_lineage
-
-    #     # parse pango_lineage_expanded from pango lineage report
-    #     try:
-    #       pango_lineage_expanded = pango_lineage_report.loc[pango_lineage_report["taxon"] == assembly_name]["expanded_lineage"].item()
-    #     except KeyError:
-    #         pango_lineage_expanded = ""
-    #     if "pango_lineage_expanded" not in table.columns:
-    #       table["pango_lineage_expanded"] = ""
-    #     table["pango_lineage_expanded"][index] = pango_lineage_expanded
-
-    #     # parse pangolin_conflicts from pango lineage report
-    #     pangolin_conflicts = pango_lineage_report.loc[pango_lineage_report["taxon"] == assembly_name]["conflict"].item()
-    #     if "pangolin_conflicts" not in table.columns:
-    #       table["pangolin_conflicts"] = ""
-    #     table["pangolin_conflicts"][index] = pangolin_conflicts
-
-    #     # parse pangolin_notes from pango lineage report
-    #     pangolin_notes = pango_lineage_report.loc[pango_lineage_report["taxon"] == assembly_name]["note"].item()
-    #     if "pangolin_notes" not in table.columns:
-    #       table["pangolin_notes"] = ""
-    #     table["pangolin_notes"][index] = pangolin_notes
-    
     # TODO: drop assembly_fasta column? What about other columns that are not required for upload?
-    upload_table.to_csv("TERRA_TABLE_TEMP.tsv", sep='\t', index=False)
+    upload_table.to_csv("TERRA_TABLE_TEMP.tsv", sep='\t', index=True)
 
     CODE
 
