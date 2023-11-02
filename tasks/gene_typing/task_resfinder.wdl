@@ -106,56 +106,63 @@ task resfinder {
     # requirements:
     # organism input (i.e. gambit_predicted_taxon) must contain "Shigella"
     # predicted resistance to antimicrobials must include ALL: "ceftriaxone", "azithromycin", "ciprofloxacin", "trimethoprim", "sulfamethoxazole", and "ampicillin"
-    if [[ "~{organism}" == *"Shigella"* ]] && \
-    grep -qi "ceftriaxone" RESFINDER_PREDICTED_PHENO_RESISTANCE.txt && \
-    grep -qi "azithromycin" RESFINDER_PREDICTED_PHENO_RESISTANCE.txt && \
-    grep -qi "ciprofloxacin" RESFINDER_PREDICTED_PHENO_RESISTANCE.txt && \
-    grep -qi "trimethoprim" RESFINDER_PREDICTED_PHENO_RESISTANCE.txt && \
-    grep -qi "sulfamethoxazole" RESFINDER_PREDICTED_PHENO_RESISTANCE.txt && \
-    grep -qi "ampicillin" RESFINDER_PREDICTED_PHENO_RESISTANCE.txt; then
-      echo "XDR Shigella based on predicted resistance to ceftriaxone, azithromycin, ciprofloxacin, trimethoprim, sulfamethoxazole, and ampicillin. Please verify by reviewing ~{samplename}_pheno_table.tsv and ~{samplename}_ResFinder_results_tab.tsv"
-      echo "XDR Shigella" > RESFINDER_PREDICTED_XDR_SHIGELLA.txt
-    else
-      echo "Not XDR Shigella"
-      echo "Not XDR Shigella" > RESFINDER_PREDICTED_XDR_SHIGELLA.txt
+    if [[ "~{organism}" != *"Shigella"* ]]; then
+      echo 'Either the input gambit_predicted_taxon does not contain "Shigella" or the user did not supply the organism as an input string to the workflow.'
+      echo "Skipping XDR Shigella check."
+      echo "Not Shigella based on gambit_predicted_taxon or user input" | tee RESFINDER_PREDICTED_XDR_SHIGELLA.txt
+    # if organism input string DOES contain the word "Shigella", check for resistance predictions to 6 drugs in XDR definition
+    elif [[ "~{organism}" == *"Shigella"* ]]; then
+      # nested if: if grep finds the all drugs, set output to XDR shigella, but if not, set it to "Not XDR Shigella"
+      if grep -qi "ceftriaxone" RESFINDER_PREDICTED_PHENO_RESISTANCE.txt && \
+      grep -qi "azithromycin" RESFINDER_PREDICTED_PHENO_RESISTANCE.txt && \
+      grep -qi "ciprofloxacin" RESFINDER_PREDICTED_PHENO_RESISTANCE.txt && \
+      grep -qi "trimethoprim" RESFINDER_PREDICTED_PHENO_RESISTANCE.txt && \
+      grep -qi "sulfamethoxazole" RESFINDER_PREDICTED_PHENO_RESISTANCE.txt && \
+      grep -qi "ampicillin" RESFINDER_PREDICTED_PHENO_RESISTANCE.txt; then
+        echo "XDR Shigella based on predicted resistance to ceftriaxone, azithromycin, ciprofloxacin, trimethoprim, sulfamethoxazole, and ampicillin. Please verify by reviewing ~{samplename}_pheno_table.tsv and ~{samplename}_ResFinder_results_tab.tsv"
+        echo "XDR Shigella" > RESFINDER_PREDICTED_XDR_SHIGELLA.txt
+      # ~{organism} does contain the word "Shigella", but one of the greps failed, meaning not all drug resistances' were predicted
+      else
+        echo "Not XDR Shigella" | tee RESFINDER_PREDICTED_XDR_SHIGELLA.txt
+      fi
     fi
 
     # set output strings for Resistance or no Resistance predicted for each of 6 drugs
-    # if grep finds the drug in the RESFINDER_PREDICTED_PHENO_RESISTANCE.txt file, then set the output string to "R"
-    # if grep does not find the drug in the RESFINDER_PREDICTED_PHENO_RESISTANCE.txt file, then set the output string to "Not predicted"
+    # if grep finds the drug in the RESFINDER_PREDICTED_PHENO_RESISTANCE.txt file, then set the output string to "Resistance"
+    # if grep does not find the drug in the RESFINDER_PREDICTED_PHENO_RESISTANCE.txt file, then set the output string to "No resistance predicted"
     # ampicillin
     if grep -qi "ampicillin" RESFINDER_PREDICTED_PHENO_RESISTANCE.txt; then
-      echo "R" > RESFINDER_PREDICTED_RESISTANCE_AMP.txt
+      echo "Resistance" > RESFINDER_PREDICTED_RESISTANCE_AMP.txt
     else
-      echo "Not predicted" > RESFINDER_PREDICTED_RESISTANCE_AMP.txt
+      echo "No resistance predicted" > RESFINDER_PREDICTED_RESISTANCE_AMP.txt
     fi
     # azithromycin
     if grep -qi "azithromycin" RESFINDER_PREDICTED_PHENO_RESISTANCE.txt; then
-      echo "R" > RESFINDER_PREDICTED_RESISTANCE_AZM.txt
+      echo "Resistance" > RESFINDER_PREDICTED_RESISTANCE_AZM.txt
     else
       echo "Not predicted" > RESFINDER_PREDICTED_RESISTANCE_AZM.txt
     fi
     # ceftriaxone
     if grep -qi "ceftriaxone" RESFINDER_PREDICTED_PHENO_RESISTANCE.txt; then
-      echo "R" > RESFINDER_PREDICTED_RESISTANCE_AXO.txt
+      echo "Resistance" > RESFINDER_PREDICTED_RESISTANCE_AXO.txt
     else
       echo "Not predicted" > RESFINDER_PREDICTED_RESISTANCE_AXO.txt
     fi
     # ciprofloxacin
     if grep -qi "ciprofloxacin" RESFINDER_PREDICTED_PHENO_RESISTANCE.txt; then
-      echo "R" > RESFINDER_PREDICTED_RESISTANCE_CIP.txt
+      echo "Resistance" > RESFINDER_PREDICTED_RESISTANCE_CIP.txt
     else
       echo "Not predicted" > RESFINDER_PREDICTED_RESISTANCE_CIP.txt
     fi
     # sulfamethoxazole
     if grep -qi "sulfamethoxazole" RESFINDER_PREDICTED_PHENO_RESISTANCE.txt; then
-      echo "R" > Resfinder_PREDICTED_RESISTANCE_SMX.txt
+      echo "Resistance" > Resfinder_PREDICTED_RESISTANCE_SMX.txt
     else
       echo "Not predicted" > RESFINDER_PREDICTED_RESISTANCE_SMX.txt
     fi
     # trimethoprim
     if grep -qi "trimethoprim" RESFINDER_PREDICTED_PHENO_RESISTANCE.txt; then
-      echo "R" > Resfinder_PREDICTED_RESISTANCE_TMP.txt
+      echo "Resistance" > Resfinder_PREDICTED_RESISTANCE_TMP.txt
     else
       echo "Not predicted" > RESFINDER_PREDICTED_RESISTANCE_TMP.txt
     fi
