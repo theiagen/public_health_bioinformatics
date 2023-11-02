@@ -140,31 +140,31 @@ task resfinder {
     if grep -qi "azithromycin" RESFINDER_PREDICTED_PHENO_RESISTANCE.txt; then
       echo "Resistance" > RESFINDER_PREDICTED_RESISTANCE_AZM.txt
     else
-      echo "Not predicted" > RESFINDER_PREDICTED_RESISTANCE_AZM.txt
+      echo "No resistance predicted" > RESFINDER_PREDICTED_RESISTANCE_AZM.txt
     fi
     # ceftriaxone
     if grep -qi "ceftriaxone" RESFINDER_PREDICTED_PHENO_RESISTANCE.txt; then
       echo "Resistance" > RESFINDER_PREDICTED_RESISTANCE_AXO.txt
     else
-      echo "Not predicted" > RESFINDER_PREDICTED_RESISTANCE_AXO.txt
+      echo "No resistance predicted" > RESFINDER_PREDICTED_RESISTANCE_AXO.txt
     fi
     # ciprofloxacin
     if grep -qi "ciprofloxacin" RESFINDER_PREDICTED_PHENO_RESISTANCE.txt; then
       echo "Resistance" > RESFINDER_PREDICTED_RESISTANCE_CIP.txt
     else
-      echo "Not predicted" > RESFINDER_PREDICTED_RESISTANCE_CIP.txt
+      echo "No resistance predicted" > RESFINDER_PREDICTED_RESISTANCE_CIP.txt
     fi
     # sulfamethoxazole
     if grep -qi "sulfamethoxazole" RESFINDER_PREDICTED_PHENO_RESISTANCE.txt; then
       echo "Resistance" > Resfinder_PREDICTED_RESISTANCE_SMX.txt
     else
-      echo "Not predicted" > RESFINDER_PREDICTED_RESISTANCE_SMX.txt
+      echo "No resistance predicted" > RESFINDER_PREDICTED_RESISTANCE_SMX.txt
     fi
     # trimethoprim
     if grep -qi "trimethoprim" RESFINDER_PREDICTED_PHENO_RESISTANCE.txt; then
       echo "Resistance" > Resfinder_PREDICTED_RESISTANCE_TMP.txt
     else
-      echo "Not predicted" > RESFINDER_PREDICTED_RESISTANCE_TMP.txt
+      echo "No resistance predicted" > RESFINDER_PREDICTED_RESISTANCE_TMP.txt
     fi
 
   >>>
