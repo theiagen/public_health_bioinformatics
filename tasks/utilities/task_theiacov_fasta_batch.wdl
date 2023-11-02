@@ -201,7 +201,7 @@ task sm_theiacov_fasta_wrangling { # the sm stands for supermassive
     CODE
 
     # upload results to terra databable 
-    #python3 scripts/import_large_tsv/import_large_tsv.py --project "~{project_name}" --workspace "~{workspace_name}" --tsv terra-table-to-upload.tsv
+    python3 scripts/import_large_tsv/import_large_tsv.py --project "~{project_name}" --workspace "~{workspace_name}" --tsv terra-table-to-upload.tsv
 
     echo "DEBUG: upload to terra table complete"
   >>>
