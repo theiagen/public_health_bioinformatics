@@ -39,7 +39,7 @@ workflow theiacov_fasta_batch {
     # sars-cov-2 specific tasks
     call pangolin_task.pangolin4 {
       input:
-        samplename = "all_samples",
+        samplename = "concatenated_assemblies",
         fasta = cat_files.concatenated_files
     }
   }
@@ -59,7 +59,6 @@ workflow theiacov_fasta_batch {
       workspace_name = workspace_name,
       project_name = project_name,
       bucket_name = bucket_name,
-      samplenames = samplenames,
       sample_to_fasta = zip(samplenames, assembly_fastas),
       organism = organism,
       nextclade_tsv = nextclade.nextclade_tsv,

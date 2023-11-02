@@ -7,7 +7,6 @@ task sm_theiacov_fasta_wrangling { # the sm stands for supermassive
     String project_name
     String bucket_name
 
-    Array[String] samplenames
     Array[Pair[String, File]] sample_to_fasta
     String organism = "sars-cov-2"
 
@@ -32,13 +31,23 @@ task sm_theiacov_fasta_wrangling { # the sm stands for supermassive
     # example map: {ERR4439752.test: /mnt/miniwdl_task_container/work/_miniwdl_inputs/0/ERR4439752.ivar.consensus.fasta}
     cp -v ~{write_json(sample_to_fasta)} sample_to_fasta.json
 
-    # using "tmp" and will want to change that
     # this line splits into individual json files
     jq -c '.results = (.results[] | [.]) ' ~{nextclade_json} | awk '{ print > "out" NR ".json"}'
-    # to-do: use gcloud storage cp to transfer to ~{bucket_name} location
-    # split pangolin into individual csv files
-    # and do the same thing with cp-ing
-    # keep those filepaths, and save to table
+    
+    # rename each individual json file with the sample name
+    for file in out*.json; do
+      samplename=$(jq -r '.results[].seqName' ${file})
+      cp -v ${file} ${samplename}.nextclade.json
+    done
+    
+    # transfer all the json files to the bucket for access in Terra -- not sure if this works on Terra
+    gcloud storage cp -v *.nextclade.json gs://~{bucket_name}/theiacov_fasta_batch-~{theiacov_fasta_analysis_date}/nextclade_json/
+
+    # split the pangolin lineage report into individual csv files named by the taxon
+    awk 'BEGIN {FS=","} NR==1 {header=$0; next} {print header > $1".pangolin_report.csv" ; print $0 >> $1".pangolin_report.csv"}' ~{pango_lineage_report}
+
+    # transfer all pangolin lineage report files to the bucket for access in Terra
+    gcloud storage cp -v *pangolin_report.csv gs://~{bucket_name}/theiacov_fasta_batch-~{theiacov_fasta_analysis_date}/pangolin_report/
 
     echo "DEBUG: Now entering Python block to perform parsing of data for populating sample-level table"
 
@@ -84,9 +93,7 @@ task sm_theiacov_fasta_wrangling { # the sm stands for supermassive
       upload_table["nextclade_ds_tag"] = "~{nextclade_ds_tag}"
       
       for sample_name in sample_to_assembly.keys():        
-        print("DEBUG: the sample_name is {}".format(sample_name))
         assembly_name = sample_to_assembly[sample_name]
-        print("DEBUG: the assembly_name is {}".format(assembly_name))
 
         if nextclade["seqName"].str.contains(assembly_name).any():
           if ("~{organism}" == "sars-cov-2"):
@@ -134,6 +141,11 @@ task sm_theiacov_fasta_wrangling { # the sm stands for supermassive
             upload_table["nextclade_lineage"] = ""
           upload_table.at[sample_name, "nextclade_lineage"] = nc_lineage
 
+          # add path to individual json to table
+          if "nextclade_json" not in upload_table.columns:
+            upload_table["nextclade_json"] = ""
+          upload_table.at[sample_name, "nextclade_json"] = "gs://~{bucket_name}/theiacov_fasta_batch-~{theiacov_fasta_analysis_date}/nextclade_json/{}.nextclade.json".format(assembly_name)
+
     # parse the Pangolin lineage report into an individual dataframe if a Pangolin report file exists
     if os.path.exists("~{pango_lineage_report}"):
       print("DEBUG: PANGOLIN lineage report file identified; now parsing into a dataframe")
@@ -176,6 +188,11 @@ task sm_theiacov_fasta_wrangling { # the sm stands for supermassive
           if "pangolin_notes" not in upload_table.columns:
             upload_table["pangolin_notes"] = ""
           upload_table.at[sample_name, "pangolin_notes"] = pangolin_notes
+          
+          # add path to individual csv to table
+          if "pango_lineage_report" not in upload_table.columns:
+            upload_table["pango_lineage_report"] = ""
+          upload_table.at[sample_name, "pango_lineage_report"] = "gs://~{bucket_name}/theiacov_fasta_batch-~{theiacov_fasta_analysis_date}/pangolin_report/{}.pangolin_report.csv".format(assembly_name)
 
     # to-do: add VADR outputs
 
