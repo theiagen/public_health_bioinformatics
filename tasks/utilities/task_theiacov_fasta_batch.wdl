@@ -213,7 +213,7 @@ task sm_theiacov_fasta_wrangling { # the sm stands for supermassive
     memory: "8 GB"
     cpu: 4
     disks:  "local-disk " + disk_size + " SSD"
-    disk: disk_size + " GB" # TES
+    disk: disk_size + " GB"
     preemptible: 0
   }
 }
