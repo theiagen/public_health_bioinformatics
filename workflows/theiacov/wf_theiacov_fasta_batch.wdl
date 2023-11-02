@@ -77,14 +77,10 @@ workflow theiacov_fasta_batch {
     # Version Capture
     String theiacov_fasta_batch_version = version_capture.phb_version
     String theiacov_fasta_batch_analysis_date = version_capture.date
-    # Read & Assembly Metadata
-    String seq_platform = seq_method
-    String assembly_method = input_assembly_method
     # Pangolin outputs
     File? pango_lineage_report = pangolin4.pango_lineage_report
     # Nextclade outputs
     File? nextclade_json = nextclade.nextclade_json
-    File? auspice_json = nextclade.auspice_json
     File? nextclade_tsv = nextclade.nextclade_tsv
     # Wrangling outputs
     File datatable = sm_theiacov_fasta_wrangling.terra_table
