@@ -212,8 +212,8 @@ task sm_theiacov_fasta_wrangling { # the sm stands for supermassive
     docker: "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-08-28-v4"
     memory: "8 GB"
     cpu: 4
-    disks: disk_size + " local-disk "
-    disk: disk_size + " GB"
+    disks:  "local-disk " + disk_size + " SSD"
+    disk: disk_size + " GB" # TES
     preemptible: 0
   }
 }
