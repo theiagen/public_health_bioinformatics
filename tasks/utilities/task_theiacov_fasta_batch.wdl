@@ -1,4 +1,4 @@
-version 1.1
+version 1.0
 
 task sm_theiacov_fasta_wrangling { # the sm stands for supermassive
   input {
@@ -8,7 +8,7 @@ task sm_theiacov_fasta_wrangling { # the sm stands for supermassive
     String bucket_name
 
     Array[String] samplenames
-    Map[String, File] sample_to_fasta
+    Array[Pair[String, File]] sample_to_fasta
     String organism = "sars-cov-2"
 
     File? nextclade_tsv
@@ -31,10 +31,10 @@ task sm_theiacov_fasta_wrangling { # the sm stands for supermassive
     # convert the map into a JSON file for use in the python block
     # example map: {ERR4439752.test: /mnt/miniwdl_task_container/work/_miniwdl_inputs/0/ERR4439752.ivar.consensus.fasta}
     cp -v ~{write_json(sample_to_fasta)} sample_to_fasta.json
-    
+
     # using "tmp" and will want to change that
     # this line splits into individual json files
-    jq -c '.results = (.results[] | [.]) ' ~{nextclade_json} | awk '{ print > "tmp" NR ".json"}'
+    jq -c '.results = (.results[] | [.]) ' ~{nextclade_json} | awk '{ print > "out" NR ".json"}'
     # to-do: use gcloud storage cp to transfer to ~{bucket_name} location
     # split pangolin into individual csv files
     # and do the same thing with cp-ing
@@ -52,19 +52,23 @@ task sm_theiacov_fasta_wrangling { # the sm stands for supermassive
     
     # parse the map of sample names to fasta files
     with open("sample_to_fasta.json") as map_file:
-      sample_to_fasta = json.load(map_file)
-      # fix assembly_name
-      print("trying to fix assembly names")
-      sample_to_assembly = {name:re.split("[.]", os.path.basename(assembly))[0] for name, assembly in sample_to_fasta.items()}
-      
-    sample_name_array = "~{sep('*', samplenames)}".split("*")
-    print(sample_name_array)
+      pair_list = json.load(map_file)
 
+      # reformat the array of pairs into a dictionary
+      sample_to_fasta = {}
+      for item in pair_list:
+        # left & right is the syntax for WDL pairs
+        key = item["left"]
+        value = item["right"]
+        sample_to_fasta[key] = value
+      
+      # fix assembly_name to be the basename of the fasta file
+      sample_to_assembly = {name:re.split("[.]", os.path.basename(assembly))[0] for name, assembly in sample_to_fasta.items()}
 
     # create a sample-level table to upload to terra
-    upload_table = pd.DataFrame(sample_name_array, columns=["entity:~{table_name}_id"]).set_index("entity:~{table_name}_id")
-    print(upload_table)
+    upload_table = pd.DataFrame(sample_to_assembly.keys(), columns=["entity:~{table_name}_id"]).set_index("entity:~{table_name}_id")
 
+    # fill in the standard output parameters
     upload_table["seq_platform"] = "~{seq_platform}"
     upload_table["assembly_method"] = "~{assembly_method}"
     upload_table["theiacov_fasta_analysis_date"] = "~{theiacov_fasta_analysis_date}"
@@ -79,7 +83,7 @@ task sm_theiacov_fasta_wrangling { # the sm stands for supermassive
       upload_table["nextclade_docker"] = "~{nextclade_docker}"
       upload_table["nextclade_ds_tag"] = "~{nextclade_ds_tag}"
       
-      for sample_name in sample_name_array:        
+      for sample_name in sample_to_assembly.keys():        
         print("DEBUG: the sample_name is {}".format(sample_name))
         assembly_name = sample_to_assembly[sample_name]
         print("DEBUG: the assembly_name is {}".format(assembly_name))
@@ -142,54 +146,53 @@ task sm_theiacov_fasta_wrangling { # the sm stands for supermassive
       upload_table["panglin_version"] = "pangolin {}; {}".format(pangolin_version, version)
 
       # iterate through results and add to table
-      for sample_name in sample_name_array:        
+      for sample_name in sample_to_assembly.keys():        
         assembly_name = sample_to_assembly[sample_name]
  
-        # parse pango_lineage from pango lineage report
-        pango_lineage = pango_lineage_report.loc[pango_lineage_report["taxon"] == assembly_name]["lineage"].item()
-        if "pango_lineage" not in upload_table.columns:
-          upload_table["pango_lineage"] = ""
-        upload_table.at[sample_name, "pango_lineage"] = pango_lineage
+        if pango_lineage_report["taxon"].str.contains(assembly_name).any():
+          # parse pango_lineage from pango lineage report
+          pango_lineage = pango_lineage_report.loc[pango_lineage_report["taxon"] == assembly_name]["lineage"].item()
+          if "pango_lineage" not in upload_table.columns:
+            upload_table["pango_lineage"] = ""
+          upload_table.at[sample_name, "pango_lineage"] = pango_lineage
 
-        # parse pango_lineage_expanded from pango lineage report
-        try:
-          pango_lineage_expanded = pango_lineage_report.loc[pango_lineage_report["taxon"] == assembly_name]["expanded_lineage"].item()
-        except KeyError:
-            pango_lineage_expanded = ""
-        if "pango_lineage_expanded" not in upload_table.columns:
-          upload_table["pango_lineage_expanded"] = ""
-        upload_table.at[sample_name, "pango_lineage_expanded"] = pango_lineage_expanded
+          # parse pango_lineage_expanded from pango lineage report
+          try:
+            pango_lineage_expanded = pango_lineage_report.loc[pango_lineage_report["taxon"] == assembly_name]["expanded_lineage"].item()
+          except KeyError:
+              pango_lineage_expanded = ""
+          if "pango_lineage_expanded" not in upload_table.columns:
+            upload_table["pango_lineage_expanded"] = ""
+          upload_table.at[sample_name, "pango_lineage_expanded"] = pango_lineage_expanded
 
-        # parse pangolin_conflicts from pango lineage report
-        pangolin_conflicts = pango_lineage_report.loc[pango_lineage_report["taxon"] == assembly_name]["conflict"].item()
-        if "pangolin_conflicts" not in upload_table.columns:
-          upload_table["pangolin_conflicts"] = ""
-        upload_table.at[sample_name, "pangolin_conflicts"] = pangolin_conflicts
+          # parse pangolin_conflicts from pango lineage report
+          pangolin_conflicts = pango_lineage_report.loc[pango_lineage_report["taxon"] == assembly_name]["conflict"].item()
+          if "pangolin_conflicts" not in upload_table.columns:
+            upload_table["pangolin_conflicts"] = ""
+          upload_table.at[sample_name, "pangolin_conflicts"] = pangolin_conflicts
 
-        # parse pangolin_notes from pango lineage report
-        pangolin_notes = pango_lineage_report.loc[pango_lineage_report["taxon"] == assembly_name]["note"].item()
-        if "pangolin_notes" not in upload_table.columns:
-          upload_table["pangolin_notes"] = ""
-        upload_table.at[sample_name, "pangolin_notes"] = pangolin_notes
-    
-    # TODO: drop assembly_fasta column? What about other columns that are not required for upload?
-    upload_table.to_csv("TERRA_TABLE_TEMP.tsv", sep='\t', index=True)
+          # parse pangolin_notes from pango lineage report
+          pangolin_notes = pango_lineage_report.loc[pango_lineage_report["taxon"] == assembly_name]["note"].item()
+          if "pangolin_notes" not in upload_table.columns:
+            upload_table["pangolin_notes"] = ""
+          upload_table.at[sample_name, "pangolin_notes"] = pangolin_notes
+
+    # to-do: add VADR outputs
+
+    upload_table.to_csv("terra-table-to-upload.tsv", sep='\t', index=True)
 
     CODE
 
-
-
     # upload results to terra databable 
-    #python3 scripts/import_large_tsv/import_large_tsv.py --project "~{project_name}" --workspace "~{workspace_name}" --tsv <path_to_tsv_to_upload> 
+    #python3 scripts/import_large_tsv/import_large_tsv.py --project "~{project_name}" --workspace "~{workspace_name}" --tsv terra-table-to-upload.tsv
 
     echo "DEBUG: upload to terra table complete"
   >>>
   output {
-    File terra_table = "TERRA_TABLE_TEMP.tsv"
-    Boolean success = true
+    File terra_table = "terra-table-to-upload.tsv"
   }
   runtime {
-    docker: "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-03-16"
+    docker: "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-08-28-v4"
     memory: "8 GB"
     cpu: 4
     disks:  "~{disk_size} local-disk "

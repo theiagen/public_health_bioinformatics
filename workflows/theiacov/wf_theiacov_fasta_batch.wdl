@@ -1,4 +1,4 @@
-version 1.1
+version 1.0
 
 import "../../tasks/species_typing/task_pangolin.wdl" as pangolin_task
 import "../../tasks/task_versioning.wdl" as versioning
@@ -60,7 +60,7 @@ workflow theiacov_fasta_batch {
       project_name = project_name,
       bucket_name = bucket_name,
       samplenames = samplenames,
-      sample_to_fasta = as_map(zip(samplenames, assembly_fastas)),
+      sample_to_fasta = zip(samplenames, assembly_fastas),
       organism = organism,
       nextclade_tsv = nextclade.nextclade_tsv,
       nextclade_docker = nextclade.nextclade_docker,
@@ -87,8 +87,7 @@ workflow theiacov_fasta_batch {
     File? nextclade_json = nextclade.nextclade_json
     File? auspice_json = nextclade.auspice_json
     File? nextclade_tsv = nextclade.nextclade_tsv
-    # success
-    Boolean success = sm_theiacov_fasta_wrangling.success
+    # Wrangling outputs
     File datatable = sm_theiacov_fasta_wrangling.terra_table
   }
 }
