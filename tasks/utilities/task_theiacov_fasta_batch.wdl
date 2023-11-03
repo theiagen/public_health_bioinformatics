@@ -31,24 +31,30 @@ task sm_theiacov_fasta_wrangling { # the sm stands for supermassive
     # example map: {ERR4439752.test: /mnt/miniwdl_task_container/work/_miniwdl_inputs/0/ERR4439752.ivar.consensus.fasta}
     cp -v ~{write_json(sample_to_fasta)} sample_to_fasta.json
 
-    # this line splits into individual json files
-    jq -c '.results = (.results[] | [.]) ' ~{nextclade_json} | awk '{ print > "out" NR ".json"}'
+    # check if nextclade json file exists
+    if [ -f ~{nextclade_json} ]; then
+      # this line splits into individual json files
+      jq -c '.results = (.results[] | [.]) ' ~{nextclade_json} | awk '{ print > "out" NR ".json"}'
     
-    # rename each individual json file with the sample name
-    for file in out*.json; do
-      samplename=$(jq -r '.results[].seqName' ${file})
-      cp -v ${file} ${samplename}.nextclade.json
-    done
+      # rename each individual json file with the sample name
+      for file in out*.json; do
+        samplename=$(jq -r '.results[].seqName' ${file})
+        cp -v ${file} ${samplename}.nextclade.json
+      done
     
-    # transfer all the json files to the bucket for access in Terra -- not sure if this works on Terra
-    gcloud storage cp -v *.nextclade.json gs://~{bucket_name}/theiacov_fasta_batch-~{theiacov_fasta_analysis_date}/nextclade_json/
+      # transfer all the json files to the bucket for access in Terra -- not sure if this works on Terra
+      gcloud storage cp -v *.nextclade.json gs://~{bucket_name}/theiacov_fasta_batch-~{theiacov_fasta_analysis_date}/nextclade_json/
+    fi
+    
+    # check if pangolin lineage report file exists
+    if [ -f ~{pango_lineage_report} ]; then
+      # split the pangolin lineage report into individual csv files named by the taxon
+      awk 'BEGIN {FS=","} NR==1 {header=$0; next} {print header > $1".pangolin_report.csv" ; print $0 >> $1".pangolin_report.csv"}' ~{pango_lineage_report}
 
-    # split the pangolin lineage report into individual csv files named by the taxon
-    awk 'BEGIN {FS=","} NR==1 {header=$0; next} {print header > $1".pangolin_report.csv" ; print $0 >> $1".pangolin_report.csv"}' ~{pango_lineage_report}
-
-    # transfer all pangolin lineage report files to the bucket for access in Terra
-    gcloud storage cp -v *pangolin_report.csv gs://~{bucket_name}/theiacov_fasta_batch-~{theiacov_fasta_analysis_date}/pangolin_report/
-
+      # transfer all pangolin lineage report files to the bucket for access in Terra
+      gcloud storage cp -v *pangolin_report.csv gs://~{bucket_name}/theiacov_fasta_batch-~{theiacov_fasta_analysis_date}/pangolin_report/
+    fi
+    
     echo "DEBUG: Now entering Python block to perform parsing of data for populating sample-level table"
 
     python3 <<CODE 
