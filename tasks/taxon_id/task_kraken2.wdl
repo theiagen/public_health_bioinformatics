@@ -161,11 +161,6 @@ task kraken2_parse_classified {
 
     python3 <<CODE 
     import pandas as pd 
-    import numpy as np 
-    import json
-    import csv
-    import os 
-    import re
 
     # load files into dataframe for parsing
     classifiedreads_table = pd.read_csv("~{samplename}.classifiedreads.txt", names=["Classified_Unclassified","Read_ID","Taxon_ID","Read_Len","Other"], header=None, delimiter="\t")
