@@ -23,7 +23,11 @@ task kraken2_theiacov {
       --threads ~{cpu} \
       --db ~{kraken2_db} \
       ~{read1} ~{read2} \
-      --report ~{samplename}_kraken2_report.txt >/dev/null
+      --report ~{samplename}_kraken2_report.txt \
+      --output ~{samplename}.classifiedreads.txt
+    
+    # Compress and cleanup
+    gzip ~{samplename}.classifiedreads.txt
 
     percentage_human=$(grep "Homo sapiens" ~{samplename}_kraken2_report.txt | cut -f 1)
      # | tee PERCENT_HUMAN
@@ -52,6 +56,7 @@ task kraken2_theiacov {
     Float percent_sc2 = read_float("PERCENT_SC2")
     String percent_target_org = read_string("PERCENT_TARGET_ORG")
     String? kraken_target_org = target_org
+    File kraken2_classified_report = "~{samplename}.classifiedreads.txt.gz" 
   }
   runtime {
     docker: "us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.0.8-beta_hv"
@@ -139,5 +144,68 @@ task kraken2_standalone {
       cpu: cpu
       disks: "local-disk 100 SSD"
       preemptible: 0
+  }
+}
+
+task kraken2_parse_classified {
+  input {
+    File kraken2_classified_report
+    File kraken2_report
+    String samplename
+    Int cpu = 4
+    Int disk_size = 100
+  }
+  command <<<
+
+    gunzip -c ~{kraken2_classified_report} > ~{samplename}.classifiedreads.txt
+
+    python3 <<CODE 
+    import pandas as pd 
+    import numpy as np 
+    import json
+    import csv
+    import os 
+    import re
+
+    # load files into dataframe for parsing
+    classifiedreads_table = pd.read_csv("~{samplename}.classifiedreads.txt", names=["Classified_Unclassified","Read_ID","Taxon_ID","Read_Len","Other"], header=None, delimiter="\t")
+    report_table = pd.read_csv("~{kraken2_report}", names=["Percent","Num_reads","Num_reads_with_taxon","Rank","Taxon_ID","Name"], header=None, delimiter="\t")
+
+    # create dataframe to store results
+    results_table = pd.DataFrame(columns=["Percent","Num_basepairs","Rank","Taxon_ID","Name"])
+    
+    # calculate total basepairs
+    total_basepairs = classifiedreads_table["Read_Len"].sum()
+
+    # for each taxon_id in the classifiedreads table, get the percent, num basepairs, rank, and name
+    # write results to dataframe
+    for taxon_id in classifiedreads_table["Taxon_ID"].unique():
+      
+      taxon_name = report_table.loc[report_table["Taxon_ID"] == taxon_id, "Name"].values[0].strip()
+      rank = report_table.loc[report_table["Taxon_ID"] == taxon_id, "Rank"].values[0].strip()
+      taxon_basepairs = classifiedreads_table.loc[classifiedreads_table["Taxon_ID"] == taxon_id, "Read_Len"].sum()
+      taxon_percent = taxon_basepairs / total_basepairs * 100
+      
+      results_table = pd.concat([results_table, pd.DataFrame({"Percent":taxon_percent, "Num_basepairs":taxon_basepairs, "Rank":rank, "Taxon_ID":taxon_id, "Name":taxon_name}, index=[0])], ignore_index=True)
+
+    # sort results by percent
+    results_table = results_table.sort_values(by=["Percent"], ascending=False)
+
+    # write results to file
+    results_table.to_csv("~{samplename}.report_parsed.txt", sep="\t", index=False, header=False)
+    CODE
+    
+  >>>
+  output {
+    File kraken_report = "~{samplename}.report_parsed.txt"
+  }
+  runtime {
+    docker: "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-08-28-v4"
+    memory: "8 GB"
+    cpu: cpu
+    disks:  "local-disk " + disk_size + " SSD"
+    disk: disk_size + " GB" # TES
+    preemptible: 0
+    maxRetries: 0
   }
 }
