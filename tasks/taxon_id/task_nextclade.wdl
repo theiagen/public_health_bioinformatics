@@ -144,7 +144,7 @@ task nextclade_output_parser {
             nc_lineage = tsv_dict['lineage']
             if nc_lineage is None:
               nc_lineage = ""
-          elif 'lineage' in tsv_dict:
+          elif 'Nextclade_pango' in tsv_dict:
             nc_lineage = tsv_dict['Nextclade_pango']
             if nc_lineage is None:
               nc_lineage = ""
