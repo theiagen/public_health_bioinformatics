@@ -177,19 +177,17 @@ task kraken2_parse_classified {
     # calculate total basepairs
     total_basepairs = classifiedreads_table["Read_Len"].sum()
 
-    # for each taxon_id in the classifiedreads table, get the percent, num basepairs, rank, and name
+    # for each taxon_id in the report table, check if exists in the classified reads output and if so get the percent, num basepairs, rank, and name
     # write results to dataframe
-    for taxon_id in classifiedreads_table["Taxon_ID"].unique():
+    for taxon_id in report_table["Taxon_ID"].unique():
+      if taxon_id in classifiedreads_table["Taxon_ID"].unique():
       
-      taxon_name = report_table.loc[report_table["Taxon_ID"] == taxon_id, "Name"].values[0].strip()
-      rank = report_table.loc[report_table["Taxon_ID"] == taxon_id, "Rank"].values[0].strip()
-      taxon_basepairs = classifiedreads_table.loc[classifiedreads_table["Taxon_ID"] == taxon_id, "Read_Len"].sum()
-      taxon_percent = taxon_basepairs / total_basepairs * 100
-      
-      results_table = pd.concat([results_table, pd.DataFrame({"Percent":taxon_percent, "Num_basepairs":taxon_basepairs, "Rank":rank, "Taxon_ID":taxon_id, "Name":taxon_name}, index=[0])], ignore_index=True)
-
-    # sort results by percent
-    results_table = results_table.sort_values(by=["Percent"], ascending=False)
+        taxon_name = report_table.loc[report_table["Taxon_ID"] == taxon_id, "Name"].values[0]
+        rank = report_table.loc[report_table["Taxon_ID"] == taxon_id, "Rank"].values[0].strip()
+        taxon_basepairs = classifiedreads_table.loc[classifiedreads_table["Taxon_ID"] == taxon_id, "Read_Len"].sum()
+        taxon_percent = taxon_basepairs / total_basepairs * 100
+        
+        results_table = pd.concat([results_table, pd.DataFrame({"Percent":taxon_percent, "Num_basepairs":taxon_basepairs, "Rank":rank, "Taxon_ID":taxon_id, "Name":taxon_name}, index=[0])], ignore_index=True)
 
     # write results to file
     results_table.to_csv("~{samplename}.report_parsed.txt", sep="\t", index=False, header=False)
