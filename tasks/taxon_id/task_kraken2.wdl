@@ -178,7 +178,7 @@ task kraken2_parse_classified {
     for taxon_id in report_table["Taxon_ID"].unique():
       if taxon_id in classifiedreads_table["Taxon_ID"].unique():
       
-        taxon_name = report_table.loc[report_table["Taxon_ID"] == taxon_id, "Name"].values[0]
+        taxon_name = report_table.loc[report_table["Taxon_ID"] == taxon_id, "Name"].values[0].strip()
         rank = report_table.loc[report_table["Taxon_ID"] == taxon_id, "Rank"].values[0].strip()
         taxon_basepairs = classifiedreads_table.loc[classifiedreads_table["Taxon_ID"] == taxon_id, "Read_Len"].sum()
         taxon_percent = taxon_basepairs / total_basepairs * 100
