@@ -34,11 +34,9 @@ workflow kraken2_ont_wf {
     # Kraken2
     String kraken2_version = kraken2_se.kraken2_version
     String kraken2_docker = kraken2_se.kraken2_docker
-    File kraken2_report = kraken2_se.kraken2_report
+    File kraken2_report = kraken2_recalculate_abundances.kraken_report
     File kraken2_classified_report = kraken2_se.kraken2_classified_report
     File kraken2_unclassified_read1 = kraken2_se.kraken2_unclassified_read1
     File kraken2_classified_read1 = kraken2_se.kraken2_classified_read1
-    # Kraken2 - recalculated abundances
-    File kraken2_recalculated_abundances_report = kraken2_recalculate_abundances.kraken_report
   }
 }
