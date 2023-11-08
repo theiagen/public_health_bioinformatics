@@ -41,7 +41,7 @@ task kraken2_theiacov {
     if [ ! -z "~{target_org}" ]; then 
       echo "Target org designated: ~{target_org}"
       percent_target_org=$(grep "~{target_org}" ~{samplename}_kraken2_report.txt | cut -f1 | head -n1 )
-      if [-z "$percent_target_org" ] ; then percent_target_org="0" ; fi
+      if [ -z "$percent_target_org" ] ; then percent_target_org="0" ; fi
     else 
       percent_target_org=""
     fi
@@ -152,6 +152,7 @@ task kraken2_parse_classified {
     File kraken2_classified_report
     File kraken2_report
     String samplename
+    String? target_org
     Int cpu = 4
     Int disk_size = 100
   }
@@ -187,10 +188,33 @@ task kraken2_parse_classified {
     # write results to file
     results_table.to_csv("~{samplename}.report_parsed.txt", sep="\t", index=False, header=False)
     CODE
+
+    # theiacov parsing blocks - percent human, sc2 and target organism
+    percentage_human=$(grep "Homo sapiens" ~{samplename}.report_parsed.txt | cut -f 1)
+    percentage_sc2=$(grep "Severe acute respiratory syndrome coronavirus 2" ~{samplename}.report_parsed.txt | cut -f1 )
+
+    if [ -z "$percentage_human" ] ; then percentage_human="0" ; fi
+    if [ -z "$percentage_sc2" ] ; then percentage_sc2="0" ; fi
+    echo $percentage_human | tee PERCENT_HUMAN
+    echo $percentage_sc2 | tee PERCENT_SC2
+
+    # capture target org percentage 
+    if [ ! -z "~{target_org}" ]; then 
+      echo "Target org designated: ~{target_org}"
+      percent_target_org=$(grep "~{target_org}" ~{samplename}.report_parsed.txt | cut -f1 | head -n1 )
+      if [ -z "$percent_target_org" ] ; then percent_target_org="0" ; fi
+    else 
+      percent_target_org=""
+    fi
+    echo $percent_target_org | tee PERCENT_TARGET_ORG
     
   >>>
   output {
     File kraken_report = "~{samplename}.report_parsed.txt"
+    Float percent_human = read_float("PERCENT_HUMAN")
+    Float percent_sc2 = read_float("PERCENT_SC2")
+    String percent_target_org = read_string("PERCENT_TARGET_ORG")
+    String? kraken_target_org = target_org
   }
   runtime {
     docker: "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-08-28-v4"
