@@ -7,6 +7,7 @@ task aa_subs {
   input {
     File alignment
     String protein_name
+    String? subtype
     #plave holder for organism variable, might be used in the future for organisms other than flu
     String? organism
     String docker = "us-docker.pkg.dev/general-theiagen/broadinstitute/viral-core:2.1.33"
@@ -14,7 +15,11 @@ task aa_subs {
     Int cpu = 2
   }
   command <<<
-  if [[ "~{protein_name}" == "PA" ]] ; then
+  if [[ "~{protein_name}" == "NA" && "~{subtype}" == "H1N1" ]] ; then
+    reference_id="CY121682.1"
+  elif [[ "~{protein_name}" == "NA" && "~{subtype}" == "H3N2" ]] ; then
+    reference_id="CY114383.1"
+  elif [[ "~{protein_name}" == "PA" ]] ; then
     reference_id="CY121685.1"
   elif [[ "~{protein_name}" == "PB1" ]] ; then
     reference_id="CY121686.1"
