@@ -416,17 +416,17 @@ workflow theiacov_illumina_pe {
     String nextclade_clade = select_first([nextclade_output_parser.nextclade_clade, ""])
     String? nextclade_lineage = nextclade_output_parser.nextclade_lineage
     # Flu resistance mutations
-    String? flu_A_315675_resistance_aa_subs = select_all([flu_antiviral_parser_pa.A_315675_aa_subs,flu_antiviral_parser_pb1.A_315675_aa_subs,flu_antiviral_parser_pb2.A_315675_aa_subs])
-    String? flu_compound_367_resistance_aa_subs = select_all([flu_antiviral_parser_pa.compound_367_aa_subs,flu_antiviral_parser_pb1.compound_367_aa_subs,flu_antiviral_parser_pb2.compound_367_aa_subs])
-    String? flu_favipiravir_resistance_aa_subs = select_all([flu_antiviral_parser_pa.favipiravir_aa_subs,flu_antiviral_parser_pb1.favipiravir_aa_subs,flu_antiviral_parser_pb2.favipiravir_aa_subs])
-    String? flu_fludase_resistance_aa_subs = select_all([flu_antiviral_parser_pa.fludase_aa_subs,flu_antiviral_parser_pb1.fludase_aa_subs,flu_antiviral_parser_pb2.fludase_aa_subs])
-    String? flu_L_742_001_resistance_aa_subs = select_all([flu_antiviral_parser_pa.L_742_001_aa_subs,flu_antiviral_parser_pb1.L_742_001_aa_subs,flu_antiviral_parser_pb2.L_742_001_aa_subs])
-    String? flu_laninamivir_resistance_aa_subs = select_all([flu_antiviral_parser_pa.laninamivir_aa_subs,flu_antiviral_parser_pb1.laninamivir_aa_subs,flu_antiviral_parser_pb2.laninamivir_aa_subs])
-    String? flu_peramivir_resistance_aa_subs = select_all([flu_antiviral_parser_pa.peramivir_aa_subs,flu_antiviral_parser_pb1.peramivir_aa_subs,flu_antiviral_parser_pb2.peramivir_aa_subs])
-    String? flu_pimodivir_resistance_aa_subs = select_all([flu_antiviral_parser_pa.pimodivir_aa_subs,flu_antiviral_parser_pb1.pimodivir_aa_subs,flu_antiviral_parser_pb2.pimodivir_aa_subs])
-    String? flu_tamiflu_resistance_aa_subs = select_all([flu_antiviral_parser_pa.tamiflu_aa_subs,flu_antiviral_parser_pb1.tamiflu_aa_subs,flu_antiviral_parser_pb2.tamiflu_aa_subs])
-    String? flu_xofluza_resistance_aa_subs = select_all([flu_antiviral_parser_pa.xofluza_aa_subs,flu_antiviral_parser_pb1.xofluza_aa_subs,flu_antiviral_parser_pb2.xofluza_aa_subs])
-    String? flu_zanamivir_resistance_aa_subs = select_all([flu_antiviral_parser_pa.zanamivir_aa_subs,flu_antiviral_parser_pb1.zanamivir_aa_subs,flu_antiviral_parser_pb2.zanamivir_aa_subs])
+    Array[String?] flu_A_315675_resistance_aa_subs = select_all([flu_antiviral_parser_pa.A_315675_aa_subs,flu_antiviral_parser_pb1.A_315675_aa_subs,flu_antiviral_parser_pb2.A_315675_aa_subs])
+    Array[String?] flu_compound_367_resistance_aa_subs = select_all([flu_antiviral_parser_pa.compound_367_aa_subs,flu_antiviral_parser_pb1.compound_367_aa_subs,flu_antiviral_parser_pb2.compound_367_aa_subs])
+    Array[String?] flu_favipiravir_resistance_aa_subs = select_all([flu_antiviral_parser_pa.favipiravir_aa_subs,flu_antiviral_parser_pb1.favipiravir_aa_subs,flu_antiviral_parser_pb2.favipiravir_aa_subs])
+    Array[String?] flu_fludase_resistance_aa_subs = select_all([flu_antiviral_parser_pa.fludase_aa_subs,flu_antiviral_parser_pb1.fludase_aa_subs,flu_antiviral_parser_pb2.fludase_aa_subs])
+    Array[String?] flu_L_742_001_resistance_aa_subs = select_all([flu_antiviral_parser_pa.L_742_001_aa_subs,flu_antiviral_parser_pb1.L_742_001_aa_subs,flu_antiviral_parser_pb2.L_742_001_aa_subs])
+    Array[String?] flu_laninamivir_resistance_aa_subs = select_all([flu_antiviral_parser_pa.laninamivir_aa_subs,flu_antiviral_parser_pb1.laninamivir_aa_subs,flu_antiviral_parser_pb2.laninamivir_aa_subs])
+    Array[String?] flu_peramivir_resistance_aa_subs = select_all([flu_antiviral_parser_pa.peramivir_aa_subs,flu_antiviral_parser_pb1.peramivir_aa_subs,flu_antiviral_parser_pb2.peramivir_aa_subs])
+    Array[String?] flu_pimodivir_resistance_aa_subs = select_all([flu_antiviral_parser_pa.pimodivir_aa_subs,flu_antiviral_parser_pb1.pimodivir_aa_subs,flu_antiviral_parser_pb2.pimodivir_aa_subs])
+    Array[String?] flu_tamiflu_resistance_aa_subs = select_all([flu_antiviral_parser_pa.tamiflu_aa_subs,flu_antiviral_parser_pb1.tamiflu_aa_subs,flu_antiviral_parser_pb2.tamiflu_aa_subs])
+    Array[String?] flu_xofluza_resistance_aa_subs = select_all([flu_antiviral_parser_pa.xofluza_aa_subs,flu_antiviral_parser_pb1.xofluza_aa_subs,flu_antiviral_parser_pb2.xofluza_aa_subs])
+    Array[String?] flu_zanamivir_resistance_aa_subs = select_all([flu_antiviral_parser_pa.zanamivir_aa_subs,flu_antiviral_parser_pb1.zanamivir_aa_subs,flu_antiviral_parser_pb2.zanamivir_aa_subs])
     # VADR Annotation QC
     File? vadr_alerts_list = vadr.alerts_list
     String? vadr_num_alerts = vadr.num_alerts
