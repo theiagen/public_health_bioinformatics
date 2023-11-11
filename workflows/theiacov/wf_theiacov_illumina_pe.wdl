@@ -210,7 +210,6 @@ workflow theiacov_illumina_pe {
         call flu_antiviral.aa_subs as aa_subs_pa {
           input:
             alignment = mafft_pa.msa,
-            reference_id = flu_pa_ref,
             organism = "flu",
             protein_name = "PA"
         }
@@ -228,7 +227,6 @@ workflow theiacov_illumina_pe {
         call flu_antiviral.aa_subs as aa_subs_pb1 {
           input:
             alignment = mafft_pb1.msa,
-            reference_id = flu_pb1_ref,
             organism = "flu",
             protein_name = "PB1"
         }
@@ -246,7 +244,6 @@ workflow theiacov_illumina_pe {
         call flu_antiviral.aa_subs as aa_subs_pb2 {
           input:
             alignment = mafft_pb2.msa,
-            reference_id = flu_pb2_ref,
             organism = "flu",
             protein_name = "PB2"
         }

@@ -6,14 +6,26 @@ task aa_subs {
   }
   input {
     File alignment
-    String? reference_id
-    String? protein_name
+    String protein_name
     String? organism
     String docker = "us-docker.pkg.dev/general-theiagen/broadinstitute/viral-core:2.1.33"
     Int disk_size = 100
     Int cpu = 2
+    File flu_pa_ref = "gs://theiagen-public-files-rp/terra/flu-references/reference_pa.fasta"
+    File flu_pb1_ref = "gs://theiagen-public-files-rp/terra/flu-references/reference_pb1.fasta"
+    File flu_pb2_ref = "gs://theiagen-public-files-rp/terra/flu-references/reference_pb2.fasta"
   }
-  command <<< 
+  command <<<
+  if [[ "~{protein_name}" == "PA" ]] ; then
+    reference_id="CY121685.1"
+  elif [[ "~{protein_name}" == "PB1" ]] ; then
+    reference_id="CY121686.1"
+  elif [[ "~{protein_name}" == "PB2" ]] ; then
+    reference_id="CY121687.1"
+  else
+    echo "Please enter a valid protein name such as PA, PB1, or PB2"
+  fi
+
   python3 <<CODE
   from Bio import AlignIO
   from Bio.Seq import Seq
@@ -25,11 +37,11 @@ task aa_subs {
   alignment = AlignIO.read("~{alignment}", "fasta")
   
   # Identify the reference sequence
-  reference_id = "~{reference_id}"
+  reference_id = "${reference_id}"
   reference_sequence_record = next((record for record in alignment if reference_id in record.id), None)
   
   if reference_sequence_record is None:
-      raise ValueError(f"Reference sequence with ID {reference_id} not found in the alignment.")
+      raise ValueError(f"Reference sequence with ID ${reference_id} not found in the alignment.")
   
   # Find the position of the first and last non-gap character in the reference sequence
   first_base_pos = next((i for i, c in enumerate(reference_sequence_record.seq) if c != '-'), None)
