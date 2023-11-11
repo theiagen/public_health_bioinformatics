@@ -7,6 +7,7 @@ task aa_subs {
   input {
     File alignment
     String protein_name
+    #plave holder for organism variable, might be used in the future for organisms other than flu
     String? organism
     String docker = "us-docker.pkg.dev/general-theiagen/broadinstitute/viral-core:2.1.33"
     Int disk_size = 100
@@ -113,7 +114,7 @@ task aa_subs {
 
 task antiviral_mutations_parser {
     meta {
-      description: "Python and bash codeblocks for parsing the output files from Nextclade."
+      description: "Parsing the output files from aa_subs task if any of the mutations are associated with antiviral resistsnce."
     }
     input {
       File mutations_tsv
