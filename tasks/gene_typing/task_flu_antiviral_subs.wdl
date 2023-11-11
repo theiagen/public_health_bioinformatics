@@ -11,9 +11,6 @@ task aa_subs {
     String docker = "us-docker.pkg.dev/general-theiagen/broadinstitute/viral-core:2.1.33"
     Int disk_size = 100
     Int cpu = 2
-    File flu_pa_ref = "gs://theiagen-public-files-rp/terra/flu-references/reference_pa.fasta"
-    File flu_pb1_ref = "gs://theiagen-public-files-rp/terra/flu-references/reference_pb1.fasta"
-    File flu_pb2_ref = "gs://theiagen-public-files-rp/terra/flu-references/reference_pb2.fasta"
   }
   command <<<
   if [[ "~{protein_name}" == "PA" ]] ; then
