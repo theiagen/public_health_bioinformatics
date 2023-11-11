@@ -13,6 +13,8 @@ import "../../tasks/gene_typing/task_abricate.wdl" as abricate
 import "../../tasks/gene_typing/task_sc2_gene_coverage.wdl" as sc2_calculation
 import "../../tasks/quality_control/task_qc_check_phb.wdl" as qc_check
 import "../../tasks/task_versioning.wdl" as versioning
+import "../../tasks/gene_typing/task_flu_antiviral_subs.wdl" as flu_antiviral
+import "../../tasks/alignment/task_mafft.wdl" as mafft_task
 
 workflow theiacov_illumina_pe {
   meta {
@@ -64,6 +66,11 @@ workflow theiacov_illumina_pe {
     Boolean skip_screen = false
     # qc check parameters
     File? qc_check_table
+    # Amino acid sunstitutions
+    File? flu_pa_ref = "gs://theiagen-public-files-rp/terra/flu-references/reference_pa.fasta"
+    File? flu_pb1_ref = "gs://theiagen-public-files-rp/terra/flu-references/reference_pb1.fasta"
+    File? flu_pb2_ref = "gs://theiagen-public-files-rp/terra/flu-references/reference_pb2.fasta"
+    String? antiviral_aa_subs #user input for antiviral aa subs to be reported
   }
   call screen.check_reads as raw_check_reads {
     input:
@@ -133,6 +140,7 @@ workflow theiacov_illumina_pe {
             read1 = read_QC_trim.read1_clean,
             read2 = read_QC_trim.read2_clean,
             samplename = samplename,
+            seq_method = seq_method
         }
         if (defined(irma.irma_assemblies)) {
           call abricate.abricate_flu {
@@ -192,6 +200,61 @@ workflow theiacov_illumina_pe {
         String ha_na_nextclade_ds_tag= "~{abricate_flu.nextclade_ds_tag_ha + ',' + abricate_flu.nextclade_ds_tag_na}"
         String ha_na_nextclade_aa_subs= "~{nextclade_output_parser.nextclade_aa_subs + ',' + nextclade_output_parser_flu_na.nextclade_aa_subs}"
         String ha_na_nextclade_aa_dels= "~{nextclade_output_parser.nextclade_aa_dels + ',' + nextclade_output_parser_flu_na.nextclade_aa_dels}"
+      }
+      # Identify AA changes for Influenza PA, PB1 and PB2 segments
+      if (organism == "flu" &&  defined(irma.seg_pa_assembly)) {
+        call mafft_task.mafft as mafft_pa {
+          input:
+            genomes = select_all([flu_pa_ref,irma.seg_pa_assembly])
+        }
+        call flu_antiviral.aa_subs as aa_subs_pa {
+          input:
+            alignment = mafft_pa.msa,
+            reference_id = flu_pa_ref,
+            organism = "flu",
+            protein_name = "PA"
+        }
+        call flu_antiviral.antiviral_mutations_parser as flu_antiviral_parser_pa {
+          input:
+            mutations_tsv = aa_subs_pa.aa_changes_tsv,
+            antiviral_aa_subs = antiviral_aa_subs
+        }
+      }
+      if (organism == "flu" &&  defined(irma.seg_pb1_assembly)) {
+        call mafft_task.mafft as mafft_pb1 {
+          input:
+            genomes = select_all([flu_pb1_ref,irma.seg_pb1_assembly])
+        }
+        call flu_antiviral.aa_subs as aa_subs_pb1 {
+          input:
+            alignment = mafft_pb1.msa,
+            reference_id = flu_pb1_ref,
+            organism = "flu",
+            protein_name = "PB1"
+        }
+        call flu_antiviral.antiviral_mutations_parser as flu_antiviral_parser_pb1 {
+          input:
+            mutations_tsv = aa_subs_pb1.aa_changes_tsv,
+            antiviral_aa_subs = antiviral_aa_subs
+        }
+      }
+      if (organism == "flu" &&  defined(irma.seg_pb2_assembly)) {
+        call mafft_task.mafft as mafft_pb2 {
+          input:
+            genomes = select_all([flu_pb2_ref,irma.seg_pb2_assembly])
+        }
+        call flu_antiviral.aa_subs as aa_subs_pb2 {
+          input:
+            alignment = mafft_pb2.msa,
+            reference_id = flu_pb2_ref,
+            organism = "flu",
+            protein_name = "PB2"
+        }
+        call flu_antiviral.antiviral_mutations_parser as flu_antiviral_parser_pb2 {
+          input:
+            mutations_tsv = aa_subs_pb2.aa_changes_tsv,
+            antiviral_aa_subs = antiviral_aa_subs
+        }
       }
       if (organism == "sars-cov-2") {
         # sars-cov-2 specific tasks
@@ -352,8 +415,18 @@ workflow theiacov_illumina_pe {
     String nextclade_aa_dels = select_first([ha_na_nextclade_aa_dels, nextclade_output_parser.nextclade_aa_dels, ""])
     String nextclade_clade = select_first([nextclade_output_parser.nextclade_clade, ""])
     String? nextclade_lineage = nextclade_output_parser.nextclade_lineage
-    # Nextclade Flu outputs - NA specific columns - tamiflu mutation
-    String? nextclade_tamiflu_resistance_aa_subs = nextclade_output_parser_flu_na.nextclade_tamiflu_aa_subs
+    # Flu resistance mutations
+    String? flu_A_315675_resistance_aa_subs = select_all([flu_antiviral_parser_pa.A_315675_aa_subs,flu_antiviral_parser_pb1.A_315675_aa_subs,flu_antiviral_parser_pb2.A_315675_aa_subs])
+    String? flu_compound_367_resistance_aa_subs = select_all([flu_antiviral_parser_pa.compound_367_aa_subs,flu_antiviral_parser_pb1.compound_367_aa_subs,flu_antiviral_parser_pb2.compound_367_aa_subs])
+    String? flu_favipiravir_resistance_aa_subs = select_all([flu_antiviral_parser_pa.favipiravir_aa_subs,flu_antiviral_parser_pb1.favipiravir_aa_subs,flu_antiviral_parser_pb2.favipiravir_aa_subs])
+    String? flu_fludase_resistance_aa_subs = select_all([flu_antiviral_parser_pa.fludase_aa_subs,flu_antiviral_parser_pb1.fludase_aa_subs,flu_antiviral_parser_pb2.fludase_aa_subs])
+    String? flu_L_742_001_resistance_aa_subs = select_all([flu_antiviral_parser_pa.L_742_001_aa_subs,flu_antiviral_parser_pb1.L_742_001_aa_subs,flu_antiviral_parser_pb2.L_742_001_aa_subs])
+    String? flu_laninamivir_resistance_aa_subs = select_all([flu_antiviral_parser_pa.laninamivir_aa_subs,flu_antiviral_parser_pb1.laninamivir_aa_subs,flu_antiviral_parser_pb2.laninamivir_aa_subs])
+    String? flu_peramivir_resistance_aa_subs = select_all([flu_antiviral_parser_pa.peramivir_aa_subs,flu_antiviral_parser_pb1.peramivir_aa_subs,flu_antiviral_parser_pb2.peramivir_aa_subs])
+    String? flu_pimodivir_resistance_aa_subs = select_all([flu_antiviral_parser_pa.pimodivir_aa_subs,flu_antiviral_parser_pb1.pimodivir_aa_subs,flu_antiviral_parser_pb2.pimodivir_aa_subs])
+    String? flu_tamiflu_resistance_aa_subs = select_all([flu_antiviral_parser_pa.tamiflu_aa_subs,flu_antiviral_parser_pb1.tamiflu_aa_subs,flu_antiviral_parser_pb2.tamiflu_aa_subs])
+    String? flu_xofluza_resistance_aa_subs = select_all([flu_antiviral_parser_pa.xofluza_aa_subs,flu_antiviral_parser_pb1.xofluza_aa_subs,flu_antiviral_parser_pb2.xofluza_aa_subs])
+    String? flu_zanamivir_resistance_aa_subs = select_all([flu_antiviral_parser_pa.zanamivir_aa_subs,flu_antiviral_parser_pb1.zanamivir_aa_subs,flu_antiviral_parser_pb2.zanamivir_aa_subs])
     # VADR Annotation QC
     File? vadr_alerts_list = vadr.alerts_list
     String? vadr_num_alerts = vadr.num_alerts
@@ -380,5 +453,9 @@ workflow theiacov_illumina_pe {
     # QC_Check Results
     String? qc_check = qc_check_task.qc_check
     File? qc_standard = qc_check_task.qc_standard
+    # AA sunstitutions
+    File? flu_pa_aa = aa_subs_pa.aa_changes_tsv
+    File? flu_pb1_aa = aa_subs_pb1.aa_changes_tsv
+    File? flu_pb2_aa = aa_subs_pb2.aa_changes_tsv
   }
 }
