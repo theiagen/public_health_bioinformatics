@@ -18,9 +18,11 @@ task czgenepi_wrangling {
     String county_column_name
 
     # optional inputs
-    String gisaid_id_column_name
     String genbank_accession_column_name
     String sequencing_date_column_name
+
+    # setting columns
+    String organism
     Boolean is_private
 
     # runtime
@@ -36,6 +38,17 @@ task czgenepi_wrangling {
     import re
     import os
 
+    # set a function to grab only the year from the date
+    def year_getter(date):
+      r = re.compile('^\d{4}-\d{2}-\d{2}')      
+      if pd.isna(date):
+        print("Incorrect collection date format; collection date must be in YYYY-MM-DD format. Invalid date was: NaN")
+      elif r.match(date) is None:
+        print("Incorrect collection date format; collection date must be in YYYY-MM-DD format. Invalid date was: " + str(date))
+        return np.nan
+      else:
+        return date.split("-")[0]
+
     if os.environ["is_private"] == "true":
       is_private = "Yes"
     else:
@@ -43,8 +56,19 @@ task czgenepi_wrangling {
 
     # make lists for the columns needed for the metadata spreadsheet
     REQUIRED_COLUMNS = ["~{terra_table_name}_id", "~{collection_date_column_name}", "~{private_id_column_name}", "~{continent_column_name}", "~{country_column_name}", "~{state_column_name}"]
-    OPTIONAL_COLUMNS = ["~{county_column_name}", "~{gisaid_id_column_name}", "~{genbank_accession_column_name}", "~{sequencing_date_column_name}"]
-    OUTPUT_COLUMN_ORDER = ["Sample Name (from FASTA)", "Private ID", "GISAID ID (Public ID) - Optional", "GenBank Accession (Public ID) - Optional", "Collection Date", "Collection Location", "Sequencing Date - Optional", "Sample is Private"]
+    OPTIONAL_COLUMNS_SC2 = ["~{county_column_name}", "~{sequencing_date_column_name}"]
+    OPTIONAL_COLUMNS_MPOX = ["~{county_column_name}", "~{genbank_accession_column_name}", "~{sequencing_date_column_name}"]
+    OUTPUT_COLUMN_ORDER_SC2 =["Sample Name (from FASTA)", "Private ID", "GISAID ID (Public ID) - Optional", "Collection Date", "Collection Location", "Sequencing Date - Optional", "Sample is Private"]
+    OUTPUT_COLUMN_ORDER_MPOX =["Sample Name (from FASTA)", "Private ID", "GenBank Accession (Public ID) - Optional", "Collection Date", "Collection Location", "Sequencing Date - Optional", "Sample is Private"]
+
+    # set optional columns based on organism
+    if "~{organism}" == "sars-cov-2":
+      OPTIONAL_COLUMNS = OPTIONAL_COLUMNS_SC2
+      OUTPUT_COLUMN_ORDER = OUTPUT_COLUMN_ORDER_SC2
+
+    elif "~{organism}" == "mpox":
+      OPTIONAL_COLUMNS = OPTIONAL_COLUMNS_MPOX
+      OUTPUT_COLUMN_ORDER = OUTPUT_COLUMN_ORDER_MPOX
 
     # read in terra table and set the private_id_column_name to be only strings
     print("DEBUG: reading in terra table")
@@ -82,6 +106,12 @@ task czgenepi_wrangling {
     # add county to the location if the length of the county is > 0
     metadata["Collection Location"] = metadata.apply(lambda x: x["Collection Location"] + "/" + x["county"] if len(x["county"]) > 0 else x["Collection Location"], axis=1)
 
+
+    if "~{organism}" == "sars-cov-2":
+      metadata["GISAID ID (Public ID) - Optional"] = "hCoV-19/" + table["state"] + "/" + table["~{private_id_column_name}"] + "/" + table["collection_date"].apply(lambda x: year_getter(x))
+    else:
+      metadata.rename(columns={"~{genbank_accession_column_name}": "GenBank Accession (Public ID) - Optional"}, inplace=True)
+
     print("DEBUG: checking if private_id column was set")
     if "~{private_id_column_name}" == "~{terra_table_name}_id":
       print("DEBUG: removing duplicated column")
@@ -93,8 +123,7 @@ task czgenepi_wrangling {
     print("DEBUG: renaming the rest of the headers")
     # rename headers to match CZGenEpi's expected format
     metadata.rename(columns={"~{terra_table_name}_id": "Sample Name (from FASTA)", 
-                             "~{gisaid_id_column_name}": "GISAID ID (Public ID) - Optional",  
-                             "~{genbank_accession_column_name}": "GenBank Accession (Public ID) - Optional",
+                            
                              "~{collection_date_column_name}": "Collection Date",
                              "~{sequencing_date_column_name}": "Sequencing Date - Optional"}, inplace=True)
 
