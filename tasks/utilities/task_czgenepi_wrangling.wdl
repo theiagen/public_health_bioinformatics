@@ -21,12 +21,14 @@ task czgenepi_wrangling {
     String gisaid_id_column_name
     String genbank_accession_column_name
     String sequencing_date_column_name
-    String sample_is_private_column_name
+    Boolean is_private
 
     # runtime
     Int disk_size = 100
   }
   command <<<
+    export is_private=~{is_private}
+   
     # parse terra table for data
     python3 <<CODE
     import pandas as pd
@@ -34,9 +36,14 @@ task czgenepi_wrangling {
     import re
     import os
 
+    if os.environ["is_private"] == "true":
+      is_private = "Yes"
+    else:
+      is_private = "No"
+
     # make lists for the columns needed for the metadata spreadsheet
     REQUIRED_COLUMNS = ["~{terra_table_name}_id", "~{collection_date_column_name}", "~{private_id_column_name}", "~{continent_column_name}", "~{country_column_name}", "~{state_column_name}"]
-    OPTIONAL_COLUMNS = ["~{county_column_name}", "~{gisaid_id_column_name}", "~{genbank_accession_column_name}", "~{sequencing_date_column_name}", "~{sample_is_private_column_name}"]
+    OPTIONAL_COLUMNS = ["~{county_column_name}", "~{gisaid_id_column_name}", "~{genbank_accession_column_name}", "~{sequencing_date_column_name}"]
     OUTPUT_COLUMN_ORDER = ["Sample Name (from FASTA)", "Private ID", "GISAID ID (Public ID) - Optional", "GenBank Accession (Public ID) - Optional", "Collection Date", "Collection Location", "Sequencing Date - Optional", "Sample is Private"]
 
     # read in terra table and set the private_id_column_name to be only strings
@@ -61,13 +68,10 @@ task czgenepi_wrangling {
     for column in OPTIONAL_COLUMNS:
       if column in table.columns:
         metadata[column] = table[column]
-
       else:
-        if column == "sample_is_private":
-          # by default, all samples will be set as private
-          metadata[column] = "Yes" 
-        else:
-          metadata[column] = ""
+        metadata[column] = ""
+    
+    metadata["Sample is Private"] = is_private
 
     metadata = metadata.fillna("")
 
@@ -92,8 +96,7 @@ task czgenepi_wrangling {
                              "~{gisaid_id_column_name}": "GISAID ID (Public ID) - Optional",  
                              "~{genbank_accession_column_name}": "GenBank Accession (Public ID) - Optional",
                              "~{collection_date_column_name}": "Collection Date",
-                             "~{sequencing_date_column_name}": "Sequencing Date - Optional", 
-                             "~{sample_is_private_column_name}": "Sample is Private"}, inplace=True)
+                             "~{sequencing_date_column_name}": "Sequencing Date - Optional"}, inplace=True)
 
     # write the output to a csv file
     metadata.to_csv("czgenepi_prep_metadata.csv", columns=OUTPUT_COLUMN_ORDER, index=False)

@@ -28,7 +28,7 @@ workflow czgenepi_prep {
     String gisaid_id_column_name = "gisaid_accession"
     String genbank_accession_column_name = "genbank_accession"
     String sequencing_date_column_name = "sequencing_date"
-    String sample_is_private_column_name = "sample_is_private"
+    Boolean is_private = true
   }
   call versioning.version_capture{
     input:
@@ -54,7 +54,7 @@ workflow czgenepi_prep {
       gisaid_id_column_name = gisaid_id_column_name,
       genbank_accession_column_name = genbank_accession_column_name,
       sequencing_date_column_name = sequencing_date_column_name,
-      sample_is_private_column_name = sample_is_private_column_name
+      is_private = is_private
   }
   output {
     File concatenated_czgenepi_fasta = czgenepi_wrangling.concatenated_fasta
