@@ -299,6 +299,10 @@ workflow theiacov_illumina_pe {
     File? read2_aligned = ivar_consensus.read2_aligned
     String aligned_bam = select_first([ivar_consensus.aligned_bam, ""])
     String aligned_bai = select_first([ivar_consensus.aligned_bai, ""])
+    File? read1_unaligned = ivar_consensus.read1_unaligned
+    File? read2_unaligned = ivar_consensus.read2_unaligned
+    File? sorted_bam_unaligned = ivar_consensus.sorted_bam_unaligned
+    File? sorted_bam_unaligned_bai = ivar_consensus.sorted_bam_unaligned_bai
     # Read Alignment - primer trimming outputs
     Float? primer_trimmed_read_percent = ivar_consensus.primer_trimmed_read_percent
     String? ivar_version_primtrim = ivar_consensus.ivar_version_primtrim
