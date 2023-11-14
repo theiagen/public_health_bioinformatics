@@ -451,6 +451,7 @@ workflow theiacov_illumina_pe {
     String nextclade_clade = select_first([nextclade_output_parser.nextclade_clade, ""])
     String? nextclade_lineage = nextclade_output_parser.nextclade_lineage
     # Flu resistance mutations
+    String? nextclade_tamiflu_resistance_aa_subs = nextclade_output_parser_flu_na.nextclade_tamiflu_aa_subs
     Array[String?] flu_A_315675_resistance_aa_subs = select_all([flu_antiviral_parser_n1_na.A_315675_aa_subs,flu_antiviral_parser_n2_na.A_315675_aa_subs,flu_antiviral_parser_pa.A_315675_aa_subs,flu_antiviral_parser_pb1.A_315675_aa_subs,flu_antiviral_parser_pb2.A_315675_aa_subs])
     Array[String?] flu_compound_367_resistance_aa_subs = select_all([flu_antiviral_parser_n1_na.compound_367_aa_subs,flu_antiviral_parser_n2_na.compound_367_aa_subs,flu_antiviral_parser_pa.compound_367_aa_subs,flu_antiviral_parser_pb1.compound_367_aa_subs,flu_antiviral_parser_pb2.compound_367_aa_subs])
     Array[String?] flu_favipiravir_resistance_aa_subs = select_all([flu_antiviral_parser_n1_na.favipiravir_aa_subs,flu_antiviral_parser_n2_na.favipiravir_aa_subs,flu_antiviral_parser_pa.favipiravir_aa_subs,flu_antiviral_parser_pb1.favipiravir_aa_subs,flu_antiviral_parser_pb2.favipiravir_aa_subs])
