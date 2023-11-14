@@ -183,6 +183,11 @@ task antiviral_mutations_parser {
       zanamivir_aa_subs = ["HA:A28T","HA:K140E","HA:K144E","HA:K162E","HA:K165E","HA:L317P","HA:L320P","HA:R453M","NA:A200T","NA:A201A","NA:A201T","NA:A243T","NA:A245T","NA:A246T","NA:D151A","NA:D151D","NA:D151E","NA:D151G","NA:D151N","NA:D151V","NA:D179G","NA:D197E","NA:D197N","NA:D197Y","NA:D198D","NA:D198E","NA:D198G","NA:D198N","NA:D198Y","NA:D199N","NA:E99A","NA:E99D","NA:E99G","NA:E105K","NA:E110K","NA:E117A","NA:E117D","NA:E117G","NA:E118D","NA:E118G","NA:E119A","NA:E119D","NA:E119G","NA:E119I","NA:E119V","NA:E276D","NA:G104E","NA:G109E","NA:G140R","NA:G142R","NA:G402S","NA:G407S","NA:H255Y","NA:H274H","NA:H274Y","NA:H275Y","NA:I117M","NA:I117V","NA:I219R","NA:I221L","NA:I221N","NA:I222K","NA:I222L","NA:I222N","NA:I222R","NA:I222V","NA:I223K","NA:I223R","NA:I223V","NA:I275T","NA:I427T","NA:N142S","NA:N144K","NA:N146K","NA:N275S","NA:N294S","NA:N295S","NA:N329K","NA:P124T","NA:P136T","NA:P139S","NA:P141S","NA:P165L","NA:Q116L","NA:Q136K","NA:Q136L","NA:Q136Q","NA:Q136R","NA:Q138R","NA:Q140R","NA:Q313R","NA:R150K","NA:R151W","NA:R152K","NA:R152W","NA:R224K","NA:R289K","NA:R290K","NA:R292K","NA:R293K","NA:R371K","NA:R374K","NA:S110F","NA:S245N","NA:S246R","NA:S247P","NA:S247R","NA:S249G","NA:S250G","NA:T40A","NA:T43A","NA:T106I","NA:T110I","NA:T111I","NA:T148I","NA:T148K","NA:V96A","NA:V116A","NA:Y155H"]
       zanamivir_aa_subs = zanamivir_aa_subs + "~{antiviral_aa_subs}".split(',')
 
+      def intersection(lst1, lst2):
+        # returns intersection between nextclade identified aa substitutions and
+        # tamiflu associated aa substitutions
+        return list(set(lst1) & set(lst2))
+
       with codecs.open("./input.tsv",'r') as tsv_file:
         tsv_reader = csv.reader(tsv_file, delimiter="\t")
         tsv_data = list(tsv_reader)
