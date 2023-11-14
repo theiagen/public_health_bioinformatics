@@ -297,6 +297,6 @@ task antiviral_mutations_parser {
       String? tamiflu_aa_subs = read_string("TAMIFLU_AASUBS")
       String? xofluza_aa_subs = read_string("XOFLUZA_AASUBS")
       String? zanamivir_aa_subs = read_string("ZANAMIVIR_AASUBS")
-    }?
+    }
 }
 
