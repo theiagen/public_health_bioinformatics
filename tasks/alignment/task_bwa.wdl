@@ -55,12 +55,14 @@ task bwa {
     if [[ ! -z "~{read2}" ]]; then
       echo "Generating FASTQs for aligned and unaligned paired reads"
       samtools fastq \
+        -@ ~{cpu} \
         -F 4 \
         -1 ~{samplename}_R1.fastq.gz \
         -2 ~{samplename}_R2.fastq.gz \
         ~{samplename}.sorted.bam
       # note the lowercase 'f' here is imporant
       samtools fastq \
+        -@ ~{cpu} \
         -f 4 \
         -1 ~{samplename}_unaligned_R1.fastq.gz \
         -2 ~{samplename}_unaligned_R2.fastq.gz \
