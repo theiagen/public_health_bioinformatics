@@ -8,7 +8,7 @@ task irma {
     String samplename
     Boolean keep_ref_deletions = true
     String read_basename = basename(read1)
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/irma:1.0.3"
+    String docker = "cdcgov/irma:v1.1.3"
     Int memory = 8
     Int cpu = 4
     Int disk_size = 100
