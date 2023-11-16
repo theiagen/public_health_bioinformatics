@@ -131,7 +131,7 @@ task antiviral_mutations_parser {
     command <<<
       # Set WDL input variable to input.tsv file
       cat "~{mutations_tsv}" > input.tsv
-      touch TAMIFLU_AASUBS
+      #touch TAMIFLU_AASUBS
       touch A_315675_AASUBS
       touch COMPOUND_367_AASUBS
       touch FAVIPIRAVIR_AASUBS
@@ -139,7 +139,7 @@ task antiviral_mutations_parser {
       touch L_742_001_AASUBS
       touch LANINAMIVIR_AASUBS
       touch PERAMIVIR_AASUBS
-      touch PIMODIVIR_AASUBS
+      #touch PIMODIVIR_AASUBS
       touch TAMIFLU_AASUBS
       touch XOFLUZA_AASUBS
       touch ZANAMIVIR_AASUBS
@@ -205,6 +205,8 @@ task antiviral_mutations_parser {
             A_315675_subs = intersection(A_315675_aa_subs, nc_aa_subs.split(','))
             with codecs.open("A_315675_AASUBS", 'wt') as A_315675_AA_Subs:
               A_315675_AA_Subs.write(",".join(A_315675_subs))
+              print((",".join(A_315675_subs)))
+              print(A_315675_subs)
             compound_367_subs = intersection(compound_367_aa_subs, nc_aa_subs.split(','))
             with codecs.open("COMPOUND_367_AASUBS", 'wt') as Compound_367_AA_Subs:
               Compound_367_AA_Subs.write(",".join(compound_367_subs))
