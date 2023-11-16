@@ -224,14 +224,8 @@ task antiviral_mutations_parser {
             with codecs.open("PERAMIVIR_AASUBS", 'wt') as Peramivir_AA_Subs:
               Peramivir_AA_Subs.write(",".join(peramivir_subs))
             pimodivir_subs = intersection(pimodivir_aa_subs, nc_aa_subs.split(','))
-            #with codecs.open("PIMODIVIR_AASUBS", 'wt') as Pimodivir_AA_Subs:
-            #  Pimodivir_AA_Subs.write(",".join(pimodivir_subs))
-            if pimodivir_subs:
-              with codecs.open("PIMODIVIR_AASUBS", 'wt') as Pimodivir_AA_Subs:
-                Pimodivir_AA_Subs.write(",".join(pimodivir_subs))
-            else:
-              with codecs.open("PIMODIVIR_AASUBS", 'wt') as Pimodivir_AA_Subs:
-                Pimodivir_AA_Subs.write("None")
+            with codecs.open("PIMODIVIR_AASUBS", 'wt') as Pimodivir_AA_Subs:
+              Pimodivir_AA_Subs.write(",".join(pimodivir_subs))
             tamiflu_subs = intersection(tamiflu_aa_subs, nc_aa_subs.split(','))
             with codecs.open("TAMIFLU_AASUBS", 'wt') as Tamiflu_AA_Subs:
               Tamiflu_AA_Subs.write(",".join(tamiflu_subs))
