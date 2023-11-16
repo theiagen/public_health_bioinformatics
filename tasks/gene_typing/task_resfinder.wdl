@@ -156,13 +156,13 @@ task resfinder {
     fi
     # sulfamethoxazole
     if grep -qi "sulfamethoxazole" RESFINDER_PREDICTED_PHENO_RESISTANCE.txt; then
-      echo "Resistance" > Resfinder_PREDICTED_RESISTANCE_SMX.txt
+      echo "Resistance" > RESFINDER_PREDICTED_RESISTANCE_SMX.txt
     else
       echo "No resistance predicted" > RESFINDER_PREDICTED_RESISTANCE_SMX.txt
     fi
     # trimethoprim
     if grep -qi "trimethoprim" RESFINDER_PREDICTED_PHENO_RESISTANCE.txt; then
-      echo "Resistance" > Resfinder_PREDICTED_RESISTANCE_TMP.txt
+      echo "Resistance" > RESFINDER_PREDICTED_RESISTANCE_TMP.txt
     else
       echo "No resistance predicted" > RESFINDER_PREDICTED_RESISTANCE_TMP.txt
     fi
@@ -182,8 +182,8 @@ task resfinder {
     String resfinder_predicted_resistance_Azm = read_string("RESFINDER_PREDICTED_RESISTANCE_AZM.txt")
     String resfinder_predicted_resistance_Axo = read_string("RESFINDER_PREDICTED_RESISTANCE_AXO.txt")
     String resfinder_predicted_resistance_Cip = read_string("RESFINDER_PREDICTED_RESISTANCE_CIP.txt")
-    String resfinder_predicted_resistance_Smx = read_string("Resfinder_PREDICTED_RESISTANCE_SMX.txt")
-    String resfinder_predicted_resistance_Tmp = read_string("Resfinder_PREDICTED_RESISTANCE_TMP.txt")
+    String resfinder_predicted_resistance_Smx = read_string("RESFINDER_PREDICTED_RESISTANCE_SMX.txt")
+    String resfinder_predicted_resistance_Tmp = read_string("RESFINDER_PREDICTED_RESISTANCE_TMP.txt")
     String resfinder_docker = "~{docker}"
     String resfinder_version = read_string("RESFINDER_VERSION")
     String resfinder_db_version = read_string("RESFINDER_DB_VERSION")
