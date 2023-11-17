@@ -291,9 +291,6 @@ workflow theiacov_illumina_pe {
             antiviral_aa_subs = antiviral_aa_subs
         }
       }
-
-      #Array[String] flu_pimodivir_resistance_aa_subs_out = if (flu_antiviral_parser_n1_na.pimodivir_aa_subs == "" && flu_antiviral_parser_n2_na.pimodivir_aa_subs == "" && flu_antiviral_parser_pa.pimodivir_aa_subs == "" && flu_antiviral_parser_pb1.pimodivir_aa_subs == "" && flu_antiviral_parser_pb2.pimodivir_aa_subs == "") then [] else select_all([flu_antiviral_parser_n1_na.pimodivir_aa_subs,flu_antiviral_parser_n2_na.pimodivir_aa_subs,flu_antiviral_parser_pa.pimodivir_aa_subs,flu_antiviral_parser_pb1.pimodivir_aa_subs,flu_antiviral_parser_pb2.pimodivir_aa_subs])
-
       if (organism == "sars-cov-2") {
         # sars-cov-2 specific tasks
         call pangolin.pangolin4 {
@@ -463,7 +460,9 @@ workflow theiacov_illumina_pe {
     Array[String?] flu_laninamivir_resistance_aa_subs = select_all([flu_antiviral_parser_n1_na.laninamivir_aa_subs,flu_antiviral_parser_n2_na.laninamivir_aa_subs,flu_antiviral_parser_pa.laninamivir_aa_subs,flu_antiviral_parser_pb1.laninamivir_aa_subs,flu_antiviral_parser_pb2.laninamivir_aa_subs])
     Array[String?] flu_peramivir_resistance_aa_subs = select_all([flu_antiviral_parser_n1_na.peramivir_aa_subs,flu_antiviral_parser_n2_na.peramivir_aa_subs,flu_antiviral_parser_pa.peramivir_aa_subs,flu_antiviral_parser_pb1.peramivir_aa_subs,flu_antiviral_parser_pb2.peramivir_aa_subs])
     #Array[String?] flu_pimodivir_resistance_aa_subs = select_all([flu_antiviral_parser_n1_na.pimodivir_aa_subs,flu_antiviral_parser_n2_na.pimodivir_aa_subs,flu_antiviral_parser_pa.pimodivir_aa_subs,flu_antiviral_parser_pb1.pimodivir_aa_subs,flu_antiviral_parser_pb2.pimodivir_aa_subs])
-    Array[String?] flu_pimodivir_resistance_aa_subs_out = if (flu_antiviral_parser_n1_na.pimodivir_aa_subs == "" && flu_antiviral_parser_n2_na.pimodivir_aa_subs == "" && flu_antiviral_parser_pa.pimodivir_aa_subs == "" && flu_antiviral_parser_pb1.pimodivir_aa_subs == "" && flu_antiviral_parser_pb2.pimodivir_aa_subs == "") then [] else select_all([flu_antiviral_parser_n1_na.pimodivir_aa_subs,flu_antiviral_parser_n2_na.pimodivir_aa_subs,flu_antiviral_parser_pa.pimodivir_aa_subs,flu_antiviral_parser_pb1.pimodivir_aa_subs,flu_antiviral_parser_pb2.pimodivir_aa_subs])
+    String? flu_pimodivir_resistance_n1_na = flu_antiviral_parser_n1_na.pimodivir_aa_subs
+    String? flu_pimodivir_resistance_n2_na = flu_antiviral_parser_n2_na.pimodivir_aa_subs
+    String? flu_pimodivir_resistance_pa = flu_antiviral_parser_pa.pimodivir_aa_subs
     Array[String?] flu_tamiflu_resistance_aa_subs = select_all([flu_antiviral_parser_n1_na.tamiflu_aa_subs,flu_antiviral_parser_n2_na.tamiflu_aa_subs,flu_antiviral_parser_pa.tamiflu_aa_subs,flu_antiviral_parser_pb1.tamiflu_aa_subs,flu_antiviral_parser_pb2.tamiflu_aa_subs])
     Array[String?] flu_xofluza_resistance_aa_subs = select_all([flu_antiviral_parser_n1_na.xofluza_aa_subs,flu_antiviral_parser_n2_na.xofluza_aa_subs,flu_antiviral_parser_pa.xofluza_aa_subs,flu_antiviral_parser_pb1.xofluza_aa_subs,flu_antiviral_parser_pb2.xofluza_aa_subs])
     Array[String?] flu_zanamivir_resistance_aa_subs = select_all([flu_antiviral_parser_n1_na.zanamivir_aa_subs,flu_antiviral_parser_n2_na.zanamivir_aa_subs,flu_antiviral_parser_pa.zanamivir_aa_subs,flu_antiviral_parser_pb1.zanamivir_aa_subs,flu_antiviral_parser_pb2.zanamivir_aa_subs])
