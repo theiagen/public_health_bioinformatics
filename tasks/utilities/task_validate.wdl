@@ -10,6 +10,10 @@ task export_two_tsvs {
     String datatable2
     Int disk_size = 10
   }
+  meta {
+    # added so that call caching is always turned off
+    volatile: true
+  }
   command <<<
     python3 /scripts/export_large_tsv/export_large_tsv.py --project ~{terra_project1} --workspace ~{terra_workspace1} --entity_type ~{datatable1} --tsv_filename "~{datatable1}.tsv"
 
