@@ -108,7 +108,8 @@ task czgenepi_wrangling {
 
 
     if "~{organism}" == "sars-cov-2":
-      metadata["GISAID ID (Public ID) - Optional"] = "hCoV-19/" + table["state"] + "/" + table["~{private_id_column_name}"] + "/" + table["collection_date"].apply(lambda x: year_getter(x))
+      print("DEBUG: creating GISAID ID column")
+      metadata["GISAID ID (Public ID) - Optional"] = "hCoV-19/" + metadata["state"] + "/" + metadata["~{private_id_column_name}"] + "/" + metadata["collection_date"].apply(lambda x: year_getter(x))
     else:
       metadata.rename(columns={"~{genbank_accession_column_name}": "GenBank Accession (Public ID) - Optional"}, inplace=True)
 
