@@ -118,6 +118,12 @@ task export_taxon_tables {
     File? resfinder_pointfinder_results 
     String? resfinder_predicted_pheno_resistance
     String? resfinder_predicted_xdr_shigella
+    String? resfinder_predicted_resistance_Amp
+    String? resfinder_predicted_resistance_Azm
+    String? resfinder_predicted_resistance_Axo
+    String? resfinder_predicted_resistance_Cip
+    String? resfinder_predicted_resistance_Smx
+    String? resfinder_predicted_resistance_Tmp
     String? resfinder_db_version 
     String? resfinder_docker 
     File? ts_mlst_results
@@ -611,6 +617,12 @@ task export_taxon_tables {
       "resfinder_pointfinder_results": "~{resfinder_pointfinder_results}",
       "resfinder_predicted_pheno_resistance": "~{resfinder_predicted_pheno_resistance}",
       "resfinder_predicted_xdr_shigella": "~{resfinder_predicted_xdr_shigella}",
+      "resfinder_predicted_resistance_Amp": "~{resfinder_predicted_resistance_Amp}",
+      "resfinder_predicted_resistance_Azm": "~{resfinder_predicted_resistance_Azm}",
+      "resfinder_predicted_resistance_Axo": "~{resfinder_predicted_resistance_Axo}",
+      "resfinder_predicted_resistance_Cip": "~{resfinder_predicted_resistance_Cip}",
+      "resfinder_predicted_resistance_Smx": "~{resfinder_predicted_resistance_Smx}",
+      "resfinder_predicted_resistance_Tmp": "~{resfinder_predicted_resistance_Tmp}",
       "resfinder_db_version": "~{resfinder_db_version}",
       "resfinder_docker": "~{resfinder_docker}",
       "prokka_gff": "~{prokka_gff}",
