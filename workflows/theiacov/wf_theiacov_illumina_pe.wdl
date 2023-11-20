@@ -596,10 +596,10 @@ workflow theiacov_illumina_pe {
     # AA sunstitutions for various flu segments
     File? flu_h1_ha_aa_subs = aa_subs_h1_ha.aa_changes_tsv
     File? flu_h3_ha_aa_subs = aa_subs_h3_ha.aa_changes_tsv
-    File? flu_n1_na_aa = aa_subs_n1_na.aa_changes_tsv
-    File? flu_n2_na_aa = aa_subs_n2_na.aa_changes_tsv
-    File? flu_pa_aa = aa_subs_pa.aa_changes_tsv
-    File? flu_pb1_aa = aa_subs_pb1.aa_changes_tsv
-    File? flu_pb2_aa = aa_subs_pb2.aa_changes_tsv
+    File? flu_n1_na_aa_subs = aa_subs_n1_na.aa_changes_tsv
+    File? flu_n2_na_aa_subs = aa_subs_n2_na.aa_changes_tsv
+    File? flu_pa_aa_subs = aa_subs_pa.aa_changes_tsv
+    File? flu_pb1_aa_subs = aa_subs_pb1.aa_changes_tsv
+    File? flu_pb2_aa_subs = aa_subs_pb2.aa_changes_tsv
   }
 }
