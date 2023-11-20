@@ -276,7 +276,7 @@
     - path: miniwdl_run/call-nextclade/work/nextclade_gene_S.translation.fasta
       md5sum: 0ce44a0a8e2784ca4b3e8d8f03211813
     - path: miniwdl_run/call-nextclade_output_parser/command
-      md5sum: a01b0a826425399bc59854b7c74acb1e
+      md5sum: f4872939953ec220ac8300beacbc8ad7
     - path: miniwdl_run/call-nextclade_output_parser/inputs.json
       contains: ["nextclade_tsv", "tsv"]
     - path: miniwdl_run/call-nextclade_output_parser/outputs.json
