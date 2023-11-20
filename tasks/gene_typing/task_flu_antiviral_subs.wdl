@@ -19,6 +19,10 @@ task aa_subs {
     reference_id="CY121682.1"
   elif [[ "~{protein_name}" == "NA" && "~{subtype}" == "H3N2" ]] ; then
     reference_id="CY114383.1"
+  elif [[ "~{protein_name}" == "HA" && "~{subtype}" == "H1N1" ]] ; then
+    reference_id="MW626062.1"
+  elif [[ "~{protein_name}" == "HA" && "~{subtype}" == "H3N2" ]] ; then
+    reference_id="EPI_ISL_1563628"
   elif [[ "~{protein_name}" == "PA" ]] ; then
     reference_id="CY121685.1"
   elif [[ "~{protein_name}" == "PB1" ]] ; then
@@ -26,7 +30,7 @@ task aa_subs {
   elif [[ "~{protein_name}" == "PB2" ]] ; then
     reference_id="CY121687.1"
   else
-    echo "Please enter a valid protein name such as PA, PB1, or PB2"
+    echo "Please enter a valid protein name such as HA, NA, PA, PB1, or PB2, and a valid subtype such as H1N1 or H3N2."
   fi
 
   python3 <<CODE
