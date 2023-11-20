@@ -99,20 +99,6 @@ task czgenepi_wrangling {
 
     metadata = metadata.fillna("")
 
-    # combine location data into one column
-    print("DEBUG: combining collection location")
-    metadata["Collection Location"] = metadata["~{continent_column_name}"] + "/" + metadata["~{country_column_name}"] + "/" + metadata["~{state_column_name}"]
-    
-    # add county to the location if the length of the county is > 0
-    metadata["Collection Location"] = metadata.apply(lambda x: x["Collection Location"] + "/" + x["county"] if len(x["county"]) > 0 else x["Collection Location"], axis=1)
-
-
-    if "~{organism}" == "sars-cov-2":
-      print("DEBUG: creating GISAID ID column")
-      metadata["GISAID ID (Public ID) - Optional"] = "hCoV-19/" + metadata["state"] + "/" + metadata["~{private_id_column_name}"] + "/" + metadata["collection_date"].apply(lambda x: year_getter(x))
-    else:
-      metadata.rename(columns={"~{genbank_accession_column_name}": "GenBank Accession (Public ID) - Optional"}, inplace=True)
-
     print("DEBUG: checking if private_id column was set")
     if "~{private_id_column_name}" == "~{terra_table_name}_id":
       print("DEBUG: removing duplicated column")
@@ -120,11 +106,23 @@ task czgenepi_wrangling {
       metadata["Private ID"] = metadata.loc[:, "~{private_id_column_name}"]
     else:
       metadata.rename(columns={"~{private_id_column_name}": "Private ID"}, inplace=True)
+
+    # combine location data into one column
+    print("DEBUG: combining collection location")
+    metadata["Collection Location"] = metadata["~{continent_column_name}"] + "/" + metadata["~{country_column_name}"] + "/" + metadata["~{state_column_name}"]
+    
+    # add county to the location if the length of the county is > 0
+    metadata["Collection Location"] = metadata.apply(lambda x: x["Collection Location"] + "/" + x["county"] if len(x["county"]) > 0 else x["Collection Location"], axis=1)
+
+    if "~{organism}" == "sars-cov-2":
+      print("DEBUG: creating GISAID ID column")
+      metadata["GISAID ID (Public ID) - Optional"] = "hCoV-19/" + metadata["state"] + "/" + metadata["~{private_id_column_name}"] + "/" + metadata["collection_date"].apply(lambda x: year_getter(x))
+    else:
+      metadata.rename(columns={"~{genbank_accession_column_name}": "GenBank Accession (Public ID) - Optional"}, inplace=True)
     
     print("DEBUG: renaming the rest of the headers")
     # rename headers to match CZGenEpi's expected format
     metadata.rename(columns={"~{terra_table_name}_id": "Sample Name (from FASTA)", 
-                            
                              "~{collection_date_column_name}": "Collection Date",
                              "~{sequencing_date_column_name}": "Sequencing Date - Optional"}, inplace=True)
 
