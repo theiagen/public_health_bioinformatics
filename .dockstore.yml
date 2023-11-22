@@ -50,6 +50,11 @@ workflows:
    primaryDescriptorPath: /workflows/theiacov/wf_theiacov_fasta.wdl
    testParameterFiles:
     - empty.json
+ - name: TheiaCoV_FASTA_Batch_PHB
+   subclass: WDL
+   primaryDescriptorPath: /workflows/theiacov/wf_theiacov_fasta_batch.wdl
+   testParameterFiles:
+    - empty.json
  - name: Mercury_Prep_N_Batch_PHB
    subclass: WDL
    primaryDescriptorPath: /workflows/submission/wf_mercury_prep_n_batch.wdl
