@@ -161,7 +161,7 @@ task sm_theiacov_fasta_wrangling { # the sm stands for supermassive
 
       pangolin_version = pango_lineage_report.loc[pango_lineage_report["taxon"] == assembly_name]["pangolin_version"].item()
       version = pango_lineage_report.loc[pango_lineage_report["taxon"] == assembly_name]["version"].item()
-      upload_table["panglin_version"] = "pangolin {}; {}".format(pangolin_version, version)
+      upload_table["pangolin_version"] = "pangolin {}; {}".format(pangolin_version, version)
 
       # iterate through results and add to table
       for sample_name in sample_to_assembly.keys():        
