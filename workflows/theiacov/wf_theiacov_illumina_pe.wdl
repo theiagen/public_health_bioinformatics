@@ -28,6 +28,8 @@ workflow theiacov_illumina_pe {
     File? primer_bed
     File? adapters
     File? phix
+    # Human reads removal (dehosting) tool
+    String dehosting_tool = "ncbi_scrub" # options: "ncbi_scrub", "hostile"
     # reference values
     File? reference_gff
     File? reference_genome
@@ -91,7 +93,9 @@ workflow theiacov_illumina_pe {
         workflow_series = "theiacov",
         trim_minlen = trim_minlen,
         trim_quality_trim_score = trim_quality_trim_score,
-        trim_window_size = trim_window_size
+        trim_window_size = trim_window_size,
+        dehosting_tool = dehosting_tool,
+        seq_method = seq_method
     }
     call screen.check_reads as clean_check_reads {
       input:
