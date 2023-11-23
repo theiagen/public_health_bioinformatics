@@ -2,7 +2,7 @@ version 1.0
 
 import "../../tasks/quality_control/task_artic_guppyplex.wdl" as artic_guppyplex
 import "../../tasks/quality_control/task_nanoq.wdl" as nanoq_task
-import "../../tasks/quality_control/task_ncbi_scrub.wdl" as ncbi_scrub
+import "../../tasks/quality_control/task_hostile.wdl" as hostile_task
 import "../../tasks/taxon_id/task_kraken2.wdl" as kraken2
 import "../../tasks/utilities/task_rasusa.wdl" as rasusa_task
 import "../../tasks/utilities/task_kmc.wdl" as kmc_task
@@ -16,6 +16,7 @@ workflow read_QC_trim_ont {
     String samplename
     File read1
     Int? genome_size
+    String seq_method
 
     String? workflow_series
 
@@ -28,14 +29,15 @@ workflow read_QC_trim_ont {
     String? target_org
   }
   if ("~{workflow_series}" == "theiacov") {
-    call ncbi_scrub.ncbi_scrub_se {
+    call hostile_task.hostile {
       input:
+        samplename = samplename,
         read1 = read1,
-        samplename = samplename
+        seq_method = seq_method
     }
     call artic_guppyplex.read_filtering {
       input:
-        demultiplexed_reads = ncbi_scrub_se.read1_dehosted,
+        demultiplexed_reads = hostile.read1_dehosted,
         samplename = samplename,
         min_length = min_length,
         max_length = max_length,
@@ -50,7 +52,7 @@ workflow read_QC_trim_ont {
     call kraken2.kraken2_theiacov as kraken2_dehosted {
       input:
         samplename = samplename,
-        read1 = ncbi_scrub_se.read1_dehosted,
+        read1 = hostile.read1_dehosted,
         target_org = target_org
     }
   }
@@ -85,7 +87,7 @@ workflow read_QC_trim_ont {
   output { 
     # theiacov outputs
     # ncbi scrub outputs
-    File? read1_dehosted = ncbi_scrub_se.read1_dehosted
+    File? read1_dehosted = hostile.read1_dehosted
     
     # kraken outputs
     String? kraken_version = kraken2_raw.version
