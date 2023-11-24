@@ -5,7 +5,7 @@ task hostile {
     File read1
     File? read2
     String samplename
-    String docker = "quay.io/biocontainers/hostile:0.2.0--pyhdfd78af_0"
+    String docker = "quay.io/biocontainers/hostile:0.3.0--pyhdfd78af_0"
     String seq_method
 
     Int disk_size = 100
@@ -36,8 +36,8 @@ task hostile {
       mv ./*.clean_2.fastq.gz "~{samplename}_R2_dehosted.fastq.gz"
     fi
     # extract the number of removed human reads
-    grep '"reads_removed":' ./decontamination-log.json | awk -F': ' '{print $2}' | awk -F',' '{print $1}' | tee HUMANREADS
-    grep '"reads_removed_proportion":' ./decontamination-log.json | awk -F': ' '{print $2}' | awk -F',' '{print $1}' | tee HUMANREADS_PROP
+    grep '"reads_removed":' ./decontamination-log.json | awk -F': ' '{print $2}' | awk -F',' '{print $1}' > HUMANREADS
+    grep '"reads_removed_proportion":' ./decontamination-log.json | awk -F': ' '{print $2}' | awk -F',' '{print $1}' > HUMANREADS_PROP
   >>>
   output {
     String hostile_version = read_string("VERSION")
