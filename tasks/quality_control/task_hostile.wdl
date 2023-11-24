@@ -43,8 +43,8 @@ task hostile {
     String hostile_version = read_string("VERSION")
     File read1_dehosted = "~{samplename}_R1_dehosted.fastq.gz"
     File? read2_dehosted = "~{samplename}_R2_dehosted.fastq.gz"
-    Int human_reads_removed = read_int("HUMANREADS")
-    Float human_reads_removed_proportion = read_float("HUMANREADS_PROP")
+    Int? human_reads_removed = read_int("HUMANREADS")
+    Float? human_reads_removed_proportion = read_float("HUMANREADS_PROP")
     String hostile_docker = docker
   }
   runtime {
