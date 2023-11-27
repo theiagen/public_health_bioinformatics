@@ -60,6 +60,6 @@ workflow theiavalidate {
     File? theiavalidate_criteria_differences = compare_two_tsvs.validation_criteria_differences
     File? theiavalidate_filtered_input_table1 = compare_two_tsvs.filtered_input_table1
     File? theiavalidate_filtered_input_table2 = compare_two_tsvs.filtered_input_table2
-    String theiavalidate__status = select_first([validation_failure, validation_attempted])
+    String theiavalidate_status = select_first([validation_failure, validation_attempted])
   }
 }
