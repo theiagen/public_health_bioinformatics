@@ -312,9 +312,6 @@ task serialization {
     python3 -c "print(', '.join([mutation for mutation in '~{sep=',' flu_xofluza_resistance_array}'.split(',') if mutation != '']))" > flu_xofluza_resistance.txt
     
     python3 -c "print(', '.join([mutation for mutation in '~{sep=',' flu_zanamivir_resistance_array}'.split(',') if mutation != '']))" > flu_zanamivir_resistance.txt
-    
-    
-    CODE
   >>>
   output{
     String flu_A_315675_resistance = read_string("flu_A_315675_resistance.txt")
