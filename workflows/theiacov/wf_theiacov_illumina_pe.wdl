@@ -194,7 +194,8 @@ workflow theiacov_illumina_pe {
         String ha_na_nextclade_ds_tag= "~{abricate_flu.nextclade_ds_tag_ha + ',' + abricate_flu.nextclade_ds_tag_na}"
         String ha_na_nextclade_aa_subs= "~{nextclade_output_parser.nextclade_aa_subs + ',' + nextclade_output_parser_flu_na.nextclade_aa_subs}"
         String ha_na_nextclade_aa_dels= "~{nextclade_output_parser.nextclade_aa_dels + ',' + nextclade_output_parser_flu_na.nextclade_aa_dels}"
-        # call antiviral substitution detection
+      }
+      if (organism == "flu") {
         call flu_antiviral.flu_antiviral_substitutions {
           input:
             na_segment_assembly = irma.seg_na_assembly,
