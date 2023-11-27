@@ -13,8 +13,7 @@ import "../../tasks/gene_typing/task_abricate.wdl" as abricate
 import "../../tasks/gene_typing/task_sc2_gene_coverage.wdl" as sc2_calculation
 import "../../tasks/quality_control/task_qc_check_phb.wdl" as qc_check
 import "../../tasks/task_versioning.wdl" as versioning
-import "../../tasks/gene_typing/task_flu_antiviral_subs.wdl" as flu_antiviral
-import "../../tasks/alignment/task_mafft.wdl" as mafft_task
+import "../../workflows/utilities/wf_influenza_antiviral_substitutions.wdl" as flu_antiviral
 
 workflow theiacov_illumina_pe {
   meta {
@@ -66,16 +65,7 @@ workflow theiacov_illumina_pe {
     Boolean skip_screen = false
     # qc check parameters
     File? qc_check_table
-    # Amino acid sunstitutions
-    File? flu_h1_ha_ref = "gs://theiagen-public-files-rp/terra/flu-references/reference_h1_ha.fasta"
-    File? flu_h3_ha_ref = "gs://theiagen-public-files-rp/terra/flu-references/reference_h3_ha.fasta"
-    File? flu_n1_na_ref = "gs://theiagen-public-files-rp/terra/flu-references/reference_n1_na.fasta"
-    File? flu_n2_na_ref = "gs://theiagen-public-files-rp/terra/flu-references/reference_n2_na.fasta"
-    File? flu_pa_ref = "gs://theiagen-public-files-rp/terra/flu-references/reference_pa.fasta"
-    File? flu_pb1_ref = "gs://theiagen-public-files-rp/terra/flu-references/reference_pb1.fasta"
-    File? flu_pb2_ref = "gs://theiagen-public-files-rp/terra/flu-references/reference_pb2.fasta"
-    String? antiviral_aa_subs #user input for antiviral aa subs to be reported
-  }
+     }
   call screen.check_reads as raw_check_reads {
     input:
       read1 = read1_raw,
@@ -204,129 +194,16 @@ workflow theiacov_illumina_pe {
         String ha_na_nextclade_ds_tag= "~{abricate_flu.nextclade_ds_tag_ha + ',' + abricate_flu.nextclade_ds_tag_na}"
         String ha_na_nextclade_aa_subs= "~{nextclade_output_parser.nextclade_aa_subs + ',' + nextclade_output_parser_flu_na.nextclade_aa_subs}"
         String ha_na_nextclade_aa_dels= "~{nextclade_output_parser.nextclade_aa_dels + ',' + nextclade_output_parser_flu_na.nextclade_aa_dels}"
-      }
-      # Identify AA changes for Influenza NA, PA, PB1 and PB2 segments, and associated antiviral mutations
-      if (organism == "flu" &&  defined(irma.seg_ha_assembly) && ((abricate_flu.abricate_flu_subtype == "H1N1") || (irma.irma_subtype == "H1N1"))) {
-        call mafft_task.mafft as mafft_h1_ha {
+        # call antiviral substitution detection
+        call flu_antiviral.flu_antiviral_substitutions {
           input:
-            genomes = select_all([flu_h1_ha_ref,irma.seg_ha_assembly])
-        }
-        call flu_antiviral.aa_subs as aa_subs_h1_ha {
-          input:
-            alignment = mafft_h1_ha.msa,
-            organism = "flu",
-            protein_name = "HA",
-            subtype = "H1N1"
-        }
-        call flu_antiviral.antiviral_mutations_parser as flu_antiviral_parser_h1_ha {
-          input:
-            mutations_tsv = aa_subs_h1_ha.aa_changes_tsv,
-            antiviral_aa_subs = antiviral_aa_subs
-        }
-      }
-      if (organism == "flu" &&  defined(irma.seg_na_assembly) && ((abricate_flu.abricate_flu_subtype == "H1N1") || (irma.irma_subtype == "H1N1"))) {
-        call mafft_task.mafft as mafft_n1_na {
-          input:
-            genomes = select_all([flu_n1_na_ref,irma.seg_na_assembly])
-        }
-        call flu_antiviral.aa_subs as aa_subs_n1_na {
-          input:
-            alignment = mafft_n1_na.msa,
-            organism = "flu",
-            protein_name = "NA",
-            subtype = "H1N1"
-        }
-        call flu_antiviral.antiviral_mutations_parser as flu_antiviral_parser_n1_na {
-          input:
-            mutations_tsv = aa_subs_n1_na.aa_changes_tsv,
-            antiviral_aa_subs = antiviral_aa_subs
-        }
-      }
-      if (organism == "flu" &&  defined(irma.seg_ha_assembly) && ((abricate_flu.abricate_flu_subtype == "H3N2") || (irma.irma_subtype == "H3N2"))) {
-        call mafft_task.mafft as mafft_h3_ha {
-          input:
-            genomes = select_all([flu_h3_ha_ref,irma.seg_ha_assembly])
-        }
-        call flu_antiviral.aa_subs as aa_subs_h3_ha {
-          input:
-            alignment = mafft_h3_ha.msa,
-            organism = "flu",
-            protein_name = "HA",
-            subtype = "H3N2"
-        }
-        call flu_antiviral.antiviral_mutations_parser as flu_antiviral_parser_h3_ha {
-          input:
-            mutations_tsv = aa_subs_h3_ha.aa_changes_tsv,
-            antiviral_aa_subs = antiviral_aa_subs
-        }
-      }
-      if (organism == "flu" &&  defined(irma.seg_na_assembly) && ((abricate_flu.abricate_flu_subtype == "H3N2") || (irma.irma_subtype == "H3N2"))) {
-        call mafft_task.mafft as mafft_n2_na {
-          input:
-            genomes = select_all([flu_n2_na_ref,irma.seg_na_assembly])
-        }
-        call flu_antiviral.aa_subs as aa_subs_n2_na {
-          input:
-            alignment = mafft_n2_na.msa,
-            organism = "flu",
-            protein_name = "NA",
-            subtype = "H3N2"
-        }
-        call flu_antiviral.antiviral_mutations_parser as flu_antiviral_parser_n2_na {
-          input:
-            mutations_tsv = aa_subs_n2_na.aa_changes_tsv,
-            antiviral_aa_subs = antiviral_aa_subs
-        }
-      }
-      if (organism == "flu" &&  defined(irma.seg_pa_assembly)) {
-        call mafft_task.mafft as mafft_pa {
-          input:
-            genomes = select_all([flu_pa_ref,irma.seg_pa_assembly])
-        }
-        call flu_antiviral.aa_subs as aa_subs_pa {
-          input:
-            alignment = mafft_pa.msa,
-            organism = "flu",
-            protein_name = "PA"
-        }
-        call flu_antiviral.antiviral_mutations_parser as flu_antiviral_parser_pa {
-          input:
-            mutations_tsv = aa_subs_pa.aa_changes_tsv,
-            antiviral_aa_subs = antiviral_aa_subs
-        }
-      }
-      if (organism == "flu" &&  defined(irma.seg_pb1_assembly)) {
-        call mafft_task.mafft as mafft_pb1 {
-          input:
-            genomes = select_all([flu_pb1_ref,irma.seg_pb1_assembly])
-        }
-        call flu_antiviral.aa_subs as aa_subs_pb1 {
-          input:
-            alignment = mafft_pb1.msa,
-            organism = "flu",
-            protein_name = "PB1"
-        }
-        call flu_antiviral.antiviral_mutations_parser as flu_antiviral_parser_pb1 {
-          input:
-            mutations_tsv = aa_subs_pb1.aa_changes_tsv,
-            antiviral_aa_subs = antiviral_aa_subs
-        }
-      }
-      if (organism == "flu" &&  defined(irma.seg_pb2_assembly)) {
-        call mafft_task.mafft as mafft_pb2 {
-          input:
-            genomes = select_all([flu_pb2_ref,irma.seg_pb2_assembly])
-        }
-        call flu_antiviral.aa_subs as aa_subs_pb2 {
-          input:
-            alignment = mafft_pb2.msa,
-            organism = "flu",
-            protein_name = "PB2"
-        }
-        call flu_antiviral.antiviral_mutations_parser as flu_antiviral_parser_pb2 {
-          input:
-            mutations_tsv = aa_subs_pb2.aa_changes_tsv,
-            antiviral_aa_subs = antiviral_aa_subs
+            na_segment_assembly = irma.seg_na_assembly,
+            ha_segment_assembly = irma.seg_ha_assembly,
+            pa_segment_assembly = irma.seg_pa_assembly,
+            pb1_segment_assembly = irma.seg_pb1_assembly,
+            pb2_segment_assembly = irma.seg_pb2_assembly,
+            abricate_flu_subtype = select_first([abricate_flu.abricate_flu_subtype, ""]),
+            irma_flu_subtype = select_first([irma.irma_subtype, ""]),
         }
       }
       if (organism == "sars-cov-2") {
@@ -488,85 +365,7 @@ workflow theiacov_illumina_pe {
     String nextclade_aa_dels = select_first([ha_na_nextclade_aa_dels, nextclade_output_parser.nextclade_aa_dels, ""])
     String nextclade_clade = select_first([nextclade_output_parser.nextclade_clade, ""])
     String? nextclade_lineage = nextclade_output_parser.nextclade_lineage
-    # Flu antiviral resistance mutations
     String? nextclade_tamiflu_resistance_aa_subs = nextclade_output_parser_flu_na.nextclade_tamiflu_aa_subs
-    String? flu_A_315675_resistance_h1_ha = flu_antiviral_parser_h1_ha.A_315675_aa_subs
-    String? flu_A_315675_resistance_h3_ha = flu_antiviral_parser_h3_ha.A_315675_aa_subs
-    String? flu_A_315675_resistance_n1_na = flu_antiviral_parser_n1_na.A_315675_aa_subs
-    String? flu_A_315675_resistance_n2_na = flu_antiviral_parser_n2_na.A_315675_aa_subs
-    String? flu_A_315675_resistance_pa = flu_antiviral_parser_pa.A_315675_aa_subs
-    String? flu_A_315675_resistance_pb1 = flu_antiviral_parser_pb1.A_315675_aa_subs
-    String? flu_A_315675_resistance_pb2 = flu_antiviral_parser_pb2.A_315675_aa_subs
-    String? flu_compound_367_resistance_h1_ha = flu_antiviral_parser_h1_ha.compound_367_aa_subs
-    String? flu_compound_367_resistance_h3_ha = flu_antiviral_parser_h3_ha.compound_367_aa_subs
-    String? flu_compound_367_resistance_n1_na = flu_antiviral_parser_n1_na.compound_367_aa_subs
-    String? flu_compound_367_resistance_n2_na = flu_antiviral_parser_n2_na.compound_367_aa_subs
-    String? flu_compound_367_resistance_pa = flu_antiviral_parser_pa.compound_367_aa_subs
-    String? flu_compound_367_resistance_pb1 = flu_antiviral_parser_pb1.compound_367_aa_subs
-    String? flu_compound_367_resistance_pb2 = flu_antiviral_parser_pb2.compound_367_aa_subs
-    String? flu_favipiravir_resistance_h1_ha = flu_antiviral_parser_h1_ha.favipiravir_aa_subs
-    String? flu_favipiravir_resistance_h3_ha = flu_antiviral_parser_h3_ha.favipiravir_aa_subs
-    String? flu_favipiravir_resistance_n1_na = flu_antiviral_parser_n1_na.favipiravir_aa_subs
-    String? flu_favipiravir_resistance_n2_na = flu_antiviral_parser_n2_na.favipiravir_aa_subs
-    String? flu_favipiravir_resistance_pa = flu_antiviral_parser_pa.favipiravir_aa_subs
-    String? flu_favipiravir_resistance_pb1 = flu_antiviral_parser_pb1.favipiravir_aa_subs
-    String? flu_favipiravir_resistance_pb2 = flu_antiviral_parser_pb2.favipiravir_aa_subs
-    String? flu_fludase_resistance_h1_ha = flu_antiviral_parser_h1_ha.fludase_aa_subs
-    String? flu_fludase_resistance_h3_ha = flu_antiviral_parser_h3_ha.fludase_aa_subs
-    String? flu_fludase_resistance_n1_na = flu_antiviral_parser_n1_na.fludase_aa_subs
-    String? flu_fludase_resistance_n2_na = flu_antiviral_parser_n2_na.fludase_aa_subs
-    String? flu_fludase_resistance_pa = flu_antiviral_parser_pa.fludase_aa_subs
-    String? flu_fludase_resistance_pb1 = flu_antiviral_parser_pb1.fludase_aa_subs
-    String? flu_fludase_resistance_pb2 = flu_antiviral_parser_pb2.fludase_aa_subs
-    String? flu_L_742_001_resistance_h1_ha = flu_antiviral_parser_h1_ha.L_742_001_aa_subs
-    String? flu_L_742_001_resistance_h3_ha = flu_antiviral_parser_h3_ha.L_742_001_aa_subs
-    String? flu_L_742_001_resistance_n1_na = flu_antiviral_parser_n1_na.L_742_001_aa_subs
-    String? flu_L_742_001_resistance_n2_na = flu_antiviral_parser_n2_na.L_742_001_aa_subs
-    String? flu_L_742_001_resistance_pa = flu_antiviral_parser_pa.L_742_001_aa_subs
-    String? flu_L_742_001_resistance_pb1 = flu_antiviral_parser_pb1.L_742_001_aa_subs
-    String? flu_L_742_001_resistance_pb2 = flu_antiviral_parser_pb2.L_742_001_aa_subs
-    String? flu_laninamivir_resistance_h1_ha = flu_antiviral_parser_h1_ha.laninamivir_aa_subs
-    String? flu_laninamivir_resistance_h3_ha = flu_antiviral_parser_h3_ha.laninamivir_aa_subs
-    String? flu_laninamivir_resistance_n1_na = flu_antiviral_parser_n1_na.laninamivir_aa_subs
-    String? flu_laninamivir_resistance_n2_na = flu_antiviral_parser_n2_na.laninamivir_aa_subs
-    String? flu_laninamivir_resistance_pa = flu_antiviral_parser_pa.laninamivir_aa_subs
-    String? flu_laninamivir_resistance_pb1 = flu_antiviral_parser_pb1.laninamivir_aa_subs
-    String? flu_laninamivir_resistance_pb2 = flu_antiviral_parser_pb2.laninamivir_aa_subs
-    String? flu_peramivir_resistance_h1_ha = flu_antiviral_parser_h1_ha.peramivir_aa_subs
-    String? flu_peramivir_resistance_h3_ha = flu_antiviral_parser_h3_ha.peramivir_aa_subs
-    String? flu_peramivir_resistance_n1_na = flu_antiviral_parser_n1_na.peramivir_aa_subs
-    String? flu_peramivir_resistance_n2_na = flu_antiviral_parser_n2_na.peramivir_aa_subs
-    String? flu_peramivir_resistance_pa = flu_antiviral_parser_pa.peramivir_aa_subs
-    String? flu_peramivir_resistance_pb1 = flu_antiviral_parser_pb1.peramivir_aa_subs
-    String? flu_peramivir_resistance_pb2 = flu_antiviral_parser_pb2.peramivir_aa_subs
-    String? flu_pimodivir_resistance_h1_ha = flu_antiviral_parser_h1_ha.pimodivir_aa_subs
-    String? flu_pimodivir_resistance_h3_ha = flu_antiviral_parser_h3_ha.pimodivir_aa_subs
-    String? flu_pimodivir_resistance_n1_na = flu_antiviral_parser_n1_na.pimodivir_aa_subs
-    String? flu_pimodivir_resistance_n2_na = flu_antiviral_parser_n2_na.pimodivir_aa_subs
-    String? flu_pimodivir_resistance_pa = flu_antiviral_parser_pa.pimodivir_aa_subs
-    String? flu_pimodivir_resistance_pb1 = flu_antiviral_parser_pb1.pimodivir_aa_subs
-    String? flu_pimodivir_resistance_pb2 = flu_antiviral_parser_pb2.pimodivir_aa_subs
-    String? flu_tamiflu_resistance_h1_ha = flu_antiviral_parser_h1_ha.tamiflu_aa_subs
-    String? flu_tamiflu_resistance_h3_ha = flu_antiviral_parser_h3_ha.tamiflu_aa_subs
-    String? flu_tamiflu_resistance_n1_na = flu_antiviral_parser_n1_na.tamiflu_aa_subs
-    String? flu_tamiflu_resistance_n2_na = flu_antiviral_parser_n2_na.tamiflu_aa_subs
-    String? flu_tamiflu_resistance_pa = flu_antiviral_parser_pa.tamiflu_aa_subs
-    String? flu_tamiflu_resistance_pb1 = flu_antiviral_parser_pb1.tamiflu_aa_subs
-    String? flu_tamiflu_resistance_pb2 = flu_antiviral_parser_pb2.tamiflu_aa_subs
-    String? flu_xofluza_resistance_h1_ha = flu_antiviral_parser_h1_ha.xofluza_aa_subs
-    String? flu_xofluza_resistance_h3_ha = flu_antiviral_parser_h3_ha.xofluza_aa_subs
-    String? flu_xofluza_resistance_n1_na = flu_antiviral_parser_n1_na.xofluza_aa_subs
-    String? flu_xofluza_resistance_n2_na = flu_antiviral_parser_n2_na.xofluza_aa_subs
-    String? flu_xofluza_resistance_pa = flu_antiviral_parser_pa.xofluza_aa_subs
-    String? flu_xofluza_resistance_pb1 = flu_antiviral_parser_pb1.xofluza_aa_subs
-    String? flu_xofluza_resistance_pb2 = flu_antiviral_parser_pb2.xofluza_aa_subs
-    String? flu_zanamivir_resistance_h1_ha = flu_antiviral_parser_h1_ha.zanamivir_aa_subs
-    String? flu_zanamivir_resistance_h3_ha = flu_antiviral_parser_h3_ha.zanamivir_aa_subs
-    String? flu_zanamivir_resistance_n1_na = flu_antiviral_parser_n1_na.zanamivir_aa_subs
-    String? flu_zanamivir_resistance_n2_na = flu_antiviral_parser_n2_na.zanamivir_aa_subs
-    String? flu_zanamivir_resistance_pa = flu_antiviral_parser_pa.zanamivir_aa_subs
-    String? flu_zanamivir_resistance_pb1 = flu_antiviral_parser_pb1.zanamivir_aa_subs
-    String? flu_zanamivir_resistance_pb2 = flu_antiviral_parser_pb2.zanamivir_aa_subs
     # VADR Annotation QC
     File? vadr_alerts_list = vadr.alerts_list
     String? vadr_num_alerts = vadr.num_alerts
@@ -583,6 +382,18 @@ workflow theiacov_illumina_pe {
     File? abricate_flu_results = abricate_flu.abricate_flu_results
     String? abricate_flu_database =  abricate_flu.abricate_flu_database
     String? abricate_flu_version = abricate_flu.abricate_flu_version
+    # Flu Antiviral Substitution Outputs
+    Array[String]? flu_A_315675_resistance = flu_antiviral_substitutions.flu_A_315675_resistance
+    Array[String]? flu_compound_367_resistance = flu_antiviral_substitutions.flu_compound_367_resistance
+    Array[String]? flu_favipiravir_resistance = flu_antiviral_substitutions.flu_favipiravir_resistance
+    Array[String]? flu_fludase_resistance = flu_antiviral_substitutions.flu_fludase_resistance
+    Array[String]? flu_L_742_001_resistance = flu_antiviral_substitutions.flu_L_742_001_resistance
+    Array[String]? flu_laninamivir_resistance = flu_antiviral_substitutions.flu_laninamivir_resistance
+    Array[String]? flu_peramivir_resistance = flu_antiviral_substitutions.flu_peramivir_resistance
+    Array[String]? flu_pimodivir_resistance = flu_antiviral_substitutions.flu_pimodivir_resistance
+    Array[String]? flu_tamiflu_resistance = flu_antiviral_substitutions.flu_tamiflu_resistance
+    Array[String]? flu_xofluza_resistance = flu_antiviral_substitutions.flu_xofluza_resistance
+    Array[String]? flu_zanamivir_resistance = flu_antiviral_substitutions.flu_zanamivir_resistance
     # HIV Outputs
     String? quasitools_version = quasitools_illumina_pe.quasitools_version
     String? quasitools_date = quasitools_illumina_pe.quasitools_date
@@ -593,13 +404,6 @@ workflow theiacov_illumina_pe {
     # QC_Check Results
     String? qc_check = qc_check_task.qc_check
     File? qc_standard = qc_check_task.qc_standard
-    # AA sunstitutions for various flu segments
-    File? flu_h1_ha_aa_subs = aa_subs_h1_ha.aa_changes_tsv
-    File? flu_h3_ha_aa_subs = aa_subs_h3_ha.aa_changes_tsv
-    File? flu_n1_na_aa_subs = aa_subs_n1_na.aa_changes_tsv
-    File? flu_n2_na_aa_subs = aa_subs_n2_na.aa_changes_tsv
-    File? flu_pa_aa_subs = aa_subs_pa.aa_changes_tsv
-    File? flu_pb1_aa_subs = aa_subs_pb1.aa_changes_tsv
-    File? flu_pb2_aa_subs = aa_subs_pb2.aa_changes_tsv
+ 
   }
 }
