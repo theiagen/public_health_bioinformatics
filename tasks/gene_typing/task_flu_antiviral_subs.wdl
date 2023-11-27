@@ -291,27 +291,27 @@ task serialization {
     String docker = "python:slim"
   }
   command <<<
-    python3 -c "print(', '.join([mutation for mutation in ~{sep=',' flu_A_315675_resistance_array}.split(',') if mutation != '']))" > flu_A_315675_resistance.txt
+    python3 -c "print(', '.join([mutation for mutation in '~{sep=',' flu_A_315675_resistance_array}'.split(',') if mutation != '']))" > flu_A_315675_resistance.txt
     
-    python3 -c "print(', '.join([mutation for mutation in ~{sep=',' flu_compound_367_resistance_array}.split(',') if mutation != '']))" > flu_compound_367_resistance.txt
+    python3 -c "print(', '.join([mutation for mutation in '~{sep=',' flu_compound_367_resistance_array}'.split(',') if mutation != '']))" > flu_compound_367_resistance.txt
     
-    python3 -c "print(', '.join([mutation for mutation in ~{sep=',' flu_favipiravir_resistance_array}.split(',') if mutation != '']))" > flu_favipiravir_resistance.txt
+    python3 -c "print(', '.join([mutation for mutation in '~{sep=',' flu_favipiravir_resistance_array}'.split(',') if mutation != '']))" > flu_favipiravir_resistance.txt
     
-    python3 -c "print(', '.join([mutation for mutation in ~{sep=',' flu_fludase_resistance_array}.split(',') if mutation != '']))" > flu_fludase_resistance.txt
+    python3 -c "print(', '.join([mutation for mutation in '~{sep=',' flu_fludase_resistance_array}'.split(',') if mutation != '']))" > flu_fludase_resistance.txt
     
-    python3 -c "print(', '.join([mutation for mutation in ~{sep=',' flu_L_742_001_resistance_array}.split(',') if mutation != '']))" > flu_L_742_001_resistance.txt
+    python3 -c "print(', '.join([mutation for mutation in '~{sep=',' flu_L_742_001_resistance_array}'.split(',') if mutation != '']))" > flu_L_742_001_resistance.txt
     
-    python3 -c "print(', '.join([mutation for mutation in ~{sep=',' flu_laninamivir_resistance_array}.split(',') if mutation != '']))" > flu_laninamivir_resistance.txt
+    python3 -c "print(', '.join([mutation for mutation in '~{sep=',' flu_laninamivir_resistance_array}'.split(',') if mutation != '']))" > flu_laninamivir_resistance.txt
     
-    python3 -c "print(', '.join([mutation for mutation in ~{sep=',' flu_peramivir_resistance_array}.split(',') if mutation != '']))" > flu_peramivir_resistance.txt
+    python3 -c "print(', '.join([mutation for mutation in '~{sep=',' flu_peramivir_resistance_array}'.split(',') if mutation != '']))" > flu_peramivir_resistance.txt
     
-    python3 -c "print(', '.join([mutation for mutation in ~{sep=',' flu_pimodivir_resistance_array}.split(',') if mutation != '']))" > flu_pimodivir_resistance.txt
+    python3 -c "print(', '.join([mutation for mutation in '~{sep=',' flu_pimodivir_resistance_array}'.split(',') if mutation != '']))" > flu_pimodivir_resistance.txt
     
-    python3 -c "print(', '.join([mutation for mutation in ~{sep=',' flu_tamiflu_resistance_array}.split(',') if mutation != '']))" > flu_tamiflu_resistance.txt
+    python3 -c "print(', '.join([mutation for mutation in '~{sep=',' flu_tamiflu_resistance_array}'.split(',') if mutation != '']))" > flu_tamiflu_resistance.txt
     
-    python3 -c "print(', '.join([mutation for mutation in ~{sep=',' flu_xofluza_resistance_array}.split(',') if mutation != '']))" > flu_xofluza_resistance.txt
+    python3 -c "print(', '.join([mutation for mutation in '~{sep=',' flu_xofluza_resistance_array}'.split(',') if mutation != '']))" > flu_xofluza_resistance.txt
     
-    python3 -c "print(', '.join([mutation for mutation in ~{sep=',' flu_zanamivir_resistance_array}.split(',') if mutation != '']))" > flu_zanamivir_resistance.txt
+    python3 -c "print(', '.join([mutation for mutation in '~{sep=',' flu_zanamivir_resistance_array}'.split(',') if mutation != '']))" > flu_zanamivir_resistance.txt
     
     
     CODE
