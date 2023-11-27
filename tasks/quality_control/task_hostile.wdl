@@ -10,7 +10,7 @@ task hostile {
 
     Int disk_size = 100
     Int cpu = 4
-    Int mem = 8
+    Int mem = 16
   }
   command <<<
     # date and version control
