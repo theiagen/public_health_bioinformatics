@@ -93,8 +93,8 @@ task theiavalidate {
     String theiavalidate_version = read_string("VERSION")
     File summary_pdf_report = "~{output_prefix}_summary.pdf"
     File summary_html_report = "~{output_prefix}_summary.html"
-    File filtered_input_table1 = "filtered-~{datatable1_name}"
-    File filtered_input_table2 = "filtered-~{datatable2_name}"
+    File filtered_input_table1 = "filtered_~{datatable1_name}"
+    File filtered_input_table2 = "filtered_~{datatable2_name}"
     File exact_differences = "~{output_prefix}_exact_differences.tsv"
     File? validation_criteria_differences = "~{output_prefix}_validation_criteria_differences.tsv"
   }
