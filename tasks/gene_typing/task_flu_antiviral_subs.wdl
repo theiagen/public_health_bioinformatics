@@ -205,36 +205,47 @@ task antiviral_mutations_parser {
           A_315675_subs = intersection(A_315675_aa_subs, nc_aa_subs.split(','))
           with codecs.open("A_315675_AASUBS", 'wt') as A_315675_AA_Subs:
             A_315675_AA_Subs.write(", ".join(A_315675_subs))
+
           compound_367_subs = intersection(compound_367_aa_subs, nc_aa_subs.split(','))
           with codecs.open("COMPOUND_367_AASUBS", 'wt') as Compound_367_AA_Subs:
             Compound_367_AA_Subs.write(", ".join(compound_367_subs))
+
           favipiravir_subs = intersection(favipiravir_aa_subs, nc_aa_subs.split(','))
           with codecs.open("FAVIPIRAVIR_AASUBS", 'wt') as Favipiravir_AA_Subs:
             Favipiravir_AA_Subs.write(", ".join(favipiravir_subs))
+
           fludase_subs = intersection(fludase_aa_subs, nc_aa_subs.split(','))
           with codecs.open("FLUDASE_AASUBS", 'wt') as Fludase_AA_Subs:
             Fludase_AA_Subs.write(", ".join(fludase_subs))
+
           L_742_001_subs = intersection(L_742_001_aa_subs, nc_aa_subs.split(','))
           with codecs.open("L_742_001_AASUBS", 'wt') as L_742_001_AA_Subs:
             L_742_001_AA_Subs.write(", ".join(L_742_001_subs))
+
           laninamivir_subs = intersection(laninamivir_aa_subs, nc_aa_subs.split(','))
           with codecs.open("LANINAMIVIR_AASUBS", 'wt') as Laninamivir_AA_Subs:
             Laninamivir_AA_Subs.write(", ".join(laninamivir_subs))
+
           peramivir_subs = intersection(peramivir_aa_subs, nc_aa_subs.split(','))
           with codecs.open("PERAMIVIR_AASUBS", 'wt') as Peramivir_AA_Subs:
             Peramivir_AA_Subs.write(", ".join(peramivir_subs))
+
           pimodivir_subs = intersection(pimodivir_aa_subs, nc_aa_subs.split(','))
           with codecs.open("PIMODIVIR_AASUBS", 'wt') as Pimodivir_AA_Subs:
             Pimodivir_AA_Subs.write(", ".join(pimodivir_subs))
+
           tamiflu_subs = intersection(tamiflu_aa_subs, nc_aa_subs.split(','))
           with codecs.open("TAMIFLU_AASUBS", 'wt') as Tamiflu_AA_Subs:
             Tamiflu_AA_Subs.write(", ".join(tamiflu_subs))
+
           xofluza_subs = intersection(xofluza_aa_subs, nc_aa_subs.split(','))
           with codecs.open("XOFLUZA_AASUBS", 'wt') as Xofluza_AA_Subs:
             Xofluza_AA_Subs.write(", ".join(xofluza_subs))
+
           zanamivir_subs = intersection(zanamivir_aa_subs, nc_aa_subs.split(','))
           with codecs.open("ZANAMIVIR_AASUBS", 'wt') as Zanamivir_AA_Subs:
             Zanamivir_AA_Subs.write(", ".join(zanamivir_subs))
+
         All_AA_Subs.write(nc_aa_subs)
     CODE
   >>>
@@ -259,5 +270,72 @@ task antiviral_mutations_parser {
     String tamiflu_aa_subs = read_string("TAMIFLU_AASUBS")
     String xofluza_aa_subs = read_string("XOFLUZA_AASUBS")
     String zanamivir_aa_subs = read_string("ZANAMIVIR_AASUBS")
+  }
+}
+
+task serialization {
+  input{ 
+    Array[String] flu_A_315675_resistance_array
+    Array[String] flu_compound_367_resistance_array
+    Array[String] flu_favipiravir_resistance_array
+    Array[String] flu_fludase_resistance_array
+    Array[String] flu_L_742_001_resistance_array
+    Array[String] flu_laninamivir_resistance_array
+    Array[String] flu_peramivir_resistance_array
+    Array[String] flu_pimodivir_resistance_array
+    Array[String] flu_tamiflu_resistance_array
+    Array[String] flu_xofluza_resistance_array
+    Array[String] flu_zanamivir_resistance_array
+
+    Int disk_size = 10
+    String docker = "python:slim"
+  }
+  command <<<
+    python3 -c "print(', '.join([mutation for mutation in ~{sep=',' flu_A_315675_resistance_array}.split(',') if mutation != '']))" > flu_A_315675_resistance.txt
+    
+    python3 -c "print(', '.join([mutation for mutation in ~{sep=',' flu_compound_367_resistance_array}.split(',') if mutation != '']))" > flu_compound_367_resistance.txt
+    
+    python3 -c "print(', '.join([mutation for mutation in ~{sep=',' flu_favipiravir_resistance_array}.split(',') if mutation != '']))" > flu_favipiravir_resistance.txt
+    
+    python3 -c "print(', '.join([mutation for mutation in ~{sep=',' flu_fludase_resistance_array}.split(',') if mutation != '']))" > flu_fludase_resistance.txt
+    
+    python3 -c "print(', '.join([mutation for mutation in ~{sep=',' flu_L_742_001_resistance_array}.split(',') if mutation != '']))" > flu_L_742_001_resistance.txt
+    
+    python3 -c "print(', '.join([mutation for mutation in ~{sep=',' flu_laninamivir_resistance_array}.split(',') if mutation != '']))" > flu_laninamivir_resistance.txt
+    
+    python3 -c "print(', '.join([mutation for mutation in ~{sep=',' flu_peramivir_resistance_array}.split(',') if mutation != '']))" > flu_peramivir_resistance.txt
+    
+    python3 -c "print(', '.join([mutation for mutation in ~{sep=',' flu_pimodivir_resistance_array}.split(',') if mutation != '']))" > flu_pimodivir_resistance.txt
+    
+    python3 -c "print(', '.join([mutation for mutation in ~{sep=',' flu_tamiflu_resistance_array}.split(',') if mutation != '']))" > flu_tamiflu_resistance.txt
+    
+    python3 -c "print(', '.join([mutation for mutation in ~{sep=',' flu_xofluza_resistance_array}.split(',') if mutation != '']))" > flu_xofluza_resistance.txt
+    
+    python3 -c "print(', '.join([mutation for mutation in ~{sep=',' flu_zanamivir_resistance_array}.split(',') if mutation != '']))" > flu_zanamivir_resistance.txt
+    
+    
+    CODE
+  >>>
+  output{
+    String flu_A_315675_resistance = read_string("flu_A_315675_resistance.txt")
+    String flu_compound_367_resistance = read_string("flu_compound_367_resistance.txt")
+    String flu_favipiravir_resistance = read_string("flu_favipiravir_resistance.txt")
+    String flu_fludase_resistance = read_string("flu_fludase_resistance.txt")
+    String flu_L_742_001_resistance = read_string("flu_L_742_001_resistance.txt")
+    String flu_laninamivir_resistance = read_string("flu_laninamivir_resistance.txt")
+    String flu_peramivir_resistance = read_string("flu_peramivir_resistance.txt")
+    String flu_pimodivir_resistance = read_string("flu_pimodivir_resistance.txt")
+    String flu_tamiflu_resistance = read_string("flu_tamiflu_resistance.txt")
+    String flu_xofluza_resistance = read_string("flu_xofluza_resistance.txt")
+    String flu_zanamivir_resistance = read_string("flu_zanamivir_resistance.txt")
+  }
+  runtime {
+    docker: "~{docker}"
+    memory: "4 GB"
+    cpu: 2
+    disks:  "local-disk " + disk_size + " SSD"
+    disk: disk_size + " GB"
+    dx_instance_type: "mem1_ssd1_v2_x2"
+    maxRetries: 3
   }
 }

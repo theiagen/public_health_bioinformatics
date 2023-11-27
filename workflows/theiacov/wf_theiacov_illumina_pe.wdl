@@ -384,17 +384,17 @@ workflow theiacov_illumina_pe {
     String? abricate_flu_database =  abricate_flu.abricate_flu_database
     String? abricate_flu_version = abricate_flu.abricate_flu_version
     # Flu Antiviral Substitution Outputs
-    Array[String]? flu_A_315675_resistance = flu_antiviral_substitutions.flu_A_315675_resistance
-    Array[String]? flu_compound_367_resistance = flu_antiviral_substitutions.flu_compound_367_resistance
-    Array[String]? flu_favipiravir_resistance = flu_antiviral_substitutions.flu_favipiravir_resistance
-    Array[String]? flu_fludase_resistance = flu_antiviral_substitutions.flu_fludase_resistance
-    Array[String]? flu_L_742_001_resistance = flu_antiviral_substitutions.flu_L_742_001_resistance
-    Array[String]? flu_laninamivir_resistance = flu_antiviral_substitutions.flu_laninamivir_resistance
-    Array[String]? flu_peramivir_resistance = flu_antiviral_substitutions.flu_peramivir_resistance
-    Array[String]? flu_pimodivir_resistance = flu_antiviral_substitutions.flu_pimodivir_resistance
-    Array[String]? flu_tamiflu_resistance = flu_antiviral_substitutions.flu_tamiflu_resistance
-    Array[String]? flu_xofluza_resistance = flu_antiviral_substitutions.flu_xofluza_resistance
-    Array[String]? flu_zanamivir_resistance = flu_antiviral_substitutions.flu_zanamivir_resistance
+    String? flu_A_315675_resistance = flu_antiviral_substitutions.flu_A_315675_resistance
+    String? flu_compound_367_resistance = flu_antiviral_substitutions.flu_compound_367_resistance
+    String? flu_favipiravir_resistance = flu_antiviral_substitutions.flu_favipiravir_resistance
+    String? flu_fludase_resistance = flu_antiviral_substitutions.flu_fludase_resistance
+    String? flu_L_742_001_resistance = flu_antiviral_substitutions.flu_L_742_001_resistance
+    String? flu_laninamivir_resistance = flu_antiviral_substitutions.flu_laninamivir_resistance
+    String? flu_peramivir_resistance = flu_antiviral_substitutions.flu_peramivir_resistance
+    String? flu_pimodivir_resistance = flu_antiviral_substitutions.flu_pimodivir_resistance
+    String? flu_tamiflu_resistance = flu_antiviral_substitutions.flu_tamiflu_resistance
+    String? flu_xofluza_resistance = flu_antiviral_substitutions.flu_xofluza_resistance
+    String? flu_zanamivir_resistance = flu_antiviral_substitutions.flu_zanamivir_resistance
     # HIV Outputs
     String? quasitools_version = quasitools_illumina_pe.quasitools_version
     String? quasitools_date = quasitools_illumina_pe.quasitools_date
