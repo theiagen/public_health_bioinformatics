@@ -275,17 +275,17 @@ task antiviral_mutations_parser {
 
 task serialization {
   input{ 
-    Array[String] flu_A_315675_resistance_array
-    Array[String] flu_compound_367_resistance_array
-    Array[String] flu_favipiravir_resistance_array
-    Array[String] flu_fludase_resistance_array
-    Array[String] flu_L_742_001_resistance_array
-    Array[String] flu_laninamivir_resistance_array
-    Array[String] flu_peramivir_resistance_array
-    Array[String] flu_pimodivir_resistance_array
-    Array[String] flu_tamiflu_resistance_array
-    Array[String] flu_xofluza_resistance_array
-    Array[String] flu_zanamivir_resistance_array
+    Array[String] flu_A_315675_resistance_array = [""]
+    Array[String] flu_compound_367_resistance_array = [""]
+    Array[String] flu_favipiravir_resistance_array = [""]
+    Array[String] flu_fludase_resistance_array = [""]
+    Array[String] flu_L_742_001_resistance_array = [""]
+    Array[String] flu_laninamivir_resistance_array = [""]
+    Array[String] flu_peramivir_resistance_array = [""]
+    Array[String] flu_pimodivir_resistance_array = [""]
+    Array[String] flu_tamiflu_resistance_array = [""]
+    Array[String] flu_xofluza_resistance_array = [""]
+    Array[String] flu_zanamivir_resistance_array = [""]
 
     Int disk_size = 10
     String docker = "python:slim"
