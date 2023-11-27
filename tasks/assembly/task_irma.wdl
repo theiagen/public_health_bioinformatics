@@ -15,25 +15,30 @@ task irma {
   }
   command <<<
     date | tee DATE
+
     #capture reads as bash variables
     read1=~{read1}
-    if [[ "~{read2}" ]]; then
+    if [[ "~{read2}" ]]; then 
       read2=~{read2}
     fi
+
     # set cat command based on compression
     if [[ "~{read1}" == *".gz" ]] ; then
       cat_reads="zcat"
     else
       cat_reads="cat"
     fi
+
     # capture irma vesion
     IRMA | head -n1 | awk -F' ' '{ print "IRMA " $5 }' | tee VERSION
+    
     # set config if needed
     if ~{keep_ref_deletions}; then 
       touch irma_config.sh
       echo 'DEL_TYPE="NNN"' >> irma_config.sh
       echo 'ALIGN_PROG="BLAT"' >> irma_config.sh
     fi
+
     # format reads, if needed
     read_header=$(${cat_reads} ~{read1} | head -n1)
     if ! [[ "${read_header}" =~ @(.+?)[_[:space:]][123]:.+ ]]; then
@@ -41,19 +46,21 @@ task irma {
       sra_id=$(echo "~{read_basename}" | awk -F "_" '{ print $1 }')
       eval "${cat_reads} ~{read1}" | awk '{print (NR%4 == 1) ? "@'${sra_id}'-" ++i " 1:1" : $0}' | gzip -c > "${sra_id}-irmafix_R1.fastq.gz"
       read1="${sra_id}-irmafix_R1.fastq.gz"
-      if [[ "~{read2}" ]]; then
+      if [[ "~{read2}" ]]; then 
         eval "${cat_reads} ~{read2}" | awk '{print (NR%4 == 1) ? "@'${sra_id}'-" ++i " 2:2" : $0}' | gzip -c > "${sra_id}-irmafix_R2.fastq.gz"
         read2="${sra_id}-irmafix_R2.fastq.gz"
-      fi
+      fi     
     else
       echo "Read headers match IRMA formatting requirements"
     fi
+
     # set IRMA module depending on sequencing technology
     if [[ ~{seq_method} == "OXFORD_NANOPORE" ]]; then
       IRMA "FLU-minion" "${read1}" ~{samplename}
     else
       IRMA "FLU" "${read1}" "${read2}" ~{samplename}
     fi
+
     # capture IRMA type
     if compgen -G "~{samplename}/*fasta"; then
       echo "Type_"$(basename "$(echo "$(find ~{samplename}/*.fasta | head -n1)")" | cut -d_ -f1) > IRMA_TYPE
@@ -62,12 +69,14 @@ task irma {
     else
       echo "No IRMA assembly generated for flu type prediction" >> IRMA_TYPE
     fi
+
     # rename IRMA outputs
     for irma_out in ~{samplename}/*{.vcf,.fasta,.bam}; do
       new_name="~{samplename}_"$(basename "${irma_out}" | cut -d "_" -f2- )
       echo "New name: ${new_name}; irma_out: ${irma_out}"
       mv "${irma_out}" "${new_name}"
     done
+    
     # capture type A subtype
     if compgen -G "~{samplename}_HA*.fasta"; then # check if HA segment exists
       if [[ "$(ls ~{samplename}_HA*.fasta)" == *"HA_H"* ]]; then # if so, grab H-type if one is identified in assembly header

@@ -1,5 +1,5 @@
 {
     "theiacov_ont.samplename": "ont",
-    "theiacov_ont.demultiplexed_reads": "tests/data/theiacov/fastqs/ont/ont.fastq.gz",
+    "theiacov_ont.read1": "tests/data/theiacov/fastqs/ont/ont.fastq.gz",
     "theiacov_ont.primer_bed": "tests/data/theiacov/primers/artic-v3.primers.bed"
 }
