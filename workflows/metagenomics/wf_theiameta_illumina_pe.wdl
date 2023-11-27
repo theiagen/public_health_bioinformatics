@@ -55,7 +55,7 @@ workflow theiameta_illumina_pe {
   }
   call krona_task.krona as krona_clean {
     input:
-      kraken2_report = kraken2_raw.kraken2_report,
+      kraken2_report = kraken2_clean.kraken2_report,
       samplename = samplename
   }
   call metaspades_assembly_wf.metaspades_assembly_pe as metaspades {
