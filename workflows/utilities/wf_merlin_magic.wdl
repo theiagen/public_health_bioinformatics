@@ -64,6 +64,7 @@ workflow merlin_magic {
     Boolean theiaeuk = false
     String? tbp_mapper
     String? tbp_caller
+    String? tbp_caller_options
     Int? tbp_min_depth
     Float? tbp_min_af
     Float? tbp_min_af_pred
@@ -261,6 +262,7 @@ workflow merlin_magic {
           ont_data = ont_data,
           mapper = tbp_mapper,
           caller = tbp_caller,
+          caller_options = tbp_caller_options,
           min_depth = tbp_min_depth,
           min_af = tbp_min_af,
           min_af_pred = tbp_min_af_pred,
