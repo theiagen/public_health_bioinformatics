@@ -60,13 +60,13 @@ task abricate_flu {
     File assembly
     String samplename
     String database = "insaflu"
-    String nextclade_flu_h1n1_ha_tag
-    String nextclade_flu_h1n1_na_tag
-    String nextclade_flu_h3n2_ha_tag
-    String nextclade_flu_h3n2_na_tag
-    String nextclade_flu_vic_ha_tag
-    String nextclade_flu_vic_na_tag
-    String nextclade_flu_yam_tag
+    String? nextclade_flu_h1n1_ha_tag
+    String? nextclade_flu_h1n1_na_tag
+    String? nextclade_flu_h3n2_ha_tag
+    String? nextclade_flu_h3n2_na_tag
+    String? nextclade_flu_vic_ha_tag
+    String? nextclade_flu_vic_na_tag
+    String? nextclade_flu_yam_tag
     Int minid = 70
     Int mincov =60
     Int cpu = 2
