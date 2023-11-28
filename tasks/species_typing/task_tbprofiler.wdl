@@ -64,7 +64,7 @@ task tbprofiler {
       --prefix ~{samplename} \
       --mapper ~{mapper} \
       --caller ~{caller} \
-      --caller_options ~{caller_options} \
+      --calling_params ~{caller_options} \
       --min_depth ~{min_depth} \
       --af ~{min_af} \
       --reporting_af ~{min_af_pred} \
