@@ -187,6 +187,12 @@ task antiviral_mutations_parser {
     def intersection(present_mutations, known_mutations):
       return list(set(present_mutations) & set(known_mutations))
 
+    # writes the intersection of aa substitutions associated with each antiviral to a file
+    def write_to_file(filename, aa_mutations, known_mutations):
+      mutations = intersection(aa_mutations, known_mutations.split(','))
+      with codecs.open(filename, 'wt') as file:
+        file.write(", ".join(mutations)
+
     # read in aa substitutions from input.tsv file
     with codecs.open("~{mutations_tsv}",'r') as tsv_file:
       tsv_reader = csv.reader(tsv_file, delimiter="\t")
@@ -202,49 +208,18 @@ task antiviral_mutations_parser {
         if nc_aa_subs == "no mutations relative to the reference.":
           nc_aa_subs = "NA"
         else:
-          A_315675_subs = intersection(A_315675_aa_subs, nc_aa_subs.split(','))
-          with codecs.open("A_315675_AASUBS", 'wt') as A_315675_AA_Subs:
-            A_315675_AA_Subs.write(", ".join(A_315675_subs))
-
-          compound_367_subs = intersection(compound_367_aa_subs, nc_aa_subs.split(','))
-          with codecs.open("COMPOUND_367_AASUBS", 'wt') as Compound_367_AA_Subs:
-            Compound_367_AA_Subs.write(", ".join(compound_367_subs))
-
-          favipiravir_subs = intersection(favipiravir_aa_subs, nc_aa_subs.split(','))
-          with codecs.open("FAVIPIRAVIR_AASUBS", 'wt') as Favipiravir_AA_Subs:
-            Favipiravir_AA_Subs.write(", ".join(favipiravir_subs))
-
-          fludase_subs = intersection(fludase_aa_subs, nc_aa_subs.split(','))
-          with codecs.open("FLUDASE_AASUBS", 'wt') as Fludase_AA_Subs:
-            Fludase_AA_Subs.write(", ".join(fludase_subs))
-
-          L_742_001_subs = intersection(L_742_001_aa_subs, nc_aa_subs.split(','))
-          with codecs.open("L_742_001_AASUBS", 'wt') as L_742_001_AA_Subs:
-            L_742_001_AA_Subs.write(", ".join(L_742_001_subs))
-
-          laninamivir_subs = intersection(laninamivir_aa_subs, nc_aa_subs.split(','))
-          with codecs.open("LANINAMIVIR_AASUBS", 'wt') as Laninamivir_AA_Subs:
-            Laninamivir_AA_Subs.write(", ".join(laninamivir_subs))
-
-          peramivir_subs = intersection(peramivir_aa_subs, nc_aa_subs.split(','))
-          with codecs.open("PERAMIVIR_AASUBS", 'wt') as Peramivir_AA_Subs:
-            Peramivir_AA_Subs.write(", ".join(peramivir_subs))
-
-          pimodivir_subs = intersection(pimodivir_aa_subs, nc_aa_subs.split(','))
-          with codecs.open("PIMODIVIR_AASUBS", 'wt') as Pimodivir_AA_Subs:
-            Pimodivir_AA_Subs.write(", ".join(pimodivir_subs))
-
-          tamiflu_subs = intersection(tamiflu_aa_subs, nc_aa_subs.split(','))
-          with codecs.open("TAMIFLU_AASUBS", 'wt') as Tamiflu_AA_Subs:
-            Tamiflu_AA_Subs.write(", ".join(tamiflu_subs))
-
-          xofluza_subs = intersection(xofluza_aa_subs, nc_aa_subs.split(','))
-          with codecs.open("XOFLUZA_AASUBS", 'wt') as Xofluza_AA_Subs:
-            Xofluza_AA_Subs.write(", ".join(xofluza_subs))
-
-          zanamivir_subs = intersection(zanamivir_aa_subs, nc_aa_subs.split(','))
-          with codecs.open("ZANAMIVIR_AASUBS", 'wt') as Zanamivir_AA_Subs:
-            Zanamivir_AA_Subs.write(", ".join(zanamivir_subs))
+          write_to_file("A_315675_AASUBS", A_315675_aa_subs, nc_aa_subs)
+          write_to_file("COMPOUND_367_AASUBS", compound_367_aa_subs, nc_aa_subs)
+          write_to_file("FAVIPIRAVIR_AASUBS", favipiravir_aa_subs, nc_aa_subs)
+          write_to_file("FLUDASE_AASUBS", fludase_aa_subs, nc_aa_subs)
+          write_to_file("L_742_001_AASUBS", L_742_001_aa_subs, nc_aa_subs)
+          write_to_file("LANINAMIVIR_AASUBS", laninamivir_aa_subs, nc_aa_subs)
+          write_to_file("PERAMIVIR_AASUBS", peramivir_aa_subs, nc_aa_subs)
+          write_to_file("PIMODIVIR_AASUBS", pimodivir_aa_subs, nc_aa_subs)
+          write_to_file("TAMIFLU_AASUBS", tamiflu_aa_subs, nc_aa_subs)
+          write_to_file("XOFLUZA_AASUBS", xofluza_aa_subs, nc_aa_subs)
+          write_to_file("ZANAMIVIR_AASUBS", zanamivir_aa_subs, nc_aa_subs)
+          
 
         All_AA_Subs.write(nc_aa_subs)
     CODE

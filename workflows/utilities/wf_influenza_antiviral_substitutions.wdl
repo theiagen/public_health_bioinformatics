@@ -26,7 +26,7 @@ workflow flu_antiviral_substitutions {
   if (defined(ha_segment_assembly) && ((abricate_flu_subtype == "H1N1") || (irma_flu_subtype == "H1N1"))) {
     call mafft_task.mafft as mafft_h1_ha {
       input:
-        genomes = select_all([flu_h1_ha_ref,ha_segment_assembly])
+        genomes = select_all([flu_h1_ha_ref, ha_segment_assembly])
     }
     call flu_antiviral.aa_subs as aa_subs_h1_ha {
       input:
@@ -43,7 +43,7 @@ workflow flu_antiviral_substitutions {
   if (defined(na_segment_assembly) && ((abricate_flu_subtype == "H1N1") || (irma_flu_subtype == "H1N1"))) {
     call mafft_task.mafft as mafft_n1_na {
       input:
-        genomes = select_all([flu_n1_na_ref,na_segment_assembly])
+        genomes = select_all([flu_n1_na_ref, na_segment_assembly])
     }
     call flu_antiviral.aa_subs as aa_subs_n1_na {
       input:
@@ -60,7 +60,7 @@ workflow flu_antiviral_substitutions {
   if (defined(ha_segment_assembly) && ((abricate_flu_subtype == "H3N2") || (irma_flu_subtype == "H3N2"))) {
     call mafft_task.mafft as mafft_h3_ha {
       input:
-        genomes = select_all([flu_h3_ha_ref,ha_segment_assembly])
+        genomes = select_all([flu_h3_ha_ref, ha_segment_assembly])
     }
     call flu_antiviral.aa_subs as aa_subs_h3_ha {
       input:
@@ -94,7 +94,7 @@ workflow flu_antiviral_substitutions {
   if (defined(pa_segment_assembly)) {
     call mafft_task.mafft as mafft_pa {
       input:
-        genomes = select_all([flu_pa_ref,pa_segment_assembly])
+        genomes = select_all([flu_pa_ref, pa_segment_assembly])
     }
     call flu_antiviral.aa_subs as aa_subs_pa {
       input:
@@ -110,7 +110,7 @@ workflow flu_antiviral_substitutions {
   if (defined(pb1_segment_assembly)) {
     call mafft_task.mafft as mafft_pb1 {
       input:
-        genomes = select_all([flu_pb1_ref,pb1_segment_assembly])
+        genomes = select_all([flu_pb1_ref, pb1_segment_assembly])
     }
     call flu_antiviral.aa_subs as aa_subs_pb1 {
       input:
@@ -126,7 +126,7 @@ workflow flu_antiviral_substitutions {
   if (defined(pb2_segment_assembly)) {
     call mafft_task.mafft as mafft_pb2 {
       input:
-        genomes = select_all([flu_pb2_ref,pb2_segment_assembly])
+        genomes = select_all([flu_pb2_ref, pb2_segment_assembly])
     }
     call flu_antiviral.aa_subs as aa_subs_pb2 {
       input:
@@ -153,7 +153,6 @@ workflow flu_antiviral_substitutions {
       flu_xofluza_resistance_array = select_all([flu_antiviral_parser_h1_ha.xofluza_aa_subs, flu_antiviral_parser_h3_ha.xofluza_aa_subs, flu_antiviral_parser_n1_na.xofluza_aa_subs, flu_antiviral_parser_n2_na.xofluza_aa_subs, flu_antiviral_parser_pa.xofluza_aa_subs, flu_antiviral_parser_pb1.xofluza_aa_subs, flu_antiviral_parser_pb2.xofluza_aa_subs]),
       flu_zanamivir_resistance_array = select_all([flu_antiviral_parser_h1_ha.zanamivir_aa_subs, flu_antiviral_parser_h3_ha.zanamivir_aa_subs, flu_antiviral_parser_n1_na.zanamivir_aa_subs, flu_antiviral_parser_n2_na.zanamivir_aa_subs, flu_antiviral_parser_pa.zanamivir_aa_subs, flu_antiviral_parser_pb1.zanamivir_aa_subs, flu_antiviral_parser_pb2.zanamivir_aa_subs])
   }
-
   output {
     # Flu antiviral resistance mutations
     String flu_A_315675_resistance = serialization.flu_A_315675_resistance
