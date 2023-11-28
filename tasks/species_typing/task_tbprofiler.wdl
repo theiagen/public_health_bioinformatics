@@ -10,6 +10,7 @@ task tbprofiler {
     Int disk_size = 100
     String mapper = "bwa"
     String caller = "freebayes"
+    String caller_options = ""
     Int min_depth = 10
     Float min_af = 0.1
     Float min_af_pred = 0.1
@@ -63,10 +64,10 @@ task tbprofiler {
       --prefix ~{samplename} \
       --mapper ~{mapper} \
       --caller ~{caller} \
+      --caller_options ~{caller_options} \
       --min_depth ~{min_depth} \
       --af ~{min_af} \
-      --reporting_af \
-      ~{min_af_pred} \
+      --reporting_af ~{min_af_pred} \
       --coverage_fraction_threshold ~{cov_frac_threshold} \
       --csv --txt \
       $TBDB
