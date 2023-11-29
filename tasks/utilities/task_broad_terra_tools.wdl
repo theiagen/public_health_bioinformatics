@@ -92,6 +92,12 @@ task export_taxon_tables {
     File? ani_output_tsv
     String? ani_top_species_match 
     String? ani_mummer_version
+    String? kmerfinder_docker
+    File? kmerfinder_results_tsv
+    String? kmerfinder_top_hit
+    String? kmerfinder_query_coverage
+    String? kmerfinder_template_coverage
+    String? kmerfinder_database
     File? amrfinderplus_all_report
     File? amrfinderplus_amr_report
     File? amrfinderplus_stress_report
@@ -118,6 +124,7 @@ task export_taxon_tables {
     String? ts_mlst_allelic_profile
     File? ts_mlst_novel_alleles
     String? ts_mlst_version
+    String? ts_mlst_docker
     File? serotypefinder_report
     String? serotypefinder_docker
     String? serotypefinder_serotype
@@ -168,7 +175,7 @@ task export_taxon_tables {
     String? lissero_serotype
     File? sistr_results
     File? sistr_allele_json
-    File? sister_allele_fasta
+    File? sistr_allele_fasta
     File? sistr_cgmlst
     String? sistr_version
     String? sistr_predicted_serotype
@@ -443,6 +450,7 @@ task export_taxon_tables {
       "ts_mlst_allelic_profile": "~{ts_mlst_allelic_profile}",
       "ts_mlst_novel_alleles": "~{ts_mlst_novel_alleles}",
       "ts_mlst_version": "~{ts_mlst_version}",
+      "ts_mlst_docker": "~{ts_mlst_docker}",	
       "serotypefinder_report": "~{serotypefinder_report}",
       "serotypefinder_docker": "~{serotypefinder_docker}",
       "serotypefinder_serotype": "~{serotypefinder_serotype}",
@@ -493,7 +501,7 @@ task export_taxon_tables {
       "lissero_serotype": "~{lissero_serotype}",
       "sistr_results": "~{sistr_results}",
       "sistr_allele_json": "~{sistr_allele_json}",
-      "sister_allele_fasta": "~{sister_allele_fasta}",
+      "sistr_allele_fasta": "~{sistr_allele_fasta}",
       "sistr_cgmlst": "~{sistr_cgmlst}",
       "sistr_version": "~{sistr_version}",
       "sistr_predicted_serotype": "~{sistr_predicted_serotype}",
@@ -587,6 +595,12 @@ task export_taxon_tables {
       "ani_output_tsv": "~{ani_output_tsv}",
       "ani_top_species_match": "~{ani_top_species_match}",
       "ani_mummer_version": "~{ani_mummer_version}",
+      "kmerfinder_docker": "~{kmerfinder_docker}",
+      "kmerfinder_results_tsv": "~{kmerfinder_results_tsv}",
+      "kmerfinder_top_hit": "~{kmerfinder_top_hit}",
+      "kmerfinder_query_coverage": "~{kmerfinder_query_coverage}",
+      "kmerfinder_template_coverage": "~{kmerfinder_template_coverage}",
+      "kmerfinder_database": "~{kmerfinder_database}",
       "resfinder_pheno_table": "~{resfinder_pheno_table}",
       "resfinder_pheno_table_species": "~{resfinder_pheno_table_species}",
       "resfinder_seqs": "~{resfinder_seqs}",

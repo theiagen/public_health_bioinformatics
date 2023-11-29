@@ -56,9 +56,7 @@
     - path: miniwdl_run/call-consensus/work/ont.2.hdf
     - path: miniwdl_run/call-consensus/work/ont.2.vcf
     - path: miniwdl_run/call-consensus/work/ont.alignreport.er
-      md5sum: 7525a7d271410d9324567e07319f100b
     - path: miniwdl_run/call-consensus/work/ont.alignreport.txt
-      md5sum: 7038287908d15ad4c8139f670f944945
     - path: miniwdl_run/call-consensus/work/ont.consensus.fasta
       md5sum: cdde2d8b7efeb498806c5c2cfc522675
     - path: miniwdl_run/call-consensus/work/ont.coverage_mask.txt
@@ -145,7 +143,7 @@
     - path: miniwdl_run/call-nextclade/work/nextclade_dataset_dir/primers.csv
       md5sum: 5990c3483bf66ce607aeb90a44e7ef2e
     - path: miniwdl_run/call-nextclade/work/nextclade_dataset_dir/qc.json
-      md5sum: 6587a54553ad565d5f8ea7d214a797d4
+      md5sum: b01f4491a54941fea12ec5b04a10fb8c
     - path: miniwdl_run/call-nextclade/work/nextclade_dataset_dir/reference.fasta
       md5sum: c7ce05f28e4ec0322c96f24e064ef55c
     - path: miniwdl_run/call-nextclade/work/nextclade_dataset_dir/sequences.fasta
@@ -278,7 +276,6 @@
       md5sum: 6db5829ff0a455e0abe538ba323d120a
     - path: miniwdl_run/call-stats_n_coverage/work/DATE
     - path: miniwdl_run/call-stats_n_coverage/work/DEPTH
-      md5sum: ef66d0ae81fc6ca39d2ab527868309f3
     - path: miniwdl_run/call-stats_n_coverage/work/MEANBASEQ
       md5sum: 68f06358611afb96787e55c81f8544e9
     - path: miniwdl_run/call-stats_n_coverage/work/MEANMAPQ
@@ -287,13 +284,9 @@
       md5sum: 53be85d2ed9fa57ab45424fe071a6672
     - path: miniwdl_run/call-stats_n_coverage/work/_miniwdl_inputs/0/ont.trimmed.rg.sorted.bam
     - path: miniwdl_run/call-stats_n_coverage/work/ont.cov.hist
-      md5sum: 51cc9467655d479f50f25c8ca008005d
     - path: miniwdl_run/call-stats_n_coverage/work/ont.cov.txt
-      md5sum: e7dce09f4e6f5d66a792bffa4debd663
     - path: miniwdl_run/call-stats_n_coverage/work/ont.flagstat.txt
-      md5sum: 971b1ac6888b860c629d4b727ce59e3c
     - path: miniwdl_run/call-stats_n_coverage/work/ont.stats.txt
-      md5sum: 8dc566a68c43b10b699ba157cf7f134e
     - path: miniwdl_run/call-stats_n_coverage_primtrim/command
       md5sum: c6e7de70dfdbb1858229e44777b84110
     - path: miniwdl_run/call-stats_n_coverage_primtrim/inputs.json
@@ -308,7 +301,6 @@
       md5sum: 39b46849af22b94f02e5927c142a2f9c
     - path: miniwdl_run/call-stats_n_coverage_primtrim/work/DATE
     - path: miniwdl_run/call-stats_n_coverage_primtrim/work/DEPTH
-      md5sum: 609c3dcc157a77ccdfff01d6a4aa3803
     - path: miniwdl_run/call-stats_n_coverage_primtrim/work/MEANBASEQ
       md5sum: 68f06358611afb96787e55c81f8544e9
     - path: miniwdl_run/call-stats_n_coverage_primtrim/work/MEANMAPQ
@@ -317,13 +309,9 @@
       md5sum: 53be85d2ed9fa57ab45424fe071a6672
     - path: miniwdl_run/call-stats_n_coverage_primtrim/work/_miniwdl_inputs/0/ont.primertrimmed.rg.sorted.bam
     - path: miniwdl_run/call-stats_n_coverage_primtrim/work/ont.cov.hist
-      md5sum: a8a488546b9099240f356e04ebc17eee
     - path: miniwdl_run/call-stats_n_coverage_primtrim/work/ont.cov.txt
-      md5sum: 09ab10340d61e5d57f4fcb6723991c4f
     - path: miniwdl_run/call-stats_n_coverage_primtrim/work/ont.flagstat.txt
-      md5sum: 971b1ac6888b860c629d4b727ce59e3c
     - path: miniwdl_run/call-stats_n_coverage_primtrim/work/ont.stats.txt
-      md5sum: 6caaafbe90652872cc72d94fb3111023
     - path: miniwdl_run/call-vadr/command
       md5sum: a4ffb60ebb7c31951bfae1bbfd3d53cd
     - path: miniwdl_run/call-vadr/inputs.json

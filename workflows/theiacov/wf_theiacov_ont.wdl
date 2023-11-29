@@ -1,6 +1,7 @@
 version 1.0
 
 import "../../tasks/assembly/task_artic_consensus.wdl" as artic_consensus
+import "../../tasks/assembly/task_irma.wdl" as irma_task
 import "../../tasks/quality_control/task_assembly_metrics.wdl" as assembly_metrics
 import "../../tasks/quality_control/task_vadr.wdl" as vadr_task
 import "../../tasks/quality_control/task_consensus_qc.wdl" as consensus_qc_task
@@ -10,6 +11,7 @@ import "../../tasks/taxon_id/task_nextclade.wdl" as nextclade_task
 import "../../tasks/species_typing/task_pangolin.wdl" as pangolin
 import "../../tasks/species_typing/task_quasitools.wdl" as quasitools
 import "../../tasks/gene_typing/task_sc2_gene_coverage.wdl" as sc2_calculation
+import "../../tasks/gene_typing/task_abricate.wdl" as abricate
 import "../../tasks/quality_control/task_qc_check_phb.wdl" as qc_check
 import "../../tasks/task_versioning.wdl" as versioning
 import "../utilities/wf_read_QC_trim_ont.wdl" as read_qc_trim_workflow
@@ -20,19 +22,29 @@ workflow theiacov_ont {
   }
   input {
     String samplename
-    File demultiplexed_reads
-    String organism = "sars-cov-2"
+    File read1
+    String organism = "sars-cov-2" # options: "sars-cov-2", "HIV", "flu"
     # sequencing values
     String seq_method = "OXFORD_NANOPORE"
-    File primer_bed
+    File? primer_bed
     # assembly parameters
     Int normalise = 200
     Int max_length = 700
     Int min_length = 400
+    Int min_depth = 20
     # nextclade inputs
+    String nextclade_docker_image = "nextstrain/nextclade:2.14.0"
     String nextclade_dataset_reference = "MN908947"
-    String nextclade_dataset_tag = "2023-08-17T12:00:00Z"
+    String nextclade_dataset_tag = "2023-09-21T12:00:00Z"
     String? nextclade_dataset_name
+    # nextclade flu inputs
+    String nextclade_flu_h1n1_ha_tag = "2023-04-02T12:00:00Z"
+    String nextclade_flu_h1n1_na_tag = "2023-04-02T12:00:00Z"
+    String nextclade_flu_h3n2_ha_tag = "2023-04-02T12:00:00Z"
+    String nextclade_flu_h3n2_na_tag = "2023-04-02T12:00:00Z"
+    String nextclade_flu_vic_ha_tag = "2023-04-02T12:00:00Z"
+    String nextclade_flu_vic_na_tag = "2023-04-02T12:00:00Z"
+    String nextclade_flu_yam_tag = "2022-07-27T12:00:00Z"
     # reference values
     File? reference_genome
     Int? genome_length
@@ -41,24 +53,27 @@ workflow theiacov_ont {
     # read screen parameters
     Int min_reads = 113 # min basepairs / 300 (which is the longest available read length of an Illumina product)
     Int min_basepairs = 34000 # 20x coverage of hepatitis delta virus
-    Int min_genome_size = 1700 # size of hepatitis delta virus
-    Int max_genome_size = 2673870 # size of Pandoravirus salinus + 200 kb
+    Int min_genome_length = 1700 # size of hepatitis delta virus
+    Int max_genome_length = 2673870 # size of Pandoravirus salinus + 200 kb
     Int min_coverage = 10
     Boolean skip_screen = false
     Boolean skip_mash = false
     # qc check parameters
     File? qc_check_table
   }
+  call versioning.version_capture{
+    input:
+  }
   if (organism == "HIV") { # set HIV specific artic version
     String run_prefix = "artic_hiv"
   }
   call screen.check_reads_se as raw_check_reads {
     input:
-      read1 = demultiplexed_reads,
+      read1 = read1,
       min_reads = min_reads,
       min_basepairs = min_basepairs,
-      min_genome_size = min_genome_size,
-      max_genome_size = max_genome_size,
+      min_genome_size = min_genome_length,
+      max_genome_size = max_genome_length,
       min_coverage = min_coverage,
       skip_screen = skip_screen,
       skip_mash = skip_mash,
@@ -69,7 +84,7 @@ workflow theiacov_ont {
   if (raw_check_reads.read_screen == "PASS") {
     call read_qc_trim_workflow.read_QC_trim_ont as read_qc_trim {
       input:
-        read1 = demultiplexed_reads,
+        read1 = read1,
         samplename = samplename,
         genome_size = genome_length,
         min_length = min_length,
@@ -83,8 +98,8 @@ workflow theiacov_ont {
         read1 = read_qc_trim.read1_clean,
         min_reads = min_reads,
         min_basepairs = min_basepairs,
-        min_genome_size = min_genome_size,
-        max_genome_size = max_genome_size,
+        min_genome_size = min_genome_length,
+        max_genome_size = max_genome_length,
         min_coverage = min_coverage,
         skip_screen = skip_screen,
         skip_mash = skip_mash,
@@ -93,24 +108,62 @@ workflow theiacov_ont {
         expected_genome_size = genome_length
     }
     if (clean_check_reads.read_screen == "PASS") {
-      call artic_consensus.consensus {
-        input:
-          samplename = samplename,
-          organism = organism,
-          filtered_reads = read_qc_trim.read1_clean,
-          primer_bed = primer_bed,
-          normalise = normalise,
-          reference_genome = reference_genome
+      # assembly via artic_consensus for sars-cov-2 and HIV
+      if (organism != "flu") {
+        call artic_consensus.consensus {
+          input:
+            samplename = samplename,
+            organism = organism,
+            filtered_reads = read_qc_trim.read1_clean,
+            primer_bed = select_first([primer_bed]),
+            normalise = normalise,
+            reference_genome = reference_genome
+        }
+        call assembly_metrics.stats_n_coverage {
+          input:
+            samplename = samplename,
+            bamfile = consensus.sorted_bam
+        }
+        call assembly_metrics.stats_n_coverage as stats_n_coverage_primtrim {
+          input:
+            samplename = samplename,
+            bamfile = consensus.trim_sorted_bam
+        }
       }
+      # assembly via irma for flu organisms
+      if (organism == "flu") {
+        call irma_task.irma {
+          input:
+            read1 = read_qc_trim.read1_clean,
+            samplename = samplename,
+            seq_method = seq_method
+        }
+        if (defined(irma.irma_assemblies)) {
+          call abricate.abricate_flu {
+            input:
+              assembly = select_first([irma.irma_assembly_fasta]),
+              samplename = samplename,
+              nextclade_flu_h1n1_ha_tag = nextclade_flu_h1n1_ha_tag,
+              nextclade_flu_h1n1_na_tag = nextclade_flu_h1n1_na_tag,
+              nextclade_flu_h3n2_ha_tag = nextclade_flu_h3n2_ha_tag,
+              nextclade_flu_h3n2_na_tag = nextclade_flu_h3n2_na_tag,
+              nextclade_flu_vic_ha_tag = nextclade_flu_vic_ha_tag,
+              nextclade_flu_vic_na_tag = nextclade_flu_vic_na_tag,
+              nextclade_flu_yam_tag = nextclade_flu_yam_tag
+          }
+        }
+      }
+      # consensus QC check
       call consensus_qc_task.consensus_qc {
         input:
-          assembly_fasta = consensus.consensus_seq,
-          reference_genome = reference_genome
+          assembly_fasta =  select_first([irma.irma_assembly_fasta, consensus.consensus_seq]),
+          reference_genome = reference_genome,
+          genome_length = genome_length
       }
       # nanoplot for basic QC metrics
       call nanoplot_task.nanoplot as nanoplot_raw {
         input:
-          read1 = demultiplexed_reads,
+          read1 = read1,
           samplename = samplename,
           est_genome_size = select_first([genome_length, consensus_qc.number_Total])
       }
@@ -120,28 +173,18 @@ workflow theiacov_ont {
           samplename = samplename,
           est_genome_size = select_first([genome_length, consensus_qc.number_Total])
       }
-      call assembly_metrics.stats_n_coverage {
-        input:
-          samplename = samplename,
-          bamfile = consensus.sorted_bam
-      }
-      call assembly_metrics.stats_n_coverage as stats_n_coverage_primtrim {
-        input:
-          samplename = samplename,
-          bamfile = consensus.trim_sorted_bam
-      }
       if (organism == "sars-cov-2") {
         # sars-cov-2 specific tasks
         call pangolin.pangolin4 {
           input:
             samplename = samplename,
-            fasta = consensus.consensus_seq
+            fasta = select_first([consensus.consensus_seq])
         }
         call sc2_calculation.sc2_gene_coverage {
           input: 
             samplename = samplename,
-            bamfile = consensus.trim_sorted_bam,
-            min_depth = 20
+            bamfile = select_first([consensus.trim_sorted_bam]),
+            min_depth = min_depth
           }
       }
       if (organism == "MPXV") {
@@ -150,14 +193,16 @@ workflow theiacov_ont {
       if (organism == "WNV") {
         # WNV specific tasks (none yet, just adding as placeholder for future)
       }
-      if (organism == "MPXV" || organism == "sars-cov-2"){ 
+      # run organism-specific typing
+      if (organism == "MPXV" || organism == "sars-cov-2" || organism == "flu" && select_first([abricate_flu.run_nextclade])){ 
         # tasks specific to either MPXV or sars-cov-2
         call nextclade_task.nextclade {
           input:
-          genome_fasta = consensus.consensus_seq,
-          dataset_name = select_first([nextclade_dataset_name, organism,]),
-          dataset_reference = nextclade_dataset_reference,
-          dataset_tag = nextclade_dataset_tag
+          docker = nextclade_docker_image,
+          genome_fasta = select_first([consensus.consensus_seq, irma.seg_ha_assembly]),
+          dataset_name = select_first([abricate_flu.nextclade_name_ha, nextclade_dataset_name, organism]),
+          dataset_reference = select_first([abricate_flu.nextclade_ref_ha, nextclade_dataset_reference]),
+          dataset_tag = select_first([abricate_flu.nextclade_ds_tag_ha, nextclade_dataset_tag])
         }
         call nextclade_task.nextclade_output_parser {
           input:
@@ -165,11 +210,32 @@ workflow theiacov_ont {
           organism = organism
         }
       }
+      if (organism == "flu" &&  select_first([abricate_flu.run_nextclade]) && defined(irma.seg_na_assembly)) { 
+        # tasks specific to flu NA - run nextclade a second time
+        call nextclade_task.nextclade as nextclade_flu_na {
+          input:
+            docker = nextclade_docker_image,
+            genome_fasta = select_first([irma.seg_na_assembly]),
+            dataset_name = select_first([abricate_flu.nextclade_name_na, nextclade_dataset_name, organism]),
+            dataset_reference = select_first([abricate_flu.nextclade_ref_na, nextclade_dataset_reference]),
+            dataset_tag = select_first([abricate_flu.nextclade_ds_tag_na, nextclade_dataset_tag])
+        }
+        call nextclade_task.nextclade_output_parser as nextclade_output_parser_flu_na {
+          input:
+            nextclade_tsv = nextclade_flu_na.nextclade_tsv,
+            organism = organism,
+            NA_segment = true
+        }
+        # concatenate tag, aa subs and aa dels for HA and NA segments
+        String ha_na_nextclade_ds_tag= "~{abricate_flu.nextclade_ds_tag_ha + ',' + abricate_flu.nextclade_ds_tag_na}"
+        String ha_na_nextclade_aa_subs= "~{nextclade_output_parser.nextclade_aa_subs + ',' + nextclade_output_parser_flu_na.nextclade_aa_subs}"
+        String ha_na_nextclade_aa_dels= "~{nextclade_output_parser.nextclade_aa_dels + ',' + nextclade_output_parser_flu_na.nextclade_aa_dels}"
+      }
       if (organism == "MPXV" || organism == "sars-cov-2" || organism == "WNV"){ 
         # tasks specific to MPXV, sars-cov-2, and WNV
         call vadr_task.vadr {
           input:
-            genome_fasta = consensus.consensus_seq,
+            genome_fasta = select_first([consensus.consensus_seq]),
             assembly_length_unambiguous = consensus_qc.number_ATCG
         }
       }
@@ -205,9 +271,6 @@ workflow theiacov_ont {
         }
       }
     }
-  }
-  call versioning.version_capture{
-    input:
   }
   output {
     # Version Capture
@@ -249,10 +312,10 @@ workflow theiacov_ont {
     String? kraken_target_org_dehosted = read_qc_trim.kraken_target_org_dehosted
     File? kraken_report_dehosted = read_qc_trim.kraken_report_dehosted
     # Read Alignment - Artic consensus outputs
+    File? assembly_fasta = select_first([consensus.consensus_seq, irma.irma_assembly_fasta, ""])
     File? aligned_bam = consensus.trim_sorted_bam
     File? aligned_bai = consensus.trim_sorted_bai
-    File? variants_from_ref_vcf = consensus.medaka_pass_vcf
-    File? assembly_fasta = consensus.consensus_seq
+    File? medaka_vcf = consensus.medaka_pass_vcf
     File? read1_aligned = consensus.reads_aligned
     File? read1_trimmed = consensus.trim_fastq
     # Read Alignment - Artic consensus versioning outputs
@@ -260,7 +323,7 @@ workflow theiacov_ont {
     String? artic_docker = consensus.artic_pipeline_docker
     String? medaka_reference = consensus.medaka_reference
     String? primer_bed_name = consensus.primer_bed_name
-    String? assembly_method = "TheiaCoV (~{version_capture.phb_version}): ~{consensus.artic_pipeline_version}"
+    String? assembly_method = "TheiaCoV (~{version_capture.phb_version}): " + select_first([consensus.artic_pipeline_version, irma.irma_version, ""])
     # Assembly QC - consensus assembly qc outputs
     File? consensus_stats = stats_n_coverage.stats
     File? consensus_flagstat = stats_n_coverage.flagstat
@@ -291,16 +354,18 @@ workflow theiacov_ont {
     String? pangolin_docker = pangolin4.pangolin_docker
     String? pangolin_versions = pangolin4.pangolin_versions
     # Nextclade outputs
-    File? nextclade_json = nextclade.nextclade_json
-    File? auspice_json = nextclade.auspice_json
-    File? nextclade_tsv = nextclade.nextclade_tsv
-    String? nextclade_version = nextclade.nextclade_version
-    String? nextclade_docker = nextclade.nextclade_docker
-    String nextclade_ds_tag = nextclade_dataset_tag
-    String? nextclade_aa_subs = nextclade_output_parser.nextclade_aa_subs
-    String? nextclade_aa_dels = nextclade_output_parser.nextclade_aa_dels
-    String? nextclade_clade = nextclade_output_parser.nextclade_clade
+    String? nextclade_json = select_first([nextclade.nextclade_json, ""])
+    String? auspice_json = select_first([ nextclade.auspice_json, ""])
+    String? nextclade_tsv = select_first([nextclade.nextclade_tsv, ""])
+    String? nextclade_version = select_first([nextclade.nextclade_version, ""])
+    String? nextclade_docker = select_first([nextclade.nextclade_docker, ""])
+    String? nextclade_ds_tag = select_first([ha_na_nextclade_ds_tag, abricate_flu.nextclade_ds_tag_ha, nextclade_dataset_tag, ""])
+    String? nextclade_aa_subs = select_first([ha_na_nextclade_aa_subs, nextclade_output_parser.nextclade_aa_subs, ""])
+    String? nextclade_aa_dels = select_first([ha_na_nextclade_aa_dels, nextclade_output_parser.nextclade_aa_dels, ""])
+    String? nextclade_clade = select_first([nextclade_output_parser.nextclade_clade, ""])
     String? nextclade_lineage = nextclade_output_parser.nextclade_lineage
+    # Nextclade Flu outputs - NA specific columns - tamiflu mutation
+    String? nextclade_tamiflu_resistance_aa_subs = nextclade_output_parser_flu_na.nextclade_tamiflu_aa_subs
     # VADR Annotation QC
     File? vadr_alerts_list = vadr.alerts_list
     String? vadr_num_alerts = vadr.num_alerts
@@ -316,5 +381,16 @@ workflow theiacov_ont {
     # QC_Check Results
     String? qc_check = qc_check_task.qc_check
     File? qc_standard = qc_check_task.qc_standard
+    # Flu Outputs
+    String? irma_version = irma.irma_version
+    String? irma_type = irma.irma_type
+    String? irma_subtype = irma.irma_subtype
+    File? irma_ha_segment = irma.seg_ha_assembly
+    File? irma_na_segment = irma.seg_na_assembly
+    String? abricate_flu_type = abricate_flu.abricate_flu_type
+    String? abricate_flu_subtype =  abricate_flu.abricate_flu_subtype
+    File? abricate_flu_results = abricate_flu.abricate_flu_results
+    String? abricate_flu_database =  abricate_flu.abricate_flu_database
+    String? abricate_flu_version = abricate_flu.abricate_flu_version
   }
 }
