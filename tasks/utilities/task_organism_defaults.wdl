@@ -6,6 +6,7 @@ task set_organism_defaults_sc2 {
     String nextclade_ds_tag = "2023-08-17T12:00:00Z"
     String nextclade_ref = "MN908947"
     String nextclade_ds_name = "sars-cov-2"
+    Int genome_len = 29903
   }
   command <<<
     echo "setting defaults for sc2"
@@ -15,6 +16,7 @@ task set_organism_defaults_sc2 {
     String nextclade_dataset_tag = nextclade_ds_tag
     String nextclade_reference = nextclade_ref
     String nextclade_dataset_name = nextclade_ds_name
+    Int genome_length = genome_len
   }
   runtime {
     memory: "1 GB"
@@ -36,6 +38,7 @@ task set_organism_defaults_mpox {
     String reference_gff_file = "gs://theiagen-public-files/terra/mpxv-files/Mpox-MT903345.1.reference.gff3"
     String vadr_options = "--glsearch -s -r --nomisc --mkey mpxv --r_lowsimok --r_lowsimxd 100 --r_lowsimxl 2000 --alt_pass discontn,dupregin --out_allfasta --minimap2 --s_overhang 150"
     Int vadr_max_length = 21000
+    Int genome_len = 197200
   }
   command <<<
     echo "setting defaults for mpox"
@@ -50,6 +53,7 @@ task set_organism_defaults_mpox {
     String reference_gff = reference_gff_file
     String vadr_opts = vadr_options
     Int vadr_maxlen = vadr_max_length
+    Int genome_length = genome_len
   }
   runtime {
     memory: "1 GB"
@@ -67,6 +71,7 @@ task set_organism_defaults_wnv {
     String primer_bed_file = "gs://theiagen-public-files/terra/theiacov-files/WNV/WNV-L1_primer.bed"
     Int vadr_skip_length = 3000
     String vadr_options = "--mkey flavi --mdir /opt/vadr/vadr-models-flavi/ --nomisc --noprotid --out_allfasta"
+    Int genome_len = 11000
   }
   command <<<
     echo "setting defaults for wnv"
@@ -77,6 +82,7 @@ task set_organism_defaults_wnv {
     String primer_bed = primer_bed_file
     Int vadr_skip_len = vadr_skip_length
     String vadr_opts = vadr_options
+    Int genome_length = genome_len
   }
   runtime {
     memory: "1 GB"
@@ -92,14 +98,14 @@ task set_organism_defaults_flu {
     String flu_segment
     String flu_subtype
     # nextclade references
-    File ref_flu_h1n1_ha = "gs://theiagen-public-files-rp/terra/flu-references/reference_h1n1pdm_ha.fasta"
-    File ref_flu_h1n1_na = "gs://theiagen-public-files-rp/terra/flu-references/reference_h1n1pdm_na.fasta"
-    File ref_flu_h3n2_ha = "gs://theiagen-public-files-rp/terra/flu-references/reference_h3n2_ha.fasta"
-    File ref_flu_h3n2_na = "gs://theiagen-public-files-rp/terra/flu-references/reference_h3n2_na.fasta"
-    File ref_flu_yam_ha = "gs://theiagen-public-files-rp/terra/flu-references/reference_yam_ha.fasta"
-    File ref_flu_yam_na = "gs://theiagen-public-files-rp/terra/flu-references/reference_yam_na.fasta"
-    File ref_flu_vic_ha = "gs://theiagen-public-files-rp/terra/flu-references/reference_vic_ha.fasta"
-    File ref_flu_vic_na = "gs://theiagen-public-files-rp/terra/flu-references/reference_vic_na.fasta"
+    String ref_flu_h1n1_ha = "gs://theiagen-public-files-rp/terra/flu-references/reference_h1n1pdm_ha.fasta"
+    String ref_flu_h1n1_na = "gs://theiagen-public-files-rp/terra/flu-references/reference_h1n1pdm_na.fasta"
+    String ref_flu_h3n2_ha = "gs://theiagen-public-files-rp/terra/flu-references/reference_h3n2_ha.fasta"
+    String ref_flu_h3n2_na = "gs://theiagen-public-files-rp/terra/flu-references/reference_h3n2_na.fasta"
+    String ref_flu_yam_ha = "gs://theiagen-public-files-rp/terra/flu-references/reference_yam_ha.fasta"
+    String ref_flu_yam_na = "gs://theiagen-public-files-rp/terra/flu-references/reference_yam_na.fasta"
+    String ref_flu_vic_ha = "gs://theiagen-public-files-rp/terra/flu-references/reference_vic_ha.fasta"
+    String ref_flu_vic_na = "gs://theiagen-public-files-rp/terra/flu-references/reference_vic_na.fasta"
 
     String nextclade_flu_h1n1_ha_tag = "2023-08-10T12:00:00Z"
     String nextclade_flu_h1n1_na_tag = "2023-08-10T12:00:00Z"
@@ -182,6 +188,7 @@ task set_organism_defaults_rsv_a {
     String nextclade_ds_tag = "2023-02-03T12:00:00Z"
     String nextclade_ref = "EPI_ISL_412866"
     String nextclade_ds_name = "rsv_a"
+    Int genome_len = 16000
   }
   command <<<
     echo "setting defaults for rsva"
@@ -191,6 +198,7 @@ task set_organism_defaults_rsv_a {
     String nextclade_dataset_tag = nextclade_ds_tag
     String nextclade_reference = nextclade_ref
     String nextclade_dataset_name = nextclade_ds_name
+    Int genome_length = genome_len
   }
   runtime {
     memory: "1 GB"
@@ -207,6 +215,7 @@ task set_organism_defaults_rsv_b {
     String nextclade_ds_tag = "2023-02-03T12:00:00Z"
     String nextclade_ref = "EPI_ISL_1653999"
     String nextclade_ds_name = "rsv_b"
+    Int genome_len = 16000
   }
   command <<<
     echo "setting defaults for rsvb"
@@ -216,6 +225,7 @@ task set_organism_defaults_rsv_b {
     String nextclade_dataset_tag = nextclade_ds_tag
     String nextclade_reference = nextclade_ref
     String nextclade_dataset_name = nextclade_ds_name
+    Int genome_length = genome_len
   }
   runtime {
     memory: "1 GB"

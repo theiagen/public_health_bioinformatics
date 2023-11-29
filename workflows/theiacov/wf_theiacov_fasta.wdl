@@ -21,8 +21,9 @@ workflow theiacov_fasta {
     # flu options
     String flu_segment = "HA" # options: HA or NA
     String? flu_subtype # options: "Victoria" "Yamagata" "H3N2" "H1N1"
-    # optional reference genome
+    # optional reference information
     File? reference_genome
+    Int? genome_length
     # nextclade inputs (default SC2)
     String nextclade_dataset_reference = "MN908947"
     String nextclade_dataset_tag = "2023-08-17T12:00:00Z"
@@ -41,7 +42,8 @@ workflow theiacov_fasta {
         reference_genome = reference_genome, 
         nextclade_ref = nextclade_dataset_reference,
         nextclade_ds_tag = nextclade_dataset_tag,
-        nextclade_ds_name = nextclade_dataset_name
+        nextclade_ds_name = nextclade_dataset_name,
+        genome_len = genome_length
     }
   }
   if (organism == "MPXV") {
@@ -50,13 +52,15 @@ workflow theiacov_fasta {
         reference_genome = reference_genome,
         nextclade_ref = nextclade_dataset_reference,
         nextclade_ds_tag = nextclade_dataset_tag,
-        nextclade_ds_name = nextclade_dataset_name
+        nextclade_ds_name = nextclade_dataset_name,
+        genome_len = genome_length
     }
   }
   if (organism == "WNV") {
     call defaults.set_organism_defaults_wnv {
       input:
-        reference_genome = reference_genome
+        reference_genome = reference_genome,
+        genome_len = genome_length
     }
   }
   if (organism == "flu") {
@@ -71,7 +75,8 @@ workflow theiacov_fasta {
     call defaults.set_organism_defaults_flu {
       input:
         flu_segment = flu_segment,
-        flu_subtype = select_first([flu_subtype, abricate_subtype])
+        flu_subtype = select_first([flu_subtype, abricate_subtype]),
+        genome_len = genome_length
     }
   }
   if (organism == "rsv_a") {
@@ -80,7 +85,8 @@ workflow theiacov_fasta {
         reference_genome = reference_genome,
         nextclade_ds_tag = nextclade_dataset_tag,
         nextclade_ds_name = nextclade_dataset_name,
-        nextclade_ref = nextclade_dataset_reference
+        nextclade_ref = nextclade_dataset_reference,
+        genome_len = genome_length
     }
   } 
   if (organism == "rsv_b") {
@@ -89,13 +95,15 @@ workflow theiacov_fasta {
         reference_genome = reference_genome,
         nextclade_ds_tag = nextclade_dataset_tag,
         nextclade_ds_name = nextclade_dataset_name,
-        nextclade_ref = nextclade_dataset_reference
+        nextclade_ref = nextclade_dataset_reference,
+        genome_len = genome_length
     }
   }
   call consensus_qc_task.consensus_qc {
     input:
       assembly_fasta = assembly_fasta,
-      reference_genome = select_first([reference_genome, set_organism_defaults_sc2.reference, set_organism_defaults_mpox.reference, set_organism_defaults_wnv.reference, set_organism_defaults_flu.reference, set_organism_defaults_rsv_a.reference, set_organism_defaults_rsv_b.reference])
+      reference_genome = select_first([reference_genome, set_organism_defaults_sc2.reference, set_organism_defaults_mpox.reference, set_organism_defaults_wnv.reference, set_organism_defaults_flu.reference, set_organism_defaults_rsv_a.reference, set_organism_defaults_rsv_b.reference]),
+      genome_length = select_first([set_organism_defaults_sc2.genome_length, set_organism_defaults_mpox.genome_length, set_organism_defaults_wnv.genome_length, set_organism_defaults_flu.genome_length, set_organism_defaults_rsv_a.genome_length, set_organism_defaults_rsv_b.genome_length]),
   }
   if (organism == "sars-cov-2") {
     call pangolin.pangolin4 {
