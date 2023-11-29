@@ -7,6 +7,9 @@ task set_organism_defaults_sc2 {
     String nextclade_ref = "MN908947"
     String nextclade_ds_name = "sars-cov-2"
     Int genome_len = 29903
+    Int vadr_max_length = 30000
+    String vadr_options = "--noseqnamemax --glsearch -s -r --nomisc --mkey sarscov2 --lowsim5seq 6 --lowsim3seq 6 --alt_fail lowscore,insertnn,deletinn --out_allfasta"
+    Int vadr_skip_len = 100000
   }
   command <<<
     echo "setting defaults for sc2"
@@ -17,6 +20,9 @@ task set_organism_defaults_sc2 {
     String nextclade_reference = nextclade_ref
     String nextclade_dataset_name = nextclade_ds_name
     Int genome_length = genome_len
+    Int vadr_maxlen = vadr_max_length
+    String vadr_opts = vadr_options
+    Int vadr_skip_length = vadr_skip_len
   }
   runtime {
     memory: "1 GB"
@@ -37,7 +43,7 @@ task set_organism_defaults_mpox {
     String primer_bed_file = "gs://theiagen-public-files/terra/mpxv-files/MPXV.primer.bed"
     String reference_gff_file = "gs://theiagen-public-files/terra/mpxv-files/Mpox-MT903345.1.reference.gff3"
     String vadr_options = "--glsearch -s -r --nomisc --mkey mpxv --r_lowsimok --r_lowsimxd 100 --r_lowsimxl 2000 --alt_pass discontn,dupregin --out_allfasta --minimap2 --s_overhang 150"
-    Int vadr_max_length = 21000
+    Int vadr_max_length = 210000
     Int genome_len = 197200
   }
   command <<<
@@ -69,9 +75,10 @@ task set_organism_defaults_wnv {
     String reference_genome = "gs://theiagen-public-files/terra/theiacov-files/WNV/NC_009942.1_wnv_L1.fasta"
     String target_org = "West Nile virus"
     String primer_bed_file = "gs://theiagen-public-files/terra/theiacov-files/WNV/WNV-L1_primer.bed"
-    Int vadr_skip_length = 3000
-    String vadr_options = "--mkey flavi --mdir /opt/vadr/vadr-models-flavi/ --nomisc --noprotid --out_allfasta"
     Int genome_len = 11000
+    String vadr_options = "--mkey flavi --mdir /opt/vadr/vadr-models-flavi/ --nomisc --noprotid --out_allfasta"    
+    Int vadr_max_length = 11000
+    Int vadr_skip_length = 3000
   }
   command <<<
     echo "setting defaults for wnv"
@@ -79,10 +86,11 @@ task set_organism_defaults_wnv {
   output {
     String reference = reference_genome
     String target_organism = target_org
-    String primer_bed = primer_bed_file
-    Int vadr_skip_len = vadr_skip_length
-    String vadr_opts = vadr_options
+    String primer_bed = primer_bed_file    
     Int genome_length = genome_len
+    String vadr_opts = vadr_options
+    Int vadr_maxlen = vadr_max_length
+    Int vadr_skip_len = vadr_skip_length
   }
   runtime {
     memory: "1 GB"
@@ -189,6 +197,8 @@ task set_organism_defaults_rsv_a {
     String nextclade_ref = "EPI_ISL_412866"
     String nextclade_ds_name = "rsv_a"
     Int genome_len = 16000
+    String vadr_options = "-r --mkey rsv --xnocomp"
+    Int vadr_max_length = 15500
   }
   command <<<
     echo "setting defaults for rsva"
@@ -199,6 +209,8 @@ task set_organism_defaults_rsv_a {
     String nextclade_reference = nextclade_ref
     String nextclade_dataset_name = nextclade_ds_name
     Int genome_length = genome_len
+    String vadr_opts = vadr_options
+    Int vadr_maxlen = vadr_max_length
   }
   runtime {
     memory: "1 GB"
@@ -215,7 +227,9 @@ task set_organism_defaults_rsv_b {
     String nextclade_ds_tag = "2023-02-03T12:00:00Z"
     String nextclade_ref = "EPI_ISL_1653999"
     String nextclade_ds_name = "rsv_b"
-    Int genome_len = 16000
+    Int genome_len = 16000   
+    String vadr_options = "-r --mkey rsv --xnocomp"
+    Int vadr_max_length = 15500
   }
   command <<<
     echo "setting defaults for rsvb"
@@ -226,6 +240,8 @@ task set_organism_defaults_rsv_b {
     String nextclade_reference = nextclade_ref
     String nextclade_dataset_name = nextclade_ds_name
     Int genome_length = genome_len
+    String vadr_opts = vadr_options
+    Int vadr_maxlen = vadr_max_length
   }
   runtime {
     memory: "1 GB"

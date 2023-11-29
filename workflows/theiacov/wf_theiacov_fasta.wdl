@@ -35,6 +35,7 @@ workflow theiacov_fasta {
     File? qc_check_table
     # vadr parameters
     Int? maxlen
+    String? vadr_opts
   }
   if (organism == "sars-cov-2") {
     call defaults.set_organism_defaults_sc2 {
@@ -43,7 +44,9 @@ workflow theiacov_fasta {
         nextclade_ref = nextclade_dataset_reference,
         nextclade_ds_tag = nextclade_dataset_tag,
         nextclade_ds_name = nextclade_dataset_name,
-        genome_len = genome_length
+        genome_len = genome_length,
+        vadr_max_length = maxlen, 
+        vadr_options = vadr_opts
     }
   }
   if (organism == "MPXV") {
@@ -53,14 +56,18 @@ workflow theiacov_fasta {
         nextclade_ref = nextclade_dataset_reference,
         nextclade_ds_tag = nextclade_dataset_tag,
         nextclade_ds_name = nextclade_dataset_name,
-        genome_len = genome_length
+        genome_len = genome_length,
+        vadr_max_length = maxlen, 
+        vadr_options = vadr_opts
     }
   }
   if (organism == "WNV") {
     call defaults.set_organism_defaults_wnv {
       input:
         reference_genome = reference_genome,
-        genome_len = genome_length
+        genome_len = genome_length,
+        vadr_max_length = maxlen, 
+        vadr_options = vadr_opts
     }
   }
   if (organism == "flu") {
@@ -86,7 +93,9 @@ workflow theiacov_fasta {
         nextclade_ds_tag = nextclade_dataset_tag,
         nextclade_ds_name = nextclade_dataset_name,
         nextclade_ref = nextclade_dataset_reference,
-        genome_len = genome_length
+        genome_len = genome_length,
+        vadr_max_length = maxlen, 
+        vadr_options = vadr_opts
     }
   } 
   if (organism == "rsv_b") {
@@ -96,7 +105,9 @@ workflow theiacov_fasta {
         nextclade_ds_tag = nextclade_dataset_tag,
         nextclade_ds_name = nextclade_dataset_name,
         nextclade_ref = nextclade_dataset_reference,
-        genome_len = genome_length
+        genome_len = genome_length,
+        vadr_max_length = maxlen, 
+        vadr_options = vadr_opts
     }
   }
   call consensus_qc_task.consensus_qc {
@@ -138,8 +149,9 @@ workflow theiacov_fasta {
     call vadr_task.vadr {
       input:
         genome_fasta = assembly_fasta,
-        maxlen = maxlen,
-        assembly_length_unambiguous = consensus_qc.number_ATCG
+        assembly_length_unambiguous = consensus_qc.number_ATCG,
+        maxlen = select_first([maxlen, set_organism_defaults_sc2.vadr_maxlen, set_organism_defaults_mpox.vadr_maxlen, set_organism_defaults_rsv_a.vadr_maxlen, set_organism_defaults_rsv_b.vadr_maxlen, set_organism_defaults_wnv.vadr_maxlen]),
+        vadr_opts = select_first([vadr_opts, set_organism_defaults_sc2.vadr_opts, set_organism_defaults_mpox.vadr_opts, set_organism_defaults_rsv_a.vadr_opts, set_organism_defaults_rsv_b.vadr_opts, set_organism_defaults_wnv.vadr_opts]),
     }
   }
   # QC check task
