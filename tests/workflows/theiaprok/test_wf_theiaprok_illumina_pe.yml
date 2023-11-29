@@ -550,7 +550,7 @@
     - path: miniwdl_run/wdl/tasks/assembly/task_shovill.wdl
       md5sum: ca45f97152cb9536f2bb0603382021bd
     - path: miniwdl_run/wdl/tasks/gene_typing/task_abricate.wdl
-      md5sum: 8ea4befaa7a09b0def8d033cb9b806d1
+      md5sum: 49018b0dc2b173bc9e0f3893b8be8e7c
     - path: miniwdl_run/wdl/tasks/gene_typing/task_amrfinderplus.wdl
       md5sum: 249db321d15832002c4945394ae9af76
     - path: miniwdl_run/wdl/tasks/gene_typing/task_bakta.wdl
