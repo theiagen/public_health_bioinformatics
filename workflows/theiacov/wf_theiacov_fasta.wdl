@@ -25,9 +25,9 @@ workflow theiacov_fasta {
     File? reference_genome
     Int? genome_length
     # nextclade inputs (default SC2)
-    String nextclade_dataset_reference = "MN908947"
-    String nextclade_dataset_tag = "2023-08-17T12:00:00Z"
-    String nextclade_dataset_name = "sars-cov-2"
+    String? nextclade_dataset_reference
+    String? nextclade_dataset_tag
+    String? nextclade_dataset_name
     # sequencing values
     String seq_method
     String input_assembly_method
