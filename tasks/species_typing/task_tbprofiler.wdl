@@ -10,7 +10,7 @@ task tbprofiler {
     Int disk_size = 100
     String mapper = "bwa"
     String caller = "freebayes"
-    String caller_options = ""
+    # String caller_options = ""
     Int min_depth = 10
     Float min_af = 0.1
     Float min_af_pred = 0.1
@@ -57,13 +57,13 @@ task tbprofiler {
       TBDB=""
     fi
 
-    # Print and save input parameters
-    if [ "~{caller_options}" = true ] ; then
-      echo "caller options: ~{caller_options}"
-      CALLER_PARAMS='"~{caller_options}"'
-    else
-      CALLER_PARAMS=""
-    fi
+    # # Print and save input parameters
+    # if [ "~{caller_options}" = true ] ; then
+    #   echo "caller options: ~{caller_options}"
+    #   CALLER_PARAMS='"~{caller_options}"'
+    # else
+    #   CALLER_PARAMS=""
+    # fi
 
     # Run tb-profiler on the input reads with samplename prefix
     tb-profiler profile \
@@ -72,7 +72,8 @@ task tbprofiler {
       --prefix ~{samplename} \
       --mapper ~{mapper} \
       --caller ~{caller} \
-      --calling_params "${CALLER_PARAMS}" \
+      # --calling_params "${CALLER_PARAMS}" \
+      --calling_params "-C 1 -F 0.0"
       --min_depth ~{min_depth} \
       --af ~{min_af} \
       --reporting_af ~{min_af_pred} \
