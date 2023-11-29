@@ -60,7 +60,7 @@ task tbprofiler {
     # Print and save input parameters
     if [ "~{caller_options}" = true ] ; then
       echo "caller options: ~{caller_options}"
-      CALLER_PARAMS="~{caller_options}"
+      CALLER_PARAMS='"~{caller_options}"'
     else
       CALLER_PARAMS=""
     fi
