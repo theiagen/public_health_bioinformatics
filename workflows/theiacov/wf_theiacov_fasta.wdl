@@ -113,7 +113,7 @@ workflow theiacov_fasta {
     }
   }
   if (organism == "sars-cov-2" || organism == "MPXV" || organism == "rsv_a" || organism == "rsv_b" || organism == "flu") {
-    if (select_first([set_organism_defaults_flu.nextclade_dataset_name, ""]) != "NA") {
+    if (select_first([set_organism_defaults_flu.nextclade_dataset_tag, ""]) != "NA") {
       call nextclade_task.nextclade {
         input:
           genome_fasta = assembly_fasta,
