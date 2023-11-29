@@ -191,7 +191,7 @@ task antiviral_mutations_parser {
     def write_to_file(filename, aa_mutations, known_mutations):
       mutations = intersection(aa_mutations, known_mutations.split(','))
       with codecs.open(filename, 'wt') as file:
-        file.write(", ".join(mutations)
+        file.write(", ".join(mutations))
 
     # read in aa substitutions from input.tsv file
     with codecs.open("~{mutations_tsv}",'r') as tsv_file:
