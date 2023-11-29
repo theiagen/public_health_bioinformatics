@@ -113,12 +113,14 @@ workflow theiacov_fasta {
     }
   }
   if (organism == "sars-cov-2" || organism == "MPXV" || organism == "rsv_a" || organism == "rsv_b" || organism == "flu") {
-    call nextclade_task.nextclade {
-      input:
-        genome_fasta = assembly_fasta,
-        dataset_name = select_first([nextclade_dataset_name, set_organism_defaults_sc2.nextclade_dataset_name, set_organism_defaults_mpox.nextclade_dataset_name, set_organism_defaults_rsv_a.nextclade_dataset_name, set_organism_defaults_rsv_b.nextclade_dataset_name, set_organism_defaults_flu.nextclade_dataset_name]),
-        dataset_reference = select_first([nextclade_dataset_reference, set_organism_defaults_sc2.nextclade_reference, set_organism_defaults_mpox.nextclade_reference, set_organism_defaults_rsv_a.nextclade_reference, set_organism_defaults_rsv_b.nextclade_reference, set_organism_defaults_flu.nextclade_reference]),
-        dataset_tag = select_first([nextclade_dataset_tag, set_organism_defaults_sc2.nextclade_dataset_tag, set_organism_defaults_mpox.nextclade_dataset_tag, set_organism_defaults_rsv_a.nextclade_dataset_tag, set_organism_defaults_rsv_b.nextclade_dataset_tag, set_organism_defaults_flu.nextclade_dataset_tag])
+    if (select_first([set_organism_defaults_flu.nextclade_dataset_name, ""]) != "NA") {
+      call nextclade_task.nextclade {
+        input:
+          genome_fasta = assembly_fasta,
+          dataset_name = select_first([nextclade_dataset_name, set_organism_defaults_sc2.nextclade_dataset_name, set_organism_defaults_mpox.nextclade_dataset_name, set_organism_defaults_rsv_a.nextclade_dataset_name, set_organism_defaults_rsv_b.nextclade_dataset_name, set_organism_defaults_flu.nextclade_dataset_name]),
+          dataset_reference = select_first([nextclade_dataset_reference, set_organism_defaults_sc2.nextclade_reference, set_organism_defaults_mpox.nextclade_reference, set_organism_defaults_rsv_a.nextclade_reference, set_organism_defaults_rsv_b.nextclade_reference, set_organism_defaults_flu.nextclade_reference]),
+          dataset_tag = select_first([nextclade_dataset_tag, set_organism_defaults_sc2.nextclade_dataset_tag, set_organism_defaults_mpox.nextclade_dataset_tag, set_organism_defaults_rsv_a.nextclade_dataset_tag, set_organism_defaults_rsv_b.nextclade_dataset_tag, set_organism_defaults_flu.nextclade_dataset_tag])
+      }
     }
   }
   # nextclade parser task

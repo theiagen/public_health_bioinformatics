@@ -118,10 +118,10 @@ task set_organism_defaults_flu {
     Boolean trim_primer = false
   }
   command <<<
-    echo "No reference found for ~{flu_subtype} ~{flu_segment}" > REFERENCE
-    echo "No nextclade tag found for ~{flu_subtype} ~{flu_segment}" > NEXTCLADE_DATASET_TAG
-    echo "No dataset name" > NEXTCLADE_DATASET_NAME
-    echo "No dataset reference" > NEXTCLADE_REFERENCE
+    echo "gs://theiagen-public-files/terra/theiacov-files/empty.fasta" > REFERENCE
+    echo "NA" > NEXTCLADE_DATASET_TAG
+    echo "NA" > NEXTCLADE_DATASET_NAME
+    echo "NA" > NEXTCLADE_REFERENCE
 
     if [ "~{flu_segment}" == "HA" ]; then
       if [ "~{flu_subtype}" == "H1N1" ]; then
