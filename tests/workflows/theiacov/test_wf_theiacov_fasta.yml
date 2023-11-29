@@ -18,7 +18,7 @@
     - wf_theiacov_fasta_miniwdl
   files:
     - path: miniwdl_run/call-consensus_qc/command
-      md5sum: c6d8981945409a1f3ef57f27d07c62cc
+      md5sum: 57cce4e7c41e1ff0f9a9883605d84695
     - path: miniwdl_run/call-consensus_qc/inputs.json
     - path: miniwdl_run/call-consensus_qc/outputs.json
     - path: miniwdl_run/call-consensus_qc/stderr.txt
