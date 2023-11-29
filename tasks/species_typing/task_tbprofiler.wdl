@@ -57,6 +57,14 @@ task tbprofiler {
       TBDB=""
     fi
 
+    # Print and save input parameters
+    if [ "~{caller_options}" = true ] ; then
+      echo "caller options: ~{caller_options}"
+      CALLER_PARAMS="~{caller_options}"
+    else
+      CALLER_PARAMS=""
+    fi
+
     # Run tb-profiler on the input reads with samplename prefix
     tb-profiler profile \
       ${mode} \
@@ -64,7 +72,7 @@ task tbprofiler {
       --prefix ~{samplename} \
       --mapper ~{mapper} \
       --caller ~{caller} \
-      --calling_params ~{caller_options} \
+      --calling_params ${CALLER_PARAMS} \
       --min_depth ~{min_depth} \
       --af ~{min_af} \
       --reporting_af ~{min_af_pred} \
