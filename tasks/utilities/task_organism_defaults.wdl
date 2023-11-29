@@ -9,7 +9,6 @@ task set_organism_defaults_sc2 {
     Int genome_len = 29903
     Int vadr_max_length = 30000
     String vadr_options = "--noseqnamemax --glsearch -s -r --nomisc --mkey sarscov2 --lowsim5seq 6 --lowsim3seq 6 --alt_fail lowscore,insertnn,deletinn --out_allfasta"
-    Int vadr_skip_len = 100000
   }
   command <<<
     echo "setting defaults for sc2"
@@ -22,7 +21,6 @@ task set_organism_defaults_sc2 {
     Int genome_length = genome_len
     Int vadr_maxlen = vadr_max_length
     String vadr_opts = vadr_options
-    Int vadr_skip_length = vadr_skip_len
   }
   runtime {
     memory: "1 GB"
@@ -78,7 +76,6 @@ task set_organism_defaults_wnv {
     Int genome_len = 11000
     String vadr_options = "--mkey flavi --mdir /opt/vadr/vadr-models-flavi/ --nomisc --noprotid --out_allfasta"    
     Int vadr_max_length = 11000
-    Int vadr_skip_length = 3000
   }
   command <<<
     echo "setting defaults for wnv"
@@ -90,7 +87,6 @@ task set_organism_defaults_wnv {
     Int genome_length = genome_len
     String vadr_opts = vadr_options
     Int vadr_maxlen = vadr_max_length
-    Int vadr_skip_len = vadr_skip_length
   }
   runtime {
     memory: "1 GB"
