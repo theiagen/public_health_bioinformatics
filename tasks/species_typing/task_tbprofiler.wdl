@@ -9,7 +9,8 @@ task tbprofiler {
     String tbprofiler_docker_image = "us-docker.pkg.dev/general-theiagen/staphb/tbprofiler:4.4.2"
     Int disk_size = 100
     String mapper = "bwa"
-    String caller = "freebayes"
+    String variant_caller = "freebayes"
+    String? variant_calling_params
     Int min_depth = 10
     Float min_af = 0.1
     Float min_af_pred = 0.1
@@ -62,8 +63,8 @@ task tbprofiler {
       ${INPUT_READS} \
       --prefix ~{samplename} \
       --mapper ~{mapper} \
-      --caller ~{caller} \
-      --calling_params "-C 1 -F 0.0" \
+      --caller ~{variant_caller} \
+      --calling_params "~{variant_calling_params}" \
       --min_depth ~{min_depth} \
       --af ~{min_af} \
       --reporting_af ~{min_af_pred} \
