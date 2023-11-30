@@ -51,8 +51,8 @@ workflow theiacov_ont {
     # kraken inputs
     String? target_org
     # read screen parameters
-    Int min_reads = 113 # min basepairs / 300 (which is the longest available read length of an Illumina product)
-    Int min_basepairs = 34000 # 20x coverage of hepatitis delta virus
+    Int min_reads = 57 # min basepairs / 300 (which is the longest available read length of an Illumina product)
+    Int min_basepairs = 17000 # 10x coverage of hepatitis delta virus
     Int min_genome_length = 1700 # size of hepatitis delta virus
     Int max_genome_length = 2673870 # size of Pandoravirus salinus + 200 kb
     Int min_coverage = 10

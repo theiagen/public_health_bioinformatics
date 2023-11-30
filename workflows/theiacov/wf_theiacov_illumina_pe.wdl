@@ -55,8 +55,8 @@ workflow theiacov_illumina_pe {
     String nextclade_flu_vic_na_tag = "2023-04-02T12:00:00Z"
     String nextclade_flu_yam_tag = "2022-07-27T12:00:00Z"
     # read screen parameters
-    Int min_reads = 113 # min basepairs / 300 (which is the longest available read length of an Illumina product)
-    Int min_basepairs = 34000 # 20x coverage of hepatitis delta virus
+    Int min_reads = 57 # min basepairs / 300 (which is the longest available read length of an Illumina product)
+    Int min_basepairs = 17000 # 10x coverage of hepatitis delta virus
     Int min_genome_size = 1700 # size of hepatitis delta virus
     Int max_genome_size = 2673870 # size of Pandoravirus salinus + 200 kb
     Int min_coverage = 10

@@ -41,8 +41,8 @@ workflow theiacov_illumina_se {
     Float consensus_min_freq = 0.6 # minimum frequency for a variant to be called as SNP in consensus genome
     Float variant_min_freq = 0.6 # minimum frequency for a variant to be reported in ivar outputs
     # read screen parameters
-    Int min_reads = 113 # min basepairs / 300 (which is the longest available read length of an Illumina product)
-    Int min_basepairs = 34000 # 20x coverage of hepatitis delta virus
+    Int min_reads = 57 # min basepairs / 300 (which is the longest available read length of an Illumina product)
+    Int min_basepairs = 17000 # 10x coverage of hepatitis delta virus
     Int min_genome_size = 1700 # size of hepatitis delta virus
     Int max_genome_size = 2673870 # size of Pandoravirus salinus + 200 kb
     Int min_coverage = 10
