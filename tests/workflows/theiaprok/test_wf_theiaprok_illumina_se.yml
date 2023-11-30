@@ -586,7 +586,7 @@
     - path: miniwdl_run/wdl/tasks/species_typing/task_sonneityping.wdl
       md5sum: aeb12cf9a0db4e34f2aecbaba51c30fb
     - path: miniwdl_run/wdl/tasks/species_typing/task_tbprofiler.wdl
-      md5sum: 0cc3554c6af825e450398f5cdcec807e
+      md5sum: e486a508ffbfbf300ad64892d82ddde6
     - path: miniwdl_run/wdl/tasks/species_typing/task_ts_mlst.wdl
       md5sum: d49ae0b02e798af0636eb2721bb434b4
     - path: miniwdl_run/wdl/tasks/task_versioning.wdl
