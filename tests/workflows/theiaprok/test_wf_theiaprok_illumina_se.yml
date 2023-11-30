@@ -596,14 +596,14 @@
     - path: miniwdl_run/wdl/tasks/taxon_id/task_kraken2.wdl
       md5sum: a1f287e6e6feaf2d7d3c74a70e3b5a28
     - path: miniwdl_run/wdl/tasks/taxon_id/task_midas.wdl
-      md5sum: faacd87946ee3fbdf70f3a15b79ce547
+      md5sum: c6f3b8b3e3894208f7b247709944c9bc
     - path: miniwdl_run/wdl/tasks/utilities/task_broad_terra_tools.wdl
-      md5sum: 43ef050bde1fb8755f38e697a1794918
+      md5sum: bd8d8c6a24114649b094bc199237ef36
     - path: miniwdl_run/wdl/workflows/theiaprok/wf_theiaprok_illumina_se.wdl
-      md5sum: e1d9e75dae5176ceeb95b88a5d3bbba7
+      md5sum: e6fe66c28e9f70bf6b8e1b337618d35c
     - path: miniwdl_run/wdl/workflows/utilities/wf_merlin_magic.wdl
       md5sum: 00bd2489b2a7aa5b88340a940961a857
     - path: miniwdl_run/wdl/workflows/utilities/wf_read_QC_trim_se.wdl
-      md5sum: 53d322d895837c0bcb049786572e944d
+      md5sum: f9f50499336d88b3665760173a21cf95
     - path: miniwdl_run/workflow.log
       contains: ["wdl", "theiaprok_illumina_se", "NOTICE", "done"]
