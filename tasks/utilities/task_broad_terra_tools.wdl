@@ -289,6 +289,7 @@ task export_taxon_tables {
     String? midas_primary_genus
     String? midas_secondary_genus
     Float? midas_secondary_genus_abundance
+    Float? midas_secondary_genus_coverage
     File? bakta_gbff
     File? bakta_gff3
     File? bakta_tsv
@@ -646,6 +647,7 @@ task export_taxon_tables {
       "midas_primary_genus": "~{midas_primary_genus}",
       "midas_secondary_genus": "~{midas_secondary_genus}",
       "midas_secondary_genus_abundance": "~{midas_secondary_genus_abundance}",
+      "midas_secondary_genus_coverage": "~{midas_secondary_genus_coverage}",
       "bakta_gbff": "~{bakta_gbff}",
       "bakta_gff3": "~{bakta_gff3}",
       "bakta_tsv": "~{bakta_tsv}",

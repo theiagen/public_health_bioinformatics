@@ -197,6 +197,7 @@ workflow theiaprok_illumina_se {
             est_coverage_raw = cg_pipeline_raw.est_coverage,
             est_coverage_clean = cg_pipeline_clean.est_coverage,
             midas_secondary_genus_abundance = read_QC_trim.midas_secondary_genus_abundance,
+            midas_secondary_genus_coverage = read_QC_trim.midas_secondary_genus_coverage,
             assembly_length = quast.genome_length,
             number_contigs = quast.number_contigs,
             n50_value = quast.n50_value,
@@ -479,6 +480,7 @@ workflow theiaprok_illumina_se {
             midas_primary_genus = read_QC_trim.midas_primary_genus,
             midas_secondary_genus = read_QC_trim.midas_secondary_genus,
             midas_secondary_genus_abundance = read_QC_trim.midas_secondary_genus_abundance,
+            midas_secondary_genus_coverage = read_QC_trim.midas_secondary_genus_coverage,
             pasty_serogroup = merlin_magic.pasty_serogroup,
             pasty_serogroup_coverage = merlin_magic.pasty_serogroup_coverage,
             pasty_serogroup_fragments = merlin_magic.pasty_serogroup_fragments,
@@ -537,6 +539,7 @@ workflow theiaprok_illumina_se {
     String? midas_primary_genus = read_QC_trim.midas_primary_genus
     String? midas_secondary_genus = read_QC_trim.midas_secondary_genus
     Float? midas_secondary_genus_abundance = read_QC_trim.midas_secondary_genus_abundance
+    Float? midas_secondary_genus_coverage = read_QC_trim.midas_secondary_genus_coverage
     #Assembly - shovill outputs
     File? assembly_fasta = shovill_se.assembly_fasta
     File? contigs_gfa = shovill_se.contigs_gfa

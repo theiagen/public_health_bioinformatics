@@ -32,7 +32,8 @@ task qc_check_phb {
     Float? quast_gc_percent
     String? busco_results
     # theiaprok only inputs
-    String? midas_secondary_genus_abundance 
+    Float? midas_secondary_genus_abundance 
+    Float? midas_secondary_genus_coverage
     Float? ani_highest_percent 
     Float? ani_highest_percent_bases_aligned
     # theiacov inputs
@@ -238,6 +239,11 @@ task qc_check_phb {
           if ("~{midas_secondary_genus_abundance}"): # if midas_secondary_genus_abundance variable exists,
             qc_note, qc_status = compare(qc_note, "midas_secondary_genus_abundance", float(~{midas_secondary_genus_abundance}), "<", float(taxon_df["midas_secondary_genus_abundance"][0]))
             qc_check_metrics.remove("midas_secondary_genus_abundance")  
+
+        if ("midas_secondary_genus_coverage" in qc_check_metrics): # if this var is in the qc_check_metrics,
+          if ("~{midas_secondary_genus_coverage}"): # if midas_secondary_genus_coverage variable exists,
+            qc_note, qc_status = compare(qc_note, "midas_secondary_genus_coverage", float(~{midas_secondary_genus_coverage}), "<", float(taxon_df["midas_secondary_genus_coverage"][0]))
+            qc_check_metrics.remove("midas_secondary_genus_coverage")  
 
         if ("assembly_length_min" in qc_check_metrics):
           if ("~{assembly_length}"):
