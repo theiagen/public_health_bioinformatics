@@ -66,6 +66,10 @@ task compare_two_tsvs {
 
     Int disk_size = 10
   }
+  meta {
+    # added so that call caching is always turned off
+    volatile: true
+  }
   command <<<
     # too lazy to create a new docker image, this is not good practice
     pip install pretty_html_table
