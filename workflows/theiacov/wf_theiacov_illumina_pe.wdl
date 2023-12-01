@@ -133,6 +133,7 @@ workflow theiacov_illumina_pe {
             read1 = read_QC_trim.read1_clean,
             read2 = read_QC_trim.read2_clean,
             samplename = samplename,
+            seq_method = seq_method
         }
         if (defined(irma.irma_assemblies)) {
           call abricate.abricate_flu {
