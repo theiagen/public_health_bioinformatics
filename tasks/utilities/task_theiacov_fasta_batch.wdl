@@ -26,6 +26,10 @@ task sm_theiacov_fasta_wrangling { # the sm stands for supermassive
     
     Int disk_size = 100
   }
+  meta {
+    # added so that call caching is always turned off
+    volatile: true
+  }
   command <<<
     # convert the map into a JSON file for use in the python block
     # example map: {ERR4439752.test: /mnt/miniwdl_task_container/work/_miniwdl_inputs/0/ERR4439752.ivar.consensus.fasta}
