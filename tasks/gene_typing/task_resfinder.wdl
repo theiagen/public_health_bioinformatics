@@ -8,7 +8,7 @@ task resfinder {
     Boolean acquired = true # Run resfinder for acquired resistance genes
     Float min_cov = 0.5 # Minimum (breadth-of) coverage of ResFinder
     Float min_id = 0.9 # Threshold for identity of ResFinder
-    Boolean call_PointFinder = false # Run pointfinder for chromosomal mutations
+    Boolean call_pointfinder = false # Run pointfinder for chromosomal mutations
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/resfinder:4.1.11"
     Int disk_size = 100
     Int cpu = 2
@@ -60,7 +60,7 @@ task resfinder {
         ~{true="--acquired" false="" acquired} \
         ~{'--min_cov ' + min_cov} \
         ~{'--threshold ' + min_id} \
-        ~{true="--point" false="" call_PointFinder} 
+        ~{true="--point" false="" call_pointfinder} 
     else 
       # pointfinder requires the use of the --species flag, so if resfinder_organism is not set, do not run pointfinder
       run_resfinder.py \
