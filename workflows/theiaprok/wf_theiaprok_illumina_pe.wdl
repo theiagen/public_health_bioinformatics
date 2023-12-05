@@ -300,6 +300,7 @@ workflow theiaprok_illumina_pe {
             ani_output_tsv = ani.ani_output_tsv,
             ani_top_species_match = ani.ani_top_species_match,
             ani_mummer_version = ani.ani_mummer_version,
+            ani_docker = ani.ani_docker,
             kmerfinder_docker = kmerfinder.kmerfinder_docker,
             kmerfinder_results_tsv = kmerfinder.kmerfinder_results_tsv,
             kmerfinder_top_hit = kmerfinder.kmerfinder_top_hit,
@@ -629,6 +630,7 @@ workflow theiaprok_illumina_pe {
     File? ani_output_tsv = ani.ani_output_tsv
     String? ani_top_species_match = ani.ani_top_species_match
     String? ani_mummer_version = ani.ani_mummer_version
+    String? ani_mummer_docker = ani.ani_docker
     # kmerfinder outputs
     String? kmerfinder_docker = kmerfinder.kmerfinder_docker
     File? kmerfinder_results_tsv = kmerfinder.kmerfinder_results_tsv
