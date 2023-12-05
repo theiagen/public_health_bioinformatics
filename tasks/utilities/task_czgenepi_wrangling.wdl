@@ -25,6 +25,10 @@ task czgenepi_wrangling {
 
     # runtime
     Int disk_size = 100
+  }  
+  meta {
+    # added so that call caching is always turned off
+    volatile: true
   }
   command <<<
     # parse terra table for data

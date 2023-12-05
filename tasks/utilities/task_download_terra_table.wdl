@@ -2,7 +2,10 @@ version 1.0
 
 task download_terra_table {
   meta {
-    description: "This task downloads a Terra table and reduces it to only include the samples of interest."
+    description: "This task downloads a Terra table and reduces it to only include the samples of interest."   
+    
+    # added so that call caching is always turned off
+    volatile: true
   }
   input {
     String terra_table_name
