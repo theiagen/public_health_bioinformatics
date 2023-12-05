@@ -341,6 +341,10 @@ task export_taxon_tables {
     String? srst2_vibrio_serogroup
     String? srst2_vibrio_biotype
   }
+  meta {
+    # added so that call caching is always turned off
+    volatile: true
+  }
   command <<<
   
     # capture taxon and corresponding table names from input taxon_tables
