@@ -38,37 +38,33 @@ workflow theiacov_fasta {
     String? vadr_opts
   }
   if (organism == "sars-cov-2") {
-    call defaults.set_organism_defaults_sc2 {
-      input:
-        reference_genome = reference_genome, 
-        nextclade_ref = nextclade_dataset_reference,
-        nextclade_ds_tag = nextclade_dataset_tag,
-        nextclade_ds_name = nextclade_dataset_name,
-        genome_len = genome_length,
-        vadr_max_length = maxlen, 
-        vadr_options = vadr_opts
-    }
+    String sc2_reference_genome = "gs://theiagen-public-files-rp/terra/augur-sars-cov-2-references/MN908947.fasta"
+    String sc2_nextclade_ds_tag = "2023-08-17T12:00:00Z"
+    String sc2_nextclade_ref = "MN908947"
+    String sc2_nextclade_ds_name = "sars-cov-2"
+    Int sc2_genome_len = 29903
+    Int sc2_vadr_max_length = 30000
+    String sc2_vadr_options = "--noseqnamemax --glsearch -s -r --nomisc --mkey sarscov2 --lowsim5seq 6 --lowsim3seq 6 --alt_fail lowscore,insertnn,deletinn --out_allfasta"
   }
   if (organism == "MPXV") {
-    call defaults.set_organism_defaults_mpox {
-      input:
-        reference_genome = reference_genome,
-        nextclade_ref = nextclade_dataset_reference,
-        nextclade_ds_tag = nextclade_dataset_tag,
-        nextclade_ds_name = nextclade_dataset_name,
-        genome_len = genome_length,
-        vadr_max_length = maxlen, 
-        vadr_options = vadr_opts
-    }
+    String mpox_reference_genome = "gs://theiagen-public-files/terra/mpxv-files/MPXV.MT903345.reference.fasta"
+    String mpox_nextclade_ds_tag = "2023-08-01T12:00:00Z"
+    String mpox_nextclade_ref = "pseudo_ON563414"
+    String mpox_nextclade_ds_name = "hMPXV_B1"
+    # String mpox_target_org = "Monkeypox virus"
+    # String mpox_primer_bed_file = "gs://theiagen-public-files/terra/mpxv-files/MPXV.primer.bed"
+    # String mpox_reference_gff_file = "gs://theiagen-public-files/terra/mpxv-files/Mpox-MT903345.1.reference.gff3"
+    String mpox_vadr_options = "--glsearch -s -r --nomisc --mkey mpxv --r_lowsimok --r_lowsimxd 100 --r_lowsimxl 2000 --alt_pass discontn,dupregin --out_allfasta --minimap2 --s_overhang 150"
+    Int mpox_vadr_max_length = 210000
+    Int mpox_genome_len = 197200
   }
   if (organism == "WNV") {
-    call defaults.set_organism_defaults_wnv {
-      input:
-        reference_genome = reference_genome,
-        genome_len = genome_length,
-        vadr_max_length = maxlen, 
-        vadr_options = vadr_opts
-    }
+    String wnv_reference_genome = "gs://theiagen-public-files/terra/theiacov-files/WNV/NC_009942.1_wnv_L1.fasta"
+    # String wnv_target_org = "West Nile virus"
+    # String wnv_primer_bed_file = "gs://theiagen-public-files/terra/theiacov-files/WNV/WNV-L1_primer.bed"
+    Int wnv_genome_len = 11000
+    String wnv_vadr_options = "--mkey flavi --mdir /opt/vadr/vadr-models-flavi/ --nomisc --noprotid --out_allfasta"    
+    Int wnv_vadr_max_length = 11000
   }
   if (organism == "flu") {
     if (!defined(flu_subtype)) {
@@ -77,7 +73,7 @@ workflow theiacov_fasta {
           assembly = assembly_fasta,
           samplename = samplename
       }
-      String? abricate_subtype = abricate_flu.abricate_flu_subtype
+      String abricate_subtype = abricate_flu.abricate_flu_subtype
     }
     call defaults.set_organism_defaults_flu {
       input:
@@ -87,34 +83,28 @@ workflow theiacov_fasta {
     }
   }
   if (organism == "rsv_a") {
-    call defaults.set_organism_defaults_rsv_a {
-      input:
-        reference_genome = reference_genome,
-        nextclade_ds_tag = nextclade_dataset_tag,
-        nextclade_ds_name = nextclade_dataset_name,
-        nextclade_ref = nextclade_dataset_reference,
-        genome_len = genome_length,
-        vadr_max_length = maxlen, 
-        vadr_options = vadr_opts
-    }
+    String rsv_a_reference_genome = "gs://theiagen-public-files-rp/terra/rsv_references/reference_rsv_a.fasta"
+    String rsv_a_nextclade_ds_tag = "2023-02-03T12:00:00Z"
+    String rsv_a_nextclade_ref = "EPI_ISL_412866"
+    String rsv_a_nextclade_ds_name = "rsv_a"
+    Int rsv_a_genome_len = 16000
+    String rsv_a_vadr_options = "-r --mkey rsv --xnocomp"
+    Int rsv_a_vadr_max_length = 15500
   } 
   if (organism == "rsv_b") {
-    call defaults.set_organism_defaults_rsv_b {
-      input:
-        reference_genome = reference_genome,
-        nextclade_ds_tag = nextclade_dataset_tag,
-        nextclade_ds_name = nextclade_dataset_name,
-        nextclade_ref = nextclade_dataset_reference,
-        genome_len = genome_length,
-        vadr_max_length = maxlen, 
-        vadr_options = vadr_opts
-    }
+    String rsv_b_reference_genome = "gs://theiagen-public-files-rp/terra/rsv_references/reference_rsv_b.fasta"
+    String rsv_b_nextclade_ds_tag = "2023-02-03T12:00:00Z"
+    String rsv_b_nextclade_ref = "EPI_ISL_1653999"
+    String rsv_b_nextclade_ds_name = "rsv_b"
+    Int rsv_b_genome_len = 16000   
+    String rsv_b_vadr_options = "-r --mkey rsv --xnocomp"
+    Int rsv_b_vadr_max_length = 15500
   }
   call consensus_qc_task.consensus_qc {
     input:
       assembly_fasta = assembly_fasta,
-      reference_genome = select_first([reference_genome, set_organism_defaults_sc2.reference, set_organism_defaults_mpox.reference, set_organism_defaults_wnv.reference, set_organism_defaults_flu.reference, set_organism_defaults_rsv_a.reference, set_organism_defaults_rsv_b.reference]),
-      genome_length = select_first([set_organism_defaults_sc2.genome_length, set_organism_defaults_mpox.genome_length, set_organism_defaults_wnv.genome_length, set_organism_defaults_flu.genome_length, set_organism_defaults_rsv_a.genome_length, set_organism_defaults_rsv_b.genome_length]),
+      reference_genome = select_first([reference_genome, sc2_reference_genome, mpox_reference_genome, wnv_reference_genome, set_organism_defaults_flu.reference, rsv_a_reference_genome, rsv_b_reference_genome]),
+      genome_length = select_first([genome_length, sc2_genome_len, mpox_genome_len, wnv_genome_len, set_organism_defaults_flu.genome_length, rsv_a_genome_len, rsv_b_genome_len]),
   }
   if (organism == "sars-cov-2") {
     call pangolin.pangolin4 {
@@ -128,9 +118,9 @@ workflow theiacov_fasta {
       call nextclade_task.nextclade {
         input:
           genome_fasta = assembly_fasta,
-          dataset_name = select_first([nextclade_dataset_name, set_organism_defaults_sc2.nextclade_dataset_name, set_organism_defaults_mpox.nextclade_dataset_name, set_organism_defaults_rsv_a.nextclade_dataset_name, set_organism_defaults_rsv_b.nextclade_dataset_name, set_organism_defaults_flu.nextclade_dataset_name]),
-          dataset_reference = select_first([nextclade_dataset_reference, set_organism_defaults_sc2.nextclade_reference, set_organism_defaults_mpox.nextclade_reference, set_organism_defaults_rsv_a.nextclade_reference, set_organism_defaults_rsv_b.nextclade_reference, set_organism_defaults_flu.nextclade_reference]),
-          dataset_tag = select_first([nextclade_dataset_tag, set_organism_defaults_sc2.nextclade_dataset_tag, set_organism_defaults_mpox.nextclade_dataset_tag, set_organism_defaults_rsv_a.nextclade_dataset_tag, set_organism_defaults_rsv_b.nextclade_dataset_tag, set_organism_defaults_flu.nextclade_dataset_tag])
+          dataset_name = select_first([nextclade_dataset_name, sc2_nextclade_ds_name, mpox_nextclade_ds_name, rsv_a_nextclade_ds_name, rsv_b_nextclade_ds_name, set_organism_defaults_flu.nextclade_dataset_name]),
+          dataset_reference = select_first([nextclade_dataset_reference, sc2_nextclade_ref, mpox_nextclade_ref, rsv_a_nextclade_ref, rsv_b_nextclade_ref, set_organism_defaults_flu.nextclade_reference]),
+          dataset_tag = select_first([nextclade_dataset_tag, sc2_nextclade_ds_tag, mpox_nextclade_ds_tag, rsv_a_nextclade_ds_tag, rsv_b_nextclade_ds_tag, set_organism_defaults_flu.nextclade_dataset_tag]),
       }
     }
   }
@@ -150,8 +140,8 @@ workflow theiacov_fasta {
       input:
         genome_fasta = assembly_fasta,
         assembly_length_unambiguous = consensus_qc.number_ATCG,
-        maxlen = select_first([maxlen, set_organism_defaults_sc2.vadr_maxlen, set_organism_defaults_mpox.vadr_maxlen, set_organism_defaults_rsv_a.vadr_maxlen, set_organism_defaults_rsv_b.vadr_maxlen, set_organism_defaults_wnv.vadr_maxlen]),
-        vadr_opts = select_first([vadr_opts, set_organism_defaults_sc2.vadr_opts, set_organism_defaults_mpox.vadr_opts, set_organism_defaults_rsv_a.vadr_opts, set_organism_defaults_rsv_b.vadr_opts, set_organism_defaults_wnv.vadr_opts]),
+        maxlen = select_first([maxlen, sc2_vadr_max_length, mpox_vadr_max_length, wnv_vadr_max_length, rsv_a_vadr_max_length, rsv_b_vadr_max_length]),
+        vadr_opts = select_first([vadr_opts, sc2_vadr_options, mpox_vadr_options, wnv_vadr_options, rsv_a_vadr_options, rsv_b_vadr_options]),
     }
   }
   # QC check task
@@ -198,7 +188,7 @@ workflow theiacov_fasta {
     File? nextclade_tsv = nextclade.nextclade_tsv
     String? nextclade_version = nextclade.nextclade_version
     String? nextclade_docker = nextclade.nextclade_docker
-    String nextclade_ds_tag =  select_first([nextclade_dataset_tag, set_organism_defaults_sc2.nextclade_dataset_tag, set_organism_defaults_mpox.nextclade_dataset_tag, set_organism_defaults_rsv_a.nextclade_dataset_tag, set_organism_defaults_rsv_b.nextclade_dataset_tag, set_organism_defaults_flu.nextclade_dataset_tag, "NA"])
+    String nextclade_ds_tag =  select_first([nextclade_dataset_tag, sc2_nextclade_ds_tag, mpox_nextclade_ds_tag, rsv_a_nextclade_ds_tag, rsv_b_nextclade_ds_tag, set_organism_defaults_flu.nextclade_dataset_tag])
     String? nextclade_clade = nextclade_output_parser.nextclade_clade
     String? nextclade_aa_subs = nextclade_output_parser.nextclade_aa_subs
     String? nextclade_aa_dels = nextclade_output_parser.nextclade_aa_dels
