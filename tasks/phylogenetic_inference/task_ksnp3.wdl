@@ -53,7 +53,8 @@ task ksnp3 {
     -in ksnp3_input.tsv \
     -outdir ksnp3 \
     -k ~{kmer_size} \
-    -core -vcf \
+    -core \
+    -vcf \
     ~{'-SNPs_all ' + previous_ksnp3_snps} \
     ~{ksnp3_args}
   
@@ -71,7 +72,13 @@ task ksnp3 {
     echo "The core SNP matrix could not be produced" | tee SKIP_SNP_DIST # otherwise, skip
   fi
 
-  mv -v ksnp3/VCF.*.vcf ksnp3/~{cluster_name}_core.vcf
+  # capture sample name of genome used as reference
+  ls ksnp3/*.vcf | cut -d '.' -f 2 | tee KSNP3_VCF_REF_SAMPLENAME.txt
+
+  # rename the 2 vcf files by appending ~{cluster_name} and removing the ref genome name to make final filenames predictable
+  mv -v ksnp3/VCF.*.vcf ksnp3/~{cluster_name}_VCF.reference_genome.vcf
+  mv -v ksnp3/VCF.SNPsNotinRef.* ksnp3/~{cluster_name}_VCF_.SNPsNotinRef.tsv
+
   mv -v ksnp3/SNPs_all_matrix.fasta ksnp3/~{cluster_name}_pan_SNPs_matrix.fasta
   mv -v ksnp3/tree.parsimony.tre ksnp3/~{cluster_name}_pan_parsimony.nwk
 
@@ -84,9 +91,11 @@ task ksnp3 {
 
   >>>
   output {
-    File ksnp3_core_matrix = "ksnp3/${cluster_name}_core_SNPs_matrix.fasta"
-    File ksnp3_core_tree = "ksnp3/${cluster_name}_core.nwk"
-    File ksnp3_core_vcf = "ksnp3/${cluster_name}_core.vcf"
+    File ksnp3_core_matrix = "ksnp3/~{cluster_name}_core_SNPs_matrix.fasta"
+    File ksnp3_core_tree = "ksnp3/~{cluster_name}_core.nwk"
+    File ksnp3_vcf_ref_genome = "ksnp3/~{cluster_name}_VCF.reference_genome.vcf"
+    File ksnp3_vcf_snps_not_in_ref = "ksnp3/~{cluster_name}_VCF_.SNPsNotinRef.tsv"
+    String ksnp3_vcf_ref_samplename = read_string("KSNP3_VCF_REF_SAMPLENAME.txt")
     File ksnp3_pan_matrix = "ksnp3/~{cluster_name}_pan_SNPs_matrix.fasta"
     File ksnp3_pan_parsimony_tree = "ksnp3/~{cluster_name}_pan_parsimony.nwk"
     File? ksnp3_ml_tree = "ksnp3/~{cluster_name}_ML.nwk"

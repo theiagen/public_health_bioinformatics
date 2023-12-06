@@ -21,7 +21,7 @@ workflow theiacov_fasta {
     String input_assembly_method
     # nextclade inputs
     String nextclade_dataset_reference = "MN908947"
-    String nextclade_dataset_tag = "2023-08-17T12:00:00Z"
+    String nextclade_dataset_tag = "2023-09-21T12:00:00Z"
     String? nextclade_dataset_name
     # qc check parameters
     File? qc_check_table
