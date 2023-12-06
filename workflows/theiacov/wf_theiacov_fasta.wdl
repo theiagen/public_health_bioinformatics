@@ -188,7 +188,7 @@ workflow theiacov_fasta {
     File? nextclade_tsv = nextclade.nextclade_tsv
     String? nextclade_version = nextclade.nextclade_version
     String? nextclade_docker = nextclade.nextclade_docker
-    String nextclade_ds_tag =  select_first([nextclade_dataset_tag, sc2_nextclade_ds_tag, mpox_nextclade_ds_tag, rsv_a_nextclade_ds_tag, rsv_b_nextclade_ds_tag, set_organism_defaults_flu.nextclade_dataset_tag])
+    String nextclade_ds_tag =  select_first([nextclade_dataset_tag, sc2_nextclade_ds_tag, mpox_nextclade_ds_tag, rsv_a_nextclade_ds_tag, rsv_b_nextclade_ds_tag, set_organism_defaults_flu.nextclade_dataset_tag, "NA"])
     String? nextclade_clade = nextclade_output_parser.nextclade_clade
     String? nextclade_aa_subs = nextclade_output_parser.nextclade_aa_subs
     String? nextclade_aa_dels = nextclade_output_parser.nextclade_aa_dels
