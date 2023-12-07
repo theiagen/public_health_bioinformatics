@@ -27,13 +27,18 @@ task bwa {
       ref_genome="/artic-ncov2019/primer_schemes/nCoV-2019/V3/nCoV-2019.reference.fasta"  
     fi
 
+    echo "input R1 has $(zcat ~{read1} | grep -c '^@') reads as input"
+    echo "input R2 has $(zcat ~{read2} | grep -c '^@') reads as input"
+
     # Map with BWA MEM; pipe to samtools sort to write sorted SAM file
     bwa mem \
       -t ~{cpu} \
       "${ref_genome}" \
       ~{read1} \
       ~{read2} | \
-    samtools sort -@ ~{cpu} > ~{samplename}.sorted.sam
+    samtools sort \
+      -@ ~{cpu} - \
+      > ~{samplename}.sorted.sam
     
     # convert SAM to BAM that only includes aligned reads
     samtools view \
@@ -51,15 +56,21 @@ task bwa {
       -o ~{samplename}.sorted.unaligned-reads.bam \
       ~{samplename}.sorted.sam
 
+    # see here for "samtools fastq" options: https://www.htslib.org/doc/samtools-fasta.html
+    # TL;DR is that "samtools fastq -1 R1.fastq -2 R2.fastq" works with paired-end inputs and will output R1 and R2 reads to separate files due to tags in the SAM & BAM file
+
+    # AFAIK for single end alignments w/ bwa mem, the output SAM/BAM files do not have tags to differentiate between R1 and R2 reads, so the "samtools fastq -0 R1.fastq" command is used to output all reads to a single file
+
     # if read2 was provided by user, extract both read1 and read2 from aligned and unaligned BAMs
     if [[ ! -z "~{read2}" ]]; then
-      echo "Generating FASTQs for aligned and unaligned paired reads"
+      echo "Generating FASTQs for aligned reads"
       samtools fastq \
         -@ ~{cpu} \
         -F 4 \
         -1 ~{samplename}_R1.fastq.gz \
         -2 ~{samplename}_R2.fastq.gz \
         ~{samplename}.sorted.bam
+      echo "Generating FASTQs for unaligned reads"
       # note the lowercase 'f' here is imporant
       samtools fastq \
         -@ ~{cpu} \
@@ -68,23 +79,39 @@ task bwa {
         -2 ~{samplename}_unaligned_R2.fastq.gz \
         ~{samplename}.sorted.unaligned-reads.bam
     else
-      echo "Generating FASTQs for aligned and unaligned single-end reads"
+      echo "Generating FASTQs for aligned single-end reads"
       samtools fastq \
         -@ ~{cpu} \
         -F 4 \
-        -1 ~{samplename}_R1.fastq.gz \
-        ~{samplename}.sorted.bam 
+        -0 ~{samplename}_R1.fastq.gz \
+        ~{samplename}.sorted.bam
+      echo "Generating FASTQs for unaligned single-end reads" 
       # again, lowercase 'f' is important for getting all unaligned reads
       samtools fastq \
         -@ ~{cpu} \
         -f 4 \
-        -1 ~{samplename}_unaligned_R1.fastq.gz \
+        -0 ~{samplename}_unaligned_R1.fastq.gz \
         ~{samplename}.sorted.unaligned-reads.bam
     fi
 
     # index BAMs
     samtools index ~{samplename}.sorted.bam 
     samtools index ~{samplename}.sorted.unaligned-reads.bam
+
+    # count output reads to ensure we are outputting all reads, regardless if the aligned or not
+    # if read2 does exist as input, count both R1 and R2
+    if [[ ! -z "~{read2}" ]]; then
+      echo "output R1_aligned has $(zcat ~{samplename}_R1.fastq.gz | grep -c '^@') reads as input"
+      echo "output R2_aligned has $(zcat ~{samplename}_R2.fastq.gz | grep -c '^@') reads as input"
+      echo
+      echo "output R1_unaligned has $(zcat ~{samplename}_unaligned_R1.fastq.gz | grep -c '^@') reads as input"
+      echo "output R2_unaligned has $(zcat ~{samplename}_unaligned_R2.fastq.gz | grep -c '^@') reads as input"
+    # else = if read2 does not exist as input, only count R1
+    else
+      echo "output R1_aligned has $(zcat ~{samplename}_R1.fastq.gz | grep -c '^@') reads as input"
+      echo
+      echo "output R1_unaligned has $(zcat ~{samplename}_unaligned_R1.fastq.gz | grep -c '^@') reads as input"
+    fi
   >>>
   output {
     String bwa_version = read_string("BWA_VERSION")
