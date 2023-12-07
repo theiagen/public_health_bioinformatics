@@ -1,6 +1,7 @@
 version 1.0
 
 import "../../tasks/quality_control/task_fastq_scan.wdl" as fastq_scan
+import "../../tasks/quality_control/task_fastqc.wdl" as fastqc_task
 import "../../tasks/quality_control/task_trimmomatic.wdl" as trimmomatic
 import "../../tasks/quality_control/task_bbduk.wdl" as bbduk_task
 import "../../tasks/quality_control/task_fastp.wdl" as fastp_task
@@ -25,7 +26,8 @@ workflow read_QC_trim_se {
     String? trimmomatic_args
     Boolean call_midas = false
     File? midas_db
-    String read_processing = "trimmomatic"
+    String read_processing = "trimmomatic" # options: trimmomatic, fastp
+    String read_counting = "fastq_scan" # options: fastq_scan, fastqc
     String fastp_args = "-g -5 20 -3 20"
   }
   if (read_processing == "trimmomatic"){
@@ -58,13 +60,25 @@ workflow read_QC_trim_se {
       adapters = adapters,
       phix = phix
   }
-  call fastq_scan.fastq_scan_se as fastq_scan_raw {
-    input:
-      read1 = read1_raw
+  if (read_counting == "fastq_scan") {
+    call fastq_scan.fastq_scan_se as fastq_scan_raw {
+      input:
+        read1 = read1_raw
+    }
+    call fastq_scan.fastq_scan_se as fastq_scan_clean {
+      input:
+        read1 = bbduk_se.read1_clean
+    }
   }
-  call fastq_scan.fastq_scan_se as fastq_scan_clean {
-    input:
-      read1 = bbduk_se.read1_clean
+  if (read_counting == "fastqc") {
+    call fastqc_task.fastqc_se as fastqc_raw {
+      input:
+        read1 = read1_raw
+    }
+    call fastqc_task.fastqc_se as fastqc_clean {
+      input:
+        read1 = bbduk_se.read1_clean
+    }
   }
   if ("~{workflow_series}" == "theiacov"){
     call kraken.kraken2_theiacov as kraken2_raw {
@@ -88,9 +102,18 @@ workflow read_QC_trim_se {
     String bbduk_docker = bbduk_se.bbduk_docker
 
     # fastq_scan
-    Int fastq_scan_raw_number_reads = fastq_scan_raw.read1_seq
-    Int fastq_scan_clean_number_reads = fastq_scan_clean.read1_seq
-    String fastq_scan_version = fastq_scan_raw.version
+    Int? fastq_scan_raw_number_reads = fastq_scan_raw.read1_seq
+    Int? fastq_scan_clean_number_reads = fastq_scan_clean.read1_seq
+    String? fastq_scan_version = fastq_scan_raw.version
+    String? fastq_scan_docker = fastq_scan_raw.fastq_scan_docker
+
+    # fastqc
+    Int? fastqc_raw_number_reads = fastqc_raw.read1_seq
+    Int? fastqc_clean_number_reads = fastqc_clean.read1_seq
+    String? fastqc_version = fastqc_raw.version
+    String? fastqc_docker = fastqc_raw.fastqc_docker
+    File? fastqc_raw_html = fastqc_raw.read1_fastqc_html
+    File? fastqc_clean_html = fastqc_clean.read1_fastqc_html
     
     # kraken2
     String? kraken_version = kraken2_raw.version

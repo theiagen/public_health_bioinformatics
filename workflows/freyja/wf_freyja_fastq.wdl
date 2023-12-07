@@ -50,18 +50,18 @@ workflow freyja_fastq {
     String freyja_fastq_wf_version = version_capture.phb_version
     String freyja_fastq_wf_analysis_date = version_capture.date
     # Raw Read QC
-    File?read1_dehosted = read_QC_trim.read1_dehosted
+    File? read1_dehosted = read_QC_trim.read1_dehosted
     File? read2_dehosted = read_QC_trim.read2_dehosted
     File read1_clean = read_QC_trim.read1_clean
     File read2_clean = read_QC_trim.read2_clean
-    Int num_reads_raw1 = read_QC_trim.fastq_scan_raw1
-    Int num_reads_raw2 = read_QC_trim.fastq_scan_raw2
-    String num_reads_raw_pairs = read_QC_trim.fastq_scan_raw_pairs
-    String fastq_scan_version = read_QC_trim.fastq_scan_version
+    Int? num_reads_raw1 = read_QC_trim.fastq_scan_raw1
+    Int? num_reads_raw2 = read_QC_trim.fastq_scan_raw2
+    String? num_reads_raw_pairs = read_QC_trim.fastq_scan_raw_pairs
+    String? fastq_scan_version = read_QC_trim.fastq_scan_version
     # Read Trim
-    Int num_reads_clean1 = read_QC_trim.fastq_scan_clean1
-    Int num_reads_clean2 = read_QC_trim.fastq_scan_clean2
-    String num_reads_clean_pairs = read_QC_trim.fastq_scan_clean_pairs
+    Int? num_reads_clean1 = read_QC_trim.fastq_scan_clean1
+    Int? num_reads_clean2 = read_QC_trim.fastq_scan_clean2
+    String? num_reads_clean_pairs = read_QC_trim.fastq_scan_clean_pairs
     String? trimmomatic_version = read_QC_trim.trimmomatic_version
     String bbduk_docker = read_QC_trim.bbduk_docker
     # Contamination Check
