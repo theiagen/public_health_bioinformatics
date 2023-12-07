@@ -27,7 +27,7 @@ workflow read_QC_trim_se {
     Boolean call_midas = false
     File? midas_db
     String read_processing = "trimmomatic" # options: trimmomatic, fastp
-    String read_counting = "fastq_scan" # options: fastq_scan, fastqc
+    String read_qc = "fastq_scan" # options: fastq_scan, fastqc
     String fastp_args = "-g -5 20 -3 20"
   }
   if (read_processing == "trimmomatic"){
@@ -60,7 +60,7 @@ workflow read_QC_trim_se {
       adapters = adapters,
       phix = phix
   }
-  if (read_counting == "fastq_scan") {
+  if (read_qc == "fastq_scan") {
     call fastq_scan.fastq_scan_se as fastq_scan_raw {
       input:
         read1 = read1_raw
@@ -70,7 +70,7 @@ workflow read_QC_trim_se {
         read1 = bbduk_se.read1_clean
     }
   }
-  if (read_counting == "fastqc") {
+  if (read_qc == "fastqc") {
     call fastqc_task.fastqc_se as fastqc_raw {
       input:
         read1 = read1_raw

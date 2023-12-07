@@ -29,7 +29,7 @@ workflow read_QC_trim_pe {
     File? phix
     String? workflow_series
     String read_processing = "trimmomatic" # options: trimmomatic, fastp
-    String read_counting = "fastq_scan" # options: fastq_scan, fastqc
+    String read_qc = "fastq_scan" # options: fastq_scan, fastqc
     String? trimmomatic_args
     String fastp_args = "--detect_adapter_for_pe -g -5 20 -3 20"
   }
@@ -90,7 +90,7 @@ workflow read_QC_trim_pe {
       adapters = adapters,
       phix = phix
   }
-  if (read_counting == "fastqc") {
+  if (read_qc == "fastqc") {
     call fastqc_task.fastqc as fastqc_raw {
       input:
         read1 = read1_raw,
@@ -102,7 +102,7 @@ workflow read_QC_trim_pe {
         read2 = bbduk.read2_clean
     }
   }
-  if (read_counting == "fastq_scan") {
+  if (read_qc == "fastq_scan") {
     call fastq_scan.fastq_scan_pe as fastq_scan_raw {
       input:
         read1 = read1_raw,
