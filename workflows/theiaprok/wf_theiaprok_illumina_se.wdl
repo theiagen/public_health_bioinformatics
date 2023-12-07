@@ -529,11 +529,11 @@ workflow theiaprok_illumina_se {
     String? fastq_scan_version = read_QC_trim.fastq_scan_version
     Int? num_reads_clean1 = read_QC_trim.fastq_scan_clean_number_reads
     # Read QC - fastqc outputs
-    Int? fastqc_num_reads_raw = read_QC_trim.fastqc_raw_number_reads
-    Int? fastqc_num_reads_clean = read_QC_trim.fastqc_clean_number_reads
+    Int? fastqc_num_reads_raw1 = read_QC_trim.fastqc_raw_number_reads
+    Int? fastqc_num_reads_clean1 = read_QC_trim.fastqc_clean_number_reads
     String? fastqc_version = read_QC_trim.fastqc_version
-    File? fastqc_raw_html = read_QC_trim.fastqc_raw_html
-    File? fastqc_clean_html = read_QC_trim.fastqc_clean_html
+    File? fastqc_raw1_html = read_QC_trim.fastqc_raw_html
+    File? fastqc_clean1_html = read_QC_trim.fastqc_clean_html
     # Read QC - trimmomatic outputs
     String? trimmomatic_version = read_QC_trim.trimmomatic_version
     # Read QC - fastp outputs
