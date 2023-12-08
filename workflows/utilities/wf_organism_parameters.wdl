@@ -74,25 +74,25 @@ workflow organism_parameters {
     if (flu_segment == "HA") {
       if (flu_subtype == "H1N1") {
         String h1n1_ha_reference = "gs://theiagen-public-files-rp/terra/flu-references/reference_h1n1pdm_ha.fasta"
-        String h1n1_ha_nextclade_ds_tag = "2023-08-10T12:00:00Z"
+        String h1n1_ha_nextclade_ds_tag = "2023-11-18T12:00:00Z"
         String h1n1_ha_nextclade_ds_name = "flu_h1n1pdm_ha"
         String h1n1_ha_nextclade_ref = "MW626062"
       }
       if (flu_subtype == "H3N2") {
         String h3n2_ha_reference = "gs://theiagen-public-files-rp/terra/flu-references/reference_h3n2_ha.fasta"
-        String h3n2_ha_nextclade_ds_tag = "2023-08-10T12:00:00Z"
+        String h3n2_ha_nextclade_ds_tag = "2023-11-18T12:00:00Z"
         String h3n2_ha_nextclade_ds_name = "flu_h3n2_ha"
         String h3n2_ha_nextclade_ref = "EPI1857216"
       }
       if (flu_subtype == "Victoria") {
         String vic_ha_reference = "gs://theiagen-public-files-rp/terra/flu-references/reference_vic_ha.fasta"
-        String vic_ha_nextclade_ds_tag = "2023-08-10T12:00:00Z"
+        String vic_ha_nextclade_ds_tag = "2023-11-22T12:00:00Z"
         String vic_ha_nextclade_ds_name = "flu_vic_ha"
         String vic_ha_nextclade_ref = "KX058884"
       }
       if (flu_subtype == "Yamagata") {
         String yam_ha_reference = "gs://theiagen-public-files-rp/terra/flu-references/reference_yam_ha.fasta"
-        String yam_ha_nextclade_ds_tag = "2023-08-10T12:00:00Z"
+        String yam_ha_nextclade_ds_tag = "2023-11-18T12:00:00Z"
         String yam_ha_nextclade_ds_name = "flu_yam_ha"
         String yam_ha_nextclade_ref = "JN993010"
       }
@@ -100,19 +100,19 @@ workflow organism_parameters {
     if (flu_segment == "NA") {
       if (flu_subtype == "H1N1") {
         String h1n1_na_reference = "gs://theiagen-public-files-rp/terra/flu-references/reference_h1n1pdm_na.fasta"
-        String h1n1_na_nextclade_ds_tag = "2023-08-10T12:00:00Z"
+        String h1n1_na_nextclade_ds_tag = "2023-11-18T12:00:00Z"
         String h1n1_na_nextclade_ds_name = "flu_h1n1pdm_na"
         String h1n1_na_nextclade_ref = "MW626056"
       }
       if (flu_subtype == "H3N2") {
         String h3n2_na_reference = "gs://theiagen-public-files-rp/terra/flu-references/reference_h3n2_na.fasta"
-        String h3n2_na_nextclade_ds_tag = "2023-08-10T12:00:00Z"
+        String h3n2_na_nextclade_ds_tag = "2023-11-18T12:00:00Z"
         String h3n2_na_nextclade_ds_name = "flu_h3n2_na"
         String h3n2_na_nextclade_ref = "EPI1857215"
       }
       if (flu_subtype == "Victoria") {
         String vic_na_reference = "gs://theiagen-public-files-rp/terra/flu-references/reference_vic_na.fasta"
-        String vic_na_nextclade_ds_tag = "2023-08-10T12:00:00Z"
+        String vic_na_nextclade_ds_tag = "2023-11-18T12:00:00Z"
         String vic_na_nextclade_ds_name = "flu_vic_na"
         String vic_na_nextclade_ref = "CY073894"
       }
