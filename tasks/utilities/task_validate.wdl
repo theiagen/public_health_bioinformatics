@@ -82,7 +82,7 @@ task theiavalidate {
       ~{true="--debug" false="--verbose" debug_output}
   >>>
   runtime {
-    docker: "us-central1-docker.pkg.dev/neon-fort-407505/theiavalidate/theiavalidate-test-build:0.0.1"
+    docker: "us-central1-docker.pkg.dev/neon-fort-407505/theiavalidate/theiavalidate-test-build:0.0.2"
     memory: "4 GB"
     cpu: 2
     disks:  "local-disk " + disk_size + " HDD"
