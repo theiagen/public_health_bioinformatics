@@ -145,14 +145,14 @@ workflow organism_parameters {
   output {
     # reference genome and sequencing information
     File reference = select_first([reference_genome, sc2_reference_genome, mpox_reference_genome, wnv_reference_genome, h1n1_ha_reference, h3n2_ha_reference, vic_ha_reference, yam_ha_reference, h1n1_na_reference, h3n2_na_reference, vic_na_reference, yam_na_reference, 
-    rsv_a_reference_genome, rsv_b_reference_genome])
+    rsv_a_reference_genome, rsv_b_reference_genome, "gs://theiagen-public-files/terra/theiacov-files/empty.fasta"])
     File primer_bed = select_first([primer_bed_file, mpox_primer_bed_file, wnv_primer_bed_file, "gs://theiagen-public-files/terra/theiacov-files/empty.bed"])
     File reference_gff = select_first([reference_gff_file, mpox_reference_gff_file, "gs://theiagen-public-files/terra/theiacov-files/empty.gff3"])
     Int genome_len = select_first([genome_length, sc2_genome_len, mpox_genome_len, wnv_genome_len, flu_genome_len, rsv_a_genome_len, rsv_b_genome_len])
     # nextclade information
-    String nextclade_dataset_tag = select_first([nextclade_ds_tag, sc2_nextclade_ds_tag, mpox_nextclade_ds_tag, wnv_nextclade_ds_tag, h1n1_ha_nextclade_ds_tag, h3n2_ha_nextclade_ds_tag, vic_ha_nextclade_ds_tag, yam_ha_nextclade_ds_tag, h1n1_na_nextclade_ds_tag, h3n2_na_nextclade_ds_tag, vic_na_nextclade_ds_tag, yam_na_nextclade_ds_tag, rsv_a_nextclade_ds_tag, rsv_b_nextclade_ds_tag])
-    String nextclade_dataset_reference = select_first([nextclade_ds_reference, sc2_nextclade_ref, mpox_nextclade_ref, wnv_nextclade_ref, h1n1_ha_nextclade_ref, h3n2_ha_nextclade_ref, vic_ha_nextclade_ref, yam_ha_nextclade_ref, h1n1_na_nextclade_ref, h3n2_na_nextclade_ref, vic_na_nextclade_ref, yam_na_nextclade_ref, rsv_a_nextclade_ref, rsv_b_nextclade_ref])
-    String nextclade_dataset_name = select_first([nextclade_ds_name, sc2_nextclade_ds_name, mpox_nextclade_ds_name, wnv_nextclade_ds_name, h1n1_ha_nextclade_ds_name, h3n2_ha_nextclade_ds_name, vic_ha_nextclade_ds_name, yam_ha_nextclade_ds_name, h1n1_na_nextclade_ds_name, h3n2_na_nextclade_ds_name, vic_na_nextclade_ds_name, yam_na_nextclade_ds_name, rsv_a_nextclade_ds_name, rsv_b_nextclade_ds_name])
+    String nextclade_dataset_tag = select_first([nextclade_ds_tag, sc2_nextclade_ds_tag, mpox_nextclade_ds_tag, wnv_nextclade_ds_tag, h1n1_ha_nextclade_ds_tag, h3n2_ha_nextclade_ds_tag, vic_ha_nextclade_ds_tag, yam_ha_nextclade_ds_tag, h1n1_na_nextclade_ds_tag, h3n2_na_nextclade_ds_tag, vic_na_nextclade_ds_tag, yam_na_nextclade_ds_tag, rsv_a_nextclade_ds_tag, rsv_b_nextclade_ds_tag, "NA"])
+    String nextclade_dataset_reference = select_first([nextclade_ds_reference, sc2_nextclade_ref, mpox_nextclade_ref, wnv_nextclade_ref, h1n1_ha_nextclade_ref, h3n2_ha_nextclade_ref, vic_ha_nextclade_ref, yam_ha_nextclade_ref, h1n1_na_nextclade_ref, h3n2_na_nextclade_ref, vic_na_nextclade_ref, yam_na_nextclade_ref, rsv_a_nextclade_ref, rsv_b_nextclade_ref, "NA"])
+    String nextclade_dataset_name = select_first([nextclade_ds_name, sc2_nextclade_ds_name, mpox_nextclade_ds_name, wnv_nextclade_ds_name, h1n1_ha_nextclade_ds_name, h3n2_ha_nextclade_ds_name, vic_ha_nextclade_ds_name, yam_ha_nextclade_ds_name, h1n1_na_nextclade_ds_name, h3n2_na_nextclade_ds_name, vic_na_nextclade_ds_name, yam_na_nextclade_ds_name, rsv_a_nextclade_ds_name, rsv_b_nextclade_ds_name, "NA"])
     # vadr options
     String vadr_opts = select_first([vadr_options, sc2_vadr_options, mpox_vadr_options, wnv_vadr_options, flu_vadr_options, rsv_a_vadr_options, rsv_b_vadr_options])
     Int vadr_maxlen = select_first([vadr_max_length, sc2_vadr_max_length, mpox_vadr_max_length, wnv_vadr_max_length, flu_vadr_max_length, rsv_a_vadr_max_length, rsv_b_vadr_max_length])
