@@ -31,7 +31,7 @@ workflow theiavalidate {
       terra_project1 = terra_project1_name,
       datatable2 = table2_name,
       terra_workspace2 = terra_workspace2_name,
-      terra_project2 = terra_project2_name
+      terra_project2 = terra_project2_name,
   }
   if (!export_two_tsvs.same_table_length) {
     String validation_failure = "Input tables were not of same length; validation not performed"

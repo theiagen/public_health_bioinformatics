@@ -62,6 +62,7 @@ task theiavalidate {
     String? na_values
     Boolean debug_output = false
 
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/theiavalidate:0.0.1"
     Int disk_size = 10
   }
   String datatable1_name = basename(datatable1_tsv)
@@ -82,7 +83,7 @@ task theiavalidate {
       ~{true="--debug" false="--verbose" debug_output}
   >>>
   runtime {
-    docker: "us-central1-docker.pkg.dev/neon-fort-407505/theiavalidate/theiavalidate-test-build:0.0.3"
+    docker: docker 
     memory: "4 GB"
     cpu: 2
     disks:  "local-disk " + disk_size + " HDD"
