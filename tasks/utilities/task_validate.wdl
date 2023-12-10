@@ -96,7 +96,8 @@ task theiavalidate {
     File summary_html_report = "~{output_prefix}_summary.html"
     File filtered_input_table1 = "filtered_~{datatable1_name}"
     File filtered_input_table2 = "filtered_~{datatable2_name}"
-    File exact_differences = "~{output_prefix}_exact_differences.tsv"
+    File exact_differences = "~{output_prefix}_exact_differences.tsv"a
     File? validation_criteria_differences = "~{output_prefix}_validation_criteria_differences.tsv"
+    Array[File]? diffs = glob("*diffs*/*")
   }
 }

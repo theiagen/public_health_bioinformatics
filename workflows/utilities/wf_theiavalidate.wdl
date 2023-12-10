@@ -61,5 +61,6 @@ workflow theiavalidate {
     File? theiavalidate_filtered_input_table1 = compare_two_tsvs.filtered_input_table1
     File? theiavalidate_filtered_input_table2 = compare_two_tsvs.filtered_input_table2
     String theiavalidate_status = select_first([validation_failure, validation_attempted])
+    Array[File]? theiavalidate_diffs = compare_two_tsvs.diffs
   }
 }
