@@ -40,6 +40,8 @@ workflow theiaprok_illumina_pe {
     File? taxon_tables
     String terra_project = "NA"
     String terra_workspace = "NA"
+    # Human reads removal (dehosting) tool
+    String dehosting_tool = "ncbi_scrub" # options: "ncbi_scrub", "hostile"
     # read screen parameters
     Boolean skip_screen = false 
     Int min_reads = 7472
@@ -84,7 +86,8 @@ workflow theiaprok_illumina_pe {
         read2_raw = read2_raw,
         trim_minlen = trim_minlen,
         trim_quality_trim_score = trim_quality_trim_score,
-        trim_window_size = trim_window_size
+        trim_window_size = trim_window_size,
+        dehosting_tool = dehosting_tool
 
     }
     call screen.check_reads as clean_check_reads {
