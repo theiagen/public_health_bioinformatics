@@ -9,10 +9,10 @@ workflow kraken2_pe_wf {
     description: "Classify paired-end reads using Kraken2"
   }
   input {
-    String  samplename
-    File    read1
-    File    read2
-    File    kraken2_db
+    String samplename
+    File read1
+    File read2
+    File kraken2_db
   }
   call kraken2.kraken2_standalone as kraken2_pe {
     input:

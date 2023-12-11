@@ -83,13 +83,17 @@ task transfer_files {
     Int mem_size_gb = 8
     String docker_image = "us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1"
   }
+  meta {
+    # added so that call caching is always turned off
+    volatile: true
+  }
   command <<<
     file_path_array="~{sep=' ' files_to_transfer}"
 
     gsutil -m cp -n ${file_path_array[@]} ~{target_bucket}
     
     echo "transferred_files" > transferred_files.tsv
-    gsutil ls ~{target_bucket} >> transferred_files.tsv        
+    gsutil -m ls ~{target_bucket} >> transferred_files.tsv        
    >>>
   output {
     File transferred_files = "transferred_files.tsv"

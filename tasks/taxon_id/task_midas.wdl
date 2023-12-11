@@ -16,14 +16,15 @@ task midas {
 
     # Decompress the Midas database
     mkdir db
-    tar -C ./db/ -xzvf ~{midas_db}  
+    echo "Decompressing Midas database. Please be patient, this may take a few minutes."
+    tar -C ./db/ -xzf ~{midas_db}  
 
     # Run Midas
     run_midas.py species ~{samplename} -1 ~{read1} ~{'-2 ' + read2} -d db/midas_db_v1.2/ -t ~{cpu} 
 
     # rename output files
-    mv ~{samplename}/species/species_profile.txt ~{samplename}/species/~{samplename}_species_profile.tsv
-    mv ~{samplename}/species/log.txt ~{samplename}/species/~{samplename}_log.txt
+    mv -v ~{samplename}/species/species_profile.txt ~{samplename}/species/~{samplename}_species_profile.tsv
+    mv -v ~{samplename}/species/log.txt ~{samplename}/species/~{samplename}_log.txt
 
     # Run a python block to parse output file for terra data tables
     # pandas is available in default docker image for python2 but not python3

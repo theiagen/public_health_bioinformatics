@@ -144,9 +144,19 @@ task nextclade_output_parser {
             nc_lineage = tsv_dict['lineage']
             if nc_lineage is None:
               nc_lineage = ""
+          elif 'Nextclade_pango' in tsv_dict:
+            nc_lineage = tsv_dict['Nextclade_pango']
+            if nc_lineage is None:
+              nc_lineage = ""
           else:
             nc_lineage = ""
           Nextclade_Lineage.write(nc_lineage)
+        
+        with codecs.open("NEXTCLADE_QC", 'wt') as Nextclade_QC:
+          nc_qc = tsv_dict['qc.overallStatus']
+          if nc_qc == '':
+            nc_qc = 'NA'
+          Nextclade_QC.write(nc_qc)
       CODE
     >>>
     runtime {
@@ -164,6 +174,7 @@ task nextclade_output_parser {
       String nextclade_tamiflu_aa_subs = read_string("TAMIFLU_AASUBS")
       String nextclade_aa_dels = read_string("NEXTCLADE_AADELS")
       String nextclade_lineage = read_string("NEXTCLADE_LINEAGE")
+      String nextclade_qc = read_string("NEXTCLADE_QC")
     }
 }
 

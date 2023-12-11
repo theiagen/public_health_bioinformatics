@@ -44,7 +44,7 @@ workflow theiacov_illumina_pe {
     # nextclade inputs
     String nextclade_docker_image = "nextstrain/nextclade:2.14.0"
     String nextclade_dataset_reference = "MN908947"
-    String nextclade_dataset_tag = "2023-08-17T12:00:00Z"
+    String nextclade_dataset_tag = "2023-09-21T12:00:00Z"
     String? nextclade_dataset_name
     # nextclade flu inputs
     String nextclade_flu_h1n1_ha_tag = "2023-04-02T12:00:00Z"
@@ -133,6 +133,7 @@ workflow theiacov_illumina_pe {
             read1 = read_QC_trim.read1_clean,
             read2 = read_QC_trim.read2_clean,
             samplename = samplename,
+            seq_method = seq_method
         }
         if (defined(irma.irma_assemblies)) {
           call abricate.abricate_flu {
@@ -352,6 +353,7 @@ workflow theiacov_illumina_pe {
     String nextclade_aa_dels = select_first([ha_na_nextclade_aa_dels, nextclade_output_parser.nextclade_aa_dels, ""])
     String nextclade_clade = select_first([nextclade_output_parser.nextclade_clade, ""])
     String? nextclade_lineage = nextclade_output_parser.nextclade_lineage
+    String? nextclade_qc = nextclade_output_parser.nextclade_qc
     # Nextclade Flu outputs - NA specific columns - tamiflu mutation
     String? nextclade_tamiflu_resistance_aa_subs = nextclade_output_parser_flu_na.nextclade_tamiflu_aa_subs
     # VADR Annotation QC
