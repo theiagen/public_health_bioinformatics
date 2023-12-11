@@ -251,5 +251,5 @@ workflows:
  - name: TBProfiler_tNGS_PHB
    subclass: WDL
    primaryDescriptorPath: /workflows/standalone_modules/wf_tbprofiler_tngs.wdl
-    testParameterFiles:
-      - empty.json
+   testParameterFiles:
+    - empty.json
