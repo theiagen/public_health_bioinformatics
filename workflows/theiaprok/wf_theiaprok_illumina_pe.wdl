@@ -87,8 +87,8 @@ workflow theiaprok_illumina_pe {
         trim_minlen = trim_minlen,
         trim_quality_trim_score = trim_quality_trim_score,
         trim_window_size = trim_window_size,
-        dehosting_tool = dehosting_tool
-
+        dehosting_tool = dehosting_tool,
+        seq_method = seq_method
     }
     call screen.check_reads as clean_check_reads {
       input:
