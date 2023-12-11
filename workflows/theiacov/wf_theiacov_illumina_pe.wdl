@@ -353,6 +353,7 @@ workflow theiacov_illumina_pe {
     String nextclade_aa_dels = select_first([ha_na_nextclade_aa_dels, nextclade_output_parser.nextclade_aa_dels, ""])
     String nextclade_clade = select_first([nextclade_output_parser.nextclade_clade, ""])
     String? nextclade_lineage = nextclade_output_parser.nextclade_lineage
+    String? nextclade_qc = nextclade_output_parser.nextclade_qc
     # Nextclade Flu outputs - NA specific columns - tamiflu mutation
     String? nextclade_tamiflu_resistance_aa_subs = nextclade_output_parser_flu_na.nextclade_tamiflu_aa_subs
     # VADR Annotation QC

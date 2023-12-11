@@ -276,7 +276,7 @@
     - path: miniwdl_run/call-nextclade/work/nextclade_gene_S.translation.fasta
       md5sum: 0ce44a0a8e2784ca4b3e8d8f03211813
     - path: miniwdl_run/call-nextclade_output_parser/command
-      md5sum: a01b0a826425399bc59854b7c74acb1e
+      md5sum: 81a13f84fdc07c4dd038114f688bd042
     - path: miniwdl_run/call-nextclade_output_parser/inputs.json
       contains: ["nextclade_tsv", "tsv"]
     - path: miniwdl_run/call-nextclade_output_parser/outputs.json
@@ -293,7 +293,7 @@
     - path: miniwdl_run/call-nextclade_output_parser/work/NEXTCLADE_CLADE
       md5sum: 96d3cf337be2f7948d6f6df5c1ab69a4
     - path: miniwdl_run/call-nextclade_output_parser/work/NEXTCLADE_LINEAGE
-      md5sum: d41d8cd98f00b204e9800998ecf8427e
+      md5sum: 717da6cd0df2d2f1d00461f3498aaca9
     - path: miniwdl_run/call-nextclade_output_parser/work/TAMIFLU_AASUBS
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     - path: miniwdl_run/call-nextclade_output_parser/work/_miniwdl_inputs/0/clearlabs.medaka.consensus.nextclade.tsv

@@ -528,7 +528,7 @@
     - path: miniwdl_run/wdl/tasks/gene_typing/task_prokka.wdl
       md5sum: 8e8423b99d5cd3e92bb89b3c3211d432
     - path: miniwdl_run/wdl/tasks/gene_typing/task_resfinder.wdl
-      md5sum: 18d0dd6560f88ed2541ad342e12412e8
+      md5sum: 27528633723303b462d095b642649453
     - path: miniwdl_run/wdl/tasks/gene_typing/task_snippy_variants.wdl
       md5sum: bc048390626650b6a939fd740c1aaf13
     - path: miniwdl_run/wdl/tasks/quality_control/task_bbduk.wdl
@@ -542,7 +542,7 @@
     - path: miniwdl_run/wdl/tasks/quality_control/task_fastq_scan.wdl
       contains: ["version", "fastq_scan", "output"]
     - path: miniwdl_run/wdl/tasks/quality_control/task_mummer_ani.wdl
-      md5sum: 21e8b1cbe4c8be26d1ac8b8013970166
+      md5sum: d50a40d533d51834d0000971dc2c2014
     - path: miniwdl_run/wdl/tasks/quality_control/task_qc_check_phb.wdl
       contains: ["version", "qc_check_table", "output"]
     - path: miniwdl_run/wdl/tasks/quality_control/task_quast.wdl
@@ -598,9 +598,9 @@
     - path: miniwdl_run/wdl/tasks/taxon_id/task_midas.wdl
       md5sum: faacd87946ee3fbdf70f3a15b79ce547
     - path: miniwdl_run/wdl/tasks/utilities/task_broad_terra_tools.wdl
-      md5sum: 43ef050bde1fb8755f38e697a1794918
+      md5sum: 4106837e51f6445e02776e0a74606ed5
     - path: miniwdl_run/wdl/workflows/theiaprok/wf_theiaprok_illumina_se.wdl
-      md5sum: e1d9e75dae5176ceeb95b88a5d3bbba7
+      md5sum: 3e19938fc8a624c7948b57867865561a
     - path: miniwdl_run/wdl/workflows/utilities/wf_merlin_magic.wdl
       md5sum: 00bd2489b2a7aa5b88340a940961a857
     - path: miniwdl_run/wdl/workflows/utilities/wf_read_QC_trim_se.wdl
