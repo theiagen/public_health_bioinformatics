@@ -3,6 +3,7 @@ version 1.0
 import "../../tasks/species_typing/task_clockwork.wdl" as clockwork_task
 import "../../tasks/species_typing/task_tbprofiler.wdl" as tbprofiler_task
 import "../../tasks/species_typing/task_tbp_parser.wdl" as tbp_parser_task
+import "../../tasks/task_versioning.wdl" as versioning
 
 workflow tbprofiler_tngs {
   meta {
@@ -12,6 +13,9 @@ workflow tbprofiler_tngs {
     File read1
     File read2
     String samplename
+  }
+  call versioning.version_capture {
+    input:
   }
   call clockwork_task.clockwork_decon_reads {
     input: 
@@ -38,11 +42,11 @@ workflow tbprofiler_tngs {
     File clockwork_cleaned_read2 = clockwork_decon_reads.clockwork_cleaned_read2
     String clockwork_version = clockwork_decon_reads.clockwork_version
     # tbprofiler outputs
-    File tbprofiler_results_csv = tbprofiler.tbprofiler_output_csv
-    File tbprofiler_results_tsv = tbprofiler.tbprofiler_output_tsv
-    File tbprofiler_results_json = tbprofiler.tbprofiler_output_json
-    File tbprofiler_results_bam = tbprofiler.tbprofiler_output_bam
-    File tbprofiler_results_bai = tbprofiler.tbprofiler_output_bai
+    File tbprofiler_report_csv = tbprofiler.tbprofiler_output_csv
+    File tbprofiler_report_tsv = tbprofiler.tbprofiler_output_tsv
+    File tbprofiler_report_json = tbprofiler.tbprofiler_output_json
+    File tbprofiler_output_alignment_bam = tbprofiler.tbprofiler_output_bam
+    File tbprofiler_output_alignment_bai = tbprofiler.tbprofiler_output_bai
     String tbprofiler_version = tbprofiler.version
     String tbprofiler_main_lineage = tbprofiler.tbprofiler_main_lineage
     String tbprofiler_sub_lineage = tbprofiler.tbprofiler_sub_lineage
@@ -61,5 +65,8 @@ workflow tbprofiler_tngs {
     Float tbp_parser_average_genome_depth = tbp_parser.tbp_parser_average_genome_depth
     String tbp_parser_version = tbp_parser.tbp_parser_version
     String tbp_parser_docker = tbp_parser.tbp_parser_docker
+    # version capture outputs
+    String tbprofiler_tngs_wf_analysis_date = version_capture.date
+    String tbprofiler_tngs_wf_version = version_capture.phb_version
   }
 }
