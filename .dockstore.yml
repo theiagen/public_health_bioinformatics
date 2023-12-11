@@ -248,3 +248,8 @@ workflows:
    primaryDescriptorPath: /workflows/utilities/wf_czgenepi_prep.wdl
    testParameterFiles:
     - empty.json
+ - name: TBProfiler_tNGS_PHB
+   subclass: WDL
+   primaryDescriptorPath: /workflows/standalone_modules/wf_tbprofiler_tngs.wdl
+    testParameterFiles:
+      - empty.json
