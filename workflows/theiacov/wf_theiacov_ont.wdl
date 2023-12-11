@@ -91,7 +91,8 @@ workflow theiacov_ont {
         max_length = max_length,
         run_prefix = run_prefix,
         target_org = target_org,
-        workflow_series = "theiacov"
+        workflow_series = "theiacov",
+        seq_method = seq_method
     }
     call screen.check_reads_se as clean_check_reads {
       input:
