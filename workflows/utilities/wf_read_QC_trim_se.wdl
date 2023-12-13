@@ -13,12 +13,12 @@ workflow read_QC_trim_se {
   }
   input {
     String samplename
-    File read1_raw
+    File read1
     Int trim_minlen = 25
     Int trim_quality_trim_score = 30
     Int trim_window_size = 4
     Int bbduk_mem = 8
-    String? target_org
+    String? target_organism
     File? adapters
     File? phix
     String? workflow_series
@@ -32,7 +32,7 @@ workflow read_QC_trim_se {
     call trimmomatic.trimmomatic_se {
       input:
         samplename = samplename,
-        read1 = read1_raw,
+        read1 = read1,
         trimmomatic_minlen = trim_minlen,
         trimmomatic_quality_trim_score = trim_quality_trim_score,
         trimmomatic_window_size = trim_window_size,
@@ -43,7 +43,7 @@ workflow read_QC_trim_se {
     call fastp_task.fastp_se {
       input:
         samplename = samplename,
-        read1 = read1_raw,
+        read1 = read1,
         fastp_window_size = trim_window_size,
         fastp_quality_trim_score = trim_quality_trim_score,
         fastp_minlen = trim_minlen,
@@ -60,7 +60,7 @@ workflow read_QC_trim_se {
   }
   call fastq_scan.fastq_scan_se as fastq_scan_raw {
     input:
-      read1 = read1_raw
+      read1 = read1
   }
   call fastq_scan.fastq_scan_se as fastq_scan_clean {
     input:
@@ -71,14 +71,14 @@ workflow read_QC_trim_se {
       input:
         samplename = samplename,
         read1 = bbduk_se.read1_clean,
-        target_org = target_org
+        target_organism = target_organism
     }
   }
   if (call_midas) {
     call midas_task.midas {
       input:
         samplename = samplename,
-        read1 = read1_raw,
+        read1 = read1,
         midas_db = midas_db
     }
   }
@@ -96,9 +96,9 @@ workflow read_QC_trim_se {
     String? kraken_version = kraken2_raw.version
     Float? kraken_human = kraken2_raw.percent_human
     Float? kraken_sc2 = kraken2_raw.percent_sc2
-    String? kraken_target_org = kraken2_raw.percent_target_org
+    String? kraken_target_organism = kraken2_raw.percent_target_organism
     File? kraken_report = kraken2_raw.kraken_report
-    String? kraken_target_org_name = target_org
+    String? kraken_target_organism_name = target_organism
    
     # trimming versioning
     String? trimmomatic_version = trimmomatic_se.version

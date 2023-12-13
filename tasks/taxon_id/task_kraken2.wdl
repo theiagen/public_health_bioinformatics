@@ -7,7 +7,7 @@ task kraken2_theiacov {
     String samplename
     String kraken2_db = "/kraken2-db"
     Int cpu = 4
-    String? target_org
+    String? target_organism
     Int disk_size = 100
   }
   command <<<
@@ -34,14 +34,14 @@ task kraken2_theiacov {
     echo $percentage_human | tee PERCENT_HUMAN
     echo $percentage_sc2 | tee PERCENT_SC2
     # capture target org percentage 
-    if [ ! -z "~{target_org}" ]; then 
-      echo "Target org designated: ~{target_org}"
-      percent_target_org=$(grep "~{target_org}" ~{samplename}_kraken2_report.txt | cut -f1 | head -n1 )
-      if [-z "$percent_target_org" ] ; then percent_target_org="0" ; fi
+    if [ ! -z "~{target_organism}" ]; then
+      echo "Target org designated: ~{target_organism}"
+      percent_target_organism=$(grep "~{target_organism}" ~{samplename}_kraken2_report.txt | cut -f1 | head -n1 )
+      if [-z "$percent_target_organism" ] ; then percent_target_organism="0" ; fi
     else 
-      percent_target_org=""
+      percent_target_organism=""
     fi
-    echo $percent_target_org | tee PERCENT_TARGET_ORG
+    echo $percent_target_organism | tee PERCENT_target_organism
 
   >>>
   output {
@@ -50,8 +50,8 @@ task kraken2_theiacov {
     File kraken_report = "~{samplename}_kraken2_report.txt"
     Float percent_human = read_float("PERCENT_HUMAN")
     Float percent_sc2 = read_float("PERCENT_SC2")
-    String percent_target_org = read_string("PERCENT_TARGET_ORG")
-    String? kraken_target_org = target_org
+    String percent_target_organism = read_string("PERCENT_target_organism")
+    String? kraken_target_organism = target_organism
   }
   runtime {
     docker: "us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.0.8-beta_hv"

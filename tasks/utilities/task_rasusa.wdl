@@ -20,7 +20,7 @@ task rasusa {
     #  --num [INTEGER] Subsample to a specific number of reads
     String? bases
     Float coverage 
-    String genome_size
+    String genome_length
     Int? seed
     Float? frac
     Int? num 
@@ -35,7 +35,7 @@ task rasusa {
     fi
     # ignore coverage values if frac input provided
     if [ -z "~{frac}" ]; then
-      COVERAGE="--coverage ~{coverage} --genome-size ~{genome_size}"
+      COVERAGE="--coverage ~{coverage} --genome-size ~{genome_length}"
     else
       COVERAGE=""
     fi

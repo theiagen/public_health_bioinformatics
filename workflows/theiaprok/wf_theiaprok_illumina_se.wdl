@@ -27,8 +27,8 @@ workflow theiaprok_illumina_se {
   input {
     String samplename
     String seq_method = "ILLUMINA"
-    File read1_raw
-    Int? genome_size
+    File read1
+    Int? genome_length
     # export taxon table parameters
     String? run_id
     String? collection_date
@@ -44,8 +44,8 @@ workflow theiaprok_illumina_se {
     Boolean skip_mash = false
     Int min_reads = 7472
     Int min_basepairs = 2241820
-    Int min_genome_size = 100000
-    Int max_genome_size = 18040666
+    Int min_genome_length = 100000
+    Int max_genome_length = 18040666
     Int min_coverage = 10
     # trimming parameters
     Int trim_minlen = 25
@@ -65,21 +65,21 @@ workflow theiaprok_illumina_se {
   }
   call screen.check_reads_se as raw_check_reads { 
     input:
-      read1 = read1_raw,
+      read1 = read1,
       min_reads = min_reads,
       min_basepairs = min_basepairs,
-      min_genome_size = min_genome_size,
-      max_genome_size = max_genome_size,
+      min_genome_length = min_genome_length,
+      max_genome_length = max_genome_length,
       min_coverage = min_coverage,
       skip_screen = skip_screen,
       skip_mash = skip_mash,
-      expected_genome_size = genome_size
+      expected_genome_length = genome_length
   }
   if (raw_check_reads.read_screen == "PASS") {
     call read_qc.read_QC_trim_se as read_QC_trim {
       input:
         samplename = samplename,
-        read1_raw = read1_raw,
+        read1 = read1,
         trim_minlen = trim_minlen,
         trim_quality_trim_score = trim_quality_trim_score,
         trim_window_size = trim_window_size
@@ -89,19 +89,19 @@ workflow theiaprok_illumina_se {
         read1 = read_QC_trim.read1_clean,
         min_reads = min_reads,
         min_basepairs = min_basepairs,
-        min_genome_size = min_genome_size,
-        max_genome_size = max_genome_size,
+        min_genome_length = min_genome_length,
+        max_genome_length = max_genome_length,
         min_coverage = min_coverage,
         skip_screen = skip_screen,
         skip_mash = skip_mash,
-        expected_genome_size = genome_size
+        expected_genome_length = genome_length
     }
     if (clean_check_reads.read_screen == "PASS") {
       call shovill.shovill_se {
         input:
           samplename = samplename,
           read1_cleaned = read_QC_trim.read1_clean,
-          genome_size = select_first([genome_size, clean_check_reads.est_genome_length])
+          genome_length = select_first([genome_length, clean_check_reads.est_genome_length])
       }
       call quast_task.quast {
         input:
@@ -110,15 +110,15 @@ workflow theiaprok_illumina_se {
       }
       call cg_pipeline.cg_pipeline as cg_pipeline_raw {
         input:
-          read1 = read1_raw,
+          read1 = read1,
           samplename = samplename,
-          genome_length = select_first([genome_size, quast.genome_length])
+          genome_length = select_first([genome_length, quast.genome_length])
       }
       call cg_pipeline.cg_pipeline as cg_pipeline_clean {
         input:
           read1 = read_QC_trim.read1_clean,
           samplename = samplename,
-          genome_length = select_first([genome_size, quast.genome_length])
+          genome_length = select_first([genome_length, quast.genome_length])
       }
       call gambit_task.gambit {
         input:
@@ -222,7 +222,7 @@ workflow theiaprok_illumina_se {
             sample_taxon = gambit.gambit_predicted_taxon,
             taxon_tables = taxon_tables,
             samplename = samplename,
-            read1 = read1_raw,
+            read1 = read1,
             read1_clean = read_QC_trim.read1_clean,
             run_id = run_id,
             collection_date = collection_date,

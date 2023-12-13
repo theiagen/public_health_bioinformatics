@@ -47,7 +47,7 @@ task kmc {
     tail -n8 LOG > ~{samplename}_kmer_stats.txt
   >>>
   output {
-    Int est_genome_size = read_int("UNIQUE_COUNTED") 
+    Int est_genome_length = read_int("UNIQUE_COUNTED")
     File kmer_stats = "~{samplename}_kmer_stats.txt"
     String kmc_version = read_string("VERSION")
   }

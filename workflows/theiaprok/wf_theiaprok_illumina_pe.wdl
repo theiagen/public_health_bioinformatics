@@ -27,9 +27,9 @@ workflow theiaprok_illumina_pe {
   input {
     String samplename
     String seq_method = "ILLUMINA"
-    File read1_raw
-    File read2_raw
-    Int? genome_size
+    File read1
+    File read2
+    Int? genome_length
     # export taxon table parameters
     String? run_id
     String? collection_date
@@ -44,8 +44,8 @@ workflow theiaprok_illumina_pe {
     Boolean skip_screen = false 
     Int min_reads = 7472
     Int min_basepairs = 2241820
-    Int min_genome_size = 100000
-    Int max_genome_size = 18040666
+    Int min_genome_length = 100000
+    Int max_genome_length = 18040666
     Int min_coverage = 10
     Int min_proportion = 40
     # trimming parameters
@@ -65,23 +65,23 @@ workflow theiaprok_illumina_pe {
   }
   call screen.check_reads as raw_check_reads {
     input:
-      read1 = read1_raw,
-      read2 = read2_raw,
+      read1 = read1,
+      read2 = read2,
       min_reads = min_reads,
       min_basepairs = min_basepairs,
-      min_genome_size = min_genome_size,
-      max_genome_size = max_genome_size,
+      min_genome_length = min_genome_length,
+      max_genome_length = max_genome_length,
       min_coverage = min_coverage,
       min_proportion = min_proportion,
       skip_screen = skip_screen,
-      expected_genome_size = genome_size
+      expected_genome_length = genome_length
   }
   if (raw_check_reads.read_screen == "PASS") {
     call read_qc.read_QC_trim_pe as read_QC_trim {
       input:
         samplename = samplename,
-        read1_raw = read1_raw,
-        read2_raw = read2_raw,
+        read1 = read1,
+        read2 = read2,
         trim_minlen = trim_minlen,
         trim_quality_trim_score = trim_quality_trim_score,
         trim_window_size = trim_window_size
@@ -93,12 +93,12 @@ workflow theiaprok_illumina_pe {
         read2 = read_QC_trim.read2_clean,
         min_reads = min_reads,
         min_basepairs = min_basepairs,
-        min_genome_size = min_genome_size,
-        max_genome_size = max_genome_size,
+        min_genome_length = min_genome_length,
+        max_genome_length = max_genome_length,
         min_coverage = min_coverage,
         min_proportion = min_proportion,
         skip_screen = skip_screen,
-        expected_genome_size = genome_size
+        expected_genome_length = genome_length
     }
     if (clean_check_reads.read_screen == "PASS") {
       call shovill.shovill_pe {
@@ -106,7 +106,7 @@ workflow theiaprok_illumina_pe {
           samplename = samplename,
           read1_cleaned = read_QC_trim.read1_clean,
           read2_cleaned = read_QC_trim.read2_clean,
-          genome_size = select_first([genome_size, clean_check_reads.est_genome_length])
+          genome_length = select_first([genome_length, clean_check_reads.est_genome_length])
       }
       call quast_task.quast {
         input:
@@ -115,17 +115,17 @@ workflow theiaprok_illumina_pe {
       }
       call cg_pipeline.cg_pipeline as cg_pipeline_raw {
         input:
-          read1 = read1_raw,
-          read2 = read2_raw,
+          read1 = read1,
+          read2 = read2,
           samplename = samplename,
-          genome_length = select_first([genome_size, quast.genome_length])
+          genome_length = select_first([genome_length, quast.genome_length])
       }
       call cg_pipeline.cg_pipeline as cg_pipeline_clean {
         input:
           read1 = read_QC_trim.read1_clean,
           read2 = read_QC_trim.read2_clean,
           samplename = samplename,
-          genome_length = select_first([genome_size, quast.genome_length])
+          genome_length = select_first([genome_length, quast.genome_length])
       }
       call gambit_task.gambit {
         input:
@@ -239,8 +239,8 @@ workflow theiaprok_illumina_pe {
             sample_taxon = gambit.gambit_predicted_taxon,
             taxon_tables = taxon_tables,
             samplename = samplename,
-            read1 = read1_raw,
-            read2 = read2_raw,
+            read1 = read1,
+            read2 = read2,
             read1_clean = read_QC_trim.read1_clean,
             read2_clean = read_QC_trim.read2_clean,
             run_id = run_id,

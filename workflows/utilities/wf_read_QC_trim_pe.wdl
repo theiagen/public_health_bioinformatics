@@ -15,15 +15,15 @@ workflow read_QC_trim_pe {
   }
   input {
     String samplename
-    File read1_raw
-    File read2_raw
+    File read1
+    File read2
     Int trim_minlen = 75
     Int trim_quality_trim_score = 30
     Int trim_window_size = 4
     Int bbduk_mem = 8
     Boolean call_midas = false
     File? midas_db
-    String? target_org
+    String? target_organism
     File? adapters
     File? phix
     String? workflow_series
@@ -35,32 +35,32 @@ workflow read_QC_trim_pe {
     call ncbi_scrub.ncbi_scrub_pe {
       input:
         samplename = samplename,
-        read1 = read1_raw,
-        read2 = read2_raw
+        read1 = read1,
+        read2 = read2
     }
   }
   if ("~{workflow_series}" == "theiacov") {
     call kraken.kraken2_theiacov as kraken2_theiacov_raw {
       input:
         samplename = samplename,
-        read1 = read1_raw,
-        read2 = read2_raw,
-        target_org = target_org
+        read1 = read1,
+        read2 = read2,
+        target_organism = target_organism
     }
     call kraken.kraken2_theiacov as kraken2_theiacov_dehosted {
       input:
         samplename = samplename,
         read1 = select_first([ncbi_scrub_pe.read1_dehosted]),
         read2 = ncbi_scrub_pe.read2_dehosted,
-        target_org = target_org
+        target_organism = target_organism
     }
   }
   if (read_processing == "trimmomatic"){
     call trimmomatic.trimmomatic_pe {
       input:
         samplename = samplename,
-        read1 = select_first([ncbi_scrub_pe.read1_dehosted, read1_raw]),
-        read2 = select_first([ncbi_scrub_pe.read2_dehosted, read2_raw]),
+        read1 = select_first([ncbi_scrub_pe.read1_dehosted, read1]),
+        read2 = select_first([ncbi_scrub_pe.read2_dehosted, read2]),
         trimmomatic_window_size = trim_window_size,
         trimmomatic_quality_trim_score = trim_quality_trim_score,
         trimmomatic_minlen = trim_minlen,
@@ -71,8 +71,8 @@ workflow read_QC_trim_pe {
     call fastp_task.fastp_pe as fastp {
       input:
         samplename = samplename,
-        read1 = select_first([ncbi_scrub_pe.read1_dehosted, read1_raw]),
-        read2 = select_first([ncbi_scrub_pe.read2_dehosted, read2_raw]),
+        read1 = select_first([ncbi_scrub_pe.read1_dehosted, read1]),
+        read2 = select_first([ncbi_scrub_pe.read2_dehosted, read2]),
         fastp_window_size = trim_window_size,
         fastp_quality_trim_score = trim_quality_trim_score,
         fastp_minlen = trim_minlen,
@@ -90,8 +90,8 @@ workflow read_QC_trim_pe {
   }
   call fastq_scan.fastq_scan_pe as fastq_scan_raw {
     input:
-      read1 = read1_raw,
-      read2 = read2_raw,
+      read1 = read1,
+      read2 = read2,
   }
   call fastq_scan.fastq_scan_pe as fastq_scan_clean {
     input:
@@ -102,8 +102,8 @@ workflow read_QC_trim_pe {
     call midas_task.midas {
       input:
         samplename = samplename,
-        read1 = read1_raw,
-        read2 = read2_raw,
+        read1 = read1,
+        read2 = read2,
         midas_db = midas_db
     }
   }
@@ -141,12 +141,12 @@ workflow read_QC_trim_pe {
     String? kraken_version = kraken2_theiacov_raw.version
     Float? kraken_human =  kraken2_theiacov_raw.percent_human
     Float? kraken_sc2 = kraken2_theiacov_raw.percent_sc2
-    String? kraken_target_org = kraken2_theiacov_raw.percent_target_org
+    String? kraken_target_organism = kraken2_theiacov_raw.percent_target_organism
     File? kraken_report = kraken2_theiacov_raw.kraken_report
     Float? kraken_human_dehosted = kraken2_theiacov_dehosted.percent_human
     Float? kraken_sc2_dehosted = kraken2_theiacov_dehosted.percent_sc2
-    String? kraken_target_org_dehosted = kraken2_theiacov_dehosted.percent_target_org
-    String? kraken_target_org_name = target_org
+    String? kraken_target_organism_dehosted = kraken2_theiacov_dehosted.percent_target_organism
+    String? kraken_target_organism_name = target_organism
     File? kraken_report_dehosted = kraken2_theiacov_dehosted.kraken_report
     
     # trimming versioning

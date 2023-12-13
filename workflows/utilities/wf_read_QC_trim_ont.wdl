@@ -15,7 +15,7 @@ workflow read_QC_trim_ont {
   input {
     String samplename
     File read1
-    Int? genome_size
+    Int? genome_length
 
     String? workflow_series
 
@@ -25,7 +25,7 @@ workflow read_QC_trim_ont {
     String? run_prefix
 
     # kraken inputs
-    String? target_org
+    String? target_organism
   }
   if ("~{workflow_series}" == "theiacov") {
     call ncbi_scrub.ncbi_scrub_se {
@@ -45,13 +45,13 @@ workflow read_QC_trim_ont {
       input:
         samplename = samplename,
         read1 = read1,
-        target_org = target_org
+        target_organism = target_organism
     }  
     call kraken2.kraken2_theiacov as kraken2_dehosted {
       input:
         samplename = samplename,
         read1 = ncbi_scrub_se.read1_dehosted,
-        target_org = target_org
+        target_organism = target_organism
     }
   }
   if ("~{workflow_series}" == "theiaprok") {
@@ -67,7 +67,7 @@ workflow read_QC_trim_ont {
         read1 = read1,
         samplename = samplename,
         coverage = 150,
-        genome_size = select_first([genome_size, kmc.est_genome_size])
+        genome_length = select_first([genome_length, kmc.est_genome_length])
     }
     # tiptoft for plasmid detection
     call tiptoft_task.tiptoft {
@@ -89,23 +89,23 @@ workflow read_QC_trim_ont {
     
     # kraken outputs
     String? kraken_version = kraken2_raw.version
-    String? kraken_target_org_name = kraken2_raw.kraken_target_org
+    String? kraken_target_organism_name = kraken2_raw.kraken_target_organism
     
     # kraken outputs raw
     Float? kraken_human = kraken2_raw.percent_human
     Float? kraken_sc2 = kraken2_raw.percent_sc2
-    String? kraken_target_org = kraken2_raw.percent_target_org
+    String? kraken_target_organism = kraken2_raw.percent_target_organism
     File? kraken_report = kraken2_raw.kraken_report
     
     # kraken outputs dehosted
     Float? kraken_human_dehosted = kraken2_dehosted.percent_human
     Float? kraken_sc2_dehosted = kraken2_dehosted.percent_sc2
-    String? kraken_target_org_dehosted = kraken2_dehosted.percent_target_org
+    String? kraken_target_organism_dehosted = kraken2_dehosted.percent_target_organism
     File? kraken_report_dehosted = kraken2_dehosted.kraken_report
    
     # theiaprok outputs
     # kmc outputs
-    Int? est_genome_size = kmc.est_genome_size
+    Int? est_genome_length = kmc.est_genome_length
     File? kmc_kmer_stats = kmc.kmer_stats
     String? kmc_version = kmc.kmc_version
     
