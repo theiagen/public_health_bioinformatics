@@ -1,0 +1,27 @@
+version 1.0
+
+import "../../../tasks/utilities/task_rename_files.wdl" as rename_files_task
+import "../../../tasks/task_versioning.wdl" as versioning
+
+workflow rename_files {
+  input {
+    File read1
+    File read2
+    String new_filename
+  }
+  call rename_files_task.rename_PE_files {
+    input:
+      read1 = read1,
+      read2 = read2,
+      new_filename = new_filename
+  }
+  call versioning.version_capture {
+    input:
+  }
+  output {
+    String rename_PE_files_version = version_capture.phb_version
+    String rename_PE_files_analysis_date = version_capture.date
+    File read1_renamed = rename_PE_files.read1_renamed
+    File read2_renamed = rename_PE_files.read2_renamed
+  }
+}
