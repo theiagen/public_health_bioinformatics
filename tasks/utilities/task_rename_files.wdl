@@ -17,25 +17,25 @@ task rename_PE_files {
     # rename forward read
     # check if compressed, if not rename and compress
     if [[ "~{read1}" == *.gz ]]; then
-      cp ~{read1} ~{new_filename}_1.fastq.gz
+      cp ~{read1} ~{new_filename}_R1.fastq.gz
     else
-      cp ~{read1} ~{new_filename}_1.fastq
-      gzip ~{new_filename}_1.fastq
+      cp ~{read1} ~{new_filename}_R1.fastq
+      gzip ~{new_filename}_R1.fastq
     fi
 
     # check if reverse read exists
     if [ ! -z ~{read2} ]; then
       if [[ "~{read2}" == *.gz ]]; then
-        cp ~{read2} ~{new_filename}_2.fastq.gz
+        cp ~{read2} ~{new_filename}_R2.fastq.gz
       else
-        cp ~{read2} ~{new_filename}_2.fastq
-        gzip ~{new_filename}_2.fastq
+        cp ~{read2} ~{new_filename}_R2.fastq
+        gzip ~{new_filename}_R2.fastq
       fi
     fi
   >>>
   output {
-    File read1_renamed = "~{new_filename}_1.fastq.gz"
-    File? read2_renamed = "~{new_filename}_2.fastq.gz"
+    File read1_renamed = "~{new_filename}_R1.fastq.gz"
+    File? read2_renamed = "~{new_filename}_R2.fastq.gz"
   }
   runtime {
     docker: "~{docker}"
