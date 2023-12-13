@@ -29,8 +29,8 @@ workflow rename_fastq_files {
     input:
   }
   output {
-    String rename_PE_files_version = version_capture.phb_version
-    String rename_PE_files_analysis_date = version_capture.date
+    String rename_fastq_files_version = version_capture.phb_version
+    String rename_fastq_files_analysis_date = version_capture.date
     File read1_renamed = select_first([rename_PE_files.read1_renamed, rename_SE_files.read1_renamed])
     File? read2_renamed = rename_PE_files.read2_renamed
   }
