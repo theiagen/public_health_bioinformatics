@@ -17,16 +17,18 @@ workflow tbprofiler_tngs {
   call versioning.version_capture {
     input:
   }
-  call clockwork_task.clockwork_decon_reads {
-    input: 
-      read1 = read1,
-      read2 = read2,
-      samplename = samplename
-  } 
+  # call clockwork_task.clockwork_decon_reads {
+  #   input: 
+  #     read1 = read1,
+  #     read2 = read2,
+  #     samplename = samplename
+  # } 
   call tbprofiler_task.tbprofiler {
     input:
-      read1 = clockwork_decon_reads.clockwork_cleaned_read1,
-      read2 = clockwork_decon_reads.clockwork_cleaned_read2,
+      # read1 = clockwork_decon_reads.clockwork_cleaned_read1,
+      # read2 = clockwork_decon_reads.clockwork_cleaned_read2,
+      read1 = read1,
+      read2 = read2,
       samplename = samplename
   }
   call tbp_parser_task.tbp_parser {
@@ -38,9 +40,9 @@ workflow tbprofiler_tngs {
   }
   output {
     # clockwork outputs
-    File clockwork_cleaned_read1 = clockwork_decon_reads.clockwork_cleaned_read1
-    File clockwork_cleaned_read2 = clockwork_decon_reads.clockwork_cleaned_read2
-    String clockwork_version = clockwork_decon_reads.clockwork_version
+    # File clockwork_cleaned_read1 = clockwork_decon_reads.clockwork_cleaned_read1
+    # File clockwork_cleaned_read2 = clockwork_decon_reads.clockwork_cleaned_read2
+    # String clockwork_version = clockwork_decon_reads.clockwork_version
     # tbprofiler outputs
     File tbprofiler_report_csv = tbprofiler.tbprofiler_output_csv
     File tbprofiler_report_tsv = tbprofiler.tbprofiler_output_tsv
