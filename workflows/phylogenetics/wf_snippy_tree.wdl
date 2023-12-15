@@ -6,6 +6,7 @@ import "../../tasks/phylogenetic_inference/task_iqtree2.wdl" as iqtree2_task
 import "../../tasks/phylogenetic_inference/task_snp_dists.wdl" as snp_dists_task
 import "../../tasks/phylogenetic_inference/task_reorder_matrix.wdl" as reorder_matrix_task
 import "../../tasks/phylogenetic_inference/task_gubbins.wdl" as gubbins_task
+import "../../tasks/phylogenetic_inference/task_shared_snps.wdl" as shared_snp_task
 import "../../tasks/utilities/task_summarize_data.wdl" as data_summary
 import "../../tasks/task_versioning.wdl" as versioning
 
@@ -20,6 +21,7 @@ workflow snippy_tree_wf {
     File reference_genome_file
     Boolean use_gubbins = true
     Boolean core_genome = true
+    Boolean shared_snp_task = false
     
     String? data_summary_terra_project
     String? data_summary_terra_workspace
@@ -52,6 +54,9 @@ workflow snippy_tree_wf {
     Int? snp_sites_disk_size
     Int? snp_sites_memory
     String? snp_sites_docker
+
+    # shared SNPs task
+    Array[File]? snippy_variants_results
   }
   call snippy_core_task.snippy_core {
     input:
@@ -129,6 +134,14 @@ workflow snippy_tree_wf {
         output_prefix = tree_name
     }
   }
+  if (shared_snp_task) {
+    call shared_snp_task.shared_snps {
+      input:
+        snippy_variants_results = snippy_variants_results, 
+        samplenames = samplenames,
+        concatenated_file_name = tree_name
+    }
+  }
   call versioning.version_capture{
     input:
   }
@@ -172,5 +185,8 @@ workflow snippy_tree_wf {
 
     # set final alignment from 3 possible task outputs
     File snippy_final_alignment = select_first([snp_sites.snp_sites_multifasta, gubbins.gubbins_polymorphic_fasta, snippy_core.snippy_full_alignment_clean])
+
+    # shared snps outputs
+    File? snippy_shared_snps = shared_snps.snippy_shared_snps
   }
 }
