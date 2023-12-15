@@ -60,13 +60,13 @@ task abricate_flu {
     File assembly
     String samplename
     String database = "insaflu"
-    String nextclade_flu_h1n1_ha_tag
-    String nextclade_flu_h1n1_na_tag
-    String nextclade_flu_h3n2_ha_tag
-    String nextclade_flu_h3n2_na_tag
-    String nextclade_flu_vic_ha_tag
-    String nextclade_flu_vic_na_tag
-    String nextclade_flu_yam_tag
+    String? nextclade_flu_h1n1_ha_tag
+    String? nextclade_flu_h1n1_na_tag
+    String? nextclade_flu_h3n2_ha_tag
+    String? nextclade_flu_h3n2_na_tag
+    String? nextclade_flu_vic_ha_tag
+    String? nextclade_flu_vic_na_tag
+    String? nextclade_flu_yam_tag
     Int minid = 70
     Int mincov =60
     Int cpu = 2
@@ -91,7 +91,17 @@ task abricate_flu {
     cat ~{samplename}_abricate_hits.tsv | awk -F '\t' '{if ($6=="M1") print $15}' > FLU_TYPE
     HA_hit=$(cat ~{samplename}_abricate_hits.tsv | awk -F '\t' '{if ($6=="HA") print $15 }')
     NA_hit=$(cat ~{samplename}_abricate_hits.tsv | awk -F '\t' '{if ($6=="NA") print $15 }')
-    flu_subtype="${HA_hit}${NA_hit}" && echo "$flu_subtype" >  FLU_SUBTYPE
+    if [[ ! (-z "${HA_hit}")  &&  ! (-z "${NA_hit}") ]]; then
+      flu_subtype="${HA_hit}${NA_hit}" && echo "$flu_subtype" >  FLU_SUBTYPE
+    fi
+    if [[ -z "${HA_hit}" ]]; then
+      flu_subtype="${NA_hit}" && echo "$flu_subtype" >  FLU_SUBTYPE
+    elif [[ -z "${NA_hit}" ]]; then
+      flu_subtype="${HA_hit}" && echo "$flu_subtype" >  FLU_SUBTYPE
+    else
+      flu_subtype="${HA_hit}${NA_hit}" && echo "$flu_subtype" >  FLU_SUBTYPE
+    fi
+    #flu_subtype="${HA_hit}${NA_hit}" && echo "$flu_subtype" >  FLU_SUBTYPE
 
     # set nextclade variables based on subptype
     run_nextclade=true

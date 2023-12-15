@@ -92,6 +92,7 @@ task export_taxon_tables {
     File? ani_output_tsv
     String? ani_top_species_match 
     String? ani_mummer_version
+    String? ani_docker
     String? kmerfinder_docker
     File? kmerfinder_results_tsv
     String? kmerfinder_top_hit
@@ -116,6 +117,14 @@ task export_taxon_tables {
     File? resfinder_results 
     File? resfinder_pointfinder_pheno_table 
     File? resfinder_pointfinder_results 
+    String? resfinder_predicted_pheno_resistance
+    String? resfinder_predicted_xdr_shigella
+    String? resfinder_predicted_resistance_Amp
+    String? resfinder_predicted_resistance_Azm
+    String? resfinder_predicted_resistance_Axo
+    String? resfinder_predicted_resistance_Cip
+    String? resfinder_predicted_resistance_Smx
+    String? resfinder_predicted_resistance_Tmp
     String? resfinder_db_version 
     String? resfinder_docker 
     File? ts_mlst_results
@@ -331,6 +340,10 @@ task export_taxon_tables {
     String? srst2_vibrio_toxR
     String? srst2_vibrio_serogroup
     String? srst2_vibrio_biotype
+  }
+  meta {
+    # added so that call caching is always turned off
+    volatile: true
   }
   command <<<
   
@@ -595,6 +608,7 @@ task export_taxon_tables {
       "ani_output_tsv": "~{ani_output_tsv}",
       "ani_top_species_match": "~{ani_top_species_match}",
       "ani_mummer_version": "~{ani_mummer_version}",
+      "ani_docker": "~{ani_docker}",
       "kmerfinder_docker": "~{kmerfinder_docker}",
       "kmerfinder_results_tsv": "~{kmerfinder_results_tsv}",
       "kmerfinder_top_hit": "~{kmerfinder_top_hit}",
@@ -607,6 +621,14 @@ task export_taxon_tables {
       "resfinder_results": "~{resfinder_results}",
       "resfinder_pointfinder_pheno_table": "~{resfinder_pointfinder_pheno_table}",
       "resfinder_pointfinder_results": "~{resfinder_pointfinder_results}",
+      "resfinder_predicted_pheno_resistance": "~{resfinder_predicted_pheno_resistance}",
+      "resfinder_predicted_xdr_shigella": "~{resfinder_predicted_xdr_shigella}",
+      "resfinder_predicted_resistance_Amp": "~{resfinder_predicted_resistance_Amp}",
+      "resfinder_predicted_resistance_Azm": "~{resfinder_predicted_resistance_Azm}",
+      "resfinder_predicted_resistance_Axo": "~{resfinder_predicted_resistance_Axo}",
+      "resfinder_predicted_resistance_Cip": "~{resfinder_predicted_resistance_Cip}",
+      "resfinder_predicted_resistance_Smx": "~{resfinder_predicted_resistance_Smx}",
+      "resfinder_predicted_resistance_Tmp": "~{resfinder_predicted_resistance_Tmp}",
       "resfinder_db_version": "~{resfinder_db_version}",
       "resfinder_docker": "~{resfinder_docker}",
       "prokka_gff": "~{prokka_gff}",

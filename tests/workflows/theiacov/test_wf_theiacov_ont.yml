@@ -94,7 +94,7 @@
     - path: miniwdl_run/call-consensus/work/primer-schemes/SARS-CoV-2/Vuser/SARS-CoV-2.scheme.bed
       md5sum: d5ad850f8c610dc45162957ab84530d6
     - path: miniwdl_run/call-consensus_qc/command
-      md5sum: 770764cd13027f258bf2a871c720c80d
+      md5sum: 2b043e77f5254e0a8002aa32693edeb8
     - path: miniwdl_run/call-consensus_qc/inputs.json
       contains: ["assembly_fasta", "medaka"]
     - path: miniwdl_run/call-consensus_qc/outputs.json
@@ -195,7 +195,7 @@
     - path: miniwdl_run/call-nextclade_output_parser/work/NEXTCLADE_CLADE
       md5sum: 111fd243cc71936455964c3956dd2e28
     - path: miniwdl_run/call-nextclade_output_parser/work/NEXTCLADE_LINEAGE
-      md5sum: d41d8cd98f00b204e9800998ecf8427e
+      md5sum: dc20c75a91e9d9de3d98af59d035f17c
     - path: miniwdl_run/call-nextclade_output_parser/work/TAMIFLU_AASUBS
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     - path: miniwdl_run/call-nextclade_output_parser/work/_miniwdl_inputs/0/ont.medaka.consensus.nextclade.tsv

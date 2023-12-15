@@ -18,7 +18,7 @@
     - wf_theiacov_fasta_miniwdl
   files:
     - path: miniwdl_run/call-consensus_qc/command
-      md5sum: b89c8a9a0b9e27b26454ba7d668d68f4
+      md5sum: 57cce4e7c41e1ff0f9a9883605d84695
     - path: miniwdl_run/call-consensus_qc/inputs.json
     - path: miniwdl_run/call-consensus_qc/outputs.json
     - path: miniwdl_run/call-consensus_qc/stderr.txt
@@ -38,7 +38,7 @@
       md5sum: 6808ca805661622ad65ae014a4b2a094
     - path: miniwdl_run/call-consensus_qc/work/_miniwdl_inputs/0/clearlabs.fasta.gz
     - path: miniwdl_run/call-nextclade/command
-      md5sum: ed29cde6f430eff4c408d9ea214ebe85
+      md5sum: b5ecaad831316b3bd8f066f1e71cc0a5
     - path: miniwdl_run/call-nextclade/inputs.json
     - path: miniwdl_run/call-nextclade/outputs.json
     - path: miniwdl_run/call-nextclade/stderr.txt
@@ -69,11 +69,11 @@
     - path: miniwdl_run/call-nextclade/work/nextclade_dataset_dir/reference.fasta
       md5sum: c7ce05f28e4ec0322c96f24e064ef55c
     - path: miniwdl_run/call-nextclade/work/nextclade_dataset_dir/sequences.fasta
-      md5sum: ea475ab0a62a0a68fc3b1108fdff8a20
+      md5sum: bb6b4e9e91304a396724bcb6344b8a5d
     - path: miniwdl_run/call-nextclade/work/nextclade_dataset_dir/tag.json
-      md5sum: 6a17b1ee5449279af7bdd0922545d7b8
+      md5sum: 97e1309e683fbaaa839198d88cd4e2d9
     - path: miniwdl_run/call-nextclade/work/nextclade_dataset_dir/tree.json
-      md5sum: 13eb330629b6ef17a070fcb6283bea2f
+      md5sum: 6892e6019bf88ec571b4560d66d3acb0
     - path: miniwdl_run/call-nextclade/work/nextclade_dataset_dir/virus_properties.json
     - path: miniwdl_run/call-nextclade/work/nextclade_gene_E.translation.fasta
       md5sum: dc43b1e98245a25c142aec52b29a07df
@@ -114,7 +114,7 @@
     - path: miniwdl_run/call-nextclade_output_parser/work/NEXTCLADE_CLADE
       md5sum: 96d3cf337be2f7948d6f6df5c1ab69a4
     - path: miniwdl_run/call-nextclade_output_parser/work/NEXTCLADE_LINEAGE
-      md5sum: d41d8cd98f00b204e9800998ecf8427e
+      md5sum: 717da6cd0df2d2f1d00461f3498aaca9
     - path: miniwdl_run/call-nextclade_output_parser/work/TAMIFLU_AASUBS
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     - path: miniwdl_run/call-nextclade_output_parser/work/_miniwdl_inputs/0/clearlabs.fasta.gz.nextclade.tsv
@@ -149,7 +149,7 @@
       md5sum: f4ad614b7ad39f28a8145cec280a93c0
     - path: miniwdl_run/call-vadr/inputs.json
     - path: miniwdl_run/call-vadr/outputs.json
-      md5sum: f58a2654f9ba9d49617f643b59ae739f
+      md5sum: e35217438ca21b347ef68e157c480c2e
     - path: miniwdl_run/call-vadr/stderr.txt
     - path: miniwdl_run/call-vadr/stderr.txt.offset
     - path: miniwdl_run/call-vadr/stdout.txt
