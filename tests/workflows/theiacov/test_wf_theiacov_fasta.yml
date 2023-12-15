@@ -100,7 +100,7 @@
     - path: miniwdl_run/call-nextclade/work/nextclade_gene_S.translation.fasta
       md5sum: e630a638abbb2c8ab4a8b74455e9668f
     - path: miniwdl_run/call-nextclade_output_parser/command
-      md5sum: 4de7be1b1183a1d13ea86fd8bf23d5d5
+      md5sum: b682d6fdfc827cf46564c61ab80cd2a5
     - path: miniwdl_run/call-nextclade_output_parser/inputs.json
     - path: miniwdl_run/call-nextclade_output_parser/outputs.json
     - path: miniwdl_run/call-nextclade_output_parser/stderr.txt
