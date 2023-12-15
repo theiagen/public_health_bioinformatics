@@ -3,7 +3,7 @@ version 1.0
 task shared_snps {
   input {
     Array[File] snippy_variants_results
-    Array[String] samplename
+    Array[String] samplenames
     String concatenated_file_name
 
     String docker = "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-03-16"
@@ -15,7 +15,7 @@ task shared_snps {
     
     file_array=(~{sep=" " snippy_variants_results})
     file_array_len=$(echo "${#file_array[@]}")
-    samplename_array=(~{sep=' ' samplename})
+    samplename_array=(~{sep=' ' samplenames})
     samplename_array_len=$(echo "${#samplename_array[@]}")
     
     touch ~{concatenated_file_name}

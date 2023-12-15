@@ -21,7 +21,7 @@ workflow snippy_tree_wf {
     File reference_genome_file
     Boolean use_gubbins = true
     Boolean core_genome = true
-    Boolean shared_snp_task = false
+    Boolean shared_snp_table = false
     
     String? data_summary_terra_project
     String? data_summary_terra_workspace
@@ -134,10 +134,10 @@ workflow snippy_tree_wf {
         output_prefix = tree_name
     }
   }
-  if (shared_snp_task) {
+  if (shared_snp_table) {
     call shared_snp_task.shared_snps {
       input:
-        snippy_variants_results = snippy_variants_results, 
+        snippy_variants_results = select_first([snippy_variants_results]), 
         samplenames = samplenames,
         concatenated_file_name = tree_name
     }
