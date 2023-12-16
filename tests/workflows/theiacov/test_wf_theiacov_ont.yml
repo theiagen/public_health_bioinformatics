@@ -178,7 +178,7 @@
     - path: miniwdl_run/call-nextclade/work/ont.medaka.consensus.nextclade.json
     - path: miniwdl_run/call-nextclade/work/ont.medaka.consensus.nextclade.tsv
     - path: miniwdl_run/call-nextclade_output_parser/command
-      md5sum: 6e30109d985d8d896cf8b0b82092fada
+      md5sum: 3f00e7c079acf38372be6c368e14cfef
     - path: miniwdl_run/call-nextclade_output_parser/inputs.json
       contains: ["nextclade_tsv", "tsv"]
     - path: miniwdl_run/call-nextclade_output_parser/outputs.json
