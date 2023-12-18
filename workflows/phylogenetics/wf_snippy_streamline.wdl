@@ -104,5 +104,7 @@ workflow snippy_streamline {
     File snippy_snp_matrix = snippy_tree_wf.snippy_snp_matrix
     File? snippy_summarized_data = snippy_tree_wf.snippy_summarized_data
     File? snippy_filtered_metadata = snippy_tree_wf.snippy_filtered_metadata
+    File? snippy_concatenated_snps = snippy_tree_wf.snippy_concatenated_snps
+    File? snippy_shared_snps = snippy_tree_wf.snippy_shared_snp_table
   }
 }
