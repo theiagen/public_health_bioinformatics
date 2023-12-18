@@ -195,6 +195,11 @@ workflows:
    primaryDescriptorPath: /workflows/utilities/file_handling/wf_concatenate_column.wdl
    testParameterFiles:
     - empty.json
+ - name: Concatenate_Variants_PHB
+   subclass: WDL
+   primaryDescriptorPath: /workflows/utilities/file_handling/wf_concatenate_variants.wdl
+   testParameterFiles:
+    - empty.json
  - name: Transfer_Column_Content_PHB
    subclass: WDL
    primaryDescriptorPath: /workflows/utilities/file_handling/wf_transfer_column.wdl
