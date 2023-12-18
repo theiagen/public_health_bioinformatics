@@ -72,6 +72,8 @@ workflow ksnp3_workflow {
     String ksnp3_vcf_ref_samplename = ksnp3_task.ksnp3_vcf_ref_samplename
     String ksnp3_core_snp_matrix_status = ksnp3_task.skip_core_snp_dists
     File ksnp3_snps = ksnp3_task.ksnp3_snps_all
+    String ksnp3_number_snps = ksnp3_task.ksnp3_number_snps
+    String ksnp3_number_core_snps = ksnp3_task.ksnp3_number_core_snps
     # ordered matrixes and reordered trees
     File? ksnp3_core_snp_matrix = core_reorder_matrix.ordered_matrix
     File? ksnp3_core_tree = core_reorder_matrix.tree
