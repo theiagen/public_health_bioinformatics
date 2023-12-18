@@ -18,7 +18,7 @@ task shared_snps {
     samplename_array=(~{sep=' ' samplenames})
     samplename_array_len=$(echo "${#samplename_array[@]}")
     
-    touch ~{concatenated_file_name}
+    touch ~{concatenated_file_name}_concatenated_snps.csv
 
     # Ensure file, and samplename arrays are of equal length
     if [ "$file_array_len" -ne "$samplename_array_len" ]; then
@@ -34,12 +34,12 @@ task shared_snps {
         samplename=${samplename_array[$index]}
         # create a new column with "samplename" as the column name and the samplename as the column content, combine with rest of file
         awk -v var=$samplename 'BEGIN{ FS = OFS = "," } { print (NR==1? "samplename" : var), $0 }' $file > file.tmp
-        cat file.tmp >> ~{concatenated_file_name}
+        cat file.tmp >> ~{concatenated_file_name}_concatenated_snps.csv
       else
         file=${file_array[$index]}
         samplename=${samplename_array[$index]}
         tail -n +2 $file | awk -v var=$samplename 'BEGIN{ FS = OFS = "," } { print var, $0 }' > file.tmp
-        cat file.tmp >> ~{concatenated_file_name}  
+        cat file.tmp >> ~{concatenated_file_name}_concatenated_snps.csv  
       fi
     done
 
@@ -47,7 +47,7 @@ task shared_snps {
     import pandas as pd
 
     # read the concatenated file into terra
-    tablename = "~{concatenated_file_name}" 
+    tablename = "~{concatenated_file_name}_concatenated_snps.csv" 
     df = pd.read_csv(tablename, delimiter=',', header=0, index_col=False) 
     
     # fill empty columns with NA
@@ -73,7 +73,8 @@ task shared_snps {
     CODE
   >>>
   output {
-    File snippy_shared_snps = "~{concatenated_file_name}_shared_snp_table.csv" 
+    File snippy_concatenated_snps = "~{concatenated_file_name}_concatenated_snps.csv"
+    File snippy_shared_snp_table = "~{concatenated_file_name}_shared_snp_table.csv" 
   }
   runtime {
     docker: "~{docker}"

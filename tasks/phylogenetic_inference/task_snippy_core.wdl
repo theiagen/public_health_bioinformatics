@@ -16,7 +16,6 @@ task snippy_core {
   command <<<
     # version control
     snippy --version | head -1 | tee VERSION
-
     tarball_array=(~{sep=" " snippy_variants_outdir_tarball})
     samplename_array=(~{sep=" " samplenames})
 
@@ -51,6 +50,7 @@ task snippy_core {
     File snippy_txt = "~{tree_name}_snps_summary.txt"
     File snippy_vcf = "~{tree_name}.vcf"
     String snippy_core_docker_image = docker
+    Array[File] snippy_variants_results = glob("*/*.csv")
   }
   runtime {
     docker: "~{docker}"

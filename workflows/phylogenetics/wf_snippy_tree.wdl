@@ -55,8 +55,6 @@ workflow snippy_tree_wf {
     Int? snp_sites_memory
     String? snp_sites_docker
 
-    # shared SNPs task
-    Array[File]? snippy_variants_results
   }
   call snippy_core_task.snippy_core {
     input:
@@ -137,7 +135,7 @@ workflow snippy_tree_wf {
   if (shared_snp_table) {
     call shared_snp_task.shared_snps {
       input:
-        snippy_variants_results = select_first([snippy_variants_results]), 
+        snippy_variants_results = snippy_core.snippy_variants_results, 
         samplenames = samplenames,
         concatenated_file_name = tree_name
     }
@@ -187,6 +185,7 @@ workflow snippy_tree_wf {
     File snippy_final_alignment = select_first([snp_sites.snp_sites_multifasta, gubbins.gubbins_polymorphic_fasta, snippy_core.snippy_full_alignment_clean])
 
     # shared snps outputs
-    File? snippy_shared_snps = shared_snps.snippy_shared_snps
+    File? snippy_concatenated_snps = shared_snps.snippy_concatenated_snps
+    File? snippy_shared_snp_table = shared_snps.snippy_shared_snp_table
   }
 }
