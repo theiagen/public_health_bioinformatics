@@ -61,6 +61,7 @@ task cat_files_fasta {
     for index in ${!file_array[@]}; do
       file=${file_array[$index]}
       header=${headers_array[$index]}
+      # replace the original header with the new header using sed before concatenating
       cat ${file} | sed "s/^>.*/>${header}/" >> ~{concatenated_file_name}
     done
   >>>
