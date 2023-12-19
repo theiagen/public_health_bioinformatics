@@ -518,7 +518,7 @@
     - path: miniwdl_run/wdl/tasks/assembly/task_shovill.wdl
       md5sum: ca45f97152cb9536f2bb0603382021bd
     - path: miniwdl_run/wdl/tasks/gene_typing/task_abricate.wdl
-      md5sum: 8ea4befaa7a09b0def8d033cb9b806d1
+      md5sum: 49018b0dc2b173bc9e0f3893b8be8e7c
     - path: miniwdl_run/wdl/tasks/gene_typing/task_amrfinderplus.wdl
       md5sum: 249db321d15832002c4945394ae9af76
     - path: miniwdl_run/wdl/tasks/gene_typing/task_bakta.wdl
@@ -528,7 +528,7 @@
     - path: miniwdl_run/wdl/tasks/gene_typing/task_prokka.wdl
       md5sum: 8e8423b99d5cd3e92bb89b3c3211d432
     - path: miniwdl_run/wdl/tasks/gene_typing/task_resfinder.wdl
-      md5sum: 18d0dd6560f88ed2541ad342e12412e8
+      md5sum: 27528633723303b462d095b642649453
     - path: miniwdl_run/wdl/tasks/gene_typing/task_snippy_variants.wdl
       md5sum: bc048390626650b6a939fd740c1aaf13
     - path: miniwdl_run/wdl/tasks/quality_control/task_bbduk.wdl
@@ -542,7 +542,7 @@
     - path: miniwdl_run/wdl/tasks/quality_control/task_fastq_scan.wdl
       contains: ["version", "fastq_scan", "output"]
     - path: miniwdl_run/wdl/tasks/quality_control/task_mummer_ani.wdl
-      md5sum: 21e8b1cbe4c8be26d1ac8b8013970166
+      md5sum: d50a40d533d51834d0000971dc2c2014
     - path: miniwdl_run/wdl/tasks/quality_control/task_qc_check_phb.wdl
       contains: ["version", "qc_check_table", "output"]
     - path: miniwdl_run/wdl/tasks/quality_control/task_quast.wdl

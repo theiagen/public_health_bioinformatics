@@ -10,6 +10,10 @@ task ncbi_datasets_download_genome_accession {
     Boolean include_gbff = false
     Boolean include_gff3 = false
   }
+  meta {
+    # added so that call caching is always turned off
+    volatile: true
+  }
   command <<<
     date | tee DATE
     datasets --version | sed 's|datasets version: ||' | tee DATASETS_VERSION
