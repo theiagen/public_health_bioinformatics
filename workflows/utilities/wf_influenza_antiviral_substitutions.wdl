@@ -20,6 +20,8 @@ workflow flu_antiviral_substitutions {
     File flu_pa_ref = "gs://theiagen-public-files-rp/terra/flu-references/reference_pa.fasta"
     File flu_pb1_ref = "gs://theiagen-public-files-rp/terra/flu-references/reference_pb1.fasta"
     File flu_pb2_ref = "gs://theiagen-public-files-rp/terra/flu-references/reference_pb2.fasta"
+    File flu_h1n1_m2_ref = "gs://theiagen-public-files-rp/terra/flu-references/reference_h1n1_m2.fasta"
+    File flu_h3n2_m2_ref = "gs://theiagen-public-files-rp/terra/flu-references/reference_h3n2_m2.fasta"
     String? antiviral_aa_subs #user input for antiviral aa subs to be reported
   }
 # Identify AA changes for Influenza NA, PA, PB1 and PB2 segments, and associated antiviral mutations
@@ -54,6 +56,23 @@ workflow flu_antiviral_substitutions {
     call flu_antiviral.antiviral_mutations_parser as flu_antiviral_parser_n1_na {
       input:
         mutations_tsv = aa_subs_n1_na.aa_changes_tsv,
+        antiviral_aa_subs = antiviral_aa_subs
+    }
+  }
+  if (defined(ha_segment_assembly) && ((abricate_flu_subtype == "H1N1") || (irma_flu_subtype == "H1N1"))) {
+    call mafft_task.mafft as mafft_h1_ha {
+      input:
+        genomes = select_all([flu_h1_ha_ref, ha_segment_assembly])
+    }
+    call flu_antiviral.aa_subs as aa_subs_h1_ha {
+      input:
+        alignment = mafft_h1_ha.msa,
+        protein_name = "HA",
+        subtype = "H1N1"
+    }
+    call flu_antiviral.antiviral_mutations_parser as flu_antiviral_parser_h1_ha {
+      input:
+        mutations_tsv = aa_subs_h1_ha.aa_changes_tsv,
         antiviral_aa_subs = antiviral_aa_subs
     }
   }
