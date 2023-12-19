@@ -679,5 +679,12 @@ workflow merlin_magic {
     File snippy_variants_bam = select_first([snippy_cauris.snippy_variants_bam, snippy_afumigatus.snippy_variants_bam, snippy_crypto.snippy_variants_bam, "gs://theiagen-public-files/terra/theiaeuk_files/no_match_detected.txt"])
     File snippy_variants_bai = select_first([snippy_cauris.snippy_variants_bai, snippy_afumigatus.snippy_variants_bai, snippy_crypto.snippy_variants_bai, "gs://theiagen-public-files/terra/theiaeuk_files/no_match_detected.txt"])
     File snippy_variants_summary = select_first([snippy_cauris.snippy_variants_summary, snippy_afumigatus.snippy_variants_summary, snippy_crypto.snippy_variants_summary, "gs://theiagen-public-files/terra/theiaeuk_files/no_match_detected.txt"])
+    # File snippy_variants_depth = select_first([snippy_cauris.snippy_variants_depth, snippy_afumigatus.snippy_variants_depth, snippy_crypto.snippy_variants_depth, "gs://theiagen-public-files/terra/theiaeuk_files/no_match_detected.txt"])
+    File snippy_variants_coverage_tsv = select_first([snippy_cauris.snippy_variants_coverage_tsv, snippy_afumigatus.snippy_variants_coverage_tsv, snippy_crypto.snippy_variants_coverage_tsv, "gs://theiagen-public-files/terra/theiaeuk_files/no_match_detected.txt"])
+    Int snippy_variants_num_reads_aligned = select_first([snippy_cauris.snippy_variants_num_reads_aligned, snippy_afumigatus.snippy_variants_num_reads_aligned, snippy_crypto.snippy_variants_num_reads_aligned, "No matching taxon detected"])
+    Int snippy_variants_num_variants = select_first([snippy_cauris.snippy_variants_num_variants, snippy_afumigatus.snippy_variants_num_variants, snippy_crypto.snippy_variants_num_reads_aligned, "No matching taxon detected"])
+    # Int snippy_variants_ref_length = select_first([snippy_cauris.snippy_variants_ref_length, snippy_afumigatus.snippy_variants_ref_length, snippy_crypto.snippy_variants_ref_length, "No matching taxon detected"])
+    # Int snippy_variants_ref_length_passed_depth = select_first([snippy_cauris.snippy_variants_ref_length_passed_depth, snippy_afumigatus.snippy_variants_ref_length_passed_depth, snippy_crypto.snippy_variants_ref_length_passed_depth, "No matching taxon detected"])
+    Float snippy_variants_percent_ref_coverage = select_first([snippy_cauris.snippy_variants_percent_ref_coverage, snippy_afumigatus.snippy_variants_percent_ref_coverage, snippy_crypto.snippy_variants_percent_ref_coverage, "No matching taxon detected"])
   }
 }

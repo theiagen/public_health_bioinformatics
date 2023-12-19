@@ -82,6 +82,10 @@ workflow snippy_streamline {
     Array[File] snippy_variants_outdir_tarball = snippy_variants_wf.snippy_variants_outdir_tarball
     Array[String] snippy_variants_snippy_version = snippy_variants_wf.snippy_variants_version
     Array[String] snippy_variants_snippy_docker = snippy_variants_wf.snippy_variants_docker
+    Array[Int] snippy_variants_num_reads_aligned = snippy_variants_wf.snippy_variants_num_reads_aligned
+    Array[Int] snippy_variants_num_variants = snippy_variants_wf.snippy_variants_num_variants
+    Array[File] snippy_variants_coverage_tsv = snippy_variants_wf.snippy_variants_coverage_tsv
+    Array[Float] snippy_variants_ref_coverage = snippy_variants_wf.snippy_variants_percent_ref_coverage
 
     ### snippy_tree wf outputs ###
     String snippy_tree_snippy_version = snippy_tree_wf.snippy_tree_snippy_version
