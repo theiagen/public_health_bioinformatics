@@ -23,7 +23,7 @@ workflow read_QC_trim_se {
     File? phix
     String? workflow_series
     String? trimmomatic_args
-    Boolean call_midas = false
+    Boolean call_midas = true
     File? midas_db
     String read_processing = "trimmomatic"
     String fastp_args = "-g -5 20 -3 20"
