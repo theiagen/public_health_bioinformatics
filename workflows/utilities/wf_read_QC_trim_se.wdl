@@ -74,12 +74,14 @@ workflow read_QC_trim_se {
         target_org = target_org
     }
   }
-  if (call_midas) {
-    call midas_task.midas {
-      input:
-        samplename = samplename,
-        read1 = read1_raw,
-        midas_db = midas_db
+  if ("~{workflow_series}" == "theiaprok"){
+    if (call_midas) {
+      call midas_task.midas {
+        input:
+          samplename = samplename,
+          read1 = read1_raw,
+          midas_db = midas_db
+      }
     }
   }
   output {
