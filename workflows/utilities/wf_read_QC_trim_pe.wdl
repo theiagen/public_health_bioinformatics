@@ -98,13 +98,15 @@ workflow read_QC_trim_pe {
       read1 = bbduk.read1_clean,
       read2 = bbduk.read2_clean
   }
-  if (call_midas) {
-    call midas_task.midas {
-      input:
-        samplename = samplename,
-        read1 = read1_raw,
-        read2 = read2_raw,
-        midas_db = midas_db
+  if ("~{workflow_series}" == "theiaprok") {
+    if (call_midas) {
+      call midas_task.midas {
+        input:
+          samplename = samplename,
+          read1 = read1_raw,
+          read2 = read2_raw,
+          midas_db = midas_db
+      }
     }
   }
   if ("~{workflow_series}" == "theiameta") {
