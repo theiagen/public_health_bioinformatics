@@ -1,6 +1,6 @@
 version 1.0
 
-import "../../../tasks/phylogenetic_inference/task_shared_snps.wdl" as shared_snp_task
+import "../../../tasks/phylogenetic_inference/task_concatenate_variants.wdl" as concatenate_variants_task
 import "../../../tasks/task_versioning.wdl" as versioning
 
 workflow concatenate_variants_wf {
@@ -13,7 +13,7 @@ workflow concatenate_variants_wf {
     Array[String] samplenames
 
   }
-  call shared_snp_task.shared_snps {
+  call concatenate_variants_task.concatenate_variants {
     input:
       snippy_variants_results = snippy_variants_results,
       samplenames = samplenames,
@@ -28,7 +28,7 @@ workflow concatenate_variants_wf {
     String concatenate_variants_analysis_date = version_capture.date
 
     # shared snps outputs
-    File snippy_concatenated_snps = shared_snps.snippy_concatenated_snps
-    File snippy_shared_snp_table = shared_snps.snippy_shared_snp_table
+    File snippy_concatenated_snps = concatenate_variants.snippy_concatenated_snps
+    File snippy_shared_snp_table = concatenate_variants.snippy_shared_snp_table
   }
 }

@@ -1,6 +1,6 @@
 version 1.0
 
-task shared_snps {
+task concatenate_variants {
   input {
     Array[File] snippy_variants_results
     Array[String] samplenames
