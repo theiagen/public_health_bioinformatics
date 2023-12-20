@@ -45,6 +45,6 @@ workflow kraken2_pe_wf {
     # Krona outputs
     String krona_version = krona.krona_version
     String krona_docker = krona.krona_docker
-    File krona_html_raw = krona.krona_html
+    File krona_html = krona.krona_html
   }
 }
