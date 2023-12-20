@@ -248,3 +248,8 @@ workflows:
    primaryDescriptorPath: /workflows/utilities/wf_czgenepi_prep.wdl
    testParameterFiles:
     - empty.json
+ - name: Rename_FASTQ_PHB
+   subclass: WDL
+   primaryDescriptorPath: /workflows/utilities/file_handling/wf_rename_fastq_files.wdl
+   testParameterFiles:
+    - empty.json
