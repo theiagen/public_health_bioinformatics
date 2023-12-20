@@ -6,7 +6,7 @@ task rename_PE_files {
   }
   input {
     File read1
-    File? read2
+    File read2
     String new_filename
     String docker = "us-docker.pkg.dev/general-theiagen/ubuntu/ubuntu:jammy-20230816"
     Int disk_size = 100
@@ -24,18 +24,16 @@ task rename_PE_files {
     fi
 
     # check if reverse read exists
-    if [ ! -z ~{read2} ]; then
-      if [[ "~{read2}" == *.gz ]]; then
-        cp ~{read2} ~{new_filename}_R2.fastq.gz
-      else
-        cp ~{read2} ~{new_filename}_R2.fastq
-        gzip ~{new_filename}_R2.fastq
-      fi
+    if [[ "~{read2}" == *.gz ]]; then
+      cp ~{read2} ~{new_filename}_R2.fastq.gz
+    else
+      cp ~{read2} ~{new_filename}_R2.fastq
+      gzip ~{new_filename}_R2.fastq
     fi
   >>>
   output {
     File read1_renamed = "~{new_filename}_R1.fastq.gz"
-    File? read2_renamed = "~{new_filename}_R2.fastq.gz"
+    File read2_renamed = "~{new_filename}_R2.fastq.gz"
   }
   runtime {
     docker: "~{docker}"

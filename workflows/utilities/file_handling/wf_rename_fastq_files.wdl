@@ -13,7 +13,7 @@ workflow rename_fastq_files {
     call rename_files_task.rename_PE_files {
       input:
         read1 = read1,
-        read2 = read2,
+        read2 = select_first([read2]),
         new_filename = new_filename
     }
   } 
