@@ -60,7 +60,7 @@ workflow theiacov_fasta_batch {
       workspace_name = workspace_name,
       project_name = project_name,
       bucket_name = bucket_name,
-      sample_to_fasta = zip(samplenames, assembly_fastas),
+      samplenames = samplenames,
       organism = organism,
       nextclade_tsv = nextclade.nextclade_tsv,
       nextclade_docker = nextclade.nextclade_docker,
