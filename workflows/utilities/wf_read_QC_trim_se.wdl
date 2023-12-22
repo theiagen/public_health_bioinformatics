@@ -25,6 +25,8 @@ workflow read_QC_trim_se {
     String? trimmomatic_args
     Boolean call_midas = false
     File? midas_db
+    Boolean call_kraken = false
+    File? kraken_db
     String read_processing = "trimmomatic"
     String fastp_args = "-g -5 20 -3 20"
   }
@@ -82,6 +84,16 @@ workflow read_QC_trim_se {
         midas_db = midas_db
     }
   }
+  if ("~{workflow_series}" == "theiaprok") {
+    if (call_kraken) {
+      call kraken.kraken2_standalone {
+        input:
+          samplename = samplename,
+          read1 = read1_raw,
+          kraken2_db = select_first([kraken_db])
+      }
+    }
+  }
   output {
     # bbduk
     File read1_clean = bbduk_se.read1_clean
@@ -93,11 +105,12 @@ workflow read_QC_trim_se {
     String fastq_scan_version = fastq_scan_raw.version
     
     # kraken2
-    String? kraken_version = kraken2_raw.version
+    String kraken_version = select_first([kraken2_raw.version, kraken2_standalone.kraken2_version, ""])
+    String kraken_docker = select_first([kraken2_raw.docker, kraken2_standalone.kraken2_docker, ""])
     Float? kraken_human = kraken2_raw.percent_human
     Float? kraken_sc2 = kraken2_raw.percent_sc2
     String? kraken_target_org = kraken2_raw.percent_target_org
-    File? kraken_report = kraken2_raw.kraken_report
+    File kraken_report = select_first([kraken2_raw.kraken_report, kraken2_standalone.kraken2_report, ""])
     String? kraken_target_org_name = target_org
    
     # trimming versioning

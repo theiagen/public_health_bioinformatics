@@ -488,6 +488,9 @@ workflow theiaprok_illumina_se {
             midas_primary_genus = read_QC_trim.midas_primary_genus,
             midas_secondary_genus = read_QC_trim.midas_secondary_genus,
             midas_secondary_genus_abundance = read_QC_trim.midas_secondary_genus_abundance,
+            kraken2_version = read_QC_trim.kraken_version,
+            kraken2_docker = read_QC_trim.kraken_docker,
+            kraken2_report = read_QC_trim.kraken_report,
             pasty_serogroup = merlin_magic.pasty_serogroup,
             pasty_serogroup_coverage = merlin_magic.pasty_serogroup_coverage,
             pasty_serogroup_fragments = merlin_magic.pasty_serogroup_fragments,
@@ -546,6 +549,10 @@ workflow theiaprok_illumina_se {
     String? midas_primary_genus = read_QC_trim.midas_primary_genus
     String? midas_secondary_genus = read_QC_trim.midas_secondary_genus
     Float? midas_secondary_genus_abundance = read_QC_trim.midas_secondary_genus_abundance
+    # Read QC - kraken outputs
+    String? kraken2_version = read_QC_trim.kraken_version
+    File? kraken2_report = read_QC_trim.kraken_report
+    String? kraken2_docker = read_QC_trim.kraken_docker
     #Assembly - shovill outputs
     File? assembly_fasta = shovill_se.assembly_fasta
     File? contigs_gfa = shovill_se.contigs_gfa
