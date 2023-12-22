@@ -128,8 +128,8 @@ workflow read_QC_trim_pe {
   }
   output {
     # NCBI scrubber and HOSTILE
-    File? read1_dehosted = select_first([ncbi_scrub_pe.read1_dehosted, hostile.read1_dehosted])
-    File? read2_dehosted = select_first([ncbi_scrub_pe.read2_dehosted, hostile.read2_dehosted])
+    String read1_dehosted = select_first([ncbi_scrub_pe.read1_dehosted, hostile.read1_dehosted, ""])
+    String read2_dehosted = select_first([ncbi_scrub_pe.read2_dehosted, hostile.read2_dehosted, ""])
     Int? ncbi_scrub_human_spots_removed = ncbi_scrub_pe.human_spots_removed
     String? ncbi_scrub_docker = ncbi_scrub_pe.ncbi_scrub_docker
     Int? hostile_human_reads_removed = hostile.human_reads_removed
