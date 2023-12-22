@@ -592,6 +592,10 @@ workflow theiaprok_illumina_pe {
     String? midas_primary_genus = read_QC_trim.midas_primary_genus
     String? midas_secondary_genus = read_QC_trim.midas_secondary_genus
     Float? midas_secondary_genus_abundance = read_QC_trim.midas_secondary_genus_abundance
+    # Read QC - kraken outputs
+    String? kraken2_version = read_QC_trim.kraken_version
+    File? kraken2_report = read_QC_trim.kraken_report
+    String? kraken2_docker = read_QC_trim.kraken_docker
     # Assembly - shovill outputs 
     File? assembly_fasta = shovill_pe.assembly_fasta
     File? contigs_gfa = shovill_pe.contigs_gfa
