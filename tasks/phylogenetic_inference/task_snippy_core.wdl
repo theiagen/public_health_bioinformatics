@@ -22,12 +22,10 @@ task snippy_core {
 
     # iteratively untar
     for i in ${tarball_array[@]}; do tar -xf $i ; done
-    ls
 
     # move csv file to a new directory to be globbed for concatenate variants task
     mkdir results_csvs
     for i in ${samplename_array[@]}; do mv $i/*.csv results_csvs ; done
-    ls results_csvs
 
     # run snippy core
     snippy-core \
