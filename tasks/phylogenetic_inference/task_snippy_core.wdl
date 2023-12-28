@@ -21,7 +21,13 @@ task snippy_core {
     samplename_array=(~{sep=" " samplenames})
 
     # iteratively untar
-    for i in ${tarball_array[@]}; do tar -xf $i; done
+    for i in ${tarball_array[@]}; do tar -xf $i ; done
+    ls
+
+    # move csv file to a new directory to be globbed for concatenate variants task
+    mkdir results_csvs
+    for i in ${samplename_array[@]}; do mv $i/*.csv results_csvs ; done
+    ls results_csvs
 
     # run snippy core
     snippy-core \
@@ -51,6 +57,7 @@ task snippy_core {
     File snippy_txt = "~{tree_name}_snps_summary.txt"
     File snippy_vcf = "~{tree_name}.vcf"
     String snippy_core_docker_image = docker
+    Array[File] snippy_variants_csv = glob("results_csvs/*.csv")
   }
   runtime {
     docker: "~{docker}"

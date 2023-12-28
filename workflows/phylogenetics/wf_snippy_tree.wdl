@@ -135,7 +135,7 @@ workflow snippy_tree_wf {
   if (call_concatenate_variants) {
     call concatenate_variants_task.concatenate_variants {
       input:
-        snippy_variants_results = snippy_variants_outdir_tarball, 
+        snippy_variants_results = snippy_core.snippy_variants_csv, 
         samplenames = samplenames,
         concatenated_file_name = tree_name
     }
