@@ -9,7 +9,7 @@ task version_capture {
     volatile: true
   }
   command {
-    PHB_Version="PHB v1.2.1: smw-tb-2023-10-25-dev branch"
+    PHB_Version="PHB v1.2.1"
     ~{default='' 'export TZ=' + timezone}
     date +"%Y-%m-%d" > TODAY
     echo "$PHB_Version" > PHB_VERSION
