@@ -62,6 +62,13 @@ workflow merlin_magic {
     Boolean call_shigeifinder_reads_input = false
     Boolean assembly_only = false
     Boolean theiaeuk = false
+    String? tbprofiler_mapper
+    Int? tbprofiler_min_depth
+    Float? tbprofiler_min_af
+    Float? tbprofiler_min_af_pred
+    Int? tbprofiler_cov_frac_threshold
+    String? tbprofiler_variant_caller
+    String? tbprofiler_variant_calling_params
     Boolean tbprofiler_run_custom_db = false
     File tbprofiler_custom_db = "gs://theiagen-public-files/terra/theiaprok-files/tbdb_varpipe_combined_nodups.tar.gz"
     Boolean tbprofiler_additional_outputs = false
@@ -252,7 +259,14 @@ workflow merlin_magic {
           samplename = samplename,
           tbprofiler_run_custom_db = tbprofiler_run_custom_db,
           tbprofiler_custom_db = tbprofiler_custom_db,
-          ont_data = ont_data
+          ont_data = ont_data,
+          mapper = tbprofiler_mapper,
+          variant_caller = tbprofiler_variant_caller,
+          variant_calling_params = tbprofiler_variant_calling_params,
+          min_depth = tbprofiler_min_depth,
+          min_af = tbprofiler_min_af,
+          min_af_pred = tbprofiler_min_af_pred,
+          cov_frac_threshold = tbprofiler_cov_frac_threshold
       }
       if (tbprofiler_additional_outputs) {
         call tbp_parser_task.tbp_parser {
@@ -580,6 +594,7 @@ workflow merlin_magic {
     File? tbprofiler_output_file = tbprofiler.tbprofiler_output_csv
     File? tbprofiler_output_bam = tbprofiler.tbprofiler_output_bam
     File? tbprofiler_output_bai = tbprofiler.tbprofiler_output_bai
+    File? tbprofiler_output_vcf = tbprofiler.tbprofiler_output_vcf
     String? tbprofiler_version = tbprofiler.version
     String? tbprofiler_main_lineage = tbprofiler.tbprofiler_main_lineage
     String? tbprofiler_sub_lineage = tbprofiler.tbprofiler_sub_lineage
