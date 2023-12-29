@@ -95,13 +95,13 @@ task snippy_variants {
     File snippy_variants_bam = "~{samplename}/~{samplename}.bam"
     File snippy_variants_bai ="~{samplename}/~{samplename}.bam.bai"
     File snippy_variants_summary = "~{samplename}/~{samplename}.txt"
-    Int snippy_variants_num_reads_aligned = read_string("READS_ALIGNED_TO_REFERENCE")
+    Int snippy_variants_num_reads_aligned = read_int("READS_ALIGNED_TO_REFERENCE")
     File snippy_variants_coverage_tsv = "~{samplename}/~{samplename}_coverage.tsv"
-    Int snippy_variants_num_variants = read_string("VARIANTS_TOTAL")
+    Int snippy_variants_num_variants = read_int("VARIANTS_TOTAL")
     File snippy_variants_depth = "~{samplename}/~{samplename}_depth.tsv"
-    Int snippy_variants_ref_length = read_string("REFERENCE_LENGTH")
-    Int snippy_variants_ref_length_passed_depth = read_string("REFERENCE_LENGTH_PASSED_DEPTH")
-    Float snippy_variants_percent_ref_coverage = read_string("PERCENT_PASSED_DEPTH_FILTER")
+    Int snippy_variants_ref_length = read_int("REFERENCE_LENGTH")
+    Int snippy_variants_ref_length_passed_depth = read_int("REFERENCE_LENGTH_PASSED_DEPTH")
+    Float snippy_variants_percent_ref_coverage = read_float("PERCENT_PASSED_DEPTH_FILTER")
   }
   runtime {
       docker: "~{docker}"

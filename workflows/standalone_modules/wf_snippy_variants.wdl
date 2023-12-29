@@ -64,11 +64,8 @@ workflow snippy_variants_wf {
     File snippy_variants_summary = snippy_variants.snippy_variants_summary
     File snippy_variants_outdir_tarball = snippy_variants.snippy_variants_outdir_tarball
     Int snippy_variants_num_reads_aligned = snippy_variants.snippy_variants_num_reads_aligned
-    Int snippy_variants_num_variants = snippy_variants.snippy_variants_num_variants
-    # File snippy_variants_depth = snippy_variants.snippy_variants_depth
     File snippy_variants_coverage_tsv = snippy_variants.snippy_variants_coverage_tsv
-    # Int snippy_variants_ref_length = snippy_variants.snippy_variants_ref_length
-    # Int snippy_variants_ref_length_passed_depth = snippy_variants.snippy_variants_ref_length_passed_depth
+    Int snippy_variants_num_variants = snippy_variants.snippy_variants_num_variants
     Float snippy_variants_percent_ref_coverage = snippy_variants.snippy_variants_percent_ref_coverage
     # snippy gene query outputs
     String? snippy_variants_query = snippy_gene_query.snippy_variants_query
