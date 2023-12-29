@@ -23,7 +23,7 @@ task czgenepi_wrangling {
 
     # setting columns
     String organism
-    Boolean is_private
+    Boolean is_private = true
 
     # runtime
     Int disk_size = 100
