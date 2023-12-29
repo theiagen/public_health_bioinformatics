@@ -16,6 +16,10 @@ task fetch_bs {
 
     String docker = "us-docker.pkg.dev/general-theiagen/theiagen/basespace_cli:1.2.1"
   }
+  meta {
+    # added so that call caching is always turned off
+    volatile: true
+  }
   command <<<
     # set basespace name and id variables
     if [[ ! -z "~{basespace_sample_id}" ]]; then

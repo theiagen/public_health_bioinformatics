@@ -3,6 +3,7 @@ version 1.0
 import "../utilities/wf_read_QC_trim_pe.wdl" as read_qc_wf
 import "../utilities/wf_metaspades_assembly.wdl" as metaspades_assembly_wf
 import "../../tasks/taxon_id/task_kraken2.wdl" as kraken_task
+import "../../tasks/taxon_id/task_krona.wdl" as krona_task
 import "../../tasks/alignment/task_minimap2.wdl" as minimap2_task
 import "../../tasks/utilities/task_parse_mapping.wdl" as parse_mapping_task
 import "../../tasks/quality_control/task_quast.wdl" as quast_task
@@ -30,6 +31,11 @@ workflow theiameta_illumina_pe {
       classified_out = "classified#.fastq",
       unclassified_out = "unclassified#.fastq"
   }
+  call krona_task.krona as krona_raw {
+    input:
+      kraken2_report = kraken2_raw.kraken2_report,
+      samplename = samplename
+  }
   call read_qc_wf.read_QC_trim_pe as read_QC_trim {
       input:
         samplename = samplename,
@@ -46,6 +52,11 @@ workflow theiameta_illumina_pe {
       kraken2_args = "",
       classified_out = "classified#.fastq",
       unclassified_out = "unclassified#.fastq"
+  }
+  call krona_task.krona as krona_clean {
+    input:
+      kraken2_report = kraken2_clean.kraken2_report,
+      samplename = samplename
   }
   call metaspades_assembly_wf.metaspades_assembly_pe as metaspades {
     input:
@@ -134,6 +145,11 @@ workflow theiameta_illumina_pe {
     Float kraken2_percent_human_raw = kraken2_raw.kraken2_percent_human
     File kraken2_report_clean = kraken2_clean.kraken2_report
     Float kraken2_percent_human_clean = kraken2_clean.kraken2_percent_human
+    # Krona outputs
+    String krona_version = krona_raw.krona_version
+    String krona_docker = krona_raw.krona_docker
+    File krona_html_raw = krona_raw.krona_html
+    File krona_html_clean = krona_clean.krona_html
     # Read QC - dehosting outputs
     File? read1_dehosted = read_QC_trim.read1_dehosted
     File? read2_dehosted = read_QC_trim.read2_dehosted

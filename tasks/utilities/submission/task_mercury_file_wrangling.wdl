@@ -19,12 +19,16 @@ task sm_metadata_wrangling { # the sm stands for supermassive
     Boolean usa_territory = false # only for SC2; uses territory name (in state column) for country in GISAID submissions 
     Int disk_size = 100
   }
+  meta {
+    # added so that call caching is always turned off
+    volatile: true
+  }
   command <<<
     # when running on terra, comment out all input_table mentions
     python3 /scripts/export_large_tsv/export_large_tsv.py --project "~{project_name}" --workspace "~{workspace_name}" --entity_type ~{table_name} --tsv_filename ~{table_name}-data.tsv
     
     # when running locally, use the input_table in place of downloading from Terra
-    #cp ~{input_table} ~{table_name}-data.tsv
+    #cp -v ~{input_table} ~{table_name}-data.tsv
 
     # transform boolean skip_county into string for python comparison
     if ~{skip_county}; then
@@ -141,16 +145,16 @@ task sm_metadata_wrangling { # the sm stands for supermassive
       for index, row in table.iterrows():
         if ("VADR skipped due to poor assembly") in str(row["vadr_num_alerts"]):
           notification = "VADR skipped due to poor assembly"
-          quality_exclusion = quality_exclusion.append({"sample_name": row["~{table_name}_id".lower()], "message": notification}, ignore_index=True)
+          quality_exclusion = pd.concat([quality_exclusion, pd.Series({"sample_name": row["~{table_name}_id".lower()], "message": notification}).to_frame().T], ignore_index=True)
         elif int(row["vadr_num_alerts"]) > ~{vadr_alert_limit}:
           notification = "VADR number alerts too high: " + str(row["vadr_num_alerts"]) + " greater than limit of " + str(~{vadr_alert_limit})
-          quality_exclusion = quality_exclusion.append({"sample_name": row["~{table_name}_id".lower()], "message": notification}, ignore_index=True)
+          quality_exclusion = pd.concat([quality_exclusion, pd.Series({"sample_name": row["~{table_name}_id".lower()], "message": notification}).to_frame().T], ignore_index=True)
         elif int(row["number_n"]) > ~{number_N_threshold}:
           notification="Number of Ns was too high: " + str(row["number_n"]) + " greater than limit of " + str(~{number_N_threshold})
-          quality_exclusion = quality_exclusion.append({"sample_name": row["~{table_name}_id".lower()], "message": notification}, ignore_index=True)
+          quality_exclusion = pd.concat([quality_exclusion, pd.Series({"sample_name": row["~{table_name}_id".lower()], "message": notification}).to_frame().T], ignore_index=True)
         if pd.isna(row["year"]):
           notification="The collection date format was incorrect"
-          quality_exclusion = quality_exclusion.append({"sample_name": row["~{table_name}_id".lower()], "message": notification}, ignore_index=True)
+          quality_exclusion = pd.concat([quality_exclusion, pd.Series({"sample_name": row["~{table_name}_id".lower()], "message": notification}).to_frame().T], ignore_index=True)
 
       with open("~{output_name}_excluded_samples.tsv", "w") as exclusions:
         exclusions.write("Samples excluded for quality thresholds:\n")
@@ -229,12 +233,12 @@ task sm_metadata_wrangling { # the sm stands for supermassive
 
         # prettify the filenames and rename them to be sra compatible; write out copy commands to a file to rename and move later
         sra_metadata["filename"] = sra_metadata["sample_name"] + "_R1.fastq.gz"
-        sra_metadata["copy_command_r1"] = "gsutil -m cp " + sra_metadata[read1_column_name] + " " + "~{gcp_bucket_uri}" + "/" + sra_metadata["filename"]
+        sra_metadata["copy_command_r1"] = "gcloud storage cp " + sra_metadata[read1_column_name] + " " + "~{gcp_bucket_uri}" + "/" + sra_metadata["filename"]
         sra_metadata["copy_command_r1"].to_csv("sra-file-transfer.sh", index=False, header=False)
         sra_metadata.drop(["copy_command_r1", read1_column_name], axis=1, inplace=True)
-        if read2_column_name in table.columns: # enable optional single end submission
+        if read2_column_name in table.columns and os.environ["using_clearlabs_data"] == "false" and os.environ["using_reads_dehosted"] == "false": # enable optional single end submission
           sra_metadata["filename2"] = sra_metadata["sample_name"] + "_R2.fastq.gz"
-          sra_metadata["copy_command_r2"] = "gsutil -m cp " + sra_metadata[read2_column_name] + " " + "~{gcp_bucket_uri}" + "/" + sra_metadata["filename2"]
+          sra_metadata["copy_command_r2"] = "gcloud storage cp " + sra_metadata[read2_column_name] + " " + "~{gcp_bucket_uri}" + "/" + sra_metadata["filename2"]
           sra_metadata["copy_command_r2"].to_csv("sra-file-transfer.sh", mode='a', index=False, header=False)
           sra_metadata.drop(["copy_command_r2", read2_column_name], axis=1, inplace=True)
 
@@ -252,7 +256,7 @@ task sm_metadata_wrangling { # the sm stands for supermassive
         genbank_metadata.rename(columns={"submission_id" : "Sequence_ID", "host_sci_name" : "host", "collection_date" : "collection-date", "isolation_source" : "isolation-source", "biosample_accession" : "BioSample", "bioproject_accession" : "BioProject"}, inplace=True)
 
         # prep for file manipulation and manuevering 
-        genbank_metadata["cp"] = "gsutil cp"
+        genbank_metadata["cp"] = "gcloud storage cp"
         genbank_metadata["fn"] = genbank_metadata["Sequence_ID"] + "_genbank_untrimmed.fasta"
         genbank_metadata.to_csv("genbank-file-transfer.sh", sep=' ', header=False, index=False, columns = ["cp", assembly_fasta_column_name, "fn"], quoting=csv.QUOTE_NONE, escapechar=" ")
         genbank_metadata.drop(["cp", assembly_fasta_column_name], axis=1, inplace=True)
@@ -316,7 +320,7 @@ task sm_metadata_wrangling { # the sm stands for supermassive
       gisaid_metadata.drop("submission_id", axis=1, inplace=True)
 
       # write out the command to rename the assembly files to a file for bash to move about
-      gisaid_metadata["cp"] = "gsutil cp"
+      gisaid_metadata["cp"] = "gcloud storage cp"
       gisaid_metadata.to_csv("gisaid-file-transfer.sh", sep=' ', header=False, index=False, columns = ["cp", assembly_fasta_column_name, "fn"], quoting=csv.QUOTE_NONE, escapechar=" ")
       gisaid_metadata.drop(["cp", assembly_fasta_column_name], axis=1, inplace=True)
 
@@ -345,7 +349,7 @@ task sm_metadata_wrangling { # the sm stands for supermassive
       for index, row in table.iterrows():
         if pd.isna(row["year"]):
           notification="The collection date format was incorrect."
-          quality_exclusion = quality_exclusion.append({"sample_name": row["~{table_name}_id".lower()], "message": notification}, ignore_index=True)
+          quality_exclusion = pd.concat([quality_exclusion, pd.Series({"sample_name": row["~{table_name}_id".lower()], "message": notification}).to_frame().T], ignore_index=True)
 
       with open("~{output_name}_excluded_samples.tsv", "w") as exclusions:
         exclusions.write("Samples excluded for bad collection_date format:\n")
@@ -416,12 +420,12 @@ task sm_metadata_wrangling { # the sm stands for supermassive
         
         # prettify the filenames and rename them to be sra compatible
         sra_metadata["filename"] = sra_metadata["sample_name"] + "_R1.fastq.gz"
-        sra_metadata["copy_command_r1"] = "gsutil -m cp " + sra_metadata[read1_column_name] + " " + "~{gcp_bucket_uri}" + "/" + sra_metadata["filename"]
+        sra_metadata["copy_command_r1"] = "gcloud storage cp " + sra_metadata[read1_column_name] + " " + "~{gcp_bucket_uri}" + "/" + sra_metadata["filename"]
         sra_metadata["copy_command_r1"].to_csv("sra-file-transfer.sh", index=False, header=False)
         sra_metadata.drop(["copy_command_r1", read1_column_name], axis=1, inplace=True)
         if read2_column_name in table.columns: # enable optional single end submission
           sra_metadata["filename2"] = sra_metadata["sample_name"] + "_R2.fastq.gz"
-          sra_metadata["copy_command_r2"] = "gsutil -m cp " + sra_metadata[read2_column_name] + " " + "~{gcp_bucket_uri}" + "/" + sra_metadata["filename2"]
+          sra_metadata["copy_command_r2"] = "gcloud storage cp " + sra_metadata[read2_column_name] + " " + "~{gcp_bucket_uri}" + "/" + sra_metadata["filename2"]
           sra_metadata["copy_command_r2"].to_csv("sra-file-transfer.sh", mode='a', index=False, header=False)
           sra_metadata.drop(["copy_command_r2", read2_column_name], axis=1, inplace=True)
 
@@ -437,7 +441,7 @@ task sm_metadata_wrangling { # the sm stands for supermassive
             bankit_metadata[column] = ""
         bankit_metadata.rename(columns={"submission_id" : "Sequence_ID", "isolate" : "Isolate", "collection_date" : "Collection_date", "country" : "Country", "host" : "Host", "isolation_source" : "Isolation_source"}, inplace=True)
 
-        bankit_metadata["cp"] = "gsutil cp"
+        bankit_metadata["cp"] = "gcloud storage cp"
         bankit_metadata["fn"] = bankit_metadata["Sequence_ID"] + "_bankit.fasta"
         bankit_metadata.to_csv("bankit-file-transfer.sh", sep=' ', header=False, index=False, columns = ["cp", assembly_fasta_column_name, "fn"], quoting=csv.QUOTE_NONE, escapechar=" ")
         bankit_metadata.drop(["cp", assembly_fasta_column_name], axis=1, inplace=True)
@@ -479,7 +483,7 @@ task sm_metadata_wrangling { # the sm stands for supermassive
       gisaid_metadata.drop("submission_id", axis=1, inplace=True)
 
       # write out the command to rename the assembly files to a file for bash to move about
-      gisaid_metadata["cp"] = "gsutil cp"
+      gisaid_metadata["cp"] = "gcloud storage cp"
       gisaid_metadata.to_csv("gisaid-file-transfer.sh", sep=' ', header=False, index=False, columns = ["cp", "assembly_fasta", "fn"], quoting=csv.QUOTE_NONE, escapechar=" ")
       gisaid_metadata.drop(["cp", "assembly_fasta"], axis=1, inplace=True)
 
@@ -513,9 +517,6 @@ task sm_metadata_wrangling { # the sm stands for supermassive
 
     echo "DEBUG: performing file transfers and manipulations"
      
-    # this version of gsutil only works on python2.7
-    export CLOUDSDK_PYTHON=python2.7
-
     if ~{skip_ncbi}; then
       echo "Skipping NCBI file manipulations..."
     else
@@ -541,7 +542,10 @@ task sm_metadata_wrangling { # the sm stands for supermassive
     bash gisaid-fasta-manipulation.sh
     cat *_gisaid.fasta > ~{output_name}_gisaid.fasta
 
-    unset CLOUDSDK_PYTHON   # reset env var
+
+    # print the excluded samples file
+    echo "DEBUG: printing excluded samples file"
+    cat ~{output_name}_excluded_samples.tsv
 
   >>>
   output {
@@ -556,7 +560,7 @@ task sm_metadata_wrangling { # the sm stands for supermassive
     File gisaid_fasta = "~{output_name}_gisaid.fasta"
   }
   runtime {
-    docker: "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-03-16"
+    docker: "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-08-28-v4"
     memory: "8 GB"
     cpu: 4
     disks:  "local-disk " + disk_size + " SSD"
