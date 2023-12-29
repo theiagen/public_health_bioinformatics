@@ -43,10 +43,10 @@ task ksnp3_shared_snps {
     data_core = data[data['num_dots'] == 0].drop(columns='num_dots')
 
     # Convert the values in selected columns to numeric 
-    data_core[columns_to_sum] = data_core[columns_to_sum].apply(pd.to_numeric, errors='coerce')
+    data_core[sample_columns] = data_core[sample_columns].apply(pd.to_numeric, errors='coerce')
 
     # Sum values by row after the 'FORMAT' column
-    data_core['Row_Sum'] = data_core[columns_to_sum].sum(axis=1)
+    data_core['Row_Sum'] = data_core[sample_columns].sum(axis=1)
 
     # Sort DataFrame by the 'Row_Sum' column in descending order
     sorted_data_core = data_core.sort_values(by='Row_Sum', ascending=False).drop(columns='Row_Sum')
