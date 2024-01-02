@@ -562,7 +562,7 @@
     - path: miniwdl_run/wdl/tasks/gene_typing/task_resfinder.wdl
       md5sum: 27528633723303b462d095b642649453
     - path: miniwdl_run/wdl/tasks/gene_typing/task_snippy_variants.wdl
-      md5sum: aa64dd74fbab8bb9abc0b2c3cdd739e3
+      md5sum: d770220e17c6eb5391b94c2d2365060c
     - path: miniwdl_run/wdl/tasks/quality_control/task_bbduk.wdl
       md5sum: 90e49f4e4568393cf8d1f8720a4772ad
     - path: miniwdl_run/wdl/tasks/quality_control/task_busco.wdl
