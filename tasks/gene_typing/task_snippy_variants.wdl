@@ -81,8 +81,14 @@ task snippy_variants {
     # compute proportion of genome with depth >= min_cov
     reference_length_passed_depth=$(cat "~{samplename}/~{samplename}_depth_${min_cov}.tsv" | wc -l)
     echo $reference_length_passed_depth | tee REFERENCE_LENGTH_PASSED_DEPTH
-    
-    echo $reference_length_passed_depth $reference_length | awk '{ print ($1/$2)*100 }' > PERCENT_PASSED_DEPTH_FILTER
+
+    # check if reference_length is equal to 0, if so, output a warning
+    if [ "$reference_length" -eq 0 ]; then
+      echo "Could not compute percent reference coverage: reference length is 0" > PERCENT_REF_COVERAGE
+    else
+      # compute percent reference coverage
+      echo $reference_length_passed_depth $reference_length | awk '{ print ($1/$2)*100 }' > PERCENT_REF_COVERAGE
+    fi
 
   >>>
   output {
@@ -101,7 +107,7 @@ task snippy_variants {
     File snippy_variants_depth = "~{samplename}/~{samplename}_depth.tsv"
     String snippy_variants_ref_length = read_string("REFERENCE_LENGTH")
     String snippy_variants_ref_length_passed_depth = read_string("REFERENCE_LENGTH_PASSED_DEPTH")
-    String snippy_variants_percent_ref_coverage = read_string("PERCENT_PASSED_DEPTH_FILTER")
+    String snippy_variants_percent_ref_coverage = read_string("PERCENT_REF_COVERAGE")
   }
   runtime {
       docker: "~{docker}"
