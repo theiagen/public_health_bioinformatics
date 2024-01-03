@@ -1,8 +1,8 @@
 version 1.0
 
-import "../../../tasks/utilities/task_file_handling.wdl" as file_handling
-import "../../../tasks/phylogenetic_inference/task_shared_variants.wdl" as shared_variants_task
-import "../../../tasks/task_versioning.wdl" as versioning
+import "../../tasks/utilities/task_file_handling.wdl" as file_handling
+import "../../tasks/phylogenetic_inference/task_shared_variants.wdl" as shared_variants_task
+import "../../tasks/task_versioning.wdl" as versioning
 
 workflow shared_variants_wf {
   meta {
