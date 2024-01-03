@@ -3,31 +3,61 @@ version 1.0
 task cat_files {
   input {
     Array[File] files_to_cat
+    Array[String]? samplenames
     String concatenated_file_name
     String docker_image = "us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1"
     Boolean skip_extra_headers = false
+    Boolean concatenate_variants = false
   }
   meta {
     # added so that call caching is always turned off
     volatile: true
   }
   command <<<
+
     file_array=(~{sep=' ' files_to_cat})
+    file_array_len=$(echo "${#file_array[@]}")
+    samplename_array=(~{sep=' ' samplenames})
+    samplename_array_len=$(echo "${#samplename_array[@]}")
+    
     touch ~{concatenated_file_name}
 
-    # cat files one by one and store them in the concatenated_files file
-    for index in ${!file_array[@]}; do
-      file=${file_array[$index]}
-      if ! ~{skip_extra_headers} ; then # act as if the first line of all files is not a header
-        cat ${file} >> ~{concatenated_file_name}
-      else # you want to skip the first line of all files except the first one
-        if [ $index == 0 ]; then # if its the first file, cat the entire thing
+    # Ensure file, and samplename arrays are of equal length
+    if [ "$file_array_len" -ne "$samplename_array_len" ]; then
+      echo "File array (length: $file_array_len) and samplename array (length: $samplename_array_len) are of unequal length." >&2
+      exit 1
+    fi
+
+    if ! ~{concatenate_variants} ; then
+      # cat files one by one and store them in the concatenated_files file, samplename will not be added as a column
+      for index in ${!file_array[@]}; do
+        file=${file_array[$index]}
+        if ! ~{skip_extra_headers} ; then # act as if the first line of all files is not a header
           cat ${file} >> ~{concatenated_file_name}
-        else # otherwise, skip the first line
-          tail -n +2 ${file} >> ~{concatenated_file_name}
+        else # you want to skip the first line of all files except the first one
+          if [ $index == 0 ]; then # if its the first file, cat the entire thing
+            cat ${file} >> ~{concatenated_file_name}
+          else # otherwise, skip the first line
+            tail -n +2 ${file} >> ~{concatenated_file_name}
+          fi
         fi
-      fi
-    done
+      done
+    else
+      # cat files one by one and store them in the concatenated_files file, but with an additional column indicating samplename
+      for index in ${!file_array[@]}; do
+        file=${file_array[$index]}
+        samplename=${samplename_array[$index]}
+        # create a new column with "samplename" as the column name and the samplename as the column content, combine with rest of file
+        if [ "$index" -eq "0" ]; then
+          # if first cloumn, add header
+          awk -v var=$samplename 'BEGIN{ FS = OFS = "," } { print (NR==1? "samplename" : var), $0 }' $file > file.tmp
+          cat file.tmp >> ~{concatenated_file_name}_concatenated_snps.csv
+        else
+          tail -n +2 $file | awk -v var=$samplename 'BEGIN{ FS = OFS = "," } { print var, $0 }' > file.tmp
+          cat file.tmp >> ~{concatenated_file_name}_concatenated_snps.csv  
+        fi
+      done
+    fi
   >>>
   output {
     File concatenated_files = "~{concatenated_file_name}"

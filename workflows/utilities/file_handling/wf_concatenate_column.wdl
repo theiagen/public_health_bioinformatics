@@ -6,11 +6,13 @@ import "../../../tasks/task_versioning.wdl" as versioning
 workflow concatenate_column_content {
   input {
     Array[File] files_to_cat
+    Array[String]? samplenames
     String concatenated_file_name
   }
   call file_handling.cat_files {
     input:
       files_to_cat = files_to_cat,
+      samplenames = samplenames,
       concatenated_file_name = concatenated_file_name
   }
   call versioning.version_capture {
