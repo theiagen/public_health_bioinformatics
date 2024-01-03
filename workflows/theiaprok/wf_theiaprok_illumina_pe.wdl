@@ -84,7 +84,8 @@ workflow theiaprok_illumina_pe {
         read2_raw = read2_raw,
         trim_minlen = trim_minlen,
         trim_quality_trim_score = trim_quality_trim_score,
-        trim_window_size = trim_window_size
+        trim_window_size = trim_window_size,
+        workflow_series = "theiaprok"
 
     }
     call screen.check_reads as clean_check_reads {
