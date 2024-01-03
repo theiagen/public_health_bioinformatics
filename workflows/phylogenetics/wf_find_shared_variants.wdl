@@ -17,7 +17,8 @@ workflow shared_variants_wf {
     input:
       files_to_cat = files_to_cat,
       samplenames = samplenames,
-      concatenated_file_name = concatenated_file_name
+      concatenated_file_name = concatenated_file_name,
+      concatenate_variants = true
   }
   call shared_variants_task.shared_variants {
     input:
