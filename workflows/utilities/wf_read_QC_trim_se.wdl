@@ -110,7 +110,7 @@ workflow read_QC_trim_se {
     Float? kraken_human = kraken2_raw.percent_human
     Float? kraken_sc2 = kraken2_raw.percent_sc2
     String? kraken_target_org = kraken2_raw.percent_target_org
-    File kraken_report = select_first([kraken2_raw.kraken_report, kraken2_standalone.kraken2_report, ""])
+    String kraken_report = select_first([kraken2_raw.kraken_report, kraken2_standalone.kraken2_report, ""])
     String? kraken_target_org_name = target_org
    
     # trimming versioning
