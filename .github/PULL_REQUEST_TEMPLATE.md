@@ -56,7 +56,7 @@ If the whole test dataset was not used, please specify which samples were tested
 #### Version Release Testing
 <!-- 
 -Will changes require functional or validation testing during the release?
--Do new samples need to be added to validation datasets? If so, please specify which samples should be added
+-Do new samples need to be added to validation datasets here: https://app.terra.bio/#workspaces/theiagen-validations/PHB_Validation_TEMPLATE? If so, please specify which samples should be added
 -Are there any output files that should be checked after running the version release testing?
 -->
 
