@@ -13,6 +13,7 @@ import "../../tasks/gene_typing/task_abricate.wdl" as abricate
 import "../../tasks/gene_typing/task_sc2_gene_coverage.wdl" as sc2_calculation
 import "../../tasks/quality_control/task_qc_check_phb.wdl" as qc_check
 import "../../tasks/task_versioning.wdl" as versioning
+import "../../workflows/utilities/wf_influenza_antiviral_substitutions.wdl" as flu_antiviral
 
 workflow theiacov_illumina_pe {
   meta {
@@ -64,7 +65,7 @@ workflow theiacov_illumina_pe {
     Boolean skip_screen = false
     # qc check parameters
     File? qc_check_table
-  }
+     }
   call screen.check_reads as raw_check_reads {
     input:
       read1 = read1_raw,
@@ -193,6 +194,18 @@ workflow theiacov_illumina_pe {
         String ha_na_nextclade_ds_tag= "~{abricate_flu.nextclade_ds_tag_ha + ',' + abricate_flu.nextclade_ds_tag_na}"
         String ha_na_nextclade_aa_subs= "~{nextclade_output_parser.nextclade_aa_subs + ',' + nextclade_output_parser_flu_na.nextclade_aa_subs}"
         String ha_na_nextclade_aa_dels= "~{nextclade_output_parser.nextclade_aa_dels + ',' + nextclade_output_parser_flu_na.nextclade_aa_dels}"
+      }
+      if (organism == "flu") {
+        call flu_antiviral.flu_antiviral_substitutions {
+          input:
+            na_segment_assembly = irma.seg_na_assembly,
+            ha_segment_assembly = irma.seg_ha_assembly,
+            pa_segment_assembly = irma.seg_pa_assembly,
+            pb1_segment_assembly = irma.seg_pb1_assembly,
+            pb2_segment_assembly = irma.seg_pb2_assembly,
+            abricate_flu_subtype = select_first([abricate_flu.abricate_flu_subtype, ""]),
+            irma_flu_subtype = select_first([irma.irma_subtype, ""]),
+        }
       }
       if (organism == "sars-cov-2") {
         # sars-cov-2 specific tasks
@@ -365,6 +378,7 @@ workflow theiacov_illumina_pe {
     String nextclade_aa_dels = select_first([ha_na_nextclade_aa_dels, nextclade_output_parser.nextclade_aa_dels, ""])
     String nextclade_clade = select_first([nextclade_output_parser.nextclade_clade, ""])
     String? nextclade_lineage = nextclade_output_parser.nextclade_lineage
+    String? nextclade_qc = nextclade_output_parser.nextclade_qc
     # Nextclade Flu outputs - NA specific columns - tamiflu mutation
     String? nextclade_tamiflu_resistance_aa_subs = nextclade_output_parser_flu_na.nextclade_tamiflu_aa_subs
     # VADR Annotation QC
@@ -372,7 +386,7 @@ workflow theiacov_illumina_pe {
     String? vadr_num_alerts = vadr.num_alerts
     String? vadr_docker = vadr.vadr_docker
     File? vadr_fastas_zip_archive = vadr.vadr_fastas_zip_archive
-    # Flu Outputs
+    # Flu IRMA and Abricate Outputs
     String? irma_version = irma.irma_version
     String? irma_type = irma.irma_type
     String? irma_subtype = irma.irma_subtype
@@ -383,6 +397,18 @@ workflow theiacov_illumina_pe {
     File? abricate_flu_results = abricate_flu.abricate_flu_results
     String? abricate_flu_database =  abricate_flu.abricate_flu_database
     String? abricate_flu_version = abricate_flu.abricate_flu_version
+    # Flu Antiviral Substitution Outputs
+    String? flu_A_315675_resistance = flu_antiviral_substitutions.flu_A_315675_resistance
+    String? flu_compound_367_resistance = flu_antiviral_substitutions.flu_compound_367_resistance
+    String? flu_favipiravir_resistance = flu_antiviral_substitutions.flu_favipiravir_resistance
+    String? flu_fludase_resistance = flu_antiviral_substitutions.flu_fludase_resistance
+    String? flu_L_742_001_resistance = flu_antiviral_substitutions.flu_L_742_001_resistance
+    String? flu_laninamivir_resistance = flu_antiviral_substitutions.flu_laninamivir_resistance
+    String? flu_peramivir_resistance = flu_antiviral_substitutions.flu_peramivir_resistance
+    String? flu_pimodivir_resistance = flu_antiviral_substitutions.flu_pimodivir_resistance
+    String? flu_tamiflu_resistance = flu_antiviral_substitutions.flu_tamiflu_resistance
+    String? flu_xofluza_resistance = flu_antiviral_substitutions.flu_xofluza_resistance
+    String? flu_zanamivir_resistance = flu_antiviral_substitutions.flu_zanamivir_resistance
     # HIV Outputs
     String? quasitools_version = quasitools_illumina_pe.quasitools_version
     String? quasitools_date = quasitools_illumina_pe.quasitools_date
@@ -393,5 +419,6 @@ workflow theiacov_illumina_pe {
     # QC_Check Results
     String? qc_check = qc_check_task.qc_check
     File? qc_standard = qc_check_task.qc_standard
+ 
   }
 }
