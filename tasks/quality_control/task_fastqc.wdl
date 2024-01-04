@@ -75,9 +75,7 @@ task fastqc_se {
   command <<<
       # get fastqc version
     fastqc --version | tee VERSION
-
-    touch READ2_SEQS
-    
+        
     # run fastqc: 
     # --extract: uncompress output files
     fastqc \
