@@ -1,14 +1,8 @@
 <!--
-Thank you for contributing to Theiagen's Public Health Bioinformatics repository!
-Please fill in the appropriate checklist below and delete whatever is not relevant.
+Thank you for contributing to Theiagen's Public Health Bioinformatics repository! 
 
-Please replace all '[ ]' with '[X]' to demonstrate completion.
-
-Please amend all text within '<>' as appropriate. 
-
-Documentation on how to contribute can be found at https://github.com/theiagen/public_health_bioinformatics#contributing-to-the-phb-workflows
+Please ensure your contributions are formatted in line with or style guide found here: https://github.com/theiagen/public_health_bioinformatics#contributing-to-the-phb-workflows and follow the instructions with <>  to complete this PR.
 -->
-
 
 
 This PR closes issue #<Issue number>.
