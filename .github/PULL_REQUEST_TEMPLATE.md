@@ -11,7 +11,7 @@ Documentation on how to contribute can be found at https://github.com/theiagen/p
 
 
 
-This PR closes issue <Issue #>.
+This PR closes issue #<Issue number>.
 
 🗑️ This dev branch should <NOT> be deleted after merging to main.
 
