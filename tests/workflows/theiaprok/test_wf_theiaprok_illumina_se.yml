@@ -600,10 +600,10 @@
     - path: miniwdl_run/wdl/tasks/utilities/task_broad_terra_tools.wdl
       md5sum: 4106837e51f6445e02776e0a74606ed5
     - path: miniwdl_run/wdl/workflows/theiaprok/wf_theiaprok_illumina_se.wdl
-      md5sum: e2fbc89ced1fd8e44106e8c12dd9c129
+      md5sum: 7cd0a0f7076eecc82b1d66dc28366b2c
     - path: miniwdl_run/wdl/workflows/utilities/wf_merlin_magic.wdl
       md5sum: 90eb6ac7463058a81da77120aa45138b
     - path: miniwdl_run/wdl/workflows/utilities/wf_read_QC_trim_se.wdl
-      md5sum: 53d322d895837c0bcb049786572e944d
+      md5sum: 0bb7412f295f5a975ffece43c7263d4c
     - path: miniwdl_run/workflow.log
       contains: ["wdl", "theiaprok_illumina_se", "NOTICE", "done"]
