@@ -28,7 +28,22 @@ task cat_files {
       exit 1
     fi
 
-    if ! ~{concatenate_variants} ; then
+    if [ "~{concatenate_variants}" = true ] ; then
+      # cat files one by one and store them in the concatenated_files file, but with an additional column indicating samplename
+      for index in ${!file_array[@]}; do
+        file=${file_array[$index]}
+        samplename=${samplename_array[$index]}
+        # create a new column with "samplename" as the column name and the samplename as the column content, combine with rest of file
+        if [ "$index" -eq "0" ]; then
+          # if first cloumn, add header
+          awk -v var=$samplename 'BEGIN{ FS = OFS = "," } { print (NR==1? "samplename" : var), $0 }' $file > file.tmp
+          cat file.tmp >> ~{concatenated_file_name}
+        else
+          tail -n +2 $file | awk -v var=$samplename 'BEGIN{ FS = OFS = "," } { print var, $0 }' > file.tmp
+          cat file.tmp >> ~{concatenated_file_name}
+        fi
+      done
+    else
       # cat files one by one and store them in the concatenated_files file, samplename will not be added as a column
       for index in ${!file_array[@]}; do
         file=${file_array[$index]}
@@ -40,21 +55,6 @@ task cat_files {
           else # otherwise, skip the first line
             tail -n +2 ${file} >> ~{concatenated_file_name}
           fi
-        fi
-      done
-    else
-      # cat files one by one and store them in the concatenated_files file, but with an additional column indicating samplename
-      for index in ${!file_array[@]}; do
-        file=${file_array[$index]}
-        samplename=${samplename_array[$index]}
-        # create a new column with "samplename" as the column name and the samplename as the column content, combine with rest of file
-        if [ "$index" -eq "0" ]; then
-          # if first cloumn, add header
-          awk -v var=$samplename 'BEGIN{ FS = OFS = "," } { print (NR==1? "samplename" : var), $0 }' $file > file.tmp
-          cat file.tmp >> ~{concatenated_file_name}_concatenated_snps.csv
-        else
-          tail -n +2 $file | awk -v var=$samplename 'BEGIN{ FS = OFS = "," } { print var, $0 }' > file.tmp
-          cat file.tmp >> ~{concatenated_file_name}_concatenated_snps.csv  
         fi
       done
     fi
