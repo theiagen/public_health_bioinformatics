@@ -138,7 +138,8 @@ workflow snippy_tree_wf {
       input:
         files_to_cat = snippy_core.snippy_variants_csv, 
         samplenames = samplenames,
-        concatenated_file_name = tree_name
+        concatenated_file_name = tree_name,
+        concatenate_variants = true
     }
     call shared_variants_task.shared_variants {
       input:
