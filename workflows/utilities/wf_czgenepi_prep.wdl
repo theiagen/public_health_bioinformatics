@@ -25,10 +25,12 @@ workflow czgenepi_prep {
     String county_column_name = "county"
 
     # optional columns
-    String gisaid_id_column_name = "gisaid_accession"
     String genbank_accession_column_name = "genbank_accession"
     String sequencing_date_column_name = "sequencing_date"
-    String sample_is_private_column_name = "sample_is_private"
+
+    # setting columns
+    String organism = "sars-cov-2" # options "sars-cov-2" or "mpox"
+    Boolean is_private = true
   }
   call versioning.version_capture{
     input:
@@ -51,10 +53,10 @@ workflow czgenepi_prep {
       country_column_name = country_column_name,
       state_column_name = state_column_name,
       county_column_name = county_column_name,
-      gisaid_id_column_name = gisaid_id_column_name,
       genbank_accession_column_name = genbank_accession_column_name,
       sequencing_date_column_name = sequencing_date_column_name,
-      sample_is_private_column_name = sample_is_private_column_name
+      organism = organism,
+      is_private = is_private
   }
   output {
     File concatenated_czgenepi_fasta = czgenepi_wrangling.concatenated_fasta
