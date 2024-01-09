@@ -397,7 +397,7 @@ workflow theiacov_illumina_pe {
     String? flu_peramivir_resistance = flu_antiviral_substitutions.flu_peramivir_resistance
     String? flu_pimodivir_resistance = flu_antiviral_substitutions.flu_pimodivir_resistance
     String? flu_rimantadine_resistance = flu_antiviral_substitutions.flu_rimantadine_resistance
-    String? flu_tamiflu_resistance = flu_antiviral_substitutions.flu_tamiflu_resistance
+    String? flu_oseltamivir_resistance = flu_antiviral_substitutions.flu_oseltamivir_resistance
     String? flu_xofluza_resistance = flu_antiviral_substitutions.flu_xofluza_resistance
     String? flu_zanamivir_resistance = flu_antiviral_substitutions.flu_zanamivir_resistance
     # HIV Outputs
