@@ -10,21 +10,21 @@ This PR closes issue #<Issue number>.
 
 🗑️ This dev branch should <NOT> be deleted after merging to main.
 
-### :brain: Aim, Context and Functionality
+## :brain: Aim, Context and Functionality
 <!--Please describe the aim of this PR, why the changes were made, and how the workflow should now function -->
 
-### :hammer_and_wrench:  Impacted Workflows/Tasks & Changes Being Made
+## :hammer_and_wrench:  Impacted Workflows/Tasks & Changes Being Made
 <!--
 -Please use bullet points or headings to describe what is being added or modified to each impacted workflow or task, and the reasoning for those choices. 
 -Consider inserting before and after tables or pictures to demonstrate the consequences of the changes on files etc.
 -->
 
-### :clipboard: Workflow/Task Steps
+## :clipboard: Workflow/Task Steps
 This will affect users of the workflow(s) even if they don’t change any workflow inputs <!--  Delete as appropriate -->: Yes/No
 
 Running this workflow on different occasions could result in different results, e.g. due to use of a live database or "latest" docker image <!--  Delete as appropriate -->: Yes/No
 
-#### 🔄 Data Processing Changes
+#### 🔄 Data Processing Changes <!--  Indicate None when appropriate -->
 <!-- How are data processed differently through the steps of the task/workflow? Please fill out the sections below.-->
 Software or software versions changed: 
 
@@ -32,13 +32,13 @@ Databases or database versions changed:
 
 Data processing/commands changed:
 
-#### ➡️ Modified Inputs
+#### ➡️ Modified Inputs <!--  Indicate None when appropriate -->
 <!--Which inputs of the workflow/task have been added/removed/modified? How have these been modified, e.g input name, type, default parameters, acceptable input ranges etc?-->
 
-#### ⬅️ Modified Outputs
+#### ⬅️ Modified Outputs <!--  Indicate None when appropriate -->
 <!--Which outputs of the workflow/task have been added/removed/modified? How have these been modified, e.g. output variable name, output content, output type, file changes?-->
 
-### :test_tube: Testing
+## :test_tube: Testing <!--  Indicate each as NA when not applicable -->
 #### Test Dataset
 <!--Briefly describe what samples were used for testing, e.g. what organism/s, pathogen diversity, etc-->
 
@@ -66,4 +66,16 @@ If the whole test dataset was not used, please specify which samples were tested
 - The workflow/task has been tested on Terra and results, including file contents, are as anticipated: Yes/No
 - The CI/CD has been adjusted and tests are passing: Yes/No
 - Code changes follow the [style guide](https://theiagen.notion.site/Style-Guide-WDL-Workflow-Development-bb456f34322d4f4db699d4029050481c): Yes/No
-- Documentation on the "main" version of the Public Health Resources Page has been updated: Yes/No
+
+## 🎯 PR Review Checklist <!--  Indicate NA when not applicable  -->
+- [ ] All impacted workflows/tasks have been tested on Terra with a different dataset than used for development
+- [ ] All reviewer suggested scenarios have been tested
+- [ ] All changed results have been confirmed to be accurate
+- [ ] All workflows/tasks impacted by change/s have been tested using a standard validation dataset to ensure no unintended change of functionality
+- [ ] All code adheres to the style guide
+- [ ] MD5 sums have been updated
+- [ ] The PR author has addressed all comments
+
+## 🗂️ Associated Documentation <!--  Indicate NA when not applicable -->
+- [ ] Relevant documentation in "PHB Main" has been updated
+- [ ] Workflow diagrams have been updated to reflect changes
