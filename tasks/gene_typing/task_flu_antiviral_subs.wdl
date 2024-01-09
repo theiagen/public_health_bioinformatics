@@ -29,12 +29,12 @@ task aa_subs {
     reference_id="CY121686.1"
   elif [[ "~{protein_name}" == "PB2" ]] ; then
     reference_id="CY121687.1"
-  elif [[ "~{protein_name}" == "M2" && "~{subtype}" == "H1N1" ]] ; then
+  elif [[ "~{protein_name}" == "MP" && "~{subtype}" == "H1N1" ]] ; then
     reference_id="NC_026431.1"
-  elif [[ "~{protein_name}" == "M2" && "~{subtype}" == "H3N2" ]] ; then
+  elif [[ "~{protein_name}" == "MP" && "~{subtype}" == "H3N2" ]] ; then
     reference_id="NC_007367.1"
   else
-    echo "Please enter a valid protein name such as HA, NA, PA, PB1, PB2, or M2 and a valid subtype such as H1N1 or H3N2."
+    echo "Please enter a valid protein name such as HA, NA, PA, PB1, PB2, or MP and a valid subtype such as H1N1 or H3N2."
   fi
 
   python3 <<CODE
@@ -159,7 +159,7 @@ task antiviral_mutations_parser {
     A_315675_aa_subs = ["NA:A272V", "NA:D151E", "NA:D151N", "NA:E119D", "NA:E119G", "NA:E119V", "NA:H274Y", "NA:H275Y", "NA:N146K", "NA:Q136K", "NA:R150K", "NA:R152K", "NA:R289K", "NA:R292K", "NA:S219T", "NA:V116A"]
     A_315675_aa_subs = A_315675_aa_subs + "~{antiviral_aa_subs}".split(',')
 
-    amantadine_aa_subs = ["M2:L26F", "M2:L26I", "M2:V27A", "M2:A30S", "M2:A30T", "M2:S31N", "M2:G34E"]
+    amantadine_aa_subs = ["MP:L26F", "MP:L26I", "MP:V27A", "MP:A30S", "MP:A30T", "MP:S31N", "MP:G34E"]
     amantadine_aa_subs = amantadine_aa_subs + "~{antiviral_aa_subs}".split(',')
 
     compound_367_aa_subs = ["PB1:H456P"]
@@ -183,7 +183,7 @@ task antiviral_mutations_parser {
     pimodivir_aa_subs = ["PB2:Q306H", "PB2:S324I", "PB2:S324N", "PB2:S324R", "PB2:F404Y", "PB2:M431I", "PB2:N510T"]
     pimodivir_aa_subs = pimodivir_aa_subs + "~{antiviral_aa_subs}".split(',')
     
-    rimantadine_aa_subs = ["M2:L26F", "M2:L26I", "M2:V27A", "M2:A30S", "M2:A30T", "M2:S31N", "M2:G34E"]
+    rimantadine_aa_subs = ["MP:L26F", "MP:L26I", "MP:V27A", "MP:A30S", "MP:A30T", "MP:S31N", "MP:G34E"]
     rimantadine_aa_subs = rimantadine_aa_subs + "~{antiviral_aa_subs}".split(',')
 
     oseltamivir_aa_subs = ["HA:A28T", "HA:D222G", "HA:D225G", "HA:G155E", "HA:G158E", "HA:K130E", "HA:K133E", "HA:K134E", "HA:K140E", "HA:K144E", "HA:K153E", "HA:K156E", "HA:K234Q", "HA:K238Q", "HA:P194L", "HA:R188K", "HA:R192K", "HA:R453M", "HA:S138A", "HA:T82K", "HA:T92K", "HA:V132A", "HA:V135A", "NA:A200T", "NA:A201A", "NA:A201T", "NA:A245T", "NA:A246T", "NA:A272V", "NA:A390E", "NA:A395E", "NA:D151D", "NA:D151E", "NA:D151G", "NA:D151N", "NA:D179G", "NA:D179N", "NA:D197E", "NA:D197N", "NA:D197Y", "NA:D198D", "NA:D198E", "NA:D198G", "NA:D198N", "NA:D198Y", "NA:D199E", "NA:D199G", "NA:D199N", "NA:D213G", "NA:D214G", "NA:D344N", "NA:D345N", "NA:D432G", "NA:E59G", "NA:E99A", "NA:E99D", "NA:E99G", "NA:E115V", "NA:E117A", "NA:E117D", "NA:E117G", "NA:E117V", "NA:E118V", "NA:E119A", "NA:E119D", "NA:E119E", "NA:E119G", "NA:E119I", "NA:E119K", "NA:E119V", "NA:E222V", "NA:E258Q", "NA:E272Q", "NA:E273Q", "NA:E276D", "NA:G104E", "NA:G108E", "NA:G109E", "NA:G140R", "NA:G142R", "NA:G145R", "NA:G147E", "NA:G147R", "NA:G320E", "NA:H101L", "NA:H255Y", "NA:H271Y", "NA:H273Y", "NA:H274H", "NA:H274N", "NA:H274Y", "NA:H275H", "NA:H275Y", "NA:H276Y", "NA:H277Y", "NA:H439P", "NA:H439R", "NA:I97V", "NA:I117M", "NA:I117V", "NA:I203L", "NA:I203M", "NA:I203R", "NA:I203T", "NA:I203V", "NA:I219K", "NA:I219L", "NA:I219M", "NA:I219R", "NA:I219T", "NA:I221L", "NA:I221N", "NA:I221T", "NA:I222K", "NA:I222L", "NA:I222M", "NA:I222N", "NA:I222R", "NA:I222T", "NA:I222V", "NA:I223K", "NA:I223L", "NA:I223M", "NA:I223R", "NA:I223T", "NA:I223V", "NA:I294V", "NA:I314V", "NA:I427T", "NA:K130N", "NA:K150N", "NA:K273Q", "NA:M372K", "NA:M375K", "NA:N44S", "NA:N46S", "NA:N142S", "NA:N144K", "NA:N146K", "NA:N169S", "NA:N199S", "NA:N200S", "NA:N220K", "NA:N221K", "NA:N275S", "NA:N294S", "NA:N295S", "NA:N325K", "NA:N329K", "NA:N368K", "NA:N369K", "NA:N386K", "NA:N390K", "NA:P139S", "NA:P141S", "NA:Q116L", "NA:Q136K", "NA:Q136L", "NA:Q313R", "NA:R136K", "NA:R150K", "NA:R151W", "NA:R152K", "NA:R152W", "NA:R193G", "NA:R194G", "NA:R221Q", "NA:R222Q", "NA:R224K", "NA:R289K", "NA:R290K", "NA:R292K", "NA:R293K", "NA:R371K", "NA:R374K", "NA:S219T", "NA:S227N", "NA:S245N", "NA:S246G", "NA:S246N", "NA:S246R", "NA:S247G", "NA:S247N", "NA:S247P", "NA:S247R", "NA:S331R", "NA:S334N", "NA:S336N", "NA:T146K", "NA:T146P", "NA:T148I", "NA:T156I", "NA:T157I", "NA:V95A", "NA:V96A", "NA:V116A", "NA:V215I", "NA:V233M", "NA:V234M", "NA:V240I", "NA:V241I", "NA:Y142H", "NA:Y144H", "NA:Y155H"]
@@ -229,7 +229,7 @@ task antiviral_mutations_parser {
           write_to_file("LANINAMIVIR_AASUBS", laninamivir_aa_subs, nc_aa_subs)
           write_to_file("PERAMIVIR_AASUBS", peramivir_aa_subs, nc_aa_subs)
           write_to_file("PIMODIVIR_AASUBS", pimodivir_aa_subs, nc_aa_subs)
-          write_to_file("OSELTAMIVIR_AASUBS", tamiflu_aa_subs, nc_aa_subs)
+          write_to_file("OSELTAMIVIR_AASUBS", oseltamivir_aa_subs, nc_aa_subs)
           write_to_file("RIMANTADINE_AASUBS", rimantadine_aa_subs, nc_aa_subs)
           write_to_file("XOFLUZA_AASUBS", xofluza_aa_subs, nc_aa_subs)
           write_to_file("ZANAMIVIR_AASUBS", zanamivir_aa_subs, nc_aa_subs)
@@ -256,7 +256,7 @@ task antiviral_mutations_parser {
     String laninamivir_aa_subs = read_string("LANINAMIVIR_AASUBS")
     String peramivir_aa_subs = read_string("PERAMIVIR_AASUBS")
     String pimodivir_aa_subs = read_string("PIMODIVIR_AASUBS")
-    String oseltamivir_aa_subs = read_string("TAMIFLU_AASUBS")
+    String oseltamivir_aa_subs = read_string("OSELTAMIVIR_AASUBS")
     String rimantadine_aa_subs = read_string("RIMANTADINE_AASUBS")
     String xofluza_aa_subs = read_string("XOFLUZA_AASUBS")
     String zanamivir_aa_subs = read_string("ZANAMIVIR_AASUBS")
@@ -319,7 +319,7 @@ task serialization {
     String flu_laninamivir_resistance = read_string("flu_laninamivir_resistance.txt")
     String flu_peramivir_resistance = read_string("flu_peramivir_resistance.txt")
     String flu_pimodivir_resistance = read_string("flu_pimodivir_resistance.txt")
-    String flu_oseltamivir_resistance = read_string("flu_tamiflu_resistance.txt")
+    String flu_oseltamivir_resistance = read_string("flu_oseltamivir_resistance.txt")
     String flu_rimantadine_resistance = read_string("flu_rimantadine_resistance.txt")
     String flu_xofluza_resistance = read_string("flu_xofluza_resistance.txt")
     String flu_zanamivir_resistance = read_string("flu_zanamivir_resistance.txt")

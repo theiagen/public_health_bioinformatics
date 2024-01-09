@@ -203,6 +203,7 @@ workflow theiacov_illumina_pe {
             pa_segment_assembly = irma.seg_pa_assembly,
             pb1_segment_assembly = irma.seg_pb1_assembly,
             pb2_segment_assembly = irma.seg_pb2_assembly,
+            mp_segment_assembly = irma.seg_mp_assembly,
             abricate_flu_subtype = select_first([abricate_flu.abricate_flu_subtype, ""]),
             irma_flu_subtype = select_first([irma.irma_subtype, ""]),
         }
@@ -387,6 +388,7 @@ workflow theiacov_illumina_pe {
     String? abricate_flu_version = abricate_flu.abricate_flu_version
     # Flu Antiviral Substitution Outputs
     String? flu_A_315675_resistance = flu_antiviral_substitutions.flu_A_315675_resistance
+    String? flu_amantadine_resistance = flu_antiviral_substitutions.flu_amantadine_resistance
     String? flu_compound_367_resistance = flu_antiviral_substitutions.flu_compound_367_resistance
     String? flu_favipiravir_resistance = flu_antiviral_substitutions.flu_favipiravir_resistance
     String? flu_fludase_resistance = flu_antiviral_substitutions.flu_fludase_resistance
@@ -394,6 +396,7 @@ workflow theiacov_illumina_pe {
     String? flu_laninamivir_resistance = flu_antiviral_substitutions.flu_laninamivir_resistance
     String? flu_peramivir_resistance = flu_antiviral_substitutions.flu_peramivir_resistance
     String? flu_pimodivir_resistance = flu_antiviral_substitutions.flu_pimodivir_resistance
+    String? flu_rimantadine_resistance = flu_antiviral_substitutions.flu_rimantadine_resistance
     String? flu_tamiflu_resistance = flu_antiviral_substitutions.flu_tamiflu_resistance
     String? flu_xofluza_resistance = flu_antiviral_substitutions.flu_xofluza_resistance
     String? flu_zanamivir_resistance = flu_antiviral_substitutions.flu_zanamivir_resistance
