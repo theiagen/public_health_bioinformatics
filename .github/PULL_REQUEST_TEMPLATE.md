@@ -14,9 +14,9 @@ This PR closes #<Issue number>.
 <!--Please describe the aim of this PR, why the changes were made, and how the workflow should now function -->
 
 ## :hammer_and_wrench:  Impacted Workflows/Tasks & Changes Being Made
-This will affect the behavior of the workflow(s) even if users don’t change any workflow inputs <!--  Delete as appropriate -->: Yes/No
+This will affect the behavior of the workflow(s) even if users don’t change any workflow inputs relative to the last version <!--  Delete as appropriate -->: Yes/No
 
-Running this workflow on different occasions could result in different results, e.g. due to use of a live database, "latest" docker image, or stochastic data processing <!--  Delete as appropriate -->: Yes/No <!-- If yes, please describe -->
+Running this workflow on different occasions could result in different results, e.g. due to use of a live database, "latest" docker image, or stochastic data processing <!--  Delete as appropriate. If yes, please describe. -->: Yes/No 
 <!--
 -Please use bullet points or headings to describe what is being added or modified to each impacted workflow or task, and the reasoning for those choices. 
 -Consider inserting before and after tables or pictures to demonstrate the consequences of the changes on files etc.
@@ -72,7 +72,7 @@ If local testing was not undertaken/possible, please explicitly state this.-->
 -Are there any output files that should be checked after running the version release testing?
 -->
 
-## :microscope: Final Developer Checks
+## :microscope: Final Developer Checklist
 <!--Please mark boxes [X] -->
 - [ ] The workflow/task has been tested locally and results, including file contents, are as anticipated: Yes/No
 - [ ] The workflow/task has been tested on Terra and results, including file contents, are as anticipated: Yes/No
