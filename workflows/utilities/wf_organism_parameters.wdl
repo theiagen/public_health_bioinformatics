@@ -32,7 +32,7 @@ workflow organism_parameters {
 
   if (organism == "sars-cov-2") {
     String sc2_reference_genome = "gs://theiagen-public-files-rp/terra/augur-sars-cov-2-references/MN908947.fasta"
-    String sc2_nextclade_ds_tag = "2023-08-17T12:00:00Z"
+    String sc2_nextclade_ds_tag = "2023-12-03T12:00:00Z"
     String sc2_nextclade_ref = "MN908947"
     String sc2_nextclade_ds_name = "sars-cov-2"
     Int sc2_genome_len = 29903
