@@ -51,7 +51,7 @@ workflow tbprofiler_tngs {
     File trimmomatic_read1_trimmed = trimmomatic_pe.read1_trimmed
     File trimmomatic_read2_trimmed = trimmomatic_pe.read2_trimmed
     File trimmomatic_stats = trimmomatic_pe.trimmomatic_stats
-    String trimmomatic_version = trimmomatic_pe.trimmomatic_version
+    String trimmomatic_version = trimmomatic_pe.version
     String trimmomatic_docker = trimmomatic_pe.trimmomatic_docker
     # clockwork outputs
     # File clockwork_cleaned_read1 = clockwork_decon_reads.clockwork_cleaned_read1
