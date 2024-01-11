@@ -16,7 +16,7 @@ workflow Terra_2_NCBI {
     String biosample_package # used to be biosample_type
     String sra_transfer_gcp_bucket # used to be gcp_bucket_uri
     Boolean submit_to_production = false # used to be path_on_ftp_server
-    String bioproject
+    String? bioproject
   }
   call versioning.version_capture{
     input:

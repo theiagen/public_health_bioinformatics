@@ -8,7 +8,7 @@ task prune_table {
     File? input_table
     Array[String] sample_names
     String biosample_type
-    String bioproject
+    String? bioproject
     String gcp_bucket_uri
     Boolean skip_biosample
     String read1_column_name = "read1"
@@ -24,6 +24,8 @@ task prune_table {
     
     # when running locally, use the input_table in place of downloading from Terra
     #cp ~{input_table} ~{table_name}-data.tsv
+
+    export bioproject_number="~{bioproject}"
 
     # transform boolean skip_biosample into string for python comparison
     if ~{skip_biosample}; then
@@ -105,13 +107,18 @@ task prune_table {
 
     elif ("~{biosample_type}".lower() == "virus"):
       required_metadata = ["submission_id", "organism", "isolate", "collection_date", "geo_loc_name", "isolation_source"]
-      optional_metadata = ["sample_title", "bioprojection_accession","attribute_package", "host", "lab_host", "altitude", "biomaterial_provider", "collected_by", "culture_collection", "depth", "disease", "env_broad_scale", "genotype", "host_tissue_sampled", "identified_by", "lat_lon", "passage_history", "samp_size", "serotype", "specimen_voucher", "strain", "temp", "description"]
+      optional_metadata = ["sample_title", "bioproject_accession","attribute_package", "host", "lab_host", "altitude", "biomaterial_provider", "collected_by", "culture_collection", "depth", "disease", "env_broad_scale", "genotype", "host_tissue_sampled", "identified_by", "lat_lon", "passage_history", "samp_size", "serotype", "specimen_voucher", "strain", "temp", "description"]
 
       table["attribute_package"] = "Virus.1.0"
 
+    elif ("~{biosample_type}".lower() == "onehealthenteric"):
+      required_metadata = ["submission_id", "strain", "organism", "collected_by", "collection_date", "geo_loc_name", "isolation_source", "source_type", "purpose_of_sampling"]
+      optional_metadata = ["sample_title", "bioproject_accession", "isolate_name_alias", "culture_collection", "reference_material", "cult_isol_date", "samp_collect_device", "project_name", "ifsac_category", "lat_lon", "serotype", "serovar", "sequenced_by", "description", "host", "host_sex", "host_age", "host_disease", "host_subject_id", "animal_env", "host_tissue_sampled", "host_body_product", "host_variety", "host_animal_breed", "upstream_intervention", "host_am", "host_group_size", "host_housing", "food_origin", "intended_consumer", "spec_intended_cons", "food_source", "food_processing_method", "food_preserv_proc", "food_prod", "label_claims", "food_product_type", "food_industry_code", "food_industry_class", "food_additive", "food_contact_surf", "food_contain_wrap", "food_pack_medium", "food_pack_integrity", "food_quality_date", "food_prod_synonym", "facility_type", "building_setting", "coll_site_geo_feat", "food_type_processed", "location_in_facility", "env_monitoring_zone", "indoor_surf", "indoor_surf_subpart", "surf_material", "material_condition", "surface_orientation", "surf_temp", "biocide_used", "animal_intrusion", "env_broad_scale", "env_local_scale", "env_medium", "plant_growth_med", "plant_water_method", "rel_location", "soil_type", "farm_water_source", "fertilizer_admin", "food_clean_proc", "sanitizer_used_postharvest", "farm_equip", "extr_weather_event", "mechanical_damage"]
+
+      table["attribute_package"] = "OneHealthEnteric.1.0"
 
     else:
-      raise Exception('Only "Microbe", "Virus", "Pathogen" and "Wastewater" are supported as acceptable input for the \`biosample_type\` variable at this time. You entered ~{biosample_type}.')
+      raise Exception('Only "Microbe", "Virus", "Pathogen.cl", "Pathogen.env", "OneHealthEnteric", and "Wastewater" are supported as acceptable input for the \`biosample_type\` variable at this time. You entered ~{biosample_type}.')
 
     # sra metadata is the same regardless of biosample_type package, but I'm separating it out in case we find out this is incorrect
     sra_required = ["~{table_name}_id", "submission_id", "library_ID", "title", "library_strategy", "library_source", "library_selection", "library_layout", "platform", "instrument_model", "design_description", "filetype", "~{read1_column_name}"]
@@ -131,7 +138,8 @@ task prune_table {
     excluded_samples.to_csv("excluded_samples.tsv", mode='a', sep='\t')
 
     # add bioproject_accesion to table
-    table["bioproject_accession"] = "~{bioproject}"
+    if (len(os.environ["bioproject_number"]) > 0):
+      table["bioproject_accession"] = os.environ["bioproject_number"]
     
     # extract the required metadata from the table
     biosample_metadata = table[required_metadata].copy()
