@@ -15,6 +15,7 @@ import "../../tasks/gene_typing/task_abricate.wdl" as abricate
 import "../../tasks/quality_control/task_qc_check_phb.wdl" as qc_check
 import "../../tasks/task_versioning.wdl" as versioning
 import "../utilities/wf_read_QC_trim_ont.wdl" as read_qc_trim_workflow
+import "../../workflows/utilities/wf_influenza_antiviral_substitutions.wdl" as flu_antiviral
 
 workflow theiacov_ont {
   meta {
@@ -186,6 +187,19 @@ workflow theiacov_ont {
             bamfile = select_first([consensus.trim_sorted_bam]),
             min_depth = min_depth
           }
+      }
+      if (organism == "flu") {
+        call flu_antiviral.flu_antiviral_substitutions {
+          input:
+            na_segment_assembly = irma.seg_na_assembly,
+            ha_segment_assembly = irma.seg_ha_assembly,
+            pa_segment_assembly = irma.seg_pa_assembly,
+            pb1_segment_assembly = irma.seg_pb1_assembly,
+            pb2_segment_assembly = irma.seg_pb2_assembly,
+            mp_segment_assembly = irma.seg_mp_assembly,
+            abricate_flu_subtype = select_first([abricate_flu.abricate_flu_subtype, ""]),
+            irma_flu_subtype = select_first([irma.irma_subtype, ""]),
+        }
       }
       if (organism == "MPXV") {
         # MPXV specific tasks
@@ -393,5 +407,19 @@ workflow theiacov_ont {
     File? abricate_flu_results = abricate_flu.abricate_flu_results
     String? abricate_flu_database =  abricate_flu.abricate_flu_database
     String? abricate_flu_version = abricate_flu.abricate_flu_version
+    # Flu Antiviral Substitution Outputs
+    String? flu_A_315675_resistance = flu_antiviral_substitutions.flu_A_315675_resistance
+    String? flu_amantadine_resistance = flu_antiviral_substitutions.flu_amantadine_resistance
+    String? flu_compound_367_resistance = flu_antiviral_substitutions.flu_compound_367_resistance
+    String? flu_favipiravir_resistance = flu_antiviral_substitutions.flu_favipiravir_resistance
+    String? flu_fludase_resistance = flu_antiviral_substitutions.flu_fludase_resistance
+    String? flu_L_742_001_resistance = flu_antiviral_substitutions.flu_L_742_001_resistance
+    String? flu_laninamivir_resistance = flu_antiviral_substitutions.flu_laninamivir_resistance
+    String? flu_peramivir_resistance = flu_antiviral_substitutions.flu_peramivir_resistance
+    String? flu_pimodivir_resistance = flu_antiviral_substitutions.flu_pimodivir_resistance
+    String? flu_rimantadine_resistance = flu_antiviral_substitutions.flu_rimantadine_resistance
+    String? flu_oseltamivir_resistance = flu_antiviral_substitutions.flu_oseltamivir_resistance
+    String? flu_xofluza_resistance = flu_antiviral_substitutions.flu_xofluza_resistance
+    String? flu_zanamivir_resistance = flu_antiviral_substitutions.flu_zanamivir_resistance
   }
 }
