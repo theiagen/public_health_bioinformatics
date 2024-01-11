@@ -13,28 +13,30 @@ workflow tbprofiler_tngs {
     File read1
     File read2
     String samplename
+    Int bases_to_crop = 30
   }
   call versioning.version_capture {
     input:
   }
-  call trimmomatic_task.trimmomatic_pe_chop {
+  call trimmomatic_task.trimmomatic_pe {
     input:
       read1 = read1,
       read2 = read2,
-      samplename = samplename
+      samplename = samplename,
+      trimmomatic_base_crop = bases_to_crop
   }
   # call clockwork_task.clockwork_decon_reads {
   #   input: 
-  #     read1 = trimmomatic_pe_chop.read1_trimmed,
-  #     read2 = trimmomatic_pe_chop.read2_trimmed,
+  #     read1 = trimmomatic_pe.read1_trimmed,
+  #     read2 = trimmomatic_pe.read2_trimmed,
   #     samplename = samplename
   # } 
   call tbprofiler_task.tbprofiler {
     input:
       # read1 = clockwork_decon_reads.clockwork_cleaned_read1,
       # read2 = clockwork_decon_reads.clockwork_cleaned_read2,
-      read1 = trimmomatic_pe_chop.read1_trimmed,
-      read2 = trimmomatic_pe_chop.read2_trimmed,
+      read1 = trimmomatic_pe.read1_trimmed,
+      read2 = trimmomatic_pe.read2_trimmed,
       samplename = samplename
   }
   call tbp_parser_task.tbp_parser {
@@ -46,11 +48,11 @@ workflow tbprofiler_tngs {
   }
   output {
     # trimmomatic outputs
-    File trimmomatic_read1_trimmed = trimmomatic_pe_chop.read1_trimmed
-    File trimmomatic_read2_trimmed = trimmomatic_pe_chop.read2_trimmed
-    File trimmomatic_stats = trimmomatic_pe_chop.trimmomatic_stats
-    String trimmomatic_version = trimmomatic_pe_chop.trimmomatic_version
-    String trimmomatic_docker = trimmomatic_pe_chop.trimmomatic_docker
+    File trimmomatic_read1_trimmed = trimmomatic_pe.read1_trimmed
+    File trimmomatic_read2_trimmed = trimmomatic_pe.read2_trimmed
+    File trimmomatic_stats = trimmomatic_pe.trimmomatic_stats
+    String trimmomatic_version = trimmomatic_pe.trimmomatic_version
+    String trimmomatic_docker = trimmomatic_pe.trimmomatic_docker
     # clockwork outputs
     # File clockwork_cleaned_read1 = clockwork_decon_reads.clockwork_cleaned_read1
     # File clockwork_cleaned_read2 = clockwork_decon_reads.clockwork_cleaned_read2
