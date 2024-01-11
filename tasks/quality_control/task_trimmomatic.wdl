@@ -89,7 +89,6 @@ task trimmomatic_se {
   }
 }
 
-
 task trimmomatic_pe_chop {
   input {
     File read1
@@ -127,7 +126,6 @@ task trimmomatic_pe_chop {
       MINLEN:~{trimmomatic_minlen} &> ~{samplename}.trim.stats.txt \
       HEADCROP:~{trimmomatic_base_chop} \
       CROP:"$avg_readlength"
-
   >>>
   output {
     File read1_trimmed = "~{samplename}_1P.fastq.gz"
@@ -143,6 +141,6 @@ task trimmomatic_pe_chop {
     disks:  "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB" 
     preemptible: 0
-   # maxRetries: 3
+    maxRetries: 3
   }
 }
