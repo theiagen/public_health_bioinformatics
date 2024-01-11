@@ -147,7 +147,7 @@ workflow theiaprok_ont {
           organism = select_first([expected_taxon, gambit.gambit_predicted_taxon])
       }
       if (call_resfinder) {
-        call resfinder_task.resfinder {
+        call resfinder_task.resfinder as resfinder_task {
           input:
             assembly = dragonflye.assembly_fasta,
             samplename = samplename,
@@ -271,6 +271,7 @@ workflow theiaprok_ont {
             ani_output_tsv = ani.ani_output_tsv,
             ani_top_species_match = ani.ani_top_species_match,
             ani_mummer_version = ani.ani_mummer_version,
+            ani_docker = ani.ani_docker,
             kmerfinder_docker = kmerfinder.kmerfinder_docker,
             kmerfinder_results_tsv = kmerfinder.kmerfinder_results_tsv,
             kmerfinder_top_hit = kmerfinder.kmerfinder_top_hit,
@@ -289,14 +290,22 @@ workflow theiaprok_ont {
             amrfinderplus_amr_subclasses = amrfinderplus.amrfinderplus_amr_subclasses,
             amrfinderplus_version = amrfinderplus.amrfinderplus_version,
             amrfinderplus_db_version = amrfinderplus.amrfinderplus_db_version,
-            resfinder_pheno_table = resfinder.resfinder_pheno_table,
-            resfinder_pheno_table_species = resfinder.resfinder_pheno_table_species,
-            resfinder_seqs = resfinder.resfinder_hit_in_genome_seq,
-            resfinder_results = resfinder.resfinder_results_tab,
-            resfinder_pointfinder_pheno_table = resfinder.pointfinder_pheno_table,
-            resfinder_pointfinder_results = resfinder.pointfinder_results,
-            resfinder_db_version = resfinder.resfinder_db_version,
-            resfinder_docker = resfinder.resfinder_docker,
+            resfinder_pheno_table = resfinder_task.resfinder_pheno_table,
+            resfinder_pheno_table_species = resfinder_task.resfinder_pheno_table_species,
+            resfinder_seqs = resfinder_task.resfinder_hit_in_genome_seq,
+            resfinder_results = resfinder_task.resfinder_results_tab,
+            resfinder_pointfinder_pheno_table = resfinder_task.pointfinder_pheno_table,
+            resfinder_pointfinder_results = resfinder_task.pointfinder_results,
+            resfinder_predicted_pheno_resistance = resfinder_task.resfinder_predicted_pheno_resistance,
+            resfinder_predicted_xdr_shigella = resfinder_task.resfinder_predicted_xdr_shigella,
+            resfinder_predicted_resistance_Amp = resfinder_task.resfinder_predicted_resistance_Amp,
+            resfinder_predicted_resistance_Azm = resfinder_task.resfinder_predicted_resistance_Azm,
+            resfinder_predicted_resistance_Axo = resfinder_task.resfinder_predicted_resistance_Axo,
+            resfinder_predicted_resistance_Cip = resfinder_task.resfinder_predicted_resistance_Cip,
+            resfinder_predicted_resistance_Smx = resfinder_task.resfinder_predicted_resistance_Smx,
+            resfinder_predicted_resistance_Tmp = resfinder_task.resfinder_predicted_resistance_Tmp,
+            resfinder_db_version = resfinder_task.resfinder_db_version,
+            resfinder_docker = resfinder_task.resfinder_docker,
             ts_mlst_results = ts_mlst.ts_mlst_results,
             ts_mlst_predicted_st = ts_mlst.ts_mlst_predicted_st,
             ts_mlst_pubmlst_scheme = ts_mlst.ts_mlst_pubmlst_scheme,
@@ -547,6 +556,7 @@ workflow theiaprok_ont {
     File? ani_output_tsv = ani.ani_output_tsv
     String? ani_top_species_match = ani.ani_top_species_match
     String? ani_mummer_version = ani.ani_mummer_version
+    String? ani_mummer_docker = ani.ani_docker
     # kmerfinder outputs
     String? kmerfinder_docker = kmerfinder.kmerfinder_docker
     File? kmerfinder_results_tsv = kmerfinder.kmerfinder_results_tsv
@@ -568,14 +578,22 @@ workflow theiaprok_ont {
     String? amrfinderplus_version = amrfinderplus.amrfinderplus_version
     String? amrfinderplus_db_version = amrfinderplus.amrfinderplus_db_version
     # Resfinder Outputs
-    File? resfinder_pheno_table = resfinder.resfinder_pheno_table
-    File? resfinder_pheno_table_species = resfinder.resfinder_pheno_table_species
-    File? resfinder_seqs = resfinder.resfinder_hit_in_genome_seq
-    File? resfinder_results = resfinder.resfinder_results_tab
-    File? resfinder_pointfinder_pheno_table = resfinder.pointfinder_pheno_table
-    File? resfinder_pointfinder_results = resfinder.pointfinder_results
-    String? resfinder_db_version = resfinder.resfinder_db_version
-    String? resfinder_docker = resfinder.resfinder_docker
+    File? resfinder_pheno_table = resfinder_task.resfinder_pheno_table
+    File? resfinder_pheno_table_species = resfinder_task.resfinder_pheno_table_species
+    File? resfinder_seqs = resfinder_task.resfinder_hit_in_genome_seq
+    File? resfinder_results = resfinder_task.resfinder_results_tab
+    File? resfinder_pointfinder_pheno_table = resfinder_task.pointfinder_pheno_table
+    File? resfinder_pointfinder_results = resfinder_task.pointfinder_results
+    String? resfinder_predicted_pheno_resistance = resfinder_task.resfinder_predicted_pheno_resistance
+    String? resfinder_predicted_xdr_shigella = resfinder_task.resfinder_predicted_xdr_shigella
+    String? resfinder_predicted_resistance_Amp = resfinder_task.resfinder_predicted_resistance_Amp
+    String? resfinder_predicted_resistance_Azm = resfinder_task.resfinder_predicted_resistance_Azm
+    String? resfinder_predicted_resistance_Axo = resfinder_task.resfinder_predicted_resistance_Axo
+    String? resfinder_predicted_resistance_Cip = resfinder_task.resfinder_predicted_resistance_Cip
+    String? resfinder_predicted_resistance_Smx = resfinder_task.resfinder_predicted_resistance_Smx
+    String? resfinder_predicted_resistance_Tmp = resfinder_task.resfinder_predicted_resistance_Tmp
+    String? resfinder_db_version = resfinder_task.resfinder_db_version
+    String? resfinder_docker = resfinder_task.resfinder_docker
     # MLST Typing
     File? ts_mlst_results = ts_mlst.ts_mlst_results
     String? ts_mlst_predicted_st = ts_mlst.ts_mlst_predicted_st

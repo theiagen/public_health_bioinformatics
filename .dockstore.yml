@@ -253,3 +253,8 @@ workflows:
    primaryDescriptorPath: /workflows/standalone_modules/wf_tbprofiler_tngs.wdl
    testParameterFiles:
     - empty.json
+ - name: Rename_FASTQ_PHB
+   subclass: WDL
+   primaryDescriptorPath: /workflows/utilities/file_handling/wf_rename_fastq_files.wdl
+   testParameterFiles:
+    - empty.json

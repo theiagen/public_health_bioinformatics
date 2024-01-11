@@ -52,6 +52,7 @@ task kraken2_theiacov {
     Float percent_sc2 = read_float("PERCENT_SC2")
     String percent_target_org = read_string("PERCENT_TARGET_ORG")
     String? kraken_target_org = target_org
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.0.8-beta_hv"
   }
   runtime {
     docker: "us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.0.8-beta_hv"
