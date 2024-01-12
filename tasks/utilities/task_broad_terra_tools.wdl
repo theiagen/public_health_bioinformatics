@@ -300,7 +300,7 @@ task export_taxon_tables {
     Float? midas_secondary_genus_abundance
     String? kraken2_version
     String? kraken2_docker
-    File? kraken2_report
+    String? kraken2_report
     File? bakta_gbff
     File? bakta_gff3
     File? bakta_tsv
