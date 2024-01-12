@@ -74,10 +74,10 @@ If local testing was not undertaken/possible, please explicitly state this.-->
 
 ## :microscope: Final Developer Checklist
 <!--Please mark boxes [X] -->
-- [ ] The workflow/task has been tested locally and results, including file contents, are as anticipated: Yes/No
-- [ ] The workflow/task has been tested on Terra and results, including file contents, are as anticipated: Yes/No
-- [ ] The CI/CD has been adjusted and tests are passing: Yes/No
-- [ ] Code changes follow the [style guide](https://theiagen.notion.site/Style-Guide-WDL-Workflow-Development-bb456f34322d4f4db699d4029050481c): Yes/No
+- [ ] The workflow/task has been tested locally and results, including file contents, are as anticipated
+- [ ] The workflow/task has been tested on Terra and results, including file contents, are as anticipated
+- [ ] The CI/CD has been adjusted and tests are passing
+- [ ] Code changes follow the [style guide](https://theiagen.notion.site/Style-Guide-WDL-Workflow-Development-bb456f34322d4f4db699d4029050481c)
 
 
 ## 🎯 Reviewer Checklist 
@@ -90,7 +90,7 @@ If local testing was not undertaken/possible, please explicitly state this.-->
 - [ ] MD5 sums have been updated
 - [ ] The PR author has addressed all comments
 
-## 🗂️ Associated Documentation (to be completed by Theaigen developer)
+## 🗂️ Associated Documentation (to be completed by Theiagen developer)
 <!--  Indicate NA when not applicable -->
 - [ ] Relevant documentation on the Public Health Resources "PHB Main" has been updated
 - [ ] Workflow diagrams have been updated to reflect changes
