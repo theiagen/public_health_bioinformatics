@@ -76,7 +76,7 @@ If local testing was not undertaken/possible, please explicitly state this.-->
 <!--Please mark boxes [X] -->
 - [ ] The workflow/task has been tested locally and results, including file contents, are as anticipated
 - [ ] The workflow/task has been tested on Terra and results, including file contents, are as anticipated
-- [ ] The CI/CD has been adjusted and tests are passing
+- [ ] The CI/CD has been adjusted and tests are passing (to be completed by Theiagen developer)
 - [ ] Code changes follow the [style guide](https://theiagen.notion.site/Style-Guide-WDL-Workflow-Development-bb456f34322d4f4db699d4029050481c)
 
 
