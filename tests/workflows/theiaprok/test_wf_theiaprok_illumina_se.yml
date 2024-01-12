@@ -122,7 +122,6 @@
     - path: miniwdl_run/call-busco/work/test/auto_lineage/run_archaea_odb10/short_summary.txt
     - path: miniwdl_run/call-busco/work/test/auto_lineage/run_bacteria_odb10/busco_sequences/fragmented_busco_sequences/1540940at2.faa
     - path: miniwdl_run/call-busco/work/test/auto_lineage/run_bacteria_odb10/busco_sequences/fragmented_busco_sequences/1540940at2.fna
-    - path: miniwdl_run/call-busco/work/test/auto_lineage/run_bacteria_odb10/busco_sequences/fragmented_busco_sequences/1567535at2.faa
     - path: miniwdl_run/call-busco/work/test/auto_lineage/run_bacteria_odb10/busco_sequences/single_copy_busco_sequences/1132353at2.faa
     - path: miniwdl_run/call-busco/work/test/auto_lineage/run_bacteria_odb10/busco_sequences/single_copy_busco_sequences/1132353at2.fna
     - path: miniwdl_run/call-busco/work/test/auto_lineage/run_bacteria_odb10/busco_sequences/single_copy_busco_sequences/1505038at2.faa
