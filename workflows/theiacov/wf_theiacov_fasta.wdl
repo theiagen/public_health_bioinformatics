@@ -50,7 +50,7 @@ workflow theiacov_fasta {
     input:
       organism = organism,
       flu_segment = flu_segment,
-      flu_subtype = select_first([flu_subtype, abricate_subtype]),
+      flu_subtype = select_first([flu_subtype, abricate_subtype, ""]),
       reference_genome = reference_genome,
       genome_length = genome_length,
       nextclade_ds_reference = nextclade_dataset_reference,
