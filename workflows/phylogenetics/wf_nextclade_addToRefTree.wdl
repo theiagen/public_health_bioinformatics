@@ -15,7 +15,7 @@ workflow nextclade_addToRefTree {
       File? qc_config_json
       File? pcr_primers_csv
       File? virus_properties
-      String organism
+      String dataset_name
       String? dataset_reference
       String? dataset_tag
     }
@@ -28,7 +28,7 @@ workflow nextclade_addToRefTree {
         gene_annotations_gff = gene_annotations_gff,
         pcr_primers_csv = pcr_primers_csv,
         virus_properties = virus_properties,
-        dataset_name = organism,
+        dataset_name = dataset_name,
         dataset_reference = dataset_reference,
         dataset_tag = dataset_tag
     }
