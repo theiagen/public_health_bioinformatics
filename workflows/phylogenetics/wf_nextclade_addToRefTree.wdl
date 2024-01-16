@@ -15,7 +15,7 @@ workflow nextclade_addToRefTree {
       File? qc_config_json
       File? pcr_primers_csv
       File? virus_properties
-      String dataset_name
+      String nextclade_dataset_name
       String? dataset_reference
       String? dataset_tag
     }
