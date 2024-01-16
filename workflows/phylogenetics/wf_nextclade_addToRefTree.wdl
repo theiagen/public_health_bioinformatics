@@ -28,7 +28,7 @@ workflow nextclade_addToRefTree {
         gene_annotations_gff = gene_annotations_gff,
         pcr_primers_csv = pcr_primers_csv,
         virus_properties = virus_properties,
-        dataset_name = dataset_name,
+        dataset_name = nextclade_dataset_name,
         dataset_reference = dataset_reference,
         dataset_tag = dataset_tag
     }
