@@ -37,7 +37,8 @@ workflow theiacov_fasta {
     Int? maxlen
     String? vadr_opts
   }
-  if (!defined(flu_subtype)) {
+  # only run abricate if user sets organism = "flu" AND if flu_subtype is unknown/not set by user
+  if (!defined(flu_subtype) && organism == "flu") {
     call abricate.abricate_flu {
       input:
         assembly = assembly_fasta,
