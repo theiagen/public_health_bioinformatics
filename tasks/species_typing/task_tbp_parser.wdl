@@ -9,11 +9,12 @@ task tbp_parser {
 
     String? sequencing_method
     String? operator
+    File? coverage_regions_bed # format after tbdb.bed
     Int min_depth = 10
     Int coverage_threshold = 100
     Boolean tbp_parser_debug = false
 
-    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:1.1.8"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:1.2.1"
     Int disk_size = 100
     Int memory = 4
     Int cpu = 1
@@ -28,6 +29,7 @@ task tbp_parser {
       ~{"--operator " + operator} \
       ~{"--min_depth " + min_depth} \
       ~{"--coverage_threshold " + coverage_threshold} \
+      ~{"--coverage_regions " + coverage_regions_bed} \
       --output_prefix ~{samplename} \
       ~{true="--debug" false="--verbose" tbp_parser_debug}
 
