@@ -37,7 +37,8 @@ workflow theiacov_fasta {
     Int? maxlen
     String? vadr_opts
   }
-  if (!defined(flu_subtype)) {
+  # only run abricate if user sets organism = "flu" AND if flu_subtype is unknown/not set by user
+  if (!defined(flu_subtype) && organism == "flu") {
     call abricate.abricate_flu {
       input:
         assembly = assembly_fasta,
@@ -49,7 +50,7 @@ workflow theiacov_fasta {
     input:
       organism = organism,
       flu_segment = flu_segment,
-      flu_subtype = select_first([flu_subtype, abricate_subtype]),
+      flu_subtype = select_first([flu_subtype, abricate_subtype, "N/A"]),
       reference_genome = reference_genome,
       genome_length = genome_length,
       nextclade_ds_reference = nextclade_dataset_reference,
