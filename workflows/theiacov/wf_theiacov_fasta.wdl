@@ -157,6 +157,7 @@ workflow theiacov_fasta {
     File?  vadr_alerts_list = vadr.alerts_list
     String? vadr_docker = vadr.vadr_docker
     File? vadr_fastas_zip_archive = vadr.vadr_fastas_zip_archive
+    String? vadr_num_alerts = vadr.num_alerts
     # QC_Check Results
     String? qc_check = qc_check_phb.qc_check
     File? qc_standard = qc_check_phb.qc_standard
