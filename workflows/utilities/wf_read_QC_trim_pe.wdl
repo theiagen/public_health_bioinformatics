@@ -90,6 +90,18 @@ workflow read_QC_trim_pe {
       adapters = adapters,
       phix = phix
   }
+  if (read_qc == "fastqc") {
+    call fastqc_task.fastqc as fastqc_raw {
+      input:
+        read1 = read1_raw,
+        read2 = read2_raw
+    }
+    call fastqc_task.fastqc as fastqc_clean {
+      input:
+        read1 = bbduk.read1_clean,
+        read2 = bbduk.read2_clean
+    }
+  }
   call fastq_scan.fastq_scan_pe as fastq_scan_raw {
     input:
       read1 = read1,
@@ -144,7 +156,7 @@ workflow read_QC_trim_pe {
     Float? kraken_human =  kraken2_theiacov_raw.percent_human
     Float? kraken_sc2 = kraken2_theiacov_raw.percent_sc2
     String? kraken_target_organism = kraken2_theiacov_raw.percent_target_organism
-    File? kraken_report = select_first([kraken2_theiacov_raw.kraken_report, kraken2_standalone.kraken2_report, ""])
+    String kraken_report = select_first([kraken2_theiacov_raw.kraken_report, kraken2_standalone.kraken2_report, ""])
     Float? kraken_human_dehosted = kraken2_theiacov_dehosted.percent_human
     Float? kraken_sc2_dehosted = kraken2_theiacov_dehosted.percent_sc2
     String? kraken_target_organism_dehosted = kraken2_theiacov_dehosted.percent_target_organism

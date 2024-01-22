@@ -58,9 +58,15 @@ workflow read_QC_trim_se {
       adapters = adapters,
       phix = phix
   }
-  call fastq_scan.fastq_scan_se as fastq_scan_raw {
-    input:
-      read1 = read1
+  if (read_qc == "fastq_scan") {
+    call fastq_scan.fastq_scan_se as fastq_scan_raw {
+      input:
+        read1 = read1_raw
+    }
+    call fastq_scan.fastq_scan_se as fastq_scan_clean {
+      input:
+        read1 = bbduk_se.read1_clean
+    }
   }
   call fastq_scan.fastq_scan_se as fastq_scan_clean {
     input:
@@ -97,7 +103,7 @@ workflow read_QC_trim_se {
     Float? kraken_human = kraken2_raw.percent_human
     Float? kraken_sc2 = kraken2_raw.percent_sc2
     String? kraken_target_organism = kraken2_raw.percent_target_organism
-    File? kraken_report = select_first([kraken2_raw.kraken_report, kraken2_standalone.kraken2_report, ""])
+    String kraken_report = select_first([kraken2_raw.kraken_report, kraken2_standalone.kraken2_report, ""])
     String? kraken_target_organism_name = target_organism
    
     # trimming versioning
