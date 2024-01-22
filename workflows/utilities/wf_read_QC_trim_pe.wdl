@@ -23,6 +23,8 @@ workflow read_QC_trim_pe {
     Int bbduk_mem = 8
     Boolean call_midas = false
     File? midas_db
+    Boolean call_kraken = false
+    File? kraken_db
     String? target_organism
     File? adapters
     File? phix
@@ -142,7 +144,7 @@ workflow read_QC_trim_pe {
     Float? kraken_human =  kraken2_theiacov_raw.percent_human
     Float? kraken_sc2 = kraken2_theiacov_raw.percent_sc2
     String? kraken_target_organism = kraken2_theiacov_raw.percent_target_organism
-    File? kraken_report = kraken2_theiacov_raw.kraken_report
+    File? kraken_report = select_first([kraken2_theiacov_raw.kraken_report, kraken2_standalone.kraken2_report, ""])
     Float? kraken_human_dehosted = kraken2_theiacov_dehosted.percent_human
     Float? kraken_sc2_dehosted = kraken2_theiacov_dehosted.percent_sc2
     String? kraken_target_organism_dehosted = kraken2_theiacov_dehosted.percent_target_organism
