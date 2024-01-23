@@ -1,6 +1,7 @@
 version 1.0
 
 import "../../tasks/quality_control/task_fastq_scan.wdl" as fastq_scan
+import "../../tasks/quality_control/task_fastqc.wdl" as fastqc_task
 import "../../tasks/quality_control/task_trimmomatic.wdl" as trimmomatic
 import "../../tasks/quality_control/task_ncbi_scrub.wdl" as ncbi_scrub
 import "../../tasks/quality_control/task_bbduk.wdl" as bbduk_task
@@ -29,7 +30,8 @@ workflow read_QC_trim_pe {
     File? adapters
     File? phix
     String? workflow_series
-    String read_processing = "trimmomatic"
+    String read_processing = "trimmomatic" # options: trimmomatic, fastp
+    String read_qc = "fastq_scan" # options: fastq_scan, fastqc
     String? trimmomatic_args
     String fastp_args = "--detect_adapter_for_pe -g -5 20 -3 20"
   }
@@ -123,6 +125,17 @@ workflow read_QC_trim_pe {
         midas_db = midas_db
     }
   }
+  if ("~{workflow_series}" == "theiaprok") {
+    if (call_kraken) {
+      call kraken.kraken2_standalone {
+        input:
+          samplename = samplename,
+          read1 = read1_raw,
+          read2 = read2_raw,
+          kraken2_db = select_first([kraken_db])
+      }
+    }
+  }
   if ("~{workflow_series}" == "theiameta") {
     call readlength_task.readlength {
       input:
@@ -144,17 +157,31 @@ workflow read_QC_trim_pe {
     String bbduk_docker = bbduk.bbduk_docker
 
     # fastq_scan
-    Int fastq_scan_raw1 = fastq_scan_raw.read1_seq
-    Int fastq_scan_raw2 = fastq_scan_raw.read2_seq
-    String fastq_scan_raw_pairs = fastq_scan_raw.read_pairs
-    Int fastq_scan_clean1 = fastq_scan_clean.read1_seq
-    Int fastq_scan_clean2 = fastq_scan_clean.read2_seq
-    String fastq_scan_clean_pairs = fastq_scan_clean.read_pairs
-    String fastq_scan_version = fastq_scan_raw.version
-    String fastq_scan_docker = fastq_scan_raw.fastq_scan_docker
+    Int? fastq_scan_raw1 = fastq_scan_raw.read1_seq
+    Int? fastq_scan_raw2 = fastq_scan_raw.read2_seq
+    String? fastq_scan_raw_pairs = fastq_scan_raw.read_pairs
+    Int? fastq_scan_clean1 = fastq_scan_clean.read1_seq
+    Int? fastq_scan_clean2 = fastq_scan_clean.read2_seq
+    String? fastq_scan_clean_pairs = fastq_scan_clean.read_pairs
+    String? fastq_scan_version = fastq_scan_raw.version
+    String? fastq_scan_docker = fastq_scan_raw.fastq_scan_docker
     
-    # kraken2
-    String? kraken_version = kraken2_theiacov_raw.version
+    # fastqc
+    Int? fastqc_raw1 = fastqc_raw.read1_seq
+    Int? fastqc_raw2 = fastqc_raw.read2_seq
+    String? fastqc_raw_pairs = fastqc_raw.read_pairs
+    Int? fastqc_clean1 = fastqc_clean.read1_seq
+    Int? fastqc_clean2 = fastqc_clean.read2_seq
+    String? fastqc_clean_pairs = fastqc_clean.read_pairs
+    String? fastqc_version = fastqc_raw.version
+    String? fastqc_docker = fastqc_raw.fastqc_docker
+    File? fastqc_raw1_html = fastqc_raw.read1_fastqc_html
+    File? fastqc_raw2_html = fastqc_raw.read2_fastqc_html
+    File? fastqc_clean1_html = fastqc_clean.read1_fastqc_html
+    File? fastqc_clean2_html = fastqc_clean.read2_fastqc_html
+    
+    # kraken2 - theiacov and theiaprok
+    String kraken_version = select_first([kraken2_theiacov_raw.version, kraken2_standalone.kraken2_version, ""])
     Float? kraken_human =  kraken2_theiacov_raw.percent_human
     Float? kraken_sc2 = kraken2_theiacov_raw.percent_sc2
     String? kraken_target_organism = kraken2_theiacov_raw.percent_target_organism
@@ -164,6 +191,7 @@ workflow read_QC_trim_pe {
     String? kraken_target_organism_dehosted = kraken2_theiacov_dehosted.percent_target_organism
     String? kraken_target_organism_name = target_organism
     File? kraken_report_dehosted = kraken2_theiacov_dehosted.kraken_report
+    String kraken_docker = select_first([kraken2_theiacov_raw.docker, kraken2_standalone.kraken2_docker, ""])
     
     # trimming versioning
     String? trimmomatic_version = trimmomatic_pe.version

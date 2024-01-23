@@ -8,7 +8,7 @@ task consensus_qc {
     Int disk_size = 100
   }
   command <<<
-    if [ ~{reference_genome} ] ; then
+    if [ -s "~{reference_genome}" ] ; then
       GENOME_LEN=$(grep -v ">" ~{reference_genome} | tr --delete '\n' | wc -c)
     elif [ ~{genome_length} ] ; then
       GENOME_LEN=~{genome_length}
@@ -27,7 +27,7 @@ task consensus_qc {
     num_ACTG=$( grep -v ">" ~{assembly_fasta} | grep -o -E "C|A|T|G" | wc -l )
     if [ -z "$num_ACTG" ] ; then num_ACTG="0" ; fi
     echo $num_ACTG | tee NUM_ACTG
-
+  
     # calculate percent coverage (Wu Han-1 genome length: 29903bp)
     python3 -c "print ( round( ($num_ACTG / $GENOME_LEN ) * 100, 2 ) )" | tee PERCENT_REF_COVERAGE
 

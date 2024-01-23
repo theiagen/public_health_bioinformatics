@@ -82,7 +82,8 @@ workflow theiaprok_illumina_se {
         read1 = read1,
         trim_minlen = trim_minlen,
         trim_quality_trim_score = trim_quality_trim_score,
-        trim_window_size = trim_window_size
+        trim_window_size = trim_window_size,
+        workflow_series = "theiaprok"
     }
     call screen.check_reads_se as clean_check_reads {
       input:
@@ -273,6 +274,7 @@ workflow theiaprok_illumina_se {
             ani_output_tsv = ani.ani_output_tsv,
             ani_top_species_match = ani.ani_top_species_match,
             ani_mummer_version = ani.ani_mummer_version,
+            ani_docker = ani.ani_docker,
             kmerfinder_docker = kmerfinder.kmerfinder_docker,
             kmerfinder_results_tsv = kmerfinder.kmerfinder_results_tsv,
             kmerfinder_top_hit = kmerfinder.kmerfinder_top_hit,
@@ -297,6 +299,14 @@ workflow theiaprok_illumina_se {
             resfinder_results = resfinder_task.resfinder_results_tab,
             resfinder_pointfinder_pheno_table = resfinder_task.pointfinder_pheno_table,
             resfinder_pointfinder_results = resfinder_task.pointfinder_results,
+            resfinder_predicted_pheno_resistance = resfinder_task.resfinder_predicted_pheno_resistance,
+            resfinder_predicted_xdr_shigella = resfinder_task.resfinder_predicted_xdr_shigella,
+            resfinder_predicted_resistance_Amp = resfinder_task.resfinder_predicted_resistance_Amp,
+            resfinder_predicted_resistance_Azm = resfinder_task.resfinder_predicted_resistance_Azm,
+            resfinder_predicted_resistance_Axo = resfinder_task.resfinder_predicted_resistance_Axo,
+            resfinder_predicted_resistance_Cip = resfinder_task.resfinder_predicted_resistance_Cip,
+            resfinder_predicted_resistance_Smx = resfinder_task.resfinder_predicted_resistance_Smx,
+            resfinder_predicted_resistance_Tmp = resfinder_task.resfinder_predicted_resistance_Tmp,
             resfinder_db_version = resfinder_task.resfinder_db_version,
             resfinder_docker = resfinder_task.resfinder_docker,
             ts_mlst_results = ts_mlst.ts_mlst_results,
@@ -479,6 +489,9 @@ workflow theiaprok_illumina_se {
             midas_primary_genus = read_QC_trim.midas_primary_genus,
             midas_secondary_genus = read_QC_trim.midas_secondary_genus,
             midas_secondary_genus_abundance = read_QC_trim.midas_secondary_genus_abundance,
+            kraken2_version = read_QC_trim.kraken_version,
+            kraken2_docker = read_QC_trim.kraken_docker,
+            kraken2_report = read_QC_trim.kraken_report,
             pasty_serogroup = merlin_magic.pasty_serogroup,
             pasty_serogroup_coverage = merlin_magic.pasty_serogroup_coverage,
             pasty_serogroup_fragments = merlin_magic.pasty_serogroup_fragments,
@@ -519,6 +532,12 @@ workflow theiaprok_illumina_se {
     Int? num_reads_raw1 = read_QC_trim.fastq_scan_raw_number_reads
     String? fastq_scan_version = read_QC_trim.fastq_scan_version
     Int? num_reads_clean1 = read_QC_trim.fastq_scan_clean_number_reads
+    # Read QC - fastqc outputs
+    Int? fastqc_num_reads_raw1 = read_QC_trim.fastqc_raw_number_reads
+    Int? fastqc_num_reads_clean1 = read_QC_trim.fastqc_clean_number_reads
+    String? fastqc_version = read_QC_trim.fastqc_version
+    File? fastqc_raw1_html = read_QC_trim.fastqc_raw_html
+    File? fastqc_clean1_html = read_QC_trim.fastqc_clean_html
     # Read QC - trimmomatic outputs
     String? trimmomatic_version = read_QC_trim.trimmomatic_version
     # Read QC - fastp outputs
@@ -537,6 +556,10 @@ workflow theiaprok_illumina_se {
     String? midas_primary_genus = read_QC_trim.midas_primary_genus
     String? midas_secondary_genus = read_QC_trim.midas_secondary_genus
     Float? midas_secondary_genus_abundance = read_QC_trim.midas_secondary_genus_abundance
+    # Read QC - kraken outputs
+    String? kraken2_version = read_QC_trim.kraken_version
+    String? kraken2_report = read_QC_trim.kraken_report
+    String? kraken2_docker = read_QC_trim.kraken_docker
     #Assembly - shovill outputs
     File? assembly_fasta = shovill_se.assembly_fasta
     File? contigs_gfa = shovill_se.contigs_gfa
@@ -573,6 +596,7 @@ workflow theiaprok_illumina_se {
     File? ani_output_tsv = ani.ani_output_tsv
     String? ani_top_species_match = ani.ani_top_species_match
     String? ani_mummer_version = ani.ani_mummer_version
+    String? ani_mummer_docker = ani.ani_docker
     # kmerfinder outputs
     String? kmerfinder_docker = kmerfinder.kmerfinder_docker
     File? kmerfinder_results_tsv = kmerfinder.kmerfinder_results_tsv
@@ -600,6 +624,14 @@ workflow theiaprok_illumina_se {
     File? resfinder_results = resfinder_task.resfinder_results_tab
     File? resfinder_pointfinder_pheno_table = resfinder_task.pointfinder_pheno_table
     File? resfinder_pointfinder_results = resfinder_task.pointfinder_results
+    String? resfinder_predicted_pheno_resistance = resfinder_task.resfinder_predicted_pheno_resistance
+    String? resfinder_predicted_xdr_shigella = resfinder_task.resfinder_predicted_xdr_shigella
+    String? resfinder_predicted_resistance_Amp = resfinder_task.resfinder_predicted_resistance_Amp
+    String? resfinder_predicted_resistance_Azm = resfinder_task.resfinder_predicted_resistance_Azm
+    String? resfinder_predicted_resistance_Axo = resfinder_task.resfinder_predicted_resistance_Axo
+    String? resfinder_predicted_resistance_Cip = resfinder_task.resfinder_predicted_resistance_Cip
+    String? resfinder_predicted_resistance_Smx = resfinder_task.resfinder_predicted_resistance_Smx
+    String? resfinder_predicted_resistance_Tmp = resfinder_task.resfinder_predicted_resistance_Tmp
     String? resfinder_db_version = resfinder_task.resfinder_db_version
     String? resfinder_docker = resfinder_task.resfinder_docker
     # MLST Typing
@@ -770,6 +802,7 @@ workflow theiaprok_illumina_se {
     File? tbprofiler_output_file = merlin_magic.tbprofiler_output_file
     File? tbprofiler_output_bam = merlin_magic.tbprofiler_output_bam
     File? tbprofiler_output_bai = merlin_magic.tbprofiler_output_bai
+    File? tbprofiler_output_vcf = merlin_magic.tbprofiler_output_vcf
     String? tbprofiler_version = merlin_magic.tbprofiler_version
     String? tbprofiler_main_lineage = merlin_magic.tbprofiler_main_lineage
     String? tbprofiler_sub_lineage = merlin_magic.tbprofiler_sub_lineage

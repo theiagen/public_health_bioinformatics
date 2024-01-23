@@ -223,6 +223,8 @@ workflow theiacov_clearlabs {
     String? nextclade_aa_subs = nextclade_output_parser.nextclade_aa_subs
     String? nextclade_aa_dels = nextclade_output_parser.nextclade_aa_dels
     String? nextclade_clade = nextclade_output_parser.nextclade_clade
+    String? nextclade_lineage = nextclade_output_parser.nextclade_lineage
+    String? nextclade_qc = nextclade_output_parser.nextclade_qc
     # VADR Annotation QC
     File?  vadr_alerts_list = vadr.alerts_list
     String? vadr_num_alerts = vadr.num_alerts
