@@ -41,7 +41,7 @@ task kraken2_theiacov {
     else 
       percent_target_organism=""
     fi
-    echo $percent_target_organism | tee PERCENT_target_organism
+    echo $percent_target_organism | tee PERCENT_TARGET_ORGANISM
 
   >>>
   output {
