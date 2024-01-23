@@ -96,13 +96,6 @@ task irma {
     else
       echo "No subtype predicted by IRMA" > IRMA_SUBTYPE
     fi
-
-    #renaming BAm files
-    for irma_bam in ~{samplename}/*{.bam}; do
-      new_name="~{samplename}_"$(basename "${irma_bam}" | cut -d "_" -f2- )
-      echo "New name: ${new_name}; irma_bam: ${irma_bam}"
-      mv "${irma_bam}" "${new_name}"
-    done
   >>>
   output {
     File? irma_assembly_fasta = "~{samplename}.irma.consensus.fasta"
