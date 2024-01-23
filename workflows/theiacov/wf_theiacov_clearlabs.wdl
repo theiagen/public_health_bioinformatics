@@ -19,7 +19,7 @@ workflow theiacov_clearlabs {
   }
   input {
     String samplename
-    File clear_lab_fastq
+    File read1
     String organism = "sars-cov-2"
     # sequencing values
     String seq_method = "OXFORD_NANOPORE"
@@ -40,12 +40,12 @@ workflow theiacov_clearlabs {
   }
   call fastq_scan.fastq_scan_se as fastq_scan_raw_reads {
     input:
-      read1 = clear_lab_fastq
+      read1 = read1
   }
   call ncbi_scrub.ncbi_scrub_se {
     input:
       samplename = samplename,
-      read1 = clear_lab_fastq
+      read1 = read1
   }
   call fastq_scan.fastq_scan_se as fastq_scan_clean_reads {
     input:
@@ -54,7 +54,7 @@ workflow theiacov_clearlabs {
   call kraken2.kraken2_theiacov as kraken2_raw {
     input:
       samplename = samplename,
-      read1 = clear_lab_fastq,
+      read1 = read1,
       target_organism = target_organism
   }  
   call kraken2.kraken2_theiacov as kraken2_dehosted {
