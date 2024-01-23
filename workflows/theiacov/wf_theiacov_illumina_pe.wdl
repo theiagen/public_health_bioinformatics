@@ -22,8 +22,8 @@ workflow theiacov_illumina_pe {
   input {
     String samplename
     String organism = "sars-cov-2" # options: "sars-cov-2", "HIV", "WNV", "MPXV", "flu"
-    File read1_raw
-    File read2_raw
+    File read1
+    File read2
     # sequencing values
     String seq_method = "ILLUMINA"
     File? primer_bed
@@ -58,8 +58,8 @@ workflow theiacov_illumina_pe {
     # read screen parameters
     Int min_reads = 57 # min basepairs / 300 (which is the longest available read length of an Illumina product)
     Int min_basepairs = 17000 # 10x coverage of hepatitis delta virus
-    Int min_genome_size = 1700 # size of hepatitis delta virus
-    Int max_genome_size = 2673870 # size of Pandoravirus salinus + 200 kb
+    Int min_genome_length = 1700 # size of hepatitis delta virus
+    Int max_genome_length = 2673870 # size of Pandoravirus salinus + 200 kb
     Int min_coverage = 10
     Int min_proportion = 40
     Boolean skip_screen = false
@@ -68,25 +68,25 @@ workflow theiacov_illumina_pe {
      }
   call screen.check_reads as raw_check_reads {
     input:
-      read1 = read1_raw,
-      read2 = read2_raw,
+      read1 = read1,
+      read2 = read2,
       min_reads = min_reads,
       min_basepairs = min_basepairs,
-      min_genome_size = min_genome_size,
-      max_genome_size = max_genome_size,
+      min_genome_length = min_genome_length,
+      max_genome_length = max_genome_length,
       min_coverage = min_coverage,
       min_proportion = min_proportion,
       skip_screen = skip_screen,
       workflow_series = "theiacov",
       organism = organism,
-      expected_genome_size = genome_length
+      expected_genome_length = genome_length
   }
   if (raw_check_reads.read_screen == "PASS") {
     call read_qc.read_QC_trim_pe as read_QC_trim {
       input:
         samplename = samplename,
-        read1_raw = read1_raw,
-        read2_raw = read2_raw,
+        read1 = read1,
+        read2 = read2,
         adapters = adapters,
         phix = phix,
         workflow_series = "theiacov",
@@ -100,14 +100,14 @@ workflow theiacov_illumina_pe {
         read2 = read_QC_trim.read2_clean,
         min_reads = min_reads,
         min_basepairs = min_basepairs,
-        min_genome_size = min_genome_size,
-        max_genome_size = max_genome_size,
+        min_genome_length = min_genome_length,
+        max_genome_length = max_genome_length,
         min_coverage = min_coverage,
         min_proportion = min_proportion,
         skip_screen = skip_screen,
         workflow_series = "theiacov",
         organism = organism,
-        expected_genome_size = genome_length
+        expected_genome_length = genome_length
     }
     if (clean_check_reads.read_screen == "PASS") {
       # assembly via bwa and ivar for non-flu data
@@ -286,18 +286,6 @@ workflow theiacov_illumina_pe {
     Int? num_reads_clean1 = read_QC_trim.fastq_scan_clean1
     Int? num_reads_clean2 = read_QC_trim.fastq_scan_clean2
     String? num_reads_clean_pairs = read_QC_trim.fastq_scan_clean_pairs
-    # Read QC - fastqc outputs
-    Int? fastqc_num_reads_raw1 = read_QC_trim.fastqc_raw1
-    Int? fastqc_num_reads_raw2 = read_QC_trim.fastqc_raw2
-    String? fastqc_num_reads_raw_pairs = read_QC_trim.fastqc_raw_pairs
-    File? fastqc_raw1_html = read_QC_trim.fastqc_raw1_html
-    File? fastqc_raw2_html = read_QC_trim.fastqc_raw2_html
-    String? fastqc_version = read_QC_trim.fastqc_version
-    Int? fastqc_num_reads_clean1 = read_QC_trim.fastqc_clean1
-    Int? fastqc_num_reads_clean2 = read_QC_trim.fastqc_clean2
-    String? fastqc_num_reads_clean_pairs = read_QC_trim.fastqc_clean_pairs
-    File? fastqc_clean1_html = read_QC_trim.fastqc_clean1_html
-    File? fastqc_clean2_html = read_QC_trim.fastqc_clean2_html
     # Read QC - trimmomatic outputs
     String? trimmomatic_version = read_QC_trim.trimmomatic_version
     # Read QC - bbduk outputs
