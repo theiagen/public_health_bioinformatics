@@ -150,7 +150,7 @@
     - path: miniwdl_run/call-fastq_scan_raw_reads/work/clearlabs_fastq-scan.json
       md5sum: 869dd2e934c600bba35f30f08e2da7c9
     - path: miniwdl_run/call-kraken2_dehosted/command
-      md5sum: 70955302d0fd9f693606ec964978367b
+      md5sum: 4c0f9435a517c6e6e4bae48536249838
     - path: miniwdl_run/call-kraken2_dehosted/inputs.json
       contains: ["read1", "samplename"]
     - path: miniwdl_run/call-kraken2_dehosted/outputs.json
@@ -165,7 +165,7 @@
       md5sum: 4fd4dcef994592f9865e9bc8807f32f4
     - path: miniwdl_run/call-kraken2_dehosted/work/PERCENT_SC2
       md5sum: 9fc4759d176a0e0d240c418dbaaafeb2
-    - path: miniwdl_run/call-kraken2_dehosted/work/PERCENT_TARGET_ORG
+    - path: miniwdl_run/call-kraken2_dehosted/work/PERCENT_TARGET_ORGANISM
       md5sum: 68b329da9893e34099c7d8ad5cb9c940
     - path: miniwdl_run/call-kraken2_dehosted/work/VERSION
       md5sum: 379b99c23325315c502e74614c035e7d
@@ -173,7 +173,7 @@
     - path: miniwdl_run/call-kraken2_dehosted/work/clearlabs_kraken2_report.txt
       md5sum: 35841fa2d77ec202c275b1de548b8d98
     - path: miniwdl_run/call-kraken2_raw/command
-      md5sum: a0ea125003ce38efdfd3905c3c38030b
+      md5sum: 6ae240ea8afd0e61a23fb9373e322cf8
     - path: miniwdl_run/call-kraken2_raw/inputs.json
       contains: ["read1", "samplename"]
     - path: miniwdl_run/call-kraken2_raw/outputs.json
@@ -188,7 +188,7 @@
       md5sum: 4fd4dcef994592f9865e9bc8807f32f4
     - path: miniwdl_run/call-kraken2_raw/work/PERCENT_SC2
       md5sum: 9fc4759d176a0e0d240c418dbaaafeb2
-    - path: miniwdl_run/call-kraken2_raw/work/PERCENT_TARGET_ORG
+    - path: miniwdl_run/call-kraken2_raw/work/PERCENT_TARGET_ORGANISM
       md5sum: 68b329da9893e34099c7d8ad5cb9c940
     - path: miniwdl_run/call-kraken2_raw/work/VERSION
       md5sum: 379b99c23325315c502e74614c035e7d

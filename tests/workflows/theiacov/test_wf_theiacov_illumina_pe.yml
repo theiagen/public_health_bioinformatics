@@ -99,7 +99,7 @@
       md5sum: 414f4efa514540a2527a4f27124575f2
     - path: miniwdl_run/call-read_QC_trim/call-kraken2_dehosted/work/PERCENT_SC2
       md5sum: 2bf2d20f083d8fa09abf6c25f8970e2e
-    - path: miniwdl_run/call-read_QC_trim/call-kraken2_dehosted/work/PERCENT_TARGET_ORG
+    - path: miniwdl_run/call-read_QC_trim/call-kraken2_dehosted/work/PERCENT_TARGET_ORGANISM
       md5sum: 68b329da9893e34099c7d8ad5cb9c940
     - path: miniwdl_run/call-read_QC_trim/call-kraken2_dehosted/work/SRR13687078_kraken2_report.txt
       md5sum: 3544d9ca35d45093c03cdead46677765
@@ -119,7 +119,7 @@
       md5sum: 414f4efa514540a2527a4f27124575f2
     - path: miniwdl_run/call-read_QC_trim/call-kraken2_raw/work/PERCENT_SC2
       md5sum: 2bf2d20f083d8fa09abf6c25f8970e2e
-    - path: miniwdl_run/call-read_QC_trim/call-kraken2_raw/work/PERCENT_TARGET_ORG
+    - path: miniwdl_run/call-read_QC_trim/call-kraken2_raw/work/PERCENT_TARGET_ORGANISM
       md5sum: 68b329da9893e34099c7d8ad5cb9c940
     - path: miniwdl_run/call-read_QC_trim/call-kraken2_raw/work/SRR13687078_kraken2_report.txt
       md5sum: 3544d9ca35d45093c03cdead46677765
