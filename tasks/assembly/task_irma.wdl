@@ -84,11 +84,15 @@ task irma {
       fi
       # format HA segment to target output name and rename header to include the samplename
       sed "1s/>/>~{samplename}_/" "~{samplename}"_HA*.fasta > "~{samplename}"_HA.fasta
+
+      mv ~{samplename}_HA*.bam ~{samplename}_HA.bam
     fi
     if compgen -G "~{samplename}_NA*.fasta" && [[ "$(ls ~{samplename}_NA*.fasta)" == *"NA_N"* ]]; then # check if NA segment exists with an N-type identified in header
        subtype+="$(basename ~{samplename}_NA*.fasta | awk -F _ '{print $NF}' | cut -d. -f1)" # grab N-type from last value in under-score-delimited filename 
        # format NA segment to target output name and rename header to include the samplename
        sed "1s/>/>~{samplename}_/" "~{samplename}"_NA*.fasta > "~{samplename}"_NA.fasta
+
+       mv ~{samplename}_NA*.bam ~{samplename}_NA.bam
     fi
 
     if ! [ -z "${subtype}" ]; then 
@@ -112,6 +116,9 @@ task irma {
     Array[File] irma_bams = glob("~{samplename}*.bam")
     String irma_version = read_string("VERSION")
     String irma_pipeline_date = read_string("DATE")
+    # for now just adding bams for these segments for mean coverage calculation
+    File? seg_ha_bam = "~{samplename}_HA.bam"
+    File? seg_na_bam = "~{samplename}_NA.bam"
   }
   runtime {
     docker: "~{docker}"
