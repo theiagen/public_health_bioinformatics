@@ -34,7 +34,7 @@ workflow theiacov_clearlabs {
     String nextclade_dataset_tag = "2023-09-21T12:00:00Z"
     String? nextclade_dataset_name
     # kraken parameters
-    String? target_org
+    String? target_organism
     # qc check parameters
     File? qc_check_table
   }
@@ -55,13 +55,13 @@ workflow theiacov_clearlabs {
     input:
       samplename = samplename,
       read1 = clear_lab_fastq,
-      target_org = target_org
+      target_organism = target_organism
   }  
   call kraken2.kraken2_theiacov as kraken2_dehosted {
     input:
       samplename = samplename,
       read1 = ncbi_scrub_se.read1_dehosted,
-      target_org = target_org
+      target_organism = target_organism
   }
   call artic_consensus.consensus {
     input:
@@ -133,10 +133,10 @@ workflow theiacov_clearlabs {
         num_reads_clean1 = fastq_scan_clean_reads.read1_seq,
         kraken_human = kraken2_raw.percent_human,
         # kraken_sc2 = kraken2_raw.percent_sc2,
-        # kraken_target_org = kraken2_raw.percent_target_org,
+        # kraken_target_organism = kraken2_raw.percent_target_organism,
         kraken_human_dehosted = kraken2_dehosted.percent_human,
         # kraken_sc2_dehosted = kraken2_dehosted.percent_sc2,
-        # kraken_target_org_dehosted = kraken2_dehosted.percent_target_org,
+        # kraken_target_organism_dehosted = kraken2_dehosted.percent_target_organism,
         meanbaseq_trim = stats_n_coverage_primtrim.meanbaseq,
         assembly_mean_coverage = stats_n_coverage_primtrim.depth,
         number_N = consensus_qc.number_N,
@@ -168,12 +168,12 @@ workflow theiacov_clearlabs {
     String kraken_version = kraken2_raw.version
     Float kraken_human = kraken2_raw.percent_human
     Float kraken_sc2 = kraken2_raw.percent_sc2
-    String? kraken_target_org = kraken2_raw.percent_target_org
-    String? kraken_target_org_name = kraken2_raw.kraken_target_org
+    String? kraken_target_organism = kraken2_raw.percent_target_organism
+    String? kraken_target_organism_name = kraken2_raw.kraken_target_organism
     File kraken_report = kraken2_raw.kraken_report
     Float kraken_human_dehosted = kraken2_dehosted.percent_human
     Float kraken_sc2_dehosted = kraken2_dehosted.percent_sc2
-    String? kraken_target_org_dehosted = kraken2_dehosted.percent_target_org
+    String? kraken_target_organism_dehosted = kraken2_dehosted.percent_target_organism
     File kraken_report_dehosted = kraken2_dehosted.kraken_report
     # Read Alignment - Artic consensus outputs
     File aligned_bam = consensus.trim_sorted_bam

@@ -1,5 +1,5 @@
 {
     "theiacov_clearlabs.samplename": "clearlabs",
-    "theiacov_clearlabs.clear_lab_fastq": "tests/data/theiacov/fastqs/clearlabs/clearlabs.fastq.gz",
+    "theiacov_clearlabs.read1": "tests/data/theiacov/fastqs/clearlabs/clearlabs.fastq.gz",
     "theiacov_clearlabs.primer_bed": "tests/data/theiacov/primers/artic-v3.primers.bed"
 }
