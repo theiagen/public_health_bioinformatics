@@ -152,7 +152,7 @@ workflow theiacov_illumina_pe {
               samplename = samplename
           }
         }
-        String ha_na_assembly_coverage = "HA: + ~{ha_assembly_coverage.depth + ',' + 'NA:' + na_assembly_coverage.depth}"
+        String ha_na_assembly_coverage = "'HA: ~{ha_assembly_coverage.depth + ', ' + 'NA:' + na_assembly_coverage.depth}"
         if (defined(irma.irma_assemblies)) {
           call abricate.abricate_flu {
             input:
