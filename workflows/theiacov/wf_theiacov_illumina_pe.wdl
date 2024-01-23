@@ -141,14 +141,14 @@ workflow theiacov_illumina_pe {
         if (defined(irma.seg_ha_bam)) {
           call assembly_metrics.stats_n_coverage as ha_assembly_coverage {
             input:
-              bamfile = irma.seg_ha_bam,
+              bamfile = select_first([irma.seg_ha_bam]),
               samplename = samplename
           }
         }
         if (defined(irma.seg_na_bam)) {
           call assembly_metrics.stats_n_coverage as na_assembly_coverage {
             input:
-              bamfile = irma.seg_na_bam,
+              bamfile = select_first([irma.seg_na_bam]),
               samplename = samplename
           }
         }
