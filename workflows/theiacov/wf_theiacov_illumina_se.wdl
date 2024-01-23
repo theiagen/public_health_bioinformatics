@@ -17,7 +17,7 @@ workflow theiacov_illumina_se {
   }
   input {
     String samplename
-    File read1_raw
+    File read1
     String organism = "sars-cov-2"
     # sequencing values
     String seq_method = "ILLUMINA"
@@ -43,8 +43,8 @@ workflow theiacov_illumina_se {
     # read screen parameters
     Int min_reads = 57 # min basepairs / 300 (which is the longest available read length of an Illumina product)
     Int min_basepairs = 17000 # 10x coverage of hepatitis delta virus
-    Int min_genome_size = 1700 # size of hepatitis delta virus
-    Int max_genome_size = 2673870 # size of Pandoravirus salinus + 200 kb
+    Int min_genome_length = 1700 # size of hepatitis delta virus
+    Int max_genome_length = 2673870 # size of Pandoravirus salinus + 200 kb
     Int min_coverage = 10
     Boolean skip_screen = false
     Boolean skip_mash = false
@@ -53,23 +53,23 @@ workflow theiacov_illumina_se {
   }
   call screen.check_reads_se as raw_check_reads {
     input:
-      read1 = read1_raw,
+      read1 = read1,
       min_reads = min_reads,
       min_basepairs = min_basepairs,
-      min_genome_size = min_genome_size,
-      max_genome_size = max_genome_size,
+      min_genome_length = min_genome_length,
+      max_genome_length = max_genome_length,
       min_coverage = min_coverage,
       skip_screen = skip_screen,
       workflow_series = "theiacov",
       organism = organism,
       skip_mash = skip_mash,
-      expected_genome_size = genome_length
+      expected_genome_length = genome_length
   }
   if (raw_check_reads.read_screen == "PASS") {
     call read_qc.read_QC_trim_se as read_QC_trim {
       input:
         samplename = samplename,
-        read1_raw = read1_raw,
+        read1 = read1,
         trim_minlen = trim_minlen,
         trim_quality_trim_score = trim_quality_trim_score,
         trim_window_size = trim_window_size,
@@ -82,14 +82,14 @@ workflow theiacov_illumina_se {
         read1 = read_QC_trim.read1_clean,
         min_reads = min_reads,
         min_basepairs = min_basepairs,
-        min_genome_size = min_genome_size,
-        max_genome_size = max_genome_size,
+        min_genome_length = min_genome_length,
+        max_genome_length = max_genome_length,
         min_coverage = min_coverage,
         skip_screen = skip_screen,
         workflow_series = "theiacov",
         organism = organism,
         skip_mash = skip_mash,
-        expected_genome_size = genome_length
+        expected_genome_length = genome_length
     }
     if (clean_check_reads.read_screen == "PASS") {
       call consensus_call.ivar_consensus {
@@ -207,8 +207,8 @@ workflow theiacov_illumina_se {
     # Read QC - kraken outputs
     Float? kraken_human = read_QC_trim.kraken_human
     Float? kraken_sc2 = read_QC_trim.kraken_sc2
-    String? kraken_target_org = read_QC_trim.kraken_target_org
-    String? kraken_target_org_name = read_QC_trim.kraken_target_org_name
+    String? kraken_target_org = read_QC_trim.kraken_target_organism
+    String? kraken_target_org_name = read_QC_trim.kraken_target_organism_name
     String? kraken_version = read_QC_trim.kraken_version
     File? kraken_report = read_QC_trim.kraken_report
     # Read Alignment - bwa outputs
