@@ -117,8 +117,8 @@ task irma {
     String irma_version = read_string("VERSION")
     String irma_pipeline_date = read_string("DATE")
     # for now just adding bams for these segments for mean coverage calculation
-    File? seg_ha_bam = "~{samplename}_HA.bam"
-    File? seg_na_bam = "~{samplename}_NA.bam"
+    File seg_ha_bam = "~{samplename}_HA.bam"
+    File seg_na_bam = "~{samplename}_NA.bam"
   }
   runtime {
     docker: "~{docker}"
