@@ -14,6 +14,7 @@ import "../../tasks/gene_typing/task_sc2_gene_coverage.wdl" as sc2_calculation
 import "../../tasks/quality_control/task_qc_check_phb.wdl" as qc_check
 import "../../tasks/task_versioning.wdl" as versioning
 import "../../workflows/utilities/wf_influenza_antiviral_substitutions.wdl" as flu_antiviral
+import "../../tasks/quality_control/task_assembly_metrics.wdl" as assembly_metrics
 
 workflow theiacov_illumina_pe {
   meta {
@@ -136,6 +137,22 @@ workflow theiacov_illumina_pe {
             samplename = samplename,
             seq_method = seq_method
         }
+        # can be redone later to accomodate processing of HA and NA bams together in the task, perhaps with an organism flag
+        if (defined(irma.seg_ha_bam)) {
+          call assembly_metrics.stats_n_coverage as ha_assembly_coverage {
+            input:
+              bamfile = irma.seg_ha_bam,
+              samplename = samplename
+          }
+        }
+        if (defined(irma.seg_na_bam)) {
+          call assembly_metrics.stats_n_coverage as na_assembly_coverage {
+            input:
+              bamfile = irma.seg_na_bam,
+              samplename = samplename
+          }
+        }
+        String ha_na_assembly_coverage = "HA: + ~{ha_assembly_coverage.depth + ',' + 'NA:' + na_assembly_coverage.depth}"
         if (defined(irma.irma_assemblies)) {
           call abricate.abricate_flu {
             input:
@@ -346,7 +363,7 @@ workflow theiacov_illumina_pe {
     File? consensus_flagstat = ivar_consensus.consensus_flagstat
     String meanbaseq_trim = select_first([ivar_consensus.meanbaseq_trim, ""])
     String meanmapq_trim = select_first([ivar_consensus.meanmapq_trim, ""])
-    String assembly_mean_coverage = select_first([ivar_consensus.assembly_mean_coverage, ""])
+    String assembly_mean_coverage = select_first([ivar_consensus.assembly_mean_coverage, ha_na_assembly_coverage , ""])
     String? samtools_version_stats = ivar_consensus.samtools_version_stats
     # Read Alignment - consensus assembly summary outputs
     Int? number_N = consensus_qc.number_N
