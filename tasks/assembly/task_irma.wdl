@@ -84,15 +84,11 @@ task irma {
       fi
       # format HA segment to target output name and rename header to include the samplename
       sed "1s/>/>~{samplename}_/" "~{samplename}"_HA*.fasta > "~{samplename}"_HA.fasta
-
-      mv ~{samplename}_HA*.bam ~{samplename}_HA.bam
     fi
     if compgen -G "~{samplename}_NA*.fasta" && [[ "$(ls ~{samplename}_NA*.fasta)" == *"NA_N"* ]]; then # check if NA segment exists with an N-type identified in header
        subtype+="$(basename ~{samplename}_NA*.fasta | awk -F _ '{print $NF}' | cut -d. -f1)" # grab N-type from last value in under-score-delimited filename 
        # format NA segment to target output name and rename header to include the samplename
        sed "1s/>/>~{samplename}_/" "~{samplename}"_NA*.fasta > "~{samplename}"_NA.fasta
-
-       mv ~{samplename}_NA*.bam ~{samplename}_NA.bam
     fi
 
     if ! [ -z "${subtype}" ]; then 
@@ -100,6 +96,13 @@ task irma {
     else
       echo "No subtype predicted by IRMA" > IRMA_SUBTYPE
     fi
+
+    #renaming BAm files
+    for irma_bam in ~{samplename}/*{.bam}; do
+      new_name="~{samplename}_"$(basename "${irma_bam}" | cut -d "_" -f2- )
+      echo "New name: ${new_name}; irma_bam: ${irma_bam}"
+      mv "${irma_bam}" "${new_name}"
+    done
   >>>
   output {
     File? irma_assembly_fasta = "~{samplename}.irma.consensus.fasta"
