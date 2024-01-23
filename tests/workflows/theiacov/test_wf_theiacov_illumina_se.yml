@@ -89,7 +89,7 @@
       md5sum: 1576d5d341223ea9d44b0b8a213bb9da
     - path: miniwdl_run/call-read_QC_trim/call-kraken2_raw/work/PERCENT_SC2
       md5sum: f850a30d512dad859b6618164dd27031
-    - path: miniwdl_run/call-read_QC_trim/call-kraken2_raw/work/PERCENT_TARGET_ORG
+    - path: miniwdl_run/call-read_QC_trim/call-kraken2_raw/work/PERCENT_TARGET_ORGANISM
       md5sum: 68b329da9893e34099c7d8ad5cb9c940
     - path: miniwdl_run/call-read_QC_trim/call-kraken2_raw/work/_miniwdl_inputs/0/ERR6319327_1.clean.fastq.gz
     - path: miniwdl_run/call-read_QC_trim/call-kraken2_raw/work/ERR6319327_kraken2_report.txt

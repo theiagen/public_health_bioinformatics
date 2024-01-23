@@ -202,7 +202,7 @@
     - path: miniwdl_run/call-cg_pipeline_raw/work/test_readMetrics.tsv
       contains: ["File", "fastq", "coverage"]
     - path: miniwdl_run/call-clean_check_reads/command
-      md5sum: c1e24d45bfa60a32fd7d9d60229d1bc4
+      md5sum: 399a571e65a55a2004fe77204ba5daa0
     - path: miniwdl_run/call-clean_check_reads/inputs.json
       contains: ["read1", "fastq", "skip_screen", "true"]
     - path: miniwdl_run/call-clean_check_reads/outputs.json
@@ -365,7 +365,7 @@
     - path: miniwdl_run/call-quast/work/transposed_report.txt
       contains: ["Assembly", "length", "contigs", "test"]
     - path: miniwdl_run/call-raw_check_reads/command
-      md5sum: 56dc92860246f373f62d8ead7fc4b4e3
+      md5sum: 33a9944ef1c01d72c8f8dcc58487f4a1
     - path: miniwdl_run/call-raw_check_reads/inputs.json
       contains: ["read1", "fastq", "skip_screen", "true"]
     - path: miniwdl_run/call-raw_check_reads/outputs.json
@@ -548,7 +548,7 @@
     - path: miniwdl_run/outputs.json
       contains: ["theiaprok_illumina_pe", "predicted", "VIRULENCE", "assembly_length"]
     - path: miniwdl_run/wdl/tasks/assembly/task_shovill.wdl
-      md5sum: ca45f97152cb9536f2bb0603382021bd
+      md5sum: 07a80c829da741915b879e3b6b384f90
     - path: miniwdl_run/wdl/tasks/gene_typing/task_abricate.wdl
       md5sum: 49018b0dc2b173bc9e0f3893b8be8e7c
     - path: miniwdl_run/wdl/tasks/gene_typing/task_amrfinderplus.wdl
@@ -582,7 +582,7 @@
     - path: miniwdl_run/wdl/tasks/quality_control/task_quast.wdl
       contains: ["version", "quast", "output"]
     - path: miniwdl_run/wdl/tasks/quality_control/task_screen.wdl
-      md5sum: b1aa33ab328b26aa1ecad344ea1fd7b5
+      md5sum: 4574cda872a55c6e80fa5e6e95972c9a
     - path: miniwdl_run/wdl/tasks/quality_control/task_trimmomatic.wdl
       contains: ["version", "trimmomatic", "output"]
     - path: miniwdl_run/wdl/tasks/species_typing/task_cauris_cladetyper.wdl
@@ -628,13 +628,13 @@
     - path: miniwdl_run/wdl/tasks/taxon_id/task_gambit.wdl
       md5sum: 4e1d4f6b8085a209f9721748a0c0fef0
     - path: miniwdl_run/wdl/tasks/taxon_id/task_kraken2.wdl
-      md5sum: 164c9186746bfc4c89907a43af56328c
+      md5sum: a093ce11a50511a28e4e113e439d9080
     - path: miniwdl_run/wdl/tasks/taxon_id/task_midas.wdl
       md5sum: faacd87946ee3fbdf70f3a15b79ce547
     - path: miniwdl_run/wdl/tasks/utilities/task_broad_terra_tools.wdl
-      md5sum: e7a4488aebdabf9ea15a16538d6c835c
+      md5sum: 73ddf332fc558c652a94f163b3d0481b
     - path: miniwdl_run/wdl/workflows/theiaprok/wf_theiaprok_illumina_pe.wdl
-      md5sum: 4c681a395a318f224d770e423b4c1d75
+      md5sum: cefe0baeb1e1d31505a754ea4691d18a
     - path: miniwdl_run/wdl/workflows/utilities/wf_merlin_magic.wdl
       md5sum: 90eb6ac7463058a81da77120aa45138b
     - path: miniwdl_run/wdl/workflows/utilities/wf_read_QC_trim_pe.wdl
