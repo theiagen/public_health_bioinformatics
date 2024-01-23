@@ -65,7 +65,7 @@ workflow read_QC_trim_se {
   if (read_qc == "fastq_scan") {
     call fastq_scan.fastq_scan_se as fastq_scan_raw {
       input:
-        read1 = read1_raw
+        read1 = read1
     }
     call fastq_scan.fastq_scan_se as fastq_scan_clean {
       input:
@@ -75,7 +75,7 @@ workflow read_QC_trim_se {
   if (read_qc == "fastqc") {
     call fastqc_task.fastqc_se as fastqc_raw {
       input:
-        read1 = read1_raw
+        read1 = read1
     }
     call fastqc_task.fastqc_se as fastqc_clean {
       input:
@@ -103,7 +103,7 @@ workflow read_QC_trim_se {
       call kraken.kraken2_standalone {
         input:
           samplename = samplename,
-          read1 = read1_raw,
+          read1 = read1,
           kraken2_db = select_first([kraken_db])
       }
     }
