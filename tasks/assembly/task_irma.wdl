@@ -98,10 +98,10 @@ task irma {
     fi
 
     # rename BAM file if exists
-    if [ $(find . -maxdepth 4 -type f -iname "~{samplename}"_HA*.bam | wc -l) -gt 0 ]; then
+    if [ ! -f "~{samplename}"_HA.bam ]; then
       mv "~{samplename}"_HA*.bam "~{samplename}"_HA.bam
     fi
-    if [ $(find . -maxdepth 4 -type f -iname "~{samplename}"_NA*.bam | wc -l) -gt 0 ]; then
+    if [ ! -f "~{samplename}"_NA.bam ]; then
       mv "~{samplename}"_NA*.bam "~{samplename}"_NA.bam
     fi
 
