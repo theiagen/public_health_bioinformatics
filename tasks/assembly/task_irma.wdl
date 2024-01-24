@@ -96,6 +96,15 @@ task irma {
     else
       echo "No subtype predicted by IRMA" > IRMA_SUBTYPE
     fi
+
+    # rename BAM file if exists
+    if [ $(find . -maxdepth 4 -type f -iname "~{samplename}"_HA*.bam | wc -l) -gt 0 ]; then
+      mv "~{samplename}"_HA*.bam > "~{samplename}"_HA.bam
+    fi
+    if [ $(find . -maxdepth 4 -type f -iname "~{samplename}"_NA*.bam | wc -l) -gt 0 ]; then
+      mv "~{samplename}"_NA*.bam > "~{samplename}"_NA.bam
+    fi
+
   >>>
   output {
     File? irma_assembly_fasta = "~{samplename}.irma.consensus.fasta"
