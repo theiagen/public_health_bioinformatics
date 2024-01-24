@@ -9,8 +9,8 @@ task irma {
     Boolean keep_ref_deletions = true
     String read_basename = basename(read1)
     String docker = "cdcgov/irma:v1.1.3"
-    Int memory = 8
-    Int cpu = 4
+    Int memory = 16
+    Int cpu = 8
     Int disk_size = 100
   }
   command <<<
