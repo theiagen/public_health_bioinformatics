@@ -20,7 +20,7 @@ jobs:
       workflows_files: ${{ steps.filter.outputs.wf_files }}
     steps:
       # Checkout the repo
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       # Select wdl files with changes
       - uses: dorny/paths-filter@v2
@@ -43,7 +43,7 @@ jobs:
         wf: ${{ fromJson(needs.changes.outputs.workflows_files) }}
     steps:
       # Checkout the repo
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       # Install a version of Python3
       - name: Set up Python

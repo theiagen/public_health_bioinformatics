@@ -19,7 +19,7 @@ jobs:
       workflows: ${{ steps.filter.outputs.changes }}
     steps:
       # Checkout the repo
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       # Select workflows with changes
       - uses: dorny/paths-filter@v2
@@ -50,11 +50,11 @@ jobs:
     steps:
       # Checkout the repo
       - name: Checkout theiagen/public_health_bacterial_genomics
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       # Import test data
       - name: Pull Test Data from bactopia/bactopia-tests
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: bactopia/bactopia-tests
           path: bactopia-tests
