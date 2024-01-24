@@ -330,7 +330,7 @@ workflow theiacov_illumina_pe {
     Float? kraken_sc2 = read_QC_trim.kraken_sc2
     String? kraken_target_org = read_QC_trim.kraken_target_org
     String? kraken_target_org_name = read_QC_trim.kraken_target_org_name
-    File? kraken_report = read_QC_trim.kraken_report
+    String? kraken_report = read_QC_trim.kraken_report
     Float? kraken_human_dehosted = read_QC_trim.kraken_human_dehosted
     Float? kraken_sc2_dehosted = read_QC_trim.kraken_sc2_dehosted
     String? kraken_target_org_dehosted =read_QC_trim.kraken_target_org_dehosted
