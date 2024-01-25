@@ -12,8 +12,10 @@ task tbp_parser {
     Int min_depth = 10
     Int coverage_threshold = 100
     Boolean tbp_parser_debug = false
+    Boolean tngs_data = false
 
-    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:1.1.8"
+
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:1.3.0"
     Int disk_size = 100
     Int memory = 4
     Int cpu = 1
@@ -29,7 +31,8 @@ task tbp_parser {
       ~{"--min_depth " + min_depth} \
       ~{"--coverage_threshold " + coverage_threshold} \
       --output_prefix ~{samplename} \
-      ~{true="--debug" false="--verbose" tbp_parser_debug}
+      ~{true="--debug" false="--verbose" tbp_parser_debug} \
+      ~{true="" false="--coverage_regions /tbp-parser/tbp_parser/data/tngs-primer-regions.bed" tngs_data}
 
     # set default genome percent coverage and average depth to 0 to prevent failures
     echo 0.0 > GENOME_PC

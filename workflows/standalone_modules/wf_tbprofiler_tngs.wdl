@@ -44,7 +44,8 @@ workflow tbprofiler_tngs {
       tbprofiler_json = tbprofiler.tbprofiler_output_json,
       tbprofiler_bam = tbprofiler.tbprofiler_output_bam,
       tbprofiler_bai = tbprofiler.tbprofiler_output_bai,
-      samplename = samplename
+      samplename = samplename,
+      tngs_data = true
   }
   output {
     # trimmomatic outputs
