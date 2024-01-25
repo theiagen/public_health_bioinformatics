@@ -122,7 +122,7 @@
     - path: miniwdl_run/call-nextclade_output_parser/work/input.tsv
       md5sum: 9b459df2831ab1974c9c8cef5bc5340e
     - path: miniwdl_run/call-pangolin4/command
-      md5sum: 85d3001929bde4169a11947fb38fb693
+      md5sum: 558f8f3b23b7562e7dca67dc0a647522
     - path: miniwdl_run/call-pangolin4/inputs.json
     - path: miniwdl_run/call-pangolin4/outputs.json
     - path: miniwdl_run/call-pangolin4/stderr.txt
@@ -144,7 +144,7 @@
       md5sum: 9f9c4c00a1ceb5526bed7dc4cdb3dcfd
     - path: miniwdl_run/call-pangolin4/work/_miniwdl_inputs/0/clearlabs.fasta.gz
     - path: miniwdl_run/call-pangolin4/work/fasta.pangolin_report.csv
-      md5sum: 81679363ffed582650f8512794035806
+      md5sum: c8ddc2706b30b5bfcaf32636ed5a63ec
     - path: miniwdl_run/call-vadr/command
       md5sum: f4ad614b7ad39f28a8145cec280a93c0
     - path: miniwdl_run/call-vadr/inputs.json
