@@ -18,6 +18,7 @@ workflow read_QC_trim_pe {
     String samplename
     File read1_raw
     File read2_raw
+    String organism
     Int trim_minlen = 75
     Int trim_quality_trim_score = 30
     Int trim_window_size = 4
@@ -49,14 +50,16 @@ workflow read_QC_trim_pe {
         samplename = samplename,
         read1 = read1_raw,
         read2 = read2_raw,
-        target_org = target_org
+        target_org = target_org,
+        organism = organism
     }
     call kraken.kraken2_theiacov as kraken2_theiacov_dehosted {
       input:
         samplename = samplename,
         read1 = select_first([ncbi_scrub_pe.read1_dehosted]),
         read2 = ncbi_scrub_pe.read2_dehosted,
-        target_org = target_org
+        target_org = target_org,
+        organism = organism
     }
   }
   if (read_processing == "trimmomatic"){
@@ -192,6 +195,10 @@ workflow read_QC_trim_pe {
     String? kraken_target_org_name = target_org
     File? kraken_report_dehosted = kraken2_theiacov_dehosted.kraken_report
     String kraken_docker = select_first([kraken2_theiacov_raw.docker, kraken2_standalone.kraken2_docker, ""])
+    String? kraken_most_abundant_organism_raw = kraken2_theiacov_raw.most_abundant_organism
+    String? kraken_percent_most_abundant_organism_raw = kraken2_theiacov_raw.percent_most_abundant_organism
+    String? kraken_most_abundant_organism_dehosted = kraken2_theiacov_dehosted.most_abundant_organism
+    String? kraken_percent_most_abundant_organism_dehosted = kraken2_theiacov_dehosted.percent_most_abundant_organism
     
     # trimming versioning
     String? trimmomatic_version = trimmomatic_pe.version

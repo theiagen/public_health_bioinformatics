@@ -88,6 +88,7 @@ workflow theiacov_illumina_pe {
         samplename = samplename,
         read1_raw = read1_raw,
         read2_raw = read2_raw,
+        organism = organism,
         adapters = adapters,
         phix = phix,
         workflow_series = "theiacov",
@@ -335,6 +336,10 @@ workflow theiacov_illumina_pe {
     Float? kraken_sc2_dehosted = read_QC_trim.kraken_sc2_dehosted
     String? kraken_target_org_dehosted =read_QC_trim.kraken_target_org_dehosted
     File? kraken_report_dehosted = read_QC_trim.kraken_report_dehosted
+    String? kraken_most_abundant_organism_raw = read_QC_trim.kraken_most_abundant_organism_raw
+    String? kraken_percent_most_abundant_organism_raw = read_QC_trim.kraken_percent_most_abundant_organism_raw
+    String? kraken_most_abundant_organism_dehosted = read_QC_trim.kraken_most_abundant_organism_dehosted
+    String? kraken_percent_most_abundant_organism_dehosted = read_QC_trim.kraken_percent_most_abundant_organism_dehosted
     # Read Alignment - bwa outputs
     String? bwa_version = ivar_consensus.bwa_version
     String? samtools_version = ivar_consensus.samtools_version

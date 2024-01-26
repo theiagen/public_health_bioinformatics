@@ -15,6 +15,7 @@ workflow read_QC_trim_ont {
   input {
     String samplename
     File read1
+    String organism
     Int? genome_size
 
     String? workflow_series
@@ -45,13 +46,15 @@ workflow read_QC_trim_ont {
       input:
         samplename = samplename,
         read1 = read1,
-        target_org = target_org
+        target_org = target_org,
+        organism = organism
     }  
     call kraken2.kraken2_theiacov as kraken2_dehosted {
       input:
         samplename = samplename,
         read1 = ncbi_scrub_se.read1_dehosted,
-        target_org = target_org
+        target_org = target_org,
+        organism = organism
     }
   }
   if ("~{workflow_series}" == "theiaprok") {
@@ -96,12 +99,16 @@ workflow read_QC_trim_ont {
     Float? kraken_sc2 = kraken2_raw.percent_sc2
     String? kraken_target_org = kraken2_raw.percent_target_org
     File? kraken_report = kraken2_raw.kraken_report
+    String? kraken_most_abundant_organism_raw = kraken2_raw.most_abundant_organism
+    String? kraken_percent_most_abundant_organism_raw = kraken2_raw.percent_most_abundant_organism
     
     # kraken outputs dehosted
     Float? kraken_human_dehosted = kraken2_dehosted.percent_human
     Float? kraken_sc2_dehosted = kraken2_dehosted.percent_sc2
     String? kraken_target_org_dehosted = kraken2_dehosted.percent_target_org
     File? kraken_report_dehosted = kraken2_dehosted.kraken_report
+    String? kraken_most_abundant_organism_dehosted = kraken2_dehosted.most_abundant_organism
+    String? kraken_percent_most_abundant_organism_dehosted = kraken2_dehosted.percent_most_abundant_organism
    
     # theiaprok outputs
     # kmc outputs

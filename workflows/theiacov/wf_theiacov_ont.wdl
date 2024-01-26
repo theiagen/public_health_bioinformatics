@@ -91,6 +91,7 @@ workflow theiacov_ont {
         max_length = max_length,
         run_prefix = run_prefix,
         target_org = target_org,
+        organism = organism,
         workflow_series = "theiacov"
     }
     call screen.check_reads_se as clean_check_reads {
@@ -306,11 +307,15 @@ workflow theiacov_ont {
     Float? kraken_sc2 = read_qc_trim.kraken_sc2
     String? kraken_target_org = read_qc_trim.kraken_target_org
     File? kraken_report = read_qc_trim.kraken_report
+    String? kraken_most_abundant_organism_raw = read_qc_trim.kraken_most_abundant_organism_raw
+    String? kraken_percent_most_abundant_organism_raw = read_qc_trim.kraken_percent_most_abundant_organism_raw
     # Read QC - kraken outputs dehosted
     Float? kraken_human_dehosted = read_qc_trim.kraken_human_dehosted
     Float? kraken_sc2_dehosted = read_qc_trim.kraken_sc2_dehosted
     String? kraken_target_org_dehosted = read_qc_trim.kraken_target_org_dehosted
     File? kraken_report_dehosted = read_qc_trim.kraken_report_dehosted
+    String? kraken_most_abundant_organism_dehosted = read_qc_trim.kraken_most_abundant_organism_dehosted
+    String? kraken_percent_most_abundant_organism_dehosted = read_qc_trim.kraken_percent_most_abundant_organism_dehosted
     # Read Alignment - Artic consensus outputs
     String assembly_fasta = select_first([consensus.consensus_seq, irma.irma_assembly_fasta, ""])
     File? aligned_bam = consensus.trim_sorted_bam
