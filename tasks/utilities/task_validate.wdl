@@ -62,7 +62,7 @@ task theiavalidate {
     String? na_values
     Boolean debug_output = false
 
-    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/theiavalidate:0.0.1"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/theiavalidate:0.1.0"
     Int disk_size = 10
   }
   String datatable1_name = basename(datatable1_tsv)
