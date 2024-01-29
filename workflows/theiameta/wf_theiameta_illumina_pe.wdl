@@ -8,6 +8,8 @@ import "../../tasks/alignment/task_minimap2.wdl" as minimap2_task
 import "../../tasks/utilities/task_parse_mapping.wdl" as parse_mapping_task
 import "../../tasks/quality_control/task_quast.wdl" as quast_task
 import "../../tasks/task_versioning.wdl" as versioning
+import "../../tasks/alignment/task_bwa.wdl" as bwa_task
+import "../../tasks/assembly/task_semibin.wdl" as semibin_task
 
 workflow theiameta_illumina_pe {
   meta {
@@ -131,6 +133,22 @@ workflow theiameta_illumina_pe {
           bam = sam_to_sorted_bam.bam,
       } 
     }
+    if (! defined(reference)){
+      call bwa_task.bwa as bwa {
+        input:
+          read1 = read_QC_trim.read1_clean,
+          read2 = read_QC_trim.read2_clean,
+          reference_genome = metaspades.assembly_fasta,
+          samplename = samplename
+      }
+      call semibin_task.semibin as semibin {
+        input:
+          sorted_bam = bwa.sorted_bam,
+          sorted_bai = bwa.sorted_bai,
+          assembly_fasta = metaspades.assembly_fasta,
+          samplename = samplename
+      }
+    }
     call versioning.version_capture{
       input:
   }
@@ -217,5 +235,8 @@ workflow theiameta_illumina_pe {
     File? read2_mapped = retrieve_aligned_pe_reads_sam.read2
     # Assembly stats
     Float? percentage_mapped_reads = assembled_reads_percent.percentage_mapped
+    # Binning
+    String? semibin_version = semibin.semibin_version
+    Array[File]? semibin_bins = semibin.semibin_bins
     }
 }
