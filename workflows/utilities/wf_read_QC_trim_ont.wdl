@@ -15,7 +15,7 @@ workflow read_QC_trim_ont {
   input {
     String samplename
     File read1
-    String organism
+    String? organism
     Int? genome_size
 
     String? workflow_series

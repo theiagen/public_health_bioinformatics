@@ -18,7 +18,7 @@ workflow read_QC_trim_pe {
     String samplename
     File read1_raw
     File read2_raw
-    String organism
+    String? organism
     Int trim_minlen = 75
     Int trim_quality_trim_score = 30
     Int trim_window_size = 4

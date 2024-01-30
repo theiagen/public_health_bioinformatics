@@ -5,7 +5,7 @@ task kraken2_theiacov {
     File read1
     File? read2
     String samplename
-    String organism
+    String? organism
     String kraken2_db = "/kraken2-db"
     Int cpu = 4
     String? target_org
