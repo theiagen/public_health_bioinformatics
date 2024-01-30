@@ -14,6 +14,10 @@ task prune_table {
     String read1_column_name = "read1"
     String read2_column_name = "read2"
   }
+  meta {
+    # added so that call caching is always turned off
+    volatile: true
+  }
   command <<<
     # when running on terra, comment out all input_table mentions
     python3 /scripts/export_large_tsv/export_large_tsv.py --project "~{project_name}" --workspace "~{workspace_name}" --entity_type ~{table_name} --tsv_filename ~{table_name}-data.tsv

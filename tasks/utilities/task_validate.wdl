@@ -10,6 +10,10 @@ task export_two_tsvs {
     String datatable2
     Int disk_size = 10
   }
+  meta {
+    # added so that call caching is always turned off
+    volatile: true
+  }
   command <<<
     python3 /scripts/export_large_tsv/export_large_tsv.py --project ~{terra_project1} --workspace ~{terra_workspace1} --entity_type ~{datatable1} --tsv_filename "~{datatable1}.tsv"
 
@@ -61,12 +65,16 @@ task theiavalidate {
     File? column_translation_tsv
     String? na_values
     Boolean debug_output = false
-
+    
     String docker = "us-docker.pkg.dev/general-theiagen/theiagen/theiavalidate:0.1.0"
     Int disk_size = 10
   }
   String datatable1_name = basename(datatable1_tsv)
   String datatable2_name = basename(datatable2_tsv)
+  meta {
+    # added so that call caching is always turned off
+    volatile: true
+  }
   command <<<
     # grab theiavalidate version
     theiavalidate.py -v > VERSION

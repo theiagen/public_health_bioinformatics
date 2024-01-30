@@ -15,6 +15,10 @@ task summarize_data {
     #File? input_table
     Boolean phandango_coloring = true
   }
+  meta {
+    # added so that call caching is always turned off
+    volatile: true
+  }
   command <<<   
     # when running on terra, comment out all input_table mentions
     python3 /scripts/export_large_tsv/export_large_tsv.py --project "~{terra_project}" --workspace "~{terra_workspace}" --entity_type ~{terra_table} --tsv_filename ~{terra_table}-data.tsv 
