@@ -298,6 +298,9 @@ task export_taxon_tables {
     String? midas_primary_genus
     String? midas_secondary_genus
     Float? midas_secondary_genus_abundance
+    String? kraken2_version
+    String? kraken2_docker
+    String? kraken2_report
     File? bakta_gbff
     File? bakta_gff3
     File? bakta_tsv
@@ -668,6 +671,9 @@ task export_taxon_tables {
       "midas_primary_genus": "~{midas_primary_genus}",
       "midas_secondary_genus": "~{midas_secondary_genus}",
       "midas_secondary_genus_abundance": "~{midas_secondary_genus_abundance}",
+      "kraken2_version": "~{kraken2_version}",
+      "kraken2_docker": "~{kraken2_docker}",
+      "kraken2_report": "~{kraken2_report}",
       "bakta_gbff": "~{bakta_gbff}",
       "bakta_gff3": "~{bakta_gff3}",
       "bakta_tsv": "~{bakta_tsv}",

@@ -312,7 +312,7 @@ workflow theiacov_ont {
     String? kraken_target_org_dehosted = read_qc_trim.kraken_target_org_dehosted
     File? kraken_report_dehosted = read_qc_trim.kraken_report_dehosted
     # Read Alignment - Artic consensus outputs
-    File? assembly_fasta = select_first([consensus.consensus_seq, irma.irma_assembly_fasta, ""])
+    String assembly_fasta = select_first([consensus.consensus_seq, irma.irma_assembly_fasta, ""])
     File? aligned_bam = consensus.trim_sorted_bam
     File? aligned_bai = consensus.trim_sorted_bai
     File? medaka_vcf = consensus.medaka_pass_vcf
@@ -323,7 +323,7 @@ workflow theiacov_ont {
     String? artic_docker = consensus.artic_pipeline_docker
     String? medaka_reference = consensus.medaka_reference
     String? primer_bed_name = consensus.primer_bed_name
-    String? assembly_method = "TheiaCoV (~{version_capture.phb_version}): " + select_first([consensus.artic_pipeline_version, irma.irma_version, ""])
+    String assembly_method = "TheiaCoV (~{version_capture.phb_version}): " + select_first([consensus.artic_pipeline_version, irma.irma_version, ""])
     # Assembly QC - consensus assembly qc outputs
     File? consensus_stats = stats_n_coverage.stats
     File? consensus_flagstat = stats_n_coverage.flagstat
@@ -354,15 +354,15 @@ workflow theiacov_ont {
     String? pangolin_docker = pangolin4.pangolin_docker
     String? pangolin_versions = pangolin4.pangolin_versions
     # Nextclade outputs
-    String? nextclade_json = select_first([nextclade.nextclade_json, ""])
-    String? auspice_json = select_first([ nextclade.auspice_json, ""])
-    String? nextclade_tsv = select_first([nextclade.nextclade_tsv, ""])
-    String? nextclade_version = select_first([nextclade.nextclade_version, ""])
-    String? nextclade_docker = select_first([nextclade.nextclade_docker, ""])
-    String? nextclade_ds_tag = select_first([ha_na_nextclade_ds_tag, abricate_flu.nextclade_ds_tag_ha, nextclade_dataset_tag, ""])
-    String? nextclade_aa_subs = select_first([ha_na_nextclade_aa_subs, nextclade_output_parser.nextclade_aa_subs, ""])
-    String? nextclade_aa_dels = select_first([ha_na_nextclade_aa_dels, nextclade_output_parser.nextclade_aa_dels, ""])
-    String? nextclade_clade = select_first([nextclade_output_parser.nextclade_clade, ""])
+    String nextclade_json = select_first([nextclade.nextclade_json, ""])
+    String auspice_json = select_first([ nextclade.auspice_json, ""])
+    String nextclade_tsv = select_first([nextclade.nextclade_tsv, ""])
+    String nextclade_version = select_first([nextclade.nextclade_version, ""])
+    String nextclade_docker = select_first([nextclade.nextclade_docker, ""])
+    String nextclade_ds_tag = select_first([ha_na_nextclade_ds_tag, abricate_flu.nextclade_ds_tag_ha, nextclade_dataset_tag, ""])
+    String nextclade_aa_subs = select_first([ha_na_nextclade_aa_subs, nextclade_output_parser.nextclade_aa_subs, ""])
+    String nextclade_aa_dels = select_first([ha_na_nextclade_aa_dels, nextclade_output_parser.nextclade_aa_dels, ""])
+    String nextclade_clade = select_first([nextclade_output_parser.nextclade_clade, ""])
     String? nextclade_lineage = nextclade_output_parser.nextclade_lineage
     String? nextclade_qc = nextclade_output_parser.nextclade_qc
     # Nextclade Flu outputs - NA specific columns - tamiflu mutation
