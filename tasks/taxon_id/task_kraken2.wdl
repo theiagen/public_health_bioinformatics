@@ -44,19 +44,19 @@ task kraken2_theiacov {
       # for legacy purposes
       echo $kraken_identified_organism_abundance > PERCENT_SC2
     elif [[ "~{organism}" == "flu" ]] ; then
-      kraken_output=$(grep "Influenza" ~{samplename}_kraken2_report.txt | sort -k3,3n | tail -1)
+      kraken_output=$(grep "Influenza" ~{samplename}_kraken2_report.txt | sort -k2,2n | tail -1)
       kraken_identified_organism=$(echo "$kraken_output" | awk '{ $1=$2=$3=$4=$5=""; print $0 }')
       kraken_identified_organism_abundance=$(echo "$kraken_output" | cut -f1)
     elif [[ "~{organism}" == "MPXV" ]] ; then
-      kraken_output=$(grep "Monkeypox" ~{samplename}_kraken2_report.txt | sort -k3,3n | tail -1)
+      kraken_output=$(grep "Monkeypox" ~{samplename}_kraken2_report.txt | sort -k2,2n | tail -1)
       kraken_identified_organism=$(echo "$kraken_output" | awk '{ $1=$2=$3=$4=$5=""; print $0 }')
       kraken_identified_organism_abundance=$(echo "$kraken_output" | cut -f1)
     elif [[ "~{organism}" == "HIV" ]] ; then
-      kraken_output=$(grep "Human immunodeficiency virus" ~{samplename}_kraken2_report.txt | sort -k3,3n | tail -1)
+      kraken_output=$(grep "Human immunodeficiency virus" ~{samplename}_kraken2_report.txt | sort -k2,2n | tail -1)
       kraken_identified_organism=$(echo "$kraken_output" | awk '{ $1=$2=$3=$4=$5=""; print $0 }')
       kraken_identified_organism_abundance=$(echo "$kraken_output" | cut -f1)
     elif [[ "~{organism}" == "WNV" ]] ; then
-      kraken_output=$(grep "West Nile virus" ~{samplename}_kraken2_report.txt | sort -k3,3n | tail -1)
+      kraken_output=$(grep "West Nile virus" ~{samplename}_kraken2_report.txt | sort -k2,2n | tail -1)
       kraken_identified_organism=$(echo "$kraken_output" | awk '{ $1=$2=$3=$4=$5=""; print $0 }')
       kraken_identified_organism_abundance=$(echo "$kraken_output" | cut -f1)
     else
