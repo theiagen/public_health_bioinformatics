@@ -60,8 +60,17 @@ task kraken2_theiacov {
       kraken_identified_organism=$(echo "$kraken_output" | awk '{ $1=$2=$3=$4=$5=""; print $0 }')
       kraken_identified_organism_abundance=$(echo "$kraken_output" | cut -f1)
     else
-      kraken_identified_organism=""
-      kraken_identified_organism_abundance=""
+    # we can either report nothing here when organism is not defined or pick the most abundant organism that is neither human nor sars-cov-2
+      kraken_output=$(tail -n +3 ~{samplename}_kraken2_report.txt) # Remove the first two rows
+      # Delete rows with the same value as $percentage_human in the 6th column for "Homo sapiens"
+      kraken_output=$(echo "$kraken_output" | awk -v ph="$percentage_human" '$6 != "Homo sapiens" || $1 == ph')
+      # Delete rows with the same value as $percentage_sc2 in the 6th column for "Severe acute respiratory syndrome-related coronavirus 2"
+      kraken_output=$(echo "$kraken_output" | awk -v psc2="$percentage_sc2" '$6 != "Severe acute respiratory syndrome-related coronavirus 2" || $1 == psc2')
+      # Sort and get the line with the highest abundance
+      kraken_output=$(echo "$kraken_output" | sort -k3,3n | tail -1)
+      # Extract the identified organism and its abundance
+      kraken_identified_organism=$(echo "$kraken_output" | awk '{ $1=$2=$3=$4=$5=""; print $0 }')
+      kraken_identified_organism_abundance=$(echo "$kraken_output" | cut -f1)
     fi
 
     echo $kraken_identified_organism | tee MOST_ABUNDANT_ORGANISM
