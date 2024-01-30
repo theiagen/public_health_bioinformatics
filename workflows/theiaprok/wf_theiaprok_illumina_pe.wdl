@@ -534,6 +534,10 @@ workflow theiaprok_illumina_pe {
             kraken2_version = read_QC_trim.kraken_version,
             kraken2_docker = read_QC_trim.kraken_docker,
             kraken2_report = read_QC_trim.kraken_report,
+            kraken_most_abundant_organism_raw = read_QC_trim.kraken_most_abundant_organism_raw,
+            kraken_percent_most_abundant_organism_raw = read_QC_trim.kraken_percent_most_abundant_organism_raw,
+            kraken_most_abundant_organism_dehosted = read_QC_trim.kraken_most_abundant_organism_dehosted,
+            kraken_percent_most_abundant_organism_dehosted = read_QC_trim.kraken_percent_most_abundant_organism_dehosted,
             pasty_serogroup = merlin_magic.pasty_serogroup,
             pasty_serogroup_coverage = merlin_magic.pasty_serogroup_coverage,
             pasty_serogroup_fragments = merlin_magic.pasty_serogroup_fragments,
@@ -612,6 +616,10 @@ workflow theiaprok_illumina_pe {
     String? kraken2_version = read_QC_trim.kraken_version
     String? kraken2_report = read_QC_trim.kraken_report
     String? kraken2_docker = read_QC_trim.kraken_docker
+    String? kraken_most_abundant_organism_raw = read_QC_trim.kraken_most_abundant_organism_raw
+    String? kraken_percent_most_abundant_organism_raw = read_QC_trim.kraken_percent_most_abundant_organism_raw
+    String? kraken_most_abundant_organism_dehosted = read_QC_trim.kraken_most_abundant_organism_dehosted
+    String? kraken_percent_most_abundant_organism_dehosted = read_QC_trim.kraken_percent_most_abundant_organism_dehosted
     # Assembly - shovill outputs 
     File? assembly_fasta = shovill_pe.assembly_fasta
     File? contigs_gfa = shovill_pe.contigs_gfa

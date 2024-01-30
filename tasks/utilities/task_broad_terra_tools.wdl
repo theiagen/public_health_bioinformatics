@@ -301,6 +301,10 @@ task export_taxon_tables {
     String? kraken2_version
     String? kraken2_docker
     String? kraken2_report
+    String? kraken_most_abundant_organism_raw
+    String? kraken_percent_most_abundant_organism_raw
+    String? kraken_most_abundant_organism_dehosted
+    String? kraken_percent_most_abundant_organism_dehosted
     File? bakta_gbff
     File? bakta_gff3
     File? bakta_tsv
@@ -674,6 +678,10 @@ task export_taxon_tables {
       "kraken2_version": "~{kraken2_version}",
       "kraken2_docker": "~{kraken2_docker}",
       "kraken2_report": "~{kraken2_report}",
+      "kraken_most_abundant_organism_raw": "~{kraken_most_abundant_organism_raw}",
+      "kraken_percent_most_abundant_organism_raw": "~{kraken_percent_most_abundant_organism_raw}",
+      "kraken_most_abundant_organism_dehosted": "~{kraken_most_abundant_organism_dehosted}",
+      "kraken_percent_most_abundant_organism_dehosted": "~{kraken_percent_most_abundant_organism_dehosted}",
       "bakta_gbff": "~{bakta_gbff}",
       "bakta_gff3": "~{bakta_gff3}",
       "bakta_tsv": "~{bakta_tsv}",
