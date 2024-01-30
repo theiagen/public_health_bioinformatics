@@ -7,6 +7,8 @@ task semibin {
     String samplename
     File assembly_fasta
     String environment = "global"
+    Int min_len = 1000
+    Float ratio = 0.05
     Int cpu = 6
     Int mem = 8
     Int disk_size = 100
@@ -17,13 +19,28 @@ task semibin {
     date | tee DATE
     SemiBin -v | tee SEMIBIN_VERSION
 
-    # run SemiBin
-    SemiBin single_easy_bin \
-      -i ~{assembly_fasta} \
-      -b ~{sorted_bam} \
-      -o ~{samplename} \
-      -t ~{cpu} \
-      --environment ~{environment}
+    # check the number of contigs are greater than min_len
+    count=$(awk '/^>/ {if (length(seq) > ~{min_len}) count++; seq = ""; next} {seq = seq $0} END {if (length(seq) > ~{min_len}) count++; print count}' ~{assembly_fasta})
+    echo "Number of contigs greater than ~{min_len} characters: $count"
+
+    # SeminBin2 requires at least two contigs greater than the min_len to run
+    if [ $count -gt 1 ]; then
+        echo "Running SemiBin2"
+        
+        # run SemiBin
+        SemiBin single_easy_bin \
+          -i ~{assembly_fasta} \
+          -b ~{sorted_bam} \
+          -o ~{samplename} \
+          -t ~{cpu} \
+          --environment ~{environment} \
+          --min-len ~{min_len} \
+          --ratio ~{ratio}
+    else
+        echo "One or fewer contigs found with ~{min_len} in ~{assembly_fasta}."
+        echo "Aborting binning with SemiBin2..."
+    fi
+
   >>>
   output {
     String semibin_version = read_string("SEMIBIN_VERSION")
@@ -34,7 +51,7 @@ task semibin {
     memory: mem + " GB"
     cpu: cpu
     disks:  "local-disk " + disk_size + " SSD"
-    disk: disk_size + " GB" # TES
+    disk: disk_size + " GB"
     preemptible: 0
     maxRetries: 3
   }
