@@ -7,10 +7,10 @@ task semibin {
     String samplename
     File assembly_fasta
     String environment = "global"
-    Int min_len = 1000
+    Int min_length = 1000
     Float ratio = 0.05
     Int cpu = 6
-    Int mem = 8
+    Int memory = 8
     Int disk_size = 100
     String docker = "us-docker.pkg.dev/general-theiagen/biocontainers/semibin:2.0.2--pyhdfd78af_0"
   }
@@ -20,8 +20,8 @@ task semibin {
     SemiBin -v | tee SEMIBIN_VERSION
 
     # check the number of contigs are greater than min_len
-    count=$(awk '/^>/ {if (length(seq) > ~{min_len}) count++; seq = ""; next} {seq = seq $0} END {if (length(seq) > ~{min_len}) count++; print count}' ~{assembly_fasta})
-    echo "Number of contigs greater than ~{min_len} characters: $count"
+    count=$(awk '/^>/ {if (length(seq) > ~{min_length}) count++; seq = ""; next} {seq = seq $0} END {if (length(seq) > ~{min_length}) count++; print count}' ~{assembly_fasta})
+    echo "Number of contigs greater than ~{min_length} characters: $count"
 
     # SeminBin2 requires at least two contigs greater than the min_len to run
     if [ $count -gt 1 ]; then
@@ -34,10 +34,10 @@ task semibin {
           -o ~{samplename} \
           -t ~{cpu} \
           --environment ~{environment} \
-          --min-len ~{min_len} \
+          --min-len ~{min_length} \
           --ratio ~{ratio}
     else
-        echo "One or fewer contigs found with ~{min_len} in ~{assembly_fasta}."
+        echo "One or fewer contigs found with ~{min_length} in ~{assembly_fasta}."
         echo "Aborting binning with SemiBin2..."
     fi
 
@@ -48,7 +48,7 @@ task semibin {
   }
   runtime {
     docker: docker
-    memory: mem + " GB"
+    memory: memory + " GB"
     cpu: cpu
     disks:  "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
