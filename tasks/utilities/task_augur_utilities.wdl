@@ -203,7 +203,7 @@ task filter_sequences_by_length {
 
 task set_sc2_defaults { # establish sars-cov-2 default values for augur
   input {
-    String nextstrain_ncov_repo_commit = "23d1243127e8838a61b7e5c1a72bc419bf8c5a0d" # last updated on 2023-03-07
+    String nextstrain_ncov_repo_commit = "cec4fa0ecd8612e4363d40662060a5a9c712d67e" # last updated on 2024-02-01    
     Int disk_size = 50
   }
   command <<<
