@@ -59,6 +59,7 @@ workflow theiaprok_illumina_pe {
     String genome_annotation = "prokka" # options: "prokka" or "bakta"
     String? expected_taxon  # allow user to provide organism (e.g. "Clostridioides_difficile") string to amrfinder. Useful when gambit does not predict the correct species    # qc check parameters
     File? qc_check_table
+    String? ts_mlst_scheme 
   }
   call versioning.version_capture{
     input:
@@ -166,11 +167,6 @@ workflow theiaprok_illumina_pe {
             organism = select_first([expected_taxon, gambit.gambit_predicted_taxon])
         }
       }
-      call ts_mlst_task.ts_mlst {
-        input: 
-          assembly = shovill_pe.assembly_fasta,
-          samplename = samplename
-      }
       if (genome_annotation == "prokka") {
         call prokka_task.prokka {
           input:
@@ -232,6 +228,16 @@ workflow theiaprok_illumina_pe {
           read1 = read_QC_trim.read1_clean,
           read2 = read_QC_trim.read2_clean
       }
+      # set custom variable to use as input into mlst Task for Vibrio O1 and O139 serogroups
+      if ( merlin_magic.srst2_vibrio_serogroup == "*O1*" || merlin_magic.srst2_vibrio_serogroup == "*O139*") {
+          String ts_mlst_scheme_vcholerae_O1_or_O139 = "vcholerae_2"
+      }
+        call ts_mlst_task.ts_mlst {
+          input: 
+            assembly = shovill_pe.assembly_fasta,
+            samplename = samplename,
+            scheme = select_first([ts_mlst_scheme_vcholerae_O1_or_O139, ts_mlst_scheme])
+        }
       if (defined(taxon_tables)) {
         call terra_tools.export_taxon_tables {
           input:
