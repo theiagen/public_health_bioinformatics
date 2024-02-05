@@ -42,6 +42,7 @@ workflow theiaprok_fasta {
     String? expected_taxon # allow user to provide organism (e.g. "Clostridioides_difficile") string to amrfinder. Useful when gambit does not predict the correct species
     # qc check parameters
     File? qc_check_table
+    String? ts_mlst_scheme
   }
   call versioning.version_capture{
     input:
@@ -92,7 +93,8 @@ workflow theiaprok_fasta {
   call ts_mlst_task.ts_mlst {
     input: 
       assembly = assembly_fasta,
-      samplename = samplename
+      samplename = samplename,
+      scheme = ts_mlst_scheme
   }
   if (genome_annotation == "prokka") {
     call prokka_task.prokka {
