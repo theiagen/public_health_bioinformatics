@@ -236,7 +236,7 @@ workflow theiaprok_illumina_pe {
           input: 
             assembly = shovill_pe.assembly_fasta,
             samplename = samplename,
-            scheme = select_first([ts_mlst_scheme_vcholerae_O1_or_O139, ts_mlst_scheme])
+            scheme = select_first([ts_mlst_scheme_vcholerae_O1_or_O139, ts_mlst_scheme, ""])
         }
       if (defined(taxon_tables)) {
         call terra_tools.export_taxon_tables {
