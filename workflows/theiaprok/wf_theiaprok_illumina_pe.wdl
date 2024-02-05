@@ -226,18 +226,14 @@ workflow theiaprok_illumina_pe {
           assembly = shovill_pe.assembly_fasta,
           samplename = samplename,
           read1 = read_QC_trim.read1_clean,
-          read2 = read_QC_trim.read2_clean
-      }
-      # set custom variable to use as input into mlst Task for Vibrio O1 and O139 serogroups
-      # hardcoding to the 4 possible output strings where O1 or O139 genes are at least partially (or fully) present and identified by SRST2 task
-      if ( merlin_magic.srst2_vibrio_serogroup == "O1" || merlin_magic.srst2_vibrio_serogroup == "O139" || merlin_magic.srst2_vibrio_serogroup == "O1 (low depth/uncertain)" || merlin_magic.srst2_vibrio_serogroup == "O139 (low depth/uncertain)" ) {
-          String ts_mlst_scheme_vcholerae_O1_or_O139 = "vcholerae_2"
+          read2 = read_QC_trim.read2_clean,
+          ts_mlst_scheme = ts_mlst_scheme
       }
         call ts_mlst_task.ts_mlst {
           input: 
             assembly = shovill_pe.assembly_fasta,
             samplename = samplename,
-            scheme = select_first([ts_mlst_scheme_vcholerae_O1_or_O139, ts_mlst_scheme, "''"])
+            scheme = merlin_magic.ts_mlst_scheme_out
         }
       if (defined(taxon_tables)) {
         call terra_tools.export_taxon_tables {
