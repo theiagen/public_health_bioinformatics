@@ -102,43 +102,6 @@ task abricate_flu {
       flu_subtype="${HA_hit}${NA_hit}" && echo "$flu_subtype" >  FLU_SUBTYPE
     fi
     #flu_subtype="${HA_hit}${NA_hit}" && echo "$flu_subtype" >  FLU_SUBTYPE
-
-    # set nextclade variables based on subptype
-    run_nextclade=true
-    touch NEXTCLADE_REF_HA NEXTCLADE_REF_NA NEXTCLADE_NAME_HA NEXTCLADE_NAME_NA NEXTCLADE_DS_TAG_HA NEXTCLADE_DS_TAG_NA
-    if [ "${flu_subtype}" == "H1N1" ]; then
-      echo "flu_h1n1pdm_ha" > NEXTCLADE_NAME_HA
-      echo "MW626062" > NEXTCLADE_REF_HA
-      echo "~{nextclade_flu_h1n1_ha_tag}" > NEXTCLADE_DS_TAG_HA
-      echo "flu_h1n1pdm_na" > NEXTCLADE_NAME_NA
-      echo "MW626056" > NEXTCLADE_REF_NA
-      echo "~{nextclade_flu_h1n1_na_tag}" > NEXTCLADE_DS_TAG_NA
-    elif [ "${flu_subtype}" == "H3N2" ]; then
-      echo "flu_h3n2_ha" > NEXTCLADE_NAME_HA
-      echo "CY163680" > NEXTCLADE_REF_HA
-      echo "~{nextclade_flu_h3n2_ha_tag}" > NEXTCLADE_DS_TAG_HA
-      echo "flu_h3n2_na" > NEXTCLADE_NAME_NA
-      echo "EPI1857215" > NEXTCLADE_REF_NA
-      echo "~{nextclade_flu_h3n2_na_tag}" > NEXTCLADE_DS_TAG_NA
-    elif [ "${flu_subtype}" == "Victoria" ]; then
-      echo "flu_vic_ha" > NEXTCLADE_NAME_HA
-      echo "KX058884" > NEXTCLADE_REF_HA
-      echo "~{nextclade_flu_vic_ha_tag}" > NEXTCLADE_DS_TAG_HA
-      echo "flu_vic_na" > NEXTCLADE_NAME_NA
-      echo "CY073894" > NEXTCLADE_REF_NA
-      echo "~{nextclade_flu_vic_na_tag}" > NEXTCLADE_DS_TAG_NA
-    elif [ "${flu_subtype}" == "Yamagata" ]; then
-      echo "flu_yam_ha" > NEXTCLADE_NAME_HA
-      echo "JN993010" > NEXTCLADE_REF_HA
-      echo "~{nextclade_flu_yam_tag}" > NEXTCLADE_DS_TAG_HA 
-      # this makes no biological sense, but avoids errors with nextclade
-      echo "flu_vic_na" > NEXTCLADE_NAME_NA
-      echo "CY073894" > NEXTCLADE_REF_NA
-      echo "~{nextclade_flu_vic_na_tag}" > NEXTCLADE_DS_TAG_NA
-    else 
-      run_nextclade=false 
-    fi
-    echo ${run_nextclade} > RUN_NEXTCLADE
   >>>
   output {
     String abricate_flu_type = read_string("FLU_TYPE")
@@ -146,13 +109,6 @@ task abricate_flu {
     File abricate_flu_results = "~{samplename}_abricate_hits.tsv"
     String abricate_flu_database = database
     String abricate_flu_version = read_string("ABRICATE_VERSION")
-    Boolean run_nextclade = read_boolean("RUN_NEXTCLADE")
-    String nextclade_ref_ha = read_string("NEXTCLADE_REF_HA")
-    String nextclade_name_ha = read_string("NEXTCLADE_NAME_HA")
-    String nextclade_ds_tag_ha = read_string("NEXTCLADE_DS_TAG_HA")
-    String nextclade_ref_na = read_string("NEXTCLADE_REF_NA")
-    String nextclade_name_na = read_string("NEXTCLADE_NAME_NA")
-    String nextclade_ds_tag_na = read_string("NEXTCLADE_DS_TAG_NA")
   }
   runtime {
     docker: "~{docker}"
