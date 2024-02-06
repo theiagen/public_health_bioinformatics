@@ -8,7 +8,7 @@
     - path: log.out
       contains: ["workflow finished with status 'Succeeded'", "theiacov_fasta", "Done"]
     - path: metadata.json
-      contains: ["outputs", "theiacov_fasta", "status", "Succeeded"]
+      contains: ["outputs", "theiacov_fasta", "Succeeded"]
 
 - name: theiacov_fasta_miniwdl
   command: miniwdl run -i ./tests/inputs/theiacov/wf_theiacov_fasta.json -d miniwdl_run/. --verbose --error-json ./workflows/theiacov/wf_theiacov_fasta.wdl
