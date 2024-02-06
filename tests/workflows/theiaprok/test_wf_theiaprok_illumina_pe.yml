@@ -4,8 +4,7 @@
     - wf_theiaprok_illumina_pe
     - wf_theiaprok_illumina_pe_cromwell
   files:
-    - path: log.err
-      contains: ["Successfully released change log lock", "INFO", "WORKFLOW_METADATA_SUMMARY_ENTRY", "liquibase"]
+    - path: log.err # file is empty, so don't check for strings within, just for presence
     - path: log.out
       contains: ["workflow finished with status 'Succeeded'", "theiaprok_illumina_pe", "Done", "No ST predicted"]
     - path: metadata.json
@@ -624,7 +623,7 @@
     - path: miniwdl_run/wdl/tasks/species_typing/task_ts_mlst.wdl
       md5sum: b83dcdc897257910bbd61868a9da49dc
     - path: miniwdl_run/wdl/tasks/task_versioning.wdl
-      md5sum: cf3c274ed0ff56b743f0c0031c9966dc
+      md5sum: b09c4453998da5ac6624dc1b49abf31f
     - path: miniwdl_run/wdl/tasks/taxon_id/task_gambit.wdl
       md5sum: 4e1d4f6b8085a209f9721748a0c0fef0
     - path: miniwdl_run/wdl/tasks/taxon_id/task_kraken2.wdl

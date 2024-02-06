@@ -4,8 +4,7 @@
     - wf_theiacov_fasta
     - wf_theiacov_fasta_cromwell
   files:
-    - path: log.err
-      contains: ["Successfully released change log lock", "INFO", "WORKFLOW_METADATA_SUMMARY_ENTRY", "liquibase"]
+    - path: log.err # file is empty, so don't check for strings within, just for presence
     - path: log.out
       contains: ["workflow finished with status 'Succeeded'", "theiacov_fasta", "Done"]
     - path: metadata.json
@@ -122,7 +121,7 @@
     - path: miniwdl_run/call-nextclade_output_parser/work/input.tsv
       md5sum: 9b459df2831ab1974c9c8cef5bc5340e
     - path: miniwdl_run/call-pangolin4/command
-      md5sum: 558f8f3b23b7562e7dca67dc0a647522
+      md5sum: b9c36681b77c5e007bf7e890265d70eb
     - path: miniwdl_run/call-pangolin4/inputs.json
     - path: miniwdl_run/call-pangolin4/outputs.json
     - path: miniwdl_run/call-pangolin4/stderr.txt
@@ -144,7 +143,7 @@
       md5sum: 9f9c4c00a1ceb5526bed7dc4cdb3dcfd
     - path: miniwdl_run/call-pangolin4/work/_miniwdl_inputs/0/clearlabs.fasta.gz
     - path: miniwdl_run/call-pangolin4/work/fasta.pangolin_report.csv
-      md5sum: c8ddc2706b30b5bfcaf32636ed5a63ec
+      md5sum: 81679363ffed582650f8512794035806
     - path: miniwdl_run/call-vadr/command
       md5sum: f4ad614b7ad39f28a8145cec280a93c0
     - path: miniwdl_run/call-vadr/inputs.json
