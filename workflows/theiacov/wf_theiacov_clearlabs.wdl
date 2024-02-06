@@ -12,6 +12,7 @@ import "../../tasks/species_typing/task_pangolin.wdl" as pangolin
 import "../../tasks/gene_typing/task_sc2_gene_coverage.wdl" as sc2_calculation
 import "../../tasks/quality_control/task_qc_check_phb.wdl" as qc_check
 import "../../tasks/task_versioning.wdl" as versioning
+import "../../workflows/utilities/wf_organism_parameters.wdl" as set_organism_defaults
 
 workflow theiacov_clearlabs {
   meta {
@@ -30,13 +31,22 @@ workflow theiacov_clearlabs {
     # reference values
     File? reference_genome
     # nextclade inputs
-    String nextclade_dataset_reference = "MN908947"
-    String nextclade_dataset_tag = "2023-09-21T12:00:00Z"
+    String? nextclade_dataset_reference
+    String? nextclade_dataset_tag
     String? nextclade_dataset_name
     # kraken parameters
     String? target_organism
     # qc check parameters
     File? qc_check_table
+  }
+  call set_organism_defaults.organism_parameters {
+    input:
+      organism = organism,
+      reference_genome = reference_genome,
+      nextclade_ds_reference = nextclade_dataset_reference,
+      nextclade_ds_tag = nextclade_dataset_tag,
+      nextclade_ds_name = nextclade_dataset_name,
+      kraken_target_org = target_organism
   }
   call fastq_scan.fastq_scan_se as fastq_scan_raw_reads {
     input:
@@ -55,13 +65,13 @@ workflow theiacov_clearlabs {
     input:
       samplename = samplename,
       read1 = read1,
-      target_organism = target_organism
+      target_organism = organism_parameters.kraken_target_organism
   }  
   call kraken2.kraken2_theiacov as kraken2_dehosted {
     input:
       samplename = samplename,
       read1 = ncbi_scrub_se.read1_dehosted,
-      target_organism = target_organism
+      target_organism = organism_parameters.kraken_target_organism
   }
   call artic_consensus.consensus {
     input:
@@ -70,7 +80,7 @@ workflow theiacov_clearlabs {
       primer_bed = primer_bed,
       normalise = normalise,
       docker = medaka_docker,
-      reference_genome = reference_genome,
+      reference_genome = organism_parameters.reference,
       organism = organism
   }
   call assembly_metrics.stats_n_coverage {
@@ -81,7 +91,7 @@ workflow theiacov_clearlabs {
   call consensus_qc_task.consensus_qc {
     input:
       assembly_fasta = consensus.consensus_seq,
-      reference_genome = reference_genome
+      reference_genome = organism_parameters.reference
   }
   call assembly_metrics.stats_n_coverage as stats_n_coverage_primtrim {
     input:
@@ -110,9 +120,9 @@ workflow theiacov_clearlabs {
     call nextclade_task.nextclade {
       input:
       genome_fasta = consensus.consensus_seq,
-      dataset_name = select_first([nextclade_dataset_name, organism]),
-      dataset_reference = nextclade_dataset_reference,
-      dataset_tag = nextclade_dataset_tag
+      dataset_name = organism_parameters.nextclade_dataset_name,
+      dataset_reference = organism_parameters.nextclade_dataset_reference,
+      dataset_tag = organism_parameters.nextclade_dataset_tag
     }
     call nextclade_task.nextclade_output_parser {
       input:
@@ -168,12 +178,12 @@ workflow theiacov_clearlabs {
     String kraken_version = kraken2_raw.version
     Float kraken_human = kraken2_raw.percent_human
     Float kraken_sc2 = kraken2_raw.percent_sc2
-    String? kraken_target_organism = kraken2_raw.percent_target_organism
-    String? kraken_target_organism_name = kraken2_raw.kraken_target_organism
+    String kraken_target_organism = kraken2_raw.percent_target_organism
+    String kraken_target_organism_name = organism_parameters.kraken_target_organism
     File kraken_report = kraken2_raw.kraken_report
     Float kraken_human_dehosted = kraken2_dehosted.percent_human
     Float kraken_sc2_dehosted = kraken2_dehosted.percent_sc2
-    String? kraken_target_organism_dehosted = kraken2_dehosted.percent_target_organism
+    String kraken_target_organism_dehosted = kraken2_dehosted.percent_target_organism
     File kraken_report_dehosted = kraken2_dehosted.kraken_report
     # Read Alignment - Artic consensus outputs
     File aligned_bam = consensus.trim_sorted_bam
@@ -219,7 +229,7 @@ workflow theiacov_clearlabs {
     File? nextclade_tsv = nextclade.nextclade_tsv
     String? nextclade_version = nextclade.nextclade_version
     String? nextclade_docker = nextclade.nextclade_docker
-    String nextclade_ds_tag = nextclade_dataset_tag
+    String nextclade_ds_tag = organism_parameters.nextclade_dataset_tag
     String? nextclade_aa_subs = nextclade_output_parser.nextclade_aa_subs
     String? nextclade_aa_dels = nextclade_output_parser.nextclade_aa_dels
     String? nextclade_clade = nextclade_output_parser.nextclade_clade
