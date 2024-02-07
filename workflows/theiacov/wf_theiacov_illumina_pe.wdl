@@ -17,7 +17,6 @@ import "../../workflows/utilities/wf_influenza_antiviral_substitutions.wdl" as f
 import "../../tasks/quality_control/task_assembly_metrics.wdl" as assembly_metrics
 import "../../workflows/utilities/wf_organism_parameters.wdl" as set_organism_defaults
 
-
 workflow theiacov_illumina_pe {
   meta {
     description: "Reference-based consensus calling for viral amplicon sequencing data"
@@ -60,6 +59,8 @@ workflow theiacov_illumina_pe {
     Int min_coverage = 10
     Int min_proportion = 40
     Boolean skip_screen = false
+    # pangolin parameters
+    String? pangolin_docker_image
     # qc check parameters
     File? qc_check_table
      }
@@ -118,7 +119,8 @@ workflow theiacov_illumina_pe {
           nextclade_ds_name = nextclade_dataset_name,     
           vadr_max_length = vadr_max_length,
           vadr_options = vadr_options,
-          primer_bed_file = primer_bed    
+          primer_bed_file = primer_bed,
+          pangolin_docker_image = pangolin_docker_image
       }
       # assembly via bwa and ivar for non-flu data
       if (organism != "flu"){
@@ -241,7 +243,8 @@ workflow theiacov_illumina_pe {
         call pangolin.pangolin4 {
           input:
             samplename = samplename,
-            fasta = select_first([ivar_consensus.assembly_fasta])
+            fasta = select_first([ivar_consensus.assembly_fasta]),
+            docker = organism_parameters.pangolin_docker
       }
         call sc2_calculation.sc2_gene_coverage {
           input: 

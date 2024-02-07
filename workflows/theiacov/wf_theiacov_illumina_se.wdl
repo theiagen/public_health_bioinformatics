@@ -10,6 +10,7 @@ import "../../tasks/species_typing/task_pangolin.wdl" as pangolin
 import "../../tasks/gene_typing/task_sc2_gene_coverage.wdl" as sc2_calculation
 import "../../tasks/quality_control/task_qc_check_phb.wdl" as qc_check
 import "../../tasks/task_versioning.wdl" as versioning
+import "../../workflows/utilities/wf_organism_parameters.wdl" as set_organism_defaults
 
 workflow theiacov_illumina_se {
   meta {
@@ -30,10 +31,11 @@ workflow theiacov_illumina_se {
     Int trim_quality_trim_score = 30
     Int trim_window_size = 4
     # nextclade inputs
-    String nextclade_dataset_reference = "MN908947"
-    String nextclade_dataset_tag = "2023-09-21T12:00:00Z"
+    String? nextclade_dataset_reference
+    String? nextclade_dataset_tag
     String? nextclade_dataset_name
     # reference values
+    File? reference_gff
     File? reference_genome
     Int? genome_length
     # assembly parameters
@@ -48,6 +50,11 @@ workflow theiacov_illumina_se {
     Int min_coverage = 10
     Boolean skip_screen = false
     Boolean skip_mash = false
+    # vadr parameters
+    Int? vadr_max_length
+    String? vadr_options
+    # pangolin parameters
+    String? pangolin_docker_image
     # qc check parameters
     File? qc_check_table
   }
@@ -92,12 +99,27 @@ workflow theiacov_illumina_se {
         expected_genome_length = genome_length
     }
     if (clean_check_reads.read_screen == "PASS") {
+      call set_organism_defaults.organism_parameters {
+        input:
+          organism = organism,
+          reference_gff_file = reference_gff,
+          reference_genome = reference_genome,
+          genome_length = genome_length,
+          nextclade_ds_reference = nextclade_dataset_reference,
+          nextclade_ds_tag = nextclade_dataset_tag,
+          nextclade_ds_name = nextclade_dataset_name,     
+          vadr_max_length = vadr_max_length,
+          vadr_options = vadr_options,
+          primer_bed_file = primer_bed,
+          pangolin_docker_image = pangolin_docker_image  
+      }
       call consensus_call.ivar_consensus {
         input:
           samplename = samplename,
           read1 = read_QC_trim.read1_clean,
-          reference_genome = reference_genome,
-          primer_bed = primer_bed,
+          reference_genome = organism_parameters.reference,
+          primer_bed = organism_parameters.primer_bed,
+          reference_gff = organism_parameters.reference_gff,
           min_depth = min_depth,
           consensus_min_freq = consensus_min_freq,
           variant_min_freq = variant_min_freq,
@@ -106,14 +128,15 @@ workflow theiacov_illumina_se {
       call consensus_qc_task.consensus_qc {
         input:
           assembly_fasta = ivar_consensus.assembly_fasta,
-          reference_genome = reference_genome
+          reference_genome = organism_parameters.reference
       }
       if (organism == "sars-cov-2") {
         # sars-cov-2 specific tasks
         call pangolin.pangolin4 {
           input:
             samplename = samplename,
-            fasta = ivar_consensus.assembly_fasta
+            fasta = ivar_consensus.assembly_fasta,
+            docker = organism_parameters.pangolin_docker
         }
         call sc2_calculation.sc2_gene_coverage {
           input: 
@@ -133,9 +156,9 @@ workflow theiacov_illumina_se {
         call nextclade_task.nextclade {
           input:
           genome_fasta = ivar_consensus.assembly_fasta,
-          dataset_name = select_first([nextclade_dataset_name, organism,]),
-          dataset_reference = nextclade_dataset_reference,
-          dataset_tag = nextclade_dataset_tag
+          dataset_name = organism_parameters.nextclade_dataset_name,
+          dataset_reference = organism_parameters.nextclade_dataset_reference,
+          dataset_tag = organism_parameters.nextclade_dataset_tag
         }
         call nextclade_task.nextclade_output_parser {
           input:
@@ -148,7 +171,9 @@ workflow theiacov_illumina_se {
         call vadr_task.vadr {
           input:
             genome_fasta = ivar_consensus.assembly_fasta,
-            assembly_length_unambiguous = consensus_qc.number_ATCG
+            assembly_length_unambiguous = consensus_qc.number_ATCG,
+            vadr_opts = organism_parameters.vadr_opts,
+            maxlen = organism_parameters.vadr_maxlen
         }
       }
       if(defined(qc_check_table)) {
@@ -265,7 +290,7 @@ workflow theiacov_illumina_se {
     File? nextclade_tsv = nextclade.nextclade_tsv
     String? nextclade_version = nextclade.nextclade_version
     String? nextclade_docker = nextclade.nextclade_docker
-    String nextclade_ds_tag = nextclade_dataset_tag
+    String? nextclade_ds_tag = organism_parameters.nextclade_dataset_tag
     String? nextclade_aa_subs = nextclade_output_parser.nextclade_aa_subs
     String? nextclade_aa_dels = nextclade_output_parser.nextclade_aa_dels
     String? nextclade_clade = nextclade_output_parser.nextclade_clade

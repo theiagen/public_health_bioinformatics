@@ -15,6 +15,7 @@ import "../../tasks/gene_typing/task_abricate.wdl" as abricate
 import "../../tasks/quality_control/task_qc_check_phb.wdl" as qc_check
 import "../../tasks/task_versioning.wdl" as versioning
 import "../utilities/wf_read_QC_trim_ont.wdl" as read_qc_trim_workflow
+import "../../workflows/utilities/wf_organism_parameters.wdl" as set_organism_defaults
 
 workflow theiacov_ont {
   meta {
@@ -33,18 +34,9 @@ workflow theiacov_ont {
     Int min_length = 400
     Int min_depth = 20
     # nextclade inputs
-    String nextclade_docker_image = "nextstrain/nextclade:2.14.0"
-    String nextclade_dataset_reference = "MN908947"
-    String nextclade_dataset_tag = "2023-09-21T12:00:00Z"
+    String nextclade_dataset_reference
+    String nextclade_dataset_tag
     String? nextclade_dataset_name
-    # nextclade flu inputs
-    String nextclade_flu_h1n1_ha_tag = "2023-04-02T12:00:00Z"
-    String nextclade_flu_h1n1_na_tag = "2023-04-02T12:00:00Z"
-    String nextclade_flu_h3n2_ha_tag = "2023-04-02T12:00:00Z"
-    String nextclade_flu_h3n2_na_tag = "2023-04-02T12:00:00Z"
-    String nextclade_flu_vic_ha_tag = "2023-04-02T12:00:00Z"
-    String nextclade_flu_vic_na_tag = "2023-04-02T12:00:00Z"
-    String nextclade_flu_yam_tag = "2022-07-27T12:00:00Z"
     # reference values
     File? reference_genome
     Int? genome_length
@@ -108,6 +100,20 @@ workflow theiacov_ont {
         expected_genome_length = genome_length
     }
     if (clean_check_reads.read_screen == "PASS") {
+      call set_organism_defaults.organism_parameters {
+        input:
+          organism = organism,
+          reference_gff_file = reference_gff,
+          reference_genome = reference_genome,
+          genome_length = genome_length,
+          nextclade_ds_reference = nextclade_dataset_reference,
+          nextclade_ds_tag = nextclade_dataset_tag,
+          nextclade_ds_name = nextclade_dataset_name,     
+          vadr_max_length = vadr_max_length,
+          vadr_options = vadr_options,
+          primer_bed_file = primer_bed,
+          pangolin_docker_image = pangolin_docker_image
+      }
       # assembly via artic_consensus for sars-cov-2 and HIV
       if (organism != "flu") {
         call artic_consensus.consensus {
@@ -198,7 +204,6 @@ workflow theiacov_ont {
         # tasks specific to either MPXV or sars-cov-2
         call nextclade_task.nextclade {
           input:
-          docker = nextclade_docker_image,
           genome_fasta = select_first([consensus.consensus_seq, irma.seg_ha_assembly]),
           dataset_name = select_first([abricate_flu.nextclade_name_ha, nextclade_dataset_name, organism]),
           dataset_reference = select_first([abricate_flu.nextclade_ref_ha, nextclade_dataset_reference]),
