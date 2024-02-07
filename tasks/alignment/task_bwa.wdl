@@ -27,8 +27,15 @@ task bwa {
       ref_genome="/artic-ncov2019/primer_schemes/nCoV-2019/V3/nCoV-2019.reference.fasta"  
     fi
 
-    echo "input R1 has $(zcat ~{read1} | grep -c '^@') reads as input"
-    echo "input R2 has $(zcat ~{read2} | grep -c '^@') reads as input"
+    # set cat command based on compression
+    if [[ "~{read1}" == *".gz" ]] ; then
+      cat_reads="zcat"
+    else
+      cat_reads="cat"
+    fi
+
+    echo -e "\ninput R1 has $(${cat_reads} ~{read1} | grep -c '^@') reads as input"
+    echo "input R2 has $(${cat_reads} ~{read2} | grep -c '^@') reads as input"
 
     # Map with BWA MEM; pipe to samtools sort to write sorted SAM file
     bwa mem \
@@ -63,7 +70,7 @@ task bwa {
 
     # if read2 was provided by user, extract both read1 and read2 from aligned and unaligned BAMs
     if [[ ! -z "~{read2}" ]]; then
-      echo "Generating FASTQs for aligned reads"
+      echo -e "\nGenerating FASTQs for aligned reads"
       samtools fastq \
         -@ ~{cpu} \
         -F 4 \
@@ -79,13 +86,13 @@ task bwa {
         -2 ~{samplename}_unaligned_R2.fastq.gz \
         ~{samplename}.sorted.unaligned-reads.bam
     else
-      echo "Generating FASTQs for aligned single-end reads"
+      echo -e "\nGenerating FASTQs for aligned single-end reads\n"
       samtools fastq \
         -@ ~{cpu} \
         -F 4 \
         -0 ~{samplename}_R1.fastq.gz \
         ~{samplename}.sorted.bam
-      echo "Generating FASTQs for unaligned single-end reads" 
+      echo -e "Generating FASTQs for unaligned single-end reads\n"
       # again, lowercase 'f' is important for getting all unaligned reads
       samtools fastq \
         -@ ~{cpu} \
@@ -101,7 +108,7 @@ task bwa {
     # count output reads to ensure we are outputting all reads, regardless if the aligned or not
     # if read2 does exist as input, count both R1 and R2
     if [[ ! -z "~{read2}" ]]; then
-      echo "output R1_aligned has $(zcat ~{samplename}_R1.fastq.gz | grep -c '^@') reads as input"
+      echo -e "\noutput R1_aligned has $(zcat ~{samplename}_R1.fastq.gz | grep -c '^@') reads as input"
       echo "output R2_aligned has $(zcat ~{samplename}_R2.fastq.gz | grep -c '^@') reads as input"
       echo
       echo "output R1_unaligned has $(zcat ~{samplename}_unaligned_R1.fastq.gz | grep -c '^@') reads as input"
