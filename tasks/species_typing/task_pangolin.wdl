@@ -6,7 +6,7 @@ task pangolin4 {
     String samplename
     Int min_length = 10000
     Float max_ambig = 0.5
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/pangolin:4.3.1-pdata-1.22"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/pangolin:4.3.1-pdata-1.23.1"
     String? analysis_mode
     Boolean expanded_lineage=true
     Boolean skip_scorpio=false

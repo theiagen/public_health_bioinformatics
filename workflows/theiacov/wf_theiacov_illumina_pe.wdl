@@ -14,6 +14,7 @@ import "../../tasks/gene_typing/task_sc2_gene_coverage.wdl" as sc2_calculation
 import "../../tasks/quality_control/task_qc_check_phb.wdl" as qc_check
 import "../../tasks/task_versioning.wdl" as versioning
 import "../../workflows/utilities/wf_influenza_antiviral_substitutions.wdl" as flu_antiviral
+import "../../tasks/quality_control/task_assembly_metrics.wdl" as assembly_metrics
 
 workflow theiacov_illumina_pe {
   meta {
@@ -136,6 +137,22 @@ workflow theiacov_illumina_pe {
             samplename = samplename,
             seq_method = seq_method
         }
+        # can be redone later to accomodate processing of HA and NA bams together in the task, perhaps with an organism flag
+        if (defined(irma.seg_ha_bam)) {
+          call assembly_metrics.stats_n_coverage as ha_assembly_coverage {
+            input:
+              bamfile = select_first([irma.seg_ha_bam]),
+              samplename = samplename
+          }
+        }
+        if (defined(irma.seg_na_bam)) {
+          call assembly_metrics.stats_n_coverage as na_assembly_coverage {
+            input:
+              bamfile = select_first([irma.seg_na_bam]),
+              samplename = samplename
+          }
+        }
+        String ha_na_assembly_coverage = "HA: " + select_first([ha_assembly_coverage.depth, ""]) + "," + "NA: " + select_first([na_assembly_coverage.depth, ""])
         if (defined(irma.irma_assemblies)) {
           call abricate.abricate_flu {
             input:
@@ -287,6 +304,18 @@ workflow theiacov_illumina_pe {
     Int? num_reads_clean1 = read_QC_trim.fastq_scan_clean1
     Int? num_reads_clean2 = read_QC_trim.fastq_scan_clean2
     String? num_reads_clean_pairs = read_QC_trim.fastq_scan_clean_pairs
+    # Read QC - fastqc outputs
+    Int? fastqc_num_reads_raw1 = read_QC_trim.fastqc_raw1
+    Int? fastqc_num_reads_raw2 = read_QC_trim.fastqc_raw2
+    String? fastqc_num_reads_raw_pairs = read_QC_trim.fastqc_raw_pairs
+    File? fastqc_raw1_html = read_QC_trim.fastqc_raw1_html
+    File? fastqc_raw2_html = read_QC_trim.fastqc_raw2_html
+    String? fastqc_version = read_QC_trim.fastqc_version
+    Int? fastqc_num_reads_clean1 = read_QC_trim.fastqc_clean1
+    Int? fastqc_num_reads_clean2 = read_QC_trim.fastqc_clean2
+    String? fastqc_num_reads_clean_pairs = read_QC_trim.fastqc_clean_pairs
+    File? fastqc_clean1_html = read_QC_trim.fastqc_clean1_html
+    File? fastqc_clean2_html = read_QC_trim.fastqc_clean2_html
     # Read QC - trimmomatic outputs
     String? trimmomatic_version = read_QC_trim.trimmomatic_version
     # Read QC - bbduk outputs
@@ -302,7 +331,7 @@ workflow theiacov_illumina_pe {
     Float? kraken_sc2 = read_QC_trim.kraken_sc2
     String? kraken_target_org = read_QC_trim.kraken_target_org
     String? kraken_target_org_name = read_QC_trim.kraken_target_org_name
-    File? kraken_report = read_QC_trim.kraken_report
+    String? kraken_report = read_QC_trim.kraken_report
     Float? kraken_human_dehosted = read_QC_trim.kraken_human_dehosted
     Float? kraken_sc2_dehosted = read_QC_trim.kraken_sc2_dehosted
     String? kraken_target_org_dehosted =read_QC_trim.kraken_target_org_dehosted
@@ -335,7 +364,7 @@ workflow theiacov_illumina_pe {
     File? consensus_flagstat = ivar_consensus.consensus_flagstat
     String meanbaseq_trim = select_first([ivar_consensus.meanbaseq_trim, ""])
     String meanmapq_trim = select_first([ivar_consensus.meanmapq_trim, ""])
-    String assembly_mean_coverage = select_first([ivar_consensus.assembly_mean_coverage, ""])
+    String assembly_mean_coverage = select_first([ivar_consensus.assembly_mean_coverage, ha_na_assembly_coverage , ""])
     String? samtools_version_stats = ivar_consensus.samtools_version_stats
     # Read Alignment - consensus assembly summary outputs
     Int? number_N = consensus_qc.number_N

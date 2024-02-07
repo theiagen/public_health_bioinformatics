@@ -9,8 +9,8 @@ task irma {
     Boolean keep_ref_deletions = true
     String read_basename = basename(read1)
     String docker = "cdcgov/irma:v1.1.3"
-    Int memory = 8
-    Int cpu = 4
+    Int memory = 16
+    Int cpu = 8
     Int disk_size = 100
   }
   command <<<
@@ -96,6 +96,15 @@ task irma {
     else
       echo "No subtype predicted by IRMA" > IRMA_SUBTYPE
     fi
+
+    # rename BAM file if exists
+    if [ ! -f "~{samplename}"_HA.bam ]; then
+      mv "~{samplename}"_HA*.bam "~{samplename}"_HA.bam
+    fi
+    if [ ! -f "~{samplename}"_NA.bam ]; then
+      mv "~{samplename}"_NA*.bam "~{samplename}"_NA.bam
+    fi
+
   >>>
   output {
     File? irma_assembly_fasta = "~{samplename}.irma.consensus.fasta"
@@ -113,6 +122,9 @@ task irma {
     Array[File] irma_bams = glob("~{samplename}*.bam")
     String irma_version = read_string("VERSION")
     String irma_pipeline_date = read_string("DATE")
+    # for now just adding bams for these segments for mean coverage calculation
+    File? seg_ha_bam = "~{samplename}_HA.bam"
+    File? seg_na_bam = "~{samplename}_NA.bam"
   }
   runtime {
     docker: "~{docker}"

@@ -82,7 +82,8 @@ workflow theiaprok_illumina_se {
         read1_raw = read1_raw,
         trim_minlen = trim_minlen,
         trim_quality_trim_score = trim_quality_trim_score,
-        trim_window_size = trim_window_size
+        trim_window_size = trim_window_size,
+        workflow_series = "theiaprok"
     }
     call screen.check_reads_se as clean_check_reads {
       input:
@@ -488,6 +489,9 @@ workflow theiaprok_illumina_se {
             midas_primary_genus = read_QC_trim.midas_primary_genus,
             midas_secondary_genus = read_QC_trim.midas_secondary_genus,
             midas_secondary_genus_abundance = read_QC_trim.midas_secondary_genus_abundance,
+            kraken2_version = read_QC_trim.kraken_version,
+            kraken2_docker = read_QC_trim.kraken_docker,
+            kraken2_report = read_QC_trim.kraken_report,
             pasty_serogroup = merlin_magic.pasty_serogroup,
             pasty_serogroup_coverage = merlin_magic.pasty_serogroup_coverage,
             pasty_serogroup_fragments = merlin_magic.pasty_serogroup_fragments,
@@ -528,6 +532,12 @@ workflow theiaprok_illumina_se {
     Int? num_reads_raw1 = read_QC_trim.fastq_scan_raw_number_reads
     String? fastq_scan_version = read_QC_trim.fastq_scan_version
     Int? num_reads_clean1 = read_QC_trim.fastq_scan_clean_number_reads
+    # Read QC - fastqc outputs
+    Int? fastqc_num_reads_raw1 = read_QC_trim.fastqc_raw_number_reads
+    Int? fastqc_num_reads_clean1 = read_QC_trim.fastqc_clean_number_reads
+    String? fastqc_version = read_QC_trim.fastqc_version
+    File? fastqc_raw1_html = read_QC_trim.fastqc_raw_html
+    File? fastqc_clean1_html = read_QC_trim.fastqc_clean_html
     # Read QC - trimmomatic outputs
     String? trimmomatic_version = read_QC_trim.trimmomatic_version
     # Read QC - fastp outputs
@@ -546,6 +556,10 @@ workflow theiaprok_illumina_se {
     String? midas_primary_genus = read_QC_trim.midas_primary_genus
     String? midas_secondary_genus = read_QC_trim.midas_secondary_genus
     Float? midas_secondary_genus_abundance = read_QC_trim.midas_secondary_genus_abundance
+    # Read QC - kraken outputs
+    String? kraken2_version = read_QC_trim.kraken_version
+    String? kraken2_report = read_QC_trim.kraken_report
+    String? kraken2_docker = read_QC_trim.kraken_docker
     #Assembly - shovill outputs
     File? assembly_fasta = shovill_se.assembly_fasta
     File? contigs_gfa = shovill_se.contigs_gfa
@@ -788,6 +802,7 @@ workflow theiaprok_illumina_se {
     File? tbprofiler_output_file = merlin_magic.tbprofiler_output_file
     File? tbprofiler_output_bam = merlin_magic.tbprofiler_output_bam
     File? tbprofiler_output_bai = merlin_magic.tbprofiler_output_bai
+    File? tbprofiler_output_vcf = merlin_magic.tbprofiler_output_vcf
     String? tbprofiler_version = merlin_magic.tbprofiler_version
     String? tbprofiler_main_lineage = merlin_magic.tbprofiler_main_lineage
     String? tbprofiler_sub_lineage = merlin_magic.tbprofiler_sub_lineage
