@@ -41,6 +41,42 @@ task cat_files {
   }
 }
 
+task cat_files_fasta {
+  input {
+    Array[File] files_to_cat
+    Array[String] headers
+    String concatenated_file_name
+    String docker_image = "us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1"
+  }
+  meta {
+    # added so that call caching is always turned off
+    volatile: true
+  }
+  command <<<
+    file_array=(~{sep=' ' files_to_cat})
+    headers_array=(~{sep=' ' headers})
+    touch ~{concatenated_file_name}
+
+    # cat files one by one and store them in the concatenated_files file
+    for index in ${!file_array[@]}; do
+      file=${file_array[$index]}
+      header=${headers_array[$index]}
+      # replace the original header with the new header using sed before concatenating
+      awk 1 ${file} | sed "s/^>.*/>${header}/" >> ~{concatenated_file_name}
+    done
+  >>>
+  output {
+    File concatenated_files = "~{concatenated_file_name}"
+  }
+  runtime {
+    docker: "~{docker_image}"
+    memory: "8 GB"
+    cpu: 2
+    disks: "local-disk 100 SSD"
+    preemptible: 0
+  }
+}
+
 task zip_files {
   input {
     Array[File] files_to_zip
@@ -83,13 +119,17 @@ task transfer_files {
     Int mem_size_gb = 8
     String docker_image = "us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1"
   }
+  meta {
+    # added so that call caching is always turned off
+    volatile: true
+  }
   command <<<
     file_path_array="~{sep=' ' files_to_transfer}"
 
     gsutil -m cp -n ${file_path_array[@]} ~{target_bucket}
     
     echo "transferred_files" > transferred_files.tsv
-    gsutil ls ~{target_bucket} >> transferred_files.tsv        
+    gsutil -m ls ~{target_bucket} >> transferred_files.tsv        
    >>>
   output {
     File transferred_files = "transferred_files.tsv"

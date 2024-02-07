@@ -1,6 +1,7 @@
 version 1.0
 
 import "../../tasks/taxon_id/task_kraken2.wdl" as kraken2
+import "../../tasks/taxon_id/task_krona.wdl" as krona_task
 import "../../tasks/task_versioning.wdl" as versioning
 
 workflow kraken2_se_wf {
@@ -18,6 +19,11 @@ workflow kraken2_se_wf {
       read1 = read1,
       kraken2_db = kraken2_db
   }
+  call krona_task.krona as krona {
+    input:
+      kraken2_report = kraken2_se.kraken2_report,
+      samplename = samplename
+  }
   call versioning.version_capture{
     input:
   }
@@ -32,5 +38,9 @@ workflow kraken2_se_wf {
     File kraken2_classified_report = kraken2_se.kraken2_classified_report
     File kraken2_unclassified_read1 = kraken2_se.kraken2_unclassified_read1
     File kraken2_classified_read1 = kraken2_se.kraken2_classified_read1
+    # Krona outputs
+    String krona_version = krona.krona_version
+    String krona_docker = krona.krona_docker
+    File krona_html = krona.krona_html
   }
 }

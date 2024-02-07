@@ -193,6 +193,12 @@ workflow theiacov_illumina_se {
     Int? num_reads_raw = read_QC_trim.fastq_scan_raw_number_reads
     String? fastq_scan_version = read_QC_trim.fastq_scan_version
     Int? num_reads_clean = read_QC_trim.fastq_scan_clean_number_reads
+    # Read QC - fastqc outputs
+    Int? fastqc_num_reads_raw = read_QC_trim.fastqc_raw_number_reads
+    Int? fastqc_num_reads_clean = read_QC_trim.fastqc_clean_number_reads
+    String? fastqc_version = read_QC_trim.fastqc_version
+    File? fastqc_raw_html = read_QC_trim.fastqc_raw_html
+    File? fastqc_clean_html = read_QC_trim.fastqc_clean_html
     # Read QC - trimmomatic outputs
     String? trimmomatic_version = read_QC_trim.trimmomatic_version
     # Read QC - bbduk outputs
@@ -267,6 +273,7 @@ workflow theiacov_illumina_se {
     String? nextclade_aa_dels = nextclade_output_parser.nextclade_aa_dels
     String? nextclade_clade = nextclade_output_parser.nextclade_clade
     String? nextclade_lineage = nextclade_output_parser.nextclade_lineage
+    String? nextclade_qc = nextclade_output_parser.nextclade_qc
     # VADR Annotation QC
     File? vadr_alerts_list = vadr.alerts_list
     String? vadr_num_alerts = vadr.num_alerts
