@@ -108,6 +108,7 @@ task freyja_one_sample {
     File? freyja_bootstrap_lineages_pdf = "~{samplename}_lineages.pdf"
     File? freyja_bootstrap_summary = "~{samplename}_summarized.csv"
     File? freyja_bootstrap_summary_pdf = "~{samplename}_summarized.pdf"
+    String freyja_barcode_file = select_first([freyja_usher_barcodes, "usher_barcodes.csv"])
     String freyja_barcode_version = read_string("FREYJA_BARCODES")
     String freyja_metadata_version = read_string("FREYJA_METADATA")
     String freyja_version = read_string("FREYJA_VERSION")
