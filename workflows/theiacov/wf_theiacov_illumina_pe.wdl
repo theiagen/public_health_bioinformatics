@@ -235,7 +235,7 @@ workflow theiacov_illumina_pe {
             pb1_segment_assembly = irma.seg_pb1_assembly,
             pb2_segment_assembly = irma.seg_pb2_assembly,
             abricate_flu_subtype = select_first([abricate_flu.abricate_flu_subtype, ""]),
-            irma_flu_subtype = select_first([irma.irma_subtype, ""]),
+            irma_flu_subtype = select_first([irma.irma_subtype, ""])
         }
       }
       if (organism == "sars-cov-2") {
