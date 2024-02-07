@@ -78,7 +78,7 @@ workflow merlin_magic {
     Int? tbp_parser_coverage_threshold
     Boolean? tbp_parser_debug
     String? tbp_parser_docker_image
-    String? ts_mlst_scheme
+    String? mlst_scheme
     String? snippy_query_gene
     Int srst2_min_cov = 80
     Int srst2_max_divergence = 20
@@ -680,8 +680,8 @@ workflow merlin_magic {
     String? srst2_vibrio_toxR = srst2_vibrio.srst2_vibrio_toxR
     String? srst2_vibrio_serogroup = srst2_vibrio.srst2_vibrio_serogroup
     String? srst2_vibrio_biotype = srst2_vibrio.srst2_vibrio_biotype
-    # this output mainly for vibrio, but also for non-vibrio samples. prioritize vibrio output; but otherwise pass along user-defined input, or use 2 single quotes (trick mlst software into using auto-scheme detection feature)
-    String ts_mlst_scheme_out = select_first([ts_mlst_scheme_vibrio, ts_mlst_scheme, "''"])
+    # this output mainly for vibrio, but also for non-vibrio samples. prioritize user-defined input, then vibrio output; but otherwise use 2 single quotes (trick mlst software into using auto-scheme detection feature)
+    String ts_mlst_scheme = select_first([mlst_scheme, ts_mlst_scheme_vibrio, "''"])
     # theiaeuk
     # c auris 
     String? clade_type = cladetyper.gambit_cladetype
