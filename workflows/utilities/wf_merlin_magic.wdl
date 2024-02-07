@@ -367,9 +367,9 @@ workflow merlin_magic {
           srst2_min_edge_depth = srst2_min_edge_depth,
           srst2_gene_max_mismatch = srst2_gene_max_mismatch
       }
-    # this is nested inside of conditional check for merlin_tag so should only be available for Vibrio samples (meaning srst2 task was run)
-    if ( srst2_vibrio.srst2_vibrio_serogroup == "O1" || srst2_vibrio.srst2_vibrio_serogroup == "O139" || srst2_vibrio.srst2_vibrio_serogroup == "O1 (low depth/uncertain)" || srst2_vibrio.srst2_vibrio_serogroup == "O139 (low depth/uncertain)") {
-      String ts_mlst_scheme_vibrio = "vcholerae_2"
+      # this conditional is nested inside of conditional for merlin_tag AND !assembly_only AND !ont_data so ts_mlst_scheme_vibrio variable will only be set for Vibrio samples that are called O1 or O139 (meaning srst2 task was run)
+      if ( srst2_vibrio.srst2_vibrio_serogroup == "O1" || srst2_vibrio.srst2_vibrio_serogroup == "O139" || srst2_vibrio.srst2_vibrio_serogroup == "O1 (low depth/uncertain)" || srst2_vibrio.srst2_vibrio_serogroup == "O139 (low depth/uncertain)") {
+        String ts_mlst_scheme_vibrio = "vcholerae_2"
     }
     }
   }
