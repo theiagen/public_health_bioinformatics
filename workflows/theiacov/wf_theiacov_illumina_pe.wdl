@@ -61,6 +61,8 @@ workflow theiacov_illumina_pe {
     Boolean skip_screen = false
     # pangolin parameters
     String? pangolin_docker_image
+    # kraken parameters
+    String? target_organism
     # qc check parameters
     File? qc_check_table
      }
@@ -120,10 +122,11 @@ workflow theiacov_illumina_pe {
           vadr_max_length = vadr_max_length,
           vadr_options = vadr_options,
           primer_bed_file = primer_bed,
-          pangolin_docker_image = pangolin_docker_image
+          pangolin_docker_image = pangolin_docker_image,
+          kraken_target_org = target_organism
       }
       # assembly via bwa and ivar for non-flu data
-      if (organism != "flu"){
+      if (organism_parameters.standardized_organism != "flu"){
         call consensus_call.ivar_consensus {
           input:
             samplename = samplename,
@@ -139,7 +142,7 @@ workflow theiacov_illumina_pe {
         }
       }
       # assembly via irma for flu organisms
-      if (organism == "flu"){
+      if (organism_parameters.standardized_organism == "flu"){
         # flu-specific tasks
         call irma_task.irma {
           input:
@@ -172,16 +175,50 @@ workflow theiacov_illumina_pe {
           }
           call set_organism_defaults.organism_parameters as set_flu_na_nextclade_values {
             input:
-              organism = organism,
+              organism = organism_parameters.standardized_organism,
               flu_segment = "NA",
-              flu_subtype = select_first([irma.irma_subtype, abricate_flu.abricate_flu_subtype]),
+              flu_subtype = irma.irma_subtype,
+              # including these to block from terra
+              reference_gff_file = reference_gff,
+              reference_genome = reference_genome,
+              genome_length = genome_length,
+              nextclade_ds_reference = nextclade_dataset_reference,
+              nextclade_ds_tag = nextclade_dataset_tag,
+              nextclade_ds_name = nextclade_dataset_name,     
+              vadr_max_length = vadr_max_length,
+              vadr_options = vadr_options,
+              primer_bed_file = primer_bed,
+              pangolin_docker_image = pangolin_docker_image,
+              kraken_target_org = target_organism
           }
           call set_organism_defaults.organism_parameters as set_flu_ha_nextclade_values {
             input:
-              organism = organism,
+              organism = organism_parameters.standardized_organism,
               flu_segment = "HA",
-              flu_subtype = select_first([irma.irma_subtype, abricate_flu.abricate_flu_subtype]),
+              flu_subtype = irma.irma_subtype,
+              # including these to block from terra
+              reference_gff_file = reference_gff,
+              reference_genome = reference_genome,
+              genome_length = genome_length,
+              nextclade_ds_reference = nextclade_dataset_reference,
+              nextclade_ds_tag = nextclade_dataset_tag,
+              nextclade_ds_name = nextclade_dataset_name,     
+              vadr_max_length = vadr_max_length,
+              vadr_options = vadr_options,
+              primer_bed_file = primer_bed,
+              pangolin_docker_image = pangolin_docker_image,
+              kraken_target_org = target_organism
           }
+        }       
+        call flu_antiviral.flu_antiviral_substitutions {
+          input:
+            na_segment_assembly = irma.seg_na_assembly,
+            ha_segment_assembly = irma.seg_ha_assembly,
+            pa_segment_assembly = irma.seg_pa_assembly,
+            pb1_segment_assembly = irma.seg_pb1_assembly,
+            pb2_segment_assembly = irma.seg_pb2_assembly,
+            abricate_flu_subtype = select_first([abricate_flu.abricate_flu_subtype, ""]),
+            irma_flu_subtype = irma.irma_subtype
         }
       }
       call consensus_qc_task.consensus_qc {
@@ -191,7 +228,7 @@ workflow theiacov_illumina_pe {
           genome_length = organism_parameters.genome_len
       }
       # run organism-specific typing
-      if (organism == "MPXV" || organism == "sars-cov-2" || organism == "flu") { 
+      if (organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "sars-cov-2" || (organism_parameters.standardized_organism == "flu" && defined(irma.seg_ha_assembly))) { 
         # tasks specific to either MPXV, sars-cov-2, or flu
         call nextclade_task.nextclade {
           input:
@@ -203,10 +240,10 @@ workflow theiacov_illumina_pe {
         call nextclade_task.nextclade_output_parser {
           input:
             nextclade_tsv = nextclade.nextclade_tsv,
-            organism = organism
+            organism = organism_parameters.standardized_organism
         }
       }
-      if (organism == "flu" && defined(irma.seg_na_assembly)) { 
+      if (organism_parameters.standardized_organism == "flu" && defined(irma.seg_na_assembly)) { 
         # tasks specific to flu NA - run nextclade a second time
         call nextclade_task.nextclade as nextclade_flu_na {
           input:
@@ -218,7 +255,7 @@ workflow theiacov_illumina_pe {
         call nextclade_task.nextclade_output_parser as nextclade_output_parser_flu_na {
           input:
             nextclade_tsv = nextclade_flu_na.nextclade_tsv,
-            organism = organism,
+            organism = organism_parameters.standardized_organism,
             NA_segment = true
         }
         # concatenate tag, aa subs and aa dels for HA and NA segments
@@ -226,19 +263,7 @@ workflow theiacov_illumina_pe {
         String ha_na_nextclade_aa_subs = "~{nextclade_output_parser.nextclade_aa_subs + ',' + nextclade_output_parser_flu_na.nextclade_aa_subs}"
         String ha_na_nextclade_aa_dels = "~{nextclade_output_parser.nextclade_aa_dels + ',' + nextclade_output_parser_flu_na.nextclade_aa_dels}"
       }
-      if (organism == "flu") {
-        call flu_antiviral.flu_antiviral_substitutions {
-          input:
-            na_segment_assembly = irma.seg_na_assembly,
-            ha_segment_assembly = irma.seg_ha_assembly,
-            pa_segment_assembly = irma.seg_pa_assembly,
-            pb1_segment_assembly = irma.seg_pb1_assembly,
-            pb2_segment_assembly = irma.seg_pb2_assembly,
-            abricate_flu_subtype = select_first([abricate_flu.abricate_flu_subtype, ""]),
-            irma_flu_subtype = select_first([irma.irma_subtype, ""])
-        }
-      }
-      if (organism == "sars-cov-2") {
+      if (organism_parameters.standardized_organism == "sars-cov-2") {
         # sars-cov-2 specific tasks
         call pangolin.pangolin4 {
           input:
@@ -253,7 +278,7 @@ workflow theiacov_illumina_pe {
             min_depth = min_depth
         }
       }
-      if (organism == "MPXV" || organism == "sars-cov-2" || organism == "WNV"){ 
+      if (organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "WNV"){ 
         # tasks specific to MPXV, sars-cov-2, and WNV
         call vadr_task.vadr {
           input:
@@ -263,7 +288,7 @@ workflow theiacov_illumina_pe {
             maxlen = organism_parameters.vadr_maxlen
         }
       }
-      if (organism == "HIV") {
+      if (organism_parameters.standardized_organism == "HIV") {
         call quasitools.quasitools as quasitools_illumina_pe {
           input:
             read1 = read_QC_trim.read1_clean,
@@ -276,7 +301,7 @@ workflow theiacov_illumina_pe {
         call qc_check.qc_check_phb as qc_check_task {
           input:
             qc_check_table = qc_check_table,
-            expected_taxon = organism,
+            expected_taxon = organism_parameters.standardized_organism,
             num_reads_raw1 = read_QC_trim.fastq_scan_raw1,
             num_reads_raw2 = read_QC_trim.fastq_scan_raw2,
             num_reads_clean1 = read_QC_trim.fastq_scan_clean1,
