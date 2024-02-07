@@ -156,7 +156,7 @@ workflow organism_parameters {
     String hiv_v1_reference_gff = "gs://theiagen-public-files/terra/hivgc-files/NC_001802.1.gff3"
     String hiv_v1_primer_bed = "gs://theiagen-public-files/terra/hivgc-files/HIV-1_v1.0.primer.hyphen.bed"
     String hiv_v1_target_org = "Human immunodeficiency virus 1"
-    String hiv_v1_genome_len = 9181 
+    Int hiv_v1_genome_len = 9181 
   }
   if (organism == "HIV-v2") {
     String hiv_v2_org_name = "HIV"
@@ -164,7 +164,7 @@ workflow organism_parameters {
     String hiv_v2_reference_gff = "gs://theiagen-public-files/terra/hivgc-files/AY228557.1.gff3"
     String hiv_v2_primer_bed = "gs://theiagen-public-files/terra/hivgc-files/HIV-1_v2.0.primer.hyphen400.1.bed"
     String hiv_v2_target_org = "Human immunodeficiency virus 1"
-    String hiv_v2_genome_len = 9840
+    Int hiv_v2_genome_len = 9840
   }
   output {
     # standardized organism flag
