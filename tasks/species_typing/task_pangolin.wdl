@@ -22,6 +22,9 @@ task pangolin4 {
 
     { pangolin --all-versions && usher --version; } | tr '\n' ';'  | cut -f -6 -d ';' | tee VERSION_PANGOLIN_ALL
 
+    # so that the paths to temp files are not too long
+    export TMPDIR=/tmp
+
     pangolin "~{fasta}" \
        ~{'--analysis-mode ' + analysis_mode} \
        ~{'--min-length ' + min_length} \
@@ -31,6 +34,7 @@ task pangolin4 {
        ~{true='--skip-designation-cache' false='' skip_designation_cache} \
        --outfile "~{samplename}.pangolin_report.csv" \
        --verbose \
+       --tempdir /tmp \
        ~{pangolin_arguments}
 
 
