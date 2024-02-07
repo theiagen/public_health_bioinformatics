@@ -8,8 +8,8 @@ import "../../tasks/task_versioning.wdl" as versioning
 
 workflow freyja_fastq {
   input {
-    File read1_raw
-    File read2_raw
+    File read1
+    File read2
     File primer_bed
     File reference_genome
     Int trimmomatic_minlen = 25
@@ -18,8 +18,8 @@ workflow freyja_fastq {
   call read_qc.read_QC_trim_pe as read_QC_trim {
     input:
       samplename = samplename,
-      read1_raw  = read1_raw,
-      read2_raw  = read2_raw,
+      read1  = read1,
+      read2  = read2,
       trim_minlen = trimmomatic_minlen,
       workflow_series = "theiacov"
   }

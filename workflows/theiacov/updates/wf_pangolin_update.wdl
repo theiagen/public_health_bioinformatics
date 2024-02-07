@@ -6,7 +6,7 @@ import "../../../tasks/task_versioning.wdl" as versioning
 workflow pangolin_update {
   input {
     String samplename
-    File assembly
+    File assembly_fasta
     String old_lineage
     String old_pangolin_docker
     String old_pangolin_assignment_version
@@ -18,7 +18,7 @@ workflow pangolin_update {
   call pangolin.pangolin4 {
     input:
       samplename = samplename,
-      fasta = assembly,
+      fasta = assembly_fasta,
       docker = new_pangolin_docker
   }
   call pangolin.pangolin_update_log {

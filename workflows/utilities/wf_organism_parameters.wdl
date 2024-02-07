@@ -26,6 +26,9 @@ workflow organism_parameters {
     Int? vadr_max_length
     String? vadr_options
 
+    # pangolin parameters
+    String? pangolin_docker_image
+
     # kraken parameters
     String? kraken_target_org
   }
@@ -35,6 +38,7 @@ workflow organism_parameters {
     String sc2_nextclade_ds_tag = "2023-12-03T12:00:00Z"
     String sc2_nextclade_ref = "MN908947"
     String sc2_nextclade_ds_name = "sars-cov-2"
+    String sc2_pangolin_docker = "us-docker.pkg.dev/general-theiagen/staphb/pangolin:4.3.1-pdata-1.24"
     Int sc2_genome_len = 29903
     Int sc2_vadr_max_length = 30000
     String sc2_vadr_options = "--noseqnamemax --glsearch -s -r --nomisc --mkey sarscov2 --lowsim5seq 6 --lowsim3seq 6 --alt_fail lowscore,insertnn,deletinn --out_allfasta"
@@ -153,6 +157,8 @@ workflow organism_parameters {
     String nextclade_dataset_tag = select_first([nextclade_ds_tag, sc2_nextclade_ds_tag, mpox_nextclade_ds_tag, wnv_nextclade_ds_tag, h1n1_ha_nextclade_ds_tag, h3n2_ha_nextclade_ds_tag, vic_ha_nextclade_ds_tag, yam_ha_nextclade_ds_tag, h1n1_na_nextclade_ds_tag, h3n2_na_nextclade_ds_tag, vic_na_nextclade_ds_tag, yam_na_nextclade_ds_tag, rsv_a_nextclade_ds_tag, rsv_b_nextclade_ds_tag, "NA"])
     String nextclade_dataset_reference = select_first([nextclade_ds_reference, sc2_nextclade_ref, mpox_nextclade_ref, wnv_nextclade_ref, h1n1_ha_nextclade_ref, h3n2_ha_nextclade_ref, vic_ha_nextclade_ref, yam_ha_nextclade_ref, h1n1_na_nextclade_ref, h3n2_na_nextclade_ref, vic_na_nextclade_ref, yam_na_nextclade_ref, rsv_a_nextclade_ref, rsv_b_nextclade_ref, "NA"])
     String nextclade_dataset_name = select_first([nextclade_ds_name, sc2_nextclade_ds_name, mpox_nextclade_ds_name, wnv_nextclade_ds_name, h1n1_ha_nextclade_ds_name, h3n2_ha_nextclade_ds_name, vic_ha_nextclade_ds_name, yam_ha_nextclade_ds_name, h1n1_na_nextclade_ds_name, h3n2_na_nextclade_ds_name, vic_na_nextclade_ds_name, yam_na_nextclade_ds_name, rsv_a_nextclade_ds_name, rsv_b_nextclade_ds_name, "NA"])
+    # pangolin options
+    String pangolin_docker = select_first([pangolin_docker_image, sc2_pangolin_docker, ""])
     # vadr options
     String vadr_opts = select_first([vadr_options, sc2_vadr_options, mpox_vadr_options, wnv_vadr_options, flu_vadr_options, rsv_a_vadr_options, rsv_b_vadr_options])
     Int vadr_maxlen = select_first([vadr_max_length, sc2_vadr_max_length, mpox_vadr_max_length, wnv_vadr_max_length, flu_vadr_max_length, rsv_a_vadr_max_length, rsv_b_vadr_max_length])

@@ -9,14 +9,14 @@ workflow rasusa_workflow {
     File? read2
     String samplename
     Float coverage
-    String genome_size
+    String genome_length
   }
   call rasusa.rasusa as rasusa_task {
     input:
       read1 = read1,
       read2 = read2,
       samplename = samplename,
-      genome_size = genome_size,
+      genome_length = genome_length,
       coverage = coverage
   }
   call versioning.version_capture{

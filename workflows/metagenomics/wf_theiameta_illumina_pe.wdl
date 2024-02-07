@@ -39,8 +39,8 @@ workflow theiameta_illumina_pe {
   call read_qc_wf.read_QC_trim_pe as read_QC_trim {
       input:
         samplename = samplename,
-        read1_raw = read1,
-        read2_raw = read2,
+        read1 = read1,
+        read2 = read2,
         workflow_series = "theiameta"
     }
   call kraken_task.kraken2_standalone as kraken2_clean {
