@@ -4,8 +4,7 @@
     - wf_theiacov_clearlabs
     - wf_theiacov_clearlabs_cromwell
   files:
-    - path: log.err
-      contains: ["Successfully released change log lock", "INFO", "WORKFLOW_METADATA_SUMMARY_ENTRY", "liquibase"]
+    - path: log.err # file is empty, so don't check for strings within, just for presence
     - path: log.out
       contains: ["workflow finished with status 'Succeeded'", "theiacov_clearlabs", "Done"]
     - path: metadata.json
@@ -300,7 +299,7 @@
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     - path: miniwdl_run/call-nextclade_output_parser/work/input.tsv
     - path: miniwdl_run/call-pangolin4/command
-      md5sum: bbfdc76e5beb51d1ca777cba116d54a8
+      md5sum: 822d5c5276870d28971ca5d134193114
     - path: miniwdl_run/call-pangolin4/inputs.json
       contains: ["fasta", "samplename", "clearlabs"]
     - path: miniwdl_run/call-pangolin4/outputs.json

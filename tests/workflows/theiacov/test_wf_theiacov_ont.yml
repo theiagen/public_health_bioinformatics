@@ -4,8 +4,7 @@
     - wf_theiacov_ont
     - wf_theiacov_ont_cromwell
   files:
-    - path: log.err
-      contains: ["Successfully released change log lock", "INFO", "WORKFLOW_METADATA_SUMMARY_ENTRY", "liquibase"]
+    - path: log.err # file is empty, so don't check for strings within, just for presence
     - path: log.out
       contains: ["workflow finished with status 'Succeeded'", "theiacov_ont", "Done"]
     - path: metadata.json
@@ -202,7 +201,7 @@
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     - path: miniwdl_run/call-nextclade_output_parser/work/input.tsv
     - path: miniwdl_run/call-pangolin4/command
-      md5sum: badc99329e09036c58a90e92b7dbed7f
+      md5sum: c1c714d97c9c01cd446da625f63e0391
     - path: miniwdl_run/call-pangolin4/inputs.json
       contains: ["fasta", "samplename", "ont"]
     - path: miniwdl_run/call-pangolin4/outputs.json
