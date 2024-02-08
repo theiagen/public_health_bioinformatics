@@ -236,7 +236,7 @@ workflow theiacov_illumina_pe {
           genome_length = organism_parameters.genome_len
       }
       # run organism-specific typing
-      if (organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "sars-cov-2" || (organism_parameters.standardized_organism == "flu" && defined(irma.seg_ha_assembly) && defined(do_not_run_flu_ha_nextclade))) { 
+      if (organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "sars-cov-2" || (organism_parameters.standardized_organism == "flu" && defined(irma.seg_ha_assembly) && ! defined(do_not_run_flu_ha_nextclade))) { 
         # tasks specific to either MPXV, sars-cov-2, or flu
         call nextclade_task.nextclade {
           input:
@@ -251,7 +251,7 @@ workflow theiacov_illumina_pe {
             organism = organism_parameters.standardized_organism
         }
       }
-      if (organism_parameters.standardized_organism == "flu" && defined(irma.seg_na_assembly) && defined(do_not_run_flu_na_nextclade)) { 
+      if (organism_parameters.standardized_organism == "flu" && defined(irma.seg_na_assembly) && ! defined(do_not_run_flu_na_nextclade)) { 
         # tasks specific to flu NA - run nextclade a second time
         call nextclade_task.nextclade as nextclade_flu_na {
           input:
