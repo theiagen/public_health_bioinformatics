@@ -2,5 +2,6 @@
     "theiacov_illumina_pe.samplename": "SRR13687078",
     "theiacov_illumina_pe.read1": "tests/data/theiacov/fastqs/illumina_pe/SRR13687078_1.fastq.gz",
     "theiacov_illumina_pe.read2": "tests/data/theiacov/fastqs/illumina_pe/SRR13687078_2.fastq.gz",
-    "theiacov_illumina_pe.primer_bed": "tests/data/theiacov/primers/artic-v3.primers.bed"
+    "theiacov_illumina_pe.primer_bed": "tests/data/theiacov/primers/artic-v3.primers.bed",
+    "theiacov_illumina_pe.reference_genome": "tests/inputs/completely-empty-for-test.txt"
 }

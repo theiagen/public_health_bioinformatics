@@ -1,5 +1,7 @@
 {
     "theiacov_clearlabs.samplename": "clearlabs",
     "theiacov_clearlabs.read1": "tests/data/theiacov/fastqs/clearlabs/clearlabs.fastq.gz",
-    "theiacov_clearlabs.primer_bed": "tests/data/theiacov/primers/artic-v3.primers.bed"
+    "theiacov_clearlabs.primer_bed": "tests/data/theiacov/primers/artic-v3.primers.bed",
+    "theiacov_clearlabs.reference_genome": "tests/inputs/completely-empty-for-test.txt"
+
 }
