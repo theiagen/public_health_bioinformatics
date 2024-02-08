@@ -25,6 +25,8 @@ workflow read_QC_trim_pe {
     Boolean call_midas = false
     File? midas_db
     Boolean call_kraken = false
+    Int? kraken_disk_size
+    Int? kraken_memory
     File? kraken_db
     String? target_organism
     File? adapters
@@ -132,7 +134,9 @@ workflow read_QC_trim_pe {
           samplename = samplename,
           read1 = read1,
           read2 = read2,
-          kraken2_db = select_first([kraken_db])
+          kraken2_db = select_first([kraken_db]),
+          disk_size = kraken_disk_size,
+          mem = kraken_memory
       }
     }
   }
