@@ -65,7 +65,22 @@ workflow theiacov_illumina_pe {
     String? target_organism
     # qc check parameters
     File? qc_check_table
-     }
+  }
+  call set_organism_defaults.organism_parameters {
+    input:
+      organism = organism,
+      reference_gff_file = reference_gff,
+      reference_genome = reference_genome,
+      genome_length = genome_length,
+      nextclade_ds_reference = nextclade_dataset_reference,
+      nextclade_ds_tag = nextclade_dataset_tag,
+      nextclade_ds_name = nextclade_dataset_name,     
+      vadr_max_length = vadr_max_length,
+      vadr_options = vadr_options,
+      primer_bed_file = primer_bed,
+      pangolin_docker_image = pangolin_docker_image,
+      kraken_target_org = target_organism
+  }
   call screen.check_reads as raw_check_reads {
     input:
       read1 = read1,
@@ -78,7 +93,7 @@ workflow theiacov_illumina_pe {
       min_proportion = min_proportion,
       skip_screen = skip_screen,
       workflow_series = "theiacov",
-      organism = organism,
+      organism = organism_parameters.standardized_organism,
       expected_genome_length = genome_length
   }
   if (raw_check_reads.read_screen == "PASS") {
@@ -106,25 +121,10 @@ workflow theiacov_illumina_pe {
         min_proportion = min_proportion,
         skip_screen = skip_screen,
         workflow_series = "theiacov",
-        organism = organism,
+        organism = organism_parameters.standardized_organism,
         expected_genome_length = genome_length
     }
     if (clean_check_reads.read_screen == "PASS") {
-      call set_organism_defaults.organism_parameters {
-        input:
-          organism = organism,
-          reference_gff_file = reference_gff,
-          reference_genome = reference_genome,
-          genome_length = genome_length,
-          nextclade_ds_reference = nextclade_dataset_reference,
-          nextclade_ds_tag = nextclade_dataset_tag,
-          nextclade_ds_name = nextclade_dataset_name,     
-          vadr_max_length = vadr_max_length,
-          vadr_options = vadr_options,
-          primer_bed_file = primer_bed,
-          pangolin_docker_image = pangolin_docker_image,
-          kraken_target_org = target_organism
-      }
       # assembly via bwa and ivar for non-flu data
       if (organism_parameters.standardized_organism != "flu"){
         call consensus_call.ivar_consensus {
@@ -211,6 +211,7 @@ workflow theiacov_illumina_pe {
               kraken_target_org = target_organism,
               hiv_primer_version = "N/A"
           }
+          # these are necessary because these are optional values and cannot be directly compared in before the nextclade task. checking for variable definition can be done though, which is why we create variables here
           if (set_flu_na_nextclade_values.nextclade_dataset_tag == "NA"){
             Boolean do_not_run_flu_na_nextclade = true
           }
@@ -278,7 +279,7 @@ workflow theiacov_illumina_pe {
             samplename = samplename,
             fasta = select_first([ivar_consensus.assembly_fasta]),
             docker = organism_parameters.pangolin_docker
-      }
+        }
         call sc2_calculation.sc2_gene_coverage {
           input: 
             samplename = samplename,

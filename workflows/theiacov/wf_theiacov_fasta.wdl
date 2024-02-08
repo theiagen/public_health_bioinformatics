@@ -65,14 +65,14 @@ workflow theiacov_fasta {
       reference_genome = organism_parameters.reference,
       genome_length = organism_parameters.genome_len
   }
-  if (organism == "sars-cov-2") {
+  if (organism_parameters.standardized_organism == "sars-cov-2") {
     call pangolin.pangolin4 {
       input:
         samplename = samplename,
         fasta = assembly_fasta
     }
   }
-  if (organism == "sars-cov-2" || organism == "MPXV" || organism == "rsv_a" || organism == "rsv_b" || organism == "flu") {
+  if (organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "rsv_a" || organism_parameters.standardized_organism == "rsv_b" || organism_parameters.standardized_organism == "flu") {
     if (organism_parameters.nextclade_dataset_tag != "NA") {
       call nextclade_task.nextclade {
         input:
@@ -81,20 +81,15 @@ workflow theiacov_fasta {
           dataset_reference = organism_parameters.nextclade_dataset_reference,
           dataset_tag = organism_parameters.nextclade_dataset_tag
       }
-    }
-  }
-  # nextclade parser task
-  if (organism == "sars-cov-2" || organism == "MPXV" || organism == "rsv_a" || organism == "rsv_b" || organism == "flu") {
-    if (defined(nextclade.nextclade_tsv)) {
       call nextclade_task.nextclade_output_parser {
         input:
-          nextclade_tsv = select_first([nextclade.nextclade_tsv]),
-          organism = organism
+          nextclade_tsv = nextclade.nextclade_tsv,
+          organism = organism_parameters.standardized_organism
       }
     }
   }
   # vadr task
-  if (organism == "sars-cov-2" || organism == "MPXV" || organism == "rsv_a" || organism == "rsv_b" || organism == "WNV") {
+  if (organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "rsv_a" || organism_parameters.standardized_organism == "rsv_b" || organism_parameters.standardized_organism == "WNV") {
     call vadr_task.vadr {
       input:
         genome_fasta = assembly_fasta,
@@ -104,7 +99,7 @@ workflow theiacov_fasta {
     }
   }
   # QC check task
-  if(defined(qc_check_table)) {
+  if (defined(qc_check_table)) {
     call qc_check.qc_check_phb {
       input:
         qc_check_table = qc_check_table,

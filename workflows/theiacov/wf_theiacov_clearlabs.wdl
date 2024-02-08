@@ -98,7 +98,7 @@ workflow theiacov_clearlabs {
       samplename = samplename,
       bamfile = consensus.trim_sorted_bam
   }
-  if (organism == "sars-cov-2") {
+  if (organism_parameters.standardized_organism == "sars-cov-2") {
     # sars-cov-2 specific tasks
     call pangolin.pangolin4 {
       input:
@@ -112,10 +112,7 @@ workflow theiacov_clearlabs {
         min_depth = 20
     }
   }
-  if (organism == "MPXV") {
-    # MPXV specific tasks
-  }
-  if (organism == "MPXV" || organism == "sars-cov-2"){
+  if (organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "sars-cov-2") {
     # tasks specific to either MPXV or sars-cov-2
     call nextclade_task.nextclade {
       input:
@@ -134,7 +131,8 @@ workflow theiacov_clearlabs {
         genome_fasta = consensus.consensus_seq,
         assembly_length_unambiguous = consensus_qc.number_ATCG
     }
-  if(defined(qc_check_table)) {
+  }
+  if (defined(qc_check_table)) {
     call qc_check.qc_check_phb as qc_check_task {
       input:
         qc_check_table = qc_check_table,
@@ -156,9 +154,8 @@ workflow theiacov_clearlabs {
         # sc2_s_gene_mean_coverage = sc2_gene_coverage.sc2_s_gene_depth,
         # sc2_s_gene_percent_coverage = sc2_gene_coverage.sc2_s_gene_percent_coverage,
         vadr_num_alerts = vadr.num_alerts
-        }
-      }
-  }
+    }
+  }  
   call versioning.version_capture{
     input:
   }

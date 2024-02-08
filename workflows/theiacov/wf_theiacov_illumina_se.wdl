@@ -58,6 +58,20 @@ workflow theiacov_illumina_se {
     # qc check parameters
     File? qc_check_table
   }
+  call set_organism_defaults.organism_parameters {
+    input:
+      organism = organism,
+      reference_gff_file = reference_gff,
+      reference_genome = reference_genome,
+      genome_length = genome_length,
+      nextclade_ds_reference = nextclade_dataset_reference,
+      nextclade_ds_tag = nextclade_dataset_tag,
+      nextclade_ds_name = nextclade_dataset_name,     
+      vadr_max_length = vadr_max_length,
+      vadr_options = vadr_options,
+      primer_bed_file = primer_bed,
+      pangolin_docker_image = pangolin_docker_image  
+  }
   call screen.check_reads_se as raw_check_reads {
     input:
       read1 = read1,
@@ -68,7 +82,7 @@ workflow theiacov_illumina_se {
       min_coverage = min_coverage,
       skip_screen = skip_screen,
       workflow_series = "theiacov",
-      organism = organism,
+      organism = organism_parameters.standardized_organism,
       skip_mash = skip_mash,
       expected_genome_length = genome_length
   }
@@ -94,25 +108,11 @@ workflow theiacov_illumina_se {
         min_coverage = min_coverage,
         skip_screen = skip_screen,
         workflow_series = "theiacov",
-        organism = organism,
+        organism = organism_parameters.standardized_organism,
         skip_mash = skip_mash,
         expected_genome_length = genome_length
     }
-    if (clean_check_reads.read_screen == "PASS") {
-      call set_organism_defaults.organism_parameters {
-        input:
-          organism = organism,
-          reference_gff_file = reference_gff,
-          reference_genome = reference_genome,
-          genome_length = genome_length,
-          nextclade_ds_reference = nextclade_dataset_reference,
-          nextclade_ds_tag = nextclade_dataset_tag,
-          nextclade_ds_name = nextclade_dataset_name,     
-          vadr_max_length = vadr_max_length,
-          vadr_options = vadr_options,
-          primer_bed_file = primer_bed,
-          pangolin_docker_image = pangolin_docker_image  
-      }
+    if (clean_check_reads.read_screen == "PASS") {     
       call consensus_call.ivar_consensus {
         input:
           samplename = samplename,
@@ -124,13 +124,13 @@ workflow theiacov_illumina_se {
           consensus_min_freq = consensus_min_freq,
           variant_min_freq = variant_min_freq,
           trim_primers = trim_primers
-        }
+      }
       call consensus_qc_task.consensus_qc {
         input:
           assembly_fasta = ivar_consensus.assembly_fasta,
           reference_genome = organism_parameters.reference
       }
-      if (organism == "sars-cov-2") {
+      if (organism_parameters.standardized_organism == "sars-cov-2") {
         # sars-cov-2 specific tasks
         call pangolin.pangolin4 {
           input:
@@ -145,13 +145,7 @@ workflow theiacov_illumina_se {
             min_depth = min_depth
         }
       }
-      if (organism == "MPXV") {
-        # MPXV specific tasks
-      }
-      if (organism == "WNV") {
-        # WNV specific tasks (none yet, just adding as placeholder for future)
-      }
-      if (organism == "MPXV" || organism == "sars-cov-2"){
+      if (organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "sars-cov-2"){
         # tasks specific to either MPXV or sars-cov-2
         call nextclade_task.nextclade {
           input:
@@ -163,10 +157,10 @@ workflow theiacov_illumina_se {
         call nextclade_task.nextclade_output_parser {
           input:
           nextclade_tsv = nextclade.nextclade_tsv,
-          organism = organism
+          organism = organism_parameters.standardized_organism
         }
       }
-      if (organism == "MPXV" || organism == "sars-cov-2" || organism == "WNV"){ 
+      if (organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "WNV"){ 
         # tasks specific to MPXV, sars-cov-2, and WNV
         call vadr_task.vadr {
           input:
