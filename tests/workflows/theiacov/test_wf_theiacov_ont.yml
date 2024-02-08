@@ -31,7 +31,7 @@
     - path: miniwdl_run/call-clean_check_reads/work/_miniwdl_inputs/0/artic_ncov2019_ont.fastq
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     - path: miniwdl_run/call-consensus/command
-      md5sum: 74fbe3156c3c085daffaeb29a7725890
+      md5sum: 056563d18294928fef5238bac7213791
     - path: miniwdl_run/call-consensus/inputs.json
       contains: ["filtered_reads", "samplename", "fastq"]
     - path: miniwdl_run/call-consensus/outputs.json
@@ -43,7 +43,7 @@
     - path: miniwdl_run/call-consensus/work/PRIMER_NAME
       md5sum: 3ca99445df901950128cddd3e58d2c52
     - path: miniwdl_run/call-consensus/work/REFERENCE_GENOME
-      md5sum: 6a2df888cb106bc8f092eeff474bca30
+      md5sum: 0e6efd549c8773f9a2f7a3e82619ee61
     - path: miniwdl_run/call-consensus/work/VERSION
       md5sum: f3528ff85409c70100063c55ad75612b
     - path: miniwdl_run/call-consensus/work/_miniwdl_inputs/0/artic-v3.primers.bed
@@ -88,12 +88,12 @@
     - path: miniwdl_run/call-consensus/work/ont.vcfreport.txt
       md5sum: 69131186223267b3ae6621cb8ef4eecd
     - path: miniwdl_run/call-consensus/work/primer-schemes/SARS-CoV-2/Vuser/SARS-CoV-2.reference.fasta
-      md5sum: cc4d7552b7ac253f38d1e21884e37ab7
+      md5sum: b9b67235a2d9d0b0d7f531166ffefd41
     - path: miniwdl_run/call-consensus/work/primer-schemes/SARS-CoV-2/Vuser/SARS-CoV-2.reference.fasta.fai
     - path: miniwdl_run/call-consensus/work/primer-schemes/SARS-CoV-2/Vuser/SARS-CoV-2.scheme.bed
       md5sum: d5ad850f8c610dc45162957ab84530d6
     - path: miniwdl_run/call-consensus_qc/command
-      md5sum: 2b043e77f5254e0a8002aa32693edeb8
+      md5sum: 3f21640edd4e1691fec5f5e2cc061d97
     - path: miniwdl_run/call-consensus_qc/inputs.json
       contains: ["assembly_fasta", "medaka"]
     - path: miniwdl_run/call-consensus_qc/outputs.json
@@ -177,7 +177,7 @@
     - path: miniwdl_run/call-nextclade/work/ont.medaka.consensus.nextclade.json
     - path: miniwdl_run/call-nextclade/work/ont.medaka.consensus.nextclade.tsv
     - path: miniwdl_run/call-nextclade_output_parser/command
-      md5sum: 3f00e7c079acf38372be6c368e14cfef
+      md5sum: 1e8b067451fe53111739fa3e27f59e8f
     - path: miniwdl_run/call-nextclade_output_parser/inputs.json
       contains: ["nextclade_tsv", "tsv"]
     - path: miniwdl_run/call-nextclade_output_parser/outputs.json
@@ -221,9 +221,9 @@
     - path: miniwdl_run/call-pangolin4/work/PANGOLIN_NOTES
       md5sum: 35aa27af5fb90d54561ee9d45a3163d5
     - path: miniwdl_run/call-pangolin4/work/PANGO_ASSIGNMENT_VERSION
-      md5sum: c67b44bacceaadab455401b5b0292f05
+      md5sum: 9ef080806165555f383b49f1fa9df47c
     - path: miniwdl_run/call-pangolin4/work/VERSION_PANGOLIN_ALL
-      md5sum: 9f9c4c00a1ceb5526bed7dc4cdb3dcfd
+      md5sum: a7b44501d440ba66c62168d53108d2a1
     - path: miniwdl_run/call-pangolin4/work/_miniwdl_inputs/0/ont.medaka.consensus.fasta
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     - path: miniwdl_run/call-pangolin4/work/ont.pangolin_report.csv
