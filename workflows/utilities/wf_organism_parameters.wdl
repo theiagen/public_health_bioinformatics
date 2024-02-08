@@ -7,6 +7,9 @@ workflow organism_parameters {
   input {
     String organism
     
+    # hiv information
+    String hiv_primer_version = "v1"
+
     # flu information
     String flu_segment = "N/A"
     String flu_subtype = "N/A"
@@ -150,7 +153,7 @@ workflow organism_parameters {
     String rsv_b_vadr_options = "-r --mkey rsv --xnocomp"
     Int rsv_b_vadr_max_length = 15500
   }
-  if (organism == "HIV-v1") {
+  if (organism == "HIV" && hiv_primer_version == "v1") {
     String hiv_v1_org_name = "HIV"
     String hiv_v1_reference_genome = "gs://theiagen-public-files/terra/hivgc-files/NC_001802.1.fasta"
     String hiv_v1_reference_gff = "gs://theiagen-public-files/terra/hivgc-files/NC_001802.1.gff3"
@@ -158,7 +161,7 @@ workflow organism_parameters {
     String hiv_v1_target_org = "Human immunodeficiency virus 1"
     Int hiv_v1_genome_len = 9181 
   }
-  if (organism == "HIV-v2") {
+  if (organism == "HIV" && hiv_primer_version == "v2") {
     String hiv_v2_org_name = "HIV"
     String hiv_v2_reference_genome = "gs://theiagen-public-files/terra/hivgc-files/AY228557.1.headerchanged.fasta"
     String hiv_v2_reference_gff = "gs://theiagen-public-files/terra/hivgc-files/AY228557.1.gff3"
