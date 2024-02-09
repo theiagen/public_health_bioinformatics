@@ -91,7 +91,7 @@ task kraken2_theiacov {
     String version = read_string("VERSION")
     File kraken_report = "~{samplename}_kraken2_report.txt"
     Float percent_human = read_float("PERCENT_HUMAN")
-    Float percent_sc2 = read_float("PERCENT_SC2")
+    Float? percent_sc2 = read_float("PERCENT_SC2")
     String percent_target_org = read_string("PERCENT_TARGET_ORG")
     String? kraken_target_org = target_org
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.0.8-beta_hv"
