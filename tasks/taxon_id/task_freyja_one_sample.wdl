@@ -90,6 +90,11 @@ task freyja_one_sample {
   # Adjust output header
   echo -e "\t/~{samplename}" > ~{samplename}_freyja_demixed.tsv
   tail -n+2 ~{samplename}_freyja_demixed.tmp >> ~{samplename}_freyja_demixed.tsv
+
+  if [ -f /opt/conda/envs/freyja-env/lib/python3.10/site-packages/freyja/data/usher_barcodes.csv ]; then
+    mv /opt/conda/envs/freyja-env/lib/python3.10/site-packages/freyja/data/usher_barcodes.csv usher_barcodes.csv
+  fi
+
   >>>
   runtime {
     memory: "~{memory} GB"
@@ -108,6 +113,7 @@ task freyja_one_sample {
     File? freyja_bootstrap_lineages_pdf = "~{samplename}_lineages.pdf"
     File? freyja_bootstrap_summary = "~{samplename}_summarized.csv"
     File? freyja_bootstrap_summary_pdf = "~{samplename}_summarized.pdf"
+    # capture barcode file - first is user supplied, second appears if the user did not supply a barcode file
     File freyja_barcode_file = select_first([freyja_usher_barcodes, "usher_barcodes.csv"])
     String freyja_barcode_version = read_string("FREYJA_BARCODES")
     String freyja_metadata_version = read_string("FREYJA_METADATA")
