@@ -122,6 +122,7 @@ task kraken2_standalone {
     String unclassified_out = "unclassified#.fastq"
     Int mem = 32
     Int cpu = 4
+    Int disk_size = 100
   }
   command <<<
     echo $(kraken2 --version 2>&1) | sed 's/^.*Kraken version //;s/ .*$//' | tee VERSION
@@ -182,7 +183,7 @@ task kraken2_standalone {
       docker: "~{docker}"
       memory: "~{mem} GB"
       cpu: cpu
-      disks: "local-disk 100 SSD"
+      disks: "local-disk " + disk_size + " SSD"
       preemptible: 0
   }
 }
