@@ -60,7 +60,7 @@
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     # fastq scan raw
     - path: miniwdl_run/call-read_QC_trim/call-fastq_scan_raw/command
-      md5sum: 942b87e2da9250f9612ec6635170e9fe
+      md5sum: 9b2cc0107f1a90972482d7b3a658d242
     - path: miniwdl_run/call-read_QC_trim/call-fastq_scan_raw/inputs.json
       contains: ["read1", "read2", "illumina_pe"]
     - path: miniwdl_run/call-read_QC_trim/call-fastq_scan_raw/outputs.json
@@ -84,7 +84,7 @@
     - path: miniwdl_run/call-read_QC_trim/call-fastq_scan_raw/work/VERSION
     # kraken2 dehosted
     - path: miniwdl_run/call-read_QC_trim/call-kraken2_theiacov_dehosted/command
-      md5sum: 7b5624b1e130fe96e49c99c22bf89078
+      md5sum: 369cf3223137d6ecbb52b3b7d388916c
     - path: miniwdl_run/call-read_QC_trim/call-kraken2_theiacov_dehosted/inputs.json
       contains: ["read1", "read2", "samplename"]
     - path: miniwdl_run/call-read_QC_trim/call-kraken2_theiacov_dehosted/outputs.json
@@ -104,7 +104,7 @@
       md5sum: 3544d9ca35d45093c03cdead46677765
     # kraken2 raw
     - path: miniwdl_run/call-read_QC_trim/call-kraken2_theiacov_raw/command
-      md5sum: eb40ccebceb76d9d01c9c1832223fa7a
+      md5sum: 9e5d32b2ffaa86b58a72e5ca7a2e6c20
     - path: miniwdl_run/call-read_QC_trim/call-kraken2_theiacov_raw/inputs.json
       contains: ["read1", "samplename"]
     - path: miniwdl_run/call-read_QC_trim/call-kraken2_theiacov_raw/outputs.json
