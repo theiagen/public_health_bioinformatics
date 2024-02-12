@@ -44,6 +44,7 @@ task semibin {
   >>>
   output {
     String semibin_version = read_string("SEMIBIN_VERSION")
+    String semibin_docker = docker
     Array[File] semibin_bins = glob("~{samplename}/output_recluster_bins/bin.*.fa")
   }
   runtime {
