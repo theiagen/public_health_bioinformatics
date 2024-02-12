@@ -104,8 +104,8 @@ task freyja_one_sample {
     tsv_reader = csv.reader(tsv_file, delimiter="\t")
     for line in tsv_reader:
       if "coverage" in line[0]:
-              with open("COVERAGE", 'wt') as coverage:
-                coverage.write(line[1])
+        with open("COVERAGE", 'wt') as coverage:
+          coverage.write(line[1])
 
   CODE
 
