@@ -237,6 +237,7 @@ workflow theiameta_illumina_pe {
     Float? percentage_mapped_reads = assembled_reads_percent.percentage_mapped
     # Binning
     String? semibin_version = semibin.semibin_version
+    String? semibin_docker = semibin.semibin_docker
     Array[File]? semibin_bins = semibin.semibin_bins
     }
 }
