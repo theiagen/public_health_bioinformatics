@@ -4,8 +4,7 @@
     - wf_theiacov_clearlabs
     - wf_theiacov_clearlabs_cromwell
   files:
-    - path: log.err
-      contains: ["Successfully released change log lock", "INFO", "WORKFLOW_METADATA_SUMMARY_ENTRY", "liquibase"]
+    - path: log.err # file is empty, so don't check for strings within, just for presence
     - path: log.out
       contains: ["workflow finished with status 'Succeeded'", "theiacov_clearlabs", "Done"]
     - path: metadata.json
@@ -300,7 +299,7 @@
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     - path: miniwdl_run/call-nextclade_output_parser/work/input.tsv
     - path: miniwdl_run/call-pangolin4/command
-      md5sum: bbfdc76e5beb51d1ca777cba116d54a8
+      md5sum: 822d5c5276870d28971ca5d134193114
     - path: miniwdl_run/call-pangolin4/inputs.json
       contains: ["fasta", "samplename", "clearlabs"]
     - path: miniwdl_run/call-pangolin4/outputs.json
@@ -320,13 +319,13 @@
     - path: miniwdl_run/call-pangolin4/work/PANGOLIN_NOTES
       md5sum: 59478efddde2191ead1b46b1f121bbc9
     - path: miniwdl_run/call-pangolin4/work/PANGO_ASSIGNMENT_VERSION
-      md5sum: edfb0c7ebdbf598df19861b650ee904a
+      md5sum: c67b44bacceaadab455401b5b0292f05
     - path: miniwdl_run/call-pangolin4/work/VERSION_PANGOLIN_ALL
-      md5sum: ef9c730f9b45d2fc284575c13fe7c920
+      md5sum: 9f9c4c00a1ceb5526bed7dc4cdb3dcfd
     - path: miniwdl_run/call-pangolin4/work/_miniwdl_inputs/0/clearlabs.medaka.consensus.fasta
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     - path: miniwdl_run/call-pangolin4/work/clearlabs.pangolin_report.csv
-      md5sum: 58773dc8fca41e521ec7ab24df371365
+      md5sum: 45b461b9971f43a9b36b4be9c1710041
     - path: miniwdl_run/call-sc2_gene_coverage/command
       md5sum: e44c070a15a0f8d42348103b0440f691
     - path: miniwdl_run/call-sc2_gene_coverage/inputs.json
