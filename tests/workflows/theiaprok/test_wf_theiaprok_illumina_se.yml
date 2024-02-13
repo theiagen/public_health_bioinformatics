@@ -483,7 +483,7 @@
     - path: miniwdl_run/call-shovill_se/work/out/skesa.fasta
     - path: miniwdl_run/call-shovill_se/work/out/test_contigs.fasta
     - path: miniwdl_run/call-ts_mlst/command
-      md5sum: df3b08d5ed6403b5ef3ae9b854fd3858
+      md5sum: 8674b9fb48f5b1973cd246bf605c9fb9
     - path: miniwdl_run/call-ts_mlst/inputs.json
       contains: ["assembly", "fasta", "sample", "test"]
     - path: miniwdl_run/call-ts_mlst/outputs.json
@@ -598,7 +598,7 @@
     - path: miniwdl_run/wdl/tasks/utilities/task_broad_terra_tools.wdl
       md5sum: e7a4488aebdabf9ea15a16538d6c835c
     - path: miniwdl_run/wdl/workflows/theiaprok/wf_theiaprok_illumina_se.wdl
-      md5sum: 947b3dc02791acf5ef4d90d34892da49
+      md5sum: 985580bfae2307a4179795698b9fa1da
     - path: miniwdl_run/wdl/workflows/utilities/wf_merlin_magic.wdl
       md5sum: 38804a4043172f09fb3a6c2e879f69c4
     - path: miniwdl_run/wdl/workflows/utilities/wf_read_QC_trim_se.wdl
