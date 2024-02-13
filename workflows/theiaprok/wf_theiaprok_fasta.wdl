@@ -42,7 +42,7 @@ workflow theiaprok_fasta {
     String? expected_taxon # allow user to provide organism (e.g. "Clostridioides_difficile") string to amrfinder. Useful when gambit does not predict the correct species
     # qc check parameters
     File? qc_check_table
-    String? ts_mlst_scheme
+    String? mlst_scheme
   }
   call versioning.version_capture{
     input:
@@ -90,12 +90,6 @@ workflow theiaprok_fasta {
         organism = select_first([expected_taxon, gambit.gambit_predicted_taxon])
     }
   }
-  call ts_mlst_task.ts_mlst {
-    input: 
-      assembly = assembly_fasta,
-      samplename = samplename,
-      scheme = ts_mlst_scheme
-  }
   if (genome_annotation == "prokka") {
     call prokka_task.prokka {
       input:
@@ -121,7 +115,14 @@ workflow theiaprok_fasta {
       assembly = assembly_fasta,
       samplename = samplename,
       assembly_only = true,
-      paired_end = false
+      paired_end = false,
+      mlst_scheme = mlst_scheme
+  }
+  call ts_mlst_task.ts_mlst {
+    input: 
+      assembly = assembly_fasta,
+      samplename = samplename,
+      scheme = merlin_magic.ts_mlst_scheme
   }
   if (defined(qc_check_table)) {
     call qc_check.qc_check_phb as qc_check_task {
