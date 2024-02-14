@@ -4,8 +4,7 @@
     - wf_theiacov_clearlabs
     - wf_theiacov_clearlabs_cromwell
   files:
-    - path: log.err
-      contains: ["Successfully released change log lock", "INFO", "WORKFLOW_METADATA_SUMMARY_ENTRY", "liquibase"]
+    - path: log.err # file is empty, so don't check for strings within, just for presence
     - path: log.out
       contains: ["workflow finished with status 'Succeeded'", "theiacov_clearlabs", "Done"]
     - path: metadata.json
@@ -88,7 +87,7 @@
     - path: miniwdl_run/call-consensus/work/primer-schemes/SARS-CoV-2/Vuser/SARS-CoV-2.scheme.bed
       md5sum: d5ad850f8c610dc45162957ab84530d6
     - path: miniwdl_run/call-consensus_qc/command
-      md5sum: 1736bbc2b16e75dbeb37076bacedc129
+      md5sum: 3ded305519281d6609fda355bf1c060b
     - path: miniwdl_run/call-consensus_qc/inputs.json
       contains: ["assembly_fasta", "medaka"]
     - path: miniwdl_run/call-consensus_qc/outputs.json
@@ -276,7 +275,7 @@
     - path: miniwdl_run/call-nextclade/work/nextclade_gene_S.translation.fasta
       md5sum: 0ce44a0a8e2784ca4b3e8d8f03211813
     - path: miniwdl_run/call-nextclade_output_parser/command
-      md5sum: a01b0a826425399bc59854b7c74acb1e
+      md5sum: 4e8f0aa96cdafee6fce248cffeca046c
     - path: miniwdl_run/call-nextclade_output_parser/inputs.json
       contains: ["nextclade_tsv", "tsv"]
     - path: miniwdl_run/call-nextclade_output_parser/outputs.json
@@ -293,14 +292,14 @@
     - path: miniwdl_run/call-nextclade_output_parser/work/NEXTCLADE_CLADE
       md5sum: 96d3cf337be2f7948d6f6df5c1ab69a4
     - path: miniwdl_run/call-nextclade_output_parser/work/NEXTCLADE_LINEAGE
-      md5sum: d41d8cd98f00b204e9800998ecf8427e
+      md5sum: 717da6cd0df2d2f1d00461f3498aaca9
     - path: miniwdl_run/call-nextclade_output_parser/work/TAMIFLU_AASUBS
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     - path: miniwdl_run/call-nextclade_output_parser/work/_miniwdl_inputs/0/clearlabs.medaka.consensus.nextclade.tsv
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     - path: miniwdl_run/call-nextclade_output_parser/work/input.tsv
     - path: miniwdl_run/call-pangolin4/command
-      md5sum: bbfdc76e5beb51d1ca777cba116d54a8
+      md5sum: 822d5c5276870d28971ca5d134193114
     - path: miniwdl_run/call-pangolin4/inputs.json
       contains: ["fasta", "samplename", "clearlabs"]
     - path: miniwdl_run/call-pangolin4/outputs.json
@@ -320,13 +319,13 @@
     - path: miniwdl_run/call-pangolin4/work/PANGOLIN_NOTES
       md5sum: 59478efddde2191ead1b46b1f121bbc9
     - path: miniwdl_run/call-pangolin4/work/PANGO_ASSIGNMENT_VERSION
-      md5sum: edfb0c7ebdbf598df19861b650ee904a
+      md5sum: c67b44bacceaadab455401b5b0292f05
     - path: miniwdl_run/call-pangolin4/work/VERSION_PANGOLIN_ALL
-      md5sum: ef9c730f9b45d2fc284575c13fe7c920
+      md5sum: 9f9c4c00a1ceb5526bed7dc4cdb3dcfd
     - path: miniwdl_run/call-pangolin4/work/_miniwdl_inputs/0/clearlabs.medaka.consensus.fasta
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     - path: miniwdl_run/call-pangolin4/work/clearlabs.pangolin_report.csv
-      md5sum: 58773dc8fca41e521ec7ab24df371365
+      md5sum: 45b461b9971f43a9b36b4be9c1710041
     - path: miniwdl_run/call-sc2_gene_coverage/command
       md5sum: e44c070a15a0f8d42348103b0440f691
     - path: miniwdl_run/call-sc2_gene_coverage/inputs.json

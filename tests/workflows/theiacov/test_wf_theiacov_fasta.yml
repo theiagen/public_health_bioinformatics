@@ -4,8 +4,7 @@
     - wf_theiacov_fasta
     - wf_theiacov_fasta_cromwell
   files:
-    - path: log.err
-      contains: ["Successfully released change log lock", "INFO", "WORKFLOW_METADATA_SUMMARY_ENTRY", "liquibase"]
+    - path: log.err # file is empty, so don't check for strings within, just for presence
     - path: log.out
       contains: ["workflow finished with status 'Succeeded'", "theiacov_fasta", "Done"]
     - path: metadata.json
@@ -18,7 +17,7 @@
     - wf_theiacov_fasta_miniwdl
   files:
     - path: miniwdl_run/call-consensus_qc/command
-      md5sum: b89c8a9a0b9e27b26454ba7d668d68f4
+      md5sum: 57cce4e7c41e1ff0f9a9883605d84695
     - path: miniwdl_run/call-consensus_qc/inputs.json
     - path: miniwdl_run/call-consensus_qc/outputs.json
     - path: miniwdl_run/call-consensus_qc/stderr.txt
@@ -38,7 +37,7 @@
       md5sum: 6808ca805661622ad65ae014a4b2a094
     - path: miniwdl_run/call-consensus_qc/work/_miniwdl_inputs/0/clearlabs.fasta.gz
     - path: miniwdl_run/call-nextclade/command
-      md5sum: ed29cde6f430eff4c408d9ea214ebe85
+      md5sum: 8d217015adda520c9fae6558584908fd
     - path: miniwdl_run/call-nextclade/inputs.json
     - path: miniwdl_run/call-nextclade/outputs.json
     - path: miniwdl_run/call-nextclade/stderr.txt
@@ -71,9 +70,9 @@
     - path: miniwdl_run/call-nextclade/work/nextclade_dataset_dir/sequences.fasta
       md5sum: ea475ab0a62a0a68fc3b1108fdff8a20
     - path: miniwdl_run/call-nextclade/work/nextclade_dataset_dir/tag.json
-      md5sum: 6a17b1ee5449279af7bdd0922545d7b8
+      md5sum: 7c080257b26eb528c72858e369fec68c
     - path: miniwdl_run/call-nextclade/work/nextclade_dataset_dir/tree.json
-      md5sum: 13eb330629b6ef17a070fcb6283bea2f
+      md5sum: 6b227b0aeeda07a187f5879e810879a3
     - path: miniwdl_run/call-nextclade/work/nextclade_dataset_dir/virus_properties.json
     - path: miniwdl_run/call-nextclade/work/nextclade_gene_E.translation.fasta
       md5sum: dc43b1e98245a25c142aec52b29a07df
@@ -100,7 +99,7 @@
     - path: miniwdl_run/call-nextclade/work/nextclade_gene_S.translation.fasta
       md5sum: e630a638abbb2c8ab4a8b74455e9668f
     - path: miniwdl_run/call-nextclade_output_parser/command
-      md5sum: 8bab8bc62cb16fff613907f34c54ec51
+      md5sum: f918de75f6557723a0b57fd67cf7a455
     - path: miniwdl_run/call-nextclade_output_parser/inputs.json
     - path: miniwdl_run/call-nextclade_output_parser/outputs.json
     - path: miniwdl_run/call-nextclade_output_parser/stderr.txt
@@ -114,7 +113,7 @@
     - path: miniwdl_run/call-nextclade_output_parser/work/NEXTCLADE_CLADE
       md5sum: 96d3cf337be2f7948d6f6df5c1ab69a4
     - path: miniwdl_run/call-nextclade_output_parser/work/NEXTCLADE_LINEAGE
-      md5sum: d41d8cd98f00b204e9800998ecf8427e
+      md5sum: 717da6cd0df2d2f1d00461f3498aaca9
     - path: miniwdl_run/call-nextclade_output_parser/work/TAMIFLU_AASUBS
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     - path: miniwdl_run/call-nextclade_output_parser/work/_miniwdl_inputs/0/clearlabs.fasta.gz.nextclade.tsv
@@ -122,7 +121,7 @@
     - path: miniwdl_run/call-nextclade_output_parser/work/input.tsv
       md5sum: 9b459df2831ab1974c9c8cef5bc5340e
     - path: miniwdl_run/call-pangolin4/command
-      md5sum: 85d3001929bde4169a11947fb38fb693
+      md5sum: b9c36681b77c5e007bf7e890265d70eb
     - path: miniwdl_run/call-pangolin4/inputs.json
     - path: miniwdl_run/call-pangolin4/outputs.json
     - path: miniwdl_run/call-pangolin4/stderr.txt
@@ -139,17 +138,17 @@
     - path: miniwdl_run/call-pangolin4/work/PANGOLIN_NOTES
       md5sum: 71eba5c871bca955ab2a69dbd2c3c62e
     - path: miniwdl_run/call-pangolin4/work/PANGO_ASSIGNMENT_VERSION
-      md5sum: 8eb91404219a5758741f83f82e9e328d
+      md5sum: 6ee5bf9a023f7a2c3033df1d8ee93f90
     - path: miniwdl_run/call-pangolin4/work/VERSION_PANGOLIN_ALL
-      md5sum: ef9c730f9b45d2fc284575c13fe7c920
+      md5sum: 9f9c4c00a1ceb5526bed7dc4cdb3dcfd
     - path: miniwdl_run/call-pangolin4/work/_miniwdl_inputs/0/clearlabs.fasta.gz
     - path: miniwdl_run/call-pangolin4/work/fasta.pangolin_report.csv
-      md5sum: e02c65e22296686804e2be23b6d4a696
+      md5sum: 81679363ffed582650f8512794035806
     - path: miniwdl_run/call-vadr/command
       md5sum: f4ad614b7ad39f28a8145cec280a93c0
     - path: miniwdl_run/call-vadr/inputs.json
     - path: miniwdl_run/call-vadr/outputs.json
-      md5sum: f58a2654f9ba9d49617f643b59ae739f
+      md5sum: e35217438ca21b347ef68e157c480c2e
     - path: miniwdl_run/call-vadr/stderr.txt
     - path: miniwdl_run/call-vadr/stderr.txt.offset
     - path: miniwdl_run/call-vadr/stdout.txt

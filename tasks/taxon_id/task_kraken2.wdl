@@ -57,6 +57,7 @@ task kraken2_theiacov {
     String percent_target_org = read_string("PERCENT_TARGET_ORG")
     String? kraken_target_org = target_org
     File kraken2_classified_report = "~{samplename}.classifiedreads.txt.gz" 
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.0.8-beta_hv"
   }
   runtime {
     docker: "us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.0.8-beta_hv"
@@ -82,6 +83,7 @@ task kraken2_standalone {
     String unclassified_out = "unclassified#.fastq"
     Int mem = 32
     Int cpu = 4
+    Int disk_size = 100
   }
   command <<<
     echo $(kraken2 --version 2>&1) | sed 's/^.*Kraken version //;s/ .*$//' | tee VERSION
@@ -142,7 +144,7 @@ task kraken2_standalone {
       docker: "~{docker}"
       memory: "~{mem} GB"
       cpu: cpu
-      disks: "local-disk 100 SSD"
+      disks: "local-disk " + disk_size + " SSD"
       preemptible: 0
   }
 }

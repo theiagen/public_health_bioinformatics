@@ -4,8 +4,7 @@
     - wf_theiacov_ont
     - wf_theiacov_ont_cromwell
   files:
-    - path: log.err
-      contains: ["Successfully released change log lock", "INFO", "WORKFLOW_METADATA_SUMMARY_ENTRY", "liquibase"]
+    - path: log.err # file is empty, so don't check for strings within, just for presence
     - path: log.out
       contains: ["workflow finished with status 'Succeeded'", "theiacov_ont", "Done"]
     - path: metadata.json
@@ -94,7 +93,7 @@
     - path: miniwdl_run/call-consensus/work/primer-schemes/SARS-CoV-2/Vuser/SARS-CoV-2.scheme.bed
       md5sum: d5ad850f8c610dc45162957ab84530d6
     - path: miniwdl_run/call-consensus_qc/command
-      md5sum: 770764cd13027f258bf2a871c720c80d
+      md5sum: 2b043e77f5254e0a8002aa32693edeb8
     - path: miniwdl_run/call-consensus_qc/inputs.json
       contains: ["assembly_fasta", "medaka"]
     - path: miniwdl_run/call-consensus_qc/outputs.json
@@ -178,7 +177,7 @@
     - path: miniwdl_run/call-nextclade/work/ont.medaka.consensus.nextclade.json
     - path: miniwdl_run/call-nextclade/work/ont.medaka.consensus.nextclade.tsv
     - path: miniwdl_run/call-nextclade_output_parser/command
-      md5sum: 5354c0f11f6f2301ce6f0a07dc3b3aca
+      md5sum: 3f00e7c079acf38372be6c368e14cfef
     - path: miniwdl_run/call-nextclade_output_parser/inputs.json
       contains: ["nextclade_tsv", "tsv"]
     - path: miniwdl_run/call-nextclade_output_parser/outputs.json
@@ -195,14 +194,14 @@
     - path: miniwdl_run/call-nextclade_output_parser/work/NEXTCLADE_CLADE
       md5sum: 111fd243cc71936455964c3956dd2e28
     - path: miniwdl_run/call-nextclade_output_parser/work/NEXTCLADE_LINEAGE
-      md5sum: d41d8cd98f00b204e9800998ecf8427e
+      md5sum: dc20c75a91e9d9de3d98af59d035f17c
     - path: miniwdl_run/call-nextclade_output_parser/work/TAMIFLU_AASUBS
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     - path: miniwdl_run/call-nextclade_output_parser/work/_miniwdl_inputs/0/ont.medaka.consensus.nextclade.tsv
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     - path: miniwdl_run/call-nextclade_output_parser/work/input.tsv
     - path: miniwdl_run/call-pangolin4/command
-      md5sum: badc99329e09036c58a90e92b7dbed7f
+      md5sum: c1c714d97c9c01cd446da625f63e0391
     - path: miniwdl_run/call-pangolin4/inputs.json
       contains: ["fasta", "samplename", "ont"]
     - path: miniwdl_run/call-pangolin4/outputs.json
@@ -222,9 +221,9 @@
     - path: miniwdl_run/call-pangolin4/work/PANGOLIN_NOTES
       md5sum: 35aa27af5fb90d54561ee9d45a3163d5
     - path: miniwdl_run/call-pangolin4/work/PANGO_ASSIGNMENT_VERSION
-      md5sum: edfb0c7ebdbf598df19861b650ee904a
+      md5sum: c67b44bacceaadab455401b5b0292f05
     - path: miniwdl_run/call-pangolin4/work/VERSION_PANGOLIN_ALL
-      md5sum: ef9c730f9b45d2fc284575c13fe7c920
+      md5sum: 9f9c4c00a1ceb5526bed7dc4cdb3dcfd
     - path: miniwdl_run/call-pangolin4/work/_miniwdl_inputs/0/ont.medaka.consensus.fasta
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     - path: miniwdl_run/call-pangolin4/work/ont.pangolin_report.csv

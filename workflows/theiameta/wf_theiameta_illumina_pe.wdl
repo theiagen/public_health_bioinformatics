@@ -3,10 +3,13 @@ version 1.0
 import "../utilities/wf_read_QC_trim_pe.wdl" as read_qc_wf
 import "../utilities/wf_metaspades_assembly.wdl" as metaspades_assembly_wf
 import "../../tasks/taxon_id/task_kraken2.wdl" as kraken_task
+import "../../tasks/taxon_id/task_krona.wdl" as krona_task
 import "../../tasks/alignment/task_minimap2.wdl" as minimap2_task
 import "../../tasks/utilities/task_parse_mapping.wdl" as parse_mapping_task
 import "../../tasks/quality_control/task_quast.wdl" as quast_task
 import "../../tasks/task_versioning.wdl" as versioning
+import "../../tasks/alignment/task_bwa.wdl" as bwa_task
+import "../../tasks/assembly/task_semibin.wdl" as semibin_task
 
 workflow theiameta_illumina_pe {
   meta {
@@ -30,6 +33,11 @@ workflow theiameta_illumina_pe {
       classified_out = "classified#.fastq",
       unclassified_out = "unclassified#.fastq"
   }
+  call krona_task.krona as krona_raw {
+    input:
+      kraken2_report = kraken2_raw.kraken2_report,
+      samplename = samplename
+  }
   call read_qc_wf.read_QC_trim_pe as read_QC_trim {
       input:
         samplename = samplename,
@@ -46,6 +54,11 @@ workflow theiameta_illumina_pe {
       kraken2_args = "",
       classified_out = "classified#.fastq",
       unclassified_out = "unclassified#.fastq"
+  }
+  call krona_task.krona as krona_clean {
+    input:
+      kraken2_report = kraken2_clean.kraken2_report,
+      samplename = samplename
   }
   call metaspades_assembly_wf.metaspades_assembly_pe as metaspades {
     input:
@@ -120,6 +133,22 @@ workflow theiameta_illumina_pe {
           bam = sam_to_sorted_bam.bam,
       } 
     }
+    if (! defined(reference)){
+      call bwa_task.bwa as bwa {
+        input:
+          read1 = read_QC_trim.read1_clean,
+          read2 = read_QC_trim.read2_clean,
+          reference_genome = metaspades.assembly_fasta,
+          samplename = samplename
+      }
+      call semibin_task.semibin as semibin {
+        input:
+          sorted_bam = bwa.sorted_bam,
+          sorted_bai = bwa.sorted_bai,
+          assembly_fasta = metaspades.assembly_fasta,
+          samplename = samplename
+      }
+    }
     call versioning.version_capture{
       input:
   }
@@ -134,19 +163,37 @@ workflow theiameta_illumina_pe {
     Float kraken2_percent_human_raw = kraken2_raw.kraken2_percent_human
     File kraken2_report_clean = kraken2_clean.kraken2_report
     Float kraken2_percent_human_clean = kraken2_clean.kraken2_percent_human
+    # Krona outputs
+    String krona_version = krona_raw.krona_version
+    String krona_docker = krona_raw.krona_docker
+    File krona_html_raw = krona_raw.krona_html
+    File krona_html_clean = krona_clean.krona_html
     # Read QC - dehosting outputs
     File? read1_dehosted = read_QC_trim.read1_dehosted
     File? read2_dehosted = read_QC_trim.read2_dehosted
     String? ncbi_scrub_docker = read_QC_trim.ncbi_scrub_docker
     # Read QC - fastq_scan outputs
-    Int num_reads_raw1 = read_QC_trim.fastq_scan_raw1
-    Int num_reads_raw2 = read_QC_trim.fastq_scan_raw2
-    String num_reads_raw_pairs = read_QC_trim.fastq_scan_raw_pairs
-    String fastq_scan_version = read_QC_trim.fastq_scan_version
-    String fastq_scan_docker = read_QC_trim.fastq_scan_docker
-    Int num_reads_clean1 = read_QC_trim.fastq_scan_clean1
-    Int num_reads_clean2 = read_QC_trim.fastq_scan_clean2
-    String num_reads_clean_pairs = read_QC_trim.fastq_scan_clean_pairs
+    Int? num_reads_raw1 = read_QC_trim.fastq_scan_raw1
+    Int? num_reads_raw2 = read_QC_trim.fastq_scan_raw2
+    String? num_reads_raw_pairs = read_QC_trim.fastq_scan_raw_pairs
+    String? fastq_scan_version = read_QC_trim.fastq_scan_version
+    String? fastq_scan_docker = read_QC_trim.fastq_scan_docker
+    Int? num_reads_clean1 = read_QC_trim.fastq_scan_clean1
+    Int? num_reads_clean2 = read_QC_trim.fastq_scan_clean2
+    String? num_reads_clean_pairs = read_QC_trim.fastq_scan_clean_pairs
+    # Read QC - fastqc outputs
+    Int? fastqc_num_reads_raw1 = read_QC_trim.fastqc_raw1
+    Int? fastqc_num_reads_raw2 = read_QC_trim.fastqc_raw2
+    String? fastqc_num_reads_raw_pairs = read_QC_trim.fastqc_raw_pairs
+    File? fastqc_raw1_html = read_QC_trim.fastqc_raw1_html
+    File? fastqc_raw2_html = read_QC_trim.fastqc_raw2_html
+    String? fastqc_version = read_QC_trim.fastqc_version
+    String? fastqc_docker = read_QC_trim.fastqc_docker
+    Int? fastqc_num_reads_clean1 = read_QC_trim.fastqc_clean1
+    Int? fastqc_num_reads_clean2 = read_QC_trim.fastqc_clean2
+    String? fastqc_num_reads_clean_pairs = read_QC_trim.fastqc_clean_pairs
+    File? fastqc_clean1_html = read_QC_trim.fastqc_clean1_html
+    File? fastqc_clean2_html = read_QC_trim.fastqc_clean2_html
     # Read QC - trimmomatic outputs
     String? trimmomatic_version = read_QC_trim.trimmomatic_version
     String? trimmomatic_docker = read_QC_trim.trimmomatic_docker
@@ -188,5 +235,9 @@ workflow theiameta_illumina_pe {
     File? read2_mapped = retrieve_aligned_pe_reads_sam.read2
     # Assembly stats
     Float? percentage_mapped_reads = assembled_reads_percent.percentage_mapped
+    # Binning
+    String? semibin_version = semibin.semibin_version
+    String? semibin_docker = semibin.semibin_docker
+    Array[File]? semibin_bins = semibin.semibin_bins
     }
 }
