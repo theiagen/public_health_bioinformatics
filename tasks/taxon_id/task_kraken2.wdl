@@ -166,26 +166,26 @@ task kraken2_parse_classified {
     import pandas as pd 
 
     # load files into dataframe for parsing
-    classifiedreads_table = pd.read_csv("~{samplename}.classifiedreads.txt", names=["Classified_Unclassified","Read_ID","Taxon_ID","Read_Len","Other"], header=None, delimiter="\t")
-    report_table = pd.read_csv("~{kraken2_report}", names=["Percent","Num_reads","Num_reads_with_taxon","Rank","Taxon_ID","Name"], header=None, delimiter="\t")
+    reads_table = pd.read_csv("~{samplename}.classifiedreads.txt", names=["classified_unclassified","read_id","taxon_id","read_len","other"], header=None, delimiter="\t")
+    report_table = pd.read_csv("~{kraken2_report}", names=["percent","num_reads","num_reads_with_taxon","rank","taxon_id","name"], header=None, delimiter="\t")
 
     # create dataframe to store results
-    results_table = pd.DataFrame(columns=["Percent","Num_basepairs","Rank","Taxon_ID","Name"])
+    results_table = pd.DataFrame(columns=["percent","num_basepairs","rank","taxon_id","name"])
     
     # calculate total basepairs
-    total_basepairs = classifiedreads_table["Read_Len"].sum()
+    total_basepairs = reads_table["read_len"].sum()
 
     # for each taxon_id in the report table, check if exists in the classified reads output and if so get the percent, num basepairs, rank, and name
     # write results to dataframe
-    for taxon_id in report_table["Taxon_ID"].unique():
-      if taxon_id in classifiedreads_table["Taxon_ID"].unique():
+    for taxon_id in report_table["taxon_id"].unique():
+      if taxon_id in reads_table["taxon_id"].unique():
       
-        taxon_name = report_table.loc[report_table["Taxon_ID"] == taxon_id, "Name"].values[0].strip()
-        rank = report_table.loc[report_table["Taxon_ID"] == taxon_id, "Rank"].values[0].strip()
-        taxon_basepairs = classifiedreads_table.loc[classifiedreads_table["Taxon_ID"] == taxon_id, "Read_Len"].sum()
+        taxon_name = report_table.loc[report_table["taxon_id"] == taxon_id, "name"].values[0].strip()
+        rank = report_table.loc[report_table["taxon_id"] == taxon_id, "rank"].values[0].strip()
+        taxon_basepairs = reads_table.loc[reads_table["taxon_id"] == taxon_id, "read_len"].sum()
         taxon_percent = taxon_basepairs / total_basepairs * 100
         
-        results_table = pd.concat([results_table, pd.DataFrame({"Percent":taxon_percent, "Num_basepairs":taxon_basepairs, "Rank":rank, "Taxon_ID":taxon_id, "Name":taxon_name}, index=[0])], ignore_index=True)
+        results_table = pd.concat([results_table, pd.DataFrame({"percent":taxon_percent, "num_basepairs":taxon_basepairs, "rank":rank, "taxon_id":taxon_id, "name":taxon_name}, index=[0])], ignore_index=True)
 
     # write results to file
     results_table.to_csv("~{samplename}.report_parsed.txt", sep="\t", index=False, header=False)
