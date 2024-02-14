@@ -52,6 +52,8 @@ workflow snippy_tree_wf {
     Int? snp_sites_disk_size
     Int? snp_sites_memory
     String? snp_sites_docker
+
+    Boolean midpoint_root_tree = true
   }
   call snippy_core_task.snippy_core {
     input:
@@ -106,17 +108,33 @@ workflow snippy_tree_wf {
       memory = iqtree2_memory,
       disk_size = iqtree2_disk_size
   }
-  call snp_dists_task.snp_dists {
+  call snp_dists_task.snp_dists as wg_snp_dists {
     input:
-      alignment = select_first([snp_sites.snp_sites_multifasta, gubbins.gubbins_polymorphic_fasta, snippy_core.snippy_full_alignment_clean]),
+      alignment = select_first([gubbins.gubbins_polymorphic_fasta, snippy_core.snippy_full_alignment_clean]),
       cluster_name = tree_name,
       docker = snp_dists_docker
   }
-  call reorder_matrix_task.reorder_matrix {
+  call reorder_matrix_task.reorder_matrix as wg_reorder_matrix {
     input:
       input_tree = iqtree2.ml_tree,
-      matrix = snp_dists.snp_matrix,
-      cluster_name = tree_name 
+      matrix = wg_snp_dists.snp_matrix,
+      cluster_name = tree_name  + "_wg",
+      midpoint_root_tree = midpoint_root_tree
+  }
+  if (core_genome) {
+    call snp_dists_task.snp_dists as cg_snp_dists {
+      input:
+        alignment = select_first([snp_sites.snp_sites_multifasta]),
+        cluster_name = tree_name,
+        docker = snp_dists_docker
+    }
+    call reorder_matrix_task.reorder_matrix as cg_reorder_matrix {
+      input:
+        input_tree = iqtree2.ml_tree,
+        matrix = cg_snp_dists.snp_matrix,
+        cluster_name = tree_name + "_cg",
+        midpoint_root_tree = false
+    }
   }
   if (defined(data_summary_column_names)) {
     call data_summary.summarize_data {
@@ -159,12 +177,13 @@ workflow snippy_tree_wf {
     String snippy_iqtree2_model_used = iqtree2.iqtree2_model_used
 
     # snpdists outputs
-    String snippy_snp_dists_version = snp_dists.snp_dists_version
-    String snippy_snp_dists_docker = snp_dists.snp_dists_docker
+    String snippy_snp_dists_version = wg_snp_dists.snp_dists_version
+    String snippy_snp_dists_docker = wg_snp_dists.snp_dists_docker
 
     # reorder matrix outputs
-    File snippy_snp_matrix = reorder_matrix.ordered_matrix
-    File snippy_final_tree = reorder_matrix.tree # this is same output tree from iqtree2, but it is midpoint rooted 
+    File snippy_wg_snp_matrix = wg_reorder_matrix.ordered_matrix
+    File? snippy_cg_snp_matrix = cg_reorder_matrix.ordered_matrix
+    File snippy_final_tree = wg_reorder_matrix.tree # this is same output tree from iqtree2, but it may be midpoint rooted depending on user input for midpoint_root_tree
 
     # data summary outputs
     File? snippy_summarized_data = summarize_data.summarized_data

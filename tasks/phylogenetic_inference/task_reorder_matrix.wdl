@@ -6,6 +6,7 @@ task reorder_matrix {
     File matrix
     String cluster_name
     Int disk_size = 100
+    Boolean midpoint_root_tree
   }
   command <<<
     # removing any "_contigs" suffixes from the tree and matrix
@@ -30,8 +31,9 @@ task reorder_matrix {
     snps.columns = snps.columns.astype(str)
     snps.index = snps.index.astype(str)
 
-    # reroot tree with midpoint
-    tree.root_at_midpoint()
+    # reroot tree with midpoint?
+    if ~{midpoint_root_tree}:
+        tree.root_at_midpoint()
 
     # extract ordered terminal ends of rerooted tree
     term_names = [term.name for term in tree.get_terminals()]
