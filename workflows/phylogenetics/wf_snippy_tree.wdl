@@ -53,7 +53,7 @@ workflow snippy_tree_wf {
     Int? snp_sites_memory
     String? snp_sites_docker
 
-    Boolean midpoint_root_tree = true
+    Boolean midpoint_root_tree = true # by default midpoint root the tree
   }
   call snippy_core_task.snippy_core {
     input:
