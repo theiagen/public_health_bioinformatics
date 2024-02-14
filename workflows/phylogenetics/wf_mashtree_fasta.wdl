@@ -14,6 +14,7 @@ workflow mashtree_fasta {
     String? data_summary_terra_workspace
     String? data_summary_terra_table
     String? data_summary_column_names
+    Boolean midpoint_root_tree = true
   }
   call mashtree.mashtree_fasta as mashtree_task {
     input:
@@ -24,7 +25,8 @@ workflow mashtree_fasta {
     input:
       input_tree = mashtree_task.mashtree_tree,
       matrix = mashtree_task.mashtree_matrix,
-      cluster_name = cluster_name
+      cluster_name = cluster_name,
+      midpoint_root_tree = midpoint_root_tree
   }
   if (defined(data_summary_column_names)) {
     call data_summary.summarize_data {
