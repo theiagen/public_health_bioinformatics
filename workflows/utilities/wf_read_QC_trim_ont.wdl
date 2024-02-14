@@ -51,7 +51,8 @@ workflow read_QC_trim_ont {
     input:
       samplename = samplename,
       kraken2_report = kraken2_raw.kraken_report,
-      kraken2_classified_report = kraken2_raw.kraken2_classified_report
+      kraken2_classified_report = kraken2_raw.kraken2_classified_report,
+      target_org = target_org
     }  
     call kraken2.kraken2_theiacov as kraken2_dehosted {
       input:
@@ -63,7 +64,8 @@ workflow read_QC_trim_ont {
     input:
       samplename = samplename,
       kraken2_report = kraken2_dehosted.kraken_report,
-      kraken2_classified_report = kraken2_dehosted.kraken2_classified_report
+      kraken2_classified_report = kraken2_dehosted.kraken2_classified_report,
+      target_org = target_org
     } 
   }
   if ("~{workflow_series}" == "theiaprok") {
