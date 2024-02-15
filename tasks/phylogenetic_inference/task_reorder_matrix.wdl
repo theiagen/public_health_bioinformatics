@@ -31,23 +31,23 @@ task reorder_matrix {
     snps.columns = snps.columns.astype(str)
     snps.index = snps.index.astype(str)
 
-    # reroot tree with midpoint?
+    # reroot tree with midpoint, if midpoint_root_tree is set to true
     if ("~{midpoint_root_tree}" == "true"):
         tree.root_at_midpoint()
 
-    # extract ordered terminal ends of rerooted tree
+    # extract ordered terminal ends of tree (could be midpoint rooted or not, depending on midpoint_root_tree optional input)
     term_names = [term.name for term in tree.get_terminals()]
 
-    # reorder matrix with re-ordered terminal ends
+    # reorder matrix according to the order of tree terminal ends
     snps = snps.reindex(index=term_names, columns=term_names)
 
     # add phandango suffix to ensure continuous coloring
     snps_out2 = snps.add_suffix(":c1")
 
-    # write out reordered matrix of rerooted tree to a file
+    # write out the reordered matrix to a file
     snps_out2.to_csv("~{cluster_name}_snp_matrix.csv", sep=",")
 
-    # write rerooted tree to a file
+    # write tree to a file (same as input tree if not midpoint rooted)
     Phylo.write(tree, "~{cluster_name}_tree.nwk", "newick")
 
     CODE
