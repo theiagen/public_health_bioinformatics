@@ -88,7 +88,7 @@ workflow snippy_tree_wf {
     call snp_sites_task.snp_sites as snp_sites {
       input:
         #input is either the whole genome MSA, this MSA with the recombinant sites removed, 
-         or the MSA of only core sites (with or without recombinant sites as specified by use_gubbins)
+        #or the MSA of only core sites (with or without recombinant sites as specified by use_gubbins)
         msa_fasta = select_first([gubbins.gubbins_polymorphic_fasta,snippy_core.snippy_full_alignment_clean]),
         output_name = tree_name,
         output_multifasta = true,
