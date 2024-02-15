@@ -118,7 +118,7 @@ workflow snippy_tree_wf {
     input:
       input_tree = iqtree2.ml_tree,
       matrix = wg_snp_dists.snp_matrix,
-      cluster_name = tree_name  + "_wg",
+      cluster_name = tree_name + "_wg",
       midpoint_root_tree = midpoint_root_tree
   }
   if (core_genome) {
@@ -130,7 +130,7 @@ workflow snippy_tree_wf {
     }
     call reorder_matrix_task.reorder_matrix as cg_reorder_matrix {
       input:
-        input_tree = iqtree2.ml_tree,
+        input_tree = wg_reorder_matrix.tree,
         matrix = cg_snp_dists.snp_matrix,
         cluster_name = tree_name + "_cg",
         midpoint_root_tree = false
@@ -183,7 +183,7 @@ workflow snippy_tree_wf {
     # reorder matrix outputs
     File snippy_wg_snp_matrix = wg_reorder_matrix.ordered_matrix
     File? snippy_cg_snp_matrix = cg_reorder_matrix.ordered_matrix
-    File snippy_final_tree = wg_reorder_matrix.tree # this is same output tree from iqtree2, but it may be midpoint rooted depending on user input for midpoint_root_tree
+    File snippy_final_tree = select_first([cg_reorder_matrix.tree, wg_reorder_matrix.tree]) # depending on user input for core_genome
 
     # data summary outputs
     File? snippy_summarized_data = summarize_data.summarized_data
