@@ -32,7 +32,7 @@ task reorder_matrix {
     snps.index = snps.index.astype(str)
 
     # reroot tree with midpoint?
-    if ~{midpoint_root_tree}:
+    if ("~{midpoint_root_tree}" == "true"):
         tree.root_at_midpoint()
 
     # extract ordered terminal ends of rerooted tree
