@@ -46,7 +46,7 @@ workflow organism_parameters {
     Int sc2_vadr_max_length = 30000
     String sc2_vadr_options = "--noseqnamemax --glsearch -s -r --nomisc --mkey sarscov2 --lowsim5seq 6 --lowsim3seq 6 --alt_fail lowscore,insertnn,deletinn --out_allfasta"
   }
-  if (organism == "MPXV" || organism == "mpox" || organism == "monkeypox") {
+  if (organism == "MPXV" || organism == "mpox" || organism == "monkeypox" || organism == "Monkeypox virus" || organism == "Mpox") {
     String mpox_org_name = "MPXV"
     String mpox_reference_genome = "gs://theiagen-public-files/terra/mpxv-files/MPXV.MT903345.reference.fasta"
     String mpox_nextclade_ds_tag = "2023-08-01T12:00:00Z"
@@ -71,7 +71,7 @@ workflow organism_parameters {
     String wnv_nextclade_ref = "NA"
     String wnv_nextclade_ds_name = "NA"
   }
-  if (organism == "flu" || organism == "influenza") {
+  if (organism == "flu" || organism == "influenza" || organism == "Flu" || organism == "Influenza") {
     String flu_org_name = "flu"
     Int flu_genome_len = 13000
 
