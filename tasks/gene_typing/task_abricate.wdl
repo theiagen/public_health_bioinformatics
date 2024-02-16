@@ -61,7 +61,7 @@ task abricate_flu {
     String samplename
     String database = "insaflu"
     Int minid = 70
-    Int mincov =60
+    Int mincov = 60
     Int cpu = 2
     Int memory = 4
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/abricate:1.0.1-insaflu-220727"
