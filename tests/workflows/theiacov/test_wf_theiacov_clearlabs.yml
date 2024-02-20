@@ -319,13 +319,13 @@
     - path: miniwdl_run/call-pangolin4/work/PANGOLIN_NOTES
       md5sum: 59478efddde2191ead1b46b1f121bbc9
     - path: miniwdl_run/call-pangolin4/work/PANGO_ASSIGNMENT_VERSION
-      md5sum: c67b44bacceaadab455401b5b0292f05
+      md5sum: 11c4566a2424e70dd45cf3e4bcd91651
     - path: miniwdl_run/call-pangolin4/work/VERSION_PANGOLIN_ALL
-      md5sum: 9f9c4c00a1ceb5526bed7dc4cdb3dcfd
+      md5sum: 7cb68886c2a1b4308be17d69dcb32d9a
     - path: miniwdl_run/call-pangolin4/work/_miniwdl_inputs/0/clearlabs.medaka.consensus.fasta
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     - path: miniwdl_run/call-pangolin4/work/clearlabs.pangolin_report.csv
-      md5sum: 45b461b9971f43a9b36b4be9c1710041
+      md5sum: 4e171371a605e170e59acb1d9e4b38bd
     - path: miniwdl_run/call-sc2_gene_coverage/command
       md5sum: e44c070a15a0f8d42348103b0440f691
     - path: miniwdl_run/call-sc2_gene_coverage/inputs.json

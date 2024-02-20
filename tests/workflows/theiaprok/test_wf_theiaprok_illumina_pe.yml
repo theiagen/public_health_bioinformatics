@@ -547,7 +547,7 @@
     - path: miniwdl_run/outputs.json
       contains: ["theiaprok_illumina_pe", "predicted", "VIRULENCE", "assembly_length"]
     - path: miniwdl_run/wdl/tasks/assembly/task_shovill.wdl
-      md5sum: 07a80c829da741915b879e3b6b384f90
+      md5sum: be5bc23bed6b1ada2efbf28b7435b8c0
     - path: miniwdl_run/wdl/tasks/gene_typing/task_abricate.wdl
       md5sum: 6c0a72c525bc3d853a242d03f10dbf1f
     - path: miniwdl_run/wdl/tasks/gene_typing/task_amrfinderplus.wdl
@@ -627,7 +627,7 @@
     - path: miniwdl_run/wdl/tasks/taxon_id/task_gambit.wdl
       md5sum: 4e1d4f6b8085a209f9721748a0c0fef0
     - path: miniwdl_run/wdl/tasks/taxon_id/task_kraken2.wdl
-      md5sum: cea79a569f58f757742f8914f53d821e
+      md5sum: 4c2ed94cd0f54fe42039c7ebe42fea5d
     - path: miniwdl_run/wdl/tasks/taxon_id/task_midas.wdl
       md5sum: faacd87946ee3fbdf70f3a15b79ce547
     - path: miniwdl_run/wdl/tasks/utilities/task_broad_terra_tools.wdl
