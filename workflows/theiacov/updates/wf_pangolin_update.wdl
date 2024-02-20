@@ -2,7 +2,7 @@ version 1.0
 
 import "../../../tasks/species_typing/task_pangolin.wdl" as pangolin
 import "../../../tasks/task_versioning.wdl" as versioning
-import "../../workflows/utilities/wf_organism_parameters.wdl" as set_organism_defaults
+import "../../../workflows/utilities/wf_organism_parameters.wdl" as set_organism_defaults
 
 workflow pangolin_update {
   input {
@@ -12,14 +12,28 @@ workflow pangolin_update {
     String old_pangolin_docker
     String old_pangolin_assignment_version
     String old_pangolin_versions
-    String new_pangolin_docker
+    String? new_pangolin_docker
     String organism = "sars-cov-2"
     File? lineage_log
   }
   call set_organism_defaults.organism_parameters {
     input:
       organism = organism,
-      pangolin_docker_image = new_pangolin_docker
+      pangolin_docker_image = new_pangolin_docker,
+      # including these to block from terra
+      flu_segment = "",
+      flu_subtype = "",
+      reference_gff_file = "gs://theiagen-public-files/terra/theiacov-files/empty.gff3",
+      reference_genome = "gs://theiagen-public-files/terra/theiacov-files/empty.fasta",
+      genome_length = "",
+      nextclade_ds_reference = "",
+      nextclade_ds_tag = "",
+      nextclade_ds_name = "",     
+      vadr_max_length = "",
+      vadr_options = "",
+      primer_bed_file = "gs://theiagen-public-files/terra/theiacov-files/empty.bed",
+      kraken_target_org = "",
+      hiv_primer_version = ""
   }
   call pangolin.pangolin4 {
     input:
