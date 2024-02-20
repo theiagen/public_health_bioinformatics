@@ -108,7 +108,7 @@ workflow read_QC_trim_se {
           read1 = read1,
           kraken2_db = select_first([kraken_db]),
           disk_size = kraken_disk_size,
-          mem = kraken_memory
+          memory = kraken_memory
       }
     }
   }
