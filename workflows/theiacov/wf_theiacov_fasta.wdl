@@ -69,7 +69,8 @@ workflow theiacov_fasta {
     call pangolin.pangolin4 {
       input:
         samplename = samplename,
-        fasta = assembly_fasta
+        fasta = assembly_fasta,
+        docker = organism_parameters.pangolin_docker
     }
   }
   if (organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "rsv_a" || organism_parameters.standardized_organism == "rsv_b" || organism_parameters.standardized_organism == "flu") {

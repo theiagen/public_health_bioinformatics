@@ -103,7 +103,8 @@ workflow theiacov_clearlabs {
     call pangolin.pangolin4 {
       input:
         samplename = samplename,
-        fasta = consensus.consensus_seq
+        fasta = consensus.consensus_seq,
+        docker = organism_parameters.pangolin_docker
     }
     call sc2_calculation.sc2_gene_coverage {
       input: 
