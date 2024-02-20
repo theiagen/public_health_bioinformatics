@@ -87,6 +87,8 @@ task shovill_se {
     String samplename
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/shovill-se:1.1.0"
     Int disk_size = 100
+    Int memory = 16
+    Int cpu = 4
 
     ## SHOVILL optional parameters
     ##  --depth [INT]           Sub-sample --R1/--R2 to this depth. Disable with --depth 0 (default: 150)
@@ -146,8 +148,8 @@ task shovill_se {
   }
   runtime {
     docker: "~{docker}"
-    memory: "16 GB"
-    cpu: 4
+    memory: "~{memory} GB"
+    cpu: cpu
     disks:  "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
     maxRetries: 3
