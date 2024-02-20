@@ -17,6 +17,8 @@ task nextclade {
     String dataset_reference
     String dataset_tag
     Int disk_size = 50
+    Int memory = 4
+    Int cpu = 2
   }
   String basename = basename(genome_fasta, ".fasta")
   command <<<
@@ -41,8 +43,8 @@ task nextclade {
   >>>
   runtime {
     docker: "~{docker}"
-    memory: "4 GB"
-    cpu: 2
+    memory: "~{memory} GB"
+    cpu: cpu
     disks:  "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB" # TES
     dx_instance_type: "mem1_ssd1_v2_x2"
@@ -66,6 +68,8 @@ task nextclade_output_parser {
     File nextclade_tsv
     String docker = "python:slim"
     Int disk_size = 50
+    Int memory = 4
+    Int cpu = 2
     String? organism
     Boolean? NA_segment
     # Place holder for user defined aa substitutions
@@ -155,8 +159,8 @@ task nextclade_output_parser {
   >>>
   runtime {
     docker: "~{docker}"
-    memory: "4 GB"
-    cpu: 2
+    memory: "~{memory} GB"
+    cpu: cpu
     disks:  "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
     dx_instance_type: "mem1_ssd1_v2_x2"

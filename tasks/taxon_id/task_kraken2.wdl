@@ -7,6 +7,7 @@ task kraken2_theiacov {
     String samplename
     String kraken2_db = "/kraken2-db"
     Int cpu = 4
+    Int memory = 8
     String? target_organism
     Int disk_size = 100
   }
@@ -56,7 +57,7 @@ task kraken2_theiacov {
   }
   runtime {
     docker: "us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.0.8-beta_hv"
-    memory: "8 GB"
+    memory: "~{memory} GB"
     cpu: cpu
     disks:  "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB" # TES
@@ -76,7 +77,7 @@ task kraken2_standalone {
     String kraken2_args = ""
     String classified_out = "classified#.fastq"
     String unclassified_out = "unclassified#.fastq"
-    Int mem = 32
+    Int memory = 32
     Int cpu = 4
     Int disk_size = 100
   }
@@ -137,7 +138,7 @@ task kraken2_standalone {
   }
   runtime {
       docker: "~{docker}"
-      memory: "~{mem} GB"
+      memory: "~{memory} GB"
       cpu: cpu
       disks: "local-disk " + disk_size + " SSD"
       preemptible: 0
