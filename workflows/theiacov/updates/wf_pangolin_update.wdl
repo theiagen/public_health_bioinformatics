@@ -2,6 +2,7 @@ version 1.0
 
 import "../../../tasks/species_typing/task_pangolin.wdl" as pangolin
 import "../../../tasks/task_versioning.wdl" as versioning
+import "../../workflows/utilities/wf_organism_parameters.wdl" as set_organism_defaults
 
 workflow pangolin_update {
   input {
@@ -12,14 +13,19 @@ workflow pangolin_update {
     String old_pangolin_assignment_version
     String old_pangolin_versions
     String new_pangolin_docker
-    String? timezone
+    String organism = "sars-cov-2"
     File? lineage_log
+  }
+  call set_organism_defaults.organism_parameters {
+    input:
+      organism = organism,
+      pangolin_docker_image = new_pangolin_docker
   }
   call pangolin.pangolin4 {
     input:
       samplename = samplename,
       fasta = assembly_fasta,
-      docker = new_pangolin_docker
+      docker = organism_parameters.pangolin_docker
   }
   call pangolin.pangolin_update_log {
     input:
@@ -32,12 +38,10 @@ workflow pangolin_update {
       new_pangolin_docker = pangolin4.pangolin_docker,
       new_pangolin_assignment_version = pangolin4.pangolin_assignment_version,
       new_pangolin_versions = pangolin4.pangolin_versions,
-      timezone = timezone,
       lineage_log = lineage_log
   }
   call versioning.version_capture{
     input:
-      timezone = timezone
   }
   output {
     # Version Capture
