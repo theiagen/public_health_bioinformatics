@@ -54,7 +54,7 @@ workflow Terra_2_NCBI {
       input:
         meta_submit_tsv = select_first([add_biosample_accessions.sra_table, prune_table.sra_table]),
         config_js = ncbi_config_js,
-        bioproject = bioproject,
+        bioproject = select_first([bioproject, ""]),
         data_bucket_uri = sra_transfer_gcp_bucket
     }
     call ncbi_tools.ncbi_sftp_upload {
