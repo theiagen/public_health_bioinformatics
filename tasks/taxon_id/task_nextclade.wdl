@@ -64,7 +64,7 @@ task nextclade_output_parser {
   }
   input {
     File nextclade_tsv
-    String docker = "python:slim"
+    String docker = "us-docker.pkg.dev/general-theiagen/python/python:3.8.18-slim"
     Int disk_size = 50
     String? organism
     Boolean? NA_segment
