@@ -46,6 +46,13 @@ workflow read_QC_trim_ont {
         samplename = samplename,
         read1 = read1,
         target_organism = target_organism
+    }
+    call kraken2.kraken2_parse_classified as kraken2_recalculate_abundances_raw {
+      input:
+        samplename = samplename,
+        kraken2_report = kraken2_raw.kraken_report,
+        kraken2_classified_report = kraken2_raw.kraken2_classified_report,
+        target_organism = target_organism
     }  
     call kraken2.kraken2_theiacov as kraken2_dehosted {
       input:
@@ -53,6 +60,13 @@ workflow read_QC_trim_ont {
         read1 = ncbi_scrub_se.read1_dehosted,
         target_organism = target_organism
     }
+    call kraken2.kraken2_parse_classified as kraken2_recalculate_abundances_dehosted {
+      input:
+        samplename = samplename,
+        kraken2_report = kraken2_dehosted.kraken_report,
+        kraken2_classified_report = kraken2_dehosted.kraken2_classified_report,
+        target_organism = target_organism
+    } 
   }
   if ("~{workflow_series}" == "theiaprok") {
     # kmc for genome size estimation
@@ -92,16 +106,16 @@ workflow read_QC_trim_ont {
     String? kraken_target_organism_name = kraken2_raw.kraken_target_organism
     
     # kraken outputs raw
-    Float? kraken_human = kraken2_raw.percent_human
-    Float? kraken_sc2 = kraken2_raw.percent_sc2
-    String? kraken_target_organism = kraken2_raw.percent_target_organism
-    File? kraken_report = kraken2_raw.kraken_report
+    Float? kraken_human = kraken2_recalculate_abundances_raw.percent_human
+    Float? kraken_sc2 = kraken2_recalculate_abundances_raw.percent_sc2
+    String? kraken_target_organism = kraken2_recalculate_abundances_raw.percent_target_organism
+    File? kraken_report = kraken2_recalculate_abundances_raw.kraken_report
     
     # kraken outputs dehosted
-    Float? kraken_human_dehosted = kraken2_dehosted.percent_human
-    Float? kraken_sc2_dehosted = kraken2_dehosted.percent_sc2
-    String? kraken_target_organism_dehosted = kraken2_dehosted.percent_target_organism
-    File? kraken_report_dehosted = kraken2_dehosted.kraken_report
+    Float? kraken_human_dehosted = kraken2_recalculate_abundances_dehosted.percent_human
+    Float? kraken_sc2_dehosted = kraken2_recalculate_abundances_dehosted.percent_sc2
+    String? kraken_target_organism_dehosted = kraken2_recalculate_abundances_dehosted.percent_target_organism
+    File? kraken_report_dehosted = kraken2_recalculate_abundances_dehosted.kraken_report
    
     # theiaprok outputs
     # kmc outputs
