@@ -46,11 +46,13 @@ task midas {
     filtered_sorted_df = filtered_df.sort_values(by=['relative_abundance'], ascending=False)
     # capture secondary genus
     secondary_genus = filtered_sorted_df.genus.iloc[0]
-    # capture abundance of secondary genus
+    # capture relative abundance of secondary genus
     secondary_genus_abundance = filtered_sorted_df.relative_abundance.iloc[0]
     # if secondary genus abundance is less than one, replace genus with text indicating no secondary genus detected
     if secondary_genus_abundance < 0.01:
       secondary_genus="No secondary genus detected (>1% relative abundance)"
+    # capture absolute coverage of secondary genus
+    secondary_genus_coverage = filtered_sorted_df.coverage.iloc[0]
 
     # write text files
     with open("PRIMARY_GENUS", 'wt') as pg:
@@ -59,6 +61,8 @@ task midas {
       sg.write(str(secondary_genus))
     with open("SECONDARY_GENUS_ABUNDANCE", 'wt') as sga:
       sga.write(str(secondary_genus_abundance))
+    with open("SECONDARY_GENUS_COVERAGE", 'wt') as sgc:
+      sgc.write(str(secondary_genus_coverage))
 
     CODE
   >>>
@@ -70,6 +74,7 @@ task midas {
     String midas_primary_genus = read_string("PRIMARY_GENUS")
     String midas_secondary_genus = read_string("SECONDARY_GENUS")
     Float midas_secondary_genus_abundance = read_string("SECONDARY_GENUS_ABUNDANCE")
+    Float midas_secondary_genus_coverage = read_string("SECONDARY_GENUS_COVERAGE")
   }
   runtime {
     docker: "~{docker}"

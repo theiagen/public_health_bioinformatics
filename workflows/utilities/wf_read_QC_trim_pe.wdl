@@ -22,7 +22,7 @@ workflow read_QC_trim_pe {
     Int trim_quality_trim_score = 30
     Int trim_window_size = 4
     Int bbduk_mem = 8
-    Boolean call_midas = false
+    Boolean call_midas = true
     File? midas_db
     Boolean call_kraken = false
     Int? kraken_disk_size
@@ -118,13 +118,15 @@ workflow read_QC_trim_pe {
         read2 = bbduk.read2_clean
     }
   }
-  if (call_midas) {
-    call midas_task.midas {
-      input:
-        samplename = samplename,
-        read1 = read1_raw,
-        read2 = read2_raw,
-        midas_db = midas_db
+  if ("~{workflow_series}" == "theiaprok") {
+    if (call_midas) {
+      call midas_task.midas {
+        input:
+          samplename = samplename,
+          read1 = read1_raw,
+          read2 = read2_raw,
+          midas_db = midas_db
+      }
     }
   }
   if ("~{workflow_series}" == "theiaprok") {
@@ -208,6 +210,7 @@ workflow read_QC_trim_pe {
     String? midas_primary_genus = midas.midas_primary_genus
     String? midas_secondary_genus = midas.midas_secondary_genus
     Float? midas_secondary_genus_abundance = midas.midas_secondary_genus_abundance
+    Float? midas_secondary_genus_coverage = midas.midas_secondary_genus_coverage
 
     # readlength
     Float? average_read_length = readlength.average_read_length

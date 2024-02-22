@@ -298,6 +298,7 @@ task export_taxon_tables {
     String? midas_primary_genus
     String? midas_secondary_genus
     Float? midas_secondary_genus_abundance
+    Float? midas_secondary_genus_coverage
     String? kraken2_version
     String? kraken2_docker
     String? kraken2_report
@@ -671,6 +672,7 @@ task export_taxon_tables {
       "midas_primary_genus": "~{midas_primary_genus}",
       "midas_secondary_genus": "~{midas_secondary_genus}",
       "midas_secondary_genus_abundance": "~{midas_secondary_genus_abundance}",
+      "midas_secondary_genus_coverage": "~{midas_secondary_genus_coverage}",
       "kraken2_version": "~{kraken2_version}",
       "kraken2_docker": "~{kraken2_docker}",
       "kraken2_report": "~{kraken2_report}",

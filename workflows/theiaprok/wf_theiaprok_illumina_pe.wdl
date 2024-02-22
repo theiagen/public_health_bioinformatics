@@ -215,6 +215,7 @@ workflow theiaprok_illumina_pe {
             est_coverage_raw = cg_pipeline_raw.est_coverage,
             est_coverage_clean = cg_pipeline_clean.est_coverage,
             midas_secondary_genus_abundance = read_QC_trim.midas_secondary_genus_abundance,
+            midas_secondary_genus_coverage = read_QC_trim.midas_secondary_genus_coverage,
             assembly_length = quast.genome_length,
             number_contigs = quast.number_contigs,
             n50_value = quast.n50_value,
@@ -531,6 +532,7 @@ workflow theiaprok_illumina_pe {
             midas_primary_genus = read_QC_trim.midas_primary_genus,
             midas_secondary_genus = read_QC_trim.midas_secondary_genus,
             midas_secondary_genus_abundance = read_QC_trim.midas_secondary_genus_abundance,
+            midas_secondary_genus_coverage = read_QC_trim.midas_secondary_genus_coverage,
             kraken2_version = read_QC_trim.kraken_version,
             kraken2_docker = read_QC_trim.kraken_docker,
             kraken2_report = read_QC_trim.kraken_report,
@@ -608,6 +610,7 @@ workflow theiaprok_illumina_pe {
     String? midas_primary_genus = read_QC_trim.midas_primary_genus
     String? midas_secondary_genus = read_QC_trim.midas_secondary_genus
     Float? midas_secondary_genus_abundance = read_QC_trim.midas_secondary_genus_abundance
+    Float? midas_secondary_genus_coverage = read_QC_trim.midas_secondary_genus_coverage
     # Read QC - kraken outputs
     String? kraken2_version = read_QC_trim.kraken_version
     String? kraken2_report = read_QC_trim.kraken_report
