@@ -55,8 +55,8 @@ workflow snippy_tree_wf {
 
     Boolean midpoint_root_tree = true # by default midpoint root the tree
   }
-#snippy core creates a whole-genome multiple sequence alignment (MSA) from each alignment provided by snipy_variants
-#snippy_core does NOT create a core genome alignment- the name is misleading!
+  # snippy core creates a whole-genome multiple sequence alignment (MSA) from each alignment provided by snipy_variants
+  # snippy_core does NOT create a core genome alignment- the name is misleading!
   call snippy_core_task.snippy_core {
     input:
       snippy_variants_outdir_tarball = snippy_variants_outdir_tarball,
@@ -69,8 +69,8 @@ workflow snippy_tree_wf {
       memory = snippy_core_memory,
       bed_file = snippy_core_bed
   }
-  #removes recombination from the MSA, if use_gubbins is set to true
-  #output is a whole genome MSA without recombinant sites
+  # removes recombination from the MSA, if use_gubbins is set to true
+  # output is a whole genome MSA without recombinant sites
   if (use_gubbins) {
     call gubbins_task.gubbins {
       input:
@@ -82,14 +82,14 @@ workflow snippy_tree_wf {
         cpu = gubbins_cpu
     }
   }
-#removes accessory genome sites from the MSA, creating the core genome, if core_genome is set to true
-#output will be a core genome, with or without recombinant sites removed, depending on user inputs for use_gubbins
+  # removes accessory genome sites from the MSA, creating the core genome, if core_genome is set to true
+  # output will be a core genome, with or without recombinant sites removed, depending on user inputs for use_gubbins
   if (core_genome) {
     call snp_sites_task.snp_sites as snp_sites {
       input:
-        #input is either the whole genome MSA, this MSA with the recombinant sites removed, 
-        #or the MSA of only core sites (with or without recombinant sites as specified by use_gubbins)
-        msa_fasta = select_first([gubbins.gubbins_polymorphic_fasta,snippy_core.snippy_full_alignment_clean]),
+        # input is either the whole genome MSA, this MSA with the recombinant sites removed, 
+        # or the MSA of only core sites (with or without recombinant sites as specified by use_gubbins)
+        msa_fasta = select_first([gubbins.gubbins_polymorphic_fasta, snippy_core.snippy_full_alignment_clean]),
         output_name = tree_name,
         output_multifasta = true,
         allow_wildcard_bases = false,
@@ -103,10 +103,10 @@ workflow snippy_tree_wf {
         disk_size = snp_sites_disk_size
     }
   }
-#creates a phylogenetic tree from the final MSA
+  # creates a phylogenetic tree from the final MSA
   call iqtree2_task.iqtree2 {
     input:
-      #input MSA will depend on the user-specified optional inputs for use_gubbins and core_genome
+      # input MSA will depend on the user-specified optional inputs for use_gubbins and core_genome
       alignment = select_first([snp_sites.snp_sites_multifasta, gubbins.gubbins_polymorphic_fasta, snippy_core.snippy_full_alignment_clean]),
       cluster_name = tree_name,
       iqtree2_model = iqtree2_model,
@@ -117,17 +117,17 @@ workflow snippy_tree_wf {
       memory = iqtree2_memory,
       disk_size = iqtree2_disk_size
   }
-  #creates a pairwise snp-distance matrix from the whole-genome MSA, with or without recombination removal.
-  #whole-genome SNP matrix will always be produced regardless of whether core_genome is used 
-  #because this is always valuable for interpreting strain-relatedness
+  # creates a pairwise snp-distance matrix from the whole-genome MSA, with or without recombination removal.
+  # whole-genome SNP matrix will always be produced regardless of whether core_genome is used 
+  # because this is always valuable for interpreting strain-relatedness
   call snp_dists_task.snp_dists as wg_snp_dists {
     input:
       alignment = select_first([gubbins.gubbins_polymorphic_fasta, snippy_core.snippy_full_alignment_clean]),
       cluster_name = tree_name,
       docker = snp_dists_docker
   }
-  #mid-point roots the phylogenetic tree, and reorders the columns in the wgSNP matrix according to the tree tip order
-  #NB the tree will remain a core genome tree is core_genome = true, and a whole-genome tree if core_genome = false
+  # mid-point roots the phylogenetic tree, and reorders the columns in the wgSNP matrix according to the tree tip order
+  # NB the tree will remain a core genome tree is core_genome = true, and a whole-genome tree if core_genome = false
   call reorder_matrix_task.reorder_matrix as wg_reorder_matrix {
     input:
       input_tree = iqtree2.ml_tree,
@@ -135,7 +135,7 @@ workflow snippy_tree_wf {
       cluster_name = tree_name + "_wg",
       midpoint_root_tree = midpoint_root_tree
   }
-  #creates a pairwise snp-distance matrix from the core-genome MSA, if core_genome is used
+  # creates a pairwise snp-distance matrix from the core-genome MSA, if core_genome is used
   if (core_genome) {
     call snp_dists_task.snp_dists as cg_snp_dists {
       input:
@@ -143,8 +143,8 @@ workflow snippy_tree_wf {
         cluster_name = tree_name,
         docker = snp_dists_docker
     }
-    #reorders the columns in the cgSNP matrix according to the tree tip order
-    #input tree is the midpoint rooted tree from the wg_reorder_matrix task, and midpoint rooting is turned off here, so the tree remains unchanged
+    # reorders the columns in the cgSNP matrix according to the tree tip order
+    # input tree is the midpoint rooted tree from the wg_reorder_matrix task, and midpoint rooting is turned off here, so the tree remains unchanged
     call reorder_matrix_task.reorder_matrix as cg_reorder_matrix {
       input:
         input_tree = wg_reorder_matrix.tree,
@@ -153,7 +153,7 @@ workflow snippy_tree_wf {
         midpoint_root_tree = false
     }
   }
-  #creates a data summary from comma-separated lists within single Terra data table columns
+  # creates a data summary from comma-separated lists within single Terra data table columns
   if (defined(data_summary_column_names)) {
     call data_summary.summarize_data {
       input:
