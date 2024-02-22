@@ -65,7 +65,8 @@ task theiavalidate {
     File? column_translation_tsv
     String? na_values
     Boolean debug_output = false
-
+    
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/theiavalidate:0.1.0"
     Int disk_size = 10
   }
   String datatable1_name = basename(datatable1_tsv)
@@ -90,7 +91,7 @@ task theiavalidate {
       ~{true="--debug" false="--verbose" debug_output}
   >>>
   runtime {
-    docker: "us-docker.pkg.dev/general-theiagen/theiagen/theiavalidate:0.0.1"
+    docker: docker 
     memory: "4 GB"
     cpu: 2
     disks:  "local-disk " + disk_size + " HDD"
@@ -105,5 +106,6 @@ task theiavalidate {
     File filtered_input_table2 = "filtered_~{datatable2_name}"
     File exact_differences = "~{output_prefix}_exact_differences.tsv"
     File? validation_criteria_differences = "~{output_prefix}_validation_criteria_differences.tsv"
+    Array[File]? diffs = glob("*diffs*/*")
   }
 }

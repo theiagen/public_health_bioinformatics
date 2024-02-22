@@ -23,7 +23,11 @@ task kraken2_theiacov {
       --threads ~{cpu} \
       --db ~{kraken2_db} \
       ~{read1} ~{read2} \
-      --report ~{samplename}_kraken2_report.txt >/dev/null
+      --report ~{samplename}_kraken2_report.txt \
+      --output ~{samplename}.classifiedreads.txt
+    
+    # Compress and cleanup
+    gzip ~{samplename}.classifiedreads.txt
 
     percentage_human=$(grep "Homo sapiens" ~{samplename}_kraken2_report.txt | cut -f 1)
      # | tee PERCENT_HUMAN
@@ -37,7 +41,7 @@ task kraken2_theiacov {
     if [ ! -z "~{target_org}" ]; then 
       echo "Target org designated: ~{target_org}"
       percent_target_org=$(grep "~{target_org}" ~{samplename}_kraken2_report.txt | cut -f1 | head -n1 )
-      if [-z "$percent_target_org" ] ; then percent_target_org="0" ; fi
+      if [ -z "$percent_target_org" ] ; then percent_target_org="0" ; fi
     else 
       percent_target_org=""
     fi
@@ -52,6 +56,7 @@ task kraken2_theiacov {
     Float percent_sc2 = read_float("PERCENT_SC2")
     String percent_target_org = read_string("PERCENT_TARGET_ORG")
     String? kraken_target_org = target_org
+    File kraken2_classified_report = "~{samplename}.classifiedreads.txt.gz" 
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.0.8-beta_hv"
   }
   runtime {
@@ -78,6 +83,7 @@ task kraken2_standalone {
     String unclassified_out = "unclassified#.fastq"
     Int mem = 32
     Int cpu = 4
+    Int disk_size = 100
   }
   command <<<
     echo $(kraken2 --version 2>&1) | sed 's/^.*Kraken version //;s/ .*$//' | tee VERSION
@@ -145,7 +151,87 @@ task kraken2_standalone {
       docker: "~{docker}"
       memory: "~{mem} GB"
       cpu: cpu
-      disks: "local-disk 100 SSD"
+      disks: "local-disk " + disk_size + " SSD"
       preemptible: 0
+  }
+}
+
+task kraken2_parse_classified {
+  input {
+    File kraken2_classified_report
+    File kraken2_report
+    String samplename
+    String? target_org
+    Int cpu = 4
+    Int disk_size = 100
+  }
+  command <<<
+
+    gunzip -c ~{kraken2_classified_report} > ~{samplename}.classifiedreads.txt
+
+    python3 <<CODE 
+    import pandas as pd 
+
+    # load files into dataframe for parsing
+    reads_table = pd.read_csv("~{samplename}.classifiedreads.txt", names=["classified_unclassified","read_id","taxon_id","read_len","other"], header=None, delimiter="\t")
+    report_table = pd.read_csv("~{kraken2_report}", names=["percent","num_reads","num_reads_with_taxon","rank","taxon_id","name"], header=None, delimiter="\t")
+
+    # create dataframe to store results
+    results_table = pd.DataFrame(columns=["percent","num_basepairs","rank","taxon_id","name"])
+    
+    # calculate total basepairs
+    total_basepairs = reads_table["read_len"].sum()
+
+    # for each taxon_id in the report table, check if exists in the classified reads output and if so get the percent, num basepairs, rank, and name
+    # write results to dataframe
+    for taxon_id in report_table["taxon_id"].unique():
+      if taxon_id in reads_table["taxon_id"].unique():
+      
+        taxon_name = report_table.loc[report_table["taxon_id"] == taxon_id, "name"].values[0].strip()
+        rank = report_table.loc[report_table["taxon_id"] == taxon_id, "rank"].values[0].strip()
+        taxon_basepairs = reads_table.loc[reads_table["taxon_id"] == taxon_id, "read_len"].sum()
+        taxon_percent = taxon_basepairs / total_basepairs * 100
+        
+        results_table = pd.concat([results_table, pd.DataFrame({"percent":taxon_percent, "num_basepairs":taxon_basepairs, "rank":rank, "taxon_id":taxon_id, "name":taxon_name}, index=[0])], ignore_index=True)
+
+    # write results to file
+    results_table.to_csv("~{samplename}.report_parsed.txt", sep="\t", index=False, header=False)
+    CODE
+
+    # theiacov parsing blocks - percent human, sc2 and target organism
+    percentage_human=$(grep "Homo sapiens" ~{samplename}.report_parsed.txt | cut -f 1)
+    percentage_sc2=$(grep "Severe acute respiratory syndrome coronavirus 2" ~{samplename}.report_parsed.txt | cut -f1 )
+
+    if [ -z "$percentage_human" ] ; then percentage_human="0" ; fi
+    if [ -z "$percentage_sc2" ] ; then percentage_sc2="0" ; fi
+    echo $percentage_human | tee PERCENT_HUMAN
+    echo $percentage_sc2 | tee PERCENT_SC2
+
+    # capture target org percentage 
+    if [ ! -z "~{target_org}" ]; then 
+      echo "Target org designated: ~{target_org}"
+      percent_target_org=$(grep "~{target_org}" ~{samplename}.report_parsed.txt | cut -f1 | head -n1 )
+      if [ -z "$percent_target_org" ] ; then percent_target_org="0" ; fi
+    else 
+      percent_target_org=""
+    fi
+    echo $percent_target_org | tee PERCENT_TARGET_ORG
+    
+  >>>
+  output {
+    File kraken_report = "~{samplename}.report_parsed.txt"
+    Float percent_human = read_float("PERCENT_HUMAN")
+    Float percent_sc2 = read_float("PERCENT_SC2")
+    String percent_target_org = read_string("PERCENT_TARGET_ORG")
+    String? kraken_target_org = target_org
+  }
+  runtime {
+    docker: "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-08-28-v4"
+    memory: "8 GB"
+    cpu: cpu
+    disks:  "local-disk " + disk_size + " SSD"
+    disk: disk_size + " GB" # TES
+    preemptible: 0
+    maxRetries: 0
   }
 }
