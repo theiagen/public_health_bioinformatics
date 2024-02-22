@@ -14,9 +14,6 @@ workflow theiacov_fasta_batch {
     Array[String] samplenames
     Array[File] assembly_fastas
     String organism = "sars-cov-2"
-    # sequencing values
-    String seq_method
-    String input_assembly_method
     # nextclade inputs
     String nextclade_dataset_reference = "MN908947"
     String nextclade_dataset_tag = "2023-09-21T12:00:00Z"
@@ -69,8 +66,6 @@ workflow theiacov_fasta_batch {
       nextclade_json = nextclade.nextclade_json,
       pango_lineage_report = pangolin4.pango_lineage_report,
       pangolin_docker = pangolin4.pangolin_docker,
-      seq_platform = seq_method,
-      assembly_method = input_assembly_method,
       theiacov_fasta_analysis_date = version_capture.date,
       theiacov_fasta_version = version_capture.phb_version
   }
