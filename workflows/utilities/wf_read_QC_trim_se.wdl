@@ -24,7 +24,7 @@ workflow read_QC_trim_se {
     File? phix
     String? workflow_series
     String? trimmomatic_args
-    Boolean call_midas = false
+    Boolean call_midas = true
     File? midas_db
     Boolean call_kraken = false
     File? kraken_db
@@ -92,12 +92,14 @@ workflow read_QC_trim_se {
         target_organism = target_organism
     }
   }
-  if (call_midas) {
-    call midas_task.midas {
-      input:
-        samplename = samplename,
-        read1 = read1,
-        midas_db = midas_db
+  if ("~{workflow_series}" == "theiaprok"){
+    if (call_midas) {
+      call midas_task.midas {
+        input:
+          samplename = samplename,
+          read1 = read1,
+          midas_db = midas_db
+      }
     }
   }
   if ("~{workflow_series}" == "theiaprok") {
@@ -150,5 +152,6 @@ workflow read_QC_trim_se {
     String? midas_primary_genus = midas.midas_primary_genus
     String? midas_secondary_genus = midas.midas_secondary_genus
     Float? midas_secondary_genus_abundance = midas.midas_secondary_genus_abundance
+    Float? midas_secondary_genus_coverage = midas.midas_secondary_genus_coverage
   }
 }
