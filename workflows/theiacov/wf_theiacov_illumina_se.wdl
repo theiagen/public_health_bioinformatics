@@ -193,6 +193,12 @@ workflow theiacov_illumina_se {
     Int? num_reads_raw = read_QC_trim.fastq_scan_raw_number_reads
     String? fastq_scan_version = read_QC_trim.fastq_scan_version
     Int? num_reads_clean = read_QC_trim.fastq_scan_clean_number_reads
+    # Read QC - fastqc outputs
+    Int? fastqc_num_reads_raw = read_QC_trim.fastqc_raw_number_reads
+    Int? fastqc_num_reads_clean = read_QC_trim.fastqc_clean_number_reads
+    String? fastqc_version = read_QC_trim.fastqc_version
+    File? fastqc_raw_html = read_QC_trim.fastqc_raw_html
+    File? fastqc_clean_html = read_QC_trim.fastqc_clean_html
     # Read QC - trimmomatic outputs
     String? trimmomatic_version = read_QC_trim.trimmomatic_version
     # Read QC - bbduk outputs
@@ -212,6 +218,9 @@ workflow theiacov_illumina_se {
     String? assembly_method = ivar_consensus.assembly_method_nonflu
     File? aligned_bam = ivar_consensus.aligned_bam
     File? aligned_bai = ivar_consensus.aligned_bai
+    File? read1_unaligned = ivar_consensus.read1_unaligned
+    File? sorted_bam_unaligned = ivar_consensus.sorted_bam_unaligned
+    File? sorted_bam_unaligned_bai = ivar_consensus.sorted_bam_unaligned_bai
     # Read Alignment - primer trimming outputs
     Float? primer_trimmed_read_percent = ivar_consensus.primer_trimmed_read_percent
     String? ivar_version_primtrim = ivar_consensus.ivar_version_primtrim

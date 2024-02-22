@@ -7,7 +7,7 @@ task sm_theiacov_fasta_wrangling { # the sm stands for supermassive
     String project_name
     String bucket_name
 
-    Array[Pair[String, File]] sample_to_fasta
+    Array[String] samplenames
     String organism = "sars-cov-2"
 
     File? nextclade_tsv
@@ -19,18 +19,12 @@ task sm_theiacov_fasta_wrangling { # the sm stands for supermassive
     File? pango_lineage_report
     String? pangolin_docker
 
-    String seq_platform
-    String assembly_method
     String theiacov_fasta_analysis_date
     String theiacov_fasta_version
     
     Int disk_size = 100
   }
   command <<<
-    # convert the map into a JSON file for use in the python block
-    # example map: {ERR4439752.test: /mnt/miniwdl_task_container/work/_miniwdl_inputs/0/ERR4439752.ivar.consensus.fasta}
-    cp -v ~{write_json(sample_to_fasta)} sample_to_fasta.json
-
     # check if nextclade json file exists
     if [ -f ~{nextclade_json} ]; then
       # this line splits into individual json files
@@ -64,28 +58,14 @@ task sm_theiacov_fasta_wrangling { # the sm stands for supermassive
     import csv
     import os 
     import re
+
+    # create array with sample names
+    samplenames_array = '~{sep="*" samplenames}'.split('*')
     
-    # parse the map of sample names to fasta files
-    with open("sample_to_fasta.json") as map_file:
-      pair_list = json.load(map_file)
-
-      # reformat the array of pairs into a dictionary
-      sample_to_fasta = {}
-      for item in pair_list:
-        # left & right is the syntax for WDL pairs
-        key = item["left"]
-        value = item["right"]
-        sample_to_fasta[key] = value
-      
-      # fix assembly_name to be the basename of the fasta file
-      sample_to_assembly = {name:re.split("[.]", os.path.basename(assembly))[0] for name, assembly in sample_to_fasta.items()}
-
     # create a sample-level table to upload to terra
-    upload_table = pd.DataFrame(sample_to_assembly.keys(), columns=["entity:~{table_name}_id"]).set_index("entity:~{table_name}_id")
+    upload_table = pd.DataFrame(samplenames_array, columns=["entity:~{table_name}_id"]).set_index("entity:~{table_name}_id")
 
     # fill in the standard output parameters
-    upload_table["seq_platform"] = "~{seq_platform}"
-    upload_table["assembly_method"] = "~{assembly_method}"
     upload_table["theiacov_fasta_analysis_date"] = "~{theiacov_fasta_analysis_date}"
     upload_table["theiacov_fasta_version"] = "~{theiacov_fasta_version}"
 
@@ -98,19 +78,18 @@ task sm_theiacov_fasta_wrangling { # the sm stands for supermassive
       upload_table["nextclade_docker"] = "~{nextclade_docker}"
       upload_table["nextclade_ds_tag"] = "~{nextclade_ds_tag}"
       
-      for sample_name in sample_to_assembly.keys():        
-        assembly_name = sample_to_assembly[sample_name]
+      for sample_name in samplenames_array:        
 
-        if nextclade["seqName"].str.contains(assembly_name).any():
+        if nextclade["seqName"].str.contains(sample_name).any():
           if ("~{organism}" == "sars-cov-2"):
-            nc_clade = str(nextclade.loc[nextclade["seqName"] == assembly_name]["clade_nextstrain"].item())
-            who_clade = str(nextclade.loc[nextclade["seqName"] == assembly_name]["clade_who"].item())
+            nc_clade = str(nextclade.loc[nextclade["seqName"] == sample_name]["clade_nextstrain"].item())
+            who_clade = str(nextclade.loc[nextclade["seqName"] == sample_name]["clade_who"].item())
             if (nc_clade != who_clade) and (nc_clade != "") and (who_clade != "") and (who_clade != "nan"):
               nc_clade = nc_clade + " (" + who_clade + ")"
             if nc_clade == "":
               nc_clade = "NA"
           else:
-            nc_clade = str(nextclade.loc[nextclade["seqName"] == assembly_name]["clade"].item())
+            nc_clade = str(nextclade.loc[nextclade["seqName"] == sample_name]["clade"].item())
             if nc_clade == "":
               nc_clade = "NA"
           # replace nextclade value in datatable if exists, if not, create it
@@ -119,7 +98,7 @@ task sm_theiacov_fasta_wrangling { # the sm stands for supermassive
           upload_table.at[sample_name, "nextclade_clade"] = nc_clade
 
           # parse nextclade_aa_subs
-          nc_aa_subs = str(nextclade.loc[nextclade["seqName"] == assembly_name]["aaSubstitutions"].item())
+          nc_aa_subs = str(nextclade.loc[nextclade["seqName"] == sample_name]["aaSubstitutions"].item())
           if nc_aa_subs == "":
             nc_aa_subs = "NA"
           elif ("~{organism}" == "flu"):
@@ -129,7 +108,7 @@ task sm_theiacov_fasta_wrangling { # the sm stands for supermassive
           upload_table.at[sample_name, "nextclade_aa_subs"] = nc_aa_subs
 
           # parse nextclade_aa_dels
-          nc_aa_dels = str(nextclade.loc[nextclade["seqName"] == assembly_name]["aaDeletions"].item())
+          nc_aa_dels = str(nextclade.loc[nextclade["seqName"] == sample_name]["aaDeletions"].item())
           if nc_aa_dels == "":
             nc_aa_dels = "NA"
           if "nextclade_aa_dels" not in upload_table.columns:
@@ -138,7 +117,7 @@ task sm_theiacov_fasta_wrangling { # the sm stands for supermassive
 
           # parse nextclade_lineage
           try:
-            nc_lineage = str(nextclade.loc[nextclade["seqName"] == assembly_name]["lineage"].item())
+            nc_lineage = str(nextclade.loc[nextclade["seqName"] == sample_name]["lineage"].item())
           except KeyError:
             nc_lineage = ""
           if nc_lineage == "":
@@ -150,7 +129,7 @@ task sm_theiacov_fasta_wrangling { # the sm stands for supermassive
           # add path to individual json to table
           if "nextclade_json" not in upload_table.columns:
             upload_table["nextclade_json"] = ""
-          upload_table.at[sample_name, "nextclade_json"] = "gs://~{bucket_name}/theiacov_fasta_batch-~{theiacov_fasta_analysis_date}/nextclade_json/{}.nextclade.json".format(assembly_name)
+          upload_table.at[sample_name, "nextclade_json"] = "gs://~{bucket_name}/theiacov_fasta_batch-~{theiacov_fasta_analysis_date}/nextclade_json/{}.nextclade.json".format(sample_name)
 
     # parse the Pangolin lineage report into an individual dataframe if a Pangolin report file exists
     if os.path.exists("~{pango_lineage_report}"):
@@ -159,24 +138,23 @@ task sm_theiacov_fasta_wrangling { # the sm stands for supermassive
       
       upload_table["pangolin_docker"] = "~{pangolin_docker}"
 
-      pangolin_version = pango_lineage_report.loc[pango_lineage_report["taxon"] == assembly_name]["pangolin_version"].item()
-      version = pango_lineage_report.loc[pango_lineage_report["taxon"] == assembly_name]["version"].item()
+      pangolin_version = pango_lineage_report.loc[pango_lineage_report["taxon"] == sample_name]["pangolin_version"].item()
+      version = pango_lineage_report.loc[pango_lineage_report["taxon"] == sample_name]["version"].item()
       upload_table["pangolin_version"] = "pangolin {}; {}".format(pangolin_version, version)
 
       # iterate through results and add to table
-      for sample_name in sample_to_assembly.keys():        
-        assembly_name = sample_to_assembly[sample_name]
+      for sample_name in samplenames_array:        
  
-        if pango_lineage_report["taxon"].str.contains(assembly_name).any():
+        if pango_lineage_report["taxon"].str.contains(sample_name).any():
           # parse pango_lineage from pango lineage report
-          pango_lineage = pango_lineage_report.loc[pango_lineage_report["taxon"] == assembly_name]["lineage"].item()
+          pango_lineage = pango_lineage_report.loc[pango_lineage_report["taxon"] == sample_name]["lineage"].item()
           if "pango_lineage" not in upload_table.columns:
             upload_table["pango_lineage"] = ""
           upload_table.at[sample_name, "pango_lineage"] = pango_lineage
 
           # parse pango_lineage_expanded from pango lineage report
           try:
-            pango_lineage_expanded = pango_lineage_report.loc[pango_lineage_report["taxon"] == assembly_name]["expanded_lineage"].item()
+            pango_lineage_expanded = pango_lineage_report.loc[pango_lineage_report["taxon"] == sample_name]["expanded_lineage"].item()
           except KeyError:
               pango_lineage_expanded = ""
           if "pango_lineage_expanded" not in upload_table.columns:
@@ -184,13 +162,13 @@ task sm_theiacov_fasta_wrangling { # the sm stands for supermassive
           upload_table.at[sample_name, "pango_lineage_expanded"] = pango_lineage_expanded
 
           # parse pangolin_conflicts from pango lineage report
-          pangolin_conflicts = pango_lineage_report.loc[pango_lineage_report["taxon"] == assembly_name]["conflict"].item()
+          pangolin_conflicts = pango_lineage_report.loc[pango_lineage_report["taxon"] == sample_name]["conflict"].item()
           if "pangolin_conflicts" not in upload_table.columns:
             upload_table["pangolin_conflicts"] = ""
           upload_table.at[sample_name, "pangolin_conflicts"] = pangolin_conflicts
 
           # parse pangolin_notes from pango lineage report
-          pangolin_notes = pango_lineage_report.loc[pango_lineage_report["taxon"] == assembly_name]["note"].item()
+          pangolin_notes = pango_lineage_report.loc[pango_lineage_report["taxon"] == sample_name]["note"].item()
           if "pangolin_notes" not in upload_table.columns:
             upload_table["pangolin_notes"] = ""
           upload_table.at[sample_name, "pangolin_notes"] = pangolin_notes
@@ -198,10 +176,10 @@ task sm_theiacov_fasta_wrangling { # the sm stands for supermassive
           # add path to individual csv to table
           if "pango_lineage_report" not in upload_table.columns:
             upload_table["pango_lineage_report"] = ""
-          upload_table.at[sample_name, "pango_lineage_report"] = "gs://~{bucket_name}/theiacov_fasta_batch-~{theiacov_fasta_analysis_date}/pangolin_report/{}.pangolin_report.csv".format(assembly_name)
+          upload_table.at[sample_name, "pango_lineage_report"] = "gs://~{bucket_name}/theiacov_fasta_batch-~{theiacov_fasta_analysis_date}/pangolin_report/{}.pangolin_report.csv".format(sample_name)
 
     # to-do: add VADR outputs
-
+    
     upload_table.to_csv("terra-table-to-upload.tsv", sep='\t', index=True)
 
     CODE

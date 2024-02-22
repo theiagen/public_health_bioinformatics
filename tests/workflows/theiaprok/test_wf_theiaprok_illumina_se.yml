@@ -4,8 +4,7 @@
     - wf_theiaprok_illumina_se
     - wf_theiaprok_illumina_se_cromwell
   files:
-    - path: log.err
-      contains: ["Successfully released change log lock", "INFO", "WORKFLOW_METADATA_SUMMARY_ENTRY", "liquibase"]
+    - path: log.err # file is empty, so don't check for strings within, just for presence
     - path: log.out
       contains: ["workflow finished with status 'Succeeded'", "theiaprok_illumina_se", "Done", "No ST predicted"]
     - path: metadata.json
@@ -122,7 +121,6 @@
     - path: miniwdl_run/call-busco/work/test/auto_lineage/run_archaea_odb10/short_summary.txt
     - path: miniwdl_run/call-busco/work/test/auto_lineage/run_bacteria_odb10/busco_sequences/fragmented_busco_sequences/1540940at2.faa
     - path: miniwdl_run/call-busco/work/test/auto_lineage/run_bacteria_odb10/busco_sequences/fragmented_busco_sequences/1540940at2.fna
-    - path: miniwdl_run/call-busco/work/test/auto_lineage/run_bacteria_odb10/busco_sequences/fragmented_busco_sequences/1567535at2.faa
     - path: miniwdl_run/call-busco/work/test/auto_lineage/run_bacteria_odb10/busco_sequences/single_copy_busco_sequences/1132353at2.faa
     - path: miniwdl_run/call-busco/work/test/auto_lineage/run_bacteria_odb10/busco_sequences/single_copy_busco_sequences/1132353at2.fna
     - path: miniwdl_run/call-busco/work/test/auto_lineage/run_bacteria_odb10/busco_sequences/single_copy_busco_sequences/1505038at2.faa
@@ -586,15 +584,15 @@
     - path: miniwdl_run/wdl/tasks/species_typing/task_sonneityping.wdl
       md5sum: aeb12cf9a0db4e34f2aecbaba51c30fb
     - path: miniwdl_run/wdl/tasks/species_typing/task_tbprofiler.wdl
-      md5sum: c2a8c0978cc1bd65656584e1bad9dca7
+      md5sum: a90fc52112a8333361f96e50b316d03b
     - path: miniwdl_run/wdl/tasks/species_typing/task_ts_mlst.wdl
-      md5sum: d49ae0b02e798af0636eb2721bb434b4
+      md5sum: b83dcdc897257910bbd61868a9da49dc
     - path: miniwdl_run/wdl/tasks/task_versioning.wdl
-      md5sum: 3469cf6787f279ffa81fa50f6257fcd7
+      md5sum: b09c4453998da5ac6624dc1b49abf31f
     - path: miniwdl_run/wdl/tasks/taxon_id/task_gambit.wdl
-      md5sum: 08987d952c67c6ff6debf6898af15f9a
+      md5sum: 4e1d4f6b8085a209f9721748a0c0fef0
     - path: miniwdl_run/wdl/tasks/taxon_id/task_kraken2.wdl
-      md5sum: a1f287e6e6feaf2d7d3c74a70e3b5a28
+      md5sum: 8bd6ffb6d89dca981a0a9272d25a10f2
     - path: miniwdl_run/wdl/tasks/taxon_id/task_midas.wdl
       md5sum: c6f3b8b3e3894208f7b247709944c9bc
     - path: miniwdl_run/wdl/tasks/utilities/task_broad_terra_tools.wdl
@@ -602,7 +600,7 @@
     - path: miniwdl_run/wdl/workflows/theiaprok/wf_theiaprok_illumina_se.wdl
       md5sum: 7a086085fbf80ad1bbdba2bca0fe98e5
     - path: miniwdl_run/wdl/workflows/utilities/wf_merlin_magic.wdl
-      md5sum: 00bd2489b2a7aa5b88340a940961a857
+      md5sum: 90eb6ac7463058a81da77120aa45138b
     - path: miniwdl_run/wdl/workflows/utilities/wf_read_QC_trim_se.wdl
       md5sum: 41d4eea28006fce852660abe334d0342
     - path: miniwdl_run/workflow.log

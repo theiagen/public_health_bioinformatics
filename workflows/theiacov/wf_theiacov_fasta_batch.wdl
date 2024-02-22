@@ -14,9 +14,6 @@ workflow theiacov_fasta_batch {
     Array[String] samplenames
     Array[File] assembly_fastas
     String organism = "sars-cov-2"
-    # sequencing values
-    String seq_method
-    String input_assembly_method
     # nextclade inputs
     String nextclade_dataset_reference = "MN908947"
     String nextclade_dataset_tag = "2023-09-21T12:00:00Z"
@@ -30,9 +27,10 @@ workflow theiacov_fasta_batch {
   call versioning.version_capture{
     input:
   }
-  call concatenate.cat_files {
+  call concatenate.cat_files_fasta {
     input: 
       files_to_cat = assembly_fastas,
+      headers = samplenames,
       concatenated_file_name = "concatenated_assemblies.fasta"
   }
   if (organism == "sars-cov-2") {
@@ -40,14 +38,14 @@ workflow theiacov_fasta_batch {
     call pangolin_task.pangolin4 {
       input:
         samplename = "concatenated_assemblies",
-        fasta = cat_files.concatenated_files
+        fasta = cat_files_fasta.concatenated_files
     }
   }
   if (organism == "MPXV" || organism == "sars-cov-2"){
     # tasks specific to either MPXV or sars-cov-2 
     call nextclade_task.nextclade {
       input:
-      genome_fasta = cat_files.concatenated_files,
+      genome_fasta = cat_files_fasta.concatenated_files,
       dataset_name = select_first([nextclade_dataset_name, organism]),
       dataset_reference = nextclade_dataset_reference,
       dataset_tag = nextclade_dataset_tag
@@ -59,7 +57,7 @@ workflow theiacov_fasta_batch {
       workspace_name = workspace_name,
       project_name = project_name,
       bucket_name = bucket_name,
-      sample_to_fasta = zip(samplenames, assembly_fastas),
+      samplenames = samplenames,
       organism = organism,
       nextclade_tsv = nextclade.nextclade_tsv,
       nextclade_docker = nextclade.nextclade_docker,
@@ -68,8 +66,6 @@ workflow theiacov_fasta_batch {
       nextclade_json = nextclade.nextclade_json,
       pango_lineage_report = pangolin4.pango_lineage_report,
       pangolin_docker = pangolin4.pangolin_docker,
-      seq_platform = seq_method,
-      assembly_method = input_assembly_method,
       theiacov_fasta_analysis_date = version_capture.date,
       theiacov_fasta_version = version_capture.phb_version
   }
