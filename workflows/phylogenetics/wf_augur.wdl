@@ -39,6 +39,8 @@ workflow augur {
     File auspice_config = "gs://theiagen-public-files-rp/terra/augur-defaults/minimal-auspice-config.json"
 
     Boolean distance_tree_only = false # by default, do not skip making a time tree
+
+    Boolean midpoint_root_tree = true # by default, midpoint root the tree
   }
   if (organism == "sars-cov-2") {
     call augur_utils.set_sc2_defaults as sc2_defaults { # establish default parameters for sars-cov-2
@@ -159,7 +161,8 @@ workflow augur {
     input:
       input_tree = augur_tree.aligned_tree,
       matrix = snp_dists.snp_matrix,
-      cluster_name = build_name
+      cluster_name = build_name,
+      midpoint_root_tree = midpoint_root_tree
   }
   call versioning.version_capture { # capture the version
     input:
