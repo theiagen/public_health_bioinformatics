@@ -631,9 +631,9 @@
     - path: miniwdl_run/wdl/tasks/taxon_id/task_midas.wdl
       md5sum: c6f3b8b3e3894208f7b247709944c9bc
     - path: miniwdl_run/wdl/tasks/utilities/task_broad_terra_tools.wdl
-      md5sum: 49d8350161dd66ef382938128e2d327c
+      md5sum: 776373df143dbf94f18e53aba3e4e0ff
     - path: miniwdl_run/wdl/workflows/theiaprok/wf_theiaprok_illumina_pe.wdl
-      md5sum: 6979e7ae9700d4272b29472aff4f0974
+      md5sum: d79a48a5f5303cedd77f923bc01a9817
     - path: miniwdl_run/wdl/workflows/utilities/wf_merlin_magic.wdl
       md5sum: 90eb6ac7463058a81da77120aa45138b
     - path: miniwdl_run/wdl/workflows/utilities/wf_read_QC_trim_pe.wdl
