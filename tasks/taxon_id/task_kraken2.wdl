@@ -95,15 +95,22 @@ task kraken2_standalone {
 
     # determine if paired-end or not
     if ! [ -z ~{read2} ]; then
+      echo "Reads are paired..."
       mode="--paired"
     fi
 
+    # determine if reads are compressed
+    if [[ ~{read1} == *.gz ]]; then
+      echo "Reads are compressed..."
+      compressed="--gzip-compressed"
+    fi
+
     # Run Kraken2
-    kraken2 $mode \
+    echo "Running Kraken2..."
+    kraken2 $mode $compressed \
         --db ./db/ \
         --threads ~{cpu} \
         --report ~{samplename}.report.txt \
-        --gzip-compressed \
         --unclassified-out ~{samplename}.~{unclassified_out} \
         --classified-out ~{samplename}.~{classified_out} \
         --output ~{samplename}.classifiedreads.txt \
