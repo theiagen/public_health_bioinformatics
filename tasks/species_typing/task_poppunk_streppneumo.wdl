@@ -10,6 +10,7 @@ task poppunk {
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/poppunk:2.4.0"
     Int disk_size = 100
     Int cpu = 4
+    Int memory = 16
     # database/reference files currently hosted on a public, requester-pays GCP bucket
     # hosting individually for speed purposes. Unzipping one big 20GB zip archive takes a long time, longer than downloading the files individually (which total 22GB uncompressed)
     # If future versions of the GPS database are released, we can update the links here or in Terra, and task should be future-proof
@@ -87,7 +88,7 @@ task poppunk {
   runtime {
     docker: "~{docker}"
     # poppunk with the GPS v6 db used upwards of 12GB ram at times
-    memory: "16 GB"
+    memory: memory + " GB"
     cpu: cpu
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"

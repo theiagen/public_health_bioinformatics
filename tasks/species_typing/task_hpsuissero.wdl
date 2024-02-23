@@ -8,8 +8,10 @@ task hpsuissero {
     File assembly
     String samplename
     String docker = "us-docker.pkg.dev/general-theiagen/biocontainers/hpsuissero:1.0.1--hdfd78af_0"
-    Int? cpu = 4
+    Int cpu = 4
     String version = "1.0.1"
+    Int disk_size = 50
+    Int memory = 8
   }
   command <<<
     # Does not output a version
@@ -27,9 +29,10 @@ task hpsuissero {
   }
   runtime {
     docker: "~{docker}"
-    memory: "8 GB"
-    cpu: 4
-    disks: "local-disk 50 SSD"
+    memory: memory + " GB"
+    cpu: cpu
+    disks: "local-disk " + disk_size + " SSD"
+    disk: disk_size + " GB"
     preemptible: 0
   }
 }

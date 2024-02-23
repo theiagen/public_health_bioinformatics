@@ -6,6 +6,9 @@ task consensus_qc {
     File? reference_genome
     Int? genome_length
     Int disk_size = 100
+    Int memory = 2
+    Int cpu = 1
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1"
   }
   command <<<
     if [ -s "~{reference_genome}" ] ; then
@@ -47,9 +50,9 @@ task consensus_qc {
     Float percent_reference_coverage = read_string("PERCENT_REF_COVERAGE")
   }
   runtime {
-    docker: "us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1"
-    memory: "2 GB"
-    cpu: 1
+    docker: docker
+    memory: memory + " GB"
+    cpu: cpu
     disks:  "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB" # TES
     preemptible: 0

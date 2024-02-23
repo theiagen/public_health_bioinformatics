@@ -9,6 +9,8 @@ task pmga {
     String samplename
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/pmga:3.0.2"
     Int cpu = 4
+    Int memory = 8
+    Int disk_size = 50
   }
   command <<<
     echo $(pmga --version 2>&1) | sed 's/.*pmga //; s/ .*\$//' | tee VERSION
@@ -41,9 +43,10 @@ task pmga {
   }
   runtime {
     docker: "~{docker}"
-    memory: "8 GB"
+    memory: memory + " GB"
     cpu: 4
-    disks: "local-disk 50 SSD"
+    disks: "local-disk " + disk_size + " SSD"
+    disk: disk_size + " GB"
     preemptible: 0
   }
 }

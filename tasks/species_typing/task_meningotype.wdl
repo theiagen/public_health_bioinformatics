@@ -10,6 +10,7 @@ task meningotype {
     String docker = "us-docker.pkg.dev/general-theiagen/biocontainers/meningotype:0.8.5--pyhdfd78af_0"
     Int disk_size = 100
     Int cpu = 2
+    Int memory = 8
   }
   command <<<
     # get version information
@@ -54,7 +55,7 @@ task meningotype {
   }
   runtime {
     docker: "~{docker}"
-    memory: "8 GB"
+    memory: memory + " GB"
     cpu: cpu
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"

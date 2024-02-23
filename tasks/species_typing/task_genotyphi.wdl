@@ -10,6 +10,7 @@ task genotyphi {
     String genotyphi_docker_image = "us-docker.pkg.dev/general-theiagen/staphb/mykrobe:0.11.0"
     Int disk_size = 100
     Int cpu = 4
+    Int memory = 8
   }
   command <<<
     # Print and save versions
@@ -63,7 +64,7 @@ task genotyphi {
   }
   runtime {
     docker: "~{genotyphi_docker_image}"
-    memory: "8 GB"
+    memory: memory + " GB"
     cpu: cpu
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"

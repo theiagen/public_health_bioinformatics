@@ -27,6 +27,9 @@ task czgenepi_wrangling {
 
     # runtime
     Int disk_size = 100
+    Int memory = 8
+    Int cpu = 1
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-08-08-2"
   }  
   meta {
     # added so that call caching is always turned off
@@ -158,12 +161,12 @@ task czgenepi_wrangling {
     File concatenated_metadata = "czgenepi_prep_metadata.csv"
   }
   runtime {
-    docker: "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-08-08-2"
-    memory: "8 GB"
-    cpu: 1
+    docker: docker 
+    memory: memory + " GB"
+    cpu: cpu
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
     dx_instance_type: "mem1_ssd1_v2_x2"
-    #maxRetries: 3
+    maxRetries: 3
   }
 }

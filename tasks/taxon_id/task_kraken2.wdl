@@ -10,6 +10,7 @@ task kraken2_theiacov {
     Int memory = 8
     String? target_organism
     Int disk_size = 100
+    String docker_image = "us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.0.8-beta_hv"
   }
   command <<<
     # date and version control
@@ -58,10 +59,10 @@ task kraken2_theiacov {
     String percent_target_organism = read_string("PERCENT_TARGET_ORGANISM")
     String? kraken_target_organism = target_organism
     File kraken2_classified_report = "~{samplename}.classifiedreads.txt.gz" 
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.0.8-beta_hv"
+    String docker = docker_image
   }
   runtime {
-    docker: "us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.0.8-beta_hv"
+    docker: docker_image
     memory: "~{memory} GB"
     cpu: cpu
     disks:  "local-disk " + disk_size + " SSD"
@@ -165,6 +166,8 @@ task kraken2_parse_classified {
     String? target_organism
     Int cpu = 4
     Int disk_size = 100
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-08-28-v4"
+    Int memory = 8
   }
   command <<<
 
@@ -227,8 +230,8 @@ task kraken2_parse_classified {
     String? kraken_target_organism = target_organism
   }
   runtime {
-    docker: "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-08-28-v4"
-    memory: "8 GB"
+    docker: docker
+    memory: memory + " GB"
     cpu: cpu
     disks:  "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB" # TES

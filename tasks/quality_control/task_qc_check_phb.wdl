@@ -53,6 +53,9 @@ task qc_check_phb {
     Float? sc2_s_gene_percent_coverage
     String? vadr_num_alerts
     Int disk_size = 100
+    Int memory = 8
+    Int cpu = 4
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-03-16"
   }
   command <<<
     python3 <<CODE
@@ -413,9 +416,9 @@ task qc_check_phb {
     File? qc_standard = qc_check_table
   }
   runtime {
-    docker: "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-03-16"
-    memory: "8 GB"
-    cpu: 4
+    docker: docker
+    memory: memory + " GB"
+    cpu: cpu
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
     maxRetries: 3

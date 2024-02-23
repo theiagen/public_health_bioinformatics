@@ -8,6 +8,7 @@ task cat_files {
     Boolean skip_extra_headers = false
     Int memory = 8
     Int cpu = 2
+    Int disk_size = 100
   }
   meta {
     # added so that call caching is always turned off
@@ -38,7 +39,8 @@ task cat_files {
     docker: "~{docker_image}"
     memory: memory + " GB"
     cpu: cpu
-    disks: "local-disk 100 SSD"
+    disks: "local-disk " + disk_size + " HDD"
+    disk: disk_size + " GB"
     preemptible: 0
   }
 }
@@ -51,6 +53,7 @@ task cat_files_fasta {
     String docker_image = "us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1"
     Int memory = 8
     Int cpu = 2
+    Int disk_size = 100
   }
   meta {
     # added so that call caching is always turned off
@@ -76,7 +79,8 @@ task cat_files_fasta {
     docker: "~{docker_image}"
     memory: memory + " GB"
     cpu: cpu
-    disks: "local-disk 100 SSD"
+    disks: "local-disk " + disk_size + " HDD"
+    disk: disk_size + " GB"
     preemptible: 0
   }
 }
@@ -88,6 +92,7 @@ task zip_files {
     String docker_image = "us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1"
     Int memory = 8
     Int cpu = 2
+    Int disk_size = 100
   }
   meta {
     # added so that call caching is always turned off
@@ -109,11 +114,12 @@ task zip_files {
     File zipped_files = "~{zipped_file_name}.zip"
   }
   runtime {
-      docker: "~{docker_image}"
-      memory: memory + " GB"
-      cpu: cpu
-      disks: "local-disk 100 SSD"
-      preemptible: 0
+    docker: "~{docker_image}"
+    memory: memory + " GB"
+    cpu: cpu
+    disks: "local-disk " + disk_size + " HDD"
+    disk: disk_size + " GB"
+    preemptible: 0
   }
 }
 
@@ -124,6 +130,7 @@ task transfer_files {
     Int cpu = 4
     Int memory = 8
     String docker_image = "us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1"
+    Int disk_size = 100
   }
   meta {
     # added so that call caching is always turned off
@@ -141,10 +148,11 @@ task transfer_files {
     File transferred_files = "transferred_files.tsv"
   }
   runtime {
-      docker: "~{docker_image}"
-      memory: "~{memory} GB"
-      cpu: cpu
-      disks: "local-disk 100 SSD"
-      preemptible: 0
+    docker: "~{docker_image}"
+    memory: "~{memory} GB"
+    cpu: cpu
+    disks: "local-disk " + disk_size + " HDD"
+    disk: disk_size + " GB"
+    preemptible: 0
   }
 }

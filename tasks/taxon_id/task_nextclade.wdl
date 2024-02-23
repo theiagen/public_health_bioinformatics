@@ -193,6 +193,8 @@ task nextclade_add_ref {
     String? dataset_reference
     String? dataset_tag
     Int disk_size = 50
+    Int memory = 8
+    Int cpu = 2
   }
   String basename = basename(genome_fasta, ".fasta")
   command <<<
@@ -234,8 +236,8 @@ task nextclade_add_ref {
   >>>
   runtime {
     docker: "~{docker}"
-    memory: "8 GB"
-    cpu: 2
+    memory: memory + " GB"
+    cpu: cpu
     disks:  "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
     dx_instance_type: "mem1_ssd1_v2_x2"

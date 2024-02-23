@@ -8,7 +8,9 @@ task emmtyper {
     File assembly
     String samplename
     String docker = "us-docker.pkg.dev/general-theiagen/biocontainers/emmtyper:0.2.0--py_0"
-    Int? cpu = 2
+    Int cpu = 2
+    Int memory = 8
+    Int disk_size = 50
 
     # Parameters
     # --workflow [blast|pcr]      Choose workflow  [default: blast]
@@ -55,9 +57,10 @@ task emmtyper {
   }
   runtime {
     docker: "~{docker}"
-    memory: "8 GB"
-    cpu: 2
-    disks: "local-disk 50 SSD"
+    memory: memory + " GB"
+    cpu: cpu
+    disks: "local-disk " + disk_size + " SSD"
+    disk: disk_size + " GB"
     preemptible: 0
   }
 }

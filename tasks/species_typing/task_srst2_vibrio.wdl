@@ -16,6 +16,7 @@ task srst2_vibrio {
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/srst2:0.2.0-vcholerae"
     Int disk_size = 100
     Int cpu = 4
+    Int memory = 8
   }
   command <<<
     if [ -z "~{read2}" ] ; then
@@ -149,7 +150,7 @@ task srst2_vibrio {
   }
   runtime {
     docker: "~{docker}"
-    memory: "8 GB"
+    memory: memory + " GB"
     cpu: cpu
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"

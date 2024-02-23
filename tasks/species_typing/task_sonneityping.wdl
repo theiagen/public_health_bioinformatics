@@ -11,6 +11,7 @@ task sonneityping {
     Int disk_size = 100
     String? myrkobe_opts
     Int cpu = 4
+    Int memory = 8
   }
   command <<<
     # Print and save versions
@@ -70,7 +71,7 @@ task sonneityping {
   }
   runtime {
     docker: "~{docker}"
-    memory: "8 GB"
+    memory: memory + " GB"
     cpu: cpu
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"

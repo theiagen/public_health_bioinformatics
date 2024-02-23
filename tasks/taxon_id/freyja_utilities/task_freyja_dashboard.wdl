@@ -15,6 +15,8 @@ task freyja_dashboard_task {
     File? dashboard_intro_text
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/freyja:1.4.8"
     Int disk_size = 100
+    Int memory = 4
+    Int cpu = 2
   }
   command <<<
   # capture version
@@ -95,8 +97,8 @@ task freyja_dashboard_task {
     File freyja_dashboard_metadata = "freyja_dash_metadata.csv"
   }
   runtime {
-    memory: "4 GB"
-    cpu: 2
+    memory: memory + " GB"
+    cpu: cpu
     docker: "~{docker}"
     disks:  "local-disk " + disk_size + " HDD"
     disk: disk_size + " GB" # TES

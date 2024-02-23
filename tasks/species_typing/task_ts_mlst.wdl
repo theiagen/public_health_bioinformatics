@@ -10,6 +10,7 @@ task ts_mlst {
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/mlst:2.23.0-2024-01"
     Int disk_size = 100
     Int cpu = 4
+    Int memory = 8
     # Parameters
     # --nopath          Strip filename paths from FILE column (default OFF)
     # --scheme [X]      Don't autodetect, force this scheme on all inputs (default '')
@@ -75,8 +76,8 @@ task ts_mlst {
   }
   runtime {
     docker: "~{docker}"
-    memory: "8 GB"
-    cpu: 4
+    memory: memory + " GB"
+    cpu: cpu
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
     maxRetries: 3

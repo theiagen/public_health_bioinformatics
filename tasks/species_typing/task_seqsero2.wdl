@@ -9,6 +9,8 @@ task seqsero2 {
     String mode = "a"
     String seqsero2_docker_image = "us-docker.pkg.dev/general-theiagen/staphb/seqsero2:1.2.1"
     Int disk_size = 100
+    Int memory = 16
+    Int cpu = 8
     Boolean paired_end
   }
   command <<<
@@ -70,8 +72,8 @@ task seqsero2 {
   }
   runtime {
     docker: "~{seqsero2_docker_image}"
-    memory: "16 GB"
-    cpu: 8
+    memory: memory + " GB"
+    cpu: cpu
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
     preemptible: 0
@@ -86,6 +88,8 @@ task seqsero2_assembly {
     String samplename
     String seqsero2_docker_image = "us-docker.pkg.dev/general-theiagen/staphb/seqsero2:1.2.1"
     Int disk_size = 100
+    Int memory = 16
+    Int cpu = 8
   }
   command <<<
     # Print and save date
@@ -140,8 +144,8 @@ task seqsero2_assembly {
   }
   runtime {
     docker: "~{seqsero2_docker_image}"
-    memory: "16 GB"
-    cpu: 8
+    memory: memory + " GB"
+    cpu: cpu
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
     preemptible: 0

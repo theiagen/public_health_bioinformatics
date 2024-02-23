@@ -8,6 +8,9 @@ task export_taxon_tables {
     File? taxon_tables
     String? samplename
     Int disk_size = 100
+    Int memory = 8
+    Int cpu = 1
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-03-16"
     # TheiaProk Outputs
     File? read1
     File? read2
@@ -738,9 +741,9 @@ task export_taxon_tables {
     fi
   >>>
   runtime {
-    docker: "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-03-16"
-    memory: "8 GB"
-    cpu: 1
+    docker: docker
+    memory: memory + " GB"
+    cpu: cpu
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
     dx_instance_type: "mem1_ssd1_v2_x2"

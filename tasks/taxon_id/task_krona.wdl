@@ -7,6 +7,7 @@ task krona {
     String docker = "us-docker.pkg.dev/general-theiagen/biocontainers/krona:2.7.1--pl526_5"
     Int memory = 8
     Int cpu = 4
+    Int disk_size = 100
   }
   command <<<
     # Get VERSION
@@ -27,7 +28,8 @@ task krona {
       docker: "~{docker}"
       memory: "~{memory} GB"
       cpu: cpu
-      disks: "local-disk 100 SSD"
+      disks: "local-disk " + disk_size + " SSD"
+      disk: disk_size + " GB"
       preemptible: 0
   }
 }

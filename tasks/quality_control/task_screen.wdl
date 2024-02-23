@@ -15,6 +15,9 @@ task check_reads {
     String? organism
     Int? expected_genome_length # user-provided
     Int disk_size = 100
+    String docker = "us-docker.pkg.dev/general-theiagen/bactopia/gather_samples:2.0.2"
+    Int memory = 2
+    Int cpu = 2
   }
   command <<<
     flag="PASS"
@@ -170,9 +173,9 @@ task check_reads {
     Int est_genome_length = read_int("EST_GENOME_LENGTH")
   }
   runtime {
-    docker: "us-docker.pkg.dev/general-theiagen/bactopia/gather_samples:2.0.2"
-    memory: "2 GB"
-    cpu: 2
+    docker: docker
+    memory: memory + " GB"
+    cpu: cpu
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
     preemptible: 0
@@ -193,7 +196,10 @@ task check_reads_se {
     String workflow_series = "theiaprok" # default to theiaprok so we don't have to change those workflows
     String? organism
     Int? expected_genome_length
-    Int disk_size = 100
+    Int disk_size = 100 
+    String docker = "us-docker.pkg.dev/general-theiagen/bactopia/gather_samples:2.0.2"
+    Int memory = 2
+    Int cpu = 2
   }
   command <<<
     flag="PASS"
@@ -334,9 +340,9 @@ task check_reads_se {
     Int est_genome_length = read_int("EST_GENOME_LENGTH")
   }
   runtime {
-    docker: "us-docker.pkg.dev/general-theiagen/bactopia/gather_samples:2.0.2"
-    memory: "2 GB"
-    cpu: 2
+    docker: docker
+    memory: memory + " GB"
+    cpu: cpu
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
     preemptible: 0

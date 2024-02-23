@@ -11,6 +11,9 @@ task summarize_data {
     String? id_column_name
 
     Int disk_size = 100
+    Int cpu = 8
+    Int memory = 1 
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-03-16" 
     # commenting out this option since it's for local dev. Prefer this option to not appear in Terra
     #File? input_table
     Boolean phandango_coloring = true
@@ -135,9 +138,9 @@ task summarize_data {
     File filtered_metadata = "~{output_prefix}_filtered_metadata.tsv"
   }
   runtime {
-    docker: "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-03-16"
-    memory: "8 GB"
-    cpu: 1
+    docker: docker
+    memory: memory + " GB"
+    cpu: cpu
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
     dx_instance_type: "mem1_ssd1_v2_x2"

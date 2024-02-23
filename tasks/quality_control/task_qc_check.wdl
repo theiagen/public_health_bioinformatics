@@ -28,6 +28,9 @@ task qc_check {
     String? ani_top_species_match
     String? busco_results
     Int disk_size = 100
+    Int docker = "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-03-16"
+    Int memory = 8
+    Int cpu = 4
   }
   command <<<
     # date 
@@ -405,9 +408,9 @@ task qc_check {
     String date = read_string("DATE")
   }
   runtime {
-    docker: "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-03-16"
-    memory: "8 GB"
-    cpu: 4
+    docker: docker
+    memory: memory + " GB"
+    cpu: cpu
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
     maxRetries: 3

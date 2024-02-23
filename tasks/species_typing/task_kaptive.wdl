@@ -8,6 +8,7 @@ task kaptive {
     String kaptive_docker_image = "us-docker.pkg.dev/general-theiagen/staphb/kaptive:2.0.3"
     Int disk_size = 100
     Int cpu = 4
+    Int memory = 8
     # Parameters
     Int start_end_margin = 10 # determines flexibility in identifying the start and end of a locus - if this value is 10, a locus match that is missing the first 8 base pairs will still count as capturing the start of the locus (default: 10) 
     Float min_identity = 90.0 # minimum required percent coverage for the gene BLAST search via tBLASTn (default: 90.0)
@@ -167,7 +168,7 @@ task kaptive {
   }
   runtime {
     docker: "~{kaptive_docker_image}"
-    memory: "8 GB"
+    memory: memory + " GB"
     cpu: cpu
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"

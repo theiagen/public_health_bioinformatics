@@ -8,6 +8,8 @@ task pasty {
     Int min_coverage = 95
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/pasty:1.0.2"
     Int disk_size = 100
+    Int memory = 4
+    Int cpu = 2
   }
   command <<<
     # date and version control
@@ -38,8 +40,8 @@ task pasty {
   }
   runtime {
     docker: "~{docker}"
-    memory: "4 GB"
-    cpu: 2
+    memory: memory + " GB"
+    cpu: cpu
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
     maxRetries: 3

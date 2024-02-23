@@ -10,6 +10,8 @@ task emmtypingtool {
     String samplename
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/emmtypingtool:0.0.1"
     Int cpu = 2
+    Int memory = 8
+    Int disk_size = 100
 
     # Parameters
     #-input_directory INPUT_DIRECTORY, -i INPUT_DIRECTORY
@@ -41,9 +43,10 @@ task emmtypingtool {
   }
   runtime {
     docker: "~{docker}"
-    memory: "8 GB"
+    memory: memory + " GB"
     cpu: cpu
-    disks: "local-disk 50 SSD"
+    disks: "local-disk " + disk_size + " SSD"
+    disk: disk_size + " GB"
     preemptible: 0
   }
 }

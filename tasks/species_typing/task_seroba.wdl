@@ -7,6 +7,8 @@ task seroba {
     String samplename
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/seroba:1.0.2"
     Int disk_size = 100
+    Int memory = 16
+    Int cpu = 8
   }
   command <<<
     # grab version
@@ -38,8 +40,8 @@ task seroba {
   }
   runtime {
     docker: "~{docker}"
-    memory: "16 GB"
-    cpu: 8
+    memory: memory + " GB"
+    cpu: cpu
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
     maxRetries: 3  }

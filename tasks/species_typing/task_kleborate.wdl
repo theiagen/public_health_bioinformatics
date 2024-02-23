@@ -7,6 +7,8 @@ task kleborate {
     String samplename
     String kleborate_docker_image = "us-docker.pkg.dev/general-theiagen/staphb/kleborate:2.2.0"
     Int disk_size = 100
+    Int cpu = 8
+    Int memory = 16
     
     # Parameters
     Boolean skip_resistance = false # Turn on resistance genes screening (default: no resistance gene screening)
@@ -132,8 +134,8 @@ task kleborate {
   }
   runtime {
     docker: "~{kleborate_docker_image}"
-    memory: "16 GB"
-    cpu: 8
+    memory: memory + " GB"
+    cpu: cpu
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
     maxRetries: 3

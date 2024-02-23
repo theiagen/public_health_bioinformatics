@@ -13,6 +13,8 @@ task pangolin4 {
     Boolean skip_designation_cache=false
     String? pangolin_arguments
     Int disk_size = 100
+    Int memory = 8
+    Int cpu = 4
   }
   command <<<
     set -e
@@ -74,8 +76,8 @@ task pangolin4 {
   }
   runtime {
     docker: "~{docker}"
-    memory: "8 GB"
-    cpu: 4
+    memory: memory + " GB"
+    cpu: cpu
     disks:  "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB" # TES
     preemptible: 0
@@ -97,6 +99,9 @@ task pangolin_update_log {
     String? timezone
     File? lineage_log
     Int disk_size = 100
+    Int memory = 8
+    Int cpu = 4
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1"
   }
   command <<<
     # set timezone for date outputs
@@ -140,9 +145,9 @@ task pangolin_update_log {
     File pango_lineage_log = "~{samplename}_pango_lineage_log.tsv"
   }
   runtime {
-    docker: "us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1"
-    memory: "8 GB"
-    cpu: 4
+    docker: docker
+    memory: memory + " GB"
+    cpu: cpu
     disks:  "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB" # TES
     preemptible: 0

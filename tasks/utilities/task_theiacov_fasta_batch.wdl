@@ -23,6 +23,9 @@ task sm_theiacov_fasta_wrangling { # the sm stands for supermassive
     String theiacov_fasta_version
     
     Int disk_size = 100
+    Int docker = "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-08-28-v4"
+    Int cpu = 8
+    Int memory = 4
   }
   command <<<
     # check if nextclade json file exists
@@ -193,9 +196,9 @@ task sm_theiacov_fasta_wrangling { # the sm stands for supermassive
     File terra_table = "terra-table-to-upload.tsv"
   }
   runtime {
-    docker: "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-08-28-v4"
-    memory: "8 GB"
-    cpu: 4
+    docker: docker
+    memory: memory + " GB"
+    cpu: cpu
     disks:  "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
     preemptible: 0

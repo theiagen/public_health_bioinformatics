@@ -9,6 +9,8 @@ task legsta {
     String samplename
     String docker = "us-docker.pkg.dev/general-theiagen/biocontainers/legsta:0.5.1--hdfd78af_2"
     Int disk_size = 100
+    Int memory = 8
+    Int cpu = 2
   }
   command <<<
     echo $(legsta --version 2>&1) | sed 's/^.*legsta //; s/ .*\$//;' | tee VERSION
@@ -40,8 +42,8 @@ task legsta {
   }
   runtime {
     docker: "~{docker}"
-    memory: "8 GB"
-    cpu: 2
+    memory: memory + " GB"
+    cpu: cpu
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
     maxRetries: 3

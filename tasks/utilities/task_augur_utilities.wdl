@@ -7,15 +7,18 @@ task fasta_to_ids {
   input {
     File sequences_fasta
     Int disk_size = 375
+    Int memory = 1
+    Int cpu = 1
+    String docker = "ubuntu"
   }
   String basename = basename(sequences_fasta, ".fasta")
   command <<<
     cat "~{sequences_fasta}" | grep \> | cut -c 2- > "~{basename}.txt"
   >>>
   runtime {
-    docker: "ubuntu"
-    memory: "1 GB"
-    cpu: 1
+    docker: docker
+    memory: memory + " GB"
+    cpu: cpu
     disks: "local-disk " + disk_size + " LOCAL"
     disk: disk_size + " GB" # TES
     dx_instance_type: "mem1_ssd1_v2_x2"
@@ -36,6 +39,8 @@ task tsv_join {
     String out_suffix = ".tsv"
     Int memory = 7
     Int disk_size = 100
+    Int cpu = 2
+    String docker = "us-docker.pkg.dev/general-theiagen/broadinstitute/viral-core:2.1.33"
   }
   command <<< 
   python3<<CODE
@@ -135,8 +140,8 @@ task tsv_join {
   }
   runtime {
     memory: "~{memory} GB"
-    cpu: 2
-    docker: "us-docker.pkg.dev/general-theiagen/broadinstitute/viral-core:2.1.33"
+    cpu: cpu
+    docker: docker
     disks: "local-disk " + disk_size + " HDD"
     disk: disk_size + " GB" # TES
     dx_instance_type: "mem1_ssd1_v2_x2"
@@ -154,6 +159,8 @@ task filter_sequences_by_length {
 
     String docker = "us-docker.pkg.dev/general-theiagen/broadinstitute/viral-core:2.1.33"
     Int disk_size = 300
+    Int memory = 1
+    Int cpu = 1
   }
   String out_fname = sub(basename(sequences_fasta), ".fasta", ".filtered.fasta")
   command <<<
@@ -187,10 +194,10 @@ task filter_sequences_by_length {
   >>>
   runtime {
     docker: docker
-    memory: "1 GB"
-    cpu : 1
-    disks: "local-disk " + disk_size + " HDD"
-    disk: disk_size + " GB" # TES
+    memory: memory + " GB"
+    cpu: cpu
+    disks:  "local-disk " + disk_size + " SSD"
+    disk: disk_size + " GB"
     dx_instance_type: "mem1_ssd1_v2_x2"
   }
   output {
@@ -205,6 +212,9 @@ task set_sc2_defaults { # establish sars-cov-2 default values for augur
   input {
     String nextstrain_ncov_repo_commit = "cec4fa0ecd8612e4363d40662060a5a9c712d67e" # last updated on 2024-02-01    
     Int disk_size = 50
+    String docker = "us-docker.pkg.dev/general-theiagen/biocontainers/augur:22.0.2--pyhdfd78af_0"
+    Int memory = 1
+    Int cpu = 1
   }
   command <<<
     wget -q "https://github.com/nextstrain/ncov/archive/~{nextstrain_ncov_repo_commit}.tar.gz"
@@ -224,10 +234,10 @@ task set_sc2_defaults { # establish sars-cov-2 default values for augur
     Float proportion_wide = 0.0
   }
   runtime {
-    docker: "us-docker.pkg.dev/general-theiagen/biocontainers/augur:22.0.2--pyhdfd78af_0"
-    memory: "1 GB"
-    cpu: 1
-    disks: "local-disk " + disk_size + " HDD"
+    docker: docker
+    memory: memory + " GB"
+    cpu: cpu
+    disks:  "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
   }
 }
@@ -240,6 +250,9 @@ task set_flu_defaults { # establish flu default values for augur
     File flu_lat_longs_tsv = "gs://theiagen-public-files-rp/terra/flu-references/lat_longs.tsv"
 
     Int disk_size = 50
+    Int memory = 1
+    Int cpu = 1
+    String docker = "us-docker.pkg.dev/general-theiagen/biocontainers/augur:22.0.2--pyhdfd78af_0"
   }
   command <<<
     # set empty file to prevent NA segment failure
@@ -316,10 +329,10 @@ task set_flu_defaults { # establish flu default values for augur
     Float proportion_wide = 0.0
   }
   runtime {
-    docker: "us-docker.pkg.dev/general-theiagen/biocontainers/augur:22.0.2--pyhdfd78af_0"
-    memory: "1 GB"
-    cpu: 1
-    disks: "local-disk " + disk_size + " HDD"
+    docker: docker
+    memory: memory + " GB"
+    cpu: cpu
+    disks:  "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
   }
 }
@@ -334,6 +347,9 @@ task set_mpxv_defaults { # establish mpxv default values for augur
     File mpxv_auspice_config = "gs://theiagen-public-files-rp/terra/augur-mpox-references/mpox_auspice_config_mpxv.json"
 
     Int disk_size = 50
+    Int memory = 1
+    Int cpu = 1
+    String docker = "us-docker.pkg.dev/general-theiagen/biocontainers/augur:22.0.2--pyhdfd78af_0"
   }
   command <<<
     # nothing to do here for now
@@ -354,9 +370,9 @@ task set_mpxv_defaults { # establish mpxv default values for augur
     Float proportion_wide = 0.0
   }
   runtime {
-    docker: "us-docker.pkg.dev/general-theiagen/biocontainers/augur:22.0.2--pyhdfd78af_0"
-    memory: "1 GB"
-    cpu: 1
+    docker: docker
+    memory: memory + " GB"
+    cpu: cpu
     disks: "local-disk " + disk_size + " HDD"
     disk: disk_size + " GB"
   }
@@ -376,6 +392,9 @@ task prep_augur_metadata {
     String? organism = "sars-cov-2"
 
     Int disk_size = 10
+    Int memory = 3
+    Int cpu = 1
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1"
   }
   command <<<   
     # Set strain name by assembly header
@@ -407,9 +426,9 @@ task prep_augur_metadata {
     File augur_metadata = "augur_metadata.tsv"
   }
   runtime {
-      docker: "us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1"
-      memory: "3 GB"
-      cpu: 1
+      docker: docker
+      memory: memory + " GB"
+      cpu: cpu
       disks: "local-disk ~{disk_size} SSD"
       disk: disk_size + " GB"
       preemptible: 0

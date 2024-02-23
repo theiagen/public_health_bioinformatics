@@ -13,6 +13,10 @@ task prune_table {
     Boolean skip_biosample
     String read1_column_name = "read1"
     String read2_column_name = "read2"
+    Int memory = 8
+    Int cpu = 4
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-03-16"
+    Int disk_size = 100
   }
   meta {
     # added so that call caching is always turned off
@@ -184,10 +188,11 @@ task prune_table {
     File excluded_samples = "excluded_samples.tsv"
   }
   runtime {
-    docker: "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-03-16"
-    memory: "8 GB"
-    cpu: 4
-    disks: "local-disk 100 SSD"
+    docker: docker
+    memory: memory + " GB"
+    cpu: cpu
+    disks:  "local-disk " + disk_size + " SSD"
+    disk: disk_size + " GB"
     preemptible: 0
   }
 }
@@ -199,6 +204,10 @@ task add_biosample_accessions {
     String project_name
     String workspace_name
     String table_name
+    Int memory = 8
+    Int cpu = 4
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-03-16"
+    Int disk_size = 100
   }
   command <<<
     echo "Uploading biosample_accession to the Terra data table"
@@ -260,10 +269,11 @@ task add_biosample_accessions {
     Boolean proceed = read_boolean("PROCEED")
   }
   runtime {
-    docker: "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-03-16"
-    memory: "8 GB"
-    cpu: 4
-    disks: "local-disk 100 SSD"
+    docker: docker
+    memory: memory + " GB"
+    cpu: cpu
+    disks:  "local-disk " + disk_size + " SSD"
+    disk: disk_size + " GB"
     preemptible: 0
   }
 }

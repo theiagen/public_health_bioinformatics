@@ -13,6 +13,8 @@ task freyja_plot_task {
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/freyja:1.4.8"
     Int disk_size = 100
     Int mincov = 60
+    Int memory = 4
+    Int cpu = 2
   }
   command <<<
   # capture version
@@ -81,8 +83,8 @@ task freyja_plot_task {
     File? freyja_plot_metadata = "freyja_times_metadata.csv"
   }
   runtime {
-    memory: "4 GB"
-    cpu: 2
+    memory: memory + " GB"
+    cpu: cpu
     docker: "~{docker}"
     disks:  "local-disk " + disk_size + " HDD"
     disk: disk_size + " GB" # TES

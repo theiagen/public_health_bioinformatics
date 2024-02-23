@@ -6,6 +6,8 @@ task serotypefinder {
     String samplename
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/serotypefinder:2.0.1"
     Int disk_size = 100
+    Int cpu = 2
+    Int memory = 8
   }
   command <<<
     # capture date and version
@@ -51,8 +53,8 @@ task serotypefinder {
   }
   runtime {
     docker: "~{docker}"
-    memory: "8 GB"
-    cpu: 2
+    memory: memory + " GB"
+    cpu: cpu
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
     preemptible:  0

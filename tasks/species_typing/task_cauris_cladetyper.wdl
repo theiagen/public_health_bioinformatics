@@ -5,9 +5,12 @@ task cauris_cladetyper {
     File assembly_fasta
     String samplename
     Int kmer_size = 11
+    
     String docker_image = "us-docker.pkg.dev/general-theiagen/biocontainers/hesslab-gambit:0.5.1--py37h8902056_0"
     Int memory = 16
     Int cpu = 8
+    Int disk_size = 100
+
     File ref_clade1 = "gs://theiagen-public-files/terra/candida_auris_refs/Cauris_Clade1_GCA_002759435.2_Cand_auris_B8441_V2_genomic.fasta"
     String ref_clade1_annotated = "gs://theiagen-public-files/terra/candida_auris_refs/Cauris_Clade1_GCA_002759435_Cauris_B8441_V2_genomic.gbff"
     File ref_clade2 = "gs://theiagen-public-files/terra/candida_auris_refs/Cauris_Clade2_GCA_003013715.2_ASM301371v2_genomic.fasta"
@@ -64,8 +67,9 @@ task cauris_cladetyper {
   runtime {
     docker: docker_image
     memory: "~{memory} GB"
-    cpu: cpu
-    disks: "local-disk 100 SSD"
+    cpu: cpu    
+    disks: "local-disk " + disk_size + " SSD"
+    disk: disk_size + " GB"
     preemptible: 0
   }
 }

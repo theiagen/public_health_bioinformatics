@@ -8,6 +8,7 @@ task tbprofiler {
     String samplename
     String tbprofiler_docker_image = "us-docker.pkg.dev/general-theiagen/staphb/tbprofiler:4.4.2"
     Int disk_size = 100
+    Int memory = 16
     String mapper = "bwa"
     String variant_caller = "freebayes"
     String? variant_calling_params
@@ -142,7 +143,7 @@ task tbprofiler {
   }
   runtime {
     docker: "~{tbprofiler_docker_image}"
-    memory: "16 GB"
+    memory: memory + " GB"
     cpu: cpu
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"

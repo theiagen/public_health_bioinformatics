@@ -68,6 +68,8 @@ task theiavalidate {
     
     String docker = "us-docker.pkg.dev/general-theiagen/theiagen/theiavalidate:0.1.0"
     Int disk_size = 10
+    Int memory = 4
+    Int cpu = 2
   }
   String datatable1_name = basename(datatable1_tsv)
   String datatable2_name = basename(datatable2_tsv)
@@ -92,8 +94,8 @@ task theiavalidate {
   >>>
   runtime {
     docker: docker 
-    memory: "4 GB"
-    cpu: 2
+    memory: memory + " GB"
+    cpu: cpu
     disks:  "local-disk " + disk_size + " HDD"
     disk: disk_size + " GB"
     dx_instance_type: "mem1_ssd1_v2_x2"

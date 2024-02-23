@@ -9,6 +9,8 @@ task hicap {
     String samplename
     String docker = "us-docker.pkg.dev/general-theiagen/biocontainers/hicap:1.0.3--py_0"
     Int cpu = 2
+    Int memory = 8
+    Int disk_size = 50
 
     #Parameters
     #-q QUERY_FP, --query_fp QUERY_FP              Input FASTA query
@@ -58,9 +60,10 @@ task hicap {
   }
   runtime {
     docker: "~{docker}"
-    memory: "8 GB"
-    cpu: cpu
-    disks: "local-disk 50 SSD"
+    memory: memory + " GB"
+    cpu: cpu    
+    disks: "local-disk " + disk_size + " SSD"
+    disk: disk_size + " GB"
     preemptible: 0
   }
 }

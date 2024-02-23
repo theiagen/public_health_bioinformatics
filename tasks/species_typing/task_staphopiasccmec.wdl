@@ -10,6 +10,7 @@ task staphopiasccmec {
     String docker = "us-docker.pkg.dev/general-theiagen/biocontainers/staphopia-sccmec:1.0.0--hdfd78af_0"
     Int disk_size = 100
     Int cpu = 1
+    Int memory = 4
   }
   command <<<
     # get version
@@ -48,7 +49,7 @@ task staphopiasccmec {
   }
   runtime {
     docker: "~{docker}"
-    memory: "4 GB"
+    memory: memory + " GB"
     cpu: cpu
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"

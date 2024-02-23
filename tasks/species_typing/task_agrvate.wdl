@@ -10,6 +10,7 @@ task agrvate {
     String docker = "us-docker.pkg.dev/general-theiagen/biocontainers/agrvate:1.0.2--hdfd78af_0"
     Int disk_size = 50
     Int cpu = 1
+    Int memory = 4
 
     # Parameters
     # --typing_only    agr typing only. Skips agr operon extraction and frameshift detection
@@ -85,7 +86,7 @@ task agrvate {
   }
   runtime {
     docker: "~{docker}"
-    memory: "4 GB"
+    memory: memory + " GB"
     cpu: cpu
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"

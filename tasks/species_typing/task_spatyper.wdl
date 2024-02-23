@@ -10,6 +10,7 @@ task spatyper {
     String docker = "us-docker.pkg.dev/general-theiagen/biocontainers/spatyper:0.3.3--pyhdfd78af_3"
     Int disk_size = 100
     Int cpu = 4
+    Int memory = 8
 
     # Parameters
     # --do_enrich Do PCR product enrichment
@@ -53,7 +54,7 @@ task spatyper {
   }
   runtime {
     docker: "~{docker}"
-    memory: "8 GB"
+    memory: memory + " GB"
     cpu: cpu
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"

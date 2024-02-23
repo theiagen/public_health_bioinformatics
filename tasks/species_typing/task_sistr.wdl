@@ -9,6 +9,7 @@ task sistr {
     String samplename
     String docker = "us-docker.pkg.dev/general-theiagen/biocontainers/sistr_cmd:1.1.1--pyh864c0ab_2"
     Int cpu = 4
+    Int memory = 8
     Int disk_size = 100
 
     # Parameters
@@ -44,8 +45,8 @@ task sistr {
   }
   runtime {
     docker: "~{docker}"
-    memory: "8 GB"
-    cpu: 4
+    memory: memory + " GB"
+    cpu: cpu
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
     preemptible: 0

@@ -6,6 +6,9 @@ task quasitools {
     File? read2
     String samplename
     String docker = "us-docker.pkg.dev/general-theiagen/biocontainers/quasitools:0.7.0--pyh864c0ab_1"
+    Int memory = 4
+    Int cpu = 2
+    Int disk_size = 50
   }
   command <<<
     # date and version capture
@@ -59,10 +62,10 @@ task quasitools {
   >>>
   runtime {
     docker: "~{docker}"
-      memory: "4 GB"
-      cpu: 4
-      disks: "local-disk 50 HDD"
-      dx_instance_type: "mem1_ssd1_v2_x2"
+      memory: memory + " GB"
+      cpu: cpu    
+      disks: "local-disk " + disk_size + " SSD"
+      disk: disk_size + " GB"
       maxRetries: 3
   }
   output {
