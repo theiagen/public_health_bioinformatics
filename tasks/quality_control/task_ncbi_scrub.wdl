@@ -7,6 +7,8 @@ task ncbi_scrub_pe {
     String samplename
     String docker = "us-docker.pkg.dev/general-theiagen/ncbi/sra-human-scrubber:1.0.2021-05-05"
     Int disk_size = 100
+    Int memory = 8 
+    Int cpu = 4
   }
   String r1_filename = basename(read1)
   String r2_filename = basename(read2)
@@ -54,9 +56,9 @@ task ncbi_scrub_pe {
   }
   runtime {
       docker: "~{docker}"
-      memory: "8 GB"
-      cpu: 4
-      disks:  "local-disk " + disk_size + " SSD"
+      memory: memory + " GB"
+      cpu: cpu
+      disks: "local-disk " + disk_size + " SSD"
       disk: disk_size + " GB" # TES
       preemptible: 0
       maxRetries: 3
@@ -69,6 +71,8 @@ task ncbi_scrub_se {
     String samplename
     String docker = "us-docker.pkg.dev/general-theiagen/ncbi/sra-human-scrubber:1.0.2021-05-05"
     Int disk_size = 100
+    Int memory = 8
+    Int cpu = 4
   }
   String r1_filename = basename(read1)
   command <<<
@@ -97,8 +101,8 @@ task ncbi_scrub_se {
   }
   runtime {
     docker: "~{docker}"
-    memory: "8 GB"
-    cpu: 4
+    memory: memory + " GB"
+    cpu: cpu
     disks:  "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB" # TES
     preemptible: 0

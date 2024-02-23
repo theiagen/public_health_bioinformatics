@@ -9,8 +9,8 @@ task animummer {
     # these 2 thresholds were set as they are used by CDC enterics lab/PulseNet for ANI thresholds
     Float ani_threshold = 80.0
     Float percent_bases_aligned_threshold = 70.0
-    String docker= "us-docker.pkg.dev/general-theiagen/staphb/mummer:4.0.0-rgdv2"
-    Int cpus = 4
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/mummer:4.0.0-rgdv2"
+    Int cpu = 4
     Int memory = 8
     Int disk_size = 100
   }
@@ -111,7 +111,7 @@ task animummer {
   runtime {
     docker:  "~{docker}"
     memory:  "~{memory} GB"
-    cpu:  cpus
+    cpu:  cpu
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
     maxRetries: 3

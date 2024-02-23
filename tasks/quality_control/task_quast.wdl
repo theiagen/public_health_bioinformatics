@@ -7,7 +7,7 @@ task quast {
     Int min_contig_len = 500
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/quast:5.0.2"
     Int disk_size = 100
-    Int mem = 2 # added default value
+    Int memory = 2 # added default value
     Int cpu = 2 # added default value
   }
   command <<<
@@ -60,7 +60,7 @@ task quast {
   }
   runtime {
     docker:  "~{docker}"
-    memory:  "~{mem} GB"
+    memory:  "~{memory} GB"
     cpu:   "~{cpu}"
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"

@@ -48,7 +48,7 @@ workflow snippy_tree_wf {
     
     String? snp_dists_docker
     
-    Int? snp_sites_cpus
+    Int? snp_sites_cpu
     Int? snp_sites_disk_size
     Int? snp_sites_memory
     String? snp_sites_docker
@@ -98,7 +98,7 @@ workflow snippy_tree_wf {
         output_phylip = false,
         output_pseudo_ref = false,
         output_monomorphic = false,
-        cpus = snp_sites_cpus,
+        cpu = snp_sites_cpu,
         memory = snp_sites_memory,
         disk_size = snp_sites_disk_size
     }

@@ -5,6 +5,9 @@ task stats_n_coverage {
     File bamfile
     String samplename
     Int disk_size = 100
+    Int memory = 8
+    Int cpu = 2
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/samtools:1.15"
   }
   command <<<
     date | tee DATE
@@ -44,9 +47,9 @@ task stats_n_coverage {
     Float meanmapq = read_string("MEANMAPQ")
   }
   runtime {
-    docker: "us-docker.pkg.dev/general-theiagen/staphb/samtools:1.15"
-    memory: "8 GB"
-    cpu: 2
+    docker: docker
+    memory: memory + " GB"
+    cpu: cpu
     disks:  "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB" # TES
     preemptible: 0

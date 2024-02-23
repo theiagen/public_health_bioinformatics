@@ -6,6 +6,7 @@ task bbduk {
     File read2_trimmed
     String samplename
     Int memory = 8
+    Int cpu = 4
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/bbtools:38.76"
     Int disk_size = 100
     File? adapters
@@ -50,7 +51,7 @@ task bbduk {
   runtime {
     docker: "~{docker}"
     memory: "~{memory} GB"
-    cpu: 4
+    cpu: cpu
     disks:  "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB" # TES
     preemptible: 0
@@ -64,6 +65,7 @@ task bbduk_se {
     String samplename
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/bbtools:38.76"
     Int memory = 8
+    Int cpu = 4
     Int disk_size = 100
     File? adapters
     File? phix
@@ -104,7 +106,7 @@ task bbduk_se {
   runtime {
     docker: "~{docker}"
     memory: "~{memory} GB"
-    cpu: 4
+    cpu: cpu
     disks:  "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB" # TES
     preemptible: 0

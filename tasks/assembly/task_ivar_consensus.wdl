@@ -15,6 +15,9 @@ task consensus {
     String char_unknown = "N"
     Boolean skip_N = false
     Int disk_size = 100
+    Int memory = 8
+    Int cpu = 2
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/ivar:1.3.1-titan"
   }
   command <<<
     # date and version control
@@ -59,9 +62,9 @@ task consensus {
     String pipeline_date = read_string("DATE")
   }
   runtime {
-    docker: "us-docker.pkg.dev/general-theiagen/staphb/ivar:1.3.1-titan"
-    memory: "8 GB"
-    cpu: 2
+    docker: docker
+    memory: memory + " GB"
+    cpu: cpu
     disks:  "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB" # TES
     preemptible: 0

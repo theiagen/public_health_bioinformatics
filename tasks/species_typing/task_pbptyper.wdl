@@ -12,7 +12,7 @@ task pbptyper {
     Int min_coverage = 95 # Minimum percent coverage to count a hit [default: 95]  
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/pbptyper:1.0.4"
     Int disk_size = 100
-    Int cpus = 4
+    Int cpu= 4
   }
   command <<<
     # get version information
@@ -42,7 +42,7 @@ task pbptyper {
   runtime {
     docker: "~{docker}"
     memory: "16 GB"
-    cpu: cpus
+    cpu: cpu
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
     maxRetries: 3    preemptible: 0

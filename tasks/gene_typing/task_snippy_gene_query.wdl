@@ -7,8 +7,9 @@ task snippy_gene_query {
     String? query_gene
     File? reference
     String docker = "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-06-21"
-    Int cpus = 8
+    Int cpu = 8
     Int memory = 32
+    Int disk_size = 100
   }
   command <<<
     # set variable for if no hits are detected for query genes
@@ -65,8 +66,8 @@ task snippy_gene_query {
   runtime {
     docker: "~{docker}"
     memory: "~{memory} GB"
-    cpu: "~{cpus}"
-    disks: "local-disk 100 SSD"
+    cpu: "~{cpu}"
+    disks: "local-disk " + disk_size + " SSD"
     preemptible: 0
     maxRetries: 3
   }

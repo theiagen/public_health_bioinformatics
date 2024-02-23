@@ -9,6 +9,7 @@ task consensus {
     File? reference_genome
     Int normalise = 20000
     Int cpu = 8
+    Int memory = 16
     Int disk_size = 100
     String medaka_model = "r941_min_high_g360"
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/artic-ncov2019-epi2me"
@@ -85,7 +86,7 @@ task consensus {
   }
   runtime {
     docker: "~{docker}"
-    memory: "16 GB"
+    memory: memory + " GB"
     cpu: cpu
     disks:  "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB" # TES

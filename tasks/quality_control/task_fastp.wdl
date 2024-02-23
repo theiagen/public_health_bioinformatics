@@ -13,6 +13,7 @@ task fastp_pe {
     # -g enables polyg trimming with default value of 10
     String fastp_args = "--detect_adapter_for_pe -g -5 20 -3 20"
     Int threads = 4
+    Int memory = 8
   }
   command <<<
     # date 
@@ -38,9 +39,9 @@ task fastp_pe {
     String pipeline_date = read_string("DATE")
   }
   runtime {
-    docker: "us-docker.pkg.dev/general-theiagen/staphb/fastp:0.23.2"
-    memory: "8 GB"
-    cpu: 4
+    docker: docker
+    memory: memory + " GB"
+    cpu: threads
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
     preemptible: 0
@@ -61,6 +62,7 @@ task fastp_se {
     # --detect_adapter_for_pe argument was removed 
     String fastp_args = "-g -5 20 -3 20"
     Int threads = 4
+    Int memory = 8
   }
   command <<<
     # date 
@@ -82,9 +84,9 @@ task fastp_se {
     String pipeline_date = read_string("DATE")
   }
   runtime {
-    docker: "us-docker.pkg.dev/general-theiagen/staphb/fastp:0.23.2"
-    memory: "8 GB"
-    cpu: 4
+    docker: docker
+    memory: memory + " GB"
+    cpu: threads
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
     preemptible: 0

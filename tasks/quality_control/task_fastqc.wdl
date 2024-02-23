@@ -5,7 +5,7 @@ task fastqc {
     File read1
     File read2
 
-    Int mem = 4
+    Int memory = 4
     Int cpu = 2
     Int disk_size = 100
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/fastqc:0.12.1"
@@ -53,7 +53,7 @@ task fastqc {
   }
   runtime {
     docker: docker
-    memory: mem + " GB"
+    memory: memory + " GB"
     cpu: cpu
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
@@ -66,7 +66,7 @@ task fastqc_se {
   input {
     File read1
 
-    Int mem = 4
+    Int memory = 4
     Int cpu = 2
     Int disk_size = 100
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/fastqc:0.12.1"
@@ -96,7 +96,7 @@ task fastqc_se {
   }
   runtime {
     docker: docker
-    memory: mem + " GB"
+    memory: memory + " GB"
     cpu: cpu
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"

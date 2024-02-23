@@ -17,7 +17,7 @@ workflow snippy_variants_wf {
     # optional inputs are exposed here so that they can be set by user in higher-level workflows. example: snippy_streamline
     # a bit of duplicate code, but done for a reason!
     String? docker
-    Int? cpus
+    Int? cpu
     Int? memory
     Int? map_qual
     Int? base_quality
@@ -33,7 +33,7 @@ workflow snippy_variants_wf {
       read2 = read2,
       reference_genome_file = reference_genome_file,
       docker = docker,
-      cpus = cpus,
+      cpu = cpu,
       memory = memory,
       map_qual = map_qual,
       base_quality = base_quality,

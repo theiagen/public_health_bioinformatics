@@ -11,7 +11,7 @@ task retrieve_aligned_contig_paf {
     String docker = "us-docker.pkg.dev/general-theiagen/biocontainers/seqkit:2.4.0--h9ee0642_0"
     Int disk_size = 100
     Int cpu = 2
-    Int mem = 8
+    Int memory = 8
   }
   command <<<
     # retrieve contig name
@@ -36,7 +36,7 @@ task retrieve_aligned_contig_paf {
   }
   runtime {
     docker: "~{docker}"
-    memory: mem + " GB"
+    memory: memory + " GB"
     cpu: cpu
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
@@ -54,7 +54,7 @@ task calculate_coverage_paf {
     String docker = "us-docker.pkg.dev/general-theiagen/quay/ubuntu:latest"
     Int disk_size = 100
     Int cpu = 2
-    Int mem = 8
+    Int memory = 8
   }
   command <<<
     # get reference length from paf file
@@ -73,7 +73,7 @@ task calculate_coverage_paf {
   }
   runtime {
     docker: "~{docker}"
-    memory: mem + " GB"
+    memory: memory + " GB"
     cpu: cpu
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
@@ -92,7 +92,7 @@ task sam_to_sorted_bam {
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/samtools:1.17"
     Int disk_size = 100
     Int cpu = 2
-    Int mem = 8
+    Int memory = 8
   }
   command <<<
     # Samtools verion capture
@@ -113,7 +113,7 @@ task sam_to_sorted_bam {
   }
   runtime {
     docker: "~{docker}"
-    memory: mem + " GB"
+    memory: memory + " GB"
     cpu: cpu
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
@@ -134,7 +134,7 @@ task retrieve_pe_reads_bam {
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/samtools:1.17"
     Int disk_size = 100
     Int cpu = 2
-    Int mem = 8
+    Int memory = 8
   }
   command <<<
     # Convert to fastq.gz, discarding the singleton reads
@@ -147,7 +147,7 @@ task retrieve_pe_reads_bam {
   }
   runtime {
     docker: "~{docker}"
-    memory: mem + " GB"
+    memory: memory + " GB"
     cpu: cpu
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
@@ -166,7 +166,7 @@ task calculate_coverage {
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/bedtools:2.31.0"
     Int disk_size = 100
     Int cpu = 2
-    Int mem = 8
+    Int memory = 8
   }
   command <<<
     # get version
@@ -194,7 +194,7 @@ task calculate_coverage {
   }
   runtime {
     docker: "~{docker}"
-    memory: mem + " GB"
+    memory: memory + " GB"
     cpu: cpu
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
@@ -209,7 +209,7 @@ task assembled_reads_percent {
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/samtools:1.17"
     Int disk_size = 100
     Int cpu = 2
-    Int mem = 8
+    Int memory = 8
   }
   command <<<
     # Count the total number of reads
@@ -228,7 +228,7 @@ task assembled_reads_percent {
   }
   runtime {
     docker: "~{docker}"
-    memory: mem + " GB"
+    memory: memory + " GB"
     cpu: cpu
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"

@@ -71,15 +71,15 @@ workflow theiacov_illumina_pe {
       organism = organism,
       reference_gff_file = reference_gff,
       reference_genome = reference_genome,
-      genome_length = genome_length,
-      nextclade_ds_reference = nextclade_dataset_reference,
-      nextclade_ds_tag = nextclade_dataset_tag,
-      nextclade_ds_name = nextclade_dataset_name,     
+      genome_length_input = genome_length,
+      nextclade_dataset_reference_input = nextclade_dataset_reference,
+      nextclade_dataset_tag_input = nextclade_dataset_tag,
+      nextclade_dataset_name_input = nextclade_dataset_name,     
       vadr_max_length = vadr_max_length,
       vadr_options = vadr_options,
       primer_bed_file = primer_bed,
       pangolin_docker_image = pangolin_docker_image,
-      kraken_target_org = target_organism
+      kraken_target_organism_input = target_organism
   }
   call screen.check_reads as raw_check_reads {
     input:
@@ -181,15 +181,15 @@ workflow theiacov_illumina_pe {
               # including these to block from terra
               reference_gff_file = reference_gff,
               reference_genome = reference_genome,
-              genome_length = genome_length,
-              nextclade_ds_reference = nextclade_dataset_reference,
-              nextclade_ds_tag = nextclade_dataset_tag,
-              nextclade_ds_name = nextclade_dataset_name,     
+              genome_length_input = genome_length,
+              nextclade_dataset_reference_input = nextclade_dataset_reference,
+              nextclade_dataset_tag_input = nextclade_dataset_tag,
+              nextclade_dataset_name_input = nextclade_dataset_name,     
               vadr_max_length = vadr_max_length,
               vadr_options = vadr_options,
               primer_bed_file = primer_bed,
               pangolin_docker_image = pangolin_docker_image,
-              kraken_target_org = target_organism,
+              kraken_target_organism_input = target_organism,
               hiv_primer_version = "N/A"
           }
           call set_organism_defaults.organism_parameters as set_flu_ha_nextclade_values {
@@ -200,15 +200,15 @@ workflow theiacov_illumina_pe {
               # including these to block from terra
               reference_gff_file = reference_gff,
               reference_genome = reference_genome,
-              genome_length = genome_length,
-              nextclade_ds_reference = nextclade_dataset_reference,
-              nextclade_ds_tag = nextclade_dataset_tag,
-              nextclade_ds_name = nextclade_dataset_name,     
+              genome_length_input = genome_length,
+              nextclade_dataset_reference_input = nextclade_dataset_reference,
+              nextclade_dataset_tag_input = nextclade_dataset_tag,
+              nextclade_dataset_name_input = nextclade_dataset_name,     
               vadr_max_length = vadr_max_length,
               vadr_options = vadr_options,
               primer_bed_file = primer_bed,
               pangolin_docker_image = pangolin_docker_image,
-              kraken_target_org = target_organism,
+              kraken_target_organism_input = target_organism,
               hiv_primer_version = "N/A"
           }
           # these are necessary because these are optional values and cannot be directly compared in before the nextclade task. checking for variable definition can be done though, which is why we create variables here
@@ -234,7 +234,7 @@ workflow theiacov_illumina_pe {
         input:
           assembly_fasta =  select_first([ivar_consensus.assembly_fasta,irma.irma_assembly_fasta]),
           reference_genome = organism_parameters.reference,
-          genome_length = organism_parameters.genome_len
+          genome_length = organism_parameters.genome_length
       }
       # run organism-specific typing
       if (organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "sars-cov-2" || (organism_parameters.standardized_organism == "flu" && defined(irma.seg_ha_assembly) && ! defined(do_not_run_flu_ha_nextclade))) { 
@@ -316,19 +316,13 @@ workflow theiacov_illumina_pe {
             num_reads_clean1 = read_QC_trim.fastq_scan_clean1,
             num_reads_clean2 = read_QC_trim.fastq_scan_clean2,
             kraken_human = read_QC_trim.kraken_human,
-            # kraken_sc2 = read_QC_trim.kraken_sc2,
-            # kraken_target_organism = read_QC_trim.kraken_target_organism,
             kraken_human_dehosted = read_QC_trim.kraken_human_dehosted,
-            # kraken_sc2_dehosted = read_QC_trim.kraken_sc2_dehosted,
-            # kraken_target_organism_dehosted =read_QC_trim.kraken_target_organism_dehosted,
             meanbaseq_trim = ivar_consensus.meanbaseq_trim,
             assembly_mean_coverage = ivar_consensus.assembly_mean_coverage,
             number_N = consensus_qc.number_N,
             assembly_length_unambiguous = consensus_qc.number_ATCG,
             number_Degenerate =  consensus_qc.number_Degenerate,
             percent_reference_coverage =  consensus_qc.percent_reference_coverage,
-            # sc2_s_gene_mean_coverage = sc2_gene_coverage.sc2_s_gene_depth,
-            # sc2_s_gene_percent_coverage = sc2_gene_coverage.sc2_s_gene_percent_coverage,
             vadr_num_alerts = vadr.num_alerts
         }
       }

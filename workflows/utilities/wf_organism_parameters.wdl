@@ -18,12 +18,12 @@ workflow organism_parameters {
     File? primer_bed_file
     File? reference_gff_file
     File? reference_genome
-    Int? genome_length
+    Int? genome_length_input
 
     # set default nextclade information as NA
-    String? nextclade_ds_reference
-    String? nextclade_ds_tag
-    String? nextclade_ds_name
+    String? nextclade_dataset_reference_input
+    String? nextclade_dataset_tag_input
+    String? nextclade_dataset_name_input
 
     # vadr parameters
     Int? vadr_max_length
@@ -33,7 +33,7 @@ workflow organism_parameters {
     String? pangolin_docker_image
 
     # kraken parameters
-    String? kraken_target_org
+    String? kraken_target_organism_input
   }
   if (organism == "sars-cov-2") {
     String sc2_org_name = "sars-cov-2"
@@ -52,7 +52,7 @@ workflow organism_parameters {
     String mpox_nextclade_ds_tag = "2023-08-01T12:00:00Z"
     String mpox_nextclade_ref = "pseudo_ON563414"
     String mpox_nextclade_ds_name = "hMPXV_B1"
-    String mpox_kraken_target_org = "Monkeypox virus"
+    String mpox_kraken_target_organism = "Monkeypox virus"
     String mpox_primer_bed_file = "gs://theiagen-public-files/terra/mpxv-files/MPXV.primer.bed"
     String mpox_reference_gff_file = "gs://theiagen-public-files/terra/mpxv-files/Mpox-MT903345.1.reference.gff3"
     String mpox_vadr_options = "--glsearch -s -r --nomisc --mkey mpxv --r_lowsimok --r_lowsimxd 100 --r_lowsimxl 2000 --alt_pass discontn,dupregin --out_allfasta --minimap2 --s_overhang 150"
@@ -62,7 +62,7 @@ workflow organism_parameters {
   if (organism == "WNV" || organism == "wnv" || organism == "West Nile virus") {
     String wnv_org_name = "WNV"
     String wnv_reference_genome = "gs://theiagen-public-files/terra/theiacov-files/WNV/NC_009942.1_wnv_L1.fasta"
-    String wnv_kraken_target_org = "West Nile virus"
+    String wnv_kraken_target_organism = "West Nile virus"
     String wnv_primer_bed_file = "gs://theiagen-public-files/terra/theiacov-files/WNV/WNV-L1_primer.bed"
     Int wnv_genome_len = 11000
     String wnv_vadr_options = "--mkey flavi --mdir /opt/vadr/vadr-models-flavi/ --nomisc --noprotid --out_allfasta"    
@@ -158,7 +158,7 @@ workflow organism_parameters {
     String hiv_v1_reference_genome = "gs://theiagen-public-files/terra/hivgc-files/NC_001802.1.fasta"
     String hiv_v1_reference_gff = "gs://theiagen-public-files/terra/hivgc-files/NC_001802.1.gff3"
     String hiv_v1_primer_bed = "gs://theiagen-public-files/terra/hivgc-files/HIV-1_v1.0.primer.hyphen.bed"
-    String hiv_v1_target_org = "Human immunodeficiency virus 1"
+    String hiv_v1_target_organism = "Human immunodeficiency virus 1"
     Int hiv_v1_genome_len = 9181 
   }
   if (organism == "HIV" && hiv_primer_version == "v2") {
@@ -166,7 +166,7 @@ workflow organism_parameters {
     String hiv_v2_reference_genome = "gs://theiagen-public-files/terra/hivgc-files/AY228557.1.headerchanged.fasta"
     String hiv_v2_reference_gff = "gs://theiagen-public-files/terra/hivgc-files/AY228557.1.gff3"
     String hiv_v2_primer_bed = "gs://theiagen-public-files/terra/hivgc-files/HIV-1_v2.0.primer.hyphen400.1.bed"
-    String hiv_v2_target_org = "Human immunodeficiency virus 1"
+    String hiv_v2_target_organism = "Human immunodeficiency virus 1"
     Int hiv_v2_genome_len = 9840
   }
   output {
@@ -177,17 +177,17 @@ workflow organism_parameters {
     rsv_a_reference_genome, rsv_b_reference_genome, hiv_v1_reference_genome, hiv_v2_reference_genome, "gs://theiagen-public-files/terra/theiacov-files/empty.fasta"])
     File primer_bed = select_first([primer_bed_file, mpox_primer_bed_file, wnv_primer_bed_file, hiv_v1_primer_bed, hiv_v2_primer_bed, "gs://theiagen-public-files/terra/theiacov-files/empty.bed"])
     File reference_gff = select_first([reference_gff_file, mpox_reference_gff_file, hiv_v1_reference_gff, hiv_v2_reference_gff, "gs://theiagen-public-files/terra/theiacov-files/empty.gff3"])
-    Int genome_len = select_first([genome_length, sc2_genome_len, mpox_genome_len, wnv_genome_len, flu_genome_len, rsv_a_genome_len, rsv_b_genome_len, hiv_v1_genome_len, hiv_v2_genome_len])
+    Int genome_length = select_first([genome_length_input, sc2_genome_len, mpox_genome_len, wnv_genome_len, flu_genome_len, rsv_a_genome_len, rsv_b_genome_len, hiv_v1_genome_len, hiv_v2_genome_len])
     # nextclade information
-    String nextclade_dataset_tag = select_first([nextclade_ds_tag, sc2_nextclade_ds_tag, mpox_nextclade_ds_tag, wnv_nextclade_ds_tag, h1n1_ha_nextclade_ds_tag, h3n2_ha_nextclade_ds_tag, vic_ha_nextclade_ds_tag, yam_ha_nextclade_ds_tag, h1n1_na_nextclade_ds_tag, h3n2_na_nextclade_ds_tag, vic_na_nextclade_ds_tag, yam_na_nextclade_ds_tag, rsv_a_nextclade_ds_tag, rsv_b_nextclade_ds_tag, "NA"])
-    String nextclade_dataset_reference = select_first([nextclade_ds_reference, sc2_nextclade_ref, mpox_nextclade_ref, wnv_nextclade_ref, h1n1_ha_nextclade_ref, h3n2_ha_nextclade_ref, vic_ha_nextclade_ref, yam_ha_nextclade_ref, h1n1_na_nextclade_ref, h3n2_na_nextclade_ref, vic_na_nextclade_ref, yam_na_nextclade_ref, rsv_a_nextclade_ref, rsv_b_nextclade_ref, "NA"])
-    String nextclade_dataset_name = select_first([nextclade_ds_name, sc2_nextclade_ds_name, mpox_nextclade_ds_name, wnv_nextclade_ds_name, h1n1_ha_nextclade_ds_name, h3n2_ha_nextclade_ds_name, vic_ha_nextclade_ds_name, yam_ha_nextclade_ds_name, h1n1_na_nextclade_ds_name, h3n2_na_nextclade_ds_name, vic_na_nextclade_ds_name, yam_na_nextclade_ds_name, rsv_a_nextclade_ds_name, rsv_b_nextclade_ds_name, "NA"])
+    String nextclade_dataset_tag = select_first([nextclade_dataset_tag_input, sc2_nextclade_ds_tag, mpox_nextclade_ds_tag, wnv_nextclade_ds_tag, h1n1_ha_nextclade_ds_tag, h3n2_ha_nextclade_ds_tag, vic_ha_nextclade_ds_tag, yam_ha_nextclade_ds_tag, h1n1_na_nextclade_ds_tag, h3n2_na_nextclade_ds_tag, vic_na_nextclade_ds_tag, yam_na_nextclade_ds_tag, rsv_a_nextclade_ds_tag, rsv_b_nextclade_ds_tag, "NA"])
+    String nextclade_dataset_reference = select_first([nextclade_dataset_reference_input, sc2_nextclade_ref, mpox_nextclade_ref, wnv_nextclade_ref, h1n1_ha_nextclade_ref, h3n2_ha_nextclade_ref, vic_ha_nextclade_ref, yam_ha_nextclade_ref, h1n1_na_nextclade_ref, h3n2_na_nextclade_ref, vic_na_nextclade_ref, yam_na_nextclade_ref, rsv_a_nextclade_ref, rsv_b_nextclade_ref, "NA"])
+    String nextclade_dataset_name = select_first([nextclade_dataset_name_input, sc2_nextclade_ds_name, mpox_nextclade_ds_name, wnv_nextclade_ds_name, h1n1_ha_nextclade_ds_name, h3n2_ha_nextclade_ds_name, vic_ha_nextclade_ds_name, yam_ha_nextclade_ds_name, h1n1_na_nextclade_ds_name, h3n2_na_nextclade_ds_name, vic_na_nextclade_ds_name, yam_na_nextclade_ds_name, rsv_a_nextclade_ds_name, rsv_b_nextclade_ds_name, "NA"])
     # pangolin options
     String pangolin_docker = select_first([pangolin_docker_image, sc2_pangolin_docker, ""])
     # vadr options
     String vadr_opts = select_first([vadr_options, sc2_vadr_options, mpox_vadr_options, wnv_vadr_options, flu_vadr_options, rsv_a_vadr_options, rsv_b_vadr_options, "NA"])
     Int vadr_maxlen = select_first([vadr_max_length, sc2_vadr_max_length, mpox_vadr_max_length, wnv_vadr_max_length, flu_vadr_max_length, rsv_a_vadr_max_length, rsv_b_vadr_max_length, 0])
     # kraken options
-    String kraken_target_organism = select_first([kraken_target_org, mpox_kraken_target_org, wnv_kraken_target_org, hiv_v1_target_org, hiv_v2_target_org, ""])
+    String kraken_target_organism = select_first([kraken_target_organism_input, mpox_kraken_target_organism, wnv_kraken_target_organism, hiv_v1_target_organism, hiv_v2_target_organism, ""])
   }
 }

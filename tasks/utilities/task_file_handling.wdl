@@ -6,6 +6,8 @@ task cat_files {
     String concatenated_file_name
     String docker_image = "us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1"
     Boolean skip_extra_headers = false
+    Int memory = 8
+    Int cpu = 2
   }
   meta {
     # added so that call caching is always turned off
@@ -34,8 +36,8 @@ task cat_files {
   }
   runtime {
     docker: "~{docker_image}"
-    memory: "8 GB"
-    cpu: 2
+    memory: memory + " GB"
+    cpu: cpu
     disks: "local-disk 100 SSD"
     preemptible: 0
   }
@@ -47,6 +49,8 @@ task cat_files_fasta {
     Array[String] headers
     String concatenated_file_name
     String docker_image = "us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1"
+    Int memory = 8
+    Int cpu = 2
   }
   meta {
     # added so that call caching is always turned off
@@ -70,8 +74,8 @@ task cat_files_fasta {
   }
   runtime {
     docker: "~{docker_image}"
-    memory: "8 GB"
-    cpu: 2
+    memory: memory + " GB"
+    cpu: cpu
     disks: "local-disk 100 SSD"
     preemptible: 0
   }
@@ -82,6 +86,8 @@ task zip_files {
     Array[File] files_to_zip
     String zipped_file_name
     String docker_image = "us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1"
+    Int memory = 8
+    Int cpu = 2
   }
   meta {
     # added so that call caching is always turned off
@@ -104,8 +110,8 @@ task zip_files {
   }
   runtime {
       docker: "~{docker_image}"
-      memory: "8 GB"
-      cpu: 2
+      memory: memory + " GB"
+      cpu: cpu
       disks: "local-disk 100 SSD"
       preemptible: 0
   }
@@ -115,8 +121,8 @@ task transfer_files {
   input {
     Array[String] files_to_transfer
     String target_bucket
-    Int cpus = 4
-    Int mem_size_gb = 8
+    Int cpu = 4
+    Int memory = 8
     String docker_image = "us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1"
   }
   meta {
@@ -136,8 +142,8 @@ task transfer_files {
   }
   runtime {
       docker: "~{docker_image}"
-      memory: "~{mem_size_gb} GB"
-      cpu: cpus
+      memory: "~{memory} GB"
+      cpu: cpu
       disks: "local-disk 100 SSD"
       preemptible: 0
   }

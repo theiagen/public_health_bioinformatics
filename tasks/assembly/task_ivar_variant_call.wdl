@@ -14,10 +14,12 @@ task variant_call {
     Float? variant_min_freq 
     Int? variant_min_depth 
     Int disk_size = 100
+    Int memory = 8
+    Int cpu = 2
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/ivar:1.3.1-titan"
   }
   command <<<
-    # date and version control
-    date | tee DATE
+    # version control
     ivar version | head -n1 | tee IVAR_VERSION
     samtools --version | head -n1 | tee SAMTOOLS_VERSION
 
@@ -90,17 +92,16 @@ task variant_call {
   >>>
   output {
     Int variant_num = read_string("VARIANT_NUM")
-    String  variant_proportion_intermediate = read_string("PROPORTION_INTERMEDIATE")
+    String variant_proportion_intermediate = read_string("PROPORTION_INTERMEDIATE")
     File sample_variants_tsv = "~{samplename}.variants.tsv"
     File sample_variants_vcf = "~{samplename}.variants.vcf"
     String ivar_version = read_string("IVAR_VERSION")
     String samtools_version = read_string("SAMTOOLS_VERSION")
-    String pipeline_date = read_string("DATE")
   }
   runtime {
-    docker: "us-docker.pkg.dev/general-theiagen/staphb/ivar:1.3.1-titan"
-    memory: "8 GB"
-    cpu: 2
+    docker: docker
+    memory: memory + " GB"
+    cpu: cpu
     disks:  "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB" # TES
     preemptible: 0

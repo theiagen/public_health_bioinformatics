@@ -9,9 +9,9 @@ workflow kraken2_se_wf {
     description: "Classify single-end reads using Kraken2"
   }
   input {
-    String  samplename
-    File    read1
-    File    kraken2_db
+    String samplename
+    File read1
+    File kraken2_db
   }
   call kraken2.kraken2_standalone as kraken2_se {
     input:

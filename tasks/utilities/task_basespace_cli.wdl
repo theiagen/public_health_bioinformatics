@@ -9,7 +9,7 @@ task fetch_bs {
     String api_server
     String access_token
     
-    Int mem_size_gb = 8
+    Int memory = 8
     Int cpu = 2
     Int disk_size = 100
     Int preemptible = 1
@@ -98,7 +98,7 @@ task fetch_bs {
   }
   runtime {
     docker: docker
-    memory: "~{mem_size_gb} GB"
+    memory: "~{memory} GB"
     cpu: cpu
     disks: "local-disk ~{disk_size} SSD"
     preemptible: preemptible

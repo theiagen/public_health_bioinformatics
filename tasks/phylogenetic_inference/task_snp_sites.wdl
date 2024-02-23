@@ -12,7 +12,7 @@ task snp_sites {
     Boolean output_monomorphic = false
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/snp-sites:2.5.1"
     Int disk_size = 100
-    Int cpus = 1
+    Int cpu = 1
     Int memory = 4
   }
   command <<< 
@@ -62,7 +62,7 @@ task snp_sites {
   runtime {
     docker: docker
     memory: memory + " GB"
-    cpu :  cpus
+    cpu :  cpu
     disks:  "local-disk " + disk_size + " HDD"
     disk: disk_size + " GB" # TES
     preemptible: 0

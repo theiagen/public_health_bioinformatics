@@ -52,10 +52,10 @@ workflow theiacov_fasta {
       flu_segment = flu_segment,
       flu_subtype = select_first([flu_subtype, abricate_subtype, "N/A"]),
       reference_genome = reference_genome,
-      genome_length = genome_length,
-      nextclade_ds_reference = nextclade_dataset_reference,
-      nextclade_ds_tag = nextclade_dataset_tag,
-      nextclade_ds_name = nextclade_dataset_name,
+      genome_length_input = genome_length,
+      nextclade_dataset_reference_input = nextclade_dataset_reference,
+      nextclade_dataset_tag_input = nextclade_dataset_tag,
+      nextclade_dataset_name_input = nextclade_dataset_name,
       vadr_max_length = maxlen,
       vadr_options = vadr_opts
   }
@@ -63,7 +63,7 @@ workflow theiacov_fasta {
     input:
       assembly_fasta = assembly_fasta,
       reference_genome = organism_parameters.reference,
-      genome_length = organism_parameters.genome_len
+      genome_length = organism_parameters.genome_length
   }
   if (organism_parameters.standardized_organism == "sars-cov-2") {
     call pangolin.pangolin4 {

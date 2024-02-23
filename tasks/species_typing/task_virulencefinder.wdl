@@ -9,7 +9,7 @@ task virulencefinder {
     String samplename
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/virulencefinder:2.0.4"
     Int disk_size = 100
-    Int mem = 8
+    Int memory = 8
     Int cpu = 2
     Float? coverage_threshold
     Float? identity_threshold
@@ -77,7 +77,7 @@ task virulencefinder {
   }
   runtime {
     docker: "~{docker}"
-    memory: mem + " GB"
+    memory: memory + " GB"
     cpu: cpu
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"

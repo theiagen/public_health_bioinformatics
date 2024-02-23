@@ -10,6 +10,7 @@ task read_filtering {
     Int max_length = 700
     Int cpu = 8
     Int disk_size = 100
+    Int memory = 16
   }
   command <<<
     # date and version control
@@ -25,7 +26,7 @@ task read_filtering {
   }
   runtime {
     docker: docker
-    memory: "16 GB"
+    memory: memory + " GB"
     cpu: cpu
     disks:  "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"

@@ -13,6 +13,7 @@ task aa_subs {
     String docker = "us-docker.pkg.dev/general-theiagen/broadinstitute/viral-core:2.1.33"
     Int disk_size = 100
     Int cpu = 2
+    Int memory = 8
   }
   command <<<
   if [[ "~{protein_name}" == "NA" && "~{subtype}" == "H1N1" ]] ; then
@@ -111,7 +112,7 @@ task aa_subs {
   }
   runtime {
     docker: "~{docker}"
-    memory: "8 GB"
+    memory: memory + " GB"
     cpu: cpu
     disks:  "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
@@ -127,6 +128,8 @@ task antiviral_mutations_parser {
     File mutations_tsv
     String docker = "python:slim"
     Int disk_size = 50
+    Int cpu = 2
+    Int memory = 4
     # User defined aa substitutions
     String? antiviral_aa_subs
   }
@@ -226,8 +229,8 @@ task antiviral_mutations_parser {
   >>>
   runtime {
     docker: "~{docker}"
-    memory: "4 GB"
-    cpu: 2
+    memory: memory + " GB"
+    cpu: cpu
     disks:  "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
     dx_instance_type: "mem1_ssd1_v2_x2"
@@ -263,6 +266,8 @@ task serialization {
     Array[String] flu_zanamivir_resistance_array = [""]
 
     Int disk_size = 10
+    Int memory = 4
+    Int cpu = 2
     String docker = "python:slim"
   }
   command <<<
@@ -303,8 +308,8 @@ task serialization {
   }
   runtime {
     docker: "~{docker}"
-    memory: "4 GB"
-    cpu: 2
+    memory: memory + " GB"
+    cpu: cpu
     disks:  "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
     dx_instance_type: "mem1_ssd1_v2_x2"

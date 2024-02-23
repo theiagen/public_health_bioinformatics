@@ -7,7 +7,6 @@ import "../../tasks/utilities/task_file_handling.wdl" as concatenate
 import "../../tasks/utilities/task_theiacov_fasta_batch.wdl" as theiacov_fasta_wrangling_task
 import "../../workflows/utilities/wf_organism_parameters.wdl" as set_organism_defaults
 
-
 workflow theiacov_fasta_batch {
   meta {
     description: "TheiaCoV_FASTA for multiple samples"
@@ -31,9 +30,9 @@ workflow theiacov_fasta_batch {
   call set_organism_defaults.organism_parameters {
     input:
       organism = organism,
-      nextclade_ds_reference = nextclade_dataset_reference,
-      nextclade_ds_tag = nextclade_dataset_tag,
-      nextclade_ds_name = nextclade_dataset_name,
+      nextclade_dataset_reference_input = nextclade_dataset_reference,
+      nextclade_dataset_tag_input = nextclade_dataset_tag,
+      nextclade_dataset_name_input = nextclade_dataset_name,
       pangolin_docker_image = pangolin_docker
   }
   call concatenate.cat_files_fasta {

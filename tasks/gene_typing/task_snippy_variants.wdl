@@ -7,8 +7,9 @@ task snippy_variants {
     File? read2
     String samplename
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/snippy:4.6.0"
-    Int cpus = 8
+    Int cpu = 8
     Int memory = 32
+    Int disk_size = 100
     # Paramters 
     # --map_qual: Minimum read mapping quality to consider (default '60')
     # --base_quality: Minimum base quality to consider (default '13')
@@ -38,7 +39,7 @@ task snippy_variants {
       --reference ~{reference_genome_file} \
       --outdir ~{samplename} \
       ${reads} \
-      --cpus ~{cpus} \
+      --cpus ~{cpu} \
       --ram ~{memory} \
       --prefix ~{samplename} \
       ~{'--mapqual ' + map_qual} \
@@ -65,8 +66,8 @@ task snippy_variants {
   runtime {
       docker: "~{docker}"
       memory: "~{memory} GB"
-      cpu: "~{cpus}"
-      disks: "local-disk 100 SSD"
+      cpu: "~{cpu}"
+      disks: "local-disk " + disk_size + " SSD"
       preemptible: 0
       maxRetries: 3
   }

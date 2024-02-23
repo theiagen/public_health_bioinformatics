@@ -11,6 +11,7 @@ task abricate {
     Int? minid
     Int? mincov
     Int cpu = 2
+    Int memory = 8
     Int disk_size = 100
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/abricate:1.0.1-abaum-plasmid"
   }
@@ -47,7 +48,7 @@ task abricate {
     String abricate_docker = docker 
   }
   runtime {
-    memory: "8 GB"
+    memory: memory + " GB"
     cpu: cpu
     docker: docker
     disks:  "local-disk " + disk_size + " SSD"

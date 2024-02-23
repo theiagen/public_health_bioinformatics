@@ -5,6 +5,7 @@ task readlength {
     File read1
     File read2
     Int memory = 8
+    Int cpu = 4
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/bbtools:38.76"
     Int disk_size = 100
   }
@@ -27,7 +28,7 @@ task readlength {
   runtime {
     docker: "~{docker}"
     memory: "~{memory} GB"
-    cpu: 4
+    cpu: cpu
     disks:  "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB" # TES
     preemptible: 0

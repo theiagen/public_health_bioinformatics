@@ -12,6 +12,7 @@ task trimmomatic_pe {
     Int threads = 4
     String? trimmomatic_args
     Int disk_size = 100
+    Int memory = 8
   }
   command <<<
     # date and version control
@@ -37,8 +38,8 @@ task trimmomatic_pe {
   }
   runtime {
     docker: "~{docker}"
-    memory: "8 GB"
-    cpu: 4
+    memory: memory + " GB"
+    cpu: threads
     disks:  "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB" # TES
     preemptible: 0
@@ -57,6 +58,7 @@ task trimmomatic_se {
     Int threads = 4
     String? trimmomatic_args
     Int disk_size = 100
+    Int memory = 8
   }
   command <<<
     # date and version control
@@ -80,8 +82,8 @@ task trimmomatic_se {
   }
   runtime {
     docker: "~{docker}"
-    memory: "8 GB"
-    cpu: 4
+    memory: memory + " GB"
+    cpu: threads
     disks:  "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB" # TES
     preemptible: 0

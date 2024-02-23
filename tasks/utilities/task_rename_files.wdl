@@ -11,7 +11,7 @@ task rename_PE_files {
     String docker = "us-docker.pkg.dev/general-theiagen/ubuntu/ubuntu:jammy-20230816"
     Int disk_size = 100
     Int cpu = 2
-    Int mem = 2
+    Int memory = 2
   }
   command <<<
     # rename forward read
@@ -37,7 +37,7 @@ task rename_PE_files {
   }
   runtime {
     docker: "~{docker}"
-    memory: mem + " GB"
+    memory: memory + " GB"
     cpu: cpu
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
@@ -56,7 +56,7 @@ task rename_SE_files {
     String docker = "us-docker.pkg.dev/general-theiagen/ubuntu/ubuntu:jammy-20230816"
     Int disk_size = 100
     Int cpu = 2
-    Int mem = 2
+    Int memory = 2
   }
   command <<<
     # rename forward read
@@ -73,7 +73,7 @@ task rename_SE_files {
   }
   runtime {
     docker: "~{docker}"
-    memory: mem + " GB"
+    memory: memory + " GB"
     cpu: cpu
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"

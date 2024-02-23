@@ -10,7 +10,7 @@ task shigatyper {
     String samplename
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/shigatyper:2.0.5"
     Int disk_size = 100
-    Int cpus = 4
+    Int cpu = 4
     Int memory = 16
     Boolean read1_is_ont = false
   }
@@ -65,7 +65,7 @@ task shigatyper {
   runtime {
     docker: "~{docker}"
     memory: "~{memory} GB"
-    cpu: cpus
+    cpu: cpu
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
     maxRetries: 3

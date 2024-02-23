@@ -6,7 +6,7 @@ task fastq_dl_sra {
     String sra_accession
     String docker = "us-docker.pkg.dev/general-theiagen/biocontainers/fastq-dl:2.0.4--pyhdfd78af_0"
     Int disk_size = 100
-    Int cpus = 2
+    Int cpu = 2
     Int memory = 8
     # default set to force the use of SRA instead of ENA due to SRA Lite FASTQ file format issues
     String fastq_dl_opts = "--provider sra"
@@ -26,7 +26,7 @@ task fastq_dl_sra {
     fastq-dl \
       --verbose \
       -a ~{sra_accession} \
-      --cpus ~{cpus} \
+      --cpus cpu \
       --prefix ~{sra_accession} \
       ~{fastq_dl_opts}
 
@@ -48,7 +48,7 @@ task fastq_dl_sra {
   runtime {
     docker: docker
     memory: memory + " GB"
-    cpu: cpus
+    cpu: cpu
     disks:  "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB" # TES
     preemptible:  1

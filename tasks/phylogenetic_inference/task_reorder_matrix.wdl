@@ -5,8 +5,12 @@ task reorder_matrix {
     File input_tree
     File matrix
     String cluster_name
-    Int disk_size = 100
     Boolean midpoint_root_tree
+    
+    Int disk_size = 100
+    Int cpu = 2
+    Int memory = 2
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/mykrobe:0.12.1" # used because it contains both biopython and pandas
   }
   command <<<
     # removing any "_contigs" suffixes from the tree and matrix
@@ -57,12 +61,12 @@ task reorder_matrix {
     File tree = "~{cluster_name}_tree.nwk"
   }
   runtime {
-    docker: "us-docker.pkg.dev/general-theiagen/staphb/mykrobe:0.12.1" # used because it contains both biopython and pandas
-    memory: "2 GB"
-    cpu: 2
+    docker: docker
+    memory: memory + " GB"
+    cpu: cpu
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
-   # maxRetries: 3
+    maxRetries: 3
     preemptible: 0
   }
 }

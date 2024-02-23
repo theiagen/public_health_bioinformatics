@@ -10,8 +10,10 @@ task augur_tree {
     String? tree_builder_args # additional tree builder arguments
     Boolean override_default_args = false # override default tree builder args instead of augmenting them
 
-    Int cpus = 64
+    Int cpu = 64
+    Int memory = 32
     Int disk_size = 750
+    String docker = "us-docker.pkg.dev/general-theiagen/biocontainers/augur:22.0.2--pyhdfd78af_0"
   }
   command <<<
     # capture version information
@@ -32,9 +34,9 @@ task augur_tree {
     String augur_version = read_string("VERSION")
   }
   runtime {
-    docker: "us-docker.pkg.dev/general-theiagen/biocontainers/augur:22.0.2--pyhdfd78af_0"
-    memory: "32 GB"
-    cpu: cpus
+    docker: docker
+    memory: memory + " GB"
+    cpu: cpu
     disks: "local-disk " + disk_size + " LOCAL"
     disk: disk_size + " GB" # TES
     dx_instance_type: "mem1_ssd1_v2_x36"

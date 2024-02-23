@@ -7,6 +7,9 @@ task primer_trim {
     File primer_bed
     Boolean keep_noprimer_reads = true
     Int disk_size = 100
+    Int memory = 8
+    Int cpu = 2
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/ivar:1.3.1-titan"
   }
   String primer_name = basename(primer_bed)
   command <<<
@@ -45,9 +48,9 @@ task primer_trim {
     String primer_bed_name = read_string("PRIMER_NAME")
   }
   runtime {
-    docker: "us-docker.pkg.dev/general-theiagen/staphb/ivar:1.3.1-titan"
-    memory:"8 GB"
-    cpu: 2
+    docker: docker
+    memory: memory + " GB"
+    cpu: cpu
     disks:  "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB" # TES
     preemptible: 0

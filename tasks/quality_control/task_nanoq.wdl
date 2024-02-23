@@ -10,6 +10,8 @@ task nanoq {
     Int min_read_length = 500
     Int max_read_qual = 40
     Int min_read_qual = 10
+    Int memory = 2
+    Int cpu = 2
   }
   command <<<
     # capture date and version
@@ -22,9 +24,9 @@ task nanoq {
     String version = read_string("VERSION")
   }
   runtime {
-    docker:  "~{docker}"
-    memory:  "2 GB"
-    cpu:   2
+    docker: "~{docker}"
+    memory: memory + " GB"
+    cpu: cpu
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
     maxRetries: 3

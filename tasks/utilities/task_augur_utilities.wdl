@@ -34,7 +34,7 @@ task tsv_join {
     String id_col
     String out_basename = "merged"
     String out_suffix = ".tsv"
-    Int mem = 7
+    Int memory = 7
     Int disk_size = 100
   }
   command <<< 
@@ -134,7 +134,7 @@ task tsv_join {
     File out_tsv = "~{out_basename}~{out_suffix}"
   }
   runtime {
-    memory: "~{mem} GB"
+    memory: "~{memory} GB"
     cpu: 2
     docker: "us-docker.pkg.dev/general-theiagen/broadinstitute/viral-core:2.1.33"
     disks: "local-disk " + disk_size + " HDD"

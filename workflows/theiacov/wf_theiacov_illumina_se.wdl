@@ -63,10 +63,10 @@ workflow theiacov_illumina_se {
       organism = organism,
       reference_gff_file = reference_gff,
       reference_genome = reference_genome,
-      genome_length = genome_length,
-      nextclade_ds_reference = nextclade_dataset_reference,
-      nextclade_ds_tag = nextclade_dataset_tag,
-      nextclade_ds_name = nextclade_dataset_name,     
+      genome_length_input = genome_length,
+      nextclade_dataset_reference_input = nextclade_dataset_reference,
+      nextclade_dataset_tag_input = nextclade_dataset_tag,
+      nextclade_dataset_name_input = nextclade_dataset_name,     
       vadr_max_length = vadr_max_length,
       vadr_options = vadr_options,
       primer_bed_file = primer_bed,
@@ -178,19 +178,12 @@ workflow theiacov_illumina_se {
             num_reads_raw1 = read_QC_trim.fastq_scan_raw_number_reads,
             num_reads_clean1 = read_QC_trim.fastq_scan_clean_number_reads,
             kraken_human = read_QC_trim.kraken_human,
-            # kraken_sc2 = read_QC_trim.kraken_sc2,
-            # kraken_target_org = read_QC_trim.kraken_target_org,
-            # kraken_human_dehosted = read_QC_trim.kraken_human_dehosted,
-            # kraken_sc2_dehosted = read_QC_trim.kraken_sc2_dehosted,
-            # kraken_target_org_dehosted =read_QC_trim.kraken_target_org_dehosted,
             meanbaseq_trim = ivar_consensus.meanbaseq_trim,
             assembly_mean_coverage = ivar_consensus.assembly_mean_coverage,
             number_N = consensus_qc.number_N,
             assembly_length_unambiguous = consensus_qc.number_ATCG,
             number_Degenerate =  consensus_qc.number_Degenerate,
             percent_reference_coverage =  consensus_qc.percent_reference_coverage,
-            # sc2_s_gene_mean_coverage = sc2_gene_coverage.sc2_s_gene_depth,
-            # sc2_s_gene_percent_coverage = sc2_gene_coverage.sc2_s_gene_percent_coverage,
             vadr_num_alerts = vadr.num_alerts
         }
       }
@@ -226,8 +219,8 @@ workflow theiacov_illumina_se {
     # Read QC - kraken outputs
     Float? kraken_human = read_QC_trim.kraken_human
     Float? kraken_sc2 = read_QC_trim.kraken_sc2
-    String? kraken_target_org = read_QC_trim.kraken_target_organism
-    String? kraken_target_org_name = read_QC_trim.kraken_target_organism_name
+    String? kraken_target_organism = read_QC_trim.kraken_target_organism
+    String? kraken_target_organism_name = read_QC_trim.kraken_target_organism_name
     String? kraken_version = read_QC_trim.kraken_version
     File? kraken_report = read_QC_trim.kraken_report
     # Read Alignment - bwa outputs

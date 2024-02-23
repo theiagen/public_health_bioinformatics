@@ -10,8 +10,8 @@ task terra_to_bigquery {
     Array[String]  output_filename_prefix
     String  docker = "us-docker.pkg.dev/general-theiagen/broadinstitute/terra-tools:tqdm"
     Int page_size = 5000
-    Int mem_size_gb = 32
-    Int CPUs = 8
+    Int memory = 32
+    Int cpu = 8
     Int disk_size = 100
     String sleep_time = "15m"
   }
@@ -295,8 +295,8 @@ task terra_to_bigquery {
   >>>
   runtime {
     docker: docker
-    memory: "~{mem_size_gb} GB"
-    cpu: CPUs
+    memory: "~{memory} GB"
+    cpu: cpu
     disks: "local-disk ~{disk_size} SSD"
   }
   output {

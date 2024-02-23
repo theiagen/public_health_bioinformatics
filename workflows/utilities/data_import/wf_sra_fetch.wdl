@@ -8,7 +8,7 @@ workflow fetch_sra_to_fastq {
     String? docker
     Int? disk_size
     Int? memory
-    Int? cpus
+    Int? cpu
     String? fastq_dl_opts
   }
   call sra_fetch.fastq_dl_sra {
@@ -16,7 +16,7 @@ workflow fetch_sra_to_fastq {
       sra_accession = sra_accession,
       docker = docker,
       disk_size = disk_size,
-      cpus = cpus,
+      cpu = cpu,
       memory = memory,
       fastq_dl_opts = fastq_dl_opts
   }
