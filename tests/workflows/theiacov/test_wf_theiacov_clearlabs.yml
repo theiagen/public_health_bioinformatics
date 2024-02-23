@@ -19,7 +19,7 @@
     - path: miniwdl_run/call-consensus/command
       md5sum: a8e200703dedf732b45dd92b0af15f1c
     - path: miniwdl_run/call-consensus/inputs.json
-      contains: ["read1_clean"samplename", "fastq"]
+      contains: ["read1_clean", "samplename", "fastq"]
     - path: miniwdl_run/call-consensus/outputs.json
       contains: ["consensus", "medaka_pass_vcf", "trim_sorted_bam"]
     - path: miniwdl_run/call-consensus/stderr.txt
