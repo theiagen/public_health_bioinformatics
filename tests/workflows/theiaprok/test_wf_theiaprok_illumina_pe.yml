@@ -549,7 +549,7 @@
     - path: miniwdl_run/wdl/tasks/assembly/task_shovill.wdl
       md5sum: be5bc23bed6b1ada2efbf28b7435b8c0
     - path: miniwdl_run/wdl/tasks/gene_typing/drug_resistance/task_abricate.wdl
-      md5sum: 6c0a72c525bc3d853a242d03f10dbf1f
+      md5sum: 0a8e80d9c835a712936eac2cc6e3a05d
     - path: miniwdl_run/wdl/tasks/gene_typing/drug_resistance/task_amrfinderplus.wdl
       md5sum: 249db321d15832002c4945394ae9af76
     - path: miniwdl_run/wdl/tasks/gene_typing/annotation/task_bakta.wdl
@@ -560,20 +560,20 @@
       md5sum: 8e8423b99d5cd3e92bb89b3c3211d432
     - path: miniwdl_run/wdl/tasks/gene_typing/drug_resistance/task_resfinder.wdl
       md5sum: 27528633723303b462d095b642649453
-    - path: miniwdl_run/wdl/tasks/gene_typing/gene_typing/variant_detection/task_snippy_variants.wdl
+    - path: miniwdl_run/wdl/tasks/gene_typing/variant_detection/task_snippy_variants.wdl
       md5sum: bc048390626650b6a939fd740c1aaf13
     - path: miniwdl_run/wdl/tasks/quality_control/read_filtering/task_bbduk.wdl
       md5sum: 90e49f4e4568393cf8d1f8720a4772ad
-    - path: miniwdl_run/wdl/tasks/quality_control/advanced_metrics/task_busco.wdlcs/task_busco.wdl
-      md5sum: 0f8b3fbca316cb940a61b2c3cdf6ebab
+    - path: miniwdl_run/wdl/tasks/quality_control/advanced_metrics/task_busco.wdl
+      md5sum: aec6ef024d6dff31723f44290f6b9cf5
     - path: miniwdl_run/wdl/tasks/quality_control/basic_statistics/task_cg_pipeline.wdl
       md5sum: c8e7ae1ed0fff7b14731228db80c6b30
     - path: miniwdl_run/wdl/tasks/quality_control/read_filtering/task_fastp.wdl
-      md5sum: b048ca5094d9355773bff9bbd2debab6
+      md5sum: cf66296a1b81cdb90b051ab649bbaf0c
     - path: miniwdl_run/wdl/tasks/quality_control/basic_statistics/task_fastq_scan.wdl
       contains: ["version", "fastq_scan", "output"]
     - path: miniwdl_run/wdl/tasks/quality_control/advanced_metrics/task_mummer_ani.wdl
-      md5sum: d50a40d533d51834d0000971dc2c2014
+      md5sum: 7425333e3e422b4884885387bc5d3fe7
     - path: miniwdl_run/wdl/tasks/quality_control/read_filtering/task_ncbi_scrub.wdl
       contains: ["version", "scrub", "output"]
     - path: miniwdl_run/wdl/tasks/quality_control/comparisons/task_qc_check_phb.wdl
@@ -581,61 +581,61 @@
     - path: miniwdl_run/wdl/tasks/quality_control/basic_statistics/task_quast.wdl
       contains: ["version", "quast", "output"]
     - path: miniwdl_run/wdl/tasks/quality_control/comparisons/task_screen.wdl
-      md5sum: 4574cda872a55c6e80fa5e6e95972c9a
+      md5sum: 27a4e3496ea32377532a0b8bd21b40ac
     - path: miniwdl_run/wdl/tasks/quality_control/read_filtering/task_trimmomatic.wdl
       contains: ["version", "trimmomatic", "output"]
     - path: miniwdl_run/wdl/tasks/species_typing/candida/task_cauris_cladetyper.wdl
-      md5sum: d30265aa94838251ce22f7840da0e9d0
+      md5sum: de931effc363113d3ad671720e00bc5d
     - path: miniwdl_run/wdl/tasks/species_typing/escherichia_shigella/task_ectyper.wdl
-      md5sum: fcdb31d6d22eb99ada24ef8213b4b233
+      md5sum: ea0fa1a5f409295ced87295bca9dcf36
     - path: miniwdl_run/wdl/tasks/species_typing/salmonella/task_genotyphi.wdl
-      md5sum: 06df4ac34f839b0bcd473e9d920a59e5
+      md5sum: 90b60281f35f92594f21e777f57dd7a6
     - path: miniwdl_run/wdl/tasks/species_typing/acinetobacter/task_kaptive.wdl
-      md5sum: a94f70ff4b08a40ca5a36f9d35e9eae4
+      md5sum: 9becb1e15ae3a36027d61bcc4ec27bd3
     - path: miniwdl_run/wdl/tasks/species_typing/klebsiella/task_kleborate.wdl
-      md5sum: be6d45d53103351d019194e1dbfb900e
+      md5sum: eba5914cbccbd2470ccad92c1f09aa7b
     - path: miniwdl_run/wdl/tasks/species_typing/legionella/task_legsta.wdl
-      md5sum: 92e9436653282213b2956595219b6228
+      md5sum: 29d878947be60cb5fae4fafee9c0e0ff
     - path: miniwdl_run/wdl/tasks/species_typing/listeria/task_lissero.wdl
-      md5sum: f890a22fb79d42f0b6348e3716aa3e5c
+      md5sum: 0c6745aa212a947a94cced3f78aa4bab
     - path: miniwdl_run/wdl/tasks/species_typing/pseudomonas/task_pasty.wdl
-      md5sum: 2a11efa1edee2acc2f4b152370b3c9a2
+      md5sum: 4a4adafa7550d39b91d4983275760c79
     - path: miniwdl_run/wdl/tasks/species_typing/streptococcus/task_pbptyper.wdl
-      md5sum: d362a21c801c9f5e05976c887103286d
+      md5sum: e34580fbf522077d5e0903390d39a0f9
     - path: miniwdl_run/wdl/tasks/species_typing/streptococcus/task_poppunk_streppneumo.wdl
-      md5sum: 4abf3d96028ecbc1dc6268f31cebfe86
+      md5sum: ec619b508bba78b74076720bf76c735e
     - path: miniwdl_run/wdl/tasks/species_typing/salmonella/task_seqsero2.wdl
-      md5sum: 92df6b17ab6af08363656c203767adf9
+      md5sum: bffa0f94f436e72894fcddc698dd0a5e
     - path: miniwdl_run/wdl/tasks/species_typing/streptococcus/task_seroba.wdl
-      md5sum: 67710d3ee71c8a1325566b985ccf307e
+      md5sum: 5931ecf20a6f04e44cfd9f43fd5bae73
     - path: miniwdl_run/wdl/tasks/species_typing/escherichia_shigella/task_serotypefinder.wdl
-      md5sum: 44e3a5c984b653ed61e2bcba0ff054e7
+      md5sum: 3f912c7770a4bc1768401f70a25bc050
     - path: miniwdl_run/wdl/tasks/species_typing/escherichia_shigella/task_shigatyper.wdl
-      md5sum: 7d39c9c0539ca2e70a14f889201452b4
+      md5sum: 4208b2598eaf216818c793aef86d2d76
     - path: miniwdl_run/wdl/tasks/species_typing/escherichia_shigella/task_shigeifinder.wdl
       md5sum: 5a24623416f2ac9a0a177c01c5db2501
     - path: miniwdl_run/wdl/tasks/species_typing/salmonella/task_sistr.wdl
-      md5sum: c05d6a6b4e700af829bd35697fc27e41
+      md5sum: 62a5b13e28599907560a70f2e75d7d29
     - path: miniwdl_run/wdl/tasks/species_typing/escherichia_shigella/task_sonneityping.wdl
-      md5sum: aeb12cf9a0db4e34f2aecbaba51c30fb
+      md5sum: 8571571f99487448218469c15b803626
     - path: miniwdl_run/wdl/tasks/species_typing/mycobacterium/task_tbprofiler.wdl
-      md5sum: a90fc52112a8333361f96e50b316d03b
+      md5sum: 860ffa77063196e04c539f5dadd23b85
     - path: miniwdl_run/wdl/tasks/species_typing/multi/task_ts_mlst.wdl
-      md5sum: b83dcdc897257910bbd61868a9da49dc
+      md5sum: 9e620568b943911dd21284543e6322d4
     - path: miniwdl_run/wdl/tasks/task_versioning.wdl
       md5sum: b09c4453998da5ac6624dc1b49abf31f
     - path: miniwdl_run/wdl/tasks/taxon_id/task_gambit.wdl
       md5sum: 4e1d4f6b8085a209f9721748a0c0fef0
     - path: miniwdl_run/wdl/tasks/taxon_id/contamination/task_kraken2.wdl
-      md5sum: 693177028d24abb1bf4e56af3c542ff6
+      md5sum: a1a071ea0c4a784a252ff28c97c1cb8f
     - path: miniwdl_run/wdl/tasks/taxon_id/contamination/task_midas.wdl
       md5sum: c6f3b8b3e3894208f7b247709944c9bc
     - path: miniwdl_run/wdl/tasks/utilities/data_export/task_broad_terra_tools.wdl
-      md5sum: 776373df143dbf94f18e53aba3e4e0ff
+      md5sum: ea141ba65f2948ae2abed7ca791e872b
     - path: miniwdl_run/wdl/workflows/theiaprok/wf_theiaprok_illumina_pe.wdl
-      md5sum: d79a48a5f5303cedd77f923bc01a9817
+      md5sum: f118a856fb096fa3ac735dc517a08f4f
     - path: miniwdl_run/wdl/workflows/utilities/wf_merlin_magic.wdl
-      md5sum: 90eb6ac7463058a81da77120aa45138b
+      md5sum: d118f2568eefb87ffb8a25edbba96736
     - path: miniwdl_run/wdl/workflows/utilities/wf_read_QC_trim_pe.wdl
       contains: ["version", "QC", "output"]
     - path: miniwdl_run/workflow.log
