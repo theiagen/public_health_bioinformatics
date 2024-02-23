@@ -21,7 +21,7 @@ workflow read_QC_trim_pe {
     Int trim_minlen = 75
     Int trim_quality_trim_score = 30
     Int trim_window_size = 4
-    Int bbduk_mem = 8
+    Int bbduk_memory = 8
     Boolean call_midas = true
     File? midas_db
     Boolean call_kraken = false
@@ -90,7 +90,7 @@ workflow read_QC_trim_pe {
       samplename = samplename,
       read1_trimmed = select_first([trimmomatic_pe.read1_trimmed, fastp.read1_trimmed]),
       read2_trimmed = select_first([trimmomatic_pe.read2_trimmed, fastp.read2_trimmed]),
-      memory = bbduk_mem,
+      memory = bbduk_memory,
       adapters = adapters,
       phix = phix
   }

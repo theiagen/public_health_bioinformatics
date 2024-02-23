@@ -18,7 +18,7 @@ workflow read_QC_trim_se {
     Int trim_minlen = 25
     Int trim_quality_trim_score = 30
     Int trim_window_size = 4
-    Int bbduk_mem = 8
+    Int bbduk_memory = 8
     String? target_organism
     File? adapters
     File? phix
@@ -60,7 +60,7 @@ workflow read_QC_trim_se {
     input:
       samplename = samplename,
       read1_trimmed = select_first([trimmomatic_se.read1_trimmed, fastp_se.read1_trimmed]),
-      memory = bbduk_mem,
+      memory = bbduk_memory,
       adapters = adapters,
       phix = phix
   }
