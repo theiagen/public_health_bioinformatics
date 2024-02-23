@@ -25,6 +25,8 @@ workflow core_gene_snp_workflow {
     String? data_summary_terra_workspace
     String? data_summary_terra_table
     String? data_summary_column_names
+
+    Boolean midpoint_root_tree = true
   }
   call pirate_task.pirate {
     input:
@@ -48,7 +50,8 @@ workflow core_gene_snp_workflow {
         input:
           input_tree = core_iqtree.ml_tree,
           matrix = core_snp_dists.snp_matrix,
-          cluster_name = cluster_name + "_core"
+          cluster_name = cluster_name + "_core",
+          midpoint_root_tree = midpoint_root_tree
       }
     }
     if (pan_tree) {
@@ -66,7 +69,8 @@ workflow core_gene_snp_workflow {
         input:
           input_tree = pan_iqtree.ml_tree,
           matrix = pan_snp_dists.snp_matrix,
-          cluster_name = cluster_name + "_pan"
+          cluster_name = cluster_name + "_pan",
+          midpoint_root_tree = midpoint_root_tree
       }
     }
   }

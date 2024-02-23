@@ -101,7 +101,8 @@ workflow snippy_streamline {
     File? snippy_gubbins_branch_stats = snippy_tree_wf.snippy_gubbins_branch_stats
     String snippy_snp_dists_version = snippy_tree_wf.snippy_snp_dists_version
     String snippy_snp_dists_docker = snippy_tree_wf.snippy_snp_dists_docker
-    File snippy_snp_matrix = snippy_tree_wf.snippy_snp_matrix
+    File snippy_wg_snp_matrix = snippy_tree_wf.snippy_wg_snp_matrix
+    File? snippy_cg_snp_matrix = snippy_tree_wf.snippy_cg_snp_matrix
     File? snippy_summarized_data = snippy_tree_wf.snippy_summarized_data
     File? snippy_filtered_metadata = snippy_tree_wf.snippy_filtered_metadata
   }
