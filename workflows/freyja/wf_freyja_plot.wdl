@@ -1,7 +1,7 @@
 version 1.0
 
-import "../../tasks/taxon_id/freyja_utilities/task_freyja_plot.wdl" as plot
 import "../../tasks/task_versioning.wdl" as versioning
+import "../../tasks/taxon_id/freyja/task_freyja_plot.wdl" as plot
 
 workflow freyja_plot {
   input {

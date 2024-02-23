@@ -1,15 +1,15 @@
 version 1.0
 
-import "../utilities/wf_read_QC_trim_pe.wdl" as read_qc_wf
-import "../utilities/wf_metaspades_assembly.wdl" as metaspades_assembly_wf
-import "../../tasks/taxon_id/task_kraken2.wdl" as kraken_task
-import "../../tasks/taxon_id/task_krona.wdl" as krona_task
-import "../../tasks/alignment/task_minimap2.wdl" as minimap2_task
-import "../../tasks/utilities/task_parse_mapping.wdl" as parse_mapping_task
-import "../../tasks/quality_control/task_quast.wdl" as quast_task
-import "../../tasks/task_versioning.wdl" as versioning
 import "../../tasks/alignment/task_bwa.wdl" as bwa_task
+import "../../tasks/alignment/task_minimap2.wdl" as minimap2_task
 import "../../tasks/assembly/task_semibin.wdl" as semibin_task
+import "../../tasks/quality_control/basic_statistics/task_quast.wdl" as quast_task
+import "../../tasks/task_versioning.wdl" as versioning
+import "../../tasks/taxon_id/contamination/task_kraken2.wdl" as kraken_task
+import "../../tasks/taxon_id/contamination/task_krona.wdl" as krona_task
+import "../../tasks/utilities/data_handling/task_parse_mapping.wdl" as parse_mapping_task
+import "../utilities/wf_metaspades_assembly.wdl" as metaspades_assembly_wf
+import "../utilities/wf_read_QC_trim_pe.wdl" as read_qc_wf
 
 workflow theiameta_illumina_pe {
   meta {

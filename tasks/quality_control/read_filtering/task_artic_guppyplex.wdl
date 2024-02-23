@@ -2,7 +2,7 @@ version 1.0
 
 task read_filtering {
   input {
-    File demultiplexed_reads
+    File read1
     String samplename
     String run_prefix = "artic_ncov2019"
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/artic-ncov2019:1.3.0-medaka-1.4.3"
@@ -15,14 +15,14 @@ task read_filtering {
   command <<<
     # date and version control
     mkdir ~{samplename}
-    cp ~{demultiplexed_reads} ~{samplename}/
+    cp ~{read1} ~{samplename}/
     echo "DIRNAME: $(dirname)"
 
     # run artic guppyplex 
     artic guppyplex --min-length ~{min_length} --max-length ~{max_length} --directory ~{samplename} --prefix ~{run_prefix}
   >>>
   output {
-    File filtered_reads = "~{run_prefix}_~{samplename}.fastq"
+    File read1_clean = "~{run_prefix}_~{samplename}.fastq"
   }
   runtime {
     docker: docker

@@ -1,14 +1,14 @@
 version 1.0
 
-import "../../tasks/quality_control/task_fastq_scan.wdl" as fastq_scan
-import "../../tasks/quality_control/task_fastqc.wdl" as fastqc_task
-import "../../tasks/quality_control/task_trimmomatic.wdl" as trimmomatic
-import "../../tasks/quality_control/task_ncbi_scrub.wdl" as ncbi_scrub
-import "../../tasks/quality_control/task_bbduk.wdl" as bbduk_task
-import "../../tasks/quality_control/task_readlength.wdl" as readlength_task
-import "../../tasks/quality_control/task_fastp.wdl" as fastp_task
-import "../../tasks/taxon_id/task_kraken2.wdl" as kraken
-import "../../tasks/taxon_id/task_midas.wdl" as midas_task
+import "../../tasks/quality_control/basic_statistics/task_fastq_scan.wdl" as fastq_scan
+import "../../tasks/quality_control/basic_statistics/task_fastqc.wdl" as fastqc_task
+import "../../tasks/quality_control/basic_statistics/task_readlength.wdl" as readlength_task
+import "../../tasks/quality_control/read_filtering/task_bbduk.wdl" as bbduk_task
+import "../../tasks/quality_control/read_filtering/task_fastp.wdl" as fastp_task
+import "../../tasks/quality_control/read_filtering/task_ncbi_scrub.wdl" as ncbi_scrub
+import "../../tasks/quality_control/read_filtering/task_trimmomatic.wdl" as trimmomatic
+import "../../tasks/taxon_id/contamination/task_kraken2.wdl" as kraken
+import "../../tasks/taxon_id/contamination/task_midas.wdl" as midas_task
 
 workflow read_QC_trim_pe {
   meta {

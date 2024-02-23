@@ -1,14 +1,14 @@
 
 version 1.0
 
-import "../../tasks/quality_control/task_vadr.wdl" as vadr_task
-import "../../tasks/quality_control/task_consensus_qc.wdl" as consensus_qc_task
-import "../../tasks/gene_typing/task_abricate.wdl" as abricate
-import "../../tasks/taxon_id/task_nextclade.wdl" as nextclade_task
-import "../../tasks/species_typing/task_pangolin.wdl" as pangolin
-import "../../tasks/quality_control/task_qc_check_phb.wdl" as qc_check
-import "../../workflows/utilities/wf_organism_parameters.wdl" as defaults
+import "../../tasks/gene_typing/drug_resistance/task_abricate.wdl" as abricate
+import "../../tasks/quality_control/advanced_metrics/task_vadr.wdl" as vadr_task
+import "../../tasks/quality_control/basic_statistics/task_consensus_qc.wdl" as consensus_qc_task
+import "../../tasks/quality_control/comparisons/task_qc_check_phb.wdl" as qc_check
+import "../../tasks/species_typing/betacoronavirus/task_pangolin.wdl" as pangolin
 import "../../tasks/task_versioning.wdl" as versioning
+import "../../tasks/taxon_id/task_nextclade.wdl" as nextclade_task
+import "../utilities/wf_organism_parameters.wdl" as defaults
 
 workflow theiacov_fasta {
   meta {

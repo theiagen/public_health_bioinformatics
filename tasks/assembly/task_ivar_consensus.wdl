@@ -37,19 +37,19 @@ task consensus {
     
     # call consensus
     samtools mpileup \
-    ~{true = "--count-orphans" false = "" count_orphans} \
-    -d ~{max_depth} \
-    ~{true = "--no-BAQ" false = "" disable_baq} \
-    -Q ~{min_bq} \
-    --reference ${ref_genome} \
-    ~{bamfile} | \
+      ~{true = "--count-orphans" false = "" count_orphans} \
+      -d ~{max_depth} \
+      ~{true = "--no-BAQ" false = "" disable_baq} \
+      -Q ~{min_bq} \
+      --reference ${ref_genome} \
+      ~{bamfile} | \
     ivar consensus \
-    -p ~{samplename}.consensus \
-    -q ~{min_qual} \
-    -t ~{consensus_min_freq} \
-    -m ~{consensus_min_depth} \
-    -n ~{char_unknown} \
-    ~{true = "-k" false = "" skip_N} 
+      -p ~{samplename}.consensus \
+      -q ~{min_qual} \
+      -t ~{consensus_min_freq} \
+      -m ~{consensus_min_depth} \
+      -n ~{char_unknown} \
+      ~{true = "-k" false = "" skip_N} 
 
     # clean up fasta header
     echo ">~{samplename}" > ~{samplename}.ivar.consensus.fasta

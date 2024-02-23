@@ -1,6 +1,6 @@
 version 1.0
 
-import "../../../tasks/species_typing/task_pangolin.wdl" as pangolin
+import "../../../tasks/species_typing/betacoronavirus/task_pangolin.wdl" as pangolin
 import "../../../tasks/task_versioning.wdl" as versioning
 import "../../../workflows/utilities/wf_organism_parameters.wdl" as set_organism_defaults
 

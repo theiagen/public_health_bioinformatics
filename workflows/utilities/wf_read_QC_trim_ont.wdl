@@ -1,12 +1,12 @@
 version 1.0
 
-import "../../tasks/quality_control/task_artic_guppyplex.wdl" as artic_guppyplex
-import "../../tasks/quality_control/task_nanoq.wdl" as nanoq_task
-import "../../tasks/quality_control/task_ncbi_scrub.wdl" as ncbi_scrub
-import "../../tasks/taxon_id/task_kraken2.wdl" as kraken2
-import "../../tasks/utilities/task_rasusa.wdl" as rasusa_task
+import "../../tasks/gene_typing/plasmid_detection/task_tiptoft.wdl" as tiptoft_task
+import "../../tasks/quality_control/read_filtering/task_artic_guppyplex.wdl" as artic_guppyplex
+import "../../tasks/quality_control/read_filtering/task_nanoq.wdl" as nanoq_task
+import "../../tasks/quality_control/read_filtering/task_ncbi_scrub.wdl" as ncbi_scrub
+import "../../tasks/taxon_id/contamination/task_kraken2.wdl" as kraken2
 import "../../tasks/utilities/task_kmc.wdl" as kmc_task
-import "../../tasks/gene_typing/task_tiptoft.wdl" as tiptoft_task
+import "../../tasks/utilities/task_rasusa.wdl" as rasusa_task
 
 workflow read_QC_trim_ont {
   meta {
@@ -35,7 +35,7 @@ workflow read_QC_trim_ont {
     }
     call artic_guppyplex.read_filtering {
       input:
-        demultiplexed_reads = ncbi_scrub_se.read1_dehosted,
+        read1 = ncbi_scrub_se.read1_dehosted,
         samplename = samplename,
         min_length = min_length,
         max_length = max_length,
@@ -124,7 +124,7 @@ workflow read_QC_trim_ont {
     String? kmc_version = kmc.kmc_version
     
     # nanoq outputs
-    File read1_clean = select_first([nanoq.filtered_read1, read_filtering.filtered_reads])
+    File read1_clean = select_first([nanoq.filtered_read1, read_filtering.read1_clean])
     String? nanoq_version = nanoq.version
 
     # rasusa outputs

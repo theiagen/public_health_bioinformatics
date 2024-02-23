@@ -1,7 +1,7 @@
 version 1.0
 
-import "../../tasks/taxon_id/task_nextclade.wdl" as nextclade_analysis
 import "../../tasks/task_versioning.wdl" as versioning
+import "../../tasks/taxon_id/task_nextclade.wdl" as nextclade_analysis
 
 workflow nextclade_addToRefTree {
     meta {

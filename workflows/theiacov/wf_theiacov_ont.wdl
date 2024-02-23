@@ -2,20 +2,20 @@ version 1.0
 
 import "../../tasks/assembly/task_artic_consensus.wdl" as artic_consensus
 import "../../tasks/assembly/task_irma.wdl" as irma_task
-import "../../tasks/quality_control/task_assembly_metrics.wdl" as assembly_metrics
-import "../../tasks/quality_control/task_vadr.wdl" as vadr_task
-import "../../tasks/quality_control/task_consensus_qc.wdl" as consensus_qc_task
-import "../../tasks/quality_control/task_screen.wdl" as screen
-import "../../tasks/quality_control/task_nanoplot.wdl" as nanoplot_task
-import "../../tasks/taxon_id/task_nextclade.wdl" as nextclade_task
-import "../../tasks/species_typing/task_pangolin.wdl" as pangolin
-import "../../tasks/species_typing/task_quasitools.wdl" as quasitools
-import "../../tasks/gene_typing/task_sc2_gene_coverage.wdl" as sc2_calculation
-import "../../tasks/gene_typing/task_abricate.wdl" as abricate
-import "../../tasks/quality_control/task_qc_check_phb.wdl" as qc_check
+import "../../tasks/gene_typing/drug_resistance/task_abricate.wdl" as abricate
+import "../../tasks/quality_control/advanced_metrics/task_vadr.wdl" as vadr_task
+import "../../tasks/quality_control/basic_statistics/task_assembly_metrics.wdl" as assembly_metrics
+import "../../tasks/quality_control/basic_statistics/task_consensus_qc.wdl" as consensus_qc_task
+import "../../tasks/quality_control/basic_statistics/task_nanoplot.wdl" as nanoplot_task
+import "../../tasks/quality_control/basic_statistics/task_sc2_gene_coverage.wdl" as sc2_calculation
+import "../../tasks/quality_control/comparisons/task_qc_check_phb.wdl" as qc_check
+import "../../tasks/quality_control/comparisons/task_screen.wdl" as screen
+import "../../tasks/species_typing/betacoronavirus/task_pangolin.wdl" as pangolin
+import "../../tasks/species_typing/lentivirus/task_quasitools.wdl" as quasitools
 import "../../tasks/task_versioning.wdl" as versioning
+import "../../tasks/taxon_id/task_nextclade.wdl" as nextclade_task
+import "../utilities/wf_organism_parameters.wdl" as set_organism_defaults
 import "../utilities/wf_read_QC_trim_ont.wdl" as read_qc_trim_workflow
-import "../../workflows/utilities/wf_organism_parameters.wdl" as set_organism_defaults
 
 workflow theiacov_ont {
   meta {
@@ -121,7 +121,7 @@ workflow theiacov_ont {
           input:
             samplename = samplename,
             organism = organism_parameters.standardized_organism,
-            filtered_reads = read_qc_trim.read1_clean,
+            read1 = read_qc_trim.read1_clean,
             primer_bed = organism_parameters.primer_bed,
             normalise = normalise,
             reference_genome = organism_parameters.reference,

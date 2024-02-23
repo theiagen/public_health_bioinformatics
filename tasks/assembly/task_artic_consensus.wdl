@@ -4,7 +4,7 @@ task consensus {
   input {
     String samplename
     String? organism
-    File filtered_reads
+    File read1
     File primer_bed
     File? reference_genome
     Int normalise = 20000
@@ -61,7 +61,7 @@ task consensus {
     # version control
     echo "Medaka via $(artic -v)" | tee VERSION
     echo "~{primer_name}" | tee PRIMER_NAME
-    artic minion --medaka --medaka-model ~{medaka_model} --normalise ~{normalise} --threads ~{cpu} --scheme-directory ./primer-schemes --read-file ~{filtered_reads} ${scheme_name} ~{samplename}
+    artic minion --medaka --medaka-model ~{medaka_model} --normalise ~{normalise} --threads ~{cpu} --scheme-directory ./primer-schemes --read-file ~{read1} ${scheme_name} ~{samplename}
     gunzip -f ~{samplename}.pass.vcf.gz
 
     # clean up fasta header

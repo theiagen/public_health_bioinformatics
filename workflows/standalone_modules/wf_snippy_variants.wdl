@@ -1,7 +1,7 @@
 version 1.0
 
-import "../../tasks/gene_typing/task_snippy_variants.wdl" as snippy
-import "../../tasks/gene_typing/task_snippy_gene_query.wdl" as snippy_gene_query_task
+import "../../tasks/gene_typing/variant_detection/task_snippy_gene_query.wdl" as snippy_gene_query_task
+import "../../tasks/gene_typing/variant_detection/task_snippy_variants.wdl" as snippy
 import "../../tasks/task_versioning.wdl" as versioning
 
 workflow snippy_variants_wf {

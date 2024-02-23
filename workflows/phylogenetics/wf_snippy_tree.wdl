@@ -1,13 +1,13 @@
 version 1.0
 
-import "../../tasks/phylogenetic_inference/task_snippy_core.wdl" as snippy_core_task
-import "../../tasks/phylogenetic_inference/task_snp_sites.wdl" as snp_sites_task
-import "../../tasks/phylogenetic_inference/task_iqtree2.wdl" as iqtree2_task
-import "../../tasks/phylogenetic_inference/task_snp_dists.wdl" as snp_dists_task
-import "../../tasks/phylogenetic_inference/task_reorder_matrix.wdl" as reorder_matrix_task
 import "../../tasks/phylogenetic_inference/task_gubbins.wdl" as gubbins_task
-import "../../tasks/utilities/task_summarize_data.wdl" as data_summary
+import "../../tasks/phylogenetic_inference/task_iqtree2.wdl" as iqtree2_task
+import "../../tasks/phylogenetic_inference/utilities/task_reorder_matrix.wdl" as reorder_matrix_task
+import "../../tasks/phylogenetic_inference/utilities/task_snippy_core.wdl" as snippy_core_task
+import "../../tasks/phylogenetic_inference/utilities/task_snp_dists.wdl" as snp_dists_task
+import "../../tasks/phylogenetic_inference/utilities/task_snp_sites.wdl" as snp_sites_task
 import "../../tasks/task_versioning.wdl" as versioning
+import "../../tasks/utilities/data_handling/task_summarize_data.wdl" as data_summary
 
 workflow snippy_tree_wf {
   meta {

@@ -1,11 +1,11 @@
 version 1.0
 
-import "../../tasks/species_typing/task_pangolin.wdl" as pangolin_task
+import "../../tasks/species_typing/betacoronavirus/task_pangolin.wdl" as pangolin_task
 import "../../tasks/task_versioning.wdl" as versioning
 import "../../tasks/taxon_id/task_nextclade.wdl" as nextclade_task
-import "../../tasks/utilities/task_file_handling.wdl" as concatenate
-import "../../tasks/utilities/task_theiacov_fasta_batch.wdl" as theiacov_fasta_wrangling_task
-import "../../workflows/utilities/wf_organism_parameters.wdl" as set_organism_defaults
+import "../../tasks/utilities/data_handling/task_theiacov_fasta_batch.wdl" as theiacov_fasta_wrangling_task
+import "../../tasks/utilities/file_handling/task_cat_files.wdl" as concatenate
+import "../utilities/wf_organism_parameters.wdl" as set_organism_defaults
 
 workflow theiacov_fasta_batch {
   meta {

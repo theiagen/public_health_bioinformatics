@@ -159,11 +159,11 @@
     - path: miniwdl_run/call-version_capture/inputs.json
     - path: miniwdl_run/call-version_capture/outputs.json
     - path: miniwdl_run/call-version_capture/task.log
-    - path: miniwdl_run/wdl/tasks/quality_control/task_consensus_qc.wdl
+    - path: miniwdl_run/wdl/tasks/quality_control/basic_statistics/task_consensus_qc.wdl
       contains: ["qc", "command", "output", "runtime"]
-    - path: miniwdl_run/wdl/tasks/quality_control/task_vadr.wdl
+    - path: miniwdl_run/wdl/tasks/quality_control/advanced_metrics/task_vadr.wdl
       contains: ["vadr", "command", "output", "runtime"]
-    - path: miniwdl_run/wdl/tasks/species_typing/task_pangolin.wdl
+    - path: miniwdl_run/wdl/tasks/species_typing/betacoronavirus/task_pangolin.wdl
       contains: ["pangolin", "command", "output", "runtime"]
     - path: miniwdl_run/wdl/tasks/task_versioning.wdl
       contains: ["version", "command", "output", "runtime"]

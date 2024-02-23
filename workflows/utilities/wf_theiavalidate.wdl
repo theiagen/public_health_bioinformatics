@@ -1,7 +1,7 @@
 version 1.0
 
-import "../../tasks/utilities/task_validate.wdl" as validate
 import "../../tasks/task_versioning.wdl" as versioning
+import "../../tasks/utilities/data_handling/task_validate.wdl" as validate
 
 workflow theiavalidate {
   input {

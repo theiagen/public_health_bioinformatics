@@ -462,37 +462,37 @@
       contains: ["bwa", "command", "output", "runtime"]
     - path: miniwdl_run/wdl/tasks/assembly/task_ivar_consensus.wdl
       contains: ["consensus", "command", "output", "runtime"]
-    - path: miniwdl_run/wdl/tasks/assembly/task_ivar_primer_trim.wdl
+    - path: miniwdl_run/wdl/tasks/quality_control/read_filtering/task_ivar_primer_trim.wdl
       contains: ["primer", "command", "output", "runtime"]
-    - path: miniwdl_run/wdl/tasks/assembly/task_ivar_variant_call.wdl
+    - path: miniwdl_run/wdl/tasks/gene_typing/variant_detection/task_ivar_variant_call.wdl
       contains: ["variants", "command", "output", "runtime"]
-    - path: miniwdl_run/wdl/tasks/gene_typing/task_sc2_gene_coverage.wdl
+    - path: miniwdl_run/wdl/tasks/quality_control/basic_statistics/task_sc2_gene_coverage.wdl
       contains: ["coverage", "command", "output", "runtime"]
-    - path: miniwdl_run/wdl/tasks/quality_control/task_assembly_metrics.wdl
+    - path: miniwdl_run/wdl/tasks/quality_control/basic_statistics/task_assembly_metrics.wdl
       contains: ["stat", "command", "output", "runtime"]
-    - path: miniwdl_run/wdl/tasks/quality_control/task_bbduk.wdl
+    - path: miniwdl_run/wdl/tasks/quality_control/read_filtering/task_bbduk.wdl
       contains: ["bbduk", "command", "output", "runtime"]
-    - path: miniwdl_run/wdl/tasks/quality_control/task_consensus_qc.wdl
+    - path: miniwdl_run/wdl/tasks/quality_control/basic_statistics/task_consensus_qc.wdl
       contains: ["qc", "command", "output", "runtime"]
-    - path: miniwdl_run/wdl/tasks/quality_control/task_fastp.wdl
+    - path: miniwdl_run/wdl/tasks/quality_control/read_filtering/task_fastp.wdl
       contains: ["fastp", "command", "output", "runtime"]
-    - path: miniwdl_run/wdl/tasks/quality_control/task_fastq_scan.wdl
+    - path: miniwdl_run/wdl/tasks/quality_control/basic_statistics/task_fastq_scan.wdl
       contains: ["fastq", "command", "output", "runtime"]
-    - path: miniwdl_run/wdl/tasks/quality_control/task_qc_check_phb.wdl
+    - path: miniwdl_run/wdl/tasks/quality_control/comparisons/task_qc_check_phb.wdl
       contains: ["check", "command", "output", "runtime"]
-    - path: miniwdl_run/wdl/tasks/quality_control/task_screen.wdl
+    - path: miniwdl_run/wdl/tasks/quality_control/comparisons/task_screen.wdl
       contains: ["screen", "command", "output", "runtime"]
-    - path: miniwdl_run/wdl/tasks/quality_control/task_trimmomatic.wdl
+    - path: miniwdl_run/wdl/tasks/quality_control/read_filtering/task_trimmomatic.wdl
       contains: ["trimmomatic", "command", "output", "runtime"]
-    - path: miniwdl_run/wdl/tasks/quality_control/task_vadr.wdl
+    - path: miniwdl_run/wdl/tasks/quality_control/advanced_metrics/task_vadr.wdl
       contains: ["vadr", "command", "output", "runtime"]
-    - path: miniwdl_run/wdl/tasks/species_typing/task_pangolin.wdl
+    - path: miniwdl_run/wdl/tasks/species_typing/betacoronavirus/task_pangolin.wdl
       contains: ["pangolin", "command", "output", "runtime"]
     - path: miniwdl_run/wdl/tasks/task_versioning.wdl
       contains: ["version", "command", "output", "runtime"]
-    - path: miniwdl_run/wdl/tasks/taxon_id/task_kraken2.wdl
+    - path: miniwdl_run/wdl/tasks/taxon_id/contamination/task_kraken2.wdl
       contains: ["kraken", "command", "output", "runtime"]
-    - path: miniwdl_run/wdl/tasks/taxon_id/task_midas.wdl
+    - path: miniwdl_run/wdl/tasks/taxon_id/contamination/task_midas.wdl
       contains: ["midas", "command", "output", "runtime"]
     - path: miniwdl_run/wdl/tasks/taxon_id/task_nextclade.wdl
       contains: ["nextclade", "command", "output", "runtime"]

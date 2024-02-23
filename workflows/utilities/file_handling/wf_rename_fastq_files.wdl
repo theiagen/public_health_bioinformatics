@@ -1,7 +1,7 @@
 version 1.0
 
-import "../../../tasks/utilities/task_rename_files.wdl" as rename_files_task
 import "../../../tasks/task_versioning.wdl" as versioning
+import "../../../tasks/utilities/file_handling/task_rename_files.wdl" as rename_files_task
 
 workflow rename_fastq_files {
   input {

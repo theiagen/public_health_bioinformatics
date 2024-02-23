@@ -1,8 +1,8 @@
 version 1.0
 
-import "../../../tasks/quality_control/task_ncbi_scrub.wdl" as ncbi_scrub
-import "../../../tasks/taxon_id/task_kraken2.wdl" as kraken
+import "../../../tasks/quality_control/read_filtering/task_ncbi_scrub.wdl" as ncbi_scrub
 import "../../../tasks/task_versioning.wdl" as versioning
+import "../../../tasks/taxon_id/contamination/task_kraken2.wdl" as kraken
 
 workflow dehost_se {
   input {
