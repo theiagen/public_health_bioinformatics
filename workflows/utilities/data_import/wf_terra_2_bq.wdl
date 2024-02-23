@@ -13,12 +13,12 @@ workflow terra_2_bq {
     }
     call terra_2_bq_task.terra_to_bigquery {
       input:
-        terra_projects=terra_projects,
-        workspace_names=workspace_names,
-        table_names=table_names,
-        table_ids=table_ids,
-        gcs_uri_prefixs=gcs_uris,
-        output_filename_prefix=output_filename_prefixs
+        terra_projects = terra_projects,
+        workspace_names = workspace_names,
+        table_names = table_names,
+        table_ids = table_ids,
+        gcs_uri_prefixs = gcs_uris,
+        output_filename_prefix = output_filename_prefixs
     }
 }
 

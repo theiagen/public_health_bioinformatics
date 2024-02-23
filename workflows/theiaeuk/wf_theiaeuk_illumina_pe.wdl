@@ -107,7 +107,7 @@ workflow theiaeuk_illumina_pe {
           assembly = shovill_pe.assembly_fasta,
           samplename = samplename,
           cpu = cpu,
-          mem = memory
+          memory = memory
       }
       call cg_pipeline_task.cg_pipeline as cg_pipeline_raw {
         input:
