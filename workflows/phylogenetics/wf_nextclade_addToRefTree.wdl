@@ -32,7 +32,7 @@ workflow nextclade_addToRefTree {
         dataset_reference = dataset_reference,
         dataset_tag = dataset_tag
     }
-    call versioning.version_capture{
+    call versioning.version_capture {
       input:
     }
     output {

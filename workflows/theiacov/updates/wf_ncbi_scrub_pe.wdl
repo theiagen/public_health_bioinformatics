@@ -22,7 +22,7 @@ workflow dehost_pe {
       read1 = ncbi_scrub_pe.read1_dehosted,
       read2 = ncbi_scrub_pe.read2_dehosted
   }
-  call versioning.version_capture{
+  call versioning.version_capture {
     input:
   }
   output {

@@ -25,14 +25,14 @@ workflow pangolin_update {
       flu_subtype = "",
       reference_gff_file = "gs://theiagen-public-files/terra/theiacov-files/empty.gff3",
       reference_genome = "gs://theiagen-public-files/terra/theiacov-files/empty.fasta",
-      genome_length = "",
-      nextclade_ds_reference = "",
-      nextclade_ds_tag = "",
-      nextclade_ds_name = "",     
-      vadr_max_length = "",
+      genome_length_input = 0,
+      nextclade_dataset_reference_input = "",
+      nextclade_dataset_tag_input = "",
+      nextclade_dataset_name_input = "",     
+      vadr_max_length = 0,
       vadr_options = "",
       primer_bed_file = "gs://theiagen-public-files/terra/theiacov-files/empty.bed",
-      kraken_target_org = "",
+      kraken_target_organism_input = "",
       hiv_primer_version = ""
   }
   call pangolin.pangolin4 {
@@ -54,7 +54,7 @@ workflow pangolin_update {
       new_pangolin_versions = pangolin4.pangolin_versions,
       lineage_log = lineage_log
   }
-  call versioning.version_capture{
+  call versioning.version_capture {
     input:
   }
   output {

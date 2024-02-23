@@ -13,7 +13,7 @@ workflow amrfinderplus_wf {
       assembly = assembly,
       samplename = samplename
     }
-  call versioning.version_capture{
+  call versioning.version_capture {
     input:
   }
   output {

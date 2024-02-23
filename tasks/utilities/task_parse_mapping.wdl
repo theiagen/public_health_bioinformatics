@@ -223,7 +223,7 @@ task assembled_reads_percent {
 
     echo $percentage_mapped | tee PERCENTAGE_MAPPED
   >>>
-  output{
+  output {
     String percentage_mapped = read_string("PERCENTAGE_MAPPED")
   }
   runtime {

@@ -19,7 +19,7 @@ workflow rasusa_workflow {
       genome_length = genome_length,
       coverage = coverage
   }
-  call versioning.version_capture{
+  call versioning.version_capture {
     input:
   }
   output {

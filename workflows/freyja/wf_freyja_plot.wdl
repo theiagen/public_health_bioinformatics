@@ -17,7 +17,7 @@ workflow freyja_plot {
       collection_date = collection_date,
       freyja_plot_name = freyja_plot_name
   }
-  call versioning.version_capture{
+  call versioning.version_capture {
     input:
   }
   output {

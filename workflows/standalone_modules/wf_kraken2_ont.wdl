@@ -24,7 +24,7 @@ workflow kraken2_ont_wf {
       kraken2_report = kraken2_se.kraken2_report,
       kraken2_classified_report = kraken2_se.kraken2_classified_report
   }
-  call versioning.version_capture{
+  call versioning.version_capture {
     input:
   }
   output {

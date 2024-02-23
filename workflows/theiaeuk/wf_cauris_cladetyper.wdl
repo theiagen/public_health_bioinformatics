@@ -13,7 +13,7 @@ workflow theiacauris_pe {
       assembly_fasta = assembly_fasta,
       samplename = samplename
   }
-  call versioning.version_capture{
+  call versioning.version_capture {
     input:
   }
   output {

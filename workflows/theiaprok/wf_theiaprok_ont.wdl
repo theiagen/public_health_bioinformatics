@@ -56,7 +56,7 @@ workflow theiaprok_ont {
     # qc check parameters
     File? qc_check_table
   }
-  call versioning_task.version_capture{
+  call versioning_task.version_capture {
     input:
   }
   call screen_task.check_reads_se as raw_check_reads {

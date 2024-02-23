@@ -328,7 +328,7 @@ workflow theiacov_illumina_pe {
       }
     }
   }
-  call versioning.version_capture{
+  call versioning.version_capture {
     input:
   }
   output {

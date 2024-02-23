@@ -42,7 +42,7 @@ workflow freyja_fastq {
       samplename = samplename,
       reference_genome = reference_genome
   }
-  call versioning.version_capture{
+  call versioning.version_capture {
     input:
   }
   output {

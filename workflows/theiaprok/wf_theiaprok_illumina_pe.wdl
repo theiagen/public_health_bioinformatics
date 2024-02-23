@@ -60,7 +60,7 @@ workflow theiaprok_illumina_pe {
     String? expected_taxon  # allow user to provide organism (e.g. "Clostridioides_difficile") string to amrfinder. Useful when gambit does not predict the correct species    # qc check parameters
     File? qc_check_table
   }
-  call versioning.version_capture{
+  call versioning.version_capture {
     input:
   }
   call screen.check_reads as raw_check_reads {

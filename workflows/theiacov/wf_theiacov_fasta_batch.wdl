@@ -60,7 +60,7 @@ workflow theiacov_fasta_batch {
       dataset_tag = organism_parameters.nextclade_dataset_tag
     }
   }
-  call versioning.version_capture{
+  call versioning.version_capture {
     input:
   }
   call theiacov_fasta_wrangling_task.sm_theiacov_fasta_wrangling {

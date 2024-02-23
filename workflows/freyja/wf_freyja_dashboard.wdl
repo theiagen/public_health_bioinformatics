@@ -21,7 +21,7 @@ workflow freyja_dashboard {
       freyja_dashboard_title = freyja_dashboard_title,
       dashboard_intro_text = dashboard_intro_text,
   }
-  call versioning.version_capture{
+  call versioning.version_capture {
     input:
   }
   output {

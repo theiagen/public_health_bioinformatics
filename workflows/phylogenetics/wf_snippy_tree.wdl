@@ -165,7 +165,7 @@ workflow snippy_tree_wf {
         output_prefix = tree_name
     }
   }
-  call versioning.version_capture{
+  call versioning.version_capture {
     input:
   }
   output {

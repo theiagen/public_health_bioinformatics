@@ -38,7 +38,7 @@ workflow theiavalidate {
   }
   if (export_two_tsvs.same_table_length) {
     String validation_attempted = "Validation attempted"
-    call validate.theiavalidate as compare_two_tsvs{
+    call validate.theiavalidate as compare_two_tsvs {
       input:
         datatable1_tsv = export_two_tsvs.datatable1_tsv,
         datatable2_tsv = export_two_tsvs.datatable2_tsv,

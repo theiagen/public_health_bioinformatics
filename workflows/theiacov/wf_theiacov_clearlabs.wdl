@@ -157,7 +157,7 @@ workflow theiacov_clearlabs {
         vadr_num_alerts = vadr.num_alerts
     }
   }  
-  call versioning.version_capture{
+  call versioning.version_capture {
     input:
   }
   output {

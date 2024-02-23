@@ -18,7 +18,7 @@ workflow Terra_2_NCBI {
     Boolean submit_to_production = false # used to be path_on_ftp_server
     String bioproject
   }
-  call versioning.version_capture{
+  call versioning.version_capture {
     input:
   }
   call submission.prune_table {

@@ -32,7 +32,7 @@ workflow czgenepi_prep {
     String organism = "sars-cov-2" # options "sars-cov-2" or "mpox"
     Boolean is_private = true
   }
-  call versioning.version_capture{
+  call versioning.version_capture {
     input:
   }
   call download_table.download_terra_table {

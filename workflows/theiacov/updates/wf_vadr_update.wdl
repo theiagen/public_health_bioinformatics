@@ -15,7 +15,7 @@ workflow vadr_update {
       docker = docker,
       assembly_length_unambiguous = assembly_length_unambiguous
   }
-  call versioning.version_capture{
+  call versioning.version_capture {
     input:
   }
   output {

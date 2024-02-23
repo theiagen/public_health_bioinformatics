@@ -60,7 +60,7 @@ workflow theiaprok_illumina_se {
     # qc check parameters
     File? qc_check_table
   }
-  call versioning.version_capture{
+  call versioning.version_capture {
     input:
   }
   call screen.check_reads_se as raw_check_reads { 

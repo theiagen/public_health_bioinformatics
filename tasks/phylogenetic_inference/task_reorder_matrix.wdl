@@ -56,7 +56,7 @@ task reorder_matrix {
 
     CODE
   >>>
-  output{
+  output {
     File ordered_matrix = "~{cluster_name}_snp_matrix.csv"
     File tree = "~{cluster_name}_tree.nwk"
   }

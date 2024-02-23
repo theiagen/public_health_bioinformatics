@@ -44,7 +44,7 @@ workflow theiaeuk_illumina_pe {
     File gambit_db_genomes = "gs://theiagen-public-files-rp/terra/theiaeuk-files/gambit/221130-theiagen-fungal-v0.2.db"
     File gambit_db_signatures = "gs://theiagen-public-files-rp/terra/theiaeuk-files/gambit/221130-theiagen-fungal-v0.2.h5"
   }
-  call versioning.version_capture{
+  call versioning.version_capture {
     input:
   } 
   call screen.check_reads as raw_check_reads {

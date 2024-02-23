@@ -252,7 +252,7 @@ task antiviral_mutations_parser {
 }
 
 task serialization {
-  input{ 
+  input { 
     Array[String] flu_A_315675_resistance_array = [""]
     Array[String] flu_compound_367_resistance_array = [""]
     Array[String] flu_favipiravir_resistance_array = [""]
@@ -293,7 +293,7 @@ task serialization {
     
     python3 -c "print(', '.join([mutation for mutation in '~{sep=',' flu_zanamivir_resistance_array}'.split(',') if mutation != '']))" > flu_zanamivir_resistance.txt
   >>>
-  output{
+  output {
     String flu_A_315675_resistance = read_string("flu_A_315675_resistance.txt")
     String flu_compound_367_resistance = read_string("flu_compound_367_resistance.txt")
     String flu_favipiravir_resistance = read_string("flu_favipiravir_resistance.txt")

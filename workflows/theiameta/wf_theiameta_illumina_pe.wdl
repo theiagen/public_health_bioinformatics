@@ -149,7 +149,7 @@ workflow theiameta_illumina_pe {
           samplename = samplename
       }
     }
-    call versioning.version_capture{
+    call versioning.version_capture {
       input:
   }
   output {

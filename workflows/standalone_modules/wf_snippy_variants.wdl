@@ -51,7 +51,7 @@ workflow snippy_variants_wf {
         query_gene = query_gene
     }
   }
-  call versioning.version_capture{
+  call versioning.version_capture {
     input:
   }
   output {

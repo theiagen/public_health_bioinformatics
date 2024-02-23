@@ -24,7 +24,7 @@ workflow kraken2_se_wf {
       kraken2_report = kraken2_se.kraken2_report,
       samplename = samplename
   }
-  call versioning.version_capture{
+  call versioning.version_capture {
     input:
   }
   output {

@@ -39,7 +39,7 @@ workflow mashtree_fasta {
         output_prefix = cluster_name
     }
   } 
-  call versioning.version_capture{
+  call versioning.version_capture {
     input:
   }
   output {

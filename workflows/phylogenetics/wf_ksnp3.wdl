@@ -60,7 +60,7 @@ workflow ksnp3_workflow {
         output_prefix = cluster_name
     }
   }
-  call versioning.version_capture{
+  call versioning.version_capture {
     input:
   }
   output {

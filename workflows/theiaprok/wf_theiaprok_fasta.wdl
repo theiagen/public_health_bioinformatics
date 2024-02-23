@@ -43,7 +43,7 @@ workflow theiaprok_fasta {
     # qc check parameters
     File? qc_check_table
   }
-  call versioning.version_capture{
+  call versioning.version_capture {
     input:
   }
   call quast_task.quast {
