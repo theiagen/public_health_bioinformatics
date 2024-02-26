@@ -23,7 +23,7 @@ task sm_theiacov_fasta_wrangling { # the sm stands for supermassive
     String theiacov_fasta_version
     
     Int disk_size = 100
-    Int docker = "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-08-28-v4"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-08-28-v4"
     Int cpu = 8
     Int memory = 4
   }
