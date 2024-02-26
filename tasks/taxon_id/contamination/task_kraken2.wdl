@@ -43,7 +43,7 @@ task kraken2_theiacov {
     if [ ! -z "~{target_organism}" ]; then
       echo "Target org designated: ~{target_organism}"
       percent_target_organism=$(grep "~{target_organism}" ~{samplename}_kraken2_report.txt | cut -f1 | head -n1 )
-      if [-z "$percent_target_organism" ] ; then percent_target_organism="0" ; fi
+      if [ -z "$percent_target_organism" ] ; then percent_target_organism="0" ; fi
     else 
       percent_target_organism=""
     fi
