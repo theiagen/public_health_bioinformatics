@@ -51,7 +51,7 @@ task fastq_scan_pe {
     String fastq_scan_docker = docker
   }
   runtime {
-    docker: "us-docker.pkg.dev/general-theiagen/biocontainers/fastq-scan:0.4.4--h7d875b9_1"
+    docker: docker
     memory: memory + " GB"
     cpu: cpu
     disks:  "local-disk " + disk_size + " SSD"
@@ -94,7 +94,7 @@ task fastq_scan_se {
     String fastq_scan_docker = docker
   }
   runtime {
-    docker: "us-docker.pkg.dev/general-theiagen/biocontainers/fastq-scan:0.4.4--h7d875b9_1"
+    docker: docker
     memory: memory + " GB"
     cpu: cpu
     disks:  "local-disk " + disk_size + " SSD"
