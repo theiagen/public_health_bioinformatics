@@ -58,7 +58,7 @@ task poppunk {
 
     # run poppunk
     poppunk_assign \
-      --threads cpu \
+      --threads ~{cpu} \
       --db "${GPS_DB_NAME}" \
       --distances "${GPS_DB_NAME}/${GPS_DB_NAME}.dists" \
       --query ~{samplename}_poppunk_input.tsv \
