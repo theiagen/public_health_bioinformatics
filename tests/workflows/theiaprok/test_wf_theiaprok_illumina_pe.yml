@@ -569,8 +569,8 @@
     - path: miniwdl_run/wdl/tasks/quality_control/basic_statistics/task_cg_pipeline.wdl
       md5sum: c8e7ae1ed0fff7b14731228db80c6b30
     - path: miniwdl_run/wdl/tasks/quality_control/read_filtering/task_fastp.wdl
-      md5sum: cf66296a1b81cdb90b051ab649bbaf0c
-    - path: miniwdl_run/wdl/tasks/quality_control/basic_statistics/task_fastq_scan.wdl
+      md5sum: 0faa3de4c2e4aa4cbbe95ae4376fe33a
+    - krakath: miniwdl_run/wdl/tasks/quality_control/basic_statistics/task_fastq_scan.wdl
       contains: ["version", "fastq_scan", "output"]
     - path: miniwdl_run/wdl/tasks/quality_control/advanced_metrics/task_mummer_ani.wdl
       md5sum: 7425333e3e422b4884885387bc5d3fe7
@@ -603,7 +603,7 @@
     - path: miniwdl_run/wdl/tasks/species_typing/streptococcus/task_pbptyper.wdl
       md5sum: e34580fbf522077d5e0903390d39a0f9
     - path: miniwdl_run/wdl/tasks/species_typing/streptococcus/task_poppunk_streppneumo.wdl
-      md5sum: ec619b508bba78b74076720bf76c735e
+      md5sum: 4456c190a338fde9de3d898a902d903b
     - path: miniwdl_run/wdl/tasks/species_typing/salmonella/task_seqsero2.wdl
       md5sum: bffa0f94f436e72894fcddc698dd0a5e
     - path: miniwdl_run/wdl/tasks/species_typing/streptococcus/task_seroba.wdl
@@ -627,7 +627,7 @@
     - path: miniwdl_run/wdl/tasks/taxon_id/task_gambit.wdl
       md5sum: 4e1d4f6b8085a209f9721748a0c0fef0
     - path: miniwdl_run/wdl/tasks/taxon_id/contamination/task_kraken2.wdl
-      md5sum: a1a071ea0c4a784a252ff28c97c1cb8f
+      md5sum: 4cfdd99bcc2015237a4a07d621576e60
     - path: miniwdl_run/wdl/tasks/taxon_id/contamination/task_midas.wdl
       md5sum: c6f3b8b3e3894208f7b247709944c9bc
     - path: miniwdl_run/wdl/tasks/utilities/data_export/task_broad_terra_tools.wdl

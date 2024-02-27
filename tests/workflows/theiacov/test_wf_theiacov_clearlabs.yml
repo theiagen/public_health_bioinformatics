@@ -149,7 +149,7 @@
     - path: miniwdl_run/call-fastq_scan_raw_reads/work/clearlabs_fastq-scan.json
       md5sum: 869dd2e934c600bba35f30f08e2da7c9
     - path: miniwdl_run/call-kraken2_dehosted/command
-      md5sum: 09885a012b5f25cd4033410b55182c41
+      md5sum: 0f9db3341b5f58fb8d145d6d94222827
     - path: miniwdl_run/call-kraken2_dehosted/inputs.json
       contains: ["read1", "samplename"]
     - path: miniwdl_run/call-kraken2_dehosted/outputs.json
@@ -172,7 +172,7 @@
     - path: miniwdl_run/call-kraken2_dehosted/work/clearlabs_kraken2_report.txt
       md5sum: 35841fa2d77ec202c275b1de548b8d98
     - path: miniwdl_run/call-kraken2_raw/command
-      md5sum: 5e7314d332bfe708da55af3b358e7867
+      md5sum: a9dabf08bff8e183fd792901ce24fc57
     - path: miniwdl_run/call-kraken2_raw/inputs.json
       contains: ["read1", "samplename"]
     - path: miniwdl_run/call-kraken2_raw/outputs.json
