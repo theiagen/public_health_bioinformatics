@@ -12,7 +12,7 @@ task fastp_pe {
     Int fastp_minlen = 50
     # -g enables polyg trimming with default value of 10
     String fastp_args = "--detect_adapter_for_pe -g -5 20 -3 20"
-    Int threads = 4
+    Int cpu = 4
     Int memory = 8
   }
   command <<<
@@ -25,7 +25,7 @@ task fastp_pe {
     --unpaired1 ~{samplename}_1U.fastq.gz --unpaired2 ~{samplename}_2U.fastq.gz \
     --cut_right --cut_right_window_size ~{fastp_window_size} --cut_right_mean_quality ~{fastp_quality_trim_score} \
     --length_required ~{fastp_minlen} \
-    --thread ~{threads} \
+    --thread ~{cpu} \
     ~{fastp_args} \
     --html ~{samplename}_fastp.html --json ~{samplename}_fastp.json
   >>>
@@ -41,7 +41,7 @@ task fastp_pe {
   runtime {
     docker: docker
     memory: memory + " GB"
-    cpu: threads
+    cpu: cpu
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
     preemptible: 0
@@ -61,7 +61,7 @@ task fastp_se {
     # -g enables polyg trimming with default value of 10
     # --detect_adapter_for_pe argument was removed 
     String fastp_args = "-g -5 20 -3 20"
-    Int threads = 4
+    Int cpu = 4
     Int memory = 8
   }
   command <<<
@@ -73,7 +73,7 @@ task fastp_se {
     --out1 ~{samplename}_1P.fastq.gz \
     --cut_right --cut_right_window_size ~{fastp_window_size} --cut_right_mean_quality ~{fastp_quality_trim_score} \
     --length_required ~{fastp_minlen} \
-    --thread ~{threads} \
+    --thread ~{cpu} \
     ~{fastp_args} \
     --html ~{samplename}_fastp.html --json ~{samplename}_fastp.json
   >>>
@@ -86,7 +86,7 @@ task fastp_se {
   runtime {
     docker: docker
     memory: memory + " GB"
-    cpu: threads
+    cpu: cpu
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
     preemptible: 0

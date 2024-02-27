@@ -7,9 +7,9 @@ task trimmomatic_pe {
     String samplename
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/trimmomatic:0.39"
     Int trimmomatic_minlen = 75
-    Int trimmomatic_window_size=4
-    Int trimmomatic_quality_trim_score=30
-    Int threads = 4
+    Int trimmomatic_window_size = 4
+    Int trimmomatic_quality_trim_score = 30
+    Int cpu = 4
     String? trimmomatic_args
     Int disk_size = 100
     Int memory = 8
@@ -21,7 +21,7 @@ task trimmomatic_pe {
 
     trimmomatic PE \
     ~{trimmomatic_args} \
-    -threads ~{threads} \
+    -threads ~{cpu} \
     ~{read1} ~{read2} \
     -baseout ~{samplename}.fastq.gz \
     SLIDINGWINDOW:~{trimmomatic_window_size}:~{trimmomatic_quality_trim_score} \
@@ -39,7 +39,7 @@ task trimmomatic_pe {
   runtime {
     docker: "~{docker}"
     memory: memory + " GB"
-    cpu: threads
+    cpu: cpu
     disks:  "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB" # TES
     preemptible: 0
@@ -55,7 +55,7 @@ task trimmomatic_se {
     Int trimmomatic_minlen = 25
     Int trimmomatic_window_size = 4
     Int trimmomatic_quality_trim_score = 30
-    Int threads = 4
+    Int cpu = 4
     String? trimmomatic_args
     Int disk_size = 100
     Int memory = 8
@@ -67,7 +67,7 @@ task trimmomatic_se {
 
     trimmomatic SE \
     ~{trimmomatic_args} \
-    -threads ~{threads} \
+    -threads ~{cpu} \
     ~{read1} \
     ~{samplename}_trimmed.fastq.gz \
     SLIDINGWINDOW:~{trimmomatic_window_size}:~{trimmomatic_quality_trim_score} \
@@ -83,7 +83,7 @@ task trimmomatic_se {
   runtime {
     docker: "~{docker}"
     memory: memory + " GB"
-    cpu: threads
+    cpu: cpu
     disks:  "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB" # TES
     preemptible: 0
