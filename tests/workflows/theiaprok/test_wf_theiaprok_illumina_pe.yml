@@ -570,7 +570,7 @@
       md5sum: c8e7ae1ed0fff7b14731228db80c6b30
     - path: miniwdl_run/wdl/tasks/quality_control/read_filtering/task_fastp.wdl
       md5sum: 0faa3de4c2e4aa4cbbe95ae4376fe33a
-    - krakath: miniwdl_run/wdl/tasks/quality_control/basic_statistics/task_fastq_scan.wdl
+    - path: miniwdl_run/wdl/tasks/quality_control/basic_statistics/task_fastq_scan.wdl
       contains: ["version", "fastq_scan", "output"]
     - path: miniwdl_run/wdl/tasks/quality_control/advanced_metrics/task_mummer_ani.wdl
       md5sum: 7425333e3e422b4884885387bc5d3fe7
