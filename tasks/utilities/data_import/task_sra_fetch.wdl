@@ -26,7 +26,7 @@ task fastq_dl_sra {
     fastq-dl \
       --verbose \
       -a ~{sra_accession} \
-      --cpus cpu \
+      --cpus ~{cpu} \
       --prefix ~{sra_accession} \
       ~{fastq_dl_opts}
 
