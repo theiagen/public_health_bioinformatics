@@ -18,6 +18,9 @@ task sm_metadata_wrangling { # the sm stands for supermassive
     Boolean using_reads_dehosted = false
     Boolean usa_territory = false # only for SC2; uses territory name (in state column) for country in GISAID submissions 
     Int disk_size = 100
+    Int memory = 8
+    Int cpu = 4
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-08-28-v4"
   }
   meta {
     # added so that call caching is always turned off
@@ -560,9 +563,9 @@ task sm_metadata_wrangling { # the sm stands for supermassive
     File gisaid_fasta = "~{output_name}_gisaid.fasta"
   }
   runtime {
-    docker: "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-08-28-v4"
-    memory: "8 GB"
-    cpu: 4
+    docker: docker
+    memory: memory + " GB"
+    cpu: cpu
     disks:  "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
     preemptible: 0
@@ -576,6 +579,9 @@ task trim_genbank_fastas {
     Int minlen = 50
     Int maxlen = 30000
     Int disk_size = 100
+    Int memory = 2
+    Int cpu = 1
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/vadr:1.3"
   }
   command <<<
     # remove terminal ambiguous nucleotides
@@ -589,9 +595,9 @@ task trim_genbank_fastas {
     File genbank_fasta = "~{output_name}_genbank.fasta"
   }
   runtime {
-    docker: "us-docker.pkg.dev/general-theiagen/staphb/vadr:1.3"
-    memory: "1 GB"
-    cpu: 1    
+    docker: docker
+    memory: memory + " GB"
+    cpu: cpu
     disks:  "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
     preemptible: 0
@@ -608,6 +614,9 @@ task table2asn {
     File bankit_metadata
     String output_name
     Int disk_size = 100
+    Int memory = 1
+    Int cpu = 1
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/ncbi-table2asn:1.26.678"
   }
   command <<<
     # using this echo statement so the fasta file doesn't have a wiggly line
@@ -630,9 +639,9 @@ task table2asn {
     File sqn_file = "~{output_name}.sqn"
   }
   runtime {
-    docker: "us-docker.pkg.dev/general-theiagen/staphb/ncbi-table2asn:1.26.678"
-    memory: "1 GB"
-    cpu: 1
+    docker: docker
+    memory: memory + " GB"
+    cpu: cpu
     disks:  "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
     preemptible: 0

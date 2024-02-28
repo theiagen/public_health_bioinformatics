@@ -1,21 +1,21 @@
 version 1.0
 
-import "../../tasks/utilities/task_file_handling.wdl" as file_handling
-import "../../tasks/utilities/task_augur_utilities.wdl" as augur_utils
-
 import "../../tasks/phylogenetic_inference/augur/task_augur_align.wdl" as align_task
 import "../../tasks/phylogenetic_inference/augur/task_augur_ancestral.wdl" as ancestral_task
-import "../../tasks/phylogenetic_inference/augur/task_augur_traits.wdl" as traits_task
 import "../../tasks/phylogenetic_inference/augur/task_augur_clades.wdl" as clades_task
 import "../../tasks/phylogenetic_inference/augur/task_augur_export.wdl" as export_task
 import "../../tasks/phylogenetic_inference/augur/task_augur_refine.wdl" as refine_task
+import "../../tasks/phylogenetic_inference/augur/task_augur_traits.wdl" as traits_task
 import "../../tasks/phylogenetic_inference/augur/task_augur_translate.wdl" as translate_task
 import "../../tasks/phylogenetic_inference/augur/task_augur_tree.wdl" as tree_task
 
-import "../../tasks/phylogenetic_inference/task_snp_dists.wdl" as snp_dists_task
-import "../../tasks/phylogenetic_inference/task_reorder_matrix.wdl" as reorder_matrix_task
+import "../../tasks/phylogenetic_inference/utilities/task_reorder_matrix.wdl" as reorder_matrix_task
+import "../../tasks/phylogenetic_inference/utilities/task_snp_dists.wdl" as snp_dists_task
 
 import "../../tasks/task_versioning.wdl" as versioning
+
+import "../../tasks/utilities/data_handling/task_augur_utilities.wdl" as augur_utils
+import "../../tasks/utilities/file_handling/task_cat_files.wdl" as file_handling
 
 workflow augur {
   input {

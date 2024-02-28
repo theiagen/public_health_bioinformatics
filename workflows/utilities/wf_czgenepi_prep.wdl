@@ -1,8 +1,8 @@
 version 1.0
 
-import "../../tasks/utilities/task_czgenepi_wrangling.wdl" as czgenepi_wrangling_task
-import "../../tasks/utilities/task_download_terra_table.wdl" as download_table
 import "../../tasks/task_versioning.wdl" as versioning
+import "../../tasks/utilities/data_export/task_download_terra_table.wdl" as download_table
+import "../../tasks/utilities/data_handling/task_czgenepi_wrangling.wdl" as czgenepi_wrangling_task
 
 workflow czgenepi_prep {
   input {
@@ -32,7 +32,7 @@ workflow czgenepi_prep {
     String organism = "sars-cov-2" # options "sars-cov-2" or "mpox"
     Boolean is_private = true
   }
-  call versioning.version_capture{
+  call versioning.version_capture {
     input:
   }
   call download_table.download_terra_table {

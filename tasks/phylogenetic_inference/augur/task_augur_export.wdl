@@ -15,6 +15,9 @@ task augur_export {
     Boolean include_root_sequence = false # export an additional json containing the root sequence used to identify mutations
   
     Int disk_size = 100
+    Int memory = 64
+    Int cpu = 4
+    String docker = "us-docker.pkg.dev/general-theiagen/biocontainers/augur:22.0.2--pyhdfd78af_0"
   }
   command <<<
     augur export v2 \
@@ -34,10 +37,10 @@ task augur_export {
     File? root_sequence_json = "~{build_name}_auspice_root-sequence.json"
   }
   runtime {
-    docker: "us-docker.pkg.dev/general-theiagen/biocontainers/augur:22.0.2--pyhdfd78af_0"
-    memory: "64 GB"
-    cpu :   4
-    disks:  "local-disk " + disk_size + " HDD"
+    docker: docker
+    memory: memory + " GB"
+    cpu: cpu
+    disks: "local-disk " + disk_size + " HDD"
     disk: disk_size + " GB"
     dx_instance_type: "mem3_ssd1_v2_x4"
     preemptible: 0

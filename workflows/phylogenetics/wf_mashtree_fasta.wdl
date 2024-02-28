@@ -1,9 +1,9 @@
 version 1.0
 
 import "../../tasks/phylogenetic_inference/task_mashtree.wdl" as mashtree
-import "../../tasks/phylogenetic_inference/task_reorder_matrix.wdl" as reorder_matrix_task
-import "../../tasks/utilities/task_summarize_data.wdl" as data_summary
+import "../../tasks/phylogenetic_inference/utilities/task_reorder_matrix.wdl" as reorder_matrix_task
 import "../../tasks/task_versioning.wdl" as versioning
+import "../../tasks/utilities/data_handling/task_summarize_data.wdl" as data_summary
 
 workflow mashtree_fasta {
   input {
@@ -39,7 +39,7 @@ workflow mashtree_fasta {
         output_prefix = cluster_name
     }
   } 
-  call versioning.version_capture{
+  call versioning.version_capture {
     input:
   }
   output {

@@ -8,6 +8,10 @@ task ncbi_sftp_upload {
     Boolean submit_to_production
 
     String wait_for="1"  # all, disabled, some number
+    String docker = "us-docker.pkg.dev/general-theiagen/broadinstitute/ncbi-tools:2.10.7.10"
+    Int cpu = 2
+    Int memory = 2
+    Int disk_size = 100
   }
   command <<<
     # if this is a production submission, then path = production
@@ -45,9 +49,10 @@ task ncbi_sftp_upload {
     Array[File] reports_xmls = glob("*report*.xml")
   }
   runtime { 
-    cpu: 2
-    memory: "2 GB"
-    disks: "local-disk 100 HDD"
+    cpu: cpu
+    memory: memory + " GB"
+    disks: "local-disk " + disk_size + " HDD"
+    disk: disk_size + " GB"
     dx_instance_type: "mem2_ssd1_v2_x2"
     docker: "us-docker.pkg.dev/general-theiagen/broadinstitute/ncbi-tools:2.10.7.10"
     maxRetries: 0
@@ -60,6 +65,10 @@ task sra_tsv_to_xml {
     File config_js
     String bioproject
     String data_bucket_uri
+    Int disk_size = 100
+    Int cpu = 1
+    Int memory = 2
+    String docker = "us-docker.pkg.dev/general-theiagen/broadinstitute/ncbi-tools:2.10.7.10"
   }
   command <<<
     set -e
@@ -80,11 +89,12 @@ task sra_tsv_to_xml {
     File submission_xml = "~{basename(meta_submit_tsv, '.tsv')}-submission.xml"
   }
   runtime {
-    cpu: 1
-    memory: "2 GB"
-    disks: "local-disk 50 HDD"
+    cpu: cpu
+    memory: memory + " GB"
+    disks:  "local-disk " + disk_size + " SSD"
+    disk: disk_size + " GB"
     dx_instance_type: "mem2_ssd1_v2_x2"
-    docker: "us-docker.pkg.dev/general-theiagen/broadinstitute/ncbi-tools:2.10.7.10"
+    docker: docker
     maxRetries: 2
   }
 }
@@ -94,6 +104,10 @@ task biosample_submit_tsv_ftp_upload {
     File meta_submit_tsv
     File config_js
     Boolean submit_to_production
+    Int memory = 2
+    Int cpu = 2
+    Int disk_size = 100
+    String docker = "us-docker.pkg.dev/general-theiagen/broadinstitute/ncbi-tools:2.10.7.10"
   }
   String base=basename(meta_submit_tsv, '.tsv')
   meta {
@@ -156,11 +170,12 @@ task biosample_submit_tsv_ftp_upload {
     Array[File] report_xmls   = glob("~{base}-report*.xml")
   }
   runtime {
-    cpu: 2
-    memory: "2 GB"
-    disks: "local-disk 100 HDD"
+    cpu: cpu
+    memory: memory + " GB"
+    disks:  "local-disk " + disk_size + " SSD"
+    disk: disk_size + " GB"
     dx_instance_type: "mem2_ssd1_v2_x2"
-    docker: "us-docker.pkg.dev/general-theiagen/broadinstitute/ncbi-tools:2.10.7.10"
+    docker: docker
     maxRetries: 0
   }
 }

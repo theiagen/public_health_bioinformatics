@@ -1,14 +1,14 @@
 
 version 1.0
 
-import "../../tasks/quality_control/task_vadr.wdl" as vadr_task
-import "../../tasks/quality_control/task_consensus_qc.wdl" as consensus_qc_task
-import "../../tasks/gene_typing/task_abricate.wdl" as abricate
-import "../../tasks/taxon_id/task_nextclade.wdl" as nextclade_task
-import "../../tasks/species_typing/task_pangolin.wdl" as pangolin
-import "../../tasks/quality_control/task_qc_check_phb.wdl" as qc_check
-import "../../workflows/utilities/wf_organism_parameters.wdl" as defaults
+import "../../tasks/gene_typing/drug_resistance/task_abricate.wdl" as abricate
+import "../../tasks/quality_control/advanced_metrics/task_vadr.wdl" as vadr_task
+import "../../tasks/quality_control/basic_statistics/task_consensus_qc.wdl" as consensus_qc_task
+import "../../tasks/quality_control/comparisons/task_qc_check_phb.wdl" as qc_check
+import "../../tasks/species_typing/betacoronavirus/task_pangolin.wdl" as pangolin
 import "../../tasks/task_versioning.wdl" as versioning
+import "../../tasks/taxon_id/task_nextclade.wdl" as nextclade_task
+import "../utilities/wf_organism_parameters.wdl" as defaults
 
 workflow theiacov_fasta {
   meta {
@@ -52,10 +52,10 @@ workflow theiacov_fasta {
       flu_segment = flu_segment,
       flu_subtype = select_first([flu_subtype, abricate_subtype, "N/A"]),
       reference_genome = reference_genome,
-      genome_length = genome_length,
-      nextclade_ds_reference = nextclade_dataset_reference,
-      nextclade_ds_tag = nextclade_dataset_tag,
-      nextclade_ds_name = nextclade_dataset_name,
+      genome_length_input = genome_length,
+      nextclade_dataset_reference_input = nextclade_dataset_reference,
+      nextclade_dataset_tag_input = nextclade_dataset_tag,
+      nextclade_dataset_name_input = nextclade_dataset_name,
       vadr_max_length = maxlen,
       vadr_options = vadr_opts
   }
@@ -63,16 +63,17 @@ workflow theiacov_fasta {
     input:
       assembly_fasta = assembly_fasta,
       reference_genome = organism_parameters.reference,
-      genome_length = organism_parameters.genome_len
+      genome_length = organism_parameters.genome_length
   }
-  if (organism == "sars-cov-2") {
+  if (organism_parameters.standardized_organism == "sars-cov-2") {
     call pangolin.pangolin4 {
       input:
         samplename = samplename,
-        fasta = assembly_fasta
+        fasta = assembly_fasta,
+        docker = organism_parameters.pangolin_docker
     }
   }
-  if (organism == "sars-cov-2" || organism == "MPXV" || organism == "rsv_a" || organism == "rsv_b" || organism == "flu") {
+  if (organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "rsv_a" || organism_parameters.standardized_organism == "rsv_b" || organism_parameters.standardized_organism == "flu") {
     if (organism_parameters.nextclade_dataset_tag != "NA") {
       call nextclade_task.nextclade {
         input:
@@ -81,20 +82,15 @@ workflow theiacov_fasta {
           dataset_reference = organism_parameters.nextclade_dataset_reference,
           dataset_tag = organism_parameters.nextclade_dataset_tag
       }
-    }
-  }
-  # nextclade parser task
-  if (organism == "sars-cov-2" || organism == "MPXV" || organism == "rsv_a" || organism == "rsv_b" || organism == "flu") {
-    if (defined(nextclade.nextclade_tsv)) {
       call nextclade_task.nextclade_output_parser {
         input:
-          nextclade_tsv = select_first([nextclade.nextclade_tsv]),
-          organism = organism
+          nextclade_tsv = nextclade.nextclade_tsv,
+          organism = organism_parameters.standardized_organism
       }
     }
   }
   # vadr task
-  if (organism == "sars-cov-2" || organism == "MPXV" || organism == "rsv_a" || organism == "rsv_b" || organism == "WNV") {
+  if (organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "rsv_a" || organism_parameters.standardized_organism == "rsv_b" || organism_parameters.standardized_organism == "WNV") {
     call vadr_task.vadr {
       input:
         genome_fasta = assembly_fasta,
@@ -104,7 +100,7 @@ workflow theiacov_fasta {
     }
   }
   # QC check task
-  if(defined(qc_check_table)) {
+  if (defined(qc_check_table)) {
     call qc_check.qc_check_phb {
       input:
         qc_check_table = qc_check_table,
@@ -116,7 +112,7 @@ workflow theiacov_fasta {
         vadr_num_alerts = vadr.num_alerts
     }
   }
-  call versioning.version_capture{
+  call versioning.version_capture {
     input:
   }
   output {

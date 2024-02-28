@@ -1,6 +1,6 @@
 version 1.0
 
-import "../../tasks/species_typing/task_cauris_cladetyper.wdl" as gambit_cladetyper
+import "../../tasks/species_typing/candida/task_cauris_cladetyper.wdl" as gambit_cladetyper
 import "../../tasks/task_versioning.wdl" as versioning
 
 workflow theiacauris_pe {
@@ -13,7 +13,7 @@ workflow theiacauris_pe {
       assembly_fasta = assembly_fasta,
       samplename = samplename
   }
-  call versioning.version_capture{
+  call versioning.version_capture {
     input:
   }
   output {

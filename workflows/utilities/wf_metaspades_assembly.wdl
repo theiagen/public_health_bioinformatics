@@ -1,9 +1,9 @@
 version 1.0
 
-import "../../tasks/assembly/task_metaspades.wdl" as metaspades_task
 import "../../tasks/alignment/task_minimap2.wdl" as minimap2_task
-import "../../tasks/utilities/task_parse_mapping.wdl" as parse_mapping_task
-import "../../tasks/quality_control/task_pilon.wdl" as pilon_task
+import "../../tasks/assembly/task_metaspades.wdl" as metaspades_task
+import "../../tasks/quality_control/read_filtering/task_pilon.wdl" as pilon_task
+import "../../tasks/utilities/data_handling/task_parse_mapping.wdl" as parse_mapping_task
 
 workflow metaspades_assembly_pe {
   meta {
