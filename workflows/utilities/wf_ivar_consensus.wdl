@@ -2,9 +2,9 @@ version 1.0
 
 import "../../tasks/alignment/task_bwa.wdl" as bwa_task
 import "../../tasks/assembly/task_ivar_consensus.wdl" as consensus_task
-import "../../tasks/assembly/task_ivar_primer_trim.wdl" as primer_trim_task
-import "../../tasks/assembly/task_ivar_variant_call.wdl" as variant_call_task
-import "../../tasks/quality_control/task_assembly_metrics.wdl" as assembly_metrics
+import "../../tasks/gene_typing/variant_detection/task_ivar_variant_call.wdl" as variant_call_task
+import "../../tasks/quality_control/basic_statistics/task_assembly_metrics.wdl" as assembly_metrics
+import "../../tasks/quality_control/read_filtering/task_ivar_primer_trim.wdl" as primer_trim_task
 
 workflow ivar_consensus {
   meta {
@@ -75,6 +75,10 @@ workflow ivar_consensus {
     File? read2_aligned = bwa.read2_aligned
     File aligned_bam =  select_first([primer_trim.trim_sorted_bam, bwa.sorted_bam, ""]) # set default values for select_first() to avoid workflow failures
     File aligned_bai = select_first([primer_trim.trim_sorted_bai, bwa.sorted_bai, ""])
+    File read1_unaligned = bwa.read1_unaligned
+    File? read2_unaligned = bwa.read2_unaligned
+    File sorted_bam_unaligned = bwa.sorted_bam_unaligned
+    File sorted_bam_unaligned_bai = bwa.sorted_bam_unaligned_bai
     
     # primer trimming outputs
     Float? primer_trimmed_read_percent = primer_trim.primer_trimmed_read_percent

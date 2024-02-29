@@ -1,11 +1,11 @@
 version 1.0
 
 import "../../tasks/phylogenetic_inference/task_ksnp3.wdl" as ksnp3
-import "../../tasks/phylogenetic_inference/task_ksnp3_shared_snps.wdl" as ksnp3_shared_snps
-import "../../tasks/phylogenetic_inference/task_snp_dists.wdl" as snp_dists
-import "../../tasks/phylogenetic_inference/task_reorder_matrix.wdl" as reorder_matrix
-import "../../tasks/utilities/task_summarize_data.wdl" as data_summary
+import "../../tasks/phylogenetic_inference/utilities/task_ksnp3_shared_snps.wdl" as ksnp3_shared_snps
+import "../../tasks/phylogenetic_inference/utilities/task_reorder_matrix.wdl" as reorder_matrix
+import "../../tasks/phylogenetic_inference/utilities/task_snp_dists.wdl" as snp_dists
 import "../../tasks/task_versioning.wdl" as versioning
+import "../../tasks/utilities/data_handling/task_summarize_data.wdl" as data_summary
 
 workflow ksnp3_workflow {
   input {
@@ -16,6 +16,7 @@ workflow ksnp3_workflow {
     String? data_summary_terra_workspace
     String? data_summary_terra_table
     String? data_summary_column_names # string of comma delimited column names
+    Boolean midpoint_root_tree = true
 	}
   call ksnp3.ksnp3 as ksnp3_task {
     input:
@@ -33,7 +34,8 @@ workflow ksnp3_workflow {
       input:
         input_tree = ksnp3_task.ksnp3_core_tree,
         matrix = core_snp_dists.snp_matrix,
-        cluster_name = cluster_name + "_core"
+        cluster_name = cluster_name + "_core",
+        midpoint_root_tree = midpoint_root_tree
     }
     call ksnp3_shared_snps.ksnp3_shared_snps as core_ksnp3_shared_snps_task {
       input:
@@ -51,7 +53,8 @@ workflow ksnp3_workflow {
     input:
       input_tree = ksnp3_task.ksnp3_pan_parsimony_tree,
       matrix = pan_snp_dists.snp_matrix,
-      cluster_name = cluster_name + "_pan"
+      cluster_name = cluster_name + "_pan",
+      midpoint_root_tree = midpoint_root_tree
   }
   if (defined(data_summary_column_names)) {
     call data_summary.summarize_data {
@@ -64,7 +67,7 @@ workflow ksnp3_workflow {
         output_prefix = cluster_name
     }
   }
-  call versioning.version_capture{
+  call versioning.version_capture {
     input:
   }
   output {

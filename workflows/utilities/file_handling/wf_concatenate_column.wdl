@@ -1,7 +1,7 @@
 version 1.0
 
-import "../../../tasks/utilities/task_file_handling.wdl" as file_handling
 import "../../../tasks/task_versioning.wdl" as versioning
+import "../../../tasks/utilities/file_handling/task_cat_files.wdl" as file_handling
 
 workflow concatenate_column_content {
   input {

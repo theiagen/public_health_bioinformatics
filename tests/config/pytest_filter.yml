@@ -1,23 +1,23 @@
 wf_theiacov_clearlabs:
   - workflows/theiacov/wf_theiacov_clearlabs.wdl
   - tasks/assembly/task_artic_consensus.wdl
-  - tasks/quality_control/task_assembly_metrics.wdl
+  - tasks/quality_control/basic_statistics/task_assembly_metrics.wdl
   - tasks/quality_control/task_ncbi_scrub.wdl
-  - tasks/quality_control/task_vadr.wdl
+  - tasks/quality_control/advanced_metrics/task_vadr.wdl
   - tasks/quality_control/task_fastq_scan.wdl
-  - tasks/quality_control/task_consensus_qc.wdl
-  - tasks/taxon_id/task_kraken2.wdl
+  - tasks/quality_control/basic_statistics/task_consensus_qc.wdl
+  - tasks/taxon_id/contamination/task_kraken2.wdl
   - tasks/taxon_id/task_nextclade.wdl
-  - tasks/species_typing/task_pangolin.wdl
-  - tasks/gene_typing/task_sc2_gene_coverage.wdl
+  - tasks/species_typing/betacoronavirus/task_pangolin.wdl
+  - tasks/quality_control/basic_statistics/task_sc2_gene_coverage.wdl
   - tasks/task_versioning.wdl
 
 wf_theiacov_fasta:
   - workflows/theiacov/wf_theiacov_fasta.wdl
-  - tasks/quality_control/task_vadr.wdl
-  - tasks/quality_control/task_consensus_qc.wdl
+  - tasks/quality_control/advanced_metrics/task_vadr.wdl
+  - tasks/quality_control/basic_statistics/task_consensus_qc.wdl
   - tasks/taxon_id/task_nextclade.wdl
-  - tasks/species_typing/task_pangolin.wdl
+  - tasks/species_typing/betacoronavirus/task_pangolin.wdl
   - tasks/task_versioning.wdl
 
 wf_theiacov_illumina_pe:
@@ -26,18 +26,18 @@ wf_theiacov_illumina_pe:
   - workflows/utilities/wf_ivar_consensus.wdl
   - tasks/alignment/task_bwa.wdl
   - tasks/assembly/task_ivar_consensus.wdl
-  - tasks/assembly/task_ivar_primer_trim.wdl
-  - tasks/assembly/task_ivar_variant_call.wdl
-  - tasks/quality_control/task_assembly_metrics.wdl
+  - tasks/quality_control/read_filtering/task_ivar_primer_trim.wdl
+  - tasks/gene_typing/variant_detection/task_ivar_variant_call.wdl
+  - tasks/quality_control/basic_statistics/task_assembly_metrics.wdl
   - tasks/assembly/task_irma.wdl
-  - tasks/quality_control/task_vadr.wdl
-  - tasks/quality_control/task_consensus_qc.wdl
-  - tasks/quality_control/task_screen.wdl
+  - tasks/quality_control/advanced_metrics/task_vadr.wdl
+  - tasks/quality_control/basic_statistics/task_consensus_qc.wdl
+  - tasks/quality_control/comparisons/task_screen.wdl
   - tasks/taxon_id/task_nextclade.wdl
-  - tasks/species_typing/task_pangolin.wdl
-  - tasks/species_typing/task_quasitools.wdl
-  - tasks/gene_typing/task_abricate.wdl
-  - tasks/gene_typing/task_sc2_gene_coverage.wdl
+  - tasks/species_typing/betacoronavirus/task_pangolin.wdl
+  - tasks/species_typing/lentivirus/task_quasitools.wdl
+  - tasks/gene_typing/drug_resistance/task_abricate.wdl
+  - tasks/quality_control/basic_statistics/task_sc2_gene_coverage.wdl
   - tasks/task_versioning.wdl
 
 wf_theiacov_illumina_se:
@@ -46,123 +46,123 @@ wf_theiacov_illumina_se:
   - workflows/utilities/wf_ivar_consensus.wdl
   - tasks/alignment/task_bwa.wdl
   - tasks/assembly/task_ivar_consensus.wdl
-  - tasks/assembly/task_ivar_primer_trim.wdl
-  - tasks/assembly/task_ivar_variant_call.wdl
-  - tasks/quality_control/task_assembly_metrics.wdl
+  - tasks/quality_control/read_filtering/task_ivar_primer_trim.wdl
+  - tasks/gene_typing/variant_detection/task_ivar_variant_call.wdl
+  - tasks/quality_control/basic_statistics/task_assembly_metrics.wdl
   - tasks/assembly/task_irma.wdl
-  - tasks/quality_control/task_vadr.wdl
-  - tasks/quality_control/task_consensus_qc.wdl
-  - tasks/quality_control/task_screen.wdl
+  - tasks/quality_control/advanced_metrics/task_vadr.wdl
+  - tasks/quality_control/basic_statistics/task_consensus_qc.wdl
+  - tasks/quality_control/comparisons/task_screen.wdl
   - tasks/taxon_id/task_nextclade.wdl
-  - tasks/species_typing/task_pangolin.wdl
-  - tasks/gene_typing/task_sc2_gene_coverage.wdl
+  - tasks/species_typing/betacoronavirus/task_pangolin.wdl
+  - tasks/quality_control/basic_statistics/task_sc2_gene_coverage.wdl
   - tasks/task_versioning.wdl
 
 wf_theiacov_ont:
   - workflows/theiacov/wf_theiacov_ont.wdl
   - tasks/assembly/task_artic_consensus.wdl
-  - tasks/quality_control/task_artic_guppyplex.wdl
-  - tasks/quality_control/task_assembly_metrics.wdl
+  - tasks/quality_control/read_filtering/task_artic_guppyplex.wdl
+  - tasks/quality_control/basic_statistics/task_assembly_metrics.wdl
   - tasks/quality_control/task_ncbi_scrub.wdl
-  - tasks/quality_control/task_vadr.wdl
+  - tasks/quality_control/advanced_metrics/task_vadr.wdl
   - tasks/quality_control/task_fastq_scan.wdl
-  - tasks/quality_control/task_consensus_qc.wdl
-  - tasks/quality_control/task_screen.wdl
-  - tasks/taxon_id/task_kraken2.wdl
+  - tasks/quality_control/basic_statistics/task_consensus_qc.wdl
+  - tasks/quality_control/comparisons/task_screen.wdl
+  - tasks/taxon_id/contamination/task_kraken2.wdl
   - tasks/taxon_id/task_nextclade.wdl
-  - tasks/species_typing/task_pangolin.wdl
-  - tasks/species_typing/task_quasitools.wdl
-  - tasks/gene_typing/task_sc2_gene_coverage.wdl
+  - tasks/species_typing/betacoronavirus/task_pangolin.wdl
+  - tasks/species_typing/lentivirus/task_quasitools.wdl
+  - tasks/quality_control/basic_statistics/task_sc2_gene_coverage.wdl
   - tasks/task_versioning.wdl
 
 wf_theiaprok_illumina_pe:
   - workflows/theiaprok/wf_theiaprok_illumina_pe.wdl
   - tasks/assembly/task_shovill.wdl
   - tasks/taxon_id/task_gambit.wdl
-  - tasks/gene_typing/task_abricate.wdl
-  - tasks/gene_typing/task_amrfinderplus.wdl
-  - tasks/gene_typing/task_resfinder.wdl
-  - tasks/gene_typing/task_bakta.wdl
-  - tasks/gene_typing/task_prokka.wdl
-  - tasks/gene_typing/task_plasmidfinder.wdl
+  - tasks/gene_typing/drug_resistance/task_abricate.wdl
+  - tasks/gene_typing/drug_resistance/task_amrfinderplus.wdl
+  - tasks/gene_typing/drug_resistance/task_resfinder.wdl
+  - tasks/gene_typing/annotation/task_bakta.wdl
+  - tasks/gene_typing/annotation/task_prokka.wdl
+  - tasks/gene_typing/plasmid_detection/task_plasmidfinder.wdl
   - tasks/task_versioning.wdl
-  - tasks/utilities/task_broad_terra_tools.wdl
+  - tasks/utilities/data_export/task_broad_terra_tools.wdl
   - workflows/utilities/wf_read_QC_trim_pe.wdl
-  - tasks/quality_control/task_bbduk.wdl
-  - tasks/quality_control/task_busco.wdl
-  - tasks/quality_control/task_cg_pipeline.wdl
+  - tasks/quality_control/read_filtering/task_bbduk.wdl
+  - tasks/quality_control/advanced_metrics/task_busco.wdl
+  - tasks/quality_control/basic_statistics/task_cg_pipeline.wdl
   - tasks/quality_control/task_fastq_scan.wdl
-  - tasks/quality_control/task_fastp.wdl
-  - tasks/quality_control/task_mummer_ani.wdl
+  - tasks/quality_control/read_filtering/task_fastp.wdl
+  - tasks/quality_control/advanced_metrics/task_mummer_ani.wdl
   - tasks/quality_control/task_ncbi_scrub.wdl
   - tasks/quality_control/task_qc_check.wdl
-  - tasks/quality_control/task_quast.wdl
-  - tasks/quality_control/task_screen.wdl
-  - tasks/quality_control/task_trimmomatic.wdl
+  - tasks/quality_control/basic_statistics/task_quast.wdl
+  - tasks/quality_control/comparisons/task_screen.wdl
+  - tasks/quality_control/read_filtering/task_trimmomatic.wdl
   - workflows/utilities/wf_merlin_magic.wdl
-  - tasks/species_typing/task_ectyper.wdl
-  - tasks/species_typing/task_genotyphi.wdl
-  - tasks/species_typing/task_kaptive.wdl
-  - tasks/species_typing/task_kleborate.wdl
-  - tasks/species_typing/task_legsta.wdl
-  - tasks/species_typing/task_lissero.wdl
-  - tasks/species_typing/task_pasty.wdl
-  - tasks/species_typing/task_pbptyper.wdl
-  - tasks/species_typing/task_poppunk_streppneumo.wdl
-  - tasks/species_typing/task_seqsero2.wdl
-  - tasks/species_typing/task_seroba.wdl
-  - tasks/species_typing/task_serotypefinder.wdl
-  - tasks/species_typing/task_shigatyper.wdl
-  - tasks/species_typing/task_shigeifinder.wdl
-  - tasks/species_typing/task_sistr.wdl
-  - tasks/species_typing/task_sonneityping.wdl
-  - tasks/species_typing/task_tbprofiler.wdl
-  - tasks/species_typing/task_ts_mlst.wdl
-  - tasks/taxon_id/task_kraken2.wdl
-  - tasks/taxon_id/task_midas.wdl
+  - tasks/species_typing/escherichia_shigella/task_ectyper.wdl
+  - tasks/species_typing/salmonella/task_genotyphi.wdl
+  - tasks/species_typing/acinetobacter/task_kaptive.wdl
+  - tasks/species_typing/klebsiella/task_kleborate.wdl
+  - tasks/species_typing/legionella/task_legsta.wdl
+  - tasks/species_typing/listeria/task_lissero.wdl
+  - tasks/species_typing/pseudomonas/task_pasty.wdl
+  - tasks/species_typing/streptococcus/task_pbptyper.wdl
+  - tasks/species_typing/streptococcus/task_poppunk_streppneumo.wdl
+  - tasks/species_typing/salmonella/task_seqsero2.wdl
+  - tasks/species_typing/streptococcus/task_seroba.wdl
+  - tasks/species_typing/escherichia_shigella/task_serotypefinder.wdl
+  - tasks/species_typing/escherichia_shigella/task_shigatyper.wdl
+  - tasks/species_typing/escherichia_shigella/task_shigeifinder.wdl
+  - tasks/species_typing/salmonella/task_sistr.wdl
+  - tasks/species_typing/escherichia_shigella/task_sonneityping.wdl
+  - tasks/species_typing/mycobacterium/task_tbprofiler.wdl
+  - tasks/species_typing/multi/task_ts_mlst.wdl
+  - tasks/taxon_id/contamination/task_kraken2.wdl
+  - tasks/taxon_id/contamination/task_midas.wdl
 
 wf_theiaprok_illumina_se:
   - workflows/theiaprok/wf_theiaprok_illumina_se.wdl
   - tasks/assembly/task_shovill.wdl
   - tasks/taxon_id/task_gambit.wdl
-  - tasks/gene_typing/task_abricate.wdl
-  - tasks/gene_typing/task_amrfinderplus.wdl
-  - tasks/gene_typing/task_resfinder.wdl
-  - tasks/gene_typing/task_bakta.wdl
-  - tasks/gene_typing/task_prokka.wdl
-  - tasks/gene_typing/task_plasmidfinder.wdl
+  - tasks/gene_typing/drug_resistance/task_abricate.wdl
+  - tasks/gene_typing/drug_resistance/task_amrfinderplus.wdl
+  - tasks/gene_typing/drug_resistance/task_resfinder.wdl
+  - tasks/gene_typing/annotation/task_bakta.wdl
+  - tasks/gene_typing/annotation/task_prokka.wdl
+  - tasks/gene_typing/plasmid_detection/task_plasmidfinder.wdl
   - tasks/task_versioning.wdl
-  - tasks/utilities/task_broad_terra_tools.wdl
+  - tasks/utilities/data_export/task_broad_terra_tools.wdl
   - workflows/utilities/wf_read_QC_trim_se.wdl
-  - tasks/quality_control/task_bbduk.wdl
-  - tasks/quality_control/task_busco.wdl
-  - tasks/quality_control/task_cg_pipeline.wdl
+  - tasks/quality_control/read_filtering/task_bbduk.wdl
+  - tasks/quality_control/advanced_metrics/task_busco.wdl
+  - tasks/quality_control/basic_statistics/task_cg_pipeline.wdl
   - tasks/quality_control/task_fastq_scan.wdl
-  - tasks/quality_control/task_fastp.wdl
-  - tasks/quality_control/task_mummer_ani.wdl
+  - tasks/quality_control/read_filtering/task_fastp.wdl
+  - tasks/quality_control/advanced_metrics/task_mummer_ani.wdl
   - tasks/quality_control/task_ncbi_scrub.wdl
   - tasks/quality_control/task_qc_check.wdl
-  - tasks/quality_control/task_quast.wdl
-  - tasks/quality_control/task_screen.wdl
-  - tasks/quality_control/task_trimmomatic.wdl
+  - tasks/quality_control/basic_statistics/task_quast.wdl
+  - tasks/quality_control/comparisons/task_screen.wdl
+  - tasks/quality_control/read_filtering/task_trimmomatic.wdl
   - workflows/utilities/wf_merlin_magic.wdl
-  - tasks/species_typing/task_ectyper.wdl
-  - tasks/species_typing/task_genotyphi.wdl
-  - tasks/species_typing/task_kaptive.wdl
-  - tasks/species_typing/task_kleborate.wdl
-  - tasks/species_typing/task_legsta.wdl
-  - tasks/species_typing/task_lissero.wdl
-  - tasks/species_typing/task_pasty.wdl
-  - tasks/species_typing/task_pbptyper.wdl
-  - tasks/species_typing/task_poppunk_streppneumo.wdl
-  - tasks/species_typing/task_seqsero2.wdl
-  - tasks/species_typing/task_seroba.wdl
-  - tasks/species_typing/task_serotypefinder.wdl
-  - tasks/species_typing/task_shigatyper.wdl
-  - tasks/species_typing/task_shigeifinder.wdl
-  - tasks/species_typing/task_sistr.wdl
-  - tasks/species_typing/task_sonneityping.wdl
-  - tasks/species_typing/task_tbprofiler.wdl
-  - tasks/species_typing/task_ts_mlst.wdl
-  - tasks/taxon_id/task_kraken2.wdl
-  - tasks/taxon_id/task_midas.wdl
+  - tasks/species_typing/escherichia_shigella/task_ectyper.wdl
+  - tasks/species_typing/salmonella/task_genotyphi.wdl
+  - tasks/species_typing/acinetobacter/task_kaptive.wdl
+  - tasks/species_typing/klebsiella/task_kleborate.wdl
+  - tasks/species_typing/legionella/task_legsta.wdl
+  - tasks/species_typing/listeria/task_lissero.wdl
+  - tasks/species_typing/pseudomonas/task_pasty.wdl
+  - tasks/species_typing/streptococcus/task_pbptyper.wdl
+  - tasks/species_typing/streptococcus/task_poppunk_streppneumo.wdl
+  - tasks/species_typing/salmonella/task_seqsero2.wdl
+  - tasks/species_typing/streptococcus/task_seroba.wdl
+  - tasks/species_typing/escherichia_shigella/task_serotypefinder.wdl
+  - tasks/species_typing/escherichia_shigella/task_shigatyper.wdl
+  - tasks/species_typing/escherichia_shigella/task_shigeifinder.wdl
+  - tasks/species_typing/salmonella/task_sistr.wdl
+  - tasks/species_typing/escherichia_shigella/task_sonneityping.wdl
+  - tasks/species_typing/mycobacterium/task_tbprofiler.wdl
+  - tasks/species_typing/multi/task_ts_mlst.wdl
+  - tasks/taxon_id/contamination/task_kraken2.wdl
+  - tasks/taxon_id/contamination/task_midas.wdl

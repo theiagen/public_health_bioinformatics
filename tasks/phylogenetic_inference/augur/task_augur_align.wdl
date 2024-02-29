@@ -5,9 +5,10 @@ task augur_align {
     File assembly_fasta
     File reference_fasta
     Boolean fill_gaps = false
-    Int cpus = 64
-    Int mem_size = 128
+    Int cpu = 64
+    Int memory = 128
     Int disk_size = 750
+    String docker = "us-docker.pkg.dev/general-theiagen/biocontainers/augur:22.0.2--pyhdfd78af_0"
   }
   command <<<
     # capture version information
@@ -16,7 +17,7 @@ task augur_align {
     # run augur align
     augur align \
       --sequences ~{assembly_fasta} \
-      --nthreads ~{cpus} \
+      --nthreads cpu \
       --reference-sequence ~{reference_fasta} \
       ~{true="--fill-gaps" false="" fill_gaps}
   >>>
@@ -25,10 +26,10 @@ task augur_align {
     String augur_version = read_string("VERSION")
   }
   runtime {
-    docker: "us-docker.pkg.dev/general-theiagen/biocontainers/augur:22.0.2--pyhdfd78af_0"
-    memory: mem_size + " GB"
-    cpu :   cpus
-    disks:  "local-disk " + disk_size + " LOCAL"
+    docker: docker
+    memory: memory + " GB"
+    cpu: cpu
+    disks: "local-disk " + disk_size + " LOCAL"
     disk: disk_size + " GB" # TES
     preemptible: 0
     dx_instance_type: "mem3_ssd1_v2_x36"

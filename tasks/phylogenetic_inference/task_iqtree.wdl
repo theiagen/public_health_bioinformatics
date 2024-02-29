@@ -11,6 +11,7 @@ task iqtree {
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/iqtree:1.6.7"
     Int disk_size = 100
     Int cpu = 4
+    Int memory = 32
   }
   command <<<
     # date and version control
@@ -39,7 +40,7 @@ task iqtree {
   }
   runtime {
     docker: "~{docker}"
-    memory: "32 GB"
+    memory: memory + " GB"
     cpu: cpu
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB" # TES

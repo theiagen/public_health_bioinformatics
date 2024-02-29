@@ -4,8 +4,7 @@
     - wf_theiacov_fasta
     - wf_theiacov_fasta_cromwell
   files:
-    - path: log.err
-      contains: ["Successfully released change log lock", "INFO", "WORKFLOW_METADATA_SUMMARY_ENTRY", "liquibase"]
+    - path: log.err # file is empty, so don't check for strings within, just for presence
     - path: log.out
       contains: ["workflow finished with status 'Succeeded'", "theiacov_fasta", "Done"]
     - path: metadata.json
@@ -38,7 +37,7 @@
       md5sum: 6808ca805661622ad65ae014a4b2a094
     - path: miniwdl_run/call-consensus_qc/work/_miniwdl_inputs/0/clearlabs.fasta.gz
     - path: miniwdl_run/call-nextclade/command
-      md5sum: 8d217015adda520c9fae6558584908fd
+      md5sum: 5574a2eac479f797176a8ecc305b5e0d
     - path: miniwdl_run/call-nextclade/inputs.json
     - path: miniwdl_run/call-nextclade/outputs.json
     - path: miniwdl_run/call-nextclade/stderr.txt
@@ -100,7 +99,7 @@
     - path: miniwdl_run/call-nextclade/work/nextclade_gene_S.translation.fasta
       md5sum: e630a638abbb2c8ab4a8b74455e9668f
     - path: miniwdl_run/call-nextclade_output_parser/command
-      md5sum: f918de75f6557723a0b57fd67cf7a455
+      md5sum: 629c753cf1951ee281791f9b03ffd5a6
     - path: miniwdl_run/call-nextclade_output_parser/inputs.json
     - path: miniwdl_run/call-nextclade_output_parser/outputs.json
     - path: miniwdl_run/call-nextclade_output_parser/stderr.txt
@@ -122,7 +121,7 @@
     - path: miniwdl_run/call-nextclade_output_parser/work/input.tsv
       md5sum: 9b459df2831ab1974c9c8cef5bc5340e
     - path: miniwdl_run/call-pangolin4/command
-      md5sum: 558f8f3b23b7562e7dca67dc0a647522
+      md5sum: b9c36681b77c5e007bf7e890265d70eb
     - path: miniwdl_run/call-pangolin4/inputs.json
     - path: miniwdl_run/call-pangolin4/outputs.json
     - path: miniwdl_run/call-pangolin4/stderr.txt
@@ -139,12 +138,12 @@
     - path: miniwdl_run/call-pangolin4/work/PANGOLIN_NOTES
       md5sum: 71eba5c871bca955ab2a69dbd2c3c62e
     - path: miniwdl_run/call-pangolin4/work/PANGO_ASSIGNMENT_VERSION
-      md5sum: 6ee5bf9a023f7a2c3033df1d8ee93f90
+      md5sum: 9cc18e8dd4fd8078dafc5e83729ccc14
     - path: miniwdl_run/call-pangolin4/work/VERSION_PANGOLIN_ALL
-      md5sum: 9f9c4c00a1ceb5526bed7dc4cdb3dcfd
+      md5sum: 7cb68886c2a1b4308be17d69dcb32d9a
     - path: miniwdl_run/call-pangolin4/work/_miniwdl_inputs/0/clearlabs.fasta.gz
     - path: miniwdl_run/call-pangolin4/work/fasta.pangolin_report.csv
-      md5sum: c8ddc2706b30b5bfcaf32636ed5a63ec
+      md5sum: b9583856dad826856fec1383588ad50e
     - path: miniwdl_run/call-vadr/command
       md5sum: f4ad614b7ad39f28a8145cec280a93c0
     - path: miniwdl_run/call-vadr/inputs.json
@@ -160,11 +159,11 @@
     - path: miniwdl_run/call-version_capture/inputs.json
     - path: miniwdl_run/call-version_capture/outputs.json
     - path: miniwdl_run/call-version_capture/task.log
-    - path: miniwdl_run/wdl/tasks/quality_control/task_consensus_qc.wdl
+    - path: miniwdl_run/wdl/tasks/quality_control/basic_statistics/task_consensus_qc.wdl
       contains: ["qc", "command", "output", "runtime"]
-    - path: miniwdl_run/wdl/tasks/quality_control/task_vadr.wdl
+    - path: miniwdl_run/wdl/tasks/quality_control/advanced_metrics/task_vadr.wdl
       contains: ["vadr", "command", "output", "runtime"]
-    - path: miniwdl_run/wdl/tasks/species_typing/task_pangolin.wdl
+    - path: miniwdl_run/wdl/tasks/species_typing/betacoronavirus/task_pangolin.wdl
       contains: ["pangolin", "command", "output", "runtime"]
     - path: miniwdl_run/wdl/tasks/task_versioning.wdl
       contains: ["version", "command", "output", "runtime"]

@@ -1,6 +1,6 @@
 version 1.0
 
-import "../../../tasks/quality_control/task_vadr.wdl" as vadr_task
+import "../../../tasks/quality_control/advanced_metrics/task_vadr.wdl" as vadr_task
 import "../../../tasks/task_versioning.wdl" as versioning
 
 workflow vadr_update {
@@ -15,7 +15,7 @@ workflow vadr_update {
       docker = docker,
       assembly_length_unambiguous = assembly_length_unambiguous
   }
-  call versioning.version_capture{
+  call versioning.version_capture {
     input:
   }
   output {
