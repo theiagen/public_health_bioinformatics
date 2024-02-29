@@ -1,7 +1,7 @@
 version 1.0
 
-import "../../tasks/utilities/task_file_handling.wdl" as file_handling
-import "../../tasks/phylogenetic_inference/task_shared_variants.wdl" as shared_variants_task
+import "../../tasks/utilities/file_handling/task_cat_files.wdl" as file_handling
+import "../../tasks/phylogenetic_inference/utilities/task_shared_variants.wdl" as shared_variants_task
 import "../../tasks/task_versioning.wdl" as versioning
 
 workflow shared_variants_wf {
@@ -9,20 +9,19 @@ workflow shared_variants_wf {
     description: "Concatenate variants from multiple samples and create a shared variants table"
   }
   input {
-    Array[File] files_to_cat
+    Array[File] variants_to_cat
     Array[String] samplenames
     String concatenated_file_name
   }
-  call file_handling.cat_files {
+  call file_handling.cat_variants {
     input:
-      files_to_cat = files_to_cat,
+      variants_to_cat = variants_to_cat,
       samplenames = samplenames,
-      concatenated_file_name = concatenated_file_name,
-      concatenate_variants = true
+      concatenated_file_name = concatenated_file_name
   }
   call shared_variants_task.shared_variants {
     input:
-      concatenated_variants = cat_files.concatenated_files,
+      concatenated_variants = cat_variants.concatenated_variants,
       concatenated_file_name = concatenated_file_name
     }
   call versioning.version_capture{
@@ -34,7 +33,7 @@ workflow shared_variants_wf {
     String shared_variants_analysis_date = version_capture.date
 
     # shared snps outputs
-    File concatenated_variants = cat_files.concatenated_files
+    File concatenated_variants = cat_variants.concatenated_variants
     File shared_variants_table = shared_variants.shared_variants_table
   }
 }

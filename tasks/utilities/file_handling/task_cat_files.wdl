@@ -45,6 +45,58 @@ task cat_files {
   }
 }
 
+task cat_variants {
+  input {
+    Array[File] variants_to_cat
+    Array[String] samplenames
+    String concatenated_file_name
+    String docker_image = "us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1"
+  }
+  meta {
+    # added so that call caching is always turned off
+    volatile: true
+  }
+  command <<<
+
+    file_array=(~{sep=' ' variants_to_cat})
+    file_array_len=$(echo "${#file_array[@]}")
+    samplename_array=(~{sep=' ' samplenames})
+    samplename_array_len=$(echo "${#samplename_array[@]}")
+    
+    touch ~{concatenated_file_name}
+
+    # Ensure file, and samplename arrays are of equal length
+    if [ "$file_array_len" -ne "$samplename_array_len" ]; then
+      echo "File array (length: $file_array_len) and samplename array (length: $samplename_array_len) are of unequal length." >&2
+      exit 1
+    fi
+
+    # cat files one by one and store them in the concatenated_files file, but with an additional column indicating samplename
+    for index in ${!file_array[@]}; do
+      file=${file_array[$index]}
+      samplename=${samplename_array[$index]}
+      # create a new column with "samplename" as the column name and the samplename as the column content, combine with rest of file
+      if [ "$index" -eq "0" ]; then
+        # if first cloumn, add header
+        awk -v var=$samplename 'BEGIN{ FS = OFS = "," } { print (NR==1? "samplename" : var), $0 }' $file >> ~{concatenated_file_name}
+      else
+        tail -n +2 $file | awk -v var=$samplename 'BEGIN{ FS = OFS = "," } { print var, $0 }' >> ~{concatenated_file_name}
+      fi
+    done
+
+  >>>
+  output {
+    File concatenated_variants = "~{concatenated_file_name}.csv"
+  }
+  runtime {
+    docker: "~{docker_image}"
+    memory: "8 GB"
+    cpu: 2
+    disks: "local-disk 100 SSD"
+    preemptible: 0
+  }
+}
+
 task cat_files_fasta {
   input {
     Array[File] files_to_cat

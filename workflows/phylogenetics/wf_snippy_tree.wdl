@@ -5,8 +5,8 @@ import "../../tasks/phylogenetic_inference/task_iqtree2.wdl" as iqtree2_task
 import "../../tasks/phylogenetic_inference/utilities/task_reorder_matrix.wdl" as reorder_matrix_task
 import "../../tasks/phylogenetic_inference/utilities/task_snippy_core.wdl" as snippy_core_task
 import "../../tasks/phylogenetic_inference/utilities/task_snp_dists.wdl" as snp_dists_task
-import "../../tasks/utilities/task_file_handling.wdl" as concatenate_variants_task
-import "../../tasks/phylogenetic_inference/task_shared_variants.wdl" as shared_variants_task
+import "../../tasks/utilities/file_handling/task_cat_files.wdl" as file_handling
+import "../../tasks/phylogenetic_inference/utilities/task_shared_variants.wdl" as shared_variants_task
 import "../../tasks/phylogenetic_inference/utilities/task_snp_sites.wdl" as snp_sites_task
 import "../../tasks/task_versioning.wdl" as versioning
 import "../../tasks/utilities/data_handling/task_summarize_data.wdl" as data_summary
@@ -22,7 +22,7 @@ workflow snippy_tree_wf {
     File reference_genome_file
     Boolean use_gubbins = true
     Boolean core_genome = true
-    Boolean call_shared_variants = false
+    Boolean call_shared_variants = true
     
     String? data_summary_terra_project
     String? data_summary_terra_workspace
@@ -169,16 +169,15 @@ workflow snippy_tree_wf {
     }
   }
   if (call_shared_variants) {
-    call concatenate_variants_task.cat_files as concatenate_variants {
+    call file_handling.cat_variants as concatenate_variants {
       input:
-        files_to_cat = snippy_core.snippy_variants_csv, 
+        variants_to_cat = snippy_core.snippy_variants_csv, 
         samplenames = samplenames,
-        concatenated_file_name = tree_name,
-        concatenate_variants = true
+        concatenated_file_name = tree_name
     }
     call shared_variants_task.shared_variants {
       input:
-        concatenated_variants = concatenate_variants.concatenated_files, 
+        concatenated_variants = concatenate_variants.concatenated_variants, 
         concatenated_file_name = tree_name
     }
   }
@@ -227,7 +226,7 @@ workflow snippy_tree_wf {
     File snippy_final_alignment = select_first([snp_sites.snp_sites_multifasta, gubbins.gubbins_polymorphic_fasta, snippy_core.snippy_full_alignment_clean])
 
     # shared snps outputs
-    File? snippy_concatenated_variants = concatenate_variants.concatenated_files
+    File? snippy_concatenated_variants = concatenate_variants.concatenated_variants
     File? snippy_shared_variants_table = shared_variants.shared_variants_table
   }
 }
