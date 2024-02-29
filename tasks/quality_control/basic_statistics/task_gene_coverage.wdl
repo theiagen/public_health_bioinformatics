@@ -14,6 +14,7 @@ task gene_coverage {
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/samtools:1.15"
     Int disk_size = 100
     Int memory = 8
+    Int cpu = 2
   }
   command <<<
     echo "Calculating gene coverage for ~{samplename} using samtools with ~{bamfile} and ~{baifile}"
@@ -65,7 +66,7 @@ task gene_coverage {
   runtime {
     docker: docker
     memory: memory + " GB"
-    cpu: 2
+    cpu: cpu
     disks:  "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
     preemptible: 0
