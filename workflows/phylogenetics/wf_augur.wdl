@@ -1,21 +1,21 @@
 version 1.0
 
-import "../../tasks/utilities/task_file_handling.wdl" as file_handling
-import "../../tasks/utilities/task_augur_utilities.wdl" as augur_utils
-
 import "../../tasks/phylogenetic_inference/augur/task_augur_align.wdl" as align_task
 import "../../tasks/phylogenetic_inference/augur/task_augur_ancestral.wdl" as ancestral_task
-import "../../tasks/phylogenetic_inference/augur/task_augur_traits.wdl" as traits_task
 import "../../tasks/phylogenetic_inference/augur/task_augur_clades.wdl" as clades_task
 import "../../tasks/phylogenetic_inference/augur/task_augur_export.wdl" as export_task
 import "../../tasks/phylogenetic_inference/augur/task_augur_refine.wdl" as refine_task
+import "../../tasks/phylogenetic_inference/augur/task_augur_traits.wdl" as traits_task
 import "../../tasks/phylogenetic_inference/augur/task_augur_translate.wdl" as translate_task
 import "../../tasks/phylogenetic_inference/augur/task_augur_tree.wdl" as tree_task
 
-import "../../tasks/phylogenetic_inference/task_snp_dists.wdl" as snp_dists_task
-import "../../tasks/phylogenetic_inference/task_reorder_matrix.wdl" as reorder_matrix_task
+import "../../tasks/phylogenetic_inference/utilities/task_reorder_matrix.wdl" as reorder_matrix_task
+import "../../tasks/phylogenetic_inference/utilities/task_snp_dists.wdl" as snp_dists_task
 
 import "../../tasks/task_versioning.wdl" as versioning
+
+import "../../tasks/utilities/data_handling/task_augur_utilities.wdl" as augur_utils
+import "../../tasks/utilities/file_handling/task_cat_files.wdl" as file_handling
 
 workflow augur {
   input {
@@ -39,6 +39,8 @@ workflow augur {
     File auspice_config = "gs://theiagen-public-files-rp/terra/augur-defaults/minimal-auspice-config.json"
 
     Boolean distance_tree_only = false # by default, do not skip making a time tree
+
+    Boolean midpoint_root_tree = true # by default, midpoint root the tree
   }
   if (organism == "sars-cov-2") {
     call augur_utils.set_sc2_defaults as sc2_defaults { # establish default parameters for sars-cov-2
@@ -129,7 +131,6 @@ workflow augur {
               refined_tree = augur_refine.refined_tree,
               ancestral_nt_muts_json = augur_ancestral.ancestral_nt_muts_json,
               translated_aa_muts_json = augur_translate.translated_aa_muts_json,
-              reference_fasta = select_first([reference_fasta, sc2_defaults.reference_fasta, flu_defaults.reference_fasta, mpxv_defaults.reference_fasta]),
               build_name = build_name,
               clades_tsv = select_first([clades_tsv, sc2_defaults.clades_tsv, flu_defaults.clades_tsv, mpxv_defaults.clades_tsv])
           }
@@ -160,7 +161,8 @@ workflow augur {
     input:
       input_tree = augur_tree.aligned_tree,
       matrix = snp_dists.snp_matrix,
-      cluster_name = build_name
+      cluster_name = build_name,
+      midpoint_root_tree = midpoint_root_tree
   }
   call versioning.version_capture { # capture the version
     input:

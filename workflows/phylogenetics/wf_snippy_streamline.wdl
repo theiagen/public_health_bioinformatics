@@ -1,11 +1,11 @@
 version 1.0
 
-import "../../workflows/standalone_modules/wf_snippy_variants.wdl" as snippy_variants_workflow
-import "../../workflows/phylogenetics/wf_snippy_tree.wdl" as snippy_tree_workflow
-import "../../tasks/phylogenetic_inference/task_centroid.wdl" as centroid_task
-import "../../tasks/phylogenetic_inference/task_referenceseeker.wdl" as referenceseeker_task
-import "../../tasks/utilities/task_ncbi_datasets.wdl" as ncbi_datasets_task
+import "../../tasks/phylogenetic_inference/utilities/task_centroid.wdl" as centroid_task
+import "../../tasks/phylogenetic_inference/utilities/task_referenceseeker.wdl" as referenceseeker_task
 import "../../tasks/task_versioning.wdl" as versioning
+import "../../tasks/utilities/data_import/task_ncbi_datasets.wdl" as ncbi_datasets_task
+import "../../workflows/phylogenetics/wf_snippy_tree.wdl" as snippy_tree_workflow
+import "../../workflows/standalone_modules/wf_snippy_variants.wdl" as snippy_variants_workflow
 
 workflow snippy_streamline {
   input {
@@ -101,7 +101,8 @@ workflow snippy_streamline {
     File? snippy_gubbins_branch_stats = snippy_tree_wf.snippy_gubbins_branch_stats
     String snippy_snp_dists_version = snippy_tree_wf.snippy_snp_dists_version
     String snippy_snp_dists_docker = snippy_tree_wf.snippy_snp_dists_docker
-    File snippy_snp_matrix = snippy_tree_wf.snippy_snp_matrix
+    File snippy_wg_snp_matrix = snippy_tree_wf.snippy_wg_snp_matrix
+    File? snippy_cg_snp_matrix = snippy_tree_wf.snippy_cg_snp_matrix
     File? snippy_summarized_data = snippy_tree_wf.snippy_summarized_data
     File? snippy_filtered_metadata = snippy_tree_wf.snippy_filtered_metadata
   }

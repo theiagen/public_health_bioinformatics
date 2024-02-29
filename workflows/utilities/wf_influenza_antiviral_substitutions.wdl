@@ -1,7 +1,7 @@
 version 1.0
 
-import "../../tasks/gene_typing/task_flu_antiviral_subs.wdl" as flu_antiviral
 import "../../tasks/alignment/task_mafft.wdl" as mafft_task
+import "../../tasks/gene_typing/drug_resistance/task_flu_antiviral_subs.wdl" as flu_antiviral
 
 workflow flu_antiviral_substitutions {
   input {

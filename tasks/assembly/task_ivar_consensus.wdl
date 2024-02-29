@@ -15,6 +15,9 @@ task consensus {
     String char_unknown = "N"
     Boolean skip_N = false
     Int disk_size = 100
+    Int memory = 8
+    Int cpu = 2
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/ivar:1.3.1-titan"
   }
   command <<<
     # date and version control
@@ -34,19 +37,19 @@ task consensus {
     
     # call consensus
     samtools mpileup \
-    ~{true = "--count-orphans" false = "" count_orphans} \
-    -d ~{max_depth} \
-    ~{true = "--no-BAQ" false = "" disable_baq} \
-    -Q ~{min_bq} \
-    --reference ${ref_genome} \
-    ~{bamfile} | \
+      ~{true = "--count-orphans" false = "" count_orphans} \
+      -d ~{max_depth} \
+      ~{true = "--no-BAQ" false = "" disable_baq} \
+      -Q ~{min_bq} \
+      --reference ${ref_genome} \
+      ~{bamfile} | \
     ivar consensus \
-    -p ~{samplename}.consensus \
-    -q ~{min_qual} \
-    -t ~{consensus_min_freq} \
-    -m ~{consensus_min_depth} \
-    -n ~{char_unknown} \
-    ~{true = "-k" false = "" skip_N} 
+      -p ~{samplename}.consensus \
+      -q ~{min_qual} \
+      -t ~{consensus_min_freq} \
+      -m ~{consensus_min_depth} \
+      -n ~{char_unknown} \
+      ~{true = "-k" false = "" skip_N} 
 
     # clean up fasta header
     echo ">~{samplename}" > ~{samplename}.ivar.consensus.fasta
@@ -59,9 +62,9 @@ task consensus {
     String pipeline_date = read_string("DATE")
   }
   runtime {
-    docker: "us-docker.pkg.dev/general-theiagen/staphb/ivar:1.3.1-titan"
-    memory: "8 GB"
-    cpu: 2
+    docker: docker
+    memory: memory + " GB"
+    cpu: cpu
     disks:  "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB" # TES
     preemptible: 0
