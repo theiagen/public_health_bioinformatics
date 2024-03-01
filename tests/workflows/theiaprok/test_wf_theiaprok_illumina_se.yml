@@ -528,7 +528,7 @@
     - path: miniwdl_run/wdl/tasks/gene_typing/drug_resistance/task_resfinder.wdl
       md5sum: 27528633723303b462d095b642649453
     - path: miniwdl_run/wdl/tasks/gene_typing/variant_detection/task_snippy_variants.wdl
-      md5sum: c6d1db69ca97e292ebb8833322ba4745
+      md5sum: db2fd675c7ad165ce0165d364e3c048f
     - path: miniwdl_run/wdl/tasks/quality_control/read_filtering/task_bbduk.wdl
       md5sum: aec6ef024d6dff31723f44290f6b9cf5
     - path: miniwdl_run/wdl/tasks/quality_control/advanced_metrics/task_busco.wdl
@@ -600,7 +600,7 @@
     - path: miniwdl_run/wdl/workflows/theiaprok/wf_theiaprok_illumina_se.wdl
       md5sum: a35176ac2f894daa5496f5ae9f0c1e94
     - path: miniwdl_run/wdl/workflows/utilities/wf_merlin_magic.wdl
-      md5sum: d118f2568eefb87ffb8a25edbba96736
+      md5sum: cfb407b32bc9436a0f12e29dc2e3b5a1
     - path: miniwdl_run/wdl/workflows/utilities/wf_read_QC_trim_se.wdl
       md5sum: a3eb93d5c701d6d03c04e166fe6cc844
     - path: miniwdl_run/workflow.log
