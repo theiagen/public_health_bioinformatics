@@ -19,7 +19,7 @@ task snippy_variants {
     # --maxsoft: Maximum soft clipping to allow (default '10')
     Int? map_qual
     Int? base_quality
-    Int? min_coverage
+    Int min_coverage = 10
     Float? min_frac
     Int? min_quality
     Int? maxsoft
@@ -65,22 +65,15 @@ task snippy_variants {
     # compute read depth at every position in the genome
     samtools depth -a "~{samplename}/~{samplename}.bam" -o "~{samplename}/~{samplename}_depth.tsv"
 
-    # if min_coverage is provided, use that value, otherwise use 10
-    if [[ ! -z "~{min_coverage}" ]]; then
-      min_cov="~{min_coverage}"
-    else
-      min_cov=10
-    fi
-
     # compute reference genome length
     reference_length=$(cat "~{samplename}/~{samplename}_depth.tsv" | wc -l)
     echo $reference_length | tee REFERENCE_LENGTH
 
-    # filter depth file to only include positions with depth >= min_cov
-    awk -F "\t" -v cov_var=$min_cov '{ if($3 >= cov_var) {print }}' "~{samplename}/~{samplename}_depth.tsv" > "~{samplename}/~{samplename}_depth_${min_cov}.tsv"
+    # filter depth file to only include positions with depth >= min_coverage
+      awk -F "\t" -v cov_var=~{min_coverage} '{ if ($3 >= cov_var) print;}' "~{samplename}/~{samplename}_depth.tsv" > "~{samplename}/~{samplename}_depth_${min_cov}.tsv"
     
-    # compute proportion of genome with depth >= min_cov
-    reference_length_passed_depth=$(cat "~{samplename}/~{samplename}_depth_${min_cov}.tsv" | wc -l)
+    # compute proportion of genome with depth >= min_coverage
+    reference_length_passed_depth=$(cat "~{samplename}/~{samplename}_depth_~{min_coverage}.tsv" | wc -l)
     echo $reference_length_passed_depth | tee REFERENCE_LENGTH_PASSED_DEPTH
 
     # check if reference_length is equal to 0, if so, output a warning
