@@ -1,7 +1,8 @@
 version 1.0
 
-import "../../tasks/utilities/task_validate.wdl" as validate
 import "../../tasks/task_versioning.wdl" as versioning
+import "../../tasks/utilities/data_export/task_export_two_tsvs.wdl" as export
+import "../../tasks/utilities/data_handling/task_validate.wdl" as validate
 
 workflow theiavalidate {
   input {
@@ -24,7 +25,7 @@ workflow theiavalidate {
     # column translation (optional)
     File? column_translation_tsv
   }
-  call validate.export_two_tsvs {
+  call export.export_two_tsvs {
     input:
       datatable1 = table1_name,
       terra_workspace1 = terra_workspace1_name,
@@ -38,7 +39,7 @@ workflow theiavalidate {
   }
   if (export_two_tsvs.same_table_length) {
     String validation_attempted = "Validation attempted"
-    call validate.theiavalidate as compare_two_tsvs{
+    call validate.theiavalidate as compare_two_tsvs {
       input:
         datatable1_tsv = export_two_tsvs.datatable1_tsv,
         datatable2_tsv = export_two_tsvs.datatable2_tsv,

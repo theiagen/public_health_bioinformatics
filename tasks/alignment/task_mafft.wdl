@@ -4,7 +4,9 @@ task mafft {
   input {
     Array[File] genomes
     Int cpu = 16
+    Int memory = 32
     Int disk_size = 100
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/mafft:7.450"
   }
   command <<<
     # date and version control
@@ -21,8 +23,8 @@ task mafft {
     File msa = "msa.fasta"
   }
   runtime {
-    docker: "us-docker.pkg.dev/general-theiagen/staphb/mafft:7.450"
-    memory: "32 GB"
+    docker: docker
+    memory: memory + " GB"
     cpu: cpu
     disks:  "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB" # TES

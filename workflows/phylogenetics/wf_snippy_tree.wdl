@@ -1,13 +1,13 @@
 version 1.0
 
-import "../../tasks/phylogenetic_inference/task_snippy_core.wdl" as snippy_core_task
-import "../../tasks/phylogenetic_inference/task_snp_sites.wdl" as snp_sites_task
-import "../../tasks/phylogenetic_inference/task_iqtree2.wdl" as iqtree2_task
-import "../../tasks/phylogenetic_inference/task_snp_dists.wdl" as snp_dists_task
-import "../../tasks/phylogenetic_inference/task_reorder_matrix.wdl" as reorder_matrix_task
 import "../../tasks/phylogenetic_inference/task_gubbins.wdl" as gubbins_task
-import "../../tasks/utilities/task_summarize_data.wdl" as data_summary
+import "../../tasks/phylogenetic_inference/task_iqtree2.wdl" as iqtree2_task
+import "../../tasks/phylogenetic_inference/utilities/task_reorder_matrix.wdl" as reorder_matrix_task
+import "../../tasks/phylogenetic_inference/utilities/task_snippy_core.wdl" as snippy_core_task
+import "../../tasks/phylogenetic_inference/utilities/task_snp_dists.wdl" as snp_dists_task
+import "../../tasks/phylogenetic_inference/utilities/task_snp_sites.wdl" as snp_sites_task
 import "../../tasks/task_versioning.wdl" as versioning
+import "../../tasks/utilities/data_handling/task_summarize_data.wdl" as data_summary
 
 workflow snippy_tree_wf {
   meta {
@@ -48,7 +48,7 @@ workflow snippy_tree_wf {
     
     String? snp_dists_docker
     
-    Int? snp_sites_cpus
+    Int? snp_sites_cpu
     Int? snp_sites_disk_size
     Int? snp_sites_memory
     String? snp_sites_docker
@@ -98,7 +98,7 @@ workflow snippy_tree_wf {
         output_phylip = false,
         output_pseudo_ref = false,
         output_monomorphic = false,
-        cpus = snp_sites_cpus,
+        cpu = snp_sites_cpu,
         memory = snp_sites_memory,
         disk_size = snp_sites_disk_size
     }
@@ -165,7 +165,7 @@ workflow snippy_tree_wf {
         output_prefix = tree_name
     }
   }
-  call versioning.version_capture{
+  call versioning.version_capture {
     input:
   }
   output {

@@ -1,7 +1,7 @@
 version 1.0
 
-import "../../tasks/taxon_id/freyja_utilities/task_freyja_dashboard.wdl" as freyja_dash
 import "../../tasks/task_versioning.wdl" as versioning
+import "../../tasks/taxon_id/freyja/task_freyja_dashboard.wdl" as freyja_dash
 
 workflow freyja_dashboard {
   input {
@@ -21,7 +21,7 @@ workflow freyja_dashboard {
       freyja_dashboard_title = freyja_dashboard_title,
       dashboard_intro_text = dashboard_intro_text,
   }
-  call versioning.version_capture{
+  call versioning.version_capture {
     input:
   }
   output {

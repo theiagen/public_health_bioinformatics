@@ -1,15 +1,15 @@
 version 1.0
 
-import "../../tasks/taxon_id/task_freyja_one_sample.wdl" as freyja_task
-import "../utilities/wf_read_QC_trim_pe.wdl" as read_qc
 import "../../tasks/alignment/task_bwa.wdl" as align
-import "../../tasks/assembly/task_ivar_primer_trim.wdl" as trim_primers
+import "../../tasks/quality_control/read_filtering/task_ivar_primer_trim.wdl" as trim_primers
 import "../../tasks/task_versioning.wdl" as versioning
+import "../../tasks/taxon_id/freyja/task_freyja.wdl" as freyja_task
+import "../utilities/wf_read_QC_trim_pe.wdl" as read_qc
 
 workflow freyja_fastq {
   input {
-    File read1_raw
-    File read2_raw
+    File read1
+    File read2
     File primer_bed
     File reference_genome
     Int trimmomatic_minlen = 25
@@ -19,8 +19,8 @@ workflow freyja_fastq {
   call read_qc.read_QC_trim_pe as read_QC_trim {
     input:
       samplename = samplename,
-      read1_raw  = read1_raw,
-      read2_raw  = read2_raw,
+      read1  = read1,
+      read2  = read2,
       trim_minlen = trimmomatic_minlen,
       workflow_series = "theiacov"
   }
@@ -44,7 +44,7 @@ workflow freyja_fastq {
       reference_genome = reference_genome,
       depth_cutoff = depth_cutoff
   }
-  call versioning.version_capture{
+  call versioning.version_capture {
     input:
   }
   output {

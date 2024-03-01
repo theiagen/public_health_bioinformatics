@@ -1,8 +1,8 @@
 version 1.0
 
-import "../../../tasks/quality_control/task_ncbi_scrub.wdl" as ncbi_scrub
-import "../../../tasks/taxon_id/task_kraken2.wdl" as kraken
+import "../../../tasks/quality_control/read_filtering/task_ncbi_scrub.wdl" as ncbi_scrub
 import "../../../tasks/task_versioning.wdl" as versioning
+import "../../../tasks/taxon_id/contamination/task_kraken2.wdl" as kraken
 
 workflow dehost_pe {
   input {
@@ -22,7 +22,7 @@ workflow dehost_pe {
       read1 = ncbi_scrub_pe.read1_dehosted,
       read2 = ncbi_scrub_pe.read2_dehosted
   }
-  call versioning.version_capture{
+  call versioning.version_capture {
     input:
   }
   output {

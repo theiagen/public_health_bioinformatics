@@ -1,7 +1,7 @@
 version 1.0
 
-import "../../tasks/gene_typing/task_snippy_variants.wdl" as snippy
-import "../../tasks/gene_typing/task_snippy_gene_query.wdl" as snippy_gene_query_task
+import "../../tasks/gene_typing/variant_detection/task_snippy_gene_query.wdl" as snippy_gene_query_task
+import "../../tasks/gene_typing/variant_detection/task_snippy_variants.wdl" as snippy
 import "../../tasks/task_versioning.wdl" as versioning
 
 workflow snippy_variants_wf {
@@ -17,7 +17,7 @@ workflow snippy_variants_wf {
     # optional inputs are exposed here so that they can be set by user in higher-level workflows. example: snippy_streamline
     # a bit of duplicate code, but done for a reason!
     String? docker
-    Int? cpus
+    Int? cpu
     Int? memory
     Int? map_qual
     Int? base_quality
@@ -33,7 +33,7 @@ workflow snippy_variants_wf {
       read2 = read2,
       reference_genome_file = reference_genome_file,
       docker = docker,
-      cpus = cpus,
+      cpu = cpu,
       memory = memory,
       map_qual = map_qual,
       base_quality = base_quality,
@@ -51,7 +51,7 @@ workflow snippy_variants_wf {
         query_gene = query_gene
     }
   }
-  call versioning.version_capture{
+  call versioning.version_capture {
     input:
   }
   output {

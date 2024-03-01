@@ -1,5 +1,6 @@
 {
     "theiacov_ont.samplename": "ont",
     "theiacov_ont.read1": "tests/data/theiacov/fastqs/ont/ont.fastq.gz",
-    "theiacov_ont.primer_bed": "tests/data/theiacov/primers/artic-v3.primers.bed"
+    "theiacov_ont.primer_bed": "tests/data/theiacov/primers/artic-v3.primers.bed",
+    "theiacov_ont.reference_genome": "tests/data/theiacov/reference/MN908947.fasta"
 }

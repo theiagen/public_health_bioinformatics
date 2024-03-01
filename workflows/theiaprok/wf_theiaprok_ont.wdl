@@ -1,24 +1,24 @@
 version 1.0
 
-import "../utilities/wf_read_QC_trim_ont.wdl" as read_qc_workflow
-import "../utilities/wf_merlin_magic.wdl" as merlin_magic_workflow
 import "../../tasks/assembly/task_dragonflye.wdl" as dragonflye_task
-import "../../tasks/quality_control/task_quast.wdl" as quast_task
-import "../../tasks/quality_control/task_nanoplot.wdl" as nanoplot_task
-import "../../tasks/quality_control/task_screen.wdl" as screen_task
-import "../../tasks/quality_control/task_busco.wdl" as busco_task
-import "../../tasks/taxon_id/task_gambit.wdl" as gambit_task
-import "../../tasks/quality_control/task_mummer_ani.wdl" as ani_task
-import "../../tasks/taxon_id/task_kmerfinder.wdl" as kmerfinder_task
-import "../../tasks/gene_typing/task_amrfinderplus.wdl" as amrfinderplus_task
-import "../../tasks/gene_typing/task_resfinder.wdl" as resfinder_task
-import "../../tasks/species_typing/task_ts_mlst.wdl" as ts_mlst_task
-import "../../tasks/gene_typing/task_bakta.wdl" as bakta_task
-import "../../tasks/gene_typing/task_prokka.wdl" as prokka_task
-import "../../tasks/gene_typing/task_plasmidfinder.wdl" as plasmidfinder_task
-import "../../tasks/quality_control/task_qc_check_phb.wdl" as qc_check
+import "../../tasks/gene_typing/annotation/task_bakta.wdl" as bakta_task
+import "../../tasks/gene_typing/annotation/task_prokka.wdl" as prokka_task
+import "../../tasks/gene_typing/drug_resistance/task_amrfinderplus.wdl" as amrfinderplus_task
+import "../../tasks/gene_typing/drug_resistance/task_resfinder.wdl" as resfinder_task
+import "../../tasks/gene_typing/plasmid_detection/task_plasmidfinder.wdl" as plasmidfinder_task
+import "../../tasks/quality_control/advanced_metrics/task_busco.wdl" as busco_task
+import "../../tasks/quality_control/advanced_metrics/task_mummer_ani.wdl" as ani_task
+import "../../tasks/quality_control/basic_statistics/task_nanoplot.wdl" as nanoplot_task
+import "../../tasks/quality_control/basic_statistics/task_quast.wdl" as quast_task
+import "../../tasks/quality_control/comparisons/task_qc_check_phb.wdl" as qc_check
+import "../../tasks/quality_control/comparisons/task_screen.wdl" as screen_task
+import "../../tasks/species_typing/multi/task_ts_mlst.wdl" as ts_mlst_task
 import "../../tasks/task_versioning.wdl" as versioning_task
-import "../../tasks/utilities/task_broad_terra_tools.wdl" as terra_tools_task
+import "../../tasks/taxon_id/contamination/task_kmerfinder.wdl" as kmerfinder_task
+import "../../tasks/taxon_id/task_gambit.wdl" as gambit_task
+import "../../tasks/utilities/data_export/task_broad_terra_tools.wdl" as terra_tools_task
+import "../utilities/wf_merlin_magic.wdl" as merlin_magic_workflow
+import "../utilities/wf_read_QC_trim_ont.wdl" as read_qc_workflow
 
 workflow theiaprok_ont {
   meta {
@@ -28,7 +28,7 @@ workflow theiaprok_ont {
     String samplename
     String seq_method = "ONT"
     File read1
-    Int? genome_size
+    Int? genome_length
     # export taxon table parameters
     String? run_id
     String? collection_date
@@ -44,8 +44,8 @@ workflow theiaprok_ont {
     Boolean skip_mash = true
     Int min_reads = 5000 # reduced from 7472 because less reads are needed to get to higher coverage due to longer read length
     Int min_basepairs = 2241820
-    Int min_genome_size = 100000
-    Int max_genome_size = 18040666 
+    Int min_genome_length = 100000
+    Int max_genome_length = 18040666
     Int min_coverage = 5 # reduced from 10 because some institutions sequence at lower depth because of longer read length
     # module options
     Boolean call_ani = false # by default do not call ANI task, but user has ability to enable this task if working with enteric pathogens or supply their own high-quality reference genome
@@ -56,7 +56,7 @@ workflow theiaprok_ont {
     # qc check parameters
     File? qc_check_table
   }
-  call versioning_task.version_capture{
+  call versioning_task.version_capture {
     input:
   }
   call screen_task.check_reads_se as raw_check_reads {
@@ -64,19 +64,19 @@ workflow theiaprok_ont {
       read1 = read1,
       min_reads = min_reads,
       min_basepairs = min_basepairs,
-      min_genome_size = min_genome_size,
-      max_genome_size = max_genome_size,
+      min_genome_length = min_genome_length,
+      max_genome_length = max_genome_length,
       min_coverage = min_coverage,
       skip_screen = skip_screen,
       skip_mash = skip_mash,
-      expected_genome_size = genome_size
+      expected_genome_length = genome_length
   }
   if (raw_check_reads.read_screen == "PASS") {
     call read_qc_workflow.read_QC_trim_ont as read_qc_trim {
       input:
         samplename = samplename,
         read1 = read1,
-        genome_size = genome_size,
+        genome_length = genome_length,
         workflow_series = "theiaprok"
     }
     call screen_task.check_reads_se as clean_check_reads {
@@ -84,18 +84,18 @@ workflow theiaprok_ont {
         read1 = read_qc_trim.read1_clean,
         min_reads = min_reads,
         min_basepairs = min_basepairs,
-        min_genome_size = min_genome_size,
-        max_genome_size = max_genome_size,
+        min_genome_length = min_genome_length,
+        max_genome_length = max_genome_length,
         min_coverage = min_coverage,
         skip_screen = skip_screen,
         skip_mash = skip_mash,
-        expected_genome_size = genome_size
+        expected_genome_length = genome_length
     }
     if (clean_check_reads.read_screen == "PASS") {
        call dragonflye_task.dragonflye {
          input:
            read1 = read_qc_trim.read1_clean,
-           genome_size = select_first([genome_size, read_qc_trim.est_genome_size]),
+           genome_length = select_first([genome_length, read_qc_trim.est_genome_length]),
            samplename = samplename
        }
       call quast_task.quast {
@@ -108,13 +108,13 @@ workflow theiaprok_ont {
         input:
           read1 = read1,
           samplename = samplename,
-          est_genome_size = select_first([genome_size, quast.genome_length])
+          est_genome_length = select_first([genome_length, quast.genome_length])
       }
       call nanoplot_task.nanoplot as nanoplot_clean {
         input:
           read1 = read_qc_trim.read1_clean,
           samplename = samplename,
-          est_genome_size = select_first([genome_size, quast.genome_length])
+          est_genome_length = select_first([genome_length, quast.genome_length])
       }
       call gambit_task.gambit {
         input:
@@ -237,7 +237,7 @@ workflow theiaprok_ont {
             nanoplot_tsv = nanoplot_raw.nanoplot_tsv,
             nanoplot_docker = nanoplot_raw.nanoplot_docker,
             nanoplot_version = nanoplot_raw.nanoplot_version,
-            kmc_est_genome_size = read_qc_trim.est_genome_size,
+            kmc_est_genome_length = read_qc_trim.est_genome_length,
             kmc_kmer_stats = read_qc_trim.kmc_kmer_stats,
             kmc_version = read_qc_trim.kmc_version,
             rasusa_version = read_qc_trim.rasusa_version,
@@ -514,7 +514,7 @@ workflow theiaprok_ont {
     String? nanoplot_version = nanoplot_raw.nanoplot_version
     String? nanoplot_docker = nanoplot_raw.nanoplot_docker
     # Read QC - kmc outputs
-    Int? kmc_est_genome_size = read_qc_trim.est_genome_size
+    Int? kmc_est_genome_length = read_qc_trim.est_genome_length
     File? kmc_kmer_stats = read_qc_trim.kmc_kmer_stats
     String? kmc_version = read_qc_trim.kmc_version
     # Read QC - rasusa outputs

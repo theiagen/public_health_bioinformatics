@@ -20,8 +20,10 @@ task augur_frequencies {
     Boolean censored = false # calculate censored frequencies at each pivot
     Boolean include_internal_nodes = false # calculate frequencies for internal nodes as well as tips
 
-    Int mem_size = 30
+    Int memory = 30
     Int disk_size = 100
+    Int cpu = 4
+    String docker = "us-docker.pkg.dev/general-theiagen/biocontainers/augur:22.0.2--pyhdfd78af_0"
   }
   command <<<
     AUGUR_RECURSION_LIMIT=10000 augur frequencies \
@@ -47,9 +49,9 @@ task augur_frequencies {
     File tip_frequencies_json = "~{build_name}_tip-frequencies.json"
   }
   runtime {
-    docker: "us-docker.pkg.dev/general-theiagen/biocontainers/augur:22.0.2--pyhdfd78af_0"
-    memory: mem_size + " GB"
-    cpu: 4
+    docker: docker
+    memory: memory + " GB"
+    cpu: cpu
     disks: "local-disk " + disk_size + " HDD"
     disk: disk_size + " GB" # TES
     dx_instance_type: "mem3_ssd2_x4"

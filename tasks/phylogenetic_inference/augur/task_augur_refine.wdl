@@ -23,6 +23,9 @@ task augur_refine {
     String divergence_units = "mutations" # units in which sequence divergences is exported ("mutations" or "mutations-per-site")
 
     Int disk_size = 100
+    Int memory = 50
+    Int cpu = 2
+    String docker = "us-docker.pkg.dev/general-theiagen/biocontainers/augur:22.0.2--pyhdfd78af_0"
   }
   command <<<
     AUGUR_RECURSION_LIMIT=10000 augur refine \
@@ -52,9 +55,9 @@ task augur_refine {
     File branch_lengths = "~{build_name}_branch_lengths.json"
   }
   runtime {
-    docker: "us-docker.pkg.dev/general-theiagen/biocontainers/augur:22.0.2--pyhdfd78af_0"
-    memory: "50 GB"
-    cpu : 2
+    docker: docker
+    memory: memory + " GB"
+    cpu: cpu
     disks: "local-disk " + disk_size + " HDD"
     disk: disk_size + " GB" # TES
     dx_instance_type: "mem3_ssd1_v2_x8"

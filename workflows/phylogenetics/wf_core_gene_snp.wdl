@@ -1,11 +1,11 @@
 version 1.0
 
-import "../../tasks/phylogenetic_inference/task_pirate.wdl" as pirate_task
 import "../../tasks/phylogenetic_inference/task_iqtree.wdl" as iqtree
-import "../../tasks/phylogenetic_inference/task_snp_dists.wdl" as snp_dists
-import "../../tasks/phylogenetic_inference/task_reorder_matrix.wdl" as reorder_matrix
-import "../../tasks/utilities/task_summarize_data.wdl" as data_summary
+import "../../tasks/phylogenetic_inference/task_pirate.wdl" as pirate_task
+import "../../tasks/phylogenetic_inference/utilities/task_reorder_matrix.wdl" as reorder_matrix
+import "../../tasks/phylogenetic_inference/utilities/task_snp_dists.wdl" as snp_dists
 import "../../tasks/task_versioning.wdl" as versioning
+import "../../tasks/utilities/data_handling/task_summarize_data.wdl" as data_summary
 
 
 workflow core_gene_snp_workflow {
@@ -85,7 +85,7 @@ workflow core_gene_snp_workflow {
         output_prefix = cluster_name
     }
   }
-  call versioning.version_capture{
+  call versioning.version_capture {
     input:
   }
   output {

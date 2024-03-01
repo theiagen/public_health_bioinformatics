@@ -14,7 +14,7 @@ task minimap2 {
     Boolean output_sam = false
     Int disk_size = 100
     Int cpu = 2
-    Int mem = 8
+    Int memory = 8
   }
   command <<<
     # Preset options - https://lh3.github.io/minimap2/minimap2.html
@@ -43,7 +43,7 @@ task minimap2 {
   }
   runtime {
     docker: "~{docker}"
-    memory: mem + " GB"
+    memory: memory + " GB"
     cpu: cpu
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"

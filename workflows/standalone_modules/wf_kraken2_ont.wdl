@@ -1,7 +1,7 @@
 version 1.0
 
-import "../../tasks/taxon_id/task_kraken2.wdl" as kraken2
 import "../../tasks/task_versioning.wdl" as versioning
+import "../../tasks/taxon_id/contamination/task_kraken2.wdl" as kraken2
 
 workflow kraken2_ont_wf {
   meta {
@@ -24,7 +24,7 @@ workflow kraken2_ont_wf {
       kraken2_report = kraken2_se.kraken2_report,
       kraken2_classified_report = kraken2_se.kraken2_classified_report
   }
-  call versioning.version_capture{
+  call versioning.version_capture {
     input:
   }
   output {
