@@ -12,6 +12,9 @@ task augur_ancestral {
     Boolean keep_overhangs = false # do not infer nucleotides for gaps on either side of the alignment
 
     Int disk_size = 50
+    Int memory = 50
+    Int cpu = 4
+    String docker = "us-docker.pkg.dev/general-theiagen/biocontainers/augur:22.0.2--pyhdfd78af_0"
   }
   command <<<
     AUGUR_RECURSION_LIMIT=10000 augur ancestral \
@@ -29,9 +32,9 @@ task augur_ancestral {
     File ancestral_sequences = "~{build_name}_ancestral_sequences.fasta"
   }
   runtime {
-    docker: "us-docker.pkg.dev/general-theiagen/biocontainers/augur:22.0.2--pyhdfd78af_0"
-    memory: "50 GB"
-    cpu: 4
+    docker: docker
+    memory: memory + " GB"
+    cpu: cpu
     disks: "local-disk " + disk_size + " HDD"
     disk: disk_size + " GB" 
     dx_instance_type: "mem3_ssd1_v2_x8"

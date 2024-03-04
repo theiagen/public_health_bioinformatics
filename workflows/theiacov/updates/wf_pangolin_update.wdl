@@ -1,25 +1,45 @@
 version 1.0
 
-import "../../../tasks/species_typing/task_pangolin.wdl" as pangolin
+import "../../../tasks/species_typing/betacoronavirus/task_pangolin.wdl" as pangolin
 import "../../../tasks/task_versioning.wdl" as versioning
+import "../../../workflows/utilities/wf_organism_parameters.wdl" as set_organism_defaults
 
 workflow pangolin_update {
   input {
     String samplename
-    File assembly
+    File assembly_fasta
     String old_lineage
     String old_pangolin_docker
     String old_pangolin_assignment_version
     String old_pangolin_versions
-    String new_pangolin_docker
-    String? timezone
+    String? new_pangolin_docker
+    String organism = "sars-cov-2"
     File? lineage_log
+  }
+  call set_organism_defaults.organism_parameters {
+    input:
+      organism = organism,
+      pangolin_docker_image = new_pangolin_docker,
+      # including these to block from terra
+      flu_segment = "",
+      flu_subtype = "",
+      reference_gff_file = "gs://theiagen-public-files/terra/theiacov-files/empty.gff3",
+      reference_genome = "gs://theiagen-public-files/terra/theiacov-files/empty.fasta",
+      genome_length_input = 0,
+      nextclade_dataset_reference_input = "",
+      nextclade_dataset_tag_input = "",
+      nextclade_dataset_name_input = "",     
+      vadr_max_length = 0,
+      vadr_options = "",
+      primer_bed_file = "gs://theiagen-public-files/terra/theiacov-files/empty.bed",
+      kraken_target_organism_input = "",
+      hiv_primer_version = ""
   }
   call pangolin.pangolin4 {
     input:
       samplename = samplename,
-      fasta = assembly,
-      docker = new_pangolin_docker
+      fasta = assembly_fasta,
+      docker = organism_parameters.pangolin_docker
   }
   call pangolin.pangolin_update_log {
     input:
@@ -32,12 +52,10 @@ workflow pangolin_update {
       new_pangolin_docker = pangolin4.pangolin_docker,
       new_pangolin_assignment_version = pangolin4.pangolin_assignment_version,
       new_pangolin_versions = pangolin4.pangolin_versions,
-      timezone = timezone,
       lineage_log = lineage_log
   }
-  call versioning.version_capture{
+  call versioning.version_capture {
     input:
-      timezone = timezone
   }
   output {
     # Version Capture

@@ -1,7 +1,7 @@
 {
   "theiaprok_illumina_pe.samplename": "test",
-  "theiaprok_illumina_pe.read1_raw": "bactopia-tests/data/species/portiera/illumina/SRR2838702_R1.fastq.gz",
-  "theiaprok_illumina_pe.read2_raw": "bactopia-tests/data/species/portiera/illumina/SRR2838702_R2.fastq.gz",
+  "theiaprok_illumina_pe.read1": "bactopia-tests/data/species/portiera/illumina/SRR2838702_R1.fastq.gz",
+  "theiaprok_illumina_pe.read2": "bactopia-tests/data/species/portiera/illumina/SRR2838702_R2.fastq.gz",
   "theiaprok_illumina_pe.skip_screen": true,
   "theiaprok_illumina_pe.read_QC_trim.call_midas": false,
   "theiaprok_illumina_pe.genome_annotation": "prokka",

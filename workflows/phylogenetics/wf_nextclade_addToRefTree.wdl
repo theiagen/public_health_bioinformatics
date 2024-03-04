@@ -1,7 +1,7 @@
 version 1.0
 
-import "../../tasks/taxon_id/task_nextclade.wdl" as nextclade_analysis
 import "../../tasks/task_versioning.wdl" as versioning
+import "../../tasks/taxon_id/task_nextclade.wdl" as nextclade_analysis
 
 workflow nextclade_addToRefTree {
     meta {
@@ -32,7 +32,7 @@ workflow nextclade_addToRefTree {
         dataset_reference = dataset_reference,
         dataset_tag = dataset_tag
     }
-    call versioning.version_capture{
+    call versioning.version_capture {
       input:
     }
     output {

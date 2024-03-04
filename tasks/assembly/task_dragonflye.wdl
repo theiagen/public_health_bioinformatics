@@ -6,7 +6,7 @@ task dragonflye {
     String samplename
     String? assembler # default is flye
     String? assembler_options # default ''
-    String? genome_size # default autodetect
+    String? genome_length # default autodetect
     File? illumina_read1 # illumina read1 fastq to use for polishing
     File? illumina_read2 # illumina read2 fastq to use for polishing 
     Boolean use_pilon_illumina_polisher = false # use polypolish by default
@@ -66,7 +66,7 @@ task dragonflye {
       --reads ~{read1} \
       --depth 0 \
       --outdir dragonflye \
-      ~{'--gsize ' + genome_size} \
+      ~{'--gsize ' + genome_length} \
       --cpus ~{cpu} \
       --ram ${mem} \
       --nofilter \

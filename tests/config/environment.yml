@@ -5,7 +5,7 @@ channels:
   - defaults
 dependencies:
   - python >=3.7
-  - cromwell
+  - cromwell=86
   - miniwdl=1.5.2
   - pytest
   - pytest-workflow

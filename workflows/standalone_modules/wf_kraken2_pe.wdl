@@ -1,8 +1,8 @@
 version 1.0
 
-import "../../tasks/taxon_id/task_kraken2.wdl" as kraken2
-import "../../tasks/taxon_id/task_krona.wdl" as krona_task
 import "../../tasks/task_versioning.wdl" as versioning
+import "../../tasks/taxon_id/contamination/task_kraken2.wdl" as kraken2
+import "../../tasks/taxon_id/contamination/task_krona.wdl" as krona_task
 
 workflow kraken2_pe_wf {
   meta {
@@ -26,7 +26,7 @@ workflow kraken2_pe_wf {
       kraken2_report = kraken2_pe.kraken2_report,
       samplename = samplename
   }
-  call versioning.version_capture{
+  call versioning.version_capture {
     input:
   }
   output {
