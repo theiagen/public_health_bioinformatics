@@ -98,10 +98,10 @@ task irma {
     fi
 
     # rename BAM file if exists
-    if [ -f "~{samplename}"_HA.bam ]; then
+    if [ -f "~{samplename}"_HA*.bam ]; then
       mv "~{samplename}"_HA*.bam "~{samplename}"_HA.bam
     fi
-    if [ -f "~{samplename}"_NA.bam ]; then
+    if [ -f "~{samplename}"_NA*.bam ]; then
       mv "~{samplename}"_NA*.bam "~{samplename}"_NA.bam
     fi
 
