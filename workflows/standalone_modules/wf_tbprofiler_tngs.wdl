@@ -1,8 +1,8 @@
 version 1.0
 
-import "../../tasks/quality_control/task_trimmomatic.wdl" as trimmomatic_task
-import "../../tasks/species_typing/task_tbprofiler.wdl" as tbprofiler_task
-import "../../tasks/species_typing/task_tbp_parser.wdl" as tbp_parser_task
+import "../../tasks/quality_control/read_filtering/task_trimmomatic.wdl" as trimmomatic_task
+import "../../tasks/species_typing/mycobacterium/task_tbprofiler.wdl" as tbprofiler_task
+import "../../tasks/species_typing/mycobacterium/task_tbp_parser.wdl" as tbp_parser_task
 import "../../tasks/task_versioning.wdl" as versioning
 
 workflow tbprofiler_tngs {
