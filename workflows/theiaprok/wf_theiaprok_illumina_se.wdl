@@ -1,24 +1,24 @@
 version 1.0
 
-import "../utilities/wf_read_QC_trim_se.wdl" as read_qc
-import "../utilities/wf_merlin_magic.wdl" as merlin_magic_workflow
 import "../../tasks/assembly/task_shovill.wdl" as shovill
-import "../../tasks/quality_control/task_quast.wdl" as quast_task
-import "../../tasks/quality_control/task_cg_pipeline.wdl" as cg_pipeline
-import "../../tasks/quality_control/task_screen.wdl" as screen
-import "../../tasks/quality_control/task_busco.wdl" as busco_task
-import "../../tasks/taxon_id/task_gambit.wdl" as gambit_task
-import "../../tasks/quality_control/task_mummer_ani.wdl" as ani_task
-import "../../tasks/taxon_id/task_kmerfinder.wdl" as kmerfinder_task
-import "../../tasks/gene_typing/task_amrfinderplus.wdl" as amrfinderplus
-import "../../tasks/gene_typing/task_resfinder.wdl" as resfinder
-import "../../tasks/species_typing/task_ts_mlst.wdl" as ts_mlst_task
-import "../../tasks/gene_typing/task_bakta.wdl" as bakta_task
-import "../../tasks/gene_typing/task_prokka.wdl" as prokka_task
-import "../../tasks/gene_typing/task_plasmidfinder.wdl" as plasmidfinder_task
-import "../../tasks/quality_control/task_qc_check_phb.wdl" as qc_check
+import "../../tasks/gene_typing/annotation/task_bakta.wdl" as bakta_task
+import "../../tasks/gene_typing/annotation/task_prokka.wdl" as prokka_task
+import "../../tasks/gene_typing/drug_resistance/task_amrfinderplus.wdl" as amrfinderplus
+import "../../tasks/gene_typing/drug_resistance/task_resfinder.wdl" as resfinder
+import "../../tasks/gene_typing/plasmid_detection/task_plasmidfinder.wdl" as plasmidfinder_task
+import "../../tasks/quality_control/advanced_metrics/task_busco.wdl" as busco_task
+import "../../tasks/quality_control/advanced_metrics/task_mummer_ani.wdl" as ani_task
+import "../../tasks/quality_control/basic_statistics/task_cg_pipeline.wdl" as cg_pipeline
+import "../../tasks/quality_control/basic_statistics/task_quast.wdl" as quast_task
+import "../../tasks/quality_control/comparisons/task_qc_check_phb.wdl" as qc_check
+import "../../tasks/quality_control/comparisons/task_screen.wdl" as screen
+import "../../tasks/species_typing/multi/task_ts_mlst.wdl" as ts_mlst_task
 import "../../tasks/task_versioning.wdl" as versioning
-import "../../tasks/utilities/task_broad_terra_tools.wdl" as terra_tools
+import "../../tasks/taxon_id/contamination/task_kmerfinder.wdl" as kmerfinder_task
+import "../../tasks/taxon_id/task_gambit.wdl" as gambit_task
+import "../../tasks/utilities/data_export/task_broad_terra_tools.wdl" as terra_tools
+import "../utilities/wf_merlin_magic.wdl" as merlin_magic_workflow
+import "../utilities/wf_read_QC_trim_se.wdl" as read_qc
 
 workflow theiaprok_illumina_se {
   meta {
@@ -27,8 +27,8 @@ workflow theiaprok_illumina_se {
   input {
     String samplename
     String seq_method = "ILLUMINA"
-    File read1_raw
-    Int? genome_size
+    File read1
+    Int? genome_length
     # export taxon table parameters
     String? run_id
     String? collection_date
@@ -44,8 +44,8 @@ workflow theiaprok_illumina_se {
     Boolean skip_mash = false
     Int min_reads = 7472
     Int min_basepairs = 2241820
-    Int min_genome_size = 100000
-    Int max_genome_size = 18040666
+    Int min_genome_length = 100000
+    Int max_genome_length = 18040666
     Int min_coverage = 10
     # trimming parameters
     Int trim_minlen = 25
@@ -60,26 +60,26 @@ workflow theiaprok_illumina_se {
     # qc check parameters
     File? qc_check_table
   }
-  call versioning.version_capture{
+  call versioning.version_capture {
     input:
   }
   call screen.check_reads_se as raw_check_reads { 
     input:
-      read1 = read1_raw,
+      read1 = read1,
       min_reads = min_reads,
       min_basepairs = min_basepairs,
-      min_genome_size = min_genome_size,
-      max_genome_size = max_genome_size,
+      min_genome_length = min_genome_length,
+      max_genome_length = max_genome_length,
       min_coverage = min_coverage,
       skip_screen = skip_screen,
       skip_mash = skip_mash,
-      expected_genome_size = genome_size
+      expected_genome_length = genome_length
   }
   if (raw_check_reads.read_screen == "PASS") {
     call read_qc.read_QC_trim_se as read_QC_trim {
       input:
         samplename = samplename,
-        read1_raw = read1_raw,
+        read1 = read1,
         trim_minlen = trim_minlen,
         trim_quality_trim_score = trim_quality_trim_score,
         trim_window_size = trim_window_size,
@@ -90,19 +90,19 @@ workflow theiaprok_illumina_se {
         read1 = read_QC_trim.read1_clean,
         min_reads = min_reads,
         min_basepairs = min_basepairs,
-        min_genome_size = min_genome_size,
-        max_genome_size = max_genome_size,
+        min_genome_length = min_genome_length,
+        max_genome_length = max_genome_length,
         min_coverage = min_coverage,
         skip_screen = skip_screen,
         skip_mash = skip_mash,
-        expected_genome_size = genome_size
+        expected_genome_length = genome_length
     }
     if (clean_check_reads.read_screen == "PASS") {
       call shovill.shovill_se {
         input:
           samplename = samplename,
           read1_cleaned = read_QC_trim.read1_clean,
-          genome_size = select_first([genome_size, clean_check_reads.est_genome_length])
+          genome_length = select_first([genome_length, clean_check_reads.est_genome_length])
       }
       call quast_task.quast {
         input:
@@ -111,15 +111,15 @@ workflow theiaprok_illumina_se {
       }
       call cg_pipeline.cg_pipeline as cg_pipeline_raw {
         input:
-          read1 = read1_raw,
+          read1 = read1,
           samplename = samplename,
-          genome_length = select_first([genome_size, quast.genome_length])
+          genome_length = select_first([genome_length, quast.genome_length])
       }
       call cg_pipeline.cg_pipeline as cg_pipeline_clean {
         input:
           read1 = read_QC_trim.read1_clean,
           samplename = samplename,
-          genome_length = select_first([genome_size, quast.genome_length])
+          genome_length = select_first([genome_length, quast.genome_length])
       }
       call gambit_task.gambit {
         input:
@@ -198,6 +198,7 @@ workflow theiaprok_illumina_se {
             est_coverage_raw = cg_pipeline_raw.est_coverage,
             est_coverage_clean = cg_pipeline_clean.est_coverage,
             midas_secondary_genus_abundance = read_QC_trim.midas_secondary_genus_abundance,
+            midas_secondary_genus_coverage = read_QC_trim.midas_secondary_genus_coverage,
             assembly_length = quast.genome_length,
             number_contigs = quast.number_contigs,
             n50_value = quast.n50_value,
@@ -223,7 +224,7 @@ workflow theiaprok_illumina_se {
             sample_taxon = gambit.gambit_predicted_taxon,
             taxon_tables = taxon_tables,
             samplename = samplename,
-            read1 = read1_raw,
+            read1 = read1,
             read1_clean = read_QC_trim.read1_clean,
             run_id = run_id,
             collection_date = collection_date,
@@ -489,6 +490,7 @@ workflow theiaprok_illumina_se {
             midas_primary_genus = read_QC_trim.midas_primary_genus,
             midas_secondary_genus = read_QC_trim.midas_secondary_genus,
             midas_secondary_genus_abundance = read_QC_trim.midas_secondary_genus_abundance,
+            midas_secondary_genus_coverage = read_QC_trim.midas_secondary_genus_coverage,
             kraken2_version = read_QC_trim.kraken_version,
             kraken2_docker = read_QC_trim.kraken_docker,
             kraken2_report = read_QC_trim.kraken_report,
@@ -556,6 +558,7 @@ workflow theiaprok_illumina_se {
     String? midas_primary_genus = read_QC_trim.midas_primary_genus
     String? midas_secondary_genus = read_QC_trim.midas_secondary_genus
     Float? midas_secondary_genus_abundance = read_QC_trim.midas_secondary_genus_abundance
+    Float? midas_secondary_genus_coverage = read_QC_trim.midas_secondary_genus_coverage
     # Read QC - kraken outputs
     String? kraken2_version = read_QC_trim.kraken_version
     String? kraken2_report = read_QC_trim.kraken_report

@@ -1,40 +1,40 @@
 version 1.0
 
 # theiaprok
-import "../../tasks/species_typing/task_serotypefinder.wdl" as serotypefinder_task
-import "../../tasks/species_typing/task_ectyper.wdl" as ectyper_task
-import "../../tasks/species_typing/task_shigatyper.wdl" as shigatyper_task
-import "../../tasks/species_typing/task_shigeifinder.wdl" as shigeifinder_task
-import "../../tasks/species_typing/task_sonneityping.wdl" as sonneityping_task
-import "../../tasks/species_typing/task_lissero.wdl" as lissero_task
-import "../../tasks/species_typing/task_sistr.wdl" as sistr_task
-import "../../tasks/species_typing/task_seqsero2.wdl" as seqsero2_task
-import "../../tasks/species_typing/task_kleborate.wdl" as kleborate_task
-import "../../tasks/species_typing/task_clockwork.wdl" as clockwork_task
-import "../../tasks/species_typing/task_tbprofiler.wdl" as tbprofiler_task
-import "../../tasks/species_typing/task_tbp_parser.wdl" as tbp_parser_task
-import "../../tasks/species_typing/task_legsta.wdl" as legsta_task
-import "../../tasks/species_typing/task_genotyphi.wdl" as genotyphi
-import "../../tasks/species_typing/task_kaptive.wdl" as kaptive_task
-import "../../tasks/species_typing/task_ngmaster.wdl" as ngmaster_task
-import "../../tasks/species_typing/task_meningotype.wdl" as meningotype_task
-import "../../tasks/species_typing/task_spatyper.wdl" as spatyper_task
-import "../../tasks/species_typing/task_staphopiasccmec.wdl" as staphopia_sccmec_task
-import "../../tasks/species_typing/task_agrvate.wdl" as agrvate_task
-import "../../tasks/species_typing/task_seroba.wdl" as seroba
-import "../../tasks/species_typing/task_pbptyper.wdl" as pbptyper
-import "../../tasks/species_typing/task_poppunk_streppneumo.wdl" as poppunk_spneumo
-import "../../tasks/species_typing/task_pasty.wdl" as pasty_task
-import "../../tasks/gene_typing/task_abricate.wdl" as abricate_task
-import "../../tasks/species_typing/task_emmtypingtool.wdl" as emmtypingtool_task
-import "../../tasks/species_typing/task_hicap.wdl" as hicap_task
-import "../../tasks/species_typing/task_srst2_vibrio.wdl" as srst2_vibrio_task
-import "../../tasks/species_typing/task_virulencefinder.wdl" as virulencefinder_task
+import "../../tasks/gene_typing/drug_resistance/task_abricate.wdl" as abricate_task
+import "../../tasks/species_typing/acinetobacter/task_kaptive.wdl" as kaptive_task
+import "../../tasks/species_typing/escherichia_shigella/task_ectyper.wdl" as ectyper_task
+import "../../tasks/species_typing/escherichia_shigella/task_serotypefinder.wdl" as serotypefinder_task
+import "../../tasks/species_typing/escherichia_shigella/task_shigatyper.wdl" as shigatyper_task
+import "../../tasks/species_typing/escherichia_shigella/task_shigeifinder.wdl" as shigeifinder_task
+import "../../tasks/species_typing/escherichia_shigella/task_sonneityping.wdl" as sonneityping_task
+import "../../tasks/species_typing/escherichia_shigella/task_virulencefinder.wdl" as virulencefinder_task
+import "../../tasks/species_typing/haemophilus/task_hicap.wdl" as hicap_task
+import "../../tasks/species_typing/klebsiella/task_kleborate.wdl" as kleborate_task
+import "../../tasks/species_typing/legionella/task_legsta.wdl" as legsta_task
+import "../../tasks/species_typing/listeria/task_lissero.wdl" as lissero_task
+import "../../tasks/species_typing/mycobacterium/task_clockwork.wdl" as clockwork_task
+import "../../tasks/species_typing/mycobacterium/task_tbp_parser.wdl" as tbp_parser_task
+import "../../tasks/species_typing/mycobacterium/task_tbprofiler.wdl" as tbprofiler_task
+import "../../tasks/species_typing/neisseria/task_meningotype.wdl" as meningotype_task
+import "../../tasks/species_typing/neisseria/task_ngmaster.wdl" as ngmaster_task
+import "../../tasks/species_typing/pseudomonas/task_pasty.wdl" as pasty_task
+import "../../tasks/species_typing/salmonella/task_genotyphi.wdl" as genotyphi
+import "../../tasks/species_typing/salmonella/task_seqsero2.wdl" as seqsero2_task
+import "../../tasks/species_typing/salmonella/task_sistr.wdl" as sistr_task
+import "../../tasks/species_typing/staphylococcus/task_agrvate.wdl" as agrvate_task
+import "../../tasks/species_typing/staphylococcus/task_spatyper.wdl" as spatyper_task
+import "../../tasks/species_typing/staphylococcus/task_staphopiasccmec.wdl" as staphopia_sccmec_task
+import "../../tasks/species_typing/streptococcus/task_emmtypingtool.wdl" as emmtypingtool_task
+import "../../tasks/species_typing/streptococcus/task_pbptyper.wdl" as pbptyper
+import "../../tasks/species_typing/streptococcus/task_poppunk_streppneumo.wdl" as poppunk_spneumo
+import "../../tasks/species_typing/streptococcus/task_seroba.wdl" as seroba
+import "../../tasks/species_typing/vibrio/task_srst2_vibrio.wdl" as srst2_vibrio_task
 
 # theiaeuk
-import "../../tasks/species_typing/task_cauris_cladetyper.wdl" as cauris_cladetyper
-import "../../tasks/gene_typing/task_snippy_variants.wdl" as snippy
-import "../../tasks/gene_typing/task_snippy_gene_query.wdl" as snippy_gene_query
+import "../../tasks/gene_typing/variant_detection/task_snippy_gene_query.wdl" as snippy_gene_query
+import "../../tasks/gene_typing/variant_detection/task_snippy_variants.wdl" as snippy
+import "../../tasks/species_typing/candida/task_cauris_cladetyper.wdl" as cauris_cladetyper
 
 workflow merlin_magic {
   meta {
