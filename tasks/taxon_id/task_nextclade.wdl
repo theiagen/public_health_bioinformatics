@@ -60,6 +60,69 @@ task nextclade {
   }
 }
 
+task nextclade_v3 {
+  meta {
+    description: "Nextclade classification of one sample. Leaving optional inputs unspecified will use SARS-CoV-2 defaults."
+  }
+  input {
+    File genome_fasta
+    File? root_sequence
+    File? auspice_reference_tree_json
+    File? qc_config_json
+    File? gene_annotations_gff
+    File? pcr_primers_csv
+    File? virus_properties
+    String docker = "nextstrain/nextclade:3.3.0" # TODO: copy image to GAR; update default to new docker image hosted no our GAR
+    String dataset_name
+    #String dataset_reference
+    String dataset_tag
+    Int disk_size = 50
+    Int memory = 4
+    Int cpu = 2
+  }
+  String basename = basename(genome_fasta, ".fasta")
+  command <<<
+    # track version & print to log
+    nextclade --version | tee NEXTCLADE_VERSION
+
+    # --reference no longer used in v3. consolidated into --name and --tag
+    nextclade dataset get --name="~{dataset_name}"  --tag="~{dataset_tag}" -o nextclade_dataset_dir --verbose
+    set -e
+
+    # not necessary to include `--jobs <jobs>` in v3. Nextclade will use all available CPU threads by default. It's fast so I don't think we will need to change unless we see errors
+    nextclade run \
+        --input-dataset=nextclade_dataset_dir/ \
+        ~{"--input-root-seq " + root_sequence} \
+        ~{"--input-tree " + auspice_reference_tree_json} \
+        ~{"--input-qc-config " + qc_config_json} \
+        ~{"--input-gene-map " + gene_annotations_gff} \
+        ~{"--input-pcr-primers " + pcr_primers_csv} \
+        ~{"--input-virus-properties " + virus_properties}  \
+        --output-json "~{basename}".nextclade.json \
+        --output-tsv  "~{basename}".nextclade.tsv \
+        --output-tree "~{basename}".nextclade.auspice.json \
+        --output-all=. \
+        "~{genome_fasta}"
+  >>>
+  runtime {
+    docker: "~{docker}"
+    memory: "~{memory} GB"
+    cpu: cpu
+    disks:  "local-disk " + disk_size + " SSD"
+    disk: disk_size + " GB" # TES
+    dx_instance_type: "mem1_ssd1_v2_x2"
+    maxRetries: 3 
+  }
+  output {
+    String nextclade_version = read_string("NEXTCLADE_VERSION")
+    File nextclade_json = "~{basename}.nextclade.json"
+    File auspice_json = "~{basename}.nextclade.auspice.json"
+    File nextclade_tsv = "~{basename}.nextclade.tsv"
+    String nextclade_docker = docker
+    String nextclade_dataset_tag = "~{dataset_tag}"
+  }
+}
+
 task nextclade_output_parser {
   meta {
     description: "Python and bash codeblocks for parsing the output files from Nextclade."
