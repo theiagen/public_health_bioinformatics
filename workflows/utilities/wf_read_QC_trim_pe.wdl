@@ -18,7 +18,7 @@ workflow read_QC_trim_pe {
     String samplename
     File read1
     File read2
-    Int trim_minlen = 75
+    Int trim_minlength = 75
     Int trim_quality_trim_score = 30
     Int trim_window_size = 4
     Int bbduk_memory = 8
@@ -69,7 +69,7 @@ workflow read_QC_trim_pe {
         read2 = select_first([ncbi_scrub_pe.read2_dehosted, read2]),
         trimmomatic_window_size = trim_window_size,
         trimmomatic_quality_trim_score = trim_quality_trim_score,
-        trimmomatic_minlen = trim_minlen,
+        trimmomatic_minlength = trim_minlength,
         trimmomatic_args = trimmomatic_args
     }
   }
@@ -81,7 +81,7 @@ workflow read_QC_trim_pe {
         read2 = select_first([ncbi_scrub_pe.read2_dehosted, read2]),
         fastp_window_size = trim_window_size,
         fastp_quality_trim_score = trim_quality_trim_score,
-        fastp_minlen = trim_minlen,
+        fastp_minlength = trim_minlength,
         fastp_args = fastp_args
     }
   }

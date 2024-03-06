@@ -12,7 +12,7 @@ workflow freyja_fastq {
     File read2
     File primer_bed
     File reference_genome
-    Int trimmomatic_minlen = 25
+    Int trimmomatic_minlength = 25
     String samplename
   }
   call read_qc.read_QC_trim_pe as read_QC_trim {
@@ -20,7 +20,7 @@ workflow freyja_fastq {
       samplename = samplename,
       read1  = read1,
       read2  = read2,
-      trim_minlen = trimmomatic_minlen,
+      trim_minlength = trimmomatic_minlength,
       workflow_series = "theiacov"
   }
   call align.bwa {
