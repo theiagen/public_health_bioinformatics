@@ -37,7 +37,7 @@ workflow theiacov_illumina_pe {
     Int? genome_length 
     # trimming parameters
     Boolean trim_primers = true
-    Int trim_minlen = 75
+    Int trim_minlength = 75
     Int trim_quality_trim_score = 30
     Int trim_window_size = 4
     # assembly parameters
@@ -105,7 +105,7 @@ workflow theiacov_illumina_pe {
         adapters = adapters,
         phix = phix,
         workflow_series = "theiacov",
-        trim_minlen = trim_minlen,
+        trim_minlength = trim_minlength,
         trim_quality_trim_score = trim_quality_trim_score,
         trim_window_size = trim_window_size
     }
