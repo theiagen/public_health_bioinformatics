@@ -70,9 +70,9 @@ task nextclade_v3 {
     File? gene_annotations_gff
     File? pcr_primers_csv
     File? nextclade_pathogen_json
-    String docker = "us-docker.pkg.dev/general-theiagen/nextstrain/nextclade:3.3.0" # TODO: copy image to GAR; update default to new docker image hosted no our GAR
+    String docker = "us-docker.pkg.dev/general-theiagen/nextstrain/nextclade:3.3.1" 
     String dataset_name
-    #String verbosity = "debug" # other options are "off" "error" "info" "debug" and "trace"
+    String verbosity = "warn" # other options are: "off" "error" "info" "debug" and "trace"
     #String dataset_reference
     String dataset_tag
     Int disk_size = 50
@@ -85,24 +85,28 @@ task nextclade_v3 {
     nextclade --version | tee NEXTCLADE_VERSION
 
     # --reference no longer used in v3. consolidated into --name and --tag
-    nextclade dataset get --name="~{dataset_name}" --tag="~{dataset_tag}" -o nextclade_dataset_dir --verbose
+    nextclade dataset get \
+      --name="~{dataset_name}" \
+      --tag="~{dataset_tag}" \
+      -o nextclade_dataset_dir \
+      --verbosity ~{verbosity}
 
     # exit script/task upon error
     set -e
 
     # not necessary to include `--jobs <jobs>` in v3. Nextclade will use all available CPU threads by default. It's fast so I don't think we will need to change unless we see errors
     nextclade run \
-        --input-dataset nextclade_dataset_dir/ \
-        ~{"--input-tree " + auspice_reference_tree_json} \
-        ~{"--input-pathogen-json " + nextclade_pathogen_json} \
-        ~{"--input-annotation " + gene_annotations_gff} \
-        ~{"--input-pcr-primers " + pcr_primers_csv} \
-        --output-json "~{basename}".nextclade.json \
-        --output-tsv  "~{basename}".nextclade.tsv \
-        --output-tree "~{basename}".nextclade.auspice.json \
-        --output-all . \
-        --verbose \
-        "~{genome_fasta}"
+      --input-dataset nextclade_dataset_dir/ \
+      ~{"--input-tree " + auspice_reference_tree_json} \
+      ~{"--input-pathogen-json " + nextclade_pathogen_json} \
+      ~{"--input-annotation " + gene_annotations_gff} \
+      ~{"--input-pcr-primers " + pcr_primers_csv} \
+      --output-json "~{basename}".nextclade.json \
+      --output-tsv  "~{basename}".nextclade.tsv \
+      --output-tree "~{basename}".nextclade.auspice.json \
+      --output-all . \
+      --verbosity ~{verbosity} \
+      "~{genome_fasta}"
   >>>
   runtime {
     docker: "~{docker}"
