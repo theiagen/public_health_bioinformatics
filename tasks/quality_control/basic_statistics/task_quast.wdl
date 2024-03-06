@@ -15,7 +15,7 @@ task quast {
     date | tee DATE
     quast.py --version | grep QUAST | tee VERSION
 
-    quast.py ~{assembly} -o . --min-contig ~{min_contig_len}
+    quast.py ~{assembly} -o . --min-contig ~{min_contig_length}
     mv report.tsv ~{samplename}_report.tsv
     
     python <<CODE
