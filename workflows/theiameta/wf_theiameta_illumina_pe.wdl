@@ -92,7 +92,7 @@ workflow theiameta_illumina_pe {
       input:
         assembly = select_first([retrieve_aligned_contig_paf.final_assembly, metaspades.assembly_fasta]),
         samplename = samplename,
-        min_contig_len = 1
+        min_contig_length = 1
       }
     if (output_additional_files){
       call minimap2_task.minimap2 as minimap2_reads {
