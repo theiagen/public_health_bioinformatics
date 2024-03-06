@@ -294,7 +294,7 @@ workflow theiacov_illumina_pe {
             genome_fasta = select_first([ivar_consensus.assembly_fasta]),
             assembly_length_unambiguous = consensus_qc.number_ATCG,
             vadr_opts = organism_parameters.vadr_opts,
-            maxlen = organism_parameters.vadr_maxlen
+            maxlength = organism_parameters.vadr_maxlength
         }
       }
       if (organism_parameters.standardized_organism == "HIV") {

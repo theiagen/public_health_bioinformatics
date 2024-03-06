@@ -11,7 +11,7 @@ task vadr {
     Int skip_length = 10000
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/vadr:1.5.1"
     Int minlen = 50
-    Int maxlen = 30000
+    Int maxlength = 30000
     Int cpu = 2
     Int memory = 8
   }
@@ -25,7 +25,7 @@ task vadr {
       /opt/vadr/vadr/miniscripts/fasta-trim-terminal-ambigs.pl \
         "~{genome_fasta}" \
         --minlen ~{minlen} \
-        --maxlen ~{maxlen} \
+        --maxlen ~{maxlength} \
         > "~{out_base}_trimmed.fasta"
 
       # run VADR

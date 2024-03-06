@@ -167,7 +167,7 @@ workflow theiacov_illumina_se {
             genome_fasta = ivar_consensus.assembly_fasta,
             assembly_length_unambiguous = consensus_qc.number_ATCG,
             vadr_opts = organism_parameters.vadr_opts,
-            maxlen = organism_parameters.vadr_maxlen
+            maxlength = organism_parameters.vadr_maxlength
         }
       }
       if(defined(qc_check_table)) {
