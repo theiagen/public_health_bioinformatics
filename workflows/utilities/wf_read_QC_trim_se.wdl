@@ -16,7 +16,7 @@ workflow read_QC_trim_se {
     String samplename
     File read1
     Int trim_minlength = 25
-    Int trim_quality_trim_score = 30
+    Int trim_quality_min_score = 30
     Int trim_window_size = 4
     Int bbduk_memory = 8
     String? target_organism
@@ -40,7 +40,7 @@ workflow read_QC_trim_se {
         samplename = samplename,
         read1 = read1,
         trimmomatic_minlength = trim_minlength,
-        trimmomatic_quality_trim_score = trim_quality_trim_score,
+        trimmomatic_quality_trim_score = trim_quality_min_score,
         trimmomatic_window_size = trim_window_size,
         trimmomatic_args = trimmomatic_args
     }
@@ -51,7 +51,7 @@ workflow read_QC_trim_se {
         samplename = samplename,
         read1 = read1,
         fastp_window_size = trim_window_size,
-        fastp_quality_trim_score = trim_quality_trim_score,
+        fastp_quality_trim_score = trim_quality_min_score,
         fastp_minlength = trim_minlength,
         fastp_args = fastp_args
     }

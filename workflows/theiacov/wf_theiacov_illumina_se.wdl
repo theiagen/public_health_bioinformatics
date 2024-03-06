@@ -28,7 +28,7 @@ workflow theiacov_illumina_se {
     # trimming parameters
     Boolean trim_primers = true
     Int trim_minlength = 25
-    Int trim_quality_trim_score = 30
+    Int trim_quality_min_score = 30
     Int trim_window_size = 4
     # nextclade inputs
     String? nextclade_dataset_reference
@@ -92,7 +92,7 @@ workflow theiacov_illumina_se {
         samplename = samplename,
         read1 = read1,
         trim_minlength = trim_minlength,
-        trim_quality_trim_score = trim_quality_trim_score,
+        trim_quality_min_score = trim_quality_min_score,
         trim_window_size = trim_window_size,
         adapters = adapters,
         phix = phix,

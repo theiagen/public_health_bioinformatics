@@ -38,7 +38,7 @@ workflow theiacov_illumina_pe {
     # trimming parameters
     Boolean trim_primers = true
     Int trim_minlength = 75
-    Int trim_quality_trim_score = 30
+    Int trim_quality_min_score = 30
     Int trim_window_size = 4
     # assembly parameters
     Int min_depth = 100  # the minimum depth to use for consensus and variant calling
@@ -106,7 +106,7 @@ workflow theiacov_illumina_pe {
         phix = phix,
         workflow_series = "theiacov",
         trim_minlength = trim_minlength,
-        trim_quality_trim_score = trim_quality_trim_score,
+        trim_quality_min_score = trim_quality_min_score,
         trim_window_size = trim_window_size
     }
     call screen.check_reads as clean_check_reads {
