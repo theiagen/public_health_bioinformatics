@@ -576,7 +576,7 @@ task trim_genbank_fastas {
   input {
     File genbank_untrimmed_fasta
     String output_name
-    Int minlen = 50
+    Int minlength = 50
     Int maxlength = 30000
     Int disk_size = 100
     Int memory = 2
@@ -587,7 +587,7 @@ task trim_genbank_fastas {
     # remove terminal ambiguous nucleotides
     /opt/vadr/vadr/miniscripts/fasta-trim-terminal-ambigs.pl \
       ~{genbank_untrimmed_fasta} \
-      --minlen ~{minlen} \
+      --minlen ~{minlength} \
       --maxlen ~{maxlength} \
       > ~{output_name}_genbank.fasta
   >>>

@@ -10,7 +10,7 @@ task vadr {
     Int assembly_length_unambiguous
     Int skip_length = 10000
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/vadr:1.5.1"
-    Int minlen = 50
+    Int minlength = 50
     Int maxlength = 30000
     Int cpu = 2
     Int memory = 8
@@ -24,7 +24,7 @@ task vadr {
       # remove terminal ambiguous nucleotides
       /opt/vadr/vadr/miniscripts/fasta-trim-terminal-ambigs.pl \
         "~{genome_fasta}" \
-        --minlen ~{minlen} \
+        --minlen ~{minlength} \
         --maxlen ~{maxlength} \
         > "~{out_base}_trimmed.fasta"
 

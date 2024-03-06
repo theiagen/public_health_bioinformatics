@@ -9,7 +9,7 @@ task fastp_pe {
     Int disk_size = 100
     Int fastp_window_size = 20
     Int fastp_quality_trim_score = 30
-    Int fastp_minlen = 50
+    Int fastp_minlength = 50
     # -g enables polyg trimming with default value of 10
     String fastp_args = "--detect_adapter_for_pe -g -5 20 -3 20"
     Int cpu = 4
@@ -24,7 +24,7 @@ task fastp_pe {
     --out1 ~{samplename}_1P.fastq.gz --out2 ~{samplename}_2P.fastq.gz \
     --unpaired1 ~{samplename}_1U.fastq.gz --unpaired2 ~{samplename}_2U.fastq.gz \
     --cut_right --cut_right_window_size ~{fastp_window_size} --cut_right_mean_quality ~{fastp_quality_trim_score} \
-    --length_required ~{fastp_minlen} \
+    --length_required ~{fastp_minlength} \
     --thread ~{cpu} \
     ~{fastp_args} \
     --html ~{samplename}_fastp.html --json ~{samplename}_fastp.json
@@ -57,7 +57,7 @@ task fastp_se {
     Int disk_size = 100
     Int fastp_window_size = 20
     Int fastp_quality_trim_score = 30
-    Int fastp_minlen = 50
+    Int fastp_minlength = 50
     # -g enables polyg trimming with default value of 10
     # --detect_adapter_for_pe argument was removed 
     String fastp_args = "-g -5 20 -3 20"
@@ -72,7 +72,7 @@ task fastp_se {
     --in1 ~{read1} \
     --out1 ~{samplename}_1P.fastq.gz \
     --cut_right --cut_right_window_size ~{fastp_window_size} --cut_right_mean_quality ~{fastp_quality_trim_score} \
-    --length_required ~{fastp_minlen} \
+    --length_required ~{fastp_minlength} \
     --thread ~{cpu} \
     ~{fastp_args} \
     --html ~{samplename}_fastp.html --json ~{samplename}_fastp.json
