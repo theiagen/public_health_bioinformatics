@@ -21,7 +21,6 @@ workflow organism_parameters {
     Int? genome_length_input
 
     # set default nextclade information as NA
-    String? nextclade_dataset_reference_input
     String? nextclade_dataset_tag_input
     String? nextclade_dataset_name_input
 
@@ -38,9 +37,8 @@ workflow organism_parameters {
   if (organism == "sars-cov-2") {
     String sc2_org_name = "sars-cov-2"
     String sc2_reference_genome = "gs://theiagen-public-files-rp/terra/augur-sars-cov-2-references/MN908947.fasta"
-    String sc2_nextclade_ds_tag = "2023-12-03T12:00:00Z"
-    String sc2_nextclade_ref = "MN908947"
-    String sc2_nextclade_ds_name = "sars-cov-2"
+    String sc2_nextclade_ds_tag = "2024-02-16--04-00-32Z"
+    String sc2_nextclade_ds_name = "nextstrain/sars-cov-2/wuhan-hu-1/orfs"
     String sc2_pangolin_docker = "us-docker.pkg.dev/general-theiagen/staphb/pangolin:4.3.1-pdata-1.25.1"
     Int sc2_genome_len = 29903
     Int sc2_vadr_max_length = 30000
@@ -50,7 +48,6 @@ workflow organism_parameters {
     String mpox_org_name = "MPXV"
     String mpox_reference_genome = "gs://theiagen-public-files/terra/mpxv-files/MPXV.MT903345.reference.fasta"
     String mpox_nextclade_ds_tag = "2023-08-01T12:00:00Z"
-    String mpox_nextclade_ref = "pseudo_ON563414"
     String mpox_nextclade_ds_name = "hMPXV_B1"
     String mpox_kraken_target_organism = "Monkeypox virus"
     String mpox_primer_bed_file = "gs://theiagen-public-files/terra/mpxv-files/MPXV.primer.bed"
@@ -68,7 +65,6 @@ workflow organism_parameters {
     String wnv_vadr_options = "--mkey flavi --mdir /opt/vadr/vadr-models-flavi/ --nomisc --noprotid --out_allfasta"    
     Int wnv_vadr_max_length = 11000
     String wnv_nextclade_ds_tag = "NA"
-    String wnv_nextclade_ref = "NA"
     String wnv_nextclade_ds_name = "NA"
   }
   if (organism == "flu" || organism == "influenza" || organism == "Flu" || organism == "Influenza") {
@@ -85,25 +81,21 @@ workflow organism_parameters {
         String h1n1_ha_reference = "gs://theiagen-public-files-rp/terra/flu-references/reference_h1n1pdm_ha.fasta"
         String h1n1_ha_nextclade_ds_tag = "2023-11-18T12:00:00Z"
         String h1n1_ha_nextclade_ds_name = "flu_h1n1pdm_ha"
-        String h1n1_ha_nextclade_ref = "MW626062"
       }
       if (flu_subtype == "H3N2") {
         String h3n2_ha_reference = "gs://theiagen-public-files-rp/terra/flu-references/reference_h3n2_ha.fasta"
         String h3n2_ha_nextclade_ds_tag = "2023-11-18T12:00:00Z"
         String h3n2_ha_nextclade_ds_name = "flu_h3n2_ha"
-        String h3n2_ha_nextclade_ref = "EPI1857216"
       }
       if (flu_subtype == "Victoria") {
         String vic_ha_reference = "gs://theiagen-public-files-rp/terra/flu-references/reference_vic_ha.fasta"
         String vic_ha_nextclade_ds_tag = "2023-11-22T12:00:00Z"
         String vic_ha_nextclade_ds_name = "flu_vic_ha"
-        String vic_ha_nextclade_ref = "KX058884"
       }
       if (flu_subtype == "Yamagata") {
         String yam_ha_reference = "gs://theiagen-public-files-rp/terra/flu-references/reference_yam_ha.fasta"
         String yam_ha_nextclade_ds_tag = "2023-11-18T12:00:00Z"
         String yam_ha_nextclade_ds_name = "flu_yam_ha"
-        String yam_ha_nextclade_ref = "JN993010"
       }
     }
     if (flu_segment == "NA") {
@@ -111,25 +103,21 @@ workflow organism_parameters {
         String h1n1_na_reference = "gs://theiagen-public-files-rp/terra/flu-references/reference_h1n1pdm_na.fasta"
         String h1n1_na_nextclade_ds_tag = "2023-11-18T12:00:00Z"
         String h1n1_na_nextclade_ds_name = "flu_h1n1pdm_na"
-        String h1n1_na_nextclade_ref = "MW626056"
       }
       if (flu_subtype == "H3N2") {
         String h3n2_na_reference = "gs://theiagen-public-files-rp/terra/flu-references/reference_h3n2_na.fasta"
         String h3n2_na_nextclade_ds_tag = "2023-11-18T12:00:00Z"
         String h3n2_na_nextclade_ds_name = "flu_h3n2_na"
-        String h3n2_na_nextclade_ref = "EPI1857215"
       }
       if (flu_subtype == "Victoria") {
         String vic_na_reference = "gs://theiagen-public-files-rp/terra/flu-references/reference_vic_na.fasta"
         String vic_na_nextclade_ds_tag = "2023-11-18T12:00:00Z"
         String vic_na_nextclade_ds_name = "flu_vic_na"
-        String vic_na_nextclade_ref = "CY073894"
       }
       if (flu_subtype == "Yamagata") {
         String yam_na_reference = "gs://theiagen-public-files-rp/terra/flu-references/reference_yam_na.fasta"
         String yam_na_nextclade_ds_tag = "NA"
         String yam_na_nextclade_ds_name = "NA"
-        String yam_na_nextclade_ref = "NA"
       }
     }
   }
@@ -137,7 +125,6 @@ workflow organism_parameters {
     String rsv_a_org_name = "rsv_a"
     String rsv_a_reference_genome = "gs://theiagen-public-files-rp/terra/rsv_references/reference_rsv_a.fasta"
     String rsv_a_nextclade_ds_tag = "2023-02-03T12:00:00Z"
-    String rsv_a_nextclade_ref = "EPI_ISL_412866"
     String rsv_a_nextclade_ds_name = "rsv_a"
     Int rsv_a_genome_len = 16000
     String rsv_a_vadr_options = "-r --mkey rsv --xnocomp"
@@ -147,7 +134,6 @@ workflow organism_parameters {
     String rsv_b_org_name = "rsv_b"
     String rsv_b_reference_genome = "gs://theiagen-public-files-rp/terra/rsv_references/reference_rsv_b.fasta"
     String rsv_b_nextclade_ds_tag = "2023-02-03T12:00:00Z"
-    String rsv_b_nextclade_ref = "EPI_ISL_1653999"
     String rsv_b_nextclade_ds_name = "rsv_b"
     Int rsv_b_genome_len = 16000   
     String rsv_b_vadr_options = "-r --mkey rsv --xnocomp"
@@ -180,7 +166,6 @@ workflow organism_parameters {
     Int genome_length = select_first([genome_length_input, sc2_genome_len, mpox_genome_len, wnv_genome_len, flu_genome_len, rsv_a_genome_len, rsv_b_genome_len, hiv_v1_genome_len, hiv_v2_genome_len])
     # nextclade information
     String nextclade_dataset_tag = select_first([nextclade_dataset_tag_input, sc2_nextclade_ds_tag, mpox_nextclade_ds_tag, wnv_nextclade_ds_tag, h1n1_ha_nextclade_ds_tag, h3n2_ha_nextclade_ds_tag, vic_ha_nextclade_ds_tag, yam_ha_nextclade_ds_tag, h1n1_na_nextclade_ds_tag, h3n2_na_nextclade_ds_tag, vic_na_nextclade_ds_tag, yam_na_nextclade_ds_tag, rsv_a_nextclade_ds_tag, rsv_b_nextclade_ds_tag, "NA"])
-    String nextclade_dataset_reference = select_first([nextclade_dataset_reference_input, sc2_nextclade_ref, mpox_nextclade_ref, wnv_nextclade_ref, h1n1_ha_nextclade_ref, h3n2_ha_nextclade_ref, vic_ha_nextclade_ref, yam_ha_nextclade_ref, h1n1_na_nextclade_ref, h3n2_na_nextclade_ref, vic_na_nextclade_ref, yam_na_nextclade_ref, rsv_a_nextclade_ref, rsv_b_nextclade_ref, "NA"])
     String nextclade_dataset_name = select_first([nextclade_dataset_name_input, sc2_nextclade_ds_name, mpox_nextclade_ds_name, wnv_nextclade_ds_name, h1n1_ha_nextclade_ds_name, h3n2_ha_nextclade_ds_name, vic_ha_nextclade_ds_name, yam_ha_nextclade_ds_name, h1n1_na_nextclade_ds_name, h3n2_na_nextclade_ds_name, vic_na_nextclade_ds_name, yam_na_nextclade_ds_name, rsv_a_nextclade_ds_name, rsv_b_nextclade_ds_name, "NA"])
     # pangolin options
     String pangolin_docker = select_first([pangolin_docker_image, sc2_pangolin_docker, ""])
