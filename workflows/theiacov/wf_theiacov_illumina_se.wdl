@@ -31,7 +31,6 @@ workflow theiacov_illumina_se {
     Int trim_quality_trim_score = 30
     Int trim_window_size = 4
     # nextclade inputs
-    String? nextclade_dataset_reference
     String? nextclade_dataset_tag
     String? nextclade_dataset_name
     # reference values
@@ -64,7 +63,6 @@ workflow theiacov_illumina_se {
       reference_gff_file = reference_gff,
       reference_genome = reference_genome,
       genome_length_input = genome_length,
-      nextclade_dataset_reference_input = nextclade_dataset_reference,
       nextclade_dataset_tag_input = nextclade_dataset_tag,
       nextclade_dataset_name_input = nextclade_dataset_name,     
       vadr_max_length = vadr_max_length,
@@ -147,16 +145,15 @@ workflow theiacov_illumina_se {
       }
       if (organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "sars-cov-2"){
         # tasks specific to either MPXV or sars-cov-2
-        call nextclade_task.nextclade {
+        call nextclade_task.nextclade_v3 {
           input:
           genome_fasta = ivar_consensus.assembly_fasta,
           dataset_name = organism_parameters.nextclade_dataset_name,
-          dataset_reference = organism_parameters.nextclade_dataset_reference,
           dataset_tag = organism_parameters.nextclade_dataset_tag
         }
         call nextclade_task.nextclade_output_parser {
           input:
-          nextclade_tsv = nextclade.nextclade_tsv,
+          nextclade_tsv = nextclade_v3.nextclade_tsv,
           organism = organism_parameters.standardized_organism
         }
       }
@@ -275,11 +272,11 @@ workflow theiacov_illumina_se {
     String? pangolin_docker = pangolin4.pangolin_docker
     String? pangolin_versions = pangolin4.pangolin_versions
     # Nextclade outputs
-    File? nextclade_json = nextclade.nextclade_json
-    File? auspice_json = nextclade.auspice_json
-    File? nextclade_tsv = nextclade.nextclade_tsv
-    String? nextclade_version = nextclade.nextclade_version
-    String? nextclade_docker = nextclade.nextclade_docker
+    File? nextclade_json = nextclade_v3.nextclade_json
+    File? auspice_json = nextclade_v3.auspice_json
+    File? nextclade_tsv = nextclade_v3.nextclade_tsv
+    String? nextclade_version = nextclade_v3.nextclade_version
+    String? nextclade_docker = nextclade_v3.nextclade_docker
     String? nextclade_ds_tag = organism_parameters.nextclade_dataset_tag
     String? nextclade_aa_subs = nextclade_output_parser.nextclade_aa_subs
     String? nextclade_aa_dels = nextclade_output_parser.nextclade_aa_dels

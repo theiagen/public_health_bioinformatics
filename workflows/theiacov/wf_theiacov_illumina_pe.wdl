@@ -45,7 +45,6 @@ workflow theiacov_illumina_pe {
     Float consensus_min_freq = 0.6 # minimum frequency for a variant to be called as SNP in consensus genome
     Float variant_min_freq = 0.6 # minimum frequency for a variant to be reported in ivar outputs
     # nextclade inputs
-    String? nextclade_dataset_reference
     String? nextclade_dataset_tag
     String? nextclade_dataset_name
     # vadr parameters
@@ -72,7 +71,6 @@ workflow theiacov_illumina_pe {
       reference_gff_file = reference_gff,
       reference_genome = reference_genome,
       genome_length_input = genome_length,
-      nextclade_dataset_reference_input = nextclade_dataset_reference,
       nextclade_dataset_tag_input = nextclade_dataset_tag,
       nextclade_dataset_name_input = nextclade_dataset_name,     
       vadr_max_length = vadr_max_length,
@@ -182,7 +180,6 @@ workflow theiacov_illumina_pe {
               reference_gff_file = reference_gff,
               reference_genome = reference_genome,
               genome_length_input = genome_length,
-              nextclade_dataset_reference_input = nextclade_dataset_reference,
               nextclade_dataset_tag_input = nextclade_dataset_tag,
               nextclade_dataset_name_input = nextclade_dataset_name,     
               vadr_max_length = vadr_max_length,
@@ -201,7 +198,6 @@ workflow theiacov_illumina_pe {
               reference_gff_file = reference_gff,
               reference_genome = reference_genome,
               genome_length_input = genome_length,
-              nextclade_dataset_reference_input = nextclade_dataset_reference,
               nextclade_dataset_tag_input = nextclade_dataset_tag,
               nextclade_dataset_name_input = nextclade_dataset_name,     
               vadr_max_length = vadr_max_length,
@@ -239,26 +235,24 @@ workflow theiacov_illumina_pe {
       # run organism-specific typing
       if (organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "sars-cov-2" || (organism_parameters.standardized_organism == "flu" && defined(irma.seg_ha_assembly) && ! defined(do_not_run_flu_ha_nextclade))) { 
         # tasks specific to either MPXV, sars-cov-2, or flu
-        call nextclade_task.nextclade {
+        call nextclade_task.nextclade_v3 {
           input:
             genome_fasta = select_first([irma.seg_ha_assembly, ivar_consensus.assembly_fasta]),
             dataset_name = select_first([set_flu_ha_nextclade_values.nextclade_dataset_name, organism_parameters.nextclade_dataset_name]),
-            dataset_reference = select_first([set_flu_ha_nextclade_values.nextclade_dataset_reference, organism_parameters.nextclade_dataset_reference]),
             dataset_tag = select_first([set_flu_ha_nextclade_values.nextclade_dataset_tag, organism_parameters.nextclade_dataset_tag])
         }
         call nextclade_task.nextclade_output_parser {
           input:
-            nextclade_tsv = nextclade.nextclade_tsv,
+            nextclade_tsv = nextclade_v3.nextclade_tsv,
             organism = organism_parameters.standardized_organism
         }
       }
       if (organism_parameters.standardized_organism == "flu" && defined(irma.seg_na_assembly) && ! defined(do_not_run_flu_na_nextclade)) { 
         # tasks specific to flu NA - run nextclade a second time
-        call nextclade_task.nextclade as nextclade_flu_na {
+        call nextclade_task.nextclade_v3 as nextclade_flu_na {
           input:
             genome_fasta = select_first([irma.seg_na_assembly]),
             dataset_name = select_first([set_flu_na_nextclade_values.nextclade_dataset_name, organism_parameters.nextclade_dataset_name]),
-            dataset_reference = select_first([set_flu_na_nextclade_values.nextclade_dataset_reference, organism_parameters.nextclade_dataset_reference]),
             dataset_tag = select_first([set_flu_na_nextclade_values.nextclade_dataset_tag, organism_parameters.nextclade_dataset_tag])
        }
         call nextclade_task.nextclade_output_parser as nextclade_output_parser_flu_na {
@@ -422,11 +416,11 @@ workflow theiacov_illumina_pe {
     String? pangolin_docker = pangolin4.pangolin_docker
     String? pangolin_versions = pangolin4.pangolin_versions
     # Nextclade outputs
-    String nextclade_json = select_first([nextclade.nextclade_json, ""])
-    String auspice_json = select_first([ nextclade.auspice_json, ""])
-    String nextclade_tsv = select_first([nextclade.nextclade_tsv, ""])
-    String nextclade_version = select_first([nextclade.nextclade_version, ""])
-    String nextclade_docker = select_first([nextclade.nextclade_docker, ""])
+    String nextclade_json = select_first([nextclade_v3.nextclade_json, ""])
+    String auspice_json = select_first([ nextclade_v3.auspice_json, ""])
+    String nextclade_tsv = select_first([nextclade_v3.nextclade_tsv, ""])
+    String nextclade_version = select_first([nextclade_v3.nextclade_version, ""])
+    String nextclade_docker = select_first([nextclade_v3.nextclade_docker, ""])
     String nextclade_ds_tag = select_first([ha_na_nextclade_ds_tag, set_flu_ha_nextclade_values.nextclade_dataset_tag, organism_parameters.nextclade_dataset_tag, ""])
     String nextclade_aa_subs = select_first([ha_na_nextclade_aa_subs, nextclade_output_parser.nextclade_aa_subs, ""])
     String nextclade_aa_dels = select_first([ha_na_nextclade_aa_dels, nextclade_output_parser.nextclade_aa_dels, ""])
