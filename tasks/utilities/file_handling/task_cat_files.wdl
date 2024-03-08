@@ -78,9 +78,9 @@ task cat_variants {
       # create a new column with "samplename" as the column name and the samplename as the column content, combine with rest of file
       if [ "$index" -eq "0" ]; then
         # if first cloumn, add header
-        awk -v var=$samplename 'BEGIN{ FS = OFS = "," } { print (NR==1? "samplename" : var), $0 }' $file >> ~{concatenated_file_name}
+        awk -v var=$samplename 'BEGIN{ FS = OFS = "," } { print (NR==1? "samplename" : var), $0 }' $file >> "~{concatenated_file_name}".csv
       else
-        tail -n +2 $file | awk -v var=$samplename 'BEGIN{ FS = OFS = "," } { print var, $0 }' >> ~{concatenated_file_name}
+        tail -n +2 $file | awk -v var=$samplename 'BEGIN{ FS = OFS = "," } { print var, $0 }' >> "~{concatenated_file_name}".csv
       fi
     done
 
