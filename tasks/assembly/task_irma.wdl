@@ -114,6 +114,7 @@ task irma {
     File? seg_pa_assembly = "~{samplename}_PA.fasta"
     File? seg_pb1_assembly = "~{samplename}_PB1.fasta"
     File? seg_pb2_assembly = "~{samplename}_PB2.fasta"
+    File? seg_mp_assembly = "~{samplename}_MP.fasta"
     String irma_type = read_string("IRMA_TYPE")
     String irma_subtype = read_string("IRMA_SUBTYPE")
     Array[File] irma_assemblies = glob("~{samplename}*.fasta")
