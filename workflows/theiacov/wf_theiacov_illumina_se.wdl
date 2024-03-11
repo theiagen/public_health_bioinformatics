@@ -209,6 +209,7 @@ workflow theiacov_illumina_se {
     Int? fastqc_num_reads_raw1 = read_QC_trim.fastqc_raw1
     Int? fastqc_num_reads_clean1 = read_QC_trim.fastqc_clean1
     String? fastqc_version = read_QC_trim.fastqc_version
+    String? fastqc_docker = read_QC_trim.fastqc_docker
     File? fastqc_raw1_html = read_QC_trim.fastqc_raw1_html
     File? fastqc_clean1_html = read_QC_trim.fastqc_clean1_html
     # Read QC - trimmomatic outputs
