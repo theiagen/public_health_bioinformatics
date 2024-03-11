@@ -99,10 +99,10 @@ task irma {
     fi
 
     # rename BAM file if exists
-    if [ -f "~{samplename}"_HA*.bam ] && [ ! ${irma_type} == "Type_B" ]; then
+    if [ -f "~{samplename}"_HA*.bam ] && [[ "${irma_type}" == "Type_A" ]]; then
       mv "~{samplename}"_HA*.bam "~{samplename}"_HA.bam
     fi
-    if [ -f "~{samplename}"_NA*.bam ] && [ ! ${irma_type} == "Type_B" ]; then
+    if [ -f "~{samplename}"_NA*.bam ] && [[ "${irma_type}" == "Type_A" ]]; then
       mv "~{samplename}"_NA*.bam "~{samplename}"_NA.bam
     fi
 
