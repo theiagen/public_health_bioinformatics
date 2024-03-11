@@ -120,18 +120,18 @@ workflow read_QC_trim_se {
     String bbduk_docker = bbduk_se.bbduk_docker
 
     # fastq_scan
-    Int? fastq_scan_raw_number_reads = fastq_scan_raw.read1_seq
-    Int? fastq_scan_clean_number_reads = fastq_scan_clean.read1_seq
+    Int? fastq_scan_raw1 = fastq_scan_raw.read1_seq
+    Int? fastq_scan_clean1 = fastq_scan_clean.read1_seq
     String? fastq_scan_version = fastq_scan_raw.version
     String? fastq_scan_docker = fastq_scan_raw.fastq_scan_docker
 
     # fastqc
-    Int? fastqc_raw_number_reads = fastqc_raw.read1_seq
-    Int? fastqc_clean_number_reads = fastqc_clean.read1_seq
+    Int? fastqc_raw1 = fastqc_raw.read1_seq
+    Int? fastqc_clean1 = fastqc_clean.read1_seq
     String? fastqc_version = fastqc_raw.version
     String? fastqc_docker = fastqc_raw.fastqc_docker
-    File? fastqc_raw_html = fastqc_raw.read1_fastqc_html
-    File? fastqc_clean_html = fastqc_clean.read1_fastqc_html
+    File? fastqc_raw1_html = fastqc_raw.read1_fastqc_html
+    File? fastqc_clean1_html = fastqc_clean.read1_fastqc_html
     
     # kraken2
     String kraken_version = select_first([kraken2_raw.version, kraken2_standalone.kraken2_version, ""])
@@ -144,7 +144,9 @@ workflow read_QC_trim_se {
    
     # trimming versioning
     String? trimmomatic_version = trimmomatic_se.version
+    String? trimmomatic_docker = trimmomatic_se.trimmomatic_docker
     String? fastp_version = fastp_se.version
+    File? fastp_html_report = fastp_se.fastp_stats
     
     # midas
     String? midas_docker = midas.midas_docker

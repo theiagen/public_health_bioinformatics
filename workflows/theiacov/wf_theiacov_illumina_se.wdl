@@ -175,8 +175,8 @@ workflow theiacov_illumina_se {
           input:
             qc_check_table = qc_check_table,
             expected_taxon = organism,
-            num_reads_raw1 = read_QC_trim.fastq_scan_raw_number_reads,
-            num_reads_clean1 = read_QC_trim.fastq_scan_clean_number_reads,
+            num_reads_raw1 = read_QC_trim.fastq_scan_raw1,
+            num_reads_clean1 = read_QC_trim.fastq_scan_clean1,
             kraken_human = read_QC_trim.kraken_human,
             meanbaseq_trim = ivar_consensus.meanbaseq_trim,
             assembly_mean_coverage = ivar_consensus.assembly_mean_coverage,
@@ -199,20 +199,23 @@ workflow theiacov_illumina_se {
     # Read Metadata
     String seq_platform = seq_method
     # Sample Screening
-    String raw_read_screen = raw_check_reads.read_screen
-    String? clean_read_screen = clean_check_reads.read_screen
+    String read_screen_raw = raw_check_reads.read_screen
+    String? read_screen_clean = clean_check_reads.read_screen
     # Read QC - fastq_scan outputs
-    Int? num_reads_raw = read_QC_trim.fastq_scan_raw_number_reads
+    Int? num_reads_raw1 = read_QC_trim.fastq_scan_raw1
     String? fastq_scan_version = read_QC_trim.fastq_scan_version
-    Int? num_reads_clean = read_QC_trim.fastq_scan_clean_number_reads
+    Int? num_reads_clean1 = read_QC_trim.fastq_scan_clean1
     # Read QC - fastqc outputs
-    Int? fastqc_num_reads_raw = read_QC_trim.fastqc_raw_number_reads
-    Int? fastqc_num_reads_clean = read_QC_trim.fastqc_clean_number_reads
+    Int? fastqc_num_reads_raw1 = read_QC_trim.fastqc_raw1
+    Int? fastqc_num_reads_clean1 = read_QC_trim.fastqc_clean1
     String? fastqc_version = read_QC_trim.fastqc_version
-    File? fastqc_raw_html = read_QC_trim.fastqc_raw_html
-    File? fastqc_clean_html = read_QC_trim.fastqc_clean_html
+    File? fastqc_raw1_html = read_QC_trim.fastqc_raw1_html
+    File? fastqc_clean1_html = read_QC_trim.fastqc_clean1_html
     # Read QC - trimmomatic outputs
     String? trimmomatic_version = read_QC_trim.trimmomatic_version
+    # Read QC - fastp outputs
+    String? fastp_version = read_QC_trim.fastp_version
+    File? fastp_html_report = read_QC_trim.fastp_html_report
     # Read QC - bbduk outputs
     File? read1_clean = read_QC_trim.read1_clean
     String? bbduk_docker = read_QC_trim.bbduk_docker
