@@ -99,13 +99,22 @@ task irma {
     fi
 
     # rename BAM file if exists
-    if [ -f "~{samplename}"_HA*.bam ] && [[ "${irma_type}" == "Type_A" ]]; then
-      mv "~{samplename}"_HA*.bam "~{samplename}"_HA.bam
+    #if [ -f "~{samplename}"_HA*.bam ] && [[ "${irma_type}" == "Type_A" ]]; then
+    #  mv "~{samplename}"_HA*.bam "~{samplename}"_HA.bam
+    #fi
+    #if [ -f "~{samplename}"_NA*.bam ] && [[ "${irma_type}" == "Type_A" ]]; then
+    #  mv "~{samplename}"_NA*.bam "~{samplename}"_NA.bam
+    #fi
+    if ls "~{samplename}"_HA?*.bam 1> /dev/null 2>&1; then
+      for file in "~{samplename}"_HA?*.bam; do
+        mv "$file" "${file%_HA*.bam}_HA.bam"
+      done
     fi
-    if [ -f "~{samplename}"_NA*.bam ] && [[ "${irma_type}" == "Type_A" ]]; then
-      mv "~{samplename}"_NA*.bam "~{samplename}"_NA.bam
+    if ls "~{samplename}"_NA?*.bam 1> /dev/null 2>&1; then
+      for file in "~{samplename}"_NA?*.bam; do
+        mv "$file" "${file%_NA*.bam}_NA.bam"
+      done
     fi
-
   >>>
   output {
     File? irma_assembly_fasta = "~{samplename}.irma.consensus.fasta"
