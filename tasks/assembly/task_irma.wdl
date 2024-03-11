@@ -64,6 +64,7 @@ task irma {
     # capture IRMA type
     if compgen -G "~{samplename}/*fasta"; then
       echo "Type_"$(basename "$(echo "$(find ~{samplename}/*.fasta | head -n1)")" | cut -d_ -f1) > IRMA_TYPE
+      irma_type=(echo "Type_"$(basename "$(echo "$(find ~{samplename}/*.fasta | head -n1)")" | cut -d_ -f1))
       # cat consensus assemblies
       cat ~{samplename}/*.fasta > ~{samplename}.irma.consensus.fasta
     else
@@ -98,10 +99,10 @@ task irma {
     fi
 
     # rename BAM file if exists
-    if [ -f "~{samplename}"_HA*.bam ]; then
+    if [ -f "~{samplename}"_HA*.bam ] && [ ! ${irma_type} == "Type_B" ]; then
       mv "~{samplename}"_HA*.bam "~{samplename}"_HA.bam
     fi
-    if [ -f "~{samplename}"_NA*.bam ]; then
+    if [ -f "~{samplename}"_NA*.bam ] && [ ! ${irma_type} == "Type_B" ]; then
       mv "~{samplename}"_NA*.bam "~{samplename}"_NA.bam
     fi
 
