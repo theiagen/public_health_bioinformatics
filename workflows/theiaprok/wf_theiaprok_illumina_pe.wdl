@@ -56,6 +56,7 @@ workflow theiaprok_illumina_pe {
     Boolean call_ani = false # by default do not call ANI task, but user has ability to enable this task if working with enteric pathogens or supply their own high-quality reference genome
     Boolean call_kmerfinder = false 
     Boolean call_resfinder = false
+    Boolean call_plasmidfinder = true
     String genome_annotation = "prokka" # options: "prokka" or "bakta"
     String? expected_taxon  # allow user to provide organism (e.g. "Clostridioides_difficile") string to amrfinder. Useful when gambit does not predict the correct species    # qc check parameters
     File? qc_check_table
@@ -185,10 +186,12 @@ workflow theiaprok_illumina_pe {
             samplename = samplename
         }
       }
-      call plasmidfinder_task.plasmidfinder {
-        input:
-          assembly = shovill_pe.assembly_fasta,
-          samplename = samplename
+      if (call_plasmidfinder) {
+        call plasmidfinder_task.plasmidfinder {
+          input:
+            assembly = shovill_pe.assembly_fasta,
+            samplename = samplename
+        }
       }
       if (defined(qc_check_table)) {
         call qc_check.qc_check_phb as qc_check_task {

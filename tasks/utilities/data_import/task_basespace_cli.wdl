@@ -12,7 +12,6 @@ task fetch_bs {
     Int memory = 8
     Int cpu = 2
     Int disk_size = 100
-    Int preemptible = 1
 
     String docker = "us-docker.pkg.dev/general-theiagen/theiagen/basespace_cli:1.2.1"
   }
@@ -102,6 +101,6 @@ task fetch_bs {
     cpu: cpu
     disks: "local-disk ~{disk_size} SSD"
     disk: disk_size + " GB"
-    preemptible: preemptible
+    preemptible: 1
   }
 }
