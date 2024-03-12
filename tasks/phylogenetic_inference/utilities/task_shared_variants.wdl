@@ -18,18 +18,17 @@ task shared_variants {
     tablename = "~{concatenated_variants}" 
     df = pd.read_csv(tablename, delimiter=',', header=0, index_col=False) 
     
-    # fill empty columns with NA
+    # fill empty columns with NA (particularly relevant for mutations with no associated AA changes)
     df.fillna("NA", inplace=True)
 
-    # parse evidence column?
-
     # pivot the table so that the samples are columns and 
-    # CHROM POS LOCUS_TAG PRODUCT (concatenated) are rows
-    # in the process, fill the pivoted table with the ALT column 
-    # and fill with 0 if there is no ALT
+    # CHROM,POS,TYPE,REF,ALT,FTYPE,STRAND,NT_POS,AA_POS,EFFECT,LOCUS_TAG,GENE,PRODUCT are rows
+    # in the process, fill the pivoted table with the EVIDENCE column 
     pivoted_df = df.pivot_table(index=['CHROM','POS','TYPE','REF','ALT','FTYPE','STRAND','NT_POS','AA_POS','EFFECT','LOCUS_TAG','GENE','PRODUCT'], columns='samplename', values='EVIDENCE', aggfunc='first')
     
-    # fill with 0 if there is no ALT
+    # if a sample does not have a mutation that is present in another sample, 
+    # the pivot table will have a NaN value
+    # so replace NaN with 0
     pivoted_df = pivoted_df.fillna(0)
 
     # Replace non-zero values with 1
