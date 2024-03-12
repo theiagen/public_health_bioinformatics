@@ -577,7 +577,7 @@ task trim_genbank_fastas {
     File genbank_untrimmed_fasta
     String output_name
     Int min_length = 50
-    Int maxlength = 30000
+    Int max_length = 30000
     Int disk_size = 100
     Int memory = 2
     Int cpu = 1
@@ -588,7 +588,7 @@ task trim_genbank_fastas {
     /opt/vadr/vadr/miniscripts/fasta-trim-terminal-ambigs.pl \
       ~{genbank_untrimmed_fasta} \
       --minlen ~{min_length} \
-      --maxlen ~{maxlength} \
+      --maxlen ~{max_length} \
       > ~{output_name}_genbank.fasta
   >>>
   output {
