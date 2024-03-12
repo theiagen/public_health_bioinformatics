@@ -44,7 +44,8 @@ workflow theiameta_illumina_pe {
         samplename = samplename,
         read1 = read1,
         read2 = read2,
-        workflow_series = "theiameta"
+        workflow_series = "theiameta",
+        kraken_db = kraken2_db
     }
   call kraken_task.kraken2_standalone as kraken2_clean {
     input:
