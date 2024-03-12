@@ -70,7 +70,7 @@ task snippy_variants {
     echo $reference_length | tee REFERENCE_LENGTH
 
     # filter depth file to only include positions with depth >= min_coverage
-      awk -F "\t" -v cov_var=~{min_coverage} '{ if ($3 >= cov_var) print;}' "~{samplename}/~{samplename}_depth.tsv" > "~{samplename}/~{samplename}_depth_${min_cov}.tsv"
+    awk -F "\t" -v cov_var=~{min_coverage} '{ if ($3 >= cov_var) print;}' "~{samplename}/~{samplename}_depth.tsv" > "~{samplename}/~{samplename}_depth_~{min_coverage}.tsv"
     
     # compute proportion of genome with depth >= min_coverage
     reference_length_passed_depth=$(cat "~{samplename}/~{samplename}_depth_~{min_coverage}.tsv" | wc -l)
