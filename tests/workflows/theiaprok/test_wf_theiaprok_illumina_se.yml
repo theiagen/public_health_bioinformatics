@@ -440,7 +440,7 @@
     - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_se/command
       md5sum: f560f566f05e75bb9c4ab0370d33edd6
     - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_se/inputs.json
-      contains: ["read", "fastq", "test", "trimmomatic_minlength"]
+      contains: ["read", "fastq", "test", "trimmomatic_min_length"]
     - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_se/outputs.json
       contains: ["read", "fastq", "test", "trimmomatic"]
     - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_se/stderr.txt

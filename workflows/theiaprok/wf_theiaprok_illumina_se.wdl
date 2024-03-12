@@ -48,7 +48,7 @@ workflow theiaprok_illumina_se {
     Int max_genome_length = 18040666
     Int min_coverage = 10
     # trimming parameters
-    Int trim_minlength = 25
+    Int trim_min_length = 25
     Int trim_quality_min_score = 30
     Int trim_window_size = 4
     # module options
@@ -80,7 +80,7 @@ workflow theiaprok_illumina_se {
       input:
         samplename = samplename,
         read1 = read1,
-        trim_minlength = trim_minlength,
+        trim_min_length = trim_min_length,
         trim_quality_min_score = trim_quality_min_score,
         trim_window_size = trim_window_size,
         workflow_series = "theiaprok"

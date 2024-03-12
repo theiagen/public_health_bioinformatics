@@ -49,7 +49,7 @@ workflow theiaprok_illumina_pe {
     Int min_coverage = 10
     Int min_proportion = 40
     # trimming parameters
-    Int trim_minlength = 75
+    Int trim_min_length = 75
     Int trim_quality_min_score = 20
     Int trim_window_size = 10
     # module options
@@ -82,7 +82,7 @@ workflow theiaprok_illumina_pe {
         samplename = samplename,
         read1 = read1,
         read2 = read2,
-        trim_minlength = trim_minlength,
+        trim_min_length = trim_min_length,
         trim_quality_min_score = trim_quality_min_score,
         trim_window_size = trim_window_size,
         workflow_series = "theiaprok"
