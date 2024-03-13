@@ -3,6 +3,7 @@ version 1.0
 task rasusa {
   meta {
     description: "Randomly subsample sequencing reads to a specified coverage (https://github.com/mbhall88/rasusa)"
+    volatile: true
   }
   input {
     File read1
