@@ -326,8 +326,8 @@ workflow theiacov_ont {
     # Read Metadata
     String seq_platform = seq_method
     # Sample Screening
-    String raw_read_screen = raw_check_reads.read_screen
-    String? clean_read_screen = clean_check_reads.read_screen
+    String read_screen_raw = raw_check_reads.read_screen
+    String? read_screen_clean = clean_check_reads.read_screen
     # Read QC - dehosting outputs
     File? read1_dehosted = read_qc_trim.read1_dehosted
     # Read QC - nanoplot outputs    
