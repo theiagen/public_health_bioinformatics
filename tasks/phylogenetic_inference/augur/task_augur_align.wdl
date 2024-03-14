@@ -18,8 +18,8 @@ task augur_align {
     # run augur align
     augur align \
       --sequences ~{assembly_fasta} \
-      --nthreads cpu \
       --reference-sequence ~{reference_fasta} \
+      --nthreads ~{cpu} \
       ~{true="--remove-reference" false="" remove_reference} \
       ~{true="--fill-gaps" false="" fill_gaps}
   >>>
