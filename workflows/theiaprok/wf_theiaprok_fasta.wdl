@@ -38,6 +38,7 @@ workflow theiaprok_fasta {
     Boolean call_ani = false # by default do not call ANI task, but user has ability to enable this task if working with enteric pathogens or supply their own high-quality reference genome
     Boolean call_kmerfinder = false
     Boolean call_resfinder = false
+    Boolean call_plasmidfinder = true
     String genome_annotation = "prokka" # options: "prokka" or "bakta"
     String? expected_taxon # allow user to provide organism (e.g. "Clostridioides_difficile") string to amrfinder. Useful when gambit does not predict the correct species
     # qc check parameters
@@ -108,10 +109,12 @@ workflow theiaprok_fasta {
         samplename = samplename
     }
   }
-  call plasmidfinder_task.plasmidfinder {
-    input:
-      assembly = assembly_fasta,
-      samplename = samplename
+  if (call_plasmidfinder) {
+    call plasmidfinder_task.plasmidfinder {
+      input:
+        assembly = assembly_fasta,
+        samplename = samplename
+    }
   }
   call merlin_magic_workflow.merlin_magic {
     input:
@@ -493,11 +496,11 @@ workflow theiaprok_fasta {
     File? bakta_summary = bakta.bakta_txt
     String? bakta_version = bakta.bakta_version
     # Plasmidfinder Results
-    String plasmidfinder_plasmids = plasmidfinder.plasmidfinder_plasmids
-    File plasmidfinder_results = plasmidfinder.plasmidfinder_results
-    File plasmidfinder_seqs = plasmidfinder.plasmidfinder_seqs
-    String plasmidfinder_docker = plasmidfinder.plasmidfinder_docker
-    String plasmidfinder_db_version = plasmidfinder.plasmidfinder_db_version
+    String? plasmidfinder_plasmids = plasmidfinder.plasmidfinder_plasmids
+    File? plasmidfinder_results = plasmidfinder.plasmidfinder_results
+    File? plasmidfinder_seqs = plasmidfinder.plasmidfinder_seqs
+    String? plasmidfinder_docker = plasmidfinder.plasmidfinder_docker
+    String? plasmidfinder_db_version = plasmidfinder.plasmidfinder_db_version
     # QC_Check Results
     String? qc_check = qc_check_task.qc_check
     File? qc_standard = qc_check_task.qc_standard

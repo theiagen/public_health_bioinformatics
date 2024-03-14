@@ -14,6 +14,7 @@ import "../../tasks/species_typing/betacoronavirus/task_pangolin.wdl" as pangoli
 import "../../tasks/species_typing/lentivirus/task_quasitools.wdl" as quasitools
 import "../../tasks/task_versioning.wdl" as versioning
 import "../../tasks/taxon_id/task_nextclade.wdl" as nextclade_task
+import "../../workflows/utilities/wf_influenza_antiviral_substitutions.wdl" as flu_antiviral
 import "../utilities/wf_organism_parameters.wdl" as set_organism_defaults
 import "../utilities/wf_read_QC_trim_ont.wdl" as read_qc_trim_workflow
 
@@ -215,6 +216,19 @@ workflow theiacov_ont {
           samplename = samplename,
           est_genome_length = select_first([genome_length, consensus_qc.number_Total, organism_parameters.genome_length])
       }
+      if (organism_parameters.standardized_organism == "flu") {
+        call flu_antiviral.flu_antiviral_substitutions {
+          input:
+            na_segment_assembly = irma.seg_na_assembly,
+            ha_segment_assembly = irma.seg_ha_assembly,
+            pa_segment_assembly = irma.seg_pa_assembly,
+            pb1_segment_assembly = irma.seg_pb1_assembly,
+            pb2_segment_assembly = irma.seg_pb2_assembly,
+            mp_segment_assembly = irma.seg_mp_assembly,
+            abricate_flu_subtype = select_first([abricate_flu.abricate_flu_subtype, ""]),
+            irma_flu_subtype = select_first([irma.irma_subtype, ""]),
+        }
+      }
       # run organism-specific typing
       if (organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "sars-cov-2" || (organism_parameters.standardized_organism == "flu" && defined(irma.seg_ha_assembly) && ! defined(do_not_run_flu_ha_nextclade))) { 
         # tasks specific to either MPXV, sars-cov-2, or flu
@@ -312,8 +326,8 @@ workflow theiacov_ont {
     # Read Metadata
     String seq_platform = seq_method
     # Sample Screening
-    String raw_read_screen = raw_check_reads.read_screen
-    String? clean_read_screen = clean_check_reads.read_screen
+    String read_screen_raw = raw_check_reads.read_screen
+    String? read_screen_clean = clean_check_reads.read_screen
     # Read QC - dehosting outputs
     File? read1_dehosted = read_qc_trim.read1_dehosted
     # Read QC - nanoplot outputs    
@@ -426,5 +440,19 @@ workflow theiacov_ont {
     File? abricate_flu_results = abricate_flu.abricate_flu_results
     String? abricate_flu_database =  abricate_flu.abricate_flu_database
     String? abricate_flu_version = abricate_flu.abricate_flu_version
+    # Flu Antiviral Substitution Outputs
+    String? flu_A_315675_resistance = flu_antiviral_substitutions.flu_A_315675_resistance
+    String? flu_amantadine_resistance = flu_antiviral_substitutions.flu_amantadine_resistance
+    String? flu_compound_367_resistance = flu_antiviral_substitutions.flu_compound_367_resistance
+    String? flu_favipiravir_resistance = flu_antiviral_substitutions.flu_favipiravir_resistance
+    String? flu_fludase_resistance = flu_antiviral_substitutions.flu_fludase_resistance
+    String? flu_L_742_001_resistance = flu_antiviral_substitutions.flu_L_742_001_resistance
+    String? flu_laninamivir_resistance = flu_antiviral_substitutions.flu_laninamivir_resistance
+    String? flu_peramivir_resistance = flu_antiviral_substitutions.flu_peramivir_resistance
+    String? flu_pimodivir_resistance = flu_antiviral_substitutions.flu_pimodivir_resistance
+    String? flu_rimantadine_resistance = flu_antiviral_substitutions.flu_rimantadine_resistance
+    String? flu_oseltamivir_resistance = flu_antiviral_substitutions.flu_oseltamivir_resistance
+    String? flu_xofluza_resistance = flu_antiviral_substitutions.flu_xofluza_resistance
+    String? flu_zanamivir_resistance = flu_antiviral_substitutions.flu_zanamivir_resistance
   }
 }

@@ -74,6 +74,11 @@ task ksnp3 {
 
   # capture sample name of genome used as reference
   ls ksnp3/*.vcf | cut -d '.' -f 2 | tee KSNP3_VCF_REF_SAMPLENAME.txt
+  
+  # capture number of SNPs
+  cut -f 2 -d ':' ksnp3/COUNT_SNPs | tr -d ' ' > ksnp3/NUMBER_SNPS
+  # capture number of core SNPs
+  grep "Number core SNPs: " ksnp3/COUNT_coreSNPs | cut -f 2 -d ':' | tr -d ' ' > ksnp3/NUMBER_CORE_SNPS
 
   # rename the 2 vcf files by appending ~{cluster_name} and removing the ref genome name to make final filenames predictable
   mv -v ksnp3/VCF.*.vcf ksnp3/~{cluster_name}_VCF.reference_genome.vcf
@@ -100,7 +105,8 @@ task ksnp3 {
     File ksnp3_pan_parsimony_tree = "ksnp3/~{cluster_name}_pan_parsimony.nwk"
     File? ksnp3_ml_tree = "ksnp3/~{cluster_name}_ML.nwk"
     File? ksnp3_nj_tree = "ksnp3/~{cluster_name}_NJ.nwk"
-    File number_snps = "ksnp3/COUNT_SNPs"
+    String ksnp3_number_snps = read_string("ksnp3/NUMBER_SNPS")
+    String ksnp3_number_core_snps = read_string("ksnp3/NUMBER_CORE_SNPS")
     File ksnp3_snps_all = "ksnp3/~{cluster_name}_SNPs_all"
     File ksnp3_input = "ksnp3_input.tsv"
     String skip_core_snp_dists = read_string("SKIP_SNP_DIST")

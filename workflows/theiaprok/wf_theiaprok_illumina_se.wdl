@@ -55,6 +55,7 @@ workflow theiaprok_illumina_se {
     Boolean call_ani = false # by default do not call ANI task, but user has ability to enable this task if working with enteric pathogens or supply their own high-quality reference genome
     Boolean call_kmerfinder = false 
     Boolean call_resfinder = false
+    Boolean call_plasmidfinder = true
     String genome_annotation = "prokka" # options: "prokka" or "bakta"
     String? expected_taxon # allow user to provide organism (e.g. "Clostridioides_difficile") string to amrfinder. Useful when gambit does not predict the correct species
     # qc check parameters
@@ -178,10 +179,12 @@ workflow theiaprok_illumina_se {
             samplename = samplename
         }
       }
-      call plasmidfinder_task.plasmidfinder {
-        input:
-          assembly = shovill_se.assembly_fasta,
-          samplename = samplename
+      if (call_plasmidfinder) {
+        call plasmidfinder_task.plasmidfinder {
+          input:
+            assembly = shovill_se.assembly_fasta,
+            samplename = samplename
+        }
       }
       if (defined(qc_check_table)) {
         call qc_check.qc_check_phb as qc_check_task {
@@ -189,8 +192,8 @@ workflow theiaprok_illumina_se {
             qc_check_table = qc_check_table,
             expected_taxon = expected_taxon,
             gambit_predicted_taxon = gambit.gambit_predicted_taxon,
-            num_reads_raw1 = read_QC_trim.fastq_scan_raw_number_reads,
-            num_reads_clean1 = read_QC_trim.fastq_scan_clean_number_reads,
+            num_reads_raw1 = read_QC_trim.fastq_scan_raw1,
+            num_reads_clean1 = read_QC_trim.fastq_scan_clean1,
             r1_mean_q_raw = cg_pipeline_raw.r1_mean_q,
             r1_mean_readlength_raw = cg_pipeline_raw.r1_mean_readlength,
             r1_mean_q_clean = cg_pipeline_clean.r1_mean_q,
@@ -235,9 +238,9 @@ workflow theiaprok_illumina_se {
             theiaprok_illumina_se_version = version_capture.phb_version,
             theiaprok_illumina_se_analysis_date = version_capture.date,
             seq_platform = seq_method,
-            num_reads_raw1 = read_QC_trim.fastq_scan_raw_number_reads,
+            num_reads_raw1 = read_QC_trim.fastq_scan_raw1,
             fastq_scan_version = read_QC_trim.fastq_scan_version,
-            num_reads_clean1 = read_QC_trim.fastq_scan_clean_number_reads,
+            num_reads_clean1 = read_QC_trim.fastq_scan_clean1,
             trimmomatic_version = read_QC_trim.trimmomatic_version,
             fastp_version = read_QC_trim.fastp_version,
             bbduk_docker = read_QC_trim.bbduk_docker,
@@ -528,22 +531,25 @@ workflow theiaprok_illumina_se {
     # Read Metadata
     String seq_platform = seq_method
     # Sample Screening
-    String raw_read_screen = raw_check_reads.read_screen
-    String? clean_read_screen = clean_check_reads.read_screen
+    String read_screen_raw = raw_check_reads.read_screen
+    String? read_screen_clean = clean_check_reads.read_screen
     # Read QC - fastq_scan outputs
-    Int? num_reads_raw1 = read_QC_trim.fastq_scan_raw_number_reads
+    Int? fastq_scan_num_reads_raw1 = read_QC_trim.fastq_scan_raw1
     String? fastq_scan_version = read_QC_trim.fastq_scan_version
-    Int? num_reads_clean1 = read_QC_trim.fastq_scan_clean_number_reads
+    Int? fastq_scan_num_reads_clean1 = read_QC_trim.fastq_scan_clean1
     # Read QC - fastqc outputs
-    Int? fastqc_num_reads_raw1 = read_QC_trim.fastqc_raw_number_reads
-    Int? fastqc_num_reads_clean1 = read_QC_trim.fastqc_clean_number_reads
+    Int? fastqc_num_reads_raw1 = read_QC_trim.fastqc_raw1
+    Int? fastqc_num_reads_clean1 = read_QC_trim.fastqc_clean1
     String? fastqc_version = read_QC_trim.fastqc_version
-    File? fastqc_raw1_html = read_QC_trim.fastqc_raw_html
-    File? fastqc_clean1_html = read_QC_trim.fastqc_clean_html
+    String? fastqc_docker = read_QC_trim.fastqc_docker
+    File? fastqc_raw1_html = read_QC_trim.fastqc_raw1_html
+    File? fastqc_clean1_html = read_QC_trim.fastqc_clean1_html
     # Read QC - trimmomatic outputs
     String? trimmomatic_version = read_QC_trim.trimmomatic_version
+    String? trimmomatic_docker = read_QC_trim.trimmomatic_docker
     # Read QC - fastp outputs
     String? fastp_version = read_QC_trim.fastp_version
+    File? fastp_html_report = read_QC_trim.fastp_html_report
     # Read QC - bbduk outputs
     File? read1_clean = read_QC_trim.read1_clean
     String? bbduk_docker = read_QC_trim.bbduk_docker
