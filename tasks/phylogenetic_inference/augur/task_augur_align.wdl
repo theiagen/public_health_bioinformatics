@@ -20,7 +20,7 @@ task augur_align {
       --sequences ~{assembly_fasta} \
       --nthreads cpu \
       --reference-sequence ~{reference_fasta} \
-      ~{true="--remove-reference" false="" remove_reference}
+      ~{true="--remove-reference" false="" remove_reference} \
       ~{true="--fill-gaps" false="" fill_gaps}
   >>>
   output {
