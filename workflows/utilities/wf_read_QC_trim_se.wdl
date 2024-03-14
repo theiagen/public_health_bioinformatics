@@ -23,7 +23,7 @@ workflow read_QC_trim_se {
     File? adapters
     File? phix
     String? workflow_series
-    String? trimmomatic_args
+    String trimmomatic_args = "-phred33"
     Boolean call_midas = true
     File? midas_db
     Boolean call_kraken = false
