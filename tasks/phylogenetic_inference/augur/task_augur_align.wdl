@@ -4,6 +4,7 @@ task augur_align {
   input {
     File assembly_fasta
     File reference_fasta
+    Boolean remove_reference
     Boolean fill_gaps = false
     Int cpu = 64
     Int memory = 128
@@ -19,6 +20,7 @@ task augur_align {
       --sequences ~{assembly_fasta} \
       --nthreads cpu \
       --reference-sequence ~{reference_fasta} \
+      ~{true="--remove-reference" false="" remove_reference}
       ~{true="--fill-gaps" false="" fill_gaps}
   >>>
   output {
