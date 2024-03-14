@@ -290,5 +290,9 @@ workflow theiaeuk_illumina_pe {
     File? theiaeuk_snippy_variants_bai = merlin_magic.snippy_variants_bai
     File? theiaeuk_snippy_variants_outdir_tarball = merlin_magic.snippy_variants_outdir_tarball
     File? theiaeuk_snippy_variants_summary = merlin_magic.snippy_variants_summary
+    Int? theiaeuk_snippy_variants_num_reads_aligned = merlin_magic.snippy_variants_num_reads_aligned
+    File? theiaeuk_snippy_variants_coverage_tsv = merlin_magic.snippy_variants_coverage_tsv
+    Int? theiaeuk_snippy_variants_num_variants = merlin_magic.snippy_variants_num_variants
+    Float? theiaeuk_snippy_variants_percent_ref_coverage = merlin_magic.snippy_variants_percent_ref_coverage
   }
 }
