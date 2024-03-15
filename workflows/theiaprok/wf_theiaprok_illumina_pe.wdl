@@ -49,8 +49,8 @@ workflow theiaprok_illumina_pe {
     Int min_coverage = 10
     Int min_proportion = 40
     # trimming parameters
-    Int trim_minlen = 75
-    Int trim_quality_trim_score = 20
+    Int trim_min_length = 75
+    Int trim_quality_min_score = 20
     Int trim_window_size = 10
     # module options
     Boolean call_ani = false # by default do not call ANI task, but user has ability to enable this task if working with enteric pathogens or supply their own high-quality reference genome
@@ -83,8 +83,8 @@ workflow theiaprok_illumina_pe {
         samplename = samplename,
         read1 = read1,
         read2 = read2,
-        trim_minlen = trim_minlen,
-        trim_quality_trim_score = trim_quality_trim_score,
+        trim_min_length = trim_min_length,
+        trim_quality_min_score = trim_quality_min_score,
         trim_window_size = trim_window_size,
         workflow_series = "theiaprok"
 

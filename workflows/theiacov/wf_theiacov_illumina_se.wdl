@@ -27,8 +27,8 @@ workflow theiacov_illumina_se {
     File? phix
     # trimming parameters
     Boolean trim_primers = true
-    Int trim_minlen = 25
-    Int trim_quality_trim_score = 30
+    Int trim_min_length = 25
+    Int trim_quality_min_score = 30
     Int trim_window_size = 4
     # nextclade inputs
     String? nextclade_dataset_reference
@@ -91,8 +91,8 @@ workflow theiacov_illumina_se {
       input:
         samplename = samplename,
         read1 = read1,
-        trim_minlen = trim_minlen,
-        trim_quality_trim_score = trim_quality_trim_score,
+        trim_min_length = trim_min_length,
+        trim_quality_min_score = trim_quality_min_score,
         trim_window_size = trim_window_size,
         adapters = adapters,
         phix = phix,
@@ -167,7 +167,7 @@ workflow theiacov_illumina_se {
             genome_fasta = ivar_consensus.assembly_fasta,
             assembly_length_unambiguous = consensus_qc.number_ATCG,
             vadr_opts = organism_parameters.vadr_opts,
-            maxlen = organism_parameters.vadr_maxlen
+            max_length = organism_parameters.vadr_maxlength
         }
       }
       if(defined(qc_check_table)) {

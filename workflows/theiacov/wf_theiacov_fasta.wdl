@@ -34,7 +34,7 @@ workflow theiacov_fasta {
     # qc check parameters
     File? qc_check_table
     # vadr parameters
-    Int? maxlen
+    Int? max_length
     String? vadr_opts
   }
   # only run abricate if user sets organism = "flu" AND if flu_subtype is unknown/not set by user
@@ -56,7 +56,7 @@ workflow theiacov_fasta {
       nextclade_dataset_reference_input = nextclade_dataset_reference,
       nextclade_dataset_tag_input = nextclade_dataset_tag,
       nextclade_dataset_name_input = nextclade_dataset_name,
-      vadr_max_length = maxlen,
+      vadr_max_length = max_length,
       vadr_options = vadr_opts
   }
   call consensus_qc_task.consensus_qc {
@@ -95,7 +95,7 @@ workflow theiacov_fasta {
       input:
         genome_fasta = assembly_fasta,
         assembly_length_unambiguous = consensus_qc.number_ATCG,
-        maxlen = organism_parameters.vadr_maxlen,
+        max_length = organism_parameters.vadr_maxlength,
         vadr_opts = organism_parameters.vadr_opts
     }
   }

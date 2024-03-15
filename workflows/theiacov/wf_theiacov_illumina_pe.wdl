@@ -37,8 +37,8 @@ workflow theiacov_illumina_pe {
     Int? genome_length 
     # trimming parameters
     Boolean trim_primers = true
-    Int trim_minlen = 75
-    Int trim_quality_trim_score = 30
+    Int trim_min_length = 75
+    Int trim_quality_min_score = 30
     Int trim_window_size = 4
     # assembly parameters
     Int min_depth = 100  # the minimum depth to use for consensus and variant calling
@@ -105,8 +105,8 @@ workflow theiacov_illumina_pe {
         adapters = adapters,
         phix = phix,
         workflow_series = "theiacov",
-        trim_minlen = trim_minlen,
-        trim_quality_trim_score = trim_quality_trim_score,
+        trim_min_length = trim_min_length,
+        trim_quality_min_score = trim_quality_min_score,
         trim_window_size = trim_window_size
     }
     call screen.check_reads as clean_check_reads {
@@ -295,7 +295,7 @@ workflow theiacov_illumina_pe {
             genome_fasta = select_first([ivar_consensus.assembly_fasta]),
             assembly_length_unambiguous = consensus_qc.number_ATCG,
             vadr_opts = organism_parameters.vadr_opts,
-            maxlen = organism_parameters.vadr_maxlen
+            max_length = organism_parameters.vadr_maxlength
         }
       }
       if (organism_parameters.standardized_organism == "HIV") {
