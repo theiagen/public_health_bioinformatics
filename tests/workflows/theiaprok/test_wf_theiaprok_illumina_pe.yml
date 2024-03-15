@@ -599,7 +599,7 @@
     - path: miniwdl_run/wdl/tasks/species_typing/listeria/task_lissero.wdl
       md5sum: 0c6745aa212a947a94cced3f78aa4bab
     - path: miniwdl_run/wdl/tasks/species_typing/pseudomonas/task_pasty.wdl
-      md5sum: 4a4adafa7550d39b91d4983275760c79
+      md5sum: 13e317e7f9fc99fb0d1a5cc17ceb325a
     - path: miniwdl_run/wdl/tasks/species_typing/streptococcus/task_pbptyper.wdl
       md5sum: e34580fbf522077d5e0903390d39a0f9
     - path: miniwdl_run/wdl/tasks/species_typing/streptococcus/task_poppunk_streppneumo.wdl
