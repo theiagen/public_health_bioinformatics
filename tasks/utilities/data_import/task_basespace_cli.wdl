@@ -50,7 +50,7 @@ task fetch_bs {
       echo "project_id: ${project_id}" 
       if [[ ! -z "${project_id}" ]]; then 
         echo "project_id identified via Basespace, now searching for dataset_id within project_id ${project_id}..."
-        dataset_id_array=($(${bs_command} list dataset --project-id=${run_id} | grep "${dataset_name}" | awk -F "|" '{ print $3 }' )) 
+        dataset_id_array=($(${bs_command} list dataset --project-id=${project_id} | grep "${dataset_name}" | awk -F "|" '{ print $3 }' )) 
         echo "dataset_id: ${dataset_id_array[*]}"
       else       
         echo "No run or project id found associated with input basespace_collection_id: ~{basespace_collection_id}" >&2
