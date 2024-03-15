@@ -12,6 +12,7 @@ workflow shared_variants_wf {
     Array[File] variants_to_cat
     Array[String] samplenames
     String concatenated_file_name
+    Boolean call_shared_table = true
   }
   call file_handling.cat_variants {
     input:
@@ -19,11 +20,13 @@ workflow shared_variants_wf {
       samplenames = samplenames,
       concatenated_file_name = concatenated_file_name
   }
-  call shared_variants_task.shared_variants {
-    input:
-      concatenated_variants = cat_variants.concatenated_variants,
-      concatenated_file_name = concatenated_file_name
+  if (call_shared_table) {
+    call shared_variants_task.shared_variants {
+      input:
+        concatenated_variants = cat_variants.concatenated_variants,
+        concatenated_file_name = concatenated_file_name
     }
+  }
   call versioning.version_capture{
     input:
   }
@@ -34,6 +37,6 @@ workflow shared_variants_wf {
 
     # shared snps outputs
     File concatenated_variants = cat_variants.concatenated_variants
-    File shared_variants_table = shared_variants.shared_variants_table
+    File? shared_variants_table = shared_variants.shared_variants_table
   }
 }
