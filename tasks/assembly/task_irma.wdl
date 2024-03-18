@@ -115,6 +115,9 @@ task irma {
         mv "$file" "${file%_NA*.bam}_NA.bam"
       done
     fi
+
+    # calculate assembly lenght of irma.consensus.fasta for VADR
+    awk '!/^>/ {len+=length($0)} END {print len}' ~{samplename}.irma.consensus.fasta > ASSEMBLY_LENGTH 
   >>>
   output {
     File? irma_assembly_fasta = "~{samplename}.irma.consensus.fasta"
@@ -135,6 +138,8 @@ task irma {
     # for now just adding bams for these segments for mean coverage calculation
     File? seg_ha_bam = "~{samplename}_HA.bam"
     File? seg_na_bam = "~{samplename}_NA.bam"
+    # adding genome length for VADR
+    Int assembly_length = read_int("ASSEMBLY_LENGTH")
   }
   runtime {
     docker: "~{docker}"
