@@ -76,8 +76,8 @@ workflow organism_parameters {
     Int flu_genome_len = 13000
 
     # vadr options are dummy options for flu right now
-    String flu_vadr_options = ""
-    Int flu_vadr_max_length = 0
+    String flu_vadr_options = "--atgonly --xnocomp --nomisc --alt_fail extrant5,extrant3 --mkey flu"
+    Int flu_vadr_max_length = 13600 # unsure about this value, by default they just use min length of 80
     
     # setting nextclade parameters
     if (flu_segment == "HA") {
