@@ -90,6 +90,7 @@ workflow theiacov_fasta {
     }
   }
   # vadr task
+  # TODO - rsv_a and rsv_b are not supported by vadr
   if (organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "rsv_a" || organism_parameters.standardized_organism == "rsv_b" || organism_parameters.standardized_organism == "WNV" || organism_parameters.standardized_organism == "flu") {
     call vadr_task.vadr {
       input:
