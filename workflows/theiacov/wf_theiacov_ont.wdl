@@ -280,11 +280,11 @@ workflow theiacov_ont {
             min_depth = min_depth
           }
       }
-      if (organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "WNV"){ 
-        # tasks specific to MPXV, sars-cov-2, and WNV
+      if (organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "WNV" || organism_parameters.standardized_organism == "flu" ){ 
+        # tasks specific to MPXV, sars-cov-2, WNV and flu
         call vadr_task.vadr {
           input:
-            genome_fasta = select_first([consensus.consensus_seq]),
+            genome_fasta = select_first([consensus.consensus_seq, irma.irma_assembly_fasta]),
             assembly_length_unambiguous = consensus_qc.number_ATCG,
             vadr_opts = organism_parameters.vadr_opts,
             max_length = organism_parameters.vadr_maxlength
