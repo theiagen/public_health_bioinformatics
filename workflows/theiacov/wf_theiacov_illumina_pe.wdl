@@ -290,8 +290,8 @@ workflow theiacov_illumina_pe {
             min_depth = min_depth
         }
       }
-      if (organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "WNV" || organism_parameters.standardized_organism == "flu" || organism_parameters.standardized_organism == "rsv_a" || organism_parameters.standardized_organism == "rsv_b" ){ 
-        # tasks specific to MPXV, sars-cov-2, WNV and flu
+      if (organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "WNV" || organism_parameters.standardized_organism == "flu" || organism_parameters.standardized_organism == "rsv_a" || organism_parameters.standardized_organism == "rsv_b"){ 
+        # tasks specific to MPXV, sars-cov-2, WNV, flu rsv_a and rsv_b
         call vadr_task.vadr {
           input:
             genome_fasta = select_first([ivar_consensus.assembly_fasta, irma.irma_assembly_fasta]),
