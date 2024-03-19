@@ -77,11 +77,11 @@ workflow organism_parameters {
   }
   if (organism == "flu" || organism == "influenza" || organism == "Flu" || organism == "Influenza") {
     String flu_org_name = "flu"
-    Int flu_genome_len = 13000
+    Int flu_genome_len = 13500
 
     # vadr options are dummy options for flu right now
     String flu_vadr_options = "--atgonly --xnocomp --nomisc --alt_fail extrant5,extrant3 --mkey flu"
-    Int flu_vadr_max_length = 13600 # unsure about this value, by default they just use min length of 80
+    Int flu_vadr_max_length = 13500
     Int flu_vadr_memory = 8
 
     # setting nextclade parameters
