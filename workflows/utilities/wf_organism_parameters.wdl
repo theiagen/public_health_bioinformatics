@@ -36,7 +36,7 @@ workflow organism_parameters {
     # kraken parameters
     String? kraken_target_organism_input
   }
-  if (organism == "sars-cov-2") {
+  if (organism == "sars-cov-2" || organism == "SARS-CoV-2") {
     String sc2_org_name = "sars-cov-2"
     String sc2_reference_genome = "gs://theiagen-public-files-rp/terra/augur-sars-cov-2-references/MN908947.fasta"
     String sc2_gene_locations_bed = "gs://theiagen-public-files-rp/terra/sars-cov-2-files/sc2_gene_locations.bed"
