@@ -190,7 +190,7 @@ workflow theiacov_ont {
               kraken_target_organism_input = target_organism,
               hiv_primer_version = "N/A"
           }         
-          if (set_flu_na_nextclade_values.nextclade_dataset_tag == "NA"){
+          if (set_flu_na_nextclade_values.nextclade_dataset_tag == "NA") {
             Boolean do_not_run_flu_na_nextclade = true
           }
           if (set_flu_ha_nextclade_values.nextclade_dataset_tag == "NA") {
@@ -286,7 +286,7 @@ workflow theiacov_ont {
             organism = organism_parameters.standardized_organism
         }
       }
-      if (organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "WNV"){ 
+      if (organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "WNV") { 
         # tasks specific to MPXV, sars-cov-2, and WNV
         call vadr_task.vadr {
           input:

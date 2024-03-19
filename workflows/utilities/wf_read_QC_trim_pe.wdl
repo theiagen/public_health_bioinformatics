@@ -61,7 +61,7 @@ workflow read_QC_trim_pe {
         target_organism = target_organism
     }
   }
-  if (read_processing == "trimmomatic"){
+  if (read_processing == "trimmomatic") {
     call trimmomatic.trimmomatic_pe {
       input:
         samplename = samplename,
@@ -73,7 +73,7 @@ workflow read_QC_trim_pe {
         trimmomatic_args = trimmomatic_args
     }
   }
-  if (read_processing == "fastp"){
+  if (read_processing == "fastp") {
     call fastp_task.fastp_pe as fastp {
       input:
         samplename = samplename,

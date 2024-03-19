@@ -128,7 +128,7 @@ workflow theiacov_illumina_pe {
     }
     if (clean_check_reads.read_screen == "PASS") {
       # assembly via bwa and ivar for non-flu data
-      if (organism_parameters.standardized_organism != "flu"){
+      if (organism_parameters.standardized_organism != "flu") {
         call consensus_call.ivar_consensus {
           input:
             samplename = samplename,
@@ -144,7 +144,7 @@ workflow theiacov_illumina_pe {
         }
       }
       # assembly via irma for flu organisms
-      if (organism_parameters.standardized_organism == "flu"){
+      if (organism_parameters.standardized_organism == "flu") {
         # flu-specific tasks
         call irma_task.irma {
           input:
@@ -214,7 +214,7 @@ workflow theiacov_illumina_pe {
               hiv_primer_version = "N/A"
           }
           # these are necessary because these are optional values and cannot be directly compared in before the nextclade task. checking for variable definition can be done though, which is why we create variables here
-          if (set_flu_na_nextclade_values.nextclade_dataset_tag == "NA"){
+          if (set_flu_na_nextclade_values.nextclade_dataset_tag == "NA") {
             Boolean do_not_run_flu_na_nextclade = true
           }
           if (set_flu_ha_nextclade_values.nextclade_dataset_tag == "NA") {
@@ -294,7 +294,7 @@ workflow theiacov_illumina_pe {
             organism = organism_parameters.standardized_organism
         }
       }
-      if (organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "WNV"){ 
+      if (organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "WNV") { 
         # tasks specific to MPXV, sars-cov-2, and WNV
         call vadr_task.vadr {
           input:
