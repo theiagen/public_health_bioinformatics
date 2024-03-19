@@ -2,7 +2,7 @@ version 1.0
 
 import "../../tasks/quality_control/advanced_metrics/task_vadr.wdl" as vadr_task
 import "../../tasks/quality_control/basic_statistics/task_consensus_qc.wdl" as consensus_qc_task
-import "../../tasks/quality_control/basic_statistics/task_sc2_gene_coverage.wdl" as sc2_calculation
+import "../../tasks/quality_control/basic_statistics/task_gene_coverage.wdl" as gene_coverage_task
 import "../../tasks/quality_control/comparisons/task_qc_check_phb.wdl" as qc_check
 import "../../tasks/quality_control/comparisons/task_screen.wdl" as screen
 import "../../tasks/species_typing/betacoronavirus/task_pangolin.wdl" as pangolin
@@ -37,6 +37,7 @@ workflow theiacov_illumina_se {
     # reference values
     File? reference_gff
     File? reference_genome
+    File? reference_gene_locations_bed
     Int? genome_length
     # assembly parameters
     Int min_depth = 100
@@ -63,6 +64,7 @@ workflow theiacov_illumina_se {
       organism = organism,
       reference_gff_file = reference_gff,
       reference_genome = reference_genome,
+      gene_locations_bed_file = reference_gene_locations_bed,
       genome_length_input = genome_length,
       nextclade_dataset_reference_input = nextclade_dataset_reference,
       nextclade_dataset_tag_input = nextclade_dataset_tag,
@@ -138,11 +140,15 @@ workflow theiacov_illumina_se {
             fasta = ivar_consensus.assembly_fasta,
             docker = organism_parameters.pangolin_docker
         }
-        call sc2_calculation.sc2_gene_coverage {
-          input: 
-            samplename = samplename,
+      }
+      if (organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "MPXV" || defined(reference_gene_locations_bed)) {
+        # tasks specific to either sars-cov-2, MPXV, or any organism with a user-supplied reference gene locations bed file
+        call gene_coverage_task.gene_coverage {
+          input:
             bamfile = ivar_consensus.aligned_bam,
-            min_depth = min_depth
+            bedfile = select_first([reference_gene_locations_bed, organism_parameters.gene_locations_bed]),
+            samplename = samplename,
+            organism = organism_parameters.standardized_organism
         }
       }
       if (organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "sars-cov-2"){
@@ -170,7 +176,7 @@ workflow theiacov_illumina_se {
             maxlen = organism_parameters.vadr_maxlen
         }
       }
-      if(defined(qc_check_table)) {
+      if (defined(qc_check_table)) {
         call qc_check.qc_check_phb as qc_check_task {
           input:
             qc_check_table = qc_check_table,
@@ -262,9 +268,9 @@ workflow theiacov_illumina_se {
     Int? number_Total = consensus_qc.number_Total
     Float? percent_reference_coverage = consensus_qc.percent_reference_coverage
     # SC2 specific coverage outputs
-    Float? sc2_s_gene_mean_coverage = sc2_gene_coverage.sc2_s_gene_depth
-    Float? sc2_s_gene_percent_coverage = sc2_gene_coverage.sc2_s_gene_percent_coverage
-    File? sc2_all_genes_percent_coverage = sc2_gene_coverage.sc2_all_genes_percent_coverage
+    Float? sc2_s_gene_mean_coverage = gene_coverage.sc2_s_gene_depth
+    Float? sc2_s_gene_percent_coverage = gene_coverage.sc2_s_gene_percent_coverage
+    File? est_percent_gene_coverage_tsv = gene_coverage.est_percent_gene_coverage_tsv
     # Pangolin outputs
     String? pango_lineage = pangolin4.pangolin_lineage
     String? pango_lineage_expanded = pangolin4.pangolin_lineage_expanded

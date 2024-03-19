@@ -3,12 +3,11 @@ version 1.0
 task gene_coverage {
   input {
     File bamfile
-    File baifile
     File bedfile
     String samplename
     Int sc2_s_gene_start = 21563
     Int sc2_s_gene_stop = 25384
-    Int min_depth
+    Int min_depth = 10
     
     String organism
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/samtools:1.15"
@@ -17,10 +16,15 @@ task gene_coverage {
     Int cpu = 2
   }
   command <<<
-    echo "Calculating gene coverage for ~{samplename} using samtools with ~{bamfile} and ~{baifile}"
+    echo "Calculating gene coverage for ~{samplename} using samtools with ~{bamfile}"
+
+    samtools index ~{bamfile}
+
+    # extract chromosome name from bam file
+    chromosome=$(samtools idxstats ~{bamfile} | cut -f 1 | head -1)
+    export chromosome
 
     if [ "~{organism}" == "sars-cov-2" ]; then
-      chromosome=$(samtools idxstats ~{bamfile} | cut -f 1 | head -1)
       samtools depth -r "$chromosome:~{sc2_s_gene_start}-~{sc2_s_gene_stop}" ~{bamfile} > ~{samplename}.s_gene.depth
       s_gene_depth=$(cut -f 7 ~{samplename}.cov.txt | tail -n 1)
       
@@ -39,16 +43,16 @@ task gene_coverage {
       import subprocess
 
       with open(~{bedfile}, "r") as bedfile, open("~{samplename}.percent_gene_coverage.tsv", "w") as outfile:
+        outfile.write("Caution: results may be inaccurate if your sample is not mapped to the reference genome used to generate the bed file of gene locations.\n")
         outfile.write("Gene\Percent_Coverage\n")
         for line in bedfile:
           if line.startswith("#"): continue
           line = line.strip().split("\t")
-          chromosome = line[0]
           start = line[1]
           stop = line[2]
           gene = line[3]
 
-          command = "samtools depth -r \"" + chromosome + ":" + start + "-" + stop + "\" " + {bamfile} + " | wc -l "
+          command = "samtools depth -r \"" + str(os.environ["chromosome"]) + ":" + start + "-" + stop + "\" " + {bamfile} + " | wc -l "
           depth = subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.PIPE, shell=True).communicate()[0]
         
           # get coverage
