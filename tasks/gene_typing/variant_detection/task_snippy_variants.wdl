@@ -19,7 +19,7 @@ task snippy_variants {
     # --maxsoft: Maximum soft clipping to allow (default '10')
     Int? map_qual
     Int? base_quality
-    Int? min_coverage
+    Int min_coverage = 10
     Float? min_frac
     Int? min_quality
     Int? maxsoft
@@ -51,6 +51,39 @@ task snippy_variants {
 
     # Compress output dir
     tar -cvzf "./~{samplename}_snippy_variants_outdir.tar" "./~{samplename}"
+
+    # compute number of reads aligned to reference
+    samtools view -c "~{samplename}/~{samplename}.bam" > READS_ALIGNED_TO_REFERENCE
+
+    # create coverage stats file
+    samtools coverage "~{samplename}/~{samplename}.bam" -o "~{samplename}/~{samplename}_coverage.tsv"
+
+    # capture number of variants from summary file
+    grep "VariantTotal" ~{samplename}/~{samplename}.txt | cut -f 2 > VARIANTS_TOTAL
+
+    # # compute proportion of reference genome with depth >= min_coverage
+    # compute read depth at every position in the genome
+    samtools depth -a "~{samplename}/~{samplename}.bam" -o "~{samplename}/~{samplename}_depth.tsv"
+
+    # compute reference genome length
+    reference_length=$(cat "~{samplename}/~{samplename}_depth.tsv" | wc -l)
+    echo $reference_length | tee REFERENCE_LENGTH
+
+    # filter depth file to only include positions with depth >= min_coverage
+    awk -F "\t" -v cov_var=~{min_coverage} '{ if ($3 >= cov_var) print;}' "~{samplename}/~{samplename}_depth.tsv" > "~{samplename}/~{samplename}_depth_~{min_coverage}.tsv"
+    
+    # compute proportion of genome with depth >= min_coverage
+    reference_length_passed_depth=$(cat "~{samplename}/~{samplename}_depth_~{min_coverage}.tsv" | wc -l)
+    echo $reference_length_passed_depth | tee REFERENCE_LENGTH_PASSED_DEPTH
+
+    # check if reference_length is equal to 0, if so, output a warning
+    if [ "$reference_length" -eq 0 ]; then
+      echo "Could not compute percent reference coverage: reference length is 0" > PERCENT_REF_COVERAGE
+    else
+      # compute percent reference coverage
+      echo $reference_length_passed_depth $reference_length | awk '{ print ($1/$2)*100 }' > PERCENT_REF_COVERAGE
+    fi
+
   >>>
   output {
     String snippy_variants_version = read_string("VERSION")
@@ -62,6 +95,13 @@ task snippy_variants {
     File snippy_variants_bam = "~{samplename}/~{samplename}.bam"
     File snippy_variants_bai ="~{samplename}/~{samplename}.bam.bai"
     File snippy_variants_summary = "~{samplename}/~{samplename}.txt"
+    String snippy_variants_num_reads_aligned = read_string("READS_ALIGNED_TO_REFERENCE")
+    File snippy_variants_coverage_tsv = "~{samplename}/~{samplename}_coverage.tsv"
+    String snippy_variants_num_variants = read_string("VARIANTS_TOTAL")
+    File snippy_variants_depth = "~{samplename}/~{samplename}_depth.tsv"
+    String snippy_variants_ref_length = read_string("REFERENCE_LENGTH")
+    String snippy_variants_ref_length_passed_depth = read_string("REFERENCE_LENGTH_PASSED_DEPTH")
+    String snippy_variants_percent_ref_coverage = read_string("PERCENT_REF_COVERAGE")
   }
   runtime {
       docker: "~{docker}"

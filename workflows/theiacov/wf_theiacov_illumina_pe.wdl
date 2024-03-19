@@ -38,8 +38,8 @@ workflow theiacov_illumina_pe {
     Int? genome_length 
     # trimming parameters
     Boolean trim_primers = true
-    Int trim_minlen = 75
-    Int trim_quality_trim_score = 30
+    Int trim_min_length = 75
+    Int trim_quality_min_score = 30
     Int trim_window_size = 4
     # assembly parameters
     Int min_depth = 100  # the minimum depth to use for consensus and variant calling
@@ -107,8 +107,8 @@ workflow theiacov_illumina_pe {
         adapters = adapters,
         phix = phix,
         workflow_series = "theiacov",
-        trim_minlen = trim_minlen,
-        trim_quality_trim_score = trim_quality_trim_score,
+        trim_min_length = trim_min_length,
+        trim_quality_min_score = trim_quality_min_score,
         trim_window_size = trim_window_size
     }
     call screen.check_reads as clean_check_reads {
@@ -168,7 +168,7 @@ workflow theiacov_illumina_pe {
               samplename = samplename
           }
         }
-        String ha_na_assembly_coverage = "HA: " + select_first([ha_assembly_coverage.depth, ""]) + "," + "NA: " + select_first([na_assembly_coverage.depth, ""])
+        String ha_na_assembly_coverage = "HA:" + select_first([ha_assembly_coverage.depth, ""]) + ", " + "NA:" + select_first([na_assembly_coverage.depth, ""])
         if (defined(irma.irma_assemblies)) {
           call abricate.abricate_flu {
             input:
@@ -228,8 +228,9 @@ workflow theiacov_illumina_pe {
             pa_segment_assembly = irma.seg_pa_assembly,
             pb1_segment_assembly = irma.seg_pb1_assembly,
             pb2_segment_assembly = irma.seg_pb2_assembly,
+            mp_segment_assembly = irma.seg_mp_assembly,
             abricate_flu_subtype = select_first([abricate_flu.abricate_flu_subtype, ""]),
-            irma_flu_subtype = irma.irma_subtype
+            irma_flu_subtype = select_first([irma.irma_subtype, ""]),
         }
       }
       call consensus_qc_task.consensus_qc {
@@ -300,7 +301,7 @@ workflow theiacov_illumina_pe {
             genome_fasta = select_first([ivar_consensus.assembly_fasta]),
             assembly_length_unambiguous = consensus_qc.number_ATCG,
             vadr_opts = organism_parameters.vadr_opts,
-            maxlen = organism_parameters.vadr_maxlen
+            max_length = organism_parameters.vadr_maxlength
         }
       }
       if (organism_parameters.standardized_organism == "HIV") {
@@ -344,18 +345,35 @@ workflow theiacov_illumina_pe {
     # Read Metadata
     String  seq_platform = seq_method
     # Sample Screening
-    String raw_read_screen = raw_check_reads.read_screen
-    String? clean_read_screen = clean_check_reads.read_screen
+    String read_screen_raw = raw_check_reads.read_screen
+    String? read_screen_clean = clean_check_reads.read_screen
     # Read QC - fastq_scan outputs
-    Int? num_reads_raw1 = read_QC_trim.fastq_scan_raw1
-    Int? num_reads_raw2 = read_QC_trim.fastq_scan_raw2
-    String? num_reads_raw_pairs = read_QC_trim.fastq_scan_raw_pairs
+    Int? fastq_scan_num_reads_raw1 = read_QC_trim.fastq_scan_raw1
+    Int? fastq_scan_num_reads_raw2 = read_QC_trim.fastq_scan_raw2
+    String? fastq_scan_num_reads_raw_pairs = read_QC_trim.fastq_scan_raw_pairs
     String? fastq_scan_version = read_QC_trim.fastq_scan_version
-    Int? num_reads_clean1 = read_QC_trim.fastq_scan_clean1
-    Int? num_reads_clean2 = read_QC_trim.fastq_scan_clean2
-    String? num_reads_clean_pairs = read_QC_trim.fastq_scan_clean_pairs
+    Int? fastq_scan_num_reads_clean1 = read_QC_trim.fastq_scan_clean1
+    Int? fastq_scan_num_reads_clean2 = read_QC_trim.fastq_scan_clean2
+    String? fastq_scan_num_reads_clean_pairs = read_QC_trim.fastq_scan_clean_pairs
+    # Read QC - fastqc outputs
+    Int? fastqc_num_reads_raw1 = read_QC_trim.fastqc_raw1
+    Int? fastqc_num_reads_raw2 = read_QC_trim.fastqc_raw2
+    String? fastqc_num_reads_raw_pairs = read_QC_trim.fastqc_raw_pairs
+    Int? fastqc_num_reads_clean1 = read_QC_trim.fastqc_clean1
+    Int? fastqc_num_reads_clean2 = read_QC_trim.fastqc_clean2
+    String? fastqc_num_reads_clean_pairs = read_QC_trim.fastqc_clean_pairs
+    File? fastqc_raw1_html = read_QC_trim.fastqc_raw1_html
+    File? fastqc_raw2_html = read_QC_trim.fastqc_raw2_html
+    File? fastqc_clean1_html = read_QC_trim.fastqc_clean1_html
+    File? fastqc_clean2_html = read_QC_trim.fastqc_clean2_html
+    String? fastqc_version = read_QC_trim.fastqc_version
+    String? fastqc_docker = read_QC_trim.fastqc_docker    
     # Read QC - trimmomatic outputs
     String? trimmomatic_version = read_QC_trim.trimmomatic_version
+    String? trimmomatic_docker = read_QC_trim.trimmomatic_docker
+    # Read QC - fastp outputs
+    String? fastp_version = read_QC_trim.fastp_version
+    File? fastp_html_report = read_QC_trim.fastp_html_report
     # Read QC - bbduk outputs
     File? read1_clean = read_QC_trim.read1_clean
     File? read2_clean = read_QC_trim.read2_clean
@@ -459,6 +477,7 @@ workflow theiacov_illumina_pe {
     String? abricate_flu_version = abricate_flu.abricate_flu_version
     # Flu Antiviral Substitution Outputs
     String? flu_A_315675_resistance = flu_antiviral_substitutions.flu_A_315675_resistance
+    String? flu_amantadine_resistance = flu_antiviral_substitutions.flu_amantadine_resistance
     String? flu_compound_367_resistance = flu_antiviral_substitutions.flu_compound_367_resistance
     String? flu_favipiravir_resistance = flu_antiviral_substitutions.flu_favipiravir_resistance
     String? flu_fludase_resistance = flu_antiviral_substitutions.flu_fludase_resistance
@@ -466,7 +485,8 @@ workflow theiacov_illumina_pe {
     String? flu_laninamivir_resistance = flu_antiviral_substitutions.flu_laninamivir_resistance
     String? flu_peramivir_resistance = flu_antiviral_substitutions.flu_peramivir_resistance
     String? flu_pimodivir_resistance = flu_antiviral_substitutions.flu_pimodivir_resistance
-    String? flu_tamiflu_resistance = flu_antiviral_substitutions.flu_tamiflu_resistance
+    String? flu_rimantadine_resistance = flu_antiviral_substitutions.flu_rimantadine_resistance
+    String? flu_oseltamivir_resistance = flu_antiviral_substitutions.flu_oseltamivir_resistance
     String? flu_xofluza_resistance = flu_antiviral_substitutions.flu_xofluza_resistance
     String? flu_zanamivir_resistance = flu_antiviral_substitutions.flu_zanamivir_resistance
     # HIV Outputs
