@@ -17,7 +17,7 @@ task tbp_parser {
     Boolean tngs_data = false
     File? coverage_regions_bed
 
-    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:1.3.5"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:1.3.6"
     Int disk_size = 100
     Int memory = 4
     Int cpu = 1
