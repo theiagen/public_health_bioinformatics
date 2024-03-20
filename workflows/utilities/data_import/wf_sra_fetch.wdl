@@ -1,10 +1,11 @@
 version 1.0
 
 import "../../../tasks/utilities/data_import/task_sra_fetch.wdl" as sra_fetch
+import "../../../tasks/utilities/data_handling/task_fastq_handeling.wdl" as fastq_handeling
 
 workflow fetch_sra_to_fastq {
   input {
-    String sra_accession
+    String accession
     String? docker
     Int? disk_size
     Int? memory
@@ -13,12 +14,17 @@ workflow fetch_sra_to_fastq {
   }
   call sra_fetch.fastq_dl_sra {
     input:
-      sra_accession = sra_accession,
+      sra_accession = accession,
       docker = docker,
       disk_size = disk_size,
       cpu = cpu,
       memory = memory,
       fastq_dl_opts = fastq_dl_opts
+  }
+  call fastq_handeling.sra_lite_autodetect {
+    input:
+      read1 = fastq_dl_sra.read1,
+      read2 = fastq_dl_sra.read2
   }
   output {
     File read1 = fastq_dl_sra.read1
@@ -27,5 +33,6 @@ workflow fetch_sra_to_fastq {
     String fastq_dl_version = fastq_dl_sra.fastq_dl_version
     String fastq_dl_docker = fastq_dl_sra.fastq_dl_docker
     String fastq_dl_date = fastq_dl_sra.fastq_dl_date
+    String fastq_dl_warning = sra_lite_autodetect.warning
   }
 }
