@@ -3,5 +3,5 @@
     "theiacov_clearlabs.read1": "tests/data/theiacov/fastqs/clearlabs/clearlabs.fastq.gz",
     "theiacov_clearlabs.primer_bed": "tests/data/theiacov/primers/artic-v3.primers.bed",
     "theiacov_clearlabs.reference_genome": "tests/data/theiacov/reference/MN908947.fasta",
-    "theiacov_clearlabs.organism_parameters.gene_locations_bed_file": "tests/inputs/completely-empty-for-test.txt"
+    "theiacov_clearlabs.organism_parameters.gene_locations_bed_file": "tests/inputs/sc2_gene_locations.bed"
 }
