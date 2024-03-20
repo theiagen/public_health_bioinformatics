@@ -26,7 +26,7 @@ task gene_coverage {
 
     if [ "~{organism}" == "sars-cov-2" ]; then
       samtools depth -r "$chromosome:~{sc2_s_gene_start}-~{sc2_s_gene_stop}" ~{bamfile} > ~{samplename}.s_gene.depth
-      s_gene_depth=$(cut -f 7 ~{samplename}.cov.txt | tail -n 1)
+      s_gene_depth=$(cut -f 7 ~{samplename}.s_gene.depth | tail -n 1)
       
       if [ -z "s_gene_depth" ] ; then s_gene_depth="0"; fi
       echo $s_gene_depth | tee S_GENE_DEPTH
@@ -40,26 +40,26 @@ task gene_coverage {
     fi
 
     python3 <<CODE
-      import subprocess
+    import subprocess
 
-      with open(~{bedfile}, "r") as bedfile, open("~{samplename}.percent_gene_coverage.tsv", "w") as outfile:
-        outfile.write("Caution: results may be inaccurate if your sample is not mapped to the reference genome used to generate the bed file of gene locations.\n")
-        outfile.write("Gene\Percent_Coverage\n")
-        for line in bedfile:
-          if line.startswith("#"): continue
-          line = line.strip().split("\t")
-          start = line[1]
-          stop = line[2]
-          gene = line[3]
+    with open(~{bedfile}, "r") as bedfile, open("~{samplename}.percent_gene_coverage.tsv", "w") as outfile:
+      outfile.write("Caution: results may be inaccurate if your sample is not mapped to the reference genome used to generate the bed file of gene locations.\n")
+      outfile.write("Gene\Percent_Coverage\n")
+      for line in bedfile:
+        if line.startswith("#"): continue
+        line = line.strip().split("\t")
+        start = line[1]
+        stop = line[2]
+        gene = line[3]
 
-          command = "samtools depth -r \"" + str(os.environ["chromosome"]) + ":" + start + "-" + stop + "\" " + {bamfile} + " | wc -l "
-          depth = subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.PIPE, shell=True).communicate()[0]
-        
-          # get coverage
-          coverage = (int(depth) / (int(stop) - int(start) + 1)) * 100
-          outfile.write("{}\t{}\n".format(gene, coverage))
+        command = "samtools depth -r \"" + str(os.environ["chromosome"]) + ":" + start + "-" + stop + "\" " + {bamfile} + " | wc -l "
+        depth = subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.PIPE, shell=True).communicate()[0]
+      
+        # get coverage
+        coverage = (int(depth) / (int(stop) - int(start) + 1)) * 100
+        outfile.write("{}\t{}\n".format(gene, coverage))
 
-    CODE
+  CODE
 
   >>>
   output {
