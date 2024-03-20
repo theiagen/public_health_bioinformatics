@@ -326,27 +326,6 @@
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     - path: miniwdl_run/call-pangolin4/work/clearlabs.pangolin_report.csv
       md5sum: 4e171371a605e170e59acb1d9e4b38bd
-    - path: miniwdl_run/call-sc2_gene_coverage/command
-      md5sum: e44c070a15a0f8d42348103b0440f691
-    - path: miniwdl_run/call-sc2_gene_coverage/inputs.json
-      contains: ["bamfile", "samplename"]
-    - path: miniwdl_run/call-sc2_gene_coverage/outputs.json
-      contains: ["sc2_gene_coverage", "sc2_s_gene_depth", "sc2_s_gene_percent_coverage"]
-    - path: miniwdl_run/call-sc2_gene_coverage/stderr.txt
-    - path: miniwdl_run/call-sc2_gene_coverage/stderr.txt.offset
-    - path: miniwdl_run/call-sc2_gene_coverage/stdout.txt
-    - path: miniwdl_run/call-sc2_gene_coverage/task.log
-      contains: ["wdl", "theiacov_clearlabs", "sc2_gene_coverage", "done"]
-    - path: miniwdl_run/call-sc2_gene_coverage/work/S_GENE_DEPTH
-      md5sum: ef30e94c3a4180fe06ff69cb48f07ecb
-    - path: miniwdl_run/call-sc2_gene_coverage/work/S_GENE_PC
-      md5sum: b9cc953b74ef66f5ca7d407242bafed0
-    - path: miniwdl_run/call-sc2_gene_coverage/work/_miniwdl_inputs/0/clearlabs.primertrimmed.rg.sorted.bam
-    - path: miniwdl_run/call-sc2_gene_coverage/work/_miniwdl_inputs/0/clearlabs.primertrimmed.rg.sorted.bam.bai
-    - path: miniwdl_run/call-sc2_gene_coverage/work/clearlabs.cov.txt
-      md5sum: 01b19e46eb9d553d0a4ab2579809e420
-    - path: miniwdl_run/call-sc2_gene_coverage/work/clearlabs.percent_gene_coverage.tsv
-      md5sum: fc9b4c728c8a6f1c2d0701497a202e2d
     - path: miniwdl_run/call-stats_n_coverage/command
       md5sum: 51da320ddc7de2ffeb263f0ddd85ced6
     - path: miniwdl_run/call-stats_n_coverage/inputs.json
@@ -512,7 +491,7 @@
       contains: ["wdl", "theiacov_clearlabs", "version_capture", "done"]
     - path: miniwdl_run/wdl/tasks/assembly/task_artic_consensus.wdl
       contains: ["artic", "command", "output", "runtime"]
-    - path: miniwdl_run/wdl/tasks/quality_control/basic_statistics/task_sc2_gene_coverage.wdl
+    - path: miniwdl_run/wdl/tasks/quality_control/basic_statistics/task_gene_coverage.wdl
       contains: ["coverage", "command", "output", "runtime"]
     - path: miniwdl_run/wdl/tasks/quality_control/basic_statistics/task_assembly_metrics.wdl
       contains: ["stat", "command", "output", "runtime"]
