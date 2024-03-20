@@ -64,14 +64,14 @@ workflow theiameta_illumina_pe {
   }
   call metaspades_task.metaspades_pe {
     input:
-      read1_cleaned = read1,
-      read2_cleaned = read2,
+      read1_cleaned = read_QC_trim.read1_clean,
+      read2_cleaned = read_QC_trim.read2_clean,
       samplename = samplename
   }
   call minimap2_task.minimap2 as minimap2_assembly_correction {
     input:
-      query1 = read1,
-      query2 = read2, 
+      query1 = read_QC_trim.read1_clean,
+      query2 = read_QC_trim.read2_clean, 
       reference = metaspades_pe.assembly_fasta,
       samplename = samplename,
       mode = "sr",
