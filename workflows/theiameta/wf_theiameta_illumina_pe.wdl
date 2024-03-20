@@ -46,7 +46,9 @@ workflow theiameta_illumina_pe {
         read2 = read2,
         workflow_series = "theiameta",
         kraken_db = kraken2_db,
-        call_kraken = false
+        call_kraken = false,
+        kraken_disk_size = 100,
+        kraken_memory = 8
     }
   call kraken_task.kraken2_standalone as kraken2_clean {
     input:
