@@ -169,8 +169,8 @@ workflow theiacov_clearlabs {
     # Read QC - dehosting outputs
     File read1_dehosted = ncbi_scrub_se.read1_dehosted
     # Read QC - fastq_scan outputs
-    Int num_reads_raw1 = fastq_scan_raw_reads.read1_seq
-    Int num_reads_clean1 = fastq_scan_clean_reads.read1_seq
+    Int fastq_scan_num_reads_raw1 = fastq_scan_raw_reads.read1_seq
+    Int fastq_scan_num_reads_clean1 = fastq_scan_clean_reads.read1_seq
     String fastq_scan_version = fastq_scan_raw_reads.version
     # Read QC - kraken outputs
     String kraken_version = kraken2_raw.version
