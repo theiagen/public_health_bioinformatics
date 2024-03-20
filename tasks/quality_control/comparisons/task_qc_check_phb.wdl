@@ -392,8 +392,12 @@ task qc_check_phb {
 
         if ("vadr_num_alerts" in qc_check_metrics): # if this var is in the qc_check_metrics,
           if ("~{vadr_num_alerts}"): # if vadr_num_alerts variable exists,
-            qc_note, qc_status = compare(qc_note, "vadr_num_alerts", int(~{vadr_num_alerts}), "<=", int(taxon_df["vadr_num_alerts"][0]))
-            qc_check_metrics.remove("vadr_num_alerts") 
+            try:
+              qc_note, qc_status = compare(qc_note, "vadr_num_alerts", int(~{vadr_num_alerts}), "<=", int(taxon_df["vadr_num_alerts"][0]))
+              qc_check_metrics.remove("vadr_num_alerts") 
+            except:
+              qc_note += "vadr_num_alerts (" + "~{vadr_num_alerts}" ") was not an integer; "
+              qc_status = "QC_ALERT"
 
         if (len(qc_check_metrics) > 0):
           qc_status = "QC_ALERT"
