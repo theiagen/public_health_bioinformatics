@@ -40,6 +40,8 @@ task gene_coverage {
       echo 0.0 | tee S_GENE_PC
     fi
 
+    # add warning to file
+    echo "Caution: results may be inaccurate if your sample is not mapped to the reference genome used to generate the bed file of gene locations." > ~{samplename}.percent_gene_coverage.tsv
     # iterate through file and calculate coverage for each row in the bedfile
     while read -r line; do
       # pull out the important fields from the bedfile
