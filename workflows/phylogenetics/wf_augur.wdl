@@ -23,6 +23,7 @@ workflow augur {
     Array[File]+ sample_metadata_tsvs # created with Augur_Prep
     String build_name
     File? reference_fasta
+    Boolean remove_reference = false # by default, do not remove the reference
     File? reference_genbank
     Int? min_num_unambig
     String organism = "sars-cov-2" # options: sars-cov-2 or flu or mpxv
@@ -82,6 +83,7 @@ workflow augur {
       input:
         assembly_fasta = filter_sequences_by_length.filtered_fasta,
         reference_fasta = select_first([reference_fasta, sc2_defaults.reference_fasta, flu_defaults.reference_fasta, mpxv_defaults.reference_fasta]),
+        remove_reference = remove_reference
     }
   }
   call augur_utils.fasta_to_ids { # extract list of remaining sequences (so we know which ones were dropped)
