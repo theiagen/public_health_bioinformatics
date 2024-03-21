@@ -31,7 +31,6 @@ workflow theiacov_clearlabs {
     # reference values
     File? reference_genome
     # nextclade inputs
-    String? nextclade_dataset_reference
     String? nextclade_dataset_tag
     String? nextclade_dataset_name
     # kraken parameters
@@ -43,7 +42,6 @@ workflow theiacov_clearlabs {
     input:
       organism = organism,
       reference_genome = reference_genome,
-      nextclade_dataset_reference_input = nextclade_dataset_reference,
       nextclade_dataset_tag_input = nextclade_dataset_tag,
       nextclade_dataset_name_input = nextclade_dataset_name,
       kraken_target_organism_input = target_organism
@@ -115,16 +113,15 @@ workflow theiacov_clearlabs {
   }
   if (organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "sars-cov-2") {
     # tasks specific to either MPXV or sars-cov-2
-    call nextclade_task.nextclade {
+    call nextclade_task.nextclade_v3 {
       input:
       genome_fasta = consensus.consensus_seq,
       dataset_name = organism_parameters.nextclade_dataset_name,
-      dataset_reference = organism_parameters.nextclade_dataset_reference,
       dataset_tag = organism_parameters.nextclade_dataset_tag
     }
     call nextclade_task.nextclade_output_parser {
       input:
-      nextclade_tsv = nextclade.nextclade_tsv,
+      nextclade_tsv = nextclade_v3.nextclade_tsv,
       organism = organism
     }
     call vadr_task.vadr {
@@ -222,11 +219,11 @@ workflow theiacov_clearlabs {
     String? pangolin_docker = pangolin4.pangolin_docker
     String? pangolin_versions = pangolin4.pangolin_versions
     # Nextclade outputs
-    File? nextclade_json = nextclade.nextclade_json
-    File? auspice_json = nextclade.auspice_json
-    File? nextclade_tsv = nextclade.nextclade_tsv
-    String? nextclade_version = nextclade.nextclade_version
-    String? nextclade_docker = nextclade.nextclade_docker
+    File? nextclade_json = nextclade_v3.nextclade_json
+    File? auspice_json = nextclade_v3.auspice_json
+    File? nextclade_tsv = nextclade_v3.nextclade_tsv
+    String? nextclade_version = nextclade_v3.nextclade_version
+    String? nextclade_docker = nextclade_v3.nextclade_docker
     String nextclade_ds_tag = organism_parameters.nextclade_dataset_tag
     String? nextclade_aa_subs = nextclade_output_parser.nextclade_aa_subs
     String? nextclade_aa_dels = nextclade_output_parser.nextclade_aa_dels
