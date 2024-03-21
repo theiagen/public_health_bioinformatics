@@ -34,7 +34,7 @@ workflow read_QC_trim_pe {
     String? workflow_series
     String read_processing = "trimmomatic" # options: trimmomatic, fastp
     String read_qc = "fastq_scan" # options: fastq_scan, fastqc
-    String trimmomatic_args = "-phred33"
+    String? trimmomatic_args
     String fastp_args = "--detect_adapter_for_pe -g -5 20 -3 20"
   }
   if (("~{workflow_series}" == "theiacov") || ("~{workflow_series}" == "theiameta")) {
