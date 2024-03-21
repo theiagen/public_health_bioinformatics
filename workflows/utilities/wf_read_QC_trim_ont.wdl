@@ -26,6 +26,9 @@ workflow read_QC_trim_ont {
 
     # kraken inputs
     String? target_organism
+
+    # rasusa downsampling
+    Float downsampling_coverage = 150
   }
   if ("~{workflow_series}" == "theiacov") {
     call ncbi_scrub.ncbi_scrub_se {
@@ -80,7 +83,7 @@ workflow read_QC_trim_ont {
       input:
         read1 = read1,
         samplename = samplename,
-        coverage = 150,
+        coverage = downsampling_coverage,
         genome_length = select_first([genome_length, kmc.est_genome_length])
     }
     # tiptoft for plasmid detection

@@ -92,7 +92,7 @@ workflow theiameta_illumina_pe {
       input:
         assembly = select_first([retrieve_aligned_contig_paf.final_assembly, metaspades.assembly_fasta]),
         samplename = samplename,
-        min_contig_len = 1
+        min_contig_length = 1
       }
     if (output_additional_files){
       call minimap2_task.minimap2 as minimap2_reads {
@@ -173,14 +173,14 @@ workflow theiameta_illumina_pe {
     File? read2_dehosted = read_QC_trim.read2_dehosted
     String? ncbi_scrub_docker = read_QC_trim.ncbi_scrub_docker
     # Read QC - fastq_scan outputs
-    Int? num_reads_raw1 = read_QC_trim.fastq_scan_raw1
-    Int? num_reads_raw2 = read_QC_trim.fastq_scan_raw2
-    String? num_reads_raw_pairs = read_QC_trim.fastq_scan_raw_pairs
+    Int? fastq_scan_num_reads_raw1 = read_QC_trim.fastq_scan_raw1
+    Int? fastq_scan_num_reads_raw2 = read_QC_trim.fastq_scan_raw2
+    String? fastq_scan_num_reads_raw_pairs = read_QC_trim.fastq_scan_raw_pairs
     String? fastq_scan_version = read_QC_trim.fastq_scan_version
     String? fastq_scan_docker = read_QC_trim.fastq_scan_docker
-    Int? num_reads_clean1 = read_QC_trim.fastq_scan_clean1
-    Int? num_reads_clean2 = read_QC_trim.fastq_scan_clean2
-    String? num_reads_clean_pairs = read_QC_trim.fastq_scan_clean_pairs
+    Int? fastq_scan_num_reads_clean1 = read_QC_trim.fastq_scan_clean1
+    Int? fastq_scan_num_reads_clean2 = read_QC_trim.fastq_scan_clean2
+    String? fastq_scan_num_reads_clean_pairs = read_QC_trim.fastq_scan_clean_pairs
     # Read QC - fastqc outputs
     Int? fastqc_num_reads_raw1 = read_QC_trim.fastqc_raw1
     Int? fastqc_num_reads_raw2 = read_QC_trim.fastqc_raw2
@@ -197,6 +197,9 @@ workflow theiameta_illumina_pe {
     # Read QC - trimmomatic outputs
     String? trimmomatic_version = read_QC_trim.trimmomatic_version
     String? trimmomatic_docker = read_QC_trim.trimmomatic_docker
+    # Read QC - fastp outputs
+    String? fastp_version = read_QC_trim.fastp_version
+    File? fastp_html_report = read_QC_trim.fastp_html_report
     # Read QC - bbduk outputs
     File read1_clean = read_QC_trim.read1_clean
     File read2_clean = read_QC_trim.read2_clean

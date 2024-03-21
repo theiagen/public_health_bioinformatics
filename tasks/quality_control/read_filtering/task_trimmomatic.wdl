@@ -6,7 +6,7 @@ task trimmomatic_pe {
     File read2
     String samplename
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/trimmomatic:0.39"
-    Int trimmomatic_minlen = 75
+    Int trimmomatic_min_length = 75
     Int trimmomatic_window_size = 4
     Int trimmomatic_quality_trim_score = 30
     Int? trimmomatic_base_crop
@@ -41,8 +41,9 @@ task trimmomatic_pe {
     ~{read1} ~{read2} \
     -baseout ~{samplename}.fastq.gz \
     SLIDINGWINDOW:~{trimmomatic_window_size}:~{trimmomatic_quality_trim_score} \
-    MINLEN:~{trimmomatic_minlen} &> ~{samplename}.trim.stats.txt \
+    MINLEN:~{trimmomatic_min_length} &> ~{samplename}.trim.stats.txt \
     "${CROPPING_VAR}"
+
   >>>
   output {
     File read1_trimmed = "~{samplename}_1P.fastq.gz"
@@ -68,7 +69,7 @@ task trimmomatic_se {
     File read1
     String samplename
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/trimmomatic:0.39"
-    Int trimmomatic_minlen = 25
+    Int trimmomatic_min_length = 25
     Int trimmomatic_window_size = 4
     Int trimmomatic_quality_trim_score = 30
     Int cpu = 4
@@ -87,7 +88,7 @@ task trimmomatic_se {
     ~{read1} \
     ~{samplename}_trimmed.fastq.gz \
     SLIDINGWINDOW:~{trimmomatic_window_size}:~{trimmomatic_quality_trim_score} \
-    MINLEN:~{trimmomatic_minlen} > ~{samplename}.trim.stats.txt
+    MINLEN:~{trimmomatic_min_length} > ~{samplename}.trim.stats.txt
   >>>
   output {
     File read1_trimmed = "~{samplename}_trimmed.fastq.gz"
