@@ -154,8 +154,8 @@ workflow theiacov_clearlabs {
         assembly_length_unambiguous = consensus_qc.number_ATCG,
         number_Degenerate =  consensus_qc.number_Degenerate,
         percent_reference_coverage =  consensus_qc.percent_reference_coverage,
-        # sc2_s_gene_mean_coverage = sc2_gene_coverage.sc2_s_gene_depth,
-        # sc2_s_gene_percent_coverage = sc2_gene_coverage.sc2_s_gene_percent_coverage,
+        # sc2_s_gene_mean_coverage = gene_coverage.sc2_s_gene_depth,
+        # sc2_s_gene_percent_coverage = gene_coverage.sc2_s_gene_percent_coverage,
         vadr_num_alerts = vadr.num_alerts
     }
   }  
