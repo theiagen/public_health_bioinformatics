@@ -8,7 +8,8 @@ import "../../tasks/task_versioning.wdl" as versioning
 import "../../tasks/taxon_id/contamination/task_kraken2.wdl" as kraken_task
 import "../../tasks/taxon_id/contamination/task_krona.wdl" as krona_task
 import "../../tasks/utilities/data_handling/task_parse_mapping.wdl" as parse_mapping_task
-import "../utilities/wf_metaspades_assembly.wdl" as metaspades_assembly_wf
+import "../../tasks/assembly/task_metaspades.wdl" as metaspades_task
+import "../../tasks/quality_control/read_filtering/task_pilon.wdl" as pilon_task
 import "../utilities/wf_read_QC_trim_pe.wdl" as read_qc_wf
 
 workflow theiameta_illumina_pe {
@@ -43,7 +44,11 @@ workflow theiameta_illumina_pe {
         samplename = samplename,
         read1 = read1,
         read2 = read2,
-        workflow_series = "theiameta"
+        workflow_series = "theiameta",
+        kraken_db = kraken2_db,
+        call_kraken = false,
+        kraken_disk_size = 100,
+        kraken_memory = 8
     }
   call kraken_task.kraken2_standalone as kraken2_clean {
     input:
@@ -60,18 +65,39 @@ workflow theiameta_illumina_pe {
       kraken2_report = kraken2_clean.kraken2_report,
       samplename = samplename
   }
-  call metaspades_assembly_wf.metaspades_assembly_pe as metaspades {
+  call metaspades_task.metaspades_pe {
     input:
-      read1 = read_QC_trim.read1_clean,
-      read2 = read_QC_trim.read2_clean,
+      read1_cleaned = read_QC_trim.read1_clean,
+      read2_cleaned = read_QC_trim.read2_clean,
       samplename = samplename
-    }
+  }
+  call minimap2_task.minimap2 as minimap2_assembly_correction {
+    input:
+      query1 = read_QC_trim.read1_clean,
+      query2 = read_QC_trim.read2_clean, 
+      reference = metaspades_pe.assembly_fasta,
+      samplename = samplename,
+      mode = "sr",
+      output_sam = true
+  }
+  call parse_mapping_task.sam_to_sorted_bam as sort_bam_assembly_correction {
+    input:
+      sam = minimap2_assembly_correction.minimap2_out,
+      samplename = samplename
+  }
+  call pilon_task.pilon {
+    input:
+      assembly = metaspades_pe.assembly_fasta,
+      bam = sort_bam_assembly_correction.bam,
+      bai = sort_bam_assembly_correction.bai,
+      samplename = samplename
+  }
     # if reference is provided, perform mapping of assembled contigs to 
     # reference with minimap2, and extract those as final assembly
     if (defined(reference)){
       call minimap2_task.minimap2 as minimap2_assembly {
         input:
-          query1 = metaspades.assembly_fasta,
+          query1 = pilon.assembly_fasta,
           reference = select_first([reference]),
           samplename = samplename,
           mode = "asm20",
@@ -80,7 +106,7 @@ workflow theiameta_illumina_pe {
       call parse_mapping_task.retrieve_aligned_contig_paf {
         input:
           paf = minimap2_assembly.minimap2_out,
-          assembly = metaspades.assembly_fasta,
+          assembly = pilon.assembly_fasta,
           samplename = samplename
       }
       call parse_mapping_task.calculate_coverage_paf {
@@ -90,7 +116,7 @@ workflow theiameta_illumina_pe {
     }
     call quast_task.quast {
       input:
-        assembly = select_first([retrieve_aligned_contig_paf.final_assembly, metaspades.assembly_fasta]),
+        assembly = select_first([retrieve_aligned_contig_paf.final_assembly, pilon.assembly_fasta]),
         samplename = samplename,
         min_contig_length = 1
       }
@@ -99,7 +125,7 @@ workflow theiameta_illumina_pe {
         input:
           query1 = read_QC_trim.read1_clean,
           query2 = read_QC_trim.read2_clean, 
-          reference = select_first([retrieve_aligned_contig_paf.final_assembly, metaspades.assembly_fasta]),
+          reference = select_first([retrieve_aligned_contig_paf.final_assembly, pilon.assembly_fasta]),
           samplename = samplename,
           mode = "sr",
           output_sam = true
@@ -138,14 +164,14 @@ workflow theiameta_illumina_pe {
         input:
           read1 = read_QC_trim.read1_clean,
           read2 = read_QC_trim.read2_clean,
-          reference_genome = metaspades.assembly_fasta,
+          reference_genome = pilon.assembly_fasta,
           samplename = samplename
       }
       call semibin_task.semibin as semibin {
         input:
           sorted_bam = bwa.sorted_bam,
           sorted_bai = bwa.sorted_bai,
-          assembly_fasta = metaspades.assembly_fasta,
+          assembly_fasta = pilon.assembly_fasta,
           samplename = samplename
       }
     }
@@ -207,18 +233,18 @@ workflow theiameta_illumina_pe {
     # Read QC - Read stats
     Float? average_read_length = read_QC_trim.average_read_length
     # Assembly - metaspades 
-    File assembly_fasta = select_first([retrieve_aligned_contig_paf.final_assembly, metaspades.assembly_fasta])
-    String metaspades_version = metaspades.metaspades_version
-    String metaspades_docker = metaspades.metaspades_docker
+    File assembly_fasta = select_first([retrieve_aligned_contig_paf.final_assembly, pilon.assembly_fasta])
+    String metaspades_version = metaspades_pe.metaspades_version
+    String metaspades_docker = metaspades_pe.metaspades_docker
     # Assembly - minimap2
-    String minimap2_version = metaspades.minimap2_version
-    String minimap2_docker = metaspades.minimap2_docker
+    String minimap2_version = minimap2_assembly_correction.minimap2_version
+    String minimap2_docker = minimap2_assembly_correction.minimap2_docker
     # Assembly - samtools
-    String samtools_version = metaspades.samtools_version
-    String samtools_docker = metaspades.samtools_docker
+    String samtools_version = sort_bam_assembly_correction.samtools_version
+    String samtools_docker = sort_bam_assembly_correction.samtools_docker
     # Assembly - pilon
-    String pilon_version = metaspades.pilon_version
-    String pilon_docker = metaspades.pilon_docker
+    String pilon_version = pilon.pilon_version
+    String pilon_docker = pilon.pilon_docker
     # Assembly QC - quast
     Int assembly_length = quast.genome_length
     Int contig_number = quast.number_contigs
