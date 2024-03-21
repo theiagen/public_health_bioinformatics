@@ -56,7 +56,7 @@ task trimmomatic_se {
     Int trimmomatic_window_size = 4
     Int trimmomatic_quality_trim_score = 30
     Int cpu = 4
-    String? trimmomatic_args
+    String trimmomatic_args = "-phred33"
     Int disk_size = 100
     Int memory = 8
   }
