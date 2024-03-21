@@ -51,7 +51,7 @@ task tbp_parser {
     samtools depth -J ~{tbprofiler_bam} | awk -F "\t" '{sum+=$3} END { print sum/NR }' | tee AVG_DEPTH
 
     # add sample id to the beginning of the coverage report
-    awk '{print "~{samplename},"$0}' ~{samplename}.percent_gene_coverage.csv > tmp.csv && mv -f tmp.csv ~{samplename}.percent_gene_coverage.csv
+    awk '{s=(NR==1)?"Sample_accession_number,":"~{samplename},"; $0=s$0}1' ~{samplename}.percent_gene_coverage.csv > tmp.csv && mv -f tmp.csv ~{samplename}.percent_gene_coverage.csv
   >>>
   output {
     File tbp_parser_looker_report_csv = "~{samplename}.looker_report.csv"
