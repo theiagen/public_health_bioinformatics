@@ -25,11 +25,10 @@ task gene_coverage {
     export chromosome
 
     if [ "~{organism}" == "sars-cov-2" ]; then
-      echo "organism sras-"
-      samtools depth -r "$chromosome:~{sc2_s_gene_start}-~{sc2_s_gene_stop}" ~{bamfile} > ~{samplename}.s_gene.depth
-      s_gene_depth=$(cut -f 7 ~{samplename}.s_gene.depth | tail -n 1)
-      
-      if [ -z "$s_gene_depth" ] ; then s_gene_depth="0"; fi
+      samtools coverage -r "$chromosome:~{sc2_s_gene_start}-~{sc2_s_gene_stop}" ~{bamfile} > ~{samplename}.s_gene.coverage.txt
+      s_gene_depth=$(cut -f 7 ~{samplename}.s_gene.coverage.txt | tail -n 1)
+
+      if [ -z "s_gene_depth" ] ; then s_gene_depth="0"; fi
       echo "$s_gene_depth" | tee S_GENE_DEPTH
       
       sgene=$(samtools depth -J -r "${chromosome}:~{sc2_s_gene_start}-~{sc2_s_gene_stop}" ~{bamfile} | awk -F "\t" '{if ($3 > ~{min_depth}) print;}' | wc -l )
@@ -41,7 +40,7 @@ task gene_coverage {
     fi
 
     # add warning to file
-    echo "Caution: results may be inaccurate if your sample is not mapped to the reference genome used to generate the bed file of gene locations." > ~{samplename}.percent_gene_coverage.tsv
+    echo "#Caution: results may be inaccurate if your sample is not mapped to the reference genome used to generate the bed file of gene locations." > ~{samplename}.percent_gene_coverage.tsv
     # iterate through file and calculate coverage for each row in the bedfile
     while read -r line; do
       # pull out the important fields from the bedfile
