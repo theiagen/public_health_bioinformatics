@@ -30,6 +30,7 @@ task sra_lite_autodetect {
     # check if the first quality control string is set to SRA-Lite
     # SRA-Lite filetype has all the quality enconding set to the '?' character
     # corresponding to a phred-score of 30
+    # awk is checking the 4th line of the file and if it starts with and contains only '?' characters
     $command ~{read1} | head -n 4 | awk 'NR==4 {if ($0 ~ /^[?]+$/) {print "SRA-Lite FASTQ detected"} else {print ""}}' > WARNING
   >>>
   output {
