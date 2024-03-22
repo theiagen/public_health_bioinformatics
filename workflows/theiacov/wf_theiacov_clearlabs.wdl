@@ -12,7 +12,7 @@ import "../../tasks/species_typing/betacoronavirus/task_pangolin.wdl" as pangoli
 import "../../tasks/task_versioning.wdl" as versioning
 import "../../tasks/taxon_id/contamination/task_kraken2.wdl" as kraken2
 import "../../tasks/taxon_id/task_nextclade.wdl" as nextclade_task
-import "../utilities/wf_organism_parameters.wdl" as set_organism_defaults
+import "../../utilities/wf_organism_parameters.wdl" as set_organism_defaults
 
 workflow theiacov_clearlabs {
   meta {
