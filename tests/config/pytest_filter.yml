@@ -9,7 +9,7 @@ wf_theiacov_clearlabs:
   - tasks/taxon_id/contamination/task_kraken2.wdl
   - tasks/taxon_id/task_nextclade.wdl
   - tasks/species_typing/betacoronavirus/task_pangolin.wdl
-  - tasks/quality_control/basic_statistics/task_sc2_gene_coverage.wdl
+  - tasks/quality_control/basic_statistics/task_gene_coverage.wdl
   - tasks/task_versioning.wdl
 
 wf_theiacov_fasta:
@@ -37,7 +37,7 @@ wf_theiacov_illumina_pe:
   - tasks/species_typing/betacoronavirus/task_pangolin.wdl
   - tasks/species_typing/lentivirus/task_quasitools.wdl
   - tasks/gene_typing/drug_resistance/task_abricate.wdl
-  - tasks/quality_control/basic_statistics/task_sc2_gene_coverage.wdl
+  - tasks/quality_control/basic_statistics/task_gene_coverage.wdl
   - tasks/task_versioning.wdl
 
 wf_theiacov_illumina_se:
@@ -55,7 +55,7 @@ wf_theiacov_illumina_se:
   - tasks/quality_control/comparisons/task_screen.wdl
   - tasks/taxon_id/task_nextclade.wdl
   - tasks/species_typing/betacoronavirus/task_pangolin.wdl
-  - tasks/quality_control/basic_statistics/task_sc2_gene_coverage.wdl
+  - tasks/quality_control/basic_statistics/task_gene_coverage.wdl
   - tasks/task_versioning.wdl
 
 wf_theiacov_ont:
@@ -72,7 +72,7 @@ wf_theiacov_ont:
   - tasks/taxon_id/task_nextclade.wdl
   - tasks/species_typing/betacoronavirus/task_pangolin.wdl
   - tasks/species_typing/lentivirus/task_quasitools.wdl
-  - tasks/quality_control/basic_statistics/task_sc2_gene_coverage.wdl
+  - tasks/quality_control/basic_statistics/task_gene_coverage.wdl
   - tasks/task_versioning.wdl
 
 wf_theiaprok_illumina_pe:

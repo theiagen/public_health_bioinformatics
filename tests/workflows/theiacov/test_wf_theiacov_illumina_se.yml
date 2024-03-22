@@ -323,26 +323,6 @@
       md5sum: a7b44501d440ba66c62168d53108d2a1
     - path: miniwdl_run/call-pangolin4/work/_miniwdl_inputs/0/ERR6319327.ivar.consensus.fasta
       md5sum: d41d8cd98f00b204e9800998ecf8427e
-    # sc2 gene coverage
-    - path: miniwdl_run/call-sc2_gene_coverage/command
-      md5sum: 51978ef4869aab0072534e15eef7ec3b
-    - path: miniwdl_run/call-sc2_gene_coverage/inputs.json
-      contains: ["bamfile", "samplename"]
-    - path: miniwdl_run/call-sc2_gene_coverage/outputs.json
-      contains: ["sc2_gene_coverage", "sc2_s_gene_depth", "sc2_s_gene_percent_coverage"]
-    - path: miniwdl_run/call-sc2_gene_coverage/stderr.txt
-    - path: miniwdl_run/call-sc2_gene_coverage/stderr.txt.offset
-    - path: miniwdl_run/call-sc2_gene_coverage/stdout.txt
-    - path: miniwdl_run/call-sc2_gene_coverage/task.log
-      contains: ["wdl", "theiacov_illumina_se", "sc2_gene_coverage", "done"]
-    - path: miniwdl_run/call-sc2_gene_coverage/work/ERR6319327.cov.txt
-      md5sum: 112b4d81f9d1af6696eb3d2f78a85d02
-    - path: miniwdl_run/call-sc2_gene_coverage/work/ERR6319327.percent_gene_coverage.tsv
-      md5sum: ffdad727d121b2ce37a46c935e887098
-    - path: miniwdl_run/call-sc2_gene_coverage/work/S_GENE_DEPTH
-      md5sum: 035a022eb0f072a0e9f1fd33c4d9b420
-    - path: miniwdl_run/call-sc2_gene_coverage/work/S_GENE_PC
-      md5sum: f7d4aa78c0a111a35f9ed1add781d4dd
     # nextclade
     - path: miniwdl_run/call-nextclade/command
       md5sum: 4360b0d82ea182ab01ffe606b3893bd2
@@ -466,7 +446,7 @@
       contains: ["primer", "command", "output", "runtime"]
     - path: miniwdl_run/wdl/tasks/gene_typing/variant_detection/task_ivar_variant_call.wdl
       contains: ["variants", "command", "output", "runtime"]
-    - path: miniwdl_run/wdl/tasks/quality_control/basic_statistics/task_sc2_gene_coverage.wdl
+    - path: miniwdl_run/wdl/tasks/quality_control/basic_statistics/task_gene_coverage.wdl
       contains: ["coverage", "command", "output", "runtime"]
     - path: miniwdl_run/wdl/tasks/quality_control/basic_statistics/task_assembly_metrics.wdl
       contains: ["stat", "command", "output", "runtime"]

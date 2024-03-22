@@ -94,7 +94,7 @@ workflow theiameta_illumina_pe {
   }
     # if reference is provided, perform mapping of assembled contigs to 
     # reference with minimap2, and extract those as final assembly
-    if (defined(reference)){
+    if (defined(reference)) {
       call minimap2_task.minimap2 as minimap2_assembly {
         input:
           query1 = pilon.assembly_fasta,
@@ -120,7 +120,7 @@ workflow theiameta_illumina_pe {
         samplename = samplename,
         min_contig_length = 1
       }
-    if (output_additional_files){
+    if (output_additional_files) {
       call minimap2_task.minimap2 as minimap2_reads {
         input:
           query1 = read_QC_trim.read1_clean,
@@ -159,7 +159,7 @@ workflow theiameta_illumina_pe {
           bam = sam_to_sorted_bam.bam,
       } 
     }
-    if (! defined(reference)){
+    if (! defined(reference)) {
       call bwa_task.bwa as bwa {
         input:
           read1 = read_QC_trim.read1_clean,
