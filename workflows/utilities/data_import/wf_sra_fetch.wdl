@@ -1,7 +1,7 @@
 version 1.0
 
 import "../../../tasks/utilities/data_import/task_sra_fetch.wdl" as sra_fetch
-import "../../../tasks/utilities/data_handling/task_fastq_handeling.wdl" as fastq_handeling
+import "../../../tasks/utilities/data_handling/task_fastq_handling.wdl" as fastq_handeling
 
 workflow fetch_sra_to_fastq {
   input {
