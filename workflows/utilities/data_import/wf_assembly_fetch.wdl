@@ -11,7 +11,7 @@ workflow assembly_fetch {
     String? ncbi_accession
   }
   # if user does not provide reference genome, determine one for the user by running referenceseeker and ncbi datasets on a provided genome to acquire one
-  if(! defined(ncbi_accession) && defined(assembly_fasta)){
+  if(! defined(ncbi_accession) && defined(assembly_fasta)) {
     call referenceseeker_task.referenceseeker {
       input:
         assembly_fasta = select_first([assembly_fasta, ""]), # to avoid error with required task input

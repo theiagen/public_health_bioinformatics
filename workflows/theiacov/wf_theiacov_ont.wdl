@@ -7,13 +7,14 @@ import "../../tasks/quality_control/advanced_metrics/task_vadr.wdl" as vadr_task
 import "../../tasks/quality_control/basic_statistics/task_assembly_metrics.wdl" as assembly_metrics
 import "../../tasks/quality_control/basic_statistics/task_consensus_qc.wdl" as consensus_qc_task
 import "../../tasks/quality_control/basic_statistics/task_nanoplot.wdl" as nanoplot_task
-import "../../tasks/quality_control/basic_statistics/task_sc2_gene_coverage.wdl" as sc2_calculation
+import "../../tasks/quality_control/basic_statistics/task_gene_coverage.wdl" as gene_coverage_task
 import "../../tasks/quality_control/comparisons/task_qc_check_phb.wdl" as qc_check
 import "../../tasks/quality_control/comparisons/task_screen.wdl" as screen
 import "../../tasks/species_typing/betacoronavirus/task_pangolin.wdl" as pangolin
 import "../../tasks/species_typing/lentivirus/task_quasitools.wdl" as quasitools
 import "../../tasks/task_versioning.wdl" as versioning
 import "../../tasks/taxon_id/task_nextclade.wdl" as nextclade_task
+import "../../workflows/utilities/wf_influenza_antiviral_substitutions.wdl" as flu_antiviral
 import "../utilities/wf_organism_parameters.wdl" as set_organism_defaults
 import "../utilities/wf_read_QC_trim_ont.wdl" as read_qc_trim_workflow
 
@@ -38,6 +39,7 @@ workflow theiacov_ont {
     String? nextclade_dataset_name
     # reference values
     File? reference_genome
+    File? reference_gene_locations_bed
     Int? genome_length
     # kraken inputs
     String? target_organism
@@ -61,6 +63,7 @@ workflow theiacov_ont {
     input:
       organism = organism,
       reference_genome = reference_genome,
+      gene_locations_bed_file = reference_gene_locations_bed,
       genome_length_input = genome_length,
       nextclade_dataset_tag_input = nextclade_dataset_tag,
       nextclade_dataset_name_input = nextclade_dataset_name,     
@@ -183,7 +186,7 @@ workflow theiacov_ont {
               kraken_target_organism_input = target_organism,
               hiv_primer_version = "N/A"
           }         
-          if (set_flu_na_nextclade_values.nextclade_dataset_tag == "NA"){
+          if (set_flu_na_nextclade_values.nextclade_dataset_tag == "NA") {
             Boolean do_not_run_flu_na_nextclade = true
           }
           if (set_flu_ha_nextclade_values.nextclade_dataset_tag == "NA") {
@@ -210,6 +213,19 @@ workflow theiacov_ont {
           read1 = read_qc_trim.read1_clean,
           samplename = samplename,
           est_genome_length = select_first([genome_length, consensus_qc.number_Total, organism_parameters.genome_length])
+      }
+      if (organism_parameters.standardized_organism == "flu") {
+        call flu_antiviral.flu_antiviral_substitutions {
+          input:
+            na_segment_assembly = irma.seg_na_assembly,
+            ha_segment_assembly = irma.seg_ha_assembly,
+            pa_segment_assembly = irma.seg_pa_assembly,
+            pb1_segment_assembly = irma.seg_pb1_assembly,
+            pb2_segment_assembly = irma.seg_pb2_assembly,
+            mp_segment_assembly = irma.seg_mp_assembly,
+            abricate_flu_subtype = select_first([abricate_flu.abricate_flu_subtype, ""]),
+            irma_flu_subtype = select_first([irma.irma_subtype, ""]),
+        }
       }
       # run organism-specific typing
       if (organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "sars-cov-2" || (organism_parameters.standardized_organism == "flu" && defined(irma.seg_ha_assembly) && ! defined(do_not_run_flu_ha_nextclade))) { 
@@ -253,21 +269,25 @@ workflow theiacov_ont {
             fasta = select_first([consensus.consensus_seq]),
             docker = organism_parameters.pangolin_docker
         }
-        call sc2_calculation.sc2_gene_coverage {
-          input: 
+      }  
+      if (organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "MPXV" || defined(reference_gene_locations_bed)) {
+        # tasks specific to either sars-cov-2, MPXV, or any organism with a user-supplied reference gene locations bed file
+        call gene_coverage_task.gene_coverage {
+          input:
+            bamfile = select_first([consensus.trim_sorted_bam, irma.seg_ha_bam, irma.seg_na_bam, ""]),
+            bedfile = select_first([reference_gene_locations_bed, organism_parameters.gene_locations_bed]),
             samplename = samplename,
-            bamfile = select_first([consensus.trim_sorted_bam]),
-            min_depth = min_depth
-          }
+            organism = organism_parameters.standardized_organism
+        }
       }
-      if (organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "WNV"){ 
+      if (organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "WNV") { 
         # tasks specific to MPXV, sars-cov-2, and WNV
         call vadr_task.vadr {
           input:
             genome_fasta = select_first([consensus.consensus_seq]),
             assembly_length_unambiguous = consensus_qc.number_ATCG,
             vadr_opts = organism_parameters.vadr_opts,
-            maxlen = organism_parameters.vadr_maxlen
+            max_length = organism_parameters.vadr_maxlength
         }
       }      
       if (organism_parameters.standardized_organism == "HIV") {
@@ -306,8 +326,8 @@ workflow theiacov_ont {
     # Read Metadata
     String seq_platform = seq_method
     # Sample Screening
-    String raw_read_screen = raw_check_reads.read_screen
-    String? clean_read_screen = clean_check_reads.read_screen
+    String read_screen_raw = raw_check_reads.read_screen
+    String? read_screen_clean = clean_check_reads.read_screen
     # Read QC - dehosting outputs
     File? read1_dehosted = read_qc_trim.read1_dehosted
     # Read QC - nanoplot outputs    
@@ -368,9 +388,9 @@ workflow theiacov_ont {
     Float? est_coverage_raw = nanoplot_raw.est_coverage
     Float? est_coverage_clean = nanoplot_clean.est_coverage
     # SC2 specific coverage outputs
-    Float? sc2_s_gene_mean_coverage = sc2_gene_coverage.sc2_s_gene_depth
-    Float? sc2_s_gene_percent_coverage = sc2_gene_coverage.sc2_s_gene_percent_coverage
-    File? sc2_all_genes_percent_coverage = sc2_gene_coverage.sc2_all_genes_percent_coverage
+    Float? sc2_s_gene_mean_coverage = gene_coverage.sc2_s_gene_depth
+    Float? sc2_s_gene_percent_coverage = gene_coverage.sc2_s_gene_percent_coverage
+    File? est_percent_gene_coverage_tsv = gene_coverage.est_percent_gene_coverage_tsv
     # Pangolin outputs
     String? pango_lineage = pangolin4.pangolin_lineage
     String? pango_lineage_expanded = pangolin4.pangolin_lineage_expanded
@@ -420,5 +440,19 @@ workflow theiacov_ont {
     File? abricate_flu_results = abricate_flu.abricate_flu_results
     String? abricate_flu_database =  abricate_flu.abricate_flu_database
     String? abricate_flu_version = abricate_flu.abricate_flu_version
+    # Flu Antiviral Substitution Outputs
+    String? flu_A_315675_resistance = flu_antiviral_substitutions.flu_A_315675_resistance
+    String? flu_amantadine_resistance = flu_antiviral_substitutions.flu_amantadine_resistance
+    String? flu_compound_367_resistance = flu_antiviral_substitutions.flu_compound_367_resistance
+    String? flu_favipiravir_resistance = flu_antiviral_substitutions.flu_favipiravir_resistance
+    String? flu_fludase_resistance = flu_antiviral_substitutions.flu_fludase_resistance
+    String? flu_L_742_001_resistance = flu_antiviral_substitutions.flu_L_742_001_resistance
+    String? flu_laninamivir_resistance = flu_antiviral_substitutions.flu_laninamivir_resistance
+    String? flu_peramivir_resistance = flu_antiviral_substitutions.flu_peramivir_resistance
+    String? flu_pimodivir_resistance = flu_antiviral_substitutions.flu_pimodivir_resistance
+    String? flu_rimantadine_resistance = flu_antiviral_substitutions.flu_rimantadine_resistance
+    String? flu_oseltamivir_resistance = flu_antiviral_substitutions.flu_oseltamivir_resistance
+    String? flu_xofluza_resistance = flu_antiviral_substitutions.flu_xofluza_resistance
+    String? flu_zanamivir_resistance = flu_antiviral_substitutions.flu_zanamivir_resistance
   }
 }

@@ -2,11 +2,11 @@ version 1.0
 
 task pasty {
   input {
-    File  assembly
-    String  samplename
+    File assembly
+    String samplename
     Int min_pident = 95
     Int min_coverage = 95
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/pasty:1.0.2"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/pasty:1.0.3"
     Int disk_size = 100
     Int memory = 4
     Int cpu = 2

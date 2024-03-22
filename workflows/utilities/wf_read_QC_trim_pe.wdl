@@ -18,8 +18,8 @@ workflow read_QC_trim_pe {
     String samplename
     File read1
     File read2
-    Int trim_minlen = 75
-    Int trim_quality_trim_score = 30
+    Int trim_min_length = 75
+    Int trim_quality_min_score = 30
     Int trim_window_size = 4
     Int bbduk_memory = 8
     Boolean call_midas = true
@@ -61,27 +61,27 @@ workflow read_QC_trim_pe {
         target_organism = target_organism
     }
   }
-  if (read_processing == "trimmomatic"){
+  if (read_processing == "trimmomatic") {
     call trimmomatic.trimmomatic_pe {
       input:
         samplename = samplename,
         read1 = select_first([ncbi_scrub_pe.read1_dehosted, read1]),
         read2 = select_first([ncbi_scrub_pe.read2_dehosted, read2]),
         trimmomatic_window_size = trim_window_size,
-        trimmomatic_quality_trim_score = trim_quality_trim_score,
-        trimmomatic_minlen = trim_minlen,
+        trimmomatic_quality_trim_score = trim_quality_min_score,
+        trimmomatic_min_length = trim_min_length,
         trimmomatic_args = trimmomatic_args
     }
   }
-  if (read_processing == "fastp"){
+  if (read_processing == "fastp") {
     call fastp_task.fastp_pe as fastp {
       input:
         samplename = samplename,
         read1 = select_first([ncbi_scrub_pe.read1_dehosted, read1]),
         read2 = select_first([ncbi_scrub_pe.read2_dehosted, read2]),
         fastp_window_size = trim_window_size,
-        fastp_quality_trim_score = trim_quality_trim_score,
-        fastp_minlen = trim_minlen,
+        fastp_quality_trim_score = trim_quality_min_score,
+        fastp_min_length = trim_min_length,
         fastp_args = fastp_args
     }
   }
@@ -203,6 +203,7 @@ workflow read_QC_trim_pe {
     String? trimmomatic_version = trimmomatic_pe.version
     String? trimmomatic_docker = trimmomatic_pe.trimmomatic_docker
     String? fastp_version = fastp.version
+    File? fastp_html_report = fastp.fastp_stats
 
     # midas
     String? midas_docker = midas.midas_docker

@@ -12,7 +12,6 @@ task fetch_bs {
     Int memory = 8
     Int cpu = 2
     Int disk_size = 100
-    Int preemptible = 1
 
     String docker = "us-docker.pkg.dev/general-theiagen/theiagen/basespace_cli:1.2.1"
   }
@@ -51,7 +50,7 @@ task fetch_bs {
       echo "project_id: ${project_id}" 
       if [[ ! -z "${project_id}" ]]; then 
         echo "project_id identified via Basespace, now searching for dataset_id within project_id ${project_id}..."
-        dataset_id_array=($(${bs_command} list dataset --project-id=${run_id} | grep "${dataset_name}" | awk -F "|" '{ print $3 }' )) 
+        dataset_id_array=($(${bs_command} list dataset --project-id=${project_id} | grep "${dataset_name}" | awk -F "|" '{ print $3 }' )) 
         echo "dataset_id: ${dataset_id_array[*]}"
       else       
         echo "No run or project id found associated with input basespace_collection_id: ~{basespace_collection_id}" >&2
@@ -102,6 +101,6 @@ task fetch_bs {
     cpu: cpu
     disks: "local-disk ~{disk_size} SSD"
     disk: disk_size + " GB"
-    preemptible: preemptible
+    preemptible: 1
   }
 }

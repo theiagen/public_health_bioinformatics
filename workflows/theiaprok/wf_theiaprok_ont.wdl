@@ -51,6 +51,7 @@ workflow theiaprok_ont {
     Boolean call_ani = false # by default do not call ANI task, but user has ability to enable this task if working with enteric pathogens or supply their own high-quality reference genome
     Boolean call_kmerfinder = false
     Boolean call_resfinder = false
+    Boolean call_plasmidfinder = true
     String genome_annotation = "prokka" # options: "prokka" or "bakta"
     String? expected_taxon # allow user to provide organism (e.g. "Clostridioides_difficile") string to amrfinder. Useful when gambit does not predict the correct species
     # qc check parameters
@@ -173,10 +174,12 @@ workflow theiaprok_ont {
             samplename = samplename
         }
       }
-      call plasmidfinder_task.plasmidfinder {
-        input:
-          assembly = dragonflye.assembly_fasta,
-          samplename = samplename
+      if (call_plasmidfinder) {
+        call plasmidfinder_task.plasmidfinder {
+          input:
+            assembly = dragonflye.assembly_fasta,
+            samplename = samplename
+        }
       }
       if (defined(qc_check_table)) {
         call qc_check.qc_check_phb as qc_check_task { 
@@ -493,8 +496,8 @@ workflow theiaprok_ont {
     # Read Metadata
     String seq_platform = seq_method
     # Sample Screening
-    String raw_read_screen = raw_check_reads.read_screen
-    String? clean_read_screen = clean_check_reads.read_screen
+    String read_screen_raw = raw_check_reads.read_screen
+    String? read_screen_clean = clean_check_reads.read_screen
     # Read QC - nanoq outputs
     File? read1_clean = read_qc_trim.read1_clean
     String? nanoq_version = read_qc_trim.nanoq_version

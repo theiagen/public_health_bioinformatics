@@ -200,6 +200,11 @@ workflows:
    primaryDescriptorPath: /workflows/utilities/file_handling/wf_concatenate_column.wdl
    testParameterFiles:
     - /tests/inputs/empty.json
+ - name: Find_Shared_Variants_PHB
+   subclass: WDL
+   primaryDescriptorPath: /workflows/phylogenetics/wf_find_shared_variants.wdl
+   testParameterFiles:
+    - /tests/inputs/empty.json
  - name: Transfer_Column_Content_PHB
    subclass: WDL
    primaryDescriptorPath: /workflows/utilities/file_handling/wf_transfer_column.wdl

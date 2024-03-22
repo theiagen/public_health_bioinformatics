@@ -5,7 +5,7 @@ import "../../tasks/gene_typing/drug_resistance/task_abricate.wdl" as abricate
 import "../../tasks/quality_control/advanced_metrics/task_vadr.wdl" as vadr_task
 import "../../tasks/quality_control/basic_statistics/task_assembly_metrics.wdl" as assembly_metrics
 import "../../tasks/quality_control/basic_statistics/task_consensus_qc.wdl" as consensus_qc_task
-import "../../tasks/quality_control/basic_statistics/task_sc2_gene_coverage.wdl" as sc2_calculation
+import "../../tasks/quality_control/basic_statistics/task_gene_coverage.wdl" as gene_coverage_task
 import "../../tasks/quality_control/comparisons/task_qc_check_phb.wdl" as qc_check
 import "../../tasks/quality_control/comparisons/task_screen.wdl" as screen
 import "../../tasks/species_typing/betacoronavirus/task_pangolin.wdl" as pangolin
@@ -34,11 +34,12 @@ workflow theiacov_illumina_pe {
     # reference values
     File? reference_gff
     File? reference_genome
+    File? reference_gene_locations_bed
     Int? genome_length 
     # trimming parameters
     Boolean trim_primers = true
-    Int trim_minlen = 75
-    Int trim_quality_trim_score = 30
+    Int trim_min_length = 75
+    Int trim_quality_min_score = 30
     Int trim_window_size = 4
     # assembly parameters
     Int min_depth = 100  # the minimum depth to use for consensus and variant calling
@@ -70,6 +71,7 @@ workflow theiacov_illumina_pe {
       organism = organism,
       reference_gff_file = reference_gff,
       reference_genome = reference_genome,
+      gene_locations_bed_file = reference_gene_locations_bed,
       genome_length_input = genome_length,
       nextclade_dataset_tag_input = nextclade_dataset_tag,
       nextclade_dataset_name_input = nextclade_dataset_name,     
@@ -103,8 +105,8 @@ workflow theiacov_illumina_pe {
         adapters = adapters,
         phix = phix,
         workflow_series = "theiacov",
-        trim_minlen = trim_minlen,
-        trim_quality_trim_score = trim_quality_trim_score,
+        trim_min_length = trim_min_length,
+        trim_quality_min_score = trim_quality_min_score,
         trim_window_size = trim_window_size
     }
     call screen.check_reads as clean_check_reads {
@@ -124,7 +126,7 @@ workflow theiacov_illumina_pe {
     }
     if (clean_check_reads.read_screen == "PASS") {
       # assembly via bwa and ivar for non-flu data
-      if (organism_parameters.standardized_organism != "flu"){
+      if (organism_parameters.standardized_organism != "flu") {
         call consensus_call.ivar_consensus {
           input:
             samplename = samplename,
@@ -140,7 +142,7 @@ workflow theiacov_illumina_pe {
         }
       }
       # assembly via irma for flu organisms
-      if (organism_parameters.standardized_organism == "flu"){
+      if (organism_parameters.standardized_organism == "flu") {
         # flu-specific tasks
         call irma_task.irma {
           input:
@@ -164,7 +166,7 @@ workflow theiacov_illumina_pe {
               samplename = samplename
           }
         }
-        String ha_na_assembly_coverage = "HA: " + select_first([ha_assembly_coverage.depth, ""]) + "," + "NA: " + select_first([na_assembly_coverage.depth, ""])
+        String ha_na_assembly_coverage = "HA:" + select_first([ha_assembly_coverage.depth, ""]) + ", " + "NA:" + select_first([na_assembly_coverage.depth, ""])
         if (defined(irma.irma_assemblies)) {
           call abricate.abricate_flu {
             input:
@@ -208,7 +210,7 @@ workflow theiacov_illumina_pe {
               hiv_primer_version = "N/A"
           }
           # these are necessary because these are optional values and cannot be directly compared in before the nextclade task. checking for variable definition can be done though, which is why we create variables here
-          if (set_flu_na_nextclade_values.nextclade_dataset_tag == "NA"){
+          if (set_flu_na_nextclade_values.nextclade_dataset_tag == "NA") {
             Boolean do_not_run_flu_na_nextclade = true
           }
           if (set_flu_ha_nextclade_values.nextclade_dataset_tag == "NA") {
@@ -222,8 +224,9 @@ workflow theiacov_illumina_pe {
             pa_segment_assembly = irma.seg_pa_assembly,
             pb1_segment_assembly = irma.seg_pb1_assembly,
             pb2_segment_assembly = irma.seg_pb2_assembly,
+            mp_segment_assembly = irma.seg_mp_assembly,
             abricate_flu_subtype = select_first([abricate_flu.abricate_flu_subtype, ""]),
-            irma_flu_subtype = irma.irma_subtype
+            irma_flu_subtype = select_first([irma.irma_subtype, ""]),
         }
       }
       call consensus_qc_task.consensus_qc {
@@ -274,21 +277,25 @@ workflow theiacov_illumina_pe {
             fasta = select_first([ivar_consensus.assembly_fasta]),
             docker = organism_parameters.pangolin_docker
         }
-        call sc2_calculation.sc2_gene_coverage {
-          input: 
+      }
+      if (organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "MPXV" || defined(reference_gene_locations_bed)) {
+        # tasks specific to either sars-cov-2, MPXV, or any organism with a user-supplied reference gene locations bed file
+        call gene_coverage_task.gene_coverage {
+          input:
+            bamfile = select_first([ivar_consensus.aligned_bam, irma.seg_ha_bam, irma.seg_na_bam, ""]),
+            bedfile = select_first([reference_gene_locations_bed, organism_parameters.gene_locations_bed]),
             samplename = samplename,
-            bamfile = select_first([ivar_consensus.aligned_bam]),
-            min_depth = min_depth
+            organism = organism_parameters.standardized_organism
         }
       }
-      if (organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "WNV"){ 
+      if (organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "WNV") { 
         # tasks specific to MPXV, sars-cov-2, and WNV
         call vadr_task.vadr {
           input:
             genome_fasta = select_first([ivar_consensus.assembly_fasta]),
             assembly_length_unambiguous = consensus_qc.number_ATCG,
             vadr_opts = organism_parameters.vadr_opts,
-            maxlen = organism_parameters.vadr_maxlen
+            max_length = organism_parameters.vadr_maxlength
         }
       }
       if (organism_parameters.standardized_organism == "HIV") {
@@ -332,18 +339,35 @@ workflow theiacov_illumina_pe {
     # Read Metadata
     String  seq_platform = seq_method
     # Sample Screening
-    String raw_read_screen = raw_check_reads.read_screen
-    String? clean_read_screen = clean_check_reads.read_screen
+    String read_screen_raw = raw_check_reads.read_screen
+    String? read_screen_clean = clean_check_reads.read_screen
     # Read QC - fastq_scan outputs
-    Int? num_reads_raw1 = read_QC_trim.fastq_scan_raw1
-    Int? num_reads_raw2 = read_QC_trim.fastq_scan_raw2
-    String? num_reads_raw_pairs = read_QC_trim.fastq_scan_raw_pairs
+    Int? fastq_scan_num_reads_raw1 = read_QC_trim.fastq_scan_raw1
+    Int? fastq_scan_num_reads_raw2 = read_QC_trim.fastq_scan_raw2
+    String? fastq_scan_num_reads_raw_pairs = read_QC_trim.fastq_scan_raw_pairs
     String? fastq_scan_version = read_QC_trim.fastq_scan_version
-    Int? num_reads_clean1 = read_QC_trim.fastq_scan_clean1
-    Int? num_reads_clean2 = read_QC_trim.fastq_scan_clean2
-    String? num_reads_clean_pairs = read_QC_trim.fastq_scan_clean_pairs
+    Int? fastq_scan_num_reads_clean1 = read_QC_trim.fastq_scan_clean1
+    Int? fastq_scan_num_reads_clean2 = read_QC_trim.fastq_scan_clean2
+    String? fastq_scan_num_reads_clean_pairs = read_QC_trim.fastq_scan_clean_pairs
+    # Read QC - fastqc outputs
+    Int? fastqc_num_reads_raw1 = read_QC_trim.fastqc_raw1
+    Int? fastqc_num_reads_raw2 = read_QC_trim.fastqc_raw2
+    String? fastqc_num_reads_raw_pairs = read_QC_trim.fastqc_raw_pairs
+    Int? fastqc_num_reads_clean1 = read_QC_trim.fastqc_clean1
+    Int? fastqc_num_reads_clean2 = read_QC_trim.fastqc_clean2
+    String? fastqc_num_reads_clean_pairs = read_QC_trim.fastqc_clean_pairs
+    File? fastqc_raw1_html = read_QC_trim.fastqc_raw1_html
+    File? fastqc_raw2_html = read_QC_trim.fastqc_raw2_html
+    File? fastqc_clean1_html = read_QC_trim.fastqc_clean1_html
+    File? fastqc_clean2_html = read_QC_trim.fastqc_clean2_html
+    String? fastqc_version = read_QC_trim.fastqc_version
+    String? fastqc_docker = read_QC_trim.fastqc_docker    
     # Read QC - trimmomatic outputs
     String? trimmomatic_version = read_QC_trim.trimmomatic_version
+    String? trimmomatic_docker = read_QC_trim.trimmomatic_docker
+    # Read QC - fastp outputs
+    String? fastp_version = read_QC_trim.fastp_version
+    File? fastp_html_report = read_QC_trim.fastp_html_report
     # Read QC - bbduk outputs
     File? read1_clean = read_QC_trim.read1_clean
     File? read2_clean = read_QC_trim.read2_clean
@@ -403,9 +427,9 @@ workflow theiacov_illumina_pe {
     Int? number_Total = consensus_qc.number_Total
     Float? percent_reference_coverage =  consensus_qc.percent_reference_coverage
     # SC2 specific coverage outputs
-    Float? sc2_s_gene_mean_coverage = sc2_gene_coverage.sc2_s_gene_depth
-    Float? sc2_s_gene_percent_coverage = sc2_gene_coverage.sc2_s_gene_percent_coverage
-    File? sc2_all_genes_percent_coverage = sc2_gene_coverage.sc2_all_genes_percent_coverage
+    Float? sc2_s_gene_mean_coverage = gene_coverage.sc2_s_gene_depth
+    Float? sc2_s_gene_percent_coverage = gene_coverage.sc2_s_gene_percent_coverage
+    File? est_percent_gene_coverage_tsv = gene_coverage.est_percent_gene_coverage_tsv
     # Pangolin outputs
     String? pango_lineage = pangolin4.pangolin_lineage
     String? pango_lineage_expanded = pangolin4.pangolin_lineage_expanded
@@ -447,6 +471,7 @@ workflow theiacov_illumina_pe {
     String? abricate_flu_version = abricate_flu.abricate_flu_version
     # Flu Antiviral Substitution Outputs
     String? flu_A_315675_resistance = flu_antiviral_substitutions.flu_A_315675_resistance
+    String? flu_amantadine_resistance = flu_antiviral_substitutions.flu_amantadine_resistance
     String? flu_compound_367_resistance = flu_antiviral_substitutions.flu_compound_367_resistance
     String? flu_favipiravir_resistance = flu_antiviral_substitutions.flu_favipiravir_resistance
     String? flu_fludase_resistance = flu_antiviral_substitutions.flu_fludase_resistance
@@ -454,7 +479,8 @@ workflow theiacov_illumina_pe {
     String? flu_laninamivir_resistance = flu_antiviral_substitutions.flu_laninamivir_resistance
     String? flu_peramivir_resistance = flu_antiviral_substitutions.flu_peramivir_resistance
     String? flu_pimodivir_resistance = flu_antiviral_substitutions.flu_pimodivir_resistance
-    String? flu_tamiflu_resistance = flu_antiviral_substitutions.flu_tamiflu_resistance
+    String? flu_rimantadine_resistance = flu_antiviral_substitutions.flu_rimantadine_resistance
+    String? flu_oseltamivir_resistance = flu_antiviral_substitutions.flu_oseltamivir_resistance
     String? flu_xofluza_resistance = flu_antiviral_substitutions.flu_xofluza_resistance
     String? flu_zanamivir_resistance = flu_antiviral_substitutions.flu_zanamivir_resistance
     # HIV Outputs
