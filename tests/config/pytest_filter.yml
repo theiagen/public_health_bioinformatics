@@ -95,7 +95,7 @@ wf_theiaprok_illumina_pe:
   - tasks/quality_control/read_filtering/task_fastp.wdl
   - tasks/quality_control/advanced_metrics/task_mummer_ani.wdl
   - tasks/quality_control/task_ncbi_scrub.wdl
-  - tasks/quality_control/task_qc_check.wdl
+  - tasks/quality_control/task_qc_check_phb.wdl
   - tasks/quality_control/basic_statistics/task_quast.wdl
   - tasks/quality_control/comparisons/task_screen.wdl
   - tasks/quality_control/read_filtering/task_trimmomatic.wdl
@@ -141,7 +141,7 @@ wf_theiaprok_illumina_se:
   - tasks/quality_control/read_filtering/task_fastp.wdl
   - tasks/quality_control/advanced_metrics/task_mummer_ani.wdl
   - tasks/quality_control/task_ncbi_scrub.wdl
-  - tasks/quality_control/task_qc_check.wdl
+  - tasks/quality_control/task_qc_check_phb.wdl
   - tasks/quality_control/basic_statistics/task_quast.wdl
   - tasks/quality_control/comparisons/task_screen.wdl
   - tasks/quality_control/read_filtering/task_trimmomatic.wdl
