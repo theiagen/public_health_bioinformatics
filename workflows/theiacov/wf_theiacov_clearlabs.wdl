@@ -5,7 +5,7 @@ import "../../tasks/quality_control/advanced_metrics/task_vadr.wdl" as vadr_task
 import "../../tasks/quality_control/basic_statistics/task_assembly_metrics.wdl" as assembly_metrics
 import "../../tasks/quality_control/basic_statistics/task_consensus_qc.wdl" as consensus_qc_task
 import "../../tasks/quality_control/basic_statistics/task_fastq_scan.wdl" as fastq_scan
-import "../../tasks/quality_control/basic_statistics/task_sc2_gene_coverage.wdl" as sc2_calculation
+import "../../tasks/quality_control/basic_statistics/task_gene_coverage.wdl" as gene_coverage_task
 import "../../tasks/quality_control/comparisons/task_qc_check_phb.wdl" as qc_check
 import "../../tasks/quality_control/read_filtering/task_ncbi_scrub.wdl" as ncbi_scrub
 import "../../tasks/species_typing/betacoronavirus/task_pangolin.wdl" as pangolin
@@ -106,10 +106,12 @@ workflow theiacov_clearlabs {
         fasta = consensus.consensus_seq,
         docker = organism_parameters.pangolin_docker
     }
-    call sc2_calculation.sc2_gene_coverage {
+    call gene_coverage_task.gene_coverage {
       input: 
         samplename = samplename,
         bamfile = consensus.trim_sorted_bam,
+        bedfile = organism_parameters.gene_locations_bed,
+        organism = organism_parameters.standardized_organism,
         min_depth = 20
     }
   }
@@ -152,8 +154,8 @@ workflow theiacov_clearlabs {
         assembly_length_unambiguous = consensus_qc.number_ATCG,
         number_Degenerate =  consensus_qc.number_Degenerate,
         percent_reference_coverage =  consensus_qc.percent_reference_coverage,
-        # sc2_s_gene_mean_coverage = sc2_gene_coverage.sc2_s_gene_depth,
-        # sc2_s_gene_percent_coverage = sc2_gene_coverage.sc2_s_gene_percent_coverage,
+        # sc2_s_gene_mean_coverage = gene_coverage.sc2_s_gene_depth,
+        # sc2_s_gene_percent_coverage = gene_coverage.sc2_s_gene_percent_coverage,
         vadr_num_alerts = vadr.num_alerts
     }
   }  
@@ -209,9 +211,9 @@ workflow theiacov_clearlabs {
     Int number_Total = consensus_qc.number_Total
     Float percent_reference_coverage = consensus_qc.percent_reference_coverage
     # SC2 specific coverage outputs
-    Float? sc2_s_gene_mean_coverage = sc2_gene_coverage.sc2_s_gene_depth
-    Float? sc2_s_gene_percent_coverage = sc2_gene_coverage.sc2_s_gene_percent_coverage
-    File? sc2_all_genes_percent_coverage = sc2_gene_coverage.sc2_all_genes_percent_coverage
+    Float? sc2_s_gene_mean_coverage = gene_coverage.sc2_s_gene_depth
+    Float? sc2_s_gene_percent_coverage = gene_coverage.sc2_s_gene_percent_coverage
+    File? est_percent_gene_coverage_tsv = gene_coverage.est_percent_gene_coverage_tsv
     # Pangolin outputs
     String? pango_lineage = pangolin4.pangolin_lineage
     String? pango_lineage_expanded = pangolin4.pangolin_lineage_expanded

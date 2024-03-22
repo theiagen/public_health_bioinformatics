@@ -372,26 +372,6 @@
       md5sum: a7b44501d440ba66c62168d53108d2a1
     - path: miniwdl_run/call-pangolin4/work/_miniwdl_inputs/0/SRR13687078.ivar.consensus.fasta
       md5sum: d41d8cd98f00b204e9800998ecf8427e
-    # sc2 gene coverage
-    - path: miniwdl_run/call-sc2_gene_coverage/command
-      md5sum: 88027da596203de5969c7e6c01df4a27
-    - path: miniwdl_run/call-sc2_gene_coverage/inputs.json
-      contains: ["bamfile", "samplename"]
-    - path: miniwdl_run/call-sc2_gene_coverage/outputs.json
-      contains: ["sc2_gene_coverage", "sc2_s_gene_depth", "sc2_s_gene_percent_coverage"]
-    - path: miniwdl_run/call-sc2_gene_coverage/stderr.txt
-    - path: miniwdl_run/call-sc2_gene_coverage/stderr.txt.offset
-    - path: miniwdl_run/call-sc2_gene_coverage/stdout.txt
-    - path: miniwdl_run/call-sc2_gene_coverage/task.log
-      contains: ["wdl", "theiacov_illumina_pe", "sc2_gene_coverage", "done"]
-    - path: miniwdl_run/call-sc2_gene_coverage/work/SRR13687078.cov.txt
-      md5sum: 229e37e1f29ebff30b35d2fc99803f5b
-    - path: miniwdl_run/call-sc2_gene_coverage/work/SRR13687078.percent_gene_coverage.tsv
-      md5sum: 3f30e14d1048ff6506eaec0ad5a07591
-    - path: miniwdl_run/call-sc2_gene_coverage/work/S_GENE_DEPTH
-      md5sum: 80b7450a18e11a0f31de75c008e0819b
-    - path: miniwdl_run/call-sc2_gene_coverage/work/S_GENE_PC
-      md5sum: 60725f5d2663ca8d41955a739a154cc9
     # nextclade
     - path: miniwdl_run/call-nextclade/command
       md5sum: c8f44c8628e995221576f5593f7230e0
@@ -519,7 +499,7 @@
       contains: ["variants", "command", "output", "runtime"]
     - path: miniwdl_run/wdl/tasks/gene_typing/drug_resistance/task_abricate.wdl
       contains: ["abricate", "command", "output", "runtime"]
-    - path: miniwdl_run/wdl/tasks/quality_control/basic_statistics/task_sc2_gene_coverage.wdl
+    - path: miniwdl_run/wdl/tasks/quality_control/basic_statistics/task_gene_coverage.wdl
       contains: ["coverage", "command", "output", "runtime"]
     - path: miniwdl_run/wdl/tasks/quality_control/basic_statistics/task_assembly_metrics.wdl
       contains: ["stat", "command", "output", "runtime"]
