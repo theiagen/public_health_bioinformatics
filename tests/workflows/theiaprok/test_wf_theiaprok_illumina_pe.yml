@@ -621,7 +621,7 @@
     - path: miniwdl_run/wdl/tasks/species_typing/mycobacterium/task_tbprofiler.wdl
       md5sum: 860ffa77063196e04c539f5dadd23b85
     - path: miniwdl_run/wdl/tasks/species_typing/multi/task_ts_mlst.wdl
-      md5sum: 9e620568b943911dd21284543e6322d4
+      md5sum: c84e37ca77732b2ffa6a32629a4b6d6f
     - path: miniwdl_run/wdl/tasks/task_versioning.wdl
       md5sum: b09c4453998da5ac6624dc1b49abf31f
     - path: miniwdl_run/wdl/tasks/taxon_id/task_gambit.wdl
