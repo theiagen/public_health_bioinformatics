@@ -11,9 +11,14 @@ task tbp_parser {
     String? operator
     Int min_depth = 10
     Int coverage_threshold = 100
+    Float rrs_frequency = 0.1
+    Float rrl_frequency = 0.1
     Boolean tbp_parser_debug = false
+    Boolean tngs_data = false
+    File? coverage_regions_bed
+    File? expert_rule_regions_bed
 
-    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:1.1.8"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:1.3.7"
     Int disk_size = 100
     Int memory = 4
     Int cpu = 1
@@ -28,8 +33,13 @@ task tbp_parser {
       ~{"--operator " + operator} \
       ~{"--min_depth " + min_depth} \
       ~{"--coverage_threshold " + coverage_threshold} \
+      ~{"--coverage_regions " + coverage_regions_bed} \
+      ~{"--tngs_expert_regions " + expert_rule_regions_bed} \
+      ~{"--rrs_frequency " + rrs_frequency} \
+      ~{"--rrl_frequency " + rrl_frequency} \
       --output_prefix ~{samplename} \
-      ~{true="--debug" false="--verbose" tbp_parser_debug}
+      ~{true="--debug" false="--verbose" tbp_parser_debug} \
+      ~{true="--tngs" false="" tngs_data}
 
     # set default genome percent coverage and average depth to 0 to prevent failures
     echo 0.0 > GENOME_PC
@@ -43,7 +53,7 @@ task tbp_parser {
     samtools depth -J ~{tbprofiler_bam} | awk -F "\t" '{sum+=$3} END { print sum/NR }' | tee AVG_DEPTH
 
     # add sample id to the beginning of the coverage report
-    awk '{print "~{samplename},"$0}' ~{samplename}.percent_gene_coverage.csv > tmp.csv && mv -f tmp.csv ~{samplename}.percent_gene_coverage.csv
+    awk '{s=(NR==1)?"Sample_accession_number,":"~{samplename},"; $0=s$0}1' ~{samplename}.percent_gene_coverage.csv > tmp.csv && mv -f tmp.csv ~{samplename}.percent_gene_coverage.csv
   >>>
   output {
     File tbp_parser_looker_report_csv = "~{samplename}.looker_report.csv"

@@ -70,7 +70,7 @@ workflow merlin_magic {
     String? tbprofiler_variant_caller
     String? tbprofiler_variant_calling_params
     Boolean tbprofiler_run_custom_db = false
-    File tbprofiler_custom_db = "gs://theiagen-public-files/terra/theiaprok-files/tbdb_varpipe_combined_nodups.tar.gz"
+    File? tbprofiler_custom_db
     Boolean tbprofiler_additional_outputs = false
     String tbp_parser_output_seq_method_type = "WGS"
     String? tbp_parser_operator

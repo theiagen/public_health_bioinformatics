@@ -35,6 +35,7 @@ task clockwork_decon_reads {
   output {
     File clockwork_cleaned_read1 = "clockwork_cleaned_~{samplename}_R1.fastq.gz"
     File clockwork_cleaned_read2 = "clockwork_cleaned_~{samplename}_R2.fastq.gz"
+    String clockwork_version = read_string("VERSION")
   }
   runtime {
     docker: docker

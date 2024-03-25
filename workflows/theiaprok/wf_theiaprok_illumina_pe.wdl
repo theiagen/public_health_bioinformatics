@@ -869,6 +869,10 @@ workflow theiaprok_illumina_pe {
     String? tbprofiler_sub_lineage = merlin_magic.tbprofiler_sub_lineage
     String? tbprofiler_dr_type = merlin_magic.tbprofiler_dr_type
     String? tbprofiler_resistance_genes = merlin_magic.tbprofiler_resistance_genes
+    Int? tbprofiler_median_coverage = merlin_magic.tbprofiler_median_coverage
+    Float? tbprofiler_pct_reads_mapped = merlin_magic.tbprofiler_pct_reads_mapped
+    String? tbp_parser_version = merlin_magic.tbp_parser_version
+    String? tbp_parser_docker = merlin_magic.tbp_parser_docker
     File? tbp_parser_lims_report_csv = merlin_magic.tbp_parser_lims_report_csv
     File? tbp_parser_looker_report_csv = merlin_magic.tbp_parser_looker_report_csv
     File? tbp_parser_laboratorian_report_csv = merlin_magic.tbp_parser_laboratorian_report_csv
