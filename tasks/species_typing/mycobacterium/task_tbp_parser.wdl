@@ -16,8 +16,9 @@ task tbp_parser {
     Boolean tbp_parser_debug = false
     Boolean tngs_data = false
     File? coverage_regions_bed
+    File? expert_rule_regions_bed
 
-    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:1.3.6"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:1.3.7"
     Int disk_size = 100
     Int memory = 4
     Int cpu = 1
@@ -33,6 +34,7 @@ task tbp_parser {
       ~{"--min_depth " + min_depth} \
       ~{"--coverage_threshold " + coverage_threshold} \
       ~{"--coverage_regions " + coverage_regions_bed} \
+      ~{"--tngs_expert_regions " + expert_rule_regions_bed} \
       ~{"--rrs_frequency " + rrs_frequency} \
       ~{"--rrl_frequency " + rrl_frequency} \
       --output_prefix ~{samplename} \
