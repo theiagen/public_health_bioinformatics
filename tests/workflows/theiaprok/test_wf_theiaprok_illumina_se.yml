@@ -438,7 +438,7 @@
       md5sum: 8e4e9cdfbacc9021a3175ccbbbde002b
     - path: miniwdl_run/call-read_QC_trim/call-fastq_scan_raw/work/_miniwdl_inputs/0/SRR2838702_R1.fastq.gz
     - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_se/command
-      md5sum: f560f566f05e75bb9c4ab0370d33edd6
+      md5sum: a317f1a2182fe1a3b26812b54eff088e
     - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_se/inputs.json
       contains: ["read", "fastq", "test", "trimmomatic_min_length"]
     - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_se/outputs.json
