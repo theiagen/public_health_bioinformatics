@@ -1,6 +1,6 @@
 version 1.0
 
-task ksnp3 {
+task clair3 {
   input {
     File alignment
     File reference
