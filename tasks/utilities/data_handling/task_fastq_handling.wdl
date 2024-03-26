@@ -31,6 +31,11 @@ task sra_lite_autodetect {
     # SRA-Lite filetype has all the quality enconding set to the '?' character
     # corresponding to a phred-score of 30
     # awk is checking the 4th line of the file and if it starts with and contains only '?' characters
+    #   NR==4 on the fourth line,
+    #   if $0 ~ /.../ this will evaluate to true only if the entire line matches this regular expression, which is:
+    #   ^ at the start of the line
+    #   [?] look for this character
+    #   +$ and only this character until the end of the line
     $command ~{read1} | head -n 4 | awk 'NR==4 {if ($0 ~ /^[?]+$/) {print "SRA-Lite FASTQ detected"} else {print ""}}' > WARNING
   >>>
   output {
