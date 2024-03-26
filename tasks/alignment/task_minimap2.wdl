@@ -12,6 +12,7 @@ task minimap2 {
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/minimap2:2.22" # newer versions seem to be bugged (infinite loop)
     String mode = "asm20"
     Boolean output_sam = false
+    String additional_options = ""
     Int disk_size = 100
     Int cpu = 2
     Int memory = 8
@@ -29,6 +30,7 @@ task minimap2 {
 
     # Run minimap2 - output can be sam or paf file depending on ~{output_sam}
     minimap2 \
+      ~{additional_options} \
       ~{true="-a" false="" output_sam} \
       -x "~{mode}" \
       -t "~{cpu}" \
@@ -38,6 +40,53 @@ task minimap2 {
   >>>
   output {
     File minimap2_out = "~{samplename}_minimap2.out"
+    String minimap2_version = read_string("VERSION")
+    String minimap2_docker = "~{docker}"
+  }
+  runtime {
+    docker: "~{docker}"
+    memory: memory + " GB"
+    cpu: cpu
+    disks: "local-disk " + disk_size + " SSD"
+    disk: disk_size + " GB"
+    maxRetries: 3
+    preemptible: 0
+  }
+}
+
+task minimap2_merge {
+  meta {
+    description: "Align an array query genomes to a reference with minimap2"
+  }
+  input {
+    Array[File] query1
+    File reference
+    String custer_name
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/minimap2:2.22" # newer versions seem to be bugged (infinite loop)
+    String mode = "asm20"
+    Boolean output_sam = false
+    String additional_options = ""
+    Int disk_size = 100
+    Int cpu = 2
+    Int memory = 8
+  }
+  command <<<
+    # Preset options - https://lh3.github.io/minimap2/minimap2.html
+    # Version capture
+    minimap2 --version | tee VERSION
+
+    # Run minimap2 - output can be sam or paf file depending on ~{output_sam}
+    minimap2 \
+      ~{additional_options} \
+      ~{true="-a" false="" output_sam} \
+      -x "~{mode}" \
+      -t "~{cpu}" \
+      "~{reference}" \
+      ~{sep=' ' query1} > "~{custer_name}"_minimap2.out 
+
+  >>>
+  output {
+    File minimap2_out = "~{custer_name}_minimap2.out"
     String minimap2_version = read_string("VERSION")
     String minimap2_docker = "~{docker}"
   }

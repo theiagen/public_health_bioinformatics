@@ -5,7 +5,7 @@ task clair3 {
     File alignment
     File alignment_index
     File reference
-    String sample_name
+    String cluster_name
     String model = "ont"
     String docker = "us-docker.pkg.dev/general-theiagen/hkubal/clair3:v1.0.6"
     Int memory = 8
@@ -33,17 +33,17 @@ task clair3 {
         --platform="ont" \
         --model_path="$model_path" \
         --output="$tmpoutdir" \
-        --sample_name=~{sample_name} \
+        --sample_name=~{cluster_name} \
         --include_all_ctgs \
         --haploid_precise \
         --no_phasing_for_fa \
         --enable_long_indel
 
-    mv "${tmpoutdir}/merge_output.vcf.gz" ~{sample_name}.vcf.gz
+    mv "${tmpoutdir}/merge_output.vcf.gz" ~{cluster_name}.vcf.gz
   >>>
   output {
-    File clair3_vcf = "~{sample_name}.vcf.gz"
-    String ksnp3_docker_image = docker
+    File clair3_vcf = "~{cluster_name}.vcf.gz"
+    String clair3_docker_image = docker
   }
   runtime {
     docker: docker
