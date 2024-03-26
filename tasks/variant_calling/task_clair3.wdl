@@ -5,20 +5,24 @@ task ksnp3 {
     File alignment
     File reference
     String sample_name
-    String model = ""
+    String model = "ont"
     String docker = "us-docker.pkg.dev/general-theiagen/hkubal/clair3:v1.0.6"
     Int memory = 8
     Int cpu = 4
     Int disk_size = 100
   }
   command <<<
-  # if the model contains _fast@ then we need to use the hac model
-  # not sure if necessary
-    if [[ ~{model} == *_fast@* ]]; then
-        model_name=$(echo "~{model}" | sed -E 's/_fast/_hac/')
-    fi
-
     model_path="/opt/models/${model_name}"
+    # hifi
+    # hifi_revio
+    # hifi_sequel2 -> hifi
+    # ilmn
+    # ont -> r941_prom_hac_g360+g422
+    # ont_guppy2 -> r941_prom_hac_g238
+    # ont_guppy5 -> r941_prom_sup_g5014
+    # r941_prom_hac_g238
+    # r941_prom_hac_g360+g422
+    # r941_prom_sup_g5014
     tmpoutdir=$(mktemp -d)
 
     run_clair3.sh \
