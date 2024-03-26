@@ -12,7 +12,7 @@ task ksnp3 {
     Int disk_size = 100
   }
   command <<<
-    model_path="/opt/models/${model_name}"
+    model_path="/opt/models/${model}"
     # hifi
     # hifi_revio
     # hifi_sequel2 -> hifi
