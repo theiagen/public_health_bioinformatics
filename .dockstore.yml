@@ -263,3 +263,8 @@ workflows:
    primaryDescriptorPath: /workflows/utilities/file_handling/wf_rename_fastq_files.wdl
    testParameterFiles:
     - /tests/inputs/empty.json
+ - name: Clair3Phy_PHB
+   subclass: WDL
+   primaryDescriptorPath: /workflows/phylogenetics/wf_clair3phy.wdl
+   testParameterFiles:
+    - /tests/inputs/empty.json
