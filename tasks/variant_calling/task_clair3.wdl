@@ -3,6 +3,7 @@ version 1.0
 task clair3 {
   input {
     File alignment
+    File alignment_index
     File reference
     String sample_name
     String model = "ont"
