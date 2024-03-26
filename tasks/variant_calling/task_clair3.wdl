@@ -12,7 +12,7 @@ task ksnp3 {
     Int disk_size = 100
   }
   command <<<
-    model_path="/opt/models/${model}"
+    model_path="/opt/models/~{model}"
     # hifi
     # hifi_revio
     # hifi_sequel2 -> hifi
@@ -48,7 +48,8 @@ task ksnp3 {
     docker: docker
     memory: "~{memory} GB"
     cpu: cpu
-    disks: "local-disk ~{disk_size} SSD"
+    disks: "local-disk " + disk_size + " SSD"
+    disk: disk_size + " GB"
     preemptible: 0
     maxRetries: 0
   }
