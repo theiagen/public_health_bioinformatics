@@ -139,7 +139,7 @@ workflow theiacov_clearlabs {
     call qc_check.qc_check_phb as qc_check_task {
       input:
         qc_check_table = qc_check_table,
-        expected_taxon = organism,
+        expected_taxon = organism_parameters.standardized_organism,
         num_reads_raw1 = fastq_scan_raw_reads.read1_seq,
         num_reads_clean1 = fastq_scan_clean_reads.read1_seq,
         kraken_human = kraken2_raw.percent_human,
