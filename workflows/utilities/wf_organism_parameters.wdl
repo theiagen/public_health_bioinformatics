@@ -43,7 +43,7 @@ workflow organism_parameters {
     String sc2_nextclade_ds_tag = "2023-12-03T12:00:00Z"
     String sc2_nextclade_ref = "MN908947"
     String sc2_nextclade_ds_name = "sars-cov-2"
-    String sc2_pangolin_docker = "us-docker.pkg.dev/general-theiagen/staphb/pangolin:4.3.1-pdata-1.25.1"
+    String sc2_pangolin_docker = "us-docker.pkg.dev/general-theiagen/staphb/pangolin:4.3.1-pdata-1.26"
     Int sc2_genome_len = 29903
     Int sc2_vadr_max_length = 30000
     String sc2_vadr_options = "--noseqnamemax --glsearch -s -r --nomisc --mkey sarscov2 --lowsim5seq 6 --lowsim3seq 6 --alt_fail lowscore,insertnn,deletinn --out_allfasta"

@@ -11,6 +11,7 @@ wf_theiacov_clearlabs:
   - tasks/species_typing/betacoronavirus/task_pangolin.wdl
   - tasks/quality_control/basic_statistics/task_gene_coverage.wdl
   - tasks/task_versioning.wdl
+  - workflows/utilities/wf_organism_parameters.wdl
 
 wf_theiacov_fasta:
   - workflows/theiacov/wf_theiacov_fasta.wdl
@@ -19,6 +20,7 @@ wf_theiacov_fasta:
   - tasks/taxon_id/task_nextclade.wdl
   - tasks/species_typing/betacoronavirus/task_pangolin.wdl
   - tasks/task_versioning.wdl
+  - workflows/utilities/wf_organism_parameters.wdl
 
 wf_theiacov_illumina_pe:
   - workflows/theiacov/wf_theiacov_illumina_pe.wdl
@@ -39,6 +41,7 @@ wf_theiacov_illumina_pe:
   - tasks/gene_typing/drug_resistance/task_abricate.wdl
   - tasks/quality_control/basic_statistics/task_gene_coverage.wdl
   - tasks/task_versioning.wdl
+  - workflows/utilities/wf_organism_parameters.wdl
 
 wf_theiacov_illumina_se:
   - workflows/theiacov/wf_theiacov_illumina_se.wdl
@@ -57,6 +60,7 @@ wf_theiacov_illumina_se:
   - tasks/species_typing/betacoronavirus/task_pangolin.wdl
   - tasks/quality_control/basic_statistics/task_gene_coverage.wdl
   - tasks/task_versioning.wdl
+  - workflows/utilities/wf_organism_parameters.wdl
 
 wf_theiacov_ont:
   - workflows/theiacov/wf_theiacov_ont.wdl
@@ -74,6 +78,7 @@ wf_theiacov_ont:
   - tasks/species_typing/lentivirus/task_quasitools.wdl
   - tasks/quality_control/basic_statistics/task_gene_coverage.wdl
   - tasks/task_versioning.wdl
+  - workflows/utilities/wf_organism_parameters.wdl
 
 wf_theiaprok_illumina_pe:
   - workflows/theiaprok/wf_theiaprok_illumina_pe.wdl
