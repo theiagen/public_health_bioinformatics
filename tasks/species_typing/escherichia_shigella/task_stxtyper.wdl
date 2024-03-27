@@ -45,7 +45,7 @@ task stxtyper {
     File stxtyper_report = "~{samplename}_stxtyper.tsv"
     String stxtyper_docker = docker
     String stxtyper_version = read_string("VERSION.txt")
-    String stxtyper_stxtyper_target_contig = read_string("stxtyper_target_contig.txt")
+    String stxtyper_target_contig = read_string("stxtyper_target_contig.txt")
     String stxtyper_stx_type = read_string("stxtyper_stx_type.txt")
     String stxtyper_stx_operon_status = read_string("stxtyper_stx_operon_status.txt")
     String stxtyper_combined_identity = read_string("stxtyper_combined_identity.txt")
