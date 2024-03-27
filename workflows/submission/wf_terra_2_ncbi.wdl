@@ -33,7 +33,7 @@ workflow Terra_2_NCBI {
       gcp_bucket_uri = sra_transfer_gcp_bucket,
       skip_biosample = skip_biosample
   }
-  if (skip_biosample == false){
+  if (skip_biosample == false) {
     call ncbi_tools.biosample_submit_tsv_ftp_upload {
       input:
         meta_submit_tsv = prune_table.biosample_table, 

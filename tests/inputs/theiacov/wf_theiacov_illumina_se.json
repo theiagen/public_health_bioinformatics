@@ -3,5 +3,6 @@
     "theiacov_illumina_se.read1": "tests/data/theiacov/fastqs/illumina_se/ERR6319327.fastq.gz",
     "theiacov_illumina_se.primer_bed": "tests/data/theiacov/primers/artic-v3.primers.bed",
     "theiacov_illumina_se.reference_genome": "tests/data/theiacov/reference/MN908947.fasta",
-    "theiacov_illumina_se.reference_gff": "tests/inputs/completely-empty-for-test.txt"
+    "theiacov_illumina_se.reference_gff": "tests/inputs/completely-empty-for-test.txt",
+    "theiacov_illumina_se.reference_gene_locations_bed": "tests/inputs/sc2_gene_locations.bed"
 }

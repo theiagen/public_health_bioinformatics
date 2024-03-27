@@ -34,7 +34,7 @@ workflow read_QC_trim_se {
     String read_qc = "fastq_scan" # options: fastq_scan, fastqc
     String fastp_args = "-g -5 20 -3 20"
   }
-  if (read_processing == "trimmomatic"){
+  if (read_processing == "trimmomatic") {
     call trimmomatic.trimmomatic_se {
       input:
         samplename = samplename,
@@ -45,7 +45,7 @@ workflow read_QC_trim_se {
         trimmomatic_args = trimmomatic_args
     }
   }
-  if (read_processing == "fastp"){
+  if (read_processing == "fastp") {
     call fastp_task.fastp_se {
       input:
         samplename = samplename,
@@ -84,7 +84,7 @@ workflow read_QC_trim_se {
         read1 = bbduk_se.read1_clean
     }
   }
-  if ("~{workflow_series}" == "theiacov"){
+  if ("~{workflow_series}" == "theiacov") {
     call kraken.kraken2_theiacov as kraken2_raw {
       input:
         samplename = samplename,
@@ -92,7 +92,7 @@ workflow read_QC_trim_se {
         target_organism = target_organism
     }
   }
-  if ("~{workflow_series}" == "theiaprok"){
+  if ("~{workflow_series}" == "theiaprok") {
     if (call_midas) {
       call midas_task.midas {
         input:

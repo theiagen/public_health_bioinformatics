@@ -18,6 +18,7 @@ workflow organism_parameters {
     File? primer_bed_file
     File? reference_gff_file
     File? reference_genome
+    File? gene_locations_bed_file
     Int? genome_length_input
 
     # set default nextclade information as NA
@@ -35,9 +36,10 @@ workflow organism_parameters {
     # kraken parameters
     String? kraken_target_organism_input
   }
-  if (organism == "sars-cov-2") {
+  if (organism == "sars-cov-2" || organism == "SARS-CoV-2") {
     String sc2_org_name = "sars-cov-2"
     String sc2_reference_genome = "gs://theiagen-public-files-rp/terra/augur-sars-cov-2-references/MN908947.fasta"
+    String sc2_gene_locations_bed = "gs://theiagen-public-files-rp/terra/sars-cov-2-files/sc2_gene_locations.bed"
     String sc2_nextclade_ds_tag = "2023-12-03T12:00:00Z"
     String sc2_nextclade_ref = "MN908947"
     String sc2_nextclade_ds_name = "sars-cov-2"
@@ -49,6 +51,7 @@ workflow organism_parameters {
   if (organism == "MPXV" || organism == "mpox" || organism == "monkeypox" || organism == "Monkeypox virus" || organism == "Mpox") {
     String mpox_org_name = "MPXV"
     String mpox_reference_genome = "gs://theiagen-public-files/terra/mpxv-files/MPXV.MT903345.reference.fasta"
+    String mpox_gene_locations_bed = "gs://theiagen-public-files/terra/mpxv-files/mpox_gene_locations.bed"
     String mpox_nextclade_ds_tag = "2023-08-01T12:00:00Z"
     String mpox_nextclade_ref = "pseudo_ON563414"
     String mpox_nextclade_ds_name = "hMPXV_B1"
@@ -175,6 +178,7 @@ workflow organism_parameters {
     # reference genome and sequencing information
     File reference = select_first([reference_genome, sc2_reference_genome, mpox_reference_genome, wnv_reference_genome, h1n1_ha_reference, h3n2_ha_reference, vic_ha_reference, yam_ha_reference, h1n1_na_reference, h3n2_na_reference, vic_na_reference, yam_na_reference, 
     rsv_a_reference_genome, rsv_b_reference_genome, hiv_v1_reference_genome, hiv_v2_reference_genome, "gs://theiagen-public-files/terra/theiacov-files/empty.fasta"])
+    File gene_locations_bed = select_first([gene_locations_bed_file, sc2_gene_locations_bed, mpox_gene_locations_bed, "gs://theiagen-public-files/terra/theiacov-files/empty.bed"])
     File primer_bed = select_first([primer_bed_file, mpox_primer_bed_file, wnv_primer_bed_file, hiv_v1_primer_bed, hiv_v2_primer_bed, "gs://theiagen-public-files/terra/theiacov-files/empty.bed"])
     File reference_gff = select_first([reference_gff_file, mpox_reference_gff_file, hiv_v1_reference_gff, hiv_v2_reference_gff, "gs://theiagen-public-files/terra/theiacov-files/empty.gff3"])
     Int genome_length = select_first([genome_length_input, sc2_genome_len, mpox_genome_len, wnv_genome_len, flu_genome_len, rsv_a_genome_len, rsv_b_genome_len, hiv_v1_genome_len, hiv_v2_genome_len])

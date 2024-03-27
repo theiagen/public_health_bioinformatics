@@ -204,7 +204,7 @@ workflows:
    subclass: WDL
    primaryDescriptorPath: /workflows/phylogenetics/wf_find_shared_variants.wdl
    testParameterFiles:
-    - empty.json
+    - /tests/inputs/empty.json
  - name: Transfer_Column_Content_PHB
    subclass: WDL
    primaryDescriptorPath: /workflows/utilities/file_handling/wf_transfer_column.wdl
