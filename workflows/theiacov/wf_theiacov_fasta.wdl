@@ -8,7 +8,7 @@ import "../../tasks/quality_control/comparisons/task_qc_check_phb.wdl" as qc_che
 import "../../tasks/species_typing/betacoronavirus/task_pangolin.wdl" as pangolin
 import "../../tasks/task_versioning.wdl" as versioning
 import "../../tasks/taxon_id/task_nextclade.wdl" as nextclade_task
-import "../utilities/wf_organism_parameters.wdl" as defaults
+import "../utilities/wf_organism_parameters.wdl" as set_organism_defaults
 
 workflow theiacov_fasta {
   meta {
@@ -46,7 +46,7 @@ workflow theiacov_fasta {
     }
   String abricate_subtype = abricate_flu.abricate_flu_subtype
   }
-  call defaults.organism_parameters {
+  call set_organism_defaults.organism_parameters {
     input:
       organism = organism,
       flu_segment = flu_segment,
@@ -104,7 +104,7 @@ workflow theiacov_fasta {
     call qc_check.qc_check_phb {
       input:
         qc_check_table = qc_check_table,
-        expected_taxon = organism,
+        expected_taxon = organism_parameters.standardized_organism,
         number_N = consensus_qc.number_N,
         assembly_length_unambiguous = consensus_qc.number_ATCG,
         number_Degenerate = consensus_qc.number_Degenerate,

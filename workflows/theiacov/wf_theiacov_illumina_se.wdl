@@ -180,7 +180,7 @@ workflow theiacov_illumina_se {
         call qc_check.qc_check_phb as qc_check_task {
           input:
             qc_check_table = qc_check_table,
-            expected_taxon = organism,
+            expected_taxon = organism_parameters.standardized_organism,
             num_reads_raw1 = read_QC_trim.fastq_scan_raw1,
             num_reads_clean1 = read_QC_trim.fastq_scan_clean1,
             kraken_human = read_QC_trim.kraken_human,
