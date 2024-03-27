@@ -761,6 +761,22 @@ workflow theiaprok_illumina_pe {
     File? virulencefinder_report_tsv = merlin_magic.virulencefinder_report_tsv
     String? virulencefinder_docker = merlin_magic.virulencefinder_docker
     String? virulencefinder_hits = merlin_magic.virulencefinder_hits
+    # stxtyper 
+    File? stxtyper_report = merlin_magic.stxtyper_report
+    String? stxtyper_docker = merlin_magic.stxtyper_docker
+    String? stxtyper_version = merlin_magic.stxtyper_version
+    String? stxtyper_target_contig = merlin_magic.stxtyper_target_contig
+    String? stxtyper_stx_type = merlin_magic.stxtyper_stx_type
+    String? stxtyper_stx_operon_status = merlin_magic.stxtyper_stx_operon_status
+    String? stxtyper_combined_identity = merlin_magic.stxtyper_combined_identity
+    String? stxtyper_target_start = merlin_magic.stxtyper_target_start
+    String? stxtyper_target_stop = merlin_magic.stxtyper_target_stop
+    String? stxtyper_a_reference = merlin_magic.stxtyper_a_reference
+    String? stxtyper_a_identity = merlin_magic.stxtyper_a_identity
+    String? stxtyper_a_coverage = merlin_magic.stxtyper_a_coverage
+    String? stxtyper_b_reference = merlin_magic.stxtyper_b_reference
+    String? stxtyper_b_identity = merlin_magic.stxtyper_b_identity
+    String? stxtyper_b_coverage = merlin_magic.stxtyper_b_coverage
     # Shigella sonnei Typing
     File? sonneityping_mykrobe_report_csv = merlin_magic.sonneityping_mykrobe_report_csv
     File? sonneityping_mykrobe_report_json = merlin_magic.sonneityping_mykrobe_report_json

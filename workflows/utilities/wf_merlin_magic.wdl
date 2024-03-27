@@ -8,6 +8,7 @@ import "../../tasks/species_typing/escherichia_shigella/task_serotypefinder.wdl"
 import "../../tasks/species_typing/escherichia_shigella/task_shigatyper.wdl" as shigatyper_task
 import "../../tasks/species_typing/escherichia_shigella/task_shigeifinder.wdl" as shigeifinder_task
 import "../../tasks/species_typing/escherichia_shigella/task_sonneityping.wdl" as sonneityping_task
+import "../../tasks/species_typing/escherichia_shigella/task_stxtyper.wdl" as stxtyper_task
 import "../../tasks/species_typing/escherichia_shigella/task_virulencefinder.wdl" as virulencefinder_task
 import "../../tasks/species_typing/haemophilus/task_hicap.wdl" as hicap_task
 import "../../tasks/species_typing/klebsiella/task_kleborate.wdl" as kleborate_task
@@ -52,6 +53,7 @@ workflow merlin_magic {
     String? pasty_docker_image
     String? emmtypingtool_docker_image
     String? shigeifinder_docker_image
+    String? stxtyper_docker_image
     String? shigatyper_docker_image
     String? staphopia_sccmec_docker_image
     String? agrvate_docker_image
@@ -157,6 +159,12 @@ workflow merlin_magic {
         coverage_threshold = virulencefinder_coverage_threshold,
         identity_threshold = virulencefinder_identity_threshold,
         database = virulencefinder_database
+    }
+    call stxtyper_task.stxtyper {
+      input:
+        assembly = assembly,
+        samplename = samplename,
+        docker = stxtyper_docker_image
     }
   }
   if (merlin_tag == "Shigella sonnei") {
@@ -491,6 +499,22 @@ workflow merlin_magic {
     File? virulencefinder_report_tsv = virulencefinder.virulencefinder_report_tsv
     String? virulencefinder_docker = virulencefinder.virulencefinder_docker
     String? virulencefinder_hits = virulencefinder.virulencefinder_hits
+    # stxtyper 
+    File? stxtyper_report = stxtyper.stxtyper_report
+    String? stxtyper_docker = stxtyper.stxtyper_docker
+    String? stxtyper_version = stxtyper.stxtyper_version
+    String? stxtyper_target_contig = stxtyper.stxtyper_target_contig
+    String? stxtyper_stx_type = stxtyper.stxtyper_stx_type
+    String? stxtyper_stx_operon_status = stxtyper.stxtyper_stx_operon_status
+    String? stxtyper_combined_identity = stxtyper.stxtyper_combined_identity
+    String? stxtyper_target_start = stxtyper.stxtyper_target_start
+    String? stxtyper_target_stop = stxtyper.stxtyper_target_stop
+    String? stxtyper_a_reference = stxtyper.stxtyper_a_reference
+    String? stxtyper_a_identity = stxtyper.stxtyper_a_identity
+    String? stxtyper_a_coverage = stxtyper.stxtyper_a_coverage
+    String? stxtyper_b_reference = stxtyper.stxtyper_b_reference
+    String? stxtyper_b_identity = stxtyper.stxtyper_b_identity
+    String? stxtyper_b_coverage = stxtyper.stxtyper_b_coverage
     # Shigella sonnei Typing
     File? sonneityping_mykrobe_report_csv = sonneityping.sonneityping_mykrobe_report_csv
     File? sonneityping_mykrobe_report_json = sonneityping.sonneityping_mykrobe_report_json
