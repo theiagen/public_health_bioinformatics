@@ -22,7 +22,7 @@
     - path: miniwdl_run/call-raw_check_reads/task.log
     # trimmomatic
     - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_pe/command
-      md5sum: 0dfaeb241ed0f54c3d5d0c4c4bea0491
+      md5sum: c90581958fb9b922c1bec6bfb7559d36
     - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_pe/inputs.json
       contains: ["read1", "read2", "samplename"]
     - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_pe/outputs.json
@@ -33,7 +33,7 @@
     - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_pe/task.log
       contains: ["wdl", "illumina_pe", "trimmomatic", "done"]
     - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_pe/work/SRR13687078.trim.stats.txt
-      md5sum: 9b28eaac90cbeba38eab41de4d95d564
+      md5sum: f7f3616ddeed21cbe619ca25e2e22697
     - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_pe/work/_miniwdl_inputs/0/SRR13687078_R1_dehosted.fastq.gz
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_pe/work/_miniwdl_inputs/0/SRR13687078_R2_dehosted.fastq.gz
@@ -427,7 +427,7 @@
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     # nextclade output parsing
     - path: miniwdl_run/call-nextclade_output_parser/command
-      md5sum: b31fdf24be9f183da8d7a21b57cabed2
+      md5sum: a366310708d6104079f7e13bd5db651d
     - path: miniwdl_run/call-nextclade_output_parser/inputs.json
       contains: ["nextclade_tsv", "tsv"]
     - path: miniwdl_run/call-nextclade_output_parser/outputs.json
