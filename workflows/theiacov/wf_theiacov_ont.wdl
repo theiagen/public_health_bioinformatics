@@ -154,7 +154,7 @@ workflow theiacov_ont {
           } 
           call set_organism_defaults.organism_parameters as set_flu_na_nextclade_values {
             input:
-              organism = organism,
+              organism = organism_parameters.standardized_organism,
               flu_segment = "NA",
               flu_subtype = irma.irma_subtype,
               # including these to block from terra
@@ -171,7 +171,7 @@ workflow theiacov_ont {
           }
           call set_organism_defaults.organism_parameters as set_flu_ha_nextclade_values {
             input:
-              organism = organism,
+              organism = organism_parameters.standardized_organism,
               flu_segment = "HA",
               flu_subtype = irma.irma_subtype,
                # including these to block from terra
@@ -239,7 +239,7 @@ workflow theiacov_ont {
         call nextclade_task.nextclade_output_parser {
           input:
           nextclade_tsv = nextclade_v3.nextclade_tsv,
-          organism = organism
+          organism = organism_parameters.standardized_organism
         }
       }
       if (organism_parameters.standardized_organism == "flu" && defined(irma.seg_na_assembly) && ! defined(do_not_run_flu_na_nextclade)) { 
@@ -253,8 +253,7 @@ workflow theiacov_ont {
         call nextclade_task.nextclade_output_parser as nextclade_output_parser_flu_na {
           input:
             nextclade_tsv = nextclade_flu_na.nextclade_tsv,
-            organism = organism,
-            NA_segment = true
+            organism = organism_parameters.standardized_organism
         }
         # concatenate tag, aa subs and aa dels for HA and NA segments
         String ha_na_nextclade_ds_tag= "~{set_flu_ha_nextclade_values.nextclade_dataset_tag + ',' + set_flu_na_nextclade_values.nextclade_dataset_tag}"
@@ -301,7 +300,7 @@ workflow theiacov_ont {
         call qc_check.qc_check_phb as qc_check_task {
           input:
             qc_check_table = qc_check_table,
-            expected_taxon = organism,
+            expected_taxon = organism_parameters.standardized_organism,
             num_reads_raw1 = nanoplot_raw.num_reads,
             num_reads_clean1 = nanoplot_clean.num_reads,
             kraken_human = read_qc_trim.kraken_human,
@@ -412,8 +411,6 @@ workflow theiacov_ont {
     String nextclade_clade = select_first([nextclade_output_parser.nextclade_clade, ""])
     String? nextclade_lineage = nextclade_output_parser.nextclade_lineage
     String? nextclade_qc = nextclade_output_parser.nextclade_qc
-    # Nextclade Flu outputs - NA specific columns - tamiflu mutation
-    String? nextclade_tamiflu_resistance_aa_subs = nextclade_output_parser_flu_na.nextclade_tamiflu_aa_subs
     # VADR Annotation QC
     File? vadr_alerts_list = vadr.alerts_list
     String? vadr_num_alerts = vadr.num_alerts

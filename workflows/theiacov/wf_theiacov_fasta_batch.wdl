@@ -67,7 +67,7 @@ workflow theiacov_fasta_batch {
       project_name = project_name,
       bucket_name = bucket_name,
       samplenames = samplenames,
-      organism = organism,
+      organism = organism_parameters.standardized_organism,
       nextclade_tsv = nextclade_v3.nextclade_tsv,
       nextclade_docker = nextclade_v3.nextclade_docker,
       nextclade_version = nextclade_v3.nextclade_version,
