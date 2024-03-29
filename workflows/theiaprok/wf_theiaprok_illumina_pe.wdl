@@ -201,8 +201,7 @@ workflow theiaprok_illumina_pe {
           input:
             assembly = shovill_pe.assembly_fasta,
             samplename = samplename,
-            database = abricate_db,
-            minid = 95 
+            database = abricate_db
         }
       }
       if (defined(qc_check_table)) {
