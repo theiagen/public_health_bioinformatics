@@ -368,6 +368,15 @@ workflow merlin_magic {
       }
     }
   }
+  if (merlin_tag == "Corynebacterium diphtheriae") {
+    call abricate_task.abricate as abricate_virulence {
+      input:
+        assembly = assembly,
+        samplename = samplename,
+        database = "vfdb",
+        minid = 95 
+    }
+  }
   
   # theiaeuk
   if (theiaeuk) {
@@ -585,11 +594,12 @@ workflow merlin_magic {
     String? kaptive_oc_match = kaptive.kaptive_oc_match
     String? kaptive_oc_type = kaptive.kaptive_oc_type
     String? kaptive_oc_confidence = kaptive.kaptive_oc_confidence
-    File? abricate_results = abricate.abricate_results
-    String? abricate_genes = abricate.abricate_genes
-    String? abricate_database = abricate.abricate_database
-    String? abricate_version = abricate.abricate_version
-    String? abricate_docker = abricate.abricate_docker
+    # Acinetobacter baumannii or Corynebacterium diphtheriae typing
+    File abricate_results = select_first([abricate.abricate_results,abricate_virulence.abricate_results, "theiagen-public-files/terra/theiaprok-files/no-results.txt"])
+    String abricate_genes = select_first([abricate.abricate_genes, abricate_virulence.abricate_genes, ""])
+    String abricate_database = select_first([abricate.abricate_database, abricate_virulence.abricate_database, ""])
+    String abricate_version = select_first([abricate.abricate_version, abricate_virulence.abricate_version, ""])
+    String abricate_docker = select_first([abricate.abricate_docker, abricate_virulence.abricate_docker, ""])
     # Mycobacterium Typing
     File? tbprofiler_output_file = tbprofiler.tbprofiler_output_csv
     File? tbprofiler_output_bam = tbprofiler.tbprofiler_output_bam
