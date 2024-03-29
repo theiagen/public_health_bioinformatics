@@ -27,3 +27,24 @@ Libuit, Kevin G., Emma L. Doughty, James R. Otieno, Frank Ambrosio, Curtis J. Ka
 Alternatively, please cite this paper if using the TheiaEuk workflow:
 
 Ambrosio, Frank, Michelle Scribner, Sage Wright, James Otieno, Emma Doughty, Andrew Gorzalski, Danielle Siao, et al. 2023. “TheiaEuk: A Species-Agnostic Bioinformatics Workflow for Fungal Genomic Characterization.” Frontiers in Public Health 11. https://doi.org/10.3389/fpubh.2023.1198213.
+
+### Maintainence Commitment
+
+Theiagen Genomics has committed to maintaining these workflows for the forseeable future. If you have any questions or concerns, please raise a [GitHub issue](https://github.com/theiagen/public_health_bioinformatics/issues/new) or contact Theiagen at support@theiagen.com. New releases that include new features are planned on a quarterly bases, with bug fixes as needed.
+
+### Authorship
+
+(Ordered by contribution [# of lines changed] as of 2024-03-28)
+
+Sage Wright (@sage-wright) - Conceptualization, Software, Validation, Supervision
+Ines Mendes (@cimendes) - Software, Validation
+Curtis Kapsak (@kapsakcj) - Conceptualization, Software, Validation
+Frank Ambrosio (@frankambrosio3) - Conceptualization, Software, Validation
+Michelle Scribner (@michellescribner) - Software, Validation
+Kevin Libuit (@kevinlibuit) - Conceptualization, Project Administration, Software, Validation, Supervision
+
+### Contributors
+
+Ash O'Farrel (@aofarrel)
+Holly Halstead (@HNHalstead)
+Sam Baird (@sam-baird)
