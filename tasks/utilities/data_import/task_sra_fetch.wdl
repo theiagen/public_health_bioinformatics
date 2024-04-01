@@ -34,7 +34,17 @@ task fastq_dl_sra {
     if [ -f "~{sra_accession}.fastq.gz" ] && [ ! -f "~{sra_accession}_1.fastq.gz" ]; then
       mv "~{sra_accession}.fastq.gz" "~{sra_accession}_1.fastq.gz"
     fi
-
+    
+    # check if the first quality control string is set to SRA-Lite
+    # SRA-Lite filetype has all the quality enconding set to the '?' character
+    # corresponding to a phred-score of 30
+    # awk is checking the 4th line of the file and if it starts with and contains only '?' characters
+    #   NR==4 on the fourth line,
+    #   if $0 ~ /.../ this will evaluate to true only if the entire line matches this regular expression, which is:
+    #   ^ at the start of the line
+    #   [?] look for this character
+    #   +$ and only this character until the end of the line
+    zcat "~{sra_accession}_1.fastq.gz" | head -n 4 | awk 'NR==4 {if ($0 ~ /^[?]+$/) {print "Potential SRA-Lite FASTQ detected"} else {print ""}}' > WARNING
     
   >>>
   output {
@@ -44,6 +54,7 @@ task fastq_dl_sra {
     String fastq_dl_version = read_string("VERSION")
     String fastq_dl_docker = docker
     String fastq_dl_date = read_string("DATE")
+    String warning = read_string("WARNING")
   }
   runtime {
     docker: docker
