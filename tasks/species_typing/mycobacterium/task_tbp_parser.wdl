@@ -11,7 +11,7 @@ task tbp_parser {
     String? operator
     Int? min_depth # default 10
     Int? coverage_threshold # default 100 (--min_percent_coverage)
-    File coverage_regions_bed
+    File? coverage_regions_bed
     Float? min_frequency # default 0.1
     Int? min_read_support # default 10
   
