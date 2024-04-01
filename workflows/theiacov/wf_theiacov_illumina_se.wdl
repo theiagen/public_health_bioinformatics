@@ -88,7 +88,7 @@ workflow theiacov_illumina_se {
       workflow_series = "theiacov",
       organism = organism_parameters.standardized_organism,
       skip_mash = skip_mash,
-      expected_genome_length = genome_length
+      expected_genome_length = organism_parameters.genome_length
   }
   if (raw_check_reads.read_screen == "PASS") {
     call read_qc.read_QC_trim_se as read_QC_trim {
@@ -114,7 +114,7 @@ workflow theiacov_illumina_se {
         workflow_series = "theiacov",
         organism = organism_parameters.standardized_organism,
         skip_mash = skip_mash,
-        expected_genome_length = genome_length
+        expected_genome_length = organism_parameters.genome_length
     }
     if (clean_check_reads.read_screen == "PASS") {     
       call consensus_call.ivar_consensus {
