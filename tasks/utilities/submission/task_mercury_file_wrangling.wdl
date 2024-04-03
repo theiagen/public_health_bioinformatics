@@ -184,7 +184,7 @@ task sm_metadata_wrangling { # the sm stands for supermassive
         sra_optional = ["design_description", read2_column_name, "amplicon_primer_scheme", "amplicon_size", "assembly_method", "dehosting_method", "submitter_email"]
 
         genbank_required = ["submission_id", "country", "host_sci_name", "collection_date", "isolation_source", "biosample_accession", "bioproject_accession", assembly_fasta_column_name]
-        genbank_optional = ["isolate"]
+        genbank_optional = ["isolate", "state"]
       else: # if skip_ncbi is true
         biosample_required = []
         biosample_optional = []
@@ -250,13 +250,20 @@ task sm_metadata_wrangling { # the sm stands for supermassive
         # GENBANK
         print("DEBUG: creating genbank metadata table...")
         genbank_metadata = table[genbank_required].copy()
+
+        update_country = false
         for column in genbank_optional:
           if column in table.columns:
             genbank_metadata[column] = table[column]
+            if column == "state":
+              update_country = true
           else: # add the column
             genbank_metadata[column] = ""
-
+            
         genbank_metadata.rename(columns={"submission_id" : "Sequence_ID", "host_sci_name" : "host", "collection_date" : "collection-date", "isolation_source" : "isolation-source", "biosample_accession" : "BioSample", "bioproject_accession" : "BioProject"}, inplace=True)
+
+        if update_country == true:
+          genbank_metadata["country"] = genbank_metadata["country"] + ": " + genbank_metadata["state"]
 
         # prep for file manipulation and manuevering 
         genbank_metadata["cp"] = "gcloud storage cp"
