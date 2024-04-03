@@ -12,6 +12,7 @@ task freyja_one_sample {
     Boolean confirmed_only = false
     Boolean bootstrap = false
     Int? number_bootstraps
+    Int? depth_cutoff
     Int memory = 4
     Int cpu = 2
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/freyja:1.4.8"
@@ -75,7 +76,9 @@ task freyja_one_sample {
     ~{"--eps " + eps} \
     ~{"--meta " + freyja_lineage_metadata} \
     ~{"--barcodes " + freyja_usher_barcodes} \
+    ~{"--depthcutoff " + depth_cutoff} \
     ~{"--nb " + number_bootstraps } \
+    ~{true='--confirmedonly' false='' confirmed_only} \
     ~{samplename}_freyja_variants.tsv \
     ~{samplename}_freyja_depths.tsv \
     --output_base ~{samplename} \
@@ -88,6 +91,7 @@ task freyja_one_sample {
     ~{'--eps ' + eps} \
     ~{'--meta ' + freyja_lineage_metadata} \
     ~{'--barcodes ' + freyja_usher_barcodes} \
+    ~{'--depthcutoff ' + depth_cutoff} \
     ~{true='--confirmedonly' false='' confirmed_only} \
     ~{samplename}_freyja_variants.tsv \
     ~{samplename}_freyja_depths.tsv \

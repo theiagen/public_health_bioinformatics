@@ -8,7 +8,7 @@ import "../../tasks/quality_control/comparisons/task_qc_check_phb.wdl" as qc_che
 import "../../tasks/species_typing/betacoronavirus/task_pangolin.wdl" as pangolin
 import "../../tasks/task_versioning.wdl" as versioning
 import "../../tasks/taxon_id/task_nextclade.wdl" as nextclade_task
-import "../utilities/wf_organism_parameters.wdl" as defaults
+import "../utilities/wf_organism_parameters.wdl" as set_organism_defaults
 
 workflow theiacov_fasta {
   meta {
@@ -36,6 +36,7 @@ workflow theiacov_fasta {
     # vadr parameters
     Int? max_length
     String? vadr_opts
+    Int? vadr_memory
   }
   # only run abricate if user sets organism = "flu" AND if flu_subtype is unknown/not set by user
   if (!defined(flu_subtype) && organism == "flu") {
@@ -46,7 +47,7 @@ workflow theiacov_fasta {
     }
   String abricate_subtype = abricate_flu.abricate_flu_subtype
   }
-  call defaults.organism_parameters {
+  call set_organism_defaults.organism_parameters {
     input:
       organism = organism,
       flu_segment = flu_segment,
@@ -57,7 +58,8 @@ workflow theiacov_fasta {
       nextclade_dataset_tag_input = nextclade_dataset_tag,
       nextclade_dataset_name_input = nextclade_dataset_name,
       vadr_max_length = max_length,
-      vadr_options = vadr_opts
+      vadr_options = vadr_opts,
+      vadr_mem = vadr_memory
   }
   call consensus_qc_task.consensus_qc {
     input:
@@ -90,13 +92,14 @@ workflow theiacov_fasta {
     }
   }
   # vadr task
-  if (organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "rsv_a" || organism_parameters.standardized_organism == "rsv_b" || organism_parameters.standardized_organism == "WNV") {
+  if (organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "rsv_a" || organism_parameters.standardized_organism == "rsv_b" || organism_parameters.standardized_organism == "WNV" || organism_parameters.standardized_organism == "flu") {
     call vadr_task.vadr {
       input:
         genome_fasta = assembly_fasta,
         assembly_length_unambiguous = consensus_qc.number_ATCG,
         max_length = organism_parameters.vadr_maxlength,
-        vadr_opts = organism_parameters.vadr_opts
+        vadr_opts = organism_parameters.vadr_opts,
+        memory = organism_parameters.vadr_memory
     }
   }
   # QC check task
@@ -104,7 +107,7 @@ workflow theiacov_fasta {
     call qc_check.qc_check_phb {
       input:
         qc_check_table = qc_check_table,
-        expected_taxon = organism,
+        expected_taxon = organism_parameters.standardized_organism,
         number_N = consensus_qc.number_N,
         assembly_length_unambiguous = consensus_qc.number_ATCG,
         number_Degenerate = consensus_qc.number_Degenerate,

@@ -95,7 +95,7 @@
       md5sum: 7e4fc05efbbc3937b99420e6193be061
     # clean read screen
     - path: miniwdl_run/call-clean_check_reads/command
-      md5sum: 1d0ee3bd55df1255db94018d089526a9
+      md5sum: 3e017e2487b5409e7a2b51bd96bd5a8b
     - path: miniwdl_run/call-clean_check_reads/inputs.json
       contains: ["read1", "organism"]
     - path: miniwdl_run/call-clean_check_reads/outputs.json
@@ -387,7 +387,7 @@
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     # nextclade output parsing
     - path: miniwdl_run/call-nextclade_output_parser/command
-      md5sum: d237498162dfdf04d03bc2ac22190639
+      md5sum: 3504896ffb4e967323bb68755f00f0bd
     - path: miniwdl_run/call-nextclade_output_parser/inputs.json
       contains: ["nextclade_tsv", "tsv"]
     - path: miniwdl_run/call-nextclade_output_parser/outputs.json

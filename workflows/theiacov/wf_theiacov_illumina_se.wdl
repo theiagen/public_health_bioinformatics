@@ -54,6 +54,7 @@ workflow theiacov_illumina_se {
     # vadr parameters
     Int? vadr_max_length
     String? vadr_options
+    Int? vadr_memory
     # pangolin parameters
     String? pangolin_docker_image
     # qc check parameters
@@ -71,6 +72,7 @@ workflow theiacov_illumina_se {
       nextclade_dataset_name_input = nextclade_dataset_name,     
       vadr_max_length = vadr_max_length,
       vadr_options = vadr_options,
+      vadr_mem = vadr_memory,
       primer_bed_file = primer_bed,
       pangolin_docker_image = pangolin_docker_image  
   }
@@ -86,7 +88,7 @@ workflow theiacov_illumina_se {
       workflow_series = "theiacov",
       organism = organism_parameters.standardized_organism,
       skip_mash = skip_mash,
-      expected_genome_length = genome_length
+      expected_genome_length = organism_parameters.genome_length
   }
   if (raw_check_reads.read_screen == "PASS") {
     call read_qc.read_QC_trim_se as read_QC_trim {
@@ -112,7 +114,7 @@ workflow theiacov_illumina_se {
         workflow_series = "theiacov",
         organism = organism_parameters.standardized_organism,
         skip_mash = skip_mash,
-        expected_genome_length = genome_length
+        expected_genome_length = organism_parameters.genome_length
     }
     if (clean_check_reads.read_screen == "PASS") {     
       call consensus_call.ivar_consensus {
@@ -166,21 +168,22 @@ workflow theiacov_illumina_se {
           organism = organism_parameters.standardized_organism
         }
       }
-      if (organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "WNV") { 
-        # tasks specific to MPXV, sars-cov-2, and WNV
+      if (organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "WNV" || organism_parameters.standardized_organism == "rsv_a" || organism_parameters.standardized_organism == "rsv_b"){ 
+        # tasks specific to MPXV, sars-cov-2, WNV, rsv_a and rsv_b
         call vadr_task.vadr {
           input:
             genome_fasta = ivar_consensus.assembly_fasta,
             assembly_length_unambiguous = consensus_qc.number_ATCG,
             vadr_opts = organism_parameters.vadr_opts,
-            max_length = organism_parameters.vadr_maxlength
+            max_length = organism_parameters.vadr_maxlength,
+            memory = organism_parameters.vadr_memory
         }
       }
       if (defined(qc_check_table)) {
         call qc_check.qc_check_phb as qc_check_task {
           input:
             qc_check_table = qc_check_table,
-            expected_taxon = organism,
+            expected_taxon = organism_parameters.standardized_organism,
             num_reads_raw1 = read_QC_trim.fastq_scan_raw1,
             num_reads_clean1 = read_QC_trim.fastq_scan_clean1,
             kraken_human = read_QC_trim.kraken_human,
