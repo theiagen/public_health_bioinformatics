@@ -69,7 +69,7 @@ task nextclade_v3 {
     File? auspice_reference_tree_json
     File? gene_annotations_gff
     File? nextclade_pathogen_json
-    String? input_ref
+    File? input_ref
     String docker = "us-docker.pkg.dev/general-theiagen/nextstrain/nextclade:3.3.1" 
     String dataset_name
     String verbosity = "warn" # other options are: "off" "error" "info" "debug" and "trace"
