@@ -19,12 +19,14 @@ task tbp_parser {
 
     Boolean tngs_data = false    
     Float? rrs_frequency # default 0.1
+    Int? rrs_read_support # default 10
     Float? rrl_frequency # default 0.1
+    Int? rrl_read_support # default 10
     Float? rpob449_frequency # default 0.1
     Float? etha237_frequency # default 0.1
     File? expert_rule_regions_bed
 
-    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:1.3.8"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:1.3.9"
     Int disk_size = 100
     Int memory = 4
     Int cpu = 1
@@ -44,7 +46,9 @@ task tbp_parser {
       ~{"--min_read_support " + min_read_support} \
       ~{"--tngs_expert_regions " + expert_rule_regions_bed} \
       ~{"--rrs_frequency " + rrs_frequency} \
+      ~{"--rrs_read_support " + rrs_read_support} \
       ~{"--rrl_frequency " + rrl_frequency} \
+      ~{"--rrl_read_support " + rrl_read_support} \
       ~{"--rpob449_frequency " + rpob449_frequency} \
       ~{"--etha237_frequency " + etha237_frequency} \
       --output_prefix ~{samplename} \
