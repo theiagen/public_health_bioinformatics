@@ -140,7 +140,7 @@
       md5sum: 897316929176464ebc9ad085f31e7284
     # clean read screen
     - path: miniwdl_run/call-clean_check_reads/command
-      md5sum: 87a2d78abefa84479a26639623961e85
+      md5sum: f6343ca364537b681d65be3d8f505f38
     - path: miniwdl_run/call-clean_check_reads/inputs.json
       contains: ["read1", "read2", "organism"]
     - path: miniwdl_run/call-clean_check_reads/outputs.json
@@ -367,9 +367,9 @@
     - path: miniwdl_run/call-pangolin4/work/PANGOLIN_NOTES
       md5sum: e98d2fc28664c0622f6b490433286e32
     - path: miniwdl_run/call-pangolin4/work/PANGO_ASSIGNMENT_VERSION
-      md5sum: 11c4566a2424e70dd45cf3e4bcd91651
+      md5sum: 96a8bfc71da50efd0aa7c381c65168a6
     - path: miniwdl_run/call-pangolin4/work/VERSION_PANGOLIN_ALL
-      md5sum: 7cb68886c2a1b4308be17d69dcb32d9a
+      md5sum: 1d2a65adcf34aa03ed8bf67f9db67d3e
     - path: miniwdl_run/call-pangolin4/work/_miniwdl_inputs/0/SRR13687078.ivar.consensus.fasta
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     # nextclade
