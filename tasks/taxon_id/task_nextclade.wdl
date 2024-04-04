@@ -232,7 +232,7 @@ task nextclade_add_ref {
     File? reference_tree_json
     File? nextclade_pathogen_json
     File? gene_annotations_gff
-    File? pcr_primers_csv
+    File? input_ref
     String docker = "us-docker.pkg.dev/general-theiagen/nextstrain/nextclade:3.3.1"
     String dataset_name
     String? dataset_tag
@@ -271,7 +271,7 @@ task nextclade_add_ref {
       --input-tree ${tree_json} \
       ~{"--input-pathogen-json " + nextclade_pathogen_json} \
       ~{"--input-annotation " + gene_annotations_gff} \
-      ~{"--input-pcr-primers " + pcr_primers_csv} \
+      ~{"--input-ref " + input_ref} \
       --output-json "~{basename}".nextclade.json \
       --output-tsv  "~{basename}".nextclade.tsv \
       --output-tree "~{basename}".nextclade.auspice.json \

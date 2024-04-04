@@ -9,10 +9,10 @@ workflow nextclade_addToRefTree {
     }
     input {
       File assembly_fasta
+      File? input_ref
       File? gene_annotations_gff
       File? reference_tree_json
       File? nextclade_pathogen_json
-      File? pcr_primers_csv
       String nextclade_dataset_name
       String? dataset_tag
     }
@@ -22,7 +22,7 @@ workflow nextclade_addToRefTree {
         reference_tree_json = reference_tree_json,
         nextclade_pathogen_json = nextclade_pathogen_json,
         gene_annotations_gff = gene_annotations_gff,
-        pcr_primers_csv = pcr_primers_csv,
+        input_ref = input_ref,
         dataset_name = nextclade_dataset_name,
         dataset_tag = dataset_tag
     }
