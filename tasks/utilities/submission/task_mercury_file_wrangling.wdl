@@ -251,18 +251,18 @@ task sm_metadata_wrangling { # the sm stands for supermassive
         print("DEBUG: creating genbank metadata table...")
         genbank_metadata = table[genbank_required].copy()
 
-        update_country = false
+        update_country = "false"
         for column in genbank_optional:
           if column in table.columns:
             genbank_metadata[column] = table[column]
             if column == "state":
-              update_country = true
+              update_country = "true"
           else: # add the column
             genbank_metadata[column] = ""
             
         genbank_metadata.rename(columns={"submission_id" : "Sequence_ID", "host_sci_name" : "host", "collection_date" : "collection-date", "isolation_source" : "isolation-source", "biosample_accession" : "BioSample", "bioproject_accession" : "BioProject"}, inplace=True)
 
-        if update_country == true:
+        if update_country == "true":
           genbank_metadata["country"] = genbank_metadata["country"] + ": " + genbank_metadata["state"]
 
         # prep for file manipulation and manuevering 
