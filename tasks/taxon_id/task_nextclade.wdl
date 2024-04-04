@@ -68,8 +68,8 @@ task nextclade_v3 {
     File genome_fasta
     File? auspice_reference_tree_json
     File? gene_annotations_gff
-    File? pcr_primers_csv
     File? nextclade_pathogen_json
+    String? input_ref
     String docker = "us-docker.pkg.dev/general-theiagen/nextstrain/nextclade:3.3.1" 
     String dataset_name
     String verbosity = "warn" # other options are: "off" "error" "info" "debug" and "trace"
@@ -96,10 +96,10 @@ task nextclade_v3 {
     # not necessary to include `--jobs <jobs>` in v3. Nextclade will use all available CPU threads by default. It's fast so I don't think we will need to change unless we see errors
     nextclade run \
       --input-dataset nextclade_dataset_dir/ \
+      ~{"--input-ref " + input_ref} \
       ~{"--input-tree " + auspice_reference_tree_json} \
       ~{"--input-pathogen-json " + nextclade_pathogen_json} \
       ~{"--input-annotation " + gene_annotations_gff} \
-      ~{"--input-pcr-primers " + pcr_primers_csv} \
       --output-json "~{basename}".nextclade.json \
       --output-tsv  "~{basename}".nextclade.tsv \
       --output-tree "~{basename}".nextclade.auspice.json \
