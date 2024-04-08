@@ -264,6 +264,9 @@ task sm_metadata_wrangling { # the sm stands for supermassive
 
         if update_country == "true":
           genbank_metadata["country"] = genbank_metadata["country"] + ": " + genbank_metadata["state"]
+        
+        # remove state column from genbank
+        genbank_metadata.drop("state", axis=1, inplace=True)
 
         # prep for file manipulation and manuevering 
         genbank_metadata["cp"] = "gcloud storage cp"
