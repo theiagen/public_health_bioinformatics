@@ -32,6 +32,7 @@ workflow theiaeuk_illumina_pe {
     Int trim_min_length = 75
     Int trim_quality_min_score = 20
     Int trim_window_size = 10
+    Int busco_memory = 24
     Boolean skip_screen = false 
     File? qc_check_table
     String? expected_taxon
@@ -139,7 +140,8 @@ workflow theiaeuk_illumina_pe {
         input:
           assembly = shovill_pe.assembly_fasta,
           samplename = samplename,
-          eukaryote = true
+          eukaryote = true,
+          memory = busco_memory
       }
       if (defined(qc_check_table)) {
         call qc_check.qc_check_phb as qc_check_task {
@@ -257,6 +259,7 @@ workflow theiaeuk_illumina_pe {
     Float? est_coverage_clean = cg_pipeline_clean.est_coverage
     # Assembly QC - busco outputs
     String? busco_version = busco.busco_version
+    String? busco_docker = busco.busco_docker
     String? busco_database = busco.busco_database
     String? busco_results = busco.busco_results
     File? busco_report = busco.busco_report

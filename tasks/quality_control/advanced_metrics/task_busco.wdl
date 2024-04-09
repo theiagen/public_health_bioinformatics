@@ -7,7 +7,7 @@ task busco {
   input {
     File assembly
     String samplename
-    String docker = "us-docker.pkg.dev/general-theiagen/ezlabgva/busco:v5.3.2_cv1"
+    String docker = "us-docker.pkg.dev/general-theiagen/ezlabgva/busco:v5.7.1_cv1"
     Int memory = 8
     Int cpu = 2
     Int disk_size = 100
@@ -25,6 +25,7 @@ task busco {
     # --auto-lineage-prok looks at only prokaryotic organisms; default
     busco \
       -i ~{assembly} \
+      -c ~{cpu} \
       -m geno \
       -o ~{samplename} \
       ~{true='--auto-lineage-euk' false='--auto-lineage-prok' eukaryote}
@@ -33,12 +34,17 @@ task busco {
     if [ -f ~{samplename}/short_summary.specific.*.~{samplename}.txt ]; then
 
       # grab the database version and format it according to BUSCO recommendations
-      cat ~{samplename}/short_summary.specific.*.~{samplename}.txt | grep "dataset is:" | cut -d' ' -f 6,9 | sed 's/,//' | sed 's/ / (/' | sed 's/$/)/' | tee DATABASE
+      # pull line out of final specific summary file
+      # cut out the database name and date it was created
+      # sed is to remove extra comma and to add parentheses around the date and remove all tabs
+      # finally write to a file called DATABASE
+      cat ~{samplename}/short_summary.specific.*.~{samplename}.txt | grep "dataset is:" | cut -d' ' -f 6,9 | sed 's/,//; s/ / (/; s/$/)/; s|[\t]||g' | tee DATABASE
       
-      # extract the results string
-      cat ~{samplename}/short_summary.specific.*.~{samplename}.txt | grep "C:" | tee BUSCO_RESULTS
+      # extract the results string; strip off all tab and space characters; write to a file called BUSCO_RESULTS
+      cat ~{samplename}/short_summary.specific.*.~{samplename}.txt | grep "C:" | sed 's|[\t]||g; s| ||g' | tee BUSCO_RESULTS
 
-      cp ~{samplename}/short_summary.specific.*.~{samplename}.txt ~{samplename}_busco-summary.txt
+      # rename final output file to predictable name
+      cp -v ~{samplename}/short_summary.specific.*.~{samplename}.txt ~{samplename}_busco-summary.txt
     else
       echo "BUSCO FAILED" | tee BUSCO_RESULTS
       echo "NA" > DATABASE
@@ -46,6 +52,7 @@ task busco {
   >>>
   output {
     String busco_version = read_string("VERSION")
+    String busco_docker = docker
     String busco_database = read_string("DATABASE")
     String busco_results = read_string("BUSCO_RESULTS")
     File? busco_report = "~{samplename}_busco-summary.txt"
