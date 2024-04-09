@@ -125,6 +125,7 @@ task tbprofiler {
     CODE
   >>>
   output {
+    File tbprofiler_custom_output = "./results/~{samplename}example.csv"
     File tbprofiler_output_csv = "./results/~{samplename}.results.csv"
     File tbprofiler_output_tsv = "./results/~{samplename}.results.txt"
     File tbprofiler_output_json = "./results/~{samplename}.results.json"
