@@ -1,6 +1,6 @@
 # Public Health Bioinformatics (PHB)
 
-The Public Health Bioinformatics Bioinformatics repository contains workflows for characterization, epidemiology and sharing of pathogen genomes.
+The Public Health Bioinformatics Bioinformatics repository contains workflows for genomic characterization, submission preparation, and genomic epidemiology of pathogens of public health concern.
 
 ## Introduction
 
