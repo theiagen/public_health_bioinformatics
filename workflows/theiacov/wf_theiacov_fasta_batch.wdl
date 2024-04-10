@@ -16,7 +16,6 @@ workflow theiacov_fasta_batch {
     Array[File] assembly_fastas
     String organism = "sars-cov-2"
     # nextclade inputs
-    String? nextclade_dataset_reference
     String? nextclade_dataset_tag
     String? nextclade_dataset_name
     # pangolin inputs
@@ -30,7 +29,6 @@ workflow theiacov_fasta_batch {
   call set_organism_defaults.organism_parameters {
     input:
       organism = organism,
-      nextclade_dataset_reference_input = nextclade_dataset_reference,
       nextclade_dataset_tag_input = nextclade_dataset_tag,
       nextclade_dataset_name_input = nextclade_dataset_name,
       pangolin_docker_image = pangolin_docker
@@ -52,11 +50,10 @@ workflow theiacov_fasta_batch {
   }
   if (organism == "MPXV" || organism == "sars-cov-2") {
     # tasks specific to either MPXV or sars-cov-2 
-    call nextclade_task.nextclade {
+    call nextclade_task.nextclade_v3 {
       input:
       genome_fasta = cat_files_fasta.concatenated_files,
       dataset_name = organism_parameters.nextclade_dataset_name,
-      dataset_reference = organism_parameters.nextclade_dataset_reference,
       dataset_tag = organism_parameters.nextclade_dataset_tag
     }
   }
@@ -71,11 +68,11 @@ workflow theiacov_fasta_batch {
       bucket_name = bucket_name,
       samplenames = samplenames,
       organism = organism_parameters.standardized_organism,
-      nextclade_tsv = nextclade.nextclade_tsv,
-      nextclade_docker = nextclade.nextclade_docker,
-      nextclade_version = nextclade.nextclade_version,
+      nextclade_tsv = nextclade_v3.nextclade_tsv,
+      nextclade_docker = nextclade_v3.nextclade_docker,
+      nextclade_version = nextclade_v3.nextclade_version,
       nextclade_ds_tag = nextclade_dataset_tag,
-      nextclade_json = nextclade.nextclade_json,
+      nextclade_json = nextclade_v3.nextclade_json,
       pango_lineage_report = pangolin4.pango_lineage_report,
       pangolin_docker = pangolin4.pangolin_docker,
       theiacov_fasta_analysis_date = version_capture.date,
@@ -88,8 +85,8 @@ workflow theiacov_fasta_batch {
     # Pangolin outputs
     File? pango_lineage_report = pangolin4.pango_lineage_report
     # Nextclade outputs
-    File? nextclade_json = nextclade.nextclade_json
-    File? nextclade_tsv = nextclade.nextclade_tsv
+    File? nextclade_json = nextclade_v3.nextclade_json
+    File? nextclade_tsv = nextclade_v3.nextclade_tsv
     # Wrangling outputs
     File datatable = sm_theiacov_fasta_wrangling.terra_table
   }

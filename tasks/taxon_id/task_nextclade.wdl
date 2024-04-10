@@ -60,6 +60,72 @@ task nextclade {
   }
 }
 
+task nextclade_v3 {
+  meta {
+    description: "Nextclade classification of one sample. Leaving optional inputs unspecified will use SARS-CoV-2 defaults."
+  }
+  input {
+    File genome_fasta
+    File? auspice_reference_tree_json
+    File? gene_annotations_gff
+    File? nextclade_pathogen_json
+    File? input_ref
+    String docker = "us-docker.pkg.dev/general-theiagen/nextstrain/nextclade:3.3.1" 
+    String dataset_name
+    String verbosity = "warn" # other options are: "off" "error" "info" "debug" and "trace"
+    String dataset_tag
+    Int disk_size = 50
+    Int memory = 4
+    Int cpu = 2
+  }
+  String basename = basename(genome_fasta, ".fasta")
+  command <<<
+    # track version & print to log
+    nextclade --version | tee NEXTCLADE_VERSION
+
+    # --reference no longer used in v3. consolidated into --name and --tag
+    nextclade dataset get \
+      --name="~{dataset_name}" \
+      --tag="~{dataset_tag}" \
+      -o nextclade_dataset_dir \
+      --verbosity ~{verbosity}
+
+    # exit script/task upon error
+    set -e
+
+    # not necessary to include `--jobs <jobs>` in v3. Nextclade will use all available CPU threads by default. It's fast so I don't think we will need to change unless we see errors
+    nextclade run \
+      --input-dataset nextclade_dataset_dir/ \
+      ~{"--input-ref " + input_ref} \
+      ~{"--input-tree " + auspice_reference_tree_json} \
+      ~{"--input-pathogen-json " + nextclade_pathogen_json} \
+      ~{"--input-annotation " + gene_annotations_gff} \
+      --output-json "~{basename}".nextclade.json \
+      --output-tsv  "~{basename}".nextclade.tsv \
+      --output-tree "~{basename}".nextclade.auspice.json \
+      --output-all . \
+      --verbosity ~{verbosity} \
+      "~{genome_fasta}"
+  >>>
+  runtime {
+    docker: "~{docker}"
+    memory: "~{memory} GB"
+    cpu: cpu
+    disks:  "local-disk " + disk_size + " SSD"
+    disk: disk_size + " GB" # TES
+    dx_instance_type: "mem1_ssd1_v2_x2"
+    maxRetries: 3 
+  }
+  output {
+    String nextclade_version = read_string("NEXTCLADE_VERSION")
+    File nextclade_json = "~{basename}.nextclade.json"
+    File auspice_json = "~{basename}.nextclade.auspice.json"
+    File nextclade_tsv = "~{basename}.nextclade.tsv"
+    String nextclade_docker = docker
+    String nextclade_dataset_tag = "~{dataset_tag}"
+  }
+}
+
 task nextclade_output_parser {
   meta {
     description: "Python and bash codeblocks for parsing the output files from Nextclade."
@@ -163,52 +229,49 @@ task nextclade_add_ref {
   }
   input {
     File genome_fasta
-    File? root_sequence
     File? reference_tree_json
-    File? qc_config_json
+    File? nextclade_pathogen_json
     File? gene_annotations_gff
-    File? pcr_primers_csv
-    File? virus_properties
-    String docker = "us-docker.pkg.dev/general-theiagen/nextstrain/nextclade:2.14.0"
+    File? input_ref
+    String docker = "us-docker.pkg.dev/general-theiagen/nextstrain/nextclade:3.3.1"
     String dataset_name
-    String? dataset_reference
     String? dataset_tag
-    Int disk_size = 50
-    Int memory = 8
+    String verbosity = "warn" # other options are: "off" "error" "info" "debug" and "trace"
+    Int disk_size = 100
+    Int memory = 4
     Int cpu = 2
   }
   String basename = basename(genome_fasta, ".fasta")
   command <<<
-    NEXTCLADE_VERSION="$(nextclade --version)"
-    echo $NEXTCLADE_VERSION > NEXTCLADE_VERSION
+    # track version & print to log
+    nextclade --version | tee NEXTCLADE_VERSION
 
+    echo "DEBUG: downloading nextclade dataset..."
     nextclade dataset get \
       --name="~{dataset_name}" \
-      ~{"--reference " + dataset_reference} \
       ~{"--tag " + dataset_tag} \
       -o nextclade_dataset_dir \
-      --verbose
+      --verbosity ~{verbosity}
 
-    # If no referece sequence is provided, use the reference tree from the dataset
+    # If no reference sequence is provided, use the reference tree from the dataset
     if [ -z "~{reference_tree_json}" ]; then
       echo "Default dataset reference tree JSON will be used"
-      cp nextclade_dataset_dir/tree.json reference_tree.json
+      cp -v nextclade_dataset_dir/tree.json reference_tree.json
     else
       echo "User reference tree JSON will be used"
-      cp ~{reference_tree_json} reference_tree.json
+      cp -v ~{reference_tree_json} reference_tree.json
     fi
 
     tree_json="reference_tree.json"
 
     set -e
+    echo "DEBUG: running nextclade..."
     nextclade run \
-      --input-dataset=nextclade_dataset_dir/ \
-      ~{"--input-root-seq " + root_sequence} \
+      --input-dataset nextclade_dataset_dir/ \
       --input-tree ${tree_json} \
-      ~{"--input-qc-config " + qc_config_json} \
-      ~{"--input-gene-map " + gene_annotations_gff} \
-      ~{"--input-pcr-primers " + pcr_primers_csv} \
-      ~{"--input-virus-properties " + virus_properties}  \
+      ~{"--input-pathogen-json " + nextclade_pathogen_json} \
+      ~{"--input-annotation " + gene_annotations_gff} \
+      ~{"--input-ref " + input_ref} \
       --output-json "~{basename}".nextclade.json \
       --output-tsv  "~{basename}".nextclade.tsv \
       --output-tree "~{basename}".nextclade.auspice.json \
