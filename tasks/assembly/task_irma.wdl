@@ -16,6 +16,9 @@ task irma {
   command <<<
     date | tee DATE
 
+    # as per suggestion from IRMA author for skipping the disk size check step of IRMA
+    export ALLOW_DISK_CHECK=0
+
     #capture reads as bash variables
     read1=~{read1}
     if [[ "~{read2}" ]]; then 
