@@ -23,6 +23,9 @@ task irma {
     echo "DEBUG: here's the available disk space of all root directories:"
     df -h /*
 
+    echo "creating softlink between PWD and /tmp/${USER} which is used by IRMA for temporary files"
+    ln -s "$(pwd)" /tmp/${USER}
+
     #capture reads as bash variables
     read1=~{read1}
     if [[ "~{read2}" ]]; then 
