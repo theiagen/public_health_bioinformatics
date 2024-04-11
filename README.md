@@ -44,27 +44,27 @@ You can expect a careful review of every PR and feedback as needed before mergin
 
 (Ordered by contribution [# of lines changed] as of 2024-03-28)
 
-* **Sage Wright** (@sage-wright) - Conceptualization, Software, Validation, Supervision
-* **Inês Mendes** (@cimendes) - Software, Validation
-* **Curtis Kapsak** (@kapsakcj) - Conceptualization, Software, Validation
-* **Frank Ambrosio** (@frankambrosio3) - Conceptualization, Software, Validation
-* **James Otieno** (@jrotieno) - Software, Validation
-* **Michelle Scribner** (@michellescribner) - Software, Validation
-* **Kevin Libuit** (@kevinlibuit) - Conceptualization, Project Administration, Software, Validation, Supervision
-* **Robert Petit** (@rpetit3) - Software, Validation
-* **Emma Doughty** (@emmadoughty) - Software, Validation
-* **Andrew Page** (@andrewjpage) - Project Administration, Software, Supervision
-* **Kelsey Kropp** (@kelseykropp) - Validation
-* **Emily Smith** (@emily-smith1) - Validation
-* **Joel Sevinsky** (@sevinsky) - Conceptualization, Project Administration, Supervision
+* **Sage Wright** ([@sage-wright](https://github/sage-wright)) - Conceptualization, Software, Validation, Supervision
+* **Inês Mendes** ([@cimendes](https://github/cimendes)) - Software, Validation
+* **Curtis Kapsak** ([@kapsakcj](https://github/kapsakcj)) - Conceptualization, Software, Validation
+* **Frank Ambrosio** ([@frankambrosio3](https://github/frankambrosio3)) - Conceptualization, Software, Validation
+* **James Otieno** ([@jrotieno](https://github/jrotieno)) - Software, Validation
+* **Michelle Scribner** ([@michellescribner](https://github/michellescribner)) - Software, Validation
+* **Kevin Libuit** ([@kevinlibuit](https://github/kevinlibuit)) - Conceptualization, Project Administration, Software, Validation, Supervision
+* **Robert Petit** ([@rpetit3](https://github/rpetit3)) - Software, Validation
+* **Emma Doughty** ([@emmadoughty](https://github/emmadoughty)) - Software, Validation
+* **Andrew Page** ([@andrewjpage](https://github/andrewjpage)) - Project Administration, Software, Supervision
+* **Kelsey Kropp** ([@kelseykropp](https://github/kelseykropp)) - Validation
+* **Emily Smith** ([@emily-smith1](https://github/emily-smith1)) - Validation
+* **Joel Sevinsky** ([@sevinsky](https://github/sevinsky)) - Conceptualization, Project Administration, Supervision
 
 ### External Contributors
 
 We would like to gratefully acknowledge the following individuals from the public health community for their contributions to the PHB repository:
 
-* **Ash O'Farrel** (@aofarrel)
-* **Holly Halstead** (@HNHalstead)
-* **Sam Baird** (@sam-baird)
+* **Ash O'Farrel** ([@aofarrel](https://github/aofarrel))
+* **Holly Halstead** ([@HNHalstead](https://github/HNHalstead))
+* **Sam Baird** ([@sam-baird](https://github/sam-baird))
 
 ### Maintaining PHB Pipelines
 
