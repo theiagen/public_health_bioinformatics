@@ -443,16 +443,21 @@ workflow theiacov_illumina_pe {
     String? pangolin_versions = pangolin4.pangolin_versions
     # Nextclade outputs
     String nextclade_json = select_first([nextclade_v3.nextclade_json, ""])
+    String nextclade_json_flu_na = select_first([nextclade_flu_na.nextclade_json, ""])
     String auspice_json = select_first([ nextclade_v3.auspice_json, ""])
+    String auspice_json_flu_na = select_first([nextclade_flu_na.auspice_json, ""])
     String nextclade_tsv = select_first([nextclade_v3.nextclade_tsv, ""])
+    String nextclade_tsv_flu_na = select_first([nextclade_flu_na.nextclade_tsv, ""])
     String nextclade_version = select_first([nextclade_v3.nextclade_version, ""])
     String nextclade_docker = select_first([nextclade_v3.nextclade_docker, ""])
     String nextclade_ds_tag = select_first([ha_na_nextclade_ds_tag, set_flu_ha_nextclade_values.nextclade_dataset_tag, organism_parameters.nextclade_dataset_tag, ""])
     String nextclade_aa_subs = select_first([ha_na_nextclade_aa_subs, nextclade_output_parser.nextclade_aa_subs, ""])
     String nextclade_aa_dels = select_first([ha_na_nextclade_aa_dels, nextclade_output_parser.nextclade_aa_dels, ""])
     String nextclade_clade = select_first([nextclade_output_parser.nextclade_clade, ""])
+    String nextclade_clade_flu_na = select_first([nextclade_output_parser_flu_na.nextclade_clade, ""])
     String? nextclade_lineage = nextclade_output_parser.nextclade_lineage
     String? nextclade_qc = nextclade_output_parser.nextclade_qc
+    String? nextclade_qc_flu_na = nextclade_output_parser_flu_na.nextclade_qc
     # VADR Annotation QC
     File? vadr_alerts_list = vadr.alerts_list
     String? vadr_num_alerts = vadr.num_alerts
