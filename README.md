@@ -66,9 +66,9 @@ We would like to gratefully acknowledge the following individuals from the publi
 * **Holly Halstead** (@HNHalstead)
 * **Sam Baird** (@sam-baird)
 
-### Maintainence Commitment
+### Maintaining PHB Pipelines
 
-Theiagen Genomics has committed to maintaining these workflows for the forseeable future. New versions that include bug fixes and additional features are released on a quarterly bases, with urgent bug fixes released as needed.
+Theiagen Genomics has committed to maintaining these workflows for the forseeable future. These workflows are written using a standard workflow language (WDL) and uses Docker images based on the [StaPHB-B Docker Builds](https://github.com/StaPH-B/docker-builds). New versions that include bug fixes and additional features are released on a quarterly bases, with urgent bug fixes released as needed. Each version is accompanied by detailed release notes to lower the barrier of pipeline upkeep from the public health community at large.
 
 ### Point of Contact
 
