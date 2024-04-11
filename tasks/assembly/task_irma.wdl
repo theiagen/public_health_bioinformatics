@@ -16,10 +16,9 @@ task irma {
   command <<<
     date | tee DATE
 
-    ## CAUTION: this step is specific to cdcgov/irma docker image
-    # this is done so that IRMA used PWD as the TMP directory instead of /tmp/root that it tries by default; cromwell doesn't allocate much disk space here
-    echo "DEBUG: editing /flu-amd/IRMA_RES/defaults.sh IRMA configuration file to set TMP directory to $(pwd)"
-    sed "s|TMP=/tmp|TMP=$(pwd)|" /flu-amd/IRMA_RES/defaults.sh
+    # this is done so that IRMA used PWD as the TMP directory instead of /tmp/root that it tries by default; cromwell doesn't allocate much disk space here (64MB or some small amount)
+    echo "DEBUG: creating an optional IRMA configuration file to set TMP directory to $(pwd)"
+    echo "TMP=$(pwd)" >> irma_config.sh
 
     echo "DEBUG: here's the available disk space of all root directories:"
     df -h /*
@@ -64,9 +63,9 @@ task irma {
 
     # set IRMA module depending on sequencing technology
     if [[ ~{seq_method} == "OXFORD_NANOPORE" ]]; then
-      IRMA "FLU-minion" "${read1}" ~{samplename}
+      IRMA "FLU-minion" "${read1}" ~{samplename} --external-config irma_config.sh
     else
-      IRMA "FLU" "${read1}" "${read2}" ~{samplename}
+      IRMA "FLU" "${read1}" "${read2}" ~{samplename} --external-config irma_config.sh
     fi
 
     # capture IRMA type
