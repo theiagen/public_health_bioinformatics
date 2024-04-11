@@ -16,15 +16,13 @@ task irma {
   command <<<
     date | tee DATE
 
-    # as per suggestion from IRMA author for skipping the disk size check step of IRMA
-    export ALLOW_DISK_CHECK=0
-    echo "DEBUG: ALLOW_DISK_CHECK is set to: ${ALLOW_DISK_CHECK}"
+    ## CAUTION: this step is specific to cdcgov/irma docker image
+    # this is done so that IRMA used PWD as the TMP directory instead of /tmp/root that it tries by default; cromwell doesn't allocate much disk space here
+    echo "DEBUG: editing /flu-amd/IRMA_RES/defaults.sh IRMA configuration file to set TMP directory to $(pwd)"
+    sed "s|TMP=/tmp|TMP=$(pwd)|" /flu-amd/IRMA_RES/defaults.sh
 
     echo "DEBUG: here's the available disk space of all root directories:"
     df -h /*
-
-    echo "creating softlink between PWD and /tmp/${USER} which is used by IRMA for temporary files"
-    ln -s "$(pwd)" /tmp/${USER}
 
     #capture reads as bash variables
     read1=~{read1}
