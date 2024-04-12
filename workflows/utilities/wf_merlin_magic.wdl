@@ -54,6 +54,7 @@ workflow merlin_magic {
     String? shigeifinder_docker_image
     String? shigatyper_docker_image
     String? staphopia_sccmec_docker_image
+    String? seqsero2_docker_image
     String? agrvate_docker_image
     String? virulencefinder_docker_image
     Boolean paired_end = true
@@ -190,7 +191,8 @@ workflow merlin_magic {
           read1 = select_first([read1]),
           read2 = read2,
           samplename = samplename,
-          paired_end = paired_end
+          paired_end = paired_end,
+          seqsero2_docker_image = seqsero2_docker_image
       }
     }
     if (ont_data || assembly_only) {
