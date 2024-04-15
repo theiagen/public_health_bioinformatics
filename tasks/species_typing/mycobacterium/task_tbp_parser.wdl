@@ -9,11 +9,24 @@ task tbp_parser {
 
     String? sequencing_method
     String? operator
-    Int min_depth = 10
-    Int coverage_threshold = 100
+    Int? min_depth # default 10
+    Int? coverage_threshold # default 100 (--min_percent_coverage)
+    File? coverage_regions_bed
+    Float? min_frequency # default 0.1
+    Int? min_read_support # default 10
+  
     Boolean tbp_parser_debug = false
 
-    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:1.1.8"
+    Boolean tngs_data = false    
+    Float? rrs_frequency # default 0.1
+    Int? rrs_read_support # default 10
+    Float? rrl_frequency # default 0.1
+    Int? rrl_read_support # default 10
+    Float? rpob449_frequency # default 0.1
+    Float? etha237_frequency # default 0.1
+    File? expert_rule_regions_bed
+
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:1.4.0"
     Int disk_size = 100
     Int memory = 4
     Int cpu = 1
@@ -27,9 +40,20 @@ task tbp_parser {
       ~{"--sequencing_method " + sequencing_method} \
       ~{"--operator " + operator} \
       ~{"--min_depth " + min_depth} \
-      ~{"--coverage_threshold " + coverage_threshold} \
+      ~{"--min_percent_coverage " + coverage_threshold} \
+      ~{"--coverage_regions " + coverage_regions_bed} \
+      ~{"--min_frequency " + min_frequency} \
+      ~{"--min_read_support " + min_read_support} \
+      ~{"--tngs_expert_regions " + expert_rule_regions_bed} \
+      ~{"--rrs_frequency " + rrs_frequency} \
+      ~{"--rrs_read_support " + rrs_read_support} \
+      ~{"--rrl_frequency " + rrl_frequency} \
+      ~{"--rrl_read_support " + rrl_read_support} \
+      ~{"--rpob449_frequency " + rpob449_frequency} \
+      ~{"--etha237_frequency " + etha237_frequency} \
       --output_prefix ~{samplename} \
-      ~{true="--debug" false="--verbose" tbp_parser_debug}
+      ~{true="--debug" false="--verbose" tbp_parser_debug} \
+      ~{true="--tngs" false="" tngs_data}
 
     # set default genome percent coverage and average depth to 0 to prevent failures
     echo 0.0 > GENOME_PC
@@ -43,7 +67,7 @@ task tbp_parser {
     samtools depth -J ~{tbprofiler_bam} | awk -F "\t" '{sum+=$3} END { print sum/NR }' | tee AVG_DEPTH
 
     # add sample id to the beginning of the coverage report
-    awk '{print "~{samplename},"$0}' ~{samplename}.percent_gene_coverage.csv > tmp.csv && mv -f tmp.csv ~{samplename}.percent_gene_coverage.csv
+    awk '{s=(NR==1)?"Sample_accession_number,":"~{samplename},"; $0=s$0}1' ~{samplename}.percent_gene_coverage.csv > tmp.csv && mv -f tmp.csv ~{samplename}.percent_gene_coverage.csv
   >>>
   output {
     File tbp_parser_looker_report_csv = "~{samplename}.looker_report.csv"

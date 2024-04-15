@@ -1,7 +1,6 @@
 version 1.0
 
 task tbprofiler {
-  # Inputs
   input {
     File read1
     File? read2
