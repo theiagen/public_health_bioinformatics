@@ -40,7 +40,7 @@ workflow organism_parameters {
     String sc2_org_name = "sars-cov-2"
     String sc2_reference_genome = "gs://theiagen-public-files-rp/terra/augur-sars-cov-2-references/MN908947.fasta"
     String sc2_gene_locations_bed = "gs://theiagen-public-files-rp/terra/sars-cov-2-files/sc2_gene_locations.bed"
-    String sc2_nextclade_ds_tag = "2024-02-16--04-00-32Z"
+    String sc2_nextclade_ds_tag = "2024-04-15--15-08-22Z"
     String sc2_nextclade_ds_name = "nextstrain/sars-cov-2/wuhan-hu-1/orfs"
     String sc2_pangolin_docker = "us-docker.pkg.dev/general-theiagen/staphb/pangolin:4.3.1-pdata-1.26"
     Int sc2_genome_len = 29903
