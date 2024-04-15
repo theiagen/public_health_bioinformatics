@@ -14,6 +14,7 @@ workflow freyja_fastq {
     File reference_genome
     Int trimmomatic_min_length = 25
     String samplename
+    Int? depth_cutoff
   }
   call read_qc.read_QC_trim_pe as read_QC_trim {
     input:
@@ -40,7 +41,8 @@ workflow freyja_fastq {
     input:
       primer_trimmed_bam = primer_trim.trim_sorted_bam,
       samplename = samplename,
-      reference_genome = reference_genome
+      reference_genome = reference_genome,
+      depth_cutoff = depth_cutoff
   }
   call versioning.version_capture {
     input:

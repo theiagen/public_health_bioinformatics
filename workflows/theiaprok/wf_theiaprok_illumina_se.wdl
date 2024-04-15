@@ -588,6 +588,7 @@ workflow theiaprok_illumina_se {
     Float? est_coverage_clean = cg_pipeline_clean.est_coverage
     # Assembly QC - busco outputs
     String? busco_version = busco.busco_version
+    String? busco_docker = busco.busco_docker
     String? busco_database = busco.busco_database
     String? busco_results = busco.busco_results
     File? busco_report = busco.busco_report

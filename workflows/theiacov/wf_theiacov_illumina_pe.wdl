@@ -5,7 +5,7 @@ import "../../tasks/gene_typing/drug_resistance/task_abricate.wdl" as abricate
 import "../../tasks/quality_control/advanced_metrics/task_vadr.wdl" as vadr_task
 import "../../tasks/quality_control/basic_statistics/task_assembly_metrics.wdl" as assembly_metrics
 import "../../tasks/quality_control/basic_statistics/task_consensus_qc.wdl" as consensus_qc_task
-import "../../tasks/quality_control/basic_statistics/task_sc2_gene_coverage.wdl" as sc2_calculation
+import "../../tasks/quality_control/basic_statistics/task_gene_coverage.wdl" as gene_coverage_task
 import "../../tasks/quality_control/comparisons/task_qc_check_phb.wdl" as qc_check
 import "../../tasks/quality_control/comparisons/task_screen.wdl" as screen
 import "../../tasks/species_typing/betacoronavirus/task_pangolin.wdl" as pangolin
@@ -34,6 +34,7 @@ workflow theiacov_illumina_pe {
     # reference values
     File? reference_gff
     File? reference_genome
+    File? reference_gene_locations_bed
     Int? genome_length 
     # trimming parameters
     Boolean trim_primers = true
@@ -45,12 +46,12 @@ workflow theiacov_illumina_pe {
     Float consensus_min_freq = 0.6 # minimum frequency for a variant to be called as SNP in consensus genome
     Float variant_min_freq = 0.6 # minimum frequency for a variant to be reported in ivar outputs
     # nextclade inputs
-    String? nextclade_dataset_reference
     String? nextclade_dataset_tag
     String? nextclade_dataset_name
     # vadr parameters
     Int? vadr_max_length
     String? vadr_options
+    Int? vadr_memory
     # read screen parameters
     Int min_reads = 57 # min basepairs / 300 (which is the longest available read length of an Illumina product)
     Int min_basepairs = 17000 # 10x coverage of hepatitis delta virus
@@ -71,8 +72,8 @@ workflow theiacov_illumina_pe {
       organism = organism,
       reference_gff_file = reference_gff,
       reference_genome = reference_genome,
+      gene_locations_bed_file = reference_gene_locations_bed,
       genome_length_input = genome_length,
-      nextclade_dataset_reference_input = nextclade_dataset_reference,
       nextclade_dataset_tag_input = nextclade_dataset_tag,
       nextclade_dataset_name_input = nextclade_dataset_name,     
       vadr_max_length = vadr_max_length,
@@ -94,7 +95,7 @@ workflow theiacov_illumina_pe {
       skip_screen = skip_screen,
       workflow_series = "theiacov",
       organism = organism_parameters.standardized_organism,
-      expected_genome_length = genome_length
+      expected_genome_length = organism_parameters.genome_length
   }
   if (raw_check_reads.read_screen == "PASS") {
     call read_qc.read_QC_trim_pe as read_QC_trim {
@@ -122,11 +123,11 @@ workflow theiacov_illumina_pe {
         skip_screen = skip_screen,
         workflow_series = "theiacov",
         organism = organism_parameters.standardized_organism,
-        expected_genome_length = genome_length
+        expected_genome_length = organism_parameters.genome_length
     }
     if (clean_check_reads.read_screen == "PASS") {
       # assembly via bwa and ivar for non-flu data
-      if (organism_parameters.standardized_organism != "flu"){
+      if (organism_parameters.standardized_organism != "flu") {
         call consensus_call.ivar_consensus {
           input:
             samplename = samplename,
@@ -142,7 +143,7 @@ workflow theiacov_illumina_pe {
         }
       }
       # assembly via irma for flu organisms
-      if (organism_parameters.standardized_organism == "flu"){
+      if (organism_parameters.standardized_organism == "flu") {
         # flu-specific tasks
         call irma_task.irma {
           input:
@@ -182,11 +183,11 @@ workflow theiacov_illumina_pe {
               reference_gff_file = reference_gff,
               reference_genome = reference_genome,
               genome_length_input = genome_length,
-              nextclade_dataset_reference_input = nextclade_dataset_reference,
               nextclade_dataset_tag_input = nextclade_dataset_tag,
               nextclade_dataset_name_input = nextclade_dataset_name,     
               vadr_max_length = vadr_max_length,
               vadr_options = vadr_options,
+              vadr_mem = vadr_memory,
               primer_bed_file = primer_bed,
               pangolin_docker_image = pangolin_docker_image,
               kraken_target_organism_input = target_organism,
@@ -201,7 +202,6 @@ workflow theiacov_illumina_pe {
               reference_gff_file = reference_gff,
               reference_genome = reference_genome,
               genome_length_input = genome_length,
-              nextclade_dataset_reference_input = nextclade_dataset_reference,
               nextclade_dataset_tag_input = nextclade_dataset_tag,
               nextclade_dataset_name_input = nextclade_dataset_name,     
               vadr_max_length = vadr_max_length,
@@ -212,7 +212,7 @@ workflow theiacov_illumina_pe {
               hiv_primer_version = "N/A"
           }
           # these are necessary because these are optional values and cannot be directly compared in before the nextclade task. checking for variable definition can be done though, which is why we create variables here
-          if (set_flu_na_nextclade_values.nextclade_dataset_tag == "NA"){
+          if (set_flu_na_nextclade_values.nextclade_dataset_tag == "NA") {
             Boolean do_not_run_flu_na_nextclade = true
           }
           if (set_flu_ha_nextclade_values.nextclade_dataset_tag == "NA") {
@@ -240,33 +240,30 @@ workflow theiacov_illumina_pe {
       # run organism-specific typing
       if (organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "sars-cov-2" || (organism_parameters.standardized_organism == "flu" && defined(irma.seg_ha_assembly) && ! defined(do_not_run_flu_ha_nextclade))) { 
         # tasks specific to either MPXV, sars-cov-2, or flu
-        call nextclade_task.nextclade {
+        call nextclade_task.nextclade_v3 {
           input:
             genome_fasta = select_first([irma.seg_ha_assembly, ivar_consensus.assembly_fasta]),
             dataset_name = select_first([set_flu_ha_nextclade_values.nextclade_dataset_name, organism_parameters.nextclade_dataset_name]),
-            dataset_reference = select_first([set_flu_ha_nextclade_values.nextclade_dataset_reference, organism_parameters.nextclade_dataset_reference]),
             dataset_tag = select_first([set_flu_ha_nextclade_values.nextclade_dataset_tag, organism_parameters.nextclade_dataset_tag])
         }
         call nextclade_task.nextclade_output_parser {
           input:
-            nextclade_tsv = nextclade.nextclade_tsv,
+            nextclade_tsv = nextclade_v3.nextclade_tsv,
             organism = organism_parameters.standardized_organism
         }
       }
       if (organism_parameters.standardized_organism == "flu" && defined(irma.seg_na_assembly) && ! defined(do_not_run_flu_na_nextclade)) { 
         # tasks specific to flu NA - run nextclade a second time
-        call nextclade_task.nextclade as nextclade_flu_na {
+        call nextclade_task.nextclade_v3 as nextclade_flu_na {
           input:
             genome_fasta = select_first([irma.seg_na_assembly]),
             dataset_name = select_first([set_flu_na_nextclade_values.nextclade_dataset_name, organism_parameters.nextclade_dataset_name]),
-            dataset_reference = select_first([set_flu_na_nextclade_values.nextclade_dataset_reference, organism_parameters.nextclade_dataset_reference]),
             dataset_tag = select_first([set_flu_na_nextclade_values.nextclade_dataset_tag, organism_parameters.nextclade_dataset_tag])
-       }
+        }
         call nextclade_task.nextclade_output_parser as nextclade_output_parser_flu_na {
           input:
             nextclade_tsv = nextclade_flu_na.nextclade_tsv,
-            organism = organism_parameters.standardized_organism,
-            NA_segment = true
+            organism = organism_parameters.standardized_organism
         }
         # concatenate tag, aa subs and aa dels for HA and NA segments
         String ha_na_nextclade_ds_tag = "~{set_flu_ha_nextclade_values.nextclade_dataset_tag + ',' + set_flu_na_nextclade_values.nextclade_dataset_tag}"
@@ -281,21 +278,26 @@ workflow theiacov_illumina_pe {
             fasta = select_first([ivar_consensus.assembly_fasta]),
             docker = organism_parameters.pangolin_docker
         }
-        call sc2_calculation.sc2_gene_coverage {
-          input: 
+      }
+      if (organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "MPXV" || defined(reference_gene_locations_bed)) {
+        # tasks specific to either sars-cov-2, MPXV, or any organism with a user-supplied reference gene locations bed file
+        call gene_coverage_task.gene_coverage {
+          input:
+            bamfile = select_first([ivar_consensus.aligned_bam, irma.seg_ha_bam, irma.seg_na_bam, ""]),
+            bedfile = select_first([reference_gene_locations_bed, organism_parameters.gene_locations_bed]),
             samplename = samplename,
-            bamfile = select_first([ivar_consensus.aligned_bam]),
-            min_depth = min_depth
+            organism = organism_parameters.standardized_organism
         }
       }
-      if (organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "WNV"){ 
-        # tasks specific to MPXV, sars-cov-2, and WNV
+      if (organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "WNV" || organism_parameters.standardized_organism == "flu" || organism_parameters.standardized_organism == "rsv_a" || organism_parameters.standardized_organism == "rsv_b"){ 
+        # tasks specific to MPXV, sars-cov-2, WNV, flu rsv_a and rsv_b
         call vadr_task.vadr {
           input:
-            genome_fasta = select_first([ivar_consensus.assembly_fasta]),
+            genome_fasta = select_first([ivar_consensus.assembly_fasta, irma.irma_assembly_fasta]),
             assembly_length_unambiguous = consensus_qc.number_ATCG,
             vadr_opts = organism_parameters.vadr_opts,
-            max_length = organism_parameters.vadr_maxlength
+            max_length = organism_parameters.vadr_maxlength,
+            memory = organism_parameters.vadr_memory
         }
       }
       if (organism_parameters.standardized_organism == "HIV") {
@@ -427,9 +429,9 @@ workflow theiacov_illumina_pe {
     Int? number_Total = consensus_qc.number_Total
     Float? percent_reference_coverage =  consensus_qc.percent_reference_coverage
     # SC2 specific coverage outputs
-    Float? sc2_s_gene_mean_coverage = sc2_gene_coverage.sc2_s_gene_depth
-    Float? sc2_s_gene_percent_coverage = sc2_gene_coverage.sc2_s_gene_percent_coverage
-    File? sc2_all_genes_percent_coverage = sc2_gene_coverage.sc2_all_genes_percent_coverage
+    Float? sc2_s_gene_mean_coverage = gene_coverage.sc2_s_gene_depth
+    Float? sc2_s_gene_percent_coverage = gene_coverage.sc2_s_gene_percent_coverage
+    File? est_percent_gene_coverage_tsv = gene_coverage.est_percent_gene_coverage_tsv
     # Pangolin outputs
     String? pango_lineage = pangolin4.pangolin_lineage
     String? pango_lineage_expanded = pangolin4.pangolin_lineage_expanded
@@ -440,19 +442,22 @@ workflow theiacov_illumina_pe {
     String? pangolin_docker = pangolin4.pangolin_docker
     String? pangolin_versions = pangolin4.pangolin_versions
     # Nextclade outputs
-    String nextclade_json = select_first([nextclade.nextclade_json, ""])
-    String auspice_json = select_first([ nextclade.auspice_json, ""])
-    String nextclade_tsv = select_first([nextclade.nextclade_tsv, ""])
-    String nextclade_version = select_first([nextclade.nextclade_version, ""])
-    String nextclade_docker = select_first([nextclade.nextclade_docker, ""])
+    String nextclade_json = select_first([nextclade_v3.nextclade_json, ""])
+    String nextclade_json_flu_na = select_first([nextclade_flu_na.nextclade_json, ""])
+    String auspice_json = select_first([ nextclade_v3.auspice_json, ""])
+    String auspice_json_flu_na = select_first([nextclade_flu_na.auspice_json, ""])
+    String nextclade_tsv = select_first([nextclade_v3.nextclade_tsv, ""])
+    String nextclade_tsv_flu_na = select_first([nextclade_flu_na.nextclade_tsv, ""])
+    String nextclade_version = select_first([nextclade_v3.nextclade_version, ""])
+    String nextclade_docker = select_first([nextclade_v3.nextclade_docker, ""])
     String nextclade_ds_tag = select_first([ha_na_nextclade_ds_tag, set_flu_ha_nextclade_values.nextclade_dataset_tag, organism_parameters.nextclade_dataset_tag, ""])
     String nextclade_aa_subs = select_first([ha_na_nextclade_aa_subs, nextclade_output_parser.nextclade_aa_subs, ""])
     String nextclade_aa_dels = select_first([ha_na_nextclade_aa_dels, nextclade_output_parser.nextclade_aa_dels, ""])
     String nextclade_clade = select_first([nextclade_output_parser.nextclade_clade, ""])
+    String nextclade_clade_flu_na = select_first([nextclade_output_parser_flu_na.nextclade_clade, ""])
     String? nextclade_lineage = nextclade_output_parser.nextclade_lineage
     String? nextclade_qc = nextclade_output_parser.nextclade_qc
-    # Nextclade Flu outputs - NA specific columns - tamiflu mutation
-    String? nextclade_tamiflu_resistance_aa_subs = nextclade_output_parser_flu_na.nextclade_tamiflu_aa_subs
+    String? nextclade_qc_flu_na = nextclade_output_parser_flu_na.nextclade_qc
     # VADR Annotation QC
     File? vadr_alerts_list = vadr.alerts_list
     String? vadr_num_alerts = vadr.num_alerts

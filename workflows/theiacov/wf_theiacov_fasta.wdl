@@ -8,7 +8,7 @@ import "../../tasks/quality_control/comparisons/task_qc_check_phb.wdl" as qc_che
 import "../../tasks/species_typing/betacoronavirus/task_pangolin.wdl" as pangolin
 import "../../tasks/task_versioning.wdl" as versioning
 import "../../tasks/taxon_id/task_nextclade.wdl" as nextclade_task
-import "../utilities/wf_organism_parameters.wdl" as defaults
+import "../utilities/wf_organism_parameters.wdl" as set_organism_defaults
 
 workflow theiacov_fasta {
   meta {
@@ -25,7 +25,6 @@ workflow theiacov_fasta {
     File? reference_genome
     Int? genome_length
     # nextclade inputs (default SC2)
-    String? nextclade_dataset_reference
     String? nextclade_dataset_tag
     String? nextclade_dataset_name
     # sequencing values
@@ -36,6 +35,7 @@ workflow theiacov_fasta {
     # vadr parameters
     Int? max_length
     String? vadr_opts
+    Int? vadr_memory
   }
   # only run abricate if user sets organism = "flu" AND if flu_subtype is unknown/not set by user
   if (!defined(flu_subtype) && organism == "flu") {
@@ -46,18 +46,18 @@ workflow theiacov_fasta {
     }
   String abricate_subtype = abricate_flu.abricate_flu_subtype
   }
-  call defaults.organism_parameters {
+  call set_organism_defaults.organism_parameters {
     input:
       organism = organism,
       flu_segment = flu_segment,
       flu_subtype = select_first([flu_subtype, abricate_subtype, "N/A"]),
       reference_genome = reference_genome,
       genome_length_input = genome_length,
-      nextclade_dataset_reference_input = nextclade_dataset_reference,
       nextclade_dataset_tag_input = nextclade_dataset_tag,
       nextclade_dataset_name_input = nextclade_dataset_name,
       vadr_max_length = max_length,
-      vadr_options = vadr_opts
+      vadr_options = vadr_opts,
+      vadr_mem = vadr_memory
   }
   call consensus_qc_task.consensus_qc {
     input:
@@ -75,28 +75,28 @@ workflow theiacov_fasta {
   }
   if (organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "rsv_a" || organism_parameters.standardized_organism == "rsv_b" || organism_parameters.standardized_organism == "flu") {
     if (organism_parameters.nextclade_dataset_tag != "NA") {
-      call nextclade_task.nextclade {
+      call nextclade_task.nextclade_v3 {
         input:
           genome_fasta = assembly_fasta,
           dataset_name = organism_parameters.nextclade_dataset_name,
-          dataset_reference = organism_parameters.nextclade_dataset_reference,
           dataset_tag = organism_parameters.nextclade_dataset_tag
       }
       call nextclade_task.nextclade_output_parser {
         input:
-          nextclade_tsv = nextclade.nextclade_tsv,
+          nextclade_tsv = nextclade_v3.nextclade_tsv,
           organism = organism_parameters.standardized_organism
       }
     }
   }
   # vadr task
-  if (organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "rsv_a" || organism_parameters.standardized_organism == "rsv_b" || organism_parameters.standardized_organism == "WNV") {
+  if (organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "rsv_a" || organism_parameters.standardized_organism == "rsv_b" || organism_parameters.standardized_organism == "WNV" || organism_parameters.standardized_organism == "flu") {
     call vadr_task.vadr {
       input:
         genome_fasta = assembly_fasta,
         assembly_length_unambiguous = consensus_qc.number_ATCG,
         max_length = organism_parameters.vadr_maxlength,
-        vadr_opts = organism_parameters.vadr_opts
+        vadr_opts = organism_parameters.vadr_opts,
+        memory = organism_parameters.vadr_memory
     }
   }
   # QC check task
@@ -104,7 +104,7 @@ workflow theiacov_fasta {
     call qc_check.qc_check_phb {
       input:
         qc_check_table = qc_check_table,
-        expected_taxon = organism,
+        expected_taxon = organism_parameters.standardized_organism,
         number_N = consensus_qc.number_N,
         assembly_length_unambiguous = consensus_qc.number_ATCG,
         number_Degenerate = consensus_qc.number_Degenerate,
@@ -138,11 +138,11 @@ workflow theiacov_fasta {
     String? pangolin_docker = pangolin4.pangolin_docker
     String? pangolin_versions = pangolin4.pangolin_versions
     # Nextclade outputs
-    File? nextclade_json = nextclade.nextclade_json
-    File? auspice_json = nextclade.auspice_json
-    File? nextclade_tsv = nextclade.nextclade_tsv
-    String? nextclade_version = nextclade.nextclade_version
-    String? nextclade_docker = nextclade.nextclade_docker
+    File? nextclade_json = nextclade_v3.nextclade_json
+    File? auspice_json = nextclade_v3.auspice_json
+    File? nextclade_tsv = nextclade_v3.nextclade_tsv
+    String? nextclade_version = nextclade_v3.nextclade_version
+    String? nextclade_docker = nextclade_v3.nextclade_docker
     String nextclade_ds_tag =  organism_parameters.nextclade_dataset_tag
     String? nextclade_clade = nextclade_output_parser.nextclade_clade
     String? nextclade_aa_subs = nextclade_output_parser.nextclade_aa_subs
