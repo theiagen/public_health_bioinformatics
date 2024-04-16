@@ -9,7 +9,7 @@ task abricate_vibrio {
     Int mincov = 60
     Int cpu = 2
     Int memory = 4
-    String docker = "us-docker.pkg.dev/general-theiagen/docker-private/abricate:1.0.1-vibrio-cholera"
+    String docker = "us-docker.pkg.dev/general-theiagen/internal/abricate:1.0.1-vibrio-cholera"
     Int disk_size = 100
   }
   command <<<
