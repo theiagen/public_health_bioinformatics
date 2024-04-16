@@ -30,6 +30,7 @@ import "../../tasks/species_typing/streptococcus/task_pbptyper.wdl" as pbptyper
 import "../../tasks/species_typing/streptococcus/task_poppunk_streppneumo.wdl" as poppunk_spneumo
 import "../../tasks/species_typing/streptococcus/task_seroba.wdl" as seroba
 import "../../tasks/species_typing/vibrio/task_srst2_vibrio.wdl" as srst2_vibrio_task
+import "../../tasks/species_typing/vibrio/task_abricate_vibrio.wdl" as abricate_vibrio_task
 
 # theiaeuk
 import "../../tasks/gene_typing/variant_detection/task_snippy_gene_query.wdl" as snippy_gene_query
@@ -87,6 +88,8 @@ workflow merlin_magic {
     Float? virulencefinder_coverage_threshold
     Float? virulencefinder_identity_threshold
     String? virulencefinder_database
+    Int abricate_minid = 70 # TODO: should be adjusted
+    Int abricate_mincov = 60 # TODO: should be adjusted
   }
   # theiaprok
   if (merlin_tag == "Acinetobacter baumannii") {
@@ -366,6 +369,13 @@ workflow merlin_magic {
           srst2_min_edge_depth = srst2_min_edge_depth,
           srst2_gene_max_mismatch = srst2_gene_max_mismatch
       }
+    }
+    call abricate_vibrio_task.abricate_vibrio {
+      input:
+        assembly = assembly,
+        samplename = samplename,
+        minid = abricate_minid,
+        mincov = abricate_mincov
     }
   }
   
@@ -675,6 +685,15 @@ workflow merlin_magic {
     String? srst2_vibrio_toxR = srst2_vibrio.srst2_vibrio_toxR
     String? srst2_vibrio_serogroup = srst2_vibrio.srst2_vibrio_serogroup
     String? srst2_vibrio_biotype = srst2_vibrio.srst2_vibrio_biotype
+    File? abricate_vibrio_abricate_tsv = abricate_vibrio.abricate_vibrio_results
+    String? abricate_vibrio_database = abricate_vibrio.abricate_vibrio_database
+    String? abricate_vibrio_version = abricate_vibrio.abricate_vibrio_version
+    String? abricate_vibrio_ctxA = abricate_vibrio.abricate_vibrio_ctxA
+    String? abricate_vibrio_ompW = abricate_vibrio.abricate_vibrio_ompW
+    String? abricate_vibrio_toxR = abricate_vibrio.abricate_vibrio_toxR
+    String? abricate_vibrio_biotype = abricate_vibrio.abricate_vibrio_biotype
+    String? abricate_vibrio_serogroup = abricate_vibrio.abricate_vibrio_serogroup
+    
     # theiaeuk
     # c auris 
     String? clade_type = cladetyper.gambit_cladetype
