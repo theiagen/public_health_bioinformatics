@@ -555,7 +555,15 @@ workflow theiaprok_illumina_pe {
             srst2_vibrio_ompW = merlin_magic.srst2_vibrio_ompW,
             srst2_vibrio_toxR = merlin_magic.srst2_vibrio_toxR,
             srst2_vibrio_serogroup = merlin_magic.srst2_vibrio_serogroup,
-            srst2_vibrio_biotype = merlin_magic.srst2_vibrio_biotype
+            srst2_vibrio_biotype = merlin_magic.srst2_vibrio_biotype,
+            abricate_vibrio_abricate_tsv = merlin_magic.abricate_vibrio_abricate_tsv,
+            abricate_vibrio_database = merlin_magic.abricate_vibrio_database,
+            abricate_vibrio_version = merlin_magic.abricate_vibrio_version,
+            abricate_vibrio_ctxA = merlin_magic.abricate_vibrio_ctxA,
+            abricate_vibrio_ompW = merlin_magic.abricate_vibrio_ompW,
+            abricate_vibrio_toxR = merlin_magic.abricate_vibrio_toxR,
+            abricate_vibrio_biotype = merlin_magic.abricate_vibrio_biotype,
+            abricate_vibrio_serogroup = merlin_magic.abricate_vibrio_serogroup
         }
       }
     }
@@ -941,6 +949,14 @@ workflow theiaprok_illumina_pe {
     String? srst2_vibrio_toxR = merlin_magic.srst2_vibrio_toxR
     String? srst2_vibrio_biotype = merlin_magic.srst2_vibrio_biotype
     String? srst2_vibrio_serogroup = merlin_magic.srst2_vibrio_serogroup
+    File? abricate_vibrio_abricate_tsv = merlin_magic.abricate_vibrio_abricate_tsv
+    String? abricate_vibrio_database = merlin_magic.abricate_vibrio_database
+    String? abricate_vibrio_version = merlin_magic.abricate_vibrio_version
+    String? abricate_vibrio_ctxA = merlin_magic.abricate_vibrio_ctxA
+    String? abricate_vibrio_ompW = merlin_magic.abricate_vibrio_ompW
+    String? abricate_vibrio_toxR = merlin_magic.abricate_vibrio_toxR
+    String? abricate_vibrio_biotype = merlin_magic.abricate_vibrio_biotype
+    String? abricate_vibrio_serogroup = merlin_magic.abricate_vibrio_serogroup
     # export taxon table output
     String? taxon_table_status = export_taxon_tables.status
   }
