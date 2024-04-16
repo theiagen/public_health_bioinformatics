@@ -163,10 +163,11 @@ workflow theiacov_ont {
               reference_genome = reference_genome,
               genome_length_input = genome_length,
               nextclade_dataset_tag_input = nextclade_dataset_tag,
-              nextclade_dataset_name_input = nextclade_dataset_name,     
+              nextclade_dataset_name_input = nextclade_dataset_name,
               vadr_max_length = vadr_max_length,
               vadr_options = vadr_options,
               primer_bed_file = primer_bed,
+              gene_locations_bed_file = reference_gene_locations_bed,
               pangolin_docker_image = pangolin_docker_image,
               kraken_target_organism_input = target_organism,
               hiv_primer_version = "N/A"
@@ -184,6 +185,7 @@ workflow theiacov_ont {
               vadr_max_length = vadr_max_length,
               vadr_options = vadr_options,
               primer_bed_file = primer_bed,
+              gene_locations_bed_file = reference_gene_locations_bed,
               pangolin_docker_image = pangolin_docker_image,
               kraken_target_organism_input = target_organism,
               hiv_primer_version = "N/A"
