@@ -96,6 +96,7 @@ workflow theiacov_fasta {
         assembly_length_unambiguous = consensus_qc.number_ATCG,
         max_length = organism_parameters.vadr_maxlength,
         vadr_opts = organism_parameters.vadr_opts,
+        skip_length = organism_parameters.vadr_skiplength,
         memory = organism_parameters.vadr_memory
     }
   }

@@ -173,6 +173,7 @@ workflow theiacov_illumina_se {
             assembly_length_unambiguous = consensus_qc.number_ATCG,
             vadr_opts = organism_parameters.vadr_opts,
             max_length = organism_parameters.vadr_maxlength,
+            skip_length = organism_parameters.vadr_skiplength,
             memory = organism_parameters.vadr_memory
         }
       }
