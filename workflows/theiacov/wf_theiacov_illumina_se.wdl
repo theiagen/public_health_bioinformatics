@@ -52,6 +52,7 @@ workflow theiacov_illumina_se {
     Boolean skip_mash = false
     # vadr parameters
     Int? vadr_max_length
+    Int? vadr_skip_length
     String? vadr_options
     Int? vadr_memory
     # pangolin parameters
@@ -69,6 +70,7 @@ workflow theiacov_illumina_se {
       nextclade_dataset_tag_input = nextclade_dataset_tag,
       nextclade_dataset_name_input = nextclade_dataset_name,     
       vadr_max_length = vadr_max_length,
+      vadr_skip_length = vadr_skip_length,
       vadr_options = vadr_options,
       vadr_mem = vadr_memory,
       primer_bed_file = primer_bed,
@@ -173,6 +175,7 @@ workflow theiacov_illumina_se {
             assembly_length_unambiguous = consensus_qc.number_ATCG,
             vadr_opts = organism_parameters.vadr_opts,
             max_length = organism_parameters.vadr_maxlength,
+            skip_length = organism_parameters.vadr_skiplength,
             memory = organism_parameters.vadr_memory
         }
       }
