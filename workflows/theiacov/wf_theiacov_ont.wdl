@@ -70,6 +70,7 @@ workflow theiacov_ont {
       nextclade_dataset_tag_input = nextclade_dataset_tag,
       nextclade_dataset_name_input = nextclade_dataset_name,     
       vadr_max_length = vadr_max_length,
+      vadr_skip_length = vadr_skip_length,
       vadr_options = vadr_options,
       vadr_mem = vadr_memory,
       primer_bed_file = primer_bed,
