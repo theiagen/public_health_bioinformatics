@@ -33,7 +33,8 @@ workflow theiacov_fasta {
     # qc check parameters
     File? qc_check_table
     # vadr parameters
-    Int? max_length
+    Int? vadr_max_length
+    Int? vadr_skip_length
     String? vadr_opts
     Int? vadr_memory
   }
@@ -55,7 +56,8 @@ workflow theiacov_fasta {
       genome_length_input = genome_length,
       nextclade_dataset_tag_input = nextclade_dataset_tag,
       nextclade_dataset_name_input = nextclade_dataset_name,
-      vadr_max_length = max_length,
+      vadr_max_length = vadr_max_length,
+      vadr_skip_length = vadr_skip_length,
       vadr_options = vadr_opts,
       vadr_mem = vadr_memory
   }
