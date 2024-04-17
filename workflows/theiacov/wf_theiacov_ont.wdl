@@ -53,6 +53,7 @@ workflow theiacov_ont {
     Boolean skip_mash = false
     # vadr parameters
     Int? vadr_max_length
+    Int? vadr_skip_length
     String? vadr_options
     Int? vadr_memory
     # pangolin parameters
@@ -165,6 +166,7 @@ workflow theiacov_ont {
               nextclade_dataset_tag_input = nextclade_dataset_tag,
               nextclade_dataset_name_input = nextclade_dataset_name,
               vadr_max_length = vadr_max_length,
+              vadr_skip_length = vadr_skip_length,
               vadr_options = vadr_options,
               primer_bed_file = primer_bed,
               gene_locations_bed_file = reference_gene_locations_bed,
@@ -183,6 +185,7 @@ workflow theiacov_ont {
               nextclade_dataset_tag_input = nextclade_dataset_tag,
               nextclade_dataset_name_input = nextclade_dataset_name,     
               vadr_max_length = vadr_max_length,
+              vadr_skip_length = vadr_skip_length,
               vadr_options = vadr_options,
               primer_bed_file = primer_bed,
               gene_locations_bed_file = reference_gene_locations_bed,

@@ -50,6 +50,7 @@ workflow theiacov_illumina_pe {
     String? nextclade_dataset_name
     # vadr parameters
     Int? vadr_max_length
+    Int? vadr_skip_length
     String? vadr_options
     Int? vadr_memory
     # read screen parameters
@@ -77,6 +78,7 @@ workflow theiacov_illumina_pe {
       nextclade_dataset_tag_input = nextclade_dataset_tag,
       nextclade_dataset_name_input = nextclade_dataset_name,     
       vadr_max_length = vadr_max_length,
+      vadr_skip_length = vadr_skip_length,
       vadr_options = vadr_options,
       primer_bed_file = primer_bed,
       pangolin_docker_image = pangolin_docker_image,
@@ -186,6 +188,7 @@ workflow theiacov_illumina_pe {
               nextclade_dataset_tag_input = nextclade_dataset_tag,
               nextclade_dataset_name_input = nextclade_dataset_name,
               vadr_max_length = vadr_max_length,
+              vadr_skip_length = vadr_skip_length,
               vadr_options = vadr_options,
               vadr_mem = vadr_memory,
               primer_bed_file = primer_bed,
@@ -206,6 +209,7 @@ workflow theiacov_illumina_pe {
               nextclade_dataset_tag_input = nextclade_dataset_tag,
               nextclade_dataset_name_input = nextclade_dataset_name,     
               vadr_max_length = vadr_max_length,
+              vadr_skip_length = vadr_skip_length,
               vadr_options = vadr_options,
               primer_bed_file = primer_bed,
               gene_locations_bed_file = reference_gene_locations_bed,
