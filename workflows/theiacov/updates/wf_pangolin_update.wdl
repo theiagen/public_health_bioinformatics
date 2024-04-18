@@ -29,6 +29,8 @@ workflow pangolin_update {
       nextclade_dataset_tag_input = "",
       nextclade_dataset_name_input = "",     
       vadr_max_length = 0,
+      vadr_skip_length = 0,
+      vadr_mem = 0, 
       vadr_options = "",
       primer_bed_file = "gs://theiagen-public-files/terra/theiacov-files/empty.bed",
       gene_locations_bed_file = "gs://theiagen-public-files/terra/theiacov-files/empty.bed",
