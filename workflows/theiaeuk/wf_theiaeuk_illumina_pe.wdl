@@ -33,7 +33,7 @@ workflow theiaeuk_illumina_pe {
     Int trim_quality_min_score = 20
     Int trim_window_size = 10
     Int busco_memory = 24
-    String busco_docker = "us-docker.pkg.dev/general-theiagen/ezlabgva/busco:v5.3.2_cv1"
+    String busco_docker_image = "us-docker.pkg.dev/general-theiagen/ezlabgva/busco:v5.3.2_cv1"
     Boolean skip_screen = false 
     File? qc_check_table
     String? expected_taxon
@@ -143,7 +143,7 @@ workflow theiaeuk_illumina_pe {
           samplename = samplename,
           eukaryote = true,
           memory = busco_memory,
-          docker = busco_docker
+          docker = busco_docker_image
       }
       if (defined(qc_check_table)) {
         call qc_check.qc_check_phb as qc_check_task {
