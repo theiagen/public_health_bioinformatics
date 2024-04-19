@@ -27,6 +27,7 @@ workflow organism_parameters {
 
     # vadr parameters
     Int? vadr_max_length
+    Int? vadr_skip_length
     String? vadr_options
     Int? vadr_mem
 
@@ -40,11 +41,12 @@ workflow organism_parameters {
     String sc2_org_name = "sars-cov-2"
     String sc2_reference_genome = "gs://theiagen-public-files-rp/terra/augur-sars-cov-2-references/MN908947.fasta"
     String sc2_gene_locations_bed = "gs://theiagen-public-files-rp/terra/sars-cov-2-files/sc2_gene_locations.bed"
-    String sc2_nextclade_ds_tag = "2024-02-16--04-00-32Z"
+    String sc2_nextclade_ds_tag = "2024-04-15--15-08-22Z"
     String sc2_nextclade_ds_name = "nextstrain/sars-cov-2/wuhan-hu-1/orfs"
     String sc2_pangolin_docker = "us-docker.pkg.dev/general-theiagen/staphb/pangolin:4.3.1-pdata-1.26"
     Int sc2_genome_len = 29903
     Int sc2_vadr_max_length = 30000
+    Int sc2_vadr_skip_length = 10000
     String sc2_vadr_options = "--noseqnamemax --glsearch -s -r --nomisc --mkey sarscov2 --lowsim5seq 6 --lowsim3seq 6 --alt_fail lowscore,insertnn,deletinn --out_allfasta"
     Int sc2_vadr_memory = 8
   }
@@ -59,6 +61,7 @@ workflow organism_parameters {
     String mpox_reference_gff_file = "gs://theiagen-public-files/terra/mpxv-files/Mpox-MT903345.1.reference.gff3"
     String mpox_vadr_options = "--glsearch -s -r --nomisc --mkey mpxv --r_lowsimok --r_lowsimxd 100 --r_lowsimxl 2000 --alt_pass discontn,dupregin --out_allfasta --minimap2 --s_overhang 150"
     Int mpox_vadr_max_length = 210000
+    Int mpox_vadr_skip_length = 65480
     Int mpox_vadr_memory = 8
     Int mpox_genome_len = 197200
   }  
@@ -70,6 +73,7 @@ workflow organism_parameters {
     Int wnv_genome_len = 11000
     String wnv_vadr_options = "--mkey flavi --mdir /opt/vadr/vadr-models-flavi/ --nomisc --noprotid --out_allfasta"    
     Int wnv_vadr_max_length = 11000
+    Int wnv_vadr_skip_length = 3000
     Int wnv_vadr_memory = 8
     String wnv_nextclade_ds_tag = "NA"
     String wnv_nextclade_ds_name = "NA"
@@ -78,9 +82,10 @@ workflow organism_parameters {
     String flu_org_name = "flu"
     Int flu_genome_len = 13500
 
-    # vadr options are dummy options for flu right now
+    # vadr options for flu
     String flu_vadr_options = "--atgonly --xnocomp --nomisc --alt_fail extrant5,extrant3 --mkey flu"
     Int flu_vadr_max_length = 13500
+    Int flu_vadr_skip_length = 500
     Int flu_vadr_memory = 8
 
     # setting nextclade parameters
@@ -137,6 +142,7 @@ workflow organism_parameters {
     Int rsv_a_genome_len = 16000
     String rsv_a_vadr_options = "-r --mkey rsv --xnocomp"
     Int rsv_a_vadr_max_length = 15500
+    Int rsv_a_vadr_skip_length = 5000
     Int rsv_a_vadr_memory = 32
   }
   if (organism == "rsv_b" || organism == "rsv-b" || organism == "RSV-B" || organism == "RSV_B") {
@@ -147,6 +153,7 @@ workflow organism_parameters {
     Int rsv_b_genome_len = 16000   
     String rsv_b_vadr_options = "-r --mkey rsv --xnocomp"
     Int rsv_b_vadr_max_length = 15500
+    Int rsv_b_vadr_skip_length = 5000
     Int rsv_b_vadr_memory = 32
   }
   if (organism == "HIV" && hiv_primer_version == "v1") {
@@ -184,6 +191,7 @@ workflow organism_parameters {
     String vadr_opts = select_first([vadr_options, sc2_vadr_options, mpox_vadr_options, wnv_vadr_options, flu_vadr_options, rsv_a_vadr_options, rsv_b_vadr_options, "NA"])
     Int vadr_maxlength = select_first([vadr_max_length, sc2_vadr_max_length, mpox_vadr_max_length, wnv_vadr_max_length, flu_vadr_max_length, rsv_a_vadr_max_length, rsv_b_vadr_max_length, 0])
     Int vadr_memory = select_first([vadr_mem, sc2_vadr_memory, mpox_vadr_memory, wnv_vadr_memory, flu_vadr_memory, rsv_a_vadr_memory, rsv_b_vadr_memory, 0])
+    Int vadr_skiplength = select_first([vadr_skip_length, sc2_vadr_skip_length, mpox_vadr_skip_length, wnv_vadr_skip_length, flu_vadr_skip_length, rsv_a_vadr_skip_length, rsv_b_vadr_skip_length, 0])
     # kraken options
     String kraken_target_organism = select_first([kraken_target_organism_input, mpox_kraken_target_organism, wnv_kraken_target_organism, hiv_v1_target_organism, hiv_v2_target_organism, ""])
   }
