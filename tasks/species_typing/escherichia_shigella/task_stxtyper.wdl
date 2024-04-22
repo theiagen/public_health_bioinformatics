@@ -21,10 +21,31 @@ task stxtyper {
     stxtyper \
       --nucleotide ~{assembly} \
       --name ~{samplename} \
-      --output ~{samplename}_stxtyper.tsv
+      --output ~{samplename}_stxtyper.tsv \
+      --log ~{samplename}_stxtyper.log
 
     # parse output TSV
     echo "DEBUG: Parsing StxTyper output TSV..."
+
+    # check for output file with only 1 line (meaning no hits found); exit cleanly if so
+    if [ $(wc -l < ~{samplename}_stxtyper.tsv) -eq 1 ]; then
+      echo "No hits found by StxTyper." > stxtyper_target_contig.txt
+      echo "No hits found by StxTyper." > stxtyper_stx_type.txt
+      echo "No hits found by StxTyper." > stxtyper_stx_operon_status.txt
+      echo "No hits found by StxTyper." > stxtyper_combined_identity.txt
+      echo "No hits found by StxTyper." > stxtyper_target_start.txt
+      echo "No hits found by StxTyper." > stxtyper_target_stop.txt
+      echo "No hits found by StxTyper." > stxtyper_target_strand.txt
+      echo "No hits found by StxTyper." > stxtyper_a_reference.txt
+      echo "No hits found by StxTyper." > stxtyper_a_identity.txt
+      echo "No hits found by StxTyper." > stxtyper_a_coverage.txt
+      echo "No hits found by StxTyper." > stxtyper_b_reference.txt
+      echo "No hits found by StxTyper." > stxtyper_b_identity.txt
+      echo "No hits found by StxTyper." > stxtyper_b_coverage.txt
+      echo "DEBUG: No hits found in StxTyper output TSV. Exiting task with exit code 0 now."
+      exit 0
+    fi
+
     tail -n 1 ~{samplename}_stxtyper.tsv | cut -f 2 >stxtyper_target_contig.txt
     tail -n 1 ~{samplename}_stxtyper.tsv | cut -f 3 >stxtyper_stx_type.txt
     tail -n 1 ~{samplename}_stxtyper.tsv | cut -f 4 >stxtyper_stx_operon_status.txt
@@ -43,6 +64,7 @@ task stxtyper {
   >>>
   output {
     File stxtyper_report = "~{samplename}_stxtyper.tsv"
+    File stxtyper_log = "~{samplename}_stxtyper.log"
     String stxtyper_docker = docker
     String stxtyper_version = read_string("VERSION.txt")
     String stxtyper_target_contig = read_string("stxtyper_target_contig.txt")

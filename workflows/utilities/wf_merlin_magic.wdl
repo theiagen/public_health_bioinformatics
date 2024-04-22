@@ -501,6 +501,7 @@ workflow merlin_magic {
     String? virulencefinder_hits = virulencefinder.virulencefinder_hits
     # stxtyper 
     File? stxtyper_report = stxtyper.stxtyper_report
+    File? stxtyper_log = stxtyper.stxtyper_log
     String? stxtyper_docker = stxtyper.stxtyper_docker
     String? stxtyper_version = stxtyper.stxtyper_version
     String? stxtyper_target_contig = stxtyper.stxtyper_target_contig

@@ -764,6 +764,7 @@ workflow theiaprok_illumina_pe {
     String? virulencefinder_hits = merlin_magic.virulencefinder_hits
     # stxtyper 
     File? stxtyper_report = merlin_magic.stxtyper_report
+    File? stxtyper_log = merlin_magic.stxtyper_log
     String? stxtyper_docker = merlin_magic.stxtyper_docker
     String? stxtyper_version = merlin_magic.stxtyper_version
     String? stxtyper_target_contig = merlin_magic.stxtyper_target_contig
