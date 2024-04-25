@@ -28,37 +28,23 @@ task stxtyper {
     echo "DEBUG: Parsing StxTyper output TSV..."
 
     # check for output file with only 1 line (meaning no hits found); exit cleanly if so
-    if [ $(wc -l < ~{samplename}_stxtyper.tsv) -eq 1 ]; then
-      echo "No hits found by StxTyper." > stxtyper_target_contig.txt
-      echo "No hits found by StxTyper." > stxtyper_stx_type.txt
-      echo "No hits found by StxTyper." > stxtyper_stx_operon_status.txt
-      echo "No hits found by StxTyper." > stxtyper_combined_identity.txt
-      echo "No hits found by StxTyper." > stxtyper_target_start.txt
-      echo "No hits found by StxTyper." > stxtyper_target_stop.txt
-      echo "No hits found by StxTyper." > stxtyper_target_strand.txt
-      echo "No hits found by StxTyper." > stxtyper_a_reference.txt
-      echo "No hits found by StxTyper." > stxtyper_a_identity.txt
-      echo "No hits found by StxTyper." > stxtyper_a_coverage.txt
-      echo "No hits found by StxTyper." > stxtyper_b_reference.txt
-      echo "No hits found by StxTyper." > stxtyper_b_identity.txt
-      echo "No hits found by StxTyper." > stxtyper_b_coverage.txt
+    if [ "$(wc -l < ~{samplename}_stxtyper.tsv)" -eq 1 ]; then
+      echo "No hits found by StxTyper" > stxtyper_hits.txt
+      echo "No hits found by StxTyper" > stxtyper_num_hits.txt
       echo "DEBUG: No hits found in StxTyper output TSV. Exiting task with exit code 0 now."
       exit 0
     fi
-
-    tail -n 1 ~{samplename}_stxtyper.tsv | cut -f 2 >stxtyper_target_contig.txt
-    tail -n 1 ~{samplename}_stxtyper.tsv | cut -f 3 >stxtyper_stx_type.txt
-    tail -n 1 ~{samplename}_stxtyper.tsv | cut -f 4 >stxtyper_stx_operon_status.txt
-    tail -n 1 ~{samplename}_stxtyper.tsv | cut -f 5 >stxtyper_combined_identity.txt
-    tail -n 1 ~{samplename}_stxtyper.tsv | cut -f 6 >stxtyper_target_start.txt
-    tail -n 1 ~{samplename}_stxtyper.tsv | cut -f 7 >stxtyper_target_stop.txt
-    tail -n 1 ~{samplename}_stxtyper.tsv | cut -f 8 >stxtyper_target_strand.txt
-    tail -n 1 ~{samplename}_stxtyper.tsv | cut -f 9 >stxtyper_a_reference.txt
-    tail -n 1 ~{samplename}_stxtyper.tsv | cut -f 10 >stxtyper_a_identity.txt
-    tail -n 1 ~{samplename}_stxtyper.tsv | cut -f 11 >stxtyper_a_coverage.txt
-    tail -n 1 ~{samplename}_stxtyper.tsv | cut -f 12 >stxtyper_b_reference.txt
-    tail -n 1 ~{samplename}_stxtyper.tsv | cut -f 13 >stxtyper_b_identity.txt
-    tail -n 1 ~{samplename}_stxtyper.tsv | cut -f 14 >stxtyper_b_coverage.txt
+    
+    # check for output file with more than 1 line (meaning hits found); count lines & parse output TSV if so
+    if [ "$(wc -l < ~{samplename}_stxtyper.tsv)" -gt 1 ]; then
+      echo "Hits found by StxTyper. Counting lines & parsing output TSV now..."
+      # count number of lines in output TSV (excluding header)
+      wc -l < ~{samplename}_stxtyper.tsv | awk '{print $1-1}' > stxtyper_num_hits.txt
+      # remove header line
+      sed '1d' ~{samplename}_stxtyper.tsv > ~{samplename}_stxtyper_noheader.tsv
+      # parse output TSV and create comma separated list of: (stx_type|operon|target_contig)
+      awk -F'\t' '{print "(" $3 "|" $4 "|" $2 ")"}' ~{samplename}_stxtyper_noheader.tsv | paste -sd, - | tee stxtyper_hits.txt
+    fi
 
     echo "DEBUG: Finished parsing StxTyper output TSV."
   >>>
@@ -67,18 +53,8 @@ task stxtyper {
     File stxtyper_log = "~{samplename}_stxtyper.log"
     String stxtyper_docker = docker
     String stxtyper_version = read_string("VERSION.txt")
-    String stxtyper_target_contig = read_string("stxtyper_target_contig.txt")
-    String stxtyper_stx_type = read_string("stxtyper_stx_type.txt")
-    String stxtyper_stx_operon_status = read_string("stxtyper_stx_operon_status.txt")
-    String stxtyper_combined_identity = read_string("stxtyper_combined_identity.txt")
-    String stxtyper_target_start = read_string("stxtyper_target_start.txt")
-    String stxtyper_target_stop = read_string("stxtyper_target_stop.txt")
-    String stxtyper_a_reference = read_string("stxtyper_a_reference.txt")
-    String stxtyper_a_identity = read_string("stxtyper_a_identity.txt")
-    String stxtyper_a_coverage = read_string("stxtyper_a_coverage.txt")
-    String stxtyper_b_reference = read_string("stxtyper_b_reference.txt")
-    String stxtyper_b_identity = read_string("stxtyper_b_identity.txt")
-    String stxtyper_b_coverage = read_string("stxtyper_b_coverage.txt")
+    String stxtyper_hits = read_string("stxtyper_hits.txt")
+    Int stxtyper_num_hits = read_string("stxtyper_num_hits.txt")
   }
   runtime {
     docker: "~{docker}"

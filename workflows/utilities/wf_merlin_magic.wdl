@@ -504,18 +504,8 @@ workflow merlin_magic {
     File? stxtyper_log = stxtyper.stxtyper_log
     String? stxtyper_docker = stxtyper.stxtyper_docker
     String? stxtyper_version = stxtyper.stxtyper_version
-    String? stxtyper_target_contig = stxtyper.stxtyper_target_contig
-    String? stxtyper_stx_type = stxtyper.stxtyper_stx_type
-    String? stxtyper_stx_operon_status = stxtyper.stxtyper_stx_operon_status
-    String? stxtyper_combined_identity = stxtyper.stxtyper_combined_identity
-    String? stxtyper_target_start = stxtyper.stxtyper_target_start
-    String? stxtyper_target_stop = stxtyper.stxtyper_target_stop
-    String? stxtyper_a_reference = stxtyper.stxtyper_a_reference
-    String? stxtyper_a_identity = stxtyper.stxtyper_a_identity
-    String? stxtyper_a_coverage = stxtyper.stxtyper_a_coverage
-    String? stxtyper_b_reference = stxtyper.stxtyper_b_reference
-    String? stxtyper_b_identity = stxtyper.stxtyper_b_identity
-    String? stxtyper_b_coverage = stxtyper.stxtyper_b_coverage
+    String? stxtyper_hits = stxtyper.stxtyper_hits
+    Int? stxtyper_num_hits = stxtyper.stxtyper_num_hits
     # Shigella sonnei Typing
     File? sonneityping_mykrobe_report_csv = sonneityping.sonneityping_mykrobe_report_csv
     File? sonneityping_mykrobe_report_json = sonneityping.sonneityping_mykrobe_report_json
