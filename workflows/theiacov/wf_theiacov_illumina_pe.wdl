@@ -23,7 +23,7 @@ workflow theiacov_illumina_pe {
   }
   input {
     String samplename
-    String organism = "sars-cov-2" # options: "sars-cov-2", "HIV", "WNV", "MPXV", "flu"
+    String organism = "sars-cov-2" # recommended options: "sars-cov-2", "HIV", "WNV", "MPXV", "flu", "rsv-a", "rsv-b"
     File read1
     File read2
     # sequencing values
