@@ -30,7 +30,7 @@ task stxtyper {
     # check for output file with only 1 line (meaning no hits found); exit cleanly if so
     if [ "$(wc -l < ~{samplename}_stxtyper.tsv)" -eq 1 ]; then
       echo "No hits found by StxTyper" > stxtyper_hits.txt
-      echo "No hits found by StxTyper" > stxtyper_num_hits.txt
+      echo "0" > stxtyper_num_hits.txt
       echo "DEBUG: No hits found in StxTyper output TSV. Exiting task with exit code 0 now."
       exit 0
     fi
@@ -54,7 +54,7 @@ task stxtyper {
     String stxtyper_docker = docker
     String stxtyper_version = read_string("VERSION.txt")
     String stxtyper_hits = read_string("stxtyper_hits.txt")
-    Int stxtyper_num_hits = read_string("stxtyper_num_hits.txt")
+    Int stxtyper_num_hits = read_int("stxtyper_num_hits.txt")
   }
   runtime {
     docker: "~{docker}"
