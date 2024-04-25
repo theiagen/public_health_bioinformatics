@@ -100,7 +100,8 @@ workflow theiacov_illumina_se {
         trim_window_size = trim_window_size,
         adapters = adapters,
         phix = phix,
-        workflow_series = "theiacov"
+        workflow_series = "theiacov",
+        target_organism = organism_parameters.kraken_target_organism
     }
     call screen.check_reads_se as clean_check_reads {
       input:
