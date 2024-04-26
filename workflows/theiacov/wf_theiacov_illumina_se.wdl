@@ -242,7 +242,7 @@ workflow theiacov_illumina_se {
     String? bwa_version = ivar_consensus.bwa_version
     String? samtools_version = ivar_consensus.samtools_version
     File? read1_aligned = ivar_consensus.read1_aligned
-    String? assembly_method = ivar_consensus.assembly_method_nonflu
+    String? assembly_method = "TheiaCoV (~{version_capture.phb_version}): " + select_first([ivar_consensus.assembly_method_nonflu, ""])
     File? aligned_bam = ivar_consensus.aligned_bam
     File? aligned_bai = ivar_consensus.aligned_bai
     File? read1_unaligned = ivar_consensus.read1_unaligned
