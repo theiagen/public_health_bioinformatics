@@ -1,12 +1,11 @@
 version 1.0
 
 task tbprofiler {
-  # Inputs
   input {
     File read1
     File? read2
     String samplename
-    String tbprofiler_docker_image = "us-docker.pkg.dev/general-theiagen/staphb/tbprofiler:4.4.2"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/tbprofiler:4.4.2"
     Int disk_size = 100
     Int memory = 16
     String mapper = "bwa"
@@ -142,7 +141,7 @@ task tbprofiler {
     Float tbprofiler_pct_reads_mapped = read_float("PCT_READS_MAPPED")
   }
   runtime {
-    docker: "~{tbprofiler_docker_image}"
+    docker: "~{docker}"
     memory: memory + " GB"
     cpu: cpu
     disks: "local-disk " + disk_size + " SSD"

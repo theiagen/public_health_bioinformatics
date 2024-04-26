@@ -8,28 +8,22 @@ workflow nextclade_addToRefTree {
       description: "Nextclade workflow that adds samples to a curated JSON tree from Augur."
     }
     input {
-      File assembly_fastas
-      File? root_sequence_fasta
+      File assembly_fasta
+      File? input_ref
       File? gene_annotations_gff
       File? reference_tree_json
-      File? qc_config_json
-      File? pcr_primers_csv
-      File? virus_properties
+      File? nextclade_pathogen_json
       String nextclade_dataset_name
-      String? dataset_reference
       String? dataset_tag
     }
     call nextclade_analysis.nextclade_add_ref { # nextclade analysis
       input:
-        genome_fasta = assembly_fastas,
-        root_sequence = root_sequence_fasta,
+        genome_fasta = assembly_fasta,
         reference_tree_json = reference_tree_json,
-        qc_config_json = qc_config_json,
+        nextclade_pathogen_json = nextclade_pathogen_json,
         gene_annotations_gff = gene_annotations_gff,
-        pcr_primers_csv = pcr_primers_csv,
-        virus_properties = virus_properties,
+        input_ref = input_ref,
         dataset_name = nextclade_dataset_name,
-        dataset_reference = dataset_reference,
         dataset_tag = dataset_tag
     }
     call versioning.version_capture {

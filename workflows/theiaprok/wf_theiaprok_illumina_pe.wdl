@@ -651,6 +651,7 @@ workflow theiaprok_illumina_pe {
     Float? est_coverage_clean = cg_pipeline_clean.est_coverage
     # Assembly QC - busco outputs
     String? busco_version = busco.busco_version
+    String? busco_docker = busco.busco_docker
     String? busco_database = busco.busco_database
     String? busco_results = busco.busco_results
     File? busco_report = busco.busco_report
@@ -886,6 +887,10 @@ workflow theiaprok_illumina_pe {
     String? tbprofiler_sub_lineage = merlin_magic.tbprofiler_sub_lineage
     String? tbprofiler_dr_type = merlin_magic.tbprofiler_dr_type
     String? tbprofiler_resistance_genes = merlin_magic.tbprofiler_resistance_genes
+    Int? tbprofiler_median_coverage = merlin_magic.tbprofiler_median_coverage
+    Float? tbprofiler_pct_reads_mapped = merlin_magic.tbprofiler_pct_reads_mapped
+    String? tbp_parser_version = merlin_magic.tbp_parser_version
+    String? tbp_parser_docker = merlin_magic.tbp_parser_docker
     File? tbp_parser_lims_report_csv = merlin_magic.tbp_parser_lims_report_csv
     File? tbp_parser_looker_report_csv = merlin_magic.tbp_parser_looker_report_csv
     File? tbp_parser_laboratorian_report_csv = merlin_magic.tbp_parser_laboratorian_report_csv
