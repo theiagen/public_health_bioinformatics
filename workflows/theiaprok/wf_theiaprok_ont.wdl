@@ -519,6 +519,8 @@ workflow theiaprok_ont {
     # Read QC - kraken outputs
     String? kraken2_version = read_qc_trim.kraken_version
     String? kraken2_report = read_qc_trim.kraken_report
+    String? kraken2_database = read_qc_trim.kraken_database
+    String? kraken_docker = read_qc_trim.kraken_docker
     # Read QC - kmc outputs
     Int? kmc_est_genome_length = read_qc_trim.est_genome_length
     File? kmc_kmer_stats = read_qc_trim.kmc_kmer_stats

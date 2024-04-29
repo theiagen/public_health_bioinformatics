@@ -136,6 +136,7 @@ workflow read_QC_trim_ont {
     Float? kraken_sc2_dehosted = kraken2_recalculate_abundances_dehosted.percent_sc2
     String? kraken_target_organism_dehosted = kraken2_recalculate_abundances_dehosted.percent_target_organism
     File? kraken_report_dehosted = kraken2_recalculate_abundances_dehosted.kraken_report
+    String kraken_database = select_first([kraken2_raw.database, kraken2_se.kraken2_database, ""])
    
     # theiaprok outputs
     # kmc outputs
