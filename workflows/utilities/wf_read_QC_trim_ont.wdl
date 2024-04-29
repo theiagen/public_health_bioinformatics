@@ -76,7 +76,6 @@ workflow read_QC_trim_ont {
     } 
   }
   if ("~{workflow_series}" == "theiaprok") {
-    # should kraken be run on the downsampled reads instead?
     if (call_kraken) {
       call kraken2.kraken2_standalone as kraken2_se {
         input:
@@ -126,7 +125,7 @@ workflow read_QC_trim_ont {
     File? read1_dehosted = ncbi_scrub_se.read1_dehosted
     
     # kraken2 - theiacov and theiapro
-    String? kraken_version = select_first([kraken2_raw.version, kraken2_se.version, ""])
+    String? kraken_version = select_first([kraken2_raw.version, kraken2_se.kraken2_version, ""])
     String kraken_docker = select_first([kraken2_raw.docker, kraken2_se.kraken2_docker, ""])
     Float? kraken_human = kraken2_recalculate_abundances_raw.percent_human
     Float? kraken_sc2 = kraken2_recalculate_abundances_raw.percent_sc2
