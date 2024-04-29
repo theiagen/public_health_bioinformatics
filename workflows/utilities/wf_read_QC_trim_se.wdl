@@ -141,6 +141,7 @@ workflow read_QC_trim_se {
     String? kraken_target_organism = kraken2_raw.percent_target_organism
     String kraken_report = select_first([kraken2_raw.kraken_report, kraken2_standalone.kraken2_report, ""])
     String? kraken_target_organism_name = target_organism
+    String kraken_database = select_first([kraken2_raw.kraken_database, kraken2_standalone.kraken2_database, ""])
    
     # trimming versioning
     String? trimmomatic_version = trimmomatic_se.version
