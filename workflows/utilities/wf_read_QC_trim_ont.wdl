@@ -78,7 +78,7 @@ workflow read_QC_trim_ont {
   if ("~{workflow_series}" == "theiaprok") {
     # should kraken be run on the downsampled reads instead?
     if (call_kraken) {
-      call kraken.kraken2_standalone as kraken2_se {
+      call kraken2.kraken2_standalone as kraken2_se {
         input:
           samplename = samplename,
           read1 = read1,
