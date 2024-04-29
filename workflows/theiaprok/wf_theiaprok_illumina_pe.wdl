@@ -619,6 +619,8 @@ workflow theiaprok_illumina_pe {
     # Read QC - kraken outputs
     String? kraken2_version = read_QC_trim.kraken_version
     String? kraken2_report = read_QC_trim.kraken_report
+    String? kraken2_database = read_QC_trim.kraken_database
+    String? kraken_docker = read_QC_trim.kraken_docker
     # Assembly - shovill outputs 
     File? assembly_fasta = shovill_pe.assembly_fasta
     File? contigs_gfa = shovill_pe.contigs_gfa
