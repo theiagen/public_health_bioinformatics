@@ -88,8 +88,8 @@ workflow merlin_magic {
     Float? virulencefinder_coverage_threshold
     Float? virulencefinder_identity_threshold
     String? virulencefinder_database
-    Int abricate_minid = 70 # TODO: should be adjusted
-    Int abricate_mincov = 60 # TODO: should be adjusted
+    Int abricate_vibrio_minid = 70 # TODO: should be adjusted
+    Int abricate_vibrio_mincov = 60 # TODO: should be adjusted
   }
   # theiaprok
   if (merlin_tag == "Acinetobacter baumannii") {
@@ -374,8 +374,8 @@ workflow merlin_magic {
       input:
         assembly = assembly,
         samplename = samplename,
-        minid = abricate_minid,
-        mincov = abricate_mincov
+        minid = abricate_vibrio_minid,
+        mincov = abricate_vibrio_mincov
     }
   }
   
@@ -685,7 +685,7 @@ workflow merlin_magic {
     String? srst2_vibrio_toxR = srst2_vibrio.srst2_vibrio_toxR
     String? srst2_vibrio_serogroup = srst2_vibrio.srst2_vibrio_serogroup
     String? srst2_vibrio_biotype = srst2_vibrio.srst2_vibrio_biotype
-    File? abricate_vibrio_abricate_tsv = abricate_vibrio.abricate_vibrio_results
+    File? abricate_vibrio_detailed_tsv = abricate_vibrio.abricate_vibrio_results
     String? abricate_vibrio_database = abricate_vibrio.abricate_vibrio_database
     String? abricate_vibrio_version = abricate_vibrio.abricate_vibrio_version
     String? abricate_vibrio_ctxA = abricate_vibrio.abricate_vibrio_ctxA

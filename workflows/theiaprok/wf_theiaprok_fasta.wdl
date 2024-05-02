@@ -405,7 +405,7 @@ workflow theiaprok_fasta {
         pasty_comment = merlin_magic.pasty_comment,
         qc_check = qc_check_task.qc_check,
         qc_standard = qc_check_task.qc_standard,
-        abricate_vibrio_abricate_tsv = merlin_magic.abricate_vibrio_abricate_tsv,
+        abricate_vibrio_detailed_tsv = merlin_magic.abricate_vibrio_detailed_tsv,
         abricate_vibrio_database = merlin_magic.abricate_vibrio_database,
         abricate_vibrio_version = merlin_magic.abricate_vibrio_version,
         abricate_vibrio_ctxA = merlin_magic.abricate_vibrio_ctxA,
@@ -644,7 +644,7 @@ workflow theiaprok_fasta {
     String? poppunk_version = merlin_magic.poppunk_version
     String? poppunk_docker = merlin_magic.poppunk_docker
     # Vibrio cholera Typing
-    File? abricate_vibrio_abricate_tsv = merlin_magic.abricate_vibrio_abricate_tsv
+    File? abricate_vibrio_detailed_tsv = merlin_magic.abricate_vibrio_detailed_tsv
     String? abricate_vibrio_database = merlin_magic.abricate_vibrio_database
     String? abricate_vibrio_version = merlin_magic.abricate_vibrio_version
     String? abricate_vibrio_ctxA = merlin_magic.abricate_vibrio_ctxA
