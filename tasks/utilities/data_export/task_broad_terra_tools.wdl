@@ -347,7 +347,7 @@ task export_taxon_tables {
     String? srst2_vibrio_toxR
     String? srst2_vibrio_serogroup
     String? srst2_vibrio_biotype
-    File? abricate_vibrio_abricate_tsv
+    File? abricate_vibrio_detailed_tsv
     String? abricate_vibrio_database
     String? abricate_vibrio_version
     String? abricate_vibrio_ctxA
@@ -729,7 +729,7 @@ task export_taxon_tables {
       "srst2_vibrio_toxR": "~{srst2_vibrio_toxR}",
       "srst2_vibrio_serogroup": "~{srst2_vibrio_serogroup}",
       "srst2_vibrio_biotype": "~{srst2_vibrio_biotype}",
-      "abricate_vibrio_abricate_tsv": "~{abricate_vibrio_abricate_tsv}",
+      "abricate_vibrio_detailed_tsv": "~{abricate_vibrio_detailed_tsv}",
       "abricate_vibrio_database": "~{abricate_vibrio_database}",
       "abricate_vibrio_version": "~{abricate_vibrio_version}",
       "abricate_vibrio_ctxA": "~{abricate_vibrio_ctxA}",
