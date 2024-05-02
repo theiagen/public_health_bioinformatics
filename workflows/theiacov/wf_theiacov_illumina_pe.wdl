@@ -23,7 +23,7 @@ workflow theiacov_illumina_pe {
   }
   input {
     String samplename
-    String organism = "sars-cov-2" # options: "sars-cov-2", "HIV", "WNV", "MPXV", "flu"
+    String organism = "sars-cov-2" # recommended options: "sars-cov-2", "HIV", "WNV", "MPXV", "flu", "rsv-a", "rsv-b"
     File read1
     File read2
     # sequencing values
@@ -110,7 +110,8 @@ workflow theiacov_illumina_pe {
         workflow_series = "theiacov",
         trim_min_length = trim_min_length,
         trim_quality_min_score = trim_quality_min_score,
-        trim_window_size = trim_window_size
+        trim_window_size = trim_window_size,
+        target_organism = organism_parameters.kraken_target_organism
     }
     call screen.check_reads as clean_check_reads {
       input:
@@ -244,8 +245,8 @@ workflow theiacov_illumina_pe {
           genome_length = organism_parameters.genome_length
       }
       # run organism-specific typing
-      if (organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "sars-cov-2" || (organism_parameters.standardized_organism == "flu" && defined(irma.seg_ha_assembly) && ! defined(do_not_run_flu_ha_nextclade))) { 
-        # tasks specific to either MPXV, sars-cov-2, or flu
+      if (organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "rsv_a" || organism_parameters.standardized_organism == "rsv_b" || (organism_parameters.standardized_organism == "flu" && defined(irma.seg_ha_assembly) && ! defined(do_not_run_flu_ha_nextclade))) { 
+        # tasks specific to either MPXV, sars-cov-2, flu, or RSV-A/RSV-B
         call nextclade_task.nextclade_v3 {
           input:
             genome_fasta = select_first([irma.seg_ha_assembly, ivar_consensus.assembly_fasta]),
