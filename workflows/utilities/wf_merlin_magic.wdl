@@ -602,7 +602,7 @@ workflow merlin_magic {
     String? tbprofiler_sub_lineage = tbprofiler.tbprofiler_sub_lineage
     String? tbprofiler_dr_type = tbprofiler.tbprofiler_dr_type
     String? tbprofiler_resistance_genes = tbprofiler.tbprofiler_resistance_genes
-    Int? tbprofiler_median_depth = tbprofiler.tbprofiler_median_depth
+    Float? tbprofiler_median_depth = tbprofiler.tbprofiler_median_depth
     Float? tbprofiler_pct_reads_mapped = tbprofiler.tbprofiler_pct_reads_mapped
     String? tbp_parser_version = tbp_parser.tbp_parser_version
     String? tbp_parser_docker = tbp_parser.tbp_parser_docker
