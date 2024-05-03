@@ -143,6 +143,12 @@ workflow merlin_magic {
           paired_end = paired_end
       }
     }
+      call stxtyper_task.stxtyper {
+        input:
+          assembly = assembly,
+          samplename = samplename,
+          docker = stxtyper_docker_image
+    }
   }
   if (merlin_tag == "Escherichia" ) {
     # E coli specific tasks
@@ -159,12 +165,6 @@ workflow merlin_magic {
         coverage_threshold = virulencefinder_coverage_threshold,
         identity_threshold = virulencefinder_identity_threshold,
         database = virulencefinder_database
-    }
-    call stxtyper_task.stxtyper {
-      input:
-        assembly = assembly,
-        samplename = samplename,
-        docker = stxtyper_docker_image
     }
   }
   if (merlin_tag == "Shigella sonnei") {
