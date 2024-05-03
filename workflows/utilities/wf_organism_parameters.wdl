@@ -140,6 +140,7 @@ workflow organism_parameters {
     String rsv_a_nextclade_ds_tag = "2024-01-29--10-29-43Z"
     String rsv_a_nextclade_ds_name = "nextstrain/rsv/a/EPI_ISL_412866"
     Int rsv_a_genome_len = 16000
+    String rsv_a_kraken_target_organism = "Respiratory syncytial virus"
     String rsv_a_vadr_options = "-r --mkey rsv --xnocomp"
     Int rsv_a_vadr_max_length = 15500
     Int rsv_a_vadr_skip_length = 5000
@@ -150,7 +151,8 @@ workflow organism_parameters {
     String rsv_b_reference_genome = "gs://theiagen-public-files-rp/terra/rsv_references/reference_rsv_b.fasta"
     String rsv_b_nextclade_ds_tag = "2024-01-29--10-29-43Z"
     String rsv_b_nextclade_ds_name = "nextstrain/rsv/b/EPI_ISL_1653999"
-    Int rsv_b_genome_len = 16000   
+    Int rsv_b_genome_len = 16000 
+    String rsv_b_kraken_target_organism = "Human orthopneumovirus"  
     String rsv_b_vadr_options = "-r --mkey rsv --xnocomp"
     Int rsv_b_vadr_max_length = 15500
     Int rsv_b_vadr_skip_length = 5000
@@ -193,6 +195,6 @@ workflow organism_parameters {
     Int vadr_memory = select_first([vadr_mem, sc2_vadr_memory, mpox_vadr_memory, wnv_vadr_memory, flu_vadr_memory, rsv_a_vadr_memory, rsv_b_vadr_memory, 0])
     Int vadr_skiplength = select_first([vadr_skip_length, sc2_vadr_skip_length, mpox_vadr_skip_length, wnv_vadr_skip_length, flu_vadr_skip_length, rsv_a_vadr_skip_length, rsv_b_vadr_skip_length, 0])
     # kraken options
-    String kraken_target_organism = select_first([kraken_target_organism_input, mpox_kraken_target_organism, wnv_kraken_target_organism, hiv_v1_target_organism, hiv_v2_target_organism, ""])
+    String kraken_target_organism = select_first([kraken_target_organism_input, mpox_kraken_target_organism, wnv_kraken_target_organism, hiv_v1_target_organism, hiv_v2_target_organism, rsv_a_kraken_target_organism, rsv_b_kraken_target_organism, ""])
   }
 }

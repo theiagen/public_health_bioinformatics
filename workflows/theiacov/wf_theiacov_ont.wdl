@@ -91,7 +91,7 @@ workflow theiacov_ont {
       skip_mash = skip_mash,
       workflow_series = "theiacov",
       organism = organism_parameters.standardized_organism,
-      expected_genome_length = genome_length
+      expected_genome_length = organism_parameters.genome_length
   }
   if (raw_check_reads.read_screen == "PASS") {
     call read_qc_trim_workflow.read_QC_trim_ont as read_qc_trim {
@@ -117,7 +117,7 @@ workflow theiacov_ont {
         skip_mash = skip_mash,
         workflow_series = "theiacov",
         organism = organism_parameters.standardized_organism,
-        expected_genome_length = genome_length
+        expected_genome_length = organism_parameters.genome_length
     }
     if (clean_check_reads.read_screen == "PASS") {
       # assembly via artic_consensus for sars-cov-2 and HIV
@@ -236,7 +236,7 @@ workflow theiacov_ont {
         }
       }
       # run organism-specific typing
-      if (organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "sars-cov-2" || (organism_parameters.standardized_organism == "flu" && defined(irma.seg_ha_assembly) && ! defined(do_not_run_flu_ha_nextclade))) { 
+      if (organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "rsv_a" || organism_parameters.standardized_organism == "rsv_b" || (organism_parameters.standardized_organism == "flu" && defined(irma.seg_ha_assembly) && ! defined(do_not_run_flu_ha_nextclade))) { 
         # tasks specific to either MPXV, sars-cov-2, or flu
         call nextclade_task.nextclade_v3 {
           input:
