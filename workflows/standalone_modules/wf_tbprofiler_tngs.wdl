@@ -71,7 +71,7 @@ workflow tbprofiler_tngs {
     String tbprofiler_num_dr_variants = tbprofiler.tbprofiler_num_dr_variants
     String tbprofiler_num_other_variants = tbprofiler.tbprofiler_num_other_variants
     String tbprofiler_resistance_genes = tbprofiler.tbprofiler_resistance_genes
-    Int tbprofiler_median_coverage = tbprofiler.tbprofiler_median_coverage
+    Int tbprofiler_median_depth = tbprofiler.tbprofiler_median_depth
     Float tbprofiler_pct_reads_mapped = tbprofiler.tbprofiler_pct_reads_mapped
     # tbp_parser outputs
     File tbp_parser_looker_report_csv = tbp_parser.tbp_parser_looker_report_csv
