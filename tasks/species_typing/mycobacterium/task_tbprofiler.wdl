@@ -125,7 +125,7 @@ task tbprofiler {
     String tbprofiler_num_dr_variants = read_string("NUM_DR_VARIANTS")
     String tbprofiler_num_other_variants = read_string("NUM_OTHER_VARIANTS")
     String tbprofiler_resistance_genes = read_string("RESISTANCE_GENES")
-    Int tbprofiler_median_depth = read_int("MEDIAN_DEPTH")
+    Float tbprofiler_median_depth = read_float("MEDIAN_DEPTH")
     Float tbprofiler_pct_reads_mapped = read_float("PCT_READS_MAPPED")
   }
   runtime {
