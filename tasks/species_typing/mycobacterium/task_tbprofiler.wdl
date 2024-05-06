@@ -51,7 +51,7 @@ task tbprofiler {
       tb-profiler update_tbdb --branch CaliforniaDPH
       TBDB="--db CaliforniaDPH"
     else
-      TBDB="" 6tt6
+      TBDB=""
     fi
 
     # Run tb-profiler on the input reads with samplename prefix
