@@ -79,7 +79,7 @@ workflow read_QC_trim_ont {
         samplename = samplename
     }
 
-    Int kmc_est_genome_length = if kmc.est_genome_length > 10000 then 10000 else kmc.est_genome_length
+    Int kmc_est_genome_length = if kmc.est_genome_length > 10000000 then 10000000 else kmc.est_genome_length
 
     # rasusa for random downsampling
     call rasusa_task.rasusa {
