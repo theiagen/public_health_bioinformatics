@@ -42,7 +42,7 @@ task abricate_vibrio {
       if [ ! -s tcpA_classical ] && [ -s tcpA_ElTor ]; then 
         echo "tcpA_ElTor" > BIOTYPE; 
       else 
-        echo 'tcpA_classical' > BIOTYPE
+        echo 'tcpA_Classical' > BIOTYPE
       fi
     fi
 
