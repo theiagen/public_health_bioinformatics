@@ -68,6 +68,7 @@ workflow merlin_magic {
     String? tbprofiler_variant_caller
     String? tbprofiler_variant_calling_params
     Boolean tbprofiler_run_custom_db = false
+    Boolean? tbprofiler_run_cdph_db
     File? tbprofiler_custom_db
     Boolean tbprofiler_additional_outputs = false
     String tbp_parser_output_seq_method_type = "WGS"
@@ -257,6 +258,7 @@ workflow merlin_magic {
           samplename = samplename,
           tbprofiler_run_custom_db = tbprofiler_run_custom_db,
           tbprofiler_custom_db = tbprofiler_custom_db,
+          tbprofiler_run_cdph_db = tbprofiler_run_cdph_db,
           ont_data = ont_data,
           mapper = tbprofiler_mapper,
           variant_caller = tbprofiler_variant_caller,

@@ -15,7 +15,8 @@ task tbprofiler {
     Float min_af = 0.1
     Int cpu = 8 
     Boolean ont_data = false
-    String? tbprofiler_custom_db
+    File? tbprofiler_custom_db
+    Boolean tbprofiler_run_cdph_db = false
     Boolean tbprofiler_run_custom_db = false
   }
   command <<<
@@ -39,8 +40,17 @@ task tbprofiler {
         echo "Custom database file is empty"
         TBDB=""
       else
-        TBDB="--db ~{tbprofiler_custom_db}"
+        echo "Found new database file ~{tbprofiler_custom_db}"
+        prefix=$(basename "~{tbprofiler_custom_db}" | sed 's/\.tar\.gz$//')
+        tar xfv ~{tbprofiler_custom_db}
+        
+        tb-profiler load_library ./"$prefix"/"$prefix"
+
+        TBDB="--db $prefix"
       fi
+    elif ~{tbprofiler_run_cdph_db}; then
+      tb-profiler update_tbdb --branch CaliforniaDPH
+      TBDB="--db CaliforniaDPH"
     fi
 
     # Run tb-profiler on the input reads with samplename prefix
