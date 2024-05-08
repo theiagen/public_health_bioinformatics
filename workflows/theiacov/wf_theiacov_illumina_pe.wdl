@@ -181,7 +181,7 @@ workflow theiacov_illumina_pe {
             input:
               organism = organism_parameters.standardized_organism,
               flu_segment = "NA",
-              flu_subtype = irma.irma_subtype,
+              flu_subtype = abricate_flu.abricate_flu_subtype,
               # including these to block from terra
               reference_gff_file = reference_gff,
               reference_genome = reference_genome,
@@ -202,7 +202,7 @@ workflow theiacov_illumina_pe {
             input:
               organism = organism_parameters.standardized_organism,
               flu_segment = "HA",
-              flu_subtype = irma.irma_subtype,
+              flu_subtype = abricate_flu.abricate_flu_subtype,
               # including these to block from terra
               reference_gff_file = reference_gff,
               reference_genome = reference_genome,
