@@ -45,7 +45,7 @@ task gambitcore {
     File gambitcore_check_report_file = "~{samplename}_gambitcore_report.tsv"
     String gambitcore_species = read_string("SPECIES")
     String gambitcore_completeness = read_string("COMPLETNESS")
-    String gambitcore_assembly_and_species_core_kmers = read_string("ASSEMBLY_SPECIES_CORE_KMERS")
+    String gambitcore_kmers_ratio = read_string("ASSEMBLY_SPECIES_CORE_KMERS")
     String gambitcore_closest_accession = read_string("CLOSEST_ACCESSION")
     String gambitcore_closest_distance = read_string("CLOSEST_DISTANCE")
     String gambitcore_assembly_kmers = read_string("ASSEMBLY_KMERS")
