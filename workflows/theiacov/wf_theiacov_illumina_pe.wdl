@@ -475,6 +475,7 @@ workflow theiacov_illumina_pe {
     String? irma_version = irma.irma_version
     String? irma_type = irma.irma_type
     String? irma_subtype = irma.irma_subtype
+    String? irma_subtype_notes = irma.irma_subtype_notes
     File? irma_ha_segment = irma.seg_ha_assembly
     File? irma_na_segment = irma.seg_na_assembly
     String? abricate_flu_type = abricate_flu.abricate_flu_type

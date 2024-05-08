@@ -132,14 +132,14 @@ task irma {
       touch IRMA_SUBTYPE_NOTES
     fi
 
-    echo "DEBUG: Renaming HA BAM files...."
     if ls "~{samplename}"_HA?*.bam 1> /dev/null 2>&1; then
+      echo "DEBUG: Renaming HA BAM files...."
       for file in "~{samplename}"_HA?*.bam; do
         mv -v "$file" "${file%_HA*.bam}_HA.bam"
       done
     fi
-    echo "DEBUG: Renaming NA BAM files...."
     if ls "~{samplename}"_NA?*.bam 1> /dev/null 2>&1; then
+      echo "DEBUG: Renaming NA BAM files...."
       for file in "~{samplename}"_NA?*.bam; do
         mv -v "$file" "${file%_NA*.bam}_NA.bam"
       done
