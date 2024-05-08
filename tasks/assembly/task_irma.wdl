@@ -71,7 +71,7 @@ task irma {
     if compgen -G "~{samplename}/*fasta"; then
       # look at list of files that match the above pattern, grab the first one, and extract the type from the filename. We expect: ~{samplename}/B_HA.fasta
       echo "Type_"$(basename "$(echo "$(find ~{samplename}/*.fasta | head -n1)")" | cut -d_ -f1) > IRMA_TYPE
-      # TODO - remove this bash variable? It's not used but could be used if necessary....Could also simply command to just: irma_type=$(cat IRMA_TYPE)
+      # set irma_type bash variable which is used later
       irma_type=$(cat IRMA_TYPE)
       # concatenate consensus assemblies into single file with all genome segments
       echo "DEBUG: creating IRMA FASTA file containing all segments...."
@@ -117,33 +117,31 @@ task irma {
       sed -i "1s/>/>~{samplename}_/" "~{samplename}_NA.fasta"
 
     # if bash variable "subtype" is not empty, write it to a file; 
-    # if "subtype" is "Type_B" then write a message indicating that IRMA does not differentiate between Victoria and Yamagata lineages
     # otherwise, write a message indicating no subtype was predicted
     if [ -n "${subtype}" ]; then 
-      echo "${subtype}" > IRMA_SUBTYPE
-    elif [[ "${irma_type}" == "Type_B" ]]; then
-      echo "IRMA does not differentiate Victoria and Yamagata Flu B lineages. See abricate_flu_subtype output column" > IRMA_SUBTYPE
+      echo "${subtype}" | tee IRMA_SUBTYPE
     else
-      echo "No subtype predicted by IRMA" > IRMA_SUBTYPE
+      echo "No subtype predicted by IRMA" | tee IRMA_SUBTYPE
     fi
 
-    ##### STOPPED HERE ON 2024-05-07, CONTINUE TESTING BELOW ######
+    # if "subtype" is "Type_B" then write a note indicating that IRMA does not differentiate between Victoria and Yamagata lineages
+    if [[ "${irma_type}" == "Type_B" ]]; then
+      echo "IRMA does not differentiate Victoria and Yamagata Flu B lineages. See abricate_flu_subtype output column" | tee IRMA_SUBTYPE_NOTES
+    else
+      # create empty file
+      touch IRMA_SUBTYPE_NOTES
+    fi
 
-    # rename BAM file if exists
-    #if [ -f "~{samplename}"_HA*.bam ] && [[ "${irma_type}" == "Type_A" ]]; then
-    #  mv "~{samplename}"_HA*.bam "~{samplename}"_HA.bam
-    #fi
-    #if [ -f "~{samplename}"_NA*.bam ] && [[ "${irma_type}" == "Type_A" ]]; then
-    #  mv "~{samplename}"_NA*.bam "~{samplename}"_NA.bam
-    #fi
+    echo "DEBUG: Renaming HA BAM files...."
     if ls "~{samplename}"_HA?*.bam 1> /dev/null 2>&1; then
       for file in "~{samplename}"_HA?*.bam; do
-        mv "$file" "${file%_HA*.bam}_HA.bam"
+        mv -v "$file" "${file%_HA*.bam}_HA.bam"
       done
     fi
+    echo "DEBUG: Renaming NA BAM files...."
     if ls "~{samplename}"_NA?*.bam 1> /dev/null 2>&1; then
       for file in "~{samplename}"_NA?*.bam; do
-        mv "$file" "${file%_NA*.bam}_NA.bam"
+        mv -v "$file" "${file%_NA*.bam}_NA.bam"
       done
     fi
   >>>
@@ -158,6 +156,7 @@ task irma {
     File? seg_mp_assembly = "~{samplename}_MP.fasta"
     String irma_type = read_string("IRMA_TYPE")
     String irma_subtype = read_string("IRMA_SUBTYPE")
+    String irma_subtype_notes = read_string("IRMA_SUBTYPE_NOTES")
     Array[File] irma_assemblies = glob("~{samplename}*.fasta")
     Array[File] irma_vcfs = glob("~{samplename}*.vcf")
     Array[File] irma_bams = glob("~{samplename}*.bam")
