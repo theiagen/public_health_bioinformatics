@@ -1,10 +1,10 @@
 version 1.0
 
-task gambit_core_check {
+task gambitcore {
   input {
     File assembly
     String samplename
-    String docker = "us-docker.pkg.dev/general-theiagen/internal/gambittools:1.0.0"
+    String docker = "us-docker.pkg.dev/general-theiagen/internal/gambitcore:0.0.1"
     File gambit_db_genomes = "gs://gambit-databases-rp/2.0.0/gambit-metadata-2.0.0-20240415.gdb"
     File gambit_db_signatures = "gs://gambit-databases-rp/2.0.0/gambit-signatures-2.0.0-20240415.gs"
     Int disk_size = 100
@@ -26,26 +26,34 @@ task gambit_core_check {
     echo ${gambit_db_version} | tee GAMBIT_DB_VERSION
     
     # run gambit core check on the assembly
-    echo "Running gambit core check with: gambit-core-check -e -v ${gambit_db_dir} ${gambit_db_dir}/$(basename -- '~{gambit_db_signatures}') ${gambit_db_dir}/$(basename -- '~{gambit_db_genomes}') ~{assembly}"
-    gambit-core-check -e -v ${gambit_db_dir} ${gambit_db_dir}/$(basename -- '~{gambit_db_signatures}') ${gambit_db_dir}/$(basename -- '~{gambit_db_genomes}') ~{assembly} | tee ~{samplename}_gambit_core_report.tsv
+    echo "Running gambitcore with: gambitcore ${gambit_db_dir} ~{assembly}"
+    gambitcore ${gambit_db_dir} ~{assembly} | tee ~{samplename}_gambitcore_report.tsv
 
     # parse output file
-    cat ~{samplename}_gambit_core_report.tsv | cut -f 2 | tail -n 1 | tee SPECIES
-    cat ~{samplename}_gambit_core_report.tsv | cut -f 3 | tail -n 1 | tee COMPLETNESS
-    cat ~{samplename}_gambit_core_report.tsv | cut -f 4 | tail -n 1 | tee CORE_KMERS
-    cat ~{samplename}_gambit_core_report.tsv | cut -f 5 | tail -n 1 | tee CLOSEST_ACCESSION
-    cat ~{samplename}_gambit_core_report.tsv | cut -f 6 | tail -n 1 | tee CLOSEST_DISTANCE
+    cat ~{samplename}_gambitcore_report.tsv | cut -f 2 | tail -n 1 | tee SPECIES
+    cat ~{samplename}_gambitcore_report.tsv | cut -f 3 | tail -n 1 | tee COMPLETNESS
+    cat ~{samplename}_gambitcore_report.tsv | cut -f 4 | tail -n 1 | tee ASSEMBLY_SPECIES_CORE_KMERS
+    cat ~{samplename}_gambitcore_report.tsv | cut -f 5 | tail -n 1 | tee CLOSEST_ACCESSION
+    cat ~{samplename}_gambitcore_report.tsv | cut -f 6 | tail -n 1 | tee CLOSEST_DISTANCE
+    cat ~{samplename}_gambitcore_report.tsv | cut -f 7 | tail -n 1 | tee ASSEMBLY_KMERS
+    cat ~{samplename}_gambitcore_report.tsv | cut -f 8 | tail -n 1 | tee SPECIES_KMERS
+    cat ~{samplename}_gambitcore_report.tsv | cut -f 9 | tail -n 1 | tee SPECIES_STD_KMERS
+    cat ~{samplename}_gambitcore_report.tsv | cut -f 10 | tail -n 1 | tee ASSEMBLY_QC
 
   >>>
   output {
-    File gambit_core_check_report_file = "~{samplename}_gambit_core_report.tsv"
-    String gambit_core_check_species = read_string("SPECIES")
-    String gambit_core_check_completeness = read_string("COMPLETNESS")
-    String gambit_core_check_core_kmers = read_string("CORE_KMERS")
-    String gambit_core_check_closest_accession = read_string("CLOSEST_ACCESSION")
-    String gambit_core_check_closest_distance = read_string("CLOSEST_DISTANCE")
-    String gambit_core_check_db_version = read_string("GAMBIT_DB_VERSION")
-    String gambit_core_check_docker = docker
+    File gambitcore_check_report_file = "~{samplename}_gambitcore_report.tsv"
+    String gambitcore_species = read_string("SPECIES")
+    String gambitcore_completeness = read_string("COMPLETNESS")
+    String gambitcore_assembly_and_species_core_kmers = read_string("ASSEMBLY_SPECIES_CORE_KMERS")
+    String gambitcore_closest_accession = read_string("CLOSEST_ACCESSION")
+    String gambitcore_closest_distance = read_string("CLOSEST_DISTANCE")
+    String gambitcore_assembly_kmers = read_string("ASSEMBLY_KMERS")
+    String gambitcore_species_kmers = read_string("SPECIES_KMERS")
+    String gambitcore_species_std_kmers = read_string("SPECIES_STD_KMERS")
+    String gambitcore_assembly_qc = read_string("ASSEMBLY_QC")
+    String gambitcore_db_version = read_string("GAMBIT_DB_VERSION")
+    String gambitcore_docker = docker
   }
   runtime {
     docker:  "~{docker}"
