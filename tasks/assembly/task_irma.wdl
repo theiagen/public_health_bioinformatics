@@ -10,7 +10,7 @@ task irma {
     String read_basename = basename(read1)
     String docker = "us-docker.pkg.dev/general-theiagen/cdcgov/irma:v1.1.5"
     Int memory = 16
-    Int cpu = 8
+    Int cpu = 4
     Int disk_size = 100
   }
   command <<<
@@ -19,9 +19,6 @@ task irma {
     # this is done so that IRMA used PWD as the TMP directory instead of /tmp/root that it tries by default; cromwell doesn't allocate much disk space here (64MB or some small amount)
     echo "DEBUG: creating an optional IRMA configuration file to set TMP directory to $(pwd)"
     echo "TMP=$(pwd)" >> irma_config.sh
-
-    echo "DEBUG: here's the available disk space of all root directories:"
-    df -h /*
 
     #capture reads as bash variables
     read1=~{read1}
@@ -61,49 +58,76 @@ task irma {
       echo "Read headers match IRMA formatting requirements"
     fi
 
+    # run IRMA
     # set IRMA module depending on sequencing technology
     if [[ ~{seq_method} == "OXFORD_NANOPORE" ]]; then
       IRMA "FLU-minion" "${read1}" ~{samplename} --external-config irma_config.sh
     else
+      # else, assume Illumina paired-end data as input
       IRMA "FLU" "${read1}" "${read2}" ~{samplename} --external-config irma_config.sh
     fi
 
     # capture IRMA type
     if compgen -G "~{samplename}/*fasta"; then
+      # look at list of files that match the above pattern, grab the first one, and extract the type from the filename. We expect: ~{samplename}/B_HA.fasta
       echo "Type_"$(basename "$(echo "$(find ~{samplename}/*.fasta | head -n1)")" | cut -d_ -f1) > IRMA_TYPE
-      irma_type=(echo "Type_"$(basename "$(echo "$(find ~{samplename}/*.fasta | head -n1)")" | cut -d_ -f1))
-      # cat consensus assemblies
+      # TODO - remove this bash variable? It's not used but could be used if necessary....Could also simply command to just: irma_type=$(cat IRMA_TYPE)
+      irma_type=$(cat IRMA_TYPE)
+      # concatenate consensus assemblies into single file with all genome segments
+      echo "DEBUG: creating IRMA FASTA file containing all segments...."
       cat ~{samplename}/*.fasta > ~{samplename}.irma.consensus.fasta
+      echo "DEBUG: editing IRMA FASTA file to include sample name in FASTA headers...."
+      sed -i "s/>/>~{samplename}_/g" ~{samplename}.irma.consensus.fasta
     else
-      echo "No IRMA assembly generated for flu type prediction" >> IRMA_TYPE
+      echo "No IRMA assembly generated for flu type prediction" | tee IRMA_TYPE
     fi
 
-    # rename IRMA outputs
+    # rename IRMA outputs to include samplename. Example: "B_HA.fasta" -> "sample0001_HA.fasta"
+    echo "DEBUG: Renaming IRMA output VCFs, FASTAs, and BAMs to include samplename...."
     for irma_out in ~{samplename}/*{.vcf,.fasta,.bam}; do
       new_name="~{samplename}_"$(basename "${irma_out}" | cut -d "_" -f2- )
-      echo "New name: ${new_name}; irma_out: ${irma_out}"
-      mv "${irma_out}" "${new_name}"
+      mv -v "${irma_out}" "${new_name}"
     done
     
     # capture type A subtype
     if compgen -G "~{samplename}_HA*.fasta"; then # check if HA segment exists
+      # NOTE: this if block does not get triggered for Flu B samples, because they do not include a subtype in FASTA filename for HA or NA segment
       if [[ "$(ls ~{samplename}_HA*.fasta)" == *"HA_H"* ]]; then # if so, grab H-type if one is identified in assembly header
         subtype="$(basename ~{samplename}_HA*.fasta | awk -F _ '{print $NF}' | cut -d. -f1)" # grab H-type from last value in under-score-delimited filename
+        # rename HA FASTA file to not include subtype in filename)
+        echo "DEBUG: renaming HA FASTA file to not include subtype in filename...."
+        mv -v ~{samplename}_HA*.fasta ~{samplename}_HA.fasta
       fi
-      # format HA segment to target output name and rename header to include the samplename
-      sed "1s/>/>~{samplename}_/" "~{samplename}"_HA*.fasta > "~{samplename}"_HA.fasta
-    fi
-    if compgen -G "~{samplename}_NA*.fasta" && [[ "$(ls ~{samplename}_NA*.fasta)" == *"NA_N"* ]]; then # check if NA segment exists with an N-type identified in header
-       subtype+="$(basename ~{samplename}_NA*.fasta | awk -F _ '{print $NF}' | cut -d. -f1)" # grab N-type from last value in under-score-delimited filename 
-       # format NA segment to target output name and rename header to include the samplename
-       sed "1s/>/>~{samplename}_/" "~{samplename}"_NA*.fasta > "~{samplename}"_NA.fasta
+      echo "DEBUG: Running sed to change HA segment FASTA header now..."
+      # format HA segment to target output name and rename header to include the samplename. Example FASTA header change: ">B_HA" -> ">sample0001_B_HA"
+      sed -i "1s/>/>~{samplename}_/" "~{samplename}_HA.fasta"
     fi
 
-    if ! [ -z "${subtype}" ]; then 
+    # if there is a file that matches the pattern AND the file contains an N-type in the header, grab the N-type
+    # NOTE: this does not get triggered for Flu B samples, because they do not include a subtype in FASTA filename for HA or NA segment
+    if compgen -G "~{samplename}_NA*.fasta" && [[ "$(ls ~{samplename}_NA*.fasta)" == *"NA_N"* ]]; then # check if NA segment exists with an N-type identified in header
+      subtype+="$(basename ~{samplename}_NA*.fasta | awk -F _ '{print $NF}' | cut -d. -f1)" # grab N-type from last value in under-score-delimited filename 
+      # rename NA FASTA file to not include subtype in filename)
+      echo "DEBUG: renaming NA FASTA file to not include subtype in filename...."
+      mv -v ~{samplename}_NA*.fasta ~{samplename}_NA.fasta
+    fi
+
+      echo "DEBUG: Running sed to change NA FASTA header now..."
+      # format NA segment to target output name and rename header to include the samplename
+      sed -i "1s/>/>~{samplename}_/" "~{samplename}_NA.fasta"
+
+    # if bash variable "subtype" is not empty, write it to a file; 
+    # if "subtype" is "Type_B" then write a message indicating that IRMA does not differentiate between Victoria and Yamagata lineages
+    # otherwise, write a message indicating no subtype was predicted
+    if [ -n "${subtype}" ]; then 
       echo "${subtype}" > IRMA_SUBTYPE
+    elif [[ "${irma_type}" == "Type_B" ]]; then
+      echo "IRMA does not differentiate Victoria and Yamagata Flu B lineages. See abricate_flu_subtype output column" > IRMA_SUBTYPE
     else
       echo "No subtype predicted by IRMA" > IRMA_SUBTYPE
     fi
+
+    ##### STOPPED HERE ON 2024-05-07, CONTINUE TESTING BELOW ######
 
     # rename BAM file if exists
     #if [ -f "~{samplename}"_HA*.bam ] && [[ "${irma_type}" == "Type_A" ]]; then
