@@ -154,12 +154,15 @@ task irma {
     File? seg_pb1_assembly = "~{samplename}_PB1.fasta"
     File? seg_pb2_assembly = "~{samplename}_PB2.fasta"
     File? seg_mp_assembly = "~{samplename}_MP.fasta"
+    File? seg_np_assembly = "~{samplename}_NP.fasta"
+    File? seg_ns_assembly = "~{samplename}_NS.fasta"
     String irma_type = read_string("IRMA_TYPE")
     String irma_subtype = read_string("IRMA_SUBTYPE")
     String irma_subtype_notes = read_string("IRMA_SUBTYPE_NOTES")
     Array[File] irma_assemblies = glob("~{samplename}*.fasta")
     Array[File] irma_vcfs = glob("~{samplename}*.vcf")
     Array[File] irma_bams = glob("~{samplename}*.bam")
+    String irma_docker = docker
     String irma_version = read_string("VERSION")
     String irma_pipeline_date = read_string("DATE")
     # for now just adding bams for these segments for mean coverage calculation

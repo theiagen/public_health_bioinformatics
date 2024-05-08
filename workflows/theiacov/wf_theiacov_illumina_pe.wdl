@@ -473,11 +473,18 @@ workflow theiacov_illumina_pe {
     File? vadr_fastas_zip_archive = vadr.vadr_fastas_zip_archive
     # Flu IRMA and Abricate Outputs
     String? irma_version = irma.irma_version
+    String? irma_docker = irma.irma_docker
     String? irma_type = irma.irma_type
     String? irma_subtype = irma.irma_subtype
     String? irma_subtype_notes = irma.irma_subtype_notes
-    File? irma_ha_segment = irma.seg_ha_assembly
-    File? irma_na_segment = irma.seg_na_assembly
+    File? irma_ha_segment_fasta = irma.seg_ha_assembly
+    File? irma_na_segment_fasta = irma.seg_na_assembly
+    File? irma_pa_segment_fasta = irma.seg_pa_assembly
+    File? irma_pb1_segment_fasta = irma.seg_pb1_assembly
+    File? irma_pb2_segment_fasta = irma.seg_pb2_assembly
+    File? irma_mp_segment_fasta = irma.seg_mp_assembly
+    File? irma_np_segment_fasta = irma.seg_np_assembly
+    File? irma_ns_segment_fasta = irma.seg_ns_assembly
     String? abricate_flu_type = abricate_flu.abricate_flu_type
     String? abricate_flu_subtype =  abricate_flu.abricate_flu_subtype
     File? abricate_flu_results = abricate_flu.abricate_flu_results
