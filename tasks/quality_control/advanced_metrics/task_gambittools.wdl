@@ -31,7 +31,7 @@ task gambitcore {
 
     # parse output file
     cat ~{samplename}_gambitcore_report.tsv | cut -f 2 | tail -n 1 | tee SPECIES
-    cat ~{samplename}_gambitcore_report.tsv | cut -f 3 | tail -n 1 | tee COMPLETNESS
+    cat ~{samplename}_gambitcore_report.tsv | cut -f 3 | tail -n 1 | tee COMPLETENESS
     cat ~{samplename}_gambitcore_report.tsv | cut -f 4 | tail -n 1 | tee ASSEMBLY_SPECIES_CORE_KMERS
     cat ~{samplename}_gambitcore_report.tsv | cut -f 5 | tail -n 1 | tee CLOSEST_ACCESSION
     cat ~{samplename}_gambitcore_report.tsv | cut -f 6 | tail -n 1 | tee CLOSEST_DISTANCE
@@ -44,7 +44,7 @@ task gambitcore {
   output {
     File gambitcore_report_file = "~{samplename}_gambitcore_report.tsv"
     String gambitcore_species = read_string("SPECIES")
-    String gambitcore_completeness = read_string("COMPLETNESS")
+    String gambitcore_completeness = read_string("COMPLETENESS")
     String gambitcore_kmers_ratio = read_string("ASSEMBLY_SPECIES_CORE_KMERS")
     String gambitcore_closest_accession = read_string("CLOSEST_ACCESSION")
     Float gambitcore_closest_distance = read_string("CLOSEST_DISTANCE")
