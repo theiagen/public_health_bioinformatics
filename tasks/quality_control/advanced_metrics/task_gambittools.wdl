@@ -42,15 +42,15 @@ task gambitcore {
 
   >>>
   output {
-    File gambitcore_check_report_file = "~{samplename}_gambitcore_report.tsv"
+    File gambitcore_report_file = "~{samplename}_gambitcore_report.tsv"
     String gambitcore_species = read_string("SPECIES")
     String gambitcore_completeness = read_string("COMPLETNESS")
     String gambitcore_kmers_ratio = read_string("ASSEMBLY_SPECIES_CORE_KMERS")
     String gambitcore_closest_accession = read_string("CLOSEST_ACCESSION")
-    String gambitcore_closest_distance = read_string("CLOSEST_DISTANCE")
-    String gambitcore_assembly_kmers = read_string("ASSEMBLY_KMERS")
-    String gambitcore_species_kmers = read_string("SPECIES_KMERS")
-    String gambitcore_species_std_kmers = read_string("SPECIES_STD_KMERS")
+    Float gambitcore_closest_distance = read_string("CLOSEST_DISTANCE")
+    Int gambitcore_assembly_kmers = read_string("ASSEMBLY_KMERS")
+    Int gambitcore_species_kmers = read_string("SPECIES_KMERS")
+    Int gambitcore_species_std_kmers = read_string("SPECIES_STD_KMERS")
     String gambitcore_assembly_qc = read_string("ASSEMBLY_QC")
     String gambitcore_db_version = read_string("GAMBIT_DB_VERSION")
     String gambitcore_docker = docker
