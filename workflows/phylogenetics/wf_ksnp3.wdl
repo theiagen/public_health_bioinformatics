@@ -17,6 +17,7 @@ workflow ksnp3_workflow {
     String? data_summary_terra_table
     String? data_summary_column_names # string of comma delimited column names
     Boolean midpoint_root_tree = true
+    Boolean add_phandango_coloring = false
 	}
   call ksnp3.ksnp3 as ksnp3_task {
     input:
@@ -54,7 +55,8 @@ workflow ksnp3_workflow {
       input_tree = ksnp3_task.ksnp3_pan_parsimony_tree,
       matrix = pan_snp_dists.snp_matrix,
       cluster_name = cluster_name + "_pan",
-      midpoint_root_tree = midpoint_root_tree
+      midpoint_root_tree = midpoint_root_tree,
+      add_phandango_coloring = add_phandango_coloring
   }
   if (defined(data_summary_column_names)) {
     call data_summary.summarize_data {
@@ -64,7 +66,8 @@ workflow ksnp3_workflow {
         terra_workspace = data_summary_terra_workspace,
         terra_table = data_summary_terra_table,
         column_names = data_summary_column_names,
-        output_prefix = cluster_name
+        output_prefix = cluster_name,
+        keep_phandango_coloring = add_phandango_coloring
     }
   }
   call versioning.version_capture {
