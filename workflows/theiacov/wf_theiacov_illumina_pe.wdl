@@ -177,11 +177,14 @@ workflow theiacov_illumina_pe {
               assembly = select_first([irma.irma_assembly_fasta]),
               samplename = samplename
           }
+          # if IRMA cannot predict a subtype (like with Flu B samples), then set the flu_subtype to the abricate_flu_subtype String output (e.g. "Victoria" for Flu B)
+          String flu_subtype = if irma.irma_subtype == "No subtype predicted by IRMA" then abricate_flu.abricate_flu_subtype else irma.irma_subtype
+
           call set_organism_defaults.organism_parameters as set_flu_na_nextclade_values {
             input:
               organism = organism_parameters.standardized_organism,
               flu_segment = "NA",
-              flu_subtype = abricate_flu.abricate_flu_subtype,
+              flu_subtype = flu_subtype,
               # including these to block from terra
               reference_gff_file = reference_gff,
               reference_genome = reference_genome,
@@ -202,7 +205,7 @@ workflow theiacov_illumina_pe {
             input:
               organism = organism_parameters.standardized_organism,
               flu_segment = "HA",
-              flu_subtype = abricate_flu.abricate_flu_subtype,
+              flu_subtype = flu_subtype,
               # including these to block from terra
               reference_gff_file = reference_gff,
               reference_genome = reference_genome,
