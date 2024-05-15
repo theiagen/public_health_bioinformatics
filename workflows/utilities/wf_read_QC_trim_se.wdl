@@ -93,7 +93,7 @@ workflow read_QC_trim_se {
     }
   }
   if ("~{workflow_series}" == "theiaprok") {
-    if ((call_midas) && defined(midas_db)) {
+    if (call_midas) {
       call midas_task.midas {
         input:
           samplename = samplename,
