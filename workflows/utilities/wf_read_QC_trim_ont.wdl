@@ -76,12 +76,12 @@ workflow read_QC_trim_ont {
     } 
   }
   if ("~{workflow_series}" == "theiaprok") {
-    if (call_kraken) {
+    if ((call_kraken) && defined(kraken_db)) {
       call kraken2.kraken2_standalone as kraken2_se {
         input:
           samplename = samplename,
           read1 = read1,
-          kraken2_db = select_first([kraken_db]),
+          kraken2_db = select_first([kraken_db, "Kraken2 database not defined"]),
           disk_size = kraken_disk_size,
           memory = kraken_memory
       }
