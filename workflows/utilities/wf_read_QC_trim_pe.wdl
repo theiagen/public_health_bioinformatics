@@ -136,7 +136,7 @@ workflow read_QC_trim_pe {
           samplename = samplename,
           read1 = read1,
           read2 = read2,
-          kraken2_db = select_first([kraken_db, "Kraken2 database not defined"]),
+          kraken2_db = select_first([kraken_db]),
           disk_size = kraken_disk_size,
           memory = kraken_memory
       }
