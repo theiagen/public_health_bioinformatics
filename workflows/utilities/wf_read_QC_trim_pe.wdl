@@ -119,7 +119,7 @@ workflow read_QC_trim_pe {
     }
   }
   if ("~{workflow_series}" == "theiaprok") {
-    if (call_midas) {
+    if ((call_midas) && defined(midas_db)) {
       call midas_task.midas {
         input:
           samplename = samplename,
@@ -130,13 +130,13 @@ workflow read_QC_trim_pe {
     }
   }
   if ("~{workflow_series}" == "theiaprok") {
-    if (call_kraken) {
+    if ((call_kraken) && defined(kraken_db)) {
       call kraken.kraken2_standalone {
         input:
           samplename = samplename,
           read1 = read1,
           read2 = read2,
-          kraken2_db = select_first([kraken_db]),
+          kraken2_db = select_first([kraken_db, "Kraken2 database not defined"]),
           disk_size = kraken_disk_size,
           memory = kraken_memory
       }
