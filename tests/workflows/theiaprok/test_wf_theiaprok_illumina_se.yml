@@ -582,17 +582,17 @@
     - path: miniwdl_run/wdl/tasks/species_typing/escherichia_shigella/task_sonneityping.wdl
       md5sum: 8571571f99487448218469c15b803626
     - path: miniwdl_run/wdl/tasks/species_typing/mycobacterium/task_tbprofiler.wdl
-      md5sum: a7ab31fd0bc2695ceeaaecd40a4663d5
+      md5sum: 97ccec2e7a8499a8b82077321c62f804
     - path: miniwdl_run/wdl/tasks/species_typing/multi/task_ts_mlst.wdl
       md5sum: c84e37ca77732b2ffa6a32629a4b6d6f
     - path: miniwdl_run/wdl/tasks/task_versioning.wdl
-      md5sum: 09c89f110dc7c6a9a614f55cf4fe1b1d
+      md5sum: 25381cffcb301f0f47266db6938a647c
     - path: miniwdl_run/wdl/tasks/taxon_id/task_gambit.wdl
       md5sum: 4e1d4f6b8085a209f9721748a0c0fef0
     - path: miniwdl_run/wdl/tasks/taxon_id/contamination/task_kraken2.wdl
       md5sum: 4cfdd99bcc2015237a4a07d621576e60
     - path: miniwdl_run/wdl/tasks/taxon_id/contamination/task_midas.wdl
-      md5sum: c6f3b8b3e3894208f7b247709944c9bc
+      md5sum: c83147d66fdf4ae14214c0a7683452e0
     - path: miniwdl_run/wdl/tasks/utilities/data_export/task_broad_terra_tools.wdl
       md5sum: 7bb7ea5da6541cbaa446b19eb7d88020
     - path: miniwdl_run/wdl/workflows/theiaprok/wf_theiaprok_illumina_se.wdl

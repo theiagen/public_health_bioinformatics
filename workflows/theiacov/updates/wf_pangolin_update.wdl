@@ -26,12 +26,14 @@ workflow pangolin_update {
       reference_gff_file = "gs://theiagen-public-files/terra/theiacov-files/empty.gff3",
       reference_genome = "gs://theiagen-public-files/terra/theiacov-files/empty.fasta",
       genome_length_input = 0,
-      nextclade_dataset_reference_input = "",
       nextclade_dataset_tag_input = "",
       nextclade_dataset_name_input = "",     
       vadr_max_length = 0,
+      vadr_skip_length = 0,
+      vadr_mem = 0, 
       vadr_options = "",
       primer_bed_file = "gs://theiagen-public-files/terra/theiacov-files/empty.bed",
+      gene_locations_bed_file = "gs://theiagen-public-files/terra/theiacov-files/empty.bed",
       kraken_target_organism_input = "",
       hiv_primer_version = ""
   }

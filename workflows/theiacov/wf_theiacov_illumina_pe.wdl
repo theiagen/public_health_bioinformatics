@@ -23,7 +23,7 @@ workflow theiacov_illumina_pe {
   }
   input {
     String samplename
-    String organism = "sars-cov-2" # options: "sars-cov-2", "HIV", "WNV", "MPXV", "flu"
+    String organism = "sars-cov-2" # recommended options: "sars-cov-2", "HIV", "WNV", "MPXV", "flu", "rsv-a", "rsv-b"
     File read1
     File read2
     # sequencing values
@@ -50,6 +50,7 @@ workflow theiacov_illumina_pe {
     String? nextclade_dataset_name
     # vadr parameters
     Int? vadr_max_length
+    Int? vadr_skip_length
     String? vadr_options
     Int? vadr_memory
     # read screen parameters
@@ -77,6 +78,7 @@ workflow theiacov_illumina_pe {
       nextclade_dataset_tag_input = nextclade_dataset_tag,
       nextclade_dataset_name_input = nextclade_dataset_name,     
       vadr_max_length = vadr_max_length,
+      vadr_skip_length = vadr_skip_length,
       vadr_options = vadr_options,
       primer_bed_file = primer_bed,
       pangolin_docker_image = pangolin_docker_image,
@@ -108,7 +110,8 @@ workflow theiacov_illumina_pe {
         workflow_series = "theiacov",
         trim_min_length = trim_min_length,
         trim_quality_min_score = trim_quality_min_score,
-        trim_window_size = trim_window_size
+        trim_window_size = trim_window_size,
+        target_organism = organism_parameters.kraken_target_organism
     }
     call screen.check_reads as clean_check_reads {
       input:
@@ -184,11 +187,13 @@ workflow theiacov_illumina_pe {
               reference_genome = reference_genome,
               genome_length_input = genome_length,
               nextclade_dataset_tag_input = nextclade_dataset_tag,
-              nextclade_dataset_name_input = nextclade_dataset_name,     
+              nextclade_dataset_name_input = nextclade_dataset_name,
               vadr_max_length = vadr_max_length,
+              vadr_skip_length = vadr_skip_length,
               vadr_options = vadr_options,
               vadr_mem = vadr_memory,
               primer_bed_file = primer_bed,
+              gene_locations_bed_file = reference_gene_locations_bed,
               pangolin_docker_image = pangolin_docker_image,
               kraken_target_organism_input = target_organism,
               hiv_primer_version = "N/A"
@@ -205,8 +210,10 @@ workflow theiacov_illumina_pe {
               nextclade_dataset_tag_input = nextclade_dataset_tag,
               nextclade_dataset_name_input = nextclade_dataset_name,     
               vadr_max_length = vadr_max_length,
+              vadr_skip_length = vadr_skip_length,
               vadr_options = vadr_options,
               primer_bed_file = primer_bed,
+              gene_locations_bed_file = reference_gene_locations_bed,
               pangolin_docker_image = pangolin_docker_image,
               kraken_target_organism_input = target_organism,
               hiv_primer_version = "N/A"
@@ -238,8 +245,8 @@ workflow theiacov_illumina_pe {
           genome_length = organism_parameters.genome_length
       }
       # run organism-specific typing
-      if (organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "sars-cov-2" || (organism_parameters.standardized_organism == "flu" && defined(irma.seg_ha_assembly) && ! defined(do_not_run_flu_ha_nextclade))) { 
-        # tasks specific to either MPXV, sars-cov-2, or flu
+      if (organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "rsv_a" || organism_parameters.standardized_organism == "rsv_b" || (organism_parameters.standardized_organism == "flu" && defined(irma.seg_ha_assembly) && ! defined(do_not_run_flu_ha_nextclade))) { 
+        # tasks specific to either MPXV, sars-cov-2, flu, or RSV-A/RSV-B
         call nextclade_task.nextclade_v3 {
           input:
             genome_fasta = select_first([irma.seg_ha_assembly, ivar_consensus.assembly_fasta]),
@@ -297,6 +304,7 @@ workflow theiacov_illumina_pe {
             assembly_length_unambiguous = consensus_qc.number_ATCG,
             vadr_opts = organism_parameters.vadr_opts,
             max_length = organism_parameters.vadr_maxlength,
+            skip_length = organism_parameters.vadr_skiplength,
             memory = organism_parameters.vadr_memory
         }
       }
@@ -381,12 +389,12 @@ workflow theiacov_illumina_pe {
     String? kraken_version = read_QC_trim.kraken_version
     Float? kraken_human = read_QC_trim.kraken_human
     Float? kraken_sc2 = read_QC_trim.kraken_sc2
-    String? kraken_target_org = read_QC_trim.kraken_target_organism
-    String? kraken_target_org_name = read_QC_trim.kraken_target_organism_name
+    String? kraken_target_organism = read_QC_trim.kraken_target_organism
+    String? kraken_target_organism_name = read_QC_trim.kraken_target_organism_name
     File? kraken_report = read_QC_trim.kraken_report
     Float? kraken_human_dehosted = read_QC_trim.kraken_human_dehosted
     Float? kraken_sc2_dehosted = read_QC_trim.kraken_sc2_dehosted
-    String? kraken_target_org_dehosted = read_QC_trim.kraken_target_organism_dehosted
+    String? kraken_target_organism_dehosted = read_QC_trim.kraken_target_organism_dehosted
     File? kraken_report_dehosted = read_QC_trim.kraken_report_dehosted
     # Read Alignment - bwa outputs
     String? bwa_version = ivar_consensus.bwa_version

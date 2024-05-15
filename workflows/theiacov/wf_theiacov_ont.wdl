@@ -53,6 +53,7 @@ workflow theiacov_ont {
     Boolean skip_mash = false
     # vadr parameters
     Int? vadr_max_length
+    Int? vadr_skip_length
     String? vadr_options
     Int? vadr_memory
     # pangolin parameters
@@ -69,6 +70,7 @@ workflow theiacov_ont {
       nextclade_dataset_tag_input = nextclade_dataset_tag,
       nextclade_dataset_name_input = nextclade_dataset_name,     
       vadr_max_length = vadr_max_length,
+      vadr_skip_length = vadr_skip_length,
       vadr_options = vadr_options,
       vadr_mem = vadr_memory,
       primer_bed_file = primer_bed,
@@ -89,7 +91,7 @@ workflow theiacov_ont {
       skip_mash = skip_mash,
       workflow_series = "theiacov",
       organism = organism_parameters.standardized_organism,
-      expected_genome_length = genome_length
+      expected_genome_length = organism_parameters.genome_length
   }
   if (raw_check_reads.read_screen == "PASS") {
     call read_qc_trim_workflow.read_QC_trim_ont as read_qc_trim {
@@ -115,7 +117,7 @@ workflow theiacov_ont {
         skip_mash = skip_mash,
         workflow_series = "theiacov",
         organism = organism_parameters.standardized_organism,
-        expected_genome_length = genome_length
+        expected_genome_length = organism_parameters.genome_length
     }
     if (clean_check_reads.read_screen == "PASS") {
       # assembly via artic_consensus for sars-cov-2 and HIV
@@ -163,10 +165,12 @@ workflow theiacov_ont {
               reference_genome = reference_genome,
               genome_length_input = genome_length,
               nextclade_dataset_tag_input = nextclade_dataset_tag,
-              nextclade_dataset_name_input = nextclade_dataset_name,     
+              nextclade_dataset_name_input = nextclade_dataset_name,
               vadr_max_length = vadr_max_length,
+              vadr_skip_length = vadr_skip_length,
               vadr_options = vadr_options,
               primer_bed_file = primer_bed,
+              gene_locations_bed_file = reference_gene_locations_bed,
               pangolin_docker_image = pangolin_docker_image,
               kraken_target_organism_input = target_organism,
               hiv_primer_version = "N/A"
@@ -182,8 +186,10 @@ workflow theiacov_ont {
               nextclade_dataset_tag_input = nextclade_dataset_tag,
               nextclade_dataset_name_input = nextclade_dataset_name,     
               vadr_max_length = vadr_max_length,
+              vadr_skip_length = vadr_skip_length,
               vadr_options = vadr_options,
               primer_bed_file = primer_bed,
+              gene_locations_bed_file = reference_gene_locations_bed,
               pangolin_docker_image = pangolin_docker_image,
               kraken_target_organism_input = target_organism,
               hiv_primer_version = "N/A"
@@ -230,7 +236,7 @@ workflow theiacov_ont {
         }
       }
       # run organism-specific typing
-      if (organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "sars-cov-2" || (organism_parameters.standardized_organism == "flu" && defined(irma.seg_ha_assembly) && ! defined(do_not_run_flu_ha_nextclade))) { 
+      if (organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "rsv_a" || organism_parameters.standardized_organism == "rsv_b" || (organism_parameters.standardized_organism == "flu" && defined(irma.seg_ha_assembly) && ! defined(do_not_run_flu_ha_nextclade))) { 
         # tasks specific to either MPXV, sars-cov-2, or flu
         call nextclade_task.nextclade_v3 {
           input:
@@ -289,6 +295,7 @@ workflow theiacov_ont {
             assembly_length_unambiguous = consensus_qc.number_ATCG,
             vadr_opts = organism_parameters.vadr_opts,
             max_length = organism_parameters.vadr_maxlength,
+            skip_length = organism_parameters.vadr_skiplength,
             memory = organism_parameters.vadr_memory
         }
       }      
@@ -338,15 +345,25 @@ workflow theiacov_ont {
     # Read QC - nanoplot raw outputs
     File? nanoplot_html_raw = nanoplot_raw.nanoplot_html
     File? nanoplot_tsv_raw = nanoplot_raw.nanoplot_tsv
-    Int? num_reads_raw1 = nanoplot_raw.num_reads
-    Float? r1_mean_readlength_raw = nanoplot_raw.mean_readlength
-    Float? r1_mean_q_raw = nanoplot_raw.mean_q
+    Int? nanoplot_num_reads_raw1 = nanoplot_raw.num_reads
+    Float? nanoplot_r1_median_readlength_raw = nanoplot_raw.median_readlength
+    Float? nanoplot_r1_mean_readlength_raw = nanoplot_raw.mean_readlength
+    Float? nanoplot_r1_stdev_readlength_raw = nanoplot_raw.stdev_readlength
+    Float? nanoplot_r1_n50_raw = nanoplot_raw.n50
+    Float? nanoplot_r1_mean_q_raw = nanoplot_raw.mean_q
+    Float? nanoplot_r1_median_q_raw = nanoplot_raw.median_q
+    Float? nanoplot_r1_est_coverage_raw = nanoplot_raw.est_coverage
     # Read QC - nanoplot clean outputs
     File? nanoplot_html_clean = nanoplot_clean.nanoplot_html
     File? nanoplot_tsv_clean = nanoplot_clean.nanoplot_tsv
-    Int? num_reads_clean1 = nanoplot_clean.num_reads
-    Float? r1_mean_readlength_clean = nanoplot_clean.mean_readlength
-    Float? r1_mean_q_clean = nanoplot_clean.mean_q
+    Int? nanoplot_num_reads_clean1 = nanoplot_clean.num_reads
+    Float? nanoplot_r1_median_readlength_clean = nanoplot_clean.median_readlength
+    Float? nanoplot_r1_mean_readlength_clean = nanoplot_clean.mean_readlength
+    Float? nanoplot_r1_stdev_readlength_clean = nanoplot_clean.stdev_readlength
+    Float? nanoplot_r1_n50_clean = nanoplot_clean.n50
+    Float? nanoplot_r1_mean_q_clean = nanoplot_clean.mean_q
+    Float? nanoplot_r1_median_q_clean = nanoplot_clean.median_q
+    Float? nanoplot_r1_est_coverage_clean = nanoplot_clean.est_coverage
     # Read QC - kraken outputs general
     String? kraken_version = read_qc_trim.kraken_version
     String? kraken_target_organism_name = read_qc_trim.kraken_target_organism_name

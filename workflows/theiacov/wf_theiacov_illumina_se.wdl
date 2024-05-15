@@ -52,6 +52,7 @@ workflow theiacov_illumina_se {
     Boolean skip_mash = false
     # vadr parameters
     Int? vadr_max_length
+    Int? vadr_skip_length
     String? vadr_options
     Int? vadr_memory
     # pangolin parameters
@@ -69,6 +70,7 @@ workflow theiacov_illumina_se {
       nextclade_dataset_tag_input = nextclade_dataset_tag,
       nextclade_dataset_name_input = nextclade_dataset_name,     
       vadr_max_length = vadr_max_length,
+      vadr_skip_length = vadr_skip_length,
       vadr_options = vadr_options,
       vadr_mem = vadr_memory,
       primer_bed_file = primer_bed,
@@ -98,7 +100,8 @@ workflow theiacov_illumina_se {
         trim_window_size = trim_window_size,
         adapters = adapters,
         phix = phix,
-        workflow_series = "theiacov"
+        workflow_series = "theiacov",
+        target_organism = organism_parameters.kraken_target_organism
     }
     call screen.check_reads_se as clean_check_reads {
       input:
@@ -151,7 +154,7 @@ workflow theiacov_illumina_se {
             organism = organism_parameters.standardized_organism
         }
       }
-      if (organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "sars-cov-2") {
+      if (organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "rsv_a" || organism_parameters.standardized_organism == "rsv_b" ) {
         # tasks specific to either MPXV or sars-cov-2
         call nextclade_task.nextclade_v3 {
           input:
@@ -173,6 +176,7 @@ workflow theiacov_illumina_se {
             assembly_length_unambiguous = consensus_qc.number_ATCG,
             vadr_opts = organism_parameters.vadr_opts,
             max_length = organism_parameters.vadr_maxlength,
+            skip_length = organism_parameters.vadr_skiplength,
             memory = organism_parameters.vadr_memory
         }
       }
@@ -238,7 +242,7 @@ workflow theiacov_illumina_se {
     String? bwa_version = ivar_consensus.bwa_version
     String? samtools_version = ivar_consensus.samtools_version
     File? read1_aligned = ivar_consensus.read1_aligned
-    String? assembly_method = ivar_consensus.assembly_method_nonflu
+    String? assembly_method = "TheiaCoV (~{version_capture.phb_version}): " + select_first([ivar_consensus.assembly_method_nonflu, ""])
     File? aligned_bam = ivar_consensus.aligned_bam
     File? aligned_bai = ivar_consensus.aligned_bai
     File? read1_unaligned = ivar_consensus.read1_unaligned
