@@ -127,13 +127,13 @@ workflow read_QC_trim_ont {
     File? read1_dehosted = ncbi_scrub_se.read1_dehosted
     
     # kraken2 - theiacov and theiapro
-    String? kraken_version = select_first([kraken2_raw.version, kraken2_se.kraken2_version, ""])
+    String kraken_version = select_first([kraken2_raw.version, kraken2_se.kraken2_version, ""])
     String kraken_docker = select_first([kraken2_raw.docker, kraken2_se.kraken2_docker, ""])
     Float? kraken_human = kraken2_recalculate_abundances_raw.percent_human
     Float? kraken_sc2 = kraken2_recalculate_abundances_raw.percent_sc2
     String? kraken_target_organism = kraken2_recalculate_abundances_raw.percent_target_organism
     String? kraken_target_organism_name = kraken2_raw.kraken_target_organism
-    File? kraken_report = select_first([kraken2_recalculate_abundances_raw.kraken_report, kraken2_recalculate_abundances.kraken_report, ""])
+    String kraken_report = select_first([kraken2_recalculate_abundances_raw.kraken_report, kraken2_recalculate_abundances.kraken_report, ""])
     Float? kraken_human_dehosted = kraken2_recalculate_abundances_dehosted.percent_human
     Float? kraken_sc2_dehosted = kraken2_recalculate_abundances_dehosted.percent_sc2
     String? kraken_target_organism_dehosted = kraken2_recalculate_abundances_dehosted.percent_target_organism
