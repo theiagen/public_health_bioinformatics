@@ -5,6 +5,7 @@ import "../../tasks/gene_typing/annotation/task_prokka.wdl" as prokka_task
 import "../../tasks/gene_typing/drug_resistance/task_amrfinderplus.wdl" as amrfinderplus
 import "../../tasks/gene_typing/drug_resistance/task_resfinder.wdl" as resfinder
 import "../../tasks/gene_typing/plasmid_detection/task_plasmidfinder.wdl" as plasmidfinder_task
+import "../../tasks/gene_typing/drug_resistance/task_abricate.wdl" as abricate_task
 import "../../tasks/quality_control/advanced_metrics/task_busco.wdl" as busco_task
 import "../../tasks/quality_control/advanced_metrics/task_mummer_ani.wdl" as ani_task
 import "../../tasks/quality_control/basic_statistics/task_quast.wdl" as quast_task
@@ -39,6 +40,8 @@ workflow theiaprok_fasta {
     Boolean call_kmerfinder = false
     Boolean call_resfinder = false
     Boolean call_plasmidfinder = true
+    Boolean call_abricate = false
+    String abricate_db = "vfdb"
     String genome_annotation = "prokka" # options: "prokka" or "bakta"
     String? expected_taxon # allow user to provide organism (e.g. "Clostridioides_difficile") string to amrfinder. Useful when gambit does not predict the correct species
     # qc check parameters
@@ -114,6 +117,14 @@ workflow theiaprok_fasta {
       input:
         assembly = assembly_fasta,
         samplename = samplename
+    }
+  }
+  if (call_abricate) {
+    call abricate_task.abricate {
+      input:
+        assembly = assembly_fasta,
+        samplename = samplename,
+        database = abricate_db
     }
   }
   call merlin_magic_workflow.merlin_magic {
@@ -331,11 +342,16 @@ workflow theiaprok_fasta {
         kaptive_kl_confidence = merlin_magic.kaptive_k_confidence,
         kaptive_oc_locus = merlin_magic.kaptive_oc_match,
         kaptive_ocl_confidence = merlin_magic.kaptive_oc_confidence,
-        abricate_abaum_plasmid_tsv = merlin_magic.abricate_results,
-        abricate_abaum_plasmid_type_genes = merlin_magic.abricate_genes,
-        abricate_database = merlin_magic.abricate_database,
-        abricate_version = merlin_magic.abricate_version,
-        abricate_docker = merlin_magic.abricate_docker,
+        abricate_results_tsv = abricate.abricate_results,
+        abricate_genes = abricate.abricate_genes,
+        abricate_database = abricate.abricate_database,
+        abricate_version = abricate.abricate_version,
+        abricate_docker = abricate.abricate_docker,
+        abricate_abaum_plasmid_tsv = merlin_magic.abricate_abaum_results,
+        abricate_abaum_plasmid_type_genes = merlin_magic.abricate_abaum_genes,
+        abricate_abaum_database = merlin_magic.abricate_abaum_database,
+        abricate_abaum_version = merlin_magic.abricate_abaum_version,
+        abricate_abaum_docker = merlin_magic.abricate_abaum_docker,
         tbprofiler_output_file = merlin_magic.tbprofiler_output_file,
         tbprofiler_output_bam = merlin_magic.tbprofiler_output_bam,
         tbprofiler_output_bai = merlin_magic.tbprofiler_output_bai,
@@ -502,6 +518,12 @@ workflow theiaprok_fasta {
     File? plasmidfinder_seqs = plasmidfinder.plasmidfinder_seqs
     String? plasmidfinder_docker = plasmidfinder.plasmidfinder_docker
     String? plasmidfinder_db_version = plasmidfinder.plasmidfinder_db_version
+    # Abricate Results
+    File? abricate_results_tsv = abricate.abricate_results
+    String? abricate_genes = abricate.abricate_genes
+    String? abricate_database = abricate.abricate_database
+    String? abricate_version = abricate.abricate_version
+    String? abricate_docker = abricate.abricate_docker
     # QC_Check Results
     String? qc_check = qc_check_task.qc_check
     File? qc_standard = qc_check_task.qc_standard
@@ -596,11 +618,11 @@ workflow theiaprok_fasta {
     String? kaptive_kl_confidence = merlin_magic.kaptive_k_confidence
     String? kaptive_oc_locus = merlin_magic.kaptive_oc_match
     String? kaptive_ocl_confidence = merlin_magic.kaptive_oc_confidence
-    File? abricate_abaum_plasmid_tsv = merlin_magic.abricate_results
-    String? abricate_abaum_plasmid_type_genes = merlin_magic.abricate_genes
-    String? abricate_database = merlin_magic.abricate_database
-    String? abricate_version = merlin_magic.abricate_version
-    String? abricate_docker = merlin_magic.abricate_docker
+    File? abricate_abaum_plasmid_tsv = merlin_magic.abricate_abaum_results
+    String? abricate_abaum_plasmid_type_genes = merlin_magic.abricate_abaum_genes
+    String? abricate_abaum_database = merlin_magic.abricate_abaum_database
+    String? abricate_abaum_version = merlin_magic.abricate_abaum_version
+    String? abricate_abaum_docker = merlin_magic.abricate_abaum_docker
     # Legionella pneumophila typing
     File? legsta_results = merlin_magic.legsta_results
     String? legsta_predicted_sbt = merlin_magic.legsta_predicted_sbt
