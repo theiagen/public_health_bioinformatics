@@ -35,8 +35,12 @@ task nanoplot {
     # grep read statistics from tsv stats file
     grep "number_of_reads" ~{samplename}_NanoStats.txt | cut -f 2 | tee NUMBER_OF_READS
     NUM_BASES=$(grep "number_of_bases" ~{samplename}_NanoStats.txt | cut -f 2 | tee NUMBER_OF_BASES)
+    grep "median_read_length" ~{samplename}_NanoStats.txt | cut -f 2 | tee MEDIAN_READ_LENGTH
     grep "mean_read_length" ~{samplename}_NanoStats.txt | cut -f 2 | tee MEAN_READ_LENGTH
+    grep "read_length_stdev" ~{samplename}_NanoStats.txt | cut -f 2 | tee READ_LENGTH_STDEV
+    grep "n50" ~{samplename}_NanoStats.txt | cut -f 2 | tee N50
     grep "mean_qual" ~{samplename}_NanoStats.txt | cut -f 2 | tee MEAN_QUAL
+    grep "median_qual" ~{samplename}_NanoStats.txt | cut -f 2 | tee MEDIAN_QUAL
 
     # estimate coverage
     # using math: C = N / G where N is number of bases, and G is estimated genome size 
@@ -46,8 +50,12 @@ task nanoplot {
     File nanoplot_html = "~{samplename}_NanoPlot-report.html"
     File nanoplot_tsv = "~{samplename}_NanoStats.txt"
     Int num_reads = read_int("NUMBER_OF_READS")
+    Float median_readlength = read_float("MEDIAN_READ_LENGTH")
     Float mean_readlength = read_float("MEAN_READ_LENGTH")
+    Float stdev_readlength = read_float("READ_LENGTH_STDEV")
+    Float n50 = read_float("N50")
     Float mean_q = read_float("MEAN_QUAL")
+    Float median_q = read_float("MEDIAN_QUAL")
     Float est_coverage = read_float("EST_COVERAGE")
     String nanoplot_version = read_string("VERSION")
     String nanoplot_docker = docker

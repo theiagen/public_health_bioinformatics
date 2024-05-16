@@ -17,7 +17,7 @@
     - wf_theiacov_ont_miniwdl
   files:
     - path: miniwdl_run/call-clean_check_reads/command
-      md5sum: 7a5e9aa6ebc5eb186c8ae5d95281233b
+      md5sum: 6d3660386046b765f6058f703f750566
     - path: miniwdl_run/call-clean_check_reads/inputs.json
     - path: miniwdl_run/call-clean_check_reads/outputs.json
     - path: miniwdl_run/call-clean_check_reads/stderr.txt
@@ -219,7 +219,7 @@
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     - path: miniwdl_run/call-pangolin4/work/ont.pangolin_report.csv
     - path: miniwdl_run/call-raw_check_reads/command
-      md5sum: ef23ed37d30676f1d624c3a3eb0ae0c1
+      md5sum: 14666562b8c1ea633a05b8c00e345410
     - path: miniwdl_run/call-raw_check_reads/inputs.json
     - path: miniwdl_run/call-raw_check_reads/outputs.json
     - path: miniwdl_run/call-raw_check_reads/stderr.txt

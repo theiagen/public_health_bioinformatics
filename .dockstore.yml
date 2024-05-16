@@ -268,3 +268,8 @@ workflows:
    primaryDescriptorPath: /workflows/utilities/file_handling/wf_rename_fastq_files.wdl
    testParameterFiles:
     - /tests/inputs/empty.json
+ - name: Gambit_Core_PHB
+   subclass: WDL
+   primaryDescriptorPath: /workflows/standalone_modules/wf_gambitcore.wdl
+   testParameterFiles:
+    - /tests/inputs/empty.json
