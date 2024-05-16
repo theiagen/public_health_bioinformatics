@@ -7,7 +7,7 @@ task prune_table {
     String project_name
     File? input_table
     Array[String] sample_names
-    String biosample_type
+    String? biosample_type
     String bioproject
     String gcp_bucket_uri
     Boolean skip_biosample
@@ -116,6 +116,7 @@ task prune_table {
     else:
       print("Skipping biosample metadata upload")
       required_metadata = []
+      optional_metadata = []
 
     # sra metadata is the same regardless of biosample_type package, but I'm separating it out in case we find out this is incorrect
     sra_required = ["~{table_name}_id", "submission_id", "library_ID", "title", "library_strategy", "library_source", "library_selection", "library_layout", "platform", "instrument_model", "design_description", "filetype", "~{read1_column_name}"]
