@@ -447,11 +447,11 @@ workflow theiaprok_illumina_se {
             abricate_database = abricate.abricate_database,
             abricate_version = abricate.abricate_version,
             abricate_docker = abricate.abricate_docker,
-            abricate_abaum_plasmid_tsv = merlin_magic.abricate_results,
-            abricate_abaum_plasmid_type_genes = merlin_magic.abricate_genes,
-            abricate_abaum_database = merlin_magic.abricate_database,
-            abricate_abaum_version = merlin_magic.abricate_version,
-            abricate_abaum_docker = merlin_magic.abricate_docker,
+            abricate_abaum_plasmid_tsv = merlin_magic.abricate_abaum_results,
+            abricate_abaum_plasmid_type_genes = merlin_magic.abricate_abaum_genes,
+            abricate_abaum_database = merlin_magic.abricate_abaum_database,
+            abricate_abaum_version = merlin_magic.abricate_abaum_version,
+            abricate_abaum_docker = merlin_magic.abricate_abaum_docker,
             tbprofiler_output_file = merlin_magic.tbprofiler_output_file,
             tbprofiler_output_bam = merlin_magic.tbprofiler_output_bam,
             tbprofiler_output_bai = merlin_magic.tbprofiler_output_bai,
@@ -825,11 +825,11 @@ workflow theiaprok_illumina_se {
     String? kaptive_kl_confidence = merlin_magic.kaptive_k_confidence
     String? kaptive_oc_locus = merlin_magic.kaptive_oc_match
     String? kaptive_ocl_confidence = merlin_magic.kaptive_oc_confidence
-    File? abricate_abaum_plasmid_tsv = merlin_magic.abricate_results
-    String? abricate_abaum_plasmid_type_genes = merlin_magic.abricate_genes
-    String? abricate_abaum_database = merlin_magic.abricate_database
-    String? abricate_abaum_version = merlin_magic.abricate_version
-    String? abricate_abaum_docker = merlin_magic.abricate_docker
+    File? abricate_abaum_plasmid_tsv = merlin_magic.abricate_abaum_results
+    String? abricate_abaum_plasmid_type_genes = merlin_magic.abricate_abaum_genes
+    String? abricate_abaum_database = merlin_magic.abricate_abaum_database
+    String? abricate_abaum_version = merlin_magic.abricate_abaum_version
+    String? abricate_abaum_docker = merlin_magic.abricate_abaum_docker
     # Mycobacterium Typing
     File? tbprofiler_output_file = merlin_magic.tbprofiler_output_file
     File? tbprofiler_output_bam = merlin_magic.tbprofiler_output_bam
