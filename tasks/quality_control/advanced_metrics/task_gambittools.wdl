@@ -10,6 +10,9 @@ task gambitcore {
     Int disk_size = 100
     Int memory = 2
     Int cpu = 1
+    Int max_species_genomes = 500
+    Float core_proportion = 0.98
+    Int num_genomes_per_species = 1
   }
   command <<<
     # capture date
@@ -27,7 +30,12 @@ task gambitcore {
     
     # run gambit core check on the assembly
     echo "Running gambitcore with: gambitcore ${gambit_db_dir} ~{assembly}"
-    gambitcore ${gambit_db_dir} ~{assembly} | tee ~{samplename}_gambitcore_report.tsv
+    gambitcore \
+      --cpus ${cpu} \
+      --max_species_genomes ${max_species_genomes} \
+      --core_proportion ${core_proportion} \
+      --num_genomes_per_species ${num_genomes_per_species} \
+      ${gambit_db_dir} ~{assembly} | tee ~{samplename}_gambitcore_report.tsv
 
     # parse output file
     cat ~{samplename}_gambitcore_report.tsv | cut -f 2 | tail -n 1 | tee SPECIES
