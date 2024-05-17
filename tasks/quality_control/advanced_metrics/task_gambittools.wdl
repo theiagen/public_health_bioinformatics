@@ -12,7 +12,6 @@ task gambitcore {
     Int cpu = 1
     Int max_species_genomes = 500 # Max number of genomes in a species to consider, ignore all others above this
     Float core_proportion = 0.98 # Proportion of genomes a kmer must be in for a species to be considered core
-    Int num_genomes_per_species = 1 # Number of genomes to keep for a species (report only) (0 means keep all)
   }
   command <<<
     # capture date
@@ -34,7 +33,6 @@ task gambitcore {
       --cpus ${cpu} \
       --max_species_genomes ${max_species_genomes} \
       --core_proportion ${core_proportion} \
-      --num_genomes_per_species ${num_genomes_per_species} \
       ${gambit_db_dir} ~{assembly} | tee ~{samplename}_gambitcore_report.tsv
 
     # parse output file
