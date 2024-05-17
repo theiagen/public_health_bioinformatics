@@ -10,8 +10,8 @@ task gambitcore {
     Int disk_size = 100
     Int memory = 2
     Int cpu = 1
-    Int max_species_genomes = 500 # Max number of genomes in a species to consider, ignore all others above this
-    Float core_proportion = 0.98 # Proportion of genomes a kmer must be in for a species to be considered core
+    Int? max_species_genomes # Max number of genomes in a species to consider, ignore all others above this
+    Float? core_proportion # Proportion of genomes a kmer must be in for a species to be considered core
   }
   command <<<
     # capture date
@@ -30,9 +30,9 @@ task gambitcore {
     # run gambit core check on the assembly
     echo "Running gambitcore with: gambitcore ${gambit_db_dir} ~{assembly}"
     gambitcore \
-      --cpus ${cpu} \
-      --max_species_genomes ${max_species_genomes} \
-      --core_proportion ${core_proportion} \
+      --cpus ~{cpu} \
+      ~{'--max_species_genomes ' + max_species_genomes} \
+      ~{'--core_proportion ' + core_proportion} \
       ${gambit_db_dir} ~{assembly} | tee ~{samplename}_gambitcore_report.tsv
 
     # parse output file
