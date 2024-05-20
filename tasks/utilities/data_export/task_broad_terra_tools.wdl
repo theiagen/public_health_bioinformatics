@@ -268,11 +268,16 @@ task export_taxon_tables {
     String? meningotype_NHBA
     String? meningotype_NadA
     String? meningotype_BAST
-    File? abricate_abaum_plasmid_tsv
-    String? abricate_abaum_plasmid_type_genes
+    File? abricate_results_tsv
+    String? abricate_genes
     String? abricate_database
     String? abricate_version
     String? abricate_docker
+    File? abricate_abaum_plasmid_tsv
+    String? abricate_abaum_plasmid_type_genes
+    String? abricate_abaum_database
+    String? abricate_abaum_version
+    String? abricate_abaum_docker
     File? tbprofiler_output_file
     File? tbprofiler_output_bam
     File? tbprofiler_output_bai
@@ -623,11 +628,16 @@ task export_taxon_tables {
       "kaptive_kl_confidence": "~{kaptive_kl_confidence}",
       "kaptive_oc_locus": "~{kaptive_oc_locus}",
       "kaptive_ocl_confidence": "~{kaptive_ocl_confidence}",
-      "abricate_abaum_plasmid_tsv": "~{abricate_abaum_plasmid_tsv}",
-      "abricate_abaum_plasmid_type_genes": "~{abricate_abaum_plasmid_type_genes}",
+      "abricate_results_tsv": "~{abricate_results_tsv}",
+      "abricate_genes": "~{abricate_genes}",
       "abricate_database": "~{abricate_database}",
       "abricate_version": "~{abricate_version}",
       "abricate_docker": "~{abricate_docker}",
+      "abricate_abaum_plasmid_tsv": "~{abricate_abaum_plasmid_tsv}",
+      "abricate_abaum_plasmid_type_genes": "~{abricate_abaum_plasmid_type_genes}",
+      "abricate_abaum_database": "~{abricate_abaum_database}",
+      "abricate_abaum_version": "~{abricate_abaum_version}",
+      "abricate_abaum_docker": "~{abricate_abaum_docker}",
       "legsta_results": "~{legsta_results}",
       "legsta_predicted_sbt": "~{legsta_predicted_sbt}",
       "legsta_version": "~{legsta_version}",

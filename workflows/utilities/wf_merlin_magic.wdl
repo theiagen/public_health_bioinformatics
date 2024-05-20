@@ -98,7 +98,7 @@ workflow merlin_magic {
         assembly = assembly,
         samplename = samplename
     }
-    call abricate_task.abricate {
+    call abricate_task.abricate as abricate_abaum {
       input:
         assembly = assembly,
         samplename = samplename,
@@ -595,11 +595,12 @@ workflow merlin_magic {
     String? kaptive_oc_match = kaptive.kaptive_oc_match
     String? kaptive_oc_type = kaptive.kaptive_oc_type
     String? kaptive_oc_confidence = kaptive.kaptive_oc_confidence
-    File? abricate_results = abricate.abricate_results
-    String? abricate_genes = abricate.abricate_genes
-    String? abricate_database = abricate.abricate_database
-    String? abricate_version = abricate.abricate_version
-    String? abricate_docker = abricate.abricate_docker
+    # Acinetobacter baumannii typing
+    File? abricate_abaum_results = abricate_abaum.abricate_results
+    String? abricate_abaum_genes = abricate_abaum.abricate_genes
+    String? abricate_abaum_database = abricate_abaum.abricate_database
+    String? abricate_abaum_version = abricate_abaum.abricate_version
+    String? abricate_abaum_docker = abricate_abaum.abricate_docker
     # Mycobacterium Typing
     File? tbprofiler_output_file = tbprofiler.tbprofiler_output_csv
     File? tbprofiler_output_bam = tbprofiler.tbprofiler_output_bam
