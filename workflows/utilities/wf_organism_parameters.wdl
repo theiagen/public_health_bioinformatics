@@ -212,7 +212,7 @@ workflow organism_parameters {
 
     # augur options for rsv-a
     File rsv_a_lat_longs_tsv = "gs://theiagen-public-files-rp/terra/flu-references/lat_longs.tsv"
-    File rsv_a_clades_tsv = "gs://theiagen-public-files-rp/terra/augur-mpox-references/rsv_a_clades.tsv"
+    File rsv_a_clades_tsv = "gs://theiagen-public-files-rp/terra/rsv_references/rsv_a_clades.tsv"
     File rsv_a_reference_gbk = "gs://theiagen-public-files-rp/terra/rsv_references/reference_rsv_a.gb"
     File rsv_a_auspice_config = "gs://theiagen-public-files-rp/terra/rsv_references/rsv_auspice_config.json"
     Int rsv_a_min_num_unambig = 10850 #using 70% of 15500
@@ -236,7 +236,7 @@ workflow organism_parameters {
 
     # augur options for rsv-a
     File rsv_b_lat_longs_tsv = "gs://theiagen-public-files-rp/terra/flu-references/lat_longs.tsv"
-    File rsv_b_clades_tsv = "gs://theiagen-public-files-rp/terra/augur-mpox-references/rsv_b_clades.tsv"
+    File rsv_b_clades_tsv = "gs://theiagen-public-files-rp/terra/rsv_references/rsv_b_clades.tsv"
     File rsv_b_reference_gbk = "gs://theiagen-public-files-rp/terra/rsv_references/reference_rsv_b.gb"
     File rsv_b_auspice_config = "gs://theiagen-public-files-rp/terra/rsv_references/rsv_auspice_config.json"
     Int rsv_b_min_num_unambig = 10850 #using 70% of 15500
