@@ -102,13 +102,16 @@ workflow read_QC_trim_ont {
         read1 = read1,
         samplename = samplename
     }
+
+    Int kmc_est_genome_length = if kmc.est_genome_length > 10000000 then 10000000 else kmc.est_genome_length
+
     # rasusa for random downsampling
     call rasusa_task.rasusa {
       input:
         read1 = read1,
         samplename = samplename,
         coverage = downsampling_coverage,
-        genome_length = select_first([genome_length, kmc.est_genome_length])
+        genome_length = select_first([genome_length, kmc_est_genome_length])
     }
     # tiptoft for plasmid detection
     call tiptoft_task.tiptoft {
@@ -144,7 +147,7 @@ workflow read_QC_trim_ont {
    
     # theiaprok outputs
     # kmc outputs
-    Int? est_genome_length = kmc.est_genome_length
+    Int? est_genome_length = kmc_est_genome_length
     File? kmc_kmer_stats = kmc.kmer_stats
     String? kmc_version = kmc.kmc_version
     
