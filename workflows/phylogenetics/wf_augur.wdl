@@ -38,8 +38,8 @@ workflow augur {
     Boolean run_traits = false # by default, do not run traits
     String? augur_trait_columns # comma-separated list of columns to use for traits
     # these are very minimal files that hopefully will prevent workflow failure but will not provide any useful information
-    File lat_longs_tsv = "gs://theiagen-public-files-rp/terra/augur-defaults/minimal-lat-longs.tsv"
-    File auspice_config = "gs://theiagen-public-files-rp/terra/augur-defaults/minimal-auspice-config.json"
+    File? lat_longs_tsv
+    File? auspice_config
 
     Boolean distance_tree_only = false # by default, do not skip making a time tree
 
