@@ -29,6 +29,7 @@ workflow read_QC_trim_ont {
     Boolean call_kraken = false
     Int? kraken_disk_size
     Int? kraken_memory
+    Int? kraken_cpu
     File? kraken_db
 
     # rasusa downsampling
@@ -83,7 +84,8 @@ workflow read_QC_trim_ont {
           read1 = read1,
           kraken2_db = select_first([kraken_db]),
           disk_size = kraken_disk_size,
-          memory = kraken_memory
+          memory = kraken_memory,
+          cpu = kraken_cpu
       }
       call kraken2.kraken2_parse_classified as kraken2_recalculate_abundances {
         input:
