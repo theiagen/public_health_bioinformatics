@@ -234,7 +234,7 @@ workflow organism_parameters {
     Int rsv_b_vadr_skip_length = 5000
     Int rsv_b_vadr_memory = 32
 
-    # augur options for rsv-a
+    # augur options for rsv-b
     File rsv_b_lat_longs_tsv = "gs://theiagen-public-files-rp/terra/flu-references/lat_longs.tsv"
     File rsv_b_clades_tsv = "gs://theiagen-public-files-rp/terra/rsv_references/rsv_b_clades.tsv"
     File rsv_b_reference_gbk = "gs://theiagen-public-files-rp/terra/rsv_references/reference_rsv_b.gb"
