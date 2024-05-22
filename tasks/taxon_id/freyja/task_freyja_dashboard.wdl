@@ -92,7 +92,7 @@ task freyja_dashboard_task {
   >>>
   output {
     String freyja_dashboard_version = read_string("FREYJA_VERSION")
-    File freyja_dasbhoard = "~{freyja_dashboard_title}.html"
+    File freyja_dashboard = "~{freyja_dashboard_title}.html"
     File freyja_demixed_aggregate = "demixed_aggregate.tsv"
     File freyja_dashboard_metadata = "freyja_dash_metadata.csv"
   }
