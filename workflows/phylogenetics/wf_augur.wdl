@@ -44,6 +44,11 @@ workflow augur {
     Boolean distance_tree_only = false # by default, do not skip making a time tree
 
     Boolean midpoint_root_tree = true # by default, midpoint root the tree
+
+    Int? pivot_interval
+    Float? min_date
+    Float? narrow_bandwidth
+    Float? proportion_wide
   }
   call set_organism_defaults.organism_parameters {
     input:
@@ -55,7 +60,11 @@ workflow augur {
       flu_subtype = flu_subtype,
       clades_tsv = clades_tsv,
       lat_longs_tsv = lat_longs_tsv,
-      auspice_config = auspice_config
+      auspice_config = auspice_config,
+      pivot_interval = pivot_interval,
+      min_date = min_date,
+      narrow_bandwidth = narrow_bandwidth,
+      proportion_wide = proportion_wide
   }
   if (organism == "sars-cov-2") {
     call augur_utils.set_sc2_defaults as sc2_defaults { # establish default parameters for sars-cov-2
