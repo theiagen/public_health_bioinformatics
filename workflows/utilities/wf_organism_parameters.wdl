@@ -60,19 +60,6 @@ workflow organism_parameters {
     Int sc2_vadr_skip_length = 10000
     String sc2_vadr_options = "--noseqnamemax --glsearch -s -r --nomisc --mkey sarscov2 --lowsim5seq 6 --lowsim3seq 6 --alt_fail lowscore,insertnn,deletinn --out_allfasta"
     Int sc2_vadr_memory = 8
-
-    # augur options for sars-cov-2
-    #File sc2_lat_longs_tsv = "gs://theiagen-public-files-rp/terra/flu-references/lat_longs.tsv"
-    #File sc2_clades_tsv = "gs://theiagen-public-files-rp/terra/sars-cov-2-files/sc2_clades.tsv"
-    #File sc2_reference_gbk = "gs://theiagen-public-files-rp/terra/sars-cov-2-files/MN908947.3.gb"
-    #File sc2_auspice_config = "gs://theiagen-public-files-rp/terra/sars-cov-2-files/sc2_auspice_config.json"
-    #Int sc2_min_num_unambig = 27000
-    #Float min_date = 2020.0
-    #Int pivot_interval = 1
-    #String pivot_interval_units = "weeks"
-    #Float narrow_bandwidth = 0.05
-    #Float proportion_wide = 0.0
-
   }
   if (organism == "MPXV" || organism == "mpox" || organism == "monkeypox" || organism == "Monkeypox virus" || organism == "Mpox") {
     String mpox_org_name = "MPXV"
