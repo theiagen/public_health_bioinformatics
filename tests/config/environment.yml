@@ -10,3 +10,4 @@ dependencies:
   - pytest
   - pytest-workflow
   - importlib-metadata <=4.13.0
+  - requests=2.31.0
