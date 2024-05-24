@@ -89,7 +89,7 @@ task freyja_dashboard_task {
     ~{'--headerColor ' + headerColor} \
     ~{'--mincov ' + mincov} \
     ~{true='--scale_by_viral_load' false='' scale_by_viral_load} \
-    --output ~${freyja_dashboard_title_updated}.html
+    --output ~{freyja_dashboard_title_updated}.html
   >>>
   output {
     String freyja_dashboard_version = read_string("FREYJA_VERSION")
