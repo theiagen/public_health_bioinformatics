@@ -12,6 +12,7 @@ task freyja_dashboard_task {
     String? headerColor
     Boolean scale_by_viral_load = false
     String freyja_dashboard_title
+    String freyja_dashboard_title_updated = sub(freyja_dashboard_title, " ", "_")
     File? dashboard_intro_text
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/freyja:1.4.8"
     Int disk_size = 100
@@ -57,7 +58,7 @@ task freyja_dashboard_task {
       --output demixed_aggregate.tsv
 
   # Create title file
-  echo "~{freyja_dashboard_title}" > dashboard-title.txt
+  echo "~{freyja_dashboard_title_updated}" > dashboard-title.txt
 
   # Create intro text file
   if [[ ! -z "~{dashboard_intro_text}" ]]; then 
@@ -77,7 +78,7 @@ task freyja_dashboard_task {
     ~{'--headerColor ' + headerColor} \
     ~{'--mincov ' + mincov} \
     ~{true='--scale_by_viral_load' false='' scale_by_viral_load} \
-    --output ~{freyja_dashboard_title}.html"
+    --output ~{freyja_dashboard_title_updated}.html"
   freyja dash \
     demixed_aggregate.tsv \
     freyja_dash_metadata.csv \
@@ -88,11 +89,11 @@ task freyja_dashboard_task {
     ~{'--headerColor ' + headerColor} \
     ~{'--mincov ' + mincov} \
     ~{true='--scale_by_viral_load' false='' scale_by_viral_load} \
-    --output ~{freyja_dashboard_title}.html
+    --output ~${freyja_dashboard_title_updated}.html
   >>>
   output {
     String freyja_dashboard_version = read_string("FREYJA_VERSION")
-    File freyja_dasbhoard = "~{freyja_dashboard_title}.html"
+    File freyja_dasbhoard = "~{freyja_dashboard_title_updated}.html"
     File freyja_demixed_aggregate = "demixed_aggregate.tsv"
     File freyja_dashboard_metadata = "freyja_dash_metadata.csv"
   }
