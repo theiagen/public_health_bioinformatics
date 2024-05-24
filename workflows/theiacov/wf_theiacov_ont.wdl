@@ -150,6 +150,22 @@ workflow theiacov_ont {
             samplename = samplename,
             seq_method = seq_method
         }
+        # calculate assembly statistics for ha & na segments (can be redone later to accomodate processing of HA/NA together with organism tag maybe?)
+        if (defined(irma.seg_ha_bam)) {
+          call assembly_metrics.stats_n_coverage as ha_assembly_coverage {
+            input:
+              bamfile = select_first([irma.seg_ha_bam]),
+              samplename = samplename
+          }
+        }
+        if (defined(irma.seg_na_bam)) {
+          call assembly_metrics.stats_n_coverage as na_assembly_coverage {
+            input:
+              bamfile = select_first([irma.seg_na_bam]),
+              samplename = samplename
+          }
+        }
+        String ha_na_assembly_coverage = "HA:" + select_first([ha_assembly_coverage.depth, ""]) + ", " + "NA:" + select_first([na_assembly_coverage.depth, ""])
         if (defined(irma.irma_assemblies)) {
           call abricate.abricate_flu {
             input:
@@ -395,7 +411,7 @@ workflow theiacov_ont {
     File? consensus_flagstat = stats_n_coverage.flagstat
     Float? meanbaseq_trim = stats_n_coverage_primtrim.meanbaseq
     Float? meanmapq_trim = stats_n_coverage_primtrim.meanmapq
-    Float? assembly_mean_coverage = stats_n_coverage_primtrim.depth
+    String assembly_mean_coverage = select_first([stats_n_coverage_primtrim.depth, ha_na_assembly_coverage, ""])
     String? samtools_version = stats_n_coverage.samtools_version
     # Assembly QC - consensus assembly summary outputs
     Int? number_N = consensus_qc.number_N

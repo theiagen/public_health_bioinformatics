@@ -123,18 +123,6 @@ task check_reads {
         elif [ "~{workflow_series}" == "theiacov" ] || [ "~{expected_genome_length}" ]; then
           if [ "~{expected_genome_length}" ]; then
             estimated_genome_length=~{expected_genome_length} # use user-provided expected_genome_length
-          elif [ "~{organism}" == "sars-cov-2" ]; then
-            estimated_genome_length=29903 # length taken from https://www.ncbi.nlm.nih.gov/nuccore/NC_045512.2
-          elif [ "~{organism}" == "MPXV" ]; then
-            estimated_genome_length=197209 # length of 2022 virus taken from https://www.ncbi.nlm.nih.gov/nuccore/NC_063383.1
-          elif [ "~{organism}" == "flu" ]; then
-            estimated_genome_length=14000 # 500 bp over the CDC's approximate full genome length of 13500 (see https://www.cdc.gov/flu/about/professionals/genetic-characterization.htm)
-          elif [ "~{organism}" == "HIV" ]; then
-            estimated_genome_length=9181 # length taken from https://www.ncbi.nlm.nih.gov/nuccore/NC_001802.1
-          elif [ "~{organism}" == "WNV" ]; then
-            estimated_genome_length=11092 # WNV lineage 1 length from https://www.ncbi.nlm.nih.gov/nuccore/NC_009942.1
-          else
-            flag="FAIL; the organism tag provided (~{organism}) is not valid and no expected_genome_length was provided."
           fi
 
           # coverage is calculated here by N/G where N is number of bases, and G is genome length
@@ -291,18 +279,6 @@ task check_reads_se {
         elif [ "~{workflow_series}" == "theiacov" ] || [ "~{expected_genome_length}" ]; then
           if [ "~{expected_genome_length}" ]; then
             estimated_genome_length=~{expected_genome_length} # use user-provided expected_genome_length
-          elif [ "~{organism}" == "sars-cov-2" ]; then
-            estimated_genome_length=29903 # length taken from https://www.ncbi.nlm.nih.gov/nuccore/NC_045512.2
-          elif [ "~{organism}" == "MPXV" ]; then
-            estimated_genome_length=197209 # length of 2022 virus taken from https://www.ncbi.nlm.nih.gov/nuccore/NC_063383.1
-          elif [ "~{organism}" == "flu" ]; then
-            estimated_genome_length=14000 # 500 bp over the CDC's approximate full genome length of 13500 (see https://www.cdc.gov/flu/about/professionals/genetic-characterization.htm)
-          elif [ "~{organism}" == "HIV" ]; then
-            estimated_genome_length=9181 # length taken from https://www.ncbi.nlm.nih.gov/nuccore/NC_001802.1
-          elif [ "~{organism}" == "WNV" ]; then
-            estimated_genome_length=11092 # WNV lineage 1 length from https://www.ncbi.nlm.nih.gov/nuccore/NC_009942.1
-          else
-            flag="FAIL; the organism tag provided (~{organism}) is not valid and no expected_genome_length was provided."
           fi
 
           # coverage is calculated here by N/G where N is number of bases, and G is genome length
