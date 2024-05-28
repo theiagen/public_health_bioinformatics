@@ -8,7 +8,7 @@ task midas {
     Int disk_size = 100
     String samplename
     String docker = "us-docker.pkg.dev/general-theiagen/fhcrc-microbiome/midas:v1.3.2--6"
-    Int memory = 32
+    Int memory = 4
     Int cpu = 4
   }
   command <<<
@@ -20,7 +20,8 @@ task midas {
     tar -C ./db/ -xzf ~{midas_db}  
 
     # Run Midas
-    run_midas.py species ~{samplename} -1 ~{read1} ~{'-2 ' + read2} -d db/midas_db_v1.2/ -t ~{cpu} 
+    apt install time
+    /usr/bin/time -v run_midas.py species ~{samplename} -1 ~{read1} ~{'-2 ' + read2} -d db/midas_db_v1.2/ -t ~{cpu} 
 
     # rename output files
     mv -v ~{samplename}/species/species_profile.txt ~{samplename}/species/~{samplename}_species_profile.tsv
