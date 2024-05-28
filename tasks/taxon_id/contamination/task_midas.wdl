@@ -20,8 +20,7 @@ task midas {
     tar -C ./db/ -xzf ~{midas_db}  
 
     # Run Midas
-    apt install time
-    /usr/bin/time -v run_midas.py species ~{samplename} -1 ~{read1} ~{'-2 ' + read2} -d db/midas_db_v1.2/ -t ~{cpu} 
+    run_midas.py species ~{samplename} -1 ~{read1} ~{'-2 ' + read2} -d db/midas_db_v1.2/ -t ~{cpu} 
 
     # rename output files
     mv -v ~{samplename}/species/species_profile.txt ~{samplename}/species/~{samplename}_species_profile.tsv
