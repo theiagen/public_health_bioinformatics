@@ -31,7 +31,7 @@ workflow freyja_dashboard {
     String freyja_dashboard_wf_analysis_date = version_capture.date
     # Freyja Dashboard Visualization
     String freyja_dashboard_version = freyja_dashboard_task.freyja_dashboard_version
-    File freyja_dasbhoard = freyja_dashboard_task.freyja_dasbhoard
+    File freyja_dashboard = freyja_dashboard_task.freyja_dashboard
     File freyja_demixed_aggregate = freyja_dashboard_task.freyja_demixed_aggregate
     File freyja_dashboard_metadata = freyja_dashboard_task.freyja_dashboard_metadata
   }
