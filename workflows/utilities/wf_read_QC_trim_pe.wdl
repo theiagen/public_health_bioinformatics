@@ -22,7 +22,7 @@ workflow read_QC_trim_pe {
     Int trim_quality_min_score = 30
     Int trim_window_size = 4
     Int bbduk_memory = 8
-    Boolean call_midas = true
+    Boolean call_midas = false
     File? midas_db
     Boolean call_kraken = false
     Int? kraken_disk_size
