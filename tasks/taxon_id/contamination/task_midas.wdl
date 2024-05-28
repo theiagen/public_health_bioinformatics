@@ -83,6 +83,6 @@ task midas {
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
     maxRetries: 3
-    preemptible: 0
+    preemptible: 1
   }
 }

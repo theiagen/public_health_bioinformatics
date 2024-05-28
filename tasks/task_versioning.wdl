@@ -23,6 +23,7 @@ task version_capture {
     docker: docker
     disks: "local-disk 10 HDD"
     dx_instance_type: "mem1_ssd1_v2_x2" 
+    preemptible: 1
   }
 }
 
