@@ -88,8 +88,8 @@ workflow merlin_magic {
     Float? virulencefinder_coverage_threshold
     Float? virulencefinder_identity_threshold
     String? virulencefinder_database
-    Int abricate_vibrio_minid = 70
-    Int abricate_vibrio_mincov = 60
+    Int abricate_vibrio_minid = 80
+    Int abricate_vibrio_mincov = 80
   }
   # theiaprok
   if (merlin_tag == "Acinetobacter baumannii") {
