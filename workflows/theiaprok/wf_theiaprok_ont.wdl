@@ -523,6 +523,7 @@ workflow theiaprok_ont {
             qc_standard = qc_check_task.qc_standard,
             abricate_vibrio_detailed_tsv = merlin_magic.abricate_vibrio_detailed_tsv,
             abricate_vibrio_database = merlin_magic.abricate_vibrio_database,
+            abricate_vibrio_docker = merlin_magic.abricate_vibrio_docker,
             abricate_vibrio_version = merlin_magic.abricate_vibrio_version,
             abricate_vibrio_ctxA = merlin_magic.abricate_vibrio_ctxA,
             abricate_vibrio_ompW = merlin_magic.abricate_vibrio_ompW,
@@ -872,6 +873,7 @@ workflow theiaprok_ont {
     # Vibrio cholera Typing
     File? abricate_vibrio_detailed_tsv = merlin_magic.abricate_vibrio_detailed_tsv
     String? abricate_vibrio_database = merlin_magic.abricate_vibrio_database
+    String? abricate_vibrio_docker = merlin_magic.abricate_vibrio_docker
     String? abricate_vibrio_version = merlin_magic.abricate_vibrio_version
     String? abricate_vibrio_ctxA = merlin_magic.abricate_vibrio_ctxA
     String? abricate_vibrio_ompW = merlin_magic.abricate_vibrio_ompW

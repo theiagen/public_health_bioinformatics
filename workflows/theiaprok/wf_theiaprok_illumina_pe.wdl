@@ -570,6 +570,7 @@ workflow theiaprok_illumina_pe {
             qc_check = qc_check_task.qc_check,
             qc_standard = qc_check_task.qc_standard,
             srst2_vibrio_detailed_tsv = merlin_magic.srst2_vibrio_detailed_tsv,
+            srst2_vibrio_docker = merlin_magic.srst2_vibrio_docker,
             srst2_vibrio_version = merlin_magic.srst2_vibrio_version,
             srst2_vibrio_ctxA = merlin_magic.srst2_vibrio_ctxA,
             srst2_vibrio_ompW = merlin_magic.srst2_vibrio_ompW,
@@ -578,6 +579,7 @@ workflow theiaprok_illumina_pe {
             srst2_vibrio_biotype = merlin_magic.srst2_vibrio_biotype,
             abricate_vibrio_detailed_tsv = merlin_magic.abricate_vibrio_detailed_tsv,
             abricate_vibrio_database = merlin_magic.abricate_vibrio_database,
+            abricate_vibrio_docker = merlin_magic.abricate_vibrio_docker,
             abricate_vibrio_version = merlin_magic.abricate_vibrio_version,
             abricate_vibrio_ctxA = merlin_magic.abricate_vibrio_ctxA,
             abricate_vibrio_ompW = merlin_magic.abricate_vibrio_ompW,
@@ -976,6 +978,7 @@ workflow theiaprok_illumina_pe {
     # Vibrio Typing
     File? srst2_vibrio_detailed_tsv = merlin_magic.srst2_vibrio_detailed_tsv
     String? srst2_vibrio_version = merlin_magic.srst2_vibrio_version
+    String? srst2_vibrio_docker = merlin_magic.srst2_vibrio_docker
     String? srst2_vibrio_ctxA = merlin_magic.srst2_vibrio_ctxA
     String? srst2_vibrio_ompW = merlin_magic.srst2_vibrio_ompW
     String? srst2_vibrio_toxR = merlin_magic.srst2_vibrio_toxR
@@ -983,6 +986,7 @@ workflow theiaprok_illumina_pe {
     String? srst2_vibrio_serogroup = merlin_magic.srst2_vibrio_serogroup
     File? abricate_vibrio_detailed_tsv = merlin_magic.abricate_vibrio_detailed_tsv
     String? abricate_vibrio_database = merlin_magic.abricate_vibrio_database
+    String? abricate_vibrio_docker = merlin_magic.abricate_vibrio_docker
     String? abricate_vibrio_version = merlin_magic.abricate_vibrio_version
     String? abricate_vibrio_ctxA = merlin_magic.abricate_vibrio_ctxA
     String? abricate_vibrio_ompW = merlin_magic.abricate_vibrio_ompW

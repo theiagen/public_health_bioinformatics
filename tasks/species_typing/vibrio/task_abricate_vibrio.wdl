@@ -62,6 +62,7 @@ task abricate_vibrio {
   output {
     File abricate_vibrio_results = "~{samplename}_abricate_hits.tsv"
     String abricate_vibrio_database = database
+    String abricate_vibrio_docker = docker
     String abricate_vibrio_version = read_string("ABRICATE_VERSION")
     String abricate_vibrio_ctxA = read_string("ctxA")
     String abricate_vibrio_ompW = read_string("ompW")

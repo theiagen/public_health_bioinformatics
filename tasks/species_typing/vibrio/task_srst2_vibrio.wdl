@@ -141,6 +141,7 @@ task srst2_vibrio {
   >>>
   output {
       File srst2_detailed_tsv = "~{samplename}.detailed.tsv"
+      String srst2_docker = docker
       String srst2_version = read_string("VERSION")
       String srst2_vibrio_ctxA = read_string("ctxA")
       String srst2_vibrio_ompW = read_string("ompW")
