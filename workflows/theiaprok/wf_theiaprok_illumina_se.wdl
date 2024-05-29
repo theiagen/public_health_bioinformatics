@@ -593,6 +593,7 @@ workflow theiaprok_illumina_se {
     String? kraken2_version = read_QC_trim.kraken_version
     String? kraken2_report = read_QC_trim.kraken_report
     String? kraken2_docker = read_QC_trim.kraken_docker
+    String? kraken2_database = read_QC_trim.kraken_database
     #Assembly - shovill outputs
     File? assembly_fasta = shovill_se.assembly_fasta
     File? contigs_gfa = shovill_se.contigs_gfa
