@@ -3,19 +3,18 @@ version 1.0
 task mafft {
   input {
     Array[File] genomes
-    Int cpu = 16
-    Int memory = 32
-    Int disk_size = 100
+    Int cpu = 2
+    Int memory = 8
+    Int disk_size = 50
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/mafft:7.450"
   }
   command <<<
     # date and version control
     date | tee DATE
-    mafft_vers=$(mafft --version)
-    echo Mafft $(mafft_vers) | tee VERSION
+    mafft --version | tee VERSION
 
     cat ~{sep=" " genomes} | sed 's/Consensus_//;s/.consensus_threshold.*//' > assemblies.fasta
-    mafft --thread -~{cpu} assemblies.fasta > msa.fasta
+    mafft --thread ~{cpu} assemblies.fasta > msa.fasta
   >>>
   output {
     String date = read_string("DATE")
