@@ -9,8 +9,8 @@ task ksnp3 {
     String ksnp3_args = "" # add -ML to calculate a maximum likelihood tree or -NJ to calculate a neighbor-joining tree
     String docker_image = "us-docker.pkg.dev/general-theiagen/staphb/ksnp3:3.1"
     File? previous_ksnp3_snps
-    Int memory = 8
-    Int cpu = 4
+    Int memory = 4
+    Int cpu = 2
     Int disk_size = 100
   }
   command <<<
