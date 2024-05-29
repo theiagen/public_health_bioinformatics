@@ -60,6 +60,7 @@ task kraken2_theiacov {
     String? kraken_target_organism = target_organism
     File kraken2_classified_report = "~{samplename}.classifiedreads.txt.gz" 
     String docker = docker_image
+    String database = kraken2_db
   }
   runtime {
     docker: docker_image
@@ -148,6 +149,7 @@ task kraken2_standalone {
     File kraken2_classified_read1 = "~{samplename}.classified_1.fastq.gz"
     Float kraken2_percent_human = read_float("PERCENT_HUMAN")
     File? kraken2_classified_read2 = "~{samplename}.classified_2.fastq.gz"
+    String kraken2_database = kraken2_db
   }
   runtime {
       docker: "~{docker}"
