@@ -5,7 +5,7 @@ task tbprofiler {
     File read1
     File? read2
     String samplename
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/tbprofiler:6.2.0"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/tbprofiler:6.2.1"
     Int disk_size = 100
     Int memory = 16
     String mapper = "bwa"
