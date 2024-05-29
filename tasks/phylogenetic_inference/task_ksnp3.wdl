@@ -56,6 +56,7 @@ task ksnp3 {
     -core \
     -vcf \
     ~{'-SNPs_all ' + previous_ksnp3_snps} \
+    -CPU ~{cpu} \
     ~{ksnp3_args}
   
   # rename ksnp3 outputs with cluster name 
