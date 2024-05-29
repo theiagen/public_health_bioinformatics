@@ -62,6 +62,7 @@ workflow merlin_magic {
     Boolean call_shigeifinder_reads_input = false
     Boolean assembly_only = false
     Boolean theiaeuk = false
+    String? tbprofiler_docker_image
     String? tbprofiler_mapper
     Int? tbprofiler_min_depth
     Float? tbprofiler_min_af
@@ -265,6 +266,7 @@ workflow merlin_magic {
           variant_calling_params = tbprofiler_variant_calling_params,
           min_depth = tbprofiler_min_depth,
           min_af = tbprofiler_min_af,
+          docker = tbprofiler_docker_image
       }
       if (tbprofiler_additional_outputs) {
         call tbp_parser_task.tbp_parser {
