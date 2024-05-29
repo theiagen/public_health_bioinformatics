@@ -52,8 +52,7 @@ task shovill_pe {
       ~{true='--noreadcorr' false='' noreadcorr} \
       ~{true='--nostitch' false='' nostitch} \
       ~{true='--nocorr' false='' nocorr} \
-      --cpus ~{cpu} \
-      --ram ~{memory}
+      --cpus ~{cpu}
 
     mv out/contigs.fa out/~{samplename}_contigs.fasta
 
@@ -130,8 +129,7 @@ task shovill_se {
       ~{true='--trim' false='' trim} \
       ~{true='--noreadcorr' false='' noreadcorr} \
       ~{true='--nocorr' false='' nocorr} \
-      --cpus ~{cpu} \
-      --ram ~{memory}
+      --cpus ~{cpu}
 
     mv out/contigs.fa out/~{samplename}_contigs.fasta
 
