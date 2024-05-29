@@ -681,6 +681,7 @@ workflow merlin_magic {
     # Vibrio
     File? srst2_vibrio_detailed_tsv = srst2_vibrio.srst2_detailed_tsv
     String? srst2_vibrio_docker = srst2_vibrio.srst2_docker
+    String? srst2_vibrio_database = srst2_vibrio.srst2_database
     String? srst2_vibrio_version = srst2_vibrio.srst2_version
     String? srst2_vibrio_ctxA = srst2_vibrio.srst2_vibrio_ctxA
     String? srst2_vibrio_ompW = srst2_vibrio.srst2_vibrio_ompW

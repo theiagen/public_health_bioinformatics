@@ -367,6 +367,7 @@ task export_taxon_tables {
     String? agrvate_docker
     File? srst2_vibrio_detailed_tsv
     String? srst2_vibrio_docker
+    String? srst2_vibrio_database
     String? srst2_vibrio_version
     String? srst2_vibrio_ctxA
     String? srst2_vibrio_ompW
@@ -777,6 +778,7 @@ task export_taxon_tables {
       "srst2_vibrio_detailed_tsv": "~{srst2_vibrio_detailed_tsv}",
       "srst2_vibrio_version": "~{srst2_vibrio_version}",~
       "srst2_vibrio_docker": "~{srst2_vibrio_docker}",
+      "srst2_vibrio_database": "~{srst2_vibrio_database}",
       "srst2_vibrio_ctxA": "~{srst2_vibrio_ctxA}",
       "srst2_vibrio_ompW": "~{srst2_vibrio_ompW}",
       "srst2_vibrio_toxR": "~{srst2_vibrio_toxR}",

@@ -529,6 +529,7 @@ workflow theiaprok_illumina_se {
             hicap_docker = merlin_magic.hicap_docker,
             srst2_vibrio_detailed_tsv = merlin_magic.srst2_vibrio_detailed_tsv,
             srst2_vibrio_docker = merlin_magic.srst2_vibrio_docker,
+            srst2_vibrio_database = merlin_magic.srst2_vibrio_database,
             srst2_vibrio_version = merlin_magic.srst2_vibrio_version,
             srst2_vibrio_ctxA = merlin_magic.srst2_vibrio_ctxA,
             srst2_vibrio_ompW = merlin_magic.srst2_vibrio_ompW,
@@ -900,6 +901,7 @@ workflow theiaprok_illumina_se {
     # Vibrio Typing
     File? srst2_vibrio_detailed_tsv = merlin_magic.srst2_vibrio_detailed_tsv
     String? srst2_vibrio_docker = merlin_magic.srst2_vibrio_docker
+    String? srst2_vibrio_database = merlin_magic.srst2_vibrio_database
     String? srst2_vibrio_version = merlin_magic.srst2_vibrio_version
     String? srst2_vibrio_ctxA = merlin_magic.srst2_vibrio_ctxA
     String? srst2_vibrio_ompW = merlin_magic.srst2_vibrio_ompW
