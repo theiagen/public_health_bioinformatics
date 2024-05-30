@@ -16,6 +16,12 @@ task irma {
   command <<<
     date | tee DATE
 
+    num_cpus_actual=$(nproc)
+    echo "DEBUG: Number of CPUs available: ${num_cpus_actual}. Setting this in irma_config.sh file..."
+    echo "SINGLE_LOCAL_PROC=${num_cpus_actual}" > irma_config.sh
+    # set this variable to half the value of num_cpus_actual, as per the IRMA documentation: https://wonder.cdc.gov/amd/flu/irma/configuration.html
+    echo "DOUBLE_LOCAL_PROC=$((${num_cpus_actual}/2))" >> irma_config.sh
+
     # this is done so that IRMA used PWD as the TMP directory instead of /tmp/root that it tries by default; cromwell doesn't allocate much disk space here (64MB or some small amount)
     echo "DEBUG: creating an optional IRMA configuration file to set TMP directory to $(pwd)"
     echo "TMP=$(pwd)" >> irma_config.sh
@@ -41,6 +47,11 @@ task irma {
       touch irma_config.sh
       echo 'DEL_TYPE="NNN"' >> irma_config.sh
       echo 'ALIGN_PROG="BLAT"' >> irma_config.sh
+      # attempting this to try to use Ns in final output FASTAs instead of periods; output assembly should have .pad.fa suffix
+      # TODO test again and look at .pad.fa files
+      #echo "ALIGN_AMENDED=1" >> irma_config.sh
+      #echo "ASSEM_REF=1" >> irma_config.sh
+      #echo "PADDED_CONSENSUS=1" >> irma_config.sh
     fi
 
     # format reads, if needed
@@ -57,6 +68,9 @@ task irma {
     else
       echo "Read headers match IRMA formatting requirements"
     fi
+
+    echo "DEBUG: Custom irma_config.sh file contents:"
+    cat irma_config.sh
 
     # run IRMA
     # set IRMA module depending on sequencing technology
@@ -78,6 +92,10 @@ task irma {
       cat ~{samplename}/*.fasta > ~{samplename}.irma.consensus.fasta
       echo "DEBUG: editing IRMA FASTA file to include sample name in FASTA headers...."
       sed -i "s/>/>~{samplename}_/g" ~{samplename}.irma.consensus.fasta
+
+      echo "DEBUG: creating copy of consensus FASTA with periods replaced by Ns...."
+      # use sed to create copy of FASTA file where periods are replaced by Ns, except in the FASTA header lines that begin with '>'
+      sed '/^>/! s/\./N/g' ~{samplename}.irma.consensus.fasta > ~{samplename}.irma.consensus.pad.fasta
     else
       echo "No IRMA assembly generated for flu type prediction" | tee IRMA_TYPE
     fi
@@ -112,9 +130,9 @@ task irma {
       mv -v ~{samplename}_NA*.fasta ~{samplename}_NA.fasta
     fi
 
-      echo "DEBUG: Running sed to change NA FASTA header now..."
-      # format NA segment to target output name and rename header to include the samplename
-      sed -i "1s/>/>~{samplename}_/" "~{samplename}_NA.fasta"
+    echo "DEBUG: Running sed to change NA FASTA header now..."
+    # format NA segment to target output name and rename header to include the samplename
+    sed -i "1s/>/>~{samplename}_/" "~{samplename}_NA.fasta"
 
     # if bash variable "subtype" is not empty, write it to a file; 
     # otherwise, write a message indicating no subtype was predicted
@@ -144,18 +162,37 @@ task irma {
         mv -v "$file" "${file%_NA*.bam}_NA.bam"
       done
     fi
+    
+    echo "DEBUG: Creating padded FASTA files for each individual segment...."
+    # this loop looks in the PWD for files ending in .fasta, and creates a copy of the file with periods replaced by Ns
+    for FASTA in ./*.fasta; do
+      # if the renamed file ends in .fasta; then create copy of the file with periods replaced by Ns
+        echo "DEBUG: creating padded FASTA file for ${FASTA}...."
+        sed '/^>/! s/\./N/g' "${FASTA}" > "${FASTA%.fasta}.pad.fasta"
+    done
   >>>
   output {
     File? irma_assembly_fasta = "~{samplename}.irma.consensus.fasta"
     File? seg_ha_assembly = "~{samplename}_HA.fasta"
     File? seg_na_assembly = "~{samplename}_NA.fasta"
-    # for now just adding these segments that have associated antiviral mutations
     File? seg_pa_assembly = "~{samplename}_PA.fasta"
     File? seg_pb1_assembly = "~{samplename}_PB1.fasta"
     File? seg_pb2_assembly = "~{samplename}_PB2.fasta"
     File? seg_mp_assembly = "~{samplename}_MP.fasta"
     File? seg_np_assembly = "~{samplename}_NP.fasta"
     File? seg_ns_assembly = "~{samplename}_NS.fasta"
+    # adding these "padded" assemblies as outputs to be passed to VADR and MAFFT (antiviral substitutions tasks)
+    # we may remove these outputs in the future if IRMA code is updated to not output periods in the consensus sequences
+    File? irma_assembly_fasta_padded = "~{samplename}.irma.consensus.pad.fasta"
+    File? seg_ha_assembly_padded = "~{samplename}_HA.pad.fasta"
+    File? seg_na_assembly_padded = "~{samplename}_NA.pad.fasta"
+    File? seg_pa_assembly_padded = "~{samplename}_PA.pad.fasta"
+    File? seg_pb1_assembly_padded = "~{samplename}_PB1.pad.fasta"
+    File? seg_pb2_assembly_padded = "~{samplename}_PB2.pad.fasta"
+    File? seg_mp_assembly_padded = "~{samplename}_MP.pad.fasta"
+    File? seg_np_assembly_padded = "~{samplename}_NP.pad.fasta"
+    File? seg_ns_assembly_padded = "~{samplename}_NS.pad.fasta"
+
     String irma_type = read_string("IRMA_TYPE")
     String irma_subtype = read_string("IRMA_SUBTYPE")
     String irma_subtype_notes = read_string("IRMA_SUBTYPE_NOTES")
