@@ -16,7 +16,7 @@ task summarize_data {
     String docker = "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-03-16" 
     # commenting out this option since it's for local dev. Prefer this option to not appear in Terra
     #File? input_table
-    Boolean keep_phandango_coloring = false
+    Boolean phandango_coloring = false
   }
   meta {
     # added so that call caching is always turned off
@@ -30,7 +30,7 @@ task summarize_data {
     # TO RENABLE: uncomment line below, and add back tilde in front of {input_table}
     #cp {input_table} ~{terra_table}-data.tsv
     
-    if ~{keep_phandango_coloring}; then
+    if ~{phandango_coloring}; then
       export phandango_coloring="true"
     else 
       export phandango_coloring="false"

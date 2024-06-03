@@ -11,7 +11,7 @@ task reorder_matrix {
     Int cpu = 2
     Int memory = 2
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/mykrobe:0.12.1" # used because it contains both biopython and pandas
-    Boolean add_phandango_coloring = false
+    Boolean phandango_coloring = false
   }
   command <<<
     # removing any "_contigs" suffixes from the tree and matrix
@@ -47,9 +47,9 @@ task reorder_matrix {
     snps = snps.reindex(index=term_names, columns=term_names)
 
     # add phandango suffix to ensure continuous coloring
-    if ("~{add_phandango_coloring} == "true")
+    if ("~{phandango_coloring}" == "true"):
         snps_out2 = snps.add_suffix(":c1")
-    else
+    else:
         snps_out2 = snps
 
     # write out the reordered matrix to a file
