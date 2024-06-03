@@ -52,6 +52,9 @@ task reorder_matrix {
     else:
         snps_out2 = snps
 
+    # remove header from index column
+    snps_out2.index.name = ""
+
     # write out the reordered matrix to a file
     snps_out2.to_csv("~{cluster_name}_snp_matrix.csv", sep=",")
 
