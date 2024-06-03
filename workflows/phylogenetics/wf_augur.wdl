@@ -17,6 +17,8 @@ import "../../tasks/task_versioning.wdl" as versioning
 import "../../tasks/utilities/data_handling/task_augur_utilities.wdl" as augur_utils
 import "../../tasks/utilities/file_handling/task_cat_files.wdl" as file_handling
 
+import "../utilities/wf_organism_parameters.wdl" as set_organism_defaults
+
 workflow augur {
   input {
     Array[File]+ assembly_fastas # use the HA or NA segment files for flu
@@ -26,7 +28,7 @@ workflow augur {
     Boolean remove_reference = false # by default, do not remove the reference
     File? reference_genbank
     Int? min_num_unambig
-    String organism = "sars-cov-2" # options: sars-cov-2 or flu or mpxv
+    String organism = "sars-cov-2" # options: sars-cov-2, flu, mpxv, "rsv-a" or "rsv-b"
     String flu_segment = "HA" # options: HA or NA
     String? flu_subtype # options: "Victoria" "Yamagata" "H3N2" "H1N1"
     Boolean skip_alignment = false # by default, do not skip alignment
@@ -36,27 +38,36 @@ workflow augur {
     Boolean run_traits = false # by default, do not run traits
     String? augur_trait_columns # comma-separated list of columns to use for traits
     # these are very minimal files that hopefully will prevent workflow failure but will not provide any useful information
-    File lat_longs_tsv = "gs://theiagen-public-files-rp/terra/augur-defaults/minimal-lat-longs.tsv"
-    File auspice_config = "gs://theiagen-public-files-rp/terra/augur-defaults/minimal-auspice-config.json"
+    File? lat_longs_tsv
+    File? auspice_config
 
     Boolean distance_tree_only = false # by default, do not skip making a time tree
 
     Boolean midpoint_root_tree = true # by default, midpoint root the tree
+
+    Int? pivot_interval
+    Float? min_date
+    Float? narrow_bandwidth
+    Float? proportion_wide
+  }
+  call set_organism_defaults.organism_parameters {
+    input:
+      organism = organism,
+      reference_genbank = reference_genbank,
+      reference_genome = reference_fasta,
+      min_num_unambig = min_num_unambig,
+      flu_segment = flu_segment,
+      flu_subtype = flu_subtype,
+      clades_tsv = clades_tsv,
+      lat_longs_tsv = lat_longs_tsv,
+      auspice_config = auspice_config,
+      pivot_interval = pivot_interval,
+      min_date = min_date,
+      narrow_bandwidth = narrow_bandwidth,
+      proportion_wide = proportion_wide
   }
   if (organism == "sars-cov-2") {
     call augur_utils.set_sc2_defaults as sc2_defaults { # establish default parameters for sars-cov-2
-      input:
-    }
-  }
-  if (organism == "flu") {
-    call augur_utils.set_flu_defaults as flu_defaults { # establish default parameters for flu
-      input:
-        flu_segment = flu_segment,
-        flu_subtype = flu_subtype
-    }
-  }
-  if (organism == "MPXV" || organism == "mpxv" || organism == "monkeypox") {
-    call augur_utils.set_mpxv_defaults as mpxv_defaults { # establish default parameters for mpxv
       input:
     }
   }
@@ -76,13 +87,13 @@ workflow augur {
   call augur_utils.filter_sequences_by_length { # remove any sequences that do not meet the quality threshold
     input:
       sequences_fasta = select_first([cat_files.concatenated_files, alignment_fasta]),
-      min_non_N = select_first([min_num_unambig, sc2_defaults.min_num_unambig, flu_defaults.min_num_unambig, mpxv_defaults.min_num_unambig]),
+      min_non_N = select_first([min_num_unambig, sc2_defaults.min_num_unambig, organism_parameters.augur_min_num_unambig]),
   }
   if (! skip_alignment) { # by default, continue
     call align_task.augur_align { # perform mafft alignment on the sequences
       input:
         assembly_fasta = filter_sequences_by_length.filtered_fasta,
-        reference_fasta = select_first([reference_fasta, sc2_defaults.reference_fasta, flu_defaults.reference_fasta, mpxv_defaults.reference_fasta]),
+        reference_fasta = select_first([reference_fasta, sc2_defaults.reference_fasta, organism_parameters.reference]),
         remove_reference = remove_reference
     }
   }
@@ -113,7 +124,7 @@ workflow augur {
       input:
         refined_tree = augur_refine.refined_tree,
         ancestral_nt_muts_json = augur_ancestral.ancestral_nt_muts_json,
-        reference_genbank = select_first([reference_genbank, sc2_defaults.reference_genbank, flu_defaults.reference_genbank, mpxv_defaults.reference_genbank]),
+        reference_genbank = select_first([reference_genbank, sc2_defaults.reference_genbank, organism_parameters.reference_gbk]),
         build_name = build_name
     }
     if (flu_segment == "HA") { # we only have clade information for HA segments (but SC2 defaults will be selected first)
@@ -127,14 +138,14 @@ workflow augur {
         }
       }
       if (! run_traits) {
-        if (defined(clades_tsv) || defined(sc2_defaults.clades_tsv) || defined(flu_defaults.clades_tsv) || defined(mpxv_defaults.clades_tsv)) { # one of these must be present
+        if (defined(clades_tsv) || defined(sc2_defaults.clades_tsv) || defined(organism_parameters.augur_clades_tsv)) { # one of these must be present
           call clades_task.augur_clades { # assign clades to nodes based on amino-acid or nucleotide signatures
             input:
               refined_tree = augur_refine.refined_tree,
               ancestral_nt_muts_json = augur_ancestral.ancestral_nt_muts_json,
               translated_aa_muts_json = augur_translate.translated_aa_muts_json,
               build_name = build_name,
-              clades_tsv = select_first([clades_tsv, sc2_defaults.clades_tsv, flu_defaults.clades_tsv, mpxv_defaults.clades_tsv])
+              clades_tsv = select_first([clades_tsv, sc2_defaults.clades_tsv, organism_parameters.augur_clades_tsv])
           }
         }
       }
@@ -150,8 +161,8 @@ workflow augur {
                             augur_clades.clade_assignments_json,
                             augur_traits.traits_assignments_json]),
         build_name = build_name,
-        lat_longs_tsv = select_first([sc2_defaults.lat_longs_tsv, flu_defaults.lat_longs_tsv, mpxv_defaults.lat_longs_tsv, lat_longs_tsv]),
-        auspice_config = select_first([sc2_defaults.auspice_config, flu_defaults.auspice_config, mpxv_defaults.auspice_config, auspice_config])
+        lat_longs_tsv = select_first([lat_longs_tsv, sc2_defaults.lat_longs_tsv, organism_parameters.augur_lat_longs_tsv]),
+        auspice_config = select_first([auspice_config, sc2_defaults.auspice_config, organism_parameters.augur_auspice_config])
     }
   }
   call snp_dists_task.snp_dists { # create a snp matrix from the alignment
