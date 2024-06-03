@@ -8,7 +8,7 @@ task reorder_matrix {
     Boolean midpoint_root_tree
     
     Int disk_size = 100
-    Int cpu = 2
+    Int cpu = 1
     Int memory = 2
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/mykrobe:0.12.1" # used because it contains both biopython and pandas
     Boolean phandango_coloring = false
