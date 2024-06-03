@@ -36,7 +36,8 @@ workflow ksnp3_workflow {
         input_tree = ksnp3_task.ksnp3_core_tree,
         matrix = core_snp_dists.snp_matrix,
         cluster_name = cluster_name + "_core",
-        midpoint_root_tree = midpoint_root_tree
+        midpoint_root_tree = midpoint_root_tree,
+        phandango_coloring = phandango_coloring
     }
     call ksnp3_shared_snps.ksnp3_shared_snps as core_ksnp3_shared_snps_task {
       input:
