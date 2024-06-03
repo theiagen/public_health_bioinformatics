@@ -43,19 +43,39 @@ task export_taxon_tables {
     String? bbduk_docker
     Float? r1_mean_q_raw
     Float? r2_mean_q_raw
-    Float? r1_mean_q_clean
     Float? combined_mean_q_raw
-    Float? combined_mean_q_clean
     Float? r1_mean_readlength_raw 
     Float? r2_mean_readlength_raw
-    Float? combined_mean_readlength_raw 
-    Float? combined_mean_readlength_clean 
+    Float? combined_mean_readlength_raw
+    Float? r1_mean_q_clean
+    Float? r2_mean_q_clean
+    Float? combined_mean_q_clean
     Float? r1_mean_readlength_clean
+    Float? r2_mean_readlength_clean
+    Float? combined_mean_readlength_clean
     String? nanoq_version
-    File? nanoplot_html
-    File? nanoplot_tsv
-    String? nanoplot_docker
     String? nanoplot_version
+    String? nanoplot_docker
+    File? nanoplot_html_raw
+    File? nanoplot_tsv_raw
+    Int? nanoplot_num_reads_raw1
+    Float? nanoplot_r1_median_readlength_raw
+    Float? nanoplot_r1_mean_readlength_raw
+    Float? nanoplot_r1_stdev_readlength_raw
+    Float? nanoplot_r1_n50_raw
+    Float? nanoplot_r1_mean_q_raw
+    Float? nanoplot_r1_median_q_raw
+    Float? nanoplot_r1_est_coverage_raw
+    File? nanoplot_html_clean
+    File? nanoplot_tsv_clean
+    Int? nanoplot_num_reads_clean1
+    Float? nanoplot_r1_median_readlength_clean
+    Float? nanoplot_r1_mean_readlength_clean
+    Float? nanoplot_r1_stdev_readlength_clean
+    Float? nanoplot_r1_n50_clean
+    Float? nanoplot_r1_mean_q_clean
+    Float? nanoplot_r1_median_q_clean
+    Float? nanoplot_r1_est_coverage_clean
     String? kmc_est_genome_length
     File? kmc_kmer_stats
     String? kmc_version
@@ -248,11 +268,16 @@ task export_taxon_tables {
     String? meningotype_NHBA
     String? meningotype_NadA
     String? meningotype_BAST
-    File? abricate_abaum_plasmid_tsv
-    String? abricate_abaum_plasmid_type_genes
+    File? abricate_results_tsv
+    String? abricate_genes
     String? abricate_database
     String? abricate_version
     String? abricate_docker
+    File? abricate_abaum_plasmid_tsv
+    String? abricate_abaum_plasmid_type_genes
+    String? abricate_abaum_database
+    String? abricate_abaum_version
+    String? abricate_abaum_docker
     File? tbprofiler_output_file
     File? tbprofiler_output_bam
     File? tbprofiler_output_bai
@@ -418,18 +443,38 @@ task export_taxon_tables {
       "r1_mean_q_raw": "~{r1_mean_q_raw}",
       "r2_mean_q_raw": "~{r2_mean_q_raw}",
       "combined_mean_q_raw": "~{combined_mean_q_raw}",
-      "combined_mean_q_clean": "~{combined_mean_q_clean}",
-      "r1_mean_q_clean": "~{r1_mean_q_clean}",
       "r1_mean_readlength_raw": "~{r1_mean_readlength_raw}",
       "r2_mean_readlength_raw": "~{r2_mean_readlength_raw}",
       "combined_mean_readlength_raw": "~{combined_mean_readlength_raw}",
-      "combined_mean_readlength_clean": "~{combined_mean_readlength_clean}",
+      "r1_mean_q_clean": "~{r1_mean_q_clean}",
+      "r2_mean_q_clean": "~{r2_mean_q_clean}",
+      "combined_mean_q_clean": "~{combined_mean_q_clean}",
       "r1_mean_readlength_clean": "~{r1_mean_readlength_clean}",
+      "r2_mean_readlength_clean": "~{r2_mean_readlength_clean}",
+      "combined_mean_readlength_clean": "~{combined_mean_readlength_clean}",
       "nanoq_version": "~{nanoq_version}",
-      "nanoplot_html": "~{nanoplot_html}",
-      "nanoplot_tsv": "~{nanoplot_tsv}",
       "nanoplot_docker": "~{nanoplot_docker}",
       "nanoplot_version": "~{nanoplot_version}",
+      "nanoplot_html_raw": "~{nanoplot_html_raw}",	
+      "nanoplot_tsv_raw": "~{nanoplot_tsv_raw}",
+      "nanoplot_num_reads_raw1": "~{nanoplot_num_reads_raw1}",
+      "nanoplot_r1_median_readlength_raw": "~{nanoplot_r1_median_readlength_raw}",
+      "nanoplot_r1_mean_readlength_raw": "~{nanoplot_r1_mean_readlength_raw}",
+      "nanoplot_r1_stdev_readlength_raw": "~{nanoplot_r1_stdev_readlength_raw}",
+      "nanoplot_r1_n50_raw": "~{nanoplot_r1_n50_raw}",
+      "nanoplot_r1_mean_q_raw": "~{nanoplot_r1_mean_q_raw}",
+      "nanoplot_r1_median_q_raw": "~{nanoplot_r1_median_q_raw}",
+      "nanoplot_r1_est_coverage_raw": "~{nanoplot_r1_est_coverage_raw}",
+      "nanoplot_html_clean": "~{nanoplot_html_clean}",
+      "nanoplot_tsv_clean": "~{nanoplot_tsv_clean}",
+      "nanoplot_num_reads_clean1": "~{nanoplot_num_reads_clean1}",
+      "nanoplot_r1_median_readlength_clean": "~{nanoplot_r1_median_readlength_clean}",
+      "nanoplot_r1_mean_readlength_clean": "~{nanoplot_r1_mean_readlength_clean}",
+      "nanoplot_r1_stdev_readlength_clean": "~{nanoplot_r1_stdev_readlength_clean}",
+      "nanoplot_r1_n50_clean": "~{nanoplot_r1_n50_clean}",
+      "nanoplot_r1_mean_q_clean": "~{nanoplot_r1_mean_q_clean}",
+      "nanoplot_r1_median_q_clean": "~{nanoplot_r1_median_q_clean}",
+      "nanoplot_r1_est_coverage_clean": "~{nanoplot_r1_est_coverage_clean}",
       "kmc_est_genome_length": "~{kmc_est_genome_length}",
       "kmc_kmer_stats": "~{kmc_kmer_stats}",
       "kmc_version": "~{kmc_version}",
@@ -575,11 +620,16 @@ task export_taxon_tables {
       "kaptive_kl_confidence": "~{kaptive_kl_confidence}",
       "kaptive_oc_locus": "~{kaptive_oc_locus}",
       "kaptive_ocl_confidence": "~{kaptive_ocl_confidence}",
-      "abricate_abaum_plasmid_tsv": "~{abricate_abaum_plasmid_tsv}",
-      "abricate_abaum_plasmid_type_genes": "~{abricate_abaum_plasmid_type_genes}",
+      "abricate_results_tsv": "~{abricate_results_tsv}",
+      "abricate_genes": "~{abricate_genes}",
       "abricate_database": "~{abricate_database}",
       "abricate_version": "~{abricate_version}",
       "abricate_docker": "~{abricate_docker}",
+      "abricate_abaum_plasmid_tsv": "~{abricate_abaum_plasmid_tsv}",
+      "abricate_abaum_plasmid_type_genes": "~{abricate_abaum_plasmid_type_genes}",
+      "abricate_abaum_database": "~{abricate_abaum_database}",
+      "abricate_abaum_version": "~{abricate_abaum_version}",
+      "abricate_abaum_docker": "~{abricate_abaum_docker}",
       "legsta_results": "~{legsta_results}",
       "legsta_predicted_sbt": "~{legsta_predicted_sbt}",
       "legsta_version": "~{legsta_version}",

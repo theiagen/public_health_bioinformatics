@@ -27,6 +27,7 @@ workflow read_QC_trim_pe {
     Boolean call_kraken = false
     Int? kraken_disk_size
     Int? kraken_memory
+    Int? kraken_cpu
     File? kraken_db
     String? target_organism
     File? adapters
@@ -130,7 +131,7 @@ workflow read_QC_trim_pe {
     }
   }
   if ("~{workflow_series}" == "theiaprok") {
-    if (call_kraken) {
+    if ((call_kraken) && defined(kraken_db)) {
       call kraken.kraken2_standalone {
         input:
           samplename = samplename,
@@ -138,8 +139,11 @@ workflow read_QC_trim_pe {
           read2 = read2,
           kraken2_db = select_first([kraken_db]),
           disk_size = kraken_disk_size,
-          memory = kraken_memory
+          memory = kraken_memory,
+          cpu = kraken_cpu
       }
+    }  if ((call_kraken) && ! defined(kraken_db)) {
+      String kraken_db_warning = "Kraken database not defined"
     }
   }
   if ("~{workflow_series}" == "theiameta") {
@@ -198,6 +202,7 @@ workflow read_QC_trim_pe {
     String? kraken_target_organism_name = target_organism
     File? kraken_report_dehosted = kraken2_theiacov_dehosted.kraken_report
     String kraken_docker = select_first([kraken2_theiacov_raw.docker, kraken2_standalone.kraken2_docker, ""])
+    String kraken_database = select_first([kraken2_theiacov_raw.database, kraken2_standalone.kraken2_database, kraken_db_warning, ""])
     
     # trimming versioning
     String? trimmomatic_version = trimmomatic_pe.version
