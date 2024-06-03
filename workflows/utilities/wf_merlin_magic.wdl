@@ -71,6 +71,7 @@ workflow merlin_magic {
     Boolean? tbprofiler_run_cdph_db
     File? tbprofiler_custom_db
     Boolean tbprofiler_additional_outputs = false
+    Boolean? tbp_parser_add_cycloserine_lims
     String tbp_parser_output_seq_method_type = "WGS"
     String? tbp_parser_operator
     Int? tbp_parser_min_depth
@@ -274,6 +275,7 @@ workflow merlin_magic {
             tbprofiler_bai = tbprofiler.tbprofiler_output_bai,
             samplename = samplename, 
             sequencing_method = tbp_parser_output_seq_method_type,
+            add_cycloserine_lims = tbp_parser_add_cycloserine_lims,
             operator = tbp_parser_operator,
             min_depth = tbp_parser_min_depth,
             coverage_threshold = tbp_parser_coverage_threshold,
