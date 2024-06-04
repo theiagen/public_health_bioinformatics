@@ -4,8 +4,8 @@ task stxtyper {
   input {
     File assembly
     String samplename
-    String docker = "kapsakcj/stxtyper:8328c4d"
-    Int disk_size = 100
+    String docker = "kapsakcj/stxtyper:78754d7"
+    Int disk_size = 50
     Int cpu = 2
     Int memory = 8
   }
