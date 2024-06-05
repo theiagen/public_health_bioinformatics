@@ -156,7 +156,6 @@ workflow snippy_tree_wf {
         input_tree = wg_reorder_matrix.tree,
         matrix = cg_snp_dists.snp_matrix,
         cluster_name = tree_name_updated + "_cg",
-        cluster_name = tree_name + "_cg",
         midpoint_root_tree = false,
         phandango_coloring = phandango_coloring
     }
