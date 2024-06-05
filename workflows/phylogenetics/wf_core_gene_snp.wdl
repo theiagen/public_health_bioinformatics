@@ -25,6 +25,7 @@ workflow core_gene_snp_workflow {
     String? data_summary_terra_workspace
     String? data_summary_terra_table
     String? data_summary_column_names
+    Boolean phandango_coloring = false
 
     Boolean midpoint_root_tree = true
   }
@@ -51,7 +52,8 @@ workflow core_gene_snp_workflow {
           input_tree = core_iqtree.ml_tree,
           matrix = core_snp_dists.snp_matrix,
           cluster_name = cluster_name + "_core",
-          midpoint_root_tree = midpoint_root_tree
+          midpoint_root_tree = midpoint_root_tree,
+          phandango_coloring = phandango_coloring
       }
     }
     if (pan_tree) {
@@ -70,7 +72,8 @@ workflow core_gene_snp_workflow {
           input_tree = pan_iqtree.ml_tree,
           matrix = pan_snp_dists.snp_matrix,
           cluster_name = cluster_name + "_pan",
-          midpoint_root_tree = midpoint_root_tree
+          midpoint_root_tree = midpoint_root_tree,
+          phandango_coloring = phandango_coloring
       }
     }
   }
@@ -82,7 +85,8 @@ workflow core_gene_snp_workflow {
         terra_workspace = data_summary_terra_workspace,
         terra_table = data_summary_terra_table,
         column_names = data_summary_column_names,
-        output_prefix = cluster_name
+        output_prefix = cluster_name,
+        phandango_coloring = phandango_coloring
     }
   }
   call versioning.version_capture {

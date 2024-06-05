@@ -28,6 +28,7 @@ workflow snippy_tree_wf {
     String? data_summary_terra_workspace
     String? data_summary_terra_table
     String? data_summary_column_names # comma delimited
+    Boolean phandango_coloring = false
 
     # the following parameters are exposed to allow modification in snippy_streamline
     String? snippy_core_docker
@@ -136,7 +137,8 @@ workflow snippy_tree_wf {
       input_tree = iqtree2.ml_tree,
       matrix = wg_snp_dists.snp_matrix,
       cluster_name = tree_name + "_wg",
-      midpoint_root_tree = midpoint_root_tree
+      midpoint_root_tree = midpoint_root_tree,
+      phandango_coloring = phandango_coloring
   }
   # creates a pairwise snp-distance matrix from the core-genome MSA, if core_genome is used
   if (core_genome) {
@@ -153,7 +155,8 @@ workflow snippy_tree_wf {
         input_tree = wg_reorder_matrix.tree,
         matrix = cg_snp_dists.snp_matrix,
         cluster_name = tree_name + "_cg",
-        midpoint_root_tree = false
+        midpoint_root_tree = false,
+        phandango_coloring = phandango_coloring
     }
   }
   # creates a data summary from comma-separated lists within single Terra data table columns
@@ -165,7 +168,8 @@ workflow snippy_tree_wf {
         terra_workspace = data_summary_terra_workspace,
         terra_table = data_summary_terra_table,
         column_names = data_summary_column_names,
-        output_prefix = tree_name
+        output_prefix = tree_name,
+        phandango_coloring = phandango_coloring
     }
   }
   if (call_shared_variants) {
