@@ -6,8 +6,8 @@ task stxtyper {
     String samplename
     String docker = "kapsakcj/stxtyper:78754d7"
     Int disk_size = 50
-    Int cpu = 2
-    Int memory = 8
+    Int cpu = 1
+    Int memory = 2
   }
   command <<<
     # capture date
@@ -32,6 +32,11 @@ task stxtyper {
       echo "No hits found by StxTyper" > stxtyper_hits.txt
       echo "0" > stxtyper_num_hits.txt
       echo "DEBUG: No hits found in StxTyper output TSV. Exiting task with exit code 0 now."
+      
+      # create empty output files
+      touch stxtyper_complete_operons.txt stxtyper_partial_hits.txt stxtyper_stxA_complete_hits.txt stxtyper_stxB_complete_hits.txt stxtyper_stxA_partial_hits.txt stxtyper_stxB_partial_hits.txt stxtyper_stx_frameshifts_or_internal_stop_hits.txt stxtyper_A_partial_B_complete.txt stx_novel_hits.txt
+      # put "none" into all of them so task does not fail
+      echo "None" | tee stxtyper_complete_operons.txt stxtyper_partial_hits.txt stxtyper_stxA_complete_hits.txt stxtyper_stxB_complete_hits.txt stxtyper_stxA_partial_hits.txt stxtyper_stxB_partial_hits.txt stxtyper_stx_frameshifts_or_internal_stop_hits.txt stxtyper_A_partial_B_complete.txt stx_novel_hits.txt
       exit 0
     fi
     
@@ -42,8 +47,20 @@ task stxtyper {
       wc -l < ~{samplename}_stxtyper.tsv | awk '{print $1-1}' > stxtyper_num_hits.txt
       # remove header line
       sed '1d' ~{samplename}_stxtyper.tsv > ~{samplename}_stxtyper_noheader.tsv
-      # parse output TSV and create comma separated list of: (stx_type|operon|target_contig)
-      awk -F'\t' '{print "(" $3 "|" $4 "|" $2 ")"}' ~{samplename}_stxtyper_noheader.tsv | paste -sd, - | tee stxtyper_hits.txt
+      ### parse output TSV ###
+      # complete operons
+      echo "DEBUG: Parsing complete operons..."
+      awk -F'\t' -v OFS=, '$4 == "COMPLETE" {print $3}' ~{samplename}_stxtyper.tsv | paste -sd, - | tee stxtyper_complete_operons.txt
+      # if grep for COMPLETE fails, write "None" to file for output string
+      if [ "$(grep 'COMPLETE' ~{samplename}_stxtyper.tsv; echo $?)" -gt 0 ]; then
+        echo "None" > stxtyper_complete_operons.txt
+      fi
+      #
+
+
+      # temporarily making a bunch of empty files to test parsing
+      touch stxtyper_partial_hits.txt stxtyper_stxA_complete_hits.txt stxtyper_stxB_complete_hits.txt stxtyper_stxA_partial_hits.txt stxtyper_stxB_partial_hits.txt stxtyper_stx_frameshifts_or_internal_stop_hits.txt stxtyper_A_partial_B_complete.txt stx_novel_hits.txt
+
     fi
 
     echo "DEBUG: Finished parsing StxTyper output TSV."
@@ -53,8 +70,17 @@ task stxtyper {
     File stxtyper_log = "~{samplename}_stxtyper.log"
     String stxtyper_docker = docker
     String stxtyper_version = read_string("VERSION.txt")
-    String stxtyper_hits = read_string("stxtyper_hits.txt")
     Int stxtyper_num_hits = read_int("stxtyper_num_hits.txt")
+    # outputs parsed from stxtyper output TSV
+    String stxtyper_complete_operons = read_string("stxtyper_complete_operons.txt")
+    String stxtyper_partial_hits = read_string("stxtyper_partial_hits.txt")
+    String stxtyper_stxA_complete_hits = read_string("stxtyper_stxA_complete_hits.txt")
+    String stxtyper_stxB_complete_hits = read_string("stxtyper_stxB_complete_hits.txt")
+    String stxtyper_stxA_partial_hits = read_string("stxtyper_stxA_partial_hits.txt")
+    String stxtyper_stxB_partial_hits = read_string("stxtyper_stxB_partial_hits.txt")
+    String stxtyper_stx_frameshifts_or_internal_stop_hits =  read_string("stxtyper_stx_frameshifts_or_internal_stop_hits.txt")
+    String stxtyper_A_partial_B_complete = read_string("stxtyper_A_partial_B_complete.txt")
+    String stx_novel_hits = read_string("stx_novel_hits.txt")
   }
   runtime {
     docker: "~{docker}"
@@ -62,7 +88,7 @@ task stxtyper {
     cpu: cpu
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
-    preemptible: 0
+    preemptible: 1
     maxRetries: 3
   }
 }
