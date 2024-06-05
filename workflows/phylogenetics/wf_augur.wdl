@@ -145,7 +145,7 @@ workflow augur {
               refined_tree = augur_refine.refined_tree,
               ancestral_nt_muts_json = augur_ancestral.ancestral_nt_muts_json,
               translated_aa_muts_json = augur_translate.translated_aa_muts_json,
-              build_name = build_name,
+              build_name = build_name_updated,
               clades_tsv = select_first([clades_tsv, sc2_defaults.clades_tsv, organism_parameters.augur_clades_tsv])
           }
         }
@@ -161,7 +161,7 @@ workflow augur {
                             augur_translate.translated_aa_muts_json,
                             augur_clades.clade_assignments_json,
                             augur_traits.traits_assignments_json]),
-        build_name = build_name,
+        build_name = build_name_updated,
         lat_longs_tsv = select_first([lat_longs_tsv, sc2_defaults.lat_longs_tsv, organism_parameters.augur_lat_longs_tsv]),
         auspice_config = select_first([auspice_config, sc2_defaults.auspice_config, organism_parameters.augur_auspice_config])
     }
