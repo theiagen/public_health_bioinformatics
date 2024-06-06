@@ -126,7 +126,7 @@ workflow augur {
         refined_tree = augur_refine.refined_tree,
         ancestral_nt_muts_json = augur_ancestral.ancestral_nt_muts_json,
         reference_genbank = select_first([reference_genbank, sc2_defaults.reference_genbank, organism_parameters.reference_gbk]),
-        build_name = build_name
+        build_name = build_name_updated
     }
     if (flu_segment == "HA") { # we only have clade information for HA segments (but SC2 defaults will be selected first)
       if (run_traits) { # by default do not run traits and clades will be assigned based on the clades_tsv
