@@ -7,9 +7,9 @@ task gambit {
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/gambit:1.0.0"
     File gambit_db_genomes = "gs://gambit-databases-rp/1.3.0/gambit-metadata-1.3-231016.gdb"
     File gambit_db_signatures = "gs://gambit-databases-rp/1.3.0/gambit-signatures-1.3-231016.gs"
-    Int disk_size = 100
-    Int memory = 16 # set default
-    Int cpu = 8 # set default
+    Int disk_size = 20
+    Int memory = 2
+    Int cpu = 1
   }
   # If "File" type is used Cromwell attempts to localize it, which fails because it doesn't exist yet.
   String report_path = "~{samplename}_gambit.json"
@@ -35,7 +35,7 @@ task gambit {
     
     echo ${gambit_db_version} | tee GAMBIT_DB_VERSION
     
-    gambit -d ${gambit_db_dir} query -f json -o ~{report_path} ~{assembly} 
+    gambit -d ${gambit_db_dir} query -f json -o ~{report_path} ~{assembly} -c ~{cpu}
     
     python3 <<EOF
     import json
@@ -150,12 +150,12 @@ task gambit {
     String gambit_docker = docker
   }
   runtime {
-    docker:  "~{docker}"
-    memory:  "~{memory} GB"
-    cpu:   "~{cpu}"
+    docker: "~{docker}"
+    memory: "~{memory} GB"
+    cpu: "~{cpu}"
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
     maxRetries: 3
-    preemptible:  0
+    preemptible: 1
   }
 }

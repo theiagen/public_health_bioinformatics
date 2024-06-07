@@ -17,7 +17,7 @@ task check_reads {
     Int disk_size = 100
     String docker = "us-docker.pkg.dev/general-theiagen/bactopia/gather_samples:2.0.2"
     Int memory = 2
-    Int cpu = 2
+    Int cpu = 1
   }
   command <<<
     flag="PASS"
@@ -166,7 +166,7 @@ task check_reads {
     cpu: cpu
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
-    preemptible: 0
+    preemptible: 1
     maxRetries: 3
   }
 }
@@ -187,7 +187,7 @@ task check_reads_se {
     Int disk_size = 100 
     String docker = "us-docker.pkg.dev/general-theiagen/bactopia/gather_samples:2.0.2"
     Int memory = 2
-    Int cpu = 2
+    Int cpu = 1
   }
   command <<<
     flag="PASS"
@@ -321,7 +321,7 @@ task check_reads_se {
     cpu: cpu
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
-    preemptible: 0
+    preemptible: 1
     maxRetries: 3
   }
 }
