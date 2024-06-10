@@ -12,6 +12,7 @@ workflow ksnp3_workflow {
     Array[File] assembly_fasta
     Array[String] samplename
     String cluster_name
+    String cluster_name_updated = sub(cluster_name, " ", "_")
     String? data_summary_terra_project
     String? data_summary_terra_workspace
     String? data_summary_terra_table
@@ -23,19 +24,19 @@ workflow ksnp3_workflow {
     input:
       assembly_fasta = assembly_fasta,
       samplename = samplename,
-      cluster_name = cluster_name
+      cluster_name = cluster_name_updated
   }
   if (ksnp3_task.skip_core_snp_dists == "The core SNP matrix was produced") {
     call snp_dists.snp_dists as core_snp_dists {
       input:
-        cluster_name = cluster_name,
+        cluster_name = cluster_name_updated,
         alignment = ksnp3_task.ksnp3_core_matrix
     }
     call reorder_matrix.reorder_matrix as core_reorder_matrix {
       input:
         input_tree = ksnp3_task.ksnp3_core_tree,
         matrix = core_snp_dists.snp_matrix,
-        cluster_name = cluster_name + "_core",
+        cluster_name = cluster_name_updated + "_core",
         midpoint_root_tree = midpoint_root_tree,
         phandango_coloring = phandango_coloring
     }
@@ -43,19 +44,19 @@ workflow ksnp3_workflow {
       input:
         ksnp3_vcf_ref_genome = ksnp3_task.ksnp3_vcf_ref_genome,
         samplename = samplename,
-        cluster_name = cluster_name
+        cluster_name = cluster_name_updated
     }
   }
   call snp_dists.snp_dists as pan_snp_dists {
     input:
-      cluster_name = cluster_name,
+      cluster_name = cluster_name_updated,
       alignment = ksnp3_task.ksnp3_pan_matrix
   }
   call reorder_matrix.reorder_matrix as pan_reorder_matrix {
     input:
       input_tree = ksnp3_task.ksnp3_pan_parsimony_tree,
       matrix = pan_snp_dists.snp_matrix,
-      cluster_name = cluster_name + "_pan",
+      cluster_name = cluster_name_updated + "_pan",
       midpoint_root_tree = midpoint_root_tree,
       phandango_coloring = phandango_coloring
   }
@@ -67,7 +68,7 @@ workflow ksnp3_workflow {
         terra_workspace = data_summary_terra_workspace,
         terra_table = data_summary_terra_table,
         column_names = data_summary_column_names,
-        output_prefix = cluster_name,
+        output_prefix = cluster_name_updated,
         phandango_coloring = phandango_coloring
     }
   }

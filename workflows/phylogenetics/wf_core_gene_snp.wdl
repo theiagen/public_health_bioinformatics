@@ -12,6 +12,7 @@ workflow core_gene_snp_workflow {
   input {
     Array[File] gff3
     String cluster_name
+    String cluster_name_updated = sub(cluster_name, " ", "_")
     # if align = true, the pirate task will produce core and pangenome alignments for the sample set,
     # otherwise, pirate will only produce a pangenome summary
     Boolean align = true
@@ -32,7 +33,7 @@ workflow core_gene_snp_workflow {
   call pirate_task.pirate {
     input:
       gff3 = gff3,
-      cluster_name = cluster_name,
+      cluster_name = cluster_name_updated,
       align = align
   }
   if (align) {
@@ -40,18 +41,18 @@ workflow core_gene_snp_workflow {
       call iqtree.iqtree as core_iqtree {
         input:
           alignment = select_first([pirate.pirate_core_alignment_fasta]),
-          cluster_name = cluster_name
+          cluster_name = cluster_name_updated
       }
       call snp_dists.snp_dists as core_snp_dists {
         input:
           alignment = select_first([pirate.pirate_core_alignment_fasta]),
-          cluster_name = cluster_name
+          cluster_name = cluster_name_updated
       }
       call reorder_matrix.reorder_matrix as core_reorder_matrix {
         input:
           input_tree = core_iqtree.ml_tree,
           matrix = core_snp_dists.snp_matrix,
-          cluster_name = cluster_name + "_core",
+          cluster_name = cluster_name_updated + "_core",
           midpoint_root_tree = midpoint_root_tree,
           phandango_coloring = phandango_coloring
       }
@@ -60,18 +61,18 @@ workflow core_gene_snp_workflow {
       call iqtree.iqtree as pan_iqtree {
         input:
           alignment = select_first([pirate.pirate_pangenome_alignment_fasta]),
-          cluster_name = cluster_name
+          cluster_name = cluster_name_updated
       }
       call snp_dists.snp_dists as pan_snp_dists {
         input:
           alignment = select_first([pirate.pirate_pangenome_alignment_fasta]),
-          cluster_name = cluster_name
+          cluster_name = cluster_name_updated
       }
       call reorder_matrix.reorder_matrix as pan_reorder_matrix {
         input:
           input_tree = pan_iqtree.ml_tree,
           matrix = pan_snp_dists.snp_matrix,
-          cluster_name = cluster_name + "_pan",
+          cluster_name = cluster_name_updated + "_pan",
           midpoint_root_tree = midpoint_root_tree,
           phandango_coloring = phandango_coloring
       }
@@ -85,7 +86,7 @@ workflow core_gene_snp_workflow {
         terra_workspace = data_summary_terra_workspace,
         terra_table = data_summary_terra_table,
         column_names = data_summary_column_names,
-        output_prefix = cluster_name,
+        output_prefix = cluster_name_updated,
         phandango_coloring = phandango_coloring
     }
   }

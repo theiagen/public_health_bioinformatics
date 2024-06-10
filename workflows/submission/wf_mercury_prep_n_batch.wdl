@@ -11,6 +11,7 @@ workflow mercury_prep_n_batch {
     Array[String] sample_names
     String organism = "sars-cov-2"
     String output_name
+    String output_name_updated = sub(output_name, " ", "_")
     String gcp_bucket_uri
     File? input_table
     Int vadr_alert_limit = 0 # only for SC2
@@ -25,7 +26,7 @@ workflow mercury_prep_n_batch {
       project_name = project_name,
       sample_names = sample_names,
       organism = organism, 
-      output_name = output_name,
+      output_name = output_name_updated,
       gcp_bucket_uri = gcp_bucket_uri,
       input_table = input_table,
       vadr_alert_limit = vadr_alert_limit,
@@ -36,7 +37,7 @@ workflow mercury_prep_n_batch {
     call submission.trim_genbank_fastas {
       input:
         genbank_untrimmed_fasta = select_first([sm_metadata_wrangling.genbank_untrimmed_fasta]),
-        output_name = output_name
+        output_name = output_name_updated
     }
   }
   if (organism == "mpox" && skip_ncbi == false) {
@@ -45,7 +46,7 @@ workflow mercury_prep_n_batch {
         authors_sbt = select_first([authors_sbt]),
         bankit_fasta = select_first([sm_metadata_wrangling.bankit_fasta]),
         bankit_metadata = select_first([sm_metadata_wrangling.bankit_metadata]),
-        output_name = output_name
+        output_name = output_name_updated
     }
   }
   call versioning.version_capture {
