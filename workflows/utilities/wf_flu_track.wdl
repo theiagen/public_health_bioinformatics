@@ -1,0 +1,193 @@
+version 1.0
+
+
+import "../../tasks/assembly/task_irma.wdl" as irma_task
+import "../../tasks/gene_typing/drug_resistance/task_abricate.wdl" as abricate
+import "../../tasks/quality_control/basic_statistics/task_assembly_metrics.wdl" as assembly_metrics
+import "../../tasks/taxon_id/task_nextclade.wdl" as nextclade_task
+import "../utilities/wf_influenza_antiviral_substitutions.wdl" as flu_antiviral
+import "../utilities/wf_organism_parameters.wdl" as set_organism_defaults
+
+workflow flu_track {
+  meta: 
+  {
+    description: "This subworkflow contains all of the flu-specific modules to help organize the TheiaCoV workflows"
+  }
+  input {
+    File read1
+    File? read2
+    String samplename
+
+    File? assembly_fasta
+
+    String? flu_subtype
+
+    String seq_method
+    String standardized_organism
+  }
+  # IRMA will run if no assembly is provided (as in the case of TheiaCoV_FASTA)
+  if (! defined(assembly_fasta)) {
+    call irma_task.irma {
+      input:
+        read1 = read1,
+        read2 = read2,
+        samplename = samplename,
+        seq_method = seq_method
+    }
+    # can be redone later to accomodate processing of HA and NA bams together in the task, perhaps with an organism flag
+    if (defined(irma.seg_ha_bam)) {
+      call assembly_metrics.stats_n_coverage as ha_assembly_coverage {
+        input:
+          bamfile = select_first([irma.seg_ha_bam]),
+          samplename = samplename
+      }
+    }
+    if (defined(irma.seg_na_bam)) {
+      call assembly_metrics.stats_n_coverage as na_assembly_coverage {
+        input:
+          bamfile = select_first([irma.seg_na_bam]),
+          samplename = samplename
+      }
+    }
+    # combine HA & NA assembly coverages
+    String ha_na_assembly_coverage = "HA: " + select_first([ha_assembly_coverage.depth, ""]) + ", NA: " + select_first([na_assembly_coverage.depth, ""])
+  }
+  # ABRICATE will run if assembly is provided, or was generated with IRMA
+  if (defined(irma.irma_assemblies) || defined(assembly_fasta) {
+    call abricate.abricate_flu {
+      input:
+        assembly = select_first([irma.irma_assembly_fasta, assembly_fasta]),
+        samplename = samplename
+    }
+    
+    # check IRMA subtype content if IRMA was run
+    if (defined(irma.irma_subtype)) {
+      # if IRMA cannot predict a subtype (like with Flu B samples), then set the flu_subtype to the abricate_flu_subtype String output (e.g. "Victoria" for Flu B)
+      String algorithmic_flu_subtype = if irma.irma_subtype == "No subtype predicted by IRMA" then abricate_flu.abricate_flu_subtype else irma.irma_subtype
+    }
+
+    call set_organism_defaults.organism_parameters as set_flu_na_nextclade_values {
+      input:
+        organism = standardized_organism,
+        flu_segment = "NA",
+        flu_subtype = select_first([flu_subtype, algorithmic_flu_subtype, abricate_flu.abricate_flu_subtype, "N/A"])
+    }
+    call set_organism_defaults.organism_parameters as set_flu_ha_nextclade_values {
+      input:
+        organism = standardized_organism,
+        flu_segment = "HA",
+        flu_subtype = select_first([flu_subtype, algorithmic_flu_subtype, abricate_flu.abricate_flu_subtype, "N/A"])
+    }
+    # these are necessary because these are optional values and cannot be directly compared in before the nextclade task. 
+    # checking for variable definition can be done though, which is why we create variables here
+    if (set_flu_na_nextclade_values.nextclade_dataset_tag == "NA") {
+      Boolean do_not_run_flu_na_nextclade = true
+    }
+    if (set_flu_ha_nextclade_values.nextclade_dataset_tag == "NA") {
+      Boolean do_not_run_flu_ha_nextclade = true
+    }
+  }       
+  # if IRMA was run successfully, run the flu_antiviral substitutions task 
+  # this block must be placed beneath the previous block because it is used in this subworkflow
+  if (defined(irma.irma_assemblies)) {
+    call flu_antiviral.flu_antiviral_substitutions {
+      input:
+        na_segment_assembly = irma.seg_na_assembly,
+        ha_segment_assembly = irma.seg_ha_assembly,
+        pa_segment_assembly = irma.seg_pa_assembly,
+        pb1_segment_assembly = irma.seg_pb1_assembly,
+        pb2_segment_assembly = irma.seg_pb2_assembly,
+        mp_segment_assembly = irma.seg_mp_assembly,
+        abricate_flu_subtype = select_first([abricate_flu.abricate_flu_subtype, ""]),
+        irma_flu_subtype = select_first([irma.irma_subtype, ""]),
+    }
+  }
+  if ((defined(irma.seg_ha_assembly) || defined(assembly_fasta)) && ! defined(do_not_run_flu_ha_nextclade)) {
+    call nextclade_task.nextclade_v3 as nextclade_flu_ha {
+      input:
+        genome_fasta = select_first([irma.seg_ha_assembly, assembly_fasta]),
+        dataset_name = set_flu_ha_nextclade_values.nextclade_dataset_name,
+        dataset_tag = set_flu_ha_nextclade_values.nextclade_dataset_tag
+    }
+    call nextclade_task.nextclade_output_parser as nextclade_output_parser_flu_ha {
+      input:
+        nextclade_tsv = nextclade_flu_ha.nextclade_tsv,
+        organism = standardized_organism
+    }
+  }
+  if ((defined(irma.seg_na_assembly) || defined(assembly_fasta)) && ! defined(do_not_run_flu_na_nextclade)) {
+    call nextclade_task.nextclade_v3 as nextclade_flu_na {
+      input:
+        genome_fasta = select_first([irma.seg_na_assembly, assembly_fasta]),
+        dataset_name = set_flu_na_nextclade_values.nextclade_dataset_name,
+        dataset_tag = set_flu_na_nextclade_values.nextclade_dataset_tag
+    }
+    call nextclade_task.nextclade_output_parser as nextclade_output_parser_flu_na {
+      input:
+        nextclade_tsv = nextclade_flu_na.nextclade_tsv,
+        organism = organism_parameters.standardized_organism
+    }
+  }
+  output {
+    # IRMA outputs 
+    String? irma_version = irma.irma_version
+    String? irma_docker = irma.irma_docker
+    String? irma_type = irma.irma_type
+    String? irma_subtype = irma.irma_subtype
+    String? irma_subtype_notes = irma.irma_subtype_notes
+    File? irma_assembly_fasta = irma.irma_assembly_fasta
+    File? irma_ha_segment_fasta = irma.seg_ha_assembly
+    File? irma_na_segment_fasta = irma.seg_na_assembly
+    File? irma_pa_segment_fasta = irma.seg_pa_assembly
+    File? irma_pb1_segment_fasta = irma.seg_pb1_assembly
+    File? irma_pb2_segment_fasta = irma.seg_pb2_assembly
+    File? irma_mp_segment_fasta = irma.seg_mp_assembly
+    File? irma_np_segment_fasta = irma.seg_np_assembly
+    File? irma_ns_segment_fasta = irma.seg_ns_assembly
+    Array[File]? irma_assemblies = irma.irma_assemblies
+    Array[File]? irma_vcfs = irma.irma_vcfs
+    Array[File]? irma_bams = irma.irma_bams
+    String? ha_na_assembly_coverage = ha_na_assembly_coverage
+    # Abricate outputs
+    String? abricate_flu_type = abricate_flu.abricate_flu_type
+    String? abricate_flu_subtype =  abricate_flu.abricate_flu_subtype
+    File? abricate_flu_results = abricate_flu.abricate_flu_results
+    String? abricate_flu_database =  abricate_flu.abricate_flu_database
+    String? abricate_flu_version = abricate_flu.abricate_flu_version
+    # Nextclade outputs
+    String? nextclade_version = nextclade_flu_ha.nextclade_version
+    String? nextclade_docker = nextclade_flu_ha.nextclade_docker
+    # Nextclade HA outputs
+    String? nextclade_json_flu_ha = nextclade_flu_ha.nextclade_json
+    String? auspice_json_flu_ha =  nextclade_flu_ha.auspice_json
+    String? nextclade_tsv_flu_ha = nextclade_flu_ha.nextclade_tsv
+    String? nextclade_ds_tag_flu_ha = set_flu_ha_nextclade_values.nextclade_dataset_tag
+    String? nextclade_aa_subs_flu_ha = nextclade_output_parser_flu_ha.nextclade_aa_subs
+    String? nextclade_aa_dels_flu_ha = nextclade_output_parser_flu_ha.nextclade_aa_dels
+    String? nextclade_clade_flu_ha = nextclade_output_parser_flu_ha.nextclade_clade
+    String? nextclade_qc_flu_ha = nextclade_output_parser_flu_ha.nextclade_qc
+    # Nextclade NA outputs
+    String? nextclade_json_flu_na = nextclade_flu_na.nextclade_json
+    String? auspice_json_flu_na = nextclade_flu_na.auspice_json
+    String? nextclade_tsv_flu_na = nextclade_flu_na.nextclade_tsv
+    String? nextclade_ds_tag_flu_na = set_flu_na_nextclade_values.nextclade_dataset_tag
+    String? nextclade_aa_subs_flu_na = nextclade_output_parser_flu_na.nextclade_aa_subs
+    String? nextclade_aa_dels_flu_na = nextclade_output_parser_flu_na.nextclade_aa_dels
+    String? nextclade_clade_flu_na = nextclade_output_parser_flu_na.nextclade_clade
+    String? nextclade_qc_flu_na = nextclade_output_parser_flu_na.nextclade_qc
+    # Flu Antiviral Substitution Outputs
+    String? flu_A_315675_resistance = flu_antiviral_substitutions.flu_A_315675_resistance
+    String? flu_amantadine_resistance = flu_antiviral_substitutions.flu_amantadine_resistance
+    String? flu_compound_367_resistance = flu_antiviral_substitutions.flu_compound_367_resistance
+    String? flu_favipiravir_resistance = flu_antiviral_substitutions.flu_favipiravir_resistance
+    String? flu_fludase_resistance = flu_antiviral_substitutions.flu_fludase_resistance
+    String? flu_L_742_001_resistance = flu_antiviral_substitutions.flu_L_742_001_resistance
+    String? flu_laninamivir_resistance = flu_antiviral_substitutions.flu_laninamivir_resistance
+    String? flu_peramivir_resistance = flu_antiviral_substitutions.flu_peramivir_resistance
+    String? flu_pimodivir_resistance = flu_antiviral_substitutions.flu_pimodivir_resistance
+    String? flu_rimantadine_resistance = flu_antiviral_substitutions.flu_rimantadine_resistance
+    String? flu_oseltamivir_resistance = flu_antiviral_substitutions.flu_oseltamivir_resistance
+    String? flu_xofluza_resistance = flu_antiviral_substitutions.flu_xofluza_resistance
+    String? flu_zanamivir_resistance = flu_antiviral_substitutions.flu_zanamivir_resistance
+  }
+}
