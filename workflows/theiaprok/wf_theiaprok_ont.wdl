@@ -6,6 +6,7 @@ import "../../tasks/gene_typing/annotation/task_prokka.wdl" as prokka_task
 import "../../tasks/gene_typing/drug_resistance/task_amrfinderplus.wdl" as amrfinderplus_task
 import "../../tasks/gene_typing/drug_resistance/task_resfinder.wdl" as resfinder_task
 import "../../tasks/gene_typing/plasmid_detection/task_plasmidfinder.wdl" as plasmidfinder_task
+import "../../tasks/gene_typing/drug_resistance/task_abricate.wdl" as abricate_task
 import "../../tasks/quality_control/advanced_metrics/task_busco.wdl" as busco_task
 import "../../tasks/quality_control/advanced_metrics/task_mummer_ani.wdl" as ani_task
 import "../../tasks/quality_control/basic_statistics/task_nanoplot.wdl" as nanoplot_task
@@ -52,6 +53,8 @@ workflow theiaprok_ont {
     Boolean call_kmerfinder = false
     Boolean call_resfinder = false
     Boolean call_plasmidfinder = true
+    Boolean call_abricate = false
+    String abricate_db = "vfdb"
     String genome_annotation = "prokka" # options: "prokka" or "bakta"
     String? expected_taxon # allow user to provide organism (e.g. "Clostridioides_difficile") string to amrfinder. Useful when gambit does not predict the correct species
     # qc check parameters
@@ -181,6 +184,14 @@ workflow theiaprok_ont {
             samplename = samplename
         }
       }
+      if (call_abricate) {
+        call abricate_task.abricate {
+          input:
+            assembly = dragonflye.assembly_fasta,
+            samplename = samplename,
+            database = abricate_db
+        }
+      }
       if (defined(qc_check_table)) {
         call qc_check.qc_check_phb as qc_check_task { 
           input:
@@ -233,13 +244,33 @@ workflow theiaprok_ont {
             seq_platform = seq_method,
             num_reads_raw1 =  nanoplot_raw.num_reads,
             num_reads_clean1 = nanoplot_clean.num_reads,
-            r1_mean_q_raw = nanoplot_clean.mean_q, 
+            r1_mean_q_raw = nanoplot_clean.mean_q,
+            r1_mean_q_clean = nanoplot_clean.mean_q,
             r1_mean_readlength_raw = nanoplot_raw.mean_readlength,
+            r1_mean_readlength_clean = nanoplot_clean.mean_readlength,
             nanoq_version = read_qc_trim.nanoq_version,
-            nanoplot_html = nanoplot_raw.nanoplot_html,
-            nanoplot_tsv = nanoplot_raw.nanoplot_tsv,
-            nanoplot_docker = nanoplot_raw.nanoplot_docker,
             nanoplot_version = nanoplot_raw.nanoplot_version,
+            nanoplot_docker = nanoplot_raw.nanoplot_docker,
+            nanoplot_html_raw = nanoplot_raw.nanoplot_html,
+            nanoplot_tsv_raw = nanoplot_raw.nanoplot_tsv,
+            nanoplot_num_reads_raw1 = nanoplot_raw.num_reads,
+            nanoplot_r1_median_readlength_raw = nanoplot_raw.median_readlength,
+            nanoplot_r1_mean_readlength_raw = nanoplot_raw.mean_readlength,
+            nanoplot_r1_stdev_readlength_raw = nanoplot_raw.stdev_readlength,
+            nanoplot_r1_n50_raw = nanoplot_raw.n50,
+            nanoplot_r1_mean_q_raw = nanoplot_raw.mean_q,
+            nanoplot_r1_median_q_raw = nanoplot_raw.median_q,
+            nanoplot_r1_est_coverage_raw = nanoplot_raw.est_coverage,
+            nanoplot_html_clean = nanoplot_clean.nanoplot_html,
+            nanoplot_tsv_clean = nanoplot_clean.nanoplot_tsv,
+            nanoplot_num_reads_clean1 = nanoplot_clean.num_reads,
+            nanoplot_r1_median_readlength_clean = nanoplot_clean.median_readlength,
+            nanoplot_r1_mean_readlength_clean = nanoplot_clean.mean_readlength,
+            nanoplot_r1_stdev_readlength_clean = nanoplot_clean.stdev_readlength,
+            nanoplot_r1_n50_clean = nanoplot_clean.n50,
+            nanoplot_r1_mean_q_clean = nanoplot_clean.mean_q,
+            nanoplot_r1_median_q_clean = nanoplot_clean.median_q,
+            nanoplot_r1_est_coverage_clean = nanoplot_clean.est_coverage,
             kmc_est_genome_length = read_qc_trim.est_genome_length,
             kmc_kmer_stats = read_qc_trim.kmc_kmer_stats,
             kmc_version = read_qc_trim.kmc_version,
@@ -417,11 +448,16 @@ workflow theiaprok_ont {
             kaptive_kl_confidence = merlin_magic.kaptive_k_confidence,
             kaptive_oc_locus = merlin_magic.kaptive_oc_match,
             kaptive_ocl_confidence = merlin_magic.kaptive_oc_confidence,
-            abricate_abaum_plasmid_tsv = merlin_magic.abricate_results,
-            abricate_abaum_plasmid_type_genes = merlin_magic.abricate_genes,
-            abricate_database = merlin_magic.abricate_database,
-            abricate_version = merlin_magic.abricate_version,
-            abricate_docker = merlin_magic.abricate_docker,
+            abricate_results_tsv = abricate.abricate_results,
+            abricate_genes = abricate.abricate_genes,
+            abricate_database = abricate.abricate_database,
+            abricate_version = abricate.abricate_version,
+            abricate_docker = abricate.abricate_docker,
+            abricate_abaum_plasmid_tsv = merlin_magic.abricate_abaum_results,
+            abricate_abaum_plasmid_type_genes = merlin_magic.abricate_abaum_genes,
+            abricate_abaum_database = merlin_magic.abricate_abaum_database,
+            abricate_abaum_version = merlin_magic.abricate_abaum_version,
+            abricate_abaum_docker = merlin_magic.abricate_abaum_docker,
             tbprofiler_output_file = merlin_magic.tbprofiler_output_file,
             tbprofiler_output_bam = merlin_magic.tbprofiler_output_bam,
             tbprofiler_output_bai = merlin_magic.tbprofiler_output_bai,
@@ -505,17 +541,32 @@ workflow theiaprok_ont {
     File? nanoplot_html_raw = nanoplot_raw.nanoplot_html
     File? nanoplot_tsv_raw = nanoplot_raw.nanoplot_tsv
     Int? nanoplot_num_reads_raw1 = nanoplot_raw.num_reads
+    Float? nanoplot_r1_median_readlength_raw = nanoplot_raw.median_readlength
     Float? nanoplot_r1_mean_readlength_raw = nanoplot_raw.mean_readlength
+    Float? nanoplot_r1_stdev_readlength_raw = nanoplot_raw.stdev_readlength
+    Float? nanoplot_r1_n50_raw = nanoplot_raw.n50
     Float? nanoplot_r1_mean_q_raw = nanoplot_raw.mean_q
+    Float? nanoplot_r1_median_q_raw = nanoplot_raw.median_q
+    Float? nanoplot_r1_est_coverage_raw = nanoplot_raw.est_coverage
     # Read QC - nanoplot clean outputs
     File? nanoplot_html_clean = nanoplot_clean.nanoplot_html
     File? nanoplot_tsv_clean = nanoplot_clean.nanoplot_tsv
     Int? nanoplot_num_reads_clean1 = nanoplot_clean.num_reads
+    Float? nanoplot_r1_median_readlength_clean = nanoplot_clean.median_readlength
     Float? nanoplot_r1_mean_readlength_clean = nanoplot_clean.mean_readlength
+    Float? nanoplot_r1_stdev_readlength_clean = nanoplot_clean.stdev_readlength
+    Float? nanoplot_r1_n50_clean = nanoplot_clean.n50
     Float? nanoplot_r1_mean_q_clean = nanoplot_clean.mean_q
+    Float? nanoplot_r1_median_q_clean = nanoplot_clean.median_q
+    Float? nanoplot_r1_est_coverage_clean = nanoplot_clean.est_coverage
     # Read QC - nanoplot general outputs
     String? nanoplot_version = nanoplot_raw.nanoplot_version
     String? nanoplot_docker = nanoplot_raw.nanoplot_docker
+    # Read QC - kraken outputs
+    String? kraken2_version = read_qc_trim.kraken_version
+    String? kraken2_report = read_qc_trim.kraken_report
+    String? kraken2_database = read_qc_trim.kraken_database
+    String? kraken_docker = read_qc_trim.kraken_docker
     # Read QC - kmc outputs
     Int? kmc_est_genome_length = read_qc_trim.est_genome_length
     File? kmc_kmer_stats = read_qc_trim.kmc_kmer_stats
@@ -622,6 +673,12 @@ workflow theiaprok_ont {
     File? plasmidfinder_seqs = plasmidfinder.plasmidfinder_seqs
     String? plasmidfinder_docker = plasmidfinder.plasmidfinder_docker
     String? plasmidfinder_db_version = plasmidfinder.plasmidfinder_db_version
+    # Abricate Results
+    File? abricate_results_tsv = abricate.abricate_results
+    String? abricate_genes = abricate.abricate_genes
+    String? abricate_database = abricate.abricate_database
+    String? abricate_version = abricate.abricate_version
+    String? abricate_docker = abricate.abricate_docker
     # QC_Check Results
     String? qc_check = qc_check_task.qc_check
     File? qc_standard = qc_check_task.qc_standard
@@ -745,11 +802,11 @@ workflow theiaprok_ont {
     String? kaptive_kl_confidence = merlin_magic.kaptive_k_confidence
     String? kaptive_oc_locus = merlin_magic.kaptive_oc_match
     String? kaptive_ocl_confidence = merlin_magic.kaptive_oc_confidence
-    File? abricate_abaum_plasmid_tsv = merlin_magic.abricate_results
-    String? abricate_abaum_plasmid_type_genes = merlin_magic.abricate_genes
-    String? abricate_database = merlin_magic.abricate_database
-    String? abricate_version = merlin_magic.abricate_version
-    String? abricate_docker = merlin_magic.abricate_docker
+    File? abricate_abaum_plasmid_tsv = merlin_magic.abricate_abaum_results
+    String? abricate_abaum_plasmid_type_genes = merlin_magic.abricate_abaum_genes
+    String? abricate_abaum_database = merlin_magic.abricate_abaum_database
+    String? abricate_abaum_version = merlin_magic.abricate_abaum_version
+    String? abricate_abaum_docker = merlin_magic.abricate_abaum_docker
     # Mycobacterium Typing
     File? tbprofiler_output_file = merlin_magic.tbprofiler_output_file
     File? tbprofiler_output_bam = merlin_magic.tbprofiler_output_bam

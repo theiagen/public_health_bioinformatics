@@ -150,6 +150,22 @@ workflow theiacov_ont {
             samplename = samplename,
             seq_method = seq_method
         }
+        # calculate assembly statistics for ha & na segments (can be redone later to accomodate processing of HA/NA together with organism tag maybe?)
+        if (defined(irma.seg_ha_bam)) {
+          call assembly_metrics.stats_n_coverage as ha_assembly_coverage {
+            input:
+              bamfile = select_first([irma.seg_ha_bam]),
+              samplename = samplename
+          }
+        }
+        if (defined(irma.seg_na_bam)) {
+          call assembly_metrics.stats_n_coverage as na_assembly_coverage {
+            input:
+              bamfile = select_first([irma.seg_na_bam]),
+              samplename = samplename
+          }
+        }
+        String ha_na_assembly_coverage = "HA:" + select_first([ha_assembly_coverage.depth, ""]) + ", " + "NA:" + select_first([na_assembly_coverage.depth, ""])
         if (defined(irma.irma_assemblies)) {
           call abricate.abricate_flu {
             input:
@@ -350,15 +366,25 @@ workflow theiacov_ont {
     # Read QC - nanoplot raw outputs
     File? nanoplot_html_raw = nanoplot_raw.nanoplot_html
     File? nanoplot_tsv_raw = nanoplot_raw.nanoplot_tsv
-    Int? num_reads_raw1 = nanoplot_raw.num_reads
-    Float? r1_mean_readlength_raw = nanoplot_raw.mean_readlength
-    Float? r1_mean_q_raw = nanoplot_raw.mean_q
+    Int? nanoplot_num_reads_raw1 = nanoplot_raw.num_reads
+    Float? nanoplot_r1_median_readlength_raw = nanoplot_raw.median_readlength
+    Float? nanoplot_r1_mean_readlength_raw = nanoplot_raw.mean_readlength
+    Float? nanoplot_r1_stdev_readlength_raw = nanoplot_raw.stdev_readlength
+    Float? nanoplot_r1_n50_raw = nanoplot_raw.n50
+    Float? nanoplot_r1_mean_q_raw = nanoplot_raw.mean_q
+    Float? nanoplot_r1_median_q_raw = nanoplot_raw.median_q
+    Float? nanoplot_r1_est_coverage_raw = nanoplot_raw.est_coverage
     # Read QC - nanoplot clean outputs
     File? nanoplot_html_clean = nanoplot_clean.nanoplot_html
     File? nanoplot_tsv_clean = nanoplot_clean.nanoplot_tsv
-    Int? num_reads_clean1 = nanoplot_clean.num_reads
-    Float? r1_mean_readlength_clean = nanoplot_clean.mean_readlength
-    Float? r1_mean_q_clean = nanoplot_clean.mean_q
+    Int? nanoplot_num_reads_clean1 = nanoplot_clean.num_reads
+    Float? nanoplot_r1_median_readlength_clean = nanoplot_clean.median_readlength
+    Float? nanoplot_r1_mean_readlength_clean = nanoplot_clean.mean_readlength
+    Float? nanoplot_r1_stdev_readlength_clean = nanoplot_clean.stdev_readlength
+    Float? nanoplot_r1_n50_clean = nanoplot_clean.n50
+    Float? nanoplot_r1_mean_q_clean = nanoplot_clean.mean_q
+    Float? nanoplot_r1_median_q_clean = nanoplot_clean.median_q
+    Float? nanoplot_r1_est_coverage_clean = nanoplot_clean.est_coverage
     # Read QC - kraken outputs general
     String? kraken_version = read_qc_trim.kraken_version
     String? kraken_target_organism_name = read_qc_trim.kraken_target_organism_name
@@ -390,7 +416,7 @@ workflow theiacov_ont {
     File? consensus_flagstat = stats_n_coverage.flagstat
     Float? meanbaseq_trim = stats_n_coverage_primtrim.meanbaseq
     Float? meanmapq_trim = stats_n_coverage_primtrim.meanmapq
-    Float? assembly_mean_coverage = stats_n_coverage_primtrim.depth
+    String assembly_mean_coverage = select_first([stats_n_coverage_primtrim.depth, ha_na_assembly_coverage, ""])
     String? samtools_version = stats_n_coverage.samtools_version
     # Assembly QC - consensus assembly summary outputs
     Int? number_N = consensus_qc.number_N

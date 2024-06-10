@@ -26,6 +26,11 @@ workflow read_QC_trim_ont {
 
     # kraken inputs
     String? target_organism
+    Boolean call_kraken = false
+    Int? kraken_disk_size
+    Int? kraken_memory
+    Int? kraken_cpu
+    File? kraken_db
 
     # rasusa downsampling
     Float downsampling_coverage = 150
@@ -72,19 +77,41 @@ workflow read_QC_trim_ont {
     } 
   }
   if ("~{workflow_series}" == "theiaprok") {
+    if ((call_kraken) && defined(kraken_db)) {
+      call kraken2.kraken2_standalone as kraken2_se {
+        input:
+          samplename = samplename,
+          read1 = read1,
+          kraken2_db = select_first([kraken_db]),
+          disk_size = kraken_disk_size,
+          memory = kraken_memory,
+          cpu = kraken_cpu
+      }
+      call kraken2.kraken2_parse_classified as kraken2_recalculate_abundances {
+        input:
+          samplename = samplename,
+          kraken2_report = kraken2_se.kraken2_report,
+          kraken2_classified_report = kraken2_se.kraken2_classified_report
+      }
+    } if ((call_kraken) && ! defined(kraken_db)) {
+      String kraken_db_warning = "Kraken database not defined"
+    }
     # kmc for genome size estimation
     call kmc_task.kmc {
       input:
         read1 = read1,
         samplename = samplename
     }
+
+    Int kmc_est_genome_length = if kmc.est_genome_length > 10000000 then 10000000 else kmc.est_genome_length
+
     # rasusa for random downsampling
     call rasusa_task.rasusa {
       input:
         read1 = read1,
         samplename = samplename,
         coverage = downsampling_coverage,
-        genome_length = select_first([genome_length, kmc.est_genome_length])
+        genome_length = select_first([genome_length, kmc_est_genome_length])
     }
     # tiptoft for plasmid detection
     call tiptoft_task.tiptoft {
@@ -104,25 +131,23 @@ workflow read_QC_trim_ont {
     # ncbi scrub outputs
     File? read1_dehosted = ncbi_scrub_se.read1_dehosted
     
-    # kraken outputs
-    String? kraken_version = kraken2_raw.version
-    String? kraken_target_organism_name = kraken2_raw.kraken_target_organism
-    
-    # kraken outputs raw
+    # kraken2 - theiacov and theiapro
+    String kraken_version = select_first([kraken2_raw.version, kraken2_se.kraken2_version, ""])
+    String kraken_docker = select_first([kraken2_raw.docker, kraken2_se.kraken2_docker, ""])
     Float? kraken_human = kraken2_recalculate_abundances_raw.percent_human
     Float? kraken_sc2 = kraken2_recalculate_abundances_raw.percent_sc2
     String? kraken_target_organism = kraken2_recalculate_abundances_raw.percent_target_organism
-    File? kraken_report = kraken2_recalculate_abundances_raw.kraken_report
-    
-    # kraken outputs dehosted
+    String? kraken_target_organism_name = kraken2_raw.kraken_target_organism
+    String kraken_report = select_first([kraken2_recalculate_abundances_raw.kraken_report, kraken2_recalculate_abundances.kraken_report, ""])
     Float? kraken_human_dehosted = kraken2_recalculate_abundances_dehosted.percent_human
     Float? kraken_sc2_dehosted = kraken2_recalculate_abundances_dehosted.percent_sc2
     String? kraken_target_organism_dehosted = kraken2_recalculate_abundances_dehosted.percent_target_organism
     File? kraken_report_dehosted = kraken2_recalculate_abundances_dehosted.kraken_report
+    String kraken_database = select_first([kraken2_raw.database, kraken2_se.kraken2_database, kraken_db_warning, ""])
    
     # theiaprok outputs
     # kmc outputs
-    Int? est_genome_length = kmc.est_genome_length
+    Int? est_genome_length = kmc_est_genome_length
     File? kmc_kmer_stats = kmc.kmer_stats
     String? kmc_version = kmc.kmc_version
     

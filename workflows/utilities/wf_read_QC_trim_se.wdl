@@ -24,12 +24,13 @@ workflow read_QC_trim_se {
     File? phix
     String? workflow_series
     String? trimmomatic_args
-    Boolean call_midas = true
+    Boolean call_midas = false
     File? midas_db
     Boolean call_kraken = false
     File? kraken_db
     Int? kraken_disk_size
     Int? kraken_memory
+    Int? kraken_cpu
     String read_processing = "trimmomatic" # options: trimmomatic, fastp
     String read_qc = "fastq_scan" # options: fastq_scan, fastqc
     String fastp_args = "-g -5 20 -3 20"
@@ -103,15 +104,18 @@ workflow read_QC_trim_se {
     }
   }
   if ("~{workflow_series}" == "theiaprok") {
-    if (call_kraken) {
+    if ((call_kraken) && defined(kraken_db)) {
       call kraken.kraken2_standalone {
         input:
           samplename = samplename,
           read1 = read1,
           kraken2_db = select_first([kraken_db]),
           disk_size = kraken_disk_size,
-          memory = kraken_memory
+          memory = kraken_memory,
+          cpu = kraken_cpu
       }
+    }  if ((call_kraken) && ! defined(kraken_db)) {
+      String kraken_db_warning = "Kraken database not defined"
     }
   }
   output {
@@ -141,6 +145,7 @@ workflow read_QC_trim_se {
     String? kraken_target_organism = kraken2_raw.percent_target_organism
     String kraken_report = select_first([kraken2_raw.kraken_report, kraken2_standalone.kraken2_report, ""])
     String? kraken_target_organism_name = target_organism
+    String kraken_database = select_first([kraken2_raw.database, kraken2_standalone.kraken2_database, kraken_db_warning, ""])
    
     # trimming versioning
     String? trimmomatic_version = trimmomatic_se.version

@@ -6,6 +6,7 @@ import "../../tasks/gene_typing/annotation/task_prokka.wdl" as prokka_task
 import "../../tasks/gene_typing/drug_resistance/task_amrfinderplus.wdl" as amrfinderplus
 import "../../tasks/gene_typing/drug_resistance/task_resfinder.wdl" as resfinder
 import "../../tasks/gene_typing/plasmid_detection/task_plasmidfinder.wdl" as plasmidfinder_task
+import "../../tasks/gene_typing/drug_resistance/task_abricate.wdl" as abricate_task
 import "../../tasks/quality_control/advanced_metrics/task_busco.wdl" as busco_task
 import "../../tasks/quality_control/advanced_metrics/task_mummer_ani.wdl" as ani_task
 import "../../tasks/quality_control/basic_statistics/task_cg_pipeline.wdl" as cg_pipeline
@@ -57,6 +58,8 @@ workflow theiaprok_illumina_pe {
     Boolean call_kmerfinder = false 
     Boolean call_resfinder = false
     Boolean call_plasmidfinder = true
+    Boolean call_abricate = false
+    String abricate_db = "vfdb"
     String genome_annotation = "prokka" # options: "prokka" or "bakta"
     String? expected_taxon  # allow user to provide organism (e.g. "Clostridioides_difficile") string to amrfinder. Useful when gambit does not predict the correct species    # qc check parameters
     File? qc_check_table
@@ -193,6 +196,14 @@ workflow theiaprok_illumina_pe {
             samplename = samplename
         }
       }
+      if (call_abricate) {
+        call abricate_task.abricate {
+          input:
+            assembly = shovill_pe.assembly_fasta,
+            samplename = samplename,
+            database = abricate_db
+        }
+      }
       if (defined(qc_check_table)) {
         call qc_check.qc_check_phb as qc_check_task {
           input:
@@ -270,10 +281,14 @@ workflow theiaprok_illumina_pe {
             r1_mean_q_raw = cg_pipeline_raw.r1_mean_q,
             r2_mean_q_raw = cg_pipeline_raw.r2_mean_q,
             combined_mean_q_raw = cg_pipeline_raw.combined_mean_q,
-            combined_mean_q_clean = cg_pipeline_clean.combined_mean_q,
             r1_mean_readlength_raw = cg_pipeline_raw.r1_mean_readlength,
             r2_mean_readlength_raw = cg_pipeline_raw.r2_mean_readlength,
             combined_mean_readlength_raw = cg_pipeline_raw.combined_mean_readlength,
+            r1_mean_q_clean = cg_pipeline_clean.r1_mean_q,
+            r2_mean_q_clean = cg_pipeline_clean.r2_mean_q,
+            combined_mean_q_clean = cg_pipeline_clean.combined_mean_q,
+            r1_mean_readlength_clean = cg_pipeline_clean.r1_mean_readlength,
+            r2_mean_readlength_clean = cg_pipeline_clean.r2_mean_readlength,
             combined_mean_readlength_clean = cg_pipeline_clean.combined_mean_readlength,
             assembly_fasta = shovill_pe.assembly_fasta,
             contigs_gfa = shovill_pe.contigs_gfa,
@@ -458,11 +473,16 @@ workflow theiaprok_illumina_pe {
             kaptive_kl_confidence = merlin_magic.kaptive_k_confidence,
             kaptive_oc_locus = merlin_magic.kaptive_oc_match,
             kaptive_ocl_confidence = merlin_magic.kaptive_oc_confidence,
-            abricate_abaum_plasmid_tsv = merlin_magic.abricate_results,
-            abricate_abaum_plasmid_type_genes = merlin_magic.abricate_genes,
-            abricate_database = merlin_magic.abricate_database,
-            abricate_version = merlin_magic.abricate_version,
-            abricate_docker = merlin_magic.abricate_docker,
+            abricate_results_tsv = abricate.abricate_results,
+            abricate_genes = abricate.abricate_genes,
+            abricate_database = abricate.abricate_database,
+            abricate_version = abricate.abricate_version,
+            abricate_docker = abricate.abricate_docker,
+            abricate_abaum_plasmid_tsv = merlin_magic.abricate_abaum_results,
+            abricate_abaum_plasmid_type_genes = merlin_magic.abricate_abaum_genes,
+            abricate_abaum_database = merlin_magic.abricate_abaum_database,
+            abricate_abaum_version = merlin_magic.abricate_abaum_version,
+            abricate_abaum_docker = merlin_magic.abricate_abaum_docker,
             tbprofiler_output_file = merlin_magic.tbprofiler_output_file,
             tbprofiler_output_bam = merlin_magic.tbprofiler_output_bam,
             tbprofiler_output_bai = merlin_magic.tbprofiler_output_bai,
@@ -604,10 +624,14 @@ workflow theiaprok_illumina_pe {
     Float? r1_mean_q_raw = cg_pipeline_raw.r1_mean_q
     Float? r2_mean_q_raw = cg_pipeline_raw.r2_mean_q
     Float? combined_mean_q_raw = cg_pipeline_raw.combined_mean_q
-    Float? combined_mean_q_clean = cg_pipeline_clean.combined_mean_q
     Float? r1_mean_readlength_raw = cg_pipeline_raw.r1_mean_readlength
     Float? r2_mean_readlength_raw = cg_pipeline_raw.r2_mean_readlength
     Float? combined_mean_readlength_raw = cg_pipeline_raw.combined_mean_readlength
+    Float? r1_mean_q_clean = cg_pipeline_clean.r1_mean_q
+    Float? r2_mean_q_clean = cg_pipeline_clean.r2_mean_q
+    Float? combined_mean_q_clean = cg_pipeline_clean.combined_mean_q
+    Float? r1_mean_readlength_clean = cg_pipeline_clean.r1_mean_readlength
+    Float? r2_mean_readlength_clean = cg_pipeline_clean.r2_mean_readlength
     Float? combined_mean_readlength_clean = cg_pipeline_clean.combined_mean_readlength
     # Read QC - midas outputs
     String? midas_docker = read_QC_trim.midas_docker
@@ -619,6 +643,8 @@ workflow theiaprok_illumina_pe {
     # Read QC - kraken outputs
     String? kraken2_version = read_QC_trim.kraken_version
     String? kraken2_report = read_QC_trim.kraken_report
+    String? kraken2_database = read_QC_trim.kraken_database
+    String? kraken_docker = read_QC_trim.kraken_docker
     # Assembly - shovill outputs 
     File? assembly_fasta = shovill_pe.assembly_fasta
     File? contigs_gfa = shovill_pe.contigs_gfa
@@ -720,6 +746,12 @@ workflow theiaprok_illumina_pe {
     File? plasmidfinder_seqs = plasmidfinder.plasmidfinder_seqs
     String? plasmidfinder_docker = plasmidfinder.plasmidfinder_docker
     String? plasmidfinder_db_version = plasmidfinder.plasmidfinder_db_version
+    # Abricate Results
+    File? abricate_results_tsv = abricate.abricate_results
+    String? abricate_genes = abricate.abricate_genes
+    String? abricate_database = abricate.abricate_database
+    String? abricate_version = abricate.abricate_version
+    String? abricate_docker = abricate.abricate_docker
     # QC_Check Results
     String? qc_check = qc_check_task.qc_check
     File? qc_standard = qc_check_task.qc_standard
@@ -855,11 +887,11 @@ workflow theiaprok_illumina_pe {
     String? kaptive_kl_confidence = merlin_magic.kaptive_k_confidence
     String? kaptive_oc_locus = merlin_magic.kaptive_oc_match
     String? kaptive_ocl_confidence = merlin_magic.kaptive_oc_confidence
-    File? abricate_abaum_plasmid_tsv = merlin_magic.abricate_results
-    String? abricate_abaum_plasmid_type_genes = merlin_magic.abricate_genes
-    String? abricate_database = merlin_magic.abricate_database
-    String? abricate_version = merlin_magic.abricate_version
-    String? abricate_docker = merlin_magic.abricate_docker
+    File? abricate_abaum_plasmid_tsv = merlin_magic.abricate_abaum_results
+    String? abricate_abaum_plasmid_type_genes = merlin_magic.abricate_abaum_genes
+    String? abricate_abaum_database = merlin_magic.abricate_abaum_database
+    String? abricate_abaum_version = merlin_magic.abricate_abaum_version
+    String? abricate_abaum_docker = merlin_magic.abricate_abaum_docker
     # Mycobacterium Typing
     File? tbprofiler_output_file = merlin_magic.tbprofiler_output_file
     File? tbprofiler_output_bam = merlin_magic.tbprofiler_output_bam

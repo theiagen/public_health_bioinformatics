@@ -14,6 +14,7 @@ workflow snippy_streamline {
     Array[File]? assembly_fasta
     Array[String] samplenames
     String tree_name
+    String tree_name_updated = sub(tree_name, " ", "_")
     # this input file can be a FASTA or GBK
     File? reference_genome_file
   }
@@ -46,7 +47,7 @@ workflow snippy_streamline {
   }
   call snippy_tree_workflow.snippy_tree_wf {
     input:
-      tree_name = tree_name,
+      tree_name = tree_name_updated,
       snippy_variants_outdir_tarball = snippy_variants_wf.snippy_variants_outdir_tarball,
       samplenames = samplenames,
       reference_genome_file = select_first([reference_genome_file, ncbi_datasets_download_genome_accession.ncbi_datasets_assembly_fasta])
