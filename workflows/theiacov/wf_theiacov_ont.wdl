@@ -230,12 +230,12 @@ workflow theiacov_ont {
       if (organism_parameters.standardized_organism == "flu") {
         call flu_antiviral.flu_antiviral_substitutions {
           input:
-            na_segment_assembly = irma.seg_na_assembly,
-            ha_segment_assembly = irma.seg_ha_assembly,
-            pa_segment_assembly = irma.seg_pa_assembly,
-            pb1_segment_assembly = irma.seg_pb1_assembly,
-            pb2_segment_assembly = irma.seg_pb2_assembly,
-            mp_segment_assembly = irma.seg_mp_assembly,
+            na_segment_assembly = irma.seg_na_assembly_padded,
+            ha_segment_assembly = irma.seg_ha_assembly_padded,
+            pa_segment_assembly = irma.seg_pa_assembly_padded,
+            pb1_segment_assembly = irma.seg_pb1_assembly_padded,
+            pb2_segment_assembly = irma.seg_pb2_assembly_padded,
+            mp_segment_assembly = irma.seg_mp_assembly_padded,
             abricate_flu_subtype = select_first([abricate_flu.abricate_flu_subtype, ""]),
             irma_flu_subtype = select_first([irma.irma_subtype, ""]),
         }
@@ -296,7 +296,7 @@ workflow theiacov_ont {
         # tasks specific to MPXV, sars-cov-2, WNV, flu, rsv_a and rsv_b
         call vadr_task.vadr {
           input:
-            genome_fasta = select_first([consensus.consensus_seq, irma.irma_assembly_fasta]),
+            genome_fasta = select_first([consensus.consensus_seq, irma.irma_assembly_fasta_padded]),
             assembly_length_unambiguous = consensus_qc.number_ATCG,
             vadr_opts = organism_parameters.vadr_opts,
             max_length = organism_parameters.vadr_maxlength,
@@ -452,8 +452,6 @@ workflow theiacov_ont {
     String? irma_type = irma.irma_type
     String? irma_subtype = irma.irma_subtype
     String? irma_subtype_notes = irma.irma_subtype_notes
-    File? irma_ha_segment = irma.seg_ha_assembly
-    File? irma_na_segment = irma.seg_na_assembly
     File? irma_ha_segment_fasta = irma.seg_ha_assembly
     File? irma_na_segment_fasta = irma.seg_na_assembly
     File? irma_pa_segment_fasta = irma.seg_pa_assembly
