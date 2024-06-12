@@ -4,7 +4,7 @@ task augur_refine {
   input {
     File aligned_fasta
     File draft_augur_tree
-    File metadata
+    File? metadata
     String build_name
 
     Int? gen_per_year # number of generations per year (default: 50)
@@ -31,7 +31,7 @@ task augur_refine {
     AUGUR_RECURSION_LIMIT=10000 augur refine \
       --tree "~{draft_augur_tree}" \
       --alignment "~{aligned_fasta}" \
-      --metadata "~{metadata}" \
+      ~{'--metadata ' + metadata} \
       --output-tree "~{build_name}_timetree.nwk" \
       --output-node-data "~{build_name}_branch_lengths.json" \
       --timetree \
