@@ -32,7 +32,6 @@ workflow theiacov_ont {
     Int normalise = 200
     Int max_length = 700
     Int min_length = 400
-    Int min_depth = 20
     # nextclade inputs
     String? nextclade_dataset_tag
     String? nextclade_dataset_name
@@ -66,6 +65,7 @@ workflow theiacov_ont {
       reference_genome = reference_genome,
       gene_locations_bed_file = reference_gene_locations_bed,
       genome_length_input = genome_length,
+      kraken_target_organism_input = target_organism,
       nextclade_dataset_tag_input = nextclade_dataset_tag,
       nextclade_dataset_name_input = nextclade_dataset_name,     
       vadr_max_length = vadr_max_length,
@@ -344,7 +344,7 @@ workflow theiacov_ont {
     File? nextclade_json = nextclade_v3.nextclade_json
     File? auspice_json = nextclade_v3.auspice_json
     File? nextclade_tsv = nextclade_v3.nextclade_tsv
-    String? nextclade_ds_tag = organism_parameters.nextclade_dataset_tag
+    String nextclade_ds_tag = organism_parameters.nextclade_dataset_tag
     String? nextclade_aa_subs = nextclade_output_parser.nextclade_aa_subs
     String? nextclade_aa_dels = nextclade_output_parser.nextclade_aa_dels
     String? nextclade_clade = nextclade_output_parser.nextclade_clade

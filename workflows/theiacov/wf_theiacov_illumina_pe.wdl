@@ -78,6 +78,7 @@ workflow theiacov_illumina_pe {
       vadr_max_length = vadr_max_length,
       vadr_skip_length = vadr_skip_length,
       vadr_options = vadr_options,
+      vadr_memory = vadr_memory,
       primer_bed_file = primer_bed,
       pangolin_docker_image = pangolin_docker_image,
       kraken_target_organism_input = target_organism
@@ -166,8 +167,8 @@ workflow theiacov_illumina_pe {
         call nextclade_task.nextclade_v3 {
           input:
             genome_fasta = select_first([ivar_consensus.assembly_fasta]),
-            dataset_name = select_first([organism_parameters.nextclade_dataset_name]),
-            dataset_tag = select_first([organism_parameters.nextclade_dataset_tag])
+            dataset_name = organism_parameters.nextclade_dataset_name,
+            dataset_tag = organism_parameters.nextclade_dataset_tag
         }
         call nextclade_task.nextclade_output_parser {
           input:
@@ -354,7 +355,7 @@ workflow theiacov_illumina_pe {
     File? nextclade_json = nextclade_v3.nextclade_json
     File? auspice_json = nextclade_v3.auspice_json
     File? nextclade_tsv = nextclade_v3.nextclade_tsv
-    String? nextclade_ds_tag = organism_parameters.nextclade_dataset_tag
+    String nextclade_ds_tag = organism_parameters.nextclade_dataset_tag
     String? nextclade_aa_subs = nextclade_output_parser.nextclade_aa_subs
     String? nextclade_aa_dels = nextclade_output_parser.nextclade_aa_dels
     String? nextclade_clade = nextclade_output_parser.nextclade_clade
