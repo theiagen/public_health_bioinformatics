@@ -1,7 +1,5 @@
 version 1.0
 
-import "../../tasks/assembly/task_irma.wdl" as irma_task
-import "../../tasks/gene_typing/drug_resistance/task_abricate.wdl" as abricate
 import "../../tasks/quality_control/advanced_metrics/task_vadr.wdl" as vadr_task
 import "../../tasks/quality_control/basic_statistics/task_assembly_metrics.wdl" as assembly_metrics
 import "../../tasks/quality_control/basic_statistics/task_consensus_qc.wdl" as consensus_qc_task
@@ -13,7 +11,6 @@ import "../../tasks/species_typing/lentivirus/task_quasitools.wdl" as quasitools
 import "../../tasks/task_versioning.wdl" as versioning
 import "../../tasks/taxon_id/task_nextclade.wdl" as nextclade_task
 import "../utilities/wf_flu_track.wdl" as run_flu_track
-import "../utilities/wf_influenza_antiviral_substitutions.wdl" as flu_antiviral
 import "../utilities/wf_ivar_consensus.wdl" as consensus_call
 import "../utilities/wf_organism_parameters.wdl" as set_organism_defaults
 import "../utilities/wf_read_QC_trim_pe.wdl" as read_qc
@@ -150,8 +147,8 @@ workflow theiacov_illumina_pe {
       if (organism_parameters.standardized_organism == "flu") {
         call run_flu_track.flu_track {
           input:
-            read1 = read_qc_trim.read1_clean,
-            read2 = read_qc_trim.read2_clean,
+            read1 = read_QC_trim.read1_clean,
+            read2 = read_QC_trim.read2_clean,
             samplename = samplename,
             standardized_organism = organism_parameters.standardized_organism,
             seq_method = seq_method
@@ -191,17 +188,17 @@ workflow theiacov_illumina_pe {
         # tasks specific to either sars-cov-2, MPXV, or any organism with a user-supplied reference gene locations bed file
         call gene_coverage_task.gene_coverage {
           input:
-            bamfile = select_first([ivar_consensus.aligned_bam, irma.seg_ha_bam, irma.seg_na_bam, ""]),
+            bamfile = select_first([ivar_consensus.aligned_bam, flu_track.irma_ha_bam, flu_track.irma_na_bam, ""]),
             bedfile = select_first([reference_gene_locations_bed, organism_parameters.gene_locations_bed]),
             samplename = samplename,
             organism = organism_parameters.standardized_organism
         }
       }
       if (organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "WNV" || organism_parameters.standardized_organism == "flu" || organism_parameters.standardized_organism == "rsv_a" || organism_parameters.standardized_organism == "rsv_b"){ 
-        # tasks specific to MPXV, sars-cov-2, WNV, flu rsv_a and rsv_b
+        # tasks specific to MPXV, sars-cov-2, WNV, flu, rsv_a, and rsv_b
         call vadr_task.vadr {
           input:
-            genome_fasta = select_first([ivar_consensus.assembly_fasta, irma.irma_assembly_fasta_padded]),
+            genome_fasta = select_first([ivar_consensus.assembly_fasta, flu_track.irma_assembly_fasta_padded]),
             assembly_length_unambiguous = consensus_qc.number_ATCG,
             vadr_opts = organism_parameters.vadr_opts,
             max_length = organism_parameters.vadr_maxlength,
@@ -363,41 +360,42 @@ workflow theiacov_illumina_pe {
     String? nextclade_clade = nextclade_output_parser.nextclade_clade
     String? nextclade_lineage = nextclade_output_parser.nextclade_lineage
     String? nextclade_qc = nextclade_output_parser.nextclade_qc
-    # Nextclade outputs for flu HA
-    String? nextclade_json_flu_ha = flu_track.nextclade_json_ha
-    String? auspice_json_flu_ha = flu_track.auspice_json_ha
-    String? nextclade_tsv_flu_ha = flu_track.nextclade_tsv_ha
-    String? nextclade_ds_tag_flu_ha = flu_track.nextclade_ds_tag_ha
-    String? nextclade_aa_subs_flu_ha = flu_track.nextclade_aa_subs_ha
-    String? nextclade_aa_dels_flu_ha = flu_track.nextclade_aa_dels_ha
-    String? nextclade_clade_flu_ha = flu_track.nextclade_clade_ha
+  # Nextclade outputs for flu HA
+    String? nextclade_json_flu_ha = flu_track.nextclade_json_flu_ha
+    String? auspice_json_flu_ha = flu_track.auspice_json_flu_ha
+    String? nextclade_tsv_flu_ha = flu_track.nextclade_tsv_flu_ha
+    String? nextclade_ds_tag_flu_ha = flu_track.nextclade_ds_tag_flu_ha
+    String? nextclade_aa_subs_flu_ha = flu_track.nextclade_aa_subs_flu_ha
+    String? nextclade_aa_dels_flu_ha = flu_track.nextclade_aa_dels_flu_ha
+    String? nextclade_clade_flu_ha = flu_track.nextclade_clade_flu_ha
     # Nextclade outputs for flu NA
-    String? nextclade_json_flu_na = flu_track.nextclade_json_na
-    String? auspice_json_flu_na = flu_track.auspice_json_na
-    String? nextclade_tsv_flu_na = flu_track.nextclade_tsv_na
-    String? nextclade_ds_tag_flu_na = flu_track.nextclade_ds_tag_na
-    String? nextclade_aa_subs_flu_na = flu_track.nextclade_aa_subs_na
-    String? nextclade_aa_dels_flu_na = flu_track.nextclade_aa_dels_na
-    String? nextclade_clade_flu_na = flu_track.nextclade_clade_na
+    String? nextclade_json_flu_na = flu_track.nextclade_json_flu_na
+    String? auspice_json_flu_na = flu_track.auspice_json_flu_na
+    String? nextclade_tsv_flu_na = flu_track.nextclade_tsv_flu_na
+    String? nextclade_ds_tag_flu_na = flu_track.nextclade_ds_tag_flu_na
+    String? nextclade_aa_subs_flu_na = flu_track.nextclade_aa_subs_flu_na
+    String? nextclade_aa_dels_flu_na = flu_track.nextclade_aa_dels_flu_na
+    String? nextclade_clade_flu_na = flu_track.nextclade_clade_flu_na
     # VADR Annotation QC
     File? vadr_alerts_list = vadr.alerts_list
     String? vadr_num_alerts = vadr.num_alerts
     String? vadr_docker = vadr.vadr_docker
     File? vadr_fastas_zip_archive = vadr.vadr_fastas_zip_archive
-    # Flu IRMA and Abricate Outputs
+    # Flu IRMA Outputs
     String? irma_version = flu_track.irma_version
     String? irma_docker = flu_track.irma_docker
     String? irma_type = flu_track.irma_type
     String? irma_subtype = flu_track.irma_subtype
     String? irma_subtype_notes = flu_track.irma_subtype_notes
-    File? irma_ha_segment_fasta = flu_track.seg_ha_assembly
-    File? irma_na_segment_fasta = flu_track.seg_na_assembly
-    File? irma_pa_segment_fasta = flu_track.seg_pa_assembly
-    File? irma_pb1_segment_fasta = flu_track.seg_pb1_assembly
-    File? irma_pb2_segment_fasta = flu_track.seg_pb2_assembly
-    File? irma_mp_segment_fasta = flu_track.seg_mp_assembly
-    File? irma_np_segment_fasta = flu_track.seg_np_assembly
-    File? irma_ns_segment_fasta = flu_track.seg_ns_assembly
+    File? irma_ha_segment_fasta = flu_track.irma_ha_segment_fasta
+    File? irma_na_segment_fasta = flu_track.irma_na_segment_fasta
+    File? irma_pa_segment_fasta = flu_track.irma_pa_segment_fasta
+    File? irma_pb1_segment_fasta = flu_track.irma_pb1_segment_fasta
+    File? irma_pb2_segment_fasta = flu_track.irma_pb2_segment_fasta
+    File? irma_mp_segment_fasta = flu_track.irma_mp_segment_fasta
+    File? irma_np_segment_fasta = flu_track.irma_np_segment_fasta
+    File? irma_ns_segment_fasta = flu_track.irma_ns_segment_fasta
+    # Flu Abricate Outputs
     String? abricate_flu_type = flu_track.abricate_flu_type
     String? abricate_flu_subtype =  flu_track.abricate_flu_subtype
     File? abricate_flu_results = flu_track.abricate_flu_results
