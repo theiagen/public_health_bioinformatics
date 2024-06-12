@@ -78,7 +78,7 @@ workflow theiacov_illumina_pe {
       vadr_max_length = vadr_max_length,
       vadr_skip_length = vadr_skip_length,
       vadr_options = vadr_options,
-      vadr_memory = vadr_memory,
+      vadr_mem = vadr_memory,
       primer_bed_file = primer_bed,
       pangolin_docker_image = pangolin_docker_image,
       kraken_target_organism_input = target_organism
