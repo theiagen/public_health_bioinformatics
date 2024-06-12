@@ -75,7 +75,7 @@ workflow augur {
   if (defined(sample_metadata_tsvs)) {
     call augur_utils.tsv_join { # merge the metadata files
       input:
-        input_tsvs = sample_metadata_tsvs,
+        input_tsvs = select_first([sample_metadata_tsvs]),
         id_col = "strain",
         out_basename = "metadata-merged"
     }
