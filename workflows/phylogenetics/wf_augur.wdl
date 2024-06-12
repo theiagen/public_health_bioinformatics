@@ -22,7 +22,7 @@ import "../utilities/wf_organism_parameters.wdl" as set_organism_defaults
 workflow augur {
   input {
     Array[File]+ assembly_fastas # use the HA or NA segment files for flu
-    Array[File] sample_metadata_tsvs # created with Augur_Prep
+    Array[File?] sample_metadata_tsvs # created with Augur_Prep
     String build_name
     String build_name_updated = sub(build_name, " ", "_")
     File? reference_fasta

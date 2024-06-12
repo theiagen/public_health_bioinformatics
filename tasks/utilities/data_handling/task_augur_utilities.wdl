@@ -33,7 +33,7 @@ task tsv_join {
     description: "Perform a full left outer join on multiple TSV tables. Each input tsv must have a header row, and each must must contain the value of id_col in its header. Inputs may or may not be gzipped. Unix/Mac/Win line endings are tolerated on input, Unix line endings are emitted as output. Unicode text safe. Copied from the Broad Institute"
   }
   input {
-    Array[File]+ input_tsvs
+    Array[File?] input_tsvs
     String id_col
     String out_basename = "merged"
     String out_suffix = ".tsv"
