@@ -17,8 +17,6 @@ workflow flu_track {
     File? read2
     String samplename
 
-    File? assembly_fasta
-
     String? flu_subtype
 
     String seq_method
@@ -71,50 +69,48 @@ workflow flu_track {
     Int? nextclade_output_parser_disk_size
   }
   # IRMA will run if no assembly is provided (as in the case of TheiaCoV_FASTA)
-  if (! defined(assembly_fasta)) {
-    call irma_task.irma {
-      input:
-        read1 = read1,
-        read2 = read2,
-        samplename = samplename,
-        seq_method = seq_method,
-        keep_ref_deletions = irma_keep_ref_deletions,
-        docker = irma_docker_image,
-        memory = irma_memory,
-        cpu = irma_cpu,
-        disk_size = irma_disk_size
-    }
-    # can be redone later to accomodate processing of HA and NA bams together in the task, perhaps with an organism flag
-    if (defined(irma.seg_ha_bam)) {
-      call assembly_metrics.stats_n_coverage as ha_assembly_coverage {
-        input:
-          bamfile = select_first([irma.seg_ha_bam]),
-          samplename = samplename,
-          memory = assembly_metrics_memory,
-          cpu = assembly_metrics_cpu,
-          disk_size = assembly_metrics_disk_size,
-          docker = assembly_metrics_docker
-      }
-    }
-    if (defined(irma.seg_na_bam)) {
-      call assembly_metrics.stats_n_coverage as na_assembly_coverage {
-        input:
-          bamfile = select_first([irma.seg_na_bam]),
-          samplename = samplename,
-          memory = assembly_metrics_memory,
-          cpu = assembly_metrics_cpu,
-          disk_size = assembly_metrics_disk_size,
-          docker = assembly_metrics_docker
-      }
-    }
-    # combine HA & NA assembly coverages
-    String ha_na_assembly_coverage_string = "HA: " + select_first([ha_assembly_coverage.depth, ""]) + ", NA: " + select_first([na_assembly_coverage.depth, ""])
+  call irma_task.irma {
+    input:
+      read1 = read1,
+      read2 = read2,
+      samplename = samplename,
+      seq_method = seq_method,
+      keep_ref_deletions = irma_keep_ref_deletions,
+      docker = irma_docker_image,
+      memory = irma_memory,
+      cpu = irma_cpu,
+      disk_size = irma_disk_size
   }
+  # can be redone later to accomodate processing of HA and NA bams together in the task, perhaps with an organism flag
+  if (defined(irma.seg_ha_bam)) {
+    call assembly_metrics.stats_n_coverage as ha_assembly_coverage {
+      input:
+        bamfile = select_first([irma.seg_ha_bam]),
+        samplename = samplename,
+        memory = assembly_metrics_memory,
+        cpu = assembly_metrics_cpu,
+        disk_size = assembly_metrics_disk_size,
+        docker = assembly_metrics_docker
+    }
+  }
+  if (defined(irma.seg_na_bam)) {
+    call assembly_metrics.stats_n_coverage as na_assembly_coverage {
+      input:
+        bamfile = select_first([irma.seg_na_bam]),
+        samplename = samplename,
+        memory = assembly_metrics_memory,
+        cpu = assembly_metrics_cpu,
+        disk_size = assembly_metrics_disk_size,
+        docker = assembly_metrics_docker
+    }
+  }
+  # combine HA & NA assembly coverages
+  String ha_na_assembly_coverage_string = "HA: " + select_first([ha_assembly_coverage.depth, ""]) + ", NA: " + select_first([na_assembly_coverage.depth, ""])
   # ABRICATE will run if assembly is provided, or was generated with IRMA
-  if (defined(irma.irma_assemblies) || defined(assembly_fasta)) {
+  if (defined(irma.irma_assemblies)) {
     call abricate.abricate_flu {
       input:
-        assembly = select_first([irma.irma_assembly_fasta, assembly_fasta]),
+        assembly = select_first([irma.irma_assembly_fasta]),
         samplename = samplename,
         minid = abricate_flu_minid,
         mincov = abricate_flu_mincov,
@@ -174,10 +170,10 @@ workflow flu_track {
         flu_h3n2_m2_ref = flu_h3n2_m2_ref
     }
   }
-  if ((defined(irma.seg_ha_assembly) || defined(assembly_fasta)) && ! defined(do_not_run_flu_ha_nextclade)) {
+  if (defined(irma.seg_ha_assembly) && ! defined(do_not_run_flu_ha_nextclade)) {
     call nextclade_task.nextclade_v3 as nextclade_flu_ha {
       input:
-        genome_fasta = select_first([irma.seg_ha_assembly, assembly_fasta]),
+        genome_fasta = select_first([irma.seg_ha_assembly]),
         dataset_name = select_first([set_flu_ha_nextclade_values.nextclade_dataset_name]),
         dataset_tag = select_first([set_flu_ha_nextclade_values.nextclade_dataset_tag]),
         docker = nextclade_docker_image,
@@ -195,10 +191,10 @@ workflow flu_track {
         disk_size = nextclade_output_parser_disk_size
     }
   }
-  if ((defined(irma.seg_na_assembly) || defined(assembly_fasta)) && ! defined(do_not_run_flu_na_nextclade)) {
+  if (defined(irma.seg_na_assembly) && ! defined(do_not_run_flu_na_nextclade)) {
     call nextclade_task.nextclade_v3 as nextclade_flu_na {
       input:
-        genome_fasta = select_first([irma.seg_na_assembly, assembly_fasta]),
+        genome_fasta = select_first([irma.seg_na_assembly]),
         dataset_name = select_first([set_flu_na_nextclade_values.nextclade_dataset_name]),
         dataset_tag = select_first([set_flu_na_nextclade_values.nextclade_dataset_tag]),
         docker = nextclade_docker_image,
