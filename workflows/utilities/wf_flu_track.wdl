@@ -122,7 +122,7 @@ workflow flu_track {
     # check IRMA subtype content if IRMA was run
     if (defined(irma.irma_subtype)) {
       # if IRMA cannot predict a subtype (like with Flu B samples), then set the flu_subtype to the abricate_flu_subtype String output (e.g. "Victoria" for Flu B)
-      String algorithmic_flu_subtype = if select_first([irma.irma_subtype]) == "No subtype predicted by IRMA" then select_first([abricate_flu.abricate_flu_subtype]) else select_first([irma.irma_subtype])
+      String algorithmic_flu_subtype = if irma.irma_subtype == "No subtype predicted by IRMA" then abricate_flu.abricate_flu_subtype else irma.irma_subtype
     }
     call set_organism_defaults.organism_parameters as set_flu_na_nextclade_values {
       input:
@@ -138,7 +138,7 @@ workflow flu_track {
     }
     # these are necessary because these are optional values and cannot be directly compared in before the nextclade task. 
     # checking for variable definition can be done though, which is why we create variables here
-    if (set_flu_na_nextclade_values.nextclade_dataset_tag == "NA") {
+    if (set_flu_na_nextclade_values.nextclade_dataset_tag == "NA") { # this "NA" is Not Applicable, not the NA segment
       Boolean do_not_run_flu_na_nextclade = true
     }
     if (set_flu_ha_nextclade_values.nextclade_dataset_tag == "NA") {
@@ -157,7 +157,7 @@ workflow flu_track {
         pb2_segment_assembly = irma.seg_pb2_assembly_padded,
         mp_segment_assembly = irma.seg_mp_assembly_padded,
         abricate_flu_subtype = select_first([abricate_flu.abricate_flu_subtype, ""]),
-        irma_flu_subtype = select_first([irma.irma_subtype, ""]),
+        irma_flu_subtype = irma.irma_subtype,
         antiviral_aa_subs = antiviral_aa_subs,
         flu_h1_ha_ref = flu_h1_ha_ref,
         flu_h3_ha_ref = flu_h3_ha_ref,
@@ -214,11 +214,11 @@ workflow flu_track {
   }
   output {
     # IRMA outputs 
-    String? irma_version = irma.irma_version
-    String? irma_docker = irma.irma_docker
-    String? irma_type = irma.irma_type
-    String? irma_subtype = irma.irma_subtype
-    String? irma_subtype_notes = irma.irma_subtype_notes
+    String irma_version = irma.irma_version
+    String irma_docker = irma.irma_docker
+    String irma_type = irma.irma_type
+    String irma_subtype = irma.irma_subtype
+    String irma_subtype_notes = irma.irma_subtype_notes
     File? irma_assembly_fasta = irma.irma_assembly_fasta
     File? irma_assembly_fasta_padded = irma.irma_assembly_fasta_padded
     File? irma_ha_segment_fasta = irma.seg_ha_assembly
@@ -230,12 +230,12 @@ workflow flu_track {
     File? irma_np_segment_fasta = irma.seg_np_assembly
     File? irma_ns_segment_fasta = irma.seg_ns_assembly
 
-    Array[File]? irma_assemblies = irma.irma_assemblies
-    Array[File]? irma_vcfs = irma.irma_vcfs
-    Array[File]? irma_bams = irma.irma_bams
+    Array[File] irma_assemblies = irma.irma_assemblies
+    Array[File] irma_vcfs = irma.irma_vcfs
+    Array[File] irma_bams = irma.irma_bams
     File? irma_ha_bam = irma.seg_ha_bam
     File? irma_na_bam = irma.seg_na_bam
-    String? ha_na_assembly_coverage = ha_na_assembly_coverage_string
+    String ha_na_assembly_coverage = ha_na_assembly_coverage_string
     # Abricate outputs
     String? abricate_flu_type = abricate_flu.abricate_flu_type
     String? abricate_flu_subtype =  abricate_flu.abricate_flu_subtype
@@ -246,18 +246,18 @@ workflow flu_track {
     String? nextclade_version = nextclade_flu_ha.nextclade_version
     String? nextclade_docker = nextclade_flu_ha.nextclade_docker
     # Nextclade HA outputs
-    String? nextclade_json_flu_ha = nextclade_flu_ha.nextclade_json
-    String? auspice_json_flu_ha =  nextclade_flu_ha.auspice_json
-    String? nextclade_tsv_flu_ha = nextclade_flu_ha.nextclade_tsv
+    File? nextclade_json_flu_ha = nextclade_flu_ha.nextclade_json
+    File? auspice_json_flu_ha =  nextclade_flu_ha.auspice_json
+    File? nextclade_tsv_flu_ha = nextclade_flu_ha.nextclade_tsv
     String? nextclade_ds_tag_flu_ha = set_flu_ha_nextclade_values.nextclade_dataset_tag
     String? nextclade_aa_subs_flu_ha = nextclade_output_parser_flu_ha.nextclade_aa_subs
     String? nextclade_aa_dels_flu_ha = nextclade_output_parser_flu_ha.nextclade_aa_dels
     String? nextclade_clade_flu_ha = nextclade_output_parser_flu_ha.nextclade_clade
     String? nextclade_qc_flu_ha = nextclade_output_parser_flu_ha.nextclade_qc
     # Nextclade NA outputs
-    String? nextclade_json_flu_na = nextclade_flu_na.nextclade_json
-    String? auspice_json_flu_na = nextclade_flu_na.auspice_json
-    String? nextclade_tsv_flu_na = nextclade_flu_na.nextclade_tsv
+    File? nextclade_json_flu_na = nextclade_flu_na.nextclade_json
+    File? auspice_json_flu_na = nextclade_flu_na.auspice_json
+    File? nextclade_tsv_flu_na = nextclade_flu_na.nextclade_tsv
     String? nextclade_ds_tag_flu_na = set_flu_na_nextclade_values.nextclade_dataset_tag
     String? nextclade_aa_subs_flu_na = nextclade_output_parser_flu_na.nextclade_aa_subs
     String? nextclade_aa_dels_flu_na = nextclade_output_parser_flu_na.nextclade_aa_dels

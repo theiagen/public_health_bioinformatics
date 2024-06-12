@@ -348,8 +348,8 @@ workflow theiacov_illumina_pe {
     String? pangolin_docker = pangolin4.pangolin_docker
     String? pangolin_versions = pangolin4.pangolin_versions
     # Nextclade outputs for all organisms
-    String? nextclade_version = select_first([nextclade_v3.nextclade_version, flu_track.nextclade_version])
-    String? nextclade_docker = select_first([nextclade_v3.nextclade_docker, flu_track.nextclade_docker])
+    String nextclade_version = select_first([nextclade_v3.nextclade_version, flu_track.nextclade_version, ""])
+    String nextclade_docker = select_first([nextclade_v3.nextclade_docker, flu_track.nextclade_docker, ""])
     # Nextclade outputs for non-flu
     File? nextclade_json = nextclade_v3.nextclade_json
     File? auspice_json = nextclade_v3.auspice_json
@@ -360,18 +360,18 @@ workflow theiacov_illumina_pe {
     String? nextclade_clade = nextclade_output_parser.nextclade_clade
     String? nextclade_lineage = nextclade_output_parser.nextclade_lineage
     String? nextclade_qc = nextclade_output_parser.nextclade_qc
-  # Nextclade outputs for flu HA
-    String? nextclade_json_flu_ha = flu_track.nextclade_json_flu_ha
-    String? auspice_json_flu_ha = flu_track.auspice_json_flu_ha
-    String? nextclade_tsv_flu_ha = flu_track.nextclade_tsv_flu_ha
+    # Nextclade outputs for flu HA
+    File? nextclade_json_flu_ha = flu_track.nextclade_json_flu_ha
+    File? auspice_json_flu_ha = flu_track.auspice_json_flu_ha
+    File? nextclade_tsv_flu_ha = flu_track.nextclade_tsv_flu_ha
     String? nextclade_ds_tag_flu_ha = flu_track.nextclade_ds_tag_flu_ha
     String? nextclade_aa_subs_flu_ha = flu_track.nextclade_aa_subs_flu_ha
     String? nextclade_aa_dels_flu_ha = flu_track.nextclade_aa_dels_flu_ha
     String? nextclade_clade_flu_ha = flu_track.nextclade_clade_flu_ha
     # Nextclade outputs for flu NA
-    String? nextclade_json_flu_na = flu_track.nextclade_json_flu_na
-    String? auspice_json_flu_na = flu_track.auspice_json_flu_na
-    String? nextclade_tsv_flu_na = flu_track.nextclade_tsv_flu_na
+    File? nextclade_json_flu_na = flu_track.nextclade_json_flu_na
+    File? auspice_json_flu_na = flu_track.auspice_json_flu_na
+    File? nextclade_tsv_flu_na = flu_track.nextclade_tsv_flu_na
     String? nextclade_ds_tag_flu_na = flu_track.nextclade_ds_tag_flu_na
     String? nextclade_aa_subs_flu_na = flu_track.nextclade_aa_subs_flu_na
     String? nextclade_aa_dels_flu_na = flu_track.nextclade_aa_dels_flu_na
