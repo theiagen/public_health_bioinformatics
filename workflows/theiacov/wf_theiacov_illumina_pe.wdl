@@ -369,6 +369,7 @@ workflow theiacov_illumina_pe {
     String? nextclade_aa_subs_flu_ha = flu_track.nextclade_aa_subs_flu_ha
     String? nextclade_aa_dels_flu_ha = flu_track.nextclade_aa_dels_flu_ha
     String? nextclade_clade_flu_ha = flu_track.nextclade_clade_flu_ha
+    String? nextclade_qc_flu_ha = flu_track.nextclade_qc_flu_ha
     # Nextclade outputs for flu NA
     File? nextclade_json_flu_na = flu_track.nextclade_json_flu_na
     File? auspice_json_flu_na = flu_track.auspice_json_flu_na
@@ -377,6 +378,7 @@ workflow theiacov_illumina_pe {
     String? nextclade_aa_subs_flu_na = flu_track.nextclade_aa_subs_flu_na
     String? nextclade_aa_dels_flu_na = flu_track.nextclade_aa_dels_flu_na
     String? nextclade_clade_flu_na = flu_track.nextclade_clade_flu_na
+    String? nextclade_qc_flu_na = flu_track.nextclade_qc_flu_na
     # VADR Annotation QC
     File? vadr_alerts_list = vadr.alerts_list
     String? vadr_num_alerts = vadr.num_alerts
