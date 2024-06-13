@@ -168,7 +168,7 @@ task irma {
     for FASTA in ./*.fasta; do
       # if the renamed file ends in .fasta; then create copy of the file with periods replaced by Ns
         echo "DEBUG: creating padded FASTA file for ${FASTA}...."
-        sed '/^>/! s/\./N/g' "${FASTA}" > "${FASTA%.fasta}.pad.fasta"
+        sed '/^>/! s/[-\.]/N/g' "${FASTA}" > "${FASTA%.fasta}.pad.fasta"
     done
   >>>
   output {
