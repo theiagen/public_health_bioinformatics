@@ -245,12 +245,12 @@ task set_sc2_defaults { # establish sars-cov-2 default values for augur
 task prep_augur_metadata {
   input {
     File assembly
-    String collection_date
-    String country
-    String state
-    String continent
+    String? collection_date
+    String? country
+    String? state
+    String? continent
 
-    String county = ""
+    String? county = ""
     String? pango_lineage
     String? nextclade_clade
     String? organism = "sars-cov-2"
