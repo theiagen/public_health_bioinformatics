@@ -94,8 +94,8 @@ task irma {
       sed -i "s/>/>~{samplename}_/g" ~{samplename}.irma.consensus.fasta
 
       echo "DEBUG: creating copy of consensus FASTA with periods replaced by Ns...."
-      # use sed to create copy of FASTA file where periods are replaced by Ns, except in the FASTA header lines that begin with '>'
-      sed '/^>/! s/\./N/g' ~{samplename}.irma.consensus.fasta > ~{samplename}.irma.consensus.pad.fasta
+      # use sed to create copy of FASTA file where periods & dashes are replaced by Ns, except in the FASTA header lines that begin with '>'
+      sed '/^>/! s/[-\.]/N/g' ~{samplename}.irma.consensus.fasta > ~{samplename}.irma.consensus.pad.fasta
     else
       echo "No IRMA assembly generated for flu type prediction" | tee IRMA_TYPE
     fi
