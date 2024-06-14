@@ -164,11 +164,12 @@ task irma {
     fi
     
     echo "DEBUG: Creating padded FASTA files for each individual segment...."
-    # this loop looks in the PWD for files ending in .fasta, and creates a copy of the file with periods replaced by Ns
+    # this loop looks in the PWD for files ending in .fasta, and creates a copy of the file with periods replaced by Ns and dashes are deleted (since they represent gaps)
     for FASTA in ./*.fasta; do
-      # if the renamed file ends in .fasta; then create copy of the file with periods replaced by Ns
+      # if the renamed file ends in .fasta; then create copy of the file with periods replaced by Ns and dashes removed in all lines except FASTA headers that begin with '>'
         echo "DEBUG: creating padded FASTA file for ${FASTA}...."
-        sed '/^>/! s/\./N/g' "${FASTA}" > "${FASTA%.fasta}.pad.fasta"
+        sed '/^>/! s/\./N/g' "${FASTA}" > "${FASTA%.fasta}.temp.fasta"
+        sed '/^>/! s/-//g' "${FASTA%.fasta}.temp.fasta" > "${FASTA%.fasta}.pad.fasta"
     done
   >>>
   output {
