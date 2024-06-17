@@ -420,7 +420,12 @@ workflow theiaprok_fasta {
         pasty_docker = merlin_magic.pasty_docker,
         pasty_comment = merlin_magic.pasty_comment,
         qc_check = qc_check_task.qc_check,
-        qc_standard = qc_check_task.qc_standard
+        qc_standard = qc_check_task.qc_standard,
+        hicap_serotype = merlin_magic.hicap_serotype,
+        hicap_genes = merlin_magic.hicap_genes,
+        hicap_results_tsv = merlin_magic.hicap_results_tsv,
+        hicap_version = merlin_magic.hicap_version,
+        hicap_docker = merlin_magic.hicap_docker
     }
   }   
   output {
@@ -657,6 +662,12 @@ workflow theiaprok_fasta {
     String? poppunk_GPS_db_version = merlin_magic.poppunk_GPS_db_version
     String? poppunk_version = merlin_magic.poppunk_version
     String? poppunk_docker = merlin_magic.poppunk_docker
+    # Haemophilus influenzae Typing
+    String? hicap_serotype = merlin_magic.hicap_serotype
+    String? hicap_genes = merlin_magic.hicap_genes
+    File? hicap_results_tsv = merlin_magic.hicap_results_tsv
+    String? hicap_version = merlin_magic.hicap_version
+    String? hicap_docker = merlin_magic.hicap_docker
     # export taxon table output
     String? taxon_table_status = export_taxon_tables.status
   }
