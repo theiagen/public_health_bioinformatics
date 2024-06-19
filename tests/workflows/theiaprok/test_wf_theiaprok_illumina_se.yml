@@ -596,7 +596,7 @@
     - path: miniwdl_run/wdl/tasks/utilities/data_export/task_broad_terra_tools.wdl
       md5sum: 52556169654cfa3e5de47c1987e83475
     - path: miniwdl_run/wdl/workflows/theiaprok/wf_theiaprok_illumina_se.wdl
-      md5sum: 97f311e848e60bbafc1a5e36fafc29c9
+      md5sum: e2015675a4f53e0e4492e8c6a43dcb37
     - path: miniwdl_run/wdl/workflows/utilities/wf_merlin_magic.wdl
       md5sum: 6c125054324cd3597f8291baefb54694
     - path: miniwdl_run/wdl/workflows/utilities/wf_read_QC_trim_se.wdl
