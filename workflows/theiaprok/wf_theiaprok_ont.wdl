@@ -3,7 +3,7 @@ version 1.0
 import "../../tasks/assembly/task_dragonflye.wdl" as dragonflye_task
 import "../../tasks/gene_typing/annotation/task_bakta.wdl" as bakta_task
 import "../../tasks/gene_typing/annotation/task_prokka.wdl" as prokka_task
-import "../../tasks/gene_typing/drug_resistance/task_amrfinderplus.wdl" as amrfinderplus_task
+import "../../tasks/gene_typing/drug_resistance/task_amrfinderplus.wdl" as amrfinderplus
 import "../../tasks/gene_typing/drug_resistance/task_resfinder.wdl" as resfinder_task
 import "../../tasks/gene_typing/plasmid_detection/task_plasmidfinder.wdl" as plasmidfinder_task
 import "../../tasks/gene_typing/drug_resistance/task_abricate.wdl" as abricate_task
@@ -144,7 +144,7 @@ workflow theiaprok_ont {
             samplename = samplename
         }
       }
-      call amrfinderplus_task.amrfinderplus_nuc as amrfinderplus {
+      call amrfinderplus.amrfinderplus_nuc as amrfinderplus_task {
         input:
           assembly = dragonflye.assembly_fasta,
           samplename = samplename,
@@ -312,18 +312,18 @@ workflow theiaprok_ont {
             kmerfinder_query_coverage = kmerfinder.kmerfinder_query_coverage,
             kmerfinder_template_coverage = kmerfinder.kmerfinder_template_coverage,
             kmerfinder_database = kmerfinder.kmerfinder_database,
-            amrfinderplus_all_report = amrfinderplus.amrfinderplus_all_report,
-            amrfinderplus_amr_report = amrfinderplus.amrfinderplus_amr_report,
-            amrfinderplus_stress_report = amrfinderplus.amrfinderplus_stress_report,
-            amrfinderplus_virulence_report = amrfinderplus.amrfinderplus_virulence_report,
-            amrfinderplus_amr_core_genes = amrfinderplus.amrfinderplus_amr_core_genes,
-            amrfinderplus_amr_plus_genes = amrfinderplus.amrfinderplus_amr_plus_genes,
-            amrfinderplus_stress_genes = amrfinderplus.amrfinderplus_stress_genes,
-            amrfinderplus_virulence_genes = amrfinderplus.amrfinderplus_virulence_genes,
-            amrfinderplus_amr_classes = amrfinderplus.amrfinderplus_amr_classes,
-            amrfinderplus_amr_subclasses = amrfinderplus.amrfinderplus_amr_subclasses,
-            amrfinderplus_version = amrfinderplus.amrfinderplus_version,
-            amrfinderplus_db_version = amrfinderplus.amrfinderplus_db_version,
+            amrfinderplus_all_report = amrfinderplus_task.amrfinderplus_all_report,
+            amrfinderplus_amr_report = amrfinderplus_task.amrfinderplus_amr_report,
+            amrfinderplus_stress_report = amrfinderplus_task.amrfinderplus_stress_report,
+            amrfinderplus_virulence_report = amrfinderplus_task.amrfinderplus_virulence_report,
+            amrfinderplus_amr_core_genes = amrfinderplus_task.amrfinderplus_amr_core_genes,
+            amrfinderplus_amr_plus_genes = amrfinderplus_task.amrfinderplus_amr_plus_genes,
+            amrfinderplus_stress_genes = amrfinderplus_task.amrfinderplus_stress_genes,
+            amrfinderplus_virulence_genes = amrfinderplus_task.amrfinderplus_virulence_genes,
+            amrfinderplus_amr_classes = amrfinderplus_task.amrfinderplus_amr_classes,
+            amrfinderplus_amr_subclasses = amrfinderplus_task.amrfinderplus_amr_subclasses,
+            amrfinderplus_version = amrfinderplus_task.amrfinderplus_version,
+            amrfinderplus_db_version = amrfinderplus_task.amrfinderplus_db_version,
             resfinder_pheno_table = resfinder_task.resfinder_pheno_table,
             resfinder_pheno_table_species = resfinder_task.resfinder_pheno_table_species,
             resfinder_seqs = resfinder_task.resfinder_hit_in_genome_seq,
@@ -629,18 +629,25 @@ workflow theiaprok_ont {
     String? kmerfinder_template_coverage = kmerfinder.kmerfinder_template_coverage
     String? kmerfinder_database = kmerfinder.kmerfinder_database
     # NCBI-AMRFinderPlus Outputs
-    File? amrfinderplus_all_report = amrfinderplus.amrfinderplus_all_report
-    File? amrfinderplus_amr_report = amrfinderplus.amrfinderplus_amr_report
-    File? amrfinderplus_stress_report = amrfinderplus.amrfinderplus_stress_report
-    File? amrfinderplus_virulence_report = amrfinderplus.amrfinderplus_virulence_report
-    String? amrfinderplus_amr_core_genes = amrfinderplus.amrfinderplus_amr_core_genes
-    String? amrfinderplus_amr_plus_genes = amrfinderplus.amrfinderplus_amr_plus_genes
-    String? amrfinderplus_stress_genes = amrfinderplus.amrfinderplus_stress_genes
-    String? amrfinderplus_virulence_genes = amrfinderplus.amrfinderplus_virulence_genes
-    String? amrfinderplus_amr_classes = amrfinderplus.amrfinderplus_amr_classes
-    String? amrfinderplus_amr_subclasses = amrfinderplus.amrfinderplus_amr_subclasses
-    String? amrfinderplus_version = amrfinderplus.amrfinderplus_version
-    String? amrfinderplus_db_version = amrfinderplus.amrfinderplus_db_version
+    File? amrfinderplus_all_report = amrfinderplus_task.amrfinderplus_all_report
+    File? amrfinderplus_amr_report = amrfinderplus_task.amrfinderplus_amr_report
+    File? amrfinderplus_stress_report = amrfinderplus_task.amrfinderplus_stress_report
+    File? amrfinderplus_virulence_report = amrfinderplus_task.amrfinderplus_virulence_report
+    String? amrfinderplus_amr_core_genes = amrfinderplus_task.amrfinderplus_amr_core_genes
+    String? amrfinderplus_amr_plus_genes = amrfinderplus_task.amrfinderplus_amr_plus_genes
+    String? amrfinderplus_stress_genes = amrfinderplus_task.amrfinderplus_stress_genes
+    String? amrfinderplus_virulence_genes = amrfinderplus_task.amrfinderplus_virulence_genes
+    String? amrfinderplus_amr_classes = amrfinderplus_task.amrfinderplus_amr_classes
+    String? amrfinderplus_amr_subclasses = amrfinderplus_task.amrfinderplus_amr_subclasses
+    String? amrfinderplus_version = amrfinderplus_task.amrfinderplus_version
+    String? amrfinderplus_db_version = amrfinderplus_task.amrfinderplus_db_version
+    # NCBI-AMRFinderPlus Outputs for BETA-LACTAM genes
+    String? amrfinderplus_amr_betalactam_genes = amrfinderplus_task.amrfinderplus_amr_betalactam_genes
+    String? amrfinderplus_amr_betalactam_betalactam_genes = amrfinderplus_task.amrfinderplus_amr_betalactam_betalactam_genes
+    String? amrfinderplus_amr_betalactam_carbapenem_genes = amrfinderplus_task.amrfinderplus_amr_betalactam_carbapenem_genes
+    String? amrfinderplus_amr_betalactam_cephalosporin_genes = amrfinderplus_task.amrfinderplus_amr_betalactam_cephalosporin_genes
+    String? amrfinderplus_amr_betalactam_cephalothin_genes = amrfinderplus_task.amrfinderplus_amr_betalactam_cephalothin_genes
+    String? amrfinderplus_amr_betalactam_methicillin_genes = amrfinderplus_task.amrfinderplus_amr_betalactam_methicillin_genes
     # Resfinder Outputs
     File? resfinder_pheno_table = resfinder_task.resfinder_pheno_table
     File? resfinder_pheno_table_species = resfinder_task.resfinder_pheno_table_species

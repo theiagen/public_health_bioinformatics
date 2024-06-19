@@ -24,7 +24,7 @@ workflow read_QC_trim_se {
     File? phix
     String? workflow_series
     String? trimmomatic_args
-    Boolean call_midas = true
+    Boolean call_midas = false
     File? midas_db
     Boolean call_kraken = false
     File? kraken_db
