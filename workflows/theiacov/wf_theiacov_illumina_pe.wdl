@@ -177,11 +177,14 @@ workflow theiacov_illumina_pe {
               assembly = select_first([irma.irma_assembly_fasta]),
               samplename = samplename
           }
+          # if IRMA cannot predict a subtype (like with Flu B samples), then set the flu_subtype to the abricate_flu_subtype String output (e.g. "Victoria" for Flu B)
+          String flu_subtype = if irma.irma_subtype == "No subtype predicted by IRMA" then abricate_flu.abricate_flu_subtype else irma.irma_subtype
+
           call set_organism_defaults.organism_parameters as set_flu_na_nextclade_values {
             input:
               organism = organism_parameters.standardized_organism,
               flu_segment = "NA",
-              flu_subtype = irma.irma_subtype,
+              flu_subtype = flu_subtype,
               # including these to block from terra
               reference_gff_file = reference_gff,
               reference_genome = reference_genome,
@@ -202,7 +205,7 @@ workflow theiacov_illumina_pe {
             input:
               organism = organism_parameters.standardized_organism,
               flu_segment = "HA",
-              flu_subtype = irma.irma_subtype,
+              flu_subtype = flu_subtype,
               # including these to block from terra
               reference_gff_file = reference_gff,
               reference_genome = reference_genome,
@@ -228,12 +231,12 @@ workflow theiacov_illumina_pe {
         }       
         call flu_antiviral.flu_antiviral_substitutions {
           input:
-            na_segment_assembly = irma.seg_na_assembly,
-            ha_segment_assembly = irma.seg_ha_assembly,
-            pa_segment_assembly = irma.seg_pa_assembly,
-            pb1_segment_assembly = irma.seg_pb1_assembly,
-            pb2_segment_assembly = irma.seg_pb2_assembly,
-            mp_segment_assembly = irma.seg_mp_assembly,
+            na_segment_assembly = irma.seg_na_assembly_padded,
+            ha_segment_assembly = irma.seg_ha_assembly_padded,
+            pa_segment_assembly = irma.seg_pa_assembly_padded,
+            pb1_segment_assembly = irma.seg_pb1_assembly_padded,
+            pb2_segment_assembly = irma.seg_pb2_assembly_padded,
+            mp_segment_assembly = irma.seg_mp_assembly_padded,
             abricate_flu_subtype = select_first([abricate_flu.abricate_flu_subtype, ""]),
             irma_flu_subtype = select_first([irma.irma_subtype, ""]),
         }
@@ -300,7 +303,7 @@ workflow theiacov_illumina_pe {
         # tasks specific to MPXV, sars-cov-2, WNV, flu rsv_a and rsv_b
         call vadr_task.vadr {
           input:
-            genome_fasta = select_first([ivar_consensus.assembly_fasta, irma.irma_assembly_fasta]),
+            genome_fasta = select_first([ivar_consensus.assembly_fasta, irma.irma_assembly_fasta_padded]),
             assembly_length_unambiguous = consensus_qc.number_ATCG,
             vadr_opts = organism_parameters.vadr_opts,
             max_length = organism_parameters.vadr_maxlength,
@@ -473,10 +476,18 @@ workflow theiacov_illumina_pe {
     File? vadr_fastas_zip_archive = vadr.vadr_fastas_zip_archive
     # Flu IRMA and Abricate Outputs
     String? irma_version = irma.irma_version
+    String? irma_docker = irma.irma_docker
     String? irma_type = irma.irma_type
     String? irma_subtype = irma.irma_subtype
-    File? irma_ha_segment = irma.seg_ha_assembly
-    File? irma_na_segment = irma.seg_na_assembly
+    String? irma_subtype_notes = irma.irma_subtype_notes
+    File? irma_ha_segment_fasta = irma.seg_ha_assembly
+    File? irma_na_segment_fasta = irma.seg_na_assembly
+    File? irma_pa_segment_fasta = irma.seg_pa_assembly
+    File? irma_pb1_segment_fasta = irma.seg_pb1_assembly
+    File? irma_pb2_segment_fasta = irma.seg_pb2_assembly
+    File? irma_mp_segment_fasta = irma.seg_mp_assembly
+    File? irma_np_segment_fasta = irma.seg_np_assembly
+    File? irma_ns_segment_fasta = irma.seg_ns_assembly
     String? abricate_flu_type = abricate_flu.abricate_flu_type
     String? abricate_flu_subtype =  abricate_flu.abricate_flu_subtype
     File? abricate_flu_results = abricate_flu.abricate_flu_results
