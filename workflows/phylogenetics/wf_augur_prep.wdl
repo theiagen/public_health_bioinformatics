@@ -6,10 +6,10 @@ import "../../tasks/utilities/data_handling/task_augur_utilities.wdl" as augur_u
 workflow augur_prep {
   input {
     File assembly
-    String collection_date
-    String country
-    String state
-    String continent
+    String? collection_date
+    String? country
+    String? state
+    String? continent
     String? pango_lineage
     String? nextclade_clade
     String? county

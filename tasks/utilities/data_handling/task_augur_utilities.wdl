@@ -33,7 +33,7 @@ task tsv_join {
     description: "Perform a full left outer join on multiple TSV tables. Each input tsv must have a header row, and each must must contain the value of id_col in its header. Inputs may or may not be gzipped. Unix/Mac/Win line endings are tolerated on input, Unix line endings are emitted as output. Unicode text safe. Copied from the Broad Institute"
   }
   input {
-    Array[File]+ input_tsvs
+    Array[File] input_tsvs
     String id_col
     String out_basename = "merged"
     String out_suffix = ".tsv"
@@ -245,12 +245,12 @@ task set_sc2_defaults { # establish sars-cov-2 default values for augur
 task prep_augur_metadata {
   input {
     File assembly
-    String collection_date
-    String country
-    String state
-    String continent
+    String? collection_date
+    String? country
+    String? state
+    String? continent
 
-    String county = ""
+    String? county = ""
     String? pango_lineage
     String? nextclade_clade
     String? organism = "sars-cov-2"
