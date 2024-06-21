@@ -366,12 +366,23 @@ task export_taxon_tables {
     String? agrvate_version
     String? agrvate_docker
     File? srst2_vibrio_detailed_tsv
+    String? srst2_vibrio_docker
+    String? srst2_vibrio_database
     String? srst2_vibrio_version
     String? srst2_vibrio_ctxA
     String? srst2_vibrio_ompW
     String? srst2_vibrio_toxR
     String? srst2_vibrio_serogroup
     String? srst2_vibrio_biotype
+    File? abricate_vibrio_detailed_tsv
+    String? abricate_vibrio_database
+    String? abricate_vibrio_docker
+    String? abricate_vibrio_version
+    String? abricate_vibrio_ctxA
+    String? abricate_vibrio_ompW
+    String? abricate_vibrio_toxR
+    String? abricate_vibrio_biotype
+    String? abricate_vibrio_serogroup
   }
   meta {
     # added so that call caching is always turned off
@@ -765,12 +776,23 @@ task export_taxon_tables {
       "agrvate_version": "~{agrvate_version}",
       "agrvate_docker": "~{agrvate_docker}",
       "srst2_vibrio_detailed_tsv": "~{srst2_vibrio_detailed_tsv}",
-      "srst2_vibrio_version": "~{srst2_vibrio_version}",
+      "srst2_vibrio_version": "~{srst2_vibrio_version}",~
+      "srst2_vibrio_docker": "~{srst2_vibrio_docker}",
+      "srst2_vibrio_database": "~{srst2_vibrio_database}",
       "srst2_vibrio_ctxA": "~{srst2_vibrio_ctxA}",
       "srst2_vibrio_ompW": "~{srst2_vibrio_ompW}",
       "srst2_vibrio_toxR": "~{srst2_vibrio_toxR}",
       "srst2_vibrio_serogroup": "~{srst2_vibrio_serogroup}",
-      "srst2_vibrio_biotype": "~{srst2_vibrio_biotype}"
+      "srst2_vibrio_biotype": "~{srst2_vibrio_biotype}",
+      "abricate_vibrio_detailed_tsv": "~{abricate_vibrio_detailed_tsv}",
+      "abricate_vibrio_database": "~{abricate_vibrio_database}",
+      "abricate_vibrio_docker": "~{abricate_vibrio_docker}",
+      "abricate_vibrio_version": "~{abricate_vibrio_version}",
+      "abricate_vibrio_ctxA": "~{abricate_vibrio_ctxA}",
+      "abricate_vibrio_ompW": "~{abricate_vibrio_ompW}",
+      "abricate_vibrio_toxR": "~{abricate_vibrio_toxR}",
+      "abricate_vibrio_biotype": "~{abricate_vibrio_biotype}",
+      "abricate_vibrio_serogroup": "~{abricate_vibrio_serogroup}"
     }
 
     with open("~{samplename}_terra_table.tsv", "w") as outfile:
