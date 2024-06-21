@@ -481,7 +481,7 @@
     - path: miniwdl_run/call-shovill_se/work/out/skesa.fasta
     - path: miniwdl_run/call-shovill_se/work/out/test_contigs.fasta
     - path: miniwdl_run/call-ts_mlst/command
-      md5sum: df3b08d5ed6403b5ef3ae9b854fd3858
+      md5sum: c306b6501c0d41704cc559b09bd95e98
     - path: miniwdl_run/call-ts_mlst/inputs.json
       contains: ["assembly", "fasta", "sample", "test"]
     - path: miniwdl_run/call-ts_mlst/outputs.json
@@ -584,7 +584,7 @@
     - path: miniwdl_run/wdl/tasks/species_typing/mycobacterium/task_tbprofiler.wdl
       md5sum: 97ccec2e7a8499a8b82077321c62f804
     - path: miniwdl_run/wdl/tasks/species_typing/multi/task_ts_mlst.wdl
-      md5sum: c84e37ca77732b2ffa6a32629a4b6d6f
+      md5sum: cfc0b5212cdf70300497bce58d295539
     - path: miniwdl_run/wdl/tasks/task_versioning.wdl
       md5sum: a7fd1295e5759277b3a1e43253881b12
     - path: miniwdl_run/wdl/tasks/taxon_id/task_gambit.wdl
