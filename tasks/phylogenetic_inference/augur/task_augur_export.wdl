@@ -3,7 +3,7 @@ version 1.0
 task augur_export {
   input {
     File refined_tree
-    File metadata
+    File? metadata
     Array[File] node_data_jsons
     String build_name
 
@@ -22,7 +22,7 @@ task augur_export {
   command <<<
     augur export v2 \
       --tree ~{refined_tree} \
-      --metadata ~{metadata} \
+      ~{"--metadata " + metadata} \
       --node-data ~{sep=' ' node_data_jsons} \
       --output ~{build_name}_auspice.json \
       ~{"--auspice-config " + auspice_config} \
