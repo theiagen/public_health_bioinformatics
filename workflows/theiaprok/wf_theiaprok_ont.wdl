@@ -525,7 +525,7 @@ workflow theiaprok_ont {
             hicap_genes = merlin_magic.hicap_genes,
             hicap_results_tsv = merlin_magic.hicap_results_tsv,
             hicap_version = merlin_magic.hicap_version,
-            hicap_docker = merlin_magic.hicap_docker
+            hicap_docker = merlin_magic.hicap_docker,
             abricate_vibrio_detailed_tsv = merlin_magic.abricate_vibrio_detailed_tsv,
             abricate_vibrio_database = merlin_magic.abricate_vibrio_database,
             abricate_vibrio_docker = merlin_magic.abricate_vibrio_docker,
