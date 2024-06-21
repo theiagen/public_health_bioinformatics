@@ -25,10 +25,10 @@ workflow gambitcore_wf {
     String gambitcore_completeness = gambitcore.gambitcore_completeness
     String gambitcore_kmers_ratio = gambitcore.gambitcore_kmers_ratio
     String gambitcore_closest_accession = gambitcore.gambitcore_closest_accession
-    Float gambitcore_closest_distance = gambitcore.gambitcore_closest_distance
-    Int gambitcore_assembly_kmers = gambitcore.gambitcore_assembly_kmers
-    Int gambitcore_species_kmers = gambitcore.gambitcore_species_kmers
-    Int gambitcore_species_std_kmers = gambitcore.gambitcore_species_std_kmers
+    String gambitcore_closest_distance = gambitcore.gambitcore_closest_distance
+    String gambitcore_assembly_kmers = gambitcore.gambitcore_assembly_kmers
+    String gambitcore_species_kmers = gambitcore.gambitcore_species_kmers
+    String gambitcore_species_std_kmers = gambitcore.gambitcore_species_std_kmers
     String gambitcore_assembly_qc = gambitcore.gambitcore_assembly_qc
     String gambitcore_db_version = gambitcore.gambitcore_db_version
     String gambitcore_docker = gambitcore.gambitcore_docker
