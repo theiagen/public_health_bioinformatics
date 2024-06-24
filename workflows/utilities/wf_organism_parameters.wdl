@@ -52,9 +52,9 @@ workflow organism_parameters {
     String sc2_org_name = "sars-cov-2"
     String sc2_reference_genome = "gs://theiagen-public-files-rp/terra/augur-sars-cov-2-references/MN908947.fasta"
     String sc2_gene_locations_bed = "gs://theiagen-public-files-rp/terra/sars-cov-2-files/sc2_gene_locations.bed"
-    String sc2_nextclade_ds_tag = "2024-04-15--15-08-22Z"
+    String sc2_nextclade_ds_tag = "2024-06-13--23-42-47Z"
     String sc2_nextclade_ds_name = "nextstrain/sars-cov-2/wuhan-hu-1/orfs"
-    String sc2_pangolin_docker = "us-docker.pkg.dev/general-theiagen/staphb/pangolin:4.3.1-pdata-1.26"
+    String sc2_pangolin_docker = "us-docker.pkg.dev/general-theiagen/staphb/pangolin:4.3.1-pdata-1.27"
     Int sc2_genome_len = 29903
     Int sc2_vadr_max_length = 30000
     Int sc2_vadr_skip_length = 10000
@@ -65,7 +65,7 @@ workflow organism_parameters {
     String mpox_org_name = "MPXV"
     String mpox_reference_genome = "gs://theiagen-public-files/terra/mpxv-files/MPXV.MT903345.reference.fasta"
     String mpox_gene_locations_bed = "gs://theiagen-public-files/terra/mpxv-files/mpox_gene_locations.bed"
-    String mpox_nextclade_ds_tag = "2024-01-16--20-31-02Z"
+    String mpox_nextclade_ds_tag = "2024-04-19--07-50-39Z"
     String mpox_nextclade_ds_name = "nextstrain/mpox/lineage-b.1"
     String mpox_kraken_target_organism = "Monkeypox virus"
     String mpox_primer_bed_file = "gs://theiagen-public-files/terra/mpxv-files/MPXV.primer.bed"
@@ -124,7 +124,7 @@ workflow organism_parameters {
       if (flu_subtype == "H1N1") {
         String h1n1_ha_reference = "gs://theiagen-public-files-rp/terra/flu-references/reference_h1n1pdm_ha.fasta"
         String h1n1_ha_reference_gbk = "gs://theiagen-public-files-rp/terra/flu-references/reference_h1n1pdm_ha.gb"
-        String h1n1_ha_nextclade_ds_tag = "2024-01-16--20-31-02Z"
+        String h1n1_ha_nextclade_ds_tag = "2024-04-19--07-50-39Z"
         String h1n1_ha_nextclade_ds_name = "nextstrain/flu/h1n1pdm/ha/MW626062"
         String h1n1_ha_clades_tsv = "gs://theiagen-public-files-rp/terra/flu-references/clades_h1n1pdm_ha.tsv"
         String h1n1_ha_auspice_config = "gs://theiagen-public-files-rp/terra/flu-references/auspice_config_h1n1pdm.json"
@@ -132,7 +132,7 @@ workflow organism_parameters {
       if (flu_subtype == "H3N2") {
         String h3n2_ha_reference = "gs://theiagen-public-files-rp/terra/flu-references/reference_h3n2_ha.fasta"
         String h3n2_ha_reference_gbk = "gs://theiagen-public-files-rp/terra/flu-references/reference_h3n2_ha.gb"
-        String h3n2_ha_nextclade_ds_tag = "2024-02-22--16-12-03Z"
+        String h3n2_ha_nextclade_ds_tag = "2024-04-19--07-50-39Z"
         String h3n2_ha_nextclade_ds_name = "nextstrain/flu/h3n2/ha/EPI1857216"
         String h3n2_ha_clades_tsv = "gs://theiagen-public-files-rp/terra/flu-references/clades_h3n2_ha.tsv"
         String h3n2_ha_auspice_config = "gs://theiagen-public-files-rp/terra/flu-references/auspice_config_h3n2.json"
@@ -140,7 +140,7 @@ workflow organism_parameters {
       if (flu_subtype == "Victoria") {
         String vic_ha_reference = "gs://theiagen-public-files-rp/terra/flu-references/reference_vic_ha.fasta"
         String vic_ha_reference_gbk = "gs://theiagen-public-files-rp/terra/flu-references/reference_vic_ha.gb"
-        String vic_ha_nextclade_ds_tag = "2024-01-16--20-31-02Z"
+        String vic_ha_nextclade_ds_tag = "2024-04-19--07-50-39Z"
         String vic_ha_nextclade_ds_name = "nextstrain/flu/vic/ha/KX058884"
         String vic_ha_clades_tsv = "gs://theiagen-public-files-rp/terra/flu-references/clades_vic_ha.tsv"
         String vic_ha_auspice_config = "gs://theiagen-public-files-rp/terra/flu-references/auspice_config_vic.json"
@@ -158,21 +158,21 @@ workflow organism_parameters {
       if (flu_subtype == "H1N1") {
         String h1n1_na_reference = "gs://theiagen-public-files-rp/terra/flu-references/reference_h1n1pdm_na.fasta"
         String h1n1_na_reference_gbk = "gs://theiagen-public-files-rp/terra/flu-references/reference_h1n1pdm_na.gb"
-        String h1n1_na_nextclade_ds_tag = "2024-01-16--20-31-02Z"
+        String h1n1_na_nextclade_ds_tag = "2024-04-19--07-50-39Z"
         String h1n1_na_nextclade_ds_name = "nextstrain/flu/h1n1pdm/na/MW626056"
         String h1n1_na_auspice_config = "gs://theiagen-public-files-rp/terra/flu-references/auspice_config_h1n1pdm.json"
       }
       if (flu_subtype == "H3N2") {
         String h3n2_na_reference = "gs://theiagen-public-files-rp/terra/flu-references/reference_h3n2_na.fasta"
         String h3n2_na_reference_gbk = "gs://theiagen-public-files-rp/terra/flu-references/reference_h3n2_na.gb"
-        String h3n2_na_nextclade_ds_tag = "2024-01-16--20-31-02Z"
+        String h3n2_na_nextclade_ds_tag = "2024-04-19--07-50-39Z"
         String h3n2_na_nextclade_ds_name = "nextstrain/flu/h3n2/na/EPI1857215"
         String h3n2_na_auspice_config = "gs://theiagen-public-files-rp/terra/flu-references/auspice_config_h3n2.json"
       }
       if (flu_subtype == "Victoria") {
         String vic_na_reference = "gs://theiagen-public-files-rp/terra/flu-references/reference_vic_na.fasta"
         String vic_na_reference_gbk = "gs://theiagen-public-files-rp/terra/flu-references/reference_yam_na.gb"
-        String vic_na_nextclade_ds_tag = "2024-01-16--20-31-02Z"
+        String vic_na_nextclade_ds_tag = "2024-04-19--07-50-39Z"
         String vic_na_nextclade_ds_name = "nextstrain/flu/vic/na/CY073894"
         String vic_na_auspice_config = "gs://theiagen-public-files-rp/terra/flu-references/auspice_config_vic.json"
       }
