@@ -11,10 +11,10 @@ task amrfinderplus_nuc {
     Float? minid
     Float? mincov
     Boolean detailed_drug_class = false
-    Int cpu = 4
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/ncbi-amrfinderplus:3.11.20-2023-09-26.1"
-    Int disk_size = 100
-    Int memory = 16
+    Int cpu = 2
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/ncbi-amrfinderplus:3.12.8-2024-05-02.2"
+    Int disk_size = 50
+    Int memory = 8
     Boolean hide_point_mutations = false
     Boolean separate_betalactam_genes = false
   }
@@ -55,7 +55,7 @@ task amrfinderplus_nuc {
     if [[ -v amrfinder_organism ]] ; then
       # always use --plus flag, others may be left out if param is optional and not supplied 
       amrfinder --plus \
-        --organism ${amrfinder_organism} \
+        --organism "${amrfinder_organism}" \
         ~{'--name ' + samplename} \
         ~{'--nucleotide ' + assembly} \
         ~{'-o ' + samplename + '_amrfinder_all.tsv'} \
@@ -198,7 +198,7 @@ task amrfinderplus_nuc {
     docker: docker
     disks:  "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
-    preemptible: 0
+    preemptible: 1
     maxRetries: 3
   }
 }
