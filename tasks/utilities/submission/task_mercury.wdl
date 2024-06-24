@@ -34,7 +34,7 @@ task mercury {
     python3 /mercury/mercury/mercury.py \
       ~{data_table} ~{table_name} ~{sep=',' samplenames} \
       --gcp_bucket_uri ~{gcp_bucket_uri} \
-      ~{"--organism" + organism} \
+      ~{"--organism " + organism} \
       ~{"--output_name " + output_name} \
       ~{true="--skip_county" false="" skip_county} \
       ~{true="--skip_ncbi" false="" skip_ncbi} \
