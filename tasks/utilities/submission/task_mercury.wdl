@@ -35,15 +35,15 @@ task mercury {
       ~{data_table} ~{table_name} ~{sep=',' samplenames} \
       --gcp_bucket_uri ~{gcp_bucket_uri} \
       ~{"--organism " + organism} \
-      ~{"--output_name " + output_name} \
+      ~{"--output_prefix " + output_name} \
       ~{true="--skip_county" false="" skip_county} \
       ~{true="--skip_ncbi" false="" skip_ncbi} \
       ~{true="--using_clearlabs_data" false="" using_clearlabs_data} \
       ~{true="--using_reads_dehosted" false="" using_reads_dehosted} \
       ~{true="--usa_territory" false="" usa_territory} \
       ~{true="--single_end" false="" single_end} \
-      ~{"--vadr-alert-limit " + vadr_alert_limit} \
-      ~{"--number-N-threshold " + number_N_threshold} \
+      ~{"--vadr_alert_limit " + vadr_alert_limit} \
+      ~{"--number_n_threshold " + number_N_threshold} \
       --debug
 
   >>>

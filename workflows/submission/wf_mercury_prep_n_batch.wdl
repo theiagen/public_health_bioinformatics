@@ -13,11 +13,11 @@ workflow mercury_prep_n_batch {
     Array[String] sample_names
     String organism = "sars-cov-2"
     String output_name = "mercury"
-    String output_name_updated = sub(output_name, " ", "_")
     String gcp_bucket_uri
     File? authors_sbt # only for mpox
     Boolean skip_ncbi = false
   }
+  String output_name_updated = sub(output_name, " ", "_")
   call download_table.download_terra_table {
     input:
       terra_table_name = terra_table_name,
