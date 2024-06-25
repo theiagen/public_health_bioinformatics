@@ -11,11 +11,12 @@ task amrfinderplus_nuc {
     Float? minid
     Float? mincov
     Boolean detailed_drug_class = false
-    Int cpu = 4
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/ncbi-amrfinderplus:3.11.20-2023-09-26.1"
-    Int disk_size = 100
-    Int memory = 16
+    Int cpu = 2
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/ncbi-amrfinderplus:3.12.8-2024-05-02.2"
+    Int disk_size = 50
+    Int memory = 8
     Boolean hide_point_mutations = false
+    Boolean separate_betalactam_genes = false
   }
   command <<<
     # logging info
@@ -54,7 +55,7 @@ task amrfinderplus_nuc {
     if [[ -v amrfinder_organism ]] ; then
       # always use --plus flag, others may be left out if param is optional and not supplied 
       amrfinder --plus \
-        --organism ${amrfinder_organism} \
+        --organism "${amrfinder_organism}" \
         ~{'--name ' + samplename} \
         ~{'--nucleotide ' + assembly} \
         ~{'-o ' + samplename + '_amrfinder_all.tsv'} \
@@ -105,6 +106,35 @@ task amrfinderplus_nuc {
       amr_subclasses=$(awk -F '\t' '{ print $13 }' ~{samplename}_amrfinder_amr.tsv | tail -n+2 | sort | uniq | tr '\n' ', ' | sed 's/.$//')
     fi
 
+    if [[ "~{separate_betalactam_genes}" == "true" ]]; then
+      betalactam_genes=$(awk -F '\t' '{ if($12 == "BETA-LACTAM") { print $7}}' ~{samplename}_amrfinder_amr.tsv | tr '\n' ', ' | sed 's/.$//') 
+      betalactam_betalactam_genes=$(awk -F '\t' '{ if($13 == "BETA-LACTAM") { print $7}}' ~{samplename}_amrfinder_amr.tsv | tr '\n' ', ' | sed 's/.$//') 
+      betalactam_carbapenem_genes=$(awk -F '\t' '{ if($13 == "CARBAPENEM") { print $7}}' ~{samplename}_amrfinder_amr.tsv | tr '\n' ', ' | sed 's/.$//')
+      betalactam_cephalosporin_genes=$(awk -F '\t' '{ if($13 == "CEPHALOSPORIN") { print $7}}' ~{samplename}_amrfinder_amr.tsv | tr '\n' ', ' | sed 's/.$//')
+      betalactam_cephalothin_genes=$(awk -F '\t' '{ if($13 == "CEPHALOTHIN") { print $7}}' ~{samplename}_amrfinder_amr.tsv | tr '\n' ', ' | sed 's/.$//')
+      betalactam_methicillin_genes=$(awk -F '\t' '{ if($13 == "METHICILLIN") { print $7}}' ~{samplename}_amrfinder_amr.tsv | tr '\n' ', ' | sed 's/.$//')
+      
+      # if variable for list of genes is EMPTY, write string saying it is empty to float to Terra table
+      if [ -z "${betalactam_genes}" ]; then
+        betalactam_genes="No BETA-LACTAM genes detected by NCBI-AMRFinderPlus"
+      fi
+      if [ -z "${betalactam_betalactam_genes}" ]; then
+        betalactam_betalactam_genes="No BETA-LACTAM genes detected by NCBI-AMRFinderPlus"
+      fi
+      if [ -z "${betalactam_carbapenem_genes}" ]; then
+        betalactam_carbapenem_genes="No BETA-LACTAM CARBAPENEM genes detected by NCBI-AMRFinderPlus"
+      fi
+      if [ -z "${betalactam_cephalosporin_genes}" ]; then
+        betalactam_cephalosporin_genes="No BETA-LACTAM CEPHALOSPORIN genes detected by NCBI-AMRFinderPlus"
+      fi
+      if [ -z "${betalactam_cephalothin_genes}" ]; then
+        betalactam_cephalothin_genes="No BETA-LACTAM CEPHALOTHIN genes detected by NCBI-AMRFinderPlus"
+      fi
+      if [ -z "${betalactam_methicillin_genes}" ]; then
+        betalactam_methicillin_genes="No BETA-LACTAM METHICILLIN genes detected by NCBI-AMRFinderPlus"
+      fi
+    fi
+
     # if variable for list of genes is EMPTY, write string saying it is empty to float to Terra table
     if [ -z "${amr_core_genes}" ]; then
        amr_core_genes="No core AMR genes detected by NCBI-AMRFinderPlus"
@@ -132,6 +162,14 @@ task amrfinderplus_nuc {
     echo "${virulence_genes}" > VIRULENCE_GENES
     echo "${amr_classes}" > AMR_CLASSES
     echo "${amr_subclasses}" > AMR_SUBCLASSES
+  
+    # if separate_betalactam_genes is true, create final output strings (if false, these values will be blank)
+    echo "${betalactam_genes}" > BETA_LACTAM_GENES
+    echo "${betalactam_betalactam_genes}" > BETA_LACTAM_BETA_LACTAM_GENES
+    echo "${betalactam_carbapenem_genes}" > BETA_LACTAM_CARBAPENEM_GENES
+    echo "${betalactam_cephalosporin_genes}" > BETA_LACTAM_CEPHALOSPORIN_GENES
+    echo "${betalactam_cephalothin_genes}" > BETA_LACTAM_CEPHALOTHIN_GENES
+    echo "${betalactam_methicillin_genes}" > BETA_LACTAM_METHICILLIN_GENES
   >>>
   output {
     File amrfinderplus_all_report = "~{samplename}_amrfinder_all.tsv"
@@ -146,6 +184,13 @@ task amrfinderplus_nuc {
     String amrfinderplus_amr_subclasses = read_string("AMR_SUBCLASSES")
     String amrfinderplus_version = read_string("AMRFINDER_VERSION")
     String amrfinderplus_db_version = read_string("AMRFINDER_DB_VERSION")
+
+    String amrfinderplus_amr_betalactam_genes = read_string("BETA_LACTAM_GENES")
+    String amrfinderplus_amr_betalactam_betalactam_genes = read_string("BETA_LACTAM_BETA_LACTAM_GENES")
+    String amrfinderplus_amr_betalactam_carbapenem_genes = read_string("BETA_LACTAM_CARBAPENEM_GENES")
+    String amrfinderplus_amr_betalactam_cephalosporin_genes = read_string("BETA_LACTAM_CEPHALOSPORIN_GENES")
+    String amrfinderplus_amr_betalactam_cephalothin_genes = read_string("BETA_LACTAM_CEPHALOTHIN_GENES")
+    String amrfinderplus_amr_betalactam_methicillin_genes = read_string("BETA_LACTAM_METHICILLIN_GENES")
   }
   runtime {
     memory: "~{memory} GB"
@@ -153,7 +198,7 @@ task amrfinderplus_nuc {
     docker: docker
     disks:  "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
-    preemptible: 0
+    preemptible: 1
     maxRetries: 3
   }
 }

@@ -9,13 +9,14 @@ workflow freyja_plot {
     Array[File] freyja_demixed
     Array[String]? collection_date
     String freyja_plot_name
+    String freyja_plot_name_updated = sub(freyja_plot_name, " ", "_")
   }
   call plot.freyja_plot_task {
     input:
       samplename = samplename,
       freyja_demixed = freyja_demixed,
       collection_date = collection_date,
-      freyja_plot_name = freyja_plot_name
+      freyja_plot_name = freyja_plot_name_updated
   }
   call versioning.version_capture {
     input:

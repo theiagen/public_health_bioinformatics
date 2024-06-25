@@ -8,9 +8,9 @@ task cg_pipeline {
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/lyveset:1.1.4f"
     String cg_pipe_opts = "--fast"
     Int genome_length
-    Int disk_size = 100
-    Int memory = 8 # added a default value here
-    Int cpu = 4 # added a default value here
+    Int disk_size = 50
+    Int memory = 2 # added a default value here
+    Int cpu = 1 # added a default value here
   }
   command <<<
     # date and version control
@@ -103,6 +103,6 @@ task cg_pipeline {
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
     maxRetries: 3
-    preemptible: 0
+    preemptible: 1
   }
 }

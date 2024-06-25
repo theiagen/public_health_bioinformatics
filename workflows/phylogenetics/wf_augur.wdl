@@ -22,8 +22,9 @@ import "../utilities/wf_organism_parameters.wdl" as set_organism_defaults
 workflow augur {
   input {
     Array[File]+ assembly_fastas # use the HA or NA segment files for flu
-    Array[File]+ sample_metadata_tsvs # created with Augur_Prep
+    Array[File]? sample_metadata_tsvs # created with Augur_Prep
     String build_name
+    String build_name_updated = sub(build_name, " ", "_")
     File? reference_fasta
     Boolean remove_reference = false # by default, do not remove the reference
     File? reference_genbank
@@ -71,17 +72,19 @@ workflow augur {
       input:
     }
   }
-  call augur_utils.tsv_join { # merge the metadata files
-    input:
-      input_tsvs = sample_metadata_tsvs,
-      id_col = "strain",
-      out_basename = "metadata-merged"
+  if (defined(sample_metadata_tsvs)) {
+    call augur_utils.tsv_join { # merge the metadata files
+      input:
+        input_tsvs = select_first([sample_metadata_tsvs]),
+        id_col = "strain",
+        out_basename = "metadata-merged"
+    }
   }
   if (! skip_alignment) { # by default, continue
     call file_handling.cat_files { # concatenate all of the input fasta files together
       input:
         files_to_cat = assembly_fastas,
-        concatenated_file_name = "~{build_name}_concatenated.fasta"
+        concatenated_file_name = "~{build_name_updated}_concatenated.fasta"
     }
   }
   call augur_utils.filter_sequences_by_length { # remove any sequences that do not meet the quality threshold
@@ -104,37 +107,37 @@ workflow augur {
   call tree_task.augur_tree { # create a "draft" (or distance) augur tree
     input:
       aligned_fasta = select_first([augur_align.aligned_fasta, filter_sequences_by_length.filtered_fasta]),
-      build_name = build_name
+      build_name = build_name_updated
   }
-  if (! distance_tree_only) { # by default, continue
+  if (! distance_tree_only && defined(tsv_join.out_tsv)) { # by default, continue
     call refine_task.augur_refine { # create a timetree (aka, refine augur tree)
       input:
         aligned_fasta = select_first([augur_align.aligned_fasta, filter_sequences_by_length.filtered_fasta]),
         draft_augur_tree = augur_tree.aligned_tree,
         metadata = tsv_join.out_tsv,
-        build_name = build_name
+        build_name = build_name_updated
     }
     call ancestral_task.augur_ancestral { # infer ancestral sequences
       input:
         refined_tree = augur_refine.refined_tree,
         aligned_fasta = select_first([augur_align.aligned_fasta, filter_sequences_by_length.filtered_fasta]),
-        build_name = build_name
+        build_name = build_name_updated
     }
     call translate_task.augur_translate { # translate gene regions from nucleotides to amino acids
       input:
         refined_tree = augur_refine.refined_tree,
         ancestral_nt_muts_json = augur_ancestral.ancestral_nt_muts_json,
         reference_genbank = select_first([reference_genbank, sc2_defaults.reference_genbank, organism_parameters.reference_gbk]),
-        build_name = build_name
+        build_name = build_name_updated
     }
     if (flu_segment == "HA") { # we only have clade information for HA segments (but SC2 defaults will be selected first)
-      if (run_traits) { # by default do not run traits and clades will be assigned based on the clades_tsv
+      if (run_traits && defined(tsv_join.out_tsv)) { # by default do not run traits and clades will be assigned based on the clades_tsv
         call traits_task.augur_traits {
           input:
             refined_tree = augur_refine.refined_tree,
             metadata = tsv_join.out_tsv,
             columns = select_first([augur_trait_columns, "pango_lineage,clade_membership"]), # default to these columns if none are specified
-            build_name = build_name
+            build_name = build_name_updated
         }
       }
       if (! run_traits) {
@@ -144,7 +147,7 @@ workflow augur {
               refined_tree = augur_refine.refined_tree,
               ancestral_nt_muts_json = augur_ancestral.ancestral_nt_muts_json,
               translated_aa_muts_json = augur_translate.translated_aa_muts_json,
-              build_name = build_name,
+              build_name = build_name_updated,
               clades_tsv = select_first([clades_tsv, sc2_defaults.clades_tsv, organism_parameters.augur_clades_tsv])
           }
         }
@@ -160,21 +163,21 @@ workflow augur {
                             augur_translate.translated_aa_muts_json,
                             augur_clades.clade_assignments_json,
                             augur_traits.traits_assignments_json]),
-        build_name = build_name,
+        build_name = build_name_updated,
         lat_longs_tsv = select_first([lat_longs_tsv, sc2_defaults.lat_longs_tsv, organism_parameters.augur_lat_longs_tsv]),
         auspice_config = select_first([auspice_config, sc2_defaults.auspice_config, organism_parameters.augur_auspice_config])
     }
   }
   call snp_dists_task.snp_dists { # create a snp matrix from the alignment
     input:
-      cluster_name = build_name,
+      cluster_name = build_name_updated,
       alignment = select_first([augur_align.aligned_fasta,filter_sequences_by_length.filtered_fasta])
   }
   call reorder_matrix_task.reorder_matrix { # reorder snp matrix to match distance tree 
     input:
       input_tree = augur_tree.aligned_tree,
       matrix = snp_dists.snp_matrix,
-      cluster_name = build_name,
+      cluster_name = build_name_updated,
       midpoint_root_tree = midpoint_root_tree
   }
   call versioning.version_capture { # capture the version
@@ -192,7 +195,7 @@ workflow augur {
     File distance_tree = augur_tree.aligned_tree
     File aligned_fastas = select_first([augur_align.aligned_fasta, alignment_fasta])
     File combined_assemblies = filter_sequences_by_length.filtered_fasta
-    File metadata_merged = tsv_join.out_tsv
+    File? metadata_merged = tsv_join.out_tsv
     File? traits_json = augur_traits.traits_assignments_json
 
     # list of samples that were kept and met the length filters    

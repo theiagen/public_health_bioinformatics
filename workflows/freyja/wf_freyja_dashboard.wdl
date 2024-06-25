@@ -10,6 +10,7 @@ workflow freyja_dashboard {
     Array[String] collection_date
     Array[String] viral_load
     String freyja_dashboard_title
+    String freyja_dashboard_title_updated = sub(freyja_dashboard_title, " ", "_")
     File? dashboard_intro_text
   }
   call freyja_dash.freyja_dashboard_task {
@@ -18,7 +19,7 @@ workflow freyja_dashboard {
       freyja_demixed = freyja_demixed,
       collection_date = collection_date,
       viral_load = viral_load,
-      freyja_dashboard_title = freyja_dashboard_title,
+      freyja_dashboard_title = freyja_dashboard_title_updated,
       dashboard_intro_text = dashboard_intro_text,
   }
   call versioning.version_capture {

@@ -570,12 +570,23 @@ workflow theiaprok_illumina_pe {
             qc_check = qc_check_task.qc_check,
             qc_standard = qc_check_task.qc_standard,
             srst2_vibrio_detailed_tsv = merlin_magic.srst2_vibrio_detailed_tsv,
+            srst2_vibrio_docker = merlin_magic.srst2_vibrio_docker,
+            srst2_vibrio_database = merlin_magic.srst2_vibrio_database,
             srst2_vibrio_version = merlin_magic.srst2_vibrio_version,
             srst2_vibrio_ctxA = merlin_magic.srst2_vibrio_ctxA,
             srst2_vibrio_ompW = merlin_magic.srst2_vibrio_ompW,
             srst2_vibrio_toxR = merlin_magic.srst2_vibrio_toxR,
             srst2_vibrio_serogroup = merlin_magic.srst2_vibrio_serogroup,
-            srst2_vibrio_biotype = merlin_magic.srst2_vibrio_biotype
+            srst2_vibrio_biotype = merlin_magic.srst2_vibrio_biotype,
+            abricate_vibrio_detailed_tsv = merlin_magic.abricate_vibrio_detailed_tsv,
+            abricate_vibrio_database = merlin_magic.abricate_vibrio_database,
+            abricate_vibrio_docker = merlin_magic.abricate_vibrio_docker,
+            abricate_vibrio_version = merlin_magic.abricate_vibrio_version,
+            abricate_vibrio_ctxA = merlin_magic.abricate_vibrio_ctxA,
+            abricate_vibrio_ompW = merlin_magic.abricate_vibrio_ompW,
+            abricate_vibrio_toxR = merlin_magic.abricate_vibrio_toxR,
+            abricate_vibrio_biotype = merlin_magic.abricate_vibrio_biotype,
+            abricate_vibrio_serogroup = merlin_magic.abricate_vibrio_serogroup
         }
       }
     }
@@ -705,6 +716,13 @@ workflow theiaprok_illumina_pe {
     String? amrfinderplus_amr_subclasses = amrfinderplus_task.amrfinderplus_amr_subclasses
     String? amrfinderplus_version = amrfinderplus_task.amrfinderplus_version
     String? amrfinderplus_db_version = amrfinderplus_task.amrfinderplus_db_version
+    # NCBI-AMRFinderPlus Outputs for BETA-LACTAM genes
+    String? amrfinderplus_amr_betalactam_genes = amrfinderplus_task.amrfinderplus_amr_betalactam_genes
+    String? amrfinderplus_amr_betalactam_betalactam_genes = amrfinderplus_task.amrfinderplus_amr_betalactam_betalactam_genes
+    String? amrfinderplus_amr_betalactam_carbapenem_genes = amrfinderplus_task.amrfinderplus_amr_betalactam_carbapenem_genes
+    String? amrfinderplus_amr_betalactam_cephalosporin_genes = amrfinderplus_task.amrfinderplus_amr_betalactam_cephalosporin_genes
+    String? amrfinderplus_amr_betalactam_cephalothin_genes = amrfinderplus_task.amrfinderplus_amr_betalactam_cephalothin_genes
+    String? amrfinderplus_amr_betalactam_methicillin_genes = amrfinderplus_task.amrfinderplus_amr_betalactam_methicillin_genes
     # Resfinder Outputs
     File? resfinder_pheno_table = resfinder_task.resfinder_pheno_table
     File? resfinder_pheno_table_species = resfinder_task.resfinder_pheno_table_species
@@ -975,11 +993,22 @@ workflow theiaprok_illumina_pe {
     # Vibrio Typing
     File? srst2_vibrio_detailed_tsv = merlin_magic.srst2_vibrio_detailed_tsv
     String? srst2_vibrio_version = merlin_magic.srst2_vibrio_version
+    String? srst2_vibrio_docker = merlin_magic.srst2_vibrio_docker
+    String? srst2_vibrio_database = merlin_magic.srst2_vibrio_database
     String? srst2_vibrio_ctxA = merlin_magic.srst2_vibrio_ctxA
     String? srst2_vibrio_ompW = merlin_magic.srst2_vibrio_ompW
     String? srst2_vibrio_toxR = merlin_magic.srst2_vibrio_toxR
     String? srst2_vibrio_biotype = merlin_magic.srst2_vibrio_biotype
     String? srst2_vibrio_serogroup = merlin_magic.srst2_vibrio_serogroup
+    File? abricate_vibrio_detailed_tsv = merlin_magic.abricate_vibrio_detailed_tsv
+    String? abricate_vibrio_database = merlin_magic.abricate_vibrio_database
+    String? abricate_vibrio_docker = merlin_magic.abricate_vibrio_docker
+    String? abricate_vibrio_version = merlin_magic.abricate_vibrio_version
+    String? abricate_vibrio_ctxA = merlin_magic.abricate_vibrio_ctxA
+    String? abricate_vibrio_ompW = merlin_magic.abricate_vibrio_ompW
+    String? abricate_vibrio_toxR = merlin_magic.abricate_vibrio_toxR
+    String? abricate_vibrio_biotype = merlin_magic.abricate_vibrio_biotype
+    String? abricate_vibrio_serogroup = merlin_magic.abricate_vibrio_serogroup
     # export taxon table output
     String? taxon_table_status = export_taxon_tables.status
   }

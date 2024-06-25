@@ -4,12 +4,14 @@ task gambitcore {
   input {
     File assembly
     String samplename
-    String docker = "us-docker.pkg.dev/general-theiagen/internal/gambitcore:0.0.1"
-    File gambit_db_genomes = "gs://gambit-databases-rp/2.0.0/gambit-metadata-2.0.0-20240415.gdb"
-    File gambit_db_signatures = "gs://gambit-databases-rp/2.0.0/gambit-signatures-2.0.0-20240415.gs"
+    String docker = "us-docker.pkg.dev/general-theiagen/internal/gambitcore:0.0.2"
+    File gambit_db_genomes = "gs://gambit-databases-rp/1.3.0/gambit-metadata-1.3-231016.gdb"
+    File gambit_db_signatures = "gs://gambit-databases-rp/1.3.0/gambit-signatures-1.3-231016.gs"
     Int disk_size = 100
     Int memory = 2
     Int cpu = 1
+    Int? max_species_genomes # Max number of genomes in a species to consider, ignore all others above this
+    Float? core_proportion # Proportion of genomes a kmer must be in for a species to be considered core
   }
   command <<<
     # capture date
@@ -27,7 +29,11 @@ task gambitcore {
     
     # run gambit core check on the assembly
     echo "Running gambitcore with: gambitcore ${gambit_db_dir} ~{assembly}"
-    gambitcore ${gambit_db_dir} ~{assembly} | tee ~{samplename}_gambitcore_report.tsv
+    gambitcore \
+      --cpus ~{cpu} \
+      ~{'--max_species_genomes ' + max_species_genomes} \
+      ~{'--core_proportion ' + core_proportion} \
+      ${gambit_db_dir} ~{assembly} | tee ~{samplename}_gambitcore_report.tsv
 
     # parse output file
     cat ~{samplename}_gambitcore_report.tsv | cut -f 2 | tail -n 1 | tee SPECIES
@@ -47,10 +53,10 @@ task gambitcore {
     String gambitcore_completeness = read_string("COMPLETENESS")
     String gambitcore_kmers_ratio = read_string("ASSEMBLY_SPECIES_CORE_KMERS")
     String gambitcore_closest_accession = read_string("CLOSEST_ACCESSION")
-    Float gambitcore_closest_distance = read_string("CLOSEST_DISTANCE")
-    Int gambitcore_assembly_kmers = read_string("ASSEMBLY_KMERS")
-    Int gambitcore_species_kmers = read_string("SPECIES_KMERS")
-    Int gambitcore_species_std_kmers = read_string("SPECIES_STD_KMERS")
+    String gambitcore_closest_distance = read_string("CLOSEST_DISTANCE")
+    String gambitcore_assembly_kmers = read_string("ASSEMBLY_KMERS")
+    String gambitcore_species_kmers = read_string("SPECIES_KMERS")
+    String gambitcore_species_std_kmers = read_string("SPECIES_STD_KMERS")
     String gambitcore_assembly_qc = read_string("ASSEMBLY_QC")
     String gambitcore_db_version = read_string("GAMBIT_DB_VERSION")
     String gambitcore_docker = docker
