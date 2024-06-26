@@ -1,5 +1,8 @@
 version 1.0
 
+# task adapted with some modifications from Neranjan Perera's GAS_identification task_emmtyper.wdl
+# https://github.com/neranjan007/GAS_identification/blob/454ef3b0cc8a90950b48342cde87136962f9adb1/tasks/task_emmtyper.wdl
+
 task emmtyper {
   meta {
     description: "emm-typing of Streptococcus pyogenes assemblies"
