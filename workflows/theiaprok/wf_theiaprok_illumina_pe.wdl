@@ -541,6 +541,10 @@ workflow theiaprok_illumina_pe {
             seroba_ariba_serotype = merlin_magic.seroba_ariba_serotype,
             seroba_ariba_identity = merlin_magic.seroba_ariba_identity,
             seroba_details = merlin_magic.seroba_details,
+            emmtyper_emm_type = merlin_magic.emmtyper_emm_type,
+            emmtyper_results_tsv = merlin_magic.emmtyper_results_tsv,
+            emmtyper_version = merlin_magic.emmtyper_version,
+            emmtyper_docker = merlin_magic.emmtyper_docker,
             emmtypingtool_emm_type = merlin_magic.emmtypingtool_emm_type,
             emmtypingtool_results_xml = merlin_magic.emmtypingtool_results_xml,
             emmtypingtool_version = merlin_magic.emmtypingtool_version,
@@ -973,6 +977,10 @@ workflow theiaprok_illumina_pe {
     String? seroba_ariba_identity = merlin_magic.seroba_ariba_identity
     File? seroba_details = merlin_magic.seroba_details
     # Streptococcus pyogenes Typing
+    String? emmtyper_emm_type = merlin_magic.emmtyper_emm_type
+    File? emmtyper_results_tsv = merlin_magic.emmtyper_results_tsv
+    String? emmtyper_version = merlin_magic.emmtyper_version
+    String? emmtyper_docker = merlin_magic.emmtyper_docker
     String? emmtypingtool_emm_type = merlin_magic.emmtypingtool_emm_type
     File? emmtypingtool_results_xml = merlin_magic.emmtypingtool_results_xml
     String? emmtypingtool_version = merlin_magic.emmtypingtool_version
