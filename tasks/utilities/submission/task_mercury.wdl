@@ -32,7 +32,7 @@ task mercury {
     python3 /mercury/mercury/mercury.py -v | tee VERSION
 
     python3 /mercury/mercury/mercury.py \
-      ~{data_table} ~{table_name} ~{sep=',' samplenames} \
+      ~{data_table} "~{table_name}_id" ~{sep=',' samplenames} \
       --gcp_bucket_uri ~{gcp_bucket_uri} \
       ~{"--organism " + organism} \
       ~{"--output_prefix " + output_name} \
