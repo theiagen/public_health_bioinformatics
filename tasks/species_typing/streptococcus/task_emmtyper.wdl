@@ -53,10 +53,15 @@ task emmtyper {
       ~{'--max-size' + max_size} \
       ~{assembly} \
       > ~{samplename}.tsv
+
+      # emm type is in column 4 for verbose output
+      awk -F "\t" '{print $4}' ~{samplename}.tsv > EMM_TYPE
   >>>
   output {
-    File emmtyper_results = "~{samplename}.tsv"
+    String emmtyper_emm_type = read_string("EMM_TYPE")
+    File emmtyper_results_tsv = "~{samplename}_emmtyper.tsv"
     String emmtyper_version = read_string("VERSION")
+    String emmtyper_docker = docker
   }
   runtime {
     docker: "~{docker}"
