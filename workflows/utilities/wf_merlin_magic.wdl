@@ -54,7 +54,6 @@ workflow merlin_magic {
     String? pasty_docker_image
     String? emmtypingtool_docker_image
     String? shigeifinder_docker_image
-    String? stxtyper_docker_image
     String? shigatyper_docker_image
     String? staphopia_sccmec_docker_image
     String? agrvate_docker_image
@@ -92,6 +91,11 @@ workflow merlin_magic {
     String? virulencefinder_database
     Int abricate_vibrio_minid = 80
     Int abricate_vibrio_mincov = 80
+    Float? stxtyper_coverage_threshold_to_output_partial_hits
+    String? stxtyper_docker_image
+    Int? stxtyper_disk_size
+    Int? stxtyper_cpu
+    Int? stxtyper_memory
   }
   # theiaprok
   if (merlin_tag == "Acinetobacter baumannii") {
@@ -150,7 +154,11 @@ workflow merlin_magic {
         input:
           assembly = assembly,
           samplename = samplename,
-          docker = stxtyper_docker_image
+          docker = stxtyper_docker_image,
+          disk_size = stxtyper_disk_size,
+          cpu = stxtyper_cpu,
+          memory = stxtyper_memory,
+          coverage_threshold_to_output_partial_hits = stxtyper_coverage_threshold_to_output_partial_hits
     }
   }
   if (merlin_tag == "Escherichia" ) {
@@ -514,8 +522,9 @@ workflow merlin_magic {
     File? stxtyper_log = stxtyper.stxtyper_log
     String? stxtyper_docker = stxtyper.stxtyper_docker
     String? stxtyper_version = stxtyper.stxtyper_version
-    String? stxtyper_hits = stxtyper.stxtyper_hits
     Int? stxtyper_num_hits = stxtyper.stxtyper_num_hits
+    ## TODO ADD MANY STXTYPER OUTPUTS HERE
+    
     # Shigella sonnei Typing
     File? sonneityping_mykrobe_report_csv = sonneityping.sonneityping_mykrobe_report_csv
     File? sonneityping_mykrobe_report_json = sonneityping.sonneityping_mykrobe_report_json
