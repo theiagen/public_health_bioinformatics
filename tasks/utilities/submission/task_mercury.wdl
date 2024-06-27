@@ -53,7 +53,7 @@ task mercury {
     File? bankit_metadata = "~{output_name}.src"
     File? biosample_metadata = "~{output_name}_biosample_metadata.tsv"
     File? excluded_samples = "~{output_name}_excluded_samples.tsv"
-    File? genbank_fasta = "~{output_name}_genbank_combined.fasta"
+    File? genbank_fasta = "~{output_name}_genbank_untrimmed_combined.fasta"
     File? genbank_metadata = "~{output_name}_genbank_metadata.tsv"
     File? gisaid_fasta = "~{output_name}_gisaid_combined.fasta"
     File? gisaid_metadata = "~{output_name}_gisaid_metadata.csv"
