@@ -42,22 +42,22 @@ task emmtyper {
     echo $(emmtyper --version 2>&1) | sed 's/^.*emmtyper v//' | tee VERSION
 
     emmtyper \
-      ~{'--workflow' + wf} \
-      ~{'--cluster-distance' + cluster_distance} \
-      ~{'--percent-identity' + percid} \
-      ~{'--culling-limit' + culling_limit} \
-      ~{'--mismatch' + mismatch} \
-      ~{'--align-diff' + align_diff} \
-      ~{'--gap' + gap} \
-      ~{'--min-perfect' + min_perfect} \
-      ~{'--min-good' + min_good} \
-      ~{'--max-size' + max_size} \
-      --output-format verbose
+      ~{'--workflow ' + wf} \
+      ~{'--cluster-distance ' + cluster_distance} \
+      ~{'--percent-identity ' + percid} \
+      ~{'--culling-limit ' + culling_limit} \
+      ~{'--mismatch ' + mismatch} \
+      ~{'--align-diff ' + align_diff} \
+      ~{'--gap ' + gap} \
+      ~{'--min-perfect ' + min_perfect} \
+      ~{'--min-good ' + min_good} \
+      ~{'--max-size ' + max_size} \
+      --output-format verbose \
       ~{assembly} \
-      > ~{samplename}.tsv
+      > ~{samplename}_emmtyper.tsv
 
       # emm type is in column 4 for verbose output format
-      awk -F "\t" '{print $4}' ~{samplename}.tsv > EMM_TYPE
+      awk -F "\t" '{print $4}' ~{samplename}_emmtyper.tsv > EMM_TYPE
   >>>
   output {
     String emmtyper_emm_type = read_string("EMM_TYPE")
