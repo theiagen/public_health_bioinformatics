@@ -184,7 +184,7 @@ task stxtyper {
     String stxtyper_stx_frameshifts_or_internal_stop_hits =  read_string("stxtyper_stx_frameshifts_or_internal_stop_hits.txt")
     String stxtyper_A_partial_B_complete = read_string("stxtyper_A_partial_B_complete.txt")
     String stxtyper_A_B_complete_different_contigs = read_string("stxtyper_A_B_complete_different_contigs.txt")
-    String stx_novel_hits = read_string("stx_novel_hits.txt")
+    String stxtyper_novel_hits = read_string("stx_novel_hits.txt")
   }
   runtime {
     docker: "~{docker}"

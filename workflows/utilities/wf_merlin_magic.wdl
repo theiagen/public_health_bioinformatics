@@ -523,8 +523,17 @@ workflow merlin_magic {
     String? stxtyper_docker = stxtyper.stxtyper_docker
     String? stxtyper_version = stxtyper.stxtyper_version
     Int? stxtyper_num_hits = stxtyper.stxtyper_num_hits
-    ## TODO ADD MANY STXTYPER OUTPUTS HERE
-    
+    String? stxtyper_complete_operons = stxtyper.stxtyper_complete_operons
+    String? stxtyper_partial_hits = stxtyper.stxtyper_partial_hits
+    String? stxtyper_stxA_complete_hits = stxtyper.stxtyper_stxA_complete_hits
+    String? stxtyper_stxB_complete_hits = stxtyper.stxtyper_stxB_complete_hits
+    String? stxtyper_stxA_partial_hits = stxtyper.stxtyper_stxA_partial_hits
+    # commenting out at user's request. keeping code in case we want to bring back later
+    #String stxtyper_stxB_partial_hits = stxtyper.stxtyper_stxB_partial_hits
+    String? stxtyper_stx_frameshifts_or_internal_stop_hits =  stxtyper.stxtyper_stx_frameshifts_or_internal_stop_hits
+    String? stxtyper_A_partial_B_complete = stxtyper.stxtyper_A_partial_B_complete
+    String? stxtyper_A_B_complete_different_contigs = stxtyper.stxtyper_A_B_complete_different_contigs
+    String? stxtyper_novel_hits = stxtyper.stxtyper_novel_hits
     # Shigella sonnei Typing
     File? sonneityping_mykrobe_report_csv = sonneityping.sonneityping_mykrobe_report_csv
     File? sonneityping_mykrobe_report_json = sonneityping.sonneityping_mykrobe_report_json
