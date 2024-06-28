@@ -23,6 +23,7 @@ workflow gambitcore_wf {
     File gambitcore_report_file = gambitcore.gambitcore_report_file
     String gambitcore_species = gambitcore.gambitcore_species
     String gambitcore_completeness = gambitcore.gambitcore_completeness
+    String gambitcore_n_genomes = gambitcore.gambitcore_n_genomes
     String gambitcore_kmers_ratio = gambitcore.gambitcore_kmers_ratio
     String gambitcore_closest_accession = gambitcore.gambitcore_closest_accession
     String gambitcore_closest_distance = gambitcore.gambitcore_closest_distance

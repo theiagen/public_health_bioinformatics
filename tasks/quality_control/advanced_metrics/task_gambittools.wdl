@@ -4,7 +4,7 @@ task gambitcore {
   input {
     File assembly
     String samplename
-    String docker = "us-docker.pkg.dev/general-theiagen/internal/gambitcore:0.0.2"
+    String docker = "us-docker.pkg.dev/general-theiagen/internal/gambitcore:0.0.3"
     File gambit_db_genomes = "gs://gambit-databases-rp/1.3.0/gambit-metadata-1.3-231016.gdb"
     File gambit_db_signatures = "gs://gambit-databases-rp/1.3.0/gambit-signatures-1.3-231016.gs"
     Int disk_size = 100
@@ -34,23 +34,37 @@ task gambitcore {
       ~{'--max_species_genomes ' + max_species_genomes} \
       ~{'--core_proportion ' + core_proportion} \
       ${gambit_db_dir} ~{assembly} | tee ~{samplename}_gambitcore_report.tsv
+    
+    # check if the output file was created
+    if [ ! -s ~{samplename}_gambitcore_report.tsv ]; then
+      echo "Gambitcore failed to produce a report"
+      exit 1
+    fi
+
+    # check if file has more than 1 line
+    if [ $(wc -l < ~{samplename}_gambitcore_report.tsv) -lt 2 ]; then
+      echo "Gambitcore produced an empty report"
+      exit 1
+    fi
 
     # parse output file
     cat ~{samplename}_gambitcore_report.tsv | cut -f 2 | tail -n 1 | tee SPECIES
     cat ~{samplename}_gambitcore_report.tsv | cut -f 3 | tail -n 1 | tee COMPLETENESS
-    cat ~{samplename}_gambitcore_report.tsv | cut -f 4 | tail -n 1 | tee ASSEMBLY_SPECIES_CORE_KMERS
-    cat ~{samplename}_gambitcore_report.tsv | cut -f 5 | tail -n 1 | tee CLOSEST_ACCESSION
-    cat ~{samplename}_gambitcore_report.tsv | cut -f 6 | tail -n 1 | tee CLOSEST_DISTANCE
-    cat ~{samplename}_gambitcore_report.tsv | cut -f 7 | tail -n 1 | tee ASSEMBLY_KMERS
-    cat ~{samplename}_gambitcore_report.tsv | cut -f 8 | tail -n 1 | tee SPECIES_KMERS
-    cat ~{samplename}_gambitcore_report.tsv | cut -f 9 | tail -n 1 | tee SPECIES_STD_KMERS
-    cat ~{samplename}_gambitcore_report.tsv | cut -f 10 | tail -n 1 | tee ASSEMBLY_QC
+    cat ~{samplename}_gambitcore_report.tsv | cut -f 4 | tail -n 1 | tee N_GENOMES
+    cat ~{samplename}_gambitcore_report.tsv | cut -f 5 | tail -n 1 | tee ASSEMBLY_SPECIES_CORE_KMERS
+    cat ~{samplename}_gambitcore_report.tsv | cut -f 6 | tail -n 1 | tee CLOSEST_ACCESSION
+    cat ~{samplename}_gambitcore_report.tsv | cut -f 7 | tail -n 1 | tee CLOSEST_DISTANCE
+    cat ~{samplename}_gambitcore_report.tsv | cut -f 8 | tail -n 1 | tee ASSEMBLY_KMERS
+    cat ~{samplename}_gambitcore_report.tsv | cut -f 9 | tail -n 1 | tee SPECIES_KMERS
+    cat ~{samplename}_gambitcore_report.tsv | cut -f 10 | tail -n 1 | tee SPECIES_STD_KMERS
+    cat ~{samplename}_gambitcore_report.tsv | cut -f 11 | tail -n 1 | tee ASSEMBLY_QC
 
   >>>
   output {
     File gambitcore_report_file = "~{samplename}_gambitcore_report.tsv"
     String gambitcore_species = read_string("SPECIES")
     String gambitcore_completeness = read_string("COMPLETENESS")
+    String gambitcore_n_genomes = read_string("N_GENOMES")
     String gambitcore_kmers_ratio = read_string("ASSEMBLY_SPECIES_CORE_KMERS")
     String gambitcore_closest_accession = read_string("CLOSEST_ACCESSION")
     String gambitcore_closest_distance = read_string("CLOSEST_DISTANCE")
