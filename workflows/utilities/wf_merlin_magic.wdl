@@ -91,7 +91,7 @@ workflow merlin_magic {
     String? virulencefinder_database
     Int abricate_vibrio_minid = 80
     Int abricate_vibrio_mincov = 80
-    Float? stxtyper_coverage_threshold_to_output_partial_hits
+    Float? stxtyper_cov_threshold_to_output_partial_hits
     String? stxtyper_docker_image
     Int? stxtyper_disk_size
     Int? stxtyper_cpu
@@ -158,7 +158,7 @@ workflow merlin_magic {
           disk_size = stxtyper_disk_size,
           cpu = stxtyper_cpu,
           memory = stxtyper_memory,
-          coverage_threshold_to_output_partial_hits = stxtyper_coverage_threshold_to_output_partial_hits
+          coverage_threshold_to_output_partial_hits = stxtyper_cov_threshold_to_output_partial_hits
     }
   }
   if (merlin_tag == "Escherichia" ) {
