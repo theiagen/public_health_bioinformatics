@@ -9,7 +9,7 @@ task stxtyper {
     String docker = "kapsakcj/stxtyper:78754d7"
     Int disk_size = 50
     Int cpu = 1
-    Int memory = 2
+    Int memory = 4
   }
   command <<<
     # capture date
