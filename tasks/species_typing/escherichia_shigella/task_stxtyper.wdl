@@ -237,7 +237,6 @@ task stxtyper {
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
     preemptible: 1
-    ## TODO: REVERT maxRetries BACK TO 3 AFTER TESTING IS COMPLETE
-    maxRetries: 0
+    maxRetries: 3
   }
 }
