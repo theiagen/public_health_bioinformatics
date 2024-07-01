@@ -25,6 +25,7 @@ import "../../tasks/species_typing/salmonella/task_sistr.wdl" as sistr_task
 import "../../tasks/species_typing/staphylococcus/task_agrvate.wdl" as agrvate_task
 import "../../tasks/species_typing/staphylococcus/task_spatyper.wdl" as spatyper_task
 import "../../tasks/species_typing/staphylococcus/task_staphopiasccmec.wdl" as staphopia_sccmec_task
+import "../../tasks/species_typing/streptococcus/task_emmtyper.wdl" as emmtyper_task
 import "../../tasks/species_typing/streptococcus/task_emmtypingtool.wdl" as emmtypingtool_task
 import "../../tasks/species_typing/streptococcus/task_pbptyper.wdl" as pbptyper
 import "../../tasks/species_typing/streptococcus/task_poppunk_streppneumo.wdl" as poppunk_spneumo
@@ -51,6 +52,17 @@ workflow merlin_magic {
     Int? pasty_min_coverage
     String? hicap_docker_image
     String? pasty_docker_image
+    String? emmtyper_wf
+    Int? emmtyper_cluster_distance
+    Int? emmtyper_percid
+    Int? emmtyper_culling_limit
+    Int? emmtyper_mismatch
+    Int? emmtyper_align_diff
+    Int? emmtyper_gap
+    Int? emmtyper_min_perfect
+    Int? emmtyper_min_good
+    Int? emmtyper_max_size
+    String? emmtyper_docker_image
     String? emmtypingtool_docker_image
     String? shigeifinder_docker_image
     String? shigatyper_docker_image
@@ -338,6 +350,22 @@ workflow merlin_magic {
     }
   }
   if (merlin_tag == "Streptococcus pyogenes") {
+    call emmtyper_task.emmtyper {
+      input:
+        assembly = assembly,
+        samplename = samplename,
+        docker = emmtyper_docker_image,
+        wf = emmtyper_wf,
+        cluster_distance = emmtyper_cluster_distance,
+        percid = emmtyper_percid,
+        culling_limit = emmtyper_culling_limit,
+        mismatch = emmtyper_mismatch,
+        align_diff = emmtyper_align_diff,
+        gap = emmtyper_gap,
+        min_perfect = emmtyper_min_perfect,
+        min_good = emmtyper_min_good,
+        max_size = emmtyper_max_size,
+    }
     if (paired_end && !ont_data) {
       call emmtypingtool_task.emmtypingtool {
         input:
@@ -668,6 +696,10 @@ workflow merlin_magic {
     String? seroba_ariba_identity = seroba_task.seroba_ariba_identity
     File? seroba_details = seroba_task.seroba_details
     # Streptococcus pyogenes Typing
+    String? emmtyper_emm_type = emmtyper.emmtyper_emm_type
+    File? emmtyper_results_tsv = emmtyper.emmtyper_results_tsv
+    String? emmtyper_version = emmtyper.emmtyper_version
+    String? emmtyper_docker = emmtyper.emmtyper_docker
     String? emmtypingtool_emm_type = emmtypingtool.emmtypingtool_emm_type
     File? emmtypingtool_results_xml = emmtypingtool.emmtypingtool_results_xml
     String? emmtypingtool_version = emmtypingtool.emmtypingtool_version

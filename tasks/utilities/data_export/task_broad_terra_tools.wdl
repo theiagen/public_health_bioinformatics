@@ -312,6 +312,10 @@ task export_taxon_tables {
     String? seroba_ariba_serotype
     String? seroba_ariba_identity
     File? seroba_details
+    String? emmtyper_emm_type
+    File? emmtyper_results_tsv
+    String? emmtyper_version
+    String? emmtyper_docker
     String? emmtypingtool_emm_type
     File? emmtypingtool_results_xml
     String? emmtypingtool_version
@@ -722,6 +726,10 @@ task export_taxon_tables {
       "seroba_ariba_serotype": "~{seroba_ariba_serotype}",
       "seroba_ariba_identity": "~{seroba_ariba_identity}",
       "seroba_details": "~{seroba_details}",
+      "emmtyper_emm_type": "~{emmtyper_emm_type}",
+      "emmtyper_results_tsv": "~{emmtyper_results_tsv}",
+      "emmtyper_version": "~{emmtyper_version}",
+      "emmtyper_docker": "~{emmtyper_docker}",
       "emmtypingtool_emm_type": "~{emmtypingtool_emm_type}",
       "emmtypingtool_reults_xml": "~{emmtypingtool_results_xml}",
       "emmtypingtool_version": "~{emmtypingtool_version}",

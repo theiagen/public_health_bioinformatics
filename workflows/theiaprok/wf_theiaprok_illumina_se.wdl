@@ -504,6 +504,10 @@ workflow theiaprok_illumina_se {
             agrvate_agr_num_frameshifts = merlin_magic.agrvate_agr_num_frameshifts,
             agrvate_version = merlin_magic.agrvate_version,
             agrvate_docker = merlin_magic.agrvate_docker,
+            emmtyper_emm_type = merlin_magic.emmtyper_emm_type,
+            emmtyper_results_tsv = merlin_magic.emmtyper_results_tsv,
+            emmtyper_version = merlin_magic.emmtyper_version,
+            emmtyper_docker = merlin_magic.emmtyper_docker,
             midas_docker = read_QC_trim.midas_docker,
             midas_report = read_QC_trim.midas_report,
             midas_primary_genus = read_QC_trim.midas_primary_genus,
@@ -899,6 +903,11 @@ workflow theiaprok_illumina_se {
     String? poppunk_GPS_db_version = merlin_magic.poppunk_GPS_db_version
     String? poppunk_version = merlin_magic.poppunk_version
     String? poppunk_docker = merlin_magic.poppunk_docker
+    # Streptococcus pyogenes Typing
+    String? emmtyper_emm_type = merlin_magic.emmtyper_emm_type
+    File? emmtyper_results_tsv = merlin_magic.emmtyper_results_tsv
+    String? emmtyper_version = merlin_magic.emmtyper_version
+    String? emmtyper_docker = merlin_magic.emmtyper_docker
     # Haemophilus influenzae Typing
     String? hicap_serotype = merlin_magic.hicap_serotype
     String? hicap_genes = merlin_magic.hicap_genes
