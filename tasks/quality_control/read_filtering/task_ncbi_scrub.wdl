@@ -90,7 +90,7 @@ task ncbi_scrub_se {
   >>>
   output {
     File read1_dehosted = "~{samplename}_R1_dehosted.fastq.gz"
-    Int read1_human_spots_removed = read_int("SPOTS_REMOVED")
+    Int human_spots_removed = read_int("SPOTS_REMOVED")
     String ncbi_scrub_docker = docker
   }
   runtime {
