@@ -6,20 +6,22 @@ task mutation_context {
     File ancestral_nt_muts_json
     String build_name
     
-    Int cpu = 4
-    Int memory = 64
-    Int disk_size = 100
+    Int cpu = 1
+    Int memory = 4
+    Int disk_size = 50
     String docker = "us-docker.pkg.dev/general-theiagen/theiagen/nextstrain-mpox-mutation-context:2024-06-27"
   }
   command <<<
     # capture version information
     
-
-    # run augur align
+    echo "DEBUG: Running mutation_context.py script now..."
+    # run mutation_context.py script
     python3 /scripts/mutation_context.py \
       --tree ~{refined_tree} \
       --mutations ~{ancestral_nt_muts_json} \
       --output "~{build_name}_mpox_mutation_context.json"
+
+    echo "DEBUG: Finished running mutation_context.py script."
   >>>
   output {
     File mutation_context_json = "~{build_name}_mpox_mutation_context.json"
@@ -30,8 +32,7 @@ task mutation_context {
     cpu: cpu
     disks: "local-disk " + disk_size + " LOCAL"
     disk: disk_size + " GB" # TES
-    preemptible: 0
-    dx_instance_type: "mem3_ssd1_v2_x4"
+    preemptible: 1
     maxRetries: 3
   }
 }
