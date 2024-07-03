@@ -155,56 +155,58 @@ workflow theiacov_illumina_pe {
             seq_method = seq_method
         }
       }
-      call consensus_qc_task.consensus_qc {
-        input:
-          assembly_fasta =  select_first([ivar_consensus.assembly_fasta, flu_track.irma_assembly_fasta]),
-          reference_genome = organism_parameters.reference,
-          genome_length = organism_parameters.genome_length
-      }
-      # run organism-specific typing
-      if (organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "rsv_a" || organism_parameters.standardized_organism == "rsv_b") { 
-        # tasks specific to either MPXV, sars-cov-2, or RSV-A/RSV-B
-        call nextclade_task.nextclade_v3 {
+      if (defined(ivar_consensus.assembly_fasta) || defined(flu_track.irma_assembly_fasta){
+        call consensus_qc_task.consensus_qc {
           input:
-            genome_fasta = select_first([ivar_consensus.assembly_fasta]),
-            dataset_name = organism_parameters.nextclade_dataset_name,
-            dataset_tag = organism_parameters.nextclade_dataset_tag
+            assembly_fasta =  select_first([ivar_consensus.assembly_fasta, flu_track.irma_assembly_fasta]),
+            reference_genome = organism_parameters.reference,
+            genome_length = organism_parameters.genome_length
         }
-        call nextclade_task.nextclade_output_parser {
-          input:
-            nextclade_tsv = nextclade_v3.nextclade_tsv,
-            organism = organism_parameters.standardized_organism
+        # run organism-specific typing
+        if (organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "rsv_a" || organism_parameters.standardized_organism == "rsv_b") { 
+          # tasks specific to either MPXV, sars-cov-2, or RSV-A/RSV-B
+          call nextclade_task.nextclade_v3 {
+            input:
+              genome_fasta = select_first([ivar_consensus.assembly_fasta]),
+              dataset_name = organism_parameters.nextclade_dataset_name,
+              dataset_tag = organism_parameters.nextclade_dataset_tag
+          }
+          call nextclade_task.nextclade_output_parser {
+            input:
+              nextclade_tsv = nextclade_v3.nextclade_tsv,
+              organism = organism_parameters.standardized_organism
+          }
         }
-      }
-      if (organism_parameters.standardized_organism == "sars-cov-2") {
-        # sars-cov-2 specific tasks
-        call pangolin.pangolin4 {
-          input:
-            samplename = samplename,
-            fasta = select_first([ivar_consensus.assembly_fasta]),
-            docker = organism_parameters.pangolin_docker
+        if (organism_parameters.standardized_organism == "sars-cov-2") {
+          # sars-cov-2 specific tasks
+          call pangolin.pangolin4 {
+            input:
+              samplename = samplename,
+              fasta = select_first([ivar_consensus.assembly_fasta]),
+              docker = organism_parameters.pangolin_docker
+          }
         }
-      }
-      if (organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "MPXV" || defined(reference_gene_locations_bed)) {
-        # tasks specific to either sars-cov-2, MPXV, or any organism with a user-supplied reference gene locations bed file
-        call gene_coverage_task.gene_coverage {
-          input:
-            bamfile = select_first([ivar_consensus.aligned_bam, flu_track.irma_ha_bam, flu_track.irma_na_bam, ""]),
-            bedfile = select_first([reference_gene_locations_bed, organism_parameters.gene_locations_bed]),
-            samplename = samplename,
-            organism = organism_parameters.standardized_organism
+        if (organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "MPXV" || defined(reference_gene_locations_bed)) {
+          # tasks specific to either sars-cov-2, MPXV, or any organism with a user-supplied reference gene locations bed file
+          call gene_coverage_task.gene_coverage {
+            input:
+              bamfile = select_first([ivar_consensus.aligned_bam, flu_track.irma_ha_bam, flu_track.irma_na_bam, ""]),
+              bedfile = select_first([reference_gene_locations_bed, organism_parameters.gene_locations_bed]),
+              samplename = samplename,
+              organism = organism_parameters.standardized_organism
+          }
         }
-      }
-      if (organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "WNV" || organism_parameters.standardized_organism == "flu" || organism_parameters.standardized_organism == "rsv_a" || organism_parameters.standardized_organism == "rsv_b"){ 
-        # tasks specific to MPXV, sars-cov-2, WNV, flu, rsv_a, and rsv_b
-        call vadr_task.vadr {
-          input:
-            genome_fasta = select_first([ivar_consensus.assembly_fasta, flu_track.irma_assembly_fasta_padded]),
-            assembly_length_unambiguous = consensus_qc.number_ATCG,
-            vadr_opts = organism_parameters.vadr_opts,
-            max_length = organism_parameters.vadr_maxlength,
-            skip_length = organism_parameters.vadr_skiplength,
-            memory = organism_parameters.vadr_memory
+        if (organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "WNV" || organism_parameters.standardized_organism == "flu" || organism_parameters.standardized_organism == "rsv_a" || organism_parameters.standardized_organism == "rsv_b"){ 
+          # tasks specific to MPXV, sars-cov-2, WNV, flu, rsv_a, and rsv_b
+          call vadr_task.vadr {
+            input:
+              genome_fasta = select_first([ivar_consensus.assembly_fasta, flu_track.irma_assembly_fasta_padded]),
+              assembly_length_unambiguous = consensus_qc.number_ATCG,
+              vadr_opts = organism_parameters.vadr_opts,
+              max_length = organism_parameters.vadr_maxlength,
+              skip_length = organism_parameters.vadr_skiplength,
+              memory = organism_parameters.vadr_memory
+          }
         }
       }
       if (organism_parameters.standardized_organism == "HIV") {
@@ -318,7 +320,7 @@ workflow theiacov_illumina_pe {
     String? ivar_variant_version = ivar_consensus.ivar_variant_version
     # Read Alignment - assembly outputs
     String assembly_method = "TheiaCoV (~{version_capture.phb_version}): " + select_first([ivar_consensus.assembly_method_nonflu, flu_track.irma_version, ""])
-    String assembly_fasta = select_first([ivar_consensus.assembly_fasta, flu_track.irma_assembly_fasta, ""])
+    String assembly_fasta = select_first([ivar_consensus.assembly_fasta, flu_track.irma_assembly_fasta, "Assembly could not be generated"])
     String? ivar_version_consensus = ivar_consensus.ivar_version_consensus
     String? samtools_version_consensus = ivar_consensus.samtools_version_consensus
     # Read Alignment - consensus assembly qc outputs
