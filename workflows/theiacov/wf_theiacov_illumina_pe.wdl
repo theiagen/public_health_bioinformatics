@@ -155,7 +155,7 @@ workflow theiacov_illumina_pe {
             seq_method = seq_method
         }
       }
-      if (defined(ivar_consensus.assembly_fasta) || defined(flu_track.irma_assembly_fasta){
+      if (defined(ivar_consensus.assembly_fasta) || defined(flu_track.irma_assembly_fasta)) {
         call consensus_qc_task.consensus_qc {
           input:
             assembly_fasta =  select_first([ivar_consensus.assembly_fasta, flu_track.irma_assembly_fasta]),
