@@ -538,7 +538,7 @@
     - path: miniwdl_run/wdl/tasks/quality_control/basic_statistics/task_fastq_scan.wdl
       contains: ["version", "fastq_scan", "output"]
     - path: miniwdl_run/wdl/tasks/quality_control/advanced_metrics/task_mummer_ani.wdl
-      md5sum: 7425333e3e422b4884885387bc5d3fe7
+      md5sum: 7549f9f7815655fccab1eeea6bb89fd5
     - path: miniwdl_run/wdl/tasks/quality_control/comparisons/task_qc_check_phb.wdl
       contains: ["version", "qc_check_table", "output"]
     - path: miniwdl_run/wdl/tasks/quality_control/basic_statistics/task_quast.wdl
