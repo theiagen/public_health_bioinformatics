@@ -97,5 +97,6 @@ task create_terra_table {
     cpu: cpu
     disks: "local-disk " + disk_size + " HDD"
     disk: disk_size + " GB"
+    preemptible: 1
   }
 }
