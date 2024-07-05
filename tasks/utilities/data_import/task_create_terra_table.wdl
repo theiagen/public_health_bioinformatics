@@ -15,6 +15,9 @@ task create_terra_table {
     Int memory = 4
     String docker = "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-06-21"
   }
+  meta {
+    volatile: true
+  }
   String new_table_name_updated = sub(new_table_name, " ", "_")
   command <<<
     echo "DEBUG: starting to creating a terra table"
