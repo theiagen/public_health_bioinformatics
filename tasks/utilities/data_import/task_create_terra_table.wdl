@@ -55,14 +55,19 @@ task create_terra_table {
     fi
 
     # get list of files
-    gcloud storage ls ~{data_location_path} | grep -E "$PATTERN" > filelist.txt
+    gcloud storage ls ~{data_location_path} | grep -E "$PATTERN" > filelist-fullpath.txt
 
-    if [ -s filelist.txt ]; then
+    if [ -s filelist-fullpath.txt ]; then
       echo "DEBUG: files were identified; now identifying sample names"
     else
       echo "DEBUG: no files were identified; please check your data location path and then try again" >&2
       exit 1
     fi
+
+    # use basename to prevent grep searches matching with file paths that include a _(R)1 or _(R)2
+    while read -r filepath; do
+      basename "$filepath" >> filelist-filename.txt
+    done <filelist-fullpath.txt
 
     touch samplenames.txt
     while read -r filepath; do
@@ -70,23 +75,27 @@ task create_terra_table {
       samplename=${file%%_*} 
 
       if grep "$samplename" samplenames.txt; then
-        echo "DEBUG: this sample has been already recorded"
+        echo "DEBUG: this sample has been already added to the terra table"
       else
-        echo "DEBUG: this sample has not yet been recorded, adding to the terra table"
+        echo "DEBUG: this sample has not yet been added to the terra table"
         echo "$samplename" >> samplenames.txt
 
         if ~{paired_end}; then
-          READ1_PATTERN="_R*[1].*\b\.fastq(\.gz)?\b$"
-          READ2_PATTERN="_R*[2].*\b\.fastq(\.gz)?\b$"
-          read1=$(grep "$samplename" filelist.txt | grep -E "$READ1_PATTERN")
-          read2=$(grep "$samplename" filelist.txt | grep -E "$READ2_PATTERN")
+          READ1_PATTERN="_R*1.*\b\.fastq(\.gz)?\b$"
+          READ2_PATTERN="_R*2.*\b\.fastq(\.gz)?\b$"
+
+          # search for the appropriate file in the list of filenames that exclude the path (filelist-filename.txt) 
+          #  and then search for that file in the full-path filelist (filelist-fullpath.txt)
+          read1=$(grep $(grep -E "$READ1_PATTERN" filelist-filename.txt | grep "$samplename") filelist-fullpath.txt)
+          read2=$(grep $(grep -E "$READ2_PATTERN" filelist-filename.txt | grep "$samplename") filelist-fullpath.txt)
+          
           echo -e "$samplename\t$read1\t$read2" >> terra_table_to_upload.tsv 
         else
           echo -e "$samplename\t$filepath" >> terra_table_to_upload.tsv
         fi
 
       fi
-    done <filelist.txt
+    done <filelist-fullpath.txt
 
     echo "DEBUG: terra table created, now beginning upload"
     python3 /scripts/import_large_tsv/import_large_tsv.py --project "~{terra_project}" --workspace "~{terra_workspace}" --tsv terra_table_to_upload.tsv
