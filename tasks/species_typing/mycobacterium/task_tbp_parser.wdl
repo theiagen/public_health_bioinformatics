@@ -17,6 +17,8 @@ task tbp_parser {
   
     Boolean tbp_parser_debug = false
 
+    Boolean add_cycloserine_lims = false
+    
     Boolean tngs_data = false    
     Float? rrs_frequency # default 0.1
     Int? rrs_read_support # default 10
@@ -53,7 +55,8 @@ task tbp_parser {
       ~{"--etha237_frequency " + etha237_frequency} \
       --output_prefix ~{samplename} \
       ~{true="--debug" false="--verbose" tbp_parser_debug} \
-      ~{true="--tngs" false="" tngs_data}
+      ~{true="--tngs" false="" tngs_data} \
+      ~{true="--add_cs_lims" false="" add_cycloserine_lims}
 
     # set default genome percent coverage and average depth to 0 to prevent failures
     echo 0.0 > GENOME_PC
