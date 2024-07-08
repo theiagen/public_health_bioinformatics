@@ -39,19 +39,19 @@ task create_terra_table {
       echo "DEBUG: paired-end data indicated"
       #  this pattern matches any files with either _R1, _1, _R2, or _2 in the filename that ends in .fastq(.gz)
       PATTERN="_R*[1-2].*\b\.f(q|astq)(\.gz)?\b$"
-      echo -e "entity:~{new_table_name_updated}_id\tread1\tread2" > terra_table_to_upload.tsv
+      echo -e "entity:~{new_table_name_updated}_id\tread1\tread2\tupload_date\ttable_created_by" > terra_table_to_upload.tsv
     else
       echo "DEBUG: single-end data indicated"
       # this pattern matches any files that end in fastq(.gz)
       PATTERN="\b\.f(q|astq)(\.gz)?\b$"
-      echo -e "entity:~{new_table_name_updated}_id\tread1" > terra_table_to_upload.tsv
+      echo -e "entity:~{new_table_name_updated}_id\tread1\tupload_date\ttable_created_by" > terra_table_to_upload.tsv
     fi
 
     if ~{assembly_data}; then
       echo "DEBUG: assembly data indicated"
       # this pattern matches any files that end in .fasta(.gz), .fa(.gz) or .fna(.gz)
       PATTERN="\b\.f(na|a|as|fn|asta)(.gz)?\b$"
-      echo -e "entity:~{new_table_name_updated}_id\tassembly_fasta" > terra_table_to_upload.tsv
+      echo -e "entity:~{new_table_name_updated}_id\tassembly_fasta\tupload_date\ttable_created_by" > terra_table_to_upload.tsv
     fi
 
     # get list of files
@@ -68,6 +68,8 @@ task create_terra_table {
     while read -r filepath; do
       basename "$filepath" >> filelist-filename.txt
     done <filelist-fullpath.txt
+
+    UPLOAD_DATE=$(date -I)
 
     touch samplenames.txt
     while read -r filepath; do
@@ -89,9 +91,9 @@ task create_terra_table {
           read1=$(grep $(grep -E "$READ1_PATTERN" filelist-filename.txt | grep "$samplename") filelist-fullpath.txt)
           read2=$(grep $(grep -E "$READ2_PATTERN" filelist-filename.txt | grep "$samplename") filelist-fullpath.txt)
           
-          echo -e "$samplename\t$read1\t$read2" >> terra_table_to_upload.tsv 
+          echo -e "$samplename\t$read1\t$read2\t$UPLOAD_DATE\tCreate_Terra_Table_PHB" >> terra_table_to_upload.tsv 
         else
-          echo -e "$samplename\t$filepath" >> terra_table_to_upload.tsv
+          echo -e "$samplename\t$filepath\t$UPLOAD_DATE\tCreate_Terra_Table_PHB" >> terra_table_to_upload.tsv
         fi
 
       fi
@@ -100,6 +102,9 @@ task create_terra_table {
     echo "DEBUG: terra table created, now beginning upload"
     python3 /scripts/import_large_tsv/import_large_tsv.py --project "~{terra_project}" --workspace "~{terra_workspace}" --tsv terra_table_to_upload.tsv
   >>>
+  output {
+    File terra_table_to_upload = "terra_table_to_upload.tsv"
+  }
   runtime {
     docker: docker
     memory: memory + " GB"
