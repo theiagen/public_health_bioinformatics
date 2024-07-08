@@ -74,12 +74,15 @@ task create_terra_table {
     touch samplenames.txt
     while read -r filepath; do
       file=$(basename "$filepath")
-      samplename=${file%%_*} 
+
+      # samplename is everything before the first underscore and first decimal (name.banana.hello_yes_please.fastq.gz -> name)
+      no_underscore_samplename=${file%%_*} 
+      samplename=${no_underscore_samplename%%.*}
 
       if grep "$samplename" samplenames.txt; then
-        echo "DEBUG: this sample has been already added to the terra table"
+        echo "DEBUG: $samplename is in the terra table"
       else
-        echo "DEBUG: this sample has not yet been added to the terra table"
+        echo "DEBUG: $samplename has NOT been added to the terra table"
         echo "$samplename" >> samplenames.txt
 
         if ~{paired_end}; then
