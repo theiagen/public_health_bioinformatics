@@ -38,19 +38,19 @@ task create_terra_table {
     if ~{paired_end}; then
       echo "DEBUG: paired-end data indicated"
       #  this pattern matches any files with either _R1, _1, _R2, or _2 in the filename that ends in .fastq(.gz)
-      PATTERN="_R*[1-2].*\b\.fastq(\.gz)?\b$"
+      PATTERN="_R*[1-2].*\b\.f(q|astq)(\.gz)?\b$"
       echo -e "entity:~{new_table_name_updated}_id\tread1\tread2" > terra_table_to_upload.tsv
     else
       echo "DEBUG: single-end data indicated"
       # this pattern matches any files that end in fastq(.gz)
-      PATTERN="\b\.fastq(\.gz)?\b$"
+      PATTERN="\b\.f(q|astq)(\.gz)?\b$"
       echo -e "entity:~{new_table_name_updated}_id\tread1" > terra_table_to_upload.tsv
     fi
 
     if ~{assembly_data}; then
       echo "DEBUG: assembly data indicated"
       # this pattern matches any files that end in .fasta(.gz), .fa(.gz) or .fna(.gz)
-      PATTERN="\b\.f(na|a|asta)(.gz)?\b$"
+      PATTERN="\b\.f(na|a|as|fn|asta)(.gz)?\b$"
       echo -e "entity:~{new_table_name_updated}_id\tassembly_fasta" > terra_table_to_upload.tsv
     fi
 
