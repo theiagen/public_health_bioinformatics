@@ -86,8 +86,8 @@ task create_terra_table {
         echo "$samplename" >> samplenames.txt
 
         if ~{paired_end}; then
-          READ1_PATTERN="_R*1.*\b\.fastq(\.gz)?\b$"
-          READ2_PATTERN="_R*2.*\b\.fastq(\.gz)?\b$"
+          READ1_PATTERN="_R*1.*\b\.f(q|astq)(\.gz)?\b$"
+          READ2_PATTERN="_R*2.*\b\.f(q|astq)(\.gz)?\b$"
 
           # search for the appropriate file in the list of filenames that exclude the path (filelist-filename.txt) 
           #  and then search for that file in the full-path filelist (filelist-fullpath.txt)
