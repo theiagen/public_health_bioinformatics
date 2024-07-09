@@ -23,7 +23,7 @@ task mercury {
     Int cpu = 2
     Int disk_size = 100
     Int memory = 8
-    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/mercury:1.0.3"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/mercury:1.0.4"
   }
   meta {
     volatile: true
@@ -46,6 +46,8 @@ task mercury {
       ~{"--number_n_threshold " + number_N_threshold} \
       --debug
 
+    # write out excluded samples file to the stdout
+    cat ~{output_name}_excluded_samples.tsv
   >>>
   output {
     String mercury_version = read_string("VERSION")
@@ -65,6 +67,6 @@ task mercury {
     disks: "local-disk " + disk_size + " SSD"
     docker: docker
     memory: memory
-    preemptible: 1
+    preemptible: 0 # this task has may have a long time and shouldn't be preempted
   }
 }
