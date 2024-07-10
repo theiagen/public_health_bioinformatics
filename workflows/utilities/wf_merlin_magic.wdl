@@ -8,6 +8,7 @@ import "../../tasks/species_typing/escherichia_shigella/task_serotypefinder.wdl"
 import "../../tasks/species_typing/escherichia_shigella/task_shigatyper.wdl" as shigatyper_task
 import "../../tasks/species_typing/escherichia_shigella/task_shigeifinder.wdl" as shigeifinder_task
 import "../../tasks/species_typing/escherichia_shigella/task_sonneityping.wdl" as sonneityping_task
+import "../../tasks/species_typing/escherichia_shigella/task_stxtyper.wdl" as stxtyper_task
 import "../../tasks/species_typing/escherichia_shigella/task_virulencefinder.wdl" as virulencefinder_task
 import "../../tasks/species_typing/haemophilus/task_hicap.wdl" as hicap_task
 import "../../tasks/species_typing/klebsiella/task_kleborate.wdl" as kleborate_task
@@ -102,6 +103,11 @@ workflow merlin_magic {
     String? virulencefinder_database
     Int abricate_vibrio_minid = 80
     Int abricate_vibrio_mincov = 80
+    Float? stxtyper_cov_threshold_to_output_partial_hits
+    String? stxtyper_docker_image
+    Int? stxtyper_disk_size
+    Int? stxtyper_cpu
+    Int? stxtyper_memory
   }
   # theiaprok
   if (merlin_tag == "Acinetobacter baumannii") {
@@ -155,6 +161,16 @@ workflow merlin_magic {
           docker = shigeifinder_docker_image,
           paired_end = paired_end
       }
+    }
+      call stxtyper_task.stxtyper {
+        input:
+          assembly = assembly,
+          samplename = samplename,
+          docker = stxtyper_docker_image,
+          disk_size = stxtyper_disk_size,
+          cpu = stxtyper_cpu,
+          memory = stxtyper_memory,
+          coverage_threshold_to_output_partial_hits = stxtyper_cov_threshold_to_output_partial_hits
     }
   }
   if (merlin_tag == "Escherichia" ) {
@@ -529,6 +545,23 @@ workflow merlin_magic {
     File? virulencefinder_report_tsv = virulencefinder.virulencefinder_report_tsv
     String? virulencefinder_docker = virulencefinder.virulencefinder_docker
     String? virulencefinder_hits = virulencefinder.virulencefinder_hits
+    # stxtyper 
+    File? stxtyper_report = stxtyper.stxtyper_report
+    File? stxtyper_log = stxtyper.stxtyper_log
+    String? stxtyper_docker = stxtyper.stxtyper_docker
+    String? stxtyper_version = stxtyper.stxtyper_version
+    Int? stxtyper_num_hits = stxtyper.stxtyper_num_hits
+    String? stxtyper_complete_operons = stxtyper.stxtyper_complete_operons
+    String? stxtyper_partial_hits = stxtyper.stxtyper_partial_hits
+    String? stxtyper_stxA_complete_hits = stxtyper.stxtyper_stxA_complete_hits
+    String? stxtyper_stxB_complete_hits = stxtyper.stxtyper_stxB_complete_hits
+    String? stxtyper_stxA_partial_hits = stxtyper.stxtyper_stxA_partial_hits
+    # commenting out at user's request. keeping code in case we want to bring back later
+    #String stxtyper_stxB_partial_hits = stxtyper.stxtyper_stxB_partial_hits
+    String? stxtyper_stx_frameshifts_or_internal_stop_hits =  stxtyper.stxtyper_stx_frameshifts_or_internal_stop_hits
+    String? stxtyper_A_partial_B_complete = stxtyper.stxtyper_A_partial_B_complete
+    String? stxtyper_A_B_complete_different_contigs = stxtyper.stxtyper_A_B_complete_different_contigs
+    String? stxtyper_novel_hits = stxtyper.stxtyper_novel_hits
     # Shigella sonnei Typing
     File? sonneityping_mykrobe_report_csv = sonneityping.sonneityping_mykrobe_report_csv
     File? sonneityping_mykrobe_report_json = sonneityping.sonneityping_mykrobe_report_json
