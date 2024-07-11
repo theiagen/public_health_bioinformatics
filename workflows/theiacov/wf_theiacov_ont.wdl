@@ -150,7 +150,20 @@ workflow theiacov_ont {
             standardized_organism = organism_parameters.standardized_organism,
             seq_method = seq_method
         }
-      }      
+      }              
+      # nanoplot for basic QC metrics
+      call nanoplot_task.nanoplot as nanoplot_raw {
+        input:
+          read1 = read1,
+          samplename = samplename,
+          est_genome_length = select_first([genome_length, organism_parameters.genome_length])
+      }
+      call nanoplot_task.nanoplot as nanoplot_clean {
+        input:
+          read1 = read_qc_trim.read1_clean,
+          samplename = samplename,
+          est_genome_length = select_first([genome_length, organism_parameters.genome_length])
+      }
       # consensus QC check
       if (defined(flu_track.irma_assembly_fasta) || defined(consensus.consensus_seq)) {
         call consensus_qc_task.consensus_qc {
@@ -159,19 +172,6 @@ workflow theiacov_ont {
             reference_genome = organism_parameters.reference,
             genome_length = organism_parameters.genome_length
         }      
-        # nanoplot for basic QC metrics
-        call nanoplot_task.nanoplot as nanoplot_raw {
-          input:
-            read1 = read1,
-            samplename = samplename,
-            est_genome_length = select_first([genome_length, consensus_qc.number_Total, organism_parameters.genome_length])
-        }
-        call nanoplot_task.nanoplot as nanoplot_clean {
-          input:
-            read1 = read_qc_trim.read1_clean,
-            samplename = samplename,
-            est_genome_length = select_first([genome_length, consensus_qc.number_Total, organism_parameters.genome_length])
-        }
         # run organism-specific typing
         if (organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "rsv_a" || organism_parameters.standardized_organism == "rsv_b") { 
           # tasks specific to either MPXV, sars-cov-2, rsv_a, or rsv_b
