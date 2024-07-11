@@ -4,6 +4,7 @@ version 1.0
 import "../../tasks/assembly/task_irma.wdl" as irma_task
 import "../../tasks/gene_typing/drug_resistance/task_abricate.wdl" as abricate
 import "../../tasks/quality_control/basic_statistics/task_assembly_metrics.wdl" as assembly_metrics
+import "../../tasks/species_typing/orthomyxoviridae/task_genoflu.wdl" as genoflu_task
 import "../../tasks/taxon_id/task_nextclade.wdl" as nextclade_task
 import "../utilities/wf_influenza_antiviral_substitutions.wdl" as flu_antiviral
 import "../utilities/wf_organism_parameters.wdl" as set_organism_defaults
@@ -35,6 +36,13 @@ workflow flu_track {
     Int? assembly_metrics_cpu
     Int? assembly_metrics_disk_size
     String? assembly_metrics_docker
+
+    # GenoFLU inputs
+    File? genoflu_cross_reference
+    Int? genoflu_cpu
+    Int? genoflu_disk_size
+    String? genoflu_docker
+    Int? genoflu_memory
 
     # Abricate inputs
     Int? abricate_flu_minid
@@ -108,6 +116,16 @@ workflow flu_track {
   String ha_na_assembly_coverage_string = "HA: " + select_first([ha_assembly_coverage.depth, ""]) + ", NA: " + select_first([na_assembly_coverage.depth, ""])
   # ABRICATE will run if assembly is provided, or was generated with IRMA
   if (defined(irma.irma_assemblies)) {
+    call genoflu_task.genoflu {
+      input:
+        assembly_fasta = select_first([irma.irma_assembly_fasta]),
+        samplename = samplename,
+        cross_reference = genoflu_cross_reference,
+        cpu = genoflu_cpu,
+        disk_size = genoflu_disk_size,
+        docker = genoflu_docker,
+        memory = genoflu_memory
+    }
     call abricate.abricate_flu {
       input:
         assembly = select_first([irma.irma_assembly_fasta]),
@@ -236,6 +254,11 @@ workflow flu_track {
     File? irma_ha_bam = irma.seg_ha_bam
     File? irma_na_bam = irma.seg_na_bam
     String ha_na_assembly_coverage = ha_na_assembly_coverage_string
+    # GenoFLU outputs
+    String? genoflu_version = genoflu.genoflu_version
+    String? genoflu_genotype = genoflu.genoflu_genotype
+    String? genoflu_all_segments = genoflu.genoflu_all_segments
+    File? genoflu_output_tsv = genoflu.genoflu_output_tsv
     # Abricate outputs
     String? abricate_flu_type = abricate_flu.abricate_flu_type
     String? abricate_flu_subtype =  abricate_flu.abricate_flu_subtype
