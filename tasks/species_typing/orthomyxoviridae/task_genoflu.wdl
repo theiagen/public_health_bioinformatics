@@ -25,8 +25,18 @@ task genoflu {
       --sample_name ~{samplename} \
       ~{"--cross_reference" + cross_reference} > genoflu.output.txt
 
-    grep "~{samplename} Genotype" genoflu.output.txt | cut -d ">" -f2 | cut -d " " -f2 | cut -d ":" -f1 > GENOTYPE
-    grep "~{samplename} Genotype" genoflu.output.txt | cut -d ">" -f2 | cut -d " " -f3- > ALL_SEGMENTS
+    GENOTYPE=$(grep "~{samplename} Genotype" genoflu.output.txt | cut -d ">" -f2 | cut -d " " -f2 | cut -d ":" -f1)
+    ALL_SEGMENTS=$(grep "~{samplename} Genotype" genoflu.output.txt | cut -d ">" -f2 | cut -d " " -f3-)
+
+    # If genotype unable to be assigned ("Not"), then parse out the expected text
+    if [[ "$GENOTYPE" == "Not" ]]; then
+      grep "~{samplename} Genotype" genoflu.output.txt | cut -d ">" -f2- | cut -d " " -f2- | cut -d ":" -f1 > GENOTYPE
+      grep "~{samplename} Genotype" genoflu.output.txt | cut -d ">" -f2- | cut -d " " -f4- | cut -d ":" -f1 > ALL_SEGMENTS
+    else
+      echo "$GENOTYPE" > GENOTYPE
+      echo "$ALL_SEGMENTS" > ALL_SEGMENTS
+    fi
+
     
     mv ~{samplename}_*_stats.tsv ~{samplename}_stats.tsv
   >>>
