@@ -40,6 +40,7 @@ task gambit {
     python3 <<EOF
     import json
     import csv
+    import re
 
     def fmt_dist(d): return format(d, '.4f')
 
