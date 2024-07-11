@@ -220,7 +220,7 @@
     - path: miniwdl_run/call-clean_check_reads/work/_miniwdl_inputs/0/test_1.clean.fastq.gz
     - path: miniwdl_run/call-clean_check_reads/work/_miniwdl_inputs/0/test_2.clean.fastq.gz
     - path: miniwdl_run/call-gambit/command
-      md5sum: 6f2537d9aa54eac508dc393d27772b76
+      md5sum: 1cb3b68070f2bc73cb23aef2d2fb7b39
     - path: miniwdl_run/call-gambit/inputs.json
       contains: ["assembly", "fasta", "samplename", "test"]
     - path: miniwdl_run/call-gambit/outputs.json
@@ -625,7 +625,7 @@
     - path: miniwdl_run/wdl/tasks/task_versioning.wdl
       md5sum: c20b66eea46148f4618abc038d3877b7
     - path: miniwdl_run/wdl/tasks/taxon_id/task_gambit.wdl
-      md5sum: f4826d61709d0d44b921a821d0d5706f
+      md5sum: 63046996defb730ae98e38b7154240b1
     - path: miniwdl_run/wdl/tasks/taxon_id/contamination/task_kraken2.wdl
       md5sum: 0ea83681884800bda1e3c4e116f2b19d
     - path: miniwdl_run/wdl/tasks/taxon_id/contamination/task_midas.wdl
