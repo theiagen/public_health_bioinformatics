@@ -121,6 +121,8 @@ task gambit {
 
     try:
       merlin_tag = predicted['name']
+      # remove candidate sub-speciation from merlin_tag
+      merlin_tag = re.sub(r'_[A-Za-z]+', '', merlin_tag)  # This line is added to remove _X where X is any letter
     except:
       merlin_tag = "NA"
 
