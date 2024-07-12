@@ -107,7 +107,7 @@ workflow flu_track {
   # combine HA & NA assembly coverages
   String ha_na_assembly_coverage_string = "HA: " + select_first([ha_assembly_coverage.depth, ""]) + ", NA: " + select_first([na_assembly_coverage.depth, ""])
   # ABRICATE will run if assembly is provided, or was generated with IRMA
-  if (defined(irma.irma_assemblies)) {
+  if (defined(irma.irma_assemblies) && defined(irma.irma_assembly_fasta)){
     call abricate.abricate_flu {
       input:
         assembly = select_first([irma.irma_assembly_fasta]),
