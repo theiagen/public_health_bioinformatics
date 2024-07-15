@@ -67,9 +67,9 @@ If local testing was not undertaken/possible, please explicitly state this.-->
 
 #### Theiagen Version Release Testing (optional)
 <!-- 
--Will changes require functional or validation testing (checking outputs etc) during the release?
--Do new samples need to be added to validation datasets? If so, upload these to the appropriate validation workspace Google bucket (). Please describe the new samples here and why these have been chosen.
--Are there any output files that should be checked after running the version release testing?
+- Will changes require functional or validation testing (checking outputs etc) during the release?
+- Do new samples need to be added to validation datasets? If so, upload these to the appropriate validation workspace Google bucket (). Please describe the new samples here and why these have been chosen.
+- Are there any output files that should be checked after running the version release testing?
 -->
 
 ## :microscope: Final Developer Checklist
