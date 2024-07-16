@@ -119,7 +119,10 @@ workflow merlin_magic {
     }
   }
   if (merlin_tag == "Escherichia" || merlin_tag == "Shigella sonnei" ) {
-    # tools specific to all Escherichia and Shigella species
+    # tools specific to ALL Escherichia and Shigella species
+    #
+    # FYI see the GAMBIT task for all merlin_tag designations but all Escherichia and Shigella species are given "Escherichia" merlin_tag designation, except for Shigella sonnei which is given "Shigella sonnei" merlin_tag.
+    # The reason being is that S. sonnei does have a species-specific tool (sonneityping) where the other Shigella species do not (flexneri, dysenteriae, boydii, etc.)
     call serotypefinder_task.serotypefinder {
       input:
         assembly = assembly,
@@ -156,9 +159,6 @@ workflow merlin_magic {
           paired_end = paired_end
       }
     }
-  }
-  if (merlin_tag == "Escherichia" ) {
-    # E coli specific tasks
     call virulencefinder_task.virulencefinder {
       input:
       #  read1 = read1,
