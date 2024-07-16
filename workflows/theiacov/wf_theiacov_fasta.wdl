@@ -80,12 +80,7 @@ workflow theiacov_fasta {
     call genoflu_task.genoflu {
       input:
         assembly_fasta = assembly_fasta,
-        samplename = samplename,
-        cross_reference = genoflu_cross_reference,
-        cpu = genoflu_cpu,
-        disk_size = genoflu_disk_size,
-        docker = genoflu_docker,
-        memory = genoflu_memory
+        samplename = samplename
     }
   }
   if (organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "rsv_a" || organism_parameters.standardized_organism == "rsv_b" || organism_parameters.standardized_organism == "flu") {
