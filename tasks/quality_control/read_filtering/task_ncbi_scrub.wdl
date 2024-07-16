@@ -7,7 +7,7 @@ task ncbi_scrub_pe {
     String samplename
     String docker = "us-docker.pkg.dev/general-theiagen/ncbi/sra-human-scrubber:2.2.1"
     Int disk_size = 100
-    Int memory = 8 
+    Int memory = 8
     Int cpu = 4
   }
   command <<<
@@ -57,7 +57,7 @@ task ncbi_scrub_pe {
       docker: "~{docker}"
       memory: memory + " GB"
       cpu: cpu
-      disks:  "local-disk " + disk_size + " SSD"
+      disks: "local-disk " + disk_size + " SSD"
       disk: disk_size + " GB" # TES
       preemptible: 0
       maxRetries: 3
@@ -70,7 +70,7 @@ task ncbi_scrub_se {
     String samplename
     String docker = "us-docker.pkg.dev/general-theiagen/ncbi/sra-human-scrubber:2.2.1"
     Int disk_size = 100
-    Int memory = 8 
+    Int memory = 8
     Int cpu = 4
   }
   command <<<
@@ -111,7 +111,7 @@ task ncbi_scrub_se {
     docker: "~{docker}"
     memory: memory + " GB"
     cpu: cpu
-    disks:  "local-disk " + disk_size + " SSD"
+    disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB" # TES
     preemptible: 0
     maxRetries: 0
