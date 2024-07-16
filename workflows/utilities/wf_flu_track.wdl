@@ -116,16 +116,6 @@ workflow flu_track {
   String ha_na_assembly_coverage_string = "HA: " + select_first([ha_assembly_coverage.depth, ""]) + ", NA: " + select_first([na_assembly_coverage.depth, ""])
   # ABRICATE will run if assembly is provided, or was generated with IRMA
   if (defined(irma.irma_assemblies) && defined(irma.irma_assembly_fasta)){
-    call genoflu_task.genoflu {
-      input:
-        assembly_fasta = select_first([irma.irma_assembly_fasta]),
-        samplename = samplename,
-        cross_reference = genoflu_cross_reference,
-        cpu = genoflu_cpu,
-        disk_size = genoflu_disk_size,
-        docker = genoflu_docker,
-        memory = genoflu_memory
-    }
     call abricate.abricate_flu {
       input:
         assembly = select_first([irma.irma_assembly_fasta]),
@@ -141,6 +131,18 @@ workflow flu_track {
     if (defined(irma.irma_subtype)) {
       # if IRMA cannot predict a subtype (like with Flu B samples), then set the flu_subtype to the abricate_flu_subtype String output (e.g. "Victoria" for Flu B)
       String algorithmic_flu_subtype = if irma.irma_subtype == "No subtype predicted by IRMA" then abricate_flu.abricate_flu_subtype else irma.irma_subtype
+    }
+    if (select_first([flu_subtype, algorithmic_flu_subtype, abricate_flu.abricate_flu_subtype, "N/A"]) == "H5N1") {
+      call genoflu_task.genoflu {
+        input:
+          assembly_fasta = select_first([irma.irma_assembly_fasta]),
+          samplename = samplename,
+          cross_reference = genoflu_cross_reference,
+          cpu = genoflu_cpu,
+          disk_size = genoflu_disk_size,
+          docker = genoflu_docker,
+          memory = genoflu_memory
+      }
     }
     call set_organism_defaults.organism_parameters as set_flu_na_nextclade_values {
       input:

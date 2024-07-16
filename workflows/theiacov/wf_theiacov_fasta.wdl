@@ -20,7 +20,7 @@ workflow theiacov_fasta {
     String organism = "sars-cov-2" # options: "sars-cov-2" "MPXV" "WNV" "flu" "rsv_a" "rsv_b
     # flu options
     String flu_segment = "HA" # options: HA or NA
-    String? flu_subtype # options: "Victoria" "Yamagata" "H3N2" "H1N1"
+    String? flu_subtype # options: "Victoria" "Yamagata" "H3N2" "H1N1" "H5N1"
     # optional reference information
     File? reference_genome
     Int? genome_length
@@ -73,6 +73,18 @@ workflow theiacov_fasta {
         samplename = samplename,
         fasta = assembly_fasta,
         docker = organism_parameters.pangolin_docker
+    }
+  }
+  if (select_first([flu_subtype, abricate_subtype, "N/A"]) == "H5N1") {
+    call genoflu_task.genoflu {
+      input:
+        assembly_fasta = assembly_fasta,
+        samplename = samplename,
+        cross_reference = genoflu_cross_reference,
+        cpu = genoflu_cpu,
+        disk_size = genoflu_disk_size,
+        docker = genoflu_docker,
+        memory = genoflu_memory
     }
   }
   if (organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "rsv_a" || organism_parameters.standardized_organism == "rsv_b" || organism_parameters.standardized_organism == "flu") {
@@ -166,5 +178,10 @@ workflow theiacov_fasta {
     File? abricate_flu_results = abricate_flu.abricate_flu_results
     String? abricate_flu_database =  abricate_flu.abricate_flu_database
     String? abricate_flu_version = abricate_flu.abricate_flu_version
+    # GenoFLU outputs    
+    String? genoflu_version = genoflu.genoflu_version
+    String? genoflu_genotype = genoflu.genoflu_genotype
+    String? genoflu_all_segments = genoflu.genoflu_all_segments
+    File? genoflu_output_tsv = genoflu.genoflu_output_tsv
   }
 }
