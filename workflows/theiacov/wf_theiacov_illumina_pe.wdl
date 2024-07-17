@@ -400,6 +400,11 @@ workflow theiacov_illumina_pe {
     File? irma_mp_segment_fasta = flu_track.irma_mp_segment_fasta
     File? irma_np_segment_fasta = flu_track.irma_np_segment_fasta
     File? irma_ns_segment_fasta = flu_track.irma_ns_segment_fasta
+    # Flu GenoFLU Outputs
+    String? genoflu_version = flu_track.genoflu_version
+    String? genoflu_genotype = flu_track.genoflu_genotype
+    String? genoflu_all_segments = flu_track.genoflu_all_segments
+    File? genoflu_output_tsv = flu_track.genoflu_output_tsv
     # Flu Abricate Outputs
     String? abricate_flu_type = flu_track.abricate_flu_type
     String? abricate_flu_subtype =  flu_track.abricate_flu_subtype
