@@ -23,11 +23,24 @@ task ncbi_scrub_pe {
       cat_command="cat"
     fi
 
+    # Count the number of reads in each file
+    read1_count=$($cat_command ~{read1} | wc -l | awk '{print $1/4}')
+    read2_count=$($cat_command ~{read2} | wc -l | awk '{print $1/4}')
+
+    if [[ $read1_count -ne $read2_count ]]
+    then
+      echo "ERROR: The number of reads in the two input files do not match."
+      echo "ERROR: The number of reads in read1 is $read1_count and the number of reads in read2 is $read2_count."
+      echo "ERROR: The unpaired reads will be ignored from the interleaved file..."
+    fi
+
     # if compressed, unzip read files as scrub tool does not take in .gz fastq files, and interleave them
     # paste command takes 4 lines at a time and merges them into a single line with tabs
     # tr substitutes the tab separators from paste into new lines, effectively interleaving the reads and keeping the FASTQ format
-    echo "DEGUB: Interleaving reads..."
-    paste <($cat_command ~{read1} | paste - - - -) <($cat_command ~{read2} | paste - - - -) | tr '\t' '\n' > interleaved.fastq
+    # Important: To ensure that the reads are interleaved correctly, the reads must be in the same order in both files
+    # Additionally, only print read pairs that have 8 fields (4 lines) to avoid interleaving unpaired reads
+    echo "DEGUB: Interleaving reads with paste..."
+    paste <($cat_command ~{read1} | paste - - - -) <($cat_command ~{read2} | paste - - - -) | awk '{if (NF == 8) print $1"\n"$2"\n"$3"\n"$4"\n"$5"\n"$6"\n"$7"\n"$8}' | tr '\t' '\n' > interleaved.fastq
 
     # dehost reads
     # -x Remove spots instead of default 'N' replacement.
