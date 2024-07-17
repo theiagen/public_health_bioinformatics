@@ -464,13 +464,13 @@ workflow theiaprok_fasta {
     String busco_results = busco.busco_results
     File? busco_report = busco.busco_report
     # Taxon ID
-    File gambit_report = gambit.gambit_report_file
-    File gambit_closest_genomes = gambit.gambit_closest_genomes_file
-    String gambit_predicted_taxon = gambit.gambit_predicted_taxon
-    String gambit_predicted_taxon_rank = gambit.gambit_predicted_taxon_rank
-    String gambit_version = gambit.gambit_version
-    String gambit_db_version = gambit.gambit_db_version
-    String gambit_docker = gambit.gambit_docker
+    File? gambit_report = gambit.gambit_report_file
+    File? gambit_closest_genomes = gambit.gambit_closest_genomes_file
+    String? gambit_predicted_taxon = gambit.gambit_predicted_taxon
+    String? gambit_predicted_taxon_rank = gambit.gambit_predicted_taxon_rank
+    String? gambit_version = gambit.gambit_version
+    String? gambit_db_version = gambit.gambit_db_version
+    String? gambit_docker = gambit.gambit_docker
     # ani-mummer
     Float? ani_highest_percent = ani.ani_highest_percent
     Float? ani_highest_percent_bases_aligned = ani.ani_highest_percent_bases_aligned

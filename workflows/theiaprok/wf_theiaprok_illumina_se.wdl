@@ -136,7 +136,7 @@ workflow theiaprok_illumina_se {
           input:
             assembly = shovill_se.assembly_fasta,
             samplename = samplename
-        }\      
+        }      
         if (call_ani) {
           call ani_task.animummer as ani {
             input:
