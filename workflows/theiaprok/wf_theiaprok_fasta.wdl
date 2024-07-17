@@ -56,17 +56,17 @@ workflow theiaprok_fasta {
       assembly = assembly_fasta,
       samplename = samplename
   }
-  call gambit_task.gambit {
-    input:
-      assembly = assembly_fasta,
-      samplename = samplename
-  } 
   call busco_task.busco {
     input:
       assembly = assembly_fasta,
       samplename = samplename
   }
   if (perform_characterization) {
+    call gambit_task.gambit {
+      input:
+        assembly = assembly_fasta,
+        samplename = samplename
+    }    
     if (call_ani) {
       call ani_task.animummer as ani {
         input:

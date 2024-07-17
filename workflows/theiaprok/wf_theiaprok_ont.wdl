@@ -121,18 +121,17 @@ workflow theiaprok_ont {
           samplename = samplename,
           est_genome_length = select_first([genome_length, quast.genome_length])
       }
-      call gambit_task.gambit {
-        input:
-          assembly = dragonflye.assembly_fasta,
-          samplename = samplename
-      }
       call busco_task.busco {
         input:
           assembly = dragonflye.assembly_fasta,
           samplename = samplename
       }
       if (perform_characterization) {
-
+        call gambit_task.gambit {
+          input:
+            assembly = dragonflye.assembly_fasta,
+            samplename = samplename
+        }
         if (call_ani) {
           call ani_task.animummer as ani {
             input:

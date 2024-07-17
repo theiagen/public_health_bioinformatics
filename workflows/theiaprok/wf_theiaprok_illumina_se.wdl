@@ -126,17 +126,17 @@ workflow theiaprok_illumina_se {
           samplename = samplename,
           genome_length = select_first([genome_length, quast.genome_length])
       }
-      call gambit_task.gambit {
-        input:
-          assembly = shovill_se.assembly_fasta,
-          samplename = samplename
-      }
       call busco_task.busco {
           input:
           assembly = shovill_se.assembly_fasta,
           samplename = samplename
       }
       if (perform_characterization) {
+        call gambit_task.gambit {
+          input:
+            assembly = shovill_se.assembly_fasta,
+            samplename = samplename
+        }\      
         if (call_ani) {
           call ani_task.animummer as ani {
             input:
