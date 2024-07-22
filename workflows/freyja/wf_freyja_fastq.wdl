@@ -1,11 +1,13 @@
 version 1.0
 
 import "../../tasks/alignment/task_bwa.wdl" as align
+import "../../tasks/alignment/task_minimap2.wdl" as minimap2
 import "../../tasks/quality_control/read_filtering/task_ivar_primer_trim.wdl" as trim_primers
 import "../../tasks/task_versioning.wdl" as versioning
 import "../../tasks/taxon_id/freyja/task_freyja.wdl" as freyja_task
 import "../utilities/wf_read_QC_trim_pe.wdl" as read_qc_pe
 import "../utilities/wf_read_QC_trim_se.wdl" as read_qc_se
+import "../../tasks/utilities/data_handling/task_parse_mapping.wdl" as task_parse_mapping
 
 workflow freyja_fastq {
   input {
@@ -16,6 +18,7 @@ workflow freyja_fastq {
     Int trimmomatic_min_length = 25
     String samplename
     Int? depth_cutoff
+    Boolean ont = false
   }
   if (defined(read2)) {
     call read_qc_pe.read_QC_trim_pe as read_QC_trim_pe {
@@ -36,18 +39,34 @@ workflow freyja_fastq {
         workflow_series = "theiacov"
     }
   }
-  call align.bwa {
-    input:
-      samplename = samplename,
-      reference_genome=reference_genome,
-      read1 = select_first([read_QC_trim_pe.read1_clean, read_QC_trim_se.read1_clean]),
-      read2 = select_first([read_QC_trim_pe.read2_clean])
+  if (ont){
+    call minimap2.minimap2 {
+      input:
+        samplename = samplename,
+        reference = reference_genome,
+        query1 = select_first([read_QC_trim_pe.read1_clean, read_QC_trim_se.read1_clean]), # this select_first might not be needed -> ont will always follow se path
+        output_sam = true
+    }
+    call task_parse_mapping.sam_to_sorted_bam {
+      input:
+        samplename = samplename,
+        sam = minimap2.minimap2_out
+    }
+  }
+  if (! ont){ 
+    call align.bwa {
+      input:
+        samplename = samplename,
+        reference_genome = reference_genome,
+        read1 = select_first([read_QC_trim_pe.read1_clean, read_QC_trim_se.read1_clean]),
+        read2 = select_first([read_QC_trim_pe.read2_clean])
+    }
   }
   call trim_primers.primer_trim {
     input:
       samplename = samplename,
       primer_bed = primer_bed,
-      bamfile = bwa.sorted_bam
+      bamfile = select_first([sam_to_sorted_bam.bam,bwa.sorted_bam])
   }
   call freyja_task.freyja_one_sample as freyja {
     input:
@@ -106,11 +125,16 @@ workflow freyja_fastq {
     Float? kraken_sc2_dehosted = select_first([read_QC_trim_pe.kraken_sc2_dehosted,read_QC_trim_se.kraken_sc2_dehosted])
     File? kraken_report_dehosted = select_first([read_QC_trim_pe.kraken_report_dehosted,read_QC_trim_se.kraken_report_dehosted])
     # Read Alignment - bwa outputs
-    String bwa_version = bwa.bwa_version
-    String samtools_version = bwa.sam_version
-    String alignment_method = "~{bwa.bwa_version}; ~{primer_trim.ivar_version}"
-    File aligned_bam = primer_trim.trim_sorted_bam
-    File aligned_bai = primer_trim.trim_sorted_bai
+    String? bwa_version = bwa.bwa_version
+    String? alignment_method = "~{bwa.bwa_version}; ~{primer_trim.ivar_version}"
+    # Read Alignment - minimap2 outputs
+    String? minimap2_version = minimap2.minimap2_version
+    String? minimap2_docker = minimap2.minimap2_docker
+    # Read Alignment - samtools
+    String samtools_version = select_first([sam_to_sorted_bam.samtools_version,bwa.sam_version])
+    # Read Alignment - bam and bai files
+    File? aligned_bam = select_first([sam_to_sorted_bam.bam,primer_trim.trim_sorted_bam])
+    File? aligned_bai = select_first([sam_to_sorted_bam.bai,primer_trim.trim_sorted_bai])
     # Read Alignment - primer trimming outputs
     Float primer_trimmed_read_percent = primer_trim.primer_trimmed_read_percent
     String ivar_version_primtrim = primer_trim.ivar_version
