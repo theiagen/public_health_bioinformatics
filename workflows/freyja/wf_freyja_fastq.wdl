@@ -4,32 +4,44 @@ import "../../tasks/alignment/task_bwa.wdl" as align
 import "../../tasks/quality_control/read_filtering/task_ivar_primer_trim.wdl" as trim_primers
 import "../../tasks/task_versioning.wdl" as versioning
 import "../../tasks/taxon_id/freyja/task_freyja.wdl" as freyja_task
-import "../utilities/wf_read_QC_trim_pe.wdl" as read_qc
+import "../utilities/wf_read_QC_trim_pe.wdl" as read_qc_pe
+import "../utilities/wf_read_QC_trim_se.wdl" as read_qc_se
 
 workflow freyja_fastq {
   input {
     File read1
-    File read2
+    File? read2
     File primer_bed
     File reference_genome
     Int trimmomatic_min_length = 25
     String samplename
     Int? depth_cutoff
   }
-  call read_qc.read_QC_trim_pe as read_QC_trim {
-    input:
-      samplename = samplename,
-      read1  = read1,
-      read2  = read2,
-      trim_min_length = trimmomatic_min_length,
-      workflow_series = "theiacov"
+  if (defined(read2)) {
+    call read_qc_pe.read_QC_trim_pe as read_QC_trim_pe {
+      input:
+        samplename = samplename,
+        read1  = read1,
+        read2  = select_first([read2]),
+        trim_min_length = trimmomatic_min_length,
+        workflow_series = "theiacov"
+    }
+  }
+  if (! defined(read2)) {
+    call read_qc_se.read_QC_trim_se as read_QC_trim_se {
+      input:
+        samplename = samplename,
+        read1  = read1,
+        trim_min_length = trimmomatic_min_length,
+        workflow_series = "theiacov"
+    }
   }
   call align.bwa {
     input:
       samplename = samplename,
       reference_genome=reference_genome,
-      read1 = read_QC_trim.read1_clean,
-      read2 = read_QC_trim.read2_clean
+      read1 = select_first([read_QC_trim_pe.read1_clean, read_QC_trim_se.read1_clean]),
+      read2 = select_first([read_QC_trim_pe.read2_clean])
   }
   call trim_primers.primer_trim {
     input:
@@ -52,47 +64,47 @@ workflow freyja_fastq {
     String freyja_fastq_wf_version = version_capture.phb_version
     String freyja_fastq_wf_analysis_date = version_capture.date
     # Read QC - fastq_scan outputs
-    Int? fastq_scan_num_reads_raw1 = read_QC_trim.fastq_scan_raw1
-    Int? fastq_scan_num_reads_raw2 = read_QC_trim.fastq_scan_raw2
-    String? fastq_scan_num_reads_raw_pairs = read_QC_trim.fastq_scan_raw_pairs
-    String? fastq_scan_version = read_QC_trim.fastq_scan_version
-    Int? fastq_scan_num_reads_clean1 = read_QC_trim.fastq_scan_clean1
-    Int? fastq_scan_num_reads_clean2 = read_QC_trim.fastq_scan_clean2
-    String? fastq_scan_num_reads_clean_pairs = read_QC_trim.fastq_scan_clean_pairs
+    Int? fastq_scan_num_reads_raw1 = select_first([read_QC_trim_pe.fastq_scan_raw1,read_QC_trim_se.fastq_scan_raw1])
+    Int? fastq_scan_num_reads_raw2 = select_first([read_QC_trim_pe.fastq_scan_raw2])
+    String? fastq_scan_num_reads_raw_pairs = select_first([read_QC_trim_pe.fastq_scan_raw_pairs])
+    String? fastq_scan_version = select_first([read_QC_trim_pe.fastq_scan_version,read_QC_trim_se.fastq_scan_version])
+    Int? fastq_scan_num_reads_clean1 = select_first([read_QC_trim_pe.fastq_scan_clean1,read_QC_trim_se.fastq_scan_clean1])
+    Int? fastq_scan_num_reads_clean2 = select_first([read_QC_trim_pe.fastq_scan_clean2])
+    String? fastq_scan_num_reads_clean_pairs = select_first([read_QC_trim_pe.fastq_scan_clean_pairs])
     # Read QC - fastqc outputs  
-    Int? fastqc_num_reads_raw1 = read_QC_trim.fastqc_raw1
-    Int? fastqc_num_reads_raw2 = read_QC_trim.fastqc_raw2
-    String? fastqc_num_reads_raw_pairs = read_QC_trim.fastqc_raw_pairs
-    File? fastqc_raw1_html = read_QC_trim.fastqc_raw1_html
-    File? fastqc_raw2_html = read_QC_trim.fastqc_raw2_html
-    String? fastqc_version = read_QC_trim.fastqc_version
-    String? fastqc_docker = read_QC_trim.fastqc_docker
-    Int? fastqc_num_reads_clean1 = read_QC_trim.fastqc_clean1
-    Int? fastqc_num_reads_clean2 = read_QC_trim.fastqc_clean2
-    String? fastqc_num_reads_clean_pairs = read_QC_trim.fastqc_clean_pairs
-    File? fastqc_clean1_html = read_QC_trim.fastqc_clean1_html
-    File? fastqc_clean2_html = read_QC_trim.fastqc_clean2_html
+    Int? fastqc_num_reads_raw1 = select_first([read_QC_trim_pe.fastqc_raw1,read_QC_trim_se.fastqc_raw1])
+    Int? fastqc_num_reads_raw2 = select_first([read_QC_trim_pe.fastqc_raw2])
+    String? fastqc_num_reads_raw_pairs = select_first([read_QC_trim_pe.fastqc_raw_pairs])
+    File? fastqc_raw1_html = select_first([read_QC_trim_pe.fastqc_raw1_html,read_QC_trim_se.fastqc_raw1_html])
+    File? fastqc_raw2_html = select_first([read_QC_trim_pe.fastqc_raw2_html])
+    String? fastqc_version = select_first([read_QC_trim_pe.fastqc_version,read_QC_trim_se.fastqc_version])
+    String? fastqc_docker = select_first([read_QC_trim_pe.fastqc_docker,read_QC_trim_se.fastqc_docker])
+    Int? fastqc_num_reads_clean1 = select_first([read_QC_trim_pe.fastqc_clean1,read_QC_trim_se.fastqc_clean1])
+    Int? fastqc_num_reads_clean2 = select_first([read_QC_trim_pe.fastqc_clean2])
+    String? fastqc_num_reads_clean_pairs = select_first([read_QC_trim_pe.fastqc_clean_pairs])
+    File? fastqc_clean1_html = select_first([read_QC_trim_pe.fastqc_clean1_html,read_QC_trim_se.fastqc_clean1_html])
+    File? fastqc_clean2_html = select_first([read_QC_trim_pe.fastqc_clean2_html])
     # Read QC - trimmomatic outputs
-    String? trimmomatic_version = read_QC_trim.trimmomatic_version
-    String? trimmomatic_docker = read_QC_trim.trimmomatic_docker
+    String? trimmomatic_version = select_first([read_QC_trim_pe.trimmomatic_version,read_QC_trim_se.trimmomatic_version])
+    String? trimmomatic_docker = select_first([read_QC_trim_pe.trimmomatic_docker,read_QC_trim_se.trimmomatic_docker])
     # Read QC - fastp outputs
-    String? fastp_version = read_QC_trim.fastp_version
-    File? fastp_html_report = read_QC_trim.fastp_html_report
+    String? fastp_version = select_first([read_QC_trim_pe.fastp_version,read_QC_trim_se.fastp_version])
+    File? fastp_html_report = select_first([read_QC_trim_pe.fastp_html_report,read_QC_trim_se.fastp_html_report])
     # Read QC - bbduk outputs
-    File read1_clean = read_QC_trim.read1_clean
-    File read2_clean = read_QC_trim.read2_clean
-    String bbduk_docker = read_QC_trim.bbduk_docker
+    File read1_clean = select_first([read_QC_trim_pe.read1_clean,read_QC_trim_se.read1_clean])
+    File read2_clean = select_first([read_QC_trim_pe.read2_clean])
+    String bbduk_docker = select_first([read_QC_trim_pe.bbduk_docker,read_QC_trim_se.bbduk_docker])
     # Read QC - dehosting outputs
-    File? read1_dehosted = read_QC_trim.read1_dehosted
-    File? read2_dehosted = read_QC_trim.read2_dehosted
+    File? read1_dehosted = select_first([read_QC_trim_pe.read1_dehosted,read_QC_trim_se.read1_dehosted])
+    File? read2_dehosted = select_first([read_QC_trim_pe.read2_dehosted])
     # Read QC - kraken outputs
-    String? kraken_version = read_QC_trim.kraken_version
-    Float? kraken_human = read_QC_trim.kraken_human
-    Float? kraken_sc2 = read_QC_trim.kraken_sc2
-    File? kraken_report = read_QC_trim.kraken_report
-    Float? kraken_human_dehosted = read_QC_trim.kraken_human_dehosted
-    Float? kraken_sc2_dehosted = read_QC_trim.kraken_sc2_dehosted
-    File? kraken_report_dehosted = read_QC_trim.kraken_report_dehosted
+    String? kraken_version = select_first([read_QC_trim_pe.kraken_version,read_QC_trim_se.kraken_version])
+    Float? kraken_human = select_first([read_QC_trim_pe.kraken_human,read_QC_trim_se.kraken_human])
+    Float? kraken_sc2 = select_first([read_QC_trim_pe.kraken_sc2,read_QC_trim_se.kraken_sc2])
+    File? kraken_report = select_first([read_QC_trim_pe.kraken_report,read_QC_trim_se.kraken_report])
+    Float? kraken_human_dehosted = select_first([read_QC_trim_pe.kraken_human_dehosted,read_QC_trim_se.kraken_human_dehosted])
+    Float? kraken_sc2_dehosted = select_first([read_QC_trim_pe.kraken_sc2_dehosted,read_QC_trim_se.kraken_sc2_dehosted])
+    File? kraken_report_dehosted = select_first([read_QC_trim_pe.kraken_report_dehosted,read_QC_trim_se.kraken_report_dehosted])
     # Read Alignment - bwa outputs
     String bwa_version = bwa.bwa_version
     String samtools_version = bwa.sam_version
