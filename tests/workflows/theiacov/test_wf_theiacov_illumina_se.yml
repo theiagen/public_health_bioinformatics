@@ -73,25 +73,25 @@
       md5sum: 87f1a9ed69127009aa0c173cd74c9d31
     - path: miniwdl_run/call-read_QC_trim/call-fastq_scan_raw/work/VERSION
     # kraken2
-    - path: miniwdl_run/call-read_QC_trim/kraken2_theiacov_raw/command
+    - path: miniwdl_run/call-read_QC_trim/call-kraken2_theiacov_raw/command
       md5sum: 0efd43fc9f7079a38e5b094245c97f59
-    - path: miniwdl_run/call-read_QC_trim/kraken2_theiacov_raw/inputs.json
+    - path: miniwdl_run/call-read_QC_trim/call-kraken2_theiacov_raw/inputs.json
       contains: ["read1", "samplename"]
-    - path: miniwdl_run/call-read_QC_trim/kraken2_theiacov_raw/outputs.json
+    - path: miniwdl_run/call-read_QC_trim/call-kraken2_theiacov_raw/outputs.json
       contains: ["kraken2", "percent_human", "percent_sc2"]
-    - path: miniwdl_run/call-read_QC_trim/kraken2_theiacov_raw/stderr.txt
-    - path: miniwdl_run/call-read_QC_trim/kraken2_theiacov_raw/stderr.txt.offset
-    - path: miniwdl_run/call-read_QC_trim/kraken2_theiacov_raw/stdout.txt
-    - path: miniwdl_run/call-read_QC_trim/kraken2_theiacov_raw/task.log
+    - path: miniwdl_run/call-read_QC_trim/call-kraken2_theiacov_raw/stderr.txt
+    - path: miniwdl_run/call-read_QC_trim/call-kraken2_theiacov_raw/stderr.txt.offset
+    - path: miniwdl_run/call-read_QC_trim/call-kraken2_theiacov_raw/stdout.txt
+    - path: miniwdl_run/call-read_QC_trim/call-kraken2_theiacov_raw/task.log
       contains: ["wdl", "theiacov_illumina_se", "kraken2_raw", "done"]
-    - path: miniwdl_run/call-read_QC_trim/kraken2_theiacov_raw/work/PERCENT_HUMAN
+    - path: miniwdl_run/call-read_QC_trim/call-kraken2_theiacov_raw/work/PERCENT_HUMAN
       md5sum: 4fd4dcef994592f9865e9bc8807f32f4
-    - path: miniwdl_run/call-read_QC_trim/kraken2_theiacov_raw/work/PERCENT_SC2
+    - path: miniwdl_run/call-read_QC_trim/call-kraken2_theiacov_raw/work/PERCENT_SC2
       md5sum: 73f7f6bf2257905cb4bee12d23247db3
-    - path: miniwdl_run/call-read_QC_trim/kraken2_theiacov_raw/work/PERCENT_TARGET_ORGANISM
+    - path: miniwdl_run/call-read_QC_trim/call-kraken2_theiacov_raw/work/PERCENT_TARGET_ORGANISM
       md5sum: 68b329da9893e34099c7d8ad5cb9c940
-    - path: miniwdl_run/call-read_QC_trim/kraken2_theiacov_raw/work/_miniwdl_inputs/0/ERR6319327_1.clean.fastq.gz
-    - path: miniwdl_run/call-read_QC_trim/kraken2_theiacov_raw/work/ERR6319327_kraken2_report.txt
+    - path: miniwdl_run/call-read_QC_trim/call-kraken2_theiacov_raw/work/_miniwdl_inputs/0/ERR6319327_1.clean.fastq.gz
+    - path: miniwdl_run/call-read_QC_trim/call-kraken2_theiacov_raw/work/ERR6319327_kraken2_report.txt
       md5sum: 3d1bab1c5040916642df5baf20a2d6bd
     # clean read screen
     - path: miniwdl_run/call-clean_check_reads/command
