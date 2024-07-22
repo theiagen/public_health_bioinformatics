@@ -143,8 +143,8 @@ workflow freyja_fastq {
     # Read Alignment - samtools
     String samtools_version = select_first([sam_to_sorted_bam.samtools_version, bwa.sam_version])
     # Read Alignment - bam and bai files
-    File? aligned_bam = select_first([sam_to_sorted_bam.bam, primer_trim.trim_sorted_bam])
-    File? aligned_bai = select_first([sam_to_sorted_bam.bai, primer_trim.trim_sorted_bai])
+    File aligned_bam = select_first([sam_to_sorted_bam.bam, primer_trim.trim_sorted_bam])
+    File aligned_bai = select_first([sam_to_sorted_bam.bai, primer_trim.trim_sorted_bai])
     # Read Alignment - primer trimming outputs
     Float primer_trimmed_read_percent = primer_trim.primer_trimmed_read_percent
     String ivar_version_primtrim = primer_trim.ivar_version
