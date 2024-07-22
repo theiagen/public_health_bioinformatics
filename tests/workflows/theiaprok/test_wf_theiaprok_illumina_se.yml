@@ -600,6 +600,6 @@
     - path: miniwdl_run/wdl/workflows/utilities/wf_merlin_magic.wdl
       md5sum: fb891a62a0629bcbc1158276b2622b95
     - path: miniwdl_run/wdl/workflows/utilities/wf_read_QC_trim_se.wdl
-      md5sum: a28fda3c3d806eb005e8a4e6cdf7b71b
+      md5sum: 51c696b5d122eb1bc7e03d31ccc82cc6
     - path: miniwdl_run/workflow.log
       contains: ["wdl", "theiaprok_illumina_se", "NOTICE", "done"]
