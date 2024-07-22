@@ -45,7 +45,7 @@ task freyja_one_sample {
   else
     # configure barcode    
     if [[ ! -z "~{freyja_usher_barcodes}" ]]; then
-      echo "User freyja usher barcodes identified; ~{freyja_usher_barcodes} will be utilized fre freyja demixing"
+      echo "User freyja usher barcodes identified; ~{freyja_usher_barcodes} will be utilized for freyja demixing"
       freyja_usher_barcode_version=$(basename -- "~{freyja_usher_barcodes}")
     else
       freyja_usher_barcode_version="unmodified from freyja container: ~{docker}"  
