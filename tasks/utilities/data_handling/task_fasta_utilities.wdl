@@ -32,7 +32,7 @@ task get_fasta_genome_size {
     
   >>>
   output {
-    String fasta_length = read_string("GENOME_LENGTH")
+    Int fasta_length = read_int("GENOME_LENGTH")
   }
   runtime {
     docker: "~{docker}"
