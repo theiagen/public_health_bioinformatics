@@ -9,6 +9,8 @@ import "../utilities/wf_read_QC_trim_pe.wdl" as read_qc_pe
 import "../utilities/wf_read_QC_trim_se.wdl" as read_qc_se
 import "../utilities/wf_read_QC_trim_ont.wdl" as read_qc_ont
 import "../../tasks/utilities/data_handling/task_parse_mapping.wdl" as task_parse_mapping
+import "../../tasks/quality_control/basic_statistics/task_nanoplot.wdl" as nanoplot_task
+import "../../tasks/utilities/data_handling/task_fasta_utilities.wdl" as fasta_utilities_task
 
 workflow freyja_fastq {
   input {
@@ -41,11 +43,27 @@ workflow freyja_fastq {
     }
   }
   if (ont) {
+    call fasta_utilities_task.get_fasta_genome_size {
+      input:
+        fasta = reference_genome
+    } 
+    call nanoplot_task.nanoplot as nanoplot_raw {
+      input:
+        read1 = read1,
+        samplename = samplename,
+        est_genome_length = get_fasta_genome_size.fasta_length
+    }
     call read_qc_ont.read_QC_trim_ont {
       input:
         samplename = samplename,
         read1 = read1
     }
+    call nanoplot_task.nanoplot as nanoplot_clean {
+      input:
+        read1 = read_QC_trim_ont.read1_clean,
+        samplename = samplename,
+        est_genome_length = get_fasta_genome_size.fasta_length
+      }
     call minimap2_task.minimap2 {
       input:
         samplename = samplename,
@@ -110,6 +128,27 @@ workflow freyja_fastq {
     String? fastqc_num_reads_clean_pairs = read_QC_trim_pe.fastqc_clean_pairs
     String fastqc_clean1_html = select_first([read_QC_trim_pe.fastqc_clean1_html, read_QC_trim_se.fastqc_clean1_html, ""])
     File? fastqc_clean2_html = read_QC_trim_pe.fastqc_clean2_html
+    # Read QC - nanoplot outputs - ONT
+    File? nanoplot_html_raw = nanoplot_raw.nanoplot_html
+    File? nanoplot_tsv_raw = nanoplot_raw.nanoplot_tsv
+    Int? nanoplot_num_reads_raw1 = nanoplot_raw.num_reads
+    Float? nanoplot_r1_median_readlength_raw = nanoplot_raw.median_readlength
+    Float? nanoplot_r1_mean_readlength_raw = nanoplot_raw.mean_readlength
+    Float? nanoplot_r1_stdev_readlength_raw = nanoplot_raw.stdev_readlength
+    Float? nanoplot_r1_n50_raw = nanoplot_raw.n50
+    Float? nanoplot_r1_mean_q_raw = nanoplot_raw.mean_q
+    Float? nanoplot_r1_median_q_raw = nanoplot_raw.median_q
+    Float? nanoplot_r1_est_coverage_raw = nanoplot_raw.est_coverage
+    File? nanoplot_html_clean = nanoplot_clean.nanoplot_html
+    File? nanoplot_tsv_clean = nanoplot_clean.nanoplot_tsv
+    Int? nanoplot_num_reads_clean1 = nanoplot_clean.num_reads
+    Float? nanoplot_r1_median_readlength_clean = nanoplot_clean.median_readlength
+    Float? nanoplot_r1_mean_readlength_clean = nanoplot_clean.mean_readlength
+    Float? nanoplot_r1_stdev_readlength_clean = nanoplot_clean.stdev_readlength
+    Float? nanoplot_r1_n50_clean = nanoplot_clean.n50
+    Float? nanoplot_r1_mean_q_clean = nanoplot_clean.mean_q
+    Float? nanoplot_r1_median_q_clean = nanoplot_clean.median_q
+    Float? nanoplot_r1_est_coverage_clean = nanoplot_clean.est_coverage
     # Read QC - trimmomatic outputs - Illumina PE and SE
     String trimmomatic_version = select_first([read_QC_trim_pe.trimmomatic_version, read_QC_trim_se.trimmomatic_version, ""])
     String trimmomatic_docker = select_first([read_QC_trim_pe.trimmomatic_docker, read_QC_trim_se.trimmomatic_docker, ""])
