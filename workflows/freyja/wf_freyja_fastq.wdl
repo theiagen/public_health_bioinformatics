@@ -1,7 +1,7 @@
 version 1.0
 
 import "../../tasks/alignment/task_bwa.wdl" as align
-import "../../tasks/alignment/task_minimap2.wdl" as minimap2
+import "../../tasks/alignment/task_minimap2.wdl" as minimap2_task
 import "../../tasks/quality_control/read_filtering/task_ivar_primer_trim.wdl" as trim_primers
 import "../../tasks/task_versioning.wdl" as versioning
 import "../../tasks/taxon_id/freyja/task_freyja.wdl" as freyja_task
@@ -40,12 +40,13 @@ workflow freyja_fastq {
     }
   }
   if (ont){
-    call minimap2.minimap2 {
+    call minimap2_task.minimap2 {
       input:
         samplename = samplename,
         reference = reference_genome,
         query1 = select_first([read_QC_trim_pe.read1_clean, read_QC_trim_se.read1_clean]), # this select_first might not be needed -> ont will always follow se path
-        output_sam = true
+        output_sam = true,
+        mode = "map-ont"
     }
     call task_parse_mapping.sam_to_sorted_bam {
       input:
