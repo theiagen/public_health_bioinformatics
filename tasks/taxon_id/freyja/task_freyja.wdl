@@ -8,6 +8,7 @@ task freyja_one_sample {
     File? freyja_usher_barcodes
     File? freyja_lineage_metadata
     Float? eps
+    Float? adapt
     Boolean update_db = false
     Boolean confirmed_only = false
     Boolean bootstrap = false
@@ -93,6 +94,7 @@ task freyja_one_sample {
     ~{'--barcodes ' + freyja_usher_barcodes} \
     ~{'--depthcutoff ' + depth_cutoff} \
     ~{true='--confirmedonly' false='' confirmed_only} \
+    ~{'--adapt ' + adapt} \
     ~{samplename}_freyja_variants.tsv \
     ~{samplename}_freyja_depths.tsv \
     --output ~{samplename}_freyja_demixed.tmp
