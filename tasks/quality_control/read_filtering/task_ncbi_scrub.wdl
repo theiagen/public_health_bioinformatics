@@ -27,6 +27,9 @@ task ncbi_scrub_pe {
     read1_count=$($cat_command ~{read1} | wc -l | awk '{print $1/4}')
     read2_count=$($cat_command ~{read2} | wc -l | awk '{print $1/4}')
 
+    echo "ERROR: Number of files in read1: $read1_count"
+    echo "ERROR: Number of files in read2: $read2_count"
+
     if [[ $read1_count -ne $read2_count ]]
     then
       echo "ERROR: The number of reads in the two input files do not match."
@@ -38,9 +41,8 @@ task ncbi_scrub_pe {
     # paste command takes 4 lines at a time and merges them into a single line with tabs
     # tr substitutes the tab separators from paste into new lines, effectively interleaving the reads and keeping the FASTQ format
     # Important: To ensure that the reads are interleaved correctly, the reads must be in the same order in both files
-    # Additionally, only print read pairs that have 8 fields (4 lines) to avoid interleaving unpaired reads
     echo "DEGUB: Interleaving reads with paste..."
-    paste <($cat_command ~{read1} | paste - - - -) <($cat_command ~{read2} | paste - - - -) | awk '{if (NF == 8) print $1"\n"$2"\n"$3"\n"$4"\n"$5"\n"$6"\n"$7"\n"$8}' | tr '\t' '\n' > interleaved.fastq
+    paste <($cat_command ~{read1} | paste - - - -) <($cat_command ~{read2} | paste - - - -) | tr '\t' '\n' > interleaved.fastq
 
     # dehost reads
     # -x Remove spots instead of default 'N' replacement.
