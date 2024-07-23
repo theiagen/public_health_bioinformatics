@@ -56,7 +56,8 @@ workflow freyja_fastq {
     call read_qc_ont.read_QC_trim_ont {
       input:
         samplename = samplename,
-        read1 = read1
+        read1 = read1,
+        workflow_series = "theiacov"
     }
     call nanoplot_task.nanoplot as nanoplot_clean {
       input:
