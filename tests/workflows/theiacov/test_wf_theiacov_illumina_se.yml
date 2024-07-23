@@ -83,7 +83,7 @@
     - path: miniwdl_run/call-read_QC_trim/call-kraken2_theiacov_raw/stderr.txt.offset
     - path: miniwdl_run/call-read_QC_trim/call-kraken2_theiacov_raw/stdout.txt
     - path: miniwdl_run/call-read_QC_trim/call-kraken2_theiacov_raw/task.log
-      contains: ["wdl", "theiacov_illumina_se", "kraken2_raw", "done"]
+      contains: ["wdl", "theiacov_illumina_se", "kraken2_theiacov_raw", "done"]
     - path: miniwdl_run/call-read_QC_trim/call-kraken2_theiacov_raw/work/PERCENT_HUMAN
       md5sum: 4fd4dcef994592f9865e9bc8807f32f4
     - path: miniwdl_run/call-read_QC_trim/call-kraken2_theiacov_raw/work/PERCENT_SC2
