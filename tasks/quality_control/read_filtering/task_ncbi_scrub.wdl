@@ -27,8 +27,8 @@ task ncbi_scrub_pe {
     read1_count=$($cat_command ~{read1} | wc -l | awk '{print $1/4}')
     read2_count=$($cat_command ~{read2} | wc -l | awk '{print $1/4}')
 
-    echo "ERROR: Number of files in read1: $read1_count"
-    echo "ERROR: Number of files in read2: $read2_count"
+    echo "DEBUG: Number of files in read1: $read1_count"
+    echo "DEBUG: Number of files in read2: $read2_count"
 
     if [[ $read1_count -ne $read2_count ]]
     then
