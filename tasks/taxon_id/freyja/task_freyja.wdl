@@ -103,8 +103,8 @@ task freyja_one_sample {
   echo -e "\t/~{samplename}" > ~{samplename}_freyja_demixed.tsv
   tail -n+2 ~{samplename}_freyja_demixed.tmp >> ~{samplename}_freyja_demixed.tsv
 
-  if [ -f opt/conda/envs/freyja-env/lib/python3.12/site-packages/freyja/data/usher_barcodes.csv ]; then
-    mv opt/conda/envs/freyja-env/lib/python3.12/site-packages/freyja/data/usher_barcodes.csv usher_barcodes.csv
+  if [ -f /opt/conda/envs/freyja-env/lib/python3.12/site-packages/freyja/data/usher_barcodes.feather ]; then
+    mv /opt/conda/envs/freyja-env/lib/python3.12/site-packages/freyja/data/usher_barcodes.feather usher_barcodes.feather
   fi
 
   if [ -f /opt/conda/envs/freyja-env/lib/python3.12/site-packages/freyja/data/curated_lineages.json ]; then
@@ -144,8 +144,8 @@ task freyja_one_sample {
     File? freyja_bootstrap_summary = "~{samplename}_summarized.csv"
     File? freyja_bootstrap_summary_pdf = "~{samplename}_summarized.pdf"
     # capture barcode file - first is user supplied, second appears if the user did not supply a barcode file
-    File freyja_usher_barcode_file = select_first([freyja_usher_barcodes, "usher_barcodes.csv"])
-    File freyja_lineage_metadata_file = select_first([freyja_lineage_metadata, "lineage_metadata.json"])
+    File freyja_usher_barcode_file = select_first([freyja_usher_barcodes, "usher_barcodes.feather"])
+    File freyja_lineage_metadata_file = select_first([freyja_lineage_metadata, "curated_lineages.json"])
     String freyja_barcode_version = read_string("FREYJA_BARCODES")
     String freyja_metadata_version = read_string("FREYJA_METADATA")
     String freyja_version = read_string("FREYJA_VERSION")
