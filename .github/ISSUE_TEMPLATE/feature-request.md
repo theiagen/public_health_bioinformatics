@@ -11,11 +11,7 @@ assignees: ''
 
 ### :pushpin: Explain the Request
 
-<!--Please describe what you would like us to add.-->
-
-### :books: Context
-
-<!--Please describe the context about your request.-->
+<!--Please describe what you would like us to add with any necessary context to the request.-->
 
 ### :chart_with_upwards_trend: Desired Behavior
 
