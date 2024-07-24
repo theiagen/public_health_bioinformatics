@@ -13,9 +13,9 @@ assignees: ''
 
 <!-- Please describe what the issue you are facing and any necessary context. -->
 
-### :repeat: How to Reproduce & Version Information
+### :repeat: How to Reproduce 
 
-<!-- Please describe the steps needed to reproduce the observed behavior, and be sure to specify the versions of the workflows/tasks being used.
+<!-- Please describe the steps needed to reproduce the observed behavior
 
 Feel free to answer the following questions to help us understand:
 - Was the workflow run on the Terra platform? Was it Terra on Azure or GCP?
@@ -24,11 +24,6 @@ Feel free to answer the following questions to help us understand:
   - If so, what was the exact command was used to launch the workflow?
 -->
 
-### :fishing_pole_and_fish: Expected Behavior
+### :computer: Version Information
 
-<!-- Please describe what you expected to happen. -->
-
-### :information_source: Additional Information
-
-<!-- Please describe any additional information we should know in order to address the issue. 
-If applicable, please add screenshots to help explain your problem.-->
+<!-- , and be sure to specify the versions of the workflows/tasks being used. -->
