@@ -26,7 +26,7 @@ This PR uses an element that could cause duplicate runs to have different result
 <!-- Describe your changes. 
 - List any changes to Docker, software, or database versions.
 - Explain your changes to the workflow/task(s), including any new inputs, outputs, or changes to existing inputs/outputs.
-- Describe any changes to file compute resources. -->
+- Describe any changes to compute resources. -->
 
 ### ➡️ Inputs
 <!-- Have any inputs been added or altered? If so, list out the changes. -->
@@ -50,7 +50,7 @@ This PR uses an element that could cause duplicate runs to have different result
 ## 🎯 Reviewer Checklist
 <!--  Indicate NA when not applicable  -->
 - [ ] All changed results have been confirmed
-- [ ] You have tested the PR appropriately (see the [testing guide]() for more information)
-- [ ] All code adheres to the style guide
+- [ ] You have tested the PR appropriately (see the [testing guide](https://theiagen.notion.site/PR-Testing-Guide-Determining-Appropriate-Levels-of-Testing-4764e98a6aeb460185039c0896714590) for more information)
+- [ ] All code adheres to the [style guide](https://theiagen.notion.site/Style-Guide-WDL-Workflow-Development-51b66a47dde54c798f35d673fff80249)
 - [ ] MD5 sums have been updated
 - [ ] The PR author has addressed all comments
