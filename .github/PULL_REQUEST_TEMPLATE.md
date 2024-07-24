@@ -14,7 +14,7 @@ This PR closes #
 ## :brain: Summary
 <!-- Please summarize what this PR does -->
 
-## :rock: Impacted Workflows/Tasks
+## :zap: Impacted Workflows/Tasks
 <!-- Please list what workflows and/or tasks are impacted by this change -->
 
 This PR may lead to different results in pre-existing outputs: **Yes/No**
