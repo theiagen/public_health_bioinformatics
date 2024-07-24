@@ -159,7 +159,7 @@ workflow freyja_fastq {
     # Read QC - nanoq - ONT
     String? nanoq_version = read_QC_trim_ont.nanoq_version
     # Read QC - bbduk outputs - Illumina PE and SE
-    String bbduk_docker = select_first([read_QC_trim_pe.bbduk_docker,read_QC_trim_se.bbduk_docker])
+    String bbduk_docker = select_first([read_QC_trim_pe.bbduk_docker, read_QC_trim_se.bbduk_docker, ""])
     # Read QC - clean reads - all
     File read1_clean = select_first([read_QC_trim_pe.read1_clean, read_QC_trim_se.read1_clean, read_QC_trim_ont.read1_clean])
     File? read2_clean = read_QC_trim_pe.read2_clean
