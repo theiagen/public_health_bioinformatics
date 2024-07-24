@@ -104,6 +104,10 @@ workflow freyja_fastq {
   call versioning.version_capture {
     input:
   }
+  
+  # capture correct alignment method
+  String alignment_method_technology = if ont then "minimap2 ~{minimap2.minimap2_version}; ~{primer_trim.ivar_version}" else "~{bwa.bwa_version}; ~{primer_trim.ivar_version}"
+
   output {
     # Version Capture
     String freyja_fastq_wf_version = version_capture.phb_version
@@ -176,7 +180,7 @@ workflow freyja_fastq {
     File kraken_report_dehosted = select_first([read_QC_trim_pe.kraken_report_dehosted, read_QC_trim_se.kraken_report_dehosted, read_QC_trim_ont.kraken_report_dehosted])
     # Read Alignment - bwa outputs
     String? bwa_version = bwa.bwa_version
-    String? alignment_method = "~{bwa.bwa_version}; ~{primer_trim.ivar_version}"
+    String? alignment_method = alignment_method_technology
     # Read Alignment - minimap2 outputs
     String? minimap2_version = minimap2.minimap2_version
     String? minimap2_docker = minimap2.minimap2_docker
