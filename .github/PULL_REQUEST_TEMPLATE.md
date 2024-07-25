@@ -23,10 +23,10 @@ This PR uses an element that could cause duplicate runs to have different result
 <!-- This may be due to using a live database or stochastic data processing. If yes, please describe. -->
 
 ## :hammer_and_wrench: Changes
-<!-- Describe your changes. 
-- List any changes to Docker, software, or database versions.
-- Explain your changes to the workflow/task(s), including any new inputs, outputs, or changes to existing inputs/outputs.
-- Describe any changes to compute resources. -->
+<!-- Describe your changes. -->
+
+### :gear: Algorithm
+<!-- Have any changes been made to the algorithm or processing changes under the hood? This can include any changes to the task/workflow algorithm; Docker, software, or database versions; compute resources; etc. If so, please explain. -->
 
 ### ➡️ Inputs
 <!-- Have any inputs been added or altered? If so, list out the changes. -->
