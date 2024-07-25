@@ -54,3 +54,4 @@ This PR uses an element that could cause duplicate runs to have different result
 - [ ] All code adheres to the [style guide](https://theiagen.notion.site/Style-Guide-WDL-Workflow-Development-51b66a47dde54c798f35d673fff80249)
 - [ ] MD5 sums have been updated
 - [ ] The PR author has addressed all comments
+- [ ] The documentation has been updated
