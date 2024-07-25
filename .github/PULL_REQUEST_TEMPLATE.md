@@ -1,96 +1,57 @@
 <!--
 Thank you for contributing to Theiagen's Public Health Bioinformatics repository! 
 
-Please ensure your contributions are formatted in line with or style guide found here: https://github.com/theiagen/public_health_bioinformatics#contributing-to-the-phb-workflows and follow the instructions with <>  to complete this PR.
+Please ensure your contributions are formatted following our style guide, which can be found here: https://theiagen.notion.site/Style-Guide-WDL-Workflow-Development-51b66a47dde54c798f35d673fff80249.
 
-As you create the PR, please provide all information required to validate the workflow.
+As you create the PR, please provide any necessary information as suggested in the comments that will help us test your PR.
 -->
 
-This PR closes #<Issue number>.
+<!-- Indicate the issue number if applicable; otherwise, delete -->
+This PR closes #
 
 🗑️ This dev branch should <NOT> be deleted after merging to main.
 
-## :brain: Aim, Context and Functionality
-<!--Please describe the aim of this PR, why the changes were made, and how the workflow should now function -->
+## :brain: Summary
+<!-- Please summarize what this PR does -->
 
-## :hammer_and_wrench:  Impacted Workflows/Tasks & Changes Being Made
-This will affect the behavior of the workflow(s) even if users don’t change any workflow inputs relative to the last version <!--  Delete as appropriate -->: Yes/No
+## :zap: Impacted Workflows/Tasks
+<!-- Please list what workflows and/or tasks are impacted by this change -->
 
-Running this workflow on different occasions could result in different results, e.g. due to use of a live database, "latest" docker image, or stochastic data processing <!--  Delete as appropriate. If yes, please describe. -->: Yes/No 
-<!--
--Please use bullet points or headings to describe what is being added or modified to each impacted workflow or task, and the reasoning for those choices. 
--Consider inserting before and after tables or pictures to demonstrate the consequences of the changes on files etc.
--->
+This PR may lead to different results in pre-existing outputs: **Yes/No**
 
-## :clipboard: Workflow/Task Step Changes
+This PR uses an element that could cause duplicate runs to have different results: **Yes/No**
+<!-- This may be due to using a live database or stochastic data processing. If yes, please describe. -->
 
-#### 🔄 Data Processing 
-<!-- How are data processed differently through the steps of the task/workflow? 
-Please describe in the sections below. 
-If nothing has changed, please explicitly say so.-->
+## :hammer_and_wrench: Changes
+<!-- Describe your changes. -->
 
-Docker/software or software versions changed: 
+### :gear: Algorithm
+<!-- Have any changes been made to the algorithm or processing changes under the hood? This can include any changes to the task/workflow algorithm; Docker, software, or database versions; compute resources; etc. If so, please explain. -->
 
-Databases or database versions changed:
+### ➡️ Inputs
+<!-- Have any inputs been added or altered? If so, list out the changes. -->
 
-Data processing/commands changed:
+### ⬅️ Outputs
+<!-- Have any outputs been added or altered? If so, list out the changes. -->
 
-File processing changed:
+## :test_tube: Testing
+<!-- Please describe how you tested this PR. -->
 
-Compute resources changed:
-
-#### ➡️ Inputs 
-<!--Which inputs of the workflow/task have been added/removed/modified? 
-How have these been modified, e.g input name, type, default parameters, acceptable input ranges etc? 
-If nothing has changed, please explicitly say so.-->
-
-#### ⬅️ Outputs 
-<!--Which outputs of the workflow/task have been added/removed/modified? 
-How have these been modified, e.g. output variable name, output content, output type, file changes? 
-If nothing has changed, please explicitly say so.-->
-
-## :test_tube: Testing 
-#### Test Dataset
-<!--Briefly describe what samples were used for testing, e.g. what organism/s, pathogen diversity, etc. -->
-
-#### Commandline Testing with MiniWDL or Cromwell (optional)
-<!--
-Please show, with screenshots if possible, that your changes pass the local execution of the workflow.
-If the whole test dataset was not used, please specify which samples were tested and verify the results were as anticipated. 
-If local testing was not undertaken/possible, please explicitly state this.-->
-
-#### Terra Testing
-<!--Please show, with screenshots if possible and/or a URL to the job execution, that your changes pass the execution of the workflow on Terra and that all results were as anticipated (including outputs you didn't expect to change!)-->
-
-#### Suggested Scenarios for Reviewer to Test
-<!--Please list any potential scenarios that the reviewer should test, including edge cases or data types-->
-
-#### Theiagen Version Release Testing (optional)
-<!-- 
-- Will changes require functional or validation testing (checking outputs etc) during the release?
-- Do new samples need to be added to validation datasets? If so, upload these to the appropriate validation workspace Google bucket (). Please describe the new samples here and why these have been chosen.
-- Are there any output files that should be checked after running the version release testing?
--->
+### Suggested Scenarios for Reviewer to Test
+<!-- Please list any potential scenarios that the reviewer should test, including edge cases or data types -->
 
 ## :microscope: Final Developer Checklist
-<!--Please mark boxes [X] -->
-- [ ] The workflow/task has been tested locally and results, including file contents, are as anticipated
-- [ ] The workflow/task has been tested on Terra and results, including file contents, are as anticipated
-- [ ] The CI/CD has been adjusted and tests are passing (to be completed by Theiagen developer)
-- [ ] Code changes follow the [style guide](https://theiagen.notion.site/Style-Guide-WDL-Workflow-Development-bb456f34322d4f4db699d4029050481c)
+<!-- Please mark boxes [X] -->
+- [ ] The workflow/task has been tested and results, including file contents, are as anticipated
+- [ ] The CI/CD has been adjusted and tests are passing (Theiagen developers)
+- [ ] Code changes follow the [style guide](https://theiagen.notion.site/Style-Guide-WDL-Workflow-Development-51b66a47dde54c798f35d673fff80249)
+- [ ] Documentation and/or workflow diagrams have been updated if applicable (Theiagen developers only)
 
-
-## 🎯 Reviewer Checklist 
+## 🎯 Reviewer Checklist
 <!--  Indicate NA when not applicable  -->
-- [ ] All impacted workflows/tasks have been tested on Terra with a different dataset than used for development
-- [ ] All reviewer-suggested scenarios have been tested and any additional
-- [ ] All changed results have been confirmed to be accurate
-- [ ] All workflows/tasks impacted by change/s have been tested using a standard validation dataset to ensure no unintended change of functionality
-- [ ] All code adheres to the style guide
+- [ ] All changed results have been confirmed
+- [ ] You have tested the PR appropriately (see the [testing guide](https://theiagen.notion.site/PR-Testing-Guide-Determining-Appropriate-Levels-of-Testing-4764e98a6aeb460185039c0896714590) for more information)
+- [ ] All code adheres to the [style guide](https://theiagen.notion.site/Style-Guide-WDL-Workflow-Development-51b66a47dde54c798f35d673fff80249)
 - [ ] MD5 sums have been updated
 - [ ] The PR author has addressed all comments
-
-## 🗂️ Associated Documentation (to be completed by Theiagen developer)
-<!--  Indicate NA when not applicable -->
-- [ ] Relevant documentation on the Public Health Resources "PHB Main" has been updated
-- [ ] Workflow diagrams have been updated to reflect changes
+- [ ] The documentation has been updated
