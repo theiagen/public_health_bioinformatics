@@ -9,7 +9,7 @@ task vadr {
     String vadr_opts = "--noseqnamemax --glsearch -s -r --nomisc --mkey sarscov2 --lowsim5seq 6 --lowsim3seq 6 --alt_fail lowscore,insertnn,deletinn --out_allfasta"
     Int assembly_length_unambiguous
     Int skip_length = 10000
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/vadr:1.6.3"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/vadr:1.6.3-hav-flu2"
     Int min_length = 50
     Int max_length = 30000
     Int cpu = 2
