@@ -7,7 +7,7 @@ task seqsero2 {
     File? read2
     String samplename
     String mode = "a"
-    String seqsero2_docker_image = "us-docker.pkg.dev/general-theiagen/staphb/seqsero2:1.2.1"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/seqsero2:1.2.1"
     Int disk_size = 100
     Int memory = 16
     Int cpu = 8
@@ -71,7 +71,7 @@ task seqsero2 {
     String seqsero2_predicted_contamination = read_string("CONTAMINATION")
   }
   runtime {
-    docker: "~{seqsero2_docker_image}"
+    docker: "~{docker}"
     memory: memory + " GB"
     cpu: cpu
     disks: "local-disk " + disk_size + " SSD"
@@ -86,7 +86,7 @@ task seqsero2_assembly {
   input {
     File assembly_fasta
     String samplename
-    String seqsero2_docker_image = "us-docker.pkg.dev/general-theiagen/staphb/seqsero2:1.2.1"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/seqsero2:1.2.1"
     Int disk_size = 100
     Int memory = 16
     Int cpu = 8
@@ -143,7 +143,7 @@ task seqsero2_assembly {
     String seqsero2_predicted_serotype = read_string("PREDICTED_SEROTYPE")
   }
   runtime {
-    docker: "~{seqsero2_docker_image}"
+    docker: "~{docker}"
     memory: memory + " GB"
     cpu: cpu
     disks: "local-disk " + disk_size + " SSD"

@@ -48,10 +48,63 @@ workflow merlin_magic {
     File assembly
     File? read1
     File? read2
-    Int? pasty_min_pident
-    Int? pasty_min_coverage
+    # subworkflow logic
+    Boolean assembly_only = false
+    Boolean ont_data = false
+    Boolean paired_end = true
+    Boolean theiaeuk = false
+    # activating tool logic
+    Boolean call_poppunk = true
+    Boolean call_shigeifinder_reads_input = false
+    Boolean tbprofiler_additional_outputs = false # set to true to run tbp-parser
+    # docker options
+    String? abricate_abaum_docker_image
+    String? abricate_vibrio_docker_image
+    String? agrvate_docker_image
+    String? cauris_cladetyper_docker_image
+    String? clockwork_docker_image
+    String? ectyper_docker_image
+    String? emmtyper_docker_image
+    String? emmtypingtool_docker_image
+    String? genotyphi_docker_image
     String? hicap_docker_image
+    String? kaptive_docker_image
+    String? kleborate_docker_image
+    String? legsta_docker_image
+    String? lissero_docker_image
+    String? meningotype_docker_image
+    String? ngmaster_docker_image
     String? pasty_docker_image
+    String? poppunk_docker_image
+    String? seqsero2_docker_image
+    String? seroba_docker_image
+    String? serotypefinder_docker_image
+    String? shigatyper_docker_image
+    String? shigeifinder_docker_image
+    String? sistr_docker_image
+    String? snippy_gene_query_docker_image
+    String? snippy_variants_docker_image
+    String? sonneityping_docker_image
+    String? spatyper_docker_image
+    String? srst2_docker_image
+    String? staphopia_sccmec_docker_image
+    String? tbprofiler_docker_image
+    String? virulencefinder_docker_image
+    # abricate vibrio options
+    Int abricate_vibrio_minid = 80
+    Int abricate_vibrio_mincov = 80
+    # cladetyper options - primarily files we host
+    File? cladetyper_ref_clade1
+    File? cladetyper_ref_clade1_annotated
+    File? cladetyper_ref_clade2
+    File? cladetyper_ref_clade2_annotated
+    File? cladetyper_ref_clade3
+    File? cladetyper_ref_clade3_annotated
+    File? cladetyper_ref_clade4
+    File? cladetyper_ref_clade4_annotated
+    File? cladetyper_ref_clade5
+    File? cladetyper_ref_clade5_annotated
+    # emmtyper options
     String? emmtyper_wf
     Int? emmtyper_cluster_distance
     Int? emmtyper_percid
@@ -62,60 +115,73 @@ workflow merlin_magic {
     Int? emmtyper_min_perfect
     Int? emmtyper_min_good
     Int? emmtyper_max_size
-    String? emmtyper_docker_image
-    String? emmtypingtool_docker_image
-    String? shigeifinder_docker_image
-    String? shigatyper_docker_image
-    String? staphopia_sccmec_docker_image
-    String? agrvate_docker_image
-    String? virulencefinder_docker_image
-    Boolean paired_end = true
-    Boolean call_poppunk = true
-    Boolean ont_data = false
-    Boolean call_shigeifinder_reads_input = false
-    Boolean assembly_only = false
-    Boolean theiaeuk = false
-    String? tbprofiler_mapper
-    Int? tbprofiler_min_depth
-    Float? tbprofiler_min_af
-    Float? tbprofiler_min_af_pred
-    Int? tbprofiler_cov_frac_threshold
-    String? tbprofiler_variant_caller
-    String? tbprofiler_variant_calling_params
+    # pasty options
+    Int? pasty_min_pident
+    Int? pasty_min_coverage        
+    # popppunk options - primarily files we host
+    File? poppunk_gps_dists_npy
+    File? poppunk_gps_dists_pkl
+    File? poppunk_gps_h5
+    File? poppunk_gps_refs
+    File? poppunk_gps_refs_dists_npy
+    File? poppunk_gps_refs_dists_pkl
+    File? poppunk_gps_refs_h5
+    File? poppunk_gps_clusters_csv
+    File? poppunk_gps_fit_npz
+    File? poppunk_gps_fit_pkl
+    File? poppunk_gps_graph_gt
+    File? poppunk_gps_qcreport_txt
+    File? poppunk_gps_unword_clusters_csv
+    File? poppunk_gps_refs_graph_gt
+    File? poppunk_gps_external_clusters_csv
+    # snippy options - mostly files we host
+    String? snippy_query_gene
+    File snippy_reference_afumigatus = "gs://theiagen-public-files/terra/theiaeuk_files/Aspergillus_fumigatus_GCF_000002655.1_ASM265v1_genomic.gbff"
+    File snippy_reference_cryptoneo = "gs://theiagen-public-files/terra/theiaeuk_files/Cryptococcus_neoformans_GCF_000091045.1_ASM9104v1_genomic.gbff"
+    #File snippy_reference_calbicans = "gs://theiagen-public-files/terra/theiaeuk_files/Candida_albicans_GCF_000182965.3_ASM18296v3_genomic.gbff"
+    # srst2 options
+    Int srst2_min_cov = 80
+    Int srst2_max_divergence = 20
+    Int srst2_min_depth = 5
+    Int srst2_min_edge_depth = 2
+    Int srst2_gene_max_mismatch = 2000
+    # tbprofiler options
     Boolean tbprofiler_run_custom_db = false
     File? tbprofiler_custom_db
-    Boolean tbprofiler_additional_outputs = false
+    Int? tbprofiler_cov_frac_threshold
+    Float? tbprofiler_min_af
+    Float? tbprofiler_min_af_pred
+    Int? tbprofiler_min_depth
+    String? tbprofiler_mapper
+    String? tbprofiler_variant_caller
+    String? tbprofiler_variant_calling_params
+    # tbp-parser options
     String tbp_parser_output_seq_method_type = "WGS"
     String? tbp_parser_operator
     Int? tbp_parser_min_depth
     Int? tbp_parser_coverage_threshold
     Boolean? tbp_parser_debug
     String? tbp_parser_docker_image
-    String? snippy_query_gene
-    Int srst2_min_cov = 80
-    Int srst2_max_divergence = 20
-    Int srst2_min_depth = 5
-    Int srst2_min_edge_depth = 2
-    Int srst2_gene_max_mismatch = 2000
+    # virulencefinder options
     Float? virulencefinder_coverage_threshold
     Float? virulencefinder_identity_threshold
     String? virulencefinder_database
-    Int abricate_vibrio_minid = 80
-    Int abricate_vibrio_mincov = 80
   }
   # theiaprok
   if (merlin_tag == "Acinetobacter baumannii") {
     call kaptive_task.kaptive {
       input:
         assembly = assembly,
-        samplename = samplename
+        samplename = samplename,
+        docker = kaptive_docker_image
     }
     call abricate_task.abricate as abricate_abaum {
       input:
         assembly = assembly,
         samplename = samplename,
         database = "AcinetobacterPlasmidTyping",
-        minid = 95 # strict threshold of 95% identity for typing purposes
+        minid = 95, # strict threshold of 95% identity for typing purposes
+        docker = abricate_abaum_docker_image
     }
   }
   if (merlin_tag == "Escherichia" || merlin_tag == "Shigella sonnei" ) {
@@ -126,15 +192,17 @@ workflow merlin_magic {
     call serotypefinder_task.serotypefinder {
       input:
         assembly = assembly,
-        samplename = samplename
+        samplename = samplename,
+        docker = serotypefinder_docker_image
     }
     call ectyper_task.ectyper {
       input:
         assembly = assembly,
-        samplename = samplename
+        samplename = samplename,
+        docker = ectyper_docker_image
     }
     if (!assembly_only) {
-      call shigatyper_task.shigatyper { # test ONT compatibility
+      call shigatyper_task.shigatyper {
         input:
           read1 = select_first([read1]),
           read2 = read2,
@@ -182,7 +250,8 @@ workflow merlin_magic {
           read1 = select_first([read1]),
           read2 = read2,
           samplename = samplename,
-          ont_data = ont_data
+          ont_data = ont_data,
+          docker = sonneityping_docker_image
       }
     }
   }
@@ -190,14 +259,16 @@ workflow merlin_magic {
     call lissero_task.lissero {
       input:
         assembly = assembly,
-        samplename = samplename
+        samplename = samplename,
+        docker = lissero_docker_image
     }
   }
   if (merlin_tag == "Salmonella") {
     call sistr_task.sistr {
       input: 
         assembly = assembly,
-        samplename = samplename
+        samplename = samplename,
+        docker = sistr_docker_image
     }
     if (!ont_data && !assembly_only) {
       call seqsero2_task.seqsero2 { 
@@ -205,23 +276,26 @@ workflow merlin_magic {
           read1 = select_first([read1]),
           read2 = read2,
           samplename = samplename,
-          paired_end = paired_end
+          paired_end = paired_end,
+          docker = seqsero2_docker_image
       }
     }
     if (ont_data || assembly_only) {
       call seqsero2_task.seqsero2_assembly {
         input:
           assembly_fasta = assembly,
-          samplename = samplename
+          samplename = samplename,
+          docker = seqsero2_docker_image
       }
     }
     if ((select_first([seqsero2.seqsero2_predicted_serotype, seqsero2_assembly.seqsero2_predicted_serotype]) == "Typhi" || sistr.sistr_predicted_serotype == "Typhi") && !assembly_only) {
-      call genotyphi.genotyphi as genotyphi_task { # needs testing
+      call genotyphi.genotyphi as genotyphi_task {
         input: 
           read1 = select_first([read1]),
           read2 = read2,
           samplename = samplename,
-          ont_data = ont_data
+          ont_data = ont_data,
+          docker = genotyphi_docker_image
       }
     }
   }
@@ -230,21 +304,24 @@ workflow merlin_magic {
     call kleborate_task.kleborate {
       input:
         assembly = assembly,
-        samplename = samplename
+        samplename = samplename,
+        docker = kleborate_docker_image
     }
   }
   if (merlin_tag == "Neisseria gonorrhoeae") {
     call ngmaster_task.ngmaster {
       input:
         assembly = assembly,
-        samplename = samplename
+        samplename = samplename,
+        docker = ngmaster_docker_image
     }
   }
   if (merlin_tag == "Neisseria meningitidis") {
     call meningotype_task.meningotype {
       input:
         assembly = assembly,
-        samplename = samplename
+        samplename = samplename,
+        docker = meningotype_docker_image
     }
   }
   if (merlin_tag == "Pseudomonas aeruginosa") {
@@ -264,7 +341,8 @@ workflow merlin_magic {
           input:
             read1 = select_first([read1]),
             read2 = read2,
-            samplename = samplename
+            samplename = samplename,
+            docker = clockwork_docker_image
         }
       }
       call tbprofiler_task.tbprofiler {
@@ -272,16 +350,17 @@ workflow merlin_magic {
           read1 = select_first([clockwork_decon_reads.clockwork_cleaned_read1, read1]),
           read2 = select_first([clockwork_decon_reads.clockwork_cleaned_read2, read2, "gs://theiagen-public-files/terra/theiaprok-files/no-read2.txt"]),
           samplename = samplename,
+          ont_data = ont_data,
           tbprofiler_run_custom_db = tbprofiler_run_custom_db,
           tbprofiler_custom_db = tbprofiler_custom_db,
-          ont_data = ont_data,
+          cov_frac_threshold = tbprofiler_cov_frac_threshold,
+          min_af = tbprofiler_min_af,
+          min_af_pred = tbprofiler_min_af_pred,
+          min_depth = tbprofiler_min_depth,
           mapper = tbprofiler_mapper,
           variant_caller = tbprofiler_variant_caller,
           variant_calling_params = tbprofiler_variant_calling_params,
-          min_depth = tbprofiler_min_depth,
-          min_af = tbprofiler_min_af,
-          min_af_pred = tbprofiler_min_af_pred,
-          cov_frac_threshold = tbprofiler_cov_frac_threshold
+          docker = tbprofiler_docker_image
       }
       if (tbprofiler_additional_outputs) {
         call tbp_parser_task.tbp_parser {
@@ -304,28 +383,29 @@ workflow merlin_magic {
     call legsta_task.legsta {
       input:
         assembly = assembly,
-        samplename = samplename
+        samplename = samplename,
+        docker = legsta_docker_image
     }
   }
   if (merlin_tag == "Staphylococcus aureus") {
-      call spatyper_task.spatyper {
-        input:
-          assembly = assembly,
-          samplename = samplename
-      }
-
+    call spatyper_task.spatyper {
+      input:
+        assembly = assembly,
+        samplename = samplename,
+        docker = spatyper_docker_image
+    }
     call staphopia_sccmec_task.staphopiasccmec {
-        input:
-          assembly = assembly,
-          samplename = samplename,
-          docker = staphopia_sccmec_docker_image
-      }
+      input:
+        assembly = assembly,
+        samplename = samplename,
+        docker = staphopia_sccmec_docker_image
+    }
     call agrvate_task.agrvate {
-        input:
-          assembly = assembly,
-          samplename = samplename,
-          docker = agrvate_docker_image
-      }
+      input:
+        assembly = assembly,
+        samplename = samplename,
+        docker = agrvate_docker_image
+     }
   }
   if (merlin_tag == "Streptococcus pneumoniae") {
     if (paired_end && !ont_data) {
@@ -333,19 +413,37 @@ workflow merlin_magic {
         input:
           read1 = select_first([read1]),
           read2 = read2,
-          samplename = samplename
+          samplename = samplename,
+          docker = seroba_docker_image
       }
     }
     call pbptyper.pbptyper as pbptyper_task {
       input:
         assembly = assembly,
-        samplename = samplename
+        samplename = samplename,
+        docker = pbptyper_docker_image
     }      
     if (call_poppunk) {
       call poppunk_spneumo.poppunk as poppunk_task {
         input:
           assembly = assembly,
-          samplename = samplename
+          samplename = samplename,
+          GPS_dists_npy = poppunk_gps_dists_npy,
+          GPS_dists_pkl = poppunk_gps_dists_pkl,
+          GPS_h5 = poppunk_gps_h5,
+          GPS_refs = poppunk_gps_refs,
+          GPS_refs_dists_npy = poppunk_gps_refs_dists_npy,
+          GPS_refs_dists_pkl = poppunk_gps_refs_dists_pkl,
+          GPS_refs_h5 = poppunk_gps_refs_h5,
+          GPS_clusters_csv = poppunk_gps_clusters_csv,
+          GPS_fit_npz = poppunk_gps_fit_npz,
+          GPS_fit_pkl = poppunk_gps_fit_pkl,
+          GPS_graph_gt = poppunk_gps_graph_gt,
+          GPS_qcreport_txt = poppunk_gps_qcreport_txt,
+          GPS_unword_clusters_csv = poppunk_gps_unword_clusters_csv,
+          GPS_refs_graph_gt = poppunk_gps_refs_graph_gt,
+          GPS_external_clusters_csv = poppunk_gps_external_clusters_csv,
+          docker = poppunk_docker_image, 
       }  
     }
   }
@@ -395,7 +493,8 @@ workflow merlin_magic {
           srst2_max_divergence = srst2_max_divergence,
           srst2_min_depth = srst2_min_depth,
           srst2_min_edge_depth = srst2_min_edge_depth,
-          srst2_gene_max_mismatch = srst2_gene_max_mismatch
+          srst2_gene_max_mismatch = srst2_gene_max_mismatch,
+          docker = srst2_docker_image
       }
     }
     call abricate_vibrio_task.abricate_vibrio {
@@ -403,7 +502,8 @@ workflow merlin_magic {
         assembly = assembly,
         samplename = samplename,
         minid = abricate_vibrio_minid,
-        mincov = abricate_vibrio_mincov
+        mincov = abricate_vibrio_mincov,
+        docker = abricate_vibrio_docker_image
     }
   }
   
@@ -413,7 +513,18 @@ workflow merlin_magic {
       call cauris_cladetyper.cauris_cladetyper as cladetyper {
         input: 
           assembly_fasta = assembly,
-          samplename = samplename
+          samplename = samplename,
+          ref_clade1 = cladetyper_ref_clade1,
+          ref_clade1_annotated = cladetyper_ref_clade1_annotated,
+          ref_clade2 = cladetyper_ref_clade2,
+          ref_clade2_annotated = cladetyper_ref_clade2_annotated,
+          ref_clade3 = cladetyper_ref_clade3,
+          ref_clade3_annotated = cladetyper_ref_clade3_annotated,
+          ref_clade4 = cladetyper_ref_clade4,
+          ref_clade4_annotated = cladetyper_ref_clade4_annotated,
+          ref_clade5 = cladetyper_ref_clade5,
+          ref_clade5_annotated = cladetyper_ref_clade5_annotated,
+          docker = cauris_cladetyper_docker_image
       }
       if (!assembly_only && !ont_data) {
         call snippy.snippy_variants as snippy_cauris { # no ONT support right now
@@ -421,14 +532,16 @@ workflow merlin_magic {
             reference_genome_file = cladetyper.clade_spec_ref,
             read1 = select_first([read1]),
             read2 = read2,
-            samplename = samplename
+            samplename = samplename,
+            docker = snippy_variants_docker_image
         }
         call snippy_gene_query.snippy_gene_query as snippy_gene_query_cauris {
           input:
             samplename = samplename,
             snippy_variants_results = snippy_cauris.snippy_variants_results,
             reference = cladetyper.clade_spec_ref,
-            query_gene = select_first([snippy_query_gene,"FKS1,lanosterol.14-alpha.demethylase,uracil.phosphoribosyltransferase"]),
+            query_gene = select_first([snippy_query_gene, "FKS1,lanosterol.14-alpha.demethylase,uracil.phosphoribosyltransferase"]),
+            docker = snippy_gene_query_docker_image
         }
       }
     }
@@ -437,7 +550,7 @@ workflow merlin_magic {
     #   if (!assembly_only && !ont_data) {
     #     call snippy.snippy_variants as snippy_calbicans {
     #       input:
-    #         reference_genome_file = "gs://theiagen-public-files/terra/theiaeuk_files/Candida_albicans_GCF_000182965.3_ASM18296v3_genomic.gbff",
+    #         reference_genome_file = snippy_reference_calbicans,
     #         read1 = select_first([read1]),
     #         read2 = read2,
     #         samplename = samplename
@@ -446,7 +559,7 @@ workflow merlin_magic {
     #       input:
     #         samplename = samplename,
     #         snippy_variants_results = snippy_calbicans.snippy_variants_results,
-    #         reference = "gs://theiagen-public-files/terra/theiaeuk_files/Candida_albicans_GCF_000182965.3_ASM18296v3_genomic.gbff",
+    #         reference = snippy_reference_calbicans,
     #         query_gene = select_first([snippy_query_gene,"GCS1,ERG11,FUR1,RTA2"]), # GCS1 is another name for FKS1
     #     }
     #   }
@@ -455,17 +568,19 @@ workflow merlin_magic {
       if (!assembly_only && !ont_data) {
         call snippy.snippy_variants as snippy_afumigatus {
           input:
-            reference_genome_file = "gs://theiagen-public-files/terra/theiaeuk_files/Aspergillus_fumigatus_GCF_000002655.1_ASM265v1_genomic.gbff",
+            reference_genome_file = snippy_reference_afumigatus,
             read1 = select_first([read1]),
             read2 = read2,
-            samplename = samplename
+            samplename = samplename,
+            docker = snippy_variants_docker_image
         }
         call snippy_gene_query.snippy_gene_query as snippy_gene_query_afumigatus {
           input:
             samplename = samplename,
             snippy_variants_results = snippy_afumigatus.snippy_variants_results,
-            reference = "gs://theiagen-public-files/terra/theiaeuk_files/Aspergillus_fumigatus_GCF_000002655.1_ASM265v1_genomic.gbff",
-            query_gene = select_first([snippy_query_gene,"Cyp51A,HapE,AFUA_4G08340"]), # AFUA_4G08340 is COX10 according to MARDy
+            reference = snippy_reference_afumigatus,
+            query_gene = select_first([snippy_query_gene, "Cyp51A,HapE,AFUA_4G08340"]), # AFUA_4G08340 is COX10 according to MARDy
+            docker = snippy_gene_query_docker_image
         }
       }
     }
@@ -473,17 +588,19 @@ workflow merlin_magic {
       if (!assembly_only && !ont_data) {
         call snippy.snippy_variants as snippy_crypto {
           input:
-            reference_genome_file = "gs://theiagen-public-files/terra/theiaeuk_files/Cryptococcus_neoformans_GCF_000091045.1_ASM9104v1_genomic.gbff",
+            reference_genome_file = snippy_reference_cryptoneo,
             read1 = select_first([read1]),
             read2 = read2,
-            samplename = samplename
+            samplename = samplename,
+            docker = snippy_variants_docker_image
         }
         call snippy_gene_query.snippy_gene_query as snippy_gene_query_crypto {
           input:
             samplename = samplename,
             snippy_variants_results = snippy_crypto.snippy_variants_results,
-            reference = "gs://theiagen-public-files/terra/theiaeuk_files/Cryptococcus_neoformans_GCF_000091045.1_ASM9104v1_genomic.gbff",
-            query_gene = select_first([snippy_query_gene,"CNA00300"]), # CNA00300 is ERG11 for this reference genome
+            reference = snippy_reference_cryptoneo,
+            query_gene = select_first([snippy_query_gene, "CNA00300"]), # CNA00300 is ERG11 for this reference genome
+            docker = snippy_gene_query_docker_image
         }
       }
     }

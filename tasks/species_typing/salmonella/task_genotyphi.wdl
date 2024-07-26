@@ -7,7 +7,7 @@ task genotyphi {
     File? read2
     Boolean ont_data = false
     String samplename
-    String genotyphi_docker_image = "us-docker.pkg.dev/general-theiagen/staphb/mykrobe:0.11.0"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/mykrobe:0.11.0"
     Int disk_size = 100
     Int cpu = 4
     Int memory = 8
@@ -63,7 +63,7 @@ task genotyphi {
     String genotyphi_genotype_confidence = read_string("CONFIDENCE")
   }
   runtime {
-    docker: "~{genotyphi_docker_image}"
+    docker: "~{docker}"
     memory: memory + " GB"
     cpu: cpu
     disks: "local-disk " + disk_size + " SSD"
