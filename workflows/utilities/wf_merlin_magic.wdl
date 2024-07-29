@@ -92,10 +92,16 @@ workflow merlin_magic {
     String? tbprofiler_docker_image
     String? tbp_parser_docker_image
     String? virulencefinder_docker_image
+    # abricate abaum options
+    Int abricate_abaum_minid = 95 # strict threshold of 95% identity for typing purposes
+    Int? abricate_abaum_mincov
     # abricate vibrio options
     Int abricate_vibrio_minid = 80
     Int abricate_vibrio_mincov = 80
+    # agrvate options
+    Boolean? agrvate_agr_typing_only
     # cladetyper options - primarily files we host
+    Int? cladetyper_kmer_size
     File? cladetyper_ref_clade1
     File? cladetyper_ref_clade1_annotated
     File? cladetyper_ref_clade2
@@ -106,6 +112,13 @@ workflow merlin_magic {
     File? cladetyper_ref_clade4_annotated
     File? cladetyper_ref_clade5
     File? cladetyper_ref_clade5_annotated
+    # ectyper options
+    Int? ectyper_opid
+    Int? ectyper_hpid
+    Int? ectyper_opcov
+    Int? ectyper_hpcov
+    Boolean? ectyper_verify
+    Boolean? ectyper_print_alleles
     # emmtyper options
     String? emmtyper_wf
     Int? emmtyper_cluster_distance
@@ -117,9 +130,28 @@ workflow merlin_magic {
     Int? emmtyper_min_perfect
     Int? emmtyper_min_good
     Int? emmtyper_max_size
+    # kaptive options
+    Int? kaptive_start_end_margin
+    Float? kaptive_min_identity
+    Float? kaptive_min_coverage
+    Float? kaptive_low_gene_id
+    # kleborate options
+    Boolean? kleborate_skip_resistance
+    Boolean? kleborate_skip_kaptive
+    Float? kleborate_min_identity
+    Float? kleborate_min_coverage
+    Float? kleborate_min_spurious_identity
+    Float? kleborate_min_spurious_coverage
+    String? kleborate_min_kaptive_confidence
+    # lissero options
+    Float? lissero_min_id
+    Float? lissero_min_cov
     # pasty options
     Int? pasty_min_pident
-    Int? pasty_min_coverage        
+    Int? pasty_min_coverage      
+    # pbptyper options 
+    Int? pbptyper_min_pident
+    Int? pbptyper_min_coverage
     # popppunk options - primarily files we host
     File? poppunk_gps_dists_npy
     File? poppunk_gps_dists_pkl
@@ -136,11 +168,23 @@ workflow merlin_magic {
     File? poppunk_gps_unword_clusters_csv
     File? poppunk_gps_refs_graph_gt
     File? poppunk_gps_external_clusters_csv
+    # sistr options
+    Boolean? sistr_use_full_cgmlst_db
     # snippy options - mostly files we host
     String? snippy_query_gene
     File snippy_reference_afumigatus = "gs://theiagen-public-files/terra/theiaeuk_files/Aspergillus_fumigatus_GCF_000002655.1_ASM265v1_genomic.gbff"
     File snippy_reference_cryptoneo = "gs://theiagen-public-files/terra/theiaeuk_files/Cryptococcus_neoformans_GCF_000091045.1_ASM9104v1_genomic.gbff"
+    Int? snippy_map_qual
+    Int? snippy_base_quality
+    Int? snippy_min_coverage
+    Float? snippy_min_frac
+    Int? snippy_min_quality
+    Int? snippy_maxsoft
     #File snippy_reference_calbicans = "gs://theiagen-public-files/terra/theiaeuk_files/Candida_albicans_GCF_000182965.3_ASM18296v3_genomic.gbff"
+    # sonneityping options
+    String? sonneityping_mykrobe_opts
+    # spatyper options
+    Boolean? spatyper_do_enrich
     # srst2 options
     Int srst2_min_cov = 80
     Int srst2_max_divergence = 20
@@ -161,8 +205,12 @@ workflow merlin_magic {
     String tbp_parser_output_seq_method_type = "WGS"
     String? tbp_parser_operator
     Int? tbp_parser_min_depth
+    Int? tbp_parser_min_frequency
+    Int? tbp_parser_min_read_support
     Int? tbp_parser_coverage_threshold
+    File? tbp_parser_coverage_regions_bed
     Boolean? tbp_parser_debug
+
     # virulencefinder options
     Float? virulencefinder_coverage_threshold
     Float? virulencefinder_identity_threshold
@@ -174,6 +222,10 @@ workflow merlin_magic {
       input:
         assembly = assembly,
         samplename = samplename,
+        start_end_margin = kaptive_start_end_margin,
+        min_identity = kaptive_min_identity,
+        min_coverage = kaptive_min_coverage,
+        low_gene_id = kaptive_low_gene_id,
         docker = kaptive_docker_image
     }
     call abricate_task.abricate as abricate_abaum {
@@ -181,7 +233,8 @@ workflow merlin_magic {
         assembly = assembly,
         samplename = samplename,
         database = "AcinetobacterPlasmidTyping",
-        minid = 95, # strict threshold of 95% identity for typing purposes
+        minid = abricate_abaum_minid, 
+        mincov = abricate_abaum_mincov,
         docker = abricate_abaum_docker_image
     }
   }
@@ -200,6 +253,12 @@ workflow merlin_magic {
       input:
         assembly = assembly,
         samplename = samplename,
+        opid = ectyper_opid,
+        hpid = ectyper_hpid,
+        opcov = ectyper_opcov,
+        hpcov = ectyper_hpcov,
+        verify = ectyper_verify,
+        print_alleles = ectyper_print_alleles,
         docker = ectyper_docker_image
     }
     if (!assembly_only) {
@@ -244,14 +303,14 @@ workflow merlin_magic {
     }
   }
   if (merlin_tag == "Shigella sonnei") {
-    # Shigella sonnei specific tasks
     if (!assembly_only) {
-      call sonneityping_task.sonneityping { # test ONT compatibility
+      call sonneityping_task.sonneityping { 
         input:
           read1 = select_first([read1]),
           read2 = read2,
           samplename = samplename,
           ont_data = ont_data,
+          mykrobe_opts = sonneityping_mykrobe_opts,
           docker = sonneityping_docker_image
       }
     }
@@ -261,6 +320,8 @@ workflow merlin_magic {
       input:
         assembly = assembly,
         samplename = samplename,
+        min_id = lissero_min_id
+        min_cov = lissero_min_cov
         docker = lissero_docker_image
     }
   }
@@ -269,6 +330,7 @@ workflow merlin_magic {
       input: 
         assembly = assembly,
         samplename = samplename,
+        use_full_cgmlst_db = sistr_use_full_cgmlst_db,
         docker = sistr_docker_image
     }
     if (!ont_data && !assembly_only) {
@@ -306,6 +368,13 @@ workflow merlin_magic {
       input:
         assembly = assembly,
         samplename = samplename,
+        skip_resistance = kleborate_skip_resistance,
+        skip_kaptive = kleborate_skip_kaptive,
+        min_identity = kleborate_min_identity,
+        min_coverage = kleborate_min_coverage,
+        min_spurious_identity = kleborate_min_spurious_identity,
+        min_spurious_coverage = kleborate_min_spurious_coverage,
+        min_kaptive_confidence = kleborate_min_kaptive_confidence,
         docker = kleborate_docker_image
     }
   }
@@ -372,8 +441,11 @@ workflow merlin_magic {
             samplename = samplename, 
             sequencing_method = tbp_parser_output_seq_method_type,
             operator = tbp_parser_operator,
-            min_depth = tbp_parser_min_depth,
             coverage_threshold = tbp_parser_coverage_threshold,
+            coverage_regions_bed = tbp_parser_coverage_regions_bed,
+            min_depth = tbp_parser_min_depth,
+            min_frequency = tbp_parser_min_frequency,
+            min_read_support = tbp_parser_min_read_support,
             tbp_parser_debug = tbp_parser_debug,
             docker = tbp_parser_docker_image
         }
@@ -393,6 +465,7 @@ workflow merlin_magic {
       input:
         assembly = assembly,
         samplename = samplename,
+        do_enrich = spatyper_do_enrich,
         docker = spatyper_docker_image
     }
     call staphopia_sccmec_task.staphopiasccmec {
@@ -405,6 +478,7 @@ workflow merlin_magic {
       input:
         assembly = assembly,
         samplename = samplename,
+        typing_only = agrvate_agr_typing_only,
         docker = agrvate_docker_image
      }
   }
@@ -422,6 +496,8 @@ workflow merlin_magic {
       input:
         assembly = assembly,
         samplename = samplename,
+        min_pident = pbptyper_min_pident,
+        min_coverage = pbptyper_min_coverage,
         docker = pbptyper_docker_image
     }      
     if (call_poppunk) {
@@ -515,6 +591,7 @@ workflow merlin_magic {
         input: 
           assembly_fasta = assembly,
           samplename = samplename,
+          kmer_size = cladetyper_kmer_size,
           ref_clade1 = cladetyper_ref_clade1,
           ref_clade1_annotated = cladetyper_ref_clade1_annotated,
           ref_clade2 = cladetyper_ref_clade2,
@@ -534,6 +611,12 @@ workflow merlin_magic {
             read1 = select_first([read1]),
             read2 = read2,
             samplename = samplename,
+            map_qual = snippy_map_qual,
+            base_quality = snippy_base_quality,
+            min_coverage = snippy_min_coverage,
+            min_frac = snippy_min_frac,
+            min_quality = snippy_min_quality,
+            maxsoft = snippy_maxsoft,
             docker = snippy_variants_docker_image
         }
         call snippy_gene_query.snippy_gene_query as snippy_gene_query_cauris {
@@ -554,6 +637,12 @@ workflow merlin_magic {
     #         reference_genome_file = snippy_reference_calbicans,
     #         read1 = select_first([read1]),
     #         read2 = read2,
+            # map_qual = snippy_map_qual,
+            # base_quality = snippy_base_quality,
+            # min_coverage = snippy_min_coverage,
+            # min_frac = snippy_min_frac,
+            # min_quality = snippy_min_quality,
+            # maxsoft = snippy_maxsoft,
     #         samplename = samplename
     #     }
     #     call snippy_gene_query.snippy_gene_query as snippy_gene_query_calbicans {
@@ -573,6 +662,12 @@ workflow merlin_magic {
             read1 = select_first([read1]),
             read2 = read2,
             samplename = samplename,
+            map_qual = snippy_map_qual,
+            base_quality = snippy_base_quality,
+            min_coverage = snippy_min_coverage,
+            min_frac = snippy_min_frac,
+            min_quality = snippy_min_quality,
+            maxsoft = snippy_maxsoft,
             docker = snippy_variants_docker_image
         }
         call snippy_gene_query.snippy_gene_query as snippy_gene_query_afumigatus {
@@ -593,6 +688,12 @@ workflow merlin_magic {
             read1 = select_first([read1]),
             read2 = read2,
             samplename = samplename,
+            map_qual = snippy_map_qual,
+            base_quality = snippy_base_quality,
+            min_coverage = snippy_min_coverage,
+            min_frac = snippy_min_frac,
+            min_quality = snippy_min_quality,
+            maxsoft = snippy_maxsoft,
             docker = snippy_variants_docker_image
         }
         call snippy_gene_query.snippy_gene_query as snippy_gene_query_crypto {
