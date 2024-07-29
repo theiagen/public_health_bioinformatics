@@ -18,7 +18,7 @@ task tbprofiler {
     # tool options within tbprofiler
     String mapper = "bwa"
     String variant_caller = "freebayes"
-    String? variant_calling_param
+    String? variant_calling_params
     # runtime
     Int cpu = 8     
     Int disk_size = 100
