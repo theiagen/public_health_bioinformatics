@@ -75,6 +75,7 @@ workflow merlin_magic {
     String? meningotype_docker_image
     String? ngmaster_docker_image
     String? pasty_docker_image
+    String? pbptyper_docker_image
     String? poppunk_docker_image
     String? seqsero2_docker_image
     String? seroba_docker_image
@@ -224,7 +225,7 @@ workflow merlin_magic {
           read2 = read2,
           samplename = samplename,
           paired_end = paired_end,
-          docker = shigeifinder_docker_imageF
+          docker = shigeifinder_docker_image
       }
     }
     call virulencefinder_task.virulencefinder {
