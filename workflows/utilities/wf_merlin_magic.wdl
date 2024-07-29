@@ -89,6 +89,7 @@ workflow merlin_magic {
     String? srst2_docker_image
     String? staphopia_sccmec_docker_image
     String? tbprofiler_docker_image
+    String? tbp_parser_docker_image
     String? virulencefinder_docker_image
     # abricate vibrio options
     Int abricate_vibrio_minid = 80
@@ -161,7 +162,6 @@ workflow merlin_magic {
     Int? tbp_parser_min_depth
     Int? tbp_parser_coverage_threshold
     Boolean? tbp_parser_debug
-    String? tbp_parser_docker_image
     # virulencefinder options
     Float? virulencefinder_coverage_threshold
     Float? virulencefinder_identity_threshold
@@ -223,8 +223,8 @@ workflow merlin_magic {
           read1 = select_first([read1]),
           read2 = read2,
           samplename = samplename,
-          docker = shigeifinder_docker_image,
-          paired_end = paired_end
+          paired_end = paired_end,
+          docker = shigeifinder_docker_imageF
       }
     }
     call virulencefinder_task.virulencefinder {
@@ -236,10 +236,10 @@ workflow merlin_magic {
       #  paired_end = paired_end,
       #  assembly_only = assembly_only,
       #  ont_data = ont_data,
-        docker = virulencefinder_docker_image,
         coverage_threshold = virulencefinder_coverage_threshold,
         identity_threshold = virulencefinder_identity_threshold,
-        database = virulencefinder_database
+        database = virulencefinder_database,
+        docker = virulencefinder_docker_image
     }
   }
   if (merlin_tag == "Shigella sonnei") {
@@ -452,7 +452,6 @@ workflow merlin_magic {
       input:
         assembly = assembly,
         samplename = samplename,
-        docker = emmtyper_docker_image,
         wf = emmtyper_wf,
         cluster_distance = emmtyper_cluster_distance,
         percid = emmtyper_percid,
@@ -463,6 +462,7 @@ workflow merlin_magic {
         min_perfect = emmtyper_min_perfect,
         min_good = emmtyper_min_good,
         max_size = emmtyper_max_size,
+        docker = emmtyper_docker_image
     }
     if (paired_end && !ont_data) {
       call emmtypingtool_task.emmtypingtool {
@@ -768,7 +768,6 @@ workflow merlin_magic {
     Float? tbp_parser_average_genome_depth = tbp_parser.tbp_parser_average_genome_depth
     File? clockwork_cleaned_read1 = clockwork_decon_reads.clockwork_cleaned_read1
     File? clockwork_cleaned_read2 = clockwork_decon_reads.clockwork_cleaned_read2
-
     # Legionella pneumophila Typing
     File? legsta_results = legsta.legsta_results
     String? legsta_predicted_sbt = legsta.legsta_predicted_sbt
