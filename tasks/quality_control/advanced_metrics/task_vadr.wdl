@@ -47,7 +47,7 @@ task vadr {
 
       # prep alerts into a tsv file for parsing
       cut -f 5 "~{out_base}/~{out_base}.vadr.alt.list" | tail -n +2 > "~{out_base}.vadr.alerts.tsv"
-      wc -l "~{out_base}.vadr.alerts.tsv" > NUM_ALERTS
+      cat "~{out_base}.vadr.alerts.tsv" | wc -l > NUM_ALERTS
 
       # rename sequence classification summary file to end in txt
       mv -v "~{out_base}/~{out_base}.vadr.sqc" "~{out_base}/~{out_base}.vadr.sqc.txt"
