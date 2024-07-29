@@ -47,7 +47,10 @@ task vadr {
 
       # prep alerts into a tsv file for parsing
       cut -f 5 "~{out_base}/~{out_base}.vadr.alt.list" | tail -n +2 > "~{out_base}.vadr.alerts.tsv"
-      cat "~{out_base}.vadr.alerts.tsv" | wc -l > NUM_ALERTS
+      wc -l "~{out_base}.vadr.alerts.tsv" > NUM_ALERTS
+
+      # rename sequence classification summary file to end in txt
+      mv -v "~{out_base}/~{out_base}.vadr.sqc" "~{out_base}/~{out_base}.vadr.sqc.txt"
 
     else
       echo "VADR skipped due to poor assembly; assembly length (unambiguous) = ~{assembly_length_unambiguous}" > NUM_ALERTS
@@ -55,7 +58,9 @@ task vadr {
 
   >>>
   output {
-    File? feature_tbl = "~{out_base}/~{out_base}.vadr.pass.tbl"
+    File? feature_tbl_pass = "~{out_base}/~{out_base}.vadr.pass.tbl"
+    File? feature_tbl_fail = "~{out_base}/~{out_base}.vadr.fail.tbl"
+    File? classification_summary_file = "~{out_base}/~{out_base}.vadr.sqc"
     String num_alerts = read_string("NUM_ALERTS")
     File? alerts_list = "~{out_base}/~{out_base}.vadr.alt.list"
     File? outputs_tgz = "~{out_base}.vadr.tar.gz"
