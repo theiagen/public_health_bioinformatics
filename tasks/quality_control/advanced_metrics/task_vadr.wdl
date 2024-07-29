@@ -60,7 +60,7 @@ task vadr {
   output {
     File? feature_tbl_pass = "~{out_base}/~{out_base}.vadr.pass.tbl"
     File? feature_tbl_fail = "~{out_base}/~{out_base}.vadr.fail.tbl"
-    File? classification_summary_file = "~{out_base}/~{out_base}.vadr.sqc"
+    File? classification_summary_file = "~{out_base}/~{out_base}.vadr.sqc.txt"
     String num_alerts = read_string("NUM_ALERTS")
     File? alerts_list = "~{out_base}/~{out_base}.vadr.alt.list"
     File? outputs_tgz = "~{out_base}.vadr.tar.gz"
