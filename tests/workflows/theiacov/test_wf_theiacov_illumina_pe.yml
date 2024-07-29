@@ -33,7 +33,7 @@
     - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_pe/task.log
       contains: ["wdl", "illumina_pe", "trimmomatic", "done"]
     - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_pe/work/SRR13687078.trim.stats.txt
-      md5sum: f7f3616ddeed21cbe619ca25e2e22697
+      md5sum: 454e9cd06acda96b7a13be30ef29c9d5
     - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_pe/work/_miniwdl_inputs/0/SRR13687078_R1_dehosted.fastq.gz
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_pe/work/_miniwdl_inputs/0/SRR13687078_R2_dehosted.fastq.gz
@@ -51,9 +51,9 @@
     - path: miniwdl_run/call-read_QC_trim/call-bbduk/task.log
       contains: ["wdl", "illumina_pe", "bbduk", "done"]
     - path: miniwdl_run/call-read_QC_trim/call-bbduk/work/SRR13687078.adapters.stats.txt
-      md5sum: 55603935123539fad25daafc00c6bcef
+      md5sum: 41e6facd9074e4cabc0eb2f756aeeff6
     - path: miniwdl_run/call-read_QC_trim/call-bbduk/work/SRR13687078.phix.stats.txt
-      md5sum: 38cd64e412739d870e63181624b9b069
+      md5sum: 1a338999b186f6752d981ff183656bb0
     - path: miniwdl_run/call-read_QC_trim/call-bbduk/work/_miniwdl_inputs/0/SRR13687078_1P.fastq.gz
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     - path: miniwdl_run/call-read_QC_trim/call-bbduk/work/_miniwdl_inputs/0/SRR13687078_2P.fastq.gz
@@ -95,13 +95,13 @@
     - path: miniwdl_run/call-read_QC_trim/call-kraken2_theiacov_dehosted/task.log
       contains: ["wdl", "theiacov_illumina_pe", "kraken2_theiacov_dehosted", "done"]
     - path: miniwdl_run/call-read_QC_trim/call-kraken2_theiacov_dehosted/work/PERCENT_HUMAN
-      md5sum: 414f4efa514540a2527a4f27124575f2
+      md5sum: 897316929176464ebc9ad085f31e7284
     - path: miniwdl_run/call-read_QC_trim/call-kraken2_theiacov_dehosted/work/PERCENT_SC2
-      md5sum: 2bf2d20f083d8fa09abf6c25f8970e2e
+      md5sum: 494a4bf9ab740c0a0fab64f670549883
     - path: miniwdl_run/call-read_QC_trim/call-kraken2_theiacov_dehosted/work/PERCENT_TARGET_ORGANISM
       md5sum: 68b329da9893e34099c7d8ad5cb9c940
     - path: miniwdl_run/call-read_QC_trim/call-kraken2_theiacov_dehosted/work/SRR13687078_kraken2_report.txt
-      md5sum: 3544d9ca35d45093c03cdead46677765
+      md5sum: 2ccc036a9a93b3cf096a5c4dda49a579
     # kraken2 raw
     - path: miniwdl_run/call-read_QC_trim/call-kraken2_theiacov_raw/command
       md5sum: a16205bdb8cf133a112c4552e8f67f97
@@ -124,7 +124,7 @@
       md5sum: 3544d9ca35d45093c03cdead46677765
     # ncbi scrub
     - path: miniwdl_run/call-read_QC_trim/call-ncbi_scrub_pe/command
-      md5sum: 95f3a7a050579989015ea29094cedc6b
+      md5sum: 8c7ca800fa98305009cfb9116a4b60b8
     - path: miniwdl_run/call-read_QC_trim/call-ncbi_scrub_pe/inputs.json
       contains: ["read1", "read2", "samplename"]
     - path: miniwdl_run/call-read_QC_trim/call-ncbi_scrub_pe/outputs.json
@@ -134,10 +134,6 @@
     - path: miniwdl_run/call-read_QC_trim/call-ncbi_scrub_pe/stdout.txt
     - path: miniwdl_run/call-read_QC_trim/call-ncbi_scrub_pe/task.log
       contains: ["wdl", "illumina_pe", "ncbi_scrub", "done"]
-    - path: miniwdl_run/call-read_QC_trim/call-ncbi_scrub_pe/work/FWD_SPOTS_REMOVED
-      md5sum: 897316929176464ebc9ad085f31e7284
-    - path: miniwdl_run/call-read_QC_trim/call-ncbi_scrub_pe/work/REV_SPOTS_REMOVED
-      md5sum: 897316929176464ebc9ad085f31e7284
     # clean read screen
     - path: miniwdl_run/call-clean_check_reads/command
       md5sum: e18830c68993b2837d1da29ce55d2de8
@@ -451,7 +447,7 @@
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     # vadr
     - path: miniwdl_run/call-vadr/command
-      md5sum: 7d13f1374bd45a189f72e7db33172cad
+      md5sum: 196c2f03351d6f75ff279f860bb271b0
     - path: miniwdl_run/call-vadr/inputs.json
       contains: ["assembly_length_unambiguous", "genome_fasta", "fasta"]
     - path: miniwdl_run/call-vadr/outputs.json
