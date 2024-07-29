@@ -30,7 +30,7 @@ task seqsero2 {
     # -d <string> (output directory name)
     # -i <file> (path to input file(s))
     SeqSero2_package.py \
-      -p 8 \
+      -p ~{cpu} \
       -m ~{mode} \
       ~{true='-t 2' false='-t 3' paired_end} \
       -n ~{samplename} \
