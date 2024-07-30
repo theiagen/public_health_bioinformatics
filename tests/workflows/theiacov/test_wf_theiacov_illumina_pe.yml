@@ -134,6 +134,8 @@
     - path: miniwdl_run/call-read_QC_trim/call-ncbi_scrub_pe/stdout.txt
     - path: miniwdl_run/call-read_QC_trim/call-ncbi_scrub_pe/task.log
       contains: ["wdl", "illumina_pe", "ncbi_scrub", "done"]
+    - path: miniwdl_run/call-read_QC_trim/call-ncbi_scrub_pe/work/SPOTS_REMOVED
+      md5sum: 7c5aba41f53293b712fd86d08ed5b36e
     # clean read screen
     - path: miniwdl_run/call-clean_check_reads/command
       md5sum: e18830c68993b2837d1da29ce55d2de8
