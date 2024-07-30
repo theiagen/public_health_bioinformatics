@@ -320,8 +320,8 @@ workflow merlin_magic {
       input:
         assembly = assembly,
         samplename = samplename,
-        min_id = lissero_min_id
-        min_cov = lissero_min_cov
+        min_id = lissero_min_id,
+        min_cov = lissero_min_cov,
         docker = lissero_docker_image
     }
   }
