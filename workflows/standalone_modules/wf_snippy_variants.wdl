@@ -27,7 +27,6 @@ workflow snippy_variants_wf {
     Int? min_quality
     Int? maxsoft
   }
-
   # Add check to verify that at least read1 or assembly_fasta is provided
   if (defined(read1) || defined(assembly_fasta)) {
     call snippy.snippy_variants {
