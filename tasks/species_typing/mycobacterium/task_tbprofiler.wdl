@@ -5,20 +5,25 @@ task tbprofiler {
     File read1
     File? read2
     String samplename
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/tbprofiler:4.4.2"
-    Int disk_size = 100
-    Int memory = 16
+
+    # logic
+    Boolean ont_data = false
+    Boolean tbprofiler_run_custom_db = false
+    File? tbprofiler_custom_db
+    # minimum thresholds
+    Int cov_frac_threshold = 1
+    Float min_af = 0.1
+    Float min_af_pred = 0.1
+    Int min_depth = 10
+    # tool options within tbprofiler
     String mapper = "bwa"
     String variant_caller = "freebayes"
     String? variant_calling_params
-    Int min_depth = 10
-    Float min_af = 0.1
-    Float min_af_pred = 0.1
-    Int cov_frac_threshold = 1
-    Int cpu = 8 
-    Boolean ont_data = false
-    File? tbprofiler_custom_db
-    Boolean tbprofiler_run_custom_db = false
+    # runtime
+    Int cpu = 8     
+    Int disk_size = 100
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/tbprofiler:4.4.2"
+    Int memory = 16
   }
   command <<<
     # Print and save date

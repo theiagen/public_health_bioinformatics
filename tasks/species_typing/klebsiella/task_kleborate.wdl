@@ -5,7 +5,7 @@ task kleborate {
   input {
     File assembly
     String samplename
-    String kleborate_docker_image = "us-docker.pkg.dev/general-theiagen/staphb/kleborate:2.2.0"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/kleborate:2.2.0"
     Int disk_size = 100
     Int cpu = 8
     Int memory = 16
@@ -116,7 +116,7 @@ task kleborate {
   output {
     File kleborate_output_file = "~{samplename}_kleborate_out.tsv"
     String kleborate_version = read_string("VERSION")
-    String kleborate_docker = kleborate_docker_image
+    String kleborate_docker = docker
     String kleborate_mlst_sequence_type = read_string("MLST_SEQUENCE_TYPE")
     String kleborate_virulence_score = read_string("VIRULENCE_SCORE")
     String kleborate_resistance_score = read_string("RESISTANCE_SCORE")
@@ -133,7 +133,7 @@ task kleborate {
     String kleborate_olocus_confidence = read_string("O_LOCUS_CONFIDENCE")
   }
   runtime {
-    docker: "~{kleborate_docker_image}"
+    docker: "~{docker}"
     memory: memory + " GB"
     cpu: cpu
     disks: "local-disk " + disk_size + " SSD"
