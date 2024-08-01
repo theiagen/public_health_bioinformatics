@@ -207,7 +207,7 @@
       contains: ["wdl", "theiacov_clearlabs", "ncbi_scrub_se", "done"]
     - path: miniwdl_run/call-ncbi_scrub_se/work/DATE
     - path: miniwdl_run/call-ncbi_scrub_se/work/SPOTS_REMOVED
-      md5sum: 3b3b3f3b3b3b3b3b3b3b3b3b3b3b3b3b
+      md5sum: 897316929176464ebc9ad085f31e7284
     - path: miniwdl_run/call-ncbi_scrub_se/work/_miniwdl_inputs/0/clearlabs.fastq.gz
     - path: miniwdl_run/call-ncbi_scrub_se/work/clearlabs_R1_dehosted.fastq.gz
     - path: miniwdl_run/call-ncbi_scrub_se/work/r1.fastq
