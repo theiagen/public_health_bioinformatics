@@ -60,8 +60,6 @@ task create_terra_table {
       # this could be a comma delimited list, so we will want to split that up
       IFS="," read -ra FILE_ENDINGS <<< "~{file_ending}"
 
-      echo ${FILE_ENDINGS[@]} >&2
-      
       PATTERN="("
       for ending in "${FILE_ENDINGS[@]}"; do
         if [ $PATTERN == "(" ]; then
@@ -72,7 +70,6 @@ task create_terra_table {
       done
 
       PATTERN="$PATTERN)"
-      echo "$PATTERN"
       unset IFS
     fi
 
@@ -82,7 +79,7 @@ task create_terra_table {
     if [ -s filelist-fullpath.txt ]; then
       echo "DEBUG: files were identified; now identifying sample names"
     else
-      echo "DEBUG: no files were identified; please check your data location path and then try again" >&2
+      echo "DEBUG: no files were identified; please check your data location path or file endings and then try again" >&2
       exit 1
     fi
 
