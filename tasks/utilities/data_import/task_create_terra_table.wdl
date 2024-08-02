@@ -28,6 +28,7 @@ task create_terra_table {
     echo "DEBUG: data_location_path: ~{data_location_path}" >&2
     echo "DEBUG: paired_end: ~{paired_end}" >&2
     echo "DEBUG: assembly_data: ~{assembly_data}" >&2 
+    echo "DEBUG: file_ending: ~{file_ending}" >&2
 
     if ~{paired_end} && ~{assembly_data}; then
       echo "DEBUG: paired-end AND assembly data indicated; this is not supported. Please check your input parameters and then try again" >&2
@@ -95,7 +96,7 @@ task create_terra_table {
       file=$(basename "$filepath")
 
       if [ -n "~{file_ending}" ]; then
-        echo "DEBUG: file ending pattern was provided; using that instead of the default pattern"
+        echo "DEBUG: file ending pattern was provided to detect samplename; using that instead of the default pattern"
         samplename=$file
         for ending in "${FILE_ENDINGS[@]}"; do
           samplename=${samplename%%$ending}
@@ -106,7 +107,6 @@ task create_terra_table {
         no_underscore_samplename=${file%%_*} 
         samplename=${no_underscore_samplename%%.*}
       fi
-
 
       if grep "$samplename" samplenames.txt; then
         echo "DEBUG: $samplename is in the terra table"
