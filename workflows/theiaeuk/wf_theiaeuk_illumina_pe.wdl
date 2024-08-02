@@ -298,6 +298,6 @@ workflow theiaeuk_illumina_pe {
     String? theiaeuk_snippy_variants_num_reads_aligned = merlin_magic.snippy_variants_num_reads_aligned
     String? theiaeuk_snippy_variants_coverage_tsv = merlin_magic.snippy_variants_coverage_tsv
     String? theiaeuk_snippy_variants_num_variants = merlin_magic.snippy_variants_num_variants
-    Float? theiaeuk_snippy_variants_percent_ref_coverage = merlin_magic.snippy_variants_percent_ref_coverage
+    String? theiaeuk_snippy_variants_percent_ref_coverage = merlin_magic.snippy_variants_percent_ref_coverage
   }
 }
