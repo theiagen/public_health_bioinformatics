@@ -96,13 +96,11 @@ task create_terra_table {
       file=$(basename "$filepath")
 
       if [ -n "~{file_ending}" ]; then
-        echo "DEBUG: file ending pattern was provided to detect samplename; using that instead of the default pattern"
         samplename=$file
         for ending in "${FILE_ENDINGS[@]}"; do
           samplename=${samplename%%$ending}
         done
       else
-        echo "DEBUG: no file ending pattern was provided; using the default pattern"
         # samplename is everything before the first underscore and first decimal (name.banana.hello_yes_please.fastq.gz -> name)
         no_underscore_samplename=${file%%_*} 
         samplename=${no_underscore_samplename%%.*}
