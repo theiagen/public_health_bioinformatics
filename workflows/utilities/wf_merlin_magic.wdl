@@ -90,6 +90,7 @@ workflow merlin_magic {
     Int? tbp_parser_min_depth
     Int? tbp_parser_coverage_threshold
     Boolean? tbp_parser_debug
+    Boolean? tbp_parser_add_cs_lims
     String? tbp_parser_docker_image
     String? snippy_query_gene
     Int srst2_min_cov = 80
@@ -295,6 +296,7 @@ workflow merlin_magic {
             min_depth = tbp_parser_min_depth,
             coverage_threshold = tbp_parser_coverage_threshold,
             tbp_parser_debug = tbp_parser_debug,
+            add_cycloserine_lims = tbp_parser_add_cs_lims,
             docker = tbp_parser_docker_image
         }
       }
