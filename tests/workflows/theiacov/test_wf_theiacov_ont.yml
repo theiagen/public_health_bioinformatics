@@ -17,7 +17,7 @@
     - wf_theiacov_ont_miniwdl
   files:
     - path: miniwdl_run/call-clean_check_reads/command
-      md5sum: 6d3660386046b765f6058f703f750566
+      md5sum: 2517c5cf87db0af66663ffb5e69f6b4f
     - path: miniwdl_run/call-clean_check_reads/inputs.json
     - path: miniwdl_run/call-clean_check_reads/outputs.json
     - path: miniwdl_run/call-clean_check_reads/stderr.txt
@@ -212,14 +212,14 @@
     - path: miniwdl_run/call-pangolin4/work/PANGOLIN_NOTES
       md5sum: 35aa27af5fb90d54561ee9d45a3163d5
     - path: miniwdl_run/call-pangolin4/work/PANGO_ASSIGNMENT_VERSION
-      md5sum: 96a8bfc71da50efd0aa7c381c65168a6
+      md5sum: 853aabc2103b240a052491e307593151
     - path: miniwdl_run/call-pangolin4/work/VERSION_PANGOLIN_ALL
-      md5sum: 1d2a65adcf34aa03ed8bf67f9db67d3e
+      md5sum: e94a844f0bf3e15934d94a42b23e1165
     - path: miniwdl_run/call-pangolin4/work/_miniwdl_inputs/0/ont.medaka.consensus.fasta
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     - path: miniwdl_run/call-pangolin4/work/ont.pangolin_report.csv
     - path: miniwdl_run/call-raw_check_reads/command
-      md5sum: 14666562b8c1ea633a05b8c00e345410
+      md5sum: 1858d98f3c15904be0c219b867727048
     - path: miniwdl_run/call-raw_check_reads/inputs.json
     - path: miniwdl_run/call-raw_check_reads/outputs.json
     - path: miniwdl_run/call-raw_check_reads/stderr.txt

@@ -8,7 +8,7 @@ task midas {
     Int disk_size = 100
     String samplename
     String docker = "us-docker.pkg.dev/general-theiagen/fhcrc-microbiome/midas:v1.3.2--6"
-    Int memory = 32
+    Int memory = 4
     Int cpu = 4
   }
   command <<<
@@ -83,6 +83,6 @@ task midas {
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
     maxRetries: 3
-    preemptible: 0
+    preemptible: 1
   }
 }

@@ -140,7 +140,7 @@
       md5sum: 897316929176464ebc9ad085f31e7284
     # clean read screen
     - path: miniwdl_run/call-clean_check_reads/command
-      md5sum: f6343ca364537b681d65be3d8f505f38
+      md5sum: e18830c68993b2837d1da29ce55d2de8
     - path: miniwdl_run/call-clean_check_reads/inputs.json
       contains: ["read1", "read2", "organism"]
     - path: miniwdl_run/call-clean_check_reads/outputs.json
@@ -367,14 +367,14 @@
     - path: miniwdl_run/call-pangolin4/work/PANGOLIN_NOTES
       md5sum: e98d2fc28664c0622f6b490433286e32
     - path: miniwdl_run/call-pangolin4/work/PANGO_ASSIGNMENT_VERSION
-      md5sum: 96a8bfc71da50efd0aa7c381c65168a6
+      md5sum: 853aabc2103b240a052491e307593151
     - path: miniwdl_run/call-pangolin4/work/VERSION_PANGOLIN_ALL
-      md5sum: 1d2a65adcf34aa03ed8bf67f9db67d3e
+      md5sum: e94a844f0bf3e15934d94a42b23e1165
     - path: miniwdl_run/call-pangolin4/work/_miniwdl_inputs/0/SRR13687078.ivar.consensus.fasta
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     # nextclade
     - path: miniwdl_run/call-nextclade_v3/command
-      md5sum: 915fc8002e078606d55dac2ee94ee2a1
+      md5sum: 37d1e1c57400927e7b6feab4ca637636
     - path: miniwdl_run/call-nextclade_v3/inputs.json
       contains: ["dataset_name", "dataset_tag", "genome_fasta"]
     - path: miniwdl_run/call-nextclade_v3/outputs.json

@@ -3,7 +3,7 @@ version 1.0
 task augur_traits {
   input {
     File refined_tree
-    File metadata
+    File? metadata
     File? weights
     #Boolean confidence = true
     String? metadata_id_columns
@@ -18,7 +18,7 @@ task augur_traits {
   command <<<
     AUGUR_RECURSION_LIMIT=10000 augur traits \
       --tree "~{refined_tree}" \
-      --metadata "~{metadata}" \
+      ~{'--metadata ' + metadata} \
       ~{'--columns {' + columns + '}'} \
       --confidence \
       ~{'--metadata-id-columns ' + metadata_id_columns} \

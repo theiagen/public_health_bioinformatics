@@ -7,10 +7,10 @@ task ts_mlst {
   input {
     File assembly
     String samplename
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/mlst:2.23.0-2024-03-11"
-    Int disk_size = 100
-    Int cpu = 4
-    Int memory = 8
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/mlst:2.23.0-2024-06-01"
+    Int disk_size = 50
+    Int cpu = 1
+    Int memory = 2
     # Parameters
     # --nopath          Strip filename paths from FILE column (default OFF)
     # --scheme [X]      Don't autodetect, force this scheme on all inputs (default '')
@@ -81,6 +81,6 @@ task ts_mlst {
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
     maxRetries: 3
-    preemptible: 0
+    preemptible: 1
   }
 }

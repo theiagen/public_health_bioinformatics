@@ -63,6 +63,6 @@ task busco {
     cpu: cpu
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
-    preemptible: 0
+    preemptible: 1
   }
 }
