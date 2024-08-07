@@ -199,14 +199,14 @@
     - path: miniwdl_run/call-ncbi_scrub_se/inputs.json
       contains: ["read1", "samplename", "clearlabs"]
     - path: miniwdl_run/call-ncbi_scrub_se/outputs.json
-      contains: ["ncbi_scrub_se", "read1_dehosted", "read1_human_spots_removed"]
+      contains: ["ncbi_scrub_se", "read1_dehosted"]
     - path: miniwdl_run/call-ncbi_scrub_se/stderr.txt
     - path: miniwdl_run/call-ncbi_scrub_se/stderr.txt.offset
     - path: miniwdl_run/call-ncbi_scrub_se/stdout.txt
     - path: miniwdl_run/call-ncbi_scrub_se/task.log
       contains: ["wdl", "theiacov_clearlabs", "ncbi_scrub_se", "done"]
     - path: miniwdl_run/call-ncbi_scrub_se/work/DATE
-    - path: miniwdl_run/call-ncbi_scrub_se/work/FWD_SPOTS_REMOVED
+    - path: miniwdl_run/call-ncbi_scrub_se/work/SPOTS_REMOVED
       md5sum: 897316929176464ebc9ad085f31e7284
     - path: miniwdl_run/call-ncbi_scrub_se/work/_miniwdl_inputs/0/clearlabs.fastq.gz
     - path: miniwdl_run/call-ncbi_scrub_se/work/clearlabs_R1_dehosted.fastq.gz
@@ -381,7 +381,7 @@
     - path: miniwdl_run/call-stats_n_coverage_primtrim/work/clearlabs.stats.txt
       md5sum: 6ad40bcca227c92fdfec23fe9a03c344
     - path: miniwdl_run/call-vadr/command
-      md5sum: 884d636dcd4137ffe9f90eb6ce95dd5e
+      md5sum: 1f49b0fa676b3ea67201305139f2568c
     - path: miniwdl_run/call-vadr/inputs.json
       contains: ["assembly_length_unambiguous", "genome_fasta", "fasta"]
     - path: miniwdl_run/call-vadr/outputs.json
@@ -452,7 +452,7 @@
       md5sum: 2fb190ba11ba66fc637584bb0dbbf2da
     - path: miniwdl_run/call-vadr/work/clearlabs.medaka.consensus/clearlabs.medaka.consensus.vadr.sqa
       md5sum: 6d241df46baa9164f1cb688c80570357
-    - path: miniwdl_run/call-vadr/work/clearlabs.medaka.consensus/clearlabs.medaka.consensus.vadr.sqc
+    - path: miniwdl_run/call-vadr/work/clearlabs.medaka.consensus/clearlabs.medaka.consensus.vadr.sqc.txt
       md5sum: 2c726dac7c46f957e40ccd6b76da32f6
     - path: miniwdl_run/call-vadr/work/clearlabs.medaka.consensus_trimmed.fasta
       md5sum: df3a832ffbced8719506279648c968af
