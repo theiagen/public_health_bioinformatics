@@ -12,7 +12,6 @@ import "../../tasks/species_typing/betacoronavirus/task_pangolin.wdl" as pangoli
 import "../../tasks/species_typing/lentivirus/task_quasitools.wdl" as quasitools
 import "../../tasks/task_versioning.wdl" as versioning
 import "../../tasks/taxon_id/task_nextclade.wdl" as nextclade_task
-import "../../workflows/utilities/wf_influenza_antiviral_substitutions.wdl" as flu_antiviral
 import "../utilities/wf_flu_track.wdl" as run_flu_track
 import "../utilities/wf_organism_parameters.wdl" as set_organism_defaults
 import "../utilities/wf_read_QC_trim_ont.wdl" as read_qc_trim_workflow
@@ -28,7 +27,7 @@ workflow theiacov_ont {
     # sequencing values
     String seq_method = "OXFORD_NANOPORE"
     File? primer_bed
-    # assembly parameters
+    # assembly parameters - sars-cov-2 specific
     Int normalise = 200
     Int max_length = 700
     Int min_length = 400
@@ -97,7 +96,7 @@ workflow theiacov_ont {
       input:
         read1 = read1,
         samplename = samplename,
-        genome_length = genome_length,
+        genome_length = organism_parameters.genome_length,
         min_length = min_length,
         max_length = max_length,
         run_prefix = run_prefix,
