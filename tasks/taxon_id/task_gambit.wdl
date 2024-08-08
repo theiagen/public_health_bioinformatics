@@ -66,7 +66,13 @@ task gambit {
           if str(empty_value) == str(fmt_dist(0)):
             f.write(fmt_dist(search_item[column]))
           else:
-            f.write(search_item[column])
+            # remove candidate sub-speciation from taxon name
+            if column == 'name':
+              gambit_name = search_item[column]
+              gambit_name = re.sub(r'_[A-Za-z]+', '', gambit_name)  # This line is added to remove _X where X is any letter
+              f.write(gambit_name)
+            else:
+              f.write(search_item[column])
 
     # Predicted taxon    
     write_output('PREDICTED_TAXON', predicted, 'name', 'NA')
