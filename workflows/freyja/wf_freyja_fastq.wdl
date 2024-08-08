@@ -92,7 +92,7 @@ workflow freyja_fastq {
     input:
       samplename = samplename,
       primer_bed = primer_bed,
-      bamfile = select_first([sam_to_sorted_bam.bam,bwa.sorted_bam])
+      bamfile = select_first([sam_to_sorted_bam.bam, bwa.sorted_bam])
   }
   call freyja_task.freyja_one_sample as freyja {
     input:
