@@ -50,7 +50,7 @@ task bwa {
     # convert SAM to BAM that only includes aligned reads
     samtools view \
       -@ ~{cpu} \
-      -F 4 \
+      -F 0x904 \
       -b \
       -o ~{samplename}.sorted.bam \
       ~{samplename}.sorted.sam
