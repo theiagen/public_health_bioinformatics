@@ -48,6 +48,9 @@ task bwa {
       > ~{samplename}.sorted.sam
     
     # convert SAM to BAM that only includes aligned reads
+    ## 0x904 = 4 (unaligned) + 100 (secondary) + 800 (supplementary)
+    # FYI the default filtering is 0x900 (secondary and supplemental) so when we previously specified -F 4, we were only filtering out unaligned reads, and keeping secondary and supplemental alignments
+    # this update to 0x904 means we are now filtering out unaligned, secondary, and supplemental alignments
     samtools view \
       -@ ~{cpu} \
       -F 0x904 \
