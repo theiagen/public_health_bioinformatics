@@ -3,7 +3,8 @@ version 1.0
 task snippy_variants {
   input {
     File reference_genome_file
-    File read1
+    File? assembly_fasta
+    File? read1
     File? read2
     String samplename
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/snippy:4.6.0"
@@ -27,11 +28,16 @@ task snippy_variants {
   command <<<
     snippy --version | head -1 | tee VERSION
 
-    # set reads var
-    if [ -z "~{read2}" ]; then
+    # set input variable
+    if [ -f "~{assembly_fasta}" ]; then
+      reads="--ctgs ~{assembly_fasta}"
+    elif [ -f "~{read1}" ] && [ -z "~{read2}" ]; then
       reads="--se ~{read1}"
-    else 
+    elif [ -f "~{read1}" ] && [ -f "~{read2}" ]; then
       reads="--R1 ~{read1} --R2 ~{read2}"
+    else
+      echo "ERROR: No reads or assembly provided"
+      exit 1
     fi
     
     # call snippy
