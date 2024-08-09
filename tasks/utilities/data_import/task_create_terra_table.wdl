@@ -103,7 +103,7 @@ task create_terra_table {
         # sample name is everything before any/all of the file ending(s)
         # if file_ending="_yes,fastq.gz" and file="name.banana.hello_yes_please.fastq.gz" then samplename="name.banana.hello"
         # if file_ending="R1.fastq.gz,R2.fastq.gz" and file1="name_R1.fastq.gz" then samplename="name_" and file2="name_R2.fastq.gz" then samplename="name_"
-        echo ${FILE_ENDINGS[@]}
+        # echo ${FILE_ENDINGS[@]}
         for ending in "${FILE_ENDINGS[@]}"; do
           samplename=${samplename%%$ending*}
         done
