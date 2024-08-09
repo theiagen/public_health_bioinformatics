@@ -5,17 +5,20 @@ import "../../tasks/quality_control/read_filtering/task_artic_guppyplex.wdl" as 
 import "../../tasks/quality_control/read_filtering/task_nanoq.wdl" as nanoq_task
 import "../../tasks/quality_control/read_filtering/task_ncbi_scrub.wdl" as ncbi_scrub
 import "../../tasks/taxon_id/contamination/task_kraken2.wdl" as kraken2
-import "../../tasks/utilities/task_kmc.wdl" as kmc_task
 import "../../tasks/utilities/task_rasusa.wdl" as rasusa_task
 
 workflow read_QC_trim_ont {
   meta {
-    description: "Runs basic QC on Oxford Nanopore (ONT) reads with (1) fastq_scan, (2) nanoplot, (3) kmc, (4) rasusa downsampling, (5) tiptoft plasmid detection, and (6) nanoq filtering"
+    description: "Runs basic QC on Oxford Nanopore (ONT) reads with (1) fastq_scan, (2) nanoplot, (3) rasusa downsampling, (4) tiptoft plasmid detection, and (5) nanoq filtering"
   }
   input {
     String samplename
     File read1
-    Int? genome_length
+
+    # kmc has been observed to be unreliable for genome length estimation, so we are now using a fixed value
+    # setting this to be 5Mb which is around .7Mb greater than the mean genome length of bacteria (based on https://github.com/CDCgov/phoenix/blob/717d19c19338373fc0f89eba30757fe5cfb3e18a/assets/databases/NCBI_Assembly_stats_20240124.txt)
+    # this default will not be used for TheiaCoV as that workflow series pass in the expected length based on the organism tag
+    Int genome_length = 5000000 
 
     String? workflow_series
 
@@ -96,14 +99,6 @@ workflow read_QC_trim_ont {
     } if ((call_kraken) && ! defined(kraken_db)) {
       String kraken_db_warning = "Kraken database not defined"
     }
-    # kmc for genome size estimation
-    call kmc_task.kmc {
-      input:
-        read1 = read1,
-        samplename = samplename
-    }
-
-    Int kmc_est_genome_length = if kmc.est_genome_length > 10000000 then 10000000 else kmc.est_genome_length
 
     # rasusa for random downsampling
     call rasusa_task.rasusa {
@@ -111,7 +106,7 @@ workflow read_QC_trim_ont {
         read1 = read1,
         samplename = samplename,
         coverage = downsampling_coverage,
-        genome_length = select_first([genome_length, kmc_est_genome_length])
+        genome_length = genome_length
     }
     # tiptoft for plasmid detection
     call tiptoft_task.tiptoft {
@@ -145,12 +140,9 @@ workflow read_QC_trim_ont {
     File? kraken_report_dehosted = kraken2_recalculate_abundances_dehosted.kraken_report
     String kraken_database = select_first([kraken2_raw.database, kraken2_se.kraken2_database, kraken_db_warning, ""])
    
-    # theiaprok outputs
-    # kmc outputs
-    Int? est_genome_length = kmc_est_genome_length
-    File? kmc_kmer_stats = kmc.kmer_stats
-    String? kmc_version = kmc.kmc_version
-    
+    # estimated genome length -- by default for TheiaProk this is 5Mb
+    Int est_genome_length = genome_length
+
     # nanoq outputs
     File read1_clean = select_first([nanoq.filtered_read1, read_filtering.read1_clean])
     String? nanoq_version = nanoq.version
