@@ -30,10 +30,13 @@ task snippy_variants {
 
     # set input variable
     if [ -f "~{assembly_fasta}" ]; then
+      echo "DEBUG: Using assembly fasta file"
       reads="--ctgs ~{assembly_fasta}"
     elif [ -f "~{read1}" ] && [ -z "~{read2}" ]; then
+      echo "DEBUG: Using single-end read file"
       reads="--se ~{read1}"
     elif [ -f "~{read1}" ] && [ -f "~{read2}" ]; then
+      echo "DEBUG: Using paired-end read files"
       reads="--R1 ~{read1} --R2 ~{read2}"
     else
       echo "ERROR: No reads or assembly provided"
