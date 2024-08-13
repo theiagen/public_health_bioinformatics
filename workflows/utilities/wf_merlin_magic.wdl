@@ -25,6 +25,7 @@ import "../../tasks/species_typing/salmonella/task_sistr.wdl" as sistr_task
 import "../../tasks/species_typing/staphylococcus/task_agrvate.wdl" as agrvate_task
 import "../../tasks/species_typing/staphylococcus/task_spatyper.wdl" as spatyper_task
 import "../../tasks/species_typing/staphylococcus/task_staphopiasccmec.wdl" as staphopia_sccmec_task
+import "../../tasks/species_typing/streptococcus/task_emmtyper.wdl" as emmtyper_task
 import "../../tasks/species_typing/streptococcus/task_emmtypingtool.wdl" as emmtypingtool_task
 import "../../tasks/species_typing/streptococcus/task_pbptyper.wdl" as pbptyper
 import "../../tasks/species_typing/streptococcus/task_poppunk_streppneumo.wdl" as poppunk_spneumo
@@ -51,6 +52,17 @@ workflow merlin_magic {
     Int? pasty_min_coverage
     String? hicap_docker_image
     String? pasty_docker_image
+    String? emmtyper_wf
+    Int? emmtyper_cluster_distance
+    Int? emmtyper_percid
+    Int? emmtyper_culling_limit
+    Int? emmtyper_mismatch
+    Int? emmtyper_align_diff
+    Int? emmtyper_gap
+    Int? emmtyper_min_perfect
+    Int? emmtyper_min_good
+    Int? emmtyper_max_size
+    String? emmtyper_docker_image
     String? emmtypingtool_docker_image
     String? shigeifinder_docker_image
     String? shigatyper_docker_image
@@ -78,6 +90,7 @@ workflow merlin_magic {
     Int? tbp_parser_min_depth
     Int? tbp_parser_coverage_threshold
     Boolean? tbp_parser_debug
+    Boolean? tbp_parser_add_cs_lims
     String? tbp_parser_docker_image
     String? snippy_query_gene
     Int srst2_min_cov = 80
@@ -107,7 +120,10 @@ workflow merlin_magic {
     }
   }
   if (merlin_tag == "Escherichia" || merlin_tag == "Shigella sonnei" ) {
-    # tools specific to all Escherichia and Shigella species
+    # tools specific to ALL Escherichia and Shigella species
+    #
+    # FYI see the GAMBIT task for all merlin_tag designations but all Escherichia and Shigella species are given "Escherichia" merlin_tag designation, except for Shigella sonnei which is given "Shigella sonnei" merlin_tag.
+    # The reason being is that S. sonnei does have a species-specific tool (sonneityping) where the other Shigella species do not (flexneri, dysenteriae, boydii, etc.)
     call serotypefinder_task.serotypefinder {
       input:
         assembly = assembly,
@@ -144,9 +160,6 @@ workflow merlin_magic {
           paired_end = paired_end
       }
     }
-  }
-  if (merlin_tag == "Escherichia" ) {
-    # E coli specific tasks
     call virulencefinder_task.virulencefinder {
       input:
       #  read1 = read1,
@@ -283,6 +296,7 @@ workflow merlin_magic {
             min_depth = tbp_parser_min_depth,
             coverage_threshold = tbp_parser_coverage_threshold,
             tbp_parser_debug = tbp_parser_debug,
+            add_cycloserine_lims = tbp_parser_add_cs_lims,
             docker = tbp_parser_docker_image
         }
       }
@@ -338,6 +352,22 @@ workflow merlin_magic {
     }
   }
   if (merlin_tag == "Streptococcus pyogenes") {
+    call emmtyper_task.emmtyper {
+      input:
+        assembly = assembly,
+        samplename = samplename,
+        docker = emmtyper_docker_image,
+        wf = emmtyper_wf,
+        cluster_distance = emmtyper_cluster_distance,
+        percid = emmtyper_percid,
+        culling_limit = emmtyper_culling_limit,
+        mismatch = emmtyper_mismatch,
+        align_diff = emmtyper_align_diff,
+        gap = emmtyper_gap,
+        min_perfect = emmtyper_min_perfect,
+        min_good = emmtyper_min_good,
+        max_size = emmtyper_max_size,
+    }
     if (paired_end && !ont_data) {
       call emmtypingtool_task.emmtypingtool {
         input:
@@ -668,6 +698,10 @@ workflow merlin_magic {
     String? seroba_ariba_identity = seroba_task.seroba_ariba_identity
     File? seroba_details = seroba_task.seroba_details
     # Streptococcus pyogenes Typing
+    String? emmtyper_emm_type = emmtyper.emmtyper_emm_type
+    File? emmtyper_results_tsv = emmtyper.emmtyper_results_tsv
+    String? emmtyper_version = emmtyper.emmtyper_version
+    String? emmtyper_docker = emmtyper.emmtyper_docker
     String? emmtypingtool_emm_type = emmtypingtool.emmtypingtool_emm_type
     File? emmtypingtool_results_xml = emmtypingtool.emmtypingtool_results_xml
     String? emmtypingtool_version = emmtypingtool.emmtypingtool_version
@@ -706,19 +740,19 @@ workflow merlin_magic {
     String? cladetyper_docker_image = cladetyper.gambit_cladetyper_docker_image
     String? cladetype_annotated_ref = cladetyper.clade_spec_ref
     # snippy variants
-    File snippy_variants_reference_genome = select_first([snippy_cauris.snippy_variants_reference_genome, snippy_afumigatus.snippy_variants_reference_genome, snippy_crypto.snippy_variants_reference_genome, "gs://theiagen-public-files/terra/theiaeuk_files/no_match_detected.txt"])
+    String snippy_variants_reference_genome = select_first([snippy_cauris.snippy_variants_reference_genome, snippy_afumigatus.snippy_variants_reference_genome, snippy_crypto.snippy_variants_reference_genome, "gs://theiagen-public-files/terra/theiaeuk_files/no_match_detected.txt"])
     String snippy_variants_version = select_first([snippy_cauris.snippy_variants_version, snippy_afumigatus.snippy_variants_version, snippy_crypto.snippy_variants_version, "No matching taxon detected"])
     String snippy_variants_query = select_first([snippy_gene_query_cauris.snippy_variants_query, snippy_gene_query_afumigatus.snippy_variants_query, snippy_gene_query_crypto.snippy_variants_query, "No matching taxon detected"])
     String snippy_variants_query_check = select_first([snippy_gene_query_cauris.snippy_variants_query_check, snippy_gene_query_afumigatus.snippy_variants_query_check, snippy_gene_query_crypto.snippy_variants_query_check, "No matching taxon detected"])
     String snippy_variants_hits = select_first([snippy_gene_query_cauris.snippy_variants_hits, snippy_gene_query_afumigatus.snippy_variants_hits, snippy_gene_query_crypto.snippy_variants_hits, "No matching taxon detected"])
-    File snippy_variants_gene_query_results = select_first([snippy_gene_query_cauris.snippy_variants_gene_query_results, snippy_gene_query_afumigatus.snippy_variants_gene_query_results, snippy_gene_query_crypto.snippy_variants_gene_query_results, "gs://theiagen-public-files/terra/theiaeuk_files/no_match_detected.txt"])
-    File snippy_variants_outdir_tarball = select_first([snippy_cauris.snippy_variants_outdir_tarball, snippy_afumigatus.snippy_variants_outdir_tarball, snippy_crypto.snippy_variants_outdir_tarball, "gs://theiagen-public-files/terra/theiaeuk_files/no_match_detected.txt"])
-    File snippy_variants_results = select_first([snippy_cauris.snippy_variants_results, snippy_afumigatus.snippy_variants_results, snippy_crypto.snippy_variants_results, "gs://theiagen-public-files/terra/theiaeuk_files/no_match_detected.txt"])
-    File snippy_variants_bam = select_first([snippy_cauris.snippy_variants_bam, snippy_afumigatus.snippy_variants_bam, snippy_crypto.snippy_variants_bam, "gs://theiagen-public-files/terra/theiaeuk_files/no_match_detected.txt"])
-    File snippy_variants_bai = select_first([snippy_cauris.snippy_variants_bai, snippy_afumigatus.snippy_variants_bai, snippy_crypto.snippy_variants_bai, "gs://theiagen-public-files/terra/theiaeuk_files/no_match_detected.txt"])
-    File snippy_variants_summary = select_first([snippy_cauris.snippy_variants_summary, snippy_afumigatus.snippy_variants_summary, snippy_crypto.snippy_variants_summary, "gs://theiagen-public-files/terra/theiaeuk_files/no_match_detected.txt"])
+    String snippy_variants_gene_query_results = select_first([snippy_gene_query_cauris.snippy_variants_gene_query_results, snippy_gene_query_afumigatus.snippy_variants_gene_query_results, snippy_gene_query_crypto.snippy_variants_gene_query_results, "gs://theiagen-public-files/terra/theiaeuk_files/no_match_detected.txt"])
+    String snippy_variants_outdir_tarball = select_first([snippy_cauris.snippy_variants_outdir_tarball, snippy_afumigatus.snippy_variants_outdir_tarball, snippy_crypto.snippy_variants_outdir_tarball, "gs://theiagen-public-files/terra/theiaeuk_files/no_match_detected.txt"])
+    String snippy_variants_results = select_first([snippy_cauris.snippy_variants_results, snippy_afumigatus.snippy_variants_results, snippy_crypto.snippy_variants_results, "gs://theiagen-public-files/terra/theiaeuk_files/no_match_detected.txt"])
+    String snippy_variants_bam = select_first([snippy_cauris.snippy_variants_bam, snippy_afumigatus.snippy_variants_bam, snippy_crypto.snippy_variants_bam, "gs://theiagen-public-files/terra/theiaeuk_files/no_match_detected.txt"])
+    String snippy_variants_bai = select_first([snippy_cauris.snippy_variants_bai, snippy_afumigatus.snippy_variants_bai, snippy_crypto.snippy_variants_bai, "gs://theiagen-public-files/terra/theiaeuk_files/no_match_detected.txt"])
+    String snippy_variants_summary = select_first([snippy_cauris.snippy_variants_summary, snippy_afumigatus.snippy_variants_summary, snippy_crypto.snippy_variants_summary, "gs://theiagen-public-files/terra/theiaeuk_files/no_match_detected.txt"])
     String snippy_variants_num_reads_aligned = select_first([snippy_cauris.snippy_variants_num_reads_aligned, snippy_afumigatus.snippy_variants_num_reads_aligned, snippy_crypto.snippy_variants_num_reads_aligned, "No matching taxon detected"])
-    File snippy_variants_coverage_tsv = select_first([snippy_cauris.snippy_variants_coverage_tsv, snippy_afumigatus.snippy_variants_coverage_tsv, snippy_crypto.snippy_variants_coverage_tsv, "gs://theiagen-public-files/terra/theiaeuk_files/no_match_detected.txt"])
+    String snippy_variants_coverage_tsv = select_first([snippy_cauris.snippy_variants_coverage_tsv, snippy_afumigatus.snippy_variants_coverage_tsv, snippy_crypto.snippy_variants_coverage_tsv, "gs://theiagen-public-files/terra/theiaeuk_files/no_match_detected.txt"])
     String snippy_variants_num_variants = select_first([snippy_cauris.snippy_variants_num_variants, snippy_afumigatus.snippy_variants_num_variants, snippy_crypto.snippy_variants_num_reads_aligned, "No matching taxon detected"])
     String snippy_variants_percent_ref_coverage = select_first([snippy_cauris.snippy_variants_percent_ref_coverage, snippy_afumigatus.snippy_variants_percent_ref_coverage, snippy_crypto.snippy_variants_percent_ref_coverage, "No matching taxon detected"])
   }

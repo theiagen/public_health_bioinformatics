@@ -36,15 +36,15 @@ task fastq_dl_sra {
     fi
     
     # check if the first quality control string is set to SRA-Lite
-    # SRA-Lite filetype has all the quality enconding set to the '?' character
-    # corresponding to a phred-score of 30
-    # awk is checking the 4th line of the file and if it starts with and contains only '?' characters
+    # SRA-Lite filetype has all the quality enconding set to the '?' or '$' character
+    # corresponding to a phred-score of 30 or 3
+    # awk is checking the 4th line of the file and if it starts with and contains only '?' or '$' characters
     #   NR==4 on the fourth line,
     #   if $0 ~ /.../ this will evaluate to true only if the entire line matches this regular expression, which is:
     #   ^ at the start of the line
     #   [?] look for this character
     #   +$ and only this character until the end of the line
-    zcat "~{sra_accession}_1.fastq.gz" | head -n 4 | awk 'NR==4 {if ($0 ~ /^[?]+$/) {print "Potential SRA-Lite FASTQ detected"} else {print ""}}' > WARNING
+    zcat "~{sra_accession}_1.fastq.gz" | head -n 4 | awk 'NR==4 {if ($0 ~ /^[?$]+$/) {print "Potential SRA-Lite FASTQ detected"} else {print ""}}' > WARNING
     
   >>>
   output {

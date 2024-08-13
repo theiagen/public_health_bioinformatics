@@ -16,7 +16,7 @@ The PHB repository contains workflows for the characterization, genomic epidemio
 
 All workflows in the PHB repository end with `_PHB` in order to differentiate them from earlier versions and from the original tools they incorporate.
 
-Briefly, the main *genomic characterization* workflows are split by pathogen type: 
+Briefly, the main *genomic characterization* workflows are split by pathogen type:
 
 1. **Viral** (***TheiaCoV*** workflows)
 2. **Bacterial** (***TheiaProk*** workflows)
@@ -30,11 +30,11 @@ The PHB repository would not be possible without its predecessors. We would like
 
 The PHB repository originated from collaborative work with Andrew Lang, PhD & his [Genomic Analysis WDL workflows](https://github.com/AndrewLangvt/genomic_analyses). The workflows and task development were influenced by The Broad's [Viral Pipes](https://github.com/broadinstitute/viral-pipelines) repository. The TheiaCoV workflows for viral genomic characterization were influenced by UPHL's [Cecret](https://github.com/UPHL-BioNGS/Cecret) & StaPH-B's [Monroe](https://staph-b.github.io/staphb_toolkit/workflow_docs/monroe/) workflows. The TheiaProk workflows for bacterial genomic characterization were influenced by Robert Petit's [bactopia](https://github.com/bactopia/bactopia). Most importantly, the PHB user community drove the development of these workflows and we are grateful for their feedback and contributions.
 
-If you would like to provide feedback, please raise a [GitHub issue](https://github.com/theiagen/public_health_vioinformatics/issues/new).
+If you would like to provide feedback, please raise a [GitHub issue](https://github.com/theiagen/public_health_bioinformatics/issues/new).
 
 ### Contributing to the PHB workflows
 
-We warmly welcome contributions to this repository! Our style guide may be found [here](https://theiagen.notion.site/Style-Guide-WDL-Workflow-Development-bb456f34322d4f4db699d4029050481c) for convenience of formatting.
+We warmly welcome contributions to this repository! Our style guide may be found [here](https://theiagen.notion.site/Style-Guide-WDL-Workflow-Development-51b66a47dde54c798f35d673fff80249) for convenience of formatting.
 
 You can expect a careful review of every PR and feedback as needed before merging, just like we do for PRs submitted by the Theiagen team. Our PR template can help prepare you for the review process. As always, reach out with any questions! We love recieving feedback and contributions from the community. When your PR is merged, we'll add your name to the contributors list below!
 

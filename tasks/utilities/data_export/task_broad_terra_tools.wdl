@@ -76,9 +76,6 @@ task export_taxon_tables {
     Float? nanoplot_r1_mean_q_clean
     Float? nanoplot_r1_median_q_clean
     Float? nanoplot_r1_est_coverage_clean
-    String? kmc_est_genome_length
-    File? kmc_kmer_stats
-    String? kmc_version
     String? rasusa_version
     File? tiptoft_plasmid_replicon_fastq
     String? tiptoft_plasmid_replicon_genes
@@ -312,6 +309,10 @@ task export_taxon_tables {
     String? seroba_ariba_serotype
     String? seroba_ariba_identity
     File? seroba_details
+    String? emmtyper_emm_type
+    File? emmtyper_results_tsv
+    String? emmtyper_version
+    String? emmtyper_docker
     String? emmtypingtool_emm_type
     File? emmtypingtool_results_xml
     String? emmtypingtool_version
@@ -486,9 +487,6 @@ task export_taxon_tables {
       "nanoplot_r1_mean_q_clean": "~{nanoplot_r1_mean_q_clean}",
       "nanoplot_r1_median_q_clean": "~{nanoplot_r1_median_q_clean}",
       "nanoplot_r1_est_coverage_clean": "~{nanoplot_r1_est_coverage_clean}",
-      "kmc_est_genome_length": "~{kmc_est_genome_length}",
-      "kmc_kmer_stats": "~{kmc_kmer_stats}",
-      "kmc_version": "~{kmc_version}",
       "rasusa_version": "~{rasusa_version}",
       "tiptoft_plasmid_replicon_fastq": "~{tiptoft_plasmid_replicon_fastq}",
       "tiptoft_plasmid_replicon_genes": "~{tiptoft_plasmid_replicon_genes}",
@@ -722,6 +720,10 @@ task export_taxon_tables {
       "seroba_ariba_serotype": "~{seroba_ariba_serotype}",
       "seroba_ariba_identity": "~{seroba_ariba_identity}",
       "seroba_details": "~{seroba_details}",
+      "emmtyper_emm_type": "~{emmtyper_emm_type}",
+      "emmtyper_results_tsv": "~{emmtyper_results_tsv}",
+      "emmtyper_version": "~{emmtyper_version}",
+      "emmtyper_docker": "~{emmtyper_docker}",
       "emmtypingtool_emm_type": "~{emmtypingtool_emm_type}",
       "emmtypingtool_reults_xml": "~{emmtypingtool_results_xml}",
       "emmtypingtool_version": "~{emmtypingtool_version}",

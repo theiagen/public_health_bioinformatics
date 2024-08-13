@@ -17,7 +17,7 @@
     - wf_theiaprok_illumina_se_miniwdl
   files:
     - path: miniwdl_run/call-amrfinderplus_task/command
-      md5sum: 6c2c570754a616e7ac032109d8ffe71c
+      md5sum: 949298123cab12a6921a378abfc90cd6
     - path: miniwdl_run/call-amrfinderplus_task/inputs.json
       contains: ["assembly", "fasta", "organism", "test"]
     - path: miniwdl_run/call-amrfinderplus_task/outputs.json
@@ -516,7 +516,7 @@
     - path: miniwdl_run/wdl/tasks/gene_typing/drug_resistance/task_abricate.wdl
       md5sum: 0a8e80d9c835a712936eac2cc6e3a05d
     - path: miniwdl_run/wdl/tasks/gene_typing/drug_resistance/task_amrfinderplus.wdl
-      md5sum: 654c31055b807b3cd2aee9d5ceeea766
+      md5sum: 02e5699f8d4fa6e6c3591a829e8441e5
     - path: miniwdl_run/wdl/tasks/gene_typing/annotation/task_bakta.wdl
       md5sum: 0bed8fb60786095843a67b1ad03051dc
     - path: miniwdl_run/wdl/tasks/gene_typing/plasmid_detection/task_plasmidfinder.wdl
@@ -538,7 +538,7 @@
     - path: miniwdl_run/wdl/tasks/quality_control/basic_statistics/task_fastq_scan.wdl
       contains: ["version", "fastq_scan", "output"]
     - path: miniwdl_run/wdl/tasks/quality_control/advanced_metrics/task_mummer_ani.wdl
-      md5sum: 7425333e3e422b4884885387bc5d3fe7
+      md5sum: 7549f9f7815655fccab1eeea6bb89fd5
     - path: miniwdl_run/wdl/tasks/quality_control/comparisons/task_qc_check_phb.wdl
       contains: ["version", "qc_check_table", "output"]
     - path: miniwdl_run/wdl/tasks/quality_control/basic_statistics/task_quast.wdl
@@ -594,12 +594,12 @@
     - path: miniwdl_run/wdl/tasks/taxon_id/contamination/task_midas.wdl
       md5sum: 64caaaff5910ac0036e2659434500962
     - path: miniwdl_run/wdl/tasks/utilities/data_export/task_broad_terra_tools.wdl
-      md5sum: 52556169654cfa3e5de47c1987e83475
+      md5sum: 4d69a6539b68503af9f3f1c2787ff920
     - path: miniwdl_run/wdl/workflows/theiaprok/wf_theiaprok_illumina_se.wdl
-      md5sum: e2015675a4f53e0e4492e8c6a43dcb37
+      md5sum: 5aa25e4fad466f92c96a7c138aca0d20
     - path: miniwdl_run/wdl/workflows/utilities/wf_merlin_magic.wdl
-      md5sum: 6c125054324cd3597f8291baefb54694
+      md5sum: ed49a785a2364452d0785819f43962ae
     - path: miniwdl_run/wdl/workflows/utilities/wf_read_QC_trim_se.wdl
-      md5sum: 963090bb29184f61c7025e2bc487de4b
+      md5sum: a28fda3c3d806eb005e8a4e6cdf7b71b
     - path: miniwdl_run/workflow.log
       contains: ["wdl", "theiaprok_illumina_se", "NOTICE", "done"]
