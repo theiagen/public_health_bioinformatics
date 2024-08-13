@@ -113,7 +113,7 @@ task create_terra_table {
         samplename=${no_underscore_samplename%%.*}
       fi
 
-      if grep "$samplename" samplenames.txt; then
+      if grep "\b$samplename\b" samplenames.txt; then
         echo "DEBUG: $samplename is already in the terra table"
       else
         echo "DEBUG: $samplename is now being added to the terra table"
