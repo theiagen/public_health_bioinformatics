@@ -4,6 +4,7 @@ task create_terra_table {
   input {
     String new_table_name
     String data_location_path
+    String? file_ending # comma-delimited list
     Boolean paired_end
     Boolean assembly_data
 
@@ -27,6 +28,7 @@ task create_terra_table {
     echo "DEBUG: data_location_path: ~{data_location_path}" >&2
     echo "DEBUG: paired_end: ~{paired_end}" >&2
     echo "DEBUG: assembly_data: ~{assembly_data}" >&2 
+    echo "DEBUG: file_ending: ~{file_ending}" >&2
 
     if ~{paired_end} && ~{assembly_data}; then
       echo "DEBUG: paired-end AND assembly data indicated; this is not supported. Please check your input parameters and then try again" >&2
@@ -54,13 +56,34 @@ task create_terra_table {
       echo -e "entity:~{new_table_name_updated}_id\tassembly_fasta\tupload_date\ttable_created_by" > terra_table_to_upload.tsv
     fi
 
+    if [ -n "~{file_ending}" ]; then
+      echo "DEBUG: a file ending pattern was provided; using that instead of the default pattern"
+      # this could be a comma delimited list, so we will want to split that up
+      IFS="," read -ra FILE_ENDINGS <<< "~{file_ending}"
+
+      PATTERN="("
+      for ending in "${FILE_ENDINGS[@]}"; do
+        if [ $PATTERN == "(" ]; then
+          PATTERN="$PATTERN$ending"
+        else
+         PATTERN="$PATTERN|$ending"
+        fi
+      done
+
+      PATTERN="$PATTERN)"
+      unset IFS
+    fi
+
+    echo "DEBUG: the following pattern will be used to identify files and extract sample names: $PATTERN" >&2
+
     # get list of files
     gcloud storage ls ~{data_location_path} | grep -E "$PATTERN" > filelist-fullpath.txt
 
     if [ -s filelist-fullpath.txt ]; then
       echo "DEBUG: files were identified; now identifying sample names"
     else
-      echo "DEBUG: no files were identified; please check your data location path and then try again" >&2
+      echo "ERROR: no files were identified; please check your data location path or file endings and then try again" >&2
+      echo "ERROR: EXITING WORKFLOW" >&2
       exit 1
     fi
 
@@ -75,26 +98,47 @@ task create_terra_table {
     while read -r filepath; do
       file=$(basename "$filepath")
 
-      # samplename is everything before the first underscore and first decimal (name.banana.hello_yes_please.fastq.gz -> name)
-      no_underscore_samplename=${file%%_*} 
-      samplename=${no_underscore_samplename%%.*}
+      if [ -n "~{file_ending}" ]; then
+        samplename=$file
+        # sample name is everything before any/all of the file ending(s)
+        # if file_ending="_yes,fastq.gz" and file="name.banana.hello_yes_please.fastq.gz" then samplename="name.banana.hello"
+        # if file_ending="R1.fastq.gz,R2.fastq.gz" and file1="name_R1.fastq.gz" then samplename="name_" and file2="name_R2.fastq.gz" then samplename="name_"
+        echo ${FILE_ENDINGS[@]}
+        for ending in "${FILE_ENDINGS[@]}"; do
+          samplename=${samplename%%$ending*}
+        done
+      else
+        # samplename is everything before the first underscore and first decimal (name.banana.hello_yes_please.fastq.gz -> name)
+        no_underscore_samplename=${file%%_*} 
+        samplename=${no_underscore_samplename%%.*}
+      fi
 
       if grep "$samplename" samplenames.txt; then
-        echo "DEBUG: $samplename is in the terra table"
+        echo "DEBUG: $samplename is already in the terra table"
       else
-        echo "DEBUG: $samplename has NOT been added to the terra table"
+        echo "DEBUG: $samplename is now being added to the terra table"
         echo "$samplename" >> samplenames.txt
 
         if ~{paired_end}; then
           READ1_PATTERN="_R*1.*\b\.f(q|astq)(\.gz)?\b$"
           READ2_PATTERN="_R*2.*\b\.f(q|astq)(\.gz)?\b$"
-
+          grep -E "$READ2_PATTERN" filelist-filename.txt
           # search for the appropriate file in the list of filenames that exclude the path (filelist-filename.txt) 
           #  and then search for that file in the full-path filelist (filelist-fullpath.txt)
           read1=$(grep $(grep -E "$READ1_PATTERN" filelist-filename.txt | grep "$samplename") filelist-fullpath.txt)
           read2=$(grep $(grep -E "$READ2_PATTERN" filelist-filename.txt | grep "$samplename") filelist-fullpath.txt)
-          
-          echo -e "$samplename\t$read1\t$read2\t$UPLOAD_DATE\tCreate_Terra_Table_PHB" >> terra_table_to_upload.tsv 
+
+          if [ $? -eq 1 ]; then
+            echo "ERROR: either read1 ($read1) or read2 ($read2) were not found for $samplename; double-check your data and try again" >&2
+            echo "ERROR: EXITING WORKFLOW" >&2
+            exit 1
+          else
+            # occasionally the readnames will be prefixed with `filelist-fullpath.txt:` so we need to remove that
+            read1=$(echo $read1 | sed -e 's/^filelist-fullpath.txt://')
+            read2=$(echo $read2 | sed -e 's/^filelist-fullpath.txt://')
+            
+            echo -e "$samplename\t$read1\t$read2\t$UPLOAD_DATE\tCreate_Terra_Table_PHB" >> terra_table_to_upload.tsv 
+          fi
         else
           echo -e "$samplename\t$filepath\t$UPLOAD_DATE\tCreate_Terra_Table_PHB" >> terra_table_to_upload.tsv
         fi
