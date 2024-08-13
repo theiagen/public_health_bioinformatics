@@ -103,7 +103,7 @@ task create_terra_table {
         # sample name is everything before any/all of the file ending(s)
         # if file_ending="_yes,fastq.gz" and file="name.banana.hello_yes_please.fastq.gz" then samplename="name.banana.hello"
         # if file_ending="R1.fastq.gz,R2.fastq.gz" and file1="name_R1.fastq.gz" then samplename="name_" and file2="name_R2.fastq.gz" then samplename="name_"
-        echo ${FILE_ENDINGS[@]}
+        # echo ${FILE_ENDINGS[@]}
         for ending in "${FILE_ENDINGS[@]}"; do
           samplename=${samplename%%$ending*}
         done
@@ -113,7 +113,7 @@ task create_terra_table {
         samplename=${no_underscore_samplename%%.*}
       fi
 
-      if grep "$samplename" samplenames.txt; then
+      if grep "\b$samplename\b" samplenames.txt; then
         echo "DEBUG: $samplename is already in the terra table"
       else
         echo "DEBUG: $samplename is now being added to the terra table"
@@ -122,7 +122,6 @@ task create_terra_table {
         if ~{paired_end}; then
           READ1_PATTERN="_R*1.*\b\.f(q|astq)(\.gz)?\b$"
           READ2_PATTERN="_R*2.*\b\.f(q|astq)(\.gz)?\b$"
-          grep -E "$READ2_PATTERN" filelist-filename.txt
           # search for the appropriate file in the list of filenames that exclude the path (filelist-filename.txt) 
           #  and then search for that file in the full-path filelist (filelist-fullpath.txt)
           read1=$(grep $(grep -E "$READ1_PATTERN" filelist-filename.txt | grep "$samplename") filelist-fullpath.txt)
