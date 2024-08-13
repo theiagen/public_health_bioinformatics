@@ -47,7 +47,16 @@ task bwa {
       -@ ~{cpu} - \
       > ~{samplename}.sorted.sam
     
-    # convert SAM to BAM that only includes aligned reads
+    # convert SAM to BAM that does not include unaligned reads; "-F 4" = exclude unaligned reads
+    # FYI - secondary and supplementary alignments are included in output BAM file
+    samtools view \
+      -@ ~{cpu} \
+      -F 4 \
+      -b \
+      -o ~{samplename}.sorted.bam \
+      ~{samplename}.sorted.sam
+
+    # create a separate BAM that only includes aligned reads (no secondary or supplementary alignments) for creating aligned FASTQ files
     ## 0x904 = 4 (unaligned) + 100 (secondary) + 800 (supplementary)
     # FYI the default filtering is 0x900 (secondary and supplemental) so when we previously specified -F 4, we were only filtering out unaligned reads, and keeping secondary and supplemental alignments
     # this update to 0x904 means we are now filtering out unaligned, secondary, and supplemental alignments
@@ -55,7 +64,7 @@ task bwa {
       -@ ~{cpu} \
       -F 0x904 \
       -b \
-      -o ~{samplename}.sorted.bam \
+      -o ~{samplename}.sorted.aligned-only.bam \
       ~{samplename}.sorted.sam
 
     # convert SAM to BAM that only includes unaligned reads
@@ -79,7 +88,7 @@ task bwa {
         -F 4 \
         -1 ~{samplename}_R1.fastq.gz \
         -2 ~{samplename}_R2.fastq.gz \
-        ~{samplename}.sorted.bam
+        ~{samplename}.sorted.aligned-only.bam
       echo "Generating FASTQs for unaligned reads"
       # note the lowercase 'f' here is imporant
       samtools fastq \
@@ -94,7 +103,7 @@ task bwa {
         -@ ~{cpu} \
         -F 4 \
         -0 ~{samplename}_R1.fastq.gz \
-        ~{samplename}.sorted.bam
+        ~{samplename}.sorted.aligned-only.bam
       echo -e "Generating FASTQs for unaligned single-end reads\n"
       # again, lowercase 'f' is important for getting all unaligned reads
       samtools fastq \
