@@ -20,7 +20,7 @@ workflow snippy_streamline_fasta {
   if (! defined(reference_genome_file)) {
     call centroid_task.centroid {
       input:
-        assembly_fasta = select_first([assembly_fasta])
+        assembly_fasta = assembly_fasta
     }
     call referenceseeker_task.referenceseeker {
       input:
