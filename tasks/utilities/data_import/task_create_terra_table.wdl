@@ -122,7 +122,6 @@ task create_terra_table {
         if ~{paired_end}; then
           READ1_PATTERN="_R*1.*\b\.f(q|astq)(\.gz)?\b$"
           READ2_PATTERN="_R*2.*\b\.f(q|astq)(\.gz)?\b$"
-          grep -E "$READ2_PATTERN" filelist-filename.txt
           # search for the appropriate file in the list of filenames that exclude the path (filelist-filename.txt) 
           #  and then search for that file in the full-path filelist (filelist-fullpath.txt)
           read1=$(grep $(grep -E "$READ1_PATTERN" filelist-filename.txt | grep "$samplename") filelist-fullpath.txt)
