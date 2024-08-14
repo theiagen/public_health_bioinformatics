@@ -14,7 +14,7 @@ task freyja_one_sample {
     Boolean bootstrap = false
     Int? number_bootstraps
     Int? depth_cutoff
-    Int memory = 4
+    Int memory = 8
     Int cpu = 2
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/freyja:1.5.1-07_02_2024-01-27-2024-07-22"
     Int disk_size = 100
