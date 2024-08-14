@@ -6,7 +6,7 @@ task cauris_cladetyper {
     String samplename
     Int kmer_size = 11
     
-    String docker_image = "us-docker.pkg.dev/general-theiagen/biocontainers/hesslab-gambit:0.5.1--py37h8902056_0"
+    String docker = "us-docker.pkg.dev/general-theiagen/biocontainers/hesslab-gambit:0.5.1--py37h8902056_0"
     Int memory = 16
     Int cpu = 8
     Int disk_size = 100
@@ -62,10 +62,10 @@ task cauris_cladetyper {
     String clade_spec_ref = read_string("CLADEREF")
     String date = read_string("DATE")
     String version = read_string("VERSION")
-    String gambit_cladetyper_docker_image = docker_image
+    String gambit_cladetyper_docker_image = docker
   }
   runtime {
-    docker: docker_image
+    docker: docker
     memory: "~{memory} GB"
     cpu: cpu    
     disks: "local-disk " + disk_size + " SSD"

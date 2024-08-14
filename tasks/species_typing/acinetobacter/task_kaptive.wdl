@@ -5,7 +5,7 @@ task kaptive {
   input {
     File assembly
     String samplename
-    String kaptive_docker_image = "us-docker.pkg.dev/general-theiagen/staphb/kaptive:2.0.3"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/kaptive:2.0.3"
     Int disk_size = 100
     Int cpu = 4
     Int memory = 8
@@ -167,7 +167,7 @@ task kaptive {
     String kaptive_oc_other_outside_genes = read_string("OTHER_GENES_OUT_LOCUS_OC")
   }
   runtime {
-    docker: "~{kaptive_docker_image}"
+    docker: "~{docker}"
     memory: memory + " GB"
     cpu: cpu
     disks: "local-disk " + disk_size + " SSD"
