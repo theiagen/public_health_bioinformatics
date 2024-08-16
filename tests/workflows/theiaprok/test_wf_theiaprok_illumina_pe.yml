@@ -29,7 +29,7 @@
     - path: miniwdl_run/call-amrfinderplus_task/task.log
       contains: ["wdl", "theiaprok_illumina_pe", "amrfinderplus", "done"]
     - path: miniwdl_run/call-amrfinderplus_task/work/AMRFINDER_DB_VERSION
-      md5sum: af6e77e015582e10a0cadb800726bb4b
+      md5sum: 672ea23e1ffc90b3c64a8468292cc5d2
     - path: miniwdl_run/call-amrfinderplus_task/work/AMRFINDER_VERSION
       md5sum: 326a7d8c0e1f7435f5ae5c9153171036
     - path: miniwdl_run/call-amrfinderplus_task/work/AMR_CLASSES
