@@ -49,7 +49,7 @@ jobs:
         shell: bash -l {0}
     steps:
       # Checkout the repo
-      - name: Checkout theiagen/public_health_bacterial_genomics
+      - name: Checkout theiagen/public_health_bioinformatics
         uses: actions/checkout@v4
 
       # Import test data

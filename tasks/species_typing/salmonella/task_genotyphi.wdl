@@ -7,7 +7,7 @@ task genotyphi {
     File? read2
     Boolean ont_data = false
     String samplename
-    String genotyphi_docker_image = "us-docker.pkg.dev/general-theiagen/staphb/mykrobe:0.11.0"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/mykrobe:0.11.0"
     Int disk_size = 100
     Int cpu = 4
     Int memory = 8
@@ -39,17 +39,17 @@ task genotyphi {
     with open("./~{samplename}_mykrobe_genotyphi_predictResults.tsv",'r') as tsv_file:
       tsv_reader = list(csv.DictReader(tsv_file, delimiter="\t"))
       for line in tsv_reader:
-        with open ("SPECIES", 'wt') as genotyphi_species:
-          species=line["species"]
+        with open("SPECIES", 'wt') as genotyphi_species:
+          species = line["species"]
           genotyphi_species.write(species)
-        with open ("SPP_PERCENT", 'wt') as species_percent:
-          spp_percent=line["spp_percent"]
+        with open("SPP_PERCENT", 'wt') as species_percent:
+          spp_percent = line["spp_percent"]
           species_percent.write(spp_percent)
-        with open ("FINAL_GENOTYPE", 'wt') as final_genotype:
-          genotype=line["final genotype"]
+        with open("FINAL_GENOTYPE", 'wt') as final_genotype:
+          genotype = line["final genotype"]
           final_genotype.write(genotype)
-        with open ("CONFIDENCE", 'wt') as genotyphi_confidence:
-          confidence=line["confidence"]
+        with open("CONFIDENCE", 'wt') as genotyphi_confidence:
+          confidence = line["confidence"]
           genotyphi_confidence.write(confidence)
     CODE
   >>>
@@ -63,7 +63,7 @@ task genotyphi {
     String genotyphi_genotype_confidence = read_string("CONFIDENCE")
   }
   runtime {
-    docker: "~{genotyphi_docker_image}"
+    docker: "~{docker}"
     memory: memory + " GB"
     cpu: cpu
     disks: "local-disk " + disk_size + " SSD"

@@ -76,9 +76,6 @@ task export_taxon_tables {
     Float? nanoplot_r1_mean_q_clean
     Float? nanoplot_r1_median_q_clean
     Float? nanoplot_r1_est_coverage_clean
-    String? kmc_est_genome_length
-    File? kmc_kmer_stats
-    String? kmc_version
     String? rasusa_version
     File? tiptoft_plasmid_replicon_fastq
     String? tiptoft_plasmid_replicon_genes
@@ -490,9 +487,6 @@ task export_taxon_tables {
       "nanoplot_r1_mean_q_clean": "~{nanoplot_r1_mean_q_clean}",
       "nanoplot_r1_median_q_clean": "~{nanoplot_r1_median_q_clean}",
       "nanoplot_r1_est_coverage_clean": "~{nanoplot_r1_est_coverage_clean}",
-      "kmc_est_genome_length": "~{kmc_est_genome_length}",
-      "kmc_kmer_stats": "~{kmc_kmer_stats}",
-      "kmc_version": "~{kmc_version}",
       "rasusa_version": "~{rasusa_version}",
       "tiptoft_plasmid_replicon_fastq": "~{tiptoft_plasmid_replicon_fastq}",
       "tiptoft_plasmid_replicon_genes": "~{tiptoft_plasmid_replicon_genes}",

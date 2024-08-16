@@ -6,6 +6,7 @@ import "../../tasks/quality_control/advanced_metrics/task_vadr.wdl" as vadr_task
 import "../../tasks/quality_control/basic_statistics/task_consensus_qc.wdl" as consensus_qc_task
 import "../../tasks/quality_control/comparisons/task_qc_check_phb.wdl" as qc_check
 import "../../tasks/species_typing/betacoronavirus/task_pangolin.wdl" as pangolin
+import "../../tasks/species_typing/orthomyxoviridae/task_genoflu.wdl" as genoflu_task
 import "../../tasks/task_versioning.wdl" as versioning
 import "../../tasks/taxon_id/task_nextclade.wdl" as nextclade_task
 import "../utilities/wf_organism_parameters.wdl" as set_organism_defaults
@@ -20,7 +21,7 @@ workflow theiacov_fasta {
     String organism = "sars-cov-2" # options: "sars-cov-2" "MPXV" "WNV" "flu" "rsv_a" "rsv_b
     # flu options
     String flu_segment = "HA" # options: HA or NA
-    String? flu_subtype # options: "Victoria" "Yamagata" "H3N2" "H1N1"
+    String? flu_subtype # options: "Victoria" "Yamagata" "H3N2" "H1N1" "H5N1"
     # optional reference information
     File? reference_genome
     Int? genome_length
@@ -73,6 +74,13 @@ workflow theiacov_fasta {
         samplename = samplename,
         fasta = assembly_fasta,
         docker = organism_parameters.pangolin_docker
+    }
+  }
+  if (select_first([flu_subtype, abricate_subtype, "N/A"]) == "H5N1") {
+    call genoflu_task.genoflu {
+      input:
+        assembly_fasta = assembly_fasta,
+        samplename = samplename
     }
   }
   if (organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "rsv_a" || organism_parameters.standardized_organism == "rsv_b" || organism_parameters.standardized_organism == "flu") {
@@ -154,6 +162,10 @@ workflow theiacov_fasta {
     String? nextclade_qc = nextclade_output_parser.nextclade_qc
     # VADR Annotation QC
     File?  vadr_alerts_list = vadr.alerts_list
+    File? vadr_feature_tbl_pass = vadr.feature_tbl_pass
+    File? vadr_feature_tbl_fail = vadr.feature_tbl_fail
+    File? vadr_classification_summary_file = vadr.classification_summary_file
+    File? vadr_all_outputs_tar_gz = vadr.outputs_tgz
     String? vadr_docker = vadr.vadr_docker
     File? vadr_fastas_zip_archive = vadr.vadr_fastas_zip_archive
     String? vadr_num_alerts = vadr.num_alerts
@@ -166,5 +178,10 @@ workflow theiacov_fasta {
     File? abricate_flu_results = abricate_flu.abricate_flu_results
     String? abricate_flu_database =  abricate_flu.abricate_flu_database
     String? abricate_flu_version = abricate_flu.abricate_flu_version
+    # GenoFLU outputs    
+    String? genoflu_version = genoflu.genoflu_version
+    String? genoflu_genotype = genoflu.genoflu_genotype
+    String? genoflu_all_segments = genoflu.genoflu_all_segments
+    File? genoflu_output_tsv = genoflu.genoflu_output_tsv
   }
 }
