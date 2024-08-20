@@ -52,8 +52,10 @@ task check_reads {
       if [ "${flag}" == "PASS" ]; then
         # count number of basepairs
         # this only works if the fastq has 4 lines per read, so this might fail one day
-        read1_bp=`eval "${cat_reads} ~{read1}" | paste - - - - | cut -f2 | tr -d '\n' | wc -c`
-        read2_bp=`eval "${cat_reads} ~{read2}" | paste - - - - | cut -f2 | tr -d '\n' | wc -c`
+        read1_bp=`eval "${cat_reads} ~{read1}" | fastq-scan | grep 'total_bp' | sed 's/[^0-9]*\([0-9]\+\).*/\1/'`
+        read2_bp=`eval "${cat_reads} ~{read2}" | fastq-scan | grep 'total_bp' | sed 's/[^0-9]*\([0-9]\+\).*/\1/'`
+        echo "DEBUG: Number of basepairs in R1: $read1_bp"
+        echo "DEBUG: Number of basepairs in R2: $read2_bp"
         # paste - - - - (print 4 consecutive lines in one row, tab delimited)
         # cut -f2 print only the second column (the second line of the fastq 4-line)
         # tr -d '\n' removes line endings
@@ -219,7 +221,8 @@ task check_reads_se {
       if [ "${flag}" == "PASS" ]; then
         # count number of basepairs
         # this only works if the fastq has 4 lines per read, so this might fail one day
-        read1_bp=`eval "${cat_reads} ~{read1}" | paste - - - - | cut -f2 | tr -d '\n' | wc -c`
+        read1_bp=`eval "${cat_reads} ~{read1}" | fastq-scan | grep 'total_bp' | sed 's/[^0-9]*\([0-9]\+\).*/\1/'`
+        echo "DEBUG: Number of basepairs in R1: $read1_bp"
         # paste - - - - (print 4 consecutive lines in one row, tab delimited)
         # cut -f2 print only the second column (the second line of the fastq 4-line)
         # tr -d '\n' removes line endings
