@@ -1,0 +1,100 @@
+site_name: Public Health Bioinformatics
+site_author: Theiagen Genomics
+site_description: A collection of bioinformatics workflows for genomic characterization, submission preparation, and genomic epidemiology of pathogens of public health concern.
+
+repo_url: https://github.com/theiagen/public_health_bioinformatics
+
+nav:
+  - Public Health Bioinformatics: 
+     - index.md
+     - All Workflows: 
+        - Workflows by Type: workflows_overview/workflows-type.md
+        - Workflows by Kingdom: workflows_overview/workflows-kingdom.md
+        - Workflows Alphabetically: workflows_overview/workflows-alphabetically.md
+     - Workflow Documentation:
+        - Assembly_Fetch: workflows/assembly_fetch.md
+
+theme: 
+  name: material
+  logo: assets/Theiagen-Logo-White.png
+  features:
+    - content.code.annotate
+    - content.code.copy
+    - content.tabs.link
+    - content.tooltips
+    #- navigation.expand
+    - navigation.instant
+    #- navigation.instant.preview
+    - navigation.path
+    - navigation.tabs
+    - navigation.top
+    - navigation.tracking
+    - search.highlight
+    - search.suggest
+    - toc.follow
+    - toc.integrate
+  language: en
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: light 
+      toggle:
+        icon: material/weather-night
+        name: Switch to Dark Mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      accent: indigo
+      primary: black
+      toggle:
+        icon: material/white-balance-sunny
+        name: Switch to Light Mode
+
+markdown_extensions: 
+  - abbr
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - pymdownx.details
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.mark
+  - pymdownx.snippets
+  - pymdownx.superfences
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - toc:
+      permalink: true
+
+plugins:
+  - git-revision-date-localized:
+      enable_creation_date: true
+      type: iso_date
+  - search
+  # - section-index
+
+extra_javascript:
+  - https://unpkg.com/tablesort@5.3.0/dist/tablesort.min.js
+  - javascripts/tablesort.js
+
+extra_css:
+  - stylesheets/extra.css
+
+extra:
+  social:
+    - icon: fontawesome/brands/github-alt
+      link: https://github.com/theiagen
+    - icon: fontawesome/brands/twitter
+      link: https://twitter.com/theiagen
+    - icon: fontawesome/brands/linkedin
+      link: https://www.linkedin.com/company/theiagen
+  version:
+    provider: mike
+  homepage: https://www.theiagen.com
+
+copyright: |
+  &copy; 2022-2024 <a href="https://www.theiagen.com" target="_blank" rel="noopener">Theiagen Genomics</a>
