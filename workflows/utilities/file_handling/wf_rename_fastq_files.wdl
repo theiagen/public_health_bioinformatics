@@ -8,8 +8,8 @@ workflow rename_fastq_files {
     File read1
     File? read2
     String new_filename
-    String new_filename_updated = sub(new_filename, " ", "_")
   }
+  String new_filename_updated = sub(new_filename, " ", "_")
   if (defined(read2)) {
     call rename_files_task.rename_PE_files {
       input:

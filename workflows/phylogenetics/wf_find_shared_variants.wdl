@@ -12,8 +12,8 @@ workflow shared_variants_wf {
     Array[File] variants_to_cat
     Array[String] samplenames
     String concatenated_file_name
-    String concatenated_file_name_updated = sub(concatenated_file_name, " ", "_")
   }
+  String concatenated_file_name_updated = sub(concatenated_file_name, " ", "_")
   call file_handling.cat_variants {
     input:
       variants_to_cat = variants_to_cat,

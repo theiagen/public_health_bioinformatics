@@ -7,8 +7,8 @@ workflow zip_column_content {
   input {
     Array[File] files_to_zip
     String zipped_file_name
-    String zipped_file_name_updated = sub(zipped_file_name, " ", "_")
   }
+  String zipped_file_name_updated = sub(zipped_file_name, " ", "_")
   call file_handling.zip_files {
     input:
       files_to_zip = files_to_zip,
