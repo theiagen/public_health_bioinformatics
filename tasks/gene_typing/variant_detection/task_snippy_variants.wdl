@@ -84,6 +84,35 @@ task snippy_variants {
       echo $reference_length_passed_depth $reference_length | awk '{ print ($1/$2)*100 }' > PERCENT_REF_COVERAGE
     fi
 
+    # create qc metrics file
+    line_count=$(wc -l < "~{samplename}/~{samplename}_coverage.tsv")
+    # Check the number of lines in the file, to consider scenarios e.g. for V. cholerae that has two chromosomes and therefore coverage metrics per chromosome
+    if [ "$line_count" -eq 2 ]; then
+      head -n 1 "~{samplename}/~{samplename}_coverage.tsv" | tr ' ' '\t' > COVERAGE_HEADER
+      sed -n '2p' "~{samplename}/~{samplename}_coverage.tsv" | tr ' ' '\t' > COVERAGE_VALUES
+    else
+      header=$(head -n 1 "~{samplename}/~{samplename}_coverage.tsv")
+      output_header="$header"
+      output_values=""
+
+      for (( i=2; i<=$line_count; i++ ))
+      do
+        #output_header="$output_header"
+        values=$(sed -n "${i}p" "~{samplename}/~{samplename}_coverage.tsv")
+        if [ -z "$output_values" ]; then
+          output_values="$values"
+        else
+          output_header="$output_header\t$header"
+          output_values="$output_values\t$values"
+        fi
+      done
+      echo "$output_header" | tr ' ' '\t' > COVERAGE_HEADER
+      echo "$output_values" | tr ' ' '\t' > COVERAGE_VALUES
+    fi
+
+    echo -e "samplename\treads_aligned_to_reference\tvariants_total\tpercent_ref_coverage\t$(cat COVERAGE_HEADER)" > "~{samplename}/~{samplename}_qc_metrics.tsv"
+    echo -e "~{samplename}\t$(cat READS_ALIGNED_TO_REFERENCE)\t$(cat VARIANTS_TOTAL)\t$(cat PERCENT_REF_COVERAGE)\t$(cat COVERAGE_VALUES)" >> "~{samplename}/~{samplename}_qc_metrics.tsv"
+
   >>>
   output {
     String snippy_variants_version = read_string("VERSION")
@@ -102,6 +131,7 @@ task snippy_variants {
     String snippy_variants_ref_length = read_string("REFERENCE_LENGTH")
     String snippy_variants_ref_length_passed_depth = read_string("REFERENCE_LENGTH_PASSED_DEPTH")
     String snippy_variants_percent_ref_coverage = read_string("PERCENT_REF_COVERAGE")
+    File snippy_variants_qc_metrics = "~{samplename}/~{samplename}_qc_metrics.tsv"
   }
   runtime {
       docker: "~{docker}"
