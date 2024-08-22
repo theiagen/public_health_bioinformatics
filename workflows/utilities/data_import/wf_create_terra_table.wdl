@@ -9,6 +9,8 @@ workflow create_terra_table {
     Boolean paired_end
     Boolean assembly_data
 
+    String? file_ending
+
     String terra_project
     String terra_workspace
   }
@@ -18,6 +20,7 @@ workflow create_terra_table {
       data_location_path = data_location_path,
       paired_end = paired_end,
       assembly_data = assembly_data,
+      file_ending = file_ending,
       terra_project = terra_project,
       terra_workspace = terra_workspace
   }

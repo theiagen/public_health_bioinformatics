@@ -273,9 +273,6 @@ workflow theiaprok_ont {
               nanoplot_r1_mean_q_clean = nanoplot_clean.mean_q,
               nanoplot_r1_median_q_clean = nanoplot_clean.median_q,
               nanoplot_r1_est_coverage_clean = nanoplot_clean.est_coverage,
-              kmc_est_genome_length = read_qc_trim.est_genome_length,
-              kmc_kmer_stats = read_qc_trim.kmc_kmer_stats,
-              kmc_version = read_qc_trim.kmc_version,
               rasusa_version = read_qc_trim.rasusa_version,
               tiptoft_plasmid_replicon_fastq = read_qc_trim.tiptoft_plasmid_replicon_fastq,
               tiptoft_plasmid_replicon_genes = read_qc_trim.tiptoft_plasmid_replicon_genes,
@@ -588,10 +585,6 @@ workflow theiaprok_ont {
     String? kraken2_report = read_qc_trim.kraken_report
     String? kraken2_database = read_qc_trim.kraken_database
     String? kraken_docker = read_qc_trim.kraken_docker
-    # Read QC - kmc outputs
-    Int? kmc_est_genome_length = read_qc_trim.est_genome_length
-    File? kmc_kmer_stats = read_qc_trim.kmc_kmer_stats
-    String? kmc_version = read_qc_trim.kmc_version
     # Read QC - rasusa outputs
     String? rasusa_version = read_qc_trim.rasusa_version
     # Read QC - tiptoft outputs

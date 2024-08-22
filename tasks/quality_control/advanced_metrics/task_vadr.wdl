@@ -9,7 +9,7 @@ task vadr {
     String vadr_opts = "--noseqnamemax --glsearch -s -r --nomisc --mkey sarscov2 --lowsim5seq 6 --lowsim3seq 6 --alt_fail lowscore,insertnn,deletinn --out_allfasta"
     Int assembly_length_unambiguous
     Int skip_length = 10000
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/vadr:1.6.3"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/vadr:1.6.3-hav-flu2"
     Int min_length = 50
     Int max_length = 30000
     Int cpu = 2
@@ -49,13 +49,18 @@ task vadr {
       cut -f 5 "~{out_base}/~{out_base}.vadr.alt.list" | tail -n +2 > "~{out_base}.vadr.alerts.tsv"
       cat "~{out_base}.vadr.alerts.tsv" | wc -l > NUM_ALERTS
 
+      # rename sequence classification summary file to end in txt
+      mv -v "~{out_base}/~{out_base}.vadr.sqc" "~{out_base}/~{out_base}.vadr.sqc.txt"
+
     else
       echo "VADR skipped due to poor assembly; assembly length (unambiguous) = ~{assembly_length_unambiguous}" > NUM_ALERTS
     fi
 
   >>>
   output {
-    File? feature_tbl = "~{out_base}/~{out_base}.vadr.pass.tbl"
+    File? feature_tbl_pass = "~{out_base}/~{out_base}.vadr.pass.tbl"
+    File? feature_tbl_fail = "~{out_base}/~{out_base}.vadr.fail.tbl"
+    File? classification_summary_file = "~{out_base}/~{out_base}.vadr.sqc.txt"
     String num_alerts = read_string("NUM_ALERTS")
     File? alerts_list = "~{out_base}/~{out_base}.vadr.alt.list"
     File? outputs_tgz = "~{out_base}.vadr.tar.gz"

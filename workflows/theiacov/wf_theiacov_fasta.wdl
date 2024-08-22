@@ -162,6 +162,10 @@ workflow theiacov_fasta {
     String? nextclade_qc = nextclade_output_parser.nextclade_qc
     # VADR Annotation QC
     File?  vadr_alerts_list = vadr.alerts_list
+    File? vadr_feature_tbl_pass = vadr.feature_tbl_pass
+    File? vadr_feature_tbl_fail = vadr.feature_tbl_fail
+    File? vadr_classification_summary_file = vadr.classification_summary_file
+    File? vadr_all_outputs_tar_gz = vadr.outputs_tgz
     String? vadr_docker = vadr.vadr_docker
     File? vadr_fastas_zip_archive = vadr.vadr_fastas_zip_archive
     String? vadr_num_alerts = vadr.num_alerts
