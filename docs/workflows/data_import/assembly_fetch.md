@@ -1,12 +1,15 @@
 ---
-title: Assembly_Fetch
+hide:
+ - toc
 ---
+
+# Assembly Fetch
 
 ## Quick Facts
 
-| **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line compatibliity** |
-|---|---|---| -- |
-| [Data Import](../workflows_overview/workflows-type.md#data-import) | [Any taxa](../workflows_overview/workflows-kingdom.md#any-taxa) | PHB v1.3.0 | Yes |
+| **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line compatibliity** | **Workflow type** |
+|---|---|---|---|---|
+| [Data Import](../../../workflows_overview/workflows-type/#data-import) | [Any taxa](../../../workflows_overview/workflows-kingdom/#any-taxa) | PHB v1.3.0 | Yes | Sample-level |
 
 ## Assembly_Fetch_PHB
 
@@ -23,26 +26,26 @@ The `Assembly_Fetch` workflow downloads assemblies from NCBI. This is particular
 
 Assembly_Fetch requires the input samplename, and either the accession for a reference genome to download (ncbi_accession) or an assembly that can be used to query RefSeq for the closest reference genome to download (assembly_fasta).
 
-| **Terra Task Name** | **Variable** | **Type** | **Default attribute** | **Description** | **Terra Status** |
+| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default attribute** | **Terra Status** |
 |---|---|---|---|---|---|
-| reference_fetch | **samplename** | String | Your sample’s name | Required |  |
-| reference_fetch | **assembly_fasta** | File | Assembly FASTA file of your sample | Optional |  |
-| reference_fetch | **ncbi_accession** | String | NCBI accession passed to the NCBI datasets task to be downloaded. Example: GCF_000006945.2 (Salmonella enterica subsp. enterica, serovar Typhimurium str. LT2 reference genome) | Optional |  |
-| ncbi_datasets_download_genome_accession | **cpu** | Int | 1 | number of cpus used to run ncbi datasets | Optional |
-| ncbi_datasets_download_genome_accession | **disk_size** | Int | 50 | Amount of storage in GigaBytes (GB) requested for the VM to run the NCBI datasets task | Optional |
-| ncbi_datasets_download_genome_accession | **docker** | String | "us-docker.pkg.dev/general-theiagen/staphb/ncbi-datasets:14.13.2” | Docker image used to run the NCBI datasets task | Optional |
-| ncbi_datasets_download_genome_accession | **include_gbff** | Boolean | FALSE | set to true if you would like the GenBank Flat File (GBFF) file included in the output. It contains nucleotide sequence, metadata, and annotations. | Optional |
-| ncbi_datasets_download_genome_accession | **include_gff3** | Boolean | FALSE | set to true if you would like the Genomic Feature File v3 (GFF3) file included in the output. It contains nucleotide sequence, metadata, and annotations | Optional |
-| ncbi_datasets_download_genome_accession | **memory** | Int | 4 | Amount of RAM/memory requested for running the NCBI datasets task | Optional |
-| referenceseeker | **cpu** | Int | 4 | number of cpus used to run referenceseeker | Optional |
-| referenceseeker | **disk_size** | Int | 200 | Amount of storage in GigaBytes (GB) requested for the VM to run the referenceseeker task | Optional |
-| referenceseeker | **docker** | String | "us-docker.pkg.dev/general-theiagen/biocontainers/referenceseeker:1.8.0--pyhdfd78af_0” | Docker image used to run the referenceseeker task | Optional |
-| referenceseeker | **memory** | Int | 16 | Amount of RAM/memory requested to run the referenceseeker task | Optional |
-| referenceseeker | **referenceseeker_ani_threshold** | Float | 0.95 | ANI threshold used to exclude ref genomes when ANI value less than this value. | Optional |
-| referenceseeker | **referenceseeker_conserved_dna_threshold** | Float | 0.69 | Conserved DNA threshold used to exclude ref genomes when conserved DNA value is less than this value. | Optional |
-| referenceseeker | **referenceseeker_db** | File | "gs://theiagen-public-files-rp/terra/theiaprok-files/referenceseeker-bacteria-refseq-205.v20210406.tar.gz” | Database used by the referenceseeker tool that contains bacterial genomes from RefSeq release 205. Downloaded from referenceseeker GitHub repo. | Optional |
-| version_capture | **timezone** | String | Optional |  |  |
-| version_capture | **docker** | String | "us-docker.pkg.dev/general-theiagen/ubuntu/ubuntu:jammy-20230816” | Optional |  |
+| reference_fetch | **samplename** | String | Your sample’s name |  | Required |
+| reference_fetch | **assembly_fasta** | File | Assembly FASTA file of your sample |  | Optional |
+| reference_fetch | **ncbi_accession** | String | NCBI accession passed to the NCBI datasets task to be downloaded. Example: GCF_000006945.2 (Salmonella enterica subsp. enterica, serovar Typhimurium str. LT2 reference genome) |  | Optional |
+| ncbi_datasets_download_genome_accession | **cpu** | Int | number of cpus used to run ncbi datasets | 1 | Optional |
+| ncbi_datasets_download_genome_accession | **disk_size** | Int | Amount of storage in GigaBytes (GB) requested for the VM to run the NCBI datasets task | 50 | Optional |
+| ncbi_datasets_download_genome_accession | **docker** | String | Docker image used to run the NCBI datasets task | "us-docker.pkg.dev/general-theiagen/staphb/ncbi-datasets:14.13.2” | Optional |
+| ncbi_datasets_download_genome_accession | **include_gbff** | Boolean | set to true if you would like the GenBank Flat File (GBFF) file included in the output. It contains nucleotide sequence, metadata, and annotations. | FALSE | Optional |
+| ncbi_datasets_download_genome_accession | **include_gff3** | Boolean | set to true if you would like the Genomic Feature File v3 (GFF3) file included in the output. It contains nucleotide sequence, metadata, and annotations | FALSE | Optional |
+| ncbi_datasets_download_genome_accession | **memory** | Int | Amount of RAM/memory requested for running the NCBI datasets task | 4 | Optional |
+| referenceseeker | **cpu** | Int | number of cpus used to run referenceseeker | 4 | Optional |
+| referenceseeker | **disk_size** | Int | Amount of storage in GigaBytes (GB) requested for the VM to run the referenceseeker task | 200 | Optional |
+| referenceseeker | **docker** | String | Docker image used to run the referenceseeker task | "us-docker.pkg.dev/general-theiagen/biocontainers/referenceseeker:1.8.0--pyhdfd78af_0” | Optional |
+| referenceseeker | **memory** | Int | Amount of RAM/memory requested to run the referenceseeker task | 16 | Optional |
+| referenceseeker | **referenceseeker_ani_threshold** | Float | ANI threshold used to exclude ref genomes when ANI value less than this value. | 0.95 | Optional |
+| referenceseeker | **referenceseeker_conserved_dna_threshold** | Float | Conserved DNA threshold used to exclude ref genomes when conserved DNA value is less than this value. | 0.69 | Optional |
+| referenceseeker | **referenceseeker_db** | File | Database used by the referenceseeker tool that contains bacterial genomes from RefSeq release 205. Downloaded from referenceseeker GitHub repo. | "gs://theiagen-public-files-rp/terra/theiaprok-files/referenceseeker-bacteria-refseq-205.v20210406.tar.gz” | Optional |
+| version_capture | **docker** | String | The Docker image used to run the version_capture task | "us-docker.pkg.dev/general-theiagen/ubuntu/ubuntu:jammy-20230816" | Optional |
+| version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
 
 # Tasks
 

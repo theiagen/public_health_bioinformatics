@@ -13,10 +13,10 @@ Theiagen’s approach to genomic analysis in public health typically uses the [T
 
 **When undertaking genomic analysis using Terra and other data visualization platforms, it is essential to consider the necessary and appropriate workflows and resources for your analysis. To help you make these choices, take a look at the relationship between the most commonly used Theiagen workflows.**
 
-![The relationship between the various PHB workflows](assets/Workflow_Relationships.png#only-light)
-![The relationship between the various PHB workflows](assets/Workflow_Relationships_dark.png#only-dark)
-
 !!! caption "Analysis Approaches for Genomic Data"
+    ![The relationship between the various PHB workflows](assets/Workflow_Relationships.png#only-light)
+    ![The relationship between the various PHB workflows](assets/Workflow_Relationships_dark.png#only-dark)
+
     This diagram shows the Theiagen workflows (green boxes) available for analysis of genomic data in public health and the workflows that may be used consecutively (arrows). The blue boxes describe the major functions that these workflows undertake. The yellow boxes show functions that may be undertaken independently of workflows on Terra.
 
 ### PHB development is a cycle

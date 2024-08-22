@@ -1,22 +1,31 @@
+/* color scheme */
 [data-md-color-scheme="light"] {
   --md-primary-bg-color: #ffffff;
   --md-primary-fg-color: #116eb7;
   --md-accent-fg-color: #1da74a;
   --md-accent-bg-color: #1da74a;
+  th {
+    background: #ffffff;
+    color: #262626;
+  }
 }
 [data-md-color-scheme="light"] img[src$="#only-dark"],
 [data-md-color-scheme="light"] img[src$="#gh-dark-mode-only"] {
   display: none; /* Hide dark images in light mode */
 }
-[data-md-color-scheme="dark"] img[src$="#only-light"],
-[data-md-color-scheme="dark"] img[src$="#gh-light-mode-only"] {
+[data-md-color-scheme="slate"] img[src$="#only-light"],
+[data-md-color-scheme="slate"] img[src$="#gh-light-mode-only"] {
   display: none; /* Hide light images in dark mode */
 }
-[data-md-color-scheme="dark"] {
+[data-md-color-scheme="slate"] {
   --md-primary-bg-color: #1da74a;
   --md-primary-fg-color: #262626;
-  --md-accent-fg-color: #116eb7;
+  --md-accent-fg-color: #1da74a;
   --md-accent-bg-color: #116eb7;
+  th {
+    background: #1F2029;
+    color: #ffffff;
+  }
 }
 
 /* dna admonition */
@@ -40,7 +49,7 @@
 
 /* caption admonition */
 :root {
-  --md-admonition-icon--caption: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13.5 4A1.5 1.5 0 0 0 12 5.5 1.5 1.5 0 0 0 13.5 7 1.5 1.5 0 0 0 15 5.5 1.5 1.5 0 0 0 13.5 4m-.36 4.77c-1.19.1-4.44 2.69-4.44 2.69-.2.15-.14.14.02.42.16.27.14.29.33.16.2-.13.53-.34 1.08-.68 2.12-1.36.34 1.78-.57 7.07-.36 2.62 2 1.27 2.61.87.6-.39 2.21-1.5 2.37-1.61.22-.15.06-.27-.11-.52-.12-.17-.24-.05-.24-.05-.65.43-1.84 1.33-2 .76-.19-.57 1.03-4.48 1.7-7.17.11-.64.41-2.04-.75-1.94Z"/></svg>')
+  --md-admonition-icon--caption: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 14.29 6.5 19h10.96l-2.71-3.54-1.97 2.34L10 14.29M5 21V7h13.96v14H5m7-18.6 2.61 2.63H9.37L12 2.4M5 5.03c-.5 0-1 .19-1.39.58C3.2 6 3 6.46 3 7v14c0 .5.2 1 .61 1.39C4 22.8 4.5 23 5 23h13.96c.54 0 1-.2 1.41-.61.4-.39.63-.89.63-1.39V7c0-.54-.23-1-.63-1.39-.41-.39-.87-.58-1.41-.58H16L12 1 7.96 5.03H5Z"/></svg>')
 }
 .md-typeset .admonition.caption,
 .md-typeset details.caption {
@@ -55,4 +64,25 @@
   background-color: rgb(135, 142, 143);
   -webkit-mask-image: var(--md-admonition-icon--caption);
           mask-image: var(--md-admonition-icon--caption);
+}
+
+/* content width */
+.md-grid {
+  max-width: initial;
+}
+
+/* scrollbar and resizable columns in tables */
+table {
+  overflow-y: scroll;
+  max-height: 500px;
+  display: block;
+}
+th {
+  position: sticky;
+  top: 0;
+  resize: horizontal;
+  overflow: auto;
+}
+td {
+  word-break: break-all;
 }
