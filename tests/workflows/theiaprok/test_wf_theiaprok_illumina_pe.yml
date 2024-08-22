@@ -29,7 +29,7 @@
     - path: miniwdl_run/call-amrfinderplus_task/task.log
       contains: ["wdl", "theiaprok_illumina_pe", "amrfinderplus", "done"]
     - path: miniwdl_run/call-amrfinderplus_task/work/AMRFINDER_DB_VERSION
-      md5sum: af6e77e015582e10a0cadb800726bb4b
+      md5sum: 672ea23e1ffc90b3c64a8468292cc5d2
     - path: miniwdl_run/call-amrfinderplus_task/work/AMRFINDER_VERSION
       md5sum: 326a7d8c0e1f7435f5ae5c9153171036
     - path: miniwdl_run/call-amrfinderplus_task/work/AMR_CLASSES
@@ -551,7 +551,7 @@
     - path: miniwdl_run/wdl/tasks/gene_typing/drug_resistance/task_abricate.wdl
       md5sum: 0a8e80d9c835a712936eac2cc6e3a05d
     - path: miniwdl_run/wdl/tasks/gene_typing/drug_resistance/task_amrfinderplus.wdl
-      md5sum: 02e5699f8d4fa6e6c3591a829e8441e5
+      md5sum: b45d8f05cf21e4e431072e354b6b3284
     - path: miniwdl_run/wdl/tasks/gene_typing/annotation/task_bakta.wdl
       md5sum: 0bed8fb60786095843a67b1ad03051dc
     - path: miniwdl_run/wdl/tasks/gene_typing/plasmid_detection/task_plasmidfinder.wdl

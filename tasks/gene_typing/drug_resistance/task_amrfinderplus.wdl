@@ -12,7 +12,7 @@ task amrfinderplus_nuc {
     Float? mincov
     Boolean detailed_drug_class = false
     Int cpu = 2
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/ncbi-amrfinderplus:3.12.8-2024-05-02.2"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/ncbi-amrfinderplus:3.12.8-2024-07-22.1"
     Int disk_size = 50
     Int memory = 8
     Boolean hide_point_mutations = false
