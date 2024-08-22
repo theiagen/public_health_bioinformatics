@@ -12,10 +12,10 @@ workflow snippy_streamline_fasta {
     Array[File] assembly_fasta
     Array[String] samplenames
     String tree_name
-    String tree_name_updated = sub(tree_name, " ", "_")
     # this input file can be a FASTA or GBK
     File? reference_genome_file
   }
+  String tree_name_updated = sub(tree_name, " ", "_")
   # if user does not provide reference genome fasta, determine one for the user by running centroid, referenceseeker, and ncbi datasets to acquire one
   if (! defined(reference_genome_file)) {
     call centroid_task.centroid {
