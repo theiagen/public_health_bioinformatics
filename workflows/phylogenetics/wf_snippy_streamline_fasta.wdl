@@ -15,6 +15,7 @@ workflow snippy_streamline_fasta {
     # this input file can be a FASTA or GBK
     File? reference_genome_file
   }
+  # hide option from input table
   String tree_name_updated = sub(tree_name, " ", "_")
   # if user does not provide reference genome fasta, determine one for the user by running centroid, referenceseeker, and ncbi datasets to acquire one
   if (! defined(reference_genome_file)) {
