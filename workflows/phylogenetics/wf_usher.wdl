@@ -10,9 +10,9 @@ workflow usher_workflow {
   input {
     Array[File] assembly_fasta
     String tree_name
-    String tree_name_updated = sub(tree_name, " ", "_")
     String organism # currently available: "sars-cov-2", "mpox", "RSV-A", "RSV-B"
   }
+  String tree_name_updated = sub(tree_name, " ", "_")
   call usher_task.usher {
     input: 
       assembly_fasta = assembly_fasta,
