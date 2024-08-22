@@ -50,7 +50,7 @@ nav:
                - Cauris_CladeTyper: workflows/standalone/cauris_cladetyper.md
                - GAMBIT_Query: workflows/standalone/gambit_query.md
                - Kraken2: workflows/standalone/kraken2.md
-               - NCBI-AMRFinderPlus: workflows/standalone/ncbi-amrfinderplus.md
+               - NCBI-AMRFinderPlus: workflows/standalone/ncbi_amrfinderplus.md
                - RASUSA: workflows/standalone/rasusa.md
                - Rename_FASTQ: workflows/standalone/rename_fastq.md
                - TBProfiler_tNGS: workflows/standalone/tbprofiler_tngs.md
@@ -77,7 +77,7 @@ nav:
                - kSNP3: workflows/phylogenetic_construction/ksnp3.md
                - Lyve_SET: workflows/phylogenetic_construction/lyve_set.md
                - MashTree_FASTA: workflows/phylogenetic_construction/mashtree_fasta.md
-               - NCBI-AMRFinderPlus: workflows/standalone/ncbi-amrfinderplus.md
+               - NCBI-AMRFinderPlus: workflows/standalone/ncbi_amrfinderplus.md
                - Snippy_Streamline: workflows/phylogenetic_construction/snippy_streamline.md
                - Snippy_Streamline_FASTA: workflows/phylogenetic_construction/snippy_streamline_fasta.md
                - Snippy_Tree: workflows/phylogenetic_construction/snippy_tree.md
@@ -91,7 +91,7 @@ nav:
                - GAMBIT_Query: workflows/standalone/gambit_query.md
                - kSNP3: workflows/phylogenetic_construction/ksnp3.md
                - MashTree_FASTA: workflows/phylogenetic_construction/mashtree_fasta.md
-               - NCBI-AMRFinderPlus: workflows/standalone/ncbi-amrfinderplus.md
+               - NCBI-AMRFinderPlus: workflows/standalone/ncbi_amrfinderplus.md
                - Snippy_Variants: workflows/phylogenetic_construction/snippy_variants.md
                - Terra_2_NCBI: workflows/public_data_sharing/terra_2_ncbi.md
                - TheiaEuk: workflows/genomic_characterization/theiaeuk.md
@@ -128,7 +128,7 @@ nav:
             - Lyve_SET: workflows/phylogenetic_construction/lyve_set.md
             - MashTree_FASTA: workflows/phylogenetic_construction/mashtree_fasta.md
             - Mercury_Prep_N_Batch: workflows/public_data_sharing/mercury_prep_n_batch.md
-            - NCBI-AMRFinderPlus: workflows/standalone/ncbi-amrfinderplus.md
+            - NCBI-AMRFinderPlus: workflows/standalone/ncbi_amrfinderplus.md
             - Pangolin_Update: workflows/genomic_characterization/pangolin_update.md
             - RASUSA: workflows/standalone/rasusa.md
             - Rename_FASTQ: workflows/standalone/rename_fastq.md
