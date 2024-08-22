@@ -11,7 +11,6 @@ workflow mercury_prep_n_batch {
     Array[String] sample_names
     String organism = "sars-cov-2"
     String output_name
-    String output_name_updated = sub(output_name, " ", "_")
     String gcp_bucket_uri
     File? input_table
     Int vadr_alert_limit = 0 # only for SC2
@@ -19,6 +18,7 @@ workflow mercury_prep_n_batch {
     Boolean skip_county = false
     Boolean skip_ncbi = false
   }
+  String output_name_updated = sub(output_name, " ", "_")
   call submission.sm_metadata_wrangling {
     input:
       table_name = table_name,
