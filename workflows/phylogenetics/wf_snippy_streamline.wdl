@@ -109,5 +109,6 @@ workflow snippy_streamline {
     File? snippy_filtered_metadata = snippy_tree_wf.snippy_filtered_metadata
     File? snippy_concatenated_variants = snippy_tree_wf.snippy_concatenated_variants
     File? snippy_shared_variants_table = snippy_tree_wf.snippy_shared_variants_table
+    File? snippy_snippy_variants_qc_metrics = snippy_tree_wf.snippy_snippy_variants_qc_metrics
   }
 }
