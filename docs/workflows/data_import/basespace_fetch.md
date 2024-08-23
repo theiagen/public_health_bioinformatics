@@ -150,6 +150,8 @@ This process must be performed on a command line (ideally on a Linux or MacOS co
 !!! warning "Sample_Name _and_ Sample_ID"
     If the Sample_Name and Sample_ID in the BaseSpace sample sheet are different, set the `basespace_sample_id` input attribute to “`this.basespace_sample_id"`.
 
+This workflow runs on the sample level.
+
 | **Terra Task Name** | **Variable** | **Type** | **Description** | **Default attribute** | **Terra Status** |
 |---|---|---|---|---|---|
 | basespace_fetch | **access_token** | String | The access token is used in place of a username and password to allow the workflow to access the user account in BaseSpace from which the data is to be transferred. It is an alphanumeric string that is 32 characters in length. Example: 9e08a96471df44579b72abf277e113b7 | | Required |
@@ -171,7 +173,7 @@ The outputs of this workflow will be the fastq files imported from BaseSpace int
 
 | **Variable** | **Type** | **Description** |
 |---|---|---|
-| basespace_fetch_analysis_date | String | Date of download | 
+| basespace_fetch_analysis_date | String | Date of download |
 | basespace_fetch_version | String | Version of the workflow |
-| read1 | File | File with forward-facing reads | 
+| read1 | File | File with forward-facing reads |
 | read2 | File | File with reverse-facing read |

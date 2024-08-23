@@ -21,6 +21,8 @@ The `Assembly_Fetch` workflow downloads assemblies from NCBI. This is particular
 
 Assembly_Fetch requires the input samplename, and either the accession for a reference genome to download (ncbi_accession) or an assembly that can be used to query RefSeq for the closest reference genome to download (assembly_fasta).
 
+This workflow runs on the sample level.
+
 | **Terra Task Name** | **Variable** | **Type** | **Description** | **Default attribute** | **Terra Status** |
 |---|---|---|---|---|---|
 | reference_fetch | **samplename** | String | Your sample’s name |  | Required |
@@ -44,7 +46,9 @@ Assembly_Fetch requires the input samplename, and either the accession for a ref
 
 ### Analysis Tasks
 
-???+ toggle "ReferenceSeeker (optional)"
+??? task "ReferenceSeeker (optional) Details"
+
+    ##### ReferenceSeeker {#referenceseeker}
 
     `ReferenceSeeker` uses your draft assembly to identify closely related bacterial, viral, fungal, or plasmid genome assemblies in [RefSeq](https://www.ncbi.nlm.nih.gov/refseq/).
 
@@ -58,28 +62,30 @@ Assembly_Fetch requires the input samplename, and either the accession for a ref
 
     For ReferenceSeeker to identify a genome, it must meet user-specified thresholds for sequence coverage (`referenceseeker_conserved_dna_threshold`) and identity (`referenceseeker_ani_threshold`). The default values for these are set according to community standards (conserved DNA >= 69 % and ANI >= 95 %). A list of closely related genomes is provided in `referenceseeker_tsv`. The reference genome that ranks highest according to ANI and conserved DNA values is considered the closest match and will be downloaded, with information about this provided in the `assembly_fetch_referenceseeker_top_hit_ncbi_accession` output.
 
-    !!! details "ReferenceSeeker Technical Details"
+    !!! techdetails "ReferenceSeeker Technical Details"
 
         |  | Links |
         | --- | --- |
         | Task | [task_referenceseeker.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/phylogenetic_inference/utilities/task_referenceseeker.wdl) |
         | Software version | 1.8.0 ("us-docker.pkg.dev/general-theiagen/biocontainers/referenceseeker:1.8.0--pyhdfd78af_0") |
-        | Software source code | ‣ |
-        | Software documentation | ‣ |
+        | Software source code | https://github.com/oschwengers/referenceseeker |
+        | Software documentation | https://github.com/oschwengers/referenceseeker |
         | Original publication | [ReferenceSeeker: rapid determination of appropriate reference genomes](https://joss.theoj.org/papers/10.21105/joss.01994) |
 
-???+ toggle "NCBI Datasets"
+??? task "NCBI Datasets Details"
+
+    ##### NCBI Datasets {#ncbi-datasets}
 
     The [`NCBI Datasets`](https://www.ncbi.nlm.nih.gov/datasets/) task downloads specified assemblies from NCBI using either the [virus](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/data-packages/virus-genome/) or [genome](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/data-packages/genome/) (for all other genome types) package as appropriate.
 
-    !!! details "NCBI Datasets Technical Details"
+    !!! techdetails "NCBI Datasets Technical Details"
 
         |  | Links |
         | --- | --- |
         | Task | [task_ncbi_datasets.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/data_import/task_ncbi_datasets.wdl) |
         | Software version | 14.13.2 (us-docker.pkg.dev/general-theiagen/staphb/ncbi-datasets:14.13.2) |
-        | Software source code | ‣ |
-        | Software documentation | ‣ |
+        | Software source code | https://github.com/ncbi/datasets |
+        | Software documentation | https://github.com/ncbi/datasets |
         | Original publication | Not known to be published |
 
 ### Outputs
@@ -102,6 +108,6 @@ Assembly_Fetch requires the input samplename, and either the accession for a ref
 
 ## References
 
-**ReferenceSeeker:** Schwengers O, Hain T, Chakraborty T, Goesmann A. ReferenceSeeker: rapid determination of appropriate reference genomes. J Open Source Softw. 2020 Feb 4;5(46):1994.
+> **ReferenceSeeker:** Schwengers O, Hain T, Chakraborty T, Goesmann A. ReferenceSeeker: rapid determination of appropriate reference genomes. J Open Source Softw. 2020 Feb 4;5(46):1994.
 
-**NCBI datasets: datasets:** NCBI Datasets is an experimental resource for finding and building datasets [Internet]. Github; [cited 2023 Apr 19]. Available from: https://github.com/ncbi/datasets
+> **NCBI datasets: datasets:** NCBI Datasets is an experimental resource for finding and building datasets [Internet]. Github; [cited 2023 Apr 19]. Available from: https://github.com/ncbi/datasets

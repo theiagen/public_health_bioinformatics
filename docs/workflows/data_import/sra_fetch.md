@@ -10,10 +10,11 @@
 
 The `SRA_Fetch` workflow downloads sequence data from NCBI’s Sequence Read Archive (SRA). It requires an SRA run accession then populates the associated read files to a Terra data table.
 
-
 Read files associated with the SRA run accession provided as input are copied to a Terra-accessible Google bucket. Hyperlinks to those files are shown in the “read1” and “read2” columns of the Terra data table.
 
 ### Inputs
+
+This workflow runs on the sample level.
 
 | **Terra Task Name** | **Variable** | **Type** | **Description** | **Default attribute** | **Terra Status** |
 |---|---|---|---|---|---|
