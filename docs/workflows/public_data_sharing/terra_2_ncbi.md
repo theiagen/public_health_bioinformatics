@@ -86,7 +86,7 @@ We are constantly working on improving these spreadsheets and they will be updat
 
 We recommend running a test submission before your first production submission to ensure that all data has been formatted correctly. Please contact Theiagen (`support@theiagen.com`) to get this set up.
 
-In the test submission, any real BioProject accession numbers you provide will not be recognized. You will have to make a “fake” or “test” BioProject. This cannot be done through the NCBI portal. Theiagen can provide assistance in creating this as it requires manual command line work on the NCBI FTP using the account they provided for you.
+In the test submission, any real BioProject accession numbers you provide will not be recognized. You will have to make a "fake" or "test" BioProject. This cannot be done through the NCBI portal. Theiagen can provide assistance in creating this as it requires manual command line work on the NCBI FTP using the account they provided for you.
 
 ??? toggle "**What’s the difference between a test submission and a production submission?**"
 
@@ -108,28 +108,28 @@ This workflow runs on set-level data tables.
 | Terra_2_NCBI | **bioproject** | String | BioProject accession that the samples will be submitted to  |  | Required |
 | Terra_2_NCBI | **biosample_package** | String | The BioSample package that the samples will be submitted under |  | Required |
 | Terra_2_NCBI | **ncbi_config_js** | File | Configuration file that contains your username and password for the NCBI FTP |  | Required |
-| Terra_2_NCBI | **project_name** | String | The name of your Terra project. You can find this information in the url of the webpage you are on. It is the section right after “#workspaces/” |  | Required |
+| Terra_2_NCBI | **project_name** | String | The name of your Terra project. You can find this information in the url of the webpage you are on. It is the section right after "#workspaces/" |  | Required |
 | Terra_2_NCBI | **sample_names** | Array[String] | The list of samples you want to submit |  | Required |
 | Terra_2_NCBI | **sra_transfer_gcp_bucket** | String | Google bucket where your SRA reads will be temporarily stored before transferring to SRA |  | Required |
 | Terra_2_NCBI | **table_name** | String | The name of the Terra table where your samples are found |  | Required |
 | Terra_2_NCBI | **workspace_name** | String | The name of the workspace where your samples are found |  | Required |
 | add_biosample_accessions | **cpu** | Int | Amount of CPUs to allocate to the task | 2  | Optional |
 | add_biosample_accessions | **disk_size** | Int | GB of Hard Drive allocated for this task | 100 | Optional |
-| add_biosample_accessions | **docker** | String | Docker image used for this task | "us-docker.pkg.dev/general-theiagen/broadinstitute/ncbi-tools:2.10.7.10” | Optional |
+| add_biosample_accessions | **docker** | String | Docker image used for this task | "us-docker.pkg.dev/general-theiagen/broadinstitute/ncbi-tools:2.10.7.10" | Optional |
 | add_biosample_accessions | **memory** | Int | GB of RAM allocated for this task | 2 | Optional |
 | biosample_submit_tsv_ftp_upload | **cpu** | Int | Amount of CPUs to allocate to the task | 2 | Optional |
 | biosample_submit_tsv_ftp_upload | **disk_size** | Int | GB of Hard Drive allocated for this task | 100 | Optional |
-| biosample_submit_tsv_ftp_upload | **docker** | String | Docker image used for this task | "us-docker.pkg.dev/general-theiagen/broadinstitute/ncbi-tools:2.10.7.10” | Optional |
+| biosample_submit_tsv_ftp_upload | **docker** | String | Docker image used for this task | "us-docker.pkg.dev/general-theiagen/broadinstitute/ncbi-tools:2.10.7.10" | Optional |
 | biosample_submit_tsv_ftp_upload | **memory** | Int | GB of RAM allocated for this task | 2 | Optional |
 | ncbi_sftp_upload | **additional_files** | Array[File] | Internal component; do not modify | [] | Optional |
 | ncbi_sftp_upload | **cpu** | Int | Amount of CPUs to allocate to the task | 2 | Optional |
 | ncbi_sftp_upload | **disk_size** | Int | GB of Hard Drive allocated for this task | 100 | Optional |
-| ncbi_sftp_upload | **docker** | String | Docker image used for this task | "us-docker.pkg.dev/general-theiagen/broadinstitute/ncbi-tools:2.10.7.10” | Optional |
+| ncbi_sftp_upload | **docker** | String | Docker image used for this task | "us-docker.pkg.dev/general-theiagen/broadinstitute/ncbi-tools:2.10.7.10" | Optional |
 | ncbi_sftp_upload | **memory** | Int | GB of RAM allocated for this task | 2 | Optional |
-| ncbi_sftp_upload | **wait_for** | String | Internal component; do not modify | “1” | Optional |
+| ncbi_sftp_upload | **wait_for** | String | Internal component; do not modify | "1" | Optional |
 | prune_table | **cpu** | Int | Amount of CPUs to allocate to the task | 2 | Optional |
 | prune_table | **disk_size** | Int | GB of Hard Drive allocated for this task | 100 | Optional |
-| prune_table | **docker** | String | Docker image used for this task | "us-docker.pkg.dev/general-theiagen/broadinstitute/ncbi-tools:2.10.7.10” | Optional |
+| prune_table | **docker** | String | Docker image used for this task | "us-docker.pkg.dev/general-theiagen/broadinstitute/ncbi-tools:2.10.7.10" | Optional |
 | prune_table | **memory** | Int | GB of RAM allocated for this task | 2 | Optional |
 | prune_table | **read1_column_name** | String | The column header of the read1 column |  | Optional |
 | prune_table | **read2_column_name** | String | The column header of the read1 column |  | Optional |

@@ -22,7 +22,7 @@ The manual creation of Terra tables can be tedious and error-prone. This workflo
 | **Terra Task Name** | **Variable** | **Type** | **Description** | **Default attribute** | **Terra Status** |
 |---|---|---|---|---|---|
 | create_terra_table | **assembly_data** | Boolean | Set to true if your data is in FASTA format; set to false if your data is FASTQ format | | Required |
-| create_terra_table | **data_location_path** | String | The full path to your data’s Google bucket folder location, including the gs://; can be easily copied by right-clicking and copying the link address in the header after navigating to the folder in the “Files” section of the “Data” tab on Terra (see below for example) | Required |
+| create_terra_table | **data_location_path** | String | The full path to your data’s Google bucket folder location, including the gs://; can be easily copied by right-clicking and copying the link address in the header after navigating to the folder in the "Files" section of the "Data" tab on Terra (see below for example) | Required |
 | create_terra_table | **new_table_name** | String | The name of the new Terra table you want to create | | Required |
 | create_terra_table | **paired_end** | Boolean | Set to true if your data is paired-end FASTQ files; set to false if not | | Required |
 | create_terra_table | **terra_project** | String | The name of the Terra project where your data table will be created | | Required | 
@@ -38,10 +38,10 @@ The manual creation of Terra tables can be tedious and error-prone. This workflo
 #### Using the Terra data uploader
 
 ??? toggle "Click for more information"
-    Once you have named your new collection, you will see the collection name directly above where you can drag-and-drop your data files, or on the same line as the Upload button. Right-click the collection name and select “Copy link address.” Paste the copied link into the data_location_path variable, remembering to enclose it in quotes.
+    Once you have named your new collection, you will see the collection name directly above where you can drag-and-drop your data files, or on the same line as the Upload button. Right-click the collection name and select "Copy link address." Paste the copied link into the data_location_path variable, remembering to enclose it in quotes.
 
     !!! info "Note"
-        If you click “Next” after uploading your files, it will ask for a metadata TSV. You do not have to provide this, and can instead exit the window. Your data will still be uploaded.
+        If you click "Next" after uploading your files, it will ask for a metadata TSV. You do not have to provide this, and can instead exit the window. Your data will still be uploaded.
     
     ![Data uploader](../../assets/create_terra_table/example1.png)
 
@@ -50,7 +50,7 @@ The manual creation of Terra tables can be tedious and error-prone. This workflo
 ??? toggle "Click for more information"
     Navigate to the folder where your data is ("example_upload" in this example) and right-click on the folder name and select "Copy link address."
 
-    If you uploaded data with the Terra data uploader, your collection will be nested in the “uploads” folder.
+    If you uploaded data with the Terra data uploader, your collection will be nested in the "uploads" folder.
 
     ![Data tab](../../assets/create_terra_table/example2.png)
 
@@ -82,7 +82,7 @@ The `file_ending` should be a substring of your file names that is held in commo
 
     In this group, the desired sample names are "sample_01" and "sample_02". However, in this example, there is no common text following the sample name. Providing `"_"` would result in the same behavior as default. We can provide *two* different patterns in the `file_ending` variable: `"_1,_2"` to capture all possible options. By doing this, "sample_01" and "sample_02" will appear in our table with the appropriate read files.
 
-To include multiple file endings, please separate them with commas, as shown in the “no elements in common” section.
+To include multiple file endings, please separate them with commas, as shown in the "no elements in common" section.
 
 ### Outputs
 
@@ -92,7 +92,7 @@ Your table will automatically appear in your workspace with the following fields
   - By default:
     - `sample01.lane2_flowcell3.fastq.gz` will be represented by `sample01` in the table
     - `sample02_negativecontrol.fastq.gz` will be represented by `sample02` in the table
-  - See “How to determine the appropriate `file_ending` for your data” above to learn how to change this default behavior
+  - See "How to determine the appropriate `file_ending` for your data" above to learn how to change this default behavior
 - Your data in the appropriate columns, dependent on the values of `assembly_data` and `paired_end`
 
     | table columns | `assembly_data` is true  | `paired_end` is true | `assembly_data` **AND** `paired_end` are false |

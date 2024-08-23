@@ -15,13 +15,13 @@ Various models are available for many organisms. The following table provides an
 
 | **Organism** | **docker** | **vadr_opts** | max_length |
 | --- | --- | --- | --- |
-| sars-cov-2 | "us-docker.pkg.dev/general-theiagen/staphb/vadr:1.6.3” | "--noseqnamemax --glsearch -s -r --nomisc --mkey sarscov2 --lowsim5seq 6 --lowsim3seq 6 --alt_fail lowscore,insertnn,deletinn --out_allfasta” | 30000 |
-| MPXV | "us-docker.pkg.dev/general-theiagen/staphb/vadr:1.6.3” | "--glsearch -s -r --nomisc --mkey mpxv --r_lowsimok --r_lowsimxd 100 --r_lowsimxl 2000 --alt_pass discontn,dupregin --out_allfasta --minimap2 --s_overhang 150” | 210000 |
-| WNV | "us-docker.pkg.dev/general-theiagen/staphb/vadr:1.6.3” | "--mkey flavi --mdir /opt/vadr/vadr-models-flavi/ --nomisc --noprotid --out_allfasta” | 11000 |
-| flu | "us-docker.pkg.dev/general-theiagen/staphb/vadr:1.6.3” | "--atgonly --xnocomp --nomisc --alt_fail extrant5,extrant3 --mkey flu” | 13500 |
-| rsv_a | "us-docker.pkg.dev/general-theiagen/staphb/vadr:1.6.3” | "-r --mkey rsv --xnocomp” | 15500 |
-| rsv_b | "us-docker.pkg.dev/general-theiagen/staphb/vadr:1.6.3” | "-r --mkey rsv --xnocomp” | 15500 |
-| HAV | "us-docker.pkg.dev/general-theiagen/staphb/vadr:1.6.3-hav” | "-r -xnocomp -mkey hav.vadr “ | 10500 |
+| sars-cov-2 | "us-docker.pkg.dev/general-theiagen/staphb/vadr:1.6.3" | "--noseqnamemax --glsearch -s -r --nomisc --mkey sarscov2 --lowsim5seq 6 --lowsim3seq 6 --alt_fail lowscore,insertnn,deletinn --out_allfasta" | 30000 |
+| MPXV | "us-docker.pkg.dev/general-theiagen/staphb/vadr:1.6.3" | "--glsearch -s -r --nomisc --mkey mpxv --r_lowsimok --r_lowsimxd 100 --r_lowsimxl 2000 --alt_pass discontn,dupregin --out_allfasta --minimap2 --s_overhang 150" | 210000 |
+| WNV | "us-docker.pkg.dev/general-theiagen/staphb/vadr:1.6.3" | "--mkey flavi --mdir /opt/vadr/vadr-models-flavi/ --nomisc --noprotid --out_allfasta" | 11000 |
+| flu | "us-docker.pkg.dev/general-theiagen/staphb/vadr:1.6.3" | "--atgonly --xnocomp --nomisc --alt_fail extrant5,extrant3 --mkey flu" | 13500 |
+| rsv_a | "us-docker.pkg.dev/general-theiagen/staphb/vadr:1.6.3" | "-r --mkey rsv --xnocomp" | 15500 |
+| rsv_b | "us-docker.pkg.dev/general-theiagen/staphb/vadr:1.6.3" | "-r --mkey rsv --xnocomp" | 15500 |
+| HAV | "us-docker.pkg.dev/general-theiagen/staphb/vadr:1.6.3-hav" | "-r -xnocomp -mkey hav.vadr" | 10500 |
 
 ### Inputs
 

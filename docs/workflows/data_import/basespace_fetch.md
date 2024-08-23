@@ -10,7 +10,7 @@
 
 The `BaseSpace_Fetch` workflow facilitates the transfer of Illumina sequencing data from BaseSpace (a cloud location) to a workspace on the [Terra.bio](http://Terra.bio) platform. Rather than downloading the files to a local drive and then re-uploading them to another location, we can perform a cloud-to-cloud transfer with the `BaseSpace_Fetch` workflow.
 
-Some initial set-up is required to use the workflow. To access one’s BaseSpace account from within a workflow on Terra.bio, it is necessary to retrieve an access token and the API server address using the BaseSpace command line tool. The access token is unique to a BaseSpace account. If it is necessary to transfer data from multiple BaseSpace accounts, multiple access tokens will need to be retrieved. Please see the “Retrieving BaseSpace Access Credentials” section below.
+Some initial set-up is required to use the workflow. To access one’s BaseSpace account from within a workflow on Terra.bio, it is necessary to retrieve an access token and the API server address using the BaseSpace command line tool. The access token is unique to a BaseSpace account. If it is necessary to transfer data from multiple BaseSpace accounts, multiple access tokens will need to be retrieved. Please see the "Retrieving BaseSpace Access Credentials" section below.
 
 In this document, we provide instructions for both the retrieval of the BaseSpace access token and running the BaseSpace_Fetch workflow.
 
@@ -25,15 +25,15 @@ This process must be performed on a command line (ideally on a Linux or MacOS co
     
     ??? toggle "Click for more information"
 
-        1. Select the “Environment configuration” cloud icon on the right side of the workspace dashboard tab
+        1. Select the "Environment configuration" cloud icon on the right side of the workspace dashboard tab
 
             ![Step1](../../assets/basespace_fetch/step1.png){width="50%"}
 
-        2. Select the “Settings” button under Jupyter
+        2. Select the "Settings" button under Jupyter
 
             ![Step2](../../assets/basespace_fetch/step2.png){width="50%"}
 
-        3. Click “CREATE” in the “Use default environment section”. There is no need to alter the default environment configuration.
+        3. Click "CREATE" in the "Use default environment section". There is no need to alter the default environment configuration.
 
             ![Step3](../../assets/basespace_fetch/step3.png){width="50%"}
 
@@ -47,7 +47,7 @@ This process must be performed on a command line (ideally on a Linux or MacOS co
     #### Step 2: Install the BaseSpace Command Line Tool To Get The Access Token And API Server Address
     ??? toggle "Click for more information"
 
-        1. Open the “Terminal” app in the right side-bar of the Terra dashboard
+        1. Open the "Terminal" app in the right side-bar of the Terra dashboard
 
             ![Step5](../../assets/basespace_fetch/step5.png){width="20%"}
 
@@ -77,7 +77,7 @@ This process must be performed on a command line (ideally on a Linux or MacOS co
             ```
 
         3. Copy and paste the contents (**access_token** & **API server**) of the `default.cfg` file into Terra as workspace data elements.
-            1. Navigate to the Terra “DATA” tab, and select “Workspace Data” at the bottom left of the page.
+            1. Navigate to the Terra "DATA" tab, and select "Workspace Data" at the bottom left of the page.
             2. You can use the ➕ icon to add the new workspace data elements as in the examples below.
 
             ![Step6](../../assets/basespace_fetch/step6.png){width="50%"}
@@ -99,7 +99,7 @@ This process must be performed on a command line (ideally on a Linux or MacOS co
 
 
     2. In Excel, set up a metadata sheet for Terra, with a row for each sample. Please feel free to use our [BaseSpace_Fetch Template](https://storage.googleapis.com/theiagen-public-files/terra/training_resources/bs_fetch_template_20231103.tsv) to help ensure the file is formatted correctly.  
-        1. In cell A1, enter the data table name with the “**entity:**NAME**_id**” format
+        1. In cell A1, enter the data table name with the "**entity:**NAME**_id**" format
         2. Create a column called `basespace_sample_name` and populate this with the data found under the `Sample_Name` column in the BaseSpace sample sheet.
 
             !!! warning "Watch out"
@@ -113,12 +113,12 @@ This process must be performed on a command line (ideally on a Linux or MacOS co
 
     #### Upload the metadata spreadsheet to the destination workspace in Terra.bio
 
-    1. In Terra, navigate to the “DATA” tab, click “IMPORT DATA” then “Upload TSV”
+    1. In Terra, navigate to the "DATA" tab, click "IMPORT DATA" then "Upload TSV"
 
         ![Step9](../../assets/basespace_fetch/step9.png){width="25%"}
 
 
-    2. Copy and paste the contents of the whole spreadsheet into the “TEXT IMPORT” tab and click “START IMPORT JOB”
+    2. Copy and paste the contents of the whole spreadsheet into the "TEXT IMPORT" tab and click "START IMPORT JOB"
 
         ![Step10](../../assets/basespace_fetch/step10.png){width="38%"}
 
@@ -128,18 +128,18 @@ This process must be performed on a command line (ideally on a Linux or MacOS co
 
 ??? toggle "Click for more information"
 
-    1. In the Terra “WORKFLOWS” tab, either:
+    1. In the Terra "WORKFLOWS" tab, either:
         1. Select the `BaseSpace_Fetch` workflow OR
         2. Import the `BaseSpace_Fetch` workflow from [Dockstore via this link](https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/BaseSpace_Fetch_PHB:main?tab=versions).
     2. Set up the `BaseSpace_Fetch` workflow by selecting the:
         1. Version (latest numbered version) from the dropdown menu.
         2. Data table to use.
         3. Samples that you wan to import data for. 
-    3. Set up the `BaseSpace_Fetch` ”INPUTS” form as below. **Don’t forget to fill out `this.basespace_sample_id` if your basespace sample IDs are different from the basespace sample names in the SampleSheet.csv file.**
+    3. Set up the `BaseSpace_Fetch` "INPUTS" form as below. **Don’t forget to fill out `this.basespace_sample_id` if your basespace sample IDs are different from the basespace sample names in the SampleSheet.csv file.**
 
         ![Step11](../../assets/basespace_fetch/step11.png){width="50%"}
 
-    4. In the “OUTPUTS” tab, select “use defaults”, then click “SAVE”.
+    4. In the "OUTPUTS" tab, select "use defaults", then click "SAVE".
     5. You can now run the workflow and import data for all the samples you have selected.
 
 ### **Inputs**
@@ -148,7 +148,7 @@ This process must be performed on a command line (ideally on a Linux or MacOS co
     If using BaseSpace_Fetch workflow version 1.3.0 or higher, the call-caching feature of Terra has been DISABLED to ensure that the workflow is run from the beginning and data is downloaded fresh. Call-caching will not be enabled, even if the user checks the box ✅ in the Terra workflow interface.
 
 !!! warning "Sample_Name _and_ Sample_ID"
-    If the Sample_Name and Sample_ID in the BaseSpace sample sheet are different, set the `basespace_sample_id` input attribute to “`this.basespace_sample_id"`.
+    If the Sample_Name and Sample_ID in the BaseSpace sample sheet are different, set the `basespace_sample_id` input attribute to "`this.basespace_sample_id"`.
 
 This workflow runs on the sample level.
 

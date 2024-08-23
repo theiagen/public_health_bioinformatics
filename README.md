@@ -83,8 +83,8 @@ The authors declare no conflict of interest.
 
 Please cite this paper if publishing work using any workflows:
 
-> Libuit, Kevin G., Emma L. Doughty, James R. Otieno, Frank Ambrosio, Curtis J. Kapsak, Emily A. Smith, Sage M. Wright, et al. 2023. “Accelerating Bioinformatics Implementation in Public Health.” Microbial Genomics 9 (7). https://doi.org/10.1099/mgen.0.001051.
+> Libuit, Kevin G., Emma L. Doughty, James R. Otieno, Frank Ambrosio, Curtis J. Kapsak, Emily A. Smith, Sage M. Wright, et al. 2023. "Accelerating Bioinformatics Implementation in Public Health." Microbial Genomics 9 (7). https://doi.org/10.1099/mgen.0.001051.
 
 Alternatively, please cite this paper if using the TheiaEuk workflow:
 
-> Ambrosio, Frank, Michelle Scribner, Sage Wright, James Otieno, Emma Doughty, Andrew Gorzalski, Danielle Siao, et al. 2023. “TheiaEuk: A Species-Agnostic Bioinformatics Workflow for Fungal Genomic Characterization.” Frontiers in Public Health 11. https://doi.org/10.3389/fpubh.2023.1198213.
+> Ambrosio, Frank, Michelle Scribner, Sage Wright, James Otieno, Emma Doughty, Andrew Gorzalski, Danielle Siao, et al. 2023. "TheiaEuk: A Species-Agnostic Bioinformatics Workflow for Fungal Genomic Characterization." Frontiers in Public Health 11. https://doi.org/10.3389/fpubh.2023.1198213.

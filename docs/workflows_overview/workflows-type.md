@@ -63,7 +63,7 @@ title: Workflows by Type
 | **Name** | **Description** | **Taxa** | **Workflow type** | **Command-line Compatible**[^1] | **Last known changes** | **Dockstore** |
 |---|---|---|---|---|---|---|
 | [**Concatenate_Column_Content**](../workflows/data_export/concatenate_column_content.md) | Concatenate contents of a specified Terra data table column for many samples ("entities") | Any taxa | Set-level | Yes | v2.1.0 | [Concatenate_Column_Content_PHB](https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Concatenate_Column_Content_PHB:main?tab=info) |
-| [**Transfer_Column_Content**](../workflows/data_export/transfer_column_content.md)| Transfer contents of a specified Terra data table column for many samples (”entities”) to a GCP storage bucket location | Any taxa | Set-level | Yes | v1.3.0 | [Transfer_Column_Content_PHB](https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Transfer_Column_Content_PHB:main?tab=info) |
+| [**Transfer_Column_Content**](../workflows/data_export/transfer_column_content.md)| Transfer contents of a specified Terra data table column for many samples ("entities") to a GCP storage bucket location | Any taxa | Set-level | Yes | v1.3.0 | [Transfer_Column_Content_PHB](https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Transfer_Column_Content_PHB:main?tab=info) |
 | [**Zip_Column_Content**](../workflows/data_export/zip_column_content.md)| Zip contents of a specified Terra data table column for many samples ("entities") | Any taxa | Set-level | Yes | v2.1.0 | [Zip_Column_Content_PHB](https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Zip_Column_Content_PHB:main?tab=info) |
 
 ### Standalone
