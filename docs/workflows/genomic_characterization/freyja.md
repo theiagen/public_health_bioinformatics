@@ -106,10 +106,10 @@ This workflow runs on the sample level.
 | freyja | **disk_size** | Int | disk size (GB) requested for this task | 100 | Optional |
 | freyja | **docker** | String | The Freyja docker image to use | "us-docker.pkg.dev/general-theiagen/staphb/freyja:1.5.1-07_02_2024-01-27-2024-07-22" | Optional |
 | freyja | **eps** | Float | The minimum lineage abundance cut-off value | 0.001 | Optional |
-| freyja | **freyja_lineage_metadata** | File | (found in the optional section, but is required) File containing the lineage metadata; the "curated_lineages.json" file found https://github.com/andersen-lab/Freyja/tree/main/freyja/data can be used for this variable. Does not need to be provided if update_db is true. | None | Optional, Required |
+| freyja | **freyja_lineage_metadata** | File | (found in the optional section, but is required) File containing the lineage metadata; the "curated_lineages.json" file found <https://github.com/andersen-lab/Freyja/tree/main/freyja/data> can be used for this variable. Does not need to be provided if update_db is true. | None | Optional, Required |
 | freyja | **memory** | Int | Memory (GB) requested for this task | 4 | Optional |
 | freyja | **number_bootstraps** | Int | The number of bootstraps to perform (only used if bootstrap = true) | 100 | Optional |
-| freyja | **update_db** | Boolean | Updates the Freyja reference files (the usher barcodes and lineage metadata files) but will not save them as output (use Freyja_Update for that purpose).<br>If set to true, the freyja_lineage_metadata and freyja_usher_barcodes files are not required. | FALSE | Optional |
+| freyja | **update_db** | Boolean | Updates the Freyja reference files (the usher barcodes and lineage metadata files) but will not save them as output (use Freyja_Update for that purpose). If set to true, the `freyja_lineage_metadata` and `freyja_usher_barcodes` files are not required. | FALSE | Optional |
 | freyja_fastq | **depth_cutoff** | Int | The minimum coverage depth with which to exclude sites below this value and group identical barcodes | 10 | Optional |
 | freyja_fastq | **ont** | Boolean | Indicates if the input data is derived from an ONT instrument.  | FALSE | Optional |
 | freyja_fastq | **read2** | File | The raw reverse-facing FASTQ file (Illumina only) |  | Optional |
@@ -187,7 +187,7 @@ This workflow runs on the sample level.
 | sam_to_sorted_bam | **disk_size** | Int | Disk size (GB) requested for this task | 100 | Optional |
 | sam_to_sorted_bam | **docker** | String | Docker image used for this task. | us-docker.pkg.dev/general-theiagen/staphb/samtools:1.17 | Optional |
 | sam_to_sorted_bam | **memory** | Int | Memory (GB) requested for this task | 8 | Optional |
-| version_capture | **docker** | String | The Docker image used to run the version_capture task | "us-docker.pkg.dev/general-theiagen/ubuntu/ubuntu:jammy-20230816" | Optional |
+| version_capture | **docker** | String | The Docker image used to run the version_capture task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
 | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
 
 ### Freyja_FASTQ Analysis Tasks
@@ -396,7 +396,7 @@ The main output file used in subsequent Freyja workflows is found under the `fre
 
 ## Freyja_Plot_PHB
 
-This workflow visualizes aggregated freyja_demixed output files produced by Freyja_FASTQ in a single plot (pdf format) which provides fractional abundance estimates for all aggregated samples. 
+This workflow visualizes aggregated freyja_demixed output files produced by Freyja_FASTQ in a single plot (pdf format) which provides fractional abundance estimates for all aggregated samples.
 
 Options exist to provide lineage-specific breakdowns and/or sample collection time information.
 
@@ -466,8 +466,8 @@ This workflow runs on the set level.
 | freyja_dashboard | **freyja_demixed** | Array[File] | An array containing the output files (freyja_demixed) made by Freyja_FASTQ workflow |  | Required |
 | freyja_dashboard | **samplename** | Array[String] | An array containing the names of the samples |  | Required |
 | freyja_dashboard | **viral_load** | Array[String] | An array containing the number of viral copies per liter |  | Required |
-| freyja_dashboard | **dashboard_intro_text** | File | A file containing the text to be contained at the top of the dashboard. | SARS-CoV-2 lineage de-convolution performed by the Freyja workflow (https://github.com/andersen-lab/Freyja). | Optional |
-| freyja_dashboard_task | **config** | File | (found in the optional section, but is required) A yaml file that applies various configurations to the dashboard, such as grouping lineages together, applying colorings, etc. See also https://github.com/andersen-lab/Freyja/blob/main/freyja/data/plot_config.yml. | None | Optional, Required |
+| freyja_dashboard | **dashboard_intro_text** | File | A file containing the text to be contained at the top of the dashboard. | SARS-CoV-2 lineage de-convolution performed by the Freyja workflow (<https://github.com/andersen-lab/Freyja>). | Optional |
+| freyja_dashboard_task | **config** | File | (found in the optional section, but is required) A yaml file that applies various configurations to the dashboard, such as grouping lineages together, applying colorings, etc. See also <https://github.com/andersen-lab/Freyja/blob/main/freyja/data/plot_config.yml>. | None | Optional, Required |
 | freyja_dashboard_task | **cpu** | Int | CPUs requested for this task | 2 | Optional |
 | freyja_dashboard_task | **docker** | String | The Freyja docker image to use | us-docker.pkg.dev/general-theiagen/staphb/freyja:1.5.1-07_02_2024-01-27-2024-07-22 | Optional |
 | freyja_dashboard_task | **headerColor** | String | A hex color code to change the color of the header |  | Optional |
@@ -520,7 +520,7 @@ The appropriate barcode file and reference sequence need to be downloaded and up
 
     Folders are organized by pathogen, with each subfolder named after the date the barcode was generated, using the format YYYY-MM-DD. Barcode files are named `barcode.csv`, and reference genome files are named `reference.fasta`.
 
-When running **Freyja_FASTQ_PHB**, the appropriate reference and barcodes file need to be passed as inputs. The first is a required input and will show up at the top of the workflows inputs page on [Terra.bio](http://Terra.bio) ([Figure 2](freyja.md/#figure2)). 
+When running **Freyja_FASTQ_PHB**, the appropriate reference and barcodes file need to be passed as inputs. The first is a required input and will show up at the top of the workflows inputs page on [Terra.bio](http://Terra.bio) ([Figure 2](freyja.md/#figure2)).
 
 !!! caption "Figure 2:  Required input for Freyja_FASTQ_PHB to provide the reference genome to be used by Freyja"
     ##### Figure 2 { #figure2 }
@@ -536,8 +536,8 @@ The barcodes file can be passed directly to Freyja by the `freyja_usher_barcodes
 
 If you use any of the Freyja workflows, please cite:
 
-> Karthikeyan, S., Levy, J.I., De Hoff, P. *et al.* Wastewater sequencing reveals early cryptic SARS-CoV-2 variant transmission. *Nature* **609**, 101–108 (2022). https://doi.org/10.1038/s41586-022-05049-6
+> Karthikeyan, S., Levy, J.I., De Hoff, P. *et al.* Wastewater sequencing reveals early cryptic SARS-CoV-2 variant transmission. *Nature* **609**, 101–108 (2022). <https://doi.org/10.1038/s41586-022-05049-6>
 
-Freyja source code can be found at `https://github.com/andersen-lab/Freyja`
+Freyja source code can be found at <https://github.com/andersen-lab/Freyja>
 
-Freyja barcodes (non-SARS-CoV-2): `https://github.com/gp201/Freyja-barcodes`
+Freyja barcodes (non-SARS-CoV-2): <https://github.com/gp201/Freyja-barcodes>

@@ -43,7 +43,7 @@ This workflow runs on the set level.
 | czgenepi_wrangling | **docker** | String | The Docker image used to run this task | us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-08-08-2 | Optional |
 | czgenepi_wrangling | **disk_size** | Int | The size of the disk used when running this task | 100 | Optional |
 | czgenepi_wrangling | **cpu** | Int | The number of cpus used to run this task | 1 | Optional |
-| version_capture | **docker** | String | The Docker image used to run the version_capture task | "us-docker.pkg.dev/general-theiagen/ubuntu/ubuntu:jammy-20230816" | Optional |
+| version_capture | **docker** | String | The Docker image used to run the version_capture task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
 | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
 
 ### Outputs
@@ -59,4 +59,4 @@ The concatenated_czgenepi_fasta and concatenated_czgenepi_metadata files can be 
 
 ## References
 
-> CZ GEN EPI Help Center "Uploading Data" https://help.czgenepi.org/hc/en-us/articles/6160372401172-Uploading-data
+> CZ GEN EPI Help Center "Uploading Data" <https://help.czgenepi.org/hc/en-us/articles/6160372401172-Uploading-data>

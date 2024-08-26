@@ -83,6 +83,7 @@ This process must be performed on a command line (ideally on a Linux or MacOS co
             ![Step6](../../assets/basespace_fetch/step6.png){width="50%"}
 
 ### Preparing to retrieve a run with BaseSpace_Fetch
+
 ??? toggle "Click for more information"
 
     !!! tip "Best Practices for Sample Identifiers"
@@ -155,7 +156,7 @@ This workflow runs on the sample level.
 | **Terra Task Name** | **Variable** | **Type** | **Description** | **Default attribute** | **Terra Status** |
 |---|---|---|---|---|---|
 | basespace_fetch | **access_token** | String | The access token is used in place of a username and password to allow the workflow to access the user account in BaseSpace from which the data is to be transferred. It is an alphanumeric string that is 32 characters in length. Example: 9e08a96471df44579b72abf277e113b7 | | Required |
-| basespace_fetch | **api_server** | String | The API server is the web address to which data transfer requests can be sent by the workflow. Use this API server if you are unsure: "https://api.basespace.illumina.com" (this is the default set by the command line tool) | | Required |
+| basespace_fetch | **api_server** | String | The API server is the web address to which data transfer requests can be sent by the workflow. Use this API server if you are unsure: `"https://api.basespace.illumina.com"` (this is the default set by the command line tool) | | Required |
 | basespace_fetch | **basespace_collection** | String | The collection ID is the BaseSpace Run or Project where the data to be transferred is stored. | | Required |
 | basespace_fetch | **basespace_sample_name** | String | The BaseSpace sample name is the sample identifier used in BaseSpace. This identifier is set on the sample sheet at the onset of an Illumina sequencing run. | | Required |
 | basespace_fetch | **sample_name** | String | The sample name is the sample identifier used in the Terra.bio data table corresponding to the metadata associated with the sample to be transferred from BaseSpace | | Required |
@@ -164,7 +165,7 @@ This workflow runs on the sample level.
 | fetch_bs | **disk_size** | Int | The disk size is the amount of storage in GigaBytes (GB) requested for the VM to run the data transfer task. | 100 | Optional |
 | fetch_bs | **docker_image** | String | The Docker image used to run BaseSpace_Fetch task. | "us-docker.pkg.dev/general-theiagen/theiagen/basespace_cli:1.2.1" | Optional |
 | fetch_bs | **memory** | Int | The memory is the amount of RAM/memory requested for running the data transfer task. | 8 | Optional |
-| version_capture | **docker** | String | The Docker image used to run the version_capture task | "us-docker.pkg.dev/general-theiagen/ubuntu/ubuntu:jammy-20230816" | Optional |
+| version_capture | **docker** | String | The Docker image used to run the version_capture task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
 | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
 
 ### **Outputs**

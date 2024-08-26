@@ -31,7 +31,7 @@ However, nextclade can be used on any organism as long as an an existing, high-q
 | nextclade_addToRefTree | **input_ref** | File | An optional FASTA file containing reference sequence. This file should contain exactly 1 sequence. | Uses the reference fasta associated with the specified nextclade dataset name | Optional |
 | nextclade_addToRefTree | **nextclade_pathogen_json** | File | An optional pathogen JSON file containing configuration and data specific to a pathogen. | Uses the reference pathogen JSON file associated with the specified nextclade dataset name | Optional |
 | nextclade_addToRefTree | **reference_tree_json** | File | An optional phylogenetic reference tree file which serves as a target for phylogenetic placement | Uses the reference tree associated with the specified nextclade dataset name | Optional |
-| version_capture | **docker** | String | The Docker image used to run the version_capture task | "us-docker.pkg.dev/general-theiagen/ubuntu/ubuntu:jammy-20230816" | Optional |
+| version_capture | **docker** | String | The Docker image used to run the version_capture task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
 | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
 
 ### Outputs

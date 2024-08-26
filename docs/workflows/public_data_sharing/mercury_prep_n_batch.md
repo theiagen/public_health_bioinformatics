@@ -8,8 +8,7 @@
 
 ## Mercury_Prep_N_Batch_PHB
 
-
-Mercury prepares and formats metadata and sequencing files **located in Google Cloud Platform (GCP) buckets** for submission to national & international databases, currently NCBI & GISAID. Mercury was initially developed to ingest read, assembly, and metadata files associated with SARS-CoV-2 amplicon reads from clinical samples and format that data for submission per the [Public Health Alliance for Genomic Epidemiology (PH4GE)’s SARS-CoV-2 Contextual Data Specifications](https://github.com/pha4ge/SARS-CoV-2-Contextual-Data-Specification). 
+Mercury prepares and formats metadata and sequencing files **located in Google Cloud Platform (GCP) buckets** for submission to national & international databases, currently NCBI & GISAID. Mercury was initially developed to ingest read, assembly, and metadata files associated with SARS-CoV-2 amplicon reads from clinical samples and format that data for submission per the [Public Health Alliance for Genomic Epidemiology (PH4GE)’s SARS-CoV-2 Contextual Data Specifications](https://github.com/pha4ge/SARS-CoV-2-Contextual-Data-Specification).
 
 Currently, Mercury supports submission preparation for SARS-CoV-2, mpox, and influenza. These organisms have different metadata requirements, and are submitted to different repositories; the following table lists the repositories for each organism & what is supported in Mercury:
 
@@ -82,10 +81,10 @@ This workflow runs on the set-level.
 | mercury | **single_end** | Boolean | Set to true if your data is single-end; this ensures that a read2 column is not included in the metadata | FALSE | Optional |
 | mercury | **skip_county** | Boolean | Use if your Terra table contains a county column that you do not want to include in your submission.  | FALSE | Optional |
 | mercury | **usa_territory** | Boolean | If true, the "state" column will be used in place of the "country" column. For example, if "state" is Puerto Rico, then the GISAID virus name will be `hCoV-19/Puerto Rico/<name>/<year>`. The NCBI `geo_loc_name` will be "USA: Puerto Rico". This optional Boolean variable should only be used with clear understanding of what it does. | FALSE | Optional |
-| mercury | **using_clearlabs_data** | Boolean | When set to true will change read1_dehosted → clearlabs_fastq_gz; <br>assembly_fasta → clearlabs_fasta; <br>assembly_mean_coverage → clearlabs_assembly_coverage | FALSE | Optional |
+| mercury | **using_clearlabs_data** | Boolean | When set to true will change read1_dehosted → clearlabs_fastq_gz; assembly_fasta → clearlabs_fasta; assembly_mean_coverage → clearlabs_assembly_coverage | FALSE | Optional |
 | mercury | **using_reads_dehosted** | Boolean | When set to true will only change read1_dehosted → reads_dehosted. Takes priority over the replacement for read1_dehosted made with the using_clearlabs_data Boolean input | FALSE | Optional |
 | mercury | **vadr_alert_limit** | Int | Only for "sars-cov-2" submissions; used to filter out any samples that contain more than the indicated number of vadr alerts | 0 | Optional |
-| mercury_prep_n_batch | **authors_sbt** | File | Only for "mpox" submissions; a file that contains author information. This file can be created here: `https://submit.ncbi.nlm.nih.gov/genbank/template/submission/` |  | Optional |
+| mercury_prep_n_batch | **authors_sbt** | File | Only for "mpox" submissions; a file that contains author information. This file can be created here: <https://submit.ncbi.nlm.nih.gov/genbank/template/submission/> |  | Optional |
 | mercury_prep_n_batch | **organism** | String | The organism that you want submission prepare for — each organism requires different metadata fields so please ensure this field is accurate. Options: "flu", "mpox"" or "sars-cov-2" | sars-cov-2 | Optional |
 | mercury_prep_n_batch | **output_name** | String | Free text prefix for all output files | mercury | Optional |
 | mercury_prep_n_batch | **skip_ncbi** | Boolean | Set to true if you only want to prepare GISAID submission files | FALSE | Optional |
@@ -102,14 +101,13 @@ This workflow runs on the set-level.
 | version_capture | **docker** | String | The Docker image used to run the version_capture task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
 | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
 
-
 ### Outputs
 
 | **Variable** | **Type** | **Description** |
 |---|---|---|
-| bankit_sqn_to_email | File |** Only for mpox submission**: the sqn file that you will use to submit mpox assembly files to NCBI via email |
+| bankit_sqn_to_email | File | **Only for mpox submission**: the sqn file that you will use to submit mpox assembly files to NCBI via email |
 | biosample_metadata | File | BioSample metadata TSV file for upload to NCBI |
-| excluded_samples | File | A file that contains the names and reasons why a sample was excluded from submission.<br> <br>For SARS-CoV-2, there are two sections: First, a section for any samples that failed to meet pre-determined quality thresholds (`number_N` and `vadr_num_alert`). Second, a section that includes a table that describes any missing required metadata for each sample. This table has the sample name for rows and any columns that have missing metadata as headers. If a sample is missing a piece of required metadata, the corresponding cell will be blank. However, if a different sample does have metadata for that column, the associated value will appear in the corresponding cell. <br>For flu and mpox, only the second section described above exists.<br>_Please see the example below for more details_. |
+| excluded_samples | File | A file that contains the names and reasons why a sample was excluded from submission. **For SARS-CoV-2**, there are two sections: First, a section for any samples that failed to meet pre-determined quality thresholds (`number_N` and `vadr_num_alert`). Second, a section that includes a table that describes any missing required metadata for each sample. This table has the sample name for rows and any columns that have missing metadata as headers. If a sample is missing a piece of required metadata, the corresponding cell will be blank. However, if a different sample does have metadata for that column, the associated value will appear in the corresponding cell. **For flu and mpox**, only the second section described above exists. _Please see the example below for more details_. |
 | genbank_fasta | File | **Only for SARS-CoV-2 submission**: GenBank fasta file for upload |
 | genbank_metadata | File | **Only for SARS-CoV-2 submission**: GenBank metadata for upload |
 | gisaid_fasta | File | **Only for mpox and SARS-CoV-2 submission**: GISAID fasta file for upload |
@@ -129,15 +127,15 @@ This workflow runs on the set-level.
     
     ```
     Samples excluded for quality thresholds:
-    sample_name	message	
-    sample2	VADR skipped due to poor assembly
-    sample3	VADR number alerts too high: 3 greater than limit of 0
-    sample4	Number of Ns was too high: 10000 greater than limit of 5000
+    sample_name message 
+    sample2 VADR skipped due to poor assembly
+    sample3 VADR number alerts too high: 3 greater than limit of 0
+    sample4 Number of Ns was too high: 10000 greater than limit of 5000
     
     Samples excluded for missing required metadata (will have empty values in indicated columns):
-    tablename_id	organism	country	library_layout
-    sample5			paired
-    sample6	SARS-CoV-2	USA
+    tablename_id    organism    country library_layout
+    sample5         paired
+    sample6 SARS-CoV-2  USA
     ```
     
     This example informs the user that samples 2-4 were excluded for quality reasons (the exact reason is listed in the `message` column), and that samples 5 and 6 were excluded because they were missing required metadata fields (sample5 was missing the `organism` and `country` fields, and sample6 was missing the `library_layout` field).

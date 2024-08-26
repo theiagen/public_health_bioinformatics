@@ -41,7 +41,7 @@ This workflow runs on the sample level.
 | referenceseeker | **referenceseeker_ani_threshold** | Float | ANI threshold used to exclude ref genomes when ANI value less than this value. | 0.95 | Optional |
 | referenceseeker | **referenceseeker_conserved_dna_threshold** | Float | Conserved DNA threshold used to exclude ref genomes when conserved DNA value is less than this value. | 0.69 | Optional |
 | referenceseeker | **referenceseeker_db** | File | Database used by the referenceseeker tool that contains bacterial genomes from RefSeq release 205. Downloaded from referenceseeker GitHub repo. | "gs://theiagen-public-files-rp/terra/theiaprok-files/referenceseeker-bacteria-refseq-205.v20210406.tar.gz" | Optional |
-| version_capture | **docker** | String | The Docker image used to run the version_capture task | "us-docker.pkg.dev/general-theiagen/ubuntu/ubuntu:jammy-20230816" | Optional |
+| version_capture | **docker** | String | The Docker image used to run the version_capture task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
 | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
 
 ### Analysis Tasks
@@ -110,4 +110,4 @@ This workflow runs on the sample level.
 
 > **ReferenceSeeker:** Schwengers O, Hain T, Chakraborty T, Goesmann A. ReferenceSeeker: rapid determination of appropriate reference genomes. J Open Source Softw. 2020 Feb 4;5(46):1994.
 <!-- -->
-> **NCBI datasets: datasets:** NCBI Datasets is an experimental resource for finding and building datasets [Internet]. Github; [cited 2023 Apr 19]. Available from: https://github.com/ncbi/datasets
+> **NCBI datasets: datasets:** NCBI Datasets is an experimental resource for finding and building datasets [Internet]. Github; [cited 2023 Apr 19]. Available from: <https://github.com/ncbi/datasets>

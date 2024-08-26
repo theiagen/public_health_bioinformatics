@@ -41,7 +41,7 @@ This workflow runs on the sample level.
 | vadr | **min_length** | Int | Minimum length subsequence to possibly replace Ns for the fasta-trim-terminal-ambigs.pl VADR script | 50 | Optional |
 | vadr | **skip_length** | Int | Minimum assembly length (unambiguous) to run vadr | 10000 | Optional |
 | vadr | **vadr_opts** | String | Options for the v-annotate.pl VADR script | ''--glsearch -s -r --nomisc --mkey sarscov2 --alt_fail lowscore,fstukcnf,insertnn,deletinn --mdir /opt/vadr/vadr-models/'' | Optional |
-| version_capture | **docker** | String | The Docker image used to run the version_capture task | "us-docker.pkg.dev/general-theiagen/ubuntu/ubuntu:jammy-20230816" | Optional |
+| version_capture | **docker** | String | The Docker image used to run the version_capture task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
 | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
 
 ### Outputs

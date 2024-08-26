@@ -39,7 +39,7 @@ This workflow runs on the sample level.
 | pangolin_update_log | **docker** | String | Docker container for the pangolin_update_log task | us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1 | Optional |
 | pangolin_update_log | **memory** | Int | Memory, in GB, for the pangolin_update_log task | 8 | Optional |
 | pangolin_update_log | **timezone** | String |  |  | Optional |
-| version_capture | **docker** | String | The Docker image used to run the version_capture task | "us-docker.pkg.dev/general-theiagen/ubuntu/ubuntu:jammy-20230816" | Optional |
+| version_capture | **docker** | String | The Docker image used to run the version_capture task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
 | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
 
 ### Outputs

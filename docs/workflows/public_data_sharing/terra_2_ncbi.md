@@ -203,15 +203,15 @@ The output files contain information mostly for debugging purposes. Additionally
     
     ```
     Samples excluded for quality thresholds:
-    sample_name	message	
-    sample2	VADR skipped due to poor assembly
-    sample3	VADR number alerts too high: 3 greater than limit of 0
-    sample4	Number of Ns was too high: 10000 greater than limit of 5000
+    sample_name message 
+    sample2 VADR skipped due to poor assembly
+    sample3 VADR number alerts too high: 3 greater than limit of 0
+    sample4 Number of Ns was too high: 10000 greater than limit of 5000
     
     Samples excluded for missing required metadata (will have empty values in indicated columns):
-    tablename_id	organism	country	library_layout
-    sample5			paired
-    sample6	SARS-CoV-2	USA
+    tablename_id    organism    country library_layout
+    sample5         paired
+    sample6 SARS-CoV-2  USA
     ```
     
     This example informs the user that samples 2-4 were excluded for quality reasons (the exact reason is listed in the `message` column), and that samples 5 and 6 were excluded because they were missing required metadata fields (sample5 was missing the `organism` and `country` fields, and sample6 was missing the `library_layout` field).

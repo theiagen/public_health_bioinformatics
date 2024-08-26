@@ -15,19 +15,19 @@ The manual creation of Terra tables can be tedious and error-prone. This workflo
 !!! warning "Default Behavior"
     Files with underscores and/or decimals in the sample name are not recognized; please use dashes instead.
 
-    For example, name.banana.hello_yes_please.fastq.gz will become "name". This means that se-test_21.fastq.gz and se-test_22.fastq.gz will not be recognized as separate samples.
+    For example, `name.banana.hello_yes_please.fastq.gz` will become "name". This means that `se-test_21.fastq.gz` and `se-test_22.fastq.gz` will not be recognized as separate samples.
 
-    This can be changed by providing information in the file_ending optional input parameter. See below for more information.
+    **_This can be changed_** by providing information in the `file_ending` optional input parameter. See below for more information.
 
 | **Terra Task Name** | **Variable** | **Type** | **Description** | **Default attribute** | **Terra Status** |
 |---|---|---|---|---|---|
 | create_terra_table | **assembly_data** | Boolean | Set to true if your data is in FASTA format; set to false if your data is FASTQ format | | Required |
-| create_terra_table | **data_location_path** | String | The full path to your data’s Google bucket folder location, including the gs://; can be easily copied by right-clicking and copying the link address in the header after navigating to the folder in the "Files" section of the "Data" tab on Terra (see below for example) | Required |
+| create_terra_table | **data_location_path** | String | The full path to your data’s Google bucket folder location, including the gs://; can be easily copied by right-clicking and copying the link address in the header after navigating to the folder in the "Files" section of the "Data" tab on Terra (see below for example) | | Required |
 | create_terra_table | **new_table_name** | String | The name of the new Terra table you want to create | | Required |
 | create_terra_table | **paired_end** | Boolean | Set to true if your data is paired-end FASTQ files; set to false if not | | Required |
-| create_terra_table | **terra_project** | String | The name of the Terra project where your data table will be created | | Required | 
+| create_terra_table | **terra_project** | String | The name of the Terra project where your data table will be created | | Required |
 | create_terra_table | **terra_workspace** | String | The name of the Terra workspace where your data table will be created | | Required |
-| create_terra_table | **file_ending** | String | Use to provide file ending(s) to determine what should be dropped from the filename to determine the name of the sample (see below for more information) | Optional |
+| create_terra_table | **file_ending** | String | Use to provide file ending(s) to determine what should be dropped from the filename to determine the name of the sample (see below for more information) | | Optional |
 | make_table | **cpu** | Int | The number of CPUs to be given to the task | 1 | Optional |
 | make_table | **disk_size** | Int | The size of the disk (in GB) | 25 | Optional |
 | make_table | **docker** | String | The docker image used to run the task | "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-06-21" | Optional |

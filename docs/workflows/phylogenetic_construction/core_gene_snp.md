@@ -43,7 +43,7 @@ This workflow runs on the set level.
 | core_iqtree | **cpu** | Int | Amount of CPUs to allocate to the task | 4 | Optional |
 | core_iqtree | **docker** | String | Docker image used for running IQ-TREE | us-docker.pkg.dev/general-theiagen/staphb/iqtree:1.6.7 | Optional |
 | core_iqtree | **iqtree_model** | String | Substitution model, frequency type (optional) and rate heterogeneity type (optional) used by IQ-TREE. This string follows the IQ-TREE "-m" option. For comparison to other tools use HKY for Bactopia, GTR+F+I for Grandeur, GTR+G4 for Nullarbor, GTR+G for Dryad | GTR+I+G | Optional |
-| core_iqtree | **iqtree_opts** | String | Additional options for IQ-TREE, see http://www.iqtree.org/doc/Command-Reference |  | Optional |
+| core_iqtree | **iqtree_opts** | String | Additional options for IQ-TREE, see <http://www.iqtree.org/doc/Command-Reference> |  | Optional |
 | core_iqtree | **iqtree_bootstraps** | String | Number of ultrafast bootstrap replicates. Follows IQ-TREE "-bb" option. | 1000 | Optional |
 | core_iqtree | **alrt** | String | Number of replicates to perform SH-like approximate likelihood ratio test (SH-aLRT). Follows IQ-TREE "-alrt" option | 1000 | Optional |
 | core_reorder_matrix | **cpu** | Int | Amount of CPUs to allocate to the task | 2 | Optional |
@@ -60,7 +60,7 @@ This workflow runs on the set level.
 | pan_iqtree | **alrt** | String | Number of replicates to perform SH-like approximate likelihood ratio test (SH-aLRT). Follows IQ-TREE "-alrt" option | 1000 | Optional |
 | pan_iqtree | **iqtree_model** | String | Substitution model, frequency type (optional) and rate heterogeneity type (optional) used by IQ-TREE. This string follows the IQ-TREE "-m" option. For comparison to other tools use HKY for Bactopia, GTR+F+I for Grandeur, GTR+G4 for Nullarbor, GTR+G for Dryad | GTR+I+G | Optional |
 | pan_iqtree | **iqtree_bootstraps** | String | Number of ultrafast bootstrap replicates. Follows IQ-TREE "-bb" option. | 1000 | Optional |
-| pan_iqtree | **iqtree_opts** | String | Additional options for IQ-TREE, see http://www.iqtree.org/doc/Command-Reference |  | Optional |
+| pan_iqtree | **iqtree_opts** | String | Additional options for IQ-TREE, see <http://www.iqtree.org/doc/Command-Reference> |  | Optional |
 | pan_iqtree | **docker** | String | Docker image used for running IQ-TREE | us-docker.pkg.dev/general-theiagen/staphb/iqtree:1.6.7 | Optional |
 | pan_reorder_matrix | **cpu** | Int | Amount of CPUs to allocate to the task | 2 | Optional |
 | pan_reorder_matrix | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
@@ -83,7 +83,7 @@ This workflow runs on the set level.
 | summarize_data | **memory** | Int | Amount of CPUs to allocate to the task | 1 | Optional |
 | summarize_data | **id_column_name** | String | Use in the case your sample IDs are not in the table ID column | 1 | Optional |
 | summarize_data | **cpu** | Int | Amount of CPUs to allocate to the task | 8 | Optional |
-| version_capture | **docker** | String | The Docker image used to run the version_capture task | "us-docker.pkg.dev/general-theiagen/ubuntu/ubuntu:jammy-20230816" | Optional |
+| version_capture | **docker** | String | The Docker image used to run the version_capture task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
 | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
 
 ### Workflow Tasks
@@ -92,7 +92,7 @@ By default, the Core_Gene_SNP workflow will begin by analyzing the input sample 
 
 The optional `summarize_data` task performs the following only if all of the `data_summary_*` and `sample_names` optional variables are filled out:
 
-1. Digests a *comma-separated* list of column names, such as `"amrfinderplus_virulence_genes,amrfinderplus_stress_genes"`, etc. that can be found within the origin Terra data table. 
+1. Digests a *comma-separated* list of column names, such as `"amrfinderplus_virulence_genes,amrfinderplus_stress_genes"`, etc. that can be found within the origin Terra data table.
 2. It will then parse through those column contents and extract each value; for example, if the `amrfinder_amr_genes` column for a sample contains these values: `"aph(3')-IIIa,tet(O),blaOXA-193"`, the `summarize_data` task will check each sample in the set to see if they also have those AMR genes detected.
 3. Outputs a .csv file that indicates presence (TRUE) or absence (empty) for each item in those columns; that is, it will check each sample in the set against the detected items in each column to see if that value was also detected.
 
@@ -122,8 +122,8 @@ By default, this task appends a Phandango coloring tag to color all items from t
 
 ### References
 
->Sion C Bayliss, Harry A Thorpe, Nicola M Coyle, Samuel K Sheppard, Edward J Feil, PIRATE: A fast and scalable pangenomics toolbox for clustering diverged orthologues in bacteria, *GigaScience*, Volume 8, Issue 10, October 2019, giz119, https://doi.org/10.1093/gigascience/giz119
+>Sion C Bayliss, Harry A Thorpe, Nicola M Coyle, Samuel K Sheppard, Edward J Feil, PIRATE: A fast and scalable pangenomics toolbox for clustering diverged orthologues in bacteria, *GigaScience*, Volume 8, Issue 10, October 2019, giz119, <https://doi.org/10.1093/gigascience/giz119>
 <!-- -->
-> Lam-Tung Nguyen, Heiko A. Schmidt, Arndt von Haeseler, Bui Quang Minh, IQ-TREE: A Fast and Effective Stochastic Algorithm for Estimating Maximum-Likelihood Phylogenies, *Molecular Biology and Evolution*, Volume 32, Issue 1, January 2015, Pages 268–274, https://doi.org/10.1093/molbev/msu300
+> Lam-Tung Nguyen, Heiko A. Schmidt, Arndt von Haeseler, Bui Quang Minh, IQ-TREE: A Fast and Effective Stochastic Algorithm for Estimating Maximum-Likelihood Phylogenies, *Molecular Biology and Evolution*, Volume 32, Issue 1, January 2015, Pages 268–274, <https://doi.org/10.1093/molbev/msu300>
 <!-- -->
-> `https://github.com/tseemann/snp-dists`
+> <https://github.com/tseemann/snp-dists>
