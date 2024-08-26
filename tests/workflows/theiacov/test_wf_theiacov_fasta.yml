@@ -130,12 +130,12 @@
     - path: miniwdl_run/call-pangolin4/work/PANGOLIN_NOTES
       md5sum: 71eba5c871bca955ab2a69dbd2c3c62e
     - path: miniwdl_run/call-pangolin4/work/PANGO_ASSIGNMENT_VERSION
-      md5sum: 36d9d4aaf6557caa4dfa5a065f8ba1e7
+      md5sum: e01f9468a9a5490f5743cc0ca76286a7
     - path: miniwdl_run/call-pangolin4/work/VERSION_PANGOLIN_ALL
-      md5sum: e94a844f0bf3e15934d94a42b23e1165
+      md5sum: b5dbf2ba7480effea8c656099df0e78e
     - path: miniwdl_run/call-pangolin4/work/_miniwdl_inputs/0/clearlabs.fasta.gz
     - path: miniwdl_run/call-pangolin4/work/fasta.pangolin_report.csv
-      md5sum: b61eef3204efd24cde2b0d7257453e22
+      md5sum: 163d8390eb18b50c7d871edf815d029f
     - path: miniwdl_run/call-vadr/command
       md5sum: 9e4318eb5b452da239723882bbcfe352
     - path: miniwdl_run/call-vadr/inputs.json
