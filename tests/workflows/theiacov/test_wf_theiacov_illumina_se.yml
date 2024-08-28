@@ -90,7 +90,6 @@
       md5sum: 7cc2eb659e21f15fa902b11812eae1f6
     - path: miniwdl_run/call-read_QC_trim/call-kraken2_theiacov_raw/work/PERCENT_TARGET_ORGANISM
       md5sum: 68b329da9893e34099c7d8ad5cb9c940
-    - path: miniwdl_run/call-read_QC_trim/call-kraken2_theiacov_raw/work/_miniwdl_inputs/0/ERR6319327_1.fastq.gz
     - path: miniwdl_run/call-read_QC_trim/call-kraken2_theiacov_raw/work/ERR6319327_kraken2_report.txt
       md5sum: 9a089b8920e55c9cc7bc8cd7d18f9a8e
     # clean read screen
