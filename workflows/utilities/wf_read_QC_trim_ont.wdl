@@ -52,36 +52,38 @@ workflow read_QC_trim_ont {
         max_length = max_length,
         run_prefix = run_prefix
     }
-    call kraken2.kraken2_theiacov as kraken2_raw {
+    call kraken2.kraken2_standalone as kraken2_theiacov_raw {
       input:
         samplename = samplename,
         read1 = read1,
-        target_organism = target_organism
+        target_organism = target_organism,
+        kraken2_db = select_first([kraken_db])
     }
     call kraken2.kraken2_parse_classified as kraken2_recalculate_abundances_raw {
       input:
         samplename = samplename,
-        kraken2_report = kraken2_raw.kraken_report,
-        kraken2_classified_report = kraken2_raw.kraken2_classified_report,
+        kraken2_report = kraken2_theiacov_raw.kraken2_report,
+        kraken2_classified_report = kraken2_theiacov_raw.kraken2_classified_report,
         target_organism = target_organism
     }  
-    call kraken2.kraken2_theiacov as kraken2_dehosted {
+    call kraken2.kraken2_standalone as kraken2_theiacov_dehosted {
       input:
         samplename = samplename,
         read1 = ncbi_scrub_se.read1_dehosted,
-        target_organism = target_organism
+        target_organism = target_organism,
+        kraken2_db = select_first([kraken_db])
     }
     call kraken2.kraken2_parse_classified as kraken2_recalculate_abundances_dehosted {
       input:
         samplename = samplename,
-        kraken2_report = kraken2_dehosted.kraken_report,
-        kraken2_classified_report = kraken2_dehosted.kraken2_classified_report,
+        kraken2_report = kraken2_theiacov_dehosted.kraken2_report,
+        kraken2_classified_report = kraken2_theiacov_dehosted.kraken2_classified_report,
         target_organism = target_organism
     } 
   }
   if ("~{workflow_series}" == "theiaprok") {
     if ((call_kraken) && defined(kraken_db)) {
-      call kraken2.kraken2_standalone as kraken2_se {
+      call kraken2.kraken2_standalone as kraken2_theiaprok {
         input:
           samplename = samplename,
           read1 = read1,
@@ -93,8 +95,8 @@ workflow read_QC_trim_ont {
       call kraken2.kraken2_parse_classified as kraken2_recalculate_abundances {
         input:
           samplename = samplename,
-          kraken2_report = kraken2_se.kraken2_report,
-          kraken2_classified_report = kraken2_se.kraken2_classified_report
+          kraken2_report = kraken2_theiaprok.kraken2_report,
+          kraken2_classified_report = kraken2_theiaprok.kraken2_classified_report
       }
     } if ((call_kraken) && ! defined(kraken_db)) {
       String kraken_db_warning = "Kraken database not defined"
@@ -127,18 +129,18 @@ workflow read_QC_trim_ont {
     File? read1_dehosted = ncbi_scrub_se.read1_dehosted
     
     # kraken2 - theiacov and theiapro
-    String kraken_version = select_first([kraken2_raw.version, kraken2_se.kraken2_version, ""])
-    String kraken_docker = select_first([kraken2_raw.docker, kraken2_se.kraken2_docker, ""])
+    String kraken_version = select_first([kraken2_theiacov_raw.kraken2_version, kraken2_theiaprok.kraken2_version, ""])
+    String kraken_docker = select_first([kraken2_theiacov_raw.kraken2_docker, kraken2_theiaprok.kraken2_docker, ""])
     Float? kraken_human = kraken2_recalculate_abundances_raw.percent_human
     Float? kraken_sc2 = kraken2_recalculate_abundances_raw.percent_sc2
     String? kraken_target_organism = kraken2_recalculate_abundances_raw.percent_target_organism
-    String? kraken_target_organism_name = kraken2_raw.kraken_target_organism
+    String? kraken_target_organism_name = kraken2_theiacov_raw.kraken2_target_organism
     String kraken_report = select_first([kraken2_recalculate_abundances_raw.kraken_report, kraken2_recalculate_abundances.kraken_report, ""])
     Float? kraken_human_dehosted = kraken2_recalculate_abundances_dehosted.percent_human
     Float? kraken_sc2_dehosted = kraken2_recalculate_abundances_dehosted.percent_sc2
     String? kraken_target_organism_dehosted = kraken2_recalculate_abundances_dehosted.percent_target_organism
     File? kraken_report_dehosted = kraken2_recalculate_abundances_dehosted.kraken_report
-    String kraken_database = select_first([kraken2_raw.database, kraken2_se.kraken2_database, kraken_db_warning, ""])
+    String kraken_database = select_first([kraken2_theiacov_raw.kraken2_database, kraken2_theiaprok.kraken2_database, kraken_db_warning, ""])
    
     # estimated genome length -- by default for TheiaProk this is 5Mb
     Int est_genome_length = genome_length

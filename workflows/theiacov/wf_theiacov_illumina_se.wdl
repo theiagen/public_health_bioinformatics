@@ -59,6 +59,9 @@ workflow theiacov_illumina_se {
     String? pangolin_docker_image
     # qc check parameters
     File? qc_check_table
+    # Kraken parameters
+    String target_organism
+    File kraken_db = "gs://theiagen-large-public-files-rp/terra/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz"
   }
   call set_organism_defaults.organism_parameters {
     input:
@@ -74,7 +77,8 @@ workflow theiacov_illumina_se {
       vadr_options = vadr_options,
       vadr_mem = vadr_memory,
       primer_bed_file = primer_bed,
-      pangolin_docker_image = pangolin_docker_image  
+      pangolin_docker_image = pangolin_docker_image,
+      kraken_target_organism_input = target_organism
   }
   call screen.check_reads_se as raw_check_reads {
     input:
@@ -101,7 +105,8 @@ workflow theiacov_illumina_se {
         adapters = adapters,
         phix = phix,
         workflow_series = "theiacov",
-        target_organism = organism_parameters.kraken_target_organism
+        target_organism = organism_parameters.kraken_target_organism,
+        kraken_db = kraken_db
     }
     call screen.check_reads_se as clean_check_reads {
       input:
