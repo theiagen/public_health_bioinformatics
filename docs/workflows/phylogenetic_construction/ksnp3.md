@@ -44,7 +44,7 @@ You can learn more about the kSNP3 workflow, including how to visualize the outp
 | ksnp3_workflow | **data_summary_terra_project** | String | The billing project for your current workspace. This can be found after the "#workspaces/" section in the workspace’s URL |  | Optional |
 | ksnp3_workflow | **data_summary_terra_table** | String | The name of the sample-level Terra data table that will be used for generating a data summary |  | Optional |
 | ksnp3_workflow | **data_summary_terra_workspace** | String | The name of the Terra workspace you are in. This can be found at the top of the webpage, or in the URL after the billing project. |  | Optional |
-| ksnp3_workflow | **midpoint_root_tree** | Boolean | If true, midpoint root the final tree |  | Optional |
+| ksnp3_workflow | **midpoint_root_tree** | Boolean | If true, midpoint root the final tree | FALSE | Optional |
 | ksnp3_workflow | **phandango_coloring** | Boolean | Boolean variable that tells the data summary task and the reorder matrix task to include a suffix that enables consistent coloring on Phandango; by default, this suffix is not added. To add this suffix set this variable to true. | FALSE | Optional |
 | pan_reorder_matrix | **cpu** | Int | Amount of CPUs to allocate to this task | 100 | Optional |
 | pan_reorder_matrix | **disk_size** | Int | Amount of storage (in GB) to allocate to this task | 2 | Optional |

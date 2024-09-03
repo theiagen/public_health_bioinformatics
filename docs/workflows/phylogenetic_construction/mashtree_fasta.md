@@ -16,15 +16,38 @@ This workflow also features an optional module, `summarize_data`, that creates a
 
 ### Inputs
 
-### Required User Inputs
-
-[Untitled Database](https://www.notion.so/13d2a9fdc04b4af497d3dc4c3a18c2d8?pvs=21)
-
-### Optional User Inputs
-
-Any optional inputs regarding runtime VM parameters have been excluded from this table.
-
-[Untitled Database](https://www.notion.so/b6c13b3c1b87484c88c4ca049d90b7f6?pvs=21)
+| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default attribute** | **Status** |
+|---|---|---|---|---|---|
+| mashtree_fasta | **assembly_fasta** | Array[File] | The set of assembly fastas | | Required |
+| mashtree_fasta | **cluster_name** | String | Free text string used to label output files | | Required |
+| mashtree_fasta | **data_summary_column_names** | String | A comma-separated list of the column names from the sample-level data table for generating a data summary (presence/absence .csv matrix); e.g., "amrfinderplus_amr_genes,amrfinderplus_virulence_genes" |  | Optional |
+| mashtree_fasta | **data_summary_terra_project** | String | The billing project for your current workspace. This can be found after the "#workspaces/" section in the workspace’s URL |  | Optional |
+| mashtree_fasta | **data_summary_terra_table** | String | The name of the sample-level Terra data table that will be used for generating a data summary |  | Optional |
+| mashtree_fasta | **data_summary_terra_workspace** | String | The name of the Terra workspace you are in. This can be found at the top of the webpage, or in the URL after the billing project. |  | Optional |
+| mashtree_fasta | **midpoint_root_tree** | Boolean | If true, midpoint root the final tree | FALSE | Optional |
+| mashtree_fasta | **phandango_coloring** | Boolean | Boolean variable that tells the data summary task and the reorder matrix task to include a suffix that enables consistent coloring on Phandango; by default, this suffix is not added. To add this suffix set this variable to true. | FALSE | Optional |
+| mashtree_fasta | **sample_names** | Array[String] | The list of samples | | Optional |
+| mashtree_task | **cpu** | Int | Number of CPUs to use | 16 | Optional |
+| mashtree_task | **disk_size** | Int | Disk size in GB | 100 | Optional |
+| mashtree_task | **docker** | String | Docker image to use | "us-docker.pkg.dev/general-theiagen/staphb/mashtree:1.2.0” | Optional |
+| mashtree_task | **genomesize** | Int | Genome size of the input samples | 5000000 | Ooptional |
+| mashtree_task | **kmerlength** | Int | Hashes will be based on strings of this many nucleotides | 21 | Optional |
+| mashtree_task | **mindepth** | Int | If set to zero, mashtree will run in "accurate" mode as it will chose a mindepth by itself in a slower method; this value otherwise indicates the minimum number of times a kmer must appear in order to be included | 5 | Optional |
+| mashtree_task | **memory** | Int | Memory in GB | 64 | Optional |
+| mashtree_task | **sketchsize** | Int | Each sketch will have at most this many non-redundant min-hashes | 10000 | Optional |
+| mashtree_task | **sort_order** | String | For neighbor-joining, the sort order can make a difference. Options include: "ABC" (alphabetical), "random", "input-order" | "ABC" | Optional |
+| mashtree_task | **truncLength** | Int | How many characters to keep in a filename | 250 | Optional |
+| reorder_matrix | **cpu** | Int | Amount of CPUs to allocate to this task | 100 | Optional |
+| reorder_matrix | **disk_size** | Int | Amount of storage (in GB) to allocate to this task | 2 | Optional |
+| reorder_matrix | **docker** | String | Docker image to use | 100 | Optional |
+| reorder_matrix | **memory** | Int | Amount of memory/RAM (in GB) to allocate to this task | us-docker.pkg.dev/general-theiagen/staphb/mykrobe:0.12.1 | Optional |
+| summarize_data | **cpu** | Int | Amount of CPUs to allocate to this task | 8 | Optional |
+| summarize_data | **disk_size** | Int | Amount of storage (in GB) to allocate to this task | 100 | Optional |
+| summarize_data | **docker** | String | Docker image to use | us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-03-16 | Optional |
+| summarize_data | **id_column_name** | String | If the sample IDs are in a different column to samplenames, it can be passed here and it will be used instead. |  | Optional |
+| summarize_data | **memory** | Int | Amount of memory/RAM (in GB) to allocate to this task | 8 | Optional |
+| version_capture | **docker** | String | The Docker image used to run the version_capture task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
+| version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
 
 ### Workflow Actions
 
@@ -40,7 +63,15 @@ By default, this task appends a Phandango coloring tag to color all items from t
 
 ### Outputs
 
-[Untitled Database](https://www.notion.so/9186a31e488140978902f3d13c9f33e9?pvs=21)
+| **Variable** | **Type** | **Description** |
+| mashtree_docker | String | The Docker image used to run the mashtree task |
+| mashtree_filtered_metadata | File | Optional output file with filtered metadata that is only produced if the optional `summarize_data` task is used |
+| mashtree_matrix | File | The SNP matrix made |
+| mashtree_summarized_data | File | CSV presence/absence matrix generated by the `summarize_data` task from the list of columns provided; formatted for Phandango if `phandango_coloring` input is `true` |
+| mashtree_tree | File | The phylogenetic tree made |
+| mashtree_version | String | The version of mashtree used in the workflow |
+| mashtree_wf_analysis_date | String | The date the workflow was run |
+| mashtree_wf_version | String | The version of PHB the workflow is hosted in |
 
 ## References
 
