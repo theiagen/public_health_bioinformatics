@@ -20,7 +20,7 @@ task sistr {
     echo $(sistr --version 2>&1) | sed 's/^.*sistr_cmd //; s/ .*\$//' | tee VERSION
     sistr \
       --qc \
-      ~{true="--use-full-cgmlst-db" false="" use_full_cgmlst_db} \
+      ~{use_full_cgmlst_db ? '--use-full-cgmlst-db' : ''} \
       --threads ~{cpu} \
       --alleles-output ~{samplename}-allele.json \
       --novel-alleles ~{samplename}-allele.fasta \
