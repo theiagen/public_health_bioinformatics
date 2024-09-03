@@ -135,6 +135,11 @@ workflows:
    primaryDescriptorPath: /workflows/theiaprok/wf_theiaprok_illumina_pe.wdl
    testParameterFiles:
     - empty.json
+ - name: TheiaProk_Illumina_PE_MMPDS_PHB
+   subclass: WDL
+   primaryDescriptorPath: /workflows/theiaprok/wf_theiaprok_illumina_pe.wdl
+   testParameterFiles:
+    - /tests/inputs/empty.json
  - name: TheiaProk_Illumina_SE_PHB
    subclass: WDL
    primaryDescriptorPath: /workflows/theiaprok/wf_theiaprok_illumina_se.wdl
