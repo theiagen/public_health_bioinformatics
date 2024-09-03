@@ -337,7 +337,7 @@ workflow merlin_magic {
         use_full_cgmlst_db = sistr_use_full_cgmlst_db,
         docker = sistr_docker_image,
         cpu = cpu_sistr,
-        memory = memory_sistr
+        memory = memory_sistr,
         disk_size = sistr_disk_size
     }
     if (!ont_data && !assembly_only) {
