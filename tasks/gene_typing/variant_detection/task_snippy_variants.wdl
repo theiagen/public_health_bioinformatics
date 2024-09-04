@@ -93,6 +93,15 @@ task snippy_variants {
       echo $reference_length_passed_depth $reference_length | awk '{ print ($1/$2)*100 }' > PERCENT_REF_COVERAGE
     fi
 
+    # Compute percentage of reads aligned
+    reads_aligned=$(cat READS_ALIGNED_TO_REFERENCE)
+    total_reads=$(samtools view -c "~{samplename}/~{samplename}.bam")
+    if [ "$total_reads" -eq 0 ]; then
+      echo "Could not compute percent reads aligned: total reads is 0" > PERCENT_READS_ALIGNED
+    else
+      echo $reads_aligned $total_reads | awk '{ print ($1/$2)*100 }' > PERCENT_READS_ALIGNED
+    fi
+
   >>>
   output {
     String snippy_variants_version = read_string("VERSION")
