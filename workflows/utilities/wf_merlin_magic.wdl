@@ -170,7 +170,6 @@ workflow merlin_magic {
     File? poppunk_gps_external_clusters_csv
     # sistr options
     Boolean? sistr_use_full_cgmlst_db
-    String? sistr_docker_image
     Int? sistr_cpu
     Int? sistr_memory
     Int? sistr_disk_size
