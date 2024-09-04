@@ -336,7 +336,7 @@ workflow merlin_magic {
         samplename = samplename,
         use_full_cgmlst_db = sistr_use_full_cgmlst_db,
         docker = sistr_docker_image,
-        cpu = cpu_sistr,
+        cpu = sistr_cpu,
         memory = memory_sistr,
         disk_size = sistr_disk_size
     }
