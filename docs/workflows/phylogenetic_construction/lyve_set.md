@@ -50,9 +50,9 @@ The Lyve_SET WDL workflow runs the [Lyve-SET](https://github.com/lskatz/lyve-SET
 The Lyve_SET WDL workflow is run using read data from a set of samples. The workflow will produce a pairwise SNP matrix for the sample set and a maximum likelihood phylogenetic tree. Details regarding the default implementation of Lyve_SET and optional modifications are listed below.
 
 1. Read processing
-    1. By default, the Lyve_SET WDL workflow will perform read cleaning using the CG-Pipeline “CGP”. However, read cleaning can be turned off or performed using “BayesHammer” using the `read_cleaner` input variable.
+    1. By default, the Lyve_SET WDL workflow will perform read cleaning using the CG-Pipeline "CGP". However, read cleaning can be turned off or performed using "BayesHammer" using the `read_cleaner` input variable.
 2. Reference procurement
-    1. By default, the Lyve_SET WDL workflow will **not** mask phages or cliffs in the reference genome. Cliffs refer to regions of the reference genome where read coverage rises or falls abruptly. Masking phages and cliffs is intended to remove low quality SNPs. Users can invoke phage and cliff masking by setting the `mask_cliffs` and `mask_phages` variables to “true”.
+    1. By default, the Lyve_SET WDL workflow will **not** mask phages or cliffs in the reference genome. Cliffs refer to regions of the reference genome where read coverage rises or falls abruptly. Masking phages and cliffs is intended to remove low quality SNPs. Users can invoke phage and cliff masking by setting the `mask_cliffs` and `mask_phages` variables to "true".
 3. SNP discovery
     1. The Lyve_SET WDL workflow uses the default read mapper and variant caller from the Lyve-SET pipeline  (`smalt` and `varscan`). Additional options for each are available using the `mapper` and `snpcaller` input variables.
     2. The workflow also uses the default parameters for variant calling from the Lyve-SET pipeline: the minimum percent consensus to call a base is 0.75 and minimum read depth is 10X. These parameters can be manually modified using the `min_alt_frac` and `min_coverage` input variables.

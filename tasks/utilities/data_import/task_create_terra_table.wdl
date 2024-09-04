@@ -3,7 +3,7 @@ version 1.0
 task create_terra_table {
   input {
     String new_table_name
-    String data_location_path
+    String data_location_path # include final `/` if it is a directory
     String? file_ending # comma-delimited list
     Boolean paired_end
     Boolean assembly_data

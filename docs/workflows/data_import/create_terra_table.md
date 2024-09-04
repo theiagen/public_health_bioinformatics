@@ -80,7 +80,7 @@ The `file_ending` should be a substring of your file names that is held in commo
 
     The default behavior would result in a single entry in the table called "sample" which is incorrect. You can rectify this by providing an appropriate `file_ending` for your samples.
 
-    In this group, the desired sample names are "sample_01" and "sample_02". However, in this example, there is no common text following the sample name. Providing `"_"` would result in the same behavior as default. We can provide *two* different patterns in the `file_ending` variable: `"_1,_2"` to capture all possible options. By doing this, "sample_01" and "sample_02" will appear in our table with the appropriate read files.
+    In this group, the desired sample names are "sample_01" and "sample_02". However, in this example, there is no common text following the sample name. Providing `"_"` would result in the same behavior as default. We can provide _two_ different patterns in the `file_ending` variable: `"_1,_2"` to capture all possible options. By doing this, "sample_01" and "sample_02" will appear in our table with the appropriate read files.
 
 To include multiple file endings, please separate them with commas, as shown in the "no elements in common" section.
 

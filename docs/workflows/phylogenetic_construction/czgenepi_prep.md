@@ -12,7 +12,7 @@ The CZGenEpi_Prep workflow prepares data for upload to the Chan Zuckerberg GEN E
 
 ### Inputs
 
-In order to enable customization for where certain fields should be pulled from the Terra table, the user can specify different column names in the appropriate location. For example, if the user wants to use the "clearlabs_fasta" column for the assembly file *instead* of the default "assembly_fasta" column, they can write "clearlabs_fasta" for the `assembly_fasta_column_name` optional variable.
+In order to enable customization for where certain fields should be pulled from the Terra table, the user can specify different column names in the appropriate location. For example, if the user wants to use the "clearlabs_fasta" column for the assembly file _instead_ of the default "assembly_fasta" column, they can write "clearlabs_fasta" for the `assembly_fasta_column_name` optional variable.
 
 Variables with both the "Optional" and "Required" tag require the column (regardless of name) to be present in the data table.
 

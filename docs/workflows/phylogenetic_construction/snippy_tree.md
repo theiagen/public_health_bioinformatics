@@ -131,7 +131,7 @@ Sequencing data used in the Snippy_Tree workflow must:
 
     Snippy is a pipeline for calling SNPs and INDELs in haploid genomes. Before running `Snippy_Tree`, you must run `Snippy_Variants`, another workflow that uses the Snippy tool to align reads against a reference genome for individual samples. In `Snippy_Tree`, the snippy tool is used again to generate a whole-genome multiple sequence alignment (fasta file) of reads from all the samples we’d like in our tree. 
 
-    When generating the multiple sequence alignment, a bed file can be provided by users to mask certain areas of the genome in the alignment. This is particularly relevant for masking known repetitive regions in *Mycobacterium tuberculosis* genomes, or masking known regions containing phage sequences.
+    When generating the multiple sequence alignment, a bed file can be provided by users to mask certain areas of the genome in the alignment. This is particularly relevant for masking known repetitive regions in _Mycobacterium tuberculosis_  genomes, or masking known regions containing phage sequences.
 
     !!! info "Why do I see `snippy_core` in Terra?"
         In Terra, this task is named "snippy_core" after the name of the command in the original Snippy tool. Despite the name, this command is NOT being used to make a core genome, but instead a multiple sequence alignment of the whole genome (without any sections masked using a bed file).
@@ -289,7 +289,7 @@ Sequencing data used in the Snippy_Tree workflow must:
 
     ##### Shared Variants (optional) {#shared_variants_task}
 
-    The `shared_variants` task takes in the `concatenated_variants` output from the `cat_variants` task and reshapes the data so that variants are rows and samples are columns. For each variant, samples where the variant was detected are populated with a “1” and samples were **either the variant was not detected or there was insufficient coverage to call variants** are populated with a “0”. The resulting table is available as the `shared_variants_table` output.
+    The `shared_variants` task takes in the `concatenated_variants` output from the `cat_variants` task and reshapes the data so that variants are rows and samples are columns. For each variant, samples where the variant was detected are populated with a "1" and samples were **either the variant was not detected or there was insufficient coverage to call variants** are populated with a "0". The resulting table is available as the `shared_variants_table` output.
 
     The `shared_variants_table` file will be in the following format:
 
@@ -338,8 +338,8 @@ Sequencing data used in the Snippy_Tree workflow must:
 
 ## References
 
-> **Gubbins:** Croucher, Nicholas J., Andrew J. Page, Thomas R. Connor, Aidan J. Delaney, Jacqueline A. Keane, Stephen D. Bentley, Julian Parkhill, and Simon R. Harris. 2015. “Rapid Phylogenetic Analysis of Large Samples of Recombinant Bacterial Whole Genome Sequences Using Gubbins.” Nucleic Acids Research 43 (3): e15.
+> **Gubbins:** Croucher, Nicholas J., Andrew J. Page, Thomas R. Connor, Aidan J. Delaney, Jacqueline A. Keane, Stephen D. Bentley, Julian Parkhill, and Simon R. Harris. 2015. "Rapid Phylogenetic Analysis of Large Samples of Recombinant Bacterial Whole Genome Sequences Using Gubbins." Nucleic Acids Research 43 (3): e15.
 <!-- -->
-> **SNP-sites:** Page, Andrew J., Ben Taylor, Aidan J. Delaney, Jorge Soares, Torsten Seemann, Jacqueline A. Keane, and Simon R. Harris. 2016. “SNP-Sites: Rapid Efficient Extraction of SNPs from Multi-FASTA Alignments.” Microbial Genomics 2 (4): e000056.
+> **SNP-sites:** Page, Andrew J., Ben Taylor, Aidan J. Delaney, Jorge Soares, Torsten Seemann, Jacqueline A. Keane, and Simon R. Harris. 2016. "SNP-Sites: Rapid Efficient Extraction of SNPs from Multi-FASTA Alignments." Microbial Genomics 2 (4): e000056.
 <!-- -->
-> **IQTree:** Nguyen, Lam-Tung, Heiko A. Schmidt, Arndt von Haeseler, and Bui Quang Minh. 2015. “IQ-TREE: A Fast and Effective Stochastic Algorithm for Estimating Maximum-Likelihood Phylogenies.” Molecular Biology and Evolution 32 (1): 268–74.
+> **IQTree:** Nguyen, Lam-Tung, Heiko A. Schmidt, Arndt von Haeseler, and Bui Quang Minh. 2015. "IQ-TREE: A Fast and Effective Stochastic Algorithm for Estimating Maximum-Likelihood Phylogenies." Molecular Biology and Evolution 32 (1): 268–74.

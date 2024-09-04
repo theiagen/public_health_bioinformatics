@@ -40,7 +40,7 @@ The `Snippy_Variants` workflow aligns single-end or paired-end reads (in FASTQ f
 | snippy_variants | **disk_size** | Int | Disk size for snippy variants task | 100 | Optional  |
 | snippy_variants_wf | **assembly_fasta** | File | Assembly file |  | Optional  |
 | snippy_variants_wf | **base_quality** | Int | Minimum quality for a nucleotide to be used in variant calling | 13 | Optional  |
-| snippy_variants_wf | **cpus* | Int | Number of CPUs to use | 4 | Optional  |
+| snippy_variants_wf | **cpus** | Int | Number of CPUs to use | 4 | Optional  |
 | snippy_variants_wf | **docker** | String | Snippy docker image to use | us-docker.pkg.dev/general-theiagen/staphb/snippy:4.6.0 | Optional  |
 | snippy_variants_wf | **map_qual** | Int | Minimum mapping quality to accept in variant calling, default from snippy tool is 60 |  | Optional  |
 | snippy_variants_wf | **maxsoft** | Int | Number of bases of alignment to soft-clip before discarding the alignment, default from snippy tool is 10 |  | Optional  |

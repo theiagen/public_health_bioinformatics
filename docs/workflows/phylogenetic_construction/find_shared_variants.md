@@ -60,7 +60,7 @@ All variant data included in the sample set should be generated from aligning se
 
     ##### Shared Variants Task {#shared_variants_task}
 
-    The `shared_variants` task takes in the `concatenated_variants` output from the `cat_variants` task and reshapes the data so that variants are rows and samples are columns. For each variant, samples where the variant was detected are populated with a “1” and samples were **either the variant was not detected or there was insufficient coverage to call variants** are populated with a “0”. The resulting table is available as the `shared_variants_table` output.
+    The `shared_variants` task takes in the `concatenated_variants` output from the `cat_variants` task and reshapes the data so that variants are rows and samples are columns. For each variant, samples where the variant was detected are populated with a "1" and samples were **either the variant was not detected or there was insufficient coverage to call variants** are populated with a "0". The resulting table is available as the `shared_variants_table` output.
 
     The `shared_variants_table` file will be in the following format:
 
