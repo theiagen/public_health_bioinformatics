@@ -154,6 +154,7 @@ nav:
 theme: 
   name: material
   logo: assets/Theiagen-Logo-White.png
+  favicon: assets/Theiagen-Symbol-Standard-01.png
   features:
     - content.code.annotate
     - content.code.copy
@@ -212,6 +213,7 @@ plugins:
       enable_creation_date: true
       type: iso_date
   - search
+  - glightbox
   # - section-index
 
 extra_javascript:

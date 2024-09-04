@@ -3,7 +3,7 @@
 To test your documentation changes, you will need to have the following packages installed on your local VM:
 
 ```bash
-pip install mkdocs mkdocs-material mkdocs-material-extensions mkdocs-git-revision-date-localized-plugin mike
+pip install mkdocs mkdocs-material mkdocs-material-extensions mkdocs-git-revision-date-localized-plugin mike mkdocs-glightbox
 ```
 
 To show the documentation locally, run the following command:
@@ -13,3 +13,5 @@ mkdocs serve
 ```
 
 This will prompt you to open your browser to the appropriate local host address.
+
+A helpful tool to transform Excel tables into Markdown can be found [here](https://tableconvert.com/excel-to-markdown)
