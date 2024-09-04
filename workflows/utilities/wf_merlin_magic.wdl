@@ -171,7 +171,7 @@ workflow merlin_magic {
     # sistr options
     Boolean? sistr_use_full_cgmlst_db
     String? sistr_docker_image
-    Int? cpu_sistr
+    Int? sistr_cpu
     Int? memory_sistr
     Int? sistr_disk_size
     # snippy options - mostly files we host
