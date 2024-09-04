@@ -172,7 +172,7 @@ workflow merlin_magic {
     Boolean? sistr_use_full_cgmlst_db
     String? sistr_docker_image
     Int? sistr_cpu
-    Int? memory_sistr
+    Int? sistr_memory
     Int? sistr_disk_size
     # snippy options - mostly files we host
     String? snippy_query_gene
@@ -337,7 +337,7 @@ workflow merlin_magic {
         use_full_cgmlst_db = sistr_use_full_cgmlst_db,
         docker = sistr_docker_image,
         cpu = sistr_cpu,
-        memory = memory_sistr,
+        memory = sistr_memory,
         disk_size = sistr_disk_size
     }
     if (!ont_data && !assembly_only) {
