@@ -21,4 +21,4 @@ jobs:
           key: ${{ github.ref }}
           path: .cache
       - run: pip install mkdocs-material mkdocs-material-extensions mkdocs-git-revision-date-localized-plugin mike mkdocs-glightbox
-      - run: mike deploy --push main --force && mkdocs gh-deploy --force
+      - run: GIT_COMMITTER_NAME=sage-wright GIT_COMMITTER_EMAIL=sage.wright@theiagen.com \ mike deploy main --push && mkdocs gh-deploy --force
