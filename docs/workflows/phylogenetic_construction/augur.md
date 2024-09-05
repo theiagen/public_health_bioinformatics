@@ -201,7 +201,7 @@ This workflow runs on the set level. Please note that for every task, runtime pa
 | augur_refine | **date_inference** | String | Assign internal nodes to their marginally most likely dates; options: "joint", "marginal" | marginal | Optional |
 | augur_refine | **divergence_units** | String | Units in which sequence divergences is exported; options: "mutations" or "mutations-per-site" | mutations | Optional |
 | augur_refine | **gen_per_year** | Int | Number of generations per year | 50 | Optional |
-| augur_refine | **keep_polytomies** | Boolean | If true, don’t attempt to resolve polytomies | FALSE | Optional |
+| augur_refine | **keep_polytomies** | Boolean | If true, don't attempt to resolve polytomies | FALSE | Optional |
 | augur_refine | **keep_root** | Boolean | If true, do not reroot the tree; use it as-is (overrides anything specified by root) | TRUE | Optional |
 | augur_refine | **precision** | String | Precision used to determine the number of grid points; options: 0 (rough) to 3 (ultra fine) | auto | Optional |
 | augur_refine | **root** | String | Rooting mechanism; options: "best", "least-squares", "min_dev", "oldest", etc. |  | Optional |

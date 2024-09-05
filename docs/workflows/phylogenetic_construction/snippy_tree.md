@@ -38,7 +38,7 @@ Sequencing data used in the Snippy_Tree workflow must:
         
         - `core_genome` = true (creates core genome phylogeny)
         - `use_gubbins` = true (recombination masked)
-        - nucleotide substitution model will be defined by IQTree’s Model Finder
+        - nucleotide substitution model will be defined by IQTree's Model Finder
     
     ??? toggle "Phylogenies of _Mycobacterium tuberculosis_ complex"
     
@@ -81,7 +81,7 @@ Sequencing data used in the Snippy_Tree workflow must:
 | snippy_tree_wf | **call_shared_variants** | Boolean | When true, workflow generates table that combines variants across all samples and a table showing variants shared across samples | TRUE | Optional |
 | snippy_tree_wf | **core_genome** | Boolean | When true, workflow generates core genome phylogeny; when false, whole genome is used | TRUE | Optional |
 | snippy_tree_wf | **data_summary_column_names** | String | A comma-separated list of the column names from the sample-level data table for generating a data summary (presence/absence .csv matrix) |  | Optional |
-| snippy_tree_wf | **data_summary_terra_project** | String | The billing project for your current workspace. This can be found after the "#workspaces/" section in the workspace’s URL |  | Optional |
+| snippy_tree_wf | **data_summary_terra_project** | String | The billing project for your current workspace. This can be found after the "#workspaces/" section in the workspace's URL |  | Optional |
 | snippy_tree_wf | **data_summary_terra_table** | String | The name of the sample-level Terra data table that will be used for generating a data summary |  | Optional |
 | snippy_tree_wf | **data_summary_terra_workspace** | String | The name of the Terra workspace you are in. This can be found at the top of the webpage, or in the URL after the billing project. |  | Optional |
 | snippy_tree_wf | **gubbins_cpu** | Int | CPUs to allocate to Gubbins | 4 | Optional |
@@ -129,7 +129,7 @@ Sequencing data used in the Snippy_Tree workflow must:
 
     ##### Snippy {#snippy_task}
 
-    Snippy is a pipeline for calling SNPs and INDELs in haploid genomes. Before running `Snippy_Tree`, you must run `Snippy_Variants`, another workflow that uses the Snippy tool to align reads against a reference genome for individual samples. In `Snippy_Tree`, the snippy tool is used again to generate a whole-genome multiple sequence alignment (fasta file) of reads from all the samples we’d like in our tree. 
+    Snippy is a pipeline for calling SNPs and INDELs in haploid genomes. Before running `Snippy_Tree`, you must run `Snippy_Variants`, another workflow that uses the Snippy tool to align reads against a reference genome for individual samples. In `Snippy_Tree`, the snippy tool is used again to generate a whole-genome multiple sequence alignment (fasta file) of reads from all the samples we'd like in our tree. 
 
     When generating the multiple sequence alignment, a bed file can be provided by users to mask certain areas of the genome in the alignment. This is particularly relevant for masking known repetitive regions in _Mycobacterium tuberculosis_  genomes, or masking known regions containing phage sequences.
 

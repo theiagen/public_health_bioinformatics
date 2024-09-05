@@ -137,7 +137,7 @@ The TheiaMeta_Illumina_PE workflow processes Illumina paired-end (PE) reads ge
 
 ??? task "`HRRT`: Human Host Sequence Removal"
 
-    All reads of human origin **are removed**, including their mates, by using NCBI’s [**human read removal tool (HRRT)**](https://github.com/ncbi/sra-human-scrubber). 
+    All reads of human origin **are removed**, including their mates, by using NCBI's [**human read removal tool (HRRT)**](https://github.com/ncbi/sra-human-scrubber). 
 
     HRRT is based on the [SRA Taxonomy Analysis Tool](https://doi.org/10.1186/s13059-021-02490-0) and employs a k-mer database constructed of k-mers from Eukaryota derived from all human RefSeq records with any k-mers found in non-Eukaryota RefSeq records subtracted from the database.
 
@@ -174,7 +174,7 @@ The TheiaMeta_Illumina_PE workflow processes Illumina paired-end (PE) reads ge
     - [BBDuk](https://jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/bbduk-guide/)  (*"Bestus Bioinformaticus" Decontamination Using Kmers*) is then used to trim the adapters and filter out all reads that have a 31-mer match to [PhiX](https://emea.illumina.com/products/by-type/sequencing-kits/cluster-gen-sequencing-reagents/phix-control-v3.html), which is commonly added to Illumina sequencing runs to monitor and/or improve overall run quality.
     
     ??? toggle "What are adapters and why do they need to be removed?"
-        Adapters are manufactured oligonucleotide sequences attached to DNA fragments during the library preparation process. In Illumina sequencing, these adapter sequences are required for attaching reads to flow cells. You can read more about Illumina adapters [here](https://emea.support.illumina.com/bulletins/2020/06/illumina-adapter-portfolio.html). For genome analysis, it’s important to remove these sequences since they’re not actually from your sample. If you don’t remove them, the downstream analysis may be affected.
+        Adapters are manufactured oligonucleotide sequences attached to DNA fragments during the library preparation process. In Illumina sequencing, these adapter sequences are required for attaching reads to flow cells. You can read more about Illumina adapters [here](https://emea.support.illumina.com/bulletins/2020/06/illumina-adapter-portfolio.html). For genome analysis, it's important to remove these sequences since they're not actually from your sample. If you don't remove them, the downstream analysis may be affected.
         
     **Read Quantification**
 
@@ -312,10 +312,10 @@ The TheiaMeta_Illumina_PE workflow processes Illumina paired-end (PE) reads ge
 | fastqc_raw2_html | File | Graphical visualization of raw reverse read qualityfrom fastqc to open in an internet browser |
 | fastqc_version | String | Version of fastqc software used |
 | kraken2_docker | String | Docker image of kraken2 |
-| kraken2_percent_human_clean | Float | Percentage of human-classified reads in the sample’s clean reads |
-| kraken2_percent_human_raw | Float | Percentage of human-classified reads in the sample’s raw reads |
-| kraken2_report_clean | File | Full Kraken report for the sample’s clean reads |
-| kraken2_report_raw | File | Full Kraken report for the sample’s raw reads |
+| kraken2_percent_human_clean | Float | Percentage of human-classified reads in the sample's clean reads |
+| kraken2_percent_human_raw | Float | Percentage of human-classified reads in the sample's raw reads |
+| kraken2_report_clean | File | Full Kraken report for the sample's clean reads |
+| kraken2_report_raw | File | Full Kraken report for the sample's raw reads |
 | kraken2_version | String | Version of kraken |
 | krona_docker | String | Docker image of Krona |
 | krona_html_clean | File | The KronaPlot after reads are cleaned |
@@ -326,7 +326,7 @@ The TheiaMeta_Illumina_PE workflow processes Illumina paired-end (PE) reads ge
 | metaspades_version | String | Version of metaspades |
 | minimap2_docker | String | Docker image of minimap2 |
 | minimap2_version | String | Version of minimap2 |
-| ncbi_scrub_docker | String | Docker image for NCBI’s HRRT |
+| ncbi_scrub_docker | String | Docker image for NCBI's HRRT |
 | percent_coverage | Float | Percentage coverage of the reference genome provided |
 | percentage_mapped_reads | Float | Percentage of mapped reads to the assembly |
 | pilon_docker | String | Docker image for pilon |

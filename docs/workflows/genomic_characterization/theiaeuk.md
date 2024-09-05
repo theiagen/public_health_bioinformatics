@@ -254,7 +254,7 @@ All input reads are processed through "core tasks" in each workflow. The core ta
     - [BBDuk](https://jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/bbduk-guide/)  (*"Bestus Bioinformaticus" Decontamination Using Kmers*) is then used to trim the adapters and filter out all reads that have a 31-mer match to [PhiX](https://emea.illumina.com/products/by-type/sequencing-kits/cluster-gen-sequencing-reagents/phix-control-v3.html), which is commonly added to Illumina sequencing runs to monitor and/or improve overall run quality.
     
     ??? toggle "What are adapters and why do they need to be removed?"
-        Adapters are manufactured oligonucleotide sequences attached to DNA fragments during the library preparation process. In Illumina sequencing, these adapter sequences are required for attaching reads to flow cells. You can read more about Illumina adapters [here](https://emea.support.illumina.com/bulletins/2020/06/illumina-adapter-portfolio.html). For genome analysis, it’s important to remove these sequences since they’re not actually from your sample. If you don’t remove them, the downstream analysis may be affected.
+        Adapters are manufactured oligonucleotide sequences attached to DNA fragments during the library preparation process. In Illumina sequencing, these adapter sequences are required for attaching reads to flow cells. You can read more about Illumina adapters [here](https://emea.support.illumina.com/bulletins/2020/06/illumina-adapter-portfolio.html). For genome analysis, it's important to remove these sequences since they're not actually from your sample. If you don't remove them, the downstream analysis may be affected.
         
     **Read Quantification**
 
@@ -374,6 +374,12 @@ All input reads are processed through "core tasks" in each workflow. The core ta
 
         !!! warning "Example Purposes Only"
             QC threshold values shown are for example purposes only and should not be presumed to be sufficient for every dataset.
+    
+    !!! techdetails "QC_Check Technical Details"    
+        
+        |  | Links |
+        | --- | --- |
+        | Task | [task_qc_check.wdl](https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/quality_control/task_qc_check.wdl) |
 
 ### Organism-specific Characterization
 

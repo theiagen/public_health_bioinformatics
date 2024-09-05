@@ -25,7 +25,7 @@ This workflow runs on the sample level.
 
 | **Terra Task Name** | **Variable** | **Type** | **Description** | **Default attribute** | **Terra Status** |
 |---|---|---|---|---|---|
-| reference_fetch | **samplename** | String | Your sample’s name |  | Required |
+| reference_fetch | **samplename** | String | Your sample's name |  | Required |
 | reference_fetch | **assembly_fasta** | File | Assembly FASTA file of your sample |  | Optional |
 | reference_fetch | **ncbi_accession** | String | NCBI accession passed to the NCBI datasets task to be downloaded. Example: GCF_000006945.2 (Salmonella enterica subsp. enterica, serovar Typhimurium str. LT2 reference genome) |  | Optional |
 | ncbi_datasets_download_genome_accession | **cpu** | Int | number of cpus used to run ncbi datasets | 1 | Optional |

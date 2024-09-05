@@ -21,7 +21,7 @@ This workflow also features an optional module, `summarize_data`, that creates a
 | mashtree_fasta | **assembly_fasta** | Array[File] | The set of assembly fastas | | Required |
 | mashtree_fasta | **cluster_name** | String | Free text string used to label output files | | Required |
 | mashtree_fasta | **data_summary_column_names** | String | A comma-separated list of the column names from the sample-level data table for generating a data summary (presence/absence .csv matrix); e.g., "amrfinderplus_amr_genes,amrfinderplus_virulence_genes" |  | Optional |
-| mashtree_fasta | **data_summary_terra_project** | String | The billing project for your current workspace. This can be found after the "#workspaces/" section in the workspace’s URL |  | Optional |
+| mashtree_fasta | **data_summary_terra_project** | String | The billing project for your current workspace. This can be found after the "#workspaces/" section in the workspace's URL |  | Optional |
 | mashtree_fasta | **data_summary_terra_table** | String | The name of the sample-level Terra data table that will be used for generating a data summary |  | Optional |
 | mashtree_fasta | **data_summary_terra_workspace** | String | The name of the Terra workspace you are in. This can be found at the top of the webpage, or in the URL after the billing project. |  | Optional |
 | mashtree_fasta | **midpoint_root_tree** | Boolean | If true, midpoint root the final tree | FALSE | Optional |

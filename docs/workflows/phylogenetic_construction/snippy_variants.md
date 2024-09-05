@@ -14,7 +14,7 @@ The `Snippy_Variants` workflow aligns single-end or paired-end reads (in FASTQ f
     ![Snippy_Variants Workflow Diagram](../../assets/phylo_diagrams/Snippy_Variants.png)
 
 !!! tip "Example Use Cases"
-    - **Finding mutations** (SNPs, MNPs, and INDELs) in your own sample’s reads relative to a reference, e.g. mutations in genes of phenotypic interest.
+    - **Finding mutations** (SNPs, MNPs, and INDELs) in your own sample's reads relative to a reference, e.g. mutations in genes of phenotypic interest.
     - **Quality control:** When undertaking quality control of sequenced isolates, it is difficult to identify contamination between multiple closely related genomes using the conventional approaches in TheiaProk (e.g. isolates from an outbreak or transmission cluster). Such contamination may be identified as allele heterogeneity at a significant number of genome positions. `Snippy_Variants` may be used to identify these heterogeneous positions by aligning reads to the assembly of the same reads, or to a closely related reference genome and lowering the thresholds to call SNPs.
     - **Assessing support for a mutation**: `Snippy_Variants` produces a BAM file of the reads aligned to the reference genome. This BAM file can be visualized in IGV (see Theiagen Office Hours recordings) to assess the position of a mutation in supporting reads, or if the assembly of the reads was used as a reference, the position in the contig.
         - Mutations that are only found at the ends of supporting reads may be an error of sequencing.

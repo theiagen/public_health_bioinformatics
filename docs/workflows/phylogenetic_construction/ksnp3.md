@@ -41,7 +41,7 @@ You can learn more about the kSNP3 workflow, including how to visualize the outp
 | ksnp3_task | **memory** | Int | Amount of memory/RAM (in GB) to allocate to this task | 8 | Optional |
 | ksnp3_task | **previous_ksnp3_snps** | File | File with existing SNPs for the current run to be appended to.  |  | Optional |
 | ksnp3_workflow | **data_summary_column_names** | String | A comma-separated list of the column names from the sample-level data table for generating a data summary (presence/absence .csv matrix); e.g., "amrfinderplus_amr_genes,amrfinderplus_virulence_genes" |  | Optional |
-| ksnp3_workflow | **data_summary_terra_project** | String | The billing project for your current workspace. This can be found after the "#workspaces/" section in the workspace’s URL |  | Optional |
+| ksnp3_workflow | **data_summary_terra_project** | String | The billing project for your current workspace. This can be found after the "#workspaces/" section in the workspace's URL |  | Optional |
 | ksnp3_workflow | **data_summary_terra_table** | String | The name of the sample-level Terra data table that will be used for generating a data summary |  | Optional |
 | ksnp3_workflow | **data_summary_terra_workspace** | String | The name of the Terra workspace you are in. This can be found at the top of the webpage, or in the URL after the billing project. |  | Optional |
 | ksnp3_workflow | **midpoint_root_tree** | Boolean | If true, midpoint root the final tree | FALSE | Optional |

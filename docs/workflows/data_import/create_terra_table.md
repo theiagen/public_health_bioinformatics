@@ -22,7 +22,7 @@ The manual creation of Terra tables can be tedious and error-prone. This workflo
 | **Terra Task Name** | **Variable** | **Type** | **Description** | **Default attribute** | **Terra Status** |
 |---|---|---|---|---|---|
 | create_terra_table | **assembly_data** | Boolean | Set to true if your data is in FASTA format; set to false if your data is FASTQ format | | Required |
-| create_terra_table | **data_location_path** | String | The full path to your data’s Google bucket folder location, including the gs://; can be easily copied by right-clicking and copying the link address in the header after navigating to the folder in the "Files" section of the "Data" tab on Terra (see below for example) | | Required |
+| create_terra_table | **data_location_path** | String | The full path to your data's Google bucket folder location, including the gs://; can be easily copied by right-clicking and copying the link address in the header after navigating to the folder in the "Files" section of the "Data" tab on Terra (see below for example) | | Required |
 | create_terra_table | **new_table_name** | String | The name of the new Terra table you want to create | | Required |
 | create_terra_table | **paired_end** | Boolean | Set to true if your data is paired-end FASTQ files; set to false if not | | Required |
 | create_terra_table | **terra_project** | String | The name of the Terra project where your data table will be created | | Required |
@@ -88,7 +88,7 @@ To include multiple file endings, please separate them with commas, as shown in 
 
 Your table will automatically appear in your workspace with the following fields:
 
-- Sample name (under the `new_table_name`_id column), which will be the section of the file’s name before any decimals or underscores (unless `file_ending` is provided)
+- Sample name (under the `new_table_name`_id column), which will be the section of the file's name before any decimals or underscores (unless `file_ending` is provided)
   - By default:
     - `sample01.lane2_flowcell3.fastq.gz` will be represented by `sample01` in the table
     - `sample02_negativecontrol.fastq.gz` will be represented by `sample02` in the table

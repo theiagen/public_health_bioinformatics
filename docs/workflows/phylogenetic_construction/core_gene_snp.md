@@ -36,7 +36,7 @@ This workflow runs on the set level.
 | core_gene_snp_workflow | **pan_tree** | Boolean | Boolean variable that instructs the workflow to create a phylogenetic tree and SNP distance matrix from the pangenome alignment. Align must also be set to true. | FALSE | Optional |
 | core_gene_snp_workflow | **data_summary_terra_workspace** | String | The name of the current Terra workspace you are in; this can be found at the top of the webpage, or in the URL after the billing project. |  | Optional |
 | core_gene_snp_workflow | **align** | Boolean | Boolean variable that instructs the workflow to generate core and pangenome alignments if "true". If "false", the workflow will produce only a pangenome summary. | TRUE | Optional |
-| core_gene_snp_workflow | **data_summary_terra_project** | String | The billing project for the current workspace; can be found after the "#workspaces/" section in the workflow’s URL |  | Optional |
+| core_gene_snp_workflow | **data_summary_terra_project** | String | The billing project for the current workspace; can be found after the "#workspaces/" section in the workflow's URL |  | Optional |
 | core_gene_snp_workflow | **sample_names** | Array[String] | Array of sample_ids from the data table used |  | Optional |
 | core_iqtree | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 32 | Optional |
 | core_iqtree | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |

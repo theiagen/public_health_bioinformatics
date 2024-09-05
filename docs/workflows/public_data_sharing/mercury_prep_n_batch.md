@@ -8,7 +8,7 @@
 
 ## Mercury_Prep_N_Batch_PHB
 
-Mercury prepares and formats metadata and sequencing files **located in Google Cloud Platform (GCP) buckets** for submission to national & international databases, currently NCBI & GISAID. Mercury was initially developed to ingest read, assembly, and metadata files associated with SARS-CoV-2 amplicon reads from clinical samples and format that data for submission per the [Public Health Alliance for Genomic Epidemiology (PH4GE)’s SARS-CoV-2 Contextual Data Specifications](https://github.com/pha4ge/SARS-CoV-2-Contextual-Data-Specification).
+Mercury prepares and formats metadata and sequencing files **located in Google Cloud Platform (GCP) buckets** for submission to national & international databases, currently NCBI & GISAID. Mercury was initially developed to ingest read, assembly, and metadata files associated with SARS-CoV-2 amplicon reads from clinical samples and format that data for submission per the [Public Health Alliance for Genomic Epidemiology (PH4GE)'s SARS-CoV-2 Contextual Data Specifications](https://github.com/pha4ge/SARS-CoV-2-Contextual-Data-Specification).
 
 Currently, Mercury supports submission preparation for SARS-CoV-2, mpox, and influenza. These organisms have different metadata requirements, and are submitted to different repositories; the following table lists the repositories for each organism & what is supported in Mercury:
 
@@ -95,9 +95,9 @@ This workflow runs on the set-level.
 | trim_genbank_fastas | **cpu** | Int | The number of CPUs assigned to this task | 1 | Optional |
 | trim_genbank_fastas | **disk_size** | Int | The amount of storage (in GB) assigned to this task | 100 | Optional |
 | trim_genbank_fastas | **docker** | String | The docker image used to run this task | us-docker.pkg.dev/general-theiagen/staphb/vadr:1.3 | Optional |
-| trim_genbank_fastas | **max_length** | Int | Only for "sars-cov-2" submissions; the maximum genome length for trimming terminal ambiguous nucleotides. If your sample’s genome is higher than this value, the workflow will error/fail. | 30000 | Optional |
+| trim_genbank_fastas | **max_length** | Int | Only for "sars-cov-2" submissions; the maximum genome length for trimming terminal ambiguous nucleotides. If your sample's genome is higher than this value, the workflow will error/fail. | 30000 | Optional |
 | trim_genbank_fastas | **memory** | Int | The amount of RAM (in GB) assigned to this task | 2 | Optional |
-| trim_genbank_fastas | **min_length** | Int | Only for "sars-cov-2" submissions; the minimum genome length for trimming terminal ambiguous nucleotides. If your sample’s genome is lower than this value, the workflow will error/fail.  | 50 | Optional |
+| trim_genbank_fastas | **min_length** | Int | Only for "sars-cov-2" submissions; the minimum genome length for trimming terminal ambiguous nucleotides. If your sample's genome is lower than this value, the workflow will error/fail.  | 50 | Optional |
 | version_capture | **docker** | String | The Docker image used to run the version_capture task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
 | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
 

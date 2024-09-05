@@ -24,7 +24,7 @@ While this workflow is technically a set-level workflow, it works on the sample-
 | usher | **docker** | String | The docker imaged used to run UShER | us-docker.pkg.dev/general-theiagen/pathogengenomics/usher:0.6.2 | Optional |
 | usher | **memory** | Int | Memory, in GB, to be allocated to UShER | 32 | Optional |
 | usher | **mutation_annotated_tree_pb** | File | Required for organisms other than sars-cov-2, mpox, RSV-A or RSV-B. This is the mutation-annotated global phylogeny upon which your samples will be placed  |  | Optional, Required |
-| usher | **reference_genome** | File | Required for organisms other than sars-cov-2, mpox, RSV-A or RSV-B. This is the reference genome used to determine your sequence’s mutations to accurately place the sample on the phylogeny.  |  | Optional, Required |
+| usher | **reference_genome** | File | Required for organisms other than sars-cov-2, mpox, RSV-A or RSV-B. This is the reference genome used to determine your sequence's mutations to accurately place the sample on the phylogeny.  |  | Optional, Required |
 | usher | **subtree_size** | Int | Indicates how many of the closest-related samples you want to show in a subtree; more subtrees are made if there is more sequence diversity in the set of input samples (multiple subtrees are only generated if this workflow is run on the set level). | 20 | Optional |
 | version_capture | **docker** | String | The Docker image used to run the version_capture task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
 | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |

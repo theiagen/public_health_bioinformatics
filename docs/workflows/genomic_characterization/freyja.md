@@ -428,7 +428,7 @@ This workflow runs on the set level.
 
     ##### `freyja_plot_task` {#freyja_plot_task}
 
-    This task will aggregate multiple samples together, and then creates a plot. Several optional inputs dictate the plot appearance (see each variable’s description for more information).
+    This task will aggregate multiple samples together, and then creates a plot. Several optional inputs dictate the plot appearance (see each variable's description for more information).
 
     !!! techdetails "Freyja Plot Technical Details"
 
@@ -482,7 +482,7 @@ This workflow runs on the set level.
 
 ??? task "`freyja_dashboard_task` Details"
 
-    This task will aggregate multiple samples together, and then create an interactive HTML visualization. Several optional inputs dictate the dashboard appearance (see each variable’s description for more information).
+    This task will aggregate multiple samples together, and then create an interactive HTML visualization. Several optional inputs dictate the dashboard appearance (see each variable's description for more information).
 
     !!! techdetails "Freyja Dashboard Technical Details"
     

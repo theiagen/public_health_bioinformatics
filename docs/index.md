@@ -4,7 +4,7 @@ title: Overview
 
 ## Documentation and Resources
 
-Theiagen’s approach to genomic analysis in public health typically uses the [Terra](https://terra.bio/) platform to run workflows that undertake bioinformatic analysis, then uses other platforms for visualization of the resulting data. Theiagen’s **Public Health Bioinformatics (PHB)** repository contains workflows for the characterization, genomic epidemiology, and sharing of pathogen genomes of public health concern. Workflows are available for viruses, bacteria, and fungi.
+Theiagen's approach to genomic analysis in public health typically uses the [Terra](https://terra.bio/) platform to run workflows that undertake bioinformatic analysis, then uses other platforms for visualization of the resulting data. Theiagen's **Public Health Bioinformatics (PHB)** repository contains workflows for the characterization, genomic epidemiology, and sharing of pathogen genomes of public health concern. Workflows are available for viruses, bacteria, and fungi.
 
 !!! dna "Our Open Source Philosophy"
     PHB source code is publicly available on [GitHub](https://github.com/theiagen/public_health_bioinformatics)!

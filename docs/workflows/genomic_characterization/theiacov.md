@@ -75,7 +75,7 @@ The compatibility of each workflow with each pathogen is shown below:
 | ONT | ✅ | ✅ | ✅ | ❌ | ✅ | ✅ | ✅ |
 | FASTA | ✅ | ✅ | ❌ | ✅ | ✅ | ✅ | ✅ |
 
-We’ve provided the following information to help you set up the workflow for each organism in the form of input JSONs.
+We've provided the following information to help you set up the workflow for each organism in the form of input JSONs.
 
 ### Inputs
 
@@ -127,7 +127,7 @@ All TheiaCoV Workflows (not TheiaCoV_FASTA_Batch)
 | consensus | **cpu** | Int | Amount of CPUs to allocate to the task | 8 | Optional | CL, ONT | sars-cov-2 |
 | consensus | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | CL, ONT | sars-cov-2 |
 | consensus | **docker** | String | Docker container used in this task | us-docker.pkg.dev/general-theiagen/staphb/artic-ncov2019-epi2me | Optional | ONT | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
-| consensus | **medaka_model** | String | In order to obtain the best results, the appropriate model must be set to match the sequencer’s basecaller model; this string takes the format of {pore}_{device}_{caller variant}_{caller_version}. See also https://github.com/nanoporetech/medaka?tab=readme-ov-file#models. | r941_min_high_g360 | Optional | CL, ONT | sars-cov-2 |
+| consensus | **medaka_model** | String | In order to obtain the best results, the appropriate model must be set to match the sequencer's basecaller model; this string takes the format of {pore}_{device}_{caller variant}_{caller_version}. See also https://github.com/nanoporetech/medaka?tab=readme-ov-file#models. | r941_min_high_g360 | Optional | CL, ONT | sars-cov-2 |
 | consensus | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 16 | Optional | CL, ONT | sars-cov-2 |
 | consensus_qc | **cpu** | Int | Amount of CPUs to allocate to the task | 1 | Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2 |
 | consensus_qc | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2 |
@@ -254,7 +254,7 @@ All TheiaCoV Workflows (not TheiaCoV_FASTA_Batch)
 | pangolin4 | **max_ambig** | Float | The maximum proportion of Ns allowed for pangolin to attempt an assignment | 0.5 | Optional | CL, FASTA, ONT, PE, SE | sars-cov-2 |
 | pangolin4 | **memory** | Int | Memory, in GB, allocated to this task | 8 | Optional | CL, FASTA, ONT, PE, SE | sars-cov-2 |
 | pangolin4 | **min_length** | Int | Minimum query length allowed for pangolin to attempt an assignment | 10000 | Optional | CL, FASTA, ONT, PE, SE | sars-cov-2 |
-| pangolin4 | **pangolin_arguments** | String | Optional arguments for pangolin e.g. ''--skip-scorpio'’ | | Optional | CL, FASTA, ONT, PE, SE | sars-cov-2 |
+| pangolin4 | **pangolin_arguments** | String | Optional arguments for pangolin e.g. ''--skip-scorpio'' | | Optional | CL, FASTA, ONT, PE, SE | sars-cov-2 |
 | pangolin4 | **skip_designation_cache** | Boolean | A True/False option that determines if the designation cache should be used | FALSE | Optional | CL, FASTA, ONT, PE, SE | sars-cov-2 |
 | pangolin4 | **skip_scorpio** | Boolean | A True/False option that determines if scorpio should be skipped. | FALSE | Optional | CL, FASTA, ONT, PE, SE | sars-cov-2 |
 | qc_check_task | **ani_highest_percent** | Float | Internal component, do not modify | | Do not modify, Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
@@ -342,8 +342,8 @@ All TheiaCoV Workflows (not TheiaCoV_FASTA_Batch)
 | vadr | **min_length** | Int | Minimum length subsequence to possibly replace Ns for the http://fasta-trim-terminal-ambigs.pl/ VADR script | 50 | Optional | CL, FASTA, ONT, PE, SE | MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | vadr | **skip_length** | Int | Minimum assembly length (unambiguous) to run VADR | 10000 | Optional | CL | MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | vadr | **vadr_opts** | String | Additional options to provide to VADR | | Optional | CL | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
-| version_capture | **docker** | String | The Docker image used to run the version_capture task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional | ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
-| version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) | | Optional | ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
+| version_capture | **docker** | String | The Docker image used to run the version_capture task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional | ONT, PE, SE, FASTA, CL | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
+| version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) | | Optional |  ONT, PE, SE, FASTA, CL | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | workflow name | **adapters** | File | File that contains the adapters used | /bbmap/resources/adapters.fa | Optional | PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | workflow name | **consensus_min_freq** | Float | The minimum frequency for a variant to be called a SNP in consensus genome | 0.6 | Optional | PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | workflow name | **flu_segment** | String | Influenza genome segment being analyzed. Options: "HA" or "NA". | HA | Optional, Required | FASTA | |
@@ -622,7 +622,7 @@ All input reads are processed through "core tasks" in the TheiaCoV Illumina, ONT
 
     ??? toggle "Host removal"
     
-        All reads of human origin **are removed**, including their mates, by using NCBI’s [**human read removal tool (HRRT)**](https://github.com/ncbi/sra-human-scrubber). 
+        All reads of human origin **are removed**, including their mates, by using NCBI's [**human read removal tool (HRRT)**](https://github.com/ncbi/sra-human-scrubber). 
 
         HRRT is based on the [SRA Taxonomy Analysis Tool](https://doi.org/10.1186/s13059-021-02490-0) and employs a k-mer database constructed of k-mers from Eukaryota derived from all human RefSeq records with any k-mers found in non-Eukaryota RefSeq records subtracted from the database.
 
@@ -655,7 +655,7 @@ All input reads are processed through "core tasks" in the TheiaCoV Illumina, ONT
         - [BBDuk](https://jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/bbduk-guide/)  (*"Bestus Bioinformaticus" Decontamination Using Kmers*) is then used to trim the adapters and filter out all reads that have a 31-mer match to [PhiX](https://emea.illumina.com/products/by-type/sequencing-kits/cluster-gen-sequencing-reagents/phix-control-v3.html), which is commonly added to Illumina sequencing runs to monitor and/or improve overall run quality.
         
         ??? toggle "What are adapters and why do they need to be removed?"
-            Adapters are manufactured oligonucleotide sequences attached to DNA fragments during the library preparation process. In Illumina sequencing, these adapter sequences are required for attaching reads to flow cells. You can read more about Illumina adapters [here](https://emea.support.illumina.com/bulletins/2020/06/illumina-adapter-portfolio.html). For genome analysis, it’s important to remove these sequences since they’re not actually from your sample. If you don’t remove them, the downstream analysis may be affected.
+            Adapters are manufactured oligonucleotide sequences attached to DNA fragments during the library preparation process. In Illumina sequencing, these adapter sequences are required for attaching reads to flow cells. You can read more about Illumina adapters [here](https://emea.support.illumina.com/bulletins/2020/06/illumina-adapter-portfolio.html). For genome analysis, it's important to remove these sequences since they're not actually from your sample. If you don't remove them, the downstream analysis may be affected.
 
     ??? toggle "Read Quantification"
 
@@ -695,7 +695,7 @@ All input reads are processed through "core tasks" in the TheiaCoV Illumina, ONT
 
     ??? toggle "Host removal"
     
-        All reads of human origin **are removed**, including their mates, by using NCBI’s [**human read removal tool (HRRT)**](https://github.com/ncbi/sra-human-scrubber). 
+        All reads of human origin **are removed**, including their mates, by using NCBI's [**human read removal tool (HRRT)**](https://github.com/ncbi/sra-human-scrubber). 
 
         HRRT is based on the [SRA Taxonomy Analysis Tool](https://doi.org/10.1186/s13059-021-02490-0) and employs a k-mer database constructed of k-mers from Eukaryota derived from all human RefSeq records with any k-mers found in non-Eukaryota RefSeq records subtracted from the database.
 
@@ -1123,7 +1123,7 @@ All TheiaCoV Workflows (not TheiaCoV_FASTA_Batch)
 | trimmomatic_docker | String | Docker container used with trimmomatic | PE, SE |
 | trimmomatic_version | String | The version of Trimmomatic used | PE, SE |
 | vadr_alerts_list | File | A file containing all of the fatal alerts as determined by VADR | CL, FASTA, ONT, PE, SE |
-| vadr_all_outputs_tar_gz | File | A .tar.gz file (gzip-compressed tar archive file) containing all outputs from the VADR command v-annotate.pl. This file must be uncompressed & extracted to see the many files within. See https://github.com/ncbi/vadr/blob/master/documentation/formats.md#format-of-v-annotatepl-output-filesfor more complete description of all files present within the archive. Useful when deeply investigating a sample’s genome & annotations. | CL, FASTA, ONT, PE, SE |
+| vadr_all_outputs_tar_gz | File | A .tar.gz file (gzip-compressed tar archive file) containing all outputs from the VADR command v-annotate.pl. This file must be uncompressed & extracted to see the many files within. See https://github.com/ncbi/vadr/blob/master/documentation/formats.md#format-of-v-annotatepl-output-filesfor more complete description of all files present within the archive. Useful when deeply investigating a sample's genome & annotations. | CL, FASTA, ONT, PE, SE |
 | vadr_classification_summary_file | File | Per-sequence tabular classification file. See https://github.com/ncbi/vadr/blob/master/documentation/formats.md#explanation-of-sqc-suffixed-output-files for more complete description. | CL, FASTA, ONT, PE, SE |
 | vadr_docker | String | Docker image used to run VADR | CL, FASTA, ONT, PE, SE |
 | vadr_fastas_zip_archive | File | Zip archive containing all fasta files created during VADR analysis | CL, FASTA, ONT, PE, SE |

@@ -13,7 +13,7 @@
 
     Resubmission risks duplicate submissions and future failures.
 
-    Contact Theiagen (`support@theiagen.com`) to determine the reason for failure, and **only move forward with Theiagen’s guidance**.
+    Contact Theiagen (`support@theiagen.com`) to determine the reason for failure, and **only move forward with Theiagen's guidance**.
 
 !!! dna "Key Resources"
     - [Pathogen metadata formatter](../../assets/metadata_formatters/Terra_2_NCBI-PATHOGEN-metadata-2024-04-30.xlsx)
@@ -88,13 +88,13 @@ We recommend running a test submission before your first production submission t
 
 In the test submission, any real BioProject accession numbers you provide will not be recognized. You will have to make a "fake" or "test" BioProject. This cannot be done through the NCBI portal. Theiagen can provide assistance in creating this as it requires manual command line work on the NCBI FTP using the account they provided for you.
 
-??? toggle "**What’s the difference between a test submission and a production submission?**"
+??? toggle "**What's the difference between a test submission and a production submission?**"
 
     A production submission means that your submission using Terra_2_NCBI will be submitted to NCBI as if you were using the online portal. That means that anything you submit on production will be given to the ****real** **NCBI servers and appear and become searchable on the NCBI website.
     
-    A test submission gives your data to a completely detached **replica** of the production server. This means that any data you submit as a test will behave exactly **like a real submission, but since it’s detached, nothing **will appear on the NCBI website, and anything returned from the workflow (such as BioSample accession numbers) will be fake. If you search for these test BioSample accession numbers on the NCBI website, either (a) nothing will appear, or (b) it will link to a random sample. 
+    A test submission gives your data to a completely detached **replica** of the production server. This means that any data you submit as a test will behave exactly **like a real submission, but since it's detached, nothing **will appear on the NCBI website, and anything returned from the workflow (such as BioSample accession numbers) will be fake. If you search for these test BioSample accession numbers on the NCBI website, either (a) nothing will appear, or (b) it will link to a random sample. 
     
-    If you want your data to be on NCBI, you must run a production submission. Initially, NCBI locks the production folder so that the user doesn’t accidentally submit test data to the main database. You must have requested activation of the production folder prior to your first production submission.
+    If you want your data to be on NCBI, you must run a production submission. Initially, NCBI locks the production folder so that the user doesn't accidentally submit test data to the main database. You must have requested activation of the production folder prior to your first production submission.
 
 ### Inputs
 
@@ -139,7 +139,7 @@ This workflow runs on set-level data tables.
 | sra_tsv_to_xml | **memory** | Int | GB of RAM allocated for this task | 2 | Optional |
 | Terra_2_NCBI | **input_table** | File | Internal component; do not modify |  | Optional |
 | Terra_2_NCBI | **skip_biosample** | Boolean | Boolean switch to turn on actual production level submission | false | Optional |
-| Terra_2_NCBI | **submit_to_production** | Boolean | Used to indicate whether or not the workflow should submit to NCBI’s production environment. If set to true, then a Production submission will occur. Otherwise, by default (false), it will perform a Test submission. | false | Optional, Required |
+| Terra_2_NCBI | **submit_to_production** | Boolean | Used to indicate whether or not the workflow should submit to NCBI's production environment. If set to true, then a Production submission will occur. Otherwise, by default (false), it will perform a Test submission. | false | Optional, Required |
 | version_capture | **docker** | String | The Docker image used to run the version_capture task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
 | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
 

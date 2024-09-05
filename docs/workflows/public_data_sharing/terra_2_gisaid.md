@@ -38,7 +38,7 @@ This workflow runs on the sample level.
 | gisaid_upload | **disk_size** | Int | Disk size, in GB, to use with this task | 100 | Optional |
 | gisaid_upload | **docker** | String | Docker container for this task | us-docker.pkg.dev/general-theiagen/broadinstitute/gisaid-cli:3.0 | Optional |
 | gisaid_upload | **frameshift_notification** | String | See top of inputs section for explanation; the notification preference regarding frameshifts in your submission | catch_novel | Optional |
-| gisaid_upload | **gisaid_credentials** | File | [EITHER] A tab-delimited file containing the submitter’s GISAID username followed by their password, used to generate the GISAID authentication file. | | Optional, Required |
+| gisaid_upload | **gisaid_credentials** | File | [EITHER] A tab-delimited file containing the submitter's GISAID username followed by their password, used to generate the GISAID authentication file. | | Optional, Required |
 | gisaid_upload | **memory** | Int | Memory, in GB, to use with this task | 2 | Optional |
 | version_capture | **docker** | String | The Docker image used to run the version_capture task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
 | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |

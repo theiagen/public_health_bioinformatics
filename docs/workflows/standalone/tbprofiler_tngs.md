@@ -39,7 +39,7 @@ This workflow is still in experimental research stages. Documentation is minimal
 | tbprofiler | **cov_frac_threshold** | Int | A cutoff used to calculate the fraction of the region covered by ≤ this value | 1 | Optional |
 | tbprofiler | **cpu** | Int | Number of CPUs to use with this task | 8 | Optional |
 | tbprofiler | **disk_size** | Int | Disk size, in GB, to use with this task | 100 | Optional |
-| tbprofiler | **mapper** | String | The mapping tool used in TBProfiler to align the reads to the reference genome; see TBProfiler’s original documentation for available options. | bwa | Optional |
+| tbprofiler | **mapper** | String | The mapping tool used in TBProfiler to align the reads to the reference genome; see TBProfiler's original documentation for available options. | bwa | Optional |
 | tbprofiler | **memory** | Int | Memory, in GB, to use with this task | 16 | Optional |
 | tbprofiler | **min_af** | Float | The minimum allele frequency to call a variant | 0.1 | Optional |
 | tbprofiler | **min_af_pred** | Float | The minimum allele frequency to use a variant for resistance prediction | 0.1 | Optional |
@@ -48,7 +48,7 @@ This workflow is still in experimental research stages. Documentation is minimal
 | tbprofiler | **tbprofiler_custom_db** | File | TBProfiler uses by default the TBDB database; if you have a custom database you wish to use, you must provide a custom database in this field and set tbprofiler_run_custom_db to true |  | Optional |
 | tbprofiler | **tbprofiler_docker_image** | String | Docker container to use with this task | us-docker.pkg.dev/general-theiagen/staphb/tbprofiler:4.4.2 | Optional |
 | tbprofiler | **tbprofiler_run_custom_db** | Boolean |  | FALSE | Optional |
-| tbprofiler | **variant_caller** | String | Select a different variant caller for TBProfiler to use by writing it in this block; see TBProfiler’s original documentation for available options. | freebayes | Optional |
+| tbprofiler | **variant_caller** | String | Select a different variant caller for TBProfiler to use by writing it in this block; see TBProfiler's original documentation for available options. | freebayes | Optional |
 | tbprofiler | **variant_calling_params** | String | Enter additional variant calling parameters in this free text input to customize how the variant caller works in TBProfiler |  | Optional |
 | tbprofiler | **bases_to_crop** | Int | Indicate the number of bases to remove from the start and end of the read | 30 | Optional |
 | trimmomatic_pe | **cpu** | Int | Number of CPUs to use with this task | 4 | Optional |

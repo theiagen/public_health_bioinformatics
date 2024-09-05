@@ -28,16 +28,16 @@ This workflow runs on the set level.
 | download_terra_table | **docker** | String | The Docker image used to run this task | quay.io/theiagen/terra-tools:2023-06-21 | Optional |
 | download_terra_table | **disk_size** | String | The size of the disk used when running this task | 1 | Optional |
 | download_terra_table | **cpu** | Int | The number of cpus used to run this task | 1 | Optional |
-| czgenepi_prep | **assembly_fasta_column_name** | String | The column name where the sample’s assembly file can be found | assembly_fasta | Optional, Required |
-| czgenepi_prep | **county_column_name** | String | The column name where the samples’ originating county can be found | county | Optional, Required |
+| czgenepi_prep | **assembly_fasta_column_name** | String | The column name where the sample's assembly file can be found | assembly_fasta | Optional, Required |
+| czgenepi_prep | **county_column_name** | String | The column name where the samples' originating county can be found | county | Optional, Required |
 | czgenepi_prep | **organism** | String | The organism for data preparation. Options: "mpox" or "sars-cov-2" | sars-cov-2 | Optional |
 | czgenepi_prep | **is_private** | Boolean | Sets whether sample status is provate, or not | true | Optional |
 | czgenepi_prep | **genbank_accession_column_name** | String | The column name where the genbank accession for the sample can be found | genbank_accession | Optional |
-| czgenepi_prep | **country_column_name** | String | The column name where the sample’s originating country can be found | country | Optional, Required |
-| czgenepi_prep | **collection_date_column_name** | String | The column name where the sample’s collection date can be found | collection_date | Optional, Required |
-| czgenepi_prep | **state_column_name** | String | The column name where the sample’s originating state can be found | state | Optional, Required |
-| czgenepi_prep | **continent_column_name** | String | The column name where the sample’s originating continent can be found | continent | Optional, Required |
-| czgenepi_prep | **sequencing_date_column_name** | String | The column name where the sample’s sequencing data can be found | sequencing_date | Optional |
+| czgenepi_prep | **country_column_name** | String | The column name where the sample's originating country can be found | country | Optional, Required |
+| czgenepi_prep | **collection_date_column_name** | String | The column name where the sample's collection date can be found | collection_date | Optional, Required |
+| czgenepi_prep | **state_column_name** | String | The column name where the sample's originating state can be found | state | Optional, Required |
+| czgenepi_prep | **continent_column_name** | String | The column name where the sample's originating continent can be found | continent | Optional, Required |
+| czgenepi_prep | **sequencing_date_column_name** | String | The column name where the sample's sequencing data can be found | sequencing_date | Optional |
 | czgenepi_prep | **private_id_column_name** | String | The column name where the Private ID for the sample can be found | terra_table_name_id | Optional, Required |
 | czgenepi_wrangling | **memory** | Int | The memory (in GB) used to run this task | 8 | Optional |
 | czgenepi_wrangling | **docker** | String | The Docker image used to run this task | us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-08-08-2 | Optional |

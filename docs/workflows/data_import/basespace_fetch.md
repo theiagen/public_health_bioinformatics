@@ -10,7 +10,7 @@
 
 The `BaseSpace_Fetch` workflow facilitates the transfer of Illumina sequencing data from BaseSpace (a cloud location) to a workspace on the [Terra.bio](http://Terra.bio) platform. Rather than downloading the files to a local drive and then re-uploading them to another location, we can perform a cloud-to-cloud transfer with the `BaseSpace_Fetch` workflow.
 
-Some initial set-up is required to use the workflow. To access one’s BaseSpace account from within a workflow on Terra.bio, it is necessary to retrieve an access token and the API server address using the BaseSpace command line tool. The access token is unique to a BaseSpace account. If it is necessary to transfer data from multiple BaseSpace accounts, multiple access tokens will need to be retrieved. Please see the "Retrieving BaseSpace Access Credentials" section below.
+Some initial set-up is required to use the workflow. To access one's BaseSpace account from within a workflow on Terra.bio, it is necessary to retrieve an access token and the API server address using the BaseSpace command line tool. The access token is unique to a BaseSpace account. If it is necessary to transfer data from multiple BaseSpace accounts, multiple access tokens will need to be retrieved. Please see the "Retrieving BaseSpace Access Credentials" section below.
 
 In this document, we provide instructions for both the retrieval of the BaseSpace access token and running the BaseSpace_Fetch workflow.
 
@@ -136,7 +136,7 @@ This process must be performed on a command line (ideally on a Linux or MacOS co
         1. Version (latest numbered version) from the dropdown menu.
         2. Data table to use.
         3. Samples that you wan to import data for. 
-    3. Set up the `BaseSpace_Fetch` "INPUTS" form as below. **Don’t forget to fill out `this.basespace_sample_id` if your basespace sample IDs are different from the basespace sample names in the SampleSheet.csv file.**
+    3. Set up the `BaseSpace_Fetch` "INPUTS" form as below. **Don't forget to fill out `this.basespace_sample_id` if your basespace sample IDs are different from the basespace sample names in the SampleSheet.csv file.**
 
         ![Step11](../../assets/basespace_fetch/step11.png){width="50%"}
 
@@ -161,7 +161,7 @@ This workflow runs on the sample level.
 | basespace_fetch | **basespace_sample_name** | String | The BaseSpace sample name is the sample identifier used in BaseSpace. This identifier is set on the sample sheet at the onset of an Illumina sequencing run. | | Required |
 | basespace_fetch | **sample_name** | String | The sample name is the sample identifier used in the Terra.bio data table corresponding to the metadata associated with the sample to be transferred from BaseSpace | | Required |
 | basespace_fetch | **basespace_sample_id** | String | The BaseSpace sample ID is an optional additional identifier used in BaseSpace. If a sample has a BaseSpace sample ID it should be available on the sample sheet and must be included in the metadata sheet upload prior to running BaseSpace_Fetch. | | Optional |
-| fetch_bs | **cpu** | Int | This input is the number of CPU’s used in the data transfer. To facilitate the transfer of many files this runtime parameter may be increased. | 2 | Optional |
+| fetch_bs | **cpu** | Int | This input is the number of CPU's used in the data transfer. To facilitate the transfer of many files this runtime parameter may be increased. | 2 | Optional |
 | fetch_bs | **disk_size** | Int | The disk size is the amount of storage in GigaBytes (GB) requested for the VM to run the data transfer task. | 100 | Optional |
 | fetch_bs | **docker_image** | String | The Docker image used to run BaseSpace_Fetch task. | "us-docker.pkg.dev/general-theiagen/theiagen/basespace_cli:1.2.1" | Optional |
 | fetch_bs | **memory** | Int | The memory is the amount of RAM/memory requested for running the data transfer task. | 8 | Optional |

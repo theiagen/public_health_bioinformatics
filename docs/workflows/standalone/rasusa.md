@@ -55,7 +55,7 @@ RASUSA functions to randomly downsample the number of raw reads to a user-define
 | read1_subsampled | File | New read1 FASTQ files downsampled to desired coverage |
 | read2_subsampled | File | New read2 FASTQ files downsampled to desired coverage |
 
-!!! tip "Don’t Forget!"
+!!! tip "Don't Forget!"
     Remember to use the subsampled reads in downstream analyses with `this.read1_subsampled` and `this.read2_subsampled` inputs.
 
 !!! info "Verify"

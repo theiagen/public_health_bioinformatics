@@ -22,7 +22,7 @@ The `Snippy_Streamline_FASTA` workflow is an all-in-one approach to generating a
     - masking user-specified regions of the genome (providing a bed file to `snippy_core_bed`)
     - producing either a core or pan-genome phylogeny and SNP-matrix (`core_genome`; default = true)
     - masking recombination detected by gubbins, or not (`use_gubbins`; default=true)
-    - choosing the nucleotide substitution (by specifying `iqtree2_model`), or allowing IQ-Tree’s ModelFinder to identify the best model for your dataset (default)
+    - choosing the nucleotide substitution (by specifying `iqtree2_model`), or allowing IQ-Tree's ModelFinder to identify the best model for your dataset (default)
 
 !!! info "Assembly Data Requirements"
 
@@ -65,7 +65,7 @@ The `Snippy_Streamline_FASTA` workflow is an all-in-one approach to generating a
 | snippy_tree_wf | **call_shared_variants** | Boolean | Activates the shared variants analysis task | TRUE | Optional |
 | snippy_tree_wf | **core_genome** | Boolean | When "true", workflow generates core genome phylogeny; when "false", whole genome is used | TRUE | Optional |
 | snippy_tree_wf | **data_summary_column_names** | String | A comma-separated list of the column names from the sample-level data table for generating a data summary (presence/absence .csv matrix) |  | Optional |
-| snippy_tree_wf | **data_summary_terra_project** | String | The billing project for your current workspace. This can be found after the "#workspaces/" section in the workspace’s URL |  | Optional |
+| snippy_tree_wf | **data_summary_terra_project** | String | The billing project for your current workspace. This can be found after the "#workspaces/" section in the workspace's URL |  | Optional |
 | snippy_tree_wf | **data_summary_terra_table** | String | The name of the sample-level Terra data table that will be used for generating a data summary |  | Optional |
 | snippy_tree_wf | **data_summary_terra_workspace** | String | The name of the Terra workspace you are in. This can be found at the top of the webpage, or in the URL after the billing project. |  | Optional |
 | snippy_tree_wf | **gubbins_cpu** | Int | CPUs to allocate to Gubbins | 4 | Optional |
