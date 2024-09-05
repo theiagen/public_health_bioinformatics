@@ -48,7 +48,7 @@ The main workflow is **Freyja_FASTQ_PHB** ([Figure 1](freyja.md#figure1)). Depen
 
 Two options are available to visualize the Freyja results: **Freyja_Plot_PHB** and **Freyja_Dashboard_PHB.** Freyja_Plot_PHB aggregates multiple samples using output from Freyja_FASTQ_PHB to generate a plot that shows fractional abundance estimates for all samples. including the option to plot sample collection date information. Alternatively, **Freyja_Dashboard_PHB** aggregates multiple samples using output from Freyja_FASTQ to generate an interactive visualization. This workflow requires an additional input field called viral load, which is the number of viral copies per liter.
 
-## Freyja_Update_PHB
+## Freyja_Update_PHB {#freyja_update}
 
 This workflow will copy the Freyja reference files (`usher_barcodes.feather` and `curated_lineages.json`) to a GCP URI of your choice for usage in Freyja_FASTQ_PHB.
 
@@ -72,7 +72,7 @@ We recommend running this workflow with **"Run inputs defined by file paths"** s
 
 This workflow does not produce any outputs that appear in a Terra data table. The reference files will appear at the location specified with the `gcp_uri` input variable.
 
-## Freyja_FASTQ_PHB
+## Freyja_FASTQ_PHB {#freyja_fastq}
 
 Freyja measures SNV frequency and sequencing depth at each position in the genome to return an estimate of the true lineage abundances in the sample. The method uses lineage-defining "barcodes" that, for SARS-CoV-2, are derived from the UShER global phylogenetic tree as a base set for demixing. **Freyja_FASTQ_PHB** returns as output a TSV file that includes the lineages present and their corresponding abundances, along with other values.
 
@@ -394,7 +394,7 @@ The main output file used in subsequent Freyja workflows is found under the `fre
 | trimmomatic_docker | String | Docker container for Trimmomatic | PE, SE |
 | trimmomatic_version | String | The version of Trimmomatic used | PE, SE |
 
-## Freyja_Plot_PHB
+## Freyja_Plot_PHB {#freyja_plot}
 
 This workflow visualizes aggregated freyja_demixed output files produced by Freyja_FASTQ in a single plot (pdf format) which provides fractional abundance estimates for all aggregated samples.
 
@@ -449,7 +449,7 @@ This workflow runs on the set level.
 | **freyja_plot_wf_analysis_date** | String | The date of analysis |
 | **freyja_plot_wf_version** | String | The version of the Public Health Bioinformatics (PHB) repository used |
 
-## Freyja_Dashboard_PHB
+## Freyja_Dashboard_PHB {#freyja_dashboard}
 
 This workflow creates a group of interactive visualizations based off of the aggregated freyja_demixed output files produced by Freyja_FASTQ called a "dashboard." Creating this dashboard requires knowing the viral load of your samples (viral copies/L).
 
