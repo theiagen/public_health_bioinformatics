@@ -1,6 +1,7 @@
 site_name: Public Health Bioinformatics
 site_author: Theiagen Genomics
 site_description: A collection of bioinformatics workflows for genomic characterization, submission preparation, and genomic epidemiology of pathogens of public health concern.
+site_url: https://theiagen.github.io/public_health_bioinformatics/
 
 repo_url: https://github.com/theiagen/public_health_bioinformatics
 
@@ -214,6 +215,7 @@ plugins:
       type: iso_date
   - search
   - glightbox
+  - mike
   # - section-index
 
 extra_javascript:
@@ -225,7 +227,7 @@ extra_css:
 
 extra:
   social:
-    - icon: fontawesome/brands/github-alt
+    - icon: fontawesome/brands/github
       link: https://github.com/theiagen
     - icon: fontawesome/brands/twitter
       link: https://twitter.com/theiagen
