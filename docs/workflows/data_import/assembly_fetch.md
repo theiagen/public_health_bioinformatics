@@ -28,20 +28,20 @@ This workflow runs on the sample level.
 | reference_fetch | **samplename** | String | Your sample's name |  | Required |
 | reference_fetch | **assembly_fasta** | File | Assembly FASTA file of your sample |  | Optional |
 | reference_fetch | **ncbi_accession** | String | NCBI accession passed to the NCBI datasets task to be downloaded. Example: GCF_000006945.2 (Salmonella enterica subsp. enterica, serovar Typhimurium str. LT2 reference genome) |  | Optional |
-| ncbi_datasets_download_genome_accession | **cpu** | Int | number of cpus used to run ncbi datasets | 1 | Optional |
-| ncbi_datasets_download_genome_accession | **disk_size** | Int | Amount of storage in GigaBytes (GB) requested for the VM to run the NCBI datasets task | 50 | Optional |
-| ncbi_datasets_download_genome_accession | **docker** | String | Docker image used to run the NCBI datasets task | "us-docker.pkg.dev/general-theiagen/staphb/ncbi-datasets:14.13.2" | Optional |
+| ncbi_datasets_download_genome_accession | **cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional |
+| ncbi_datasets_download_genome_accession | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 50 | Optional |
+| ncbi_datasets_download_genome_accession | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/staphb/ncbi-datasets:14.13.2" | Optional |
 | ncbi_datasets_download_genome_accession | **include_gbff** | Boolean | set to true if you would like the GenBank Flat File (GBFF) file included in the output. It contains nucleotide sequence, metadata, and annotations. | FALSE | Optional |
 | ncbi_datasets_download_genome_accession | **include_gff3** | Boolean | set to true if you would like the Genomic Feature File v3 (GFF3) file included in the output. It contains nucleotide sequence, metadata, and annotations | FALSE | Optional |
-| ncbi_datasets_download_genome_accession | **memory** | Int | Amount of RAM/memory requested for running the NCBI datasets task | 4 | Optional |
-| referenceseeker | **cpu** | Int | number of cpus used to run referenceseeker | 4 | Optional |
-| referenceseeker | **disk_size** | Int | Amount of storage in GigaBytes (GB) requested for the VM to run the referenceseeker task | 200 | Optional |
-| referenceseeker | **docker** | String | Docker image used to run the referenceseeker task | "us-docker.pkg.dev/general-theiagen/biocontainers/referenceseeker:1.8.0--pyhdfd78af_0" | Optional |
-| referenceseeker | **memory** | Int | Amount of RAM/memory requested to run the referenceseeker task | 16 | Optional |
+| ncbi_datasets_download_genome_accession | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 4 | Optional |
+| referenceseeker | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional |
+| referenceseeker | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 200 | Optional |
+| referenceseeker | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/biocontainers/referenceseeker:1.8.0--pyhdfd78af_0" | Optional |
+| referenceseeker | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 16 | Optional |
 | referenceseeker | **referenceseeker_ani_threshold** | Float | ANI threshold used to exclude ref genomes when ANI value less than this value. | 0.95 | Optional |
 | referenceseeker | **referenceseeker_conserved_dna_threshold** | Float | Conserved DNA threshold used to exclude ref genomes when conserved DNA value is less than this value. | 0.69 | Optional |
 | referenceseeker | **referenceseeker_db** | File | Database used by the referenceseeker tool that contains bacterial genomes from RefSeq release 205. Downloaded from referenceseeker GitHub repo. | "gs://theiagen-public-files-rp/terra/theiaprok-files/referenceseeker-bacteria-refseq-205.v20210406.tar.gz" | Optional |
-| version_capture | **docker** | String | The Docker image used to run the version_capture task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
+| version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
 | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
 
 ### Analysis Tasks

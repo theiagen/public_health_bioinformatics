@@ -14,14 +14,14 @@ The GAMBIT_Query_PHB workflow performs taxon assignment of a genome assembly usi
 
 | **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
 |---|---|---|---|---|---|
-| gambit_query | assembly_fasta | File | Assembly file in FASTA format |  | Required |
-| gambit_query | samplename | String | Sample name |  | Required |
-| gambit | cpu | Int | Number of CPUs | 8 | Optional |
-| gambit | disk_size | Int | Disk size in GB | 100 | Optional |
-| gambit | memory | Int | Memory in GB | 16 | Optional |
-| gambit | docker | String | Docker image to use | "us-docker.pkg.dev/general-theiagen/staphb/gambit:1.0.0" | Optional |
-| gambit | gambit_db_genomes | File | Database of metadata for assembled query genomes; requires complementary signatures file. If not provided, uses default database "/gambit-db" | "gs://gambit-databases-rp/2.0.0/gambit-metadata-2.0.0-20240628.gdb" | Optional |
-| gambit | gambit_db_signatures | File | Signatures file; requires complementary genomes file. If not specified, the file from the docker container will be used. | "gs://gambit-databases-rp/2.0.0/gambit-signatures-2.0.0-20240628.gs" | Optional |
+| gambit_query | **assembly_fasta** | File | Assembly file in FASTA format |  | Required |
+| gambit_query | **samplename** | String | Sample name |  | Required |
+| gambit | **cpu** | Int | Number of CPUs to allocate to the task | 8 | Optional |
+| gambit | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
+| gambit | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 16 | Optional |
+| gambit | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/staphb/gambit:1.0.0" | Optional |
+| gambit | **gambit_db_genomes** | File | Database of metadata for assembled query genomes; requires complementary signatures file. If not provided, uses default database "/gambit-db" | "gs://gambit-databases-rp/2.0.0/gambit-metadata-2.0.0-20240628.gdb" | Optional |
+| gambit | **gambit_db_signatures** | File | Signatures file; requires complementary genomes file. If not specified, the file from the docker container will be used. | "gs://gambit-databases-rp/2.0.0/gambit-signatures-2.0.0-20240628.gs" | Optional |
 
 ### Workflow Tasks
 

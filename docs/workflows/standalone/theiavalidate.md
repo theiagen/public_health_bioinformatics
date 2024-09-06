@@ -53,14 +53,14 @@ Please note that all string inputs **must** be enclosed in quotation marks; for 
 | theiavalidate | **terra_project2_name** | String | If the table2_name is located in a different Terra project, indicate it here. Otherwise, the workflow will look for table2_name in the Terra project indicated in terra_project1_name. | value for `terra_project1_name` | Optional |
 | theiavalidate | **terra_workspace2_name** | String | If the table2_name is located in a different Terra workspace, indicate it here. Otherwise, the workflow will look for table2_name in the Terra workspace indicated in terra_workspace1_name. | value for `terra_workspace1_name` | Optional |
 | theiavalidate | **validation_criteria_tsv** | File | If the user wants to specify a different comparison than the default exact string match, they may supply a TSV file that indicates the different options (see the section below this table). |  | Optional |
-| compare_two_tsvs | **cpu** | Int | CPUs to use with TheiaValidate | 2 | Optional |
+| compare_two_tsvs | **cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional |
 | compare_two_tsvs | **debug_output** | Boolean | Set to true to enable more outputs; useful when debugging | FALSE | Optional |
-| compare_two_tsvs | **disk_size** | Int | Disk size, in GB, for TheiaValidate | 100 | Optional |
-| compare_two_tsvs | **docker** | String | Docker container for TheiaValidate | us-docker.pkg.dev/general-theiagen/theiagen/theiavalidate:0.1.0 | Optional |
-| compare_two_tsvs | **memory** | Int | Memory, in GB, for TheiaValidate | 4 | Optional |
+| compare_two_tsvs | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
+| compare_two_tsvs | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/theiagen/theiavalidate:0.1.0 | Optional |
+| compare_two_tsvs | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 4 | Optional |
 | compare_two_tsvs | **na_values** | String | If the user knows a particular value in either table that they would like to be considered N/A, they can indicate those values in a comma-separated list here. Any changes here will overwrite the default and not append to the default list. Do not include whitespace. | -1.#IND,1.#QNAN,1.#IND,-1.#QNAN,#N/A,N/A,n/a,,#NA,NULL,null,NaN,-NaN,nan,-nan,None | Optional |
-| export_two_tsvs | **cpu** | Int | CPUs to use while exporting TSVs | 1 | Optional |
-| export_two_tsvs | **disk_size** | Int | Disk size, in GB, for exporting TSVs | 10 | Optional |
+| export_two_tsvs | **cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional |
+| export_two_tsvs | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 10 | Optional |
 
 The optional `validation_criteria_tsv` file takes the following format (tab-delimited; _a header line is required_):
 

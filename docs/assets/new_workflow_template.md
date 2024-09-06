@@ -4,7 +4,7 @@
 
 | **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
 |---|---|---|---|---|
-| [Workflow Type](../../workflows_overview/workflows-type.md/#link-to-workflow-type) | [Applicable Kingdom](../../workflows_overview/workflows-kingdom.md/#link-to-applicable-kingdom) | PHB <version with last changes> | <command-line compatibility> | <workflow type on terra> |
+| [Workflow Type](../../workflows_overview/workflows-type.md/#link-to-workflow-type) | [Applicable Kingdom](../../workflows_overview/workflows-kingdom.md/#link-to-applicable-kingdom) | PHB <version with last changes> | <command-line compatibility> | <workflow level on terra> |
 
 ## Workflow_Name_On_Terra
 

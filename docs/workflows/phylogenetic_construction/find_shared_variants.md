@@ -25,12 +25,12 @@ All variant data included in the sample set should be generated from aligning se
 | shared_variants_wf | **concatenated_file_name** | String | String of your choice to prefix output files | | Required |
 | shared_variants_wf | **samplenames** | Array[String] | The samples to be included in the analysis | | Required |
 | shared_variants_wf | **variants_to_cat** | Array[File] | The result file from the Snippy_Variants workflow | | Required |
-| cat_variants | **docker_image** | String | The docker image to use when concatenating the variant files | "us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1" | Optional |
-| shared_variants | **cpu** | Int | The number of CPUs to use when running the shared_variants task | 1 | Optional |
-| shared_variants | **disk_size** | Int | The disk size (in GB) to use when running the shared_variants task | 100 | Optional |
-| shared_variants | **docker** | String | The docker image to use when running the shared_variants task | "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-03-16" | Optional |
-| shared_variants | **memory** | Int | The memory (in GB) to use when running the shared_variants task | 8 | Optional |
-| version_capture | **docker** | String | The Docker image used to run the version_capture task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
+| cat_variants | **docker_image** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1" | Optional |
+| shared_variants | **cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional |
+| shared_variants | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
+| shared_variants | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-03-16" | Optional |
+| shared_variants | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional |
+| version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
 | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
 
 ### Tasks

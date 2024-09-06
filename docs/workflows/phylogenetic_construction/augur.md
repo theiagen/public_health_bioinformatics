@@ -40,12 +40,12 @@ This workflow runs on the sample level.
 | augur_prep | **nextclade_clade** | String | The Nextclade clade of the sample |  | Optional |
 | augur_prep | **pango_lineage** | String | The Pangolin lineage of the sample |  | Optional |
 | augur_prep | state | **String** | State (or province) where sample was collected |  | Optional |
-| prep_augur_metadata | **cpu** | Int | CPU resources allocated to the prep augur metadata task | 1 | Optional |
-| prep_augur_metadata | **disk_size** | Int | The size of the disk used for the prep augur metadata task | 10 | Optional |
-| prep_augur_metadata | **docker** | String | Docker tag used for the prep augur metadata task | us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1 | Optional |
-| prep_augur_metadata | **memory** | Int | Memory allocated to the prep augur metadata task | 3 | Optional |
+| prep_augur_metadata | **cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional |
+| prep_augur_metadata | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 10 | Optional |
+| prep_augur_metadata | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1 | Optional |
+| prep_augur_metadata | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 3 | Optional |
 | prep_augur_metadata | **organism** | String | The organism to be analyzed in Augur; options: "sars-cov-2", "flu", "MPXV", "rsv-a", "rsv-b" | sars-cov-2 | Optional |
-| version_capture | **docker** | String | The Docker image used to run the version_capture task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
+| version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
 | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
 
 #### Augur_Prep Outputs
@@ -218,7 +218,7 @@ This workflow runs on the set level. Please note that for every task, runtime pa
 | organism_parameters | **kraken_target_organism_input** | String | The organism whose abundance the user wants to check in their reads. This should be a proper taxonomic name recognized by the Kraken database. | Defaults are organism-specific. Please find default values for all organisms here: <https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl>. For an organism without set defaults, the default is "". | Optional |
 | organism_parameters | **nextclade_dataset_name_input** | String | NextClade organism dataset name | Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl>. For an organism without set defaults, the default is "NA". | Optional |
 | organism_parameters | **nextclade_dataset_tag_input** | String | NextClade organism dataset tag | Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl>. For an organism without set defaults, the default is "NA". | Optional |
-| organism_parameters | **pangolin_docker_image** | String | Docker tag used for running Pangolin | us-docker.pkg.dev/general-theiagen/staphb/pangolin:4.3.1-pdata-1.26 | Optional |
+| organism_parameters | **pangolin_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/pangolin:4.3.1-pdata-1.26 | Optional |
 | organism_parameters | **primer_bed_file** | File | The bed file containing the primers used when sequencing was performed | Defaults are organism-specific. Please find default values for all organisms here: <https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl>. For an organism without set defaults, an empty primer bed file is provided, "gs://theiagen-public-files/terra/theiacov-files/empty.bed", but will not be as useful as an organism specific primer bed file. | Optional |
 | organism_parameters | **reference_gff_file** | File | Reference GFF file for the organism being analyzed | Defaults are organism-specific. Please find default values for all organisms here: <https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl>. For an organism without set defaults, an empty gff file is provided, "gs://theiagen-public-files/terra/theiacov-files/empty.gff3", but will not be as useful as an organism specific gff file. | Optional |
 | organism_parameters | **vadr_max_length** | Int | Maximum length for the `fasta-trim-terminal-ambigs.pl` VADR script | Defaults are organism-specific. Please find default values for all organisms here: <https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl>. For an organism without set defaults, the default is 0. | Optional |

@@ -28,54 +28,54 @@ The TheiaMeta_Illumina_PE workflow processes Illumina paired-end (PE) reads ge
 | theiameta_illumina_pe | **read1** | File | Forward Illumina read in FASTQ file format |  | Required |
 | theiameta_illumina_pe | **read2** | File | Reverse Illumina read in FASTQ file format |  | Required |
 | theiameta_illumina_pe | **samplename** | String | Name of the sample being analyzed |  | Required |
-| assembled_reads_percent | **cpu** | Int | CPUs to use with samtools | 2 | Optional |
-| assembled_reads_percent | **disk_size** | Int | Disk size to use with samtools | 100 | Optional |
-| assembled_reads_percent | **docker** | String | Docker container for samtools | us-docker.pkg.dev/general-theiagen/staphb/samtools:1.17 | Optional |
-| assembled_reads_percent | **memory** | Int | Memory to use with samtools | 8 | Optional |
-| bwa | **cpu** | Int | CPUs to use | 6 | Optional |
-| bwa | **disk_size** | Int | Disk dize, in GB, to use with bwa | 100 | Optional |
-| bwa | **docker** | String | bwa docker image to use | us-docker.pkg.dev/general-theiagen/staphb/ivar:1.3.1-titan | Optional |
-| bwa | **memory** | Int | Memory, in GB, to use with bwa | 16 | Optional |
-| calculate_coverage | **cpu** | Int | CPUs to use with bedtools | 2 | Optional |
-| calculate_coverage | **disk_size** | Int | Disk size, in GB, to use with bedtools | 100 | Optional |
-| calculate_coverage | **docker** | String | bedtools docker image to use | us-docker.pkg.dev/general-theiagen/staphb/bedtools:2.31.0 | Optional |
-| calculate_coverage | **memory** | Int | Memory, in GB, to use with bedtools | 8 | Optional |
-| calculate_coverage_paf | **cpu** | Int | CPUs to use | 2 | Optional |
-| calculate_coverage_paf | **disk_size** | Int | Disk size, in GB, to use | 100 | Optional |
-| calculate_coverage_paf | **docker** | String | docker image to use | us-docker.pkg.dev/general-theiagen/quay/ubuntu:latest | Optional |
-| calculate_coverage_paf | **memory** | Int | Memory, in GB, to use | 8 | Optional |
-| compare_assemblies | **disk_size** | Int | Disk dize, in GB, to use with compare_assemblies | 100 | Optional |
-| kraken2_clean | **cpu** | Int | CPUs to use with kraken2 | 4 | Optional |
+| assembled_reads_percent | **cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional |
+| assembled_reads_percent | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
+| assembled_reads_percent | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/samtools:1.17 | Optional |
+| assembled_reads_percent | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional |
+| bwa | **cpu** | Int | Number of CPUs to allocate to the task | 6 | Optional |
+| bwa | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
+| bwa | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/ivar:1.3.1-titan | Optional |
+| bwa | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 16 | Optional |
+| calculate_coverage | **cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional |
+| calculate_coverage | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
+| calculate_coverage | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/bedtools:2.31.0 | Optional |
+| calculate_coverage | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional |
+| calculate_coverage_paf | **cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional |
+| calculate_coverage_paf | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
+| calculate_coverage_paf | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/quay/ubuntu:latest | Optional |
+| calculate_coverage_paf | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional |
+| compare_assemblies | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
+| kraken2_clean | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional |
 | kraken2_clean | **disk_size** | Int | GB of storage to request for VM used to run the kraken2 task. Increase this when using large (>30GB kraken2 databases such as the "k2_standard" database) | 100 | Optional |
-| kraken2_clean | **docker** | String | Docker image used to run the kraken2 task | us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.1.2-no-db | Optional |
-| kraken2_clean | **memory** | Int | GB of RAM allocated to the kraken2 task | 16 | Optional |
-| kraken2_raw | **cpu** | Int | CPUs to use with kraken2 | 4 | Optional |
+| kraken2_clean | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.1.2-no-db | Optional |
+| kraken2_clean | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 16 | Optional |
+| kraken2_raw | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional |
 | kraken2_raw | **disk_dize** | Int | GB of storage to request for VM used to run the kraken2 task. Increase this when using large (>30GB kraken2 databases such as the "k2_standard" database) | 100 | Optional |
-| kraken2_raw | **docker** | String | Docker image used to run the kraken2 task | us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.1.2-no-db | Optional |
-| kraken2_raw | **memory** | Int | GB of RAM allocated to the kraken2 task | 16 | Optional |
-| krona_clean | **cpu** | Int | CPUs to use with krona | 4 | Optional |
-| krona_clean | **disk_size** | Int | Disk dize, in GB, to use with krona | 100 | Optional |
-| krona_clean | **docker** | String | krona docker image to use | us-docker.pkg.dev/general-theiagen/biocontainers/krona:2.7.1--pl526_5 | Optional |
-| krona_clean | **memory** | Int | Memory, in GB, to use with krona | 8 | Optional |
-| krona_raw | **cpu** | Int | CPUs to use with krona | 4 | Optional |
-| krona_raw | **disk_size** | Int | Disk dize, in GB, to use with krona | 100 | Optional |
-| krona_raw | **docker** | String | krona docker image to use | us-docker.pkg.dev/general-theiagen/biocontainers/krona:2.7.1--pl526_5 | Optional |
-| krona_raw | **memory** | Int | Memory, in GB, to use with krona | 8 | Optional |
+| kraken2_raw | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.1.2-no-db | Optional |
+| kraken2_raw | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 16 | Optional |
+| krona_clean | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional |
+| krona_clean | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
+| krona_clean | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/biocontainers/krona:2.7.1--pl526_5 | Optional |
+| krona_clean | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional |
+| krona_raw | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional |
+| krona_raw | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
+| krona_raw | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/biocontainers/krona:2.7.1--pl526_5 | Optional |
+| krona_raw | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional |
 | metaspades | **kmers** | String | Kmer list to use with metaspades. If not provided metaspades automatically sets this value |  | Optional |
 | metaspades | **metaspades_opts** | String | Additional arguments to pass to metaspades task |  | Optional |
-| minimap2_assembly | **cpu** | Int | CPUs to use with minimap2 | 2 | Optional |
-| minimap2_assembly | **disk_size** | Int | Disk size, in GB, to use with minimap2 | 100 | Optional |
-| minimap2_assembly | **docker** | String | minimap2 docker image to use | us-docker.pkg.dev/general-theiagen/staphb/minimap2:2.22 | Optional |
-| minimap2_assembly | **memory** | Int | Memory, in GB, to use with minimap2 | 8 | Optional |
+| minimap2_assembly | **cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional |
+| minimap2_assembly | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
+| minimap2_assembly | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/minimap2:2.22 | Optional |
+| minimap2_assembly | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional |
 | minimap2_assembly | **query2** | File | Internal component. Do not modify. |  | Optional |
-| minimap2_reads | **cpu** | Int | CPUs to use with minimap2 | 2 | Optional |
-| minimap2_reads | **disk_size** | Int | Disk size, in GB, to use with minimap2 | 100 | Optional |
-| minimap2_reads | **docker** | String | minimap2 docker image to use | us-docker.pkg.dev/general-theiagen/staphb/minimap2:2.22 | Optional |
-| minimap2_reads | **memory** | Int | Memory, in GB, to use with minimap2 | 8 | Optional |
-| quast | **cpu** | Int | CPUs to use with quast | 2 | Optional |
-| quast | **disk_size** | Int | Disk size, in GB, to use with quast | 100 | Optional |
-| quast | **docker** | String | Quast docker image to use | us-docker.pkg.dev/general-theiagen/staphb/quast:5.0.2 | Optional |
-| quast | **memory** | Int | Memory, in GB, to use with quast | 2 | Optional |
+| minimap2_reads | **cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional |
+| minimap2_reads | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
+| minimap2_reads | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/minimap2:2.22 | Optional |
+| minimap2_reads | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional |
+| quast | **cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional |
+| quast | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
+| quast | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/quast:5.0.2 | Optional |
+| quast | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 2 | Optional |
 | read_QC_trim | **adapters** | File | Adapter file to be trimmed by trimmomatic |  | Optional |
 | read_QC_trim | **bbduck_mem** | Int | Memory to use with bbduck | 8 | Optional |
 | read_QC_trim | **call_midas** | Boolean | Optional to run Midas on input data | FALSE | Optional |
@@ -88,37 +88,37 @@ The TheiaMeta_Illumina_PE workflow processes Illumina paired-end (PE) reads ge
 | read_QC_trim | **trim_min_length** | Int |  |  | Optional |
 | read_QC_trim | **trim_window_size** | Int |  |  | Optional |
 | read_QC_trim | **trimmomatic_args** | String |  |  | Optional |
-| retrieve_aligned_contig_paf | **cpu** | Int | CPUs to use with seqkit | 2 | Optional |
-| retrieve_aligned_contig_paf | **disk_size** | Int | Disk size to use with seqkit | 100 | Optional |
-| retrieve_aligned_contig_paf | **docker** | String | Seqkit docker image to use | us-docker.pkg.dev/general-theiagen/staphb/seqkit:2.3.1 | Optional |
-| retrieve_aligned_contig_paf | **memory** | Int | Memory, in GB, to use with seqkit | 8 | Optional |
-| retrieve_aligned_pe_reads_sam | **cpu** | Int | CPUs to use with samtools | 2 | Optional |
-| retrieve_aligned_pe_reads_sam | **disk_size** | Int | Disk size to use with samtools | 100 | Optional |
-| retrieve_aligned_pe_reads_sam | **docker** | String | Samtools docker image to use | us-docker.pkg.dev/general-theiagen/staphb/samtools:1.17 | Optional |
-| retrieve_aligned_pe_reads_sam | **memory** | Int | Memory, in GB, to use with samtools | 8 | Optional |
-| retrieve_unaligned_pe_reads_sam | **cpu** | Int | CPUs to use with samtools | 2 | Optional |
-| retrieve_unaligned_pe_reads_sam | **disk_size** | Int | Disk size to use with samtools | 100 | Optional |
-| retrieve_unaligned_pe_reads_sam | **docker** | String | Samtools docker image to use | us-docker.pkg.dev/general-theiagen/staphb/samtools:1.17 | Optional |
-| retrieve_unaligned_pe_reads_sam | **memory** | Int | Memory, in GB, to use with samtools | 8 | Optional |
-| sam_to_sorted_bam | **cpu** | Int | CPUs to use with samtools | 2 | Optional |
-| sam_to_sorted_bam | **disk_size** | Int | Disk size to use with samtools | 100 | Optional |
-| sam_to_sorted_bam | **docker** | String | Samtools docker image to use | us-docker.pkg.dev/general-theiagen/staphb/samtools:1.17 | Optional |
-| sam_to_sorted_bam | **memory** | Int | Memory, in GB, to use with samtools | 8 | Optional |
-| semibin | **cpu** | Int | CPUs to use with semibin | 6 | Optional |
-| semibin | **disk_size** | Int | Disk dize, in GB, to use with semibin | 100 | Optional |
-| semibin | **docker** | String | semibin docker image to use | us-docker.pkg.dev/general-theiagen/biocontainers/semibin:2.0.2--pyhdfd78af_0 | Optional |
+| retrieve_aligned_contig_paf | **cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional |
+| retrieve_aligned_contig_paf | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
+| retrieve_aligned_contig_paf | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/seqkit:2.3.1 | Optional |
+| retrieve_aligned_contig_paf | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional |
+| retrieve_aligned_pe_reads_sam | **cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional |
+| retrieve_aligned_pe_reads_sam | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
+| retrieve_aligned_pe_reads_sam | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/samtools:1.17 | Optional |
+| retrieve_aligned_pe_reads_sam | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional |
+| retrieve_unaligned_pe_reads_sam | **cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional |
+| retrieve_unaligned_pe_reads_sam | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
+| retrieve_unaligned_pe_reads_sam | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/samtools:1.17 | Optional |
+| retrieve_unaligned_pe_reads_sam | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional |
+| sam_to_sorted_bam | **cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional |
+| sam_to_sorted_bam | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
+| sam_to_sorted_bam | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/samtools:1.17 | Optional |
+| sam_to_sorted_bam | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional |
+| semibin | **cpu** | Int | Number of CPUs to allocate to the task | 6 | Optional |
+| semibin | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
+| semibin | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/biocontainers/semibin:2.0.2--pyhdfd78af_0 | Optional |
 | semibin | **environment** | String | Environment model to use. Options: • human_gut<br>• dog_gut<br>• ocean<br>• soil<br>• cat_gut<br>• human_oral<br>• mouse_gut<br>• pig_gut<br>• built_environment<br>• wastewater<br>• chicken_caecum<br>- global | global | Optional |
-| semibin | **memory** | Int | Memory, in GB, to use with semibin | 8 | Optional |
+| semibin | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional |
 | semibin | **min_length** | Int | Minimum contig length for binning | 1000 | Optional |
 | semibin | **ratio** | Float | If the ratio of the number of base pairs of contigs between 1000-2500 bp smaller than this value, the minimal length will be set as 1000bp, otherwise 2500bp. | 0.05 | Optional |
-| sort_bam_assembly_correction | **cpu** | Int | CPUs to use  | 2 | Optional |
-| sort_bam_assembly_correction | **disk_size** | Int | Disk size to use with, in GB | 100 | Optional |
-| sort_bam_assembly_correction | **docker** | String | Docker image to use | us-docker.pkg.dev/general-theiagen/staphb/samtools:1.17 | Optional |
-| sort_bam_assembly_correction | **memory** | Int | Memory, in GB, to use with this task | 8 | Optional |
+| sort_bam_assembly_correction | **cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional |
+| sort_bam_assembly_correction | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
+| sort_bam_assembly_correction | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/samtools:1.17 | Optional |
+| sort_bam_assembly_correction | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional |
 | theiameta_illumina_pe | **kraken2_db** | File | A Kraken2 database in .tar.gz format | gs://theiagen-public-files-rp/terra/theiaprok-files/k2_standard_08gb_20230605.tar.gz | Optional |
 | theiameta_illumina_pe | **output_additional_files** | Boolean | Output additional files such as aligned and unaligned reads to reference | FALSE | Optional |
 | theiameta_illumina_pe | **reference** | File | Reference file for consensus calling, in FASTA format |  | Optional |
-| version_capture | **docker** | String | The Docker image used to run the version_capture task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
+| version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
 | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
 
 ### Workflow Tasks

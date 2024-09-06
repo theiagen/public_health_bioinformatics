@@ -120,40 +120,40 @@ All TheiaCoV Workflows (not TheiaCoV_FASTA_Batch)
 | theiacov_ont | **read1** | File | Demultiplexed ONT read in FASTQ file format (compression optional) | | Required | ONT | HIV, MPXV, WNV, flu, sars-cov-2 |
 | workflow name | **samplename** | String | Name of the sample being analyzed | | Required | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | workflow name | **seq_method** | String | The sequencing methodology used to generate the input read data | | Required | FASTA | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
-| clean_check_reads | **cpu** | Int | Amount of CPUs to allocate to the task | 2 | Optional | ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
+| clean_check_reads | **cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional | ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | clean_check_reads | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
-| clean_check_reads | **docker** | String | Docker container used in this task | us-docker.pkg.dev/general-theiagen/bactopia/gather_samples:2.0.2 | Optional | ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
+| clean_check_reads | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/bactopia/gather_samples:2.0.2 | Optional | ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | clean_check_reads | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 2 | Optional | ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
-| consensus | **cpu** | Int | Amount of CPUs to allocate to the task | 8 | Optional | CL, ONT | sars-cov-2 |
+| consensus | **cpu** | Int | Number of CPUs to allocate to the task | 8 | Optional | CL, ONT | sars-cov-2 |
 | consensus | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | CL, ONT | sars-cov-2 |
-| consensus | **docker** | String | Docker container used in this task | us-docker.pkg.dev/general-theiagen/staphb/artic-ncov2019-epi2me | Optional | ONT | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
+| consensus | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/artic-ncov2019-epi2me | Optional | ONT | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | consensus | **medaka_model** | String | In order to obtain the best results, the appropriate model must be set to match the sequencer's basecaller model; this string takes the format of {pore}_{device}_{caller variant}_{caller_version}. See also https://github.com/nanoporetech/medaka?tab=readme-ov-file#models. | r941_min_high_g360 | Optional | CL, ONT | sars-cov-2 |
 | consensus | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 16 | Optional | CL, ONT | sars-cov-2 |
-| consensus_qc | **cpu** | Int | Amount of CPUs to allocate to the task | 1 | Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2 |
+| consensus_qc | **cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2 |
 | consensus_qc | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2 |
-| consensus_qc | **docker** | String | Docker container used in this task | ngolin | Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2 |
+| consensus_qc | **docker** | String | The Docker container to use for the task | ngolin | Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2 |
 | consensus_qc | **genome_length** | Int | Internal component, do not modify | | Do not modify, Optional | CL, SE | HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2 |
 | consensus_qc | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 2 | Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2 |
-| fastq_scan_clean_reads | **cpu** | Int | Amount of CPUs to allocate to the task | 1 | Optional | CL | sars-cov-2 |
+| fastq_scan_clean_reads | **cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional | CL | sars-cov-2 |
 | fastq_scan_clean_reads | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | CL | sars-cov-2 |
-| fastq_scan_clean_reads | **docker** | Int | Docker container used in this task | us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1 | Optional | CL | sars-cov-2 |
+| fastq_scan_clean_reads | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1 | Optional | CL | sars-cov-2 |
 | fastq_scan_clean_reads | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 2 | Optional | CL | sars-cov-2 |
 | fastq_scan_clean_reads | **read1_name** | Int | Internal component, do not modify | | Do not modify, Optional | CL | sars-cov-2 |
-| fastq_scan_raw_reads | **cpu** | Int | Amount of CPUs to allocate to the task | 1 | Optional | CL | sars-cov-2 |
+| fastq_scan_raw_reads | **cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional | CL | sars-cov-2 |
 | fastq_scan_raw_reads | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | CL | sars-cov-2 |
-| fastq_scan_raw_reads | **docker** | Int | Docker container used in this task | us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1 | Optional | CL | sars-cov-2 |
+| fastq_scan_raw_reads | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1 | Optional | CL | sars-cov-2 |
 | fastq_scan_raw_reads | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 2 | Optional | CL | sars-cov-2 |
 | fastq_scan_raw_reads | **read1_name** | Int | Internal component, do not modify | | Do not modify, Optional | CL | sars-cov-2 |
-| flu_track | **abricate_flu_cpu** | Int | Amount of CPUs to allocate to the task | 2 | Optional | FASTA, ONT, PE | flu |
+| flu_track | **abricate_flu_cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional | FASTA, ONT, PE | flu |
 | flu_track | **abricate_flu_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | FASTA, ONT, PE | flu |
-| flu_track | **abricate_flu_docker** | String | Docker container used in this task | us-docker.pkg.dev/general-theiagen/staphb/abricate:1.0.1-insaflu-220727 | Optional | FASTA, ONT, PE | flu |
+| flu_track | **abricate_flu_docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/abricate:1.0.1-insaflu-220727 | Optional | FASTA, ONT, PE | flu |
 | flu_track | **abricate_flu_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 4 | Optional | FASTA, ONT, PE | flu |
 | flu_track | **abricate_flu_mincov** | Int | Minimum DNA % coverage | 60 | Optional | FASTA, ONT, PE | flu |
 | flu_track | **abricate_flu_minid** | Int | Minimum DNA % identity | 70 | Optional | FASTA, ONT, PE | flu |
 | flu_track | **antiviral_aa_subs** | String | Additional list of antiviral resistance associated amino acid substitutions of interest to be searched against those called on the sample segments. They take the format of <protein>:<AA><Pos><AA>, e.g. NA:A26V | | Optional | ONT, PE | flu |
-| flu_track | **assembly_metrics_cpu** | Int | Amount of CPUs to allocate to the task | 2 | Optional | PE | flu |
+| flu_track | **assembly_metrics_cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional | PE | flu |
 | flu_track | **assembly_metrics_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | PE | flu |
-| flu_track | **assembly_metrics_docker** | String | Docker container used in the assembly_metrics task run on HA and NA segments | us-docker.pkg.dev/general-theiagen/staphb/samtools:1.15 | Optional | PE | flu |
+| flu_track | **assembly_metrics_docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/samtools:1.15 | Optional | PE | flu |
 | flu_track | **assembly_metrics_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | PE | flu |
 | flu_track | **flu_h1_ha_ref** | File | Internal component, do not modify | | Do not modify, Optional | ONT, PE | flu |
 | flu_track | **flu_h1n1_m2_ref** | File | Internal component, do not modify | | Do not modify, Optional | ONT, PE | flu |
@@ -165,69 +165,69 @@ All TheiaCoV Workflows (not TheiaCoV_FASTA_Batch)
 | flu_track | **flu_pb1_ref** | File | Internal component, do not modify | | Do not modify, Optional | ONT, PE | flu |
 | flu_track | **flu_pb2_ref** | File | Internal component, do not modify | | Do not modify, Optional | ONT, PE | flu |
 | flu_track | **flu_subtype** | String | The influenza subtype being analyzed. Used for picking nextclade datasets. Options: "Yamagata", "Victoria", "H1N1", "H3N2". Only use to override the subtype call from IRMA and ABRicate. | | Optional | CL, ONT, PE, SE | flu |
-| flu_track | **genoflu_cpu** | Int | Amount of CPUs to allocate to the task | 1 | Optional | FASTA, ONT, PE | flu |
+| flu_track | **genoflu_cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional | FASTA, ONT, PE | flu |
 | flu_track | **genoflu_cross_reference** | File | An Excel file to cross-reference BLAST findings; probably useful if novel genotypes are not in the default file used by genoflu.py | | Optional | FASTA, ONT, PE | |
 | flu_track | **genoflu_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 25 | Optional | FASTA, ONT, PE | |
-| flu_track | **genoflu_docker** | String | Docker container used in this task | us-docker.pkg.dev/general-theiagen/staphb/genoflu:1.03 | Optional | FASTA, ONT, PE | |
+| flu_track | **genoflu_docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/genoflu:1.03 | Optional | FASTA, ONT, PE | |
 | flu_track | **genoflu_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 2 | Optional | FASTA, ONT, PE | |
-| flu_track | **irma_cpu** | Int | Amount of CPUs to allocate to the task | 4 | Optional | ONT, PE | flu |
+| flu_track | **irma_cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional | ONT, PE | flu |
 | flu_track | **irma_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | ONT, PE | flu |
-| flu_track | **irma_docker_image** | String | Docker container used in the IRMA task | us-docker.pkg.dev/general-theiagen/cdcgov/irma:v1.1.5 | Optional | ONT, PE | flu |
+| flu_track | **irma_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/cdcgov/irma:v1.1.5 | Optional | ONT, PE | flu |
 | flu_track | **irma_keep_ref_deletions** | Boolean | True/False variable that determines if sites missed during read gathering should be deleted by ambiguation. | TRUE | Optional | ONT, PE | flu |
 | flu_track | **irma_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 16 | Optional | ONT, PE | flu |
-| flu_track | **nextclade_cpu** | Int | CPU resources allocated to this task | 2 | Optional | ONT, PE | flu |
-| flu_track | **nextclade_disk_size** | Int | The size, in GB, of the disk used for this task | 50 | Optional | ONT, PE | flu |
-| flu_track | **nextclade_docker** | String | Docker container used in this task | us-docker.pkg.dev/general-theiagen/nextstrain/nextclade:3.3.1 | Optional | ONT, PE | flu |
-| flu_track | **nextclade_memory** | Int | Memory, in GB, allocated to this task | 4 | Optional | ONT, PE | flu |
-| flu_track | **nextclade_output_parser_cpu** | Int | Amount of CPUs to allocate to the task | 2 | Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
+| flu_track | **nextclade_cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional | ONT, PE | flu |
+| flu_track | **nextclade_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 50 | Optional | ONT, PE | flu |
+| flu_track | **nextclade_docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/nextstrain/nextclade:3.3.1 | Optional | ONT, PE | flu |
+| flu_track | **nextclade_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 4 | Optional | ONT, PE | flu |
+| flu_track | **nextclade_output_parser_cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | flu_track | **nextclade_output_parser_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 50 | Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
-| flu_track | **nextclade_output_parser_docker** | String | Docker container used in this task | us-docker.pkg.dev/general-theiagen/python/python:3.8.18-slim | Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
-| flu_track | **nextclade_output_parser_memory** | Int | Memory, in GB, allocated to this task | 4 | Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
+| flu_track | **nextclade_output_parser_docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/python/python:3.8.18-slim | Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
+| flu_track | **nextclade_output_parser_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 4 | Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | flu_track | **read2** | File | Internal component. Do not use. | | Optional | ONT | flu |
-| gene_coverage | **cpu** | Int | Amount of CPUs to allocate to the task | 2 | Optional | CL, ONT, PE, SE | MPXV, sars-cov-2 |
+| gene_coverage | **cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional | CL, ONT, PE, SE | MPXV, sars-cov-2 |
 | gene_coverage | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | CL, ONT, PE, SE | MPXV, sars-cov-2 |
-| gene_coverage | **docker** | String | Docker container used in this task | us-docker.pkg.dev/general-theiagen/staphb/samtools:1.15 | Optional | CL, ONT, PE, SE | MPXV, sars-cov-2 |
+| gene_coverage | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/samtools:1.15 | Optional | CL, ONT, PE, SE | MPXV, sars-cov-2 |
 | gene_coverage | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | CL, ONT, PE, SE | MPXV, sars-cov-2 |
 | gene_coverage | **min_depth** | Int | The minimum depth to determine if a position was covered. | 10 | Optional | ONT, PE, SE | MPXV, sars-cov-2 |
 | gene_coverage | **sc2_s_gene_start** | Int | start nucleotide position of the SARS-CoV-2 Spike gene | 21563 | Optional | CL, ONT, PE, SE | MPXV, sars-cov-2 |
 | gene_coverage | **sc2_s_gene_stop** | Int | End/Last nucleotide position of the SARS-CoV-2 Spike gene | 25384 | Optional | CL, ONT, PE, SE | MPXV, sars-cov-2 |
 | ivar_consensus | **read2** | File | Internal component, do not modify | | Do not modify, Optional | SE | HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2 |
 | ivar_consensus | **skip_N** | Boolean | True/False variable that determines if regions with depth less than minimum depth should not be added to the consensus sequence | FALSE | Optional | PE, SE | HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2 |
-| kraken2_dehosted | **cpu** | Int | Amount of CPUs to allocate to the task | 4 | Optional | CL | sars-cov-2 |
+| kraken2_dehosted | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional | CL | sars-cov-2 |
 | kraken2_dehosted | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | CL | sars-cov-2 |
-| kraken2_dehosted | **docker_image** | String | Docker container used in this task | us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.0.8-beta_hv | Optional | CL | sars-cov-2 |
+| kraken2_dehosted | **docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.0.8-beta_hv | Optional | CL | sars-cov-2 |
 | kraken2_dehosted | **kraken2_db** | String | The database used to run Kraken2 | /kraken2-db | Optional | CL | sars-cov-2 |
 | kraken2_dehosted | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | CL | sars-cov-2 |
 | kraken2_dehosted | **read2** | File | Internal component, do not modify | | Do not modify, Optional | CL | sars-cov-2 |
-| kraken2_raw | **cpu** | Int | Amount of CPUs to allocate to the task | 4 | Optional | CL | sars-cov-2 |
+| kraken2_raw | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional | CL | sars-cov-2 |
 | kraken2_raw | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | CL | sars-cov-2 |
 | kraken2_raw | **docker_image** | Int | Docker container used in this task | us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.0.8-beta_hv | Optional | CL | sars-cov-2 |
 | kraken2_raw | **kraken2_db** | String | The database used to run Kraken2 | /kraken2-db | Optional | CL | sars-cov-2 |
 | kraken2_raw | **memory** | String | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | CL | sars-cov-2 |
 | kraken2_raw | **read_processing** | String | The tool used for trimming of primers from reads. Options are trimmomatic and fastp | trimmomatic | Optional | | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | kraken2_raw | **read2** | File | Internal component, do not modify | | Do not modify, Optional | CL | sars-cov-2 |
-| nanoplot_clean | **cpu** | Int | CPU resources allocated to this task | 4 | Optional | ONT | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
-| nanoplot_clean | **disk_size** | Int | The size, in GB, of the disk used for this task | 100 | Optional | ONT | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
-| nanoplot_clean | **docker** | String | Docker container used in this task | us-docker.pkg.dev/general-theiagen/staphb/nanoplot:1.40.0 | Optional | ONT | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
+| nanoplot_clean | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional | ONT | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
+| nanoplot_clean | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | ONT | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
+| nanoplot_clean | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/nanoplot:1.40.0 | Optional | ONT | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | nanoplot_clean | **max_length** | Int | The maximum length of clean reads, for which reads longer than the length specified will be hidden. | 100000 | Optional | ONT | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
-| nanoplot_clean | **memory** | Int | Memory, in GB, allocated to this task | 16 | Optional | ONT | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
-| nanoplot_raw | **cpu** | Int | CPU resources allocated to this task | 4 | Optional | ONT | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
-| nanoplot_raw | **disk_size** | Int | The size, in GB, of the disk used for this task | 100 | Optional | ONT | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
-| nanoplot_raw | **docker** | String | Docker container used in this task | us-docker.pkg.dev/general-theiagen/staphb/nanoplot:1.40.0 | Optional | ONT | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
+| nanoplot_clean | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 16 | Optional | ONT | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
+| nanoplot_raw | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional | ONT | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
+| nanoplot_raw | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | ONT | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
+| nanoplot_raw | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/nanoplot:1.40.0 | Optional | ONT | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | nanoplot_raw | **max_length** | Int | The maximum length of clean reads, for which reads longer than the length specified will be hidden. | 100000 | Optional | ONT | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
-| nanoplot_raw | **memory** | Int | Memory, in GB, allocated to this task | 16 | Optional | ONT | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
-| ncbi_scrub_se | **cpu** | Int | Amount of CPUs to allocate to the task | 4 | Optional | CL | sars-cov-2 |
+| nanoplot_raw | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 16 | Optional | ONT | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
+| ncbi_scrub_se | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional | CL | sars-cov-2 |
 | ncbi_scrub_se | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | CL | sars-cov-2 |
-| ncbi_scrub_se | **docker** | String | Docker container used in this task | us-docker.pkg.dev/general-theiagen/ncbi/sra-human-scrubber:2.2.1 | Optional | CL | sars-cov-2 |
+| ncbi_scrub_se | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/ncbi/sra-human-scrubber:2.2.1 | Optional | CL | sars-cov-2 |
 | ncbi_scrub_se | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | CL | sars-cov-2 |
-| nextclade_output_parser | **cpu** | Int | CPU resources allocated to this task | 2 | Optional | ONT, PE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
-| nextclade_output_parser | **disk_size** | Int | The size, in GB, of the disk used for this task | 50 | Optional | ONT, PE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
-| nextclade_output_parser | **docker** | String | Docker container used in this task | us-docker.pkg.dev/general-theiagen/python/python:3.8.18-slim | Optional | ONT, PE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
-| nextclade_output_parser | **memory** | Int | Memory, in GB, allocated to this task | 2 | Optional | ONT, PE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
+| nextclade_output_parser | **cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional | ONT, PE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
+| nextclade_output_parser | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 50 | Optional | ONT, PE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
+| nextclade_output_parser | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/python/python:3.8.18-slim | Optional | ONT, PE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
+| nextclade_output_parser | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 2 | Optional | ONT, PE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | nextclade_v3 | **auspice_reference_tree_json** | File | An Auspice JSON phylogenetic reference tree which serves as a target for phylogenetic placement. | Inherited from nextclade dataset | Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
-| nextclade_v3 | **cpu** | Int | Amount of CPUs to allocate to the task | 2 | Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
+| nextclade_v3 | **cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | nextclade_v3 | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 50 | Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
-| nextclade_v3 | **docker** | String | Docker container used in this task | us-docker.pkg.dev/general-theiagen/nextstrain/nextclade:3.3.1 | Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
+| nextclade_v3 | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/nextstrain/nextclade:3.3.1 | Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | nextclade_v3 | **gene_annotations_gff** | File | A genome annotation to specify how to translate the nucleotide sequence to proteins (genome_annotation.gff3). specifying this enables codon-informed alignment and protein alignments. See here for more info: https://docs.nextstrain.org/projects/nextclade/en/latest/user/input-files/03-genome-annotation.html | Inherited from nextclade dataset | Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | nextclade_v3 | **input_ref** | File | A nucleotide sequence which serves as a reference for the pairwise alignment of all input sequences. This is also the sequence which defines the coordinate system of the genome annotation. See here for more info: https://docs.nextstrain.org/projects/nextclade/en/latest/user/input-files/02-reference-sequence.html | Inherited from nextclade dataset | Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | nextclade_v3 | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 4 | Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
@@ -240,19 +240,19 @@ All TheiaCoV Workflows (not TheiaCoV_FASTA_Batch)
 | organism_parameters | **genome_length_input** | Int | Use to specify the expected genome length; provided by default for all supported organisms | Default provided for SARS-CoV-2 (29903), mpox (197200), WNV (11000), flu (13000), RSV-A (16000), RSV-B (16000), HIV (primer versions 1 [9181] and 2 [9840]) | Optional | CL | |
 | organism_parameters | **hiv_primer_version** | String | The version of HIV primers used. Options are "https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl#L156" and "https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl#L164". This input is ignored if provided for TheiaCoV_Illumina_SE and TheiaCoV_ClearLabs | v1 | Optional | CL, FASTA, ONT, PE, SE | HIV |
 | organism_parameters | **kraken_target_organism_input** | String | The organism whose abundance the user wants to check in their reads. This should be a proper taxonomic name recognized by the Kraken database. | Default provided for mpox (Monkeypox virus), WNV (West Nile virus), and HIV (Human immunodeficiency virus 1) | Optional | FASTA, ONT, SE | HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2 |
-| organism_parameters | **pangolin_docker_image** | String | Docker tag used for running Pangolin | us-docker.pkg.dev/general-theiagen/staphb/pangolin:4.3.1-pdata-1.29 | Optional | CL, FASTA | |
+| organism_parameters | **pangolin_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/pangolin:4.3.1-pdata-1.29 | Optional | CL, FASTA | |
 | organism_parameters | **primer_bed_file** | File | The bed file containing the primers used when sequencing was performed | REQUIRED FOR SARS-CoV-2, MPOX, WNV, RSV-A & RSV-B. Provided by default only for HIV primer versions 1 ("gs://theiagen-public-files/terra/hivgc-files/HIV-1_v1.0.primer.hyphen.bed" and 2 ("gs://theiagen-public-files/terra/hivgc-files/HIV-1_v2.0.primer.hyphen400.1.bed") | Optional, Sometimes required | CL, FASTA | |
 | organism_parameters | **reference_gff_file** | File | Reference GFF file for the organism being analyzed | Default provided for mpox ("gs://theiagen-public-files/terra/mpxv-files/Mpox-MT903345.1.reference.gff3") and HIV (primer versions 1 ["gs://theiagen-public-files/terra/hivgc-files/NC_001802.1.gff3"] and 2 ["gs://theiagen-public-files/terra/hivgc-files/AY228557.1.gff3"]) | Optional | CL, FASTA, ONT | |
 | organism_parameters | **vadr_max_length** | Int | Maximum length for the fasta-trim-terminal-ambigs.pl VADR script | Default provided for SARS-CoV-2 (30000), mpox (210000), WNV (11000), flu (0), RSV-A (15500) and RSV-B (15500). | Optional | CL | |
-| organism_parameters | **vadr_memory** | Int | Memory, in GB, allocated to this task | 32 (RSV-A and RSV-B) and 8 (all other TheiaCoV organisms) | Optional | CL, ONT, PE, SE | MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
+| organism_parameters | **vadr_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 32 (RSV-A and RSV-B) and 8 (all other TheiaCoV organisms) | Optional | CL, ONT, PE, SE | MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | organism_parameters | **vadr_options** | String | Options for the v-annotate.pl VADR script | Default provided for SARS-CoV-2 ("--noseqnamemax --glsearch -s -r --nomisc --mkey sarscov2 --lowsim5seq 6 --lowsim3seq 6 --alt_fail lowscore,insertnn,deletinn --out_allfasta"), mpox ("--glsearch -s -r --nomisc --mkey mpxv --r_lowsimok --r_lowsimxd 100 --r_lowsimxl 2000 --alt_pass discontn,dupregin --out_allfasta --minimap2 --s_overhang 150"), WNV ("--mkey flavi --mdir /opt/vadr/vadr-models-flavi/ --nomisc --noprotid --out_allfasta"), flu (""), RSV-A ("-r --mkey rsv --xnocomp"), and RSV-B ("-r --mkey rsv --xnocomp") | Optional | CL | |
 | organism_parameters | **vadr_skip_length** | Int | Minimum assembly length (unambiguous) to run VADR | 10000 | Optional | CL | MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | pangolin4 | **analysis_mode** | String | Pangolin inference engine for lineage designations (usher or pangolearn). Default is Usher. | | Optional | CL, FASTA, ONT, PE, SE | sars-cov-2 |
-| pangolin4 | **cpu** | Int | CPU resources allocated to this task | 4 | Optional | CL, FASTA, ONT, PE, SE | sars-cov-2 |
-| pangolin4 | **disk_size** | Int | The size, in GB, of the disk used for this task | 100 | Optional | CL, FASTA, ONT, PE, SE | sars-cov-2 |
+| pangolin4 | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional | CL, FASTA, ONT, PE, SE | sars-cov-2 |
+| pangolin4 | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | CL, FASTA, ONT, PE, SE | sars-cov-2 |
 | pangolin4 | **expanded_lineage** | Boolean | True/False that determines if a lineage should be expanded without aliases (e.g., BA.1 → B.1.1.529.1) | TRUE | Optional | CL, FASTA, ONT, PE, SE | sars-cov-2 |
 | pangolin4 | **max_ambig** | Float | The maximum proportion of Ns allowed for pangolin to attempt an assignment | 0.5 | Optional | CL, FASTA, ONT, PE, SE | sars-cov-2 |
-| pangolin4 | **memory** | Int | Memory, in GB, allocated to this task | 8 | Optional | CL, FASTA, ONT, PE, SE | sars-cov-2 |
+| pangolin4 | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | CL, FASTA, ONT, PE, SE | sars-cov-2 |
 | pangolin4 | **min_length** | Int | Minimum query length allowed for pangolin to attempt an assignment | 10000 | Optional | CL, FASTA, ONT, PE, SE | sars-cov-2 |
 | pangolin4 | **pangolin_arguments** | String | Optional arguments for pangolin e.g. ''--skip-scorpio'' | | Optional | CL, FASTA, ONT, PE, SE | sars-cov-2 |
 | pangolin4 | **skip_designation_cache** | Boolean | A True/False option that determines if the designation cache should be used | FALSE | Optional | CL, FASTA, ONT, PE, SE | sars-cov-2 |
@@ -266,9 +266,9 @@ All TheiaCoV Workflows (not TheiaCoV_FASTA_Batch)
 | qc_check_task | **combined_mean_q_raw** | Float | Internal component, do not modify | | Do not modify, Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | qc_check_task | **combined_mean_readlength_clean** | Float | Internal component, do not modify | | Do not modify, Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | qc_check_task | **combined_mean_readlength_raw** | Float | Internal component, do not modify | | Do not modify, Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
-| qc_check_task | **cpu** | Int | CPU resources allocated to this task | 4 | Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
-| qc_check_task | **disk_size** | Int | The size, in GB, of the disk used for this task | 100 | Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
-| qc_check_task | **docker** | String | Docker container used in this task | us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-03-16 | Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
+| qc_check_task | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
+| qc_check_task | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
+| qc_check_task | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-03-16 | Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | qc_check_task | **est_coverage_clean** | Float | Internal component, do not modify | | Do not modify, Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | qc_check_task | **est_coverage_raw** | Float | Internal component, do not modify | | Do not modify, Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | qc_check_task | **gambit_predicted_taxon** | String | Internal component, do not modify | | Do not modify, Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
@@ -278,7 +278,7 @@ All TheiaCoV Workflows (not TheiaCoV_FASTA_Batch)
 | qc_check_task | **kraken_sc2_dehosted** | Float | Internal component, do not modify | | Do not modify, Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | qc_check_task | **kraken_target_organism** | Float | Internal component, do not modify | | Do not modify, Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | qc_check_task | **kraken_target_organism_dehosted** | Float | Internal component, do not modify | | Do not modify, Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
-| qc_check_task | **memory** | Int | Memory, in GB, allocated to this task | 8 | Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
+| qc_check_task | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | qc_check_task | **midas_secondary_genus_abundance** | Float | Internal component, do not modify | | Do not modify, Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | qc_check_task | **midas_secondary_genus_coverage** | Float | Internal component, do not modify | | Do not modify, Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | qc_check_task | **minbaseq_trim** | Int | Internal component, do not modify | | Do not modify, Optional | FASTA | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
@@ -297,19 +297,19 @@ All TheiaCoV Workflows (not TheiaCoV_FASTA_Batch)
 | qc_check_task | **r2_mean_readlength_raw** | Float | Internal component, do not modify | | Do not modify, Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | qc_check_task | **sc2_s_gene_mean_coverage** | Float | Internal component, do not modify | | Do not modify, Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | qc_check_task | **sc2_s_gene_percent_coverage** | Float | Internal component, do not modify | | Do not modify, Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
-| quasitools_illumina_pe | **cpu** | Int | CPU resources allocated to this task | 2 | Optional | PE | HIV |
-| quasitools_illumina_pe | **disk_size** | Int | The size, in GB, of the disk used for this task | 50 | Optional | PE | HIV |
-| quasitools_illumina_pe | **docker** | String | Docker container used in this task | us-docker.pkg.dev/general-theiagen/biocontainers/quasitools:0.7.0--pyh864c0ab_1 | Optional | PE | HIV |
-| quasitools_illumina_pe | **memory** | Int | Memory, in GB, allocated to this task | 4 | Optional | PE | HIV |
-| quasitools_ont | **cpu** | Int | CPU resources allocated to this task | 2 | Optional | ONT | HIV |
-| quasitools_ont | **disk_size** | Int | The size, in GB, of the disk used for this task | 50 | Optional | ONT | HIV |
-| quasitools_ont | **docker** | String | Docker container used in this task | us-docker.pkg.dev/general-theiagen/biocontainers/quasitools:0.7.0--pyh864c0ab_1 | Optional | ONT | HIV |
-| quasitools_ont | **memory** | Int | Memory, in GB, allocated to this task | 4 | Optional | ONT | HIV |
+| quasitools_illumina_pe | **cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional | PE | HIV |
+| quasitools_illumina_pe | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 50 | Optional | PE | HIV |
+| quasitools_illumina_pe | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/biocontainers/quasitools:0.7.0--pyh864c0ab_1 | Optional | PE | HIV |
+| quasitools_illumina_pe | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 4 | Optional | PE | HIV |
+| quasitools_ont | **cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional | ONT | HIV |
+| quasitools_ont | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 50 | Optional | ONT | HIV |
+| quasitools_ont | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/biocontainers/quasitools:0.7.0--pyh864c0ab_1 | Optional | ONT | HIV |
+| quasitools_ont | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 4 | Optional | ONT | HIV |
 | quasitools_ont | **read2** | File | Internal component. Do not use. | | Do not modify, Optional | ONT | HIV |
-| raw_check_reads | **cpu** | Int | CPU resources allocated to this task | 2 | Optional | ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
-| raw_check_reads | **disk_size** | Int | The size, in GB, of the disk used for this task | 100 | Optional | ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
-| raw_check_reads | **docker** | String | Docker container used in this task | us-docker.pkg.dev/general-theiagen/bactopia/gather_samples:2.0.2 | Optional | ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
-| raw_check_reads | **memory** | Int | Memory, in GB, allocated to this task | 2 | Optional | ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
+| raw_check_reads | **cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional | ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
+| raw_check_reads | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
+| raw_check_reads | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/bactopia/gather_samples:2.0.2 | Optional | ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
+| raw_check_reads | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 2 | Optional | ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | read_QC_trim | **bbduk_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | read_QC_trim | **call_kraken** | Boolean | True/False variable that determines if the Kraken2 task should be called. | FALSE | Optional | PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | read_QC_trim | **call_midas** | Boolean | True/False variable that determines if the MIDAS task should be called. | TRUE | Optional | PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
@@ -326,23 +326,23 @@ All TheiaCoV Workflows (not TheiaCoV_FASTA_Batch)
 | set_flu_ha_nextclade_values | **reference_gff_file** | File | Reference GFF file for flu HA | | Do not modify, Optional | ONT | flu |
 | set_flu_na_nextclade_values | **reference_gff_file** | Int | Reference GFF file for flu NA | | Do not modify, Optional | ONT | flu |
 | set_flu_na_nextclade_values | **vadr_mem** | Int | Memory, in GB, allocated to this task | 8 | Do not modify, Optional | ONT | flu |
-| stats_n_coverage | **cpu** | Int | Amount of CPUs to allocate to the task | 2 | Optional | CL, ONT | |
+| stats_n_coverage | **cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional | CL, ONT | |
 | stats_n_coverage | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | CL, ONT | |
-| stats_n_coverage | **docker** | String | Docker container used in this task | us-docker.pkg.dev/general-theiagen/staphb/samtools:1.15 | Optional | CL, ONT | |
+| stats_n_coverage | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/samtools:1.15 | Optional | CL, ONT | |
 | stats_n_coverage | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | CL, ONT | |
-| stats_n_coverage_primtrim | **cpu** | Int | Amount of CPUs to allocate to the task | 2 | Optional | CL, ONT | |
+| stats_n_coverage_primtrim | **cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional | CL, ONT | |
 | stats_n_coverage_primtrim | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | CL, ONT | |
-| stats_n_coverage_primtrim | **docker** | String | Docker container used in this task | us-docker.pkg.dev/general-theiagen/staphb/samtools:1.15 | Optional | CL, ONT | |
+| stats_n_coverage_primtrim | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/samtools:1.15 | Optional | CL, ONT | |
 | stats_n_coverage_primtrim | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | CL, ONT | |
-| vadr | **cpu** | Int | CPU resources allocated to this task | 2 | Optional | CL, FASTA, ONT, PE, SE | MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
-| vadr | **disk_size** | Int | The size, in GB, of the disk used for this task | 100 | Optional | CL, FASTA, ONT, PE, SE | MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
-| vadr | **docker** | String | Docker container used in this task | us-docker.pkg.dev/general-theiagen/staphb/vadr:1.5.1 | Optional | CL, FASTA, ONT, PE, SE | MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
+| vadr | **cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional | CL, FASTA, ONT, PE, SE | MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
+| vadr | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | CL, FASTA, ONT, PE, SE | MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
+| vadr | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/vadr:1.5.1 | Optional | CL, FASTA, ONT, PE, SE | MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | vadr | **max_length** | Int | Maximum length of contig allowed to run VADR | | Optional | CL | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
-| vadr | **memory** | Int | Memory, in GB, allocated to this task | 32 (RSV-A and RSV-B) and 8 (all other TheiaCoV organisms) | Optional | CL | MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
+| vadr | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 32 (RSV-A and RSV-B) and 8 (all other TheiaCoV organisms) | Optional | CL | MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | vadr | **min_length** | Int | Minimum length subsequence to possibly replace Ns for the http://fasta-trim-terminal-ambigs.pl/ VADR script | 50 | Optional | CL, FASTA, ONT, PE, SE | MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | vadr | **skip_length** | Int | Minimum assembly length (unambiguous) to run VADR | 10000 | Optional | CL | MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | vadr | **vadr_opts** | String | Additional options to provide to VADR | | Optional | CL | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
-| version_capture | **docker** | String | The Docker image used to run the version_capture task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional | ONT, PE, SE, FASTA, CL | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
+| version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional | ONT, PE, SE, FASTA, CL | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) | | Optional |  ONT, PE, SE, FASTA, CL | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | workflow name | **adapters** | File | File that contains the adapters used | /bbmap/resources/adapters.fa | Optional | PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | workflow name | **consensus_min_freq** | Float | The minimum frequency for a variant to be called a SNP in consensus genome | 0.6 | Optional | PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
@@ -351,7 +351,7 @@ All TheiaCoV Workflows (not TheiaCoV_FASTA_Batch)
 | workflow name | **genome_length** | Int | Use to specify the expected genome length | | Optional | FASTA, ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | workflow name | **max_genome_length** | Int | Maximum genome length able to pass read screening | 2673870 | Optional | ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | workflow name | **max_length** | Int | Maximum length for a read based on the SARS-CoV-2 primer scheme | 700 | Optional | ONT | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
-| workflow name | **medaka_docker** | String | Docker container used in this task | us-docker.pkg.dev/general-theiagen/staphb/artic-ncov2019:1.3.0-medaka-1.4.3 | Optional | CL | |
+| workflow name | **medaka_docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/artic-ncov2019:1.3.0-medaka-1.4.3 | Optional | CL | |
 | workflow name | **min_basepairs** | Int | Minimum base pairs to pass read screening | 34000 | Optional | ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | workflow name | **min_coverage** | Int | Minimum coverage to pass read screening | 10 | Optional | ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | workflow name | **min_depth** | Int | Minimum depth of reads required to call variants and generate a consensus genome. This value is passed to the iVar software. | 100 | Optional | ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
@@ -363,7 +363,7 @@ All TheiaCoV Workflows (not TheiaCoV_FASTA_Batch)
 | workflow name | **nextclade_dataset_tag** | String | Nextclade dataset tag. Used for pulling up-to-date reference genomes and associated information specific to nextclade datasets (QC thresholds, organism-specific information like SARS-CoV-2 clade & lineage information, etc.) that is required for running the Nextclade tool. | Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments) here: https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl | Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | workflow name | **normalise** | Int | Used to normalize the amount of reads to the indicated level before variant calling | 20000 for CL, 200 for ONT | Optional | CL, ONT | |
 | workflow name | **organism** | String | The organism that is being analyzed. Options: "sars-cov-2", "MPXV", "WNV", "HIV", "flu", "rsv_a", "rsv_b". However, "flu" is not available for TheiaCoV_Illumina_SE | sars-cov-2 | Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
-| workflow name | **pangolin_docker_image** | String | Docker container used in pangolin task | us-docker.pkg.dev/general-theiagen/staphb/pangolin:4.3.1-pdata-1.29 | Do not modify, Optional | ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
+| workflow name | **pangolin_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/pangolin:4.3.1-pdata-1.29 | Do not modify, Optional | ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | workflow name | **phix** | File | File that contains the phix used | /bbmap/resources/phix174_ill.ref.fa.gz | Optional | PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | workflow name | **primer_bed** | File | The bed file containing the primers used when sequencing was performed | | Optional | ONT, PE, SE | HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2 |
 | workflow name | **qc_check_table** | File | A TSV file with optional user input QC values to be compared against the default workflow value | | Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
@@ -379,7 +379,7 @@ All TheiaCoV Workflows (not TheiaCoV_FASTA_Batch)
 | workflow name | **trim_quality_min_score** | Int | The minimum quality score to keep during trimming | 30 | Optional | PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | workflow name | **trim_window_size** | Int | Specifies window size for trimming (the number of bases to average the quality across) | 4 | Optional | PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | workflow name | **vadr_max_length** | Int | Maximum length of contig allowed to run VADR | | Optional | FASTA, ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
-| workflow name | **vadr_memory** | Int | Memory, in GB, allocated to this task | 32 (RSV-A and RSV-B) and 8 (all other TheiaCoV organisms) | Optional | FASTA, ONT, PE, SE | MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
+| workflow name | **vadr_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 32 (RSV-A and RSV-B) and 8 (all other TheiaCoV organisms) | Optional | FASTA, ONT, PE, SE | MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | workflow name | **vadr_options** | String | Additional options to provide to VADR | | Optional | ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | workflow name | **vadr_opts** | String | Additional options to provide to VADR | | Optional | FASTA | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | workflow name | **vadr_skip_length** | Int | Minimum assembly length (unambiguous) to run VADR | 10000 | Optional | FASTA, ONT, PE, SE | MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
@@ -401,17 +401,17 @@ All TheiaCoV Workflows (not TheiaCoV_FASTA_Batch)
     | theiacov_fasta_batch | **samplenames** | Array[String] | The names of the samples to be analyzed. Example: this.sars-cov-2-samples.sars-cov-2-sample_id |  | Required |
     | theiacov_fasta_batch | **table_name** | String | The name of the Terra table where the data can be found. Example: "sars-cov-2-sample" |  | Required |
     | theiacov_fasta_batch | **workspace_name** | String | The name of the Terra workspace where the data can be found. Example "my-terra-workspace" |  | Required |
-    | cat_files_fasta | **cpu** | Int | CPUs requested for the cat_files_fasta task | 2 | Optional |
-    | cat_files_fasta | **disk_size** | Int | The size of the disk used for this task in GB | 100 | Optional |
-    | cat_files_fasta | **docker_image** | String | Docker tag used for running the concatenation task | us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1 | Optional |
-    | cat_files_fasta | **memory** | Int | Memory (GB) requested for this task | 8 | Optional |
+    | cat_files_fasta | **cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional |
+    | cat_files_fasta | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
+    | cat_files_fasta | **docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1 | Optional |
+    | cat_files_fasta | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional |
     | nextclade_v3 | **auspice_reference_tree_json** | File | The phylogenetic reference tree which serves as a target for phylogenetic placement | default is inherited from NextClade dataset | Optional |
-    | nextclade_v3 | **cpu** | Int | CPUs requested for this task | 2 | Optional |
-    | nextclade_v3 | **disk_size** | Int | The size of the disk used for this task | 50 | Optional |
-    | nextclade_v3 | **docker** | String | Docker tag used for running NextClade | us-docker.pkg.dev/general-theiagen/nextstrain/nextclade:3.3.1 | Optional |
+    | nextclade_v3 | **cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional |
+    | nextclade_v3 | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 50 | Optional |
+    | nextclade_v3 | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/nextstrain/nextclade:3.3.1 | Optional |
     | nextclade_v3 | **gene_annotations_gff** | File | A genome annotation to specify how to translate the nucleotide sequence to proteins (genome_annotation.gff3). specifying this enables codon-informed alignment and protein alignments. See here for more info: https://docs.nextstrain.org/projects/nextclade/en/latest/user/input-files/03-genome-annotation.html | None | Optional |
     | nextclade_v3 | **input_ref** | File | A nucleotide sequence which serves as a reference for the pairwise alignment of all input sequences. This is also the sequence which defines the coordinate system of the genome annotation. See here for more info: https://docs.nextstrain.org/projects/nextclade/en/latest/user/input-files/02-reference-sequence.html | None | Optional |
-    | nextclade_v3 | **memory** | Int | Memory (GB) requested for this task | 4 | Optional |
+    | nextclade_v3 | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 4 | Optional |
     | nextclade_v3 | **nextclade_pathogen_json** | File | General dataset configuration file. See here for more info: https://docs.nextstrain.org/projects/nextclade/en/latest/user/input-files/05-pathogen-config.html | None | Optional |
     | nextclade_v3 | **verbosity** | String | other options are: "off" , "error" , "info" , "debug" , and "trace"  (highest level of verbosity) | warn | Optional |
     | organism_parameters | **flu_segment** | String |  |  | Optional |
@@ -427,22 +427,22 @@ All TheiaCoV Workflows (not TheiaCoV_FASTA_Batch)
     | organism_parameters | **vadr_mem** | Int |  |  | Optional |
     | organism_parameters | **vadr_options** | String |  |  | Optional |
     | pangolin4 | **analysis_mode** | String | Used to switch between usher and pangolearn analysis modes. Only use usher because pangolearn is no longer supported as of Pangolin v4.3 and higher versions. | None | Optional |
-    | pangolin4 | **cpu** | Int |  | 4 | Optional |
-    | pangolin4 | **disk_size** | Int | The size of the disk used for this task | 100 | Optional |
+    | pangolin4 | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional |
+    | pangolin4 | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
     | pangolin4 | **expanded_lineage** | Boolean | True/False that determines if a lineage should be expanded without aliases (e.g., BA.1 → B.1.1.529.1) | TRUE | Optional |
     | pangolin4 | **max_ambig** | Float | The maximum proportion of Ns allowed for pangolin to attempt an assignment | 0.5 | Optional |
-    | pangolin4 | **memory** | Int | Memory (GB) requested for this task | 8 | Optional |
+    | pangolin4 | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional |
     | pangolin4 | **skip_designation_cache** | Boolean | True/False that determines if the designation cache should be used | FALSE | Optional |
     | pangolin4 | **skip_scorpio** | Boolean | True/False that determines if scorpio should be skipped. | FALSE | Optional |
-    | sm_theiacov_fasta_wrangling | **cpu** | Int |  | 8 | Optional |
-    | sm_theiacov_fasta_wrangling | **disk_size** | Int | The size of the disk used for this task | 100 | Optional |
-    | sm_theiacov_fasta_wrangling | **docker** | String | Docker image used for this task | us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-08-28-v4 | Optional |
-    | sm_theiacov_fasta_wrangling | **memory** | Int | CPUs requested for this task | 4 | Optional |
+    | sm_theiacov_fasta_wrangling | **cpu** | Int | Number of CPUs to allocate to the task | 8 | Optional |
+    | sm_theiacov_fasta_wrangling | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
+    | sm_theiacov_fasta_wrangling | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-08-28-v4 | Optional |
+    | sm_theiacov_fasta_wrangling | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 4 | Optional |
     | theiacov_fasta_batch | **nextclade_dataset_name** | String | Nextclade organism dataset name. Options: "nextstrain/sars-cov-2/wuhan-hu-1/orfs" However, if organism input is set correctly, this input will be automatically assigned the corresponding dataset name. | sars-cov-2 | Optional |
     | theiacov_fasta_batch | **nextclade_dataset_tag** | String | Nextclade dataset tag. Used for pulling up-to-date reference genomes and associated information specific to nextclade datasets (QC thresholds, organism-specific information like SARS-CoV-2 clade & lineage information, etc.) that is required for running the Nextclade tool.  | 2024-06-13--23-42-47Z | Optional |
     | theiacov_fasta_batch | **organism** | String | The organism that is being analyzed. Options: "sars-cov-2" | sars-cov-2 | Optional |
-    | theiacov_fasta_batch | **pangolin_docker** | String | Docker image used for running Pangolin | us-docker.pkg.dev/general-theiagen/staphb/pangolin:4.3.1-pdata-1.27 | Optional |
-    | version_capture | **docker** | String | The Docker image used to run the version_capture task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
+    | theiacov_fasta_batch | **pangolin_docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/pangolin:4.3.1-pdata-1.27 | Optional |
+    | version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
     | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
 
 ### Organism-specific parameters and logic {#org-specific}

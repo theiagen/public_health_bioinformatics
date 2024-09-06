@@ -35,14 +35,14 @@ RASUSA functions to randomly downsample the number of raw reads to a user-define
 | rasusa_workflow | **read2** | File | FASTQ file containing read2 sequences | | Required |
 | rasusa_workflow | **samplename** | String | Name of the sample to be analyzed | | Required |
 | rasusa_task | **bases** | String | Explicitly define the number of bases required in the downsampled reads in quotations; when used, genome size and coverage are ignored; acceptable metric suffixes include: `b`, `k`, `m`, `g`, and `t` for base, kilo, mega, giga, and tera, respectively | | Optional |
-| rasusa_task | **cpu** | Int | CPUs requested for this task | 4 | Optional |
-| rasusa_task | **disk_size** | Int | Disk size requested for this task | 100 | Optional |
-| rasusa_task | **docker** | String | Docker image to use for this task | "us-docker.pkg.dev/general-theiagen/staphb/rasusa:0.7.0" | Optional |
+| rasusa_task | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional |
+| rasusa_task | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
+| rasusa_task | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/staphb/rasusa:0.7.0" | Optional |
 | rasusa_task | **frac** | Float | Explicitly define the fraction of reads to keep in the subsample; when used, genome size and coverage are ignored; acceptable inputs include whole numbers and decimals, e.g. 50.0 will leave 50% of the reads in the subsample | | Optional |
-| rasusa_task | **memory** | Int | Memory requested for this task | 8 | Optional |
+| rasusa_task | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional |
 | rasusa_task | **num** | Int | Optional: explicitly define the number of reads in the subsample; when used, genome size and coverage are ignored; acceptable metric suffixes include: `b`, `k`, `m`, `g`, and `t` for base, kilo, mega, giga, and tera, respectively | | Optional |
 | rasusa_task | **seed** | Int | Use to assign a name to the "random seed" that is used by the subsampler; i.e. this allows the exact same subsample to be produced from the same input file/s in subsequent runs when providing the seed identifier; do not input values for random downsampling | | Optional |
-| version_capture | **docker** | String | The Docker image used to run the version_capture task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
+| version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
 | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
 
 ### Outputs

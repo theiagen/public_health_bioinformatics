@@ -28,23 +28,23 @@ All input reads are processed through "core tasks" in each workflow. The core ta
 | theiaeuk_pe | **read1** | File | Unprocessed Illumina forward read file |  | Required |
 | theiaeuk_pe | **read2** | File | Unprocessed Illumina reverse read file |  | Required |
 | theiaeuk_pe | **samplename** | String | Name of Terra datatable |  | Required |
-| busco | **cpu** | Int | CPUs assined to BUSCO | 2 | Optional |
-| busco | **disk_size** | Int | Disk size, in GB, for BUSCO | 100 | Optional |
-| busco | **docker** | String | BUSCO docker image to use | us-docker.pkg.dev/general-theiagen/ezlabgva/busco:v5.3.2_cv1 | Optional |
+| busco | **cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional |
+| busco | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
+| busco | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/ezlabgva/busco:v5.3.2_cv1 | Optional |
 | cg_pipeline_clean | **cg_pipe_opts** | String | Options to pass to CG-Pipeline for clean read assessment  | --fast | Optional |
-| cg_pipeline_clean | **disk_size** | Int | Disk size, in GB, for GC-Pipeline | 100 | Optional |
-| cg_pipeline_clean | **docker** | String | CG-Pipeline docker image used for clean read assessment  | us-docker.pkg.dev/general-theiagen/staphb/lyveset:1.1.4f | Optional |
+| cg_pipeline_clean | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
+| cg_pipeline_clean | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/lyveset:1.1.4f | Optional |
 | cg_pipeline_raw | **cg_pipe_opts** | String | Options to pass to CG-Pipeline for clean read assessment  | --fast | Optional |
-| cg_pipeline_raw | **disk_size** | Int | Disk size, in GB, for GC-Pipeline | 100 | Optional |
-| cg_pipeline_raw | **docker** | String | CG-Pipeline docker image used for clean read assessment  | us-docker.pkg.dev/general-theiagen/staphb/lyveset:1.1.4f | Optional |
-| clean_check_reads | **cpu** | Int | CPU number to use with this task | 2 | Optional |
-| clean_check_reads | **disk_size** | Int | Disk size, in GB, for this task | 100 | Optional |
-| clean_check_reads | **docker** | String | Docker container for this task | us-docker.pkg.dev/general-theiagen/bactopia/gather_samples:2.0.2 | Optional |
-| clean_check_reads | **memory** | Int | Memory, in GB, to use with this task | 2 | Optional |
+| cg_pipeline_raw | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
+| cg_pipeline_raw | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/lyveset:1.1.4f | Optional |
+| clean_check_reads | **cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional |
+| clean_check_reads | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
+| clean_check_reads | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/bactopia/gather_samples:2.0.2 | Optional |
+| clean_check_reads | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 2 | Optional |
 | clean_check_reads | **organism** | String | Internal component, do not modify |  | Do Not Modify, Optional |
 | clean_check_reads | **workflow_series** | String | Internal component, do not modify |  | Do Not Modify, Optional |
-| gambit | **disk_size** | Int |  | 100 | Optional |
-| gambit | **docker** | String | GAMBIT docker image to use | us-docker.pkg.dev/general-theiagen/staphb/gambit:0.5.0 | Optional |
+| gambit | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
+| gambit | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/gambit:0.5.0 | Optional |
 | merlin_magic | **agrvate_docker_image** | String | Internal component, do not modify | "us-docker.pkg.dev/general-theiagen/biocontainers/agrvate:1.0.2--hdfd78af_0" | Do Not Modify, Optional |
 | merlin_magic | **assembly_only** | Boolean | Internal component, do not modify |  | Do Not Modify, Optional |
 | merlin_magic | **call_poppunk** | Boolean | Internal component, do not modify | TRUE | Do Not Modify, Optional |
@@ -90,9 +90,9 @@ All input reads are processed through "core tasks" in each workflow. The core ta
 | qc_check_task | **ani_highest_percent_bases_aligned** | Float | Internal component, do not modify |  | Do Not Modify, Optional |
 | qc_check_task | **assembly_length_unambiguous** | Int | Internal component, do not modify |  | Do Not Modify, Optional |
 | qc_check_task | **assembly_mean_coverage** | Float | Internal component, do not modify |  | Do Not Modify, Optional |
-| qc_check_task | **cpu** | Int | Amount of CPUs to allocate to the QC Check task | 4 | Optional |
-| qc_check_task | **disk_size** | Int | Amount of storage (in GB) to allocate to the QC Check task | 100 | Optional |
-| qc_check_task | **docker** | String | QC Check docker image to use |  "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-03-16" | Optional |
+| qc_check_task | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional |
+| qc_check_task | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
+| qc_check_task | **docker** | String | The Docker container to use for the task |  "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-03-16" | Optional |
 | qc_check_task | **kraken_human** | Float | Internal component, do not modify |  | Do Not Modify, Optional |
 | qc_check_task | **kraken_human_dehosted** | Float | Internal component, do not modify |  | Do Not Modify, Optional |
 | qc_check_task | **kraken_sc2** | Float | Internal component, do not modify |  | Do Not Modify, Optional |
@@ -100,7 +100,7 @@ All input reads are processed through "core tasks" in each workflow. The core ta
 | qc_check_task | **kraken_target_organism** | Float | Internal component, do not modify |  | Do Not Modify, Optional |
 | qc_check_task | **kraken_target_organism_dehosted** | Float | Internal component, do not modify |  | Do Not Modify, Optional |
 | qc_check_task | **meanbaseq_trim** | String | Internal component, do not modify |  | Do Not Modify, Optional |
-| qc_check_task | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the QC Check task | 8 | Optional |
+| qc_check_task | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional |
 | qc_check_task | **midas_secondary_genus_abundance** | Int | Internal component, do not modify |  | Do Not Modify, Optional |
 | qc_check_task | **midas_secondary_genus_coverage** | Float | Internal component, do not modify |  | Do Not Modify, Optional |
 | qc_check_task | **number_Degenerate** | Int | Internal component, do not modify |  | Do Not Modify, Optional |
@@ -109,21 +109,21 @@ All input reads are processed through "core tasks" in each workflow. The core ta
 | qc_check_task | **sc2_s_gene_mean_coverage** | Float | Internal component, do not modify |  | Do Not Modify, Optional |
 | qc_check_task | **sc2_s_gene_percent_coverage** | Float | Internal component, do not modify |  | Do Not Modify, Optional |
 | qc_check_task | **vadr_num_alerts** | String | Internal component, do not modify |  | Do Not Modify, Optional |
-| quast | **disk_size** | Int | Disk size, in GB, for this task | 100 | Optional |
-| quast | **docker** | String | QUAST docker image to use | us-docker.pkg.dev/general-theiagen/staphb/quast:5.0.2 | Optional |
+| quast | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
+| quast | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/quast:5.0.2 | Optional |
 | quast | **min_contig_length** | Int | Minimum length of contig for QUAST | 500 | Optional |
 | rasusa_task | **bases** | String | Explicitly set the number of bases required e.g., 4.3kb, 7Tb, 9000, 4.1MB |  | Optional |
-| rasusa_task | **cpu** | Int | CPU number to use with this task | 4 | Optional |
-| rasusa_task | **disk_size** | Int | Disk size, in GB, for this task | 100 | Optional |
-| rasusa_task | **docker** | String | Docker container for this task | us-docker.pkg.dev/general-theiagen/staphb/rasusa:0.7.0 | Optional |
+| rasusa_task | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional |
+| rasusa_task | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
+| rasusa_task | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/rasusa:0.7.0 | Optional |
 | rasusa_task | **frac** | Float | Subsample to a fraction of the reads |  | Optional |
-| rasusa_task | **memory** | Int | Memory, in GB, to use with this task | 8 | Optional |
+| rasusa_task | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional |
 | rasusa_task | **num** | Int | Subsample to a specific number of reads |  | Optional |
 | rasusa_task | **seed** | Int | Random seed to use |  | Optional |
-| raw_check_reads | **cpu** | Int | CPU number to use with this task | 2 | Optional |
-| raw_check_reads | **disk_size** | Int | Disk size, in GB, for this task | 100 | Optional |
-| raw_check_reads | **docker** | String | Docker container for this task | us-docker.pkg.dev/general-theiagen/bactopia/gather_samples:2.0.2 | Optional |
-| raw_check_reads | **memory** | Int | Memory, in GB, to use with this task | 2 | Optional |
+| raw_check_reads | **cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional |
+| raw_check_reads | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
+| raw_check_reads | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/bactopia/gather_samples:2.0.2 | Optional |
+| raw_check_reads | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 2 | Optional |
 | raw_check_reads | **organism** | String | Internal component, do not modify |  | Do Not Modify, Optional |
 | raw_check_reads | **workflow_series** | String | Internal component, do not modify |  | Do Not Modify, Optional |
 | read_QC_trim | **adapters** | File | File with adapter sequences to be removed |  | Optional |
@@ -132,8 +132,8 @@ All input reads are processed through "core tasks" in each workflow. The core ta
 | read_QC_trim | **call_midas** | Boolean | Internal component, do not modify | FALSE | Do Not Modify, Optional |
 | read_QC_trim | **fastp_args** | String | Additional arguments to pass to fastp | --detect_adapter_for_pe -g -5 20 -3 20 | Optional |
 | read_QC_trim | **kraken_db** | File | Database to use with kraken2 |  | Optional |
-| read_QC_trim | **kraken_disk_size** | Int | Disk size, in GB, for Kraken2 |  | Optional |
-| read_QC_trim | **kraken_memory** | Int | Memory, in GB, for Kraken2 |  | Optional |
+| read_QC_trim | **kraken_disk_size** | Int | Amount of storage (in GB) to allocate to the task |  | Optional |
+| read_QC_trim | **kraken_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task |  | Optional |
 | read_QC_trim | **midas_db** | File | Internal component, do not modify |  | Do Not Modify, Optional |
 | read_QC_trim | **phix** | File | A file containing the phix used during Illumina sequencing; used in the BBDuk task |  | Optional |
 | read_QC_trim | **read_processing** | String | Read trimming software to use, either "trimmomatic" or "fastp" | trimmomatic | Optional |
@@ -147,8 +147,8 @@ All input reads are processed through "core tasks" in each workflow. The core ta
 | shovill_pe | **assembler** | String | Assembler to use (spades, skesa, velvet or megahit), see <https://github.com/tseemann/shovill#--assembler> | "skesa" | Optional |
 | shovill_pe | **assembler_options** | String | Assembler-specific options that you might choose, see <https://github.com/tseemann/shovill#--opts> |  | Optional |
 | shovill_pe | **depth** | Int | User specified depth of coverage for downsampling (see <https://github.com/tseemann/shovill#--depth and https://github.com/tseemann/shovill#main-steps>) | 150 | Optional |
-| shovill_pe | **disk_size** | Int | Disk size, in GB, for this task | 100 | Optional |
-| shovill_pe | **docker** | String | Shovill docker image to use | us-docker.pkg.dev/general-theiagen/staphb/shovill:1.1.0 | Optional |
+| shovill_pe | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
+| shovill_pe | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/shovill:1.1.0 | Optional |
 | shovill_pe | **genome_length** | String | Internal component, do not modify |  | Do Not Modify, Optional |
 | shovill_pe | **kmers** | String | User-specified Kmer length to override choice made by Shovill, see <https://github.com/tseemann/shovill#--kmers> | auto | Optional |
 | shovill_pe | **min_contig_length** | Int | Minimum contig length to keep in final assembly  | 200 | Optional |
@@ -157,7 +157,7 @@ All input reads are processed through "core tasks" in each workflow. The core ta
 | shovill_pe | **noreadcorr** | Boolean | Disable correction of sequencing errors in reads by Shovill (see <https://github.com/tseemann/shovill#main-steps>) | FALSE | Optional |
 | shovill_pe | **nostitch** | Boolean | Disable read stitching by Shovill (see <https://github.com/tseemann/shovill#main-steps>) | FALSE | Optional |
 | shovill_pe | **trim** | Boolean | Enable adaptor trimming (see <https://github.com/tseemann/shovill#main-step>s) | FALSE | Optional |
-| theiaeuk_pe | **busco_memory** | Int | Memory allocated to the BUSCO in GB  | 8 | Optional |
+| theiaeuk_pe | **busco_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional |
 | theiaeuk_pe | **call_rasusa** | Boolean | If true, launch rasusa task to subsample raw reads to read depth of 150X | TRUE | Optional |
 | theiaeuk_pe | **gambit_db_genomes** | File | User-provided database of assembled query genomes; requires complementary signatures file. If not provided, uses default database, "/gambit-db" | gs://gambit-databases-rp/1.3.0/gambit-metadata-1.3-231016.gdb | Optional |
 | theiaeuk_pe | **gambit_db_signatures** | File | User-provided signatures file; requires complementary genomes file. If not specified, the file from the docker container will be used.  | gs://gambit-databases-rp/1.3.0/gambit-signatures-1.3-231016.gs | Optional |
@@ -170,7 +170,7 @@ All input reads are processed through "core tasks" in each workflow. The core ta
 | theiaeuk_pe | **min_reads** | Int | Minimum number of reads to pass read screening | 10000 | Optional |
 | theiaeuk_pe | **skip_screen** | Boolean | Option to skip the read screening prior to analysis | FALSE | Optional |
 | theiaeuk_pe | **subsample_coverage** | Float | Read depth for RASUSA task to subsample reads to | 150 | Optional |
-| version_capture | **docker** | String | The Docker image used to run the version_capture task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
+| version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
 | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
 
 ### Workflow tasks (performed for all taxa)

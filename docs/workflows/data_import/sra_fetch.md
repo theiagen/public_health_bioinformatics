@@ -19,11 +19,11 @@ This workflow runs on the sample level.
 | **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
 |---|---|---|---|---|---|
 | fetch_sra_to_fastq | **sra_accession** | String | SRA, ENA, or DRA accession number | | Required |
-| fetch_sra_to_fastq | **cpu** | Int | The number of CPUs to be given to the task | 2 | Optional |
-| fetch_sra_to_fastq | **disk_size** | Int | The size of the disk (in GB) | 100 | Optional |
-| fetch_sra_to_fastq | **docker_image** | String | The docker image used to run the task | "us-docker.pkg.dev/general-theiagen/biocontainers/fastq-dl:2.0.4--pyhdfd78af_0" | Optional |
+| fetch_sra_to_fastq | **cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional |
+| fetch_sra_to_fastq | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
+| fetch_sra_to_fastq | **docker_image** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/biocontainers/fastq-dl:2.0.4--pyhdfd78af_0" | Optional |
 | fetch_sra_to_fastq | **fastq_dl_options** | String | Additional parameters to pass to fastq_dl from [here](https://github.com/rpetit3/fastq-dl?tab=readme-ov-file#usage) | "--provider sra" | Optional |
-| fetch_sra_to_fastq | **memory** | Int | The RAM (in GB) available to run the task | 8 | Optional |
+| fetch_sra_to_fastq | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional |
 
 The only required input for the SRA_Fetch workflow is an SRA run accession beginning "SRR", an ENA run accession beginning "ERR", or a DRA run accession which beginning "DRR".
 

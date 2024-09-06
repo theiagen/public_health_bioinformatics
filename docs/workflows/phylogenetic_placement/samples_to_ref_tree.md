@@ -21,9 +21,9 @@ However, nextclade can be used on any organism as long as an an existing, high-q
 |---|---|---|---|---|---|
 | nextclade_addToRefTree | **assembly_fasta** | File | A fasta file with query sequence(s) to be placed onto the global tree |  | Required |
 | nextclade_addToRefTree | **nextclade_dataset_name** | String | What nextclade dataset name to run nextclade on; the options are: "sars-cov-2", "flu_h1n1pdm_ha", "flu_h1n1pdm_na", "flu_h3n2_ha", "flu_h3n2_na", "flu_vic_ha", "flu_vic_na", "flu_yam_ha", "hMPXV", "hMPXV_B1", "MPXV", "rsv_a" and "rsv_b"  |  | Required |
-| nextclade_add_ref | **cpu** | Int | Amount of CPUs to allocate to the task | 2 | Optional |
-| nextclade_add_ref | **disk_size** | Int | computation disk size | 100 | Optional |
-| nextclade_add_ref | **docker** | String | nextclade docker image | us-docker.pkg.dev/general-theiagen/nextstrain/nextclade:3.3.1 | Optional |
+| nextclade_add_ref | **cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional |
+| nextclade_add_ref | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
+| nextclade_add_ref | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/nextstrain/nextclade:3.3.1 | Optional |
 | nextclade_add_ref | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 4 | Optional |
 | nextclade_add_ref | **verbosity** | String | Set the nextclade output verbosity level. Options: off, error, warn, info, debug, trace | "warn" | Optional |
 | nextclade_addToRefTree | **dataset_tag** | String | nextclade dataset tag | Uses the dataset tag associated with the nextclade docker image version | Optional |
@@ -31,7 +31,7 @@ However, nextclade can be used on any organism as long as an an existing, high-q
 | nextclade_addToRefTree | **input_ref** | File | An optional FASTA file containing reference sequence. This file should contain exactly 1 sequence. | Uses the reference fasta associated with the specified nextclade dataset name | Optional |
 | nextclade_addToRefTree | **nextclade_pathogen_json** | File | An optional pathogen JSON file containing configuration and data specific to a pathogen. | Uses the reference pathogen JSON file associated with the specified nextclade dataset name | Optional |
 | nextclade_addToRefTree | **reference_tree_json** | File | An optional phylogenetic reference tree file which serves as a target for phylogenetic placement | Uses the reference tree associated with the specified nextclade dataset name | Optional |
-| version_capture | **docker** | String | The Docker image used to run the version_capture task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
+| version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
 | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
 
 ### Outputs

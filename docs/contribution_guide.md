@@ -72,8 +72,8 @@ If you are adding a new workflow, there are a number of things to do in order to
 2. Collect the following information for your new workflow:
      - Workflow Name - Link the name with a relative path to the workflow page in appropriate `docs/workflows/` subdirectory
      - Workflow Description - Brief description of the workflow
-     - Taxa - Options: "Any taxa", "Bacteria", "Mycotics", "Viral"
-     - Workflow Type (_on Terra_) - Options: "Sample-level", "Set-level", or neither
+     - Applicable Kingdom - Options: "Any taxa", "Bacteria", "Mycotics", "Viral"
+     - Workflow Level (_on Terra_) - Options: "Sample-level", "Set-level", or neither
      - Command-line compatibility - Options: "Yes", "No", and/or "Some optional features incompatible"
      - The version where the last known changes occurred (likely the upcoming version if it is a new workflow)
      - Link to the workflow on Dockstore (if applicable) - Workflow name linked to the information tab on Dockstore.
@@ -90,6 +90,15 @@ In order to maintain cohesive documentation, the following language and formatti
 
 ### Language Conventions
 
+The following language conventions should be followed when writing documentation:
+
+- The documentation should be written in American English (sorry to our friends across the pond!)
+- The following variables should recieve the following descriptions:
+    - `cpu` - Number of CPUs to allocate to the task
+    - `disk_size` - Amount of storage (in GB) to allocate to the task
+    - `docker` or `docker_image` - The Docker container to use for the task
+    - `memory` - Amount of memory/RAM (in GB) to allocate to the task
+
 ### Formatting Conventions
 
 - **Bold Text** - Use `**bold text**` to indicate text that should be bolded.
@@ -97,7 +106,7 @@ In order to maintain cohesive documentation, the following language and formatti
 - ==Highlighted Text== - Use `==highlighted text==` to indicate text that should be highlighted.
 - `Code` - Use \`code\` to indicate text that should be formatted as code.
 - ^^Underlined Text^^ - Use `^^underlined text^^` to indicate text that should be underlined (works with our theme; not all Markdown renderers support this).
-- > Citations 
+- > Citations
     - Use a `>` to activate quote formatting for a citation. Make sure to separate multiple citations with a comment line (`<!-- -->`) to prevent the citations from running together.
 - Callouts/Admonitions - These features are called "call-outs" in Notion, but are "Admonitions" in MkDocs. [I highly recommend referring to the Material for MkDocs documentation page on Admonitions to learn how best to use this feature](https://squidfunk.github.io/mkdocs-material/reference/admonitions/). Use the following syntax to create a callout:
 
@@ -132,7 +141,7 @@ In order to maintain cohesive documentation, the following language and formatti
         ![Alt Text](/path/to/image.png)
     ```
 
-- Indentation - **_FOUR_** spaces are required instead of the typical two. This is a side effect of using this theme. If you use two spaces, the list and/or indentations will not render correctly.
+- Indentation - **_FOUR_** spaces are required instead of the typical two. This is a side effect of using this theme. If you use two spaces, the list and/or indentations will not render correctly. This will make your linter sad :( 
 
     ```markdown
     - first item

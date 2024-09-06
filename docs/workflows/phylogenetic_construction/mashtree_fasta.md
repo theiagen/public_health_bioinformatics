@@ -27,26 +27,26 @@ This workflow also features an optional module, `summarize_data`, that creates a
 | mashtree_fasta | **midpoint_root_tree** | Boolean | If true, midpoint root the final tree | FALSE | Optional |
 | mashtree_fasta | **phandango_coloring** | Boolean | Boolean variable that tells the data summary task and the reorder matrix task to include a suffix that enables consistent coloring on Phandango; by default, this suffix is not added. To add this suffix set this variable to true. | FALSE | Optional |
 | mashtree_fasta | **sample_names** | Array[String] | The list of samples | | Optional |
-| mashtree_task | **cpu** | Int | Number of CPUs to use | 16 | Optional |
-| mashtree_task | **disk_size** | Int | Disk size in GB | 100 | Optional |
-| mashtree_task | **docker** | String | Docker image to use | "us-docker.pkg.dev/general-theiagen/staphb/mashtree:1.2.0" | Optional |
+| mashtree_task | **cpu** | Int | Number of CPUs to allocate to the task | 16 | Optional |
+| mashtree_task | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
+| mashtree_task | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/staphb/mashtree:1.2.0" | Optional |
 | mashtree_task | **genomesize** | Int | Genome size of the input samples | 5000000 | Ooptional |
 | mashtree_task | **kmerlength** | Int | Hashes will be based on strings of this many nucleotides | 21 | Optional |
 | mashtree_task | **mindepth** | Int | If set to zero, mashtree will run in "accurate" mode as it will chose a mindepth by itself in a slower method; this value otherwise indicates the minimum number of times a kmer must appear in order to be included | 5 | Optional |
-| mashtree_task | **memory** | Int | Memory in GB | 64 | Optional |
+| mashtree_task | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 64 | Optional |
 | mashtree_task | **sketchsize** | Int | Each sketch will have at most this many non-redundant min-hashes | 10000 | Optional |
 | mashtree_task | **sort_order** | String | For neighbor-joining, the sort order can make a difference. Options include: "ABC" (alphabetical), "random", "input-order" | "ABC" | Optional |
 | mashtree_task | **truncLength** | Int | How many characters to keep in a filename | 250 | Optional |
-| reorder_matrix | **cpu** | Int | Amount of CPUs to allocate to this task | 100 | Optional |
-| reorder_matrix | **disk_size** | Int | Amount of storage (in GB) to allocate to this task | 2 | Optional |
-| reorder_matrix | **docker** | String | Docker image to use | 100 | Optional |
-| reorder_matrix | **memory** | Int | Amount of memory/RAM (in GB) to allocate to this task | us-docker.pkg.dev/general-theiagen/staphb/mykrobe:0.12.1 | Optional |
-| summarize_data | **cpu** | Int | Amount of CPUs to allocate to this task | 8 | Optional |
-| summarize_data | **disk_size** | Int | Amount of storage (in GB) to allocate to this task | 100 | Optional |
-| summarize_data | **docker** | String | Docker image to use | us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-03-16 | Optional |
+| reorder_matrix | **cpu** | Int | Number of CPUs to allocate to the task | 100 | Optional |
+| reorder_matrix | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 2 | Optional |
+| reorder_matrix | **docker** | String | The Docker container to use for the task | 100 | Optional |
+| reorder_matrix | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | us-docker.pkg.dev/general-theiagen/staphb/mykrobe:0.12.1 | Optional |
+| summarize_data | **cpu** | Int | Number of CPUs to allocate to the task | 8 | Optional |
+| summarize_data | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
+| summarize_data | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-03-16 | Optional |
 | summarize_data | **id_column_name** | String | If the sample IDs are in a different column to samplenames, it can be passed here and it will be used instead. |  | Optional |
-| summarize_data | **memory** | Int | Amount of memory/RAM (in GB) to allocate to this task | 8 | Optional |
-| version_capture | **docker** | String | The Docker image used to run the version_capture task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
+| summarize_data | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional |
+| version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
 | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
 
 ### Workflow Actions

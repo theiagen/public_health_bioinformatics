@@ -20,11 +20,11 @@ This workflow runs on the set level.
 |---|---|---|---|---|---|
 | zip_column_content | **files_to_zip** | Array[File] | The column that has the files you want to zip. |  | Required |
 | zip_column_content | **zipped_file_name** | String | The name you want your zipped file to have. The .zip file extension will be added to this name. |  | Required |
-| zip_files | **cpu** | Int | The number of CPUs to allocate to the task | 2 | Optional |
-| zip_files | **disk_size** | Int | Amount of storage (in GB) requested for the VM to run the zip_files task | 100 | Optional |
-| zip_files | **docker_image** | String | Docker image used to run the zip_files task | "us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1" | Optional |
-| zip_files | **memory** | Int | Amount of RAM/memory requested for running the zip_files task | 8 | Optional |
-| version_capture | **docker** | String | The Docker image used to run the version_capture task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
+| zip_files | **cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional |
+| zip_files | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
+| zip_files | **docker_image** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1" | Optional |
+| zip_files | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional |
+| version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
 | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
 
 ### Outputs

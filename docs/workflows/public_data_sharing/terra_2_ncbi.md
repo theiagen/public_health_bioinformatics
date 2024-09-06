@@ -113,34 +113,34 @@ This workflow runs on set-level data tables.
 | Terra_2_NCBI | **sra_transfer_gcp_bucket** | String | Google bucket where your SRA reads will be temporarily stored before transferring to SRA |  | Required |
 | Terra_2_NCBI | **table_name** | String | The name of the Terra table where your samples are found |  | Required |
 | Terra_2_NCBI | **workspace_name** | String | The name of the workspace where your samples are found |  | Required |
-| add_biosample_accessions | **cpu** | Int | Amount of CPUs to allocate to the task | 2  | Optional |
-| add_biosample_accessions | **disk_size** | Int | GB of Hard Drive allocated for this task | 100 | Optional |
-| add_biosample_accessions | **docker** | String | Docker image used for this task | "us-docker.pkg.dev/general-theiagen/broadinstitute/ncbi-tools:2.10.7.10" | Optional |
-| add_biosample_accessions | **memory** | Int | GB of RAM allocated for this task | 2 | Optional |
-| biosample_submit_tsv_ftp_upload | **cpu** | Int | Amount of CPUs to allocate to the task | 2 | Optional |
-| biosample_submit_tsv_ftp_upload | **disk_size** | Int | GB of Hard Drive allocated for this task | 100 | Optional |
-| biosample_submit_tsv_ftp_upload | **docker** | String | Docker image used for this task | "us-docker.pkg.dev/general-theiagen/broadinstitute/ncbi-tools:2.10.7.10" | Optional |
-| biosample_submit_tsv_ftp_upload | **memory** | Int | GB of RAM allocated for this task | 2 | Optional |
+| add_biosample_accessions | **cpu** | Int | Number of CPUs to allocate to the task | 2  | Optional |
+| add_biosample_accessions | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
+| add_biosample_accessions | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/broadinstitute/ncbi-tools:2.10.7.10" | Optional |
+| add_biosample_accessions | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 2 | Optional |
+| biosample_submit_tsv_ftp_upload | **cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional |
+| biosample_submit_tsv_ftp_upload | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
+| biosample_submit_tsv_ftp_upload | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/broadinstitute/ncbi-tools:2.10.7.10" | Optional |
+| biosample_submit_tsv_ftp_upload | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 2 | Optional |
 | ncbi_sftp_upload | **additional_files** | Array[File] | Internal component; do not modify | [] | Optional |
-| ncbi_sftp_upload | **cpu** | Int | Amount of CPUs to allocate to the task | 2 | Optional |
-| ncbi_sftp_upload | **disk_size** | Int | GB of Hard Drive allocated for this task | 100 | Optional |
-| ncbi_sftp_upload | **docker** | String | Docker image used for this task | "us-docker.pkg.dev/general-theiagen/broadinstitute/ncbi-tools:2.10.7.10" | Optional |
-| ncbi_sftp_upload | **memory** | Int | GB of RAM allocated for this task | 2 | Optional |
+| ncbi_sftp_upload | **cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional |
+| ncbi_sftp_upload | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
+| ncbi_sftp_upload | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/broadinstitute/ncbi-tools:2.10.7.10" | Optional |
+| ncbi_sftp_upload | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 2 | Optional |
 | ncbi_sftp_upload | **wait_for** | String | Internal component; do not modify | "1" | Optional |
-| prune_table | **cpu** | Int | Amount of CPUs to allocate to the task | 2 | Optional |
-| prune_table | **disk_size** | Int | GB of Hard Drive allocated for this task | 100 | Optional |
-| prune_table | **docker** | String | Docker image used for this task | "us-docker.pkg.dev/general-theiagen/broadinstitute/ncbi-tools:2.10.7.10" | Optional |
-| prune_table | **memory** | Int | GB of RAM allocated for this task | 2 | Optional |
+| prune_table | **cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional |
+| prune_table | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
+| prune_table | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/broadinstitute/ncbi-tools:2.10.7.10" | Optional |
+| prune_table | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 2 | Optional |
 | prune_table | **read1_column_name** | String | The column header of the read1 column |  | Optional |
 | prune_table | **read2_column_name** | String | The column header of the read1 column |  | Optional |
-| sra_tsv_to_xml | **cpu** | Int | Amount of CPUs to allocate to the task | 2 | Optional |
-| sra_tsv_to_xml | **disk_size** | Int | GB of Hard Drive allocated for this task | 100 | Optional |
-| sra_tsv_to_xml | **docker** | String | Docker image used for this task | "us-docker.pkg.dev/general-theiagen/broadinstitute/ncbi-tools:2.10.7.10" | Optional |
-| sra_tsv_to_xml | **memory** | Int | GB of RAM allocated for this task | 2 | Optional |
+| sra_tsv_to_xml | **cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional |
+| sra_tsv_to_xml | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
+| sra_tsv_to_xml | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/broadinstitute/ncbi-tools:2.10.7.10" | Optional |
+| sra_tsv_to_xml | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 2 | Optional |
 | Terra_2_NCBI | **input_table** | File | Internal component; do not modify |  | Optional |
 | Terra_2_NCBI | **skip_biosample** | Boolean | Boolean switch to turn on actual production level submission | false | Optional |
 | Terra_2_NCBI | **submit_to_production** | Boolean | Used to indicate whether or not the workflow should submit to NCBI's production environment. If set to true, then a Production submission will occur. Otherwise, by default (false), it will perform a Test submission. | false | Optional, Required |
-| version_capture | **docker** | String | The Docker image used to run the version_capture task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
+| version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
 | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
 
 ??? task "Workflow Tasks"

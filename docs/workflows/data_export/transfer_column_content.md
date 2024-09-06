@@ -29,11 +29,11 @@ This workflow runs on the set level.
 |---|---|---|---|---|---|
 | transfer_column_content | **files_to_transfer** | Array[File] | The column that has the files you want to concatenate. | | Required |
 | transfer_column_content | **target_bucket** | String | The GS URI of the target storage bucket. Note: **Do not include spaces**, but **do** include the `gs://` at the beginning of the bucket URI | | Required |
-| transfer_files | **cpu** | Int | Number of cpus to allocate to this task | 4 | Optional |
-| transfer_files | **disk_size** | Int | Storage in GB for the disk for this task | 100 | Optional |
+| transfer_files | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional |
+| transfer_files | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
 | transfer_files | **docker_image** | String | The docker image used to perform the file transfer. | us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1" | Optional |
-| transfer_files | **memory** | Int | RAM in GB for this task | 8 | Optional |
-| version_capture | **docker** | String | The Docker image used to run the version_capture task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
+| transfer_files | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional |
+| version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
 | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
 
 ### Outputs

@@ -24,10 +24,10 @@ This workflow runs on the set level.
 | czgenepi_prep | **terra_table_name** | String | The name of the Terra table where the data is hosted |  | Required |
 | czgenepi_prep | **terra_project_name** | String | The name of the Terra project where the data is hosted |  | Required |
 | czgenepi_prep | **terra_workspace_name** | String | The name of the Terra workspace where the data is hosted |  | Required |
-| download_terra_table | **memory** | Int | The memory (in GB) used to run this task | 10 | Optional |
-| download_terra_table | **docker** | String | The Docker image used to run this task | quay.io/theiagen/terra-tools:2023-06-21 | Optional |
+| download_terra_table | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 10 | Optional |
+| download_terra_table | **docker** | String | The Docker container to use for the task | quay.io/theiagen/terra-tools:2023-06-21 | Optional |
 | download_terra_table | **disk_size** | String | The size of the disk used when running this task | 1 | Optional |
-| download_terra_table | **cpu** | Int | The number of cpus used to run this task | 1 | Optional |
+| download_terra_table | **cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional |
 | czgenepi_prep | **assembly_fasta_column_name** | String | The column name where the sample's assembly file can be found | assembly_fasta | Optional, Required |
 | czgenepi_prep | **county_column_name** | String | The column name where the samples' originating county can be found | county | Optional, Required |
 | czgenepi_prep | **organism** | String | The organism for data preparation. Options: "mpox" or "sars-cov-2" | sars-cov-2 | Optional |
@@ -39,11 +39,11 @@ This workflow runs on the set level.
 | czgenepi_prep | **continent_column_name** | String | The column name where the sample's originating continent can be found | continent | Optional, Required |
 | czgenepi_prep | **sequencing_date_column_name** | String | The column name where the sample's sequencing data can be found | sequencing_date | Optional |
 | czgenepi_prep | **private_id_column_name** | String | The column name where the Private ID for the sample can be found | terra_table_name_id | Optional, Required |
-| czgenepi_wrangling | **memory** | Int | The memory (in GB) used to run this task | 8 | Optional |
-| czgenepi_wrangling | **docker** | String | The Docker image used to run this task | us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-08-08-2 | Optional |
-| czgenepi_wrangling | **disk_size** | Int | The size of the disk used when running this task | 100 | Optional |
-| czgenepi_wrangling | **cpu** | Int | The number of cpus used to run this task | 1 | Optional |
-| version_capture | **docker** | String | The Docker image used to run the version_capture task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
+| czgenepi_wrangling | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional |
+| czgenepi_wrangling | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-08-08-2 | Optional |
+| czgenepi_wrangling | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
+| czgenepi_wrangling | **cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional |
+| version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
 | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
 
 ### Outputs

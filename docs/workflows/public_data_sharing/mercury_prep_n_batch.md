@@ -69,14 +69,14 @@ This workflow runs on the set-level.
 | mercury_prep_n_batch | **terra_project_name** | String | The name of your Terra project. You can find this information in the URL of the webpage of your Terra dashboard. For example, if your URL contains #workspaces/example/my_workspace/ then your project name is example |  | Required |
 | mercury_prep_n_batch | **terra_table_name** | String | The name of the Terra table where your samples can be found. Do not include the entity: prefix or the _id suffix, just the name of the table as listed in the sidebar on lefthand side of the Terra Data tab. |  | Required |
 | mercury_prep_n_batch | **terra_workspace_name** | String | The name of your Terra workspace where your samples can be found. For example, if your URL contains #workspaces/example/my_workspace/ then your project name is my_workspace |  | Required |
-| download_terra_table | **cpu** | Int | The number of CPUs assigned to this task | 1 | Optional |
-| download_terra_table | **disk_size** | Int | The amount of storage (in GB) assigned to this task | 10 | Optional |
-| download_terra_table | **docker** | String | The docker image used to run this task | us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-06-21 | Optional |
-| download_terra_table | **memory** | Int | The amount of RAM (in GB) assigned to this task | 1 | Optional |
-| mercury | **cpu** | Int | The number of CPUs assigned to this task | 2 | Optional |
-| mercury | **disk_size** | Int | The amount of storage (in GB) assigned to this task | 50 | Optional |
-| mercury | **docker** | String | The docker image used to run this task | us-docker.pkg.dev/general-theiagen/theiagen/mercury:1.0.7 | Optional |
-| mercury | **memory** | Int | The amount of RAM (in GB) assigned to this task | 2 | Optional |
+| download_terra_table | **cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional |
+| download_terra_table | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 10 | Optional |
+| download_terra_table | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-06-21 | Optional |
+| download_terra_table | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 1 | Optional |
+| mercury | **cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional |
+| mercury | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 50 | Optional |
+| mercury | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/theiagen/mercury:1.0.7 | Optional |
+| mercury | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 2 | Optional |
 | mercury | **number_N_threshold** | Int | Only for "sars-cov-2" submissions; used to filter out any samples that contain more than the indicated number of Ns in the assembly file | 5000 | Optional |
 | mercury | **single_end** | Boolean | Set to true if your data is single-end; this ensures that a read2 column is not included in the metadata | FALSE | Optional |
 | mercury | **skip_county** | Boolean | Use if your Terra table contains a county column that you do not want to include in your submission.  | FALSE | Optional |
@@ -88,17 +88,17 @@ This workflow runs on the set-level.
 | mercury_prep_n_batch | **organism** | String | The organism that you want submission prepare for — each organism requires different metadata fields so please ensure this field is accurate. Options: "flu", "mpox"" or "sars-cov-2" | sars-cov-2 | Optional |
 | mercury_prep_n_batch | **output_name** | String | Free text prefix for all output files | mercury | Optional |
 | mercury_prep_n_batch | **skip_ncbi** | Boolean | Set to true if you only want to prepare GISAID submission files | FALSE | Optional |
-| table2asn | **cpu** | Int | The number of CPUs assigned to this task | 1 | Optional |
-| table2asn | **disk_size** | Int | The amount of storage (in GB) assigned to this task | 100 | Optional |
-| table2asn | **docker** | String | The docker image used to run this task | us-docker.pkg.dev/general-theiagen/staphb/ncbi-table2asn:1.26.678 | Optional |
-| table2asn | **memory** | Int | The amount of RAM (in GB) assigned to this task | 1 | Optional |
-| trim_genbank_fastas | **cpu** | Int | The number of CPUs assigned to this task | 1 | Optional |
-| trim_genbank_fastas | **disk_size** | Int | The amount of storage (in GB) assigned to this task | 100 | Optional |
-| trim_genbank_fastas | **docker** | String | The docker image used to run this task | us-docker.pkg.dev/general-theiagen/staphb/vadr:1.3 | Optional |
+| table2asn | **cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional |
+| table2asn | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
+| table2asn | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/ncbi-table2asn:1.26.678 | Optional |
+| table2asn | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 1 | Optional |
+| trim_genbank_fastas | **cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional |
+| trim_genbank_fastas | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
+| trim_genbank_fastas | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/vadr:1.3 | Optional |
 | trim_genbank_fastas | **max_length** | Int | Only for "sars-cov-2" submissions; the maximum genome length for trimming terminal ambiguous nucleotides. If your sample's genome is higher than this value, the workflow will error/fail. | 30000 | Optional |
-| trim_genbank_fastas | **memory** | Int | The amount of RAM (in GB) assigned to this task | 2 | Optional |
+| trim_genbank_fastas | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 2 | Optional |
 | trim_genbank_fastas | **min_length** | Int | Only for "sars-cov-2" submissions; the minimum genome length for trimming terminal ambiguous nucleotides. If your sample's genome is lower than this value, the workflow will error/fail.  | 50 | Optional |
-| version_capture | **docker** | String | The Docker image used to run the version_capture task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
+| version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
 | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
 
 ### Outputs

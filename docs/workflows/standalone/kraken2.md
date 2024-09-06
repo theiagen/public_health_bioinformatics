@@ -49,22 +49,22 @@ Besides the data input types, there are minimal differences between these two wo
 | *workflow_name | **read2** | File |  |  | Required for PE only | PE |
 | *workflow_name | **samplename** | String |  |  | Required | ONT, PE, SE |
 | kraken2_pe or kraken2_se | **classified_out** | String | Allows user to rename the classified FASTQ files output. Must include .fastq as the suffix | classified#.fastq | Optional | ONT, PE, SE |
-| kraken2_pe or kraken2_se | **cpu** | Int | Number of CPUs used  run the kraken2 task | 4 | Optional | ONT, PE, SE |
+| kraken2_pe or kraken2_se | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional | ONT, PE, SE |
 | kraken2_pe or kraken2_se | **disk_size** | Int | GB of storage to request for VM used to run the kraken2 task. Increase this when using large (>30GB kraken2 databases such as the "k2_standard" database) | 100 | Optional | ONT, PE, SE |
-| kraken2_pe or kraken2_se | **docker** | String | Docker image used to run the kraken2 task | us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.1.2-no-db | Optional | ONT, PE, SE |
+| kraken2_pe or kraken2_se | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.1.2-no-db | Optional | ONT, PE, SE |
 | kraken2_pe or kraken2_se | **kraken2_args** | String | Allows a user to supply additional kraken2 command line arguments |  | Optional | ONT, PE, SE |
-| kraken2_pe or kraken2_se | **memory** | Int | GB of RAM allocated to the kraken2 task | 32 | Optional | ONT, PE, SE |
+| kraken2_pe or kraken2_se | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 32 | Optional | ONT, PE, SE |
 | kraken2_pe or kraken2_se | **unclassified_out** | String | Allows user to rename unclassified FASTQ files output. Must include .fastq as the suffix | unclassified#.fastq | Optional | ONT, PE, SE |
-| krona | **cpu** | Int | Number of CPUs used  run the krona task | 4 | Optional | PE, SE |
-| krona | **disk_size** | Int | GB of storage to request for VM used to run the krona task | 100 | Optional | PE, SE |
-| krona | **docker** | String | Docker image used to run the krona task | us-docker.pkg.dev/general-theiagen/biocontainers/krona:2.7.1--pl526_5 | Optional | PE, SE |
-| krona | **memory** | Int | GB of RAM allocated to the krona task | 8 | Optional | PE, SE |
-| kraken2_recalculate_abundances | **cpu** | Int | Number of CPUs used  run the task | 4 | Optional | ONT |
-| kraken2_recalculate_abundances | **disk_size** | Int | GB of storage to request for VM used to run the task | 100 | Optional | ONT |
-| kraken2_recalculate_abundances | **docker** | String | Docker image used to run the task | us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-08-28-v4 | Optional | ONT |
-| kraken2_recalculate_abundances | **memory** | Int | GB of RAM allocated to the krona task | 8 | Optional | ONT |
+| krona | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional | PE, SE |
+| krona | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | PE, SE |
+| krona | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/biocontainers/krona:2.7.1--pl526_5 | Optional | PE, SE |
+| krona | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | PE, SE |
+| kraken2_recalculate_abundances | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional | ONT |
+| kraken2_recalculate_abundances | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | ONT |
+| kraken2_recalculate_abundances | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-08-28-v4 | Optional | ONT |
+| kraken2_recalculate_abundances | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | ONT |
 | kraken2_recalculate_abundances | **target_organism** | String | Target organism for the kraken2 abundance to be exported to the data table |  | Optional | ONT |
-| version_capture | **docker** | String | The Docker image used to run the version_capture task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional | ONT, PE, SE |
+| version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional | ONT, PE, SE |
 | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional | ONT, PE, SE |
 
 ### Outputs

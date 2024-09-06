@@ -28,10 +28,10 @@ The manual creation of Terra tables can be tedious and error-prone. This workflo
 | create_terra_table | **terra_project** | String | The name of the Terra project where your data table will be created | | Required |
 | create_terra_table | **terra_workspace** | String | The name of the Terra workspace where your data table will be created | | Required |
 | create_terra_table | **file_ending** | String | Use to provide file ending(s) to determine what should be dropped from the filename to determine the name of the sample (see below for more information) | | Optional |
-| make_table | **cpu** | Int | The number of CPUs to be given to the task | 1 | Optional |
-| make_table | **disk_size** | Int | The size of the disk (in GB) | 25 | Optional |
-| make_table | **docker** | String | The docker image used to run the task | "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-06-21" | Optional |
-| make_table | **memory** | Int | The RAM (in GB) available to run the task | 4 | Optional |
+| make_table | **cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional |
+| make_table | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 25 | Optional |
+| make_table | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-06-21" | Optional |
+| make_table | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 4 | Optional |
 
 ### Finding the `data_location_path`
 

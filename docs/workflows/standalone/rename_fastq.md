@@ -17,11 +17,11 @@ This sample-level workflow receives a read file or a pair of read files (FASTQ),
 | rename_fastq_files | **new_filename** | String | New name for the FASTQ file(s) | | Required |
 | rename_fastq_files | **read1** | File | FASTQ file containing read1 sequences | | Required |
 | rename_fastq_files | **read2** | File | FASTQ file containing read2 sequences | | Optional |
-| rename_PE_files or rename_SE_files | **cpu** | Int | CPUs requested for this task | 2 | Optional |
-| rename_PE_files or rename_SE_files | **disk_size** | Int | Disk size requested for this task | 100 | Optional |
-| rename_PE_files or rename_SE_files | **docker** | String | Docker image to use for this task | "us-docker.pkg.dev/general-theiagen/ubuntu/ubuntu:jammy-20230816" | Optional |
-| rename_PE_files or rename_SE_files | **memory** | Int | Memory requested for this task | 2 | Optional |
-| version_capture | **docker** | String | The Docker image used to run the version_capture task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
+| rename_PE_files or rename_SE_files | **cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional |
+| rename_PE_files or rename_SE_files | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
+| rename_PE_files or rename_SE_files | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/ubuntu/ubuntu:jammy-20230816" | Optional |
+| rename_PE_files or rename_SE_files | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 2 | Optional |
+| version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
 | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
 
 ### Outputs

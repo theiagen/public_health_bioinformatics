@@ -165,7 +165,7 @@ This workflow runs on the sample level.
 | fetch_bs | **disk_size** | Int | The disk size is the amount of storage in GigaBytes (GB) requested for the VM to run the data transfer task. | 100 | Optional |
 | fetch_bs | **docker_image** | String | The Docker image used to run BaseSpace_Fetch task. | "us-docker.pkg.dev/general-theiagen/theiagen/basespace_cli:1.2.1" | Optional |
 | fetch_bs | **memory** | Int | The memory is the amount of RAM/memory requested for running the data transfer task. | 8 | Optional |
-| version_capture | **docker** | String | The Docker image used to run the version_capture task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
+| version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
 | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
 
 ### **Outputs**
