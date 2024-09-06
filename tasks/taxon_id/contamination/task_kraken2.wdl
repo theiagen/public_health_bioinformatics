@@ -92,7 +92,7 @@ task kraken2_standalone {
     File kraken2_classified_read1 = "~{samplename}.classified_1.fastq.gz"
     Float kraken2_percent_human = read_float("PERCENT_HUMAN")
     Float kraken2_percent_sc2 = read_float("PERCENT_SC2")
-    String? kraken2_percent_target_organism = read_string("PERCENT_TARGET_ORG")
+    String kraken2_percent_target_organism = read_string("PERCENT_TARGET_ORGANISM")
     String? kraken2_target_organism = target_organism
     File? kraken2_classified_read2 = "~{samplename}.classified_2.fastq.gz"
     String kraken2_database = kraken2_db
@@ -167,14 +167,14 @@ task kraken2_parse_classified {
     else 
       percent_target_organism=""
     fi
-    echo $percent_target_organism | tee PERCENT_TARGET_ORG
+    echo $percent_target_organism | tee PERCENT_TARGET_ORGANISM
     
   >>>
   output {
     File kraken_report = "~{samplename}.report_parsed.txt"
     Float percent_human = read_float("PERCENT_HUMAN")
     Float percent_sc2 = read_float("PERCENT_SC2")
-    String percent_target_organism = read_string("PERCENT_TARGET_ORG")
+    String percent_target_organism = read_string("PERCENT_TARGET_ORGANISM")
     String? kraken_target_organism = target_organism
   }
   runtime {
