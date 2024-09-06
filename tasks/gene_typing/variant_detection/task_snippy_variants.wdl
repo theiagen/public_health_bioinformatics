@@ -61,8 +61,8 @@ task snippy_variants {
     # Compress output dir
     tar -cvzf "./~{samplename}_snippy_variants_outdir.tar" "./~{samplename}"
 
-    # compute number of reads aligned to reference
-    samtools view -c "~{samplename}/~{samplename}.bam" > READS_ALIGNED_TO_REFERENCE
+    # compute number of reads aligned to reference (excluding unmapped reads)
+    samtools view -c -F 4 "~{samplename}/~{samplename}.bam" > READS_ALIGNED_TO_REFERENCE
 
     # create coverage stats file
     samtools coverage "~{samplename}/~{samplename}.bam" -o "~{samplename}/~{samplename}_coverage.tsv"
