@@ -1,7 +1,7 @@
 version 1.0
 
 import "../../tasks/task_versioning.wdl" as versioning
-import "../../tasks/taxon_id/contamination/task_kraken2.wdl" as kraken2
+import "../../tasks/taxon_id/contamination/task_kraken2.wdl" as kraken2_task
 
 workflow kraken2_ont_wf {
   meta {
@@ -12,17 +12,17 @@ workflow kraken2_ont_wf {
     File read1
     File kraken2_db
   }
-  call kraken2.kraken2_standalone as kraken2_se {
+  call kraken2_task.kraken2_standalone as kraken2 {
     input:
       samplename = samplename,
       read1 = read1,
       kraken2_db = kraken2_db
   }
-  call kraken2.kraken2_parse_classified as kraken2_recalculate_abundances {
+  call kraken2_task.kraken2_parse_classified as kraken2_recalculate_abundances {
     input:
       samplename = samplename,
-      kraken2_report = kraken2_se.kraken2_report,
-      kraken2_classified_report = kraken2_se.kraken2_classified_report
+      kraken2_report = kraken2.kraken2_report,
+      kraken2_classified_report = kraken2.kraken2_classified_report
   }
   call versioning.version_capture {
     input:
@@ -32,11 +32,11 @@ workflow kraken2_ont_wf {
     String kraken2_se_wf_version = version_capture.phb_version
     String kraken2_se_wf_analysis_date = version_capture.date
     # Kraken2
-    String kraken2_version = kraken2_se.kraken2_version
-    String kraken2_docker = kraken2_se.kraken2_docker
-    File kraken2_classified_report = kraken2_se.kraken2_classified_report
+    String kraken2_version = kraken2.kraken2_version
+    String kraken2_docker = kraken2.kraken2_docker
+    File kraken2_classified_report = kraken2.kraken2_classified_report
     File kraken2_report = kraken2_recalculate_abundances.kraken_report
-    File kraken2_unclassified_read1 = kraken2_se.kraken2_unclassified_read1
-    File kraken2_classified_read1 = kraken2_se.kraken2_classified_read1
+    File kraken2_unclassified_read1 = kraken2.kraken2_unclassified_read1
+    File kraken2_classified_read1 = kraken2.kraken2_classified_read1
   }
 }
