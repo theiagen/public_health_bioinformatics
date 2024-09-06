@@ -2,7 +2,7 @@
 
 ## Quick Facts
 
-| **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line compatibility** | **Workflow type** |
+| **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
 |---|---|---|---|---|
 | [Standalone](../../workflows_overview/workflows-type.md/#standalone) | [Any Taxa](../../workflows_overview/workflows-kingdom.md/#any-taxa) | PHB v2.1.0 | Yes | Sample-level |
 
@@ -12,7 +12,7 @@ This sample-level workflow receives a read file or a pair of read files (FASTQ),
 
 ### Inputs
 
-| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Attribute** | **Terra Status** |
+| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
 |---|---|---|---|---|---|
 | rename_fastq_files | **new_filename** | String | New name for the FASTQ file(s) | | Required |
 | rename_fastq_files | **read1** | File | FASTQ file containing read1 sequences | | Required |

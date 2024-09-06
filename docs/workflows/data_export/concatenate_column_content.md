@@ -4,7 +4,7 @@ title: Concatenate_Column_Content
 
 ## Quick Facts
 
-| **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line compatibliity** | **Workflow type** |
+| **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
 |---|---|---|---|---|
 | [Exporting Data From Terra](../../workflows_overview/workflows-type.md/#exporting-data-from-terra) | [Any taxa](../../workflows_overview/workflows-kingdom.md/#any-taxa) | PHB v2.1.0 | Yes | Set-level |
 
@@ -16,7 +16,7 @@ This set-level workflow will create a file containing all of the items from a gi
 
 This workflow runs on the set level.
 
-| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default attribute** | **Terra Status** |
+| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
 |---|---|---|---|---|---|
 | concatenate_column_content | **concatenated_file_name** | String | The name of the output file. ***Include the extension***, such as ".fasta" or ".txt". |  | Required |
 | concatenate_column_content | **files_to_cat** | Array[File] | The column that has the files you want to concatenate. |  | Required |

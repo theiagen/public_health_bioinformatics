@@ -2,7 +2,7 @@
 
 ## Quick Facts
 
-| **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line compatibility** | **Workflow type** |
+| **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
 |---|---|---|---|---|
 | [Phylogenetic Placement](../../workflows_overview/workflows-type.md/#phylogenetic-placement) | [Viral](../../workflows_overview/workflows-kingdom.md/#viral) | PHB v2.1.0 | Yes | Sample-level, Set-level |
 
@@ -17,7 +17,7 @@ However, nextclade can be used on any organism as long as an an existing, high-q
 
 ### Inputs
 
-| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default attribute** | **Status** |
+| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
 |---|---|---|---|---|---|
 | nextclade_addToRefTree | **assembly_fasta** | File | A fasta file with query sequence(s) to be placed onto the global tree |  | Required |
 | nextclade_addToRefTree | **nextclade_dataset_name** | String | What nextclade dataset name to run nextclade on; the options are: "sars-cov-2", "flu_h1n1pdm_ha", "flu_h1n1pdm_na", "flu_h3n2_ha", "flu_h3n2_na", "flu_vic_ha", "flu_vic_na", "flu_yam_ha", "hMPXV", "hMPXV_B1", "MPXV", "rsv_a" and "rsv_b"  |  | Required |

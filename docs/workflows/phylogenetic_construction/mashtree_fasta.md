@@ -2,7 +2,7 @@
 
 ## Quick Facts
 
-| **Workflow Category** | **Applicable Kingdom** | **Last Known Changes** | **Command-line compatibliity** | **Workflow type** |
+| **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
 |---|---|---|---|---|
 | [Phylogenetic Construction](../../workflows_overview/workflows-type.md/#phylogenetic-construction) | [Bacteria](../../workflows_overview/workflows-kingdom.md/#bacteria) | PHB v2.1.0 | Yes | Set-level |
 
@@ -16,7 +16,7 @@ This workflow also features an optional module, `summarize_data`, that creates a
 
 ### Inputs
 
-| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default attribute** | **Status** |
+| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
 |---|---|---|---|---|---|
 | mashtree_fasta | **assembly_fasta** | Array[File] | The set of assembly fastas | | Required |
 | mashtree_fasta | **cluster_name** | String | Free text string used to label output files | | Required |

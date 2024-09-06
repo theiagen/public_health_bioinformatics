@@ -2,7 +2,7 @@
 
 ## Quick Facts
 
-| **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line compatibliity** | **Workflow type** |
+| **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
 |---|---|---|---|---|
 | [Genomic Characterization](../../workflows_overview/workflows-type.md/#genomic-characterization) | [Viral](../../workflows_overview/workflows-kingdom.md/#viral), SARS-Cov-2 | PHB v2.0.0 | Yes | Sample-level |
 
@@ -14,7 +14,7 @@ The Pangolin_Update workflow re-runs Pangolin updating prior lineage calls from 
 
 This workflow runs on the sample level.
 
-| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default attribute** | **Terra Status** |
+| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
 |---|---|---|---|---|---|
 | pangolin_update | **assembly_fasta** | File | SARS-CoV-2 assembly file in FASTA format |  | Required |
 | pangolin_update | **old_lineage** | String | The Pangolin lineage previously assigned to the sample |  | Required |

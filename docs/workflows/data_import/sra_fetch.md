@@ -2,7 +2,7 @@
 
 ## Quick Facts
 
-| **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line compatibliity** | **Workflow type** |
+| **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
 |---|---|---|---|---|
 | [Data Import](../../workflows_overview/workflows-type.md/#data-import) | [Any taxa](../../workflows_overview/workflows-kingdom.md/#any-taxa) | PHB v2.2.0 | Yes | Sample-level |
 
@@ -16,7 +16,7 @@ Read files associated with the SRA run accession provided as input are copied to
 
 This workflow runs on the sample level.
 
-| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default attribute** | **Terra Status** |
+| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
 |---|---|---|---|---|---|
 | fetch_sra_to_fastq | **sra_accession** | String | SRA, ENA, or DRA accession number | | Required |
 | fetch_sra_to_fastq | **cpu** | Int | The number of CPUs to be given to the task | 2 | Optional |
@@ -53,4 +53,4 @@ Given the lack of usefulness of SRA Lite formatted FASTQ files, we try to avoid 
 
 ## References
 
-This workflow relies on [fastq-dl](https://github.com/rpetit3/fastq-dl), a very handy bioinformatics tool by Robert A. Petit III
+> This workflow relies on [fastq-dl](https://github.com/rpetit3/fastq-dl), a very handy bioinformatics tool by Robert A. Petit III

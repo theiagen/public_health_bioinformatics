@@ -2,7 +2,7 @@
 
 ## Quick Facts
 
-| **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line compatibliity** | **Workflow type** |
+| **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
 |---|---|---|---|---|
 | [Genomic Characterization](../../workflows_overview/workflows-type.md/#genomic-characterization) | [Any Taxa](../../workflows_overview/workflows-kingdom.md/#any-taxa) | PHB v2.2.0 | Yes | Sample-level |
 
@@ -23,7 +23,7 @@ TheiaMeta can use one of two distinct methods for generating and processing the 
 
 The TheiaMeta_Illumina_PE workflow processes Illumina paired-end (PE) reads generated for metagenomic characterization (typically by shotgun). By default, this workflow will assume that input reads were generated using a 300-cycle sequencing kit (i.e. 2 x 150 bp reads). Modifications to the optional parameter for `trim_minlen` may be required to accommodate shorter read data, such as 2 x 75bp reads generated using a 150-cycle sequencing kit.
 
-| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Attribute** | **Terra Status** |
+| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
 |---|---|---|---|---|---|
 | theiameta_illumina_pe | **read1** | File | Forward Illumina read in FASTQ file format |  | Required |
 | theiameta_illumina_pe | **read2** | File | Reverse Illumina read in FASTQ file format |  | Required |
@@ -146,8 +146,8 @@ The TheiaMeta_Illumina_PE workflow processes Illumina paired-end (PE) reads ge
         |  | Links |
         | --- | --- |
         | Task | [task_ncbi_scrub.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/task_ncbi_scrub.wdl) |
-        | Software source code | [NCBI Scrub on GitHub](https://github.com/ncbi/sra-human-scrubber) |
-        | Software documentation | <https://github.com/ncbi/sra-human-scrubber/blob/master/README.md> |
+        | Software Source Code | [NCBI Scrub on GitHub](https://github.com/ncbi/sra-human-scrubber) |
+        | Software Documentation | <https://github.com/ncbi/sra-human-scrubber/blob/master/README.md> |
 
 ??? task "`read_QC_trim`: Read Quality Trimming, Adapter Removal, Quantification, and Identification"
 
@@ -211,13 +211,13 @@ The TheiaMeta_Illumina_PE workflow processes Illumina paired-end (PE) reads ge
         
     !!! techdetails "read_QC_trim Technical Details"
                 
-        | | Links |
+        |  | Links |
         | --- | --- |
         | Sub-workflow | [wf_read_QC_trim.wdl](https://github.com/theiagen/public_health_bacterial_genomics/blob/main/workflows/wf_read_QC_trim.wdl) |
         | Tasks | [task_fastp.wdl](https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/quality_control/task_fastp.wdl)<br>[task_trimmomatic.wdl](https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/quality_control/task_trimmomatic.wdl#L3) (PE subtask)<br>[task_bbduk.wdl](https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/quality_control/task_bbduk.wdl)<br>[task_fastq_scan.wdl](https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/quality_control/task_fastq_scan.wdl#L3) (PE subtask)<br>[task_midas.wdl](https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/taxon_id/task_midas.wdl)<br>[task_kraken2.wdl](https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/taxon_id/task_kraken2.wdl) |
-        | Software source code | [fastp](https://github.com/OpenGene/fastp); [Trimmomatic](https://github.com/usadellab/Trimmomatic); [fastq-scan](https://github.com/rpetit3/fastq-scan); [MIDAS](https://github.com/snayfach/MIDAS); [Kraken2](https://github.com/DerrickWood/kraken2)|
-        | Software documentation | [fastp](https://github.com/OpenGene/fastp); [Trimmomatic](http://www.usadellab.org/cms/?page=trimmomatic); [BBDuk](https://jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/bbduk-guide/); [fastq-scan](https://github.com/rpetit3/fastq-scan); [MIDAS](https://github.com/snayfach/MIDAS); [Kraken2](https://github.com/DerrickWood/kraken2/wiki) |
-        | Original publications | *[Trimmomatic: a flexible trimmer for Illumina sequence data](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4103590/)<br>*[fastp: an ultra-fast all-in-one FASTQ preprocessor](https://academic.oup.com/bioinformatics/article/34/17/i884/5093234?login=false)<br>*[An integrated metagenomics pipeline for strain profiling reveals novel patterns of bacterial transmission and biogeography](https://pubmed.ncbi.nlm.nih.gov/27803195/)<br>*[Improved metagenomic analysis with Kraken 2](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1891-0) |
+        | Software Source Code | [fastp](https://github.com/OpenGene/fastp); [Trimmomatic](https://github.com/usadellab/Trimmomatic); [fastq-scan](https://github.com/rpetit3/fastq-scan); [MIDAS](https://github.com/snayfach/MIDAS); [Kraken2](https://github.com/DerrickWood/kraken2)|
+        | Software Documentation | [fastp](https://github.com/OpenGene/fastp); [Trimmomatic](http://www.usadellab.org/cms/?page=trimmomatic); [BBDuk](https://jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/bbduk-guide/); [fastq-scan](https://github.com/rpetit3/fastq-scan); [MIDAS](https://github.com/snayfach/MIDAS); [Kraken2](https://github.com/DerrickWood/kraken2/wiki) |
+        | Original Publication(s) | *[Trimmomatic: a flexible trimmer for Illumina sequence data](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4103590/)<br>*[fastp: an ultra-fast all-in-one FASTQ preprocessor](https://academic.oup.com/bioinformatics/article/34/17/i884/5093234?login=false)<br>*[An integrated metagenomics pipeline for strain profiling reveals novel patterns of bacterial transmission and biogeography](https://pubmed.ncbi.nlm.nih.gov/27803195/)<br>*[Improved metagenomic analysis with Kraken 2](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1891-0) |
 
 ??? task "`kraken`: Taxonomic Classification"
 
@@ -233,9 +233,9 @@ The TheiaMeta_Illumina_PE workflow processes Illumina paired-end (PE) reads ge
         |  | Links |
         | --- | --- |
         | Task | [task_kraken2.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/task_kraken2.wdl) |
-        | Software source code | [Kraken2 on GitHub](https://github.com/DerrickWood/kraken2/) |
-        | Software documentation | <https://github.com/DerrickWood/kraken2/wiki> |
-        | Original publication | [Improved metagenomic analysis with Kraken 2](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1891-0) |
+        | Software Source Code | [Kraken2 on GitHub](https://github.com/DerrickWood/kraken2/) |
+        | Software Documentation | <https://github.com/DerrickWood/kraken2/wiki> |
+        | Original Publication(s) | [Improved metagenomic analysis with Kraken 2](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1891-0) |
 
 #### Assembly
 
@@ -248,9 +248,9 @@ The TheiaMeta_Illumina_PE workflow processes Illumina paired-end (PE) reads ge
         |  | Links |
         | --- | --- |
         | Task | [task_metaspades.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_metaspades.wdl) |
-        | Software source code | [SPAdes on GitHub](https://github.com/ablab/spades) |
-        | Software documentation | <https://github.com/ablab/spades/blob/spades_3.15.5/README.md> |
-        | Original publication | [metaSPAdes: a new versatile metagenomic assembler](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5411777/) |
+        | Software Source Code | [SPAdes on GitHub](https://github.com/ablab/spades) |
+        | Software Documentation | <https://github.com/ablab/spades/blob/spades_3.15.5/README.md> |
+        | Original Publication(s) | [metaSPAdes: a new versatile metagenomic assembler](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5411777/) |
 
 ??? task "`minimap2`: Assembly Alignment and Contig Filtering (if a reference is provided)"
 
@@ -267,9 +267,9 @@ The TheiaMeta_Illumina_PE workflow processes Illumina paired-end (PE) reads ge
         |  | Links |
         | --- | --- |
         | Task | [task_quast.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/task_quast.wdl) |
-        | Software source code | [QUAST on GitHub](https://github.com/ablab/quast) |
-        | Software documentation | <https://cab.spbu.ru/software/quast/> |
-        | Original publication | [QUAST: quality assessment tool for genome assemblies](https://academic.oup.com/bioinformatics/article/29/8/1072/228832) |
+        | Software Source Code | [QUAST on GitHub](https://github.com/ablab/quast) |
+        | Software Documentation | <https://cab.spbu.ru/software/quast/> |
+        | Original Publication(s) | [QUAST: quality assessment tool for genome assemblies](https://academic.oup.com/bioinformatics/article/29/8/1072/228832) |
 
 #### Binning
 

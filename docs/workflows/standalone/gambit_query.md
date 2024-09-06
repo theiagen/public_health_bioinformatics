@@ -2,7 +2,7 @@
 
 ## Quick Facts
 
-| **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line compatibility** | **Workflow type** |
+| **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
 |---|---|---|---|---|
 | [Standalone](../../workflows_overview/workflows-type.md/#standalone) | [Bacteria](../../workflows_overview/workflows-kingdom.md/#bacteria), [Mycotics](../../workflows_overview/workflows-kingdom.md#mycotics) | PHB v2.2.0 | Yes | Sample-level |
 
@@ -12,7 +12,7 @@ The GAMBIT_Query_PHB workflow performs taxon assignment of a genome assembly usi
 
 ### Inputs
 
-| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default attribute** | **Status** |
+| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
 |---|---|---|---|---|---|
 | gambit_query | assembly_fasta | File | Assembly file in FASTA format |  | Required |
 | gambit_query | samplename | String | Sample name |  | Required |
@@ -34,9 +34,9 @@ For additional details regarding the GAMBIT tool and a list of available GAMBIT 
     |  | Links |
     | --- | --- |
     | Task | [task_gambit.wdl](https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/taxon_id/task_gambit.wdl) |
-    | Software source code | [GAMBIT on GitHub](https://github.com/jlumpe/gambit) |
-    | Software documentation | [GAMBIT ReadTheDocs](https://gambit-genomics.readthedocs.io/en/latest/) |
-    | Original publication | [GAMBIT (Genomic Approximation Method for Bacterial Identification and Tracking): A methodology to rapidly leverage whole genome sequencing of bacterial isolates for clinical identification](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0277575) |
+    | Software Source Code | [GAMBIT on GitHub](https://github.com/jlumpe/gambit) |
+    | Software Documentation | [GAMBIT ReadTheDocs](https://gambit-genomics.readthedocs.io/en/latest/) |
+    | Original Publication(s) | [GAMBIT (Genomic Approximation Method for Bacterial Identification and Tracking): A methodology to rapidly leverage whole genome sequencing of bacterial isolates for clinical identification](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0277575) |
 
 ### Outputs
 
@@ -50,8 +50,6 @@ For additional details regarding the GAMBIT tool and a list of available GAMBIT 
 | gambit_query_wf_analysis_date | String | Date of analysis |
 | gambit_query_wf_version | String | PHB repository version |
 | gambit_report | File | GAMBIT report in a machine-readable format |
-| gambit_version | String | Version of gambit software used |
-
-## References
+| gambit_version | String | Version of gambit software used
 
 > GAMBIT (Genomic Approximation Method for Bacterial Identification and Tracking): A methodology to rapidly leverage whole genome sequencing of bacterial isolates for clinical identification. Lumpe et al. PLOS ONE, 2022. DOI: [10.1371/journal.pone.0277575](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0277575)

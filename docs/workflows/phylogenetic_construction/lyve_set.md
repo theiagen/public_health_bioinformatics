@@ -2,7 +2,7 @@
 
 ## Quick Facts
 
-| **Workflow Category** | **Applicable Kingdom** | **Last Known Changes** | **Command-line compatibliity** | **Workflow type** |
+| **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
 |---|---|---|---|---|
 | [Phylogenetic Construction](../../workflows_overview/workflows-type.md/#phylogenetic-construction) | [Bacteria](../../workflows_overview/workflows-kingdom.md/#bacteria) | PHB v2.1.0 | Yes | Set-level |
 
@@ -17,7 +17,7 @@ The Lyve_SET WDL workflow runs the [Lyve-SET](https://github.com/lskatz/lyve-SET
 
 ### Inputs
 
-| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default attribute** | **Status** |
+| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
 |---|---|---|---|---|---|
 | lyveset_workflow | **dataset_name** | String | Free text string used to label output files | | Required |
 | lyveset_workflow | **read1** | Array[File] | Array of read1 files for sample set. We recommend using cleaned rather than raw reads. | | Required |
@@ -85,4 +85,4 @@ In addition to these outputs, all of the files produced by the Lyve-SET pipeline
 
 ## References
 
-**Lyve-SET** Katz LS, Griswold T, Williams-Newkirk AJ, Wagner D, Petkau A, et al. (2017) A Comparative Analysis of the Lyve-SET Phylogenomics Pipeline for Genomic Epidemiology of Foodborne Pathogens. Frontiers in Microbiology 8.
+> **Lyve-SET** Katz LS, Griswold T, Williams-Newkirk AJ, Wagner D, Petkau A, et al. (2017) A Comparative Analysis of the Lyve-SET Phylogenomics Pipeline for Genomic Epidemiology of Foodborne Pathogens. Frontiers in Microbiology 8.

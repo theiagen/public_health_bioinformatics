@@ -3,7 +3,7 @@
 ## Quick Facts
 
 
-| **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line compatibliity** | **Workflow type** |
+| **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
 |---|---|---|---|---|
 | [Genomic Characterization](../../workflows_overview/workflows-type.md/#genomic-characterization) | [Viral](../../workflows_overview/workflows-kingdom.md/#viral) | PHB v1.2.1 | Yes | Sample-level |
 
@@ -29,7 +29,7 @@ Please note the default values are for SARS-CoV-2.
 
 This workflow runs on the sample level.
 
-| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Attribute** | **Terra Status** |
+| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
 |---|---|---|---|---|---|
 | vadr_update | **assembly_length_unambiguous** | Int | Number of unambiguous basecalls within the consensus assembly |  | Required |
 | vadr_update | **docker** | String | Docker image used to run VADR |  | Required |

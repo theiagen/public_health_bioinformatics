@@ -2,7 +2,7 @@
 
 ## Quick Facts
 
-| **Workflow Category** | **Applicable Kingdom** | **Last Known Changes** | **Command-line compatibliity** | **Workflow type** |
+| **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
 |---|---|---|---|---|
 | [Phylogenetic Construction](../../workflows_overview/workflows-type.md/#phylogenetic-construction) | [Viral](../../workflows_overview/workflows-kingdom.md/#viral) | PHB v1.3.0 | No | Set-level |
 
@@ -18,7 +18,7 @@ Variables with both the "Optional" and "Required" tag require the column (regard
 
 This workflow runs on the set level.
 
-| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default attribute** | **Status** |
+| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
 |---|---|---|---|---|---|
 | czgenepi_prep | **sample_names** | Array[String] | The array of sample ids you want to prepare for CZ GEN EPI |  | Required |
 | czgenepi_prep | **terra_table_name** | String | The name of the Terra table where the data is hosted |  | Required |

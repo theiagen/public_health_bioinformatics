@@ -2,7 +2,7 @@
 
 ## Quick Facts
 
-| **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line compatibliity** | **Workflow type** |
+| **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
 |---|---|---|---|---|
 | [Data Import](../../workflows_overview/workflows-type.md/#data-import) | [Any taxa](../../workflows_overview/workflows-kingdom.md/#any-taxa) | PHB v1.3.0 | Yes | Sample-level |
 
@@ -153,7 +153,7 @@ This process must be performed on a command line (ideally on a Linux or MacOS co
 
 This workflow runs on the sample level.
 
-| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default attribute** | **Terra Status** |
+| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
 |---|---|---|---|---|---|
 | basespace_fetch | **access_token** | String | The access token is used in place of a username and password to allow the workflow to access the user account in BaseSpace from which the data is to be transferred. It is an alphanumeric string that is 32 characters in length. Example: 9e08a96471df44579b72abf277e113b7 | | Required |
 | basespace_fetch | **api_server** | String | The API server is the web address to which data transfer requests can be sent by the workflow. Use this API server if you are unsure: `"https://api.basespace.illumina.com"` (this is the default set by the command line tool) | | Required |

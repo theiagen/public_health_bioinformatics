@@ -2,7 +2,7 @@
 
 ## Quick Facts
 
-| **Workflow Category** | **Applicable Kingdom** | **Last Known Changes** | **Command-line compatibility** | **Workflow type** |
+| **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
 |---|---|---|---|---|
 | [Phylogenetic Construction](../../workflows_overview/workflows-type.md/#phylogenetic-construction) | [Bacteria](../../workflows_overview/workflows-kingdom.md/#bacteria), [Mycotics](../../workflows_overview/workflows-kingdom.md#mycotics), [Viral](../../workflows_overview/workflows-kingdom.md/#viral) | PHB v2.2.0 | Yes | Sample-level |
 
@@ -29,7 +29,7 @@ The `Snippy_Variants` workflow aligns single-end or paired-end reads (in FASTQ f
 !!! info "Query String"
     The query string can be a gene or any other annotation that matches the GenBank file/output VCF **EXACTLY**
 
-| **Terra Task Name** | **Name** | **Type** | **Description** | **Default attribute** | **Status** |
+| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
 |---|---|---|---|---|---|
 | snippy_variants_wf | **reference_genome_file** | File | Reference genome (GenBank file or fasta) |  | Required |
 | snippy_variants_wf | **samplename** | String | Names of samples |  | Required |

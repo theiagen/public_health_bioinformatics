@@ -9,7 +9,7 @@ title: Workflows by Kingdom
 ### Any Taxa
 
 
-| **Name** | **Description** | **Taxa** | **Workflow type** | **Command-line Compatible**[^1] | **Last known changes** | **Dockstore** |
+| **Name** | **Description** | **Taxa** | **Workflow Level** | **Command-line Compatible**[^1] | **Last known changes** | **Dockstore** |
 |---|---|---|---|---|---|---|
 | [**Assembly_Fetch**](../workflows/data_import/assembly_fetch.md) | Download assemblies from NCBI, after optionally identifying the closest RefSeq reference genome to your own draft assembly | Any taxa | Sample-level | Yes | v1.3.0 | [Assembly_Fetch_PHB](https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Assembly_Fetch_PHB:main?tab=info) |
 | [**BaseSpace_Fetch**](../workflows/data_import/basespace_fetch.md)| Import data from BaseSpace into Terra | Any taxa | Sample-level | Yes | v2.0.0 | [BaseSpace_Fetch_PHB](https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/BaseSpace_Fetch_PHB:main?tab=info) |
@@ -26,7 +26,7 @@ title: Workflows by Kingdom
 
 ### Bacteria
 
-| **Name** | **Description** | **Taxa** | **Workflow type** | **Command-line Compatible**[^1] | **Last known changes** | **Dockstore** |
+| **Name** | **Description** | **Applicable Kingdom** | **Workflow Level** | **Command-line Compatibility**[^1] | **Last Known Changes** | **Dockstore** |
 |---|---|---|---|---|---|---|
 | [**Core_Gene_SNP**](../workflows/phylogenetic_construction/core_gene_snp.md) | Pangenome analysis | Bacteria | Set-level | Some optional features incompatible, Yes | v2.1.0 | [Core_Gene_SNP_PHB](https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Core_Gene_SNP_PHB:main?tab=info) |
 | [**Find_Shared_Variants**](../workflows/phylogenetic_construction/find_shared_variants.md)| Combines and reshapes variant data from Snippy_Variants to illustrate variants shared across multiple samples | Bacteria, Mycotics | Set-level | Yes | v2.0.0 | [Find_Shared_Variants_PHB](https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Find_Shared_Variants_PHB:main?tab=info) |
@@ -45,7 +45,7 @@ title: Workflows by Kingdom
 
 ### Mycotics
 
-| **Name** | **Description** | **Taxa** | **Workflow type** | **Command-line Compatible**[^1] | **Last known changes** | **Dockstore** |
+| **Name** | **Description** | **Applicable Kingdom** | **Workflow Level** | **Command-line Compatibility**[^1] | **Last Known Changes** | **Dockstore** |
 |---|---|---|---|---|---|---|
 | [**Cauris_CladeTyper**](../workflows/standalone/cauris_cladetyper.md)| C. auris clade assignment | Mycotics | Sample-level | Yes | v1.0.0 | [Cauris_CladeTyper_PHB](https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Cauris_CladeTyper_PHB:main?tab=info) |
 | [**Find_Shared_Variants**](../workflows/phylogenetic_construction/find_shared_variants.md)| Combines and reshapes variant data from Snippy_Variants to illustrate variants shared across multiple samples | Bacteria, Mycotics | Set-level | Yes | v2.0.0 | [Find_Shared_Variants_PHB](https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Find_Shared_Variants_PHB:main?tab=info) |
@@ -60,7 +60,7 @@ title: Workflows by Kingdom
 ### Viral
 
 
-| **Name** | **Description** | **Taxa** | **Workflow type** | **Command-line Compatible**[^1] | **Last known changes** | **Dockstore** |
+| **Name** | **Description** | **Applicable Kingdom** | **Workflow Level** | **Command-line Compatibility**[^1] | **Last Known Changes** | **Dockstore** |
 |---|---|---|---|---|---|---|
 | [**Augur**](../workflows/phylogenetic_construction/augur.md) | Phylogenetic analysis for viral pathogens | Viral | Sample-level, Set-level | Yes | v2.1.0 | [Augur_Prep_PHB](https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Augur_Prep_PHB:main?tab=info), [Augur_PHB](https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Augur_PHB:main?tab=info) |
 | [**CZGenEpi_Prep**](../workflows/phylogenetic_construction/czgenepi_prep.md)| Prepare metadata and fasta files for easy upload to the CZ GEN EPI platform. | Monkeypox virus, SARS-CoV-2, Viral | Set-level | No | v1.3.0 | [CZGenEpi_Prep_PHB](https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/CZGenEpi_Prep_PHB:main?tab=info) |

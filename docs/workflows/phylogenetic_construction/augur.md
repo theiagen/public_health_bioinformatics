@@ -2,7 +2,7 @@
 
 ## Quick Facts
 
-| **Workflow Category** | **Applicable Kingdom** | **Last Known Changes** | **Command-line compatibliity** | **Workflow type** |
+| **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
 |---|---|---|---|---|
 | [Phylogenetic Construction](../../workflows_overview/workflows-type.md/#phylogenetic-construction) | [Viral](../../workflows_overview/workflows-kingdom.md/#viral) | PHB v2.1.0 | Yes | Sample-level, Set-level |
 
@@ -30,7 +30,7 @@ The Augur_Prep_PHB workflow takes assembly FASTA files and associated metadata f
 
 This workflow runs on the sample level.
 
-| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default attribute** | **Status** |
+| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
 |---|---|---|---|---|---|
 | augur_prep | **assembly** | File | Assembly/consensus file (single FASTA file per sample) |  | Required |
 | augur_prep | **collection_date** | String | Collection date of the sample |  | Optional |
@@ -165,7 +165,7 @@ The Augur_PHB workflow takes in a ***set*** of SARS-CoV-2 (or any other viral 
 
 This workflow runs on the set level. Please note that for every task, runtime parameters are modifiable (cpu, disk_size, docker, and memory); most of these values have been excluded from the table below for convenience.
 
-| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default attribute** | **Status** |
+| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
 |---|---|---|---|---|---|
 | augur | **assembly_fastas** | Array[File] | An array of the assembly files to use; use either the HA or NA segment for flu samples |  | Required |
 | augur | **build_name** | String | Name to give to the Augur build |  | Required |

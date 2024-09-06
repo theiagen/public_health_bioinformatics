@@ -2,7 +2,7 @@
 
 ## Quick Facts
 
-| **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line compatibility** | **Workflow type** |
+| **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
 |---|---|---|---|---|
 | [Standalone](../../workflows_overview/workflows-type.md/#standalone) | [Bacteria](../../workflows_overview/workflows-kingdom.md/#bacteria) | PHB v2.0.0 | Yes | Sample-level |
 
@@ -12,7 +12,7 @@ This workflow is still in experimental research stages. Documentation is minimal
 
 ### Inputs
 
-| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default attribute** | **Status** |
+| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
 |---|---|---|---|---|---|
 | tbprofiler_tngs | **read1** | File | Illumina forward read file in FASTQ file format (compression optional) |  | Required |
 | tbprofiler_tngs | **read2** | File | Illumina reverse read file in FASTQ file format (compression optional) |  | Required |

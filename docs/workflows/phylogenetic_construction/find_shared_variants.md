@@ -2,7 +2,7 @@
 
 ## Quick Facts
 
-| **Workflow Category** | **Applicable Kingdom** | **Last Known Changes** | **Command-line compatibliity** | **Workflow type** |
+| **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
 |---|---|---|---|---|
 | [Phylogenetic Construction](../../workflows_overview/workflows-type.md/#phylogenetic-construction) | [Bacteria](../../workflows_overview/workflows-kingdom.md/#bacteria), [Mycotics](../../workflows_overview/workflows-kingdom.md#mycotics) | PHB v2.0.0 | Yes | Set-level |
 
@@ -20,7 +20,7 @@ The primary intended input of the workflow is the `snippy_variants_results` outp
 
 All variant data included in the sample set should be generated from aligning sequencing reads to the **same reference genome**. If variant data was generated using different reference genomes, shared variants cannot be identified and results will be less useful.
 
-| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default attribute** | **Status** |
+| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
 | --- | --- | --- | --- | --- | --- |
 | shared_variants_wf | **concatenated_file_name** | String | String of your choice to prefix output files | | Required |
 | shared_variants_wf | **samplenames** | Array[String] | The samples to be included in the analysis | | Required |
@@ -54,7 +54,7 @@ All variant data included in the sample set should be generated from aligning se
         |  | Links |
         | --- | --- |
         | Task | /tasks/utilities/file_handling/task_cat_files.wdl |
-        | Software source code | [task_cat_files.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/file_handling/task_cat_files.wdl) |
+        | Software Source Code | [task_cat_files.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/file_handling/task_cat_files.wdl) |
 
 ??? task "Shared Variants Task"
 
@@ -75,7 +75,7 @@ All variant data included in the sample set should be generated from aligning se
         |  | Links |
         | --- | --- |
         | Task | task_shared_variants.wdl |
-        | Software source code | [task_shared_variants.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/phylogenetic_inference/utilities/task_shared_variants.wdl) |
+        | Software Source Code | [task_shared_variants.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/phylogenetic_inference/utilities/task_shared_variants.wdl) |
 
 ### Outputs
 

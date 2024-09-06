@@ -8,7 +8,7 @@
 
 ## Quick Facts
 
-| **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line compatibliity** | **Workflow type** |
+| **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
 |---|---|---|---|---|
 | [Genomic Characterization](../../workflows_overview/workflows-type.md/#genomic-characterization) | [Viral](../../workflows_overview/workflows-kingdom.md/#viral) | PHB v2.2.0 | Yes | Sample-level, Set-level |
 
@@ -56,7 +56,7 @@ This workflow will copy the Freyja reference files (`usher_barcodes.feather` and
 
 We recommend running this workflow with **"Run inputs defined by file paths"** selected since no information from a Terra data table is actually being used. We also recommend turning off call caching so new information is retrieved every time.
 
-| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default attribute** | **Terra Status** |
+| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
 |---|---|---|---|---|---|
 | freyja_update | **gcp_uri** | String | The path where you want the Freyja reference files to be stored. Include gs:// at the beginning of the string. Full example with a Terra workspace bucket: "gs://fc-87ddd67a-c674-45a8-9651-f91e3d2f6bb7" | | Required |
 | freyja_update_refs | **cpu** | Int | CPUs requested for this task | 4 | Optional |
@@ -90,7 +90,7 @@ The Freyja_FASTQ_PHB workflow is compatible with the multiple input data types: 
 
 This workflow runs on the sample level.
 
-| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default attribute** | **Terra Status** |
+| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
 |---|---|---|---|---|---|
 | freyja_fastq | **primer_bed** | File | The bed file containing the primers used when sequencing was performed |  | Required |
 | freyja_fastq | **read1** | File | The raw forward-facing FASTQ file (Illumina or ONT) |  | Required |
@@ -239,9 +239,9 @@ This workflow runs on the sample level.
         |  | Links |
         | --- | --- |
         | Task | [task_bwa.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/alignment/task_bwa.wdl) |
-        | Software source code | https://github.com/lh3/bwa |
-        | Software documentation | https://bio-bwa.sourceforge.net/ |
-        | Original publication | [Fast and accurate short read alignment with Burrows-Wheeler transform](https://doi.org/10.1093/bioinformatics/btp324) |
+        | Software Source Code | https://github.com/lh3/bwa |
+        | Software Documentation | https://bio-bwa.sourceforge.net/ |
+        | Original Publication(s) | [Fast and accurate short read alignment with Burrows-Wheeler transform](https://doi.org/10.1093/bioinformatics/btp324) |
 
 ??? task "`minimap2` Details"
 
@@ -254,9 +254,9 @@ This workflow runs on the sample level.
         |  | Links |
         | --- | --- |
         | Task | [task_minimap2.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/alignment/task_minimap2.wdl) |
-        | Software source code | https://github.com/lh3/minimap2 |
-        | Software documentation | https://lh3.github.io/minimap2/ |
-        | Original publication | [Minimap2: pairwise alignment for nucleotide sequences](https://doi.org/10.1093/bioinformatics/bty191) |
+        | Software Source Code | https://github.com/lh3/minimap2 |
+        | Software Documentation | https://lh3.github.io/minimap2/ |
+        | Original Publication(s) | [Minimap2: pairwise alignment for nucleotide sequences](https://doi.org/10.1093/bioinformatics/bty191) |
 
 ??? task "`primer_trim` Details"
 
@@ -269,9 +269,9 @@ This workflow runs on the sample level.
         |  | Links |
         | --- | --- |
         | Task | [task_ivar_primer_trim.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_ivar_primer_trim.wdl) |
-        | Software source code | https://github.com/andersen-lab/ivar |
-        | Software documentation | https://andersen-lab.github.io/ivar/html/manualpage.html |
-        | Original publication | [An amplicon-based sequencing framework for accurately measuring intrahost virus diversity using PrimalSeq and iVar](https://doi.org/10.1186/s13059-018-1618-7) |
+        | Software Source Code | https://github.com/andersen-lab/ivar |
+        | Software Documentation | https://andersen-lab.github.io/ivar/html/manualpage.html |
+        | Original Publication(s) | [An amplicon-based sequencing framework for accurately measuring intrahost virus diversity using PrimalSeq and iVar](https://doi.org/10.1186/s13059-018-1618-7) |
 
 ??? task "`freyja` Details"
 
@@ -284,8 +284,8 @@ This workflow runs on the sample level.
         |  | Links |
         | --- | --- |
         | Task | [task_freyja_one_sample.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/freyja/task_freyja.wdl) |
-        | Software source code | https://github.com/andersen-lab/Freyja |
-        | Software documentation | https://andersen-lab.github.io/Freyja/index.html# |
+        | Software Source Code | https://github.com/andersen-lab/Freyja |
+        | Software Documentation | https://andersen-lab.github.io/Freyja/index.html# |
 
 ### Freyja_FASTQ Outputs
 
@@ -404,7 +404,7 @@ Options exist to provide lineage-specific breakdowns and/or sample collection ti
 
 This workflow runs on the set level.
 
-| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default attribute** | **Terra Status** |
+| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
 |---|---|---|---|---|---|
 | freyja_plot | **freyja_demixed** | Array[File] | An array containing the output files (freyja_demixed) made by Freyja_FASTQ |  | Required |
 | freyja_plot | **freyja_plot_name** | String | The name of the plot to be produced. Example: "my-freyja-plot" |  | Required |
@@ -435,8 +435,8 @@ This workflow runs on the set level.
         |  | Links |
         | --- | --- |
         | Task | [wf_freyja_plot.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/freyja/task_freyja_plot.wdl) |
-        | Software source code | https://github.com/andersen-lab/Freyja |
-        | Software documentation | https://github.com/andersen-lab/Freyja |
+        | Software Source Code | https://github.com/andersen-lab/Freyja |
+        | Software Documentation | https://github.com/andersen-lab/Freyja |
 
 ### Freyja_Plot Outputs
 
@@ -459,7 +459,7 @@ This dashboard is not "live" — that is, you must rerun the workflow every time
 
 This workflow runs on the set level.
 
-| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default attribute** | **Status** |
+| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
 |---|---|---|---|---|---|
 | freyja_dashboard | **collection_date** | Array[String] | An array containing the collection dates for the sample (YYYY-MM-DD format) |  | Required |
 | freyja_dashboard | **freyja_dashboard_title** | String | The name of the dashboard to be produced. Example: "my-freyja-dashboard" |  | Required |
@@ -489,8 +489,8 @@ This workflow runs on the set level.
         |  | Links |
         | --- | --- |
         | Task | [wf_freyja_dashboard.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/freyja/task_freyja_dashboard.wdl) |
-        | Software source code | https://github.com/andersen-lab/Freyja |
-        | Software documentation | https://github.com/andersen-lab/Freyja |
+        | Software Source Code | https://github.com/andersen-lab/Freyja |
+        | Software Documentation | https://github.com/andersen-lab/Freyja |
 
 ### Freyja_Dashboard Outputs
 
@@ -537,7 +537,7 @@ The barcodes file can be passed directly to Freyja by the `freyja_usher_barcodes
 If you use any of the Freyja workflows, please cite:
 
 > Karthikeyan, S., Levy, J.I., De Hoff, P. *et al.* Wastewater sequencing reveals early cryptic SARS-CoV-2 variant transmission. *Nature* **609**, 101–108 (2022). <https://doi.org/10.1038/s41586-022-05049-6>
-
-Freyja source code can be found at <https://github.com/andersen-lab/Freyja>
-
-Freyja barcodes (non-SARS-CoV-2): <https://github.com/gp201/Freyja-barcodes>
+<!-- -->
+> Freyja source code can be found at <https://github.com/andersen-lab/Freyja>
+<!-- -->
+> Freyja barcodes (non-SARS-CoV-2): <https://github.com/gp201/Freyja-barcodes>

@@ -4,7 +4,7 @@ title: Zip_Column_Content
 
 ## Quick Facts
 
-| **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line compatibliity** | **Workflow type** |
+| **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |||||
 |---|---|---|---|---|
 | [Exporting Data From Terra](../../workflows_overview/workflows-type.md/#exporting-data-from-terra) | [Any taxa](../../workflows_overview/workflows-kingdom.md/#any-taxa) | PHB v2.1.0 | Yes | Set-level |
 
@@ -16,7 +16,7 @@ This workflow will create a zip file that contains all of the items in a column 
 
 This workflow runs on the set level.
 
-| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default attribute** | **Terra Status** |
+| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
 |---|---|---|---|---|---|
 | zip_column_content | **files_to_zip** | Array[File] | The column that has the files you want to zip. |  | Required |
 | zip_column_content | **zipped_file_name** | String | The name you want your zipped file to have. The .zip file extension will be added to this name. |  | Required |

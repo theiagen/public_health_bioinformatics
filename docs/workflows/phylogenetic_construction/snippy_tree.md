@@ -2,7 +2,7 @@
 
 ## Quick Facts
 
-| **Workflow Category** | **Applicable Kingdom** | **Last Known Changes** | **Command-line compatibility** | **Workflow type** |
+| **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
 |---|---|---|---|---|
 | [Phylogenetic Construction](../../workflows_overview/workflows-type.md/#phylogenetic-construction) | [Bacteria](../../workflows_overview/workflows-kingdom.md/#bacteria) | PHB v2.1.0 | Yes; some optional features incompatible | Set-level |
 
@@ -53,7 +53,7 @@ Sequencing data used in the Snippy_Tree workflow must:
         - Using the core genome
             - `core_genome` = true (as default)
 
-| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default attribute** | **Status** |
+| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
 |---|---|---|---|---|---|
 | snippy_tree_wf | **tree_name_updated** | String | Internal component, do not modify. Used for replacing spaces with underscores_ |  | Do not modify |
 | snippy_tree_wf | **reference_genome_file** | File | Reference genome in FASTA or GENBANK format (must be the same reference used in Snippy_Variants workflow) |  | Required |
@@ -142,8 +142,8 @@ Sequencing data used in the Snippy_Tree workflow must:
         | --- | --- |
         | Task | [task_snippy_core.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/phylogenetic_inference/task_snippy_core.wdl) |
         | Default software version | v4.6.0 (us-docker.pkg.dev/general-theiagen/staphb/snippy:4.6.0) |
-        | Software source code | [Snippy on GitHub](https://github.com/tseemann/snippy) |
-        | Software documentation | [Snippy on GitHub](https://github.com/tseemann/snippy) |
+        | Software Source Code | [Snippy on GitHub](https://github.com/tseemann/snippy) |
+        | Software Documentation | [Snippy on GitHub](https://github.com/tseemann/snippy) |
 
 ??? task "Gubbins (optional)"
 
@@ -167,9 +167,9 @@ Sequencing data used in the Snippy_Tree workflow must:
         |  | Links |
         | --- | --- |
         | Task | [task_gubbins.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/phylogenetic_inference/task_gubbins.wdl) |
-        | Software source code | [Gubbins on GitHub](https://github.com/nickjcroucher/gubbins) |
-        | Software documentation | [Gubbins v3.3 manual](https://github.com/nickjcroucher/gubbins/blob/v3.3/docs/gubbins_manual.md) |
-        | Original publication | [Rapid phylogenetic analysis of large samples of recombinant bacterial whole genome sequences using Gubbins](https://academic.oup.com/nar/article/43/3/e15/2410982) |
+        | Software Source Code | [Gubbins on GitHub](https://github.com/nickjcroucher/gubbins) |
+        | Software Documentation | [Gubbins v3.3 manual](https://github.com/nickjcroucher/gubbins/blob/v3.3/docs/gubbins_manual.md) |
+        | Original Publication(s) | [Rapid phylogenetic analysis of large samples of recombinant bacterial whole genome sequences using Gubbins](https://academic.oup.com/nar/article/43/3/e15/2410982) |
         | Default software version | us-docker.pkg.dev/general-theiagen/biocontainers/gubbins:3.3--py310pl5321h8472f5a_0 |
 
 ??? task "SNP-sites (optional)"
@@ -187,9 +187,9 @@ Sequencing data used in the Snippy_Tree workflow must:
         | --- | --- |
         | Task | [task_snp_sites.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/phylogenetic_inference/task_snp_sites.wdl) |
         | Default software version | 2.5.1 (us-docker.pkg.dev/general-theiagen/biocontainers/snp-sites:2.5.1--hed695b0_0) |
-        | Software source code | [SNP-sites on GitHub](https://github.com/sanger-pathogens/snp-sites) |
-        | Software documentation | [SNP-sites on GitHub](https://github.com/sanger-pathogens/snp-sites) |
-        | Original publication | [SNP-sites: rapid efficient extraction of SNPs from multi-FASTA alignments](https://www.microbiologyresearch.org/content/journal/mgen/10.1099/mgen.0.000056) |
+        | Software Source Code | [SNP-sites on GitHub](https://github.com/sanger-pathogens/snp-sites) |
+        | Software Documentation | [SNP-sites on GitHub](https://github.com/sanger-pathogens/snp-sites) |
+        | Original Publication(s) | [SNP-sites: rapid efficient extraction of SNPs from multi-FASTA alignments](https://www.microbiologyresearch.org/content/journal/mgen/10.1099/mgen.0.000056) |
 
 ??? task "IQTree2"
 
@@ -211,9 +211,9 @@ Sequencing data used in the Snippy_Tree workflow must:
         |  | Links |
         | --- | --- |
         | Task | [task_iqtree2.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/phylogenetic_inference/task_iqtree2.wdl) |
-        | Software source code | [IQ-TREE on GitHub](https://github.com/iqtree/iqtree2) |
-        | Software documentation | [IQTree documentation](http://www.iqtree.org/doc/) for the latest version (not necessarily the version used in this workflow) |
-        | Original publication | [IQ-TREE 2: New Models and Efficient Methods for Phylogenetic Inference in the Genomic Era](https://academic.oup.com/mbe/article/37/5/1530/5721363) |
+        | Software Source Code | [IQ-TREE on GitHub](https://github.com/iqtree/iqtree2) |
+        | Software Documentation | [IQTree documentation](http://www.iqtree.org/doc/) for the latest version (not necessarily the version used in this workflow) |
+        | Original Publication(s) | [IQ-TREE 2: New Models and Efficient Methods for Phylogenetic Inference in the Genomic Era](https://academic.oup.com/mbe/article/37/5/1530/5721363) |
         | Publication for the SH-alRT test | [New Algorithms and Methods to Estimate Maximum-Likelihood Phylogenies: Assessing the Performance of PhyML 3.0](https://academic.oup.com/sysbio/article/59/3/307/1702850?login=false) |
         | Publication for ultrafast bootstrapping integration to IQTree | [Ultrafast Approximation for Phylogenetic Bootstrap](https://academic.oup.com/mbe/article/30/5/1188/997508?login=false); [UFBoot2: Improving the Ultrafast Bootstrap Approximation](https://academic.oup.com/mbe/article/35/2/518/4565479?login=false) |
         | Publication for ModelFinder  | [ModelFinder: fast model selection for accurate phylogenetic estimates](https://www.nature.com/articles/nmeth.4285) |
@@ -232,9 +232,9 @@ Sequencing data used in the Snippy_Tree workflow must:
         | --- | --- |
         | Task | [task_snp_dists.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/phylogenetic_inference/task_snp_dists.wdl) |
         | Default software version | 0.8.2 (us-docker.pkg.dev/general-theiagen/staphb/snp-dists:0.8.2) |
-        | Software source code | [SNP-dists on GitHub](https://github.com/tseemann/snp-dists) |
-        | Software documentation | [SNP-dists on GitHub](https://github.com/tseemann/snp-dists) |
-        | Original publication | Not known to be published |
+        | Software Source Code | [SNP-dists on GitHub](https://github.com/tseemann/snp-dists) |
+        | Software Documentation | [SNP-dists on GitHub](https://github.com/tseemann/snp-dists) |
+        | Original Publication(s) | Not known to be published |
 
 ??? task "Data summary (optional)"
 
@@ -283,7 +283,7 @@ Sequencing data used in the Snippy_Tree workflow must:
         |  | Links |
         | --- | --- |
         | Task | /tasks/utilities/file_handling/task_cat_files.wdl |
-        | Software source code | [task_cat_files.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/file_handling/task_cat_files.wdl) |
+        | Software Source Code | [task_cat_files.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/file_handling/task_cat_files.wdl) |
 
 ??? task "Shared Variants Task (Optional)"
 
@@ -304,7 +304,7 @@ Sequencing data used in the Snippy_Tree workflow must:
         |  | Links |
         | --- | --- |
         | Task | task_shared_variants.wdl |
-        | Software source code | [task_shared_variants.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/phylogenetic_inference/utilities/task_shared_variants.wdl) |
+        | Software Source Code | [task_shared_variants.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/phylogenetic_inference/utilities/task_shared_variants.wdl) |
 
 ### Outputs
 

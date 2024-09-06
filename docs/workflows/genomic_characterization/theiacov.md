@@ -2,7 +2,7 @@
 
 ## Quick Facts
 
-| **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line compatibliity** | **Workflow type** |
+| **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
 |---|---|---|---|---|
 | [Genomic Characterization](../../workflows_overview/workflows-type.md/#genomic-characterization) | [Viral](../../workflows_overview/workflows-kingdom.md/#viral) | PHB v2.2.0 | Yes, some optional features incompatible | Sample-level |
 
@@ -108,7 +108,7 @@ All TheiaCoV Workflows (not TheiaCoV_FASTA_Batch)
 
         The TheiaCoV_ClearLabs workflow takes in read data produced by the Clear Dx platform from ClearLabs. However, many users use the TheiaCoV_FASTA workflow instead of this one due to a few known issues when generating assemblies with this pipeline that are not present when using ClearLabs-generated FASTA files.
 
-| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default attribute** | **Terra Status** | **Workflow** | **Organism** |
+| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |* | **Organism** |
 |---|---|---|---|---|---|---|---|
 | theiacov_clearlabs | **primer_bed** | File | The bed file containing the primers used when sequencing was performed | | Required | CL | sars-cov-2 |
 | theiacov_clearlabs | **read1** | File | Read data produced by the Clear Dx platform from ClearLabs | | Required | CL | sars-cov-2 |
@@ -393,7 +393,7 @@ All TheiaCoV Workflows (not TheiaCoV_FASTA_Batch)
 
             The TheiaCoV_FASTA_Batch workflow takes in a set of assembly files in FASTA format.
 
-    | **Terra Task Name** | **Variable** | **Type** | **Description** | **Default attribute** | **Terra Status** |
+    | **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
     |---|---|---|---|---|---|
     | theiacov_fasta_batch | **assembly_fastas** | Array[File] | Genome assembly files in fasta format. Example: this.sars-cov-2-samples.assembly_fasta |  | Required |
     | theiacov_fasta_batch | **bucket_name** | String | The GCP bucket for the workspace where the TheiaCoV_FASTA_Batch output files are saved. We recommend using a unique GSURI for the bucket associated with your Terra workspace. The root GSURI is accessible in the Dashboard page of your workspace in the "Cloud Information" section.<br>Do not include the prefix gs:// in the string<br>Example: ""fc-c526190d-4332-409b-8086-be7e1af9a0b6/theiacov_fasta_batch-2024-04-15-seq-run-1/ |  | Required |
@@ -631,8 +631,8 @@ All input reads are processed through "core tasks" in the TheiaCoV Illumina, ONT
             |  | Links |
             | --- | --- |
             | Task | [task_ncbi_scrub.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/task_ncbi_scrub.wdl) |
-            | Software source code | [NCBI Scrub on GitHub](https://github.com/ncbi/sra-human-scrubber) |
-            | Software documentation | <https://github.com/ncbi/sra-human-scrubber/blob/master/README.md> |
+            | Software Source Code | [NCBI Scrub on GitHub](https://github.com/ncbi/sra-human-scrubber) |
+            | Software Documentation | <https://github.com/ncbi/sra-human-scrubber/blob/master/README.md> |
 
     ??? toggle "Read quality trimming"
 
@@ -675,19 +675,19 @@ All input reads are processed through "core tasks" in the TheiaCoV Illumina, ONT
             |  | Links |
             | --- | --- |
             | Task | [task_kraken2.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/task_kraken2.wdl) |
-            | Software source code | [Kraken2 on GitHub](https://github.com/DerrickWood/kraken2/) |
-            | Software documentation | <https://github.com/DerrickWood/kraken2/wiki> |
-            | Original publication | [Improved metagenomic analysis with Kraken 2](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1891-0) |
+            | Software Source Code | [Kraken2 on GitHub](https://github.com/DerrickWood/kraken2/) |
+            | Software Documentation | <https://github.com/DerrickWood/kraken2/wiki> |
+            | Original Publication(s) | [Improved metagenomic analysis with Kraken 2](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1891-0) |
        
     !!! techdetails "read_QC_trim Technical Details"
                 
-        | | Links |
+        |  | Links |
         | --- | --- |
         | Sub-workflow | [wf_read_QC_trim.wdl](https://github.com/theiagen/public_health_bacterial_genomics/blob/main/workflows/wf_read_QC_trim.wdl) |
         | Tasks | [task_fastp.wdl](https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/quality_control/task_fastp.wdl)<br>[task_trimmomatic.wdl](https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/quality_control/task_trimmomatic.wdl)<br>[task_bbduk.wdl](https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/quality_control/task_bbduk.wdl)<br>[task_fastq_scan.wdl](https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/quality_control/task_fastq_scan.wdl)<br>[task_midas.wdl](https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/taxon_id/task_midas.wdl)<br>[task_kraken2.wdl](https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/taxon_id/task_kraken2.wdl) |
-        | Software source code | [fastp](https://github.com/OpenGene/fastp); [Trimmomatic](https://github.com/usadellab/Trimmomatic); [fastq-scan](https://github.com/rpetit3/fastq-scan); [MIDAS](https://github.com/snayfach/MIDAS); [Kraken2](https://github.com/DerrickWood/kraken2)|
-        | Software documentation | [fastp](https://github.com/OpenGene/fastp); [Trimmomatic](http://www.usadellab.org/cms/?page=trimmomatic); [BBDuk](https://jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/bbduk-guide/); [fastq-scan](https://github.com/rpetit3/fastq-scan); [MIDAS](https://github.com/snayfach/MIDAS); [Kraken2](https://github.com/DerrickWood/kraken2/wiki) |
-        | Original publications | *[Trimmomatic: a flexible trimmer for Illumina sequence data](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4103590/)<br>*[fastp: an ultra-fast all-in-one FASTQ preprocessor](https://academic.oup.com/bioinformatics/article/34/17/i884/5093234?login=false)<br>*[An integrated metagenomics pipeline for strain profiling reveals novel patterns of bacterial transmission and biogeography](https://pubmed.ncbi.nlm.nih.gov/27803195/)<br>*[Improved metagenomic analysis with Kraken 2](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1891-0) |
+        | Software Source Code | [fastp](https://github.com/OpenGene/fastp); [Trimmomatic](https://github.com/usadellab/Trimmomatic); [fastq-scan](https://github.com/rpetit3/fastq-scan); [MIDAS](https://github.com/snayfach/MIDAS); [Kraken2](https://github.com/DerrickWood/kraken2)|
+        | Software Documentation | [fastp](https://github.com/OpenGene/fastp); [Trimmomatic](http://www.usadellab.org/cms/?page=trimmomatic); [BBDuk](https://jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/bbduk-guide/); [fastq-scan](https://github.com/rpetit3/fastq-scan); [MIDAS](https://github.com/snayfach/MIDAS); [Kraken2](https://github.com/DerrickWood/kraken2/wiki) |
+        | Original Publication(s) | *[Trimmomatic: a flexible trimmer for Illumina sequence data](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4103590/)<br>*[fastp: an ultra-fast all-in-one FASTQ preprocessor](https://academic.oup.com/bioinformatics/article/34/17/i884/5093234?login=false)<br>*[An integrated metagenomics pipeline for strain profiling reveals novel patterns of bacterial transmission and biogeography](https://pubmed.ncbi.nlm.nih.gov/27803195/)<br>*[Improved metagenomic analysis with Kraken 2](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1891-0) |
 
 ??? task "`read_QC_trim_ONT`: Read Quality Trimming, Host Removal, and Identification ==_for ONT data_=="
 
@@ -704,8 +704,8 @@ All input reads are processed through "core tasks" in the TheiaCoV Illumina, ONT
             |  | Links |
             | --- | --- |
             | Task | [task_ncbi_scrub.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/task_ncbi_scrub.wdl) |
-            | Software source code | [NCBI Scrub on GitHub](https://github.com/ncbi/sra-human-scrubber) |
-            | Software documentation | <https://github.com/ncbi/sra-human-scrubber/blob/master/README.md> |
+            | Software Source Code | [NCBI Scrub on GitHub](https://github.com/ncbi/sra-human-scrubber) |
+            | Software Documentation | <https://github.com/ncbi/sra-human-scrubber/blob/master/README.md> |
 
     ??? toggle "Read quality filtering"
         
@@ -725,9 +725,9 @@ All input reads are processed through "core tasks" in the TheiaCoV Illumina, ONT
             |  | Links |
             | --- | --- |
             | Task | [task_kraken2.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/task_kraken2.wdl) |
-            | Software source code | [Kraken2 on GitHub](https://github.com/DerrickWood/kraken2/) |
-            | Software documentation | <https://github.com/DerrickWood/kraken2/wiki> |
-            | Original publication | [Improved metagenomic analysis with Kraken 2](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1891-0) |
+            | Software Source Code | [Kraken2 on GitHub](https://github.com/DerrickWood/kraken2/) |
+            | Software Documentation | <https://github.com/DerrickWood/kraken2/wiki> |
+            | Original Publication(s) | [Improved metagenomic analysis with Kraken 2](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1891-0) |
         
     !!! techdetails "read_QC_trim Technical Details"
         
@@ -737,9 +737,9 @@ All input reads are processed through "core tasks" in the TheiaCoV Illumina, ONT
         | --- | --- |
         | Sub-workflow | [wf_read_QC_trim_ont.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_read_QC_trim_ont.wdl) |
         | Tasks | [task_ncbi_scrub.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_ncbi_scrub.wdl#L68) (SE subtask)<br>[task_artic_guppyplex.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_artic_guppyplex.wdl)<br>[task_kraken2.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/contamination/task_kraken2.wdl#L3)|
-        | Software source code | [NCBI Scrub on GitHub](https://github.com/ncbi/sra-human-scrubber)<br>[Artic on GitHub](https://github.com/artic-network/fieldbioinformatics)<br>[Kraken2 on GitHub](https://github.com/DerrickWood/kraken2/) |
-        | Software documentation | [NCBI Scrub](<https://github.com/ncbi/sra-human-scrubber/blob/master/README.md>)<br>[Artic pipeline](https://artic.readthedocs.io/en/latest/?badge=latest)<br>[Kraken2](https://github.com/DerrickWood/kraken2/wiki) |
-        | Original publications | [*STAT: a fast, scalable, MinHash-based *k*-mer tool to assess Sequence Read Archive next-generation sequence submissions](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-021-02490-0)<br>*[Improved metagenomic analysis with Kraken 2](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1891-0)  |
+        | Software Source Code | [NCBI Scrub on GitHub](https://github.com/ncbi/sra-human-scrubber)<br>[Artic on GitHub](https://github.com/artic-network/fieldbioinformatics)<br>[Kraken2 on GitHub](https://github.com/DerrickWood/kraken2/) |
+        | Software Documentation | [NCBI Scrub](<https://github.com/ncbi/sra-human-scrubber/blob/master/README.md>)<br>[Artic pipeline](https://artic.readthedocs.io/en/latest/?badge=latest)<br>[Kraken2](https://github.com/DerrickWood/kraken2/wiki) |
+        | Original Publication(s) | [*STAT: a fast, scalable, MinHash-based *k*-mer tool to assess Sequence Read Archive next-generation sequence submissions](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-021-02490-0)<br>*[Improved metagenomic analysis with Kraken 2](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1891-0)  |
 
 #### Assembly tasks
 
@@ -763,9 +763,9 @@ All input reads are processed through "core tasks" in the TheiaCoV Illumina, ONT
         | --- | --- |
         | Sub-workflow | [wf_ivar_consensus.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_ivar_consensus.wdl) |
         | Tasks | [task_bwa.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/alignment/task_bwa.wdl)<br>[task_ivar_primer_trim.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_ivar_primer_trim.wdl)<br>[task_assembly_metrics.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_assembly_metrics.wdl)<br>[task_ivar_variant_call.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/variant_detection/task_ivar_variant_call.wdl)<br>[task_ivar_consensus.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_ivar_consensus.wdl) |
-        | Software source code | [BWA on GitHub](https://github.com/lh3/bwa), [iVar on GitHub](https://andersen-lab.github.io/ivar/html/) |
-        | Software documentation | [BWA on SourceForge](https://bio-bwa.sourceforge.net/), [iVar on GitHub](https://andersen-lab.github.io/ivar/html/) |
-        | Original publications | [*Aligning sequence reads, clone sequences and assembly contigs with BWA-MEM](https://doi.org/10.48550/arXiv.1303.3997)<br>[*An amplicon-based sequencing framework for accurately measuring intrahost virus diversity using PrimalSeq and iVar](http://dx.doi.org/10.1186/s13059-018-1618-7) |
+        | Software Source Code | [BWA on GitHub](https://github.com/lh3/bwa), [iVar on GitHub](https://andersen-lab.github.io/ivar/html/) |
+        | Software Documentation | [BWA on SourceForge](https://bio-bwa.sourceforge.net/), [iVar on GitHub](https://andersen-lab.github.io/ivar/html/) |
+        | Original Publication(s) | [*Aligning sequence reads, clone sequences and assembly contigs with BWA-MEM](https://doi.org/10.48550/arXiv.1303.3997)<br>[*An amplicon-based sequencing framework for accurately measuring intrahost virus diversity using PrimalSeq and iVar](http://dx.doi.org/10.1186/s13059-018-1618-7) |
 
 ??? toggle "`artic_consensus`: Alignment, Primer Trimming, Variant Detection, and Consensus ==_for non-flu organisms in ONT & ClearLabs workflows_=="
 
@@ -780,8 +780,8 @@ All input reads are processed through "core tasks" in the TheiaCoV Illumina, ONT
         |  | Links |
         | --- | --- |
         | Task | [task_artic_consensus.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_artic_consensus.wdl) |
-        | Software source code | [Artic on GitHub](https://github.com/artic-network/fieldbioinformatics) |
-        | Software documentation | [Artic pipeline](https://artic.readthedocs.io/en/latest/?badge=latest) |
+        | Software Source Code | [Artic on GitHub](https://github.com/artic-network/fieldbioinformatics) |
+        | Software Documentation | [Artic pipeline](https://artic.readthedocs.io/en/latest/?badge=latest) |
 
 ??? toggle "`irma`: Assembly and Characterization ==_for flu in TheiaCoV_Illumina_PE & TheiaCoV_ONT_=="
 
@@ -793,8 +793,8 @@ All input reads are processed through "core tasks" in the TheiaCoV Illumina, ONT
         |  | Links |
         | --- | --- |
         | Task | [task_irma.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_irma.wdl) |
-        | Software documentation | [IRMA website](https://wonder.cdc.gov/amd/flu/irma/) |
-        | **Original publications** | [*Viral deep sequencing needs an adaptive approach: IRMA, the iterative refinement meta-assembler](https://bmcgenomics.biomedcentral.com/articles/10.1186/s12864-016-3030-6) |
+        | Software Documentation | [IRMA website](https://wonder.cdc.gov/amd/flu/irma/) |
+        | Original Publication(s) | [*Viral deep sequencing needs an adaptive approach: IRMA, the iterative refinement meta-assembler](https://bmcgenomics.biomedcentral.com/articles/10.1186/s12864-016-3030-6) |
 
 #### Organism-specific characterization tasks {#org-specific-tasks}
 
@@ -823,8 +823,8 @@ All input reads are processed through "core tasks" in the TheiaCoV Illumina, ONT
         |  | Links |
         | --- | --- |
         | Task | [task_pangolin.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/betacoronavirus/task_pangolin.wdl) |
-        | Software source code | [Pangolin on GitHub](https://github.com/cov-lineages/pangolin) |
-        | Software documentation | [Pangolin website](https://cov-lineages.org/resources/pangolin.html) |
+        | Software Source Code | [Pangolin on GitHub](https://github.com/cov-lineages/pangolin) |
+        | Software Documentation | [Pangolin website](https://cov-lineages.org/resources/pangolin.html) |
 
 ??? task "`nextclade`"
 
@@ -835,9 +835,9 @@ All input reads are processed through "core tasks" in the TheiaCoV Illumina, ONT
         |  | Links |
         | --- | --- |
         | Task | [task_nextclade.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/task_nextclade.wdl#L63) |
-        | Software source code | <https://github.com/nextstrain/nextclade> |
-        | Software documentation | [Nextclade](https://docs.nextstrain.org/projects/nextclade/en/stable/) |
-        | Original publication | [Nextclade: clade assignment, mutation calling and quality control for viral genomes.](https://doi.org/10.21105/joss.03773) |
+        | Software Source Code | <https://github.com/nextstrain/nextclade> |
+        | Software Documentation | [Nextclade](https://docs.nextstrain.org/projects/nextclade/en/stable/) |
+        | Original Publication(s) | [Nextclade: clade assignment, mutation calling and quality control for viral genomes.](https://doi.org/10.21105/joss.03773) |
 
 ??? task "`vadr`"
 
@@ -848,9 +848,9 @@ All input reads are processed through "core tasks" in the TheiaCoV Illumina, ONT
         |  | Links |
         | --- | --- |
         | Task | [task_vadr.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/advanced_metrics/task_vadr.wdl) |
-        | Software source code | <https://github.com/ncbi/vadr> |
-        | Software documentation | <https://github.com/ncbi/vadr/wiki> |
-        | Original publication | For SARS-CoV-2: *[Faster SARS-CoV-2 sequence validation and annotation for GenBank using VADR](https://doi.org/10.1093/nargab/lqad002)*<br> For non-SARS_CoV-2: [*VADR: validation and annotation of virus sequence submissions to GenBank*](https://doi.org/10.1186/s12859-020-3537-3) |
+        | Software Source Code | <https://github.com/ncbi/vadr> |
+        | Software Documentation | <https://github.com/ncbi/vadr/wiki> |
+        | Original Publication(s) | For SARS-CoV-2: *[Faster SARS-CoV-2 sequence validation and annotation for GenBank using VADR](https://doi.org/10.1093/nargab/lqad002)*<br> For non-SARS_CoV-2: [*VADR: validation and annotation of virus sequence submissions to GenBank*](https://doi.org/10.1186/s12859-020-3537-3) |
 
 ??? task "`quasitools`"
 
@@ -861,8 +861,8 @@ All input reads are processed through "core tasks" in the TheiaCoV Illumina, ONT
         |  | Links |
         | --- | --- |
         | Task | [task_quasitools.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/lentivirus/task_quasitools.wdl) |
-        | Software source code | <https://github.com/phac-nml/quasitools/> |
-        | Software documentation | [Quasitools HyDRA](https://phac-nml.github.io/quasitools/hydra/) |
+        | Software Source Code | <https://github.com/phac-nml/quasitools/> |
+        | Software Documentation | [Quasitools HyDRA](https://phac-nml.github.io/quasitools/hydra/) |
 
 ??? task "`irma`"
 
@@ -872,8 +872,8 @@ All input reads are processed through "core tasks" in the TheiaCoV Illumina, ONT
         |  | Links |
         | --- | --- |
         | Task | [task_irma.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_irma.wdl) |
-        | Software documentation | [IRMA website](https://wonder.cdc.gov/amd/flu/irma/) |
-        | **Original publications** | [*Viral deep sequencing needs an adaptive approach: IRMA, the iterative refinement meta-assembler](https://bmcgenomics.biomedcentral.com/articles/10.1186/s12864-016-3030-6) |
+        | Software Documentation | [IRMA website](https://wonder.cdc.gov/amd/flu/irma/) |
+        | Original Publication(s) | [*Viral deep sequencing needs an adaptive approach: IRMA, the iterative refinement meta-assembler](https://bmcgenomics.biomedcentral.com/articles/10.1186/s12864-016-3030-6) |
 
 ??? task "`abricate`"
 
@@ -883,8 +883,8 @@ All input reads are processed through "core tasks" in the TheiaCoV Illumina, ONT
         |  | Links |
         | --- | --- |
         | Task | [task_abricate.wdl (abricate_flu subtask)](https://github.com/theiagen/public_health_bioinformatics/blob/2dff853defc6ea540a058873f6fe6a78cc2350c7/tasks/gene_typing/drug_resistance/task_abricate.wdl#L59) |
-        | Software source code | [ABRicate on GitHub](https://github.com/tseemann/abricate) |
-        | Software documentation | [ABRicate on GitHub](https://github.com/tseemann/abricate) |
+        | Software Source Code | [ABRicate on GitHub](https://github.com/tseemann/abricate) |
+        | Software Documentation | [ABRicate on GitHub](https://github.com/tseemann/abricate) |
 
 ??? task "`gene_coverage`"
 
@@ -915,7 +915,7 @@ All input reads are processed through "core tasks" in the TheiaCoV Illumina, ONT
         |  | Links |
         | --- | --- |
         | Task | [task_genoflu.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/orthomyxoviridae/task_genoflu.wdl) |
-        | Software source code | [GenoFLU on GitHub](https://github.com/USDA-VS/GenoFLU) |
+        | Software Source Code | [GenoFLU on GitHub](https://github.com/USDA-VS/GenoFLU) |
 
 ### Outputs
 

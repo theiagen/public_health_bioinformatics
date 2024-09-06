@@ -2,7 +2,7 @@
 
 ## Quick Facts
 
-| **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line compatibliity** | **Workflow type** |
+| **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
 |---|---|---|---|---|
 | [Data Import](../../workflows_overview/workflows-type.md/#data-import) | [Any taxa](../../workflows_overview/workflows-kingdom.md/#any-taxa) | PHB v1.3.0 | Yes | Sample-level |
 
@@ -23,7 +23,7 @@ Assembly_Fetch requires the input samplename, and either the accession for a ref
 
 This workflow runs on the sample level.
 
-| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default attribute** | **Terra Status** |
+| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
 |---|---|---|---|---|---|
 | reference_fetch | **samplename** | String | Your sample's name |  | Required |
 | reference_fetch | **assembly_fasta** | File | Assembly FASTA file of your sample |  | Optional |
@@ -68,9 +68,9 @@ This workflow runs on the sample level.
         | --- | --- |
         | Task | [task_referenceseeker.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/phylogenetic_inference/utilities/task_referenceseeker.wdl) |
         | Software version | 1.8.0 ("us-docker.pkg.dev/general-theiagen/biocontainers/referenceseeker:1.8.0--pyhdfd78af_0") |
-        | Software source code | https://github.com/oschwengers/referenceseeker |
-        | Software documentation | https://github.com/oschwengers/referenceseeker |
-        | Original publication | [ReferenceSeeker: rapid determination of appropriate reference genomes](https://joss.theoj.org/papers/10.21105/joss.01994) |
+        | Software Source Code | https://github.com/oschwengers/referenceseeker |
+        | Software Documentation | https://github.com/oschwengers/referenceseeker |
+        | Original Publication(s) | [ReferenceSeeker: rapid determination of appropriate reference genomes](https://joss.theoj.org/papers/10.21105/joss.01994) |
 
 ??? task "NCBI Datasets Details"
 
@@ -84,9 +84,9 @@ This workflow runs on the sample level.
         | --- | --- |
         | Task | [task_ncbi_datasets.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/data_import/task_ncbi_datasets.wdl) |
         | Software version | 14.13.2 (us-docker.pkg.dev/general-theiagen/staphb/ncbi-datasets:14.13.2) |
-        | Software source code | https://github.com/ncbi/datasets |
-        | Software documentation | https://github.com/ncbi/datasets |
-        | Original publication | Not known to be published |
+        | Software Source Code | https://github.com/ncbi/datasets |
+        | Software Documentation | https://github.com/ncbi/datasets |
+        | Original Publication(s) | Not known to be published |
 
 ### Outputs
 

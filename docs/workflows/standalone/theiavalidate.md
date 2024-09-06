@@ -2,7 +2,7 @@
 
 ## Quick Facts
 
-| **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line compatibility** | **Workflow type** |
+| **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
 |---|---|---|---|---|
 | [Standalone](../../workflows_overview/workflows-type.md/#standalone) | [Any Taxa](../../workflows_overview/workflows-kingdom.md/#any-taxa) | PHB v2.0.0 | No | |
 
@@ -41,7 +41,7 @@ If a column consists of only GCURIs (Google Cloud file paths), the files will be
 
 Please note that all string inputs **must** be enclosed in quotation marks; for example, "column1,column2" or "workspace1"
 
-| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default attribute** | **Status** |
+| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
 |---|---|---|---|---|---|
 | theiavalidate | **columns_to_compare** | String | A comma-separated list of the columns the user wants to compare. Do not include whitespace. |  | Required |
 | theiavalidate | **output_prefix** | String | The prefix for the output files |  | Required |

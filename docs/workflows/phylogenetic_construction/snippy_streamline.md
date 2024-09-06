@@ -2,7 +2,7 @@
 
 ## Quick Facts
 
-| **Workflow Category** | **Applicable Kingdom** | **Last Known Changes** | **Command-line compatibility** | **Workflow type** |
+| **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
 |---|---|---|---|---|
 | [Phylogenetic Construction](../../workflows_overview/workflows-type.md/#phylogenetic-construction) | [Bacteria](../../workflows_overview/workflows-kingdom.md/#bacteria) | PHB v2.2.0 | Yes; some optional features incompatible | Set-level |
 
@@ -65,7 +65,7 @@ To run Snippy_Streamline, either a reference genome must be provided (`reference
         - Using the core genome
             - `core_genome` = true (as default)
 
-| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default attribute** | **Status** |
+| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
 |---|---|---|---|---|---|
 | snippy_streamline | **read1** | Array[File] | The forward read files |  | Required |
 | snippy_streamline | **read2** | Array[File] | The reverse read files |  | Required |
@@ -148,8 +148,8 @@ For automatic reference selection by the workflow (optional):
         |  | Links |
         | --- | --- |
         | Task | [task_centroid.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/phylogenetic_inference/task_centroid.wdl) |
-        | Software source code | <https://github.com/theiagen/centroid> |
-        | Software documentation | <https://github.com/theiagen/centroid> |
+        | Software Source Code | <https://github.com/theiagen/centroid> |
+        | Software Documentation | <https://github.com/theiagen/centroid> |
 
 ??? task "Assembly_Fetch workflow (optional)"
 

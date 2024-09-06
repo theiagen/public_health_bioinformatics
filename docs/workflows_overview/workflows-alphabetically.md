@@ -6,7 +6,7 @@ title: Alphabetical Workflows
 
 ---
 
-| **Name** | **Description** | **Taxa** | **Workflow type** | **Command-line compatible**[^1] | **Last known changes** | **Dockstore** |
+| **Name** | **Description** | **Applicable Kingdom** | **Workflow Level** | **Command-line Compatibility**[^1] | **Last Known Changes** | **Dockstore** |
 |---|---|---|---|---|---|---|
 | [**Assembly_Fetch**](../workflows/data_import/assembly_fetch.md) | Download assemblies from NCBI, after optionally identifying the closest RefSeq reference genome to your own draft assembly | Any taxa | Sample-level | Yes | v1.3.0 | [Assembly_Fetch_PHB](https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Assembly_Fetch_PHB:main?tab=info) |
 | [**Augur**](../workflows/phylogenetic_construction/augur.md) | Phylogenetic analysis for viral pathogens | Viral | Sample-level, Set-level | Yes | v2.1.0 | [Augur_Prep_PHB](https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Augur_Prep_PHB:main?tab=info), [Augur_PHB](https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Augur_PHB:main?tab=info) |

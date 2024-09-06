@@ -2,7 +2,7 @@
 
 ## Quick Facts
 
-| **Workflow Category** | **Applicable Kingdom** | **Last Known Changes** | **Command-line compatibliity** | **Workflow type** |
+| **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
 |---|---|---|---|---|
 | [Phylogenetic Construction](../../workflows_overview/workflows-type.md/#phylogenetic-construction) | [Bacteria](../../workflows_overview/workflows-kingdom.md/#bacteria), [Mycotics](../../workflows_overview/workflows-kingdom.md#mycotics), [Viral](../../workflows_overview/workflows-kingdom.md/#viral) | PHB v2.1.0 | Yes; some optional features incompatible | Set-level |
 
@@ -19,7 +19,7 @@ You can learn more about the kSNP3 workflow, including how to visualize the outp
 
 ### Inputs
 
-| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default attribute** | **Status** |
+| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
 |---|---|---|---|---|---|
 | ksnp3_workflow | **assembly_fasta** | Array[File] | The assembly files to be analyzed | | Required |
 | ksnp3_workflow | **cluster_name** | String | Free text string used to label output files | | Required |

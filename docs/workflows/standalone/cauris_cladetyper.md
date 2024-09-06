@@ -5,7 +5,7 @@
 
 ## Quick Facts
 
-| **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line compatibility** | **Workflow type** |
+| **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
 |---|---|---|---|---|
 | [Standalone](../../workflows_overview/workflows-type.md/#standalone) | [Mycotics](../../workflows_overview/workflows-kingdom.md#mycotics) | PHB v1.0.0 | Yes | Sample-level |
 

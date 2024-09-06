@@ -8,7 +8,7 @@ title: Workflows by Type
 
 ### Data Import
 
-| **Name** | **Description** | **Taxa** | **Workflow type** | **Command-line Compatible**[^1] | **Last known changes** | **Dockstore** |
+| **Name** | **Description** | **Applicable Kingdom** | **Workflow Level** | **Command-line Compatibility**[^1] | **Last Known Changes** | **Dockstore** |
 |---|---|---|---|---|---|---|
 | [**Assembly_Fetch**](../workflows/data_import/assembly_fetch.md) | Download assemblies from NCBI, after optionally identifying the closest RefSeq reference genome to your own draft assembly | Any taxa | Sample-level | Yes | v1.3.0 | [Assembly_Fetch_PHB](https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Assembly_Fetch_PHB:main?tab=info) |
 | [**BaseSpace_Fetch**](../workflows/data_import/basespace_fetch.md)| Import data from BaseSpace into Terra | Any taxa | Sample-level | Yes | v2.0.0 | [BaseSpace_Fetch_PHB](https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/BaseSpace_Fetch_PHB:main?tab=info) |
@@ -17,7 +17,7 @@ title: Workflows by Type
 
 ### Genomic Characterization
 
-| **Name** | **Description** | **Taxa** | **Workflow type** | **Command-line Compatible**[^1] | **Last Known changes** | **Dockstore** |
+| **Name** | **Description** | **Applicable Kingdom** | **Workflow Level** | **Command-line Compatibility**[^1] | **Last Known Changes** | **Dockstore** |
 |---|---|---|---|---|---|---|
 | [**Freyja Workflow Series**](../workflows/genomic_characterization/freyja.md)| Recovers relative lineage abundances from mixed sample data and generates visualizations | SARS-CoV-2, Viral | Sample-level, Set-level | Yes | v2.2.0 | [Freyja_FASTQ_PHB](https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Freyja_FASTQ_PHB:main?tab=info), [Freyja_Plot_PHB](https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Freyja_Plot_PHB:main?tab=info), [Freyja_Dashboard_PHB](https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Freyja_Dashboard_PHB:main?tab=info), [Freyja_Update_PHB](https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Freyja_Update_PHB:main?tab=info) |
 | [**Pangolin_Update**](../workflows/genomic_characterization/pangolin_update.md) | Update Pangolin assignments | SARS-CoV-2, Viral | Sample-level | Yes | v2.0.0 | [Pangolin_Update_PHB](https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Pangolin_Update_PHB:main?tab=info) |
@@ -29,7 +29,7 @@ title: Workflows by Type
 
 ### Phylogenetic Construction
 
-| **Name** | **Description** | **Taxa** | **Workflow type** | **Command-line Compatible**[^1] | **Last known changes** | **Dockstore** |
+| **Name** | **Description** | **Applicable Kingdom** | **Workflow Level** | **Command-line Compatibility**[^1] | **Last Known Changes** | **Dockstore** |
 |---|---|---|---|---|---|---|
 | [**Augur**](../workflows/phylogenetic_construction/augur.md) | Phylogenetic analysis for viral pathogens | Viral | Sample-level, Set-level | Yes | v2.1.0 | [Augur_Prep_PHB](https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Augur_Prep_PHB:main?tab=info), [Augur_PHB](https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Augur_PHB:main?tab=info) |
 | [**Core_Gene_SNP**](../workflows/phylogenetic_construction/core_gene_snp.md) | Pangenome analysis | Bacteria | Set-level | Some optional features incompatible, Yes | v2.1.0 | [Core_Gene_SNP_PHB](https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Core_Gene_SNP_PHB:main?tab=info) |
@@ -45,14 +45,14 @@ title: Workflows by Type
 
 ### Phylogenetic Placement
 
-| **Name** | **Description** | **Taxa** | **Workflow type** | **Command-line Compatible**[^1] | **Last known changes** | **Dockstore** |
+| **Name** | **Description** | **Applicable Kingdom** | **Workflow Level** | **Command-line Compatibility**[^1] | **Last Known Changes** | **Dockstore** |
 |---|---|---|---|---|---|---|
 | [**Samples_to_Ref_Tree**](../workflows/phylogenetic_placement/samples_to_ref_tree.md)| Use Nextclade to rapidly and accurately place your samples on any existing phylogenetic tree | Monkeypox virus, SARS-CoV-2, Viral | Sample-level, Set-level | Yes | v2.1.0 | [Samples_to_Ref_Tree_PHB](https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Samples_to_Ref_Tree_PHB:main?tab=info) |
 | [**Usher_PHB**](../workflows/phylogenetic_placement/usher.md)| Use UShER to rapidly and accurately place your samples on any existing phylogenetic tree | Monkeypox virus, SARS-CoV-2, Viral | Sample-level, Set-level | Yes | v2.1.0 | [Usher_PHB](https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Usher_PHB:main?tab=info) |
 
 ### Public Data Sharing
 
-| **Name** | **Description** | **Taxa** | **Workflow type** | **Command-line Compatible**[^1] | **Last known changes** | **Dockstore** |
+| **Name** | **Description** | **Applicable Kingdom** | **Workflow Level** | **Command-line Compatibility**[^1] | **Last Known Changes** | **Dockstore** | | **Dockstore** |
 |---|---|---|---|---|---|---|
 | [**Mercury_Prep_N_Batch**](../workflows/public_data_sharing/mercury_prep_n_batch.md)| Prepare metadata and sequence data for submission to NCBI and GISAID | Influenza, Monkeypox virus, SARS-CoV-2, Viral | Set-level | No | v2.2.0 | [Mercury_Prep_N_Batch_PHB](https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Mercury_Prep_N_Batch_PHB:main?tab=info) |
 | [**Terra_2_GISAID**](../workflows/public_data_sharing/terra_2_gisaid.md)| Upload of assembly data to GISAID | SARS-CoV-2, Viral | Set-level | Yes | v1.2.1 | [Terra_2_GISAID_PHB](https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Terra_2_GISAID_PHB:main?tab=info) |
@@ -60,7 +60,7 @@ title: Workflows by Type
 
 ### Exporting Data from Terra
 
-| **Name** | **Description** | **Taxa** | **Workflow type** | **Command-line Compatible**[^1] | **Last known changes** | **Dockstore** |
+| **Name** | **Description** | **Applicable Kingdom** | **Workflow Level** | **Command-line Compatibility**[^1] | **Last Known Changes** | **Dockstore** |
 |---|---|---|---|---|---|---|
 | [**Concatenate_Column_Content**](../workflows/data_export/concatenate_column_content.md) | Concatenate contents of a specified Terra data table column for many samples ("entities") | Any taxa | Set-level | Yes | v2.1.0 | [Concatenate_Column_Content_PHB](https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Concatenate_Column_Content_PHB:main?tab=info) |
 | [**Transfer_Column_Content**](../workflows/data_export/transfer_column_content.md)| Transfer contents of a specified Terra data table column for many samples ("entities") to a GCP storage bucket location | Any taxa | Set-level | Yes | v1.3.0 | [Transfer_Column_Content_PHB](https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Transfer_Column_Content_PHB:main?tab=info) |
@@ -68,7 +68,7 @@ title: Workflows by Type
 
 ### Standalone
 
-| **Name** | **Description** | **Taxa** | **Workflow type** | **Command-line Compatible**[^1] | **Last known changes** | **Dockstore** |
+| **Name** | **Description** | **Applicable Kingdom** | **Workflow Level** | **Command-line Compatibility**[^1] | **Last Known Changes** | **Dockstore** |
 |---|---|---|---|---|---|---|
 | [**Cauris_CladeTyper**](../workflows/standalone/cauris_cladetyper.md)| C. auris clade assignment | Mycotics | Sample-level | Yes | v1.0.0 | [Cauris_CladeTyper_PHB](https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Cauris_CladeTyper_PHB:main?tab=info) |
 | [**GAMBIT_Query**](../workflows/standalone/gambit_query.md)| Taxon identification of genome assembly using GAMBIT | Bacteria, Mycotics | Sample-level | Yes | v2.0.0 | [Gambit_Query_PHB](https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Gambit_Query_PHB:main?tab=info) |

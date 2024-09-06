@@ -2,7 +2,7 @@
 
 ## Quick Facts
 
-| **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line compatibility** | **Workflow type** |
+| **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
 |---|---|---|---|---|
 | [Public Data Sharing](../../workflows_overview/workflows-type.md/#public-data-sharing) | [Bacteria](../../workflows_overview/workflows-kingdom.md#bacteria), [Mycotics](../../workflows_overview/workflows-kingdom.md#mycotics) [Viral](../../workflows_overview/workflows-kingdom.md/#viral) | PHB v2.1.0 | No | Set-level |
 
@@ -103,7 +103,7 @@ This workflow runs on set-level data tables.
 !!! info "Production Submissions"
     Please note that an optional Boolean variable, `submit_to_production`, is **required** for a production submission.
 
-| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default attribute** | **Status** |
+| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
 | --- | --- | --- | --- | --- | --- |
 | Terra_2_NCBI | **bioproject** | String | BioProject accession that the samples will be submitted to  |  | Required |
 | Terra_2_NCBI | **biosample_package** | String | The BioSample package that the samples will be submitted under |  | Required |

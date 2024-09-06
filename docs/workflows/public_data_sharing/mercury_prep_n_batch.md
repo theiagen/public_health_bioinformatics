@@ -2,7 +2,7 @@
 
 ## Quick Facts
 
-| **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line compatibility** | **Workflow type** |
+| **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
 |---|---|---|---|---|
 | [Public Data Sharing](../../workflows_overview/workflows-type.md/#public-data-sharing) | [Viral](../../workflows_overview/workflows-kingdom.md/#viral) | PHB v2.2.0 | Yes | Set-level |
 
@@ -62,7 +62,7 @@ To help users collect all required metadata, we have created the following Excel
 
 This workflow runs on the set-level.
 
-| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Attribute** | **Status** |
+| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** | |
 |---|---|---|---|---|---|
 | mercury_prep_n_batch | **gcp_bucket_uri** | String | Google bucket where your SRA reads will be temporarily stored before transferring to SRA. Example: "gs://theiagen_sra_transfer" |  | Required |
 | mercury_prep_n_batch | **sample_names** | Array[String] | The samples you want to submit |  | Required |

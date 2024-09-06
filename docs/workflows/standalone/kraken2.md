@@ -2,7 +2,7 @@
 
 ## Quick Facts
 
-| **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line compatibility** | **Workflow type** |
+| **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
 |---|---|---|---|---|
 | [Standalone](../../workflows_overview/workflows-type.md/#standalone) | [Any Taxa](../../workflows_overview/workflows-kingdom.md/#any-taxa) | PHB v2.0.0 | Yes | Sample-level |
 
@@ -42,7 +42,7 @@ Besides the data input types, there are minimal differences between these two wo
 
 ### Inputs
 
-| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Attribute** | **Terra Status** | **Workflow** |
+| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** | **Workflow** |
 |---|---|---|---|---|---|---|
 | *workflow_name | **kraken2_db** | File | A Kraken2 database in .tar.gz format |  | Required | ONT, PE, SE |
 | *workflow_name | **read1** | File |  |  | Required | ONT, PE, SE |
@@ -141,10 +141,9 @@ Krona will only output hierarchical results for bacterial organisms in its curre
     
     ![Example Krona Report](../../assets/misc_files/example_krona_report.png)
 
-## References
-
-|  | Links |
-| --- | --- |
-| Software source code | [Kraken2 on GitHub](https://github.com/DerrickWood/kraken2/)  |
-| Software documentation | <https://github.com/DerrickWood/kraken2/blob/master/docs/MANUAL.markdown> |
-| Original publication | [Improved metagenomic analysis with Kraken 2](https://link.springer.com/article/10.1186/s13059-019-1891-0) |
+!!! techdetails "Kraken2 Technical Details"
+    |  | Links |
+    | --- | --- |
+    | Software Source Code | [Kraken2 on GitHub](https://github.com/DerrickWood/kraken2/)  |
+    | Software Documentation | <https://github.com/DerrickWood/kraken2/blob/master/docs/MANUAL.markdown> |
+    | Original Publication(s) | [Improved metagenomic analysis with Kraken 2](https://link.springer.com/article/10.1186/s13059-019-1891-0) |

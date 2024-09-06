@@ -151,6 +151,7 @@ nav:
             - Usher_PHB: workflows/phylogenetic_placement/usher.md
             - VADR_Update: workflows/genomic_characterization/vadr_update.md
             - Zip_Column_Content: workflows/data_export/zip_column_content.md
+     - Contributing to the Documentation: contribution_guide.md
 
 theme: 
   name: material
@@ -202,6 +203,7 @@ markdown_extensions:
   - pymdownx.inlinehilite
   - pymdownx.keys
   - pymdownx.mark
+  - pymdownx.caret
   - pymdownx.snippets
   - pymdownx.superfences
   - pymdownx.tasklist:
