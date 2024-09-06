@@ -7,22 +7,21 @@ import "../../tasks/utilities/data_import/task_ncbi_datasets.wdl" as ncbi_datase
 import "../../workflows/phylogenetics/wf_snippy_tree.wdl" as snippy_tree_workflow
 import "../../workflows/standalone_modules/wf_snippy_variants.wdl" as snippy_variants_workflow
 
-workflow snippy_streamline {
+workflow snippy_streamline_fasta {
   input {
-    Array[File] read1
-    Array[File] read2
-    Array[File]? assembly_fasta
+    Array[File] assembly_fasta
     Array[String] samplenames
     String tree_name
     # this input file can be a FASTA or GBK
     File? reference_genome_file
   }
+  # hide option from input table
   String tree_name_updated = sub(tree_name, " ", "_")
   # if user does not provide reference genome fasta, determine one for the user by running centroid, referenceseeker, and ncbi datasets to acquire one
   if (! defined(reference_genome_file)) {
     call centroid_task.centroid {
       input:
-        assembly_fasta = select_first([assembly_fasta])
+        assembly_fasta = assembly_fasta
     }
     call referenceseeker_task.referenceseeker {
       input:
@@ -36,15 +35,14 @@ workflow snippy_streamline {
   }
   # see https://github.com/openwdl/wdl/issues/279 for syntax explanation
   # see also https://github.com/openwdl/wdl/blob/main/versions/1.1/SPEC.md#arraypairxy-ziparrayx-arrayy for zip explanation
-  scatter (triplet in zip(zip(read1, read2), samplenames)) {
-    call snippy_variants_workflow.snippy_variants_wf {
-      input:
-        read1 = triplet.left.left, # access the left-most object (read 1)
-        read2 = triplet.left.right, # access the right-side object on the left (read 2)
-        reference_genome_file = select_first([reference_genome_file, ncbi_datasets_download_genome_accession.ncbi_datasets_assembly_fasta]),
-        samplename = triplet.right # access the right-most object (samplename)
+   scatter (duplet in zip(assembly_fasta, samplenames)) {
+      call snippy_variants_workflow.snippy_variants_wf {
+        input:
+            assembly_fasta = duplet.left,
+            reference_genome_file = select_first([reference_genome_file, ncbi_datasets_download_genome_accession.ncbi_datasets_assembly_fasta]),
+            samplename = duplet.right
+        }
     }
-  }
   call snippy_tree_workflow.snippy_tree_wf {
     input:
       tree_name = tree_name_updated,

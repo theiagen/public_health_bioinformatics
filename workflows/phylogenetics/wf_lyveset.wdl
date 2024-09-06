@@ -9,9 +9,9 @@ workflow lyveset_workflow {
     Array[File] read2
     Array[String] samplename
     String dataset_name
-    String dataset_name_updated = sub(dataset_name, " ", "_")
     File reference_genome
   }
+  String dataset_name_updated = sub(dataset_name, " ", "_")
   call lyveset.lyveset {
     input:
       read1 = read1,

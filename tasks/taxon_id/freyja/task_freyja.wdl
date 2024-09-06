@@ -8,14 +8,15 @@ task freyja_one_sample {
     File? freyja_usher_barcodes
     File? freyja_lineage_metadata
     Float? eps
+    Float? adapt
     Boolean update_db = false
     Boolean confirmed_only = false
     Boolean bootstrap = false
     Int? number_bootstraps
     Int? depth_cutoff
-    Int memory = 4
+    Int memory = 8
     Int cpu = 2
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/freyja:1.4.8"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/freyja:1.5.1-07_02_2024-01-27-2024-07-22"
     Int disk_size = 100
   }
   command <<<
@@ -44,7 +45,7 @@ task freyja_one_sample {
   else
     # configure barcode    
     if [[ ! -z "~{freyja_usher_barcodes}" ]]; then
-      echo "User freyja usher barcodes identified; ~{freyja_usher_barcodes} will be utilized fre freyja demixing"
+      echo "User freyja usher barcodes identified; ~{freyja_usher_barcodes} will be utilized for freyja demixing"
       freyja_usher_barcode_version=$(basename -- "~{freyja_usher_barcodes}")
     else
       freyja_usher_barcode_version="unmodified from freyja container: ~{docker}"  
@@ -93,6 +94,7 @@ task freyja_one_sample {
     ~{'--barcodes ' + freyja_usher_barcodes} \
     ~{'--depthcutoff ' + depth_cutoff} \
     ~{true='--confirmedonly' false='' confirmed_only} \
+    ~{'--adapt ' + adapt} \
     ~{samplename}_freyja_variants.tsv \
     ~{samplename}_freyja_depths.tsv \
     --output ~{samplename}_freyja_demixed.tmp
@@ -101,8 +103,12 @@ task freyja_one_sample {
   echo -e "\t/~{samplename}" > ~{samplename}_freyja_demixed.tsv
   tail -n+2 ~{samplename}_freyja_demixed.tmp >> ~{samplename}_freyja_demixed.tsv
 
-  if [ -f /opt/conda/envs/freyja-env/lib/python3.10/site-packages/freyja/data/usher_barcodes.csv ]; then
-    mv /opt/conda/envs/freyja-env/lib/python3.10/site-packages/freyja/data/usher_barcodes.csv usher_barcodes.csv
+  if [ -f /opt/conda/envs/freyja-env/lib/python3.12/site-packages/freyja/data/usher_barcodes.feather ]; then
+    mv /opt/conda/envs/freyja-env/lib/python3.12/site-packages/freyja/data/usher_barcodes.feather usher_barcodes.feather
+  fi
+
+  if [ -f /opt/conda/envs/freyja-env/lib/python3.12/site-packages/freyja/data/curated_lineages.json ]; then
+    mv /opt/conda/envs/freyja-env/lib/python3.12/site-packages/freyja/data/curated_lineages.json curated_lineages.json
   fi
   
   #Output QC values to the Terra data table
@@ -138,7 +144,8 @@ task freyja_one_sample {
     File? freyja_bootstrap_summary = "~{samplename}_summarized.csv"
     File? freyja_bootstrap_summary_pdf = "~{samplename}_summarized.pdf"
     # capture barcode file - first is user supplied, second appears if the user did not supply a barcode file
-    File freyja_barcode_file = select_first([freyja_usher_barcodes, "usher_barcodes.csv"])
+    File freyja_usher_barcode_file = select_first([freyja_usher_barcodes, "usher_barcodes.feather"])
+    File freyja_lineage_metadata_file = select_first([freyja_lineage_metadata, "curated_lineages.json"])
     String freyja_barcode_version = read_string("FREYJA_BARCODES")
     String freyja_metadata_version = read_string("FREYJA_METADATA")
     String freyja_version = read_string("FREYJA_VERSION")

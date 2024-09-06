@@ -5,6 +5,7 @@ import "../../tasks/quality_control/basic_statistics/task_fastqc.wdl" as fastqc_
 import "../../tasks/quality_control/read_filtering/task_bbduk.wdl" as bbduk_task
 import "../../tasks/quality_control/read_filtering/task_fastp.wdl" as fastp_task
 import "../../tasks/quality_control/read_filtering/task_trimmomatic.wdl" as trimmomatic
+import "../../tasks/quality_control/read_filtering/task_ncbi_scrub.wdl" as ncbi_scrub
 import "../../tasks/taxon_id/contamination/task_kraken2.wdl" as kraken
 import "../../tasks/taxon_id/contamination/task_midas.wdl" as midas_task
 
@@ -35,11 +36,20 @@ workflow read_QC_trim_se {
     String read_qc = "fastq_scan" # options: fastq_scan, fastqc
     String fastp_args = "-g -5 20 -3 20"
   }
+
+  if (("~{workflow_series}" == "theiacov") || ("~{workflow_series}" == "theiameta")) {
+    call ncbi_scrub.ncbi_scrub_se {
+      input:
+        samplename = samplename,
+        read1 = read1
+    }
+  }
+
   if (read_processing == "trimmomatic") {
     call trimmomatic.trimmomatic_se {
       input:
         samplename = samplename,
-        read1 = read1,
+        read1 = select_first([ncbi_scrub_se.read1_dehosted, read1]),
         trimmomatic_min_length = trim_min_length,
         trimmomatic_quality_trim_score = trim_quality_min_score,
         trimmomatic_window_size = trim_window_size,
@@ -50,7 +60,7 @@ workflow read_QC_trim_se {
     call fastp_task.fastp_se {
       input:
         samplename = samplename,
-        read1 = read1,
+        read1 = select_first([ncbi_scrub_se.read1_dehosted, read1]),
         fastp_window_size = trim_window_size,
         fastp_quality_trim_score = trim_quality_min_score,
         fastp_min_length = trim_min_length,
@@ -86,10 +96,16 @@ workflow read_QC_trim_se {
     }
   }
   if ("~{workflow_series}" == "theiacov") {
-    call kraken.kraken2_theiacov as kraken2_raw {
+    call kraken.kraken2_theiacov as kraken2_theiacov_raw {
       input:
         samplename = samplename,
-        read1 = bbduk_se.read1_clean,
+        read1 = read1,
+        target_organism = target_organism
+    }
+    call kraken.kraken2_theiacov as kraken2_theiacov_dehosted {
+      input:
+        samplename = samplename,
+        read1 = select_first([ncbi_scrub_se.read1_dehosted]),
         target_organism = target_organism
     }
   }
@@ -119,6 +135,11 @@ workflow read_QC_trim_se {
     }
   }
   output {
+    # NCBI scrubber
+    File? read1_dehosted = ncbi_scrub_se.read1_dehosted
+    Int? ncbi_scrub_human_spots_removed = ncbi_scrub_se.human_spots_removed
+    String? ncbi_scrub_docker = ncbi_scrub_se.ncbi_scrub_docker
+
     # bbduk
     File read1_clean = bbduk_se.read1_clean
     String bbduk_docker = bbduk_se.bbduk_docker
@@ -137,15 +158,19 @@ workflow read_QC_trim_se {
     File? fastqc_raw1_html = fastqc_raw.read1_fastqc_html
     File? fastqc_clean1_html = fastqc_clean.read1_fastqc_html
     
-    # kraken2
-    String kraken_version = select_first([kraken2_raw.version, kraken2_standalone.kraken2_version, ""])
-    String kraken_docker = select_first([kraken2_raw.docker, kraken2_standalone.kraken2_docker, ""])
-    Float? kraken_human = kraken2_raw.percent_human
-    Float? kraken_sc2 = kraken2_raw.percent_sc2
-    String? kraken_target_organism = kraken2_raw.percent_target_organism
-    String kraken_report = select_first([kraken2_raw.kraken_report, kraken2_standalone.kraken2_report, ""])
+    # kraken2 - raw and dehosted
+    String kraken_version = select_first([kraken2_theiacov_raw.version, kraken2_standalone.kraken2_version, ""])
+    Float? kraken_human = kraken2_theiacov_raw.percent_human
+    Float? kraken_sc2 = kraken2_theiacov_raw.percent_sc2
+    String? kraken_target_organism = kraken2_theiacov_raw.percent_target_organism
+    String kraken_report = select_first([kraken2_theiacov_raw.kraken_report, kraken2_standalone.kraken2_report, ""])
+    Float? kraken_human_dehosted = kraken2_theiacov_dehosted.percent_human
+    Float? kraken_sc2_dehosted = kraken2_theiacov_dehosted.percent_sc2
+    String? kraken_target_organism_dehosted = kraken2_theiacov_dehosted.percent_target_organism
     String? kraken_target_organism_name = target_organism
-    String kraken_database = select_first([kraken2_raw.database, kraken2_standalone.kraken2_database, kraken_db_warning, ""])
+    File? kraken_report_dehosted = kraken2_theiacov_dehosted.kraken_report
+    String kraken_docker = select_first([kraken2_theiacov_raw.docker, kraken2_standalone.kraken2_docker, ""])
+    String kraken_database = select_first([kraken2_theiacov_raw.database, kraken2_standalone.kraken2_database, kraken_db_warning, ""])
    
     # trimming versioning
     String? trimmomatic_version = trimmomatic_se.version

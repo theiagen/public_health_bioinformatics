@@ -7,9 +7,9 @@ task sonneityping {
     File? read2
     Boolean ont_data = false
     String samplename
+    String? mykrobe_opts
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/mykrobe:0.12.1"
     Int disk_size = 100
-    String? myrkobe_opts
     Int cpu = 4
     Int memory = 8
   }
@@ -28,7 +28,7 @@ task sonneityping {
     --out ~{samplename}.mykrobe \
     ~{true='--ont' false='' ont_data} \
     --seq ~{read1} ~{read2} \
-    ~{myrkobe_opts}
+    ~{mykrobe_opts}
 
     # use sonneityping script to produce final TSV; alleles.txt is required input for human-readable genotype names
     python /sonneityping/parse_mykrobe_predict.py \

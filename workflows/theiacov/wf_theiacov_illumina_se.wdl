@@ -232,12 +232,16 @@ workflow theiacov_illumina_se {
     File? read1_clean = read_QC_trim.read1_clean
     String? bbduk_docker = read_QC_trim.bbduk_docker
     # Read QC - kraken outputs
+    String? kraken_version = read_QC_trim.kraken_version
     Float? kraken_human = read_QC_trim.kraken_human
     Float? kraken_sc2 = read_QC_trim.kraken_sc2
     String? kraken_target_organism = read_QC_trim.kraken_target_organism
     String? kraken_target_organism_name = read_QC_trim.kraken_target_organism_name
-    String? kraken_version = read_QC_trim.kraken_version
     File? kraken_report = read_QC_trim.kraken_report
+    Float? kraken_human_dehosted = read_QC_trim.kraken_human_dehosted
+    Float? kraken_sc2_dehosted = read_QC_trim.kraken_sc2_dehosted
+    String? kraken_target_organism_dehosted = read_QC_trim.kraken_target_organism_dehosted
+    File? kraken_report_dehosted = read_QC_trim.kraken_report_dehosted
     # Read Alignment - bwa outputs
     String? bwa_version = ivar_consensus.bwa_version
     String? samtools_version = ivar_consensus.samtools_version
@@ -303,6 +307,10 @@ workflow theiacov_illumina_se {
     String? nextclade_qc = nextclade_output_parser.nextclade_qc
     # VADR Annotation QC
     File? vadr_alerts_list = vadr.alerts_list
+    File? vadr_feature_tbl_pass = vadr.feature_tbl_pass
+    File? vadr_feature_tbl_fail = vadr.feature_tbl_fail
+    File? vadr_classification_summary_file = vadr.classification_summary_file
+    File? vadr_all_outputs_tar_gz = vadr.outputs_tgz
     String? vadr_num_alerts = vadr.num_alerts
     String? vadr_docker = vadr.vadr_docker
     File? vadr_fastas_zip_archive = vadr.vadr_fastas_zip_archive

@@ -12,7 +12,7 @@ task amrfinderplus_nuc {
     Float? mincov
     Boolean detailed_drug_class = false
     Int cpu = 2
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/ncbi-amrfinderplus:3.12.8-2024-05-02.2"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/ncbi-amrfinderplus:3.12.8-2024-07-22.1"
     Int disk_size = 50
     Int memory = 8
     Boolean hide_point_mutations = false
@@ -29,7 +29,7 @@ task amrfinderplus_nuc {
     ## create associative array
     declare -A organisms=( ["Acinetobacter baumannii"]="Acinetobacter_baumannii" ["Burkholderia cepacia"]="Burkholderia_cepacia" \
       ["Burkholderia pseudomallei"]="Burkholderia_pseudomallei" ["Campylobacter coli"]="Campylobacter" ["Campylobacter jejuni"]="Campylobacter" \
-      ["Citrobacter freundii"]="Citrobacter_freundii" ["Clostridioides _difficile"]="Clostridioides_difficile" ["Enterobacter cloacae"]="Enterobacter_cloacae" \
+      ["Citrobacter freundii"]="Citrobacter_freundii" ["Clostridioides difficile"]="Clostridioides_difficile" ["Enterobacter asburiae"]="Enterobacter_asburiae" ["Enterobacter cloacae"]="Enterobacter_cloacae" \
       ["Enterococcus faecalis"]="Enterococcus_faecalis" ["Enterococcus hirae"]="Enterococcus_faecium" ["Enterococcusfaecium"]="Enterococcus_faecium" \
       [*"Escherichia"*]="Escherichia" [*"Shigella"*]="Escherichia" ["Klebsiella aerogenes"]="Klebsiella_pneumoniae" ["Klebsiella pneumoniae"]="Klebsiella_pneumoniae" \
       ["Klebsiella variicola"]="Klebsiella_pneumoniae" ["Klebsiella oxytoca"]="Klebsiella_oxytoca" ["Neisseria gonorrhea"]="Neisseria_gonorrhoeae" \
@@ -37,7 +37,7 @@ task amrfinderplus_nuc {
       [*"Salmonella"*]="Salmonella" ["Serratia marcescens"]="Serratia_marcescens" ["Staphylococcus aureus"]="Staphylococcus_aureus" \
       ["Staphylococcus pseudintermedius"]="Staphylococcus_pseudintermedius" ["Streptococcus agalactiae"]="Streptococcus_agalactiae" \
       ["Streptococcus pneumoniae"]="Streptococcus_pneumoniae" ["Streptococcus mitis"]="Streptococcus_pneumoniae" \
-      ["Streptococcus pyogenes"]="Streptococcus_pyogenes" ["Vibrio cholerae"]="Vibrio_cholerae"
+      ["Streptococcus pyogenes"]="Streptococcus_pyogenes" ["Vibrio cholerae"]="Vibrio_cholerae" ["Vibrio parahaemolyticus"]="Vibrio_parahaemolyticus" ["Vibrio vulnificus"]="Vibrio_vulnificus"
       )
 
     for key in "${!organisms[@]}"; do
@@ -49,7 +49,7 @@ task amrfinderplus_nuc {
     done
 
     # checking bash variable
-    echo "amrfinder_organism is set to: " ${amrfinder_organism}
+    echo "amrfinder_organism is set to: ${amrfinder_organism}"
     
     # if amrfinder_organism variable is set, use --organism flag, otherwise do not use --organism flag
     if [[ -v amrfinder_organism ]] ; then

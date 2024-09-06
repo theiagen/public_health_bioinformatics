@@ -17,7 +17,6 @@ workflow snippy_tree_wf {
   }
   input {
     String tree_name
-    String tree_name_updated = sub(tree_name, " ", "_")
     Array[File] snippy_variants_outdir_tarball
     Array[String] samplenames
     File reference_genome_file
@@ -60,6 +59,7 @@ workflow snippy_tree_wf {
 
     Boolean midpoint_root_tree = true # by default midpoint root the tree
   }
+  String tree_name_updated = sub(tree_name, " ", "_")
   # snippy core creates a whole-genome multiple sequence alignment (MSA) from each alignment provided by snipy_variants
   # snippy_core does NOT create a core genome alignment- the name is misleading!
   call snippy_core_task.snippy_core {

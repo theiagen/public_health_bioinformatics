@@ -273,3 +273,13 @@ workflows:
    primaryDescriptorPath: /workflows/standalone_modules/wf_gambitcore.wdl
    testParameterFiles:
     - /tests/inputs/empty.json
+ - name: Create_Terra_Table_PHB
+   subclass: WDL
+   primaryDescriptorPath: /workflows/utilities/data_import/wf_create_terra_table.wdl
+   testParameterFiles:
+    - /tests/inputs/empty.json
+ - name: Snippy_Streamline_FASTA_PHB
+   subclass: WDL
+   primaryDescriptorPath: /workflows/phylogenetics/wf_snippy_streamline_fasta.wdl
+   testParameterFiles:
+    - /tests/inputs/empty.json

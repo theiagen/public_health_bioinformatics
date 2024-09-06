@@ -8,6 +8,7 @@ import "../../tasks/phylogenetic_inference/augur/task_augur_refine.wdl" as refin
 import "../../tasks/phylogenetic_inference/augur/task_augur_traits.wdl" as traits_task
 import "../../tasks/phylogenetic_inference/augur/task_augur_translate.wdl" as translate_task
 import "../../tasks/phylogenetic_inference/augur/task_augur_tree.wdl" as tree_task
+import "../../tasks/phylogenetic_inference/augur/task_augur_mutation_context.wdl" as mutation_context_task
 
 import "../../tasks/phylogenetic_inference/utilities/task_reorder_matrix.wdl" as reorder_matrix_task
 import "../../tasks/phylogenetic_inference/utilities/task_snp_dists.wdl" as snp_dists_task
@@ -130,6 +131,14 @@ workflow augur {
         reference_genbank = select_first([reference_genbank, sc2_defaults.reference_genbank, organism_parameters.reference_gbk]),
         build_name = build_name_updated
     }
+    if (organism_parameters.standardized_organism == "MPXV") {
+      call mutation_context_task.mutation_context { # add mutation context to the tree
+        input:
+          refined_tree = augur_refine.refined_tree,
+          ancestral_nt_muts_json = augur_ancestral.ancestral_nt_muts_json,
+          build_name = build_name_updated
+      }
+    }
     if (flu_segment == "HA") { # we only have clade information for HA segments (but SC2 defaults will be selected first)
       if (run_traits && defined(tsv_join.out_tsv)) { # by default do not run traits and clades will be assigned based on the clades_tsv
         call traits_task.augur_traits {
@@ -162,7 +171,8 @@ workflow augur {
                             augur_ancestral.ancestral_nt_muts_json,
                             augur_translate.translated_aa_muts_json,
                             augur_clades.clade_assignments_json,
-                            augur_traits.traits_assignments_json]),
+                            augur_traits.traits_assignments_json,
+                            mutation_context.mutation_context_json]),
         build_name = build_name_updated,
         lat_longs_tsv = select_first([lat_longs_tsv, sc2_defaults.lat_longs_tsv, organism_parameters.augur_lat_longs_tsv]),
         auspice_config = select_first([auspice_config, sc2_defaults.auspice_config, organism_parameters.augur_auspice_config])
