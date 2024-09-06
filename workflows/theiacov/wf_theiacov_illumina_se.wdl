@@ -192,7 +192,7 @@ workflow theiacov_illumina_se {
             expected_taxon = organism_parameters.standardized_organism,
             num_reads_raw1 = read_QC_trim.fastq_scan_raw1,
             num_reads_clean1 = read_QC_trim.fastq_scan_clean1,
-            kraken_human = read_QC_trim.kraken_human,
+            kraken_human = read_QC_trim.kraken2_human,
             meanbaseq_trim = ivar_consensus.meanbaseq_trim,
             assembly_mean_coverage = ivar_consensus.assembly_mean_coverage,
             number_N = consensus_qc.number_N,
@@ -236,13 +236,13 @@ workflow theiacov_illumina_se {
     # Read QC - bbduk outputs
     File? read1_clean = read_QC_trim.read1_clean
     String? bbduk_docker = read_QC_trim.bbduk_docker
-    # Read QC - kraken outputs
-    Float? kraken_human = read_QC_trim.kraken_human
-    Float? kraken_sc2 = read_QC_trim.kraken_sc2
-    String? kraken_target_organism = read_QC_trim.kraken_target_organism
-    String? kraken_target_organism_name = read_QC_trim.kraken_target_organism_name
-    String? kraken_version = read_QC_trim.kraken_version
-    File? kraken_report = read_QC_trim.kraken_report
+    # Read QC - kraken2 outputs
+    Float? kraken2_human = read_QC_trim.kraken2_human
+    Float? kraken2_sc2 = read_QC_trim.kraken2_sc2
+    String? kraken2_target_organism = read_QC_trim.kraken2_target_organism
+    String? kraken2_target_organism_name = read_QC_trim.kraken2_target_organism_name
+    String? kraken2_version = read_QC_trim.kraken2_version
+    File? kraken2_report = read_QC_trim.kraken2_report
     # Read Alignment - bwa outputs
     String? bwa_version = ivar_consensus.bwa_version
     String? samtools_version = ivar_consensus.samtools_version

@@ -129,18 +129,18 @@ workflow read_QC_trim_ont {
     File? read1_dehosted = ncbi_scrub_se.read1_dehosted
     
     # kraken2 - theiacov and theiapro
-    String kraken_version = select_first([kraken2_theiacov_raw.kraken2_version, kraken2_theiaprok.kraken2_version, ""])
-    String kraken_docker = select_first([kraken2_theiacov_raw.kraken2_docker, kraken2_theiaprok.kraken2_docker, ""])
-    Float? kraken_human = kraken2_recalculate_abundances_raw.percent_human
-    Float? kraken_sc2 = kraken2_recalculate_abundances_raw.percent_sc2
-    String? kraken_target_organism = kraken2_recalculate_abundances_raw.percent_target_organism
-    String? kraken_target_organism_name = kraken2_theiacov_raw.kraken2_target_organism
-    String kraken_report = select_first([kraken2_recalculate_abundances_raw.kraken_report, kraken2_recalculate_abundances.kraken_report, ""])
-    Float? kraken_human_dehosted = kraken2_recalculate_abundances_dehosted.percent_human
-    Float? kraken_sc2_dehosted = kraken2_recalculate_abundances_dehosted.percent_sc2
-    String? kraken_target_organism_dehosted = kraken2_recalculate_abundances_dehosted.percent_target_organism
-    File? kraken_report_dehosted = kraken2_recalculate_abundances_dehosted.kraken_report
-    String kraken_database = select_first([kraken2_theiacov_raw.kraken2_database, kraken2_theiaprok.kraken2_database, kraken_db_warning, ""])
+    String kraken2_version = select_first([kraken2_theiacov_raw.kraken2_version, kraken2_theiaprok.kraken2_version, ""])
+    String kraken2_docker = select_first([kraken2_theiacov_raw.kraken2_docker, kraken2_theiaprok.kraken2_docker, ""])
+    Float? kraken2_human = kraken2_recalculate_abundances_raw.percent_human
+    Float? kraken2_sc2 = kraken2_recalculate_abundances_raw.percent_sc2
+    String? kraken2_target_organism = kraken2_recalculate_abundances_raw.percent_target_organism
+    String? kraken2_target_organism_name = kraken2_theiacov_raw.kraken2_target_organism
+    String kraken2_report = select_first([kraken2_recalculate_abundances_raw.kraken_report, kraken2_recalculate_abundances.kraken_report, ""])
+    Float? kraken2_human_dehosted = kraken2_recalculate_abundances_dehosted.percent_human
+    Float? kraken2_sc2_dehosted = kraken2_recalculate_abundances_dehosted.percent_sc2
+    String? kraken2_target_organism_dehosted = kraken2_recalculate_abundances_dehosted.percent_target_organism
+    File? kraken2_report_dehosted = kraken2_recalculate_abundances_dehosted.kraken_report
+    String kraken2_database = select_first([kraken2_theiacov_raw.kraken2_database, kraken2_theiaprok.kraken2_database, kraken_db_warning, ""])
    
     # estimated genome length -- by default for TheiaProk this is 5Mb
     Int est_genome_length = genome_length

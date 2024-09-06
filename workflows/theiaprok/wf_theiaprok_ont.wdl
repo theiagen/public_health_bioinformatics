@@ -581,10 +581,10 @@ workflow theiaprok_ont {
     String? nanoplot_version = nanoplot_raw.nanoplot_version
     String? nanoplot_docker = nanoplot_raw.nanoplot_docker
     # Read QC - kraken outputs
-    String? kraken2_version = read_qc_trim.kraken_version
-    String? kraken2_report = read_qc_trim.kraken_report
-    String? kraken2_database = read_qc_trim.kraken_database
-    String? kraken_docker = read_qc_trim.kraken_docker
+    String? kraken2_version = read_qc_trim.kraken2_version
+    String? kraken2_report = read_qc_trim.kraken2_report
+    String? kraken2_database = read_qc_trim.kraken2_database
+    String? kraken_docker = read_qc_trim.kraken2_docker
     # Read QC - rasusa outputs
     String? rasusa_version = read_qc_trim.rasusa_version
     # Read QC - tiptoft outputs
