@@ -158,6 +158,7 @@ theme:
   name: material
   logo: assets/Theiagen-Logo-White.png
   favicon: assets/Theiagen-Symbol-Standard-01.png
+  custom_dir: docs/overrides
   features:
     - content.code.annotate
     - content.code.copy
