@@ -106,6 +106,10 @@ workflow ivar_consensus {
     String meanmapq_trim = select_first([stats_n_coverage_primtrim.meanmapq, stats_n_coverage.meanmapq,""])
     String assembly_mean_coverage = select_first([stats_n_coverage_primtrim.depth, stats_n_coverage.depth,""])
     String samtools_version_stats = stats_n_coverage.samtools_version
+
+    # Assembly metrics
+    Float percentage_mapped_reads = select_first([stats_n_coverage_primtrim.percentage_mapped_reads, stats_n_coverage.percentage_mapped_reads, 0.0])
+
   
   }
 }

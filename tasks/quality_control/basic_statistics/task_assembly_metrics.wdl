@@ -14,11 +14,11 @@ task stats_n_coverage {
     samtools --version | head -n1 | tee VERSION
 
     samtools stats ~{bamfile} > ~{samplename}.stats.txt
-
     samtools coverage ~{bamfile} -m -o ~{samplename}.cov.hist
     samtools coverage ~{bamfile} -o ~{samplename}.cov.txt
     samtools flagstat ~{bamfile} > ~{samplename}.flagstat.txt
 
+     # Extracting coverage, depth, meanbaseq, and meanmapq
     coverage=$(cut -f 6 ~{samplename}.cov.txt | tail -n 1)
     depth=$(cut -f 7 ~{samplename}.cov.txt | tail -n 1)
     meanbaseq=$(cut -f 8 ~{samplename}.cov.txt | tail -n 1)
@@ -33,6 +33,18 @@ task stats_n_coverage {
     echo $depth | tee DEPTH
     echo $meanbaseq | tee MEANBASEQ
     echo $meanmapq | tee MEANMAPQ
+
+    # Parsing flagstat for total and mapped reads
+    total_reads=$(grep "in total" ~{samplename}.flagstat.txt | cut -d " " -f 1)
+    mapped_reads=$(grep "mapped (" ~{samplename}.flagstat.txt | cut -d " " -f 1)
+
+    if [ -z "$total_reads" ] ; then total_reads="1" ; fi  # avoid division by zero
+    if [ -z "$mapped_reads" ] ; then mapped_reads="0" ; fi
+
+    # Calculate percentage of mapped reads
+    percentage_mapped_reads=$(echo "scale=2; ($mapped_reads / $total_reads) * 100" | bc)
+
+    echo $percentage_mapped_reads | tee PERCENTAGE_MAPPED_READS
   >>>
   output {
     String date = read_string("DATE")
@@ -45,6 +57,7 @@ task stats_n_coverage {
     Float depth = read_string("DEPTH")
     Float meanbaseq = read_string("MEANBASEQ")
     Float meanmapq = read_string("MEANMAPQ")
+    Float percentage_mapped_reads = read_string("PERCENTAGE_MAPPED_READS")
   }
   runtime {
     docker: docker
