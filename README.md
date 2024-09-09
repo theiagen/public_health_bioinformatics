@@ -4,7 +4,7 @@ The Public Health Bioinformatics Bioinformatics repository contains workflows fo
 
 ## Introduction
 
-**More information about the steps undertaken in these workflows is available via the [Theiagen Public Resources Documentation](https://theiagen.notion.site/Theiagen-Public-Health-Resources-a4bd134b0c5c4fe39870e21029a30566).**
+**More information about the steps undertaken in these workflows is available via the [Theiagen Public Resources Documentation](https://theiagen.github.io/public_health_bioinformatics/latest/).**
 
 Support for running these workflows can be sought by raising a [GitHub issue](https://github.com/theiagen/public_health_bioinformatics/issues/new) or by contacting Theiagen at support@theiagen.com.
 
@@ -22,7 +22,7 @@ Briefly, the main _genomic characterization_  workflows are split by pathogen ty
 2. **Bacterial** (***TheiaProk*** workflows)
 3. **Fungal** (*[**TheiaEuk**](../workflows/genomic_characterization/theiaeuk.md)* workflows)
 
-Many more workflows are available, and are documented in detail in the [Theiagen Public Resources Documentation](https://theiagen.notion.site/Theiagen-Public-Health-Resources-a4bd134b0c5c4fe39870e21029a30566).
+Many more workflows are available, and are documented in detail in the [Theiagen Public Resources Documentation](https://theiagen.github.io/public_health_bioinformatics/latest/).
 
 ## On the Shoulder of Giants
 
