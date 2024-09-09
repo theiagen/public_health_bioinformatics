@@ -237,6 +237,8 @@ extra:
       link: https://www.linkedin.com/company/theiagen
   version:
     provider: mike
+    default: latest
+    alias: true
   homepage: https://www.theiagen.com
 
 copyright: |
