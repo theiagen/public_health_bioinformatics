@@ -1,0 +1,6469 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A collection of bioinformatics workflows for genomic characterization, submission preparation, and genomic epidemiology of pathogens of public health concern.">
+      
+      
+        <meta name="author" content="Theiagen Genomics">
+      
+      
+        <link rel="canonical" href="https://theiagen.github.io/public_health_bioinformatics/main/workflows/genomic_characterization/theiaeuk/">
+      
+      
+        <link rel="prev" href="../theiacov/">
+      
+      
+        <link rel="next" href="../theiameta/">
+      
+      
+      <link rel="icon" href="../../../assets/Theiagen-Symbol-Standard-01.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.34">
+    
+    
+      
+        <title>TheiaEuk - Public Health Bioinformatics</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.35f28582.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+   <link href="../../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+    html.glightbox-open { overflow: initial; height: 100%; }
+    .gslide-title { margin-top: 0px; user-select: text; }
+    .gslide-desc { color: #666; user-select: text; }
+    .gslide-image img { background: white; }
+    .gscrollbar-fixer { padding-right: 15px; }
+    .gdesc-inner { font-size: 0.75rem; }
+    body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
+    body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
+    body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}</style> <script src="../../../assets/javascripts/glightbox.min.js"></script></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="light" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#theiaeuk" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="https://www.theiagen.com" title="Public Health Bioinformatics" class="md-header__button md-logo" aria-label="Public Health Bioinformatics" data-md-component="logo">
+      
+  <img src="../../../assets/Theiagen-Logo-White.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Public Health Bioinformatics
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              TheiaEuk
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="light" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to Dark Mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to Dark Mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="indigo"  aria-label="Switch to Light Mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to Light Mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m3.55 19.09 1.41 1.41 1.8-1.79-1.42-1.42M12 6c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6c0-3.32-2.69-6-6-6m8 7h3v-2h-3m-2.76 7.71 1.8 1.79 1.41-1.41-1.79-1.8M20.45 5l-1.41-1.4-1.8 1.79 1.42 1.42M13 1h-2v3h2M6.76 5.39 4.96 3.6 3.55 5l1.79 1.81zM1 13h3v-2H1m12 9h-2v3h2"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/theiagen/public_health_bioinformatics" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../.." class="md-tabs__link">
+          
+  
+  Public Health Bioinformatics
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="https://www.theiagen.com" title="Public Health Bioinformatics" class="md-nav__button md-logo" aria-label="Public Health Bioinformatics" data-md-component="logo">
+      
+  <img src="../../../assets/Theiagen-Logo-White.png" alt="logo">
+
+    </a>
+    Public Health Bioinformatics
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/theiagen/public_health_bioinformatics" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Public Health Bioinformatics
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            Public Health Bioinformatics
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_1_2" id="__nav_1_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    All Workflows
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1_2">
+            <span class="md-nav__icon md-icon"></span>
+            All Workflows
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_2_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_2_1" id="__nav_1_2_1_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Workflows by Type
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_1_2_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            Workflows by Type
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../workflows_overview/workflows-type/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Overview Table
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_2_1_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_2_1_2" id="__nav_1_2_1_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Data Import
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_1_2_1_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_2_1_2">
+            <span class="md-nav__icon md-icon"></span>
+            Data Import
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data_import/assembly_fetch/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Assembly_Fetch
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data_import/basespace_fetch/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    BaseSpace_Fetch
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data_import/create_terra_table/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Create_Terra_Table
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data_import/sra_fetch/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    SRA_Fetch
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_2_1_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_2_1_3" id="__nav_1_2_1_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Genomic Characterization
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_1_2_1_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_2_1_3">
+            <span class="md-nav__icon md-icon"></span>
+            Genomic Characterization
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../freyja/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Freyja Workflow Series
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pangolin_update/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Pangolin_Update
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../theiacov/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    TheiaCoV Workflow Series
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    TheiaEuk
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    TheiaEuk
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#quick-facts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quick Facts
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#theiaeuk-workflows" class="md-nav__link">
+    <span class="md-ellipsis">
+      TheiaEuk Workflows
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="TheiaEuk Workflows">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#inputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Inputs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#workflow-tasks-performed-for-all-taxa" class="md-nav__link">
+    <span class="md-ellipsis">
+      Workflow tasks (performed for all taxa)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#organism-specific-characterization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Organism-specific Characterization
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#outputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Outputs
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../theiameta/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    TheiaMeta
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../theiaprok/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    TheiaProk Workflow Series
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../vadr_update/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    VADR_Update
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_2_1_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_2_1_4" id="__nav_1_2_1_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Phylogenetic Construction
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_1_2_1_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_2_1_4">
+            <span class="md-nav__icon md-icon"></span>
+            Phylogenetic Construction
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phylogenetic_construction/augur/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Augur
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phylogenetic_construction/core_gene_snp/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Core_Gene_SNP
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phylogenetic_construction/czgenepi_prep/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    CZGenEpi_Prep
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phylogenetic_construction/find_shared_variants/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Find_Shared_Variants
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phylogenetic_construction/ksnp3/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    kSNP3
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phylogenetic_construction/lyve_set/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lyve_SET
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phylogenetic_construction/mashtree_fasta/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    MashTree_FASTA
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phylogenetic_construction/snippy_streamline/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Snippy_Streamline
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phylogenetic_construction/snippy_streamline_fasta/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Snippy_Streamline_FASTA
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phylogenetic_construction/snippy_tree/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Snippy_Tree
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phylogenetic_construction/snippy_variants/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Snippy_Variants
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_2_1_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_2_1_5" id="__nav_1_2_1_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Phylogenetic Placement
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_1_2_1_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_2_1_5">
+            <span class="md-nav__icon md-icon"></span>
+            Phylogenetic Placement
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phylogenetic_placement/samples_to_ref_tree/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Samples_to_Ref_Tree
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phylogenetic_placement/usher/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Usher_PHB
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_2_1_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_2_1_6" id="__nav_1_2_1_6_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Public Data Sharing
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_1_2_1_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_2_1_6">
+            <span class="md-nav__icon md-icon"></span>
+            Public Data Sharing
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../public_data_sharing/mercury_prep_n_batch/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Mercury_Prep_N_Batch
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../public_data_sharing/terra_2_gisaid/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Terra_2_GISAID
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../public_data_sharing/terra_2_ncbi/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Terra_2_NCBI
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_2_1_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_2_1_7" id="__nav_1_2_1_7_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Exporting Data from Terra
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_1_2_1_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_2_1_7">
+            <span class="md-nav__icon md-icon"></span>
+            Exporting Data from Terra
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data_export/concatenate_column_content/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Concatenate_Column_Content
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data_export/transfer_column_content/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Transfer_Column_Content
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data_export/zip_column_content/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Zip_Column_Content
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_2_1_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_2_1_8" id="__nav_1_2_1_8_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Standalone
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_1_2_1_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_2_1_8">
+            <span class="md-nav__icon md-icon"></span>
+            Standalone
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../standalone/cauris_cladetyper/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Cauris_CladeTyper
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../standalone/gambit_query/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    GAMBIT_Query
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../standalone/kraken2/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Kraken2
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../standalone/ncbi_amrfinderplus/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    NCBI-AMRFinderPlus
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../standalone/rasusa/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    RASUSA
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../standalone/rename_fastq/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Rename_FASTQ
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../standalone/tbprofiler_tngs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    TBProfiler_tNGS
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../standalone/theiavalidate/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    TheiaValidate
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_2_2" id="__nav_1_2_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Workflows by Kingdom
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_1_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            Workflows by Kingdom
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../workflows_overview/workflows-kingdom/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Overview Table
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_2_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_2_2_2" id="__nav_1_2_2_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Any Taxa
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_1_2_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_2_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            Any Taxa
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data_import/assembly_fetch/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Assembly_Fetch
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data_import/basespace_fetch/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    BaseSpace_Fetch
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data_export/concatenate_column_content/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Concatenate_Column_Content
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data_import/create_terra_table/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Create_Terra_Table
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../standalone/kraken2/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Kraken2
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../standalone/rasusa/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    RASUSA
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../standalone/rename_fastq/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Rename_FASTQ
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data_import/sra_fetch/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    SRA_Fetch
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../theiameta/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    TheiaMeta
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../standalone/theiavalidate/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    TheiaValidate
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data_export/transfer_column_content/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Transfer_Column_Content
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data_export/zip_column_content/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Zip_Column_Content
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_2_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_2_2_3" id="__nav_1_2_2_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Bacteria
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_1_2_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_2_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            Bacteria
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phylogenetic_construction/core_gene_snp/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Core_Gene_SNP
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phylogenetic_construction/find_shared_variants/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Find_Shared_Variants
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../standalone/gambit_query/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    GAMBIT_Query
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phylogenetic_construction/ksnp3/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    kSNP3
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phylogenetic_construction/lyve_set/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lyve_SET
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phylogenetic_construction/mashtree_fasta/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    MashTree_FASTA
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../standalone/ncbi_amrfinderplus/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    NCBI-AMRFinderPlus
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phylogenetic_construction/snippy_streamline/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Snippy_Streamline
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phylogenetic_construction/snippy_streamline_fasta/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Snippy_Streamline_FASTA
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phylogenetic_construction/snippy_tree/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Snippy_Tree
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phylogenetic_construction/snippy_variants/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Snippy_Variants
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../standalone/tbprofiler_tngs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    TBProfiler_tNGS
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../public_data_sharing/terra_2_ncbi/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Terra_2_NCBI
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../theiaprok/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    TheiaProk Workflow Series
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_2_2_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_2_2_4" id="__nav_1_2_2_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Mycotics
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_1_2_2_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_2_2_4">
+            <span class="md-nav__icon md-icon"></span>
+            Mycotics
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../standalone/cauris_cladetyper/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Cauris_CladeTyper
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phylogenetic_construction/find_shared_variants/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Find_Shared_Variants
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../standalone/gambit_query/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    GAMBIT_Query
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phylogenetic_construction/ksnp3/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    kSNP3
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phylogenetic_construction/mashtree_fasta/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    MashTree_FASTA
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../standalone/ncbi_amrfinderplus/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    NCBI-AMRFinderPlus
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phylogenetic_construction/snippy_variants/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Snippy_Variants
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../public_data_sharing/terra_2_ncbi/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Terra_2_NCBI
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    TheiaEuk
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    TheiaEuk
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#quick-facts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quick Facts
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#theiaeuk-workflows" class="md-nav__link">
+    <span class="md-ellipsis">
+      TheiaEuk Workflows
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="TheiaEuk Workflows">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#inputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Inputs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#workflow-tasks-performed-for-all-taxa" class="md-nav__link">
+    <span class="md-ellipsis">
+      Workflow tasks (performed for all taxa)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#organism-specific-characterization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Organism-specific Characterization
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#outputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Outputs
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_2_2_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_2_2_5" id="__nav_1_2_2_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Viral
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_1_2_2_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_2_2_5">
+            <span class="md-nav__icon md-icon"></span>
+            Viral
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phylogenetic_construction/augur/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Augur
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phylogenetic_construction/czgenepi_prep/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    CZGenEpi_Prep
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../freyja/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Freyja Workflow Series
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phylogenetic_construction/ksnp3/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    kSNP3
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phylogenetic_construction/mashtree_fasta/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    MashTree_FASTA
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../public_data_sharing/mercury_prep_n_batch/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Mercury_Prep_N_Batch
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pangolin_update/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Pangolin_Update
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phylogenetic_placement/samples_to_ref_tree/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Samples_to_Ref_Tree
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phylogenetic_construction/snippy_variants/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Snippy_Variants
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../public_data_sharing/terra_2_gisaid/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Terra_2_GISAID
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../public_data_sharing/terra_2_ncbi/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Terra_2_NCBI
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../theiacov/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    TheiaCoV Workflow Series
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phylogenetic_placement/usher/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Usher_PHB
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../vadr_update/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    VADR_Update
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_2_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_1_2_3" id="__nav_1_2_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Workflows Alphabetically
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_1_2_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            Workflows Alphabetically
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../workflows_overview/workflows-alphabetically/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Overview Table
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data_import/assembly_fetch/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Assembly_Fetch
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phylogenetic_construction/augur/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Augur
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data_import/basespace_fetch/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    BaseSpace_Fetch
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../standalone/cauris_cladetyper/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Cauris_CladeTyper
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data_export/concatenate_column_content/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Concatenate_Column_Content
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phylogenetic_construction/core_gene_snp/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Core_Gene_SNP
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data_import/create_terra_table/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Create_Terra_Table
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phylogenetic_construction/czgenepi_prep/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    CZGenEpi_Prep
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phylogenetic_construction/find_shared_variants/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Find_Shared_Variants
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../freyja/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Freyja Workflow Series
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../standalone/gambit_query/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    GAMBIT_Query
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../standalone/kraken2/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Kraken2
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phylogenetic_construction/ksnp3/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    kSNP3
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phylogenetic_construction/lyve_set/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lyve_SET
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phylogenetic_construction/mashtree_fasta/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    MashTree_FASTA
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../public_data_sharing/mercury_prep_n_batch/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Mercury_Prep_N_Batch
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../standalone/ncbi_amrfinderplus/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    NCBI-AMRFinderPlus
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pangolin_update/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Pangolin_Update
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../standalone/rasusa/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    RASUSA
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../standalone/rename_fastq/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Rename_FASTQ
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phylogenetic_placement/samples_to_ref_tree/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Samples_to_Ref_Tree
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phylogenetic_construction/snippy_streamline/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Snippy_Streamline
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phylogenetic_construction/snippy_streamline_fasta/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Snippy_Streamline_FASTA
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phylogenetic_construction/snippy_tree/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Snippy_Tree
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phylogenetic_construction/snippy_variants/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Snippy_Variants
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data_import/sra_fetch/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    SRA_Fetch
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../standalone/tbprofiler_tngs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    TBProfiler_tNGS
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../public_data_sharing/terra_2_gisaid/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Terra_2_GISAID
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../public_data_sharing/terra_2_ncbi/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Terra_2_NCBI
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../theiacov/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    TheiaCoV Workflow Series
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    TheiaEuk
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    TheiaEuk
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#quick-facts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quick Facts
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#theiaeuk-workflows" class="md-nav__link">
+    <span class="md-ellipsis">
+      TheiaEuk Workflows
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="TheiaEuk Workflows">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#inputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Inputs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#workflow-tasks-performed-for-all-taxa" class="md-nav__link">
+    <span class="md-ellipsis">
+      Workflow tasks (performed for all taxa)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#organism-specific-characterization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Organism-specific Characterization
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#outputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Outputs
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../theiameta/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    TheiaMeta
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../theiaprok/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    TheiaProk Workflow Series
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../standalone/theiavalidate/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    TheiaValidate
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data_export/transfer_column_content/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Transfer_Column_Content
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phylogenetic_placement/usher/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Usher_PHB
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../vadr_update/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    VADR_Update
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data_export/zip_column_content/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Zip_Column_Content
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../contribution_guide/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Contributing to the Documentation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#quick-facts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quick Facts
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#theiaeuk-workflows" class="md-nav__link">
+    <span class="md-ellipsis">
+      TheiaEuk Workflows
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="TheiaEuk Workflows">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#inputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Inputs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#workflow-tasks-performed-for-all-taxa" class="md-nav__link">
+    <span class="md-ellipsis">
+      Workflow tasks (performed for all taxa)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#organism-specific-characterization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Organism-specific Characterization
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#outputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Outputs
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="theiaeuk">TheiaEuk<a class="headerlink" href="#theiaeuk" title="Permanent link">&para;</a></h1>
+<h2 id="quick-facts">Quick Facts<a class="headerlink" href="#quick-facts" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th><strong>Workflow Type</strong></th>
+<th><strong>Applicable Kingdom</strong></th>
+<th><strong>Last Known Changes</strong></th>
+<th><strong>Command-line Compatibliity</strong></th>
+<th><strong>Workflow Level</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="../../../workflows_overview/workflows-type/#genomic-characterization">Genomic Characterization</a></td>
+<td><a href="../../../workflows_overview/workflows-kingdom/#mycotics">Mycotics</a></td>
+<td>PHB v2.2.0</td>
+<td>Yes</td>
+<td>Sample-level</td>
+</tr>
+</tbody>
+</table>
+<h2 id="theiaeuk-workflows">TheiaEuk Workflows<a class="headerlink" href="#theiaeuk-workflows" title="Permanent link">&para;</a></h2>
+<p><strong>The TheiaEuk_PE workflow is for the assembly, quality assessment, and characterization of fungal genomes.</strong> It is designed to accept Illumina paired-end sequencing data as the primary input. <strong>It is currently intended only for haploid fungal genomes like <em>Candida auris</em>.</strong> Analyzing diploid genomes using TheiaEuk should be attempted only with expert attention to the resulting genome quality.</p>
+<p>All input reads are processed through "core tasks" in each workflow. The core tasks include raw-read quality assessment, read cleaning (quality trimming and adapter removal), de novo assembly, assembly quality assessment, and species taxon identification. For some taxa identified, "taxa-specific sub-workflows" will be automatically activated, undertaking additional taxa-specific characterization steps, including clade-typing and/or antifungal resistance detection.</p>
+<div class="admonition caption">
+<p class="admonition-title">TheiaEuk Workflow Diagram</p>
+<p><a class="glightbox" href="../../../assets/characterization/TheiaEuk_Illumina_PE.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="TheiaEuk Workflow Diagram" src="../../../assets/characterization/TheiaEuk_Illumina_PE.png" width="75%" /></a></p>
+</div>
+<h3 id="inputs">Inputs<a class="headerlink" href="#inputs" title="Permanent link">&para;</a></h3>
+<div class="admonition info">
+<p class="admonition-title">Input read data</p>
+<p>The TheiaEuk_PE workflow takes in Illumina paired-end read data. Read file names should end with <code>.fastq</code> or <code>.fq</code>, with the optional addition of <code>.gz</code>. When possible, Theiagen recommends zipping files with <a href="https://www.gnu.org/software/gzip/">gzip</a> prior to Terra upload to minimize data upload time.</p>
+<p>By default, the workflow anticipates 2 x 150bp reads (i.e. the input reads were generated using a 300-cycle sequencing kit). Modifications to the optional parameter for <code>trim_minlen</code> may be required to accommodate shorter read data, such as the 2 x 75bp reads generated using a 150-cycle sequencing kit.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th><strong>Terra Task Name</strong></th>
+<th><strong>Variable</strong></th>
+<th><strong>Type</strong></th>
+<th><strong>Description</strong></th>
+<th><strong>Default Value</strong></th>
+<th><strong>Terra Status</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>theiaeuk_pe</td>
+<td><strong>read1</strong></td>
+<td>File</td>
+<td>Unprocessed Illumina forward read file</td>
+<td></td>
+<td>Required</td>
+</tr>
+<tr>
+<td>theiaeuk_pe</td>
+<td><strong>read2</strong></td>
+<td>File</td>
+<td>Unprocessed Illumina reverse read file</td>
+<td></td>
+<td>Required</td>
+</tr>
+<tr>
+<td>theiaeuk_pe</td>
+<td><strong>samplename</strong></td>
+<td>String</td>
+<td>Name of Terra datatable</td>
+<td></td>
+<td>Required</td>
+</tr>
+<tr>
+<td>busco</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>busco</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>100</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>busco</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/ezlabgva/busco:v5.3.2_cv1</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>cg_pipeline_clean</td>
+<td><strong>cg_pipe_opts</strong></td>
+<td>String</td>
+<td>Options to pass to CG-Pipeline for clean read assessment</td>
+<td>--fast</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>cg_pipeline_clean</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>100</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>cg_pipeline_clean</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/lyveset:1.1.4f</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>cg_pipeline_raw</td>
+<td><strong>cg_pipe_opts</strong></td>
+<td>String</td>
+<td>Options to pass to CG-Pipeline for clean read assessment</td>
+<td>--fast</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>cg_pipeline_raw</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>100</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>cg_pipeline_raw</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/lyveset:1.1.4f</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>clean_check_reads</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>clean_check_reads</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>100</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>clean_check_reads</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/bactopia/gather_samples:2.0.2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>clean_check_reads</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>clean_check_reads</td>
+<td><strong>organism</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Do Not Modify, Optional</td>
+</tr>
+<tr>
+<td>clean_check_reads</td>
+<td><strong>workflow_series</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Do Not Modify, Optional</td>
+</tr>
+<tr>
+<td>gambit</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>100</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>gambit</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/gambit:0.5.0</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>agrvate_docker_image</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td>"us-docker.pkg.dev/general-theiagen/biocontainers/agrvate:1.0.2--hdfd78af_0"</td>
+<td>Do Not Modify, Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>assembly_only</strong></td>
+<td>Boolean</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Do Not Modify, Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>call_poppunk</strong></td>
+<td>Boolean</td>
+<td>Internal component, do not modify</td>
+<td>TRUE</td>
+<td>Do Not Modify, Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>call_shigeifinder_reads_input</strong></td>
+<td>Boolean</td>
+<td>Internal component, do not modify</td>
+<td>FALSE</td>
+<td>Do Not Modify, Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>emmtypingtool_docker_image</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/emmtypingtool:0.0.1</td>
+<td>Do Not Modify, Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>hicap_docker_image</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td>us-docker.pkg.dev/general-theiagen/biocontainers/hicap:1.0.3--py_0</td>
+<td>Do Not Modify, Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>ont_data</strong></td>
+<td>Boolean</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Do Not Modify, Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>paired_end</strong></td>
+<td>Boolean</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Do Not Modify, Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>pasty_docker_image</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/pasty:1.0.3</td>
+<td>Do Not Modify, Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>pasty_min_coverage</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td>95</td>
+<td>Do Not Modify, Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>pasty_min_pident</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td>95</td>
+<td>Do Not Modify, Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>shigatyper_docker_image</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/shigatyper:2.0.5</td>
+<td>Do Not Modify, Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>shigeifinder_docker_image</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/shigeifinder:1.3.5</td>
+<td>Do Not Modify, Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>snippy_query_gene</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Do Not Modify, Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>srst2_gene_max_mismatch</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td>2000</td>
+<td>Do Not Modify, Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>srst2_max_divergence</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td>20</td>
+<td>Do Not Modify, Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>srst2_min_cov</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td>80</td>
+<td>Do Not Modify, Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>srst2_min_depth</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td>5</td>
+<td>Do Not Modify, Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>srst2_min_edge_depth</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td>2</td>
+<td>Do Not Modify, Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>staphopia_sccmec_docker_image</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td>us-docker.pkg.dev/general-theiagen/biocontainers/staphopia-sccmec:1.0.0--hdfd78af_0</td>
+<td>Do Not Modify, Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>tbp_parser_coverage_threshold</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td>100</td>
+<td>Do Not Modify, Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>tbp_parser_debug</strong></td>
+<td>Boolean</td>
+<td>Internal component, do not modify</td>
+<td>FALSE</td>
+<td>Do Not Modify, Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>tbp_parser_docker_image</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:1.3.6</td>
+<td>Do Not Modify, Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>tbp_parser_min_depth</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td>10</td>
+<td>Do Not Modify, Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>tbp_parser_operator</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td>"Operator not provided"</td>
+<td>Do Not Modify, Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>tbp_parser_output_seq_method_type</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td>"WGS"</td>
+<td>Do Not Modify, Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>tbp_parser_output_seq_method_type</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td>"Sequencing method not provided"</td>
+<td>Do Not Modify, Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>tbprofiler_additional_outputs</strong></td>
+<td>Boolean</td>
+<td>Internal component, do not modify</td>
+<td>FALSE</td>
+<td>Do Not Modify, Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>tbprofiler_cov_frac_threshold</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td>1</td>
+<td>Do Not Modify, Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>tbprofiler_custom_db</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Do Not Modify, Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>tbprofiler_mapper</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td>bwa</td>
+<td>Do Not Modify, Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>tbprofiler_min_af</strong></td>
+<td>Float</td>
+<td>Internal component, do not modify</td>
+<td>0.1</td>
+<td>Do Not Modify, Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>tbprofiler_min_af_pred</strong></td>
+<td>Float</td>
+<td>Internal component, do not modify</td>
+<td>0.1</td>
+<td>Do Not Modify, Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>tbprofiler_min_depth</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td>10</td>
+<td>Do Not Modify, Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>tbprofiler_run_custom_db</strong></td>
+<td>Boolean</td>
+<td>Internal component, do not modify</td>
+<td>FALSE</td>
+<td>Do Not Modify, Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>tbprofiler_variant_caller</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td>freebayes</td>
+<td>Do Not Modify, Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>tbprofiler_variant_calling_params</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td>None</td>
+<td>Do Not Modify, Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>virulencefinder_coverage_threshold</strong></td>
+<td>Float</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Do Not Modify, Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>virulencefinder_database</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td>"virulence_ecoli"</td>
+<td>Do Not Modify, Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>virulencefinder_docker_image</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/virulencefinder:2.0.4</td>
+<td>Do Not Modify, Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>virulencefinder_identity_threshold</strong></td>
+<td>Float</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Do Not Modify, Optional</td>
+</tr>
+<tr>
+<td>qc_check_task</td>
+<td><strong>ani_highest_percent</strong></td>
+<td>Float</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Do Not Modify, Optional</td>
+</tr>
+<tr>
+<td>qc_check_task</td>
+<td><strong>ani_highest_percent_bases_aligned</strong></td>
+<td>Float</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Do Not Modify, Optional</td>
+</tr>
+<tr>
+<td>qc_check_task</td>
+<td><strong>assembly_length_unambiguous</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Do Not Modify, Optional</td>
+</tr>
+<tr>
+<td>qc_check_task</td>
+<td><strong>assembly_mean_coverage</strong></td>
+<td>Float</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Do Not Modify, Optional</td>
+</tr>
+<tr>
+<td>qc_check_task</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>4</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>qc_check_task</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>100</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>qc_check_task</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>"us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-03-16"</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>qc_check_task</td>
+<td><strong>kraken_human</strong></td>
+<td>Float</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Do Not Modify, Optional</td>
+</tr>
+<tr>
+<td>qc_check_task</td>
+<td><strong>kraken_human_dehosted</strong></td>
+<td>Float</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Do Not Modify, Optional</td>
+</tr>
+<tr>
+<td>qc_check_task</td>
+<td><strong>kraken_sc2</strong></td>
+<td>Float</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Do Not Modify, Optional</td>
+</tr>
+<tr>
+<td>qc_check_task</td>
+<td><strong>kraken_sc2_dehosted</strong></td>
+<td>Float</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Do Not Modify, Optional</td>
+</tr>
+<tr>
+<td>qc_check_task</td>
+<td><strong>kraken_target_organism</strong></td>
+<td>Float</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Do Not Modify, Optional</td>
+</tr>
+<tr>
+<td>qc_check_task</td>
+<td><strong>kraken_target_organism_dehosted</strong></td>
+<td>Float</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Do Not Modify, Optional</td>
+</tr>
+<tr>
+<td>qc_check_task</td>
+<td><strong>meanbaseq_trim</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Do Not Modify, Optional</td>
+</tr>
+<tr>
+<td>qc_check_task</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>8</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>qc_check_task</td>
+<td><strong>midas_secondary_genus_abundance</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Do Not Modify, Optional</td>
+</tr>
+<tr>
+<td>qc_check_task</td>
+<td><strong>midas_secondary_genus_coverage</strong></td>
+<td>Float</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Do Not Modify, Optional</td>
+</tr>
+<tr>
+<td>qc_check_task</td>
+<td><strong>number_Degenerate</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Do Not Modify, Optional</td>
+</tr>
+<tr>
+<td>qc_check_task</td>
+<td><strong>number_N</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Do Not Modify, Optional</td>
+</tr>
+<tr>
+<td>qc_check_task</td>
+<td><strong>percent_reference_coverage</strong></td>
+<td>Float</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Do Not Modify, Optional</td>
+</tr>
+<tr>
+<td>qc_check_task</td>
+<td><strong>sc2_s_gene_mean_coverage</strong></td>
+<td>Float</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Do Not Modify, Optional</td>
+</tr>
+<tr>
+<td>qc_check_task</td>
+<td><strong>sc2_s_gene_percent_coverage</strong></td>
+<td>Float</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Do Not Modify, Optional</td>
+</tr>
+<tr>
+<td>qc_check_task</td>
+<td><strong>vadr_num_alerts</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Do Not Modify, Optional</td>
+</tr>
+<tr>
+<td>quast</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>100</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>quast</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/quast:5.0.2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>quast</td>
+<td><strong>min_contig_length</strong></td>
+<td>Int</td>
+<td>Minimum length of contig for QUAST</td>
+<td>500</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>rasusa_task</td>
+<td><strong>bases</strong></td>
+<td>String</td>
+<td>Explicitly set the number of bases required e.g., 4.3kb, 7Tb, 9000, 4.1MB</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>rasusa_task</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>4</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>rasusa_task</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>100</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>rasusa_task</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/rasusa:0.7.0</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>rasusa_task</td>
+<td><strong>frac</strong></td>
+<td>Float</td>
+<td>Subsample to a fraction of the reads</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>rasusa_task</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>8</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>rasusa_task</td>
+<td><strong>num</strong></td>
+<td>Int</td>
+<td>Subsample to a specific number of reads</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>rasusa_task</td>
+<td><strong>seed</strong></td>
+<td>Int</td>
+<td>Random seed to use</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>raw_check_reads</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>raw_check_reads</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>100</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>raw_check_reads</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/bactopia/gather_samples:2.0.2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>raw_check_reads</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>raw_check_reads</td>
+<td><strong>organism</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Do Not Modify, Optional</td>
+</tr>
+<tr>
+<td>raw_check_reads</td>
+<td><strong>workflow_series</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Do Not Modify, Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>adapters</strong></td>
+<td>File</td>
+<td>File with adapter sequences to be removed</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>bbduk_mem</strong></td>
+<td>Int</td>
+<td>Memory allocated to the BBDuk VM</td>
+<td>8</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>call_kraken</strong></td>
+<td>Boolean</td>
+<td>If true, Kraken2 is executed on the dataset</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>call_midas</strong></td>
+<td>Boolean</td>
+<td>Internal component, do not modify</td>
+<td>FALSE</td>
+<td>Do Not Modify, Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>fastp_args</strong></td>
+<td>String</td>
+<td>Additional arguments to pass to fastp</td>
+<td>--detect_adapter_for_pe -g -5 20 -3 20</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>kraken_db</strong></td>
+<td>File</td>
+<td>Database to use with kraken2</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>kraken_disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>kraken_memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>midas_db</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Do Not Modify, Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>phix</strong></td>
+<td>File</td>
+<td>A file containing the phix used during Illumina sequencing; used in the BBDuk task</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>read_processing</strong></td>
+<td>String</td>
+<td>Read trimming software to use, either "trimmomatic" or "fastp"</td>
+<td>trimmomatic</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>read_qc</strong></td>
+<td>String</td>
+<td>Allows the user to decide between fastq_scan (default) and fastqc for the evaluation of read quality.</td>
+<td>"fastq_scan"</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>target_organism</strong></td>
+<td>String</td>
+<td>This string is searched for in the kraken2 outputs to extract the read percentage</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>trim_minlength</strong></td>
+<td>Int</td>
+<td>Specifies minimum length of each read after trimming to be kept</td>
+<td>75</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>trim_quality_trim_score</strong></td>
+<td>Int</td>
+<td>Specifies the average quality of bases in a sliding window to be kept</td>
+<td>20</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>trim_window_size</strong></td>
+<td>Int</td>
+<td>Specifies window size for trimming (the number of bases to average the quality across)</td>
+<td>10</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>trimmomatic_args</strong></td>
+<td>String</td>
+<td>Additional arguments for trimmomatic</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>workflow_series</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Do Not Modify, Optional</td>
+</tr>
+<tr>
+<td>shovill_pe</td>
+<td><strong>assembler</strong></td>
+<td>String</td>
+<td>Assembler to use (spades, skesa, velvet or megahit), see <a href="https://github.com/tseemann/shovill#--assembler">https://github.com/tseemann/shovill#--assembler</a></td>
+<td>"skesa"</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>shovill_pe</td>
+<td><strong>assembler_options</strong></td>
+<td>String</td>
+<td>Assembler-specific options that you might choose, see <a href="https://github.com/tseemann/shovill#--opts">https://github.com/tseemann/shovill#--opts</a></td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>shovill_pe</td>
+<td><strong>depth</strong></td>
+<td>Int</td>
+<td>User specified depth of coverage for downsampling (see <a href="https://github.com/tseemann/shovill#--depth and https://github.com/tseemann/shovill#main-steps">https://github.com/tseemann/shovill#--depth and https://github.com/tseemann/shovill#main-steps</a>)</td>
+<td>150</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>shovill_pe</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>100</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>shovill_pe</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/shovill:1.1.0</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>shovill_pe</td>
+<td><strong>genome_length</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Do Not Modify, Optional</td>
+</tr>
+<tr>
+<td>shovill_pe</td>
+<td><strong>kmers</strong></td>
+<td>String</td>
+<td>User-specified Kmer length to override choice made by Shovill, see <a href="https://github.com/tseemann/shovill#--kmers">https://github.com/tseemann/shovill#--kmers</a></td>
+<td>auto</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>shovill_pe</td>
+<td><strong>min_contig_length</strong></td>
+<td>Int</td>
+<td>Minimum contig length to keep in final assembly</td>
+<td>200</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>shovill_pe</td>
+<td><strong>min_coverage</strong></td>
+<td>Float</td>
+<td>Minimum contig coverage to keep in final assembly</td>
+<td>2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>shovill_pe</td>
+<td><strong>nocorr</strong></td>
+<td>Boolean</td>
+<td>Disable correction of minor assembly errors by Shovill (see <a href="https://github.com/tseemann/shovill#main-steps">https://github.com/tseemann/shovill#main-steps</a>)</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>shovill_pe</td>
+<td><strong>noreadcorr</strong></td>
+<td>Boolean</td>
+<td>Disable correction of sequencing errors in reads by Shovill (see <a href="https://github.com/tseemann/shovill#main-steps">https://github.com/tseemann/shovill#main-steps</a>)</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>shovill_pe</td>
+<td><strong>nostitch</strong></td>
+<td>Boolean</td>
+<td>Disable read stitching by Shovill (see <a href="https://github.com/tseemann/shovill#main-steps">https://github.com/tseemann/shovill#main-steps</a>)</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>shovill_pe</td>
+<td><strong>trim</strong></td>
+<td>Boolean</td>
+<td>Enable adaptor trimming (see <a href="https://github.com/tseemann/shovill#main-step">https://github.com/tseemann/shovill#main-step</a>s)</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaeuk_pe</td>
+<td><strong>busco_memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>8</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaeuk_pe</td>
+<td><strong>call_rasusa</strong></td>
+<td>Boolean</td>
+<td>If true, launch rasusa task to subsample raw reads to read depth of 150X</td>
+<td>TRUE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaeuk_pe</td>
+<td><strong>gambit_db_genomes</strong></td>
+<td>File</td>
+<td>User-provided database of assembled query genomes; requires complementary signatures file. If not provided, uses default database, "/gambit-db"</td>
+<td>gs://gambit-databases-rp/1.3.0/gambit-metadata-1.3-231016.gdb</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaeuk_pe</td>
+<td><strong>gambit_db_signatures</strong></td>
+<td>File</td>
+<td>User-provided signatures file; requires complementary genomes file. If not specified, the file from the docker container will be used.</td>
+<td>gs://gambit-databases-rp/1.3.0/gambit-signatures-1.3-231016.gs</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaeuk_pe</td>
+<td><strong>genome_length</strong></td>
+<td>Int</td>
+<td>User-specified expected genome size to be used in genome statistics calculations</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaeuk_pe</td>
+<td><strong>max_genome_size</strong></td>
+<td>Int</td>
+<td>Maximum genome size able to pass read screening</td>
+<td>50000000</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaeuk_pe</td>
+<td><strong>min_basepairs</strong></td>
+<td>Int</td>
+<td>Minimum number of base pairs able to pass read screening</td>
+<td>2241820</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaeuk_pe</td>
+<td><strong>min_coverage</strong></td>
+<td>Int</td>
+<td>Minimum genome coverage able to pass read screening</td>
+<td>10</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaeuk_pe</td>
+<td><strong>min_genome_size</strong></td>
+<td>Int</td>
+<td>Minimum genome size able to pass read screening</td>
+<td>100000</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaeuk_pe</td>
+<td><strong>min_proportion</strong></td>
+<td>Int</td>
+<td>Minimum proportion of total reads in each read file to pass read screening</td>
+<td>50</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaeuk_pe</td>
+<td><strong>min_reads</strong></td>
+<td>Int</td>
+<td>Minimum number of reads to pass read screening</td>
+<td>10000</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaeuk_pe</td>
+<td><strong>skip_screen</strong></td>
+<td>Boolean</td>
+<td>Option to skip the read screening prior to analysis</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaeuk_pe</td>
+<td><strong>subsample_coverage</strong></td>
+<td>Float</td>
+<td>Read depth for RASUSA task to subsample reads to</td>
+<td>150</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>version_capture</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>"us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0"</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>version_capture</td>
+<td><strong>timezone</strong></td>
+<td>String</td>
+<td>Set the time zone to get an accurate date of analysis (uses UTC by default)</td>
+<td></td>
+<td>Optional</td>
+</tr>
+</tbody>
+</table>
+<h3 id="workflow-tasks-performed-for-all-taxa">Workflow tasks (performed for all taxa)<a class="headerlink" href="#workflow-tasks-performed-for-all-taxa" title="Permanent link">&para;</a></h3>
+<details class="task">
+<summary><code>versioning</code>: Version capture for TheiaEuk</summary>
+<p>The <code>versioning</code> task captures the workflow version from the GitHub (code repository) version.</p>
+<div class="admonition techdetails">
+<p class="admonition-title">Version Capture Technical details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/task_versioning.wdl">task_versioning.wdl</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<details class="task">
+<summary><code>screen</code>: Total Raw Read Quantification and Genome Size Estimation</summary>
+<p>The <a href="https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/quality_control/task_screen.wdl"><code>screen</code></a> task ensures the quantity of sequence data is sufficient to undertake genomic analysis. It uses bash commands for quantification of reads and base pairs, and <a href="https://mash.readthedocs.io/en/latest/index.html">mash</a> sketching to estimate the genome size and its coverage. At each step, the results are assessed relative to pass/fail criteria and thresholds that may be defined by optional user inputs. Samples that do not meet these criteria will not be processed further by the workflow:</p>
+<ol>
+<li>Total number of reads: A sample will fail the read screening task if its total number of reads is less than or equal to <code>min_reads</code>.</li>
+<li>The proportion of basepairs reads in the forward and reverse read files: A sample will fail the read screening if fewer than <code>min_proportion</code> basepairs are in either the reads1 or read2 files.</li>
+<li>Number of basepairs: A sample will fail the read screening if there are fewer than <code>min_basepairs</code> basepairs</li>
+<li>Estimated genome size:  A sample will fail the read screening if the estimated genome size is smaller than <code>min_genome_size</code> or bigger than <code>max_genome_size</code>.</li>
+<li>Estimated genome coverage: A sample will fail the read screening if the estimated genome coverage is less than the <code>min_coverage</code>.</li>
+</ol>
+<p>Read screening is undertaken on both the raw and cleaned reads. The task may be skipped by setting the <code>skip_screen</code> variable to true.</p>
+<p>Default values vary between the PE and SE workflow. The rationale for these default values can be found below.</p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Rationale</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>skip_screen</code></td>
+<td>Prevent the read screen from running</td>
+</tr>
+<tr>
+<td><code>min_reads</code></td>
+<td>Minimum number of base pairs for 20x coverage of <em>Hansenula polymorpha</em>  divided by 300 (longest Illumina read length)</td>
+</tr>
+<tr>
+<td><code>min_basepairs</code></td>
+<td>Greater than 10x coverage of <em>Hansenula polymorpha</em></td>
+</tr>
+<tr>
+<td><code>min_genome_size</code></td>
+<td>Based on the <em>Hansenula polymorpha</em>  genome - the smallest fungal genome as of 2015-04-02 (8.97 Mbp)</td>
+</tr>
+<tr>
+<td><code>max_genome_size</code></td>
+<td>Based on the <em>Cenococcum geophilum</em>  genome, the biggest pathogenic fungal genome, (177.57 Mbp)</td>
+</tr>
+<tr>
+<td><code>min_coverage</code></td>
+<td>A bare-minimum coverage for genome characterization. Higher coverage would be required for high-quality phylogenetics.</td>
+</tr>
+<tr>
+<td><code>min_proportion</code></td>
+<td>Greater than 50% reads are in the read1 file; others are in the read2 file</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition techdetails">
+<p class="admonition-title">Screen Technical Details</p>
+<p>There is a single WDL task for read screening. The <code>screen</code> task is run twice, once for raw reads and once for clean reads.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/task_screen.wdl">task_screen.wdl</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<details class="task">
+<summary><code>rasusa</code>: Read subsampling</summary>
+<p>The RASUSA task performs subsampling of the raw reads. By default, this task will subsample reads to a depth of 150X using the estimated genome length produced during the preceding raw read screen. The user can prevent the task from being launched by setting the <code>call_rasusa</code>variable to false. </p>
+<p>The user can also provide an estimated genome length for the task to use for subsampling using the <code>genome_size</code> variable. In addition, the read depth can be modified using the <code>subsample_coverage</code> variable.</p>
+<div class="admonition techdetails">
+<p class="admonition-title">RASUSA Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>TheiaEuk_Illumina_PE_PHB</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/task_rasusa.wdl">task_rasusa.wdl</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<details class="task">
+<summary><code>read_QC_trim</code>: Read Quality Trimming, Adapter Removal, Quantification, and Identification</summary>
+<p><code>read_QC_trim</code> is a sub-workflow within TheiaEuk that removes low-quality reads, low-quality regions of reads, and sequencing adapters to improve data quality. It uses a number of tasks, described below.</p>
+<p><strong>Read quality trimming</strong></p>
+<p>Either <code>trimmomatic</code> or <code>fastp</code> can be used for read-quality trimming. Trimmomatic is used by default. Both tools trim low-quality regions of reads with a sliding window (with a window size of <code>trim_window_size</code>), cutting once the average quality within the window falls below <code>trim_quality_trim_score</code>. They will both discard the read if it is trimmed below <code>trim_minlen</code>. </p>
+<p>If fastp is selected for analysis, fastp also implements the additional read-trimming steps indicated below:</p>
+<table>
+<thead>
+<tr>
+<th><strong>Parameter</strong></th>
+<th><strong>Explanation</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-g</td>
+<td>enables polyG tail trimming</td>
+</tr>
+<tr>
+<td>-5 20</td>
+<td>enables read end-trimming</td>
+</tr>
+<tr>
+<td>-3 20</td>
+<td>enables read end-trimming</td>
+</tr>
+<tr>
+<td>--detect_adapter_for_pe</td>
+<td>enables adapter-trimming <strong>only for paired-end reads</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Adapter removal</strong></p>
+<p>The <code>BBDuk</code> task removes adapters from sequence reads. To do this:</p>
+<ul>
+<li><a href="https://jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/repair-guide/">Repair</a> from the <a href="https://jgi.doe.gov/data-and-tools/software-tools/bbtools/">BBTools</a> package reorders reads in paired fastq files to ensure the forward and reverse reads of a pair are in the same position in the two fastq files.</li>
+<li><a href="https://jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/bbduk-guide/">BBDuk</a>  (<em>"Bestus Bioinformaticus" Decontamination Using Kmers</em>) is then used to trim the adapters and filter out all reads that have a 31-mer match to <a href="https://emea.illumina.com/products/by-type/sequencing-kits/cluster-gen-sequencing-reagents/phix-control-v3.html">PhiX</a>, which is commonly added to Illumina sequencing runs to monitor and/or improve overall run quality.</li>
+</ul>
+<details class="toggle">
+<summary>What are adapters and why do they need to be removed?</summary>
+<p>Adapters are manufactured oligonucleotide sequences attached to DNA fragments during the library preparation process. In Illumina sequencing, these adapter sequences are required for attaching reads to flow cells. You can read more about Illumina adapters <a href="https://emea.support.illumina.com/bulletins/2020/06/illumina-adapter-portfolio.html">here</a>. For genome analysis, it's important to remove these sequences since they're not actually from your sample. If you don't remove them, the downstream analysis may be affected.</p>
+</details>
+<p><strong>Read Quantification</strong></p>
+<p>There are two methods for read quantification to choose from: <a href="https://github.com/rpetit3/fastq-scan"><code>fastq-scan</code></a> (default) or <a href="https://www.bioinformatics.babraham.ac.uk/projects/fastqc/"><code>fastqc</code></a>. Both quantify the forward and reverse reads in FASTQ files. In TheiaProk_Illumina_PE, they also provide the total number of read pairs. This task is run once with raw reads as input and once with clean reads as input. If QC has been performed correctly, you should expect <strong>fewer</strong> clean reads than raw reads. <code>fastqc</code> also provides a graphical visualization of the read quality.</p>
+<p><strong>Read Identification (optional)</strong></p>
+<p>The <code>MIDAS</code> task is for the identification of reads to detect contamination with non-target taxa. This task is optional and turned off by default. It can be used by setting the <code>call_midas</code> input variable to <code>true</code>.</p>
+<p>The MIDAS tool was originally designed for metagenomic sequencing data but has been co-opted for use with bacterial isolate WGS methods. It can be used to detect contamination present in raw sequencing data by estimating bacterial species abundance in bacterial isolate WGS data. If a secondary genus is detected above a relative frequency of 0.01 (1%), then the sample should fail QC and be investigated further for potential contamination.</p>
+<p>This task is similar to those used in commercial software, BioNumerics, for estimating secondary species abundance.</p>
+<details class="toggle">
+<summary>How are the MIDAS output columns determined?</summary>
+<p>Example MIDAS report in the ****<code>midas_report</code> column:</p>
+<table>
+<thead>
+<tr>
+<th>species_id</th>
+<th>count_reads</th>
+<th>coverage</th>
+<th>relative_abundance</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Salmonella_enterica_58156</td>
+<td>3309</td>
+<td>89.88006645</td>
+<td>0.855888033</td>
+</tr>
+<tr>
+<td>Salmonella_enterica_58266</td>
+<td>501</td>
+<td>11.60606061</td>
+<td>0.110519371</td>
+</tr>
+<tr>
+<td>Salmonella_enterica_53987</td>
+<td>99</td>
+<td>2.232896237</td>
+<td>0.021262881</td>
+</tr>
+<tr>
+<td>Citrobacter_youngae_61659</td>
+<td>46</td>
+<td>0.995216227</td>
+<td>0.009477003</td>
+</tr>
+<tr>
+<td>Escherichia_coli_58110</td>
+<td>5</td>
+<td>0.123668877</td>
+<td>0.001177644</td>
+</tr>
+</tbody>
+</table>
+<p>MIDAS report column descriptions:</p>
+<ul>
+<li>species_id: species identifier</li>
+<li>count_reads: number of reads mapped to marker genes</li>
+<li>coverage: estimated genome-coverage (i.e. read-depth) of species in metagenome</li>
+<li>relative_abundance: estimated relative abundance of species in metagenome</li>
+</ul>
+<p>The value in the <code>midas_primary_genus</code> column is derived by ordering the rows in order of "relative_abundance" and identifying the genus of top species in the "species_id" column (Salmonella). The value in the <code>midas_secondary_genus</code> column is derived from the genus of the second-most prevalent genus in the "species_id" column (Citrobacter). The <code>midas_secondary_genus_abundance</code> column is the "relative_abundance" of the second-most prevalent genus (0.009477003). The <code>midas_secondary_genus_coverage</code> is the "coverage" of the second-most prevalent genus (0.995216227).</p>
+</details>
+<div class="admonition techdetails">
+<p class="admonition-title">read_QC_trim Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Sub-workflow</td>
+<td><a href="https://github.com/theiagen/public_health_bacterial_genomics/blob/main/workflows/wf_read_QC_trim.wdl">wf_read_QC_trim.wdl</a></td>
+</tr>
+<tr>
+<td>Tasks</td>
+<td><a href="https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/quality_control/task_fastp.wdl">task_fastp.wdl</a><br><a href="https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/quality_control/task_trimmomatic.wdl#L3">task_trimmomatic.wdl</a> (PE subtask)<br><a href="https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/quality_control/task_bbduk.wdl">task_bbduk.wdl</a><br><a href="https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/quality_control/task_fastq_scan.wdl#L3">task_fastq_scan.wdl</a> (PE subtask)<br><a href="https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/taxon_id/task_midas.wdl">task_midas.wdl</a><br><a href="https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/taxon_id/task_kraken2.wdl">task_kraken2.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/OpenGene/fastp">fastp</a>; <a href="https://github.com/usadellab/Trimmomatic">Trimmomatic</a>; <a href="https://github.com/rpetit3/fastq-scan">fastq-scan</a>; <a href="https://github.com/snayfach/MIDAS">MIDAS</a>; <a href="https://github.com/DerrickWood/kraken2">Kraken2</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://github.com/OpenGene/fastp">fastp</a>; <a href="http://www.usadellab.org/cms/?page=trimmomatic">Trimmomatic</a>; <a href="https://jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/bbduk-guide/">BBDuk</a>; <a href="https://github.com/rpetit3/fastq-scan">fastq-scan</a>; <a href="https://github.com/snayfach/MIDAS">MIDAS</a>; <a href="https://github.com/DerrickWood/kraken2/wiki">Kraken2</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><em><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4103590/">Trimmomatic: a flexible trimmer for Illumina sequence data</a><br></em><a href="https://academic.oup.com/bioinformatics/article/34/17/i884/5093234?login=false">fastp: an ultra-fast all-in-one FASTQ preprocessor</a><br><em><a href="https://pubmed.ncbi.nlm.nih.gov/27803195/">An integrated metagenomics pipeline for strain profiling reveals novel patterns of bacterial transmission and biogeography</a><br></em><a href="https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1891-0">Improved metagenomic analysis with Kraken 2</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<details class="task">
+<summary><code>shovill</code>: <em>De novo</em> Assembly</summary>
+<p>De Novo assembly will be undertaken only for samples that have sufficient read quantity and quality, as determined by the <code>screen</code> task assessment of clean reads. </p>
+<p>In TheiaEuk, assembly is performed using the <a href="https://github.com/tseemann/shovill">Shovill</a> pipeline. This undertakes the assembly with one of four assemblers (<a href="https://github.com/ncbi/SKESA">SKESA</a> (default), <a href="https://github.com/ablab/spades">SPAdes</a>, <a href="https://github.com/dzerbino/velvet/">Velvet</a>, <a href="https://github.com/voutcn/megahit">Megahit</a>), but also performs <a href="https://github.com/tseemann/shovill#main-steps">a number of pre- and post-processing steps</a> to improve the resulting genome assembly. Shovill uses an estimated genome size (see <a href="https://github.com/tseemann/shovill#--gsize">here</a>). If this is not provided by the user as an optional input, Shovill will estimate the genome size using <a href="https://mash.readthedocs.io/en/latest/index.html">mash</a>. Adaptor trimming can be undertaken with Shovill by setting the <code>trim</code> option to "true", but this is set to "false" by default as <a href="https://www.notion.so/TheiaProk-Workflow-Series-89b9c08406094ec78d08a578fe861626?pvs=21">alternative adapter trimming</a> is undertaken in the TheiaEuk workflow.</p>
+<details class="toggle">
+<summary>What is <em>de novo</em>  assembly?</summary>
+<p><em>De novo</em>  assembly is the process or product of attempting to reconstruct a genome from scratch (without prior knowledge of the genome) using sequence reads. Assembly of fungal genomes from short-reads will produce multiple contigs per chromosome rather than a single contiguous sequence for each chromosome.</p>
+</details>
+<div class="admonition techdetails">
+<p class="admonition-title">Shovill Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TheiaEuk WDL Task</td>
+<td><a href="https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/assembly/task_shovill.wdl#L3">task_shovill.wdl</a></td>
+</tr>
+<tr>
+<td>Software code repository and documentation</td>
+<td><a href="https://github.com/tseemann/shovill">Shovill on GitHub</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<details class="task">
+<summary><code>QUAST</code>: Assembly Quality Assessment</summary>
+<p><a href="https://github.com/ablab/quast"><code>QUAST</code></a> (<strong>QU</strong>ality <strong>AS</strong>sessment <strong>T</strong>ool) evaluates genome assemblies by computing several metrics that describe the assembly quality, including the total number of bases in the assembly, the length of the largest contig in the assembly, and the assembly percentage GC content.</p>
+<div class="admonition techdetails">
+<p class="admonition-title">QUAST Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/task_quast.wdl">task_quast.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/ablab/quast">QUAST on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td>https://quast.sourceforge.net/docs/manual.html</td>
+</tr>
+<tr>
+<td>Orginal publication</td>
+<td><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3624806/">QUAST: quality assessment tool for genome assemblies</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<details class="task">
+<summary><code>CG-Pipeline</code>: Assessment of Read Quality, and Estimation of Genome Coverage</summary>
+<p>The<code>cg_pipeline</code> task generates metrics about read quality and estimates the coverage of the genome using the "run_assembly_readMetrics.pl" script from <a href="https://github.com/lskatz/CG-Pipeline/">CG-Pipeline</a>. The genome coverage estimates are calculated using both using raw and cleaned reads, using either a user-provided <code>genome_size</code> or the estimated genome length generated by QUAST.</p>
+<div class="admonition techdetails">
+<p class="admonition-title">CG-Pipeline Technical Details</p>
+<p>The <code>cg_pipeline</code> task is run twice in TheiaEuk, once with raw reads, and once with clean reads.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/task_cg_pipeline.wdl">task_cg_pipeline.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/lskatz/CG-Pipeline/">CG-Pipeline on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://github.com/lskatz/CG-Pipeline/">CG-Pipeline on GitHub</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://academic.oup.com/bioinformatics/article/26/15/1819/188418">A computational genomics pipeline for prokaryotic sequencing projects</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<details class="task">
+<summary><code>GAMBIT</code>: <strong>Taxon Assignment</strong></summary>
+<p><a href="https://github.com/jlumpe/gambit"><code>GAMBIT</code></a> determines the taxon of the genome assembly using a k-mer based approach to match the assembly sequence to the closest complete genome in a database, thereby predicting its identity. Sometimes, GAMBIT can confidently designate the organism to the species level. Other times, it is more conservative and assigns it to a higher taxonomic rank.</p>
+<p>For additional details regarding the GAMBIT tool and a list of available GAMBIT databases for analysis, please consult the <a href="https://www.notion.so/GAMBIT-7c1376b861d0486abfbc316480046bdc?pvs=21">GAMBIT</a> tool documentation.</p>
+<div class="admonition techdetails">
+<p class="admonition-title">GAMBIT Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/taxon_id/task_gambit.wdl">task_gambit.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/jlumpe/gambit">GAMBIT on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://gambit-genomics.readthedocs.io/en/latest/">GAMBIT ReadTheDocs</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0277575">GAMBIT (Genomic Approximation Method for Bacterial Identification and Tracking): A methodology to rapidly leverage whole genome sequencing of bacterial isolates for clinical identification</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<details class="task">
+<summary><strong><code>QC_check</code>: Check QC Metrics Against User-Defined Thresholds (optional)</strong></summary>
+<p>The <code>qc_check</code> task compares generated QC metrics against user-defined thresholds for each metric. This task will run if the user provides a <code>qc_check_table</code> .tsv file. If all QC metrics meet the threshold, the <code>qc_check</code> output variable will read <code>QC_PASS</code>. Otherwise, the output will read <code>QC_NA</code> if the task could not proceed or <code>QC_ALERT</code> followed by a string indicating what metric failed.</p>
+<p>The <code>qc_check</code> task applies quality thresholds according to the sample taxa. The sample taxa is taken from the <code>gambit_predicted_taxon</code> value inferred by the GAMBIT module OR can be manually provided by the user using the <code>expected_taxon</code> workflow input.</p>
+<details class="toggle">
+<summary>Formatting the <em>qc_check_table.tsv</em></summary>
+<ul>
+<li>The first column of the qc_check_table lists the taxa that the task will assess and the header of this column must be "taxon".</li>
+<li>Any genus or species can be included as a row of the qc_check_table. However, these taxa must <strong>uniquely</strong> match the sample taxa, meaning that the file can include multiple species from the same genus (Vibrio_cholerae and Vibrio_vulnificus), but not both a genus row and species within that genus (Vibrio and Vibrio cholerae). <strong>The taxa should be formatted with the first letter capitalized and underscores in lieu of spaces.</strong></li>
+<li>Each subsequent column indicates a QC metric and lists a threshold for each taxa that will be checked. <strong>The column names must exactly match expected values, so we highly recommend copy and pasting from the template files below.</strong></li>
+</ul>
+</details>
+<details class="toggle">
+<summary>Template <em>qc_check_table.tsv</em> files</summary>
+<p>TheiaEuk_Illumina_PE_PHB: <a href="../../../assets/characterization/theiaeuk_qc_check_template.tsv">theiaeuk_qc_check_template.tsv</a></p>
+<div class="admonition warning">
+<p class="admonition-title">Example Purposes Only</p>
+<p>QC threshold values shown are for example purposes only and should not be presumed to be sufficient for every dataset.</p>
+</div>
+</details>
+<div class="admonition techdetails">
+<p class="admonition-title">QC_Check Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/quality_control/task_qc_check.wdl">task_qc_check.wdl</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<h3 id="organism-specific-characterization">Organism-specific Characterization<a class="headerlink" href="#organism-specific-characterization" title="Permanent link">&para;</a></h3>
+<p>The TheiaEuk workflow automatically activates taxa-specific tasks after identification of relevant taxa using <code>GAMBIT</code>. Many of these taxa-specific tasks do not require any additional workflow tasks from the user.</p>
+<details class="toggle">
+<summary><em>Candida auris</em></summary>
+<p>Two tools are deployed when <em>Candida auris is</em>  identified. First, the Cladetyping tool is launched to determine the clade of the specimen by comparing the sequence to five clade-specific reference files. The output of the clade typing task will be used to specify the reference genome for the antifungal resistance detection tool. To detect mutations that may confer antifungal resistance, <code>Snippy</code> is used to find all variants relative to the clade-specific reference, then these variants are queried for product names associated with resistance according to the MARDy database (<a href="http://mardy.dide.ic.ac.uk/index.php">http://mardy.dide.ic.ac.uk/index.php</a>).</p>
+<p><strong>Default reference genomes used for clade typing and antimicrobial resistance gene detection of C. auris</strong></p>
+<table>
+<thead>
+<tr>
+<th>Clade</th>
+<th>Genome Accession</th>
+<th>Assembly Name</th>
+<th>Strain</th>
+<th>NCBI Submitter</th>
+<th>Included mutations in AMR genes (not comprehensive)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Candida auris Clade I</td>
+<td>GCA_002759435.2</td>
+<td>Cand_auris_B8441_V2</td>
+<td>B8441</td>
+<td>Centers for Disease Control and Prevention</td>
+<td></td>
+</tr>
+<tr>
+<td>Candida auris Clade II</td>
+<td>GCA_003013715.2</td>
+<td>ASM301371v2</td>
+<td>B11220</td>
+<td>Centers for Disease Control and Prevention</td>
+<td></td>
+</tr>
+<tr>
+<td>Candida auris Clade III</td>
+<td>GCA_002775015.1</td>
+<td>Cand_auris_B11221_V1</td>
+<td>B11221</td>
+<td>Centers for Disease Control and Prevention</td>
+<td><em>ERG11</em> V125A/F126L</td>
+</tr>
+<tr>
+<td>Candida auris Clade IV</td>
+<td>GCA_003014415.1</td>
+<td>Cand_auris_B11243</td>
+<td>B11243</td>
+<td>Centers for Disease Control and Prevention</td>
+<td><em>ERG11</em> Y132F</td>
+</tr>
+<tr>
+<td>Candida auris Clade V</td>
+<td>GCA_016809505.1</td>
+<td>ASM1680950v1</td>
+<td>IFRC2087</td>
+<td>Centers for Disease Control and Prevention</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>The genes in which there are known resistance-conferring mutations for this pathogen are:</p>
+<ul>
+<li>FKS1</li>
+<li>ERG11 (lanosterol 14-alpha demethylase)</li>
+<li>FUR1 (uracil phosphoribosyltransferase)</li>
+</ul>
+<p>Mutations in these genes that are known to confer resistance are shown below (source: MARDy database http://mardy.dide.ic.ac.uk/index.php)</p>
+<table>
+<thead>
+<tr>
+<th><strong>Organism</strong></th>
+<th><strong>Found in</strong></th>
+<th><strong>Gene name</strong></th>
+<th><strong>Gene locus</strong></th>
+<th><strong>AA mutation</strong></th>
+<th><strong>Drug</strong></th>
+<th><strong>Tandem repeat name</strong></th>
+<th><strong>Tandem repeat sequence</strong></th>
+<th><strong>Reference</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Candida auris</strong></td>
+<td><strong>Human</strong></td>
+<td><strong>ERG11</strong></td>
+<td></td>
+<td><strong>Y132F</strong></td>
+<td><strong>Fluconazole</strong></td>
+<td></td>
+<td></td>
+<td><a href="https://academic.oup.com/cid/article/64/2/134/2706620/Simultaneous-Emergence-of-Multidrug-Resistant"><strong>10.1093/cid/ciw691</strong></a></td>
+</tr>
+<tr>
+<td><strong>Candida auris</strong></td>
+<td><strong>Human</strong></td>
+<td><strong>ERG11</strong></td>
+<td></td>
+<td><strong>K143R</strong></td>
+<td><strong>Fluconazole</strong></td>
+<td></td>
+<td></td>
+<td><a href="https://academic.oup.com/cid/article/64/2/134/2706620/Simultaneous-Emergence-of-Multidrug-Resistant"><strong>10.1093/cid/ciw691</strong></a></td>
+</tr>
+<tr>
+<td><strong>Candida auris</strong></td>
+<td><strong>Human</strong></td>
+<td><strong>ERG11</strong></td>
+<td></td>
+<td><strong>F126T</strong></td>
+<td><strong>Fluconazole</strong></td>
+<td></td>
+<td></td>
+<td><a href="https://academic.oup.com/cid/article/64/2/134/2706620/Simultaneous-Emergence-of-Multidrug-Resistant"><strong>10.1093/cid/ciw691</strong></a></td>
+</tr>
+<tr>
+<td><strong>Candida auris</strong></td>
+<td><strong>Human</strong></td>
+<td><strong>FKS1</strong></td>
+<td></td>
+<td><strong>S639P</strong></td>
+<td><strong>Micafungin</strong></td>
+<td></td>
+<td></td>
+<td><a href="https://www.sciencedirect.com/science/article/pii/S0732889317303498"><strong>10.1016/j.diagmicrobio.2017.10.021</strong></a></td>
+</tr>
+<tr>
+<td><strong>Candida auris</strong></td>
+<td><strong>Human</strong></td>
+<td><strong>FKS1</strong></td>
+<td></td>
+<td><strong>S639P</strong></td>
+<td><strong>Caspofungin</strong></td>
+<td></td>
+<td></td>
+<td><a href="https://www.sciencedirect.com/science/article/pii/S0732889317303498"><strong>10.1016/j.diagmicrobio.2017.10.021</strong></a></td>
+</tr>
+<tr>
+<td><strong>Candida auris</strong></td>
+<td><strong>Human</strong></td>
+<td><strong>FKS1</strong></td>
+<td></td>
+<td><strong>S639P</strong></td>
+<td><strong>Anidulafungin</strong></td>
+<td></td>
+<td></td>
+<td><a href="https://www.sciencedirect.com/science/article/pii/S0732889317303498"><strong>10.1016/j.diagmicrobio.2017.10.021</strong></a></td>
+</tr>
+<tr>
+<td><strong>Candida auris</strong></td>
+<td><strong>Human</strong></td>
+<td><strong>FKS1</strong></td>
+<td></td>
+<td><strong>S639F</strong></td>
+<td><strong>Micafungin</strong></td>
+<td></td>
+<td></td>
+<td><a href="https://academic.oup.com/jac/advance-article/doi/10.1093/jac/dkx480/4794718"><strong>10.1093/jac/dkx480</strong></a></td>
+</tr>
+<tr>
+<td><strong>Candida auris</strong></td>
+<td><strong>Human</strong></td>
+<td><strong>FKS1</strong></td>
+<td></td>
+<td><strong>S639F</strong></td>
+<td><strong>Caspofungin</strong></td>
+<td></td>
+<td></td>
+<td><a href="https://academic.oup.com/jac/advance-article/doi/10.1093/jac/dkx480/4794718"><strong>10.1093/jac/dkx480</strong></a></td>
+</tr>
+<tr>
+<td><strong>Candida auris</strong></td>
+<td><strong>Human</strong></td>
+<td><strong>FKS1</strong></td>
+<td></td>
+<td><strong>S639F</strong></td>
+<td><strong>Anidulafungin</strong></td>
+<td></td>
+<td></td>
+<td><a href="https://academic.oup.com/jac/advance-article/doi/10.1093/jac/dkx480/4794718"><strong>10.1093/jac/dkx480</strong></a></td>
+</tr>
+<tr>
+<td><strong>Candida auris</strong></td>
+<td><strong>Human</strong></td>
+<td><strong>FUR1</strong></td>
+<td><strong>CAMJ_004922</strong></td>
+<td><strong>F211I</strong></td>
+<td><strong>5-flucytosine</strong></td>
+<td></td>
+<td></td>
+<td><a href="https://www.nature.com/articles/s41426-018-0045-x"><strong>https://doi.org/10.1038/s41426-018-0045-x</strong></a></td>
+</tr>
+</tbody>
+</table>
+</details>
+<details class="toggle">
+<summary><em>Candida albicans</em></summary>
+<p>When this species is detected by the taxon ID tool, an antifungal resistance detection task is deployed. To detect mutations that may confer antifungal resistance, <code>Snippy</code> is used to find all variants relative to the clade-specific reference, and these variants are queried for product names associated with resistance according to the MARDy database (<a href="http://mardy.dide.ic.ac.uk/index.php">http://mardy.dide.ic.ac.uk/index.php</a>).</p>
+<p>The genes in which there are known resistance-conferring mutations for this pathogen are:</p>
+<ul>
+<li>ERG11</li>
+<li>GCS1 (FKS1)</li>
+<li>FUR1</li>
+<li>RTA2</li>
+</ul>
+</details>
+<details class="toggle">
+<summary><em>Aspergillus fumigatus</em></summary>
+<p>When this species is detected by the taxon ID tool an antifungal resistance detection task is deployed. To detect mutations that may confer antifungal resistance, <code>Snippy</code> is used to find all variants relative to the clade-specific reference, and these variants are queried for product names associated with resistance according to the MARDy database (<a href="http://mardy.dide.ic.ac.uk/index.php">http://mardy.dide.ic.ac.uk/index.php</a>).</p>
+<p>The genes in which there are known resistance-conferring mutations for this pathogen are:</p>
+<ul>
+<li>Cyp51A</li>
+<li>HapE</li>
+<li>COX10 (AFUA_4G08340)</li>
+</ul>
+</details>
+<details class="toggle">
+<summary><em>Cryptococcus neoformans</em></summary>
+<p>When this species is detected by the taxon ID tool an antifungal resistance detection task is deployed. To detect mutations that may confer antifungal resistance, <code>Snippy</code> is used to find all variants relative to the clade-specific reference, and these variants are queried for product names associated with resistance according to the MARDy database (<a href="http://mardy.dide.ic.ac.uk/index.php">http://mardy.dide.ic.ac.uk/index.php</a>).</p>
+<p>The gene in which there are known resistance-conferring mutations for this pathogen is:</p>
+<ul>
+<li>ERG11 (CNA00300)</li>
+</ul>
+</details>
+<h3 id="outputs">Outputs<a class="headerlink" href="#outputs" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><strong>Variable</strong></th>
+<th><strong>Type</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>cg_pipeline_docker</td>
+<td>String</td>
+<td>Docker file used for running CG-Pipeline on cleaned reads</td>
+</tr>
+<tr>
+<td>cg_pipeline_report</td>
+<td>File</td>
+<td>TSV file of read metrics from raw reads, including average read length, number of reads, and estimated genome coverage</td>
+</tr>
+<tr>
+<td>est_coverage_clean</td>
+<td>Float</td>
+<td>Estimated coverage calculated from   clean reads and genome length</td>
+</tr>
+<tr>
+<td>est_coverage_raw</td>
+<td>Float</td>
+<td>Estimated coverage calculated from  raw reads and genome length</td>
+</tr>
+<tr>
+<td>r1_mean_q_clean</td>
+<td>Float</td>
+<td>Mean quality score of clean forward reads</td>
+</tr>
+<tr>
+<td>r1_mean_q_raw</td>
+<td>Float</td>
+<td>Mean quality score of raw forward reads</td>
+</tr>
+<tr>
+<td>r2_mean_q_clean</td>
+<td>Float</td>
+<td>Mean quality score of clean reverse reads</td>
+</tr>
+<tr>
+<td>r2_mean_q_raw</td>
+<td>Float</td>
+<td>Mean quality score of raw reverse reads</td>
+</tr>
+<tr>
+<td>fastq_scan_version</td>
+<td>String</td>
+<td>Version of fastq-scan software used</td>
+</tr>
+<tr>
+<td>gambit_closest_genomes</td>
+<td>File</td>
+<td>CSV file listing genomes in the GAMBIT database that are most similar to the query assembly</td>
+</tr>
+<tr>
+<td>gambit_db_version</td>
+<td>String</td>
+<td>Version of GAMBIT used</td>
+</tr>
+<tr>
+<td>gambit_docker</td>
+<td>String</td>
+<td>GAMBIT docker file used</td>
+</tr>
+<tr>
+<td>gambit_predicted_taxon</td>
+<td>String</td>
+<td>Taxon predicted by GAMBIT</td>
+</tr>
+<tr>
+<td>gambit_predicted_taxon_rank</td>
+<td>String</td>
+<td>Taxon rank of GAMBIT taxon prediction</td>
+</tr>
+<tr>
+<td>gambit_report</td>
+<td>File</td>
+<td>GAMBIT report in a machine-readable format</td>
+</tr>
+<tr>
+<td>gambit_version</td>
+<td>String</td>
+<td>Version of GAMBIT software used</td>
+</tr>
+<tr>
+<td>assembly_length</td>
+<td>Int</td>
+<td>Length of assembly (total contig length) as determined by QUAST</td>
+</tr>
+<tr>
+<td>n50_value</td>
+<td>Int</td>
+<td>N50 of assembly calculated by QUAST</td>
+</tr>
+<tr>
+<td>number_contigs</td>
+<td>Int</td>
+<td>Total number of contigs in assembly</td>
+</tr>
+<tr>
+<td>quast_report</td>
+<td>File</td>
+<td>TSV report from QUAST</td>
+</tr>
+<tr>
+<td>quast_version</td>
+<td>String</td>
+<td>Software version of QUAST used</td>
+</tr>
+<tr>
+<td>rasusa_version</td>
+<td>String</td>
+<td>Version of rasusa used</td>
+</tr>
+<tr>
+<td>read1_subsampled</td>
+<td>File</td>
+<td>Subsampled read1 file</td>
+</tr>
+<tr>
+<td>read2_subsampled</td>
+<td>File</td>
+<td>Subsampled read2 file</td>
+</tr>
+<tr>
+<td>bbduk_docker</td>
+<td>String</td>
+<td>BBDuk docker image used</td>
+</tr>
+<tr>
+<td>fastp_version</td>
+<td>String</td>
+<td>Version of fastp software used</td>
+</tr>
+<tr>
+<td>read1_clean</td>
+<td>File</td>
+<td>Clean forward reads file</td>
+</tr>
+<tr>
+<td>read2_clean</td>
+<td>File</td>
+<td>Clean reverse reads file</td>
+</tr>
+<tr>
+<td>num_reads_clean_pairs</td>
+<td>String</td>
+<td>Number of read pairs after cleaning</td>
+</tr>
+<tr>
+<td>num_reads_clean1</td>
+<td>Int</td>
+<td>Number of forward reads after cleaning</td>
+</tr>
+<tr>
+<td>num_reads_clean2</td>
+<td>Int</td>
+<td>Number of reverse reads after cleaning</td>
+</tr>
+<tr>
+<td>num_reads_raw_pairs</td>
+<td>String</td>
+<td>Number of input read pairs</td>
+</tr>
+<tr>
+<td>num_reads_raw1</td>
+<td>Int</td>
+<td>Number of input forward reads</td>
+</tr>
+<tr>
+<td>num_reads_raw2</td>
+<td>Int</td>
+<td>Number of input reverse reads</td>
+</tr>
+<tr>
+<td>trimmomatic_version</td>
+<td>String</td>
+<td>Version of trimmomatic used</td>
+</tr>
+<tr>
+<td>clean_read_screen</td>
+<td>String</td>
+<td>PASS or FAIL result from clean read screening; FAIL accompanied by the reason for failure</td>
+</tr>
+<tr>
+<td>raw_read_screen</td>
+<td>String</td>
+<td>PASS or FAIL result from raw read screening; FAIL accompanied by thereason for failure</td>
+</tr>
+<tr>
+<td>assembly_fasta</td>
+<td>File</td>
+<td><a href="https://github.com/tseemann/shovill#contigsfa">https://github.com/tseemann/shovill#contigsfa</a></td>
+</tr>
+<tr>
+<td>contigs_fastg</td>
+<td>File</td>
+<td>Assembly graph if megahit used for genome assembly</td>
+</tr>
+<tr>
+<td>contigs_gfa</td>
+<td>File</td>
+<td>Assembly graph if spades used for genome assembly</td>
+</tr>
+<tr>
+<td>contigs_lastgraph</td>
+<td>File</td>
+<td>Assembly graph if velvet used for genome assembly</td>
+</tr>
+<tr>
+<td>shovill_pe_version</td>
+<td>String</td>
+<td>Shovill version used</td>
+</tr>
+<tr>
+<td>theiaeuk_snippy_variants_bam</td>
+<td>File</td>
+<td>BAM file produced by the snippy module</td>
+</tr>
+<tr>
+<td>theiaeuk_snippy_variants_gene_query_results</td>
+<td>File</td>
+<td>File containing all lines from variants file matching gene query terms</td>
+</tr>
+<tr>
+<td>theiaeuk_snippy_variants_hits</td>
+<td>String</td>
+<td>String of all variant file entries matching gene query term</td>
+</tr>
+<tr>
+<td>theiaeuk_snippy_variants_outdir_tarball</td>
+<td>File</td>
+<td>Tar compressed file containing full snippy output directory</td>
+</tr>
+<tr>
+<td>theiaeuk_snippy_variants_query</td>
+<td>String</td>
+<td>The gene query term(s) used to search variant</td>
+</tr>
+<tr>
+<td>theiaeuk_snippy_variants_query_check</td>
+<td>String</td>
+<td>Were the gene query terms present in the refence annotated genome file</td>
+</tr>
+<tr>
+<td>theiaeuk_snippy_variants_reference_genome</td>
+<td>File</td>
+<td>The reference genome used in the alignment and variant calling</td>
+</tr>
+<tr>
+<td>theiaeuk_snippy_variants_results</td>
+<td>File</td>
+<td>The variants file produced by snippy</td>
+</tr>
+<tr>
+<td>theiaeuk_snippy_variants_summary</td>
+<td>File</td>
+<td>A file summarizing the variants detected by snippy</td>
+</tr>
+<tr>
+<td>theiaeuk_snippy_variants_version</td>
+<td>String</td>
+<td>The version of the snippy_variants module being used</td>
+</tr>
+<tr>
+<td>seq_platform</td>
+<td>String</td>
+<td>Sequencing platform inout by the user</td>
+</tr>
+<tr>
+<td>theiaeuk_illumina_pe_analysis_date</td>
+<td>String</td>
+<td>Date of TheiaProk workflow execution</td>
+</tr>
+<tr>
+<td>theiaeuk_illumina_pe_version</td>
+<td>String</td>
+<td>TheiaProk workflow version used</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+  
+    
+  
+  
+    
+  
+
+
+  <aside class="md-source-file">
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Last update">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2024-09-06</span>
+  </span>
+
+    
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Created">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2023-03-25</span>
+  </span>
+
+    
+    
+    
+  </aside>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      &copy; 2022-2024 <a href="https://www.theiagen.com" target="_blank" rel="noopener">Theiagen Genomics</a>
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/theiagen" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://twitter.com/theiagen" target="_blank" rel="noopener" title="twitter.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/company/theiagen" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3M135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5m282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["content.code.annotate", "content.code.copy", "content.tabs.link", "content.tooltips", "navigation.instant", "navigation.path", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.suggest", "toc.follow"], "search": "../../../assets/javascripts/workers/search.07f07601.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.56dfad97.min.js"></script>
+      
+        <script src="https://unpkg.com/tablesort@5.3.0/dist/tablesort.min.js"></script>
+      
+        <script src="../../../javascripts/tablesort.js"></script>
+      
+    
+  <script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(() => { lightbox.reload() });
+</script></body>
+</html>
