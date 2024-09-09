@@ -4,21 +4,38 @@ on:
     branches:
       - smw-documentation-dev
       - main
+
 permissions: 
   contents: write
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout main
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - uses: actions/setup-python@v4
+      
+      - name: Setup python
+        uses: actions/setup-python@v4
         with:
           python-version: 3.x
-      - uses: actions/cache@v2
+      
+      - name: Cache dependencies
+        uses: actions/cache@v2
         with:
           key: ${{ github.ref }}
           path: .cache
-      - run: pip install mkdocs-material mkdocs-material-extensions mkdocs-git-revision-date-localized-plugin mike mkdocs-glightbox
-      - run: git config user.name sage-wright && git config user.email sage.wright@theiagen.com && mike deploy main --push && mkdocs gh-deploy --force
+
+      - name: Install dependencies
+        run: |
+          pip install mkdocs-material mkdocs-material-extensions mkdocs-git-revision-date-localized-plugin mike mkdocs-glightbox
+      
+      - name: Build documentation
+        run: |
+          git config user.name sage-wright
+          git config user.email sage.wright@theiagen.com 
+          LATEST_RELEASE=$(curl -sL https://api.github.com/repos/theiagen/public_health_bioinformatics/releases/latest | jq -r ".tag_name")
+          mike deploy main --push --update-aliases ${LATEST_RELEASE} latest
+          mike set-default --push latest
