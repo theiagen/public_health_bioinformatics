@@ -1,4 +1,4 @@
-name: build-documentation
+name: version-documentation
 on:
  release:
    types: [published]
