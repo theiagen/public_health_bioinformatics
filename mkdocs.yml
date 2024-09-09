@@ -152,6 +152,7 @@ nav:
             - VADR_Update: workflows/genomic_characterization/vadr_update.md
             - Zip_Column_Content: workflows/data_export/zip_column_content.md
      - Contributing to the Documentation: contribution_guide.md
+     - Contributing to the Code: code_contribution.md
 
 theme: 
   name: material

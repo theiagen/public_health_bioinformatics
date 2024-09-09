@@ -1,6 +1,6 @@
 # PHB Documentation Contribution Guide
 
-The documentation for PHB is hosted in this directory. This documentation is written in Markdown and is built using [MkDocs](https://www.mkdocs.org/) and the [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/) theme.
+The documentation for PHB is hosted in the `docs/` directory. This documentation is written in Markdown and is built using [MkDocs](https://www.mkdocs.org/) and the [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/) theme.
 
 This guide is intended to provide a brief overview of the documentation structure and how to contribute to the documentation, including standard language and formatting conventions.
 
