@@ -1,9 +1,7 @@
 name: build-documentation
 on:
-  push:
-    branches:
-      - smw-documentation-dev
-      - main
+ release:
+   types: [published]
 
 permissions: 
   contents: write
@@ -36,4 +34,6 @@ jobs:
         run: |
           git config user.name sage-wright
           git config user.email sage.wright@theiagen.com 
+          LATEST_RELEASE=$(curl -sL https://api.github.com/repos/theiagen/public_health_bioinformatics/releases/latest | jq -r ".tag_name")
           mike deploy --push --update-aliases main
+          mike set-default --push latest
