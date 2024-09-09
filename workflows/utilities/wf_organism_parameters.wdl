@@ -191,7 +191,7 @@ workflow organism_parameters {
     String rsv_a_nextclade_ds_tag = "2024-08-01--22-31-31Z"
     String rsv_a_nextclade_ds_name = "nextstrain/rsv/a/EPI_ISL_412866"
     Int rsv_a_genome_len = 15500
-    String rsv_a_kraken_target_organism = "Respiratory syncytial virus"
+    String rsv_a_kraken_target_organism = "Human respiratory syncytial virus A"
     String rsv_a_vadr_options = "-r --mkey rsv --xnocomp"
     Int rsv_a_vadr_max_length = 15500
     Int rsv_a_vadr_skip_length = 5000
@@ -215,7 +215,7 @@ workflow organism_parameters {
     String rsv_b_nextclade_ds_tag = "2024-08-01--22-31-31Z"
     String rsv_b_nextclade_ds_name = "nextstrain/rsv/b/EPI_ISL_1653999"
     Int rsv_b_genome_len = 15500
-    String rsv_b_kraken_target_organism = "Human orthopneumovirus"  
+    String rsv_b_kraken_target_organism = "human respiratory syncytial virus"  
     String rsv_b_vadr_options = "-r --mkey rsv --xnocomp"
     Int rsv_b_vadr_max_length = 15500
     Int rsv_b_vadr_skip_length = 5000

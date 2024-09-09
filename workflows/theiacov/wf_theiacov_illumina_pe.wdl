@@ -299,6 +299,7 @@ workflow theiacov_illumina_pe {
     Float? kraken2_sc2_dehosted = read_QC_trim.kraken2_sc2_dehosted
     String? kraken2_target_organism_dehosted = read_QC_trim.kraken2_target_organism_dehosted
     File? kraken2_report_dehosted = read_QC_trim.kraken2_report_dehosted
+    String? kraken2_database = read_QC_trim.kraken2_database
     # Read Alignment - bwa outputs
     String? bwa_version = ivar_consensus.bwa_version
     String? samtools_version = ivar_consensus.samtools_version
