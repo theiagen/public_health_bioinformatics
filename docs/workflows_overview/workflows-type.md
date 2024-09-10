@@ -52,7 +52,7 @@ title: Workflows by Type
 
 ### Public Data Sharing
 
-| **Name** | **Description** | **Applicable Kingdom** | **Workflow Level** | **Command-line Compatibility**[^1] | **Last Known Changes** | **Dockstore** | | **Dockstore** |
+| **Name** | **Description** | **Applicable Kingdom** | **Workflow Level** | **Command-line Compatibility**[^1] | **Last Known Changes** | **Dockstore** |
 |---|---|---|---|---|---|---|
 | [**Mercury_Prep_N_Batch**](../workflows/public_data_sharing/mercury_prep_n_batch.md)| Prepare metadata and sequence data for submission to NCBI and GISAID | Influenza, Monkeypox virus, SARS-CoV-2, Viral | Set-level | No | v2.2.0 | [Mercury_Prep_N_Batch_PHB](https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Mercury_Prep_N_Batch_PHB:main?tab=info) |
 | [**Terra_2_GISAID**](../workflows/public_data_sharing/terra_2_gisaid.md)| Upload of assembly data to GISAID | SARS-CoV-2, Viral | Set-level | Yes | v1.2.1 | [Terra_2_GISAID_PHB](https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Terra_2_GISAID_PHB:main?tab=info) |
