@@ -38,11 +38,14 @@ task stats_n_coverage {
     total_reads=$(grep "in total" ~{samplename}.flagstat.txt | cut -d " " -f 1)
     mapped_reads=$(grep "mapped (" ~{samplename}.flagstat.txt | cut -d " " -f 1)
 
-    if [ -z "$total_reads" ] ; then total_reads="1" ; fi  # avoid division by zero
-    if [ -z "$mapped_reads" ] ; then mapped_reads="0" ; fi
+    if [ -z "$total_reads" ]; then total_reads="1"; fi  # avoid division by zero
+    if [ -z "$mapped_reads" ]; then mapped_reads="0"; fi
 
     # Calculate percentage of mapped reads
     percentage_mapped_reads=$(echo "scale=2; ($mapped_reads / $total_reads) * 100" | bc)
+
+    # Default to 0.0 if calculation fails
+    if [ -z "$percentage_mapped_reads" ]; then percentage_mapped_reads="0.0"; fi
 
     echo $percentage_mapped_reads | tee PERCENTAGE_MAPPED_READS
   >>>
@@ -57,7 +60,7 @@ task stats_n_coverage {
     Float depth = read_string("DEPTH")
     Float meanbaseq = read_string("MEANBASEQ")
     Float meanmapq = read_string("MEANMAPQ")
-    Float percentage_mapped_reads = read_string("PERCENTAGE_MAPPED_READS")
+    Float percentage_mapped_reads = read_float("PERCENTAGE_MAPPED_READS")
   }
   runtime {
     docker: docker
