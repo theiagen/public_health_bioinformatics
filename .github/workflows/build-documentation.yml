@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - main
+      - smw-documentation-dev
 
 permissions: 
   contents: write
@@ -35,4 +36,4 @@ jobs:
         run: |
           git config user.name sage-wright
           git config user.email sage.wright@theiagen.com 
-          mike deploy --push main
+          mike deploy --push main --update-aliases main development
