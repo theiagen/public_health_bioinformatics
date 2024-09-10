@@ -34,19 +34,21 @@ task stats_n_coverage {
     echo $meanbaseq | tee MEANBASEQ
     echo $meanmapq | tee MEANMAPQ
 
-    # Parsing flagstat for total and mapped reads
-    total_reads=$(grep "in total" ~{samplename}.flagstat.txt | cut -d " " -f 1)
-    mapped_reads=$(grep "mapped (" ~{samplename}.flagstat.txt | cut -d " " -f 1)
+    # Parsing stats.txt for total and mapped reads
+    total_reads=$(grep "^SN" ~{samplename}.stats.txt | grep "raw total sequences:" | cut -f 3)
+    mapped_reads=$(grep "^SN" ~{samplename}.stats.txt | grep "reads mapped:" | cut -f 3)
 
-    if [ -z "$total_reads" ]; then total_reads="1"; fi  # avoid division by zero
+    # Check for empty values and set defaults to avoid errors
+    if [ -z "$total_reads" ]; then total_reads="1"; fi  # Avoid division by zero
     if [ -z "$mapped_reads" ]; then mapped_reads="0"; fi
 
-    # Calculate percentage of mapped reads
+    # Calculate the percentage of mapped reads
     percentage_mapped_reads=$(echo "scale=2; ($mapped_reads / $total_reads) * 100" | bc)
 
-    # Default to 0.0 if calculation fails
+    # If the percentage calculation fails, default to 0.0
     if [ -z "$percentage_mapped_reads" ]; then percentage_mapped_reads="0.0"; fi
 
+    # Output the result
     echo $percentage_mapped_reads | tee PERCENTAGE_MAPPED_READS
   >>>
   output {
