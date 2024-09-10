@@ -73,7 +73,7 @@ task stats_n_coverage {
     Float depth = read_string("DEPTH")
     Float meanbaseq = read_string("MEANBASEQ")
     Float meanmapq = read_string("MEANMAPQ")
-    Float percentage_mapped_reads = read_float("PERCENTAGE_MAPPED_READS")
+    Float percentage_mapped_reads = read_string("PERCENTAGE_MAPPED_READS")
     File metrics_txt = "~{samplename}_metrics.txt"
 
   }
