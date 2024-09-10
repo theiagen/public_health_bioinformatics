@@ -35,8 +35,8 @@ task stats_n_coverage {
     echo $meanmapq | tee MEANMAPQ
 
     # Parsing stats.txt for total and mapped reads
-    total_reads=$(grep "^SN" ~{samplename}.stats.txt | grep "raw total sequences:" | awk '{print $4}')
-    mapped_reads=$(grep "^SN" ~{samplename}.stats.txt | grep "reads mapped:" | awk '{print $4}')
+    total_reads=$(grep "^SN" ~{samplename}.stats.txt | grep "raw total sequences:" | cut -f 3)
+    mapped_reads=$(grep "^SN" ~{samplename}.stats.txt | grep "reads mapped:" | cut -f 3)
 
     # Check for empty values and set defaults to avoid errors
     if [ -z "$total_reads" ]; then total_reads="1"; fi  # Avoid division by zero
