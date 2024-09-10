@@ -43,7 +43,7 @@ task stats_n_coverage {
     if [ -z "$mapped_reads" ]; then mapped_reads="0"; fi
 
     # Calculate the percentage of mapped reads
-    percentage_mapped_reads=$(echo "scale=2; ($mapped_reads / $total_reads) * 100" | bc)
+    percentage_mapped_reads=$(awk "BEGIN {printf \"%.2f\", ($mapped_reads / $total_reads) * 100}")
 
     # If the percentage calculation fails, default to 0.0
     if [ -z "$percentage_mapped_reads" ]; then percentage_mapped_reads="0.0"; fi
