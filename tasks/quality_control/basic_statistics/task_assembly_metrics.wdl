@@ -51,15 +51,16 @@ task stats_n_coverage {
     # Output the result
     echo $percentage_mapped_reads | tee PERCENTAGE_MAPPED_READS
 
+    #output all metrics in one txt file
     # Output header row (for CSV)
-    echo "Statistic,Value" > ~{samplename}_metrics.csv
+    echo "Statistic    Value" > ~{samplename}_metrics.txt
 
     # Output each statistic as a row
-    echo "Coverage,$coverage" >> ~{samplename}_metrics.csv
-    echo "Depth,$depth" >> ~{samplename}_metrics.csv
-    echo "Mean Base Quality,$meanbaseq" >> ~{samplename}_metrics.csv
-    echo "Mean Mapping Quality,$meanmapq" >> ~{samplename}_metrics.csv
-    echo "Percentage Mapped Reads,$percentage_mapped_reads" >> ~{samplename}_metrics.csv
+    echo "Coverage    $coverage" >> ~{samplename}_metrics.txt
+    echo "Depth    $depth" >> ~{samplename}_metrics.txt
+    echo "Mean Base Quality    $meanbaseq" >> ~{samplename}_metrics.txt
+    echo "Mean Mapping Quality    $meanmapq" >> ~{samplename}_metrics.txt
+    echo "Percentage Mapped Reads    $percentage_mapped_reads" >> ~{samplename}_metrics.txt
   >>>
   output {
     String date = read_string("DATE")
@@ -73,7 +74,7 @@ task stats_n_coverage {
     Float meanbaseq = read_string("MEANBASEQ")
     Float meanmapq = read_string("MEANMAPQ")
     Float percentage_mapped_reads = read_float("PERCENTAGE_MAPPED_READS")
-    File metrics_csv = "~{samplename}_metrics.csv"
+    File metrics_txt = "~{samplename}_metrics.txt"
 
   }
   runtime {
