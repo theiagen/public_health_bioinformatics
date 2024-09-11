@@ -64,6 +64,7 @@ By default, this task appends a Phandango coloring tag to color all items from t
 ### Outputs
 
 | **Variable** | **Type** | **Description** |
+|---|---|---|
 | mashtree_docker | String | The Docker image used to run the mashtree task |
 | mashtree_filtered_metadata | File | Optional output file with filtered metadata that is only produced if the optional `summarize_data` task is used |
 | mashtree_matrix | File | The SNP matrix made |

@@ -226,7 +226,7 @@ Sequencing data used in the Snippy_Tree workflow must:
 
     The SNP-distance output can be visualized using software such as [Phandango](http://jameshadfield.github.io/phandango/#/main) to explore the relationships between the genomic sequences. The task adds a Phandango coloring tag (:c1) to the column names in the output matrix to ensure that all columns are colored with the same color scheme throughout.
 
-    - **Technical details**  
+    !!! techdetails "SNP-dists Technical Details"
         
         |  | Links |
         | --- | --- |
