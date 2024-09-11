@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - main
+      - smw-documentation-dev
 
 permissions: 
   contents: write
