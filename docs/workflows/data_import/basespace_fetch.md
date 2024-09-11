@@ -10,16 +10,16 @@
 
 The `BaseSpace_Fetch` workflow facilitates the transfer of Illumina sequencing data from BaseSpace (a cloud location) to a workspace on the [Terra.bio](http://Terra.bio) platform. Rather than downloading the files to a local drive and then re-uploading them to another location, we can perform a cloud-to-cloud transfer with the `BaseSpace_Fetch` workflow.
 
-Some initial set-up is required to use the workflow. To access one's BaseSpace account from within a workflow on Terra.bio, it is necessary to retrieve an access token and the API server address using the BaseSpace command line tool. The access token is unique to a BaseSpace account. If it is necessary to transfer data from multiple BaseSpace accounts, multiple access tokens will need to be retrieved. Please see the "Retrieving BaseSpace Access Credentials" section below.
+Some initial set-up is required to use the workflow. To access one's BaseSpace account from within a workflow on Terra.bio, it is necessary to retrieve an access token and the API server address using the BaseSpace command-line tool. The access token is unique to a BaseSpace account. If it is necessary to transfer data from multiple BaseSpace accounts, multiple access tokens will need to be retrieved. Please see the "Retrieving BaseSpace Access Credentials" section below.
 
 In this document, we provide instructions for both the retrieval of the BaseSpace access token and running the BaseSpace_Fetch workflow.
 
 ### Retrieving BaseSpace Access Credentials
 
-This process must be performed on a command line (ideally on a Linux or MacOS computer) before using the `BaseSpace_Fetch` workflow for the first time. This can be set up in Terra, however it will work in any command line environment that has access to the internet to install & run the BaseSpace command line tool: `bs`.
+This process must be performed on a command-line (ideally on a Linux or MacOS computer) before using the `BaseSpace_Fetch` workflow for the first time. This can be set up in Terra, however it will work in any command-line environment that has access to the internet to install & run the BaseSpace command-line tool: `bs`.
 
 ??? toggle "Click for more information"
-    If you already have a command line environment available, you can skip ahead to Step 2.
+    If you already have a command-line environment available, you can skip ahead to Step 2.
 
     #### Step 1: Setup Jupyter Cloud Environment
     
@@ -44,7 +44,7 @@ This process must be performed on a command line (ideally on a Linux or MacOS co
 
             ![Step4](../../assets/figures/basespace_fetch/step4.png){width="50%"}
 
-    #### Step 2: Install the BaseSpace Command Line Tool To Get The Access Token And API Server Address
+    #### Step 2: Install the BaseSpace Command-Line Tool To Get The Access Token And API Server Address
     ??? toggle "Click for more information"
 
         1. Open the "Terminal" app in the right side-bar of the Terra dashboard
@@ -64,7 +64,7 @@ This process must be performed on a command line (ideally on a Linux or MacOS co
             # provide proper permissions to bs cli executable 
             chmod u+x $HOME/bin/bs
             
-            # add the 'bs' command line tool to the $PATH variable so that you can call the command line tool from any directory
+            # add the 'bs' command-line tool to the $PATH variable so that you can call the command-line tool from any directory
             export PATH="$PATH:$HOME/bin/"
             
             # authenticate with BaseSpace credentials
@@ -156,7 +156,7 @@ This workflow runs on the sample level.
 | **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
 |---|---|---|---|---|---|
 | basespace_fetch | **access_token** | String | The access token is used in place of a username and password to allow the workflow to access the user account in BaseSpace from which the data is to be transferred. It is an alphanumeric string that is 32 characters in length. Example: 9e08a96471df44579b72abf277e113b7 | | Required |
-| basespace_fetch | **api_server** | String | The API server is the web address to which data transfer requests can be sent by the workflow. Use this API server if you are unsure: `"https://api.basespace.illumina.com"` (this is the default set by the command line tool) | | Required |
+| basespace_fetch | **api_server** | String | The API server is the web address to which data transfer requests can be sent by the workflow. Use this API server if you are unsure: `"https://api.basespace.illumina.com"` (this is the default set by the command-line tool) | | Required |
 | basespace_fetch | **basespace_collection** | String | The collection ID is the BaseSpace Run or Project where the data to be transferred is stored. | | Required |
 | basespace_fetch | **basespace_sample_name** | String | The BaseSpace sample name is the sample identifier used in BaseSpace. This identifier is set on the sample sheet at the onset of an Illumina sequencing run. | | Required |
 | basespace_fetch | **sample_name** | String | The sample name is the sample identifier used in the Terra.bio data table corresponding to the metadata associated with the sample to be transferred from BaseSpace | | Required |

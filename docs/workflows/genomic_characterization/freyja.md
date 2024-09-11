@@ -472,7 +472,7 @@ This workflow runs on the set level.
 | freyja_dashboard_task | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/freyja:1.5.1-07_02_2024-01-27-2024-07-22 | Optional |
 | freyja_dashboard_task | **headerColor** | String | A hex color code to change the color of the header |  | Optional |
 | freyja_dashboard_task | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 4 | Optional |
-| freyja_dashboard_task | **mincov** | Float | The minimum genome coverage used as a cut-off of data to include in the dashboard. Default is set to 60 by the freyja command line tool (not a WDL task default, per se) | None | Optional |
+| freyja_dashboard_task | **mincov** | Float | The minimum genome coverage used as a cut-off of data to include in the dashboard. Default is set to 60 by the freyja command-line tool (not a WDL task default, per se) | None | Optional |
 | freyja_dashboard_task | **scale_by_viral_load** | Boolean | If set to true, averages samples taken the same day while taking viral load into account | FALSE | Optional |
 | freyja_dashboard_task | **thresh** | Float | The minimum lineage abundance cut-off value | None | Optional |
 | version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |

@@ -52,7 +52,7 @@ Besides the data input types, there are minimal differences between these two wo
 | kraken2_pe or kraken2_se | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional | ONT, PE, SE |
 | kraken2_pe or kraken2_se | **disk_size** | Int | GB of storage to request for VM used to run the kraken2 task. Increase this when using large (>30GB kraken2 databases such as the "k2_standard" database) | 100 | Optional | ONT, PE, SE |
 | kraken2_pe or kraken2_se | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.1.2-no-db | Optional | ONT, PE, SE |
-| kraken2_pe or kraken2_se | **kraken2_args** | String | Allows a user to supply additional kraken2 command line arguments |  | Optional | ONT, PE, SE |
+| kraken2_pe or kraken2_se | **kraken2_args** | String | Allows a user to supply additional kraken2 command-line arguments |  | Optional | ONT, PE, SE |
 | kraken2_pe or kraken2_se | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 32 | Optional | ONT, PE, SE |
 | kraken2_pe or kraken2_se | **unclassified_out** | String | Allows user to rename unclassified FASTQ files output. Must include .fastq as the suffix | unclassified#.fastq | Optional | ONT, PE, SE |
 | krona | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional | PE, SE |

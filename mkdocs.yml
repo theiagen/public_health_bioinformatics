@@ -7,7 +7,7 @@ repo_url: https://github.com/theiagen/public_health_bioinformatics
 
 nav:
   - Public Health Bioinformatics: 
-     - index.md
+     - Home: index.md
      - Getting Started:
         - With the Command-Line: getting_started/commandline.md
         - With Terra.bio: getting_started/terra.md
@@ -154,8 +154,9 @@ nav:
             - Usher_PHB: workflows/phylogenetic_placement/usher.md
             - VADR_Update: workflows/genomic_characterization/vadr_update.md
             - Zip_Column_Content: workflows/data_export/zip_column_content.md
-     - Contributing to the Documentation: contributing/doc_contribution.md
-     - Contributing to the Code: contributing/code_contribution.md
+     - Contributing:
+        - Contributing to the Documentation: contributing/doc_contribution.md
+        - Contributing to the Code: contributing/code_contribution.md
 
 theme: 
   name: material

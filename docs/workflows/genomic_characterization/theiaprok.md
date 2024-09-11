@@ -300,16 +300,16 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 | merlin_magic | **call_shigeifinder_reads_input** | Boolean | If set to "true", the ShigEiFinder task  will run again but using read files as input instead of the assembly file. Input is shown but not used for TheiaProk_FASTA. | FALSE | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **cauris_cladetyper_docker_image** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **cladetyper_kmer_size** | Int | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **cladetyper_ref_clade1** | File | *Provide an empty file if running TheiaProk on the command line |  | Do not modify, Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **cladetyper_ref_clade1_annotated** | File | *Provide an empty file if running TheiaProk on the command line |  | Do not modify, Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **cladetyper_ref_clade2** | File | *Provide an empty file if running TheiaProk on the command line |  | Do not modify, Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **cladetyper_ref_clade2_annotated** | File | *Provide an empty file if running TheiaProk on the command line |  | Do not modify, Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **cladetyper_ref_clade3** | File | *Provide an empty file if running TheiaProk on the command line |  | Do not modify, Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **cladetyper_ref_clade3_annotated** | File | *Provide an empty file if running TheiaProk on the command line |  | Do not modify, Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **cladetyper_ref_clade4** | File | *Provide an empty file if running TheiaProk on the command line |  | Do not modify, Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **cladetyper_ref_clade4_annotated** | File | *Provide an empty file if running TheiaProk on the command line |  | Do not modify, Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **cladetyper_ref_clade5** | File | *Provide an empty file if running TheiaProk on the command line |  | Do not modify, Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **cladetyper_ref_clade5_annotated** | File | *Provide an empty file if running TheiaProk on the command line |  | Do not modify, Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **cladetyper_ref_clade1** | File | *Provide an empty file if running TheiaProk on the command-line |  | Do not modify, Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **cladetyper_ref_clade1_annotated** | File | *Provide an empty file if running TheiaProk on the command-line |  | Do not modify, Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **cladetyper_ref_clade2** | File | *Provide an empty file if running TheiaProk on the command-line |  | Do not modify, Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **cladetyper_ref_clade2_annotated** | File | *Provide an empty file if running TheiaProk on the command-line |  | Do not modify, Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **cladetyper_ref_clade3** | File | *Provide an empty file if running TheiaProk on the command-line |  | Do not modify, Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **cladetyper_ref_clade3_annotated** | File | *Provide an empty file if running TheiaProk on the command-line |  | Do not modify, Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **cladetyper_ref_clade4** | File | *Provide an empty file if running TheiaProk on the command-line |  | Do not modify, Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **cladetyper_ref_clade4_annotated** | File | *Provide an empty file if running TheiaProk on the command-line |  | Do not modify, Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **cladetyper_ref_clade5** | File | *Provide an empty file if running TheiaProk on the command-line |  | Do not modify, Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **cladetyper_ref_clade5_annotated** | File | *Provide an empty file if running TheiaProk on the command-line |  | Do not modify, Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **clockwork_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/cdcgov/varpipe_wgs_with_refs:2bc7234074bd53d9e92a1048b0485763cd9bbf6f4d12d5a1cc82bfec8ca7d75e | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **ectyper_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/biocontainers/ectyper:1.0.0--pyhdfd78af_1 | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **ectyper_hpcov** | Int | Minumum percent coverage required for an H antigen allele match | 50 | Optional | FASTA, ONT, PE, SE |
@@ -349,21 +349,21 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 | merlin_magic | **pbptyper_min_coverage** | Int | Minimum percent coverage to count a hit | 90 | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **pbptyper_min_pident** | Int | Minimum percent identity to count a hit | 90 | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **poppunk_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/poppunk:2.4.0 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **poppunk_gps_clusters_csv** | File | Poppunk database file *Provide an empty or local file if running TheiaProk on the command line | gs://theiagen-public-files-rp/terra/theiaprok-files/GPS_v6/GPS_v6_clusters.csv | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **poppunk_gps_dists_npy** | File | Poppunk database file *Provide an empty or local file if running TheiaProk on the command line | gs://theiagen-public-files-rp/terra/theiaprok-files/GPS_v6/GPS_v6.dists.npy | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **poppunk_gps_dists_pkl** | File | Poppunk database file *Provide an empty or local file if running TheiaProk on the command line | gs://theiagen-public-files-rp/terra/theiaprok-files/GPS_v6/GPS_v6.dists.pkl | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **poppunk_gps_external_clusters_csv** | File | Poppunk database file *Provide an empty or local file if running TheiaProk on the command line | gs://theiagen-public-files-rp/terra/theiaprok-files/GPS_v6/GPS_v6_external_clusters.csv | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **poppunk_gps_fit_npz** | File | Poppunk database file *Provide an empty or local file if running TheiaProk on the command line | gs://theiagen-public-files-rp/terra/theiaprok-files/GPS_v6/GPS_v6_fit.npz | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **poppunk_gps_fit_pkl** | File | Poppunk database file *Provide an empty or local file if running TheiaProk on the command line | gs://theiagen-public-files-rp/terra/theiaprok-files/GPS_v6/GPS_v6_fit.pkl | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **poppunk_gps_graph_gt** | File | Poppunk database file *Provide an empty or local file if running TheiaProk on the command line | gs://theiagen-public-files-rp/terra/theiaprok-files/GPS_v6/GPS_v6_graph.gt | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **poppunk_gps_h5** | File | Poppunk database file *Provide an empty or local file if running TheiaProk on the command line | gs://theiagen-public-files-rp/terra/theiaprok-files/GPS_v6/GPS_v6.h5 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **poppunk_gps_qcreport_txt** | File | Poppunk database file *Provide an empty or local file if running TheiaProk on the command line | gs://theiagen-public-files-rp/terra/theiaprok-files/GPS_v6/GPS_v6_qcreport.txt | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **poppunk_gps_refs** | File | Poppunk database file *Provide an empty or local file if running TheiaProk on the command line | gs://theiagen-public-files-rp/terra/theiaprok-files/GPS_v6/GPS_v6.refs | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **poppunk_gps_refs_dists_npy** | File | Poppunk database file *Provide an empty or local file if running TheiaProk on the command line | gs://theiagen-public-files-rp/terra/theiaprok-files/GPS_v6/GPS_v6.refs.dists.npy | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **poppunk_gps_refs_dists_pkl** | File | Poppunk database file *Provide an empty or local file if running TheiaProk on the command line | gs://theiagen-public-files-rp/terra/theiaprok-files/GPS_v6/GPS_v6.refs.dists.pkl | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **poppunk_gps_refs_graph_gt** | File | Poppunk database file *Provide an empty or local file if running TheiaProk on the command line | gs://theiagen-public-files-rp/terra/theiaprok-files/GPS_v6/GPS_v6refs_graph.gt | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **poppunk_gps_refs_h5** | File | Poppunk database file *Provide an empty or local file if running TheiaProk on the command line | gs://theiagen-public-files-rp/terra/theiaprok-files/GPS_v6/GPS_v6.refs.h5 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **poppunk_gps_unword_clusters_csv** | File | Poppunk database file *Provide an empty or local file if running TheiaProk on the command line | gs://theiagen-public-files-rp/terra/theiaprok-files/GPS_v6/GPS_v6_unword_clusters.csv | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **poppunk_gps_clusters_csv** | File | Poppunk database file *Provide an empty or local file if running TheiaProk on the command-line | gs://theiagen-public-files-rp/terra/theiaprok-files/GPS_v6/GPS_v6_clusters.csv | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **poppunk_gps_dists_npy** | File | Poppunk database file *Provide an empty or local file if running TheiaProk on the command-line | gs://theiagen-public-files-rp/terra/theiaprok-files/GPS_v6/GPS_v6.dists.npy | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **poppunk_gps_dists_pkl** | File | Poppunk database file *Provide an empty or local file if running TheiaProk on the command-line | gs://theiagen-public-files-rp/terra/theiaprok-files/GPS_v6/GPS_v6.dists.pkl | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **poppunk_gps_external_clusters_csv** | File | Poppunk database file *Provide an empty or local file if running TheiaProk on the command-line | gs://theiagen-public-files-rp/terra/theiaprok-files/GPS_v6/GPS_v6_external_clusters.csv | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **poppunk_gps_fit_npz** | File | Poppunk database file *Provide an empty or local file if running TheiaProk on the command-line | gs://theiagen-public-files-rp/terra/theiaprok-files/GPS_v6/GPS_v6_fit.npz | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **poppunk_gps_fit_pkl** | File | Poppunk database file *Provide an empty or local file if running TheiaProk on the command-line | gs://theiagen-public-files-rp/terra/theiaprok-files/GPS_v6/GPS_v6_fit.pkl | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **poppunk_gps_graph_gt** | File | Poppunk database file *Provide an empty or local file if running TheiaProk on the command-line | gs://theiagen-public-files-rp/terra/theiaprok-files/GPS_v6/GPS_v6_graph.gt | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **poppunk_gps_h5** | File | Poppunk database file *Provide an empty or local file if running TheiaProk on the command-line | gs://theiagen-public-files-rp/terra/theiaprok-files/GPS_v6/GPS_v6.h5 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **poppunk_gps_qcreport_txt** | File | Poppunk database file *Provide an empty or local file if running TheiaProk on the command-line | gs://theiagen-public-files-rp/terra/theiaprok-files/GPS_v6/GPS_v6_qcreport.txt | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **poppunk_gps_refs** | File | Poppunk database file *Provide an empty or local file if running TheiaProk on the command-line | gs://theiagen-public-files-rp/terra/theiaprok-files/GPS_v6/GPS_v6.refs | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **poppunk_gps_refs_dists_npy** | File | Poppunk database file *Provide an empty or local file if running TheiaProk on the command-line | gs://theiagen-public-files-rp/terra/theiaprok-files/GPS_v6/GPS_v6.refs.dists.npy | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **poppunk_gps_refs_dists_pkl** | File | Poppunk database file *Provide an empty or local file if running TheiaProk on the command-line | gs://theiagen-public-files-rp/terra/theiaprok-files/GPS_v6/GPS_v6.refs.dists.pkl | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **poppunk_gps_refs_graph_gt** | File | Poppunk database file *Provide an empty or local file if running TheiaProk on the command-line | gs://theiagen-public-files-rp/terra/theiaprok-files/GPS_v6/GPS_v6refs_graph.gt | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **poppunk_gps_refs_h5** | File | Poppunk database file *Provide an empty or local file if running TheiaProk on the command-line | gs://theiagen-public-files-rp/terra/theiaprok-files/GPS_v6/GPS_v6.refs.h5 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **poppunk_gps_unword_clusters_csv** | File | Poppunk database file *Provide an empty or local file if running TheiaProk on the command-line | gs://theiagen-public-files-rp/terra/theiaprok-files/GPS_v6/GPS_v6_unword_clusters.csv | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **read1** | File | Internal component, do not modify |  | Do not modify, Optional | FASTA |
 | merlin_magic | **read2** | File | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, SE |
 | merlin_magic | **seqsero2_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/seqsero2:1.2.1 | Optional | FASTA, ONT, PE, SE |
@@ -381,9 +381,9 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 | merlin_magic | **snippy_min_frac** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **snippy_min_quality** | Int | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **snippy_query_gene** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, PE, SE |
-| merlin_magic | **snippy_reference_afumigatus** | File | *Provide an empty file if running TheiaProk on the command line |  | Do not modify, Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **snippy_reference_calbicans** | File | *Provide an empty file if running TheiaProk on the command line |  | Do not modify, Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **snippy_reference_cryptoneo** | File | *Provide an empty file if running TheiaProk on the command line |  | Do not modify, Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **snippy_reference_afumigatus** | File | *Provide an empty file if running TheiaProk on the command-line |  | Do not modify, Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **snippy_reference_calbicans** | File | *Provide an empty file if running TheiaProk on the command-line |  | Do not modify, Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **snippy_reference_cryptoneo** | File | *Provide an empty file if running TheiaProk on the command-line |  | Do not modify, Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **snippy_variants_docker_image** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **sonneityping_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/mykrobe:0.12.1 | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **sonneityping_mykrobe_opts** | String | Additional options for mykrobe in sonneityping |  | Optional | FASTA, ONT, PE, SE |
@@ -1161,7 +1161,7 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
 
     ??? task "`VirulenceFinder`: Virulence gene identification"
         
-        VirulenceFinder in TheiaProk is only run on assembly files due to issues regarding discordant results when using read files on the web application versus the command line.
+        VirulenceFinder in TheiaProk is only run on assembly files due to issues regarding discordant results when using read files on the web application versus the command-line.
         
         !!! techdetails "VirulenceFinder Technical Details"
             
@@ -1612,8 +1612,8 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
 | amrfinderplus_amr_betalactam_genes | String | Beta-lactam AMR genes identified by AMRFinderPlus | FASTA, ONT, PE, SE |
 | amrfinderplus_amr_betalactam_methicillin_genes | String | Beta-lactam AMR genes identified by AMRFinderPlus that are known to confer resistance to methicilin | FASTA, ONT, PE, SE |
 | amrfinderplus_amr_classes | String | AMRFinderPlus predictions for classes of drugs that genes found in the reads are known to confer resistance to | FASTA, ONT, PE, SE |
-| amrfinderplus_amr_core_genes | String | AMR genes identified by AMRFinderPlus where the scope is “core” | FASTA, ONT, PE, SE |
-| amrfinderplus_amr_plus_genes | String | AMR genes identified by AMRFinderPlus where the scope is “plus” | FASTA, ONT, PE, SE |
+| amrfinderplus_amr_core_genes | String | AMR genes identified by AMRFinderPlus where the scope is "core" | FASTA, ONT, PE, SE |
+| amrfinderplus_amr_plus_genes | String | AMR genes identified by AMRFinderPlus where the scope is "plus" | FASTA, ONT, PE, SE |
 | amrfinderplus_amr_report | File | TSV file detailing AMR genes only, from the amrfinderplus_all_report | FASTA, ONT, PE, SE |
 | amrfinderplus_amr_subclasses | String | More specificity about the drugs that genes identified in the reads confer resistance to | FASTA, ONT, PE, SE |
 | amrfinderplus_db_version | String | AMRFinderPlus database version used | FASTA, ONT, PE, SE |
