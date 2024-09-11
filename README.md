@@ -4,7 +4,7 @@ The Public Health Bioinformatics Bioinformatics repository contains workflows fo
 
 ## Introduction
 
-**More information about the steps undertaken in these workflows is available via the [Theiagen Public Resources Documentation](https://theiagen.notion.site/Theiagen-Public-Health-Resources-a4bd134b0c5c4fe39870e21029a30566).**
+**More information about the steps undertaken in these workflows is available via the [Theiagen Public Resources Documentation](https://theiagen.github.io/public_health_bioinformatics/latest/).**
 
 Support for running these workflows can be sought by raising a [GitHub issue](https://github.com/theiagen/public_health_bioinformatics/issues/new) or by contacting Theiagen at support@theiagen.com.
 
@@ -16,13 +16,13 @@ The PHB repository contains workflows for the characterization, genomic epidemio
 
 All workflows in the PHB repository end with `_PHB` in order to differentiate them from earlier versions and from the original tools they incorporate.
 
-Briefly, the main *genomic characterization* workflows are split by pathogen type:
+Briefly, the main _genomic characterization_  workflows are split by pathogen type:
 
 1. **Viral** (***TheiaCoV*** workflows)
 2. **Bacterial** (***TheiaProk*** workflows)
-3. **Fungal** (***TheiaEuk*** workflows)
+3. **Fungal** (*[**TheiaEuk**](../workflows/genomic_characterization/theiaeuk.md)* workflows)
 
-Many more workflows are available, and are documented in detail in the [Theiagen Public Resources Documentation](https://theiagen.notion.site/Theiagen-Public-Health-Resources-a4bd134b0c5c4fe39870e21029a30566).
+Many more workflows are available, and are documented in detail in the [Theiagen Public Resources Documentation](https://theiagen.github.io/public_health_bioinformatics/latest/).
 
 ## On the Shoulder of Giants
 
@@ -83,8 +83,8 @@ The authors declare no conflict of interest.
 
 Please cite this paper if publishing work using any workflows:
 
-> Libuit, Kevin G., Emma L. Doughty, James R. Otieno, Frank Ambrosio, Curtis J. Kapsak, Emily A. Smith, Sage M. Wright, et al. 2023. “Accelerating Bioinformatics Implementation in Public Health.” Microbial Genomics 9 (7). https://doi.org/10.1099/mgen.0.001051.
+> Libuit, Kevin G., Emma L. Doughty, James R. Otieno, Frank Ambrosio, Curtis J. Kapsak, Emily A. Smith, Sage M. Wright, et al. 2023. "Accelerating Bioinformatics Implementation in Public Health." Microbial Genomics 9 (7). https://doi.org/10.1099/mgen.0.001051.
 
 Alternatively, please cite this paper if using the TheiaEuk workflow:
 
-> Ambrosio, Frank, Michelle Scribner, Sage Wright, James Otieno, Emma Doughty, Andrew Gorzalski, Danielle Siao, et al. 2023. “TheiaEuk: A Species-Agnostic Bioinformatics Workflow for Fungal Genomic Characterization.” Frontiers in Public Health 11. https://doi.org/10.3389/fpubh.2023.1198213.
+> Ambrosio, Frank, Michelle Scribner, Sage Wright, James Otieno, Emma Doughty, Andrew Gorzalski, Danielle Siao, et al. 2023. "TheiaEuk: A Species-Agnostic Bioinformatics Workflow for Fungal Genomic Characterization." Frontiers in Public Health 11. https://doi.org/10.3389/fpubh.2023.1198213.
