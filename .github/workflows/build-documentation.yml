@@ -36,3 +36,6 @@ jobs:
           git config user.name sage-wright
           git config user.email sage.wright@theiagen.com 
           mike deploy --push main
+          LATEST_RELEASE=$(curl -sL https://api.github.com/repos/theiagen/public_health_bioinformatics/releases/latest | jq -r ".tag_name")
+          mike deploy --push --update-aliases ${LATEST_RELEASE} latest
+          mike set-default --push latest
