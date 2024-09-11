@@ -4,7 +4,7 @@
 
 | **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
 |---|---|---|---|---|
-| [Genomic Characterization](../../workflows_overview/workflows-type.md/#genomic-characterization) | [Bacteria](../../workflows_overview/workflows-kingdom.md/#bacteria) | PHB v2.2.0 | Yes, some optional features incompatible | Sample-level |
+| [Genomic Characterization](../../workflows_overview/workflows_type.md/#genomic-characterization) | [Bacteria](../../workflows_overview/workflows_kingdom.md/#bacteria) | PHB v2.2.0 | Yes, some optional features incompatible | Sample-level |
 
 ## TheiaProk Workflows
 
@@ -16,7 +16,7 @@
 4. Genome assemblies (**TheiaProk_FASTA**)
 
 !!! caption "TheiaProk Workflow Diagram"
-    ![TheiaProk Workflow Diagram](../../assets/characterization/TheiaProk.png)
+    ![TheiaProk Workflow Diagram](../../assets/figures/TheiaProk.png)
 
 All input reads are processed through "[core tasks](#core-tasks-performed-for-all-taxa)" in the TheiaProk Illumina and ONT workflows. These undertake read trimming and assembly appropriate to the input data type. TheiaProk workflows subsequently launch default genome characterization modules for quality assessment, species identification, antimicrobial resistance gene detection, sequence typing, and more. **For some taxa identified, "taxa-specific sub-workflows" will be automatically activated, undertaking additional taxa-specific characterization steps.** When setting up each workflow, users may choose to use "optional tasks" as additions or alternatives to tasks run in the workflow by default.
 
@@ -1026,8 +1026,8 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 
     ??? toggle "Template _qc_check_table.tsv_ files"
 
-        - TheiaProk_Illumina_PE: [theiaprok_illumina_pe_qc_check_template.tsv](../../assets/characterization/theiaprok_illumina_pe_qc_check_template.tsv)
-        - TheiaProk_FASTA: [theiaprok_fasta_qc_check_template.tsv](../../assets/characterization/theiaprok_fasta_qc_check_template.tsv)
+        - TheiaProk_Illumina_PE: [theiaprok_illumina_pe_qc_check_template.tsv](../../assets/files/TheiaProk_Illumina_PE_qc_check_template.tsv)
+        - TheiaProk_FASTA: [theiaprok_fasta_qc_check_template.tsv](../../assets/files/TheiaProk_FASTA_qc_check_template.tsv)
 
         !!! warning "Example Purposes Only"
             QC threshold values shown are for example purposes only and should not be presumed to be sufficient for every dataset.
@@ -1472,7 +1472,7 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
         
         Global Pneumococcal Sequence Clusters (GPSC) define and name pneumococcal strains. GPSC designation is undertaken using the PopPUNK software and GPSC database as described in the file below, obtained from [here](https://www.pneumogen.net/gps/training_command_line.html).
 
-        :file: [GPSC_README_PopPUNK2.txt](../../assets/misc_files/GPSC_README_PopPUNK2.txt)
+        :file: [GPSC_README_PopPUNK2.txt](../../assets/files/GPSC_README_PopPUNK2.txt)
         
         !!! tip "Interpreting GPSC results"
             - In the `*_external_clusters.csv` novel clusters are assigned NA. For isolates that are assigned a novel cluster and pass QC, you can email [globalpneumoseq@gmail.com](mailto:globalpneumoseq@gmail.com) to have these novel clusters added to the database.

@@ -4,7 +4,7 @@
 
 | **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
 |---|---|---|---|---|
-| [Data Import](../../workflows_overview/workflows-type.md/#data-import) | [Any taxa](../../workflows_overview/workflows-kingdom.md/#any-taxa) | PHB v1.3.0 | Yes | Sample-level |
+| [Data Import](../../workflows_overview/workflows_type.md/#data-import) | [Any taxa](../../workflows_overview/workflows_kingdom.md/#any-taxa) | PHB v1.3.0 | Yes | Sample-level |
 
 ## Setting up BaseSpace_Fetch
 
@@ -27,29 +27,29 @@ This process must be performed on a command line (ideally on a Linux or MacOS co
 
         1. Select the "Environment configuration" cloud icon on the right side of the workspace dashboard tab
 
-            ![Step1](../../assets/basespace_fetch/step1.png){width="50%"}
+            ![Step1](../../assets/figures/basespace_fetch/step1.png){width="50%"}
 
         2. Select the "Settings" button under Jupyter
 
-            ![Step2](../../assets/basespace_fetch/step2.png){width="50%"}
+            ![Step2](../../assets/figures/basespace_fetch/step2.png){width="50%"}
 
         3. Click "CREATE" in the "Use default environment section". There is no need to alter the default environment configuration.
 
-            ![Step3](../../assets/basespace_fetch/step3.png){width="50%"}
+            ![Step3](../../assets/figures/basespace_fetch/step3.png){width="50%"}
 
 
         4. Undertaking steps 1 and 2 again, you will see options to configure the environment.
             1. The default environment (default = GATK 4.1.4.1, Python 3.7..10, R 4.0.5) should be sufficient for retrieval of BaseSpace credentials, but if performing other tasks in the environment please modify the resource allocations appropriately. 
             2. You can use up to 4 CPUs which can help move things faster with multithreaded `gsutil`
 
-            ![Step4](../../assets/basespace_fetch/step4.png){width="50%"}
+            ![Step4](../../assets/figures/basespace_fetch/step4.png){width="50%"}
 
     #### Step 2: Install the BaseSpace Command Line Tool To Get The Access Token And API Server Address
     ??? toggle "Click for more information"
 
         1. Open the "Terminal" app in the right side-bar of the Terra dashboard
 
-            ![Step5](../../assets/basespace_fetch/step5.png){width="20%"}
+            ![Step5](../../assets/figures/basespace_fetch/step5.png){width="20%"}
 
 
         2. Download and setup BaseSpace (BS) CLI (as per Illumina documentation) by following the commands below. The lines beginning with `#` are comments, the following lines are the commands to be copy/pasted into the termina
@@ -80,7 +80,7 @@ This process must be performed on a command line (ideally on a Linux or MacOS co
             1. Navigate to the Terra "DATA" tab, and select "Workspace Data" at the bottom left of the page.
             2. You can use the ➕ icon to add the new workspace data elements as in the examples below.
 
-            ![Step6](../../assets/basespace_fetch/step6.png){width="50%"}
+            ![Step6](../../assets/figures/basespace_fetch/step6.png){width="50%"}
 
 ### Preparing to retrieve a run with BaseSpace_Fetch
 
@@ -96,7 +96,7 @@ This process must be performed on a command line (ideally on a Linux or MacOS co
     1. Download the sample sheet from BaseSpace.
         1. On the BaseSpace portal, you can navigate to this via: Runs → {run} → Files → SampleSheet.csv
 
-        ![Step7](../../assets/basespace_fetch/step7.png){width="50%"}
+        ![Step7](../../assets/figures/basespace_fetch/step7.png){width="50%"}
 
 
     2. In Excel, set up a metadata sheet for Terra, with a row for each sample. Please feel free to use our [BaseSpace_Fetch Template](https://storage.googleapis.com/theiagen-public-files/terra/training_resources/bs_fetch_template_20231103.tsv) to help ensure the file is formatted correctly.  
@@ -109,19 +109,19 @@ This process must be performed on a command line (ideally on a Linux or MacOS co
         4. Create a `basespace_collection_id` column, and populate it with the BaseSpace Project or Run identifier
         5. Populate column A of the spreadsheet with the sample names
 
-        ![Step8](../../assets/basespace_fetch/step8.png){width="50%"}
+        ![Step8](../../assets/figures/basespace_fetch/step8.png){width="50%"}
 
 
     #### Upload the metadata spreadsheet to the destination workspace in Terra.bio
 
     1. In Terra, navigate to the "DATA" tab, click "IMPORT DATA" then "Upload TSV"
 
-        ![Step9](../../assets/basespace_fetch/step9.png){width="25%"}
+        ![Step9](../../assets/figures/basespace_fetch/step9.png){width="25%"}
 
 
     2. Copy and paste the contents of the whole spreadsheet into the "TEXT IMPORT" tab and click "START IMPORT JOB"
 
-        ![Step10](../../assets/basespace_fetch/step10.png){width="38%"}
+        ![Step10](../../assets/figures/basespace_fetch/step10.png){width="38%"}
 
 ## Using the BaseSpace_Fetch Workflow
 
@@ -138,7 +138,7 @@ This process must be performed on a command line (ideally on a Linux or MacOS co
         3. Samples that you wan to import data for. 
     3. Set up the `BaseSpace_Fetch` "INPUTS" form as below. **Don't forget to fill out `this.basespace_sample_id` if your basespace sample IDs are different from the basespace sample names in the SampleSheet.csv file.**
 
-        ![Step11](../../assets/basespace_fetch/step11.png){width="50%"}
+        ![Step11](../../assets/figures/basespace_fetch/step11.png){width="50%"}
 
     4. In the "OUTPUTS" tab, select "use defaults", then click "SAVE".
     5. You can now run the workflow and import data for all the samples you have selected.

@@ -4,12 +4,12 @@
 
 | **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
 |---|---|---|---|---|
-| [Standalone](../../workflows_overview/workflows-type.md/#standalone) | [Any Taxa](../../workflows_overview/workflows-kingdom.md/#any-taxa) | PHB v2.0.0 | No | |
+| [Standalone](../../workflows_overview/workflows_type.md/#standalone) | [Any Taxa](../../workflows_overview/workflows_kingdom.md/#any-taxa) | PHB v2.0.0 | No | |
 
 ## TheiaValidate_PHB
 
 !!! caption "TheiaValidate Workflow Diagram"
-    ![TheiaValidate Workflow Diagram](../../assets/theiavalidate/TheiaValidate.png)
+    ![TheiaValidate Workflow Diagram](../../assets/figures/TheiaValidate.png)
 
 TheiaValidate performs basic comparisons between user-designated columns in two separate tables. We anticipate this workflow being run to determine if any differences exist between version releases or two workflows, such as TheiaProk_ONT vs TheiaProk_Illumina_PE. A summary PDF report is produced in addition to a Excel spreadsheet that lists the values for any columns that do not have matching content for a sample.
 
@@ -21,9 +21,9 @@ In order to enable this workflow to function for different workflow series, we r
 !!! tool "Validation Starting Points"
     | Workflow Series | Validation Criteria TSV | Columns to Compare |
     |---|---|---|
-    | TheiaCoV Workflows | [TheiaCov Validation Criteria](../../assets/theiavalidate/theiacov-validation-criteria.txt) | abricate_flu_subtype,abricate_flu_type,assembly_length_unambiguous,assembly_mean_coverage,irma_subtype,irma_type,kraken_human,kraken_human_dehosted,kraken_sc2,kraken_sc2_dehosted,kraken_target_org,kraken_target_org_dehosted,nextclade_aa_dels,nextclade_aa_subs,nextclade_clade,nextclade_lineage,nextclade_tamiflu_resistance_aa_subs,num_reads_clean1,num_reads_clean2,number_N,pango_lineage,percent_reference_coverage,vadr_num_alerts |
-    | TheiaEuk Workflows | [TheiaEuk Validation Criteria](../../assets/theiavalidate/theiaeuk-validation-criteria.txt) | assembly_length,busco_results,clade_type,est_coverage_clean,est_coverage_raw,gambit_predicted_taxon,n50_value,num_reads_clean1,num_reads_clean2,number_contigs,quast_gc_percent,theiaeuk_snippy_variants_hits |
-    | TheiaProk Workflows | [TheiaProk Validation Criteria](../../assets/theiavalidate/theiaprok-validation-criteria.txt) | abricate_abaum_plasmid_type_genes,agrvate_agr_group,amrfinderplus_amr_core_genes,amrfinderplus_amr_plus_genes,amrfinderplus_stress_genes,amrfinderplus_virulence_genes,ani_highest_percent,ani_top_species_match,assembly_length,busco_results,ectyper_predicted_serotype,emmtypingtool_emm_type,est_coverage_clean,est_coverage_raw,gambit_predicted_taxon,genotyphi_final_genotype,hicap_genes,hicap_serotype,kaptive_k_type,kleborate_genomic_resistance_mutations,kleborate_key_resistance_genes,kleborate_mlst_sequence_type,legsta_predicted_sbt,lissero_serotype,meningotype_serogroup,midas_primary_genus,midas_secondary_genus,midas_secondary_genus_abundance,n50_value,ngmaster_ngmast_sequence_type,ngmaster_ngstar_sequence_type,num_reads_clean1,num_reads_clean2,number_contigs,pasty_serogroup,pbptyper_predicted_1A_2B_2X,plasmidfinder_plasmids,poppunk_gps_cluster,seqsero2_predicted_serotype,seroba_ariba_serotype,seroba_serotype,serotypefinder_serotype,shigatyper_ipaB_presence_absence,shigatyper_predicted_serotype,shigeifinder_cluster,shigeifinder_serotype,sistr_predicted_serotype,sonneityping_final_genotype,spatyper_type,srst2_vibrio_serogroup,staphopiasccmec_types_and_mecA_presence,tbprofiler_main_lineage,tbprofiler_resistance_genes,ts_mlst_predicted_st,virulencefinder_hits |
+    | TheiaCoV Workflows | [TheiaCov Validation Criteria](../../assets/files/theiavalidate/theiacov-validation-criteria.txt) | abricate_flu_subtype,abricate_flu_type,assembly_length_unambiguous,assembly_mean_coverage,irma_subtype,irma_type,kraken_human,kraken_human_dehosted,kraken_sc2,kraken_sc2_dehosted,kraken_target_org,kraken_target_org_dehosted,nextclade_aa_dels,nextclade_aa_subs,nextclade_clade,nextclade_lineage,nextclade_tamiflu_resistance_aa_subs,num_reads_clean1,num_reads_clean2,number_N,pango_lineage,percent_reference_coverage,vadr_num_alerts |
+    | TheiaEuk Workflows | [TheiaEuk Validation Criteria](../../assets/files/theiavalidate/theiaeuk-validation-criteria.txt) | assembly_length,busco_results,clade_type,est_coverage_clean,est_coverage_raw,gambit_predicted_taxon,n50_value,num_reads_clean1,num_reads_clean2,number_contigs,quast_gc_percent,theiaeuk_snippy_variants_hits |
+    | TheiaProk Workflows | [TheiaProk Validation Criteria](../../assets/files/theiavalidate/theiaprok-validation-criteria.txt) | abricate_abaum_plasmid_type_genes,agrvate_agr_group,amrfinderplus_amr_core_genes,amrfinderplus_amr_plus_genes,amrfinderplus_stress_genes,amrfinderplus_virulence_genes,ani_highest_percent,ani_top_species_match,assembly_length,busco_results,ectyper_predicted_serotype,emmtypingtool_emm_type,est_coverage_clean,est_coverage_raw,gambit_predicted_taxon,genotyphi_final_genotype,hicap_genes,hicap_serotype,kaptive_k_type,kleborate_genomic_resistance_mutations,kleborate_key_resistance_genes,kleborate_mlst_sequence_type,legsta_predicted_sbt,lissero_serotype,meningotype_serogroup,midas_primary_genus,midas_secondary_genus,midas_secondary_genus_abundance,n50_value,ngmaster_ngmast_sequence_type,ngmaster_ngstar_sequence_type,num_reads_clean1,num_reads_clean2,number_contigs,pasty_serogroup,pbptyper_predicted_1A_2B_2X,plasmidfinder_plasmids,poppunk_gps_cluster,seqsero2_predicted_serotype,seroba_ariba_serotype,seroba_serotype,serotypefinder_serotype,shigatyper_ipaB_presence_absence,shigatyper_predicted_serotype,shigeifinder_cluster,shigeifinder_serotype,sistr_predicted_serotype,sonneityping_final_genotype,spatyper_type,srst2_vibrio_serogroup,staphopiasccmec_types_and_mecA_presence,tbprofiler_main_lineage,tbprofiler_resistance_genes,ts_mlst_predicted_st,virulencefinder_hits |
 
 If additional validation metrics are desired, the user has the ability to provide a `validation_criteria_tsv` file that specifies what type of comparison should be performed. There are several options for additional validation checks:
 
@@ -147,12 +147,12 @@ To help demonstrate how TheiaValidate works, please observe the following exampl
 
 If the above inputs are provided, then the following output files will be generated:
 
-[filtered_example_table1.tsv](../../assets/theiavalidate/filtered_example_table1.tsv)
+[filtered_example_table1.tsv](../../assets/files/theiavalidate/filtered_example_table1.tsv)
 
-[filtered_example_table2.tsv](../../assets/theiavalidate/filtered_example_table2.tsv)
+[filtered_example_table2.tsv](../../assets/files/theiavalidate/filtered_example_table2.tsv)
 
-[example_summary.pdf](../../assets/theiavalidate/example_summary.pdf)
+[example_summary.pdf](../../assets/files/theiavalidate/example_summary.pdf)
 
-[example_exact_differences.tsv](../../assets/theiavalidate/example_exact_differences.tsv)
+[example_exact_differences.tsv](../../assets/files/theiavalidate/example_exact_differences.tsv)
 
-[example_validation_criteria_differences.tsv](../../assets/theiavalidate/example_validation_criteria_differences.tsv)
+[example_validation_criteria_differences.tsv](../../assets/files/theiavalidate/example_validation_criteria_differences.tsv)

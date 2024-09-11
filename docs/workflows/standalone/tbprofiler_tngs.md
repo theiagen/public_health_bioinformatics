@@ -4,7 +4,7 @@
 
 | **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
 |---|---|---|---|---|
-| [Standalone](../../workflows_overview/workflows-type.md/#standalone) | [Bacteria](../../workflows_overview/workflows-kingdom.md/#bacteria) | PHB v2.0.0 | Yes | Sample-level |
+| [Standalone](../../workflows_overview/workflows_type.md/#standalone) | [Bacteria](../../workflows_overview/workflows_kingdom.md/#bacteria) | PHB v2.0.0 | Yes | Sample-level |
 
 ## TBProfiler_tNGS_PHB
 

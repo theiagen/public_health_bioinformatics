@@ -4,7 +4,7 @@
 
 | **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
 |---|---|---|---|---|
-| [Phylogenetic Placement](../../workflows_overview/workflows-type.md/#phylogenetic-placement) | [Viral](../../workflows_overview/workflows-kingdom.md/#viral) | PHB v2.1.0 | Yes | Sample-level, set-level |
+| [Phylogenetic Placement](../../workflows_overview/workflows_type.md/#phylogenetic-placement) | [Viral](../../workflows_overview/workflows_kingdom.md/#viral) | PHB v2.1.0 | Yes | Sample-level, set-level |
 
 ## Usher_PHB
 

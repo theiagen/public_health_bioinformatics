@@ -40,29 +40,22 @@ Here are some VSCode Extensions can help you write and edit your markdown files 
 A brief description of the documentation structure is as follows:
 
 - `docs/` - Contains the Markdown files for the documentation.
-    - `index.md` - The home page for the PHB documentation.
-    - `contributing_guide.md` - This file.
     - `assets/` - Contains images and other files used in the documentation.
-        - `basespace_fetch/` - Contains images for the BaseSpace_Fetch workflow.
-        - `characterization/` - Contains workflow diagrams for the characterization workflows AND the template QC check tables for those workflows.
-        - `create_terra_table/` - Contains images for the Create_Terra_Table workflow.
-        - `freyja/` - Contains images for the Freyja workflow.
+        - `figures/` - Contains images, figures, and workflow diagrams used in the documentation. For workflows that contain many images (such as BaseSpace_Fetch), it is recommended to create a subdirectory for the workflow.
+        - `files/` - Contains files that are used in the documentation. This may include example outputs or templates. For workflows that contain many files (such as TheiaValidate), it is recommended to create a subdirectory for the workflow.
+        - `logos/` - Contains Theiagen logos and symbols used int he documentation.
         - `metadata_formatters/` - Contains the most up-to-date metadata formatters for our submission workflows.
-        - `misc_files/` - Contains example outputs and various other files used in the documentation.
-        - `phylo_diagrams/` - Contains images for the phylogenetic workflows.
-        - `standalone/` - Contains images for the standalone workflows.
-        - `theiavalidate/` - Contains example input and outputs for the TheiaValidate workflow.
-        - `new_workflow_template.md` - A template for new workflow pages.
-        - `Theiagen-Logo-White.png` - The Theiagen logo in white
-        - `Theiagen-Symbol-Standard-01.png` - The Theiagen symbol in standard colors
-        - `Workflow_Relationships_dark.png` - A diagram showing the relationships between the various workflows suitable for dark mode
-        - `Workflow_Relationships.png` - A diagram showing the relationships between the various workflows suitable for light mode
+        - `new_workflow_template.md` - A template for adding a new workflow page to the documentation.
+    - `contributing/` - Contains the Markdown files for our contribution guides, such as this file
     - `javascripts/` - Contains JavaScript files used in the documentation.
         - `tablesort.js` - A JavaScript file used to enable table sorting in the documentation.
+    - `overrides/` - Contains HTMLs used to override theme defaults
+        - `main.html` - Contains the HTML used to display a warning when the latest version is not selected
     - `stylesheets/` - Contains CSS files used in the documentation.
         - `extra.css` - A custom CSS file used to style the documentation; contains all custom theme elements (scrollable tables, resizable columns, Theiagen colors), and custom admonitions.
     - `workflows/` - Contains the Markdown files for each workflow, organized into subdirectories by workflow category
     - `workflows_overview/` - Contains the Markdown files for the overview tables for each display type: alphabetically, by applicable kingdom, and by workflow type.
+    - `index.md` - The home/landing page for our documentation.
 
 ### Adding a Page for a New Workflow {#new-page}
 
@@ -79,9 +72,9 @@ If you are adding a new workflow, there are a number of things to do in order to
      - Link to the workflow on Dockstore (if applicable) - Workflow name linked to the information tab on Dockstore.
 3. Format this information in a table.
 4. Copy the previously gathered information to ==**ALL THREE**== overview tables in `docs/workflows_overview/`:
-     - `workflows-alphabetically.md` - Add the workflow in the appropriate spot based on the workflow name.
-     - `workflows-kingdom.md` - Add the workflow in the appropriate spot(s) based on the kingdom(s) the workflow is applicable to. Make sure it is added alphabetically within the appropriate subsection(s).
-     - `workflows-type.md` - Add the workflow in the appropriate spot based on the workflow type. Make sure it is added alphabetically within the appropriate subsection.
+     - `workflows_alphabetically.md` - Add the workflow in the appropriate spot based on the workflow name.
+     - `workflows_kingdom.md` - Add the workflow in the appropriate spot(s) based on the kingdom(s) the workflow is applicable to. Make sure it is added alphabetically within the appropriate subsection(s).
+     - `workflows_type.md` - Add the workflow in the appropriate spot based on the workflow type. Make sure it is added alphabetically within the appropriate subsection.
 5. Copy the path to the workflow to ==**ALL**== of the appropriate locations in the `mkdocs.yml` file (under the `nav:` section) in the main directory of this repository. These should be the exact same spots as in the overview tables but without additional information. This ensures the workflow can be accessed from the navigation sidebar.
 
 ## Standard Language & Formatting Conventions

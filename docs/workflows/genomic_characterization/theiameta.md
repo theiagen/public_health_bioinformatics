@@ -4,7 +4,7 @@
 
 | **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
 |---|---|---|---|---|
-| [Genomic Characterization](../../workflows_overview/workflows-type.md/#genomic-characterization) | [Any Taxa](../../workflows_overview/workflows-kingdom.md/#any-taxa) | PHB v2.2.0 | Yes | Sample-level |
+| [Genomic Characterization](../../workflows_overview/workflows_type.md/#genomic-characterization) | [Any Taxa](../../workflows_overview/workflows_kingdom.md/#any-taxa) | PHB v2.2.0 | Yes | Sample-level |
 
 ## TheiaMeta Workflows
 
@@ -17,7 +17,7 @@ TheiaMeta can use one of two distinct methods for generating and processing the 
 
 !!! caption "TheiaMeta Workflow Diagram"
 
-    ![TheiaMeta Workflow Diagram](../../assets/characterization/TheiaMeta_Illumina_PE.png)
+    ![TheiaMeta Workflow Diagram](../../assets/figures/TheiaMeta_Illumina_PE.png)
 
 ### Inputs
 

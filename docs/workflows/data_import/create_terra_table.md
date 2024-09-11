@@ -4,7 +4,7 @@
 
 | **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
 |---|---|---|---|---|
-| [Data Import](../../workflows_overview/workflows-type.md/#data-import) | [Any taxa](../../workflows_overview/workflows-kingdom.md/#any-taxa) | PHB v2.2.0 | Yes | Sample-level |
+| [Data Import](../../workflows_overview/workflows_type.md/#data-import) | [Any taxa](../../workflows_overview/workflows_kingdom.md/#any-taxa) | PHB v2.2.0 | Yes | Sample-level |
 
 ## Create_Terra_Table_PHB
 
@@ -43,7 +43,7 @@ The manual creation of Terra tables can be tedious and error-prone. This workflo
     !!! info "Note"
         If you click "Next" after uploading your files, it will ask for a metadata TSV. You do not have to provide this, and can instead exit the window. Your data will still be uploaded.
     
-    ![Data uploader](../../assets/create_terra_table/example1.png)
+    ![Data uploader](../../assets/figures/Create_Terra_Table_example1.png)
 
 #### Using the "Files" section in the Data tab
 
@@ -52,7 +52,7 @@ The manual creation of Terra tables can be tedious and error-prone. This workflo
 
     If you uploaded data with the Terra data uploader, your collection will be nested in the "uploads" folder.
 
-    ![Data tab](../../assets/create_terra_table/example2.png)
+    ![Data tab](../../assets/figures/Create_Terra_Table_example2.png)
 
 ### How to determine the appropriate `file_ending` for your data
 

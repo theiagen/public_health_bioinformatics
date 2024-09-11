@@ -4,7 +4,7 @@
 
 | **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
 |---|---|---|---|---|
-| [Phylogenetic Construction](../../workflows_overview/workflows-type.md/#phylogenetic-construction) | [Viral](../../workflows_overview/workflows-kingdom.md/#viral) | PHB v1.3.0 | No | Set-level |
+| [Phylogenetic Construction](../../workflows_overview/workflows_type.md/#phylogenetic-construction) | [Viral](../../workflows_overview/workflows_kingdom.md/#viral) | PHB v1.3.0 | No | Set-level |
 
 ## CZGenEpi_Prep_PHB
 

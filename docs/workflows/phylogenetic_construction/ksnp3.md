@@ -4,7 +4,7 @@
 
 | **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
 |---|---|---|---|---|
-| [Phylogenetic Construction](../../workflows_overview/workflows-type.md/#phylogenetic-construction) | [Bacteria](../../workflows_overview/workflows-kingdom.md/#bacteria), [Mycotics](../../workflows_overview/workflows-kingdom.md#mycotics), [Viral](../../workflows_overview/workflows-kingdom.md/#viral) | PHB v2.1.0 | Yes; some optional features incompatible | Set-level |
+| [Phylogenetic Construction](../../workflows_overview/workflows_type.md/#phylogenetic-construction) | [Bacteria](../../workflows_overview/workflows_kingdom.md/#bacteria), [Mycotics](../../workflows_overview/workflows_kingdom.md#mycotics), [Viral](../../workflows_overview/workflows_kingdom.md/#viral) | PHB v2.1.0 | Yes; some optional features incompatible | Set-level |
 
 ## kSNP3_PHB
 
@@ -82,7 +82,7 @@ If you fill out the `data_summary_*` and `sample_names` optional variables, you 
     Data summary produced using the `phandango_coloring` option, visualized alongside Newick tree at <http://jameshadfield.github.io/phandango/#/main>
 
     !!! caption "Example phandango_coloring output"
-        ![Phandango coloring example](../../assets/misc_files/example_phandango_coloring.png)
+        ![Phandango coloring example](../../assets/figures/example_phandango_coloring.png)
 
 ### Outputs
 

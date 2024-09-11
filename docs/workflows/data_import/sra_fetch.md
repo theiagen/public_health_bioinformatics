@@ -4,7 +4,7 @@
 
 | **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
 |---|---|---|---|---|
-| [Data Import](../../workflows_overview/workflows-type.md/#data-import) | [Any taxa](../../workflows_overview/workflows-kingdom.md/#any-taxa) | PHB v2.2.0 | Yes | Sample-level |
+| [Data Import](../../workflows_overview/workflows_type.md/#data-import) | [Any taxa](../../workflows_overview/workflows_kingdom.md/#any-taxa) | PHB v2.2.0 | Yes | Sample-level |
 
 ## SRA_Fetch_PHB
 

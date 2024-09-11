@@ -7,7 +7,7 @@
 
 | **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
 |---|---|---|---|---|
-| [Standalone](../../workflows_overview/workflows-type.md/#standalone) | [Mycotics](../../workflows_overview/workflows-kingdom.md#mycotics) | PHB v1.0.0 | Yes | Sample-level |
+| [Standalone](../../workflows_overview/workflows_type.md/#standalone) | [Mycotics](../../workflows_overview/workflows_kingdom.md#mycotics) | PHB v1.0.0 | Yes | Sample-level |
 
 ## Cauris_CladeTyper_PHB
 

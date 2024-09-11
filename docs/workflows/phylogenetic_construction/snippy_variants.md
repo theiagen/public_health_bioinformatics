@@ -4,14 +4,14 @@
 
 | **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
 |---|---|---|---|---|
-| [Phylogenetic Construction](../../workflows_overview/workflows-type.md/#phylogenetic-construction) | [Bacteria](../../workflows_overview/workflows-kingdom.md/#bacteria), [Mycotics](../../workflows_overview/workflows-kingdom.md#mycotics), [Viral](../../workflows_overview/workflows-kingdom.md/#viral) | PHB v2.2.0 | Yes | Sample-level |
+| [Phylogenetic Construction](../../workflows_overview/workflows_type.md/#phylogenetic-construction) | [Bacteria](../../workflows_overview/workflows_kingdom.md/#bacteria), [Mycotics](../../workflows_overview/workflows_kingdom.md#mycotics), [Viral](../../workflows_overview/workflows_kingdom.md/#viral) | PHB v2.2.0 | Yes | Sample-level |
 
 ## Snippy_Variants_PHB
 
 The `Snippy_Variants` workflow aligns single-end or paired-end reads (in FASTQ format), or assembled sequences (in FASTA format), against a reference genome, then identifies single-nucleotide polymorphisms (SNPs), multi-nucleotide polymorphisms (MNPs), and insertions/deletions (INDELs) across the alignment. If a GenBank file is used as the reference, mutations associated with user-specified query strings (e.g. genes of interest) can additionally be reported to the Terra data table.
 
 !!! caption "Snippy_Variants Workflow Diagram"
-    ![Snippy_Variants Workflow Diagram](../../assets/phylo_diagrams/Snippy_Variants.png)
+    ![Snippy_Variants Workflow Diagram](../../assets/figures/Snippy_Variants.png)
 
 !!! tip "Example Use Cases"
     - **Finding mutations** (SNPs, MNPs, and INDELs) in your own sample's reads relative to a reference, e.g. mutations in genes of phenotypic interest.

@@ -8,9 +8,12 @@ repo_url: https://github.com/theiagen/public_health_bioinformatics
 nav:
   - Public Health Bioinformatics: 
      - index.md
-     - All Workflows: 
+     - Getting Started:
+        - With the Command-Line: getting_started/commandline.md
+        - With Terra.bio: getting_started/terra.md
+     - Workflows: 
         - Workflows by Type: 
-            - Overview Table: workflows_overview/workflows-type.md
+            - Overview Table: workflows_overview/workflows_type.md
             - Data Import:
                - Assembly_Fetch: workflows/data_import/assembly_fetch.md
                - BaseSpace_Fetch: workflows/data_import/basespace_fetch.md
@@ -57,7 +60,7 @@ nav:
                - TBProfiler_tNGS: workflows/standalone/tbprofiler_tngs.md
                - TheiaValidate: workflows/standalone/theiavalidate.md
         - Workflows by Kingdom: 
-            - Overview Table: workflows_overview/workflows-kingdom.md
+            - Overview Table: workflows_overview/workflows_kingdom.md
             - Any Taxa:
                - Assembly_Fetch: workflows/data_import/assembly_fetch.md
                - BaseSpace_Fetch: workflows/data_import/basespace_fetch.md
@@ -112,7 +115,7 @@ nav:
                - Usher_PHB: workflows/phylogenetic_placement/usher.md
                - VADR_Update: workflows/genomic_characterization/vadr_update.md
         - Workflows Alphabetically: 
-            - Overview Table: workflows_overview/workflows-alphabetically.md
+            - Overview Table: workflows_overview/workflows_alphabetically.md
             - Assembly_Fetch: workflows/data_import/assembly_fetch.md
             - Augur: workflows/phylogenetic_construction/augur.md
             - BaseSpace_Fetch: workflows/data_import/basespace_fetch.md
@@ -151,13 +154,13 @@ nav:
             - Usher_PHB: workflows/phylogenetic_placement/usher.md
             - VADR_Update: workflows/genomic_characterization/vadr_update.md
             - Zip_Column_Content: workflows/data_export/zip_column_content.md
-     - Contributing to the Documentation: contribution_guide.md
-     - Contributing to the Code: code_contribution.md
+     - Contributing to the Documentation: contributing/doc_contribution.md
+     - Contributing to the Code: contributing/code_contribution.md
 
 theme: 
   name: material
-  logo: assets/Theiagen-Logo-White.png
-  favicon: assets/Theiagen-Symbol-Standard-01.png
+  logo: assets/logos/Theiagen-Logo-White.png
+  favicon: assets/logos/Theiagen-Symbol-Standard-01.png
   custom_dir: docs/overrides
   features:
     - content.code.annotate

@@ -6,7 +6,7 @@ title: Zip_Column_Content
 
 | **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |||||
 |---|---|---|---|---|
-| [Exporting Data From Terra](../../workflows_overview/workflows-type.md/#exporting-data-from-terra) | [Any taxa](../../workflows_overview/workflows-kingdom.md/#any-taxa) | PHB v2.1.0 | Yes | Set-level |
+| [Exporting Data From Terra](../../workflows_overview/workflows_type.md/#exporting-data-from-terra) | [Any taxa](../../workflows_overview/workflows_kingdom.md/#any-taxa) | PHB v2.1.0 | Yes | Set-level |
 
 ## Zip_Column_Content_PHB
 

@@ -2,7 +2,7 @@
 title: Workflows by Type
 ---
 
-[Sort by Kingdom](workflows-kingdom.md) | [Sort Alphabetically](workflows-alphabetically.md)
+[Sort by Kingdom](workflows_kingdom.md) | [Sort Alphabetically](workflows_alphabetically.md)
 
 ---
 

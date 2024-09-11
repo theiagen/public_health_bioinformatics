@@ -4,7 +4,7 @@
 
 | **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
 |---|---|---|---|---|
-| [Public Data Sharing](../../workflows_overview/workflows-type.md/#public-data-sharing) | [Viral](../../workflows_overview/workflows-kingdom.md/#viral) | PHB v2.2.0 | Yes | Set-level |
+| [Public Data Sharing](../../workflows_overview/workflows_type.md/#public-data-sharing) | [Viral](../../workflows_overview/workflows_kingdom.md/#viral) | PHB v2.2.0 | Yes | Set-level |
 
 ## Mercury_Prep_N_Batch_PHB
 
@@ -123,7 +123,7 @@ This workflow runs on the set-level.
 
     Due to the nature of tsv files, it may be easier to download and open this file in Excel. 
     
-    [example_excluded_samples.tsv](../../assets/misc_files/example_excluded_samples.tsv)
+    [example_excluded_samples.tsv](../../assets/files/example_excluded_samples.tsv)
     
     ```
     Samples excluded for quality thresholds:

@@ -10,7 +10,7 @@
 
 | **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
 |---|---|---|---|---|
-| [Genomic Characterization](../../workflows_overview/workflows-type.md/#genomic-characterization) | [Viral](../../workflows_overview/workflows-kingdom.md/#viral) | PHB v2.2.0 | Yes | Sample-level, Set-level |
+| [Genomic Characterization](../../workflows_overview/workflows_type.md/#genomic-characterization) | [Viral](../../workflows_overview/workflows_kingdom.md/#viral) | PHB v2.2.0 | Yes | Sample-level, Set-level |
 
 ## Freyja Overview
 
@@ -23,7 +23,7 @@ Additional post-processing steps can produce visualizations of aggregated sample
 
 !!! caption "Figure 1: Workflow Diagram for Freyja_FASTQ_PHB workflow"
     ##### Figure 1 { #figure1 }
-    ![**Figure 1: Workflow diagram for Freyja_FASTQ_PHB workflow.**](../../assets/freyja/Freyja_FASTQ.png){width=25%}
+    ![**Figure 1: Workflow diagram for Freyja_FASTQ_PHB workflow.**](../../assets/figures/Freyja_FASTQ.png){width=25%}
 
     Depending on the type of data (Illumina or Oxford Nanopore), the Read QC and Filtering steps, as well as the Read Alignment steps use different software. The user can specify if the barcodes and lineages file should be updated with `freyja update` before running Freyja or if bootstrapping is to be performed with `freyja boot`.
 
@@ -524,13 +524,13 @@ When running **Freyja_FASTQ_PHB**, the appropriate reference and barcodes file n
 
 !!! caption "Figure 2:  Required input for Freyja_FASTQ_PHB to provide the reference genome to be used by Freyja"
     ##### Figure 2 { #figure2 }
-    ![**Figure 2:  Required input for Freyja_FASTQ_PHB to provide the reference genome to be used by Freyja.**](../../assets/freyja/figure2.png)
+    ![**Figure 2:  Required input for Freyja_FASTQ_PHB to provide the reference genome to be used by Freyja.**](../../assets/figures/Freyja_figure2.png)
 
 The barcodes file can be passed directly to Freyja by the `freyja_usher_barcodes` optional input ([Figure 3](freyja.md/#figure3)).
 
 !!! caption "Figure 3: Optional input for Freyja_FASTQ_PHB to provide the barcodes file to be used by Freyja"
     ##### Figure 3 {#figure3}
-    ![**Figure 3: Optional input for Freyja_FASTQ_PHB to provide the barcodes file to be used by Freyja.**](../../assets/freyja/figure3.png)
+    ![**Figure 3: Optional input for Freyja_FASTQ_PHB to provide the barcodes file to be used by Freyja.**](../../assets/figures/Freyja_figure3.png)
 
 ## References
 

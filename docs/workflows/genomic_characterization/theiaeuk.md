@@ -4,7 +4,7 @@
 
 | **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibliity** | **Workflow Level** |
 |---|---|---|---|---|
-| [Genomic Characterization](../../workflows_overview/workflows-type.md/#genomic-characterization) | [Mycotics](../../workflows_overview/workflows-kingdom.md/#mycotics) | PHB v2.2.0 | Yes | Sample-level |
+| [Genomic Characterization](../../workflows_overview/workflows_type.md/#genomic-characterization) | [Mycotics](../../workflows_overview/workflows_kingdom.md/#mycotics) | PHB v2.2.0 | Yes | Sample-level |
 
 ## TheiaEuk Workflows
 
@@ -13,7 +13,7 @@
 All input reads are processed through "core tasks" in each workflow. The core tasks include raw-read quality assessment, read cleaning (quality trimming and adapter removal), de novo assembly, assembly quality assessment, and species taxon identification. For some taxa identified, "taxa-specific sub-workflows" will be automatically activated, undertaking additional taxa-specific characterization steps, including clade-typing and/or antifungal resistance detection.
 
 !!! caption "TheiaEuk Workflow Diagram"
-    ![TheiaEuk Workflow Diagram](../../assets/characterization/TheiaEuk_Illumina_PE.png){width=75%}
+    ![TheiaEuk Workflow Diagram](../../assets/figures/TheiaEuk_Illumina_PE.png){width=75%}
 
 ### Inputs
 
@@ -370,7 +370,7 @@ All input reads are processed through "core tasks" in each workflow. The core ta
 
     ??? toggle "Template _qc_check_table.tsv_ files"
 
-        TheiaEuk_Illumina_PE_PHB: [theiaeuk_qc_check_template.tsv](../../assets/characterization/theiaeuk_qc_check_template.tsv)
+        TheiaEuk_Illumina_PE_PHB: [theiaeuk_qc_check_template.tsv](../../assets/files/TheiaEuk_qc_check_template.tsv)
 
         !!! warning "Example Purposes Only"
             QC threshold values shown are for example purposes only and should not be presumed to be sufficient for every dataset.

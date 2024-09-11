@@ -4,7 +4,7 @@
 
 | **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
 |---|---|---|---|---|
-| [Public Data Sharing](../../workflows_overview/workflows-type.md/#public-data-sharing) | [Bacteria](../../workflows_overview/workflows-kingdom.md#bacteria), [Mycotics](../../workflows_overview/workflows-kingdom.md#mycotics) [Viral](../../workflows_overview/workflows-kingdom.md/#viral) | PHB v2.1.0 | No | Set-level |
+| [Public Data Sharing](../../workflows_overview/workflows_type.md/#public-data-sharing) | [Bacteria](../../workflows_overview/workflows_kingdom.md#bacteria), [Mycotics](../../workflows_overview/workflows_kingdom.md#mycotics) [Viral](../../workflows_overview/workflows_kingdom.md/#viral) | PHB v2.1.0 | No | Set-level |
 
 ## Terra_2_NCBI_PHB
 
@@ -199,7 +199,7 @@ The output files contain information mostly for debugging purposes. Additionally
 
     Due to the nature of tsv files, it may be easier to download and open this file in Excel. 
     
-    [example_excluded_samples.tsv](../../assets/misc_files/example_excluded_samples.tsv)
+    [example_excluded_samples.tsv](../../assets/files/example_excluded_samples.tsv)
     
     ```
     Samples excluded for quality thresholds:

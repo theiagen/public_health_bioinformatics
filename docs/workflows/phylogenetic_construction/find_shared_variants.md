@@ -4,7 +4,7 @@
 
 | **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
 |---|---|---|---|---|
-| [Phylogenetic Construction](../../workflows_overview/workflows-type.md/#phylogenetic-construction) | [Bacteria](../../workflows_overview/workflows-kingdom.md/#bacteria), [Mycotics](../../workflows_overview/workflows-kingdom.md#mycotics) | PHB v2.0.0 | Yes | Set-level |
+| [Phylogenetic Construction](../../workflows_overview/workflows_type.md/#phylogenetic-construction) | [Bacteria](../../workflows_overview/workflows_kingdom.md/#bacteria), [Mycotics](../../workflows_overview/workflows_kingdom.md#mycotics) | PHB v2.0.0 | Yes | Set-level |
 
 ## Find_Shared_Variants_PHB
 
@@ -12,7 +12,7 @@
 
 !!! caption "Find_Shared_Variants Workflow Diagram"
 
-    ![Find_Shared_Variants Workflow Diagram](../../assets/phylo_diagrams/Find_Shared_Variants_PHB.png)
+    ![Find_Shared_Variants Workflow Diagram](../../assets/figures/Find_Shared_Variants_PHB.png)
 
 ### Inputs
 

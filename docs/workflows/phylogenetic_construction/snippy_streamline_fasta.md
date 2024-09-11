@@ -4,7 +4,7 @@
 
 | **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
 |---|---|---|---|---|
-| [Phylogenetic Construction](../../workflows_overview/workflows-type.md/#phylogenetic-construction) | [Bacteria](../../workflows_overview/workflows-kingdom.md/#bacteria) | PHB v2.2.0 | Yes; some optional features incompatible | Set-level |
+| [Phylogenetic Construction](../../workflows_overview/workflows_type.md/#phylogenetic-construction) | [Bacteria](../../workflows_overview/workflows_kingdom.md/#bacteria) | PHB v2.2.0 | Yes; some optional features incompatible | Set-level |
 
 ## Snippy_Streamline_FASTA_PHB
 
@@ -12,7 +12,7 @@ This workflow is a FASTA-compatible version of [Snippy_Streamline](./snippy_stre
 
 !!! caption "Snippy_Streamline_FASTA_PHB Workflow Diagram"
     <div style="text-align: center;">
-    ![Snippy_Streamline_FASTA_PHB Workflow Diagram](../../assets/phylo_diagrams/Snippy_Streamline_FASTA.png){width=50%}
+    ![Snippy_Streamline_FASTA_PHB Workflow Diagram](../../assets/figures/Snippy_Streamline_FASTA.png){width=50%}
     </div>
 
 The `Snippy_Streamline_FASTA` workflow is an all-in-one approach to generating a reference-based phylogenetic tree and associated SNP-distance matrix. The workflow can be run in multiple ways with options for:

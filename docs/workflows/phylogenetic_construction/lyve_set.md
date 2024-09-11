@@ -4,7 +4,7 @@
 
 | **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
 |---|---|---|---|---|
-| [Phylogenetic Construction](../../workflows_overview/workflows-type.md/#phylogenetic-construction) | [Bacteria](../../workflows_overview/workflows-kingdom.md/#bacteria) | PHB v2.1.0 | Yes | Set-level |
+| [Phylogenetic Construction](../../workflows_overview/workflows_type.md/#phylogenetic-construction) | [Bacteria](../../workflows_overview/workflows_kingdom.md/#bacteria) | PHB v2.1.0 | Yes | Set-level |
 
 ## Lyve_SET_PHB
 
@@ -13,7 +13,7 @@ The Lyve_SET WDL workflow runs the [Lyve-SET](https://github.com/lskatz/lyve-SET
 ### Lyve-SET Pipeline (from [Lyve-SET paper](https://www.frontiersin.org/articles/10.3389/fmicb.2017.00375/full))
 
 !!! caption "Lyve-SET Workflow Diagram"
-    ![Lyve-SET Workflow Diagram](../../assets/phylo_diagrams/lyve_set.png)
+    ![Lyve-SET Workflow Diagram](../../assets/figures/Lyve_Set.png)
 
 ### Inputs
 

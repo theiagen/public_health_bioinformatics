@@ -4,7 +4,7 @@
 
 | **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
 |---|---|---|---|---|
-| [Standalone](../../workflows_overview/workflows-type.md/#standalone) | [Any Taxa](../../workflows_overview/workflows-kingdom.md/#any-taxa) | PHB v2.0.0 | Yes | Sample-level |
+| [Standalone](../../workflows_overview/workflows_type.md/#standalone) | [Any Taxa](../../workflows_overview/workflows_kingdom.md/#any-taxa) | PHB v2.0.0 | Yes | Sample-level |
 
 ## Kraken2 Workflows
 
@@ -21,7 +21,7 @@ There are three Kraken2 workflows:
 Besides the data input types, there are minimal differences between these two workflows.
 
 !!! caption "Kraken2 Workflow Diagram"
-    ![Kraken2 Workflow Diagram](../../assets/standalone/Kraken2.png)
+    ![Kraken2 Workflow Diagram](../../assets/figures/Kraken2.png)
 
 ### Databases
 
@@ -139,7 +139,7 @@ Krona will only output hierarchical results for bacterial organisms in its curre
 
     Below is an example of the `krona_html` for a metagenomic sample. Taxonomic rank is organised from the centre of the pie chart to the edge, with each slice representing the relative abundance of a given taxa in the sample. 
     
-    ![Example Krona Report](../../assets/misc_files/example_krona_report.png)
+    ![Example Krona Report](../../assets/figures/example_krona_report.png)
 
 !!! techdetails "Kraken2 Technical Details"
     |  | Links |

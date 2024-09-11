@@ -4,7 +4,7 @@
 
 | **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
 |---|---|---|---|---|
-| [Genomic Characterization](../../workflows_overview/workflows-type.md/#genomic-characterization) | [Viral](../../workflows_overview/workflows-kingdom.md/#viral) | PHB v2.2.0 | Yes, some optional features incompatible | Sample-level |
+| [Genomic Characterization](../../workflows_overview/workflows_type.md/#genomic-characterization) | [Viral](../../workflows_overview/workflows_kingdom.md/#viral) | PHB v2.2.0 | Yes, some optional features incompatible | Sample-level |
 
 ## TheiaCoV Workflows
 
@@ -51,7 +51,7 @@ Additionally, the **TheiaCoV_FASTA_Batch** workflow is available to process seve
         - [TheiaCoV_FASTA_RSV-B_2024-04-19.json](https://prod-files-secure.s3.us-west-2.amazonaws.com/be290196-9090-4f3c-a9ab-fe730ad213e0/160cdfbc-a556-40bc-aa05-84ae69511400/TheiaCoV_FASTA_RSV-B_2024-04-19.json)
 
 !!! caption "TheiaCoV Workflow Diagram"
-    ![TheiaCoV Workflow Diagram](../../assets/characterization/TheiaCoV.png)
+    ![TheiaCoV Workflow Diagram](../../assets/figures/TheiaCoV.png)
 
 ### Supported Organisms
 

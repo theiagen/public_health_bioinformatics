@@ -4,12 +4,12 @@
 
 | **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
 |---|---|---|---|---|
-| [Phylogenetic Construction](../../workflows_overview/workflows-type.md/#phylogenetic-construction) | [Bacteria](../../workflows_overview/workflows-kingdom.md/#bacteria) | PHB v2.1.0 | Yes, some optional features incompatible | Set-level |
+| [Phylogenetic Construction](../../workflows_overview/workflows_type.md/#phylogenetic-construction) | [Bacteria](../../workflows_overview/workflows_kingdom.md/#bacteria) | PHB v2.1.0 | Yes, some optional features incompatible | Set-level |
 
 ## Core_Gene_SNP_PHB
 
 !!! caption "Core Gene SNP Workflow Diagram"
-    ![Core Gene SNP Workflow Diagram](../../assets/phylo_diagrams/Core_Gene_SNP.png){width:45%}
+    ![Core Gene SNP Workflow Diagram](../../assets/figures/Core_Gene_SNP.png){width:45%}
 
 The Core_Gene_SNP workflow is intended for pangenome analysis, core gene alignment, and phylogenetic analysis. The workflow takes in gene sequence data in GFF3 format from a set of samples. It first produces a pangenome summary using [`Pirate`](https://github.com/SionBayliss/PIRATE), which clusters genes within the sample set into orthologous gene families. By default, the workflow also instructs `Pirate` to produce both core gene and pangenome alignments. The workflow subsequently triggers the generation of a phylogenetic tree and SNP distance matrix from the core gene alignment using [`iqtree`](https://github.com/iqtree/iqtree2/tree/v1.6.7) and [`snp-dists`](https://github.com/tseemann/snp-dists), respectively. Optionally, the workflow will also run this analysis using the pangenome alignment. This workflow also features an optional module, `summarize_data`, that creates a presence/absence matrix for the analyzed samples from a list of indicated columns (such as AMR genes, etc.) that can be used in Phandango.
 
