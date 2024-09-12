@@ -224,8 +224,8 @@ task stxtyper {
     File stxtyper_log = "~{samplename}_stxtyper.log"
     String stxtyper_docker = docker
     String stxtyper_version = read_string("VERSION.txt")
-    Int stxtyper_num_hits = read_int("stxtyper_num_hits.txt")
     # outputs parsed from stxtyper output TSV
+    Int stxtyper_num_hits = read_int("stxtyper_num_hits.txt")
     String stxtyper_all_hits = read_string("stxtyper_all_hits.txt")
     String stxtyper_complete_operon_hits = read_string("stxtyper_complete_operons.txt")
     String stxtyper_partial_hits = read_string("stxtyper_partial_hits.txt")
