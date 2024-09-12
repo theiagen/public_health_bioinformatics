@@ -232,6 +232,12 @@ workflow theiameta_illumina_pe {
     String bbduk_docker = read_QC_trim.bbduk_docker
     # Read QC - Read stats
     Float? average_read_length = read_QC_trim.average_read_length
+    # MIDAS outputs
+    String? midas_primary_genus = read_QC_trim.midas_primary_genus
+    String? midas_secondary_genus = read_QC_trim.midas_secondary_genus
+    Float? midas_secondary_genus_abundance = read_QC_trim.midas_secondary_genus_abundance
+    File? midas_report = read_QC_trim.midas_report
+    Float? midas_secondary_genus_coverage = read_QC_trim.midas_secondary_genus_coverage
     # Assembly - metaspades 
     File assembly_fasta = select_first([retrieve_aligned_contig_paf.final_assembly, pilon.assembly_fasta])
     String metaspades_version = metaspades_pe.metaspades_version
