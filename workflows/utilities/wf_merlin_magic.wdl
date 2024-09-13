@@ -217,6 +217,7 @@ workflow merlin_magic {
     Float? virulencefinder_identity_threshold
     String? virulencefinder_database
     # stxtyper options
+    Boolean call_stxtyper = false # set to true to run stxtyper on any bacterial sample
     Boolean? stxtyper_enable_debug
     String? stxtyper_docker_image
     Int? stxtyper_disk_size
@@ -243,6 +244,19 @@ workflow merlin_magic {
         minid = abricate_abaum_minid, 
         mincov = abricate_abaum_mincov,
         docker = abricate_abaum_docker_image
+    }
+  }
+  # stxtyper is special & in it's own conditional block because it should automatically be run on Escherichia and Shigella species; but optionally run on ANY bacterial sample if the user wants to screen for Shiga toxin genes
+  if (merlin_tag == "Escherichia" || merlin_tag == "Shigella sonnei" || call_stxtyper == true ) {
+      call stxtyper_task.stxtyper {
+        input:
+          assembly = assembly,
+          samplename = samplename,
+          docker = stxtyper_docker_image,
+          disk_size = stxtyper_disk_size,
+          cpu = stxtyper_cpu,
+          memory = stxtyper_memory,
+          enable_debugging = stxtyper_enable_debug
     }
   }
   if (merlin_tag == "Escherichia" || merlin_tag == "Shigella sonnei" ) {
@@ -293,16 +307,6 @@ workflow merlin_magic {
           paired_end = paired_end,
           docker = shigeifinder_docker_image
       }
-    }
-      call stxtyper_task.stxtyper {
-        input:
-          assembly = assembly,
-          samplename = samplename,
-          docker = stxtyper_docker_image,
-          disk_size = stxtyper_disk_size,
-          cpu = stxtyper_cpu,
-          memory = stxtyper_memory,
-          enable_debugging = stxtyper_enable_debug
     }
     call virulencefinder_task.virulencefinder {
       input:
