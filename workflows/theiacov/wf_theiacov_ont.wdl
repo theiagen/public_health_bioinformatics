@@ -139,6 +139,11 @@ workflow theiacov_ont {
             samplename = samplename,
             bamfile = consensus.trim_sorted_bam
         }
+       # Calculate percentage of mapped reads using assembled_reads_percent task
+        call assembly_metrics.assembled_reads_percent {
+          input:
+            bam = consensus.trim_sorted_bam
+        }  
       }
       # assembly via irma for flu organisms
       if (organism_parameters.standardized_organism == "flu") {
@@ -427,5 +432,6 @@ workflow theiacov_ont {
     # QC_Check Results
     String? qc_check = qc_check_task.qc_check
     File? qc_standard = qc_check_task.qc_standard
+    
   }
 }
