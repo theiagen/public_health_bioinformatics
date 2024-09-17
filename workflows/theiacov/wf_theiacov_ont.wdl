@@ -432,6 +432,6 @@ workflow theiacov_ont {
     # QC_Check Results
     String? qc_check = qc_check_task.qc_check
     File? qc_standard = qc_check_task.qc_standard
-    
+    Float? percentage_mapped_reads = assembled_reads_percent.percentage_mapped
   }
 }
