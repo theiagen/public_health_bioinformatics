@@ -14,7 +14,7 @@
 
 While this workflow is technically a set-level workflow, it works on the sample-level too. When run on the set-level, the samples are placed with respect to each other.
 
-| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** | |
+| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
 |---|---|---|---|---|---|
 | usher_workflow | **assembly_fasta** | Array[File] | The assembly files for the samples you want to place on the pre-existing; can either be a set of samples, an individual sample, or multiple individual samples |  | Required |
 | usher_workflow | **organism** | String | What organism to run UShER on; the following organism have default global phylogenies and reference files provided: sars-cov-2, mpox, RSV-A, RSV-B.  |  | Required |
