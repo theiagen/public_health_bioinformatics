@@ -60,7 +60,7 @@ The `Snippy_Variants` workflow aligns single-end or paired-end reads (in FASTQ f
 
 ### Outputs
 
-!!! tip "Visualize your outputs in IGB"
+!!! tip "Visualize your outputs in IGV"
     Output bam/bai files may be visualized using IGV to manually assess read placement and SNP support.
 
 | **Variable** | **Type** | **Description** |
