@@ -11,6 +11,7 @@ task tbprofiler {
     String mapper = "bwa"
     String variant_caller = "freebayes"
     String? variant_calling_params
+    String? additional_parameters
     Int min_depth = 10
     Float min_af = 0.1
     Int cpu = 8 
@@ -65,6 +66,7 @@ task tbprofiler {
       --threads ~{cpu} \
       --csv --txt \
       ~{true="--platform nanopore" false="" ont_data} \
+      ~{additional_parameters} \
       ${TBDB}
 
     # Collate results

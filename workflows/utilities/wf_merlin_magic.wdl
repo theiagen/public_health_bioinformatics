@@ -68,6 +68,7 @@ workflow merlin_magic {
     Float? tbprofiler_min_af
     String? tbprofiler_variant_caller
     String? tbprofiler_variant_calling_params
+    String? tbprofiler_additional_parameters
     Boolean tbprofiler_run_custom_db = false
     Boolean? tbprofiler_run_cdph_db
     File? tbprofiler_custom_db
@@ -266,7 +267,8 @@ workflow merlin_magic {
           variant_calling_params = tbprofiler_variant_calling_params,
           min_depth = tbprofiler_min_depth,
           min_af = tbprofiler_min_af,
-          docker = tbprofiler_docker_image
+          docker = tbprofiler_docker_image,
+          additional_parameters = tbprofiler_additional_parameters
       }
       if (tbprofiler_additional_outputs) {
         call tbp_parser_task.tbp_parser {
