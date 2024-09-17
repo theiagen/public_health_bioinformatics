@@ -47,7 +47,7 @@ When undertaking genomic analysis using the command-line, via Terra, or other da
 We continuously work to improve our codebase and usability of our workflows by the public health community, so changes from version to version are expected.  This documentation page reflects the state of the workflow at the version stated in the title.
 
 !!! dna "What's new?"
-    You can see the changes since PHB v2.1.0 [**here**](https://theiagen.notion.site/Public-Health-Bioinformatics-v2-2-0-Minor-Release-Notes-9b2781f27b8d4b69949f8fc1ef04868d?pvs=4)!
+    You can see the changes since PHB v2.2.0 [**here**](https://theiagen.notion.site/Public-Health-Bioinformatics-v2-2-1-Patch-Release-Notes-104cb013bc9380bcbd70dab04bf671a8?pvs=74)!
 
 ## Contributing to the PHB Repository
 
