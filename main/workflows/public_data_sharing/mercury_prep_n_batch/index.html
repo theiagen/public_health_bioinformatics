@@ -1732,6 +1732,27 @@
   
   
     <li class="md-nav__item">
+      <a href="../../standalone/ncbi_scrub/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    NCBI-Scrub
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../standalone/rasusa/" class="md-nav__link">
         
   
@@ -2018,6 +2039,27 @@
   
   <span class="md-ellipsis">
     Kraken2
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../standalone/ncbi_scrub/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    NCBI-Scrub
   </span>
   
 
@@ -3790,6 +3832,27 @@
   
   
     <li class="md-nav__item">
+      <a href="../../standalone/ncbi_scrub/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    NCBI-Scrub
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../genomic_characterization/pangolin_update/" class="md-nav__link">
         
   
@@ -4596,44 +4659,308 @@
 </div>
 <h3 id="inputs">Inputs<a class="headerlink" href="#inputs" title="Permanent link">&para;</a></h3>
 <p>This workflow runs on the set-level.</p>
-<p>| <strong>Terra Task Name</strong> | <strong>Variable</strong> | <strong>Type</strong> | <strong>Description</strong> | <strong>Default Value</strong> | <strong>Terra Status</strong> | |
-|---|---|---|---|---|---|
-| mercury_prep_n_batch | <strong>gcp_bucket_uri</strong> | String | Google bucket where your SRA reads will be temporarily stored before transferring to SRA. Example: "gs://theiagen_sra_transfer" |  | Required |
-| mercury_prep_n_batch | <strong>sample_names</strong> | Array[String] | The samples you want to submit |  | Required |
-| mercury_prep_n_batch | <strong>terra_project_name</strong> | String | The name of your Terra project. You can find this information in the URL of the webpage of your Terra dashboard. For example, if your URL contains #workspaces/example/my_workspace/ then your project name is example |  | Required |
-| mercury_prep_n_batch | <strong>terra_table_name</strong> | String | The name of the Terra table where your samples can be found. Do not include the entity: prefix or the _id suffix, just the name of the table as listed in the sidebar on lefthand side of the Terra Data tab. |  | Required |
-| mercury_prep_n_batch | <strong>terra_workspace_name</strong> | String | The name of your Terra workspace where your samples can be found. For example, if your URL contains #workspaces/example/my_workspace/ then your project name is my_workspace |  | Required |
-| download_terra_table | <strong>cpu</strong> | Int | Number of CPUs to allocate to the task | 1 | Optional |
-| download_terra_table | <strong>disk_size</strong> | Int | Amount of storage (in GB) to allocate to the task | 10 | Optional |
-| download_terra_table | <strong>docker</strong> | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-06-21 | Optional |
-| download_terra_table | <strong>memory</strong> | Int | Amount of memory/RAM (in GB) to allocate to the task | 1 | Optional |
-| mercury | <strong>cpu</strong> | Int | Number of CPUs to allocate to the task | 2 | Optional |
-| mercury | <strong>disk_size</strong> | Int | Amount of storage (in GB) to allocate to the task | 50 | Optional |
-| mercury | <strong>docker</strong> | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/theiagen/mercury:1.0.7 | Optional |
-| mercury | <strong>memory</strong> | Int | Amount of memory/RAM (in GB) to allocate to the task | 2 | Optional |
-| mercury | <strong>number_N_threshold</strong> | Int | Only for "sars-cov-2" submissions; used to filter out any samples that contain more than the indicated number of Ns in the assembly file | 5000 | Optional |
-| mercury | <strong>single_end</strong> | Boolean | Set to true if your data is single-end; this ensures that a read2 column is not included in the metadata | FALSE | Optional |
-| mercury | <strong>skip_county</strong> | Boolean | Use if your Terra table contains a county column that you do not want to include in your submission.  | FALSE | Optional |
-| mercury | <strong>usa_territory</strong> | Boolean | If true, the "state" column will be used in place of the "country" column. For example, if "state" is Puerto Rico, then the GISAID virus name will be <code>hCoV-19/Puerto Rico/&lt;name&gt;/&lt;year&gt;</code>. The NCBI <code>geo_loc_name</code> will be "USA: Puerto Rico". This optional Boolean variable should only be used with clear understanding of what it does. | FALSE | Optional |
-| mercury | <strong>using_clearlabs_data</strong> | Boolean | When set to true will change read1_dehosted → clearlabs_fastq_gz; assembly_fasta → clearlabs_fasta; assembly_mean_coverage → clearlabs_assembly_coverage | FALSE | Optional |
-| mercury | <strong>using_reads_dehosted</strong> | Boolean | When set to true will only change read1_dehosted → reads_dehosted. Takes priority over the replacement for read1_dehosted made with the using_clearlabs_data Boolean input | FALSE | Optional |
-| mercury | <strong>vadr_alert_limit</strong> | Int | Only for "sars-cov-2" submissions; used to filter out any samples that contain more than the indicated number of vadr alerts | 0 | Optional |
-| mercury_prep_n_batch | <strong>authors_sbt</strong> | File | Only for "mpox" submissions; a file that contains author information. This file can be created here: <a href="https://submit.ncbi.nlm.nih.gov/genbank/template/submission/">https://submit.ncbi.nlm.nih.gov/genbank/template/submission/</a> |  | Optional |
-| mercury_prep_n_batch | <strong>organism</strong> | String | The organism that you want submission prepare for — each organism requires different metadata fields so please ensure this field is accurate. Options: "flu", "mpox"" or "sars-cov-2" | sars-cov-2 | Optional |
-| mercury_prep_n_batch | <strong>output_name</strong> | String | Free text prefix for all output files | mercury | Optional |
-| mercury_prep_n_batch | <strong>skip_ncbi</strong> | Boolean | Set to true if you only want to prepare GISAID submission files | FALSE | Optional |
-| table2asn | <strong>cpu</strong> | Int | Number of CPUs to allocate to the task | 1 | Optional |
-| table2asn | <strong>disk_size</strong> | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
-| table2asn | <strong>docker</strong> | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/ncbi-table2asn:1.26.678 | Optional |
-| table2asn | <strong>memory</strong> | Int | Amount of memory/RAM (in GB) to allocate to the task | 1 | Optional |
-| trim_genbank_fastas | <strong>cpu</strong> | Int | Number of CPUs to allocate to the task | 1 | Optional |
-| trim_genbank_fastas | <strong>disk_size</strong> | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
-| trim_genbank_fastas | <strong>docker</strong> | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/vadr:1.3 | Optional |
-| trim_genbank_fastas | <strong>max_length</strong> | Int | Only for "sars-cov-2" submissions; the maximum genome length for trimming terminal ambiguous nucleotides. If your sample's genome is higher than this value, the workflow will error/fail. | 30000 | Optional |
-| trim_genbank_fastas | <strong>memory</strong> | Int | Amount of memory/RAM (in GB) to allocate to the task | 2 | Optional |
-| trim_genbank_fastas | <strong>min_length</strong> | Int | Only for "sars-cov-2" submissions; the minimum genome length for trimming terminal ambiguous nucleotides. If your sample's genome is lower than this value, the workflow will error/fail.  | 50 | Optional |
-| version_capture | <strong>docker</strong> | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
-| version_capture | <strong>timezone</strong> | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |</p>
+<table>
+<thead>
+<tr>
+<th><strong>Terra Task Name</strong></th>
+<th><strong>Variable</strong></th>
+<th><strong>Type</strong></th>
+<th><strong>Description</strong></th>
+<th><strong>Default Value</strong></th>
+<th><strong>Terra Status</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>mercury_prep_n_batch</td>
+<td><strong>gcp_bucket_uri</strong></td>
+<td>String</td>
+<td>Google bucket where your SRA reads will be temporarily stored before transferring to SRA. Example: "gs://theiagen_sra_transfer"</td>
+<td></td>
+<td>Required</td>
+</tr>
+<tr>
+<td>mercury_prep_n_batch</td>
+<td><strong>sample_names</strong></td>
+<td>Array[String]</td>
+<td>The samples you want to submit</td>
+<td></td>
+<td>Required</td>
+</tr>
+<tr>
+<td>mercury_prep_n_batch</td>
+<td><strong>terra_project_name</strong></td>
+<td>String</td>
+<td>The name of your Terra project. You can find this information in the URL of the webpage of your Terra dashboard. For example, if your URL contains #workspaces/example/my_workspace/ then your project name is example</td>
+<td></td>
+<td>Required</td>
+</tr>
+<tr>
+<td>mercury_prep_n_batch</td>
+<td><strong>terra_table_name</strong></td>
+<td>String</td>
+<td>The name of the Terra table where your samples can be found. Do not include the entity: prefix or the _id suffix, just the name of the table as listed in the sidebar on lefthand side of the Terra Data tab.</td>
+<td></td>
+<td>Required</td>
+</tr>
+<tr>
+<td>mercury_prep_n_batch</td>
+<td><strong>terra_workspace_name</strong></td>
+<td>String</td>
+<td>The name of your Terra workspace where your samples can be found. For example, if your URL contains #workspaces/example/my_workspace/ then your project name is my_workspace</td>
+<td></td>
+<td>Required</td>
+</tr>
+<tr>
+<td>download_terra_table</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>1</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>download_terra_table</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>10</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>download_terra_table</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-06-21</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>download_terra_table</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>1</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>mercury</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>mercury</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>50</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>mercury</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/mercury:1.0.7</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>mercury</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>mercury</td>
+<td><strong>number_N_threshold</strong></td>
+<td>Int</td>
+<td>Only for "sars-cov-2" submissions; used to filter out any samples that contain more than the indicated number of Ns in the assembly file</td>
+<td>5000</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>mercury</td>
+<td><strong>single_end</strong></td>
+<td>Boolean</td>
+<td>Set to true if your data is single-end; this ensures that a read2 column is not included in the metadata</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>mercury</td>
+<td><strong>skip_county</strong></td>
+<td>Boolean</td>
+<td>Use if your Terra table contains a county column that you do not want to include in your submission.</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>mercury</td>
+<td><strong>usa_territory</strong></td>
+<td>Boolean</td>
+<td>If true, the "state" column will be used in place of the "country" column. For example, if "state" is Puerto Rico, then the GISAID virus name will be <code>hCoV-19/Puerto Rico/&lt;name&gt;/&lt;year&gt;</code>. The NCBI <code>geo_loc_name</code> will be "USA: Puerto Rico". This optional Boolean variable should only be used with clear understanding of what it does.</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>mercury</td>
+<td><strong>using_clearlabs_data</strong></td>
+<td>Boolean</td>
+<td>When set to true will change read1_dehosted → clearlabs_fastq_gz; assembly_fasta → clearlabs_fasta; assembly_mean_coverage → clearlabs_assembly_coverage</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>mercury</td>
+<td><strong>using_reads_dehosted</strong></td>
+<td>Boolean</td>
+<td>When set to true will only change read1_dehosted → reads_dehosted. Takes priority over the replacement for read1_dehosted made with the using_clearlabs_data Boolean input</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>mercury</td>
+<td><strong>vadr_alert_limit</strong></td>
+<td>Int</td>
+<td>Only for "sars-cov-2" submissions; used to filter out any samples that contain more than the indicated number of vadr alerts</td>
+<td>0</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>mercury_prep_n_batch</td>
+<td><strong>authors_sbt</strong></td>
+<td>File</td>
+<td>Only for "mpox" submissions; a file that contains author information. This file can be created here: <a href="https://submit.ncbi.nlm.nih.gov/genbank/template/submission/">https://submit.ncbi.nlm.nih.gov/genbank/template/submission/</a></td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>mercury_prep_n_batch</td>
+<td><strong>organism</strong></td>
+<td>String</td>
+<td>The organism that you want submission prepare for — each organism requires different metadata fields so please ensure this field is accurate. Options: "flu", "mpox"" or "sars-cov-2"</td>
+<td>sars-cov-2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>mercury_prep_n_batch</td>
+<td><strong>output_name</strong></td>
+<td>String</td>
+<td>Free text prefix for all output files</td>
+<td>mercury</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>mercury_prep_n_batch</td>
+<td><strong>skip_ncbi</strong></td>
+<td>Boolean</td>
+<td>Set to true if you only want to prepare GISAID submission files</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>table2asn</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>1</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>table2asn</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>100</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>table2asn</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/ncbi-table2asn:1.26.678</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>table2asn</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>1</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>trim_genbank_fastas</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>1</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>trim_genbank_fastas</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>100</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>trim_genbank_fastas</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/vadr:1.3</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>trim_genbank_fastas</td>
+<td><strong>max_length</strong></td>
+<td>Int</td>
+<td>Only for "sars-cov-2" submissions; the maximum genome length for trimming terminal ambiguous nucleotides. If your sample's genome is higher than this value, the workflow will error/fail.</td>
+<td>30000</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>trim_genbank_fastas</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>trim_genbank_fastas</td>
+<td><strong>min_length</strong></td>
+<td>Int</td>
+<td>Only for "sars-cov-2" submissions; the minimum genome length for trimming terminal ambiguous nucleotides. If your sample's genome is lower than this value, the workflow will error/fail.</td>
+<td>50</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>version_capture</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>"us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0"</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>version_capture</td>
+<td><strong>timezone</strong></td>
+<td>String</td>
+<td>Set the time zone to get an accurate date of analysis (uses UTC by default)</td>
+<td></td>
+<td>Optional</td>
+</tr>
+</tbody>
+</table>
 <h3 id="outputs">Outputs<a class="headerlink" href="#outputs" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
@@ -4743,7 +5070,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2024-09-11</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2024-09-17</span>
   </span>
 
     

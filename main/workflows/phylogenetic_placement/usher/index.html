@@ -1684,6 +1684,27 @@
   
   
     <li class="md-nav__item">
+      <a href="../../standalone/ncbi_scrub/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    NCBI-Scrub
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../standalone/rasusa/" class="md-nav__link">
         
   
@@ -1970,6 +1991,27 @@
   
   <span class="md-ellipsis">
     Kraken2
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../standalone/ncbi_scrub/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    NCBI-Scrub
   </span>
   
 
@@ -3564,6 +3606,27 @@
   
   
     <li class="md-nav__item">
+      <a href="../../standalone/ncbi_scrub/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    NCBI-Scrub
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../genomic_characterization/pangolin_update/" class="md-nav__link">
         
   
@@ -4303,20 +4366,116 @@
 <p><a href="https://usher-wiki.readthedocs.io/en/latest/">UShER</a> (Ultrafast Sample Placement on Existing Trees) rapidly places new samples onto an existing phylogeny using maximum parsimony. This workflow uses the UCSC-maintained global trees for SARS-CoV-2, mpox, RSV-A, and RSV-B if those organisms are specified in the <code>organism</code> input field. However, UShER can be used on any organism as long as a mutation-annotated tree (MAT) is provided in protobuf format. Contact us if you need help generating your own mutation-annotated tree, or follow the instructions available on the UShER wiki <a href="https://usher-wiki.readthedocs.io/en/latest/">here</a>.</p>
 <h3 id="inputs">Inputs<a class="headerlink" href="#inputs" title="Permanent link">&para;</a></h3>
 <p>While this workflow is technically a set-level workflow, it works on the sample-level too. When run on the set-level, the samples are placed with respect to each other.</p>
-<p>| <strong>Terra Task Name</strong> | <strong>Variable</strong> | <strong>Type</strong> | <strong>Description</strong> | <strong>Default Value</strong> | <strong>Terra Status</strong> | |
-|---|---|---|---|---|---|
-| usher_workflow | <strong>assembly_fasta</strong> | Array[File] | The assembly files for the samples you want to place on the pre-existing; can either be a set of samples, an individual sample, or multiple individual samples |  | Required |
-| usher_workflow | <strong>organism</strong> | String | What organism to run UShER on; the following organism have default global phylogenies and reference files provided: sars-cov-2, mpox, RSV-A, RSV-B.  |  | Required |
-| usher_workflow | <strong>tree_name</strong> | String | The output prefix for the uncondensed tree output and the clades output. |  | Required |
-| usher | <strong>cpu</strong> | Int | Number of CPUs to allocate to the task | 8 | Optional |
-| usher | <strong>disk_size</strong> | Int | Amount of storage (in GB) to allocate to the task | 200 | Optional |
-| usher | <strong>docker</strong> | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/pathogengenomics/usher:0.6.2 | Optional |
-| usher | <strong>memory</strong> | Int | Amount of memory/RAM (in GB) to allocate to the task | 32 | Optional |
-| usher | <strong>mutation_annotated_tree_pb</strong> | File | Required for organisms other than sars-cov-2, mpox, RSV-A or RSV-B. This is the mutation-annotated global phylogeny upon which your samples will be placed  |  | Optional, Required |
-| usher | <strong>reference_genome</strong> | File | Required for organisms other than sars-cov-2, mpox, RSV-A or RSV-B. This is the reference genome used to determine your sequence's mutations to accurately place the sample on the phylogeny.  |  | Optional, Required |
-| usher | <strong>subtree_size</strong> | Int | Indicates how many of the closest-related samples you want to show in a subtree; more subtrees are made if there is more sequence diversity in the set of input samples (multiple subtrees are only generated if this workflow is run on the set level). | 20 | Optional |
-| version_capture | <strong>docker</strong> | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
-| version_capture | <strong>timezone</strong> | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |</p>
+<table>
+<thead>
+<tr>
+<th><strong>Terra Task Name</strong></th>
+<th><strong>Variable</strong></th>
+<th><strong>Type</strong></th>
+<th><strong>Description</strong></th>
+<th><strong>Default Value</strong></th>
+<th><strong>Terra Status</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>usher_workflow</td>
+<td><strong>assembly_fasta</strong></td>
+<td>Array[File]</td>
+<td>The assembly files for the samples you want to place on the pre-existing; can either be a set of samples, an individual sample, or multiple individual samples</td>
+<td></td>
+<td>Required</td>
+</tr>
+<tr>
+<td>usher_workflow</td>
+<td><strong>organism</strong></td>
+<td>String</td>
+<td>What organism to run UShER on; the following organism have default global phylogenies and reference files provided: sars-cov-2, mpox, RSV-A, RSV-B.</td>
+<td></td>
+<td>Required</td>
+</tr>
+<tr>
+<td>usher_workflow</td>
+<td><strong>tree_name</strong></td>
+<td>String</td>
+<td>The output prefix for the uncondensed tree output and the clades output.</td>
+<td></td>
+<td>Required</td>
+</tr>
+<tr>
+<td>usher</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>8</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>usher</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>200</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>usher</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/pathogengenomics/usher:0.6.2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>usher</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>32</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>usher</td>
+<td><strong>mutation_annotated_tree_pb</strong></td>
+<td>File</td>
+<td>Required for organisms other than sars-cov-2, mpox, RSV-A or RSV-B. This is the mutation-annotated global phylogeny upon which your samples will be placed</td>
+<td></td>
+<td>Optional, Required</td>
+</tr>
+<tr>
+<td>usher</td>
+<td><strong>reference_genome</strong></td>
+<td>File</td>
+<td>Required for organisms other than sars-cov-2, mpox, RSV-A or RSV-B. This is the reference genome used to determine your sequence's mutations to accurately place the sample on the phylogeny.</td>
+<td></td>
+<td>Optional, Required</td>
+</tr>
+<tr>
+<td>usher</td>
+<td><strong>subtree_size</strong></td>
+<td>Int</td>
+<td>Indicates how many of the closest-related samples you want to show in a subtree; more subtrees are made if there is more sequence diversity in the set of input samples (multiple subtrees are only generated if this workflow is run on the set level).</td>
+<td>20</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>version_capture</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>"us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0"</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>version_capture</td>
+<td><strong>timezone</strong></td>
+<td>String</td>
+<td>Set the time zone to get an accurate date of analysis (uses UTC by default)</td>
+<td></td>
+<td>Optional</td>
+</tr>
+</tbody>
+</table>
 <h3 id="outputs">Outputs<a class="headerlink" href="#outputs" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
@@ -4391,7 +4550,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2024-09-11</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2024-09-17</span>
   </span>
 
     
