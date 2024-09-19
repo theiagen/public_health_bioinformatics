@@ -63,6 +63,9 @@ The `Snippy_Variants` workflow aligns single-end or paired-end reads (in FASTQ f
 !!! tip "Visualize your outputs in IGV"
     Output bam/bai files may be visualized using IGV to manually assess read placement and SNP support.
 
+!!! warning "Note on coverage calculations"
+    The outputs from `samtools coverage` may differ from the `snippy_variants_percent_ref_coverage` due to different calculation methods. `samtools coverage` computes genome-wide coverage metrics (e.g., the proportion of bases covered at depth ≥ 1), while `snippy_variants_percent_ref_coverage` uses a user-defined minimum coverage threshold (default is 10), calculating the proportion of the reference genome with a depth greater than or equal to this threshold.
+
 | **Variable** | **Type** | **Description** |
 |---|---|---|
 | snippy_variants_bai | File | Indexed bam file of the reads aligned to the reference |
