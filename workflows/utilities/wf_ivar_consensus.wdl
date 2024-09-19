@@ -30,6 +30,10 @@ workflow ivar_consensus {
     Int?        ivar_trim_primers_memory
     Int?        ivar_trim_primers_disk_size
     String?     ivar_trim_primers_docker
+    Int?        stats_n_coverage_primtrim_cpu
+    Int?        stats_n_coverage_primtrim_memory
+    Int?        stats_n_coverage_primtrim_disk_size
+    String?     stats_n_coverage_primtrim_docker
     Int?        ivar_variant_cpu
     Int?        ivar_variant_memory
     Int?        ivar_variant_disk_size
@@ -68,7 +72,11 @@ workflow ivar_consensus {
     call assembly_metrics.stats_n_coverage as stats_n_coverage_primtrim {
     input:
       samplename = samplename,
-      bamfile = primer_trim.trim_sorted_bam
+      bamfile = primer_trim.trim_sorted_bam,
+      cpu = stats_n_coverage_primtrim_cpu,
+      memory = stats_n_coverage_primtrim_memory,
+      disk_size = stats_n_coverage_primtrim_size,
+      docker = stats_n_coverage_primtrim_docker
     }
   }
   call variant_call_task.variant_call {
