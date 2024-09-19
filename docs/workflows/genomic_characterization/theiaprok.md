@@ -579,11 +579,11 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
         
         |  | Links |
         | --- | --- |
-        | Task | [task_versioning.wdl](https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/task_versioning.wdl) |
+        | Task | [task_versioning.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/task_versioning.wdl) |
 
 ??? task "`screen`: Total Raw Read Quantification and Genome Size Estimation"
 
-    The [`screen`](https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/quality_control/task_screen.wdl) task ensures the quantity of sequence data is sufficient to undertake genomic analysis. It uses bash commands for quantification of reads and base pairs, and [mash](https://mash.readthedocs.io/en/latest/index.html) sketching to estimate the genome size and its coverage. At each step, the results are assessed relative to pass/fail criteria and thresholds that may be defined by optional user inputs. Samples that do not meet these criteria will not be processed further by the workflow:
+    The [`screen`](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/comparisons/task_screen.wdl) task ensures the quantity of sequence data is sufficient to undertake genomic analysis. It uses bash commands for quantification of reads and base pairs, and [mash](https://mash.readthedocs.io/en/latest/index.html) sketching to estimate the genome size and its coverage. At each step, the results are assessed relative to pass/fail criteria and thresholds that may be defined by optional user inputs. Samples that do not meet these criteria will not be processed further by the workflow:
 
     1. Total number of reads: A sample will fail the read screening task if its total number of reads is less than or equal to `min_reads`.
     2. The proportion of basepairs reads in the forward and reverse read files: A sample will fail the read screening if fewer than `min_proportion` basepairs are in either the reads1 or read2 files.
@@ -610,7 +610,7 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
         
         |  | TheiaProk_Illumina_PE | TheiaProk_Illumina_SE and TheiaProk_ONT |
         | --- | --- | --- |
-        | Task | [task_screen.wdl](https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/quality_control/task_screen.wdl#L3) (PE sub-task) | [task_screen.wdl](https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/quality_control/task_screen.wdl#L147) (SE sub-task) |
+        | Task | [task_screen.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/comparisons/task_screen.wdl#L3) (PE sub-task) | [task_screen.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/comparisons/task_screen.wdl#L147) (SE sub-task) |
 
 #### Illumina Data Core Tasks
 
@@ -682,11 +682,11 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
                 
         |  | Links |
         | --- | --- |
-        | Sub-workflow | [wf_read_QC_trim.wdl](https://github.com/theiagen/public_health_bacterial_genomics/blob/main/workflows/wf_read_QC_trim.wdl) |
-        | Tasks | [task_fastp.wdl](https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/quality_control/task_fastp.wdl)<br>[task_trimmomatic.wdl](https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/quality_control/task_trimmomatic.wdl)<br>[task_bbduk.wdl](https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/quality_control/task_bbduk.wdl)<br>[task_fastq_scan.wdl](https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/quality_control/task_fastq_scan.wdl)<br>[task_midas.wdl](https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/taxon_id/task_midas.wdl)<br>[task_kraken2.wdl](https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/taxon_id/task_kraken2.wdl) |
+        | Sub-workflow | [wf_read_QC_trim.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_read_QC_trim.wdl) |
+        | Tasks | [task_fastp.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_fastp.wdl)<br>[task_trimmomatic.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_trimmomatic.wdl)<br>[task_bbduk.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_bbduk.wdl)<br>[task_fastq_scan.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_fastq_scan.wdl)<br>[task_midas.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/contamination/task_midas.wdl)<br>[task_kraken2.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/contamination/task_kraken2.wdl)|
         | Software Source Code | [fastp](https://github.com/OpenGene/fastp); [Trimmomatic](https://github.com/usadellab/Trimmomatic); [fastq-scan](https://github.com/rpetit3/fastq-scan); [MIDAS](https://github.com/snayfach/MIDAS); [Kraken2](https://github.com/DerrickWood/kraken2)|
         | Software Documentation | [fastp](https://github.com/OpenGene/fastp); [Trimmomatic](http://www.usadellab.org/cms/?page=trimmomatic); [BBDuk](https://jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/bbduk-guide/); [fastq-scan](https://github.com/rpetit3/fastq-scan); [MIDAS](https://github.com/snayfach/MIDAS); [Kraken2](https://github.com/DerrickWood/kraken2/wiki) |
-        | Original Publication(s) | *[Trimmomatic: a flexible trimmer for Illumina sequence data](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4103590/)<br>*[fastp: an ultra-fast all-in-one FASTQ preprocessor](https://academic.oup.com/bioinformatics/article/34/17/i884/5093234?login=false)<br>*[An integrated metagenomics pipeline for strain profiling reveals novel patterns of bacterial transmission and biogeography](https://pubmed.ncbi.nlm.nih.gov/27803195/)<br>*[Improved metagenomic analysis with Kraken 2](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1891-0) |
+        | Original Publication(s) | [Trimmomatic: a flexible trimmer for Illumina sequence data](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4103590/)<br>[fastp: an ultra-fast all-in-one FASTQ preprocessor](https://academic.oup.com/bioinformatics/article/34/17/i884/5093234?login=false)<br>[An integrated metagenomics pipeline for strain profiling reveals novel patterns of bacterial transmission and biogeography](https://pubmed.ncbi.nlm.nih.gov/27803195/)<br>[Improved metagenomic analysis with Kraken 2](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1891-0) |
 
 ??? task "`CG-Pipeline`: Assessment of Read Quality, and Estimation of Genome Coverage"
 
@@ -714,7 +714,7 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
     !!! techdetails "Shovill Technical Details"
         |  | Links |
         | --- | --- |
-        | TheiaProk WDL Task | [task_shovill.wdl](https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/assembly/task_shovill.wdl#L3) |
+        | TheiaProk WDL Task | [task_shovill.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_shovill.wdl#L3) |
         | Software code repository and documentation | [Shovill on GitHub](https://github.com/tseemann/shovill) |
 
 #### ONT Data Core Tasks
@@ -744,7 +744,7 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
         | Workflow | **TheiaProk_ONT** |
         | --- | --- |
         | Sub-workflow | [wf_read_QC_trim_ont.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_read_QC_trim_ont.wdl) |
-        | Tasks | [task_nanoplot.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/task_nanoplot.wdl) [task_fastq_scan.wdl](https://github.com/theiagen/public_health_bacterial_genomics/blob/b481ce48f3d527ab8f31e4ad8171769212cc091a/tasks/quality_control/task_fastq_scan.wdl#L3) [task_rasusa.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/task_rasusa.wdl) [task_nanoq.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/task_nanoq.wdl) [task_tiptoft.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/task_tiptoft.wdl) |
+        | Tasks | [task_nanoplot.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/task_nanoplot.wdl) [task_fastq_scan.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/b481ce48f3d527ab8f31e4ad8171769212cc091a/tasks/quality_control/basic_statistics/task_fastq_scan.wdl) [task_rasusa.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/task_rasusa.wdl) [task_nanoq.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/task_nanoq.wdl) [task_tiptoft.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/task_tiptoft.wdl) |
         | Software Source Code | [fastq-scan](https://github.com/rpetit3/fastq-scan), [NanoPlot](https://github.com/wdecoster/NanoPlot), [RASUSA](https://github.com/mbhall88/rasusa), [tiptoft](https://github.com/andrewjpage/tiptoft), [nanoq](https://github.com/esteinig/nanoq) |
         | Original Publication(s) | [NanoPlot paper](https://academic.oup.com/bioinformatics/article/39/5/btad311/7160911)<br>[RASUSA paper](https://doi.org/10.21105/joss.03941)<br>[Nanoq Paper](https://doi.org/10.21105/joss.02991)<br>[Tiptoft paper](https://doi.org/10.21105/joss.01021) |
 
@@ -752,7 +752,7 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
     !!! techdetails "dragonflye Technical Details"
         |  | Links |
         | --- | --- |
-        | Task | [task_dragonflye.wdl](https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/assembly/task_dragonflye.wdl) |
+        | Task | [task_dragonflye.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_dragonflye.wdl) |
         | Software Source Code | [dragonflye on GitHub](https://github.com/rpetit3/dragonflye) |
         | Software Documentation | [dragonflye on GitHub](https://github.com/rpetit3/dragonflye) |
 
@@ -766,7 +766,7 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
         
         |  | Links |
         | --- | --- |
-        | Task | [task_quast.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/task_quast.wdl) |
+        | Task | [task_quast.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_quast.wdl) |
         | Software Source Code | [QUAST on GitHub](https://github.com/ablab/quast) |
         | Software Documentation | <https://cab.spbu.ru/software/quast/> |
         | Original Publication(s) | [QUAST: quality assessment tool for genome assemblies](https://academic.oup.com/bioinformatics/article/29/8/1072/228832) |
@@ -816,7 +816,7 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
         
         |  | Links |
         | --- | --- |
-        | Task | [task_mummer_ani.wdl](https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/quality_control/task_mummer_ani.wdl) |
+        | Task | [task_mummer_ani.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/advanced_metrics/task_mummer_ani.wdl) |
         | Software Source Code | [ani-m](https://github.com/lskatz/ani-m), [MUMmer](https://github.com/mummer4/mummer) |
         | Software Documentation | [ani-m](https://github.com/lskatz/ani-m), [MUMmer](https://mummer.sourceforge.net/) |
         | Original Publication(s) | [MUMmer4: A fast and versatile genome alignment system](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1005944) |
@@ -832,7 +832,7 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 
         |  | Links |
         | --- | --- |
-        | Task | [task_gambit.wdl](https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/taxon_id/task_gambit.wdl) |
+        | Task | [task_gambit.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/task_gambit.wdl) |
         | Software Source Code | [GAMBIT on GitHub](https://github.com/jlumpe/gambit) |
         | Software Documentation | [GAMBIT ReadTheDocs](https://gambit-genomics.readthedocs.io/en/latest/) |
         | Original Publication(s) | [GAMBIT (Genomic Approximation Method for Bacterial Identification and Tracking): A methodology to rapidly leverage whole genome sequencing of bacterial isolates for clinical identification](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0277575) |
@@ -845,7 +845,7 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
         
         |  | Links |
         | --- | --- |
-        | Task | [task_kmerfinder.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/task_kmerfinder.wdl) |
+        | Task | [task_kmerfinder.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/contamination/task_kmerfinder.wdl) |
         | Software Source Code | https://bitbucket.org/genomicepidemiology/kmerfinder |
         | Software Documentation | https://cge.food.dtu.dk/services/KmerFinder/instructions.php |
         | Original Publication(s) | [**Benchmarking of Methods for Genomic Taxonomy**](https://journals.asm.org/doi/full/10.1128/jcm.02981-13?rfr_dat=cr_pub++0pubmed&url_ver=Z39.88-2003&rfr_id=ori%3Arid%3Acrossref.org) |
@@ -862,7 +862,7 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
         
         |  | Links |
         | --- | --- |
-        | Task | [task_amrfinderplus.wdl](https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/gene_typing/task_amrfinderplus.wdl) |
+        | Task | [task_amrfinderplus.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/drug_resistance/task_amrfinderplus.wdl) |
         | Software Source Code | [amr on GitHub](https://github.com/ncbi/amr) |
         | Software Documentation | https://github.com/ncbi/amr/wiki |
         | Original Publication(s) | [AMRFinderPlus and the Reference Gene Catalog facilitate examination of the genomic links among antimicrobial resistance, stress response, and virulence](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8208984/) |
@@ -914,7 +914,7 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
         
         |  | Links |
         | --- | --- |
-        | Task | [task_resfinder.wdl](https://github.com/theiagen/public_health_bacterial_genomics/blob/eld-docs-dev/tasks/gene_typing/task_resfinder.wdl) |
+        | Task | [task_resfinder.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/drug_resistance/task_resfinder.wdl) |
         | Software Source Code | https://bitbucket.org/genomicepidemiology/resfinder/src/master/ |
         | Software Documentation | https://bitbucket.org/genomicepidemiology/resfinder/src/master/ |
         | ResFinder database | https://bitbucket.org/genomicepidemiology/resfinder_db/src/master/ |
@@ -962,7 +962,7 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
     !!! techdetails "TS_MLST Technical Details"        
         |  | Links |
         | --- | --- |
-        | Task | [task_ts_mlst.wdl](https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/species_typing/task_ts_mlst.wdl) |
+        | Task | [task_ts_mlst.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/multi/task_ts_mlst.wdl) |
         | Software Source Code | [mlst](https://github.com/tseemann/mlst) |
         | Software Documentation | [mlst](https://github.com/tseemann/mlst) |
 
@@ -975,7 +975,7 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
     !!! techdetails "Prokka Technical Details"
         |  | Links |
         | --- | --- |
-        | Task | [task_prokka.wdl](https://github.com/theiagen/public_health_bacterial_genomics/blob/eld-docs-dev/tasks/gene_typing/task_prokka.wdl) |
+        | Task | [task_prokka.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/annotation/task_prokka.wdl) |
         | Software Source Code | [prokka](https://github.com/tseemann/prokka) |
         | Software Documentation | [prokka](https://github.com/tseemann/prokka) |
         | Original Publication(s) | [Prokka: rapid prokaryotic genome annotation](https://academic.oup.com/bioinformatics/article/30/14/2068/2390517?login=false) |
@@ -990,7 +990,7 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
         
         |  | Links |
         | --- | --- |
-        | Task | [task_bakta.wdl](https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/gene_typing/task_bakta.wdl) |
+        | Task | [task_bakta.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/annotation/task_bakta.wdl) |
         | Software Source Code | [bakta](https://github.com/oschwengers/bakta) |
         | Software Documentation | <https://github.com/oschwengers/bakta> |
         | Original Publication(s) | [Bakta: rapid and standardized annotation of bacterial genomes via alignment-free sequence identification](https://www.microbiologyresearch.org/content/journal/mgen/10.1099/mgen.0.000685) |
@@ -1007,7 +1007,7 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
         
         |  | Links |
         | --- | --- |
-        | Task | [task_plasmidfinder.wdl](https://github.com/theiagen/public_health_bacterial_genomics/blob/eld-docs-dev/tasks/gene_typing/task_plasmidfinder.wdl) |
+        | Task | [task_plasmidfinder.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/plasmid_typing/task_plasmidfinder.wdl) |
         | Software Source Code | https://bitbucket.org/genomicepidemiology/plasmidfinder/src/master/ |
         | Software Documentation | https://bitbucket.org/genomicepidemiology/plasmidfinder/src/master/ |
         | Original Publication(s) | [In Silico Detection and Typing of Plasmids using PlasmidFinder and Plasmid Multilocus Sequence Typing](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4068535/) |
@@ -1036,7 +1036,7 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
         
         |  | Links |
         | --- | --- |
-        | Task | [task_qc_check.wdl](https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/quality_control/task_qc_check.wdl) |
+        | Task | [task_qc_check.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/comparisons/task_qc_check.wdl) |
 
 ??? task "`Taxon Tables`: Copy outputs to new data tables based on taxonomic assignment (optional)"
 
@@ -1094,7 +1094,7 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
             
             |  | Links |
             | --- | --- |
-            | Task | [task_kaptive.wdl](https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/species_typing/task_kaptive.wdl) |
+            | Task | [task_kaptive.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/acinetobacter/task_kaptive.wdl) |
             | Software Source Code | [Kaptive on GitHub](https://github.com/katholt/Kaptive/wiki) |
             | Software Documentation | https://github.com/katholt/Kaptive/wiki |
             | Orginal publications | [Identification of Acinetobacter baumannii loci for capsular polysaccharide (KL) and lipooligosaccharide outer core (OCL) synthesis in genome assemblies using curated reference databases compatible with Kaptive](https://www.microbiologyresearch.org/content/journal/mgen/10.1099/mgen.0.000339)<br>[An update to the database for Acinetobacter baumannii capsular polysaccharide locus typing extends the extensive and diverse repertoire of genes found at and outside the K locus](https://www.microbiologyresearch.org/content/journal/mgen/10.1099/mgen.0.000878) |
@@ -1103,13 +1103,13 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
         
         *Acinetobacter* plasmids are not included in the [PlasmidFinder](https://www.notion.so/TheiaProk-Workflow-Series-68c34aca2a0240ef94fef0acd33651b9?pvs=21) database. Instead, the [AcinetobacterPlasmidTyping](https://github.com/MehradHamidian/AcinetobacterPlasmidTyping) database contains variants of the plasmid *rep* gene for *A. baumannii* plasmid identification. When matched with >/= 95 % identity, this represents a typing scheme for *Acinetobacter baumannii* plasmids. In TheiaProk, we use the tool [abricate](https://github.com/tseemann/abricate) to query our assemblies against this database.
             
-        The bioinformatics software for querying sample assemblies against the AcinetobacterPlasmidTyping database is [Abricate](https://github.com/tseemann/abricate). The WDL task simply runs abricate, and the Acinetobacter Plasmid database and default setting of 95% minimum identity are set in the [merlin magic sub-workflow](https://github.com/theiagen/public_health_bacterial_genomics/blob/main/workflows/wf_merlin_magic.wdl#L44).
+        The bioinformatics software for querying sample assemblies against the AcinetobacterPlasmidTyping database is [Abricate](https://github.com/tseemann/abricate). The WDL task simply runs abricate, and the Acinetobacter Plasmid database and default setting of 95% minimum identity are set in the [merlin magic sub-workflow](https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_merlin_magic.wdl).
 
         !!! techdetails "AcinetobacterPlasmidTyping Technical Details"
 
             |  | Links |
             | --- | --- |
-            | Task | [task_abricate.wdl](https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/gene_typing/task_abricate.wdl) |
+            | Task | [task_abricate.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/drug_resistance/task_abricate.wdl) |
             | Database and documentation | [https://github.com/MehradHamidian/AcinetobacterPlasmidTyping](https://github.com/MehradHamidian/AcinetobacterPlasmidTyping/tree/v1.0.0) |
             | Software Source Code and documentation | [abricate on GitHub](https://github.com/tseemann/abricate) |
             | Original Publication(s) | [Detection and Typing of Plasmids in *Acinetobacter baumannii* Using *rep* Genes Encoding Replication Initiation Proteins](https://journals.asm.org/doi/10.1128/spectrum.02478-22?url_ver=Z39.88-2003&rfr_id=ori:rid:crossref.org&rfr_dat=cr_pub%20%200pubmed) |
@@ -1139,7 +1139,7 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
             
             |  | Links |
             | --- | --- |
-            | Task | [task_serotypefinder.wdl](https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/species_typing/task_serotypefinder.wdl) |
+            | Task | [task_serotypefinder.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/escherichia_shigella/task_serotypefinder.wdl) |
             | Software Source Code | https://bitbucket.org/genomicepidemiology/serotypefinder/src/master/ |
             | Software Documentation | https://bitbucket.org/genomicepidemiology/serotypefinder/src/master/ |
             | Original Publication(s) | [Rapid and Easy In Silico Serotyping of Escherichia coli Isolates by Use of Whole-Genome Sequencing Data](https://journals.asm.org/doi/10.1128/JCM.00008-15) |
@@ -1152,7 +1152,7 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
             
             |  | Links |
             | --- | --- |
-            | Task | [task_ectyper.wdl](https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/species_typing/task_ectyper.wdl) |
+            | Task | [task_ectyper.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/escherichia_shigella/task_ectyper.wdl) |
             | Software Source Code | [ECTyper on GitHub](https://github.com/phac-nml/ecoli_serotyping) |
             | Software Documentation | [ECTyper on GitHub](https://github.com/phac-nml/ecoli_serotyping) |
             | Orginal publication | [ECTyper: in silico Escherichia coli serotype and species prediction from raw and assembled whole-genome sequence data](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8767331/) |
@@ -1167,7 +1167,7 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
             
             |  | Links |
             | --- | --- |
-            | Task | [task_virulencefinder.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/task_virulencefinder.wdl) |
+            | Task | [task_virulencefinder.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/escherichia_shigella/task_virulencefinder.wdl) |
             | Software Source Code | [**VirulenceFinder**](https://bitbucket.org/genomicepidemiology/virulencefinder/src/master/) |
             | Software Documentation | [**VirulenceFinder**](https://bitbucket.org/genomicepidemiology/virulencefinder/src/master/) |
             | Original Publication(s) | [Real-time whole-genome sequencing for routine typing, surveillance, and outbreak detection of verotoxigenic Escherichia co](https://pubmed.ncbi.nlm.nih.gov/24574290/) |
@@ -1182,7 +1182,7 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
             
             |  | Links |
             | --- | --- |
-            | Task | [task_shigatyper.wdl](https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/species_typing/task_shigatyper.wdl) |
+            | Task | [task_shigatyper.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/escherichia_shigella/task_shigatyper.wdl) |
             | Software Source Code | [ShigaTyper on GitHub](https://github.com/CFSAN-Biostatistics/shigatyper) |
             | Software Documentation | https://github.com/CFSAN-Biostatistics/shigatyper |
             | Origin publication | [In Silico Serotyping Based on Whole-Genome Sequencing Improves the Accuracy of Shigella Identification](https://doi.org/10.1128/AEM.00165-19) |
@@ -1195,7 +1195,7 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
             
             |  | Links |
             | --- | --- |
-            | Task | [task_shigeifinder.wdl](https://github.com/theiagen/public_health_bacterial_genomics/blob/42659de535202cc37ab509b38987406ad0360dd4/tasks/species_typing/task_shigeifinder.wdl#L3) |
+            | Task | [task_shigeifinder.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/escherichia_shigella/task_shigeifinder.wdl) |
             | Software Source Code | [ShigEiFinder on GitHub](https://github.com/LanLab/ShigEiFinder) |
             | Software Documentation | [ShigEiFinder on GitHub](https://github.com/LanLab/ShigEiFinder) |
             | Origin publication | [Cluster-specific gene markers enhance Shigella and enteroinvasive Escherichia coli in silico serotyping](https://pubmed.ncbi.nlm.nih.gov/34889728/) |
@@ -1207,7 +1207,7 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
         !!! techdetails "ShigEiFinder_reads Technical Details"
             |  | Links |
             | --- | --- |
-            | Task | [task_shigeifinder.wdl](https://github.com/theiagen/public_health_bacterial_genomics/blob/42659de535202cc37ab509b38987406ad0360dd4/tasks/species_typing/task_shigeifinder.wdl#L81) |
+            | Task | [task_shigeifinder.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/escherichia_shigella/task_shigeifinder.wdl#L81) |
             | Software Source Code | [ShigEiFinder on GitHub](https://github.com/LanLab/ShigEiFinder) |
             | Software Documentation | [ShigEiFinder on GitHub](https://github.com/LanLab/ShigEiFinder) |
             | Origin publication | [Cluster-specific gene markers enhance Shigella and enteroinvasive Escherichia coli in silico serotyping](https://pubmed.ncbi.nlm.nih.gov/34889728/) |
@@ -1224,7 +1224,7 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
 
             |  | Links |
             | --- | --- |
-            | Task | [task_sonneityping.wdl](https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/species_typing/task_sonneityping.wdl) |
+            | Task | [task_sonneityping.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/escherichia_shigella/task_sonneityping.wdl) |
             | Software Source Code | [Mykrobe](https://github.com/Mykrobe-tools/mykrobe), [sonneityping](https://github.com/katholt/sonneityping) |
             | Software Documentation | https://github.com/Mykrobe-tools/mykrobe/wiki, [sonneityping](https://github.com/katholt/sonneityping) |
             | Original Publication(s) | [Global population structure and genotyping framework for genomic surveillance of the major dysentery pathogen, *Shigella sonnei*](https://www.nature.com/articles/s41467-021-22700-4) |
@@ -1244,7 +1244,7 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
             
             |  | Links |
             | --- | --- |
-            | Task | [task_hicap.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/task_hicap.wdl) |
+            | Task | [task_hicap.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/haemophilus/task_hicap.wdl) |
             | Software Source Code | [hicap on GitHub](https://github.com/scwatts/hicap) |
             | Software Documentation | [hicap on GitHub](https://github.com/scwatts/hicap) |
             | Original Publication(s) | [hicap: In Silico Serotyping of the Haemophilus influenzae Capsule Locus](https://doi.org/10.7717/peerj.5261) |
@@ -1259,7 +1259,7 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
             
             |  | Links |
             | --- | --- |
-            | Task | [task_kleborate.wdl](https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/species_typing/task_kleborate.wdl) |
+            | Task | [task_kleborate.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/haemophilus/task_kleborate.wdl) |
             | Software Source Code | [kleborate on GitHub](https://github.com/katholt/Kleborate) |
             | Software Documentation | https://github.com/katholt/Kleborate/wiki |
             | Orginal publication | [A genomic surveillance framework and genotyping tool for Klebsiella pneumoniae and its related species complex](https://www.nature.com/articles/s41467-021-24448-3)<br>[Identification of Klebsiella capsule synthesis loci from whole genome data](https://www.microbiologyresearch.org/content/journal/mgen/10.1099/mgen.0.000102) |
@@ -1274,7 +1274,7 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
             
             |  | Links |
             | --- | --- |
-            | Task | [task_legsta.wdl](https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/species_typing/task_legsta.wdl) |
+            | Task | [task_legsta.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/legionella/task_legsta.wdl) |
             | Software Source Code | [Legsta](https://github.com/tseemann/legsta) |
             | Software Documentation | [Legsta](https://github.com/tseemann/legsta) |
 
@@ -1288,7 +1288,7 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
             
             |  | Links |
             | --- | --- |
-            | Task | [task_lissero.wd](https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/species_typing/task_lissero.wdl) |
+            | Task | [task_lissero.wd](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/listeria/task_lissero.wdl) |
             | Software Source Code | [LisSero](https://github.com/MDU-PHL/LisSero) |
             | Software Documentation | [LisSero](https://github.com/MDU-PHL/LisSero) |
 
@@ -1346,7 +1346,7 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
             
             |  | Links |
             | --- | --- |
-            | Task | [task_ngmaster.wdl](https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/species_typing/task_ngmaster.wdl) |
+            | Task | [task_ngmaster.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/neisseria/task_ngmaster.wdl) |
             | Software Source Code | [ngmaster](https://github.com/MDU-PHL/ngmaster) |
             | Software Documentation | [ngmaster](https://github.com/MDU-PHL/ngmaster) |
             | Original Publication(s) | [NGMASTER: *in silico* multi-antigen sequence typing for *Neisseria gonorrhoeae*](https://www.microbiologyresearch.org/content/journal/mgen/10.1099/mgen.0.000076) |
@@ -1359,7 +1359,7 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
             
             |  | Links |
             | --- | --- |
-            | Task | [task_meningotype.wdl](https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/species_typing/task_meningotype.wdl) |
+            | Task | [task_meningotype.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/neisseria/task_meningotype.wdl) |
             | Software Source Code | [meningotype](https://github.com/MDU-PHL/meningotype) |
             | Software Documentation | [meningotype](https://github.com/MDU-PHL/meningotype) |
 
@@ -1374,7 +1374,7 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
             
             |  | Links |
             | --- | --- |
-            | Task | [task_pasty.wdl](https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/species_typing/task_pasty.wdl) |
+            | Task | [task_pasty.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/pseudomonas/task_pasty.wdl) |
             | Software Source Code | [pasty](https://github.com/rpetit3/pasty) |
             | Software Documentation | [pasty](https://github.com/rpetit3/pasty) |
             | Original Publication(s) | [Application of Whole-Genome Sequencing Data for O-Specific Antigen Analysis and In Silico Serotyping of Pseudomonas aeruginosa Isolates.](https://journals.asm.org/doi/10.1128/JCM.00349-16) |
@@ -1392,7 +1392,7 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
             
             |  | Links |
             | --- | --- |
-            | Task | [task_sistr.wdl](https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/species_typing/task_sistr.wdl) |
+            | Task | [task_sistr.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/salmonella/task_sistr.wdl) |
             | Software Source Code | [SISTR](https://github.com/phac-nml/sistr_cmd) |
             | Software Documentation | [SISTR](https://github.com/phac-nml/sistr_cmd) |
             | Original Publication(s) | [The Salmonella In Silico Typing Resource (SISTR): an open web-accessible tool for rapidly typing and subtyping draft Salmonella genome assemblies.](http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0147101) |
@@ -1404,7 +1404,7 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
         !!! techdetails "SeqSero2 Technical Details"
             |  | Links |
             | --- | --- |
-            | Task | [task_seqsero2.wdl](https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/species_typing/task_seqsero2.wdl) |
+            | Task | [task_seqsero2.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/salmonella/task_seqsero2.wdl) |
             | Software Source Code | [SeqSero2](https://github.com/denglab/SeqSero2) |
             | Software Documentation | [SeqSero2](https://github.com/denglab/SeqSero2) |
             | Original Publication(s) | [Salmonella serotype determination utilizing high-throughput genome sequencing data.](https://journals.asm.org/doi/10.1128/JCM.00323-15)<br>[SeqSero2: rapid and improved Salmonella serotype determination using whole genome sequencing data.](https://journals.asm.org/doi/10.1128/AEM.01746-19) |
@@ -1419,7 +1419,7 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
             
             |  | Links |
             | --- | --- |
-            | Task | [task_genotyphi.wdl](https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/species_typing/task_genotyphi.wdl) |
+            | Task | [task_genotyphi.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/salmonella/task_genotyphi.wdl) |
             | Software Source Code | [genotyphi](https://github.com/katholt/genotyphi) |
             | Software Documentation | https://github.com/katholt/genotyphi/blob/main/README.md#mykrobe-implementation |
             | Orginal publication | [An extended genotyping framework for Salmonella enterica serovar Typhi, the cause of human typhoid](https://www.nature.com/articles/ncomms12827/)<br>[Five Years of GenoTyphi: Updates to the Global Salmonella Typhi Genotyping Framework](https://academic.oup.com/jid/article/224/Supplement_7/S775/6358992?login=false) |
@@ -1435,7 +1435,7 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
 
             |  | Links |
             | --- | --- |
-            | Task | [task_spatyper.wdl](https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/species_typing/task_spatyper.wdl) |
+            | Task | [task_spatyper.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/staphylococcus/task_spatyper.wdl) |
             | Software Source Code | [spatyper](https://github.com/HCGB-IGTP/spaTyper) |
             | Software Documentation | [spatyper](https://github.com/HCGB-IGTP/spaTyper) |
             
@@ -1447,7 +1447,7 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
             
             |  | Links |
             | --- | --- |
-            | Task | [task_staphopiasccmec.wdl](https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/species_typing/task_staphopiasccmec.wdl) |
+            | Task | [task_staphopiasccmec.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/staphylococcus/task_staphopiasccmec.wdl) |
             | Software Source Code | [staphopia-sccmec](https://github.com/staphopia/staphopia-sccmec) |
             | Software Documentation | [staphopia-sccmec](https://github.com/staphopia/staphopia-sccmec) |
             | Original Publication(s) | [*Staphylococcus aureus* viewed from the perspective of 40,000+ genomes](https://doi.org/10.7717/peerj.5261) |
@@ -1460,7 +1460,7 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
             
             |  | Links |
             | --- | --- |
-            | Task | [task_agrvate.wdl](https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/species_typing/task_agrvate.wdl) |
+            | Task | [task_agrvate.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/staphylococcus/task_agrvate.wdl) |
             | Software Source Code | [agrVATE](https://github.com/VishnuRaghuram94/AgrVATE) |
             | Software Documentation | [agrVATE](https://github.com/VishnuRaghuram94/AgrVATE) |
             | Original Publication(s) | [Species-Wide Phylogenomics of the *Staphylococcus aureus Agr* Operon Revealed Convergent Evolution of Frameshift Mutations](https://doi.org/10.1128/spectrum.01334-21) |
@@ -1482,7 +1482,7 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
             
             |  | Links |
             | --- | --- |
-            | Task | [task_poppunk_streppneumo.wdl](https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/species_typing/task_poppunk_streppneumo.wdl) |
+            | Task | [task_poppunk_streppneumo.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/streptococcus/task_poppunk_streppneumo.wdl) |
             | GPSC database | https://www.pneumogen.net/gps/training_command_line.html |
             | Software Source Code | [PopPunk](https://github.com/bacpop/PopPUNK) |
             | Software Documentation | https://poppunk.readthedocs.io/en/latest/ |
@@ -1496,7 +1496,7 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
             
             |  | Links |
             | --- | --- |
-            | Task | [task_seroba.wdl](https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/species_typing/task_seroba.wdl) |
+            | Task | [task_seroba.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/streptococcus/task_seroba.wdl) |
             | Software Source Code | [SeroBA](https://github.com/sanger-pathogens/seroba) |
             | Software Documentation | https://sanger-pathogens.github.io/seroba/ |
             | Original Publication(s) | [SeroBA: rapid high-throughput serotyping of Streptococcus pneumoniae from whole genome sequence data](https://www.microbiologyresearch.org/content/journal/mgen/10.1099/mgen.0.000186) |
@@ -1509,7 +1509,7 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
             
             |  | Links |
             | --- | --- |
-            | Task | [task_pbptyper.wdl](https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/species_typing/task_pbptyper.wdl) |
+            | Task | [task_pbptyper.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/streptococcus/task_pbptyper.wdl) |
             | Software Source Code | [pbptyper](https://github.com/rpetit3/pbptyper) |
             | Software Documentation | [pbptyper](https://github.com/rpetit3/pbptyper) |
             | Original Publication(s) | [Penicillin-binding protein transpeptidase signatures for tracking and predicting β-lactam resistance levels in Streptococcus pneumoniae](https://journals.asm.org/doi/full/10.1128/mBio.00756-16) |
@@ -1523,7 +1523,7 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
         !!! techdetails "emm-typing-tool Technical Details"            
             |  | Links |
             | --- | --- |
-            | Task | [task_emmtypingtool.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/task_emmtypingtool.wdl) |
+            | Task | [task_emmtypingtool.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/streptococcus/task_emmtypingtool.wdl) |
             | Software Source Code | [emm-typing-tool](https://github.com/ukhsa-collaboration/emm-typing-tool) |
             | Software Documentation | [emm-typing-tool](https://github.com/ukhsa-collaboration/emm-typing-tool) |
 
@@ -1547,7 +1547,7 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
 
             |  | Links |
             | --- | --- |
-            | Task | [task_srst2_vibrio.wdl](https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/species_typing/task_srst2_vibrio.wdl) |
+            | Task | [task_srst2_vibrio.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/vibrio/task_srst2_vibrio.wdl) |
             | Software Source Code | [srst2](https://github.com/katholt/srst2) |
             | Software Documentation | [srst2](https://github.com/katholt/srst2) |
             | Database Description | [Docker container](https://github.com/StaPH-B/docker-builds/tree/master/srst2/0.2.0-vibrio-230224) |
@@ -1569,7 +1569,7 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
         !!! techdetails "Abricate Technical Details"
             |  | Links |
             | --- | --- |
-            | Task | [task_abricate_vibrio.wdl](https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/species_typing/task_srst2_vibrio.wdl) |
+            | Task | [task_abricate_vibrio.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/vibrio/task_srst2_vibrio.wdl) |
             | Software Source Code | [abricate](https://github.com/tseemann/abricate) |
             | Software Documentation | [abricate](https://github.com/tseemann/abricate) |
             | Database Description | [Docker container](https://github.com/StaPH-B/docker-builds/tree/master/abricate/1.0.1-vibrio-cholera) |
