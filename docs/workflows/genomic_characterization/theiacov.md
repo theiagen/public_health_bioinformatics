@@ -27,28 +27,28 @@ Additionally, the **TheiaCoV_FASTA_Batch** workflow is available to process seve
     [**Reference Materials for Mpox**](https://www.notion.so/Workspace-Reference-Materials-for-MPXV-Genomic-Characterization-a34f355c68c54c0a82e926d4de607bca?pvs=21)
 
     ??? toggle "HIV Input JSONs"
-        - [TheiaCoV_Illumina_PE_HIV_v1_2024-04-19.json](https://prod-files-secure.s3.us-west-2.amazonaws.com/be290196-9090-4f3c-a9ab-fe730ad213e0/439f1c74-d91e-4978-b173-3302f878e343/TheiaCoV_Illumina_PE_HIV_v1_2024-04-19.json)
-        - [TheiaCoV_Illumina_PE_HIV_v2_2024-04-19.json](https://prod-files-secure.s3.us-west-2.amazonaws.com/be290196-9090-4f3c-a9ab-fe730ad213e0/2c7872de-44c8-406d-bbec-fadaacbb0d98/TheiaCoV_Illumina_PE_HIV_v2_2024-04-19.json)
-        - [TheiaCoV_ONT_HIV_v1_2024-04-19.json](https://prod-files-secure.s3.us-west-2.amazonaws.com/be290196-9090-4f3c-a9ab-fe730ad213e0/9f9a7bd1-2ac4-47fb-967b-4198a45d4a71/TheiaCoV_ONT_HIV_v1_2024-04-19.json)
-        - [TheiaCoV_ONT_HIV_v2_2024-04-19.json](https://prod-files-secure.s3.us-west-2.amazonaws.com/be290196-9090-4f3c-a9ab-fe730ad213e0/13fdfec0-4a81-460e-948a-be6ad30d022d/TheiaCoV_ONT_HIV_v2_2024-04-19.json)
+        - [TheiaCoV_Illumina_PE_HIV_v1_2024-04-19.json](../../assets/files/input_jsons/TheiaCoV_Illumina_PE_HIV_v1_2024-04-19.json)
+        - [TheiaCoV_Illumina_PE_HIV_v2_2024-04-19.json](../../assets/files/input_jsons/TheiaCoV_Illumina_PE_HIV_v2_2024-04-19.json)
+        - [TheiaCoV_ONT_HIV_v1_2024-04-19.json](../../assets/files/input_jsons/TheiaCoV_ONT_HIV_v1_2024-04-19.json)
+        - [TheiaCoV_ONT_HIV_v2_2024-04-19.json](../../assets/files/input_jsons/TheiaCoV_ONT_HIV_v2_2024-04-19.json)
         
     ??? toggle "WNV Input JSONs"
-        - [TheiaCoV_Illumina_PE_WNV_2024-04-19.json](https://prod-files-secure.s3.us-west-2.amazonaws.com/be290196-9090-4f3c-a9ab-fe730ad213e0/6af74d02-9985-428d-897e-e04ebacc42a3/TheiaCoV_Illumina_PE_WNV_2024-04-19.json)
-        - [TheiaCoV_Illumina_SE_WNV_2024-04-19.json](https://prod-files-secure.s3.us-west-2.amazonaws.com/be290196-9090-4f3c-a9ab-fe730ad213e0/cb8dec19-2563-4070-9ae9-031c089f8b3d/TheiaCoV_Illumina_SE_WNV_2024-04-19.json)
-        - [TheiaCoV_FASTA_WNV_2024-04-19.json](https://prod-files-secure.s3.us-west-2.amazonaws.com/be290196-9090-4f3c-a9ab-fe730ad213e0/f2059069-5ce1-45e1-ab9e-51925158c0eb/TheiaCoV_FASTA_WNV_2024-04-19.json)
+        - [TheiaCoV_Illumina_PE_WNV_2024-04-19.json](../../assets/files/input_jsons/TheiaCoV_Illumina_PE_WNV_2024-04-19.json)
+        - [TheiaCoV_Illumina_SE_WNV_2024-04-19.json](../../assets/files/input_jsons/TheiaCoV_Illumina_SE_WNV_2024-04-19.json)
+        - [TheiaCoV_FASTA_WNV_2024-04-19.json](../../assets/files/input_jsons/TheiaCoV_FASTA_WNV_2024-04-19.json)
         
     ??? toggle "Flu Input JSONs"
-        - [TheiaCoV_Illumina_PE_flu_2024-04-19.json](https://prod-files-secure.s3.us-west-2.amazonaws.com/be290196-9090-4f3c-a9ab-fe730ad213e0/ba326b69-8a2a-4af2-a74f-e710e667f82b/TheiaCoV_Illumina_PE_flu_2024-04-19.json)
-        - [TheiaCoV_ONT_flu_2024-04-19.json](https://prod-files-secure.s3.us-west-2.amazonaws.com/be290196-9090-4f3c-a9ab-fe730ad213e0/c01c98f5-d00e-4ff2-ad09-6cc3ff1ad3a7/TheiaCoV_ONT_flu_2024-04-19.json)
-        - [TheiaCoV_FASTA_flu_2024-04-19.json](https://prod-files-secure.s3.us-west-2.amazonaws.com/be290196-9090-4f3c-a9ab-fe730ad213e0/4c7d7a16-2c20-4cbc-9618-231afade9940/TheiaCoV_FASTA_flu_2024-04-19.json)
+        - [TheiaCoV_Illumina_PE_flu_2024-04-19.json](../../assets/files/input_jsons/TheiaCoV_Illumina_PE_flu_2024-04-19.json)
+        - [TheiaCoV_ONT_flu_2024-04-19.json](../../assets/files/input_jsons/TheiaCoV_ONT_flu_2024-04-19.json)
+        - [TheiaCoV_FASTA_flu_2024-04-19.json](../../assets/files/input_jsons/TheiaCoV_FASTA_flu_2024-04-19.json)
         
     ??? toggle "RSV-A Input JSONs"
-        - [TheiaCoV_Illumina_PE_RSV-B_2024-04-19.json](https://prod-files-secure.s3.us-west-2.amazonaws.com/be290196-9090-4f3c-a9ab-fe730ad213e0/2be20bb8-b733-4f02-a27f-b0cf19d015f8/TheiaCoV_Illumina_PE_RSV-B_2024-04-19.json)
-        - [TheiaCoV_FASTA_RSV-A_2024-04-19.json](https://prod-files-secure.s3.us-west-2.amazonaws.com/be290196-9090-4f3c-a9ab-fe730ad213e0/ba6a4845-14ee-4664-b9f3-808f76c87d15/TheiaCoV_FASTA_RSV-A_2024-04-19.json)
-        
+        - [TheiaCoV_Illumina_PE_RSV-A_2024-04-19.json](../../assets/files/input_jsons/TheiaCoV_Illumina_PE_RSV-A_2024-04-19.json)
+        - [TheiaCoV_FASTA_RSV-A_2024-04-19.json](../../assets/files/input_jsons/TheiaCoV_FASTA_RSV-A_2024-04-19.json)
+
     ??? toggle "RSV-B Input JSONs" 
-        - [TheiaCoV_Illumina_PE_RSV-A_2024-04-19.json](https://prod-files-secure.s3.us-west-2.amazonaws.com/be290196-9090-4f3c-a9ab-fe730ad213e0/dd1612ff-20c5-4310-9cb3-c07bf9b7e8a1/TheiaCoV_Illumina_PE_RSV-A_2024-04-19.json)
-        - [TheiaCoV_FASTA_RSV-B_2024-04-19.json](https://prod-files-secure.s3.us-west-2.amazonaws.com/be290196-9090-4f3c-a9ab-fe730ad213e0/160cdfbc-a556-40bc-aa05-84ae69511400/TheiaCoV_FASTA_RSV-B_2024-04-19.json)
+        - [TheiaCoV_Illumina_PE_RSV-B_2024-04-19.json](../../assets/files/input_jsons/TheiaCoV_Illumina_PE_RSV-B_2024-04-19.json)
+        - [TheiaCoV_FASTA_RSV-B_2024-04-19.json](../../assets/files/input_jsons/TheiaCoV_FASTA_RSV-B_2024-04-19.json)
 
 !!! caption "TheiaCoV Workflow Diagram"
     ![TheiaCoV Workflow Diagram](../../assets/figures/TheiaCoV.png)
