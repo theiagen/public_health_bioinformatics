@@ -147,7 +147,7 @@ For automatic reference selection by the workflow (optional):
     
         |  | Links |
         | --- | --- |
-        | Task | [task_centroid.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/phylogenetic_inference/task_centroid.wdl) |
+        | Task | [task_centroid.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/phylogenetic_inference/utilities/task_centroid.wdl) |
         | Software Source Code | <https://github.com/theiagen/centroid> |
         | Software Documentation | <https://github.com/theiagen/centroid> |
 
