@@ -75,7 +75,7 @@ workflow ivar_consensus {
       bamfile = primer_trim.trim_sorted_bam,
       cpu = stats_n_coverage_primtrim_cpu,
       memory = stats_n_coverage_primtrim_memory,
-      disk_size = stats_n_coverage_primtrim_size,
+      disk_size = stats_n_coverage_primtrim_disk_size,
       docker = stats_n_coverage_primtrim_docker
     }
   }
