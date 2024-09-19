@@ -19,7 +19,7 @@ task variant_call {
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/ivar:1.3.1-titan"
   }
   command <<<
-    set -eou pipefail
+    set -euo pipefail
     # version control
     ivar version | head -n1 | tee IVAR_VERSION
     samtools --version | head -n1 | tee SAMTOOLS_VERSION
