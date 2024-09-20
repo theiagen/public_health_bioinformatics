@@ -60,7 +60,7 @@ workflow theiacov_illumina_se {
     # qc check parameters
     File? qc_check_table
     # Kraken parameters
-    String target_organism
+    String? target_organism
     File kraken_db = "gs://theiagen-large-public-files-rp/terra/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz"
   }
   call set_organism_defaults.organism_parameters {
