@@ -193,6 +193,30 @@ All TheiaCoV Workflows (not TheiaCoV_FASTA_Batch)
 | gene_coverage | **sc2_s_gene_stop** | Int | End/Last nucleotide position of the SARS-CoV-2 Spike gene | 25384 | Optional | CL, ONT, PE, SE | MPXV, sars-cov-2 |
 | ivar_consensus | **read2** | File | Internal component, do not modify | | Do not modify, Optional | SE | HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2 |
 | ivar_consensus | **skip_N** | Boolean | True/False variable that determines if regions with depth less than minimum depth should not be added to the consensus sequence | FALSE | Optional | PE, SE | HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2 |
+| ivar_consensus | **ivar_bwa_cpu** | Int | Number of CPUs to allocate to the task | 6 | Optional | SE,PE | HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2 |
+| ivar_consensus | **ivar_bwa_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | SE,PE | HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2 |
+| ivar_consensus | **ivar_bwa_docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/ivar:1.3.1-titan | Optional | SE,PE | HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2 |
+| ivar_consensus | **ivar_bwa_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 16 | Optional | SE,PE | HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2 |
+| ivar_consensus | **ivar_consensus_cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional | SE,PE | HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2 |
+| ivar_consensus | **ivar_consensus_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | SE,PE | HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2 |
+| ivar_consensus | **ivar_consensus_docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/ivar:1.3.1-titan | Optional | SE,PE | HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2 |
+| ivar_consensus | **ivar_consensus_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | SE,PE | HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2 |
+| ivar_consensus | **ivar_trim_primers_cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional | SE,PE | HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2 |
+| ivar_consensus | **ivar_trim_primers_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | SE,PE | HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2 |
+| ivar_consensus | **ivar_trim_primers_docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/ivar:1.3.1-titan | Optional | SE,PE | HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2 |
+| ivar_consensus | **ivar_trim_primers_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | SE,PE | HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2 |
+| ivar_consensus | **ivar_variant_cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional  | SE,PE | HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2 |
+| ivar_consensus | **ivar_variant_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | SE,PE | HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2 |
+| ivar_consensus | **ivar_variant_docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/ivar:1.3.1-titan | | SE,PE | HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2 |
+| ivar_consensus | **ivar_variant_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional  | SE,PE | HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2 |
+| ivar_consensus | **stats_n_coverage_cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional | SE,PE | HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2 |
+| ivar_consensus | **stats_n_coverage_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | SE,PE | HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2 |
+| ivar_consensus | **stats_n_coverage_docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/samtools:1.15 | | SE,PE | HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2 |
+| ivar_consensus | **stats_n_coverage_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | SE,PE | HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2 |
+| ivar_consensus | **stats_n_coverage_primtrim_cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional | SE,PE | HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2 |
+| ivar_consensus | **stats_n_coverage_primtrim_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | SE,PE | HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2 |
+| ivar_consensus | **stats_n_coverage_primtrim_docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/samtools:1.15 | Optional | SE,PE | HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2 |
+| ivar_consensus | **stats_n_coverage_primtrim_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | SE,PE | HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2 |
 | kraken2_dehosted | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional | CL | sars-cov-2 |
 | kraken2_dehosted | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | CL | sars-cov-2 |
 | kraken2_dehosted | **docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.0.8-beta_hv | Optional | CL | sars-cov-2 |
