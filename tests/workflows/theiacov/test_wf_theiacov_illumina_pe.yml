@@ -84,7 +84,7 @@
     - path: miniwdl_run/call-read_QC_trim/call-fastq_scan_raw/work/VERSION
     # kraken2 dehosted
     - path: miniwdl_run/call-read_QC_trim/call-kraken2_theiacov_dehosted/command
-      md5sum: 2031501aaf268d2987b6dbc3b8b32dfa
+      md5sum: ad6608bb5c8581d17a9d14760917171c
     - path: miniwdl_run/call-read_QC_trim/call-kraken2_theiacov_dehosted/inputs.json
       contains: ["read1", "read2", "samplename"]
     - path: miniwdl_run/call-read_QC_trim/call-kraken2_theiacov_dehosted/outputs.json
@@ -97,14 +97,14 @@
     - path: miniwdl_run/call-read_QC_trim/call-kraken2_theiacov_dehosted/work/PERCENT_HUMAN
       md5sum: 897316929176464ebc9ad085f31e7284
     - path: miniwdl_run/call-read_QC_trim/call-kraken2_theiacov_dehosted/work/PERCENT_SC2
-      md5sum: 494a4bf9ab740c0a0fab64f670549883
+      md5sum: 6baf8bb11094b9011d8dc34e66743712
     - path: miniwdl_run/call-read_QC_trim/call-kraken2_theiacov_dehosted/work/PERCENT_TARGET_ORGANISM
       md5sum: 68b329da9893e34099c7d8ad5cb9c940
     - path: miniwdl_run/call-read_QC_trim/call-kraken2_theiacov_dehosted/work/SRR13687078_kraken2_report.txt
       md5sum: 2ccc036a9a93b3cf096a5c4dda49a579
     # kraken2 raw
     - path: miniwdl_run/call-read_QC_trim/call-kraken2_theiacov_raw/command
-      md5sum: a16205bdb8cf133a112c4552e8f67f97
+      md5sum: e457432bb1e150e2d561936577c9c51c
     - path: miniwdl_run/call-read_QC_trim/call-kraken2_theiacov_raw/inputs.json
       contains: ["read1", "samplename"]
     - path: miniwdl_run/call-read_QC_trim/call-kraken2_theiacov_raw/outputs.json
@@ -115,9 +115,9 @@
     - path: miniwdl_run/call-read_QC_trim/call-kraken2_theiacov_raw/task.log
       contains: ["wdl", "theiacov_illumina_pe", "kraken2_theiacov_raw", "done"]
     - path: miniwdl_run/call-read_QC_trim/call-kraken2_theiacov_raw/work/PERCENT_HUMAN
-      md5sum: 414f4efa514540a2527a4f27124575f2
+      md5sum: 897316929176464ebc9ad085f31e7284
     - path: miniwdl_run/call-read_QC_trim/call-kraken2_theiacov_raw/work/PERCENT_SC2
-      md5sum: 2bf2d20f083d8fa09abf6c25f8970e2e
+      md5sum: cfefab882d84cf0f2a1bde9c19eec318
     - path: miniwdl_run/call-read_QC_trim/call-kraken2_theiacov_raw/work/PERCENT_TARGET_ORGANISM
       md5sum: 68b329da9893e34099c7d8ad5cb9c940
     - path: miniwdl_run/call-read_QC_trim/call-kraken2_theiacov_raw/work/SRR13687078_kraken2_report.txt
