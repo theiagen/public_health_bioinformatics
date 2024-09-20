@@ -22,30 +22,30 @@ workflow ivar_consensus {
     Float consensus_min_freq 
     File? primer_bed
     Boolean? skip_N
-    Int?        ivar_bwa_cpu
-    Int?        ivar_bwa_memory
-    Int?        ivar_bwa_disk_size
-    String?     ivar_bwa_docker
-    Int?        ivar_trim_primers_cpu
-    Int?        ivar_trim_primers_memory
-    Int?        ivar_trim_primers_disk_size
-    String?     ivar_trim_primers_docker
-    Int?        stats_n_coverage_primtrim_cpu
-    Int?        stats_n_coverage_primtrim_memory
-    Int?        stats_n_coverage_primtrim_disk_size
-    String?     stats_n_coverage_primtrim_docker
-    Int?        ivar_variant_cpu
-    Int?        ivar_variant_memory
-    Int?        ivar_variant_disk_size
-    String?     ivar_variant_docker
-    Int?        ivar_consensus_cpu
-    Int?        ivar_consensus_memory
-    Int?        ivar_consensus_disk_size
-    String?     ivar_consensus_docker
-    Int?        stats_n_coverage_cpu
-    Int?        stats_n_coverage_memory
-    Int?        stats_n_coverage_disk_size
-    String?     stats_n_coverage_docker
+    Int? ivar_bwa_cpu
+    Int? ivar_bwa_memory
+    Int? ivar_bwa_disk_size
+    String? ivar_bwa_docker
+    Int? ivar_trim_primers_cpu
+    Int? ivar_trim_primers_memory
+    Int? ivar_trim_primers_disk_size
+    String? ivar_trim_primers_docker
+    Int? stats_n_coverage_primtrim_cpu
+    Int? stats_n_coverage_primtrim_memory
+    Int? stats_n_coverage_primtrim_disk_size
+    String? stats_n_coverage_primtrim_docker
+    Int? ivar_variant_cpu
+    Int? ivar_variant_memory
+    Int? ivar_variant_disk_size
+    String? ivar_variant_docker
+    Int? ivar_consensus_cpu
+    Int? ivar_consensus_memory
+    Int? ivar_consensus_disk_size
+    String? ivar_consensus_docker
+    Int? stats_n_coverage_cpu
+    Int? stats_n_coverage_memory
+    Int? stats_n_coverage_disk_size
+    String? stats_n_coverage_docker
   }
   call bwa_task.bwa {
     input:
