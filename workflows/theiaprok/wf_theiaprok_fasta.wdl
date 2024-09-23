@@ -582,16 +582,10 @@ workflow theiaprok_fasta {
     String? stxtyper_docker = merlin_magic.stxtyper_docker
     String? stxtyper_version = merlin_magic.stxtyper_version
     Int? stxtyper_num_hits = merlin_magic.stxtyper_num_hits
-    String? stxtyper_complete_operons = merlin_magic.stxtyper_complete_operons
+    String? stxtyper_all_hits = merlin_magic.stxtyper_all_hits
+    String? stxtyper_complete_operons = merlin_magic.stxtyper_complete_operon_hits
     String? stxtyper_partial_hits = merlin_magic.stxtyper_partial_hits
-    String? stxtyper_stxA_complete_hits = merlin_magic.stxtyper_stxA_complete_hits
-    String? stxtyper_stxB_complete_hits = merlin_magic.stxtyper_stxB_complete_hits
-    String? stxtyper_stxA_partial_hits = merlin_magic.stxtyper_stxA_partial_hits
-    # commenting out at user's request. keeping code in case we want to bring back later
-    #String stxtyper_stxB_partial_hits = merlin_magic.stxtyper_stxB_partial_hits
     String? stxtyper_stx_frameshifts_or_internal_stop_hits =  merlin_magic.stxtyper_stx_frameshifts_or_internal_stop_hits
-    String? stxtyper_A_partial_B_complete = merlin_magic.stxtyper_A_partial_B_complete
-    String? stxtyper_A_B_complete_different_contigs = merlin_magic.stxtyper_A_B_complete_different_contigs
     String? stxtyper_novel_hits = merlin_magic.stxtyper_novel_hits
     # Listeria Typing
     File? lissero_results = merlin_magic.lissero_results
