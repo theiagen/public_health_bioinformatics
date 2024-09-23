@@ -573,7 +573,7 @@ All input reads are processed through "core tasks" in the TheiaCoV Illumina, ONT
 !!! tip ""
     These tasks are performed regardless of organism, and perform read trimming and various quality control steps.
 
-??? task "`versioning`: Version capture for TheiaEuk"
+??? task "`versioning`: Version capture for TheiaCoV"
 
     The `versioning` task captures the workflow version from the GitHub (code repository) version.
         
@@ -739,7 +739,7 @@ All input reads are processed through "core tasks" in the TheiaCoV Illumina, ONT
         | Tasks | [task_ncbi_scrub.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_ncbi_scrub.wdl#L68) (SE subtask)<br>[task_artic_guppyplex.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_artic_guppyplex.wdl)<br>[task_kraken2.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/contamination/task_kraken2.wdl#L3)|
         | Software Source Code | [NCBI Scrub on GitHub](https://github.com/ncbi/sra-human-scrubber)<br>[Artic on GitHub](https://github.com/artic-network/fieldbioinformatics)<br>[Kraken2 on GitHub](https://github.com/DerrickWood/kraken2/) |
         | Software Documentation | [NCBI Scrub](<https://github.com/ncbi/sra-human-scrubber/blob/master/README.md>)<br>[Artic pipeline](https://artic.readthedocs.io/en/latest/?badge=latest)<br>[Kraken2](https://github.com/DerrickWood/kraken2/wiki) |
-        | Original Publication(s) | [*STAT: a fast, scalable, MinHash-based *k*-mer tool to assess Sequence Read Archive next-generation sequence submissions](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-021-02490-0)<br>*[Improved metagenomic analysis with Kraken 2](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1891-0)  |
+        | Original Publication(s) | [STAT: a fast, scalable, MinHash-based *k*-mer tool to assess Sequence Read Archive next-generation sequence submissions](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-021-02490-0)<br>[Improved metagenomic analysis with Kraken 2](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1891-0)  |
 
 #### Assembly tasks
 
@@ -765,7 +765,7 @@ All input reads are processed through "core tasks" in the TheiaCoV Illumina, ONT
         | Tasks | [task_bwa.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/alignment/task_bwa.wdl)<br>[task_ivar_primer_trim.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_ivar_primer_trim.wdl)<br>[task_assembly_metrics.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_assembly_metrics.wdl)<br>[task_ivar_variant_call.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/variant_detection/task_ivar_variant_call.wdl)<br>[task_ivar_consensus.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_ivar_consensus.wdl) |
         | Software Source Code | [BWA on GitHub](https://github.com/lh3/bwa), [iVar on GitHub](https://andersen-lab.github.io/ivar/html/) |
         | Software Documentation | [BWA on SourceForge](https://bio-bwa.sourceforge.net/), [iVar on GitHub](https://andersen-lab.github.io/ivar/html/) |
-        | Original Publication(s) | [*Aligning sequence reads, clone sequences and assembly contigs with BWA-MEM](https://doi.org/10.48550/arXiv.1303.3997)<br>[*An amplicon-based sequencing framework for accurately measuring intrahost virus diversity using PrimalSeq and iVar](http://dx.doi.org/10.1186/s13059-018-1618-7) |
+        | Original Publication(s) | [Aligning sequence reads, clone sequences and assembly contigs with BWA-MEM](https://doi.org/10.48550/arXiv.1303.3997)<br>[An amplicon-based sequencing framework for accurately measuring intrahost virus diversity using PrimalSeq and iVar](http://dx.doi.org/10.1186/s13059-018-1618-7) |
 
 ??? toggle "`artic_consensus`: Alignment, Primer Trimming, Variant Detection, and Consensus ==_for non-flu organisms in ONT & ClearLabs workflows_=="
 
@@ -794,7 +794,7 @@ All input reads are processed through "core tasks" in the TheiaCoV Illumina, ONT
         | --- | --- |
         | Task | [task_irma.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_irma.wdl) |
         | Software Documentation | [IRMA website](https://wonder.cdc.gov/amd/flu/irma/) |
-        | Original Publication(s) | [*Viral deep sequencing needs an adaptive approach: IRMA, the iterative refinement meta-assembler](https://bmcgenomics.biomedcentral.com/articles/10.1186/s12864-016-3030-6) |
+        | Original Publication(s) | [Viral deep sequencing needs an adaptive approach: IRMA, the iterative refinement meta-assembler](https://bmcgenomics.biomedcentral.com/articles/10.1186/s12864-016-3030-6) |
 
 #### Organism-specific characterization tasks {#org-specific-tasks}
 
@@ -873,7 +873,7 @@ All input reads are processed through "core tasks" in the TheiaCoV Illumina, ONT
         | --- | --- |
         | Task | [task_irma.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_irma.wdl) |
         | Software Documentation | [IRMA website](https://wonder.cdc.gov/amd/flu/irma/) |
-        | Original Publication(s) | [*Viral deep sequencing needs an adaptive approach: IRMA, the iterative refinement meta-assembler](https://bmcgenomics.biomedcentral.com/articles/10.1186/s12864-016-3030-6) |
+        | Original Publication(s) | [Viral deep sequencing needs an adaptive approach: IRMA, the iterative refinement meta-assembler](https://bmcgenomics.biomedcentral.com/articles/10.1186/s12864-016-3030-6) |
 
 ??? task "`abricate`"
 

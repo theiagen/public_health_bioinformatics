@@ -84,7 +84,7 @@ We are constantly working on improving these spreadsheets and they will be updat
 
 ### Running the Workflow
 
-We recommend running a test submission before your first production submission to ensure that all data has been formatted correctly. Please contact Theiagen (`support@theiagen.com`) to get this set up.
+We recommend running a test submission before your first production submission to ensure that all data has been formatted correctly. Please contact Theiagen (<support@theiagen.com>) to get this set up.
 
 In the test submission, any real BioProject accession numbers you provide will not be recognized. You will have to make a "fake" or "test" BioProject. This cannot be done through the NCBI portal. Theiagen can provide assistance in creating this as it requires manual command-line work on the NCBI FTP using the account they provided for you.
 

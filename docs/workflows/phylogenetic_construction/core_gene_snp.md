@@ -18,8 +18,6 @@ The Core_Gene_SNP workflow is intended for pangenome analysis, core gene alignme
 
 ### Inputs
 
-### Optional User Inputs
-
 For further detail regarding Pirate options, please see [PIRATE's documentation)[https://github.com/SionBayliss/PIRATE). For further detail regarding IQ-TREE options, please see `http://www.iqtree.org/doc/Command-Reference`.
 
 This workflow runs on the set level.
