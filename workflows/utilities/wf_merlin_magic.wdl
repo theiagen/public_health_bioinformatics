@@ -625,7 +625,7 @@ workflow merlin_magic {
             samplename = samplename,
             snippy_variants_results = snippy_cauris.snippy_variants_results,
             reference = cladetyper.clade_spec_ref,
-            query_gene = select_first([snippy_query_gene, "FKS1,lanosterol.14-alpha.demethylase,uracil.phosphoribosyltransferase"]),
+            query_gene = select_first([snippy_query_gene, "FKS1,lanosterol.14-alpha.demethylase,uracil.phosphoribosyltransferase,ERG6,FLO8,PSK74852,MEC3,ERG3,ERG11"]),
             docker = snippy_gene_query_docker_image
         }
       }
