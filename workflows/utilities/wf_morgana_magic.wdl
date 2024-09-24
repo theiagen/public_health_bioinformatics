@@ -18,7 +18,7 @@ workflow morgana_magic {
   call set_organism_defaults.organism_parameters {
     input:
       taxon_id = taxon_id,
-      organism = "temporary"
+      organism = "To Be Determined"
   }
   call consensus_qc_task.consensus_qc {
     input:

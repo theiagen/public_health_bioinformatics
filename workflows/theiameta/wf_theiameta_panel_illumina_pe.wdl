@@ -20,6 +20,7 @@ workflow theiameta_panel_illumina_pe {
     Array[Int]? taxon_ids # suggest using a workspace element if user wants to modify?
     File kraken2_db = "gs://theiagen-large-public-files-rp/terra/databases/kraken2/k2_viral_20240112.tar.gz"
   }
+  # kraken does not run as part of the theiameta track in read_QC_trim -- we may want to change that
   call kraken_task.kraken2_standalone as kraken2_raw {
     input:
       samplename = samplename,
@@ -54,6 +55,8 @@ workflow theiameta_panel_illumina_pe {
   scatter (taxon_id in taxon_ids) {
     call krakentools_task.extract_kraken_reads as krakentools {
       input:
+        # we should consider changing the classified_report name so 
+        #  it won't be confused with the actual kraken2 report
         kraken2_output = kraken2_clean.kraken2_classified_report,
         kraken2_report = kraken2_clean.kraken2_report,
         read1 = read_QC_trim.read1_clean,
@@ -66,7 +69,7 @@ workflow theiameta_panel_illumina_pe {
           read1 = krakentools.extracted_read1,
           read2 = krakentools.extracted_read2
       }
-        #### ADJUST IN THE FUTURE; SETTING TO 100 FOR TESTING 
+      #### ADJUST IN THE FUTURE; SETTING TO 100 FOR TESTING ####
       if (fastq_scan_binned.read1_seq > 100) {
         call metaspades_task.metaspades_pe {
           input:
