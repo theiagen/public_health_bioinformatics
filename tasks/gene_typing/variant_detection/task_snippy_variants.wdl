@@ -120,7 +120,7 @@ task snippy_variants {
     String snippy_variants_ref_length = read_string("REFERENCE_LENGTH")
     String snippy_variants_ref_length_passed_depth = read_string("REFERENCE_LENGTH_PASSED_DEPTH")
     String snippy_variants_percent_ref_coverage = read_string("PERCENT_REF_COVERAGE")
-    String snippy_variants_percent_read_aligned = read_string("PERCENT_READS_ALIGNED")
+    String snippy_variants_percent_reads_aligned = read_string("PERCENT_READS_ALIGNED")
   }
   runtime {
       docker: "~{docker}"
