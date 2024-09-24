@@ -6,6 +6,7 @@ workflow organism_parameters {
   }
   input {
     String organism
+    String taxon_id
     
     # hiv information
     String hiv_primer_version = "v1"
@@ -48,7 +49,35 @@ workflow organism_parameters {
     Float? narrow_bandwidth
     Float? proportion_wide
   }
-  if (organism == "sars-cov-2" || organism == "SARS-CoV-2") {
+  if (defined(taxon_id)) {
+    if (taxon_id == "2697049") {
+      String sc2 = "sars-cov-2"
+    }
+    if (taxon_id == "10244") {
+      String mpox = "MPXV"
+    }
+    if (taxon_id == "11082") {
+      String wnv = "WNV"
+    }
+    if (taxon_id == "11320") {
+      # flu A
+      String flua = "flu"
+    }
+    if (taxon_id == "11520") {
+      # flu B
+      String flub = "flu"
+    }
+    if (taxon_id == "12814") {
+      String rsva = "rsv_a"
+    }
+    if (taxon_id == "12815") {
+      String rsvb = "rsv_b"
+    }
+    if (taxon_id == "11676") {
+      String hiv = "HIV"
+    }
+  }
+  if (organism == "sars-cov-2" || organism == "SARS-CoV-2" || defined(sc2)) {
     String sc2_org_name = "sars-cov-2"
     String sc2_reference_genome = "gs://theiagen-public-files-rp/terra/augur-sars-cov-2-references/MN908947.fasta"
     String sc2_gene_locations_bed = "gs://theiagen-public-files-rp/terra/sars-cov-2-files/sc2_gene_locations.bed"
@@ -61,7 +90,7 @@ workflow organism_parameters {
     String sc2_vadr_options = "--noseqnamemax --glsearch -s -r --nomisc --mkey sarscov2 --lowsim5seq 6 --lowsim3seq 6 --alt_fail lowscore,insertnn,deletinn --out_allfasta"
     Int sc2_vadr_memory = 8
   }
-  if (organism == "MPXV" || organism == "mpox" || organism == "monkeypox" || organism == "Monkeypox virus" || organism == "Mpox") {
+  if (organism == "MPXV" || organism == "mpox" || organism == "monkeypox" || organism == "Monkeypox virus" || organism == "Mpox" || defined(mpox)) {
     String mpox_org_name = "MPXV"
     String mpox_reference_genome = "gs://theiagen-public-files/terra/mpxv-files/MPXV.MT903345.reference.fasta"
     String mpox_gene_locations_bed = "gs://theiagen-public-files/terra/mpxv-files/mpox_gene_locations.bed"
@@ -88,7 +117,7 @@ workflow organism_parameters {
     Float mpox_narrow_bandwidth = 0.1666667
     Float mpox_proportion_wide = 0.0
   }  
-  if (organism == "WNV" || organism == "wnv" || organism == "West Nile virus") {
+  if (organism == "WNV" || organism == "wnv" || organism == "West Nile virus" || defined(wnv)) {
     String wnv_org_name = "WNV"
     String wnv_reference_genome = "gs://theiagen-public-files/terra/theiacov-files/WNV/NC_009942.1_wnv_L1.fasta"
     String wnv_kraken_target_organism = "West Nile virus"
@@ -101,7 +130,7 @@ workflow organism_parameters {
     String wnv_nextclade_ds_tag = "NA"
     String wnv_nextclade_ds_name = "NA"
   }
-  if (organism == "flu" || organism == "influenza" || organism == "Flu" || organism == "Influenza") {
+  if (organism == "flu" || organism == "influenza" || organism == "Flu" || organism == "Influenza" || defined(flua) || defined (flub)) {
     String flu_org_name = "flu"
     Int flu_genome_len = 13500
 
@@ -185,7 +214,7 @@ workflow organism_parameters {
       }
     }
   }
-  if (organism == "rsv_a" || organism == "rsv-a" || organism == "RSV-A" || organism == "RSV_A") {
+  if (organism == "rsv_a" || organism == "rsv-a" || organism == "RSV-A" || organism == "RSV_A" || defined(rsva)) {
     String rsv_a_org_name = "rsv_a"
     String rsv_a_reference_genome = "gs://theiagen-public-files-rp/terra/rsv_references/reference_rsv_a.fasta"
     String rsv_a_nextclade_ds_tag = "2024-08-01--22-31-31Z"
@@ -209,7 +238,7 @@ workflow organism_parameters {
     Float rsv_a_narrow_bandwidth = 0.1666667
     Float rsv_a_proportion_wide = 0.0
   }
-  if (organism == "rsv_b" || organism == "rsv-b" || organism == "RSV-B" || organism == "RSV_B") {
+  if (organism == "rsv_b" || organism == "rsv-b" || organism == "RSV-B" || organism == "RSV_B" || defined(rsvb)) {
     String rsv_b_org_name = "rsv_b"
     String rsv_b_reference_genome = "gs://theiagen-public-files-rp/terra/rsv_references/reference_rsv_b.fasta"
     String rsv_b_nextclade_ds_tag = "2024-08-01--22-31-31Z"
@@ -233,7 +262,7 @@ workflow organism_parameters {
     Float rsv_b_narrow_bandwidth = 0.1666667
     Float rsv_b_proportion_wide = 0.0
   }
-  if (organism == "HIV" && hiv_primer_version == "v1") {
+  if (organism == "HIV" && hiv_primer_version == "v1" || defined(hiv)) {
     String hiv_v1_org_name = "HIV"
     String hiv_v1_reference_genome = "gs://theiagen-public-files/terra/hivgc-files/NC_001802.1.fasta"
     String hiv_v1_reference_gff = "gs://theiagen-public-files/terra/hivgc-files/NC_001802.1.gff3"
