@@ -1,0 +1,6 @@
+samples	columnA-string	columnB-set	columnC-ignore	columnD-float	columnE-missing
+sample1	option1	item1,item3,item2	cheesecake	999	present
+sample2	option2	item1,item2,item3	batter	12	present
+sample3	option1	item1,item2	cheese	24	
+sample4	option1	item1,item2	cakebatter	728	
+sample5	option2	item1,item2,item3	batter	4	present

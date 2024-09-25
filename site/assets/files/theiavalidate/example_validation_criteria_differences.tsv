@@ -1,0 +1,7 @@
+Column	columnB-set	columnB-set	columnD-float	columnD-float	columnE-missing	columnE-missing
+Table	example_table1.tsv	example_table2.tsv	example_table1.tsv	example_table2.tsv	example_table1.tsv	example_table2.tsv
+sample1						
+sample2						
+sample3	item1,item2,item3	item1,item2	14.0	24.0	present	
+sample4			3492.0	728.0		
+sample5	item1,item2	item1,item2,item3	3.0	4.0		

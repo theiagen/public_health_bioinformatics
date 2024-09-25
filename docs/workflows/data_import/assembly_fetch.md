@@ -23,26 +23,138 @@ Assembly_Fetch requires the input samplename, and either the accession for a ref
 
 This workflow runs on the sample level.
 
-| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
-|---|---|---|---|---|---|
-| reference_fetch | **samplename** | String | Your sample's name |  | Required |
-| reference_fetch | **assembly_fasta** | File | Assembly FASTA file of your sample |  | Optional |
-| reference_fetch | **ncbi_accession** | String | NCBI accession passed to the NCBI datasets task to be downloaded. Example: GCF_000006945.2 (Salmonella enterica subsp. enterica, serovar Typhimurium str. LT2 reference genome) |  | Optional |
-| ncbi_datasets_download_genome_accession | **cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional |
-| ncbi_datasets_download_genome_accession | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 50 | Optional |
-| ncbi_datasets_download_genome_accession | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/staphb/ncbi-datasets:14.13.2" | Optional |
-| ncbi_datasets_download_genome_accession | **include_gbff** | Boolean | set to true if you would like the GenBank Flat File (GBFF) file included in the output. It contains nucleotide sequence, metadata, and annotations. | FALSE | Optional |
-| ncbi_datasets_download_genome_accession | **include_gff3** | Boolean | set to true if you would like the Genomic Feature File v3 (GFF3) file included in the output. It contains nucleotide sequence, metadata, and annotations | FALSE | Optional |
-| ncbi_datasets_download_genome_accession | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 4 | Optional |
-| referenceseeker | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional |
-| referenceseeker | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 200 | Optional |
-| referenceseeker | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/biocontainers/referenceseeker:1.8.0--pyhdfd78af_0" | Optional |
-| referenceseeker | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 16 | Optional |
-| referenceseeker | **referenceseeker_ani_threshold** | Float | ANI threshold used to exclude ref genomes when ANI value less than this value. | 0.95 | Optional |
-| referenceseeker | **referenceseeker_conserved_dna_threshold** | Float | Conserved DNA threshold used to exclude ref genomes when conserved DNA value is less than this value. | 0.69 | Optional |
-| referenceseeker | **referenceseeker_db** | File | Database used by the referenceseeker tool that contains bacterial genomes from RefSeq release 205. Downloaded from referenceseeker GitHub repo. | "gs://theiagen-public-files-rp/terra/theiaprok-files/referenceseeker-bacteria-refseq-205.v20210406.tar.gz" | Optional |
-| version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
-| version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
+## Inputs
+
+Assembly_Fetch requires the input samplename, and either the accession for a reference genome to download (ncbi_accession) or an assembly that can be used to query RefSeq for the closest reference genome to download (assembly_fasta).
+
+This workflow runs on the sample level.
+ 
+<div style="width: 100%;"> 
+  <button id="resetOrderButton" style="padding: 4px 6px; font-size: 12px; background-color: #116eb7; color: white; border: none; border-radius: 5px; cursor: pointer;">
+    Reset Table
+  </button>
+
+  <table id="inputTable" class="display" style="width: 100%; font-size: 14px;"> 
+    <thead></thead>
+    <tbody></tbody>
+  </table>
+</div>
+
+<style>
+  /* Set max height and enable vertical scrolling */
+  #inputTable_wrapper {
+    max-height: 600px;  /* Adjust the height as needed */
+    overflow-y: auto;   /* Enable vertical scrolling */
+  }
+
+  /* Ensure the table fills the container width */
+  #inputTable {
+    width: 100% !important;
+    table-layout: auto;
+  }
+
+  /* Adjust font size for table headers and cells */
+  #inputTable th, #inputTable td {
+    font-size: 12px;
+  }
+
+  /* Style the table header */
+  #inputTable th {
+    background-color: #116eb7;
+    color: white;
+    font-weight: bold;
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    function loadTable(enablePostbackSafe) {
+      // Set default value if parameter is undefined
+      if (typeof enablePostbackSafe === 'undefined') {
+        enablePostbackSafe = true;
+      }
+
+      Papa.parse('/public_health_bioinformatics/data/assembly_fetch_input.csv', {
+        download: true,
+        header: true,
+        complete: function(results) {
+          var data = results.data;
+          var headers = Object.keys(data[0]);  // Automatically fetch headers from CSV
+
+          // Build table headers
+          var headerHTML = '<tr>';
+          headers.forEach(function(header) {
+            headerHTML += '<th>' + header + '</th>';
+          });
+          headerHTML += '</tr>';
+          document.querySelector('#inputTable thead').innerHTML = headerHTML;
+
+          // Build table data from CSV
+          var tableRows = [];
+          data.forEach(function(row) {
+            var rowArray = [];
+            headers.forEach(function(header) {
+              var cellContent = row[header] ? row[header] : '';
+              if (header === 'Variable') {
+                cellContent = '<strong>' + cellContent + '</strong>';
+              }
+              rowArray.push(cellContent);
+            });
+            tableRows.push(rowArray);
+          });
+
+          // Ensure DataTable is destroyed and reinitialized if it exists
+          if ($.fn.DataTable.isDataTable('#inputTable')) {
+            $('#inputTable').DataTable().clear().destroy();
+          }
+
+          // Initialize DataTable
+          var table = $('#inputTable').DataTable({
+            data: tableRows,
+            columns: headers.map(function(header) {
+              return { title: header };
+            }),
+            paging: false,
+            searching: true,
+            ordering: true,
+            order: [],
+            autoWidth: false,
+            responsive: true,
+            stateSave: true
+          });
+
+          // Adjust columns after initialization
+          table.columns.adjust();
+
+          // Initialize colResizable after DataTable
+          $('#inputTable').colResizable({
+            liveDrag: true,
+            headerOnly: false,
+            postbackSafe: enablePostbackSafe
+          });
+        }
+      });
+    }
+
+    // Load the table when the DOM is ready
+    loadTable();
+
+    // Reset button to reload the table
+    document.getElementById('resetOrderButton').addEventListener('click', function() {
+      // Disable colResizable and flush its state
+      $('#inputTable').colResizable({ disable: true, flush: true });
+
+      // Clear DataTables state to reset column widths and other settings
+      $('#inputTable').DataTable().state.clear();
+
+      // Reload the table without saving column widths
+      loadTable(false);
+    });
+  });
+</script>
+
+
+
 
 ### Analysis Tasks
 

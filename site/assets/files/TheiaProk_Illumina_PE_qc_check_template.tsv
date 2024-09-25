@@ -1,0 +1,15 @@
+taxon	num_reads_raw1	num_reads_raw2	num_reads_clean1	num_reads_clean2	est_coverage_raw	est_coverage_clean	combined_mean_q_raw	r1_mean_q_raw	r2_mean_q_raw	combined_mean_readlength_raw	r1_mean_readlength_raw	r2_mean_readlength_raw	combined_mean_q_clean	r1_mean_q_clean	r2_mean_q_clean	combined_mean_readlength_clean	r1_mean_readlength_clean	r2_mean_readlength_clean	assembly_length_min	assembly_length_max	midas_secondary_genus_abundance	number_contigs	n50_value	quast_gc_percent_min	quast_gc_percent_max	busco_completeness	ani_highest_percent	ani_highest_percent_bases_aligned
+Listeria_monocytogenes	100000	100000	100000	100000	20		30			135			30			135			2800000	3200000	0.01						92	70
+Escherichia_coli	100000	100000	100000	100000	40		30			135			30			135			4900000	6000000	0.01						92	70
+Shigella	100000	100000	100000	100000	40		30			135			30			135			4200000	4900000	0.01						92	70
+Salmonella	100000	100000	100000	100000	30		30			135			30			135			4400000	5700000	0.01						92	70
+Campylobacter	100000	100000	100000	100000	20		30			135			30			135			1400000	2200000	0.01						92	70
+Vibrio_cholerae	100000	100000	100000	100000	40		30			135			30			135			3800000	4300000	0.01						92	70
+Vibrio_parahaemolyticus	100000	100000	100000	100000	40		30			135			30			135			4900000	5500000	0.01						92	70
+Vibrio_vulnificus	100000	100000	100000	100000	40		30			135			30			135			4700000	5300000	0.01						92	70
+Pseudomonas	100000	100000	100000	100000	30	30	30	30	30	135	135	135	30	30	30	135	135	135				500	10000			95		
+Streptococcus	100000	100000	100000	100000	30	30	30	30	30	135	135	135	30	30	30	135	135	135				500	10000			95		
+Acinetobacter	100000	100000	100000	100000	30	30	30	30	30	135	135	135	30	30	30	135	135	135				500	10000			95		
+Mycobacterium	100000	100000	100000	100000	30	30	30	30	30	135	135	135	30	30	30	135	135	135				500	10000			95		
+Legionella	100000	100000	100000	100000	30	30	30	30	30	135	135	135	30	30	30	135	135	135				500	10000			95		
+Klebsiella	100000	100000	100000	100000	30	30	30	30	30	135	135	135	30	30	30	135	135	135				500	10000			95		

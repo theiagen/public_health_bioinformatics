@@ -184,3 +184,15 @@ th {
 td {
   word-break: break-all;
 }
+
+############################ table.css ###########################
+#inputTable_wrapper {
+  overflow-y: auto;
+  max-height: 500px;  /* Ensures a single vertical scrollbar */
+}
+
+#inputTable th {
+  background-color: #007BFF;  /* Custom blue color for table headers */
+  color: white;
+  font-weight: bold;
+}
