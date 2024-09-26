@@ -75,6 +75,7 @@ workflow merlin_magic {
     Boolean tbprofiler_additional_outputs = false
     String tbp_parser_output_seq_method_type = "WGS"
     String? tbp_parser_operator
+    Boolean? tbp_parser_add_cs_lims
     Int? tbp_parser_min_depth
     Int? tbp_parser_coverage_threshold
     Boolean? tbp_parser_debug
@@ -281,6 +282,7 @@ workflow merlin_magic {
             operator = tbp_parser_operator,
             min_depth = tbp_parser_min_depth,
             coverage_threshold = tbp_parser_coverage_threshold,
+            add_cycloserine_lims = tbp_parser_add_cs_lims,
             tbp_parser_debug = tbp_parser_debug,
             docker = tbp_parser_docker_image
         }
