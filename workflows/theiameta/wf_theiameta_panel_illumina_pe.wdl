@@ -8,6 +8,7 @@ import "../../tasks/quality_control/read_filtering/task_pilon.wdl" as pilon_task
 import "../../tasks/taxon_id/contamination/task_kraken2.wdl" as kraken_task
 import "../../tasks/taxon_id/task_krakentools.wdl" as krakentools_task
 import "../../tasks/taxon_id/contamination/task_krona.wdl" as krona_task
+import "../../tasks/utilities/data_handling/task_gather_scatter.wdl" as gather_scatter_task
 import "../../tasks/utilities/data_handling/task_parse_mapping.wdl" as parse_mapping_task
 import "../utilities/wf_morgana_magic.wdl" as morgana_magic_workflow
 import "../utilities/wf_read_QC_trim_pe.wdl" as read_qc_trim_pe
@@ -71,6 +72,7 @@ workflow theiameta_panel_illumina_pe {
       }
       #### ADJUST IN THE FUTURE; SETTING TO 100 FOR TESTING ####
       if (fastq_scan_binned.read1_seq > 100) {
+        String did_attempt_assembly = "Assembly attempted"
         call metaspades_task.metaspades_pe {
           input:
             read1_cleaned = krakentools.extracted_read1,
@@ -110,10 +112,42 @@ workflow theiameta_panel_illumina_pe {
             assembly_fasta = pilon.assembly_fasta,
             read1 = krakentools.extracted_read1,
             read2 = krakentools.extracted_read2,
-            taxon_id = taxon_id
+            taxon_id = "~{taxon_id}"
         }
       }
-      # DO OUTPUTS????Q
     }
   }  
+  call gather_scatter_task.gather_scatter {
+    input:
+      taxon_ids = select_first([taxon_ids]),
+      organism = morgana_magic.organism,
+      extracted_read1 = krakentools.extracted_read1,
+      extracted_read2 = krakentools.extracted_read2,
+      fastq_scan_num_reads_binned1 = fastq_scan_binned.read1_seq,
+      fastq_scan_num_reads_binned2 = fastq_scan_binned.read2_seq,
+      fastq_scan_num_reads_binned_pairs = fastq_scan_binned.read_pairs,
+      pilon_assembly_fasta = pilon.assembly_fasta,
+      quast_genome_length = quast.genome_length,
+      quast_number_contigs = quast.number_contigs,
+      quast_n50 = quast.n50_value,
+      quast_gc_percent = quast.gc_percent,
+      pango_lineage = morgana_magic.pango_lineage,
+      pango_lineage_expanded = morgana_magic.pango_lineage_expanded,
+      pangolin_conflicts = morgana_magic.pangolin_conflicts,
+      pangolin_notes = morgana_magic.pangolin_notes,
+      pangolin_assignment_version = morgana_magic.pangolin_assignment_version,
+      pangolin_versions = morgana_magic.pangolin_versions,
+      pangolin_docker = morgana_magic.pangolin_docker,
+      nextclade_version = morgana_magic.nextclade_version,
+      nextclade_docker = morgana_magic.nextclade_docker,
+      nextclade_ds_tag = morgana_magic.nextclade_ds_tag,
+      nextclade_aa_subs = morgana_magic.nextclade_aa_subs,
+      nextclade_aa_dels = morgana_magic.nextclade_aa_dels,
+      nextclade_clade = morgana_magic.nextclade_clade,
+      nextclade_lineage = morgana_magic.nextclade_lineage,
+      nextclade_qc = morgana_magic.nextclade_qc
+  } 
+  output {
+    Array[String?] identified_organisms = select_first([morgana_magic.organism])
+  }
 }

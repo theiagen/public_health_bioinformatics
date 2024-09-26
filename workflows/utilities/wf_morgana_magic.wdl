@@ -15,6 +15,7 @@ workflow morgana_magic {
     File read2
     String taxon_id
   }
+  #### need to add more flu characterization
   call set_organism_defaults.organism_parameters {
     input:
       taxon_id = taxon_id,
@@ -48,6 +49,7 @@ workflow morgana_magic {
         organism = organism_parameters.standardized_organism
     }
   }
+  ##### is running vadr even something we want to do????
   if (organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "WNV" || organism_parameters.standardized_organism == "flu" || organism_parameters.standardized_organism == "rsv_a" || organism_parameters.standardized_organism == "rsv_b") { 
     # tasks specific to MPXV, sars-cov-2, WNV, flu, rsv_a, and rsv_b
     call vadr_task.vadr {
@@ -60,6 +62,7 @@ workflow morgana_magic {
         memory = organism_parameters.vadr_memory
     }
   }
+  ##### is running quasitools even something we want to do????
   if (organism_parameters.standardized_organism == "HIV") {
     call quasitools.quasitools as quasitools_illumina_pe {
       input:
