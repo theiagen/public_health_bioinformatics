@@ -371,7 +371,10 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 | merlin_magic | **serotypefinder_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/serotypefinder:2.0.1 | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **shigatyper_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/shigatyper:2.0.5 | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **shigeifinder_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/shigeifinder:1.3.5 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **sistr_cpu** | Int | The number of CPU cores to allocate for the task. | 8 | Optional | FASTA, ONT, PE, SE  |
+| merlin_magic | **sistr_disk_size** | Int | The disk size (in GB) to allocate for the task.  | 100 | Optional | FASTA, ONT, PE, SE  |
 | merlin_magic | **sistr_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/biocontainers/sistr_cmd:1.1.1--pyh864c0ab_2 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **sistr_memory** | Int | The amount of memory (in GB) to allocate for the task. | 32 | Optional | FASTA, ONT, PE, SE  |
 | merlin_magic | **sistr_use_full_cgmlst_db** | Boolean | Set to true to use the full set of cgMLST alleles which can include highly similar alleles. By default the smaller "centroid" alleles or representative alleles are used for each marker | False  | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **snippy_base_quality** | Int | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **snippy_gene_query_docker_image** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE, SE |
