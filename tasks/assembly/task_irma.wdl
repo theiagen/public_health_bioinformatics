@@ -87,9 +87,26 @@ task irma {
       echo "Type_"$(basename "$(echo "$(find ~{samplename}/*.fasta | head -n1)")" | cut -d_ -f1) > IRMA_TYPE
       # set irma_type bash variable which is used later
       irma_type=$(cat IRMA_TYPE)
-      # concatenate consensus assemblies into single file with all genome segments
-      echo "DEBUG: creating IRMA FASTA file containing all segments...."
-      cat ~{samplename}/*.fasta > ~{samplename}.irma.consensus.fasta
+      
+      # flu segments from largest to smallest
+      segments=("PB2" "PB1" "PA" "HA" "NP" "NA" "MP" "NS")
+
+      echo "DEBUG: creating IRMA FASTA file containing all segments in order (largest to smallest)...."
+      
+      # initialize an empty file
+      touch ~{samplename}.irma.consensus.fasta
+
+      # concatenate files in the order of the segments array
+      for segment in "${segments[@]}"; do
+        segment_file=$(find "~{samplename}" -name "*${segment}*.fasta")
+        if [ -n "$segment_file" ]; then
+          echo "DEBUG: Adding $segment_file to consensus FASTA"
+          cat "$segment_file" >> ~{samplename}.irma.consensus.fasta
+        else
+          echo "WARNING: No file containing ${segment} found for ~{samplename}"
+        fi
+      done
+
       echo "DEBUG: editing IRMA FASTA file to include sample name in FASTA headers...."
       sed -i "s/>/>~{samplename}_/g" ~{samplename}.irma.consensus.fasta
 
