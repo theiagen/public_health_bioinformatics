@@ -41,12 +41,6 @@ This workflow runs on the sample level.
 </div>
 
 <style>
-  /* Set max height and enable vertical scrolling */
-  #inputTable_wrapper {
-    max-height: 600px;  /* Adjust the height as needed */
-    overflow-y: auto;   /* Enable vertical scrolling */
-  }
-
   /* Ensure the table fills the container width */
   #inputTable {
     width: 100% !important;
@@ -108,7 +102,7 @@ This workflow runs on the sample level.
             $('#inputTable').DataTable().clear().destroy();
           }
 
-          // Initialize DataTable
+          // Initialize DataTable with scrolling options
           var table = $('#inputTable').DataTable({
             data: tableRows,
             columns: headers.map(function(header) {
@@ -119,6 +113,9 @@ This workflow runs on the sample level.
             ordering: true,
             order: [],
             autoWidth: false,
+            scrollY: "600px",  // Scrollable height
+            scrollX: true,      // Enable horizontal scroll if needed
+            scrollCollapse: true,  // Collapse the scroll area when fewer rows
             responsive: true,
             stateSave: true
           });
@@ -152,7 +149,6 @@ This workflow runs on the sample level.
     });
   });
 </script>
-
 
 
 
