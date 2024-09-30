@@ -249,7 +249,7 @@
     - path: miniwdl_run/call-ivar_consensus/call-variant_call/work/IVAR_VERSION
       md5sum: 2edd145a24bee2b3465b82715869b561
     - path: miniwdl_run/call-ivar_consensus/call-variant_call/work/PROPORTION_INTERMEDIATE
-      md5sum: 897316929176464ebc9ad085f31e7284
+      md5sum: 4fd4dcef994592f9865e9bc8807f32f4
     - path: miniwdl_run/call-ivar_consensus/call-variant_call/work/SAMTOOLS_VERSION
       md5sum: 03c5ecf22fdfdb6b240ac3880281a056
     - path: miniwdl_run/call-ivar_consensus/call-variant_call/work/SRR13687078.variants.tsv

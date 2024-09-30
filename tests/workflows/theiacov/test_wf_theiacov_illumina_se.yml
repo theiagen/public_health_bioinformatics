@@ -285,7 +285,7 @@
     - path: miniwdl_run/call-consensus_qc/work/NUM_ACTG
       md5sum: 646a2709ceea763e25df9658d0cf0897
     - path: miniwdl_run/call-consensus_qc/work/NUM_DEGENERATE
-      md5sum: 897316929176464ebc9ad085f31e7284
+      md5sum: 4fd4dcef994592f9865e9bc8807f32f4
     - path: miniwdl_run/call-consensus_qc/work/NUM_N
       md5sum: 7627554073c1f56b9ead3d42d0b8aca8
     - path: miniwdl_run/call-consensus_qc/work/NUM_TOTAL
