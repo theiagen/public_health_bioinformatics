@@ -169,8 +169,8 @@
     - path: miniwdl_run/call-kraken2_dehosted/work/VERSION
       md5sum: 37b34738ddce9734ae7857ca4d8ee6d3
     - path: miniwdl_run/call-kraken2_dehosted/work/_miniwdl_inputs/0/clearlabs_R1_dehosted.fastq.gz
-    - path: miniwdl_run/call-kraken2_dehosted/work/clearlabs_kraken2_report.txt
-      md5sum: 35841fa2d77ec202c275b1de548b8d98
+    - path: miniwdl_run/call-kraken2_dehosted/work/clearlabs.report.txt
+      md5sum: b66dbcf8d229c1b6fcfff4dd786068bd
     - path: miniwdl_run/call-kraken2_raw/command
       md5sum: c918fc7f9baa660aff0b4fb9e01d5281
     - path: miniwdl_run/call-kraken2_raw/inputs.json
@@ -192,8 +192,8 @@
     - path: miniwdl_run/call-kraken2_raw/work/VERSION
       md5sum: 37b34738ddce9734ae7857ca4d8ee6d3
     - path: miniwdl_run/call-kraken2_raw/work/_miniwdl_inputs/0/clearlabs.fastq.gz
-    - path: miniwdl_run/call-kraken2_raw/work/clearlabs_kraken2_report.txt
-      md5sum: 35841fa2d77ec202c275b1de548b8d98
+    - path: miniwdl_run/call-kraken2_raw/work/clearlabs.report.txt
+      md5sum: b66dbcf8d229c1b6fcfff4dd786068bd
     - path: miniwdl_run/call-ncbi_scrub_se/command
       contains: ["read1", "scrubber", "gzip"]
     - path: miniwdl_run/call-ncbi_scrub_se/inputs.json

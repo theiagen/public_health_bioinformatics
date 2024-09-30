@@ -85,13 +85,13 @@
     - path: miniwdl_run/call-read_QC_trim/call-kraken2_theiacov_raw/task.log
       contains: ["wdl", "theiacov_illumina_se", "kraken2_theiacov_raw", "done"]
     - path: miniwdl_run/call-read_QC_trim/call-kraken2_theiacov_raw/work/PERCENT_HUMAN
-      md5sum: 897316929176464ebc9ad085f31e7284
+      md5sum: 4fd4dcef994592f9865e9bc8807f32f4
     - path: miniwdl_run/call-read_QC_trim/call-kraken2_theiacov_raw/work/PERCENT_SC2
       md5sum: adbe14d7547234f3743f80907ed33179
     - path: miniwdl_run/call-read_QC_trim/call-kraken2_theiacov_raw/work/PERCENT_TARGET_ORGANISM
       md5sum: 68b329da9893e34099c7d8ad5cb9c940
-    - path: miniwdl_run/call-read_QC_trim/call-kraken2_theiacov_raw/work/ERR6319327_kraken2_report.txt
-      md5sum: 9a089b8920e55c9cc7bc8cd7d18f9a8e
+    - path: miniwdl_run/call-read_QC_trim/call-kraken2_theiacov_raw/work/ERR6319327.report.txt
+      md5sum: cb58af9eb139d109b55ce65d6d2344d6
     # clean read screen
     - path: miniwdl_run/call-clean_check_reads/command
       md5sum: aec6c57452ddff84c325601a780605d2

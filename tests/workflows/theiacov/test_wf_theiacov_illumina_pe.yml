@@ -100,8 +100,8 @@
       md5sum: 6baf8bb11094b9011d8dc34e66743712
     - path: miniwdl_run/call-read_QC_trim/call-kraken2_theiacov_dehosted/work/PERCENT_TARGET_ORGANISM
       md5sum: 68b329da9893e34099c7d8ad5cb9c940
-    - path: miniwdl_run/call-read_QC_trim/call-kraken2_theiacov_dehosted/work/SRR13687078_kraken2_report.txt
-      md5sum: 2ccc036a9a93b3cf096a5c4dda49a579
+    - path: miniwdl_run/call-read_QC_trim/call-kraken2_theiacov_dehosted/work/SRR13687078.report.txt
+      md5sum: 565954ac2bb6ef427754de3b43430728
     # kraken2 raw
     - path: miniwdl_run/call-read_QC_trim/call-kraken2_theiacov_raw/command
       md5sum: e457432bb1e150e2d561936577c9c51c
@@ -120,8 +120,8 @@
       md5sum: cfefab882d84cf0f2a1bde9c19eec318
     - path: miniwdl_run/call-read_QC_trim/call-kraken2_theiacov_raw/work/PERCENT_TARGET_ORGANISM
       md5sum: 68b329da9893e34099c7d8ad5cb9c940
-    - path: miniwdl_run/call-read_QC_trim/call-kraken2_theiacov_raw/work/SRR13687078_kraken2_report.txt
-      md5sum: 3544d9ca35d45093c03cdead46677765
+    - path: miniwdl_run/call-read_QC_trim/call-kraken2_theiacov_raw/work/SRR13687078.report.txt
+      md5sum: 8ea92e13d401e1c955336edfdcd4f1ba
     # ncbi scrub
     - path: miniwdl_run/call-read_QC_trim/call-ncbi_scrub_pe/command
       md5sum: 8c7ca800fa98305009cfb9116a4b60b8
