@@ -29,126 +29,21 @@ Assembly_Fetch requires the input samplename, and either the accession for a ref
 
 This workflow runs on the sample level.
  
+<!-- Assembly Fetch Table -->
 <div style="width: 100%;"> 
-  <button id="resetOrderButton" style="padding: 4px 6px; font-size: 12px; background-color: #116eb7; color: white; border: none; border-radius: 5px; cursor: pointer;">
-    Reset Table
-  </button>
-
   <table id="inputTable" class="display" style="width: 100%; font-size: 14px;"> 
     <thead></thead>
     <tbody></tbody>
   </table>
 </div>
 
-<style>
-  /* Ensure the table fills the container width */
-  #inputTable {
-    width: 100% !important;
-    table-layout: auto;
-  }
-
-  /* Adjust font size for table headers and cells */
-  #inputTable th, #inputTable td {
-    font-size: 12px;
-  }
-
-  /* Style the table header */
-  #inputTable th {
-    background-color: #116eb7;
-    color: white;
-    font-weight: bold;
-  }
-</style>
-
+<!-- Script to call loadDynamicTable -->
 <script>
   document.addEventListener('DOMContentLoaded', function() {
-    function loadTable(enablePostbackSafe) {
-      // Set default value if parameter is undefined
-      if (typeof enablePostbackSafe === 'undefined') {
-        enablePostbackSafe = true;
-      }
-
-      Papa.parse('/public_health_bioinformatics/data/assembly_fetch_input.csv', {
-        download: true,
-        header: true,
-        complete: function(results) {
-          var data = results.data;
-          var headers = Object.keys(data[0]);  // Automatically fetch headers from CSV
-
-          // Build table headers
-          var headerHTML = '<tr>';
-          headers.forEach(function(header) {
-            headerHTML += '<th>' + header + '</th>';
-          });
-          headerHTML += '</tr>';
-          document.querySelector('#inputTable thead').innerHTML = headerHTML;
-
-          // Build table data from CSV
-          var tableRows = [];
-          data.forEach(function(row) {
-            var rowArray = [];
-            headers.forEach(function(header) {
-              var cellContent = row[header] ? row[header] : '';
-              if (header === 'Variable') {
-                cellContent = '<strong>' + cellContent + '</strong>';
-              }
-              rowArray.push(cellContent);
-            });
-            tableRows.push(rowArray);
-          });
-
-          // Ensure DataTable is destroyed and reinitialized if it exists
-          if ($.fn.DataTable.isDataTable('#inputTable')) {
-            $('#inputTable').DataTable().clear().destroy();
-          }
-
-          // Initialize DataTable with scrolling options
-          var table = $('#inputTable').DataTable({
-            data: tableRows,
-            columns: headers.map(function(header) {
-              return { title: header };
-            }),
-            paging: false,
-            searching: true,
-            ordering: true,
-            order: [],
-            autoWidth: false,
-            scrollY: "600px",  // Scrollable height
-            scrollX: true,      // Enable horizontal scroll if needed
-            scrollCollapse: true,  // Collapse the scroll area when fewer rows
-            responsive: true,
-            stateSave: true
-          });
-
-          // Adjust columns after initialization
-          table.columns.adjust();
-
-          // Initialize colResizable after DataTable
-          $('#inputTable').colResizable({
-            liveDrag: true,
-            headerOnly: false,
-            postbackSafe: enablePostbackSafe
-          });
-        }
-      });
-    }
-
-    // Load the table when the DOM is ready
-    loadTable();
-
-    // Reset button to reload the table
-    document.getElementById('resetOrderButton').addEventListener('click', function() {
-      // Disable colResizable and flush its state
-      $('#inputTable').colResizable({ disable: true, flush: true });
-
-      // Clear DataTables state to reset column widths and other settings
-      $('#inputTable').DataTable().state.clear();
-
-      // Reload the table without saving column widths
-      loadTable(false);
-    });
+    loadDynamicTable('/public_health_bioinformatics/data/assembly_fetch_input.csv', 'inputTable');
   });
 </script>
+
 
 
 

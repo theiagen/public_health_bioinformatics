@@ -232,9 +232,10 @@ plugins:
 extra_javascript:
   - https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js
   - https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js
-  - https://cdn.datatables.net/fixedheader/3.3.1/js/dataTables.fixedHeader.min.js  # FixedHeader JavaScript
-  - https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js  # For CSV parsing
-  - https://cdnjs.cloudflare.com/ajax/libs/colresizable/1.6.0/colResizable-1.6.min.js  # colResizable Plugin
+  - https://cdn.datatables.net/fixedheader/3.3.1/js/dataTables.fixedHeader.min.js  # FixedHeader for js table
+  - https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js  # For CSV parsing js table
+  - https://cdnjs.cloudflare.com/ajax/libs/colresizable/1.6.0/colResizable-1.6.min.js  # colResizable Plugin for js table
+  - javascripts/tableLoader.js
 
 extra_css:
   - stylesheets/extra.css
