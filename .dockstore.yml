@@ -283,3 +283,8 @@ workflows:
    primaryDescriptorPath: /workflows/phylogenetics/wf_snippy_streamline_fasta.wdl
    testParameterFiles:
     - /tests/inputs/empty.json
+ - name: Dorado_Basecalling_PHB
+   subclass: WDL
+   primaryDescriptorPath: /workflows/utilities/wf_dorado_basecalling.wdl
+   testParameterFiles:
+    - /tests/inputs/empty.json
