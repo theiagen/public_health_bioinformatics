@@ -63,18 +63,21 @@ The `Snippy_Variants` workflow aligns single-end or paired-end reads (in FASTQ f
 !!! tip "Visualize your outputs in IGV"
     Output bam/bai files may be visualized using IGV to manually assess read placement and SNP support.
 
+!!! warning "Note on coverage calculations"
+    The outputs from `samtools coverage` (found in the `snippy_variants_coverage_tsv` file) may differ from the `snippy_variants_percent_ref_coverage` due to different calculation methods. `samtools coverage` computes genome-wide coverage metrics (e.g., the proportion of bases covered at depth ≥ 1), while `snippy_variants_percent_ref_coverage` uses a user-defined minimum coverage threshold (default is 10), calculating the proportion of the reference genome with a depth greater than or equal to this threshold.
+
 | **Variable** | **Type** | **Description** |
 |---|---|---|
 | snippy_variants_bai | File | Indexed bam file of the reads aligned to the reference |
 | snippy_variants_bam | File | Bam file of reads aligned to the reference |
-| snippy_variants_coverage_tsv | File | Coverage stats tsv file output by the samtools coverage command |
+| snippy_variants_coverage_tsv | File | Coverage statistics TSV file output by the `samtools coverage` command, providing genome-wide metrics such as the proportion of bases covered (depth ≥ 1), mean depth, and other related statistics.            |
 | snippy_variants_docker | String | Docker image for snippy variants task |
 | snippy_variants_gene_query_results | File | CSV file detailing results for mutations associated with the query strings specified by the user |
 | snippy_variants_hits | String | A summary of mutations associated with the query strings specified by the user |
 | snippy_variants_num_reads_aligned | Int | Number of reads that aligned to the reference genome as calculated by samtools view -c command |
 | snippy_variants_num_variants | Int | Number of variants detected between sample and reference genome |
 | snippy_variants_outdir_tarball | File | A compressed file containing the whole directory of snippy output files. This is used when running Snippy_Tree |
-| snippy_variants_percent_ref_coverage | Float | Proportion of reference genome with depth greater than or equal to min_coverage  |
+| snippy_variants_percent_ref_coverage| Float | Proportion of the reference genome covered by reads with a depth greater than or equal to the `min_coverage` threshold (default is 10). |
 | snippy_variants_query | String | Query strings specified by the user when running the workflow |
 | snippy_variants_query_check | String | Verification that query strings are found in the reference genome |
 | snippy_variants_results | File | CSV file detailing results for all mutations identified in the query sequence relative to the reference |
