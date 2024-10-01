@@ -10,7 +10,7 @@ workflow dorado_basecalling_workflow {
     String output_prefix
   }
 
-  call basecall_task.dorado_basecall {  # Use the new alias here
+  call basecall_task.basecall {
     input:
       input_files = input_files,
       sample_names = sample_names,
@@ -19,7 +19,7 @@ workflow dorado_basecalling_workflow {
   }
 
   output {
-    Array[File] basecalled_fastqs = basecall_task.dorado_basecall.basecalled_fastqs  # Use the new alias here
-    Array[File] logs = basecall_task.dorado_basecall.logs  # Use the new alias here
+    Array[File] basecalled_fastqs = basecall_task.basecall.basecalled_fastqs
+    Array[File] logs = basecall_task.basecall.logs
   }
 }
