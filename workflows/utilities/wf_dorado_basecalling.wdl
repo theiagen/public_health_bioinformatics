@@ -19,7 +19,7 @@ workflow dorado_basecalling_workflow {
   }
 
   output {
-    Array[File] basecalled_fastqs = basecall_task.basecall.basecalled_fastqs
-    Array[File] logs = basecall_task.basecall.logs
+    Array[File] basecalled_fastqs = basecall.basecalled_fastqs
+    Array[File] logs = basecall.logs
   }
 }
