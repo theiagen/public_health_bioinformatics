@@ -31,7 +31,7 @@
     - path: miniwdl_run/call-clean_check_reads/work/_miniwdl_inputs/0/artic_ncov2019_ont.fastq
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     - path: miniwdl_run/call-consensus/command
-      md5sum: 056563d18294928fef5238bac7213791
+      md5sum: 362dccda19ecadf377d5cd5872946ddd
     - path: miniwdl_run/call-consensus/inputs.json
       contains: ["read1_clean", "samplename", "fastq"]
     - path: miniwdl_run/call-consensus/outputs.json
@@ -45,7 +45,7 @@
     - path: miniwdl_run/call-consensus/work/REFERENCE_GENOME
       md5sum: 0e6efd549c8773f9a2f7a3e82619ee61
     - path: miniwdl_run/call-consensus/work/VERSION
-      md5sum: f3528ff85409c70100063c55ad75612b
+      md5sum: 394e07bc6788e025ac35254411db107c
     - path: miniwdl_run/call-consensus/work/_miniwdl_inputs/0/artic-v3.primers.bed
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     - path: miniwdl_run/call-consensus/work/_miniwdl_inputs/0/artic_ncov2019_ont.fastq
@@ -77,7 +77,7 @@
       md5sum: 4ca7d9fd06b9cdf379c2cf02b9fd6d0e
     - path: miniwdl_run/call-consensus/work/ont.primers.vcf
     - path: miniwdl_run/call-consensus/work/ont.primersitereport.txt
-      md5sum: cffee67632a262eeb947cea9cee0b4c1
+      md5sum: dab514423a8fb7b59ab7870ad8c3b4cf
     - path: miniwdl_run/call-consensus/work/ont.primertrimmed.rg.sorted.bam
     - path: miniwdl_run/call-consensus/work/ont.primertrimmed.rg.sorted.bam.bai
     - path: miniwdl_run/call-consensus/work/ont.sorted.bam
