@@ -66,5 +66,6 @@ task basecall {
     cpu: 8
     memory: "32GB"
     gpuCount: 1
+    gpuType: "nvidia-tesla-v100"
   }
 }
