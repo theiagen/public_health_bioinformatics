@@ -64,8 +64,6 @@
     - path: miniwdl_run/call-consensus/work/ont.fastq.gz
     - path: miniwdl_run/call-consensus/work/ont.medaka.consensus.fasta
       md5sum: d36b7c665aa4127f0a6e8dbc562eea3e
-    - path: miniwdl_run/call-consensus/work/ont.merged.gvcf.vcf.gz
-    - path: miniwdl_run/call-consensus/work/ont.merged.gvcf.vcf.gz.tbi
     - path: miniwdl_run/call-consensus/work/ont.merged.vcf.gz
     - path: miniwdl_run/call-consensus/work/ont.merged.vcf.gz.tbi
     - path: miniwdl_run/call-consensus/work/ont.minion.log.txt
@@ -73,8 +71,6 @@
     - path: miniwdl_run/call-consensus/work/ont.pass.vcf.gz.tbi
     - path: miniwdl_run/call-consensus/work/ont.preconsensus.fasta
       md5sum: b68f4ee4abc9fc16215204d0ff754bb8
-    - path: miniwdl_run/call-consensus/work/ont.preconsensus.fasta.fai
-      md5sum: 4ca7d9fd06b9cdf379c2cf02b9fd6d0e
     - path: miniwdl_run/call-consensus/work/ont.primers.vcf
     - path: miniwdl_run/call-consensus/work/ont.primersitereport.txt
       md5sum: dab514423a8fb7b59ab7870ad8c3b4cf
@@ -84,9 +80,6 @@
     - path: miniwdl_run/call-consensus/work/ont.sorted.bam.bai
     - path: miniwdl_run/call-consensus/work/ont.trimmed.rg.sorted.bam
     - path: miniwdl_run/call-consensus/work/ont.trimmed.rg.sorted.bam.bai
-    - path: miniwdl_run/call-consensus/work/ont.vcfcheck.log
-    - path: miniwdl_run/call-consensus/work/ont.vcfreport.txt
-      md5sum: 69131186223267b3ae6621cb8ef4eecd
     - path: miniwdl_run/call-consensus/work/primer-schemes/SARS-CoV-2/Vuser/SARS-CoV-2.reference.fasta
       md5sum: b9b67235a2d9d0b0d7f531166ffefd41
     - path: miniwdl_run/call-consensus/work/primer-schemes/SARS-CoV-2/Vuser/SARS-CoV-2.reference.fasta.fai
