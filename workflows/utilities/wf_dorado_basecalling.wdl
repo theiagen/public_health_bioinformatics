@@ -1,6 +1,6 @@
 version 1.0
 
-import "../../tasks/basecalling/dorado_basecall.wdl" as dorado_basecall
+import "../../tasks/basecalling/task_dorado_basecall.wdl" as dorado_basecall
 
 workflow dorado_basecalling_workflow {
   input {
@@ -10,7 +10,7 @@ workflow dorado_basecalling_workflow {
     String output_prefix
   }
 
-  call dorado_basecall {
+  call dorado_basecall.dorado_basecall {
     input:
       input_files = input_files,
       sample_names = sample_names,
@@ -19,7 +19,7 @@ workflow dorado_basecalling_workflow {
   }
 
   output {
-    Array[File] basecalled_fastqs = dorado_basecall.basecalled_fastqs
-    Array[File] logs = dorado_basecall.logs
+    Array[File] basecalled_fastqs = dorado_basecall.dorado_basecall.basecalled_fastqs  
+    Array[File] logs = dorado_basecall.dorado_basecall.logs  
   }
 }
