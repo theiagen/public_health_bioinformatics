@@ -1,6 +1,6 @@
 version 1.0
 
-import "../tasks/basecalling/dorado_basecall.wdl"
+import "../tasks/basecalling/dorado_basecall.wdl" as dorado_basecall
 
 workflow dorado_basecalling_workflow {
   input {
