@@ -1,6 +1,6 @@
 version 1.0
 
-task dorado_basecall {
+task basecall {
   input {
     Array[File] input_files
     Array[String] sample_names
