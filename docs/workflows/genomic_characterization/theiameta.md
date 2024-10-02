@@ -131,7 +131,7 @@ The TheiaMeta_Illumina_PE workflow processes Illumina paired-end (PE) reads ge
         
         |  | Links |
         | --- | --- |
-        | Task | [task_versioning.wdl](https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/task_versioning.wdl) |
+        | Task | [task_versioning.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/task_versioning.wdl) |
 
 #### Read Cleaning and QC
 
@@ -213,11 +213,11 @@ The TheiaMeta_Illumina_PE workflow processes Illumina paired-end (PE) reads ge
                 
         |  | Links |
         | --- | --- |
-        | Sub-workflow | [wf_read_QC_trim.wdl](https://github.com/theiagen/public_health_bacterial_genomics/blob/main/workflows/wf_read_QC_trim.wdl) |
-        | Tasks | [task_fastp.wdl](https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/quality_control/task_fastp.wdl)<br>[task_trimmomatic.wdl](https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/quality_control/task_trimmomatic.wdl#L3) (PE subtask)<br>[task_bbduk.wdl](https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/quality_control/task_bbduk.wdl)<br>[task_fastq_scan.wdl](https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/quality_control/task_fastq_scan.wdl#L3) (PE subtask)<br>[task_midas.wdl](https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/taxon_id/task_midas.wdl)<br>[task_kraken2.wdl](https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/taxon_id/task_kraken2.wdl) |
+        | Sub-workflow | [wf_read_QC_trim.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_read_QC_trim.wdl) |
+        | Tasks | [task_fastp.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_fastp.wdl)<br>[task_trimmomatic.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_trimmomatic.wdl)<br>[task_bbduk.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_bbduk.wdl)<br>[task_fastq_scan.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_fastq_scan.wdl)<br>[task_midas.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/contamination/task_midas.wdl)<br>[task_kraken2.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/contamination/task_kraken2.wdl)|
         | Software Source Code | [fastp](https://github.com/OpenGene/fastp); [Trimmomatic](https://github.com/usadellab/Trimmomatic); [fastq-scan](https://github.com/rpetit3/fastq-scan); [MIDAS](https://github.com/snayfach/MIDAS); [Kraken2](https://github.com/DerrickWood/kraken2)|
         | Software Documentation | [fastp](https://github.com/OpenGene/fastp); [Trimmomatic](http://www.usadellab.org/cms/?page=trimmomatic); [BBDuk](https://jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/bbduk-guide/); [fastq-scan](https://github.com/rpetit3/fastq-scan); [MIDAS](https://github.com/snayfach/MIDAS); [Kraken2](https://github.com/DerrickWood/kraken2/wiki) |
-        | Original Publication(s) | *[Trimmomatic: a flexible trimmer for Illumina sequence data](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4103590/)<br>*[fastp: an ultra-fast all-in-one FASTQ preprocessor](https://academic.oup.com/bioinformatics/article/34/17/i884/5093234?login=false)<br>*[An integrated metagenomics pipeline for strain profiling reveals novel patterns of bacterial transmission and biogeography](https://pubmed.ncbi.nlm.nih.gov/27803195/)<br>*[Improved metagenomic analysis with Kraken 2](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1891-0) |
+        | Original Publication(s) | [Trimmomatic: a flexible trimmer for Illumina sequence data](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4103590/)<br>[fastp: an ultra-fast all-in-one FASTQ preprocessor](https://academic.oup.com/bioinformatics/article/34/17/i884/5093234?login=false)<br>[An integrated metagenomics pipeline for strain profiling reveals novel patterns of bacterial transmission and biogeography](https://pubmed.ncbi.nlm.nih.gov/27803195/)<br>[Improved metagenomic analysis with Kraken 2](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1891-0) |
 
 ??? task "`kraken`: Taxonomic Classification"
 
@@ -268,7 +268,7 @@ The TheiaMeta_Illumina_PE workflow processes Illumina paired-end (PE) reads ge
         | --- | --- |
         | Task | [task_quast.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/task_quast.wdl) |
         | Software Source Code | [QUAST on GitHub](https://github.com/ablab/quast) |
-        | Software Documentation | <https://cab.spbu.ru/software/quast/> |
+        | Software Documentation | <https://quast.sourceforge.net/> |
         | Original Publication(s) | [QUAST: quality assessment tool for genome assemblies](https://academic.oup.com/bioinformatics/article/29/8/1072/228832) |
 
 #### Binning

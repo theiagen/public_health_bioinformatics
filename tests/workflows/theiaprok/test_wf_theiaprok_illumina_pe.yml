@@ -621,7 +621,7 @@
     - path: miniwdl_run/wdl/tasks/species_typing/multi/task_ts_mlst.wdl
       md5sum: ff8070a06eca94264ad6a7d91cb03bf0
     - path: miniwdl_run/wdl/tasks/task_versioning.wdl
-      md5sum: e834231f74072bd3f40861095de25864
+      md5sum: 72d7f4462417909d85f692615e3a658b
     - path: miniwdl_run/wdl/tasks/taxon_id/task_gambit.wdl
       md5sum: 2aa70eab24868920f6c28843dd3b5613
     - path: miniwdl_run/wdl/tasks/taxon_id/contamination/task_kraken2.wdl
@@ -633,7 +633,7 @@
     - path: miniwdl_run/wdl/workflows/theiaprok/wf_theiaprok_illumina_pe.wdl
       md5sum: 6d9dd969e2144ca23f2a0e101e6b6966
     - path: miniwdl_run/wdl/workflows/utilities/wf_merlin_magic.wdl
-      md5sum: 359bc59b671ef3121f6b4ac589f0c80e
+      md5sum: 8ab95440118d06dd3c07765a19e876e7
     - path: miniwdl_run/wdl/workflows/utilities/wf_read_QC_trim_pe.wdl
       contains: ["version", "QC", "output"]
     - path: miniwdl_run/workflow.log

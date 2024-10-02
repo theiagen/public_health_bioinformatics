@@ -6,8 +6,7 @@ title: Home
 
 The PHB repository contains workflows for the characterization, genomic epidemiology, and sharing of pathogen genomes of public health concern. Workflows are available for viruses, bacteria, and fungi.
 
-All workflows in the PHB repository end with `_PHB` in order to differentiate them from earlier versions and from the original tools they 
-incorporate.
+All workflows in the PHB repository end with `_PHB` in order to differentiate them from earlier versions and from the original tools they incorporate.
 
 <center>[Explore our workflows](workflows_overview/workflows_type.md){ .md-button .md-button--primary }</center>
 
@@ -28,7 +27,7 @@ incorporate.
 </div>
 
 !!! dna "Our Open Source Philosophy"
-    PHB source code is publicly available on [GitHub](https://github.com/theiagen/public_health_bioinformatics) and available under [GNU Affero General Public License v3.0](https://github.com/theiagen/public_health_viral_genomics/blob/main/LICENSE)!
+    PHB source code is publicly available on [GitHub](https://github.com/theiagen/public_health_bioinformatics) and available under [GNU Affero General Public License v3.0](https://github.com/theiagen/public_health_bioinformatics/blob/main/LICENSE)!
 
     All workflows can be imported directly to [Terra](https://terra.bio/) via the [**Dockstore PHB collection**](https://dockstore.org/organizations/Theiagen/collections/public-health-bioinformatics)! 
     
@@ -90,7 +89,7 @@ We would like to gratefully acknowledge the following individuals from the publi
 
 The PHB repository would not be possible without its predecessors. We would like to acknowledge the following repositories, individuals, and contributors for their influence on the development of these workflows:
 
-The PHB repository originated from collaborative work with Andrew Lang, PhD & his [Genomic Analysis WDL workflows](https://github.com/AndrewLangvt/genomic_analyses). The workflows and task development were influenced by The Broad's [Viral Pipes](https://github.com/broadinstitute/viral-pipelines) repository. The TheiaCoV workflows for viral genomic characterization were influenced by UPHL's [Cecret](https://github.com/UPHL-BioNGS/Cecret) & StaPH-B's [Monroe](https://staph-b.github.io/staphb_toolkit/workflow_docs/monroe/) workflows. The TheiaProk workflows for bacterial genomic characterization were influenced by Robert Petit's [bactopia](https://github.com/bactopia/bactopia). Most importantly, the PHB user community drove the development of these workflows and we are grateful for their feedback and contributions.
+The PHB repository originated from collaborative work with Andrew Lang, PhD & his [Genomic Analysis WDL workflows](https://github.com/AndrewLangvt/genomic_analyses). The workflows and task development were influenced by The Broad's [Viral Pipes](https://github.com/broadinstitute/viral-pipelines) repository. The TheiaCoV workflows for viral genomic characterization were influenced by UPHL's [Cecret](https://github.com/UPHL-BioNGS/Cecret) & StaPH-B's Monroe (now deprecated) workflows. The TheiaProk workflows for bacterial genomic characterization were influenced by Robert Petit's [bactopia](https://github.com/bactopia/bactopia). Most importantly, the PHB user community drove the development of these workflows and we are grateful for their feedback and contributions.
 
 If you would like to provide feedback, please raise a [GitHub issue](https://github.com/theiagen/public_health_bioinformatics/issues/new) or contact us at <support@theiagen.com>.
 
