@@ -1,0 +1,39 @@
+name: version-documentation
+on:
+ release:
+   types: [published]
+
+permissions: 
+  contents: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      
+      - name: Setup python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.x
+      
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        with:
+          key: ${{ github.ref }}
+          path: .cache
+
+      - name: Install dependencies
+        run: |
+          pip install mkdocs-material mkdocs-material-extensions mkdocs-git-revision-date-localized-plugin mike mkdocs-glightbox
+      
+      - name: Build documentation
+        run: |
+          git config user.name sage-wright
+          git config user.email sage.wright@theiagen.com 
+          LATEST_RELEASE=$(curl -sL https://api.github.com/repos/theiagen/public_health_bioinformatics/releases/latest | jq -r ".tag_name")
+          mike deploy --push --update-aliases ${LATEST_RELEASE} latest
+          mike set-default --push latest
