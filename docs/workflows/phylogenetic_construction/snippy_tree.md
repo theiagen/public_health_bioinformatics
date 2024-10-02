@@ -140,7 +140,7 @@ Sequencing data used in the Snippy_Tree workflow must:
     
         |  | Links |
         | --- | --- |
-        | Task | [task_snippy_core.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/phylogenetic_inference/task_snippy_core.wdl) |
+        | Task | [task_snippy_core.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/phylogenetic_inference/utilities/task_snippy_core.wdl) |
         | Default software version | v4.6.0 (us-docker.pkg.dev/general-theiagen/staphb/snippy:4.6.0) |
         | Software Source Code | [Snippy on GitHub](https://github.com/tseemann/snippy) |
         | Software Documentation | [Snippy on GitHub](https://github.com/tseemann/snippy) |
@@ -185,7 +185,7 @@ Sequencing data used in the Snippy_Tree workflow must:
         
         |  | Links |
         | --- | --- |
-        | Task | [task_snp_sites.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/phylogenetic_inference/task_snp_sites.wdl) |
+        | Task | [task_snp_sites.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/phylogenetic_inference/utilities/task_snp_sites.wdl) |
         | Default software version | 2.5.1 (us-docker.pkg.dev/general-theiagen/biocontainers/snp-sites:2.5.1--hed695b0_0) |
         | Software Source Code | [SNP-sites on GitHub](https://github.com/sanger-pathogens/snp-sites) |
         | Software Documentation | [SNP-sites on GitHub](https://github.com/sanger-pathogens/snp-sites) |
@@ -230,7 +230,7 @@ Sequencing data used in the Snippy_Tree workflow must:
         
         |  | Links |
         | --- | --- |
-        | Task | [task_snp_dists.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/phylogenetic_inference/task_snp_dists.wdl) |
+        | Task | [task_snp_dists.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/phylogenetic_inference/utilities/task_snp_dists.wdl) |
         | Default software version | 0.8.2 (us-docker.pkg.dev/general-theiagen/staphb/snp-dists:0.8.2) |
         | Software Source Code | [SNP-dists on GitHub](https://github.com/tseemann/snp-dists) |
         | Software Documentation | [SNP-dists on GitHub](https://github.com/tseemann/snp-dists) |
