@@ -22,7 +22,7 @@
       
       
       <link rel="icon" href="../../../assets/logos/Theiagen-Symbol-Standard-01.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.38">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.39">
     
     
       
@@ -9853,7 +9853,7 @@
 <tbody>
 <tr>
 <td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/task_versioning.wdl">task_versioning.wdl</a></td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/task_versioning.wdl">task_versioning.wdl</a></td>
 </tr>
 </tbody>
 </table>
@@ -9861,7 +9861,7 @@
 </details>
 <details class="task">
 <summary><code>screen</code>: Total Raw Read Quantification and Genome Size Estimation</summary>
-<p>The <a href="https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/quality_control/task_screen.wdl"><code>screen</code></a> task ensures the quantity of sequence data is sufficient to undertake genomic analysis. It uses bash commands for quantification of reads and base pairs, and <a href="https://mash.readthedocs.io/en/latest/index.html">mash</a> sketching to estimate the genome size and its coverage. At each step, the results are assessed relative to pass/fail criteria and thresholds that may be defined by optional user inputs. Samples that do not meet these criteria will not be processed further by the workflow:</p>
+<p>The <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/comparisons/task_screen.wdl"><code>screen</code></a> task ensures the quantity of sequence data is sufficient to undertake genomic analysis. It uses bash commands for quantification of reads and base pairs, and <a href="https://mash.readthedocs.io/en/latest/index.html">mash</a> sketching to estimate the genome size and its coverage. At each step, the results are assessed relative to pass/fail criteria and thresholds that may be defined by optional user inputs. Samples that do not meet these criteria will not be processed further by the workflow:</p>
 <ol>
 <li>Total number of reads: A sample will fail the read screening task if its total number of reads is less than or equal to <code>min_reads</code>.</li>
 <li>The proportion of basepairs reads in the forward and reverse read files: A sample will fail the read screening if fewer than <code>min_proportion</code> basepairs are in either the reads1 or read2 files.</li>
@@ -9931,8 +9931,8 @@
 <tbody>
 <tr>
 <td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/quality_control/task_screen.wdl#L3">task_screen.wdl</a> (PE sub-task)</td>
-<td><a href="https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/quality_control/task_screen.wdl#L147">task_screen.wdl</a> (SE sub-task)</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/comparisons/task_screen.wdl#L3">task_screen.wdl</a> (PE sub-task)</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/comparisons/task_screen.wdl#L147">task_screen.wdl</a> (SE sub-task)</td>
 </tr>
 </tbody>
 </table>
@@ -10055,11 +10055,11 @@
 <tbody>
 <tr>
 <td>Sub-workflow</td>
-<td><a href="https://github.com/theiagen/public_health_bacterial_genomics/blob/main/workflows/wf_read_QC_trim.wdl">wf_read_QC_trim.wdl</a></td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_read_QC_trim.wdl">wf_read_QC_trim.wdl</a></td>
 </tr>
 <tr>
 <td>Tasks</td>
-<td><a href="https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/quality_control/task_fastp.wdl">task_fastp.wdl</a><br><a href="https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/quality_control/task_trimmomatic.wdl">task_trimmomatic.wdl</a><br><a href="https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/quality_control/task_bbduk.wdl">task_bbduk.wdl</a><br><a href="https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/quality_control/task_fastq_scan.wdl">task_fastq_scan.wdl</a><br><a href="https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/taxon_id/task_midas.wdl">task_midas.wdl</a><br><a href="https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/taxon_id/task_kraken2.wdl">task_kraken2.wdl</a></td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_fastp.wdl">task_fastp.wdl</a><br><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_trimmomatic.wdl">task_trimmomatic.wdl</a><br><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_bbduk.wdl">task_bbduk.wdl</a><br><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_fastq_scan.wdl">task_fastq_scan.wdl</a><br><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/contamination/task_midas.wdl">task_midas.wdl</a><br><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/contamination/task_kraken2.wdl">task_kraken2.wdl</a></td>
 </tr>
 <tr>
 <td>Software Source Code</td>
@@ -10071,7 +10071,7 @@
 </tr>
 <tr>
 <td>Original Publication(s)</td>
-<td><em><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4103590/">Trimmomatic: a flexible trimmer for Illumina sequence data</a><br></em><a href="https://academic.oup.com/bioinformatics/article/34/17/i884/5093234?login=false">fastp: an ultra-fast all-in-one FASTQ preprocessor</a><br><em><a href="https://pubmed.ncbi.nlm.nih.gov/27803195/">An integrated metagenomics pipeline for strain profiling reveals novel patterns of bacterial transmission and biogeography</a><br></em><a href="https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1891-0">Improved metagenomic analysis with Kraken 2</a></td>
+<td><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4103590/">Trimmomatic: a flexible trimmer for Illumina sequence data</a><br><a href="https://academic.oup.com/bioinformatics/article/34/17/i884/5093234?login=false">fastp: an ultra-fast all-in-one FASTQ preprocessor</a><br><a href="https://pubmed.ncbi.nlm.nih.gov/27803195/">An integrated metagenomics pipeline for strain profiling reveals novel patterns of bacterial transmission and biogeography</a><br><a href="https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1891-0">Improved metagenomic analysis with Kraken 2</a></td>
 </tr>
 </tbody>
 </table>
@@ -10131,7 +10131,7 @@
 <tbody>
 <tr>
 <td>TheiaProk WDL Task</td>
-<td><a href="https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/assembly/task_shovill.wdl#L3">task_shovill.wdl</a></td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_shovill.wdl#L3">task_shovill.wdl</a></td>
 </tr>
 <tr>
 <td>Software code repository and documentation</td>
@@ -10169,7 +10169,7 @@
 </tr>
 <tr>
 <td>Tasks</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/task_nanoplot.wdl">task_nanoplot.wdl</a> <a href="https://github.com/theiagen/public_health_bacterial_genomics/blob/b481ce48f3d527ab8f31e4ad8171769212cc091a/tasks/quality_control/task_fastq_scan.wdl#L3">task_fastq_scan.wdl</a> <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/task_rasusa.wdl">task_rasusa.wdl</a> <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/task_nanoq.wdl">task_nanoq.wdl</a> <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/task_tiptoft.wdl">task_tiptoft.wdl</a></td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_nanoplot.wdl">task_nanoplot.wdl</a> <a href="https://github.com/theiagen/public_health_bioinformatics/blob/b481ce48f3d527ab8f31e4ad8171769212cc091a/tasks/quality_control/basic_statistics/task_fastq_scan.wdl">task_fastq_scan.wdl</a> <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/task_rasusa.wdl">task_rasusa.wdl</a> <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_nanoq.wdl">task_nanoq.wdl</a> <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/plasmid_detection/task_tiptoft.wdl">task_tiptoft.wdl</a></td>
 </tr>
 <tr>
 <td>Software Source Code</td>
@@ -10197,7 +10197,7 @@
 <tbody>
 <tr>
 <td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/assembly/task_dragonflye.wdl">task_dragonflye.wdl</a></td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_dragonflye.wdl">task_dragonflye.wdl</a></td>
 </tr>
 <tr>
 <td>Software Source Code</td>
@@ -10227,7 +10227,7 @@
 <tbody>
 <tr>
 <td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/task_quast.wdl">task_quast.wdl</a></td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_quast.wdl">task_quast.wdl</a></td>
 </tr>
 <tr>
 <td>Software Source Code</td>
@@ -10292,7 +10292,7 @@
 <details class="task">
 <summary><code>MUMmer_ANI</code>: Average Nucleotide Identity (optional)</summary>
 <p>Average Nucleotide Identity (ANI) is a useful approach for taxonomic identification. The higher the percentage ANI of a query sequence to a given reference genome, the more likely the sequence is the same taxa as the reference. </p>
-<p>ANI is calculated in TheiaProk using <a href="https://github.com/lskatz/ani-m">a perl script written by Lee Katz</a> (<a href="http://ani-m.pl">ani-m.pl</a>). This uses <a href="http://mummer.sourceforge.net/">MUMmer</a> to rapidly align entire query assemblies to one or more reference genomes. By default, TheiaProk uses a set of 43 reference genomes in <a href="https://github.com/StaPH-B/docker-builds/blob/master/fastani/1.34-RGDV2/RGDv2-metadata.tsv">RGDv2</a>, a database containing genomes of enteric pathogens commonly sequenced by CDC EDLB &amp; PulseNet participating laboratories. The user may also provide their own reference genome. After genome alignment with MUMmer, ani-m.pl calculates the average nucleotide identity and percent bases aligned between 2 genomes (query and reference genomes)</p>
+<p>ANI is calculated in TheiaProk using <a href="https://github.com/lskatz/ani-m">a perl script written by Lee Katz</a> (ani-m.pl). This uses <a href="http://mummer.sourceforge.net/">MUMmer</a> to rapidly align entire query assemblies to one or more reference genomes. By default, TheiaProk uses a set of 43 reference genomes in <a href="https://github.com/StaPH-B/docker-builds/blob/master/fastani/1.34-RGDV2/RGDv2-metadata.tsv">RGDv2</a>, a database containing genomes of enteric pathogens commonly sequenced by CDC EDLB &amp; PulseNet participating laboratories. The user may also provide their own reference genome. After genome alignment with MUMmer, ani-m.pl calculates the average nucleotide identity and percent bases aligned between 2 genomes (query and reference genomes)</p>
 <p>The default database of reference genomes used is called "Reference Genome Database version 2" AKA "RGDv2". This database is composed of 43 enteric bacteria representing 32 species and is intended for identification of enteric pathogens and common contaminants. It contains six Campylobacter spp., three Escherichia/Shigella spp., one <em>Grimontia hollisae</em>, six <em>Listeria spp.</em>, one <em>Photobacterium damselae</em>, two <em>Salmonella spp.</em>, and thirteen <em>Vibrio spp.</em> </p>
 <p>2 Thresholds are utilized to prevent false positive hits. The <code>ani_top_species_match</code> will only report a genus &amp; species match if both thresholds are surpassed. Both of these thresholds are set to match those used in BioNumerics for PulseNet organisms.</p>
 <ol>
@@ -10312,7 +10312,7 @@
 <tbody>
 <tr>
 <td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/quality_control/task_mummer_ani.wdl">task_mummer_ani.wdl</a></td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/advanced_metrics/task_mummer_ani.wdl">task_mummer_ani.wdl</a></td>
 </tr>
 <tr>
 <td>Software Source Code</td>
@@ -10350,7 +10350,7 @@
 <tbody>
 <tr>
 <td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/taxon_id/task_gambit.wdl">task_gambit.wdl</a></td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/task_gambit.wdl">task_gambit.wdl</a></td>
 </tr>
 <tr>
 <td>Software Source Code</td>
@@ -10383,7 +10383,7 @@
 <tbody>
 <tr>
 <td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/task_kmerfinder.wdl">task_kmerfinder.wdl</a></td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/contamination/task_kmerfinder.wdl">task_kmerfinder.wdl</a></td>
 </tr>
 <tr>
 <td>Software Source Code</td>
@@ -10418,7 +10418,7 @@
 <tbody>
 <tr>
 <td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/gene_typing/task_amrfinderplus.wdl">task_amrfinderplus.wdl</a></td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/drug_resistance/task_amrfinderplus.wdl">task_amrfinderplus.wdl</a></td>
 </tr>
 <tr>
 <td>Software Source Code</td>
@@ -10487,7 +10487,7 @@
 <tbody>
 <tr>
 <td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bacterial_genomics/blob/eld-docs-dev/tasks/gene_typing/task_resfinder.wdl">task_resfinder.wdl</a></td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/drug_resistance/task_resfinder.wdl">task_resfinder.wdl</a></td>
 </tr>
 <tr>
 <td>Software Source Code</td>
@@ -10564,7 +10564,7 @@
 <tbody>
 <tr>
 <td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/species_typing/task_ts_mlst.wdl">task_ts_mlst.wdl</a></td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/multi/task_ts_mlst.wdl">task_ts_mlst.wdl</a></td>
 </tr>
 <tr>
 <td>Software Source Code</td>
@@ -10594,7 +10594,7 @@
 <tbody>
 <tr>
 <td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bacterial_genomics/blob/eld-docs-dev/tasks/gene_typing/task_prokka.wdl">task_prokka.wdl</a></td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/annotation/task_prokka.wdl">task_prokka.wdl</a></td>
 </tr>
 <tr>
 <td>Software Source Code</td>
@@ -10628,7 +10628,7 @@
 <tbody>
 <tr>
 <td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/gene_typing/task_bakta.wdl">task_bakta.wdl</a></td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/annotation/task_bakta.wdl">task_bakta.wdl</a></td>
 </tr>
 <tr>
 <td>Software Source Code</td>
@@ -10665,7 +10665,7 @@
 <tbody>
 <tr>
 <td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bacterial_genomics/blob/eld-docs-dev/tasks/gene_typing/task_plasmidfinder.wdl">task_plasmidfinder.wdl</a></td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/plasmid_typing/task_plasmidfinder.wdl">task_plasmidfinder.wdl</a></td>
 </tr>
 <tr>
 <td>Software Source Code</td>
@@ -10718,7 +10718,7 @@
 <tbody>
 <tr>
 <td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/quality_control/task_qc_check.wdl">task_qc_check.wdl</a></td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/comparisons/task_qc_check.wdl">task_qc_check.wdl</a></td>
 </tr>
 </tbody>
 </table>
@@ -10822,7 +10822,7 @@
 <tbody>
 <tr>
 <td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/species_typing/task_kaptive.wdl">task_kaptive.wdl</a></td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/acinetobacter/task_kaptive.wdl">task_kaptive.wdl</a></td>
 </tr>
 <tr>
 <td>Software Source Code</td>
@@ -10843,7 +10843,7 @@
 <details class="task">
 <summary><code>AcinetobacterPlasmidTyping</code>: Acinetobacter plasmid detection</summary>
 <p><em>Acinetobacter</em> plasmids are not included in the <a href="https://www.notion.so/TheiaProk-Workflow-Series-68c34aca2a0240ef94fef0acd33651b9?pvs=21">PlasmidFinder</a> database. Instead, the <a href="https://github.com/MehradHamidian/AcinetobacterPlasmidTyping">AcinetobacterPlasmidTyping</a> database contains variants of the plasmid <em>rep</em> gene for <em>A. baumannii</em> plasmid identification. When matched with &gt;/= 95 % identity, this represents a typing scheme for <em>Acinetobacter baumannii</em> plasmids. In TheiaProk, we use the tool <a href="https://github.com/tseemann/abricate">abricate</a> to query our assemblies against this database.</p>
-<p>The bioinformatics software for querying sample assemblies against the AcinetobacterPlasmidTyping database is <a href="https://github.com/tseemann/abricate">Abricate</a>. The WDL task simply runs abricate, and the Acinetobacter Plasmid database and default setting of 95% minimum identity are set in the <a href="https://github.com/theiagen/public_health_bacterial_genomics/blob/main/workflows/wf_merlin_magic.wdl#L44">merlin magic sub-workflow</a>.</p>
+<p>The bioinformatics software for querying sample assemblies against the AcinetobacterPlasmidTyping database is <a href="https://github.com/tseemann/abricate">Abricate</a>. The WDL task simply runs abricate, and the Acinetobacter Plasmid database and default setting of 95% minimum identity are set in the <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_merlin_magic.wdl">merlin magic sub-workflow</a>.</p>
 <div class="admonition techdetails">
 <p class="admonition-title">AcinetobacterPlasmidTyping Technical Details</p>
 <table>
@@ -10856,7 +10856,7 @@
 <tbody>
 <tr>
 <td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/gene_typing/task_abricate.wdl">task_abricate.wdl</a></td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/drug_resistance/task_abricate.wdl">task_abricate.wdl</a></td>
 </tr>
 <tr>
 <td>Database and documentation</td>
@@ -10904,7 +10904,7 @@
 <tbody>
 <tr>
 <td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/species_typing/task_serotypefinder.wdl">task_serotypefinder.wdl</a></td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/escherichia_shigella/task_serotypefinder.wdl">task_serotypefinder.wdl</a></td>
 </tr>
 <tr>
 <td>Software Source Code</td>
@@ -10937,7 +10937,7 @@
 <tbody>
 <tr>
 <td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/species_typing/task_ectyper.wdl">task_ectyper.wdl</a></td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/escherichia_shigella/task_ectyper.wdl">task_ectyper.wdl</a></td>
 </tr>
 <tr>
 <td>Software Source Code</td>
@@ -10971,7 +10971,7 @@
 <tbody>
 <tr>
 <td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/task_virulencefinder.wdl">task_virulencefinder.wdl</a></td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/escherichia_shigella/task_virulencefinder.wdl">task_virulencefinder.wdl</a></td>
 </tr>
 <tr>
 <td>Software Source Code</td>
@@ -11005,7 +11005,7 @@
 <tbody>
 <tr>
 <td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/species_typing/task_shigatyper.wdl">task_shigatyper.wdl</a></td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/escherichia_shigella/task_shigatyper.wdl">task_shigatyper.wdl</a></td>
 </tr>
 <tr>
 <td>Software Source Code</td>
@@ -11038,7 +11038,7 @@
 <tbody>
 <tr>
 <td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bacterial_genomics/blob/42659de535202cc37ab509b38987406ad0360dd4/tasks/species_typing/task_shigeifinder.wdl#L3">task_shigeifinder.wdl</a></td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/escherichia_shigella/task_shigeifinder.wdl">task_shigeifinder.wdl</a></td>
 </tr>
 <tr>
 <td>Software Source Code</td>
@@ -11071,7 +11071,7 @@
 <tbody>
 <tr>
 <td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bacterial_genomics/blob/42659de535202cc37ab509b38987406ad0360dd4/tasks/species_typing/task_shigeifinder.wdl#L81">task_shigeifinder.wdl</a></td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/escherichia_shigella/task_shigeifinder.wdl#L81">task_shigeifinder.wdl</a></td>
 </tr>
 <tr>
 <td>Software Source Code</td>
@@ -11106,7 +11106,7 @@
 <tbody>
 <tr>
 <td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/species_typing/task_sonneityping.wdl">task_sonneityping.wdl</a></td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/escherichia_shigella/task_sonneityping.wdl">task_sonneityping.wdl</a></td>
 </tr>
 <tr>
 <td>Software Source Code</td>
@@ -11146,7 +11146,7 @@
 <tbody>
 <tr>
 <td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/task_hicap.wdl">task_hicap.wdl</a></td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/haemophilus/task_hicap.wdl">task_hicap.wdl</a></td>
 </tr>
 <tr>
 <td>Software Source Code</td>
@@ -11183,7 +11183,7 @@
 <tbody>
 <tr>
 <td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/species_typing/task_kleborate.wdl">task_kleborate.wdl</a></td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/haemophilus/task_kleborate.wdl">task_kleborate.wdl</a></td>
 </tr>
 <tr>
 <td>Software Source Code</td>
@@ -11220,7 +11220,7 @@
 <tbody>
 <tr>
 <td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/species_typing/task_legsta.wdl">task_legsta.wdl</a></td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/legionella/task_legsta.wdl">task_legsta.wdl</a></td>
 </tr>
 <tr>
 <td>Software Source Code</td>
@@ -11253,7 +11253,7 @@
 <tbody>
 <tr>
 <td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/species_typing/task_lissero.wdl">task_lissero.wd</a></td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/listeria/task_lissero.wdl">task_lissero.wdl</a></td>
 </tr>
 <tr>
 <td>Software Source Code</td>
@@ -11384,7 +11384,7 @@
 <tbody>
 <tr>
 <td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/species_typing/task_ngmaster.wdl">task_ngmaster.wdl</a></td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/neisseria/task_ngmaster.wdl">task_ngmaster.wdl</a></td>
 </tr>
 <tr>
 <td>Software Source Code</td>
@@ -11417,7 +11417,7 @@
 <tbody>
 <tr>
 <td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/species_typing/task_meningotype.wdl">task_meningotype.wdl</a></td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/neisseria/task_meningotype.wdl">task_meningotype.wdl</a></td>
 </tr>
 <tr>
 <td>Software Source Code</td>
@@ -11450,7 +11450,7 @@
 <tbody>
 <tr>
 <td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/species_typing/task_pasty.wdl">task_pasty.wdl</a></td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/pseudomonas/task_pasty.wdl">task_pasty.wdl</a></td>
 </tr>
 <tr>
 <td>Software Source Code</td>
@@ -11488,7 +11488,7 @@
 <tbody>
 <tr>
 <td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/species_typing/task_sistr.wdl">task_sistr.wdl</a></td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/salmonella/task_sistr.wdl">task_sistr.wdl</a></td>
 </tr>
 <tr>
 <td>Software Source Code</td>
@@ -11521,7 +11521,7 @@
 <tbody>
 <tr>
 <td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/species_typing/task_seqsero2.wdl">task_seqsero2.wdl</a></td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/salmonella/task_seqsero2.wdl">task_seqsero2.wdl</a></td>
 </tr>
 <tr>
 <td>Software Source Code</td>
@@ -11555,7 +11555,7 @@
 <tbody>
 <tr>
 <td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/species_typing/task_genotyphi.wdl">task_genotyphi.wdl</a></td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/salmonella/task_genotyphi.wdl">task_genotyphi.wdl</a></td>
 </tr>
 <tr>
 <td>Software Source Code</td>
@@ -11592,7 +11592,7 @@
 <tbody>
 <tr>
 <td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/species_typing/task_spatyper.wdl">task_spatyper.wdl</a></td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/staphylococcus/task_spatyper.wdl">task_spatyper.wdl</a></td>
 </tr>
 <tr>
 <td>Software Source Code</td>
@@ -11621,7 +11621,7 @@
 <tbody>
 <tr>
 <td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/species_typing/task_staphopiasccmec.wdl">task_staphopiasccmec.wdl</a></td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/staphylococcus/task_staphopiasccmec.wdl">task_staphopiasccmec.wdl</a></td>
 </tr>
 <tr>
 <td>Software Source Code</td>
@@ -11654,7 +11654,7 @@
 <tbody>
 <tr>
 <td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/species_typing/task_agrvate.wdl">task_agrvate.wdl</a></td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/staphylococcus/task_agrvate.wdl">task_agrvate.wdl</a></td>
 </tr>
 <tr>
 <td>Software Source Code</td>
@@ -11699,7 +11699,7 @@
 <tbody>
 <tr>
 <td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/species_typing/task_poppunk_streppneumo.wdl">task_poppunk_streppneumo.wdl</a></td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/streptococcus/task_poppunk_streppneumo.wdl">task_poppunk_streppneumo.wdl</a></td>
 </tr>
 <tr>
 <td>GPSC database</td>
@@ -11736,7 +11736,7 @@
 <tbody>
 <tr>
 <td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/species_typing/task_seroba.wdl">task_seroba.wdl</a></td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/streptococcus/task_seroba.wdl">task_seroba.wdl</a></td>
 </tr>
 <tr>
 <td>Software Source Code</td>
@@ -11769,7 +11769,7 @@
 <tbody>
 <tr>
 <td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/species_typing/task_pbptyper.wdl">task_pbptyper.wdl</a></td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/streptococcus/task_pbptyper.wdl">task_pbptyper.wdl</a></td>
 </tr>
 <tr>
 <td>Software Source Code</td>
@@ -11806,7 +11806,7 @@
 <tbody>
 <tr>
 <td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/task_emmtypingtool.wdl">task_emmtypingtool.wdl</a></td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/streptococcus/task_emmtypingtool.wdl">task_emmtypingtool.wdl</a></td>
 </tr>
 <tr>
 <td>Software Source Code</td>
@@ -11885,7 +11885,7 @@
 <tbody>
 <tr>
 <td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/species_typing/task_srst2_vibrio.wdl">task_srst2_vibrio.wdl</a></td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/vibrio/task_srst2_vibrio.wdl">task_srst2_vibrio.wdl</a></td>
 </tr>
 <tr>
 <td>Software Source Code</td>
@@ -11964,7 +11964,7 @@
 <tbody>
 <tr>
 <td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/species_typing/task_srst2_vibrio.wdl">task_abricate_vibrio.wdl</a></td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/vibrio/task_srst2_vibrio.wdl">task_abricate_vibrio.wdl</a></td>
 </tr>
 <tr>
 <td>Software Source Code</td>
@@ -14394,7 +14394,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2024-09-27</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2024-10-02</span>
   </span>
 
     
@@ -14502,7 +14502,7 @@
     <script id="__config" type="application/json">{"base": "../../..", "features": ["content.code.annotate", "content.code.copy", "content.tabs.link", "content.tooltips", "navigation.instant", "navigation.path", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.suggest", "toc.follow"], "search": "../../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"alias": true, "default": "latest", "provider": "mike"}}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.d6f25eb3.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.525ec568.min.js"></script>
       
         <script src="https://unpkg.com/tablesort@5.3.0/dist/tablesort.min.js"></script>
       
