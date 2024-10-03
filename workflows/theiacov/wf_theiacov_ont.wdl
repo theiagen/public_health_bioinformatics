@@ -436,6 +436,6 @@ workflow theiacov_ont {
     Float? percentage_mapped_reads = stats_n_coverage.percentage_mapped_reads
     Float? percentage_mapped_reads_trimmed = stats_n_coverage_primtrim.percentage_mapped_reads
     # Flu mapped reads outputs
-    Float? percentage_mapped_reads_flu = stats_n_coverage.percentage_mapped_reads
+    Float? percentage_mapped_reads_flu = flu_stats_n_coverage.percentage_mapped_reads
   }
 }
