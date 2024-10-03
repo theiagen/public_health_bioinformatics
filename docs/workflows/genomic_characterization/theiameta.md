@@ -325,10 +325,7 @@ The TheiaMeta_Illumina_PE workflow processes Illumina paired-end (PE) reads ge
 | metaspades_docker | String | Docker image of metaspades |
 | metaspades_version | String | Version of metaspades |
 | midas_primary_genus | String | Primary genus detected by MIDAS |
-| midas_report | File | MIDAS report file |
-| midas_secondary_genus | String | Secondary genus detected by MIDAS |
-| midas_secondary_genus_abundance | Float | Abundance of the secondary genus |
-| midas_secondary_genus_coverage | Float | Coverage of the secondary genus |
+| midas_report | File | MIDAS report file tsv file|
 | minimap2_docker | String | Docker image of minimap2 |
 | minimap2_version | String | Version of minimap2 |
 | ncbi_scrub_docker | String | Docker image for NCBI's HRRT |
