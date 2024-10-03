@@ -432,10 +432,15 @@ workflow theiacov_ont {
     # QC_Check Results
     String? qc_check = qc_check_task.qc_check
     File? qc_standard = qc_check_task.qc_standard
-    # Percentage mapped reads for non-flu
-    Float? percentage_mapped_reads = stats_n_coverage.percentage_mapped_reads
-    Float? percentage_mapped_reads_trimmed = stats_n_coverage_primtrim.percentage_mapped_reads
-    # Flu mapped reads outputs
-    Float? percentage_mapped_reads_flu = flu_stats_n_coverage.percentage_mapped_reads
+    # Non-flu specific outputs
+    if (organism_parameters.standardized_organism != "flu") {
+        Float? percentage_mapped_reads = stats_n_coverage.percentage_mapped_reads
+        Float? percentage_mapped_reads_trimmed = stats_n_coverage_primtrim.percentage_mapped_reads
+    }
+
+    # Flu-specific outputs
+    if (organism_parameters.standardized_organism == "flu") {
+        Float? percentage_mapped_reads_flu = flu_stats_n_coverage.percentage_mapped_reads
+    }
   }
 }
