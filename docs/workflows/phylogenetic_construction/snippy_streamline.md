@@ -218,6 +218,8 @@ For all cases:
 | snippy_tree_snippy_docker | String | Docker file used for Snippy in the Snippy_Tree subworkfow |
 | snippy_tree_snippy_version | String | Version of Snippy_Tree subworkflow used |
 | snippy_variants_outdir_tarball | Array[File] | A compressed file containing the whole directory of snippy output files. This is used when running Snippy_Tree |
+| snippy_variants_percent_reads_aligned | Float | Percentage of reads aligned to the reference genome |
+| snippy_variants_percent_ref_coverage| Float | Proportion of the reference genome covered by reads with a depth greater than or equal to the `min_coverage` threshold (default is 10). |
 | snippy_variants_snippy_docker | Array[String] | Docker file used for Snippy in the Snippy_Variants subworkfow |
 | snippy_variants_snippy_version | Array[String] | Version of Snippy_Tree subworkflow used |
 | snippy_wg_snp_matrix | File | CSV file of whole genome pairwise SNP distances between samples, calculated from the final alignment |
