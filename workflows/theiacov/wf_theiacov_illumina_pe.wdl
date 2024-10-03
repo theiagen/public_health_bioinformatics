@@ -144,7 +144,7 @@ workflow theiacov_illumina_pe {
             trim_primers = trim_primers
         }
       }
-      # perform flu-specific tasks
+      # for flu organisms call flu_track
       if (organism_parameters.standardized_organism == "flu") {
         call run_flu_track.flu_track {
           input:
@@ -154,6 +154,12 @@ workflow theiacov_illumina_pe {
             standardized_organism = organism_parameters.standardized_organism,
             seq_method = seq_method
         }
+      }
+      # Calculate the percentage of mapped reads for flu samples
+      call assembly_metrics.stats_n_coverage as flu_stats_n_coverage {
+        input:
+            samplename = samplename,
+            bamfile = select_first([flu_track.irma_ha_bam, flu_track.irma_na_bam])
       }
       if (defined(ivar_consensus.assembly_fasta) || defined(flu_track.irma_assembly_fasta)) {
         call consensus_qc_task.consensus_qc {
@@ -429,6 +435,8 @@ workflow theiacov_illumina_pe {
     String? flu_oseltamivir_resistance = flu_track.flu_oseltamivir_resistance
     String? flu_xofluza_resistance = flu_track.flu_xofluza_resistance
     String? flu_zanamivir_resistance = flu_track.flu_zanamivir_resistance
+    # Flu Track Outputs stats n coverage
+    Float? flu_percentage_mapped_reads = flu_stats_n_coverage.percentage_mapped_reads
     # HIV Outputs
     String? quasitools_version = quasitools_illumina_pe.quasitools_version
     String? quasitools_date = quasitools_illumina_pe.quasitools_date

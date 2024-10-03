@@ -1104,6 +1104,7 @@ All TheiaCoV Workflows (not TheiaCoV_FASTA_Batch)
 | pangolin_notes | String | Lineage notes as determined by Pangolin | CL, FASTA, ONT, PE, SE |
 | pangolin_versions | String | All Pangolin software and database versions | CL, FASTA, ONT, PE, SE |
 | percent_reference_coverage | Float | Percent coverage of the reference genome after performing primer trimming; calculated as assembly_length_unambiguous / length of the reference genome (SC2: 29903) x 100 | CL, FASTA, ONT, PE, SE |
+| percentage_mapped_reads | String |Percentage of reads that successfully aligned to the reference genome. This value is calculated by number of mapped reads / total number of reads x 100. | ONT, PE, SE |
 | primer_bed_name | String | Name of the primer bed files used for primer trimming | CL, ONT, PE, SE |
 | primer_trimmed_read_percent | Float | Percentage of read data with primers trimmed as determined by iVar trim | PE, SE |
 | qc_check | String | The results of the QC Check task | CL, FASTA, ONT, PE, SE |
