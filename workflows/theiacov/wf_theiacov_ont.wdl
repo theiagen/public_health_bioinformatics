@@ -433,10 +433,9 @@ workflow theiacov_ont {
     String? qc_check = qc_check_task.qc_check
     File? qc_standard = qc_check_task.qc_standard
     # Percentage mapped reads for non-flu
-    Float? percentage_mapped_reads = assembled_reads_percent.percentage_mapped
+    Float? percentage_mapped_reads = stats_n_coverage.percentage_mapped_reads
     Float? percentage_mapped_reads_trimmed = stats_n_coverage_primtrim.percentage_mapped_reads
     # Flu mapped reads outputs
     Float? percentage_mapped_reads_flu = stats_n_coverage.percentage_mapped_reads
-    
   }
 }
