@@ -70,7 +70,7 @@ The Augur_PHB workflow takes in a ***set*** of SARS-CoV-2 (or any other viral 
 !!! dna "Optional Inputs"
     There are **many** optional user inputs. For SARS-CoV-2, Flu, rsv-a, rsv-b, and mpxv, default values that mimic the NextStrain builds have been preselected. To use these defaults, you must write either `"sars-cov-2"`,`"flu"`, `"rsv-a"`, `"rsv-b"`, or `"mpxv"` for the `organism` variable.
 
-    For Flu - it is **required** to set `flu_segment` to either `"HA"` or `"NA"` & `flu_subtype` to either `"H1N1"` or `"H3N2"` or `"Victoria"` or `"Yamagata"` or `"H5N1"`(`"H5N1"` will only work with `"HA"`) depending on your set of samples.
+    For Flu - it is **required** to set `flu_segment` to either `"HA"` or `"NA"` & `flu_subtype` to either `"H1N1"` or `"H3N2"` or `"Victoria"` or `"Yamagata"` or `"H5N1"` (`"H5N1"` will only work with `"HA"`) depending on your set of samples.
 
 ???+ toggle "A Note on Optional Inputs"
     ??? toggle "Default values for SARS-CoV-2"
