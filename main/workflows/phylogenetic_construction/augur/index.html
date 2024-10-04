@@ -4876,7 +4876,7 @@
 <div class="admonition dna">
 <p class="admonition-title">Optional Inputs</p>
 <p>There are <strong>many</strong> optional user inputs. For SARS-CoV-2, Flu, rsv-a, rsv-b, and mpxv, default values that mimic the NextStrain builds have been preselected. To use these defaults, you must write either <code>"sars-cov-2"</code>,<code>"flu"</code>, <code>"rsv-a"</code>, <code>"rsv-b"</code>, or <code>"mpxv"</code> for the <code>organism</code> variable.</p>
-<p>For Flu - it is <strong>required</strong> to set <code>flu_segment</code> to either <code>"HA"</code> or <code>"NA"</code> &amp; <code>flu_subtype</code> to either <code>"H1N1"</code> or <code>"H3N2"</code> or <code>"Victoria"</code> or <code>"Yamagata"</code> depending on your set of samples.</p>
+<p>For Flu - it is <strong>required</strong> to set <code>flu_segment</code> to either <code>"HA"</code> or <code>"NA"</code> &amp; <code>flu_subtype</code> to either <code>"H1N1"</code> or <code>"H3N2"</code> or <code>"Victoria"</code> or <code>"Yamagata"</code> or <code>"H5N1"</code> (<code>"H5N1"</code> will only work with <code>"HA"</code>) depending on your set of samples.</p>
 </div>
 <details class="toggle" open="open">
 <summary>A Note on Optional Inputs</summary>
@@ -4962,6 +4962,17 @@
 </li>
 <li>NA<ul>
 <li>reference_fasta = <code>"gs://theiagen-public-files-rp/terra/flu-references/reference_yam_na.gb"</code></li>
+</ul>
+</li>
+</ul>
+</details>
+<details class="toggle">
+<summary>H5N1</summary>
+<ul>
+<li>auspice_config = <code>"gs://theiagen-public-files-rp/terra/flu-references/auspice_config_h5n1.json"</code></li>
+<li>HA<ul>
+<li>reference_fasta = <code>"gs://theiagen-public-files-rp/terra/flu-references/reference_h5n1_ha.gb"</code></li>
+<li>clades_tsv = <code>"gs://theiagen-public-files-rp/terra/flu-references/h5nx-clades.tsv"</code></li>
 </ul>
 </li>
 </ul>
@@ -5083,7 +5094,7 @@
 <td>augur</td>
 <td><strong>flu_subtype</strong></td>
 <td>String</td>
-<td>Required if organism = "flu". The subtype of the flu samples being analyzed; options: "H1N1", "H3N2", "Victoria", "Yamagata"</td>
+<td>Required if organism = "flu". The subtype of the flu samples being analyzed; options: "H1N1", "H3N2", "Victoria", "Yamagata", "H5N1"</td>
 <td></td>
 <td>Optional, Required</td>
 </tr>
@@ -5675,7 +5686,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2024-10-02</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2024-10-04</span>
   </span>
 
     

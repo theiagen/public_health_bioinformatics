@@ -5445,7 +5445,7 @@
 <td>flu_track</td>
 <td><strong>flu_subtype</strong></td>
 <td>String</td>
-<td>The influenza subtype being analyzed. Used for picking nextclade datasets. Options: "Yamagata", "Victoria", "H1N1", "H3N2". Only use to override the subtype call from IRMA and ABRicate.</td>
+<td>The influenza subtype being analyzed. Used for picking nextclade datasets. Options: "Yamagata", "Victoria", "H1N1", "H3N2", "H5N1". Only use to override the subtype call from IRMA and ABRicate.</td>
 <td></td>
 <td>Optional</td>
 <td>CL, ONT, PE, SE</td>
@@ -6395,7 +6395,7 @@
 <td>organism_parameters</td>
 <td><strong>flu_subtype</strong></td>
 <td>String</td>
-<td>The influenza subtype being analyzed. Options: "Yamagata", "Victoria", "H1N1", "H3N2". Automatically determined. This input is ignored if provided for TheiaCoV_Illumina_SE and TheiaCoV_ClearLabs</td>
+<td>The influenza subtype being analyzed. Options: "Yamagata", "Victoria", "H1N1", "H3N2", "H5N1". Automatically determined. This input is ignored if provided for TheiaCoV_Illumina_SE and TheiaCoV_ClearLabs</td>
 <td>N/A</td>
 <td>Optional</td>
 <td>CL, ONT, PE, SE</td>
@@ -7515,7 +7515,7 @@
 <td>workflow name</td>
 <td><strong>flu_subtype</strong></td>
 <td>String</td>
-<td>The influenza subtype being analyzed. Options: "Yamagata", "Victoria", "H1N1", "H3N2". Automatically determined.</td>
+<td>The influenza subtype being analyzed. Options: "Yamagata", "Victoria", "H1N1", "H3N2", "H5N1". Automatically determined.</td>
 <td></td>
 <td>Optional</td>
 <td>FASTA</td>
@@ -8656,6 +8656,30 @@
 <td>ha</td>
 <td>yamagata</td>
 <td><code>"gs://theiagen-public-files-rp/terra/flu-references/reference_yam_ha.fasta"</code></td>
+<td></td>
+</tr>
+<tr>
+<td>nextclade_dataset_name_input</td>
+<td>flu</td>
+<td>ha</td>
+<td>h5n1</td>
+<td><code>"community/moncla-lab/iav-h5/ha/all-clades"</code></td>
+<td></td>
+</tr>
+<tr>
+<td>nextclade_dataset_tag_input</td>
+<td>flu</td>
+<td>ha</td>
+<td>h5n1</td>
+<td><code>"2024-05-08--11-39-52Z"</code></td>
+<td></td>
+</tr>
+<tr>
+<td>reference_genome</td>
+<td>flu</td>
+<td>ha</td>
+<td>h5n1</td>
+<td><code>"gs://theiagen-public-files-rp/terra/flu-references/reference_h5n1_ha.fasta"</code></td>
 <td></td>
 </tr>
 <tr>
@@ -11104,7 +11128,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2024-10-02</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2024-10-04</span>
   </span>
 
     
