@@ -184,9 +184,8 @@ The TheiaMeta_Illumina_PE workflow processes Illumina paired-end (PE) reads ge
 
     The `MIDAS` task is for the identification of reads to detect contamination with non-target taxa. This task is optional and turned off by default. It can be used by setting the `call_midas` input variable to `true`.
 
-    The MIDAS tool was originally designed for metagenomic sequencing data but has been co-opted for use with bacterial isolate WGS methods. It can be used to detect contamination present in raw sequencing data by estimating bacterial species abundance in bacterial isolate WGS data. If a secondary genus is detected above a relative frequency of 0.01 (1%), then the sample should fail QC and be investigated further for potential contamination.
+    The MIDAS reference database, located at **`gs://theiagen-large-public-files-rp/terra/theiaprok-files/midas/midas_db_v1.2.tar.gz`**, is provided as the default. It is possible to provide a custom database. More information is available [here](https://github.com/snayfach/MIDAS/blob/master/docs/ref_db.md).
 
-    This task is similar to those used in commercial software, BioNumerics, for estimating secondary species abundance.
 
     ??? toggle "How are the MIDAS output columns determined?"
         
@@ -206,8 +205,6 @@ The TheiaMeta_Illumina_PE workflow processes Illumina paired-end (PE) reads ge
         - count_reads: number of reads mapped to marker genes
         - coverage: estimated genome-coverage (i.e. read-depth) of species in metagenome
         - relative_abundance: estimated relative abundance of species in metagenome
-        
-        The value in the `midas_primary_genus` column is derived by ordering the rows in order of "relative_abundance" and identifying the genus of top species in the "species_id" column (Salmonella). The value in the `midas_secondary_genus` column is derived from the genus of the second-most prevalent genus in the "species_id" column (Citrobacter). The `midas_secondary_genus_abundance` column is the "relative_abundance" of the second-most prevalent genus (0.009477003). The `midas_secondary_genus_coverage` is the "coverage" of the second-most prevalent genus (0.995216227).
         
     !!! techdetails "read_QC_trim Technical Details"
                 
