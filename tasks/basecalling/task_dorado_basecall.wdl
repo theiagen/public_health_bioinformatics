@@ -10,7 +10,6 @@ task basecall {
 
   command <<< 
     set -e
-    mkdir -p output/fastqs
     mkdir -p output/logs
 
     input_files_array=(~{sep=" " input_files})
@@ -22,6 +21,12 @@ task basecall {
     for file in ${input_files_array[@]}; do
       base_name=$(basename $file .pod5)
 
+      # Extract barcode (assuming 'barcodeXX' is part of the base name)
+      barcode=$(echo $base_name | grep -o 'barcode[0-9]\+')
+
+      # Create a directory for the current barcode
+      mkdir -p output/fastqs/${barcode}
+
       echo "Processing file $file with base name $base_name"
 
       # Run Dorado basecaller
@@ -30,15 +35,15 @@ task basecall {
         "$file" \
         --device cuda:all \
         --emit-fastq \
-        --output-dir output/fastqs > output/logs/${base_name}_basecaller.log 2>&1 || { echo "Dorado basecaller failed for $file" >&2; exit 1; }
+        --output-dir output/fastqs/${barcode} > output/logs/${base_name}_basecaller.log 2>&1 || { echo "Dorado basecaller failed for $file" >&2; exit 1; }
 
       # Check for any generated FASTQ file(s) for the current file
-      generated_fastqs=(output/fastqs/*.fastq)
+      generated_fastqs=(output/fastqs/${barcode}/*.fastq)
 
       if [[ ${#generated_fastqs[@]} -gt 0 ]]; then
         # Rename each FASTQ file with base name and an index
         for idx in ${!generated_fastqs[@]}; do
-          mv "${generated_fastqs[$idx]}" "output/fastqs/basecalled_${base_name}_part${idx}.fastq"
+          mv "${generated_fastqs[$idx]}" "output/fastqs/${barcode}/basecalled_${base_name}_part${idx}.fastq"
         done
         echo "FASTQ files generated for $base_name"
       else
@@ -53,7 +58,7 @@ task basecall {
   >>>
 
   output {
-    Array[File] basecalled_fastqs = glob("output/fastqs/*.fastq")
+    Array[File] basecalled_fastqs = glob("output/fastqs/*/*.fastq")
     Array[File] logs = glob("output/logs/*.log")
   }
 
