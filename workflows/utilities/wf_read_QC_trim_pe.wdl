@@ -213,6 +213,9 @@ workflow read_QC_trim_pe {
     String? midas_docker = midas.midas_docker
     File? midas_report = midas.midas_report
     String? midas_primary_genus = midas.midas_primary_genus
+    String? midas_secondary_genus = midas.midas_secondary_genus
+    Float? midas_secondary_genus_abundance = midas.midas_secondary_genus_abundance
+    Float? midas_secondary_genus_coverage = midas.midas_secondary_genus_coverage
 
     # readlength
     Float? average_read_length = readlength.average_read_length
