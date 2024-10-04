@@ -164,7 +164,7 @@ All TheiaCoV Workflows (not TheiaCoV_FASTA_Batch)
 | flu_track | **flu_pa_ref** | File | Internal component, do not modify | | Do not modify, Optional | ONT, PE | flu |
 | flu_track | **flu_pb1_ref** | File | Internal component, do not modify | | Do not modify, Optional | ONT, PE | flu |
 | flu_track | **flu_pb2_ref** | File | Internal component, do not modify | | Do not modify, Optional | ONT, PE | flu |
-| flu_track | **flu_subtype** | String | The influenza subtype being analyzed. Used for picking nextclade datasets. Options: "Yamagata", "Victoria", "H1N1", "H3N2". Only use to override the subtype call from IRMA and ABRicate. | | Optional | CL, ONT, PE, SE | flu |
+| flu_track | **flu_subtype** | String | The influenza subtype being analyzed. Used for picking nextclade datasets. Options: "Yamagata", "Victoria", "H1N1", "H3N2", "H5N1". Only use to override the subtype call from IRMA and ABRicate. | | Optional | CL, ONT, PE, SE | flu |
 | flu_track | **genoflu_cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional | FASTA, ONT, PE | flu |
 | flu_track | **genoflu_cross_reference** | File | An Excel file to cross-reference BLAST findings; probably useful if novel genotypes are not in the default file used by genoflu.py | | Optional | FASTA, ONT, PE | |
 | flu_track | **genoflu_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 25 | Optional | FASTA, ONT, PE | |
@@ -259,7 +259,7 @@ All TheiaCoV Workflows (not TheiaCoV_FASTA_Batch)
 | nextclade_v3 | **verbosity** | String | other options are: "off" , "error" , "info" , "debug" , and "trace" (highest level of verbosity) | warn | Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | organism_parameters | **auspice_config** | File | Auspice config file used in Augur_PHB workflow.<br>Defaults set for various organisms & Flu segments. A minimal auspice config file is set in cases where organism is not specified and user does not provide an optional input config file. | | Optional | Augur, CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | organism_parameters | **flu_segment** | String | Influenza genome segment being analyzed. Options: "HA" or "NA". Automatically determined. This input is ignored if provided for TheiaCoV_Illumina_SE and TheiaCoV_ClearLabs | N/A | Optional | CL, ONT, PE, SE | flu |
-| organism_parameters | **flu_subtype** | String | The influenza subtype being analyzed. Options: "Yamagata", "Victoria", "H1N1", "H3N2". Automatically determined. This input is ignored if provided for TheiaCoV_Illumina_SE and TheiaCoV_ClearLabs | N/A | Optional | CL, ONT, PE, SE | flu |
+| organism_parameters | **flu_subtype** | String | The influenza subtype being analyzed. Options: "Yamagata", "Victoria", "H1N1", "H3N2", "H5N1". Automatically determined. This input is ignored if provided for TheiaCoV_Illumina_SE and TheiaCoV_ClearLabs | N/A | Optional | CL, ONT, PE, SE | flu |
 | organism_parameters | **gene_locations_bed_file** | File | Use to provide locations of interest where average coverage will be calculated | Default provided for SARS-CoV-2 ("gs://theiagen-public-files-rp/terra/sars-cov-2-files/sc2_gene_locations.bed") and mpox ("gs://theiagen-public-files/terra/mpxv-files/mpox_gene_locations.bed") | Optional | CL, FASTA | |
 | organism_parameters | **genome_length_input** | Int | Use to specify the expected genome length; provided by default for all supported organisms | Default provided for SARS-CoV-2 (29903), mpox (197200), WNV (11000), flu (13000), RSV-A (16000), RSV-B (16000), HIV (primer versions 1 [9181] and 2 [9840]) | Optional | CL | |
 | organism_parameters | **hiv_primer_version** | String | The version of HIV primers used. Options are "https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl#L156" and "https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl#L164". This input is ignored if provided for TheiaCoV_Illumina_SE and TheiaCoV_ClearLabs | v1 | Optional | CL, FASTA, ONT, PE, SE | HIV |
@@ -371,7 +371,7 @@ All TheiaCoV Workflows (not TheiaCoV_FASTA_Batch)
 | workflow name | **adapters** | File | File that contains the adapters used | /bbmap/resources/adapters.fa | Optional | PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | workflow name | **consensus_min_freq** | Float | The minimum frequency for a variant to be called a SNP in consensus genome | 0.6 | Optional | PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | workflow name | **flu_segment** | String | Influenza genome segment being analyzed. Options: "HA" or "NA". | HA | Optional, Required | FASTA | |
-| workflow name | **flu_subtype** | String | The influenza subtype being analyzed. Options: "Yamagata", "Victoria", "H1N1", "H3N2". Automatically determined. | | Optional | FASTA | |
+| workflow name | **flu_subtype** | String | The influenza subtype being analyzed. Options: "Yamagata", "Victoria", "H1N1", "H3N2", "H5N1". Automatically determined. | | Optional | FASTA | |
 | workflow name | **genome_length** | Int | Use to specify the expected genome length | | Optional | FASTA, ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | workflow name | **max_genome_length** | Int | Maximum genome length able to pass read screening | 2673870 | Optional | ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | workflow name | **max_length** | Int | Maximum length for a read based on the SARS-CoV-2 primer scheme | 700 | Optional | ONT | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
@@ -538,6 +538,9 @@ The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflo
         | nextclade_dataset_name_input | flu | ha | yamagata | `"nextstrain/flu/yam/ha/JN993010"` |  |
         | nextclade_dataset_tag_input | flu | ha | yamagata | `"2024-01-30--16-34-55Z"` |  |
         | reference_genome | flu | ha | yamagata | `"gs://theiagen-public-files-rp/terra/flu-references/reference_yam_ha.fasta"` |  |
+        | nextclade_dataset_name_input | flu | ha | h5n1 | `"community/moncla-lab/iav-h5/ha/all-clades"` |  |
+        | nextclade_dataset_tag_input | flu | ha | h5n1 | `"2024-05-08--11-39-52Z"` |  |
+        | reference_genome | flu | ha | h5n1 | `"gs://theiagen-public-files-rp/terra/flu-references/reference_h5n1_ha.fasta"` |  |
         | nextclade_dataset_name_input | flu | na | h1n1 | `"nextstrain/flu/h1n1pdm/na/MW626056"` |  |
         | nextclade_dataset_tag_input | flu | na | h1n1 | `"2024-07-03--08-29-55Z"` |  |
         | reference_genome | flu | na | h1n1 | `"gs://theiagen-public-files-rp/terra/flu-references/reference_h1n1pdm_na.fasta"` |  |
