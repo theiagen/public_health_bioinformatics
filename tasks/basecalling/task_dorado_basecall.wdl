@@ -1,5 +1,3 @@
-version 1.0
-
 task basecall {
   input {
     Array[File] input_files
@@ -11,8 +9,8 @@ task basecall {
   command <<< 
     set -e
 
-    # Define the top-level output folder based on the date or a unique identifier
-    output_base="output/$(date +%Y/%m/%d)/"
+    # Define the top-level fastq output folder
+    output_base="output/fastq/"
     mkdir -p $output_base
 
     input_files_array=(~{sep=" " input_files})
@@ -27,7 +25,7 @@ task basecall {
       # Extract barcode (assuming 'barcodeXX' is part of the base name)
       barcode=$(echo $base_name | grep -o 'barcode[0-9]\+')
 
-      # Create a directory for the current barcode inside the top-level folder
+      # Create a directory for the current barcode inside the fastq folder
       barcode_dir="${output_base}${barcode}"
       mkdir -p ${barcode_dir}/fastqs
       mkdir -p ${barcode_dir}/logs
@@ -61,8 +59,8 @@ task basecall {
   >>>
 
   output {
-    Array[File] basecalled_fastqs = glob("output/*/barcode*/fastqs/*.fastq")
-    Array[File] logs = glob("output/*/barcode*/logs/*.log")
+    Array[File] basecalled_fastqs = glob("output/fastq/barcode*/fastqs/*.fastq")
+    Array[File] logs = glob("output/fastq/barcode*/logs/*.log")
   }
 
   runtime {
