@@ -17,10 +17,6 @@ task basecall {
 
     input_files_array=(~{sep=" " input_files})
 
-    # Initialize arrays to store paths of output files
-    fastq_paths=()
-    log_paths=()
-
     echo "Input files: ${input_files_array[@]}"
     echo "Dorado model: ~{dorado_model}"
 
@@ -51,32 +47,23 @@ task basecall {
       if [[ ${#generated_fastqs[@]} -gt 0 ]]; then
         for idx in ${!generated_fastqs[@]}; do
           mv "${generated_fastqs[$idx]}" "${barcode_dir}/fastqs/basecalled_${base_name}_part${idx}.fastq"
-          # Store the path of each FASTQ file in the array
-          fastq_paths+=("${barcode_dir}/fastqs/basecalled_${base_name}_part${idx}.fastq")
         done
         echo "FASTQ files generated for $base_name"
       else
         echo "Error: No FASTQ generated for $file" >&2
         exit 1
       fi
-
-      # Store the path of the log file
-      log_paths+=("${barcode_dir}/logs/${base_name}_basecaller.log")
     done
 
     # Log the final directory structure for debugging
     echo "Final output directory structure:"
     ls -lh $output_base
-
-    # Output the list of fastq and log files
-    echo "${fastq_paths[@]}" > fastq_files.txt
-    echo "${log_paths[@]}" > log_files.txt
   >>>
 
   output {
-    # Use read_lines to retrieve the paths of the generated fastqs and logs
-    Array[File] basecalled_fastqs = read_lines("fastq_files.txt")
-    Array[File] logs = read_lines("log_files.txt")
+    # Output all the FASTQ files and logs in their respective folders
+    Array[File] basecalled_fastqs = glob("output/fastq/barcode*/fastqs/*.fastq")
+    Array[File] logs = glob("output/fastq/barcode*/logs/*.log")
   }
 
   runtime {
