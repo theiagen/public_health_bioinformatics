@@ -4,6 +4,7 @@ import "../utilities/wf_read_QC_trim_ont.wdl" as read_qc
 import "../../tasks/assembly/task_dragonflye.wdl" as dragonflye
 import "../../tasks/taxon_id/task_gambit.wdl" as gambit
 import "../utilities/wf_merlin_magic.wdl" as merlin_magic_workflow
+import "../../tasks/task_versioning.wdl" as versioning
 
 workflow theiaeuk_ont {
   input {
@@ -37,7 +38,7 @@ workflow theiaeuk_ont {
       samplename = samplename,
       assembler = assembler,
       assembler_options = assembler_options,
-      genome_length = "${genome_length}",
+      genome_length = genome_length,
       medaka_model = medaka_model,
       cpu = dragonflye_cpu,
       memory = dragonflye_memory,
@@ -63,7 +64,14 @@ workflow theiaeuk_ont {
       theiaeuk = true
   }
 
+  call versioning.version_capture {
+    input:
+  }
+
   output {
+    # Version Capture
+    String theiaeuk_ont_version = version_capture.phb_version
+    String theiaeuk_ont_analysis_date = version_capture.date
     # Read QC outputs
     File read1_clean = read_qc.read1_clean
     String? nanoq_version = read_qc.nanoq_version
