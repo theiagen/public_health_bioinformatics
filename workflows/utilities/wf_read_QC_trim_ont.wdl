@@ -121,6 +121,24 @@ workflow read_QC_trim_ont {
         samplename = samplename
     }
   }
+
+  if (workflow_series == "theiaeuk") {
+    # rasusa for random downsampling
+    call rasusa_task.rasusa as theiaeuk_rasusa {
+      input:
+        read1 = read1,
+        samplename = samplename,
+        coverage = downsampling_coverage,
+        genome_length = genome_length
+    }
+
+    # nanoq for filtering
+    call nanoq_task.nanoq as theiaeuk_nanoq {
+      input:
+        read1 = theiaeuk_rasusa.read1_subsampled,
+        samplename = samplename
+    }
+  }
   output { 
     # theiacov outputs
     # ncbi scrub outputs
@@ -144,7 +162,7 @@ workflow read_QC_trim_ont {
     Int est_genome_length = genome_length
 
     # nanoq outputs
-    File read1_clean = select_first([nanoq.filtered_read1, read_filtering.read1_clean])
+    File read1_clean = select_first([nanoq.filtered_read1, read_filtering.read1_clean, theiaeuk_nanoq.filtered_read1])
     String? nanoq_version = nanoq.version
 
     # rasusa outputs
