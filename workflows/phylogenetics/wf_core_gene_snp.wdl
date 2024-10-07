@@ -12,7 +12,6 @@ workflow core_gene_snp_workflow {
   input {
     Array[File] gff3
     String cluster_name
-    String cluster_name_updated = sub(cluster_name, " ", "_")
     # if align = true, the pirate task will produce core and pangenome alignments for the sample set,
     # otherwise, pirate will only produce a pangenome summary
     Boolean align = true
@@ -30,6 +29,7 @@ workflow core_gene_snp_workflow {
 
     Boolean midpoint_root_tree = true
   }
+  String cluster_name_updated = sub(cluster_name, " ", "_")
   call pirate_task.pirate {
     input:
       gff3 = gff3,

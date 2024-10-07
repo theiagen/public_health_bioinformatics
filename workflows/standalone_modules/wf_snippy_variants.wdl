@@ -10,7 +10,8 @@ workflow snippy_variants_wf {
   }
   input {
     File reference_genome_file
-    File read1
+    File? assembly_fasta
+    File? read1
     File? read2
     String samplename
     String? query_gene
@@ -29,6 +30,7 @@ workflow snippy_variants_wf {
   call snippy.snippy_variants {
     input:
       samplename = samplename,
+      assembly_fasta = assembly_fasta,
       read1 = read1,
       read2 = read2,
       reference_genome_file = reference_genome_file,
@@ -56,6 +58,7 @@ workflow snippy_variants_wf {
   }
   output {
     String snippy_variants_wf_version = version_capture.phb_version
+    # snippy outputs
     String snippy_variants_version = snippy_variants.snippy_variants_version
     String snippy_variants_docker = snippy_variants.snippy_variants_docker
     File snippy_variants_results = snippy_variants.snippy_variants_results
@@ -67,7 +70,11 @@ workflow snippy_variants_wf {
     File snippy_variants_coverage_tsv = snippy_variants.snippy_variants_coverage_tsv
     Int snippy_variants_num_variants = snippy_variants.snippy_variants_num_variants
     Float snippy_variants_percent_ref_coverage = snippy_variants.snippy_variants_percent_ref_coverage
+<<<<<<< HEAD
     File snippy_variants_qc_metrics = snippy_variants.snippy_variants_qc_metrics
+=======
+    Float snippy_variants_percent_reads_aligned  = snippy_variants.snippy_variants_percent_reads_aligned
+>>>>>>> main
     # snippy gene query outputs
     String? snippy_variants_query = snippy_gene_query.snippy_variants_query
     String? snippy_variants_query_check = snippy_gene_query.snippy_variants_query_check

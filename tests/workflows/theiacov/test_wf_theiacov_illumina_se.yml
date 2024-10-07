@@ -74,7 +74,7 @@
     - path: miniwdl_run/call-read_QC_trim/call-fastq_scan_raw/work/VERSION
     # kraken2
     - path: miniwdl_run/call-read_QC_trim/call-kraken2_theiacov_raw/command
-      md5sum: 0efd43fc9f7079a38e5b094245c97f59
+      md5sum: ca22e45a62c5c26c4447cdafe75a26ab
     - path: miniwdl_run/call-read_QC_trim/call-kraken2_theiacov_raw/inputs.json
       contains: ["read1", "samplename"]
     - path: miniwdl_run/call-read_QC_trim/call-kraken2_theiacov_raw/outputs.json
@@ -85,14 +85,13 @@
     - path: miniwdl_run/call-read_QC_trim/call-kraken2_theiacov_raw/task.log
       contains: ["wdl", "theiacov_illumina_se", "kraken2_theiacov_raw", "done"]
     - path: miniwdl_run/call-read_QC_trim/call-kraken2_theiacov_raw/work/PERCENT_HUMAN
-      md5sum: 4fd4dcef994592f9865e9bc8807f32f4
+      md5sum: 1576d5d341223ea9d44b0b8a213bb9da
     - path: miniwdl_run/call-read_QC_trim/call-kraken2_theiacov_raw/work/PERCENT_SC2
-      md5sum: 73f7f6bf2257905cb4bee12d23247db3
+      md5sum: 7cc2eb659e21f15fa902b11812eae1f6
     - path: miniwdl_run/call-read_QC_trim/call-kraken2_theiacov_raw/work/PERCENT_TARGET_ORGANISM
       md5sum: 68b329da9893e34099c7d8ad5cb9c940
-    - path: miniwdl_run/call-read_QC_trim/call-kraken2_theiacov_raw/work/_miniwdl_inputs/0/ERR6319327_1.clean.fastq.gz
     - path: miniwdl_run/call-read_QC_trim/call-kraken2_theiacov_raw/work/ERR6319327_kraken2_report.txt
-      md5sum: 3d1bab1c5040916642df5baf20a2d6bd
+      md5sum: 9a089b8920e55c9cc7bc8cd7d18f9a8e
     # clean read screen
     - path: miniwdl_run/call-clean_check_reads/command
       md5sum: aec6c57452ddff84c325601a780605d2
@@ -189,7 +188,7 @@
     - path: miniwdl_run/call-ivar_consensus/call-stats_n_coverage_primtrim/work/_miniwdl_inputs/0/ERR6319327.primertrim.sorted.bam
     # variant call
     - path: miniwdl_run/call-ivar_consensus/call-variant_call/command
-      md5sum: b19b644c97a1e267664bc334622471a4
+      md5sum: 0e927e531c7c66c130fbb69e4fece330
     - path: miniwdl_run/call-ivar_consensus/call-variant_call/inputs.json
       contains: ["bamfile", "variant_min_freq", "samplename"]
     - path: miniwdl_run/call-ivar_consensus/call-variant_call/outputs.json
@@ -220,7 +219,7 @@
     - path: miniwdl_run/call-ivar_consensus/call-variant_call/work/_miniwdl_inputs/0/ERR6319327.primertrim.sorted.bam
     # consensus
     - path: miniwdl_run/call-ivar_consensus/call-consensus/command
-      md5sum: 043ae7ecbd31d90be3e92cdc9fd55c10
+      md5sum: d74095745fef2e76e82e1f195da8b32e
     - path: miniwdl_run/call-ivar_consensus/call-consensus/inputs.json
       contains: ["bamfile", "samplename", "min_depth"]
     - path: miniwdl_run/call-ivar_consensus/call-consensus/outputs.json
@@ -318,14 +317,14 @@
     - path: miniwdl_run/call-pangolin4/work/PANGOLIN_NOTES
       md5sum: 0b1f8fb5b938fe71631f61234cbf7ab3
     - path: miniwdl_run/call-pangolin4/work/PANGO_ASSIGNMENT_VERSION
-      md5sum: 853aabc2103b240a052491e307593151
+      md5sum: 0803245359027bd3017d2bd9a9c9c8e3
     - path: miniwdl_run/call-pangolin4/work/VERSION_PANGOLIN_ALL
-      md5sum: e94a844f0bf3e15934d94a42b23e1165
+      md5sum: b5dbf2ba7480effea8c656099df0e78e
     - path: miniwdl_run/call-pangolin4/work/_miniwdl_inputs/0/ERR6319327.ivar.consensus.fasta
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     # nextclade
     - path: miniwdl_run/call-nextclade_v3/command
-      md5sum: 69111991f11943f957e618e9cbef7c32
+      md5sum: a98129345713c75ac2e51ffa465c1703
     - path: miniwdl_run/call-nextclade_v3/inputs.json
       contains: ["dataset_name", "dataset_tag", "genome_fasta"]
     - path: miniwdl_run/call-nextclade_v3/outputs.json
@@ -374,7 +373,7 @@
     - path: miniwdl_run/call-nextclade_v3/work/nextclade_dataset_dir/sequences.fasta
     - path: miniwdl_run/call-nextclade_v3/work/nextclade_dataset_dir/tree.json
     - path: miniwdl_run/call-nextclade_v3/work/nextclade_dataset_dir/pathogen.json
-      md5sum: ec72674ad0e3d7e9451d91de60ff47eb
+      md5sum: a51a91e0b5e16590c1afd0c7897ad071
     - path: miniwdl_run/call-nextclade_v3/work/_miniwdl_inputs/0/ERR6319327.ivar.consensus.fasta
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     # nextclade output parsing
