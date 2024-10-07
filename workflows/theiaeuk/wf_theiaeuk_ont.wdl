@@ -83,7 +83,7 @@ workflow theiaeuk_ont {
     String gambit_db_version = gambit.gambit_db_version
     String merlin_tag = gambit.merlin_tag
     String gambit_docker = gambit.gambit_docker
-    # C. auris specific outputs
+    # C. auris specific outputs for cladetyper
     String? clade_type = merlin_magic.clade_type
     String? cladetyper_analysis_date = merlin_magic.cladetyper_analysis_date
     String? cladetyper_version = merlin_magic.cladetyper_version
