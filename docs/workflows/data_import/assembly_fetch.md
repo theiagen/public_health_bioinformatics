@@ -37,14 +37,6 @@ This workflow runs on the sample level.
   </table>
 </div>
 
-<!-- Script to call loadDynamicTable -->
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    loadDynamicTable('/public_health_bioinformatics/data/assembly_fetch_input.csv', 'inputTable');
-  });
-</script>
-
-
 
 
 ### Analysis Tasks

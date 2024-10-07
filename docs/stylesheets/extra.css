@@ -184,3 +184,21 @@ th {
 td {
   word-break: break-all;
 }
+
+/* Style the search box for tables*/
+input[type="search"] {
+  width: 25%;            
+  padding: 8px;           
+  margin-bottom: 15px;    
+  font-size: 16px;        
+  border: 1px solid #ccc;
+  border-radius: 4px;    
+  box-sizing: border-box; 
+}
+
+/* Change the placeholder text color search bar */
+input[type="search"]::placeholder {
+  color: #888;           
+  font-style: italic;     
+}
+
