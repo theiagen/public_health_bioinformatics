@@ -5488,8 +5488,7 @@
 <p>There are two methods for read quantification to choose from: <a href="https://github.com/rpetit3/fastq-scan"><code>fastq-scan</code></a> (default) or <a href="https://www.bioinformatics.babraham.ac.uk/projects/fastqc/"><code>fastqc</code></a>. Both quantify the forward and reverse reads in FASTQ files. In TheiaProk_Illumina_PE, they also provide the total number of read pairs. This task is run once with raw reads as input and once with clean reads as input. If QC has been performed correctly, you should expect <strong>fewer</strong> clean reads than raw reads. <code>fastqc</code> also provides a graphical visualization of the read quality.</p>
 <p><strong>Read Identification (optional)</strong></p>
 <p>The <code>MIDAS</code> task is for the identification of reads to detect contamination with non-target taxa. This task is optional and turned off by default. It can be used by setting the <code>call_midas</code> input variable to <code>true</code>.</p>
-<p>The MIDAS tool was originally designed for metagenomic sequencing data but has been co-opted for use with bacterial isolate WGS methods. It can be used to detect contamination present in raw sequencing data by estimating bacterial species abundance in bacterial isolate WGS data. If a secondary genus is detected above a relative frequency of 0.01 (1%), then the sample should fail QC and be investigated further for potential contamination.</p>
-<p>This task is similar to those used in commercial software, BioNumerics, for estimating secondary species abundance.</p>
+<p>The MIDAS reference database, located at <strong><code>gs://theiagen-large-public-files-rp/terra/theiaprok-files/midas/midas_db_v1.2.tar.gz</code></strong>, is provided as the default. It is possible to provide a custom database. More information is available <a href="https://github.com/snayfach/MIDAS/blob/master/docs/ref_db.md">here</a>.</p>
 <details class="toggle">
 <summary>How are the MIDAS output columns determined?</summary>
 <p>Example MIDAS report in the ****<code>midas_report</code> column:</p>
@@ -5542,7 +5541,6 @@
 <li>coverage: estimated genome-coverage (i.e. read-depth) of species in metagenome</li>
 <li>relative_abundance: estimated relative abundance of species in metagenome</li>
 </ul>
-<p>The value in the <code>midas_primary_genus</code> column is derived by ordering the rows in order of "relative_abundance" and identifying the genus of top species in the "species_id" column (Salmonella). The value in the <code>midas_secondary_genus</code> column is derived from the genus of the second-most prevalent genus in the "species_id" column (Citrobacter). The <code>midas_secondary_genus_abundance</code> column is the "relative_abundance" of the second-most prevalent genus (0.009477003). The <code>midas_secondary_genus_coverage</code> is the "coverage" of the second-most prevalent genus (0.995216227).</p>
 </details>
 <div class="admonition techdetails">
 <p class="admonition-title">read_QC_trim Technical Details</p>
@@ -5919,6 +5917,16 @@
 <td>Version of metaspades</td>
 </tr>
 <tr>
+<td>midas_primary_genus</td>
+<td>String</td>
+<td>Primary genus detected by MIDAS</td>
+</tr>
+<tr>
+<td>midas_report</td>
+<td>File</td>
+<td>MIDAS report file tsv file</td>
+</tr>
+<tr>
 <td>minimap2_docker</td>
 <td>String</td>
 <td>Docker image of minimap2</td>
@@ -6112,7 +6120,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2024-10-02</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2024-10-07</span>
   </span>
 
     
