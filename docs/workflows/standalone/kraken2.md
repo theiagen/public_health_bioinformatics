@@ -33,10 +33,11 @@ Besides the data input types, there are minimal differences between these two wo
 | Database name | Database Description | Suggested Applications | GCP URI (for usage in Terra) | Source | Database Size (GB) | Date of Last Update |
 | --- | --- | --- | --- | --- | --- | --- |
 | **Kalamari v5.1** | Kalamari is a database of complete public assemblies, that has been fine-tuned for enteric pathogens and is backed by trusted institutions. [Full list available here ( in chromosomes.tsv and plasmids.tsv)](https://github.com/lskatz/Kalamari/tree/master/src) | Single-isolate enteric bacterial pathogen analysis (Salmonella, Escherichia, Shigella, Listeria, Campylobacter, Vibrio, Yersinia) | **`gs://theiagen-large-public-files-rp/terra/databases/kraken2/kraken2.kalamari_5.1.tar.gz`** | ‣ | 1.5 | 18/5/2022 |
-| **standard 8GB** | Standard RefSeq database (archaea, bacteria, viral, plasmid, human, UniVec_Core) capped at 8GB | Prokaryotic or viral organisms, but for enteric pathogens, we recommend Kalamari | **`gs://theiagen-large-public-files-rp/terra/databases/kraken2/k2_standard_08gb_20240112.tar.gz`** | https://benlangmead.github.io/aws-indexes/k2 | 7.5 | 12/1/2024 |
-| **standard 16GB** | Standard RefSeq database (archaea, bacteria, viral, plasmid, human, UniVec_Core) capped at 16GB | Prokaryotic or viral organisms, but for enteric pathogens, we recommend Kalamari | **`gs://theiagen-large-public-files-rp/terra/databases/kraken2/k2_standard_16gb_20240112.tar.gz`** | https://benlangmead.github.io/aws-indexes/k2 | 15 | 12/1/2024 |
 | **standard** | Standard RefSeq database (archaea, bacteria, viral, plasmid, human, UniVec_Core)  | Prokaryotic or viral organisms, but for enteric pathogens, we recommend Kalamari | **`gs://theiagen-large-public-files-rp/terra/databases/kraken2/k2_standard_20240112.tar.gz`** | https://benlangmead.github.io/aws-indexes/k2 | 72 | 18/4/2023 |
+| **standard 16GB** | Standard RefSeq database (archaea, bacteria, viral, plasmid, human, UniVec_Core) capped at 16GB | Prokaryotic or viral organisms, but for enteric pathogens, we recommend Kalamari | **`gs://theiagen-large-public-files-rp/terra/databases/kraken2/k2_standard_16gb_20240112.tar.gz`** | https://benlangmead.github.io/aws-indexes/k2 | 15 | 12/1/2024 |
+| **standard 8GB** | Standard RefSeq database (archaea, bacteria, viral, plasmid, human, UniVec_Core) capped at 8GB | Prokaryotic or viral organisms, but for enteric pathogens, we recommend Kalamari | **`gs://theiagen-large-public-files-rp/terra/databases/kraken2/k2_standard_08gb_20240112.tar.gz`** | https://benlangmead.github.io/aws-indexes/k2 | 7.5 | 12/1/2024 |
 | **viral** | RefSeq viral | Viral metagenomics | **`gs://theiagen-large-public-files-rp/terra/databases/kraken2/k2_viral_20240112.tar.gz`** | https://benlangmead.github.io/aws-indexes/k2 | 0.6 | 12/1/2024 |
+| **viral with human** | Refseq viral plus human (GRCh38) | Viral metagenomics | **`gs://theiagen-large-public-files-rp/terra/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz`** | Theiagen Genomics | 2.76 | 10/7/2024 |
 | **EuPathDB48** | Eukaryotic pathogen genomes with contaminants removed. [Full list available here](https://genome-idx.s3.amazonaws.com/kraken/k2_eupathdb48_20201113/EuPathDB48_Contents.txt) | Eukaryotic organisms (Candida spp., Aspergillus spp., etc) | **`gs://theiagen-public-files-rp/terra/theiaprok-files/k2_eupathdb48_20201113.tar.gz`** | https://benlangmead.github.io/aws-indexes/k2 | 30.3 | 13/11/2020 |
 | **EuPathDB48** | Eukaryotic pathogen genomes with contaminants removed. [Full list available here](https://genome-idx.s3.amazonaws.com/kraken/k2_eupathdb48_20201113/EuPathDB48_Contents.txt) | Eukaryotic organisms (Candida spp., Aspergillus spp., etc) | **`gs://theiagen-large-public-files-rp/terra/databases/kraken/k2_eupathdb48_20230407.tar.gz`** | https://benlangmead.github.io/aws-indexes/k2 | 11 | 7/4/2023 |
 
@@ -48,13 +49,13 @@ Besides the data input types, there are minimal differences between these two wo
 | *workflow_name | **read1** | File |  |  | Required | ONT, PE, SE |
 | *workflow_name | **read2** | File |  |  | Required for PE only | PE |
 | *workflow_name | **samplename** | String |  |  | Required | ONT, PE, SE |
-| kraken2_pe or kraken2_se | **classified_out** | String | Allows user to rename the classified FASTQ files output. Must include .fastq as the suffix | classified#.fastq | Optional | ONT, PE, SE |
-| kraken2_pe or kraken2_se | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional | ONT, PE, SE |
-| kraken2_pe or kraken2_se | **disk_size** | Int | GB of storage to request for VM used to run the kraken2 task. Increase this when using large (>30GB kraken2 databases such as the "k2_standard" database) | 100 | Optional | ONT, PE, SE |
-| kraken2_pe or kraken2_se | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.1.2-no-db | Optional | ONT, PE, SE |
-| kraken2_pe or kraken2_se | **kraken2_args** | String | Allows a user to supply additional kraken2 command-line arguments |  | Optional | ONT, PE, SE |
-| kraken2_pe or kraken2_se | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 32 | Optional | ONT, PE, SE |
-| kraken2_pe or kraken2_se | **unclassified_out** | String | Allows user to rename unclassified FASTQ files output. Must include .fastq as the suffix | unclassified#.fastq | Optional | ONT, PE, SE |
+| kraken2 | **classified_out** | String | Allows user to rename the classified FASTQ files output. Must include .fastq as the suffix | classified#.fastq | Optional | ONT, PE, SE |
+| kraken2 | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional | ONT, PE, SE |
+| kraken2 | **disk_size** | Int | GB of storage to request for VM used to run the kraken2 task. Increase this when using large (>30GB kraken2 databases such as the "k2_standard" database) | 100 | Optional | ONT, PE, SE |
+| kraken2 | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.1.2-no-db | Optional | ONT, PE, SE |
+| kraken2 | **kraken2_args** | String | Allows a user to supply additional kraken2 command-line arguments |  | Optional | ONT, PE, SE |
+| kraken2 | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 32 | Optional | ONT, PE, SE |
+| kraken2 | **unclassified_out** | String | Allows user to rename unclassified FASTQ files output. Must include .fastq as the suffix | unclassified#.fastq | Optional | ONT, PE, SE |
 | krona | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional | PE, SE |
 | krona | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | PE, SE |
 | krona | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/biocontainers/krona:2.7.1--pl526_5 | Optional | PE, SE |
@@ -133,7 +134,13 @@ When assessing the taxonomic identity of a single isolate's sequence, it is norm
 
 [Krona](https://github.com/marbl/Krona) produces an interactive report that allows hierarchical data, such as the one from Kraken2, to be explored with zooming, multi-layered pie charts. These pie charts are intuitive and highly responsive.
 
-Krona will only output hierarchical results for bacterial organisms in its current implementation.
+!!! warning
+   
+    Krona will only output hierarchical results for **bacterial organisms** in its current implementation.
+
+!!! warning
+   
+    Krona is only available for Kraken reports generated with **Illumina data**, paired or singled-ended.
 
 ??? toggle "Example Krona report"
 
@@ -147,3 +154,10 @@ Krona will only output hierarchical results for bacterial organisms in its curre
     | Software Source Code | [Kraken2 on GitHub](https://github.com/DerrickWood/kraken2/)  |
     | Software Documentation | <https://github.com/DerrickWood/kraken2/blob/master/docs/MANUAL.markdown> |
     | Original Publication(s) | [Improved metagenomic analysis with Kraken 2](https://link.springer.com/article/10.1186/s13059-019-1891-0) |
+
+!!! techdetails "Krona Technical Details"
+    |  | Links |
+    | --- | --- |
+    | Software Source Code | [Krona on GitHub](https://github.com/marbl/Krona)  |
+    | Software Documentation | <https://github.com/marbl/Krona/wiki> |
+    | Original Publication(s) | [Interactive metagenomic visualization in a Web browser](https://doi.org/10.1186/1471-2105-12-385) |
