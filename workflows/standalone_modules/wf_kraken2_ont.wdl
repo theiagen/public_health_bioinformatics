@@ -29,8 +29,8 @@ workflow kraken2_ont_wf {
   }
   output {
     # PHB Version Captures
-    String kraken2_se_wf_version = version_capture.phb_version
-    String kraken2_se_wf_analysis_date = version_capture.date
+    String kraken2_ont_wf_version = version_capture.phb_version
+    String kraken2_ont_wf_analysis_date = version_capture.date
     # Kraken2
     String kraken2_version = kraken2.kraken2_version
     String kraken2_docker = kraken2.kraken2_docker
