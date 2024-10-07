@@ -95,7 +95,7 @@
     - path: miniwdl_run/call-read_QC_trim/call-kraken2_theiacov_dehosted/task.log
       contains: ["wdl", "theiacov_illumina_pe", "kraken2_theiacov_dehosted", "done"]
     - path: miniwdl_run/call-read_QC_trim/call-kraken2_theiacov_dehosted/work/PERCENT_HUMAN
-      md5sum: 897316929176464ebc9ad085f31e7284
+      md5sum: 4fd4dcef994592f9865e9bc8807f32f4
     - path: miniwdl_run/call-read_QC_trim/call-kraken2_theiacov_dehosted/work/PERCENT_SC2
       md5sum: 6baf8bb11094b9011d8dc34e66743712
     - path: miniwdl_run/call-read_QC_trim/call-kraken2_theiacov_dehosted/work/PERCENT_TARGET_ORGANISM
