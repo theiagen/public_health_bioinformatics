@@ -6,7 +6,7 @@ function addTableSearch() {
           // Create the search input element
           const searchInput = document.createElement("input");
           searchInput.setAttribute("type", "search");
-          searchInput.setAttribute("placeholder", "Search table..."); // Updated placeholder text
+          searchInput.setAttribute("placeholder", "Search table..."); 
           searchInput.style.marginBottom = "10px";
           searchInput.style.display = "block"; // Ensure the input box appears above the table
 
