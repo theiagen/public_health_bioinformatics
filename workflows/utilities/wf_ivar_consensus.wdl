@@ -22,25 +22,61 @@ workflow ivar_consensus {
     Float consensus_min_freq 
     File? primer_bed
     Boolean? skip_N
+    Int? ivar_bwa_cpu
+    Int? ivar_bwa_memory
+    Int? ivar_bwa_disk_size
+    String? ivar_bwa_docker
+    Int? ivar_trim_primers_cpu
+    Int? ivar_trim_primers_memory
+    Int? ivar_trim_primers_disk_size
+    String? ivar_trim_primers_docker
+    Int? stats_n_coverage_primtrim_cpu
+    Int? stats_n_coverage_primtrim_memory
+    Int? stats_n_coverage_primtrim_disk_size
+    String? stats_n_coverage_primtrim_docker
+    Int? ivar_variant_cpu
+    Int? ivar_variant_memory
+    Int? ivar_variant_disk_size
+    String? ivar_variant_docker
+    Int? ivar_consensus_cpu
+    Int? ivar_consensus_memory
+    Int? ivar_consensus_disk_size
+    String? ivar_consensus_docker
+    Int? stats_n_coverage_cpu
+    Int? stats_n_coverage_memory
+    Int? stats_n_coverage_disk_size
+    String? stats_n_coverage_docker
   }
   call bwa_task.bwa {
     input:
       samplename = samplename,
       read1 = read1,
       read2 = read2,
-      reference_genome = reference_genome
+      reference_genome = reference_genome,
+      cpu = ivar_bwa_cpu,
+      memory = ivar_bwa_memory,
+      disk_size = ivar_bwa_disk_size,
+      docker = ivar_bwa_docker
   }
   if (trim_primers) {
     call primer_trim_task.primer_trim {
       input:
         samplename = samplename,
         primer_bed = select_first([primer_bed]),
-        bamfile = bwa.sorted_bam
+        bamfile = bwa.sorted_bam,
+        cpu = ivar_trim_primers_cpu,
+        memory = ivar_trim_primers_memory,
+        disk_size = ivar_trim_primers_disk_size,
+        docker = ivar_trim_primers_docker
     }
     call assembly_metrics.stats_n_coverage as stats_n_coverage_primtrim {
     input:
       samplename = samplename,
       bamfile = primer_trim.trim_sorted_bam,
+      cpu = stats_n_coverage_primtrim_cpu,
+      memory = stats_n_coverage_primtrim_memory,
+      disk_size = stats_n_coverage_primtrim_disk_size,
+      docker = stats_n_coverage_primtrim_docker
     }
   }
   call variant_call_task.variant_call {
@@ -50,8 +86,11 @@ workflow ivar_consensus {
       reference_gff = reference_gff,
       reference_genome = reference_genome,
       variant_min_depth = min_depth,
-      variant_min_freq = variant_min_freq
-
+      variant_min_freq = variant_min_freq,
+      cpu = ivar_variant_cpu,
+      memory = ivar_variant_memory,
+      disk_size = ivar_variant_disk_size,
+      docker = ivar_variant_docker
   }
   call consensus_task.consensus {
     input:
@@ -60,12 +99,20 @@ workflow ivar_consensus {
       reference_genome = reference_genome,
       consensus_min_depth = min_depth,
       consensus_min_freq = consensus_min_freq,
-      skip_N = skip_N
+      skip_N = skip_N,
+      cpu = ivar_consensus_cpu,
+      memory = ivar_consensus_memory,
+      disk_size = ivar_consensus_disk_size,
+      docker = ivar_consensus_docker
   }
   call assembly_metrics.stats_n_coverage {
     input:
       samplename = samplename,
-      bamfile = bwa.sorted_bam
+      bamfile = bwa.sorted_bam,
+      cpu = stats_n_coverage_cpu,
+      memory = stats_n_coverage_memory,
+      disk_size = stats_n_coverage_disk_size,
+      docker = stats_n_coverage_docker
   }
   output {
     # bwa outputs

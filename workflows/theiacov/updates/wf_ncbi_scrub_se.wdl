@@ -27,7 +27,7 @@ workflow dehost_se {
     String ncbi_scrub_se_analysis_date = version_capture.date
     File read1_dehosted = ncbi_scrub_se.read1_dehosted
     String ncbi_scrub_docker = ncbi_scrub_se.ncbi_scrub_docker
-    Int human_spots_removed = ncbi_scrub_se.read1_human_spots_removed
+    Int ncbi_scrub_human_spots_removed = ncbi_scrub_se.human_spots_removed
     Float kraken_human_dehosted = kraken2.percent_human
     Float kraken_sc2_dehosted = kraken2.percent_sc2
     String kraken_version_dehosted = kraken2.version
