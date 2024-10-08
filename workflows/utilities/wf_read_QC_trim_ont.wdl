@@ -79,27 +79,8 @@ workflow read_QC_trim_ont {
         target_organism = target_organism
     } 
   }
-  if ("~{workflow_series}" == "theiaprok") {
-    if ((call_kraken) && defined(kraken_db)) {
-      call kraken2.kraken2_standalone as kraken2_se {
-        input:
-          samplename = samplename,
-          read1 = read1,
-          kraken2_db = select_first([kraken_db]),
-          disk_size = kraken_disk_size,
-          memory = kraken_memory,
-          cpu = kraken_cpu
-      }
-      call kraken2.kraken2_parse_classified as kraken2_recalculate_abundances {
-        input:
-          samplename = samplename,
-          kraken2_report = kraken2_se.kraken2_report,
-          kraken2_classified_report = kraken2_se.kraken2_classified_report
-      }
-    } if ((call_kraken) && ! defined(kraken_db)) {
-      String kraken_db_warning = "Kraken database not defined"
-    }
 
+  if ("~{workflow_series}" == "theiaprok" || "~{workflow_series}" == "theiaeuk") {
     # rasusa for random downsampling
     call rasusa_task.rasusa {
       input:
@@ -108,35 +89,41 @@ workflow read_QC_trim_ont {
         coverage = downsampling_coverage,
         genome_length = genome_length
     }
-    # tiptoft for plasmid detection
-    call tiptoft_task.tiptoft {
-      input:
-        read1 = read1,
-        samplename = samplename
-    }  
-    # nanoq/filtlong (default min length 500)
+
+    # nanoq for filtering
     call nanoq_task.nanoq {
       input:
         read1 = rasusa.read1_subsampled,
         samplename = samplename
     }
-  }
 
-  if (workflow_series == "theiaeuk") {
-    # rasusa for random downsampling
-    call rasusa_task.rasusa as theiaeuk_rasusa {
-      input:
-        read1 = read1,
-        samplename = samplename,
-        coverage = downsampling_coverage,
-        genome_length = genome_length
-    }
+    if ("~{workflow_series}" == "theiaprok") {
+      # tiptoft for plasmid detection
+      call tiptoft_task.tiptoft {
+        input:
+          read1 = read1,
+          samplename = samplename
+      }
 
-    # nanoq for filtering
-    call nanoq_task.nanoq as theiaeuk_nanoq {
-      input:
-        read1 = theiaeuk_rasusa.read1_subsampled,
-        samplename = samplename
+      if (call_kraken && defined(kraken_db)) {
+        call kraken2.kraken2_standalone as kraken2_se {
+          input:
+            samplename = samplename,
+            read1 = read1,
+            kraken2_db = select_first([kraken_db]),
+            disk_size = kraken_disk_size,
+            memory = kraken_memory,
+            cpu = kraken_cpu
+        }
+        call kraken2.kraken2_parse_classified as kraken2_recalculate_abundances {
+          input:
+            samplename = samplename,
+            kraken2_report = kraken2_se.kraken2_report,
+            kraken2_classified_report = kraken2_se.kraken2_classified_report
+        } 
+      } if ((call_kraken) && ! defined(kraken_db)) {
+          String kraken_db_warning = "Kraken database not defined"
+        }
     }
   }
   output { 
@@ -162,7 +149,7 @@ workflow read_QC_trim_ont {
     Int est_genome_length = genome_length
 
     # nanoq outputs
-    File read1_clean = select_first([nanoq.filtered_read1, read_filtering.read1_clean, theiaeuk_nanoq.filtered_read1])
+    File read1_clean = select_first([nanoq.filtered_read1, read_filtering.read1_clean])
     String? nanoq_version = nanoq.version
 
     # rasusa outputs
