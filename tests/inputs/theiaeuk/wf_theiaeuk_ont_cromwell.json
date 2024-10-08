@@ -1,0 +1,7 @@
+{
+    "theiaeuk_ont.samplename": "test",
+    "theiaeuk_ont.read1": "tests/data/theiacov/fastqs/ont/ont.fastq.gz",
+    "theiaeuk_ont.dragonflye.assembler": "flye",
+    "theiaeuk_ont.gambit.gambit_db_signatures": "./tests/inputs/completely-empty-for-test.txt",
+    "theiaeuk_ont.gambit.gambit_db_genomes": "./tests/inputs/completely-empty-for-test.txt"
+}

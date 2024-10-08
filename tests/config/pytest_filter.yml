@@ -171,3 +171,13 @@ wf_theiaprok_illumina_se:
   - tasks/species_typing/multi/task_ts_mlst.wdl
   - tasks/taxon_id/contamination/task_kraken2.wdl
   - tasks/taxon_id/contamination/task_midas.wdl
+
+# wf_theiaeuk_ont:
+#   - workflows/theiaeuk/wf_theiaeuk_ont.wdl
+#   - tasks/assembly/task_dragonflye.wdl
+#   - tasks/taxon_id/task_gambit.wdl
+#   - workflows/utilities/wf_merlin_magic.wdl
+#   - tasks/quality_control/basic_statistics/task_nanoplot.wdl
+#   - tasks/quality_control/basic_statistics/task_quast.wdl
+#   - tasks/quality_control/advanced_metrics/task_busco.wdl
+#   - tasks/task_versioning.wdl

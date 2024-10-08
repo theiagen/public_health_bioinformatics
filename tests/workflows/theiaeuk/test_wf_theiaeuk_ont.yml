@@ -1,0 +1,22 @@
+- name: theiaeuk_ont_cromwell
+  command: cromwell run -i ./tests/inputs/theiaeuk/wf_theiaeuk_ont_cromwell.json -m metadata.json ./workflows/theiaeuk/wf_theiaeuk_ont.wdl
+  tags:
+    - wf_theiaeuk_ont
+    - wf_theiaeuk_ont_cromwell
+  files:
+    - path: log.err
+    - path: log.out
+      contains: ["workflow finished with status 'Succeeded'", "theiaeuk_ont", "Done"]
+    - path: metadata.json
+      contains: ["outputs", "theiaeuk_ont", "Succeeded"]
+
+- name: theiaeuk_ont_miniwdl
+  command: miniwdl run -i ./tests/inputs/theiaeuk/wf_theiaeuk_ont.json -d miniwdl_run/. --verbose --error-json ./workflows/theiaeuk/wf_theiaeuk_ont.wdl
+  tags:
+    - wf_theiaeuk_ont
+    - wf_theiaeuk_ont_miniwdl
+  files:
+    - path: miniwdl_run/call-someTask/command
+      md5sum: expectedMd5sumHere
+    - path: miniwdl_run/call-someTask/inputs.json
+      contains: ["expectedContent", "moreExpectedContent"]
