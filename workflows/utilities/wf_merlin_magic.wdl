@@ -612,54 +612,50 @@ workflow merlin_magic {
           docker = cauris_cladetyper_docker_image
       }
       if (!assembly_only && !ont_data) {
-        call snippy.snippy_variants as snippy_cauris {
-          input:
-            reference_genome_file = cladetyper.clade_spec_ref,
-            read1 = select_first([read1]),
-            read2 = read2,
-            samplename = samplename,
-            map_qual = snippy_map_qual,
-            base_quality = snippy_base_quality,
-            min_coverage = snippy_min_coverage,
-            min_frac = snippy_min_frac,
-            min_quality = snippy_min_quality,
-            maxsoft = snippy_maxsoft,
-            docker = snippy_variants_docker_image
-        }
-        call snippy_gene_query.snippy_gene_query as snippy_gene_query_cauris {
-          input:
-            samplename = samplename,
-            snippy_variants_results = snippy_cauris.snippy_variants_results,
-            reference = cladetyper.clade_spec_ref,
-            query_gene = select_first([snippy_query_gene, "FKS1,lanosterol.14-alpha.demethylase,uracil.phosphoribosyltransferase"]),
-            docker = snippy_gene_query_docker_image
-        }
-      }
-    
-      if (assembly_only && ont_data) {
-        call snippy.snippy_variants as snippy_cauris_ont {
-          input:
-            reference_genome_file = cladetyper.clade_spec_ref,
-            assembly_fasta = assembly,
-            samplename = samplename,
-            map_qual = snippy_map_qual,
-            base_quality = snippy_base_quality,
-            min_coverage = snippy_min_coverage,
-            min_frac = snippy_min_frac,
-            min_quality = snippy_min_quality,
-            maxsoft = snippy_maxsoft,
-            docker = snippy_variants_docker_image
-        }
-        call snippy_gene_query.snippy_gene_query as snippy_gene_query_cauris_ont {
-          input:
-            samplename = samplename,
-            snippy_variants_results = snippy_cauris_ont.snippy_variants_results,
-            reference = cladetyper.clade_spec_ref,
-            query_gene = select_first([snippy_query_gene, "FKS1,ERG11,FUR1"]),
-            docker = snippy_gene_query_docker_image
-        }
+      call snippy.snippy_variants as snippy_cauris {
+        input:
+          reference_genome_file = cladetyper.clade_spec_ref,
+          read1 = select_first([read1]),
+          read2 = read2,
+          samplename = samplename,
+          map_qual = snippy_map_qual,
+          base_quality = snippy_base_quality,
+          min_coverage = snippy_min_coverage,
+          min_frac = snippy_min_frac,
+          min_quality = snippy_min_quality,
+          maxsoft = snippy_maxsoft,
+          docker = snippy_variants_docker_image
       }
     }
+
+    if (assembly_only && ont_data) {
+      call snippy.snippy_variants as snippy_cauris_ont {
+        input:
+          reference_genome_file = cladetyper.clade_spec_ref,
+          assembly_fasta = assembly,
+          samplename = samplename,
+          map_qual = snippy_map_qual,
+          base_quality = snippy_base_quality,
+          min_coverage = snippy_min_coverage,
+          min_frac = snippy_min_frac,
+          min_quality = snippy_min_quality,
+          maxsoft = snippy_maxsoft,
+          docker = snippy_variants_docker_image
+      }
+    }
+    call snippy_gene_query.snippy_gene_query as snippy_gene_query_cauris {
+      input:
+        samplename = samplename,
+        snippy_variants_results = select_first([snippy_cauris.snippy_variants_results, snippy_cauris_ont.snippy_variants_results]),
+        reference = cladetyper.clade_spec_ref,
+        query_gene = select_first([
+          snippy_query_gene,
+          if (assembly_only && ont_data) then "FKS1,ERG11,FUR1" 
+          else "FKS1,lanosterol.14-alpha.demethylase,uracil.phosphoribosyltransferase"
+        ]),
+        docker = snippy_gene_query_docker_image
+    }
+  }
     # Removing C.albicans subworkflow for now as current workflows not designed for diploid assembly
     # if (merlin_tag == "Candida albicans") {
     #   if (!assembly_only && !ont_data) {
@@ -989,10 +985,10 @@ workflow merlin_magic {
     # snippy variants
     String snippy_variants_reference_genome = select_first([snippy_cauris.snippy_variants_reference_genome, snippy_cauris_ont.snippy_variants_reference_genome, snippy_afumigatus.snippy_variants_reference_genome, snippy_crypto.snippy_variants_reference_genome, "gs://theiagen-public-files/terra/theiaeuk_files/no_match_detected.txt"])
     String snippy_variants_version = select_first([snippy_cauris.snippy_variants_version, snippy_cauris_ont.snippy_variants_version,snippy_afumigatus.snippy_variants_version, snippy_crypto.snippy_variants_version, "No matching taxon detected"])
-    String snippy_variants_query = select_first([snippy_gene_query_cauris.snippy_variants_query, snippy_gene_query_cauris_ont.snippy_variants_query, snippy_gene_query_afumigatus.snippy_variants_query, snippy_gene_query_crypto.snippy_variants_query, "No matching taxon detected"])
-    String snippy_variants_query_check = select_first([snippy_gene_query_cauris.snippy_variants_query_check, snippy_gene_query_cauris_ont.snippy_variants_query_check, snippy_gene_query_afumigatus.snippy_variants_query_check, snippy_gene_query_crypto.snippy_variants_query_check, "No matching taxon detected"])
-    String snippy_variants_hits = select_first([snippy_gene_query_cauris.snippy_variants_hits, snippy_gene_query_cauris_ont.snippy_variants_hits, snippy_gene_query_afumigatus.snippy_variants_hits, snippy_gene_query_crypto.snippy_variants_hits, "No matching taxon detected"])
-    String snippy_variants_gene_query_results = select_first([snippy_gene_query_cauris.snippy_variants_gene_query_results, snippy_gene_query_cauris_ont.snippy_variants_gene_query_results, snippy_gene_query_afumigatus.snippy_variants_gene_query_results, snippy_gene_query_crypto.snippy_variants_gene_query_results, "gs://theiagen-public-files/terra/theiaeuk_files/no_match_detected.txt"])
+    String snippy_variants_query = select_first([snippy_gene_query_cauris.snippy_variants_query, snippy_gene_query_afumigatus.snippy_variants_query, snippy_gene_query_crypto.snippy_variants_query, "No matching taxon detected"])
+    String snippy_variants_query_check = select_first([snippy_gene_query_cauris.snippy_variants_query_check, snippy_gene_query_afumigatus.snippy_variants_query_check, snippy_gene_query_crypto.snippy_variants_query_check, "No matching taxon detected"])
+    String snippy_variants_hits = select_first([snippy_gene_query_cauris.snippy_variants_hits, snippy_gene_query_afumigatus.snippy_variants_hits, snippy_gene_query_crypto.snippy_variants_hits, "No matching taxon detected"])
+    String snippy_variants_gene_query_results = select_first([snippy_gene_query_cauris.snippy_variants_gene_query_results, snippy_gene_query_afumigatus.snippy_variants_gene_query_results, snippy_gene_query_crypto.snippy_variants_gene_query_results, "gs://theiagen-public-files/terra/theiaeuk_files/no_match_detected.txt"])
     String snippy_variants_outdir_tarball = select_first([snippy_cauris.snippy_variants_outdir_tarball, snippy_cauris_ont.snippy_variants_outdir_tarball, snippy_afumigatus.snippy_variants_outdir_tarball, snippy_crypto.snippy_variants_outdir_tarball, "gs://theiagen-public-files/terra/theiaeuk_files/no_match_detected.txt"])
     String snippy_variants_results = select_first([snippy_cauris.snippy_variants_results, snippy_cauris_ont.snippy_variants_results,snippy_afumigatus.snippy_variants_results, snippy_crypto.snippy_variants_results, "gs://theiagen-public-files/terra/theiaeuk_files/no_match_detected.txt"])
     String snippy_variants_bam = select_first([snippy_cauris.snippy_variants_bam, snippy_cauris_ont.snippy_variants_bam, snippy_afumigatus.snippy_variants_bam, snippy_crypto.snippy_variants_bam, "gs://theiagen-public-files/terra/theiaeuk_files/no_match_detected.txt"])
