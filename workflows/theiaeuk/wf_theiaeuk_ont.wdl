@@ -20,8 +20,6 @@ workflow theiaeuk_ont {
     String medaka_model = "r941_min_hac_g507"
     File gambit_db_genomes = "gs://theiagen-public-files-rp/terra/theiaeuk-files/gambit/221130-theiagen-fungal-v0.2.db"
     File gambit_db_signatures = "gs://theiagen-public-files-rp/terra/theiaeuk-files/gambit/221130-theiagen-fungal-v0.2.h5"
-    Boolean assembly_only = true 
-    Boolean ont_data = true
   }
 
   call read_qc.read_QC_trim_ont as read_qc {
@@ -58,9 +56,8 @@ workflow theiaeuk_ont {
       samplename = samplename,
       merlin_tag = gambit.merlin_tag,
       assembly = dragonflye.assembly_fasta,
-      read1 = read_qc.read1_clean,
-      assembly_only = assembly_only,
-      ont_data = ont_data,
+      assembly_only = true,
+      ont_data = true,
       theiaeuk = true
   }
 
