@@ -25,6 +25,8 @@ This set-level workflow will transfer all of the items from a given column in a 
 
 This workflow runs on the set level.
 
+<div id="outputs-table" markdown="1">
+
 | **Terra Task name** | **input_variable** | **Type** | **Description** | **Default attribute** | **Status** |
 |---|---|---|---|---|---|
 | transfer_column_content | **files_to_transfer** | Array[File] | The column that has the files you want to concatenate. | | Required |
@@ -35,6 +37,8 @@ This workflow runs on the set level.
 | transfer_files | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional |
 | version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
 | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
+
+</div>
 
 ### Outputs
 

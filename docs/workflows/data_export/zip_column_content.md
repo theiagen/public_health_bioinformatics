@@ -16,6 +16,8 @@ This workflow will create a zip file that contains all of the items in a column 
 
 This workflow runs on the set level.
 
+<div id="inputs-table" markdown="1">
+
 | **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
 |---|---|---|---|---|---|
 | zip_column_content | **files_to_zip** | Array[File] | The column that has the files you want to zip. |  | Required |
@@ -26,6 +28,8 @@ This workflow runs on the set level.
 | zip_files | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional |
 | version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
 | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
+
+</div>
 
 ### Outputs
 

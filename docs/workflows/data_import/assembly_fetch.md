@@ -23,6 +23,8 @@ Assembly_Fetch requires the input samplename, and either the accession for a ref
 
 This workflow runs on the sample level.
 
+<div id="inputs-table" markdown="1">
+
 | **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
 |---|---|---|---|---|---|
 | reference_fetch | **samplename** | String | Your sample's name |  | Required |
@@ -43,6 +45,8 @@ This workflow runs on the sample level.
 | referenceseeker | **referenceseeker_db** | File | Database used by the referenceseeker tool that contains bacterial genomes from RefSeq release 205. Downloaded from referenceseeker GitHub repo. | "gs://theiagen-public-files-rp/terra/theiaprok-files/referenceseeker-bacteria-refseq-205.v20210406.tar.gz" | Optional |
 | version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
 | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
+
+</div>
 
 ### Analysis Tasks
 
@@ -90,6 +94,8 @@ This workflow runs on the sample level.
 
 ### Outputs
 
+<div id="outputs-table" markdown="1">
+
 | **Variable** | **Type** | **Description** |
 |---|---|---|
 | assembly_fetch_analysis_date | String | Date of assembly download |
@@ -101,10 +107,12 @@ This workflow runs on the sample level.
 | assembly_fetch_ncbi_datasets_version | String | NCBI datasets version used |
 | assembly_fetch_referenceseeker_database | String | ReferenceSeeker database used |
 | assembly_fetch_referenceseeker_docker | String | Docker file used for ReferenceSeeker |
-| assembly_fetch_referenceseeker_top_hit_ncbi_accession | String | NCBI Accession for the top it identified by Assembly_Fetch |
+| assembly_fetch_referenceseeker_top_hit_ncbi_accession | String | NCBI Accession for the top hit identified by Assembly_Fetch |
 | assembly_fetch_referenceseeker_tsv | File | TSV file of the top hits between the query genome and the Reference Seeker database |
 | assembly_fetch_referenceseeker_version | String | ReferenceSeeker version used |
 | assembly_fetch_version | String | The version of the repository the Assembly Fetch workflow is in |
+
+</div>
 
 ## References
 

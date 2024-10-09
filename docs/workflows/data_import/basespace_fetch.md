@@ -153,6 +153,8 @@ This process must be performed on a command-line (ideally on a Linux or MacOS co
 
 This workflow runs on the sample level.
 
+<div id="inputs-table" markdown="1">
+
 | **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
 |---|---|---|---|---|---|
 | basespace_fetch | **access_token** | String | The access token is used in place of a username and password to allow the workflow to access the user account in BaseSpace from which the data is to be transferred. It is an alphanumeric string that is 32 characters in length. Example: 9e08a96471df44579b72abf277e113b7 | | Required |
@@ -167,6 +169,8 @@ This workflow runs on the sample level.
 | fetch_bs | **memory** | Int | The memory is the amount of RAM/memory requested for running the data transfer task. | 8 | Optional |
 | version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
 | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
+
+</div>
 
 ### **Outputs**
 
