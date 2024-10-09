@@ -18,6 +18,8 @@ Variables with both the "Optional" and "Required" tag require the column (regard
 
 This workflow runs on the set level.
 
+<div class="searchable-table" markdown="1">
+
 | **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
 |---|---|---|---|---|---|
 | czgenepi_prep | **sample_names** | Array[String] | The array of sample ids you want to prepare for CZ GEN EPI |  | Required |
@@ -45,6 +47,8 @@ This workflow runs on the set level.
 | czgenepi_wrangling | **cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional |
 | version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
 | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
+
+</div>
 
 ### Outputs
 

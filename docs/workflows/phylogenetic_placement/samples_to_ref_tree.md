@@ -17,6 +17,8 @@ However, nextclade can be used on any organism as long as an an existing, high-q
 
 ### Inputs
 
+<div class="searchable-table" markdown="1">
+
 | **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
 |---|---|---|---|---|---|
 | nextclade_addToRefTree | **assembly_fasta** | File | A fasta file with query sequence(s) to be placed onto the global tree |  | Required |
@@ -34,7 +36,11 @@ However, nextclade can be used on any organism as long as an an existing, high-q
 | version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
 | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
 
+</div>
+
 ### Outputs
+
+<div class="searchable-table" markdown="1">
 
 | **Variable** | **Type** | **Description** |
 |---|---|---|
@@ -45,3 +51,5 @@ However, nextclade can be used on any organism as long as an an existing, high-q
 | treeUpdate_nextclade_version | String | Nextclade version used |
 | samples_to_ref_tree_analysis_date | String | Date of analysis |
 | samples_to_ref_tree_version | String | Version of the Public Health Bioinformatics (PHB) repository used |
+
+</div>

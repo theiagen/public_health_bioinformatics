@@ -14,6 +14,8 @@ The Pangolin_Update workflow re-runs Pangolin updating prior lineage calls from 
 
 This workflow runs on the sample level.
 
+<div class="searchable-table" markdown="1">
+
 | **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
 |---|---|---|---|---|---|
 | pangolin_update | **assembly_fasta** | File | SARS-CoV-2 assembly file in FASTA format |  | Required |
@@ -42,7 +44,11 @@ This workflow runs on the sample level.
 | version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
 | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
 
+</div>
+
 ### Outputs
+
+<div class="searchable-table" markdown="1">
 
 | **Variable** | **Type** | **Description** |
 |---|---|---|
@@ -58,3 +64,5 @@ This workflow runs on the sample level.
 | **pangolin_update_version** | String | Version of the Public Health Bioinformatics (PHB) repository used |
 | **pangolin_updates** | String | Result of Pangolin Update (lineage changed versus unchanged) with lineage assignment and date of analysis |
 | **pangolin_versions** | String | All Pangolin software and database versions |
+
+</div>

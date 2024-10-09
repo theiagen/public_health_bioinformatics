@@ -16,6 +16,8 @@ This set-level workflow will create a file containing all of the items from a gi
 
 This workflow runs on the set level.
 
+<div class="searchable-table" markdown="1">
+
 | **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
 |---|---|---|---|---|---|
 | concatenate_column_content | **concatenated_file_name** | String | The name of the output file. ***Include the extension***, such as ".fasta" or ".txt". |  | Required |
@@ -27,6 +29,8 @@ This workflow runs on the set level.
 | cat_files | **skip_extra_headers** | Boolean | If the files you are concatenating have identical headers, you can include only the first instance of the header and skip all of the others so they do not appear duplicated in the concatenated file. To activate this, set to true. | false | Optional |
 | version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
 | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
+
+</div>
 
 ### Outputs
 

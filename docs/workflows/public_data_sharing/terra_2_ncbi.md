@@ -103,6 +103,8 @@ This workflow runs on set-level data tables.
 !!! info "Production Submissions"
     Please note that an optional Boolean variable, `submit_to_production`, is **required** for a production submission.
 
+<div class="searchable-table" markdown="1">
+
 | **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
 | --- | --- | --- | --- | --- | --- |
 | Terra_2_NCBI | **bioproject** | String | BioProject accession that the samples will be submitted to  |  | Required |
@@ -143,6 +145,8 @@ This workflow runs on set-level data tables.
 | version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
 | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
 
+</div>
+
 ??? task "Workflow Tasks"
 
     ##### Workflow Tasks {#workflow-tasks}
@@ -178,6 +182,8 @@ If the workflow ends unsuccessfully, no outputs will be shown on Terra and the `
 
 The output files contain information mostly for debugging purposes. Additionally, if your submission is successful, the point of contact for the submission should also receive an email from NCBI notifying them of their submission success.
 
+<div class="searchable-table" markdown="1">
+
 | Variable | Description | Type |
 | --- | --- | --- |
 | biosample_failures | Text file listing samples that failed BioSample submission | File |
@@ -192,6 +198,8 @@ The output files contain information mostly for debugging purposes. Additionally
 | sra_submission_xml | XML file that was used to submit your SRA reads to NCBI | File |
 | terra_2_ncbi_analysis_date | Date that the workflow was run | String |
 | terra_2_ncbi_version | Version of the PHB repository where the workflow is hosted | String |
+
+</div>
 
 ???+ toggle "An example excluded_samples.tsv file"
 
