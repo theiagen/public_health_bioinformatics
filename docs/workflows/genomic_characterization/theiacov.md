@@ -812,7 +812,7 @@ All input reads are processed through "core tasks" in the TheiaCoV Illumina, ONT
 
 ??? toggle "`irma`: Assembly and Characterization ==_for flu in TheiaCoV_Illumina_PE & TheiaCoV_ONT_=="
 
-    Cleaned reads are assembled using `irma` which does not use a reference due to the rapid evolution and high variability of influenza. `irma` also performs typing and subtyping as part of the assembly process.
+    Cleaned reads are assembled using `irma` which does not use a reference due to the rapid evolution and high variability of influenza. Assemblies produced by `irma` will be orderd from largest to smallest assembled flu segment. `irma` also performs typing and subtyping as part of the assembly process.
 
     General statistics about the assembly are generated with the `consensus_qc` task ([task_assembly_metrics.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_assembly_metrics.wdl)).
 
@@ -959,7 +959,7 @@ All TheiaCoV Workflows (not TheiaCoV_FASTA_Batch)
 | aligned_bam | File | Primer-trimmed BAM file; generated during consensus assembly process | CL, ONT, PE, SE |
 | artic_docker | String | Docker image utilized for read trimming and consensus genome assembly | CL, ONT |
 | artic_version | String | Version of the Artic software utilized for read trimming and conesnsus genome assembly | CL, ONT |
-| assembly_fasta | File | Consensus genome assembly; for lower quality flu samples, the output may state "Assembly could not be generated" when there is too little and/or too low quality data for IRMA to produce an assembly | CL, ONT, PE, SE |
+| assembly_fasta | File | Consensus genome assembly; for lower quality flu samples, the output may state "Assembly could not be generated" when there is too little and/or too low quality data for IRMA to produce an assembly. Contigs will be ordered from smallest to largest when IRMA is used. | CL, ONT, PE, SE |
 | assembly_length_unambiguous | Int | Number of unambiguous basecalls within the consensus assembly | CL, FASTA, ONT, PE, SE |
 | assembly_mean_coverage | Float | Mean sequencing depth throughout the consensus assembly. Generated after performing primer trimming and calculated using the SAMtools coverage command | CL, ONT, PE, SE |
 | assembly_method | String | Method employed to generate consensus assembly | CL, FASTA, ONT, PE, SE |
