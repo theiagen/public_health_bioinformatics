@@ -19,6 +19,8 @@ workflow theiameta_panel_illumina_pe {
     File read1
     File read2
     Array[Int]? taxon_ids # suggest using a workspace element if user wants to modify?
+
+    Int minimum_read_number = 100
     File kraken2_db = "gs://theiagen-large-public-files-rp/terra/databases/kraken2/k2_viral_20240112.tar.gz"
   }
   # kraken does not run as part of the theiameta track in read_QC_trim -- we may want to change that
@@ -71,7 +73,7 @@ workflow theiameta_panel_illumina_pe {
           read2 = krakentools.extracted_read2
       }
       #### ADJUST IN THE FUTURE; SETTING TO 100 FOR TESTING ####
-      if (fastq_scan_binned.read1_seq > 100) {
+      if (fastq_scan_binned.read1_seq > ~{minimum_read_number}) {
         String did_attempt_assembly = "Assembly attempted"
         call metaspades_task.metaspades_pe {
           input:

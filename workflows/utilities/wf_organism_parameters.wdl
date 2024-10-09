@@ -63,6 +63,7 @@ workflow organism_parameters {
     if (select_first([taxon_id]) == "11320") {
       # flu A
       String flu_a_taxon_id = "flu"
+      # also do flu type
     }
     if (select_first([taxon_id]) == "11520") {
       # flu B

@@ -61,6 +61,10 @@ task gather_scatter {
     echo "nextclade_lineage: ~{sep="," nextclade_lineage}"
     echo "nextclade_qc: ~{sep="," nextclade_qc}"
 
+
+    # turn into tsv?
+    # output to file
+
   >>>
   output {
     Array[Int]? taxon_ids_out = taxon_ids
