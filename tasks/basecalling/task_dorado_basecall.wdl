@@ -34,7 +34,7 @@ task basecall {
 
   output {
     # Output all the FASTQ files and logs in the output folder
-    Array[File] basecalled_fastqs = glob("output/fastq/barcode*/**/*.fastq")
+    Array[File] basecalled_fastqs = glob("output/fastq/**/*.fastq")
     Array[File] logs = glob("output/fastq/basecall.log")
   }
 
@@ -47,4 +47,3 @@ task basecall {
     maxRetries: 3
   }
 }
-
