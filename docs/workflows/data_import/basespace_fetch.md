@@ -153,7 +153,7 @@ This process must be performed on a command-line (ideally on a Linux or MacOS co
 
 This workflow runs on the sample level.
 
-<div id="inputs-table" markdown="1">
+<div class="searchable-table" markdown="1">
 
 | **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
 |---|---|---|---|---|---|

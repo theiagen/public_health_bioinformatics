@@ -23,7 +23,7 @@ Assembly_Fetch requires the input samplename, and either the accession for a ref
 
 This workflow runs on the sample level.
 
-<div id="inputs-table" markdown="1">
+<div class="searchable-table" markdown="1">
 
 | **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
 |---|---|---|---|---|---|
@@ -94,7 +94,7 @@ This workflow runs on the sample level.
 
 ### Outputs
 
-<div id="outputs-table" markdown="1">
+<div class="searchable-table" markdown="1">
 
 | **Variable** | **Type** | **Description** |
 |---|---|---|

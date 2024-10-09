@@ -16,7 +16,7 @@ This workflow will create a zip file that contains all of the items in a column 
 
 This workflow runs on the set level.
 
-<div id="inputs-table" markdown="1">
+<div class="searchable-table" markdown="1">
 
 | **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
 |---|---|---|---|---|---|

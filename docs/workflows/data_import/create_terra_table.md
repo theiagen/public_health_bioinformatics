@@ -19,7 +19,7 @@ The manual creation of Terra tables can be tedious and error-prone. This workflo
 
     **_This can be changed_** by providing information in the `file_ending` optional input parameter. See below for more information.
 
-<div id="inputs-table" markdown="1">
+<div class="searchable-table" markdown="1">
 
 | **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
 |---|---|---|---|---|---|

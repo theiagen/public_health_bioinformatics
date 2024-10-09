@@ -16,7 +16,7 @@ Read files associated with the SRA run accession provided as input are copied to
 
 This workflow runs on the sample level.
 
-<div id="inputs-table" markdown="1">
+<div class="searchable-table" markdown="1">
 
 | **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
 |---|---|---|---|---|---|
@@ -45,7 +45,7 @@ Read data are available either with full base quality scores (**SRA Normalized F
 
 Given the lack of usefulness of SRA Lite formatted FASTQ files, we try to avoid these by selecting as provided SRA directly (SRA-Lite is more probably to be the file synced to other repositories), but some times downloading these files is unavoidable. To make the user aware of this, a warning column is present that is populated when an SRA-Lite file is detected.
 
-<div id="outputs-table" markdown="1">
+<div class="searchable-table" markdown="1">
 
 | **Variable** | **Type** | **Description** | **Production Status** |
 |---|---|---|---|

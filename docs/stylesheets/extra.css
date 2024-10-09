@@ -192,7 +192,6 @@ input[type="search"] {
   margin-bottom: 15px;    
   font-size: 16px;        
   border: 1px solid #ccc;
-  border-radius: 4px;    
   box-sizing: border-box; 
 }
 
@@ -201,6 +200,3 @@ input[type="search"]::placeholder {
   color: #888;           
   font-style: italic;     
 }
-
-
-

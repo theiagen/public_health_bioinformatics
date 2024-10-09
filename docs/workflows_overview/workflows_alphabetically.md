@@ -6,6 +6,8 @@ title: Alphabetical Workflows
 
 ---
 
+<div class="searchable-table" markdown="1">
+
 | **Name** | **Description** | **Applicable Kingdom** | **Workflow Level** | **Command-line Compatibility**[^1] | **Last Known Changes** | **Dockstore** |
 |---|---|---|---|---|---|---|
 | [**Assembly_Fetch**](../workflows/data_import/assembly_fetch.md) | Download assemblies from NCBI, after optionally identifying the closest RefSeq reference genome to your own draft assembly | Any taxa | Sample-level | Yes | v1.3.0 | [Assembly_Fetch_PHB](https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Assembly_Fetch_PHB:main?tab=info) |
@@ -47,6 +49,8 @@ title: Alphabetical Workflows
 | [**Samples_to_Ref_Tree**](../workflows/phylogenetic_placement/usher.md)| Use UShER to rapidly and accurately place your samples on any existing phylogenetic tree | Monkeypox virus, SARS-CoV-2, Viral | Sample-level, Set-level | Yes | v2.1.0 | [Usher_PHB](https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Usher_PHB:main?tab=info) |
 | [**Usher_PHB**](../workflows/genomic_characterization/vadr_update.md)| Update VADR assignments | HAV, Influenza, Monkeypox virus, RSV-A, RSV-B, SARS-CoV-2, Viral, WNV | Sample-level | Yes | v1.2.1 | [VADR_Update_PHB](https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/VADR_Update_PHB:main?tab=info) |
 | [**Zip_Column_Content**](../workflows/data_export/zip_column_content.md)| Zip contents of a specified Terra data table column for many samples ("entities") | Any taxa | Set-level | Yes | v2.1.0 | [Zip_Column_Content_PHB](https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Zip_Column_Content_PHB:main?tab=info) |
+
+</div>
 
 <!-- definitions for workflow type column -->
 *[Sample-level]: This workflow is run once for each sample

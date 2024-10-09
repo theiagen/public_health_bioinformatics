@@ -23,6 +23,8 @@ All input reads are processed through "core tasks" in each workflow. The core ta
 
     By default, the workflow anticipates 2 x 150bp reads (i.e. the input reads were generated using a 300-cycle sequencing kit). Modifications to the optional parameter for `trim_minlen` may be required to accommodate shorter read data, such as the 2 x 75bp reads generated using a 150-cycle sequencing kit.
 
+<div class="searchable-table" markdown="1">    
+
 | **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
 |---|---|---|---|---|---|
 | theiaeuk_pe | **read1** | File | Unprocessed Illumina forward read file |  | Required |
@@ -172,6 +174,8 @@ All input reads are processed through "core tasks" in each workflow. The core ta
 | theiaeuk_pe | **subsample_coverage** | Float | Read depth for RASUSA task to subsample reads to | 150 | Optional |
 | version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
 | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
+
+</div>
 
 ### Workflow tasks (performed for all taxa)
 
@@ -451,6 +455,8 @@ The TheiaEuk workflow automatically activates taxa-specific tasks after identifi
 
 ### Outputs
 
+<div class="searchable-table" markdown="1">
+
 | **Variable** | **Type** | **Description** |
 |---|---|---|
 | cg_pipeline_docker | String | Docker file used for running CG-Pipeline on cleaned reads |
@@ -508,3 +514,5 @@ The TheiaEuk workflow automatically activates taxa-specific tasks after identifi
 | seq_platform | String | Sequencing platform inout by the user |
 | theiaeuk_illumina_pe_analysis_date | String | Date of TheiaProk workflow execution |
 | theiaeuk_illumina_pe_version | String | TheiaProk workflow version used |
+
+</div>

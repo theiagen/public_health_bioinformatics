@@ -25,7 +25,7 @@ This set-level workflow will transfer all of the items from a given column in a 
 
 This workflow runs on the set level.
 
-<div id="outputs-table" markdown="1">
+<div class="searchable-table" markdown="1">
 
 | **Terra Task name** | **input_variable** | **Type** | **Description** | **Default attribute** | **Status** |
 |---|---|---|---|---|---|

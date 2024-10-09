@@ -16,7 +16,7 @@ This set-level workflow will create a file containing all of the items from a gi
 
 This workflow runs on the set level.
 
-<div id="outputs-table" markdown="1">
+<div class="searchable-table" markdown="1">
 
 | **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
 |---|---|---|---|---|---|
