@@ -1,5 +1,3 @@
-version 1.0
-
 task basecall {
   input {
     Array[File] input_files
@@ -27,14 +25,20 @@ task basecall {
       --emit-fastq \
       --output-dir ${output_base} > ${output_base}/basecall.log 2>&1 || { echo "Dorado basecaller failed" >&2; exit 1; }
 
+    # Verify if any FASTQ files were created
+    if ! ls ${output_base}/*.fastq 1> /dev/null 2>&1; then
+      echo "Error: No FASTQ files generated" >&2
+      exit 1
+    fi
+
     # Log the final directory structure for debugging
     echo "Final output directory structure:"
     ls -lh $output_base
   >>>
 
   output {
-    # Output all the FASTQ files and logs in the output folder
-    Array[File] basecalled_fastqs = glob("output/fastq/**/*.fastq")
+    # Capture all FASTQ files directly under the output folder
+    Array[File] basecalled_fastqs = glob("output/fastq/*.fastq")
     Array[File] logs = glob("output/fastq/basecall.log")
   }
 
