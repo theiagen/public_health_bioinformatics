@@ -1,5 +1,3 @@
-version 1.0
-
 task basecall {
   input {
     Array[File] input_files
@@ -8,7 +6,7 @@ task basecall {
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/dorado:0.8.0"
   }
 
-  command <<<
+  command <<< 
     set -e
 
     # Define the output folder
@@ -35,13 +33,21 @@ task basecall {
         --verbose > $log_file 2>&1 || { echo "Dorado basecaller failed for $file" >&2; exit 1; }
     done
 
+    # Concatenate all FASTQ files for each barcode
+    echo "Combining FASTQ files for each barcode..."
+    find ${output_base} -name "*.fastq" | while read -r fastq_file; do
+      barcode_name=$(basename "$fastq_file" | cut -d'_' -f2)
+      combined_fastq="${output_base}/${barcode_name}_combined.fastq"
+      cat "$fastq_file" >> "$combined_fastq"
+    done
+
     # Log final output structure
     echo "Final output directory structure:"
     ls -lh $output_base
   >>>
 
   output {
-    Array[File] basecalled_fastqs = glob("output/fastq/**/*.fastq")
+    Array[File] combined_fastqs = glob("output/fastq/*_combined.fastq")
     Array[File] logs = glob("output/fastq/*.log")
   }
 
