@@ -32,6 +32,7 @@ task basecall {
         --kit-name ~{kit_name} \
         --device cuda:all \
         --emit-fastq \
+        --verbose \
         --output-dir "$output_base" > "$log_file" 2>&1 || { echo "Dorado basecaller failed for $file" >&2; exit 1; }
     done
 
