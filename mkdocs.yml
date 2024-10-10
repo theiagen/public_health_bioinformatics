@@ -23,8 +23,8 @@ nav:
                - Freyja Workflow Series: workflows/genomic_characterization/freyja.md
                - Pangolin_Update: workflows/genomic_characterization/pangolin_update.md
                - TheiaCoV Workflow Series: workflows/genomic_characterization/theiacov.md
-               - TheiaEuk: workflows/genomic_characterization/theiaeuk.md
-               - TheiaMeta: workflows/genomic_characterization/theiameta.md
+               - TheiaEuk Workflow Series: workflows/genomic_characterization/theiaeuk.md
+               - TheiaMeta Workflow Series: workflows/genomic_characterization/theiameta.md
                - TheiaProk Workflow Series: workflows/genomic_characterization/theiaprok.md
                - VADR_Update: workflows/genomic_characterization/vadr_update.md
             - Phylogenetic Construction:
@@ -72,7 +72,7 @@ nav:
                - RASUSA: workflows/standalone/rasusa.md
                - Rename_FASTQ: workflows/standalone/rename_fastq.md
                - SRA_Fetch: workflows/data_import/sra_fetch.md
-               - TheiaMeta: workflows/genomic_characterization/theiameta.md
+               - TheiaMeta Workflow Series: workflows/genomic_characterization/theiameta.md
                - TheiaValidate: workflows/standalone/theiavalidate.md
                - Transfer_Column_Content: workflows/data_export/transfer_column_content.md
                - Zip_Column_Content: workflows/data_export/zip_column_content.md
@@ -100,7 +100,7 @@ nav:
                - NCBI-AMRFinderPlus: workflows/standalone/ncbi_amrfinderplus.md
                - Snippy_Variants: workflows/phylogenetic_construction/snippy_variants.md
                - Terra_2_NCBI: workflows/public_data_sharing/terra_2_ncbi.md
-               - TheiaEuk: workflows/genomic_characterization/theiaeuk.md
+               - TheiaEuk Workflow Series Workflow Series: workflows/genomic_characterization/theiaeuk.md
             - Viral:
                - Augur: workflows/phylogenetic_construction/augur.md
                - CZGenEpi_Prep: workflows/phylogenetic_construction/czgenepi_prep.md
@@ -149,8 +149,8 @@ nav:
             - Terra_2_GISAID: workflows/public_data_sharing/terra_2_gisaid.md
             - Terra_2_NCBI: workflows/public_data_sharing/terra_2_ncbi.md
             - TheiaCoV Workflow Series: workflows/genomic_characterization/theiacov.md
-            - TheiaEuk: workflows/genomic_characterization/theiaeuk.md
-            - TheiaMeta: workflows/genomic_characterization/theiameta.md
+            - TheiaEuk Workflow Series: workflows/genomic_characterization/theiaeuk.md
+            - TheiaMeta Workflow Series: workflows/genomic_characterization/theiameta.md
             - TheiaProk Workflow Series: workflows/genomic_characterization/theiaprok.md
             - TheiaValidate: workflows/standalone/theiavalidate.md
             - Transfer_Column_Content: workflows/data_export/transfer_column_content.md
