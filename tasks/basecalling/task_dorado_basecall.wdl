@@ -4,6 +4,7 @@ task basecall {
   input {
     Array[File] input_files
     String dorado_model
+    String kit_name
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/dorado:0.8.0"
   }
 
@@ -12,34 +13,36 @@ task basecall {
 
     # Define the top-level fastq output folder
     output_base="output/fastq/"
-    mkdir -p $output_base
+    mkdir -p "$output_base"
 
     input_files_array=(~{sep=" " input_files})
 
     echo "Input files: ${input_files_array[@]}"
     echo "Dorado model: ~{dorado_model}"
+    echo "Kit name: ~{kit_name}"
 
-    # Run Dorado basecaller on all input files
-    for file in ${input_files_array[@]}; do
-      base_name=$(basename $file .pod5)
+    # Run Dorado basecaller with barcode classification on all input files
+    for file in "${input_files_array[@]}"; do
+      base_name=$(basename "$file" .pod5)
       log_file="${output_base}/${base_name}_basecall.log"
 
       dorado basecaller \
         /dorado_models/~{dorado_model} \
         "$file" \
+        --kit-name ~{kit_name} \
         --device cuda:all \
         --emit-fastq \
-        --output-dir ${output_base} > $log_file 2>&1 || { echo "Dorado basecaller failed for $file" >&2; exit 1; }
+        --output-dir "$output_base" > "$log_file" 2>&1 || { echo "Dorado basecaller failed for $file" >&2; exit 1; }
     done
 
     # Log the final directory structure for debugging
     echo "Final output directory structure:"
-    ls -lh $output_base
+    ls -lh "$output_base"
   >>>
 
   output {
     # Output all the FASTQ files and log files
-    Array[File] basecalled_fastqs = glob("output/fastq/**/*.fastq")
+    Array[File] basecalled_fastqs = glob("output/fastq/*/*.fastq")
     Array[File] logs = glob("output/fastq/*.log")
   }
 

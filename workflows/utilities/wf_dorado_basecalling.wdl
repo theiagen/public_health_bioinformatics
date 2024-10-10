@@ -6,12 +6,14 @@ workflow dorado_basecalling_workflow {
   input {
     Array[File] input_files
     String dorado_model
+    String kit_name
   }
 
   call basecall_task.basecall {
     input:
       input_files = input_files,
-      dorado_model = dorado_model
+      dorado_model = dorado_model,
+      kit_name = kit_name
   }
 
   output {
