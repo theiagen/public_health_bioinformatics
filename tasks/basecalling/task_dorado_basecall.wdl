@@ -1,5 +1,3 @@
-version 1.0
-
 task basecall {
   input {
     Array[File] input_files
@@ -20,12 +18,17 @@ task basecall {
     echo "Dorado model: ~{dorado_model}"
 
     # Run Dorado basecaller on all input files
-    dorado basecaller \
-      /dorado_models/~{dorado_model} \
-      ${input_files_array[@]} \
-      --device cuda:all \
-      --emit-fastq \
-      --output-dir ${output_base} > ${output_base}/basecall.log 2>&1 || { echo "Dorado basecaller failed" >&2; exit 1; }
+    for file in ${input_files_array[@]}; do
+      base_name=$(basename $file .pod5)
+      log_file="${output_base}/${base_name}_basecall.log"
+
+      dorado basecaller \
+        /dorado_models/~{dorado_model} \
+        "$file" \
+        --device cuda:all \
+        --emit-fastq \
+        --output-dir ${output_base} > $log_file 2>&1 || { echo "Dorado basecaller failed for $file" >&2; exit 1; }
+    done
 
     # Log the final directory structure for debugging
     echo "Final output directory structure:"
@@ -33,9 +36,9 @@ task basecall {
   >>>
 
   output {
-    # Output all the FASTQ files and logs in their respective folders
+    # Output all the FASTQ files and log files
     Array[File] basecalled_fastqs = glob("output/fastq/**/*.fastq")
-    File log = "output/fastq/basecall.log"
+    Array[File] logs = glob("output/fastq/*.log")
   }
 
   runtime {
