@@ -111,7 +111,7 @@ workflow theiameta_panel_illumina_pe {
   call gather_scatter_task.gather_scatter {
     input:
       samplename = samplename,
-      taxon_ids = select_first([taxon_ids]),
+      taxon_ids = taxon_ids,
       organism = krakentools.organism_name,
       extracted_read1 = krakentools.extracted_read1,
       extracted_read2 = krakentools.extracted_read2,
