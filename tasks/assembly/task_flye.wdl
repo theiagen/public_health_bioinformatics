@@ -1,6 +1,6 @@
 version 1.0
 
-task flye_consensus {
+task flye {
   input {
     File read1
     String samplename
@@ -16,7 +16,7 @@ task flye_consensus {
     Int? asm_coverage # reduced coverage for initial disjointig assembly
 
     Int polishing_iterations = 1
-    Int minimum_overlap = 1
+    Int? minimum_overlap
     
     Float? read_error_rate
     Boolean uneven_coverage_mode = false
@@ -28,7 +28,7 @@ task flye_consensus {
 
     Int cpu = 4
     Int disk_size = 100
-    String docker
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/flye:2.9.4"
     Int memory = 32
   }
   command <<<
@@ -53,7 +53,7 @@ task flye_consensus {
     flye \
       ${READ_TYPE} ~{read1} \
       --iterations ~{polishing_iterations} \
-      --min-overlap ~{minimum_overlap} \
+      ~{"--min-overlap" + minimum_overlap} \
       ~{if defined(asm_coverage) then "--genome-size " + genome_length else ""} \
       ~{"--asm-coverage " + asm_coverage} \
       ~{"--read-error " + read_error_rate} \
@@ -64,6 +64,8 @@ task flye_consensus {
       ~{"--extra-params " + additonal_parameters} \
       --threads ~{cpu} \
       --out-dir .
+
+    mv assembly.fasta ~{samplename}.assembly.fasta
 
   >>>
   output {
