@@ -33,20 +33,35 @@ task basecall {
         --verbose || { echo "Dorado basecaller failed for $file" >&2; exit 1; }
     done
 
-    # Concatenate all FASTQ files for each barcode
+    # Output a list of all generated FASTQ files
+    echo "Listing all generated FASTQ files..."
+    find ${output_base} -name "*.fastq" > all_fastq_files.txt
+    cat all_fastq_files.txt
+
+    # Identify unique barcodes from the generated files
+    echo "Identifying barcodes..."
+    barcodes=$(grep -o 'barcode[0-9]*' all_fastq_files.txt | sort | uniq)
+    echo "Found barcodes: $barcodes"
+
+    # Concatenate FASTQ files for each barcode
     echo "Combining FASTQ files for each barcode..."
-    find ${output_base} -name "*.fastq" | while read -r fastq_file; do
-      # Extract barcode name from the filename (assuming barcodes are included in filenames)
-      barcode_name=$(basename "$fastq_file" | grep -o 'barcode[0-9]*')
-      if [ -z "$barcode_name" ]; then
-        barcode_name="unclassified"
-      fi
-      combined_fastq="${output_base}/${barcode_name}_combined.fastq"
+    for barcode in $barcodes; do
+      combined_fastq="${output_base}/${barcode}_combined.fastq"
       
       # Clear the target file before appending
       : > "$combined_fastq"
-      
-      cat "$fastq_file" >> "$combined_fastq"
+
+      grep "$barcode" all_fastq_files.txt | while read -r fastq_file; do
+        cat "$fastq_file" >> "$combined_fastq"
+      done
+    done
+
+    # Handle unclassified reads
+    echo "Combining unclassified FASTQ files..."
+    unclassified_fastq="${output_base}/unclassified_combined.fastq"
+    : > "$unclassified_fastq"
+    grep -L 'barcode[0-9]*' all_fastq_files.txt | while read -r fastq_file; do
+      cat "$fastq_file" >> "$unclassified_fastq"
     done
 
     # Log final output structure
@@ -59,7 +74,6 @@ task basecall {
   }
 
   runtime {
-    docker: docker
     cpu: 8
     memory: "32GB"
     gpuCount: 1
