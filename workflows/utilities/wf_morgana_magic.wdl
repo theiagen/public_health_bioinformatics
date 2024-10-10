@@ -1,11 +1,11 @@
 version 1.0
 
-import "../../tasks/quality_control/advanced_metrics/task_vadr.wdl" as vadr_task
 import "../../tasks/quality_control/basic_statistics/task_consensus_qc.wdl" as consensus_qc_task
 import "../../tasks/species_typing/betacoronavirus/task_pangolin.wdl" as pangolin
 import "../../tasks/species_typing/lentivirus/task_quasitools.wdl" as quasitools
 import "../../tasks/taxon_id/task_nextclade.wdl" as nextclade_task
 import "../utilities/wf_organism_parameters.wdl" as set_organism_defaults
+import "../utilities/wf_flu_track.wdl" as flu_track_wf
 
 workflow morgana_magic {
   input {
@@ -14,6 +14,7 @@ workflow morgana_magic {
     File read1
     File read2
     String taxon_id
+    String seq_method
   }
   #### need to add more flu characterization
   call set_organism_defaults.organism_parameters {
@@ -27,6 +28,17 @@ workflow morgana_magic {
       reference_genome = organism_parameters.reference,
       genome_length = organism_parameters.genome_length
   }
+  if (organism_parameters.standardized_organism == "flu") {
+    call flu_track_wf.flu_track {
+      input:
+        samplename = samplename,
+        read1 = read1,
+        read2 = read2,
+        seq_method = seq_method,
+        standardized_organism = organism_parameters.standardized_organism,
+        analyze_flu_antiviral_substitutions = false # don't try to look for antiviral substitutions?? or maybe? not sure
+    }
+  }
   if (organism_parameters.standardized_organism == "sars-cov-2") {
     call pangolin.pangolin4 {
       input:
@@ -36,7 +48,6 @@ workflow morgana_magic {
     }
   }
   if (organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "rsv_a" || organism_parameters.standardized_organism == "rsv_b") { 
-    # tasks specific to either MPXV, sars-cov-2, or RSV-A/RSV-B
     call nextclade_task.nextclade_v3 {
       input:
         genome_fasta = assembly_fasta,
@@ -47,20 +58,6 @@ workflow morgana_magic {
       input:
         nextclade_tsv = nextclade_v3.nextclade_tsv,
         organism = organism_parameters.standardized_organism
-    }
-  }
-  ### add flu
-  ##### is running vadr even something we want to do????
-  if (organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "WNV" || organism_parameters.standardized_organism == "flu" || organism_parameters.standardized_organism == "rsv_a" || organism_parameters.standardized_organism == "rsv_b") { 
-    # tasks specific to MPXV, sars-cov-2, WNV, flu, rsv_a, and rsv_b
-    call vadr_task.vadr {
-      input:
-        genome_fasta = assembly_fasta,
-        assembly_length_unambiguous = consensus_qc.number_ATCG,
-        vadr_opts = organism_parameters.vadr_opts,
-        max_length = organism_parameters.vadr_maxlength,
-        skip_length = organism_parameters.vadr_skiplength,
-        memory = organism_parameters.vadr_memory
     }
   }
   ##### is running quasitools even something we want to do????
@@ -74,6 +71,12 @@ workflow morgana_magic {
   }
   output {
     String organism = organism_parameters.standardized_organism
+    # Consensus QC outputs
+    Int number_N = consensus_qc.number_N
+    Int number_ATCG = consensus_qc.number_ATCG
+    Int number_Degenerate = consensus_qc.number_Degenerate
+    Int number_Total = consensus_qc.number_Total
+    Float percent_reference_coverage = consensus_qc.percent_reference_coverage
     # Pangolin outputs
     String? pango_lineage = pangolin4.pangolin_lineage
     String? pango_lineage_expanded = pangolin4.pangolin_lineage_expanded
@@ -84,8 +87,8 @@ workflow morgana_magic {
     String? pangolin_docker = pangolin4.pangolin_docker
     String? pangolin_versions = pangolin4.pangolin_versions
     # Nextclade outputs for all organisms
-    String nextclade_version = select_first([nextclade_v3.nextclade_version, ""])
-    String nextclade_docker = select_first([nextclade_v3.nextclade_docker, ""])
+    String nextclade_version = select_first([nextclade_v3.nextclade_version, flu_track.nextclade_version, ""])
+    String nextclade_docker = select_first([nextclade_v3.nextclade_docker, flu_track.nextclade_docker, ""])
     # Nextclade outputs for non-flu
     File? nextclade_json = nextclade_v3.nextclade_json
     File? auspice_json = nextclade_v3.auspice_json
@@ -96,15 +99,41 @@ workflow morgana_magic {
     String? nextclade_clade = nextclade_output_parser.nextclade_clade
     String? nextclade_lineage = nextclade_output_parser.nextclade_lineage
     String? nextclade_qc = nextclade_output_parser.nextclade_qc
-    # VADR Annotation QC
-    File? vadr_alerts_list = vadr.alerts_list
-    File? vadr_feature_tbl_pass = vadr.feature_tbl_pass
-    File? vadr_feature_tbl_fail = vadr.feature_tbl_fail
-    File? vadr_classification_summary_file = vadr.classification_summary_file
-    File? vadr_all_outputs_tar_gz = vadr.outputs_tgz
-    String? vadr_num_alerts = vadr.num_alerts
-    String? vadr_docker = vadr.vadr_docker
-    File? vadr_fastas_zip_archive = vadr.vadr_fastas_zip_archive
+    # Nextclade outputs for flu HA
+    File? nextclade_json_flu_ha = flu_track.nextclade_json_flu_ha
+    File? auspice_json_flu_ha = flu_track.auspice_json_flu_ha
+    File? nextclade_tsv_flu_ha = flu_track.nextclade_tsv_flu_ha
+    String? nextclade_ds_tag_flu_ha = flu_track.nextclade_ds_tag_flu_ha
+    String? nextclade_aa_subs_flu_ha = flu_track.nextclade_aa_subs_flu_ha
+    String? nextclade_aa_dels_flu_ha = flu_track.nextclade_aa_dels_flu_ha
+    String? nextclade_clade_flu_ha = flu_track.nextclade_clade_flu_ha
+    String? nextclade_qc_flu_ha = flu_track.nextclade_qc_flu_ha
+    # Nextclade outputs for flu NA
+    File? nextclade_json_flu_na = flu_track.nextclade_json_flu_na
+    File? auspice_json_flu_na = flu_track.auspice_json_flu_na
+    File? nextclade_tsv_flu_na = flu_track.nextclade_tsv_flu_na
+    String? nextclade_ds_tag_flu_na = flu_track.nextclade_ds_tag_flu_na
+    String? nextclade_aa_subs_flu_na = flu_track.nextclade_aa_subs_flu_na
+    String? nextclade_aa_dels_flu_na = flu_track.nextclade_aa_dels_flu_na
+    String? nextclade_clade_flu_na = flu_track.nextclade_clade_flu_na
+    String? nextclade_qc_flu_na = flu_track.nextclade_qc_flu_na
+    # Flu IRMA Outputs
+    String? irma_version = flu_track.irma_version
+    String? irma_docker = flu_track.irma_docker
+    String? irma_type = flu_track.irma_type
+    String? irma_subtype = flu_track.irma_subtype
+    String? irma_subtype_notes = flu_track.irma_subtype_notes
+    # Flu GenoFLU Outputs
+    String? genoflu_version = flu_track.genoflu_version
+    String? genoflu_genotype = flu_track.genoflu_genotype
+    String? genoflu_all_segments = flu_track.genoflu_all_segments
+    File? genoflu_output_tsv = flu_track.genoflu_output_tsv
+    # Flu Abricate Outputs
+    String? abricate_flu_type = flu_track.abricate_flu_type
+    String? abricate_flu_subtype =  flu_track.abricate_flu_subtype
+    File? abricate_flu_results = flu_track.abricate_flu_results
+    String? abricate_flu_database =  flu_track.abricate_flu_database
+    String? abricate_flu_version = flu_track.abricate_flu_version
     # HIV Outputs
     String? quasitools_version = quasitools_illumina_pe.quasitools_version
     String? quasitools_date = quasitools_illumina_pe.quasitools_date

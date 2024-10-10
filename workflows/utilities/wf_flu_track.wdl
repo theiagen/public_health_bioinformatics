@@ -75,6 +75,8 @@ workflow flu_track {
     Int? nextclade_output_parser_cpu
     Int? nextclade_output_parser_memory
     Int? nextclade_output_parser_disk_size
+
+    Boolean analyze_flu_antiviral_substitutions = true
   }
   # IRMA will run if no assembly is provided (as in the case of TheiaCoV_FASTA)
   call irma_task.irma {
@@ -167,7 +169,7 @@ workflow flu_track {
   }       
   # if IRMA was run successfully, run the flu_antiviral substitutions task 
   # this block must be placed beneath the previous block because it is used in this subworkflow
-  if (defined(irma.irma_assemblies)) {
+  if (defined(irma.irma_assemblies) && analyze_flu_antiviral_substitutions) {
     call flu_antiviral.flu_antiviral_substitutions {
       input:
         na_segment_assembly = irma.seg_na_assembly_padded,

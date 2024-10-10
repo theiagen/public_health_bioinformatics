@@ -23,19 +23,6 @@ workflow theiameta_panel_illumina_pe {
     Int minimum_read_number = 100
     File kraken2_db = "gs://theiagen-large-public-files-rp/terra/databases/kraken2/k2_viral_20240112.tar.gz"
   }
-  # kraken does not run as part of the theiameta track in read_QC_trim -- we may want to change that
-  call kraken_task.kraken2_standalone as kraken2_raw {
-    input:
-      samplename = samplename,
-      read1 = read1,
-      read2 = read2,
-      kraken2_db = kraken2_db
-  }
-  call krona_task.krona as krona_raw {
-    input:
-      kraken2_report = kraken2_raw.kraken2_report,
-      samplename = samplename
-  }
   call read_qc_trim_pe.read_QC_trim_pe as read_QC_trim {
       input:
         samplename = samplename,
@@ -43,16 +30,17 @@ workflow theiameta_panel_illumina_pe {
         read2 = read2,
         workflow_series = "theiameta"
   }
-  call kraken_task.kraken2_standalone as kraken2_clean {
+  # kraken does not run as part of the theiameta track in read_QC_trim -- we may want to change that
+  call kraken_task.kraken2_standalone as kraken2 {
     input:
       samplename = samplename,
       read1 = read_QC_trim.read1_clean,
       read2 = read_QC_trim.read2_clean,
       kraken2_db = kraken2_db
   }
-  call krona_task.krona as krona_clean {
+  call krona_task.krona as krona {
     input:
-      kraken2_report = kraken2_clean.kraken2_report,
+      kraken2_report = kraken2.kraken2_report,
       samplename = samplename
   }
   scatter (taxon_id in taxon_ids) {
@@ -60,8 +48,8 @@ workflow theiameta_panel_illumina_pe {
       input:
         # we should consider changing the classified_report name so 
         #  it won't be confused with the actual kraken2 report
-        kraken2_output = kraken2_clean.kraken2_classified_report,
-        kraken2_report = kraken2_clean.kraken2_report,
+        kraken2_output = kraken2.kraken2_classified_report,
+        kraken2_report = kraken2.kraken2_report,
         read1 = read_QC_trim.read1_clean,
         read2 = read_QC_trim.read2_clean,
         taxon_id = taxon_id
@@ -73,7 +61,7 @@ workflow theiameta_panel_illumina_pe {
           read2 = krakentools.extracted_read2
       }
       #### ADJUST IN THE FUTURE; SETTING TO 100 FOR TESTING ####
-      if (fastq_scan_binned.read1_seq > ~{minimum_read_number}) {
+      if (fastq_scan_binned.read1_seq > minimum_read_number) {
         String did_attempt_assembly = "Assembly attempted"
         call metaspades_task.metaspades_pe {
           input:
@@ -114,25 +102,35 @@ workflow theiameta_panel_illumina_pe {
             assembly_fasta = pilon.assembly_fasta,
             read1 = krakentools.extracted_read1,
             read2 = krakentools.extracted_read2,
-            taxon_id = "~{taxon_id}"
+            taxon_id = "~{taxon_id}",
+            seq_method = "ILLUMINA"
         }
       }
     }
   }  
   call gather_scatter_task.gather_scatter {
     input:
+      samplename = samplename,
       taxon_ids = select_first([taxon_ids]),
-      organism = morgana_magic.organism,
+      organism = krakentools.organism_name,
       extracted_read1 = krakentools.extracted_read1,
       extracted_read2 = krakentools.extracted_read2,
+      krakentools_docker = krakentools.krakentools_docker,
       fastq_scan_num_reads_binned1 = fastq_scan_binned.read1_seq,
       fastq_scan_num_reads_binned2 = fastq_scan_binned.read2_seq,
       fastq_scan_num_reads_binned_pairs = fastq_scan_binned.read_pairs,
-      pilon_assembly_fasta = pilon.assembly_fasta,
+      fastq_scan_docker = fastq_scan_binned.fastq_scan_docker,
+      fastq_scan_version = fastq_scan_binned.version,
+      pilon_assembly_fasta = pilon.assembly_fasta, # maybe??
       quast_genome_length = quast.genome_length,
       quast_number_contigs = quast.number_contigs,
       quast_n50 = quast.n50_value,
       quast_gc_percent = quast.gc_percent,
+      number_N = morgana_magic.number_N,
+      number_ATCG = morgana_magic.number_ATCG,
+      number_Degenerate = morgana_magic.number_Degenerate,
+      number_Total = morgana_magic.number_Total,
+      percent_reference_coverage = morgana_magic.percent_reference_coverage,
       pango_lineage = morgana_magic.pango_lineage,
       pango_lineage_expanded = morgana_magic.pango_lineage_expanded,
       pangolin_conflicts = morgana_magic.pangolin_conflicts,
@@ -147,9 +145,34 @@ workflow theiameta_panel_illumina_pe {
       nextclade_aa_dels = morgana_magic.nextclade_aa_dels,
       nextclade_clade = morgana_magic.nextclade_clade,
       nextclade_lineage = morgana_magic.nextclade_lineage,
-      nextclade_qc = morgana_magic.nextclade_qc
+      nextclade_qc = morgana_magic.nextclade_qc,
+      nextclade_ds_tag_flu_ha = morgana_magic.nextclade_ds_tag_flu_ha,
+      nextclade_aa_subs_flu_ha = morgana_magic.nextclade_aa_subs_flu_ha,
+      nextclade_aa_dels_flu_ha = morgana_magic.nextclade_aa_dels_flu_ha,
+      nextclade_clade_flu_ha = morgana_magic.nextclade_clade_flu_ha,
+      nextclade_qc_flu_ha = morgana_magic.nextclade_qc_flu_ha,
+      nextclade_ds_tag_flu_na = morgana_magic.nextclade_ds_tag_flu_na,
+      nextclade_aa_subs_flu_na = morgana_magic.nextclade_aa_subs_flu_na,
+      nextclade_aa_dels_flu_na = morgana_magic.nextclade_aa_dels_flu_na,
+      nextclade_clade_flu_na = morgana_magic.nextclade_clade_flu_na,
+      nextclade_qc_flu_na = morgana_magic.nextclade_qc_flu_na
   } 
   output {
-    Array[String?] identified_organisms = select_first([morgana_magic.organism])
+    # kraken2 outputs
+    String kraken2_version = kraken2.kraken2_version
+    String kraken2_database = kraken2.kraken2_database
+    String kraken2_docker = kraken2.kraken2_docker
+    File kraken2_report = kraken2.kraken2_report
+    File kraken2_classified_report = kraken2.kraken2_classified_report
+    # krona outputs
+    String krona_version = krona.krona_version
+    String krona_docker = krona.krona_docker
+    File krona_html = krona.krona_html
+    # krakentools outputs
+    Array[String] identified_organisms = krakentools.organism_name
+    # docker image??? -- work on figuring out how to make this not an array
+   # Array[String] krakentools_docker = select_first([krakentools.krakentools_docker]),
+    File results_by_taxon_tsv = gather_scatter.gathered_results
+
   }
 }

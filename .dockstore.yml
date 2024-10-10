@@ -225,6 +225,11 @@ workflows:
    primaryDescriptorPath: /workflows/theiameta/wf_theiameta_illumina_pe.wdl
    testParameterFiles:
     - /tests/inputs/empty.json
+ - name: TheiaMeta_Panel_Illumina_PE_PHB
+   subclass: WDL
+   primaryDescriptorPath: /workflows/theiameta/wf_theiameta_panel_illumina_pe.wdl
+   testParameterFiles:
+    - /tests/inputs/empty.json
  - name: Snippy_Streamline_PHB
    subclass: WDL
    primaryDescriptorPath: /workflows/phylogenetics/wf_snippy_streamline.wdl
