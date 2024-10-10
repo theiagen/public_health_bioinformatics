@@ -10,9 +10,9 @@ task basecall {
   command <<< 
     set -e
 
-    # Define the top-level FASTQ output folder
-    output_base="/cromwell_root/output/fastq/"
-    mkdir -p ${output_base}
+    # Define the top-level fastq output folder
+    output_base="output/fastq/"
+    mkdir -p $output_base
 
     input_files_array=(~{sep=" " input_files})
 
@@ -27,23 +27,15 @@ task basecall {
       --emit-fastq \
       --output-dir ${output_base} > ${output_base}/basecall.log 2>&1 || { echo "Dorado basecaller failed" >&2; exit 1; }
 
-    # Verify that FASTQ files are generated in expected barcode subdirectories
-    if ls ${output_base}/*/*.fastq 1> /dev/null 2>&1; then
-      echo "FASTQ files successfully generated."
-    else
-      echo "Error: No FASTQ files found in ${output_base}" >&2
-      exit 1
-    fi
-
     # Log the final directory structure for debugging
     echo "Final output directory structure:"
-    ls -lhR ${output_base}
+    ls -lh $output_base
   >>>
 
   output {
-    # Collect all the FASTQ files and log files from the output folder
-    Array[File] basecalled_fastqs = glob("output/fastq/*/*.fastq")
-    File log = glob("output/fastq/basecall.log")[0]
+    # Output all the FASTQ files and logs in their respective folders
+    Array[File] basecalled_fastqs = glob("output/fastq/**/*.fastq")
+    File log = "output/fastq/basecall.log"
   }
 
   runtime {
