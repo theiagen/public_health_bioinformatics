@@ -99,7 +99,7 @@ workflow read_QC_trim_se {
     call kraken.kraken2_theiacov as kraken2_theiacov_raw {
       input:
         samplename = samplename,
-        read1 = bbduk_se.read1_clean,
+        read1 = read1,
         target_organism = target_organism
     }
     call kraken.kraken2_theiacov as kraken2_theiacov_dehosted {
@@ -158,7 +158,7 @@ workflow read_QC_trim_se {
     File? fastqc_raw1_html = fastqc_raw.read1_fastqc_html
     File? fastqc_clean1_html = fastqc_clean.read1_fastqc_html
     
-    # kraken2
+    # kraken2 - raw and dehosted
     String kraken_version = select_first([kraken2_theiacov_raw.version, kraken2_standalone.kraken2_version, ""])
     Float? kraken_human = kraken2_theiacov_raw.percent_human
     Float? kraken_sc2 = kraken2_theiacov_raw.percent_sc2

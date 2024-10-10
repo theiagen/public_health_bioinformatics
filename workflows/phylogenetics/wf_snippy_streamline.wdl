@@ -14,10 +14,10 @@ workflow snippy_streamline {
     Array[File]? assembly_fasta
     Array[String] samplenames
     String tree_name
-    String tree_name_updated = sub(tree_name, " ", "_")
     # this input file can be a FASTA or GBK
     File? reference_genome_file
   }
+  String tree_name_updated = sub(tree_name, " ", "_")
   # if user does not provide reference genome fasta, determine one for the user by running centroid, referenceseeker, and ncbi datasets to acquire one
   if (! defined(reference_genome_file)) {
     call centroid_task.centroid {
@@ -83,6 +83,9 @@ workflow snippy_streamline {
     Array[File] snippy_variants_outdir_tarball = snippy_variants_wf.snippy_variants_outdir_tarball
     Array[String] snippy_variants_snippy_version = snippy_variants_wf.snippy_variants_version
     Array[String] snippy_variants_snippy_docker = snippy_variants_wf.snippy_variants_docker
+    Array[Float] snippy_variants_percent_reads_aligned = snippy_variants_wf.snippy_variants_percent_reads_aligned
+    Array[Float] snippy_variants_percent_ref_coverage = snippy_variants_wf.snippy_variants_percent_ref_coverage
+
 
     ### snippy_tree wf outputs ###
     String snippy_tree_snippy_version = snippy_tree_wf.snippy_tree_snippy_version

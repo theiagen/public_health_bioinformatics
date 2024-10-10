@@ -9,7 +9,6 @@ workflow mashtree_fasta {
   input {
     Array[File] assembly_fasta
     String cluster_name
-    String cluster_name_updated = sub(cluster_name, " ", "_")
     Array[String]? sample_names
     String? data_summary_terra_project
     String? data_summary_terra_workspace
@@ -18,6 +17,7 @@ workflow mashtree_fasta {
     Boolean midpoint_root_tree = true
     Boolean phandango_coloring = false
   }
+  String cluster_name_updated = sub(cluster_name, " ", "_")
   call mashtree.mashtree_fasta as mashtree_task {
     input:
       assembly_fasta = assembly_fasta,

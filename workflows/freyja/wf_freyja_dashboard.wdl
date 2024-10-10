@@ -10,9 +10,9 @@ workflow freyja_dashboard {
     Array[String] collection_date
     Array[String] viral_load
     String freyja_dashboard_title
-    String freyja_dashboard_title_updated = sub(freyja_dashboard_title, " ", "_")
     File? dashboard_intro_text
   }
+  String freyja_dashboard_title_updated = sub(freyja_dashboard_title, " ", "_")
   call freyja_dash.freyja_dashboard_task {
     input:
       samplename = samplename,

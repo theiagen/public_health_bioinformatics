@@ -32,7 +32,7 @@ workflow augur {
     Int? min_num_unambig
     String organism = "sars-cov-2" # options: sars-cov-2, flu, mpxv, "rsv-a" or "rsv-b"
     String flu_segment = "HA" # options: HA or NA
-    String? flu_subtype # options: "Victoria" "Yamagata" "H3N2" "H1N1"
+    String? flu_subtype # options: "Victoria" "Yamagata" "H3N2" "H1N1" "H5N1"
     Boolean skip_alignment = false # by default, do not skip alignment
     File? alignment_fasta # if alignment is skipped, provide an alignment
 
