@@ -1,3 +1,5 @@
+version 1.0
+
 task basecall {
   input {
     Array[File] input_files
