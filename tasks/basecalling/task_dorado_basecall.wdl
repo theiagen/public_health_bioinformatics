@@ -5,7 +5,7 @@ task basecall {
     Array[File] input_files
     String dorado_model
     String kit_name
-    String? docker = "us-docker.pkg.dev/general-theiagen/staphb/dorado:0.8.0"  # Default Docker image
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/dorado:0.8.0"
   }
 
   command <<< 
