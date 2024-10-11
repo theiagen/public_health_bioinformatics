@@ -57,6 +57,10 @@ task gather_scatter {
     Array[String?] nextclade_aa_dels_flu_na
     Array[String?] nextclade_clade_flu_na
     Array[String?] nextclade_qc_flu_na
+    String docker = "us-docker.pkg.dev/general-theiagen/quay/ubuntu:latest"
+    Int disk_size = 50
+    Int cpu = 2
+    Int memory = 8
   }
   command <<<
     (
@@ -110,5 +114,14 @@ task gather_scatter {
   >>>
   output {
     File gathered_results = "~{samplename}.results.tsv"
+  }
+  runtime {
+    docker: "~{docker}"
+    memory: memory + " GB"
+    cpu: cpu
+    disks: "local-disk " + disk_size + " SSD"
+    disk: disk_size + " GB"
+    maxRetries: 0
+    preemptible: 0
   }
 }
