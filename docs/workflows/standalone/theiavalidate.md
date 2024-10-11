@@ -4,17 +4,17 @@
 
 | **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
 |---|---|---|---|---|
-| [Standalone](../../workflows_overview/workflows_type.md/#standalone) | [Any Taxa](../../workflows_overview/workflows_kingdom.md/#any-taxa) | PHB v2.0.0 | No | |
+| [Standalone](../../workflows_overview/workflows_type.md/#standalone) | [Any Taxa](../../workflows_overview/workflows_kingdom.md/#any-taxa) | PHB v2.0.0 | No | Set |
 
 ## TheiaValidate_PHB
 
 !!! caption "TheiaValidate Workflow Diagram"
     ![TheiaValidate Workflow Diagram](../../assets/figures/TheiaValidate.png)
 
-TheiaValidate performs basic comparisons between user-designated columns in two separate tables. We anticipate this workflow being run to determine if any differences exist between version releases or two workflows, such as TheiaProk_ONT vs TheiaProk_Illumina_PE. A summary PDF report is produced in addition to a Excel spreadsheet that lists the values for any columns that do not have matching content for a sample.
+TheiaValidate performs basic comparisons between user-designated columns in two separate tables. We anticipate this workflow being run to determine if any differences exist between version releases or two workflows, such as TheiaProk_ONT vs TheiaProk_Illumina_PE. A summary PDF report is produced in addition to an Excel spreadsheet that lists the values for any columns that do not have matching content for a sample.
 
 !!! warning
-    The two tables being compared **must** have both identical sample names and an equal number of samples. If not, validation will not work or (in the case of unequal number of samples) not be attempted.
+    The two tables being compared **must** have both identical sample names and an equal number of samples. If not, validation will not work or (in the case of an unequal number of samples) not be attempted.
 
 In order to enable this workflow to function for different workflow series, we require users to provide a list of columns they want to compare between the two tables. Feel free to use the information below that Theiagen uses to compare versions of the three main workflow series as a _**starting point**_ for your own validations:
 
