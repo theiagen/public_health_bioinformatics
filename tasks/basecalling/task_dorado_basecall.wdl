@@ -58,15 +58,17 @@ task basecall {
       echo "Demultiplexing BAM file: $bam_file"
       echo "Demux output directory: $demuxed_output"
 
+      # Corrected Dorado demux command
       dorado demux \
-        --input $bam_file \
-        --output-dir $demuxed_output \
+        "$bam_file" \
+        --output-dir "$demuxed_output" \
         --kit-name ~{kit_name} \
         --emit-fastq \
         --verbose || { echo "ERROR: Dorado demux failed for $bam_file" >&2; exit 1; }
 
       echo "Demultiplexing completed for $bam_file"
     done
+
 
     echo "### All demultiplexing steps completed ###"
     ls -lh $fastq_output
