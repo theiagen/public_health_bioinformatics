@@ -30,7 +30,7 @@ task basecall {
         --kit-name ~{kit_name} \
         --emit-fastq \
         --output-dir ${output_base} \
-        --verbose || { echo "Dorado basecaller failed for $file" >&2; exit 1; }
+        --output-filename "${output_prefix}_barcode" || { echo "Dorado basecaller failed for $file" >&2; exit 1; }
     done
 
     # Output a list of all generated FASTQ files
