@@ -1,6 +1,6 @@
 version 1.0
 
-task basecall_and_demux {
+task basecall {
   input {
     Array[File] input_files
     String dorado_model
