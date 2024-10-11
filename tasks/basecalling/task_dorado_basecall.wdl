@@ -39,7 +39,7 @@ task basecall {
         /dorado_models/~{dorado_model} \
         "$file" \
         --kit-name ~{kit_name} \
-        --emit-sam \
+        --emit-bam \
         --output-dir $bam_output \
         --verbose || { echo "ERROR: Dorado basecaller failed for $file" >&2; exit 1; }
 
