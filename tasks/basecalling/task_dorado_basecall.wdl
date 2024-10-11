@@ -102,6 +102,12 @@ task basecall {
 
     echo "### Final output directory structure ###"
     ls -lh $fastq_output
+
+    # Step 4: Clean up BAM files
+    echo "### Step 4: Cleaning up BAM files ###"
+    rm -rf $bam_output
+    echo "BAM files removed"
+
   >>>
 
   output {
