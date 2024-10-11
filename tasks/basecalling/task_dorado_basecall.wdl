@@ -69,7 +69,6 @@ task basecall {
       echo "Demultiplexing completed for $bam_file"
     done
 
-
     echo "### All demultiplexing steps completed ###"
     ls -lh $fastq_output
 
@@ -122,6 +121,6 @@ task basecall {
     memory: "32GB"
     gpuCount: 1
     gpuType: "nvidia-tesla-t4"
-    maxRetries: 3
+    maxRetries: 1
   }
 }
