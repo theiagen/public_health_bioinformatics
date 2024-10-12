@@ -9,7 +9,6 @@ workflow dorado_basecalling_workflow {
     Array[File] input_files
     String dorado_model
     String kit_name
-    String model_type
   }
 
   call basecall_task.basecall as basecall_step {
@@ -17,7 +16,6 @@ workflow dorado_basecalling_workflow {
       input_files = input_files,
       dorado_model = dorado_model,
       kit_name = kit_name,
-      model_type = model_type
   }
 
   call samtools_convert_task.samtools_convert as samtools_convert_step {

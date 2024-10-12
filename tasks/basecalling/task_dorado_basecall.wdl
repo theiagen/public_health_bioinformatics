@@ -5,7 +5,6 @@ task basecall {
     Array[File] input_files
     String dorado_model
     String kit_name
-    String model_type = "sup"  # Default to sup for most accurate basecalling
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/dorado:0.8.0"
   }
 
@@ -29,7 +28,6 @@ task basecall {
         "$file" \
         --kit-name ~{kit_name} \
         --emit-sam \
-        --model-type ~{model_type} \
         --no-trim \
         --output-dir "$sam_output" \
         --verbose || { echo "ERROR: Dorado basecaller failed for $file"; exit 1; }
