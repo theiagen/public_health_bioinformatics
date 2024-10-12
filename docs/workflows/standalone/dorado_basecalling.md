@@ -10,6 +10,17 @@
 
 The Dorado Basecalling workflow is used to convert Oxford Nanopore `POD5` sequencing files into `FASTQ` format by utilizing a GPU-accelerated environment. This workflow is ideal for high-throughput applications where fast and accurate basecalling is essential.
 
+### Model Type Selection
+
+- **Model Type (sup):** The most accurate model, recommended for critical applications requiring the highest basecall accuracy. It is the slowest of the three model types.
+- **Model Type (hac):** A balance between speed and accuracy, recommended for most users. Provides accurate results faster than `sup` but less accurate than `sup`.
+- **Model Type (fast):** The fastest model, recommended when speed is prioritized over accuracy, such as for initial analyses or non-critical applications.
+
+**Example Models:**
+- `dna_r10.4.1_e8.2_400bps_sup@v4.2.0`
+- `dna_r10.4.1_e8.2_400bps_hac@v4.2.0`
+- `dna_r10.4.1_e8.2_400bps_fast@v4.2.0`
+
 ### Inputs
 
 | **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** | **Workflow** |
