@@ -34,6 +34,7 @@ Here are some VSCode Extensions can help you write and edit your markdown files 
 
 - [Excel to Markdown Table](https://tableconvert.com/excel-to-markdown) - This website will convert an Excel table into markdown format, which can be copied and pasted into your markdown file.
 - [Material for MkDocs Reference](https://squidfunk.github.io/mkdocs-material/reference/) - This is the official reference for the Material for MkDocs theme, which will help you understand how to use the theme's features.
+- [Broken Link Check](https://www.brokenlinkcheck.com/) - This website will scan your website to ensure that all links are working correctly. This will only work on the deployed version of the documentation, not the local version.
 
 ## Documentation Structure
 

@@ -77,6 +77,7 @@ The `Snippy_Variants` workflow aligns single-end or paired-end reads (in FASTQ f
 | snippy_variants_num_reads_aligned | Int | Number of reads that aligned to the reference genome as calculated by samtools view -c command |
 | snippy_variants_num_variants | Int | Number of variants detected between sample and reference genome |
 | snippy_variants_outdir_tarball | File | A compressed file containing the whole directory of snippy output files. This is used when running Snippy_Tree |
+| snippy_variants_percent_reads_aligned | Float | Percentage of reads aligned to the reference genome |
 | snippy_variants_percent_ref_coverage| Float | Proportion of the reference genome covered by reads with a depth greater than or equal to the `min_coverage` threshold (default is 10). |
 | snippy_variants_query | String | Query strings specified by the user when running the workflow |
 | snippy_variants_query_check | String | Verification that query strings are found in the reference genome |
