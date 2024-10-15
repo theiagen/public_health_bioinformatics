@@ -184,6 +184,15 @@ workflow organism_parameters {
         String yam_ha_clades_tsv = "gs://theiagen-public-files-rp/terra/flu-references/clades_yam_ha.tsv"
         String yam_ha_auspice_config = "gs://theiagen-public-files-rp/terra/flu-references/auspice_config_yam.json"
       }
+      if (flu_subtype == "H5N1") {
+        # H5N1 is a special case where the dataset used is the h5nx all clades dataset 
+        String h5n1_ha_reference = "gs://theiagen-public-files-rp/terra/flu-references/reference_h5n1_ha.fasta"
+        String h5n1_ha_reference_gbk = "gs://theiagen-public-files-rp/terra/flu-references/reference_h5n1_ha.gb"
+        String h5n1_ha_nextclade_ds_tag = "2024-05-08--11-39-52Z"
+        String h5n1_ha_nextclade_ds_name = "community/moncla-lab/iav-h5/ha/all-clades"
+        String h5n1_ha_clades_tsv = "gs://theiagen-public-files-rp/terra/flu-references/h5nx-clades.tsv"
+        String h5n1_ha_auspice_config = "gs://theiagen-public-files-rp/terra/flu-references/auspice_config_h5n1.json"
+      }
     }
     if (flu_segment == "NA") {
       if (flu_subtype == "H1N1") {
@@ -285,15 +294,15 @@ workflow organism_parameters {
     # standardized organism flag
     String standardized_organism = select_first([sc2_org_name, mpox_org_name, wnv_org_name, flu_org_name, rsv_a_org_name, rsv_b_org_name, hiv_v1_org_name, hiv_v2_org_name, organism])
     # reference genome and sequencing information
-    File reference = select_first([reference_genome, sc2_reference_genome, mpox_reference_genome, wnv_reference_genome, h1n1_ha_reference, h3n2_ha_reference, vic_ha_reference, yam_ha_reference, h1n1_na_reference, h3n2_na_reference, vic_na_reference, yam_na_reference, 
+    File reference = select_first([reference_genome, sc2_reference_genome, mpox_reference_genome, wnv_reference_genome, h1n1_ha_reference, h3n2_ha_reference, vic_ha_reference, yam_ha_reference, h5n1_ha_reference, h1n1_na_reference, h3n2_na_reference, vic_na_reference, yam_na_reference, 
     rsv_a_reference_genome, rsv_b_reference_genome, hiv_v1_reference_genome, hiv_v2_reference_genome, "gs://theiagen-public-files/terra/theiacov-files/empty.fasta"])
     File gene_locations_bed = select_first([gene_locations_bed_file, sc2_gene_locations_bed, mpox_gene_locations_bed, "gs://theiagen-public-files/terra/theiacov-files/empty.bed"])
     File primer_bed = select_first([primer_bed_file, mpox_primer_bed_file, wnv_primer_bed_file, hiv_v1_primer_bed, hiv_v2_primer_bed, "gs://theiagen-public-files/terra/theiacov-files/empty.bed"])
     File reference_gff = select_first([reference_gff_file, mpox_reference_gff_file, hiv_v1_reference_gff, hiv_v2_reference_gff, "gs://theiagen-public-files/terra/theiacov-files/empty.gff3"])
     Int genome_length = select_first([genome_length_input, sc2_genome_len, mpox_genome_len, wnv_genome_len, flu_genome_len, rsv_a_genome_len, rsv_b_genome_len, hiv_v1_genome_len, hiv_v2_genome_len])
     # nextclade information
-    String nextclade_dataset_tag = select_first([nextclade_dataset_tag_input, sc2_nextclade_ds_tag, mpox_nextclade_ds_tag, wnv_nextclade_ds_tag, h1n1_ha_nextclade_ds_tag, h3n2_ha_nextclade_ds_tag, vic_ha_nextclade_ds_tag, yam_ha_nextclade_ds_tag, h1n1_na_nextclade_ds_tag, h3n2_na_nextclade_ds_tag, vic_na_nextclade_ds_tag, yam_na_nextclade_ds_tag, rsv_a_nextclade_ds_tag, rsv_b_nextclade_ds_tag, "NA"])
-    String nextclade_dataset_name = select_first([nextclade_dataset_name_input, sc2_nextclade_ds_name, mpox_nextclade_ds_name, wnv_nextclade_ds_name, h1n1_ha_nextclade_ds_name, h3n2_ha_nextclade_ds_name, vic_ha_nextclade_ds_name, yam_ha_nextclade_ds_name, h1n1_na_nextclade_ds_name, h3n2_na_nextclade_ds_name, vic_na_nextclade_ds_name, yam_na_nextclade_ds_name, rsv_a_nextclade_ds_name, rsv_b_nextclade_ds_name, "NA"])
+    String nextclade_dataset_tag = select_first([nextclade_dataset_tag_input, sc2_nextclade_ds_tag, mpox_nextclade_ds_tag, wnv_nextclade_ds_tag, h1n1_ha_nextclade_ds_tag, h3n2_ha_nextclade_ds_tag, vic_ha_nextclade_ds_tag, yam_ha_nextclade_ds_tag, h5n1_ha_nextclade_ds_tag, h1n1_na_nextclade_ds_tag, h3n2_na_nextclade_ds_tag, vic_na_nextclade_ds_tag, yam_na_nextclade_ds_tag, rsv_a_nextclade_ds_tag, rsv_b_nextclade_ds_tag, "NA"])
+    String nextclade_dataset_name = select_first([nextclade_dataset_name_input, sc2_nextclade_ds_name, mpox_nextclade_ds_name, wnv_nextclade_ds_name, h1n1_ha_nextclade_ds_name, h3n2_ha_nextclade_ds_name, vic_ha_nextclade_ds_name, yam_ha_nextclade_ds_name, h5n1_ha_nextclade_ds_name, h1n1_na_nextclade_ds_name, h3n2_na_nextclade_ds_name, vic_na_nextclade_ds_name, yam_na_nextclade_ds_name, rsv_a_nextclade_ds_name, rsv_b_nextclade_ds_name, "NA"])
     # pangolin options
     String pangolin_docker = select_first([pangolin_docker_image, sc2_pangolin_docker, ""])
     # vadr options
@@ -305,10 +314,10 @@ workflow organism_parameters {
     String kraken_target_organism = select_first([kraken_target_organism_input, mpox_kraken_target_organism, wnv_kraken_target_organism, hiv_v1_target_organism, hiv_v2_target_organism, rsv_a_kraken_target_organism, rsv_b_kraken_target_organism, ""])
     # augur options
     Int augur_min_num_unambig = select_first([min_num_unambig, mpox_min_num_unambig, flu_min_num_unambig, rsv_a_min_num_unambig, rsv_b_min_num_unambig, 0])
-    File augur_clades_tsv = select_first([clades_tsv, h1n1_ha_clades_tsv, h3n2_ha_clades_tsv, vic_ha_clades_tsv, yam_ha_clades_tsv, rsv_a_clades_tsv, rsv_b_clades_tsv, mpox_clades_tsv, "gs://theiagen-public-files-rp/terra/augur-defaults/minimal-clades.tsv"])
+    File augur_clades_tsv = select_first([clades_tsv, h1n1_ha_clades_tsv, h3n2_ha_clades_tsv, vic_ha_clades_tsv, yam_ha_clades_tsv, h5n1_ha_clades_tsv, rsv_a_clades_tsv, rsv_b_clades_tsv, mpox_clades_tsv, "gs://theiagen-public-files-rp/terra/augur-defaults/minimal-clades.tsv"])
     File augur_lat_longs_tsv = select_first([lat_longs_tsv, flu_lat_longs_tsv, mpox_lat_longs_tsv, rsv_a_lat_longs_tsv, rsv_b_lat_longs_tsv, "gs://theiagen-public-files-rp/terra/augur-defaults/minimal-lat-longs.tsv"])
-    File reference_gbk = select_first([reference_genbank, h1n1_ha_reference_gbk, h3n2_ha_reference_gbk, vic_ha_reference_gbk, yam_ha_reference_gbk, h1n1_na_reference_gbk, h3n2_na_reference_gbk, vic_na_reference_gbk, yam_na_reference_gbk, rsv_a_reference_gbk, rsv_b_reference_gbk, mpox_reference_gbk, "gs://theiagen-public-files/terra/theiacov-files/empty.gbk"])
-    File augur_auspice_config = select_first([auspice_config, h1n1_ha_auspice_config, h3n2_ha_auspice_config, vic_ha_auspice_config, yam_ha_auspice_config, h1n1_na_auspice_config, h3n2_na_auspice_config, vic_na_auspice_config, yam_na_auspice_config, rsv_a_auspice_config, rsv_b_auspice_config, mpox_auspice_config, "gs://theiagen-public-files-rp/terra/augur-defaults/minimal-auspice-config.json"])
+    File reference_gbk = select_first([reference_genbank, h1n1_ha_reference_gbk, h3n2_ha_reference_gbk, vic_ha_reference_gbk, yam_ha_reference_gbk, h5n1_ha_reference_gbk, h1n1_na_reference_gbk, h3n2_na_reference_gbk, vic_na_reference_gbk, yam_na_reference_gbk, rsv_a_reference_gbk, rsv_b_reference_gbk, mpox_reference_gbk, "gs://theiagen-public-files/terra/theiacov-files/empty.gbk"])
+    File augur_auspice_config = select_first([auspice_config, h1n1_ha_auspice_config, h3n2_ha_auspice_config, vic_ha_auspice_config, yam_ha_auspice_config, h5n1_ha_auspice_config, h1n1_na_auspice_config, h3n2_na_auspice_config, vic_na_auspice_config, yam_na_auspice_config, rsv_a_auspice_config, rsv_b_auspice_config, mpox_auspice_config, "gs://theiagen-public-files-rp/terra/augur-defaults/minimal-auspice-config.json"])
     Float augur_min_date = select_first([min_date, flu_min_date, rsv_a_min_date, rsv_b_min_date, mpox_min_date, 0.0])
     Int augur_pivot_interval = select_first([pivot_interval, flu_pivot_interval, mpox_pivot_interval, rsv_a_pivot_interval,rsv_b_pivot_interval, 0])
     Float augur_narrow_bandwidth = select_first([narrow_bandwidth, flu_narrow_bandwidth, mpox_narrow_bandwidth, rsv_a_narrow_bandwidth, rsv_b_narrow_bandwidth, 0.0])

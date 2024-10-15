@@ -20,6 +20,8 @@ task consensus {
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/ivar:1.3.1-titan"
   }
   command <<<
+    #set -euo pipefail to avoid silent failure
+    set -euo pipefail
     # date and version control
     date | tee DATE
     ivar version | head -n1 | tee IVAR_VERSION
