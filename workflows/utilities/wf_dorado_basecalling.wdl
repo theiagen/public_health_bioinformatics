@@ -3,7 +3,7 @@ version 1.0
 import "../../tasks/basecalling/task_dorado_basecall.wdl" as basecall_task
 import "../../tasks/basecalling/task_samtools_convert.wdl" as samtools_convert_task
 import "../../tasks/basecalling/task_dorado_demux.wdl" as dorado_demux_task
-import "../../../tasks/utilities/data_import/task_create_terra_table.wdl" as terra_fastq_table
+import "../../tasks/utilities/data_import/task_create_terra_table.wdl" as terra_fastq_table
 
 workflow dorado_basecalling_workflow {
   input {
