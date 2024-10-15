@@ -50,7 +50,14 @@ task dorado_demux {
 
       echo "Demultiplexing completed for $bam_file. Check $demux_output/demux.log for details."
 
-      # List contents of the demux output directory
+      # Gzip the generated FASTQ files
+      echo "Compressing FASTQ files in $demux_output"
+      gzip "$demux_output"/*.fastq || {
+        echo "ERROR: Failed to gzip FASTQ files for $bam_file" >&2
+        exit 1
+      }
+
+      echo "FASTQ files compressed for $bam_file."
       echo "Contents of $demux_output:"
       ls -lh "$demux_output"
     done
@@ -61,7 +68,7 @@ task dorado_demux {
   >>>
 
   output {
-    Array[File] fastq_files = glob("output/fastq/**/*.fastq")
+    Array[File] fastq_files = glob("output/fastq/**/*.fastq.gz")
   }
 
   runtime {

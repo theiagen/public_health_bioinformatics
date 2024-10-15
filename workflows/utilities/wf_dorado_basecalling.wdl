@@ -3,6 +3,8 @@ version 1.0
 import "../../tasks/basecalling/task_dorado_basecall.wdl" as basecall_task
 import "../../tasks/basecalling/task_samtools_convert.wdl" as samtools_convert_task
 import "../../tasks/basecalling/task_dorado_demux.wdl" as dorado_demux_task
+import "../../../tasks/utilities/data_import/task_create_terra_table.wdl" as terra_fastq_table
+
 
 workflow dorado_basecalling_workflow {
   input {
@@ -27,6 +29,18 @@ workflow dorado_basecalling_workflow {
     input:
       bam_files = samtools_convert_step.bam_files,
       kit_name = kit_name
+  }
+
+  # Create Terra Table with Fastq Files
+  call terra_fastq_table.create_terra_table as create_terra_table {
+    input:
+      new_table_name = new_table_name
+      data_location_path = data_location_path,
+      paired_end = paired_end,
+      assembly_data = assembly_data,
+      file_ending = ".fastq.gz",
+      terra_project = terra_project,
+      terra_workspace = terra_workspace
   }
 
   output {
