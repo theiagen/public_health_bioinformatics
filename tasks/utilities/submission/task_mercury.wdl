@@ -29,6 +29,9 @@ task mercury {
     volatile: true
   }
   command <<<
+    #set -euo pipefail to avoid silent failure
+    set -euo pipefail
+
     python3 /mercury/mercury/mercury.py -v | tee VERSION
 
     python3 /mercury/mercury/mercury.py \
