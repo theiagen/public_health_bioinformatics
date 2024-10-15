@@ -7,7 +7,6 @@ import "../../tasks/quality_control/basic_statistics/task_quast.wdl" as quast_ta
 import "../../tasks/quality_control/read_filtering/task_pilon.wdl" as pilon_task
 import "../../tasks/taxon_id/contamination/task_kraken2.wdl" as kraken_task
 import "../../tasks/taxon_id/task_krakentools.wdl" as krakentools_task
-import "../../tasks/taxon_id/contamination/task_krona.wdl" as krona_task
 import "../../tasks/utilities/data_handling/task_gather_scatter.wdl" as gather_scatter_task
 import "../../tasks/utilities/data_handling/task_parse_mapping.wdl" as parse_mapping_task
 import "../utilities/wf_morgana_magic.wdl" as morgana_magic_workflow
@@ -37,11 +36,6 @@ workflow theiameta_panel_illumina_pe {
       read1 = read_QC_trim.read1_clean,
       read2 = read_QC_trim.read2_clean,
       kraken2_db = kraken2_db
-  }
-  call krona_task.krona as krona {
-    input:
-      kraken2_report = kraken2.kraken2_report,
-      samplename = samplename
   }
   scatter (taxon_id in taxon_ids) {
     call krakentools_task.extract_kraken_reads as krakentools {
@@ -164,10 +158,6 @@ workflow theiameta_panel_illumina_pe {
     String kraken2_docker = kraken2.kraken2_docker
     File kraken2_report = kraken2.kraken2_report
     File kraken2_classified_report = kraken2.kraken2_classified_report
-    # krona outputs
-    String krona_version = krona.krona_version
-    String krona_docker = krona.krona_docker
-    File krona_html = krona.krona_html
     # krakentools outputs
     Array[String] identified_organisms = krakentools.organism_name
     # docker image??? -- work on figuring out how to make this not an array
