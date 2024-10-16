@@ -10,13 +10,13 @@ task dorado_demux {
   command <<< 
     set -e
     echo "### Running Dorado demux ###"
-    
+
     mkdir -p demux_output
 
     for bam_file in ~{sep=" " bam_files}; do
       echo "Processing BAM file: $bam_file"
 
-      # Run the Dorado demux command
+      # Run Dorado demux command
       dorado demux \
         "$bam_file" \
         --output-dir demux_output \
@@ -29,22 +29,29 @@ task dorado_demux {
       }
 
       echo "Demultiplexing completed for $bam_file."
+    done
 
-      # Process the output FASTQ files
-      for fastq_file in demux_output/*.fastq; do
+    echo "### Listing FASTQ files after demux ###"
+    ls -lh demux_output/*.fastq
+
+    # Process and rename FASTQ files
+    for fastq_file in demux_output/*.fastq; do
+      if [[ "$fastq_file" == *"unclassified"* ]]; then
+        final_fastq="${kit_name}_unclassified.fastq"
+      else
         barcode=$(echo "$fastq_file" | sed -E 's/.*_(barcode[0-9]+)\.fastq/\1/')
-
-        # Determine the final output file name
         final_fastq="${kit_name}_${barcode}.fastq"
+      fi
 
-        if [ -f "$final_fastq" ]; then
-          echo "Appending $fastq_file to $final_fastq"
-          cat "$fastq_file" >> "$final_fastq"
-        else
-          echo "Creating new FASTQ: $final_fastq"
-          mv "$fastq_file" "$final_fastq"
-        fi
-      done
+      # If the target FASTQ exists, append; otherwise, move it
+      if [ -f "$final_fastq" ]; then
+        echo "Appending $fastq_file to $final_fastq"
+        cat "$fastq_file" >> "$final_fastq"
+        rm "$fastq_file"
+      else
+        echo "Creating new FASTQ: $final_fastq"
+        mv "$fastq_file" "$final_fastq"
+      fi
     done
 
     echo "### Zipping all FASTQ files ###"
@@ -53,7 +60,7 @@ task dorado_demux {
     done
 
     echo "### Dorado demux process completed ###"
-    ls -lh ~{kit_name}_*.fastq.gz
+    ls -lh ${kit_name}_*.fastq.gz
   >>>
 
   output {
