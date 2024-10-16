@@ -232,14 +232,10 @@ plugins:
 extra_javascript:
   - https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js
   - https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js  
-  - https://unpkg.com/tablesort@5.3.0/dist/tablesort.min.js       
-  - javascripts/tablesort.js                                      
-  - assets/js/table-search.js                                     
+  - javascripts/table-search.js                                     
 
 extra_css:
   - stylesheets/extra.css                                         
-  - https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css 
-
 
 extra:
   social:

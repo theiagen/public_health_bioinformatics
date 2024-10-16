@@ -184,19 +184,35 @@ th {
 td {
   word-break: break-all;
 }
-
-/* Style the search box for tables*/
-input[type="search"] {
-  width: 25%;            
-  padding: 8px;           
-  margin-bottom: 15px;    
-  font-size: 16px;        
-  border: 1px solid #ccc;
-  box-sizing: border-box; 
+/* Base styles for the search box */
+div.searchable-table input.table-search-input {
+  width: 25%;
+  padding: 8px;
+  margin-bottom: 15px;
+  font-size: 14px;
+  box-sizing: border-box;
 }
 
-/* Change the placeholder text color search bar */
-input[type="search"]::placeholder {
-  color: #888;           
-  font-style: italic;     
+/* Light mode styles */
+[data-md-color-scheme="light"] div.searchable-table input.table-search-input {
+  background-color: #fff;
+  color: #000;
+  border: 1px solid #ccc;
+}
+
+[data-md-color-scheme="light"] div.searchable-table input.table-search-input::placeholder {
+  color: #888;
+  font-style: italic;
+}
+
+/* Dark mode styles */
+[data-md-color-scheme="slate"] div.searchable-table input.table-search-input {
+  background-color: #1d2125;
+  color: #fff;
+  border: 1px solid #373B40;
+}
+
+[data-md-color-scheme="slate"] div.searchable-table input.table-search-input::placeholder {
+  color: #bbb;
+  font-style: italic;
 }
