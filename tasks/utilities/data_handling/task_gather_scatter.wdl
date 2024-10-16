@@ -3,60 +3,60 @@ version 1.0
 task gather_scatter {
   input {
     String samplename
-    Array[Int]? taxon_ids
+    Array[Int]?+ taxon_ids
     # krakentools outputs
-    Array[String?] organism
-    Array[File?] extracted_read1
-    Array[File?] extracted_read2
-    Array[String]? krakentools_docker
+    Array[String?]+ organism
+    Array[File?]+ extracted_read1
+    Array[File?]+ extracted_read2
+    Array[String]?+ krakentools_docker
     # fastq_scan outputs
-    Array[Int?] fastq_scan_num_reads_binned1
-    Array[Int?] fastq_scan_num_reads_binned2
-    Array[String?] fastq_scan_num_reads_binned_pairs
-    Array[String?] fastq_scan_docker
-    Array[String?] fastq_scan_version
+    Array[Int?]+ fastq_scan_num_reads_binned1
+    Array[Int?]+ fastq_scan_num_reads_binned2
+    Array[String?]+ fastq_scan_num_reads_binned_pairs
+    Array[String?]+ fastq_scan_docker
+    Array[String?]+ fastq_scan_version
     # Assembly 
-    Array[File?] pilon_assembly_fasta ### maybe?????
+    Array[File?]+ pilon_assembly_fasta ### maybe?????
     # quast outputs
-    Array[Int?] quast_genome_length
-    Array[Int?] quast_number_contigs
-    Array[Int?] quast_n50
-    Array[Float?] quast_gc_percent
+    Array[Int?]+ quast_genome_length
+    Array[Int?]+ quast_number_contigs
+    Array[Int?]+ quast_n50
+    Array[Float?]+ quast_gc_percent
     # consensus qc outputs
-    Array[Int?] number_N
-    Array[Int?] number_ATCG
-    Array[Int?] number_Degenerate
-    Array[Int?] number_Total
-    Array[Float?] percent_reference_coverage
+    Array[Int?]+ number_N
+    Array[Int?]+ number_ATCG
+    Array[Int?]+ number_Degenerate
+    Array[Int?]+ number_Total
+    Array[Float?]+ percent_reference_coverage
     # pangolin outputs
-    Array[String?] pango_lineage
-    Array[String?] pango_lineage_expanded
-    Array[String?] pangolin_conflicts
-    Array[String?] pangolin_notes
-    Array[String?] pangolin_assignment_version
-    Array[String?] pangolin_versions
-    Array[String?] pangolin_docker
+    Array[String?]+ pango_lineage
+    Array[String?]+ pango_lineage_expanded
+    Array[String?]+ pangolin_conflicts
+    Array[String?]+ pangolin_notes
+    Array[String?]+ pangolin_assignment_version
+    Array[String?]+ pangolin_versions
+    Array[String?]+ pangolin_docker
     # Nextclade outputs for non-flu
-    Array[String?] nextclade_version
-    Array[String?] nextclade_docker
-    Array[String?] nextclade_ds_tag
-    Array[String?] nextclade_aa_subs
-    Array[String?] nextclade_aa_dels
-    Array[String?] nextclade_clade
-    Array[String?] nextclade_lineage
-    Array[String?] nextclade_qc
+    Array[String?]+ nextclade_version
+    Array[String?]+ nextclade_docker
+    Array[String?]+ nextclade_ds_tag
+    Array[String?]+ nextclade_aa_subs
+    Array[String?]+ nextclade_aa_dels
+    Array[String?]+ nextclade_clade
+    Array[String?]+ nextclade_lineage
+    Array[String?]+ nextclade_qc
     # Nextclade outputs for flu HA
-    Array[String?] nextclade_ds_tag_flu_ha
-    Array[String?] nextclade_aa_subs_flu_ha
-    Array[String?] nextclade_aa_dels_flu_ha
-    Array[String?] nextclade_clade_flu_ha
-    Array[String?] nextclade_qc_flu_ha
+    Array[String?]+ nextclade_ds_tag_flu_ha
+    Array[String?]+ nextclade_aa_subs_flu_ha
+    Array[String?]+ nextclade_aa_dels_flu_ha
+    Array[String?]+ nextclade_clade_flu_ha
+    Array[String?]+ nextclade_qc_flu_ha
     # Nextclade outputs for flu NA
-    Array[String?] nextclade_ds_tag_flu_na
-    Array[String?] nextclade_aa_subs_flu_na
-    Array[String?] nextclade_aa_dels_flu_na
-    Array[String?] nextclade_clade_flu_na
-    Array[String?] nextclade_qc_flu_na
+    Array[String?]+ nextclade_ds_tag_flu_na
+    Array[String?]+ nextclade_aa_subs_flu_na
+    Array[String?]+ nextclade_aa_dels_flu_na
+    Array[String?]+ nextclade_clade_flu_na
+    Array[String?]+ nextclade_qc_flu_na
     String docker = "us-docker.pkg.dev/general-theiagen/quay/ubuntu:latest"
     Int disk_size = 50
     Int cpu = 2
