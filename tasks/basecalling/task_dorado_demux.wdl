@@ -11,59 +11,59 @@ task dorado_demux {
     set -e
 
     echo "### Running Dorado demux ###"
-    for bam_file in ~{sep=" " bam_files}; do
-      # Check if the BAM file exists
-      if [ ! -f "$bam_file" ]; then
-        echo "ERROR: BAM file $bam_file does not exist" >&2
-        exit 1
-      fi
+    
+    # Create a temporary directory for demux output
+    mkdir -p demux_output
 
+    for bam_file in ~{sep=" " bam_files}; do
       echo "Processing BAM file: $bam_file"
 
-      # Get a clean base name for output (removing unnecessary prefixes)
-      base_name=$(basename "$bam_file" .bam | sed 's/^[^_]*_//')
-
-      echo "Demultiplexing BAM file: $bam_file"
-      echo "Output directory: Current working directory (.)"
-
-      # Run the Dorado demux command, outputting directly to the working directory
+      # Run the Dorado demux command and output FASTQ files to 'demux_output/'
       dorado demux \
         "$bam_file" \
-        --output-dir . \
         --kit-name ~{kit_name} \
         --emit-fastq \
-        --verbose > "${base_name}_demux.log" 2>&1 || {
+        --output-dir demux_output \
+        --verbose > "demux_output/$(basename $bam_file .bam)_demux.log" 2>&1 || {
           echo "ERROR: Dorado demux failed for $bam_file" >&2
-          cat "${base_name}_demux.log" >&2
           exit 1
         }
 
-      echo "Demultiplexing completed for $bam_file. Log: ${base_name}_demux.log"
+      echo "Demultiplexing completed for $bam_file."
+    done
 
-      # Rename FASTQ files to remove unwanted prefixes
-      for fastq_file in ./*.fastq; do
-        new_name="${base_name}_$(basename "$fastq_file" | sed 's/^[^_]*_//')"
-        mv "$fastq_file" "$new_name"
-        echo "Renamed $fastq_file to $new_name"
-      done
+    echo "### Merging FASTQ files by barcode ###"
 
-      # Gzip the renamed FASTQ files
-      echo "Compressing FASTQ files for $bam_file"
-      gzip ./*.fastq || {
-        echo "ERROR: Failed to gzip FASTQ files for $bam_file" >&2
-        exit 1
-      }
+    # Merge FASTQ files by barcode
+    for fastq_file in demux_output/*.fastq; do
+      barcode=$(basename "$fastq_file" | cut -d'_' -f2)  # Extract barcode from filename
+      merged_fastq="~{kit_name}_${barcode}.fastq"
 
-      echo "FASTQ files compressed for $bam_file."
-      echo "Listing output files:"
-      ls -lh .
+      # Append to existing FASTQ or create new if it doesn't exist
+      if [ -f "$merged_fastq" ]; then
+        echo "Appending $fastq_file to $merged_fastq"
+        cat "$fastq_file" >> "$merged_fastq"
+      else
+        echo "Creating new FASTQ: $merged_fastq"
+        mv "$fastq_file" "$merged_fastq"
+      fi
+    done
+
+    echo "### Zipping FASTQ files ###"
+    
+    # Zip all merged FASTQ files
+    for merged_fastq in ~{kit_name}_*.fastq; do
+      gzip "$merged_fastq"
+      echo "Zipped $merged_fastq to ${merged_fastq}.gz"
     done
 
     echo "### Dorado demux process completed ###"
+    ls -lh ~{kit_name}_*.fastq.gz
+
   >>>
 
   output {
-    Array[File] fastq_files = glob("*.fastq.gz")
+    Array[File] fastq_files = glob("~{kit_name}_*.fastq.gz")
   }
 
   runtime {
