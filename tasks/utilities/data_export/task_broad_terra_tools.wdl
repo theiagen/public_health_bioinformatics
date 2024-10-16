@@ -390,7 +390,8 @@ task export_taxon_tables {
     volatile: true
   }
   command <<<
-  
+    set -euo pipefail
+    
     # capture taxon and corresponding table names from input taxon_tables
     taxon_array=($(cut -f1 ~{taxon_tables} | tail +2))
     echo "Taxon array: ${taxon_array[*]}"
