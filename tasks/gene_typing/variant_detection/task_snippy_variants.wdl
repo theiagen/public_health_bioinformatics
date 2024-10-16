@@ -85,51 +85,54 @@ task snippy_variants {
     reference_length_passed_depth=$(cat "~{samplename}/~{samplename}_depth_~{min_coverage}.tsv" | wc -l)
     echo $reference_length_passed_depth | tee REFERENCE_LENGTH_PASSED_DEPTH
 
-    # check if reference_length is equal to 0, if so, output a warning
     if [ "$reference_length" -eq 0 ]; then
-      echo "Could not compute percent reference coverage: reference length is 0" > PERCENT_REF_COVERAGE
+      echo "0" > PERCENT_REF_COVERAGE
     else
-      # compute percent reference coverage
-      echo $reference_length_passed_depth $reference_length | awk '{ print ($1/$2)*100 }' > PERCENT_REF_COVERAGE
+      echo $reference_length_passed_depth $reference_length | awk '{ printf("%.2f", ($1/$2)*100) }' > PERCENT_REF_COVERAGE
     fi
 
     # Compute percentage of reads aligned
     reads_aligned=$(cat READS_ALIGNED_TO_REFERENCE)
     total_reads=$(samtools view -c "~{samplename}/~{samplename}.bam")
+    echo $total_reads > TOTAL_READS
     if [ "$total_reads" -eq 0 ]; then
-      echo "Could not compute percent reads aligned: total reads is 0" > PERCENT_READS_ALIGNED
+      echo "0" > PERCENT_READS_ALIGNED
     else
-      echo $reads_aligned $total_reads | awk '{ print ($1/$2)*100 }' > PERCENT_READS_ALIGNED
+      echo $reads_aligned $total_reads | awk '{ printf("%.2f", ($1/$2)*100) }' > PERCENT_READS_ALIGNED
     fi
 
-    # create qc metrics file
+    # Create QC metrics file
     line_count=$(wc -l < "~{samplename}/~{samplename}_coverage.tsv")
-    # Check the number of lines in the file, to consider scenarios e.g. for V. cholerae that has two chromosomes and therefore coverage metrics per chromosome
+    # Check the number of lines in the coverage file, to consider scenarios e.g. for V. cholerae that has two chromosomes and therefore coverage metrics per chromosome
     if [ "$line_count" -eq 2 ]; then
       head -n 1 "~{samplename}/~{samplename}_coverage.tsv" | tr ' ' '\t' > COVERAGE_HEADER
       sed -n '2p' "~{samplename}/~{samplename}_coverage.tsv" | tr ' ' '\t' > COVERAGE_VALUES
-    else
+    elif [ "$line_count" -gt 2 ]; then
+      # Multiple chromosomes (header + multiple data lines)
       header=$(head -n 1 "~{samplename}/~{samplename}_coverage.tsv")
-      output_header="$header"
+      output_header=""
       output_values=""
-
-      for (( i=2; i<=$line_count; i++ ))
-      do
-        #output_header="$output_header"
-        values=$(sed -n "${i}p" "~{samplename}/~{samplename}_coverage.tsv")
-        if [ -z "$output_values" ]; then
-          output_values="$values"
+      # while loop to iterate over each line in the coverage file
+      while read -r line; do
+        if [ -z "$output_header" ]; then
+          output_header="$header"
+          output_values="$line"
         else
           output_header="$output_header\t$header"
-          output_values="$output_values\t$values"
+          output_values="$output_values\t$line"
         fi
-      done
+      done < <(tail -n +2 "~{samplename}/~{samplename}_coverage.tsv")
       echo "$output_header" | tr ' ' '\t' > COVERAGE_HEADER
       echo "$output_values" | tr ' ' '\t' > COVERAGE_VALUES
+    else
+      # Coverage file has insufficient data
+      echo "Coverage file has insufficient data." > COVERAGE_HEADER
+      echo "" > COVERAGE_VALUES
     fi
 
-    echo -e "samplename\treads_aligned_to_reference\tvariants_total\tpercent_ref_coverage\t$(cat COVERAGE_HEADER)" > "~{samplename}/~{samplename}_qc_metrics.tsv"
-    echo -e "~{samplename}\t$(cat READS_ALIGNED_TO_REFERENCE)\t$(cat VARIANTS_TOTAL)\t$(cat PERCENT_REF_COVERAGE)\t$(cat COVERAGE_VALUES)" >> "~{samplename}/~{samplename}_qc_metrics.tsv"
+    # Build the QC metrics file
+    echo -e "samplename\treads_aligned_to_reference\ttotal_reads\tpercent_reads_aligned\tvariants_total\tpercent_ref_coverage\t$(cat COVERAGE_HEADER)" > "~{samplename}/~{samplename}_qc_metrics.tsv"
+    echo -e "~{samplename}\t$reads_aligned\t$total_reads\t$(cat PERCENT_READS_ALIGNED)\t$(cat VARIANTS_TOTAL)\t$(cat PERCENT_REF_COVERAGE)\t$(cat COVERAGE_VALUES)" >> "~{samplename}/~{samplename}_qc_metrics.tsv"
 
   >>>
   output {
