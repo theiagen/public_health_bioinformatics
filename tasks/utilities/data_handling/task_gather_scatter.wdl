@@ -8,7 +8,7 @@ task gather_scatter {
     Array[String?]+ organism
     Array[File?]+ extracted_read1
     Array[File?]+ extracted_read2
-    Array[String]?+ krakentools_docker
+    Array[String]? krakentools_docker
     # fastq_scan outputs
     Array[Int?]+ fastq_scan_num_reads_binned1
     Array[Int?]+ fastq_scan_num_reads_binned2
