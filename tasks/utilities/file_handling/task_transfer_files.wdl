@@ -16,10 +16,10 @@ task transfer_files {
   command <<<
     file_path_array="~{sep=' ' files_to_transfer}" 
 
-    gcloud storage -m cp -n ${file_path_array[@]} ~{target_bucket}
+    gcloud storage cp -n ${file_path_array[@]} ~{target_bucket}
     
     echo "transferred_files" > transferred_files.tsv
-    gcloud storage -m ls ~{target_bucket} >> transferred_files.tsv        
+    gcloud storage ls ~{target_bucket} >> transferred_files.tsv        
    >>>
   output {
     File transferred_files = "transferred_files.tsv"
