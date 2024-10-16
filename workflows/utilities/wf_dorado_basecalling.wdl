@@ -61,6 +61,6 @@ workflow dorado_basecalling_workflow {
 
   output {
     Array[File] fastq_files = dorado_demux.fastq_files
-    File terra_table_tsv = create_terra_table.terra_table_to_upload
+    File? terra_table_tsv = create_terra_table.terra_table_to_upload
   }
 }
