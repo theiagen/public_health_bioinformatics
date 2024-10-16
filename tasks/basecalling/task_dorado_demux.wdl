@@ -9,57 +9,51 @@ task dorado_demux {
 
   command <<< 
     set -e
-
     echo "### Running Dorado demux ###"
     
-    # Create a temporary directory for demux output
     mkdir -p demux_output
 
     for bam_file in ~{sep=" " bam_files}; do
       echo "Processing BAM file: $bam_file"
 
-      # Run the Dorado demux command and output FASTQ files to 'demux_output/'
+      # Run the Dorado demux command
       dorado demux \
         "$bam_file" \
+        --output-dir demux_output \
         --kit-name ~{kit_name} \
         --emit-fastq \
-        --output-dir demux_output \
-        --verbose > "demux_output/$(basename $bam_file .bam)_demux.log" 2>&1 || {
+        --verbose > "demux_output/$(basename "$bam_file").log" 2>&1 || {
           echo "ERROR: Dorado demux failed for $bam_file" >&2
+          cat "demux_output/$(basename "$bam_file").log" >&2
           exit 1
-        }
+      }
 
       echo "Demultiplexing completed for $bam_file."
+
+      # Process the output FASTQ files
+      for fastq_file in demux_output/*.fastq; do
+        barcode=$(echo "$fastq_file" | sed -E 's/.*_(barcode[0-9]+)\.fastq/\1/')
+
+        # Determine the final output file name
+        final_fastq="${kit_name}_${barcode}.fastq"
+
+        if [ -f "$final_fastq" ]; then
+          echo "Appending $fastq_file to $final_fastq"
+          cat "$fastq_file" >> "$final_fastq"
+        else
+          echo "Creating new FASTQ: $final_fastq"
+          mv "$fastq_file" "$final_fastq"
+        fi
+      done
     done
 
-    echo "### Merging FASTQ files by barcode ###"
-
-    # Merge FASTQ files by barcode
-    for fastq_file in demux_output/*.fastq; do
-      barcode=$(basename "$fastq_file" | cut -d'_' -f2)  # Extract barcode from filename
-      merged_fastq="~{kit_name}_${barcode}.fastq"
-
-      # Append to existing FASTQ or create new if it doesn't exist
-      if [ -f "$merged_fastq" ]; then
-        echo "Appending $fastq_file to $merged_fastq"
-        cat "$fastq_file" >> "$merged_fastq"
-      else
-        echo "Creating new FASTQ: $merged_fastq"
-        mv "$fastq_file" "$merged_fastq"
-      fi
-    done
-
-    echo "### Zipping FASTQ files ###"
-    
-    # Zip all merged FASTQ files
-    for merged_fastq in ~{kit_name}_*.fastq; do
-      gzip "$merged_fastq"
-      echo "Zipped $merged_fastq to ${merged_fastq}.gz"
+    echo "### Zipping all FASTQ files ###"
+    for fastq in ${kit_name}_*.fastq; do
+      gzip -f "$fastq"
     done
 
     echo "### Dorado demux process completed ###"
     ls -lh ~{kit_name}_*.fastq.gz
-
   >>>
 
   output {
@@ -73,4 +67,3 @@ task dorado_demux {
     maxRetries: 0
   }
 }
-
