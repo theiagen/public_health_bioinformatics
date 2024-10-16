@@ -187,10 +187,11 @@ td {
 /* Base styles for the search box */
 div.searchable-table input.table-search-input {
   width: 25%;
-  padding: 8px;
-  margin-bottom: 15px;
-  font-size: 14px;
+  padding: 10px;
+  margin-bottom: 12px;
+  font-size: 12px;
   box-sizing: border-box;
+  border-radius: 2px; 
 }
 
 /* Light mode styles */
