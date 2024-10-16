@@ -3,7 +3,7 @@ version 1.0
 task gather_scatter {
   input {
     String samplename
-    Array[Int]?+ taxon_ids
+    Array[Int]? taxon_ids
     # krakentools outputs
     Array[String?]+ organism
     Array[File?]+ extracted_read1
