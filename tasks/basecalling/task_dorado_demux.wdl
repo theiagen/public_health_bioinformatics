@@ -10,65 +10,60 @@ task dorado_demux {
   command <<< 
     set -e
 
-    # Define output folder for FASTQ files
-    fastq_output="output/fastq/"
-    mkdir -p "$fastq_output"
-
     echo "### Running Dorado demux ###"
     for bam_file in ~{sep=" " bam_files}; do
-      # Logging the BAM file details
+      # Check if the BAM file exists
       if [ ! -f "$bam_file" ]; then
         echo "ERROR: BAM file $bam_file does not exist" >&2
         exit 1
       fi
-      echo "BAM file $bam_file found. Proceeding with demux."
 
-      base_name=$(basename "$bam_file" .bam)
-      demux_output="${fastq_output}/${base_name}"
-      mkdir -p "$demux_output"
+      echo "Processing BAM file: $bam_file"
 
-      # Verify output directory creation
-      if [ ! -d "$demux_output" ]; then
-        echo "ERROR: Demux output directory $demux_output was not created." >&2
-        exit 1
-      fi
+      # Get a clean base name for output (removing unnecessary prefixes)
+      base_name=$(basename "$bam_file" .bam | sed 's/^[^_]*_//')
 
       echo "Demultiplexing BAM file: $bam_file"
-      echo "Demux output directory: $demux_output"
+      echo "Output directory: Current working directory (.)"
 
-      # Run the Dorado demux command and log output to a file
+      # Run the Dorado demux command, outputting directly to the working directory
       dorado demux \
         "$bam_file" \
-        --output-dir "$demux_output" \
+        --output-dir . \
         --kit-name ~{kit_name} \
         --emit-fastq \
-        --verbose > "$demux_output/demux.log" 2>&1 || { 
+        --verbose > "${base_name}_demux.log" 2>&1 || {
           echo "ERROR: Dorado demux failed for $bam_file" >&2
-          cat "$demux_output/demux.log" >&2
+          cat "${base_name}_demux.log" >&2
           exit 1
         }
 
-      echo "Demultiplexing completed for $bam_file. Check $demux_output/demux.log for details."
+      echo "Demultiplexing completed for $bam_file. Log: ${base_name}_demux.log"
 
-      # Gzip the generated FASTQ files
-      echo "Compressing FASTQ files in $demux_output"
-      gzip "$demux_output"/*.fastq || {
+      # Rename FASTQ files to remove unwanted prefixes
+      for fastq_file in ./*.fastq; do
+        new_name="${base_name}_$(basename "$fastq_file" | sed 's/^[^_]*_//')"
+        mv "$fastq_file" "$new_name"
+        echo "Renamed $fastq_file to $new_name"
+      done
+
+      # Gzip the renamed FASTQ files
+      echo "Compressing FASTQ files for $bam_file"
+      gzip ./*.fastq || {
         echo "ERROR: Failed to gzip FASTQ files for $bam_file" >&2
         exit 1
       }
 
       echo "FASTQ files compressed for $bam_file."
-      echo "Contents of $demux_output:"
-      ls -lh "$demux_output"
+      echo "Listing output files:"
+      ls -lh .
     done
 
-    echo "### All demultiplexing steps completed ###"
-    echo "Listing contents of $fastq_output:"
-    ls -lh "$fastq_output"
+    echo "### Dorado demux process completed ###"
   >>>
 
   output {
-    Array[File] fastq_files = glob("output/fastq/**/*.fastq.gz")
+    Array[File] fastq_files = glob("*.fastq.gz")
   }
 
   runtime {
@@ -78,3 +73,4 @@ task dorado_demux {
     maxRetries: 0
   }
 }
+
