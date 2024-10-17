@@ -9,7 +9,8 @@ import "../../tasks/utilities/data_import/task_create_terra_table.wdl" as terra_
 workflow dorado_basecalling_workflow {
   meta {
     description: "GPU-accelerated workflow for basecalling Oxford Nanopore POD5 files, generating SAM outputs and supporting downstream demultiplexing and FASTQ output."
-}
+  }
+
   input {
     Array[File] input_files
     String dorado_model
@@ -43,13 +44,13 @@ workflow dorado_basecalling_workflow {
       fastq_file_name = fastq_file_name
   }
 
-  call transfer_fastq_files.transfer_files {
+  call transfer_fastq_files.transfer_files as transfer_files {
     input:
       files_to_transfer = dorado_demux.fastq_files,
       target_bucket = fastq_upload_path
   }
 
-  if (defined(transfer_fastq_files.transferred_files)) {
+  if (defined(transfer_files.transferred_files)) {
     call terra_fastq_table.create_terra_table as create_terra_table {
       input:
         new_table_name = new_table_name,
