@@ -191,7 +191,7 @@ workflow snippy_tree_wf {
     call file_handling.cat_files as concatenate_qc_metrics {
       input:
         files_to_cat = select_first([snippy_variants_qc_metrics]),
-        concatenated_file_name = tree_name_updated + "_combined_qc_metrics.tsv"
+        concatenated_file_name = tree_name_updated + "_combined_qc_metrics.tsv",
         skip_extra_headers = true
     }
   }
