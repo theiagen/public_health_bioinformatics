@@ -112,7 +112,8 @@ workflow theiacov_illumina_pe {
         trim_quality_min_score = trim_quality_min_score,
         trim_window_size = trim_window_size,
         target_organism = organism_parameters.kraken_target_organism,
-        kraken_db = kraken_db
+        kraken_db = kraken_db,
+        call_kraken = true
     }
     call screen.check_reads as clean_check_reads {
       input:

@@ -103,7 +103,8 @@ workflow theiacov_ont {
         run_prefix = run_prefix,
         target_organism = organism_parameters.kraken_target_organism,
         workflow_series = "theiacov",
-        kraken_db = kraken_db
+        kraken_db = kraken_db,
+        call_kraken = true
     }
     call screen.check_reads_se as clean_check_reads {
       input:
