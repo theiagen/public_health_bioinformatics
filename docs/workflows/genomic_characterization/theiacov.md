@@ -217,19 +217,22 @@ All TheiaCoV Workflows (not TheiaCoV_FASTA_Batch)
 | ivar_consensus | **stats_n_coverage_primtrim_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | SE,PE | HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2 |
 | ivar_consensus | **stats_n_coverage_primtrim_docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/samtools:1.15 | Optional | SE,PE | HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2 |
 | ivar_consensus | **stats_n_coverage_primtrim_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | SE,PE | HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2 |
+| kraken2_dehosted | **classified_out** | String | Allows user to rename the classified FASTQ files output. Must include .fastq as the suffix | classified#.fastq | Optional | CL | sars-cov-2 |
 | kraken2_dehosted | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional | CL | sars-cov-2 |
 | kraken2_dehosted | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | CL | sars-cov-2 |
-| kraken2_dehosted | **docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.0.8-beta_hv | Optional | CL | sars-cov-2 |
+| kraken2_dehosted | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.0.8-beta_hv | Optional | CL | sars-cov-2 |
 | kraken2_dehosted | **kraken2_db** | String | The database used to run Kraken2 | /kraken2-db | Optional | CL | sars-cov-2 |
 | kraken2_dehosted | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | CL | sars-cov-2 |
 | kraken2_dehosted | **read2** | File | Internal component, do not modify | | Do not modify, Optional | CL | sars-cov-2 |
+| kraken2_dehosted | **unclassified_out** | String | Allows user to rename the unclassified FASTQ files output. Must include .fastq as the suffix | unclassified#.fastq | Optional | CL | sars-cov-2 |
+| kraken2_raw | **classified_out** | String | Allows user to rename the classified FASTQ files output. Must include .fastq as the suffix | classified#.fastq | Optional | CL | sars-cov-2 |
 | kraken2_raw | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional | CL | sars-cov-2 |
 | kraken2_raw | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | CL | sars-cov-2 |
-| kraken2_raw | **docker_image** | Int | Docker container used in this task | us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.0.8-beta_hv | Optional | CL | sars-cov-2 |
+| kraken2_raw | **docker** | Int | Docker container used in this task | us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.0.8-beta_hv | Optional | CL | sars-cov-2 |
 | kraken2_raw | **kraken2_db** | String | The database used to run Kraken2 | /kraken2-db | Optional | CL | sars-cov-2 |
 | kraken2_raw | **memory** | String | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | CL | sars-cov-2 |
-| kraken2_raw | **read_processing** | String | The tool used for trimming of primers from reads. Options are trimmomatic and fastp | trimmomatic | Optional | | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | kraken2_raw | **read2** | File | Internal component, do not modify | | Do not modify, Optional | CL | sars-cov-2 |
+| kraken2_raw | **unclassified_out** | String | Allows user to rename the unclassified FASTQ files output. Must include .fastq as the suffix | unclassified#.fastq | Optional | CL | sars-cov-2 |
 | nanoplot_clean | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional | ONT | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | nanoplot_clean | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | ONT | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | nanoplot_clean | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/nanoplot:1.40.0 | Optional | ONT | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
@@ -373,6 +376,7 @@ All TheiaCoV Workflows (not TheiaCoV_FASTA_Batch)
 | workflow name | **flu_segment** | String | Influenza genome segment being analyzed. Options: "HA" or "NA". | HA | Optional, Required | FASTA | |
 | workflow name | **flu_subtype** | String | The influenza subtype being analyzed. Options: "Yamagata", "Victoria", "H1N1", "H3N2", "H5N1". Automatically determined. | | Optional | FASTA | |
 | workflow name | **genome_length** | Int | Use to specify the expected genome length | | Optional | FASTA, ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
+| workflow name | **kraken_db** | File | A Kraken2 database in .tar.gz format. Must contain viral and human sequences. | gs://theiagen-large-public-files-rp/terra/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz | Optional | CL, ONT, PE, SE |  HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | workflow name | **max_genome_length** | Int | Maximum genome length able to pass read screening | 2673870 | Optional | ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | workflow name | **max_length** | Int | Maximum length for a read based on the SARS-CoV-2 primer scheme | 700 | Optional | ONT | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | workflow name | **medaka_docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/artic-ncov2019:1.3.0-medaka-1.4.3 | Optional | CL | |
