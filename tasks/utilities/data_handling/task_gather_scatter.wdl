@@ -58,7 +58,7 @@ task gather_scatter {
     File? nextclade_clade_flu_na
     File? nextclade_qc_flu_na
     # change to be a docker with pandas
-    String docker = "us-docker.pkg.dev/general-theiagen/quay/ubuntu:latest"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-03-16"
     Int disk_size = 50
     Int cpu = 2
     Int memory = 8
@@ -67,19 +67,20 @@ task gather_scatter {
     python3<<CODE
     import pandas as pd
     import os
+    import json
 
-    def load_json_data(file_path):
+    def load_json_data(file_path, column_name):
       if os.path.exists(file_path):
         with open(file_path, 'r') as file:
           json_data_from_file = json.load(file)
-          df_from_file = pd.DataFrame(json_data_from_file, columns=[os.basename(file_path)])
+          df_from_file = pd.DataFrame(json_data_from_file, columns=[column_name])
           return df_from_file
       else:
         return None
 
     df = pd.DataFrame()
     
-    taxon_ids_df = load_json_data("~{taxon_ids}")
+    taxon_ids_df = load_json_data("~{taxon_ids}", "taxon_ids")
     if taxon_ids_df is not None:
       df = pd.concat([df, taxon_ids_df], axis=1)
     
