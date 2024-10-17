@@ -1039,16 +1039,17 @@ All TheiaCoV Workflows (not TheiaCoV_FASTA_Batch)
 | ivar_vcf | File | iVar tsv output converted to VCF format | PE, SE |
 | ivar_version_consensus | String | Version of iVar for running the iVar consensus command | PE, SE |
 | ivar_version_primtrim | String | Version of iVar for running the iVar trim command | PE, SE |
-| kraken_human | Float | Percent of human read data detected using the Kraken2 software | CL, ONT, PE, SE |
-| kraken_human_dehosted | Float | Percent of human read data detected using the Kraken2 software after host removal | CL, ONT, PE |
-| kraken_report | File | Full Kraken report | CL, ONT, PE, SE |
-| kraken_report_dehosted | File | Full Kraken report after host removal | CL, ONT, PE |
-| kraken_sc2 | Float | Percent of SARS-CoV-2 read data detected using the Kraken2 software | CL, ONT, PE, SE |
-| kraken_sc2_dehosted | Float | Percent of SARS-CoV-2 read data detected using the Kraken2 software after host removal | CL, ONT, PE |
-| kraken_target_organism | String | Percent of target organism read data detected using the Kraken2 software | CL, ONT, PE, SE |
-| kraken_target_organism_dehosted | String | Percent of target organism read data detected using the Kraken2 software after host removal | CL, ONT, PE |
-| kraken_target_organism_name | String | The name of the target organism; e.g., "Monkeypox" or "Human immunodeficiency virus" | CL, ONT, PE, SE |
-| kraken_version | String | Version of Kraken software used | CL, ONT, PE, SE |
+| kraken2_database | String | Database file used for Kraken2 analysis | CL, ONT, PE, SE |
+| kraken2_human | Float | Percent of human read data detected using the Kraken2 software | CL, ONT, PE, SE |
+| kraken2_human_dehosted | Float | Percent of human read data detected using the Kraken2 software after host removal | CL, ONT, PE |
+| kraken2_report | File | Full Kraken report | CL, ONT, PE, SE |
+| kraken2_report_dehosted | File | Full Kraken report after host removal | CL, ONT, PE |
+| kraken2_sc2 | Float | Percent of SARS-CoV-2 read data detected using the Kraken2 software | CL, ONT, PE, SE |
+| kraken2_sc2_dehosted | Float | Percent of SARS-CoV-2 read data detected using the Kraken2 software after host removal | CL, ONT, PE |
+| kraken2_target_organism | String | Percent of target organism read data detected using the Kraken2 software | CL, ONT, PE, SE |
+| kraken2_target_organism_dehosted | String | Percent of target organism read data detected using the Kraken2 software after host removal | CL, ONT, PE |
+| kraken2_target_organism_name | String | The name of the target organism; e.g., "Monkeypox" or "Human immunodeficiency virus" | CL, ONT, PE, SE |
+| kraken2_version | String | Version of Kraken software used | CL, ONT, PE, SE |
 | meanbaseq_trim | Float | Mean quality of the nucleotide basecalls aligned to the reference genome after primer trimming | CL, ONT, PE, SE |
 | meanmapq_trim | Float | Mean quality of the mapped reads to the reference genome after primer trimming | CL, ONT, PE, SE |
 | medaka_reference | String | Reference sequence used in medaka task | CL, ONT |
