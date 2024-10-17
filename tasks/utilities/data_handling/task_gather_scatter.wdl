@@ -72,7 +72,7 @@ task gather_scatter {
       if os.path.exists(file_path):
         with open(file_path, 'r') as file:
           json_data_from_file = json.load(file)
-          df_from_file = pd.DataFrame(json_data_from_file, columns=[file_path])
+          df_from_file = pd.DataFrame(json_data_from_file, columns=[os.basename(file_path)])
           return df_from_file
       else:
         return None
