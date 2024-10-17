@@ -18,6 +18,7 @@ workflow dorado_basecalling_workflow {
     String? file_ending
     String terra_project
     String terra_workspace
+    String fastq_file_name
   }
 
   call basecall_task.basecall as basecall_step {
@@ -35,18 +36,17 @@ workflow dorado_basecalling_workflow {
   call dorado_demux_task.dorado_demux {
     input:
       bam_files = samtools_convert.bam_files,
-      kit_name = kit_name
+      kit_name = kit_name,
+      file_name = fastq_file_name
   }
 
-  # Transfer FASTQ files to Terra
   call transfer_fastq_files.transfer_files {
     input:
       files_to_transfer = dorado_demux.fastq_files,
       target_bucket = fastq_upload_path
   }
 
-  # Create Terra Table with gzipped FASTQ Files
-  if (defined(transfer_files.transferred_files)) {
+  if (defined(transfer_fastq_files.transferred_files)) {
     call terra_fastq_table.create_terra_table as create_terra_table {
       input:
         new_table_name = new_table_name,
@@ -57,7 +57,7 @@ workflow dorado_basecalling_workflow {
         terra_project = terra_project,
         terra_workspace = terra_workspace
     }
- }
+  }
 
   output {
     Array[File] fastq_files = dorado_demux.fastq_files
