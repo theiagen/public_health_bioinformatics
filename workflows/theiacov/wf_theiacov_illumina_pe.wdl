@@ -63,6 +63,7 @@ workflow theiacov_illumina_pe {
     String? pangolin_docker_image
     # kraken parameters
     String? target_organism
+    File kraken_db = "gs://theiagen-large-public-files-rp/terra/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz"
     # qc check parameters
     File? qc_check_table
   }
@@ -110,7 +111,9 @@ workflow theiacov_illumina_pe {
         trim_min_length = trim_min_length,
         trim_quality_min_score = trim_quality_min_score,
         trim_window_size = trim_window_size,
-        target_organism = organism_parameters.kraken_target_organism
+        target_organism = organism_parameters.kraken_target_organism,
+        kraken_db = kraken_db,
+        call_kraken = true
     }
     call screen.check_reads as clean_check_reads {
       input:
@@ -227,8 +230,8 @@ workflow theiacov_illumina_pe {
             num_reads_raw2 = read_QC_trim.fastq_scan_raw2,
             num_reads_clean1 = read_QC_trim.fastq_scan_clean1,
             num_reads_clean2 = read_QC_trim.fastq_scan_clean2,
-            kraken_human = read_QC_trim.kraken_human,
-            kraken_human_dehosted = read_QC_trim.kraken_human_dehosted,
+            kraken_human = read_QC_trim.kraken2_human,
+            kraken_human_dehosted = read_QC_trim.kraken2_human_dehosted,
             meanbaseq_trim = ivar_consensus.meanbaseq_trim,
             assembly_mean_coverage = ivar_consensus.assembly_mean_coverage,
             number_N = consensus_qc.number_N,
@@ -287,16 +290,17 @@ workflow theiacov_illumina_pe {
     File? read1_dehosted = read_QC_trim.read1_dehosted
     File? read2_dehosted = read_QC_trim.read2_dehosted
     # Read QC - kraken outputs
-    String? kraken_version = read_QC_trim.kraken_version
-    Float? kraken_human = read_QC_trim.kraken_human
-    Float? kraken_sc2 = read_QC_trim.kraken_sc2
-    String? kraken_target_organism = read_QC_trim.kraken_target_organism
-    String? kraken_target_organism_name = read_QC_trim.kraken_target_organism_name
-    File? kraken_report = read_QC_trim.kraken_report
-    Float? kraken_human_dehosted = read_QC_trim.kraken_human_dehosted
-    Float? kraken_sc2_dehosted = read_QC_trim.kraken_sc2_dehosted
-    String? kraken_target_organism_dehosted = read_QC_trim.kraken_target_organism_dehosted
-    File? kraken_report_dehosted = read_QC_trim.kraken_report_dehosted
+    String? kraken2_version = read_QC_trim.kraken2_version
+    Float? kraken2_human = read_QC_trim.kraken2_human
+    Float? kraken2_sc2 = read_QC_trim.kraken2_sc2
+    String? kraken2_target_organism = read_QC_trim.kraken2_target_organism
+    String? kraken2_target_organism_name = read_QC_trim.kraken2_target_organism_name
+    File? kraken2_report = read_QC_trim.kraken2_report
+    Float? kraken2_human_dehosted = read_QC_trim.kraken2_human_dehosted
+    Float? kraken2_sc2_dehosted = read_QC_trim.kraken2_sc2_dehosted
+    String? kraken2_target_organism_dehosted = read_QC_trim.kraken2_target_organism_dehosted
+    File? kraken2_report_dehosted = read_QC_trim.kraken2_report_dehosted
+    String? kraken2_database = read_QC_trim.kraken2_database
     # Read Alignment - bwa outputs
     String? bwa_version = ivar_consensus.bwa_version
     String? samtools_version = ivar_consensus.samtools_version

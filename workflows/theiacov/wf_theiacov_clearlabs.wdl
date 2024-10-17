@@ -37,6 +37,8 @@ workflow theiacov_clearlabs {
     String? target_organism
     # qc check parameters
     File? qc_check_table
+    # kraken inputs
+    File kraken_db = "gs://theiagen-large-public-files-rp/terra/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz"
   }
   call set_organism_defaults.organism_parameters {
     input:
@@ -59,17 +61,19 @@ workflow theiacov_clearlabs {
     input:
       read1 = ncbi_scrub_se.read1_dehosted
   }
-  call kraken2.kraken2_theiacov as kraken2_raw {
+  call kraken2.kraken2_standalone as kraken2_raw {
     input:
       samplename = samplename,
       read1 = read1,
-      target_organism = organism_parameters.kraken_target_organism
+      target_organism = organism_parameters.kraken_target_organism,
+      kraken2_db = kraken_db
   }  
-  call kraken2.kraken2_theiacov as kraken2_dehosted {
+  call kraken2.kraken2_standalone as kraken2_dehosted {
     input:
       samplename = samplename,
       read1 = ncbi_scrub_se.read1_dehosted,
-      target_organism = organism_parameters.kraken_target_organism
+      target_organism = organism_parameters.kraken_target_organism,
+      kraken2_db = kraken_db
   }
   call artic_consensus.consensus {
     input:
@@ -139,10 +143,10 @@ workflow theiacov_clearlabs {
         expected_taxon = organism_parameters.standardized_organism,
         num_reads_raw1 = fastq_scan_raw_reads.read1_seq,
         num_reads_clean1 = fastq_scan_clean_reads.read1_seq,
-        kraken_human = kraken2_raw.percent_human,
+        kraken_human = kraken2_raw.kraken2_percent_human,
         # kraken_sc2 = kraken2_raw.percent_sc2,
         # kraken_target_organism = kraken2_raw.percent_target_organism,
-        kraken_human_dehosted = kraken2_dehosted.percent_human,
+        kraken_human_dehosted = kraken2_dehosted.kraken2_percent_human,
         # kraken_sc2_dehosted = kraken2_dehosted.percent_sc2,
         # kraken_target_organism_dehosted = kraken2_dehosted.percent_target_organism,
         meanbaseq_trim = stats_n_coverage_primtrim.meanbaseq,
@@ -172,16 +176,16 @@ workflow theiacov_clearlabs {
     Int fastq_scan_num_reads_clean1 = fastq_scan_clean_reads.read1_seq
     String fastq_scan_version = fastq_scan_raw_reads.version
     # Read QC - kraken outputs
-    String kraken_version = kraken2_raw.version
-    Float kraken_human = kraken2_raw.percent_human
-    Float kraken_sc2 = kraken2_raw.percent_sc2
-    String kraken_target_organism = kraken2_raw.percent_target_organism
+    String kraken_version = kraken2_raw.kraken2_version
+    Float kraken_human = kraken2_raw.kraken2_percent_human
+    Float kraken_sc2 = kraken2_raw.kraken2_percent_sc2
+    String kraken_target_organism = kraken2_raw.kraken2_percent_target_organism
     String kraken_target_organism_name = organism_parameters.kraken_target_organism
-    File kraken_report = kraken2_raw.kraken_report
-    Float kraken_human_dehosted = kraken2_dehosted.percent_human
-    Float kraken_sc2_dehosted = kraken2_dehosted.percent_sc2
-    String kraken_target_organism_dehosted = kraken2_dehosted.percent_target_organism
-    File kraken_report_dehosted = kraken2_dehosted.kraken_report
+    File kraken_report = kraken2_raw.kraken2_report
+    Float kraken_human_dehosted = kraken2_dehosted.kraken2_percent_human
+    Float kraken_sc2_dehosted = kraken2_dehosted.kraken2_percent_sc2
+    String kraken_target_organism_dehosted = kraken2_dehosted.kraken2_percent_target_organism
+    File kraken_report_dehosted = kraken2_dehosted.kraken2_report
     # Read Alignment - Artic consensus outputs
     File aligned_bam = consensus.trim_sorted_bam
     File aligned_bai = consensus.trim_sorted_bai

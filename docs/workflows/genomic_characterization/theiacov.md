@@ -217,19 +217,22 @@ All TheiaCoV Workflows (not TheiaCoV_FASTA_Batch)
 | ivar_consensus | **stats_n_coverage_primtrim_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | SE,PE | HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2 |
 | ivar_consensus | **stats_n_coverage_primtrim_docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/samtools:1.15 | Optional | SE,PE | HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2 |
 | ivar_consensus | **stats_n_coverage_primtrim_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | SE,PE | HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2 |
+| kraken2_dehosted | **classified_out** | String | Allows user to rename the classified FASTQ files output. Must include .fastq as the suffix | classified#.fastq | Optional | CL | sars-cov-2 |
 | kraken2_dehosted | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional | CL | sars-cov-2 |
 | kraken2_dehosted | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | CL | sars-cov-2 |
-| kraken2_dehosted | **docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.0.8-beta_hv | Optional | CL | sars-cov-2 |
+| kraken2_dehosted | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.0.8-beta_hv | Optional | CL | sars-cov-2 |
 | kraken2_dehosted | **kraken2_db** | String | The database used to run Kraken2 | /kraken2-db | Optional | CL | sars-cov-2 |
 | kraken2_dehosted | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | CL | sars-cov-2 |
 | kraken2_dehosted | **read2** | File | Internal component, do not modify | | Do not modify, Optional | CL | sars-cov-2 |
+| kraken2_dehosted | **unclassified_out** | String | Allows user to rename the unclassified FASTQ files output. Must include .fastq as the suffix | unclassified#.fastq | Optional | CL | sars-cov-2 |
+| kraken2_raw | **classified_out** | String | Allows user to rename the classified FASTQ files output. Must include .fastq as the suffix | classified#.fastq | Optional | CL | sars-cov-2 |
 | kraken2_raw | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional | CL | sars-cov-2 |
 | kraken2_raw | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | CL | sars-cov-2 |
-| kraken2_raw | **docker_image** | Int | Docker container used in this task | us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.0.8-beta_hv | Optional | CL | sars-cov-2 |
+| kraken2_raw | **docker** | Int | Docker container used in this task | us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.0.8-beta_hv | Optional | CL | sars-cov-2 |
 | kraken2_raw | **kraken2_db** | String | The database used to run Kraken2 | /kraken2-db | Optional | CL | sars-cov-2 |
 | kraken2_raw | **memory** | String | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | CL | sars-cov-2 |
-| kraken2_raw | **read_processing** | String | The tool used for trimming of primers from reads. Options are trimmomatic and fastp | trimmomatic | Optional | | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | kraken2_raw | **read2** | File | Internal component, do not modify | | Do not modify, Optional | CL | sars-cov-2 |
+| kraken2_raw | **unclassified_out** | String | Allows user to rename the unclassified FASTQ files output. Must include .fastq as the suffix | unclassified#.fastq | Optional | CL | sars-cov-2 |
 | nanoplot_clean | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional | ONT | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | nanoplot_clean | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | ONT | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | nanoplot_clean | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/nanoplot:1.40.0 | Optional | ONT | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
@@ -373,6 +376,7 @@ All TheiaCoV Workflows (not TheiaCoV_FASTA_Batch)
 | workflow name | **flu_segment** | String | Influenza genome segment being analyzed. Options: "HA" or "NA". | HA | Optional, Required | FASTA | |
 | workflow name | **flu_subtype** | String | The influenza subtype being analyzed. Options: "Yamagata", "Victoria", "H1N1", "H3N2", "H5N1". Automatically determined. | | Optional | FASTA | |
 | workflow name | **genome_length** | Int | Use to specify the expected genome length | | Optional | FASTA, ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
+| workflow name | **kraken_db** | File | A Kraken2 database in .tar.gz format. Must contain viral and human sequences. | gs://theiagen-large-public-files-rp/terra/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz | Optional | CL, ONT, PE, SE |  HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | workflow name | **max_genome_length** | Int | Maximum genome length able to pass read screening | 2673870 | Optional | ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | workflow name | **max_length** | Int | Maximum length for a read based on the SARS-CoV-2 primer scheme | 700 | Optional | ONT | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | workflow name | **medaka_docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/artic-ncov2019:1.3.0-medaka-1.4.3 | Optional | CL | |
@@ -1035,16 +1039,17 @@ All TheiaCoV Workflows (not TheiaCoV_FASTA_Batch)
 | ivar_vcf | File | iVar tsv output converted to VCF format | PE, SE |
 | ivar_version_consensus | String | Version of iVar for running the iVar consensus command | PE, SE |
 | ivar_version_primtrim | String | Version of iVar for running the iVar trim command | PE, SE |
-| kraken_human | Float | Percent of human read data detected using the Kraken2 software | CL, ONT, PE, SE |
-| kraken_human_dehosted | Float | Percent of human read data detected using the Kraken2 software after host removal | CL, ONT, PE |
-| kraken_report | File | Full Kraken report | CL, ONT, PE, SE |
-| kraken_report_dehosted | File | Full Kraken report after host removal | CL, ONT, PE |
-| kraken_sc2 | Float | Percent of SARS-CoV-2 read data detected using the Kraken2 software | CL, ONT, PE, SE |
-| kraken_sc2_dehosted | Float | Percent of SARS-CoV-2 read data detected using the Kraken2 software after host removal | CL, ONT, PE |
-| kraken_target_organism | String | Percent of target organism read data detected using the Kraken2 software | CL, ONT, PE, SE |
-| kraken_target_organism_dehosted | String | Percent of target organism read data detected using the Kraken2 software after host removal | CL, ONT, PE |
-| kraken_target_organism_name | String | The name of the target organism; e.g., "Monkeypox" or "Human immunodeficiency virus" | CL, ONT, PE, SE |
-| kraken_version | String | Version of Kraken software used | CL, ONT, PE, SE |
+| kraken2_database | String | Database file used for Kraken2 analysis | CL, ONT, PE, SE |
+| kraken2_human | Float | Percent of human read data detected using the Kraken2 software | CL, ONT, PE, SE |
+| kraken2_human_dehosted | Float | Percent of human read data detected using the Kraken2 software after host removal | CL, ONT, PE |
+| kraken2_report | File | Full Kraken report | CL, ONT, PE, SE |
+| kraken2_report_dehosted | File | Full Kraken report after host removal | CL, ONT, PE |
+| kraken2_sc2 | Float | Percent of SARS-CoV-2 read data detected using the Kraken2 software | CL, ONT, PE, SE |
+| kraken2_sc2_dehosted | Float | Percent of SARS-CoV-2 read data detected using the Kraken2 software after host removal | CL, ONT, PE |
+| kraken2_target_organism | String | Percent of target organism read data detected using the Kraken2 software | CL, ONT, PE, SE |
+| kraken2_target_organism_dehosted | String | Percent of target organism read data detected using the Kraken2 software after host removal | CL, ONT, PE |
+| kraken2_target_organism_name | String | The name of the target organism; e.g., "Monkeypox" or "Human immunodeficiency virus" | CL, ONT, PE, SE |
+| kraken2_version | String | Version of Kraken software used | CL, ONT, PE, SE |
 | meanbaseq_trim | Float | Mean quality of the nucleotide basecalls aligned to the reference genome after primer trimming | CL, ONT, PE, SE |
 | meanmapq_trim | Float | Mean quality of the mapped reads to the reference genome after primer trimming | CL, ONT, PE, SE |
 | medaka_reference | String | Reference sequence used in medaka task | CL, ONT |
