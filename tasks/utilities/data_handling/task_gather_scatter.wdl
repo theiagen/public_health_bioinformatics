@@ -130,11 +130,7 @@ task gather_scatter {
     print(df)
     df.to_csv("~{samplename}.results.tsv", sep='\t', index=False)
 
-
     CODE
-
-
-
   >>>
   output {
     File gathered_results = "~{samplename}.results.tsv"
