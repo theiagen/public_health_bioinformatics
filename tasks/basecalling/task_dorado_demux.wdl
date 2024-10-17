@@ -10,13 +10,20 @@ task dorado_demux {
 
   command <<< 
     set -e
-    echo "### Running Dorado demux ###"
+
+    echo "### Starting Dorado demux ###"
+    date
+    echo "Input BAM files:"
+    for bam_file in ~{sep=" " bam_files}; do echo "$bam_file"; done
 
     mkdir -p demux_output
 
     for bam_file in ~{sep=" " bam_files}; do
       echo "Processing BAM file: $bam_file"
+      echo "Output directory: demux_output"
+      echo "Running dorado demux for kit: ~{kit_name}"
 
+      # Run Dorado demux command
       dorado demux \
         "$bam_file" \
         --output-dir demux_output \
@@ -24,42 +31,51 @@ task dorado_demux {
         --emit-fastq \
         --verbose > "demux_output/$(basename "$bam_file").log" 2>&1 || {
           echo "ERROR: Dorado demux failed for $bam_file" >&2
+          cat "demux_output/$(basename "$bam_file").log" >&2
           exit 1
       }
 
-      echo "Demultiplexing completed for $bam_file."
+      echo "Demultiplexing completed for $bam_file"
     done
 
     echo "### Listing FASTQ files after demux ###"
-    ls -lh demux_output/*.fastq
+    ls -lh demux_output/*.fastq || echo "No FASTQ files found."
 
-    # Process and rename FASTQ files based on the input file_name and barcode
+    # Debugging the file naming logic
+    echo "### Renaming FASTQ files ###"
     for fastq_file in demux_output/*.fastq; do
+      echo "Processing $fastq_file"
+      
       if [[ "$fastq_file" == *"unclassified"* ]]; then
-        final_fastq="${fastq_file_name}_unclassified.fastq"
+        final_fastq="~{fastq_file_name}_unclassified.fastq"
       else
         barcode=$(echo "$fastq_file" | sed -E 's/.*_(barcode[0-9]+)\.fastq/\1/')
-        final_fastq="${fastq_file_name}_${barcode}.fastq"
+        final_fastq="~{fastq_file_name}_${barcode}.fastq"
       fi
 
-      # If the target FASTQ exists, append; otherwise, move it
+      echo "Renaming $fastq_file to $final_fastq"
+
       if [ -f "$final_fastq" ]; then
-        echo "Appending $fastq_file to $final_fastq"
+        echo "Appending to existing $final_fastq"
         cat "$fastq_file" >> "$final_fastq"
         rm "$fastq_file"
       else
-        echo "Creating new FASTQ: $final_fastq"
+        echo "Creating new FASTQ file: $final_fastq"
         mv "$fastq_file" "$final_fastq"
       fi
     done
 
     echo "### Zipping all FASTQ files ###"
-    for fastq in ${fastq_file_name}_*.fastq; do
+    for fastq in ~{fastq_file_name}_*.fastq; do
+      echo "Zipping $fastq"
       gzip -f "$fastq"
     done
 
-    echo "### Dorado demux process completed ###"
-    ls -lh ${fastq_file_name}_*.fastq.gz
+    echo "### Final FASTQ Files ###"
+    ls -lh ~{fastq_file_name}_*.fastq.gz || echo "No gzipped FASTQ files found."
+
+    echo "### Dorado demux process completed successfully ###"
+    date
   >>>
 
   output {
