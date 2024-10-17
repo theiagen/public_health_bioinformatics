@@ -184,14 +184,14 @@ workflow snippy_tree_wf {
     call shared_variants_task.shared_variants {
       input:
         concatenated_variants = concatenate_variants.concatenated_variants, 
-        concatenated_file_name = tree_name_updated + "_combined_qc_metrics.tsv",
+        concatenated_file_name = tree_name_updated
     }
   }
   if (defined(snippy_variants_qc_metrics)) {
     call file_handling.cat_files as concatenate_qc_metrics {
       input:
         files_to_cat = select_first([snippy_variants_qc_metrics]),
-        concatenated_file_name = tree_name_updated,
+        concatenated_file_name = tree_name_updated + "_combined_qc_metrics.tsv"
         skip_extra_headers = true
     }
   }

@@ -312,6 +312,7 @@ Sequencing data used in the Snippy_Tree workflow must:
 |---|---|---|
 | snippy_cg_snp_matrix | File | CSV file of core genome pairwise SNP distances between samples, calculated from the final alignment  |
 | snippy_concatenated_variants | File | Concatenated snippy_results file across all samples in the set |
+| snippy_combined_qc_metrics | File | Combined QC metrics file containing concatenated QC metrics from all samples. The file is a tab-separated values (TSV) file with the following columns:<br>- samplename<br>- reads_aligned_to_reference<br>- total_reads<br>- percent_reads_aligned<br>- variants_total<br>- percent_ref_coverage<br>- #rname<br>- startpos<br>- endpos<br>- numreads<br>- covbases<br>- coverage<br>- meandepth<br>- meanbaseq<br>- meanmapq<br><br>The last set of columns (`#rname` to `meanmapq`) may repeat for each chromosome or contig in the reference genome. |
 | snippy_filtered_metadata | File | TSV recording the columns of the Terra data table that were used in the summarize_data task |
 | snippy_final_alignment | File | Final alignment (FASTA file) used to generate the tree (either after snippy alignment, gubbins recombination removal, and/or core site selection with SNP-sites) |
 | snippy_final_tree | File | Newick tree produced from the final alignment. Depending on user input for core_genome, the tree could be a core genome tree (default when core_genome is true) or whole genome tree (if core_genome is false) |
