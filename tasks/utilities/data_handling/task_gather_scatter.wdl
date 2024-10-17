@@ -66,57 +66,24 @@ task gather_scatter {
   command <<<
     python3<<CODE
     import pandas as pd
+    import os
+
+    def load_json_data(file_path):
+      if os.path.exists(file_path):
+        with open(file_path, 'r') as file:
+          json_data_from_file = json.load(file)
+          df_from_file = pd.DataFrame(json_data_from_file, columns=[file_path])
+          return df_from_file
+      else:
+        return None
+
+    df = pd.DataFrame()
     
-    taxon_ids = pd.read_csv("~{taxon_ids}", header=None, names=["taxon_id"])
-    organism = pd.read_csv("~{organism}", header=None, names=["organism"])
-    extracted_read1 = pd.read_csv("~{extracted_read1}", header=None, names=["extracted_read1"])
-    extracted_read2 = pd.read_csv("~{extracted_read2}", header=None, names=["extracted_read2"])
-    krakentools_docker = pd.read_csv("~{krakentools_docker}", header=None, names=["krakentools_docker"])
-    fastq_scan_num_reads_binned1 = pd.read_csv("~{fastq_scan_num_reads_binned1}", header=None, names=["fastq_scan_num_reads_binned1"])
-    fastq_scan_num_reads_binned2 = pd.read_csv("~{fastq_scan_num_reads_binned2}", header=None, names=["fastq_scan_num_reads_binned2"])
-    fastq_scan_num_reads_binned_pairs = pd.read_csv("~{fastq_scan_num_reads_binned_pairs}", header=None, names=["fastq_scan_num_reads_binned_pairs"])
-    fastq_scan_docker = pd.read_csv("~{fastq_scan_docker}", header=None, names=["fastq_scan_docker"])
-    fastq_scan_version = pd.read_csv("~{fastq_scan_version}", header=None, names=["fastq_scan_version"])
-    pilon_assembly_fasta = pd.read_csv("~{pilon_assembly_fasta}", header=None, names=["pilon_assembly_fasta"])
-    quast_genome_length = pd.read_csv("~{quast_genome_length}", header=None, names=["quast_genome_length"])
-    quast_number_contigs = pd.read_csv("~{quast_number_contigs}", header=None, names=["quast_number_contigs"])
-    quast_n50 = pd.read_csv("~{quast_n50}", header=None, names=["quast_n50"])
-    quast_gc_percent = pd.read_csv("~{quast_gc_percent}", header=None, names=["quast_gc_percent"])
-    number_N = pd.read_csv("~{number_N}", header=None, names=["number_N"])
-    number_ATCG = pd.read_csv("~{number_ATCG}", header=None, names=["number_ATCG"])
-    number_Degenerate = pd.read_csv("~{number_Degenerate}", header=None, names=["number_Degenerate"])
-    number_Total = pd.read_csv("~{number_Total}", header=None, names=["number_Total"])
-    percent_reference_coverage = pd.read_csv("~{percent_reference_coverage}", header=None, names=["percent_reference_coverage"])
-    pango_lineage = pd.read_csv("~{pango_lineage}", header=None, names=["pango_lineage"])
-    pango_lineage_expanded = pd.read_csv("~{pango_lineage_expanded}", header=None, names=["pango_lineage_expanded"])
-    pangolin_conflicts = pd.read_csv("~{pangolin_conflicts}", header=None, names=["pangolin_conflicts"])
-    pangolin_notes = pd.read_csv("~{pangolin_notes}", header=None, names=["pangolin_notes"])
-    pangolin_assignment_version = pd.read_csv("~{pangolin_assignment_version}", header=None, names=["pangolin_assignment_version"])
-    pangolin_versions = pd.read_csv("~{pangolin_versions}", header=None, names=["pangolin_versions"])
-    pangolin_docker = pd.read_csv("~{pangolin_docker}", header=None, names=["pangolin_docker"])
-    nextclade_version = pd.read_csv("~{nextclade_version}", header=None, names=["nextclade_version"])
-    nextclade_docker = pd.read_csv("~{nextclade_docker}", header=None, names=["nextclade_docker"])
-    nextclade_ds_tag = pd.read_csv("~{nextclade_ds_tag}", header=None, names=["nextclade_ds_tag"])
-    nextclade_aa_subs = pd.read_csv("~{nextclade_aa_subs}", header=None, names=["nextclade_aa_subs"])
-    nextclade_aa_dels = pd.read_csv("~{nextclade_aa_dels}", header=None, names=["nextclade_aa_dels"])
-    nextclade_clade = pd.read_csv("~{nextclade_clade}", header=None, names=["nextclade_clade"])
-    nextclade_lineage = pd.read_csv("~{nextclade_lineage}", header=None, names=["nextclade_lineage"])
-    nextclade_qc = pd.read_csv("~{nextclade_qc}", header=None, names=["nextclade_qc"])
-    nextclade_ds_tag_flu_ha = pd.read_csv("~{nextclade_ds_tag_flu_ha}", header=None, names=["nextclade_ds_tag_flu_ha"])
-    nextclade_aa_subs_flu_ha = pd.read_csv("~{nextclade_aa_subs_flu_ha}", header=None, names=["nextclade_aa_subs_flu_ha"])
-    nextclade_aa_dels_flu_ha = pd.read_csv("~{nextclade_aa_dels_flu_ha}", header=None, names=["nextclade_aa_dels_flu_ha"])
-    nextclade_clade_flu_ha = pd.read_csv("~{nextclade_clade_flu_ha}", header=None, names=["nextclade_clade_flu_ha"])
-    nextclade_qc_flu_ha = pd.read_csv("~{nextclade_qc_flu_ha}", header=None, names=["nextclade_qc_flu_ha"])
-    nextclade_ds_tag_flu_na = pd.read_csv("~{nextclade_ds_tag_flu_na}", header=None, names=["nextclade_ds_tag_flu_na"])
-    nextclade_aa_subs_flu_na = pd.read_csv("~{nextclade_aa_subs_flu_na}", header=None, names=["nextclade_aa_subs_flu_na"])
-    nextclade_aa_dels_flu_na = pd.read_csv("~{nextclade_aa_dels_flu_na}", header=None, names=["nextclade_aa_dels_flu_na"])
-    nextclade_clade_flu_na = pd.read_csv("~{nextclade_clade_flu_na}", header=None, names=["nextclade_clade_flu_na"])
-    nextclade_qc_flu_na = pd.read_csv("~{nextclade_qc_flu_na}", header=None, names=["nextclade_qc_flu_na"])
+    taxon_ids_df = load_json_data("~{taxon_ids}")
+    if taxon_ids_df is not None:
+      df = pd.concat([df, taxon_ids_df], axis=1)
     
-
-
-
-
+    print(df)
 
 
     CODE
