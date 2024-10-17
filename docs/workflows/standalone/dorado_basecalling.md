@@ -12,32 +12,48 @@ The Dorado Basecalling workflow is used to convert Oxford Nanopore `POD5` sequen
 
 ### Model Type Selection
 
-- **Model Type (sup):** The most accurate model, recommended for critical applications requiring the highest basecall accuracy. It is the slowest of the three model types.
-- **Model Type (hac):** A balance between speed and accuracy, recommended for most users. Provides accurate results faster than `sup` but less accurate than `sup`.
-- **Model Type (fast):** The fastest model, recommended when speed is prioritized over accuracy, such as for initial analyses or non-critical applications.
+- **Model Type (sup):** (super accuracy) The most accurate model, recommended for critical applications requiring the highest basecall accuracy. It is the slowest of the three model types.
+- **Model Type (hac):** (High Accuracy) A balance between speed and accuracy, recommended for most users. Provides accurate results faster than `sup` but less accurate than `sup`.
+- **Model Type (fast):** (Fast Model) The fastest model, recommended when speed is prioritized over accuracy, such as for initial analyses or non-critical applications.
 
 **Example Models:**
 - `dna_r10.4.1_e8.2_400bps_sup@v4.2.0`
 - `dna_r10.4.1_e8.2_400bps_hac@v4.2.0`
 - `dna_r10.4.1_e8.2_400bps_fast@v4.2.0`
 
-### Inputs
+## **Workflow Structure**
 
-| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** | **Workflow** |
+1. **Dorado Basecalling**: Converts `POD5` files to **SAM** files using the specified model.
+2. **Samtools Convert**: Converts the generated SAM files to BAM for efficient processing.
+3. **Dorado Demultiplexing**: Demultiplexes BAM files to produce barcode-specific FASTQ files.
+4. **FASTQ File Transfer**: Transfers files to Terra for downstream analysis.
+5. **Terra Table Creation**: Generates a Terra table with the uploaded FASTQ files.
+
+---
+
+## **Inputs**
+
+| **Task** | **Variable** | **Type** | **Description** | **Default Value** | **Required** | **Workflow** |
 |---|---|---|---|---|---|---|
-| basecall | **input_files** | Array[File] | Array of `POD5` files to be basecalled | None | Required | Dorado |
-| basecall | **sample_names** | Array[String] | Array of sample names corresponding to the input files | None | Required | Dorado |
-| basecall | **dorado_model** | String | Dorado basecalling model (e.g., `dna_r10.4.1_e8.2_260bps_sup@v3.5.2`) | None | Required | Dorado |
-| basecall | **output_prefix** | String | Prefix to apply to output files | None | Required | Dorado |
-| basecall | **cpu** | Int | Number of CPUs to allocate to the task | 8 | Optional | Dorado |
-| basecall | **memory** | String | Amount of memory/RAM to allocate to the task | 32GB | Optional | Dorado |
-| basecall | **docker** | String | The Docker container used for this task | us-docker.pkg.dev/general-theiagen/staphb/dorado:0.8.0 | Optional | Dorado |
-| basecall | **gpuCount** | Int | Number of GPUs to use for basecalling | 1 | Optional | Dorado |
-| basecall | **gpuType** | String | Type of GPU to use | nvidia-tesla-t4 | Optional | Dorado |
+| Basecalling | **input_files** | Array[File] | Array of `POD5` files for basecalling | None | Yes | Dorado |
+| Basecalling | **fastq_file_name** | String | Prefix for naming output FASTQ files | None | Yes | Dorado |
+| Basecalling | **dorado_model** | String | Model type (e.g., `dna_r10.4.1_e8.2_260bps_sup@v3.5.2`) | None | Yes | Dorado |
+| Basecalling | **kit_name** | String | Kit name used for sequencing | None | Yes | Dorado |
+| Basecalling | **cpu** | Int | Number of CPUs allocated | 8 | No | Dorado |
+| Basecalling | **memory** | String | Amount of memory to allocate | 32GB | No | Dorado |
+| Basecalling | **gpuCount** | Int | Number of GPUs to use | 1 | No | Dorado |
+| Basecalling | **gpuType** | String | Type of GPU | nvidia-tesla-t4 | No | Dorado |
+| Demultiplexing | **fastq_upload_path** | String | Location to upload FASTQ files on Terra (copy path from terra folder) | None | Yes | Demux |
+| Terra Table | **terra_project** | String | Terra project ID | None | Yes | Terra |
+| Terra Table | **terra_workspace** | String | Terra workspace name | None | Yes | Terra |
 
-### Outputs
+---
+
+## **Outputs**
 
 | **Variable** | **Type** | **Description** | **Workflow** |
 |---|---|---|---|
-| basecalled_fastqs | Array[File] | Array of FASTQ files generated from basecalling | Dorado |
-| logs | Array[File] | Array of log files capturing the basecalling process | Dorado |
+| **basecalled_fastqs** | Array[File] | Array of FASTQ files generated from basecalling | Dorado |
+| **demuxed_fastqs** | Array[File] | FASTQ files produced from BAM demultiplexing | Demux |
+| **logs** | Array[File] | Log files from the demultiplexing process | Demux |
+| **terra_table_tsv** | File | TSV file for Terra table upload | Terra |

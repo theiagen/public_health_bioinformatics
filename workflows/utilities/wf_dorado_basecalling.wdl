@@ -7,6 +7,9 @@ import "../../tasks/utilities/file_handling/task_transfer_files.wdl" as transfer
 import "../../tasks/utilities/data_import/task_create_terra_table.wdl" as terra_fastq_table
 
 workflow dorado_basecalling_workflow {
+  meta {
+    description: "GPU-accelerated workflow for basecalling Oxford Nanopore POD5 files, generating SAM outputs and supporting downstream demultiplexing and FASTQ output."
+}
   input {
     Array[File] input_files
     String dorado_model
@@ -37,7 +40,7 @@ workflow dorado_basecalling_workflow {
     input:
       bam_files = samtools_convert.bam_files,
       kit_name = kit_name,
-      file_name = fastq_file_name
+      fastq_file_name = fastq_file_name
   }
 
   call transfer_fastq_files.transfer_files {

@@ -36,10 +36,10 @@ task dorado_demux {
     # Process and rename FASTQ files based on the input file_name and barcode
     for fastq_file in demux_output/*.fastq; do
       if [[ "$fastq_file" == *"unclassified"* ]]; then
-        final_fastq="${file_name}_unclassified.fastq"
+        final_fastq="${fastq_file_name}_unclassified.fastq"
       else
         barcode=$(echo "$fastq_file" | sed -E 's/.*_(barcode[0-9]+)\.fastq/\1/')
-        final_fastq="${file_name}_${barcode}.fastq"
+        final_fastq="${fastq_file_name}_${barcode}.fastq"
       fi
 
       # If the target FASTQ exists, append; otherwise, move it
@@ -54,16 +54,16 @@ task dorado_demux {
     done
 
     echo "### Zipping all FASTQ files ###"
-    for fastq in ${file_name}_*.fastq; do
+    for fastq in ${fastq_file_name}_*.fastq; do
       gzip -f "$fastq"
     done
 
     echo "### Dorado demux process completed ###"
-    ls -lh ${file_name}_*.fastq.gz
+    ls -lh ${fastq_file_name}_*.fastq.gz
   >>>
 
   output {
-    Array[File] fastq_files = glob("~{file_name}_*.fastq.gz")
+    Array[File] fastq_files = glob("~{fastq_file_name}_*.fastq.gz")
   }
 
   runtime {
