@@ -39,6 +39,8 @@ The `Snippy_Streamline_FASTA` workflow is an all-in-one approach to generating a
 
 ### Inputs
 
+<div class="searchable-table" markdown="1">
+
 | **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
 |---|---|---|---|---|---|
 | snippy_streamline_fasta | **assembly_fasta** | Array[File] | The assembly files for your samples |  | Required |
@@ -107,7 +109,11 @@ The `Snippy_Streamline_FASTA` workflow is an all-in-one approach to generating a
 | version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
 | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
 
+</div>
+
 ### Outputs
+
+<div class="searchable-table" markdown="1">
 
 | **Variable** | **Type** | **Description** |
 |---|---|---|
@@ -151,3 +157,5 @@ The `Snippy_Streamline_FASTA` workflow is an all-in-one approach to generating a
 | snippy_variants_snippy_docker | Array[String] | Docker file used for Snippy in the Snippy_Variants subworkfow |
 | snippy_variants_snippy_version | Array[String] | Version of Snippy_Tree subworkflow used |
 | snippy_wg_snp_matrix | File | CSV file of whole genome pairwise SNP distances between samples, calculated from the final alignment |
+
+</div>

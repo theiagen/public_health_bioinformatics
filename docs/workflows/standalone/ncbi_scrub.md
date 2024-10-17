@@ -16,6 +16,8 @@ There are three Kraken2 workflows:
 
 ### Inputs
 
+<div class="searchable-table" markdown="1">
+
 | **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** | **Workflow** |
 |---|---|---|---|---|---|---|
 | dehost_pe or dehost_se | **read1** | File | | | Required | PE, SE |
@@ -34,6 +36,8 @@ There are three Kraken2 workflows:
 | ncbi_scrub_pe or ncbi_scrub_se | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | PE, SE |
 | version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional | PE, SE |
 | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional | PE, SE |
+
+</div>
 
 ### Workflow Tasks
 
@@ -69,6 +73,8 @@ This workflow is composed of two tasks, one to dehost the input reads and anothe
 
 ### Outputs
 
+<div class="searchable-table" markdown="1">
+
 | **Variable** | **Type** | **Description** | **Workflow** |
 |---|---|---|---|
 | kraken_human_dehosted | Float | Percent of human read data detected using the Kraken2 software after host removal | PE, SE |
@@ -82,3 +88,4 @@ This workflow is composed of two tasks, one to dehost the input reads and anothe
 | read1_dehosted | File | Dehosted forward reads | PE, SE |
 | read2_dehosted | File | Dehosted reverse reads | PE |
 
+</div>

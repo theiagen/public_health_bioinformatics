@@ -12,6 +12,8 @@ This sample-level workflow receives a read file or a pair of read files (FASTQ),
 
 ### Inputs
 
+<div class="searchable-table" markdown="1">
+
 | **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
 |---|---|---|---|---|---|
 | rename_fastq_files | **new_filename** | String | New name for the FASTQ file(s) | | Required |
@@ -23,6 +25,8 @@ This sample-level workflow receives a read file or a pair of read files (FASTQ),
 | rename_PE_files or rename_SE_files | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 2 | Optional |
 | version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
 | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
+
+</div>
 
 ### Outputs
 

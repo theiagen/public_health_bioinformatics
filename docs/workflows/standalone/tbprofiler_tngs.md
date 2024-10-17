@@ -12,6 +12,8 @@ This workflow is still in experimental research stages. Documentation is minimal
 
 ### Inputs
 
+<div class="searchable-table" markdown="1">
+
 | **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
 |---|---|---|---|---|---|
 | tbprofiler_tngs | **read1** | File | Illumina forward read file in FASTQ file format (compression optional) |  | Required |
@@ -62,7 +64,11 @@ This workflow is still in experimental research stages. Documentation is minimal
 | version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
 | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
 
+</div>
+
 ### Terra Outputs
+
+<div class="searchable-table" markdown="1">
 
 | **Variable** | **Type** | **Description** |
 |---|---|---|
@@ -95,3 +101,5 @@ This workflow is still in experimental research stages. Documentation is minimal
 | trimmomatic_read2_trimmed | File | The read2 file post trimming |
 | trimmomatic_stats | File | The read trimming statistics |
 | trimmomatic_version | String | The version of trimmomatic used in this analysis |
+
+</div>
