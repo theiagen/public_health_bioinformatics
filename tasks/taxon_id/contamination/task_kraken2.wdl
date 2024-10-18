@@ -157,28 +157,33 @@ task kraken2_parse_classified {
 
     # theiacov parsing blocks - percent human, sc2 and target organism
     percentage_human=$(grep "Homo sapiens" ~{samplename}.report_parsed.txt | cut -f 1)
-    percentage_sc2=$(grep "Severe acute respiratory syndrome coronavirus 2" ~{samplename}.report_parsed.txt | cut -f1 )
-
     if [ -z "$percentage_human" ] ; then percentage_human="0" ; fi
-    if [ -z "$percentage_sc2" ] ; then percentage_sc2="0" ; fi
     echo $percentage_human | tee PERCENT_HUMAN
-    echo $percentage_sc2 | tee PERCENT_SC2
 
     # capture target org percentage 
     if [ ! -z "~{target_organism}" ]; then 
       echo "Target org designated: ~{target_organism}"
-      percent_target_organism=$(grep "~{target_organism}" ~{samplename}.report_parsed.txt | cut -f1 | head -n1 )
-      if [ -z "$percent_target_organism" ] ; then percent_target_organism="0" ; fi
+      if [[ "~{target_organism}" == "Severe acute respiratory syndrome coronavirus 2" ]]; then
+        percentage_sc2=$(grep "Severe acute respiratory syndrome coronavirus 2" ~{samplename}.report.txt | cut -f1 )
+        percent_target_organism=""
+        if [ -z "$percentage_sc2" ] ; then percentage_sc2="0" ; fi
+      else
+        percentage_sc2="" 
+        percent_target_organism=$(grep "~{target_organism}" ~{samplename}.report.txt | cut -f1 | head -n1 )
+        if [ -z "$percent_target_organism" ] ; then percent_target_organism="0" ; fi
+      fi
     else 
       percent_target_organism=""
+      percentage_sc2=""
     fi
+    echo $percentage_sc2 | tee PERCENT_SC2
     echo $percent_target_organism | tee PERCENT_TARGET_ORGANISM
     
   >>>
   output {
     File kraken_report = "~{samplename}.report_parsed.txt"
     Float percent_human = read_float("PERCENT_HUMAN")
-    Float percent_sc2 = read_float("PERCENT_SC2")
+    String percent_sc2 = read_string("PERCENT_SC2")
     String percent_target_organism = read_string("PERCENT_TARGET_ORGANISM")
     String? kraken_target_organism = target_organism
   }
