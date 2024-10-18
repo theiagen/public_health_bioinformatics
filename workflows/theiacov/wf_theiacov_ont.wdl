@@ -40,6 +40,7 @@ workflow theiacov_ont {
     Int? genome_length
     # kraken inputs
     String? target_organism
+    File kraken_db = "gs://theiagen-large-public-files-rp/terra/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz"
     # read screen parameters
     Int min_reads = 57 # min basepairs / 300 (which is the longest available read length of an Illumina product)
     Int min_basepairs = 17000 # 10x coverage of hepatitis delta virus
@@ -101,7 +102,9 @@ workflow theiacov_ont {
         max_length = max_length,
         run_prefix = run_prefix,
         target_organism = organism_parameters.kraken_target_organism,
-        workflow_series = "theiacov"
+        workflow_series = "theiacov",
+        kraken_db = kraken_db,
+        call_kraken = true
     }
     call screen.check_reads_se as clean_check_reads {
       input:
@@ -232,7 +235,7 @@ workflow theiacov_ont {
             expected_taxon = organism_parameters.standardized_organism,
             num_reads_raw1 = nanoplot_raw.num_reads,
             num_reads_clean1 = nanoplot_clean.num_reads,
-            kraken_human = read_qc_trim.kraken_human,
+            kraken_human = read_qc_trim.kraken2_human,
             meanbaseq_trim = stats_n_coverage_primtrim.meanbaseq,
             assembly_mean_coverage = stats_n_coverage_primtrim.depth,
             number_N = consensus_qc.number_N,
@@ -283,19 +286,20 @@ workflow theiacov_ont {
     Float? nanoplot_r1_mean_q_clean = nanoplot_clean.mean_q
     Float? nanoplot_r1_median_q_clean = nanoplot_clean.median_q
     Float? nanoplot_r1_est_coverage_clean = nanoplot_clean.est_coverage
-    # Read QC - kraken outputs general
-    String? kraken_version = read_qc_trim.kraken_version
-    String? kraken_target_organism_name = read_qc_trim.kraken_target_organism_name
-    # Read QC - kraken outputs raw
-    Float? kraken_human = read_qc_trim.kraken_human
-    Float? kraken_sc2 = read_qc_trim.kraken_sc2
-    String? kraken_target_organism = read_qc_trim.kraken_target_organism
-    File? kraken_report = read_qc_trim.kraken_report
-    # Read QC - kraken outputs dehosted
-    Float? kraken_human_dehosted = read_qc_trim.kraken_human_dehosted
-    Float? kraken_sc2_dehosted = read_qc_trim.kraken_sc2_dehosted
-    String? kraken_target_organism_dehosted = read_qc_trim.kraken_target_organism_dehosted
-    File? kraken_report_dehosted = read_qc_trim.kraken_report_dehosted
+    # Read QC - kraken2 outputs general
+    String? kraken2_version = read_qc_trim.kraken2_version
+    String? kraken2_target_organism_name = read_qc_trim.kraken2_target_organism_name
+    # Read QC - kraken2 outputs raw
+    Float? kraken2_human = read_qc_trim.kraken2_human
+    Float? kraken_sc2 = read_qc_trim.kraken2_sc2
+    String? kraken2_target_organism = read_qc_trim.kraken2_target_organism
+    File? kraken2_report = read_qc_trim.kraken2_report
+    String? kraken2_database = read_qc_trim.kraken2_database
+    # Read QC - kraken2 outputs dehosted
+    Float? kraken2_human_dehosted = read_qc_trim.kraken2_human_dehosted
+    Float? kraken2_sc2_dehosted = read_qc_trim.kraken2_sc2_dehosted
+    String? kraken2_target_organism_dehosted = read_qc_trim.kraken2_target_organism_dehosted
+    File? kraken2_report_dehosted = read_qc_trim.kraken2_report_dehosted
     # Read Alignment - Artic consensus outputs
     String assembly_fasta = select_first([consensus.consensus_seq, flu_track.irma_assembly_fasta, "Assembly could not be generated"])
     File? aligned_bam = consensus.trim_sorted_bam
