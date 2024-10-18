@@ -1044,8 +1044,8 @@ All TheiaCoV Workflows (not TheiaCoV_FASTA_Batch)
 | kraken2_human_dehosted | Float | Percent of human read data detected using the Kraken2 software after host removal | CL, ONT, PE |
 | kraken2_report | File | Full Kraken report | CL, ONT, PE, SE |
 | kraken2_report_dehosted | File | Full Kraken report after host removal | CL, ONT, PE |
-| kraken2_sc2 | Float | Percent of SARS-CoV-2 read data detected using the Kraken2 software | CL, ONT, PE, SE |
-| kraken2_sc2_dehosted | Float | Percent of SARS-CoV-2 read data detected using the Kraken2 software after host removal | CL, ONT, PE |
+| kraken2_sc2 | String | Percent of SARS-CoV-2 read data detected using the Kraken2 software | CL, ONT, PE, SE |
+| kraken2_sc2_dehosted | String | Percent of SARS-CoV-2 read data detected using the Kraken2 software after host removal | CL, ONT, PE |
 | kraken2_target_organism | String | Percent of target organism read data detected using the Kraken2 software | CL, ONT, PE, SE |
 | kraken2_target_organism_dehosted | String | Percent of target organism read data detected using the Kraken2 software after host removal | CL, ONT, PE |
 | kraken2_target_organism_name | String | The name of the target organism; e.g., "Monkeypox" or "Human immunodeficiency virus" | CL, ONT, PE, SE |
