@@ -1964,6 +1964,16 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
 | staphopiasccmec_results_tsv | File | sccmec types and mecA presence | FASTA, ONT, PE, SE |
 | staphopiasccmec_types_and_mecA_presence | String | staphopia-sccmec Hamming distance file | FASTA, ONT, PE, SE |
 | staphopiasccmec_version | String | staphopia-sccmec presence and absence TSV file | FASTA, ONT, PE, SE |
+| stxtyper_all_hits | String | Comma-separated list of matches of all types. Includes complete, partial, frameshift, internal stop, and novel hits. List is de-duplicated so multiple identical hits are only listed once. For example if 5 partial stx2 hits are detected in the genome, only 1 "stx2" will be listed in this field. To view the potential subtype for each partial hit, the user will need to view the stxtyper_report TSV file. | FASTA, ONT, PE, SE |
+| stxtyper_complete_operons | String | Comma-separated list of all COMPLETE operons detected by StxTyper. Show multiple hits if present in results. | FASTA, ONT, PE, SE |
+| stxtyper_docker | String | Name of docker image used by the stxtyper task | FASTA, ONT, PE, SE |
+| stxtyper_log | File | Raw log TXT file produced by StxTyper. Only useful if debugging core functionality of StxTyper. Not very useful to end user | FASTA, ONT, PE, SE |
+| stxtyper_novel_hits | String | Comma-separated list of matches that have the OPERON output of "COMPLETE_NOVEL". Possible outputs "stx1", "stx2", or "stx1,stx2" | FASTA, ONT, PE, SE |
+| stxtyper_num_hits | Int | Number of "hits" or rows present in the `stxtyper_report` TSV file | FASTA, ONT, PE, SE |
+| stxtyper_partial_hits | String | Possible outputs "stx1", "stx2", or "stx1,stx2". Tells the user that there was a partial hit to either the A or B subunit, but does not describe which subunit, only the possible types from the PARTIAL matches. | FASTA, ONT, PE, SE |
+| stxtyper_report | File | Raw results TSV file produced by StxTyper | FASTA, ONT, PE, SE |
+| stxtyper_stx_frameshifts_or_internal_stop_hits | String | Comma-separated list of matches that have the OPERON output of "FRAMESHIFT" or "INTERNAL_STOP". Possible outputs "stx1", "stx2", or "stx1,stx2" | FASTA, ONT, PE, SE |
+| stxtyper_version | String | Version of StxTyper used | FASTA, ONT, PE, SE |
 | taxon_table_status | String | Status of the taxon table upload | FASTA, ONT, PE, SE |
 | tbp_parser_average_genome_depth | Float | Optional output. Average genome depth across the reference genome  | ONT, PE, SE |
 | tbp_parser_coverage_report | File | Optional output. TSV file with breadth of coverage of each gene associated with antimicrobial resistance in mycobacterium tuberculosis.  | ONT, PE, SE |
