@@ -84,7 +84,7 @@
     - path: miniwdl_run/call-read_QC_trim/call-fastq_scan_raw/work/VERSION
     # kraken2 dehosted
     - path: miniwdl_run/call-read_QC_trim/call-kraken2_theiacov_dehosted/command
-      md5sum: ad6608bb5c8581d17a9d14760917171c
+      md5sum: bf23be02912876a001a0c0936cd1ebbd
     - path: miniwdl_run/call-read_QC_trim/call-kraken2_theiacov_dehosted/inputs.json
       contains: ["read1", "read2", "samplename"]
     - path: miniwdl_run/call-read_QC_trim/call-kraken2_theiacov_dehosted/outputs.json
@@ -104,7 +104,7 @@
       md5sum: 565954ac2bb6ef427754de3b43430728
     # kraken2 raw
     - path: miniwdl_run/call-read_QC_trim/call-kraken2_theiacov_raw/command
-      md5sum: e457432bb1e150e2d561936577c9c51c
+      md5sum: 66318d2ef05bfba05da6ca9b78d54ba5
     - path: miniwdl_run/call-read_QC_trim/call-kraken2_theiacov_raw/inputs.json
       contains: ["read1", "samplename"]
     - path: miniwdl_run/call-read_QC_trim/call-kraken2_theiacov_raw/outputs.json
