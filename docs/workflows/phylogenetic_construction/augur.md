@@ -70,7 +70,7 @@ The Augur_PHB workflow takes in a ***set*** of SARS-CoV-2 (or any other viral 
 !!! dna "Optional Inputs"
     There are **many** optional user inputs. For SARS-CoV-2, Flu, rsv-a, rsv-b, and mpxv, default values that mimic the NextStrain builds have been preselected. To use these defaults, you must write either `"sars-cov-2"`,`"flu"`, `"rsv-a"`, `"rsv-b"`, or `"mpxv"` for the `organism` variable.
 
-    For Flu - it is **required** to set `flu_segment` to either `"HA"` or `"NA"` & `flu_subtype` to either `"H1N1"` or `"H3N2"` or `"Victoria"` or `"Yamagata"` depending on your set of samples.
+    For Flu - it is **required** to set `flu_segment` to either `"HA"` or `"NA"` & `flu_subtype` to either `"H1N1"` or `"H3N2"` or `"Victoria"` or `"Yamagata"` or `"H5N1"` (`"H5N1"` will only work with `"HA"`) depending on your set of samples.
 
 ???+ toggle "A Note on Optional Inputs"
     ??? toggle "Default values for SARS-CoV-2"
@@ -121,6 +121,11 @@ The Augur_PHB workflow takes in a ***set*** of SARS-CoV-2 (or any other viral 
                 - clades_tsv = `"gs://theiagen-public-files-rp/terra/flu-references/clades_yam_ha.tsv"`
             - NA
                 - reference_fasta = `"gs://theiagen-public-files-rp/terra/flu-references/reference_yam_na.gb"`
+        ??? toggle "H5N1"
+            - auspice_config = `"gs://theiagen-public-files-rp/terra/flu-references/auspice_config_h5n1.json"`
+            - HA
+                - reference_fasta = `"gs://theiagen-public-files-rp/terra/flu-references/reference_h5n1_ha.gb"`
+                - clades_tsv = `"gs://theiagen-public-files-rp/terra/flu-references/h5nx-clades.tsv"`
 
     ??? toggle "Default values for MPXV"
         - min_num_unambig = 150000
@@ -173,13 +178,13 @@ This workflow runs on the set level. Please note that for every task, runtime pa
 | augur | **clades_tsv** | File | TSV file containing clade mutation positions in four columns | Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl>. For an organism without set defaults, an empty clades file is provided to prevent workflow failure, "gs://theiagen-public-files-rp/terra/augur-defaults/minimal-clades.tsv", but will not be as useful as an organism specific clades file. | Optional, Required |
 | augur | **distance_tree_only** | Boolean | Create only a distance tree (skips all Augur steps after augur_tree) | TRUE | Optional |
 | augur | **flu_segment** | String | Required if organism = "flu". The name of the segment to be analyzed; options: "HA" or "NA" | "HA" (only used if organism = "flu") | Optional, Required |
-| augur | **flu_subtype** | String | Required if organism = "flu". The subtype of the flu samples being analyzed; options: "H1N1", "H3N2", "Victoria", "Yamagata" |  | Optional, Required |
+| augur | **flu_subtype** | String | Required if organism = "flu". The subtype of the flu samples being analyzed; options: "H1N1", "H3N2", "Victoria", "Yamagata", "H5N1" |  | Optional, Required |
 | augur | **lat_longs_tsv** | File | Tab-delimited file of geographic location names with corresponding latitude and longitude values | Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl>. For an organism without set defaults, a minimal lat-long file is provided to prevent workflow failure, "gs://theiagen-public-files-rp/terra/augur-defaults/minimal-lat-longs.tsv", but will not be as useful as a detailed lat-longs file covering all the locations for the samples to be visualized. | Optional |
 | augur | **min_date** | Float | Minimum date to begin filtering or frequencies calculations | Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl>. For an organism without set defaults, the default value is 0.0 | Optional |
 | augur | **min_num_unambig** | Int | Minimum number of called bases in genome to pass prefilter | Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl>. For an organism without set defaults, the default value is 0 | Optional |
 | augur | **organism** | String | Organism used to preselect default values; options: "sars-cov-2", "flu", "mpxv", "rsv-a", "rsv-b" | sars-cov-2 | Optional |
 | augur | **reference_fasta** | File | The reference FASTA file used to align the genomes and build the trees | Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl>. For an organism without set defaults, a reference fasta file must be provided otherwise the workflow fails. | Optional, Required |
-| augur | **reference_genbank** | File | The GenBank .gb file for the same reference genome used for the reference_fasta | Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wd>l. For an organism without set defaults, a reference genbank file must be provided otherwise the workflow fails. | Optional, Required |
+| augur | **reference_genbank** | File | The GenBank .gb file for the same reference genome used for the reference_fasta | Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl>. For an organism without set defaults, a reference genbank file must be provided otherwise the workflow fails. | Optional, Required |
 | augur | **sample_metadata_tsvs** | Array[File] | An array of the metadata files produced in Augur_Prep_PHB |  | Optional |
 | augur | **build_name_updated** | String | Internal component, do not modify. Used for replacing spaces with underscores _ |  | Do Not Modify |
 | augur_align | **fill_gaps** | Boolean | If true, gaps represent missing data rather than true indels and so are replaced by N after aligning. | FALSE | Optional |

@@ -171,6 +171,9 @@ workflow merlin_magic {
     File? poppunk_gps_external_clusters_csv
     # sistr options
     Boolean? sistr_use_full_cgmlst_db
+    Int? sistr_cpu
+    Int? sistr_memory
+    Int? sistr_disk_size
     # snippy options - mostly files we host
     String? snippy_query_gene
     File snippy_reference_afumigatus = "gs://theiagen-public-files/terra/theiaeuk_files/Aspergillus_fumigatus_GCF_000002655.1_ASM265v1_genomic.gbff"
@@ -352,7 +355,10 @@ workflow merlin_magic {
         assembly = assembly,
         samplename = samplename,
         use_full_cgmlst_db = sistr_use_full_cgmlst_db,
-        docker = sistr_docker_image
+        docker = sistr_docker_image,
+        cpu = sistr_cpu,
+        memory = sistr_memory,
+        disk_size = sistr_disk_size
     }
     if (!ont_data && !assembly_only) {
       call seqsero2_task.seqsero2 { 

@@ -27,28 +27,28 @@ Additionally, the **TheiaCoV_FASTA_Batch** workflow is available to process seve
     [**Reference Materials for Mpox**](https://www.notion.so/Workspace-Reference-Materials-for-MPXV-Genomic-Characterization-a34f355c68c54c0a82e926d4de607bca?pvs=21)
 
     ??? toggle "HIV Input JSONs"
-        - [TheiaCoV_Illumina_PE_HIV_v1_2024-04-19.json](https://prod-files-secure.s3.us-west-2.amazonaws.com/be290196-9090-4f3c-a9ab-fe730ad213e0/439f1c74-d91e-4978-b173-3302f878e343/TheiaCoV_Illumina_PE_HIV_v1_2024-04-19.json)
-        - [TheiaCoV_Illumina_PE_HIV_v2_2024-04-19.json](https://prod-files-secure.s3.us-west-2.amazonaws.com/be290196-9090-4f3c-a9ab-fe730ad213e0/2c7872de-44c8-406d-bbec-fadaacbb0d98/TheiaCoV_Illumina_PE_HIV_v2_2024-04-19.json)
-        - [TheiaCoV_ONT_HIV_v1_2024-04-19.json](https://prod-files-secure.s3.us-west-2.amazonaws.com/be290196-9090-4f3c-a9ab-fe730ad213e0/9f9a7bd1-2ac4-47fb-967b-4198a45d4a71/TheiaCoV_ONT_HIV_v1_2024-04-19.json)
-        - [TheiaCoV_ONT_HIV_v2_2024-04-19.json](https://prod-files-secure.s3.us-west-2.amazonaws.com/be290196-9090-4f3c-a9ab-fe730ad213e0/13fdfec0-4a81-460e-948a-be6ad30d022d/TheiaCoV_ONT_HIV_v2_2024-04-19.json)
+        - [TheiaCoV_Illumina_PE_HIV_v1_2024-04-19.json](../../assets/files/input_jsons/TheiaCoV_Illumina_PE_HIV_v1_2024-04-19.json)
+        - [TheiaCoV_Illumina_PE_HIV_v2_2024-04-19.json](../../assets/files/input_jsons/TheiaCoV_Illumina_PE_HIV_v2_2024-04-19.json)
+        - [TheiaCoV_ONT_HIV_v1_2024-04-19.json](../../assets/files/input_jsons/TheiaCoV_ONT_HIV_v1_2024-04-19.json)
+        - [TheiaCoV_ONT_HIV_v2_2024-04-19.json](../../assets/files/input_jsons/TheiaCoV_ONT_HIV_v2_2024-04-19.json)
         
     ??? toggle "WNV Input JSONs"
-        - [TheiaCoV_Illumina_PE_WNV_2024-04-19.json](https://prod-files-secure.s3.us-west-2.amazonaws.com/be290196-9090-4f3c-a9ab-fe730ad213e0/6af74d02-9985-428d-897e-e04ebacc42a3/TheiaCoV_Illumina_PE_WNV_2024-04-19.json)
-        - [TheiaCoV_Illumina_SE_WNV_2024-04-19.json](https://prod-files-secure.s3.us-west-2.amazonaws.com/be290196-9090-4f3c-a9ab-fe730ad213e0/cb8dec19-2563-4070-9ae9-031c089f8b3d/TheiaCoV_Illumina_SE_WNV_2024-04-19.json)
-        - [TheiaCoV_FASTA_WNV_2024-04-19.json](https://prod-files-secure.s3.us-west-2.amazonaws.com/be290196-9090-4f3c-a9ab-fe730ad213e0/f2059069-5ce1-45e1-ab9e-51925158c0eb/TheiaCoV_FASTA_WNV_2024-04-19.json)
+        - [TheiaCoV_Illumina_PE_WNV_2024-04-19.json](../../assets/files/input_jsons/TheiaCoV_Illumina_PE_WNV_2024-04-19.json)
+        - [TheiaCoV_Illumina_SE_WNV_2024-04-19.json](../../assets/files/input_jsons/TheiaCoV_Illumina_SE_WNV_2024-04-19.json)
+        - [TheiaCoV_FASTA_WNV_2024-04-19.json](../../assets/files/input_jsons/TheiaCoV_FASTA_WNV_2024-04-19.json)
         
     ??? toggle "Flu Input JSONs"
-        - [TheiaCoV_Illumina_PE_flu_2024-04-19.json](https://prod-files-secure.s3.us-west-2.amazonaws.com/be290196-9090-4f3c-a9ab-fe730ad213e0/ba326b69-8a2a-4af2-a74f-e710e667f82b/TheiaCoV_Illumina_PE_flu_2024-04-19.json)
-        - [TheiaCoV_ONT_flu_2024-04-19.json](https://prod-files-secure.s3.us-west-2.amazonaws.com/be290196-9090-4f3c-a9ab-fe730ad213e0/c01c98f5-d00e-4ff2-ad09-6cc3ff1ad3a7/TheiaCoV_ONT_flu_2024-04-19.json)
-        - [TheiaCoV_FASTA_flu_2024-04-19.json](https://prod-files-secure.s3.us-west-2.amazonaws.com/be290196-9090-4f3c-a9ab-fe730ad213e0/4c7d7a16-2c20-4cbc-9618-231afade9940/TheiaCoV_FASTA_flu_2024-04-19.json)
+        - [TheiaCoV_Illumina_PE_flu_2024-04-19.json](../../assets/files/input_jsons/TheiaCoV_Illumina_PE_flu_2024-04-19.json)
+        - [TheiaCoV_ONT_flu_2024-04-19.json](../../assets/files/input_jsons/TheiaCoV_ONT_flu_2024-04-19.json)
+        - [TheiaCoV_FASTA_flu_2024-04-19.json](../../assets/files/input_jsons/TheiaCoV_FASTA_flu_2024-04-19.json)
         
     ??? toggle "RSV-A Input JSONs"
-        - [TheiaCoV_Illumina_PE_RSV-B_2024-04-19.json](https://prod-files-secure.s3.us-west-2.amazonaws.com/be290196-9090-4f3c-a9ab-fe730ad213e0/2be20bb8-b733-4f02-a27f-b0cf19d015f8/TheiaCoV_Illumina_PE_RSV-B_2024-04-19.json)
-        - [TheiaCoV_FASTA_RSV-A_2024-04-19.json](https://prod-files-secure.s3.us-west-2.amazonaws.com/be290196-9090-4f3c-a9ab-fe730ad213e0/ba6a4845-14ee-4664-b9f3-808f76c87d15/TheiaCoV_FASTA_RSV-A_2024-04-19.json)
-        
+        - [TheiaCoV_Illumina_PE_RSV-A_2024-04-19.json](../../assets/files/input_jsons/TheiaCoV_Illumina_PE_RSV-A_2024-04-19.json)
+        - [TheiaCoV_FASTA_RSV-A_2024-04-19.json](../../assets/files/input_jsons/TheiaCoV_FASTA_RSV-A_2024-04-19.json)
+
     ??? toggle "RSV-B Input JSONs" 
-        - [TheiaCoV_Illumina_PE_RSV-A_2024-04-19.json](https://prod-files-secure.s3.us-west-2.amazonaws.com/be290196-9090-4f3c-a9ab-fe730ad213e0/dd1612ff-20c5-4310-9cb3-c07bf9b7e8a1/TheiaCoV_Illumina_PE_RSV-A_2024-04-19.json)
-        - [TheiaCoV_FASTA_RSV-B_2024-04-19.json](https://prod-files-secure.s3.us-west-2.amazonaws.com/be290196-9090-4f3c-a9ab-fe730ad213e0/160cdfbc-a556-40bc-aa05-84ae69511400/TheiaCoV_FASTA_RSV-B_2024-04-19.json)
+        - [TheiaCoV_Illumina_PE_RSV-B_2024-04-19.json](../../assets/files/input_jsons/TheiaCoV_Illumina_PE_RSV-B_2024-04-19.json)
+        - [TheiaCoV_FASTA_RSV-B_2024-04-19.json](../../assets/files/input_jsons/TheiaCoV_FASTA_RSV-B_2024-04-19.json)
 
 !!! caption "TheiaCoV Workflow Diagram"
     ![TheiaCoV Workflow Diagram](../../assets/figures/TheiaCoV.png)
@@ -164,7 +164,7 @@ All TheiaCoV Workflows (not TheiaCoV_FASTA_Batch)
 | flu_track | **flu_pa_ref** | File | Internal component, do not modify | | Do not modify, Optional | ONT, PE | flu |
 | flu_track | **flu_pb1_ref** | File | Internal component, do not modify | | Do not modify, Optional | ONT, PE | flu |
 | flu_track | **flu_pb2_ref** | File | Internal component, do not modify | | Do not modify, Optional | ONT, PE | flu |
-| flu_track | **flu_subtype** | String | The influenza subtype being analyzed. Used for picking nextclade datasets. Options: "Yamagata", "Victoria", "H1N1", "H3N2". Only use to override the subtype call from IRMA and ABRicate. | | Optional | CL, ONT, PE, SE | flu |
+| flu_track | **flu_subtype** | String | The influenza subtype being analyzed. Used for picking nextclade datasets. Options: "Yamagata", "Victoria", "H1N1", "H3N2", "H5N1". Only use to override the subtype call from IRMA and ABRicate. | | Optional | CL, ONT, PE, SE | flu |
 | flu_track | **genoflu_cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional | FASTA, ONT, PE | flu |
 | flu_track | **genoflu_cross_reference** | File | An Excel file to cross-reference BLAST findings; probably useful if novel genotypes are not in the default file used by genoflu.py | | Optional | FASTA, ONT, PE | |
 | flu_track | **genoflu_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 25 | Optional | FASTA, ONT, PE | |
@@ -191,8 +191,32 @@ All TheiaCoV Workflows (not TheiaCoV_FASTA_Batch)
 | gene_coverage | **min_depth** | Int | The minimum depth to determine if a position was covered. | 10 | Optional | ONT, PE, SE | MPXV, sars-cov-2 |
 | gene_coverage | **sc2_s_gene_start** | Int | start nucleotide position of the SARS-CoV-2 Spike gene | 21563 | Optional | CL, ONT, PE, SE | MPXV, sars-cov-2 |
 | gene_coverage | **sc2_s_gene_stop** | Int | End/Last nucleotide position of the SARS-CoV-2 Spike gene | 25384 | Optional | CL, ONT, PE, SE | MPXV, sars-cov-2 |
+| ivar_consensus | **ivar_bwa_cpu** | Int | Number of CPUs to allocate to the task | 6 | Optional | SE,PE | HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2 |
+| ivar_consensus | **ivar_bwa_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | SE,PE | HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2 |
+| ivar_consensus | **ivar_bwa_docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/ivar:1.3.1-titan | Optional | SE,PE | HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2 |
+| ivar_consensus | **ivar_bwa_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 16 | Optional | SE,PE | HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2 |
+| ivar_consensus | **ivar_consensus_cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional | SE,PE | HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2 |
+| ivar_consensus | **ivar_consensus_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | SE,PE | HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2 |
+| ivar_consensus | **ivar_consensus_docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/ivar:1.3.1-titan | Optional | SE,PE | HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2 |
+| ivar_consensus | **ivar_consensus_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | SE,PE | HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2 |
+| ivar_consensus | **ivar_trim_primers_cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional | SE,PE | HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2 |
+| ivar_consensus | **ivar_trim_primers_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | SE,PE | HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2 |
+| ivar_consensus | **ivar_trim_primers_docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/ivar:1.3.1-titan | Optional | SE,PE | HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2 |
+| ivar_consensus | **ivar_trim_primers_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | SE,PE | HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2 |
+| ivar_consensus | **ivar_variant_cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional  | SE,PE | HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2 |
+| ivar_consensus | **ivar_variant_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | SE,PE | HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2 |
+| ivar_consensus | **ivar_variant_docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/ivar:1.3.1-titan | | SE,PE | HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2 |
+| ivar_consensus | **ivar_variant_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional  | SE,PE | HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2 |
 | ivar_consensus | **read2** | File | Internal component, do not modify | | Do not modify, Optional | SE | HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2 |
 | ivar_consensus | **skip_N** | Boolean | True/False variable that determines if regions with depth less than minimum depth should not be added to the consensus sequence | FALSE | Optional | PE, SE | HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2 |
+| ivar_consensus | **stats_n_coverage_cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional | SE,PE | HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2 |
+| ivar_consensus | **stats_n_coverage_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | SE,PE | HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2 |
+| ivar_consensus | **stats_n_coverage_docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/samtools:1.15 | | SE,PE | HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2 |
+| ivar_consensus | **stats_n_coverage_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | SE,PE | HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2 |
+| ivar_consensus | **stats_n_coverage_primtrim_cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional | SE,PE | HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2 |
+| ivar_consensus | **stats_n_coverage_primtrim_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | SE,PE | HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2 |
+| ivar_consensus | **stats_n_coverage_primtrim_docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/samtools:1.15 | Optional | SE,PE | HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2 |
+| ivar_consensus | **stats_n_coverage_primtrim_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | SE,PE | HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2 |
 | kraken2_dehosted | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional | CL | sars-cov-2 |
 | kraken2_dehosted | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | CL | sars-cov-2 |
 | kraken2_dehosted | **docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.0.8-beta_hv | Optional | CL | sars-cov-2 |
@@ -235,7 +259,7 @@ All TheiaCoV Workflows (not TheiaCoV_FASTA_Batch)
 | nextclade_v3 | **verbosity** | String | other options are: "off" , "error" , "info" , "debug" , and "trace" (highest level of verbosity) | warn | Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | organism_parameters | **auspice_config** | File | Auspice config file used in Augur_PHB workflow.<br>Defaults set for various organisms & Flu segments. A minimal auspice config file is set in cases where organism is not specified and user does not provide an optional input config file. | | Optional | Augur, CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | organism_parameters | **flu_segment** | String | Influenza genome segment being analyzed. Options: "HA" or "NA". Automatically determined. This input is ignored if provided for TheiaCoV_Illumina_SE and TheiaCoV_ClearLabs | N/A | Optional | CL, ONT, PE, SE | flu |
-| organism_parameters | **flu_subtype** | String | The influenza subtype being analyzed. Options: "Yamagata", "Victoria", "H1N1", "H3N2". Automatically determined. This input is ignored if provided for TheiaCoV_Illumina_SE and TheiaCoV_ClearLabs | N/A | Optional | CL, ONT, PE, SE | flu |
+| organism_parameters | **flu_subtype** | String | The influenza subtype being analyzed. Options: "Yamagata", "Victoria", "H1N1", "H3N2", "H5N1". Automatically determined. This input is ignored if provided for TheiaCoV_Illumina_SE and TheiaCoV_ClearLabs | N/A | Optional | CL, ONT, PE, SE | flu |
 | organism_parameters | **gene_locations_bed_file** | File | Use to provide locations of interest where average coverage will be calculated | Default provided for SARS-CoV-2 ("gs://theiagen-public-files-rp/terra/sars-cov-2-files/sc2_gene_locations.bed") and mpox ("gs://theiagen-public-files/terra/mpxv-files/mpox_gene_locations.bed") | Optional | CL, FASTA | |
 | organism_parameters | **genome_length_input** | Int | Use to specify the expected genome length; provided by default for all supported organisms | Default provided for SARS-CoV-2 (29903), mpox (197200), WNV (11000), flu (13000), RSV-A (16000), RSV-B (16000), HIV (primer versions 1 [9181] and 2 [9840]) | Optional | CL | |
 | organism_parameters | **hiv_primer_version** | String | The version of HIV primers used. Options are "https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl#L156" and "https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl#L164". This input is ignored if provided for TheiaCoV_Illumina_SE and TheiaCoV_ClearLabs | v1 | Optional | CL, FASTA, ONT, PE, SE | HIV |
@@ -347,7 +371,7 @@ All TheiaCoV Workflows (not TheiaCoV_FASTA_Batch)
 | workflow name | **adapters** | File | File that contains the adapters used | /bbmap/resources/adapters.fa | Optional | PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | workflow name | **consensus_min_freq** | Float | The minimum frequency for a variant to be called a SNP in consensus genome | 0.6 | Optional | PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | workflow name | **flu_segment** | String | Influenza genome segment being analyzed. Options: "HA" or "NA". | HA | Optional, Required | FASTA | |
-| workflow name | **flu_subtype** | String | The influenza subtype being analyzed. Options: "Yamagata", "Victoria", "H1N1", "H3N2". Automatically determined. | | Optional | FASTA | |
+| workflow name | **flu_subtype** | String | The influenza subtype being analyzed. Options: "Yamagata", "Victoria", "H1N1", "H3N2", "H5N1". Automatically determined. | | Optional | FASTA | |
 | workflow name | **genome_length** | Int | Use to specify the expected genome length | | Optional | FASTA, ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | workflow name | **max_genome_length** | Int | Maximum genome length able to pass read screening | 2673870 | Optional | ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | workflow name | **max_length** | Int | Maximum length for a read based on the SARS-CoV-2 primer scheme | 700 | Optional | ONT | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
@@ -514,6 +538,9 @@ The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflo
         | nextclade_dataset_name_input | flu | ha | yamagata | `"nextstrain/flu/yam/ha/JN993010"` |  |
         | nextclade_dataset_tag_input | flu | ha | yamagata | `"2024-01-30--16-34-55Z"` |  |
         | reference_genome | flu | ha | yamagata | `"gs://theiagen-public-files-rp/terra/flu-references/reference_yam_ha.fasta"` |  |
+        | nextclade_dataset_name_input | flu | ha | h5n1 | `"community/moncla-lab/iav-h5/ha/all-clades"` |  |
+        | nextclade_dataset_tag_input | flu | ha | h5n1 | `"2024-05-08--11-39-52Z"` |  |
+        | reference_genome | flu | ha | h5n1 | `"gs://theiagen-public-files-rp/terra/flu-references/reference_h5n1_ha.fasta"` |  |
         | nextclade_dataset_name_input | flu | na | h1n1 | `"nextstrain/flu/h1n1pdm/na/MW626056"` |  |
         | nextclade_dataset_tag_input | flu | na | h1n1 | `"2024-07-03--08-29-55Z"` |  |
         | reference_genome | flu | na | h1n1 | `"gs://theiagen-public-files-rp/terra/flu-references/reference_h1n1pdm_na.fasta"` |  |
@@ -581,11 +608,11 @@ All input reads are processed through "core tasks" in the TheiaCoV Illumina, ONT
         
         |  | Links |
         | --- | --- |
-        | Task | [task_versioning.wdl](https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/task_versioning.wdl) |
+        | Task | [task_versioning.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/task_versioning.wdl) |
 
 ??? task "`screen`: Total Raw Read Quantification and Genome Size Estimation"
 
-    The [`screen`](https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/quality_control/task_screen.wdl) task ensures the quantity of sequence data is sufficient to undertake genomic analysis. It uses bash commands for quantification of reads and base pairs, and [mash](https://mash.readthedocs.io/en/latest/index.html) sketching to estimate the genome size and its coverage. At each step, the results are assessed relative to pass/fail criteria and thresholds that may be defined by optional user inputs. Samples that do not meet these criteria will not be processed further by the workflow:
+    The [`screen`](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/comparisons/task_screen.wdl) task ensures the quantity of sequence data is sufficient to undertake genomic analysis. It uses [`fastq-scan`](https://github.com/rpetit3/fastq-scan) and bash commands for quantification of reads and base pairs, and [mash](https://mash.readthedocs.io/en/latest/index.html) sketching to estimate the genome size and its coverage. At each step, the results are assessed relative to pass/fail criteria and thresholds that may be defined by optional user inputs. Samples that do not meet these criteria will not be processed further by the workflow:
 
     1. Total number of reads: A sample will fail the read screening task if its total number of reads is less than or equal to `min_reads`.
     2. The proportion of basepairs reads in the forward and reverse read files: A sample will fail the read screening if fewer than `min_proportion` basepairs are in either the reads1 or read2 files.
@@ -614,7 +641,7 @@ All input reads are processed through "core tasks" in the TheiaCoV Illumina, ONT
         
         |  | Links |
         | --- | --- |
-        | Task | [task_screen.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/task_screen.wdl)  |
+        | Task | [task_screen.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/comparisons/task_screen.wdl)  |
 
 ??? task "`read_QC_trim_pe` and `read_QC_trim_se`: Read Quality Trimming, Host and Adapter Removal, Quantification, and Identification ==_for Illumina workflows_=="
 
@@ -630,7 +657,7 @@ All input reads are processed through "core tasks" in the TheiaCoV Illumina, ONT
             
             |  | Links |
             | --- | --- |
-            | Task | [task_ncbi_scrub.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/task_ncbi_scrub.wdl) |
+            | Task | [task_ncbi_scrub.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_ncbi_scrub.wdl) |
             | Software Source Code | [NCBI Scrub on GitHub](https://github.com/ncbi/sra-human-scrubber) |
             | Software Documentation | <https://github.com/ncbi/sra-human-scrubber/blob/master/README.md> |
 
@@ -674,7 +701,7 @@ All input reads are processed through "core tasks" in the TheiaCoV Illumina, ONT
             
             |  | Links |
             | --- | --- |
-            | Task | [task_kraken2.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/task_kraken2.wdl) |
+            | Task | [task_kraken2.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/contamination/task_kraken2.wdl) |
             | Software Source Code | [Kraken2 on GitHub](https://github.com/DerrickWood/kraken2/) |
             | Software Documentation | <https://github.com/DerrickWood/kraken2/wiki> |
             | Original Publication(s) | [Improved metagenomic analysis with Kraken 2](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1891-0) |
@@ -683,8 +710,8 @@ All input reads are processed through "core tasks" in the TheiaCoV Illumina, ONT
                 
         |  | Links |
         | --- | --- |
-        | Sub-workflow | [wf_read_QC_trim.wdl](https://github.com/theiagen/public_health_bacterial_genomics/blob/main/workflows/wf_read_QC_trim.wdl) |
-        | Tasks | [task_fastp.wdl](https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/quality_control/task_fastp.wdl)<br>[task_trimmomatic.wdl](https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/quality_control/task_trimmomatic.wdl)<br>[task_bbduk.wdl](https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/quality_control/task_bbduk.wdl)<br>[task_fastq_scan.wdl](https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/quality_control/task_fastq_scan.wdl)<br>[task_midas.wdl](https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/taxon_id/task_midas.wdl)<br>[task_kraken2.wdl](https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/taxon_id/task_kraken2.wdl) |
+        | Sub-workflow | [wf_read_QC_trim.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilties/wf_read_QC_trim.wdl) |
+        | Tasks | [task_fastp.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_fastp.wdl)<br>[task_trimmomatic.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_trimmomatic.wdl)<br>[task_bbduk.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_bbduk.wdl)<br>[task_fastq_scan.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_fastq_scan.wdl)<br>[task_midas.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/contamination/task_midas.wdl)<br>[task_kraken2.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/contamination/task_kraken2.wdl) |
         | Software Source Code | [fastp](https://github.com/OpenGene/fastp); [Trimmomatic](https://github.com/usadellab/Trimmomatic); [fastq-scan](https://github.com/rpetit3/fastq-scan); [MIDAS](https://github.com/snayfach/MIDAS); [Kraken2](https://github.com/DerrickWood/kraken2)|
         | Software Documentation | [fastp](https://github.com/OpenGene/fastp); [Trimmomatic](http://www.usadellab.org/cms/?page=trimmomatic); [BBDuk](https://jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/bbduk-guide/); [fastq-scan](https://github.com/rpetit3/fastq-scan); [MIDAS](https://github.com/snayfach/MIDAS); [Kraken2](https://github.com/DerrickWood/kraken2/wiki) |
         | Original Publication(s) | *[Trimmomatic: a flexible trimmer for Illumina sequence data](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4103590/)<br>*[fastp: an ultra-fast all-in-one FASTQ preprocessor](https://academic.oup.com/bioinformatics/article/34/17/i884/5093234?login=false)<br>*[An integrated metagenomics pipeline for strain profiling reveals novel patterns of bacterial transmission and biogeography](https://pubmed.ncbi.nlm.nih.gov/27803195/)<br>*[Improved metagenomic analysis with Kraken 2](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1891-0) |
@@ -785,7 +812,7 @@ All input reads are processed through "core tasks" in the TheiaCoV Illumina, ONT
 
 ??? toggle "`irma`: Assembly and Characterization ==_for flu in TheiaCoV_Illumina_PE & TheiaCoV_ONT_=="
 
-    Cleaned reads are assembled using `irma` which does not use a reference due to the rapid evolution and high variability of influenza. `irma` also performs typing and subtyping as part of the assembly process.
+    Cleaned reads are assembled using `irma` which does not use a reference due to the rapid evolution and high variability of influenza. Assemblies produced by `irma` will be orderd from largest to smallest assembled flu segment. `irma` also performs typing and subtyping as part of the assembly process.
 
     General statistics about the assembly are generated with the `consensus_qc` task ([task_assembly_metrics.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_assembly_metrics.wdl)).
 
@@ -899,7 +926,7 @@ All input reads are processed through "core tasks" in the TheiaCoV Illumina, ONT
 
     This sub-workflow determines which, if any, antiviral mutations are present in the sample. 
     
-    The assembled HA, NA, PA, PB1 and PB2 segments are compared against [a list of known amino-acid substitutions associated with resistance](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/task_flu_antiviral_subs.wdl) to the antivirals  A_315675, compound_367, Favipiravir, Fludase, L_742_001, Laninamivir, Oseltamivir (tamiflu), Peramivir, Pimodivir, Xofluza, and Zanamivir. The list of known antiviral amino acid substitutions can be expanded via optional user input `antiviral_aa_subs` in the format "`NA:V95A,HA:I97V`", i.e. `Protein:AAPositionAA`. 
+    The assembled HA, NA, PA, PB1 and PB2 segments are compared against [a list of known amino-acid substitutions associated with resistance](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/drug_resistance/task_flu_antiviral_subs.wdl) to the antivirals  A_315675, compound_367, Favipiravir, Fludase, L_742_001, Laninamivir, Oseltamivir (tamiflu), Peramivir, Pimodivir, Xofluza, and Zanamivir. The list of known antiviral amino acid substitutions can be expanded via optional user input `antiviral_aa_subs` in the format "`NA:V95A,HA:I97V`", i.e. `Protein:AAPositionAA`. 
 
     !!! techdetails "Antiviral Substitutions Technical Details"        
         |  | Links |
@@ -932,7 +959,7 @@ All TheiaCoV Workflows (not TheiaCoV_FASTA_Batch)
 | aligned_bam | File | Primer-trimmed BAM file; generated during consensus assembly process | CL, ONT, PE, SE |
 | artic_docker | String | Docker image utilized for read trimming and consensus genome assembly | CL, ONT |
 | artic_version | String | Version of the Artic software utilized for read trimming and conesnsus genome assembly | CL, ONT |
-| assembly_fasta | File | Consensus genome assembly; for lower quality flu samples, the output may state "Assembly could not be generated" when there is too little and/or too low quality data for IRMA to produce an assembly | CL, ONT, PE, SE |
+| assembly_fasta | File | Consensus genome assembly; for lower quality flu samples, the output may state "Assembly could not be generated" when there is too little and/or too low quality data for IRMA to produce an assembly. Contigs will be ordered from largest to smallest when IRMA is used. | CL, ONT, PE, SE |
 | assembly_length_unambiguous | Int | Number of unambiguous basecalls within the consensus assembly | CL, FASTA, ONT, PE, SE |
 | assembly_mean_coverage | Float | Mean sequencing depth throughout the consensus assembly. Generated after performing primer trimming and calculated using the SAMtools coverage command | CL, ONT, PE, SE |
 | assembly_method | String | Method employed to generate consensus assembly | CL, FASTA, ONT, PE, SE |
