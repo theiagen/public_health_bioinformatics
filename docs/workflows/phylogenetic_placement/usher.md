@@ -14,6 +14,8 @@
 
 While this workflow is technically a set-level workflow, it works on the sample-level too. When run on the set-level, the samples are placed with respect to each other.
 
+<div class="searchable-table" markdown="1">
+
 | **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
 |---|---|---|---|---|---|
 | usher_workflow | **assembly_fasta** | Array[File] | The assembly files for the samples you want to place on the pre-existing; can either be a set of samples, an individual sample, or multiple individual samples |  | Required |
@@ -29,7 +31,11 @@ While this workflow is technically a set-level workflow, it works on the sample-
 | version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
 | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
 
+</div>
+
 ### Outputs
+
+<div class="searchable-table" markdown="1">
 
 | **Variable** | **Type** | **Description** |
 |---|---|---|
@@ -41,3 +47,5 @@ While this workflow is technically a set-level workflow, it works on the sample-
 | usher_subtrees | Array[File] | An array of subtrees where your samples have been placed |
 | usher_uncondensed_tree | File | The entire global tree with your samples included (warning: may be a very large file if the organism is "sars-cov-2") |
 | usher_version | String | The version of UShER used |
+
+</div>

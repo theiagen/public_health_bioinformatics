@@ -20,6 +20,8 @@ The primary intended input of the workflow is the `snippy_variants_results` outp
 
 All variant data included in the sample set should be generated from aligning sequencing reads to the **same reference genome**. If variant data was generated using different reference genomes, shared variants cannot be identified and results will be less useful.
 
+<div class="searchable-table" markdown="1">
+
 | **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
 | --- | --- | --- | --- | --- | --- |
 | shared_variants_wf | **concatenated_file_name** | String | String of your choice to prefix output files | | Required |
@@ -32,6 +34,8 @@ All variant data included in the sample set should be generated from aligning se
 | shared_variants | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional |
 | version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
 | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
+
+</div>
 
 ### Tasks
 

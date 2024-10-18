@@ -19,6 +19,8 @@ You can learn more about the kSNP3 workflow, including how to visualize the outp
 
 ### Inputs
 
+<div class="searchable-table" markdown="1">
+
 | **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
 |---|---|---|---|---|---|
 | ksnp3_workflow | **assembly_fasta** | Array[File] | The assembly files to be analyzed | | Required |
@@ -62,6 +64,8 @@ You can learn more about the kSNP3 workflow, including how to visualize the outp
 | version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
 | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
 
+</div>
+
 ### Workflow Actions
 
 The `ksnp3` workflow is run on the set of assembly files to produce both pan-genome and core-genome phylogenies. This also results in alignment files which - are used by [`snp-dists`](https://github.com/tseemann/snp-dists) to produce a pairwise SNP distance matrix for both the pan-genome and core-genomes.
@@ -86,6 +90,8 @@ If you fill out the `data_summary_*` and `sample_names` optional variables, you 
 
 ### Outputs
 
+<div class="searchable-table" markdown="1">
+
 | **Variable** | **Type** | **Description** |
 |---|---|---|
 | ksnp3_core_snp_matrix | File | The SNP matrix made with the core genome; formatted for Phandango if `phandango_coloring` input is `true` |
@@ -108,6 +114,8 @@ If you fill out the `data_summary_*` and `sample_names` optional variables, you 
 | ksnp3_vcf_snps_not_in_ref | File | A TSV file of the SNPs not present in the reference genome, but were identified by kSNP3. |
 | ksnp3_wf_analysis_date | String | The date the workflow was run |
 | ksnp3_wf_version | String | The version of the repository the workflow is hosted in |
+
+</div>
 
 ## References
 

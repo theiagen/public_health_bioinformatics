@@ -65,6 +65,8 @@ To run Snippy_Streamline, either a reference genome must be provided (`reference
         - Using the core genome
             - `core_genome` = true (as default)
 
+<div class="searchable-table" markdown="1">
+
 | **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
 |---|---|---|---|---|---|
 | snippy_streamline | **read1** | Array[File] | The forward read files |  | Required |
@@ -133,6 +135,8 @@ To run Snippy_Streamline, either a reference genome must be provided (`reference
 | version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
 | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
 
+</div>
+
 ### Workflow Tasks
 
 For automatic reference selection by the workflow (optional):
@@ -179,6 +183,8 @@ For all cases:
 
 ### Outputs
 
+<div class="searchable-table" markdown="1">
+
 | **Variable** | **Type** | **Description** |
 |---|---|---|
 | snippy_centroid_docker | String | Docker file used for Centroid |
@@ -223,3 +229,5 @@ For all cases:
 | snippy_variants_snippy_docker | Array[String] | Docker file used for Snippy in the Snippy_Variants subworkfow |
 | snippy_variants_snippy_version | Array[String] | Version of Snippy_Tree subworkflow used |
 | snippy_wg_snp_matrix | File | CSV file of whole genome pairwise SNP distances between samples, calculated from the final alignment |
+
+</div>

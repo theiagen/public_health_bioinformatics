@@ -30,6 +30,8 @@ The Augur_Prep_PHB workflow takes assembly FASTA files and associated metadata f
 
 This workflow runs on the sample level.
 
+<div class="searchable-table" markdown="1">
+
 | **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
 |---|---|---|---|---|---|
 | augur_prep | **assembly** | File | Assembly/consensus file (single FASTA file per sample) |  | Required |
@@ -47,6 +49,8 @@ This workflow runs on the sample level.
 | prep_augur_metadata | **organism** | String | The organism to be analyzed in Augur; options: "sars-cov-2", "flu", "MPXV", "rsv-a", "rsv-b" | sars-cov-2 | Optional |
 | version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
 | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
+
+</div>
 
 #### Augur_Prep Outputs
 
@@ -170,6 +174,8 @@ The Augur_PHB workflow takes in a ***set*** of SARS-CoV-2 (or any other viral 
 
 This workflow runs on the set level. Please note that for every task, runtime parameters are modifiable (cpu, disk_size, docker, and memory); most of these values have been excluded from the table below for convenience.
 
+<div class="searchable-table" markdown="1">
+
 | **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
 |---|---|---|---|---|---|
 | augur | **assembly_fastas** | Array[File] | An array of the assembly files to use; use either the HA or NA segment for flu samples |  | Required |
@@ -234,6 +240,8 @@ This workflow runs on the set level. Please note that for every task, runtime pa
 | mutation_context | **disk_size** | Int | Disk size in GB requested for the mutation_context task that is specific to Mpox. | 50 | Optional |
 | mutation_context | **docker** | String | Docker image used for the mutation_context task that is specific to Mpox. Do not modify. | us-docker.pkg.dev/general-theiagen/theiagen/nextstrain-mpox-mutation-context:2024-06-27 | Do Not Modify, Optional |
 | mutation_context | **memory** | Int | Memory size in GB requested for the mutation_context task that is specific to Mpox. | 4 | Optional |
+
+</div>
 
 ??? task "Workflow Tasks"
     ##### Augur Workflow Tasks {#augur-tasks}
