@@ -188,6 +188,7 @@ For all cases:
 | snippy_centroid_version | String | Centroid version used |
 | snippy_cg_snp_matrix | File | CSV file of core genome pairwise SNP distances between samples, calculated from the final alignment  |
 | snippy_concatenated_variants | File | The concatenated variants file |
+| snippy_combined_qc_metrics | File | Combined QC metrics file containing concatenated QC metrics from all samples. The file is a tab-separated values (TSV) file with the following columns:<br>- samplename<br>- reads_aligned_to_reference<br>- total_reads<br>- percent_reads_aligned<br>- variants_total<br>- percent_ref_coverage<br>- #rname<br>- startpos<br>- endpos<br>- numreads<br>- covbases<br>- coverage<br>- meandepth<br>- meanbaseq<br>- meanmapq<br><br>The last set of columns (`#rname` to `meanmapq`) may repeat for each chromosome or contig in the reference genome. |
 | snippy_filtered_metadata | File | TSV recording the columns of the Terra data table that were used in the summarize_data task |
 | snippy_final_alignment | File | Final alignment (FASTA file) used to generate the tree (either after snippy alignment, gubbins recombination removal, and/or core site selection with SNP-sites) |
 | snippy_final_tree | File | Final phylogenetic tree produced by Snippy_Streamline |

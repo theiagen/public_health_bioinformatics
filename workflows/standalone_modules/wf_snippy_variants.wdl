@@ -70,6 +70,7 @@ workflow snippy_variants_wf {
     File snippy_variants_coverage_tsv = snippy_variants.snippy_variants_coverage_tsv
     Int snippy_variants_num_variants = snippy_variants.snippy_variants_num_variants
     Float snippy_variants_percent_ref_coverage = snippy_variants.snippy_variants_percent_ref_coverage
+    File snippy_variants_qc_metrics = snippy_variants.snippy_variants_qc_metrics
     Float snippy_variants_percent_reads_aligned  = snippy_variants.snippy_variants_percent_reads_aligned
     # snippy gene query outputs
     String? snippy_variants_query = snippy_gene_query.snippy_variants_query
