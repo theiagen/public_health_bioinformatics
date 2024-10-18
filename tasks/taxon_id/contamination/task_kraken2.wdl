@@ -56,20 +56,25 @@ task kraken2_standalone {
     percentage_human=$(grep "Homo sapiens" ~{samplename}.report.txt | cut -f 1)
     if [ -z "$percentage_human" ] ; then percentage_human="0" ; fi
     echo $percentage_human | tee PERCENT_HUMAN
-    
-    # Report percentage of SARS-CoV-2 reads
-    percentage_sc2=$(grep "Severe acute respiratory syndrome coronavirus 2" ~{samplename}.report.txt | cut -f1 )
-    if [ -z "$percentage_sc2" ] ; then percentage_sc2="0" ; fi
-    echo $percentage_sc2 | tee PERCENT_SC2
 
     # capture target org percentage
     if [ ! -z "~{target_organism}" ]; then
       echo "Target org designated: ~{target_organism}"
-      percent_target_organism=$(grep "~{target_organism}" ~{samplename}.report.txt | cut -f1 | head -n1 )
-      if [ -z "$percent_target_organism" ] ; then percent_target_organism="0" ; fi
+      # if target organisms is sc2, report it in a special legacy column called PERCENT_SC2
+      if [[ "~{target_organism}" == "Severe acute respiratory syndrome coronavirus 2" ]]; then
+        percentage_sc2=$(grep "Severe acute respiratory syndrome coronavirus 2" ~{samplename}.report.txt | cut -f1 )
+        percent_target_organism=""
+        if [ -z "$percentage_sc2" ] ; then percentage_sc2="0" ; fi
+      else
+        percentage_sc2="" 
+        percent_target_organism=$(grep "~{target_organism}" ~{samplename}.report.txt | cut -f1 | head -n1 )
+        if [ -z "$percent_target_organism" ] ; then percent_target_organism="0" ; fi
+      fi
     else
       percent_target_organism=""
+      percentage_sc2=""
     fi
+    echo $percentage_sc2 | tee PERCENT_SC2
     echo $percent_target_organism | tee PERCENT_TARGET_ORGANISM
 
     # rename classified and unclassified read files if SE
@@ -91,7 +96,7 @@ task kraken2_standalone {
     File? kraken2_unclassified_read2 = "~{samplename}.unclassified_2.fastq.gz"
     File kraken2_classified_read1 = "~{samplename}.classified_1.fastq.gz"
     Float kraken2_percent_human = read_float("PERCENT_HUMAN")
-    Float kraken2_percent_sc2 = read_float("PERCENT_SC2")
+    String kraken2_percent_sc2 = read_string("PERCENT_SC2")
     String kraken2_percent_target_organism = read_string("PERCENT_TARGET_ORGANISM")
     String? kraken2_target_organism = target_organism
     File? kraken2_classified_read2 = "~{samplename}.classified_2.fastq.gz"

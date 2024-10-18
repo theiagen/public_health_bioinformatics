@@ -194,11 +194,11 @@ workflow read_QC_trim_pe {
     # kraken2 - theiacov and theiaprok
     String kraken2_version = select_first([kraken2_theiacov_raw.kraken2_version, kraken2_theiaprok.kraken2_version, ""])
     Float? kraken2_human =  kraken2_theiacov_raw.kraken2_percent_human
-    Float? kraken2_sc2 = kraken2_theiacov_raw.kraken2_percent_sc2
+    String? kraken2_sc2 = kraken2_theiacov_raw.kraken2_percent_sc2
     String? kraken2_target_organism = kraken2_theiacov_raw.kraken2_percent_target_organism
     String kraken2_report = select_first([kraken2_theiacov_raw.kraken2_report, kraken2_theiaprok.kraken2_report, ""])
     Float? kraken2_human_dehosted = kraken2_theiacov_dehosted.kraken2_percent_human
-    Float? kraken2_sc2_dehosted = kraken2_theiacov_dehosted.kraken2_percent_sc2
+    String? kraken2_sc2_dehosted = kraken2_theiacov_dehosted.kraken2_percent_sc2
     String? kraken2_target_organism_dehosted = kraken2_theiacov_dehosted.kraken2_percent_target_organism
     String? kraken2_target_organism_name = target_organism
     File? kraken2_report_dehosted = kraken2_theiacov_dehosted.kraken2_report

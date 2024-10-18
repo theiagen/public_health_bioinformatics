@@ -292,12 +292,12 @@ workflow theiacov_illumina_pe {
     # Read QC - kraken outputs
     String? kraken2_version = read_QC_trim.kraken2_version
     Float? kraken2_human = read_QC_trim.kraken2_human
-    Float? kraken2_sc2 = read_QC_trim.kraken2_sc2
+    String? kraken2_sc2 = read_QC_trim.kraken2_sc2
     String? kraken2_target_organism = read_QC_trim.kraken2_target_organism
     String? kraken2_target_organism_name = read_QC_trim.kraken2_target_organism_name
     File? kraken2_report = read_QC_trim.kraken2_report
     Float? kraken2_human_dehosted = read_QC_trim.kraken2_human_dehosted
-    Float? kraken2_sc2_dehosted = read_QC_trim.kraken2_sc2_dehosted
+    String? kraken2_sc2_dehosted = read_QC_trim.kraken2_sc2_dehosted
     String? kraken2_target_organism_dehosted = read_QC_trim.kraken2_target_organism_dehosted
     File? kraken2_report_dehosted = read_QC_trim.kraken2_report_dehosted
     String? kraken2_database = read_QC_trim.kraken2_database

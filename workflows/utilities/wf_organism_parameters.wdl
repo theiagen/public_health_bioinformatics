@@ -54,6 +54,7 @@ workflow organism_parameters {
     String sc2_gene_locations_bed = "gs://theiagen-public-files-rp/terra/sars-cov-2-files/sc2_gene_locations.bed"
     String sc2_nextclade_ds_tag = "2024-07-17--12-57-03Z"
     String sc2_nextclade_ds_name = "nextstrain/sars-cov-2/wuhan-hu-1/orfs"
+    String sc2_kraken_target_organism = "Severe acute respiratory syndrome coronavirus 2"
     String sc2_pangolin_docker = "us-docker.pkg.dev/general-theiagen/staphb/pangolin:4.3.1-pdata-1.29"
     Int sc2_genome_len = 29903
     Int sc2_vadr_max_length = 30000
@@ -279,7 +280,7 @@ workflow organism_parameters {
     Int vadr_memory = select_first([vadr_mem, sc2_vadr_memory, mpox_vadr_memory, wnv_vadr_memory, flu_vadr_memory, rsv_a_vadr_memory, rsv_b_vadr_memory, 0])
     Int vadr_skiplength = select_first([vadr_skip_length, sc2_vadr_skip_length, mpox_vadr_skip_length, wnv_vadr_skip_length, flu_vadr_skip_length, rsv_a_vadr_skip_length, rsv_b_vadr_skip_length, 0])
     # kraken options
-    String kraken_target_organism = select_first([kraken_target_organism_input, mpox_kraken_target_organism, wnv_kraken_target_organism, hiv_v1_target_organism, hiv_v2_target_organism, rsv_a_kraken_target_organism, rsv_b_kraken_target_organism, ""])
+    String kraken_target_organism = select_first([kraken_target_organism_input, sc2_kraken_target_organism, mpox_kraken_target_organism, wnv_kraken_target_organism, hiv_v1_target_organism, hiv_v2_target_organism, rsv_a_kraken_target_organism, rsv_b_kraken_target_organism, ""])
     # augur options
     Int augur_min_num_unambig = select_first([min_num_unambig, mpox_min_num_unambig, flu_min_num_unambig, rsv_a_min_num_unambig, rsv_b_min_num_unambig, 0])
     File augur_clades_tsv = select_first([clades_tsv, h1n1_ha_clades_tsv, h3n2_ha_clades_tsv, vic_ha_clades_tsv, yam_ha_clades_tsv, h5n1_ha_clades_tsv, rsv_a_clades_tsv, rsv_b_clades_tsv, mpox_clades_tsv, "gs://theiagen-public-files-rp/terra/augur-defaults/minimal-clades.tsv"])
