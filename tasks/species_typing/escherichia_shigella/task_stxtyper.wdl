@@ -90,7 +90,7 @@ task stxtyper {
       fi
       
       echo "DEBUG: generating stx_type_all string output now..."
-      # sort and uniq so there are no duplicates; then paste into a single comma-separate line with commas
+      # sort and uniq so there are no duplicates; then paste into a single comma-separated line with commas
       # sed is to remove any instances of "None" from the output
       cat stxtyper_complete_operons.txt stxtyper_partial_hits.txt stxtyper_stx_frameshifts_or_internal_stop_hits.txt stx_novel_hits.txt | sed '/None/d' | sort | uniq | paste -sd, - > stxtyper_all_hits.txt
 
