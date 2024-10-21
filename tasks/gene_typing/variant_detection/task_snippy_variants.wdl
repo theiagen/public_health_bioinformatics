@@ -85,8 +85,9 @@ task snippy_variants {
     reference_length_passed_depth=$(cat "~{samplename}/~{samplename}_depth_~{min_coverage}.tsv" | wc -l)
     echo $reference_length_passed_depth | tee REFERENCE_LENGTH_PASSED_DEPTH
 
+    # check if reference_length is equal to 0, if so, output a warning
     if [ "$reference_length" -eq 0 ]; then
-      echo "0" > PERCENT_REF_COVERAGE
+      echo "Could not compute percent reference coverage: reference length is 0" > PERCENT_REF_COVERAGE
     else
       echo $reference_length_passed_depth $reference_length | awk '{ printf("%.2f", ($1/$2)*100) }' > PERCENT_REF_COVERAGE
     fi
@@ -96,7 +97,7 @@ task snippy_variants {
     total_reads=$(samtools view -c "~{samplename}/~{samplename}.bam")
     echo $total_reads > TOTAL_READS
     if [ "$total_reads" -eq 0 ]; then
-      echo "0" > PERCENT_READS_ALIGNED
+      echo "Could not compute percent reads aligned: total reads is 0" > PERCENT_READS_ALIGNED
     else
       echo $reads_aligned $total_reads | awk '{ printf("%.2f", ($1/$2)*100) }' > PERCENT_READS_ALIGNED
     fi
