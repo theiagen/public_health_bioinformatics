@@ -1251,7 +1251,7 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
         
         Generally, `stxtyper` looks for _stxA_ and _stxB_ subunits that compose a complete operon. The A subunit is longer (in amino acid length) than the B subunit. Stxtyper attempts to detect these, compare them to a database of known sequences, and type them based on amino acid composition.  There typing algorithm and rules defining how to type these genes & operons will be described more completely in a publication that will be available in the future.
         
-        The `stxtyper_report` output TSV is provided in [this output format](https://github.com/ncbi/stxtyper?tab=readme-ov-file#output)
+        The `stxtyper_report` output TSV is provided in [this output format.](https://github.com/ncbi/stxtyper?tab=readme-ov-file#output)
 
         Eventually this tool will be incorporated into AMRFinderPlus and will run behind-the-scenes when the user (or in this case, the TheiaProk workflow) provides the `amrfinder --organism Escherichia` option.
 
@@ -1966,8 +1966,8 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
 | staphopiasccmec_version | String | staphopia-sccmec presence and absence TSV file | FASTA, ONT, PE, SE |
 | stxtyper_all_hits | String | Comma-separated list of matches of all types. Includes complete, partial, frameshift, internal stop, and novel hits. List is de-duplicated so multiple identical hits are only listed once. For example if 5 partial stx2 hits are detected in the genome, only 1 "stx2" will be listed in this field. To view the potential subtype for each partial hit, the user will need to view the stxtyper_report TSV file. | FASTA, ONT, PE, SE |
 | stxtyper_complete_operons | String | Comma-separated list of all COMPLETE operons detected by StxTyper. Show multiple hits if present in results. | FASTA, ONT, PE, SE |
-| stxtyper_docker | String | Name of docker image used by the stxtyper task | FASTA, ONT, PE, SE |
-| stxtyper_log | File | Raw log TXT file produced by StxTyper. Only useful if debugging core functionality of StxTyper. Not very useful to end user | FASTA, ONT, PE, SE |
+| stxtyper_docker | String | Name of docker image used by the stxtyper task. | FASTA, ONT, PE, SE |
+| stxtyper_log | File | Raw log TXT file produced by StxTyper. Only useful if debugging core functionality of StxTyper. Not very useful to end user. | FASTA, ONT, PE, SE |
 | stxtyper_novel_hits | String | Comma-separated list of matches that have the OPERON output of "COMPLETE_NOVEL". Possible outputs "stx1", "stx2", or "stx1,stx2" | FASTA, ONT, PE, SE |
 | stxtyper_num_hits | Int | Number of "hits" or rows present in the `stxtyper_report` TSV file | FASTA, ONT, PE, SE |
 | stxtyper_partial_hits | String | Possible outputs "stx1", "stx2", or "stx1,stx2". Tells the user that there was a partial hit to either the A or B subunit, but does not describe which subunit, only the possible types from the PARTIAL matches. | FASTA, ONT, PE, SE |
