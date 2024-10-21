@@ -32,12 +32,10 @@ task metaspades_pe {
       if [ ! -s ~{samplename}_contigs.fasta ]; then
         tee "Metaspades produced an empty assembly for ~{samplename}" > WARNING
         rm -f ~{samplename}_contigs.fasta
-        exit 1
       fi
     
     else
       tee "Metaspades failed to assemble for ~{samplename}" > WARNING
-      exit 1
     fi
 
   >>>
