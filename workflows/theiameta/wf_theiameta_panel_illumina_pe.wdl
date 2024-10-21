@@ -5,6 +5,7 @@ import "../../tasks/assembly/task_metaspades.wdl" as metaspades_task
 import "../../tasks/quality_control/basic_statistics/task_fastq_scan.wdl" as fastq_scan
 import "../../tasks/quality_control/basic_statistics/task_quast.wdl" as quast_task
 import "../../tasks/quality_control/read_filtering/task_pilon.wdl" as pilon_task
+import "../../tasks/task_versioning.wdl" as versioning
 import "../../tasks/taxon_id/contamination/task_kraken2.wdl" as kraken_task
 import "../../tasks/taxon_id/task_krakentools.wdl" as krakentools_task
 import "../../tasks/utilities/data_handling/task_gather_scatter.wdl" as gather_scatter_task
@@ -21,6 +22,9 @@ workflow theiameta_panel_illumina_pe {
 
     Int minimum_read_number = 100
     File kraken2_db = "gs://theiagen-large-public-files-rp/terra/databases/kraken2/k2_viral_20240112.tar.gz"
+  }
+  call versioning.version_capture {
+    input:
   }
   call read_qc_trim_pe.read_QC_trim_pe as read_QC_trim {
       input:
@@ -152,6 +156,9 @@ workflow theiameta_panel_illumina_pe {
       nextclade_qc_flu_na = write_json(morgana_magic.nextclade_qc_flu_na)
   } 
   output {
+    # versioning outputs
+    String theiameta_panel_illumina_pe_version = version_capture.phb_version
+    String theiameta_panel_illumina_pe_analysis_date = version_capture.date
     # kraken2 outputs
     String kraken2_version = kraken2.kraken2_version
     String kraken2_database = kraken2.kraken2_database
