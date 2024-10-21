@@ -67,41 +67,45 @@ workflow theiameta_panel_illumina_pe {
             read2_cleaned = krakentools.extracted_read2,
             samplename = "~{samplename}_~{taxon_id}"
         }
-        call minimap2_task.minimap2 as minimap2_assembly_correction {
-          input:
-            query1 = krakentools.extracted_read1,
-            query2 = krakentools.extracted_read2,
-            reference = metaspades_pe.assembly_fasta,
-            samplename = "~{samplename}_~{taxon_id}",
-            mode = "sr",
-            output_sam = true
-        }
-        call parse_mapping_task.sam_to_sorted_bam as sort_bam_assembly_correction {
-          input:
-            sam = minimap2_assembly_correction.minimap2_out,
-            samplename = "~{samplename}_~{taxon_id}"
-        }
-        call pilon_task.pilon {
-          input:
-            assembly = metaspades_pe.assembly_fasta,
-            bam = sort_bam_assembly_correction.bam,
-            bai = sort_bam_assembly_correction.bai,
-            samplename = "~{samplename}_~{taxon_id}"
-        }    
-        call quast_task.quast {
-          input:
-            assembly = pilon.assembly_fasta,
-            samplename = "~{samplename}_~{taxon_id}",
-            min_contig_length = 1
-        }
-        call morgana_magic_workflow.morgana_magic {
-          input:
-            samplename = "~{samplename}_~{taxon_id}",
-            assembly_fasta = pilon.assembly_fasta,
-            read1 = krakentools.extracted_read1,
-            read2 = krakentools.extracted_read2,
-            taxon_id = "~{taxon_id}",
-            seq_method = "ILLUMINA"
+        if (defined(metaspades_pe.assembly_fasta)) {
+          call minimap2_task.minimap2 as minimap2_assembly_correction {
+            input:
+              query1 = krakentools.extracted_read1,
+              query2 = krakentools.extracted_read2,
+              reference = select_first([metaspades_pe.assembly_fasta]),
+              samplename = "~{samplename}_~{taxon_id}",
+              mode = "sr",
+              output_sam = true
+          }
+          call parse_mapping_task.sam_to_sorted_bam as sort_bam_assembly_correction {
+            input:
+              sam = minimap2_assembly_correction.minimap2_out,
+              samplename = "~{samplename}_~{taxon_id}"
+          }
+          call pilon_task.pilon {
+            input:
+              assembly = select_first([metaspades_pe.assembly_fasta]),
+              bam = sort_bam_assembly_correction.bam,
+              bai = sort_bam_assembly_correction.bai,
+              samplename = "~{samplename}_~{taxon_id}"
+          }
+          if (defined(pilon.assembly_fasta)) {    
+            call quast_task.quast {
+              input:
+                assembly = select_first([pilon.assembly_fasta]),
+                samplename = "~{samplename}_~{taxon_id}",
+                min_contig_length = 1
+            }
+            call morgana_magic_workflow.morgana_magic {
+              input:
+                samplename = "~{samplename}_~{taxon_id}",
+                assembly_fasta = select_first([pilon.assembly_fasta]),
+                read1 = krakentools.extracted_read1,
+                read2 = krakentools.extracted_read2,
+                taxon_id = "~{taxon_id}",
+                seq_method = "ILLUMINA"
+            }
+          }
         }
       }
     }

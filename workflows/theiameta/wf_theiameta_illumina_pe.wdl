@@ -71,110 +71,114 @@ workflow theiameta_illumina_pe {
       read2_cleaned = read_QC_trim.read2_clean,
       samplename = samplename
   }
-  call minimap2_task.minimap2 as minimap2_assembly_correction {
-    input:
-      query1 = read_QC_trim.read1_clean,
-      query2 = read_QC_trim.read2_clean, 
-      reference = metaspades_pe.assembly_fasta,
-      samplename = samplename,
-      mode = "sr",
-      output_sam = true
-  }
-  call parse_mapping_task.sam_to_sorted_bam as sort_bam_assembly_correction {
-    input:
-      sam = minimap2_assembly_correction.minimap2_out,
-      samplename = samplename
-  }
-  call pilon_task.pilon {
-    input:
-      assembly = metaspades_pe.assembly_fasta,
-      bam = sort_bam_assembly_correction.bam,
-      bai = sort_bam_assembly_correction.bai,
-      samplename = samplename
-  }
-    # if reference is provided, perform mapping of assembled contigs to 
-    # reference with minimap2, and extract those as final assembly
-    if (defined(reference)) {
-      call minimap2_task.minimap2 as minimap2_assembly {
-        input:
-          query1 = pilon.assembly_fasta,
-          reference = select_first([reference]),
-          samplename = samplename,
-          mode = "asm20",
-          output_sam = false
-      }
-      call parse_mapping_task.retrieve_aligned_contig_paf {
-        input:
-          paf = minimap2_assembly.minimap2_out,
-          assembly = pilon.assembly_fasta,
-          samplename = samplename
-      }
-      call parse_mapping_task.calculate_coverage_paf {
-        input:
-          paf = minimap2_assembly.minimap2_out
-      }
-    }
-    call quast_task.quast {
+  if (defined(metaspades_pe.assembly_fasta)) {
+    call minimap2_task.minimap2 as minimap2_assembly_correction {
       input:
-        assembly = select_first([retrieve_aligned_contig_paf.final_assembly, pilon.assembly_fasta]),
+        query1 = read_QC_trim.read1_clean,
+        query2 = read_QC_trim.read2_clean, 
+        reference = select_first([metaspades_pe.assembly_fasta]),
         samplename = samplename,
-        min_contig_length = 1
-      }
-    if (output_additional_files) {
-      call minimap2_task.minimap2 as minimap2_reads {
-        input:
-          query1 = read_QC_trim.read1_clean,
-          query2 = read_QC_trim.read2_clean, 
-          reference = select_first([retrieve_aligned_contig_paf.final_assembly, pilon.assembly_fasta]),
-          samplename = samplename,
-          mode = "sr",
-          output_sam = true
-      }
-      call parse_mapping_task.sam_to_sorted_bam {
-        input:
-          sam = minimap2_reads.minimap2_out,
-          samplename = samplename
-      }
-      call parse_mapping_task.calculate_coverage {
-        input:
-          bam = sam_to_sorted_bam.bam,
-          bai = sam_to_sorted_bam.bai
-      }
-      call parse_mapping_task.retrieve_pe_reads_bam as retrieve_unaligned_pe_reads_sam {
-        input:
-          bam = sam_to_sorted_bam.bam,
-          samplename = samplename,
-          prefix = "unassembled",
-          sam_flag = 4
-      }
-      call parse_mapping_task.retrieve_pe_reads_bam as retrieve_aligned_pe_reads_sam {
-        input:
-          bam = sam_to_sorted_bam.bam,
-          samplename = samplename,
-          sam_flag = 2,
-          prefix = "assembled"
-      }
-      call parse_mapping_task.assembled_reads_percent {
-        input:
-          bam = sam_to_sorted_bam.bam,
-      } 
+        mode = "sr",
+        output_sam = true
     }
-    if (! defined(reference)) {
-      call bwa_task.bwa as bwa {
-        input:
-          read1 = read_QC_trim.read1_clean,
-          read2 = read_QC_trim.read2_clean,
-          reference_genome = pilon.assembly_fasta,
-          samplename = samplename
+    call parse_mapping_task.sam_to_sorted_bam as sort_bam_assembly_correction {
+      input:
+        sam = minimap2_assembly_correction.minimap2_out,
+        samplename = samplename
+    }
+    call pilon_task.pilon {
+      input:
+        assembly = select_first([metaspades_pe.assembly_fasta]),
+        bam = sort_bam_assembly_correction.bam,
+        bai = sort_bam_assembly_correction.bai,
+        samplename = samplename
+    }
+    if (defined(pilon.assembly_fasta)) {
+      # if reference is provided, perform mapping of assembled contigs to 
+      # reference with minimap2, and extract those as final assembly
+      if (defined(reference)) {
+        call minimap2_task.minimap2 as minimap2_assembly {
+          input:
+            query1 = select_first([pilon.assembly_fasta]),
+            reference = select_first([reference]),
+            samplename = samplename,
+            mode = "asm20",
+            output_sam = false
+        }
+        call parse_mapping_task.retrieve_aligned_contig_paf {
+          input:
+            paf = minimap2_assembly.minimap2_out,
+            assembly = select_first([pilon.assembly_fasta]),
+            samplename = samplename
+        }
+        call parse_mapping_task.calculate_coverage_paf {
+          input:
+            paf = minimap2_assembly.minimap2_out
+        }
       }
-      call semibin_task.semibin as semibin {
+      call quast_task.quast {
         input:
-          sorted_bam = bwa.sorted_bam,
-          sorted_bai = bwa.sorted_bai,
-          assembly_fasta = pilon.assembly_fasta,
-          samplename = samplename
+          assembly = select_first([retrieve_aligned_contig_paf.final_assembly, pilon.assembly_fasta]),
+          samplename = samplename,
+          min_contig_length = 1
+        }
+      if (output_additional_files) {
+        call minimap2_task.minimap2 as minimap2_reads {
+          input:
+            query1 = read_QC_trim.read1_clean,
+            query2 = read_QC_trim.read2_clean, 
+            reference = select_first([retrieve_aligned_contig_paf.final_assembly, pilon.assembly_fasta]),
+            samplename = samplename,
+            mode = "sr",
+            output_sam = true
+        }
+        call parse_mapping_task.sam_to_sorted_bam {
+          input:
+            sam = minimap2_reads.minimap2_out,
+            samplename = samplename
+        }
+        call parse_mapping_task.calculate_coverage {
+          input:
+            bam = sam_to_sorted_bam.bam,
+            bai = sam_to_sorted_bam.bai
+        }
+        call parse_mapping_task.retrieve_pe_reads_bam as retrieve_unaligned_pe_reads_sam {
+          input:
+            bam = sam_to_sorted_bam.bam,
+            samplename = samplename,
+            prefix = "unassembled",
+            sam_flag = 4
+        }
+        call parse_mapping_task.retrieve_pe_reads_bam as retrieve_aligned_pe_reads_sam {
+          input:
+            bam = sam_to_sorted_bam.bam,
+            samplename = samplename,
+            sam_flag = 2,
+            prefix = "assembled"
+        }
+        call parse_mapping_task.assembled_reads_percent {
+          input:
+            bam = sam_to_sorted_bam.bam,
+        } 
+      }
+      if (! defined(reference)) {
+        call bwa_task.bwa as bwa {
+          input:
+            read1 = read_QC_trim.read1_clean,
+            read2 = read_QC_trim.read2_clean,
+            reference_genome = pilon.assembly_fasta,
+            samplename = samplename
+        }
+        call semibin_task.semibin as semibin {
+          input:
+            sorted_bam = bwa.sorted_bam,
+            sorted_bai = bwa.sorted_bai,
+            assembly_fasta = select_first([pilon.assembly_fasta]),
+            samplename = samplename
+        }
       }
     }
+  }
     call versioning.version_capture {
       input:
   }
@@ -240,20 +244,20 @@ workflow theiameta_illumina_pe {
     String metaspades_version = metaspades_pe.metaspades_version
     String metaspades_docker = metaspades_pe.metaspades_docker
     # Assembly - minimap2
-    String minimap2_version = minimap2_assembly_correction.minimap2_version
-    String minimap2_docker = minimap2_assembly_correction.minimap2_docker
+    String? minimap2_version = minimap2_assembly_correction.minimap2_version
+    String? minimap2_docker = minimap2_assembly_correction.minimap2_docker
     # Assembly - samtools
-    String samtools_version = sort_bam_assembly_correction.samtools_version
-    String samtools_docker = sort_bam_assembly_correction.samtools_docker
+    String? samtools_version = sort_bam_assembly_correction.samtools_version
+    String? samtools_docker = sort_bam_assembly_correction.samtools_docker
     # Assembly - pilon
-    String pilon_version = pilon.pilon_version
-    String pilon_docker = pilon.pilon_docker
+    String? pilon_version = pilon.pilon_version
+    String? pilon_docker = pilon.pilon_docker
     # Assembly QC - quast
-    Int assembly_length = quast.genome_length
-    Int contig_number = quast.number_contigs
-    Int largest_contig = quast.largest_contig
-    String quast_version = quast.version
-    String quast_docker = quast.quast_docker
+    Int? assembly_length = quast.genome_length
+    Int? contig_number = quast.number_contigs
+    Int? largest_contig = quast.largest_contig
+    String? quast_version = quast.version
+    String? quast_docker = quast.quast_docker
     # Assembly QC - minimap2
     Float? percent_coverage = calculate_coverage_paf.percent_coverage
     # Assembly QC - bedtools

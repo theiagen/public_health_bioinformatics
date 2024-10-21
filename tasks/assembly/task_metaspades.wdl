@@ -15,7 +15,9 @@ task metaspades_pe {
   }
   command <<<
     metaspades.py --version | head -1 | cut -d ' ' -f 2 | tee VERSION
-    metaspades.py \
+    touch WARNING
+
+    if metaspades.py \
       -1 ~{read1_cleaned} \
       -2 ~{read2_cleaned} \
       ~{'-k ' + kmers} \
@@ -23,15 +25,21 @@ task metaspades_pe {
       -t ~{cpu} \
       -o metaspades \
       --phred-offset ~{phred_offset} \
-      ~{metaspades_opts}
+      ~{metaspades_opts}; then
 
-    mv metaspades/contigs.fasta ~{samplename}_contigs.fasta
+      mv metaspades/contigs.fasta ~{samplename}_contigs.fasta
+    
+    else
+      tee "Metaspades failed to assemble for ~{samplename}" > WARNING
+      exit 1
+    fi
 
   >>>
   output {
-    File assembly_fasta = "~{samplename}_contigs.fasta"
+    File? assembly_fasta = "~{samplename}_contigs.fasta"
     String metaspades_version = read_string("VERSION")
     String metaspades_docker = '~{docker}'
+    String metaspades_warning = read_string("WARNING")
   }
   runtime {
     docker: "~{docker}"
