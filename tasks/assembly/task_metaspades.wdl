@@ -28,6 +28,12 @@ task metaspades_pe {
       ~{metaspades_opts}; then
 
       mv metaspades/contigs.fasta ~{samplename}_contigs.fasta
+
+      if [ ! -s ~{samplename}_contigs.fasta ]; then
+        tee "Metaspades produced an empty assembly for ~{samplename}" > WARNING
+        rm -f ~{samplename}_contigs.fasta
+        exit 1
+      fi
     
     else
       tee "Metaspades failed to assemble for ~{samplename}" > WARNING
