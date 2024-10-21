@@ -1,4 +1,4 @@
-# TheiaEuk 
+# TheiaEuk Workflow Series
 
 ## Quick Facts
 
@@ -22,6 +22,8 @@ All input reads are processed through "core tasks" in each workflow. The core ta
     The TheiaEuk_PE workflow takes in Illumina paired-end read data. Read file names should end with `.fastq` or `.fq`, with the optional addition of `.gz`. When possible, Theiagen recommends zipping files with [gzip](https://www.gnu.org/software/gzip/) prior to Terra upload to minimize data upload time.
 
     By default, the workflow anticipates 2 x 150bp reads (i.e. the input reads were generated using a 300-cycle sequencing kit). Modifications to the optional parameter for `trim_minlen` may be required to accommodate shorter read data, such as the 2 x 75bp reads generated using a 150-cycle sequencing kit.
+
+<div class="searchable-table" markdown="1">    
 
 | **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
 |---|---|---|---|---|---|
@@ -172,6 +174,8 @@ All input reads are processed through "core tasks" in each workflow. The core ta
 | theiaeuk_pe | **subsample_coverage** | Float | Read depth for RASUSA task to subsample reads to | 150 | Optional |
 | version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
 | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
+
+</div>
 
 ### Workflow tasks (performed for all taxa)
 
@@ -389,36 +393,57 @@ The TheiaEuk workflow automatically activates taxa-specific tasks after identifi
 
     Two tools are deployed when _Candida auris is_  identified. First, the Cladetyping tool is launched to determine the clade of the specimen by comparing the sequence to five clade-specific reference files. The output of the clade typing task will be used to specify the reference genome for the antifungal resistance detection tool. To detect mutations that may confer antifungal resistance, `Snippy` is used to find all variants relative to the clade-specific reference, then these variants are queried for product names associated with resistance according to the MARDy database (<http://mardy.dide.ic.ac.uk/index.php>).
 
-    **Default reference genomes used for clade typing and antimicrobial resistance gene detection of C. auris**
-
-    | Clade | Genome Accession | Assembly Name | Strain | NCBI Submitter | Included mutations in AMR genes (not comprehensive) |
-    | --- | --- | --- | --- | --- | --- |
-    | Candida auris Clade I | GCA_002759435.2 | Cand_auris_B8441_V2 | B8441 | Centers for Disease Control and Prevention |  |
-    | Candida auris Clade II | GCA_003013715.2 | ASM301371v2 | B11220 | Centers for Disease Control and Prevention |  |
-    | Candida auris Clade III | GCA_002775015.1 | Cand_auris_B11221_V1 | B11221 | Centers for Disease Control and Prevention | _ERG11_ V125A/F126L |
-    | Candida auris Clade IV | GCA_003014415.1 | Cand_auris_B11243 | B11243 | Centers for Disease Control and Prevention | _ERG11_ Y132F |
-    | Candida auris Clade V | GCA_016809505.1 | ASM1680950v1 | IFRC2087 | Centers for Disease Control and Prevention |  |
-
     The genes in which there are known resistance-conferring mutations for this pathogen are:
 
     - FKS1
     - ERG11 (lanosterol 14-alpha demethylase)
     - FUR1 (uracil phosphoribosyltransferase)
 
-    Mutations in these genes that are known to confer resistance are shown below (source: MARDy database http://mardy.dide.ic.ac.uk/index.php)
+    We query `Snippy` results to see if any mutations were identified in those genes. In addition, _C. auris_ automatically checks for the following loci. You will find the mutations next to the locus tag in the `theiaeuk_snippy_variants_hits` column corresponding gene name followings:
 
-    | **Organism** | **Found in** | **Gene name** | **Gene locus** | **AA mutation** | **Drug** | **Tandem repeat name** | **Tandem repeat sequence** | **Reference** |
-    | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-    | **Candida auris** | **Human** | **ERG11** |  | **Y132F** | **Fluconazole** |  |  | [**10.1093/cid/ciw691**](https://academic.oup.com/cid/article/64/2/134/2706620/Simultaneous-Emergence-of-Multidrug-Resistant) |
-    | **Candida auris** | **Human** | **ERG11** |  | **K143R** | **Fluconazole** |  |  | [**10.1093/cid/ciw691**](https://academic.oup.com/cid/article/64/2/134/2706620/Simultaneous-Emergence-of-Multidrug-Resistant) |
-    | **Candida auris** | **Human** | **ERG11** |  | **F126T** | **Fluconazole** |  |  | [**10.1093/cid/ciw691**](https://academic.oup.com/cid/article/64/2/134/2706620/Simultaneous-Emergence-of-Multidrug-Resistant) |
-    | **Candida auris** | **Human** | **FKS1** |  | **S639P** | **Micafungin** |  |  | [**10.1016/j.diagmicrobio.2017.10.021**](https://www.sciencedirect.com/science/article/pii/S0732889317303498) |
-    | **Candida auris** | **Human** | **FKS1** |  | **S639P** | **Caspofungin** |  |  | [**10.1016/j.diagmicrobio.2017.10.021**](https://www.sciencedirect.com/science/article/pii/S0732889317303498) |
-    | **Candida auris** | **Human** | **FKS1** |  | **S639P** | **Anidulafungin** |  |  | [**10.1016/j.diagmicrobio.2017.10.021**](https://www.sciencedirect.com/science/article/pii/S0732889317303498) |
-    | **Candida auris** | **Human** | **FKS1** |  | **S639F** | **Micafungin** |  |  | [**10.1093/jac/dkx480**](https://academic.oup.com/jac/advance-article/doi/10.1093/jac/dkx480/4794718) |
-    | **Candida auris** | **Human** | **FKS1** |  | **S639F** | **Caspofungin** |  |  | [**10.1093/jac/dkx480**](https://academic.oup.com/jac/advance-article/doi/10.1093/jac/dkx480/4794718) |
-    | **Candida auris** | **Human** | **FKS1** |  | **S639F** | **Anidulafungin** |  |  | [**10.1093/jac/dkx480**](https://academic.oup.com/jac/advance-article/doi/10.1093/jac/dkx480/4794718) |
-    | **Candida auris** | **Human** | **FUR1** | **CAMJ_004922** | **F211I** | **5-flucytosine** |  |  | [**https://doi.org/10.1038/s41426-018-0045-x**](https://www.nature.com/articles/s41426-018-0045-x) |
+    | **TheiaEuk Search Term** | **Corresponding Gene Name** |
+    |---|---|
+    | B9J08_005340 | ERG6 |
+    | B9J08_000401 | FLO8 |
+    | B9J08_005343 | Hypothetical protein (PSK74852) |
+    | B9J08_003102 | MEC3 |
+    | B9J08_003737 | ERG3 |
+    | lanosterol.14-alpha.demethylase | ERG11 |
+    | uracil.phosphoribosyltransferase | FUR1 |
+    | FKS1 | FKS1 |    
+
+    For example, one sample may have the following output for the `theiaeuk_snippy_variants_hits` column:
+
+    ```plaintext
+    lanosterol.14-alpha.demethylase: lanosterol 14-alpha demethylase (missense_variant c.428A>G p.Lys143Arg; C:266 T:0),B9J08_000401: hypothetical protein (stop_gained c.424C>T p.Gln142*; A:70 G:0)
+    ```
+
+    Based on this, we can tell that ERG11 has a missense variant at position 143 (Lysine to Arginine) and B9J08_000401 (which is FLO8) has a stop-gained variant at position 142 (Glutamine to Stop).
+
+    ??? toggle "Default reference genomes used for clade typing and antimicrobial resistance gene detection of _C. auris_"
+        | Clade | Genome Accession | Assembly Name | Strain | NCBI Submitter | Included mutations in AMR genes (not comprehensive) |
+        | --- | --- | --- | --- | --- | --- |
+        | Candida auris Clade I | GCA_002759435.2 | Cand_auris_B8441_V2 | B8441 | Centers for Disease Control and Prevention |  |
+        | Candida auris Clade II | GCA_003013715.2 | ASM301371v2 | B11220 | Centers for Disease Control and Prevention |  |
+        | Candida auris Clade III | GCA_002775015.1 | Cand_auris_B11221_V1 | B11221 | Centers for Disease Control and Prevention | _ERG11_ V125A/F126L |
+        | Candida auris Clade IV | GCA_003014415.1 | Cand_auris_B11243 | B11243 | Centers for Disease Control and Prevention | _ERG11_ Y132F |
+        | Candida auris Clade V | GCA_016809505.1 | ASM1680950v1 | IFRC2087 | Centers for Disease Control and Prevention |  |
+
+    ??? toggle "Known resistance-conferring mutations for _Candida auris_"
+        Mutations in these genes that are known to confer resistance are shown below (source: MARDy database http://mardy.dide.ic.ac.uk/index.php)
+
+        | **Organism** | **Found in** | **Gene name** | **Gene locus** | **AA mutation** | **Drug** | **Tandem repeat name** | **Tandem repeat sequence** | **Reference** |
+        | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+        | **Candida auris** | **Human** | **ERG11** |  | **Y132F** | **Fluconazole** |  |  | [**10.1093/cid/ciw691**](https://academic.oup.com/cid/article/64/2/134/2706620/Simultaneous-Emergence-of-Multidrug-Resistant) |
+        | **Candida auris** | **Human** | **ERG11** |  | **K143R** | **Fluconazole** |  |  | [**10.1093/cid/ciw691**](https://academic.oup.com/cid/article/64/2/134/2706620/Simultaneous-Emergence-of-Multidrug-Resistant) |
+        | **Candida auris** | **Human** | **ERG11** |  | **F126T** | **Fluconazole** |  |  | [**10.1093/cid/ciw691**](https://academic.oup.com/cid/article/64/2/134/2706620/Simultaneous-Emergence-of-Multidrug-Resistant) |
+        | **Candida auris** | **Human** | **FKS1** |  | **S639P** | **Micafungin** |  |  | [**10.1016/j.diagmicrobio.2017.10.021**](https://www.sciencedirect.com/science/article/pii/S0732889317303498) |
+        | **Candida auris** | **Human** | **FKS1** |  | **S639P** | **Caspofungin** |  |  | [**10.1016/j.diagmicrobio.2017.10.021**](https://www.sciencedirect.com/science/article/pii/S0732889317303498) |
+        | **Candida auris** | **Human** | **FKS1** |  | **S639P** | **Anidulafungin** |  |  | [**10.1016/j.diagmicrobio.2017.10.021**](https://www.sciencedirect.com/science/article/pii/S0732889317303498) |
+        | **Candida auris** | **Human** | **FKS1** |  | **S639F** | **Micafungin** |  |  | [**10.1093/jac/dkx480**](https://academic.oup.com/jac/advance-article/doi/10.1093/jac/dkx480/4794718) |
+        | **Candida auris** | **Human** | **FKS1** |  | **S639F** | **Caspofungin** |  |  | [**10.1093/jac/dkx480**](https://academic.oup.com/jac/advance-article/doi/10.1093/jac/dkx480/4794718) |
+        | **Candida auris** | **Human** | **FKS1** |  | **S639F** | **Anidulafungin** |  |  | [**10.1093/jac/dkx480**](https://academic.oup.com/jac/advance-article/doi/10.1093/jac/dkx480/4794718) |
+        | **Candida auris** | **Human** | **FUR1** | **CAMJ_004922** | **F211I** | **5-flucytosine** |  |  | [**https://doi.org/10.1038/s41426-018-0045-x**](https://www.nature.com/articles/s41426-018-0045-x) |
 
 ??? toggle "_Candida albicans_"
 
@@ -450,6 +475,8 @@ The TheiaEuk workflow automatically activates taxa-specific tasks after identifi
     - ERG11 (CNA00300)
 
 ### Outputs
+
+<div class="searchable-table" markdown="1">
 
 | **Variable** | **Type** | **Description** |
 |---|---|---|
@@ -508,3 +535,5 @@ The TheiaEuk workflow automatically activates taxa-specific tasks after identifi
 | seq_platform | String | Sequencing platform inout by the user |
 | theiaeuk_illumina_pe_analysis_date | String | Date of TheiaProk workflow execution |
 | theiaeuk_illumina_pe_version | String | TheiaProk workflow version used |
+
+</div>

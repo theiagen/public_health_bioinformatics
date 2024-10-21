@@ -184,5 +184,36 @@ th {
 td {
   word-break: break-all;
 }
+/* Base styles for the search box */
+div.searchable-table input.table-search-input {
+  width: 25%;
+  padding: 10px;
+  margin-bottom: 12px;
+  font-size: 12px;
+  box-sizing: border-box;
+  border-radius: 2px; 
+}
 
+/* Light mode styles */
+[data-md-color-scheme="light"] div.searchable-table input.table-search-input {
+  background-color: #fff;
+  color: #000;
+  border: 1px solid #E0E1E1;
+}
 
+[data-md-color-scheme="light"] div.searchable-table input.table-search-input::placeholder {
+  color: #888;
+  font-style: italic;
+}
+
+/* Dark mode styles */
+[data-md-color-scheme="slate"] div.searchable-table input.table-search-input {
+  background-color: #1d2125;
+  color: #fff;
+  border: 1px solid #373B40;
+}
+
+[data-md-color-scheme="slate"] div.searchable-table input.table-search-input::placeholder {
+  color: #bbb;
+  font-style: italic;
+}
