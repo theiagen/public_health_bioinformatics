@@ -20,13 +20,15 @@ workflow morgana_magic {
   call set_organism_defaults.organism_parameters {
     input:
       taxon_id = taxon_id,
-      organism = "To Be Determined"
+      organism = "unsupported"
   }
-  call consensus_qc_task.consensus_qc {
-    input:
-      assembly_fasta = assembly_fasta,
-      reference_genome = organism_parameters.reference,
-      genome_length = organism_parameters.genome_length
+  if (organism_parameters.standardized_organism != "unsupported") { # occurs in theiameta_panel
+    call consensus_qc_task.consensus_qc {
+      input:
+        assembly_fasta = assembly_fasta,
+        reference_genome = organism_parameters.reference,
+        genome_length = organism_parameters.genome_length
+    }
   }
   if (organism_parameters.standardized_organism == "flu") {
     call flu_track_wf.flu_track {
@@ -72,11 +74,11 @@ workflow morgana_magic {
   output {
     String organism = organism_parameters.standardized_organism
     # Consensus QC outputs
-    Int number_N = consensus_qc.number_N
-    Int number_ATCG = consensus_qc.number_ATCG
-    Int number_Degenerate = consensus_qc.number_Degenerate
-    Int number_Total = consensus_qc.number_Total
-    Float percent_reference_coverage = consensus_qc.percent_reference_coverage
+    Int? number_N = consensus_qc.number_N
+    Int? number_ATCG = consensus_qc.number_ATCG
+    Int? number_Degenerate = consensus_qc.number_Degenerate
+    Int? number_Total = consensus_qc.number_Total
+    Float? percent_reference_coverage = consensus_qc.percent_reference_coverage
     # Pangolin outputs
     String? pango_lineage = pangolin4.pangolin_lineage
     String? pango_lineage_expanded = pangolin4.pangolin_lineage_expanded

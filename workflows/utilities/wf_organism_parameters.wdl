@@ -51,6 +51,8 @@ workflow organism_parameters {
   }
   # for morgana_magic & theiameta_panel compatibility
   if (defined(taxon_id)) {
+    # set dummy values for unsupported organisms to prevent workflow failure
+    Int unsupported_theiameta_panel_genome_length = 0
     if (select_first([taxon_id]) == "2697049") {
       String sars_cov_2_taxon_id = "sars-cov-2"
     }
@@ -61,13 +63,10 @@ workflow organism_parameters {
       String wnv_taxon_id = "WNV"
     }
     if (select_first([taxon_id]) == "11320") {
-      # flu A
-      String flu_a_taxon_id = "flu"
-      # also do flu type
+      String flu_a_taxon_id = "flu" # flu A
     }
     if (select_first([taxon_id]) == "11520") {
-      # flu B
-      String flu_b_taxon_id = "flu"
+      String flu_b_taxon_id = "flu" # flu B
     }
     if (select_first([taxon_id]) == "12814") {
       String rsv_a_taxon_id = "rsv_a"
@@ -299,7 +298,7 @@ workflow organism_parameters {
     File gene_locations_bed = select_first([gene_locations_bed_file, sc2_gene_locations_bed, mpox_gene_locations_bed, "gs://theiagen-public-files/terra/theiacov-files/empty.bed"])
     File primer_bed = select_first([primer_bed_file, mpox_primer_bed_file, wnv_primer_bed_file, hiv_v1_primer_bed, hiv_v2_primer_bed, "gs://theiagen-public-files/terra/theiacov-files/empty.bed"])
     File reference_gff = select_first([reference_gff_file, mpox_reference_gff_file, hiv_v1_reference_gff, hiv_v2_reference_gff, "gs://theiagen-public-files/terra/theiacov-files/empty.gff3"])
-    Int genome_length = select_first([genome_length_input, sc2_genome_len, mpox_genome_len, wnv_genome_len, flu_genome_len, rsv_a_genome_len, rsv_b_genome_len, hiv_v1_genome_len, hiv_v2_genome_len])
+    Int genome_length = select_first([genome_length_input, sc2_genome_len, mpox_genome_len, wnv_genome_len, flu_genome_len, rsv_a_genome_len, rsv_b_genome_len, hiv_v1_genome_len, hiv_v2_genome_len, unsupported_theiameta_panel_genome_length])
     # nextclade information
     String nextclade_dataset_tag = select_first([nextclade_dataset_tag_input, sc2_nextclade_ds_tag, mpox_nextclade_ds_tag, wnv_nextclade_ds_tag, h1n1_ha_nextclade_ds_tag, h3n2_ha_nextclade_ds_tag, vic_ha_nextclade_ds_tag, yam_ha_nextclade_ds_tag, h5n1_ha_nextclade_ds_tag, h1n1_na_nextclade_ds_tag, h3n2_na_nextclade_ds_tag, vic_na_nextclade_ds_tag, yam_na_nextclade_ds_tag, rsv_a_nextclade_ds_tag, rsv_b_nextclade_ds_tag, "NA"])
     String nextclade_dataset_name = select_first([nextclade_dataset_name_input, sc2_nextclade_ds_name, mpox_nextclade_ds_name, wnv_nextclade_ds_name, h1n1_ha_nextclade_ds_name, h3n2_ha_nextclade_ds_name, vic_ha_nextclade_ds_name, yam_ha_nextclade_ds_name, h5n1_ha_nextclade_ds_name, h1n1_na_nextclade_ds_name, h3n2_na_nextclade_ds_name, vic_na_nextclade_ds_name, yam_na_nextclade_ds_name, rsv_a_nextclade_ds_name, rsv_b_nextclade_ds_name, "NA"])
