@@ -22,7 +22,7 @@
       
       
       <link rel="icon" href="../../../assets/logos/Theiagen-Symbol-Standard-01.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.41">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.42">
     
     
       
@@ -4615,6 +4615,7 @@
 </div>
 <h3 id="inputs">Inputs<a class="headerlink" href="#inputs" title="Permanent link">&para;</a></h3>
 <p>The TheiaMeta_Illumina_PE workflow processes Illumina paired-end (PE) reads generated for metagenomic characterization (typically by shotgun). By default, this workflow will assume that input reads were generated using a 300-cycle sequencing kit (i.e. 2 x 150 bp reads). Modifications to the optional parameter for <code>trim_minlen</code> may be required to accommodate shorter read data, such as 2 x 75bp reads generated using a 150-cycle sequencing kit.</p>
+<div class="searchable-table">
 <table>
 <thead>
 <tr>
@@ -5389,6 +5390,7 @@
 </tr>
 </tbody>
 </table>
+</div>
 <h3 id="workflow-tasks">Workflow Tasks<a class="headerlink" href="#workflow-tasks" title="Permanent link">&para;</a></h3>
 <details class="task">
 <summary><code>versioning</code>: Version Capture for TheiaMeta</summary>
@@ -5692,6 +5694,7 @@
 <p>If no reference genome is provided through the <strong><code>reference</code></strong> optional input, the assembly produced with <code>metaspades</code> will be binned with <code>semibin2</code>, a a command tool for metagenomic binning with deep learning. </p>
 </details>
 <h3 id="outputs">Outputs<a class="headerlink" href="#outputs" title="Permanent link">&para;</a></h3>
+<div class="searchable-table">
 <table>
 <thead>
 <tr>
@@ -6058,6 +6061,7 @@
 </tr>
 </tbody>
 </table>
+</div>
 <h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
 <blockquote>
 <p><strong>Human read removal tool (HRRT)</strong>: <a href="https://github.com/ncbi/sra-human-scrubber">https://github.com/ncbi/sra-human-scrubber</a></p>
@@ -6120,7 +6124,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2024-10-07</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2024-10-21</span>
   </span>
 
     
@@ -6233,6 +6237,8 @@
         <script src="https://unpkg.com/tablesort@5.3.0/dist/tablesort.min.js"></script>
       
         <script src="../../../javascripts/tablesort.js"></script>
+      
+        <script src="../../../javascripts/table-search.js"></script>
       
     
   <script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});

@@ -22,7 +22,7 @@
       
       
       <link rel="icon" href="../../../assets/logos/Theiagen-Symbol-Standard-01.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.41">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.42">
     
     
       
@@ -4608,6 +4608,7 @@
 <p class="admonition-title">Query String</p>
 <p>The query string can be a gene or any other annotation that matches the GenBank file/output VCF <strong>EXACTLY</strong></p>
 </div>
+<div class="searchable-table">
 <table>
 <thead>
 <tr>
@@ -4798,6 +4799,7 @@
 </tr>
 </tbody>
 </table>
+</div>
 <h3 id="workflow-tasks">Workflow Tasks<a class="headerlink" href="#workflow-tasks" title="Permanent link">&para;</a></h3>
 <p><code>Snippy_Variants</code> uses the snippy tool to align reads to the reference and call SNPs, MNPs and INDELs according to optional input parameters. The output includes a file of variants that is then queried using the <code>grep</code> bash command to identify any mutations in specified genes or annotations of interest. The query string MUST match the gene name or annotation as specified in the GenBank file and provided in the output variant file in the <code>snippy_results</code> column.</p>
 <h3 id="outputs">Outputs<a class="headerlink" href="#outputs" title="Permanent link">&para;</a></h3>
@@ -4809,6 +4811,7 @@
 <p class="admonition-title">Note on coverage calculations</p>
 <p>The outputs from <code>samtools coverage</code> (found in the <code>snippy_variants_coverage_tsv</code> file) may differ from the <code>snippy_variants_percent_ref_coverage</code> due to different calculation methods. <code>samtools coverage</code> computes genome-wide coverage metrics (e.g., the proportion of bases covered at depth ≥ 1), while <code>snippy_variants_percent_ref_coverage</code> uses a user-defined minimum coverage threshold (default is 10), calculating the proportion of the reference genome with a depth greater than or equal to this threshold.</p>
 </div>
+<div class="searchable-table">
 <table>
 <thead>
 <tr>
@@ -4905,6 +4908,7 @@
 </tr>
 </tbody>
 </table>
+</div>
 
 
 
@@ -4927,7 +4931,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2024-10-03</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2024-10-21</span>
   </span>
 
     
@@ -5040,6 +5044,8 @@
         <script src="https://unpkg.com/tablesort@5.3.0/dist/tablesort.min.js"></script>
       
         <script src="../../../javascripts/tablesort.js"></script>
+      
+        <script src="../../../javascripts/table-search.js"></script>
       
     
   <script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});

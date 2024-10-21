@@ -22,7 +22,7 @@
       
       
       <link rel="icon" href="../../../assets/logos/Theiagen-Symbol-Standard-01.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.41">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.42">
     
     
       
@@ -4447,6 +4447,7 @@
 <h3 id="inputs">Inputs<a class="headerlink" href="#inputs" title="Permanent link">&para;</a></h3>
 <p>For further detail regarding Pirate options, please see [PIRATE's documentation)[https://github.com/SionBayliss/PIRATE). For further detail regarding IQ-TREE options, please see <code>http://www.iqtree.org/doc/Command-Reference</code>.</p>
 <p>This workflow runs on the set level.</p>
+<div class="searchable-table">
 <table>
 <thead>
 <tr>
@@ -4933,6 +4934,7 @@
 </tr>
 </tbody>
 </table>
+</div>
 <h3 id="workflow-tasks">Workflow Tasks<a class="headerlink" href="#workflow-tasks" title="Permanent link">&para;</a></h3>
 <p>By default, the Core_Gene_SNP workflow will begin by analyzing the input sample set using <a href="https://github.com/SionBayliss/PIRATE">PIRATE</a>. Pirate takes in GFF3 files and classifies the genes into gene families by sequence identity, outputting a pangenome summary file. The workflow will instruct Pirate to create core gene and pangenome alignments using this gene family data. Setting the "align" input variable to false will turn off this behavior, and the workflow will output only the pangenome summary. The workflow will then use the core gene alignment from <code>Pirate</code> to infer a phylogenetic tree using <code>IQ-TREE</code>. It will also produce an SNP distance matrix from this alignment using <a href="https://github.com/tseemann/snp-dists">snp-dists</a>. This behavior can be turned off by setting the <code>core_tree</code> input variable to false. The workflow will not create a pangenome tree or SNP-matrix by default, but this behavior can be turned on by setting the <code>pan_tree</code> input variable to true.</p>
 <p>The optional <code>summarize_data</code> task performs the following only if all of the <code>data_summary_*</code> and <code>sample_names</code> optional variables are filled out:</p>
@@ -4943,6 +4945,7 @@
 </ol>
 <p>By default, this task appends a Phandango coloring tag to color all items from the same column the same; this can be turned off by setting the optional <code>phandango_coloring</code> variable to <code>false</code>.</p>
 <h3 id="outputs">Outputs<a class="headerlink" href="#outputs" title="Permanent link">&para;</a></h3>
+<div class="searchable-table">
 <table>
 <thead>
 <tr>
@@ -5039,6 +5042,7 @@
 </tr>
 </tbody>
 </table>
+</div>
 <h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
 <blockquote>
 <p>Sion C Bayliss, Harry A Thorpe, Nicola M Coyle, Samuel K Sheppard, Edward J Feil, PIRATE: A fast and scalable pangenomics toolbox for clustering diverged orthologues in bacteria, <em>GigaScience</em>, Volume 8, Issue 10, October 2019, giz119, <a href="https://doi.org/10.1093/gigascience/giz119">https://doi.org/10.1093/gigascience/giz119</a></p>
@@ -5073,7 +5077,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2024-09-17</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2024-10-21</span>
   </span>
 
     
@@ -5186,6 +5190,8 @@
         <script src="https://unpkg.com/tablesort@5.3.0/dist/tablesort.min.js"></script>
       
         <script src="../../../javascripts/tablesort.js"></script>
+      
+        <script src="../../../javascripts/table-search.js"></script>
       
     
   <script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});

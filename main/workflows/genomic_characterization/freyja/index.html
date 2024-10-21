@@ -22,7 +22,7 @@
       
       
       <link rel="icon" href="../../../assets/logos/Theiagen-Symbol-Standard-01.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.41">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.42">
     
     
       
@@ -5509,6 +5509,7 @@
 <p>This workflow will copy the Freyja reference files (<code>usher_barcodes.feather</code> and <code>curated_lineages.json</code>) to a GCP URI of your choice for usage in Freyja_FASTQ_PHB.</p>
 <h3 id="inputs">Inputs<a class="headerlink" href="#inputs" title="Permanent link">&para;</a></h3>
 <p>We recommend running this workflow with <strong>"Run inputs defined by file paths"</strong> selected since no information from a Terra data table is actually being used. We also recommend turning off call caching so new information is retrieved every time.</p>
+<div class="searchable-table">
 <table>
 <thead>
 <tr>
@@ -5595,6 +5596,7 @@
 </tr>
 </tbody>
 </table>
+</div>
 <h3 id="outputs">Outputs<a class="headerlink" href="#outputs" title="Permanent link">&para;</a></h3>
 <p>This workflow does not produce any outputs that appear in a Terra data table. The reference files will appear at the location specified with the <code>gcp_uri</code> input variable.</p>
 <h2 id="freyja_fastq">Freyja_FASTQ_PHB<a class="headerlink" href="#freyja_fastq" title="Permanent link">&para;</a></h2>
@@ -5633,6 +5635,7 @@
 </table>
 <h3 id="freyja_fastq-inputs">Freyja_FASTQ Inputs<a class="headerlink" href="#freyja_fastq-inputs" title="Permanent link">&para;</a></h3>
 <p>This workflow runs on the sample level.</p>
+<div class="searchable-table">
 <table>
 <thead>
 <tr>
@@ -6423,6 +6426,7 @@
 </tr>
 </tbody>
 </table>
+</div>
 <h3 id="freyja_fastq-analysis-tasks">Freyja_FASTQ Analysis Tasks<a class="headerlink" href="#freyja_fastq-analysis-tasks" title="Permanent link">&para;</a></h3>
 <details class="task">
 <summary><code>read_QC_trim_pe</code> Details</summary>
@@ -6665,6 +6669,7 @@
 <p class="admonition-title">Click "Ignore empty outputs"</p>
 <p>When running the Freyja_FASTQ_PHB workflow, it is recommended to select the "Ignore empty outputs" option in the Terra UI. This will hide the output columns that will not be generated for your input data type.</p>
 </div>
+<div class="searchable-table">
 <table>
 <thead>
 <tr>
@@ -7175,11 +7180,13 @@
 </tr>
 </tbody>
 </table>
+</div>
 <h2 id="freyja_plot">Freyja_Plot_PHB<a class="headerlink" href="#freyja_plot" title="Permanent link">&para;</a></h2>
 <p>This workflow visualizes aggregated freyja_demixed output files produced by Freyja_FASTQ in a single plot (pdf format) which provides fractional abundance estimates for all aggregated samples.</p>
 <p>Options exist to provide lineage-specific breakdowns and/or sample collection time information.</p>
 <h3 id="freyja_plot-inputs">Freyja_Plot Inputs<a class="headerlink" href="#freyja_plot-inputs" title="Permanent link">&para;</a></h3>
 <p>This workflow runs on the set level.</p>
+<div class="searchable-table">
 <table>
 <thead>
 <tr>
@@ -7314,6 +7321,7 @@
 </tr>
 </tbody>
 </table>
+</div>
 <h3 id="analysis-tasks">Analysis Tasks<a class="headerlink" href="#analysis-tasks" title="Permanent link">&para;</a></h3>
 <details class="task">
 <summary><code>freyja_plot_task</code> Details</summary>
@@ -7392,6 +7400,7 @@
 <p>This dashboard is not "live" — that is, you must rerun the workflow every time you want new data to be included in the visualizations.</p>
 <h3 id="freyja_dashboard-inputs">Freyja_Dashboard Inputs<a class="headerlink" href="#freyja_dashboard-inputs" title="Permanent link">&para;</a></h3>
 <p>This workflow runs on the set level.</p>
+<div class="searchable-table">
 <table>
 <thead>
 <tr>
@@ -7534,6 +7543,7 @@
 </tr>
 </tbody>
 </table>
+</div>
 <h3 id="freyja_dashboard-tasks">Freyja_Dashboard Tasks<a class="headerlink" href="#freyja_dashboard-tasks" title="Permanent link">&para;</a></h3>
 <details class="task">
 <summary><code>freyja_dashboard_task</code> Details</summary>
@@ -7667,7 +7677,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2024-09-11</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2024-10-21</span>
   </span>
 
     
@@ -7780,6 +7790,8 @@
         <script src="https://unpkg.com/tablesort@5.3.0/dist/tablesort.min.js"></script>
       
         <script src="../../../javascripts/tablesort.js"></script>
+      
+        <script src="../../../javascripts/table-search.js"></script>
       
     
   <script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
