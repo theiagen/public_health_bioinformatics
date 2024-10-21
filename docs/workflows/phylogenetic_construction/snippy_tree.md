@@ -53,6 +53,8 @@ Sequencing data used in the Snippy_Tree workflow must:
         - Using the core genome
             - `core_genome` = true (as default)
 
+<div class="searchable-table" markdown="1">
+
 | **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
 |---|---|---|---|---|---|
 | snippy_tree_wf | **tree_name_updated** | String | Internal component, do not modify. Used for replacing spaces with underscores_ |  | Do not modify |
@@ -122,6 +124,8 @@ Sequencing data used in the Snippy_Tree workflow must:
 | wg_snp_dists | **cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional |
 | wg_snp_dists | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 50 | Optional |
 | wg_snp_dists | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 2 | Optional |
+
+</div>
 
 ### Workflow Tasks
 
@@ -308,6 +312,8 @@ Sequencing data used in the Snippy_Tree workflow must:
 
 ### Outputs
 
+<div class="searchable-table" markdown="1">
+
 | **Variable** | **Type** | **Description** |
 |---|---|---|
 | snippy_cg_snp_matrix | File | CSV file of core genome pairwise SNP distances between samples, calculated from the final alignment  |
@@ -335,6 +341,8 @@ Sequencing data used in the Snippy_Tree workflow must:
 | snippy_tree_snippy_version | String | Snippy version used |
 | snippy_tree_version | String | Version of Snippy_Tree workflow |
 | snippy_wg_snp_matrix | File | CSV file of whole genome pairwise SNP distances between samples, calculated from the final alignment |
+
+</div>
 
 ## References
 
