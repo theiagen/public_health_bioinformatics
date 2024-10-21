@@ -45,6 +45,8 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 
         The TheiaProk_FASTA workflow takes in assembly files in FASTA format.
 
+<div class="searchable-table" markdown="1">
+
 | **Terra Task name** | **Variable** | **Type** | **Description** | **Default value** | **Terra Status** | **Workflow** |
 |---|---|---|---|---|---|---|
 | *workflow name | **samplename** | String | Name of sample to be analyzed |  | Required | FASTA, ONT, PE, SE |
@@ -568,6 +570,8 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 | ts_mlst | **scheme** | String | Don’t autodetect the MLST scheme; force this scheme on all inputs (see https://www.notion.so/TheiaProk-Workflow-Series-68c34aca2a0240ef94fef0acd33651b9?pvs=21 for accepted strings) | None | Optional | FASTA, ONT, PE, SE |
 | version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional | FASTA, ONT, PE, SE |
 | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) | FASTA, ONT, PE, SE |
+
+</div>
 
 !!! tip "Skip Characterization"
     Ever wanted to skip characterization? Now you can! Set the optional input `perform_characterization` to **`false`** to only generate an assembly and run assembly QC.
@@ -1579,6 +1583,8 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
 
 ### Outputs
 
+<div class="searchable-table" markdown="1">
+
 | **Variable** | **Type** | **Description** | **Workflow** |
 |---|---|---|---|
 | abricate_abaum_database | String | Database of reference A. baumannii plasmid typing genes used for plasmid typing | FASTA, ONT, PE, SE |
@@ -1977,3 +1983,5 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
 | virulencefinder_docker | String | VirulenceFinder docker image used | FASTA, ONT, PE, SE |
 | virulencefinder_hits | String | Virulence genes detected by VirulenceFinder | FASTA, ONT, PE, SE |
 | virulencefinder_report_tsv | File | Output TSV file created by VirulenceFinder | FASTA, ONT, PE, SE |
+
+</div>

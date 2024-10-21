@@ -65,6 +65,8 @@ To help users collect all required metadata, we have created the following Excel
 
 This workflow runs on the set-level.
 
+<div class="searchable-table" markdown="1">
+
 | **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
 |---|---|---|---|---|---|
 | mercury_prep_n_batch | **gcp_bucket_uri** | String | Google bucket where your SRA reads will be temporarily stored before transferring to SRA. Example: "gs://theiagen_sra_transfer" |  | Required |
@@ -104,7 +106,11 @@ This workflow runs on the set-level.
 | version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
 | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
 
+</div>
+
 ### Outputs
+
+<div class="searchable-table" markdown="1">
 
 | **Variable** | **Type** | **Description** |
 |---|---|---|
@@ -119,6 +125,8 @@ This workflow runs on the set-level.
 | mercury_prep_n_batch_version | String | Version of the PHB repository that hosts this workflow |
 | mercury_script_version | String | Version of the Mercury tool that was used in this workflow |
 | sra_metadata | File | SRA metadata TSV file for upload |
+
+</div>
 
 ???+ toggle "An example excluded_samples.tsv file"
 

@@ -108,6 +108,8 @@ All TheiaCoV Workflows (not TheiaCoV_FASTA_Batch)
 
         The TheiaCoV_ClearLabs workflow takes in read data produced by the Clear Dx platform from ClearLabs. However, many users use the TheiaCoV_FASTA workflow instead of this one due to a few known issues when generating assemblies with this pipeline that are not present when using ClearLabs-generated FASTA files.
 
+<div class="searchable-table" markdown="1">
+
 | **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |* | **Organism** |
 |---|---|---|---|---|---|---|---|
 | theiacov_clearlabs | **primer_bed** | File | The bed file containing the primers used when sequencing was performed | | Required | CL | sars-cov-2 |
@@ -408,6 +410,8 @@ All TheiaCoV Workflows (not TheiaCoV_FASTA_Batch)
 | workflow name | **vadr_opts** | String | Additional options to provide to VADR | | Optional | FASTA | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | workflow name | **vadr_skip_length** | Int | Minimum assembly length (unambiguous) to run VADR | 10000 | Optional | FASTA, ONT, PE, SE | MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | workflow name | **variant_min_freq** | Float | Minimum frequency for a variant to be reported in ivar outputs | 0.6 | Optional | PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
+
+</div>
 
 ??? toggle "TheiaCoV_FASTA_Batch_PHB Inputs"
 
@@ -992,6 +996,8 @@ All input reads are processed through "core tasks" in the TheiaCoV Illumina, ONT
 
 All TheiaCoV Workflows (not TheiaCoV_FASTA_Batch)
 
+<div class="searchable-table" markdown="1">
+
 | **Variable** | **Type** | **Description** | **Workflow** |
 |---|---|---|---|
 | abricate_flu_database | String | ABRicate database used for analysis | FASTA, ONT, PE |
@@ -1202,6 +1208,8 @@ All TheiaCoV Workflows (not TheiaCoV_FASTA_Batch)
 | vadr_feature_tbl_pass | File | 5 column feature table output for passing sequences. See https://github.com/ncbi/vadr/blob/master/documentation/formats.md#format-of-v-annotatepl-output-files for more complete description. | CL, FASTA, ONT, PE, SE |
 | vadr_num_alerts | String | Number of fatal alerts as determined by VADR | CL, FASTA, ONT, PE, SE |
 | variants_from_ref_vcf | File | Number of variants relative to the reference genome | CL |
+
+</div>
 
 ??? toggle "TheiaCoV_FASTA_Batch_PHB Outputs"
 

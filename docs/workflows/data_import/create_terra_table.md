@@ -19,6 +19,8 @@ The manual creation of Terra tables can be tedious and error-prone. This workflo
 
     **_This can be changed_** by providing information in the `file_ending` optional input parameter. See below for more information.
 
+<div class="searchable-table" markdown="1">
+
 | **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
 |---|---|---|---|---|---|
 | create_terra_table | **assembly_data** | Boolean | Set to true if your data is in FASTA format; set to false if your data is FASTQ format | | Required |
@@ -32,6 +34,8 @@ The manual creation of Terra tables can be tedious and error-prone. This workflo
 | make_table | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 25 | Optional |
 | make_table | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-06-21" | Optional |
 | make_table | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 4 | Optional |
+
+</div>
 
 ### Finding the `data_location_path`
 
