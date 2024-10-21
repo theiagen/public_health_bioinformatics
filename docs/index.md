@@ -65,10 +65,11 @@ You can expect a careful review of every PR and feedback as needed before mergin
 - **Sage Wright** ([@sage-wright](https://github.com/sage-wright)) - Conceptualization, Software, Validation, Supervision
 - **Inês Mendes** ([@cimendes](https://github.com/cimendes)) - Software, Validation
 - **Curtis Kapsak** ([@kapsakcj](https://github.com/kapsakcj)) - Conceptualization, Software, Validation
-- **James Otieno** ([@jrotieno](https://github.com/jrotieno)) - Software, Validation
 - **Frank Ambrosio** ([@frankambrosio3](https://github.com/frankambrosio3)) - Conceptualization, Software, Validation
 - **Michelle Scribner** ([@michellescribner](https://github.com/michellescribner)) - Software, Validation
 - **Kevin Libuit** ([@kevinlibuit](https://github.com/kevinlibuit)) - Conceptualization, Project Administration, Software, Validation, Supervision
+- **Fraser Combe** ([@fraser-combe](https://github.com/fraser-combe)) - Software, Validation
+- **Michal-Babins** ([@Michal-Babins](https://github.com/Michal-Babins)) - Software, Validation
 - **Emma Doughty** ([@emmadoughty](https://github.com/emmadoughty)) - Software, Validation
 - **Andrew Page** ([@andrewjpage](https://github.com/andrewjpage)) - Project Administration, Software, Supervision
 - **Andrew Lang** ([@AndrewLangVt](https://github.com/AndrewLangVt)) - Software, Supervision
@@ -80,6 +81,7 @@ You can expect a careful review of every PR and feedback as needed before mergin
 
 We would like to gratefully acknowledge the following individuals from the public health community for their contributions to the PHB repository:
 
+- **James Otieno** ([@jrotieno](https://github.com/jrotieno))
 - **Robert Petit** ([@rpetit3](https://github.com/rpetit3))
 - **Ash O'Farrel** ([@aofarrel](https://github.com/aofarrel))
 - **Sam Baird** ([@sam-baird](https://github.com/sam-baird))
