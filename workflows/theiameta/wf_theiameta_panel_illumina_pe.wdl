@@ -20,7 +20,7 @@ workflow theiameta_panel_illumina_pe {
     File read2
     Array[Int] taxon_ids # suggest using a workspace element if user wants to modify?
 
-    Int minimum_read_number = 100
+    Int minimum_read_number = 1000
     File kraken2_db = "gs://theiagen-large-public-files-rp/terra/databases/kraken2/k2_viral_20240112.tar.gz"
   }
   call versioning.version_capture {
