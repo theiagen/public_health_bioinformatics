@@ -156,10 +156,12 @@ workflow theiacov_illumina_pe {
         }
       }
       # Calculate the percentage of mapped reads for flu samples
-      call assembly_metrics.stats_n_coverage as flu_stats_n_coverage {
-        input:
+      if (defined(flu_track.irma_ha_bam) || defined(flu_track.irma_na_bam)) {
+        call assembly_metrics.stats_n_coverage as flu_stats_n_coverage {
+          input:
             samplename = samplename,
             bamfile = select_first([flu_track.irma_ha_bam, flu_track.irma_na_bam])
+        }
       }
       if (defined(ivar_consensus.assembly_fasta) || defined(flu_track.irma_assembly_fasta)) {
         call consensus_qc_task.consensus_qc {
