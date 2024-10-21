@@ -16,6 +16,8 @@ task gather_scatter {
     File? fastq_scan_docker
     File? fastq_scan_version
     # Assembly 
+    File? metaspades_warning
+    File? pilon_warning
     File? pilon_assembly_fasta### maybe?????
     # quast outputs
     File? quast_genome_length
@@ -92,6 +94,8 @@ task gather_scatter {
     df = load_json_data("~{fastq_scan_num_reads_binned_pairs}", "fastq_scan_num_reads_binned_pairs", df)
     df = load_json_data("~{fastq_scan_docker}", "fastq_scan_docker", df)
     df = load_json_data("~{fastq_scan_version}", "fastq_scan_version", df)
+    df = load_json_data("~{metaspades_warning}", "metaspades_warning", df)
+    df = load_json_data("~{pilon_warning}", "pilon_warning", df)
     df = load_json_data("~{pilon_assembly_fasta}", "pilon_assembly_fasta", df)
     df = load_json_data("~{quast_genome_length}", "quast_genome_length", df)
     df = load_json_data("~{quast_number_contigs}", "quast_number_contigs", df)

@@ -115,7 +115,7 @@ workflow theiameta_panel_illumina_pe {
       samplename = samplename,
       taxon_ids = write_json(taxon_ids),
       organism = write_json(krakentools.organism_name),
-      extracted_read1 = write_json(krakentools.extracted_read1),
+      extracted_read1 = write_json(krakentools.extracted_read1), ## not sure how useful these links are
       extracted_read2 = write_json(krakentools.extracted_read2),
       krakentools_docker = write_json(krakentools.krakentools_docker),
       fastq_scan_num_reads_binned1 = write_json(fastq_scan_binned.read1_seq),
@@ -123,6 +123,8 @@ workflow theiameta_panel_illumina_pe {
       fastq_scan_num_reads_binned_pairs = write_json(fastq_scan_binned.read_pairs),
       fastq_scan_docker = write_json(fastq_scan_binned.fastq_scan_docker),
       fastq_scan_version = write_json(fastq_scan_binned.version),
+      metaspades_warning = write_json(metaspades_pe.metaspades_warning),
+      pilon_warning = write_json(pilon.pilon_warning),
       pilon_assembly_fasta = write_json(pilon.assembly_fasta), # maybe??
       quast_genome_length = write_json(quast.genome_length),
       quast_number_contigs = write_json(quast.number_contigs),
