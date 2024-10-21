@@ -66,6 +66,7 @@ task gather_scatter {
   command <<<
     python3<<CODE
     import pandas as pd
+    import numpy as np
     import os
     import json
 
@@ -130,10 +131,15 @@ task gather_scatter {
     print(df)
     df.to_csv("~{samplename}.results.tsv", sep='\t', index=False)
 
+
+    organism_names = df["organism"].replace('', np.nan).dropna()
+    organism_names.to_csv("~{samplename}.organism_names.tsv", index=False, header=False)
     CODE
   >>>
   output {
     File gathered_results = "~{samplename}.results.tsv"
+    Array[String] organism_names = read_lines("~{samplename}.organism_names.tsv")
+
   }
   runtime {
     docker: "~{docker}"

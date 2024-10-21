@@ -159,10 +159,7 @@ workflow theiameta_panel_illumina_pe {
     File kraken2_report = kraken2.kraken2_report
     File kraken2_classified_report = kraken2.kraken2_classified_report
     # krakentools outputs
-    Array[String] identified_organisms = krakentools.organism_name
-    # docker image??? -- work on figuring out how to make this not an array
-   # Array[String] krakentools_docker = select_first([krakentools.krakentools_docker]),
+    Array[String] identified_organisms = gather_scatter.organism_names
     File results_by_taxon_tsv = gather_scatter.gathered_results
-
   }
 }
