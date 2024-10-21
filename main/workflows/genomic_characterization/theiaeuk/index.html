@@ -26,7 +26,7 @@
     
     
       
-        <title>TheiaEuk - Public Health Bioinformatics</title>
+        <title>TheiaEuk Workflow Series - Public Health Bioinformatics</title>
       
     
     
@@ -89,7 +89,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#theiaeuk" class="md-skip">
+        <a href="#theiaeuk-workflow-series" class="md-skip">
           Skip to content
         </a>
       
@@ -148,7 +148,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              TheiaEuk
+              TheiaEuk Workflow Series
             
           </span>
         </div>
@@ -818,7 +818,7 @@
           
   
   <span class="md-ellipsis">
-    TheiaEuk
+    TheiaEuk Workflow Series
   </span>
   
 
@@ -829,7 +829,7 @@
         
   
   <span class="md-ellipsis">
-    TheiaEuk
+    TheiaEuk Workflow Series
   </span>
   
 
@@ -2760,7 +2760,7 @@
           
   
   <span class="md-ellipsis">
-    TheiaEuk
+    TheiaEuk Workflow Series
   </span>
   
 
@@ -2771,7 +2771,7 @@
         
   
   <span class="md-ellipsis">
-    TheiaEuk
+    TheiaEuk Workflow Series
   </span>
   
 
@@ -3949,7 +3949,7 @@
           
   
   <span class="md-ellipsis">
-    TheiaEuk
+    TheiaEuk Workflow Series
   </span>
   
 
@@ -3960,7 +3960,7 @@
         
   
   <span class="md-ellipsis">
-    TheiaEuk
+    TheiaEuk Workflow Series
   </span>
   
 
@@ -4412,7 +4412,7 @@
   
 
 
-<h1 id="theiaeuk">TheiaEuk<a class="headerlink" href="#theiaeuk" title="Permanent link">&para;</a></h1>
+<h1 id="theiaeuk-workflow-series">TheiaEuk Workflow Series<a class="headerlink" href="#theiaeuk-workflow-series" title="Permanent link">&para;</a></h1>
 <h2 id="quick-facts">Quick Facts<a class="headerlink" href="#quick-facts" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -6064,7 +6064,61 @@
 <details class="toggle">
 <summary><em>Candida auris</em></summary>
 <p>Two tools are deployed when <em>Candida auris is</em>  identified. First, the Cladetyping tool is launched to determine the clade of the specimen by comparing the sequence to five clade-specific reference files. The output of the clade typing task will be used to specify the reference genome for the antifungal resistance detection tool. To detect mutations that may confer antifungal resistance, <code>Snippy</code> is used to find all variants relative to the clade-specific reference, then these variants are queried for product names associated with resistance according to the MARDy database (<a href="http://mardy.dide.ic.ac.uk/index.php">http://mardy.dide.ic.ac.uk/index.php</a>).</p>
-<p><strong>Default reference genomes used for clade typing and antimicrobial resistance gene detection of C. auris</strong></p>
+<p>The genes in which there are known resistance-conferring mutations for this pathogen are:</p>
+<ul>
+<li>FKS1</li>
+<li>ERG11 (lanosterol 14-alpha demethylase)</li>
+<li>FUR1 (uracil phosphoribosyltransferase)</li>
+</ul>
+<p>We query <code>Snippy</code> results to see if any mutations were identified in those genes. In addition, <em>C. auris</em> automatically checks for the following loci. You will find the mutations next to the locus tag in the <code>theiaeuk_snippy_variants_hits</code> column corresponding gene name followings:</p>
+<table>
+<thead>
+<tr>
+<th><strong>TheiaEuk Search Term</strong></th>
+<th><strong>Corresponding Gene Name</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>B9J08_005340 </td>
+<td>ERG6</td>
+</tr>
+<tr>
+<td>B9J08_000401</td>
+<td>FLO8</td>
+</tr>
+<tr>
+<td>B9J08_005343</td>
+<td>Hypothetical protein (PSK74852)</td>
+</tr>
+<tr>
+<td>B9J08_003102</td>
+<td>MEC3</td>
+</tr>
+<tr>
+<td>B9J08_003737</td>
+<td>ERG3</td>
+</tr>
+<tr>
+<td>lanosterol.14-alpha.demethylase</td>
+<td>ERG11</td>
+</tr>
+<tr>
+<td>uracil.phosphoribosyltransferase</td>
+<td>FUR1</td>
+</tr>
+<tr>
+<td>FKS1</td>
+<td>FKS1</td>
+</tr>
+</tbody>
+</table>
+<p>For example, one sample may have the following output for the <code>theiaeuk_snippy_variants_hits</code> column:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>lanosterol.14-alpha.demethylase: lanosterol 14-alpha demethylase (missense_variant c.428A&gt;G p.Lys143Arg; C:266 T:0),B9J08_000401: hypothetical protein (stop_gained c.424C&gt;T p.Gln142*; A:70 G:0)
+</span></code></pre></div>
+<p>Based on this, we can tell that ERG11 has a missense variant at position 143 (Lysine to Arginine) and B9J08_000401 (which is FLO8) has a stop-gained variant at position 142 (Glutamine to Stop).</p>
+<details class="toggle">
+<summary>Default reference genomes used for clade typing and antimicrobial resistance gene detection of <em>C. auris</em></summary>
 <table>
 <thead>
 <tr>
@@ -6119,12 +6173,9 @@
 </tr>
 </tbody>
 </table>
-<p>The genes in which there are known resistance-conferring mutations for this pathogen are:</p>
-<ul>
-<li>FKS1</li>
-<li>ERG11 (lanosterol 14-alpha demethylase)</li>
-<li>FUR1 (uracil phosphoribosyltransferase)</li>
-</ul>
+</details>
+<details class="toggle">
+<summary>Known resistance-conferring mutations for <em>Candida auris</em></summary>
 <p>Mutations in these genes that are known to confer resistance are shown below (source: MARDy database http://mardy.dide.ic.ac.uk/index.php)</p>
 <table>
 <thead>
@@ -6253,6 +6304,7 @@
 </tr>
 </tbody>
 </table>
+</details>
 </details>
 <details class="toggle">
 <summary><em>Candida albicans</em></summary>
@@ -6642,6 +6694,7 @@
   
     <div class="md-copyright__highlight">
       &copy; 2022-2024 <a href="https://www.theiagen.com" target="_blank" rel="noopener">Theiagen Genomics</a>
+
     </div>
   
   
