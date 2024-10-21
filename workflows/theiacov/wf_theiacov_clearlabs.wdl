@@ -86,13 +86,6 @@ workflow theiacov_clearlabs {
       samplename = samplename,
       bamfile = consensus.sorted_bam
   }
-  # Use stats_n_coverage to calculate percentage_mapped_reads
-  call assembly_metrics.stats_n_coverage as stats_n_coverage {
-    input:
-      samplename = samplename,
-      bamfile = consensus.sorted_bam
-  }
-
   call consensus_qc_task.consensus_qc {
     input:
       assembly_fasta = consensus.consensus_seq,
