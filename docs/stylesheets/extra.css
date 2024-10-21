@@ -198,7 +198,7 @@ div.searchable-table input.table-search-input {
 [data-md-color-scheme="light"] div.searchable-table input.table-search-input {
   background-color: #fff;
   color: #000;
-  border: 1px solid #ccc;
+  border: 1px solid #E0E1E1;
 }
 
 [data-md-color-scheme="light"] div.searchable-table input.table-search-input::placeholder {
