@@ -164,12 +164,12 @@ task kraken2_parse_classified {
     if [ ! -z "~{target_organism}" ]; then 
       echo "Target org designated: ~{target_organism}"
       if [[ "~{target_organism}" == "Severe acute respiratory syndrome coronavirus 2" ]]; then
-        percentage_sc2=$(grep "Severe acute respiratory syndrome coronavirus 2" ~{samplename}.report.txt | cut -f1 )
+        percentage_sc2=$(grep "Severe acute respiratory syndrome coronavirus 2" ~{kraken2_report} | cut -f1 )
         percent_target_organism=""
         if [ -z "$percentage_sc2" ] ; then percentage_sc2="0" ; fi
       else
         percentage_sc2="" 
-        percent_target_organism=$(grep "~{target_organism}" ~{samplename}.report.txt | cut -f1 | head -n1 )
+        percent_target_organism=$(grep "~{target_organism}" ~{kraken2_report} | cut -f1 | head -n1 )
         if [ -z "$percent_target_organism" ] ; then percent_target_organism="0" ; fi
       fi
     else 
