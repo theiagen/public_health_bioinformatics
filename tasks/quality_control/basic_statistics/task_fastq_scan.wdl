@@ -78,14 +78,16 @@ task fastq_scan_se {
   input {
     File read1
     String read1_name = basename(basename(basename(read1, ".gz"), ".fastq"), ".fq")
-    Int disk_size = 100
+    Int disk_size = 50
     Int memory = 2
-    Int cpu = 2
-    String docker = "quay.io/biocontainers/fastq-scan:0.4.4--h7d875b9_1"
+    Int cpu = 1
+    String docker = "us-docker.pkg.dev/general-theiagen/biocontainers/fastq-scan:1.0.1--h4ac6f70_3"
   }
   command <<<
-    # capture date and version
-    date | tee DATE
+    # exit task in case anything fails in one-liners or variables are unset
+    set -euo pipefail
+    
+    # capture version
     fastq-scan -v | tee VERSION
 
     # set cat command based on compression
@@ -96,14 +98,16 @@ task fastq_scan_se {
     fi
 
     # capture forward read stats
+    echo "DEBUG: running fastq-scan on $(basename ~{read1})"
     eval "${cat_reads} ~{read1}" | fastq-scan | tee ~{read1_name}_fastq-scan.json
-    cat ~{read1_name}_fastq-scan.json | jq .qc_stats.read_total | tee READ1_SEQS
+    # using simple redirect so STDOUT is not confusing
+    jq .qc_stats.read_total ~{read1_name}_fastq-scan.json > READ1_SEQS
+    echo "DEBUG: number of reads in $(basename ~{read1}): $(cat READ1_SEQS)"
   >>>
   output {
-    File fastq_scan_report = "~{read1_name}_fastq-scan.json"
+    File fastq_scan_json = "~{read1_name}_fastq-scan.json"
     Int read1_seq = read_int("READ1_SEQS")
     String version = read_string("VERSION")
-    String pipeline_date = read_string("DATE")
     String fastq_scan_docker = docker
   }
   runtime {
@@ -111,8 +115,8 @@ task fastq_scan_se {
     memory: memory + " GB"
     cpu: cpu
     disks:  "local-disk " + disk_size + " SSD"
-    disk: disk_size + " GB" # TES
-    preemptible: 0
+    disk: disk_size + " GB"
+    preemptible: 1
     maxRetries: 3
   }
 }
