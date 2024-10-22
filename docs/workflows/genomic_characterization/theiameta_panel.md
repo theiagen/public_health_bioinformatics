@@ -14,7 +14,15 @@ TheiaMeta_Panel was created initially for the Illumina Viral Surveillance Panel;
 
 | **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
 |---|---|---|---|---|---|
-| task_name | **variable_name** | Type | Description | Default Value | Required/Optional |
+| theiameta_panel_illumina_pe | **read1** | File | The forward Illumina read in FASTQ file format (compression optional)  | | Required |
+| theiameta_panel_illumina_pe | **read2** | File | The reverse Illumina read in FASTQ file format (compression optional) | | Required |
+| theiameta_panel_illumina_pe | **samplename** | String | The name of the sample being analyzed | | Required |
+| theiameta_panel_illumina_pe | **taxon_ids** | Array[Int] | The taxon IDs to be used for taxonomic binning | | Required |
+| fastq_scan_binned | **cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional |
+| fastq_scan_binned | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
+| fastq_scan_binned | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1 | Optional |
+| fastq_scan_binned | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 2 | Optional |
+| fastq_scan_binned | 
 
 ### Workflow Tasks
 
