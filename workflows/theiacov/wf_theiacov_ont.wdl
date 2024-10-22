@@ -149,12 +149,7 @@ workflow theiacov_ont {
             standardized_organism = organism_parameters.standardized_organism,
             seq_method = seq_method
         }
-      call assembly_metrics.stats_n_coverage as flu_stats_n_coverage {
-          input:
-            samplename = samplename,
-            bamfile = select_first([flu_track.irma_ha_bam, flu_track.irma_na_bam])
-        }
-      }              
+      }
       # nanoplot for basic QC metrics
       call nanoplot_task.nanoplot as nanoplot_raw {
         input:
@@ -433,7 +428,7 @@ workflow theiacov_ont {
     String? qc_check = qc_check_task.qc_check
     File? qc_standard = qc_check_task.qc_standard
     # Non-flu specific outputs
-    # Non-flu specific outputs
-    Float percentage_mapped_reads = select_first([flu_stats_n_coverage.percentage_mapped_reads, stats_n_coverage.percentage_mapped_reads, 0.0])  
+    Float percentage_mapped_reads = select_first([run_flu_track.flu_stats_n_coverage.percentage_mapped_reads, stats_n_coverage.percentage_mapped_reads])
+
   }
 }

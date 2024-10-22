@@ -155,14 +155,6 @@ workflow theiacov_illumina_pe {
             seq_method = seq_method
         }
       }
-      # Calculate the percentage of mapped reads for flu samples
-      if (defined(flu_track.irma_ha_bam) || defined(flu_track.irma_na_bam)) {
-        call assembly_metrics.stats_n_coverage as flu_stats_n_coverage {
-          input:
-            samplename = samplename,
-            bamfile = select_first([flu_track.irma_ha_bam, flu_track.irma_na_bam])
-        }
-      }
       if (defined(ivar_consensus.assembly_fasta) || defined(flu_track.irma_assembly_fasta)) {
         call consensus_qc_task.consensus_qc {
           input:
@@ -437,8 +429,6 @@ workflow theiacov_illumina_pe {
     String? flu_oseltamivir_resistance = flu_track.flu_oseltamivir_resistance
     String? flu_xofluza_resistance = flu_track.flu_xofluza_resistance
     String? flu_zanamivir_resistance = flu_track.flu_zanamivir_resistance
-    # Flu Track Outputs stats n coverage
-    Float? flu_percentage_mapped_reads = flu_stats_n_coverage.percentage_mapped_reads
     # HIV Outputs
     String? quasitools_version = quasitools_illumina_pe.quasitools_version
     String? quasitools_date = quasitools_illumina_pe.quasitools_date
@@ -450,6 +440,6 @@ workflow theiacov_illumina_pe {
     String? qc_check = qc_check_task.qc_check
     File? qc_standard = qc_check_task.qc_standard
     # Capture percentage_mapped_reads from ivar_consensus task
-    Float? percentage_mapped_reads = ivar_consensus.percentage_mapped_reads 
+    Float percentage_mapped_reads = select_first([ivar_consensus.percentage_mapped_reads, flu_stats_n_coverage.percentage_mapped_reads])
   }
 }

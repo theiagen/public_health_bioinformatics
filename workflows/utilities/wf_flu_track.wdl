@@ -112,6 +112,14 @@ workflow flu_track {
         docker = assembly_metrics_docker
     }
   }
+  # Calculate the percentage of mapped reads for flu samples
+  if (defined(irma.seg_ha_bam) || defined(irma.seg_na_bam)) {
+    call assembly_metrics.stats_n_coverage as flu_stats_n_coverage {
+      input:
+        samplename = samplename,
+        bamfile = select_first([irma.seg_ha_bam, irma.seg_na_bam])
+    }
+  }
   # combine HA & NA assembly coverages
   String ha_na_assembly_coverage_string = "HA: " + select_first([ha_assembly_coverage.depth, ""]) + ", NA: " + select_first([na_assembly_coverage.depth, ""])
   # ABRICATE will run if assembly is provided, or was generated with IRMA
@@ -249,7 +257,8 @@ workflow flu_track {
     File? irma_mp_segment_fasta = irma.seg_mp_assembly
     File? irma_np_segment_fasta = irma.seg_np_assembly
     File? irma_ns_segment_fasta = irma.seg_ns_assembly
-
+    # calulate mapped reads percentage for flu samples
+    Float? flu_percentage_mapped_reads = flu_stats_n_coverage.percentage_mapped_reads
     Array[File] irma_assemblies = irma.irma_assemblies
     Array[File] irma_vcfs = irma.irma_vcfs
     Array[File] irma_bams = irma.irma_bams
