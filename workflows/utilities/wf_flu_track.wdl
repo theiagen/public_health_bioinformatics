@@ -257,14 +257,14 @@ workflow flu_track {
     File? irma_mp_segment_fasta = irma.seg_mp_assembly
     File? irma_np_segment_fasta = irma.seg_np_assembly
     File? irma_ns_segment_fasta = irma.seg_ns_assembly
-    # calulate mapped reads percentage for flu samples
-    Float? flu_percentage_mapped_reads = flu_stats_n_coverage.percentage_mapped_reads
     Array[File] irma_assemblies = irma.irma_assemblies
     Array[File] irma_vcfs = irma.irma_vcfs
     Array[File] irma_bams = irma.irma_bams
     File? irma_ha_bam = irma.seg_ha_bam
     File? irma_na_bam = irma.seg_na_bam
     String ha_na_assembly_coverage = ha_na_assembly_coverage_string
+     # calulate mapped reads percentage for flu samples
+    Float? percentage_mapped_reads = flu_stats_n_coverage.percentage_mapped_reads
     # GenoFLU outputs
     String? genoflu_version = genoflu.genoflu_version
     String? genoflu_genotype = genoflu.genoflu_genotype
