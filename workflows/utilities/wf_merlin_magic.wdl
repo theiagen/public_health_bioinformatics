@@ -1008,7 +1008,7 @@ workflow merlin_magic {
     String snippy_variants_summary = select_first([snippy_cauris.snippy_variants_summary, snippy_afumigatus.snippy_variants_summary, snippy_crypto.snippy_variants_summary, "gs://theiagen-public-files/terra/theiaeuk_files/no_match_detected.txt"])
     String snippy_variants_num_reads_aligned = select_first([snippy_cauris.snippy_variants_num_reads_aligned, snippy_afumigatus.snippy_variants_num_reads_aligned, snippy_crypto.snippy_variants_num_reads_aligned, "No matching taxon detected"])
     String snippy_variants_coverage_tsv = select_first([snippy_cauris.snippy_variants_coverage_tsv, snippy_afumigatus.snippy_variants_coverage_tsv, snippy_crypto.snippy_variants_coverage_tsv, "gs://theiagen-public-files/terra/theiaeuk_files/no_match_detected.txt"])
-    String snippy_variants_num_variants = select_first([snippy_cauris.snippy_variants_num_variants, snippy_afumigatus.snippy_variants_num_variants, snippy_crypto.snippy_variants_num_reads_aligned, "No matching taxon detected"])
+    String snippy_variants_num_variants = select_first([snippy_cauris.snippy_variants_num_variants, snippy_afumigatus.snippy_variants_num_variants, snippy_crypto.snippy_variants_num_variants, "No matching taxon detected"])
     String snippy_variants_percent_ref_coverage = select_first([snippy_cauris.snippy_variants_percent_ref_coverage, snippy_afumigatus.snippy_variants_percent_ref_coverage, snippy_crypto.snippy_variants_percent_ref_coverage, "No matching taxon detected"])
   }
 }
