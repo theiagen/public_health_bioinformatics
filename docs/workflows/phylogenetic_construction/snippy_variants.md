@@ -68,6 +68,7 @@ The `Snippy_Variants` workflow aligns single-end or paired-end reads (in FASTQ f
 
 | **Variable** | **Type** | **Description** |
 |---|---|---|
+| snippy_combined_qc_metrics | File | Combined QC metrics file containing concatenated QC metrics from all samples. The file is a tab-separated values (TSV) file with the following columns:<br>- samplename<br>- reads_aligned_to_reference<br>- total_reads<br>- percent_reads_aligned<br>- variants_total<br>- percent_ref_coverage<br>- #rname<br>- startpos<br>- endpos<br>- numreads<br>- covbases<br>- coverage<br>- meandepth<br>- meanbaseq<br>- meanmapq<br><br>The last set of columns (`#rname` to `meanmapq`) may repeat for each chromosome or contig in the reference genome. |
 | snippy_variants_bai | File | Indexed bam file of the reads aligned to the reference |
 | snippy_variants_bam | File | Bam file of reads aligned to the reference |
 | snippy_variants_coverage_tsv | File | Coverage statistics TSV file output by the `samtools coverage` command, providing genome-wide metrics such as the proportion of bases covered (depth ≥ 1), mean depth, and other related statistics.            |
