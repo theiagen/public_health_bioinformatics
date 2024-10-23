@@ -22,7 +22,62 @@ TheiaMeta_Panel was created initially for the Illumina Viral Surveillance Panel;
 | fastq_scan_binned | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
 | fastq_scan_binned | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1 | Optional |
 | fastq_scan_binned | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 2 | Optional |
-| fastq_scan_binned | 
+| gather_scatter | **cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional |
+| gather_scatter | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 50 | Optional |
+| gather_scatter | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-03-16 | Optional |
+| gather_scatter | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional |
+| kraken2 | **classified_out** | String | Allows user to rename the classified FASTQ files output. Must include .fastq as the suffix | classified#.fastq | Optional |
+ kraken2 | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional |
+| kraken2 | **disk_size** | Int | GB of storage to request for VM used to run the kraken2 task. Increase this when using large (>30GB kraken2 databases such as the "k2_standard" database) | 100 | Optional |
+| kraken2 | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.1.2-no-db | Optional |
+| kraken2 | **kraken2_args** | String | Allows a user to supply additional kraken2 command-line arguments |  | Optional |
+| kraken2 | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 32 | Optional |
+| kraken2 | **unclassified_out** | String | Allows user to rename unclassified FASTQ files output. Must include .fastq as the suffix | unclassified#.fastq | Optional |
+| krakentools | **cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional |
+| krakentools | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
+| krakentools | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/theiagen/krakentools:d4a2fbe| Optional |
+| krakentools | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 4 | Optional |
+| metaspades | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional |
+| metaspades | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
+| metaspades | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/theiagen/metaspades:3.15.3 | Optional |
+| metaspades | **kmers** | String | The k-mer list to use; if not provided, the value is automatically set | | Optional |
+| metaspades | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 32 | Optional |
+| metaspades | **metaspades_opts** | String | Additional arguments to pass on to the metaspades command | | Optional |
+| metaspades | **phred_offset** | Int | The PHRED quality offset of the input reads; can be either 33 or 64 | 33 | Optional |
+| minimap2_assembly_correction | **cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional |
+| minimap2_assembly_correction | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
+| minimap2_assembly_correction | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/minimap2:2.22 | Optional |
+| minimap2_assembly_correction | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional |
+| pilon | **cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional |
+| pilon | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
+| pilon | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/pilon:1.24 | Optional |
+| pilon | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional |
+| quast | **cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional |
+| quast | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
+| quast | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/quast:5.0.2 | Optional |
+| quast | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional |
+| read_QC_trim | **adapters** | File | A file containing the sequence of the adapters used during library preparation, used in the BBDuk task |  | Optional |
+| read_QC_trim | **bbduk_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional |
+| read_QC_trim | **call_kraken** | Boolean | Set to true to launch Kraken2; if true, you must provide a kraken_db | FALSE | Optional |
+| read_QC_trim | **call_midas** | Boolean | Set to true to launch Midas | TRUE | Optional |
+| read_QC_trim | **fastp_args** | String | Additional arguments to pass to fastp | "--detect_adapter_for_pe -g -5 20 -3 20 | Optional |
+| read_QC_trim | **midas_db** | File | Midas database file | gs://theiagen-large-public-files-rp/terra/theiaprok-files/midas/midas_db_v1.2.tar.gz | Optional |
+| read_QC_trim | **phix** | File | A file containing the phix used during Illumina sequencing; used in the BBDuk task |  | Optional |
+| read_QC_trim | **read_processing** | String | Read trimming software to use, either "trimmomatic" or "fastp" | trimmomatic | Optional |
+| read_QC_trim | **read_qc** | String | Allows the user to decide between fastq_scan (default) and fastqc for the evaluation of read quality. | fastq_scan | Optional |
+| read_QC_trim | **trim_min_length** | Int | The minimum length of each read after trimming | 75 | Optional | 
+| read_QC_trim | **trim_primers** | Boolean | A True/False option that determines if primers should be trimmed. | TRUE | Optional |
+| read_QC_trim | **trim_quality_min_score** | Int | The minimum quality score to keep during trimming | 30 | Optional |
+| read_QC_trim | **trim_window_size** | Int | Specifies window size for trimming (the number of bases to average the quality across) | 4 | Optional |
+| read_QC_trim | **trimmomatic_args** | String | Additional arguments to pass to trimmomatic | -phred33 | Optional |
+| sort_bam_assembly_correction | **cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional |
+| sort_bam_assembly_correction | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
+| sort_bam_assembly_correction | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/samtools:1.17 | Optional |
+| sort_bam_assembly_correction | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional |
+| theiameta_panel_illumina_pe | **kraken2_db** | File | A Kraken2 database in .tar.gz format | gs://theiagen-large-public-files-rp/terra/databases/kraken2/k2_viral_20240112.tar.gz | Optional | 
+| theiameta_panel_illumina_pe | **minimum_read_number** | Int | The minimum number of reads in order to attempt assembly on a bin of reads | 1000 | Optional |
+| version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
+| version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) | | Optional |
 
 ### Workflow Tasks
 
@@ -126,7 +181,15 @@ TheiaMeta_Panel was created initially for the Illumina Viral Surveillance Panel;
 
 | **Variable** | **Type** | **Description** |
 |---|---|---|
-| variable_name | Type | Description |
+| identified_organisms | Array[String] | A list of organisms that were able to be identified in the sample with the specified Kraken2 database |
+| kraken2_classified_report | File | Standard Kraken2 output report. TXT filetype, but can be opened in Excel as a TSV file |
+| kraken2_database | String | The name of the database used to run Kraken2 |
+| kraken2_docker | String | Docker image used to run kraken2 |
+| kraken2_report | File | Text document describing taxonomic prediction of every FASTQ record. This file can be very large and cumbersome to open and view |
+| kraken2_version | String | The version of Kraken2 used in the analysis |
+| results_by_taxon_tsv | File | A TSV file that contains the results for every taxon ID provided in the taxon_ids input variable that had reads identified; characterization (if applicable) and basic statistics regarding read count, assembly generation (if applicable), and general quality, are also associated with each bin |
+| theiameta_panel_illumina_pe_analysis_date | String | Date the workflow was run |
+| theiameta_panel_illumina_pe_version | String | Version of PHB used to run the workflow |
 
 ## References (if applicable)
 
