@@ -1255,7 +1255,7 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
         
         Generally, `stxtyper` looks for _stxA_ and _stxB_ subunits that compose a complete operon. The A subunit is longer (in amino acid length) than the B subunit. Stxtyper attempts to detect these, compare them to a database of known sequences, and type them based on amino acid composition.  There typing algorithm and rules defining how to type these genes & operons will be described more completely in a publication that will be available in the future.
         
-        The `stxtyper_report` output TSV is provided in [this output format.](https://github.com/ncbi/stxtyper?tab=readme-ov-file#output)
+        The `stxtyper_report` output TSV is provided in [this output format.](https://github.com/ncbi/stxtyper/tree/v1.0.24?tab=readme-ov-file#output)
 
         Eventually this tool will be incorporated into AMRFinderPlus and will run behind-the-scenes when the user (or in this case, the TheiaProk workflow) provides the `amrfinder --organism Escherichia` option.
 
