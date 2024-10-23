@@ -17,9 +17,10 @@ task basecall {
 
     echo "### Starting basecalling ###"
 
-    # Debugging: List all files in the current directory structure
-    echo "### Listing all files and directories before basecalling ###"
+    echo "### About to list all files and directories ###"
     find /cromwell_root -type f -exec ls -lh {} \;
+    echo "### Finished listing files and directories ###"
+
 
     # Basecalling loop for each input file
     for file in ~{sep=" " input_files}; do
