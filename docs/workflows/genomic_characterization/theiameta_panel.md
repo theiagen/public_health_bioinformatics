@@ -12,6 +12,8 @@ TheiaMeta_Panel was created initially for the Illumina Viral Surveillance Panel;
 
 ### Inputs
 
+<div class="searchable-table" markdown="1">
+
 | **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
 |---|---|---|---|---|---|
 | theiameta_panel_illumina_pe | **read1** | File | The forward Illumina read in FASTQ file format (compression optional)  | | Required |
@@ -78,6 +80,8 @@ TheiaMeta_Panel was created initially for the Illumina Viral Surveillance Panel;
 | theiameta_panel_illumina_pe | **minimum_read_number** | Int | The minimum number of reads in order to attempt assembly on a bin of reads | 1000 | Optional |
 | version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
 | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) | | Optional |
+
+</div>
 
 ### Workflow Tasks
 
@@ -179,6 +183,8 @@ TheiaMeta_Panel was created initially for the Illumina Viral Surveillance Panel;
 
 ### Outputs
 
+<div class="searchable-table" markdown="1">
+
 | **Variable** | **Type** | **Description** |
 |---|---|---|
 | identified_organisms | Array[String] | A list of organisms that were able to be identified in the sample with the specified Kraken2 database |
@@ -191,8 +197,23 @@ TheiaMeta_Panel was created initially for the Illumina Viral Surveillance Panel;
 | theiameta_panel_illumina_pe_analysis_date | String | Date the workflow was run |
 | theiameta_panel_illumina_pe_version | String | Version of PHB used to run the workflow |
 
+</div>
+
 ## References (if applicable)
 
-> reference1
+>**Trimmomatic:** Anthony M. Bolger and others, Trimmomatic: a flexible trimmer for Illumina sequence data, *Bioinformatics*, Volume 30, Issue 15, August 2014, Pages 2114–2120, <https://doi.org/10.1093/bioinformatics/btu170>
 <!-- -->
-> reference2
+>**Fastq-Scan:** <https://github.com/rpetit3/fastq-scan>
+<!-- -->
+>**metaSPAdes:** Sergey Nurk and others, metaSPAdes: a new versatile metagenomic assembler, *Genome Res.* 2017 May; 27(5): 824–834., <https://doi.org/10.1101%2Fgr.213959.116>
+<!-- -->
+>**Pilon:** Bruce J. Walker and others. Pilon: An Integrated Tool for Comprehensive Microbial Variant Detection and Genome Assembly Improvement. *Plos One.* November 19, 2014. <https://doi.org/10.1371/journal.pone.0112963>
+<!-- -->
+>**Minimap2:** Heng Li, Minimap2: pairwise alignment for nucleotide sequences, *Bioinformatics*, Volume 34, Issue 18, September 2018, Pages 3094–3100, <https://doi.org/10.1093/bioinformatics/bty191>
+<!-- -->
+>**QUAST:** Alexey Gurevich and others, QUAST: quality assessment tool for genome assemblies, *Bioinformatics*, Volume 29, Issue 8, April 2013, Pages 1072–1075, <https://doi.org/10.1093/bioinformatics/btt086>
+<!-- -->
+>**Samtools:** Li, Heng, Bob Handsaker, Alec Wysoker, Tim Fennell, Jue Ruan, Nils Homer, Gabor Marth, Goncalo Abecasis, Richard Durbin, and 1000 Genome Project Data Processing Subgroup. 2009. The Sequence Alignment/Map format and SAMtools. Bioinformatics 25(16): 2078-2079.
+<!-- -->
+>**Bcftools:** Petr Danecek, James K Bonfield, Jennifer Liddle, John Marshall, Valeriu Ohan, Martin O Pollard, Andrew Whitwham, Thomas Keane, Shane A McCarthy, Robert M Davies, Heng Li. Twelve years of SAMtools and BCFtools. GigaScience, Volume 10, Issue 2, February 2021, giab008, <https://doi.org/10.1093/gigascience/giab008>
+<!-- -->
