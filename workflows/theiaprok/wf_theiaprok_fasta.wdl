@@ -578,7 +578,6 @@ workflow theiaprok_fasta {
     String? virulencefinder_hits = merlin_magic.virulencefinder_hits
     # stxtyper 
     File? stxtyper_report = merlin_magic.stxtyper_report
-    File? stxtyper_log = merlin_magic.stxtyper_log
     String? stxtyper_docker = merlin_magic.stxtyper_docker
     String? stxtyper_version = merlin_magic.stxtyper_version
     Int? stxtyper_num_hits = merlin_magic.stxtyper_num_hits
