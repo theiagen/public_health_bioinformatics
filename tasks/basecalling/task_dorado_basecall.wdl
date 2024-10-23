@@ -17,6 +17,10 @@ task basecall {
 
     echo "### Starting basecalling ###"
 
+    # Debugging: List all files in the current directory structure
+    echo "### Listing all files and directories before basecalling ###"
+    find /cromwell_root -type f -exec ls -lh {} \;
+
     for file in ~{sep=" " input_files}; do
       base_name=$(basename "$file" .pod5)
       sam_file="$sam_output/${base_name}.sam"

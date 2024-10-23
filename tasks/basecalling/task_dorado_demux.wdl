@@ -29,6 +29,7 @@ task dorado_demux {
         --output-dir demux_output \
         --kit-name ~{kit_name} \
         --emit-fastq \
+        --emit-summary \
         --verbose > "demux_output/$(basename "$bam_file").log" 2>&1 || {
           echo "ERROR: Dorado demux failed for $bam_file" >&2
           cat "demux_output/$(basename "$bam_file").log" >&2
