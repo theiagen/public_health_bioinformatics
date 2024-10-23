@@ -13,12 +13,14 @@ workflow dorado_basecalling_workflow {
 
   input {
     Array[File] input_files
-    String dorado_model
+    String? dorado_model
     String kit_name
+    Boolean use_auto_model = true   
+    String model_speed = "sup"
     String new_table_name
     String fastq_upload_path
-    Boolean paired_end
-    Boolean assembly_data
+    Boolean paired_end = false  
+    Boolean assembly_data = false
     String? file_ending
     String terra_project
     String terra_workspace
@@ -27,9 +29,11 @@ workflow dorado_basecalling_workflow {
 
   call basecall_task.basecall as basecall_step {
     input:
-      input_files = input_files,
-      dorado_model = dorado_model,
-      kit_name = kit_name
+       input_files = input_files,
+       use_auto_model = use_auto_model,
+       model_speed = model_speed,
+       dorado_model = dorado_model,
+       kit_name = kit_name
   }
 
   call samtools_convert_task.samtools_convert {
