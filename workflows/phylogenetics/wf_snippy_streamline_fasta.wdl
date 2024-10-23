@@ -48,7 +48,7 @@ workflow snippy_streamline_fasta {
       tree_name = tree_name_updated,
       snippy_variants_outdir_tarball = snippy_variants_wf.snippy_variants_outdir_tarball,
       samplenames = samplenames,
-      reference_genome_file = select_first([reference_genome_file, ncbi_datasets_download_genome_accession.ncbi_datasets_assembly_fasta])
+      reference_genome_file = select_first([reference_genome_file, ncbi_datasets_download_genome_accession.ncbi_datasets_assembly_fasta]),
       snippy_variants_qc_metrics = snippy_variants_wf.snippy_variants_qc_metrics
   }
   call versioning.version_capture {
