@@ -21,22 +21,27 @@ task basecall {
     echo "### Listing all files and directories before basecalling ###"
     find /cromwell_root -type f -exec ls -lh {} \;
 
+    # Basecalling loop for each input file
     for file in ~{sep=" " input_files}; do
       base_name=$(basename "$file" .pod5)
       sam_file="$sam_output/${base_name}.sam"
 
       echo "Processing $file, output: $sam_file"
 
-      dorado basecaller \
+      # Run Dorado basecaller and continue to the next file if it fails
+      if dorado basecaller \
         /dorado_models/~{dorado_model} \
         "$file" \
         --kit-name ~{kit_name} \
         --emit-sam \
         --no-trim \
         --output-dir "$sam_output" \
-        --verbose || { echo "ERROR: Dorado basecaller failed for $file"; exit 1; }
+        --verbose; then
+          echo "Basecalling completed successfully for $file. SAM file: $sam_file"
+      else
+          echo "ERROR: Dorado basecaller failed for $file. Moving on to the next file."
+      fi
 
-      echo "Basecalling completed for $file. SAM file: $sam_file"
     done
 
     echo "Basecalling steps completed."
