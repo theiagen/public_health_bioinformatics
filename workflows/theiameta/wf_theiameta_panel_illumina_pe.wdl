@@ -18,7 +18,10 @@ workflow theiameta_panel_illumina_pe {
     String samplename
     File read1
     File read2
-    Array[Int] taxon_ids # suggest using a workspace element if user wants to modify?
+    # default taxon IDs for Illumina VSP panel
+    Array[Int] taxon_ids 
+    # = [10244, 10255, 10298, 10359, 10376, 10632, 10804, 11021, 11029, 11033, 11034, 11036, 11039, 11041, 11053, 11060, 11069, 11070, 11072, 11079, 11080, 11082, 11083, 11084, 11089, 11137, 11234, 11292, 11520, 11552, 11577, 11580, 11587, 11588, 11676, 11709, 12092, 12475, 12538, 12542, 28875, 28876, 31631, 33743, 35305, 35511, 36427, 37124, 38766, 38767, 45270, 46839, 57482, 57483, 59301, 64286, 64320, 68887, 80935, 90961, 95341, 102793, 102796, 108098, 114727, 114729, 118655, 119210, 129875, 129951, 130308, 130309, 130310, 138948, 138949, 138950, 138951, 147711, 147712, 152219, 162145, 169173, 186538, 186539, 186540, 186541, 238817, 277944, 290028, 333278, 333760, 333761, 333762, 440266, 463676, 493803, 536079, 565995, 862909, 1003835, 1216928, 1221391, 1239565, 1239570, 1239573, 1277649, 1313215, 1330524, 1335626, 1348384, 1424613, 1452514, 1474807, 1497391, 1608084, 1618189, 1891764, 1891767, 1965344, 1980456, 2010960, 2169701, 2169991, 2560525, 2560602, 2697049, 2847089, 2901879, 2907957, 3052148, 3052223, 3052225, 3052230, 3052302, 3052307, 3052310, 3052314, 3052470, 3052477, 3052480, 3052489, 3052490, 3052493, 3052496, 3052499, 3052503, 3052505, 3052518, 10798, 11216, 1203539, 12730, 142786, 1803956, 208893, 2560526, 2849717, 3052303, 3052317, 3052498, 746830, 746831, 943908]
+    # suggest using a workspace element if user wants to modify?
 
     Int minimum_read_number = 1000
     File kraken2_db = "gs://theiagen-large-public-files-rp/terra/databases/kraken2/k2_viral_20240112.tar.gz"
@@ -31,9 +34,17 @@ workflow theiameta_panel_illumina_pe {
         samplename = samplename,
         read1 = read1,
         read2 = read2,
-        workflow_series = "theiameta"
+        workflow_series = "theiameta",
+        # adding these additional inputs to hide them from Terra; these are not used
+        call_kraken = false,
+        kraken_disk_size = 0,
+        kraken_memory = 0,
+        kraken_cpu = 0,
+        kraken_db = kraken2_db,
+        target_organism = ""
   }
   # kraken does not run as part of the theiameta track in read_QC_trim -- we may want to change that
+  # if we do change that, we will want to change the inputs to read_QC_trim to no longer have defaults hiding them from Terra
   call kraken_task.kraken2_standalone as kraken2 {
     input:
       samplename = samplename,
@@ -60,7 +71,6 @@ workflow theiameta_panel_illumina_pe {
       }
       #### ADJUST IN THE FUTURE; SETTING TO 100 FOR TESTING ####
       if (fastq_scan_binned.read1_seq > minimum_read_number) {
-        String did_attempt_assembly = "Assembly attempted"
         call metaspades_task.metaspades_pe {
           input:
             read1_cleaned = krakentools.extracted_read1,
