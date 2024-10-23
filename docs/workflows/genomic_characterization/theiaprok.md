@@ -45,6 +45,8 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 
         The TheiaProk_FASTA workflow takes in assembly files in FASTA format.
 
+<div class="searchable-table" markdown="1">
+
 | **Terra Task name** | **Variable** | **Type** | **Description** | **Default value** | **Terra Status** | **Workflow** |
 |---|---|---|---|---|---|---|
 | *workflow name | **samplename** | String | Name of sample to be analyzed |  | Required | FASTA, ONT, PE, SE |
@@ -569,6 +571,8 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 | version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional | FASTA, ONT, PE, SE |
 | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) | FASTA, ONT, PE, SE |
 
+</div>
+
 !!! tip "Skip Characterization"
     Ever wanted to skip characterization? Now you can! Set the optional input `perform_characterization` to **`false`** to only generate an assembly and run assembly QC.
 
@@ -586,7 +590,7 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 
 ??? task "`screen`: Total Raw Read Quantification and Genome Size Estimation"
 
-    The [`screen`](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/comparisons/task_screen.wdl) task ensures the quantity of sequence data is sufficient to undertake genomic analysis. It uses bash commands for quantification of reads and base pairs, and [mash](https://mash.readthedocs.io/en/latest/index.html) sketching to estimate the genome size and its coverage. At each step, the results are assessed relative to pass/fail criteria and thresholds that may be defined by optional user inputs. Samples that do not meet these criteria will not be processed further by the workflow:
+    The [`screen`](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/comparisons/task_screen.wdl) task ensures the quantity of sequence data is sufficient to undertake genomic analysis. It uses [`fastq-scan`](https://github.com/rpetit3/fastq-scan) and bash commands for quantification of reads and base pairs, and [mash](https://mash.readthedocs.io/en/latest/index.html) sketching to estimate the genome size and its coverage. At each step, the results are assessed relative to pass/fail criteria and thresholds that may be defined by optional user inputs. Samples that do not meet these criteria will not be processed further by the workflow:
 
     1. Total number of reads: A sample will fail the read screening task if its total number of reads is less than or equal to `min_reads`.
     2. The proportion of basepairs reads in the forward and reverse read files: A sample will fail the read screening if fewer than `min_proportion` basepairs are in either the reads1 or read2 files.
@@ -1579,6 +1583,8 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
 
 ### Outputs
 
+<div class="searchable-table" markdown="1">
+
 | **Variable** | **Type** | **Description** | **Workflow** |
 |---|---|---|---|
 | abricate_abaum_database | String | Database of reference A. baumannii plasmid typing genes used for plasmid typing | FASTA, ONT, PE, SE |
@@ -1977,3 +1983,5 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
 | virulencefinder_docker | String | VirulenceFinder docker image used | FASTA, ONT, PE, SE |
 | virulencefinder_hits | String | Virulence genes detected by VirulenceFinder | FASTA, ONT, PE, SE |
 | virulencefinder_report_tsv | File | Output TSV file created by VirulenceFinder | FASTA, ONT, PE, SE |
+
+</div>

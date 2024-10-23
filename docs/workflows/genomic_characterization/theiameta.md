@@ -23,6 +23,8 @@ TheiaMeta can use one of two distinct methods for generating and processing the 
 
 The TheiaMeta_Illumina_PE workflow processes Illumina paired-end (PE) reads generated for metagenomic characterization (typically by shotgun). By default, this workflow will assume that input reads were generated using a 300-cycle sequencing kit (i.e. 2 x 150 bp reads). Modifications to the optional parameter for `trim_minlen` may be required to accommodate shorter read data, such as 2 x 75bp reads generated using a 150-cycle sequencing kit.
 
+<div class="searchable-table" markdown="1">
+
 | **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
 |---|---|---|---|---|---|
 | theiameta_illumina_pe | **read1** | File | Forward Illumina read in FASTQ file format |  | Required |
@@ -120,6 +122,8 @@ The TheiaMeta_Illumina_PE workflow processes Illumina paired-end (PE) reads ge
 | theiameta_illumina_pe | **reference** | File | Reference file for consensus calling, in FASTA format |  | Optional |
 | version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
 | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
+
+</div>
 
 ### Workflow Tasks
 
@@ -276,6 +280,8 @@ The TheiaMeta_Illumina_PE workflow processes Illumina paired-end (PE) reads ge
 
 ### Outputs
 
+<div class="searchable-table" markdown="1">
+
 | **Variable** | **Type** | **Description** |
 |---|---|---|
 | assembly_fasta | File | Final assembly (MAG) |
@@ -349,6 +355,8 @@ The TheiaMeta_Illumina_PE workflow processes Illumina paired-end (PE) reads ge
 | theiameta_illumina_pe_version | String | Version of workflow |
 | trimmomatic_docker | String | Docker image of trimmomatic |
 | trimmomatic_version | String | Version of trimmomatic used |
+
+</div>
 
 ## References
 

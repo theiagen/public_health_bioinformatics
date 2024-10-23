@@ -8,6 +8,7 @@ title: Workflows by Kingdom
 
 ### Any Taxa
 
+<div class="searchable-table" markdown="1">
 
 | **Name** | **Description** | **Taxa** | **Workflow Level** | **Command-line Compatible**[^1] | **Last known changes** | **Dockstore** |
 |---|---|---|---|---|---|---|
@@ -25,7 +26,11 @@ title: Workflows by Kingdom
 | [**Transfer_Column_Content**](../workflows/data_export/transfer_column_content.md)| Transfer contents of a specified Terra data table column for many samples ("entities") to a GCP storage bucket location | Any taxa | Set-level | Yes | v1.3.0 | [Transfer_Column_Content_PHB](https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Transfer_Column_Content_PHB:main?tab=info) |
 | [**Zip_Column_Content**](../workflows/data_export/zip_column_content.md)| Zip contents of a specified Terra data table column for many samples ("entities") | Any taxa | Set-level | Yes | v2.1.0 | [Zip_Column_Content_PHB](https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Zip_Column_Content_PHB:main?tab=info) |
 
+</div>
+
 ### Bacteria
+
+<div class="searchable-table" markdown="1">
 
 | **Name** | **Description** | **Applicable Kingdom** | **Workflow Level** | **Command-line Compatibility**[^1] | **Last Known Changes** | **Dockstore** |
 |---|---|---|---|---|---|---|
@@ -44,7 +49,11 @@ title: Workflows by Kingdom
 | [**Terra_2_NCBI**](../workflows/public_data_sharing/terra_2_ncbi.md)| Upload of sequence data to NCBI | Bacteria, Mycotics, Viral | Set-level | No | v2.1.0 | [Terra_2_NCBI_PHB](https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Terra_2_NCBI_PHB:main?tab=info) |
 | [**TheiaProk Workflow Series**](../workflows/genomic_characterization/theiaprok.md) | Bacterial genome assembly, QC and characterization from WGS data | Bacteria | Sample-level | Some optional features incompatible, Yes | v2.2.0 | [TheiaProk_Illumina_PE_PHB](https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/TheiaProk_Illumina_PE_PHB:main?tab=info), [TheiaProk_Illumina_SE_PHB](https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/TheiaProk_Illumina_SE_PHB:main?tab=info), [TheiaProk_ONT_PHB](https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/TheiaProk_ONT_PHB:main?tab=info), [TheiaProk_FASTA_PHB](https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/TheiaProk_FASTA_PHB:main?tab=info) |
 
+</div>
+
 ### Mycotics
+
+<div class="searchable-table" markdown="1">
 
 | **Name** | **Description** | **Applicable Kingdom** | **Workflow Level** | **Command-line Compatibility**[^1] | **Last Known Changes** | **Dockstore** |
 |---|---|---|---|---|---|---|
@@ -58,8 +67,11 @@ title: Workflows by Kingdom
 | [**Terra_2_NCBI**](../workflows/public_data_sharing/terra_2_ncbi.md)| Upload of sequence data to NCBI | Bacteria, Mycotics, Viral | Set-level | No | v2.1.0 | [Terra_2_NCBI_PHB](https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Terra_2_NCBI_PHB:main?tab=info) |
 | [**TheiaEuk**](../workflows/genomic_characterization/theiaeuk.md) | Mycotic genome assembly, QC and characterization from WGS data | Mycotics | Sample-level | Some optional features incompatible, Yes | v2.0.1 | [TheiaEuk_Illumina_PE_PHB](https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/TheiaEuk_Illumina_PE_PHB:main?tab=info) |
 
+</div>
+
 ### Viral
 
+<div class="searchable-table" markdown="1">
 
 | **Name** | **Description** | **Applicable Kingdom** | **Workflow Level** | **Command-line Compatibility**[^1] | **Last Known Changes** | **Dockstore** |
 |---|---|---|---|---|---|---|
@@ -78,6 +90,8 @@ title: Workflows by Kingdom
 | [**TheiaMeta Panel**](../workflows/genomic_characterization/theiameta_panel.md) | Genome assembly and QC from metagenomic sequencing using a panel | Viral | Sample-level | Yes | v2.X.X | [TheiaMeta_Panel_PHB](https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/TheiaMeta_Panel_PHB:main?tab=info) |
 | [**Usher_PHB**](../workflows/phylogenetic_placement/usher.md)| Use UShER to rapidly and accurately place your samples on any existing phylogenetic tree | Monkeypox virus, SARS-CoV-2, Viral | Sample-level, Set-level | Yes | v2.1.0 | [Usher_PHB](https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Usher_PHB:main?tab=info) |
 | [**VADR_Update**](../workflows/genomic_characterization/vadr_update.md)| Update VADR assignments | HAV, Influenza, Monkeypox virus, RSV-A, RSV-B, SARS-CoV-2, Viral, WNV | Sample-level | Yes | v1.2.1 | [VADR_Update_PHB](https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/VADR_Update_PHB:main?tab=info) |
+
+</div>
 
 <!-- definitions for workflow type column -->
 *[Sample-level]: This workflow is run once for each sample
