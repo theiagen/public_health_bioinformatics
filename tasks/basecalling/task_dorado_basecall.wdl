@@ -2,9 +2,11 @@ version 1.0
 
 task basecall {
   input {
-    Array[File] input_files
-    String dorado_model
-    String kit_name
+    Array[File] input_files                # Input POD5 files for basecalling
+    Boolean use_auto_model = true          # Boolean to choose automatic model selection
+    String? model_speed = "sup"            # Optional model speed: "fast", "hac", or "sup"
+    String? dorado_model                   # Optional: Specific model path or version
+    String kit_name                        # Kit name used for sequencing
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/dorado:0.8.0"
   }
 
@@ -17,11 +19,6 @@ task basecall {
 
     echo "### Starting basecalling ###"
 
-    echo "### About to list all files and directories ###"
-    find /cromwell_root -type f -exec ls -lh {} \;
-    echo "### Finished listing files and directories ###"
-
-
     # Basecalling loop for each input file
     for file in ~{sep=" " input_files}; do
       base_name=$(basename "$file" .pod5)
@@ -29,20 +26,31 @@ task basecall {
 
       echo "Processing $file, output: $sam_file"
 
-      # Run Dorado basecaller and continue to the next file if it fails
-      if dorado basecaller \
-        /dorado_models/~{dorado_model} \
-        "$file" \
-        --kit-name ~{kit_name} \
-        --emit-sam \
-        --no-trim \
-        --output-dir "$sam_output" \
-        --verbose; then
-          echo "Basecalling completed successfully for $file. SAM file: $sam_file"
+      # Run Dorado basecaller based on user input
+      if ~{use_auto_model} && [[ -z "~{dorado_model}" ]]; then
+        echo "Using automatic model selection with speed: ~{model_speed}"
+        dorado basecaller \
+          --model ~{model_speed} \
+          "$file" \
+          --kit-name ~{kit_name} \
+          --emit-sam \
+          --no-trim \
+          --output-dir "$sam_output" \
+          --verbose || { echo "ERROR: Dorado basecaller failed for $file"; exit 1; }
+
       else
-          echo "ERROR: Dorado basecaller failed for $file. Moving on to the next file."
+        echo "Using specified model: ~{dorado_model}"
+        dorado basecaller \
+          /dorado_models/~{dorado_model} \
+          "$file" \
+          --kit-name ~{kit_name} \
+          --emit-sam \
+          --no-trim \
+          --output-dir "$sam_output" \
+          --verbose || { echo "ERROR: Dorado basecaller failed for $file"; exit 1; }
       fi
 
+      echo "Basecalling completed for $file. SAM file: $sam_file"
     done
 
     echo "Basecalling steps completed."
@@ -58,6 +66,6 @@ task basecall {
     memory: "32GB"
     gpuCount: 1
     gpuType: "nvidia-tesla-t4"
-    maxRetries: 0
+    maxRetries: 3
   }
 }
