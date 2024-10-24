@@ -157,7 +157,7 @@
       md5sum: 603c3cbc771ca910b96d3c032aafe7c9
     # stats n coverage primer trim
     - path: miniwdl_run/call-ivar_consensus/call-stats_n_coverage_primtrim/command
-      md5sum: 67cac223adcf059a9dfaa9f28ed34f68
+      md5sum: 4945b2eb1bb9c419cdb6da7e78e7229d
     - path: miniwdl_run/call-ivar_consensus/call-stats_n_coverage_primtrim/inputs.json
       contains: ["bamfile", "samplename"]
     - path: miniwdl_run/call-ivar_consensus/call-stats_n_coverage_primtrim/outputs.json
@@ -240,7 +240,7 @@
       md5sum: 03c5ecf22fdfdb6b240ac3880281a056
     # stats n coverage
     - path: miniwdl_run/call-ivar_consensus/call-stats_n_coverage/command
-      md5sum: 3dacccb252429a0ff46c079a75a09377
+      md5sum: 798a1a5da8115c0e3a2f0f7895816e62
     - path: miniwdl_run/call-ivar_consensus/call-stats_n_coverage/inputs.json
       contains: ["bamfile", "samplename"]
     - path: miniwdl_run/call-ivar_consensus/call-stats_n_coverage/outputs.json
