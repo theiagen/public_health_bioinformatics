@@ -8,7 +8,189 @@
 
 ## TheiaMeta_Panel_Illumina_PE_PHB
 
-TheiaMeta_Panel was created initially for the Illumina Viral Surveillance Panel; however, it can be used for any panel that is sequenced using Illumina paired-end reads if the appropriate taxon IDs are provided. TheiaMeta_Panel performs taxonomic binning, and then assembles the bins into contigs. If the contigs are associated with a supported organism, genomic characterization will be performed.
+TheiaMeta_Panel_Illumina_PE was created initially for the [Illumina Viral Surveillance Panel](https://www.illumina.com/products/by-type/sequencing-kits/library-prep-kits/viral-surveillance-panel.html)[^1]; however, it can be used for any panel that is sequenced using Illumina paired-end reads if the appropriate taxon IDs are provided. TheiaMeta_Panel performs taxonomic binning, and then assembles the bins into contigs. If the contigs are associated with a supported organism, genomic characterization will be performed.
+
+[^1]: We are not affiliated with Illumina, Inc. The mention of the Illumina Viral Surveillance Panel is for informational purposes only.
+
+??? toggle "**What organisms and taxon IDs are identified by default?**"
+    The Illumina VSP panel contains over 224 viral species, of which 163 can be identified in the default Kraken2 viral database.
+
+    Accordingly, the following 163 taxon IDs are used by default in TheiaMeta_Panel_Illumina_PE. Feel free to search this table to see if your organism of interest is included.
+
+    <div class="searchable-table" markdown="1">
+
+    | **Taxon ID** | **Organism Name in Illumina VSP Panel** |
+    |---|---|
+    | 10804 | Adeno-associated virus 2 (AAV2) |
+    | 1313215 | Aichi virus 1 (AiV-A1) |
+    | 2849717  | Aigai virus (AIGV) |
+    | 1980456 | Andes virus (ANDV) |
+    | 1424613 | Anjozorobe virus (ANJV) |
+    | 90961 | Australian bat lyssavirus (ABLV) |
+    | 3052470 | Bayou virus (BAYV) |
+    | 3052490 | Black Creek Canal virus (BCCV) |
+    | 2010960 | Bombali virus (BOMV) |
+    | 1618189 | Bourbon virus (BRBV) |
+    | 565995 | Bundibugyo virus (BDBV) |
+    | 80935 | Cache Valley virus (CVV) |
+    | 35305 | California encephalitis virus (CEV) |
+    | 1221391 | Cedar virus (CedV) |
+    | 3052302 | Chapare virus (CHAPV) |
+    | 37124 | Chikungunya virus (CHIKV) |
+    | 169173 | Choclo virus (CHOV) |
+    | 46839 | Colorado tick fever virus (CTFV) |
+    | 138948 | Coxsackievirus A |
+    | 138949 | Coxsackievirus B |
+    | 3052518 | Crimean-Congo hemorrhagic fever virus (CCHFV) |
+    | 11053 | Dengue Virus 1 |
+    | 11060 | Dengue Virus 2 |
+    | 11069 | Dengue Virus 3 |
+    | 11070 | Dengue Virus 4 |
+    | 3052477 | Dobrava virus (DOBV) |
+    | 38767 | Duvenhage virus (DUVV) |
+    | 11021 | Eastern equine encephalitis virus (EEEV) |
+    | 138951 | Enterovirus D |
+    | 10376 | Epstein-Barr virus (EBV) |
+    | 57482 | European bat lyssavirus 1 |
+    | 57483 | European bat lyssavirus 2 |
+    | 2847089 | Ghana virus (GhV) |
+    | 3052307 | Guanarito virus (GTOV) |
+    | 3052480 | Hantaan virus (HTNV) |
+    | 1216928 | Heartland virus (HRTV) |
+    | 3052223 | Hendra virus (HeV) |
+    | 12092 | Hepatitis A virus (HAV) |
+    | 3052230 | Hepatitis C virus (HCV) |
+    | 12475 | Hepatitis D virus (HDV) |
+    | 10298 | Herpes simplex virus 1 (HSV1) |
+    | 129875 | Human adenovirus A |
+    | 108098 | Human adenovirus B |
+    | 129951 | Human adenovirus C |
+    | 130310 | Human adenovirus D |
+    | 130308 | Human adenovirus E |
+    | 130309 | Human adenovirus F |
+    | 536079 | Human adenovirus G |
+    | 11137 | Human coronavirus 229E (HCoV_229E) |
+    | 290028 | Human coronavirus HKU1 (HCoV_HKU1) |
+    | 277944 | Human coronavirus NL63 (HCoV_NL63) |
+    | 31631 | Human coronavirus OC43 (HCoV_OC43) |
+    | 10359 | Human cytomegalovirus (HCMV) |
+    | 11676 | Human immunodeficiency virus 1 (HIV-1) |
+    | 11709 | Human immunodeficiency virus 2 (HIV-2) |
+    | 162145 | Human metapneumovirus (HMPV) |
+    | 333760 | Human papillomavirus 16 (HPV16; high-risk) |
+    | 333761 | Human papillomavirus 18 (HPV18; high-risk) |
+    | 333762 | Human papillomavirus 26 (HPV26) |
+    | 12730 | Human parainfluenza virus 1 (HPIV-1) |
+    | 2560525 | Human parainfluenza virus 2 (HPIV-2) |
+    | 11216 | Human parainfluenza virus 3 (HPIV-3) |
+    | 2560526  | Human parainfluenza virus 4 (HPIV-4) |
+    | 1803956  | Human parechovirus (HPeV) |
+    | 10798  | Human parvovirus B19 (B19V) |
+    | 746830 | Human polyomavirus 6 (HPyV6) |
+    | 746831 | Human polyomavirus 7 (HPyV7) |
+    | 943908 | Human polyomavirus 9 (HPyV9) |
+    | 208893 | Human respiratory syncytial virus A (HRSV-A) |
+    | 114727 | Influenza A virus (H1N1) |
+    | 114729 | Influenza A virus (H2N2) |
+    | 119210 | Influenza A virus (H3N2) |
+    | 102793 | Influenza A virus (H5N1) |
+    | 333278 | Influenza A virus (H7N9) |
+    | 102796 | Influenza A virus (H9N2) |
+    | 11520 | Influenza B virus |
+    | 11552 | Influenza C virus |
+    | 35511 | Jamestown Canyon virus (JCV) |
+    | 11072 | Japanese encephalitis virus (JEV) |
+    | 10632 | JC polyomavirus (JCPyV) |
+    | 2169991 | Junin virus (JUNV) |
+    | 1891764 | KI polyomavirus (KIPyV) |
+    | 33743 | Kyasanur Forest disease virus (KFDV) |
+    | 11577 | La Crosse virus (LACV) |
+    | 38766 | Lagos bat virus (LBV) |
+    | 3052489 | Laguna Negra virus (LANV) |
+    | 3052310 | Lassa virus (LASV) |
+    | 1965344 | LI polyomavirus (LIPyV) |
+    | 3052148 | Lloviu virus (LLOV) |
+    | 3052314 | Lujo virus (LUJV) |
+    | 3052303 | Lymphocytic choriomeningitis virus (LCMV) |
+    | 3052317 | Machupo virus (MACV) |
+    | 1239565 | Mamastrovirus 1 (MAstV1) |
+    | 1239570 | Mamastrovirus 6 (MAstV6) |
+    | 1239573 | Mamastrovirus 9 (MAstV9) |
+    | 238817 | Maporal virus (MAPV) |
+    | 3052505 | Marburg virus (MARV) |
+    | 59301 | Mayaro virus (MAYV) |
+    | 11234 | Measles virus (MV) |
+    | 152219 | Menangle virus (MenV) |
+    | 493803 | Merkel cell polyomavirus (MCPyV) |
+    | 1335626 | Middle East respiratory syndrome-related coronavirus (MERS-CoV) |
+    | 1474807 | Mojiang virus (MojV) |
+    | 12538 | Mokola virus (MOKV) |
+    | 10244 | Monkeypox virus (MPV) |
+    | 2560602 | Mumps virus (MuV) |
+    | 11079 | Murray Valley encephalitis virus (MVEV) |
+    | 1203539 | MW polyomavirus (MWPyV) |
+    | 1497391 | New Jersey polyomavirus (NJPyV) |
+    | 3052225 | Nipah virus (NiV) |
+    | 142786 | Norovirus |
+    | 12542 | Omsk hemorrhagic fever virus (OHFV) |
+    | 2169701 | Onyong-nyong virus (ONNV) |
+    | 118655 | Oropouche virus (OROV) |
+    | 138950 | Poliovirus |
+    | 11083 | Powassan virus (POWV) |
+    | 11587 | Punta Toro virus (PTV) |
+    | 3052493 | Puumala virus (PUUV) |
+    | 11292 | Rabies virus (RABV) |
+    | 186539 | Reston virus (RESTV) |
+    | 147711 | Rhinovirus A (RV-A) |
+    | 147712 | Rhinovirus B (RV-B) |
+    | 463676 | Rhinovirus C (RV-C) |
+    | 11588 | Rift Valley fever virus (RVFV) |
+    | 11029 | Ross River virus (RRV) |
+    | 28875 | Rotavirus A (RVA) |
+    | 28876 | Rotavirus B (RVB) |
+    | 36427 | Rotavirus C (RVC) |
+    | 1348384 | Rotavirus H (RVH) |
+    | 11041 | Rubella virus (RuV) |
+    | 2907957 | Sabia virus (SBAV) |
+    | 1330524 | Salivirus A (SaV-A) |
+    | 3052496 | Sangassou virus (SANGV) |
+    | 95341 | Sapovirus |
+    | 11033 | Semliki Forest virus (SFV) |
+    | 3052498 | Seoul virus (SEOV) |
+    | 2901879 | Severe acute respiratory syndrome coronavirus (SARS-CoV) |
+    | 2697049 | Severe acute respiratory syndrome coronavirus 2 (SARS-CoV-2) |
+    | 1003835 | Severe fever with thrombocytopenia syndrome virus (SFTSV) |
+    | 1891767 | Simian virus 40 (SV40) |
+    | 3052499 | Sin nombre virus (SNV) |
+    | 11034 | Sindbis virus (SINV) |
+    | 11580 | Snowshoe hare virus (SSHV) |
+    | 1452514 | Sosuga virus (SoRV) |
+    | 11080 | St. Louis encephalitis virus (SLEV) |
+    | 1277649 | STL polyomavirus (STLPyV) |
+    | 186540 | Sudan virus (SUDV) |
+    | 1608084 | Tacheng tick virus 2 (TcTV-2) |
+    | 45270 | Tahyna virus (TAHV) |
+    | 186541 | Tai Forest virus (TAFV) |
+    | 11084 | Tick-borne encephalitis virus (TBEV) |
+    | 68887 | Torque teno virus (TTV) |
+    | 862909 | Trichodysplasia spinulosa-associated polyomavirus (TSPyV) |
+    | 3052503 | Tula virus (TULV) |
+    | 64286 | Usutu virus (USUV) |
+    | 10255 | Variola virus (VARV) |
+    | 11036 | Venezuelan equine encephalitis virus (VEEV) |
+    | 11082 | West Nile virus (WNV) |
+    | 11039 | Western equine encephalitis virus (WEEV) |
+    | 440266 | WU polyomavirus (WUPyV) |
+    | 11089 | Yellow fever virus (YFV) |
+    | 186538 | Zaire ebolavirus(EBOV) |
+    | 64320 | Zika virus (ZIKV) |
+
+    </div>
+
+!!! tip "Make your own list of taxon IDs"
+    You may want to make your own list of taxon IDs if you know your sample is likely to contain a specific organism or group of organisms. You can find taxon IDs in the [NCBI Taxonomy Browser](https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi).
+
+    In Terra, you provide your created list of taxon IDs as an array of integers for the `taxon_ids` optional input variable, like this: `[1, 2, 3, 4, 5]`. Just replace the numbers in this example with the taxon IDs you want to use.
 
 ### Inputs
 
@@ -170,7 +352,7 @@ TheiaMeta_Panel was created initially for the Illumina Viral Surveillance Panel;
         | Software Documentation | <https://github.com/DerrickWood/kraken2/wiki> |
         | Original Publication(s) | [Improved metagenomic analysis with Kraken 2](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1891-0) |
 
-??? task "`KrakenTools extract_kraken_reads`: Read Binning"
+??? task "`extract_kraken_reads` from KrakenTools: Read Binning"
     KrakenTools is a collection of scripts that can be used to help downstream analysis of Kraken2 results. In particular, this task uses the `extract_kraken_reads` script, which extracts reads classified at any user-specified taxonomy IDs. All parent and children reads of the specified taxonomic ID are also extracted.
 
     !!! techdetails "KrakenTools Technical Details"
@@ -199,21 +381,9 @@ TheiaMeta_Panel was created initially for the Illumina Viral Surveillance Panel;
 
 </div>
 
-## References (if applicable)
+#### The `results_by_taxon_tsv` Output File
 
->**Trimmomatic:** Anthony M. Bolger and others, Trimmomatic: a flexible trimmer for Illumina sequence data, *Bioinformatics*, Volume 30, Issue 15, August 2014, Pages 2114–2120, <https://doi.org/10.1093/bioinformatics/btu170>
-<!-- -->
->**Fastq-Scan:** <https://github.com/rpetit3/fastq-scan>
-<!-- -->
->**metaSPAdes:** Sergey Nurk and others, metaSPAdes: a new versatile metagenomic assembler, *Genome Res.* 2017 May; 27(5): 824–834., <https://doi.org/10.1101%2Fgr.213959.116>
-<!-- -->
->**Pilon:** Bruce J. Walker and others. Pilon: An Integrated Tool for Comprehensive Microbial Variant Detection and Genome Assembly Improvement. *Plos One.* November 19, 2014. <https://doi.org/10.1371/journal.pone.0112963>
-<!-- -->
->**Minimap2:** Heng Li, Minimap2: pairwise alignment for nucleotide sequences, *Bioinformatics*, Volume 34, Issue 18, September 2018, Pages 3094–3100, <https://doi.org/10.1093/bioinformatics/bty191>
-<!-- -->
->**QUAST:** Alexey Gurevich and others, QUAST: quality assessment tool for genome assemblies, *Bioinformatics*, Volume 29, Issue 8, April 2013, Pages 1072–1075, <https://doi.org/10.1093/bioinformatics/btt086>
-<!-- -->
->**Samtools:** Li, Heng, Bob Handsaker, Alec Wysoker, Tim Fennell, Jue Ruan, Nils Homer, Gabor Marth, Goncalo Abecasis, Richard Durbin, and 1000 Genome Project Data Processing Subgroup. 2009. The Sequence Alignment/Map format and SAMtools. Bioinformatics 25(16): 2078-2079.
-<!-- -->
->**Bcftools:** Petr Danecek, James K Bonfield, Jennifer Liddle, John Marshall, Valeriu Ohan, Martin O Pollard, Andrew Whitwham, Thomas Keane, Shane A McCarthy, Robert M Davies, Heng Li. Twelve years of SAMtools and BCFtools. GigaScience, Volume 10, Issue 2, February 2021, giab008, <https://doi.org/10.1093/gigascience/giab008>
-<!-- -->
+This file contains the 
+
+## References
+
