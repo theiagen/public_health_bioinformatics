@@ -16,7 +16,7 @@ workflow dorado_basecalling_workflow {
     String? dorado_model
     String kit_name
     Boolean use_auto_model = true   
-    String model_speed = "sup"
+    String model_accuracy = "sup"
     String new_table_name
     String fastq_upload_path
     Boolean paired_end = false  
@@ -31,7 +31,7 @@ workflow dorado_basecalling_workflow {
     input:
        input_files = input_files,
        use_auto_model = use_auto_model,
-       model_speed = model_speed,
+       model_accuracy = model_accuracy,
        dorado_model = dorado_model,
        kit_name = kit_name
   }

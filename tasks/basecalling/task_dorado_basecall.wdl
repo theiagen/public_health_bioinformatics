@@ -2,11 +2,11 @@ version 1.0
 
 task basecall {
   input {
-    Array[File] input_files                # Input POD5 files for basecalling
-    Boolean use_auto_model = true          # Boolean to choose automatic model selection
-    String? model_speed = "sup"            # Optional model speed: "fast", "hac", or "sup"
-    String? dorado_model                   # Optional: Specific model path or version
-    String kit_name                        # Kit name used for sequencing
+    Array[File] input_files
+    String? dorado_model               # Optional: Manual model input
+    Boolean use_auto_model = true      # Use automatic model selection if true
+    String model_accuracy = "sup"      # Default to 'sup' (most accurate model)
+    String kit_name                    # Sequencing kit name
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/dorado:0.8.0"
   }
 
@@ -19,38 +19,29 @@ task basecall {
 
     echo "### Starting basecalling ###"
 
-    # Basecalling loop for each input file
+    # Determine which model to use (auto or manual)
+    model_to_use=$(if [[ ~{use_auto_model} == "true" ]]; then echo ~{model_accuracy}; else echo ~{dorado_model}; fi)
+
+    # Loop through input files and basecall
     for file in ~{sep=" " input_files}; do
       base_name=$(basename "$file" .pod5)
       sam_file="$sam_output/${base_name}.sam"
 
       echo "Processing $file, output: $sam_file"
 
-      # Run Dorado basecaller based on user input
-      if ~{use_auto_model} && [[ -z "~{dorado_model}" ]]; then
-        echo "Using automatic model selection with speed: ~{model_speed}"
-        dorado basecaller \
-          --model ~{model_speed} \
-          "$file" \
-          --kit-name ~{kit_name} \
-          --emit-sam \
-          --no-trim \
-          --output-dir "$sam_output" \
-          --verbose || { echo "ERROR: Dorado basecaller failed for $file"; exit 1; }
-
+      # Run Dorado basecaller
+      if dorado basecaller \
+        "$model_to_use" \
+        "$file" \
+        --kit-name ~{kit_name} \
+        --emit-sam \
+        --no-trim \
+        --output-dir "$sam_output" \
+        --verbose; then
+          echo "Basecalling completed successfully for $file. SAM file: $sam_file"
       else
-        echo "Using specified model: ~{dorado_model}"
-        dorado basecaller \
-          /dorado_models/~{dorado_model} \
-          "$file" \
-          --kit-name ~{kit_name} \
-          --emit-sam \
-          --no-trim \
-          --output-dir "$sam_output" \
-          --verbose || { echo "ERROR: Dorado basecaller failed for $file"; exit 1; }
+          echo "ERROR: Dorado basecaller failed for $file. Moving on to the next file."
       fi
-
-      echo "Basecalling completed for $file. SAM file: $sam_file"
     done
 
     echo "Basecalling steps completed."
