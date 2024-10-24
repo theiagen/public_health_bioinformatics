@@ -155,8 +155,6 @@ workflow ivar_consensus {
     String samtools_version_stats = stats_n_coverage.samtools_version
 
     # Assembly metrics
-    Float percentage_mapped_reads = select_first([stats_n_coverage_primtrim.percentage_mapped_reads, stats_n_coverage.percentage_mapped_reads, 0.0])
-
-  
+    String percentage_mapped_reads = select_first([stats_n_coverage_primtrim.percentage_mapped_reads, stats_n_coverage.percentage_mapped_reads,""])
   }
 }
