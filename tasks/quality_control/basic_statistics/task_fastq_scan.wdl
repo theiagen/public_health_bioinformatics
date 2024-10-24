@@ -4,13 +4,13 @@ task fastq_scan_pe {
   input {
     File read1
     File read2
-    String read1_name = basename(basename(basename(read1, ".gz"), ".fastq"), ".fq")
-    String read2_name = basename(basename(basename(read2, ".gz"), ".fastq"), ".fq")
     Int disk_size = 100
     String docker = "quay.io/biocontainers/fastq-scan:0.4.4--h7d875b9_1"
     Int memory = 2
     Int cpu = 2
   }
+  String read1_name = basename(basename(basename(read1, ".gz"), ".fastq"), ".fq")
+  String read2_name = basename(basename(basename(read2, ".gz"), ".fastq"), ".fq")
   command <<<
     # capture date and version
     date | tee DATE
@@ -64,12 +64,12 @@ task fastq_scan_pe {
 task fastq_scan_se {
   input {
     File read1
-    String read1_name = basename(basename(basename(read1, ".gz"), ".fastq"), ".fq")
     Int disk_size = 100
     Int memory = 2
     Int cpu = 2
     String docker = "quay.io/biocontainers/fastq-scan:0.4.4--h7d875b9_1"
   }
+  String read1_name = basename(basename(basename(read1, ".gz"), ".fastq"), ".fq")
   command <<<
     # capture date and version
     date | tee DATE

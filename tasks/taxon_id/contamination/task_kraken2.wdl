@@ -147,8 +147,8 @@ task kraken2_standalone {
     File kraken2_unclassified_read1 = "~{samplename}.unclassified_1.fastq.gz"
     File? kraken2_unclassified_read2 = "~{samplename}.unclassified_2.fastq.gz"
     File kraken2_classified_read1 = "~{samplename}.classified_1.fastq.gz"
-    Float kraken2_percent_human = read_float("PERCENT_HUMAN")
     File? kraken2_classified_read2 = "~{samplename}.classified_2.fastq.gz"
+    Float kraken2_percent_human = read_float("PERCENT_HUMAN")
     String kraken2_database = kraken2_db
   }
   runtime {
