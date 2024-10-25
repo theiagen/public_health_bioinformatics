@@ -584,7 +584,7 @@ workflow theiaprok_ont {
     String? kraken2_version = read_qc_trim.kraken2_version
     String? kraken2_report = read_qc_trim.kraken2_report
     String? kraken2_database = read_qc_trim.kraken2_database
-    String? kraken_docker = read_qc_trim.kraken2_docker
+    String? kraken2_docker = read_qc_trim.kraken2_docker
     # Read QC - rasusa outputs
     String? rasusa_version = read_qc_trim.rasusa_version
     # Read QC - tiptoft outputs
