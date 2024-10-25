@@ -758,6 +758,16 @@ workflow theiaprok_illumina_se {
     File? virulencefinder_report_tsv = merlin_magic.virulencefinder_report_tsv
     String? virulencefinder_docker = merlin_magic.virulencefinder_docker
     String? virulencefinder_hits = merlin_magic.virulencefinder_hits
+    # stxtyper 
+    File? stxtyper_report = merlin_magic.stxtyper_report
+    String? stxtyper_docker = merlin_magic.stxtyper_docker
+    String? stxtyper_version = merlin_magic.stxtyper_version
+    Int? stxtyper_num_hits = merlin_magic.stxtyper_num_hits
+    String? stxtyper_all_hits = merlin_magic.stxtyper_all_hits
+    String? stxtyper_complete_operons = merlin_magic.stxtyper_complete_operon_hits
+    String? stxtyper_partial_hits = merlin_magic.stxtyper_partial_hits
+    String? stxtyper_stx_frameshifts_or_internal_stop_hits =  merlin_magic.stxtyper_stx_frameshifts_or_internal_stop_hits
+    String? stxtyper_novel_hits = merlin_magic.stxtyper_novel_hits
     # Shigella sonnei Typing
     File? sonneityping_mykrobe_report_csv = merlin_magic.sonneityping_mykrobe_report_csv
     File? sonneityping_mykrobe_report_json = merlin_magic.sonneityping_mykrobe_report_json

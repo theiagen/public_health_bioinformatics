@@ -52,7 +52,7 @@ To help users collect all required metadata, we have created the following Excel
 
     The `using_clearlabs_data` and `using_reads_dehosted` arguments change the default values for the `read1_column_name`, `assembly_fasta_column_name`, and `assembly_mean_coverage_column_name` metadata columns. The default values are shown in the table below in addition to what they are changed to depending on what arguments are used.
 
-    | Variable | Default Value | with `using_clearlabs_data` | with `using_reads_dehosted` | with both  `using_clearlabs_data` ***and*** `using_reads_dehosted` |
+    | Variable | Default Value | with `using_clearlabs_data` | with `using_reads_dehosted` | with both  `using_clearlabs_data` **_and_** `using_reads_dehosted` |
     | --- | --- | --- | --- | --- |
     | `read1_column_name` | `"read1_dehosted"` | `"clearlabs_fastq_gz"` | `"reads_dehosted"` | `"reads_dehosted"` |
     | `assembly_fasta_column_name` | `"assembly_fasta"` | `"clearlabs_fasta"` | `"assembly_fasta"` | `"clearlabs_fasta"` |
@@ -60,14 +60,19 @@ To help users collect all required metadata, we have created the following Excel
 
 ### Inputs
 
+!!! tip "Use the sample table for the `terra_table_name` input"
+    Make sure your entry for `terra_table_name` is for the _sample_ table! While the root entity needs to be the set table, the input value for `terra_table_name` should be the sample table.
+
 This workflow runs on the set-level.
+
+<div class="searchable-table" markdown="1">
 
 | **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
 |---|---|---|---|---|---|
 | mercury_prep_n_batch | **gcp_bucket_uri** | String | Google bucket where your SRA reads will be temporarily stored before transferring to SRA. Example: "gs://theiagen_sra_transfer" |  | Required |
 | mercury_prep_n_batch | **sample_names** | Array[String] | The samples you want to submit |  | Required |
-| mercury_prep_n_batch | **terra_project_name** | String | The name of your Terra project. You can find this information in the URL of the webpage of your Terra dashboard. For example, if your URL contains #workspaces/example/my_workspace/ then your project name is example |  | Required |
-| mercury_prep_n_batch | **terra_table_name** | String | The name of the Terra table where your samples can be found. Do not include the entity: prefix or the _id suffix, just the name of the table as listed in the sidebar on lefthand side of the Terra Data tab. |  | Required |
+| mercury_prep_n_batch | **terra_project_name** | String | The name of your Terra project. You can find this information in the URL of the webpage of your Terra dashboard. For example, if your URL contains `#workspaces/example/my_workspace/` then your project name is `example` |  | Required |
+| mercury_prep_n_batch | **terra_table_name** | String | The name of the Terra table where your **samples** can be found. Do not include the `entity:` prefix, the `_id` suffix, or the `_set_id` suffix, just the name of the sample-level data table as listed in the sidebar on lefthand side of the Terra Data tab. |  | Required |
 | mercury_prep_n_batch | **terra_workspace_name** | String | The name of your Terra workspace where your samples can be found. For example, if your URL contains #workspaces/example/my_workspace/ then your project name is my_workspace |  | Required |
 | download_terra_table | **cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional |
 | download_terra_table | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 10 | Optional |
@@ -101,7 +106,11 @@ This workflow runs on the set-level.
 | version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
 | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
 
+</div>
+
 ### Outputs
+
+<div class="searchable-table" markdown="1">
 
 | **Variable** | **Type** | **Description** |
 |---|---|---|
@@ -116,6 +125,8 @@ This workflow runs on the set-level.
 | mercury_prep_n_batch_version | String | Version of the PHB repository that hosts this workflow |
 | mercury_script_version | String | Version of the Mercury tool that was used in this workflow |
 | sra_metadata | File | SRA metadata TSV file for upload |
+
+</div>
 
 ???+ toggle "An example excluded_samples.tsv file"
 

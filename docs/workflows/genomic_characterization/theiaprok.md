@@ -45,6 +45,8 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 
         The TheiaProk_FASTA workflow takes in assembly files in FASTA format.
 
+<div class="searchable-table" markdown="1">
+
 | **Terra Task name** | **Variable** | **Type** | **Description** | **Default value** | **Terra Status** | **Workflow** |
 |---|---|---|---|---|---|---|
 | *workflow name | **samplename** | String | Name of sample to be analyzed |  | Required | FASTA, ONT, PE, SE |
@@ -297,7 +299,8 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 | merlin_magic | **agrvate_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/biocontainers/agrvate:1.0.2--hdfd78af_0 | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **assembly_only** | Boolean | Internal component, do not modify |  | Do not modify, Optional | ONT, PE, SE |
 | merlin_magic | **call_poppunk** | Boolean | If "true", runs PopPUNK for GPSC cluster designation for S. pneumoniae | TRUE | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **call_shigeifinder_reads_input** | Boolean | If set to "true", the ShigEiFinder task  will run again but using read files as input instead of the assembly file. Input is shown but not used for TheiaProk_FASTA. | FALSE | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **call_shigeifinder_reads_input** | Boolean | If set to "true", the ShigEiFinder task will run again but using read files as input instead of the assembly file. Input is shown but not used for TheiaProk_FASTA. | FALSE | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **call_stxtyper** | Boolean | If set to "true", the StxTyper task will run on all samples regardless of the `gambit_predicted_taxon` output. Useful if you suspect a non-E.coli or non-Shigella sample contains stx genes. | FALSE | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **cauris_cladetyper_docker_image** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **cladetyper_kmer_size** | Int | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **cladetyper_ref_clade1** | File | *Provide an empty file if running TheiaProk on the command-line |  | Do not modify, Optional | FASTA, ONT, PE, SE |
@@ -371,8 +374,8 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 | merlin_magic | **serotypefinder_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/serotypefinder:2.0.1 | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **shigatyper_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/shigatyper:2.0.5 | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **shigeifinder_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/shigeifinder:1.3.5 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **sistr_cpu** | Int | The number of CPU cores to allocate for the task. | 8 | Optional | FASTA, ONT, PE, SE  |
-| merlin_magic | **sistr_disk_size** | Int | The disk size (in GB) to allocate for the task.  | 100 | Optional | FASTA, ONT, PE, SE  |
+| merlin_magic | **sistr_cpu** | Int | The number of CPU cores to allocate for the task | 8 | Optional | FASTA, ONT, PE, SE  |
+| merlin_magic | **sistr_disk_size** | Int | The disk size (in GB) to allocate for the task  | 100 | Optional | FASTA, ONT, PE, SE  |
 | merlin_magic | **sistr_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/biocontainers/sistr_cmd:1.1.1--pyh864c0ab_2 | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **sistr_memory** | Int | The amount of memory (in GB) to allocate for the task. | 32 | Optional | FASTA, ONT, PE, SE  |
 | merlin_magic | **sistr_use_full_cgmlst_db** | Boolean | Set to true to use the full set of cgMLST alleles which can include highly similar alleles. By default the smaller "centroid" alleles or representative alleles are used for each marker | False  | Optional | FASTA, ONT, PE, SE |
@@ -398,6 +401,11 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 | merlin_magic | **srst2_min_cov** | Int | Minimum breadth of coverage for SRST2 to call a gene as present | 80 | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **srst2_min_depth** | Int | Minimum depth of coverage for SRST2 to call a gene as present  | 5 | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **srst2_min_edge_depth** | Int | Minimum edge depth for SRST2 to call a gene as present  | 2 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **stxtyper_cpu** | Int | The number of CPU cores to allocate for the task. | 1 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **stxtyper_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 50 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **stxtyper_docker_image** | String | The Docker container to use for the task | `us-docker.pkg.dev/general-theiagen/staphb/stxtyper:1.0.24` | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **stxtyper_enable_debug** | Boolean | When enabled, additional messages are printed and files in `$TMPDIR` are not removed after running | FALSE | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **stxtyper_memory** | Int | Amount of memory (in GB) to allocate to the task | 4 | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **staphopia_sccmec_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/biocontainers/staphopia-sccmec:1.0.0--hdfd78af_0 | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **tbp_parser_coverage_regions_bed** | File | A bed file that lists the regions to be considered for QC |  | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **tbp_parser_coverage_threshold** | Int | The minimum coverage for a region to pass QC in tbp_parser | 100 | Optional | FASTA, ONT, PE, SE |
@@ -569,6 +577,8 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 | version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional | FASTA, ONT, PE, SE |
 | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) | FASTA, ONT, PE, SE |
 
+</div>
+
 !!! tip "Skip Characterization"
     Ever wanted to skip characterization? Now you can! Set the optional input `perform_characterization` to **`false`** to only generate an assembly and run assembly QC.
 
@@ -586,7 +596,7 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 
 ??? task "`screen`: Total Raw Read Quantification and Genome Size Estimation"
 
-    The [`screen`](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/comparisons/task_screen.wdl) task ensures the quantity of sequence data is sufficient to undertake genomic analysis. It uses bash commands for quantification of reads and base pairs, and [mash](https://mash.readthedocs.io/en/latest/index.html) sketching to estimate the genome size and its coverage. At each step, the results are assessed relative to pass/fail criteria and thresholds that may be defined by optional user inputs. Samples that do not meet these criteria will not be processed further by the workflow:
+    The [`screen`](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/comparisons/task_screen.wdl) task ensures the quantity of sequence data is sufficient to undertake genomic analysis. It uses [`fastq-scan`](https://github.com/rpetit3/fastq-scan) and bash commands for quantification of reads and base pairs, and [mash](https://mash.readthedocs.io/en/latest/index.html) sketching to estimate the genome size and its coverage. At each step, the results are assessed relative to pass/fail criteria and thresholds that may be defined by optional user inputs. Samples that do not meet these criteria will not be processed further by the workflow:
 
     1. Total number of reads: A sample will fail the read screening task if its total number of reads is less than or equal to `min_reads`.
     2. The proportion of basepairs reads in the forward and reverse read files: A sample will fail the read screening if fewer than `min_proportion` basepairs are in either the reads1 or read2 files.
@@ -1127,8 +1137,8 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
         
         NCBI's AMRFinderPlus, which is implemented as a core module in TheiaProk, detects the *bla*OXA-51-like genes. This may be used to confirm the species, in addition to the GAMBIT taxon identification. The *bla*OXA-51-like genes act as carbapenemases when an IS*Aba1* is found 7 bp upstream of the gene. Detection of this IS is not currently undertaken in TheiaProk.
 
-??? toggle "_Escherichia_ or _Shigella_ spp"
-    ##### _Escherichia_ or _Shigella_ spp {#escherichia-or-shigella}
+??? toggle "_Escherichia_ or _Shigella_ spp."
+    ##### _Escherichia_ or _Shigella_ spp. {#escherichia-or-shigella}
 
     The *Escherichia* and *Shigella* genera are [difficult to differentiate as they do not comply with genomic definitions of genera and species](https://www.sciencedirect.com/science/article/abs/pii/S1286457902016374). Consequently, when either _Escherichia_ or _Shigella_ are identified by GAMBIT, all tools intended for these taxa are used. 
 
@@ -1179,7 +1189,7 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
 
     ??? task "`ShigaTyper`: *Shigella*/EIEC differentiation and serotyping ==_for Illumina and ONT only_=="
         
-        ShigaTyper predicts *Shigella* spp serotypes from Illumina or ONT read data. If the genome is not *Shigella* or EIEC, the results from this tool will state this. In the notes it provides, it also reports on the presence of *ipaB* which is suggestive of the presence of the "virulent invasion plasmid".
+        ShigaTyper predicts *Shigella* spp. serotypes from Illumina or ONT read data. If the genome is not *Shigella* or EIEC, the results from this tool will state this. In the notes it provides, it also reports on the presence of *ipaB* which is suggestive of the presence of the "virulent invasion plasmid".
         
         !!! techdetails "ShigaTyper Technical Details"
             
@@ -1234,6 +1244,30 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
 
     **Shigella XDR prediction.** Please see the documentation section above for ResFinder for details regarding this taxa-specific analysis. 
 
+    ??? task "`StxTyper`: Identification and typing of Shiga toxin (Stx) genes ==_using the assembly file as input_=="
+        
+        StxTyper screens bacterial genome assemblies for shiga toxin genes and subtypes them into known subtypes and also looks for novel subtypes in cases where the detected sequences diverge from the reference sequences.
+        
+        Shiga toxin is the main virulence factor of Shiga-toxin-producing E. coli (STEC), though these genes are also found in Shigella species as well as some other genera more rarely, such as Klebsiella. [Please see this review paper that describes shiga toxins in great detail.](https://doi.org/10.3390/microorganisms12040687)
+
+        !!! tip "Running StxTyper via the TheiaProk workflows"
+            The TheiaProk workflow will automatically run `stxtyper` on all E. coli and Shigella spp. samples, but ==*the user can opt-in to running the tool on any sample by setting the optional input variable `call_stxtyper` to `true` when configuring the workflow.*==
+        
+        Generally, `stxtyper` looks for _stxA_ and _stxB_ subunits that compose a complete operon. The A subunit is longer (in amino acid length) than the B subunit. Stxtyper attempts to detect these, compare them to a database of known sequences, and type them based on amino acid composition.  There typing algorithm and rules defining how to type these genes & operons will be described more completely in a publication that will be available in the future.
+        
+        The `stxtyper_report` output TSV is provided in [this output format.](https://github.com/ncbi/stxtyper/tree/v1.0.24?tab=readme-ov-file#output)
+
+        Eventually this tool will be incorporated into AMRFinderPlus and will run behind-the-scenes when the user (or in this case, the TheiaProk workflow) provides the `amrfinder --organism Escherichia` option.
+
+        !!! techdetails "StxTyper Technical Details"
+
+            |  | Links |
+            | --- | --- |
+            | Task | [task_stxtyper.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/escherichia_shigella/task_stxtyper.wdl) |
+            | Software Source Code | [ncbi/stxtyper GitHub repository](https://github.com/ncbi/stxtyper) |
+            | Software Documentation | [ncbi/stxtyper GitHub repository](https://github.com/ncbi/stxtyper) |
+            | Original Publication(s) | No publication currently available, as this is a new tool. One will be available in the future. |
+
 ??? toggle "_Haemophilus influenzae_"
     ##### _Haemophilus influenzae_ {#haemophilus-influenzae}
     ??? task "`hicap`: Sequence typing"
@@ -1252,8 +1286,8 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
             | Software Documentation | [hicap on GitHub](https://github.com/scwatts/hicap) |
             | Original Publication(s) | [hicap: In Silico Serotyping of the Haemophilus influenzae Capsule Locus](https://doi.org/10.7717/peerj.5261) |
 
-??? toggle "_Klebsiella_ spp"
-    ##### _Klebsiella_ spp {#klebsiella}
+??? toggle "_Klebsiella_ spp."
+    ##### _Klebsiella_ spp. {#klebsiella}
     ??? task "`Kleborate`: Species identification, MLST, serotyping, AMR and virulence characterization"
 
         [Kleborate](https://github.com/katholt/Kleborate) is a tool to identify the *Klebsiella* species, MLST sequence type, serotype, virulence factors (ICE*Kp* and plasmid associated), and AMR genes and mutations. Serotyping is based on the capsular (K antigen) and lipopolysaccharide (LPS) (O antigen) genes. The resistance genes identified by Kleborate are described [here](https://github.com/katholt/Kleborate/wiki/Antimicrobial-resistance).
@@ -1334,8 +1368,8 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
             | Software Source Code | [clockwork](https://github.com/iqbal-lab-org/clockwork) |
             | Software Documentation | <https://github.com/iqbal-lab-org/clockwork/wiki> |
 
-??? toggle "_Neisseria_ spp"
-    ##### _Neisseria_ spp {#neisseria}
+??? toggle "_Neisseria_ spp."
+    ##### _Neisseria_ spp. {#neisseria}
     ??? task "`ngmaster`: _Neisseria gonorrhoeae_ sequence typing"
 
         NG-MAST is currently the most widely used method for epidemiological surveillance of *Neisseria gonorrhoea.* This tool is targeted at clinical and research microbiology laboratories that have performed WGS of *N. gonorrhoeae* isolates and wish to understand the molecular context of their data in comparison to previously published epidemiological studies. As WGS becomes more routinely performed, *NGMASTER*
@@ -1382,14 +1416,14 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
             | Software Documentation | [pasty](https://github.com/rpetit3/pasty) |
             | Original Publication(s) | [Application of Whole-Genome Sequencing Data for O-Specific Antigen Analysis and In Silico Serotyping of Pseudomonas aeruginosa Isolates.](https://journals.asm.org/doi/10.1128/JCM.00349-16) |
 
-??? toggle "_Salmonella_ spp"
-    ##### _Salmonella_ spp {#salmonella}
+??? toggle "_Salmonella_ spp."
+    ##### _Salmonella_ spp. {#salmonella}
 
     Both SISTR and SeqSero2 are used for serotyping all *Salmonella* spp. Occasionally, the predicted serotypes may differ between SISTR and SeqSero2. When this occurs, differences are typically small and analogous, and are likely as a result of differing source databases. More information about Salmonella serovar nomenclature can be found [here](https://www.happykhan.com/posts/binfie-guide-serovar/). For *Salmonella* Typhi, genotyphi is additionally run for further typing.
 
     ??? task "`SISTR`: Salmonella serovar prediction"
         
-        [SISTR](https://github.com/phac-nml/sistr_cmd) performs *Salmonella spp* serotype prediction using antigen gene and cgMLST gene alleles. In TheiaProk. SISTR is run on genome assemblies, and uses the default database setting (smaller "centroid" alleles or representative alleles instead of the full set of cgMLST alleles). It also runs a QC mode to determine the level of confidence in the serovar prediction (see [here](https://github.com/phac-nml/sistr_cmd#qc-by-sistr_cmd---qc)).
+        [SISTR](https://github.com/phac-nml/sistr_cmd) performs *Salmonella spp.* serotype prediction using antigen gene and cgMLST gene alleles. In TheiaProk. SISTR is run on genome assemblies, and uses the default database setting (smaller "centroid" alleles or representative alleles instead of the full set of cgMLST alleles). It also runs a QC mode to determine the level of confidence in the serovar prediction (see [here](https://github.com/phac-nml/sistr_cmd#qc-by-sistr_cmd---qc)).
         
         !!! techdetails "SISTR Technical Details"
             
@@ -1530,11 +1564,11 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
             | Software Source Code | [emm-typing-tool](https://github.com/ukhsa-collaboration/emm-typing-tool) |
             | Software Documentation | [emm-typing-tool](https://github.com/ukhsa-collaboration/emm-typing-tool) |
 
-??? toggle "_Vibrio_ spp"
-    ##### _Vibrio_ spp {#vibrio}
+??? toggle "_Vibrio_ spp."
+    ##### _Vibrio_ spp. {#vibrio}
     ??? task "`SRST2`: Vibrio characterization ==_for Illumina only_=="
 
-        The `SRST2 Vibrio characterization` task detects sequences for *Vibrio* spp characterization using Illumina sequence reads and a database of target sequence that are traditionally used in PCR methods. The sequences included in the database are as follows:
+        The `SRST2 Vibrio characterization` task detects sequences for *Vibrio* spp. characterization using Illumina sequence reads and a database of target sequence that are traditionally used in PCR methods. The sequences included in the database are as follows:
         
         | Sequence name | Sequence role | Purpose in database |
         | --- | --- | --- |
@@ -1557,7 +1591,7 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
     
     ??? task "`Abricate`: Vibrio characterization"
         
-        The `Abricate` Vibrio characterization task detects sequences for *Vibrio* spp characterization using genome assemblies and the abricate "vibrio" database. The sequences included in the database are as follows:
+        The `Abricate` Vibrio characterization task detects sequences for *Vibrio* spp. characterization using genome assemblies and the abricate "vibrio" database. The sequences included in the database are as follows:
         
         | Sequence name | Sequence role | Purpose in database |
         | --- | --- | --- |
@@ -1578,6 +1612,8 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
             | Database Description | [Docker container](https://github.com/StaPH-B/docker-builds/tree/master/abricate/1.0.1-vibrio-cholera) |
 
 ### Outputs
+
+<div class="searchable-table" markdown="1">
 
 | **Variable** | **Type** | **Description** | **Workflow** |
 |---|---|---|---|
@@ -1859,7 +1895,7 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
 | resfinder_results | File | Predicted resistance genes grouped by antibiotic class | FASTA, ONT, PE, SE |
 | resfinder_seqs | File | FASTA of resistance gene sequences from user’s input sequence | FASTA, ONT, PE, SE |
 | seq_platform | String | Sequencing platform input by the user | FASTA, ONT, PE, SE |
-| seqsero2_predicted_antigenic_profile | String | Antigenic profile predicted for Salmonella spp by SeqSero2 | ONT, PE, SE |
+| seqsero2_predicted_antigenic_profile | String | Antigenic profile predicted for Salmonella spp. by SeqSero2 | ONT, PE, SE |
 | seqsero2_predicted_contamination | String | Indicates whether contamination between Salmonella with different serotypes was predicted by SeqSero2 | ONT, PE, SE |
 | seqsero2_predicted_serotype | String | Serotype predicted by SeqSero2 | ONT, PE, SE |
 | seqsero2_report | File | TSV report produced by SeqSero2 | ONT, PE, SE |
@@ -1934,6 +1970,15 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
 | staphopiasccmec_results_tsv | File | sccmec types and mecA presence | FASTA, ONT, PE, SE |
 | staphopiasccmec_types_and_mecA_presence | String | staphopia-sccmec Hamming distance file | FASTA, ONT, PE, SE |
 | staphopiasccmec_version | String | staphopia-sccmec presence and absence TSV file | FASTA, ONT, PE, SE |
+| stxtyper_all_hits | String | Comma-separated list of matches of all types. Includes complete, partial, frameshift, internal stop, and novel hits. List is de-duplicated so multiple identical hits are only listed once. For example if 5 partial stx2 hits are detected in the genome, only 1 "stx2" will be listed in this field. To view the potential subtype for each partial hit, the user will need to view the stxtyper_report TSV file. | FASTA, ONT, PE, SE |
+| stxtyper_complete_operons | String | Comma-separated list of all COMPLETE operons detected by StxTyper. Show multiple hits if present in results. | FASTA, ONT, PE, SE |
+| stxtyper_docker | String | Name of docker image used by the stxtyper task. | FASTA, ONT, PE, SE |
+| stxtyper_novel_hits | String | Comma-separated list of matches that have the OPERON output of "COMPLETE_NOVEL". Possible outputs "stx1", "stx2", or "stx1,stx2" | FASTA, ONT, PE, SE |
+| stxtyper_num_hits | Int | Number of "hits" or rows present in the `stxtyper_report` TSV file | FASTA, ONT, PE, SE |
+| stxtyper_partial_hits | String | Possible outputs "stx1", "stx2", or "stx1,stx2". Tells the user that there was a partial hit to either the A or B subunit, but does not describe which subunit, only the possible types from the PARTIAL matches. | FASTA, ONT, PE, SE |
+| stxtyper_report | File | Raw results TSV file produced by StxTyper | FASTA, ONT, PE, SE |
+| stxtyper_stx_frameshifts_or_internal_stop_hits | String | Comma-separated list of matches that have the OPERON output of "FRAMESHIFT" or "INTERNAL_STOP". Possible outputs "stx1", "stx2", or "stx1,stx2" | FASTA, ONT, PE, SE |
+| stxtyper_version | String | Version of StxTyper used | FASTA, ONT, PE, SE |
 | taxon_table_status | String | Status of the taxon table upload | FASTA, ONT, PE, SE |
 | tbp_parser_average_genome_depth | Float | Optional output. Average genome depth across the reference genome  | ONT, PE, SE |
 | tbp_parser_coverage_report | File | Optional output. TSV file with breadth of coverage of each gene associated with antimicrobial resistance in mycobacterium tuberculosis.  | ONT, PE, SE |
@@ -1977,3 +2022,5 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
 | virulencefinder_docker | String | VirulenceFinder docker image used | FASTA, ONT, PE, SE |
 | virulencefinder_hits | String | Virulence genes detected by VirulenceFinder | FASTA, ONT, PE, SE |
 | virulencefinder_report_tsv | File | Output TSV file created by VirulenceFinder | FASTA, ONT, PE, SE |
+
+</div>
