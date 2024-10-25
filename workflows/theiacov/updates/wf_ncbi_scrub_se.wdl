@@ -33,7 +33,7 @@ workflow dehost_se {
     String ncbi_scrub_docker = ncbi_scrub_se.ncbi_scrub_docker
     Int ncbi_scrub_human_spots_removed = ncbi_scrub_se.human_spots_removed
     Float kraken2_human_dehosted = kraken2.kraken2_percent_human
-    Float kraken2_sc2_dehosted = kraken2.kraken2_percent_sc2
+    String kraken2_sc2_dehosted = kraken2.kraken2_percent_sc2
     String kraken2_version_dehosted = kraken2.kraken2_version
     File kraken2_report_dehosted = kraken2.kraken2_report
   }
