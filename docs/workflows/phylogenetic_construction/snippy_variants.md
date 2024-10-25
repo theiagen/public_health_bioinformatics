@@ -58,6 +58,13 @@ The `Snippy_Variants` workflow aligns single-end or paired-end reads (in FASTQ f
 
 `Snippy_Variants` uses the snippy tool to align reads to the reference and call SNPs, MNPs and INDELs according to optional input parameters. The output includes a file of variants that is then queried using the `grep` bash command to identify any mutations in specified genes or annotations of interest. The query string MUST match the gene name or annotation as specified in the GenBank file and provided in the output variant file in the `snippy_results` column.
 
+Additionally, `Snippy_Variants` extracts quality control (QC) metrics from the Snippy output for each sample. These per-sample QC metrics are saved in TSV files (`snippy_variants_qc_metrics`). The QC metrics include:
+
+- **Percentage of reads aligned to the reference genome** (`snippy_variants_percent_reads_aligned`).
+- **Percentage of the reference genome covered at or above the specified depth threshold** (`snippy_variants_percent_ref_coverage`).
+
+These per-sample QC metrics can be combined into a single file (`snippy_combined_qc_metrics`) in downstream workflows, such as `snippy_tree_wf`, providing an overview of QC metrics across all samples.
+
 ### Outputs
 
 !!! tip "Visualize your outputs in IGV"
@@ -68,7 +75,6 @@ The `Snippy_Variants` workflow aligns single-end or paired-end reads (in FASTQ f
 
 | **Variable** | **Type** | **Description** |
 |---|---|---|
-| snippy_combined_qc_metrics | File | Combined QC metrics file containing concatenated QC metrics from all samples. The file is a tab-separated values (TSV) file with the following columns:<br>- samplename<br>- reads_aligned_to_reference<br>- total_reads<br>- percent_reads_aligned<br>- variants_total<br>- percent_ref_coverage<br>- #rname<br>- startpos<br>- endpos<br>- numreads<br>- covbases<br>- coverage<br>- meandepth<br>- meanbaseq<br>- meanmapq<br><br>The last set of columns (`#rname` to `meanmapq`) may repeat for each chromosome or contig in the reference genome. |
 | snippy_variants_bai | File | Indexed bam file of the reads aligned to the reference |
 | snippy_variants_bam | File | Bam file of reads aligned to the reference |
 | snippy_variants_coverage_tsv | File | Coverage statistics TSV file output by the `samtools coverage` command, providing genome-wide metrics such as the proportion of bases covered (depth ≥ 1), mean depth, and other related statistics.            |

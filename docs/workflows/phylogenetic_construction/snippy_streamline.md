@@ -169,6 +169,12 @@ For all cases:
 
     `Snippy_Variants` aligns reads for each sample against the reference genome. As part of `Snippy_Streamline`, the only output from this workflow is the `snippy_variants_outdir_tarball` which is provided in the set-level data table. Please see the full documentation for [Snippy_Variants](./snippy_variants.md) for more information.
 
+??? task "snippy_variants" (qc_metrics output)
+
+    ##### snippy_variants {#snippy_variants}
+
+    This task runs Snippy to perform SNP analysis on individual samples. It extracts QC metrics from the Snippy output for each sample and saves them in per-sample TSV files (`snippy_variants_qc_metrics`). These per-sample QC metrics are then combined into a single file (`snippy_combined_qc_metrics`) in the downstream `snippy_tree_wf` workflow.
+
 ??? task "Snippy_Tree workflow"
 
     ##### Snippy_Tree {#snippy_tree}

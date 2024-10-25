@@ -107,6 +107,14 @@ The `Snippy_Streamline_FASTA` workflow is an all-in-one approach to generating a
 | version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
 | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
 
+### Workflow Tasks
+
+??? task "snippy_variants" (qc_metrics output)
+
+    ##### snippy_variants {#snippy_variants}
+
+    This task runs Snippy to perform SNP analysis on individual samples. It extracts QC metrics from the Snippy output for each sample and saves them in per-sample TSV files (`snippy_variants_qc_metrics`). These per-sample QC metrics are then combined into a single file (`snippy_combined_qc_metrics`) in the downstream `snippy_tree_wf` workflow.
+
 ### Outputs
 
 | **Variable** | **Type** | **Description** |
