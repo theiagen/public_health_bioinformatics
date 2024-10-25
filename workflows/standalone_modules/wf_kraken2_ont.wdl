@@ -35,7 +35,7 @@ workflow kraken2_ont_wf {
     String kraken2_version = kraken2.kraken2_version
     String kraken2_docker = kraken2.kraken2_docker
     File kraken2_classified_report = kraken2.kraken2_classified_report
-    File kraken2_report = kraken2_recalculate_abundances.kraken2_report
+    File kraken2_report = kraken2_recalculate_abundances.kraken2_parsed_report
     File kraken2_unclassified_read1 = kraken2.kraken2_unclassified_read1
     File kraken2_classified_read1 = kraken2.kraken2_classified_read1
   }
