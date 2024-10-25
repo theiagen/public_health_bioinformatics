@@ -268,7 +268,7 @@ All TheiaCoV Workflows (not TheiaCoV_FASTA_Batch)
 | organism_parameters | **gene_locations_bed_file** | File | Use to provide locations of interest where average coverage will be calculated | Default provided for SARS-CoV-2 ("gs://theiagen-public-files-rp/terra/sars-cov-2-files/sc2_gene_locations.bed") and mpox ("gs://theiagen-public-files/terra/mpxv-files/mpox_gene_locations.bed") | Optional | CL, FASTA | |
 | organism_parameters | **genome_length_input** | Int | Use to specify the expected genome length; provided by default for all supported organisms | Default provided for SARS-CoV-2 (29903), mpox (197200), WNV (11000), flu (13000), RSV-A (16000), RSV-B (16000), HIV (primer versions 1 [9181] and 2 [9840]) | Optional | CL | |
 | organism_parameters | **hiv_primer_version** | String | The version of HIV primers used. Options are "https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl#L156" and "https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl#L164". This input is ignored if provided for TheiaCoV_Illumina_SE and TheiaCoV_ClearLabs | v1 | Optional | CL, FASTA, ONT, PE, SE | HIV |
-| organism_parameters | **kraken_target_organism_input** | String | The organism whose abundance the user wants to check in their reads. This should be a proper taxonomic name recognized by the Kraken database. | Default provided for mpox (Monkeypox virus), WNV (West Nile virus), and HIV (Human immunodeficiency virus 1) | Optional | FASTA, ONT, SE | HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2 |
+| organism_parameters | **kraken2_target_organism_input** | String | The organism whose abundance the user wants to check in their reads. This should be a proper taxonomic name recognized by the Kraken database. | Default provided for mpox (Monkeypox virus), WNV (West Nile virus), and HIV (Human immunodeficiency virus 1) | Optional | FASTA, ONT, SE | HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2 |
 | organism_parameters | **pangolin_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/pangolin:4.3.1-pdata-1.29 | Optional | CL, FASTA | |
 | organism_parameters | **primer_bed_file** | File | The bed file containing the primers used when sequencing was performed | REQUIRED FOR SARS-CoV-2, MPOX, WNV, RSV-A & RSV-B. Provided by default only for HIV primer versions 1 ("gs://theiagen-public-files/terra/hivgc-files/HIV-1_v1.0.primer.hyphen.bed" and 2 ("gs://theiagen-public-files/terra/hivgc-files/HIV-1_v2.0.primer.hyphen400.1.bed") | Optional, Sometimes required | CL, FASTA | |
 | organism_parameters | **reference_gff_file** | File | Reference GFF file for the organism being analyzed | Default provided for mpox ("gs://theiagen-public-files/terra/mpxv-files/Mpox-MT903345.1.reference.gff3") and HIV (primer versions 1 ["gs://theiagen-public-files/terra/hivgc-files/NC_001802.1.gff3"] and 2 ["gs://theiagen-public-files/terra/hivgc-files/AY228557.1.gff3"]) | Optional | CL, FASTA, ONT | |
@@ -301,12 +301,12 @@ All TheiaCoV Workflows (not TheiaCoV_FASTA_Batch)
 | qc_check_task | **est_coverage_clean** | Float | Internal component, do not modify | | Do not modify, Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | qc_check_task | **est_coverage_raw** | Float | Internal component, do not modify | | Do not modify, Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | qc_check_task | **gambit_predicted_taxon** | String | Internal component, do not modify | | Do not modify, Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
-| qc_check_task | **kraken_human** | String | Internal component, do not modify | | Do not modify, Optional | FASTA, ONT, SE | |
-| qc_check_task | **kraken_human_dehosted** | String | Internal component, do not modify | | Do not modify, Optional | FASTA, ONT, SE | |
-| qc_check_task | **kraken_sc2** | Float | Internal component, do not modify | | Do not modify, Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
-| qc_check_task | **kraken_sc2_dehosted** | Float | Internal component, do not modify | | Do not modify, Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
-| qc_check_task | **kraken_target_organism** | Float | Internal component, do not modify | | Do not modify, Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
-| qc_check_task | **kraken_target_organism_dehosted** | Float | Internal component, do not modify | | Do not modify, Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
+| qc_check_task | **kraken2_human** | String | Internal component, do not modify | | Do not modify, Optional | FASTA, ONT, SE | |
+| qc_check_task | **kraken2_human_dehosted** | String | Internal component, do not modify | | Do not modify, Optional | FASTA, ONT, SE | |
+| qc_check_task | **kraken2_sc2** | Float | Internal component, do not modify | | Do not modify, Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
+| qc_check_task | **kraken2_sc2_dehosted** | Float | Internal component, do not modify | | Do not modify, Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
+| qc_check_task | **kraken2_target_organism** | Float | Internal component, do not modify | | Do not modify, Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
+| qc_check_task | **kraken2_target_organism_dehosted** | Float | Internal component, do not modify | | Do not modify, Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | qc_check_task | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | qc_check_task | **midas_secondary_genus_abundance** | Float | Internal component, do not modify | | Do not modify, Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | qc_check_task | **midas_secondary_genus_coverage** | Float | Internal component, do not modify | | Do not modify, Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
@@ -340,13 +340,13 @@ All TheiaCoV Workflows (not TheiaCoV_FASTA_Batch)
 | raw_check_reads | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/bactopia/gather_samples:2.0.2 | Optional | ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | raw_check_reads | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 2 | Optional | ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | read_QC_trim | **bbduk_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
-| read_QC_trim | **call_kraken** | Boolean | True/False variable that determines if the Kraken2 task should be called. | FALSE | Optional | PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
+| read_QC_trim | **call_kraken2** | Boolean | True/False variable that determines if the Kraken2 task should be called. | FALSE | Optional | PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | read_QC_trim | **call_midas** | Boolean | True/False variable that determines if the MIDAS task should be called. | TRUE | Optional | PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | read_QC_trim | **downsampling_coverage** | Float | The desired coverage to sub-sample the reads to with RASUSA | 150 | Optional | ONT | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | read_QC_trim | **fastp_args** | String | Additional fastp task arguments | --detect_adapter_for_pe -g -5 20 -3 20 | Optional | PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | read_QC_trim | **kraken2_db** | File | The database used to run Kraken2 | /kraken2-db | Optional | PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
-| read_QC_trim | **kraken_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
-| read_QC_trim | **kraken_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
+| read_QC_trim | **kraken2_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
+| read_QC_trim | **kraken2_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | read_QC_trim | **midas_db** | File | The database used by the MIDAS task | gs://theiagen-public-files-rp/terra/theiaprok-files/midas/midas_db_v1.2.tar.gz | Optional | PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | read_QC_trim | **read_processing** | String | The name of the tool to perform basic read processing; options: "trimmomatic" or "fastp" | trimmomatic | Optional | PE, SE | |
 | read_QC_trim | **read_qc** | String | The tool used for quality control (QC) of reads. Options are fastq_scan and fastqc | fastq_scan | Optional | PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
@@ -451,7 +451,7 @@ All TheiaCoV Workflows (not TheiaCoV_FASTA_Batch)
     | organism_parameters | **gene_locations_bed_file** | File |  |  | Optional |
     | organism_parameters | **genome_length_input** | Int |  |  | Optional |
     | organism_parameters | **hiv_primer_version** | String |  |  | Optional |
-    | organism_parameters | **kraken_target_organism_input** | String |  |  | Optional |
+    | organism_parameters | **kraken2_target_organism_input** | String |  |  | Optional |
     | organism_parameters | **primer_bed_file** | File |  |  | Optional |
     | organism_parameters | **reference_genome** | File |  |  | Optional |
     | organism_parameters | **reference_gff_file** | File |  |  | Optional |
@@ -502,7 +502,7 @@ The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflo
         |---|---|---|
         | gene_locations_bed_file | MPXV | `"gs://theiagen-public-files/terra/mpxv-files/mpox_gene_locations.bed"` |
         | genome_length_input | MPXV | `197200` |
-        | kraken_target_organism_input | MPXV | `"Monkeypox virus"` |
+        | kraken2_target_organism_input | MPXV | `"Monkeypox virus"` |
         | nextclade_dataset_name_input | MPXV | `"nextstrain/mpox/lineage-b.1"` |
         | nextclade_dataset_tag_input | MPXV | `"2024-04-19--07-50-39Z"` |
         | primer_bed_file | MPXV | `"gs://theiagen-public-files/terra/mpxv-files/MPXV.primer.bed"` |
@@ -516,7 +516,7 @@ The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflo
         | **Overwrite Variable Name** | **Organism** | **Default Value** | **Notes** |
         |---|---|---|---|
         | genome_length_input | WNV | `11000` | |
-        | kraken_target_organism_input | WNV | `"West Nile virus`" | |
+        | kraken2_target_organism_input | WNV | `"West Nile virus`" | |
         | nextclade_dataset_name_input | WNV | `"NA"` | TheiaCoV's Nextclade currently does not support WNV |
         | nextclade_dataset_tag_input | WNV | `"NA"` | TheiaCoV's Nextclade currently does not support WNV |
         | primer_bed_file | WNV | `"gs://theiagen-public-files/terra/theiacov-files/WNV/WNV-L1_primer.bed"` |  |
@@ -566,7 +566,7 @@ The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflo
         | **Overwrite Variable Name** | **Organism** | **Default Value** |
         |---|---|---|
         | genome_length_input | rsv_a | 16000 |
-        | kraken_target_organism | rsv_a | Respiratory syncytial virus |
+        | kraken2_target_organism | rsv_a | Respiratory syncytial virus |
         | nextclade_dataset_name_input | rsv_a | nextstrain/rsv/a/EPI_ISL_412866 |
         | nextclade_dataset_tag_input | rsv_a | 2024-08-01--22-31-31Z |
         | reference_genome | rsv_a | gs://theiagen-public-files-rp/terra/rsv_references/reference_rsv_a.fasta |
@@ -578,7 +578,7 @@ The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflo
         | **Overwrite Variable Name** | **Organism** | **Default Value** |
         |---|---|---|
         | genome_length_input | rsv_b | 16000 |
-        | kraken_target_organism | rsv_b |  "Human orthopneumovirus" |
+        | kraken2_target_organism | rsv_b |  "Human orthopneumovirus" |
         | nextclade_dataset_name_input | rsv_b | nextstrain/rsv/b/EPI_ISL_1653999 |
         | nextclade_dataset_tag_input | rsv_b | "2024-08-01--22-31-31Z" |
         | reference_genome | rsv_b | gs://theiagen-public-files-rp/terra/rsv_references/reference_rsv_b.fasta |
@@ -589,7 +589,7 @@ The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflo
     ??? toggle "HIV Defaults"
         | **Overwrite Variable Name** | **Organism** | **Default Value** | **Notes** |
         |---|---|---|---|
-        | kraken_target_organism_input | HIV | Human immunodeficiency virus 1 |  |
+        | kraken2_target_organism_input | HIV | Human immunodeficiency virus 1 |  |
         | genome_length_input | HIV-v1 | 9181 | This version of HIV originates from Oregon |
         | primer_bed_file | HIV-v1 | gs://theiagen-public-files/terra/hivgc-files/HIV-1_v1.0.primer.hyphen.bed | This version of HIV originates from Oregon |
         | reference_genome | HIV-v1 | gs://theiagen-public-files/terra/hivgc-files/NC_001802.1.fasta | This version of HIV originates from Oregon |

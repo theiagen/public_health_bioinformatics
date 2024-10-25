@@ -146,13 +146,13 @@ This workflow runs on the sample level.
 | primer_trim | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional |
 | read_QC_trim_pe | **adapters** | File | A FASTA file containing adapter sequence | None | Optional |
 | read_QC_trim_pe | **bbduk_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional |
-| read_QC_trim_pe | **call_kraken** | Boolean | By default this is set to false to skip kraken2; set to true to run kraken2 but a database must be also provided via the kraken_db input parameter for this to run successfully | FALSE | Optional |
+| read_QC_trim_pe | **call_kraken** | Boolean | By default this is set to false to skip kraken2; set to true to run kraken2 but a database must be also provided via the kraken2_db input parameter for this to run successfully | FALSE | Optional |
 | read_QC_trim_pe | **call_midas** | Boolean | By default this is set to true to run MIDAS; set to false to skip MIDAS | FALSE | Optional |
 | read_QC_trim_pe | **fastp_args** | String | Additional arguments to use with fastp | "--detect_adapter_for_pe -g -5 20 -3 20" | Optional |
-| read_QC_trim_pe | **kraken_cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional |
-| read_QC_trim_pe | **kraken_db** | File | A kraken2 database to use with the kraken2 optional task. The file must be a .tar.gz kraken2 database. | None | Optional, Sometimes required |
-| read_QC_trim_pe | **kraken_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
-| read_QC_trim_pe | **kraken_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional |
+| read_QC_trim_pe | **kraken2_cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional |
+| read_QC_trim_pe | **kraken2_db** | File | A kraken2 database to use with the kraken2 optional task. The file must be a .tar.gz kraken2 database. | None | Optional, Sometimes required |
+| read_QC_trim_pe | **kraken2_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
+| read_QC_trim_pe | **kraken2_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional |
 | read_QC_trim_pe | **midas_db** | File | Database to use with MIDAS. Not required as one will be auto-selected when running the MIDAS task. | None | Optional, Sometimes required |
 | read_QC_trim_pe | **phix** | File | The file containing the phix sequence to be used during bbduk task | None | Optional |
 | read_QC_trim_pe | **read_processing** | String | Options: "trimmomatic" or "fastp" to indicate which read trimming module to use | "trimmomatic" | Optional |
@@ -161,26 +161,26 @@ This workflow runs on the sample level.
 | read_QC_trim_pe | **trim_quality_trim_score** | Int | The minimum quality score to keep during trimming | 30 | Optional |
 | read_QC_trim_pe | **trim_window_size** | Int | The window size to use during trimming | 4 | Optional |
 | read_QC_trim_pe | **trimmomatic_args** | String | Additional command-line arguments to use with trimmomatic | None | Optional |
-| read_QC_trim_ont | **call_kraken** | Boolean | By default this is set to false to skip kraken2; set to true to run kraken2 but a database must be also provided via the kraken_db input parameter for this to run successfully | FALSE | Optional |
+| read_QC_trim_ont | **call_kraken2** | Boolean | By default this is set to false to skip kraken2; set to true to run kraken2 but a database must be also provided via the kraken2_db input parameter for this to run successfully | FALSE | Optional |
 | read_QC_trim_ont | **downsampling_coverage** | Float | The depth to downsample to with Rasusa. Internal component. Do not modify. | 150 | Do not modify, Optional |
 | read_QC_trim_ont | **genome_length** | Int | Internal component. Do not modify | None | Do not modify, Optional |
-| read_QC_trim_ont | **kraken_cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional |
-| read_QC_trim_ont | **kraken_db** | File | A kraken2 database to use with the kraken2 optional task. The file must be a .tar.gz kraken2 database. | None | Optional |
-| read_QC_trim_ont | **kraken_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
-| read_QC_trim_ont | **kraken_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional |
+| read_QC_trim_ont | **kraken2_cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional |
+| read_QC_trim_ont | **kraken2_db** | File | A kraken2 database to use with the kraken2 optional task. The file must be a .tar.gz kraken2 database. | None | Optional |
+| read_QC_trim_ont | **kraken2_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
+| read_QC_trim_ont | **kraken2_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional |
 | read_QC_trim_ont | **max_length** | Int | Internal component, do not modify |  | Do not modify, Optional |
 | read_QC_trim_ont | **min_length** | Int | Internal component, do not modify |  | Do not modify, Optional |
 | read_QC_trim_ont | **run_prefix** | String | Internal component, do not modify |  | Do not modify, Optional |
 | read_QC_trim_ont | **target_organism** | String | This string is searched for in the kraken2 outputs to extract the read percentage |  | Optional |
 | read_QC_trim_se | **adapters** | File | A FASTA file containing adapter sequence | None | Optional |
 | read_QC_trim_se | **bbduk_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional |
-| read_QC_trim_se | **call_kraken** | Boolean | By default this is set to false to skip kraken2; set to true to run kraken2 but a database must be also provided via the kraken_db input parameter for this to run successfully | FALSE | Optional |
+| read_QC_trim_se | **call_kraken** | Boolean | By default this is set to false to skip kraken2; set to true to run kraken2 but a database must be also provided via the kraken2_db input parameter for this to run successfully | FALSE | Optional |
 | read_QC_trim_se | **call_midas** | Boolean | By default this is set to true to run MIDAS; set to false to skip MIDAS | FALSE | Optional |
 | read_QC_trim_se | **fastp_args** | String | Additional arguments to use with fastp | "--detect_adapter_for_pe -g -5 20 -3 20" | Optional |
-| read_QC_trim_se | **kraken_cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional |
-| read_QC_trim_se | **kraken_db** | File | A kraken2 database to use with the kraken2 optional task. The file must be a .tar.gz kraken2 database. | None | Optional |
-| read_QC_trim_se | **kraken_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
-| read_QC_trim_se | **kraken_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional |
+| read_QC_trim_se | **kraken2_cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional |
+| read_QC_trim_se | **kraken2_db** | File | A kraken2 database to use with the kraken2 optional task. The file must be a .tar.gz kraken2 database. | None | Optional |
+| read_QC_trim_se | **kraken2_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
+| read_QC_trim_se | **kraken2_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional |
 | read_QC_trim_se | **midas_db** | File | Database to use with MIDAS. Not required as one will be auto-selected when running the MIDAS task. | None | Optional, Sometimes required |
 | read_QC_trim_se | **phix** | File | The file containing the phix sequence to be used during bbduk task | None | Optional |
 | read_QC_trim_se | **read_processing** | String | Options: "trimmomatic" or "fastp" to indicate which read trimming module to use | "trimmomatic" | Optional |
@@ -363,13 +363,13 @@ The main output file used in subsequent Freyja workflows is found under the `fre
 | freyja_variants | File | The TSV file containing the variants identified by Freyja | ONT, PE, SE |
 | freyja_version | String | version of Freyja used | ONT, PE, SE |
 | ivar_version_primtrim | String | Version of iVar for running the iVar trim command | ONT, PE, SE |
-| kraken_human | Float | Percent of human read data detected using the Kraken2 software | ONT, PE, SE |
-| kraken_human_dehosted | Float | Percent of human read data detected using the Kraken2 software after host removal | ONT, PE, SE |
-| kraken_report | File | Full Kraken report | ONT, PE, SE |
-| kraken_report_dehosted | File | Full Kraken report after host removal | ONT, PE, SE |
-| kraken_sc2 | Float | Percent of SARS-CoV-2 read data detected using the Kraken2 software | ONT, PE, SE |
-| kraken_sc2_dehosted | Float | Percent of SARS-CoV-2 read data detected using the Kraken2 software after host removal | ONT, PE, SE |
-| kraken_version | String | Version of Kraken software used | ONT, PE, SE |
+| kraken2_human | Float | Percent of human read data detected using the Kraken2 software | ONT, PE, SE |
+| kraken2_human_dehosted | Float | Percent of human read data detected using the Kraken2 software after host removal | ONT, PE, SE |
+| kraken2_report | File | Full Kraken report | ONT, PE, SE |
+| kraken2_report_dehosted | File | Full Kraken report after host removal | ONT, PE, SE |
+| kraken2_sc2 | Float | Percent of SARS-CoV-2 read data detected using the Kraken2 software | ONT, PE, SE |
+| kraken2_sc2_dehosted | Float | Percent of SARS-CoV-2 read data detected using the Kraken2 software after host removal | ONT, PE, SE |
+| kraken2_version | String | Version of Kraken software used | ONT, PE, SE |
 | minimap2_docker | String | Docker image used to run minimap2 | ONT |
 | minimap2_version | String | Version of minimap2 used | ONT |
 | nanoplot_html_clean | File | Clean read file | ONT |

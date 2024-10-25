@@ -37,12 +37,12 @@ task qc_check_phb {
     Float? ani_highest_percent 
     Float? ani_highest_percent_bases_aligned
     # theiacov inputs
-    Float? kraken_human 
-    Float? kraken_human_dehosted
-    Float? kraken_sc2
-    Float? kraken_sc2_dehosted
-    Float? kraken_target_organism
-    Float? kraken_target_organism_dehosted
+    Float? kraken2_human 
+    Float? kraken2_human_dehosted
+    Float? kraken2_sc2
+    Float? kraken2_sc2_dehosted
+    Float? kraken2_target_organism
+    Float? kraken2_target_organism_dehosted
     String? meanbaseq_trim
     Float? assembly_mean_coverage
     Int? number_N
@@ -315,35 +315,35 @@ task qc_check_phb {
             qc_note, qc_status = compare(qc_note, "num_reads_clean2", int(~{num_reads_clean2}), ">=", int(taxon_df["num_reads_clean2"][0]))
             qc_check_metrics.remove("num_reads_clean2")
 
-        if ("kraken_human" in qc_check_metrics): # if this var is in the qc_check_metrics,
-          if ("~{kraken_human}"): # if kraken_human variable exists,
-            qc_note, qc_status = compare(qc_note, "kraken_human", float(~{kraken_human}), "<=", float(taxon_df["kraken_human"][0]))
-            qc_check_metrics.remove("kraken_human")
+        if ("kraken2_human" in qc_check_metrics): # if this var is in the qc_check_metrics,
+          if ("~{kraken2_human}"): # if kraken2_human variable exists,
+            qc_note, qc_status = compare(qc_note, "kraken2_human", float(~{kraken2_human}), "<=", float(taxon_df["kraken2_human"][0]))
+            qc_check_metrics.remove("kraken2_human")
 
-        if ("kraken_human_dehosted" in qc_check_metrics): # if this var is in the qc_check_metrics,
-          if ("~{kraken_human_dehosted}"): # if kraken_human_dehosted variable exists,
-            qc_note, qc_status = compare(qc_note, "kraken_human_dehosted", float(~{kraken_human_dehosted}), "<=", float(taxon_df["kraken_human_dehosted"][0]))
-            qc_check_metrics.remove("kraken_human_dehosted")
+        if ("kraken2_human_dehosted" in qc_check_metrics): # if this var is in the qc_check_metrics,
+          if ("~{kraken2_human_dehosted}"): # if kraken2_human_dehosted variable exists,
+            qc_note, qc_status = compare(qc_note, "kraken2_human_dehosted", float(~{kraken2_human_dehosted}), "<=", float(taxon_df["kraken2_human_dehosted"][0]))
+            qc_check_metrics.remove("kraken2_human_dehosted")
 
-        if ("kraken_sc2" in qc_check_metrics): # if this var is in the qc_check_metrics,
-          if ("~{kraken_sc2}"): # if kraken_sc2 variable exists,
-            qc_note, qc_status = compare(qc_note, "kraken_sc2", float(~{kraken_sc2}), ">=", float(taxon_df["kraken_sc2"][0]))
-            qc_check_metrics.remove("kraken_sc2") 
+        if ("kraken2_sc2" in qc_check_metrics): # if this var is in the qc_check_metrics,
+          if ("~{kraken2_sc2}"): # if kraken2_sc2 variable exists,
+            qc_note, qc_status = compare(qc_note, "kraken2_sc2", float(~{kraken2_sc2}), ">=", float(taxon_df["kraken2_sc2"][0]))
+            qc_check_metrics.remove("kraken2_sc2") 
 
-        if ("kraken_sc2_dehosted" in qc_check_metrics): # if this var is in the qc_check_metrics,
-          if ("~{kraken_sc2_dehosted}"): # if kraken_sc2_dehosted variable exists,
-            qc_note, qc_status = compare(qc_note, "kraken_sc2_dehosted", float(~{kraken_sc2_dehosted}), ">=", float(taxon_df["kraken_sc2_dehosted"][0]))
-            qc_check_metrics.remove("kraken_sc2_dehosted")   
+        if ("kraken2_sc2_dehosted" in qc_check_metrics): # if this var is in the qc_check_metrics,
+          if ("~{kraken2_sc2_dehosted}"): # if kraken2_sc2_dehosted variable exists,
+            qc_note, qc_status = compare(qc_note, "kraken2_sc2_dehosted", float(~{kraken2_sc2_dehosted}), ">=", float(taxon_df["kraken2_sc2_dehosted"][0]))
+            qc_check_metrics.remove("kraken2_sc2_dehosted")   
 
-        if ("kraken_target_organism" in qc_check_metrics): # if this var is in the qc_check_metrics,
-          if ("~{kraken_target_organism}"): # if kraken_target_organism variable exists,
-            qc_note, qc_status = compare(qc_note, "kraken_target_organismanism", float(~{kraken_target_organism}), ">=", float(taxon_df["kraken_target_organism"][0]))
-            qc_check_metrics.remove("kraken_target_organism") 
+        if ("kraken2_target_organism" in qc_check_metrics): # if this var is in the qc_check_metrics,
+          if ("~{kraken2_target_organism}"): # if kraken2_target_organism variable exists,
+            qc_note, qc_status = compare(qc_note, "kraken2_target_organismanism", float(~{kraken2_target_organism}), ">=", float(taxon_df["kraken2_target_organism"][0]))
+            qc_check_metrics.remove("kraken2_target_organism") 
 
-        if ("kraken_target_organism_dehosted" in qc_check_metrics): # if this var is in the qc_check_metrics,
-          if ("~{kraken_target_organism_dehosted}"): # if kraken_target_organism_dehosted variable exists,
-            qc_note, qc_status = compare(qc_note, "kraken_target_organism_dehosted", float(~{kraken_target_organism_dehosted}), ">=", float(taxon_df["kraken_target_organism_dehosted"][0]))
-            qc_check_metrics.remove("kraken_target_organism_dehosted")   
+        if ("kraken2_target_organism_dehosted" in qc_check_metrics): # if this var is in the qc_check_metrics,
+          if ("~{kraken2_target_organism_dehosted}"): # if kraken2_target_organism_dehosted variable exists,
+            qc_note, qc_status = compare(qc_note, "kraken2_target_organism_dehosted", float(~{kraken2_target_organism_dehosted}), ">=", float(taxon_df["kraken2_target_organism_dehosted"][0]))
+            qc_check_metrics.remove("kraken2_target_organism_dehosted")   
 
         if ("meanbaseq_trim" in qc_check_metrics): # if this var is in the qc_check_metrics,
           if ("~{meanbaseq_trim}"): # if meanbaseq_trim variable exists,
