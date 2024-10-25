@@ -29,11 +29,11 @@ workflow read_QC_trim_ont {
 
     # kraken inputs
     String? target_organism
-    Boolean call_kraken = false
-    Int? kraken_disk_size
-    Int? kraken_memory
-    Int? kraken_cpu
-    File? kraken_db
+    Boolean call_kraken2 = false
+    Int? kraken2_disk_size
+    Int? kraken2_memory
+    Int? kraken2_cpu
+    File? kraken2_db
 
     # rasusa downsampling
     Float downsampling_coverage = 150
@@ -57,7 +57,7 @@ workflow read_QC_trim_ont {
         samplename = samplename,
         read1 = read1,
         target_organism = target_organism,
-        kraken2_db = select_first([kraken_db])
+        kraken2_db = select_first([kraken2_db])
     }
     call kraken2.kraken2_parse_classified as kraken2_recalculate_abundances_raw {
       input:
@@ -71,7 +71,7 @@ workflow read_QC_trim_ont {
         samplename = samplename,
         read1 = ncbi_scrub_se.read1_dehosted,
         target_organism = target_organism,
-        kraken2_db = select_first([kraken_db])
+        kraken2_db = select_first([kraken2_db])
     }
     call kraken2.kraken2_parse_classified as kraken2_recalculate_abundances_dehosted {
       input:
@@ -82,15 +82,15 @@ workflow read_QC_trim_ont {
     } 
   }
   if ("~{workflow_series}" == "theiaprok") {
-    if ((call_kraken) && defined(kraken_db)) {
+    if ((call_kraken2) && defined(kraken2_db)) {
       call kraken2.kraken2_standalone as kraken2_theiaprok {
         input:
           samplename = samplename,
           read1 = read1,
-          kraken2_db = select_first([kraken_db]),
-          disk_size = kraken_disk_size,
-          memory = kraken_memory,
-          cpu = kraken_cpu
+          kraken2_db = select_first([kraken2_db]),
+          disk_size = kraken2_disk_size,
+          memory = kraken2_memory,
+          cpu = kraken2_cpu
       }
       call kraken2.kraken2_parse_classified as kraken2_recalculate_abundances {
         input:
@@ -98,8 +98,8 @@ workflow read_QC_trim_ont {
           kraken2_report = kraken2_theiaprok.kraken2_report,
           kraken2_classified_report = kraken2_theiaprok.kraken2_classified_report
       }
-    } if ((call_kraken) && ! defined(kraken_db)) {
-      String kraken_db_warning = "Kraken database not defined"
+    } if ((call_kraken2) && ! defined(kraken2_db)) {
+      String kraken2_db_warning = "Kraken2 database not defined"
     }
 
     # rasusa for random downsampling
@@ -140,7 +140,7 @@ workflow read_QC_trim_ont {
     String? kraken2_sc2_dehosted = kraken2_recalculate_abundances_dehosted.percent_sc2
     String? kraken2_target_organism_dehosted = kraken2_recalculate_abundances_dehosted.percent_target_organism
     File? kraken2_report_dehosted = kraken2_recalculate_abundances_dehosted.kraken_report
-    String kraken2_database = select_first([kraken2_theiacov_raw.kraken2_database, kraken2_theiaprok.kraken2_database, kraken_db_warning, ""])
+    String kraken2_database = select_first([kraken2_theiacov_raw.kraken2_database, kraken2_theiaprok.kraken2_database, kraken2_db_warning, ""])
    
     # estimated genome length -- by default for TheiaProk this is 5Mb
     Int est_genome_length = genome_length

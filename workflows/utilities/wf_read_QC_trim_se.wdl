@@ -27,11 +27,11 @@ workflow read_QC_trim_se {
     String? trimmomatic_args
     Boolean call_midas = false
     File? midas_db
-    Boolean call_kraken = false
-    File? kraken_db
-    Int? kraken_disk_size
-    Int? kraken_memory
-    Int? kraken_cpu
+    Boolean call_kraken2 = false
+    File? kraken2_db
+    Int? kraken2_disk_size
+    Int? kraken2_memory
+    Int? kraken2_cpu
     String read_processing = "trimmomatic" # options: trimmomatic, fastp
     String read_qc = "fastq_scan" # options: fastq_scan, fastqc
     String fastp_args = "-g -5 20 -3 20"
@@ -101,14 +101,14 @@ workflow read_QC_trim_se {
         samplename = samplename,
         read1 = read1,
         target_organism = target_organism,
-        kraken2_db = select_first([kraken_db])
+        kraken2_db = select_first([kraken2_db])
     }
     call kraken.kraken2_standalone as kraken2_theiacov_dehosted {
       input:
         samplename = samplename,
         read1 = select_first([ncbi_scrub_se.read1_dehosted]),
         target_organism = target_organism,
-        kraken2_db = select_first([kraken_db])
+        kraken2_db = select_first([kraken2_db])
     }
   }
   if ("~{workflow_series}" == "theiaprok") {
@@ -122,18 +122,18 @@ workflow read_QC_trim_se {
     }
   }
   if ("~{workflow_series}" == "theiaprok") {
-    if ((call_kraken) && defined(kraken_db)) {
+    if ((call_kraken2) && defined(kraken2_db)) {
       call kraken.kraken2_standalone as kraken2_theiaprok {
         input:
           samplename = samplename,
           read1 = read1,
-          kraken2_db = select_first([kraken_db]),
-          disk_size = kraken_disk_size,
-          memory = kraken_memory,
-          cpu = kraken_cpu
+          kraken2_db = select_first([kraken2_db]),
+          disk_size = kraken2_disk_size,
+          memory = kraken2_memory,
+          cpu = kraken2_cpu
       }
-    }  if ((call_kraken) && ! defined(kraken_db)) {
-      String kraken_db_warning = "Kraken database not defined"
+    }  if ((call_kraken2) && ! defined(kraken2_db)) {
+      String kraken2_db_warning = "Kraken database not defined"
     }
   }
   output {
@@ -172,7 +172,7 @@ workflow read_QC_trim_se {
     String? kraken2_target_organism_name = target_organism
     File? kraken2_report_dehosted = kraken2_theiacov_dehosted.kraken2_report
     String kraken2_docker = select_first([kraken2_theiacov_raw.kraken2_docker, kraken2_theiaprok.kraken2_docker, ""])
-    String kraken2_database = select_first([kraken2_theiacov_raw.kraken2_database, kraken2_theiaprok.kraken2_database, kraken_db_warning, ""])
+    String kraken2_database = select_first([kraken2_theiacov_raw.kraken2_database, kraken2_theiaprok.kraken2_database, kraken2_db_warning, ""])
    
     # trimming versioning
     String? trimmomatic_version = trimmomatic_se.version
