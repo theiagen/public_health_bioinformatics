@@ -22,6 +22,8 @@ workflow freyja_fastq {
     String samplename
     Int? depth_cutoff
     Boolean ont = false
+    File kraken2_db = "gs://theiagen-large-public-files-rp/terra/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz"
+
   }
   if (defined(read2)) {
     call read_qc_pe.read_QC_trim_pe as read_QC_trim_pe {
@@ -30,7 +32,9 @@ workflow freyja_fastq {
         read1  = read1,
         read2  = select_first([read2]),
         trim_min_length = trimmomatic_min_length,
-        workflow_series = "theiacov"
+        workflow_series = "theiacov",
+        kraken2_db = kraken2_db,
+        target_organism = "Severe acute respiratory syndrome coronavirus 2"
     }
   }
   if (! defined(read2) && ! ont) {
@@ -39,7 +43,9 @@ workflow freyja_fastq {
         samplename = samplename,
         read1  = read1,
         trim_min_length = trimmomatic_min_length,
-        workflow_series = "theiacov"
+        workflow_series = "theiacov",
+        kraken2_db = kraken2_db,
+        target_organism = "Severe acute respiratory syndrome coronavirus 2"
     }
   }
   if (ont) {
@@ -57,7 +63,9 @@ workflow freyja_fastq {
       input:
         samplename = samplename,
         read1 = read1,
-        workflow_series = "theiacov"
+        workflow_series = "theiacov",
+        kraken2_db = kraken2_db,
+        target_organism = "Severe acute respiratory syndrome coronavirus 2"
     }
     call nanoplot_task.nanoplot as nanoplot_clean {
       input:
@@ -173,10 +181,10 @@ workflow freyja_fastq {
     # Read QC - kraken outputs - all
     String kraken2_version = select_first([read_QC_trim_pe.kraken2_version, read_QC_trim_se.kraken2_version, read_QC_trim_ont.kraken2_version])
     Float kraken2_human = select_first([read_QC_trim_pe.kraken2_human, read_QC_trim_se.kraken2_human, read_QC_trim_ont.kraken2_human])
-    Float kraken2_sc2 = select_first([read_QC_trim_pe.kraken2_sc2, read_QC_trim_se.kraken2_sc2, read_QC_trim_ont.kraken2_sc2])
+    String kraken2_sc2 = select_first([read_QC_trim_pe.kraken2_sc2, read_QC_trim_se.kraken2_sc2, read_QC_trim_ont.kraken2_sc2])
     String kraken2_report = select_first([read_QC_trim_pe.kraken2_report, read_QC_trim_se.kraken2_report, read_QC_trim_ont.kraken2_report])
     Float kraken2_human_dehosted = select_first([read_QC_trim_pe.kraken2_human_dehosted, read_QC_trim_se.kraken2_human_dehosted, read_QC_trim_ont.kraken2_human_dehosted])
-    Float kraken2_sc2_dehosted = select_first([read_QC_trim_pe.kraken2_sc2_dehosted, read_QC_trim_se.kraken2_sc2_dehosted, read_QC_trim_ont.kraken2_sc2_dehosted])
+    String kraken2_sc2_dehosted = select_first([read_QC_trim_pe.kraken2_sc2_dehosted, read_QC_trim_se.kraken2_sc2_dehosted, read_QC_trim_ont.kraken2_sc2_dehosted])
     File kraken2_report_dehosted = select_first([read_QC_trim_pe.kraken2_report_dehosted, read_QC_trim_se.kraken2_report_dehosted, read_QC_trim_ont.kraken2_report_dehosted])
     # Read Alignment - bwa outputs
     String? bwa_version = bwa.bwa_version
