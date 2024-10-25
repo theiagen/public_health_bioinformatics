@@ -63,7 +63,7 @@ workflow theiacov_illumina_pe {
     String? pangolin_docker_image
     # kraken parameters
     String? target_organism
-    File kraken_db = "gs://theiagen-large-public-files-rp/terra/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz"
+    File kraken2_db = "gs://theiagen-large-public-files-rp/terra/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz"
     # qc check parameters
     File? qc_check_table
   }
@@ -112,7 +112,7 @@ workflow theiacov_illumina_pe {
         trim_quality_min_score = trim_quality_min_score,
         trim_window_size = trim_window_size,
         target_organism = organism_parameters.kraken_target_organism,
-        kraken_db = kraken_db,
+        kraken_db = kraken2_db,
         call_kraken = true
     }
     call screen.check_reads as clean_check_reads {
