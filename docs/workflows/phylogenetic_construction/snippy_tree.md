@@ -306,6 +306,12 @@ Sequencing data used in the Snippy_Tree workflow must:
         | Task | task_shared_variants.wdl |
         | Software Source Code | [task_shared_variants.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/phylogenetic_inference/utilities/task_shared_variants.wdl) |
 
+??? task "snippy_variants" (qc_metrics output)
+
+    ##### snippy_variants {#snippy_variants}
+
+    This task runs Snippy to perform SNP analysis on individual samples. It extracts QC metrics from the Snippy output for each sample and saves them in per-sample TSV files (`snippy_variants_qc_metrics`). These per-sample QC metrics are then combined into a single file (`snippy_combined_qc_metrics`) in the downstream `snippy_tree_wf` workflow.
+
 ### Outputs
 
 | **Variable** | **Type** | **Description** |

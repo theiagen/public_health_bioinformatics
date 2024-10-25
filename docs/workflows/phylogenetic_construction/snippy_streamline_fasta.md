@@ -37,6 +37,14 @@ The `Snippy_Streamline_FASTA` workflow is an all-in-one approach to generating a
 
     **If reference genomes have multiple contigs, they will not be compatible with using Gubbins** to mask recombination in the phylogenetic tree. The automatic selection of a reference genome by the workflow may result in a reference with multiple contigs. In this case, an alternative reference genome should be sought.
 
+### Workflow Tasks
+
+??? task "snippy_variants" (qc_metrics output)
+
+    ##### snippy_variants {#snippy_variants}
+
+    This task runs Snippy to perform SNP analysis on individual samples. It extracts QC metrics from the Snippy output for each sample and saves them in per-sample TSV files (`snippy_variants_qc_metrics`). These per-sample QC metrics are then combined into a single file (`snippy_combined_qc_metrics`) in the downstream `snippy_tree_wf` workflow.
+
 ### Inputs
 
 | **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
@@ -106,14 +114,6 @@ The `Snippy_Streamline_FASTA` workflow is an all-in-one approach to generating a
 | snippy_variants_wf | **read2** | File | Internal component, do not modify.  |  | Do Not Modify, Optional |
 | version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
 | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
-
-### Workflow Tasks
-
-??? task "snippy_variants" (qc_metrics output)
-
-    ##### snippy_variants {#snippy_variants}
-
-    This task runs Snippy to perform SNP analysis on individual samples. It extracts QC metrics from the Snippy output for each sample and saves them in per-sample TSV files (`snippy_variants_qc_metrics`). These per-sample QC metrics are then combined into a single file (`snippy_combined_qc_metrics`) in the downstream `snippy_tree_wf` workflow.
 
 ### Outputs
 
