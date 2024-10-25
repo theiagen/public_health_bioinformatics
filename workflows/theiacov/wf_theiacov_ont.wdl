@@ -40,7 +40,7 @@ workflow theiacov_ont {
     Int? genome_length
     # kraken inputs
     String? target_organism
-    File kraken_db = "gs://theiagen-large-public-files-rp/terra/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz"
+    File kraken2_db = "gs://theiagen-large-public-files-rp/terra/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz"
     # read screen parameters
     Int min_reads = 57 # min basepairs / 300 (which is the longest available read length of an Illumina product)
     Int min_basepairs = 17000 # 10x coverage of hepatitis delta virus
@@ -103,7 +103,7 @@ workflow theiacov_ont {
         run_prefix = run_prefix,
         target_organism = organism_parameters.kraken_target_organism,
         workflow_series = "theiacov",
-        kraken_db = kraken_db,
+        kraken_db = kraken2_db,
         call_kraken = true
     }
     call screen.check_reads_se as clean_check_reads {
