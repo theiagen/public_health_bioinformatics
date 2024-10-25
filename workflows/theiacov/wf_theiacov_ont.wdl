@@ -65,7 +65,7 @@ workflow theiacov_ont {
       reference_genome = reference_genome,
       gene_locations_bed_file = reference_gene_locations_bed,
       genome_length_input = genome_length,
-      kraken_target_organism_input = target_organism,
+      kraken2_target_organism_input = target_organism,
       nextclade_dataset_tag_input = nextclade_dataset_tag,
       nextclade_dataset_name_input = nextclade_dataset_name,     
       vadr_max_length = vadr_max_length,
@@ -101,10 +101,10 @@ workflow theiacov_ont {
         min_length = min_length,
         max_length = max_length,
         run_prefix = run_prefix,
-        target_organism = organism_parameters.kraken_target_organism,
+        target_organism = organism_parameters.kraken2_target_organism,
         workflow_series = "theiacov",
-        kraken_db = kraken2_db,
-        call_kraken = true
+        kraken2_db = kraken2_db,
+        call_kraken2 = true
     }
     call screen.check_reads_se as clean_check_reads {
       input:
@@ -235,7 +235,7 @@ workflow theiacov_ont {
             expected_taxon = organism_parameters.standardized_organism,
             num_reads_raw1 = nanoplot_raw.num_reads,
             num_reads_clean1 = nanoplot_clean.num_reads,
-            kraken_human = read_qc_trim.kraken2_human,
+            kraken2_human = read_qc_trim.kraken2_human,
             meanbaseq_trim = stats_n_coverage_primtrim.meanbaseq,
             assembly_mean_coverage = stats_n_coverage_primtrim.depth,
             number_N = consensus_qc.number_N,

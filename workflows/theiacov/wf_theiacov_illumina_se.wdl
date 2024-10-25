@@ -78,7 +78,7 @@ workflow theiacov_illumina_se {
       vadr_mem = vadr_memory,
       primer_bed_file = primer_bed,
       pangolin_docker_image = pangolin_docker_image,
-      kraken_target_organism_input = target_organism
+      kraken2_target_organism_input = target_organism
   }
   call screen.check_reads_se as raw_check_reads {
     input:
@@ -105,9 +105,9 @@ workflow theiacov_illumina_se {
         adapters = adapters,
         phix = phix,
         workflow_series = "theiacov",
-        target_organism = organism_parameters.kraken_target_organism,
-        kraken_db = kraken2_db,
-        call_kraken = true
+        target_organism = organism_parameters.kraken2_target_organism,
+        kraken2_db = kraken2_db,
+        call_kraken2 = true
     }
     call screen.check_reads_se as clean_check_reads {
       input:
@@ -193,7 +193,7 @@ workflow theiacov_illumina_se {
             expected_taxon = organism_parameters.standardized_organism,
             num_reads_raw1 = read_QC_trim.fastq_scan_raw1,
             num_reads_clean1 = read_QC_trim.fastq_scan_clean1,
-            kraken_human = read_QC_trim.kraken2_human,
+            kraken2_human = read_QC_trim.kraken2_human,
             meanbaseq_trim = ivar_consensus.meanbaseq_trim,
             assembly_mean_coverage = ivar_consensus.assembly_mean_coverage,
             number_N = consensus_qc.number_N,

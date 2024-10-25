@@ -82,7 +82,7 @@ workflow theiacov_illumina_pe {
       vadr_mem = vadr_memory,
       primer_bed_file = primer_bed,
       pangolin_docker_image = pangolin_docker_image,
-      kraken_target_organism_input = target_organism
+      kraken2_target_organism_input = target_organism
   }
   call screen.check_reads as raw_check_reads {
     input:
@@ -111,9 +111,9 @@ workflow theiacov_illumina_pe {
         trim_min_length = trim_min_length,
         trim_quality_min_score = trim_quality_min_score,
         trim_window_size = trim_window_size,
-        target_organism = organism_parameters.kraken_target_organism,
-        kraken_db = kraken2_db,
-        call_kraken = true
+        target_organism = organism_parameters.kraken2_target_organism,
+        kraken2_db = kraken2_db,
+        call_kraken2 = true
     }
     call screen.check_reads as clean_check_reads {
       input:
@@ -230,8 +230,8 @@ workflow theiacov_illumina_pe {
             num_reads_raw2 = read_QC_trim.fastq_scan_raw2,
             num_reads_clean1 = read_QC_trim.fastq_scan_clean1,
             num_reads_clean2 = read_QC_trim.fastq_scan_clean2,
-            kraken_human = read_QC_trim.kraken2_human,
-            kraken_human_dehosted = read_QC_trim.kraken2_human_dehosted,
+            kraken2_human = read_QC_trim.kraken2_human,
+            kraken2_human_dehosted = read_QC_trim.kraken2_human_dehosted,
             meanbaseq_trim = ivar_consensus.meanbaseq_trim,
             assembly_mean_coverage = ivar_consensus.assembly_mean_coverage,
             number_N = consensus_qc.number_N,

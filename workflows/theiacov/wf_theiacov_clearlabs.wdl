@@ -46,7 +46,7 @@ workflow theiacov_clearlabs {
       reference_genome = reference_genome,
       nextclade_dataset_tag_input = nextclade_dataset_tag,
       nextclade_dataset_name_input = nextclade_dataset_name,
-      kraken_target_organism_input = target_organism
+      kraken2_target_organism_input = target_organism
   }
   call fastq_scan.fastq_scan_se as fastq_scan_raw_reads {
     input:
@@ -65,14 +65,14 @@ workflow theiacov_clearlabs {
     input:
       samplename = samplename,
       read1 = read1,
-      target_organism = organism_parameters.kraken_target_organism,
+      target_organism = organism_parameters.kraken2_target_organism,
       kraken2_db = kraken2_db
   }  
   call kraken2.kraken2_standalone as kraken2_dehosted {
     input:
       samplename = samplename,
       read1 = ncbi_scrub_se.read1_dehosted,
-      target_organism = organism_parameters.kraken_target_organism,
+      target_organism = organism_parameters.kraken2_target_organism,
       kraken2_db = kraken2_db
   }
   call artic_consensus.consensus {
@@ -143,10 +143,10 @@ workflow theiacov_clearlabs {
         expected_taxon = organism_parameters.standardized_organism,
         num_reads_raw1 = fastq_scan_raw_reads.read1_seq,
         num_reads_clean1 = fastq_scan_clean_reads.read1_seq,
-        kraken_human = kraken2_raw.kraken2_percent_human,
+        kraken2_human = kraken2_raw.kraken2_percent_human,
         # kraken_sc2 = kraken2_raw.percent_sc2,
         # kraken_target_organism = kraken2_raw.percent_target_organism,
-        kraken_human_dehosted = kraken2_dehosted.kraken2_percent_human,
+        kraken2_human_dehosted = kraken2_dehosted.kraken2_percent_human,
         # kraken_sc2_dehosted = kraken2_dehosted.percent_sc2,
         # kraken_target_organism_dehosted = kraken2_dehosted.percent_target_organism,
         meanbaseq_trim = stats_n_coverage_primtrim.meanbaseq,
@@ -180,7 +180,7 @@ workflow theiacov_clearlabs {
     Float kraken2_human = kraken2_raw.kraken2_percent_human
     String kraken2_sc2 = kraken2_raw.kraken2_percent_sc2
     String kraken2_target_organism = kraken2_raw.kraken2_percent_target_organism
-    String kraken2_target_organism_name = organism_parameters.kraken_target_organism
+    String kraken2_target_organism_name = organism_parameters.kraken2_target_organism
     File kraken2_report = kraken2_raw.kraken2_report
     Float kraken2_human_dehosted = kraken2_dehosted.kraken2_percent_human
     String kraken2_sc2_dehosted = kraken2_dehosted.kraken2_percent_sc2
