@@ -36,7 +36,7 @@ workflow organism_parameters {
     String? pangolin_docker_image
 
     # kraken parameters
-    String? kraken_target_organism_input
+    String? kraken2_target_organism_input
 
     # augur parameters
     Int? min_num_unambig
@@ -54,7 +54,7 @@ workflow organism_parameters {
     String sc2_gene_locations_bed = "gs://theiagen-public-files-rp/terra/sars-cov-2-files/sc2_gene_locations.bed"
     String sc2_nextclade_ds_tag = "2024-07-17--12-57-03Z"
     String sc2_nextclade_ds_name = "nextstrain/sars-cov-2/wuhan-hu-1/orfs"
-    String sc2_kraken_target_organism = "Severe acute respiratory syndrome coronavirus 2"
+    String sc2_kraken2_target_organism = "Severe acute respiratory syndrome coronavirus 2"
     String sc2_pangolin_docker = "us-docker.pkg.dev/general-theiagen/staphb/pangolin:4.3.1-pdata-1.29"
     Int sc2_genome_len = 29903
     Int sc2_vadr_max_length = 30000
@@ -68,7 +68,7 @@ workflow organism_parameters {
     String mpox_gene_locations_bed = "gs://theiagen-public-files/terra/mpxv-files/mpox_gene_locations.bed"
     String mpox_nextclade_ds_tag = "2024-04-19--07-50-39Z"
     String mpox_nextclade_ds_name = "nextstrain/mpox/lineage-b.1"
-    String mpox_kraken_target_organism = "Monkeypox virus"
+    String mpox_kraken2_target_organism = "Monkeypox virus"
     String mpox_primer_bed_file = "gs://theiagen-public-files/terra/mpxv-files/MPXV.primer.bed"
     String mpox_reference_gff_file = "gs://theiagen-public-files/terra/mpxv-files/Mpox-MT903345.1.reference.gff3"
     String mpox_vadr_options = "--glsearch -s -r --nomisc --mkey mpxv --r_lowsimok --r_lowsimxd 100 --r_lowsimxl 2000 --alt_pass discontn,dupregin --out_allfasta --minimap2 --s_overhang 150"
@@ -92,7 +92,7 @@ workflow organism_parameters {
   if (organism == "WNV" || organism == "wnv" || organism == "West Nile virus") {
     String wnv_org_name = "WNV"
     String wnv_reference_genome = "gs://theiagen-public-files/terra/theiacov-files/WNV/NC_009942.1_wnv_L1.fasta"
-    String wnv_kraken_target_organism = "West Nile virus"
+    String wnv_kraken2_target_organism = "West Nile virus"
     String wnv_primer_bed_file = "gs://theiagen-public-files/terra/theiacov-files/WNV/WNV-L1_primer.bed"
     Int wnv_genome_len = 11000
     String wnv_vadr_options = "--mkey flavi --mdir /opt/vadr/vadr-models-flavi/ --nomisc --noprotid --out_allfasta"    
@@ -201,7 +201,7 @@ workflow organism_parameters {
     String rsv_a_nextclade_ds_tag = "2024-08-01--22-31-31Z"
     String rsv_a_nextclade_ds_name = "nextstrain/rsv/a/EPI_ISL_412866"
     Int rsv_a_genome_len = 15500
-    String rsv_a_kraken_target_organism = "Human respiratory syncytial virus A"
+    String rsv_a_kraken2_target_organism = "Human respiratory syncytial virus A"
     String rsv_a_vadr_options = "-r --mkey rsv --xnocomp"
     Int rsv_a_vadr_max_length = 15500
     Int rsv_a_vadr_skip_length = 5000
@@ -225,7 +225,7 @@ workflow organism_parameters {
     String rsv_b_nextclade_ds_tag = "2024-08-01--22-31-31Z"
     String rsv_b_nextclade_ds_name = "nextstrain/rsv/b/EPI_ISL_1653999"
     Int rsv_b_genome_len = 15500
-    String rsv_b_kraken_target_organism = "human respiratory syncytial virus"  
+    String rsv_b_kraken2_target_organism = "human respiratory syncytial virus"  
     String rsv_b_vadr_options = "-r --mkey rsv --xnocomp"
     Int rsv_b_vadr_max_length = 15500
     Int rsv_b_vadr_skip_length = 5000
@@ -280,7 +280,7 @@ workflow organism_parameters {
     Int vadr_memory = select_first([vadr_mem, sc2_vadr_memory, mpox_vadr_memory, wnv_vadr_memory, flu_vadr_memory, rsv_a_vadr_memory, rsv_b_vadr_memory, 0])
     Int vadr_skiplength = select_first([vadr_skip_length, sc2_vadr_skip_length, mpox_vadr_skip_length, wnv_vadr_skip_length, flu_vadr_skip_length, rsv_a_vadr_skip_length, rsv_b_vadr_skip_length, 0])
     # kraken options
-    String kraken_target_organism = select_first([kraken_target_organism_input, sc2_kraken_target_organism, mpox_kraken_target_organism, wnv_kraken_target_organism, hiv_v1_target_organism, hiv_v2_target_organism, rsv_a_kraken_target_organism, rsv_b_kraken_target_organism, ""])
+    String kraken2_target_organism = select_first([kraken2_target_organism_input, sc2_kraken2_target_organism, mpox_kraken2_target_organism, wnv_kraken2_target_organism, hiv_v1_target_organism, hiv_v2_target_organism, rsv_a_kraken2_target_organism, rsv_b_kraken2_target_organism, ""])
     # augur options
     Int augur_min_num_unambig = select_first([min_num_unambig, mpox_min_num_unambig, flu_min_num_unambig, rsv_a_min_num_unambig, rsv_b_min_num_unambig, 0])
     File augur_clades_tsv = select_first([clades_tsv, h1n1_ha_clades_tsv, h3n2_ha_clades_tsv, vic_ha_clades_tsv, yam_ha_clades_tsv, h5n1_ha_clades_tsv, rsv_a_clades_tsv, rsv_b_clades_tsv, mpox_clades_tsv, "gs://theiagen-public-files-rp/terra/augur-defaults/minimal-clades.tsv"])
