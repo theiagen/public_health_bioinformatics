@@ -9,6 +9,8 @@ workflow dehost_pe {
     String samplename
     File read1
     File read2
+    File kraken2_db = "gs://theiagen-large-public-files-rp/terra/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz"
+
   }
   call ncbi_scrub.ncbi_scrub_pe {
     input:
@@ -16,11 +18,13 @@ workflow dehost_pe {
       read1 = read1,
       read2 = read2
   }
-  call kraken.kraken2_theiacov as kraken2 {
+  call kraken.kraken2_standalone as kraken2 {
     input:
       samplename = samplename,
       read1 = ncbi_scrub_pe.read1_dehosted,
-      read2 = ncbi_scrub_pe.read2_dehosted
+      read2 = ncbi_scrub_pe.read2_dehosted,
+      kraken2_db = kraken2_db,
+      target_organism = "Severe acute respiratory syndrome coronavirus 2"
   }
   call versioning.version_capture {
     input:
@@ -32,9 +36,9 @@ workflow dehost_pe {
     File read2_dehosted = ncbi_scrub_pe.read2_dehosted
     Int ncbi_scrub_human_spots_removed = ncbi_scrub_pe.human_spots_removed
     String ncbi_scrub_docker = ncbi_scrub_pe.ncbi_scrub_docker
-    Float kraken2_human_dehosted = kraken2.percent_human
-    Float kraken2_sc2_dehosted = kraken2.percent_sc2
+    Float kraken2_human_dehosted = kraken2.kraken2_percent_human
+    Float kraken2_sc2_dehosted = kraken2.kraken2_percent_sc2
     File kraken2_report_dehosted = kraken2.kraken2_report
-    String kraken2_version_dehosted = kraken2.version
+    String kraken2_version_dehosted = kraken2.kraken2_version
   }
 }
