@@ -77,10 +77,10 @@ This workflow is composed of two tasks, one to dehost the input reads and anothe
 
 | **Variable** | **Type** | **Description** | **Workflow** |
 |---|---|---|---|
-| kraken_human_dehosted | Float | Percent of human read data detected using the Kraken2 software after host removal | PE, SE |
-| kraken_report_dehosted | File | Full Kraken report after host removal | PE, SE |
-| kraken_sc2_dehosted | Float | Percent of SARS-CoV-2 read data detected using the Kraken2 software after host removal | PE, SE |
-| kraken_version_dehosted | String | Version of Kraken2 software used | PE, SE |
+| kraken2_human_dehosted | Float | Percent of human read data detected using the Kraken2 software after host removal | PE, SE |
+| kraken2_report_dehosted | File | Full Kraken report after host removal | PE, SE |
+| kraken2_sc2_dehosted | Float | Percent of SARS-CoV-2 read data detected using the Kraken2 software after host removal | PE, SE |
+| kraken2_version_dehosted | String | Version of Kraken2 software used | PE, SE |
 | ncbi_scrub_docker | String | Docker image used to run HRRT | PE, SE |
 | ncbi_scrub_human_spots_removed | Int | Number of spots removed (or masked) | PE, SE |
 | ncbi_scrub_pe_analysis_date | String | Date of analysis | PE, SE |

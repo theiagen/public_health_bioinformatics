@@ -95,12 +95,12 @@ All input reads are processed through "core tasks" in each workflow. The core ta
 | qc_check_task | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional |
 | qc_check_task | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
 | qc_check_task | **docker** | String | The Docker container to use for the task |  "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-03-16" | Optional |
-| qc_check_task | **kraken_human** | Float | Internal component, do not modify |  | Do Not Modify, Optional |
-| qc_check_task | **kraken_human_dehosted** | Float | Internal component, do not modify |  | Do Not Modify, Optional |
-| qc_check_task | **kraken_sc2** | Float | Internal component, do not modify |  | Do Not Modify, Optional |
-| qc_check_task | **kraken_sc2_dehosted** | Float | Internal component, do not modify |  | Do Not Modify, Optional |
-| qc_check_task | **kraken_target_organism** | Float | Internal component, do not modify |  | Do Not Modify, Optional |
-| qc_check_task | **kraken_target_organism_dehosted** | Float | Internal component, do not modify |  | Do Not Modify, Optional |
+| qc_check_task | **kraken2_human** | Float | Internal component, do not modify |  | Do Not Modify, Optional |
+| qc_check_task | **kraken2_human_dehosted** | Float | Internal component, do not modify |  | Do Not Modify, Optional |
+| qc_check_task | **kraken2_sc2** | Float | Internal component, do not modify |  | Do Not Modify, Optional |
+| qc_check_task | **kraken2_sc2_dehosted** | Float | Internal component, do not modify |  | Do Not Modify, Optional |
+| qc_check_task | **kraken2_target_organism** | Float | Internal component, do not modify |  | Do Not Modify, Optional |
+| qc_check_task | **kraken2_target_organism_dehosted** | Float | Internal component, do not modify |  | Do Not Modify, Optional |
 | qc_check_task | **meanbaseq_trim** | String | Internal component, do not modify |  | Do Not Modify, Optional |
 | qc_check_task | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional |
 | qc_check_task | **midas_secondary_genus_abundance** | Int | Internal component, do not modify |  | Do Not Modify, Optional |
@@ -133,9 +133,9 @@ All input reads are processed through "core tasks" in each workflow. The core ta
 | read_QC_trim | **call_kraken** | Boolean | If true, Kraken2 is executed on the dataset | FALSE | Optional |
 | read_QC_trim | **call_midas** | Boolean | Internal component, do not modify | FALSE | Do Not Modify, Optional |
 | read_QC_trim | **fastp_args** | String | Additional arguments to pass to fastp | --detect_adapter_for_pe -g -5 20 -3 20 | Optional |
-| read_QC_trim | **kraken_db** | File | Database to use with kraken2 |  | Optional |
-| read_QC_trim | **kraken_disk_size** | Int | Amount of storage (in GB) to allocate to the task |  | Optional |
-| read_QC_trim | **kraken_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task |  | Optional |
+| read_QC_trim | **kraken2_db** | File | Database to use with kraken2 |  | Optional |
+| read_QC_trim | **kraken2_disk_size** | Int | Amount of storage (in GB) to allocate to the task |  | Optional |
+| read_QC_trim | **kraken2_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task |  | Optional |
 | read_QC_trim | **midas_db** | File | Internal component, do not modify |  | Do Not Modify, Optional |
 | read_QC_trim | **phix** | File | A file containing the phix used during Illumina sequencing; used in the BBDuk task |  | Optional |
 | read_QC_trim | **read_processing** | String | Read trimming software to use, either "trimmomatic" or "fastp" | trimmomatic | Optional |

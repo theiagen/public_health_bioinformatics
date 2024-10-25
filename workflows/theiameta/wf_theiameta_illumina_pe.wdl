@@ -5,7 +5,7 @@ import "../../tasks/alignment/task_minimap2.wdl" as minimap2_task
 import "../../tasks/assembly/task_semibin.wdl" as semibin_task
 import "../../tasks/quality_control/basic_statistics/task_quast.wdl" as quast_task
 import "../../tasks/task_versioning.wdl" as versioning
-import "../../tasks/taxon_id/contamination/task_kraken2.wdl" as kraken_task
+import "../../tasks/taxon_id/contamination/task_kraken2.wdl" as kraken2_task
 import "../../tasks/taxon_id/contamination/task_krona.wdl" as krona_task
 import "../../tasks/utilities/data_handling/task_parse_mapping.wdl" as parse_mapping_task
 import "../../tasks/assembly/task_metaspades.wdl" as metaspades_task
@@ -24,7 +24,7 @@ workflow theiameta_illumina_pe {
     File kraken2_db = "gs://theiagen-public-files-rp/terra/theiaprok-files/k2_standard_08gb_20230605.tar.gz"
     Boolean output_additional_files = false
   }
-  call kraken_task.kraken2_standalone as kraken2_raw {
+  call kraken2_task.kraken2_standalone as kraken2_raw {
     input:
       samplename = samplename,
       read1 = read1,
@@ -50,7 +50,7 @@ workflow theiameta_illumina_pe {
         kraken2_disk_size = 100,
         kraken2_memory = 8
     }
-  call kraken_task.kraken2_standalone as kraken2_clean {
+  call kraken2_task.kraken2_standalone as kraken2_clean {
     input:
       samplename = samplename,
       read1 = read_QC_trim.read1_clean,

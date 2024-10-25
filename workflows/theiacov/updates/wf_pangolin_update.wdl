@@ -34,7 +34,7 @@ workflow pangolin_update {
       vadr_options = "",
       primer_bed_file = "gs://theiagen-public-files/terra/theiacov-files/empty.bed",
       gene_locations_bed_file = "gs://theiagen-public-files/terra/theiacov-files/empty.bed",
-      kraken_target_organism_input = "",
+      kraken2_target_organism_input = "",
       hiv_primer_version = ""
   }
   call pangolin.pangolin4 {

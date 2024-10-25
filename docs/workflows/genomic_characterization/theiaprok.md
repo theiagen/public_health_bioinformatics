@@ -471,12 +471,12 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 | qc_check_task | **docker** | String | The Docker container to use for the task |  "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-03-16" | Optional | FASTA, ONT, PE, SE |
 | qc_check_task | **est_coverage_clean** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA |
 | qc_check_task | **est_coverage_raw** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA |
-| qc_check_task | **kraken_human** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE, SE |
-| qc_check_task | **kraken_human_dehosted** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE, SE |
-| qc_check_task | **kraken_sc2** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE, SE |
-| qc_check_task | **kraken_sc2_dehosted** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE, SE |
-| qc_check_task | **kraken_target_organism** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE, SE |
-| qc_check_task | **kraken_target_organism_dehosted** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE, SE |
+| qc_check_task | **kraken2_human** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE, SE |
+| qc_check_task | **kraken2_human_dehosted** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE, SE |
+| qc_check_task | **kraken2_sc2** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE, SE |
+| qc_check_task | **kraken2_sc2_dehosted** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE, SE |
+| qc_check_task | **kraken2_target_organism** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE, SE |
+| qc_check_task | **kraken2_target_organism_dehosted** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE, SE |
 | qc_check_task | **meanbaseq_trim** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE, SE |
 | qc_check_task | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | FASTA, ONT, PE, SE |
 | qc_check_task | **midas_secondary_genus_abundance** | Int | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT |
@@ -512,15 +512,15 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 | raw_check_reads | **workflow_series** | String | Internal component, do not modify |  | Do not modify, Optional | ONT, PE, SE |
 | read_QC_trim | **adapters** | File | A file containing the sequence of the adapters used during library preparation, used in the BBDuk task |  | Optional | PE, SE |
 | read_QC_trim | **bbduk_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | PE, SE |
-| read_QC_trim | **call_kraken** | Boolean | Set to true to launch Kraken2; if true, you must provide a kraken_db | FALSE | Optional | ONT, PE, SE |
+| read_QC_trim | **call_kraken** | Boolean | Set to true to launch Kraken2; if true, you must provide a kraken2_db | FALSE | Optional | ONT, PE, SE |
 | read_QC_trim | **call_midas** | Boolean | Set to true to launch Midas | TRUE | Optional | PE, SE |
 | read_QC_trim | **downsampling_coverage** | Float | The depth to downsample to with Rasusa | 150 | Optional | ONT |
 | read_QC_trim | **fastp_args** | String | Additional arguments to pass to fastp | -g -5 20 -3 20 | Optional | SE |
 | read_QC_trim | **fastp_args** | String | Additional arguments to pass to fastp | "--detect_adapter_for_pe -g -5 20 -3 20 | Optional | PE |
-| read_QC_trim | **kraken_cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional | ONT, PE, SE |
-| read_QC_trim | **kraken_db** | File | Kraken2 database file; must be provided in call_kraken is true |  | Optional | ONT, PE, SE |
-| read_QC_trim | **kraken_disk_size** | Int | GB of storage to request for VM used to run the kraken2 task. Increase this when using large (>30GB kraken2 databases such as the "k2_standard" database) | 100 | Optional | ONT, PE, SE |
-| read_QC_trim | **kraken_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | ONT, PE, SE |
+| read_QC_trim | **kraken2_cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional | ONT, PE, SE |
+| read_QC_trim | **kraken2_db** | File | Kraken2 database file; must be provided in call_kraken is true |  | Optional | ONT, PE, SE |
+| read_QC_trim | **kraken2_disk_size** | Int | GB of storage to request for VM used to run the kraken2 task. Increase this when using large (>30GB kraken2 databases such as the "k2_standard" database) | 100 | Optional | ONT, PE, SE |
+| read_QC_trim | **kraken2_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | ONT, PE, SE |
 | read_QC_trim | **max_length** | Int | Internal component, do not modify |  | Do not modify, Optional | ONT |
 | read_QC_trim | **midas_db** | File | Midas database file | gs://theiagen-large-public-files-rp/terra/theiaprok-files/midas/midas_db_v1.2.tar.gz | Optional | PE, SE |
 | read_QC_trim | **min_length** | Int | Internal component, do not modify |  | Do not modify, Optional | ONT |
@@ -689,7 +689,7 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
         
     Alternatively to `MIDAS`, the `Kraken2` task can also be turned on through setting the `call_kraken` input variable as `true` for the identification of reads to detect contamination with non-target taxa.
 
-    Kraken2 is a bioinformatics tool originally designed for metagenomic applications. It has additionally proven valuable for validating taxonomic assignments and checking contamination of single-species (e.g. bacterial isolate) whole genome sequence data. A database must be provided if this optional module is activated, through the kraken_db optional input. A list of suggested databases can be found on [Kraken2 standalone documentation](../standalone/kraken2.md).
+    Kraken2 is a bioinformatics tool originally designed for metagenomic applications. It has additionally proven valuable for validating taxonomic assignments and checking contamination of single-species (e.g. bacterial isolate) whole genome sequence data. A database must be provided if this optional module is activated, through the kraken2_db optional input. A list of suggested databases can be found on [Kraken2 standalone documentation](../standalone/kraken2.md).
 
     !!! techdetails "read_QC_trim Technical Details"
                 

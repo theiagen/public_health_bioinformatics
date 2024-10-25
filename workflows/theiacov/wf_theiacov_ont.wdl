@@ -291,7 +291,7 @@ workflow theiacov_ont {
     String? kraken2_target_organism_name = read_qc_trim.kraken2_target_organism_name
     # Read QC - kraken2 outputs raw
     Float? kraken2_human = read_qc_trim.kraken2_human
-    String? kraken_sc2 = read_qc_trim.kraken2_sc2
+    String? kraken2_sc2 = read_qc_trim.kraken2_sc2
     String? kraken2_target_organism = read_qc_trim.kraken2_target_organism
     File? kraken2_report = read_qc_trim.kraken2_report
     String? kraken2_database = read_qc_trim.kraken2_database
