@@ -77,11 +77,11 @@ This workflow runs on the set-level.
 | download_terra_table | **cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional |
 | download_terra_table | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 10 | Optional |
 | download_terra_table | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-06-21 | Optional |
-| download_terra_table | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 1 | Optional |
+| download_terra_table | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 2 | Optional |
 | mercury | **cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional |
-| mercury | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 50 | Optional |
-| mercury | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/theiagen/mercury:1.0.7 | Optional |
-| mercury | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 2 | Optional |
+| mercury | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
+| mercury | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/theiagen/mercury:1.0.9 | Optional |
+| mercury | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional |
 | mercury | **number_N_threshold** | Int | Only for "sars-cov-2" submissions; used to filter out any samples that contain more than the indicated number of Ns in the assembly file | 5000 | Optional |
 | mercury | **single_end** | Boolean | Set to true if your data is single-end; this ensures that a read2 column is not included in the metadata | FALSE | Optional |
 | mercury | **skip_county** | Boolean | Use if your Terra table contains a county column that you do not want to include in your submission.  | FALSE | Optional |
