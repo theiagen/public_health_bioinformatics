@@ -148,15 +148,6 @@ workflow morgana_magic {
         memory = nextclade_output_parser_memory
     }
   }
-  ##### is running quasitools even something we want to do????
-  if (organism_parameters.standardized_organism == "HIV") {
-    call quasitools.quasitools as quasitools_illumina_pe {
-      input:
-        read1 = read1,
-        read2 = read2,
-        samplename = samplename
-    }
-  }
   output {
     String organism = organism_parameters.standardized_organism
     # Consensus QC outputs
@@ -222,12 +213,5 @@ workflow morgana_magic {
     File? abricate_flu_results = flu_track.abricate_flu_results
     String? abricate_flu_database =  flu_track.abricate_flu_database
     String? abricate_flu_version = flu_track.abricate_flu_version
-    # HIV Outputs
-    String? quasitools_version = quasitools_illumina_pe.quasitools_version
-    String? quasitools_date = quasitools_illumina_pe.quasitools_date
-    File? quasitools_coverage_file = quasitools_illumina_pe.coverage_file
-    File? quasitools_dr_report = quasitools_illumina_pe.dr_report
-    File? quasitools_hydra_vcf = quasitools_illumina_pe.hydra_vcf
-    File? quasitools_mutations_report = quasitools_illumina_pe.mutations_report
   }
 }

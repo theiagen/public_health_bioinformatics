@@ -59,7 +59,23 @@ task gather_scatter {
     File? nextclade_aa_dels_flu_na
     File? nextclade_clade_flu_na
     File? nextclade_qc_flu_na
+    # IRMA outputs
+    File? irma_version
+    File? irma_docker
+    File? irma_type
+    File? irma_subtype
+    File? irma_subtype_notes
+    # GenoFLU outputs
+    File? genoflu_version
+    File? genoflu_genotype
+    File? genoflu_all_segments
+    # abricate outputs
+    File? abricate_flu_type
+    File? abricate_flu_subtype
+    File? abricate_flu_database
+    File? abricate_flu_version
 
+    # runtime parameters
     String docker = "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-03-16"
     Int disk_size = 50
     Int cpu = 2
@@ -83,6 +99,8 @@ task gather_scatter {
         return None
 
     df = pd.DataFrame()
+    
+    # organism-agnostic columns
     df = load_json_data("~{taxon_ids}", "taxon_ids", df)
     df = load_json_data("~{organism}", "organism", df)
     df = load_json_data("~{extracted_read1}", "extracted_read1", df)
@@ -105,6 +123,8 @@ task gather_scatter {
     df = load_json_data("~{number_Degenerate}", "number_Degenerate", df)
     df = load_json_data("~{number_Total}", "number_Total", df)
     df = load_json_data("~{percent_reference_coverage}", "percent_reference_coverage", df)
+    
+    # organism-specific columns
     df = load_json_data("~{pango_lineage}", "pango_lineage", df)
     df = load_json_data("~{pango_lineage_expanded}", "pango_lineage_expanded", df)
     df = load_json_data("~{pangolin_conflicts}", "pangolin_conflicts", df)
@@ -130,6 +150,20 @@ task gather_scatter {
     df = load_json_data("~{nextclade_aa_dels_flu_na}", "nextclade_aa_dels_flu_na", df)
     df = load_json_data("~{nextclade_clade_flu_na}", "nextclade_clade_flu_na", df)
     df = load_json_data("~{nextclade_qc_flu_na}", "nextclade_qc_flu_na", df)
+    df = load_json_data("~{irma_version}", "irma_version", df)
+    df = load_json_data("~{irma_docker}", "irma_docker", df)
+    df = load_json_data("~{irma_type}", "irma_type", df)
+    df = load_json_data("~{irma_subtype}", "irma_subtype", df)
+    df = load_json_data("~{irma_subtype_notes}", "irma_subtype_notes", df)
+    df = load_json_data("~{genoflu_version}", "genoflu_version", df)
+    df = load_json_data("~{genoflu_genotype}", "genoflu_genotype", df)
+    df = load_json_data("~{genoflu_all_segments}", "genoflu_all_segments", df)
+    df = load_json_data("~{abricate_flu_type}", "abricate_flu_type", df)
+    df = load_json_data("~{abricate_flu_subtype}", "abricate_flu_subtype", df)
+    df = load_json_data("~{abricate_flu_database}", "abricate_flu_database", df)
+    df = load_json_data("~{abricate_flu_version}", "abricate_flu_version", df)
+
+    # add samplename column
     df.insert(0, "samplename" , "~{samplename}")
     
     # print(df)

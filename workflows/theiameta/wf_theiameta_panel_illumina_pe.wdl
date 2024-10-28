@@ -164,7 +164,19 @@ workflow theiameta_panel_illumina_pe {
       nextclade_aa_subs_flu_na = write_json(morgana_magic.nextclade_aa_subs_flu_na),
       nextclade_aa_dels_flu_na = write_json(morgana_magic.nextclade_aa_dels_flu_na),
       nextclade_clade_flu_na = write_json(morgana_magic.nextclade_clade_flu_na),
-      nextclade_qc_flu_na = write_json(morgana_magic.nextclade_qc_flu_na)
+      nextclade_qc_flu_na = write_json(morgana_magic.nextclade_qc_flu_na),
+      irma_version = write_json(morgana_magic.irma_version),
+      irma_docker = write_json(morgana_magic.irma_docker),
+      irma_type = write_json(morgana_magic.irma_type),
+      irma_subtype = write_json(morgana_magic.irma_subtype),
+      irma_subtype_notes = write_json(morgana_magic.irma_subtype_notes),
+      genoflu_version = write_json(morgana_magic.genoflu_version),
+      genoflu_genotype = write_json(morgana_magic.genoflu_genotype),
+      genoflu_all_segments = write_json(morgana_magic.genoflu_all_segments),
+      abricate_flu_type = write_json(morgana_magic.abricate_flu_type),
+      abricate_flu_subtype = write_json(morgana_magic.abricate_flu_subtype),
+      abricate_flu_database = write_json(morgana_magic.abricate_flu_database),
+      abricate_flu_version = write_json(morgana_magic.abricate_flu_version)
   } 
   output {
     # versioning outputs
