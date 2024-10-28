@@ -53,6 +53,7 @@ workflow flu_track {
     Int? abricate_flu_disk_size
 
     # flu antiviral substitutions subworkflow inputs
+    Boolean analyze_flu_antiviral_substitutions = true
     File? flu_h1_ha_ref
     File? flu_h3_ha_ref
     File? flu_n1_na_ref
@@ -75,8 +76,6 @@ workflow flu_track {
     Int? nextclade_output_parser_cpu
     Int? nextclade_output_parser_memory
     Int? nextclade_output_parser_disk_size
-
-    Boolean analyze_flu_antiviral_substitutions = true
   }
   # IRMA will run if no assembly is provided (as in the case of TheiaCoV_FASTA)
   call irma_task.irma {

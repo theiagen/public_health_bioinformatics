@@ -15,19 +15,66 @@ workflow morgana_magic {
     File read2
     String taxon_id
     String seq_method
+    # consensus qc
+    Int? consensus_qc_cpu
+    Int? consensus_qc_disk_size
+    String? consensus_qc_docker
+    Int? consensus_qc_memory
+    # assembly metrics 
+    Int? assembly_metrics_cpu
+    Int? assembly_metrics_disk_size
+    String? assembly_metrics_docker
+    Int? assembly_metrics_memory
+    # flu track - irma
+    Int? irma_cpu
+    Int? irma_disk_size
+    String? irma_docker_image
+    Boolean? irma_keep_ref_deletions
+    Int? irma_memory
+    # flu track - genoflu
+    Int? genoflu_cpu
+    File? genoflu_cross_reference
+    Int? genoflu_disk_size
+    String? genoflu_docker
+    Int? genoflu_memory
+    # flu track - abricate
+    Int? abricate_flu_cpu
+    Int? abricate_flu_disk_size
+    String? abricate_flu_docker
+    Int? abricate_flu_memory
+    Int? abricate_flu_mincov
+    Int? abricate_flu_minid
+    # nextclade inputs
+    Int? nextclade_cpu
+    Int? nextclade_disk_size
+    String? nextclade_docker_image
+    Int? nextclade_memory
+    Int? nextclade_output_parser_cpu
+    Int? nextclade_output_parser_disk_size
+    String? nextclade_output_parser_docker
+    Int? nextclade_output_parser_memory
+    # pangolin inputs
+    Int? pangolin_cpu
+    Int? pangolin_disk_size
+    String? pangolin_docker
+    Int? pangolin_memory
   }
-  #### need to add more flu characterization
   call set_organism_defaults.organism_parameters {
     input:
       taxon_id = taxon_id,
-      organism = "unsupported"
+      organism = "unsupported",
+      pangolin_docker_image = pangolin_docker
   }
   if (organism_parameters.standardized_organism != "unsupported") { # occurs in theiameta_panel
     call consensus_qc_task.consensus_qc {
       input:
         assembly_fasta = assembly_fasta,
         reference_genome = organism_parameters.reference,
-        genome_length = organism_parameters.genome_length
+        genome_length = organism_parameters.genome_length,
+        cpu = consensus_qc_cpu,
+        disk_size = consensus_qc_disk_size,
+        docker = consensus_qc_docker,
+        memory = consensus_qc_memory
     }
   }
   if (organism_parameters.standardized_organism == "flu") {
@@ -38,7 +85,35 @@ workflow morgana_magic {
         read2 = read2,
         seq_method = seq_method,
         standardized_organism = organism_parameters.standardized_organism,
-        analyze_flu_antiviral_substitutions = false # don't try to look for antiviral substitutions?? or maybe? not sure
+        analyze_flu_antiviral_substitutions = false, # don't try to look for antiviral substitutions?? or maybe? not sure
+        assembly_metrics_cpu = assembly_metrics_cpu,
+        assembly_metrics_disk_size = assembly_metrics_disk_size,
+        assembly_metrics_docker = assembly_metrics_docker,
+        assembly_metrics_memory = assembly_metrics_memory,
+        irma_cpu = irma_cpu,
+        irma_disk_size = irma_disk_size,
+        irma_docker_image = irma_docker_image,        
+        irma_keep_ref_deletions = irma_keep_ref_deletions,
+        irma_memory = irma_memory,
+        genoflu_cross_reference = genoflu_cross_reference,
+        genoflu_cpu = genoflu_cpu,
+        genoflu_disk_size = genoflu_disk_size,
+        genoflu_docker = genoflu_docker,
+        genoflu_memory = genoflu_memory,
+        abricate_flu_cpu = abricate_flu_cpu,
+        abricate_flu_disk_size = abricate_flu_disk_size,
+        abricate_flu_docker = abricate_flu_docker,
+        abricate_flu_memory = abricate_flu_memory,
+        abricate_flu_mincov = abricate_flu_mincov,
+        abricate_flu_minid = abricate_flu_minid,
+        nextclade_cpu = nextclade_cpu,
+        nextclade_disk_size = nextclade_disk_size,
+        nextclade_docker_image = nextclade_docker_image,
+        nextclade_memory = nextclade_memory,
+        nextclade_output_parser_cpu = nextclade_output_parser_cpu,
+        nextclade_output_parser_disk_size = nextclade_output_parser_disk_size,
+        nextclade_output_parser_docker = nextclade_output_parser_docker,
+        nextclade_output_parser_memory = nextclade_output_parser_memory
     }
   }
   if (organism_parameters.standardized_organism == "sars-cov-2") {
@@ -46,7 +121,10 @@ workflow morgana_magic {
       input:
         samplename = samplename,
         fasta = assembly_fasta,
-        docker = organism_parameters.pangolin_docker
+        docker = organism_parameters.pangolin_docker,
+        cpu = pangolin_cpu,
+        disk_size = pangolin_disk_size,
+        memory = pangolin_memory
     }
   }
   if (organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "rsv_a" || organism_parameters.standardized_organism == "rsv_b") { 
@@ -54,12 +132,20 @@ workflow morgana_magic {
       input:
         genome_fasta = assembly_fasta,
         dataset_name = organism_parameters.nextclade_dataset_name,
-        dataset_tag = organism_parameters.nextclade_dataset_tag
+        dataset_tag = organism_parameters.nextclade_dataset_tag,
+        cpu = nextclade_cpu,
+        disk_size = nextclade_disk_size,
+        docker = nextclade_docker_image,
+        memory = nextclade_memory
     }
     call nextclade_task.nextclade_output_parser {
       input:
         nextclade_tsv = nextclade_v3.nextclade_tsv,
-        organism = organism_parameters.standardized_organism
+        organism = organism_parameters.standardized_organism,
+        cpu = nextclade_output_parser_cpu,
+        disk_size = nextclade_output_parser_disk_size,
+        docker = nextclade_output_parser_docker,
+        memory = nextclade_output_parser_memory
     }
   }
   ##### is running quasitools even something we want to do????

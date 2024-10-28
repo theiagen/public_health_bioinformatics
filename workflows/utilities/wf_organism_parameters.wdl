@@ -23,7 +23,7 @@ workflow organism_parameters {
     File? gene_locations_bed_file
     Int? genome_length_input
 
-    # set default nextclade information as NA
+    # set default nextclade information as "NA"
     String? nextclade_dataset_tag_input
     String? nextclade_dataset_name_input
 
