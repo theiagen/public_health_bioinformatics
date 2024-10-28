@@ -201,7 +201,6 @@ TheiaMeta_Panel_Illumina_PE was created initially for the [Illumina Viral Survei
 | theiameta_panel_illumina_pe | **read1** | File | The forward Illumina read in FASTQ file format (compression optional)  | | Required |
 | theiameta_panel_illumina_pe | **read2** | File | The reverse Illumina read in FASTQ file format (compression optional) | | Required |
 | theiameta_panel_illumina_pe | **samplename** | String | The name of the sample being analyzed | | Required |
-| theiameta_panel_illumina_pe | **taxon_ids** | Array[Int] | The taxon IDs to be used for taxonomic binning | | Required |
 | fastq_scan_binned | **cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional |
 | fastq_scan_binned | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
 | fastq_scan_binned | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1 | Optional |
@@ -211,7 +210,7 @@ TheiaMeta_Panel_Illumina_PE was created initially for the [Illumina Viral Survei
 | gather_scatter | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-03-16 | Optional |
 | gather_scatter | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional |
 | kraken2 | **classified_out** | String | Allows user to rename the classified FASTQ files output. Must include .fastq as the suffix | classified#.fastq | Optional |
- kraken2 | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional |
+| kraken2 | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional |
 | kraken2 | **disk_size** | Int | GB of storage to request for VM used to run the kraken2 task. Increase this when using large (>30GB kraken2 databases such as the "k2_standard" database) | 100 | Optional |
 | kraken2 | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.1.2-no-db | Optional |
 | kraken2 | **kraken2_args** | String | Allows a user to supply additional kraken2 command-line arguments |  | Optional |
@@ -232,6 +231,42 @@ TheiaMeta_Panel_Illumina_PE was created initially for the [Illumina Viral Survei
 | minimap2_assembly_correction | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
 | minimap2_assembly_correction | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/minimap2:2.22 | Optional |
 | minimap2_assembly_correction | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional |
+| morgana_magic | **abricate_flu_cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional |
+| morgana_magic | **abricate_flu_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
+| morgana_magic | **abricate_flu_docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/abricate:1.0.1-insaflu-220727 | Optional |
+| morgana_magic | **abricate_flu_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 4 | Optional |
+| morgana_magic | **abricate_flu_mincov** | Int | Minimum DNA % coverage | 60 | Optional |
+| morgana_magic | **abricate_flu_minid** | Int | Minimum DNA % identity | 70 | Optional |
+| morgana_magic | **assembly_metrics_cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional |
+| morgana_magic | **assembly_metrics_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
+| morgana_magic | **assembly_metrics_docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/samtools:1.15 | Optional |
+| morgana_magic | **assembly_metrics_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional |
+| morgana_magic | **cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional |
+| morgana_magic | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
+| morgana_magic | **docker** | String | The Docker container to use for the task | ngolin | Optional |
+| morgana_magic | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 2 | Optional |
+| morgana_magic | **genoflu_cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional |
+| morgana_magic | **genoflu_cross_reference** | File | An Excel file to cross-reference BLAST findings; probably useful if novel genotypes are not in the default file used by genoflu.py | | Optional |
+| morgana_magic | **genoflu_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 25 | Optional |
+| morgana_magic | **genoflu_docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/genoflu:1.03 | Optional |
+| morgana_magic | **genoflu_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 2 | Optional |
+| morgana_magic | **irma_cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional |
+| morgana_magic | **irma_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
+| morgana_magic | **irma_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/cdcgov/irma:v1.1.5 | Optional |
+| morgana_magic | **irma_keep_ref_deletions** | Boolean | True/False variable that determines if sites missed during read gathering should be deleted by ambiguation. | TRUE | Optional |
+| morgana_magic | **irma_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 16 | Optional |
+| morgana_magic | **nextclade_cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional |
+| morgana_magic | **nextclade_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 50 | Optional |
+| morgana_magic | **nextclade_docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/nextstrain/nextclade:3.3.1 | Optional |
+| morgana_magic | **nextclade_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 4 | Optional |
+| morgana_magic | **nextclade_output_parser_cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional |
+| morgana_magic | **nextclade_output_parser_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 50 | Optional |
+| morgana_magic | **nextclade_output_parser_docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/python/python:3.8.18-slim | Optional |
+| morgana_magic | **nextclade_output_parser_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 4 | Optional |
+| morgana_magic | **pangolin_cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional |
+| morgana_magic | **pangolin_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
+| morgana_magic |  **pangolin_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/pangolin:4.3.1-pdata-1.29 | Optional |
+| morgana_magic | **pangolin_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional |
 | pilon | **cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional |
 | pilon | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
 | pilon | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/pilon:1.24 | Optional |
@@ -258,8 +293,9 @@ TheiaMeta_Panel_Illumina_PE was created initially for the [Illumina Viral Survei
 | sort_bam_assembly_correction | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
 | sort_bam_assembly_correction | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/samtools:1.17 | Optional |
 | sort_bam_assembly_correction | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional |
-| theiameta_panel_illumina_pe | **kraken2_db** | File | A Kraken2 database in .tar.gz format | gs://theiagen-large-public-files-rp/terra/databases/kraken2/k2_viral_20240112.tar.gz | Optional | 
+| theiameta_panel_illumina_pe | **kraken2_db** | File | A Kraken2 database in .tar.gz format | gs://theiagen-large-public-files-rp/terra/databases/kraken2/k2_viral_20240112.tar.gz | Optional |
 | theiameta_panel_illumina_pe | **minimum_read_number** | Int | The minimum number of reads in order to attempt assembly on a bin of reads | 1000 | Optional |
+| theiameta_panel_illumina_pe | **taxon_ids** | Array[Int] | The taxon IDs to be used for taxonomic binning. By default, this array uses the taxon IDs listed above that are intended for the Illumina VSP panel | Illumina VSP panel (see above toggle) | Optional |
 | version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
 | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) | | Optional |
 
