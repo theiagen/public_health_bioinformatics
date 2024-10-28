@@ -115,7 +115,7 @@ All TheiaCoV Workflows (not TheiaCoV_FASTA_Batch)
 | theiacov_clearlabs | **primer_bed** | File | The bed file containing the primers used when sequencing was performed | | Required | CL | sars-cov-2 |
 | theiacov_clearlabs | **read1** | File | Read data produced by the Clear Dx platform from ClearLabs | | Required | CL | sars-cov-2 |
 | theiacov_fasta | **assembly_fasta** | File | Input assembly FASTA file | | Required | FASTA | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
-| theiacov_fasta | **input_assembly_method** | File | Method used to generate the assembly file | | Required | FASTA | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
+| theiacov_fasta | **input_assembly_method** | String | Method used to generate the assembly file | | Required | FASTA | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | theiacov_illumina_pe | **read1** | File | Forward Illumina read in FASTQ file format (compression optional) | | Required | PE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | theiacov_illumina_pe | **read2** | File | Reverse Illumina read in FASTQ file format (compression optional) | | Required | PE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | theiacov_illumina_se | **read1** | File | Forward Illumina read in FASTQ file format (compression optional) | | Required | SE | MPXV, WNV, sars-cov-2 |
