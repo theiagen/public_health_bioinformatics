@@ -18,7 +18,7 @@ task gather_scatter {
     # Assembly 
     File? metaspades_warning
     File? pilon_warning
-    File? pilon_assembly_fasta### maybe?????
+    File? assembly_fasta
     # quast outputs
     File? quast_genome_length
     File? quast_number_contigs
@@ -59,7 +59,7 @@ task gather_scatter {
     File? nextclade_aa_dels_flu_na
     File? nextclade_clade_flu_na
     File? nextclade_qc_flu_na
-    # change to be a docker with pandas
+
     String docker = "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-03-16"
     Int disk_size = 50
     Int cpu = 2
@@ -83,7 +83,6 @@ task gather_scatter {
         return None
 
     df = pd.DataFrame()
-    
     df = load_json_data("~{taxon_ids}", "taxon_ids", df)
     df = load_json_data("~{organism}", "organism", df)
     df = load_json_data("~{extracted_read1}", "extracted_read1", df)
@@ -96,7 +95,7 @@ task gather_scatter {
     df = load_json_data("~{fastq_scan_version}", "fastq_scan_version", df)
     df = load_json_data("~{metaspades_warning}", "metaspades_warning", df)
     df = load_json_data("~{pilon_warning}", "pilon_warning", df)
-    df = load_json_data("~{pilon_assembly_fasta}", "pilon_assembly_fasta", df)
+    df = load_json_data("~{assembly_fasta}", "assembly_fasta", df)
     df = load_json_data("~{quast_genome_length}", "quast_genome_length", df)
     df = load_json_data("~{quast_number_contigs}", "quast_number_contigs", df)
     df = load_json_data("~{quast_n50}", "quast_n50", df)
@@ -131,10 +130,10 @@ task gather_scatter {
     df = load_json_data("~{nextclade_aa_dels_flu_na}", "nextclade_aa_dels_flu_na", df)
     df = load_json_data("~{nextclade_clade_flu_na}", "nextclade_clade_flu_na", df)
     df = load_json_data("~{nextclade_qc_flu_na}", "nextclade_qc_flu_na", df)
+    df.insert(0, "samplename" , "~{samplename}")
     
-    print(df)
+    # print(df)
     df.to_csv("~{samplename}.results.tsv", sep='\t', index=False)
-
 
     organism_names = df["organism"].replace('', np.nan).dropna()
     organism_names.to_csv("~{samplename}.organism_names.tsv", index=False, header=False)
@@ -143,7 +142,6 @@ task gather_scatter {
   output {
     File gathered_results = "~{samplename}.results.tsv"
     Array[String] organism_names = read_lines("~{samplename}.organism_names.tsv")
-
   }
   runtime {
     docker: "~{docker}"

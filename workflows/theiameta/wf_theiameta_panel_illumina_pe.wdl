@@ -20,7 +20,6 @@ workflow theiameta_panel_illumina_pe {
     File read2
     # default taxon IDs for Illumina VSP panel
     Array[Int] taxon_ids = [10244, 10255, 10298, 10359, 10376, 10632, 10804, 11021, 11029, 11033, 11034, 11036, 11039, 11041, 11053, 11060, 11069, 11070, 11072, 11079, 11080, 11082, 11083, 11084, 11089, 11137, 11234, 11292, 11520, 11552, 11577, 11580, 11587, 11588, 11676, 11709, 12092, 12475, 12538, 12542, 28875, 28876, 31631, 33743, 35305, 35511, 36427, 37124, 38766, 38767, 45270, 46839, 57482, 57483, 59301, 64286, 64320, 68887, 80935, 90961, 95341, 102793, 102796, 108098, 114727, 114729, 118655, 119210, 129875, 129951, 130308, 130309, 130310, 138948, 138949, 138950, 138951, 147711, 147712, 152219, 162145, 169173, 186538, 186539, 186540, 186541, 238817, 277944, 290028, 333278, 333760, 333761, 333762, 440266, 463676, 493803, 536079, 565995, 862909, 1003835, 1216928, 1221391, 1239565, 1239570, 1239573, 1277649, 1313215, 1330524, 1335626, 1348384, 1424613, 1452514, 1474807, 1497391, 1608084, 1618189, 1891764, 1891767, 1965344, 1980456, 2010960, 2169701, 2169991, 2560525, 2560602, 2697049, 2847089, 2901879, 2907957, 3052148, 3052223, 3052225, 3052230, 3052302, 3052307, 3052310, 3052314, 3052470, 3052477, 3052480, 3052489, 3052490, 3052493, 3052496, 3052499, 3052503, 3052505, 3052518, 10798, 11216, 1203539, 12730, 142786, 1803956, 208893, 2560526, 2849717, 3052303, 3052317, 3052484, 3052498, 746830, 746831, 943908]
-    # suggest using a workspace element if user wants to modify?
 
     Int minimum_read_number = 1000
     File kraken2_db = "gs://theiagen-large-public-files-rp/terra/databases/kraken2/k2_viral_20240112.tar.gz"
@@ -34,7 +33,7 @@ workflow theiameta_panel_illumina_pe {
         read1 = read1,
         read2 = read2,
         workflow_series = "theiameta",
-        # adding these additional inputs to hide them from Terra; these are not used
+        # adding these additional inputs to hide them from Terra; these are not used and we don't want the user to modiy them
         call_kraken = false,
         kraken_disk_size = 0,
         kraken_memory = 0,
@@ -54,8 +53,6 @@ workflow theiameta_panel_illumina_pe {
   scatter (taxon_id in taxon_ids) {
     call krakentools_task.extract_kraken_reads as krakentools {
       input:
-        # we should consider changing the classified_report name so 
-        #  it won't be confused with the actual kraken2 report
         kraken2_output = kraken2.kraken2_classified_report,
         kraken2_report = kraken2.kraken2_report,
         read1 = read_QC_trim.read1_clean,
@@ -65,22 +62,21 @@ workflow theiameta_panel_illumina_pe {
     if (krakentools.success) {
       call fastq_scan.fastq_scan_pe as fastq_scan_binned {
         input:
-          read1 = krakentools.extracted_read1,
-          read2 = krakentools.extracted_read2
+          read1 = select_first([krakentools.extracted_read1]),
+          read2 = select_first([krakentools.extracted_read2])
       }
-      #### ADJUST IN THE FUTURE; SETTING TO 100 FOR TESTING ####
       if (fastq_scan_binned.read1_seq > minimum_read_number) {
         call metaspades_task.metaspades_pe {
           input:
-            read1_cleaned = krakentools.extracted_read1,
-            read2_cleaned = krakentools.extracted_read2,
+            read1_cleaned = select_first([krakentools.extracted_read1]),
+            read2_cleaned = select_first([krakentools.extracted_read2]),
             samplename = "~{samplename}_~{taxon_id}"
         }
         if (defined(metaspades_pe.assembly_fasta)) {
           call minimap2_task.minimap2 as minimap2_assembly_correction {
             input:
-              query1 = krakentools.extracted_read1,
-              query2 = krakentools.extracted_read2,
+              query1 = select_first([krakentools.extracted_read1]),
+              query2 = select_first([krakentools.extracted_read2]),
               reference = select_first([metaspades_pe.assembly_fasta]),
               samplename = "~{samplename}_~{taxon_id}",
               mode = "sr",
@@ -109,9 +105,9 @@ workflow theiameta_panel_illumina_pe {
               input:
                 samplename = "~{samplename}_~{taxon_id}",
                 assembly_fasta = select_first([pilon.assembly_fasta]),
-                read1 = krakentools.extracted_read1,
-                read2 = krakentools.extracted_read2,
-                taxon_id = "~{taxon_id}",
+                read1 = select_first([krakentools.extracted_read1]),
+                read2 = select_first([krakentools.extracted_read2]),
+                taxon_id = taxon_id,
                 seq_method = "ILLUMINA"
             }
           }
@@ -124,7 +120,7 @@ workflow theiameta_panel_illumina_pe {
       samplename = samplename,
       taxon_ids = write_json(taxon_ids),
       organism = write_json(krakentools.organism_name),
-      extracted_read1 = write_json(krakentools.extracted_read1), ## not sure how useful these links are
+      extracted_read1 = write_json(krakentools.extracted_read1),
       extracted_read2 = write_json(krakentools.extracted_read2),
       krakentools_docker = write_json(krakentools.krakentools_docker),
       fastq_scan_num_reads_binned1 = write_json(fastq_scan_binned.read1_seq),
@@ -134,7 +130,7 @@ workflow theiameta_panel_illumina_pe {
       fastq_scan_version = write_json(fastq_scan_binned.version),
       metaspades_warning = write_json(metaspades_pe.metaspades_warning),
       pilon_warning = write_json(pilon.pilon_warning),
-      pilon_assembly_fasta = write_json(pilon.assembly_fasta), # maybe??
+      assembly_fasta = write_json(pilon.assembly_fasta),
       quast_genome_length = write_json(quast.genome_length),
       quast_number_contigs = write_json(quast.number_contigs),
       quast_n50 = write_json(quast.n50_value),
