@@ -56,14 +56,14 @@ workflow morgana_magic {
     # pangolin inputs
     Int? pangolin_cpu
     Int? pangolin_disk_size
-    String? pangolin_docker
+    String? pangolin_docker_image
     Int? pangolin_memory
   }
   call set_organism_defaults.organism_parameters {
     input:
       taxon_id = taxon_id,
       organism = "unsupported",
-      pangolin_docker_image = pangolin_docker
+      pangolin_docker_image = pangolin_docker_image
   }
   if (organism_parameters.standardized_organism != "unsupported") { # occurs in theiameta_panel
     call consensus_qc_task.consensus_qc {
