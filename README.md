@@ -52,7 +52,7 @@ You can expect a careful review of every PR and feedback as needed before mergin
 * **Kevin Libuit** ([@kevinlibuit](https://github.com/kevinlibuit)) - Conceptualization, Project Administration, Software, Validation, Supervision
 * **Emma Doughty** ([@emmadoughty](https://github.com/emmadoughty)) - Software, Validation
 * **Fraser Combe** ([@fraser-combe](https://github.com/fraser-combe)) - Software, Validation
-* **Michal-Babins** ([@Michal-Babins](https://github.com/Michal-Babins)) - Software, Validation
+* **Michal Babinski** ([@Michal-Babins](https://github.com/Michal-Babins)) - Software, Validation
 * **Andrew Lang** ([@AndrewLangVt](https://github.com/AndrewLangVt)) - Software, Supervision
 * **Andrew Page** ([@andrewjpage](https://github.com/andrewjpage)) - Project Administration, Software, Supervision
 * **Kelsey Kropp** ([@kelseykropp](https://github.com/kelseykropp)) - Validation
@@ -65,6 +65,7 @@ We would like to gratefully acknowledge the following individuals from the publi
 
 * **James Otieno** ([@jrotieno](https://github.com/jrotieno))
 * **Robert Petit** ([@rpetit3](https://github.com/rpetit3))
+* **Emma Doughty** ([@emmadoughty](https://github.com/emmadoughty))
 * **Ash O'Farrel** ([@aofarrel](https://github.com/aofarrel))
 * **Sam Baird** ([@sam-baird](https://github.com/sam-baird))
 * **Holly Halstead** ([@HNHalstead](https://github.com/HNHalstead))
