@@ -13,13 +13,11 @@ workflow dorado_basecalling_workflow {
 
   input {
     Array[File] input_files
-    String? dorado_model
+    String dorado_model = "sup"  # Default to sup model, user can override with a full model name
     String kit_name
-    Boolean use_auto_model = true   
-    String model_accuracy = "sup"
     String new_table_name
     String fastq_upload_path
-    Boolean paired_end = false  
+    Boolean paired_end = false
     Boolean assembly_data = false
     String? file_ending
     String terra_project
@@ -27,18 +25,18 @@ workflow dorado_basecalling_workflow {
     String fastq_file_name
   }
 
-  call basecall_task.basecall as basecall_step {
-    input:
-       input_files = input_files,
-       use_auto_model = use_auto_model,
-       model_accuracy = model_accuracy,
-       dorado_model = dorado_model,
-       kit_name = kit_name
+  scatter (file in input_files) {
+    call basecall_task.basecall as basecall_step {
+      input:
+        input_file = file,
+        dorado_model = dorado_model,
+        kit_name = kit_name
+    }
   }
 
   call samtools_convert_task.samtools_convert {
     input:
-      sam_files = basecall_step.sam_files
+      sam_files = flatten(basecall_step.sam_files)
   }
 
   call dorado_demux_task.dorado_demux {
