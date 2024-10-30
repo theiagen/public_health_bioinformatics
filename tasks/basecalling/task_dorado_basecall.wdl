@@ -5,6 +5,9 @@ task basecall {
     File input_file                    # Single POD5 file for scatter processing
     String dorado_model = "sup"         # Default model to 'sup', can be overridden with full model name see docs
     String kit_name                    # Sequencing kit name
+    Int disk_size = 100
+    Int memory = 32
+    Int cpu = 8
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/dorado:0.8.0"
   }
 
@@ -41,8 +44,10 @@ task basecall {
 
   runtime {
     docker: docker
-    cpu: 8
-    memory: "32GB"
+    cpu: cpu
+    memory: "~{memory} GB"
+    disks:  "local-disk " + disk_size + " SSD"
+    disk: disk_size + " GB"
     gpuCount: 1
     gpuType: "nvidia-tesla-t4"  }
 }

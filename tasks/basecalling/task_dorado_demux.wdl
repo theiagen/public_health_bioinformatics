@@ -5,6 +5,9 @@ task dorado_demux {
     Array[File] bam_files
     String kit_name
     String fastq_file_name
+    Int cpu = 4 
+    Int memory = 16
+    Int disk_size = 50
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/dorado:0.8.0"
   }
 
@@ -83,10 +86,10 @@ task dorado_demux {
     Array[File] fastq_files = glob("~{fastq_file_name}_*.fastq.gz")
   }
 
-  runtime {
+   runtime {
     docker: docker
-    cpu: 4
-    memory: "16GB"
-    maxRetries: 0
+    cpu: cpu
+    memory: "~{memory} GB"
+    disks: "local-disk ~{disk_size} SSD"
   }
 }

@@ -12,11 +12,11 @@ The Dorado Basecalling workflow is used to convert Oxford Nanopore `POD5` sequen
 
 ### Model Type Selection
 
-Users can choose between automatic or manual model selection using a configurable use_auto_model flag:
+Users can configure the basecalling model by setting the dorado_model input parameter:
 
-Automatic Model Selection: Automatically picks the best model ('sup', 'hac', or 'fast') based on the input file and user-defined model accuracy paramater.
-
-Manual Model Input: If the user disables automatic selection, a specific model path or model version must be provided.
+- Default Model: "sup" (super accuracy) is used unless overridden by the user.
+- Manual Model Input: Users can specify the full path or name of a specific model (e.g., dna_r10.4.1_e8.2_400bps_hac@v4.2.0).
+- Automatic Detection: When set to sup, hac, or fast, Dorado will automatically select the appropriate model version if available.
 
 - **Model Type (sup):** (super accuracy) The most accurate model, recommended for critical applications requiring the highest basecall accuracy. It is the slowest of the three model types.
 - **Model Type (hac):** (High Accuracy) A balance between speed and accuracy, recommended for most users. Provides accurate results faster than `sup` but less accurate than `sup`.
@@ -42,10 +42,8 @@ Manual Model Input: If the user disables automatic selection, a specific model p
 | **Task** | **Variable** | **Type** | **Description** | **Default Value** | **Required** |
 |---|---|---|---|---|---|
 | Basecalling | **input_files** | Array[File] | Array of `POD5` files for basecalling | None | Yes |
-| Basecalling | **use_auto_model** | Boolean | Use automatic model selection (`sup`, `hac`, or `fast` based on model accuracy)| true | No |
-| Basecalling | **model_accuracy** | String | Desired model accuracy (`sup`, `hac`, `fast`) if using automatic selection | sup | No |
+| Basecalling | **dorado_model** | Boolean | Model accuracy or full model name (default: 'sup')| sup | No |
 | Basecalling | **fastq_file_name** | String | Prefix for naming output FASTQ files | None | Yes |
-| Basecalling | **dorado_model** | String | Model type (e.g., `dna_r10.4.1_e8.2_260bps_sup@v3.5.2`) if manual input | None | Yes |
 | Basecalling | **kit_name** | String | Sequencing kit name used (e.g., `SQK-RPB114-24`). | None | Yes |
 | Basecalling | **cpu** | Int | Number of CPUs allocated | 8 | No |
 | Basecalling | **memory** | String | Amount of memory to allocate | 32GB | No |
@@ -59,6 +57,8 @@ Manual Model Input: If the user disables automatic selection, a specific model p
 ---
 
 ### Detailed Input Information
+
+- **dorado_model**: If set to 'sup', 'hac', or 'fast', the workflow will run with automatic model selection. If a full model name is provided, Dorado will use that model directly.
 - **fastq_file_name**: This will serve as a prefix for the output FASTQ files. For example, if you provide `project001`, the resulting files will be named `project001_barcodeXX.fastq.gz`.
 - **kit_name**: Ensure the correct kit name is provided, as it determines the barcoding and adapter trimming behavior.
 - **fastq_upload_path**: This is the folder path in Terra where the final FASTQ files will be transferred for further analysis. Ensure the path matches your Terra workspace configuration.

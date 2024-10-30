@@ -3,6 +3,9 @@ version 1.0
 task samtools_convert {
   input {
     Array[File] sam_files
+    Int cpu = 4
+    Int memory = 16
+    Int disk_size = 50
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/samtools:1.15"
   }
 
@@ -30,10 +33,10 @@ task samtools_convert {
     Array[File] bam_files = glob("output/bam/*.bam")
   }
 
-  runtime {
+ runtime {
     docker: docker
-    cpu: 4
-    memory: "16GB"
-    maxRetries: 0
+    cpu: cpu
+    memory: "~{memory} GB"
+    disks: "local-disk ~{disk_size} HDD"
   }
 }

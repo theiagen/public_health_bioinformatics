@@ -13,7 +13,7 @@ workflow dorado_basecalling_workflow {
 
   input {
     Array[File] input_files
-    String dorado_model = "sup"  # Default to sup model, user can override with a full model name
+    String dorado_model = "sup" 
     String kit_name
     String new_table_name
     String fastq_upload_path
@@ -23,6 +23,9 @@ workflow dorado_basecalling_workflow {
     String terra_project
     String terra_workspace
     String fastq_file_name
+    Int cpu = 8                      
+    Int memory = 32                    
+    Int disk_size = 100               
   }
 
   scatter (file in input_files) {
@@ -30,7 +33,10 @@ workflow dorado_basecalling_workflow {
       input:
         input_file = file,
         dorado_model = dorado_model,
-        kit_name = kit_name
+        kit_name = kit_name,
+        cpu = cpu,
+        memory = memory,
+        disk_size = disk_size
     }
   }
 
