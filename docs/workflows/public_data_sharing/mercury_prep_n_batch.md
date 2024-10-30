@@ -56,7 +56,7 @@ To help users collect all required metadata, we have created the following Excel
     | --- | --- | --- | --- | --- |
     | `read1_column_name` | `"read1_dehosted"` | `"clearlabs_fastq_gz"` | `"reads_dehosted"` | `"reads_dehosted"` |
     | `assembly_fasta_column_name` | `"assembly_fasta"` | `"clearlabs_fasta"` | `"assembly_fasta"` | `"clearlabs_fasta"` |
-    | `assembly_mean_coverage_column_name` | `"assembly_mean_coverage"` | `"clearlabs_assembly_coverage"` | `"assembly_mean_coverage"` | `"clearlabs_assembly_coverage"` |
+    | `assembly_mean_coverage_column_name` | `"assembly_mean_coverage"` | `"clearlabs_sequencing_depth"` | `"assembly_mean_coverage"` | `"clearlabs_sequencing_depth"` |
 
 ### Inputs
 
