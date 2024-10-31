@@ -29,6 +29,8 @@ The `Snippy_Variants` workflow aligns single-end or paired-end reads (in FASTQ f
 !!! info "Query String"
     The query string can be a gene or any other annotation that matches the GenBank file/output VCF **EXACTLY**
 
+<div class="searchable-table" markdown="1">
+
 | **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
 |---|---|---|---|---|---|
 | snippy_variants_wf | **reference_genome_file** | File | Reference genome (GenBank file or fasta) |  | Required |
@@ -54,6 +56,8 @@ The `Snippy_Variants` workflow aligns single-end or paired-end reads (in FASTQ f
 | version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
 | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
 
+</div>
+
 ### Workflow Tasks
 
 `Snippy_Variants` uses the snippy tool to align reads to the reference and call SNPs, MNPs and INDELs according to optional input parameters. The output includes a file of variants that is then queried using the `grep` bash command to identify any mutations in specified genes or annotations of interest. The query string MUST match the gene name or annotation as specified in the GenBank file and provided in the output variant file in the `snippy_results` column.
@@ -65,6 +69,8 @@ The `Snippy_Variants` workflow aligns single-end or paired-end reads (in FASTQ f
 
 !!! warning "Note on coverage calculations"
     The outputs from `samtools coverage` (found in the `snippy_variants_coverage_tsv` file) may differ from the `snippy_variants_percent_ref_coverage` due to different calculation methods. `samtools coverage` computes genome-wide coverage metrics (e.g., the proportion of bases covered at depth ≥ 1), while `snippy_variants_percent_ref_coverage` uses a user-defined minimum coverage threshold (default is 10), calculating the proportion of the reference genome with a depth greater than or equal to this threshold.
+
+<div class="searchable-table" markdown="1">
 
 | **Variable** | **Type** | **Description** |
 |---|---|---|
@@ -85,3 +91,5 @@ The `Snippy_Variants` workflow aligns single-end or paired-end reads (in FASTQ f
 | snippy_variants_summary | File | A summary TXT fie showing the number of mutations identified for each mutation type |
 | snippy_variants_version | String | Version of Snippy used |
 | snippy_variants_wf_version | String | Version of Snippy_Variants used |
+
+</div>

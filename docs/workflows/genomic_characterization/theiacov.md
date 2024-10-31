@@ -108,12 +108,14 @@ All TheiaCoV Workflows (not TheiaCoV_FASTA_Batch)
 
         The TheiaCoV_ClearLabs workflow takes in read data produced by the Clear Dx platform from ClearLabs. However, many users use the TheiaCoV_FASTA workflow instead of this one due to a few known issues when generating assemblies with this pipeline that are not present when using ClearLabs-generated FASTA files.
 
+<div class="searchable-table" markdown="1">
+
 | **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |* | **Organism** |
 |---|---|---|---|---|---|---|---|
 | theiacov_clearlabs | **primer_bed** | File | The bed file containing the primers used when sequencing was performed | | Required | CL | sars-cov-2 |
 | theiacov_clearlabs | **read1** | File | Read data produced by the Clear Dx platform from ClearLabs | | Required | CL | sars-cov-2 |
 | theiacov_fasta | **assembly_fasta** | File | Input assembly FASTA file | | Required | FASTA | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
-| theiacov_fasta | **input_assembly_method** | File | Method used to generate the assembly file | | Required | FASTA | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
+| theiacov_fasta | **input_assembly_method** | String | Method used to generate the assembly file | | Required | FASTA | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | theiacov_illumina_pe | **read1** | File | Forward Illumina read in FASTQ file format (compression optional) | | Required | PE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | theiacov_illumina_pe | **read2** | File | Reverse Illumina read in FASTQ file format (compression optional) | | Required | PE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | theiacov_illumina_se | **read1** | File | Forward Illumina read in FASTQ file format (compression optional) | | Required | SE | MPXV, WNV, sars-cov-2 |
@@ -126,8 +128,8 @@ All TheiaCoV Workflows (not TheiaCoV_FASTA_Batch)
 | clean_check_reads | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 2 | Optional | ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | consensus | **cpu** | Int | Number of CPUs to allocate to the task | 8 | Optional | CL, ONT | sars-cov-2 |
 | consensus | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | CL, ONT | sars-cov-2 |
-| consensus | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/artic-ncov2019-epi2me | Optional | ONT | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
-| consensus | **medaka_model** | String | In order to obtain the best results, the appropriate model must be set to match the sequencer's basecaller model; this string takes the format of {pore}_{device}_{caller variant}_{caller_version}. See also https://github.com/nanoporetech/medaka?tab=readme-ov-file#models. | r941_min_high_g360 | Optional | CL, ONT | sars-cov-2 |
+| consensus | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/artic:1.2.4-1.12.0 | Optional | CL, ONT | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
+| consensus | **medaka_model** | String | In order to obtain the best results, the appropriate model must be set to match the sequencer's basecaller model; this string takes the format of {pore}_{device}_{caller variant}_{caller_version}. See the list of available models in the `artic_consensus` documentation section. See also https://github.com/nanoporetech/medaka?tab=readme-ov-file#models. | r941_min_high_g360 | Optional | CL, ONT | sars-cov-2 |
 | consensus | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 16 | Optional | CL, ONT | sars-cov-2 |
 | consensus_qc | **cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2 |
 | consensus_qc | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2 |
@@ -409,6 +411,8 @@ All TheiaCoV Workflows (not TheiaCoV_FASTA_Batch)
 | workflow name | **vadr_skip_length** | Int | Minimum assembly length (unambiguous) to run VADR | 10000 | Optional | FASTA, ONT, PE, SE | MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | workflow name | **variant_min_freq** | Float | Minimum frequency for a variant to be reported in ivar outputs | 0.6 | Optional | PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 
+</div>
+
 ??? toggle "TheiaCoV_FASTA_Batch_PHB Inputs"
 
     ##### TheiaCoV_FASTA_Batch Inputs {#theiacov-fasta-batch-inputs}
@@ -612,7 +616,7 @@ All input reads are processed through "core tasks" in the TheiaCoV Illumina, ONT
 
 ??? task "`screen`: Total Raw Read Quantification and Genome Size Estimation"
 
-    The [`screen`](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/comparisons/task_screen.wdl) task ensures the quantity of sequence data is sufficient to undertake genomic analysis. It uses bash commands for quantification of reads and base pairs, and [mash](https://mash.readthedocs.io/en/latest/index.html) sketching to estimate the genome size and its coverage. At each step, the results are assessed relative to pass/fail criteria and thresholds that may be defined by optional user inputs. Samples that do not meet these criteria will not be processed further by the workflow:
+    The [`screen`](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/comparisons/task_screen.wdl) task ensures the quantity of sequence data is sufficient to undertake genomic analysis. It uses [`fastq-scan`](https://github.com/rpetit3/fastq-scan) and bash commands for quantification of reads and base pairs, and [mash](https://mash.readthedocs.io/en/latest/index.html) sketching to estimate the genome size and its coverage. At each step, the results are assessed relative to pass/fail criteria and thresholds that may be defined by optional user inputs. Samples that do not meet these criteria will not be processed further by the workflow:
 
     1. Total number of reads: A sample will fail the read screening task if its total number of reads is less than or equal to `min_reads`.
     2. The proportion of basepairs reads in the forward and reverse read files: A sample will fail the read screening if fewer than `min_proportion` basepairs are in either the reads1 or read2 files.
@@ -800,6 +804,50 @@ All input reads are processed through "core tasks" in the TheiaCoV Illumina, ONT
 
     !!! info ""
         Read-trimming is performed on raw read data generated on the ClearLabs instrument and thus not a required step in the TheiaCoV_ClearLabs workflow.
+    
+    ??? toggle "Available `medaka` models"
+        The medaka models available in the default docker container are as follows:
+
+        ``` bash
+        r103_fast_g507, r103_fast_snp_g507, r103_fast_variant_g507, r103_hac_g507,
+        r103_hac_snp_g507, r103_hac_variant_g507, r103_min_high_g345, r103_min_high_g360,
+        r103_prom_high_g360, r103_prom_snp_g3210, r103_prom_variant_g3210, r103_sup_g507,
+        r103_sup_snp_g507, r103_sup_variant_g507, r1041_e82_260bps_fast_g632,
+        r1041_e82_260bps_fast_variant_g632, r1041_e82_260bps_hac_g632,
+        r1041_e82_260bps_hac_v4.0.0, r1041_e82_260bps_hac_v4.1.0,
+        r1041_e82_260bps_hac_variant_g632, r1041_e82_260bps_hac_variant_v4.1.0,
+        r1041_e82_260bps_joint_apk_ulk_v5.0.0, r1041_e82_260bps_sup_g632,
+        r1041_e82_260bps_sup_v4.0.0, r1041_e82_260bps_sup_v4.1.0,
+        r1041_e82_260bps_sup_variant_g632, r1041_e82_260bps_sup_variant_v4.1.0,
+        r1041_e82_400bps_fast_g615, r1041_e82_400bps_fast_g632,
+        r1041_e82_400bps_fast_variant_g615, r1041_e82_400bps_fast_variant_g632,
+        r1041_e82_400bps_hac_g615, r1041_e82_400bps_hac_g632, r1041_e82_400bps_hac_v4.0.0,
+        r1041_e82_400bps_hac_v4.1.0, r1041_e82_400bps_hac_v4.2.0, r1041_e82_400bps_hac_v4.3.0,
+        r1041_e82_400bps_hac_v5.0.0, r1041_e82_400bps_hac_variant_g615,
+        r1041_e82_400bps_hac_variant_g632, r1041_e82_400bps_hac_variant_v4.1.0,
+        r1041_e82_400bps_hac_variant_v4.2.0, r1041_e82_400bps_hac_variant_v4.3.0,
+        r1041_e82_400bps_hac_variant_v5.0.0, r1041_e82_400bps_sup_g615,
+        r1041_e82_400bps_sup_v4.0.0, r1041_e82_400bps_sup_v4.1.0, r1041_e82_400bps_sup_v4.2.0,
+        r1041_e82_400bps_sup_v4.3.0, r1041_e82_400bps_sup_v5.0.0,
+        r1041_e82_400bps_sup_variant_g615, r1041_e82_400bps_sup_variant_v4.1.0,
+        r1041_e82_400bps_sup_variant_v4.2.0, r1041_e82_400bps_sup_variant_v4.3.0,
+        r1041_e82_400bps_sup_variant_v5.0.0, r104_e81_fast_g5015, r104_e81_fast_variant_g5015,
+        r104_e81_hac_g5015, r104_e81_hac_variant_g5015, r104_e81_sup_g5015, r104_e81_sup_g610,
+        r104_e81_sup_variant_g610, r10_min_high_g303, r10_min_high_g340, r941_e81_fast_g514,
+        r941_e81_fast_variant_g514, r941_e81_hac_g514, r941_e81_hac_variant_g514,
+        r941_e81_sup_g514, r941_e81_sup_variant_g514, r941_min_fast_g303, r941_min_fast_g507,
+        r941_min_fast_snp_g507, r941_min_fast_variant_g507, r941_min_hac_g507,
+        r941_min_hac_snp_g507, r941_min_hac_variant_g507, r941_min_high_g303, r941_min_high_g330,
+        r941_min_high_g340_rle, r941_min_high_g344, r941_min_high_g351, r941_min_high_g360,
+        r941_min_sup_g507, r941_min_sup_snp_g507, r941_min_sup_variant_g507, r941_prom_fast_g303,
+        r941_prom_fast_g507, r941_prom_fast_snp_g507, r941_prom_fast_variant_g507,
+        r941_prom_hac_g507, r941_prom_hac_snp_g507, r941_prom_hac_variant_g507,
+        r941_prom_high_g303, r941_prom_high_g330, r941_prom_high_g344, r941_prom_high_g360,
+        r941_prom_high_g4011, r941_prom_snp_g303, r941_prom_snp_g322, r941_prom_snp_g360,
+        r941_prom_sup_g507, r941_prom_sup_snp_g507, r941_prom_sup_variant_g507,
+        r941_prom_variant_g303, r941_prom_variant_g322, r941_prom_variant_g360,
+        r941_sup_plant_g610, r941_sup_plant_variant_g610
+        ```
 
     General statistics about the assembly are generated with the `consensus_qc` task ([task_assembly_metrics.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_assembly_metrics.wdl)).
 
@@ -948,6 +996,8 @@ All input reads are processed through "core tasks" in the TheiaCoV Illumina, ONT
 
 All TheiaCoV Workflows (not TheiaCoV_FASTA_Batch)
 
+<div class="searchable-table" markdown="1">
+
 | **Variable** | **Type** | **Description** | **Workflow** |
 |---|---|---|---|
 | abricate_flu_database | String | ABRicate database used for analysis | FASTA, ONT, PE |
@@ -959,7 +1009,7 @@ All TheiaCoV Workflows (not TheiaCoV_FASTA_Batch)
 | aligned_bam | File | Primer-trimmed BAM file; generated during consensus assembly process | CL, ONT, PE, SE |
 | artic_docker | String | Docker image utilized for read trimming and consensus genome assembly | CL, ONT |
 | artic_version | String | Version of the Artic software utilized for read trimming and conesnsus genome assembly | CL, ONT |
-| assembly_fasta | File | Consensus genome assembly; for lower quality flu samples, the output may state "Assembly could not be generated" when there is too little and/or too low quality data for IRMA to produce an assembly. Contigs will be ordered from smallest to largest when IRMA is used. | CL, ONT, PE, SE |
+| assembly_fasta | File | Consensus genome assembly; for lower quality flu samples, the output may state "Assembly could not be generated" when there is too little and/or too low quality data for IRMA to produce an assembly. Contigs will be ordered from largest to smallest when IRMA is used. | CL, ONT, PE, SE |
 | assembly_length_unambiguous | Int | Number of unambiguous basecalls within the consensus assembly | CL, FASTA, ONT, PE, SE |
 | assembly_mean_coverage | Float | Mean sequencing depth throughout the consensus assembly. Generated after performing primer trimming and calculated using the SAMtools coverage command | CL, ONT, PE, SE |
 | assembly_method | String | Method employed to generate consensus assembly | CL, FASTA, ONT, PE, SE |
@@ -1158,6 +1208,8 @@ All TheiaCoV Workflows (not TheiaCoV_FASTA_Batch)
 | vadr_feature_tbl_pass | File | 5 column feature table output for passing sequences. See https://github.com/ncbi/vadr/blob/master/documentation/formats.md#format-of-v-annotatepl-output-files for more complete description. | CL, FASTA, ONT, PE, SE |
 | vadr_num_alerts | String | Number of fatal alerts as determined by VADR | CL, FASTA, ONT, PE, SE |
 | variants_from_ref_vcf | File | Number of variants relative to the reference genome | CL |
+
+</div>
 
 ??? toggle "TheiaCoV_FASTA_Batch_PHB Outputs"
 
