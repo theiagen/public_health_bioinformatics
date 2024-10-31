@@ -1,4 +1,4 @@
-# Dorado Basecalling Workflow - Version 1.0
+# Dorado Basecalling Workflow
 
 ## Quick Facts
 
@@ -14,9 +14,9 @@ The Dorado Basecalling workflow is used to convert Oxford Nanopore `POD5` sequen
 
 Users can configure the basecalling model by setting the dorado_model input parameter:
 
-- Default Model: "sup" (super accuracy) is used unless overridden by the user.
-- Manual Model Input: Users can specify the full path or name of a specific model (e.g., dna_r10.4.1_e8.2_400bps_hac@v4.2.0).
-- Automatic Detection: When set to sup, hac, or fast, Dorado will automatically select the appropriate model version if available.
+Default Model: "sup" (super accuracy) is used unless overridden by the user.
+Manual Model Input: Users can specify the full path or name of a specific model (e.g., dna_r10.4.1_e8.2_400bps_hac@v4.2.0).
+Automatic Detection: When set to sup, hac, or fast, Dorado will automatically select the appropriate model version if available.
 
 - **Model Type (sup):** (super accuracy) The most accurate model, recommended for critical applications requiring the highest basecall accuracy. It is the slowest of the three model types.
 - **Model Type (hac):** (High Accuracy) A balance between speed and accuracy, recommended for most users. Provides accurate results faster than `sup` but less accurate than `sup`.
@@ -56,12 +56,20 @@ Users can configure the basecalling model by setting the dorado_model input para
 
 ---
 
-### Detailed Input Information
+!!! info "Detailed Input Information"
+    - **dorado_model**: If set to 'sup', 'hac', or 'fast', the workflow will run with automatic model selection. If a full model name is provided, Dorado will use that model directly.
+    - **fastq_file_name**: This will serve as a prefix for the output FASTQ files. For example, if you provide `project001-`, the resulting files will be named `project001-barcodeXX.fastq.gz`.
+    - **kit_name**: Ensure the correct kit name is provided, as it determines the barcoding and adapter trimming behavior.
+    - **fastq_upload_path**: This is the folder path in Terra where the final FASTQ files will be transferred for further analysis. Ensure the path matches your Terra workspace configuration.
 
-- **dorado_model**: If set to 'sup', 'hac', or 'fast', the workflow will run with automatic model selection. If a full model name is provided, Dorado will use that model directly.
-- **fastq_file_name**: This will serve as a prefix for the output FASTQ files. For example, if you provide `project001`, the resulting files will be named `project001_barcodeXX.fastq.gz`.
-- **kit_name**: Ensure the correct kit name is provided, as it determines the barcoding and adapter trimming behavior.
-- **fastq_upload_path**: This is the folder path in Terra where the final FASTQ files will be transferred for further analysis. Ensure the path matches your Terra workspace configuration.
+!!! tip "File Naming Guidelines"
+    - **Avoid special characters**: Do not include special characters such as underscores (`_`), periods (`.`), or any non-alphanumeric symbols in the `fastq_file_name` prefix, as these can interfere with proper file parsing and sample name recognition.
+    - **Use a clear, simple prefix**: The prefix `projectname` will automatically append identifiers like `-barcodeXX.fastq.gz` or `-unclassified.fastq.gz` to name each output file, ensuring each one is distinct.
+
+    ### Examples:
+
+    - **Accepted Prefix**: `projectname-barcode01.fastq.gz`
+    - **Not Recommended**: `projectname_2024_test-barcode01.fastq.gz` (would recognize only `projectname` as the sample name, leading to ambiguity with multiple files).
 
 ---
 
