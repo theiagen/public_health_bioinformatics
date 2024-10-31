@@ -51,10 +51,10 @@ task dorado_demux {
       echo "Processing $fastq_file"
       
       if [[ "$fastq_file" == *"unclassified"* ]]; then
-        final_fastq="~{fastq_file_name}_unclassified.fastq"
+        final_fastq="~{fastq_file_name}unclassified.fastq"
       else
         barcode=$(echo "$fastq_file" | sed -E 's/.*_(barcode[0-9]+)\.fastq/\1/')
-        final_fastq="~{fastq_file_name}_${barcode}.fastq"
+        final_fastq="~{fastq_file_name}${barcode}.fastq"
       fi
 
       echo "Renaming $fastq_file to $final_fastq"
@@ -83,7 +83,7 @@ task dorado_demux {
   >>>
 
   output {
-    Array[File] fastq_files = glob("~{fastq_file_name}_*.fastq.gz")
+    Array[File] fastq_files = glob("~{fastq_file_name}*.fastq.gz")
   }
 
    runtime {
