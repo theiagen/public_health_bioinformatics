@@ -53,14 +53,14 @@ task stats_n_coverage {
 
     #output all metrics in one txt file
     # Output header row (for CSV)
-    echo "Statistic    Value" > ~{samplename}_metrics.txt
+    echo -e "Statistic\tValue" > ~{samplename}_metrics.txt
 
     # Output each statistic as a row
-    echo "Coverage    $coverage" >> ~{samplename}_metrics.txt
-    echo "Depth    $depth" >> ~{samplename}_metrics.txt
-    echo "Mean Base Quality    $meanbaseq" >> ~{samplename}_metrics.txt
-    echo "Mean Mapping Quality    $meanmapq" >> ~{samplename}_metrics.txt
-    echo "Percentage Mapped Reads    $percentage_mapped_reads" >> ~{samplename}_metrics.txt
+     echo -e "Coverage\t$coverage" >> ~{samplename}_metrics.txt
+    echo -e "Depth\t$depth" >> ~{samplename}_metrics.txt
+    echo -e "Mean Base Quality\t$meanbaseq" >> ~{samplename}_metrics.txt
+    echo -e "Mean Mapping Quality\t$meanmapq" >> ~{samplename}_metrics.txt
+    echo -e "Percentage Mapped Reads\t$percentage_mapped_reads" >> ~{samplename}_metrics.txt
   >>>
   output {
     String date = read_string("DATE")
