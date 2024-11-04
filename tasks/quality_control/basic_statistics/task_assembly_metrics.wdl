@@ -56,7 +56,7 @@ task stats_n_coverage {
     echo -e "Statistic\tValue" > ~{samplename}_metrics.txt
 
     # Output each statistic as a row
-     echo -e "Coverage\t$coverage" >> ~{samplename}_metrics.txt
+    echo -e "Coverage\t$coverage" >> ~{samplename}_metrics.txt
     echo -e "Depth\t$depth" >> ~{samplename}_metrics.txt
     echo -e "Mean Base Quality\t$meanbaseq" >> ~{samplename}_metrics.txt
     echo -e "Mean Mapping Quality\t$meanmapq" >> ~{samplename}_metrics.txt
