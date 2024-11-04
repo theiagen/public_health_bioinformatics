@@ -1,8 +1,8 @@
 version 1.0
 
-task get_srr_from_biosamples {
+task fetch_srr_metadata {
   input {
-    String biosample_accession 
+    String sample_accession 
     String docker = "us-docker.pkg.dev/general-theiagen/biocontainers/fastq-dl:2.0.4--pyhdfd78af_0"
     Int disk_size = 10
     Int cpu = 2
@@ -17,14 +17,14 @@ task get_srr_from_biosamples {
     mkdir -p metadata_output
     date -u | tee DATE
 
-    # Debug output to show the biosample being processed
-    echo "Fetching metadata for BioSample: ${biosample_accession}"
+    # Debug output to show the sample being processed
+    echo "Fetching metadata for sample accession: ${sample_accession}"
 
     # Use fastq-dl to fetch metadata only
-    fastq-dl --accession ~{biosample_accession} --provider SRA --outdir metadata_output --only-download-metadata --verbose
+    fastq-dl --accession ~{sample_accession} --provider SRA --outdir metadata_output --only-download-metadata --verbose
 
     if [[ -f metadata_output/fastq-run-info.tsv ]]; then
-      echo "Metadata written for ${biosample_accession}:"
+      echo "Metadata written for ${sample_accession}:"
       echo "TSV content:"
       cat metadata_output/fastq-run-info.tsv
 
@@ -35,7 +35,7 @@ task get_srr_from_biosamples {
       # Output the SRR accessions as a single string
       echo "${SRR_accessions}" > metadata_output/srr_accession.txt
     else
-      echo "No metadata found for ${biosample_accession}"
+      echo "No metadata found for ${sample_accession}"
       exit 1
     fi
   >>>
