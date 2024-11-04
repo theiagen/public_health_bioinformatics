@@ -428,6 +428,6 @@ workflow theiacov_ont {
     String? qc_check = qc_check_task.qc_check
     File? qc_standard = qc_check_task.qc_standard
     # Non-flu specific outputs
-    String percentage_mapped_reads = select_first([stats_n_coverage.percentage_mapped_reads, flu_track.ha_na_mapped_reads_percentage_string, ""])
+    String percentage_mapped_reads = select_first([stats_n_coverage.percentage_mapped_reads, flu_track.ha_na_mapped_reads_percentage, ""])
   }
 }
