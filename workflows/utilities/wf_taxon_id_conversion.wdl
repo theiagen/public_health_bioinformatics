@@ -2,7 +2,7 @@ version 1.0
 
 workflow convert_taxon_ids {
   input {
-    Int taxon_id
+    String taxon_id
   }
   String unsupported_organism = "unsupported"
   if (taxon_id == "2697049") {
