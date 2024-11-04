@@ -45,7 +45,7 @@ task extract_kraken_reads {
   output {
     File? extracted_read1 = "~{taxon_id}_1.fastq.gz"
     File? extracted_read2 = "~{taxon_id}_2.fastq.gz"
-    String organism_name = read_string("ORGANISM_NAME") ### fix
+    String organism_name = read_string("ORGANISM_NAME")
     String krakentools_docker = docker
     Boolean success = read_boolean("CONTINUE")
   }

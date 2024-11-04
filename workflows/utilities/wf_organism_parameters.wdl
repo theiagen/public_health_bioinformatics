@@ -6,7 +6,6 @@ workflow organism_parameters {
   }
   input {
     String organism
-    String? taxon_id
     
     # hiv information
     String hiv_primer_version = "v1"
@@ -49,36 +48,10 @@ workflow organism_parameters {
     Float? narrow_bandwidth
     Float? proportion_wide
   }
-  # for morgana_magic & theiameta_panel compatibility
-  if (defined(taxon_id)) {
-    # set dummy values for unsupported organisms to prevent workflow failure
-    Int unsupported_theiameta_panel_genome_length = 0
-    if (select_first([taxon_id]) == "2697049") {
-      String sars_cov_2_taxon_id = "sars-cov-2"
-    }
-    if (select_first([taxon_id]) == "10244") {
-      String mpox_taxon_id = "MPXV"
-    }
-    if (select_first([taxon_id]) == "11082") {
-      String wnv_taxon_id = "WNV"
-    }
-    if (select_first([taxon_id]) == "11320") {
-      String flu_a_taxon_id = "flu" # flu A
-    }
-    if (select_first([taxon_id]) == "11520") {
-      String flu_b_taxon_id = "flu" # flu B
-    }
-    if (select_first([taxon_id]) == "12814") {
-      String rsv_a_taxon_id = "rsv_a"
-    }
-    if (select_first([taxon_id]) == "12815") {
-      String rsv_b_taxon_id = "rsv_b"
-    }
-    if (select_first([taxon_id]) == "11676") {
-      String hiv_taxon_id = "HIV"
-    }
+  if (organism == "unsupported") {  
+    Int unsupported_genome_length = 0
   }
-  if (organism == "sars-cov-2" || organism == "SARS-CoV-2" || defined(sars_cov_2_taxon_id)) {
+  if (organism == "sars-cov-2" || organism == "SARS-CoV-2") {
     String sc2_org_name = "sars-cov-2"
     String sc2_reference_genome = "gs://theiagen-public-files-rp/terra/augur-sars-cov-2-references/MN908947.fasta"
     String sc2_gene_locations_bed = "gs://theiagen-public-files-rp/terra/sars-cov-2-files/sc2_gene_locations.bed"
@@ -91,7 +64,7 @@ workflow organism_parameters {
     String sc2_vadr_options = "--noseqnamemax --glsearch -s -r --nomisc --mkey sarscov2 --lowsim5seq 6 --lowsim3seq 6 --alt_fail lowscore,insertnn,deletinn --out_allfasta"
     Int sc2_vadr_memory = 8
   }
-  if (organism == "MPXV" || organism == "mpox" || organism == "monkeypox" || organism == "Monkeypox virus" || organism == "Mpox" || defined(mpox_taxon_id)) {
+  if (organism == "MPXV" || organism == "mpox" || organism == "monkeypox" || organism == "Monkeypox virus" || organism == "Mpox") {
     String mpox_org_name = "MPXV"
     String mpox_reference_genome = "gs://theiagen-public-files/terra/mpxv-files/MPXV.MT903345.reference.fasta"
     String mpox_gene_locations_bed = "gs://theiagen-public-files/terra/mpxv-files/mpox_gene_locations.bed"
@@ -118,7 +91,7 @@ workflow organism_parameters {
     Float mpox_narrow_bandwidth = 0.1666667
     Float mpox_proportion_wide = 0.0
   }  
-  if (organism == "WNV" || organism == "wnv" || organism == "West Nile virus" || defined(wnv_taxon_id)) {
+  if (organism == "WNV" || organism == "wnv" || organism == "West Nile virus") {
     String wnv_org_name = "WNV"
     String wnv_reference_genome = "gs://theiagen-public-files/terra/theiacov-files/WNV/NC_009942.1_wnv_L1.fasta"
     String wnv_kraken_target_organism = "West Nile virus"
@@ -131,7 +104,7 @@ workflow organism_parameters {
     String wnv_nextclade_ds_tag = "NA"
     String wnv_nextclade_ds_name = "NA"
   }
-  if (organism == "flu" || organism == "influenza" || organism == "Flu" || organism == "Influenza" || defined(flu_a_taxon_id) || defined (flu_b_taxon_id)) {
+  if (organism == "flu" || organism == "influenza" || organism == "Flu" || organism == "Influenza") {
     String flu_org_name = "flu"
     Int flu_genome_len = 13500
 
@@ -224,7 +197,7 @@ workflow organism_parameters {
       }
     }
   }
-  if (organism == "rsv_a" || organism == "rsv-a" || organism == "RSV-A" || organism == "RSV_A" || defined(rsv_a_taxon_id)) {
+  if (organism == "rsv_a" || organism == "rsv-a" || organism == "RSV-A" || organism == "RSV_A") {
     String rsv_a_org_name = "rsv_a"
     String rsv_a_reference_genome = "gs://theiagen-public-files-rp/terra/rsv_references/reference_rsv_a.fasta"
     String rsv_a_nextclade_ds_tag = "2024-08-01--22-31-31Z"
@@ -241,14 +214,14 @@ workflow organism_parameters {
     File rsv_a_clades_tsv = "gs://theiagen-public-files-rp/terra/rsv_references/rsv_a_clades.tsv"
     File rsv_a_reference_gbk = "gs://theiagen-public-files-rp/terra/rsv_references/reference_rsv_a.gb"
     File rsv_a_auspice_config = "gs://theiagen-public-files-rp/terra/rsv_references/rsv_auspice_config.json"
-    Int rsv_a_min_num_unambig = 10850 #using 70% of 15500
+    Int rsv_a_min_num_unambig = 10850 # using 70% of 15500
     # inherited from flu defaults
     Float rsv_a_min_date = 2020.0
     Int rsv_a_pivot_interval = 1
     Float rsv_a_narrow_bandwidth = 0.1666667
     Float rsv_a_proportion_wide = 0.0
   }
-  if (organism == "rsv_b" || organism == "rsv-b" || organism == "RSV-B" || organism == "RSV_B" || defined(rsv_b_taxon_id)) {
+  if (organism == "rsv_b" || organism == "rsv-b" || organism == "RSV-B" || organism == "RSV_B") {
     String rsv_b_org_name = "rsv_b"
     String rsv_b_reference_genome = "gs://theiagen-public-files-rp/terra/rsv_references/reference_rsv_b.fasta"
     String rsv_b_nextclade_ds_tag = "2024-08-01--22-31-31Z"
@@ -265,15 +238,14 @@ workflow organism_parameters {
     File rsv_b_clades_tsv = "gs://theiagen-public-files-rp/terra/rsv_references/rsv_b_clades.tsv"
     File rsv_b_reference_gbk = "gs://theiagen-public-files-rp/terra/rsv_references/reference_rsv_b.gb"
     File rsv_b_auspice_config = "gs://theiagen-public-files-rp/terra/rsv_references/rsv_auspice_config.json"
-    Int rsv_b_min_num_unambig = 10850 #using 70% of 15500
+    Int rsv_b_min_num_unambig = 10850 # using 70% of 15500
     # inherited from flu defaults
     Float rsv_b_min_date = 2020.0
     Int rsv_b_pivot_interval = 1
     Float rsv_b_narrow_bandwidth = 0.1666667
     Float rsv_b_proportion_wide = 0.0
   }
-  # assuming HIV v1 for now for taxon_id -- this is not accurate and will need reexamination
-  if (organism == "HIV" && hiv_primer_version == "v1" || defined(hiv_taxon_id)) {
+  if (organism == "HIV" && hiv_primer_version == "v1") {
     String hiv_v1_org_name = "HIV"
     String hiv_v1_reference_genome = "gs://theiagen-public-files/terra/hivgc-files/NC_001802.1.fasta"
     String hiv_v1_reference_gff = "gs://theiagen-public-files/terra/hivgc-files/NC_001802.1.gff3"
@@ -298,7 +270,7 @@ workflow organism_parameters {
     File gene_locations_bed = select_first([gene_locations_bed_file, sc2_gene_locations_bed, mpox_gene_locations_bed, "gs://theiagen-public-files/terra/theiacov-files/empty.bed"])
     File primer_bed = select_first([primer_bed_file, mpox_primer_bed_file, wnv_primer_bed_file, hiv_v1_primer_bed, hiv_v2_primer_bed, "gs://theiagen-public-files/terra/theiacov-files/empty.bed"])
     File reference_gff = select_first([reference_gff_file, mpox_reference_gff_file, hiv_v1_reference_gff, hiv_v2_reference_gff, "gs://theiagen-public-files/terra/theiacov-files/empty.gff3"])
-    Int genome_length = select_first([genome_length_input, sc2_genome_len, mpox_genome_len, wnv_genome_len, flu_genome_len, rsv_a_genome_len, rsv_b_genome_len, hiv_v1_genome_len, hiv_v2_genome_len, unsupported_theiameta_panel_genome_length])
+    Int genome_length = select_first([genome_length_input, sc2_genome_len, mpox_genome_len, wnv_genome_len, flu_genome_len, rsv_a_genome_len, rsv_b_genome_len, hiv_v1_genome_len, hiv_v2_genome_len, unsupported_genome_length])
     # nextclade information
     String nextclade_dataset_tag = select_first([nextclade_dataset_tag_input, sc2_nextclade_ds_tag, mpox_nextclade_ds_tag, wnv_nextclade_ds_tag, h1n1_ha_nextclade_ds_tag, h3n2_ha_nextclade_ds_tag, vic_ha_nextclade_ds_tag, yam_ha_nextclade_ds_tag, h5n1_ha_nextclade_ds_tag, h1n1_na_nextclade_ds_tag, h3n2_na_nextclade_ds_tag, vic_na_nextclade_ds_tag, yam_na_nextclade_ds_tag, rsv_a_nextclade_ds_tag, rsv_b_nextclade_ds_tag, "NA"])
     String nextclade_dataset_name = select_first([nextclade_dataset_name_input, sc2_nextclade_ds_name, mpox_nextclade_ds_name, wnv_nextclade_ds_name, h1n1_ha_nextclade_ds_name, h3n2_ha_nextclade_ds_name, vic_ha_nextclade_ds_name, yam_ha_nextclade_ds_name, h5n1_ha_nextclade_ds_name, h1n1_na_nextclade_ds_name, h3n2_na_nextclade_ds_name, vic_na_nextclade_ds_name, yam_na_nextclade_ds_name, rsv_a_nextclade_ds_name, rsv_b_nextclade_ds_name, "NA"])

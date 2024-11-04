@@ -2,10 +2,10 @@ version 1.0
 
 import "../../tasks/quality_control/basic_statistics/task_consensus_qc.wdl" as consensus_qc_task
 import "../../tasks/species_typing/betacoronavirus/task_pangolin.wdl" as pangolin
-import "../../tasks/species_typing/lentivirus/task_quasitools.wdl" as quasitools
 import "../../tasks/taxon_id/task_nextclade.wdl" as nextclade_task
-import "../utilities/wf_organism_parameters.wdl" as set_organism_defaults
 import "../utilities/wf_flu_track.wdl" as flu_track_wf
+import "../utilities/wf_organism_parameters.wdl" as set_organism_defaults
+import "../utilities/wf_taxon_id_conversion.wdl" as taxon_id_conversion
 
 workflow morgana_magic {
   input {
@@ -59,10 +59,14 @@ workflow morgana_magic {
     String? pangolin_docker_image
     Int? pangolin_memory
   }
+  call taxon_id_conversion.convert_taxon_ids {
+    input:
+      taxon_id = taxon_id
+  }
   call set_organism_defaults.organism_parameters {
     input:
       taxon_id = taxon_id,
-      organism = "unsupported",
+      organism = convert_taxon_ids.organism,
       pangolin_docker_image = pangolin_docker_image
   }
   if (organism_parameters.standardized_organism != "unsupported") { # occurs in theiameta_panel
@@ -85,7 +89,7 @@ workflow morgana_magic {
         read2 = read2,
         seq_method = seq_method,
         standardized_organism = organism_parameters.standardized_organism,
-        analyze_flu_antiviral_substitutions = false, # don't try to look for antiviral substitutions?? or maybe? not sure
+        analyze_flu_antiviral_substitutions = false,
         assembly_metrics_cpu = assembly_metrics_cpu,
         assembly_metrics_disk_size = assembly_metrics_disk_size,
         assembly_metrics_docker = assembly_metrics_docker,
