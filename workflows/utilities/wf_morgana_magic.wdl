@@ -65,7 +65,6 @@ workflow morgana_magic {
   }
   call set_organism_defaults.organism_parameters {
     input:
-      taxon_id = taxon_id,
       organism = convert_taxon_ids.organism,
       pangolin_docker_image = pangolin_docker_image
   }
