@@ -207,6 +207,8 @@ workflow theiacov_clearlabs {
     Int number_Degenerate = consensus_qc.number_Degenerate
     Int number_Total = consensus_qc.number_Total
     Float percent_reference_coverage = consensus_qc.percent_reference_coverage
+    # Percentage mapped reads
+    Float percentage_mapped_reads = stats_n_coverage.percentage_mapped_reads
     # SC2 specific coverage outputs
     Float? sc2_s_gene_mean_coverage = gene_coverage.sc2_s_gene_depth
     Float? sc2_s_gene_percent_coverage = gene_coverage.sc2_s_gene_percent_coverage

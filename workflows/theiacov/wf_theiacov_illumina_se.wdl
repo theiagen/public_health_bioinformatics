@@ -317,5 +317,7 @@ workflow theiacov_illumina_se {
     # QC_Check Results
     String? qc_check = qc_check_task.qc_check
     File? qc_standard = qc_check_task.qc_standard
+    # Capture percentage_mapped_reads from ivar_consensus task
+    String? percentage_mapped_reads = ivar_consensus.percentage_mapped_reads
   }
 }
