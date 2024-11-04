@@ -116,7 +116,7 @@ workflow flu_track {
   String ha_na_assembly_coverage_string = "HA: " + select_first([ha_assembly_coverage.depth, ""]) + ", NA: " + select_first([na_assembly_coverage.depth, ""])
   
   # combine HA & NA mapped reads percentages
-  String ha_na_mapped_reads_percentage_string = "HA: " + select_first([ha_assembly_coverage.percentage_mapped_reads, ""]) + ", NA: " + select_first([na_assembly_coverage.percentage_mapped_reads, ""])
+  String ha_na_percentage_mapped_reads = "HA: " + select_first([ha_assembly_coverage.percentage_mapped_reads, ""]) + ", NA: " + select_first([na_assembly_coverage.percentage_mapped_reads, ""])
 
   # ABRICATE will run if assembly is provided, or was generated with IRMA
   if (defined(irma.irma_assemblies) && defined(irma.irma_assembly_fasta)){
