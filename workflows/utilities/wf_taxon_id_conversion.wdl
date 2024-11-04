@@ -30,6 +30,6 @@ workflow convert_taxon_ids {
     String hiv = "HIV"
   }
   output {
-    organism = select_first([sars_cov_2, mpox, wnv, flu_a, flu_b, rsv_a, rsv_b, hiv, unsupported_organism])
+    String organism = select_first([sars_cov_2, mpox, wnv, flu_a, flu_b, rsv_a, rsv_b, hiv, unsupported_organism])
   }
 }
