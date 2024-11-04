@@ -254,6 +254,8 @@ workflow theiaprok_illumina_se {
               num_reads_raw1 = read_QC_trim.fastq_scan_raw1,
               fastq_scan_version = read_QC_trim.fastq_scan_version,
               num_reads_clean1 = read_QC_trim.fastq_scan_clean1,
+              fastq_scan_raw1_json = read_QC_trim.fastq_scan_raw1_json,
+              fastq_scan_clean1_json = read_QC_trim.fastq_scan_clean1_json,
               trimmomatic_version = read_QC_trim.trimmomatic_version,
               fastp_version = read_QC_trim.fastp_version,
               bbduk_docker = read_QC_trim.bbduk_docker,

@@ -35,6 +35,10 @@ task export_taxon_tables {
     Int? num_reads_raw2
     String? num_reads_raw_pairs
     String? fastq_scan_version
+    File? fastq_scan_raw1_json
+    File? fastq_scan_raw2_json
+    File? fastq_scan_clean1_json
+    File? fastq_scan_clean2_json
     Int? num_reads_clean1
     Int? num_reads_clean2
     String? num_reads_clean_pairs
@@ -446,6 +450,10 @@ task export_taxon_tables {
       "num_reads_raw2": "~{num_reads_raw2}",
       "num_reads_raw_pairs": "~{num_reads_raw_pairs}",
       "fastq_scan_version": "~{fastq_scan_version}",
+      "fastq_scan_raw1_json": "~{fastq_scan_raw1_json}",
+      "fastq_scan_raw2_json": "~{fastq_scan_raw2_json}",
+      "fastq_scan_clean1_json": "~{fastq_scan_clean1_json}",
+      "fastq_scan_clean2_json": "~{fastq_scan_clean2_json}",
       "num_reads_clean1": "~{num_reads_clean1}",
       "num_reads_clean2": "~{num_reads_clean2}",
       "num_reads_clean_pairs": "~{num_reads_clean_pairs}",
