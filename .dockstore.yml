@@ -195,7 +195,7 @@ workflows:
    primaryDescriptorPath: /workflows/utilities/data_import/wf_terra_2_bq.wdl
    testParameterFiles:
     - /tests/inputs/empty.json
- - name: Update_srr_metadata_PHB
+ - name: Update_SRR_Metadata_PHB
    subclass: WDL
    primaryDescriptorPath: /workflows/utilities/data_import/wf_update_srr_metadata.wdl
    testParameterFiles:
