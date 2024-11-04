@@ -440,6 +440,6 @@ workflow theiacov_illumina_pe {
     String? qc_check = qc_check_task.qc_check
     File? qc_standard = qc_check_task.qc_standard
     # Capture percentage_mapped_reads from ivar_consensus task or flu_track task
-    String percentage_mapped_reads = select_first([ivar_consensus.percentage_mapped_reads, flu_track.percentage_mapped_reads,""])
+    String percentage_mapped_reads = select_first([ivar_consensus.percentage_mapped_reads, flu_track.percentage_mapped_reads, ""])
   }
 }
