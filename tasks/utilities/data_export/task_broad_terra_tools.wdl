@@ -394,7 +394,8 @@ task export_taxon_tables {
     volatile: true
   }
   command <<<
-  
+    set -euo pipefail
+
     # capture taxon and corresponding table names from input taxon_tables
     taxon_array=($(cut -f1 ~{taxon_tables} | tail +2))
     echo "Taxon array: ${taxon_array[*]}"
@@ -786,7 +787,7 @@ task export_taxon_tables {
       "agrvate_version": "~{agrvate_version}",
       "agrvate_docker": "~{agrvate_docker}",
       "srst2_vibrio_detailed_tsv": "~{srst2_vibrio_detailed_tsv}",
-      "srst2_vibrio_version": "~{srst2_vibrio_version}",~
+      "srst2_vibrio_version": "~{srst2_vibrio_version}",
       "srst2_vibrio_docker": "~{srst2_vibrio_docker}",
       "srst2_vibrio_database": "~{srst2_vibrio_database}",
       "srst2_vibrio_ctxA": "~{srst2_vibrio_ctxA}",
