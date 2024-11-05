@@ -37,11 +37,9 @@ task basecall {
 
     echo "Basecalling completed for ~{input_file}. SAM file: $sam_file"
   >>>
-
   output {
     Array[File] sam_files = glob("output/sam/*.sam")
   }
-
   runtime {
     docker: docker
     cpu: cpu

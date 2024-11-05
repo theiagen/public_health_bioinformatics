@@ -4,9 +4,9 @@
 
 | **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
 |---|---|---|---|---|
-| [Standalone](../../workflows_overview/workflows_type.md/#standalone) | [Any Taxa](../../workflows_overview/workflows_kingdom.md/#any-taxa) | Dorado v1.0 | Yes | Sample-level |
+| [Standalone](../../workflows_overview/workflows_type.md/#standalone) | [Any Taxa](../../workflows_overview/workflows_kingdom.md/#any-taxa) | v2.2.1 | Yes | Sample-level |
 
-## Dorado Basecalling Overview
+## Dorado_Basecalling_PHB
 
 The Dorado Basecalling workflow is used to convert Oxford Nanopore `POD5` sequencing files into `FASTQ` format by utilizing a GPU-accelerated environment. This workflow is ideal for high-throughput applications where fast and accurate basecalling is essential. The workflow will upload fastq files to a user designated terra table for downstream analysis.
 
@@ -27,34 +27,24 @@ Automatic Detection: When set to sup, hac, or fast, Dorado will automatically se
 - `dna_r10.4.1_e8.2_400bps_hac@v4.2.0`
 - `dna_r10.4.1_e8.2_400bps_fast@v4.2.0`
 
-### Workflow Structure
+### Inputs
 
-1. **Dorado Basecalling**: Converts `POD5` files to 'SAM' files using the specified model.
-2. **Samtools Convert**: Converts the generated SAM files to BAM for efficient processing.
-3. **Dorado Demultiplexing**: Demultiplexes BAM files to produce barcode-specific FASTQ files.
-4. **FASTQ File Transfer**: Transfers files to Terra for downstream analysis.
-5. **Terra Table Creation**: Generates a Terra table with the uploaded FASTQ files for downstream analyses.
-
----
-
-## Inputs
-
-| **Task** | **Variable** | **Type** | **Description** | **Default Value** | **Required** |
+| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
 |---|---|---|---|---|---|
-| Basecalling | **input_files** | Array[File] | Array of `POD5` files for basecalling | None | Yes |
-| Basecalling | **dorado_model** | Boolean | Model accuracy or full model name (default: 'sup')| sup | No |
-| Basecalling | **fastq_file_name** | String | Prefix for naming output FASTQ files | None | Yes |
-| Basecalling | **kit_name** | String | Sequencing kit name used (e.g., `SQK-RPB114-24`). | None | Yes |
-| Basecalling | **cpu** | Int | Number of CPUs allocated | 8 | No |
-| Basecalling | **memory** | String | Amount of memory to allocate | 32GB | No |
-| Basecalling | **gpuCount** | Int | Number of GPUs to use | 1 | No |
-| Basecalling | **gpuType** | String | Type of GPU (e.g., `nvidia-tesla-t4`). | nvidia-tesla-t4 | No |
-| Demultiplexing | **fastq_upload_path** | String | Location to upload FASTQ files on Terra (copy path from terra folder) | None | Yes |
-| Demultiplexing | **fastq_file_name** | String | Prefix for naming output FASTQ files| None| Yes |
-| Terra Table | **terra_project** | String | Terra project ID for final fastq file uplaod to terra table | None | Yes |
-| Terra Table | **terra_workspace** | String | Terra workspace name for final fastq file upload to Terra table | None | Yes |
-
----
+| dorado_basecalling_workflow | **input_files** | Array[File] | Array of `POD5` files for basecalling | None | Required |
+| dorado_basecalling_workflow | **dorado_model** | String | Model accuracy or full model name (default: 'sup') | "sup" | Optional |
+| dorado_basecalling_workflow | **fastq_file_name** | String | Prefix for naming output FASTQ files | None | Required |
+| dorado_basecalling_workflow | **kit_name** | String | Sequencing kit name used (e.g., `SQK-RPB114-24`) | None | Required |
+| basecall_task.basecall | **cpu** | Int | Number of CPUs allocated | 8 | Optional |
+| basecall_task.basecall | **memory** | Int | Amount of memory to allocate (GB) | 32 | Optional |
+| basecall_task.basecall | **gpuCount** | Int | Number of GPUs to use | 1 | Optional |
+| basecall_task.basecall | **gpuType** | String | Type of GPU (e.g., `nvidia-tesla-t4`) | "nvidia-tesla-t4" | Optional |
+| dorado_basecalling_workflow | **fastq_upload_path** | String | Terra folder path for uploading FASTQ files | None | Required |
+| dorado_basecalling_workflow | **terra_project** | String | Terra project ID for FASTQ file upload | None | Required |
+| dorado_basecalling_workflow | **terra_workspace** | String | Terra workspace for final FASTQ file upload | None | Required |
+| dorado_basecalling_workflow | **paired_end** | Boolean | Indicates if data is paired-end | false | Optional |
+| dorado_basecalling_workflow | **assembly_data** | Boolean | Indicates if the data is for assembly | false | Optional |
+| dorado_basecalling_workflow | **file_ending** | String? | File extension pattern for identifying files (e.g., ".fastq.gz") | None | Optional |
 
 !!! info "Detailed Input Information"
     - **dorado_model**: If set to 'sup', 'hac', or 'fast', the workflow will run with automatic model selection. If a full model name is provided, Dorado will use that model directly.
@@ -71,9 +61,27 @@ Automatic Detection: When set to sup, hac, or fast, Dorado will automatically se
     - **Accepted Prefix**: `projectname-barcode01.fastq.gz`
     - **Not Recommended**: `projectname_2024_test-barcode01.fastq.gz` (would recognize only `projectname` as the sample name, leading to ambiguity with multiple files).
 
----
+### Workflow Tasks
 
-## Outputs
+This workflow is composed of several tasks to process, basecall, and analyze rabies genome data:
+
+??? task "`Dorado Basecalling`: Converts `POD5` files to 'SAM' files"
+    The basecalling task takes `POD5` files as input and converts them into 'SAM' format using the specified model. This step leverages GPU acceleration for efficient processing.
+
+??? task "`Samtools Convert`: Converts SAM to BAM"
+    Once the SAM files are generated, this task converts them into BAM format, optimizing them for downstream applications and saving storage space.
+
+??? task "`Dorado Demultiplexing`: Produces barcode-specific FASTQ files"
+    This task demultiplexes the BAM files based on barcodes, generating individual FASTQ files for each barcode to support further analyses.
+
+??? task "`FASTQ File Transfer`: Transfers files to Terra"
+    After demultiplexing, the FASTQ files are uploaded to Terra for storage and potential use in other workflows.
+
+??? task "`Terra Table Creation`: Creates a Terra table with FASTQ files"
+    A Terra table is created to index the uploaded FASTQ files, enabling easy access and integration with other workflows for downstream analyses.
+
+
+### Outputs
 
 | **Variable** | **Type** | **Description** |
 |---|---|---|
@@ -82,5 +90,6 @@ Automatic Detection: When set to sup, hac, or fast, Dorado will automatically se
 | **logs** | Array[File] | Log files from the demultiplexing process |
 | **terra_table_tsv** | File | TSV file for Terra table upload |
 
+## References
 <!-- -->
 ><https://github.com/nanoporetech/dorado/>

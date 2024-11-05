@@ -85,7 +85,6 @@ task dorado_demux {
   output {
     Array[File] fastq_files = glob("~{fastq_file_name}-*.fastq.gz")
   }
-
    runtime {
     docker: docker
     cpu: cpu

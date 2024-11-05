@@ -32,7 +32,6 @@ task samtools_convert {
   output {
     Array[File] bam_files = glob("output/bam/*.bam")
   }
-
  runtime {
     docker: docker
     cpu: cpu

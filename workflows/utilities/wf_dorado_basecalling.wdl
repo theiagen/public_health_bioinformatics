@@ -10,7 +10,6 @@ workflow dorado_basecalling_workflow {
   meta {
     description: "GPU-accelerated workflow for basecalling Oxford Nanopore POD5 files, generating SAM outputs and supporting downstream demultiplexing and FASTQ output."
   }
-
   input {
     Array[File] input_files
     String dorado_model = "sup" 
@@ -22,42 +21,31 @@ workflow dorado_basecalling_workflow {
     String? file_ending
     String terra_project
     String terra_workspace
-    String fastq_file_name
-    Int cpu = 8                      
-    Int memory = 32                    
-    Int disk_size = 100               
+    String fastq_file_name             
   }
-
   scatter (file in input_files) {
     call basecall_task.basecall as basecall_step {
       input:
         input_file = file,
         dorado_model = dorado_model,
         kit_name = kit_name,
-        cpu = cpu,
-        memory = memory,
-        disk_size = disk_size
     }
   }
-
   call samtools_convert_task.samtools_convert {
     input:
       sam_files = flatten(basecall_step.sam_files)
   }
-
   call dorado_demux_task.dorado_demux {
     input:
       bam_files = samtools_convert.bam_files,
       kit_name = kit_name,
       fastq_file_name = fastq_file_name
   }
-
   call transfer_fastq_files.transfer_files as transfer_files {
     input:
       files_to_transfer = dorado_demux.fastq_files,
       target_bucket = fastq_upload_path
   }
-
   if (defined(transfer_files.transferred_files)) {
     call terra_fastq_table.create_terra_table as create_terra_table {
       input:
@@ -70,7 +58,6 @@ workflow dorado_basecalling_workflow {
         terra_workspace = terra_workspace
     }
   }
-
   output {
     Array[File] fastq_files = dorado_demux.fastq_files
     File? terra_table_tsv = create_terra_table.terra_table_to_upload

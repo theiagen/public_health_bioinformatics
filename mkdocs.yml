@@ -52,7 +52,7 @@ nav:
                - Zip_Column_Content: workflows/data_export/zip_column_content.md
             - Standalone:
                - Cauris_CladeTyper: workflows/standalone/cauris_cladetyper.md
-               - Dorado_basecalling: workflows/standalone/dorado_basecalling.md
+               - Dorado_Bsecalling: workflows/standalone/dorado_basecalling.md
                - GAMBIT_Query: workflows/standalone/gambit_query.md
                - Kraken2: workflows/standalone/kraken2.md
                - NCBI-AMRFinderPlus: workflows/standalone/ncbi_amrfinderplus.md
@@ -68,7 +68,7 @@ nav:
                - BaseSpace_Fetch: workflows/data_import/basespace_fetch.md
                - Concatenate_Column_Content: workflows/data_export/concatenate_column_content.md
                - Create_Terra_Table: workflows/data_import/create_terra_table.md
-               - Dorado_basecalling: workflows/standalone/dorado_basecalling.md
+               - Dorado_Basecalling: workflows/standalone/dorado_basecalling.md
                - Kraken2: workflows/standalone/kraken2.md
                - NCBI-Scrub: workflows/standalone/ncbi_scrub.md
                - RASUSA: workflows/standalone/rasusa.md
@@ -128,7 +128,7 @@ nav:
             - Core_Gene_SNP: workflows/phylogenetic_construction/core_gene_snp.md
             - Create_Terra_Table: workflows/data_import/create_terra_table.md
             - CZGenEpi_Prep: workflows/phylogenetic_construction/czgenepi_prep.md
-            - Dorado_basecalling: workflows/standalone/dorado_basecalling.md
+            - Dorado_Basecalling: workflows/standalone/dorado_basecalling.md
             - Find_Shared_Variants: workflows/phylogenetic_construction/find_shared_variants.md
             - Freyja Workflow Series: workflows/genomic_characterization/freyja.md
             - GAMBIT_Query: workflows/standalone/gambit_query.md
