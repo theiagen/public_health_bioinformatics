@@ -8,9 +8,9 @@
 
 ## TheiaEuk Workflows
 
-**The TheiaEuk_PE workflow is for the assembly, quality assessment, and characterization of fungal genomes.** It is designed to accept Illumina paired-end sequencing data as the primary input. **It is currently intended only for haploid fungal genomes like _Candida auris_.** Analyzing diploid genomes using TheiaEuk should be attempted only with expert attention to the resulting genome quality.
+**The TheiaEuk_PE workflow is for the assembly, quality assessment, and characterization of fungal genomes.** It is designed to accept Illumina paired-end sequencing data as the primary input. **It is currently intended only for ==haploid== fungal genomes like _Candida auris_.** Analyzing diploid genomes using TheiaEuk should be attempted only with expert attention to the resulting genome quality.
 
-All input reads are processed through "core tasks" in each workflow. The core tasks include raw-read quality assessment, read cleaning (quality trimming and adapter removal), de novo assembly, assembly quality assessment, and species taxon identification. For some taxa identified, "taxa-specific sub-workflows" will be automatically activated, undertaking additional taxa-specific characterization steps, including clade-typing and/or antifungal resistance detection.
+All input reads are processed through "core tasks" in each workflow. The core tasks include raw read quality assessment, read cleaning (quality trimming and adapter removal), de novo assembly, assembly quality assessment, and species taxon identification. For some taxa identified, taxa-specific sub-workflows will be automatically activated, undertaking additional taxa-specific characterization steps, including clade-typing and/or antifungal resistance detection.
 
 !!! caption "TheiaEuk Workflow Diagram"
     ![TheiaEuk Workflow Diagram](../../assets/figures/TheiaEuk_Illumina_PE.png){width=75%}
@@ -177,7 +177,14 @@ All input reads are processed through "core tasks" in each workflow. The core ta
 
 </div>
 
-### Workflow tasks (performed for all taxa)
+### Workflow Tasks
+
+All input reads are processed through "core tasks" in the TheiaEuk workflows. These undertake read trimming and assembly appropriate to the input data type, currently only Illumina paired-end data. TheiaEuk workflow subsequently launch default genome characterization modules for quality assessment, and additional taxa-specific characterization steps. When setting up the workflow, users may choose to use "optional tasks" or alternatives to tasks run in the workflow by default.
+
+#### Core tasks
+
+!!! tip ""
+    These tasks are performed regardless or of organism, and perform read trimming and various quality control steps.
 
 ??? task "`versioning`: Version capture for TheiaEuk"
 
@@ -221,17 +228,20 @@ All input reads are processed through "core tasks" in each workflow. The core ta
         | --- | --- |
         | Task | [task_screen.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/comparisons/task_screen.wdl)  |
 
-??? task "`rasusa`: Read subsampling"
+??? task "`Rasusa`: Read subsampling"
 
-    The RASUSA task performs subsampling of the raw reads. By default, this task will subsample reads to a depth of 150X using the estimated genome length produced during the preceding raw read screen. The user can prevent the task from being launched by setting the `call_rasusa`variable to false. 
+    The Rasusa task performs subsampling of the raw reads. By default, this task will subsample reads to a depth of 150X using the estimated genome length produced during the preceding raw read screen. The user can prevent the task from being launched by setting the `call_rasusa`variable to false. 
 
     The user can also provide an estimated genome length for the task to use for subsampling using the `genome_size` variable. In addition, the read depth can be modified using the `subsample_coverage` variable.
         
-    !!! techdetails "RASUSA Technical Details"
+    !!! techdetails "Rasusa Technical Details"
 
-        |  | TheiaEuk_Illumina_PE_PHB |
+        |  | Links |
         | --- | --- |
         | Task | [task_rasusa.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/task_rasusa.wdl) |
+        | Software Source Code | [Rasusa on GitHub](https://github.com/mbhall88/rasusa) |
+        | Software Documentation | [Rasusa on GitHub](https://github.com/mbhall88/rasusa) |
+        | Original Publication(s) | [Rasusa: Randomly subsample sequencing reads to a specified coverage](https://doi.org/10.21105/joss.03941) |
 
 ??? task "`read_QC_trim`: Read Quality Trimming, Adapter Removal, Quantification, and Identification"
 
@@ -297,11 +307,16 @@ All input reads are processed through "core tasks" in each workflow. The core ta
                 
         |  | Links |
         | --- | --- |
-        | Sub-workflow | [wf_read_QC_trim.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_read_QC_trim_pe.wdl) |
+        | Sub-workflow | [wf_read_QC_trim_pe.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_read_QC_trim_pe.wdl) |
         | Tasks | [task_fastp.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_fastp.wdl)<br>[task_trimmomatic.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_trimmomatic.wdl)<br>[task_bbduk.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_bbduk.wdl)<br>[task_fastq_scan.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_fastq_scan.wdl)<br>[task_midas.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/contamination/task_midas.wdl)<br>[task_kraken2.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/contamination/task_kraken2.wdl)|
         | Software Source Code | [fastp](https://github.com/OpenGene/fastp); [Trimmomatic](https://github.com/usadellab/Trimmomatic); [fastq-scan](https://github.com/rpetit3/fastq-scan); [MIDAS](https://github.com/snayfach/MIDAS); [Kraken2](https://github.com/DerrickWood/kraken2)|
         | Software Documentation | [fastp](https://github.com/OpenGene/fastp); [Trimmomatic](http://www.usadellab.org/cms/?page=trimmomatic); [BBDuk](https://jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/bbduk-guide/); [fastq-scan](https://github.com/rpetit3/fastq-scan); [MIDAS](https://github.com/snayfach/MIDAS); [Kraken2](https://github.com/DerrickWood/kraken2/wiki) |
         | Original Publication(s) | [Trimmomatic: a flexible trimmer for Illumina sequence data](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4103590/)<br>[fastp: an ultra-fast all-in-one FASTQ preprocessor](https://academic.oup.com/bioinformatics/article/34/17/i884/5093234?login=false)<br>[An integrated metagenomics pipeline for strain profiling reveals novel patterns of bacterial transmission and biogeography](https://pubmed.ncbi.nlm.nih.gov/27803195/)<br>[Improved metagenomic analysis with Kraken 2](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1891-0) |
+
+#### Assembly tasks
+
+!!! tip ""
+    These tasks assemble the reads into a _de novo_ assembly and assess the quality of the assembly.
 
 ??? task "`shovill`: _De novo_ Assembly"
 
@@ -316,7 +331,8 @@ All input reads are processed through "core tasks" in each workflow. The core ta
         |  | Links |
         | --- | --- |
         | TheiaEuk WDL Task | [task_shovill.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_shovill.wdl#L3) |
-        | Software code repository and documentation | [Shovill on GitHub](https://github.com/tseemann/shovill) |
+        | Software Source Code | [Shovill on GitHub](https://github.com/tseemann/shovill) |
+        | Software Documentation | [Shovill on GitHub](https://github.com/tseemann/shovill) |
 
 ??? task "`QUAST`: Assembly Quality Assessment"
 
@@ -345,6 +361,11 @@ All input reads are processed through "core tasks" in each workflow. The core ta
         | Software Documentation | [CG-Pipeline on GitHub](https://github.com/lskatz/CG-Pipeline/) |
         | Original Publication(s) | [A computational genomics pipeline for prokaryotic sequencing projects](https://academic.oup.com/bioinformatics/article/26/15/1819/188418) |
 
+#### Organism-agnostic characterization
+
+!!! tip ""
+    These tasks are performed regardless of the organism and provide quality control and taxonomic assignment.
+
 ??? task "`GAMBIT`: **Taxon Assignment**"
 
     [`GAMBIT`](https://github.com/jlumpe/gambit) determines the taxon of the genome assembly using a k-mer based approach to match the assembly sequence to the closest complete genome in a database, thereby predicting its identity. Sometimes, GAMBIT can confidently designate the organism to the species level. Other times, it is more conservative and assigns it to a higher taxonomic rank.
@@ -360,7 +381,33 @@ All input reads are processed through "core tasks" in each workflow. The core ta
         | Software Documentation | [GAMBIT ReadTheDocs](https://gambit-genomics.readthedocs.io/en/latest/) |
         | Original Publication(s) | [GAMBIT (Genomic Approximation Method for Bacterial Identification and Tracking): A methodology to rapidly leverage whole genome sequencing of bacterial isolates for clinical identification](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0277575) |
 
-??? task "**`QC_check`: Check QC Metrics Against User-Defined Thresholds (optional)**"
+??? task "`BUSCO`: Assembly Quality Assessment"
+
+    BUSCO (**B**enchmarking **U**niversal **S**ingle-**C**opy **O**rthologue) attempts to quantify the completeness and contamination of an assembly to generate quality assessment metrics. It uses taxa-specific databases containing genes that are all expected to occur in the given taxa, each in a single copy. BUSCO examines the presence or absence of these genes, whether they are fragmented, and whether they are duplicated (suggestive that additional copies came from contaminants).
+
+    **BUSCO notation** 
+    
+    Here is an example of BUSCO notation: `C:99.1%[S:98.9%,D:0.2%],F:0.0%,M:0.9%,n:440`. There are several abbreviations used in this output:
+    
+    - Complete (C) - genes are considered "complete" when their lengths are within two standard deviations of the BUSCO group mean length.
+    - Single-copy (S) - genes that are complete and have only one copy.
+    - Duplicated (D) - genes that are complete and have more than one copy.
+    - Fragmented (F) - genes that are only partially recovered.
+    - Missing (M) - genes that were not recovered at all.
+    - Number of genes examined (n) - the number of genes examined.
+    
+    A high equity assembly will use the appropriate database for the taxa, have high complete (C) and single-copy (S) percentages, and low duplicated (D), fragmented (F) and missing (M) percentages. 
+  
+    !!! techdetails "BUSCO Technical Details"
+        
+        |  | Links |
+        | --- | --- |
+        | Task | [task_busco.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/advanced_metrics/task_busco.wdl) |
+        | Software Source Code | [BUSCO on GitLab](https://gitlab.com/ezlab/busco) |
+        | Software Documentation | https://busco.ezlab.org/ |
+        | Orginal publication | [BUSCO: assessing genome assembly and annotation completeness with single-copy orthologs](https://academic.oup.com/bioinformatics/article/31/19/3210/211866) |
+
+??? task "`QC_check`: **Check QC Metrics Against User-Defined Thresholds (optional)**"
 
     The `qc_check` task compares generated QC metrics against user-defined thresholds for each metric. This task will run if the user provides a `qc_check_table` .tsv file. If all QC metrics meet the threshold, the `qc_check` output variable will read `QC_PASS`. Otherwise, the output will read `QC_NA` if the task could not proceed or `QC_ALERT` followed by a string indicating what metric failed.
 
@@ -385,7 +432,7 @@ All input reads are processed through "core tasks" in each workflow. The core ta
         | --- | --- |
         | Task | [task_qc_check_phb.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/comparisons/task_qc_check_phb.wdl) |
 
-### Organism-specific Characterization
+#### Organism-specific characterization
 
 The TheiaEuk workflow automatically activates taxa-specific tasks after identification of relevant taxa using `GAMBIT`. Many of these taxa-specific tasks do not require any additional workflow tasks from the user.
 
