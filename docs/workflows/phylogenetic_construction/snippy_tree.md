@@ -266,7 +266,7 @@ Sequencing data used in the Snippy_Tree workflow must:
 
         |  | Links |
         | --- | --- |
-        | Task | [task_summarize_data.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/task_summarize_data.wdl) |
+        | Task | [task_summarize_data.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/data_handling/task_summarize_data.wdl) |
 
 ??? task "Concatenate Variants (optional)"
 
