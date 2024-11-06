@@ -23,6 +23,7 @@ workflow snippy_tree_wf {
     Boolean use_gubbins = true
     Boolean core_genome = true
     Boolean call_shared_variants = true
+    Array[File]? snippy_variants_qc_metrics
     
     String? data_summary_terra_project
     String? data_summary_terra_workspace
@@ -186,6 +187,14 @@ workflow snippy_tree_wf {
         concatenated_file_name = tree_name_updated
     }
   }
+  if (defined(snippy_variants_qc_metrics)) {
+    call file_handling.cat_files as concatenate_qc_metrics {
+      input:
+        files_to_cat = select_first([snippy_variants_qc_metrics]),
+        concatenated_file_name = tree_name_updated + "_combined_qc_metrics.tsv",
+        skip_extra_headers = true
+    }
+  }
   call versioning.version_capture {
     input:
   }
@@ -233,5 +242,8 @@ workflow snippy_tree_wf {
     # shared snps outputs
     File? snippy_concatenated_variants = concatenate_variants.concatenated_variants
     File? snippy_shared_variants_table = shared_variants.shared_variants_table
+
+    # combined qc metrics
+    File? snippy_combined_qc_metrics = concatenate_qc_metrics.concatenated_files
   }
 }
