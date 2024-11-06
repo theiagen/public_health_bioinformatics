@@ -22,7 +22,7 @@
       
       
       <link rel="icon" href="../../../assets/logos/Theiagen-Symbol-Standard-01.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.43">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.44">
     
     
       
@@ -1187,6 +1187,15 @@
   <a href="#snippy_variants" class="md-nav__link">
     <span class="md-ellipsis">
       Snippy_Variants
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#snippy_variants" class="md-nav__link">
+    <span class="md-ellipsis">
+      snippy_variants
     </span>
   </a>
   
@@ -2524,6 +2533,15 @@
   <a href="#snippy_variants" class="md-nav__link">
     <span class="md-ellipsis">
       Snippy_Variants
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#snippy_variants" class="md-nav__link">
+    <span class="md-ellipsis">
+      snippy_variants
     </span>
   </a>
   
@@ -3924,6 +3942,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#snippy_variants" class="md-nav__link">
+    <span class="md-ellipsis">
+      snippy_variants
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#snippy_tree" class="md-nav__link">
     <span class="md-ellipsis">
       Snippy_Tree
@@ -4493,6 +4520,15 @@
   <a href="#snippy_variants" class="md-nav__link">
     <span class="md-ellipsis">
       Snippy_Variants
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#snippy_variants" class="md-nav__link">
+    <span class="md-ellipsis">
+      snippy_variants
     </span>
   </a>
   
@@ -5222,6 +5258,30 @@
 <p><code>Snippy_Variants</code> aligns reads for each sample against the reference genome. As part of <code>Snippy_Streamline</code>, the only output from this workflow is the <code>snippy_variants_outdir_tarball</code> which is provided in the set-level data table. Please see the full documentation for <a href="../snippy_variants/">Snippy_Variants</a> for more information.</p>
 </details>
 <details class="task">
+<summary>snippy_variants (qc_metrics output)</summary>
+<h5 id="snippy_variants">snippy_variants<a class="headerlink" href="#snippy_variants" title="Permanent link">&para;</a></h5>
+<p>This task runs Snippy to perform SNP analysis on individual samples. It extracts QC metrics from the Snippy output for each sample and saves them in per-sample TSV files (<code>snippy_variants_qc_metrics</code>). These per-sample QC metrics include the following columns:</p>
+<ul>
+<li><strong>samplename</strong>: The name of the sample.</li>
+<li><strong>reads_aligned_to_reference</strong>: The number of reads that aligned to the reference genome.</li>
+<li><strong>total_reads</strong>: The total number of reads in the sample.</li>
+<li><strong>percent_reads_aligned</strong>: The percentage of reads that aligned to the reference genome.</li>
+<li><strong>variants_total</strong>: The total number of variants detected between the sample and the reference genome.</li>
+<li><strong>percent_ref_coverage</strong>: The percentage of the reference genome covered by reads with a depth greater than or equal to the <code>min_coverage</code> threshold (default is 10).</li>
+<li><strong>#rname</strong>: Reference sequence name (e.g., chromosome or contig name).</li>
+<li><strong>startpos</strong>: Starting position of the reference sequence.</li>
+<li><strong>endpos</strong>: Ending position of the reference sequence.</li>
+<li><strong>numreads</strong>: Number of reads covering the reference sequence.</li>
+<li><strong>covbases</strong>: Number of bases with coverage.</li>
+<li><strong>coverage</strong>: Percentage of the reference sequence covered (depth ≥ 1).</li>
+<li><strong>meandepth</strong>: Mean depth of coverage over the reference sequence.</li>
+<li><strong>meanbaseq</strong>: Mean base quality over the reference sequence.</li>
+<li><strong>meanmapq</strong>: Mean mapping quality over the reference sequence.</li>
+</ul>
+<p>These per-sample QC metrics are then combined into a single file (<code>snippy_combined_qc_metrics</code>) in the downstream <code>snippy_tree_wf</code> workflow. The combined QC metrics file includes the same columns as above for all samples. Note that the last set of columns (<code>#rname</code> to <code>meanmapq</code>) may repeat for each chromosome or contig in the reference genome.</p>
+<p><strong>Note:</strong> The per-sample QC metrics provide valuable insights into the quality and coverage of your sequencing data relative to the reference genome. Monitoring these metrics can help identify samples with low coverage, poor alignment, or potential issues that may affect downstream analyses.</p>
+</details>
+<details class="task">
 <summary>Snippy_Tree workflow</summary>
 <h5 id="snippy_tree">Snippy_Tree<a class="headerlink" href="#snippy_tree" title="Permanent link">&para;</a></h5>
 <p>A simplified version of <code>Snippy_Tree</code> is used to build the phylogeny in the <code>Snippy_Streamline</code> workflow. The tasks undertaken are exactly the same between both workflows, but the user inputs and outputs have been reduced for clarity and ease. Please see the full documentation for <a href="../snippy_tree/">Snippy_Tree</a> for more information.</p>
@@ -5272,6 +5332,11 @@
 <td>snippy_concatenated_variants</td>
 <td>File</td>
 <td>The concatenated variants file</td>
+</tr>
+<tr>
+<td>snippy_combined_qc_metrics</td>
+<td>File</td>
+<td>Combined QC metrics file containing concatenated QC metrics from all samples.</td>
 </tr>
 <tr>
 <td>snippy_filtered_metadata</td>
@@ -5473,7 +5538,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2024-10-21</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2024-11-06</span>
   </span>
 
     
