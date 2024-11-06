@@ -509,7 +509,7 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
         !!! techdetails "Snippy Variants Technical Details"
             |  | Links |
             | --- | --- |
-            | Task | [task_snippy_variants.wdl]([tasks/gene_typing/variant_detection/task_snippy_variants.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/variant_detection/task_snippy_variants.wdl))<br>[task_snippy_gene_query.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/variant_detection/task_snippy_gene_query.wdl) |
+            | Task | [task_snippy_variants.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/variant_detection/task_snippy_variants.wdl)<br>[task_snippy_gene_query.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/variant_detection/task_snippy_gene_query.wdl) |
             | Software Source Code | [Snippy on GitHub](https://github.com/tseemann/snippy) |
             | Software Documentation | [Snippy on GitHub](https://github.com/tseemann/snippy) |
             
@@ -538,7 +538,7 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
         !!! techdetails "Snippy Variants Technical Details"
             |  | Links |
             | --- | --- |
-            | Task | [task_snippy_variants.wdl]([tasks/gene_typing/variant_detection/task_snippy_variants.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/variant_detection/task_snippy_variants.wdl))<br>[task_snippy_gene_query.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/variant_detection/task_snippy_gene_query.wdl) |
+            | Task | [task_snippy_variants.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/variant_detection/task_snippy_variants.wdl)<br>[task_snippy_gene_query.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/variant_detection/task_snippy_gene_query.wdl) |
             | Software Source Code | [Snippy on GitHub](https://github.com/tseemann/snippy) |
             | Software Documentation | [Snippy on GitHub](https://github.com/tseemann/snippy) |
 
@@ -565,7 +565,7 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
         !!! techdetails "Snippy Variants Technical Details"
             |  | Links |
             | --- | --- |
-            | Task | [task_snippy_variants.wdl]([tasks/gene_typing/variant_detection/task_snippy_variants.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/variant_detection/task_snippy_variants.wdl))<br>[task_snippy_gene_query.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/variant_detection/task_snippy_gene_query.wdl) |
+            | Task | [task_snippy_variants.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/variant_detection/task_snippy_variants.wdl)<br>[task_snippy_gene_query.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/variant_detection/task_snippy_gene_query.wdl) |
             | Software Source Code | [Snippy on GitHub](https://github.com/tseemann/snippy) |
             | Software Documentation | [Snippy on GitHub](https://github.com/tseemann/snippy) |
 
@@ -588,7 +588,7 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
         !!! techdetails "Snippy Variants Technical Details"
             |  | Links |
             | --- | --- |
-            | Task | [task_snippy_variants.wdl]([tasks/gene_typing/variant_detection/task_snippy_variants.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/variant_detection/task_snippy_variants.wdl))<br>[task_snippy_gene_query.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/variant_detection/task_snippy_gene_query.wdl) |
+            | Task | [task_snippy_variants.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/variant_detection/task_snippy_variants.wdl)<br>[task_snippy_gene_query.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/variant_detection/task_snippy_gene_query.wdl) |
             | Software Source Code | [Snippy on GitHub](https://github.com/tseemann/snippy) |
             | Software Documentation | [Snippy on GitHub](https://github.com/tseemann/snippy) |
 
