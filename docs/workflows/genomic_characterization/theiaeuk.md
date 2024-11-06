@@ -23,7 +23,7 @@ All input reads are processed through "core tasks" in each workflow. The core ta
 
     By default, the workflow anticipates 2 x 150bp reads (i.e. the input reads were generated using a 300-cycle sequencing kit). Modifications to the optional parameter for `trim_minlen` may be required to accommodate shorter read data, such as the 2 x 75bp reads generated using a 150-cycle sequencing kit.
 
-<div class="searchable-table" markdown="1">    
+<div class="searchable-table" markdown="1">
 
 | **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
 |---|---|---|---|---|---|
@@ -148,7 +148,7 @@ All input reads are processed through "core tasks" in each workflow. The core ta
 | read_QC_trim | **workflow_series** | String | Internal component, do not modify |  | Do Not Modify, Optional |
 | shovill_pe | **assembler** | String | Assembler to use (spades, skesa, velvet or megahit), see <https://github.com/tseemann/shovill#--assembler> | "skesa" | Optional |
 | shovill_pe | **assembler_options** | String | Assembler-specific options that you might choose, see <https://github.com/tseemann/shovill#--opts> |  | Optional |
-| shovill_pe | **depth** | Int | User specified depth of coverage for downsampling (see <https://github.com/tseemann/shovill#--depth and https://github.com/tseemann/shovill#main-steps>) | 150 | Optional |
+| shovill_pe | **depth** | Int | User specified depth of coverage for downsampling (see <https://github.com/tseemann/shovill#--depth> and <https://github.com/tseemann/shovill#main-steps>) | 150 | Optional |
 | shovill_pe | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
 | shovill_pe | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/shovill:1.1.0 | Optional |
 | shovill_pe | **genome_length** | String | Internal component, do not modify |  | Do Not Modify, Optional |
@@ -184,7 +184,7 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
 #### Core tasks
 
 !!! tip ""
-    These tasks are performed regardless or of organism, and perform read trimming and various quality control steps.
+    These tasks are performed regardless of organism. They perform read trimming and various quality control steps.
 
 ??? task "`versioning`: Version capture for TheiaEuk"
 
@@ -196,7 +196,7 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
         | --- | --- |
         | Task | [task_versioning.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/task_versioning.wdl) |
 
-??? task "`screen`: Total Raw Read Quantification and Genome Size Estimation"
+??? task "`screen`: Total Raw Read Quantification and Genome Size Estimation (optional, on by default)"
 
     The [`screen`](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/comparisons/task_screen.wdl) task ensures the quantity of sequence data is sufficient to undertake genomic analysis. It uses [`fastq-scan`](https://github.com/rpetit3/fastq-scan) and bash commands for quantification of reads and base pairs, and [mash](https://mash.readthedocs.io/en/latest/index.html) sketching to estimate the genome size and its coverage. At each step, the results are assessed relative to pass/fail criteria and thresholds that may be defined by optional user inputs. Samples that do not meet these criteria will not be processed further by the workflow:
 
@@ -228,7 +228,7 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
         | --- | --- |
         | Task | [task_screen.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/comparisons/task_screen.wdl)  |
 
-??? task "`Rasusa`: Read subsampling"
+??? task "`Rasusa`: Read subsampling (optional, on by default)"
 
     The Rasusa task performs subsampling of the raw reads. By default, this task will subsample reads to a depth of 150X using the estimated genome length produced during the preceding raw read screen. The user can prevent the task from being launched by setting the `call_rasusa`variable to false. 
 
@@ -407,7 +407,7 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
         | Software Documentation | https://busco.ezlab.org/ |
         | Orginal publication | [BUSCO: assessing genome assembly and annotation completeness with single-copy orthologs](https://academic.oup.com/bioinformatics/article/31/19/3210/211866) |
 
-??? task "`QC_check`: **Check QC Metrics Against User-Defined Thresholds (optional)**"
+??? task "`QC_check`: Check QC Metrics Against User-Defined Thresholds (optional)"
 
     The `qc_check` task compares generated QC metrics against user-defined thresholds for each metric. This task will run if the user provides a `qc_check_table` .tsv file. If all QC metrics meet the threshold, the `qc_check` output variable will read `QC_PASS`. Otherwise, the output will read `QC_NA` if the task could not proceed or `QC_ALERT` followed by a string indicating what metric failed.
 
@@ -434,92 +434,163 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
 
 #### Organism-specific characterization
 
-The TheiaEuk workflow automatically activates taxa-specific tasks after identification of relevant taxa using `GAMBIT`. Many of these taxa-specific tasks do not require any additional workflow tasks from the user.
+!!! tip ""
+    The TheiaEuk workflow automatically activates taxa-specific tasks after identification of the relevant taxa using `GAMBIT`. Many of these taxa-specific tasks do not require any additional inputs from the user.
 
 ??? toggle "_Candida auris_"
+    Two tools are deployed when _Candida auris_ is  identified.
 
-    Two tools are deployed when _Candida auris is_  identified. First, the Cladetyping tool is launched to determine the clade of the specimen by comparing the sequence to five clade-specific reference files. The output of the clade typing task will be used to specify the reference genome for the antifungal resistance detection tool. To detect mutations that may confer antifungal resistance, `Snippy` is used to find all variants relative to the clade-specific reference, then these variants are queried for product names associated with resistance according to the MARDy database (<http://mardy.dide.ic.ac.uk/index.php>).
+    ??? task "Cladetyping: clade determination"
+        GAMBIT is used to determine the clade of the specimen by comparing the sequence to five clade-specific reference files. The output of the clade typing task will be used to specify the reference genome for the antifungal resistance detection tool.
 
-    The genes in which there are known resistance-conferring mutations for this pathogen are:
+        ??? toggle "Default reference genomes used for clade typing and antimicrobial resistance gene detection of _C. auris_"
+            | Clade | Genome Accession | Assembly Name | Strain | NCBI Submitter | Included mutations in AMR genes (not comprehensive) |
+            | --- | --- | --- | --- | --- | --- |
+            | _Candida auris_ Clade I | GCA_002759435.2 | Cand_auris_B8441_V2 | B8441 | Centers for Disease Control and Prevention |  |
+            | _Candida auris_ Clade II | GCA_003013715.2 | ASM301371v2 | B11220 | Centers for Disease Control and Prevention |  |
+            | _Candida auris_ Clade III | GCA_002775015.1 | Cand_auris_B11221_V1 | B11221 | Centers for Disease Control and Prevention | _ERG11_ V125A/F126L |
+            | _Candida auris_ Clade IV | GCA_003014415.1 | Cand_auris_B11243 | B11243 | Centers for Disease Control and Prevention | _ERG11_ Y132F |
+            | _Candida auris_ Clade V | GCA_016809505.1 | ASM1680950v1 | IFRC2087 | Centers for Disease Control and Prevention |  |
 
-    - FKS1
-    - ERG11 (lanosterol 14-alpha demethylase)
-    - FUR1 (uracil phosphoribosyltransferase)
+        !!! techdetails "Cladetyping Technical Details"
+            |  | Links |
+            | --- | --- |
+            | Task | [task_cauris_cladetyping.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/candida/task_cauris_cladetyper.wdl) |
+            | Software Source Code | [GAMBIT on GitHub](https://github.com/jlumpe/gambit) |
+            | Software Documentation | [GAMBIT Overview](https://theiagen.notion.site/GAMBIT-7c1376b861d0486abfbc316480046bdc?pvs=4)
+            | Original Publication(s) | [GAMBIT (Genomic Approximation Method for Bacterial Identification and Tracking): A methodology to rapidly leverage whole genome sequencing of bacterial isolates for clinical identification](https://doi.org/10.1371/journal.pone.0277575)<br> [TheiaEuk: a species-agnostic bioinformatics workflow for fungal genomic characterization](https://doi.org/10.3389/fpubh.2023.1198213) |
 
-    We query `Snippy` results to see if any mutations were identified in those genes. In addition, _C. auris_ automatically checks for the following loci. You will find the mutations next to the locus tag in the `theiaeuk_snippy_variants_hits` column corresponding gene name followings:
+    ??? task "Snippy Variants: antifungal resistance detection"
+        To detect mutations that may confer antifungal resistance, `Snippy` is used to find all variants relative to the clade-specific reference, then these variants are queried for product names associated with resistance.
+    
+        The genes in which there are known resistance-conferring mutations for this pathogen are:
 
-    | **TheiaEuk Search Term** | **Corresponding Gene Name** |
-    |---|---|
-    | B9J08_005340 | ERG6 |
-    | B9J08_000401 | FLO8 |
-    | B9J08_005343 | Hypothetical protein (PSK74852) |
-    | B9J08_003102 | MEC3 |
-    | B9J08_003737 | ERG3 |
-    | lanosterol.14-alpha.demethylase | ERG11 |
-    | uracil.phosphoribosyltransferase | FUR1 |
-    | FKS1 | FKS1 |    
+        - FKS1
+        - ERG11 (lanosterol 14-alpha demethylase)
+        - FUR1 (uracil phosphoribosyltransferase)
 
-    For example, one sample may have the following output for the `theiaeuk_snippy_variants_hits` column:
+        We query `Snippy` results to see if any mutations were identified in those genes. By default, we automatically check for the following loci (which can be overwritten by the user). You will find the mutations next to the locus tag in the `theiaeuk_snippy_variants_hits` column corresponding gene name (see below):
 
-    ```plaintext
-    lanosterol.14-alpha.demethylase: lanosterol 14-alpha demethylase (missense_variant c.428A>G p.Lys143Arg; C:266 T:0),B9J08_000401: hypothetical protein (stop_gained c.424C>T p.Gln142*; A:70 G:0)
-    ```
+        | **TheiaEuk Search Term** | **Corresponding Gene Name** |
+        |---|---|
+        | B9J08_005340 | ERG6 |
+        | B9J08_000401 | FLO8 |
+        | B9J08_005343 | Hypothetical protein (PSK74852) |
+        | B9J08_003102 | MEC3 |
+        | B9J08_003737 | ERG3 |
+        | lanosterol.14-alpha.demethylase | ERG11 |
+        | uracil.phosphoribosyltransferase | FUR1 |
+        | FKS1 | FKS1 |    
 
-    Based on this, we can tell that ERG11 has a missense variant at position 143 (Lysine to Arginine) and B9J08_000401 (which is FLO8) has a stop-gained variant at position 142 (Glutamine to Stop).
+        For example, one sample may have the following output for the `theiaeuk_snippy_variants_hits` column:
 
-    ??? toggle "Default reference genomes used for clade typing and antimicrobial resistance gene detection of _C. auris_"
-        | Clade | Genome Accession | Assembly Name | Strain | NCBI Submitter | Included mutations in AMR genes (not comprehensive) |
-        | --- | --- | --- | --- | --- | --- |
-        | Candida auris Clade I | GCA_002759435.2 | Cand_auris_B8441_V2 | B8441 | Centers for Disease Control and Prevention |  |
-        | Candida auris Clade II | GCA_003013715.2 | ASM301371v2 | B11220 | Centers for Disease Control and Prevention |  |
-        | Candida auris Clade III | GCA_002775015.1 | Cand_auris_B11221_V1 | B11221 | Centers for Disease Control and Prevention | _ERG11_ V125A/F126L |
-        | Candida auris Clade IV | GCA_003014415.1 | Cand_auris_B11243 | B11243 | Centers for Disease Control and Prevention | _ERG11_ Y132F |
-        | Candida auris Clade V | GCA_016809505.1 | ASM1680950v1 | IFRC2087 | Centers for Disease Control and Prevention |  |
+        ```plaintext
+        lanosterol.14-alpha.demethylase: lanosterol 14-alpha demethylase (missense_variant c.428A>G p.Lys143Arg; C:266 T:0),B9J08_000401: hypothetical protein (stop_gained c.424C>T p.Gln142*; A:70 G:0)
+        ```
 
-    ??? toggle "Known resistance-conferring mutations for _Candida auris_"
-        Mutations in these genes that are known to confer resistance are shown below (source: MARDy database http://mardy.dide.ic.ac.uk/index.php)
+        Based on this, we can tell that ERG11 has a missense variant at position 143 (Lysine to Arginine) and B9J08_000401 (which is FLO8) has a stop-gained variant at position 142 (Glutamine to Stop).
 
-        | **Organism** | **Found in** | **Gene name** | **Gene locus** | **AA mutation** | **Drug** | **Tandem repeat name** | **Tandem repeat sequence** | **Reference** |
-        | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-        | **Candida auris** | **Human** | **ERG11** |  | **Y132F** | **Fluconazole** |  |  | [**10.1093/cid/ciw691**](https://academic.oup.com/cid/article/64/2/134/2706620/Simultaneous-Emergence-of-Multidrug-Resistant) |
-        | **Candida auris** | **Human** | **ERG11** |  | **K143R** | **Fluconazole** |  |  | [**10.1093/cid/ciw691**](https://academic.oup.com/cid/article/64/2/134/2706620/Simultaneous-Emergence-of-Multidrug-Resistant) |
-        | **Candida auris** | **Human** | **ERG11** |  | **F126T** | **Fluconazole** |  |  | [**10.1093/cid/ciw691**](https://academic.oup.com/cid/article/64/2/134/2706620/Simultaneous-Emergence-of-Multidrug-Resistant) |
-        | **Candida auris** | **Human** | **FKS1** |  | **S639P** | **Micafungin** |  |  | [**10.1016/j.diagmicrobio.2017.10.021**](https://www.sciencedirect.com/science/article/pii/S0732889317303498) |
-        | **Candida auris** | **Human** | **FKS1** |  | **S639P** | **Caspofungin** |  |  | [**10.1016/j.diagmicrobio.2017.10.021**](https://www.sciencedirect.com/science/article/pii/S0732889317303498) |
-        | **Candida auris** | **Human** | **FKS1** |  | **S639P** | **Anidulafungin** |  |  | [**10.1016/j.diagmicrobio.2017.10.021**](https://www.sciencedirect.com/science/article/pii/S0732889317303498) |
-        | **Candida auris** | **Human** | **FKS1** |  | **S639F** | **Micafungin** |  |  | [**10.1093/jac/dkx480**](https://academic.oup.com/jac/advance-article/doi/10.1093/jac/dkx480/4794718) |
-        | **Candida auris** | **Human** | **FKS1** |  | **S639F** | **Caspofungin** |  |  | [**10.1093/jac/dkx480**](https://academic.oup.com/jac/advance-article/doi/10.1093/jac/dkx480/4794718) |
-        | **Candida auris** | **Human** | **FKS1** |  | **S639F** | **Anidulafungin** |  |  | [**10.1093/jac/dkx480**](https://academic.oup.com/jac/advance-article/doi/10.1093/jac/dkx480/4794718) |
-        | **Candida auris** | **Human** | **FUR1** | **CAMJ_004922** | **F211I** | **5-flucytosine** |  |  | [**https://doi.org/10.1038/s41426-018-0045-x**](https://www.nature.com/articles/s41426-018-0045-x) |
+        ??? toggle "Known resistance-conferring mutations for _Candida auris_"
+            Mutations in these genes that are known to confer resistance are shown below
 
+            | **Organism** | **Found in** | **Gene name** | **Gene locus** | **AA mutation** | **Drug** | **Reference** |
+            | --- | --- | --- | --- | --- | --- | --- |
+            | **Candida auris** | **Human** | **ERG11** |  | **Y132F** | **Fluconazole** | [Simultaneous Emergence of Multidrug-Resistant _Candida auris_ on 3 Continents Confirmed by Whole-Genome Sequencing and Epidemiological Analyses](https://academic.oup.com/cid/article/64/2/134/2706620/Simultaneous-Emergence-of-Multidrug-Resistant) |
+            | **Candida auris** | **Human** | **ERG11** |  | **K143R** | **Fluconazole** | [Simultaneous Emergence of Multidrug-Resistant _Candida auris_ on 3 Continents Confirmed by Whole-Genome Sequencing and Epidemiological Analyses](https://academic.oup.com/cid/article/64/2/134/2706620/Simultaneous-Emergence-of-Multidrug-Resistant) |
+            | **Candida auris** | **Human** | **ERG11** |  | **F126T** | **Fluconazole** | [Simultaneous Emergence of Multidrug-Resistant _Candida auris_ on 3 Continents Confirmed by Whole-Genome Sequencing and Epidemiological Analyses](https://academic.oup.com/cid/article/64/2/134/2706620/Simultaneous-Emergence-of-Multidrug-Resistant) |
+            | **Candida auris** | **Human** | **FKS1** |  | **S639P** | **Micafungin**  | [Activity of CD101, a long-acting echinocandin, against clinical isolates of Candida auris](https://www.sciencedirect.com/science/article/pii/S0732889317303498) |
+            | **Candida auris** | **Human** | **FKS1** |  | **S639P** | **Caspofungin** | [Activity of CD101, a long-acting echinocandin, against clinical isolates of Candida auris](https://www.sciencedirect.com/science/article/pii/S0732889317303498) |
+            | **Candida auris** | **Human** | **FKS1** |  | **S639P** | **Anidulafungin** | [Activity of CD101, a long-acting echinocandin, against clinical isolates of Candida auris](https://www.sciencedirect.com/science/article/pii/S0732889317303498) |
+            | **Candida auris** | **Human** | **FKS1** |  | **S639F** | **Micafungin** | [A multicentre study of antifungal susceptibility patterns among 350 _Candida auris_ isolates (2009–17) in India: role of the ERG11 and FKS1 genes in azole and echinocandin resistance](https://academic.oup.com/jac/advance-article/doi/10.1093/jac/dkx480/4794718) |
+            | **Candida auris** | **Human** | **FKS1** |  | **S639F** | **Caspofungin** | [A multicentre study of antifungal susceptibility patterns among 350 _Candida auris_ isolates (2009–17) in India: role of the ERG11 and FKS1 genes in azole and echinocandin resistance](https://academic.oup.com/jac/advance-article/doi/10.1093/jac/dkx480/4794718) |
+            | **Candida auris** | **Human** | **FKS1** |  | **S639F** | **Anidulafungin** | [A multicentre study of antifungal susceptibility patterns among 350 _Candida auris_ isolates (2009–17) in India: role of the ERG11 and FKS1 genes in azole and echinocandin resistance](https://academic.oup.com/jac/advance-article/doi/10.1093/jac/dkx480/4794718) |
+            | **Candida auris** | **Human** | **FUR1** | **CAMJ_004922** | **F211I** | **5-flucytosine** | [Genomic epidemiology of the UK outbreak of the emerging human fungal pathogen Candida auris](https://doi.org/10.1038/s41426-018-0045-x) |
+
+        !!! techdetails "Snippy Variants Technical Details"
+            |  | Links |
+            | --- | --- |
+            | Task | [task_snippy_variants.wdl]([tasks/gene_typing/variant_detection/task_snippy_variants.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/variant_detection/task_snippy_variants.wdl))<br>[task_snippy_gene_query.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/variant_detection/task_snippy_gene_query.wdl) |
+            | Software Source Code | [Snippy on GitHub](https://github.com/tseemann/snippy) |
+            | Software Documentation | [Snippy on GitHub](https://github.com/tseemann/snippy) |
+            
 ??? toggle "_Candida albicans_"
+    When this species is detected by the taxon ID tool, an antifungal resistance detection task is deployed.
 
-    When this species is detected by the taxon ID tool, an antifungal resistance detection task is deployed. To detect mutations that may confer antifungal resistance, `Snippy` is used to find all variants relative to the clade-specific reference, and these variants are queried for product names associated with resistance according to the MARDy database (<http://mardy.dide.ic.ac.uk/index.php>).
+    ??? task "Snippy Variants: antifungal resistance detection"
+        To detect mutations that may confer antifungal resistance, `Snippy` is used to find all variants relative to the clade-specific reference, and these variants are queried for product names associated with resistance.
 
-    The genes in which there are known resistance-conferring mutations for this pathogen are:
+        The genes in which there are known resistance-conferring mutations for this pathogen are:
 
-    - ERG11
-    - GCS1 (FKS1)
-    - FUR1
-    - RTA2
+        - ERG11
+        - GCS1 (FKS1)
+        - FUR1
+        - RTA2
+
+        We query `Snippy` results to see if any mutations were identified in those genes. By default, we automatically check for the following loci (which can be overwritten by the user). You will find the mutations next to the locus tag in the `theiaeuk_snippy_variants_hits` column corresponding gene name (see below):
+
+        | **TheiaEuk Search Term** | **Corresponding Gene Name** |
+        |---|---|
+        | ERG11 | ERG11 |
+        | GCS1 | FKS1 |
+        | FUR1 | FUR1 |
+        | RTA2 | RTA2 |
+
+        !!! techdetails "Snippy Variants Technical Details"
+            |  | Links |
+            | --- | --- |
+            | Task | [task_snippy_variants.wdl]([tasks/gene_typing/variant_detection/task_snippy_variants.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/variant_detection/task_snippy_variants.wdl))<br>[task_snippy_gene_query.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/variant_detection/task_snippy_gene_query.wdl) |
+            | Software Source Code | [Snippy on GitHub](https://github.com/tseemann/snippy) |
+            | Software Documentation | [Snippy on GitHub](https://github.com/tseemann/snippy) |
 
 ??? toggle "_Aspergillus fumigatus_"
+    When this species is detected by the taxon ID tool an antifungal resistance detection task is deployed.
 
-    When this species is detected by the taxon ID tool an antifungal resistance detection task is deployed. To detect mutations that may confer antifungal resistance, `Snippy` is used to find all variants relative to the clade-specific reference, and these variants are queried for product names associated with resistance according to the MARDy database (<http://mardy.dide.ic.ac.uk/index.php>).
+    ??? task "Snippy Variants: antifungal resistance detection"
+        To detect mutations that may confer antifungal resistance, `Snippy` is used to find all variants relative to the clade-specific reference, and these variants are queried for product names associated with resistance.
 
-    The genes in which there are known resistance-conferring mutations for this pathogen are:
+        The genes in which there are known resistance-conferring mutations for this pathogen are:
 
-    - Cyp51A
-    - HapE
-    - COX10 (AFUA_4G08340)
+        - Cyp51A
+        - HapE
+        - COX10 (AFUA_4G08340)
+ 
+        We query `Snippy` results to see if any mutations were identified in those genes. By default, we automatically check for the following loci (which can be overwritten by the user). You will find the mutations next to the locus tag in the `theiaeuk_snippy_variants_hits` column corresponding gene name (see below):
+
+        | **TheiaEuk Search Term** | **Corresponding Gene Name** |
+        |---|---|
+        | Cyp51A | Cyp51A |
+        | HapE | HapE |
+        | AFUA_4G08340 | COX10 |
+
+        !!! techdetails "Snippy Variants Technical Details"
+            |  | Links |
+            | --- | --- |
+            | Task | [task_snippy_variants.wdl]([tasks/gene_typing/variant_detection/task_snippy_variants.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/variant_detection/task_snippy_variants.wdl))<br>[task_snippy_gene_query.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/variant_detection/task_snippy_gene_query.wdl) |
+            | Software Source Code | [Snippy on GitHub](https://github.com/tseemann/snippy) |
+            | Software Documentation | [Snippy on GitHub](https://github.com/tseemann/snippy) |
 
 ??? toggle "_Cryptococcus neoformans_"
+    When this species is detected by the taxon ID tool an antifungal resistance detection task is deployed.
 
-    When this species is detected by the taxon ID tool an antifungal resistance detection task is deployed. To detect mutations that may confer antifungal resistance, `Snippy` is used to find all variants relative to the clade-specific reference, and these variants are queried for product names associated with resistance according to the MARDy database (<http://mardy.dide.ic.ac.uk/index.php>).
+    ??? task "Snippy Variants: antifungal resistance detection"
+        To detect mutations that may confer antifungal resistance, `Snippy` is used to find all variants relative to the clade-specific reference, and these variants are queried for product names associated with resistance.
 
-    The gene in which there are known resistance-conferring mutations for this pathogen is:
+        The genes in which there are known resistance-conferring mutations for this pathogen are:
 
-    - ERG11 (CNA00300)
+        - ERG11 (CNA00300)
+        
+        We query `Snippy` results to see if any mutations were identified in those genes. By default, we automatically check for the following loci (which can be overwritten by the user). You will find the mutations next to the locus tag in the `theiaeuk_snippy_variants_hits` column corresponding gene name (see below):
+
+        | **TheiaEuk Search Term** | **Corresponding Gene Name** |
+        |---|---|
+        | CNA00300 | ERG11 |
+    
+        !!! techdetails "Snippy Variants Technical Details"
+            |  | Links |
+            | --- | --- |
+            | Task | [task_snippy_variants.wdl]([tasks/gene_typing/variant_detection/task_snippy_variants.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/variant_detection/task_snippy_variants.wdl))<br>[task_snippy_gene_query.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/variant_detection/task_snippy_gene_query.wdl) |
+            | Software Source Code | [Snippy on GitHub](https://github.com/tseemann/snippy) |
+            | Software Documentation | [Snippy on GitHub](https://github.com/tseemann/snippy) |
 
 ### Outputs
 
