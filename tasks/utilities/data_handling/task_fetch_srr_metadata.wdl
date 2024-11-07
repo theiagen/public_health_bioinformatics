@@ -8,7 +8,6 @@ task fetch_srr_metadata {
     Int cpu = 2
     Int memory = 8
   }
-
   meta {
     volatile: true
   }
@@ -43,7 +42,6 @@ task fetch_srr_metadata {
   output {
     String srr_accession = read_string("metadata_output/srr_accession.txt")
   }
-
   runtime {
     docker: docker
     memory: memory + " GB"
