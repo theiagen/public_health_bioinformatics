@@ -256,7 +256,7 @@ task kraken2_parse_classified {
     File kraken_report = "~{samplename}.report_parsed.txt"
     Float percent_human = read_float("PERCENT_HUMAN")
     String percent_sc2 = read_string("PERCENT_SC2")
-    String percent_target_organism = read_string("PERCENT_TARGET_ORG")
+    String percent_target_organism = read_string("PERCENT_TARGET_ORGANISM")
     String? kraken_target_organism = target_organism
   }
   runtime {
