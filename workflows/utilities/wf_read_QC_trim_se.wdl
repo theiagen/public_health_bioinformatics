@@ -100,13 +100,21 @@ workflow read_QC_trim_se {
       input:
         samplename = samplename,
         read1 = read1,
-        target_organism = target_organism
+        target_organism = target_organism,
+        kraken2_db = kraken_db,
+        disk_size = kraken_disk_size,
+        memory = kraken_memory,
+        cpu = kraken_cpu
     }
     call kraken.kraken2_theiacov as kraken2_theiacov_dehosted {
       input:
         samplename = samplename,
         read1 = select_first([ncbi_scrub_se.read1_dehosted]),
-        target_organism = target_organism
+        target_organism = target_organism,
+        kraken2_db = kraken_db,
+        disk_size = kraken_disk_size,
+        memory = kraken_memory,
+        cpu = kraken_cpu
     }
   }
   if ("~{workflow_series}" == "theiaprok") {
