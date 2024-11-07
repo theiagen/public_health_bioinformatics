@@ -52,7 +52,7 @@ nav:
                - Zip_Column_Content: workflows/data_export/zip_column_content.md
             - Standalone:
                - Cauris_CladeTyper: workflows/standalone/cauris_cladetyper.md
-               - Dorado_Bsecalling: workflows/standalone/dorado_basecalling.md
+               - Dorado_Basecalling: workflows/standalone/dorado_basecalling.md
                - GAMBIT_Query: workflows/standalone/gambit_query.md
                - Kraken2: workflows/standalone/kraken2.md
                - NCBI-AMRFinderPlus: workflows/standalone/ncbi_amrfinderplus.md

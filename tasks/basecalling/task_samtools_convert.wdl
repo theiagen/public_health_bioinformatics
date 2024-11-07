@@ -10,7 +10,7 @@ task samtools_convert {
   }
 
   command <<< 
-    set -e
+    set -euo pipefail
 
     bam_output="output/bam/"
     mkdir -p $bam_output
@@ -20,7 +20,7 @@ task samtools_convert {
       bam_file="${bam_output}/${base_name}.bam"
 
       echo "Converting SAM to BAM: $sam_file -> $bam_file"
-      samtools view -bS "$sam_file" > "$bam_file" || { echo "ERROR: samtools failed to convert $sam_file to BAM" >&2; exit 1; }
+      samtools view -@ ~{cpu} -bS "$sam_file" > "$bam_file" || { echo "ERROR: samtools failed to convert $sam_file to BAM" >&2; exit 1; }
 
       echo "Conversion successful: $bam_file"
     done
@@ -36,6 +36,6 @@ task samtools_convert {
     docker: docker
     cpu: cpu
     memory: "~{memory} GB"
-    disks: "local-disk ~{disk_size} HDD"
+    disks: "local-disk ~{disk_size} SSD"
   }
 }

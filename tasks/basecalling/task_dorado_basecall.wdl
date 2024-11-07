@@ -12,7 +12,7 @@ task basecall {
   }
 
   command <<< 
-    set -e
+    set -euo pipefail
 
     # Create output directory for SAM files
     sam_output="output/sam/"
@@ -48,4 +48,6 @@ task basecall {
     disk: disk_size + " GB"
     gpuCount: 1
     gpuType: "nvidia-tesla-t4"  }
+    preemptible: 0
+    maxRetries: 1
 }

@@ -7,12 +7,12 @@ task dorado_demux {
     String fastq_file_name
     Int cpu = 4 
     Int memory = 16
-    Int disk_size = 50
+    Int disk_size = 100
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/dorado:0.8.0"
   }
 
   command <<< 
-    set -e
+    set -euo pipefail
 
     echo "### Starting Dorado demux ###"
     date
@@ -90,5 +90,7 @@ task dorado_demux {
     cpu: cpu
     memory: "~{memory} GB"
     disks: "local-disk ~{disk_size} SSD"
+    preemptible: 0
+    maxRetries: 1
   }
 }
