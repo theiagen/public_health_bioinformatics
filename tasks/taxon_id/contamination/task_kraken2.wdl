@@ -5,25 +5,39 @@ task kraken2_theiacov {
     File read1
     File? read2
     String samplename
-    String kraken2_db = "/kraken2-db"
+    String kraken2_db = "gs://theiagen-large-public-files-rp/terra/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz"
     Int cpu = 4
     Int memory = 8
     String? target_organism
     Int disk_size = 100
-    String docker_image = "us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.0.8-beta_hv"
+    String docker_image = "us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.1.2-no-db"
   }
   command <<<
     # date and version control
     date | tee DATE
     kraken2 --version | head -n1 | tee VERSION
     num_reads=$(ls *fastq.gz 2> /dev/nul | wc -l)
+
+    # Decompress the Kraken2 database
+    mkdir db
+    tar -C ./db/ -xzvf ~{kraken2_db} 
+
     if ! [ -z ~{read2} ]; then
       mode="--paired"
     fi
     echo $mode
-    kraken2 $mode \
+
+     # determine if reads are compressed
+    if [[ ~{read1} == *.gz ]]; then
+      echo "Reads are compressed..."
+      compressed="--gzip-compressed"
+    fi
+    echo $compressed
+
+    # Run Kraken2
+    kraken2 $mode $compressed \
       --threads ~{cpu} \
-      --db ~{kraken2_db} \
+      --db ./db/ \
       ~{read1} ~{read2} \
       --report ~{samplename}_kraken2_report.txt \
       --output ~{samplename}.classifiedreads.txt
@@ -31,22 +45,29 @@ task kraken2_theiacov {
     # Compress and cleanup
     gzip ~{samplename}.classifiedreads.txt
 
+    # capture human percentage
     percentage_human=$(grep "Homo sapiens" ~{samplename}_kraken2_report.txt | cut -f 1)
-     # | tee PERCENT_HUMAN
-    percentage_sc2=$(grep "Severe acute respiratory syndrome coronavirus 2" ~{samplename}_kraken2_report.txt | cut -f1 )
-     # | tee PERCENT_COV
     if [ -z "$percentage_human" ] ; then percentage_human="0" ; fi
-    if [ -z "$percentage_sc2" ] ; then percentage_sc2="0" ; fi
     echo $percentage_human | tee PERCENT_HUMAN
-    echo $percentage_sc2 | tee PERCENT_SC2
-    # capture target org percentage 
+
+    # capture target org percentage
     if [ ! -z "~{target_organism}" ]; then
       echo "Target org designated: ~{target_organism}"
-      percent_target_organism=$(grep "~{target_organism}" ~{samplename}_kraken2_report.txt | cut -f1 | head -n1 )
-      if [ -z "$percent_target_organism" ] ; then percent_target_organism="0" ; fi
-    else 
+      # if target organisms is sc2, report it in a special legacy column called PERCENT_SC2
+      if [[ "~{target_organism}" == "Severe acute respiratory syndrome coronavirus 2" ]]; then
+        percentage_sc2=$(grep "Severe acute respiratory syndrome coronavirus 2" ~{samplename}_kraken2_report.txt  | cut -f1 )
+        percent_target_organism=""
+        if [ -z "$percentage_sc2" ] ; then percentage_sc2="0" ; fi
+      else
+        percentage_sc2="" 
+        percent_target_organism=$(grep "~{target_organism}" ~{samplename}_kraken2_report.txt  | cut -f1 | head -n1 )
+        if [ -z "$percent_target_organism" ] ; then percent_target_organism="0" ; fi
+      fi
+    else
       percent_target_organism=""
+      percentage_sc2=""
     fi
+    echo $percentage_sc2 | tee PERCENT_SC2
     echo $percent_target_organism | tee PERCENT_TARGET_ORGANISM
 
   >>>
@@ -55,7 +76,7 @@ task kraken2_theiacov {
     String version = read_string("VERSION")
     File kraken_report = "~{samplename}_kraken2_report.txt"
     Float percent_human = read_float("PERCENT_HUMAN")
-    Float percent_sc2 = read_float("PERCENT_SC2")
+    String percent_sc2 = read_string("PERCENT_SC2")
     String percent_target_organism = read_string("PERCENT_TARGET_ORGANISM")
     String? kraken_target_organism = target_organism
     File kraken2_classified_report = "~{samplename}.classifiedreads.txt.gz" 
@@ -205,29 +226,36 @@ task kraken2_parse_classified {
     CODE
 
     # theiacov parsing blocks - percent human, sc2 and target organism
+    # capture human percentage
     percentage_human=$(grep "Homo sapiens" ~{samplename}.report_parsed.txt | cut -f 1)
-    percentage_sc2=$(grep "Severe acute respiratory syndrome coronavirus 2" ~{samplename}.report_parsed.txt | cut -f1 )
-
     if [ -z "$percentage_human" ] ; then percentage_human="0" ; fi
-    if [ -z "$percentage_sc2" ] ; then percentage_sc2="0" ; fi
     echo $percentage_human | tee PERCENT_HUMAN
-    echo $percentage_sc2 | tee PERCENT_SC2
 
-    # capture target org percentage 
-    if [ ! -z "~{target_organism}" ]; then 
+    # capture target org percentage
+    if [ ! -z "~{target_organism}" ]; then
       echo "Target org designated: ~{target_organism}"
-      percent_target_organism=$(grep "~{target_organism}" ~{samplename}.report_parsed.txt | cut -f1 | head -n1 )
-      if [ -z "$percent_target_organism" ] ; then percent_target_organism="0" ; fi
-    else 
+      # if target organisms is sc2, report it in a special legacy column called PERCENT_SC2
+      if [[ "~{target_organism}" == "Severe acute respiratory syndrome coronavirus 2" ]]; then
+        percentage_sc2=$(grep "Severe acute respiratory syndrome coronavirus 2" ~{samplename}.report_parsed.txt  | cut -f1 )
+        percent_target_organism=""
+        if [ -z "$percentage_sc2" ] ; then percentage_sc2="0" ; fi
+      else
+        percentage_sc2="" 
+        percent_target_organism=$(grep "~{target_organism}" ~{samplename}.report_parsed.txt  | cut -f1 | head -n1 )
+        if [ -z "$percent_target_organism" ] ; then percent_target_organism="0" ; fi
+      fi
+    else
       percent_target_organism=""
+      percentage_sc2=""
     fi
-    echo $percent_target_organism | tee PERCENT_TARGET_ORG
+    echo $percentage_sc2 | tee PERCENT_SC2
+    echo $percent_target_organism | tee PERCENT_TARGET_ORGANISM
     
   >>>
   output {
     File kraken_report = "~{samplename}.report_parsed.txt"
     Float percent_human = read_float("PERCENT_HUMAN")
-    Float percent_sc2 = read_float("PERCENT_SC2")
+    String percent_sc2 = read_string("PERCENT_SC2")
     String percent_target_organism = read_string("PERCENT_TARGET_ORG")
     String? kraken_target_organism = target_organism
   }
