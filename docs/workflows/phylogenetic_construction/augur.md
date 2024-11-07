@@ -14,10 +14,10 @@ Two workflows are offered: **Augur_Prep_PHB** and **Augur_PHB**. These must be r
 
 !!! dna "**Helpful resources for epidemiological interpretation**"
 
-    - [introduction to Nextstrain](https://www.cdc.gov/amd/training/covid-toolkit/module3-1.html) (which includes Auspice)
-    - guide to Nextstrain [interactive trees](https://www.cdc.gov/amd/training/covid-toolkit/module3-4.html)
-    - an [introduction to UShER](https://www.cdc.gov/amd/training/covid-toolkit/module3-3.html)
-    - a video about [how to read trees](https://www.cdc.gov/amd/training/covid-toolkit/module1-3.html) if this is new to you
+    - [introduction to Nextstrain](https://www.cdc.gov/advanced-molecular-detection/php/training/module-3-1.html) (which includes Auspice)
+    - guide to Nextstrain [interactive trees](https://www.cdc.gov/advanced-molecular-detection/php/training/module-3-4.html)
+    - an [introduction to UShER](https://www.cdc.gov/advanced-molecular-detection/php/training/module-3-3.html)
+    - a video about [how to read trees](https://www.cdc.gov/advanced-molecular-detection/php/training/module-1-3.html) if this is new to you
     - documentation on [how to identify SARS-CoV-2 recombinants](https://github.com/pha4ge/pipeline-resources/blob/main/docs/sc2-recombinants.md)
 
 ### Augur_Prep_PHB

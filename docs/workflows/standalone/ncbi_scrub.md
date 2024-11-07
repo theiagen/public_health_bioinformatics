@@ -66,7 +66,7 @@ This workflow is composed of two tasks, one to dehost the input reads and anothe
         
         |  | Links |
         | --- | --- |
-        | Task | [task_kraken2.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/task_kraken2.wdl) |
+        | Task | [task_kraken2.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/contamination/task_kraken2.wdl) |
         | Software Source Code | [Kraken2 on GitHub](https://github.com/DerrickWood/kraken2/) |
         | Software Documentation | <https://github.com/DerrickWood/kraken2/wiki> |
         | Original Publication(s) | [Improved metagenomic analysis with Kraken 2](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1891-0) |
