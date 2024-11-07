@@ -56,7 +56,11 @@ workflow read_QC_trim_ont {
       input:
         samplename = samplename,
         read1 = read1,
-        target_organism = target_organism
+        target_organism = target_organism,
+        kraken2_db = kraken_db,
+        disk_size = kraken_disk_size,
+        memory = kraken_memory,
+        cpu = kraken_cpu
     }
     call kraken2.kraken2_parse_classified as kraken2_recalculate_abundances_raw {
       input:
@@ -69,7 +73,11 @@ workflow read_QC_trim_ont {
       input:
         samplename = samplename,
         read1 = ncbi_scrub_se.read1_dehosted,
-        target_organism = target_organism
+        target_organism = target_organism,
+        kraken2_db = kraken_db,
+        disk_size = kraken_disk_size,
+        memory = kraken_memory,
+        cpu = kraken_cpu
     }
     call kraken2.kraken2_parse_classified as kraken2_recalculate_abundances_dehosted {
       input:
