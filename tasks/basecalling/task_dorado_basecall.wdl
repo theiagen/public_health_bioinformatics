@@ -47,7 +47,8 @@ task basecall {
     disks:  "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
     gpuCount: 1
-    gpuType: "nvidia-tesla-t4"  }
+    gpuType: "nvidia-tesla-t4"  
     preemptible: 0
     maxRetries: 1
+    }
 }

@@ -37,5 +37,7 @@ task samtools_convert {
     cpu: cpu
     memory: "~{memory} GB"
     disks: "local-disk ~{disk_size} SSD"
+    preemptible: 0
+    maxRetries: 1
   }
 }
