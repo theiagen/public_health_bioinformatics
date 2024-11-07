@@ -20,7 +20,8 @@ workflow dehost_pe {
     input:
       samplename = samplename,
       read1 = ncbi_scrub_pe.read1_dehosted,
-      read2 = ncbi_scrub_pe.read2_dehosted
+      read2 = ncbi_scrub_pe.read2_dehosted,
+      target_organism = "Severe acute respiratory syndrome coronavirus 2"
   }
   call versioning.version_capture {
     input:
@@ -33,7 +34,7 @@ workflow dehost_pe {
     Int ncbi_scrub_human_spots_removed = ncbi_scrub_pe.human_spots_removed
     String ncbi_scrub_docker = ncbi_scrub_pe.ncbi_scrub_docker
     Float kraken_human_dehosted = kraken2.percent_human
-    Float kraken_sc2_dehosted = kraken2.percent_sc2
+    String kraken_sc2_dehosted = kraken2.percent_sc2
     File kraken_report_dehosted = kraken2.kraken_report
     String kraken_version_dehosted = kraken2.version
   }
