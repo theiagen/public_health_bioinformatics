@@ -22,7 +22,7 @@ workflow freyja_fastq {
     String samplename
     Int? depth_cutoff
     Boolean ont = false
-    String target_organism = "Severe acute respiratory syndrome coronavirus 2"
+    String kraken2_target_organism = "Severe acute respiratory syndrome coronavirus 2"
   }
   if (defined(read2)) {
     call read_qc_pe.read_QC_trim_pe as read_QC_trim_pe {
@@ -32,7 +32,7 @@ workflow freyja_fastq {
         read2  = select_first([read2]),
         trim_min_length = trimmomatic_min_length,
         workflow_series = "theiacov",
-        target_organism = target_organism
+        target_organism = kraken2_target_organism
     }
   }
   if (! defined(read2) && ! ont) {
@@ -42,7 +42,7 @@ workflow freyja_fastq {
         read1  = read1,
         trim_min_length = trimmomatic_min_length,
         workflow_series = "theiacov",
-        target_organism = target_organism
+        target_organism = kraken2_target_organism
     }
   }
   if (ont) {
@@ -61,7 +61,7 @@ workflow freyja_fastq {
         samplename = samplename,
         read1 = read1,
         workflow_series = "theiacov",
-        target_organism = target_organism
+        target_organism = kraken2_target_organism
     }
     call nanoplot_task.nanoplot as nanoplot_clean {
       input:
