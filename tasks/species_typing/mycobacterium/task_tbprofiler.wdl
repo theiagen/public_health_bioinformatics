@@ -20,9 +20,9 @@ task tbprofiler {
     Boolean tbprofiler_run_cdph_db = false
     Boolean tbprofiler_run_custom_db = false
     
-    Int cpu = 8 
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/tbprofiler:6.4.0"
+    Int cpu = 8     
     Int disk_size = 100
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/tbprofiler:6.4.0"
     Int memory = 16
   }
   command <<<
