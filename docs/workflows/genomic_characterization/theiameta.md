@@ -295,12 +295,16 @@ The TheiaMeta_Illumina_PE workflow processes Illumina paired-end (PE) reads ge
 | fastp_html_report | File | Report file for fastp in HTML format |
 | fastp_version | String | Version of fastp used |
 | fastq_scan_docker | String | Docker image of fastq_scan |
+| fastq_scan_clean1_json | File | JSON file output from `fastq-scan` containing summary stats about clean forward read quality and length |
+| fastq_scan_clean2_json | File | JSON file output from `fastq-scan` containing summary stats about clean reverse read quality and length |
 | fastq_scan_num_reads_clean_pairs | String | Number of read pairs after cleaning as calculated by fastq_scan |
 | fastq_scan_num_reads_clean1 | Int | Number of forward reads after cleaning as calculated by fastq_scan |
 | fastq_scan_num_reads_clean2 | Int | Number of reverse reads after cleaning as calculated by fastq_scan |
 | fastq_scan_num_reads_raw_pairs | String | Number of input read pairs as calculated by fastq_scan |
 | fastq_scan_num_reads_raw1 | Int | Number of input forward reads as calculated by fastq_scan |
 | fastq_scan_num_reads_raw2 | Int | Number of input reserve reads as calculated by fastq_scan |
+| fastq_scan_raw1_json | File | JSON file output from `fastq-scan` containing summary stats about raw forward read quality and length |
+| fastq_scan_raw2_json | File | JSON file output from `fastq-scan` containing summary stats about raw reverse read quality and length |
 | fastq_scan_version | String | fastq_scan version |
 | fastqc_clean1_html | File | Graphical visualization of clean forward read quality from fastqc to open in an internet browser |
 | fastqc_clean2_html | File | Graphical visualization of clean reverse read quality from fastqc to open in an internet browser |

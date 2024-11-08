@@ -9,7 +9,7 @@ import "../../tasks/utilities/task_rasusa.wdl" as rasusa_task
 
 workflow read_QC_trim_ont {
   meta {
-    description: "Runs basic QC on Oxford Nanopore (ONT) reads with (1) fastq_scan, (2) nanoplot, (3) rasusa downsampling, (4) tiptoft plasmid detection, and (5) nanoq filtering"
+    description: "Runs basic QC on Oxford Nanopore (ONT) reads with nanoplot, rasusa downsampling, tiptoft plasmid detection, and nanoq filtering"
   }
   input {
     String samplename
