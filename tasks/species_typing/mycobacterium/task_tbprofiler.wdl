@@ -5,20 +5,25 @@ task tbprofiler {
     File read1
     File? read2
     String samplename
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/tbprofiler:6.4.0"
-    Int disk_size = 100
-    Int memory = 16
+    Boolean ont_data = false
+    
     String mapper = "bwa"
-    String variant_caller = "freebayes"
+    String variant_caller = "gatk"
     String? variant_calling_params
-    String? additional_parameters
+    
+    String? additional_parameters # for tbprofiler
+    
     Int min_depth = 10
     Float min_af = 0.1
-    Int cpu = 8 
-    Boolean ont_data = false
+    
     File? tbprofiler_custom_db
     Boolean tbprofiler_run_cdph_db = false
     Boolean tbprofiler_run_custom_db = false
+    
+    Int cpu = 8 
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/tbprofiler:6.4.0"
+    Int disk_size = 100
+    Int memory = 16
   }
   command <<<
     # Print and save version

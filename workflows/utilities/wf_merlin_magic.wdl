@@ -197,18 +197,17 @@ workflow merlin_magic {
     Int srst2_gene_max_mismatch = 2000
     # tbprofiler options
     Boolean tbprofiler_run_custom_db = false
+    Boolean tbprofiler_run_cdph_db = false
     File? tbprofiler_custom_db
-    Int? tbprofiler_cov_frac_threshold
     Float? tbprofiler_min_af
-    Float? tbprofiler_min_af_pred
     Int? tbprofiler_min_depth
     String? tbprofiler_mapper
     String? tbprofiler_variant_caller
     String? tbprofiler_variant_calling_params
+    String? tbprofiler_additional_parameters
     # tbp-parser options
     String tbp_parser_output_seq_method_type = "WGS"
     String? tbp_parser_operator
-    Boolean? tbp_parser_add_cs_lims
     Int? tbp_parser_min_depth
     Int? tbp_parser_min_frequency
     Int? tbp_parser_min_read_support
@@ -216,6 +215,14 @@ workflow merlin_magic {
     File? tbp_parser_coverage_regions_bed
     Boolean? tbp_parser_debug
     Boolean? tbp_parser_add_cs_lims
+    Boolean? tbp_parser_tngs_data
+    Float? tbp_parser_rrs_frequency
+    Int? tbp_parser_rrs_read_support
+    Float? tbp_parser_rrl_frequency
+    Int? tbp_parser_rrl_read_support
+    Float? tbp_parser_rpob449_frequency
+    Float? tbp_parser_etha237_frequency
+    File? tbp_parser_expert_rule_regions_bed
     # virulencefinder options
     Float? virulencefinder_coverage_threshold
     Float? virulencefinder_identity_threshold
@@ -449,18 +456,16 @@ workflow merlin_magic {
           read2 = select_first([clockwork_decon_reads.clockwork_cleaned_read2, read2, "gs://theiagen-public-files/terra/theiaprok-files/no-read2.txt"]),
           samplename = samplename,
           ont_data = ont_data,
-          tbprofiler_run_custom_db = tbprofiler_run_custom_db,
-          tbprofiler_custom_db = tbprofiler_custom_db,
-          tbprofiler_run_cdph_db = tbprofiler_run_cdph_db,
-          cov_frac_threshold = tbprofiler_cov_frac_threshold,
-          min_af = tbprofiler_min_af,
-          min_af_pred = tbprofiler_min_af_pred,
-          min_depth = tbprofiler_min_depth,
           mapper = tbprofiler_mapper,
           variant_caller = tbprofiler_variant_caller,
           variant_calling_params = tbprofiler_variant_calling_params,
-          docker = tbprofiler_docker_image,
-          additional_parameters = tbprofiler_additional_parameters
+          additional_parameters = tbprofiler_additional_parameters,
+          min_depth = tbprofiler_min_depth,
+          min_af = tbprofiler_min_af,
+          tbprofiler_custom_db = tbprofiler_custom_db,
+          tbprofiler_run_custom_db = tbprofiler_run_custom_db,
+          tbprofiler_run_cdph_db = tbprofiler_run_cdph_db,
+          docker = tbprofiler_docker_image
       }
       if (tbprofiler_additional_outputs) {
         call tbp_parser_task.tbp_parser {
@@ -471,13 +476,21 @@ workflow merlin_magic {
             samplename = samplename, 
             sequencing_method = tbp_parser_output_seq_method_type,
             operator = tbp_parser_operator,
-            coverage_threshold = tbp_parser_coverage_threshold,
-            coverage_regions_bed = tbp_parser_coverage_regions_bed,
             min_depth = tbp_parser_min_depth,
             min_frequency = tbp_parser_min_frequency,
             min_read_support = tbp_parser_min_read_support,
-            tbp_parser_debug = tbp_parser_debug,
+            coverage_threshold = tbp_parser_coverage_threshold,
+            coverage_regions_bed = tbp_parser_coverage_regions_bed,
             add_cycloserine_lims = tbp_parser_add_cs_lims,
+            tbp_parser_debug = tbp_parser_debug,
+            tngs_data = tbp_parser_tngs_data,
+            rrs_frequency = tbp_parser_rrs_frequency,
+            rrs_read_support = tbp_parser_rrs_read_support,
+            rrl_frequency = tbp_parser_rrl_frequency,
+            rrl_read_support = tbp_parser_rrl_read_support,
+            rpob449_frequency = tbp_parser_rpob449_frequency,
+            etha237_frequency = tbp_parser_etha237_frequency,
+            expert_rule_regions_bed = tbp_parser_expert_rule_regions_bed,
             docker = tbp_parser_docker_image
         }
       }
