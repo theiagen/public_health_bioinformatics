@@ -484,6 +484,10 @@ The TheiaEuk workflow automatically activates taxa-specific tasks after identifi
 | cg_pipeline_report | File | TSV file of read metrics from raw reads, including average read length, number of reads, and estimated genome coverage |
 | est_coverage_clean | Float | Estimated coverage calculated from   clean reads and genome length |
 | est_coverage_raw | Float | Estimated coverage calculated from  raw reads and genome length |
+| fastq_scan_clean1_json | File | JSON file output from `fastq-scan` containing summary stats about clean forward read quality and length |
+| fastq_scan_clean2_json | File | JSON file output from `fastq-scan` containing summary stats about clean reverse read quality and length |
+| fastq_scan_raw1_json | File | JSON file output from `fastq-scan` containing summary stats about raw forward read quality and length |
+| fastq_scan_raw2_json | File | JSON file output from `fastq-scan` containing summary stats about raw reverse read quality and length |
 | r1_mean_q_clean | Float | Mean quality score of clean forward reads |
 | r1_mean_q_raw | Float | Mean quality score of raw forward reads |
 | r2_mean_q_clean | Float | Mean quality score of clean reverse reads |

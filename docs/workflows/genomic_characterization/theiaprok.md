@@ -1731,12 +1731,16 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
 | est_coverage_raw | Float | Estimated coverage calculated from raw reads and genome length | ONT, PE, SE |
 | fastp_html_report | File | The HTML report made with fastp | PE, SE |
 | fastp_version | String | Version of fastp software used | PE, SE |
+| fastq_scan_clean1_json | File | JSON file output from `fastq-scan` containing summary stats about clean forward read quality and length | PE, SE |
+| fastq_scan_clean2_json | File | JSON file output from `fastq-scan` containing summary stats about clean reverse read quality and length | PE |
 | fastq_scan_num_reads_clean_pairs | String | Number of read pairs after cleaning as calculated by fastq_scan | PE |
 | fastq_scan_num_reads_clean1 | Int | Number of forward reads after cleaning as calculated by fastq_scan | PE, SE |
 | fastq_scan_num_reads_clean2 | Int | Number of reverse reads after cleaning as calculated by fastq_scan | PE |
 | fastq_scan_num_reads_raw_pairs | String | Number of input read pairs calculated by fastq_scan | PE |
 | fastq_scan_num_reads_raw1 | Int | Number of input forward reads calculated by fastq_scan | PE, SE |
 | fastq_scan_num_reads_raw2 | Int | Number of input reverse reads calculated by fastq_scan | PE |
+| fastq_scan_raw1_json | File | JSON file output from `fastq-scan` containing summary stats about raw forward read quality and length | PE, SE |
+| fastq_scan_raw2_json | File | JSON file output from `fastq-scan` containing summary stats about raw reverse read quality and length | PE |
 | fastq_scan_version | String | Version of fastq-scan software used | PE, SE |
 | fastqc_clean1_html | File | Graphical visualization of clean forward read quality from fastqc to open in an internet browser | PE, SE |
 | fastqc_clean2_html | File | Graphical visualization of clean reverse read quality from fastqc to open in an internet browser | PE |
