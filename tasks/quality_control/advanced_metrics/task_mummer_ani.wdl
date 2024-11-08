@@ -58,7 +58,7 @@ task animummer {
       ANI_HIGHEST_PERCENT_BASES_ALIGNED=$(cat ANI_HIGHEST_PERCENT_BASES_ALIGNED.txt)
 
       ## parse out ANI value using highest percentBases aligned value
-      grep "$(cat ANI_HIGHEST_PERCENT_BASES_ALIGNED.txt)" ~{samplename}.ani-mummer.out.tsv | cut -f 3 | tee ANI_HIGHEST_PERCENT.txt
+      grep "$(cat ANI_HIGHEST_PERCENT_BASES_ALIGNED.txt)" ~{samplename}.ani-mummer.out.tsv | cut -f 3 | uniq | tee ANI_HIGHEST_PERCENT.txt
       echo "Highest ANI value is: $(cat ANI_HIGHEST_PERCENT.txt)"
       # set ANI_HIGHEST_PERCENT as a bash variable (float)
       ANI_HIGHEST_PERCENT=$(cat ANI_HIGHEST_PERCENT.txt)

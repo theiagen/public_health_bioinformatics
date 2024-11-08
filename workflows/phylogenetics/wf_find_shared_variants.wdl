@@ -13,16 +13,17 @@ workflow shared_variants_wf {
     Array[String] samplenames
     String concatenated_file_name
   }
+  String concatenated_file_name_updated = sub(concatenated_file_name, " ", "_")
   call file_handling.cat_variants {
     input:
       variants_to_cat = variants_to_cat,
       samplenames = samplenames,
-      concatenated_file_name = concatenated_file_name
+      concatenated_file_name = concatenated_file_name_updated
   }
   call shared_variants_task.shared_variants {
     input:
       concatenated_variants = cat_variants.concatenated_variants,
-      concatenated_file_name = concatenated_file_name
+      concatenated_file_name = concatenated_file_name_updated
     }
   call versioning.version_capture{
     input:

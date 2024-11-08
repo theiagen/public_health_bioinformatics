@@ -17,9 +17,12 @@ task check_reads {
     Int disk_size = 100
     String docker = "us-docker.pkg.dev/general-theiagen/bactopia/gather_samples:2.0.2"
     Int memory = 2
-    Int cpu = 2
+    Int cpu = 1
   }
   command <<<
+    # just in case anything fails, throw an error
+    set -euo pipefail
+    
     flag="PASS"
 
     # initalize estimated genome length
@@ -34,13 +37,13 @@ task check_reads {
       fi
 
       # check one: number of reads
-      read1_num=`eval "$cat_reads ~{read1}" | awk '{s++}END{print s/4}'`
-      read2_num=`eval "$cat_reads ~{read2}" | awk '{s++}END{print s/4}'`
-      # awk '{s++}END{print s/4' counts the number of lines and divides them by 4
-      # key assumption: in fastq there will be four lines per read
-      # sometimes fastqs do not have 4 lines per read, so this might fail one day
+      read1_num=$($cat_reads ~{read1} | fastq-scan | grep 'read_total' | sed 's/[^0-9]*\([0-9]\+\).*/\1/')
+      read2_num=$($cat_reads ~{read2} | fastq-scan | grep 'read_total' | sed 's/[^0-9]*\([0-9]\+\).*/\1/')
+      echo "DEBUG: Number of reads in R1: ${read1_num}"
+      echo "DEBUG: Number of reads in R2: ${read2_num}"
 
       reads_total=$(expr $read1_num + $read2_num)
+      echo "DEBUG: Number of reads total in R1 and R2: ${reads_total}"
 
       if [ "${reads_total}" -le "~{min_reads}" ]; then
         flag="FAIL; the total number of reads is below the minimum of ~{min_reads}"
@@ -51,13 +54,11 @@ task check_reads {
       # checks two and three: number of basepairs and proportion of sequence
       if [ "${flag}" == "PASS" ]; then
         # count number of basepairs
-        # this only works if the fastq has 4 lines per read, so this might fail one day
-        read1_bp=`eval "${cat_reads} ~{read1}" | paste - - - - | cut -f2 | tr -d '\n' | wc -c`
-        read2_bp=`eval "${cat_reads} ~{read2}" | paste - - - - | cut -f2 | tr -d '\n' | wc -c`
-        # paste - - - - (print 4 consecutive lines in one row, tab delimited)
-        # cut -f2 print only the second column (the second line of the fastq 4-line)
-        # tr -d '\n' removes line endings
-        # wc -c counts characters
+        # using fastq-scan to count the number of basepairs in each fastq
+        read1_bp=$(eval "${cat_reads} ~{read1}" | fastq-scan | grep 'total_bp' | sed 's/[^0-9]*\([0-9]\+\).*/\1/')
+        read2_bp=$(eval "${cat_reads} ~{read2}" | fastq-scan | grep 'total_bp' | sed 's/[^0-9]*\([0-9]\+\).*/\1/')
+        echo "DEBUG: Number of basepairs in R1: $read1_bp"
+        echo "DEBUG: Number of basepairs in R2: $read2_bp"
 
         # set proportion variables for easy comparison
         # removing the , 2) to make these integers instead of floats
@@ -123,18 +124,6 @@ task check_reads {
         elif [ "~{workflow_series}" == "theiacov" ] || [ "~{expected_genome_length}" ]; then
           if [ "~{expected_genome_length}" ]; then
             estimated_genome_length=~{expected_genome_length} # use user-provided expected_genome_length
-          elif [ "~{organism}" == "sars-cov-2" ]; then
-            estimated_genome_length=29903 # length taken from https://www.ncbi.nlm.nih.gov/nuccore/NC_045512.2
-          elif [ "~{organism}" == "MPXV" ]; then
-            estimated_genome_length=197209 # length of 2022 virus taken from https://www.ncbi.nlm.nih.gov/nuccore/NC_063383.1
-          elif [ "~{organism}" == "flu" ]; then
-            estimated_genome_length=14000 # 500 bp over the CDC's approximate full genome length of 13500 (see https://www.cdc.gov/flu/about/professionals/genetic-characterization.htm)
-          elif [ "~{organism}" == "HIV" ]; then
-            estimated_genome_length=9181 # length taken from https://www.ncbi.nlm.nih.gov/nuccore/NC_001802.1
-          elif [ "~{organism}" == "WNV" ]; then
-            estimated_genome_length=11092 # WNV lineage 1 length from https://www.ncbi.nlm.nih.gov/nuccore/NC_009942.1
-          else
-            flag="FAIL; the organism tag provided (~{organism}) is not valid and no expected_genome_length was provided."
           fi
 
           # coverage is calculated here by N/G where N is number of bases, and G is genome length
@@ -159,7 +148,8 @@ task check_reads {
             flag="FAIL; the estimated coverage (${estimated_coverage}) is less than the minimum of ~{min_coverage}x"
           else
             flag="PASS"
-            echo $estimated_genome_length | tee EST_GENOME_LENGTH
+            echo ${estimated_genome_length} | tee EST_GENOME_LENGTH
+            echo "DEBUG: estimated_genome_length: ${estimated_genome_length}"
           fi 
         fi
       fi 
@@ -178,7 +168,7 @@ task check_reads {
     cpu: cpu
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
-    preemptible: 0
+    preemptible: 1
     maxRetries: 3
   }
 }
@@ -199,9 +189,12 @@ task check_reads_se {
     Int disk_size = 100 
     String docker = "us-docker.pkg.dev/general-theiagen/bactopia/gather_samples:2.0.2"
     Int memory = 2
-    Int cpu = 2
+    Int cpu = 1
   }
   command <<<
+    # just in case anything fails, throw an error
+    set -euo pipefail
+
     flag="PASS"
 
     # initalize estimated genome length
@@ -215,11 +208,9 @@ task check_reads_se {
         cat_reads="cat"
       fi
 
-      # check one: number of reads
-      read1_num=`eval "$cat_reads ~{read1}" | awk '{s++}END{print s/4}'`
-      # awk '{s++}END{print s/4' counts the number of lines and divides them by 4
-      # key assumption: in fastq there will be four lines per read
-      # sometimes fastqs do not have 4 lines per read, so this might fail one day
+      # check one: number of reads via fastq-scan
+      read1_num=$($cat_reads ~{read1} | fastq-scan | grep 'read_total' | sed 's/[^0-9]*\([0-9]\+\).*/\1/')
+      echo "DEBUG: Number of reads in R1: ${read1_num}"
 
       if [ "${read1_num}" -le "~{min_reads}" ] ; then
         flag="FAIL; the number of reads (${read1_num}) is below the minimum of ~{min_reads}"
@@ -230,12 +221,9 @@ task check_reads_se {
       # checks two and three: number of basepairs and proportion of sequence
       if [ "${flag}" == "PASS" ]; then
         # count number of basepairs
-        # this only works if the fastq has 4 lines per read, so this might fail one day
-        read1_bp=`eval "${cat_reads} ~{read1}" | paste - - - - | cut -f2 | tr -d '\n' | wc -c`
-        # paste - - - - (print 4 consecutive lines in one row, tab delimited)
-        # cut -f2 print only the second column (the second line of the fastq 4-line)
-        # tr -d '\n' removes line endings
-        # wc -c counts characters
+        # using fastq-scan to count the number of basepairs in each fastq
+        read1_bp=$(eval "${cat_reads} ~{read1}" | fastq-scan | grep 'total_bp' | sed 's/[^0-9]*\([0-9]\+\).*/\1/')
+        echo "DEBUG: Number of basepairs in R1: $read1_bp"
 
         if [ "$flag" == "PASS" ] ; then
           if [ "${read1_bp}" -le "~{min_basepairs}" ] ; then
@@ -291,18 +279,6 @@ task check_reads_se {
         elif [ "~{workflow_series}" == "theiacov" ] || [ "~{expected_genome_length}" ]; then
           if [ "~{expected_genome_length}" ]; then
             estimated_genome_length=~{expected_genome_length} # use user-provided expected_genome_length
-          elif [ "~{organism}" == "sars-cov-2" ]; then
-            estimated_genome_length=29903 # length taken from https://www.ncbi.nlm.nih.gov/nuccore/NC_045512.2
-          elif [ "~{organism}" == "MPXV" ]; then
-            estimated_genome_length=197209 # length of 2022 virus taken from https://www.ncbi.nlm.nih.gov/nuccore/NC_063383.1
-          elif [ "~{organism}" == "flu" ]; then
-            estimated_genome_length=14000 # 500 bp over the CDC's approximate full genome length of 13500 (see https://www.cdc.gov/flu/about/professionals/genetic-characterization.htm)
-          elif [ "~{organism}" == "HIV" ]; then
-            estimated_genome_length=9181 # length taken from https://www.ncbi.nlm.nih.gov/nuccore/NC_001802.1
-          elif [ "~{organism}" == "WNV" ]; then
-            estimated_genome_length=11092 # WNV lineage 1 length from https://www.ncbi.nlm.nih.gov/nuccore/NC_009942.1
-          else
-            flag="FAIL; the organism tag provided (~{organism}) is not valid and no expected_genome_length was provided."
           fi
 
           # coverage is calculated here by N/G where N is number of bases, and G is genome length
@@ -333,7 +309,8 @@ task check_reads_se {
     fi 
     
     echo $flag | tee FLAG
-    echo $estimated_genome_length | tee EST_GENOME_LENGTH
+    echo ${estimated_genome_length} | tee EST_GENOME_LENGTH
+    echo "DEBUG: estimated_genome_length: ${estimated_genome_length}"
   >>>
   output {
     String read_screen = read_string("FLAG")
@@ -345,7 +322,7 @@ task check_reads_se {
     cpu: cpu
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
-    preemptible: 0
+    preemptible: 1
     maxRetries: 3
   }
 }

@@ -16,7 +16,7 @@ task summarize_data {
     String docker = "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-03-16" 
     # commenting out this option since it's for local dev. Prefer this option to not appear in Terra
     #File? input_table
-    Boolean phandango_coloring = true
+    Boolean phandango_coloring = false
   }
   meta {
     # added so that call caching is always turned off

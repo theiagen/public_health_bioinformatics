@@ -5,11 +5,11 @@ task gambit {
     File assembly
     String samplename
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/gambit:1.0.0"
-    File gambit_db_genomes = "gs://gambit-databases-rp/1.3.0/gambit-metadata-1.3-231016.gdb"
-    File gambit_db_signatures = "gs://gambit-databases-rp/1.3.0/gambit-signatures-1.3-231016.gs"
-    Int disk_size = 100
-    Int memory = 16 # set default
-    Int cpu = 8 # set default
+    File gambit_db_genomes = "gs://gambit-databases-rp/2.0.0/gambit-metadata-2.0.0-20240628.gdb"
+    File gambit_db_signatures = "gs://gambit-databases-rp/2.0.0/gambit-signatures-2.0.0-20240628.gs"
+    Int disk_size = 20
+    Int memory = 2
+    Int cpu = 1
   }
   # If "File" type is used Cromwell attempts to localize it, which fails because it doesn't exist yet.
   String report_path = "~{samplename}_gambit.json"
@@ -35,11 +35,12 @@ task gambit {
     
     echo ${gambit_db_version} | tee GAMBIT_DB_VERSION
     
-    gambit -d ${gambit_db_dir} query -f json -o ~{report_path} ~{assembly} 
+    gambit -d ${gambit_db_dir} query -f json -o ~{report_path} ~{assembly} -c ~{cpu}
     
     python3 <<EOF
     import json
     import csv
+    import re
 
     def fmt_dist(d): return format(d, '.4f')
 
@@ -65,7 +66,13 @@ task gambit {
           if str(empty_value) == str(fmt_dist(0)):
             f.write(fmt_dist(search_item[column]))
           else:
-            f.write(search_item[column])
+            # remove candidate sub-speciation from taxon name
+            if column == 'name':
+              gambit_name = search_item[column]
+              gambit_name = re.sub(r'_[A-Za-z]+', '', gambit_name)  # This line is added to remove _X where X is any letter
+              f.write(gambit_name)
+            else:
+              f.write(search_item[column])
 
     # Predicted taxon    
     write_output('PREDICTED_TAXON', predicted, 'name', 'NA')
@@ -121,6 +128,8 @@ task gambit {
 
     try:
       merlin_tag = predicted['name']
+      # remove candidate sub-speciation from merlin_tag
+      merlin_tag = re.sub(r'_[A-Za-z]+', '', merlin_tag)  # This line is added to remove _X where X is any letter
     except:
       merlin_tag = "NA"
 
@@ -150,12 +159,12 @@ task gambit {
     String gambit_docker = docker
   }
   runtime {
-    docker:  "~{docker}"
-    memory:  "~{memory} GB"
-    cpu:   "~{cpu}"
+    docker: "~{docker}"
+    memory: "~{memory} GB"
+    cpu: "~{cpu}"
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
     maxRetries: 3
-    preemptible:  0
+    preemptible: 1
   }
 }

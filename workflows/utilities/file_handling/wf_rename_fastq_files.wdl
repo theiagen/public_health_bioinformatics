@@ -9,19 +9,20 @@ workflow rename_fastq_files {
     File? read2
     String new_filename
   }
+  String new_filename_updated = sub(new_filename, " ", "_")
   if (defined(read2)) {
     call rename_files_task.rename_PE_files {
       input:
         read1 = read1,
         read2 = select_first([read2]),
-        new_filename = new_filename
+        new_filename = new_filename_updated
     }
   } 
   if (!defined(read2)) {
     call rename_files_task.rename_SE_files {
       input:
         read1 = read1,
-        new_filename = new_filename
+        new_filename = new_filename_updated
     }
   }
   call versioning.version_capture {

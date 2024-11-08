@@ -71,7 +71,7 @@ workflow theiacov_fasta_batch {
       nextclade_tsv = nextclade_v3.nextclade_tsv,
       nextclade_docker = nextclade_v3.nextclade_docker,
       nextclade_version = nextclade_v3.nextclade_version,
-      nextclade_ds_tag = nextclade_dataset_tag,
+      nextclade_ds_tag = organism_parameters.nextclade_dataset_tag,
       nextclade_json = nextclade_v3.nextclade_json,
       pango_lineage_report = pangolin4.pango_lineage_report,
       pangolin_docker = pangolin4.pangolin_docker,

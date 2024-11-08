@@ -11,12 +11,13 @@ workflow lyveset_workflow {
     String dataset_name
     File reference_genome
   }
+  String dataset_name_updated = sub(dataset_name, " ", "_")
   call lyveset.lyveset {
     input:
       read1 = read1,
       read2 = read2,
       samplename = samplename,
-      dataset_name = dataset_name,
+      dataset_name = dataset_name_updated,
       reference_genome = reference_genome
   }
   call versioning.version_capture {

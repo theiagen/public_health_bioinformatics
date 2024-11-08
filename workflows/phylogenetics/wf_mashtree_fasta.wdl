@@ -15,18 +15,21 @@ workflow mashtree_fasta {
     String? data_summary_terra_table
     String? data_summary_column_names
     Boolean midpoint_root_tree = true
+    Boolean phandango_coloring = false
   }
+  String cluster_name_updated = sub(cluster_name, " ", "_")
   call mashtree.mashtree_fasta as mashtree_task {
     input:
       assembly_fasta = assembly_fasta,
-      cluster_name = cluster_name
+      cluster_name = cluster_name_updated
     }
   call reorder_matrix_task.reorder_matrix {
     input:
       input_tree = mashtree_task.mashtree_tree,
       matrix = mashtree_task.mashtree_matrix,
-      cluster_name = cluster_name,
-      midpoint_root_tree = midpoint_root_tree
+      cluster_name = cluster_name_updated,
+      midpoint_root_tree = midpoint_root_tree,
+      phandango_coloring = phandango_coloring
   }
   if (defined(data_summary_column_names)) {
     call data_summary.summarize_data {
@@ -36,7 +39,8 @@ workflow mashtree_fasta {
         terra_workspace = data_summary_terra_workspace,
         terra_table = data_summary_terra_table,
         column_names = data_summary_column_names,
-        output_prefix = cluster_name
+        output_prefix = cluster_name_updated,
+        phandango_coloring = phandango_coloring
     }
   } 
   call versioning.version_capture {

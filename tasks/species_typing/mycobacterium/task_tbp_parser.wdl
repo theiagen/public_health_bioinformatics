@@ -19,6 +19,8 @@ task tbp_parser {
 
     Boolean add_cycloserine_lims = false
 
+    Boolean add_cycloserine_lims = false
+    
     Boolean tngs_data = false    
     Float? rrs_frequency # default 0.1
     Int? rrs_read_support # default 10

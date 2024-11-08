@@ -8,10 +8,11 @@ workflow concatenate_column_content {
     Array[File] files_to_cat
     String concatenated_file_name
   }
+  String concatenated_file_name_updated = sub(concatenated_file_name, " ", "_")
   call file_handling.cat_files {
     input:
       files_to_cat = files_to_cat,
-      concatenated_file_name = concatenated_file_name
+      concatenated_file_name = concatenated_file_name_updated
   }
   call versioning.version_capture {
     input:

@@ -43,22 +43,39 @@ task export_taxon_tables {
     String? bbduk_docker
     Float? r1_mean_q_raw
     Float? r2_mean_q_raw
-    Float? r1_mean_q_clean
     Float? combined_mean_q_raw
-    Float? combined_mean_q_clean
     Float? r1_mean_readlength_raw 
     Float? r2_mean_readlength_raw
-    Float? combined_mean_readlength_raw 
-    Float? combined_mean_readlength_clean 
+    Float? combined_mean_readlength_raw
+    Float? r1_mean_q_clean
+    Float? r2_mean_q_clean
+    Float? combined_mean_q_clean
     Float? r1_mean_readlength_clean
+    Float? r2_mean_readlength_clean
+    Float? combined_mean_readlength_clean
     String? nanoq_version
-    File? nanoplot_html
-    File? nanoplot_tsv
-    String? nanoplot_docker
     String? nanoplot_version
-    String? kmc_est_genome_length
-    File? kmc_kmer_stats
-    String? kmc_version
+    String? nanoplot_docker
+    File? nanoplot_html_raw
+    File? nanoplot_tsv_raw
+    Int? nanoplot_num_reads_raw1
+    Float? nanoplot_r1_median_readlength_raw
+    Float? nanoplot_r1_mean_readlength_raw
+    Float? nanoplot_r1_stdev_readlength_raw
+    Float? nanoplot_r1_n50_raw
+    Float? nanoplot_r1_mean_q_raw
+    Float? nanoplot_r1_median_q_raw
+    Float? nanoplot_r1_est_coverage_raw
+    File? nanoplot_html_clean
+    File? nanoplot_tsv_clean
+    Int? nanoplot_num_reads_clean1
+    Float? nanoplot_r1_median_readlength_clean
+    Float? nanoplot_r1_mean_readlength_clean
+    Float? nanoplot_r1_stdev_readlength_clean
+    Float? nanoplot_r1_n50_clean
+    Float? nanoplot_r1_mean_q_clean
+    Float? nanoplot_r1_median_q_clean
+    Float? nanoplot_r1_est_coverage_clean
     String? rasusa_version
     File? tiptoft_plasmid_replicon_fastq
     String? tiptoft_plasmid_replicon_genes
@@ -248,11 +265,16 @@ task export_taxon_tables {
     String? meningotype_NHBA
     String? meningotype_NadA
     String? meningotype_BAST
-    File? abricate_abaum_plasmid_tsv
-    String? abricate_abaum_plasmid_type_genes
+    File? abricate_results_tsv
+    String? abricate_genes
     String? abricate_database
     String? abricate_version
     String? abricate_docker
+    File? abricate_abaum_plasmid_tsv
+    String? abricate_abaum_plasmid_type_genes
+    String? abricate_abaum_database
+    String? abricate_abaum_version
+    String? abricate_abaum_docker
     File? tbprofiler_output_file
     File? tbprofiler_output_bam
     File? tbprofiler_output_bai
@@ -287,6 +309,10 @@ task export_taxon_tables {
     String? seroba_ariba_serotype
     String? seroba_ariba_identity
     File? seroba_details
+    String? emmtyper_emm_type
+    File? emmtyper_results_tsv
+    String? emmtyper_version
+    String? emmtyper_docker
     String? emmtypingtool_emm_type
     File? emmtypingtool_results_xml
     String? emmtypingtool_version
@@ -341,12 +367,23 @@ task export_taxon_tables {
     String? agrvate_version
     String? agrvate_docker
     File? srst2_vibrio_detailed_tsv
+    String? srst2_vibrio_docker
+    String? srst2_vibrio_database
     String? srst2_vibrio_version
     String? srst2_vibrio_ctxA
     String? srst2_vibrio_ompW
     String? srst2_vibrio_toxR
     String? srst2_vibrio_serogroup
     String? srst2_vibrio_biotype
+    File? abricate_vibrio_detailed_tsv
+    String? abricate_vibrio_database
+    String? abricate_vibrio_docker
+    String? abricate_vibrio_version
+    String? abricate_vibrio_ctxA
+    String? abricate_vibrio_ompW
+    String? abricate_vibrio_toxR
+    String? abricate_vibrio_biotype
+    String? abricate_vibrio_serogroup
   }
   meta {
     # added so that call caching is always turned off
@@ -418,21 +455,38 @@ task export_taxon_tables {
       "r1_mean_q_raw": "~{r1_mean_q_raw}",
       "r2_mean_q_raw": "~{r2_mean_q_raw}",
       "combined_mean_q_raw": "~{combined_mean_q_raw}",
-      "combined_mean_q_clean": "~{combined_mean_q_clean}",
-      "r1_mean_q_clean": "~{r1_mean_q_clean}",
       "r1_mean_readlength_raw": "~{r1_mean_readlength_raw}",
       "r2_mean_readlength_raw": "~{r2_mean_readlength_raw}",
       "combined_mean_readlength_raw": "~{combined_mean_readlength_raw}",
-      "combined_mean_readlength_clean": "~{combined_mean_readlength_clean}",
+      "r1_mean_q_clean": "~{r1_mean_q_clean}",
+      "r2_mean_q_clean": "~{r2_mean_q_clean}",
+      "combined_mean_q_clean": "~{combined_mean_q_clean}",
       "r1_mean_readlength_clean": "~{r1_mean_readlength_clean}",
+      "r2_mean_readlength_clean": "~{r2_mean_readlength_clean}",
+      "combined_mean_readlength_clean": "~{combined_mean_readlength_clean}",
       "nanoq_version": "~{nanoq_version}",
-      "nanoplot_html": "~{nanoplot_html}",
-      "nanoplot_tsv": "~{nanoplot_tsv}",
       "nanoplot_docker": "~{nanoplot_docker}",
       "nanoplot_version": "~{nanoplot_version}",
-      "kmc_est_genome_length": "~{kmc_est_genome_length}",
-      "kmc_kmer_stats": "~{kmc_kmer_stats}",
-      "kmc_version": "~{kmc_version}",
+      "nanoplot_html_raw": "~{nanoplot_html_raw}",	
+      "nanoplot_tsv_raw": "~{nanoplot_tsv_raw}",
+      "nanoplot_num_reads_raw1": "~{nanoplot_num_reads_raw1}",
+      "nanoplot_r1_median_readlength_raw": "~{nanoplot_r1_median_readlength_raw}",
+      "nanoplot_r1_mean_readlength_raw": "~{nanoplot_r1_mean_readlength_raw}",
+      "nanoplot_r1_stdev_readlength_raw": "~{nanoplot_r1_stdev_readlength_raw}",
+      "nanoplot_r1_n50_raw": "~{nanoplot_r1_n50_raw}",
+      "nanoplot_r1_mean_q_raw": "~{nanoplot_r1_mean_q_raw}",
+      "nanoplot_r1_median_q_raw": "~{nanoplot_r1_median_q_raw}",
+      "nanoplot_r1_est_coverage_raw": "~{nanoplot_r1_est_coverage_raw}",
+      "nanoplot_html_clean": "~{nanoplot_html_clean}",
+      "nanoplot_tsv_clean": "~{nanoplot_tsv_clean}",
+      "nanoplot_num_reads_clean1": "~{nanoplot_num_reads_clean1}",
+      "nanoplot_r1_median_readlength_clean": "~{nanoplot_r1_median_readlength_clean}",
+      "nanoplot_r1_mean_readlength_clean": "~{nanoplot_r1_mean_readlength_clean}",
+      "nanoplot_r1_stdev_readlength_clean": "~{nanoplot_r1_stdev_readlength_clean}",
+      "nanoplot_r1_n50_clean": "~{nanoplot_r1_n50_clean}",
+      "nanoplot_r1_mean_q_clean": "~{nanoplot_r1_mean_q_clean}",
+      "nanoplot_r1_median_q_clean": "~{nanoplot_r1_median_q_clean}",
+      "nanoplot_r1_est_coverage_clean": "~{nanoplot_r1_est_coverage_clean}",
       "rasusa_version": "~{rasusa_version}",
       "tiptoft_plasmid_replicon_fastq": "~{tiptoft_plasmid_replicon_fastq}",
       "tiptoft_plasmid_replicon_genes": "~{tiptoft_plasmid_replicon_genes}",
@@ -575,11 +629,16 @@ task export_taxon_tables {
       "kaptive_kl_confidence": "~{kaptive_kl_confidence}",
       "kaptive_oc_locus": "~{kaptive_oc_locus}",
       "kaptive_ocl_confidence": "~{kaptive_ocl_confidence}",
-      "abricate_abaum_plasmid_tsv": "~{abricate_abaum_plasmid_tsv}",
-      "abricate_abaum_plasmid_type_genes": "~{abricate_abaum_plasmid_type_genes}",
+      "abricate_results_tsv": "~{abricate_results_tsv}",
+      "abricate_genes": "~{abricate_genes}",
       "abricate_database": "~{abricate_database}",
       "abricate_version": "~{abricate_version}",
       "abricate_docker": "~{abricate_docker}",
+      "abricate_abaum_plasmid_tsv": "~{abricate_abaum_plasmid_tsv}",
+      "abricate_abaum_plasmid_type_genes": "~{abricate_abaum_plasmid_type_genes}",
+      "abricate_abaum_database": "~{abricate_abaum_database}",
+      "abricate_abaum_version": "~{abricate_abaum_version}",
+      "abricate_abaum_docker": "~{abricate_abaum_docker}",
       "legsta_results": "~{legsta_results}",
       "legsta_predicted_sbt": "~{legsta_predicted_sbt}",
       "legsta_version": "~{legsta_version}",
@@ -661,6 +720,10 @@ task export_taxon_tables {
       "seroba_ariba_serotype": "~{seroba_ariba_serotype}",
       "seroba_ariba_identity": "~{seroba_ariba_identity}",
       "seroba_details": "~{seroba_details}",
+      "emmtyper_emm_type": "~{emmtyper_emm_type}",
+      "emmtyper_results_tsv": "~{emmtyper_results_tsv}",
+      "emmtyper_version": "~{emmtyper_version}",
+      "emmtyper_docker": "~{emmtyper_docker}",
       "emmtypingtool_emm_type": "~{emmtypingtool_emm_type}",
       "emmtypingtool_reults_xml": "~{emmtypingtool_results_xml}",
       "emmtypingtool_version": "~{emmtypingtool_version}",
@@ -715,12 +778,23 @@ task export_taxon_tables {
       "agrvate_version": "~{agrvate_version}",
       "agrvate_docker": "~{agrvate_docker}",
       "srst2_vibrio_detailed_tsv": "~{srst2_vibrio_detailed_tsv}",
-      "srst2_vibrio_version": "~{srst2_vibrio_version}",
+      "srst2_vibrio_version": "~{srst2_vibrio_version}",~
+      "srst2_vibrio_docker": "~{srst2_vibrio_docker}",
+      "srst2_vibrio_database": "~{srst2_vibrio_database}",
       "srst2_vibrio_ctxA": "~{srst2_vibrio_ctxA}",
       "srst2_vibrio_ompW": "~{srst2_vibrio_ompW}",
       "srst2_vibrio_toxR": "~{srst2_vibrio_toxR}",
       "srst2_vibrio_serogroup": "~{srst2_vibrio_serogroup}",
-      "srst2_vibrio_biotype": "~{srst2_vibrio_biotype}"
+      "srst2_vibrio_biotype": "~{srst2_vibrio_biotype}",
+      "abricate_vibrio_detailed_tsv": "~{abricate_vibrio_detailed_tsv}",
+      "abricate_vibrio_database": "~{abricate_vibrio_database}",
+      "abricate_vibrio_docker": "~{abricate_vibrio_docker}",
+      "abricate_vibrio_version": "~{abricate_vibrio_version}",
+      "abricate_vibrio_ctxA": "~{abricate_vibrio_ctxA}",
+      "abricate_vibrio_ompW": "~{abricate_vibrio_ompW}",
+      "abricate_vibrio_toxR": "~{abricate_vibrio_toxR}",
+      "abricate_vibrio_biotype": "~{abricate_vibrio_biotype}",
+      "abricate_vibrio_serogroup": "~{abricate_vibrio_serogroup}"
     }
 
     with open("~{samplename}_terra_table.tsv", "w") as outfile:

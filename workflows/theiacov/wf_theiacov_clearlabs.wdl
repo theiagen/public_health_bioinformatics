@@ -207,6 +207,8 @@ workflow theiacov_clearlabs {
     Int number_Degenerate = consensus_qc.number_Degenerate
     Int number_Total = consensus_qc.number_Total
     Float percent_reference_coverage = consensus_qc.percent_reference_coverage
+    # Percentage mapped reads
+    Float percentage_mapped_reads = stats_n_coverage.percentage_mapped_reads
     # SC2 specific coverage outputs
     Float? sc2_s_gene_mean_coverage = gene_coverage.sc2_s_gene_depth
     Float? sc2_s_gene_percent_coverage = gene_coverage.sc2_s_gene_percent_coverage
@@ -235,6 +237,10 @@ workflow theiacov_clearlabs {
     # VADR Annotation QC
     File?  vadr_alerts_list = vadr.alerts_list
     String? vadr_num_alerts = vadr.num_alerts
+    File? vadr_feature_tbl_pass = vadr.feature_tbl_pass
+    File? vadr_feature_tbl_fail = vadr.feature_tbl_fail
+    File? vadr_classification_summary_file = vadr.classification_summary_file
+    File? vadr_all_outputs_tar_gz = vadr.outputs_tgz
     String? vadr_docker = vadr.vadr_docker
     File? vadr_fastas_zip_archive = vadr.vadr_fastas_zip_archive
     # QC_Check Results

@@ -17,6 +17,7 @@ workflow snippy_streamline {
     # this input file can be a FASTA or GBK
     File? reference_genome_file
   }
+  String tree_name_updated = sub(tree_name, " ", "_")
   # if user does not provide reference genome fasta, determine one for the user by running centroid, referenceseeker, and ncbi datasets to acquire one
   if (! defined(reference_genome_file)) {
     call centroid_task.centroid {
@@ -46,10 +47,11 @@ workflow snippy_streamline {
   }
   call snippy_tree_workflow.snippy_tree_wf {
     input:
-      tree_name = tree_name,
+      tree_name = tree_name_updated,
       snippy_variants_outdir_tarball = snippy_variants_wf.snippy_variants_outdir_tarball,
       samplenames = samplenames,
-      reference_genome_file = select_first([reference_genome_file, ncbi_datasets_download_genome_accession.ncbi_datasets_assembly_fasta])
+      reference_genome_file = select_first([reference_genome_file, ncbi_datasets_download_genome_accession.ncbi_datasets_assembly_fasta]),
+      snippy_variants_qc_metrics = snippy_variants_wf.snippy_variants_qc_metrics
   }
   call versioning.version_capture {
     input:
@@ -82,6 +84,9 @@ workflow snippy_streamline {
     Array[File] snippy_variants_outdir_tarball = snippy_variants_wf.snippy_variants_outdir_tarball
     Array[String] snippy_variants_snippy_version = snippy_variants_wf.snippy_variants_version
     Array[String] snippy_variants_snippy_docker = snippy_variants_wf.snippy_variants_docker
+    Array[Float] snippy_variants_percent_reads_aligned = snippy_variants_wf.snippy_variants_percent_reads_aligned
+    Array[Float] snippy_variants_percent_ref_coverage = snippy_variants_wf.snippy_variants_percent_ref_coverage
+
 
     ### snippy_tree wf outputs ###
     String snippy_tree_snippy_version = snippy_tree_wf.snippy_tree_snippy_version
@@ -107,5 +112,6 @@ workflow snippy_streamline {
     File? snippy_filtered_metadata = snippy_tree_wf.snippy_filtered_metadata
     File? snippy_concatenated_variants = snippy_tree_wf.snippy_concatenated_variants
     File? snippy_shared_variants_table = snippy_tree_wf.snippy_shared_variants_table
+    File? snippy_combined_qc_metrics = snippy_tree_wf.snippy_combined_qc_metrics
   }
 }
