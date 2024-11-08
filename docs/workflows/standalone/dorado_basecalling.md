@@ -12,17 +12,18 @@ The Dorado Basecalling workflow is used to convert Oxford Nanopore `POD5` sequen
 
 ### Model Type Selection
 
-Users can configure the basecalling model by setting the dorado_model input parameter:
+Users can configure the basecalling model by setting the `dorado_model` input parameter:
 
 Default Model: "sup" (super accuracy) is used unless overridden by the user.
 Manual Model Input: Users can specify the full path or name of a specific model (e.g., dna_r10.4.1_e8.2_400bps_hac@v4.2.0).
 Automatic Detection: When set to sup, hac, or fast, Dorado will automatically select the appropriate model version if available.
 
-- **Model Type (sup):** (super accuracy) The most accurate model, recommended for critical applications requiring the highest basecall accuracy. It is the slowest of the three model types.
+- **Model Type (sup):** (Super Accuracy) The most accurate model, recommended for critical applications requiring the highest basecall accuracy. It is the slowest of the three model types.
 - **Model Type (hac):** (High Accuracy) A balance between speed and accuracy, recommended for most users. Provides accurate results faster than `sup` but less accurate than `sup`.
 - **Model Type (fast):** (Fast Model) The fastest model, recommended when speed is prioritized over accuracy, such as for initial analyses or non-critical applications.
 
 ### Example Manual Models:
+
 - `dna_r10.4.1_e8.2_400bps_sup@v4.2.0`
 - `dna_r10.4.1_e8.2_400bps_hac@v4.2.0`
 - `dna_r10.4.1_e8.2_400bps_fast@v4.2.0`
