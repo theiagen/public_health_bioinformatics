@@ -12,8 +12,7 @@ workflow wf_retrieve_srr {
 
   call srr_task.fetch_srr_metadata {
     input:
-      sample_accession = sample_accession,  
-      docker = retrieve_srr_docker
+      sample_accession = sample_accession
   }
 
   output {
