@@ -18,7 +18,7 @@ Default Model: "sup" (super accuracy) is used unless overridden by the user.
 Manual Model Input: Users can specify the full path or name of a specific model (e.g., dna_r10.4.1_e8.2_400bps_hac@v4.2.0).
 Automatic Detection: When set to sup, hac, or fast, Dorado will automatically select the appropriate model version if available.
 
-- **Model Type (sup):** (Super Accuracy) The most accurate model, recommended for critical applications requiring the highest basecall accuracy. It is the slowest of the three model types.
+- **Model Type (sup):** (Super Accuracy) The most accurate model, recommended for applications requiring the highest basecall accuracy. It is the slowest of the three model types.
 - **Model Type (hac):** (High Accuracy) A balance between speed and accuracy, recommended for most users. Provides accurate results faster than `sup` but less accurate than `sup`.
 - **Model Type (fast):** (Fast Model) The fastest model, recommended when speed is prioritized over accuracy, such as for initial analyses or non-critical applications.
 
@@ -48,19 +48,19 @@ Automatic Detection: When set to sup, hac, or fast, Dorado will automatically se
 | **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
 |---|---|---|---|---|---|
 | dorado_basecalling_workflow | **input_files** | Array[File] | Array of `POD5` files for basecalling | None | Required |
-| dorado_basecalling_workflow | **dorado_model** | String | Model accuracy or full model name (default: 'sup') | "sup" | Optional |
 | dorado_basecalling_workflow | **fastq_file_name** | String | Prefix for naming output FASTQ files | None | Required |
 | dorado_basecalling_workflow | **kit_name** | String | Sequencing kit name used (e.g., `SQK-RPB114-24`) | None | Required |
-| basecall_task.basecall | **cpu** | Int | Number of CPUs allocated | 8 | Optional |
-| basecall_task.basecall | **memory** | Int | Amount of memory to allocate (GB) | 32 | Optional |
-| basecall_task.basecall | **gpuCount** | Int | Number of GPUs to use | 1 | Optional |
-| basecall_task.basecall | **gpuType** | String | Type of GPU (e.g., `nvidia-tesla-t4`) | "nvidia-tesla-t4" | Optional |
 | dorado_basecalling_workflow | **fastq_upload_path** | String | Terra folder path for uploading FASTQ files | None | Required |
 | dorado_basecalling_workflow | **terra_project** | String | Terra project ID for FASTQ file upload | None | Required |
 | dorado_basecalling_workflow | **terra_workspace** | String | Terra workspace for final FASTQ file upload | None | Required |
-| dorado_basecalling_workflow | **paired_end** | Boolean | Indicates if data is paired-end | false | Optional |
+| dorado_basecalling_workflow | **dorado_model** | String | Model speed for basecalling ('sup' for super accuracy, 'hac' for high accuracy, or 'fast' for high speed). Users may also specify a full model name. | "sup" | Optional |
+| basecall_task.basecall | **cpu** | Int | Number of CPUs allocated | 8 | Optional |
+| basecall_task.basecall | **gpuCount** | Int | Number of GPUs to use | 1 | Optional |
+| basecall_task.basecall | **gpuType** | String | Type of GPU (e.g., `nvidia-tesla-t4`) | "nvidia-tesla-t4" | Optional |
+| basecall_task.basecall | **memory** | Int | Amount of memory to allocate (GB) | 32 | Optional |
 | dorado_basecalling_workflow | **assembly_data** | Boolean | Indicates if the data is for assembly | false | Optional |
 | dorado_basecalling_workflow | **file_ending** | String? | File extension pattern for identifying files (e.g., ".fastq.gz") | None | Optional |
+| dorado_basecalling_workflow | **paired_end** | Boolean | Indicates if data is paired-end | false | Optional |
 
 !!! info "Detailed Input Information"
     - **dorado_model**: If set to 'sup', 'hac', or 'fast', the workflow will run with automatic model selection. If a full model name is provided, Dorado will use that model directly.
