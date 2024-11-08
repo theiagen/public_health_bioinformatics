@@ -26,7 +26,7 @@ This workflow runs on the set level.
 | czgenepi_prep | **terra_table_name** | String | The name of the Terra table where the data is hosted |  | Required |
 | czgenepi_prep | **terra_project_name** | String | The name of the Terra project where the data is hosted |  | Required |
 | czgenepi_prep | **terra_workspace_name** | String | The name of the Terra workspace where the data is hosted |  | Required |
-| download_terra_table | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 10 | Optional |
+| download_terra_table | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 2 | Optional |
 | download_terra_table | **docker** | String | The Docker container to use for the task | quay.io/theiagen/terra-tools:2023-06-21 | Optional |
 | download_terra_table | **disk_size** | String | The size of the disk used when running this task | 1 | Optional |
 | download_terra_table | **cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional |

@@ -17,8 +17,9 @@ task download_terra_table {
     String docker = "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-06-21"
   }
   command <<<
+    # set -euo pipefail to avoid silent failure
     set -euo pipefail
-    
+
     python3 /scripts/export_large_tsv/export_large_tsv.py --project ~{terra_project_name} --workspace ~{terra_workspace_name} --entity_type ~{terra_table_name} --tsv_filename "~{terra_table_name}.tsv"
   >>>
   output {
@@ -31,5 +32,7 @@ task download_terra_table {
     disks: "local-disk " + disk_size + " HDD"
     disk: disk_size + " GB"
     dx_instance_type: "mem1_ssd1_v2_x2"
+    preemptible: 0 # this task may take a long time and shouldn't be preempted
+    maxRetries: 3
   }
 }

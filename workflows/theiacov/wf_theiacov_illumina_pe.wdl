@@ -144,7 +144,7 @@ workflow theiacov_illumina_pe {
             trim_primers = trim_primers
         }
       }
-      # perform flu-specific tasks
+      # for flu organisms call flu_track
       if (organism_parameters.standardized_organism == "flu") {
         call run_flu_track.flu_track {
           input:
@@ -439,6 +439,7 @@ workflow theiacov_illumina_pe {
     # QC_Check Results
     String? qc_check = qc_check_task.qc_check
     File? qc_standard = qc_check_task.qc_standard
- 
+    # Capture percentage_mapped_reads from ivar_consensus task or flu_track task
+    String percentage_mapped_reads = select_first([ivar_consensus.percentage_mapped_reads, flu_track.percentage_mapped_reads, ""])
   }
 }

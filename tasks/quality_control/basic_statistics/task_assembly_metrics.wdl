@@ -14,11 +14,11 @@ task stats_n_coverage {
     samtools --version | head -n1 | tee VERSION
 
     samtools stats ~{bamfile} > ~{samplename}.stats.txt
-
     samtools coverage ~{bamfile} -m -o ~{samplename}.cov.hist
     samtools coverage ~{bamfile} -o ~{samplename}.cov.txt
     samtools flagstat ~{bamfile} > ~{samplename}.flagstat.txt
 
+     # Extracting coverage, depth, meanbaseq, and meanmapq
     coverage=$(cut -f 6 ~{samplename}.cov.txt | tail -n 1)
     depth=$(cut -f 7 ~{samplename}.cov.txt | tail -n 1)
     meanbaseq=$(cut -f 8 ~{samplename}.cov.txt | tail -n 1)
@@ -33,6 +33,34 @@ task stats_n_coverage {
     echo $depth | tee DEPTH
     echo $meanbaseq | tee MEANBASEQ
     echo $meanmapq | tee MEANMAPQ
+
+    # Parsing stats.txt for total and mapped reads
+    total_reads=$(grep "^SN" ~{samplename}.stats.txt | grep "raw total sequences:" | cut -f 3)
+    mapped_reads=$(grep "^SN" ~{samplename}.stats.txt | grep "reads mapped:" | cut -f 3)
+
+    # Check for empty values and set defaults to avoid errors
+    if [ -z "$total_reads" ]; then total_reads="1"; fi  # Avoid division by zero
+    if [ -z "$mapped_reads" ]; then mapped_reads="0"; fi
+
+    # Calculate the percentage of mapped reads
+    percentage_mapped_reads=$(awk "BEGIN {printf \"%.2f\", ($mapped_reads / $total_reads) * 100}")
+
+    # If the percentage calculation fails, default to 0.0
+    if [ -z "$percentage_mapped_reads" ]; then percentage_mapped_reads="0.0"; fi
+
+    # Output the result
+    echo $percentage_mapped_reads | tee PERCENTAGE_MAPPED_READS
+
+    #output all metrics in one txt file
+    # Output header row (for CSV)
+    echo -e "Statistic\tValue" > ~{samplename}_metrics.txt
+
+    # Output each statistic as a row
+    echo -e "Coverage\t$coverage" >> ~{samplename}_metrics.txt
+    echo -e "Depth\t$depth" >> ~{samplename}_metrics.txt
+    echo -e "Mean Base Quality\t$meanbaseq" >> ~{samplename}_metrics.txt
+    echo -e "Mean Mapping Quality\t$meanmapq" >> ~{samplename}_metrics.txt
+    echo -e "Percentage Mapped Reads\t$percentage_mapped_reads" >> ~{samplename}_metrics.txt
   >>>
   output {
     String date = read_string("DATE")
@@ -45,6 +73,9 @@ task stats_n_coverage {
     Float depth = read_string("DEPTH")
     Float meanbaseq = read_string("MEANBASEQ")
     Float meanmapq = read_string("MEANMAPQ")
+    Float percentage_mapped_reads = read_string("PERCENTAGE_MAPPED_READS")
+    File metrics_txt = "~{samplename}_metrics.txt"
+
   }
   runtime {
     docker: docker

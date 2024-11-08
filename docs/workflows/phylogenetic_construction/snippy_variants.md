@@ -62,6 +62,13 @@ The `Snippy_Variants` workflow aligns single-end or paired-end reads (in FASTQ f
 
 `Snippy_Variants` uses the snippy tool to align reads to the reference and call SNPs, MNPs and INDELs according to optional input parameters. The output includes a file of variants that is then queried using the `grep` bash command to identify any mutations in specified genes or annotations of interest. The query string MUST match the gene name or annotation as specified in the GenBank file and provided in the output variant file in the `snippy_results` column.
 
+Additionally, `Snippy_Variants` extracts quality control (QC) metrics from the Snippy output for each sample. These per-sample QC metrics are saved in TSV files (`snippy_variants_qc_metrics`). The QC metrics include:
+
+- **Percentage of reads aligned to the reference genome** (`snippy_variants_percent_reads_aligned`).
+- **Percentage of the reference genome covered at or above the specified depth threshold** (`snippy_variants_percent_ref_coverage`).
+
+These per-sample QC metrics can be combined into a single file (`snippy_combined_qc_metrics`) in downstream workflows, such as `snippy_tree_wf`, providing an overview of QC metrics across all samples.
+
 ### Outputs
 
 !!! tip "Visualize your outputs in IGV"

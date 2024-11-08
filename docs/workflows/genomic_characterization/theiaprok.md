@@ -686,7 +686,34 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
         - relative_abundance: estimated relative abundance of species in metagenome
         
         The value in the `midas_primary_genus` column is derived by ordering the rows in order of "relative_abundance" and identifying the genus of top species in the "species_id" column (Salmonella). The value in the `midas_secondary_genus` column is derived from the genus of the second-most prevalent genus in the "species_id" column (Citrobacter). The `midas_secondary_genus_abundance` column is the "relative_abundance" of the second-most prevalent genus (0.009477003). The `midas_secondary_genus_coverage` is the "coverage" of the second-most prevalent genus (0.995216227).
-        
+
+    **MIDAS Reference Database Overview**
+
+    The **MIDAS reference database** is a comprehensive tool for identifying bacterial species in metagenomic and bacterial isolate WGS data. It includes several layers of genomic data, helping detect species abundance and potential contaminants.
+
+    **Key Components of the MIDAS Database**
+
+    1. **Species Groups**: 
+    - MIDAS clusters bacterial genomes based on 96.5% sequence identity, forming over 5,950 species groups from 31,007 genomes. These groups align with the gold-standard species definition (95% ANI), ensuring highly accurate species identification.
+
+    2. **Genomic Data Structure**:
+    - **Marker Genes**: Contains 15 universal single-copy genes used to estimate species abundance.
+    - **Representative Genome**: Each species group has a selected representative genome, which minimizes genetic variation and aids in accurate SNP identification.
+    - **Pan-genome**: The database includes clusters of non-redundant genes, with options for multi-level clustering (e.g., 99%, 95%, 90% identity), enabling MIDAS to identify gene content within strains at various clustering thresholds.
+
+    3. **Taxonomic Annotation**: 
+    - Genomes are annotated based on consensus Latin names. Discrepancies in name assignments may occur due to factors like unclassified genomes or genus-level ambiguities.
+
+    ---
+
+    **Using the Default MIDAS Database**
+
+    TheiaProk uses the pre-loaded MIDAS database in Terra (see input table for current version) by default for bacterial species detection in metagenomic data, requiring no additional setup.
+
+    **How to Set Up the Default MIDAS Database**
+
+    Users can also build their own custom MIDAS database if they want to include specific genomes or configurations. This custom database can replace the default MIDAS database used in Terra. To build a custom MIDAS database, follow the [MIDAS GitHub guide on building a custom database](https://github.com/snayfach/MIDAS/blob/master/docs/build_db.md). Once the database is built, users can upload it to a Google Cloud Storage bucket or Terra workkspace and provide the link to the database in the `midas_db` input variable.
+
     Alternatively to `MIDAS`, the `Kraken2` task can also be turned on through setting the `call_kraken` input variable as `true` for the identification of reads to detect contamination with non-target taxa.
 
     Kraken2 is a bioinformatics tool originally designed for metagenomic applications. It has additionally proven valuable for validating taxonomic assignments and checking contamination of single-species (e.g. bacterial isolate) whole genome sequence data. A database must be provided if this optional module is activated, through the kraken_db optional input. A list of suggested databases can be found on [Kraken2 standalone documentation](../standalone/kraken2.md).
