@@ -15,7 +15,7 @@ task tbp_parser {
     Float? min_frequency # default 0.1
     Int? min_read_support # default 10
   
-    Boolean tbp_parser_debug = false
+    Boolean tbp_parser_debug = true
 
     Boolean add_cycloserine_lims = false
 
@@ -28,7 +28,7 @@ task tbp_parser {
     Float? etha237_frequency # default 0.1
     File? expert_rule_regions_bed
 
-    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:1.5.10"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:2.0.0"
     Int disk_size = 100
     Int memory = 4
     Int cpu = 1

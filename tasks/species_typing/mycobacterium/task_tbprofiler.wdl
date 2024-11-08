@@ -5,7 +5,7 @@ task tbprofiler {
     File read1
     File? read2
     String samplename
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/tbprofiler:6.2.0"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/tbprofiler:6.4.0"
     Int disk_size = 100
     Int memory = 16
     String mapper = "bwa"
@@ -21,9 +21,6 @@ task tbprofiler {
     Boolean tbprofiler_run_custom_db = false
   }
   command <<<
-    # Print and save date
-    date | tee DATE
-
     # Print and save version
     tb-profiler version > VERSION && sed -i -e 's/TBProfiler version //' VERSION && sed -n -i '$p' VERSION
     
@@ -36,7 +33,6 @@ task tbprofiler {
 
     # check if new database file is provided and not empty
     if ~{tbprofiler_run_custom_db}; then
-      tb-profiler load_library ~{tbprofiler_custom_db}
       if [ ! -s ~{tbprofiler_custom_db} ]; then
         echo "Custom database file is empty"
         TBDB=""
