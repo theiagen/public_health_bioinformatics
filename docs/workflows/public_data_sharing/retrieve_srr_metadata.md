@@ -4,11 +4,13 @@
 
 | **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
 |---|---|---|---|---|
-| [Public Data Sharing](../../workflows_overview/workflows_type.md/#public-data-sharing) | [Any Taxa](../../workflows_overview/workflows_kingdom.md/#any-taxa) | PHB v2.2.1 | Yes | Sample-level |
+| [Public Data Sharing](../../workflows_overview/workflows_type.md/#public-data-sharing) | [Any Taxa](../../workflows_overview/workflows_kingdom.md/#any-taxa) | PHB v2.3.0 | Yes | Sample-level |
 
 ## Retrieve SRR Metadata
 
-This workflow retrieves the Sequence Read Archive (SRA) accession (SRR) associated with a given sample accession. It utilizes the `fastq-dl` tool to fetch metadata from SRA and outputs the SRR accession.
+This workflow is designed to retrieve the Sequence Read Archive (SRA) accession (SRR) associated with a given sample accession. The primary inputs are BioSample IDs (e.g., SAMN00000000) or SRA Experiment IDs (e.g., SRX000000), which link to sequencing data in the SRA repository.
+
+The workflow uses the fastq-dl tool to fetch metadata from SRA and specifically parses this metadata to extract the associated SRR accession and outputs the SRR accession.
 
 ### Inputs
 
@@ -16,7 +18,7 @@ This workflow retrieves the Sequence Read Archive (SRA) accession (SRR) associat
 
 | **Terra Task Name** | **Variable** | **Type** | **Description**| **Default Value** | **Terra Status** |
 | --- | --- | --- | --- | --- | --- |
-| fetch_srr_metadata | **sample_accession** | String |  SRA-compatible accession, such as a **BioSample ID** (e.g., "SAMN00000000") or **SRA Experiment ID** (e.g., "SRX000000"), used to retrieve SRR metadata. | N/A | Required |
+| fetch_srr_metadata | **sample_accession** | String |  SRA-compatible accession, such as a **BioSample ID** (e.g., "SAMN00000000") or **SRA Experiment ID** (e.g., "SRX000000"), used to retrieve SRR metadata. | | Required |
 | fetch_srr_metadata | **docker**| String | Docker image for metadata retrieval. | `us-docker.pkg.dev/general-theiagen/biocontainers/fastq-dl:2.0.4--pyhdfd78af_0` | Optional |
 | fetch_srr_metadata | **disk_size** | Int | Disk space in GB allocated for the task. | 10 | Optional |
 | fetch_srr_metadata | **cpu** | Int | Number of CPUs allocated for the task. | 2 | Optional |
@@ -43,7 +45,7 @@ This workflow has a single task that performs metadata retrieval for the specifi
 
 | **Variable** | **Type** | **Description**|
 |---|---|---|
-| srr_accession| String | The SRR accession associated with the sample ID.|
+| srr_accession| String | The SRR accession associated with the input sample accession.|
 
 ## References
 

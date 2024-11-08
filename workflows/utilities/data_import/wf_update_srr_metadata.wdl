@@ -8,7 +8,6 @@ workflow wf_retrieve_srr {
   }
   input {
     String sample_accession  
-    String retrieve_srr_docker = "us-docker.pkg.dev/general-theiagen/biocontainers/fastq-dl:2.0.4--pyhdfd78af_0"
   }
 
   call srr_task.fetch_srr_metadata {
