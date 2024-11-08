@@ -19,9 +19,6 @@ task augur_tree {
     # capture version information
     augur version > VERSION
 
-    # Get alignment basename
-    FASTA_BASENAME=$(basename ~{aligned_fasta} .fasta)
-
     AUGUR_RECURSION_LIMIT=10000 augur tree \
       --alignment "~{aligned_fasta}" \
       --output "~{build_name}_~{method}.nwk" \
@@ -35,7 +32,9 @@ task augur_tree {
     # If iqtree, get the model used
     if [ "~{method}" == "iqtree" ]; then
       if [ "~{substitution_model}" == "auto" ]; then
-        MODEL=$(grep "Best-fit model:" ${FASTA_BASENAME}-delim.fasta.log | sed 's|Best-fit model: ||g;s|chosen.*||' | tr -d '\n\r')
+        FASTA_BASENAME=$(basename ~{aligned_fasta} .fasta)
+        FASTA_DIR=$(dirname ~{aligned_fasta})
+        MODEL=$(grep "Best-fit model:" ${FASTA_DIR}/${FASTA_BASENAME}-delim.iqtree.log | sed 's|Best-fit model: ||g;s|chosen.*||' | tr -d '\n\r')
       else
         MODEL="~{substitution_model}"
       fi
