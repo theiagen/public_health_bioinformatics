@@ -29,7 +29,7 @@ task tbp_parser {
     Float? etha237_frequency # default 0.1
     File? expert_rule_regions_bed
 
-    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:1.4.2"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:2.0.0"
     Int disk_size = 100
     Int memory = 4
     Int cpu = 1
