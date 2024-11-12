@@ -39,6 +39,8 @@ task augur_tree {
         MODEL="~{substitution_model}"
       fi
       echo "$MODEL" > FINAL_MODEL.txt
+    else
+      echo "" > FINAL_MODEL.txt
     fi
   >>>
 
