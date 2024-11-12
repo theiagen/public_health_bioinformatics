@@ -47,7 +47,7 @@ task augur_tree {
   output {
     File aligned_tree  = "~{build_name}_~{method}.nwk"
     String augur_version = read_string("VERSION")
-    String? iqtree_model_used = read_string("FINAL_MODEL.txt")
+    String iqtree_model_used = read_string("FINAL_MODEL.txt")
   }
   runtime {
     docker: docker

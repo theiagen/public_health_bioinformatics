@@ -203,7 +203,7 @@ workflow augur {
     File? auspice_input_json = augur_export.auspice_json
     File? time_tree = augur_refine.refined_tree
     File distance_tree = augur_tree.aligned_tree
-    String? iqtree_model_used = augur_tree.iqtree_model_used
+    String iqtree_model_used = augur_tree.iqtree_model_used
     File aligned_fastas = select_first([augur_align.aligned_fasta, alignment_fasta])
     File combined_assemblies = filter_sequences_by_length.filtered_fasta
     File? metadata_merged = tsv_join.out_tsv
