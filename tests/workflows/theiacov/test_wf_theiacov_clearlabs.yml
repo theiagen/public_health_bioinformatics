@@ -115,17 +115,16 @@
     - path: miniwdl_run/call-fastq_scan_clean_reads/inputs.json
       contains: ["read1", "clearlabs"]
     - path: miniwdl_run/call-fastq_scan_clean_reads/outputs.json
-      contains: ["fastq_scan_se", "pipeline_date", "read1_seq"]
+      contains: ["fastq_scan_se", "read1_seq"]
     - path: miniwdl_run/call-fastq_scan_clean_reads/stderr.txt
     - path: miniwdl_run/call-fastq_scan_clean_reads/stderr.txt.offset
     - path: miniwdl_run/call-fastq_scan_clean_reads/stdout.txt
     - path: miniwdl_run/call-fastq_scan_clean_reads/task.log
       contains: ["wdl", "theiacov_clearlabs", "fastq_scan_clean_reads", "done"]
-    - path: miniwdl_run/call-fastq_scan_clean_reads/work/DATE
     - path: miniwdl_run/call-fastq_scan_clean_reads/work/READ1_SEQS
       md5sum: 097e79b36919c8377c56088363e3d8b7
     - path: miniwdl_run/call-fastq_scan_clean_reads/work/VERSION
-      md5sum: 8e4e9cdfbacc9021a3175ccbbbde002b
+      md5sum: a59bb42644e35c09b8fa8087156fa4c2
     - path: miniwdl_run/call-fastq_scan_clean_reads/work/_miniwdl_inputs/0/clearlabs_R1_dehosted.fastq.gz
     - path: miniwdl_run/call-fastq_scan_clean_reads/work/clearlabs_R1_dehosted_fastq-scan.json
       md5sum: 869dd2e934c600bba35f30f08e2da7c9
@@ -134,17 +133,16 @@
     - path: miniwdl_run/call-fastq_scan_raw_reads/inputs.json
       contains: ["read1", "clearlabs"]
     - path: miniwdl_run/call-fastq_scan_raw_reads/outputs.json
-      contains: ["fastq_scan_se", "pipeline_date", "read1_seq"]
+      contains: ["fastq_scan_se", "read1_seq"]
     - path: miniwdl_run/call-fastq_scan_raw_reads/stderr.txt
     - path: miniwdl_run/call-fastq_scan_raw_reads/stderr.txt.offset
     - path: miniwdl_run/call-fastq_scan_raw_reads/stdout.txt
     - path: miniwdl_run/call-fastq_scan_raw_reads/task.log
       contains: ["wdl", "theiacov_clearlabs", "fastq_scan_raw_reads", "done"]
-    - path: miniwdl_run/call-fastq_scan_raw_reads/work/DATE
     - path: miniwdl_run/call-fastq_scan_raw_reads/work/READ1_SEQS
       md5sum: 097e79b36919c8377c56088363e3d8b7
     - path: miniwdl_run/call-fastq_scan_raw_reads/work/VERSION
-      md5sum: 8e4e9cdfbacc9021a3175ccbbbde002b
+      md5sum: a59bb42644e35c09b8fa8087156fa4c2
     - path: miniwdl_run/call-fastq_scan_raw_reads/work/_miniwdl_inputs/0/clearlabs.fastq.gz
     - path: miniwdl_run/call-fastq_scan_raw_reads/work/clearlabs_fastq-scan.json
       md5sum: 869dd2e934c600bba35f30f08e2da7c9
