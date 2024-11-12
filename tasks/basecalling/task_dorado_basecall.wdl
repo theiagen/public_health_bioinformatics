@@ -44,7 +44,7 @@ task basecall {
   >>>
   
   output {
-    Array[File] sam_files = glob("output/sam_*/${base_name}.sam")
+    Array[File] sam_files = glob("output/sam_*/*.sam")
   }
   
   runtime {
