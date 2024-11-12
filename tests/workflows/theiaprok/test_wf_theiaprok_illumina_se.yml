@@ -526,7 +526,7 @@
     - path: miniwdl_run/wdl/tasks/gene_typing/drug_resistance/task_resfinder.wdl
       md5sum: 27528633723303b462d095b642649453
     - path: miniwdl_run/wdl/tasks/gene_typing/variant_detection/task_snippy_variants.wdl
-      md5sum: 3b9e04569d7e856dcc649b7726b306b7
+      md5sum: 440a620a10ccdafe612f0b33ef05f86d
     - path: miniwdl_run/wdl/tasks/quality_control/read_filtering/task_bbduk.wdl
       md5sum: aec6ef024d6dff31723f44290f6b9cf5
     - path: miniwdl_run/wdl/tasks/quality_control/advanced_metrics/task_busco.wdl
@@ -580,7 +580,7 @@
     - path: miniwdl_run/wdl/tasks/species_typing/escherichia_shigella/task_sonneityping.wdl
       md5sum: 3357a36f11992a0ca00c61d7bfccb44b
     - path: miniwdl_run/wdl/tasks/species_typing/mycobacterium/task_tbprofiler.wdl
-      md5sum: 3b37e6bf7f4773e12afe1fa15920acd9
+      md5sum: 484f7b78f12607a737fe30f4c5f3d697
     - path: miniwdl_run/wdl/tasks/species_typing/multi/task_ts_mlst.wdl
       md5sum: ff8070a06eca94264ad6a7d91cb03bf0
     - path: miniwdl_run/wdl/tasks/task_versioning.wdl
@@ -596,7 +596,7 @@
     - path: miniwdl_run/wdl/workflows/theiaprok/wf_theiaprok_illumina_se.wdl
       md5sum: fdb66b59ac886501a4ae90a25cefd633
     - path: miniwdl_run/wdl/workflows/utilities/wf_merlin_magic.wdl
-      md5sum: ea5cff6eff8c2c42046cf2eae6f16b6f
+      md5sum: ea00ab995a3121d2bf23241e172f1dfc
     - path: miniwdl_run/wdl/workflows/utilities/wf_read_QC_trim_se.wdl
       md5sum: d11bfe33fdd96eab28892be5a01c1c7d
     - path: miniwdl_run/workflow.log
