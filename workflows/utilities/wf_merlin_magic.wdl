@@ -57,7 +57,7 @@ workflow merlin_magic {
     # activating tool logic
     Boolean call_poppunk = true
     Boolean call_shigeifinder_reads_input = false
-    Boolean tbprofiler_additional_outputs = false # set to true to run tbp-parser
+    Boolean call_tbp_parser = false
     # docker options
     String? abricate_abaum_docker_image
     String? abricate_vibrio_docker_image
@@ -467,7 +467,7 @@ workflow merlin_magic {
           tbprofiler_run_cdph_db = tbprofiler_run_cdph_db,
           docker = tbprofiler_docker_image
       }
-      if (tbprofiler_additional_outputs) {
+      if (call_tbp_parser) {
         call tbp_parser_task.tbp_parser {
           input:
             tbprofiler_json = tbprofiler.tbprofiler_output_json,

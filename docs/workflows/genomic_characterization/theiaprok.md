@@ -301,6 +301,7 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 | merlin_magic | **call_poppunk** | Boolean | If "true", runs PopPUNK for GPSC cluster designation for S. pneumoniae | TRUE | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **call_shigeifinder_reads_input** | Boolean | If set to "true", the ShigEiFinder task will run again but using read files as input instead of the assembly file. Input is shown but not used for TheiaProk_FASTA. | FALSE | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **call_stxtyper** | Boolean | If set to "true", the StxTyper task will run on all samples regardless of the `gambit_predicted_taxon` output. Useful if you suspect a non-E.coli or non-Shigella sample contains stx genes. | FALSE | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **call_tbp_parser** | Boolean | If set to "true", activates the tbp_parser module and results in more outputs, including tbp_parser_looker_report_csv, tbp_parser_laboratorian_report_csv,  tbp_parser_lims_report_csv, tbp_parser_coverage_report, and tbp_parser_genome_percent_coverage | FALSE | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **cauris_cladetyper_docker_image** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **cladetyper_kmer_size** | Int | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **cladetyper_ref_clade1** | File | *Provide an empty file if running TheiaProk on the command-line |  | Do not modify, Optional | FASTA, ONT, PE, SE |
@@ -407,27 +408,35 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 | merlin_magic | **stxtyper_enable_debug** | Boolean | When enabled, additional messages are printed and files in `$TMPDIR` are not removed after running | FALSE | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **stxtyper_memory** | Int | Amount of memory (in GB) to allocate to the task | 4 | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **staphopia_sccmec_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/biocontainers/staphopia-sccmec:1.0.0--hdfd78af_0 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **tbp_parser_add_cs_lims** | Boolean | Set to true add cycloserine results to the LIMS report | FALSE | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **tbp_parser_coverage_regions_bed** | File | A bed file that lists the regions to be considered for QC |  | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **tbp_parser_coverage_threshold** | Int | The minimum coverage for a region to pass QC in tbp_parser | 100 | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **tbp_parser_debug** | Boolean | Activate the debug mode on tbp_parser; increases logging outputs | FALSE | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **tbp_parser_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:1.6.0 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **tbp_parser_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:1.4.0 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **tbp_parser_etha237_frequency** | Float | Minimum frequency for a mutation in ethA at protein position 237 to pass QC in tbp-parser | 0.1 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **tbp_parser_expert_rule_regions_bed** | File | A file that contains the regions where R mutations and expert rules are applied |  | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **tbp_parser_min_depth** | Int | Minimum depth for a variant to pass QC in tbp_parser | 10 | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **tbp_parser_min_frequency** | Int | The minimum frequency for a mutation to pass QC | 0.1 | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **tbp_parser_min_read_support** | Int | The minimum read support for a mutation to pass QC | 10 | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **tbp_parser_operator** | String | Fills the "operator" field in the tbp_parser output files | Operator not provided | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **tbp_parser_output_seq_method_type** | String | Fills out the "seq_method" field in the tbp_parser output files | Sequencing method not provided | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **tbprofiler_additional_outputs** | Boolean | If set to "true", activates the tbp_parser module and results in more outputs, including tbp_parser_looker_report_csv, tbp_parser_laboratorian_report_csv,  tbp_parser_lims_report_csv, tbp_parser_coverage_report, and tbp_parser_genome_percent_coverage | FALSE | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **tbprofiler_cov_frac_threshold** | Int | A cutoff used to calculate the fraction of the region covered by ≤ this value | 1 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **tbp_parser_rpob449_frequency** | Float | Minimum frequency for a mutation at protein position 449 to pass QC in tbp-parser | 0.1 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **tbp_parser_rrl_frequency** | Float | Minimum frequency for a mutation in rrl to pass QC in tbp-parser | 0.1 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **tbp_parser_rrl_read_support** | Int | Minimum read support for a mutation in rrl to pass QC in tbp-parser | 10 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **tbp_parser_rrs_frequency** | Float | Minimum frequency for a mutation in rrs to pass QC in tbp-parser | 0.1 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **tbp_parser_rrs_read_support** | Int | Minimum read support for a mutation in rrs to pass QC in tbp-parser | 10 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **tbp_parser_tngs_data** | Boolean | Set to true to enable tNGS-specific parameters and runs in tbp-parser | FALSE | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **call_tbp_parser** | Boolean | If set to "true", activates the tbp_parser module and results in more outputs, including tbp_parser_looker_report_csv, tbp_parser_laboratorian_report_csv,  tbp_parser_lims_report_csv, tbp_parser_coverage_report, and tbp_parser_genome_percent_coverage | FALSE | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **tbprofiler_additional_parameters** | String | Add additional parameters to the tbprofiler command |  | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **tbprofiler_custom_db** | File | TBProfiler uses by default the TBDB database; if you have a custom database you wish to use, you must provide a custom database in this field and set tbprofiler_run_custom_db to true |  | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **tbprofiler_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/tbprofiler:4.4.2 | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **tbprofiler_mapper** | String | The mapping tool used in TBProfiler to align the reads to the reference genome; see TBProfiler’s original documentation for available options. | bwa | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **tbprofiler_min_af** | Float | The minimum allele frequency to call a variant | 0.1 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **tbprofiler_min_af_pred** | Float | The minimum allele frequency to use a variant for resistance prediction | 0.1 | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **tbprofiler_min_depth** | Int | The minimum depth for a variant to be called. | 10 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **tbprofiler_run_cdph_db** | Boolean | TBProfiler uses by default the TBDB database; set this value to "true" to use the WHO v2 database with customizations for CDPH | FALSE | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **tbprofiler_run_custom_db** | Boolean | TBProfiler uses by default the TBDB database; if you have a custom database you wish to use, you must set this value to true and provide a custom database in the tbprofiler_custom_db field | FALSE | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **tbprofiler_variant_caller** | String | Select a different variant caller for TBProfiler to use by writing it in this block; see TBProfiler’s original documentation for available options. | freebayes | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **tbprofiler_variant_calling_params** | String | Enter additional variant calling parameters in this free text input to customize how the variant caller works in TBProfiler | None | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **tbprofiler_variant_caller** | String | Select a different variant caller for TBProfiler to use by writing it in this block; see TBProfiler’s original documentation for available options. | GATK | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **tbprofiler_variant_calling_params** | String | Enter additional variant calling parameters in this free text input to customize how the variant caller works in TBProfiler | | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **theiaeuk** | Boolean | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **virulencefinder_coverage_threshold** | Float | The threshold for minimum coverage |  | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **virulencefinder_database** | String | The specific database to use | virulence_ecoli | Optional | FASTA, ONT, PE, SE |
