@@ -14,16 +14,17 @@ task basecall {
   command <<< 
     set -euo pipefail
 
-    # Create output directory for SAM files
-    sam_output="output/sam/"
+    # Create a unique output directory for each scatter job
+    base_name=$(basename "~{input_file}" .pod5)
+    sam_output="output/sam_${base_name}/"
     mkdir -p "$sam_output"
 
     echo "### Starting basecalling for ~{input_file} ###"
 
-    base_name=$(basename "~{input_file}" .pod5)
+    # Set SAM file path with unique naming based on POD5 basename
     sam_file="$sam_output/${base_name}.sam"
 
-    echo "Processing ~{input_file}, output: $sam_file"
+    echo "Processing ~{input_file}, expected output: $sam_file"
 
     # Run Dorado basecaller
     dorado basecaller \
@@ -35,20 +36,26 @@ task basecall {
       --output-dir "$sam_output" \
       --verbose || { echo "ERROR: Dorado basecaller failed for ~{input_file}"; exit 1; }
 
-    echo "Basecalling completed for ~{input_file}. SAM file: $sam_file"
+    # Rename the generated SAM file to the unique name based on input_file
+    generated_sam=$(find "$sam_output" -name "*.sam" | head -n 1)
+    mv "$generated_sam" "$sam_file"
+
+    echo "Basecalling completed for ~{input_file}. SAM file renamed to: $sam_file"
   >>>
+  
   output {
-    Array[File] sam_files = glob("output/sam/*.sam")
+    Array[File] sam_files = glob("output/sam_${base_name}/*.sam")
   }
+  
   runtime {
     docker: docker
     cpu: cpu
     memory: "~{memory} GB"
-    disks:  "local-disk " + disk_size + " SSD"
-    disk: disk_size + " GB"
+    disks: "local-disk " + disk_size + " SSD"
     gpuCount: 1
     gpuType: "nvidia-tesla-t4"  
     preemptible: 0
     maxRetries: 1
-    }
+  }
 }
+

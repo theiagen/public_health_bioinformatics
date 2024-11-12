@@ -19,75 +19,66 @@ task dorado_demux {
     echo "Input BAM files:"
     for bam_file in ~{sep=" " bam_files}; do echo "$bam_file"; done
 
-    mkdir -p demux_output
-
+    # Process each BAM file in a unique output directory
     for bam_file in ~{sep=" " bam_files}; do
-      echo "Processing BAM file: $bam_file"
-      echo "Output directory: demux_output"
+      base_name=$(basename "$bam_file" .bam)
+      demux_dir="demux_output_${base_name}"
+      mkdir -p "$demux_dir"
+
+      echo "Processing BAM file: $bam_file into directory $demux_dir"
       echo "Running dorado demux for kit: ~{kit_name}"
 
       # Run Dorado demux command
       dorado demux \
         "$bam_file" \
-        --output-dir demux_output \
+        --output-dir "$demux_dir" \
         --kit-name ~{kit_name} \
         --emit-fastq \
         --emit-summary \
-        --verbose > "demux_output/$(basename "$bam_file").log" 2>&1 || {
+        --verbose > "$demux_dir/demux_${base_name}.log" 2>&1 || {
           echo "ERROR: Dorado demux failed for $bam_file" >&2
-          cat "demux_output/$(basename "$bam_file").log" >&2
+          cat "$demux_dir/demux_${base_name}.log" >&2
           exit 1
       }
 
       echo "Demultiplexing completed for $bam_file"
     done
 
-    echo "### Listing FASTQ files after demux ###"
-    ls -lh demux_output/*.fastq || echo "No FASTQ files found."
+    # Merge FASTQ files across directories by barcode
+    echo "### Merging FASTQ files by barcode ###"
+    mkdir -p merged_output
+    for demux_dir in demux_output_*; do
+      for fastq_file in "$demux_dir"/*.fastq; do
+        barcode=$(basename "$fastq_file")
+        final_fastq="merged_output/${barcode}"
 
-    # Debugging the file naming logic and counting reads per file
-    echo "### Renaming FASTQ files and Counting Reads ###"
-    for fastq_file in demux_output/*.fastq; do
-      echo "Processing $fastq_file"
-      
-      if [[ "$fastq_file" == *"unclassified"* ]]; then
-        final_fastq="~{fastq_file_name}-unclassified.fastq"
-      else
-        barcode=$(echo "$fastq_file" | sed -E 's/.*_(barcode[0-9]+)\.fastq/\1/')
-        final_fastq="~{fastq_file_name}-${barcode}.fastq"
-      fi
-
-      # Count reads in each intermediate FASTQ file
-      read_count=$(grep -c "^@" "$fastq_file")
-      echo "Read count in $fastq_file: $read_count"
-
-      echo "Renaming $fastq_file to $final_fastq"
-
-      if [ -f "$final_fastq" ]; then
-        echo "Appending to existing $final_fastq"
-        cat "$fastq_file" >> "$final_fastq"
-        rm "$fastq_file"
-      else
-        echo "Creating new FASTQ file: $final_fastq"
-        mv "$fastq_file" "$final_fastq"
-      fi
+        # Check if the merged file already exists
+        if [ -f "$final_fastq" ]; then
+          echo "Appending to existing $final_fastq"
+          cat "$fastq_file" >> "$final_fastq"
+        else
+          echo "Creating new FASTQ file: $final_fastq"
+          mv "$fastq_file" "$final_fastq"
+        fi
+      done
     done
 
-    echo "### Zipping all FASTQ files ###"
-    for fastq in ~{fastq_file_name}-*.fastq; do
-      echo "Zipping $fastq"
-      gzip -f "$fastq"
+    # Compress the final merged FASTQ files
+    echo "### Compressing merged FASTQ files ###"
+    for final_fastq in merged_output/*.fastq; do
+      echo "Compressing $final_fastq"
+      gzip -f "$final_fastq"
     done
 
-    echo "### Final FASTQ Files ###"
-    ls -lh ~{fastq_file_name}-*.fastq.gz || echo "No gzipped FASTQ files found."
+    echo "### Final Merged FASTQ Files ###"
+    ls -lh merged_output/*.fastq.gz || echo "No gzipped FASTQ files found."
 
     echo "### Dorado demux process completed successfully ###"
     date
   >>>
 
   output {
-    Array[File] fastq_files = glob("~{fastq_file_name}-*.fastq.gz")
+    Array[File] fastq_files = glob("merged_output/*.fastq.gz")
   }
   
   runtime {
