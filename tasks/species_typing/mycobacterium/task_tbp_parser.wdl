@@ -64,7 +64,7 @@ task tbp_parser {
     echo 0.0 > AVG_DEPTH
 
     # get genome percent coverage for the entire reference genome length over min_depth
-    genome=$(samtools depth -J ~{tbprofiler_bam} | awk -F "\t" '{if ($3 >= ~{min_depth}) print;}' | wc -l )
+    genome=$(samtools depth -J ~{tbprofiler_bam} | awk -F "\t" -v min_depth=~{min_depth} '{if ($3 >= min_depth) print;}' | wc -l )
     python3 -c "print ( ($genome / 4411532 ) * 100 )" | tee GENOME_PC
 
     # get genome average depth
