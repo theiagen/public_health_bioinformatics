@@ -4,13 +4,15 @@
 
 | **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
 |---|---|---|---|---|
-| [Workflow Type](../../workflows_overview/workflows_type.md/#link-to-workflow-type) | [Applicable Kingdom](../../workflows_overview/workflows_kingdom.md/#link-to-applicable-kingdom) | PHB <version with last changes> | <command-line compatibility> | <workflow level on terra> |
+| [Link to Workflow Type](../../workflows_overview/workflows_type.md/#link-to-workflow-type) | [Link to Applicable Kingdom](../../workflows_overview/workflows_kingdom.md/#link-to-applicable-kingdom) | PHB <version with last changes\> | <command-line compatibility\> | <workflow level on terra (set or sample)\> |
 
 ## Workflow_Name_On_Terra
 
 Description of the workflow.
 
 ### Inputs
+
+Input should be ordered as they appear on Terra
 
 | **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
 |---|---|---|---|---|---|
