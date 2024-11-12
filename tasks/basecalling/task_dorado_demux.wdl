@@ -45,8 +45,8 @@ task dorado_demux {
     echo "### Listing FASTQ files after demux ###"
     ls -lh demux_output/*.fastq || echo "No FASTQ files found."
 
-    # Debugging the file naming logic
-    echo "### Renaming FASTQ files ###"
+    # Debugging the file naming logic and counting reads per file
+    echo "### Renaming FASTQ files and Counting Reads ###"
     for fastq_file in demux_output/*.fastq; do
       echo "Processing $fastq_file"
       
@@ -56,6 +56,10 @@ task dorado_demux {
         barcode=$(echo "$fastq_file" | sed -E 's/.*_(barcode[0-9]+)\.fastq/\1/')
         final_fastq="~{fastq_file_name}-${barcode}.fastq"
       fi
+
+      # Count reads in each intermediate FASTQ file
+      read_count=$(grep -c "^@" "$fastq_file")
+      echo "Read count in $fastq_file: $read_count"
 
       echo "Renaming $fastq_file to $final_fastq"
 
@@ -85,7 +89,8 @@ task dorado_demux {
   output {
     Array[File] fastq_files = glob("~{fastq_file_name}-*.fastq.gz")
   }
-   runtime {
+  
+  runtime {
     docker: docker
     cpu: cpu
     memory: "~{memory} GB"
