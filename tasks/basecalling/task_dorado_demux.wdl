@@ -14,6 +14,9 @@ task dorado_demux {
   command <<< 
     set -euo pipefail
 
+    fastq_file_name="~{fastq_file_name}"
+    kit_name="~{kit_name}"
+
     echo "### Starting Dorado demux ###"
     date
     echo "Input BAM files:"
@@ -26,13 +29,13 @@ task dorado_demux {
       mkdir -p "$demux_dir"
 
       echo "Processing BAM file: $bam_file into directory $demux_dir"
-      echo "Running dorado demux for kit: ~{kit_name}"
+      echo "Running dorado demux for kit: $kit_name"
 
       # Run Dorado demux command
       dorado demux \
         "$bam_file" \
         --output-dir "$demux_dir" \
-        --kit-name ~{kit_name} \
+        --kit-name "$kit_name" \
         --emit-fastq \
         --emit-summary \
         --verbose > "$demux_dir/demux_${base_name}.log" 2>&1 || {
@@ -44,12 +47,14 @@ task dorado_demux {
       echo "Demultiplexing completed for $bam_file"
     done
 
-    # Merge FASTQ files across directories by barcode
+    # Debugging merged output and merging logic
     echo "### Merging FASTQ files by barcode ###"
     mkdir -p merged_output
     for demux_dir in demux_output_*; do
       for fastq_file in "$demux_dir"/*.fastq; do
-        # Determine if the file is "unclassified" or has a specific barcode and rename
+        echo "Processing $fastq_file in $demux_dir"
+
+        # Check if the file is "unclassified" or has a specific barcode
         if [[ "$fastq_file" == *"unclassified"* ]]; then
           final_fastq="merged_output/${fastq_file_name}-unclassified.fastq"
         else
@@ -57,7 +62,7 @@ task dorado_demux {
           final_fastq="merged_output/${fastq_file_name}-${barcode}.fastq"
         fi
 
-        # Check if the merged file already exists
+        # Verify if the merged file already exists
         if [ -f "$final_fastq" ]; then
           echo "Appending to existing $final_fastq"
           cat "$fastq_file" >> "$final_fastq"
