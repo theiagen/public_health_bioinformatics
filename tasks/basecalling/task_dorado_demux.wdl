@@ -49,8 +49,13 @@ task dorado_demux {
     mkdir -p merged_output
     for demux_dir in demux_output_*; do
       for fastq_file in "$demux_dir"/*.fastq; do
-        barcode=$(basename "$fastq_file")
-        final_fastq="merged_output/${barcode}"
+        # Determine if the file is "unclassified" or has a specific barcode and rename
+        if [[ "$fastq_file" == *"unclassified"* ]]; then
+          final_fastq="merged_output/${fastq_file_name}-unclassified.fastq"
+        else
+          barcode=$(echo "$fastq_file" | sed -E 's/.*_(barcode[0-9]+)\.fastq/\1/')
+          final_fastq="merged_output/${fastq_file_name}-${barcode}.fastq"
+        fi
 
         # Check if the merged file already exists
         if [ -f "$final_fastq" ]; then
