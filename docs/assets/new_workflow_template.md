@@ -26,12 +26,12 @@ Description of the workflow tasks
     Description of the task
 
     !!! techdetails "Tool Name Technical Details"
-        |  | Links | 
-        | --- | --- | 
+        |  | Links |
+        | --- | --- |
         | Task | [link to task on GitHub] |
         | Software Source Code | [link to tool's source code] |
         | Software Documentation | [link to tool's documentation] |
-        | Original Publication | [link to tool's publication] |
+        | Original Publication(s) | [link to tool's publication] |
 
 ### Outputs
 
