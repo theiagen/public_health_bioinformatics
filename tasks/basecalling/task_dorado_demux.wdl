@@ -8,7 +8,7 @@ task dorado_demux {
     Int cpu = 4 
     Int memory = 16
     Int disk_size = 100
-    String docker_dorado = "us-docker.pkg.dev/general-theiagen/staphb/dorado:0.8.0"
+    String dorado = "us-docker.pkg.dev/general-theiagen/staphb/dorado:0.8.0"
   }
 
   command <<< 
@@ -92,7 +92,7 @@ task dorado_demux {
 
   output {
     Array[File] fastq_files = glob("merged_output/*.fastq.gz")
-    String dorado_docker_used = docker_dorado
+    String dorado_docker = dorado
     String dorado_version = read_string("DORADO_VERSION")
     File dorado_demux_log = "dorado_demux.log" 
   }
