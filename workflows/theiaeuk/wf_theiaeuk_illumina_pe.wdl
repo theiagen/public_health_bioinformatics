@@ -208,6 +208,10 @@ workflow theiaeuk_illumina_pe {
     Int? fastq_scan_num_reads_clean1 = read_QC_trim.fastq_scan_clean1
     Int? fastq_scan_num_reads_clean2 = read_QC_trim.fastq_scan_clean2
     String? fastq_scan_num_reads_clean_pairs = read_QC_trim.fastq_scan_clean_pairs
+    File? fastq_scan_raw1_json = read_QC_trim.fastq_scan_raw1_json
+    File? fastq_scan_raw2_json = read_QC_trim.fastq_scan_raw2_json
+    File? fastq_scan_clean1_json = read_QC_trim.fastq_scan_clean1_json
+    File? fastq_scan_clean2_json = read_QC_trim.fastq_scan_clean2_json
     # Read QC - trimmomatic outputs
     String? trimmomatic_version = read_QC_trim.trimmomatic_version
     String? trimmomatic_docker = read_QC_trim.trimmomatic_docker

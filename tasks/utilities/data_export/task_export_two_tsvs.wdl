@@ -18,6 +18,7 @@ task export_two_tsvs {
     volatile: true
   }
   command <<<
+    set -euo pipefail
     python3 /scripts/export_large_tsv/export_large_tsv.py --project ~{terra_project1} --workspace ~{terra_workspace1} --entity_type ~{datatable1} --tsv_filename "~{datatable1}_table1.tsv"
 
     # check if second project is provided; if not, use first

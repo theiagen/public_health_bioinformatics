@@ -254,6 +254,8 @@ workflow theiaprok_illumina_se {
               num_reads_raw1 = read_QC_trim.fastq_scan_raw1,
               fastq_scan_version = read_QC_trim.fastq_scan_version,
               num_reads_clean1 = read_QC_trim.fastq_scan_clean1,
+              fastq_scan_raw1_json = read_QC_trim.fastq_scan_raw1_json,
+              fastq_scan_clean1_json = read_QC_trim.fastq_scan_clean1_json,
               trimmomatic_version = read_QC_trim.trimmomatic_version,
               fastp_version = read_QC_trim.fastp_version,
               bbduk_docker = read_QC_trim.bbduk_docker,
@@ -571,6 +573,8 @@ workflow theiaprok_illumina_se {
     Int? fastq_scan_num_reads_raw1 = read_QC_trim.fastq_scan_raw1
     String? fastq_scan_version = read_QC_trim.fastq_scan_version
     Int? fastq_scan_num_reads_clean1 = read_QC_trim.fastq_scan_clean1
+    File? fastq_scan_raw1_json = read_QC_trim.fastq_scan_raw1_json
+    File? fastq_scan_clean1_json = read_QC_trim.fastq_scan_clean1_json
     # Read QC - fastqc outputs
     Int? fastqc_num_reads_raw1 = read_QC_trim.fastqc_raw1
     Int? fastqc_num_reads_clean1 = read_QC_trim.fastqc_clean1
@@ -758,6 +762,16 @@ workflow theiaprok_illumina_se {
     File? virulencefinder_report_tsv = merlin_magic.virulencefinder_report_tsv
     String? virulencefinder_docker = merlin_magic.virulencefinder_docker
     String? virulencefinder_hits = merlin_magic.virulencefinder_hits
+    # stxtyper 
+    File? stxtyper_report = merlin_magic.stxtyper_report
+    String? stxtyper_docker = merlin_magic.stxtyper_docker
+    String? stxtyper_version = merlin_magic.stxtyper_version
+    Int? stxtyper_num_hits = merlin_magic.stxtyper_num_hits
+    String? stxtyper_all_hits = merlin_magic.stxtyper_all_hits
+    String? stxtyper_complete_operons = merlin_magic.stxtyper_complete_operon_hits
+    String? stxtyper_partial_hits = merlin_magic.stxtyper_partial_hits
+    String? stxtyper_stx_frameshifts_or_internal_stop_hits =  merlin_magic.stxtyper_stx_frameshifts_or_internal_stop_hits
+    String? stxtyper_novel_hits = merlin_magic.stxtyper_novel_hits
     # Shigella sonnei Typing
     File? sonneityping_mykrobe_report_csv = merlin_magic.sonneityping_mykrobe_report_csv
     File? sonneityping_mykrobe_report_json = merlin_magic.sonneityping_mykrobe_report_json

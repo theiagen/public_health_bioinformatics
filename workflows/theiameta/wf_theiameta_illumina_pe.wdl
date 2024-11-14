@@ -207,6 +207,10 @@ workflow theiameta_illumina_pe {
     Int? fastq_scan_num_reads_clean1 = read_QC_trim.fastq_scan_clean1
     Int? fastq_scan_num_reads_clean2 = read_QC_trim.fastq_scan_clean2
     String? fastq_scan_num_reads_clean_pairs = read_QC_trim.fastq_scan_clean_pairs
+    File? fastq_scan_raw1_json = read_QC_trim.fastq_scan_raw1_json
+    File? fastq_scan_raw2_json = read_QC_trim.fastq_scan_raw2_json
+    File? fastq_scan_clean1_json = read_QC_trim.fastq_scan_clean1_json
+    File? fastq_scan_clean2_json = read_QC_trim.fastq_scan_clean2_json
     # Read QC - fastqc outputs
     Int? fastqc_num_reads_raw1 = read_QC_trim.fastqc_raw1
     Int? fastqc_num_reads_raw2 = read_QC_trim.fastqc_raw2
@@ -232,6 +236,9 @@ workflow theiameta_illumina_pe {
     String bbduk_docker = read_QC_trim.bbduk_docker
     # Read QC - Read stats
     Float? average_read_length = read_QC_trim.average_read_length
+    # MIDAS outputs
+    String? midas_primary_genus = read_QC_trim.midas_primary_genus
+    File? midas_report = read_QC_trim.midas_report
     # Assembly - metaspades 
     File assembly_fasta = select_first([retrieve_aligned_contig_paf.final_assembly, pilon.assembly_fasta])
     String metaspades_version = metaspades_pe.metaspades_version

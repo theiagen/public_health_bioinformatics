@@ -23,12 +23,15 @@ task mercury {
     Int cpu = 2
     Int disk_size = 100
     Int memory = 8
-    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/mercury:1.0.8"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/mercury:1.0.9"
   }
   meta {
     volatile: true
   }
   command <<<
+    #set -euo pipefail to avoid silent failure
+    set -euo pipefail
+
     python3 /mercury/mercury/mercury.py -v | tee VERSION
 
     python3 /mercury/mercury/mercury.py \

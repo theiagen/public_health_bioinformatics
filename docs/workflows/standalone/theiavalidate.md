@@ -30,14 +30,16 @@ If additional validation metrics are desired, the user has the ability to provid
 - **EXACT** performs an exact string match and counts the number of exact match failures/differences
 - **IGNORE** does not check the values and says there are 0 failures
 - **SET** checks list items (such as `amrfinder_plus_genes` which is a comma-delimited list of genes) for identical content — order does not matter; that is, `mdsA,mdsB` is determined to be same as `mdsB,mdsA`. The EXACT match does not consider these to be the same, but the SET match does.
--**<PERCENT_DIFF>**, which is an actual decimal value such as **0.02**, calculates the percent difference between _numerical_ columns. If the columns are not numerical, this function will **not** work and will lead to workflow failure. For example, if the decimal percentage is 0.02, the test will indicate a failure if the values in the two columns are more than 2% different.
+- **<PERCENT_DIFF\>**, which is an actual decimal value such as **0.02**, calculates the percent difference between _numerical_ columns. If the columns are not numerical, this function will **not** work and will lead to workflow failure. For example, if the decimal percentage is 0.02, the test will indicate a failure if the values in the two columns are more than 2% different.
 - Dates, integers, and object-type values are ignored and indicate 0 failures.
 
 ### File Comparisons
 
-If a column consists of only GCURIs (Google Cloud file paths), the files will be localized and compared with either an EXACT match or a SET match. In the SET match, the lines in the file are ordered before comparison. Results are returned to the summary table as expected. The results of each file comparison can be found in the `theiavalidate_diffs`  output column.
+If a column consists of only GCP URIs (Google Cloud file paths), the files will be localized and compared with either an EXACT match or a SET match. In the SET match, the lines in the file are ordered before comparison. Results are returned to the summary table as expected. The results of each file comparison can be found in the `theiavalidate_diffs`  output column.
 
 ### Inputs
+
+<div class="searchable-table" markdown="1">
 
 Please note that all string inputs **must** be enclosed in quotation marks; for example, "column1,column2" or "workspace1"
 
@@ -61,6 +63,8 @@ Please note that all string inputs **must** be enclosed in quotation marks; for 
 | compare_two_tsvs | **na_values** | String | If the user knows a particular value in either table that they would like to be considered N/A, they can indicate those values in a comma-separated list here. Any changes here will overwrite the default and not append to the default list. Do not include whitespace. | -1.#IND,1.#QNAN,1.#IND,-1.#QNAN,#N/A,N/A,n/a,,#NA,NULL,null,NaN,-NaN,nan,-nan,None | Optional |
 | export_two_tsvs | **cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional |
 | export_two_tsvs | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 10 | Optional |
+
+</div>
 
 The optional `validation_criteria_tsv` file takes the following format (tab-delimited; _a header line is required_):
 
@@ -95,6 +99,8 @@ Please note that the name in the **second column** will be displayed and used in
 
 ### Outputs
 
+<div class="searchable-table" markdown="1">
+
 | **Variable** | **Type** | **Description** |
 |---|---|---|
 | theiavalidate_criteria_differences | File | A TSV file that lists only the differences that fail to meet the validation criteria |
@@ -107,6 +113,8 @@ Please note that the name in the **second column** will be displayed and used in
 | theiavalidate_status | String | Indicates whether or not validation was attempted |
 | theiavalidate_version | String | The version of the TheiaValidate Python Docker |
 | theiavalidate_wf_version | String | The version of the PHB repository |
+
+</div>
 
 ### Example Data and Outputs
 

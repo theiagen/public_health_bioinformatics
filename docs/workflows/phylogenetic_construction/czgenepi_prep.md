@@ -18,13 +18,15 @@ Variables with both the "Optional" and "Required" tag require the column (regard
 
 This workflow runs on the set level.
 
+<div class="searchable-table" markdown="1">
+
 | **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
 |---|---|---|---|---|---|
 | czgenepi_prep | **sample_names** | Array[String] | The array of sample ids you want to prepare for CZ GEN EPI |  | Required |
 | czgenepi_prep | **terra_table_name** | String | The name of the Terra table where the data is hosted |  | Required |
 | czgenepi_prep | **terra_project_name** | String | The name of the Terra project where the data is hosted |  | Required |
 | czgenepi_prep | **terra_workspace_name** | String | The name of the Terra workspace where the data is hosted |  | Required |
-| download_terra_table | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 10 | Optional |
+| download_terra_table | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 2 | Optional |
 | download_terra_table | **docker** | String | The Docker container to use for the task | quay.io/theiagen/terra-tools:2023-06-21 | Optional |
 | download_terra_table | **disk_size** | String | The size of the disk used when running this task | 1 | Optional |
 | download_terra_table | **cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional |
@@ -45,6 +47,8 @@ This workflow runs on the set level.
 | czgenepi_wrangling | **cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional |
 | version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
 | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
+
+</div>
 
 ### Outputs
 

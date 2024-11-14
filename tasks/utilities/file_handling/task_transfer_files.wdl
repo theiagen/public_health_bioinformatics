@@ -14,7 +14,9 @@ task transfer_files {
     volatile: true
   }
   command <<<
-    file_path_array="~{sep=' ' files_to_transfer}" 
+    set -euo pipefail
+    
+    file_path_array="~{sep=' ' files_to_transfer}"
 
     gcloud storage cp -n ${file_path_array[@]} ~{target_bucket}
     

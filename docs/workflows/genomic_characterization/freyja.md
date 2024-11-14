@@ -56,6 +56,8 @@ This workflow will copy the Freyja reference files (`usher_barcodes.feather` and
 
 We recommend running this workflow with **"Run inputs defined by file paths"** selected since no information from a Terra data table is actually being used. We also recommend turning off call caching so new information is retrieved every time.
 
+<div class="searchable-table" markdown="1">
+
 | **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
 |---|---|---|---|---|---|
 | freyja_update | **gcp_uri** | String | The path where you want the Freyja reference files to be stored. Include gs:// at the beginning of the string. Full example with a Terra workspace bucket: "gs://fc-87ddd67a-c674-45a8-9651-f91e3d2f6bb7" | | Required |
@@ -67,6 +69,8 @@ We recommend running this workflow with **"Run inputs defined by file paths"** s
 | transfer_files | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
 | transfer_files | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1" | Optional |
 | transfer_files | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 4 | Optional |
+
+</div>
 
 ### Outputs
 
@@ -89,6 +93,8 @@ The Freyja_FASTQ_PHB workflow is compatible with the multiple input data types: 
 ### Freyja_FASTQ Inputs
 
 This workflow runs on the sample level.
+
+<div class="searchable-table" markdown="1">
 
 | **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
 |---|---|---|---|---|---|
@@ -189,6 +195,8 @@ This workflow runs on the sample level.
 | sam_to_sorted_bam | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional |
 | version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
 | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
+
+</div>
 
 ### Freyja_FASTQ Analysis Tasks
 
@@ -308,6 +316,8 @@ The main output file used in subsequent Freyja workflows is found under the `fre
 !!! tip "Click "Ignore empty outputs""
     When running the Freyja_FASTQ_PHB workflow, it is recommended to select the "Ignore empty outputs" option in the Terra UI. This will hide the output columns that will not be generated for your input data type.
 
+<div class="searchable-table" markdown="1">
+
 | **Variable** | **Type** | **Description** | **Input Data Type** |
 |---|---|---|---|
 | aligned_bai | File | Index companion file to the bam file generated during the consensus assembly process | ONT, PE, SE |
@@ -317,12 +327,16 @@ The main output file used in subsequent Freyja workflows is found under the `fre
 | bwa_version | String | Version of BWA used to map read data to the reference genome | PE, SE |
 | fastp_html_report | File | The HTML report made with fastp | PE, SE |
 | fastp_version | String | Version of fastp software used | PE, SE |
+| fastq_scan_clean1_json | File | JSON file output from `fastq-scan` containing summary stats about clean forward read quality and length | PE, SE |
+| fastq_scan_clean2_json | File | JSON file output from `fastq-scan` containing summary stats about clean reverse read quality and length | PE |
 | fastq_scan_num_reads_clean_pairs | String | Number of clean read pairs | PE |
 | fastq_scan_num_reads_clean1 | Int | Number of clean forward reads | PE, SE |
 | fastq_scan_num_reads_clean2 | Int | Number of clean reverse reads | PE |
 | fastq_scan_num_reads_raw_pairs | String | Number of raw read pairs | PE |
 | fastq_scan_num_reads_raw1 | Int | Number of raw forward reads | PE, SE |
 | fastq_scan_num_reads_raw2 | Int | Number of raw reverse reads | PE |
+| fastq_scan_raw1_json | File | JSON file output from `fastq-scan` containing summary stats about raw forward read quality and length | PE, SE |
+| fastq_scan_raw2_json | File | JSON file output from `fastq-scan` containing summary stats about raw reverse read quality and length | PE |
 | fastq_scan_version | String | Version of fastq_scan used for read QC analysis | PE, SE |
 | fastqc_clean1_html | File | Graphical visualization of clean forward read quality from fastqc to open in an internet browser | PE, SE |
 | fastqc_clean2_html | File | Graphical visualization of clean reverse read quality from fastqc to open in an internet browser | PE |
@@ -394,6 +408,8 @@ The main output file used in subsequent Freyja workflows is found under the `fre
 | trimmomatic_docker | String | Docker container for Trimmomatic | PE, SE |
 | trimmomatic_version | String | The version of Trimmomatic used | PE, SE |
 
+</div>
+
 ## Freyja_Plot_PHB {#freyja_plot}
 
 This workflow visualizes aggregated freyja_demixed output files produced by Freyja_FASTQ in a single plot (pdf format) which provides fractional abundance estimates for all aggregated samples.
@@ -403,6 +419,8 @@ Options exist to provide lineage-specific breakdowns and/or sample collection ti
 ### Freyja_Plot Inputs
 
 This workflow runs on the set level.
+
+<div class="searchable-table" markdown="1">
 
 | **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
 |---|---|---|---|---|---|
@@ -421,6 +439,8 @@ This workflow runs on the set level.
 | freyja_plot_task | **plot_time_interval** | String | Options: "MS" for month, "D" for day | MS | Optional |
 | version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
 | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
+
+</div>
 
 ### Analysis Tasks
 
@@ -459,6 +479,8 @@ This dashboard is not "live" — that is, you must rerun the workflow every time
 
 This workflow runs on the set level.
 
+<div class="searchable-table" markdown="1">
+
 | **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
 |---|---|---|---|---|---|
 | freyja_dashboard | **collection_date** | Array[String] | An array containing the collection dates for the sample (YYYY-MM-DD format) |  | Required |
@@ -477,6 +499,8 @@ This workflow runs on the set level.
 | freyja_dashboard_task | **thresh** | Float | The minimum lineage abundance cut-off value | None | Optional |
 | version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
 | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
+
+</div>
 
 ### Freyja_Dashboard Tasks
 

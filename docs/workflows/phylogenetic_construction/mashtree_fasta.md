@@ -16,6 +16,8 @@ This workflow also features an optional module, `summarize_data`, that creates a
 
 ### Inputs
 
+<div class="searchable-table" markdown="1">
+
 | **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
 |---|---|---|---|---|---|
 | mashtree_fasta | **assembly_fasta** | Array[File] | The set of assembly fastas | | Required |
@@ -49,6 +51,8 @@ This workflow also features an optional module, `summarize_data`, that creates a
 | version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
 | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
 
+</div>
+
 ### Workflow Actions
 
 `MashTree_Fasta` is run on a set of assembly fastas and creates a phylogenetic tree and matrix. These outputs are passed to a task that will rearrange the matrix to match the order of the terminal ends in the phylogenetic tree.
@@ -63,6 +67,8 @@ By default, this task appends a Phandango coloring tag to color all items from t
 
 ### Outputs
 
+<div class="searchable-table" markdown="1">
+
 | **Variable** | **Type** | **Description** |
 |---|---|---|
 | mashtree_docker | String | The Docker image used to run the mashtree task |
@@ -73,6 +79,8 @@ By default, this task appends a Phandango coloring tag to color all items from t
 | mashtree_version | String | The version of mashtree used in the workflow |
 | mashtree_wf_analysis_date | String | The date the workflow was run |
 | mashtree_wf_version | String | The version of PHB the workflow is hosted in |
+
+</div>
 
 ## References
 

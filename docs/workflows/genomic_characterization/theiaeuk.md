@@ -1,4 +1,4 @@
-# TheiaEuk 
+# TheiaEuk Workflow Series
 
 ## Quick Facts
 
@@ -22,6 +22,8 @@ All input reads are processed through "core tasks" in each workflow. The core ta
     The TheiaEuk_PE workflow takes in Illumina paired-end read data. Read file names should end with `.fastq` or `.fq`, with the optional addition of `.gz`. When possible, Theiagen recommends zipping files with [gzip](https://www.gnu.org/software/gzip/) prior to Terra upload to minimize data upload time.
 
     By default, the workflow anticipates 2 x 150bp reads (i.e. the input reads were generated using a 300-cycle sequencing kit). Modifications to the optional parameter for `trim_minlen` may be required to accommodate shorter read data, such as the 2 x 75bp reads generated using a 150-cycle sequencing kit.
+
+<div class="searchable-table" markdown="1">    
 
 | **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
 |---|---|---|---|---|---|
@@ -173,6 +175,8 @@ All input reads are processed through "core tasks" in each workflow. The core ta
 | version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
 | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
 
+</div>
+
 ### Workflow tasks (performed for all taxa)
 
 ??? task "`versioning`: Version capture for TheiaEuk"
@@ -183,11 +187,11 @@ All input reads are processed through "core tasks" in each workflow. The core ta
         
         |  | Links |
         | --- | --- |
-        | Task | [task_versioning.wdl](https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/task_versioning.wdl) |
+        | Task | [task_versioning.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/task_versioning.wdl) |
 
 ??? task "`screen`: Total Raw Read Quantification and Genome Size Estimation"
 
-    The [`screen`](https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/quality_control/task_screen.wdl) task ensures the quantity of sequence data is sufficient to undertake genomic analysis. It uses bash commands for quantification of reads and base pairs, and [mash](https://mash.readthedocs.io/en/latest/index.html) sketching to estimate the genome size and its coverage. At each step, the results are assessed relative to pass/fail criteria and thresholds that may be defined by optional user inputs. Samples that do not meet these criteria will not be processed further by the workflow:
+    The [`screen`](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/comparisons/task_screen.wdl) task ensures the quantity of sequence data is sufficient to undertake genomic analysis. It uses [`fastq-scan`](https://github.com/rpetit3/fastq-scan) and bash commands for quantification of reads and base pairs, and [mash](https://mash.readthedocs.io/en/latest/index.html) sketching to estimate the genome size and its coverage. At each step, the results are assessed relative to pass/fail criteria and thresholds that may be defined by optional user inputs. Samples that do not meet these criteria will not be processed further by the workflow:
 
     1. Total number of reads: A sample will fail the read screening task if its total number of reads is less than or equal to `min_reads`.
     2. The proportion of basepairs reads in the forward and reverse read files: A sample will fail the read screening if fewer than `min_proportion` basepairs are in either the reads1 or read2 files.
@@ -293,11 +297,11 @@ All input reads are processed through "core tasks" in each workflow. The core ta
                 
         |  | Links |
         | --- | --- |
-        | Sub-workflow | [wf_read_QC_trim.wdl](https://github.com/theiagen/public_health_bacterial_genomics/blob/main/workflows/wf_read_QC_trim.wdl) |
-        | Tasks | [task_fastp.wdl](https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/quality_control/task_fastp.wdl)<br>[task_trimmomatic.wdl](https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/quality_control/task_trimmomatic.wdl#L3) (PE subtask)<br>[task_bbduk.wdl](https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/quality_control/task_bbduk.wdl)<br>[task_fastq_scan.wdl](https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/quality_control/task_fastq_scan.wdl#L3) (PE subtask)<br>[task_midas.wdl](https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/taxon_id/task_midas.wdl)<br>[task_kraken2.wdl](https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/taxon_id/task_kraken2.wdl) |
+        | Sub-workflow | [wf_read_QC_trim.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_read_QC_trim.wdl) |
+        | Tasks | [task_fastp.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_fastp.wdl)<br>[task_trimmomatic.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_trimmomatic.wdl)<br>[task_bbduk.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_bbduk.wdl)<br>[task_fastq_scan.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_fastq_scan.wdl)<br>[task_midas.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/contamination/task_midas.wdl)<br>[task_kraken2.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/contamination/task_kraken2.wdl)|
         | Software Source Code | [fastp](https://github.com/OpenGene/fastp); [Trimmomatic](https://github.com/usadellab/Trimmomatic); [fastq-scan](https://github.com/rpetit3/fastq-scan); [MIDAS](https://github.com/snayfach/MIDAS); [Kraken2](https://github.com/DerrickWood/kraken2)|
         | Software Documentation | [fastp](https://github.com/OpenGene/fastp); [Trimmomatic](http://www.usadellab.org/cms/?page=trimmomatic); [BBDuk](https://jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/bbduk-guide/); [fastq-scan](https://github.com/rpetit3/fastq-scan); [MIDAS](https://github.com/snayfach/MIDAS); [Kraken2](https://github.com/DerrickWood/kraken2/wiki) |
-        | Original Publication(s) | *[Trimmomatic: a flexible trimmer for Illumina sequence data](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4103590/)<br>*[fastp: an ultra-fast all-in-one FASTQ preprocessor](https://academic.oup.com/bioinformatics/article/34/17/i884/5093234?login=false)<br>*[An integrated metagenomics pipeline for strain profiling reveals novel patterns of bacterial transmission and biogeography](https://pubmed.ncbi.nlm.nih.gov/27803195/)<br>*[Improved metagenomic analysis with Kraken 2](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1891-0) |
+        | Original Publication(s) | [Trimmomatic: a flexible trimmer for Illumina sequence data](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4103590/)<br>[fastp: an ultra-fast all-in-one FASTQ preprocessor](https://academic.oup.com/bioinformatics/article/34/17/i884/5093234?login=false)<br>[An integrated metagenomics pipeline for strain profiling reveals novel patterns of bacterial transmission and biogeography](https://pubmed.ncbi.nlm.nih.gov/27803195/)<br>[Improved metagenomic analysis with Kraken 2](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1891-0) |
 
 ??? task "`shovill`: _De novo_ Assembly"
 
@@ -311,7 +315,7 @@ All input reads are processed through "core tasks" in each workflow. The core ta
     !!! techdetails "Shovill Technical Details"
         |  | Links |
         | --- | --- |
-        | TheiaEuk WDL Task | [task_shovill.wdl](https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/assembly/task_shovill.wdl#L3) |
+        | TheiaEuk WDL Task | [task_shovill.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_shovill.wdl#L3) |
         | Software code repository and documentation | [Shovill on GitHub](https://github.com/tseemann/shovill) |
 
 ??? task "`QUAST`: Assembly Quality Assessment"
@@ -351,7 +355,7 @@ All input reads are processed through "core tasks" in each workflow. The core ta
 
         |  | Links |
         | --- | --- |
-        | Task | [task_gambit.wdl](https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/taxon_id/task_gambit.wdl) |
+        | Task | [task_gambit.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/task_gambit.wdl) |
         | Software Source Code | [GAMBIT on GitHub](https://github.com/jlumpe/gambit) |
         | Software Documentation | [GAMBIT ReadTheDocs](https://gambit-genomics.readthedocs.io/en/latest/) |
         | Original Publication(s) | [GAMBIT (Genomic Approximation Method for Bacterial Identification and Tracking): A methodology to rapidly leverage whole genome sequencing of bacterial isolates for clinical identification](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0277575) |
@@ -379,7 +383,7 @@ All input reads are processed through "core tasks" in each workflow. The core ta
         
         |  | Links |
         | --- | --- |
-        | Task | [task_qc_check.wdl](https://github.com/theiagen/public_health_bacterial_genomics/blob/main/tasks/quality_control/task_qc_check.wdl) |
+        | Task | [task_qc_check.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/comparisons/task_qc_check.wdl) |
 
 ### Organism-specific Characterization
 
@@ -389,36 +393,57 @@ The TheiaEuk workflow automatically activates taxa-specific tasks after identifi
 
     Two tools are deployed when _Candida auris is_  identified. First, the Cladetyping tool is launched to determine the clade of the specimen by comparing the sequence to five clade-specific reference files. The output of the clade typing task will be used to specify the reference genome for the antifungal resistance detection tool. To detect mutations that may confer antifungal resistance, `Snippy` is used to find all variants relative to the clade-specific reference, then these variants are queried for product names associated with resistance according to the MARDy database (<http://mardy.dide.ic.ac.uk/index.php>).
 
-    **Default reference genomes used for clade typing and antimicrobial resistance gene detection of C. auris**
-
-    | Clade | Genome Accession | Assembly Name | Strain | NCBI Submitter | Included mutations in AMR genes (not comprehensive) |
-    | --- | --- | --- | --- | --- | --- |
-    | Candida auris Clade I | GCA_002759435.2 | Cand_auris_B8441_V2 | B8441 | Centers for Disease Control and Prevention |  |
-    | Candida auris Clade II | GCA_003013715.2 | ASM301371v2 | B11220 | Centers for Disease Control and Prevention |  |
-    | Candida auris Clade III | GCA_002775015.1 | Cand_auris_B11221_V1 | B11221 | Centers for Disease Control and Prevention | _ERG11_ V125A/F126L |
-    | Candida auris Clade IV | GCA_003014415.1 | Cand_auris_B11243 | B11243 | Centers for Disease Control and Prevention | _ERG11_ Y132F |
-    | Candida auris Clade V | GCA_016809505.1 | ASM1680950v1 | IFRC2087 | Centers for Disease Control and Prevention |  |
-
     The genes in which there are known resistance-conferring mutations for this pathogen are:
 
     - FKS1
     - ERG11 (lanosterol 14-alpha demethylase)
     - FUR1 (uracil phosphoribosyltransferase)
 
-    Mutations in these genes that are known to confer resistance are shown below (source: MARDy database http://mardy.dide.ic.ac.uk/index.php)
+    We query `Snippy` results to see if any mutations were identified in those genes. In addition, _C. auris_ automatically checks for the following loci. You will find the mutations next to the locus tag in the `theiaeuk_snippy_variants_hits` column corresponding gene name followings:
 
-    | **Organism** | **Found in** | **Gene name** | **Gene locus** | **AA mutation** | **Drug** | **Tandem repeat name** | **Tandem repeat sequence** | **Reference** |
-    | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-    | **Candida auris** | **Human** | **ERG11** |  | **Y132F** | **Fluconazole** |  |  | [**10.1093/cid/ciw691**](https://academic.oup.com/cid/article/64/2/134/2706620/Simultaneous-Emergence-of-Multidrug-Resistant) |
-    | **Candida auris** | **Human** | **ERG11** |  | **K143R** | **Fluconazole** |  |  | [**10.1093/cid/ciw691**](https://academic.oup.com/cid/article/64/2/134/2706620/Simultaneous-Emergence-of-Multidrug-Resistant) |
-    | **Candida auris** | **Human** | **ERG11** |  | **F126T** | **Fluconazole** |  |  | [**10.1093/cid/ciw691**](https://academic.oup.com/cid/article/64/2/134/2706620/Simultaneous-Emergence-of-Multidrug-Resistant) |
-    | **Candida auris** | **Human** | **FKS1** |  | **S639P** | **Micafungin** |  |  | [**10.1016/j.diagmicrobio.2017.10.021**](https://www.sciencedirect.com/science/article/pii/S0732889317303498) |
-    | **Candida auris** | **Human** | **FKS1** |  | **S639P** | **Caspofungin** |  |  | [**10.1016/j.diagmicrobio.2017.10.021**](https://www.sciencedirect.com/science/article/pii/S0732889317303498) |
-    | **Candida auris** | **Human** | **FKS1** |  | **S639P** | **Anidulafungin** |  |  | [**10.1016/j.diagmicrobio.2017.10.021**](https://www.sciencedirect.com/science/article/pii/S0732889317303498) |
-    | **Candida auris** | **Human** | **FKS1** |  | **S639F** | **Micafungin** |  |  | [**10.1093/jac/dkx480**](https://academic.oup.com/jac/advance-article/doi/10.1093/jac/dkx480/4794718) |
-    | **Candida auris** | **Human** | **FKS1** |  | **S639F** | **Caspofungin** |  |  | [**10.1093/jac/dkx480**](https://academic.oup.com/jac/advance-article/doi/10.1093/jac/dkx480/4794718) |
-    | **Candida auris** | **Human** | **FKS1** |  | **S639F** | **Anidulafungin** |  |  | [**10.1093/jac/dkx480**](https://academic.oup.com/jac/advance-article/doi/10.1093/jac/dkx480/4794718) |
-    | **Candida auris** | **Human** | **FUR1** | **CAMJ_004922** | **F211I** | **5-flucytosine** |  |  | [**https://doi.org/10.1038/s41426-018-0045-x**](https://www.nature.com/articles/s41426-018-0045-x) |
+    | **TheiaEuk Search Term** | **Corresponding Gene Name** |
+    |---|---|
+    | B9J08_005340 | ERG6 |
+    | B9J08_000401 | FLO8 |
+    | B9J08_005343 | Hypothetical protein (PSK74852) |
+    | B9J08_003102 | MEC3 |
+    | B9J08_003737 | ERG3 |
+    | lanosterol.14-alpha.demethylase | ERG11 |
+    | uracil.phosphoribosyltransferase | FUR1 |
+    | FKS1 | FKS1 |    
+
+    For example, one sample may have the following output for the `theiaeuk_snippy_variants_hits` column:
+
+    ```plaintext
+    lanosterol.14-alpha.demethylase: lanosterol 14-alpha demethylase (missense_variant c.428A>G p.Lys143Arg; C:266 T:0),B9J08_000401: hypothetical protein (stop_gained c.424C>T p.Gln142*; A:70 G:0)
+    ```
+
+    Based on this, we can tell that ERG11 has a missense variant at position 143 (Lysine to Arginine) and B9J08_000401 (which is FLO8) has a stop-gained variant at position 142 (Glutamine to Stop).
+
+    ??? toggle "Default reference genomes used for clade typing and antimicrobial resistance gene detection of _C. auris_"
+        | Clade | Genome Accession | Assembly Name | Strain | NCBI Submitter | Included mutations in AMR genes (not comprehensive) |
+        | --- | --- | --- | --- | --- | --- |
+        | Candida auris Clade I | GCA_002759435.2 | Cand_auris_B8441_V2 | B8441 | Centers for Disease Control and Prevention |  |
+        | Candida auris Clade II | GCA_003013715.2 | ASM301371v2 | B11220 | Centers for Disease Control and Prevention |  |
+        | Candida auris Clade III | GCA_002775015.1 | Cand_auris_B11221_V1 | B11221 | Centers for Disease Control and Prevention | _ERG11_ V125A/F126L |
+        | Candida auris Clade IV | GCA_003014415.1 | Cand_auris_B11243 | B11243 | Centers for Disease Control and Prevention | _ERG11_ Y132F |
+        | Candida auris Clade V | GCA_016809505.1 | ASM1680950v1 | IFRC2087 | Centers for Disease Control and Prevention |  |
+
+    ??? toggle "Known resistance-conferring mutations for _Candida auris_"
+        Mutations in these genes that are known to confer resistance are shown below (source: MARDy database http://mardy.dide.ic.ac.uk/index.php)
+
+        | **Organism** | **Found in** | **Gene name** | **Gene locus** | **AA mutation** | **Drug** | **Tandem repeat name** | **Tandem repeat sequence** | **Reference** |
+        | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+        | **Candida auris** | **Human** | **ERG11** |  | **Y132F** | **Fluconazole** |  |  | [**10.1093/cid/ciw691**](https://academic.oup.com/cid/article/64/2/134/2706620/Simultaneous-Emergence-of-Multidrug-Resistant) |
+        | **Candida auris** | **Human** | **ERG11** |  | **K143R** | **Fluconazole** |  |  | [**10.1093/cid/ciw691**](https://academic.oup.com/cid/article/64/2/134/2706620/Simultaneous-Emergence-of-Multidrug-Resistant) |
+        | **Candida auris** | **Human** | **ERG11** |  | **F126T** | **Fluconazole** |  |  | [**10.1093/cid/ciw691**](https://academic.oup.com/cid/article/64/2/134/2706620/Simultaneous-Emergence-of-Multidrug-Resistant) |
+        | **Candida auris** | **Human** | **FKS1** |  | **S639P** | **Micafungin** |  |  | [**10.1016/j.diagmicrobio.2017.10.021**](https://www.sciencedirect.com/science/article/pii/S0732889317303498) |
+        | **Candida auris** | **Human** | **FKS1** |  | **S639P** | **Caspofungin** |  |  | [**10.1016/j.diagmicrobio.2017.10.021**](https://www.sciencedirect.com/science/article/pii/S0732889317303498) |
+        | **Candida auris** | **Human** | **FKS1** |  | **S639P** | **Anidulafungin** |  |  | [**10.1016/j.diagmicrobio.2017.10.021**](https://www.sciencedirect.com/science/article/pii/S0732889317303498) |
+        | **Candida auris** | **Human** | **FKS1** |  | **S639F** | **Micafungin** |  |  | [**10.1093/jac/dkx480**](https://academic.oup.com/jac/advance-article/doi/10.1093/jac/dkx480/4794718) |
+        | **Candida auris** | **Human** | **FKS1** |  | **S639F** | **Caspofungin** |  |  | [**10.1093/jac/dkx480**](https://academic.oup.com/jac/advance-article/doi/10.1093/jac/dkx480/4794718) |
+        | **Candida auris** | **Human** | **FKS1** |  | **S639F** | **Anidulafungin** |  |  | [**10.1093/jac/dkx480**](https://academic.oup.com/jac/advance-article/doi/10.1093/jac/dkx480/4794718) |
+        | **Candida auris** | **Human** | **FUR1** | **CAMJ_004922** | **F211I** | **5-flucytosine** |  |  | [**https://doi.org/10.1038/s41426-018-0045-x**](https://www.nature.com/articles/s41426-018-0045-x) |
 
 ??? toggle "_Candida albicans_"
 
@@ -451,12 +476,18 @@ The TheiaEuk workflow automatically activates taxa-specific tasks after identifi
 
 ### Outputs
 
+<div class="searchable-table" markdown="1">
+
 | **Variable** | **Type** | **Description** |
 |---|---|---|
 | cg_pipeline_docker | String | Docker file used for running CG-Pipeline on cleaned reads |
 | cg_pipeline_report | File | TSV file of read metrics from raw reads, including average read length, number of reads, and estimated genome coverage |
 | est_coverage_clean | Float | Estimated coverage calculated from   clean reads and genome length |
 | est_coverage_raw | Float | Estimated coverage calculated from  raw reads and genome length |
+| fastq_scan_clean1_json | File | JSON file output from `fastq-scan` containing summary stats about clean forward read quality and length |
+| fastq_scan_clean2_json | File | JSON file output from `fastq-scan` containing summary stats about clean reverse read quality and length |
+| fastq_scan_raw1_json | File | JSON file output from `fastq-scan` containing summary stats about raw forward read quality and length |
+| fastq_scan_raw2_json | File | JSON file output from `fastq-scan` containing summary stats about raw reverse read quality and length |
 | r1_mean_q_clean | Float | Mean quality score of clean forward reads |
 | r1_mean_q_raw | Float | Mean quality score of raw forward reads |
 | r2_mean_q_clean | Float | Mean quality score of clean reverse reads |
@@ -508,3 +539,5 @@ The TheiaEuk workflow automatically activates taxa-specific tasks after identifi
 | seq_platform | String | Sequencing platform inout by the user |
 | theiaeuk_illumina_pe_analysis_date | String | Date of TheiaProk workflow execution |
 | theiaeuk_illumina_pe_version | String | TheiaProk workflow version used |
+
+</div>

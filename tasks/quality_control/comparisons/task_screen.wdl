@@ -20,6 +20,9 @@ task check_reads {
     Int cpu = 1
   }
   command <<<
+    # just in case anything fails, throw an error
+    set -euo pipefail
+    
     flag="PASS"
 
     # initalize estimated genome length
@@ -34,13 +37,13 @@ task check_reads {
       fi
 
       # check one: number of reads
-      read1_num=`eval "$cat_reads ~{read1}" | awk '{s++}END{print s/4}'`
-      read2_num=`eval "$cat_reads ~{read2}" | awk '{s++}END{print s/4}'`
-      # awk '{s++}END{print s/4' counts the number of lines and divides them by 4
-      # key assumption: in fastq there will be four lines per read
-      # sometimes fastqs do not have 4 lines per read, so this might fail one day
+      read1_num=$($cat_reads ~{read1} | fastq-scan | grep 'read_total' | sed 's/[^0-9]*\([0-9]\+\).*/\1/')
+      read2_num=$($cat_reads ~{read2} | fastq-scan | grep 'read_total' | sed 's/[^0-9]*\([0-9]\+\).*/\1/')
+      echo "DEBUG: Number of reads in R1: ${read1_num}"
+      echo "DEBUG: Number of reads in R2: ${read2_num}"
 
       reads_total=$(expr $read1_num + $read2_num)
+      echo "DEBUG: Number of reads total in R1 and R2: ${reads_total}"
 
       if [ "${reads_total}" -le "~{min_reads}" ]; then
         flag="FAIL; the total number of reads is below the minimum of ~{min_reads}"
@@ -51,13 +54,11 @@ task check_reads {
       # checks two and three: number of basepairs and proportion of sequence
       if [ "${flag}" == "PASS" ]; then
         # count number of basepairs
-        # this only works if the fastq has 4 lines per read, so this might fail one day
-        read1_bp=`eval "${cat_reads} ~{read1}" | paste - - - - | cut -f2 | tr -d '\n' | wc -c`
-        read2_bp=`eval "${cat_reads} ~{read2}" | paste - - - - | cut -f2 | tr -d '\n' | wc -c`
-        # paste - - - - (print 4 consecutive lines in one row, tab delimited)
-        # cut -f2 print only the second column (the second line of the fastq 4-line)
-        # tr -d '\n' removes line endings
-        # wc -c counts characters
+        # using fastq-scan to count the number of basepairs in each fastq
+        read1_bp=$(eval "${cat_reads} ~{read1}" | fastq-scan | grep 'total_bp' | sed 's/[^0-9]*\([0-9]\+\).*/\1/')
+        read2_bp=$(eval "${cat_reads} ~{read2}" | fastq-scan | grep 'total_bp' | sed 's/[^0-9]*\([0-9]\+\).*/\1/')
+        echo "DEBUG: Number of basepairs in R1: $read1_bp"
+        echo "DEBUG: Number of basepairs in R2: $read2_bp"
 
         # set proportion variables for easy comparison
         # removing the , 2) to make these integers instead of floats
@@ -147,7 +148,8 @@ task check_reads {
             flag="FAIL; the estimated coverage (${estimated_coverage}) is less than the minimum of ~{min_coverage}x"
           else
             flag="PASS"
-            echo $estimated_genome_length | tee EST_GENOME_LENGTH
+            echo ${estimated_genome_length} | tee EST_GENOME_LENGTH
+            echo "DEBUG: estimated_genome_length: ${estimated_genome_length}"
           fi 
         fi
       fi 
@@ -190,6 +192,9 @@ task check_reads_se {
     Int cpu = 1
   }
   command <<<
+    # just in case anything fails, throw an error
+    set -euo pipefail
+
     flag="PASS"
 
     # initalize estimated genome length
@@ -203,11 +208,9 @@ task check_reads_se {
         cat_reads="cat"
       fi
 
-      # check one: number of reads
-      read1_num=`eval "$cat_reads ~{read1}" | awk '{s++}END{print s/4}'`
-      # awk '{s++}END{print s/4' counts the number of lines and divides them by 4
-      # key assumption: in fastq there will be four lines per read
-      # sometimes fastqs do not have 4 lines per read, so this might fail one day
+      # check one: number of reads via fastq-scan
+      read1_num=$($cat_reads ~{read1} | fastq-scan | grep 'read_total' | sed 's/[^0-9]*\([0-9]\+\).*/\1/')
+      echo "DEBUG: Number of reads in R1: ${read1_num}"
 
       if [ "${read1_num}" -le "~{min_reads}" ] ; then
         flag="FAIL; the number of reads (${read1_num}) is below the minimum of ~{min_reads}"
@@ -218,12 +221,9 @@ task check_reads_se {
       # checks two and three: number of basepairs and proportion of sequence
       if [ "${flag}" == "PASS" ]; then
         # count number of basepairs
-        # this only works if the fastq has 4 lines per read, so this might fail one day
-        read1_bp=`eval "${cat_reads} ~{read1}" | paste - - - - | cut -f2 | tr -d '\n' | wc -c`
-        # paste - - - - (print 4 consecutive lines in one row, tab delimited)
-        # cut -f2 print only the second column (the second line of the fastq 4-line)
-        # tr -d '\n' removes line endings
-        # wc -c counts characters
+        # using fastq-scan to count the number of basepairs in each fastq
+        read1_bp=$(eval "${cat_reads} ~{read1}" | fastq-scan | grep 'total_bp' | sed 's/[^0-9]*\([0-9]\+\).*/\1/')
+        echo "DEBUG: Number of basepairs in R1: $read1_bp"
 
         if [ "$flag" == "PASS" ] ; then
           if [ "${read1_bp}" -le "~{min_basepairs}" ] ; then
@@ -309,7 +309,8 @@ task check_reads_se {
     fi 
     
     echo $flag | tee FLAG
-    echo $estimated_genome_length | tee EST_GENOME_LENGTH
+    echo ${estimated_genome_length} | tee EST_GENOME_LENGTH
+    echo "DEBUG: estimated_genome_length: ${estimated_genome_length}"
   >>>
   output {
     String read_screen = read_string("FLAG")

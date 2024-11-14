@@ -146,6 +146,10 @@ task create_terra_table {
     done <filelist-fullpath.txt
 
     echo "DEBUG: terra table created, now beginning upload"
+    
+    # set error handling to exit if the subsequent import_large_tsv.py task fails
+    set -euo pipefail
+
     python3 /scripts/import_large_tsv/import_large_tsv.py --project "~{terra_project}" --workspace "~{terra_workspace}" --tsv terra_table_to_upload.tsv
   >>>
   output {

@@ -53,6 +53,8 @@ Sequencing data used in the Snippy_Tree workflow must:
         - Using the core genome
             - `core_genome` = true (as default)
 
+<div class="searchable-table" markdown="1">
+
 | **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
 |---|---|---|---|---|---|
 | snippy_tree_wf | **tree_name_updated** | String | Internal component, do not modify. Used for replacing spaces with underscores_ |  | Do not modify |
@@ -123,6 +125,8 @@ Sequencing data used in the Snippy_Tree workflow must:
 | wg_snp_dists | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 50 | Optional |
 | wg_snp_dists | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 2 | Optional |
 
+</div>
+
 ### Workflow Tasks
 
 ??? task "Snippy"
@@ -140,7 +144,7 @@ Sequencing data used in the Snippy_Tree workflow must:
     
         |  | Links |
         | --- | --- |
-        | Task | [task_snippy_core.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/phylogenetic_inference/task_snippy_core.wdl) |
+        | Task | [task_snippy_core.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/phylogenetic_inference/utilities/task_snippy_core.wdl) |
         | Default software version | v4.6.0 (us-docker.pkg.dev/general-theiagen/staphb/snippy:4.6.0) |
         | Software Source Code | [Snippy on GitHub](https://github.com/tseemann/snippy) |
         | Software Documentation | [Snippy on GitHub](https://github.com/tseemann/snippy) |
@@ -185,7 +189,7 @@ Sequencing data used in the Snippy_Tree workflow must:
         
         |  | Links |
         | --- | --- |
-        | Task | [task_snp_sites.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/phylogenetic_inference/task_snp_sites.wdl) |
+        | Task | [task_snp_sites.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/phylogenetic_inference/utilities/task_snp_sites.wdl) |
         | Default software version | 2.5.1 (us-docker.pkg.dev/general-theiagen/biocontainers/snp-sites:2.5.1--hed695b0_0) |
         | Software Source Code | [SNP-sites on GitHub](https://github.com/sanger-pathogens/snp-sites) |
         | Software Documentation | [SNP-sites on GitHub](https://github.com/sanger-pathogens/snp-sites) |
@@ -230,7 +234,7 @@ Sequencing data used in the Snippy_Tree workflow must:
         
         |  | Links |
         | --- | --- |
-        | Task | [task_snp_dists.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/phylogenetic_inference/task_snp_dists.wdl) |
+        | Task | [task_snp_dists.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/phylogenetic_inference/utilities/task_snp_dists.wdl) |
         | Default software version | 0.8.2 (us-docker.pkg.dev/general-theiagen/staphb/snp-dists:0.8.2) |
         | Software Source Code | [SNP-dists on GitHub](https://github.com/tseemann/snp-dists) |
         | Software Documentation | [SNP-dists on GitHub](https://github.com/tseemann/snp-dists) |
@@ -306,12 +310,41 @@ Sequencing data used in the Snippy_Tree workflow must:
         | Task | task_shared_variants.wdl |
         | Software Source Code | [task_shared_variants.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/phylogenetic_inference/utilities/task_shared_variants.wdl) |
 
+??? task "snippy_variants (qc_metrics output)"
+
+    ##### snippy_variants {#snippy_variants}
+
+    This task runs Snippy to perform SNP analysis on individual samples. It extracts QC metrics from the Snippy output for each sample and saves them in per-sample TSV files (`snippy_variants_qc_metrics`). These per-sample QC metrics include the following columns:
+
+    - **samplename**: The name of the sample.
+    - **reads_aligned_to_reference**: The number of reads that aligned to the reference genome.
+    - **total_reads**: The total number of reads in the sample.
+    - **percent_reads_aligned**: The percentage of reads that aligned to the reference genome.
+    - **variants_total**: The total number of variants detected between the sample and the reference genome.
+    - **percent_ref_coverage**: The percentage of the reference genome covered by reads with a depth greater than or equal to the `min_coverage` threshold (default is 10).
+    - **#rname**: Reference sequence name (e.g., chromosome or contig name).
+    - **startpos**: Starting position of the reference sequence.
+    - **endpos**: Ending position of the reference sequence.
+    - **numreads**: Number of reads covering the reference sequence.
+    - **covbases**: Number of bases with coverage.
+    - **coverage**: Percentage of the reference sequence covered (depth ≥ 1).
+    - **meandepth**: Mean depth of coverage over the reference sequence.
+    - **meanbaseq**: Mean base quality over the reference sequence.
+    - **meanmapq**: Mean mapping quality over the reference sequence.
+
+    These per-sample QC metrics are then combined into a single file (`snippy_combined_qc_metrics`) in the downstream `snippy_tree_wf` workflow. The combined QC metrics file includes the same columns as above for all samples. Note that the last set of columns (`#rname` to `meanmapq`) may repeat for each chromosome or contig in the reference genome.
+
+    **Note:** The per-sample QC metrics provide valuable insights into the quality and coverage of your sequencing data relative to the reference genome. Monitoring these metrics can help identify samples with low coverage, poor alignment, or potential issues that may affect downstream analyses.
+
 ### Outputs
+
+<div class="searchable-table" markdown="1">
 
 | **Variable** | **Type** | **Description** |
 |---|---|---|
 | snippy_cg_snp_matrix | File | CSV file of core genome pairwise SNP distances between samples, calculated from the final alignment  |
 | snippy_concatenated_variants | File | Concatenated snippy_results file across all samples in the set |
+| snippy_combined_qc_metrics | File | Combined QC metrics file containing concatenated QC metrics from all samples. |
 | snippy_filtered_metadata | File | TSV recording the columns of the Terra data table that were used in the summarize_data task |
 | snippy_final_alignment | File | Final alignment (FASTA file) used to generate the tree (either after snippy alignment, gubbins recombination removal, and/or core site selection with SNP-sites) |
 | snippy_final_tree | File | Newick tree produced from the final alignment. Depending on user input for core_genome, the tree could be a core genome tree (default when core_genome is true) or whole genome tree (if core_genome is false) |
@@ -335,6 +368,8 @@ Sequencing data used in the Snippy_Tree workflow must:
 | snippy_tree_snippy_version | String | Snippy version used |
 | snippy_tree_version | String | Version of Snippy_Tree workflow |
 | snippy_wg_snp_matrix | File | CSV file of whole genome pairwise SNP distances between samples, calculated from the final alignment |
+
+</div>
 
 ## References
 
