@@ -9,7 +9,7 @@ task dorado_demux {
     Int memory = 16
     Int disk_size = 100
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/dorado:0.8.0"
-    Array[String] dorado_model_used
+    String dorado_model_used
   }
 
   command <<< 
@@ -17,10 +17,10 @@ task dorado_demux {
 
     # Capture Dorado version
     dorado --version | tee DORADO_VERSION
+    echo "Dorado version:" $(cat DORADO_VERSION)
 
-    #Dorado model used
-    array=(~{sep=''dorado_model_used}) 
-    echo "${array[0]}" > DORADO_MODEL_USED
+    # Output the Dorado model used
+    echo "~{dorado_model_used}" > DORADO_MODEL_USED
 
     fastq_file_name="~{fastq_file_name}"
     kit_name="~{kit_name}"
@@ -103,7 +103,7 @@ task dorado_demux {
     String dorado_docker = docker
     String dorado_version = read_string("DORADO_VERSION")
     File dorado_demux_log = "dorado_demux.log" 
-    String dorado_model_used = read_string("DORADO_MODEL_USED")
+    String dorado_model_name = read_string("DORADO_MODEL_USED")
   }
   
   runtime {
