@@ -1,6 +1,6 @@
 version 1.0
 
-task fetch_srr_metadata {
+task fetch_srr_accession {
   input {
     String sample_accession 
     String docker = "us-docker.pkg.dev/general-theiagen/biocontainers/fastq-dl:2.0.4--pyhdfd78af_0"
@@ -41,7 +41,6 @@ task fetch_srr_metadata {
       echo "No SRR accession found" > metadata_output/srr_accession.txt
     fi
   >>>
-
   output {
     String srr_accession = read_string("metadata_output/srr_accession.txt")
   }

@@ -1,4 +1,4 @@
-# Retrieve SRR Metadata Workflow
+# Fetch SRR Accession Workflow
 
 ## Quick Facts
 
@@ -6,15 +6,13 @@
 |---|---|---|---|---|
 | [Public Data Sharing](../../workflows_overview/workflows_type.md/#public-data-sharing) | [Any Taxa](../../workflows_overview/workflows_kingdom.md/#any-taxa) | PHB v2.3.0 | Yes | Sample-level |
 
-## Retrieve SRR Metadata
+## Fetch SRR Accession
 
 This workflow is designed to retrieve the Sequence Read Archive (SRA) accession (SRR) associated with a given sample accession. The primary inputs are BioSample IDs (e.g., SAMN00000000) or SRA Experiment IDs (e.g., SRX000000), which link to sequencing data in the SRA repository.
 
 The workflow uses the fastq-dl tool to fetch metadata from SRA and specifically parses this metadata to extract the associated SRR accession and outputs the SRR accession.
 
 ### Inputs
-
-<div class="searchable-table" markdown="1">
 
 | **Terra Task Name** | **Variable** | **Type** | **Description**| **Default Value** | **Terra Status** |
 | --- | --- | --- | --- | --- | --- |
@@ -24,14 +22,12 @@ The workflow uses the fastq-dl tool to fetch metadata from SRA and specifically 
 | fetch_srr_metadata | **cpu** | Int | Number of CPUs allocated for the task. | 2 | Optional |
 | fetch_srr_metadata | **memory** | Int | Memory in GB allocated for the task. | 8 | Optional |
 
-</div>
-
 ### Workflow Tasks
 
 This workflow has a single task that performs metadata retrieval for the specified sample accession.
 
 ??? task "`fastq-dl`: Fetches SRR metadata for sample accession"
-    Fetches metadata for a given sample accession using the `fastq-dl` tool. This task uses a Docker container and retrieves the SRR accession by parsing the metadata output.
+    When provided a BioSample accession or SRA experiment ID, 'fastq-dl' collects metadata and returns the appropriate SRR accession.
 
     !!! techdetails "fastq-dl Technical Details"
         |  | Links | 
