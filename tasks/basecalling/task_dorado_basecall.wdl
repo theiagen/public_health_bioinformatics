@@ -14,8 +14,9 @@ task basecall {
   command <<< 
     set -euo pipefail
 
-    # Capture Dorado version
-    dorado --version > DORADO_VERSION
+    # Capture Dorado version and log it
+    dorado --version > DORADO_VERSION 2>&1
+    echo "Captured Dorado version:" $(cat DORADO_VERSION)
 
     # Define a log file path to capture output
     log_file="dorado_basecall.log"
@@ -46,11 +47,11 @@ task basecall {
     generated_sam=$(find "$sam_output" -name "*.sam" | head -n 1)
     mv "$generated_sam" "$sam_file"
 
-    # Extract the detailed model name from the log file
+    # Extract the detailed model name from the log file or set a default if extraction fails
     model_name=$(grep -oP '(?<=downloading )[^ ]+' "$log_file" | head -n 1 || echo "unknown_model")
     
     # Write the model name to DORADO_MODEL, or default to "unknown_model"
-    echo "Extracted Dorado model name: $model_name"
+    echo "Extracted Dorado model name: $model_name" | tee -a "$log_file"
     echo "$model_name" > "DORADO_MODEL"
 
     echo "Basecalling completed for ~{input_file}. SAM file renamed to: $sam_file" | tee -a "$log_file"
