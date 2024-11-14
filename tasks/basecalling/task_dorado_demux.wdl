@@ -8,7 +8,7 @@ task dorado_demux {
     Int cpu = 4 
     Int memory = 16
     Int disk_size = 100
-    String dorado = "us-docker.pkg.dev/general-theiagen/staphb/dorado:0.8.0"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/dorado:0.8.0"
   }
 
   command <<< 
