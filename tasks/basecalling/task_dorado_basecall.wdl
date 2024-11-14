@@ -17,19 +17,22 @@ task basecall {
     # Capture Dorado version
     dorado --version | tee DORADO_VERSION
 
+    # Define a log file path to capture output
+    log_file="dorado_basecall.log"
+
     # Create a unique output directory for each scatter job
     base_name=$(basename "~{input_file}" .pod5)
     sam_output="output/sam_${base_name}/"
     mkdir -p "$sam_output"
 
-    echo "### Starting basecalling for ~{input_file} ###"
+    echo "### Starting basecalling for ~{input_file} ###" | tee -a "$log_file"
 
     # Set SAM file path with unique naming based on POD5 basename
     sam_file="$sam_output/${base_name}.sam"
 
-    echo "Processing ~{input_file}, expected output: $sam_file"
+    echo "Processing ~{input_file}, expected output: $sam_file" | tee -a "$log_file"
 
-    # Run Dorado basecaller
+    # Run Dorado basecaller and log output
     dorado basecaller \
       "~{dorado_model}" \
       "~{input_file}" \
@@ -37,7 +40,7 @@ task basecall {
       --emit-sam \
       --no-trim \
       --output-dir "$sam_output" \
-      --verbose || { echo "ERROR: Dorado basecaller failed for ~{input_file}"; exit 1; }
+      --verbose | tee -a "$log_file" || { echo "ERROR: Dorado basecaller failed for ~{input_file}"; exit 1; }
 
     # Rename the generated SAM file to the unique name based on input_file
     generated_sam=$(find "$sam_output" -name "*.sam" | head -n 1)
@@ -48,7 +51,7 @@ task basecall {
     echo "Extracted Dorado model name: $model_name"
     echo "$model_name" > "DORADO_MODEL"
 
-    echo "Basecalling completed for ~{input_file}. SAM file renamed to: $sam_file"
+    echo "Basecalling completed for ~{input_file}. SAM file renamed to: $sam_file" | tee -a "$log_file"
   >>>
   
   output {
