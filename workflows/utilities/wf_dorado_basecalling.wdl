@@ -66,11 +66,14 @@ workflow dorado_basecalling_workflow {
     # Version Captures
     String dorado_phb_version = version_capture.phb_version
     String dorado_analysis_date = version_capture.date
+
+    # Outputs from the main steps
     Array[File] fastq_files = dorado_demux.fastq_files
     File? terra_table_tsv = create_terra_table.terra_table_to_upload
+
+    # Versions and model used 
     String dorado_version = dorado_demux.dorado_version
-    String samtools_version = samtools_convert.samtools_version
-    String dorado_docker = dorado_demux.dorado_docker
-    String dorado_model = select_first(dorado_basecall.dorado_model_used)
-  }
+    String? samtools_version = samtools_convert.samtools_version
+    String dorado_model = dorado_model 
+    }
 }
