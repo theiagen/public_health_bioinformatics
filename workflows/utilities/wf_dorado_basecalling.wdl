@@ -61,6 +61,7 @@ workflow dorado_basecalling_workflow {
         terra_project = terra_project,
         terra_workspace = terra_workspace
     }
+    Array[String] dorado_model_used = dorado_basecall.dorado_model_used
   }
   output {
     # Version Captures
@@ -74,6 +75,6 @@ workflow dorado_basecalling_workflow {
     # Versions and model used 
     String dorado_version = dorado_demux.dorado_version
     String samtools_version = samtools_convert.samtools_version
-    Array[String] dorado_model_used = dorado_basecall.dorado_model_used
+    String dorado_model_used = select_first(dorado_model_used)
     }
 }
