@@ -74,6 +74,6 @@ workflow dorado_basecalling_workflow {
     # Versions and model used 
     String dorado_version = dorado_demux.dorado_version
     String samtools_version = samtools_convert.samtools_version
-    String dorado_model = dorado_basecall.dorado_model_used
+    String dorado_model_used = dorado_basecall.dorado_model_used
     }
 }
