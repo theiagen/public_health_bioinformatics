@@ -12,6 +12,9 @@ task samtools_convert {
   command <<< 
     set -euo pipefail
 
+    # samtools version
+    samtools --version | tee SAMTOOLS_VERSION
+
     bam_output="output/bam/"
     mkdir -p "$bam_output"
 
@@ -35,6 +38,8 @@ task samtools_convert {
 
   output {
     Array[File] bam_files = glob("output/bam/*.bam")
+    String samtools_version = read_string("SAMTOOLS_VERSION")
+    String samtools_docker = docker
   }
   runtime {
     docker: docker

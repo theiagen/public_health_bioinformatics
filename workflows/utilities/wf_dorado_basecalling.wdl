@@ -23,8 +23,11 @@ workflow dorado_basecalling_workflow {
     String terra_workspace
     String fastq_file_name             
   }
+  call versioning_task.version_capture {
+    input:
+  }
   scatter (file in input_files) {
-    call basecall_task.basecall as basecall_step {
+    call basecall_task.basecall as dorado_basecall {
       input:
         input_file = file,
         dorado_model = dorado_model,
@@ -59,7 +62,14 @@ workflow dorado_basecalling_workflow {
     }
   }
   output {
+    # Version Captures
+    String theiaprok_ont_version = version_capture.phb_version
+    String theiaprok_ont_analysis_date = version_capture.date
     Array[File] fastq_files = dorado_demux.fastq_files
     File? terra_table_tsv = create_terra_table.terra_table_to_upload
+    String? dorado_version = dorado_demux.dorado_version
+    String? samtools_version = samtools_convert.samtools_version
+    String? dorado_docker = dorado_demux.dorado_docker
+    String? dorado_model_used = dorado_basecall.dorado_model_used
   }
 }

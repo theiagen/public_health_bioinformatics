@@ -8,11 +8,14 @@ task dorado_demux {
     Int cpu = 4 
     Int memory = 16
     Int disk_size = 100
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/dorado:0.8.0"
+    String docker_dorado = "us-docker.pkg.dev/general-theiagen/staphb/dorado:0.8.0"
   }
 
   command <<< 
     set -euo pipefail
+
+    # Capture Dorado version
+    dorado --version | tee DORADO_VERSION
 
     fastq_file_name="~{fastq_file_name}"
     kit_name="~{kit_name}"
@@ -89,6 +92,9 @@ task dorado_demux {
 
   output {
     Array[File] fastq_files = glob("merged_output/*.fastq.gz")
+    String dorado_docker_used = docker_dorado
+    String dorado_version = read_string("DORADO_VERSION")
+    File dorado_demux_log = "dorado_demux.log" 
   }
   
   runtime {

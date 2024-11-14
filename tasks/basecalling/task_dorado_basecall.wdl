@@ -14,6 +14,9 @@ task basecall {
   command <<< 
     set -euo pipefail
 
+    # Capture Dorado version
+    dorado --version | tee DORADO_VERSION
+
     # Create a unique output directory for each scatter job
     base_name=$(basename "~{input_file}" .pod5)
     sam_output="output/sam_${base_name}/"
@@ -45,6 +48,9 @@ task basecall {
   
   output {
     Array[File] sam_files = glob("output/sam_*/*.sam")
+    String dorado_model_used = dorado_model
+    String dorado_docker = docker
+    String dorado_version = read_string("DORADO_VERSION")
   }
   
   runtime {
