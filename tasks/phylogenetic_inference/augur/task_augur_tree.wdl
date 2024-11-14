@@ -28,10 +28,26 @@ task augur_tree {
       ~{"--tree-builder-args " + tree_builder_args} \
       ~{true="--override-default-args" false="" override_default_args} \
       --nthreads auto
+
+    # If iqtree, get the model used
+    if [ "~{method}" == "iqtree" ]; then
+      if [ "~{substitution_model}" == "auto" ]; then
+        FASTA_BASENAME=$(basename ~{aligned_fasta} .fasta)
+        FASTA_DIR=$(dirname ~{aligned_fasta})
+        MODEL=$(grep "Best-fit model:" ${FASTA_DIR}/${FASTA_BASENAME}-delim.iqtree.log | sed 's|Best-fit model: ||g;s|chosen.*||' | tr -d '\n\r')
+      else
+        MODEL="~{substitution_model}"
+      fi
+      echo "$MODEL" > FINAL_MODEL.txt
+    else
+      echo "" > FINAL_MODEL.txt
+    fi
   >>>
+
   output {
     File aligned_tree  = "~{build_name}_~{method}.nwk"
     String augur_version = read_string("VERSION")
+    String iqtree_model_used = read_string("FINAL_MODEL.txt")
   }
   runtime {
     docker: docker
