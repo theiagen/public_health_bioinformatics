@@ -92,7 +92,7 @@ task dorado_demux {
 
   output {
     Array[File] fastq_files = glob("merged_output/*.fastq.gz")
-    String dorado_docker = dorado
+    String dorado_docker = docker
     String dorado_version = read_string("DORADO_VERSION")
     File dorado_demux_log = "dorado_demux.log" 
   }
