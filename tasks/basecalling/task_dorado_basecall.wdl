@@ -43,6 +43,11 @@ task basecall {
     generated_sam=$(find "$sam_output" -name "*.sam" | head -n 1)
     mv "$generated_sam" "$sam_file"
 
+    # Extract the detailed model name from the log file
+    model_name=$(grep -oP '(?<=downloading )[^ ]+' "$log_file" | head -n 1)
+    echo "Extracted Dorado model name: $model_name"
+    echo "$model_name" > "DORADO_MODEL"
+
     echo "Basecalling completed for ~{input_file}. SAM file renamed to: $sam_file"
   >>>
   
@@ -51,6 +56,7 @@ task basecall {
     String dorado_model_used = dorado_model
     String dorado_docker = docker
     String dorado_version = read_string("DORADO_VERSION")
+    String dorado_model = read_string("DORADO_MODEL")
   }
   
   runtime {
