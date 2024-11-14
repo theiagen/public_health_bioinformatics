@@ -37,7 +37,7 @@ workflow dorado_basecalling_workflow {
   }
   call samtools_convert_task.samtools_convert {
     input:
-      sam_files = flatten(basecall_step.sam_files)
+      sam_files = flatten(dorado_basecall.sam_files)
   }
   call dorado_demux_task.dorado_demux {
     input:
@@ -64,13 +64,13 @@ workflow dorado_basecalling_workflow {
   }
   output {
     # Version Captures
-    String theiaprok_ont_version = version_capture.phb_version
-    String theiaprok_ont_analysis_date = version_capture.date
+    String dorado_phb_version = version_capture.phb_version
+    String dorado_analysis_date = version_capture.date
     Array[File] fastq_files = dorado_demux.fastq_files
     File? terra_table_tsv = create_terra_table.terra_table_to_upload
-    String? dorado_version = dorado_demux.dorado_version
-    String? samtools_version = samtools_convert.samtools_version
-    String? dorado_docker = dorado_demux.dorado_docker
-    String? dorado_model_used = dorado_basecall.dorado_model_used
+    String dorado_version = dorado_demux.dorado_version
+    String samtools_version = samtools_convert.samtools_version
+    String dorado_docker = dorado_demux.dorado_docker
+    String dorado_model = select_first(dorado_basecall.dorado_model_used)
   }
 }
