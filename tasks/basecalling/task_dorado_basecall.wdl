@@ -53,7 +53,6 @@ task basecall {
   
   output {
     Array[File] sam_files = glob("output/sam_*/*.sam")
-    String dorado_model_used = dorado_model
     String dorado_docker = docker
     String dorado_version = read_string("DORADO_VERSION")
     String dorado_model = read_string("DORADO_MODEL")
