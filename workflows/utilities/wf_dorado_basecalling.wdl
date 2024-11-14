@@ -44,7 +44,7 @@ workflow dorado_basecalling_workflow {
       bam_files = samtools_convert.bam_files,
       kit_name = kit_name,
       fastq_file_name = fastq_file_name,
-      dorado_model_used = dorado_basecall.dorado_model_used
+      dorado_model_used = dorado_basecall.dorado_model_used[0]
   }
   call transfer_fastq_files.transfer_files as transfer_files {
     input:
