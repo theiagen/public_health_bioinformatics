@@ -18,6 +18,16 @@ task basecall {
     dorado --version > DORADO_VERSION 2>&1
     echo "Captured Dorado version:" $(cat DORADO_VERSION)
 
+    # Define the model to use, substituting "sup" with the full model name if given
+    resolved_model="~{dorado_model}"
+    if [ "$resolved_model" = "sup" ]; then
+      resolved_model="dna_r10.4.1_e8.2_400bps_sup@v5.0.0"
+    fi
+
+    # Log the resolved model name
+    echo "Using Dorado model: $resolved_model"
+    echo "$resolved_model" > "DORADO_MODEL"
+
     # Define a log file path to capture output
     log_file="dorado_basecall.log"
 
@@ -46,13 +56,6 @@ task basecall {
     # Rename the generated SAM file to the unique name based on input_file
     generated_sam=$(find "$sam_output" -name "*.sam" | head -n 1)
     mv "$generated_sam" "$sam_file"
-
-    # Extract the detailed model name from the log file or set a default if extraction fails
-    model_name=$(grep -oP '(?<=downloading )[^ ]+' "$log_file" | head -n 1 || echo "unknown_model")
-    
-    # Write the model name to DORADO_MODEL, or default to "unknown_model"
-    echo "Extracted Dorado model name: $model_name" | tee -a "$log_file"
-    echo "$model_name" > "DORADO_MODEL"
 
     echo "Basecalling completed for ~{input_file}. SAM file renamed to: $sam_file" | tee -a "$log_file"
   >>>

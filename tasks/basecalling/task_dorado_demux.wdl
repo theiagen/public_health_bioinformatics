@@ -25,8 +25,11 @@ task dorado_demux {
     fastq_file_name="~{fastq_file_name}"
     kit_name="~{kit_name}"
 
+    # Start the main log file for the entire task
+    exec > >(tee -a dorado_demux.log) 2>&1
     echo "### Starting Dorado demux ###"
     date
+    
     echo "Input BAM files:"
     for bam_file in ~{sep=" " bam_files}; do echo "$bam_file"; done
 
