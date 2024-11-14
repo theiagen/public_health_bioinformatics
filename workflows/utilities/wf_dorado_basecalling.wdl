@@ -5,7 +5,7 @@ import "../../tasks/basecalling/task_samtools_convert.wdl" as samtools_convert_t
 import "../../tasks/basecalling/task_dorado_demux.wdl" as dorado_demux_task
 import "../../tasks/utilities/file_handling/task_transfer_files.wdl" as transfer_fastq_files
 import "../../tasks/utilities/data_import/task_create_terra_table.wdl" as terra_fastq_table
-import "../../tasks/utilities/versioning/task_version_capture.wdl" as versioning_task
+import "../../tasks/task_versioning.wdl" as versioning_task
 
 workflow dorado_basecalling_workflow {
   meta {
