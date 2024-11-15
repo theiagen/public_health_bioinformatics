@@ -16,8 +16,7 @@ task dorado_demux {
     set -euo pipefail
 
     # Capture Dorado version
-    dorado --version 2>&1 | tee DORADO_VERSION
-    echo "Dorado version:" $(cat DORADO_VERSION)
+    dorado --version 2>&1 | head -n1 | tee DORADO_VERSION
 
     # Output the Dorado model used
     echo "~{dorado_model_used}" > DORADO_MODEL_USED

@@ -101,10 +101,13 @@ This workflow is composed of several tasks to process, basecall, and analyze rab
 
 | **Variable** | **Type** | **Description** |
 |---|---|---|
-| **basecalled_fastqs** | Array[File] | Array of FASTQ files generated from basecalling |
-| **demuxed_fastqs** | Array[File] | FASTQ files produced from BAM demultiplexing |
-| **logs** | Array[File] | Log files from the demultiplexing process |
+| **fastq_files** | Array[File] | FASTQ files produced from basecalling and demultiplexing |
 | **terra_table_tsv** | File | TSV file for Terra table upload |
+| **dorado_version** | String | Version of Dorado used in the workflow |
+| **dorado_model** | String | Model used for basecalling |
+|  **samtools_version** | String | Version of Samtools used in the workflow |
+|  **dorado_analysis_date** | String | Date of Dorado analysis |
+|  **dorado_phb_version** | String | Version of Dorado PHB workflow |
 
 ## References
 <!-- -->
