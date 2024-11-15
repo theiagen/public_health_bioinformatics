@@ -31,7 +31,7 @@ task trimmomatic_pe {
       avg_readlength=$(python3 -c "print(int(((${read_length_r1} + ${read_length_r2}) / 2) - ~{trimmomatic_base_crop}))")
     
       # HEADCROP: number of bases to remove from the start of the read
-      # CROP: number of bases to KEEP, from the start of the read
+      # CROP: number of bases to KEEP, from the start of the read 
       CROPPING_VAR="HEADCROP:~{trimmomatic_base_crop} CROP:$avg_readlength"
     fi
     
