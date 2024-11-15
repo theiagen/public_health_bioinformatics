@@ -13,7 +13,7 @@ task samtools_convert {
     set -euo pipefail
 
     # samtools version
-    samtools --version | tee SAMTOOLS_VERSION
+    samtools --version | head -n1 | tee VERSION
 
     bam_output="output/bam/"
     mkdir -p "$bam_output"
