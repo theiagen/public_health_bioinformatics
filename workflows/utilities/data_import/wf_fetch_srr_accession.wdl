@@ -1,6 +1,6 @@
 version 1.0
 
-import "../../../tasks/utilities/data_handling/fetch_srr_accession.wdl" as srr_task
+import "../../../tasks/utilities/data_handling/task_fetch_srr_accession.wdl" as srr_task
 
 workflow wf_retrieve_srr {
   meta {
