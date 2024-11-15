@@ -8,7 +8,7 @@
 
 ## Fetch SRR Accession
 
-This workflow is designed to retrieve the Sequence Read Archive (SRA) accession (SRR) associated with a given sample accession. The primary inputs are BioSample IDs (e.g., SAMN00000000) or SRA Experiment IDs (e.g., SRX000000), which link to sequencing data in the SRA repository.
+This workflow retrieves the Sequence Read Archive (SRA) accession (SRR) associated with a given sample accession. The primary inputs are BioSample IDs (e.g., SAMN00000000) or SRA Experiment IDs (e.g., SRX000000), which link to sequencing data in the SRA repository.
 
 The workflow uses the fastq-dl tool to fetch metadata from SRA and specifically parses this metadata to extract the associated SRR accession and outputs the SRR accession.
 

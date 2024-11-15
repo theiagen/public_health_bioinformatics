@@ -10,39 +10,43 @@ task fetch_srr_accession {
   }
   meta {
     volatile: true
+    version: "1.0"
   }
 
   command <<< 
-    mkdir -p metadata_output
     date -u | tee DATE
+
+    fastq-dl --version | tee VERSION
 
     # Debug output to show the sample being processed
     echo "Fetching metadata for sample accession: ${sample_accession}"
 
-    # Use fastq-dl to fetch metadata only
-    fastq-dl --accession ~{sample_accession} --outdir metadata_output --only-download-metadata --verbose
+    # Use fastq-dl to fetch metadata only, outputting to the current directory
+    fastq-dl --accession ~{sample_accession} --only-download-metadata --verbose
 
-
-    if [[ -f metadata_output/fastq-run-info.tsv ]]; then
+    if [[ -f fastq-run-info.tsv ]]; then
       echo "Metadata written for ${sample_accession}:"
       echo "TSV content:"
-      cat metadata_output/fastq-run-info.tsv
+      cat fastq-run-info.tsv
 
-      # Extract the SRR accession (It is typically in the first column)
-      SRR_accessions=$(awk -F'\t' 'NR>1 {print $1}' metadata_output/fastq-run-info.tsv)
-      if [[ -z "${SRR_accessions}" ]]; then
-        echo "No SRR accession found for ${sample_accession}" > metadata_output/srr_accession.txt
+      # Extract the SRR accessions and write them directly to srr_accession.txt
+      awk -F'\t' 'NR>1 {print $1}' fastq-run-info.tsv > srr_accession.txt
+
+      # Check if srr_accession.txt is empty (no SRR accessions found)
+      if [[ ! -s srr_accession.txt ]]; then
+        echo "No SRR accession found for ${sample_accession}" > srr_accession.txt
       else
-        echo "Extracted SRR accessions: ${SRR_accessions}"
-        echo "${SRR_accessions}" > metadata_output/srr_accession.txt
+        echo "Extracted SRR accessions:"
+        cat srr_accession.txt
       fi
     else
       echo "No metadata found for ${sample_accession}"
-      echo "No SRR accession found" > metadata_output/srr_accession.txt
+      echo "No SRR accession found" > srr_accession.txt
     fi
   >>>
   output {
-    String srr_accession = read_string("metadata_output/srr_accession.txt")
+    Array[String] srr_accession = read_lines("srr_accession.txt")
+    String fastq_dl_version = read_string("VERSION")
   }
   runtime {
     docker: docker
