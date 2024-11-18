@@ -29,15 +29,15 @@ task fetch_srr_accession {
       echo "TSV content:"
       cat fastq-run-info.tsv
 
-      # Extract the SRR accessions and write them directly to srr_accession.txt
-      awk -F'\t' 'NR>1 {print $1}' fastq-run-info.tsv > srr_accession.txt
+      # Extract SRR accessions and join them with commas
+      SRR_accessions=$(awk -F'\t' 'NR>1 {print $1}' fastq-run-info.tsv | paste -sd ',' -)
 
-      # Check if srr_accession.txt is empty (no SRR accessions found)
-      if [[ ! -s srr_accession.txt ]]; then
+      # Check if SRR_accessions is empty
+      if [[ -z "${SRR_accessions}" ]]; then
         echo "No SRR accession found for ${sample_accession}" > srr_accession.txt
       else
-        echo "Extracted SRR accessions:"
-        cat srr_accession.txt
+        echo "Extracted SRR accessions: ${SRR_accessions}"
+        echo "${SRR_accessions}" > srr_accession.txt
       fi
     else
       echo "No metadata found for ${sample_accession}"
@@ -45,7 +45,7 @@ task fetch_srr_accession {
     fi
   >>>
   output {
-    Array[String] srr_accession = read_lines("srr_accession.txt")
+    String srr_accession = read_string("srr_accession.txt")
     String fastq_dl_version = read_string("VERSION")
   }
   runtime {

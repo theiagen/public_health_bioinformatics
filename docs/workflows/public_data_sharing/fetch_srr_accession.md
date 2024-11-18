@@ -41,7 +41,7 @@ This workflow has a single task that performs metadata retrieval for the specifi
 
 | **Variable** | **Type** | **Description**|
 |---|---|---|
-| srr_accession| String | The SRR accession associated with the input sample accession.|
+| srr_accession| String | The SRR accession's associated with the input sample accession.|
 
 ## References
 
