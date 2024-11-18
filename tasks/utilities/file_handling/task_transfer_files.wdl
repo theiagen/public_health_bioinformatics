@@ -6,7 +6,7 @@ task transfer_files {
     String target_bucket
     Int cpu = 4
     Int memory = 8
-    String docker_image = "gcr.io/google.com/cloudsdktool/google-cloud-cli:427.0.0-alpine"
+    String docker_image = "us-docker.pkg.dev/general-theiagen/cloudsdktool/google-cloud-cli:427.0.0-alpine"
     Int disk_size = 100
   }
   meta {

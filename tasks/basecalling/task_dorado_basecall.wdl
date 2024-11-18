@@ -24,7 +24,7 @@ task basecall {
       resolved_model="dna_r10.4.1_e8.2_400bps_sup@v5.0.0"
     fi
 
-    # Log the resolved model name
+    # Log the resolved model namet
     echo "Using Dorado model: $resolved_model"
     echo "$resolved_model" > "DORADO_MODEL"
 
