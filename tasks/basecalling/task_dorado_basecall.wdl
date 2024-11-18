@@ -54,7 +54,7 @@ task basecall {
 
     # Log the resolved model name
     echo "DEBUG: Parsing model name from dorado log or capturing string from user input..."
-    if [ "~{dorado_model}" == "fast" || "~{dorado_model}" == "hac" || "~{dorado_model}" == "sup" ]; then
+    if [ "~{dorado_model}" == "fast" ] || [ "~{dorado_model}" == "hac" ] || [ "~{dorado_model}" == "sup" ]; then
       echo "DEBUG: User provided either fast, hac, or sup as input for dorado_model variable, parsing log for explicit model name now..."
       grep -m 1 'downloading' dorado_basecall.log | sed -e 's/.*downloading //' -e 's/ with.*//' | tr -d '\n' | tee DORADO_MODEL
 
