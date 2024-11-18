@@ -18,6 +18,7 @@ import "../../tasks/task_versioning.wdl" as versioning
 import "../../tasks/taxon_id/contamination/task_kmerfinder.wdl" as kmerfinder_task
 import "../../tasks/taxon_id/task_gambit.wdl" as gambit_task
 import "../../tasks/utilities/data_export/task_broad_terra_tools.wdl" as terra_tools
+import "../utilities/file_handling/wf_concatenate_illumina_lanes.wdl" as concatenate_lanes_workflow
 import "../utilities/wf_merlin_magic.wdl" as merlin_magic_workflow
 import "../utilities/wf_read_QC_trim_pe.wdl" as read_qc
 
@@ -30,6 +31,15 @@ workflow theiaprok_illumina_pe {
     String seq_method = "ILLUMINA"
     File read1
     File read2
+
+    # optional additional lanes
+    File? read1_lane2
+    File? read1_lane3
+    File? read1_lane4
+    File? read2_lane2
+    File? read2_lane3
+    File? read2_lane4
+
     Int? genome_length
     # export taxon table parameters
     String? run_id
@@ -68,10 +78,24 @@ workflow theiaprok_illumina_pe {
   call versioning.version_capture {
     input:
   }
+  if (defined(read1_lane2)) {
+    call concatenate_lanes_workflow.concatenate_illumina_lanes {
+      input:
+        samplename = samplename,
+        read1_lane1 = read1,
+        read1_lane2 = select_first([read1_lane2]),
+        read1_lane3 = read1_lane3,
+        read1_lane4 = read1_lane4,
+        read2_lane1 = read2,
+        read2_lane2 = read2_lane2,
+        read2_lane3 = read2_lane3,
+        read2_lane4 = read2_lane4
+    }
+  }
   call screen.check_reads as raw_check_reads {
     input:
-      read1 = read1,
-      read2 = read2,
+      read1 = select_first([concatenate_illumina_lanes.read1_concatenated, read1]),
+      read2 = select_first([concatenate_illumina_lanes.read2_concatenated, read2]),
       min_reads = min_reads,
       min_basepairs = min_basepairs,
       min_genome_length = min_genome_length,
@@ -85,8 +109,8 @@ workflow theiaprok_illumina_pe {
     call read_qc.read_QC_trim_pe as read_QC_trim {
       input:
         samplename = samplename,
-        read1 = read1,
-        read2 = read2,
+        read1 = select_first([concatenate_illumina_lanes.read1_concatenated, read1]),
+        read2 = select_first([concatenate_illumina_lanes.read2_concatenated, read2]),
         trim_min_length = trim_min_length,
         trim_quality_min_score = trim_quality_min_score,
         trim_window_size = trim_window_size,
@@ -121,8 +145,8 @@ workflow theiaprok_illumina_pe {
       }
       call cg_pipeline.cg_pipeline as cg_pipeline_raw {
         input:
-          read1 = read1,
-          read2 = read2,
+          read1 = select_first([concatenate_illumina_lanes.read1_concatenated, read1]),
+          read2 = select_first([concatenate_illumina_lanes.read2_concatenated, read2]),
           samplename = samplename,
           genome_length = select_first([genome_length, quast.genome_length])
       }
@@ -257,8 +281,8 @@ workflow theiaprok_illumina_pe {
               sample_taxon = gambit.gambit_predicted_taxon,
               taxon_tables = taxon_tables,
               samplename = samplename,
-              read1 = read1,
-              read2 = read2,
+              read1 = select_first([concatenate_illumina_lanes.read1_concatenated, read1]),
+              read2 = select_first([concatenate_illumina_lanes.read2_concatenated, read2]),
               read1_clean = read_QC_trim.read1_clean,
               read2_clean = read_QC_trim.read2_clean,
               run_id = run_id,
@@ -608,6 +632,9 @@ workflow theiaprok_illumina_pe {
     String theiaprok_illumina_pe_analysis_date = version_capture.date
     # Read Metadata
     String seq_platform = seq_method
+    # Concatenated Illumina Reads
+    File? read1_concatenated = concatenate_illumina_lanes.read1_concatenated
+    File? read2_concatenated = concatenate_illumina_lanes.read2_concatenated
     # Sample Screening
     String read_screen_raw = raw_check_reads.read_screen
     String? read_screen_clean = clean_check_reads.read_screen
