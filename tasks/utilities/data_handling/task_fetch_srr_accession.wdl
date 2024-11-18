@@ -10,41 +10,42 @@ task fetch_srr_accession {
   }
   meta {
     volatile: true
-    version: "1.0"
   }
 
   command <<< 
+    # Output the current date and fastq-dl version for debugging
     date -u | tee DATE
-
     fastq-dl --version | tee VERSION
 
-    # Debug output to show the sample being processed
-    echo "Fetching metadata for sample accession: ${sample_accession}"
+    # Debug log: Display the sample accession being processed
+    echo "Fetching metadata for sample accession: ~{sample_accession}"
 
-    # Use fastq-dl to fetch metadata only, outputting to the current directory
+    # Use fastq-dl to fetch metadata for the sample accession
     fastq-dl --accession ~{sample_accession} --only-download-metadata --verbose
 
     if [[ -f fastq-run-info.tsv ]]; then
-      echo "Metadata written for ${sample_accession}:"
+      echo "Metadata written for ~{sample_accession}:"
       echo "TSV content:"
       cat fastq-run-info.tsv
 
-      # Extract SRR accessions and join them with commas
+      # Extract SRR accessions from the TSV file and join them into a comma-separated string
       SRR_accessions=$(awk -F'\t' 'NR>1 {print $1}' fastq-run-info.tsv | paste -sd ',' -)
 
-      # Check if SRR_accessions is empty
+      # Write the SRR accessions to srr_accession.txt
       if [[ -z "${SRR_accessions}" ]]; then
-        echo "No SRR accession found for ${sample_accession}" > srr_accession.txt
+        echo "No SRR accession found for ~{sample_accession}" > srr_accession.txt
       else
         echo "Extracted SRR accessions: ${SRR_accessions}"
         echo "${SRR_accessions}" > srr_accession.txt
       fi
     else
-      echo "No metadata found for ${sample_accession}"
+      # Handle the case where no metadata file is found
+      echo "No metadata found for ~{sample_accession}"
       echo "No SRR accession found" > srr_accession.txt
     fi
   >>>
   output {
+    # Output the extracted SRR accessions and the fastq-dl version
     String srr_accession = read_string("srr_accession.txt")
     String fastq_dl_version = read_string("VERSION")
   }
