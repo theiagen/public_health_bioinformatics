@@ -66,10 +66,14 @@ task flye {
       --out-dir .
 
     mv assembly.fasta ~{samplename}.assembly.fasta
+    mv assembly_info.txt ~{samplename}.assembly_info.txt
+    mv assembly_graph.gfa ~{samplename}.assembly_graph.gfa
 
   >>>
   output {
     File assembly = "~{samplename}.assembly.fasta"
+    File assembly_graph = "~{samplename}.assembly_graph.gfa" 
+    File assembly_info = "~{samplename}.assembly_info.txt" 
     String flye_version = read_string("VERSION")
     String flye_docker = "~{docker}"
   }
