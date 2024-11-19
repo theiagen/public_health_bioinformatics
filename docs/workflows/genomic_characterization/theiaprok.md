@@ -4,7 +4,7 @@
 
 | **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
 |---|---|---|---|---|
-| [Genomic Characterization](../../workflows_overview/workflows_type.md/#genomic-characterization) | [Bacteria](../../workflows_overview/workflows_kingdom.md/#bacteria) | PHB v2.2.0 | Yes, some optional features incompatible | Sample-level |
+| [Genomic Characterization](../../workflows_overview/workflows_type.md/#genomic-characterization) | [Bacteria](../../workflows_overview/workflows_kingdom.md/#bacteria) | PHB v2.3.0 | Yes, some optional features incompatible | Sample-level |
 
 ## TheiaProk Workflows
 
@@ -78,6 +78,12 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 | *workflow name | **originating_lab** | String | Will be used in the "originating_lab" column in any taxon-specific tables created in the Export Taxon Tables task |  | Optional | FASTA, ONT, PE, SE |
 | *workflow name | **perform_characterization** | Boolean | Set to "false" if you want to only generate an assembly and relevant QC metrics and skip all characterization tasks | TRUE | Optional | FASTA, ONT, PE, SE |
 | *workflow name | **qc_check_table** | File | TSV value with taxons for rows and QC values for columns; internal cells represent user-determined QC thresholds; if provided, turns on the QC Check task.<br>Click on the variable name for an example QC Check table |  | Optional | FASTA, ONT, PE, SE |
+| *workflow name | **read1_lane2** | File | If provided, the Concatenate_Illumina_Lanes subworkflow will concatenate all files from the same lane before doing any subsequent analysis |  | Optional | PE, SE |
+| *workflow name | **read1_lane3** | File | If provided, the Concatenate_Illumina_Lanes subworkflow will concatenate all files from the same lane before doing any subsequent analysis |  | Optional | PE, SE |
+| *workflow name | **read1_lane4** | File | If provided, the Concatenate_Illumina_Lanes subworkflow will concatenate all files from the same lane before doing any subsequent analysis |  | Optional | PE, SE |
+| *workflow name | **read2_lane2** | File | If provided, the Concatenate_Illumina_Lanes subworkflow will concatenate all files from the same lane before doing any subsequent analysis |  | Optional | PE, SE |
+| *workflow name | **read2_lane3** | File | If provided, the Concatenate_Illumina_Lanes subworkflow will concatenate all files from the same lane before doing any subsequent analysis |  | Optional | PE, SE |
+| *workflow name | **read2_lane4** | File | If provided, the Concatenate_Illumina_Lanes subworkflow will concatenate all files from the same lane before doing any subsequent analysis |  | Optional | PE, SE | 
 | *workflow name | **run_id** | String | Will be used in the "run_id" column in any taxon-specific tables created in the Export Taxon Tables task |  | Optional | FASTA, ONT, PE, SE |
 | *workflow name | **seq_method** | String | Will be used in the "seq_id" column in any taxon-specific tables created in the Export Taxon Tables task |  | Optional | FASTA, ONT, PE, SE |
 | *workflow name | **skip_mash** | Boolean | If true, skips estimation of genome size and coverage in read screening steps. As a result, providing true also prevents screening using these parameters. | TRUE | Optional | ONT, SE |
@@ -603,6 +609,17 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
         | --- | --- |
         | Task | [task_versioning.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/task_versioning.wdl) |
 
+??? task "`concatenate_illumina_lanes`: Concatenate Multi-Lane Illumina FASTQs ==_for Illumina only_=="
+
+    The `concatenate_illumina_lanes` task concatenates Illumina FASTQ files from multiple lanes into a single file. This task only runs if the `read1_lane2` input file has been provided. All read1 lanes are concatenated together and are used in subsequent tasks, as are the read2 lanes. These concatenated files are also provided as output.
+
+    !!! techdetails "Concatenate Illumina Lanes Technical Details"
+        The `concatenate_illumina_lanes` task is run twice, once for raw reads and once for clean reads. The task is the same for both PE and SE workflows.
+        
+        |  | Links |
+        | --- | --- |
+        | Task | [wf_concatenate_illumina_lanes.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/file_handling/wf_concatenate_illumina_lanes.wdl)
+
 ??? task "`screen`: Total Raw Read Quantification and Genome Size Estimation"
 
     The [`screen`](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/comparisons/task_screen.wdl) task ensures the quantity of sequence data is sufficient to undertake genomic analysis. It uses [`fastq-scan`](https://github.com/rpetit3/fastq-scan) and bash commands for quantification of reads and base pairs, and [mash](https://mash.readthedocs.io/en/latest/index.html) sketching to estimate the genome size and its coverage. At each step, the results are assessed relative to pass/fail criteria and thresholds that may be defined by optional user inputs. Samples that do not meet these criteria will not be processed further by the workflow:
@@ -705,12 +722,12 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
     1. **Species Groups**: 
     - MIDAS clusters bacterial genomes based on 96.5% sequence identity, forming over 5,950 species groups from 31,007 genomes. These groups align with the gold-standard species definition (95% ANI), ensuring highly accurate species identification.
 
-    2. **Genomic Data Structure**:
+    1. **Genomic Data Structure**:
     - **Marker Genes**: Contains 15 universal single-copy genes used to estimate species abundance.
     - **Representative Genome**: Each species group has a selected representative genome, which minimizes genetic variation and aids in accurate SNP identification.
     - **Pan-genome**: The database includes clusters of non-redundant genes, with options for multi-level clustering (e.g., 99%, 95%, 90% identity), enabling MIDAS to identify gene content within strains at various clustering thresholds.
 
-    3. **Taxonomic Annotation**: 
+    1. **Taxonomic Annotation**: 
     - Genomes are annotated based on consensus Latin names. Discrepancies in name assignments may occur due to factors like unclassified genomes or genus-level ambiguities.
 
     ---
