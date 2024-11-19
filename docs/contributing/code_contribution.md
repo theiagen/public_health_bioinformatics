@@ -177,7 +177,6 @@ task example_task {
       output {
         File result_csv = "output.csv"  # CSV file generated
         File result_log = "log.txt"    # Log file
-        String 
       }
       ```
         
