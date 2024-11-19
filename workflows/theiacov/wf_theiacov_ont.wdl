@@ -149,7 +149,7 @@ workflow theiacov_ont {
             standardized_organism = organism_parameters.standardized_organism,
             seq_method = seq_method
         }
-      }              
+      }
       # nanoplot for basic QC metrics
       call nanoplot_task.nanoplot as nanoplot_raw {
         input:
@@ -427,5 +427,7 @@ workflow theiacov_ont {
     # QC_Check Results
     String? qc_check = qc_check_task.qc_check
     File? qc_standard = qc_check_task.qc_standard
+    # Non-flu specific outputs
+    String percentage_mapped_reads = select_first([stats_n_coverage_primtrim.percentage_mapped_reads, stats_n_coverage.percentage_mapped_reads, flu_track.percentage_mapped_reads, ""])
   }
 }

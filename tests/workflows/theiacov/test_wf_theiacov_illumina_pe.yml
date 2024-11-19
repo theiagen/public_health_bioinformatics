@@ -60,11 +60,11 @@
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     # fastq scan raw
     - path: miniwdl_run/call-read_QC_trim/call-fastq_scan_raw/command
-      md5sum: 9b2cc0107f1a90972482d7b3a658d242
+      md5sum: 56bcc1ba5d2a9c94f4704fc4b8e6b7ba
     - path: miniwdl_run/call-read_QC_trim/call-fastq_scan_raw/inputs.json
       contains: ["read1", "read2", "illumina_pe"]
     - path: miniwdl_run/call-read_QC_trim/call-fastq_scan_raw/outputs.json
-      contains: ["fastq_scan_pe", "pipeline_date", "read1_seq", "read2_seq"]
+      contains: ["fastq_scan_pe", "read1_seq", "read2_seq"]
     - path: miniwdl_run/call-read_QC_trim/call-fastq_scan_raw/stderr.txt
     - path: miniwdl_run/call-read_QC_trim/call-fastq_scan_raw/stderr.txt.offset
     - path: miniwdl_run/call-read_QC_trim/call-fastq_scan_raw/stdout.txt
@@ -74,7 +74,6 @@
       md5sum: 2a77387b247176aa5fcc9aed228699c9
     - path: miniwdl_run/call-read_QC_trim/call-fastq_scan_raw/work/SRR13687078_2_fastq-scan.json
       md5sum: d0eebdd4e14cf0a0b371fee1338474c9
-    - path: miniwdl_run/call-read_QC_trim/call-fastq_scan_raw/work/DATE
     - path: miniwdl_run/call-read_QC_trim/call-fastq_scan_raw/work/READ1_SEQS
       md5sum: 4e4a08422dbf7001fd09ad5126e13b44
     - path: miniwdl_run/call-read_QC_trim/call-fastq_scan_raw/work/READ2_SEQS
@@ -205,7 +204,7 @@
       md5sum: 511e696afe25f8b96a84d68ec5a8af8a
     # stats n coverage primer trim
     - path: miniwdl_run/call-ivar_consensus/call-stats_n_coverage_primtrim/command
-      md5sum: 260c3887be6d99b18caf6d3914c5737f
+      md5sum: 1c61b89c2a94e87518a6679a04885341
     - path: miniwdl_run/call-ivar_consensus/call-stats_n_coverage_primtrim/inputs.json
       contains: ["bamfile", "samplename"]
     - path: miniwdl_run/call-ivar_consensus/call-stats_n_coverage_primtrim/outputs.json
@@ -288,7 +287,7 @@
       md5sum: 6c63395a125f8618334b8af2de4e2d88
     # stats n coverage
     - path: miniwdl_run/call-ivar_consensus/call-stats_n_coverage/command
-      md5sum: 1ffac4cc3e9bdd84a0f9228e8e5ca5d9
+      md5sum: e49a297b1c0eb195a2acd80f00672668
     - path: miniwdl_run/call-ivar_consensus/call-stats_n_coverage/inputs.json
       contains: ["bamfile", "samplename"]
     - path: miniwdl_run/call-ivar_consensus/call-stats_n_coverage/outputs.json

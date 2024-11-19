@@ -211,6 +211,10 @@ workflow theiameta_illumina_pe {
     Int? fastq_scan_num_reads_clean1 = read_QC_trim.fastq_scan_clean1
     Int? fastq_scan_num_reads_clean2 = read_QC_trim.fastq_scan_clean2
     String? fastq_scan_num_reads_clean_pairs = read_QC_trim.fastq_scan_clean_pairs
+    File? fastq_scan_raw1_json = read_QC_trim.fastq_scan_raw1_json
+    File? fastq_scan_raw2_json = read_QC_trim.fastq_scan_raw2_json
+    File? fastq_scan_clean1_json = read_QC_trim.fastq_scan_clean1_json
+    File? fastq_scan_clean2_json = read_QC_trim.fastq_scan_clean2_json
     # Read QC - fastqc outputs
     Int? fastqc_num_reads_raw1 = read_QC_trim.fastqc_raw1
     Int? fastqc_num_reads_raw2 = read_QC_trim.fastqc_raw2

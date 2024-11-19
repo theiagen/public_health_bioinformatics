@@ -220,7 +220,7 @@ This workflow runs on the set level. Please note that for every task, runtime pa
 | augur_tree | **exclude_sites** | File | File of one-based sites to exclude for raw tree building (BED format in .bed files, DRM format in tab-delimited files, or one position per line) |  | Optional |
 | augur_tree | **method** | String | Which method to use to build the tree; options: "fasttree", "raxml", "iqtree" | iqtree | Optional |
 | augur_tree | **override_default_args** | Boolean | If true, override default tree builder arguments instead of augmenting them | FALSE | Optional |
-| augur_tree | **substitution_model** | String | The substitution model to use; only available for iqtree. Specify "auto" to run ModelTest; options: "GTR" | GTR | Optional |
+| augur_tree | **substitution_model** | String | The substitution model to use; only available for iqtree. Specify "auto" to run ModelTest; model options can be found [here](http://www.iqtree.org/doc/Substitution-Models) | GTR | Optional |
 | augur_tree | **tree_builder_args** | String | Additional tree builder arguments either augmenting or overriding the default arguments. FastTree defaults: "-nt -nosupport". RAxML defaults: "-f d -m GTRCAT -c 25 -p 235813". IQ-TREE defaults: "-ninit 2 -n 2 -me 0.05 -nt AUTO -redo" |  | Optional |
 | sc2_defaults | **nextstrain_ncov_repo_commit** | String | The version of the <https://github.com/nextstrain/ncov/> from which to draw default values for SARS-CoV-2. | `23d1243127e8838a61b7e5c1a72bc419bf8c5a0d` | Optional |
 | organism_parameters | **gene_locations_bed_file** | File | Use to provide locations of interest where average coverage will be calculated | Defaults are organism-specific. Please find default values for some organisms here: <https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl>. For an organism without set defaults, an empty file is provided, "gs://theiagen-public-files/terra/theiacov-files/empty.bed", but will not be as useful as an organism specific gene locations bed file. | Optional |
@@ -284,6 +284,7 @@ The Nextstrain team hosts documentation surrounding the Augur workflow → Auspi
 | **Variable** | **Type** | **Description** |
 | --- | --- | --- |
 | aligned_fastas | File | A FASTA file of the aligned genomes |
+| augur_iqtree_model_used | String | The iqtree model used during augur tree |
 | augur_phb_analysis_date | String | The date the analysis was run |
 | augur_phb_version | String | The version of the Public Health Bioinformatics (PHB) repository used |
 | augur_version | String | Version of Augur used |

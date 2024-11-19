@@ -215,6 +215,8 @@ workflow theiacov_illumina_se {
     Int? fastq_scan_num_reads_raw1 = read_QC_trim.fastq_scan_raw1
     String? fastq_scan_version = read_QC_trim.fastq_scan_version
     Int? fastq_scan_num_reads_clean1 = read_QC_trim.fastq_scan_clean1
+    File? fastq_scan_raw1_json = read_QC_trim.fastq_scan_raw1_json
+    File? fastq_scan_clean1_json = read_QC_trim.fastq_scan_clean1_json
     # Read QC - fastqc outputs
     Int? fastqc_num_reads_raw1 = read_QC_trim.fastqc_raw1
     Int? fastqc_num_reads_clean1 = read_QC_trim.fastqc_clean1
@@ -317,5 +319,7 @@ workflow theiacov_illumina_se {
     # QC_Check Results
     String? qc_check = qc_check_task.qc_check
     File? qc_standard = qc_check_task.qc_standard
+    # Capture percentage_mapped_reads from ivar_consensus task
+    String? percentage_mapped_reads = ivar_consensus.percentage_mapped_reads
   }
 }

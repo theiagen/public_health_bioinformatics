@@ -115,7 +115,7 @@ All TheiaCoV Workflows (not TheiaCoV_FASTA_Batch)
 | theiacov_clearlabs | **primer_bed** | File | The bed file containing the primers used when sequencing was performed | | Required | CL | sars-cov-2 |
 | theiacov_clearlabs | **read1** | File | Read data produced by the Clear Dx platform from ClearLabs | | Required | CL | sars-cov-2 |
 | theiacov_fasta | **assembly_fasta** | File | Input assembly FASTA file | | Required | FASTA | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
-| theiacov_fasta | **input_assembly_method** | File | Method used to generate the assembly file | | Required | FASTA | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
+| theiacov_fasta | **input_assembly_method** | String | Method used to generate the assembly file | | Required | FASTA | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | theiacov_illumina_pe | **read1** | File | Forward Illumina read in FASTQ file format (compression optional) | | Required | PE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | theiacov_illumina_pe | **read2** | File | Reverse Illumina read in FASTQ file format (compression optional) | | Required | PE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | theiacov_illumina_se | **read1** | File | Forward Illumina read in FASTQ file format (compression optional) | | Required | SE | MPXV, WNV, sars-cov-2 |
@@ -1027,6 +1027,8 @@ All TheiaCoV Workflows (not TheiaCoV_FASTA_Batch)
 | est_percent_gene_coverage_tsv | File | Percent coverage for each gene in the organism being analyzed (depending on the organism input) | CL, ONT, PE, SE |
 | fastp_html_report | File | HTML report for fastp | PE, SE |
 | fastp_version | String | Fastp version used | PE, SE |
+| fastq_scan_clean1_json | File | JSON file output from `fastq-scan` containing summary stats about clean forward read quality and length | PE, SE, CL |
+| fastq_scan_clean2_json | File | JSON file output from `fastq-scan` containing summary stats about clean reverse read quality and length | PE |
 | fastq_scan_num_reads_clean_pairs | String | Number of paired reads after filtering as determined by fastq_scan | PE |
 | fastq_scan_num_reads_clean1 | Int | Number of forward reads after filtering as determined by fastq_scan | CL, PE, SE |
 | fastq_scan_num_reads_clean2 | Int | Number of reverse reads after filtering as determined by fastq_scan | PE |
@@ -1037,6 +1039,8 @@ All TheiaCoV Workflows (not TheiaCoV_FASTA_Batch)
 | fastq_scan_r1_mean_q_raw | Float | Forward read mean quality value before quality trimming and adapter removal |  |
 | fastq_scan_r1_mean_readlength_clean | Float | Forward read mean read length value after quality trimming and adapter removal |  |
 | fastq_scan_r1_mean_readlength_raw | Float | Forward read mean read length value before quality trimming and adapter removal |  |
+| fastq_scan_raw1_json | File | JSON file output from `fastq-scan` containing summary stats about raw forward read quality and length | PE, SE, CL |
+| fastq_scan_raw2_json | File | JSON file output from `fastq-scan` containing summary stats about raw reverse read quality and length | PE |
 | fastq_scan_version | String | Version of fastq_scan used for read QC analysis | CL, PE, SE |
 | fastqc_clean1_html | File | Graphical visualization of clean forward read quality from fastqc to open in an internet browser | PE, SE |
 | fastqc_clean2_html | File | Graphical visualization of clean reverse read quality  from fastqc to open in an internet browser | PE |
@@ -1158,6 +1162,7 @@ All TheiaCoV Workflows (not TheiaCoV_FASTA_Batch)
 | pangolin_notes | String | Lineage notes as determined by Pangolin | CL, FASTA, ONT, PE, SE |
 | pangolin_versions | String | All Pangolin software and database versions | CL, FASTA, ONT, PE, SE |
 | percent_reference_coverage | Float | Percent coverage of the reference genome after performing primer trimming; calculated as assembly_length_unambiguous / length of the reference genome (SC2: 29903) x 100 | CL, FASTA, ONT, PE, SE |
+| percentage_mapped_reads | String | Percentage of reads that successfully aligned to the reference genome. This value is calculated by number of mapped reads / total number of reads x 100. | ONT, PE, SE |
 | primer_bed_name | String | Name of the primer bed files used for primer trimming | CL, ONT, PE, SE |
 | primer_trimmed_read_percent | Float | Percentage of read data with primers trimmed as determined by iVar trim | PE, SE |
 | qc_check | String | The results of the QC Check task | CL, FASTA, ONT, PE, SE |

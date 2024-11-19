@@ -115,6 +115,10 @@ workflow flu_track {
   }
   # combine HA & NA assembly coverages
   String ha_na_assembly_coverage_string = "HA: " + select_first([ha_assembly_coverage.depth, ""]) + ", NA: " + select_first([na_assembly_coverage.depth, ""])
+  
+  # combine HA & NA mapped reads percentages
+  String ha_na_percentage_mapped_reads = "HA: " + select_first([ha_assembly_coverage.percentage_mapped_reads, ""]) + ", NA: " + select_first([na_assembly_coverage.percentage_mapped_reads, ""])
+
   # ABRICATE will run if assembly is provided, or was generated with IRMA
   if (defined(irma.irma_assemblies) && defined(irma.irma_assembly_fasta)){
     call abricate.abricate_flu {
@@ -250,13 +254,14 @@ workflow flu_track {
     File? irma_mp_segment_fasta = irma.seg_mp_assembly
     File? irma_np_segment_fasta = irma.seg_np_assembly
     File? irma_ns_segment_fasta = irma.seg_ns_assembly
-
     Array[File] irma_assemblies = irma.irma_assemblies
     Array[File] irma_vcfs = irma.irma_vcfs
     Array[File] irma_bams = irma.irma_bams
     File? irma_ha_bam = irma.seg_ha_bam
     File? irma_na_bam = irma.seg_na_bam
     String ha_na_assembly_coverage = ha_na_assembly_coverage_string
+     # calulate mapped reads percentage for flu samples
+    String percentage_mapped_reads = ha_na_percentage_mapped_reads
     # GenoFLU outputs
     String? genoflu_version = genoflu.genoflu_version
     String? genoflu_genotype = genoflu.genoflu_genotype
