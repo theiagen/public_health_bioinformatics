@@ -25,7 +25,7 @@ task dorado_demux {
     kit_name="~{kit_name}"
 
     # Start the main log file for the entire task
-    exec > >(tee -a dorado_demux.log) 2>&1
+    exec > >(tee -a dorado_demux_output.log) 2>&1
     echo "### Starting Dorado demux ###"
     date
     
@@ -101,7 +101,7 @@ task dorado_demux {
     Array[File] fastq_files = glob("merged_output/*.fastq.gz")
     String dorado_docker = docker
     String dorado_version = read_string("DORADO_VERSION")
-    File dorado_demux_log = "dorado_demux.log" 
+    File dorado_demux_log = "dorado_demux_output.log" 
     String dorado_model_name = read_string("DORADO_MODEL_USED")
   }
   
