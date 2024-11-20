@@ -13,6 +13,8 @@ task fetch_srr_accession {
   }
 
   command <<< 
+    set -euo pipefail
+    
     # Output the current date and fastq-dl version for debugging
     date -u | tee DATE
     fastq-dl --version | tee VERSION
