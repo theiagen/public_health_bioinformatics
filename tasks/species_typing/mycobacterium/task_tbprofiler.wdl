@@ -22,7 +22,7 @@ task tbprofiler {
     
     Int cpu = 8     
     Int disk_size = 100
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/tbprofiler:6.4.0"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/tbprofiler:6.4.1"
     Int memory = 16
   }
   command <<<
