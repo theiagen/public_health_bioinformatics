@@ -19,35 +19,33 @@ task fetch_srr_accession {
     date -u | tee DATE
     fastq-dl --version | tee VERSION
 
-    # Debug log: Display the sample accession being processed
-    echo "Fetching metadata for sample accession: ~{sample_accession}"
-
     # Use fastq-dl to fetch metadata for the sample accession
-    fastq-dl --accession ~{sample_accession} --only-download-metadata --verbose
+    echo "Fetching metadata for sample accession: ~{sample_accession}"
+    if fastq-dl --accession ~{sample_accession} --only-download-metadata --verbose; then
+        if [[ -f fastq-run-info.tsv ]]; then
+            echo "Metadata written for ~{sample_accession}:"
+            cat fastq-run-info.tsv
 
-    if [[ -f fastq-run-info.tsv ]]; then
-      echo "Metadata written for ~{sample_accession}:"
-      echo "TSV content:"
-      cat fastq-run-info.tsv
+            # Extract SRR accessions from the TSV file
+            SRR_accessions=$(awk -F'\t' 'NR>1 {print $1}' fastq-run-info.tsv | paste -sd ',' -)
 
-      # Extract SRR accessions from the TSV file and join them into a comma-separated string
-      SRR_accessions=$(awk -F'\t' 'NR>1 {print $1}' fastq-run-info.tsv | paste -sd ',' -)
-
-      # Write the SRR accessions to srr_accession.txt
-      if [[ -z "${SRR_accessions}" ]]; then
-        echo "No SRR accession found for ~{sample_accession}" > srr_accession.txt
-      else
-        echo "Extracted SRR accessions: ${SRR_accessions}"
-        echo "${SRR_accessions}" > srr_accession.txt
-      fi
+            if [[ -z "${SRR_accessions}" ]]; then
+                echo "No SRR accession found for ~{sample_accession}" > srr_accession.txt
+            else
+                echo "Extracted SRR accessions: ${SRR_accessions}"
+                echo "${SRR_accessions}" > srr_accession.txt
+            fi
+        else
+            echo "No metadata file found for ~{sample_accession}"
+            echo "No SRR accession found" > srr_accession.txt
+        fi
     else
-      # Handle the case where no metadata file is found
-      echo "No metadata found for ~{sample_accession}"
-      echo "No SRR accession found" > srr_accession.txt
+        # Explicitly fail for invalid biosample IDs or SRA
+        echo "Invalid Biosample ID/SRA or error fetching metadata for ~{sample_accession}"
+        exit 1
     fi
   >>>
   output {
-    # Output the extracted SRR accessions and the fastq-dl version
     String srr_accession = read_string("srr_accession.txt")
     String fastq_dl_version = read_string("VERSION")
   }
