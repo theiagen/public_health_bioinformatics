@@ -418,7 +418,7 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 | merlin_magic | **tbp_parser_coverage_regions_bed** | File | A bed file that lists the regions to be considered for QC |  | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **tbp_parser_coverage_threshold** | Int | The minimum coverage for a region to pass QC in tbp_parser | 100 | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **tbp_parser_debug** | Boolean | Activate the debug mode on tbp_parser; increases logging outputs | TRUE | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **tbp_parser_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:1.6.0 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **tbp_parser_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:2.1.0 | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **tbp_parser_etha237_frequency** | Float | Minimum frequency for a mutation in ethA at protein position 237 to pass QC in tbp-parser | 0.1 | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **tbp_parser_expert_rule_regions_bed** | File | A file that contains the regions where R mutations and expert rules are applied |  | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **tbp_parser_min_depth** | Int | Minimum depth for a variant to pass QC in tbp_parser | 10 | Optional | FASTA, ONT, PE, SE |
@@ -612,7 +612,7 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
     The `concatenate_illumina_lanes` task concatenates Illumina FASTQ files from multiple lanes into a single file. This task only runs if the `read1_lane2` input file has been provided. All read1 lanes are concatenated together and are used in subsequent tasks, as are the read2 lanes. These concatenated files are also provided as output.
 
     !!! techdetails "Concatenate Illumina Lanes Technical Details"
-        The `concatenate_illumina_lanes` task is run twice, once for raw reads and once for clean reads. The task is the same for both PE and SE workflows.
+        The `concatenate_illumina_lanes` task is run before any downstream steps take place.
         
         |  | Links |
         | --- | --- |
@@ -720,12 +720,12 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
     1. **Species Groups**: 
     - MIDAS clusters bacterial genomes based on 96.5% sequence identity, forming over 5,950 species groups from 31,007 genomes. These groups align with the gold-standard species definition (95% ANI), ensuring highly accurate species identification.
 
-    1. **Genomic Data Structure**:
+    2. **Genomic Data Structure**:
     - **Marker Genes**: Contains 15 universal single-copy genes used to estimate species abundance.
     - **Representative Genome**: Each species group has a selected representative genome, which minimizes genetic variation and aids in accurate SNP identification.
     - **Pan-genome**: The database includes clusters of non-redundant genes, with options for multi-level clustering (e.g., 99%, 95%, 90% identity), enabling MIDAS to identify gene content within strains at various clustering thresholds.
 
-    1. **Taxonomic Annotation**: 
+    3. **Taxonomic Annotation**: 
     - Genomes are annotated based on consensus Latin names. Discrepancies in name assignments may occur due to factors like unclassified genomes or genus-level ambiguities.
 
     ---
