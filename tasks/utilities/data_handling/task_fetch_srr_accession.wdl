@@ -11,7 +11,6 @@ task fetch_srr_accession {
   meta {
     volatile: true
   }
-
   command <<< 
     set -euo pipefail
 
@@ -19,43 +18,32 @@ task fetch_srr_accession {
     date -u | tee DATE
     fastq-dl --version | tee VERSION
 
-    # Fetch metadata for the sample accession
-    echo "Fetching metadata for valid biosample ID or SRA: ~{sample_accession}"
-    if fastq-dl --accession ~{sample_accession} --only-download-metadata --verbose 2> stderr; then
-        if [[ -f fastq-run-info.tsv ]]; then
-            echo "Metadata written for valid biosample ID or SRA: ~{sample_accession}"
-            cat fastq-run-info.tsv
+    echo "Fetching metadata for accession: ~{sample_accession}"
 
-            # Extract SRR accessions from the TSV file
-            SRR_accessions=$(awk -F'\t' 'NR>1 {print $1}' fastq-run-info.tsv | paste -sd ',' -)
+    # Run fastq-dl and capture stderr
+    fastq-dl --accession ~{sample_accession} --only-download-metadata -m 2 --verbose 2> stderr.log || true
 
-            if [[ -z "${SRR_accessions}" ]]; then
-                # Valid biosample ID or SRA, but no SRR accessions found
-                echo "No SRR accession found for valid biosample ID or SRA: ~{sample_accession}" > srr_accession.txt
-            else
-                # Valid biosample ID or SRA with SRR accessions
-                echo "Extracted SRR accessions: ${SRR_accessions}"
-                echo "${SRR_accessions}" > srr_accession.txt
-            fi
-        else
-            # No metadata file generated, treat as no SRRs found for valid biosample
-            echo "No metadata file found for valid biosample ID or SRA: ~{sample_accession}"
-            echo "No SRR accession found" > srr_accession.txt
-        fi
+    # Handle whether the ID/accession is valid and contains SRR metadata based on stderr
+    if grep -q "No results found for" stderr.log; then
+        echo "No SRR accession found" > srr_accession.txt
+        echo "No SRR accession found for accession: ~{sample_accession}"
+    elif grep -q "received an empty response" stderr.log; then
+        echo "No SRR accession found" > srr_accession.txt
+        echo "No SRR accession found for accession: ~{sample_accession}"
+    elif grep -q "is not a Study, Sample, Experiment, or Run accession" stderr.log; then
+        echo "Invalid accession: ~{sample_accession}" >&2
+        exit 1
+    elif [[ ! -f fastq-run-info.tsv ]]; then
+        echo "No metadata file found for accession: ~{sample_accession}" >&2
+        exit 1
     else
-        # Check stderr for specific error messages
-        if grep -q "Query was successful, but received an empty response" stderr; then
-            # Valid biosample ID or SRA, but no data found output No SRR accession found
-            echo "No SRR accession found for valid biosample ID or SRA: ~{sample_accession} -Query was successful, but received an empty response" > srr_accession.txt
+        # Extract SRR accessions from the TSV file if it exists
+        SRR_accessions=$(awk -F'\t' 'NR>1 {print $1}' fastq-run-info.tsv | paste -sd ',' -)
+        if [[ -z "${SRR_accessions}" ]]; then
             echo "No SRR accession found" > srr_accession.txt
-        elif grep -q "is not a Study, Sample, Experiment, or Run accession" stderr; then
-            # Invalid accession ID or SRA Fail workflow
-            echo "Invalid biosample ID or SRA: ~{sample_accession}"
-            exit 1
         else
-            # Unexpected error
-            echo "fastq-dl failed for ~{sample_accession} due to an unknown error."
-            exit 1
+            echo "Extracted SRR accessions: ${SRR_accessions}"
+            echo "${SRR_accessions}" > srr_accession.txt
         fi
     fi
   >>>
