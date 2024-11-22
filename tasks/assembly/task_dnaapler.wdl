@@ -8,7 +8,7 @@ task dnaapler_all {
     Int threads = 4         
     Int disk_size = 100               
     Int memory = 16                        
-    String docker # making Dockerfile for new dnaapler version
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/dnaapler:0.8.0"
  }
 
   command <<< 

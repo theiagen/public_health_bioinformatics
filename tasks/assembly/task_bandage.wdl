@@ -7,7 +7,7 @@ task bandage_plot {
       Int cpu = 2
       Int memory = 4
       Int disk_size = 10
-      String docker = "staphb/bandage:0.8.1"
+      String docker = "us-docker.pkg.dev/general-theiagen/staphb/bandage:0.8.1"
     }
     command <<< 
       bandage --version | tee VERSION
