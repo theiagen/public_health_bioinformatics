@@ -464,7 +464,7 @@
     - path: miniwdl_run/call-read_QC_trim/call-fastq_scan_raw/work/_miniwdl_inputs/0/SRR2838702_R1.fastq.gz
     - path: miniwdl_run/call-read_QC_trim/call-fastq_scan_raw/work/_miniwdl_inputs/0/SRR2838702_R2.fastq.gz
     - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_pe/command
-      md5sum: cc137a029d5143592b40edf01d53735f
+      md5sum: cc961dbda52c70200555ffb34e5ba62d
     - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_pe/inputs.json
       contains: ["read", "fastq", "test", "trimmomatic_min_length"]
     - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_pe/outputs.json
@@ -615,7 +615,7 @@
     - path: miniwdl_run/wdl/tasks/species_typing/escherichia_shigella/task_sonneityping.wdl
       md5sum: 3357a36f11992a0ca00c61d7bfccb44b
     - path: miniwdl_run/wdl/tasks/species_typing/mycobacterium/task_tbprofiler.wdl
-      md5sum: 484f7b78f12607a737fe30f4c5f3d697
+      md5sum: a4d6d24a04a453227b4fa320ff79e45f
     - path: miniwdl_run/wdl/tasks/species_typing/multi/task_ts_mlst.wdl
       md5sum: ff8070a06eca94264ad6a7d91cb03bf0
     - path: miniwdl_run/wdl/tasks/task_versioning.wdl
@@ -629,7 +629,7 @@
     - path: miniwdl_run/wdl/tasks/utilities/data_export/task_broad_terra_tools.wdl
       md5sum: 8c97c5bd65e2787239f12ef425d479ae
     - path: miniwdl_run/wdl/workflows/theiaprok/wf_theiaprok_illumina_pe.wdl
-      md5sum: a6387407ef51b7493b0897869375e7df
+      md5sum: ac49217c129add7c000eedf38acee8f3
     - path: miniwdl_run/wdl/workflows/utilities/wf_merlin_magic.wdl
       md5sum: f3b18a0b4c2bdeb0896176e8f9c8247d
     - path: miniwdl_run/wdl/workflows/utilities/wf_read_QC_trim_pe.wdl

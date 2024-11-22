@@ -578,7 +578,7 @@
     - path: miniwdl_run/wdl/tasks/species_typing/escherichia_shigella/task_sonneityping.wdl
       md5sum: 3357a36f11992a0ca00c61d7bfccb44b
     - path: miniwdl_run/wdl/tasks/species_typing/mycobacterium/task_tbprofiler.wdl
-      md5sum: 484f7b78f12607a737fe30f4c5f3d697
+      md5sum: a4d6d24a04a453227b4fa320ff79e45f
     - path: miniwdl_run/wdl/tasks/species_typing/multi/task_ts_mlst.wdl
       md5sum: ff8070a06eca94264ad6a7d91cb03bf0
     - path: miniwdl_run/wdl/tasks/task_versioning.wdl
@@ -592,7 +592,7 @@
     - path: miniwdl_run/wdl/tasks/utilities/data_export/task_broad_terra_tools.wdl
       md5sum: 8c97c5bd65e2787239f12ef425d479ae
     - path: miniwdl_run/wdl/workflows/theiaprok/wf_theiaprok_illumina_se.wdl
-      md5sum: 4111a758490174325ae8ea52a95319e9
+      md5sum: 5e735ae6cb60f86ec7983274f3baf9f8
     - path: miniwdl_run/wdl/workflows/utilities/wf_merlin_magic.wdl
       md5sum: f3b18a0b4c2bdeb0896176e8f9c8247d
     - path: miniwdl_run/wdl/workflows/utilities/wf_read_QC_trim_se.wdl
