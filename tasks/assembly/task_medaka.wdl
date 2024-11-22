@@ -17,11 +17,11 @@ task medaka_polish {
           -i ~{read1} \
           -d ~{assembly_fasta} \
           -m ~{medaka_model} \
-          -o medaka_out \
+          -o . \
           --threads ~{cpu}
         # Rename output files with sample name
-        mv medaka_out/consensus.fasta ~{samplename}.polished.fasta
-        mv medaka_out/consensus.vcf.gz ~{samplename}.polished.vcf.gz
+        mv consensus.fasta ~{samplename}.polished.fasta
+        mv consensus.vcf.gz ~{samplename}.polished.vcf.gz
     >>>
     output {
       File polished_fasta = "~{samplename}.polished.fasta"
