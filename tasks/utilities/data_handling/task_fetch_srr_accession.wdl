@@ -14,34 +14,33 @@ task fetch_srr_accession {
 
   command <<< 
     set -euo pipefail
-    
+
     # Output the current date and fastq-dl version for debugging
     date -u | tee DATE
     fastq-dl --version | tee VERSION
 
-    # Use fastq-dl to fetch metadata for the sample accession
-    echo "Fetching metadata for sample accession: ~{sample_accession}"
+    # Fetch metadata for the sample accession
+    echo "Fetching metadata for valid biosample ID or SRA: ~{sample_accession}"
     if fastq-dl --accession ~{sample_accession} --only-download-metadata --verbose; then
         if [[ -f fastq-run-info.tsv ]]; then
-            echo "Metadata written for ~{sample_accession}:"
+            echo "Metadata written for valid biosample ID or SRA: ~{sample_accession}"
             cat fastq-run-info.tsv
 
             # Extract SRR accessions from the TSV file
             SRR_accessions=$(awk -F'\t' 'NR>1 {print $1}' fastq-run-info.tsv | paste -sd ',' -)
 
             if [[ -z "${SRR_accessions}" ]]; then
-                echo "No SRR accession found for ~{sample_accession}" > srr_accession.txt
+                echo "No SRR accession found for valid biosample ID or SRA: ~{sample_accession}" > srr_accession.txt
             else
                 echo "Extracted SRR accessions: ${SRR_accessions}"
                 echo "${SRR_accessions}" > srr_accession.txt
             fi
         else
-            echo "No metadata file found for ~{sample_accession}"
+            echo "No metadata file found for valid biosample ID or SRA: ~{sample_accession}"
             echo "No SRR accession found" > srr_accession.txt
         fi
     else
-        # Explicitly fail for invalid biosample IDs or SRA
-        echo "Invalid Biosample ID/SRA or error fetching metadata for ~{sample_accession}"
+        echo "SRR workflow failed for ~{sample_accession}, invalid biosample ID or SRA"
         exit 1
     fi
   >>>
