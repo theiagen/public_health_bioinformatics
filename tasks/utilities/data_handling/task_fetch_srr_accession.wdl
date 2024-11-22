@@ -12,7 +12,7 @@ task fetch_srr_accession {
     volatile: true
   }
 
-  command <<< 
+    command <<< 
     set -euo pipefail
 
     # Output the current date and fastq-dl version for debugging
@@ -40,8 +40,14 @@ task fetch_srr_accession {
             echo "No SRR accession found" > srr_accession.txt
         fi
     else
-        echo "SRR workflow failed for ~{sample_accession}, invalid biosample ID or SRA"
-        exit 1
+        # Handle cases where fastq-dl exits with an error
+        if grep -q "No results found" stderr || [[ ! -f fastq-run-info.tsv ]]; then
+            echo "No SRR accession found for valid biosample ID or SRA: ~{sample_accession}"
+            echo "No SRR accession found" > srr_accession.txt
+        else
+            echo "fastq-dl failed for ~{sample_accession}, invalid biosample ID or SRA"
+            exit 1
+        fi
     fi
   >>>
   output {
