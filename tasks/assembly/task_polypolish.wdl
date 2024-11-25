@@ -44,7 +44,7 @@ task polypolish {
   >>>
   output {
     String polypolish_version = read_string("VERSION")
-    File polished_assembly = "~{samplename}_polished.fasta" # i don't actually know what the otuput is called
+    File polished_assembly = "~{samplename}_polished.fasta"
   }
   runtime {
     docker: "~{docker}"
