@@ -154,3 +154,39 @@ task bwa {
     maxRetries: 3
   }
 }
+
+task bwa_all {
+  input {
+    File draft_assembly_fasta
+    File read1
+    File read2
+    String samplename
+
+    Int cpu = 6
+    Int disk_size = 100
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/bwa:0.7.18"
+    Int memory = 16
+  }
+  command <<<
+    bwa &> BWA_HELP
+    grep "Version" BWA_HELP | cut -d" " -f2 > BWA_VERSION
+
+    bwa mem -t ~{cpu} -a ~{draft_assembly_fasta} ~{read1} > ~{samplename}_R1.sam
+    bwa mem -t ~{cpu} -a ~{draft_assembly_fasta} ~{read2} > ~{samplename}_R2.sam
+
+  >>>
+  output {
+    File read1_sam = "~{samplename}_R1.sam"
+    File read2_sam = "~{samplename}_R2.sam"
+    String bwa_version = read_string("BWA_VERSION")
+  }
+  runtime {
+    docker: "~{docker}"
+    memory: "~{memory} GB"
+    cpu: "~{cpu}"
+    disks:  "local-disk " + disk_size + " SSD"
+    disk: disk_size + " GB"
+    maxRetries: 3
+    preemptible: 0
+  }
+}
