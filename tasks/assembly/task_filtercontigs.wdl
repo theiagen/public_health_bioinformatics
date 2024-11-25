@@ -55,7 +55,7 @@ task contig_filter {
     docker: "~{docker}"
     cpu: cpu
     memory: "~{memory} GB"
-    disks: "local-disk " + disk_size + " HDD"
+    disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
     maxRetries: 3
     preemptible: 0
