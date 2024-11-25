@@ -75,7 +75,7 @@ title: Workflows by Type
 | [**Mercury_Prep_N_Batch**](../workflows/public_data_sharing/mercury_prep_n_batch.md)| Prepare metadata and sequence data for submission to NCBI and GISAID | Influenza, Monkeypox virus, SARS-CoV-2, Viral | Set-level | No | v2.2.0 | [Mercury_Prep_N_Batch_PHB](https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Mercury_Prep_N_Batch_PHB:main?tab=info) |
 | [**Terra_2_GISAID**](../workflows/public_data_sharing/terra_2_gisaid.md)| Upload of assembly data to GISAID | SARS-CoV-2, Viral | Set-level | Yes | v1.2.1 | [Terra_2_GISAID_PHB](https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Terra_2_GISAID_PHB:main?tab=info) |
 | [**Terra_2_NCBI**](../workflows/public_data_sharing/terra_2_ncbi.md)| Upload of sequence data to NCBI | Bacteria, Mycotics, Viral | Set-level | No | v2.1.0 | [Terra_2_NCBI_PHB](https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Terra_2_NCBI_PHB:main?tab=info) |
-| [**Fetch_SRR_Accession**](../workflows/public_data_sharing/fetch_srr_accession.md)| Update SRR metadata in a Terra data table | Any taxa | | Yes | v2.3.0 | [Fetch_SRR_Accession_PHB](https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Fetch_SRR_Accession_PHB:main?tab=info) |
+| [**Fetch_SRR_Accession**](../workflows/public_data_sharing/fetch_srr_accession.md)| Update SRR metadata in a Terra data table at the sample level | Any taxa | | Yes | v2.3.0 | [Fetch_SRR_Accession_PHB](https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Fetch_SRR_Accession_PHB:main?tab=info) |
 
 </div>
 
