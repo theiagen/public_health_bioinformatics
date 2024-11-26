@@ -34,7 +34,7 @@ task augur_tree {
       if [ "~{substitution_model}" == "auto" ]; then
         FASTA_BASENAME=$(basename ~{aligned_fasta} .fasta)
         FASTA_DIR=$(dirname ~{aligned_fasta})
-        MODEL=$(grep "Best-fit model:" ${FASTA_DIR}/${FASTA_BASENAME}-delim.iqtree.log | sed 's|Best-fit model: ||g;s|chosen.*||' | tr -d '\n\r')
+        MODEL=$(grep "Best-fit model:" ${FASTA_DIR}/*${FASTA_BASENAME}-delim.iqtree.log | sed 's|Best-fit model: ||g;s|chosen.*||' | tr -d '\n\r')
       else
         MODEL="~{substitution_model}"
       fi
@@ -42,6 +42,9 @@ task augur_tree {
     else
       echo "" > FINAL_MODEL.txt
     fi
+
+    echo 
+    echo "DEBUG: FINAL_MODEL.txt is: $(cat FINAL_MODEL.txt)"
   >>>
 
   output {
