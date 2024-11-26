@@ -16,11 +16,11 @@ The workflow uses the fastq-dl tool to fetch metadata from SRA and specifically 
 
 | **Terra Task Name** | **Variable** | **Type** | **Description**| **Default Value** | **Terra Status** |
 | --- | --- | --- | --- | --- | --- |
+| fetch_srr_metadata | **sample_accession** | String |  SRA-compatible accession, such as a **BioSample ID** (e.g., "SAMN00000000") or **SRA Experiment ID** (e.g., "SRX000000"), used to retrieve SRR metadata. | | Required |
 | fetch_srr_metadata | **cpu** | Int | Number of CPUs allocated for the task. | 2 | Optional |
 | fetch_srr_metadata | **disk_size** | Int | Disk space in GB allocated for the task. | 10 | Optional |
 | fetch_srr_metadata | **docker**| String | Docker image for metadata retrieval. | `us-docker.pkg.dev/general-theiagen/biocontainers/fastq-dl:2.0.4--pyhdfd78af_0` | Optional |
 | fetch_srr_metadata | **memory** | Int | Memory in GB allocated for the task. | 8 | Optional |
-| fetch_srr_metadata | **sample_accession** | String |  SRA-compatible accession, such as a **BioSample ID** (e.g., "SAMN00000000") or **SRA Experiment ID** (e.g., "SRX000000"), used to retrieve SRR metadata. | | Required |
 | version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
 | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) | | Optional |
 
@@ -44,6 +44,8 @@ This workflow has a single task that performs metadata retrieval for the specifi
 | **Variable** | **Type** | **Description**|
 |---|---|---|
 | srr_accession| String | The SRR accession's associated with the input sample accession.|
+| fetch_srr_accession_version | String | The version of the fetch_srr_accession workflow. |
+| fetch_srr_accession_analysis_date | String | The date the fetch_srr_accession analysis was run. |
 
 ## References
 
