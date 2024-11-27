@@ -3,6 +3,7 @@ version 1.0
 import "../../tasks/assembly/task_flye.wdl" as task_flye
 import "../../tasks/assembly/task_bandageplot.wdl" as task_bandage
 import "../../tasks/assembly/task_medaka.wdl" as task_medaka
+import "../../tasks/assembly/task_dnaapler.wdl" as task_dnaapler
 
 workflow flye_consensus {
   # Input parameters
@@ -33,9 +34,16 @@ workflow flye_consensus {
       medaka_model = medaka_model,
       polish_rounds = polish_rounds,
   }
+  #final step dnaapler
+  call task_dnaapler.dnaapler as dnaapler {
+    input:
+      assembly_fasta = medaka.medaka_fasta,
+      samplename = samplename,
+      read1 = read1,
+  }
   # Outputs
   output {
-    File final_assembly = medaka.medaka_fasta
+    File final_assembly = dnaapler.reoriented_fasta
     File bandage_plot = bandage.plot
     File medaka_vcf = medaka.medaka_vcf
     String flye_version = flye.flye_version
