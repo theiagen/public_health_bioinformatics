@@ -71,7 +71,7 @@ task flye {
 
   >>>
   output {
-    File assembly = "~{samplename}.assembly.fasta"
+    File assembly_fasta = "~{samplename}.assembly.fasta"
     File assembly_graph = "~{samplename}.assembly_graph.gfa" 
     File assembly_info = "~{samplename}.assembly_info.txt" 
     String flye_version = read_string("VERSION")

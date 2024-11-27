@@ -14,8 +14,8 @@ task bandage_plot {
       Bandage image ~{assembly_graph_gfa} ~{samplename}_bandage_plot.png
     >>>
     output {
-      File plot = "~{output_prefix}.png"
-      String version = read_string("VERSION")
+      File plot = "~{samplename}_bandage_plot.png"
+      String bandage_version = read_string("VERSION")
     }
     runtime {
       docker: "~{docker}"

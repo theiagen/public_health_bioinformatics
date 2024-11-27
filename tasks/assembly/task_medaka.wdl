@@ -1,6 +1,6 @@
 version 1.0
 
-task medaka_polish {
+task medaka_consensus {
     input {
       File assembly_fasta
       String samplename
@@ -16,6 +16,7 @@ task medaka_polish {
       medaka --version | tee VERSION
 
       # Initialize the input for polishing with the provided assembly FASTA
+        cp ~{assembly_fasta} polished_input.fasta
         cp ~{assembly_fasta} polished_input.fasta
 
         # Perform Medaka polishing for the specified number of rounds
