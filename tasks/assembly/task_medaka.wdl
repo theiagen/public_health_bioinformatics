@@ -10,7 +10,7 @@ task medaka_polish {
       Int cpu = 4
       Int memory = 16
       Int disk_size = 100
-      String docker = "staphb/medaka:2.0.1"
+      String docker = "us-docker.pkg.dev/general-theiagen/staphb/medaka:2.0.1"
     }
     command <<< 
       medaka --version | tee VERSION
