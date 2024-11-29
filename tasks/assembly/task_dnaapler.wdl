@@ -10,6 +10,7 @@ task dnaapler_all {
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/dnaapler:0.8.0"
  }
   command <<< 
+      set -euo pipefail
       dnaapler --version | tee VERSION
 
       # Run DnaApler with the 'all' subcommand
@@ -19,7 +20,6 @@ task dnaapler_all {
         -p ~{prefix} \
         -t ~{threads}
   >>>
-
   output {
     File reoriented_fasta = "~{prefix}_reoriented.fasta" 
     String dnaapler_version = read_string("VERSION") 
@@ -30,7 +30,8 @@ task dnaapler_all {
     memory: "~{memory} GB"                  
     disks: "local-disk " + disk_size + " SSD"  
     disk: disk_size + " GB"             
-    maxRetries: 3                     
+    maxRetries: 1                    
     preemptible: 0                     
   }
+}
 

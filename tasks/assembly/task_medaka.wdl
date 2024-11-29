@@ -5,7 +5,7 @@ task medaka_consensus {
       File assembly_fasta
       String samplename
       File read1
-      String medaka_model
+      String medaka_model = "r1041_e82_400bps_sup_v5.0.0"
       Int polish_rounds = 1
       Int cpu = 4
       Int memory = 16
@@ -13,7 +13,8 @@ task medaka_consensus {
       String docker = "us-docker.pkg.dev/general-theiagen/staphb/medaka:2.0.1"
     }
     command <<< 
-      medaka --version | tee VERSION
+      set -euo pipefail
+      medaka --version | tee MEDAKA_VERSION
 
       # Initialize the input for polishing with the provided assembly FASTA
         cp ~{assembly_fasta} polished_input.fasta
@@ -30,20 +31,18 @@ task medaka_consensus {
                 -d polished_input.fasta \
                 -o "$polish_dir" \
                 -m ~{medaka_model} \
-                --threads ~{cpu}
+                -t ~{cpu}
 
-            # Update the input for the next round
+            # Updates the input for the next round
             cp "$polish_dir/consensus.fasta" polished_input.fasta
         done
 
         # Rename final polished outputs with sample name
         mv polished_input.fasta ~{samplename}.polished.fasta
-        mv polish_round_~{polish_rounds}/consensus.vcf.gz ~{samplename}.polished.vcf.gz
     >>>
     output {
       File medaka_fasta = "~{samplename}.polished.fasta"
-      File medaka_vcf = "~{samplename}.polished.vcf.gz"
-      String medaka_version = read_string("VERSION")
+      String medaka_version = read_string("MEDAKA_VERSION")
     }
     runtime {
       docker: "~{docker}"
@@ -51,7 +50,7 @@ task medaka_consensus {
       memory: "~{memory} GB"
       disks: "local-disk " + disk_size + " HDD"
       disk: disk_size + " GB"
-      maxRetries: 3
+      maxRetries: 1
       preemptible: 0
     }
 }

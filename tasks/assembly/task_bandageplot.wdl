@@ -10,7 +10,8 @@ task bandage_plot {
       String docker = "us-docker.pkg.dev/general-theiagen/staphb/bandage:0.8.1"
     }
     command <<< 
-      bandage --version | tee VERSION
+      set -euo pipefail
+      Bandage --version | tee VERSION
       Bandage image ~{assembly_graph_gfa} ~{samplename}_bandage_plot.png
     >>>
     output {
@@ -23,7 +24,7 @@ task bandage_plot {
       memory: "~{memory} GB"
       disks: "local-disk " + disk_size + " HDD"
       disk: disk_size + " GB"
-      maxRetries: 3
+      maxRetries: 1
       preemptible: 0
   }
 }

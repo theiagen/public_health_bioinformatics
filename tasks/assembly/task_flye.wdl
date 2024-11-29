@@ -32,6 +32,7 @@ task flye {
     Int memory = 32
   }
   command <<<
+    set -euo pipefail
     flye --version | tee VERSION
 
     # determine read type
