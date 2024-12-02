@@ -16,8 +16,18 @@ task augur_tree {
     String docker = "us-docker.pkg.dev/general-theiagen/biocontainers/augur:22.0.2--pyhdfd78af_0"
   }
   command <<<
+    set -euo pipefail
+    
     # capture version information
     augur version > VERSION
+    echo
+    echo "mafft version:"
+    mafft --version 2>&1 | tee MAFFT_VERSION
+    echo
+    echo "iqtree version:"
+    iqtree --version | grep version | sed 's/.*version/version/;s/ for Linux.*//' | tee IQTREE_VERSION
+    echo
+    echo "Running augur tree now..."
 
     AUGUR_RECURSION_LIMIT=10000 augur tree \
       --alignment "~{aligned_fasta}" \
@@ -50,6 +60,8 @@ task augur_tree {
   output {
     File aligned_tree  = "~{build_name}_~{method}.nwk"
     String augur_version = read_string("VERSION")
+    String mafft_version = read_string("MAFFT_VERSION")
+    String iqtree_version = read_string("IQTREE_VERSION")
     String iqtree_model_used = read_string("FINAL_MODEL.txt")
   }
   runtime {

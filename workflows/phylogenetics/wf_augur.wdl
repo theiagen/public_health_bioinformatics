@@ -204,6 +204,8 @@ workflow augur {
     File? time_tree = augur_refine.refined_tree
     File distance_tree = augur_tree.aligned_tree
     String augur_iqtree_model_used = augur_tree.iqtree_model_used
+    String augur_iqtree_version = augur_tree.iqtree_version
+    String augur_mafft_version = augur_tree.mafft_version
     File aligned_fastas = select_first([augur_align.aligned_fasta, alignment_fasta])
     File combined_assemblies = filter_sequences_by_length.filtered_fasta
     File? metadata_merged = tsv_join.out_tsv
