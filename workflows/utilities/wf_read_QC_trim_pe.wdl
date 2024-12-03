@@ -183,6 +183,10 @@ workflow read_QC_trim_pe {
     File? fastqc_raw2_html = fastqc_raw.read2_fastqc_html
     File? fastqc_clean1_html = fastqc_clean.read1_fastqc_html
     File? fastqc_clean2_html = fastqc_clean.read2_fastqc_html
+
+	# fastp
+	File? fastp_html = fastp.fastp_stats
+	File? fastp_json = fastp.fastp_json
     
     # kraken2 - theiacov and theiaprok
     String kraken_version = select_first([kraken2_theiacov_raw.version, kraken2_standalone.kraken2_version, ""])
