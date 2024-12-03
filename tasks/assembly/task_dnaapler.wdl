@@ -12,10 +12,7 @@ task dnaapler_all {
   command <<< 
     set -euo pipefail
 
-    echo "Starting dnaapler task for sample: ~{samplename}"
-    echo "Input file: ~{input_fasta}"
-
-    # Check input FASTA validity
+    # Check input FASTA is valid
     echo "Validating input FASTA file..."
     if ! grep -q "^>" ~{input_fasta}; then
       echo "ERROR: Input file ~{input_fasta} is not in FASTA format." >&2

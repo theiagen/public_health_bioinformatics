@@ -8,7 +8,7 @@ task racon {
     Int memory = 16
     Int disk_size = 100
     String samplename
-    String docker = "staphb/racon-minimap2:latest"
+    String docker = "staphb/racon-minimap2" # need to add minimap2 to staph-b docker-builds
   }
   command <<< 
     set -euo pipefail

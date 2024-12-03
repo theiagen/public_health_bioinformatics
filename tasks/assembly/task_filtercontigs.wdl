@@ -3,61 +3,71 @@ version 1.0
 task contig_filter {
   input {
     File assembly_fasta
-    Int min_len
-    Float min_cov = 0.0
+    Int min_len = 1000
     Boolean filter_homopolymers = true
-    Int cpu = 4
-    Int memory = 8
-    Int disk_size = 50
-    String docker = "biotools"
+    Int disk_size = 100
+    Int memory = 16
+    Int threads = 4
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/seqkit:2.8.2"
   }
   command <<< 
-    set -e
-    echo "Starting contig filtering"
+    set -euo pipefail
+    echo "Filtering contigs from ~{assembly_fasta}" >&2
 
-    # Define output file paths
-    output_filtered="filtered_contigs.fasta"
+    # Calculate initial metrics
+    total_contigs=$(grep -c "^>" ~{assembly_fasta})
+    echo "Total contigs: $total_contigs" >&2
 
-    # Perform filtering using seqkit and awk
-    seqkit fx2tab -l -i -H ~{assembly_fasta} | \
-    awk -v min_len=~{min_len} -v min_cov=~{min_cov} -v filter_homopolymers=~{filter_homopolymers} '
-    BEGIN { OFS="\t" }
-    {
-        # Parse length and optional coverage from headers
-        length = $2
-        coverage = (match($1, /cov=([0-9.]+)/, arr) ? arr[1] : 0)
+    total_bases=$(awk '/^>/ {if (seqlen){print seqlen}; seqlen=0; next} {seqlen += length($0)} END {if (seqlen) print seqlen}' ~{assembly_fasta})
+    echo "Total bases: $total_bases" >&2
 
-        # Filter criteria
-        if (length >= min_len && coverage >= min_cov) {
-            # Remove homopolymers if enabled
-            if (filter_homopolymers) {
-                if ($3 !~ /^(A+|T+|C+|G+)$/) {
-                    print $1, $2, $3
-                }
-            } else {
-                print $1, $2, $3
-            }
-        }
-    }' | seqkit tab2fx -o $output_filtered
+    # Filter by length
+    seqkit seq -m ~{min_len} ~{assembly_fasta} > length_filtered.fasta
+    echo "Length filtering complete. File size:" >&2
+    ls -lh length_filtered.fasta >&2
 
-    # Ensure the output is not empty
-    if [ ! -s $output_filtered ]; then
-        echo "Error: No contigs passed filtering criteria!" >&2
-        exit 1
+    # If homopolymer filtering is enabled, process further
+    if [ "~{filter_homopolymers}" = "true" ]; then
+      awk '
+      BEGIN {RS=">"; ORS=""} 
+      NR > 1 {
+        header = $1; seq = $2
+        if (seq !~ /^(.)\1+$/) {print ">" header seq "\n"}
+      }' length_filtered.fasta > filtered_contigs.fasta
+    else
+      mv length_filtered.fasta filtered_contigs.fasta
     fi
 
-    echo "Filtering complete. Filtered contigs written to $output_filtered."
+    # Validate the final file
+    if [ ! -s filtered_contigs.fasta ]; then
+      echo "Error: No contigs passed filtering criteria!" >&2
+      exit 1
+    fi
+
+    # Count final retained contigs
+    retained_contigs=$(grep -c "^>" filtered_contigs.fasta)
+    retained_bases=$(awk '/^>/ {if (seqlen){print seqlen}; seqlen=0; next} {seqlen += length($0)} END {if (seqlen) print seqlen}' filtered_contigs.fasta)
+    contigs_removed_homopolymers=$((total_contigs - retained_contigs))
+
+    # Write metrics to file
+    metrics_file="filtering_metrics.txt"
+    echo "Total contigs: $total_contigs" > $metrics_file
+    echo "Total bases: $total_bases" >> $metrics_file
+    echo "Contigs retained: $retained_contigs" >> $metrics_file
+    echo "Bases retained: $retained_bases" >> $metrics_file
+    echo "Contigs removed (short length): $((total_contigs - retained_contigs))" >> $metrics_file
+    echo "Contigs removed (homopolymers): $contigs_removed_homopolymers" >> $metrics_file
+
+    cat $metrics_file >&2
   >>>
   output {
     File filtered_fasta = "filtered_contigs.fasta"
+    File metrics = "filtering_metrics.txt"
   }
   runtime {
     docker: "~{docker}"
-    cpu: cpu
-    memory: "~{memory} GB"
+    cpu: threads
+    memory: "~{memory}G"
     disks: "local-disk " + disk_size + " SSD"
-    disk: disk_size + " GB"
-    maxRetries: 3
-    preemptible: 0
   }
 }
