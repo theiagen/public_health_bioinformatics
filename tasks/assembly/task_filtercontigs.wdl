@@ -31,8 +31,15 @@ task contig_filter {
       awk '
       BEGIN {RS=">"; ORS=""} 
       NR > 1 {
-        header = $1; seq = $2
-        if (seq !~ /^(.)\1+$/) {print ">" header seq "\n"}
+        split($0, lines, "\n");
+        header = lines[1];
+        seq = "";
+        for (i=2; i<=length(lines); i++) {
+          seq = seq lines[i];
+        }
+        if (seq !~ /^(.)\1+$/) {
+          print ">" header "\n" seq "\n"
+        }
       }' length_filtered.fasta > filtered_contigs.fasta
     else
       mv length_filtered.fasta filtered_contigs.fasta
@@ -62,7 +69,7 @@ task contig_filter {
   >>>
   output {
     File filtered_fasta = "filtered_contigs.fasta"
-    File metrics = "filtering_metrics.txt"
+    File assembly_filtering_metrics = "filtering_metrics.txt"
   }
   runtime {
     docker: "~{docker}"

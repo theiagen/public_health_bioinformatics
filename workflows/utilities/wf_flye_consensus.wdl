@@ -6,6 +6,7 @@ import "../../tasks/assembly/task_medaka.wdl" as task_medaka
 import "../../tasks/assembly/task_racon.wdl" as task_racon
 import "../../tasks/assembly/task_dnaapler.wdl" as task_dnaapler
 import "../../tasks/task_versioning.wdl" as versioning_task
+import "../../tasks/assembly/task_filtercontigs.wdl" as task_filtercontigs
 
 workflow flye_consensus {
   meta {
@@ -14,9 +15,9 @@ workflow flye_consensus {
   input {
     File read1
     String samplename
-    String medaka_model
     String polisher = "medaka"
-    Int polish_rounds
+    Int? polish_rounds
+    String? medaka_model
   }
   call versioning_task.version_capture {
     input:
@@ -49,14 +50,19 @@ workflow flye_consensus {
         samplename = samplename
     }
   }
+  call task_filtercontigs.contig_filter as contig_filter {
+    input:
+      assembly_fasta = select_first([medaka.medaka_fasta, racon.polished_fasta])
+  }
   call task_dnaapler.dnaapler_all as dnaapler {
     input:
-      input_fasta = select_first([medaka.medaka_fasta, racon.polished_fasta]),
+      input_fasta = contig_filter.filtered_fasta,
       samplename = samplename
   }
   output {
     File final_assembly = dnaapler.reoriented_fasta
     File bandage_plot = bandage.plot
+    File filtered_assembly = contig_filter.filtered_fasta
     String flye_phb_version = version_capture.phb_version    
     String flye_analysis_date = version_capture.date
   }
