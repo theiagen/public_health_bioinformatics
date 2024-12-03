@@ -22,7 +22,7 @@
       
       
       <link rel="icon" href="../../../assets/logos/Theiagen-Symbol-Standard-01.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.46">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.47">
     
     
       
@@ -95,16 +95,6 @@
       
     </div>
     <div data-md-component="announce">
-      
-        <aside class="md-banner">
-          <div class="md-banner__inner md-grid md-typeset">
-            
-            
-    <center>🏗️ I'm under construction! Pardon the dust while we remodel! 👷</center>
-
-          </div>
-          
-        </aside>
       
     </div>
     
@@ -10158,7 +10148,7 @@
 <tbody>
 <tr>
 <td>Sub-workflow</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_read_QC_trim.wdl">wf_read_QC_trim.wdl</a></td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_read_QC_trim_pe.wdl">wf_read_QC_trim_pe.wdl</a><br><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_read_QC_trim_se.wdl">wf_read_QC_trim_se.wdl</a></td>
 </tr>
 <tr>
 <td>Tasks</td>
@@ -10196,7 +10186,7 @@
 <tbody>
 <tr>
 <td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/task_cg_pipeline.wdl">task_cg_pipeline.wdl</a></td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_cg_pipeline.wdl">task_cg_pipeline.wdl</a></td>
 </tr>
 <tr>
 <td>Software Source Code</td>
@@ -10217,7 +10207,7 @@
 <details class="task">
 <summary><code>shovill</code>: <em>De novo</em> Assembly</summary>
 <p>De Novo assembly will be undertaken only for samples that have sufficient read quantity and quality, as determined by the <code>screen</code> task assessment of clean reads. </p>
-<p>In TheiaEuk, assembly is performed using the <a href="https://github.com/tseemann/shovill">Shovill</a> pipeline. This undertakes the assembly with one of four assemblers (<a href="https://github.com/ncbi/SKESA">SKESA</a> (default), <a href="https://github.com/ablab/spades">SPAdes</a>, <a href="https://github.com/dzerbino/velvet/">Velvet</a>, <a href="https://github.com/voutcn/megahit">Megahit</a>), but also performs <a href="https://github.com/tseemann/shovill#main-steps">a number of pre- and post-processing steps</a> to improve the resulting genome assembly. Shovill uses an estimated genome size (see <a href="https://github.com/tseemann/shovill#--gsize">here</a>). If this is not provided by the user as an optional input, Shovill will estimate the genome size using <a href="https://mash.readthedocs.io/en/latest/index.html">mash</a>. Adaptor trimming can be undertaken with Shovill by setting the <code>trim</code> option to "true", but this is set to "false" by default as <a href="https://www.notion.so/TheiaProk-Workflow-Series-89b9c08406094ec78d08a578fe861626?pvs=21">alternative adapter trimming</a> is undertaken in the TheiaEuk workflow.</p>
+<p>In TheiaProk, assembly is performed using the <a href="https://github.com/tseemann/shovill">Shovill</a> pipeline. This undertakes the assembly with one of four assemblers (<a href="https://github.com/ncbi/SKESA">SKESA</a> (default), <a href="https://github.com/ablab/spades">SPAdes</a>, <a href="https://github.com/dzerbino/velvet/">Velvet</a>, <a href="https://github.com/voutcn/megahit">Megahit</a>), but also performs <a href="https://github.com/tseemann/shovill#main-steps">a number of pre- and post-processing steps</a> to improve the resulting genome assembly. Shovill uses an estimated genome size (see <a href="https://github.com/tseemann/shovill#--gsize">here</a>). If this is not provided by the user as an optional input, Shovill will estimate the genome size using <a href="https://mash.readthedocs.io/en/latest/index.html">mash</a>. Adaptor trimming can be undertaken with Shovill by setting the <code>trim</code> option to "true", but this is set to "false" by default as <a href="https://www.notion.so/TheiaProk-Workflow-Series-89b9c08406094ec78d08a578fe861626?pvs=21">alternative adapter trimming</a> is undertaken in the TheiaEuk workflow.</p>
 <details class="toggle">
 <summary>What is <em>de novo</em>  assembly?</summary>
 <p><em>De novo</em>  assembly is the process or product of attempting to reconstruct a genome from scratch (without prior knowledge of the genome) using sequence reads. Assembly of fungal genomes from short-reads will produce multiple contigs per chromosome rather than a single contiguous sequence for each chromosome.</p>
@@ -10233,11 +10223,15 @@
 </thead>
 <tbody>
 <tr>
-<td>TheiaProk WDL Task</td>
+<td>TheiaEuk WDL Task</td>
 <td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_shovill.wdl#L3">task_shovill.wdl</a></td>
 </tr>
 <tr>
-<td>Software code repository and documentation</td>
+<td>Software Source Code</td>
+<td><a href="https://github.com/tseemann/shovill">Shovill on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
 <td><a href="https://github.com/tseemann/shovill">Shovill on GitHub</a></td>
 </tr>
 </tbody>
@@ -10249,7 +10243,7 @@
 <summary><code>read_QC_trim_ont</code>: Read Quality Trimming, Quantification, and Identification</summary>
 <p><code>read_QC_trim_ont</code> is a sub-workflow within TheiaProk_ONT that filters low-quality reads and trims low-quality regions of reads. It uses several tasks, described below.</p>
 <p><strong>Estimated genome length</strong>:</p>
-<p>By default, an estimated genome length is set to 5 Mb, which is around 0.7 Mb higher than the average bacterial genome length, according to the information collated <a href="https://github.com/CDCgov/phoenix/blob/717d19c19338373fc0f89eba30757fe5cfb3e18a/assets/databases/NCBI_Assembly_stats_20240124.txt">here</a>. This estimate can be overwritten by the user, and is used by <code>RASUSA</code> and <code>dragonflye</code>.</p>
+<p>By default, an estimated genome length is set to 5 Mb, which is around 0.7 Mb higher than the average bacterial genome length, according to the information collated <a href="https://github.com/CDCgov/phoenix/blob/717d19c19338373fc0f89eba30757fe5cfb3e18a/assets/databases/NCBI_Assembly_stats_20240124.txt">here</a>. This estimate can be overwritten by the user, and is used by <code>Rasusa</code> and <code>dragonflye</code>.</p>
 <p><strong>Plotting and quantifying long-read sequencing data:</strong> <code>nanoplot</code></p>
 <p>Nanoplot is used for the determination of mean quality scores, read lengths, and number of reads. This task is run once with raw reads as input and once with clean reads as input. If QC has been performed correctly, you should expect <strong>fewer</strong> clean reads than raw reads.</p>
 <p><strong>Read subsampling:</strong> Samples are automatically randomly subsampled to 150X coverage using <code>RASUSA</code>.</p>
@@ -10272,7 +10266,7 @@
 </tr>
 <tr>
 <td>Tasks</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_nanoplot.wdl">task_nanoplot.wdl</a> <a href="https://github.com/theiagen/public_health_bioinformatics/blob/b481ce48f3d527ab8f31e4ad8171769212cc091a/tasks/quality_control/basic_statistics/task_fastq_scan.wdl">task_fastq_scan.wdl</a> <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/task_rasusa.wdl">task_rasusa.wdl</a> <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_nanoq.wdl">task_nanoq.wdl</a> <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/plasmid_detection/task_tiptoft.wdl">task_tiptoft.wdl</a></td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_nanoplot.wdl">task_nanoplot.wdl</a> <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_fastq_scan.wdl">task_fastq_scan.wdl</a> <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/task_rasusa.wdl">task_rasusa.wdl</a> <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_nanoq.wdl">task_nanoq.wdl</a> <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/plasmid_detection/task_tiptoft.wdl">task_tiptoft.wdl</a></td>
 </tr>
 <tr>
 <td>Software Source Code</td>
@@ -10338,7 +10332,7 @@
 </tr>
 <tr>
 <td>Software Documentation</td>
-<td><a href="https://cab.spbu.ru/software/quast/">https://cab.spbu.ru/software/quast/</a></td>
+<td><a href="https://quast.sourceforge.net/">https://quast.sourceforge.net/</a></td>
 </tr>
 <tr>
 <td>Original Publication(s)</td>
@@ -10506,7 +10500,7 @@
 </details>
 <details class="task">
 <summary><code>AMRFinderPlus</code>: AMR Genotyping (default)</summary>
-<p>NCBI's <a href="https://github.com/ncbi/amr/wiki">AMRFinderPlus</a> is the default antimicrobial resistance (AMR) detection tool used in TheiaProk. <a href="https://www.notion.so/TheiaProk-Workflow-Series-68c34aca2a0240ef94fef0acd33651b9?pvs=21">ResFinder</a> may be used alternatively and if so, AMRFinderPlus is not run. </p>
+<p>NCBI's <a href="https://github.com/ncbi/amr/wiki">AMRFinderPlus</a> is the default antimicrobial resistance (AMR) detection tool used in TheiaProk. ResFinder may be used alternatively and if so, AMRFinderPlus is not run. </p>
 <p>AMRFinderPlus identifies acquired antimicrobial resistance (AMR) genes, virulence genes, and stress genes.  Such AMR genes confer resistance to antibiotics, metals, biocides, heat, or acid. For some taxa (see <a href="https://github.com/ncbi/amr/wiki/Running-AMRFinderPlus#--organism-option">here</a>), AMRFinderPlus will provide taxa-specific results including filtering out genes that are almost ubiquitous in the taxa (intrinsic genes) and identifying resistance-associated point mutations.  In TheiaProk, the taxon used by AMRFinderPlus is specified based on the <code>gambit_predicted_taxon</code> or a user-provided <code>expected_taxon</code>.</p>
 <p>You can check if a gene or point mutation is in the AMRFinderPlus database <a href="https://www.ncbi.nlm.nih.gov/pathogens/refgene/#">here</a>, find the sequences of reference genes <a href="https://www.ncbi.nlm.nih.gov/bioproject/PRJNA313047">here</a>, and search the query Hidden Markov Models (HMMs) used by AMRFinderPlus to identify AMR genes and some stress and virulence proteins (<a href="https://www.ncbi.nlm.nih.gov/pathogens/hmm/">here</a>). The AMRFinderPlus database is updated frequently. You can ensure you are using the most up-to-date version by specifying the docker image as a workflow input. You might like to save this docker image as a workspace data element to make this easier.</p>
 <div class="admonition techdetails">
@@ -10768,7 +10762,7 @@
 <tbody>
 <tr>
 <td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/plasmid_typing/task_plasmidfinder.wdl">task_plasmidfinder.wdl</a></td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/plasmid_detection/task_plasmidfinder.wdl">task_plasmidfinder.wdl</a></td>
 </tr>
 <tr>
 <td>Software Source Code</td>
@@ -10821,7 +10815,7 @@
 <tbody>
 <tr>
 <td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/comparisons/task_qc_check.wdl">task_qc_check.wdl</a></td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/comparistask_qc_check_phb.wdl.wdl">task_qc_check_phb.wdl</a></td>
 </tr>
 </tbody>
 </table>
@@ -11327,7 +11321,7 @@
 <tbody>
 <tr>
 <td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/haemophilus/task_kleborate.wdl">task_kleborate.wdl</a></td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/klebsiella/task_kleborate.wdl">task_kleborate.wdl</a></td>
 </tr>
 <tr>
 <td>Software Source Code</td>
@@ -11822,7 +11816,7 @@
 <h5 id="streptococcus-pneumoniae"><em>Streptococcus pneumoniae</em><a class="headerlink" href="#streptococcus-pneumoniae" title="Permanent link">&para;</a></h5>
 <details class="task">
 <summary><code>PopPUNK</code>: Global Pneumococcal Sequence Cluster typing</summary>
-<p>Global Pneumococcal Sequence Clusters (GPSC) define and name pneumococcal strains. GPSC designation is undertaken using the PopPUNK software and GPSC database as described in the file below, obtained from <a href="https://www.pneumogen.net/gps/training_command_line.html">here</a>.</p>
+<p>Global Pneumococcal Sequence Clusters (GPSC) define and name pneumococcal strains. GPSC designation is undertaken using the PopPUNK software and GPSC database as described in the file below, obtained from <a href="https://www.pneumogen.net/gps/#/training#command-line">here</a>.</p>
 <p>:file: <a href="../../../assets/files/GPSC_README_PopPUNK2.txt">GPSC_README_PopPUNK2.txt</a></p>
 <div class="admonition tip">
 <p class="admonition-title">Interpreting GPSC results</p>
@@ -11847,7 +11841,7 @@
 </tr>
 <tr>
 <td>GPSC database</td>
-<td>https://www.pneumogen.net/gps/training_command_line.html</td>
+<td><a href="https://www.pneumogen.net/gps/#/training#command-line">https://www.pneumogen.net/gps/#/training#command-line</a></td>
 </tr>
 <tr>
 <td>Software Source Code</td>
@@ -11855,7 +11849,7 @@
 </tr>
 <tr>
 <td>Software Documentation</td>
-<td>https://poppunk.readthedocs.io/en/latest/</td>
+<td><a href="https://poppunk.readthedocs.io/en/latest/">https://poppunk.readthedocs.io/en/latest/</a></td>
 </tr>
 <tr>
 <td>Original Publication(s)</td>
@@ -14618,7 +14612,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2024-11-08</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2024-12-03</span>
   </span>
 
     
