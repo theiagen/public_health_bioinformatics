@@ -157,7 +157,7 @@ workflow organism_parameters {
         # H5N1 is a special case where the dataset used is the h5nx all clades dataset 
         String h5n1_ha_reference = "gs://theiagen-public-files-rp/terra/flu-references/reference_h5n1_ha.fasta"
         String h5n1_ha_reference_gbk = "gs://theiagen-public-files-rp/terra/flu-references/reference_h5n1_ha.gb"
-        String h5n1_ha_nextclade_ds_tag = "2024-05-08--11-39-52Z"
+        String h5n1_ha_nextclade_ds_tag = "2024-12-04--17-05-31Z"
         String h5n1_ha_nextclade_ds_name = "community/moncla-lab/iav-h5/ha/all-clades"
         String h5n1_ha_clades_tsv = "gs://theiagen-public-files-rp/terra/flu-references/h5nx-clades.tsv"
         String h5n1_ha_auspice_config = "gs://theiagen-public-files-rp/terra/flu-references/auspice_config_h5n1.json"
