@@ -147,7 +147,7 @@ A brief description of the documentation structure is as follows:
     - `assets/` - Contains images and other files used in the documentation.
         - `figures/` - Contains images, figures, and workflow diagrams used in the documentation. For workflows that contain many images (such as BaseSpace_Fetch), it is recommended to create a subdirectory for the workflow.
         - `files/` - Contains files that are used in the documentation. This may include example outputs or templates. For workflows that contain many files (such as TheiaValidate), it is recommended to create a subdirectory for the workflow.
-        - `logos/` - Contains Theiagen logos and symbols used int he documentation.
+        - `logos/` - Contains Theiagen logos and symbols used in the documentation.
         - `metadata_formatters/` - Contains the most up-to-date metadata formatters for our submission workflows.
         - `new_workflow_template.md` - A template for adding a new workflow page to the documentation. You can see this template [here](../assets/new_workflow_template.md)
     - `contributing/` - Contains the Markdown files for our contribution guides, such as this file
