@@ -477,12 +477,12 @@ All TheiaCoV Workflows (not TheiaCoV_FASTA_Batch)
 
 The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflows. This step automatically sets the different parameters needed for each downstream tool to the appropriate value for the user-designated organism (by default, `"sars-cov-2"` is the default organism).
 
-<div class="searchable-table" markdown="1">
-
 !!! dna ""
     The following tables include the relevant organism-specific parameters; **all of these default values can be overwritten by providing a value for the "Overwrite Variable Name" field**.
 
     ??? toggle "SARS-CoV-2 Defaults"
+        <div class="searchable-table" markdown="block">
+
         | **Overwrite Variable Name** | **Organism** | **Default Value** |
         |---|---|---|
         | gene_locations_bed_file | sars-cov-2 | `"gs://theiagen-public-files-rp/terra/sars-cov-2-files/sc2_gene_locations.bed"` |
@@ -495,7 +495,11 @@ The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflo
         | vadr_mem | sars-cov-2 | `8` |
         | vadr_options | sars-cov-2 | `"--noseqnamemax --glsearch -s -r --nomisc --mkey sarscov2 --lowsim5seq 6 --lowsim3seq 6 --alt_fail lowscore,insertnn,deletinn --out_allfasta"` |
 
+        </div>
+
     ??? toggle "Mpox Defaults"
+        <div class="searchable-table" markdown="block">
+
         | **Overwrite Variable Name** | **Organism** | **Default Value** |
         |---|---|---|
         | gene_locations_bed_file | MPXV | `"gs://theiagen-public-files/terra/mpxv-files/mpox_gene_locations.bed"` |
@@ -509,8 +513,12 @@ The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflo
         | vadr_max_length | MPXV | `210000` |
         | vadr_mem | MPXV | `8` |
         | vadr_options | MPXV | `"--glsearch -s -r --nomisc --mkey mpxv --r_lowsimok --r_lowsimxd 100 --r_lowsimxl 2000 --alt_pass discontn,dupregin --out_allfasta --minimap2 --s_overhang 150"` |
+        
+        </div>
 
     ??? toggle "WNV Defaults"
+        <div class="searchable-table" markdown="block">
+
         | **Overwrite Variable Name** | **Organism** | **Default Value** | **Notes** |
         |---|---|---|---|
         | genome_length_input | WNV | `11000` | |
@@ -523,7 +531,11 @@ The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflo
         | vadr_mem | WNV | `8` |  |
         | vadr_options | WNV | `"--mkey flavi --mdir /opt/vadr/vadr-models-flavi/ --nomisc --noprotid --out_allfasta"` |  |
 
+        </div>
+
     ??? toggle "Flu Defaults"
+        <div class="searchable-table" markdown="block">
+
         | **Overwrite Variable Name** | **Organism** | **Flu Segment** | **Flu Subtype** | **Default Value** | **Notes** |
         |---|---|---|---|---|---|
         | flu_segment | flu | all | all | N/A | TheiaCoV will attempt to automatically assign a flu segment  |
@@ -560,7 +572,11 @@ The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflo
         | nextclade_dataset_tag_input | flu | na | yamagata | `"NA"` |  |
         | reference_genome | flu | na | yamagata | `"gs://theiagen-public-files-rp/terra/flu-references/reference_yam_na.fasta"` |  |
 
+        </div>
+
     ??? toggle "RSV-A Defaults"
+        <div class="searchable-table" markdown="block">
+
         | **Overwrite Variable Name** | **Organism** | **Default Value** |
         |---|---|---|
         | genome_length_input | rsv_a | 16000 |
@@ -572,7 +588,11 @@ The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflo
         | vadr_mem | rsv_a | 32 |
         | vadr_options | rsv_a | -r --mkey rsv --xnocomp |
 
+        </div>
+
     ??? toggle "RSV-B Defaults"
+        <div class="searchable-table" markdown="block">
+
         | **Overwrite Variable Name** | **Organism** | **Default Value** |
         |---|---|---|
         | genome_length_input | rsv_b | 16000 |
@@ -584,7 +604,11 @@ The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflo
         | vadr_mem | rsv_b | 32 |
         | vadr_options | rsv_b | -r --mkey rsv --xnocomp |
 
+        </div>
+
     ??? toggle "HIV Defaults"
+        <div class="searchable-table" markdown="block">
+
         | **Overwrite Variable Name** | **Organism** | **Default Value** | **Notes** |
         |---|---|---|---|
         | kraken_target_organism_input | HIV | Human immunodeficiency virus 1 |  |
@@ -596,7 +620,8 @@ The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflo
         | primer_bed_file | HIV-v2 | gs://theiagen-public-files/terra/hivgc-files/HIV-1_v2.0.primer.hyphen400.1.bed | This version of HIV originates from Southern Africa |
         | reference_genome | HIV-v2 | gs://theiagen-public-files/terra/hivgc-files/AY228557.1.headerchanged.fasta | This version of HIV originates from Southern Africa |
         | reference_gff_file | HIV-v2 | gs://theiagen-public-files/terra/hivgc-files/AY228557.1.gff3 | This version of HIV originates from Southern Africa |
-</div>
+
+        </div>
 
 ### Workflow Tasks
 
