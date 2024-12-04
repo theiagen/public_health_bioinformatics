@@ -899,6 +899,8 @@ All input reads are processed through "core tasks" in the TheiaCoV Illumina, ONT
         | Task | [task_pangolin.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/betacoronavirus/task_pangolin.wdl) |
         | Software Source Code | [Pangolin on GitHub](https://github.com/cov-lineages/pangolin) |
         | Software Documentation | [Pangolin website](https://cov-lineages.org/resources/pangolin.html) |
+        | Original Publication(s) | [A dynamic nomenclature proposal for SARS-CoV-2 lineages to assist genomic epidemiology](https://doi.org/10.1038/s41564-020-0770-5) |
+
 
 ??? task "`nextclade`"
 
@@ -1141,10 +1143,10 @@ All TheiaCoV Workflows (not TheiaCoV_FASTA_Batch)
 | nextclade_json_flu_ha | File | Nextclade output in JSON file format, specific to Flu HA segment | ONT, PE |
 | nextclade_json_flu_na | File | Nextclade output in JSON file format, specific to Flu NA segment | ONT, PE |
 | nextclade_lineage | String | Nextclade lineage designation | CL, FASTA, ONT, PE, SE |
-| nextclade_qc | String | QC metric as determined by Nextclade. (For Flu, this output will be specific to HA segment) | CL, FASTA, ONT, PE, SE |
+| nextclade_qc | String | QC metric as determined by Nextclade. Will be blank for Flu | CL, FASTA, ONT, PE, SE |
 | nextclade_qc_flu_ha | String | QC metric as determined by Nextclade, specific to Flu HA segment | ONT, PE |
 | nextclade_qc_flu_na | String | QC metric as determined by Nextclade, specific to Flu NA segment | ONT, PE |
-| nextclade_tsv | File | Nextclade output in TSV file format. (For Flu, this output will be specific to HA segment) | CL, FASTA, ONT, PE, SE |
+| nextclade_tsv | File | Nextclade output in TSV file format. Will be blank for Flu | CL, FASTA, ONT, PE, SE |
 | nextclade_tsv_flu_ha | File | Nextclade output in TSV file format, specific to Flu HA segment | ONT, PE |
 | nextclade_tsv_flu_na | File | Nextclade output in TSV file format, specific to Flu NA segment | ONT, PE |
 | nextclade_version | String | The version of Nextclade software used | CL, FASTA, ONT, PE, SE |
