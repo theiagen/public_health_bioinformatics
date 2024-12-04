@@ -5630,7 +5630,8 @@
 <h4 id="assembly">Assembly<a class="headerlink" href="#assembly" title="Permanent link">&para;</a></h4>
 <details class="task">
 <summary><code>metaspades</code>: <em>De Novo</em> Metagenomic Assembly</summary>
-<p>While metagenomics has emerged as a technology of choice for analyzing bacterial populations, the assembly of metagenomic data remains challenging. A dedicated metagenomic assembly algorithm is necessary to circumvent the challenge of interpreting variation. metaSPAdes addresses various challenges of metagenomic assembly by capitalizing on computational ideas that proved to be useful in assemblies of single cells and highly polymorphic diploid genomes. </p>
+<p>While metagenomics has emerged as a technology of choice for analyzing bacterial populations, the assembly of metagenomic data remains challenging. A dedicated metagenomic assembly algorithm is necessary to circumvent the challenge of interpreting variation. metaSPAdes addresses various challenges of metagenomic assembly by capitalizing on computational ideas that proved to be useful in assemblies of single cells and highly polymorphic diploid genomes.</p>
+<p><code>metaspades</code> is a <em>de novo</em> assembler that first constructs a de Bruijn graph of all the reads using the SPAdes algorithm. Through various graph simplification procedures, paths in the assembly graph are reconstructed that correspond to long genomic fragments within the metagenome. For more details, please see the original publication.</p>
 <div class="admonition techdetails">
 <p class="admonition-title">MetaSPAdes Technical Details</p>
 <table>
@@ -5651,19 +5652,119 @@
 </tr>
 <tr>
 <td>Software Documentation</td>
-<td><a href="https://github.com/ablab/spades/blob/spades_3.15.5/README.md">https://github.com/ablab/spades/blob/spades_3.15.5/README.md</a></td>
+<td><a href="https://ablab.github.io/spades/index.html">SPAdes Manual</a></td>
 </tr>
 <tr>
 <td>Original Publication(s)</td>
-<td><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5411777/">metaSPAdes: a new versatile metagenomic assembler</a></td>
+<td><a href="http://www.genome.org/cgi/doi/10.1101/gr.213959.116">metaSPAdes: a new versatile metagenomic assembler</a></td>
 </tr>
 </tbody>
 </table>
 </div>
 </details>
 <details class="task">
-<summary><code>minimap2</code>: Assembly Alignment and Contig Filtering (if a reference is provided)</summary>
+<summary><code>minimap2</code>: Assembly Alignment and Contig Filtering</summary>
 <p>If a reference genome is provided through the <strong><code>reference</code></strong> optional input, the assembly produced with <code>metaspades</code> will be mapped to the reference genome with <code>minimap2</code>. The contigs which align to the reference are retrieved and returned in the <strong><code>assembly_fasta</code></strong> output.</p>
+<p><code>minimap2</code> is a popular aligner that is used for correcting the assembly produced by metaSPAdes. This is done by aligning the reads back to the generated assembly or a reference genome.</p>
+<p>In minimap2, "modes" are a group of preset options. Two different modes are used in this task depending on whether a reference genome is provided.</p>
+<p>If a reference genome is <em>not</em> provided, the only mode used in this task is <code>sr</code> which is intended for "short single-end reads without splicing". The <code>sr</code> mode indicates the following parameters should be used: <code>-k21 -w11 --sr --frag=yes -A2 -B8 -O12,32 -E2,1 -b0 -r100 -p.5 -N20 -f1000,5000 -n2 -m20 -s40 -g100 -2K50m --heap-sort=yes --secondary=no</code>. The output file is in SAM format.</p>
+<p>If a reference genome is provided, then after the draft assembly polishing with <code>pilon</code>, this task runs again with the mode set to <code>asm20</code> which is intended for "long assembly to reference mapping". The <code>asm20</code> mode indicates the following parameters should be used: <code>-k19 -w10 -U50,500 --rmq -r100k -g10k -A1 -B4 -O6,26 -E2,1 -s200 -z200 -N50</code>. The output file is in PAF format.</p>
+<p>For more information, please see the <a href="https://lh3.github.io/minimap2/minimap2.html">minimap2 manpage</a></p>
+<div class="admonition techdetails">
+<p class="admonition-title">minimap2 Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/alignment/task_minimap2.wdl">task_minimap2.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/lh3/minimap2">minimap2 on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://lh3.github.io/minimap2">minimap2</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://academic.oup.com/bioinformatics/article/34/18/3094/4994778">Minimap2: pairwise alignment for nucleotide sequences</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<details class="task">
+<summary><code>samtools</code>: SAM File Conversion </summary>
+<p>This task converts the output SAM file from minimap2 and converts it to a BAM file. It then sorts the BAM based on the read names, and then generates an index file.</p>
+<div class="admonition techdetails">
+<p class="admonition-title">samtools Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/data_handling/task_parse_mapping.wdl">task_samtools.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/samtools/samtools">samtools on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://www.htslib.org/doc/samtools.html">samtools</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://doi.org/10.1093/bioinformatics/btp352">The Sequence Alignment/Map format and SAMtools</a><br><a href="https://doi.org/10.1093/gigascience/giab008">Twelve Years of SAMtools and BCFtools</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<details class="task">
+<summary><code>pilon</code>: Assembly Polishing</summary>
+<p><code>pilon</code> is a tool that uses read alignment to correct errors in an assembly. It is used to polish the assembly produced by metaSPAdes. The input to Pilon is the sorted BAM file produced by <code>samtools</code>, and the original draft assembly produced by <code>metaspades</code>.</p>
+<div class="admonition techdetails">
+<p class="admonition-title">pilon Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_pilon.wdl">task_pilon.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/broadinstitute/pilon">Pilon on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://github.com/broadinstitute/pilon/wiki">Pilon Wiki</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://doi.org/10.1371/journal.pone.0112963">Pilon: An Integrated Tool for Comprehensive Microbial Variant Detection and Genome Assembly Improvement</a></td>
+</tr>
+</tbody>
+</table>
+</div>
 </details>
 <h4 id="assembly-qc">Assembly QC<a class="headerlink" href="#assembly-qc" title="Permanent link">&para;</a></h4>
 <details class="task">
@@ -6155,7 +6256,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2024-12-03</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2024-12-04</span>
   </span>
 
     
