@@ -14,13 +14,15 @@ The Dorado Basecalling workflow is used to convert Oxford Nanopore `POD5` sequen
 
 Users can configure the basecalling model by setting the `dorado_model` input parameter:
 
-Default Model: "sup" (super accuracy) is used unless overridden by the user.
-Manual Model Input: Users can specify the full path or name of a specific model (e.g., dna_r10.4.1_e8.2_400bps_hac@v4.2.0).
-Automatic Detection: When set to sup, hac, or fast, Dorado will automatically select the appropriate model version if available.
+**Default Model: "`sup`" (super accuracy)** is used unless overridden by the user.
 
-- **Model Type (sup):** (Super Accuracy) The most accurate model, recommended for applications requiring the highest basecall accuracy. It is the slowest of the three model types.
-- **Model Type (hac):** (High Accuracy) A balance between speed and accuracy, recommended for most users. Provides accurate results faster than `sup` but less accurate than `sup`.
-- **Model Type (fast):** (Fast Model) The fastest model, recommended when speed is prioritized over accuracy, such as for initial analyses or non-critical applications.
+**Automatic Detection:** When set to `sup`, `hac`, or `fast`, Dorado will automatically select the appropriate model version if available.
+
+- **Model Type (`sup`):** (Super Accuracy) The most accurate model, recommended for applications requiring the highest basecall accuracy. It is the slowest of the three model types.
+- **Model Type (`hac`):** (High Accuracy) A balance between speed and accuracy. Provides basecalls faster but those basecalls will be less accurate than those resulting from using the `sup` model.
+- **Model Type (`fast`):** (Fast Model) The fastest model, recommended when speed is prioritized over accuracy, such as for initial analyses or non-critical applications.
+
+**Manual Model Input:** Users can specify the full path or name of a specific model (e.g. `dna_r10.4.1_e8.2_400bps_hac@v4.2.0`).
 
 ### Example Manual Models:
 
@@ -66,7 +68,7 @@ Automatic Detection: When set to sup, hac, or fast, Dorado will automatically se
     - **dorado_model**: If set to 'sup', 'hac', or 'fast', the workflow will run with automatic model selection. If a full model name is provided, Dorado will use that model directly.
     - **fastq_file_name**: This will serve as a prefix for the output FASTQ files. For example, if you provide `project001-`, the resulting files will be named `project001-barcodeXX.fastq.gz`.
     - **kit_name**: Ensure the correct kit name is provided, as it determines the barcoding and adapter trimming behavior.
-    - **fastq_upload_path**: This is the folder path in Terra where the final FASTQ files will be transferred for further analysis. Ensure the path matches your Terra workspace configuration.
+    - **fastq_upload_path**: This is the folder path in Terra where the final FASTQ files will be transferred for further analysis. Ensure the path matches your Terra workspace bucket GSURI. Please visit the "Dashboard" tab of your Terra workspace which provides a link to the bucket in the "Cloud Information" drop-down panel. The root GSURI for Terra workspace buckets generally start with `gs://fc-` followed by a unique identifier.
 
 !!! tip "File Naming Guidelines"
     - **Avoid special characters**: Do not include special characters such as underscores (`_`), periods (`.`), or any non-alphanumeric symbols in the `fastq_file_name` prefix, as these can interfere with proper file parsing and sample name recognition.
@@ -79,7 +81,7 @@ Automatic Detection: When set to sup, hac, or fast, Dorado will automatically se
 
 ### Workflow Tasks
 
-This workflow is composed of several tasks to process, basecall, and analyze rabies genome data:
+This workflow is composed of several tasks to process, basecall, and analyze Oxford Nanopore `POD5` files:
 
 ??? task "`Dorado Basecalling`: Converts `POD5` files to 'SAM' files"
     The basecalling task takes `POD5` files as input and converts them into 'SAM' format using the specified model. This step leverages GPU acceleration for efficient processing.
@@ -91,7 +93,7 @@ This workflow is composed of several tasks to process, basecall, and analyze rab
     This task demultiplexes the BAM files based on barcodes, generating individual FASTQ files for each barcode to support further analyses.
 
 ??? task "`FASTQ File Transfer`: Transfers files to Terra"
-    After demultiplexing, the FASTQ files are uploaded to Terra for storage and potential use in other workflows.
+    After demultiplexing, the FASTQ files are uploaded to the Terra workspace bucket for storage and potential use in other workflows.
 
 ??? task "`Terra Table Creation`: Creates a Terra table with FASTQ files"
     A Terra table is created to index the uploaded FASTQ files, enabling easy access and integration with other workflows for downstream analyses.
