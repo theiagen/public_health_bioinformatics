@@ -477,6 +477,8 @@ All TheiaCoV Workflows (not TheiaCoV_FASTA_Batch)
 
 The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflows. This step automatically sets the different parameters needed for each downstream tool to the appropriate value for the user-designated organism (by default, `"sars-cov-2"` is the default organism).
 
+<div class="searchable-table" markdown="1">
+
 !!! dna ""
     The following tables include the relevant organism-specific parameters; **all of these default values can be overwritten by providing a value for the "Overwrite Variable Name" field**.
 
@@ -594,6 +596,7 @@ The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflo
         | primer_bed_file | HIV-v2 | gs://theiagen-public-files/terra/hivgc-files/HIV-1_v2.0.primer.hyphen400.1.bed | This version of HIV originates from Southern Africa |
         | reference_genome | HIV-v2 | gs://theiagen-public-files/terra/hivgc-files/AY228557.1.headerchanged.fasta | This version of HIV originates from Southern Africa |
         | reference_gff_file | HIV-v2 | gs://theiagen-public-files/terra/hivgc-files/AY228557.1.gff3 | This version of HIV originates from Southern Africa |
+</div>
 
 ### Workflow Tasks
 
