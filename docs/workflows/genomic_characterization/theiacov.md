@@ -221,14 +221,14 @@ All TheiaCoV Workflows (not TheiaCoV_FASTA_Batch)
 | ivar_consensus | **stats_n_coverage_primtrim_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | SE,PE | HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2 |
 | kraken2_dehosted | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional | CL | sars-cov-2 |
 | kraken2_dehosted | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | CL | sars-cov-2 |
-| kraken2_dehosted | **docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.0.8-beta_hv | Optional | CL | sars-cov-2 |
-| kraken2_dehosted | **kraken2_db** | String | The database used to run Kraken2 | /kraken2-db | Optional | CL | sars-cov-2 |
+| kraken2_dehosted | **docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.1.2-no-db | Optional | CL | sars-cov-2 |
+| kraken2_dehosted | **kraken2_db** | File | The database used to run Kraken2. Must contain viral and human sequences. | "gs://theiagen-large-public-files-rp/terra/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz" | Optional | CL | sars-cov-2 |
 | kraken2_dehosted | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | CL | sars-cov-2 |
 | kraken2_dehosted | **read2** | File | Internal component, do not modify | | Do not modify, Optional | CL | sars-cov-2 |
 | kraken2_raw | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional | CL | sars-cov-2 |
 | kraken2_raw | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | CL | sars-cov-2 |
-| kraken2_raw | **docker_image** | Int | Docker container used in this task | us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.0.8-beta_hv | Optional | CL | sars-cov-2 |
-| kraken2_raw | **kraken2_db** | String | The database used to run Kraken2 | /kraken2-db | Optional | CL | sars-cov-2 |
+| kraken2_raw | **docker_image** | Int | Docker container used in this task | us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.1.2-no-db | Optional | CL | sars-cov-2 |
+| kraken2_raw | **kraken2_db** | File | The database used to run Kraken2. Must contain viral and human sequences. | "gs://theiagen-large-public-files-rp/terra/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz" | Optional | CL | sars-cov-2 |
 | kraken2_raw | **memory** | String | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | CL | sars-cov-2 |
 | kraken2_raw | **read_processing** | String | The tool used for trimming of primers from reads. Options are trimmomatic and fastp | trimmomatic | Optional | | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | kraken2_raw | **read2** | File | Internal component, do not modify | | Do not modify, Optional | CL | sars-cov-2 |
@@ -300,8 +300,8 @@ All TheiaCoV Workflows (not TheiaCoV_FASTA_Batch)
 | qc_check_task | **gambit_predicted_taxon** | String | Internal component, do not modify | | Do not modify, Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | qc_check_task | **kraken_human** | String | Internal component, do not modify | | Do not modify, Optional | FASTA, ONT, SE | |
 | qc_check_task | **kraken_human_dehosted** | String | Internal component, do not modify | | Do not modify, Optional | FASTA, ONT, SE | |
-| qc_check_task | **kraken_sc2** | Float | Internal component, do not modify | | Do not modify, Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
-| qc_check_task | **kraken_sc2_dehosted** | Float | Internal component, do not modify | | Do not modify, Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
+| qc_check_task | **kraken_sc2** | String | Internal component, do not modify | | Do not modify, Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
+| qc_check_task | **kraken_sc2_dehosted** | String | Internal component, do not modify | | Do not modify, Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | qc_check_task | **kraken_target_organism** | Float | Internal component, do not modify | | Do not modify, Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | qc_check_task | **kraken_target_organism_dehosted** | Float | Internal component, do not modify | | Do not modify, Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | qc_check_task | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
@@ -341,7 +341,7 @@ All TheiaCoV Workflows (not TheiaCoV_FASTA_Batch)
 | read_QC_trim | **call_midas** | Boolean | True/False variable that determines if the MIDAS task should be called. | TRUE | Optional | PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | read_QC_trim | **downsampling_coverage** | Float | The desired coverage to sub-sample the reads to with RASUSA | 150 | Optional | ONT | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | read_QC_trim | **fastp_args** | String | Additional fastp task arguments | --detect_adapter_for_pe -g -5 20 -3 20 | Optional | PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
-| read_QC_trim | **kraken_db** | File | The database used to run Kraken2 | /kraken2-db | Optional | PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
+| read_QC_trim | **kraken_db** | File | The database used to run Kraken2. Must contain viral and human sequences. | "gs://theiagen-large-public-files-rp/terra/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz" | Optional | PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | read_QC_trim | **kraken_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | read_QC_trim | **kraken_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | read_QC_trim | **midas_db** | File | The database used by the MIDAS task | gs://theiagen-public-files-rp/terra/theiaprok-files/midas/midas_db_v1.2.tar.gz | Optional | PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
@@ -487,6 +487,7 @@ The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflo
         |---|---|---|
         | gene_locations_bed_file | sars-cov-2 | `"gs://theiagen-public-files-rp/terra/sars-cov-2-files/sc2_gene_locations.bed"` |
         | genome_length_input | sars-cov-2 | `29903` |
+        | kraken_target_organism_input | sars-cov-2 | `"Severe acute respiratory syndrome coronavirus 2"` |
         | nextclade_dataset_name_input | sars-cov-2 | `"nextstrain/sars-cov-2/wuhan-hu-1/orfs"` |
         | nextclade_dataset_tag_input | sars-cov-2 | `"2024-11-19--14-18-53Z"` |
         | pangolin_docker_image | sars-cov-2 | `"us-docker.pkg.dev/general-theiagen/staphb/pangolin:4.3.1-pdata-1.31 "`|
@@ -580,7 +581,7 @@ The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflo
         | **Overwrite Variable Name** | **Organism** | **Default Value** |
         |---|---|---|
         | genome_length_input | rsv_a | 16000 |
-        | kraken_target_organism | rsv_a | Respiratory syncytial virus |
+        | kraken_target_organism | rsv_a | "Human respiratory syncytial virus A" |
         | nextclade_dataset_name_input | rsv_a | nextstrain/rsv/a/EPI_ISL_412866 |
         | nextclade_dataset_tag_input | rsv_a | "2024-11-27--02-51-00Z" |
         | reference_genome | rsv_a | gs://theiagen-public-files-rp/terra/rsv_references/reference_rsv_a.fasta |
@@ -596,7 +597,7 @@ The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflo
         | **Overwrite Variable Name** | **Organism** | **Default Value** |
         |---|---|---|
         | genome_length_input | rsv_b | 16000 |
-        | kraken_target_organism | rsv_b |  "Human orthopneumovirus" |
+        | kraken_target_organism | rsv_b |  "human respiratory syncytial virus" |
         | nextclade_dataset_name_input | rsv_b | nextstrain/rsv/b/EPI_ISL_1653999 |
         | nextclade_dataset_tag_input | rsv_b | "2024-11-27--02-51-00Z" |
         | reference_genome | rsv_b | gs://theiagen-public-files-rp/terra/rsv_references/reference_rsv_b.fasta |
@@ -726,7 +727,7 @@ All input reads are processed through "core tasks" in the TheiaCoV Illumina, ONT
         Kraken2 is run on the set of raw reads, provided as input, as well as the set of clean reads that are resulted from the `read_QC_trim` workflow
 
         !!! info "Database-dependent"
-            TheiaCoV automatically uses a viral-specific Kraken2 database.
+            TheiaCoV automatically uses a viral-specific Kraken2 database. This database was generated in-house from RefSeq's viral sequence collection and human genome GRCh38. It's available at `gs://theiagen-large-public-files-rp/terra/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz`
 
         !!! techdetails "Kraken2 Technical Details"    
             
@@ -776,7 +777,7 @@ All input reads are processed through "core tasks" in the TheiaCoV Illumina, ONT
         Kraken2 is run on the set of raw reads, provided as input, as well as the set of clean reads that are resulted from the `read_QC_trim` workflow
 
         !!! info "Database-dependent"
-            TheiaCoV automatically uses a viral-specific Kraken2 database.
+            TheiaCoV automatically uses a viral-specific Kraken2 database. This database was generated in-house from RefSeq's viral sequence collection and human genome GRCh38. It's available at `gs://theiagen-large-public-files-rp/terra/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz`
 
         !!! techdetails "Kraken2 Technical Details"    
             
@@ -1122,8 +1123,8 @@ All TheiaCoV Workflows (not TheiaCoV_FASTA_Batch)
 | kraken_human_dehosted | Float | Percent of human read data detected using the Kraken2 software after host removal | CL, ONT, PE |
 | kraken_report | File | Full Kraken report | CL, ONT, PE, SE |
 | kraken_report_dehosted | File | Full Kraken report after host removal | CL, ONT, PE |
-| kraken_sc2 | Float | Percent of SARS-CoV-2 read data detected using the Kraken2 software | CL, ONT, PE, SE |
-| kraken_sc2_dehosted | Float | Percent of SARS-CoV-2 read data detected using the Kraken2 software after host removal | CL, ONT, PE |
+| kraken_sc2 | String | Percent of SARS-CoV-2 read data detected using the Kraken2 software | CL, ONT, PE, SE |
+| kraken_sc2_dehosted | String | Percent of SARS-CoV-2 read data detected using the Kraken2 software after host removal | CL, ONT, PE |
 | kraken_target_organism | String | Percent of target organism read data detected using the Kraken2 software | CL, ONT, PE, SE |
 | kraken_target_organism_dehosted | String | Percent of target organism read data detected using the Kraken2 software after host removal | CL, ONT, PE |
 | kraken_target_organism_name | String | The name of the target organism; e.g., "Monkeypox" or "Human immunodeficiency virus" | CL, ONT, PE, SE |

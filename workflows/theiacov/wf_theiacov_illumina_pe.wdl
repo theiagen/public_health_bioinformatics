@@ -293,12 +293,12 @@ workflow theiacov_illumina_pe {
     # Read QC - kraken outputs
     String? kraken_version = read_QC_trim.kraken_version
     Float? kraken_human = read_QC_trim.kraken_human
-    Float? kraken_sc2 = read_QC_trim.kraken_sc2
+    String? kraken_sc2 = read_QC_trim.kraken_sc2
     String? kraken_target_organism = read_QC_trim.kraken_target_organism
     String? kraken_target_organism_name = read_QC_trim.kraken_target_organism_name
     File? kraken_report = read_QC_trim.kraken_report
     Float? kraken_human_dehosted = read_QC_trim.kraken_human_dehosted
-    Float? kraken_sc2_dehosted = read_QC_trim.kraken_sc2_dehosted
+    String? kraken_sc2_dehosted = read_QC_trim.kraken_sc2_dehosted
     String? kraken_target_organism_dehosted = read_QC_trim.kraken_target_organism_dehosted
     File? kraken_report_dehosted = read_QC_trim.kraken_report_dehosted
     # Read Alignment - bwa outputs

@@ -23,6 +23,7 @@ There are three Kraken2 workflows:
 | dehost_pe or dehost_se | **read1** | File | | | Required | PE, SE |
 | dehost_pe or dehost_se | **read2** | File | | | Required | PE |
 | dehost_pe or dehost_se | **samplename** | String | | | Required | PE, SE |
+| dehost_pe or dehost_se | **target_organism** | String | Target organism for Kraken2 reporting | "Severe acute respiratory syndrome coronavirus 2" | Optional | PE, SE |
 | kraken2 | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional | PE, SE |
 | kraken2 | **disk_size** | Int | Amount of storage (in GB) to allocate to the task. Increase this when using large (>30GB kraken2 databases such as the "k2_standard" database) | 100 | Optional | PE, SE |
 | kraken2 | **docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.0.8-beta_hv | Optional | PE, SE |
