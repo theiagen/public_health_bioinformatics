@@ -115,17 +115,16 @@
     - path: miniwdl_run/call-fastq_scan_clean_reads/inputs.json
       contains: ["read1", "clearlabs"]
     - path: miniwdl_run/call-fastq_scan_clean_reads/outputs.json
-      contains: ["fastq_scan_se", "pipeline_date", "read1_seq"]
+      contains: ["fastq_scan_se", "read1_seq"]
     - path: miniwdl_run/call-fastq_scan_clean_reads/stderr.txt
     - path: miniwdl_run/call-fastq_scan_clean_reads/stderr.txt.offset
     - path: miniwdl_run/call-fastq_scan_clean_reads/stdout.txt
     - path: miniwdl_run/call-fastq_scan_clean_reads/task.log
       contains: ["wdl", "theiacov_clearlabs", "fastq_scan_clean_reads", "done"]
-    - path: miniwdl_run/call-fastq_scan_clean_reads/work/DATE
     - path: miniwdl_run/call-fastq_scan_clean_reads/work/READ1_SEQS
       md5sum: 097e79b36919c8377c56088363e3d8b7
     - path: miniwdl_run/call-fastq_scan_clean_reads/work/VERSION
-      md5sum: 8e4e9cdfbacc9021a3175ccbbbde002b
+      md5sum: a59bb42644e35c09b8fa8087156fa4c2
     - path: miniwdl_run/call-fastq_scan_clean_reads/work/_miniwdl_inputs/0/clearlabs_R1_dehosted.fastq.gz
     - path: miniwdl_run/call-fastq_scan_clean_reads/work/clearlabs_R1_dehosted_fastq-scan.json
       md5sum: 869dd2e934c600bba35f30f08e2da7c9
@@ -134,17 +133,16 @@
     - path: miniwdl_run/call-fastq_scan_raw_reads/inputs.json
       contains: ["read1", "clearlabs"]
     - path: miniwdl_run/call-fastq_scan_raw_reads/outputs.json
-      contains: ["fastq_scan_se", "pipeline_date", "read1_seq"]
+      contains: ["fastq_scan_se", "read1_seq"]
     - path: miniwdl_run/call-fastq_scan_raw_reads/stderr.txt
     - path: miniwdl_run/call-fastq_scan_raw_reads/stderr.txt.offset
     - path: miniwdl_run/call-fastq_scan_raw_reads/stdout.txt
     - path: miniwdl_run/call-fastq_scan_raw_reads/task.log
       contains: ["wdl", "theiacov_clearlabs", "fastq_scan_raw_reads", "done"]
-    - path: miniwdl_run/call-fastq_scan_raw_reads/work/DATE
     - path: miniwdl_run/call-fastq_scan_raw_reads/work/READ1_SEQS
       md5sum: 097e79b36919c8377c56088363e3d8b7
     - path: miniwdl_run/call-fastq_scan_raw_reads/work/VERSION
-      md5sum: 8e4e9cdfbacc9021a3175ccbbbde002b
+      md5sum: a59bb42644e35c09b8fa8087156fa4c2
     - path: miniwdl_run/call-fastq_scan_raw_reads/work/_miniwdl_inputs/0/clearlabs.fastq.gz
     - path: miniwdl_run/call-fastq_scan_raw_reads/work/clearlabs_fastq-scan.json
       md5sum: 869dd2e934c600bba35f30f08e2da7c9
@@ -236,7 +234,7 @@
     - path: miniwdl_run/call-nextclade_v3/work/nextclade_dataset_dir/genome_annotation.gff3
       md5sum: 4dff84d2d6ada820e0e3a8bc6798d402
     - path: miniwdl_run/call-nextclade_v3/work/nextclade_dataset_dir/pathogen.json
-      md5sum: a51a91e0b5e16590c1afd0c7897ad071
+      md5sum: 32f20640f926d5b59fed6b954541792d
     - path: miniwdl_run/call-nextclade_v3/work/nextclade_dataset_dir/reference.fasta
       md5sum: c7ce05f28e4ec0322c96f24e064ef55c
     - path: miniwdl_run/call-nextclade_v3/work/nextclade_dataset_dir/sequences.fasta
@@ -310,13 +308,13 @@
     - path: miniwdl_run/call-pangolin4/work/PANGOLIN_NOTES
       md5sum: 59478efddde2191ead1b46b1f121bbc9
     - path: miniwdl_run/call-pangolin4/work/PANGO_ASSIGNMENT_VERSION
-      md5sum: 0803245359027bd3017d2bd9a9c9c8e3
+      md5sum: 36f64a1cd7c6844309e8ad2121358088
     - path: miniwdl_run/call-pangolin4/work/VERSION_PANGOLIN_ALL
-      md5sum: b5dbf2ba7480effea8c656099df0e78e
+      md5sum: dfd90750c8776f46bad1de214c1d1a57
     - path: miniwdl_run/call-pangolin4/work/_miniwdl_inputs/0/clearlabs.medaka.consensus.fasta
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     - path: miniwdl_run/call-pangolin4/work/clearlabs.pangolin_report.csv
-      md5sum: 151390c419b00ca44eb83e2bbfb96996
+      md5sum: 0370f24c270c44f6023dd98af79501e7
     - path: miniwdl_run/call-stats_n_coverage/command
       md5sum: ac020678f99ac145b11d3dbc7b9fe9ba
     - path: miniwdl_run/call-stats_n_coverage/inputs.json

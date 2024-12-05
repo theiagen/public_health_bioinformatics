@@ -14,6 +14,8 @@ task transfer_files {
     volatile: true
   }
   command <<<
+    set -euo pipefail
+    
     file_path_array="~{sep=' ' files_to_transfer}"
 
     gsutil -m cp -n ${file_path_array[@]} ~{target_bucket}

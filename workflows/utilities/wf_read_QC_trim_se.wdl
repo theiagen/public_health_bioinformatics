@@ -157,6 +157,8 @@ workflow read_QC_trim_se {
     Int? fastq_scan_clean1 = fastq_scan_clean.read1_seq
     String? fastq_scan_version = fastq_scan_raw.version
     String? fastq_scan_docker = fastq_scan_raw.fastq_scan_docker
+    File? fastq_scan_raw1_json = fastq_scan_raw.fastq_scan_json
+    File? fastq_scan_clean1_json = fastq_scan_clean.fastq_scan_json
 
     # fastqc
     Int? fastqc_raw1 = fastqc_raw.read1_seq

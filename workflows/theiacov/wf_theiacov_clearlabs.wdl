@@ -171,6 +171,8 @@ workflow theiacov_clearlabs {
     Int fastq_scan_num_reads_raw1 = fastq_scan_raw_reads.read1_seq
     Int fastq_scan_num_reads_clean1 = fastq_scan_clean_reads.read1_seq
     String fastq_scan_version = fastq_scan_raw_reads.version
+    File fastq_scan_raw1_json = fastq_scan_raw_reads.fastq_scan_json
+    File fastq_scan_clean1_json = fastq_scan_clean_reads.fastq_scan_json
     # Read QC - kraken outputs
     String kraken_version = kraken2_raw.version
     Float kraken_human = kraken2_raw.percent_human

@@ -66,3 +66,7 @@ This workflow runs on the sample level.
 | **pangolin_versions** | String | All Pangolin software and database versions |
 
 </div>
+
+## References
+
+> **Pangolin**: RRambaut A, Holmes EC, O'Toole Á, Hill V, McCrone JT, Ruis C, du Plessis L, Pybus OG. A dynamic nomenclature proposal for SARS-CoV-2 lineages to assist genomic epidemiology. Nat Microbiol. 2020 Nov;5(11):1403-1407. doi: 10.1038/s41564-020-0770-5. Epub 2020 Jul 15. PMID: 32669681; PMCID: PMC7610519.

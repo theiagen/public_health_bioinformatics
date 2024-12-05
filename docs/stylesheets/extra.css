@@ -200,7 +200,6 @@ div.searchable-table input.table-search-input {
   color: #000;
   border: 1px solid #E0E1E1;
 }
-
 [data-md-color-scheme="light"] div.searchable-table input.table-search-input::placeholder {
   color: #888;
   font-style: italic;
@@ -212,7 +211,6 @@ div.searchable-table input.table-search-input {
   color: #fff;
   border: 1px solid #373B40;
 }
-
 [data-md-color-scheme="slate"] div.searchable-table input.table-search-input::placeholder {
   color: #bbb;
   font-style: italic;
