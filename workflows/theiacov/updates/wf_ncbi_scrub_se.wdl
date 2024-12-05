@@ -8,6 +8,7 @@ workflow dehost_se {
   input {
     String samplename
     File read1
+    String target_organism = "Severe acute respiratory syndrome coronavirus 2"
   }
   call ncbi_scrub.ncbi_scrub_se {
     input:
@@ -18,7 +19,7 @@ workflow dehost_se {
     input:
       samplename = samplename,
       read1 = ncbi_scrub_se.read1_dehosted,
-      target_organism = "Severe acute respiratory syndrome coronavirus 2"
+      target_organism = target_organism
   }
   call versioning.version_capture {
     input:
