@@ -147,7 +147,7 @@
     - path: miniwdl_run/call-fastq_scan_raw_reads/work/clearlabs_fastq-scan.json
       md5sum: 869dd2e934c600bba35f30f08e2da7c9
     - path: miniwdl_run/call-kraken2_dehosted/command
-      md5sum: 0f9db3341b5f58fb8d145d6d94222827
+      md5sum: 4306699c67306b103561adf31c3754e3
     - path: miniwdl_run/call-kraken2_dehosted/inputs.json
       contains: ["read1", "samplename"]
     - path: miniwdl_run/call-kraken2_dehosted/outputs.json
@@ -159,18 +159,18 @@
       contains: ["wdl", "theiacov_clearlabs", "kraken2_dehosted", "done"]
     - path: miniwdl_run/call-kraken2_dehosted/work/DATE
     - path: miniwdl_run/call-kraken2_dehosted/work/PERCENT_HUMAN
-      md5sum: 4fd4dcef994592f9865e9bc8807f32f4
+      md5sum: 897316929176464ebc9ad085f31e7284
     - path: miniwdl_run/call-kraken2_dehosted/work/PERCENT_SC2
-      md5sum: 9fc4759d176a0e0d240c418dbaaafeb2
+      md5sum: 86b6b8aa9ad17f169f04c02b0e2bf1b1
     - path: miniwdl_run/call-kraken2_dehosted/work/PERCENT_TARGET_ORGANISM
       md5sum: 68b329da9893e34099c7d8ad5cb9c940
     - path: miniwdl_run/call-kraken2_dehosted/work/VERSION
-      md5sum: 379b99c23325315c502e74614c035e7d
+      md5sum: 7ad46f90cd0ffa94f32a6e06299ed05c
     - path: miniwdl_run/call-kraken2_dehosted/work/_miniwdl_inputs/0/clearlabs_R1_dehosted.fastq.gz
     - path: miniwdl_run/call-kraken2_dehosted/work/clearlabs_kraken2_report.txt
-      md5sum: 35841fa2d77ec202c275b1de548b8d98
+      md5sum: b66dbcf8d229c1b6fcfff4dd786068bd
     - path: miniwdl_run/call-kraken2_raw/command
-      md5sum: a9dabf08bff8e183fd792901ce24fc57
+      md5sum: d6e217901b67290466eec97f13564022
     - path: miniwdl_run/call-kraken2_raw/inputs.json
       contains: ["read1", "samplename"]
     - path: miniwdl_run/call-kraken2_raw/outputs.json
@@ -182,16 +182,16 @@
       contains: ["wdl", "theiacov_clearlabs", "kraken2_raw", "done"]
     - path: miniwdl_run/call-kraken2_raw/work/DATE
     - path: miniwdl_run/call-kraken2_raw/work/PERCENT_HUMAN
-      md5sum: 4fd4dcef994592f9865e9bc8807f32f4
+      md5sum: 897316929176464ebc9ad085f31e7284
     - path: miniwdl_run/call-kraken2_raw/work/PERCENT_SC2
-      md5sum: 9fc4759d176a0e0d240c418dbaaafeb2
+      md5sum: 86b6b8aa9ad17f169f04c02b0e2bf1b1
     - path: miniwdl_run/call-kraken2_raw/work/PERCENT_TARGET_ORGANISM
       md5sum: 68b329da9893e34099c7d8ad5cb9c940
     - path: miniwdl_run/call-kraken2_raw/work/VERSION
-      md5sum: 379b99c23325315c502e74614c035e7d
+      md5sum: 7ad46f90cd0ffa94f32a6e06299ed05c
     - path: miniwdl_run/call-kraken2_raw/work/_miniwdl_inputs/0/clearlabs.fastq.gz
     - path: miniwdl_run/call-kraken2_raw/work/clearlabs_kraken2_report.txt
-      md5sum: 35841fa2d77ec202c275b1de548b8d98
+      md5sum: b66dbcf8d229c1b6fcfff4dd786068bd
     - path: miniwdl_run/call-ncbi_scrub_se/command
       contains: ["read1", "scrubber", "gzip"]
     - path: miniwdl_run/call-ncbi_scrub_se/inputs.json
@@ -234,7 +234,7 @@
     - path: miniwdl_run/call-nextclade_v3/work/nextclade_dataset_dir/genome_annotation.gff3
       md5sum: 4dff84d2d6ada820e0e3a8bc6798d402
     - path: miniwdl_run/call-nextclade_v3/work/nextclade_dataset_dir/pathogen.json
-      md5sum: a51a91e0b5e16590c1afd0c7897ad071
+      md5sum: 32f20640f926d5b59fed6b954541792d
     - path: miniwdl_run/call-nextclade_v3/work/nextclade_dataset_dir/reference.fasta
       md5sum: c7ce05f28e4ec0322c96f24e064ef55c
     - path: miniwdl_run/call-nextclade_v3/work/nextclade_dataset_dir/sequences.fasta
@@ -308,13 +308,13 @@
     - path: miniwdl_run/call-pangolin4/work/PANGOLIN_NOTES
       md5sum: 59478efddde2191ead1b46b1f121bbc9
     - path: miniwdl_run/call-pangolin4/work/PANGO_ASSIGNMENT_VERSION
-      md5sum: 0803245359027bd3017d2bd9a9c9c8e3
+      md5sum: 36f64a1cd7c6844309e8ad2121358088
     - path: miniwdl_run/call-pangolin4/work/VERSION_PANGOLIN_ALL
-      md5sum: b5dbf2ba7480effea8c656099df0e78e
+      md5sum: dfd90750c8776f46bad1de214c1d1a57
     - path: miniwdl_run/call-pangolin4/work/_miniwdl_inputs/0/clearlabs.medaka.consensus.fasta
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     - path: miniwdl_run/call-pangolin4/work/clearlabs.pangolin_report.csv
-      md5sum: 151390c419b00ca44eb83e2bbfb96996
+      md5sum: 0370f24c270c44f6023dd98af79501e7
     - path: miniwdl_run/call-stats_n_coverage/command
       md5sum: ac020678f99ac145b11d3dbc7b9fe9ba
     - path: miniwdl_run/call-stats_n_coverage/inputs.json
