@@ -112,8 +112,8 @@ This workflow runs on the sample level.
 | freyja | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
 | freyja | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/staphb/freyja:1.5.2-11_30_2024-02-00-2024-12-02" | Optional |
 | freyja | **eps** | Float | The minimum lineage abundance cut-off value | 0.001 | Optional |
-| freyja | **freyja_barcodes** | String |  | None | Optional |
-| freyja | **freyja_lineage_metadata** | File | (found in the optional section, but is required) File containing the lineage metadata; the "curated_lineages.json" file found <https://github.com/andersen-lab/Freyja/tree/main/freyja/data> can be used for this variable. Does not need to be provided if update_db is true. | None | Optional, Required |
+| freyja | **freyja_barcodes** | String | Custom barcode file. Does not need to be provided if update_db is true if the freyja_pathogen is provided. | None | Optional |
+| freyja | **freyja_lineage_metadata** | File | File containing the lineage metadata; the "curated_lineages.json" file found <https://github.com/andersen-lab/Freyja/tree/main/freyja/data> can be used for this variable. Does not need to be provided if update_db is true or if the freyja_pathogen is provided. | None | Optional, Required |
 | freyja | **freyja_pathogen** | String | Pathogen of interest, used if not providing the barcodes and lineage metadata files. Options: SARS-CoV-2, MPXV, H5NX, H1N1pdm, FLU-B-VIC, MEASLESN450, MEASLES, RSVa, RSVb | None | Optional |
 | freyja | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 4 | Optional |
 | freyja | **number_bootstraps** | Int | The number of bootstraps to perform (only used if bootstrap = true) | 100 | Optional |
