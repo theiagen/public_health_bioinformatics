@@ -8,9 +8,9 @@ task pangolin4 {
     Float max_ambig = 0.5
     String docker
     String? analysis_mode
-    Boolean expanded_lineage=true
-    Boolean skip_scorpio=false
-    Boolean skip_designation_cache=false
+    Boolean expanded_lineage = true
+    Boolean skip_scorpio = false
+    Boolean skip_designation_cache = false
     String? pangolin_arguments
     Int disk_size = 100
     Int memory = 8

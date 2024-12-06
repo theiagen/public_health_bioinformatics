@@ -4,13 +4,14 @@ task fastq_scan_pe {
   input {
     File read1
     File read2
-    String read1_name = basename(basename(basename(read1, ".gz"), ".fastq"), ".fq")
-    String read2_name = basename(basename(basename(read2, ".gz"), ".fastq"), ".fq")
-    Int disk_size = 50
+
+    Int disk_size = 100
     String docker = "us-docker.pkg.dev/general-theiagen/biocontainers/fastq-scan:1.0.1--h4ac6f70_3"
     Int memory = 2
     Int cpu = 1
   }
+  String read1_name = basename(basename(basename(read1, ".gz"), ".fastq"), ".fq")
+  String read2_name = basename(basename(basename(read2, ".gz"), ".fastq"), ".fq")
   command <<<
     # exit task in case anything fails in one-liners or variables are unset
     set -euo pipefail
@@ -77,12 +78,13 @@ task fastq_scan_pe {
 task fastq_scan_se {
   input {
     File read1
-    String read1_name = basename(basename(basename(read1, ".gz"), ".fastq"), ".fq")
-    Int disk_size = 50
+
+    Int disk_size = 100
     Int memory = 2
     Int cpu = 1
     String docker = "us-docker.pkg.dev/general-theiagen/biocontainers/fastq-scan:1.0.1--h4ac6f70_3"
   }
+  String read1_name = basename(basename(basename(read1, ".gz"), ".fastq"), ".fq")
   command <<<
     # exit task in case anything fails in one-liners or variables are unset
     set -euo pipefail

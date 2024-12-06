@@ -247,7 +247,6 @@ The TheiaMeta_Illumina_PE workflow processes Illumina paired-end (PE) reads ge
     `metaspades` is a _de novo_ assembler that first constructs a de Bruijn graph of all the reads using the SPAdes algorithm. Through various graph simplification procedures, paths in the assembly graph are reconstructed that correspond to long genomic fragments within the metagenome. For more details, please see the original publication.
 
     !!! techdetails "MetaSPAdes Technical Details"
-        
         |  | Links |
         | --- | --- |
         | Task | [task_metaspades.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_metaspades.wdl) |

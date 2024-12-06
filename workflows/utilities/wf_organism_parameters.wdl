@@ -22,7 +22,7 @@ workflow organism_parameters {
     File? gene_locations_bed_file
     Int? genome_length_input
 
-    # set default nextclade information as NA
+    # set default nextclade information as "NA"
     String? nextclade_dataset_tag_input
     String? nextclade_dataset_name_input
 
@@ -47,6 +47,9 @@ workflow organism_parameters {
     Float? min_date
     Float? narrow_bandwidth
     Float? proportion_wide
+  }
+  if (organism == "unsupported") {  
+    Int unsupported_genome_length = 0
   }
   if (organism == "sars-cov-2" || organism == "SARS-CoV-2") {
     String sc2_org_name = "sars-cov-2"
@@ -212,7 +215,7 @@ workflow organism_parameters {
     File rsv_a_clades_tsv = "gs://theiagen-public-files-rp/terra/rsv_references/rsv_a_clades.tsv"
     File rsv_a_reference_gbk = "gs://theiagen-public-files-rp/terra/rsv_references/reference_rsv_a.gb"
     File rsv_a_auspice_config = "gs://theiagen-public-files-rp/terra/rsv_references/rsv_auspice_config.json"
-    Int rsv_a_min_num_unambig = 10850 #using 70% of 15500
+    Int rsv_a_min_num_unambig = 10850 # using 70% of 15500
     # inherited from flu defaults
     Float rsv_a_min_date = 2020.0
     Int rsv_a_pivot_interval = 1
@@ -236,7 +239,7 @@ workflow organism_parameters {
     File rsv_b_clades_tsv = "gs://theiagen-public-files-rp/terra/rsv_references/rsv_b_clades.tsv"
     File rsv_b_reference_gbk = "gs://theiagen-public-files-rp/terra/rsv_references/reference_rsv_b.gb"
     File rsv_b_auspice_config = "gs://theiagen-public-files-rp/terra/rsv_references/rsv_auspice_config.json"
-    Int rsv_b_min_num_unambig = 10850 #using 70% of 15500
+    Int rsv_b_min_num_unambig = 10850 # using 70% of 15500
     # inherited from flu defaults
     Float rsv_b_min_date = 2020.0
     Int rsv_b_pivot_interval = 1
@@ -268,7 +271,7 @@ workflow organism_parameters {
     File gene_locations_bed = select_first([gene_locations_bed_file, sc2_gene_locations_bed, mpox_gene_locations_bed, "gs://theiagen-public-files/terra/theiacov-files/empty.bed"])
     File primer_bed = select_first([primer_bed_file, mpox_primer_bed_file, wnv_primer_bed_file, hiv_v1_primer_bed, hiv_v2_primer_bed, "gs://theiagen-public-files/terra/theiacov-files/empty.bed"])
     File reference_gff = select_first([reference_gff_file, mpox_reference_gff_file, hiv_v1_reference_gff, hiv_v2_reference_gff, "gs://theiagen-public-files/terra/theiacov-files/empty.gff3"])
-    Int genome_length = select_first([genome_length_input, sc2_genome_len, mpox_genome_len, wnv_genome_len, flu_genome_len, rsv_a_genome_len, rsv_b_genome_len, hiv_v1_genome_len, hiv_v2_genome_len])
+    Int genome_length = select_first([genome_length_input, sc2_genome_len, mpox_genome_len, wnv_genome_len, flu_genome_len, rsv_a_genome_len, rsv_b_genome_len, hiv_v1_genome_len, hiv_v2_genome_len, unsupported_genome_length])
     # nextclade information
     String nextclade_dataset_tag = select_first([nextclade_dataset_tag_input, sc2_nextclade_ds_tag, mpox_nextclade_ds_tag, wnv_nextclade_ds_tag, h1n1_ha_nextclade_ds_tag, h3n2_ha_nextclade_ds_tag, vic_ha_nextclade_ds_tag, yam_ha_nextclade_ds_tag, h5n1_ha_nextclade_ds_tag, h1n1_na_nextclade_ds_tag, h3n2_na_nextclade_ds_tag, vic_na_nextclade_ds_tag, yam_na_nextclade_ds_tag, rsv_a_nextclade_ds_tag, rsv_b_nextclade_ds_tag, "NA"])
     String nextclade_dataset_name = select_first([nextclade_dataset_name_input, sc2_nextclade_ds_name, mpox_nextclade_ds_name, wnv_nextclade_ds_name, h1n1_ha_nextclade_ds_name, h3n2_ha_nextclade_ds_name, vic_ha_nextclade_ds_name, yam_ha_nextclade_ds_name, h5n1_ha_nextclade_ds_name, h1n1_na_nextclade_ds_name, h3n2_na_nextclade_ds_name, vic_na_nextclade_ds_name, yam_na_nextclade_ds_name, rsv_a_nextclade_ds_name, rsv_b_nextclade_ds_name, "NA"])

@@ -16,20 +16,26 @@ task pilon {
     pilon --version | cut -d' ' -f3 | tee VERSION
 
     # run pilon
-    pilon \
+    if pilon \
     --genome ~{assembly} \
     --frags ~{bam} \
     --output ~{samplename} \
     --outdir pilon \
-    --changes --vcf
+    --changes --vcf; then
+      touch WARNING
+    else
+      tee "Pilon failed to run for ~{samplename}" > WARNING
+      exit 1
+    fi
 
   >>>
   output {
-    File assembly_fasta = "pilon/~{samplename}.fasta"
-    File changes = "pilon/~{samplename}.changes"
-    File vcf = "pilon/~{samplename}.vcf"
+    File? assembly_fasta = "pilon/~{samplename}.fasta"
+    File? changes = "pilon/~{samplename}.changes"
+    File? vcf = "pilon/~{samplename}.vcf"
     String pilon_version = read_string("VERSION")
     String pilon_docker = "~{docker}"
+    String pilon_warning = read_string("WARNING")
   }
   runtime {
     docker: "~{docker}"
