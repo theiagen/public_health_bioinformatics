@@ -558,7 +558,7 @@ The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflo
         | nextclade_dataset_tag_input | flu | ha | yamagata | `"2024-01-30--16-34-55Z"` |  |
         | reference_genome | flu | ha | yamagata | `"gs://theiagen-public-files-rp/terra/flu-references/reference_yam_ha.fasta"` |  |
         | nextclade_dataset_name_input | flu | ha | h5n1 | `"community/moncla-lab/iav-h5/ha/all-clades"` |  |
-        | nextclade_dataset_tag_input | flu | ha | h5n1 | `"2024-05-08--11-39-52Z"` |  |
+        | nextclade_dataset_tag_input | flu | ha | h5n1 | `"2024-12-04--17-05-31Z"` |  |
         | reference_genome | flu | ha | h5n1 | `"gs://theiagen-public-files-rp/terra/flu-references/reference_h5n1_ha.fasta"` |  |
         | nextclade_dataset_name_input | flu | na | h1n1 | `"nextstrain/flu/h1n1pdm/na/MW626056"` |  |
         | nextclade_dataset_tag_input | flu | na | h1n1 | `"2024-11-05--09-19-52Z"` |  |
