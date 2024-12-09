@@ -117,6 +117,7 @@ This workflow runs on the sample level.
 | freyja | **number_bootstraps** | Int | The number of bootstraps to perform (only used if bootstrap = true) | 100 | Optional |
 | freyja | **update_db** | Boolean | Updates the Freyja reference files (the usher barcodes and lineage metadata files) but will not save them as output (use Freyja_Update for that purpose). If set to true, the `freyja_lineage_metadata` and `freyja_usher_barcodes` files are not required. | FALSE | Optional |
 | freyja_fastq | **depth_cutoff** | Int | The minimum coverage depth with which to exclude sites below this value and group identical barcodes | 10 | Optional |
+| freyja_fastq | **kraken2_target_organism** | String | The organism whose abundance the user wants to check in their reads. This should be a proper taxonomic name recognized by the Kraken database. | "Severe acute respiratory syndrome coronavirus 2" | Optional |
 | freyja_fastq | **ont** | Boolean | Indicates if the input data is derived from an ONT instrument.  | FALSE | Optional |
 | freyja_fastq | **read2** | File | The raw reverse-facing FASTQ file (Illumina only) |  | Optional |
 | freyja_fastq | **trimmomatic_minlen** | Int | The minimum length cut-off when performing read cleaning | 25 | Optional |
@@ -327,12 +328,16 @@ The main output file used in subsequent Freyja workflows is found under the `fre
 | bwa_version | String | Version of BWA used to map read data to the reference genome | PE, SE |
 | fastp_html_report | File | The HTML report made with fastp | PE, SE |
 | fastp_version | String | Version of fastp software used | PE, SE |
+| fastq_scan_clean1_json | File | JSON file output from `fastq-scan` containing summary stats about clean forward read quality and length | PE, SE |
+| fastq_scan_clean2_json | File | JSON file output from `fastq-scan` containing summary stats about clean reverse read quality and length | PE |
 | fastq_scan_num_reads_clean_pairs | String | Number of clean read pairs | PE |
 | fastq_scan_num_reads_clean1 | Int | Number of clean forward reads | PE, SE |
 | fastq_scan_num_reads_clean2 | Int | Number of clean reverse reads | PE |
 | fastq_scan_num_reads_raw_pairs | String | Number of raw read pairs | PE |
 | fastq_scan_num_reads_raw1 | Int | Number of raw forward reads | PE, SE |
 | fastq_scan_num_reads_raw2 | Int | Number of raw reverse reads | PE |
+| fastq_scan_raw1_json | File | JSON file output from `fastq-scan` containing summary stats about raw forward read quality and length | PE, SE |
+| fastq_scan_raw2_json | File | JSON file output from `fastq-scan` containing summary stats about raw reverse read quality and length | PE |
 | fastq_scan_version | String | Version of fastq_scan used for read QC analysis | PE, SE |
 | fastqc_clean1_html | File | Graphical visualization of clean forward read quality from fastqc to open in an internet browser | PE, SE |
 | fastqc_clean2_html | File | Graphical visualization of clean reverse read quality from fastqc to open in an internet browser | PE |
@@ -367,8 +372,8 @@ The main output file used in subsequent Freyja workflows is found under the `fre
 | kraken_human_dehosted | Float | Percent of human read data detected using the Kraken2 software after host removal | ONT, PE, SE |
 | kraken_report | File | Full Kraken report | ONT, PE, SE |
 | kraken_report_dehosted | File | Full Kraken report after host removal | ONT, PE, SE |
-| kraken_sc2 | Float | Percent of SARS-CoV-2 read data detected using the Kraken2 software | ONT, PE, SE |
-| kraken_sc2_dehosted | Float | Percent of SARS-CoV-2 read data detected using the Kraken2 software after host removal | ONT, PE, SE |
+| kraken_sc2 | String | Percent of SARS-CoV-2 read data detected using the Kraken2 software | ONT, PE, SE |
+| kraken_sc2_dehosted | String | Percent of SARS-CoV-2 read data detected using the Kraken2 software after host removal | ONT, PE, SE |
 | kraken_version | String | Version of Kraken software used | ONT, PE, SE |
 | minimap2_docker | String | Docker image used to run minimap2 | ONT |
 | minimap2_version | String | Version of minimap2 used | ONT |

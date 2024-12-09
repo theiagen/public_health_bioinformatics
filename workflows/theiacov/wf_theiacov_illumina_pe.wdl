@@ -260,6 +260,10 @@ workflow theiacov_illumina_pe {
     Int? fastq_scan_num_reads_clean1 = read_QC_trim.fastq_scan_clean1
     Int? fastq_scan_num_reads_clean2 = read_QC_trim.fastq_scan_clean2
     String? fastq_scan_num_reads_clean_pairs = read_QC_trim.fastq_scan_clean_pairs
+    File? fastq_scan_raw1_json = read_QC_trim.fastq_scan_raw1_json
+    File? fastq_scan_raw2_json = read_QC_trim.fastq_scan_raw2_json
+    File? fastq_scan_clean1_json = read_QC_trim.fastq_scan_clean1_json
+    File? fastq_scan_clean2_json = read_QC_trim.fastq_scan_clean2_json
     # Read QC - fastqc outputs
     Int? fastqc_num_reads_raw1 = read_QC_trim.fastqc_raw1
     Int? fastqc_num_reads_raw2 = read_QC_trim.fastqc_raw2
@@ -289,12 +293,12 @@ workflow theiacov_illumina_pe {
     # Read QC - kraken outputs
     String? kraken_version = read_QC_trim.kraken_version
     Float? kraken_human = read_QC_trim.kraken_human
-    Float? kraken_sc2 = read_QC_trim.kraken_sc2
+    String? kraken_sc2 = read_QC_trim.kraken_sc2
     String? kraken_target_organism = read_QC_trim.kraken_target_organism
     String? kraken_target_organism_name = read_QC_trim.kraken_target_organism_name
     File? kraken_report = read_QC_trim.kraken_report
     Float? kraken_human_dehosted = read_QC_trim.kraken_human_dehosted
-    Float? kraken_sc2_dehosted = read_QC_trim.kraken_sc2_dehosted
+    String? kraken_sc2_dehosted = read_QC_trim.kraken_sc2_dehosted
     String? kraken_target_organism_dehosted = read_QC_trim.kraken_target_organism_dehosted
     File? kraken_report_dehosted = read_QC_trim.kraken_report_dehosted
     # Read Alignment - bwa outputs

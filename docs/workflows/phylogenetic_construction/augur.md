@@ -14,10 +14,10 @@ Two workflows are offered: **Augur_Prep_PHB** and **Augur_PHB**. These must be r
 
 !!! dna "**Helpful resources for epidemiological interpretation**"
 
-    - [introduction to Nextstrain](https://www.cdc.gov/amd/training/covid-toolkit/module3-1.html) (which includes Auspice)
-    - guide to Nextstrain [interactive trees](https://www.cdc.gov/amd/training/covid-toolkit/module3-4.html)
-    - an [introduction to UShER](https://www.cdc.gov/amd/training/covid-toolkit/module3-3.html)
-    - a video about [how to read trees](https://www.cdc.gov/amd/training/covid-toolkit/module1-3.html) if this is new to you
+    - [introduction to Nextstrain](https://www.cdc.gov/advanced-molecular-detection/php/training/module-3-1.html) (which includes Auspice)
+    - guide to Nextstrain [interactive trees](https://www.cdc.gov/advanced-molecular-detection/php/training/module-3-4.html)
+    - an [introduction to UShER](https://www.cdc.gov/advanced-molecular-detection/php/training/module-3-3.html)
+    - a video about [how to read trees](https://www.cdc.gov/advanced-molecular-detection/php/training/module-1-3.html) if this is new to you
     - documentation on [how to identify SARS-CoV-2 recombinants](https://github.com/pha4ge/pipeline-resources/blob/main/docs/sc2-recombinants.md)
 
 ### Augur_Prep_PHB
@@ -174,7 +174,7 @@ The Augur_PHB workflow takes in a ***set*** of SARS-CoV-2 (or any other viral 
 
 This workflow runs on the set level. Please note that for every task, runtime parameters are modifiable (cpu, disk_size, docker, and memory); most of these values have been excluded from the table below for convenience.
 
-<div class="searchable-table" markdown="1">
+<div class="searchable-table" markdown="1" width=100vw>
 
 | **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
 |---|---|---|---|---|---|
@@ -198,7 +198,7 @@ This workflow runs on the set level. Please note that for every task, runtime pa
 | augur_ancestral | **inference** | String | Calculate joint or marginal maximum likelihood ancestral sequence states; options: "joint", "marginal" | joint | Optional |
 | augur_ancestral | **keep_ambiguous** | Boolean | If true, do not infer nucleotides at ambiguous (N) sides | FALSE | Optional |
 | augur_ancestral | **keep_overhangs** | Boolean | If true, do not infer nucleotides for gaps on either side of the alignment | FALSE | Optional |
-| augur_export | **colors_tsv** | File | Custom color definitions, one per line in the format TRAIT_TYPE \| TRAIT_VALUE\tHEX_CODE |  | Optional |
+| augur_export | **colors_tsv** | File | Custom color definitions, one per line in TSV format with the following fields: TRAIT_TYPE TRAIT_VALUE HEX_CODE |  | Optional |
 | augur_export | **description_md** | File | Markdown file with description of build and/or acknowledgements |  | Optional |
 | augur_export | **include_root_sequence** | Boolean | Export an additional JSON containing the root sequence used to identify mutations | FALSE | Optional |
 | augur_export | **title** | String | Title to be displayed by Auspice |  | Optional |

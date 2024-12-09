@@ -288,12 +288,12 @@ workflow theiacov_ont {
     String? kraken_target_organism_name = read_qc_trim.kraken_target_organism_name
     # Read QC - kraken outputs raw
     Float? kraken_human = read_qc_trim.kraken_human
-    Float? kraken_sc2 = read_qc_trim.kraken_sc2
+    String? kraken_sc2 = read_qc_trim.kraken_sc2
     String? kraken_target_organism = read_qc_trim.kraken_target_organism
     File? kraken_report = read_qc_trim.kraken_report
     # Read QC - kraken outputs dehosted
     Float? kraken_human_dehosted = read_qc_trim.kraken_human_dehosted
-    Float? kraken_sc2_dehosted = read_qc_trim.kraken_sc2_dehosted
+    String? kraken_sc2_dehosted = read_qc_trim.kraken_sc2_dehosted
     String? kraken_target_organism_dehosted = read_qc_trim.kraken_target_organism_dehosted
     File? kraken_report_dehosted = read_qc_trim.kraken_report_dehosted
     # Read Alignment - Artic consensus outputs

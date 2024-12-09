@@ -52,14 +52,22 @@ workflow read_QC_trim_pe {
         samplename = samplename,
         read1 = read1,
         read2 = read2,
-        target_organism = target_organism
+        target_organism = target_organism,
+        kraken2_db = kraken_db,
+        disk_size = kraken_disk_size,
+        memory = kraken_memory,
+        cpu = kraken_cpu
     }
     call kraken.kraken2_theiacov as kraken2_theiacov_dehosted {
       input:
         samplename = samplename,
         read1 = select_first([ncbi_scrub_pe.read1_dehosted]),
         read2 = ncbi_scrub_pe.read2_dehosted,
-        target_organism = target_organism
+        target_organism = target_organism,
+        kraken2_db = kraken_db,
+        disk_size = kraken_disk_size,
+        memory = kraken_memory,
+        cpu = kraken_cpu
     }
   }
   if (read_processing == "trimmomatic") {
@@ -174,6 +182,10 @@ workflow read_QC_trim_pe {
     String? fastq_scan_clean_pairs = fastq_scan_clean.read_pairs
     String? fastq_scan_version = fastq_scan_raw.version
     String? fastq_scan_docker = fastq_scan_raw.fastq_scan_docker
+    File? fastq_scan_raw1_json = fastq_scan_raw.read1_fastq_scan_json
+    File? fastq_scan_raw2_json = fastq_scan_raw.read2_fastq_scan_json
+    File? fastq_scan_clean1_json = fastq_scan_clean.read1_fastq_scan_json
+    File? fastq_scan_clean2_json = fastq_scan_clean.read2_fastq_scan_json
     
     # fastqc
     Int? fastqc_raw1 = fastqc_raw.read1_seq
@@ -192,11 +204,11 @@ workflow read_QC_trim_pe {
     # kraken2 - theiacov and theiaprok
     String kraken_version = select_first([kraken2_theiacov_raw.version, kraken2_standalone.kraken2_version, ""])
     Float? kraken_human =  kraken2_theiacov_raw.percent_human
-    Float? kraken_sc2 = kraken2_theiacov_raw.percent_sc2
+    String? kraken_sc2 = kraken2_theiacov_raw.percent_sc2
     String? kraken_target_organism = kraken2_theiacov_raw.percent_target_organism
     String kraken_report = select_first([kraken2_theiacov_raw.kraken_report, kraken2_standalone.kraken2_report, ""])
     Float? kraken_human_dehosted = kraken2_theiacov_dehosted.percent_human
-    Float? kraken_sc2_dehosted = kraken2_theiacov_dehosted.percent_sc2
+    String? kraken_sc2_dehosted = kraken2_theiacov_dehosted.percent_sc2
     String? kraken_target_organism_dehosted = kraken2_theiacov_dehosted.percent_target_organism
     String? kraken_target_organism_name = target_organism
     File? kraken_report_dehosted = kraken2_theiacov_dehosted.kraken_report

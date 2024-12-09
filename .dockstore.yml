@@ -195,6 +195,11 @@ workflows:
    primaryDescriptorPath: /workflows/utilities/data_import/wf_terra_2_bq.wdl
    testParameterFiles:
     - /tests/inputs/empty.json
+ - name: Fetch_SRR_Accession_PHB
+   subclass: WDL
+   primaryDescriptorPath: /workflows/utilities/data_import/wf_fetch_srr_accession.wdl
+   testParameterFiles:
+    - /tests/inputs/empty.json
  - name: Concatenate_Column_Content_PHB
    subclass: WDL
    primaryDescriptorPath: /workflows/utilities/file_handling/wf_concatenate_column.wdl
