@@ -24,13 +24,10 @@ workflow flye_consensus {
     Int? polish_rounds
     String? medaka_model
     Boolean trim_reads = false  # Default: No trimming
-    Boolean no_polishing = false # Default: Polishing enabled
-    Boolean run_polypolish = false # Default: Do not run Polypolish
-  }
+    Boolean no_polishing = false # Default: Polishing enabled  }
   call versioning_task.version_capture {
     input:
   }
-
   # Optional Porechop trimming before Flye
   if (trim_reads) {
     call task_porechop.porechop as porechop {
@@ -39,23 +36,21 @@ workflow flye_consensus {
         samplename = samplename
     }
   }
-
   # Call Flye using either trimmed reads or raw reads
   call task_flye.flye as flye {
     input:
       read1 = select_first([porechop.trimmed_reads, read1]),  # Use trimmed reads if available
       samplename = samplename
   }
-
   # Generate Bandage plot
   call task_bandage.bandage_plot as bandage {
     input:
       assembly_graph_gfa = flye.assembly_graph,
       samplename = samplename
   }
-
   # Hybrid Assembly Path: Polypolish
-  if (defined(illumina_read1) && defined(illumina_read2) && run_polypolish) {
+   # Hybrid Assembly Path: Polypolish
+  if (defined(illumina_read1) && defined(illumina_read2)) {
     call task_bwamem.bwa_index as bwa_index {
       input:
         fasta = flye.assembly_fasta
@@ -101,6 +96,7 @@ workflow flye_consensus {
       }
     }
   }
+
   call task_filtercontigs.contig_filter as contig_filter {
     input:
       assembly_fasta = select_first([polypolish.polished_assembly,medaka.medaka_fasta, racon.polished_fasta, flye.assembly_fasta]), #use Flye assembly if no polishing is true

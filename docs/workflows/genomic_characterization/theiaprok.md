@@ -145,19 +145,15 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 | clean_check_reads | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 2 | Optional | ONT, PE, SE |
 | clean_check_reads | **organism** | String | Internal component, do not modify |  | Do not modify, Optional | ONT, PE, SE |
 | clean_check_reads | **workflow_series** | String | Internal component, do not modify |  | Do not modify, Optional | ONT, PE, SE |
-| dragonflye | **assembler** | String | The assembler to use in dragonflye. Three options: raven, miniasm, flye | flye | Optional | ONT |
-| dragonflye | **assembler_options** | String | Enables extra assembler options in quote |  | Optional | ONT |
-| dragonflye | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional | ONT |
-| dragonflye | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | ONT |
-| dragonflye | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/biocontainers/dragonflye:1.0.14--hdfd78af_0 | Optional | ONT |
-| dragonflye | **illumina_polishing_rounds** | Int | Number of polishing rounds to conduct with Illumina data | 1 | Optional | ONT |
-| dragonflye | **illumina_read1** | File | If Illumina reads are provided, Dragonflye will perform Illumina polishing |  | Optional | ONT |
-| dragonflye | **illumina_read2** | File | If Illumina reads are provided, Dragonflye will perform Illumina polishing |  | Optional | ONT |
-| dragonflye | **medaka_model** | String | The model of medaka to use for assembly | r941_min_hac_g507 | Optional | ONT |
-| dragonflye | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 32 | Optional | ONT |
-| dragonflye | **polishing_rounds** | Int | The number of polishing rounds to conduct (without Illumina) | 1 | Optional | ONT |
-| dragonflye | **use_pilon_illumina_polisher** | Boolean | Set to true to use Pilon to polish Illumina reads | FALSE | Optional | ONT |
-| dragonflye | **use_racon** | Boolean | Set to true to use Racon to polish instead of Medaka | FALSE | Optional | ONT |
+| flye_consensus | **illumina_polishing_rounds** | Int | Number of polishing rounds to conduct with Illumina data | 1 | Optional | ONT |
+| flue_consensus | **illumina_read1** | File | If Illumina reads are provided, Dragonflye will perform Illumina polishing |  | Optional | ONT |
+| flye_consensus | **illumina_read2** | File | If Illumina reads are provided, flye_consensus worflow will perform Illumina polishing |  | Optional | ONT |
+| flye_consensus | **medaka_model** | String | The model of medaka to use for assembly | r1041_e82_400bps_sup_v5.0.0 | Optional | ONT |
+| flye_consensus | **polisher** | String | The polishing tool to use for assembly | medaka | Optional | ONT |
+| flye_consensus | **polishing_rounds** | Int | The number of polishing rounds to conduct for medaka or racon (without Illumina) | 1 | Optional | ONT |
+| flye_consensus | **read1** | File | ONT read file in FASTQ file format (compression optional) |  | Optional | ONT |
+| flye_consensus | **trim_reads** | Boolean | If true, trims reads before assembly | FALSE | Optional | ONT |
+| flye_consensus | **no_polishing** | Boolean | If true, skips polishing | FALSE | Optional | ONT |
 | export_taxon_tables | **asembly_fasta** | File | Internal component, do not modify |  | Do not modify, Optional | FASTA |
 | export_taxon_tables | **bbduk_docker** | String | The Docker container to use for the task |  | Do not modify, Optional | FASTA, ONT |
 | export_taxon_tables | **cg_pipeline_docker** | String | The Docker container to use for the task |  | Do not modify, Optional | FASTA, ONT |

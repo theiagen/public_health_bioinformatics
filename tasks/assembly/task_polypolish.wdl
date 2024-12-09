@@ -7,7 +7,7 @@ task polypolish {
     File read1_sam # these files need to be aligned to the draft assembly with `-a` flag
     File read2_sam # see also the task_bwa.wdl#bwa_all task
 
-    Int polypolish_rounds = 1 # Default: 1 round of polishing
+    Int illumina_polishing_rounds = 1 # Default: 1 round of polishing
     String? pair_orientation # default: auto
     Float? low_percentile_threshold # default: 0.1
     Float? high_percentile_threshold # default: 99.9
