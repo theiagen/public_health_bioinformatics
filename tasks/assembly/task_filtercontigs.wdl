@@ -18,7 +18,7 @@ task contig_filter {
     total_contigs=$(grep -c "^>" ~{assembly_fasta})
     echo "Total contigs: $total_contigs" >&2
 
-    total_bases=$(awk '/^>/ {if (seqlen){print seqlen}; seqlen=0; next} {seqlen += length($0)} END {if (seqlen) print seqlen}' ~{assembly_fasta})
+    total_bases=$(awk '/^>/ {if (seqlen){total+=seqlen}; seqlen=0; next} {seqlen += length($0)} END {total+=seqlen; print total}' ~{assembly_fasta})
     echo "Total bases: $total_bases" >&2
 
     # Filter by length

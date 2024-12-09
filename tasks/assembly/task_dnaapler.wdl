@@ -4,10 +4,10 @@ task dnaapler_all {
   input {
     File input_fasta
     String samplename
-    Int threads = 4
+    Int cpu = 4
     Int disk_size = 100
     Int memory = 16
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/dnaapler:0.8.0"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/dnaapler:1.0.1"
   }
   command <<< 
     set -euo pipefail
@@ -35,7 +35,7 @@ task dnaapler_all {
       -i ~{input_fasta} \
       -o "$output_dir" \
       -p ~{samplename} \
-      -t ~{threads} \
+      -t ~{cpu} \
       -f || {
         echo "ERROR: dnaapler command failed. Check logs for details." >&2
         exit 1
@@ -61,7 +61,7 @@ task dnaapler_all {
   }
   runtime {
     docker: "~{docker}"
-    cpu: threads
+    cpu: cpu
     memory: "~{memory} GB"
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"

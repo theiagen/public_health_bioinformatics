@@ -1,6 +1,6 @@
 version 1.0
 
-workflow porechopabi_workflow {
+task porechop {
   input {
     Array[File] raw_reads             # Input raw reads (FASTQ format)
     String samplename                 
