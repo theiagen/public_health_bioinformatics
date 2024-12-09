@@ -13,7 +13,7 @@ import "../../tasks/assembly/task_polypolish.wdl" as task_polypolish
 
 workflow flye_consensus {
   meta {
-    description: "Run Flye assembly, Bandage plot, and consensus polishing with Medaka or Racon from long reads and reorient contigs with dnaapler"
+    description: "This workflow assembles long-read sequencing data using Flye, optionally trims reads with Porechop, and generates an assembly graph visualization with Bandage. It supports consensus polishing with Medaka or Racon for long reads, or Polypolish for hybrid assemblies with Illumina short reads. The workflow concludes by reorienting contigs with Dnaapler for a final assembly."
   }
   input {
     File read1                    # raw input reads
@@ -27,7 +27,6 @@ workflow flye_consensus {
     Boolean no_polishing = false # Default: Polishing enabled
     Boolean run_polypolish = false # Default: Do not run Polypolish
   }
-    # Capture versioning information
   call versioning_task.version_capture {
     input:
   }
