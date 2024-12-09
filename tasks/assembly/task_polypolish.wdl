@@ -7,6 +7,7 @@ task polypolish {
     File read1_sam # these files need to be aligned to the draft assembly with `-a` flag
     File read2_sam # see also the task_bwa.wdl#bwa_all task
 
+    Int polypolish_rounds = 1 # Default: 1 round of polishing
     String? pair_orientation # default: auto
     Float? low_percentile_threshold # default: 0.1
     Float? high_percentile_threshold # default: 99.9
@@ -23,28 +24,46 @@ task polypolish {
     Int memory = 4
   }
   command <<<
+    set -euo pipefail
+
     polypolish --version | tee VERSION
 
-    polypolish filter \
-      --in1 ~{read1_sam} \
-      --in2 ~{read2_sam} \
-      --out1 ~{samplename}_filtered1.sam \
-      --out2 ~{samplename}_filtered2.sam \
-      ~{"--orientation  " + pair_orientation} \
-      ~{"--low " + low_percentile_threshold} \
-      ~{"--high " + high_percentile_threshold} 
+    # Initial input for polishing
+    polished_assembly="~{assembly_fasta}"
 
-    polypolish polish ~{assembly_fasta} ~{samplename}_filtered1.sam ~{samplename}_filtered2.sam \
-      ~{"--fraction_invalid " + fraction_invalid} \
-      ~{"--fraction_valid " + fraction_valid} \
-      ~{"--max_errors " + maximum_errors} \
-      ~{"--min_depth " + minimum_depth} \
-      ~{true="--careful" false="" careful} \
-      > ~{samplename}_polished.fasta
+    for i in $(seq 1 ~{polypolish_rounds}); do
+      echo "Starting Polypolish round $i..."
+
+      # Filter SAM files
+      polypolish filter \
+        --in1 ~{read1_sam} \
+        --in2 ~{read2_sam} \
+        --out1 ${polished_assembly}_filtered1.sam \
+        --out2 ${polished_assembly}_filtered2.sam \
+        ~{"--orientation " + pair_orientation} \
+        ~{"--low " + low_percentile_threshold} \
+        ~{"--high " + high_percentile_threshold}
+
+      # Perform polishing
+      polypolish polish ${polished_assembly} \
+        ${polished_assembly}_filtered1.sam \
+        ${polished_assembly}_filtered2.sam \
+        ~{"--fraction_invalid " + fraction_invalid} \
+        ~{"--fraction_valid " + fraction_valid} \
+        ~{"--max_errors " + maximum_errors} \
+        ~{"--min_depth " + minimum_depth} \
+        ~{true="--careful" false="" careful} \
+        > "${polished_assembly}_round${i}.fasta"
+
+      polished_assembly="${polished_assembly}_round${i}.fasta"
+    done
+
+    # Final polished output
+    mv "${polished_assembly}" "~{samplename}_final_polished.fasta"
   >>>
   output {
     String polypolish_version = read_string("VERSION")
-    File polished_assembly = "~{samplename}_polished.fasta"
+    File polished_assembly = "~{samplename}_final_polished.fasta"
   }
   runtime {
     docker: "~{docker}"
