@@ -49,7 +49,6 @@ workflow flye_consensus {
       samplename = samplename
   }
   # Hybrid Assembly Path: Polypolish
-   # Hybrid Assembly Path: Polypolish
   if (defined(illumina_read1) && defined(illumina_read2)) {
     call task_bwamem.bwa_index as bwa_index {
       input:
@@ -79,7 +78,7 @@ workflow flye_consensus {
     if (!no_polishing && polisher == "medaka") {
       call task_medaka.medaka_consensus as medaka {
         input:
-          assembly_fasta = flye.assembly_fasta,
+          unpolished_fasta = flye.assembly_fasta,
           samplename = samplename,
           read1 = select_first([porechop.trimmed_reads, read1]),  # Use trimmed reads if available
           medaka_model = medaka_model,
@@ -96,7 +95,7 @@ workflow flye_consensus {
       }
     }
   }
-
+  # Contig Filtering and Final Assembly orientation
   call task_filtercontigs.contig_filter as contig_filter {
     input:
       assembly_fasta = select_first([polypolish.polished_assembly,medaka.medaka_fasta, racon.polished_fasta, flye.assembly_fasta]), #use Flye assembly if no polishing is true

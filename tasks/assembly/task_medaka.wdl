@@ -2,7 +2,7 @@ version 1.0
 
 task medaka_consensus {
     input {
-      File assembly_fasta
+      File unpolished_fasta
       String samplename
       File read1
       String medaka_model = "r1041_e82_400bps_sup_v5.0.0"
@@ -17,8 +17,7 @@ task medaka_consensus {
       medaka --version | tee MEDAKA_VERSION
 
       # Initialize the input for polishing with the provided assembly FASTA
-        cp ~{assembly_fasta} polished_input.fasta
-        cp ~{assembly_fasta} polished_input.fasta
+        cp ~{unpolished_fasta} polished_input.fasta
 
         # Perform Medaka polishing for the specified number of rounds
         for i in $(seq 1 ~{polish_rounds}); do
