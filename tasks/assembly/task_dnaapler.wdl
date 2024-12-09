@@ -4,6 +4,7 @@ task dnaapler_all {
   input {
     File input_fasta
     String samplename
+    String dmaapler_mode = "all" # The mode of reorientation to execute (default: 'all')
     Int cpu = 4
     Int disk_size = 100
     Int memory = 16
@@ -31,7 +32,7 @@ task dnaapler_all {
 
     # Run dnaapler with the 'all' subcommand
     echo "Running dnaapler..."
-    dnaapler all \
+    dnaapler ~{dmaapler_mode} \
       -i ~{input_fasta} \
       -o "$output_dir" \
       -p ~{samplename} \
