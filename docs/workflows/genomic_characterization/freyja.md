@@ -1,11 +1,5 @@
 # Freyja Workflow Series
 
-!!! dna inline end "Wastewater and more"
-    The typical use case of Freyja is to **analyze mixed SARS-CoV-2 samples** from a sequencing dataset, most often **wastewater**.
-
-    !!! warning "Default Values"
-        The defaults included in the Freyja workflows reflect this use case but **can be adjusted for other pathogens**. See the [**Running Freyja on other pathogens**](freyja.md#running-freyja-on-other-pathogens) section for more information.
-
 ## Quick Facts
 
 | **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
@@ -21,9 +15,15 @@
 
 Additional post-processing steps can produce visualizations of aggregated samples.
 
+!!! dna "Wastewater and more"
+    The typical use case of Freyja is to **analyze mixed SARS-CoV-2 samples** from a sequencing dataset, most often **wastewater**.
+
+    !!! warning "Default Values"
+        The defaults included in the Freyja workflows reflect this use case but **can be adjusted for other pathogens**. See the [**Running Freyja on other pathogens**](freyja.md#running-freyja-on-other-pathogens) section for more information.
+
 !!! caption "Figure 1: Workflow Diagram for Freyja_FASTQ_PHB workflow"
     ##### Figure 1 { #figure1 }
-    ![**Figure 1: Workflow diagram for Freyja_FASTQ_PHB workflow.**](../../assets/figures/Freyja_FASTQ.png){width=25%}
+    ![**Figure 1: Workflow diagram for Freyja_FASTQ_PHB workflow.**](../../assets/figures/Freyja_FASTQ.png){width=100%}
 
     Depending on the type of data (Illumina or Oxford Nanopore), the Read QC and Filtering steps, as well as the Read Alignment steps use different software. The user can specify if the barcodes and lineages file should be updated with `freyja update` before running Freyja or if bootstrapping is to be performed with `freyja boot`.
 
@@ -534,18 +534,26 @@ This workflow runs on the set level.
 
 The main requirement to run Freyja on other pathogens is **the existence of a barcode file for your pathogen of interest**. Currently, barcodes exist for the following organisms
 
-- MEASLES
+- SARS-CoV-2 (default)
 - MPXV
+- H5NX
+- H1N1pdm
+- FLU-B-VIC
+- MEASLESN450
+- MEASLES
 - RSVa
 - RSVb
-
-The appropriate barcode file and reference sequence need to be downloaded and uploaded to your [Terra.bio](http://Terra.bio) workspace.
 
 !!! warning "Freyja barcodes for other pathogens"
 
     Data for various pathogens can be found in the following repository: [Freyja Barcodes](https://github.com/gp201/Freyja-barcodes)
 
     Folders are organized by pathogen, with each subfolder named after the date the barcode was generated, using the format YYYY-MM-DD. Barcode files are named `barcode.csv`, and reference genome files are named `reference.fasta`.
+
+There's two ways of 
+The appropriate barcode file and reference sequence need to be downloaded and uploaded to your [Terra.bio](http://Terra.bio) workspace.
+
+
 
 When running **Freyja_FASTQ_PHB**, the appropriate reference and barcodes file need to be passed as inputs. The first is a required input and will show up at the top of the workflows inputs page on [Terra.bio](http://Terra.bio) ([Figure 2](freyja.md/#figure2)).
 
