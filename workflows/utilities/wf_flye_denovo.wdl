@@ -1,15 +1,15 @@
 version 1.0
 
-import "../../tasks/assembly/task_porechop.wdl" as task_porechop
+import "../../tasks/quality_control/read_filtering/task_porechop.wdl" as task_porechop
 import "../../tasks/assembly/task_flye.wdl" as task_flye
 import "../../tasks/assembly/task_bandageplot.wdl" as task_bandage
-import "../../tasks/polyshing/task_medaka.wdl" as task_medaka
-import "../../tasks/polyshing/task_racon.wdl" as task_racon
+import "../../tasks/polishing/task_medaka.wdl" as task_medaka
+import "../../tasks/polishing/task_racon.wdl" as task_racon
 import "../../tasks/assembly/task_dnaapler.wdl" as task_dnaapler
 import "../../tasks/task_versioning.wdl" as versioning_task
-import "../../tasks/read_filtering/task_filtercontigs.wdl" as task_filtercontigs
-import "../../tasks/alignment/task_bwamem.wdl" as task_bwamem
-import "../../tasks/polyshing/task_polypolish.wdl" as task_polypolish
+import "../../tasks/quality_control/read_filtering/task_filtercontigs.wdl" as task_filtercontigs
+import "../../tasks/alignment/task_bwa.wdl" as task_bwamem
+import "../../tasks/polishing/task_polypolish.wdl" as task_polypolish
 
 workflow flye_denovo {
   meta {
@@ -21,7 +21,7 @@ workflow flye_denovo {
     File? illumina_read2          # Optional Illumina short-read R2 for hybrid assembly
     String samplename
     String polisher = "medaka"
-    Int? polish_rounds
+    Int polish_rounds = 1      # Default: 1 polishing round
     String? medaka_model
     Boolean skip_trim_reads = false  # Default: No trimming
     Boolean skip_polishing = false # Default: Polishing enabled  
@@ -30,7 +30,7 @@ workflow flye_denovo {
     input:
   }
   # Optional Porechop trimming before Flye
-  if (skip_trim_reads) {
+  if (!skip_trim_reads) {
     call task_porechop.porechop as porechop {
       input:
         read1 = read1,
@@ -49,31 +49,24 @@ workflow flye_denovo {
       assembly_graph_gfa = flye.assembly_graph,
       samplename = samplename
   }
-  # Hybrid Assembly Path: Polypolish
+ # Hybrid Assembly Path: Polypolish
   if (defined(illumina_read1) && defined(illumina_read2)) {
-    call task_bwamem.bwa_index as bwa_index {
-      input:
-        fasta = flye.assembly_fasta
-    }
-
     call task_bwamem.bwa_all as bwa_all {
       input:
-        index = bwa_index.index,
-        read1 = illumina_read1,
-        read2 = illumina_read2,
+        draft_assembly_fasta = flye.assembly_fasta,
+        read1 = select_first([illumina_read1]),  
+        read2 = select_first([illumina_read2]),  
         samplename = samplename
     }
-
     call task_polypolish.polypolish as polypolish {
       input:
         assembly_fasta = flye.assembly_fasta,
-        read1_sam = bwa_all.sam1,
-        read2_sam = bwa_all.sam2,
+        read1_sam = bwa_all.read1_sam,
+        read2_sam = bwa_all.read2_sam,
         samplename = samplename,
-        polypolish_rounds = select_default(1, polish_rounds)
+        illumina_polishing_rounds = polish_rounds
     }
   }
-
   # ONT-only Polishing Path: Medaka or Racon
   if (!defined(illumina_read1) || !defined(illumina_read2)) {
     if (!skip_polishing && polisher == "medaka") {
@@ -83,15 +76,13 @@ workflow flye_denovo {
           samplename = samplename,
           read1 = select_first([porechop.trimmed_reads, read1]),  # Use trimmed reads if available
           medaka_model = medaka_model,
-          polish_rounds = polish_rounds
       }
     }
-
     if (!skip_polishing && polisher == "racon") {
       call task_racon.racon as racon {
         input:
           unpolished_fasta = flye.assembly_fasta,
-          reads = select_first([porechop.trimmed_reads, read1]),  # Use trimmed reads if available
+          read1 = select_first([porechop.trimmed_reads, read1]),  # Use trimmed reads if available
           samplename = samplename
       }
     }

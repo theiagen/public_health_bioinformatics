@@ -31,7 +31,7 @@ task polypolish {
     # Initial input for polishing
     polished_assembly="~{assembly_fasta}"
 
-    for i in $(seq 1 ~{polypolish_rounds}); do
+    for i in $(seq 1 ~{illumina_polishing_rounds}); do
       echo "Starting Polypolish round $i..."
 
       # Filter SAM files
