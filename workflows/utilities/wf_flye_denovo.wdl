@@ -21,10 +21,11 @@ workflow flye_denovo {
     File? illumina_read2          # Optional Illumina short-read R2 for hybrid assembly
     String samplename
     String polisher = "medaka"
-    Int polish_rounds = 1      # Default: 1 polishing round
-    String? medaka_model
-    Boolean skip_trim_reads = false  # Default: No trimming
-    Boolean skip_polishing = false # Default: Polishing enabled  
+    Int? polish_rounds        # Optional number of polishing rounds
+    String? medaka_model_override # Optional user-specified Medaka model
+    Boolean auto_medaka_model = true  # Enable automatic Medaka model selection
+    Boolean skip_trim_reads = true   # Default: No trimming
+    Boolean skip_polishing = false    # Default: Polishing enabled
   }
   call versioning_task.version_capture {
     input:
@@ -49,13 +50,13 @@ workflow flye_denovo {
       assembly_graph_gfa = flye.assembly_graph,
       samplename = samplename
   }
- # Hybrid Assembly Path: Polypolish
+  # Hybrid Assembly Path: Polypolish
   if (defined(illumina_read1) && defined(illumina_read2)) {
     call task_bwamem.bwa_all as bwa_all {
       input:
         draft_assembly_fasta = flye.assembly_fasta,
-        read1 = select_first([illumina_read1]),  
-        read2 = select_first([illumina_read2]),  
+        read1 = select_first([illumina_read1]),
+        read2 = select_first([illumina_read2]),
         samplename = samplename
     }
     call task_polypolish.polypolish as polypolish {
@@ -75,7 +76,8 @@ workflow flye_denovo {
           unpolished_fasta = flye.assembly_fasta,
           samplename = samplename,
           read1 = select_first([porechop.trimmed_reads, read1]),  # Use trimmed reads if available
-          medaka_model = medaka_model,
+          medaka_model_override = medaka_model_override,
+          auto_model = auto_medaka_model
       }
     }
     if (!skip_polishing && polisher == "racon") {
@@ -83,14 +85,15 @@ workflow flye_denovo {
         input:
           unpolished_fasta = flye.assembly_fasta,
           read1 = select_first([porechop.trimmed_reads, read1]),  # Use trimmed reads if available
-          samplename = samplename
+          samplename = samplename,
+          polishing_rounds = polish_rounds
       }
     }
   }
   # Contig Filtering and Final Assembly orientation
   call task_filtercontigs.contig_filter as contig_filter {
     input:
-      assembly_fasta = select_first([polypolish.polished_assembly,medaka.medaka_fasta, racon.polished_fasta, flye.assembly_fasta]), #use Flye assembly if no polishing is true
+      assembly_fasta = select_first([polypolish.polished_assembly, medaka.medaka_fasta, racon.polished_fasta, flye.assembly_fasta]), # Use Flye assembly if no polishing
   }
   call task_dnaapler.dnaapler_all as dnaapler {
     input:
