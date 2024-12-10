@@ -287,6 +287,7 @@ The Nextstrain team hosts documentation surrounding the Augur workflow → Auspi
 | augur_fasttree_version | String | The fasttree version used |
 | augur_iqtree_model_used | String | The iqtree model used during augur tree |
 | augur_iqtree_version | String | The iqtree version used during augur tree |
+| augur_mafft_version | String | The mafft version used in augur align |
 | augur_phb_analysis_date | String | The date the analysis was run |
 | augur_phb_version | String | The version of the Public Health Bioinformatics (PHB) repository used |
 | augur_raxml_version | String | The version of raxml used during augur tree |
