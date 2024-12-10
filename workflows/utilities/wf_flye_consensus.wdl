@@ -10,6 +10,7 @@ import "../../tasks/task_versioning.wdl" as versioning_task
 import "../../tasks/assembly/task_filtercontigs.wdl" as task_filtercontigs
 import "../../tasks/alignment/task_bwamem.wdl" as task_bwamem
 import "../../tasks/assembly/task_polypolish.wdl" as task_polypolish
+import "../../tasks/quality_control/basic_statistics/flye_assembly_stats.wdl" as task_assembly_stats
 
 workflow flye_consensus {
   meta {
@@ -105,10 +106,17 @@ workflow flye_consensus {
       input_fasta = contig_filter.filtered_fasta,
       samplename = samplename
   }
+  # Assembly stats
+  call task_assembly_stats as assembly_stats {
+  input:
+    assembly_fasta = dnaapler.reoriented_fasta,
+    samplename = samplename
+ }
   output {
     File final_assembly = dnaapler.reoriented_fasta
     File bandage_plot = bandage.plot
     File filtered_assembly = contig_filter.filtered_fasta
+    File flye_assembly_stats = assembly_stats.assembly_stats_file
     String flye_phb_version = version_capture.phb_version
     String flye_analysis_date = version_capture.date
   }

@@ -20,22 +20,22 @@ task racon {
     # Start with the unpolished FASTA as the input
     intermediate_fasta="~{unpolished_fasta}"
 
-    for round in $(seq 1 ~{polishing_rounds}); do
-      echo "Starting Racon polishing round $round..."
+     for i in $(seq 1 ~{polishing_rounds}); do
+       echo "Starting Medaka polishing round $i"
 
       # Generate alignments with Minimap2
-      minimap2 -t ~{cpu} "${intermediate_fasta}" "~{read1}" > "~{samplename}_round${round}.paf"
+      minimap2 -t ~{cpu} "${intermediate_fasta}" "~{read1}" > "~{samplename}_round${i}.paf"
 
       # Run Racon for polishing
       racon \
         -t ~{cpu} \
         "~{read1}" \
-        "~{samplename}_round${round}.paf" \
+        "~{samplename}_round${i}.paf" \
         "${intermediate_fasta}" \
-        > "~{samplename}_round${round}.polished.fasta"
+        > "~{samplename}_round${i}.polished.fasta"
 
       # Update current_fasta for the next round
-      intermediate_fasta="~{samplename}_round${round}.polished.fasta"
+      intermediate_fasta="~{samplename}_round${i}.polished.fasta"
     done
 
     # Move the final polished assembly to the output
