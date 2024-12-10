@@ -63,12 +63,14 @@ task contig_filter {
 
     # Write filtering metrics to a summary file
     metrics_file="filtering_metrics.txt"
-    echo "Total contigs: $total_contigs" > $metrics_file
-    echo "Total bases: $total_bases" >> $metrics_file
-    echo "Contigs retained: $retained_contigs" >> $metrics_file
-    echo "Bases retained: $retained_bases" >> $metrics_file
-    echo "Contigs removed (short length): $((total_contigs - retained_contigs))" >> $metrics_file
-    echo "Contigs removed (homopolymers): $contigs_removed_homopolymers" >> $metrics_file
+    {
+      echo "Total contigs: $total_contigs"
+      echo "Total bases: $total_bases"
+      echo "Contigs retained: $retained_contigs"
+      echo "Bases retained: $retained_bases"
+      echo "Contigs removed (short length): $((total_contigs - retained_contigs))"
+      echo "Contigs removed (homopolymers): $contigs_removed_homopolymers"
+    } > $metrics_file
 
     cat $metrics_file >&2
   >>>
