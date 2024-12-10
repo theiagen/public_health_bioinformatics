@@ -6,7 +6,7 @@ task assembly_stats {
     String samplename
     Int cpu = 1
     Int memory = 4
-    Int disk_size = 10
+    Int disk_size = 50
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/seqkit:2.8.2"
   }
   command <<< 

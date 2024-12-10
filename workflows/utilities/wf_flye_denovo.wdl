@@ -3,16 +3,15 @@ version 1.0
 import "../../tasks/assembly/task_porechop.wdl" as task_porechop
 import "../../tasks/assembly/task_flye.wdl" as task_flye
 import "../../tasks/assembly/task_bandageplot.wdl" as task_bandage
-import "../../tasks/assembly/task_medaka.wdl" as task_medaka
-import "../../tasks/assembly/task_racon.wdl" as task_racon
+import "../../tasks/polyshing/task_medaka.wdl" as task_medaka
+import "../../tasks/polyshing/task_racon.wdl" as task_racon
 import "../../tasks/assembly/task_dnaapler.wdl" as task_dnaapler
 import "../../tasks/task_versioning.wdl" as versioning_task
-import "../../tasks/assembly/task_filtercontigs.wdl" as task_filtercontigs
+import "../../tasks/read_filtering/task_filtercontigs.wdl" as task_filtercontigs
 import "../../tasks/alignment/task_bwamem.wdl" as task_bwamem
-import "../../tasks/assembly/task_polypolish.wdl" as task_polypolish
-import "../../tasks/quality_control/basic_statistics/flye_assembly_stats.wdl" as task_assembly_stats
+import "../../tasks/polyshing/task_polypolish.wdl" as task_polypolish
 
-workflow flye_consensus {
+workflow flye_denovo {
   meta {
     description: "This workflow assembles long-read sequencing data using Flye, optionally trims reads with Porechop, and generates an assembly graph visualization with Bandage. It supports consensus polishing with Medaka or Racon for long reads, or Polypolish for hybrid assemblies with Illumina short reads. The workflow concludes by reorienting contigs with Dnaapler for a final assembly."
   }
@@ -24,13 +23,14 @@ workflow flye_consensus {
     String polisher = "medaka"
     Int? polish_rounds
     String? medaka_model
-    Boolean trim_reads = false  # Default: No trimming
-    Boolean no_polishing = false # Default: Polishing enabled  }
+    Boolean skip_trim_reads = false  # Default: No trimming
+    Boolean skip_polishing = false # Default: Polishing enabled  
+  }
   call versioning_task.version_capture {
     input:
   }
   # Optional Porechop trimming before Flye
-  if (trim_reads) {
+  if (skip_trim_reads) {
     call task_porechop.porechop as porechop {
       input:
         read1 = read1,
@@ -76,7 +76,7 @@ workflow flye_consensus {
 
   # ONT-only Polishing Path: Medaka or Racon
   if (!defined(illumina_read1) || !defined(illumina_read2)) {
-    if (!no_polishing && polisher == "medaka") {
+    if (!skip_polishing && polisher == "medaka") {
       call task_medaka.medaka_consensus as medaka {
         input:
           unpolished_fasta = flye.assembly_fasta,
@@ -87,7 +87,7 @@ workflow flye_consensus {
       }
     }
 
-    if (!no_polishing && polisher == "racon") {
+    if (!skip_polishing && polisher == "racon") {
       call task_racon.racon as racon {
         input:
           unpolished_fasta = flye.assembly_fasta,
@@ -106,17 +106,10 @@ workflow flye_consensus {
       input_fasta = contig_filter.filtered_fasta,
       samplename = samplename
   }
-  # Assembly stats
-  call task_assembly_stats as assembly_stats {
-  input:
-    assembly_fasta = dnaapler.reoriented_fasta,
-    samplename = samplename
- }
   output {
     File final_assembly = dnaapler.reoriented_fasta
     File bandage_plot = bandage.plot
     File filtered_assembly = contig_filter.filtered_fasta
-    File flye_assembly_stats = assembly_stats.assembly_stats_file
     String flye_phb_version = version_capture.phb_version
     String flye_analysis_date = version_capture.date
   }
