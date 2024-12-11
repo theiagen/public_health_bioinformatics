@@ -100,7 +100,6 @@ workflow theiaprok_ont {
        call flye_workflow.flye_denovo {
        input:
          read1 = read_qc_trim.read1_clean,
-         genome_length = select_first([genome_length, read_qc_trim.est_genome_length]),
          samplename = samplename
        }
       call quast_task.quast {
