@@ -22,7 +22,7 @@
       
       
       <link rel="icon" href="../../../assets/logos/Theiagen-Symbol-Standard-01.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.47">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.48">
     
     
       
@@ -5456,14 +5456,6 @@
 
 
 <h1 id="freyja-workflow-series">Freyja Workflow Series<a class="headerlink" href="#freyja-workflow-series" title="Permanent link">&para;</a></h1>
-<div class="admonition dna inline end">
-<p class="admonition-title">Wastewater and more</p>
-<p>The typical use case of Freyja is to <strong>analyze mixed SARS-CoV-2 samples</strong> from a sequencing dataset, most often <strong>wastewater</strong>.</p>
-<div class="admonition warning">
-<p class="admonition-title">Default Values</p>
-<p>The defaults included in the Freyja workflows reflect this use case but <strong>can be adjusted for other pathogens</strong>. See the <a href="./#running-freyja-on-other-pathogens"><strong>Running Freyja on other pathogens</strong></a> section for more information.</p>
-</div>
-</div>
 <h2 id="quick-facts">Quick Facts<a class="headerlink" href="#quick-facts" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -5479,7 +5471,7 @@
 <tr>
 <td><a href="../../../workflows_overview/workflows_type/#genomic-characterization">Genomic Characterization</a></td>
 <td><a href="../../../workflows_overview/workflows_kingdom/#viral">Viral</a></td>
-<td>PHB v2.2.0</td>
+<td>PHB v2.3.0</td>
 <td>Yes</td>
 <td>Sample-level, Set-level</td>
 </tr>
@@ -5492,10 +5484,18 @@
 <li>Depth-weighted demixing using constrained least absolute deviation regression.</li>
 </ol>
 <p>Additional post-processing steps can produce visualizations of aggregated samples.</p>
+<div class="admonition dna">
+<p class="admonition-title">Wastewater and more</p>
+<p>The typical use case of Freyja is to <strong>analyze mixed SARS-CoV-2 samples</strong> from a sequencing dataset, most often <strong>wastewater</strong>.</p>
+<div class="admonition warning">
+<p class="admonition-title">Default Values</p>
+<p>The defaults included in the Freyja workflows reflect this use case but <strong>can be adjusted for other pathogens</strong>. See the <a href="./#running-freyja-on-other-pathogens"><strong>Running Freyja on other pathogens</strong></a> section for more information.</p>
+</div>
+</div>
 <div class="admonition caption">
 <p class="admonition-title">Figure 1: Workflow Diagram for Freyja_FASTQ_PHB workflow</p>
 <h5 id="figure1">Figure 1<a class="headerlink" href="#figure1" title="Permanent link">&para;</a></h5>
-<p><a class="glightbox" href="../../../assets/figures/Freyja_FASTQ.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="**Figure 1: Workflow diagram for Freyja_FASTQ_PHB workflow.**" src="../../../assets/figures/Freyja_FASTQ.png" width="25%" /></a></p>
+<p><a class="glightbox" href="../../../assets/figures/Freyja_FASTQ.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="**Figure 1: Workflow diagram for Freyja_FASTQ_PHB workflow.**" src="../../../assets/figures/Freyja_FASTQ.png" width="100%" /></a></p>
 <p>Depending on the type of data (Illumina or Oxford Nanopore), the Read QC and Filtering steps, as well as the Read Alignment steps use different software. The user can specify if the barcodes and lineages file should be updated with <code>freyja update</code> before running Freyja or if bootstrapping is to be performed with <code>freyja boot</code>.</p>
 </div>
 <p>Four workflows have been created that perform different parts of Freyja:</p>
@@ -5562,7 +5562,7 @@
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>"us-docker.pkg.dev/general-theiagen/staphb/freyja:1.5.1-07_02_2024-01-27-2024-07-22"</td>
+<td>"us-docker.pkg.dev/general-theiagen/staphb/freyja:1.5.2-11_30_2024-02-00-2024-12-02"</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -5760,7 +5760,7 @@
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>"us-docker.pkg.dev/general-theiagen/staphb/freyja:1.5.1-07_02_2024-01-27-2024-07-22"</td>
+<td>"us-docker.pkg.dev/general-theiagen/staphb/freyja:1.5.2-11_30_2024-02-00-2024-12-02"</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -5773,11 +5773,27 @@
 </tr>
 <tr>
 <td>freyja</td>
+<td><strong>freyja_barcodes</strong></td>
+<td>String</td>
+<td>Custom barcode file. Does not need to be provided if update_db is true if the freyja_pathogen is provided.</td>
+<td>None</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>freyja</td>
 <td><strong>freyja_lineage_metadata</strong></td>
 <td>File</td>
-<td>(found in the optional section, but is required) File containing the lineage metadata; the "curated_lineages.json" file found <a href="https://github.com/andersen-lab/Freyja/tree/main/freyja/data">https://github.com/andersen-lab/Freyja/tree/main/freyja/data</a> can be used for this variable. Does not need to be provided if update_db is true.</td>
+<td>File containing the lineage metadata; the "curated_lineages.json" file found <a href="https://github.com/andersen-lab/Freyja/tree/main/freyja/data">https://github.com/andersen-lab/Freyja/tree/main/freyja/data</a> can be used for this variable. Does not need to be provided if update_db is true or if the freyja_pathogen is provided.</td>
 <td>None</td>
 <td>Optional, Required</td>
+</tr>
+<tr>
+<td>freyja</td>
+<td><strong>freyja_pathogen</strong></td>
+<td>String</td>
+<td>Pathogen of interest, used if not providing the barcodes and lineage metadata files. Options: SARS-CoV-2, MPXV, H5NX, H1N1pdm, FLU-B-VIC, MEASLESN450, MEASLES, RSVa, RSVb</td>
+<td>None</td>
+<td>Optional</td>
 </tr>
 <tr>
 <td>freyja</td>
@@ -5799,7 +5815,7 @@
 <td>freyja</td>
 <td><strong>update_db</strong></td>
 <td>Boolean</td>
-<td>Updates the Freyja reference files (the usher barcodes and lineage metadata files) but will not save them as output (use Freyja_Update for that purpose). If set to true, the <code>freyja_lineage_metadata</code> and <code>freyja_usher_barcodes</code> files are not required.</td>
+<td>Updates the Freyja reference files (the usher barcodes and lineage metadata files) but will not save them as output (use Freyja_Update for that purpose). If set to true, the <code>freyja_lineage_metadata</code> and <code>freyja_barcodes</code> files are not required.</td>
 <td>FALSE</td>
 <td>Optional</td>
 </tr>
@@ -6958,9 +6974,9 @@
 <td>ONT, PE, SE</td>
 </tr>
 <tr>
-<td>freyja_usher_barcode_file</td>
+<td>freyja_barcode_file</td>
 <td>File</td>
-<td>USHER barcode feather file used. Can be the one provided as input or downloaded by Freyja if update_db is true</td>
+<td>Barcode feather file used. Can be the one provided as input or downloaded by Freyja if update_db is true</td>
 <td>ONT, PE, SE</td>
 </tr>
 <tr>
@@ -7295,7 +7311,7 @@
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/freyja:1.5.1-07_02_2024-01-27-2024-07-22</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/freyja:1.5.2-11_30_2024-02-00-2024-12-02</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7525,7 +7541,7 @@
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/freyja:1.5.1-07_02_2024-01-27-2024-07-22</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/freyja:1.5.2-11_30_2024-02-00-2024-12-02</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7662,24 +7678,29 @@
 <h2 id="running-freyja-on-other-pathogens">Running Freyja on other pathogens<a class="headerlink" href="#running-freyja-on-other-pathogens" title="Permanent link">&para;</a></h2>
 <p>The main requirement to run Freyja on other pathogens is <strong>the existence of a barcode file for your pathogen of interest</strong>. Currently, barcodes exist for the following organisms</p>
 <ul>
-<li>MEASLES</li>
+<li>SARS-CoV-2 (default)</li>
 <li>MPXV</li>
+<li>H5NX</li>
+<li>H1N1pdm</li>
+<li>FLU-B-VIC</li>
+<li>MEASLESN450</li>
+<li>MEASLES</li>
 <li>RSVa</li>
 <li>RSVb</li>
 </ul>
-<p>The appropriate barcode file and reference sequence need to be downloaded and uploaded to your <a href="http://Terra.bio">Terra.bio</a> workspace.</p>
 <div class="admonition warning">
 <p class="admonition-title">Freyja barcodes for other pathogens</p>
 <p>Data for various pathogens can be found in the following repository: <a href="https://github.com/gp201/Freyja-barcodes">Freyja Barcodes</a></p>
 <p>Folders are organized by pathogen, with each subfolder named after the date the barcode was generated, using the format YYYY-MM-DD. Barcode files are named <code>barcode.csv</code>, and reference genome files are named <code>reference.fasta</code>.</p>
 </div>
+<p>The appropriate barcode file and reference sequence need to be downloaded and uploaded to your <a href="http://Terra.bio">Terra.bio</a> workspace.</p>
 <p>When running <strong>Freyja_FASTQ_PHB</strong>, the appropriate reference and barcodes file need to be passed as inputs. The first is a required input and will show up at the top of the workflows inputs page on <a href="http://Terra.bio">Terra.bio</a> (<a href="./#figure2">Figure 2</a>).</p>
 <div class="admonition caption">
 <p class="admonition-title">Figure 2:  Required input for Freyja_FASTQ_PHB to provide the reference genome to be used by Freyja</p>
 <h5 id="figure2">Figure 2<a class="headerlink" href="#figure2" title="Permanent link">&para;</a></h5>
 <p><a class="glightbox" href="../../../assets/figures/Freyja_figure2.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="**Figure 2:  Required input for Freyja_FASTQ_PHB to provide the reference genome to be used by Freyja.**" src="../../../assets/figures/Freyja_figure2.png" /></a></p>
 </div>
-<p>The barcodes file can be passed directly to Freyja by the <code>freyja_usher_barcodes</code> optional input (<a href="./#figure3">Figure 3</a>).</p>
+<p>The barcodes file can be passed directly to Freyja by the <code>freyja_barcodes</code> optional input (<a href="./#figure3">Figure 3</a>).</p>
 <div class="admonition caption">
 <p class="admonition-title">Figure 3: Optional input for Freyja_FASTQ_PHB to provide the barcodes file to be used by Freyja</p>
 <h5 id="figure3">Figure 3<a class="headerlink" href="#figure3" title="Permanent link">&para;</a></h5>
@@ -7720,7 +7741,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2024-12-05</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2024-12-11</span>
   </span>
 
     
