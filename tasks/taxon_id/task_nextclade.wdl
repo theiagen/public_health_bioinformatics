@@ -139,70 +139,82 @@ task nextclade_output_parser {
     String? organism
   }
   command <<<
-    # Set WDL input variable to input.tsv file
-    cat "~{nextclade_tsv}" > input.tsv
-    touch TAMIFLU_AASUBS
-    
     # Parse outputs using python3
     python3 <<CODE
     import csv
-    import codecs
 
-    with codecs.open("./input.tsv",'r') as tsv_file:
+    with open("~{nextclade_tsv}", 'r') as tsv_file:
       tsv_reader = csv.reader(tsv_file, delimiter="\t")
       tsv_data = list(tsv_reader)
 
       if len(tsv_data) == 1:
         tsv_data.append(['NA']*len(tsv_data[0]))
+
       tsv_dict = dict(zip(tsv_data[0], tsv_data[1]))
 
-      # combine 'clade_nextstrain' and 'clade_who' column if sars-cov-2, if false then parse 'clade' column
+      # function to write a field in the tsv_dict to a file for output
+      def write_field_to_file(output_file_name, item_to_parse):
+        with open(output_file_name, 'wt') as output_file:
+          item = tsv_dict[item_to_parse]
+          if item == '':
+            item = 'NA'
+          output_file.write(item)
+
+      # combine 'clade_nextstrain' and 'clade_who' column if sars-cov-2
       if ("~{organism}" == "sars-cov-2"):
-        with codecs.open("NEXTCLADE_CLADE", 'wt') as Nextclade_Clade:
+        with open("NEXTCLADE_CLADE", 'wt') as nextclade_clade:
           nc_clade = tsv_dict['clade_nextstrain']
           who_clade = tsv_dict['clade_who']
           if (nc_clade != who_clade) and (nc_clade != '') and (who_clade != ''):
             nc_clade = nc_clade + " (" + who_clade + ")"
           if nc_clade == '':
             nc_clade = 'NA'
-          Nextclade_Clade.write(nc_clade)
+          nextclade_clade.write(nc_clade)
+
       else:
-        with codecs.open("NEXTCLADE_CLADE", 'wt') as Nextclade_Clade:
-          nc_clade = tsv_dict['clade']
-          if nc_clade == '':
-            nc_clade = 'NA'
-          Nextclade_Clade.write(nc_clade)
+        write_field_to_file("NEXTCLADE_CLADE", 'clade')
 
-      with codecs.open("NEXTCLADE_AASUBS", 'wt') as Nextclade_AA_Subs:
-        nc_aa_subs = tsv_dict['aaSubstitutions']
-        if nc_aa_subs == '':
-          nc_aa_subs = 'NA'
-        Nextclade_AA_Subs.write(nc_aa_subs)
+      write_field_to_file('NEXTCLADE_AASUBS', 'aaSubstitutions')
+      write_field_to_file('NEXTCLADE_AADELS', 'aaDeletions')
 
-      with codecs.open("NEXTCLADE_AADELS", 'wt') as Nextclade_AA_Dels:
-        nc_aa_dels = tsv_dict['aaDeletions']
-        if nc_aa_dels == '':
-          nc_aa_dels = 'NA'
-        Nextclade_AA_Dels.write(nc_aa_dels)
+      if 'lineage' in tsv_dict:
+        write_field_to_file('NEXTCLADE_LINEAGE', 'lineage')
+      elif 'Nextclade_pango' in tsv_dict:
+        write_field_to_file('NEXTCLADE_LINEAGE', 'Nextclade_pango')
 
-      with codecs.open("NEXTCLADE_LINEAGE", 'wt') as Nextclade_Lineage:
-        if 'lineage' in tsv_dict:
-          nc_lineage = tsv_dict['lineage']
-          if nc_lineage is None:
-            nc_lineage = ""
-        elif 'Nextclade_pango' in tsv_dict:
-          nc_lineage = tsv_dict['Nextclade_pango']
-          if nc_lineage is None:
-            nc_lineage = ""
-        else:
-          nc_lineage = ""
-        Nextclade_Lineage.write(nc_lineage)
-      
-      with codecs.open("NEXTCLADE_QC", 'wt') as Nextclade_QC:
-        nc_qc = tsv_dict['qc.overallStatus']
-        if nc_qc == '':
-          nc_qc = 'NA'
-        Nextclade_QC.write(nc_qc)
+      write_field_to_file('NEXTCLADE_QC', 'qc.overallStatus')
+
+      if ("~{organism}" == "flu"):
+        # split the amino acid mutations by segment
+        segments=["PB2", "PB1", "PA", "HA", "NP", "NA", "MP", "NS"]
+
+        def process_nc_aa_string(file_path):
+          segments_dict = {segment: [] for segment in segments}
+
+          with open(file_path, 'r') as file:
+            nc_aa_string = file.read().strip()
+
+          mutation_list = nc_aa_string.split(',')
+
+          for single_mutation in mutation_list:
+            segment, change = single_mutation.split(':')
+            if segment in segments_dict and change != '':
+              segments_dict[segment].append(single_mutation)
+
+        if nc_aa_subs != '' and nc_aa_subs != 'NA':
+          process_nc_aa_string("NEXTCLADE_AASUBS")
+
+        if nc_aa_dels != '' and nc_aa_dels != 'NA':
+          process_nc_aa_string("NEXTCLADE_AADELS")
+
+        write_field_to_file
+        for segment, values in segments_dict.items():
+          with open(f"NEXTCLADE_AA_FLU_{segment}", 'w') as nextclade_aa_flu:
+            nextclade_aa_flu.write(','.join(values))])
+      else:
+       # prevent WDL failures
+       touch NEXTCLADE_AA_FLU_PB2 NEXTCLADE_AA_FLU_PB1 NEXTCLADE_AA_FLU_PA NEXTCLADE_AA_FLU_HA NEXTCLADE_AA_FLU_NP NEXTCLADE_AA_FLU_NA NEXTCLADE_AA_FLU_MP NEXTCLADE_AA_FLU_NS
+
     CODE
   >>>
   runtime {
@@ -220,6 +232,15 @@ task nextclade_output_parser {
     String nextclade_aa_dels = read_string("NEXTCLADE_AADELS")
     String nextclade_lineage = read_string("NEXTCLADE_LINEAGE")
     String nextclade_qc = read_string("NEXTCLADE_QC")
+    # flu fields only
+    String nextclade_aa_flu_pb2 = read_string("NEXTCLADE_AA_FLU_PB2")
+    String nextclade_aa_flu_pb1 = read_string("NEXTCLADE_AA_FLU_PB1")
+    String nextclade_aa_flu_pa = read_string("NEXTCLADE_AA_FLU_PA")
+    String nextclade_aa_flu_ha = read_string("NEXTCLADE_AA_FLU_HA")
+    String nextclade_aa_flu_np = read_string("NEXTCLADE_AA_FLU_NP")
+    String nextclade_aa_flu_na = read_string("NEXTCLADE_AA_FLU_NA")
+    String nextclade_aa_flu_mp = read_string("NEXTCLADE_AA_FLU_MP")
+    String nextclade_aa_flu_ns = read_string("NEXTCLADE_AA_FLU_NS")
   }
 }
 

@@ -7,14 +7,16 @@ task irma {
     String seq_method
     String samplename
     Boolean keep_ref_deletions = true
-    String read_basename = basename(read1)
+    Int minimum_consensus_support = 50
     String docker = "us-docker.pkg.dev/general-theiagen/cdcgov/irma:v1.1.5"
     Int memory = 16
     Int cpu = 4
     Int disk_size = 100
   }
+  String read_basename = basename(read1)
   command <<<
-    date | tee DATE
+    # capture irma vesion
+    IRMA | head -n1 | awk -F' ' '{ print "IRMA " $5 }' | tee VERSION
 
     num_cpus_actual=$(nproc)
     echo "DEBUG: Number of CPUs available: ${num_cpus_actual}. Setting this in irma_config.sh file..."
@@ -22,51 +24,40 @@ task irma {
     # set this variable to half the value of num_cpus_actual, as per the IRMA documentation: https://wonder.cdc.gov/amd/flu/irma/configuration.html
     echo "DOUBLE_LOCAL_PROC=$((${num_cpus_actual}/2))" >> irma_config.sh
 
+    # any base with less than the minimum support depth will be called N
+    echo "MIN_CONS_SUPPORT=~{minimum_consensus_support}" >> irma_config.sh
+
     # this is done so that IRMA used PWD as the TMP directory instead of /tmp/root that it tries by default; cromwell doesn't allocate much disk space here (64MB or some small amount)
     echo "DEBUG: creating an optional IRMA configuration file to set TMP directory to $(pwd)"
     echo "TMP=$(pwd)" >> irma_config.sh
 
-    #capture reads as bash variables
+    # capture reads as bash variables 
     read1=~{read1}
-    if [[ "~{read2}" ]]; then 
+    if [ -f ~{read2} ]; then 
       read2=~{read2}
     fi
 
-    # set cat command based on compression
-    if [[ "~{read1}" == *".gz" ]] ; then
-      cat_reads="zcat"
-    else
-      cat_reads="cat"
-    fi
-
-    # capture irma vesion
-    IRMA | head -n1 | awk -F' ' '{ print "IRMA " $5 }' | tee VERSION
-    
     # set config if needed
     if ~{keep_ref_deletions}; then 
       touch irma_config.sh
       echo 'DEL_TYPE="NNN"' >> irma_config.sh
       echo 'ALIGN_PROG="BLAT"' >> irma_config.sh
-      # attempting this to try to use Ns in final output FASTAs instead of periods; output assembly should have .pad.fa suffix
-      # TODO test again and look at .pad.fa files
-      #echo "ALIGN_AMENDED=1" >> irma_config.sh
-      #echo "ASSEM_REF=1" >> irma_config.sh
-      #echo "PADDED_CONSENSUS=1" >> irma_config.sh
     fi
 
     # format reads, if needed
-    read_header=$(${cat_reads} ~{read1} | head -n1)
+    read_header=$(zcat -f ~{read1} | head -n1)
     if ! [[ "${read_header}" =~ @(.+?)[_[:space:]][123]:.+ ]]; then
-      echo "Read headers may lead to IRMA failure; reformatting to meet IRMA input requirements"
-      sra_id=$(echo "~{read_basename}" | awk -F "_" '{ print $1 }')
-      eval "${cat_reads} ~{read1}" | awk '{print (NR%4 == 1) ? "@'${sra_id}'-" ++i " 1:1" : $0}' | gzip -c > "${sra_id}-irmafix_R1.fastq.gz"
-      read1="${sra_id}-irmafix_R1.fastq.gz"
-      if [[ "~{read2}" ]]; then 
-        eval "${cat_reads} ~{read2}" | awk '{print (NR%4 == 1) ? "@'${sra_id}'-" ++i " 2:2" : $0}' | gzip -c > "${sra_id}-irmafix_R2.fastq.gz"
-        read2="${sra_id}-irmafix_R2.fastq.gz"
+      echo "DEBUG: Read headers may lead to IRMA failure; reformatting to meet IRMA input requirements"
+      read_basename=$(echo "~{read_basename}" | awk -F "_" '{ print $1 }')
+      
+      eval "zcat -f ~{read1}" | awk '{print (NR%4 == 1) ? "@'${read_basename}'-" ++i " 1:1" : $0}' | gzip -c > "${read_basename}-irmafix_R1.fastq.gz"
+      read1="${read_basename}-irmafix_R1.fastq.gz"
+      if [ -f ~{read2} ]; then 
+        eval "zcat -f ~{read2}" | awk '{print (NR%4 == 1) ? "@'${read_basename}'-" ++i " 2:2" : $0}' | gzip -c > "${read_basename}-irmafix_R2.fastq.gz"
+        read2="${read_basename}-irmafix_R2.fastq.gz"
       fi     
     else
-      echo "Read headers match IRMA formatting requirements"
+      echo "DEBUG: Read headers match IRMA formatting requirements"
     fi
 
     echo "DEBUG: Custom irma_config.sh file contents:"
@@ -98,7 +89,7 @@ task irma {
 
       # concatenate files in the order of the segments array
       for segment in "${segments[@]}"; do
-        segment_file=$(find "~{samplename}" -name "*${segment}*.fasta")
+        segment_file=$(find "~{samplename}/amended_consensus" -name "*${segment}*.fasta")
         if [ -n "$segment_file" ]; then
           echo "DEBUG: Adding $segment_file to consensus FASTA"
           cat "$segment_file" >> ~{samplename}.irma.consensus.fasta
@@ -199,6 +190,7 @@ task irma {
     File? seg_mp_assembly = "~{samplename}_MP.fasta"
     File? seg_np_assembly = "~{samplename}_NP.fasta"
     File? seg_ns_assembly = "~{samplename}_NS.fasta"
+    
     # adding these "padded" assemblies as outputs to be passed to VADR and MAFFT (antiviral substitutions tasks)
     # we may remove these outputs in the future if IRMA code is updated to not output periods in the consensus sequences
     File? irma_assembly_fasta_padded = "~{samplename}.irma.consensus.pad.fasta"
