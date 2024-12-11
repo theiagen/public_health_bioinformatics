@@ -550,7 +550,6 @@ The main requirement to run Freyja on other pathogens is **the existence of a ba
 
     Folders are organized by pathogen, with each subfolder named after the date the barcode was generated, using the format YYYY-MM-DD. Barcode files are named `barcode.csv`, and reference genome files are named `reference.fasta`.
 
-There's two ways of 
 The appropriate barcode file and reference sequence need to be downloaded and uploaded to your [Terra.bio](http://Terra.bio) workspace.
 
 
