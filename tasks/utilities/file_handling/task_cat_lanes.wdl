@@ -47,7 +47,7 @@ task cat_lanes {
     docker: "~{docker}"
     memory: memory + " GB"
     cpu: cpu
-    disks: "local-disk " + disk_size + " HDD"
+    disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
     preemptible: 1
   }
