@@ -82,7 +82,6 @@ task export_taxon_tables {
     String? tiptoft_version
     File? assembly_fasta
     File? contigs_gfa
-    String? dragonflye_version
     String? shovill_pe_version
     String? shovill_se_version
     File? quast_report
@@ -493,7 +492,6 @@ task export_taxon_tables {
       "tiptoft_version": "~{tiptoft_version}",
       "assembly_fasta": "~{assembly_fasta}",
       "contigs_gfa": "~{contigs_gfa}",
-      "dragonflye_version": "~{dragonflye_version}",
       "shovill_pe_version": "~{shovill_pe_version}",
       "shovill_se_version": "~{shovill_se_version}",
       "quast_report": "~{quast_report}",

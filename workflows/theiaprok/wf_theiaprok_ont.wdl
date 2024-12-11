@@ -1,6 +1,5 @@
 version 1.0
 
-import "../../tasks/assembly/task_dragonflye.wdl" as dragonflye_task
 import "../../tasks/gene_typing/annotation/task_bakta.wdl" as bakta_task
 import "../../tasks/gene_typing/annotation/task_prokka.wdl" as prokka_task
 import "../../tasks/gene_typing/drug_resistance/task_amrfinderplus.wdl" as amrfinderplus
@@ -20,6 +19,7 @@ import "../../tasks/taxon_id/task_gambit.wdl" as gambit_task
 import "../../tasks/utilities/data_export/task_broad_terra_tools.wdl" as terra_tools_task
 import "../utilities/wf_merlin_magic.wdl" as merlin_magic_workflow
 import "../utilities/wf_read_QC_trim_ont.wdl" as read_qc_workflow
+import "../utilities/wf_flye_denovo.wdl" as flye_workflow
 
 workflow theiaprok_ont {
   meta {
@@ -97,16 +97,16 @@ workflow theiaprok_ont {
         expected_genome_length = genome_length
     }
     if (clean_check_reads.read_screen == "PASS") {
-       call dragonflye_task.dragonflye {
-         input:
-           read1 = read_qc_trim.read1_clean,
-           genome_length = select_first([genome_length, read_qc_trim.est_genome_length]),
-           samplename = samplename
+       call flye_workflow.flye_denovo {
+       input:
+         read1 = read_qc_trim.read1_clean,
+         genome_length = select_first([genome_length, read_qc_trim.est_genome_length]),
+         samplename = samplename
        }
       call quast_task.quast {
-        input:
-          assembly = dragonflye.assembly_fasta,
-          samplename = samplename
+      input:
+        assembly = flye_denovo.final_assembly,
+        samplename = samplename
       }
       # nanoplot for basic QC metrics
       call nanoplot_task.nanoplot as nanoplot_raw {
@@ -123,73 +123,73 @@ workflow theiaprok_ont {
       }
       call busco_task.busco {
         input:
-          assembly = dragonflye.assembly_fasta,
+          assembly = flye_denovo.final_assembly,
           samplename = samplename
       }
       if (perform_characterization) {
         call gambit_task.gambit {
           input:
-            assembly = dragonflye.assembly_fasta,
+            assembly = flye_denovo.final_assembly,
             samplename = samplename
         }
         if (call_ani) {
           call ani_task.animummer as ani {
             input:
-              assembly = dragonflye.assembly_fasta,
+              assembly = flye_denovo.final_assembly,
               samplename = samplename
           }
         }
         if (call_kmerfinder) {
           call kmerfinder_task.kmerfinder_bacteria as kmerfinder {
             input:
-              assembly = dragonflye.assembly_fasta,
+              assembly = flye_denovo.final_assembly,
               samplename = samplename
           }
         }
         call amrfinderplus.amrfinderplus_nuc as amrfinderplus_task {
           input:
-            assembly = dragonflye.assembly_fasta,
+            assembly = flye_denovo.final_assembly,
             samplename = samplename,
             organism = select_first([expected_taxon, gambit.gambit_predicted_taxon])
         }
         if (call_resfinder) {
           call resfinder_task.resfinder as resfinder_task {
             input:
-              assembly = dragonflye.assembly_fasta,
+              assembly = flye_denovo.final_assembly,
               samplename = samplename,
               organism = select_first([expected_taxon, gambit.gambit_predicted_taxon])
           }
         }
         call ts_mlst_task.ts_mlst {
           input: 
-            assembly = dragonflye.assembly_fasta,
+            assembly = flye_denovo.final_assembly,
             samplename = samplename
         }
         if (genome_annotation == "prokka") {
           call prokka_task.prokka {
             input:
-              assembly = dragonflye.assembly_fasta,
+              assembly = flye_denovo.final_assembly,
               samplename = samplename
           }
         }
         if (genome_annotation == "bakta") {
           call bakta_task.bakta {
             input:
-              assembly = dragonflye.assembly_fasta,
+              assembly = flye_denovo.final_assembly,
               samplename = samplename
           }
         }
         if (call_plasmidfinder) {
           call plasmidfinder_task.plasmidfinder {
             input:
-              assembly = dragonflye.assembly_fasta,
+              assembly = flye_denovo.final_assembly,
               samplename = samplename
           }
         }
         if (call_abricate) {
           call abricate_task.abricate {
             input:
-              assembly = dragonflye.assembly_fasta,
+              assembly = flye_denovo.final_assembly,
               samplename = samplename,
               database = abricate_db
           }
@@ -220,7 +220,7 @@ workflow theiaprok_ont {
         call merlin_magic_workflow.merlin_magic {
           input:
             merlin_tag = select_first([expected_taxon, gambit.merlin_tag]),
-            assembly = dragonflye.assembly_fasta,
+            assembly = flye_denovo.final_assembly,
             samplename = samplename,
             read1 = read_qc_trim.read1_clean,
             ont_data = true
@@ -277,9 +277,8 @@ workflow theiaprok_ont {
               tiptoft_plasmid_replicon_fastq = read_qc_trim.tiptoft_plasmid_replicon_fastq,
               tiptoft_plasmid_replicon_genes = read_qc_trim.tiptoft_plasmid_replicon_genes,
               tiptoft_version = read_qc_trim.tiptoft_version,
-              assembly_fasta = dragonflye.assembly_fasta,
-              contigs_gfa = dragonflye.contigs_gfa,
-              dragonflye_version = dragonflye.dragonflye_version,
+              assembly_fasta = flye_denovo.final_assembly,
+              contigs_gfa = flye_denovo.contigs_gfa,
               quast_report = quast.quast_report,
               quast_version = quast.version,
               assembly_length = quast.genome_length,
@@ -591,10 +590,9 @@ workflow theiaprok_ont {
     File? tiptoft_plasmid_replicon_fastq = read_qc_trim.tiptoft_plasmid_replicon_fastq
     String? tiptoft_plasmid_replicon_genes = read_qc_trim.tiptoft_plasmid_replicon_genes
     String? tiptoft_version = read_qc_trim.tiptoft_version
-    # Assembly - dragonflye outputs
-    File? assembly_fasta = dragonflye.assembly_fasta
-    File? contigs_gfa = dragonflye.contigs_gfa
-    String? dragonflye_version = dragonflye.dragonflye_version
+    # Assembly - flye_denovo outputs
+    File? assembly_fasta = flye_denovo.final_assembly
+    File? contigs_gfa = flye_denovo.contigs_gfa
     # Assembly QC - quast outputs
     File? quast_report = quast.quast_report
     String? quast_version = quast.version

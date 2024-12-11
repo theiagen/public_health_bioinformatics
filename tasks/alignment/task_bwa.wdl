@@ -171,6 +171,13 @@ task bwa_all {
     bwa &> BWA_HELP
     grep "Version" BWA_HELP | cut -d" " -f2 > BWA_VERSION
 
+     if [[ ! -f "~{draft_assembly_fasta}.bwt" ]]; then
+      echo "Indexing reference genome: ~{draft_assembly_fasta}"
+      bwa index ~{draft_assembly_fasta}
+    else
+      echo "Reference genome is already indexed: ~{draft_assembly_fasta}"
+    fi
+    
     bwa mem -t ~{cpu} -a ~{draft_assembly_fasta} ~{read1} > ~{samplename}_R1.sam
     bwa mem -t ~{cpu} -a ~{draft_assembly_fasta} ~{read2} > ~{samplename}_R2.sam
 

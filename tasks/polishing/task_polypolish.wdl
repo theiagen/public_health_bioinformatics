@@ -21,7 +21,7 @@ task polypolish {
     Int cpu = 1 # polypolish is single-threaded
     Int disk_size = 100
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/polypolish:0.6.0"
-    Int memory = 4
+    Int memory = 8
   }
   command <<<
     set -euo pipefail
@@ -72,6 +72,6 @@ task polypolish {
     disks:  "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
     maxRetries: 3
-    preemptible: 1
+    preemptible: 0
   }
 }

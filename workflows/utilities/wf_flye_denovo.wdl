@@ -8,7 +8,7 @@ import "../../tasks/polishing/task_racon.wdl" as task_racon
 import "../../tasks/assembly/task_dnaapler.wdl" as task_dnaapler
 import "../../tasks/task_versioning.wdl" as versioning_task
 import "../../tasks/quality_control/read_filtering/task_filtercontigs.wdl" as task_filtercontigs
-import "../../tasks/alignment/task_bwa.wdl" as task_bwamem
+import "../../tasks/alignment/task_bwa.wdl" as task_bwaall
 import "../../tasks/polishing/task_polypolish.wdl" as task_polypolish
 
 workflow flye_denovo {
@@ -21,7 +21,7 @@ workflow flye_denovo {
     File? illumina_read2          # Optional Illumina short-read R2 for hybrid assembly
     String samplename
     String polisher = "medaka"
-    Int? polish_rounds        # Optional number of polishing rounds
+    Int? polish_rounds = 1        # Optional number of polishing rounds
     String? medaka_model_override # Optional user-specified Medaka model
     Boolean auto_medaka_model = true  # Enable automatic Medaka model selection
     Boolean skip_trim_reads = true   # Default: No trimming
@@ -47,23 +47,23 @@ workflow flye_denovo {
   # Generate Bandage plot
   call task_bandage.bandage_plot as bandage {
     input:
-      assembly_graph_gfa = flye.assembly_graph,
+      assembly_graph_gfa = flye.assembly_graph_gfa,
       samplename = samplename
   }
   # Hybrid Assembly Path: Polypolish
   if (defined(illumina_read1) && defined(illumina_read2)) {
-    call task_bwamem.bwa_all as bwa_all {
-      input:
-        draft_assembly_fasta = flye.assembly_fasta,
-        read1 = select_first([illumina_read1]),
-        read2 = select_first([illumina_read2]),
-        samplename = samplename
+   call task_bwaall.bwa_all as bwa {
+     input:
+       draft_assembly_fasta = flye.assembly_fasta,
+       read1 = select_first([illumina_read1]),
+       read2 = select_first([illumina_read2]),
+       samplename = samplename
     }
     call task_polypolish.polypolish as polypolish {
       input:
         assembly_fasta = flye.assembly_fasta,
-        read1_sam = bwa_all.read1_sam,
-        read2_sam = bwa_all.read2_sam,
+        read1_sam = bwa.read1_sam,
+        read2_sam = bwa.read2_sam,
         samplename = samplename,
         illumina_polishing_rounds = polish_rounds
     }
@@ -102,8 +102,9 @@ workflow flye_denovo {
   }
   output {
     File final_assembly = dnaapler.reoriented_fasta
+    #add into terra export table
     File bandage_plot = bandage.plot
-    File filtered_assembly = contig_filter.filtered_fasta
+    File contigs_gfa = flye.assembly_graph_gfa
     String flye_phb_version = version_capture.phb_version
     String flye_analysis_date = version_capture.date
   }
