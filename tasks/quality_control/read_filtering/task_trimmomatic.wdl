@@ -40,9 +40,9 @@ task trimmomatic_pe {
     -threads ~{cpu} \
     ~{read1} ~{read2} \
     -baseout ~{samplename}.fastq.gz \
+    "${CROPPING_VAR}" \
     SLIDINGWINDOW:~{trimmomatic_window_size}:~{trimmomatic_quality_trim_score} \
-    MINLEN:~{trimmomatic_min_length} &> ~{samplename}.trim.stats.txt \
-    "${CROPPING_VAR}"
+    MINLEN:~{trimmomatic_min_length} &> ~{samplename}.trim.stats.txt
 
   >>>
   output {
