@@ -10,13 +10,13 @@
 
 [Freyja](https://github.com/andersen-lab/Freyja) is a tool for analysing viral mixed sample genomic sequencing data. Developed by Joshua Levy from the [Andersen Lab](https://andersen-lab.com/), it performs two main steps:
 
-1. Single nucleotide variant (SNV) frequency estimation;
-2. Depth-weighted demixing using constrained least absolute deviation regression.
+1. Variant Frequency Estimation: Freyja calculates the frequencies of single nucleotide variants (SNVs) in the genomic sequencing data.
+2. Depth-Weighted Demixing: It separates mixed populations of viral subtypes using a depth-weighted statistical approach, estimating the proportional abundance of each subtype in the sample based on the frequencies of subtype-defining variants.
 
 Additional post-processing steps can produce visualizations of aggregated samples.
 
 !!! dna "Wastewater and more"
-    The typical use case of Freyja is to **analyze mixed SARS-CoV-2 samples** from a sequencing dataset, most often **wastewater**.
+    The typical use case of Freyja is to **analyze mixed SARS-CoV-2 samples** from a sequencing dataset, most often **wastewater**, but the tool is not limited to this context. With the appropriate reference genomes and barcode files, Freyja can be adapted for other pathogens, including MPXV, Influenza, RSV, and Measles. 
 
     !!! warning "Default Values"
         The defaults included in the Freyja workflows reflect this use case but **can be adjusted for other pathogens**. See the [**Running Freyja on other pathogens**](freyja.md#running-freyja-on-other-pathogens) section for more information.
