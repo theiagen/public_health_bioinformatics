@@ -100,13 +100,21 @@ workflow read_QC_trim_se {
       input:
         samplename = samplename,
         read1 = read1,
-        target_organism = target_organism
+        target_organism = target_organism,
+        kraken2_db = kraken_db,
+        disk_size = kraken_disk_size,
+        memory = kraken_memory,
+        cpu = kraken_cpu
     }
     call kraken.kraken2_theiacov as kraken2_theiacov_dehosted {
       input:
         samplename = samplename,
         read1 = select_first([ncbi_scrub_se.read1_dehosted]),
-        target_organism = target_organism
+        target_organism = target_organism,
+        kraken2_db = kraken_db,
+        disk_size = kraken_disk_size,
+        memory = kraken_memory,
+        cpu = kraken_cpu
     }
   }
   if ("~{workflow_series}" == "theiaprok") {
@@ -163,11 +171,11 @@ workflow read_QC_trim_se {
     # kraken2 - raw and dehosted
     String kraken_version = select_first([kraken2_theiacov_raw.version, kraken2_standalone.kraken2_version, ""])
     Float? kraken_human = kraken2_theiacov_raw.percent_human
-    Float? kraken_sc2 = kraken2_theiacov_raw.percent_sc2
+    String? kraken_sc2 = kraken2_theiacov_raw.percent_sc2
     String? kraken_target_organism = kraken2_theiacov_raw.percent_target_organism
     String kraken_report = select_first([kraken2_theiacov_raw.kraken_report, kraken2_standalone.kraken2_report, ""])
     Float? kraken_human_dehosted = kraken2_theiacov_dehosted.percent_human
-    Float? kraken_sc2_dehosted = kraken2_theiacov_dehosted.percent_sc2
+    String? kraken_sc2_dehosted = kraken2_theiacov_dehosted.percent_sc2
     String? kraken_target_organism_dehosted = kraken2_theiacov_dehosted.percent_target_organism
     String? kraken_target_organism_name = target_organism
     File? kraken_report_dehosted = kraken2_theiacov_dehosted.kraken_report
