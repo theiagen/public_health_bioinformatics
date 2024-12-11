@@ -284,9 +284,13 @@ The Nextstrain team hosts documentation surrounding the Augur workflow → Auspi
 | **Variable** | **Type** | **Description** |
 | --- | --- | --- |
 | aligned_fastas | File | A FASTA file of the aligned genomes |
-| augur_iqtree_model_used | String | The iqtree model used during augur tree |
+| augur_fasttree_version | String | The fasttree version used, blank if other tree method used |
+| augur_iqtree_model_used | String | The iqtree model used during augur tree, blank if iqtree not used |
+| augur_iqtree_version | String | The iqtree version used during augur tree (defualt), blank if other tree method used |
+| augur_mafft_version | String | The mafft version used in augur align |
 | augur_phb_analysis_date | String | The date the analysis was run |
 | augur_phb_version | String | The version of the Public Health Bioinformatics (PHB) repository used |
+| augur_raxml_version | String | The version of raxml used during augur tree, blank if other tree method used |
 | augur_version | String | Version of Augur used |
 | auspice_input_json | File | JSON file used as input to Auspice |
 | combined_assemblies | File | Concatenated FASTA file containing all samples |
