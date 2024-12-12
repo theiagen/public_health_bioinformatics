@@ -7,7 +7,7 @@ task contig_filter {
     Boolean filter_homopolymers = true
     Int disk_size = 100
     Int memory = 16
-    Int threads = 4
+    Int cpu = 4
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/seqkit:2.8.2"
   }
   command <<< 
@@ -89,7 +89,7 @@ task contig_filter {
   }
   runtime {
     docker: "~{docker}"
-    cpu: threads
+    cpu: cpu
     memory: "~{memory}G"
     disks: "local-disk " + disk_size + " SSD"
   }

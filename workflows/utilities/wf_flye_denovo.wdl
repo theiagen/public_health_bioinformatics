@@ -29,22 +29,22 @@ workflow flye_denovo {
     Int porechop_disk_size = 50
     String? porechop_trimopts     # Optional Porechop trimming options
 
-    # Task-level parameters for Flye
-    Boolean ont_corrected = false
-    Boolean ont_high_quality = false
-    Boolean pacbio_raw = false
-    Boolean pacbio_corrected = false
-    Boolean pacbio_hifi = false
-    Int? genome_length              # Requires `asm_coverage`
-    Int? asm_coverage               # Reduced coverage for initial disjointig assembly
+    # Flye-specific inputs
+    Boolean flye_ont_corrected = false
+    Boolean flye_ont_high_quality = false
+    Boolean flye_pacbio_raw = false
+    Boolean flye_pacbio_corrected = false
+    Boolean flye_pacbio_hifi = false
+    Int? flye_genome_length              # Requires `asm_coverage`
+    Int? flye_asm_coverage               # Reduced coverage for initial disjointig assembly
     Int flye_polishing_iterations = 1    # Default polishing iterations
-    Int? minimum_overlap            # Minimum overlap between reads
-    Float? read_error_rate          # Maximum expected read error rate
-    Boolean uneven_coverage_mode = false
-    Boolean keep_haplotypes = false
-    Boolean no_alt_contigs = false
-    Boolean scaffold = false
-    String? additional_parameters   # Any extra Flye-specific parameters
+    Int? flye_minimum_overlap            # Minimum overlap between reads
+    Float? flye_read_error_rate          # Maximum expected read error rate
+    Boolean flye_uneven_coverage_mode = false
+    Boolean flye_keep_haplotypes = false
+    Boolean flye_no_alt_contigs = false
+    Boolean flye_scaffold = false
+    String? flye_additional_parameters   # Any extra Flye-specific parameters
     Int flye_cpu = 4
     Int flye_memory = 32
     Int flye_disk_size = 100
@@ -54,16 +54,15 @@ workflow flye_denovo {
     Int bandage_memory = 4
     Int bandage_disk_size = 10
 
-    #Task-level parameters for Polypolish
     # Polypolish-specific inputs
-    String? pair_orientation
-    Float? low_percentile_threshold
-    Float? high_percentile_threshold
-    Float? fraction_invalid
-    Float? fraction_valid
-    Int? maximum_errors
-    Int? minimum_depth
-    Boolean careful = false
+    String? polypolish_pair_orientation
+    Float? polypolish_low_percentile_threshold
+    Float? polypolish_high_percentile_threshold
+    Float? polypolish_fraction_invalid
+    Float? polypolish_fraction_valid
+    Int? polypolish_maximum_errors
+    Int? polypolish_minimum_depth
+    Boolean polypolish_careful = false
     Int polypolish_cpu = 1
     Int polypolish_memory = 8
     Int polypolish_disk_size = 100
@@ -81,11 +80,11 @@ workflow flye_denovo {
     Int racon_disk_size = 100
 
     # Contig filter-specific inputs
-    Int contig_filter_min_len = 1000
-    Boolean contig_filter_homopolymers = true
-    Int contig_filter_cpu = 4
-    Int contig_filter_memory = 16
-    Int contig_filter_disk_size = 100
+    Int filtercontigs_min_len = 1000
+    Boolean filtercontigs_homopolymers = true
+    Int filtercontigs_cpu = 4
+    Int filtercontigs_memory = 16
+    Int filtercontigs_disk_size = 100
 
     # Dnaapler-specific inputs
     String dnaapler_mode = "all"
@@ -117,21 +116,21 @@ workflow flye_denovo {
     input:
       read1 = select_first([porechop.trimmed_reads, read1]),  # Use trimmed reads if available
       samplename = samplename,
-      ont_corrected = ont_corrected,
-      pacbio_corrected = pacbio_corrected,
-      pacbio_hifi = pacbio_hifi,
-      pacbio_raw = pacbio_raw,
-      ont_high_quality = ont_high_quality,
-      genome_length = genome_length,
-      asm_coverage = asm_coverage,
+      ont_corrected = flye_ont_corrected,
+      pacbio_corrected = flye_pacbio_corrected,
+      pacbio_hifi = flye_pacbio_hifi,
+      pacbio_raw = flye_pacbio_raw,
+      ont_high_quality = flye_ont_high_quality,
+      genome_length = flye_genome_length,
+      asm_coverage = flye_asm_coverage,
       flye_polishing_iterations = flye_polishing_iterations,
-      minimum_overlap = minimum_overlap,
-      read_error_rate = read_error_rate,
-      uneven_coverage_mode = uneven_coverage_mode,
-      keep_haplotypes = keep_haplotypes,
-      no_alt_contigs = no_alt_contigs,
-      scaffold = scaffold,
-      additional_parameters = additional_parameters,
+      minimum_overlap = flye_minimum_overlap,
+      read_error_rate = flye_read_error_rate,
+      uneven_coverage_mode = flye_uneven_coverage_mode,
+      keep_haplotypes = flye_keep_haplotypes,
+      no_alt_contigs = flye_no_alt_contigs,
+      scaffold = flye_scaffold,
+      additional_parameters = flye_additional_parameters,
       cpu = flye_cpu,
       memory = flye_memory,
       disk_size = flye_disk_size
@@ -161,14 +160,14 @@ workflow flye_denovo {
         read2_sam = bwa.read2_sam,
         samplename = samplename,
         illumina_polishing_rounds = polish_rounds,
-        pair_orientation = pair_orientation,
-        low_percentile_threshold = low_percentile_threshold,
-        high_percentile_threshold = high_percentile_threshold,
-        fraction_invalid = fraction_invalid,
-        fraction_valid = fraction_valid,
-        maximum_errors = maximum_errors,
-        minimum_depth = minimum_depth,
-        careful = careful,
+        pair_orientation = polypolish_pair_orientation,
+        low_percentile_threshold = polypolish_low_percentile_threshold,
+        high_percentile_threshold = polypolish_high_percentile_threshold,
+        fraction_invalid = polypolish_fraction_invalid,
+        fraction_valid = polypolish_fraction_valid,
+        maximum_errors = polypolish_maximum_errors,
+        minimum_depth = polypolish_minimum_depth,
+        careful = polypolish_careful,
         cpu = polypolish_cpu,
         memory = polypolish_memory,
         disk_size = polypolish_disk_size
@@ -183,7 +182,10 @@ workflow flye_denovo {
           samplename = samplename,
           read1 = select_first([porechop.trimmed_reads, read1]),  # Use trimmed reads if available
           medaka_model_override = medaka_model_override,
-          auto_model = auto_medaka_model
+          auto_model = auto_medaka_model,
+          cpu = medaka_cpu,
+          memory = medaka_memory,
+          disk_size = medaka_disk_size
       }
     }
     if (!skip_polishing && polisher == "racon") {
@@ -203,11 +205,11 @@ workflow flye_denovo {
   call task_filtercontigs.contig_filter as contig_filter {
     input:
       assembly_fasta = select_first([polypolish.polished_assembly, medaka.medaka_fasta, racon.polished_fasta, flye.assembly_fasta]), # Use Flye assembly if no polishing
-      min_len = contig_filter_min_len,
-      filter_homopolymers = contig_filter_homopolymers,
-      threads = contig_filter_cpu,
-      memory = contig_filter_memory,
-      disk_size = contig_filter_disk_size
+      min_len = filtercontigs_min_len,
+      filter_homopolymers = filtercontigs_homopolymers,
+      cpu = filtercontigs_cpu,
+      memory = filtercontigs_memory,
+      disk_size = filtercontigs_disk_size
   }
   call task_dnaapler.dnaapler_all as dnaapler {
     input:
