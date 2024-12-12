@@ -9,7 +9,7 @@ task racon {
     Int memory = 32            
     Int disk_size = 100   
     String samplename
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/racon:1.5.0-minimap2"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/racon:1.5.0-minimap2-generic"
   }
   command <<< 
     set -euo pipefail
