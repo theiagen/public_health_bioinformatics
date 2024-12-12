@@ -17,16 +17,18 @@ task racon {
     minimap2 --version | tee MINIMAP2_VERSION
     racon --version | tee -a RACON_VERSION
 
-    # Start with the unpolished FASTA as the input
+    echo "Starting Racon polishing process..."
+    # Initialize the input assembly
     intermediate_fasta="~{unpolished_fasta}"
 
-     for i in $(seq 1 ~{polishing_rounds}); do
-       echo "Starting Medaka polishing round $i"
+    # Loop through polishing rounds
+    for i in $(seq 1 ~{polishing_rounds}); do
+      echo "Polishing round $i..."
 
-      # Generate alignments with Minimap2
-      minimap2 -t ~{cpu} "${intermediate_fasta}" "~{read1}" > "~{samplename}_round${i}.paf"
+      # Align reads to the current assembly
+      minimap2 -x map-ont -t ~{cpu} "${intermediate_fasta}" "~{read1}" > "~{samplename}_round${i}.paf"
 
-      # Run Racon for polishing
+      # Run Racon to polish the assembly
       racon \
         -t ~{cpu} \
         "~{read1}" \
@@ -34,12 +36,13 @@ task racon {
         "${intermediate_fasta}" \
         > "~{samplename}_round${i}.polished.fasta"
 
-      # Update current_fasta for the next round
+      # Update for the next round
       intermediate_fasta="~{samplename}_round${i}.polished.fasta"
     done
 
-    # Move the final polished assembly to the output
+    # Save the final polished assembly
     mv "${intermediate_fasta}" "~{samplename}_final_polished.fasta"
+    echo "Polishing complete. Final assembly saved as ~{samplename}_final_polished.fasta"
   >>>
   output {
     File polished_fasta = "~{samplename}_final_polished.fasta"  
