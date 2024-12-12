@@ -5,7 +5,7 @@ task racon {
     File unpolished_fasta
     File read1
     Int polishing_rounds = 1      # Default: 1 polishing round
-    Int cpu = 4                  
+    Int cpu = 8                  
     Int memory = 16             
     Int disk_size = 100   
     String samplename
@@ -50,7 +50,7 @@ task racon {
     docker: "~{docker}"
     memory: memory + " GB"
     cpu: cpu
-    disk: disk_size + " GB"
+    disks: "local-disk " + disk_size + " SSD"
     maxRetries: 3
     preemptible: 0
   }

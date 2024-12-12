@@ -61,7 +61,7 @@ task medaka_consensus {
     docker: "~{docker}"
     cpu: cpu
     memory: "~{memory} GB"
-    disks: "local-disk " + disk_size + " HDD"
+    disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
     maxRetries: 1
     preemptible: 0

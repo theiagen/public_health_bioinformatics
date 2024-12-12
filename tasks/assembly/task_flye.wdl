@@ -15,7 +15,7 @@ task flye {
     Int? genome_length # requires `asm_coverage`
     Int? asm_coverage # reduced coverage for initial disjointig assembly
 
-    Int polishing_iterations = 1
+    Int flye_polishing_iterations = 1
     Int? minimum_overlap
     
     Float? read_error_rate
@@ -24,7 +24,7 @@ task flye {
     Boolean no_alt_contigs = false
     Boolean scaffold = false
       
-    String? additonal_parameters 
+    String? additional_parameters    # Any extra Flye-specific parameters
 
     Int cpu = 4
     Int disk_size = 100
@@ -53,7 +53,7 @@ task flye {
     # genome size parameter requires asm_coverage
     flye \
       ${READ_TYPE} ~{read1} \
-      --iterations ~{polishing_iterations} \
+      --iterations ~{flye_polishing_iterations} \
       ~{"--min-overlap" + minimum_overlap} \
       ~{if defined(asm_coverage) then "--genome-size " + genome_length else ""} \
       ~{"--asm-coverage " + asm_coverage} \
@@ -62,7 +62,7 @@ task flye {
       ~{true="--keep-haplotypes" false="" keep_haplotypes} \
       ~{true="--no-alt-contigs" false="" no_alt_contigs} \
       ~{true="--scaffold" false="" scaffold} \
-      ~{"--extra-params " + additonal_parameters} \
+      ~{"--extra-params " + additional_parameters } \
       --threads ~{cpu} \
       --out-dir .
 
@@ -82,7 +82,7 @@ task flye {
     docker: "~{docker}"
     cpu: cpu
     memory: "~{memory} GB"
-    disks: "local-disk " + disk_size + " HDD"
+    disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
     maxRetries: 3
     preemptible: 0
