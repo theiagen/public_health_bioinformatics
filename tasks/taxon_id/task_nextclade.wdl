@@ -188,11 +188,11 @@ task nextclade_output_parser {
         # split the amino acid mutations by segment
         segments=["PB2", "PB1", "PA", "HA", "NP", "NA", "MP", "NS"]
 
-        def process_nc_aa_string(file_path):
+        def process_nc_aa_string(input_file_name):
           segments_dict = {segment: [] for segment in segments}
 
-          with open(file_path, 'r') as file:
-            nc_aa_string = file.read().strip()
+          with open(input_file_name, 'r') as input_file:
+            nc_aa_string = input_file.read().strip()
 
           mutation_list = nc_aa_string.split(',')
 
