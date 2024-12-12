@@ -6,7 +6,7 @@ task racon {
     File read1
     Int polishing_rounds = 1      # Default: 1 polishing round
     Int cpu = 8                  
-    Int memory = 16             
+    Int memory = 32            
     Int disk_size = 100   
     String samplename
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/racon:1.5.0-minimap2"
@@ -18,6 +18,13 @@ task racon {
     racon --version | tee -a RACON_VERSION
 
     echo "Starting Racon polishing process..."
+
+    #debugging system info
+    echo "CPU Info:"
+    lscpu
+    echo "Memory Info:"
+    free -h
+
     # Initialize the input assembly
     intermediate_fasta="~{unpolished_fasta}"
 
