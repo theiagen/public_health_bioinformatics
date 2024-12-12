@@ -25,6 +25,9 @@ task racon {
     echo "Memory Info:"
     free -h
 
+    echo "Checking CPU compatibility in Terra..."
+    lscpu | grep -E 'sse|avx'
+
     # Initialize the input assembly
     intermediate_fasta="~{unpolished_fasta}"
 
@@ -61,7 +64,7 @@ task racon {
     memory: memory + " GB"
     cpu: cpu
     disks: "local-disk " + disk_size + " SSD"
-    maxRetries: 3
+    maxRetries: 1
     preemptible: 0
   }
 }
