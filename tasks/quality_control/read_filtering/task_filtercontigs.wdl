@@ -92,5 +92,7 @@ task contig_filter {
     cpu: cpu
     memory: "~{memory}G"
     disks: "local-disk " + disk_size + " SSD"
+    maxRetries: 3
+    preemptible: 0
   }
 }

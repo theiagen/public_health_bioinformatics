@@ -220,9 +220,8 @@ workflow flye_denovo {
       memory = dnaapler_memory,
       disk_size = dnaapler_disk_size
   }
-  output {
+  output { 
     File final_assembly = dnaapler.reoriented_fasta
-    #add into terra export table
     File bandage_plot = bandage.plot
     File contigs_gfa = flye.assembly_graph_gfa
     String flye_phb_version = version_capture.phb_version

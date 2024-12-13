@@ -81,6 +81,7 @@ task export_taxon_tables {
     String? tiptoft_plasmid_replicon_genes
     String? tiptoft_version
     File? assembly_fasta
+    File? bandage_plot
     File? contigs_gfa
     String? shovill_pe_version
     String? shovill_se_version
@@ -491,6 +492,7 @@ task export_taxon_tables {
       "tiptoft_plasmid_replicon_genes": "~{tiptoft_plasmid_replicon_genes}",
       "tiptoft_version": "~{tiptoft_version}",
       "assembly_fasta": "~{assembly_fasta}",
+      "bandage_plot": "~{bandage_plot}",
       "contigs_gfa": "~{contigs_gfa}",
       "shovill_pe_version": "~{shovill_pe_version}",
       "shovill_se_version": "~{shovill_se_version}",

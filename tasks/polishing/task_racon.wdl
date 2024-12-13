@@ -19,15 +19,6 @@ task racon {
 
     echo "Starting Racon polishing process..."
 
-    #debugging system info
-    echo "CPU Info:"
-    lscpu
-    echo "Memory Info:"
-    free -h
-
-    echo "Checking CPU compatibility in Terra..."
-    lscpu | grep -E 'sse|avx'
-
     # Initialize the input assembly
     intermediate_fasta="~{unpolished_fasta}"
 

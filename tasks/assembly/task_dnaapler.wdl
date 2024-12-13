@@ -66,7 +66,7 @@ task dnaapler_all {
     memory: "~{memory} GB"
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
-    maxRetries: 1
+    maxRetries: 3
     preemptible: 0
   }
 }

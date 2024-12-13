@@ -592,6 +592,7 @@ workflow theiaprok_ont {
     # Assembly - flye_denovo outputs
     File? assembly_fasta = flye_denovo.final_assembly
     File? contigs_gfa = flye_denovo.contigs_gfa
+    File? bandage_plot = flye_denovo.bandage_plot
     # Assembly QC - quast outputs
     File? quast_report = quast.quast_report
     String? quast_version = quast.version
