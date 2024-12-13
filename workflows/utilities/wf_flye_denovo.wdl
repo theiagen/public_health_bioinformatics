@@ -96,9 +96,6 @@ workflow flye_denovo {
     Boolean skip_trim_reads = true   # Default: No trimming
     Boolean skip_polishing = false    # Default: Polishing enabled
   }
-  call versioning_task.version_capture {
-    input:
-  }
   # Optional Porechop trimming before Flye
   if (!skip_trim_reads) {
     call task_porechop.porechop as porechop {
@@ -221,10 +218,19 @@ workflow flye_denovo {
       disk_size = dnaapler_disk_size
   }
   output { 
-    File final_assembly = dnaapler.reoriented_fasta
+    #update this throughout theiprok
+    File assembly_fasta = dnaapler.reoriented_fasta
     File bandage_plot = bandage.plot
     File contigs_gfa = flye.assembly_graph_gfa
-    String flye_phb_version = version_capture.phb_version
-    String flye_analysis_date = version_capture.date
+    String? medaka_model = medaka.medaka_model
+    #add task versions
+    String? porechop_version = porechop.porechop_version
+    String flye_version = flye.flye_version
+    String bandage_version = bandage.bandage_version
+    String? medaka_version = medaka.medaka_version
+    String? racon_version = racon.racon_version
+    String? bwa_version = bwa.bwa_version
+    String? polypolish_version = polypolish.polypolish_version
+    String dnaapler_version = dnaapler.dnaapler_version
   }
 }

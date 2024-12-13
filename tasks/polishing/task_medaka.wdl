@@ -42,6 +42,7 @@ task medaka_consensus {
     fi
 
     echo "Using Medaka model for polishing: $selected_model"
+    echo ~[selected_model] > MEDAKA_MODEL
 
     # Perform Medaka polishing
     medaka_consensus \
@@ -56,6 +57,7 @@ task medaka_consensus {
   output {
     File medaka_fasta = "~{samplename}.polished.fasta"
     String medaka_version = read_string("MEDAKA_VERSION")
+    String medaka_model = read_string("MEDAKA_MODEL")
   }
   runtime {
     docker: "~{docker}"
@@ -63,7 +65,7 @@ task medaka_consensus {
     memory: "~{memory} GB"
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
-    maxRetries: 1
+    maxRetries: 3
     preemptible: 0
   }
 }

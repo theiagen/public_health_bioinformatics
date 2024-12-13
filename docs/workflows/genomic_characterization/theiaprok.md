@@ -146,15 +146,67 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 | clean_check_reads | **organism** | String | Internal component, do not modify |  | Do not modify, Optional | ONT, PE, SE |
 | clean_check_reads | **workflow_series** | String | Internal component, do not modify |  | Do not modify, Optional | ONT, PE, SE |
 | flye_denovo | **auto_medaka_model** | Boolean | If true, medaka will automatically select the best Medaka model for assembly | TRUE | Optional | ONT |
+| flye_denovo | **bandage_cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional | ONT |
+| flye_denovo | **bandage_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 10 | Optional | ONT |
+| flye_denovo | **bandage_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 4 | Optional | ONT |
+| flye_denovo | **dnaapler_cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional | ONT |
+| flye_denovo | **dnaapler_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | ONT |
+| flye_denovo | **dnaapler_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 16 | Optional | ONT |
+| flye_denovo | **dnaapler_mode** | String | Dnaapler-specific inputs | all | Optional | ONT |
+| flye_denovo | **filtercontigs_cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional | ONT |
+| flye_denovo | **filtercontigs_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | ONT |
+| flye_denovo | **filtercontigs_homopolymers** | Boolean | If true, filters out homopolymers | TRUE | Optional | ONT |
+| flye_denovo | **filtercontigs_min_len** | Int | Minimum contig length to keep | 1000 | Optional | ONT |
+| flye_denovo | **filtercontigs_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 16 | Optional | ONT |
+| flye_denovo | **flye_ont_corrected** | File | If true, uses ONT corrected reads for assembly | FALSE | Optional | ONT |
+| flye_denovo | **flye_ont_high_quality** | File | If true, uses ONT high-quality reads for assembly | FALSE | Optional | ONT |
+| flye_denovo | **flye_pacbio_raw** | File | If true, uses PacBio raw reads for assembly | FALSE | Optional | ONT |
+| flye_denovo | **flye_pacbio_corrected** | File | If true, uses PacBio corrected reads for assembly | FALSE | Optional | ONT |
+| flye_denovo | **flye_pacbio_hifi** | File | If true, uses PacBio HiFi reads for assembly | FALSE | Optional | ONT |
+| flye_denovo | **flye_genome_length** | Int | User-specified expected genome length to be used in genome statistics calculations |  | Optional | ONT |
+| flye_denovo | **flye_asm_coverage** | Int | Reduced coverage for initial disjointig assembly |  | Optional | ONT |
+| flye_denovo | **flye_polishing_iterations** | Int | Default polishing iterations | 1 | Optional | ONT |
+| flye_denovo | **flye_minimum_overlap** | Int | Minimum overlap between reads |  | Optional | ONT |
+| flye_denovo | **flye_read_error_rate** | Float | Maximum expected read error rate |  | Optional | ONT |
+| flye_denovo | **flye_uneven_coverage_mode** | Boolean |  | FALSE | Optional | ONT |
+| flye_denovo | **flye_keep_haplotypes** | Boolean | If true keep haplotypes | FALSE | Optional | ONT |
+| flye_denovo | **flye_no_alt_contigs** | Boolean | If true, do not generate alternative contigs | FALSE | Optional | ONT |
+| flye_denovo | **flye_scaffold** | Boolean | If true, scaffold | FALSE | Optional | ONT |
+| flye_denovo | **flye_additional_parameters** | String | Any extra Flye-specific parameters |  | Optional | ONT |
+| flye_denovo | **flye_cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional | ONT |
+| flye_denovo | **flye_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 32 | Optional | ONT |
+| flye_denovo | **flye_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | ONT |
 | flye_denovo | **illumina_read1** | File | If Illumina reads are provided, flye_denovo subworkflow will perform Illumina polishing |  | Optional | ONT |
 | flye_denovo | **illumina_read2** | File | If Illumina reads are provided, flye_denovo subworflow will perform Illumina polishing |  | Optional | ONT |
 | flye_denovo | **medaka_model_override** | String | The model of medaka to use for assembly | r1041_e82_400bps_sup_v5.0.0 | Optional | ONT |
+| flye_denovo | **medaka_cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional | ONT |
+| flye_denovo | **medaka_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 16 | Optional | ONT |
+| flye_denovo | **medaka_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | ONT |
 | flye_denovo | **polisher** | String | The polishing tool to use for assembly | medaka | Optional | ONT |
 | flye_denovo | **polishing_rounds** | Int | The number of polishing rounds to conduct for medaka or racon (without Illumina) | 1 | Optional | ONT |
+| flye_denovo | **porechop_cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional | ONT |
+| flye_denovo | **porechop_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | ONT |
+| flye_denovo | **porechop_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | ONT |
+| flye_denovo | **porechop_trimopts** | String | Options to pass to Porechop for trimming |  | Optional | ONT |
+| flye_denovo | **polypolish_pair_orientation** | String | Polypolish-specific inputs |  | Optional | ONT |
+| flye_denovo | **polypolish_low_percentile_threshold** | Float | Polypolish-specific inputs |  | Optional | ONT |
+| flye_denovo | **polypolish_high_percentile_threshold** | Float | Polypolish-specific inputs |  | Optional | ONT |
+| flye_denovo | **polypolish_fraction_invalid** | Float | Polypolish-specific inputs |  | Optional | ONT |
+| flye_denovo | **polypolish_fraction_valid** | Float | Polypolish-specific inputs |  | Optional | ONT |
+| flye_denovo | **polypolish_maximum_errors** | Int | Polypolish-specific inputs |  | Optional | ONT |
+| flye_denovo | **polypolish_minimum_depth** | Int | Polypolish-specific inputs |  | Optional | ONT |
+| flye_denovo | **polypolish_careful** | Boolean | Polypolish-specific inputs | FALSE | Optional | ONT |
+| flye_denovo | **polypolish_cpu** | Int | Polypolish cpu | 1 | Optional | ONT |
+| flye_denovo | **polypolish_memory** | Int | Polypolish memory | 8 | Optional | ONT |
+| flye_denovo | **polypolish_disk_size** | Int | Polypolish disk size | 100 | Optional | ONT |
+| flye_denovo | **racon_cpu** | Int | Number of CPUs to allocate to the task | 8 | Optional | ONT |
+| flye_denovo | **racon_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 16 | Optional | ONT |
+| flye_denovo | **racon_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | ONT |
 | flye_denovo | **read1** | File | ONT read file in FASTQ file format (compression optional) |  | Optional | ONT |
 | flye_denovo | **skip_trim_reads** | Boolean | If true, trims reads before assembly | FALSE | Optional | ONT |
 | flye_denovo | **skip_polishing** | Boolean | If true, skips polishing | FALSE | Optional | ONT |
 | export_taxon_tables | **asembly_fasta** | File | Internal component, do not modify |  | Do not modify, Optional | FASTA |
+| export_taxon_tables | **bandage_plot** | File | Internal component, do not modify |  | Do not modify, Optional | ONT |
 | export_taxon_tables | **bbduk_docker** | String | The Docker container to use for the task |  | Do not modify, Optional | FASTA, ONT |
 | export_taxon_tables | **cg_pipeline_docker** | String | The Docker container to use for the task |  | Do not modify, Optional | FASTA, ONT |
 | export_taxon_tables | **cg_pipeline_report_clean** | File | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT |
@@ -167,7 +219,6 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 | export_taxon_tables | **cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional | FASTA, ONT, PE, SE |
 | export_taxon_tables | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | FASTA, ONT, PE, SE |
 | export_taxon_tables | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-03-16 | Optional | FASTA, ONT, PE, SE |
-| export_taxon_tables | **dragonflye_version** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, PE, SE |
 | export_taxon_tables | **emmtypingtool_docker** | String | The Docker container to use for the task |  | Do not modify, Optional | FASTA, ONT, SE |
 | export_taxon_tables | **emmtypingtool_emm_type** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, SE |
 | export_taxon_tables | **emmtypingtool_results_xml** | File | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, SE |
@@ -749,44 +800,88 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 
 ??? task "`Flye`: _De novo_ Assembly"
 
-    `Flye` is a sub-workflow that performs _de novo_ assembly using Flye for ONT data and supports additional polishing and visualization steps. The detailed steps and tasks are as follows:
+    `Flye_denovo` is a sub-workflow that performs _de novo_ assembly using Flye for ONT data and supports additional polishing and visualization steps. The detailed steps and tasks are as follows:
 
-    ### Workflow Steps
+    ??? toggle "`Porechop`: Optional Read Trimming"
+        - Trims input reads if trimming is enabled using `task_porechop.wdl`.
 
-    1. **Version Capture**:
-        - Captures software and runtime versions for reproducibility.
+        !!! techdetails "Technical Details: Porechop"
+            - **Purpose**: Ensures high-quality reads by removing adapters and other unwanted sequences.
+            - **WDL Task**: [task_porechop.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_porechop.wdl)
+            - **Software Source Code**: [Porechop on GitHub](https://github.com/rrwick/Porechop)
+            - **Software Documentation**: [Porechop Documentation](https://github.com/rrwick/Porechop#porechop)
 
-    2. **Optional Read Trimming**:
-        - Utilizes `task_porechop.wdl` to trim input reads if trimming is enabled.
+    ??? toggle "`Flye`: De novo_ Assembly"
+        - Assembles long reads into contigs using `task_flye.wdl`.
 
-    3. **_De novo_ Assembly**:
-        - Uses `task_flye.wdl` for assembling long reads into contigs.
+        !!! techdetails "Technical Details: Flye"
+            - **Purpose**: Assembles raw reads into contiguous sequences (contigs) for further analysis.
+            - **WDL Task**: [task_flye.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_flye.wdl)
+            - **Software Source Code**: [Flye on GitHub](https://github.com/fenderglass/Flye)
+            - **Software Documentation**: [Flye Documentation](https://github.com/fenderglass/Flye/blob/flye/docs/USAGE.md)
 
-    4. **Graph Visualization**:
-        - Employs `task_bandageplot.wdl` to visualize the assembly graph using Bandage.
+    ??? toggle "`Bandage`: Graph Visualization"
+        - Visualizes the assembly graph output from `Flye` using `task_bandageplot.wdl`.
 
-    5. **Polishing**:
-        - Supports polishing the assembly from Flye using:
-          - **Medaka** (`task_medaka.wdl`) for long reads.
-          - **Racon** (`task_racon.wdl`) for long reads.
-          - **Polypolish** (`task_polypolish.wdl`) for hybrid assemblies with Illumina data.
+        !!! techdetails "Technical Details: Bandage"
+            - **Purpose**: Generates a graphical representation of the assembly to aid visualization and quality checks.
+            - **WDL Task**: [task_bandageplot.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_bandageplot.wdl)
+            - **Software Source Code**: [Bandage on GitHub](https://github.com/rrwick/Bandage)
+            - **Software Documentation**: [Bandage Documentation](https://github.com/rrwick/Bandage#bandage)
 
-    6. **Contig Filtering**:
-        - Filters contigs using `task_filtercontigs.wdl` based on user-defined criteria.
+    ??? toggle "`BWA`: Index and align data for Hybrid Assembly Alignment ==_for ONT and Illumina data_=="
+        - Indexes and creates SAM files for input to Polypolish using `task_bwaall.wdl`.
 
-    7. **Final Assembly Orientation**:
-        - Reorients contigs using `task_dnaapler.wdl` to start at a standard reference point.
+        !!! techdetails "Technical Details: BWA"
+            - **Purpose**: Aligns Illumina reads to the draft assembly and produces SAM files for hybrid polishing.
+            - **WDL Task**: [task_bwaall.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/alignment/task_bwa.wdl)
+            - **Software Source Code**: [BWA on GitHub](https://github.com/lh3/bwa)
+            - **Software Documentation**: [BWA Documentation](http://bio-bwa.sourceforge.net/)
 
-    !!! techdetails "Flye_Denovo Technical Details"
-        |  | Links |
-        | --- | --- |
-        | Subworkflow | [wf_flye_denovo.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_flye_denovo.wdl) |
-        | Assembly Task | [task_flye.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_flye.wdl) |
-        | Polishing Tasks | [task_medaka.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/polishing/task_medaka.wdl), [task_racon.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/polishing/task_racon.wdl), [task_polypolish.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/polishing/task_polypolish.wdl) |
-        | Contig Filtering Task | [task_filtercontigs.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_filtercontigs.wdl) |
-        | Final Orientation Task | [task_dnaapler.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_dnaapler.wdl) |
-        | Software Source Code | [Flye on GitHub](https://github.com/fenderglass/Flye) |
-        | Software Documentation | [Flye Documentation](https://github.com/fenderglass/Flye/blob/flye/docs/USAGE.md) |
+    ??? toggle "`Polypolish`: Hybrid Assembly Polishing ==_for ONT and Illumina data_=="
+        - Polishes assemblies with hybrid ONT and Illumina data using `task_polypolish.wdl`.
+
+        !!! techdetails "Technical Details: Polypolish"
+            - **Purpose**: Enhances hybrid assemblies by leveraging short-read data for fine-tuning.
+            - **WDL Task**: [task_polypolish.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/polishing/task_polypolish.wdl)
+            - **Software Source Code**: [Polypolish on GitHub](https://github.com/rrwick/Polypolish)
+            - **Software Documentation**: [Polypolish Documentation](https://github.com/rrwick/Polypolish#polypolish)
+
+    ??? toggle "`Medaka`: Polishing of Flye assembly"
+        - Polishes the Flye assembly using `task_medaka.wdl`.
+
+        !!! techdetails "Technical Details: Medaka"
+            - **Purpose**: Refines assembly accuracy for ONT data by incorporating error corrections.
+            - **WDL Task**: [task_medaka.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/polishing/task_medaka.wdl)
+            - **Software Source Code**: [Medaka on GitHub](https://github.com/nanoporetech/medaka)
+            - **Software Documentation**: [Medaka Documentation](https://github.com/nanoporetech/medaka#medaka)
+
+    ??? toggle "`Racon`: Polishing"
+        - Offers an alternative polishing approach using `task_racon.wdl`.
+
+        !!! techdetails "Technical Details: Racon"
+            - **Purpose**: Improves assembly accuracy for long-read data using sequence alignments.
+            - **WDL Task**: [task_racon.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/polishing/task_racon.wdl)
+            - **Software Source Code**: [Racon on GitHub](https://github.com/lbcb-sci/racon)
+            - **Software Documentation**: [Racon Documentation](https://github.com/lbcb-sci/racon#racon)
+
+    ??? toggle "`Filter Contigs`: filter contigs below a threshold length and remove homopolymer contigs"
+        - Filters contigs based on user-defined criteria using `task_filtercontigs.wdl`.
+
+        !!! techdetails "Technical Details: Filter Contigs"
+            - **Purpose**: Removes low-quality or short contigs to improve downstream analyses.
+            - **WDL Task**: [task_filtercontigs.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_filtercontigs.wdl)
+            - **Software Source Code**: [FilterContigs on GitHub](https://github.com/your-organization/filtercontigs) (replace with actual link)
+            - **Software Documentation**: [FilterContigs Documentation](https://github.com/your-organization/filtercontigs#readme) (replace with actual link)
+
+    ??? toggle "`DnaApler`: Final Assembly Orientation"
+        - Reorients contigs to start at a standard reference point using `task_dnaapler.wdl`.
+
+        !!! techdetails "Technical Details: DnaApler"
+            - **Purpose**: Ensures consistent starting positions for assemblies based on reference standards.
+            - **WDL Task**: [task_dnaapler.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_dnaapler.wdl)
+            - **Software Source Code**: [DnaApler on GitHub](https://github.com/your-organization/dnaapler) (replace with actual link)
+            - **Software Documentation**: [DnaApler Documentation](https://github.com/your-organization/dnaapler#readme) (replace with actual link)
 
 #### Post-Assembly Tasks (performed for all taxa)
 
@@ -1660,7 +1755,7 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
 | ani_mummer_version | String | Version of MUMmer used | FASTA, ONT, PE, SE |
 | ani_output_tsv | File | Full output TSV from ani-m | FASTA, ONT, PE, SE |
 | ani_top_species_match | String | Species of genome with highest ANI to query FASTA | FASTA, ONT, PE, SE |
-| assembly_fasta | File | https://github.com/tseemann/shovill#contigsfa | ONT, PE, SE |
+| assembly_fasta | File | Fasta file outputted from Flye or Shovill | ONT, PE, SE |
 | assembly_length | Int | Length of assembly (total contig length) as determined by QUAST | FASTA, ONT, PE, SE |
 | bakta_gbff | File | Genomic GenBank format annotation file | FASTA, ONT, PE, SE |
 | bakta_gff3 | File | Generic Feature Format Version 3 file | FASTA, ONT, PE, SE |
@@ -1668,12 +1763,14 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
 | bakta_tsv | File | Annotations as simple human readable TSV | FASTA, ONT, PE, SE |
 | bakta_version | String | Bakta version used | FASTA, ONT, PE, SE |
 | bandage_plot | File | Image file (PNG) visualizing the Flye assembly graph generated by Bandage | FASTA, ONT, PE, SE |
+| bandage_version | String | Version of Bandage used | FASTA, ONT, PE, SE |
 | bbduk_docker | String | BBDuk docker image used  | PE, SE |
 | busco_database | String | BUSCO database used | FASTA, ONT, PE, SE |
 | busco_docker | String | BUSCO docker image used | FASTA, ONT, PE, SE |
 | busco_report | File | A plain text summary of the results in BUSCO notation | FASTA, ONT, PE, SE |
 | busco_results | String | BUSCO results (see https://www.notion.so/TheiaProk-Workflow-Series-68c34aca2a0240ef94fef0acd33651b9?pvs=21) | ONT |
 | busco_version | String | BUSCO software version used | FASTA, ONT, PE, SE |
+| bwa_version | String | Version of BWA software used | FASTA, ONT, PE, SE |
 | cg_pipeline_docker | String | Docker file used for running CG-Pipeline on cleaned reads | PE, SE |
 | cg_pipeline_report_clean | File | TSV file of read metrics from clean reads, including average read length, number of reads, and estimated genome coverage | PE, SE |
 | cg_pipeline_report_raw | File | TSV file of read metrics from raw reads, including average read length, number of reads, and estimated genome coverage | PE, SE |
@@ -1686,6 +1783,7 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
 | contigs_fastg | File | Assembly graph if megahit used for genome assembly | PE |
 | contigs_gfa | File | Assembly graph if spades or Flye is used for genome assembly | ONT, PE, SE |
 | contigs_lastgraph | File | Assemb7ly graph if velvet used for genome assembly | PE |
+| dnaapler_version | String | Version of dnaAplER used | FASTA, ONT, PE, SE |
 | ectyper_predicted_serotype | String | Serotype predicted by ECTyper | FASTA, ONT, PE, SE |
 | ectyper_results | File | TSV file of evidence for ECTyper predicted serotype (see https://github.com/phac-nml/ecoli_serotyping#report-format) | FASTA, ONT, PE, SE |
 | ectyper_version | String | Version of ECTyper used | FASTA, ONT, PE, SE |
@@ -1717,6 +1815,7 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
 | fastqc_raw2_html | File | Graphical visualization of raw reverse read qualityfrom fastqc to open in an internet browser | PE |
 | fastqc_version | String | Version of fastqc software used | PE, SE |
 | final_assembly | File | Final assembly file output from flye_denovo assembly| FASTA, ONT, PE, SE |
+| flye_version | String | Version of Flye software used | FASTA, ONT, PE, SE |
 | gambit_closest_genomes | File | CSV file listing genomes in the GAMBIT database that are most similar to the query assembly | FASTA, ONT, PE, SE |
 | gambit_db_version | String | Version of GAMBIT used | FASTA, ONT, PE, SE |
 | gambit_docker | String | GAMBIT docker file used | FASTA, ONT, PE, SE |
@@ -1774,6 +1873,8 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
 | lissero_results | File | TSV results file from LisSero (see https://github.com/MDU-PHL/LisSero#example-output) | FASTA, ONT, PE, SE |
 | lissero_serotype | String | Serotype predicted by LisSero | FASTA, ONT, PE, SE |
 | lissero_version | String | Version of LisSero used | FASTA, ONT, PE, SE |
+| medaka_model | String | Model used by Medaka | ONT |
+| medaka_version | String | Version of Medaka used | ONT |
 | meningotype_BAST | String | BAST type | FASTA, ONT, PE, SE |
 | meningotype_FetA | String | FetA type | FASTA, ONT, PE, SE |
 | meningotype_fHbp | String | fHbp type | FASTA, ONT, PE, SE |
@@ -1846,11 +1947,13 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
 | plasmidfinder_plasmids | String | Names of plasmids identified by PlasmidFinder | FASTA, ONT, PE, SE |
 | plasmidfinder_results | File | Output file from PlasmidFinder in TSV format | FASTA, ONT, PE, SE |
 | plasmidfinder_seqs | File | Hit_in_genome_seq.fsa file produced by PlasmidFinder | FASTA, ONT, PE, SE |
+| polypolish_version | String | Version of Polypolish used | FASTA, ONT, PE, SE |
 | poppunk_docker | String | PopPUNK docker image with GPSC database used | FASTA, ONT, PE, SE |
 | poppunk_gps_cluster | String | GPS cluster predicted by PopPUNK  | FASTA, ONT, PE, SE |
 | poppunk_GPS_db_version | String | Version of GPSC database used | FASTA, ONT, PE, SE |
 | poppunk_gps_external_cluster_csv | File | GPSC v6 scheme designations | FASTA, ONT, PE, SE |
 | poppunk_version | String | Version of PopPUNK used | FASTA, ONT, PE, SE |
+| porechop_version | String | Version of Porechop used | ONT |
 | prokka_gbk | File | GenBank file produced from Prokka annotation of input FASTA | FASTA, ONT, PE, SE |
 | prokka_gff | File | Prokka output GFF3 file containing sequence and annotation (you can view this in IGV) | FASTA, ONT, PE, SE |
 | prokka_sqn | File | A Sequin file for GenBank submission | FASTA, ONT, PE, SE |
@@ -1867,6 +1970,7 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
 | r2_mean_q_raw | Float | Mean quality score of raw reverse reads | PE |
 | r2_mean_readlength_clean | Float | Mean read length of clean reverse reads | PE |
 | r2_mean_readlength_raw | Float | Mean read length of raw reverse reads | PE |
+| racon_version | String | Version of Racon used | ONT |
 | rasusa_version | String | Version of RASUSA used for analysis | ONT |
 | read_screen_clean | String | PASS or FAIL result from clean read screening; FAIL accompanied by the reason for failure | ONT, PE, SE |
 | read_screen_raw | String | PASS or FAIL result from raw read screening; FAIL accompanied by thereason for failure | ONT, PE, SE |

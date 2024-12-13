@@ -104,7 +104,7 @@ workflow theiaprok_ont {
        }
       call quast_task.quast {
       input:
-        assembly = flye_denovo.final_assembly,
+        assembly = flye_denovo.assembly_fasta,
         samplename = samplename
       }
       # nanoplot for basic QC metrics
@@ -122,73 +122,73 @@ workflow theiaprok_ont {
       }
       call busco_task.busco {
         input:
-          assembly = flye_denovo.final_assembly,
+          assembly = flye_denovo.assembly_fasta,
           samplename = samplename
       }
       if (perform_characterization) {
         call gambit_task.gambit {
           input:
-            assembly = flye_denovo.final_assembly,
+            assembly = flye_denovo.assembly_fasta,
             samplename = samplename
         }
         if (call_ani) {
           call ani_task.animummer as ani {
             input:
-              assembly = flye_denovo.final_assembly,
+              assembly = flye_denovo.assembly_fasta,
               samplename = samplename
           }
         }
         if (call_kmerfinder) {
           call kmerfinder_task.kmerfinder_bacteria as kmerfinder {
             input:
-              assembly = flye_denovo.final_assembly,
+              assembly = flye_denovo.assembly_fasta,
               samplename = samplename
           }
         }
         call amrfinderplus.amrfinderplus_nuc as amrfinderplus_task {
           input:
-            assembly = flye_denovo.final_assembly,
+            assembly = flye_denovo.assembly_fasta,
             samplename = samplename,
             organism = select_first([expected_taxon, gambit.gambit_predicted_taxon])
         }
         if (call_resfinder) {
           call resfinder_task.resfinder as resfinder_task {
             input:
-              assembly = flye_denovo.final_assembly,
+              assembly = flye_denovo.assembly_fasta,
               samplename = samplename,
               organism = select_first([expected_taxon, gambit.gambit_predicted_taxon])
           }
         }
         call ts_mlst_task.ts_mlst {
           input: 
-            assembly = flye_denovo.final_assembly,
+            assembly = flye_denovo.assembly_fasta,
             samplename = samplename
         }
         if (genome_annotation == "prokka") {
           call prokka_task.prokka {
             input:
-              assembly = flye_denovo.final_assembly,
+              assembly = flye_denovo.assembly_fasta,
               samplename = samplename
           }
         }
         if (genome_annotation == "bakta") {
           call bakta_task.bakta {
             input:
-              assembly = flye_denovo.final_assembly,
+              assembly = flye_denovo.assembly_fasta,
               samplename = samplename
           }
         }
         if (call_plasmidfinder) {
           call plasmidfinder_task.plasmidfinder {
             input:
-              assembly = flye_denovo.final_assembly,
+              assembly = flye_denovo.assembly_fasta,
               samplename = samplename
           }
         }
         if (call_abricate) {
           call abricate_task.abricate {
             input:
-              assembly = flye_denovo.final_assembly,
+              assembly = flye_denovo.assembly_fasta,
               samplename = samplename,
               database = abricate_db
           }
@@ -219,7 +219,7 @@ workflow theiaprok_ont {
         call merlin_magic_workflow.merlin_magic {
           input:
             merlin_tag = select_first([expected_taxon, gambit.merlin_tag]),
-            assembly = flye_denovo.final_assembly,
+            assembly = flye_denovo.assembly_fasta,
             samplename = samplename,
             read1 = read_qc_trim.read1_clean,
             ont_data = true
@@ -276,7 +276,7 @@ workflow theiaprok_ont {
               tiptoft_plasmid_replicon_fastq = read_qc_trim.tiptoft_plasmid_replicon_fastq,
               tiptoft_plasmid_replicon_genes = read_qc_trim.tiptoft_plasmid_replicon_genes,
               tiptoft_version = read_qc_trim.tiptoft_version,
-              assembly_fasta = flye_denovo.final_assembly,
+              assembly_fasta = flye_denovo.assembly_fasta,
               contigs_gfa = flye_denovo.contigs_gfa,
               quast_report = quast.quast_report,
               quast_version = quast.version,
@@ -590,7 +590,7 @@ workflow theiaprok_ont {
     String? tiptoft_plasmid_replicon_genes = read_qc_trim.tiptoft_plasmid_replicon_genes
     String? tiptoft_version = read_qc_trim.tiptoft_version
     # Assembly - flye_denovo outputs
-    File? assembly_fasta = flye_denovo.final_assembly
+    File? assembly_fasta = flye_denovo.assembly_fasta
     File? contigs_gfa = flye_denovo.contigs_gfa
     File? bandage_plot = flye_denovo.bandage_plot
     # Assembly QC - quast outputs

@@ -171,7 +171,7 @@ task bwa_all {
     bwa &> BWA_HELP
     grep "Version" BWA_HELP | cut -d" " -f2 > BWA_VERSION
 
-     if [[ ! -f "~{draft_assembly_fasta}.bwt" ]]; then
+    if [[ ! -f "~{draft_assembly_fasta}.bwt" ]]; then
       echo "Indexing reference genome: ~{draft_assembly_fasta}"
       bwa index ~{draft_assembly_fasta}
     else
