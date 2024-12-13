@@ -12,13 +12,13 @@
         <meta name="author" content="Theiagen Genomics">
       
       
-        <link rel="canonical" href="https://theiagen.github.io/public_health_bioinformatics/main/workflows/public_data_sharing/terra_2_ncbi/">
+        <link rel="canonical" href="https://theiagen.github.io/public_health_bioinformatics/main/workflows/standalone/concatenate_illumina_lanes/">
       
       
-        <link rel="prev" href="../terra_2_gisaid/">
+        <link rel="prev" href="../../data_export/concatenate_column_content/">
       
       
-        <link rel="next" href="../../genomic_characterization/theiacov/">
+        <link rel="next" href="../../phylogenetic_construction/core_gene_snp/">
       
       
       <link rel="icon" href="../../../assets/logos/Theiagen-Symbol-Standard-01.png">
@@ -26,7 +26,7 @@
     
     
       
-        <title>Terra_2_NCBI - Public Health Bioinformatics</title>
+        <title>Concatenate_Illumina_Lanes - Public Health Bioinformatics</title>
       
     
     
@@ -89,7 +89,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#terra_2_ncbi" class="md-skip">
+        <a href="#concatenate-illumina-lanes" class="md-skip">
           Skip to content
         </a>
       
@@ -138,7 +138,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Terra_2_NCBI
+              Concatenate_Illumina_Lanes
             
           </span>
         </div>
@@ -1290,7 +1290,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../fetch_srr_accession/" class="md-nav__link">
+      <a href="../../public_data_sharing/fetch_srr_accession/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1311,7 +1311,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../mercury_prep_n_batch/" class="md-nav__link">
+      <a href="../../public_data_sharing/mercury_prep_n_batch/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1332,7 +1332,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../terra_2_gisaid/" class="md-nav__link">
+      <a href="../../public_data_sharing/terra_2_gisaid/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1350,30 +1350,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  <span class="md-ellipsis">
-    Terra_2_NCBI
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../public_data_sharing/terra_2_ncbi/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1382,161 +1362,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#quick-facts" class="md-nav__link">
-    <span class="md-ellipsis">
-      Quick Facts
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#terra_2_ncbi_phb" class="md-nav__link">
-    <span class="md-ellipsis">
-      Terra_2_NCBI_PHB
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Terra_2_NCBI_PHB">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#prerequisites" class="md-nav__link">
-    <span class="md-ellipsis">
-      Prerequisites
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#collating-biosample-metadata" class="md-nav__link">
-    <span class="md-ellipsis">
-      Collating BioSample Metadata
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#metadata-formatters" class="md-nav__link">
-    <span class="md-ellipsis">
-      Metadata Formatters
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#running-the-workflow" class="md-nav__link">
-    <span class="md-ellipsis">
-      Running the Workflow
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#inputs" class="md-nav__link">
-    <span class="md-ellipsis">
-      Inputs
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Inputs">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#workflow-tasks" class="md-nav__link">
-    <span class="md-ellipsis">
-      Workflow Tasks
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#workflow-success" class="md-nav__link">
-    <span class="md-ellipsis">
-      Workflow Success
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#outputs" class="md-nav__link">
-    <span class="md-ellipsis">
-      Outputs
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Outputs">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#example-excluded-samples" class="md-nav__link">
-    <span class="md-ellipsis">
-      An example excluded_samples.tsv file
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#limitations" class="md-nav__link">
-    <span class="md-ellipsis">
-      Limitations
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#acknowledgments" class="md-nav__link">
-    <span class="md-ellipsis">
-      Acknowledgments
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1704,7 +1529,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/cauris_cladetyper/" class="md-nav__link">
+      <a href="../cauris_cladetyper/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1722,10 +1547,30 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../standalone/concatenate_illumina_lanes/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Concatenate_Illumina_Lanes
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -1734,6 +1579,77 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#quick-facts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quick Facts
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#concatenate_illumina_lanes_phb" class="md-nav__link">
+    <span class="md-ellipsis">
+      Concatenate_Illumina_Lanes_PHB
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Concatenate_Illumina_Lanes_PHB">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#inputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Inputs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#workflow-tasks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Workflow Tasks
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#outputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Outputs
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1746,7 +1662,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/gambit_query/" class="md-nav__link">
+      <a href="../gambit_query/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1767,7 +1683,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/kraken2/" class="md-nav__link">
+      <a href="../kraken2/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1788,7 +1704,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/ncbi_amrfinderplus/" class="md-nav__link">
+      <a href="../ncbi_amrfinderplus/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1809,7 +1725,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/ncbi_scrub/" class="md-nav__link">
+      <a href="../ncbi_scrub/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1830,7 +1746,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/rasusa/" class="md-nav__link">
+      <a href="../rasusa/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1851,7 +1767,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/rename_fastq/" class="md-nav__link">
+      <a href="../rename_fastq/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1872,7 +1788,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/tbprofiler_tngs/" class="md-nav__link">
+      <a href="../tbprofiler_tngs/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1893,7 +1809,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/theiavalidate/" class="md-nav__link">
+      <a href="../theiavalidate/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2087,10 +2003,30 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../standalone/concatenate_illumina_lanes/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Concatenate_Illumina_Lanes
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -2099,6 +2035,77 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#quick-facts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quick Facts
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#concatenate_illumina_lanes_phb" class="md-nav__link">
+    <span class="md-ellipsis">
+      Concatenate_Illumina_Lanes_PHB
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Concatenate_Illumina_Lanes_PHB">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#inputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Inputs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#workflow-tasks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Workflow Tasks
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#outputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Outputs
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -2132,7 +2139,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/kraken2/" class="md-nav__link">
+      <a href="../kraken2/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2153,7 +2160,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/ncbi_scrub/" class="md-nav__link">
+      <a href="../ncbi_scrub/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2174,7 +2181,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/rasusa/" class="md-nav__link">
+      <a href="../rasusa/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2195,7 +2202,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/rename_fastq/" class="md-nav__link">
+      <a href="../rename_fastq/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2258,7 +2265,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/theiavalidate/" class="md-nav__link">
+      <a href="../theiavalidate/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2409,7 +2416,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/gambit_query/" class="md-nav__link">
+      <a href="../gambit_query/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2493,7 +2500,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/ncbi_amrfinderplus/" class="md-nav__link">
+      <a href="../ncbi_amrfinderplus/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2598,7 +2605,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/tbprofiler_tngs/" class="md-nav__link">
+      <a href="../tbprofiler_tngs/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2616,30 +2623,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  <span class="md-ellipsis">
-    Terra_2_NCBI
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../public_data_sharing/terra_2_ncbi/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2648,161 +2635,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#quick-facts" class="md-nav__link">
-    <span class="md-ellipsis">
-      Quick Facts
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#terra_2_ncbi_phb" class="md-nav__link">
-    <span class="md-ellipsis">
-      Terra_2_NCBI_PHB
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Terra_2_NCBI_PHB">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#prerequisites" class="md-nav__link">
-    <span class="md-ellipsis">
-      Prerequisites
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#collating-biosample-metadata" class="md-nav__link">
-    <span class="md-ellipsis">
-      Collating BioSample Metadata
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#metadata-formatters" class="md-nav__link">
-    <span class="md-ellipsis">
-      Metadata Formatters
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#running-the-workflow" class="md-nav__link">
-    <span class="md-ellipsis">
-      Running the Workflow
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#inputs" class="md-nav__link">
-    <span class="md-ellipsis">
-      Inputs
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Inputs">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#workflow-tasks" class="md-nav__link">
-    <span class="md-ellipsis">
-      Workflow Tasks
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#workflow-success" class="md-nav__link">
-    <span class="md-ellipsis">
-      Workflow Success
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#outputs" class="md-nav__link">
-    <span class="md-ellipsis">
-      Outputs
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Outputs">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#example-excluded-samples" class="md-nav__link">
-    <span class="md-ellipsis">
-      An example excluded_samples.tsv file
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#limitations" class="md-nav__link">
-    <span class="md-ellipsis">
-      Limitations
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#acknowledgments" class="md-nav__link">
-    <span class="md-ellipsis">
-      Acknowledgments
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -2882,7 +2714,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/cauris_cladetyper/" class="md-nav__link">
+      <a href="../cauris_cladetyper/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2924,7 +2756,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/gambit_query/" class="md-nav__link">
+      <a href="../gambit_query/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2987,7 +2819,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/ncbi_amrfinderplus/" class="md-nav__link">
+      <a href="../ncbi_amrfinderplus/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3026,30 +2858,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  <span class="md-ellipsis">
-    Terra_2_NCBI
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../public_data_sharing/terra_2_ncbi/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3058,161 +2870,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#quick-facts" class="md-nav__link">
-    <span class="md-ellipsis">
-      Quick Facts
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#terra_2_ncbi_phb" class="md-nav__link">
-    <span class="md-ellipsis">
-      Terra_2_NCBI_PHB
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Terra_2_NCBI_PHB">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#prerequisites" class="md-nav__link">
-    <span class="md-ellipsis">
-      Prerequisites
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#collating-biosample-metadata" class="md-nav__link">
-    <span class="md-ellipsis">
-      Collating BioSample Metadata
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#metadata-formatters" class="md-nav__link">
-    <span class="md-ellipsis">
-      Metadata Formatters
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#running-the-workflow" class="md-nav__link">
-    <span class="md-ellipsis">
-      Running the Workflow
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#inputs" class="md-nav__link">
-    <span class="md-ellipsis">
-      Inputs
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Inputs">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#workflow-tasks" class="md-nav__link">
-    <span class="md-ellipsis">
-      Workflow Tasks
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#workflow-success" class="md-nav__link">
-    <span class="md-ellipsis">
-      Workflow Success
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#outputs" class="md-nav__link">
-    <span class="md-ellipsis">
-      Outputs
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Outputs">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#example-excluded-samples" class="md-nav__link">
-    <span class="md-ellipsis">
-      An example excluded_samples.tsv file
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#limitations" class="md-nav__link">
-    <span class="md-ellipsis">
-      Limitations
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#acknowledgments" class="md-nav__link">
-    <span class="md-ellipsis">
-      Acknowledgments
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -3397,7 +3054,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../mercury_prep_n_batch/" class="md-nav__link">
+      <a href="../../public_data_sharing/mercury_prep_n_batch/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3481,7 +3138,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../terra_2_gisaid/" class="md-nav__link">
+      <a href="../../public_data_sharing/terra_2_gisaid/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3499,30 +3156,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  <span class="md-ellipsis">
-    Terra_2_NCBI
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../public_data_sharing/terra_2_ncbi/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3531,161 +3168,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#quick-facts" class="md-nav__link">
-    <span class="md-ellipsis">
-      Quick Facts
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#terra_2_ncbi_phb" class="md-nav__link">
-    <span class="md-ellipsis">
-      Terra_2_NCBI_PHB
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Terra_2_NCBI_PHB">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#prerequisites" class="md-nav__link">
-    <span class="md-ellipsis">
-      Prerequisites
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#collating-biosample-metadata" class="md-nav__link">
-    <span class="md-ellipsis">
-      Collating BioSample Metadata
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#metadata-formatters" class="md-nav__link">
-    <span class="md-ellipsis">
-      Metadata Formatters
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#running-the-workflow" class="md-nav__link">
-    <span class="md-ellipsis">
-      Running the Workflow
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#inputs" class="md-nav__link">
-    <span class="md-ellipsis">
-      Inputs
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Inputs">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#workflow-tasks" class="md-nav__link">
-    <span class="md-ellipsis">
-      Workflow Tasks
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#workflow-success" class="md-nav__link">
-    <span class="md-ellipsis">
-      Workflow Success
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#outputs" class="md-nav__link">
-    <span class="md-ellipsis">
-      Outputs
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Outputs">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#example-excluded-samples" class="md-nav__link">
-    <span class="md-ellipsis">
-      An example excluded_samples.tsv file
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#limitations" class="md-nav__link">
-    <span class="md-ellipsis">
-      Limitations
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#acknowledgments" class="md-nav__link">
-    <span class="md-ellipsis">
-      Acknowledgments
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -3901,7 +3383,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/cauris_cladetyper/" class="md-nav__link">
+      <a href="../cauris_cladetyper/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3940,10 +3422,30 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../standalone/concatenate_illumina_lanes/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Concatenate_Illumina_Lanes
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -3952,6 +3454,77 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#quick-facts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quick Facts
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#concatenate_illumina_lanes_phb" class="md-nav__link">
+    <span class="md-ellipsis">
+      Concatenate_Illumina_Lanes_PHB
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Concatenate_Illumina_Lanes_PHB">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#inputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Inputs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#workflow-tasks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Workflow Tasks
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#outputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Outputs
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -4069,7 +3642,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/gambit_query/" class="md-nav__link">
+      <a href="../gambit_query/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -4090,7 +3663,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/kraken2/" class="md-nav__link">
+      <a href="../kraken2/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -4174,7 +3747,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../mercury_prep_n_batch/" class="md-nav__link">
+      <a href="../../public_data_sharing/mercury_prep_n_batch/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -4195,7 +3768,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/ncbi_amrfinderplus/" class="md-nav__link">
+      <a href="../ncbi_amrfinderplus/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -4216,7 +3789,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/ncbi_scrub/" class="md-nav__link">
+      <a href="../ncbi_scrub/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -4258,7 +3831,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/rasusa/" class="md-nav__link">
+      <a href="../rasusa/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -4279,7 +3852,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/rename_fastq/" class="md-nav__link">
+      <a href="../rename_fastq/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -4426,7 +3999,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/tbprofiler_tngs/" class="md-nav__link">
+      <a href="../tbprofiler_tngs/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -4447,7 +4020,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../terra_2_gisaid/" class="md-nav__link">
+      <a href="../../public_data_sharing/terra_2_gisaid/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -4465,30 +4038,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  <span class="md-ellipsis">
-    Terra_2_NCBI
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../public_data_sharing/terra_2_ncbi/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -4497,161 +4050,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#quick-facts" class="md-nav__link">
-    <span class="md-ellipsis">
-      Quick Facts
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#terra_2_ncbi_phb" class="md-nav__link">
-    <span class="md-ellipsis">
-      Terra_2_NCBI_PHB
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Terra_2_NCBI_PHB">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#prerequisites" class="md-nav__link">
-    <span class="md-ellipsis">
-      Prerequisites
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#collating-biosample-metadata" class="md-nav__link">
-    <span class="md-ellipsis">
-      Collating BioSample Metadata
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#metadata-formatters" class="md-nav__link">
-    <span class="md-ellipsis">
-      Metadata Formatters
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#running-the-workflow" class="md-nav__link">
-    <span class="md-ellipsis">
-      Running the Workflow
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#inputs" class="md-nav__link">
-    <span class="md-ellipsis">
-      Inputs
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Inputs">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#workflow-tasks" class="md-nav__link">
-    <span class="md-ellipsis">
-      Workflow Tasks
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#workflow-success" class="md-nav__link">
-    <span class="md-ellipsis">
-      Workflow Success
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#outputs" class="md-nav__link">
-    <span class="md-ellipsis">
-      Outputs
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Outputs">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#example-excluded-samples" class="md-nav__link">
-    <span class="md-ellipsis">
-      An example excluded_samples.tsv file
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#limitations" class="md-nav__link">
-    <span class="md-ellipsis">
-      Limitations
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#acknowledgments" class="md-nav__link">
-    <span class="md-ellipsis">
-      Acknowledgments
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -4748,7 +4146,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/theiavalidate/" class="md-nav__link">
+      <a href="../theiavalidate/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -4993,50 +4391,14 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#terra_2_ncbi_phb" class="md-nav__link">
+  <a href="#concatenate_illumina_lanes_phb" class="md-nav__link">
     <span class="md-ellipsis">
-      Terra_2_NCBI_PHB
+      Concatenate_Illumina_Lanes_PHB
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Terra_2_NCBI_PHB">
+    <nav class="md-nav" aria-label="Concatenate_Illumina_Lanes_PHB">
       <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#prerequisites" class="md-nav__link">
-    <span class="md-ellipsis">
-      Prerequisites
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#collating-biosample-metadata" class="md-nav__link">
-    <span class="md-ellipsis">
-      Collating BioSample Metadata
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#metadata-formatters" class="md-nav__link">
-    <span class="md-ellipsis">
-      Metadata Formatters
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#running-the-workflow" class="md-nav__link">
-    <span class="md-ellipsis">
-      Running the Workflow
-    </span>
-  </a>
-  
-</li>
         
           <li class="md-nav__item">
   <a href="#inputs" class="md-nav__link">
@@ -5045,8 +4407,7 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Inputs">
-      <ul class="md-nav__list">
+</li>
         
           <li class="md-nav__item">
   <a href="#workflow-tasks" class="md-nav__link">
@@ -5058,56 +4419,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#workflow-success" class="md-nav__link">
-    <span class="md-ellipsis">
-      Workflow Success
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#outputs" class="md-nav__link">
     <span class="md-ellipsis">
       Outputs
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Outputs">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#example-excluded-samples" class="md-nav__link">
-    <span class="md-ellipsis">
-      An example excluded_samples.tsv file
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#limitations" class="md-nav__link">
-    <span class="md-ellipsis">
-      Limitations
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#acknowledgments" class="md-nav__link">
-    <span class="md-ellipsis">
-      Acknowledgments
     </span>
   </a>
   
@@ -5136,7 +4450,7 @@
   
 
 
-<h1 id="terra_2_ncbi">Terra_2_NCBI<a class="headerlink" href="#terra_2_ncbi" title="Permanent link">&para;</a></h1>
+<h1 id="concatenate-illumina-lanes">Concatenate Illumina Lanes<a class="headerlink" href="#concatenate-illumina-lanes" title="Permanent link">&para;</a></h1>
 <h2 id="quick-facts">Quick Facts<a class="headerlink" href="#quick-facts" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -5150,111 +4464,17 @@
 </thead>
 <tbody>
 <tr>
-<td><a href="../../../workflows_overview/workflows_type/#public-data-sharing">Public Data Sharing</a></td>
-<td><a href="../../../workflows_overview/workflows_kingdom/#bacteria">Bacteria</a>, <a href="../../../workflows_overview/workflows_kingdom/#mycotics">Mycotics</a> <a href="../../../workflows_overview/workflows_kingdom/#viral">Viral</a></td>
-<td>PHB v2.3.0</td>
-<td>No</td>
-<td>Set-level</td>
+<td><a href="../../../workflows_overview/workflows_type/#standalone">Standalone</a></td>
+<td><a href="../../../workflows_overview/workflows_kingdom/#any-taxa">Any Taxa</a></td>
+<td>PHB 2.3.0</td>
+<td>Yes</td>
+<td>Sample-level</td>
 </tr>
 </tbody>
 </table>
-<h2 id="terra_2_ncbi_phb">Terra_2_NCBI_PHB<a class="headerlink" href="#terra_2_ncbi_phb" title="Permanent link">&para;</a></h2>
-<div class="admonition warning">
-<p class="admonition-title">Do not resubmit!</p>
-<p><strong>If the Terra_2_NCBI workflow fails, DO NOT resubmit.</strong></p>
-<p>Resubmission risks duplicate submissions and future failures.</p>
-<p>Contact Theiagen (<code>support@theiagen.com</code>) to determine the reason for failure, and <strong>only move forward with Theiagen's guidance</strong>.</p>
-</div>
-<div class="admonition dna">
-<p class="admonition-title">Key Resources</p>
-<ul>
-<li><a href="../../../assets/metadata_formatters/Terra_2_NCBI-PATHOGEN-metadata-2024-04-30.xlsx">Pathogen metadata formatter</a></li>
-<li><a href="../../../assets/metadata_formatters/Terra_2_NCBI-MICROBE-metadata-2022-07-11.xlsx">Microbe metadata formatter</a></li>
-<li><a href="../../../assets/metadata_formatters/Terra_2_NCBI-VIRUS-metadata-2022-09-09.xlsx">Virus metadata formatter</a></li>
-</ul>
-</div>
-<p>The Terra_2_NCBI workflow is a programmatic data submission method to share metadata information with NCBI BioSample and paired-end Illumina reads with NCBI SRA directly from Terra without having to use the NCBI portal.</p>
-<h3 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h3>
-<details class="toggle">
-<summary>Before running the Terra_2_NCBI workflow</summary>
-<ol>
-<li>
-<p>The user <strong>must</strong> have access to the NCBI FTP. To gain these credentials, we recommend emailing <code>**sra@ncbi.nlm.nih.gov**</code> a variation of the following example, including all the information:</p>
-<blockquote>
-<p>Hello,</p>
-<p>We would like to automate submissions to the Submission Portal using XML metadata to accompany our cloud-hosted data files.  We would like to upload via FTP and need to create a submission group.</p>
-<p>Here is the relevant information:</p>
-<ol>
-<li>Suggested group abbreviation:</li>
-<li>Full group name:</li>
-<li>Institution and department:</li>
-<li>Contact person (someone likely to remain at the location for an extended time):</li>
-<li>Contact email:</li>
-<li>Mailing address (including country and postcode):</li>
-</ol>
-<p>We will be using an existing submission pipeline that is known to work and would like to request that the production folder be activated. Thank you for your assistance!</p>
-</blockquote>
-</li>
-<li>
-<p>From NCBI, you will need to get in response:</p>
-<ol>
-<li>an FTP address (it will likely be ftp-private.ncbi.nih.gov)</li>
-<li>Username (typically the suggested group abbreviation)</li>
-<li>Password</li>
-<li>an acknowledgment that the production folder has been activated.</li>
-</ol>
-<p>Please confirm that the production folder has been activated, or else the submission pipeline will either fail or only run test submissions and not actually submit to NCBI.</p>
-</li>
-<li>
-<p>Before you can run the workflow for the first time, we also recommend scheduling a meeting with Theiagen to get additional things set up, including</p>
-<ul>
-<li>adding a correctly-formatted configuration file to your workspace data elements that includes your FTP username and password, laboratory details, and other important information.</li>
-<li>ensuring your proxy account has been given permission to write to the google bucket where SRA reads are temporarily stored before being transferred to NCBI.</li>
-</ul>
-<details class="toggle">
-<summary>What is the configuration file used for?</summary>
-<p>The configuration file tells the workflow your username and password so you can access the FTP. It also provides important information about who should be contacted regarding the submission. We recommend contacting a member of Theiagen for help in the creation of this configuration file to ensure that everything is formatted correctly.</p>
-</details>
-</li>
-</ol>
-</details>
-<h3 id="collating-biosample-metadata">Collating BioSample Metadata<a class="headerlink" href="#collating-biosample-metadata" title="Permanent link">&para;</a></h3>
-<p>In order to create BioSamples, you need to choose the correct BioSample package and have the appropriate metadata included in your data table.</p>
-<p>Currently, Terra_2_NCBI only supports <em>Pathogen</em>, <em>Virus</em>, and <em>Microbe</em> BioSample packages. <strong>Most organisms should be submitted using the Pathogen package</strong> unless you have been specifically directed otherwise (either through CDC communications or another reliable source). Definitions of packages supported by Terra_2_NCBI are listed below with more requirements provided via the links:</p>
-<ul>
-<li><a href="https://www.ncbi.nlm.nih.gov/biosample/docs/packages/Pathogen.cl.1.0/">Pathogen.cl</a> - any clinical or host-associated pathogen</li>
-<li><a href="https://www.ncbi.nlm.nih.gov/biosample/docs/packages/Pathogen.env.1.0/">Pathogen.env</a> - environmental, food or other pathogen <em>(no metadata formatter available at this time)</em></li>
-<li><a href="https://www.ncbi.nlm.nih.gov/biosample/docs/packages/Microbe.1.0/">Microbe</a> - bacteria or other unicellular microbes that do not fit under the MIxS, Pathogen, or Virus packages.</li>
-<li><a href="https://www.ncbi.nlm.nih.gov/biosample/docs/packages/Virus.1.0/">Virus</a> -  viruses <strong>not</strong> directly associated with disease<ul>
-<li>Viral pathogens should be submitted using the Pathogen: Clinical or host-associated pathogen package.</li>
-</ul>
-</li>
-</ul>
-<h3 id="metadata-formatters">Metadata Formatters<a class="headerlink" href="#metadata-formatters" title="Permanent link">&para;</a></h3>
-<p>For each package, we have created a metadata template spreadsheet to help you organize your metadata:</p>
-<p>Please note that the pathogen metadata formatter is for the <em>clinical</em> pathogen package, not the environmental pathogen.</p>
-<ul>
-<li><a href="../../../assets/metadata_formatters/Terra_2_NCBI-PATHOGEN-metadata-2024-04-30.xlsx">Terra_2_NCBI-PATHOGEN-metadata-2024-04-30.xlsx</a></li>
-<li><a href="../../../assets/metadata_formatters/Terra_2_NCBI-MICROBE-metadata-2022-07-11.xlsx">Terra_2_NCBI-MICROBE-metadata-2022-07-11.xlsx</a></li>
-<li><a href="../../../assets/metadata_formatters/Terra_2_NCBI-VIRUS-metadata-2022-09-09.xlsx">Terra_2_NCBI-VIRUS-metadata-2022-09-09.xlsx</a></li>
-</ul>
-<p>We are constantly working on improving these spreadsheets and they will be updated in due course.</p>
-<h3 id="running-the-workflow">Running the Workflow<a class="headerlink" href="#running-the-workflow" title="Permanent link">&para;</a></h3>
-<p>We recommend running a test submission before your first production submission to ensure that all data has been formatted correctly. Please contact Theiagen (<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#117;&#112;&#112;&#111;&#114;&#116;&#64;&#116;&#104;&#101;&#105;&#97;&#103;&#101;&#110;&#46;&#99;&#111;&#109;">&#115;&#117;&#112;&#112;&#111;&#114;&#116;&#64;&#116;&#104;&#101;&#105;&#97;&#103;&#101;&#110;&#46;&#99;&#111;&#109;</a>) to get this set up.</p>
-<p>In the test submission, any real BioProject accession numbers you provide will not be recognized. You will have to make a "fake" or "test" BioProject. This cannot be done through the NCBI portal. Theiagen can provide assistance in creating this as it requires manual command-line work on the NCBI FTP using the account they provided for you.</p>
-<details class="toggle">
-<summary><strong>What's the difference between a test submission and a production submission?</strong></summary>
-<p>A production submission means that your submission using Terra_2_NCBI will be submitted to NCBI as if you were using the online portal. That means that anything you submit on production will be given to the <strong><em>*real</em>* </strong>NCBI servers and appear and become searchable on the NCBI website.</p>
-<p>A test submission gives your data to a completely detached <strong>replica</strong> of the production server. This means that any data you submit as a test will behave exactly <strong>like a real submission, but since it's detached, nothing </strong>will appear on the NCBI website, and anything returned from the workflow (such as BioSample accession numbers) will be fake. If you search for these test BioSample accession numbers on the NCBI website, either (a) nothing will appear, or (b) it will link to a random sample. </p>
-<p>If you want your data to be on NCBI, you must run a production submission. Initially, NCBI locks the production folder so that the user doesn't accidentally submit test data to the main database. You must have requested activation of the production folder prior to your first production submission.</p>
-</details>
+<h2 id="concatenate_illumina_lanes_phb">Concatenate_Illumina_Lanes_PHB<a class="headerlink" href="#concatenate_illumina_lanes_phb" title="Permanent link">&para;</a></h2>
+<p>Some Illumina machines produce multi-lane FASTQ files for a single sample. This workflow concatenates the multiple lanes into a single FASTQ file per read type (forward or reverse).</p>
 <h3 id="inputs">Inputs<a class="headerlink" href="#inputs" title="Permanent link">&para;</a></h3>
-<p>This workflow runs on set-level data tables.</p>
-<div class="admonition info">
-<p class="admonition-title">Production Submissions</p>
-<p>Please note that an optional Boolean variable, <code>submit_to_production</code>, is <strong>required</strong> for a production submission.</p>
-</div>
-<div class="searchable-table">
 <table>
 <thead>
 <tr>
@@ -5268,284 +4488,108 @@
 </thead>
 <tbody>
 <tr>
-<td>Terra_2_NCBI</td>
-<td><strong>bioproject</strong></td>
-<td>String</td>
-<td>BioProject accession that the samples will be submitted to</td>
-<td></td>
-<td>Required</td>
-</tr>
-<tr>
-<td>Terra_2_NCBI</td>
-<td><strong>biosample_package</strong></td>
-<td>String</td>
-<td>The BioSample package that the samples will be submitted under</td>
-<td></td>
-<td>Required</td>
-</tr>
-<tr>
-<td>Terra_2_NCBI</td>
-<td><strong>ncbi_config_js</strong></td>
+<td>concatenate_illumina_lanes</td>
+<td><strong>read1_lane1</strong></td>
 <td>File</td>
-<td>Configuration file that contains your username and password for the NCBI FTP</td>
+<td>The first lane for the forward reads</td>
 <td></td>
 <td>Required</td>
 </tr>
 <tr>
-<td>Terra_2_NCBI</td>
-<td><strong>project_name</strong></td>
-<td>String</td>
-<td>The name of your Terra project. You can find this information in the url of the webpage you are on. It is the section right after "#workspaces/"</td>
-<td></td>
-<td>Required</td>
-</tr>
-<tr>
-<td>Terra_2_NCBI</td>
-<td><strong>sample_names</strong></td>
-<td>Array[String]</td>
-<td>The list of samples you want to submit</td>
-<td></td>
-<td>Required</td>
-</tr>
-<tr>
-<td>Terra_2_NCBI</td>
-<td><strong>sra_transfer_gcp_bucket</strong></td>
-<td>String</td>
-<td>Google bucket where your SRA reads will be temporarily stored before transferring to SRA</td>
-<td></td>
-<td>Required</td>
-</tr>
-<tr>
-<td>Terra_2_NCBI</td>
-<td><strong>table_name</strong></td>
-<td>String</td>
-<td>The name of the Terra table where your samples are found</td>
-<td></td>
-<td>Required</td>
-</tr>
-<tr>
-<td>Terra_2_NCBI</td>
-<td><strong>workspace_name</strong></td>
-<td>String</td>
-<td>The name of the workspace where your samples are found</td>
-<td></td>
-<td>Required</td>
-</tr>
-<tr>
-<td>add_biosample_accessions</td>
-<td><strong>cpu</strong></td>
-<td>Int</td>
-<td>Number of CPUs to allocate to the task</td>
-<td>2</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>add_biosample_accessions</td>
-<td><strong>disk_size</strong></td>
-<td>Int</td>
-<td>Amount of storage (in GB) to allocate to the task</td>
-<td>100</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>add_biosample_accessions</td>
-<td><strong>docker</strong></td>
-<td>String</td>
-<td>The Docker container to use for the task</td>
-<td>"us-docker.pkg.dev/general-theiagen/broadinstitute/ncbi-tools:2.10.7.10"</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>add_biosample_accessions</td>
-<td><strong>memory</strong></td>
-<td>Int</td>
-<td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>2</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>biosample_submit_tsv_ftp_upload</td>
-<td><strong>cpu</strong></td>
-<td>Int</td>
-<td>Number of CPUs to allocate to the task</td>
-<td>2</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>biosample_submit_tsv_ftp_upload</td>
-<td><strong>disk_size</strong></td>
-<td>Int</td>
-<td>Amount of storage (in GB) to allocate to the task</td>
-<td>100</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>biosample_submit_tsv_ftp_upload</td>
-<td><strong>docker</strong></td>
-<td>String</td>
-<td>The Docker container to use for the task</td>
-<td>"us-docker.pkg.dev/general-theiagen/broadinstitute/ncbi-tools:2.10.7.10"</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>biosample_submit_tsv_ftp_upload</td>
-<td><strong>memory</strong></td>
-<td>Int</td>
-<td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>2</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>ncbi_sftp_upload</td>
-<td><strong>additional_files</strong></td>
-<td>Array[File]</td>
-<td>Internal component; do not modify</td>
-<td>[]</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>ncbi_sftp_upload</td>
-<td><strong>cpu</strong></td>
-<td>Int</td>
-<td>Number of CPUs to allocate to the task</td>
-<td>2</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>ncbi_sftp_upload</td>
-<td><strong>disk_size</strong></td>
-<td>Int</td>
-<td>Amount of storage (in GB) to allocate to the task</td>
-<td>100</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>ncbi_sftp_upload</td>
-<td><strong>docker</strong></td>
-<td>String</td>
-<td>The Docker container to use for the task</td>
-<td>"us-docker.pkg.dev/general-theiagen/broadinstitute/ncbi-tools:2.10.7.10"</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>ncbi_sftp_upload</td>
-<td><strong>memory</strong></td>
-<td>Int</td>
-<td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>2</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>ncbi_sftp_upload</td>
-<td><strong>wait_for</strong></td>
-<td>String</td>
-<td>Internal component; do not modify</td>
-<td>"1"</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>prune_table</td>
-<td><strong>cpu</strong></td>
-<td>Int</td>
-<td>Number of CPUs to allocate to the task</td>
-<td>2</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>prune_table</td>
-<td><strong>disk_size</strong></td>
-<td>Int</td>
-<td>Amount of storage (in GB) to allocate to the task</td>
-<td>100</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>prune_table</td>
-<td><strong>docker</strong></td>
-<td>String</td>
-<td>The Docker container to use for the task</td>
-<td>"us-docker.pkg.dev/general-theiagen/broadinstitute/ncbi-tools:2.10.7.10"</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>prune_table</td>
-<td><strong>memory</strong></td>
-<td>Int</td>
-<td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>2</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>prune_table</td>
-<td><strong>read1_column_name</strong></td>
-<td>String</td>
-<td>The column header of the read1 column</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>prune_table</td>
-<td><strong>read2_column_name</strong></td>
-<td>String</td>
-<td>The column header of the read1 column</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>sra_tsv_to_xml</td>
-<td><strong>cpu</strong></td>
-<td>Int</td>
-<td>Number of CPUs to allocate to the task</td>
-<td>2</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>sra_tsv_to_xml</td>
-<td><strong>disk_size</strong></td>
-<td>Int</td>
-<td>Amount of storage (in GB) to allocate to the task</td>
-<td>100</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>sra_tsv_to_xml</td>
-<td><strong>docker</strong></td>
-<td>String</td>
-<td>The Docker container to use for the task</td>
-<td>"us-docker.pkg.dev/general-theiagen/broadinstitute/ncbi-tools:2.10.7.10"</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>sra_tsv_to_xml</td>
-<td><strong>memory</strong></td>
-<td>Int</td>
-<td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>2</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>Terra_2_NCBI</td>
-<td><strong>input_table</strong></td>
+<td>concatenate_illumina_lanes</td>
+<td><strong>read1_lane2</strong></td>
 <td>File</td>
-<td>Internal component; do not modify</td>
+<td>The second lane for the forward reads</td>
+<td></td>
+<td>Required</td>
+</tr>
+<tr>
+<td>concatenate_illumina_lanes</td>
+<td><strong>samplename</strong></td>
+<td>String</td>
+<td>The name of the sample, used to name the output files</td>
+<td></td>
+<td>Required</td>
+</tr>
+<tr>
+<td>cat_lanes</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>cat_lanes</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>50</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>cat_lanes</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>"us-docker.pkg.dev/general-theiagen/theiagen/utility:1.2"</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>cat_lanes</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>4</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>concatenate_illumina_lanes</td>
+<td><strong>read1_lane3</strong></td>
+<td>File</td>
+<td>The third lane for the forward reads</td>
 <td></td>
 <td>Optional</td>
 </tr>
 <tr>
-<td>Terra_2_NCBI</td>
-<td><strong>skip_biosample</strong></td>
-<td>Boolean</td>
-<td>Boolean switch to turn on actual production level submission</td>
-<td>false</td>
+<td>concatenate_illumina_lanes</td>
+<td><strong>read1_lane4</strong></td>
+<td>File</td>
+<td>The fourth lane for the forward reads</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
-<td>Terra_2_NCBI</td>
-<td><strong>submit_to_production</strong></td>
-<td>Boolean</td>
-<td>Used to indicate whether or not the workflow should submit to NCBI's production environment. If set to true, then a Production submission will occur. Otherwise, by default (false), it will perform a Test submission.</td>
-<td>false</td>
-<td>Optional, Required</td>
+<td>concatenate_illumina_lanes</td>
+<td><strong>read2_lane1</strong></td>
+<td>File</td>
+<td>The first lane for the reverse reads</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>concatenate_illumina_lanes</td>
+<td><strong>read2_lane2</strong></td>
+<td>File</td>
+<td>The second lane for the reverse reads</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>concatenate_illumina_lanes</td>
+<td><strong>read2_lane3</strong></td>
+<td>File</td>
+<td>The third lane for the reverse reads</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>concatenate_illumina_lanes</td>
+<td><strong>read2_lane4</strong></td>
+<td>File</td>
+<td>The fourth lane for the reverse reads</td>
+<td></td>
+<td>Optional</td>
 </tr>
 <tr>
 <td>version_capture</td>
@@ -5565,149 +4609,44 @@
 </tr>
 </tbody>
 </table>
-</div>
-<details class="task">
-<summary>Workflow Tasks</summary>
-<h5 id="workflow-tasks">Workflow Tasks<a class="headerlink" href="#workflow-tasks" title="Permanent link">&para;</a></h5>
-<p>The workflow will perform the following tasks, each highlighted as <code>code</code></p>
-<ol>
-<li><code>prune_table</code>formats all incoming metadata for submission.</li>
-<li>
-<p>If you are submitting BioSamples:</p>
-<ol>
-<li><code>biosample_submit_tsv_ftp_upload</code> will <ol>
-<li>format the BioSample table into XML format</li>
-<li>submit BioSamples to NCBI</li>
-<li>return all NCBI communications in XML format, and</li>
-<li>parse those communications for any and all BioSample accessions.</li>
-</ol>
-</li>
-<li>
-<ol>
-<li>add the BioSample accessions to SRA metadata</li>
-<li>upload the BioSample accessions to the origin Terra table</li>
-</ol>
-<p><code>add_biosample_accessions</code> will</p>
-<p>If BioSample accessions fail to be generated, this task ends the workflow and users should contact Theiagen for further support. Otherwise, the workflow will continue and outputs are returned to the Terra data table. </p>
-</li>
-</ol>
-</li>
-<li>
-<p>If BioSample accessions were generated or if BioSample submission was skipped</p>
-<ol>
-<li><code>sra_tsv_to_xml</code> converts the SRA metadata (including any generated or pre-provided BioSample accessions) into XML format.</li>
-<li><code>ncbi_sftp_upload</code> <ol>
-<li>uploads the SRA metadata to NCBI </li>
-<li>returns any XML communications from NCBI.</li>
-</ol>
-</li>
-</ol>
-</li>
-</ol>
-</details>
-<h4 id="workflow-success">Workflow Success<a class="headerlink" href="#workflow-success" title="Permanent link">&para;</a></h4>
-<p>If the workflow ends successfully, it returns the outputs to the Terra data table and the XML communications from NCBI will say that submission is underway. The workflow does not declare successful sample submission since SRA sometimes takes a while to do this. If the submission was successful, the point of contact for the submission will receive the SRA accessions via email from NCBI.</p>
-<p>If the workflow ends unsuccessfully, no outputs will be shown on Terra and the <code>biosample_status</code> output variable will indicate that the BioSample submission failed.</p>
+<h3 id="workflow-tasks">Workflow Tasks<a class="headerlink" href="#workflow-tasks" title="Permanent link">&para;</a></h3>
+<p>This workflow concatenates the Illumina lanes for forward and (if provided) reverse reads. The output files are named as followed:</p>
+<ul>
+<li>Forward reads: <code>&lt;samplename&gt;_merged_R1.fastq.gz</code></li>
+<li>Reverse reads: <code>&lt;samplename&gt;_merged_R2.fastq.gz</code></li>
+</ul>
 <h3 id="outputs">Outputs<a class="headerlink" href="#outputs" title="Permanent link">&para;</a></h3>
-<p>The output files contain information mostly for debugging purposes. Additionally, if your submission is successful, the point of contact for the submission should also receive an email from NCBI notifying them of their submission success.</p>
-<div class="searchable-table">
 <table>
 <thead>
 <tr>
-<th>Variable</th>
-<th>Description</th>
-<th>Type</th>
+<th><strong>Variable</strong></th>
+<th><strong>Type</strong></th>
+<th><strong>Description</strong></th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>biosample_failures</td>
-<td>Text file listing samples that failed BioSample submission</td>
-<td>File</td>
-</tr>
-<tr>
-<td>biosample_metadata</td>
-<td>Metadata used for BioSample submission in proper BioSample formatting</td>
-<td>File</td>
-</tr>
-<tr>
-<td>biosample_report_xmls</td>
-<td>One or more XML files that contain the response from NCBI regarding your BioSample submission. These can be pretty cryptic, but often contain information to determine  if anything went wrong</td>
-<td>Array[File]</td>
-</tr>
-<tr>
-<td>biosample_status</td>
-<td>String showing whether BioSample submission was successful</td>
+<td>concatenate_illumina_lanes_analysis_date</td>
 <td>String</td>
+<td>Date of analysis</td>
 </tr>
 <tr>
-<td>biosample_submission_xml</td>
-<td>XML file used to submit your BioSamples to NCBI</td>
-<td>File</td>
-</tr>
-<tr>
-<td>excluded_samples</td>
-<td>Text file listing samples that were excluded from BioSample submission for missing required metadata</td>
-<td>File</td>
-</tr>
-<tr>
-<td>generated_accessions</td>
-<td>Text file mapping the BioSample accession with its sample name.</td>
-<td>File</td>
-</tr>
-<tr>
-<td>sra_metadata</td>
-<td>Metadata used for SRA submission in proper SRA formatting</td>
-<td>File</td>
-</tr>
-<tr>
-<td>sra_report_xmls</td>
-<td>One or more XML files containing the response from NCBI regarding your SRA submission. These can be pretty cryptic, but often contain information to determine  if anything went wrong</td>
-<td>Array[File]</td>
-</tr>
-<tr>
-<td>sra_submission_xml</td>
-<td>XML file that was used to submit your SRA reads to NCBI</td>
-<td>File</td>
-</tr>
-<tr>
-<td>terra_2_ncbi_analysis_date</td>
-<td>Date that the workflow was run</td>
+<td>concatenate_illumina_lanes_version</td>
 <td>String</td>
+<td>Version of PHB used for the analysis</td>
 </tr>
 <tr>
-<td>terra_2_ncbi_version</td>
-<td>Version of the PHB repository where the workflow is hosted</td>
-<td>String</td>
+<td>read1_concatenated</td>
+<td>File</td>
+<td>Concatenated forward reads</td>
+</tr>
+<tr>
+<td>read2_concatenated</td>
+<td>File</td>
+<td>Concatenated reverse reads</td>
 </tr>
 </tbody>
 </table>
-</div>
-<details class="toggle" open="open">
-<summary>An example excluded_samples.tsv file</summary>
-<h5 id="example-excluded-samples">An example excluded_samples.tsv file<a class="headerlink" href="#example-excluded-samples" title="Permanent link">&para;</a></h5>
-<p>Due to the nature of tsv files, it may be easier to download and open this file in Excel. </p>
-<p><a href="../../../assets/files/example_excluded_samples.tsv">example_excluded_samples.tsv</a></p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Samples excluded for quality thresholds:
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>sample_name message 
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>sample2 VADR skipped due to poor assembly
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>sample3 VADR number alerts too high: 3 greater than limit of 0
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>sample4 Number of Ns was too high: 10000 greater than limit of 5000
-</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
-</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>Samples excluded for missing required metadata (will have empty values in indicated columns):
-</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>tablename_id    organism    country library_layout
-</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>sample5         paired
-</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>sample6 SARS-CoV-2  USA
-</span></code></pre></div>
-<p>This example informs the user that samples 2-4 were excluded for quality reasons (the exact reason is listed in the <code>message</code> column), and that samples 5 and 6 were excluded because they were missing required metadata fields (sample5 was missing the <code>organism</code> and <code>country</code> fields, and sample6 was missing the <code>library_layout</code> field).</p>
-</details>
-<h3 id="limitations">Limitations<a class="headerlink" href="#limitations" title="Permanent link">&para;</a></h3>
-<ul>
-<li>The maximum number of samples that can be submitted at once appears to be 300. We recommend submitting less than 300 samples at a time to avoid errors due to large submission sizes.</li>
-<li>A workflow on returning SRA accessions using the generated BioSample accessions is in progress.</li>
-</ul>
-<h3 id="acknowledgments">Acknowledgments<a class="headerlink" href="#acknowledgments" title="Permanent link">&para;</a></h3>
-<p>This workflow would not have been possible without the invaluable contributions of Dr. Danny Park.</p>
 
 
 
@@ -5740,7 +4679,7 @@
     <span class="md-icon" title="Created">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2024-09-11</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2024-12-13</span>
   </span>
 
     
