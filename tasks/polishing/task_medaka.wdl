@@ -42,7 +42,7 @@ task medaka_consensus {
     fi
 
     echo "Using Medaka model for polishing: $selected_model"
-    echo ~[selected_model] > MEDAKA_MODEL
+    echo $selected_model > MEDAKA_MODEL
 
     # Perform Medaka polishing
     medaka_consensus \
