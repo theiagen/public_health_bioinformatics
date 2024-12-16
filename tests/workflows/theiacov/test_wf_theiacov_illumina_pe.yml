@@ -22,7 +22,7 @@
     - path: miniwdl_run/call-raw_check_reads/task.log
     # trimmomatic
     - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_pe/command
-      md5sum: fcc0e853c3719e41f3d169c291dc3927
+      md5sum: e16dcea259c3bf45ec374c92da0bf2dd
     - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_pe/inputs.json
       contains: ["read1", "read2", "samplename"]
     - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_pe/outputs.json
