@@ -20,25 +20,31 @@ task medaka_consensus {
     # Initialize selected_model variable
     selected_model=""
 
-    # Check if auto_model is enabled
-    if [[ "~{auto_model}" == "true" ]]; then
-      echo "Attempting automatic model selection..."
-      medaka tools resolve_model --auto_model consensus ~{read1} > auto_model.txt || true
-      auto_model=$(cat auto_model.txt || echo "")
-
-      # Alert if automatic model selection fails
-      if [[ -z "$auto_model" ]]; then
-        echo "Warning: Automatic model selection failed. Defaulting to fallback model."
-      fi
-    fi
-
-    # Use auto_model if detected, otherwise fallback to user-provided or default
-    if [[ -n "$auto_model" ]]; then
-      selected_model="$auto_model"
-    elif [[ -n "~{medaka_model_override}" ]]; then
+    # Check if override model is provided
+    if [[ -n "~{medaka_model_override}" ]]; then
+      echo "Using user-provided Medaka model override: ~{medaka_model_override}"
       selected_model="~{medaka_model_override}"
     else
-      selected_model="r1041_e82_400bps_sup_v5.0.0"
+      # Check if auto_model is enabled
+      if [[ "~{auto_model}" == "true" ]]; then
+        echo "Attempting automatic model selection..."
+        medaka tools resolve_model --auto_model consensus ~{read1} > auto_model.txt || true
+        auto_model=$(cat auto_model.txt || echo "")
+
+        # Alert if automatic model selection fails
+        if [[ -n "$auto_model" ]]; then
+          selected_model="$auto_model"
+          echo "Automatically selected Medaka model: $selected_model"
+        else
+          echo "Warning: Automatic model selection failed or returned empty. Using default model."
+        fi
+      fi
+
+      # If no model selected yet, use default
+      if [[ -z "$selected_model" ]]; then
+        selected_model="r1041_e82_400bps_sup_v5.0.0"
+        echo "Using default Medaka model: $selected_model"
+      fi
     fi
 
     echo "Using Medaka model for polishing: $selected_model"
