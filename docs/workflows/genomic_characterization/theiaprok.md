@@ -850,6 +850,12 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
     ??? toggle "`Medaka`: Polishing of Flye assembly"
         - Polishes the Flye assembly using `task_medaka.wdl`.
 
+        - Automatic Model Selection: Automatically determines the most appropriate Medaka model based on the input data, ensuring optimal polishing results without manual intervention. 
+        - User-Specified Model Override: Allows users to specify a particular Medaka model if automatic selection does not yield the desired outcome or for specialized use cases.
+        - Default Model: If both automatic model selection fails and no user-specified model is provided, Medaka defaults to the predefined fallback model `r1041_e82_400bps_sup_v5.0.0`. 
+
+        !! note "Medaka Model Resolution Process" Medaka's automatic model selection leverages the medaka tools `resolve_model` command to analyze the input reads and identify the most suitable model for polishing. This process examines the error profiles and characteristics of the sequencing data to ensure that the selected model aligns well with the data's specific needs. If the automatic selection fails to identify a suitable model, Medaka gracefully falls back to the default model to maintain workflow continuity. Users should verify the chosen model and consider specifying a model override if necessary.
+
         !!! techdetails "Technical Details: Medaka"
             - **Purpose**: Refines assembly accuracy for ONT data by incorporating error corrections.
             - **WDL Task**: [task_medaka.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/polishing/task_medaka.wdl)
