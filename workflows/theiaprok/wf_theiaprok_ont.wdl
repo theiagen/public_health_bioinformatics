@@ -599,7 +599,7 @@ workflow theiaprok_ont {
     String? medaka_version = flye_denovo.medaka_version
     String? racon_version = flye_denovo.racon_version
     String? bwa_version = flye_denovo.bwa_version
-    String? polypolish_version = pflye_denovo.polypolish_version
+    String? polypolish_version = flye_denovo.polypolish_version
     String dnaapler_version = flye_denovo.dnaapler_version
     # Assembly QC - quast outputs
     File? quast_report = quast.quast_report
