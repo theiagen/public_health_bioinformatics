@@ -593,6 +593,14 @@ workflow theiaprok_ont {
     File? assembly_fasta = flye_denovo.assembly_fasta
     File? contigs_gfa = flye_denovo.contigs_gfa
     File? bandage_plot = flye_denovo.bandage_plot
+    String? porechop_version = flye_denovo.porechop_version
+    String flye_version = flye_denovo.flye_version
+    String bandage_version = flye_denovo.bandage_version
+    String? medaka_version = flye_denovo.medaka_version
+    String? racon_version = flye_denovo.racon_version
+    String? bwa_version = flye_denovo.bwa_version
+    String? polypolish_version = pflye_denovo.polypolish_version
+    String dnaapler_version = flye_denovo.dnaapler_version
     # Assembly QC - quast outputs
     File? quast_report = quast.quast_report
     String? quast_version = quast.version
