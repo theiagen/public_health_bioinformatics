@@ -46,7 +46,7 @@ When undertaking genomic analysis using the command-line, via Terra, or other da
 We continuously work to improve our codebase and usability of our workflows by the public health community, so changes from version to version are expected.  This documentation page reflects the state of the workflow at the version stated in the title.
 
 !!! dna "What's new?"
-    You can see the changes since PHB v2.2.0 [**here**](https://theiagen.notion.site/Public-Health-Bioinformatics-v2-2-1-Patch-Release-Notes-104cb013bc9380bcbd70dab04bf671a8?pvs=74)!
+    You can see the changes since PHB v2.2.1 [**here**](https://theiagen.notion.site/public-health-bioinformatics-v2-3-0-minor-release-notes?pvs=4)!
 
 ## Contributing to the PHB Repository
 
@@ -73,7 +73,6 @@ You can expect a careful review of every PR and feedback as needed before mergin
 - **Michal Babinski** ([@Michal-Babins](https://github.com/Michal-Babins)) - Software, Validation
 - **Andrew Lang** ([@AndrewLangVt](https://github.com/AndrewLangVt)) - Software, Supervision
 - **Kelsey Kropp** ([@kelseykropp](https://github.com/kelseykropp)) - Validation
-- **Emily Smith** ([@emily-smith1](https://github.com/emily-smith1)) - Validation
 - **Joel Sevinsky** ([@sevinsky](https://github.com/sevinsky)) - Conceptualization, Project Administration, Supervision
 
 ### External Contributors
@@ -86,6 +85,7 @@ We would like to gratefully acknowledge the following individuals from the publi
 - **Ash O'Farrel** ([@aofarrel](https://github.com/aofarrel))
 - **Sam Baird** ([@sam-baird](https://github.com/sam-baird))
 - **Holly Halstead** ([@HNHalstead](https://github.com/HNHalstead))
+- **Emily Smith** ([@emily-smith1](https://github.com/emily-smith1))
 
 ### On the Shoulder of Giants
 
