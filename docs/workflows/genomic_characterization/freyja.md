@@ -21,9 +21,9 @@ Additional post-processing steps can produce visualizations of aggregated sample
     !!! warning "Default Values"
         The defaults included in the Freyja workflows reflect this use case but **can be adjusted for other pathogens**. See the [**Running Freyja on other pathogens**](freyja.md#running-freyja-on-other-pathogens) section for more information.
 
-!!! caption "Figure 1: Workflow Diagram for Freyja_FASTQ_PHB workflow"
+!!! caption "Figure 1: Workflow diagram for Freyja Suite of workflows"
     ##### Figure 1 { #figure1 }
-    ![**Figure 1: Workflow diagram for Freyja_FASTQ_PHB workflow.**](../../assets/figures/Freyja_FASTQ.png){width=100%}
+    ![**Figure 1: Workflow diagram for Freyja Suite of workflows.**](../../assets/figures/Freyja_Suite_Diagram_20241216.png){width=100%}
 
     Depending on the type of data (Illumina or Oxford Nanopore), the Read QC and Filtering steps, as well as the Read Alignment steps use different software. The user can specify if the barcodes and lineages file should be updated with `freyja update` before running Freyja or if bootstrapping is to be performed with `freyja boot`.
 
