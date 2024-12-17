@@ -28,11 +28,9 @@ task cat_lanes {
     
     exists() { [[ -f $1 ]]; }
 
-    set -euo pipefail
-
     cat ~{read1_lane1} ~{read1_lane2} ~{read1_lane3} ~{read1_lane4} > "~{samplename}_merged_R1.fastq.gz"
 
-    if exists ~{read2_lane1} ; then
+    if exists "~{read2_lane1}" ; then
       cat ~{read2_lane1} ~{read2_lane2} ~{read2_lane3} ~{read2_lane4} > "~{samplename}_merged_R2.fastq.gz"
     fi
 
