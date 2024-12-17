@@ -23,6 +23,8 @@ task prune_table {
     volatile: true
   }
   command <<<
+    set -euo pipefail
+    
     # when running on terra, comment out all input_table mentions
     python3 /scripts/export_large_tsv/export_large_tsv.py --project "~{project_name}" --workspace "~{workspace_name}" --entity_type ~{table_name} --tsv_filename ~{table_name}-data.tsv
     
@@ -54,7 +56,7 @@ task prune_table {
 
     # read export table into pandas
     tablename = "~{table_name}-data.tsv"
-    table = pd.read_csv(tablename, delimiter='\t', header=0, dtype={"~{table_name}_id": 'str'}) # ensure sample_id is always a string)
+    table = pd.read_csv(tablename, delimiter='\t', header=0, dtype={"~{table_name}_id": 'str', "collection_date": 'str'}) # ensure sample_id is always a string)
 
     # extract the samples for upload from the entire table
     table = table[table["~{table_name}_id"].isin("~{sep='*' sample_names}".split("*"))]

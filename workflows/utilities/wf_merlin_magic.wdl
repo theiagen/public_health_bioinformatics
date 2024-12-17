@@ -8,6 +8,7 @@ import "../../tasks/species_typing/escherichia_shigella/task_serotypefinder.wdl"
 import "../../tasks/species_typing/escherichia_shigella/task_shigatyper.wdl" as shigatyper_task
 import "../../tasks/species_typing/escherichia_shigella/task_shigeifinder.wdl" as shigeifinder_task
 import "../../tasks/species_typing/escherichia_shigella/task_sonneityping.wdl" as sonneityping_task
+import "../../tasks/species_typing/escherichia_shigella/task_stxtyper.wdl" as stxtyper_task
 import "../../tasks/species_typing/escherichia_shigella/task_virulencefinder.wdl" as virulencefinder_task
 import "../../tasks/species_typing/haemophilus/task_hicap.wdl" as hicap_task
 import "../../tasks/species_typing/klebsiella/task_kleborate.wdl" as kleborate_task
@@ -56,7 +57,7 @@ workflow merlin_magic {
     # activating tool logic
     Boolean call_poppunk = true
     Boolean call_shigeifinder_reads_input = false
-    Boolean tbprofiler_additional_outputs = false # set to true to run tbp-parser
+    Boolean call_tbp_parser = false
     # docker options
     String? abricate_abaum_docker_image
     String? abricate_vibrio_docker_image
@@ -196,14 +197,14 @@ workflow merlin_magic {
     Int srst2_gene_max_mismatch = 2000
     # tbprofiler options
     Boolean tbprofiler_run_custom_db = false
+    Boolean tbprofiler_run_cdph_db = false
     File? tbprofiler_custom_db
-    Int? tbprofiler_cov_frac_threshold
     Float? tbprofiler_min_af
-    Float? tbprofiler_min_af_pred
     Int? tbprofiler_min_depth
     String? tbprofiler_mapper
     String? tbprofiler_variant_caller
     String? tbprofiler_variant_calling_params
+    String? tbprofiler_additional_parameters
     # tbp-parser options
     String tbp_parser_output_seq_method_type = "WGS"
     String? tbp_parser_operator
@@ -214,10 +215,25 @@ workflow merlin_magic {
     File? tbp_parser_coverage_regions_bed
     Boolean? tbp_parser_debug
     Boolean? tbp_parser_add_cs_lims
+    Boolean? tbp_parser_tngs_data
+    Float? tbp_parser_rrs_frequency
+    Int? tbp_parser_rrs_read_support
+    Float? tbp_parser_rrl_frequency
+    Int? tbp_parser_rrl_read_support
+    Float? tbp_parser_rpob449_frequency
+    Float? tbp_parser_etha237_frequency
+    File? tbp_parser_expert_rule_regions_bed
     # virulencefinder options
     Float? virulencefinder_coverage_threshold
     Float? virulencefinder_identity_threshold
     String? virulencefinder_database
+    # stxtyper options
+    Boolean call_stxtyper = false # set to true to run stxtyper on any bacterial sample
+    Boolean? stxtyper_enable_debug
+    String? stxtyper_docker_image
+    Int? stxtyper_disk_size
+    Int? stxtyper_cpu
+    Int? stxtyper_memory
   }
   # theiaprok
   if (merlin_tag == "Acinetobacter baumannii") {
@@ -239,6 +255,19 @@ workflow merlin_magic {
         minid = abricate_abaum_minid, 
         mincov = abricate_abaum_mincov,
         docker = abricate_abaum_docker_image
+    }
+  }
+  # stxtyper is special & in it's own conditional block because it should automatically be run on Escherichia and Shigella species; but optionally run on ANY bacterial sample if the user wants to screen for Shiga toxin genes
+  if (merlin_tag == "Escherichia" || merlin_tag == "Shigella sonnei" || call_stxtyper == true ) {
+      call stxtyper_task.stxtyper {
+        input:
+          assembly = assembly,
+          samplename = samplename,
+          docker = stxtyper_docker_image,
+          disk_size = stxtyper_disk_size,
+          cpu = stxtyper_cpu,
+          memory = stxtyper_memory,
+          enable_debugging = stxtyper_enable_debug
     }
   }
   if (merlin_tag == "Escherichia" || merlin_tag == "Shigella sonnei" ) {
@@ -427,18 +456,18 @@ workflow merlin_magic {
           read2 = select_first([clockwork_decon_reads.clockwork_cleaned_read2, read2, "gs://theiagen-public-files/terra/theiaprok-files/no-read2.txt"]),
           samplename = samplename,
           ont_data = ont_data,
-          tbprofiler_run_custom_db = tbprofiler_run_custom_db,
-          tbprofiler_custom_db = tbprofiler_custom_db,
-          cov_frac_threshold = tbprofiler_cov_frac_threshold,
-          min_af = tbprofiler_min_af,
-          min_af_pred = tbprofiler_min_af_pred,
-          min_depth = tbprofiler_min_depth,
           mapper = tbprofiler_mapper,
           variant_caller = tbprofiler_variant_caller,
           variant_calling_params = tbprofiler_variant_calling_params,
+          additional_parameters = tbprofiler_additional_parameters,
+          min_depth = tbprofiler_min_depth,
+          min_af = tbprofiler_min_af,
+          tbprofiler_custom_db = tbprofiler_custom_db,
+          tbprofiler_run_custom_db = tbprofiler_run_custom_db,
+          tbprofiler_run_cdph_db = tbprofiler_run_cdph_db,
           docker = tbprofiler_docker_image
       }
-      if (tbprofiler_additional_outputs) {
+      if (call_tbp_parser) {
         call tbp_parser_task.tbp_parser {
           input:
             tbprofiler_json = tbprofiler.tbprofiler_output_json,
@@ -447,13 +476,21 @@ workflow merlin_magic {
             samplename = samplename, 
             sequencing_method = tbp_parser_output_seq_method_type,
             operator = tbp_parser_operator,
-            coverage_threshold = tbp_parser_coverage_threshold,
-            coverage_regions_bed = tbp_parser_coverage_regions_bed,
             min_depth = tbp_parser_min_depth,
             min_frequency = tbp_parser_min_frequency,
             min_read_support = tbp_parser_min_read_support,
-            tbp_parser_debug = tbp_parser_debug,
+            coverage_threshold = tbp_parser_coverage_threshold,
+            coverage_regions_bed = tbp_parser_coverage_regions_bed,
             add_cycloserine_lims = tbp_parser_add_cs_lims,
+            tbp_parser_debug = tbp_parser_debug,
+            tngs_data = tbp_parser_tngs_data,
+            rrs_frequency = tbp_parser_rrs_frequency,
+            rrs_read_support = tbp_parser_rrs_read_support,
+            rrl_frequency = tbp_parser_rrl_frequency,
+            rrl_read_support = tbp_parser_rrl_read_support,
+            rpob449_frequency = tbp_parser_rpob449_frequency,
+            etha237_frequency = tbp_parser_etha237_frequency,
+            expert_rule_regions_bed = tbp_parser_expert_rule_regions_bed,
             docker = tbp_parser_docker_image
         }
       }
@@ -631,7 +668,7 @@ workflow merlin_magic {
             samplename = samplename,
             snippy_variants_results = snippy_cauris.snippy_variants_results,
             reference = cladetyper.clade_spec_ref,
-            query_gene = select_first([snippy_query_gene, "FKS1,lanosterol.14-alpha.demethylase,uracil.phosphoribosyltransferase"]),
+            query_gene = select_first([snippy_query_gene, "FKS1,lanosterol.14-alpha.demethylase,uracil.phosphoribosyltransferase,B9J08_005340,B9J08_000401,B9J08_003102,B9J08_003737,B9J08_005343"]),
             docker = snippy_gene_query_docker_image
         }
       }
@@ -755,6 +792,16 @@ workflow merlin_magic {
     File? virulencefinder_report_tsv = virulencefinder.virulencefinder_report_tsv
     String? virulencefinder_docker = virulencefinder.virulencefinder_docker
     String? virulencefinder_hits = virulencefinder.virulencefinder_hits
+    # stxtyper 
+    File? stxtyper_report = stxtyper.stxtyper_report
+    String? stxtyper_docker = stxtyper.stxtyper_docker
+    String? stxtyper_version = stxtyper.stxtyper_version
+    Int? stxtyper_num_hits = stxtyper.stxtyper_num_hits
+    String? stxtyper_all_hits = stxtyper.stxtyper_all_hits
+    String? stxtyper_complete_operon_hits = stxtyper.stxtyper_complete_operon_hits
+    String? stxtyper_partial_hits = stxtyper.stxtyper_partial_hits
+    String? stxtyper_stx_frameshifts_or_internal_stop_hits =  stxtyper.stxtyper_frameshifts_or_internal_stop_hits
+    String? stxtyper_novel_hits = stxtyper.stxtyper_novel_hits
     # Shigella sonnei Typing
     File? sonneityping_mykrobe_report_csv = sonneityping.sonneityping_mykrobe_report_csv
     File? sonneityping_mykrobe_report_json = sonneityping.sonneityping_mykrobe_report_json
@@ -865,7 +912,7 @@ workflow merlin_magic {
     String? tbprofiler_sub_lineage = tbprofiler.tbprofiler_sub_lineage
     String? tbprofiler_dr_type = tbprofiler.tbprofiler_dr_type
     String? tbprofiler_resistance_genes = tbprofiler.tbprofiler_resistance_genes
-    Int? tbprofiler_median_coverage = tbprofiler.tbprofiler_median_coverage
+    Float? tbprofiler_median_depth = tbprofiler.tbprofiler_median_depth
     Float? tbprofiler_pct_reads_mapped = tbprofiler.tbprofiler_pct_reads_mapped
     String? tbp_parser_version = tbp_parser.tbp_parser_version
     String? tbp_parser_docker = tbp_parser.tbp_parser_docker
@@ -976,7 +1023,7 @@ workflow merlin_magic {
     String snippy_variants_summary = select_first([snippy_cauris.snippy_variants_summary, snippy_afumigatus.snippy_variants_summary, snippy_crypto.snippy_variants_summary, "gs://theiagen-public-files/terra/theiaeuk_files/no_match_detected.txt"])
     String snippy_variants_num_reads_aligned = select_first([snippy_cauris.snippy_variants_num_reads_aligned, snippy_afumigatus.snippy_variants_num_reads_aligned, snippy_crypto.snippy_variants_num_reads_aligned, "No matching taxon detected"])
     String snippy_variants_coverage_tsv = select_first([snippy_cauris.snippy_variants_coverage_tsv, snippy_afumigatus.snippy_variants_coverage_tsv, snippy_crypto.snippy_variants_coverage_tsv, "gs://theiagen-public-files/terra/theiaeuk_files/no_match_detected.txt"])
-    String snippy_variants_num_variants = select_first([snippy_cauris.snippy_variants_num_variants, snippy_afumigatus.snippy_variants_num_variants, snippy_crypto.snippy_variants_num_reads_aligned, "No matching taxon detected"])
+    String snippy_variants_num_variants = select_first([snippy_cauris.snippy_variants_num_variants, snippy_afumigatus.snippy_variants_num_variants, snippy_crypto.snippy_variants_num_variants, "No matching taxon detected"])
     String snippy_variants_percent_ref_coverage = select_first([snippy_cauris.snippy_variants_percent_ref_coverage, snippy_afumigatus.snippy_variants_percent_ref_coverage, snippy_crypto.snippy_variants_percent_ref_coverage, "No matching taxon detected"])
   }
 }

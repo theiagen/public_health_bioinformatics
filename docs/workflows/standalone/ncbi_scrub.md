@@ -16,11 +16,14 @@ There are three Kraken2 workflows:
 
 ### Inputs
 
+<div class="searchable-table" markdown="1">
+
 | **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** | **Workflow** |
 |---|---|---|---|---|---|---|
 | dehost_pe or dehost_se | **read1** | File | | | Required | PE, SE |
 | dehost_pe or dehost_se | **read2** | File | | | Required | PE |
 | dehost_pe or dehost_se | **samplename** | String | | | Required | PE, SE |
+| dehost_pe or dehost_se | **target_organism** | String | Target organism for Kraken2 reporting | "Severe acute respiratory syndrome coronavirus 2" | Optional | PE, SE |
 | kraken2 | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional | PE, SE |
 | kraken2 | **disk_size** | Int | Amount of storage (in GB) to allocate to the task. Increase this when using large (>30GB kraken2 databases such as the "k2_standard" database) | 100 | Optional | PE, SE |
 | kraken2 | **docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.0.8-beta_hv | Optional | PE, SE |
@@ -34,6 +37,8 @@ There are three Kraken2 workflows:
 | ncbi_scrub_pe or ncbi_scrub_se | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | PE, SE |
 | version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional | PE, SE |
 | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional | PE, SE |
+
+</div>
 
 ### Workflow Tasks
 
@@ -62,12 +67,14 @@ This workflow is composed of two tasks, one to dehost the input reads and anothe
         
         |  | Links |
         | --- | --- |
-        | Task | [task_kraken2.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/task_kraken2.wdl) |
+        | Task | [task_kraken2.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/contamination/task_kraken2.wdl) |
         | Software Source Code | [Kraken2 on GitHub](https://github.com/DerrickWood/kraken2/) |
         | Software Documentation | <https://github.com/DerrickWood/kraken2/wiki> |
         | Original Publication(s) | [Improved metagenomic analysis with Kraken 2](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1891-0) |
 
 ### Outputs
+
+<div class="searchable-table" markdown="1">
 
 | **Variable** | **Type** | **Description** | **Workflow** |
 |---|---|---|---|
@@ -82,3 +89,4 @@ This workflow is composed of two tasks, one to dehost the input reads and anothe
 | read1_dehosted | File | Dehosted forward reads | PE, SE |
 | read2_dehosted | File | Dehosted reverse reads | PE |
 
+</div>

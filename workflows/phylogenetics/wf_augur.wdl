@@ -32,7 +32,7 @@ workflow augur {
     Int? min_num_unambig
     String organism = "sars-cov-2" # options: sars-cov-2, flu, mpxv, "rsv-a" or "rsv-b"
     String flu_segment = "HA" # options: HA or NA
-    String? flu_subtype # options: "Victoria" "Yamagata" "H3N2" "H1N1"
+    String? flu_subtype # options: "Victoria" "Yamagata" "H3N2" "H1N1" "H5N1"
     Boolean skip_alignment = false # by default, do not skip alignment
     File? alignment_fasta # if alignment is skipped, provide an alignment
 
@@ -200,9 +200,14 @@ workflow augur {
     String augur_version = augur_tree.augur_version
 
     # augur outputs
+    String? augur_mafft_version = augur_align.mafft_version
     File? auspice_input_json = augur_export.auspice_json
     File? time_tree = augur_refine.refined_tree
     File distance_tree = augur_tree.aligned_tree
+    String augur_iqtree_model_used = augur_tree.iqtree_model_used
+    String augur_iqtree_version = augur_tree.iqtree_version
+    String augur_fasttree_version = augur_tree.fasttree_version
+    String augur_raxml_version = augur_tree.raxml_version
     File aligned_fastas = select_first([augur_align.aligned_fasta, alignment_fasta])
     File combined_assemblies = filter_sequences_by_length.filtered_fasta
     File? metadata_merged = tsv_join.out_tsv

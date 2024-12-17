@@ -16,6 +16,8 @@ Read files associated with the SRA run accession provided as input are copied to
 
 This workflow runs on the sample level.
 
+<div class="searchable-table" markdown="1">
+
 | **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
 |---|---|---|---|---|---|
 | fetch_sra_to_fastq | **sra_accession** | String | SRA, ENA, or DRA accession number | | Required |
@@ -24,6 +26,8 @@ This workflow runs on the sample level.
 | fetch_sra_to_fastq | **docker_image** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/biocontainers/fastq-dl:2.0.4--pyhdfd78af_0" | Optional |
 | fetch_sra_to_fastq | **fastq_dl_options** | String | Additional parameters to pass to fastq_dl from [here](https://github.com/rpetit3/fastq-dl?tab=readme-ov-file#usage) | "--provider sra" | Optional |
 | fetch_sra_to_fastq | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional |
+
+</div>
 
 The only required input for the SRA_Fetch workflow is an SRA run accession beginning "SRR", an ENA run accession beginning "ERR", or a DRA run accession which beginning "DRR".
 
@@ -41,6 +45,8 @@ Read data are available either with full base quality scores (**SRA Normalized F
 
 Given the lack of usefulness of SRA Lite formatted FASTQ files, we try to avoid these by selecting as provided SRA directly (SRA-Lite is more probably to be the file synced to other repositories), but some times downloading these files is unavoidable. To make the user aware of this, a warning column is present that is populated when an SRA-Lite file is detected.
 
+<div class="searchable-table" markdown="1">
+
 | **Variable** | **Type** | **Description** | **Production Status** |
 |---|---|---|---|
 | read1 | File | File containing the forward reads | Always produced |
@@ -50,6 +56,8 @@ Given the lack of usefulness of SRA Lite formatted FASTQ files, we try to avoid 
 | fastq_dl_metadata | File | File containing metadata of the provided accession such as submission_accession, library_selection, instrument_platform, among others | Always produced |
 | fastq_dl_version | String | Fastq_dl version used | Always produced |
 | fastq_dl_warning | String |  This warning field is populated if SRA-Lite files are detected. These files contain all quality encoding as Phred-30 or Phred-3. | Depends on internal workflow logic |
+
+</div>
 
 ## References
 

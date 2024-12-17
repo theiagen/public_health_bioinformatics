@@ -4,7 +4,7 @@
 
 | **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
 |---|---|---|---|---|
-| [Standalone](../../workflows_overview/workflows_type.md/#standalone) | [Any Taxa](../../workflows_overview/workflows_kingdom.md/#any-taxa) | PHB v2.0.0 | Yes | Sample-level |
+| [Standalone](../../workflows_overview/workflows_type.md/#standalone) | [Any Taxa](../../workflows_overview/workflows_kingdom.md/#any-taxa) | PHB v2.3.0 | Yes | Sample-level |
 
 ## Kraken2 Workflows
 
@@ -30,6 +30,8 @@ Besides the data input types, there are minimal differences between these two wo
 
 #### Suggested databases
 
+<div class="searchable-table" markdown="1">
+
 | Database name | Database Description | Suggested Applications | GCP URI (for usage in Terra) | Source | Database Size (GB) | Date of Last Update |
 | --- | --- | --- | --- | --- | --- | --- |
 | **Kalamari v5.1** | Kalamari is a database of complete public assemblies, that has been fine-tuned for enteric pathogens and is backed by trusted institutions. [Full list available here ( in chromosomes.tsv and plasmids.tsv)](https://github.com/lskatz/Kalamari/tree/master/src) | Single-isolate enteric bacterial pathogen analysis (Salmonella, Escherichia, Shigella, Listeria, Campylobacter, Vibrio, Yersinia) | **`gs://theiagen-large-public-files-rp/terra/databases/kraken2/kraken2.kalamari_5.1.tar.gz`** | ‣ | 1.5 | 18/5/2022 |
@@ -40,7 +42,11 @@ Besides the data input types, there are minimal differences between these two wo
 | **EuPathDB48** | Eukaryotic pathogen genomes with contaminants removed. [Full list available here](https://genome-idx.s3.amazonaws.com/kraken/k2_eupathdb48_20201113/EuPathDB48_Contents.txt) | Eukaryotic organisms (Candida spp., Aspergillus spp., etc) | **`gs://theiagen-public-files-rp/terra/theiaprok-files/k2_eupathdb48_20201113.tar.gz`** | https://benlangmead.github.io/aws-indexes/k2 | 30.3 | 13/11/2020 |
 | **EuPathDB48** | Eukaryotic pathogen genomes with contaminants removed. [Full list available here](https://genome-idx.s3.amazonaws.com/kraken/k2_eupathdb48_20201113/EuPathDB48_Contents.txt) | Eukaryotic organisms (Candida spp., Aspergillus spp., etc) | **`gs://theiagen-large-public-files-rp/terra/databases/kraken/k2_eupathdb48_20230407.tar.gz`** | https://benlangmead.github.io/aws-indexes/k2 | 11 | 7/4/2023 |
 
+</div>
+
 ### Inputs
+
+<div class="searchable-table" markdown="1">
 
 | **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** | **Workflow** |
 |---|---|---|---|---|---|---|
@@ -67,7 +73,11 @@ Besides the data input types, there are minimal differences between these two wo
 | version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional | ONT, PE, SE |
 | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional | ONT, PE, SE |
 
+</div>
+
 ### Outputs
+
+<div class="searchable-table" markdown="1">
 
 | **Variable** | **Type** | **Description** |
 |---|---|---|
@@ -84,6 +94,8 @@ Besides the data input types, there are minimal differences between these two wo
 | krona_docker | String | Docker image used to run krona (if PE or SE) |
 | krona_html | File | HTML report of krona with visualisation of taxonomic classification of reads (if PE or SE) |
 | krona_version | String | krona version (if PE or SE) |
+
+</div>
 
 #### Interpretation of results
 

@@ -28,6 +28,8 @@ task sm_theiacov_fasta_wrangling { # the sm stands for supermassive
     Int memory = 4
   }
   command <<<
+    set -euo pipefail
+
     # check if nextclade json file exists
     if [ -f ~{nextclade_json} ]; then
       # this line splits into individual json files

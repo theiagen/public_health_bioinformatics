@@ -42,30 +42,32 @@ You can expect a careful review of every PR and feedback as needed before mergin
 
 ### Authorship
 
-(Ordered by contribution [# of lines changed] as of 2024-08-01)
+(Ordered by contribution [# of lines changed] as of 2024-12-04)
 
 * **Sage Wright** ([@sage-wright](https://github.com/sage-wright)) - Conceptualization, Software, Validation, Supervision
 * **Inês Mendes** ([@cimendes](https://github.com/cimendes)) - Software, Validation
 * **Curtis Kapsak** ([@kapsakcj](https://github.com/kapsakcj)) - Conceptualization, Software, Validation
-* **James Otieno** ([@jrotieno](https://github.com/jrotieno)) - Software, Validation
 * **Frank Ambrosio** ([@frankambrosio3](https://github.com/frankambrosio3)) - Conceptualization, Software, Validation
 * **Michelle Scribner** ([@michellescribner](https://github.com/michellescribner)) - Software, Validation
 * **Kevin Libuit** ([@kevinlibuit](https://github.com/kevinlibuit)) - Conceptualization, Project Administration, Software, Validation, Supervision
-* **Emma Doughty** ([@emmadoughty](https://github.com/emmadoughty)) - Software, Validation
+* **Fraser Combe** ([@fraser-combe](https://github.com/fraser-combe)) - Software, Validation
 * **Andrew Page** ([@andrewjpage](https://github.com/andrewjpage)) - Project Administration, Software, Supervision
+* **Michal Babinski** ([@Michal-Babins](https://github.com/Michal-Babins)) - Software, Validation
 * **Andrew Lang** ([@AndrewLangVt](https://github.com/AndrewLangVt)) - Software, Supervision
 * **Kelsey Kropp** ([@kelseykropp](https://github.com/kelseykropp)) - Validation
-* **Emily Smith** ([@emily-smith1](https://github.com/emily-smith1)) - Validation
 * **Joel Sevinsky** ([@sevinsky](https://github.com/sevinsky)) - Conceptualization, Project Administration, Supervision
 
 ### External Contributors
 
 We would like to gratefully acknowledge the following individuals from the public health community for their contributions to the PHB repository:
 
+* **James Otieno** ([@jrotieno](https://github.com/jrotieno)) 
 * **Robert Petit** ([@rpetit3](https://github.com/rpetit3))
+* **Emma Doughty** ([@emmadoughty](https://github.com/emmadoughty))
 * **Ash O'Farrel** ([@aofarrel](https://github.com/aofarrel))
 * **Sam Baird** ([@sam-baird](https://github.com/sam-baird))
 * **Holly Halstead** ([@HNHalstead](https://github.com/HNHalstead))
+* **Emily Smith** ([@emily-smith1](https://github.com/emily-smith1))
 
 ### Maintaining PHB Pipelines
 

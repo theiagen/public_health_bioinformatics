@@ -4,13 +4,15 @@
 
 | **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
 |---|---|---|---|---|
-| [Standalone](../../workflows_overview/workflows_type.md/#standalone) | [Bacteria](../../workflows_overview/workflows_kingdom.md/#bacteria) | PHB v2.0.0 | Yes | Sample-level |
+| [Standalone](../../workflows_overview/workflows_type.md/#standalone) | [Bacteria](../../workflows_overview/workflows_kingdom.md/#bacteria) | PHB v2.3.0 | Yes | Sample-level |
 
 ## TBProfiler_tNGS_PHB
 
 This workflow is still in experimental research stages. Documentation is minimal as changes may occur in the code; it will be fleshed out when a stable state has been achieved.
 
 ### Inputs
+
+<div class="searchable-table" markdown="1">
 
 | **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
 |---|---|---|---|---|---|
@@ -21,7 +23,7 @@ This workflow is still in experimental research stages. Documentation is minimal
 | tbp_parser | **coverage_threshold** | Int | The minimum percentage of a region to exceed the minimum depth for a region to pass QC in tbp_parser | 100 | Optional |
 | tbp_parser | **cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional |
 | tbp_parser | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
-| tbp_parser | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:1.6.0 | Optional |
+| tbp_parser | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:2.2.2 | Optional |
 | tbp_parser | **etha237_frequency** | Float | Minimum frequency for a mutation in ethA at protein position 237 to pass QC in tbp-parser | 0.1 | Optional |
 | tbp_parser | **expert_rule_regions_bed** | File | A file that contains the regions where R mutations and expert rules are applied |  | Optional |
 | tbp_parser | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 4 | Optional |
@@ -62,7 +64,11 @@ This workflow is still in experimental research stages. Documentation is minimal
 | version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
 | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
 
+</div>
+
 ### Terra Outputs
+
+<div class="searchable-table" markdown="1">
 
 | **Variable** | **Type** | **Description** |
 |---|---|---|
@@ -95,3 +101,5 @@ This workflow is still in experimental research stages. Documentation is minimal
 | trimmomatic_read2_trimmed | File | The read2 file post trimming |
 | trimmomatic_stats | File | The read trimming statistics |
 | trimmomatic_version | String | The version of trimmomatic used in this analysis |
+
+</div>

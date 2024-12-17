@@ -149,7 +149,7 @@ workflow theiacov_ont {
             standardized_organism = organism_parameters.standardized_organism,
             seq_method = seq_method
         }
-      }              
+      }
       # nanoplot for basic QC metrics
       call nanoplot_task.nanoplot as nanoplot_raw {
         input:
@@ -288,12 +288,12 @@ workflow theiacov_ont {
     String? kraken_target_organism_name = read_qc_trim.kraken_target_organism_name
     # Read QC - kraken outputs raw
     Float? kraken_human = read_qc_trim.kraken_human
-    Float? kraken_sc2 = read_qc_trim.kraken_sc2
+    String? kraken_sc2 = read_qc_trim.kraken_sc2
     String? kraken_target_organism = read_qc_trim.kraken_target_organism
     File? kraken_report = read_qc_trim.kraken_report
     # Read QC - kraken outputs dehosted
     Float? kraken_human_dehosted = read_qc_trim.kraken_human_dehosted
-    Float? kraken_sc2_dehosted = read_qc_trim.kraken_sc2_dehosted
+    String? kraken_sc2_dehosted = read_qc_trim.kraken_sc2_dehosted
     String? kraken_target_organism_dehosted = read_qc_trim.kraken_target_organism_dehosted
     File? kraken_report_dehosted = read_qc_trim.kraken_report_dehosted
     # Read Alignment - Artic consensus outputs
@@ -427,5 +427,7 @@ workflow theiacov_ont {
     # QC_Check Results
     String? qc_check = qc_check_task.qc_check
     File? qc_standard = qc_check_task.qc_standard
+    # Non-flu specific outputs
+    String percentage_mapped_reads = select_first([stats_n_coverage_primtrim.percentage_mapped_reads, stats_n_coverage.percentage_mapped_reads, flu_track.percentage_mapped_reads, ""])
   }
 }

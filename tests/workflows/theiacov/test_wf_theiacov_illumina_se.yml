@@ -56,11 +56,11 @@
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     # fastq scan raw
     - path: miniwdl_run/call-read_QC_trim/call-fastq_scan_raw/command
-      md5sum: 56f66a4ef82d3ae03c17db6a26f59528
+      md5sum: f96c3103490fff3560fc930a84bd459d
     - path: miniwdl_run/call-read_QC_trim/call-fastq_scan_raw/inputs.json
       contains: ["read1", "illumina_se"]
     - path: miniwdl_run/call-read_QC_trim/call-fastq_scan_raw/outputs.json
-      contains: ["fastq_scan_se", "pipeline_date", "read1_seq"]
+      contains: ["fastq_scan_se", "read1_seq"]
     - path: miniwdl_run/call-read_QC_trim/call-fastq_scan_raw/stderr.txt
     - path: miniwdl_run/call-read_QC_trim/call-fastq_scan_raw/stderr.txt.offset
     - path: miniwdl_run/call-read_QC_trim/call-fastq_scan_raw/stdout.txt
@@ -68,13 +68,12 @@
       contains: ["wdl", "theiacov_illumina_se", "fastq_scan_raw", "done"]
     - path: miniwdl_run/call-read_QC_trim/call-fastq_scan_raw/work/ERR6319327_fastq-scan.json
       md5sum: 66b2f7c60b74de654f590d77bdd2231e
-    - path: miniwdl_run/call-read_QC_trim/call-fastq_scan_raw/work/DATE
     - path: miniwdl_run/call-read_QC_trim/call-fastq_scan_raw/work/READ1_SEQS
       md5sum: 87f1a9ed69127009aa0c173cd74c9d31
     - path: miniwdl_run/call-read_QC_trim/call-fastq_scan_raw/work/VERSION
     # kraken2
     - path: miniwdl_run/call-read_QC_trim/call-kraken2_theiacov_raw/command
-      md5sum: ca22e45a62c5c26c4447cdafe75a26ab
+      md5sum: 3478232c364dc1cf01b6b0300400c26c
     - path: miniwdl_run/call-read_QC_trim/call-kraken2_theiacov_raw/inputs.json
       contains: ["read1", "samplename"]
     - path: miniwdl_run/call-read_QC_trim/call-kraken2_theiacov_raw/outputs.json
@@ -85,16 +84,16 @@
     - path: miniwdl_run/call-read_QC_trim/call-kraken2_theiacov_raw/task.log
       contains: ["wdl", "theiacov_illumina_se", "kraken2_theiacov_raw", "done"]
     - path: miniwdl_run/call-read_QC_trim/call-kraken2_theiacov_raw/work/PERCENT_HUMAN
-      md5sum: 1576d5d341223ea9d44b0b8a213bb9da
+      md5sum: 4fd4dcef994592f9865e9bc8807f32f4
     - path: miniwdl_run/call-read_QC_trim/call-kraken2_theiacov_raw/work/PERCENT_SC2
-      md5sum: 7cc2eb659e21f15fa902b11812eae1f6
+      md5sum: adbe14d7547234f3743f80907ed33179
     - path: miniwdl_run/call-read_QC_trim/call-kraken2_theiacov_raw/work/PERCENT_TARGET_ORGANISM
       md5sum: 68b329da9893e34099c7d8ad5cb9c940
     - path: miniwdl_run/call-read_QC_trim/call-kraken2_theiacov_raw/work/ERR6319327_kraken2_report.txt
-      md5sum: 9a089b8920e55c9cc7bc8cd7d18f9a8e
+      md5sum: cb58af9eb139d109b55ce65d6d2344d6
     # clean read screen
     - path: miniwdl_run/call-clean_check_reads/command
-      md5sum: aec6c57452ddff84c325601a780605d2
+      md5sum: 80a361915a627e86743baacfc383b2b5
     - path: miniwdl_run/call-clean_check_reads/inputs.json
       contains: ["read1", "organism"]
     - path: miniwdl_run/call-clean_check_reads/outputs.json
@@ -157,7 +156,7 @@
       md5sum: 603c3cbc771ca910b96d3c032aafe7c9
     # stats n coverage primer trim
     - path: miniwdl_run/call-ivar_consensus/call-stats_n_coverage_primtrim/command
-      md5sum: 67cac223adcf059a9dfaa9f28ed34f68
+      md5sum: affacdcfda48ad5e371a4510f19520bd
     - path: miniwdl_run/call-ivar_consensus/call-stats_n_coverage_primtrim/inputs.json
       contains: ["bamfile", "samplename"]
     - path: miniwdl_run/call-ivar_consensus/call-stats_n_coverage_primtrim/outputs.json
@@ -240,7 +239,7 @@
       md5sum: 03c5ecf22fdfdb6b240ac3880281a056
     # stats n coverage
     - path: miniwdl_run/call-ivar_consensus/call-stats_n_coverage/command
-      md5sum: 3dacccb252429a0ff46c079a75a09377
+      md5sum: cb4de0e459b3fada21bcf08a8dbea89f
     - path: miniwdl_run/call-ivar_consensus/call-stats_n_coverage/inputs.json
       contains: ["bamfile", "samplename"]
     - path: miniwdl_run/call-ivar_consensus/call-stats_n_coverage/outputs.json
@@ -317,14 +316,14 @@
     - path: miniwdl_run/call-pangolin4/work/PANGOLIN_NOTES
       md5sum: 0b1f8fb5b938fe71631f61234cbf7ab3
     - path: miniwdl_run/call-pangolin4/work/PANGO_ASSIGNMENT_VERSION
-      md5sum: 0803245359027bd3017d2bd9a9c9c8e3
+      md5sum: 36f64a1cd7c6844309e8ad2121358088
     - path: miniwdl_run/call-pangolin4/work/VERSION_PANGOLIN_ALL
-      md5sum: b5dbf2ba7480effea8c656099df0e78e
+      md5sum: dfd90750c8776f46bad1de214c1d1a57
     - path: miniwdl_run/call-pangolin4/work/_miniwdl_inputs/0/ERR6319327.ivar.consensus.fasta
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     # nextclade
     - path: miniwdl_run/call-nextclade_v3/command
-      md5sum: a98129345713c75ac2e51ffa465c1703
+      md5sum: c5d644127d8eae3f8fb3e3eaecb7fd2e
     - path: miniwdl_run/call-nextclade_v3/inputs.json
       contains: ["dataset_name", "dataset_tag", "genome_fasta"]
     - path: miniwdl_run/call-nextclade_v3/outputs.json
@@ -373,7 +372,7 @@
     - path: miniwdl_run/call-nextclade_v3/work/nextclade_dataset_dir/sequences.fasta
     - path: miniwdl_run/call-nextclade_v3/work/nextclade_dataset_dir/tree.json
     - path: miniwdl_run/call-nextclade_v3/work/nextclade_dataset_dir/pathogen.json
-      md5sum: a51a91e0b5e16590c1afd0c7897ad071
+      md5sum: 32f20640f926d5b59fed6b954541792d
     - path: miniwdl_run/call-nextclade_v3/work/_miniwdl_inputs/0/ERR6319327.ivar.consensus.fasta
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     # nextclade output parsing

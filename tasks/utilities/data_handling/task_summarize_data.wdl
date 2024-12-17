@@ -23,6 +23,8 @@ task summarize_data {
     volatile: true
   }
   command <<<   
+    set -euo pipefail
+    
     # when running on terra, comment out all input_table mentions
     python3 /scripts/export_large_tsv/export_large_tsv.py --project "~{terra_project}" --workspace "~{terra_workspace}" --entity_type ~{terra_table} --tsv_filename ~{terra_table}-data.tsv 
     

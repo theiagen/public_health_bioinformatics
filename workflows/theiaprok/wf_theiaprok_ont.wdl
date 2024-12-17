@@ -737,6 +737,16 @@ workflow theiaprok_ont {
     File? virulencefinder_report_tsv = merlin_magic.virulencefinder_report_tsv
     String? virulencefinder_docker = merlin_magic.virulencefinder_docker
     String? virulencefinder_hits = merlin_magic.virulencefinder_hits
+    # stxtyper 
+    File? stxtyper_report = merlin_magic.stxtyper_report
+    String? stxtyper_docker = merlin_magic.stxtyper_docker
+    String? stxtyper_version = merlin_magic.stxtyper_version
+    Int? stxtyper_num_hits = merlin_magic.stxtyper_num_hits
+    String? stxtyper_all_hits = merlin_magic.stxtyper_all_hits
+    String? stxtyper_complete_operons = merlin_magic.stxtyper_complete_operon_hits
+    String? stxtyper_partial_hits = merlin_magic.stxtyper_partial_hits
+    String? stxtyper_stx_frameshifts_or_internal_stop_hits =  merlin_magic.stxtyper_stx_frameshifts_or_internal_stop_hits
+    String? stxtyper_novel_hits = merlin_magic.stxtyper_novel_hits
     # Shigella sonnei Typing
     File? sonneityping_mykrobe_report_csv = merlin_magic.sonneityping_mykrobe_report_csv
     File? sonneityping_mykrobe_report_json = merlin_magic.sonneityping_mykrobe_report_json
@@ -845,7 +855,7 @@ workflow theiaprok_ont {
     String? tbprofiler_sub_lineage = merlin_magic.tbprofiler_sub_lineage
     String? tbprofiler_dr_type = merlin_magic.tbprofiler_dr_type
     String? tbprofiler_resistance_genes = merlin_magic.tbprofiler_resistance_genes
-    Int? tbprofiler_median_coverage = merlin_magic.tbprofiler_median_coverage
+    Float? tbprofiler_median_depth = merlin_magic.tbprofiler_median_depth
     Float? tbprofiler_pct_reads_mapped = merlin_magic.tbprofiler_pct_reads_mapped
     String? tbp_parser_version = merlin_magic.tbp_parser_version
     String? tbp_parser_docker = merlin_magic.tbp_parser_docker

@@ -27,6 +27,8 @@ RASUSA functions to randomly downsample the number of raw reads to a user-define
 
 ### Inputs
 
+<div class="searchable-table" markdown="1">
+
 | **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Attribute** | **Terra Status** |
 |---|---|---|---|---|---|
 | rasusa_workflow | **coverage** | Float | Use to specify the desired coverage of reads after downsampling; actual coverage of subsampled reads will not be exact and may be slightly higher; always check the estimated clean coverage after performing downstream workflows to verify coverage values, when necessary | | Required |
@@ -45,7 +47,11 @@ RASUSA functions to randomly downsample the number of raw reads to a user-define
 | version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
 | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
 
+</div>
+
 ### Outputs
+
+<div class="searchable-table" markdown="1">
 
 | **Variable** | **Type** | **Description** |
 |---|---|---|
@@ -54,6 +60,8 @@ RASUSA functions to randomly downsample the number of raw reads to a user-define
 | rasusa_wf_version | String | Version of PHB used for the analysis |
 | read1_subsampled | File | New read1 FASTQ files downsampled to desired coverage |
 | read2_subsampled | File | New read2 FASTQ files downsampled to desired coverage |
+
+</div>
 
 !!! tip "Don't Forget!"
     Remember to use the subsampled reads in downstream analyses with `this.read1_subsampled` and `this.read2_subsampled` inputs.
