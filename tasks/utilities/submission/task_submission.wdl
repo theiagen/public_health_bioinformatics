@@ -7,14 +7,24 @@ task prune_table {
     String project_name
     File? input_table
     Array[String] sample_names
-    String biosample_type
+    String? biosample_type
     String bioproject
     String gcp_bucket_uri
     Boolean skip_biosample
     String read1_column_name = "read1"
     String read2_column_name = "read2"
+    Int memory = 8
+    Int cpu = 4
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-03-16"
+    Int disk_size = 100
+  }
+  meta {
+    # added so that call caching is always turned off
+    volatile: true
   }
   command <<<
+    set -euo pipefail
+    
     # when running on terra, comment out all input_table mentions
     python3 /scripts/export_large_tsv/export_large_tsv.py --project "~{project_name}" --workspace "~{workspace_name}" --entity_type ~{table_name} --tsv_filename ~{table_name}-data.tsv
     
@@ -46,68 +56,69 @@ task prune_table {
 
     # read export table into pandas
     tablename = "~{table_name}-data.tsv"
-    table = pd.read_csv(tablename, delimiter='\t', header=0, dtype={"~{table_name}_id": 'str'}) # ensure sample_id is always a string)
+    table = pd.read_csv(tablename, delimiter='\t', header=0, dtype={"~{table_name}_id": 'str', "collection_date": 'str'}) # ensure sample_id is always a string)
 
     # extract the samples for upload from the entire table
     table = table[table["~{table_name}_id"].isin("~{sep='*' sample_names}".split("*"))]
 
     # set required and optional metadata fields based on the biosample_type package
-    if ("~{biosample_type}".lower() == "microbe"):
-      required_metadata = ["submission_id", "organism", "collection_date", "geo_loc_name", "sample_type"]
-      optional_metadata = ["sample_title", "bioproject_accession", "attribute_package", "strain", "isolate", "host", "isolation_source", "altitude", "biomaterial_provider", "collected_by", "depth", "env_broad_scale", "genotype", "host_tissue_sampled", "identified_by", "lab_host", "lat_lon", "mating_type", "passage_history", "samp_size", "serotype", "serovar", "specimen_voucher", "temp", "description", "MLST"]
-      # add a column for biosample package -- required for XML submission
-      table["attribute_package"] = "Microbe.1.0"
-      # future qc checks:
-      #   q-score >= 30
-      #   reads > 50 bp
-      #   trailing/leading bases removed
-      #   similar GC content to expected genome
-      #   assembled genome ratio ~1.0
-      #   200 contigs or less
+    if (os.environ["skip_bio"] == "false"):
+      if ("~{biosample_type}".lower() == "microbe"):
+        required_metadata = ["submission_id", "organism", "collection_date", "geo_loc_name", "sample_type"]
+        optional_metadata = ["sample_title", "bioproject_accession", "attribute_package", "strain", "isolate", "host", "isolation_source", "altitude", "biomaterial_provider", "collected_by", "depth", "env_broad_scale", "genotype", "host_tissue_sampled", "identified_by", "lab_host", "lat_lon", "mating_type", "passage_history", "samp_size", "serotype", "serovar", "specimen_voucher", "temp", "description", "MLST"]
+        # add a column for biosample package -- required for XML submission
+        table["attribute_package"] = "Microbe.1.0"
+        # future qc checks:
+        #   q-score >= 30
+        #   reads > 50 bp
+        #   trailing/leading bases removed
+        #   similar GC content to expected genome
+        #   assembled genome ratio ~1.0
+        #   200 contigs or less
 
-    elif ("~{biosample_type}".lower() == "wastewater"):
-      required_metadata = ["submission_id", "organism", "collection_date", "geo_loc_name", "isolation_source", "ww_population", "ww_sample_duration", "ww_sample_matrix", "ww_sample_type", "ww_surv_target_1", "ww_surv_target_1_known_presence"]
-      optional_metadata = ["sample_title", "bioproject_accession", "attribute_package", "collected_by", "purpose_of_ww_sampling","purpose_of_ww_sequencing", "sequenced_by", "ww_endog_control_1", "ww_endog_control_1_conc", "ww_endog_control_1_protocol", "ww_endog_control_1_units", "ww_endog_control_2", "ww_endog_control_2_conc", "ww_endog_control_2_protocol", "ww_endog_control_2_units", "ww_flow", "ww_industrial_effluent_percent", "ww_ph", "ww_population_source", "ww_pre_treatment", "ww_primary_sludge_retention_time", "ww_processing_protocol", "ww_sample_salinity", "ww_sample_site", "ww_surv_jurisdiction", "ww_surv_system_sample_id", "ww_surv_target_1_conc", "ww_surv_target_1_conc_unit", "ww_surv_target_1_extract", "ww_surv_target_1_extract_unit", "ww_surv_target_1_gene", "ww_surv_target_1_protocol", "ww_surv_target_2", "ww_surv_target_2_conc", "ww_surv_target_2_conc_unit", "ww_surv_target_2_extract", "ww_surv_target_2_extract_unit", "ww_surv_target_2_gene", "ww_surv_target_2_known_present", "ww_surv_target_2_protocol", "ww_temperature", "ww_total_suspended_solids", "description"]
-      # add a column for biosample package -- required for XML submission
-      table["attribute_package"] = "SARS-CoV-2.wwsurv.1.0"
+      elif ("~{biosample_type}".lower() == "wastewater"):
+        required_metadata = ["submission_id", "organism", "collection_date", "geo_loc_name", "isolation_source", "ww_population", "ww_sample_duration", "ww_sample_matrix", "ww_sample_type", "ww_surv_target_1", "ww_surv_target_1_known_present"]
+        optional_metadata = ["sample_title", "bioproject_accession", "attribute_package", "collected_by", "purpose_of_ww_sampling","purpose_of_ww_sequencing", "sequenced_by", "ww_endog_control_1", "ww_endog_control_1_conc", "ww_endog_control_1_protocol", "ww_endog_control_1_units", "ww_endog_control_2", "ww_endog_control_2_conc", "ww_endog_control_2_protocol", "ww_endog_control_2_units", "ww_flow", "ww_industrial_effluent_percent", "ww_ph", "ww_population_source", "ww_pre_treatment", "ww_primary_sludge_retention_time", "ww_processing_protocol", "ww_sample_salinity", "ww_sample_site", "ww_surv_jurisdiction", "ww_surv_system_sample_id", "ww_surv_target_1_conc", "ww_surv_target_1_conc_unit", "ww_surv_target_1_extract", "ww_surv_target_1_extract_unit", "ww_surv_target_1_gene", "ww_surv_target_1_protocol", "ww_surv_target_2", "ww_surv_target_2_conc", "ww_surv_target_2_conc_unit", "ww_surv_target_2_extract", "ww_surv_target_2_extract_unit", "ww_surv_target_2_gene", "ww_surv_target_2_known_present", "ww_surv_target_2_protocol", "ww_temperature", "ww_total_suspended_solids", "description"]
+        # add a column for biosample package -- required for XML submission
+        table["attribute_package"] = "SARS-CoV-2.wwsurv.1.0"
+    
+      elif ("~{biosample_type}".lower() == "pathogen") or ("pathogen.cl" in "~{biosample_type}".lower()):
+        required_metadata = ["submission_id", "organism", "collected_by", "collection_date", "geo_loc_name", "host", "host_disease", "isolation_source", "lat_lon"]
+        optional_metadata = ["sample_title", "isolation_type", "bioproject_accession", "attribute_package", "strain", "isolate", "culture_collection", "genotype", "host_age", "host_description", "host_disease_outcome", "host_disease_stage", "host_health_state", "host_sex", "host_subject_id", "host_tissue_sampled", "passage_history", "pathotype", "serotype", "serovar", "specimen_voucher", "subgroup", "subtype", "description"] 
+        # add a column for biosample package -- required for XML submission
+        table["attribute_package"] = "Pathogen.cl"
+        # future qc checks:
+        #   gc after trimming 42-47.5%
+        #   average phred after trimming >= 28
+      
+        #   coverage after trimming >= 20X
+        #if "mean_coverage_depth" in table.columns:
+        #  table = table[(table.mean_coverage_depth > 20)]
+      elif ("pathogen.env" in "~{biosample_type}".lower()):
+        required_metadata = ["submission_id", "organism", "collected_by", "collection_date", "geo_loc_name", "isolation_source", "lat_lon"]
+        optional_metadata = ["host", "host_disease", "isolation_type", "sample_title", "bioproject_accession", "attribute_package", "strain", "isolate", "culture_collection", "genotype", "host_age", "host_description", "host_disease_outcome", "host_disease_stage", "host_health_state", "host_sex", "host_subject_id", "host_tissue_sampled", "passage_history", "pathotype", "serotype", "serovar", "specimen_voucher", "subgroup", "subtype", "description"] 
+        # add a column for biosample package -- required for XML submission
+        table["attribute_package"] = "Pathogen.env.1.0"
+        # future qc checks:
+        #   gc after trimming 42-47.5%
+        #   average phred after trimming >= 28
+      
+        #   coverage after trimming >= 20X
+        #if "mean_coverage_depth" in table.columns:
+        #  table = table[(table.mean_coverage_depth > 20)]
 
-      # qc checks:
+      elif ("~{biosample_type}".lower() == "virus"):
+        required_metadata = ["submission_id", "organism", "isolate", "collection_date", "geo_loc_name", "isolation_source"]
+        optional_metadata = ["sample_title", "bioprojection_accession","attribute_package", "host", "lab_host", "altitude", "biomaterial_provider", "collected_by", "culture_collection", "depth", "disease", "env_broad_scale", "genotype", "host_tissue_sampled", "identified_by", "lat_lon", "passage_history", "samp_size", "serotype", "specimen_voucher", "strain", "temp", "description"]
 
-   
-    elif ("~{biosample_type}".lower() == "pathogen") or ("pathogen.cl" in "~{biosample_type}".lower()):
-      required_metadata = ["submission_id", "organism", "collected_by", "collection_date", "geo_loc_name", "host", "host_disease", "isolation_source", "lat_lon"]
-      optional_metadata = ["sample_title", "isolation_type", "bioproject_accession", "attribute_package", "strain", "isolate", "culture_collection", "genotype", "host_age", "host_description", "host_disease_outcome", "host_disease_stage", "host_health_state", "host_sex", "host_subject_id", "host_tissue_sampled", "passage_history", "pathotype", "serotype", "serovar", "specimen_voucher", "subgroup", "subtype", "description"] 
-      # add a column for biosample package -- required for XML submission
-      table["attribute_package"] = "Pathogen.cl"
-      # future qc checks:
-      #   gc after trimming 42-47.5%
-      #   average phred after trimming >= 28
-     
-      #   coverage after trimming >= 20X
-      #if "mean_coverage_depth" in table.columns:
-      #  table = table[(table.mean_coverage_depth > 20)]
-    elif ("pathogen.env" in "~{biosample_type}".lower()):
-      required_metadata = ["submission_id", "organism", "collected_by", "collection_date", "geo_loc_name", "isolation_source", "lat_lon"]
-      optional_metadata = ["host", "host_disease", "isolation_type", "sample_title", "bioproject_accession", "attribute_package", "strain", "isolate", "culture_collection", "genotype", "host_age", "host_description", "host_disease_outcome", "host_disease_stage", "host_health_state", "host_sex", "host_subject_id", "host_tissue_sampled", "passage_history", "pathotype", "serotype", "serovar", "specimen_voucher", "subgroup", "subtype", "description"] 
-      # add a column for biosample package -- required for XML submission
-      table["attribute_package"] = "Pathogen.env.1.0"
-      # future qc checks:
-      #   gc after trimming 42-47.5%
-      #   average phred after trimming >= 28
-     
-      #   coverage after trimming >= 20X
-      #if "mean_coverage_depth" in table.columns:
-      #  table = table[(table.mean_coverage_depth > 20)]
+        table["attribute_package"] = "Virus.1.0"
 
-    elif ("~{biosample_type}".lower() == "virus"):
-      required_metadata = ["submission_id", "organism", "isolate", "collection_date", "geo_loc_name", "isolation_source"]
-      optional_metadata = ["sample_title", "bioprojection_accession","attribute_package", "host", "lab_host", "altitude", "biomaterial_provider", "collected_by", "culture_collection", "depth", "disease", "env_broad_scale", "genotype", "host_tissue_sampled", "identified_by", "lat_lon", "passage_history", "samp_size", "serotype", "specimen_voucher", "strain", "temp", "description"]
-
-      table["attribute_package"] = "Virus.1.0"
-
-
+      else:
+        raise Exception('Only "Microbe", "Virus", "Pathogen" and "Wastewater" are supported as acceptable input for the \`biosample_type\` variable at this time. You entered ~{biosample_type}.')
     else:
-      raise Exception('Only "Microbe", "Virus", "Pathogen" and "Wastewater" are supported as acceptable input for the \`biosample_type\` variable at this time. You entered ~{biosample_type}.')
+      print("Skipping biosample metadata upload")
+      required_metadata = []
+      optional_metadata = []
 
     # sra metadata is the same regardless of biosample_type package, but I'm separating it out in case we find out this is incorrect
     sra_required = ["~{table_name}_id", "submission_id", "library_ID", "title", "library_strategy", "library_source", "library_selection", "library_layout", "platform", "instrument_model", "design_description", "filetype", "~{read1_column_name}"]
@@ -180,10 +191,11 @@ task prune_table {
     File excluded_samples = "excluded_samples.tsv"
   }
   runtime {
-    docker: "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-03-16"
-    memory: "8 GB"
-    cpu: 4
-    disks: "local-disk 100 SSD"
+    docker: docker
+    memory: memory + " GB"
+    cpu: cpu
+    disks:  "local-disk " + disk_size + " SSD"
+    disk: disk_size + " GB"
     preemptible: 0
   }
 }
@@ -195,6 +207,10 @@ task add_biosample_accessions {
     String project_name
     String workspace_name
     String table_name
+    Int memory = 8
+    Int cpu = 4
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-03-16"
+    Int disk_size = 100
   }
   command <<<
     echo "Uploading biosample_accession to the Terra data table"
@@ -256,10 +272,11 @@ task add_biosample_accessions {
     Boolean proceed = read_boolean("PROCEED")
   }
   runtime {
-    docker: "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-03-16"
-    memory: "8 GB"
-    cpu: 4
-    disks: "local-disk 100 SSD"
+    docker: docker
+    memory: memory + " GB"
+    cpu: cpu
+    disks:  "local-disk " + disk_size + " SSD"
+    disk: disk_size + " GB"
     preemptible: 0
   }
 }

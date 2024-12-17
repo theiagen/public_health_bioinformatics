@@ -1,0 +1,12 @@
+name: pytest-env-CI
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - python >=3.7
+  - cromwell=86
+  - miniwdl=1.5.2
+  - pytest
+  - pytest-workflow
+  - importlib-metadata <=4.13.0
+  - requests=2.31.0

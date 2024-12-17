@@ -1,8 +1,8 @@
 version 1.0
 
-import "../../../tasks/phylogenetic_inference/task_referenceseeker.wdl" as referenceseeker_task
-import "../../../tasks/utilities/task_ncbi_datasets.wdl" as ncbi_datasets_task
+import "../../../tasks/phylogenetic_inference/utilities/task_referenceseeker.wdl" as referenceseeker_task
 import "../../../tasks/task_versioning.wdl" as versioning
+import "../../../tasks/utilities/data_import/task_ncbi_datasets.wdl" as ncbi_datasets_task
 
 workflow assembly_fetch {
   input {
@@ -11,7 +11,7 @@ workflow assembly_fetch {
     String? ncbi_accession
   }
   # if user does not provide reference genome, determine one for the user by running referenceseeker and ncbi datasets on a provided genome to acquire one
-  if(! defined(ncbi_accession) && defined(assembly_fasta)){
+  if(! defined(ncbi_accession) && defined(assembly_fasta)) {
     call referenceseeker_task.referenceseeker {
       input:
         assembly_fasta = select_first([assembly_fasta, ""]), # to avoid error with required task input

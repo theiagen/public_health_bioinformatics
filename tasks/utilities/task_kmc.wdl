@@ -10,12 +10,15 @@ task kmc {
     String docker = "us-docker.pkg.dev/general-theiagen/biocontainers/kmc:3.2.1--h9ee0642_0"
     Int disk_size = 100
     Int cpu = 8
-    Int mem = 32
+    Int memory = 32
     Int kmer_length = 21
     Int min_kmer_count = 10
   }
   command <<<
     kmc | head -n 1 | tee VERSION
+
+    # initialize kmc output
+    echo -n 0 > UNIQUE_COUNTED
 
     # run kmc
     # kmc [options] <input_file> <output_file> <working_dir>
@@ -26,7 +29,7 @@ task kmc {
     # -ci<value> - exclude k-mers occuring less than <value> times (default: 1e9)
     kmc \
       -sm \
-      -m"~{mem}" \
+      -m"~{memory}" \
       -t"~{cpu}" \
       -k"~{kmer_length}" \
       -ci"~{min_kmer_count}" \
@@ -38,19 +41,19 @@ task kmc {
     # kmc_outputs is a mess of files that are not human readable
     # however, the stdout does produce some useful stats. 
     #  the no. of unique counted k-mers can be used as an estimate of genome size
-    grep "unique counted k" LOG | tr -s ' ' | cut -d ' ' -f8 > UNIQUE_COUNTED
+    grep "unique counted k" LOG | tr -s ' ' | cut -d ' ' -f8 >> UNIQUE_COUNTED
 
     # extracting only the kmer statistics and writing to file:
     tail -n8 LOG > ~{samplename}_kmer_stats.txt
   >>>
   output {
-    String est_genome_size = read_string("UNIQUE_COUNTED") 
+    Int est_genome_length = read_int("UNIQUE_COUNTED")
     File kmer_stats = "~{samplename}_kmer_stats.txt"
     String kmc_version = read_string("VERSION")
   }
   runtime {
     docker: "~{docker}"
-    memory: mem + " GB"
+    memory: memory + " GB"
     cpu: cpu
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"

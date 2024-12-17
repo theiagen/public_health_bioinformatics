@@ -17,9 +17,9 @@ task usher {
 
     # runtime
     String docker = "us-docker.pkg.dev/general-theiagen/pathogengenomics/usher:0.6.2"
-    Int memory = 8
-    Int cpus = 2
-    Int disk_size = 100
+    Int memory = 16
+    Int cpu = 4
+    Int disk_size = 200
   }
   command <<<
     if [ "~{organism}" == "mpox" ]; then
@@ -131,7 +131,7 @@ task usher {
   runtime {
     docker: docker
     memory: memory + " GB"
-    cpu :  cpus
+    cpu :  cpu
     disks:  "local-disk " + disk_size + " HDD"
     disk: disk_size + " GB"
     preemptible: 0

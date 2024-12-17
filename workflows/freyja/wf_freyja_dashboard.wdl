@@ -1,7 +1,7 @@
 version 1.0
 
-import "../../tasks/taxon_id/freyja_utilities/task_freyja_dashboard.wdl" as freyja_dash
 import "../../tasks/task_versioning.wdl" as versioning
+import "../../tasks/taxon_id/freyja/task_freyja_dashboard.wdl" as freyja_dash
 
 workflow freyja_dashboard {
   input {
@@ -12,16 +12,17 @@ workflow freyja_dashboard {
     String freyja_dashboard_title
     File? dashboard_intro_text
   }
+  String freyja_dashboard_title_updated = sub(freyja_dashboard_title, " ", "_")
   call freyja_dash.freyja_dashboard_task {
     input:
       samplename = samplename,
       freyja_demixed = freyja_demixed,
       collection_date = collection_date,
       viral_load = viral_load,
-      freyja_dashboard_title = freyja_dashboard_title,
+      freyja_dashboard_title = freyja_dashboard_title_updated,
       dashboard_intro_text = dashboard_intro_text,
   }
-  call versioning.version_capture{
+  call versioning.version_capture {
     input:
   }
   output {
@@ -30,7 +31,7 @@ workflow freyja_dashboard {
     String freyja_dashboard_wf_analysis_date = version_capture.date
     # Freyja Dashboard Visualization
     String freyja_dashboard_version = freyja_dashboard_task.freyja_dashboard_version
-    File freyja_dasbhoard = freyja_dashboard_task.freyja_dasbhoard
+    File freyja_dashboard = freyja_dashboard_task.freyja_dashboard
     File freyja_demixed_aggregate = freyja_dashboard_task.freyja_demixed_aggregate
     File freyja_dashboard_metadata = freyja_dashboard_task.freyja_dashboard_metadata
   }

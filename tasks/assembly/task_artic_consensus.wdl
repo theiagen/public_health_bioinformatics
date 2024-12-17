@@ -4,14 +4,15 @@ task consensus {
   input {
     String samplename
     String? organism
-    File filtered_reads
+    File read1
     File primer_bed
     File? reference_genome
     Int normalise = 20000
     Int cpu = 8
+    Int memory = 16
     Int disk_size = 100
     String medaka_model = "r941_min_high_g360"
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/artic-ncov2019-epi2me"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/artic:1.2.4-1.12.0"
   }
   String primer_name = basename(primer_bed)
   command <<<
@@ -60,7 +61,13 @@ task consensus {
     # version control
     echo "Medaka via $(artic -v)" | tee VERSION
     echo "~{primer_name}" | tee PRIMER_NAME
-    artic minion --medaka --medaka-model ~{medaka_model} --normalise ~{normalise} --threads ~{cpu} --scheme-directory ./primer-schemes --read-file ~{filtered_reads} ${scheme_name} ~{samplename}
+    artic minion \
+      --medaka \
+      --medaka-model ~{medaka_model} \
+      --normalise ~{normalise} \
+      --threads ~{cpu} \
+      --scheme-directory ./primer-schemes \
+      --read-file ~{read1} ${scheme_name} ~{samplename}
     gunzip -f ~{samplename}.pass.vcf.gz
 
     # clean up fasta header
@@ -85,7 +92,7 @@ task consensus {
   }
   runtime {
     docker: "~{docker}"
-    memory: "16 GB"
+    memory: memory + " GB"
     cpu: cpu
     disks:  "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB" # TES

@@ -1,17 +1,19 @@
 version 1.0
 
-import "../../tasks/phylogenetic_inference/task_snippy_core.wdl" as snippy_core_task
-import "../../tasks/phylogenetic_inference/task_snp_sites.wdl" as snp_sites_task
-import "../../tasks/phylogenetic_inference/task_iqtree2.wdl" as iqtree2_task
-import "../../tasks/phylogenetic_inference/task_snp_dists.wdl" as snp_dists_task
-import "../../tasks/phylogenetic_inference/task_reorder_matrix.wdl" as reorder_matrix_task
 import "../../tasks/phylogenetic_inference/task_gubbins.wdl" as gubbins_task
-import "../../tasks/utilities/task_summarize_data.wdl" as data_summary
+import "../../tasks/phylogenetic_inference/task_iqtree2.wdl" as iqtree2_task
+import "../../tasks/phylogenetic_inference/utilities/task_reorder_matrix.wdl" as reorder_matrix_task
+import "../../tasks/phylogenetic_inference/utilities/task_snippy_core.wdl" as snippy_core_task
+import "../../tasks/phylogenetic_inference/utilities/task_snp_dists.wdl" as snp_dists_task
+import "../../tasks/utilities/file_handling/task_cat_files.wdl" as file_handling
+import "../../tasks/phylogenetic_inference/utilities/task_shared_variants.wdl" as shared_variants_task
+import "../../tasks/phylogenetic_inference/utilities/task_snp_sites.wdl" as snp_sites_task
 import "../../tasks/task_versioning.wdl" as versioning
+import "../../tasks/utilities/data_handling/task_summarize_data.wdl" as data_summary
 
 workflow snippy_tree_wf {
   meta {
-    description: "Perform phylogenetic tree inference using iqtree (default) or snp-dist"
+    description: "Perform phylogenetic tree inference using iqtree (default)"
   }
   input {
     String tree_name
@@ -20,17 +22,21 @@ workflow snippy_tree_wf {
     File reference_genome_file
     Boolean use_gubbins = true
     Boolean core_genome = true
+    Boolean call_shared_variants = true
+    Array[File]? snippy_variants_qc_metrics
     
     String? data_summary_terra_project
     String? data_summary_terra_workspace
     String? data_summary_terra_table
     String? data_summary_column_names # comma delimited
+    Boolean phandango_coloring = false
 
     # the following parameters are exposed to allow modification in snippy_streamline
     String? snippy_core_docker
     Int? snippy_core_cpu 
     Int? snippy_core_disk_size
     Int? snippy_core_memory
+    File? snippy_core_bed
     
     Int? gubbins_disk_size
     Int? gubbins_memory
@@ -47,39 +53,50 @@ workflow snippy_tree_wf {
     
     String? snp_dists_docker
     
-    Int? snp_sites_cpus
+    Int? snp_sites_cpu
     Int? snp_sites_disk_size
     Int? snp_sites_memory
     String? snp_sites_docker
+
+    Boolean midpoint_root_tree = true # by default midpoint root the tree
   }
+  String tree_name_updated = sub(tree_name, " ", "_")
+  # snippy core creates a whole-genome multiple sequence alignment (MSA) from each alignment provided by snipy_variants
+  # snippy_core does NOT create a core genome alignment- the name is misleading!
   call snippy_core_task.snippy_core {
     input:
       snippy_variants_outdir_tarball = snippy_variants_outdir_tarball,
       samplenames = samplenames,
       reference_genome_file = reference_genome_file,
-      tree_name = tree_name,
+      tree_name = tree_name_updated,
       docker = snippy_core_docker,
       cpu = snippy_core_cpu,
       disk_size = snippy_core_disk_size,
-      memory = snippy_core_memory
+      memory = snippy_core_memory,
+      bed_file = snippy_core_bed
   }
+  # removes recombination from the MSA, if use_gubbins is set to true
+  # output is a whole genome MSA without recombinant sites
   if (use_gubbins) {
     call gubbins_task.gubbins {
       input:
         alignment = snippy_core.snippy_full_alignment_clean,
-        cluster_name = tree_name,
+        cluster_name = tree_name_updated,
         docker = gubbins_docker,
         disk_size = gubbins_disk_size,
         memory = gubbins_memory,
         cpu = gubbins_cpu
     }
   }
+  # removes accessory genome sites from the MSA, creating the core genome, if core_genome is set to true
+  # output will be a core genome, with or without recombinant sites removed, depending on user inputs for use_gubbins
   if (core_genome) {
     call snp_sites_task.snp_sites as snp_sites {
       input:
-        # hardcoding some of the snp-sites optional outputs to false, 
-        msa_fasta = select_first([gubbins.gubbins_polymorphic_fasta,snippy_core.snippy_full_alignment_clean]),
-        output_name = tree_name,
+        # input is either the whole genome MSA, this MSA with the recombinant sites removed, 
+        # or the MSA of only core sites (with or without recombinant sites as specified by use_gubbins)
+        msa_fasta = select_first([gubbins.gubbins_polymorphic_fasta, snippy_core.snippy_full_alignment_clean]),
+        output_name = tree_name_updated,
         output_multifasta = true,
         allow_wildcard_bases = false,
         docker = snp_sites_docker,
@@ -87,15 +104,17 @@ workflow snippy_tree_wf {
         output_phylip = false,
         output_pseudo_ref = false,
         output_monomorphic = false,
-        cpus = snp_sites_cpus,
+        cpu = snp_sites_cpu,
         memory = snp_sites_memory,
         disk_size = snp_sites_disk_size
     }
   }
+  # creates a phylogenetic tree from the final MSA
   call iqtree2_task.iqtree2 {
     input:
+      # input MSA will depend on the user-specified optional inputs for use_gubbins and core_genome
       alignment = select_first([snp_sites.snp_sites_multifasta, gubbins.gubbins_polymorphic_fasta, snippy_core.snippy_full_alignment_clean]),
-      cluster_name = tree_name,
+      cluster_name = tree_name_updated,
       iqtree2_model = iqtree2_model,
       iqtree2_opts = iqtree2_opts,
       iqtree2_bootstraps = iqtree2_bootstraps,
@@ -104,18 +123,45 @@ workflow snippy_tree_wf {
       memory = iqtree2_memory,
       disk_size = iqtree2_disk_size
   }
-  call snp_dists_task.snp_dists {
+  # creates a pairwise snp-distance matrix from the whole-genome MSA, with or without recombination removal.
+  # whole-genome SNP matrix will always be produced regardless of whether core_genome is used 
+  # because this is always valuable for interpreting strain-relatedness
+  call snp_dists_task.snp_dists as wg_snp_dists {
     input:
-      alignment = select_first([snp_sites.snp_sites_multifasta, gubbins.gubbins_polymorphic_fasta, snippy_core.snippy_full_alignment_clean]),
-      cluster_name = tree_name,
+      alignment = select_first([gubbins.gubbins_polymorphic_fasta, snippy_core.snippy_full_alignment_clean]),
+      cluster_name = tree_name_updated,
       docker = snp_dists_docker
   }
-  call reorder_matrix_task.reorder_matrix {
+  # mid-point roots the phylogenetic tree, and reorders the columns in the wgSNP matrix according to the tree tip order
+  # NB the tree will remain a core genome tree is core_genome = true, and a whole-genome tree if core_genome = false
+  call reorder_matrix_task.reorder_matrix as wg_reorder_matrix {
     input:
       input_tree = iqtree2.ml_tree,
-      matrix = snp_dists.snp_matrix,
-      cluster_name = tree_name 
+      matrix = wg_snp_dists.snp_matrix,
+      cluster_name = tree_name_updated + "_wg",
+      midpoint_root_tree = midpoint_root_tree,
+      phandango_coloring = phandango_coloring
   }
+  # creates a pairwise snp-distance matrix from the core-genome MSA, if core_genome is used
+  if (core_genome) {
+    call snp_dists_task.snp_dists as cg_snp_dists {
+      input:
+        alignment = select_first([snp_sites.snp_sites_multifasta]),
+        cluster_name = tree_name_updated,
+        docker = snp_dists_docker
+    }
+    # reorders the columns in the cgSNP matrix according to the tree tip order
+    # input tree is the midpoint rooted tree from the wg_reorder_matrix task, and midpoint rooting is turned off here, so the tree remains unchanged
+    call reorder_matrix_task.reorder_matrix as cg_reorder_matrix {
+      input:
+        input_tree = wg_reorder_matrix.tree,
+        matrix = cg_snp_dists.snp_matrix,
+        cluster_name = tree_name_updated + "_cg",
+        midpoint_root_tree = false,
+        phandango_coloring = phandango_coloring
+    }
+  }
+  # creates a data summary from comma-separated lists within single Terra data table columns
   if (defined(data_summary_column_names)) {
     call data_summary.summarize_data {
       input:
@@ -124,10 +170,32 @@ workflow snippy_tree_wf {
         terra_workspace = data_summary_terra_workspace,
         terra_table = data_summary_terra_table,
         column_names = data_summary_column_names,
-        output_prefix = tree_name
+        output_prefix = tree_name_updated,
+        phandango_coloring = phandango_coloring
     }
   }
-  call versioning.version_capture{
+  if (call_shared_variants) {
+    call file_handling.cat_variants as concatenate_variants {
+      input:
+        variants_to_cat = snippy_core.snippy_variants_csv, 
+        samplenames = samplenames,
+        concatenated_file_name = tree_name_updated
+    }
+    call shared_variants_task.shared_variants {
+      input:
+        concatenated_variants = concatenate_variants.concatenated_variants, 
+        concatenated_file_name = tree_name_updated
+    }
+  }
+  if (defined(snippy_variants_qc_metrics)) {
+    call file_handling.cat_files as concatenate_qc_metrics {
+      input:
+        files_to_cat = select_first([snippy_variants_qc_metrics]),
+        concatenated_file_name = tree_name_updated + "_combined_qc_metrics.tsv",
+        skip_extra_headers = true
+    }
+  }
+  call versioning.version_capture {
     input:
   }
   output {
@@ -156,13 +224,13 @@ workflow snippy_tree_wf {
     String snippy_iqtree2_docker = iqtree2.iqtree2_docker
     String snippy_iqtree2_model_used = iqtree2.iqtree2_model_used
 
-    # snpdists outputs
-    String snippy_snp_dists_version = snp_dists.snp_dists_version
-    String snippy_snp_dists_docker = snp_dists.snp_dists_docker
-
-    # reorder matrix outputs
-    File snippy_snp_matrix = reorder_matrix.ordered_matrix
-    File snippy_final_tree = reorder_matrix.tree # this is same output tree from iqtree2, but it is midpoint rooted 
+    # snp matrix outputs
+    String snippy_snp_dists_version = wg_snp_dists.snp_dists_version
+    String snippy_snp_dists_docker = wg_snp_dists.snp_dists_docker
+    File snippy_wg_snp_matrix = wg_reorder_matrix.ordered_matrix
+    File? snippy_cg_snp_matrix = cg_reorder_matrix.ordered_matrix
+    
+    File snippy_final_tree = select_first([cg_reorder_matrix.tree, wg_reorder_matrix.tree]) # depending on user input for core_genome
 
     # data summary outputs
     File? snippy_summarized_data = summarize_data.summarized_data
@@ -170,5 +238,12 @@ workflow snippy_tree_wf {
 
     # set final alignment from 3 possible task outputs
     File snippy_final_alignment = select_first([snp_sites.snp_sites_multifasta, gubbins.gubbins_polymorphic_fasta, snippy_core.snippy_full_alignment_clean])
+
+    # shared snps outputs
+    File? snippy_concatenated_variants = concatenate_variants.concatenated_variants
+    File? snippy_shared_variants_table = shared_variants.shared_variants_table
+
+    # combined qc metrics
+    File? snippy_combined_qc_metrics = concatenate_qc_metrics.concatenated_files
   }
 }

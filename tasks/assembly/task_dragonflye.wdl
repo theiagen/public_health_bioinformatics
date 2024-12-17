@@ -6,7 +6,7 @@ task dragonflye {
     String samplename
     String? assembler # default is flye
     String? assembler_options # default ''
-    String? genome_size # default autodetect
+    String? genome_length # default autodetect
     File? illumina_read1 # illumina read1 fastq to use for polishing
     File? illumina_read2 # illumina read2 fastq to use for polishing 
     Boolean use_pilon_illumina_polisher = false # use polypolish by default
@@ -17,6 +17,7 @@ task dragonflye {
     String docker = "us-docker.pkg.dev/general-theiagen/biocontainers/dragonflye:1.0.14--hdfd78af_0"
     Int disk_size = 100
     Int cpu = 4
+    Int memory = 32
   }
   command <<<
     # get version information
@@ -46,6 +47,9 @@ task dragonflye {
       ILLUMINA_POLISHER=""
     fi
 
+    # reduce requested memory to prevent out of memory errors
+    mem=$(( ~{memory}-1 ))
+
     # run dragonflye
     # --reads for input nanopore fastq
     # --depth 0 disables sub-sampling of reads (performed with rasusa already)
@@ -62,9 +66,9 @@ task dragonflye {
       --reads ~{read1} \
       --depth 0 \
       --outdir dragonflye \
-      ~{'--gsize ' + genome_size} \
+      ~{'--gsize ' + genome_length} \
       --cpus ~{cpu} \
-      --ram 8 \
+      --ram ${mem} \
       --nofilter \
       ~{'--assembler ' + assembler} \
       ~{'--opts "' + assembler_options + '"'} \
@@ -73,14 +77,16 @@ task dragonflye {
 
     # rename final output file to have .fasta ending instead of .fa
     mv dragonflye/contigs.fa ~{samplename}.fasta
+    mv dragonflye/*.gfa ~{samplename}_contigs.gfa
   >>>
   output {
     File assembly_fasta = "~{samplename}.fasta"
+    File contigs_gfa = "~{samplename}_contigs.gfa"
     String dragonflye_version = read_string("VERSION")
   }
   runtime {
     docker: "~{docker}"
-    memory: "16 GB"
+    memory: "~{memory} GB"
     cpu: cpu
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"

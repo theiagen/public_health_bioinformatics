@@ -4,31 +4,40 @@ task augur_align {
   input {
     File assembly_fasta
     File reference_fasta
+    Boolean remove_reference
     Boolean fill_gaps = false
-    Int cpus = 64
-    Int mem_size = 32
+    Int cpu = 64
+    Int memory = 128
     Int disk_size = 750
+    String docker = "us-docker.pkg.dev/general-theiagen/biocontainers/augur:22.0.2--pyhdfd78af_0"
   }
   command <<<
+    set -euo pipefail
+    
     # capture version information
     augur version > VERSION
+    echo
+    echo "mafft version:"
+    mafft --version 2>&1 | tee MAFFT_VERSION
 
     # run augur align
     augur align \
       --sequences ~{assembly_fasta} \
-      --nthreads ~{cpus} \
       --reference-sequence ~{reference_fasta} \
+      --nthreads ~{cpu} \
+      ~{true="--remove-reference" false="" remove_reference} \
       ~{true="--fill-gaps" false="" fill_gaps}
   >>>
   output {
     File aligned_fasta = "alignment.fasta"
     String augur_version = read_string("VERSION")
+    String mafft_version = read_string("MAFFT_VERSION")
   }
   runtime {
-    docker: "us-docker.pkg.dev/general-theiagen/biocontainers/augur:22.0.2--pyhdfd78af_0"
-    memory: mem_size + " GB"
-    cpu :   cpus
-    disks:  "local-disk " + disk_size + " LOCAL"
+    docker: docker
+    memory: memory + " GB"
+    cpu: cpu
+    disks: "local-disk " + disk_size + " LOCAL"
     disk: disk_size + " GB" # TES
     preemptible: 0
     dx_instance_type: "mem3_ssd1_v2_x36"

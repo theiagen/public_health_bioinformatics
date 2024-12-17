@@ -1,51 +1,58 @@
 <!--
-Thank your for contributing to Theiagen's Public Health Bioinformatics repository!
-Please fill in the appropriate checklist below and delete whatever is not relevant.
+Thank you for contributing to Theiagen's Public Health Bioinformatics repository! 
 
-Documentation on how to contribute can be found at https://github.com/theiagen/public_health_bioinformatics#contributing-to-the-phb-workflows
+Please ensure your contributions are formatted following our style guide, which can be found here: https://theiagen.notion.site/Style-Guide-WDL-Workflow-Development-51b66a47dde54c798f35d673fff80249.
 
-Please replace all '[ ]' with '[X]' to demonstrate completion.
-
-Please delete all text within '<>'. 
+As you create the PR, please provide any necessary information as suggested in the comments that will help us test your PR.
 -->
-Closes <Issue number>
 
-## :hammer_and_wrench: Changes Being Made
+<!-- Indicate the issue number if applicable; otherwise, delete -->
+This PR closes #
 
-<!--Here give examples of the changes you've made to this pull request. Include an itemized list if you can. It'll help the reviewer-->
+🗑️ This dev branch should <NOT> be deleted after merging to main.
 
-## :brain: Context and Rationale
+## :brain: Summary
+<!-- Please summarize what this PR does -->
 
-<!--What's the context of the changes? Where there any trade-offs you had to consider?-->
+## :zap: Impacted Workflows/Tasks
+<!-- Please list what workflows and/or tasks are impacted by this change -->
 
-## :clipboard: Workflow/Task Steps
+This PR may lead to different results in pre-existing outputs: **Yes/No**
 
-<!--What are the main steps of your workflow/task? Make it explicit enough so that someone who doesn't have deep knowledge of the workflow/task can understand how the rationale was implemented.-->
+This PR uses an element that could cause duplicate runs to have different results: **Yes/No**
+<!-- This may be due to using a live database or stochastic data processing. If yes, please describe. -->
 
-### Inputs
+## :hammer_and_wrench: Changes
+<!-- Describe your changes. -->
 
-<!--What are the mandatory and optional inputs of your workflow/task?-->
+### :gear: Algorithm
+<!-- Have any changes been made to the algorithm or processing changes under the hood? This can include any changes to the task/workflow algorithm; Docker, software, or database versions; compute resources; etc. If so, please explain. -->
 
-### Outputs
+### ➡️ Inputs
+<!-- Have any inputs been added or altered? If so, list out the changes. -->
 
-<!--What are the outputs of your workflow/task?-->
+### ⬅️ Outputs
+<!-- Have any outputs been added or altered? If so, list out the changes. -->
 
 ## :test_tube: Testing
+<!-- Please describe how you tested this PR. -->
 
-### Locally
+### Suggested Scenarios for Reviewer to Test
+<!-- Please list any potential scenarios that the reviewer should test, including edge cases or data types -->
 
-<!--Please show, with screenshots when possible, that your changes pass the local execution of the workflow-->
+## :microscope: Final Developer Checklist
+<!-- Please mark boxes [X] -->
+- [ ] The workflow/task has been tested and results, including file contents, are as anticipated
+- [ ] The CI/CD has been adjusted and tests are passing (Theiagen developers)
+- [ ] Code changes follow the [style guide](https://theiagen.notion.site/Style-Guide-WDL-Workflow-Development-51b66a47dde54c798f35d673fff80249)
+- [ ] Documentation and/or workflow diagrams have been updated if applicable
+  - [ ] You have updated the latest version for any affected worklows in the respective workflow documentation page and for every entry in the three `workflows_overview` tables.
 
-### Terra
-
-<!--Please show, with screenshots when possible and/or a URL to the job execution, that your changes pass the execution of the workflow on Terra.bio-->
-
-## :microscope: Quality checks
-
-<!--Please ensure that your changes respect the following quality checks.-->
-
-Pull Request (PR) checklist:
-- [ ] Include a description of what is in this pull request in this message.
-- [ ] The workflow/task has been tested locally and on Terra
-- [ ] The CI/CD has been adjusted and tests are passing
-- [ ] Everything follows the [style guide](https://theiagen.notion.site/Style-Guide-WDL-Workflow-Development-bb456f34322d4f4db699d4029050481c)
+## 🎯 Reviewer Checklist
+<!--  Indicate NA when not applicable  -->
+- [ ] All changed results have been confirmed
+- [ ] You have tested the PR appropriately (see the [testing guide](https://theiagen.notion.site/PR-Testing-Guide-Determining-Appropriate-Levels-of-Testing-4764e98a6aeb460185039c0896714590) for more information)
+- [ ] All code adheres to the [style guide](https://theiagen.notion.site/Style-Guide-WDL-Workflow-Development-51b66a47dde54c798f35d673fff80249)
+- [ ] MD5 sums have been updated
+- [ ] The PR author has addressed all comments
+- [ ] The documentation has been updated

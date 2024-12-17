@@ -9,8 +9,8 @@ task ksnp3 {
     String ksnp3_args = "" # add -ML to calculate a maximum likelihood tree or -NJ to calculate a neighbor-joining tree
     String docker_image = "us-docker.pkg.dev/general-theiagen/staphb/ksnp3:3.1"
     File? previous_ksnp3_snps
-    Int memory = 8
-    Int cpu = 4
+    Int memory = 4
+    Int cpu = 2
     Int disk_size = 100
   }
   command <<<
@@ -53,8 +53,10 @@ task ksnp3 {
     -in ksnp3_input.tsv \
     -outdir ksnp3 \
     -k ~{kmer_size} \
-    -core -vcf \
+    -core \
+    -vcf \
     ~{'-SNPs_all ' + previous_ksnp3_snps} \
+    -CPU ~{cpu} \
     ~{ksnp3_args}
   
   # rename ksnp3 outputs with cluster name 
@@ -71,7 +73,18 @@ task ksnp3 {
     echo "The core SNP matrix could not be produced" | tee SKIP_SNP_DIST # otherwise, skip
   fi
 
-  mv -v ksnp3/VCF.*.vcf ksnp3/~{cluster_name}_core.vcf
+  # capture sample name of genome used as reference
+  ls ksnp3/*.vcf | cut -d '.' -f 2 | tee KSNP3_VCF_REF_SAMPLENAME.txt
+  
+  # capture number of SNPs
+  cut -f 2 -d ':' ksnp3/COUNT_SNPs | tr -d ' ' > ksnp3/NUMBER_SNPS
+  # capture number of core SNPs
+  grep "Number core SNPs: " ksnp3/COUNT_coreSNPs | cut -f 2 -d ':' | tr -d ' ' > ksnp3/NUMBER_CORE_SNPS
+
+  # rename the 2 vcf files by appending ~{cluster_name} and removing the ref genome name to make final filenames predictable
+  mv -v ksnp3/VCF.*.vcf ksnp3/~{cluster_name}_VCF.reference_genome.vcf
+  mv -v ksnp3/VCF.SNPsNotinRef.* ksnp3/~{cluster_name}_VCF_.SNPsNotinRef.tsv
+
   mv -v ksnp3/SNPs_all_matrix.fasta ksnp3/~{cluster_name}_pan_SNPs_matrix.fasta
   mv -v ksnp3/tree.parsimony.tre ksnp3/~{cluster_name}_pan_parsimony.nwk
 
@@ -84,14 +97,17 @@ task ksnp3 {
 
   >>>
   output {
-    File ksnp3_core_matrix = "ksnp3/${cluster_name}_core_SNPs_matrix.fasta"
-    File ksnp3_core_tree = "ksnp3/${cluster_name}_core.nwk"
-    File ksnp3_core_vcf = "ksnp3/${cluster_name}_core.vcf"
+    File ksnp3_core_matrix = "ksnp3/~{cluster_name}_core_SNPs_matrix.fasta"
+    File ksnp3_core_tree = "ksnp3/~{cluster_name}_core.nwk"
+    File ksnp3_vcf_ref_genome = "ksnp3/~{cluster_name}_VCF.reference_genome.vcf"
+    File ksnp3_vcf_snps_not_in_ref = "ksnp3/~{cluster_name}_VCF_.SNPsNotinRef.tsv"
+    String ksnp3_vcf_ref_samplename = read_string("KSNP3_VCF_REF_SAMPLENAME.txt")
     File ksnp3_pan_matrix = "ksnp3/~{cluster_name}_pan_SNPs_matrix.fasta"
     File ksnp3_pan_parsimony_tree = "ksnp3/~{cluster_name}_pan_parsimony.nwk"
     File? ksnp3_ml_tree = "ksnp3/~{cluster_name}_ML.nwk"
     File? ksnp3_nj_tree = "ksnp3/~{cluster_name}_NJ.nwk"
-    File number_snps = "ksnp3/COUNT_SNPs"
+    String ksnp3_number_snps = read_string("ksnp3/NUMBER_SNPS")
+    String ksnp3_number_core_snps = read_string("ksnp3/NUMBER_CORE_SNPS")
     File ksnp3_snps_all = "ksnp3/~{cluster_name}_SNPs_all"
     File ksnp3_input = "ksnp3_input.tsv"
     String skip_core_snp_dists = read_string("SKIP_SNP_DIST")

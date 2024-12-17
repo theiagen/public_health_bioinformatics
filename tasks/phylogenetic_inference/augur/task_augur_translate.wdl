@@ -10,6 +10,9 @@ task augur_translate {
     File? genes # a file containing list of genes to translate (from nucleotides to amino acids)
 
     Int disk_size = 50
+    Int cpu = 1
+    Int memory = 32
+    String docker = "us-docker.pkg.dev/general-theiagen/biocontainers/augur:22.0.2--pyhdfd78af_0"
   }
   command <<<
     AUGUR_RECURSION_LIMIT=10000 augur translate \
@@ -23,9 +26,9 @@ task augur_translate {
     File translated_aa_muts_json = "~{build_name}_aa_muts.json"
   }
   runtime {
-    docker: "us-docker.pkg.dev/general-theiagen/biocontainers/augur:22.0.2--pyhdfd78af_0"
-    memory: "2 GB"
-    cpu : 1
+    docker: docker
+    memory: memory + " GB"
+    cpu: cpu
     disks: "local-disk " + disk_size + " HDD"
     disk: disk_size + " GB"
     dx_instance_type: "mem1_ssd1_v2_x2"

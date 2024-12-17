@@ -3,12 +3,13 @@ version 1.0
 task version_capture {
   input {
     String? timezone
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0"
   }
   meta {
     volatile: true
   }
   command {
-    PHB_Version="PHB v1.0.1"
+    PHB_Version="PHB v2.3.0"
     ~{default='' 'export TZ=' + timezone}
     date +"%Y-%m-%d" > TODAY
     echo "$PHB_Version" > PHB_VERSION
@@ -20,9 +21,10 @@ task version_capture {
   runtime {
     memory: "1 GB"
     cpu: 1
-    docker: "ubuntu:jammy"
+    docker: docker
     disks: "local-disk 10 HDD"
     dx_instance_type: "mem1_ssd1_v2_x2" 
+    preemptible: 1
   }
 }
 
