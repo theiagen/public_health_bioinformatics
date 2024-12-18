@@ -10,7 +10,6 @@ task basecall {
     Int cpu = 8
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/dorado:0.8.3"
   }
-
   command <<< 
     set -euo pipefail
 
@@ -69,7 +68,6 @@ task basecall {
 
     echo "Basecalling completed for ~{input_file}. SAM file renamed to: $sam_file" | tee -a "dorado_basecall.log"
   >>>
-  
   output {
     Array[File] sam_files = glob("output/sam_*/*.sam")
     String dorado_docker = docker
@@ -78,7 +76,6 @@ task basecall {
     # keeping this dorado_log just for debugging purposes, not a wf output
     File dorado_log = "dorado_basecall.log"
   }
-  
   runtime {
     docker: docker
     cpu: cpu
