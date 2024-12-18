@@ -8,7 +8,7 @@
 
 ## Dorado_Basecalling_PHB
 
-The Dorado Basecalling workflow is used to convert Oxford Nanopore `POD5` sequencing files into `FASTQ` format by utilizing a GPU-accelerated environment. This workflow is ideal for high-throughput applications where fast and accurate basecalling is essential. The workflow will upload fastq files to a user designated terra table for downstream analysis.
+The Dorado Basecalling workflow is used to convert Oxford Nanopore `POD5` sequencing files into `FASTQ` format by utilizing a GPU-accelerated environment. This workflow is ideal for high-throughput applications where fast and accurate basecalling is essential. The workflow utilizes the Terra Data Uploader to add `POD5` files to a Google Cloud Storage (GCS) bucket and provide the bucket path `(gs://...)` as an input to the workflow, and output final `fastq` files to a user designated terra table for downstream analysis.
 
 ### Model Type Selection
 
@@ -49,7 +49,7 @@ Users can configure the basecalling model by setting the `dorado_model` input pa
 
 | **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
 |---|---|---|---|---|---|
-| dorado_basecalling_workflow | **input_files** | Array[File] | Array of `POD5` files for basecalling | None | Required |
+| dorado_basecalling_workflow | **pod5_bucket_path** | String | GCS path of the bucket containing POD5 files. | None | Required |
 | dorado_basecalling_workflow | **fastq_file_name** | String | Prefix for naming output FASTQ files | None | Required |
 | dorado_basecalling_workflow | **kit_name** | String | Sequencing kit name used (e.g., `SQK-RPB114-24`) | None | Required |
 | dorado_basecalling_workflow | **fastq_upload_path** | String | Terra folder path for uploading FASTQ files | None | Required |
@@ -63,6 +63,24 @@ Users can configure the basecalling model by setting the `dorado_model` input pa
 | dorado_basecalling_workflow | **assembly_data** | Boolean | Indicates if the data is for assembly | false | Optional |
 | dorado_basecalling_workflow | **file_ending** | String? | File extension pattern for identifying files (e.g., ".fastq.gz") | None | Optional |
 | dorado_basecalling_workflow | **paired_end** | Boolean | Indicates if data is paired-end | false | Optional |
+
+### Uploading Pod5 Files to Terra `pod5_bucket_path`"
+
+??? toggle "Click for more information"
+    To run the Dorado Basecalling Workflow, you must first upload your `POD5 files` to a Google Cloud Storage (GCS) bucket within your Terra workspace. Follow these steps:
+
+    **Step 1: Use the Terra Data Uploader**
+    Go to the **"Data"** tab in your Terra workspace. Click **"Upload Files"** and select your `POD5` files for upload. Confirm the upload process and wait for the files to be uploaded.
+
+    **Step 2: Copy the GCS Path**
+    After the upload is complete, Right-click the collection name and select "Copy link address."
+
+    ![Data uploader](../../assets/figures/dorado_pod5_data_upload.png)
+
+    **Step 3: Paste the GCS Path into the Workflow Input**
+    Open the workflow configuration screen in Terra. Paste the copied GCS path into the `pod5_bucket_path` input field for the Dorado Basecalling Workflow.
+    
+    ![Data uploader](../../assets/figures/dorado_input_seelction.png)
 
 !!! info "Detailed Input Information"
     - **dorado_model**: If set to 'sup', 'hac', or 'fast', the workflow will run with automatic model selection. If a full model name is provided, Dorado will use that model directly.
@@ -83,6 +101,9 @@ Users can configure the basecalling model by setting the `dorado_model` input pa
 
 This workflow is composed of several tasks to process, basecall, and analyze Oxford Nanopore `POD5` files:
 
+??? task "`Transfer POD5 Files`: Transfers `POD5` files to Terra"
+    Lists `.pod5` files in the specified GCS bucket and passes their paths to the basecalling task.
+
 ??? task "`Dorado Basecalling`: Converts `POD5` files to 'SAM' files"
     The basecalling task takes `POD5` files as input and converts them into 'SAM' format using the specified model. This step leverages GPU acceleration for efficient processing.
 
@@ -97,7 +118,6 @@ This workflow is composed of several tasks to process, basecall, and analyze Oxf
 
 ??? task "`Terra Table Creation`: Creates a Terra table with FASTQ files"
     A Terra table is created to index the uploaded FASTQ files, enabling easy access and integration with other workflows for downstream analyses.
-
 
 ### Outputs
 
