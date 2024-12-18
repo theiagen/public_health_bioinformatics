@@ -17,7 +17,7 @@
     - wf_theiacov_clearlabs_miniwdl
   files:
     - path: miniwdl_run/call-consensus/command
-      md5sum: b19d5ce485c612036064c07f0a1d6a18
+      md5sum: a8e200703dedf732b45dd92b0af15f1c
     - path: miniwdl_run/call-consensus/inputs.json
       contains: ["read1", "samplename", "fastq"]
     - path: miniwdl_run/call-consensus/outputs.json
