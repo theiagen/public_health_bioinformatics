@@ -6,13 +6,14 @@ import "../../tasks/basecalling/task_dorado_demux.wdl" as dorado_demux_task
 import "../../tasks/utilities/file_handling/task_transfer_files.wdl" as transfer_fastq_files
 import "../../tasks/utilities/data_import/task_create_terra_table.wdl" as terra_fastq_table
 import "../../tasks/task_versioning.wdl" as versioning_task
+import "../../tasks/utilities/file_handling/task_transfer_pod5_files.wdl" as transfer_pod5_files_task         
 
 workflow dorado_basecalling_workflow {
   meta {
     description: "GPU-accelerated workflow for basecalling Oxford Nanopore POD5 files, generating SAM outputs and supporting downstream demultiplexing and FASTQ output."
   }
   input {
-    Array[File] input_files
+    String pod5_bucket_path  # GCS bucket path containing POD5 files
     String dorado_model = "sup" 
     String kit_name
     String new_table_name
@@ -27,12 +28,16 @@ workflow dorado_basecalling_workflow {
   call versioning_task.version_capture {
     input:
   }
-  scatter (file in input_files) {
+  call transfer_pod5_files_task.transfer_pod5_files as transfer_pod5 {
+    input:
+      pod5_bucket_path = pod5_bucket_path
+  }
+  scatter (pod5_path in transfer_pod5.pod5_file_paths) {
     call basecall_task.basecall as dorado_basecall {
       input:
-        input_file = file,
+        input_file = pod5_path,
         dorado_model = dorado_model,
-        kit_name = kit_name,
+        kit_name = kit_name
     }
   }
   call samtools_convert_task.samtools_convert {

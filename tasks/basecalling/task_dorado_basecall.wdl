@@ -8,7 +8,7 @@ task basecall {
     Int disk_size = 100
     Int memory = 32
     Int cpu = 8
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/dorado:0.8.0"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/dorado:0.8.3"
   }
 
   command <<< 
