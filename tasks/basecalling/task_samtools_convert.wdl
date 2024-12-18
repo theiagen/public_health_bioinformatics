@@ -8,7 +8,6 @@ task samtools_convert {
     Int disk_size = 50
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/samtools:1.15"
   }
-
   command <<< 
     set -euo pipefail
 
@@ -35,7 +34,6 @@ task samtools_convert {
     echo "### Listing BAM files in $bam_output ###"
     ls -lh "$bam_output"
   >>>
-
   output {
     Array[File] bam_files = glob("output/bam/*.bam")
     String samtools_version = read_string("SAMTOOLS_VERSION")

@@ -11,7 +11,6 @@ task dorado_demux {
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/dorado:0.8.0"
     String dorado_model_used
   }
-
   command <<< 
     set -euo pipefail
 
@@ -96,7 +95,6 @@ task dorado_demux {
     echo "### Dorado demux process completed successfully ###"
     date
   >>>
-
   output {
     Array[File] fastq_files = glob("merged_output/*.fastq.gz")
     String dorado_docker = docker
@@ -104,7 +102,6 @@ task dorado_demux {
     File dorado_demux_log = "dorado_demux_output.log" 
     String dorado_model_name = read_string("DORADO_MODEL_USED")
   }
-  
   runtime {
     docker: docker
     cpu: cpu

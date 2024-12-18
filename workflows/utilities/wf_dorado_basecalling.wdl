@@ -28,7 +28,6 @@ workflow dorado_basecalling_workflow {
   call versioning_task.version_capture {
     input:
   }
-  # List `.pod5` files in GCS bucket
   call transfer_pod5_files_task.transfer_pod5_files as transfer_pod5 {
     input:
       pod5_bucket_path = pod5_bucket_path

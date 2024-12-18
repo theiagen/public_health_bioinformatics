@@ -9,9 +9,9 @@ task transfer_pod5_files {
     String docker =  "us-docker.pkg.dev/general-theiagen/cloudsdktool/google-cloud-cli:427.0.0-alpine"
   }
   command <<<
-     set -euo pipefail
+    set -euo pipefail
 
-     echo "Listing .pod5 files in ~{pod5_bucket_path}"
+    echo "Listing .pod5 files in ~{pod5_bucket_path}"
     gcloud storage ls -r "~{pod5_bucket_path}" | grep "\.pod5$" > pod5_files_list.txt
 
     # Check if any files are found
