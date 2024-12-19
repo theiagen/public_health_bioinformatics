@@ -5141,16 +5141,16 @@
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/artic:1.2.4-1.12.0</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/artic-ncov2019-epi2me</td>
 <td>Optional</td>
-<td>CL, ONT</td>
+<td>ONT</td>
 <td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
 </tr>
 <tr>
 <td>consensus</td>
 <td><strong>medaka_model</strong></td>
 <td>String</td>
-<td>In order to obtain the best results, the appropriate model must be set to match the sequencer's basecaller model; this string takes the format of {pore}<em caller="caller" variant="variant">{device}</em>. See the list of available models in the }_{caller_version<code>artic_consensus</code> documentation section. See also https://github.com/nanoporetech/medaka?tab=readme-ov-file#models.</td>
+<td>In order to obtain the best results, the appropriate model must be set to match the sequencer's basecaller model; this string takes the format of {pore}<em caller="caller" variant="variant">{device}</em>. See also https://github.com/nanoporetech/medaka?tab=readme-ov-file#models.}_{caller_version</td>
 <td>r941_min_high_g360</td>
 <td>Optional</td>
 <td>CL, ONT</td>
@@ -9469,49 +9469,6 @@
 <div class="admonition info">
 <p>Read-trimming is performed on raw read data generated on the ClearLabs instrument and thus not a required step in the TheiaCoV_ClearLabs workflow.</p>
 </div>
-<details class="toggle">
-<summary>Available <code>medaka</code> models</summary>
-<p>The medaka models available in the default docker container are as follows:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>r103_fast_g507,<span class="w"> </span>r103_fast_snp_g507,<span class="w"> </span>r103_fast_variant_g507,<span class="w"> </span>r103_hac_g507,
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>r103_hac_snp_g507,<span class="w"> </span>r103_hac_variant_g507,<span class="w"> </span>r103_min_high_g345,<span class="w"> </span>r103_min_high_g360,
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>r103_prom_high_g360,<span class="w"> </span>r103_prom_snp_g3210,<span class="w"> </span>r103_prom_variant_g3210,<span class="w"> </span>r103_sup_g507,
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>r103_sup_snp_g507,<span class="w"> </span>r103_sup_variant_g507,<span class="w"> </span>r1041_e82_260bps_fast_g632,
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>r1041_e82_260bps_fast_variant_g632,<span class="w"> </span>r1041_e82_260bps_hac_g632,
-</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>r1041_e82_260bps_hac_v4.0.0,<span class="w"> </span>r1041_e82_260bps_hac_v4.1.0,
-</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>r1041_e82_260bps_hac_variant_g632,<span class="w"> </span>r1041_e82_260bps_hac_variant_v4.1.0,
-</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>r1041_e82_260bps_joint_apk_ulk_v5.0.0,<span class="w"> </span>r1041_e82_260bps_sup_g632,
-</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>r1041_e82_260bps_sup_v4.0.0,<span class="w"> </span>r1041_e82_260bps_sup_v4.1.0,
-</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>r1041_e82_260bps_sup_variant_g632,<span class="w"> </span>r1041_e82_260bps_sup_variant_v4.1.0,
-</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>r1041_e82_400bps_fast_g615,<span class="w"> </span>r1041_e82_400bps_fast_g632,
-</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>r1041_e82_400bps_fast_variant_g615,<span class="w"> </span>r1041_e82_400bps_fast_variant_g632,
-</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>r1041_e82_400bps_hac_g615,<span class="w"> </span>r1041_e82_400bps_hac_g632,<span class="w"> </span>r1041_e82_400bps_hac_v4.0.0,
-</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>r1041_e82_400bps_hac_v4.1.0,<span class="w"> </span>r1041_e82_400bps_hac_v4.2.0,<span class="w"> </span>r1041_e82_400bps_hac_v4.3.0,
-</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>r1041_e82_400bps_hac_v5.0.0,<span class="w"> </span>r1041_e82_400bps_hac_variant_g615,
-</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>r1041_e82_400bps_hac_variant_g632,<span class="w"> </span>r1041_e82_400bps_hac_variant_v4.1.0,
-</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>r1041_e82_400bps_hac_variant_v4.2.0,<span class="w"> </span>r1041_e82_400bps_hac_variant_v4.3.0,
-</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>r1041_e82_400bps_hac_variant_v5.0.0,<span class="w"> </span>r1041_e82_400bps_sup_g615,
-</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>r1041_e82_400bps_sup_v4.0.0,<span class="w"> </span>r1041_e82_400bps_sup_v4.1.0,<span class="w"> </span>r1041_e82_400bps_sup_v4.2.0,
-</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>r1041_e82_400bps_sup_v4.3.0,<span class="w"> </span>r1041_e82_400bps_sup_v5.0.0,
-</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>r1041_e82_400bps_sup_variant_g615,<span class="w"> </span>r1041_e82_400bps_sup_variant_v4.1.0,
-</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>r1041_e82_400bps_sup_variant_v4.2.0,<span class="w"> </span>r1041_e82_400bps_sup_variant_v4.3.0,
-</span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>r1041_e82_400bps_sup_variant_v5.0.0,<span class="w"> </span>r104_e81_fast_g5015,<span class="w"> </span>r104_e81_fast_variant_g5015,
-</span><span id="__span-0-24"><a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>r104_e81_hac_g5015,<span class="w"> </span>r104_e81_hac_variant_g5015,<span class="w"> </span>r104_e81_sup_g5015,<span class="w"> </span>r104_e81_sup_g610,
-</span><span id="__span-0-25"><a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>r104_e81_sup_variant_g610,<span class="w"> </span>r10_min_high_g303,<span class="w"> </span>r10_min_high_g340,<span class="w"> </span>r941_e81_fast_g514,
-</span><span id="__span-0-26"><a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>r941_e81_fast_variant_g514,<span class="w"> </span>r941_e81_hac_g514,<span class="w"> </span>r941_e81_hac_variant_g514,
-</span><span id="__span-0-27"><a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>r941_e81_sup_g514,<span class="w"> </span>r941_e81_sup_variant_g514,<span class="w"> </span>r941_min_fast_g303,<span class="w"> </span>r941_min_fast_g507,
-</span><span id="__span-0-28"><a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>r941_min_fast_snp_g507,<span class="w"> </span>r941_min_fast_variant_g507,<span class="w"> </span>r941_min_hac_g507,
-</span><span id="__span-0-29"><a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a>r941_min_hac_snp_g507,<span class="w"> </span>r941_min_hac_variant_g507,<span class="w"> </span>r941_min_high_g303,<span class="w"> </span>r941_min_high_g330,
-</span><span id="__span-0-30"><a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a>r941_min_high_g340_rle,<span class="w"> </span>r941_min_high_g344,<span class="w"> </span>r941_min_high_g351,<span class="w"> </span>r941_min_high_g360,
-</span><span id="__span-0-31"><a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a>r941_min_sup_g507,<span class="w"> </span>r941_min_sup_snp_g507,<span class="w"> </span>r941_min_sup_variant_g507,<span class="w"> </span>r941_prom_fast_g303,
-</span><span id="__span-0-32"><a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a>r941_prom_fast_g507,<span class="w"> </span>r941_prom_fast_snp_g507,<span class="w"> </span>r941_prom_fast_variant_g507,
-</span><span id="__span-0-33"><a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a>r941_prom_hac_g507,<span class="w"> </span>r941_prom_hac_snp_g507,<span class="w"> </span>r941_prom_hac_variant_g507,
-</span><span id="__span-0-34"><a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a>r941_prom_high_g303,<span class="w"> </span>r941_prom_high_g330,<span class="w"> </span>r941_prom_high_g344,<span class="w"> </span>r941_prom_high_g360,
-</span><span id="__span-0-35"><a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a>r941_prom_high_g4011,<span class="w"> </span>r941_prom_snp_g303,<span class="w"> </span>r941_prom_snp_g322,<span class="w"> </span>r941_prom_snp_g360,
-</span><span id="__span-0-36"><a id="__codelineno-0-36" name="__codelineno-0-36" href="#__codelineno-0-36"></a>r941_prom_sup_g507,<span class="w"> </span>r941_prom_sup_snp_g507,<span class="w"> </span>r941_prom_sup_variant_g507,
-</span><span id="__span-0-37"><a id="__codelineno-0-37" name="__codelineno-0-37" href="#__codelineno-0-37"></a>r941_prom_variant_g303,<span class="w"> </span>r941_prom_variant_g322,<span class="w"> </span>r941_prom_variant_g360,
-</span><span id="__span-0-38"><a id="__codelineno-0-38" name="__codelineno-0-38" href="#__codelineno-0-38"></a>r941_sup_plant_g610,<span class="w"> </span>r941_sup_plant_variant_g610
-</span></code></pre></div>
-</details>
 <p>General statistics about the assembly are generated with the <code>consensus_qc</code> task (<a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_assembly_metrics.wdl">task_assembly_metrics.wdl</a>).</p>
 <div class="admonition techdetails">
 <p class="admonition-title">Artic Consensus Technical Details</p>
@@ -11298,7 +11255,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2024-12-13</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2024-12-19</span>
   </span>
 
     
