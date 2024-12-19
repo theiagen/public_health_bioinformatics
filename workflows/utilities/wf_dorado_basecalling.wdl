@@ -6,7 +6,7 @@ import "../../tasks/basecalling/task_dorado_demux.wdl" as dorado_demux_task
 import "../../tasks/utilities/file_handling/task_transfer_files.wdl" as transfer_fastq_files
 import "../../tasks/utilities/data_import/task_create_terra_table.wdl" as terra_fastq_table
 import "../../tasks/task_versioning.wdl" as versioning_task
-import "../../tasks/utilities/file_handling/task_transfer_pod5_files.wdl" as transfer_pod5_files_task         
+import "../../tasks/utilities/file_handling/task_list_pod5_files.wdl" as list_pod5_files_task         
 
 workflow dorado_basecalling_workflow {
   meta {
@@ -28,11 +28,11 @@ workflow dorado_basecalling_workflow {
   call versioning_task.version_capture {
     input:
   }
-  call transfer_pod5_files_task.transfer_pod5_files as transfer_pod5 {
+  call list_pod5_files_task.list_pod5_files as list_pod5 {
     input:
       pod5_bucket_path = pod5_bucket_path
   }
-  scatter (pod5_path in transfer_pod5.pod5_file_paths) {
+  scatter (pod5_path in list_pod5.pod5_file_paths) {
     call basecall_task.basecall as dorado_basecall {
       input:
         input_file = pod5_path,

@@ -1,11 +1,11 @@
 version 1.0
 
-task transfer_pod5_files {
+task list_pod5_files {
   input {
     String pod5_bucket_path             # GCS bucket path containing `.pod5` files (e.g., "gs://your-terra-bucket/pod5_uploads/")
     Int disk_size = 100
-    Int memory = 32
-    Int cpu = 8
+    Int memory = 4
+    Int cpu = 1
     String docker =  "us-docker.pkg.dev/general-theiagen/cloudsdktool/google-cloud-cli:427.0.0-alpine"
   }
   command <<<
@@ -28,7 +28,7 @@ task transfer_pod5_files {
     cpu: cpu
     memory: "~{memory} GB"
     disks: "local-disk ~{disk_size} SSD"
-    preemptible: 0
+    preemptible: 1
     maxRetries: 1
   }
 }
