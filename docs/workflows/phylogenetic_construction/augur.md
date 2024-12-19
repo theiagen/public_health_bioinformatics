@@ -4,7 +4,7 @@
 
 | **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
 |---|---|---|---|---|
-| [Phylogenetic Construction](../../workflows_overview/workflows_type.md/#phylogenetic-construction) | [Viral](../../workflows_overview/workflows_kingdom.md/#viral) | PHB v2.1.0 | Yes | Sample-level, Set-level |
+| [Phylogenetic Construction](../../workflows_overview/workflows_type.md/#phylogenetic-construction) | [Viral](../../workflows_overview/workflows_kingdom.md/#viral) | PHB v2.3.0 | Yes | Sample-level, Set-level |
 
 ## Augur Workflows
 
@@ -14,10 +14,10 @@ Two workflows are offered: **Augur_Prep_PHB** and **Augur_PHB**. These must be r
 
 !!! dna "**Helpful resources for epidemiological interpretation**"
 
-    - [introduction to Nextstrain](https://www.cdc.gov/amd/training/covid-toolkit/module3-1.html) (which includes Auspice)
-    - guide to Nextstrain [interactive trees](https://www.cdc.gov/amd/training/covid-toolkit/module3-4.html)
-    - an [introduction to UShER](https://www.cdc.gov/amd/training/covid-toolkit/module3-3.html)
-    - a video about [how to read trees](https://www.cdc.gov/amd/training/covid-toolkit/module1-3.html) if this is new to you
+    - [introduction to Nextstrain](https://www.cdc.gov/advanced-molecular-detection/php/training/module-3-1.html) (which includes Auspice)
+    - guide to Nextstrain [interactive trees](https://www.cdc.gov/advanced-molecular-detection/php/training/module-3-4.html)
+    - an [introduction to UShER](https://www.cdc.gov/advanced-molecular-detection/php/training/module-3-3.html)
+    - a video about [how to read trees](https://www.cdc.gov/advanced-molecular-detection/php/training/module-1-3.html) if this is new to you
     - documentation on [how to identify SARS-CoV-2 recombinants](https://github.com/pha4ge/pipeline-resources/blob/main/docs/sc2-recombinants.md)
 
 ### Augur_Prep_PHB
@@ -174,7 +174,7 @@ The Augur_PHB workflow takes in a ***set*** of SARS-CoV-2 (or any other viral 
 
 This workflow runs on the set level. Please note that for every task, runtime parameters are modifiable (cpu, disk_size, docker, and memory); most of these values have been excluded from the table below for convenience.
 
-<div class="searchable-table" markdown="1">
+<div class="searchable-table" markdown="1" width=100vw>
 
 | **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
 |---|---|---|---|---|---|
@@ -198,7 +198,7 @@ This workflow runs on the set level. Please note that for every task, runtime pa
 | augur_ancestral | **inference** | String | Calculate joint or marginal maximum likelihood ancestral sequence states; options: "joint", "marginal" | joint | Optional |
 | augur_ancestral | **keep_ambiguous** | Boolean | If true, do not infer nucleotides at ambiguous (N) sides | FALSE | Optional |
 | augur_ancestral | **keep_overhangs** | Boolean | If true, do not infer nucleotides for gaps on either side of the alignment | FALSE | Optional |
-| augur_export | **colors_tsv** | File | Custom color definitions, one per line in the format TRAIT_TYPE \| TRAIT_VALUE\tHEX_CODE |  | Optional |
+| augur_export | **colors_tsv** | File | Custom color definitions, one per line in TSV format with the following fields: TRAIT_TYPE TRAIT_VALUE HEX_CODE |  | Optional |
 | augur_export | **description_md** | File | Markdown file with description of build and/or acknowledgements |  | Optional |
 | augur_export | **include_root_sequence** | Boolean | Export an additional JSON containing the root sequence used to identify mutations | FALSE | Optional |
 | augur_export | **title** | String | Title to be displayed by Auspice |  | Optional |
@@ -284,9 +284,13 @@ The Nextstrain team hosts documentation surrounding the Augur workflow → Auspi
 | **Variable** | **Type** | **Description** |
 | --- | --- | --- |
 | aligned_fastas | File | A FASTA file of the aligned genomes |
-| augur_iqtree_model_used | String | The iqtree model used during augur tree |
+| augur_fasttree_version | String | The fasttree version used, blank if other tree method used |
+| augur_iqtree_model_used | String | The iqtree model used during augur tree, blank if iqtree not used |
+| augur_iqtree_version | String | The iqtree version used during augur tree (defualt), blank if other tree method used |
+| augur_mafft_version | String | The mafft version used in augur align |
 | augur_phb_analysis_date | String | The date the analysis was run |
 | augur_phb_version | String | The version of the Public Health Bioinformatics (PHB) repository used |
+| augur_raxml_version | String | The version of raxml used during augur tree, blank if other tree method used |
 | augur_version | String | Version of Augur used |
 | auspice_input_json | File | JSON file used as input to Auspice |
 | combined_assemblies | File | Concatenated FASTA file containing all samples |

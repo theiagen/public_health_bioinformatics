@@ -12,8 +12,13 @@ task augur_align {
     String docker = "us-docker.pkg.dev/general-theiagen/biocontainers/augur:22.0.2--pyhdfd78af_0"
   }
   command <<<
+    set -euo pipefail
+    
     # capture version information
     augur version > VERSION
+    echo
+    echo "mafft version:"
+    mafft --version 2>&1 | tee MAFFT_VERSION
 
     # run augur align
     augur align \
@@ -26,6 +31,7 @@ task augur_align {
   output {
     File aligned_fasta = "alignment.fasta"
     String augur_version = read_string("VERSION")
+    String mafft_version = read_string("MAFFT_VERSION")
   }
   runtime {
     docker: docker

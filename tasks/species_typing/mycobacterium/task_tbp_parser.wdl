@@ -9,17 +9,18 @@ task tbp_parser {
 
     String? sequencing_method
     String? operator
+
     Int? min_depth # default 10
-    Int? coverage_threshold # default 100 (--min_percent_coverage)
-    File? coverage_regions_bed
     Float? min_frequency # default 0.1
     Int? min_read_support # default 10
-  
-    Boolean tbp_parser_debug = false
-
-    Boolean add_cycloserine_lims = false
     
+    Int? coverage_threshold # default 100 (--min_percent_coverage)
+    File? coverage_regions_bed
+  
+    Boolean add_cycloserine_lims = false
+    Boolean tbp_parser_debug = true
     Boolean tngs_data = false    
+
     Float? rrs_frequency # default 0.1
     Int? rrs_read_support # default 10
     Float? rrl_frequency # default 0.1
@@ -27,11 +28,11 @@ task tbp_parser {
     Float? rpob449_frequency # default 0.1
     Float? etha237_frequency # default 0.1
     File? expert_rule_regions_bed
-
-    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:1.6.0"
-    Int disk_size = 100
-    Int memory = 4
+    
     Int cpu = 1
+    Int disk_size = 100   
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:2.2.2"
+    Int memory = 4
   }
   command <<<
     # get version
@@ -42,10 +43,10 @@ task tbp_parser {
       ~{"--sequencing_method " + sequencing_method} \
       ~{"--operator " + operator} \
       ~{"--min_depth " + min_depth} \
-      ~{"--min_percent_coverage " + coverage_threshold} \
-      ~{"--coverage_regions " + coverage_regions_bed} \
       ~{"--min_frequency " + min_frequency} \
       ~{"--min_read_support " + min_read_support} \
+      ~{"--min_percent_coverage " + coverage_threshold} \
+      ~{"--coverage_regions " + coverage_regions_bed} \
       ~{"--tngs_expert_regions " + expert_rule_regions_bed} \
       ~{"--rrs_frequency " + rrs_frequency} \
       ~{"--rrs_read_support " + rrs_read_support} \
@@ -63,7 +64,7 @@ task tbp_parser {
     echo 0.0 > AVG_DEPTH
 
     # get genome percent coverage for the entire reference genome length over min_depth
-    genome=$(samtools depth -J ~{tbprofiler_bam} | awk -F "\t" '{if ($3 >= ~{min_depth}) print;}' | wc -l )
+    genome=$(samtools depth -J ~{tbprofiler_bam} | awk -F "\t" -v min_depth=~{min_depth} '{if ($3 >= min_depth) print;}' | wc -l )
     python3 -c "print ( ($genome / 4411532 ) * 100 )" | tee GENOME_PC
 
     # get genome average depth

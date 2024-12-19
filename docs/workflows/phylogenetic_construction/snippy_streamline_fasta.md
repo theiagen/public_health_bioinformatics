@@ -4,7 +4,7 @@
 
 | **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
 |---|---|---|---|---|
-| [Phylogenetic Construction](../../workflows_overview/workflows_type.md/#phylogenetic-construction) | [Bacteria](../../workflows_overview/workflows_kingdom.md/#bacteria) | PHB v2.2.0 | Yes; some optional features incompatible | Set-level |
+| [Phylogenetic Construction](../../workflows_overview/workflows_type.md/#phylogenetic-construction) | [Bacteria](../../workflows_overview/workflows_kingdom.md/#bacteria) | PHB v2.3.0 | Yes; some optional features incompatible | Set-level |
 
 ## Snippy_Streamline_FASTA_PHB
 
@@ -39,11 +39,11 @@ The `Snippy_Streamline_FASTA` workflow is an all-in-one approach to generating a
 
 ### Workflow Tasks
 
-??? task "snippy_variants (qc_metrics output)"
+??? task "Snippy_Variants QC Metrics Concatenation (optional)"
 
-    ##### snippy_variants {#snippy_variants}
+    ##### Snippy_Variants QC Metric Concatenation (optional) {#snippy_variants}
 
-    This task runs Snippy to perform SNP analysis on individual samples. It extracts QC metrics from the Snippy output for each sample and saves them in per-sample TSV files (`snippy_variants_qc_metrics`). These per-sample QC metrics include the following columns:
+    Optionally, the user can provide the `snippy_variants_qc_metrics` file produced by the Snippy_Variants workflow as input to the workflow to concatenate the reports for each sample in the tree. These per-sample QC metrics include the following columns:
 
     - **samplename**: The name of the sample.
     - **reads_aligned_to_reference**: The number of reads that aligned to the reference genome.
@@ -61,9 +61,17 @@ The `Snippy_Streamline_FASTA` workflow is an all-in-one approach to generating a
     - **meanbaseq**: Mean base quality over the reference sequence.
     - **meanmapq**: Mean mapping quality over the reference sequence.
 
-    These per-sample QC metrics are then combined into a single file (`snippy_combined_qc_metrics`) in the downstream `snippy_tree_wf` workflow. The combined QC metrics file includes the same columns as above for all samples. Note that the last set of columns (`#rname` to `meanmapq`) may repeat for each chromosome or contig in the reference genome.
+    The combined QC metrics file includes the same columns as above for all samples. Note that the last set of columns (`#rname` to `meanmapq`) may repeat for each chromosome or contig in the reference genome.
 
-    **Note:** The per-sample QC metrics provide valuable insights into the quality and coverage of your sequencing data relative to the reference genome. Monitoring these metrics can help identify samples with low coverage, poor alignment, or potential issues that may affect downstream analyses.
+    !!! tip "QC Metrics for Phylogenetic Analysis"
+        These QC metrics provide valuable insights into the quality and coverage of your sequencing data relative to the reference genome. Monitoring these metrics can help identify samples with low coverage, poor alignment, or potential issues that may affect downstream analyses, and we recommend examining them before proceeding with phylogenetic analysis if performing Snippy_Variants and Snippy_Tree separately.
+
+    !!! techdetails "Snippy Variants Technical Details"
+        |  | Links |
+        | --- | --- |
+        | Task | [task_snippy_variants.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/variant_detection/task_snippy_variants.wdl) |
+        | Software Source Code | [Snippy on GitHub](https://github.com/tseemann/snippy) |
+        | Software Documentation | [Snippy on GitHub](https://github.com/tseemann/snippy) |
 
 ### Inputs
 

@@ -176,12 +176,12 @@ workflow theiacov_clearlabs {
     # Read QC - kraken outputs
     String kraken_version = kraken2_raw.version
     Float kraken_human = kraken2_raw.percent_human
-    Float kraken_sc2 = kraken2_raw.percent_sc2
+    String kraken_sc2 = kraken2_raw.percent_sc2
     String kraken_target_organism = kraken2_raw.percent_target_organism
     String kraken_target_organism_name = organism_parameters.kraken_target_organism
     File kraken_report = kraken2_raw.kraken_report
     Float kraken_human_dehosted = kraken2_dehosted.percent_human
-    Float kraken_sc2_dehosted = kraken2_dehosted.percent_sc2
+    String kraken_sc2_dehosted = kraken2_dehosted.percent_sc2
     String kraken_target_organism_dehosted = kraken2_dehosted.percent_target_organism
     File kraken_report_dehosted = kraken2_dehosted.kraken_report
     # Read Alignment - Artic consensus outputs

@@ -5,7 +5,8 @@ task freyja_one_sample {
     File primer_trimmed_bam
     String samplename
     File reference_genome
-    File? freyja_usher_barcodes
+    String? freyja_pathogen
+    File? freyja_barcodes
     File? freyja_lineage_metadata
     Float? eps
     Float? adapt
@@ -16,7 +17,7 @@ task freyja_one_sample {
     Int? depth_cutoff
     Int memory = 8
     Int cpu = 2
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/freyja:1.5.1-07_02_2024-01-27-2024-07-22"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/freyja:1.5.2-11_30_2024-02-00-2024-12-02"
     Int disk_size = 100
   }
   command <<<
@@ -44,9 +45,9 @@ task freyja_one_sample {
       freyja_metadata_version="freyja update: $(date +"%Y-%m-%d")"
   else
     # configure barcode    
-    if [[ ! -z "~{freyja_usher_barcodes}" ]]; then
-      echo "User freyja usher barcodes identified; ~{freyja_usher_barcodes} will be utilized for freyja demixing"
-      freyja_usher_barcode_version=$(basename -- "~{freyja_usher_barcodes}")
+    if [[ ! -z "~{freyja_barcodes}" ]]; then
+      echo "User freyja usher barcodes identified; ~{freyja_barcodes} will be utilized for freyja demixing"
+      freyja_usher_barcode_version=$(basename -- "~{freyja_barcodes}")
     else
       freyja_usher_barcode_version="unmodified from freyja container: ~{docker}"  
     fi
@@ -74,9 +75,10 @@ task freyja_one_sample {
   # Calculate Boostraps, if specified
   if ~{bootstrap}; then
     freyja boot \
+    ~{"--pathogen" + freyja_pathogen} \
     ~{"--eps " + eps} \
     ~{"--meta " + freyja_lineage_metadata} \
-    ~{"--barcodes " + freyja_usher_barcodes} \
+    ~{"--barcodes " + freyja_barcodes} \
     ~{"--depthcutoff " + depth_cutoff} \
     ~{"--nb " + number_bootstraps } \
     ~{true='--confirmedonly' false='' confirmed_only} \
@@ -91,7 +93,7 @@ task freyja_one_sample {
   freyja demix \
     ~{'--eps ' + eps} \
     ~{'--meta ' + freyja_lineage_metadata} \
-    ~{'--barcodes ' + freyja_usher_barcodes} \
+    ~{'--barcodes ' + freyja_barcodes} \
     ~{'--depthcutoff ' + depth_cutoff} \
     ~{true='--confirmedonly' false='' confirmed_only} \
     ~{'--adapt ' + adapt} \
@@ -144,7 +146,7 @@ task freyja_one_sample {
     File? freyja_bootstrap_summary = "~{samplename}_summarized.csv"
     File? freyja_bootstrap_summary_pdf = "~{samplename}_summarized.pdf"
     # capture barcode file - first is user supplied, second appears if the user did not supply a barcode file
-    File freyja_usher_barcode_file = select_first([freyja_usher_barcodes, "usher_barcodes.feather"])
+    File freyja_barcode_file = select_first([freyja_barcodes, "usher_barcodes.feather"])
     File freyja_lineage_metadata_file = select_first([freyja_lineage_metadata, "curated_lineages.json"])
     String freyja_barcode_version = read_string("FREYJA_BARCODES")
     String freyja_metadata_version = read_string("FREYJA_METADATA")

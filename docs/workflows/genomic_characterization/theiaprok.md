@@ -4,7 +4,7 @@
 
 | **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
 |---|---|---|---|---|
-| [Genomic Characterization](../../workflows_overview/workflows_type.md/#genomic-characterization) | [Bacteria](../../workflows_overview/workflows_kingdom.md/#bacteria) | PHB v2.2.0 | Yes, some optional features incompatible | Sample-level |
+| [Genomic Characterization](../../workflows_overview/workflows_type.md/#genomic-characterization) | [Bacteria](../../workflows_overview/workflows_kingdom.md/#bacteria) | PHB v2.3.0 | Yes, some optional features incompatible | Sample-level |
 
 ## TheiaProk Workflows
 
@@ -78,6 +78,12 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 | *workflow name | **originating_lab** | String | Will be used in the "originating_lab" column in any taxon-specific tables created in the Export Taxon Tables task |  | Optional | FASTA, ONT, PE, SE |
 | *workflow name | **perform_characterization** | Boolean | Set to "false" if you want to only generate an assembly and relevant QC metrics and skip all characterization tasks | TRUE | Optional | FASTA, ONT, PE, SE |
 | *workflow name | **qc_check_table** | File | TSV value with taxons for rows and QC values for columns; internal cells represent user-determined QC thresholds; if provided, turns on the QC Check task.<br>Click on the variable name for an example QC Check table |  | Optional | FASTA, ONT, PE, SE |
+| *workflow name | **read1_lane2** | File | If provided, the Concatenate_Illumina_Lanes subworkflow will concatenate all files from the same lane before doing any subsequent analysis |  | Optional | PE, SE |
+| *workflow name | **read1_lane3** | File | If provided, the Concatenate_Illumina_Lanes subworkflow will concatenate all files from the same lane before doing any subsequent analysis |  | Optional | PE, SE |
+| *workflow name | **read1_lane4** | File | If provided, the Concatenate_Illumina_Lanes subworkflow will concatenate all files from the same lane before doing any subsequent analysis |  | Optional | PE, SE |
+| *workflow name | **read2_lane2** | File | If provided, the Concatenate_Illumina_Lanes subworkflow will concatenate all files from the same lane before doing any subsequent analysis |  | Optional | PE, SE |
+| *workflow name | **read2_lane3** | File | If provided, the Concatenate_Illumina_Lanes subworkflow will concatenate all files from the same lane before doing any subsequent analysis |  | Optional | PE, SE |
+| *workflow name | **read2_lane4** | File | If provided, the Concatenate_Illumina_Lanes subworkflow will concatenate all files from the same lane before doing any subsequent analysis |  | Optional | PE, SE | 
 | *workflow name | **run_id** | String | Will be used in the "run_id" column in any taxon-specific tables created in the Export Taxon Tables task |  | Optional | FASTA, ONT, PE, SE |
 | *workflow name | **seq_method** | String | Will be used in the "seq_id" column in any taxon-specific tables created in the Export Taxon Tables task |  | Optional | FASTA, ONT, PE, SE |
 | *workflow name | **skip_mash** | Boolean | If true, skips estimation of genome size and coverage in read screening steps. As a result, providing true also prevents screening using these parameters. | TRUE | Optional | ONT, SE |
@@ -301,6 +307,7 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 | merlin_magic | **call_poppunk** | Boolean | If "true", runs PopPUNK for GPSC cluster designation for S. pneumoniae | TRUE | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **call_shigeifinder_reads_input** | Boolean | If set to "true", the ShigEiFinder task will run again but using read files as input instead of the assembly file. Input is shown but not used for TheiaProk_FASTA. | FALSE | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **call_stxtyper** | Boolean | If set to "true", the StxTyper task will run on all samples regardless of the `gambit_predicted_taxon` output. Useful if you suspect a non-E.coli or non-Shigella sample contains stx genes. | FALSE | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **call_tbp_parser** | Boolean | If set to "true", activates the tbp_parser module and results in more outputs, including tbp_parser_looker_report_csv, tbp_parser_laboratorian_report_csv,  tbp_parser_lims_report_csv, tbp_parser_coverage_report, and tbp_parser_genome_percent_coverage | FALSE | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **cauris_cladetyper_docker_image** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **cladetyper_kmer_size** | Int | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **cladetyper_ref_clade1** | File | *Provide an empty file if running TheiaProk on the command-line |  | Do not modify, Optional | FASTA, ONT, PE, SE |
@@ -407,27 +414,33 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 | merlin_magic | **stxtyper_enable_debug** | Boolean | When enabled, additional messages are printed and files in `$TMPDIR` are not removed after running | FALSE | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **stxtyper_memory** | Int | Amount of memory (in GB) to allocate to the task | 4 | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **staphopia_sccmec_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/biocontainers/staphopia-sccmec:1.0.0--hdfd78af_0 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **tbp_parser_add_cs_lims** | Boolean | Set to true add cycloserine results to the LIMS report | FALSE | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **tbp_parser_coverage_regions_bed** | File | A bed file that lists the regions to be considered for QC |  | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **tbp_parser_coverage_threshold** | Int | The minimum coverage for a region to pass QC in tbp_parser | 100 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **tbp_parser_debug** | Boolean | Activate the debug mode on tbp_parser; increases logging outputs | FALSE | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **tbp_parser_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:1.6.0 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **tbp_parser_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:1.4.0 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **tbp_parser_debug** | Boolean | Activate the debug mode on tbp_parser; increases logging outputs | TRUE | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **tbp_parser_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:2.2.2 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **tbp_parser_etha237_frequency** | Float | Minimum frequency for a mutation in ethA at protein position 237 to pass QC in tbp-parser | 0.1 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **tbp_parser_expert_rule_regions_bed** | File | A file that contains the regions where R mutations and expert rules are applied |  | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **tbp_parser_min_depth** | Int | Minimum depth for a variant to pass QC in tbp_parser | 10 | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **tbp_parser_min_frequency** | Int | The minimum frequency for a mutation to pass QC | 0.1 | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **tbp_parser_min_read_support** | Int | The minimum read support for a mutation to pass QC | 10 | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **tbp_parser_operator** | String | Fills the "operator" field in the tbp_parser output files | Operator not provided | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **tbp_parser_output_seq_method_type** | String | Fills out the "seq_method" field in the tbp_parser output files | Sequencing method not provided | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **tbprofiler_additional_outputs** | Boolean | If set to "true", activates the tbp_parser module and results in more outputs, including tbp_parser_looker_report_csv, tbp_parser_laboratorian_report_csv,  tbp_parser_lims_report_csv, tbp_parser_coverage_report, and tbp_parser_genome_percent_coverage | FALSE | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **tbprofiler_cov_frac_threshold** | Int | A cutoff used to calculate the fraction of the region covered by ≤ this value | 1 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **tbp_parser_rpob449_frequency** | Float | Minimum frequency for a mutation at protein position 449 to pass QC in tbp-parser | 0.1 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **tbp_parser_rrl_frequency** | Float | Minimum frequency for a mutation in rrl to pass QC in tbp-parser | 0.1 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **tbp_parser_rrl_read_support** | Int | Minimum read support for a mutation in rrl to pass QC in tbp-parser | 10 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **tbp_parser_rrs_frequency** | Float | Minimum frequency for a mutation in rrs to pass QC in tbp-parser | 0.1 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **tbp_parser_rrs_read_support** | Int | Minimum read support for a mutation in rrs to pass QC in tbp-parser | 10 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **tbp_parser_tngs_data** | Boolean | Set to true to enable tNGS-specific parameters and runs in tbp-parser | FALSE | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **tbprofiler_custom_db** | File | TBProfiler uses by default the TBDB database; if you have a custom database you wish to use, you must provide a custom database in this field and set tbprofiler_run_custom_db to true |  | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **tbprofiler_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/tbprofiler:4.4.2 | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **tbprofiler_mapper** | String | The mapping tool used in TBProfiler to align the reads to the reference genome; see TBProfiler’s original documentation for available options. | bwa | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **tbprofiler_min_af** | Float | The minimum allele frequency to call a variant | 0.1 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **tbprofiler_min_af_pred** | Float | The minimum allele frequency to use a variant for resistance prediction | 0.1 | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **tbprofiler_min_depth** | Int | The minimum depth for a variant to be called. | 10 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **tbprofiler_run_cdph_db** | Boolean | TBProfiler uses by default the TBDB database; set this value to "true" to use the WHO v2 database with customizations for CDPH | FALSE | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **tbprofiler_run_custom_db** | Boolean | TBProfiler uses by default the TBDB database; if you have a custom database you wish to use, you must set this value to true and provide a custom database in the tbprofiler_custom_db field | FALSE | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **tbprofiler_variant_caller** | String | Select a different variant caller for TBProfiler to use by writing it in this block; see TBProfiler’s original documentation for available options. | freebayes | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **tbprofiler_variant_calling_params** | String | Enter additional variant calling parameters in this free text input to customize how the variant caller works in TBProfiler | None | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **tbprofiler_variant_caller** | String | Select a different variant caller for TBProfiler to use by writing it in this block; see TBProfiler’s original documentation for available options. | GATK | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **tbprofiler_variant_calling_params** | String | Enter additional variant calling parameters in this free text input to customize how the variant caller works in TBProfiler | | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **theiaeuk** | Boolean | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **virulencefinder_coverage_threshold** | Float | The threshold for minimum coverage |  | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **virulencefinder_database** | String | The specific database to use | virulence_ecoli | Optional | FASTA, ONT, PE, SE |
@@ -594,6 +607,17 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
         | --- | --- |
         | Task | [task_versioning.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/task_versioning.wdl) |
 
+??? task "`concatenate_illumina_lanes`: Concatenate Multi-Lane Illumina FASTQs ==_for Illumina only_=="
+
+    The `concatenate_illumina_lanes` task concatenates Illumina FASTQ files from multiple lanes into a single file. This task only runs if the `read1_lane2` input file has been provided. All read1 lanes are concatenated together and are used in subsequent tasks, as are the read2 lanes. These concatenated files are also provided as output.
+
+    !!! techdetails "Concatenate Illumina Lanes Technical Details"
+        The `concatenate_illumina_lanes` task is run before any downstream steps take place.
+        
+        |  | Links |
+        | --- | --- |
+        | Task | [wf_concatenate_illumina_lanes.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/file_handling/wf_concatenate_illumina_lanes.wdl)
+
 ??? task "`screen`: Total Raw Read Quantification and Genome Size Estimation"
 
     The [`screen`](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/comparisons/task_screen.wdl) task ensures the quantity of sequence data is sufficient to undertake genomic analysis. It uses [`fastq-scan`](https://github.com/rpetit3/fastq-scan) and bash commands for quantification of reads and base pairs, and [mash](https://mash.readthedocs.io/en/latest/index.html) sketching to estimate the genome size and its coverage. At each step, the results are assessed relative to pass/fail criteria and thresholds that may be defined by optional user inputs. Samples that do not meet these criteria will not be processed further by the workflow:
@@ -722,7 +746,7 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
                 
         |  | Links |
         | --- | --- |
-        | Sub-workflow | [wf_read_QC_trim.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_read_QC_trim.wdl) |
+        | Sub-workflow | [wf_read_QC_trim_pe.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_read_QC_trim_pe.wdl)<br>[wf_read_QC_trim_se.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_read_QC_trim_se.wdl) |
         | Tasks | [task_fastp.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_fastp.wdl)<br>[task_trimmomatic.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_trimmomatic.wdl)<br>[task_bbduk.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_bbduk.wdl)<br>[task_fastq_scan.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_fastq_scan.wdl)<br>[task_midas.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/contamination/task_midas.wdl)<br>[task_kraken2.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/contamination/task_kraken2.wdl)|
         | Software Source Code | [fastp](https://github.com/OpenGene/fastp); [Trimmomatic](https://github.com/usadellab/Trimmomatic); [fastq-scan](https://github.com/rpetit3/fastq-scan); [MIDAS](https://github.com/snayfach/MIDAS); [Kraken2](https://github.com/DerrickWood/kraken2)|
         | Software Documentation | [fastp](https://github.com/OpenGene/fastp); [Trimmomatic](http://www.usadellab.org/cms/?page=trimmomatic); [BBDuk](https://jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/bbduk-guide/); [fastq-scan](https://github.com/rpetit3/fastq-scan); [MIDAS](https://github.com/snayfach/MIDAS); [Kraken2](https://github.com/DerrickWood/kraken2/wiki) |
@@ -737,7 +761,7 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
         
         |  | Links |
         | --- | --- |
-        | Task | [task_cg_pipeline.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/task_cg_pipeline.wdl) |
+        | Task | [task_cg_pipeline.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_cg_pipeline.wdl) |
         | Software Source Code | [CG-Pipeline on GitHub](https://github.com/lskatz/CG-Pipeline/) |
         | Software Documentation | [CG-Pipeline on GitHub](https://github.com/lskatz/CG-Pipeline/) |
         | Original Publication(s) | [A computational genomics pipeline for prokaryotic sequencing projects](https://academic.oup.com/bioinformatics/article/26/15/1819/188418) |
@@ -746,7 +770,7 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 
     De Novo assembly will be undertaken only for samples that have sufficient read quantity and quality, as determined by the `screen` task assessment of clean reads. 
 
-    In TheiaEuk, assembly is performed using the [Shovill](https://github.com/tseemann/shovill) pipeline. This undertakes the assembly with one of four assemblers ([SKESA](https://github.com/ncbi/SKESA) (default), [SPAdes](https://github.com/ablab/spades), [Velvet](https://github.com/dzerbino/velvet/), [Megahit](https://github.com/voutcn/megahit)), but also performs [a number of pre- and post-processing steps](https://github.com/tseemann/shovill#main-steps) to improve the resulting genome assembly. Shovill uses an estimated genome size (see [here](https://github.com/tseemann/shovill#--gsize)). If this is not provided by the user as an optional input, Shovill will estimate the genome size using [mash](https://mash.readthedocs.io/en/latest/index.html). Adaptor trimming can be undertaken with Shovill by setting the `trim` option to "true", but this is set to "false" by default as [alternative adapter trimming](https://www.notion.so/TheiaProk-Workflow-Series-89b9c08406094ec78d08a578fe861626?pvs=21) is undertaken in the TheiaEuk workflow.
+    In TheiaProk, assembly is performed using the [Shovill](https://github.com/tseemann/shovill) pipeline. This undertakes the assembly with one of four assemblers ([SKESA](https://github.com/ncbi/SKESA) (default), [SPAdes](https://github.com/ablab/spades), [Velvet](https://github.com/dzerbino/velvet/), [Megahit](https://github.com/voutcn/megahit)), but also performs [a number of pre- and post-processing steps](https://github.com/tseemann/shovill#main-steps) to improve the resulting genome assembly. Shovill uses an estimated genome size (see [here](https://github.com/tseemann/shovill#--gsize)). If this is not provided by the user as an optional input, Shovill will estimate the genome size using [mash](https://mash.readthedocs.io/en/latest/index.html). Adaptor trimming can be undertaken with Shovill by setting the `trim` option to "true", but this is set to "false" by default as [alternative adapter trimming](https://www.notion.so/TheiaProk-Workflow-Series-89b9c08406094ec78d08a578fe861626?pvs=21) is undertaken in the TheiaEuk workflow.
 
     ??? toggle "What is _de novo_  assembly?"
         _De novo_  assembly is the process or product of attempting to reconstruct a genome from scratch (without prior knowledge of the genome) using sequence reads. Assembly of fungal genomes from short-reads will produce multiple contigs per chromosome rather than a single contiguous sequence for each chromosome.
@@ -754,8 +778,9 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
     !!! techdetails "Shovill Technical Details"
         |  | Links |
         | --- | --- |
-        | TheiaProk WDL Task | [task_shovill.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_shovill.wdl#L3) |
-        | Software code repository and documentation | [Shovill on GitHub](https://github.com/tseemann/shovill) |
+        | TheiaEuk WDL Task | [task_shovill.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_shovill.wdl#L3) |
+        | Software Source Code | [Shovill on GitHub](https://github.com/tseemann/shovill) |
+        | Software Documentation | [Shovill on GitHub](https://github.com/tseemann/shovill) |
 
 #### ONT Data Core Tasks
 
@@ -765,7 +790,7 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 
     **Estimated genome length**:
 
-    By default, an estimated genome length is set to 5 Mb, which is around 0.7 Mb higher than the average bacterial genome length, according to the information collated [here](https://github.com/CDCgov/phoenix/blob/717d19c19338373fc0f89eba30757fe5cfb3e18a/assets/databases/NCBI_Assembly_stats_20240124.txt). This estimate can be overwritten by the user, and is used by `RASUSA` and `dragonflye`.
+    By default, an estimated genome length is set to 5 Mb, which is around 0.7 Mb higher than the average bacterial genome length, according to the information collated [here](https://github.com/CDCgov/phoenix/blob/717d19c19338373fc0f89eba30757fe5cfb3e18a/assets/databases/NCBI_Assembly_stats_20240124.txt). This estimate can be overwritten by the user, and is used by `Rasusa` and `dragonflye`.
 
     **Plotting and quantifying long-read sequencing data:** `nanoplot`
 
@@ -784,7 +809,7 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
         | Workflow | **TheiaProk_ONT** |
         | --- | --- |
         | Sub-workflow | [wf_read_QC_trim_ont.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_read_QC_trim_ont.wdl) |
-        | Tasks | [task_nanoplot.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_nanoplot.wdl) [task_fastq_scan.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/b481ce48f3d527ab8f31e4ad8171769212cc091a/tasks/quality_control/basic_statistics/task_fastq_scan.wdl) [task_rasusa.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/task_rasusa.wdl) [task_nanoq.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_nanoq.wdl) [task_tiptoft.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/plasmid_detection/task_tiptoft.wdl) |
+        | Tasks | [task_nanoplot.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_nanoplot.wdl) [task_fastq_scan.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_fastq_scan.wdl) [task_rasusa.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/task_rasusa.wdl) [task_nanoq.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_nanoq.wdl) [task_tiptoft.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/plasmid_detection/task_tiptoft.wdl) |
         | Software Source Code | [fastq-scan](https://github.com/rpetit3/fastq-scan), [NanoPlot](https://github.com/wdecoster/NanoPlot), [RASUSA](https://github.com/mbhall88/rasusa), [tiptoft](https://github.com/andrewjpage/tiptoft), [nanoq](https://github.com/esteinig/nanoq) |
         | Original Publication(s) | [NanoPlot paper](https://academic.oup.com/bioinformatics/article/39/5/btad311/7160911)<br>[RASUSA paper](https://doi.org/10.21105/joss.03941)<br>[Nanoq Paper](https://doi.org/10.21105/joss.02991)<br>[Tiptoft paper](https://doi.org/10.21105/joss.01021) |
 
@@ -808,7 +833,7 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
         | --- | --- |
         | Task | [task_quast.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_quast.wdl) |
         | Software Source Code | [QUAST on GitHub](https://github.com/ablab/quast) |
-        | Software Documentation | <https://cab.spbu.ru/software/quast/> |
+        | Software Documentation | <https://quast.sourceforge.net/> |
         | Original Publication(s) | [QUAST: quality assessment tool for genome assemblies](https://academic.oup.com/bioinformatics/article/29/8/1072/228832) |
 
 ??? task "`BUSCO`: Assembly Quality Assessment"
@@ -892,7 +917,7 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 
 ??? task "`AMRFinderPlus`: AMR Genotyping (default)"
 
-    NCBI's [AMRFinderPlus](https://github.com/ncbi/amr/wiki) is the default antimicrobial resistance (AMR) detection tool used in TheiaProk. [ResFinder](https://www.notion.so/TheiaProk-Workflow-Series-68c34aca2a0240ef94fef0acd33651b9?pvs=21) may be used alternatively and if so, AMRFinderPlus is not run. 
+    NCBI's [AMRFinderPlus](https://github.com/ncbi/amr/wiki) is the default antimicrobial resistance (AMR) detection tool used in TheiaProk. ResFinder may be used alternatively and if so, AMRFinderPlus is not run. 
 
     AMRFinderPlus identifies acquired antimicrobial resistance (AMR) genes, virulence genes, and stress genes.  Such AMR genes confer resistance to antibiotics, metals, biocides, heat, or acid. For some taxa (see [here](https://github.com/ncbi/amr/wiki/Running-AMRFinderPlus#--organism-option)), AMRFinderPlus will provide taxa-specific results including filtering out genes that are almost ubiquitous in the taxa (intrinsic genes) and identifying resistance-associated point mutations.  In TheiaProk, the taxon used by AMRFinderPlus is specified based on the `gambit_predicted_taxon` or a user-provided `expected_taxon`.
 
@@ -1047,7 +1072,7 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
         
         |  | Links |
         | --- | --- |
-        | Task | [task_plasmidfinder.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/plasmid_typing/task_plasmidfinder.wdl) |
+        | Task | [task_plasmidfinder.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/plasmid_detection/task_plasmidfinder.wdl) |
         | Software Source Code | https://bitbucket.org/genomicepidemiology/plasmidfinder/src/master/ |
         | Software Documentation | https://bitbucket.org/genomicepidemiology/plasmidfinder/src/master/ |
         | Original Publication(s) | [In Silico Detection and Typing of Plasmids using PlasmidFinder and Plasmid Multilocus Sequence Typing](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4068535/) |
@@ -1076,7 +1101,7 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
         
         |  | Links |
         | --- | --- |
-        | Task | [task_qc_check.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/comparisons/task_qc_check.wdl) |
+        | Task | [task_qc_check_phb.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/comparistask_qc_check_phb.wdl.wdl) |
 
 ??? task "`Taxon Tables`: Copy outputs to new data tables based on taxonomic assignment (optional)"
 
@@ -1323,7 +1348,7 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
             
             |  | Links |
             | --- | --- |
-            | Task | [task_kleborate.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/haemophilus/task_kleborate.wdl) |
+            | Task | [task_kleborate.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/klebsiella/task_kleborate.wdl) |
             | Software Source Code | [kleborate on GitHub](https://github.com/katholt/Kleborate) |
             | Software Documentation | https://github.com/katholt/Kleborate/wiki |
             | Orginal publication | [A genomic surveillance framework and genotyping tool for Klebsiella pneumoniae and its related species complex](https://www.nature.com/articles/s41467-021-24448-3)<br>[Identification of Klebsiella capsule synthesis loci from whole genome data](https://www.microbiologyresearch.org/content/journal/mgen/10.1099/mgen.0.000102) |
@@ -1534,7 +1559,7 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
 
     ??? task "`PopPUNK`: Global Pneumococcal Sequence Cluster typing"
         
-        Global Pneumococcal Sequence Clusters (GPSC) define and name pneumococcal strains. GPSC designation is undertaken using the PopPUNK software and GPSC database as described in the file below, obtained from [here](https://www.pneumogen.net/gps/training_command_line.html).
+        Global Pneumococcal Sequence Clusters (GPSC) define and name pneumococcal strains. GPSC designation is undertaken using the PopPUNK software and GPSC database as described in the file below, obtained from [here](https://www.pneumogen.net/gps/#/training#command-line).
 
         :file: [GPSC_README_PopPUNK2.txt](../../assets/files/GPSC_README_PopPUNK2.txt)
         
@@ -1547,9 +1572,9 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
             |  | Links |
             | --- | --- |
             | Task | [task_poppunk_streppneumo.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/streptococcus/task_poppunk_streppneumo.wdl) |
-            | GPSC database | https://www.pneumogen.net/gps/training_command_line.html |
+            | GPSC database | <https://www.pneumogen.net/gps/#/training#command-line> |
             | Software Source Code | [PopPunk](https://github.com/bacpop/PopPUNK) |
-            | Software Documentation | https://poppunk.readthedocs.io/en/latest/ |
+            | Software Documentation | <https://poppunk.readthedocs.io/en/latest/> |
             | Original Publication(s) | [Fast and flexible bacterial genomic epidemiology with PopPUNK](https://genome.cshlp.org/content/29/2/304) |
         
     ??? task "`SeroBA`: Serotyping ==_for Illumina_PE only_=="
@@ -2021,7 +2046,7 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
 | tbp_parser_version | String | Optional output. The version of tbp-parser | ONT, PE |
 | tbprofiler_dr_type | String | Drug resistance type predicted by TB-Profiler (sensitive, Pre-MDR, MDR, Pre-XDR, XDR) | ONT, PE, SE |
 | tbprofiler_main_lineage | String | Lineage(s) predicted by TBProfiler | ONT, PE, SE |
-| tbprofiler_median_coverage | Int | The median coverage of the H37Rv TB reference genome | ONT, PE |
+| tbprofiler_median_depth | Int | The median depth of the H37Rv TB reference genome covered by the sample | ONT, PE |
 | tbprofiler_output_bai | File | Index BAM file generated by mapping sequencing reads to reference genome by TBProfiler | ONT, PE, SE |
 | tbprofiler_output_bam | File | BAM alignment file produced by TBProfiler | ONT, PE, SE |
 | tbprofiler_output_file | File | CSV report from TBProfiler | ONT, PE, SE |
