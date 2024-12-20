@@ -6,7 +6,6 @@ import "../../tasks/assembly/task_bandageplot.wdl" as task_bandage
 import "../../tasks/polishing/task_medaka.wdl" as task_medaka
 import "../../tasks/polishing/task_racon.wdl" as task_racon
 import "../../tasks/assembly/task_dnaapler.wdl" as task_dnaapler
-import "../../tasks/task_versioning.wdl" as versioning_task
 import "../../tasks/quality_control/read_filtering/task_filtercontigs.wdl" as task_filtercontigs
 import "../../tasks/alignment/task_bwa.wdl" as task_bwaall
 import "../../tasks/polishing/task_polypolish.wdl" as task_polypolish
