@@ -19,8 +19,9 @@ workflow cauris_cladetyper {
   output {
     String cauris_cladetyper_wf_version = version_capture.phb_version
     String cauris_cladetyper_wf_analysis_date = version_capture.date
-    String gambit_cladetyper_clade = gambit_cladetyper.gambit_cladetype
-    String gambit_cladetyper_annotated_reference = gambit_cladetyper.annotated_reference
-    String gambit_cladetyper_version = gambit_cladetyper.version
+    String cladetyper_clade = gambit_cladetyper.gambit_cladetype
+    String cladetyper_annotated_reference = gambit_cladetyper.annotated_reference
+    String cladetyper_version = gambit_cladetyper.gambit_version
+    String cladetyper_docker_image = gambit_cladetyper.gambit_cladetyper_docker_image
   }
 }
