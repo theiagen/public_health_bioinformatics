@@ -69,7 +69,7 @@ workflow theiaeuk_illumina_pe {
           read1 = read1,
           read2 = read2,
           samplename = samplename,
-          genome_length = select_first([genome_length, raw_check_reads.est_genome_length]),
+          genome_length = select_first([genome_length, raw_check_reads.est_genome_length, 0]),
           coverage = subsample_coverage
       }
     }  
