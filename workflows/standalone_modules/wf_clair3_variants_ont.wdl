@@ -7,7 +7,7 @@ import "../../tasks/utilities/data_handling/task_fasta_utilities.wdl" as fasta_u
 import "../../tasks/task_versioning.wdl" as versioning
 
 # MVP Clair3 variant calling workflow for ONT data
-workflow clair3_variants_ont_wf {
+workflow clair3_variants_ont {
   meta {
     description: "Call variants using Clair3 for ONT data"
   }
