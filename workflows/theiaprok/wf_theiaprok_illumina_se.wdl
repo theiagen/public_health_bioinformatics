@@ -85,19 +85,20 @@ workflow theiaprok_illumina_se {
         read1_lane4 = read1_lane4
     }
   }
-  call screen.check_reads_se as raw_check_reads { 
-    input:
-      read1 = select_first([concatenate_illumina_lanes.read1_concatenated, read1]),
-      min_reads = min_reads,
-      min_basepairs = min_basepairs,
-      min_genome_length = min_genome_length,
-      max_genome_length = max_genome_length,
-      min_coverage = min_coverage,
-      skip_screen = skip_screen,
-      skip_mash = skip_mash,
-      expected_genome_length = genome_length
+  if (! skip_screen) {
+    call screen.check_reads_se as raw_check_reads { 
+      input:
+        read1 = select_first([concatenate_illumina_lanes.read1_concatenated, read1]),
+        min_reads = min_reads,
+        min_basepairs = min_basepairs,
+        min_genome_length = min_genome_length,
+        max_genome_length = max_genome_length,
+        min_coverage = min_coverage,
+        skip_mash = skip_mash,
+        expected_genome_length = genome_length
+    }
   }
-  if (raw_check_reads.read_screen == "PASS") {
+  if (select_first([raw_check_reads.read_screen, ""]) == "PASS" || skip_screen) {
     call read_qc.read_QC_trim_se as read_QC_trim {
       input:
         samplename = samplename,
@@ -107,19 +108,20 @@ workflow theiaprok_illumina_se {
         trim_window_size = trim_window_size,
         workflow_series = "theiaprok"
     }
-    call screen.check_reads_se as clean_check_reads {
-      input:
-        read1 = read_QC_trim.read1_clean,
-        min_reads = min_reads,
-        min_basepairs = min_basepairs,
-        min_genome_length = min_genome_length,
-        max_genome_length = max_genome_length,
-        min_coverage = min_coverage,
-        skip_screen = skip_screen,
-        skip_mash = skip_mash,
-        expected_genome_length = genome_length
+    if (! skip_screen) {
+      call screen.check_reads_se as clean_check_reads {
+        input:
+          read1 = read_QC_trim.read1_clean,
+          min_reads = min_reads,
+          min_basepairs = min_basepairs,
+          min_genome_length = min_genome_length,
+          max_genome_length = max_genome_length,
+          min_coverage = min_coverage,
+          skip_mash = skip_mash,
+          expected_genome_length = genome_length
+      }
     }
-    if (clean_check_reads.read_screen == "PASS") {
+    if (select_first([clean_check_reads.read_screen, ""]) == "PASS" || skip_screen) {
       call shovill.shovill_se {
         input:
           samplename = samplename,
@@ -586,7 +588,7 @@ workflow theiaprok_illumina_se {
     # Concatenated Illumina Reads
     File? read1_concatenated = concatenate_illumina_lanes.read1_concatenated
     # Sample Screening
-    String read_screen_raw = raw_check_reads.read_screen
+    String? read_screen_raw = raw_check_reads.read_screen
     String? read_screen_clean = clean_check_reads.read_screen
     # Read QC - fastq_scan outputs
     Int? fastq_scan_num_reads_raw1 = read_QC_trim.fastq_scan_raw1
