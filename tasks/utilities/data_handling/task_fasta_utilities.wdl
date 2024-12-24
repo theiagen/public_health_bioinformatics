@@ -44,3 +44,37 @@ task get_fasta_genome_size {
     preemptible: 0
   }
 }
+
+task samtools_faidx {
+  meta {
+    description: "Index FASTA file using samtools faidx"
+  }
+  input {
+    File fasta
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/samtools:1.17"
+    Int disk_size = 100
+    Int cpu = 2
+    Int memory = 8
+  }
+  command <<<
+    # Samtools version capture
+    samtools --version | head -n1 | cut -d' ' -f2 | tee VERSION
+
+    # Index FASTA file
+    samtools faidx ~{fasta}
+  >>>
+  output {
+    File fai = "~{fasta}.fai"
+    String samtools_version = read_string("VERSION")
+    String samtools_docker = "~{docker}"
+  }
+  runtime {
+    docker: "~{docker}"
+    memory: memory + " GB"
+    cpu: cpu
+    disks: "local-disk " + disk_size + " SSD"
+    disk: disk_size + " GB"
+    maxRetries: 0
+    preemptible: 0
+  }
+}
