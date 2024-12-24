@@ -126,7 +126,7 @@ workflow theiaprok_illumina_se {
         input:
           samplename = samplename,
           read1_cleaned = read_QC_trim.read1_clean,
-          genome_length = select_first([genome_length, clean_check_reads.est_genome_length])
+          genome_length = select_first([genome_length, clean_check_reads.est_genome_length, 0])
       }
       call quast_task.quast {
         input:
