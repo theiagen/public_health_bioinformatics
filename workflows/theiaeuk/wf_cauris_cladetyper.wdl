@@ -1,6 +1,6 @@
 version 1.0
 
-import "../../tasks/species_typing/candida/task_cauris_cladetyper.wdl" as gambit_cladetyper
+import "../../tasks/species_typing/candida/task_cauris_cladetyper.wdl" as gambit_cladetyper_task
 import "../../tasks/task_versioning.wdl" as versioning
 
 workflow cauris_cladetyper {
@@ -8,7 +8,7 @@ workflow cauris_cladetyper {
     File assembly_fasta
     String samplename
   }
-  call gambit_cladetyper.cauris_cladetyper as gambit_cladetyper_task {
+  call gambit_cladetyper_task.cauris_cladetyper as gambit_cladetyper {
     input:
       assembly_fasta = assembly_fasta,
       samplename = samplename
@@ -19,8 +19,8 @@ workflow cauris_cladetyper {
   output {
     String cauris_cladetyper_wf_version = version_capture.phb_version
     String cauris_cladetyper_wf_analysis_date = version_capture.date
-    String gambit_cladetyper_clade = gambit_cladetyper_task.gambit_cladetype
-    String gambit_cladetyper_clade_ref = gambit_cladetyper_task.clade_spec_ref
-    String gambit_cladetyper_version = gambit_cladetyper_task.version
+    String gambit_cladetyper_clade = gambit_cladetyper.gambit_cladetype
+    String gambit_cladetyper_clade_ref = gambit_cladetyper.clade_spec_ref
+    String gambit_cladetyper_version = gambit_cladetyper.version
   }
 }

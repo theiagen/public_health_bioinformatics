@@ -1,8 +1,5 @@
 # Cauris_CladeTyper
 
-!!! warning "NEEDS WORK!!!!"
-    This page is under construction and will be updated soon.
-
 ## Quick Facts
 
 | **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
@@ -14,6 +11,13 @@
 The Cauris_CladeTyper_PHB Workflow is designed to assign the clade to _Candida auris_ (also known as _Candidozyma auris_) WGS assemblies based on their genomic sequence similarity to the five clade-specific reference files. Clade typing is essential for understanding the epidemiology and evolutionary dynamics of this emerging multidrug-resistant fungal pathogen.
 
 ### Inputs
+
+
+| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
+|---|---|---|---|---|---|
+| cauris_cladetyper | **assembly_fasta** | File | The input assembly file in FASTA format | | Required |
+| cauris_cladetyper | **samplename** | String | The name of the sample being analyzed | | Required |
+| 
 
 ### Workflow Tasks
 
