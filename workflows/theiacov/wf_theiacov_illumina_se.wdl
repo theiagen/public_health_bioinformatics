@@ -113,7 +113,7 @@ workflow theiacov_illumina_se {
           max_genome_length = max_genome_length,
           min_coverage = min_coverage,
           workflow_series = "theiacov",
-            skip_mash = skip_mash,
+          skip_mash = skip_mash,
           expected_genome_length = organism_parameters.genome_length
       }
     }
@@ -158,14 +158,14 @@ workflow theiacov_illumina_se {
         # tasks specific to either MPXV or sars-cov-2
         call nextclade_task.nextclade_v3 {
           input:
-          genome_fasta = ivar_consensus.assembly_fasta,
-          dataset_name = organism_parameters.nextclade_dataset_name,
-          dataset_tag = organism_parameters.nextclade_dataset_tag
+            genome_fasta = ivar_consensus.assembly_fasta,
+            dataset_name = organism_parameters.nextclade_dataset_name,
+            dataset_tag = organism_parameters.nextclade_dataset_tag
         }
         call nextclade_task.nextclade_output_parser {
           input:
-          nextclade_tsv = nextclade_v3.nextclade_tsv,
-          organism = organism_parameters.standardized_organism
+            nextclade_tsv = nextclade_v3.nextclade_tsv,
+            organism = organism_parameters.standardized_organism
         }
       }
       if (organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "WNV" || organism_parameters.standardized_organism == "rsv_a" || organism_parameters.standardized_organism == "rsv_b"){ 
