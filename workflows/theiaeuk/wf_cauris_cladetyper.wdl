@@ -20,7 +20,7 @@ workflow cauris_cladetyper {
     String cauris_cladetyper_wf_version = version_capture.phb_version
     String cauris_cladetyper_wf_analysis_date = version_capture.date
     String gambit_cladetyper_clade = gambit_cladetyper.gambit_cladetype
-    String gambit_cladetyper_clade_ref = gambit_cladetyper.clade_spec_ref
+    String gambit_cladetyper_annotated_reference = gambit_cladetyper.annotated_reference
     String gambit_cladetyper_version = gambit_cladetyper.version
   }
 }

@@ -282,7 +282,6 @@ workflow theiaeuk_illumina_pe {
     File? qc_standard = qc_check_task.qc_standard
     # Cladetyper Outputs
     String? clade_type = merlin_magic.clade_type
-    String? cladetyper_analysis_date = merlin_magic.cladetyper_analysis_date
     String? cladetyper_version = merlin_magic.cladetyper_version
     String? cladetyper_docker_image = merlin_magic.cladetyper_docker_image
     String? cladetype_annotated_ref = merlin_magic.cladetype_annotated_ref

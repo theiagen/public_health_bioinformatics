@@ -59,9 +59,9 @@ task cauris_cladetyper {
 
   >>>
   output {
+    String gambit_version = read_string("VERSION")
     String gambit_cladetype = read_string("CLADETYPE")
-    String clade_spec_ref = read_string("CLADEREF")
-    String version = read_string("VERSION")
+    String annotated_reference = read_string("CLADEREF")
     String gambit_cladetyper_docker_image = docker
   }
   runtime {
