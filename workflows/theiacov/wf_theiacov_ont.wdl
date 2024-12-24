@@ -88,7 +88,6 @@ workflow theiacov_ont {
         min_coverage = min_coverage,
         skip_mash = skip_mash,
         workflow_series = "theiacov",
-        organism = organism_parameters.standardized_organism,
         expected_genome_length = organism_parameters.genome_length
     }
   }
@@ -115,8 +114,7 @@ workflow theiacov_ont {
           min_coverage = min_coverage,
           skip_mash = skip_mash,
           workflow_series = "theiacov",
-          organism = organism_parameters.standardized_organism,
-          expected_genome_length = organism_parameters.genome_length
+            expected_genome_length = organism_parameters.genome_length
       }
     }
     if (select_first([clean_check_reads.read_screen, ""]) == "PASS" || skip_screen) {

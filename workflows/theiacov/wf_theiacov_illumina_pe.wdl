@@ -95,7 +95,6 @@ workflow theiacov_illumina_pe {
         min_coverage = min_coverage,
         min_proportion = min_proportion,
         workflow_series = "theiacov",
-        organism = organism_parameters.standardized_organism,
         expected_genome_length = organism_parameters.genome_length
     }
   }
@@ -125,8 +124,7 @@ workflow theiacov_illumina_pe {
           min_coverage = min_coverage,
           min_proportion = min_proportion,
           workflow_series = "theiacov",
-          organism = organism_parameters.standardized_organism,
-          expected_genome_length = organism_parameters.genome_length
+            expected_genome_length = organism_parameters.genome_length
       }
     }
     if (select_first([clean_check_reads.read_screen, ""]) == "PASS" || skip_screen) {

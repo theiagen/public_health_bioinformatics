@@ -86,7 +86,6 @@ workflow theiacov_illumina_se {
         max_genome_length = max_genome_length,
         min_coverage = min_coverage,
         workflow_series = "theiacov",
-        organism = organism_parameters.standardized_organism,
         skip_mash = skip_mash,
         expected_genome_length = organism_parameters.genome_length
     }
@@ -114,8 +113,7 @@ workflow theiacov_illumina_se {
           max_genome_length = max_genome_length,
           min_coverage = min_coverage,
           workflow_series = "theiacov",
-          organism = organism_parameters.standardized_organism,
-          skip_mash = skip_mash,
+            skip_mash = skip_mash,
           expected_genome_length = organism_parameters.genome_length
       }
     }
