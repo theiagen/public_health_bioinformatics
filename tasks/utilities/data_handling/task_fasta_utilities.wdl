@@ -58,16 +58,20 @@ task samtools_faidx {
     String fasta_basename = basename(fasta)
   }
   command <<<
+    set -euo pipefail
+    
+    # Copy reference to current directory first
+    cp ~{fasta} ~{fasta_basename}
+
     # Samtools version capture
     samtools --version | head -n1 | cut -d' ' -f2 | tee VERSION
 
-    echo "Index FASTA file basname: ~{fasta_basename}"
-    
-    # Index FASTA file index is in current directory
-    samtools faidx ~{fasta}
-    cp ~{fasta}.fai ~{fasta_basename}.fai
+    # Index FASTA file
+    samtools faidx ~{fasta_basename}
   >>>
+  
   output {
+    File indexed_fasta = "~{fasta_basename}"
     File fai = "~{fasta_basename}.fai"
     String samtools_version = read_string("VERSION")
     String samtools_docker = "~{docker}"

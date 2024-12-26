@@ -50,7 +50,7 @@ workflow clair3_variants_ont {
     input:
       alignment_bam_file = sam_to_sorted_bam.bam,
       alignment_bam_file_index = sam_to_sorted_bam.bai,
-      reference_genome_file = reference_genome_file,
+      reference_genome_file = samtools_faidx.indexed_fasta,
       reference_genome_file_index = samtools_faidx.fai,
       sequencing_platform = "ont", #only want ont for now
       samplename = samplename,
