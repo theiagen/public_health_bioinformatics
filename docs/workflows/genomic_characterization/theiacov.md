@@ -348,7 +348,7 @@ All TheiaCoV Workflows (not TheiaCoV_FASTA_Batch)
 | read_QC_trim | **kraken_cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional | ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | read_QC_trim | **kraken_db** | File | The database used to run Kraken2. Must contain viral and human sequences. | "gs://theiagen-large-public-files-rp/terra/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz" | Optional | ONT, PE, SE, ONT | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | read_QC_trim | **kraken_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
-| read_QC_trim | **kraken_docker** | Int | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.1.2-no-db" | Optional | ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
+| read_QC_trim | **kraken_docker_image** | Int | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.1.2-no-db" | Optional | ONT | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | read_QC_trim | **kraken_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | read_QC_trim | **midas_db** | File | The database used by the MIDAS task | gs://theiagen-public-files-rp/terra/theiaprok-files/midas/midas_db_v1.2.tar.gz | Optional | PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | read_QC_trim | **nanoq_cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional | ONT | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |

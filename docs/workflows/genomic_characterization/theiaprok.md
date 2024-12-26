@@ -537,7 +537,7 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 | read_QC_trim | **kraken_cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional | ONT, PE, SE |
 | read_QC_trim | **kraken_db** | File | Kraken2 database file; must be provided in call_kraken is true |  | Optional | ONT, PE, SE |
 | read_QC_trim | **kraken_disk_size** | Int | GB of storage to request for VM used to run the kraken2 task. Increase this when using large (>30GB kraken2 databases such as the "k2_standard" database) | 100 | Optional | ONT, PE, SE |
-| read_QC_trim | **kraken_docker** | Int | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.1.2-no-db" | Optional | ONT |
+| read_QC_trim | **kraken_docker_image** | Int | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.1.2-no-db" | Optional | ONT |
 | read_QC_trim | **kraken_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | ONT, PE, SE |
 | read_QC_trim | **max_length** | Int | Internal component, do not modify |  | Do not modify, Optional | ONT |
 | read_QC_trim | **min_length** | Int | Internal component, do not modify |  | Do not modify, Optional | ONT |
