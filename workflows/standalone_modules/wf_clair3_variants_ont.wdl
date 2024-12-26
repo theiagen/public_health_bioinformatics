@@ -15,13 +15,14 @@ workflow clair3_variants_ont {
     File read1
     File reference_genome_file
     String samplename
-    String model = "r941_prom_hac_g360+g422"
+    String? clair3_model
     String? docker
     Int? memory
     Int? cpu
     Int? disk_size
-    Int variant_quality = 2
+    Int? variant_quality
     Boolean enable_gvcf = false
+    Boolean enable_long_indel = false
   }
   # Call the minimap2 task with recommended options for ONT data, when we expand to PacBio need to refactor logic
   call minimap2_task.minimap2 {
@@ -31,7 +32,7 @@ workflow clair3_variants_ont {
       samplename = samplename,
       mode = "map-ont",
       output_sam = true,
-      additional_options = "-L --cs --MD"
+      mapping_options = "-L --cs --MD" # recommended options for ONT data
   }
   # Parse the minimap2 output to a sorted BAM file, and index it, expected by clair3
   call parse_mapping_task.sam_to_sorted_bam {
@@ -51,15 +52,16 @@ workflow clair3_variants_ont {
       alignment_bam_file_index = sam_to_sorted_bam.bai,
       reference_genome_file = reference_genome_file,
       reference_genome_file_index = samtools_faidx.fai,
-      sequencing_platform = "ont",
+      sequencing_platform = "ont", #only want ont for now
       samplename = samplename,
-      model = model,
+      clair3_model = clair3_model,
+      variant_quality = variant_quality,
+      enable_gvcf = enable_gvcf,
+      enable_long_indel = enable_long_indel,
       docker = docker,
       memory = memory,
       cpu = cpu,
       disk_size = disk_size,
-      qual = variant_quality,
-      enable_gvcf = enable_gvcf
   }
 
   call versioning.version_capture {
@@ -80,7 +82,7 @@ workflow clair3_variants_ont {
     File clair3_variants_full_alignment_vcf = clair3_variants.clair3_variants_full_alignment_vcf
     File? clair3_variants_gvcf = clair3_variants.clair3_variants_gvcf
     String clair3_docker_image = clair3_variants.clair3_variants_docker_image
-    String clair3_model = clair3_variants.clair3_model
+    String clair3_model_used = clair3_variants.clair3_model_used
   }
 
 }

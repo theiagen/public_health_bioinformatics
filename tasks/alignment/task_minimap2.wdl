@@ -12,7 +12,7 @@ task minimap2 {
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/minimap2:2.22" # newer versions seem to be bugged (infinite loop)
     String mode = "asm20"
     Boolean output_sam = false
-    String? additional_options
+    String? mapping_options
     Int disk_size = 100
     Int cpu = 2
     Int memory = 8
@@ -23,10 +23,10 @@ task minimap2 {
     minimap2 --version | tee VERSION
 
     # Set additional options
-    if [ -z "~{additional_options}" ]; then
+    if [ -z "~{mapping_options}" ]; then
       OPTIONS=""
     else
-      OPTIONS="~{additional_options}"
+      OPTIONS="~{mapping_options}"
     fi
 
     if [ -z "~{query2}" ] ; then
