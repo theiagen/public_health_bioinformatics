@@ -45,7 +45,7 @@ workflow read_QC_trim_ont {
     Int? kraken_cpu
     File? kraken_db
     Int? kraken_disk_size
-    String? kraken_docker
+    String? kraken_docker_image
     Int? kraken_memory
   
     # rasusa downsampling inputs
@@ -112,7 +112,8 @@ workflow read_QC_trim_ont {
         kraken2_db = kraken_db,
         disk_size = kraken_disk_size,
         memory = kraken_memory,
-        cpu = kraken_cpu
+        cpu = kraken_cpu,
+        docker_image = kraken_docker_image
     }
     call kraken2.kraken2_parse_classified as kraken2_recalculate_abundances_raw {
       input:
@@ -129,7 +130,8 @@ workflow read_QC_trim_ont {
         kraken2_db = kraken_db,
         disk_size = kraken_disk_size,
         memory = kraken_memory,
-        cpu = kraken_cpu
+        cpu = kraken_cpu,
+        docker_image = kraken_docker_image
     }
     call kraken2.kraken2_parse_classified as kraken2_recalculate_abundances_dehosted {
       input:
@@ -149,7 +151,7 @@ workflow read_QC_trim_ont {
           disk_size = kraken_disk_size,
           memory = kraken_memory,
           cpu = kraken_cpu,
-          docker = kraken_docker
+          docker = kraken_docker_image
       }
       call kraken2.kraken2_parse_classified as kraken2_recalculate_abundances {
         input:
