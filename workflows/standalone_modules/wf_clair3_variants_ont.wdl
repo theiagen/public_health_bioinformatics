@@ -16,17 +16,17 @@ workflow clair3_variants_ont {
     File reference_genome_file
     String samplename
     String? clair3_model
-    String? docker
-    Int? memory
-    Int? cpu
-    Int? disk_size
-    Int? variant_quality
+    String? clair3_docker
+    Int? clair3_memory
+    Int? clair3_cpu
+    Int? clair3_disk_size
+    Int? clair3_variant_quality
     # Boolean flags for controlling Clair3's behavior, defaults set to true for haploid calling
-    Boolean? include_all_contigs
-    Boolean? enable_haploid_precise
-    Boolean? disable_phasing
-    Boolean? enable_gvcf
-    Boolean? enable_long_indel
+    Boolean? clair3_include_all_contigs
+    Boolean? clair3_enable_haploid_precise
+    Boolean? clair3_disable_phasing
+    Boolean? clair3_enable_gvcf
+    Boolean? clair3_enable_long_indel
   }
   # Call the minimap2 task with recommended options for ONT data, when we expand to PacBio need to refactor logic
   call minimap2_task.minimap2 {
@@ -58,16 +58,16 @@ workflow clair3_variants_ont {
       sequencing_platform = "ont", #only want ont for now
       samplename = samplename,
       clair3_model = clair3_model,
-      variant_quality = variant_quality,
-      include_all_contigs = include_all_contigs,
-      enable_haploid_precise = enable_haploid_precise,
-      disable_phasing = disable_phasing,
-      enable_gvcf = enable_gvcf,
-      enable_long_indel = enable_long_indel,
-      docker = docker,
-      memory = memory,
-      cpu = cpu,
-      disk_size = disk_size,
+      variant_quality = clair3_variant_quality,
+      include_all_contigs = clair3_include_all_contigs,
+      enable_haploid_precise = clair3_enable_haploid_precise,
+      disable_phasing = clair3_disable_phasing,
+      enable_gvcf = clair3_enable_gvcf,
+      enable_long_indel = clair3_enable_long_indel,
+      docker = clair3_docker,
+      memory = clair3_memory,
+      cpu = clair3_cpu,
+      disk_size = clair3_disk_size,
   }
   call versioning.version_capture {
     input:
