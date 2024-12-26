@@ -281,10 +281,10 @@ workflow theiaeuk_illumina_pe {
     String? qc_check = qc_check_task.qc_check
     File? qc_standard = qc_check_task.qc_standard
     # Cladetyper Outputs
-    String? clade_type = merlin_magic.clade_type
-    String? cladetyper_version = merlin_magic.cladetyper_version
+    String? cladetyper_clade_type = merlin_magic.clade_type
+    String? cladetyper_gambit_version = merlin_magic.cladetyper_version
     String? cladetyper_docker_image = merlin_magic.cladetyper_docker_image
-    String? cladetype_annotated_ref = merlin_magic.cladetype_annotated_ref
+    String? cladetyper_annotated_reference = merlin_magic.cladetype_annotated_ref
     # Snippy Outputs
     String? theiaeuk_snippy_variants_version = merlin_magic.snippy_variants_version
     String? theiaeuk_snippy_variants_query = merlin_magic.snippy_variants_query
