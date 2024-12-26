@@ -4,7 +4,7 @@
 
 | **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibliity** | **Workflow Level** |
 |---|---|---|---|---|
-| [Genomic Characterization](../../workflows_overview/workflows_type.md/#genomic-characterization) | [Mycotics](../../workflows_overview/workflows_kingdom.md/#mycotics) | PHB v2.3.0 | Yes | Sample-level |
+| [Genomic Characterization](../../workflows_overview/workflows_type.md/#genomic-characterization) | [Mycotics](../../workflows_overview/workflows_kingdom.md/#mycotics) | PHB vX.X.X | Yes | Sample-level |
 
 ## TheiaEuk Workflows
 

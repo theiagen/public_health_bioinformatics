@@ -67,7 +67,7 @@ title: Workflows by Kingdom
 | [**NCBI-AMRFinderPlus**](../workflows/standalone/ncbi_amrfinderplus.md)| Runs NCBI's AMRFinderPlus on genome assemblies (bacterial and fungal) | Bacteria, Mycotics | Sample-level | Yes | v2.0.0 | [NCBI-AMRFinderPlus_PHB](https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/NCBI-AMRFinderPlus_PHB:main?tab=info) |
 | [**Snippy_Variants**](../workflows/phylogenetic_construction/snippy_variants.md)| Alignment of reads to a reference genome, then SNP calling | Bacteria, Mycotics, Viral | Sample-level | Yes | v2.3.0 | [Snippy_Variants_PHB](https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Snippy_Variants_PHB:main?tab=info) |
 | [**Terra_2_NCBI**](../workflows/public_data_sharing/terra_2_ncbi.md)| Upload of sequence data to NCBI | Bacteria, Mycotics, Viral | Set-level | No | v2.3.0 | [Terra_2_NCBI_PHB](https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Terra_2_NCBI_PHB:main?tab=info) |
-| [**TheiaEuk**](../workflows/genomic_characterization/theiaeuk.md) | Mycotic genome assembly, QC and characterization from WGS data | Mycotics | Sample-level | Some optional features incompatible, Yes | v2.3.0 | [TheiaEuk_Illumina_PE_PHB](https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/TheiaEuk_Illumina_PE_PHB:main?tab=info) |
+| [**TheiaEuk**](../workflows/genomic_characterization/theiaeuk.md) | Mycotic genome assembly, QC and characterization from WGS data | Mycotics | Sample-level | Some optional features incompatible, Yes | vX.X.X | [TheiaEuk_Illumina_PE_PHB](https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/TheiaEuk_Illumina_PE_PHB:main?tab=info) |
 
 </div>
 
