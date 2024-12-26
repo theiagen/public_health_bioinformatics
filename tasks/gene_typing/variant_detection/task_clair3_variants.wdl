@@ -13,6 +13,9 @@ task clair3_variants {
     Int memory = 8
     Int cpu = 4
     Int disk_size = 100
+    Boolean include_all_contigs = true # Haploid calling option, default true
+    Boolean enable_haploid_precise = true # Haploid calling option, default true
+    Boolean disable_phasing = true # Haploid calling option, default true
     Boolean enable_gvcf = false
     Boolean enable_long_indel = false
     Int variant_quality = 2
@@ -42,11 +45,11 @@ task clair3_variants {
         --output=~{samplename} \
         --sample_name=~{samplename} \
         --qual=~{variant_quality} \
-        --include_all_ctgs \
-        --haploid_precise \
-        --no_phasing_for_fa \
-        ~{if enable_long_indel then "--enable_long_indel" else ""} \
-        ~{if enable_gvcf then "--gvcf" else ""}
+        ~{true="--include_all_ctgs" false="" include_all_contigs} \
+        ~{true="--haploid_precise" false="" enable_haploid_precise} \
+        ~{true="--no_phasing_for_fa" false="" disable_phasing} \
+        ~{true="--enable_long_indel" false="" enable_long_indel} \
+        ~{true="--gvcf" false="" enable_gvcf}
 
     mv "~{samplename}/merge_output.vcf.gz" ~{samplename}_merge_output.vcf.gz
     mv "~{samplename}/pileup.vcf.gz" ~{samplename}_pileup.vcf.gz

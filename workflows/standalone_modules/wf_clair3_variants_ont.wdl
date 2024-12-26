@@ -21,8 +21,12 @@ workflow clair3_variants_ont {
     Int? cpu
     Int? disk_size
     Int? variant_quality
-    Boolean enable_gvcf = false
-    Boolean enable_long_indel = false
+    # Boolean flags for controlling Clair3's behavior, defaults set to true for haploid calling
+    Boolean? include_all_contigs
+    Boolean? enable_haploid_precise
+    Boolean? disable_phasing
+    Boolean? enable_gvcf
+    Boolean? enable_long_indel
   }
   # Call the minimap2 task with recommended options for ONT data, when we expand to PacBio need to refactor logic
   call minimap2_task.minimap2 {
@@ -55,6 +59,9 @@ workflow clair3_variants_ont {
       samplename = samplename,
       clair3_model = clair3_model,
       variant_quality = variant_quality,
+      include_all_contigs = include_all_contigs,
+      enable_haploid_precise = enable_haploid_precise,
+      disable_phasing = disable_phasing,
       enable_gvcf = enable_gvcf,
       enable_long_indel = enable_long_indel,
       docker = docker,
