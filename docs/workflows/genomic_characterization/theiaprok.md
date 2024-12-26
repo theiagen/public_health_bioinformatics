@@ -524,10 +524,10 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 | raw_check_reads | **organism** | String | Internal component, do not modify |  | Do not modify, Optional | ONT, PE, SE |
 | raw_check_reads | **workflow_series** | String | Internal component, do not modify |  | Do not modify, Optional | ONT, PE, SE |
 | read_QC_trim | **adapters** | File | A file containing the sequence of the adapters used during library preparation, used in the BBDuk task |  | Optional | PE, SE |
-| read_QC_trim | **artic_guppyplex_cpu** | Int | Internal Component, Do not modify| 8 | Optional | ONT |
-| read_QC_trim | **artic_guppyplex_disk_size** | Int | Internal Component, Do not modify| 100 | Optional | ONT |
-| read_QC_trim | **artic_guppyplex_docker** | String | Internal Component, Do not modify| us-docker.pkg.dev/general-theiagen/staphb/artic-ncov2019:1.3.0-medaka-1.4.3 | Optional | ONT |
-| read_QC_trim | **artic_guppyplex_memory** | Int | Internal Component, Do not modify| 16 | Optional | ONT |
+| read_QC_trim | **artic_guppyplex_cpu** | Int | Internal component, do not modify| 8 | Optional | ONT |
+| read_QC_trim | **artic_guppyplex_disk_size** | Int | Internal component, do not modify| 100 | Optional | ONT |
+| read_QC_trim | **artic_guppyplex_docker** | String | Internal component, do not modify| us-docker.pkg.dev/general-theiagen/staphb/artic-ncov2019:1.3.0-medaka-1.4.3 | Optional | ONT |
+| read_QC_trim | **artic_guppyplex_memory** | Int | Internal component, do not modify| 16 | Optional | ONT |
 | read_QC_trim | **bbduk_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | PE, SE |
 | read_QC_trim | **call_kraken** | Boolean | Set to true to launch Kraken2; if true, you must provide a kraken_db | FALSE | Optional | ONT, PE, SE |
 | read_QC_trim | **call_midas** | Boolean | Set to true to launch Midas | TRUE | Optional | PE, SE |
@@ -551,10 +551,10 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 | read_QC_trim | **nanoq_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 2 | Optional | ONT |
 | read_QC_trim | **nanoq_min_read_length** | Int | The minimum read length to keep after trimming | 500 | Optional | ONT |
 | read_QC_trim | **nanoq_min_read_qual** | Int | The minimum read quality to keep after trimming | 10 | Optional | ONT |
-| read_QC_trim | **ncbi_scrub_cpu** | Int | Internal Component, Do not modify| 4 | Optional | ONT |
-| read_QC_trim | **ncbi_scrub_disk_size** | Int | Internal Component, Do not modify| 100 | Optional | ONT |
-| read_QC_trim | **ncbi_scrub_docker** | String | Internal Component, Do not modify| "us-docker.pkg.dev/general-theiagen/ncbi/sra-human-scrubber:2.2.1" | Optional | ONT |
-| read_QC_trim | **ncbi_scrub_memory** | Int | Internal Component, Do not modify| 8 | Optional | ONT |
+| read_QC_trim | **ncbi_scrub_cpu** | Int | Internal component, do not modify| 4 | Optional | ONT |
+| read_QC_trim | **ncbi_scrub_disk_size** | Int | Internal component, do not modify| 100 | Optional | ONT |
+| read_QC_trim | **ncbi_scrub_docker** | String | Internal component, do not modify| "us-docker.pkg.dev/general-theiagen/ncbi/sra-human-scrubber:2.2.1" | Optional | ONT |
+| read_QC_trim | **ncbi_scrub_memory** | Int | Internal component, do not modify| 8 | Optional | ONT |
 | read_QC_trim | **rasusa_bases** | String | Explicitly set the number of bases required e.g., 4.3kb, 7Tb, 9000, 4.1MB. If this option is given, --coverage and --genome-size are ignored | | Optional | ONT |
 | read_QC_trim | **rasusa_cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional | ONT |
 | read_QC_trim | **rasusa_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | ONT |
