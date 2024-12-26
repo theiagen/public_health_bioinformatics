@@ -55,16 +55,20 @@ task samtools_faidx {
     Int disk_size = 100
     Int cpu = 2
     Int memory = 8
+    String fasta_basename = basename(fasta)
   }
   command <<<
     # Samtools version capture
     samtools --version | head -n1 | cut -d' ' -f2 | tee VERSION
 
-    # Index FASTA file
+    echo "Index FASTA file basname: ~{fasta_basename}"
+    
+    # Index FASTA file index is in current directory
     samtools faidx ~{fasta}
+    cp ~{fasta}.fai ~{fasta_basename}.fai
   >>>
   output {
-    File fai = "~{fasta}.fai"
+    File fai = "~{fasta_basename}.fai"
     String samtools_version = read_string("VERSION")
     String samtools_docker = "~{docker}"
   }
