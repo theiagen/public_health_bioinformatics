@@ -407,7 +407,7 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
         | Software Documentation | https://busco.ezlab.org/ |
         | Orginal publication | [BUSCO: assessing genome assembly and annotation completeness with single-copy orthologs](https://academic.oup.com/bioinformatics/article/31/19/3210/211866) |
 
-??? task "`QC_check`: Check QC Metrics Against User-Defined Thresholds (optional)"
+??? task "`qc_check`: Check QC Metrics Against User-Defined Thresholds (optional)"
 
     The `qc_check` task compares generated QC metrics against user-defined thresholds for each metric. This task will run if the user provides a `qc_check_table` .tsv file. If all QC metrics meet the threshold, the `qc_check` output variable will read `QC_PASS`. Otherwise, the output will read `QC_NA` if the task could not proceed or `QC_ALERT` followed by a string indicating what metric failed.
 

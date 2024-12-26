@@ -1077,7 +1077,7 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
         | Software Documentation | https://bitbucket.org/genomicepidemiology/plasmidfinder/src/master/ |
         | Original Publication(s) | [In Silico Detection and Typing of Plasmids using PlasmidFinder and Plasmid Multilocus Sequence Typing](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4068535/) |
 
-??? task "**`QC_check`: Check QC Metrics Against User-Defined Thresholds (optional)**"
+??? task "**`qc_check`: Check QC Metrics Against User-Defined Thresholds (optional)**"
 
     The `qc_check` task compares generated QC metrics against user-defined thresholds for each metric. This task will run if the user provides a `qc_check_table` .tsv file. If all QC metrics meet the threshold, the `qc_check` output variable will read `QC_PASS`. Otherwise, the output will read `QC_NA` if the task could not proceed or `QC_ALERT` followed by a string indicating what metric failed.
 
