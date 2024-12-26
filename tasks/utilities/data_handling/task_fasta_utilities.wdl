@@ -53,12 +53,10 @@ task samtools_faidx {
     File fasta
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/samtools:1.17"
     Int disk_size = 100
-    Int cpu = 2
+    Int cpu = 1
     Int memory = 8
   }
-
   String fasta_basename = basename(fasta)
-
   command <<<
     set -euo pipefail
 

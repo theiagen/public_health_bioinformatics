@@ -17,7 +17,6 @@ task clair3_variants {
     Boolean enable_long_indel = false
     Int variant_quality = 2
   }
-
   command <<<
     set -euo pipefail
 
@@ -49,9 +48,7 @@ task clair3_variants {
     if [ "~{enable_gvcf}" == "true" ]; then
         mv "~{samplename}/merge_output.gvcf.gz" ~{samplename}_merge_output.gvcf.gz
     fi
-
   >>>
-  
   output {
     File clair3_variants_final_vcf = "~{samplename}_merge_output.vcf.gz"
     File clair3_variants_full_alignment_vcf = "~{samplename}_full_alignment.vcf.gz"
@@ -60,7 +57,6 @@ task clair3_variants {
     String clair3_variants_docker_image = docker
     String clair3_model_used = clair3_model
   }
-
   runtime {
     docker: docker
     memory: "~{memory} GB"

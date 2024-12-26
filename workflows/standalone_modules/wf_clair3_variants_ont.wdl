@@ -45,7 +45,6 @@ workflow clair3_variants_ont {
     input:
       fasta = reference_genome_file
   }
-
   call clair3.clair3_variants {
     input:
       alignment_bam_file = sam_to_sorted_bam.bam,
@@ -63,11 +62,9 @@ workflow clair3_variants_ont {
       cpu = cpu,
       disk_size = disk_size,
   }
-
   call versioning.version_capture {
     input:
   }
-  
   output {
     # Data handling - Read Alignment- samtools version
     String samtools_version = sam_to_sorted_bam.samtools_version
@@ -84,5 +81,4 @@ workflow clair3_variants_ont {
     String clair3_docker_image = clair3_variants.clair3_variants_docker_image
     String clair3_model_used = clair3_variants.clair3_model_used
   }
-
 }
