@@ -110,7 +110,7 @@ All TheiaCoV Workflows (not TheiaCoV_FASTA_Batch)
 
 <div class="searchable-table" markdown="1">
 
-| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |* | **Organism** |
+| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** | **Workflow** | **Organism** |
 |---|---|---|---|---|---|---|---|
 | theiacov_clearlabs | **primer_bed** | File | The bed file containing the primers used when sequencing was performed | | Required | CL | sars-cov-2 |
 | theiacov_clearlabs | **read1** | File | Read data produced by the Clear Dx platform from ClearLabs | | Required | CL | sars-cov-2 |
