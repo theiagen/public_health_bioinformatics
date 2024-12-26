@@ -17,6 +17,8 @@ task clair3_variants {
     Boolean enable_long_indel = false
     Int variant_quality = 2
   }
+  String bam_basename = basename(alignment_bam_file)
+  String ref_basename = basename(reference_genome_file)
   command <<<
     set -euo pipefail
 
@@ -25,9 +27,15 @@ task clair3_variants {
     echo "Running Clair3 variant calling, aligninment bam file index localized: ~{alignment_bam_file_index}"
     echo "Running Clair3 variant calling, reference genome file index localized: ~{reference_genome_file_index}"
 
+    # Create local copies with correct names, Clair3 expects bai and fai in working directory, but not set explicitly
+    cp ~{alignment_bam_file} ~{bam_basename}
+    cp ~{alignment_bam_file_index} ~{bam_basename}.bai
+    cp ~{reference_genome_file} ~{ref_basename}
+    cp ~{reference_genome_file_index} ~{ref_basename}.fai
+
     run_clair3.sh \
-        --bam_fn=~{alignment_bam_file} \
-        --ref_fn=~{reference_genome_file} \
+        --bam_fn=~{bam_basename} \
+        --ref_fn=~{ref_basename} \
         --threads=~{cpu} \
         --platform=~{sequencing_platform} \
         --model_path="$model_path" \
