@@ -29,9 +29,9 @@ task clair3_variants {
     echo "Running Clair3 variant calling, aligninment bam file index localized: ~{alignment_bam_file_index}"
     echo "Running Clair3 variant calling, reference genome file index localized: ~{reference_genome_file_index}"
 
-    # Create local copies with correct names, Clair3 expects bai and fai in working directory, but not set explicitly
-    # cp {alignment_bam_file} {bam_basename}
-    # cp {alignment_bam_file_index} {bam_basename}.bai
+    # Create local fasta & fai copies, Clair3 expects fai & fasta 
+    # in working directory, but fai not set explicitly, bam and bai coming from same task
+    # so we can assume they are in the same directory
     cp ~{reference_genome_file} ~{ref_basename}
     cp ~{reference_genome_file_index} ~{ref_basename}.fai
 
