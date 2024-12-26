@@ -9,7 +9,7 @@ task clair3_variants {
     String sequencing_platform
     String samplename
     String clair3_model = "r941_prom_hac_g360+g422"
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/clair3:1.0.10"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/clair3-extra-models:1.0.10"
     Int memory = 8
     Int cpu = 4
     Int disk_size = 100
