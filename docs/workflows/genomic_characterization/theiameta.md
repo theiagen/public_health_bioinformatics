@@ -109,7 +109,7 @@ The TheiaMeta_Illumina_PE workflow processes Illumina paired-end (PE) reads ge
 | semibin | **cpu** | Int | Number of CPUs to allocate to the task | 6 | Optional |
 | semibin | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
 | semibin | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/biocontainers/semibin:2.0.2--pyhdfd78af_0 | Optional |
-| semibin | **environment** | String | Environment model to use. Options: • human_gut<br>• dog_gut<br>• ocean<br>• soil<br>• cat_gut<br>• human_oral<br>• mouse_gut<br>• pig_gut<br>• built_environment<br>• wastewater<br>• chicken_caecum<br>- global | global | Optional |
+| semibin | **environment** | String | Environment model to use. Options:<br>• human_gut<br>• dog_gut<br>• ocean<br>• soil<br>• cat_gut<br>• human_oral<br>• mouse_gut<br>• pig_gut<br>• built_environment<br>• wastewater<br>• chicken_caecum<br>• global | global | Optional |
 | semibin | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional |
 | semibin | **min_length** | Int | Minimum contig length for binning | 1000 | Optional |
 | semibin | **ratio** | Float | If the ratio of the number of base pairs of contigs between 1000-2500 bp smaller than this value, the minimal length will be set as 1000bp, otherwise 2500bp. | 0.05 | Optional |
@@ -128,9 +128,8 @@ The TheiaMeta_Illumina_PE workflow processes Illumina paired-end (PE) reads ge
 ### Workflow Tasks
 
 ??? task "`versioning`: Version Capture for TheiaMeta"
-
     The `versioning` task captures the workflow version from the GitHub (code repository) version.
-        
+
     !!! techdetails "Version Capture Technical details"
         
         |  | Links |
@@ -298,6 +297,7 @@ The TheiaMeta_Illumina_PE workflow processes Illumina paired-end (PE) reads ge
         | Software Source Code | [Pilon on GitHub](https://github.com/broadinstitute/pilon) |
         | Software Documentation | [Pilon Wiki](https://github.com/broadinstitute/pilon/wiki) |
         | Original Publication(s) | [Pilon: An Integrated Tool for Comprehensive Microbial Variant Detection and Genome Assembly Improvement](https://doi.org/10.1371/journal.pone.0112963) |
+
 #### Assembly QC
 
 ??? task  "`quast`: Assembly Quality Assessment"
@@ -317,7 +317,16 @@ The TheiaMeta_Illumina_PE workflow processes Illumina paired-end (PE) reads ge
 
 ??? task "`semibin2`: Metagenomic binning (if a reference is NOT provided)"
 
-    If no reference genome is provided through the **`reference`** optional input, the assembly produced with `metaspades` will be binned with `semibin2`, a a command tool for metagenomic binning with deep learning. 
+    If no reference genome is provided through the **`reference`** optional input, the assembly produced with `metaspades` (and polished by `pilon`) will be binned with `semibin2`, a command tool for metagenomic binning with deep learning. Specifically, it uses a semi-supervised siamese neural network that uses knowledge from reference genomes while maintaining reference-exclusive bins. By default, the `global` environemnt model is used, though a variety of options that may be better suited for your sample are available, and listed in the relevant inputs section.
+
+    !!! techdetails "SemiBin2 Technical Details"
+        
+        |  | Links |
+        | --- | --- |
+        | Task | [task_semibin2.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_semibin.wdl) |
+        | Software Source Code | [SemiBin2 on GitHub](https://github.com/BigDataBiology/SemiBin) |
+        | Software Documenttation | [SemiBin2 ReadTheDocs](https://semibin.readthedocs.io/en/stable/usage/) |
+        | Original Publication(s) | [A deep siamese neural network improves metagenome-assembled genomes in microbiome datasets across different environments](https://doi.org/10.1038/s41467-022-29843-y) |
 
 ### Outputs
 
@@ -373,7 +382,7 @@ The TheiaMeta_Illumina_PE workflow processes Illumina paired-end (PE) reads ge
 | metaspades_docker | String | Docker image of metaspades |
 | metaspades_version | String | Version of metaspades |
 | midas_primary_genus | String | Primary genus detected by MIDAS |
-| midas_report | File | MIDAS report file tsv file|
+| midas_report | File | MIDAS report file tsv file |
 | minimap2_docker | String | Docker image of minimap2 |
 | minimap2_version | String | Version of minimap2 |
 | ncbi_scrub_docker | String | Docker image for NCBI's HRRT |
