@@ -51,3 +51,31 @@ task minimap2 {
     preemptible: 0
   }
 }
+
+task minimap2_align_ont {
+  input {
+    File fastq              # Input filtered FASTQ file
+    File reference          # Reference genome file
+    String sample_name      # Sample name for output file naming
+    Int disk_size = 100
+    Int cpu = 2
+    Int memory = 8        
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/minimap2:2.22"
+  }
+  command <<<
+    minimap2 --version | tee VERSION
+    # Align reads to the reference genome using Minimap2
+    minimap2 -ax map-ont --MD -t ~{cpu} ~{reference} ~{fastq} > ~{sample_name}.sam
+  >>>
+  output {
+    File aligned_sam = "~{sample_name}.sam"
+  }
+  runtime {
+    docker: "~{docker}"
+    memory: memory + " GB"
+    cpu: cpu
+    disks: "local-disk " + disk_size + " SSD"
+    disk: disk_size + " GB"
+    maxRetries: 3
+  }
+}
