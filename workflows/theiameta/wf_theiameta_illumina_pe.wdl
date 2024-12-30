@@ -128,7 +128,8 @@ workflow theiameta_illumina_pe {
           reference = select_first([retrieve_aligned_contig_paf.final_assembly, pilon.assembly_fasta]),
           samplename = samplename,
           mode = "sr",
-          output_sam = true
+          output_sam = true,
+          long_read_flags = false
       }
       call parse_mapping_task.sam_to_sorted_bam {
         input:
