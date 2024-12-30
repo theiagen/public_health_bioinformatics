@@ -81,6 +81,7 @@ workflow clair3_variants_ont {
     File aligned_fai = samtools_faidx.fai
     #Clair3 variant calling
     String clair3_variants_wf_version = version_capture.phb_version
+    String clair3_version = clair3_variants.clair3_version
     File clair3_variants_final_vcf = clair3_variants.clair3_variants_final_vcf
     File clair3_variants_pileup_vcf = clair3_variants.clair3_variants_pileup_vcf
     File clair3_variants_full_alignment_vcf = clair3_variants.clair3_variants_full_alignment_vcf

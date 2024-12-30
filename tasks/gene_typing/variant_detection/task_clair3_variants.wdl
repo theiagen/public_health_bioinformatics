@@ -24,8 +24,13 @@ task clair3_variants {
   command <<<
     set -euo pipefail
 
+    # Capture version
+    run_clair3.sh --version | head -1 | tee VERSION
+
+    # Set model path
     model_path="/clair3/models/~{clair3_model}"
 
+    # Make sure alignment bam file and fasta index are localized
     echo "Running Clair3 variant calling, aligninment bam file index localized: ~{alignment_bam_file_index}"
     echo "Running Clair3 variant calling, reference genome file index localized: ~{reference_genome_file_index}"
 
@@ -60,6 +65,7 @@ task clair3_variants {
     fi
   >>>
   output {
+    String clair3_version = read_string("VERSION")
     File clair3_variants_final_vcf = "~{samplename}_merge_output.vcf.gz"
     File clair3_variants_full_alignment_vcf = "~{samplename}_full_alignment.vcf.gz"
     File clair3_variants_pileup_vcf = "~{samplename}_pileup.vcf.gz"
