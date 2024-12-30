@@ -12,7 +12,7 @@ task minimap2 {
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/minimap2:2.22" # newer versions seem to be bugged (infinite loop)
     String mode = "asm20"
     Boolean output_sam = false
-    String? mapping_options
+    Boolean long_read_flags = false
     Int disk_size = 100
     Int cpu = 2
     Int memory = 8
@@ -22,13 +22,6 @@ task minimap2 {
     # Version capture
     minimap2 --version | tee VERSION
 
-    # Set additional options
-    if [ -z "~{mapping_options}" ]; then
-      OPTIONS=""
-    else
-      OPTIONS="~{mapping_options}"
-    fi
-
     if [ -z "~{query2}" ] ; then
       INPUT_QUERY="~{query1}"
     else
@@ -37,8 +30,8 @@ task minimap2 {
 
     # Run minimap2 - output can be sam or paf file depending on ~{output_sam}
     minimap2 \
-      ${OPTIONS} \
       ~{true="-a" false="" output_sam} \
+      ~{true="-L --cs --MD" false="" long_read_flags} \
       -x "~{mode}" \
       -t "~{cpu}" \
       "~{reference}" \

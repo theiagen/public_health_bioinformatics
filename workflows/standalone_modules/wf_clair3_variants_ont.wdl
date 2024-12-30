@@ -36,7 +36,7 @@ workflow clair3_variants_ont {
       samplename = samplename,
       mode = "map-ont",
       output_sam = true,
-      mapping_options = "-L --cs --MD" # recommended options for ONT data
+      long_read_flags = true
   }
   # Parse the minimap2 output to a sorted BAM file, and index it, expected by clair3
   call parse_mapping_task.sam_to_sorted_bam {
