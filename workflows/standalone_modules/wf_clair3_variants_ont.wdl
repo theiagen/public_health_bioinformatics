@@ -28,7 +28,7 @@ workflow clair3_variants_ont {
     Boolean? clair3_enable_gvcf
     Boolean? clair3_enable_long_indel
   }
-  # Call the minimap2 task with recommended options for ONT data, when we expand to PacBio need to refactor logic
+  # Call the minimap2 task with recommended options for ONT data
   call minimap2_task.minimap2 {
     input:
       query1 = read1,
@@ -90,3 +90,4 @@ workflow clair3_variants_ont {
     String clair3_model_used = clair3_variants.clair3_model_used
   }
 }
+
