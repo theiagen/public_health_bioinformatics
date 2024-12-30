@@ -30,7 +30,7 @@ PHB `Clair3_Variants` also supports 10 model configuration for `clair3` ONT. 3 p
 | clair3_variants_ont | **clair3_enable_gvcf** | Boolean | Output gVCF format | false | Optional |
 | clair3_variants_ont | **clair3_enable_haploid_precise** | Boolean | Enable haploid precise calling, only 1/1 is considered as a variant | true | Optional |
 | clair3_variants_ont | **clair3_enable_long_indel** | Boolean | Enable long indel calling | false | Optional |
-| clair3_variants_ont | **clair3_include_all_contigs** | Boolean | Call variants on all contigs | true | Optional |
+| clair3_variants_ont | **clair3_include_all_contigs** | Boolean | Call variants on all contigs, should always be true for non-human samples | true | Optional |
 | clair3_variants_ont | **clair3_memory** | Int | Memory allocation in GB | 8 | Optional |
 | clair3_variants_ont | **clair3_model** | String | Model name for variant calling, see latest models: https://github.com/nanoporetech/rerio?tab=readme-ov-file#clair3-models | r941_prom_hac_g360+g422 | Optional |
 | clair3_variants_ont | **clair3_variant_quality** | Int | Minimum variant quality score | 2 | Optional |
