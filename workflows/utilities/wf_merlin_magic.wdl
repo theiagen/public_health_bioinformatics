@@ -651,7 +651,7 @@ workflow merlin_magic {
       if (!assembly_only && !ont_data) {
         call snippy.snippy_variants as snippy_cauris { # no ONT support right now
           input:
-            reference_genome_file = cladetyper.clade_spec_ref,
+            reference_genome_file = cladetyper.annotated_reference,
             read1 = select_first([read1]),
             read2 = read2,
             samplename = samplename,
@@ -667,7 +667,7 @@ workflow merlin_magic {
           input:
             samplename = samplename,
             snippy_variants_results = snippy_cauris.snippy_variants_results,
-            reference = cladetyper.clade_spec_ref,
+            reference = cladetyper.annotated_reference,
             query_gene = select_first([snippy_query_gene, "FKS1,lanosterol.14-alpha.demethylase,uracil.phosphoribosyltransferase,B9J08_005340,B9J08_000401,B9J08_003102,B9J08_003737,B9J08_005343"]),
             docker = snippy_gene_query_docker_image
         }
@@ -1005,10 +1005,9 @@ workflow merlin_magic {
     # theiaeuk
     # c auris 
     String? clade_type = cladetyper.gambit_cladetype
-    String? cladetyper_analysis_date = cladetyper.date
-    String? cladetyper_version = cladetyper.version
+    String? cladetyper_version = cladetyper.gambit_version
     String? cladetyper_docker_image = cladetyper.gambit_cladetyper_docker_image
-    String? cladetype_annotated_ref = cladetyper.clade_spec_ref
+    String? cladetype_annotated_ref = cladetyper.annotated_reference
     # snippy variants
     String snippy_variants_reference_genome = select_first([snippy_cauris.snippy_variants_reference_genome, snippy_afumigatus.snippy_variants_reference_genome, snippy_crypto.snippy_variants_reference_genome, "gs://theiagen-public-files/terra/theiaeuk_files/no_match_detected.txt"])
     String snippy_variants_version = select_first([snippy_cauris.snippy_variants_version, snippy_afumigatus.snippy_variants_version, snippy_crypto.snippy_variants_version, "No matching taxon detected"])

@@ -51,9 +51,9 @@ Besides the data input types, there are minimal differences between these two wo
 | **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** | **Workflow** |
 |---|---|---|---|---|---|---|
 | *workflow_name | **kraken2_db** | File | A Kraken2 database in .tar.gz format |  | Required | ONT, PE, SE |
-| *workflow_name | **read1** | File |  |  | Required | ONT, PE, SE |
-| *workflow_name | **read2** | File |  |  | Required for PE only | PE |
-| *workflow_name | **samplename** | String |  |  | Required | ONT, PE, SE |
+| *workflow_name | **read1** | File | Forward read in FASTQ file format (compression optional) |  | Required | ONT, PE, SE |
+| *workflow_name | **read2** | File | Reverse Illumina read in FASTQ file format (compression optional) |  | Required for PE only | PE |
+| *workflow_name | **samplename** | String | Name of the sample being analyzed |  | Required | ONT, PE, SE |
 | kraken2_pe or kraken2_se | **classified_out** | String | Allows user to rename the classified FASTQ files output. Must include .fastq as the suffix | classified#.fastq | Optional | ONT, PE, SE |
 | kraken2_pe or kraken2_se | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional | ONT, PE, SE |
 | kraken2_pe or kraken2_se | **disk_size** | Int | GB of storage to request for VM used to run the kraken2 task. Increase this when using large (>30GB kraken2 databases such as the "k2_standard" database) | 100 | Optional | ONT, PE, SE |
