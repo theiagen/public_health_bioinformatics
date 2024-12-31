@@ -293,3 +293,8 @@ workflows:
    primaryDescriptorPath: /workflows/utilities/file_handling/wf_concatenate_illumina_lanes.wdl
    testParameterFiles:
      - /tests/inputs/empty.json
+ - name: Reference_Genome_Consensus_PHB
+   subclass: WDL
+   primaryDescriptorPath: /workflows/standalone_modules/wf_reference_genome_consensus.wdl
+   testParameterFiles:
+    - /tests/inputs/empty.json
