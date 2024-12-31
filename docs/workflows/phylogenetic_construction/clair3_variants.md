@@ -37,6 +37,19 @@ PHB `Clair3_Variants` also supports 10 model configuration for `clair3` ONT. 3 p
 | clair3_variants_ont | **read1** | File | ONT sequencing reads in FASTQ format | | Required |
 | clair3_variants_ont | **reference_genome_file** | File | Reference genome in FASTA format | | Required |
 | clair3_variants_ont | **samplename** | String | Name of Samples | | Required |
+| minimap2 | **cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional |
+| minimap2 | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
+| minimap2 | **docker** | String | Docker image used for this task. | "us-docker.pkg.dev/general-theiagen/staphb/minimap2:2.22" | Optional |
+| minimap2 | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional |
+| minimap2 | **query2** | File | Internal component. Do not modify | None | Do not modify, Optional |
+| sam_to_sorted_bam | **cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional |
+| sam_to_sorted_bam | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
+| sam_to_sorted_bam | **docker** | String | Docker image used for this task. | "us-docker.pkg.dev/general-theiagen/staphb/samtools:1.17" | Optional |
+| sam_to_sorted_bam | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional |
+| samtools_faidx | **cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional |
+| samtools_faidx | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
+| samtools_faidx | **docker** | String | Docker image used for this task. | "us-docker.pkg.dev/general-theiagen/staphb/samtools:1.17" | Optional |
+| samtools_faidx | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional |
 | version_capture | **docker** | String | Docker container for versioning | us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0 | Optional |
 | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
 
