@@ -4,7 +4,6 @@ task fastqc {
   input {
     File read1
     File read2
-
     Int memory = 4
     Int cpu = 2
     Int disk_size = 100

@@ -8,10 +8,9 @@ import "../../tasks/utilities/file_handling/task_samtools_process.wdl" as samtoo
 import "../../tasks/utilities/file_handling/task_filter_coverage.wdl" as filter_task
 import "../../tasks/polishing/task_medaka.wdl" as medaka_task
 
-workflow refnaap_workflow {
+workflow reference_genome_consensus {
   meta {
-    description: "A generalizable workflow for reference-guided genome assembly and analysis of an ONT sequencing file."
-    version: "1.0"
+    description: "A workflow for reference-guided genome assembly, read trimming, alignment, coverage filtering, and consensus sequence generation from ONT basecalled FASTQ files."
   }
   input {
     File fastq_file               # input FASTQ file
@@ -72,14 +71,11 @@ workflow refnaap_workflow {
   }
   output {
     File fastqc_report = fastqc_se.read1_fastqc_html
-    File trimmed_fastq_file = seqtk_trim.trimmed_fastq
     File read_length_plot = plot_read_length_distribution.read_length_plot
-    File aligned_sam_file = minimap2_align_ont.aligned_sam
-    File sorted_bam_file = samtools_process.sorted_bam_file
     File coverage_file = samtools_process.coverage_file
-    File scaffolds_fasta = filter_coverage.scaffolds_fasta
     File medaka_consensus_fasta = medaka_consensus.medaka_fasta
     String medaka_version = medaka_consensus.medaka_version
     String medaka_model = medaka_consensus.medaka_model
+    String samtools_version = samtools_process.samtools_version
   }
 }
