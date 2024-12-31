@@ -4634,7 +4634,7 @@
 <tr>
 <td><a href="../../../workflows_overview/workflows_type/#genomic-characterization">Genomic Characterization</a></td>
 <td><a href="../../../workflows_overview/workflows_kingdom/#mycotics">Mycotics</a></td>
-<td>PHB v2.3.0</td>
+<td>PHB vX.X.X</td>
 <td>Yes</td>
 <td>Sample-level</td>
 </tr>
@@ -6818,6 +6818,46 @@
 </thead>
 <tbody>
 <tr>
+<td>assembly_fasta</td>
+<td>File</td>
+<td><em>De novo</em> genome assembly in FASTA format</td>
+</tr>
+<tr>
+<td>assembly_length</td>
+<td>Int</td>
+<td>Length of assembly (total number of nucleotides) as determined by QUAST</td>
+</tr>
+<tr>
+<td>bbduk_docker</td>
+<td>String</td>
+<td>BBDuk docker image used</td>
+</tr>
+<tr>
+<td>busco_database</td>
+<td>String</td>
+<td>BUSCO database used</td>
+</tr>
+<tr>
+<td>busco_docker</td>
+<td>String</td>
+<td>BUSCO docker image used</td>
+</tr>
+<tr>
+<td>busco_report</td>
+<td>File</td>
+<td>A plain text summary of the results in BUSCO notation</td>
+</tr>
+<tr>
+<td>busco_results</td>
+<td>String</td>
+<td>BUSCO results (see above for explanation of BUSCO notation)</td>
+</tr>
+<tr>
+<td>busco_version</td>
+<td>String</td>
+<td>BUSCO software version used</td>
+</tr>
+<tr>
 <td>cg_pipeline_docker</td>
 <td>String</td>
 <td>Docker file used for running CG-Pipeline on cleaned reads</td>
@@ -6828,14 +6868,79 @@
 <td>TSV file of read metrics from raw reads, including average read length, number of reads, and estimated genome coverage</td>
 </tr>
 <tr>
+<td>cladetyper_annotated_reference</td>
+<td>String</td>
+<td>The annotated reference file for the identified clade, "None" if no clade was identified</td>
+</tr>
+<tr>
+<td>cladetyper_clade</td>
+<td>String</td>
+<td>The clade assigned to the input assembly</td>
+</tr>
+<tr>
+<td>cladetyper_docker_image</td>
+<td>String</td>
+<td>The Docker container used for the task</td>
+</tr>
+<tr>
+<td>cladetyper_gambit_version</td>
+<td>String</td>
+<td>The version of GAMBIT used for the analysis</td>
+</tr>
+<tr>
+<td>combined_mean_q_clean</td>
+<td>Float</td>
+<td>Mean quality score for the combined clean reads</td>
+</tr>
+<tr>
+<td>combined_mean_q_raw</td>
+<td>Float</td>
+<td>Mean quality score for the combined raw reads</td>
+</tr>
+<tr>
+<td>combined_mean_readlength_clean</td>
+<td>Float</td>
+<td>Mean read length for the combined clean reads</td>
+</tr>
+<tr>
+<td>combined_mean_readlength_raw</td>
+<td>Float</td>
+<td>Mean read length for the combined raw reads</td>
+</tr>
+<tr>
+<td>contigs_fastg</td>
+<td>File</td>
+<td>Assembly graph if megahit used for genome assembly</td>
+</tr>
+<tr>
+<td>contigs_gfa</td>
+<td>File</td>
+<td>Assembly graph if spades used for genome assembly</td>
+</tr>
+<tr>
+<td>contigs_lastgraph</td>
+<td>File</td>
+<td>Assembly graph if velvet used for genome assembly</td>
+</tr>
+<tr>
 <td>est_coverage_clean</td>
 <td>Float</td>
-<td>Estimated coverage calculated from   clean reads and genome length</td>
+<td>Estimated coverage calculated from clean reads and genome length</td>
 </tr>
 <tr>
 <td>est_coverage_raw</td>
 <td>Float</td>
-<td>Estimated coverage calculated from  raw reads and genome length</td>
+<td>Estimated coverage calculated from raw reads and genome length</td>
+</tr>
+<tr>
+<td>fastp_html_report</td>
+<td>File</td>
+<td>The HTML report made with fastp</td>
+</tr>
+<tr>
+<td>fastp_version</td>
+<td>String</td>
+<td>Version of fastp software used</td>
 </tr>
 <tr>
 <td>fastq_scan_clean1_json</td>
@@ -6848,6 +6953,41 @@
 <td>JSON file output from <code>fastq-scan</code> containing summary stats about clean reverse read quality and length</td>
 </tr>
 <tr>
+<td>fastq_scan_num_reads_clean_pairs</td>
+<td>String</td>
+<td>Number of read pairs after cleaning as calculated by fastq_scan</td>
+</tr>
+<tr>
+<td>fastq_scan_num_reads_clean1</td>
+<td>Int</td>
+<td>Number of forward reads after cleaning as calculated by fastq_scan</td>
+</tr>
+<tr>
+<td>fastq_scan_num_reads_clean2</td>
+<td>Int</td>
+<td>Number of reverse reads after cleaning as calculated by fastq_scan</td>
+</tr>
+<tr>
+<td>fastq_scan_num_reads_raw_pairs</td>
+<td>String</td>
+<td>Number of input read pairs calculated by fastq_scan</td>
+</tr>
+<tr>
+<td>fastq_scan_num_reads_raw1</td>
+<td>Int</td>
+<td>Number of input forward reads calculated by fastq_scan</td>
+</tr>
+<tr>
+<td>fastq_scan_num_reads_raw2</td>
+<td>Int</td>
+<td>Number of input reverse reads calculated by fastq_scan</td>
+</tr>
+<tr>
+<td>fastq_scan_num_reads_raw_pairs</td>
+<td>String</td>
+<td>Number of input read pairs calculated by fastq_scan</td>
+</tr>
+<tr>
 <td>fastq_scan_raw1_json</td>
 <td>File</td>
 <td>JSON file output from <code>fastq-scan</code> containing summary stats about raw forward read quality and length</td>
@@ -6858,29 +6998,69 @@
 <td>JSON file output from <code>fastq-scan</code> containing summary stats about raw reverse read quality and length</td>
 </tr>
 <tr>
-<td>r1_mean_q_clean</td>
-<td>Float</td>
-<td>Mean quality score of clean forward reads</td>
-</tr>
-<tr>
-<td>r1_mean_q_raw</td>
-<td>Float</td>
-<td>Mean quality score of raw forward reads</td>
-</tr>
-<tr>
-<td>r2_mean_q_clean</td>
-<td>Float</td>
-<td>Mean quality score of clean reverse reads</td>
-</tr>
-<tr>
-<td>r2_mean_q_raw</td>
-<td>Float</td>
-<td>Mean quality score of raw reverse reads</td>
-</tr>
-<tr>
 <td>fastq_scan_version</td>
 <td>String</td>
 <td>Version of fastq-scan software used</td>
+</tr>
+<tr>
+<td>fastqc_clean1_html</td>
+<td>File</td>
+<td>Graphical visualization of clean forward read quality from fastqc to open in an internet browser</td>
+</tr>
+<tr>
+<td>fastqc_clean2_html</td>
+<td>File</td>
+<td>Graphical visualization of clean reverse read quality from fastqc to open in an internet browser</td>
+</tr>
+<tr>
+<td>fastqc_docker</td>
+<td>String</td>
+<td>Docker container used with fastqc</td>
+</tr>
+<tr>
+<td>fastqc_num_reads_clean1</td>
+<td>Int</td>
+<td>Number of forward reads after cleaning by fastqc</td>
+</tr>
+<tr>
+<td>fastqc_num_reads_clean2</td>
+<td>Int</td>
+<td>Number of reverse reads after cleaning by fastqc</td>
+</tr>
+<tr>
+<td>fastqc_num_reads_clean_pairs</td>
+<td>String</td>
+<td>Number of read pairs after cleaning by fastqc</td>
+</tr>
+<tr>
+<td>fastqc_num_reads_raw1</td>
+<td>Int</td>
+<td>Number of input reverse reads by fastqc</td>
+</tr>
+<tr>
+<td>fastqc_num_reads_raw2</td>
+<td>Int</td>
+<td>Number of input reverse reads by fastqc</td>
+</tr>
+<tr>
+<td>fastqc_num_reads_raw_pairs</td>
+<td>String</td>
+<td>Number of input read pairs by fastqc</td>
+</tr>
+<tr>
+<td>fastqc_raw1_html</td>
+<td>File</td>
+<td>Graphical visualization of raw forward read quality from fastqc to open in an internet browser</td>
+</tr>
+<tr>
+<td>fastqc_raw2_html</td>
+<td>File</td>
+<td>Graphical visualization of raw reverse read qualityfrom fastqc to open in an internet browser</td>
+</tr>
+<tr>
+<td>fastqc_version</td>
+<td>String</td>
+<td>Version of fastqc software used</td>
 </tr>
 <tr>
 <td>gambit_closest_genomes</td>
@@ -6918,11 +7098,6 @@
 <td>Version of GAMBIT software used</td>
 </tr>
 <tr>
-<td>assembly_length</td>
-<td>Int</td>
-<td>Length of assembly (total contig length) as determined by QUAST</td>
-</tr>
-<tr>
 <td>n50_value</td>
 <td>Int</td>
 <td>N50 of assembly calculated by QUAST</td>
@@ -6931,6 +7106,21 @@
 <td>number_contigs</td>
 <td>Int</td>
 <td>Total number of contigs in assembly</td>
+</tr>
+<tr>
+<td>qc_check</td>
+<td>String</td>
+<td>A string that indicates whether or not the sample passes a set of pre-determined and user-provided QC thresholds</td>
+</tr>
+<tr>
+<td>qc_standard</td>
+<td>File</td>
+<td>The user-provided file that contains the QC thresholds used for the QC check</td>
+</tr>
+<tr>
+<td>quast_gc_percent</td>
+<td>Float</td>
+<td>The GC percent of your sample</td>
 </tr>
 <tr>
 <td>quast_report</td>
@@ -6943,29 +7133,29 @@
 <td>Software version of QUAST used</td>
 </tr>
 <tr>
+<td>r1_mean_q_raw</td>
+<td>Float</td>
+<td>Mean quality score of raw forward reads</td>
+</tr>
+<tr>
+<td>r1_mean_readlength_raw</td>
+<td>Float</td>
+<td>Mean read length of raw forward reads</td>
+</tr>
+<tr>
+<td>r2_mean_q_raw</td>
+<td>Float</td>
+<td>Mean quality score of raw reverse reads</td>
+</tr>
+<tr>
+<td>r2_mean_readlength_clean</td>
+<td>Float</td>
+<td>Mean read length of clean reverse reads</td>
+</tr>
+<tr>
 <td>rasusa_version</td>
 <td>String</td>
 <td>Version of rasusa used</td>
-</tr>
-<tr>
-<td>read1_subsampled</td>
-<td>File</td>
-<td>Subsampled read1 file</td>
-</tr>
-<tr>
-<td>read2_subsampled</td>
-<td>File</td>
-<td>Subsampled read2 file</td>
-</tr>
-<tr>
-<td>bbduk_docker</td>
-<td>String</td>
-<td>BBDuk docker image used</td>
-</tr>
-<tr>
-<td>fastp_version</td>
-<td>String</td>
-<td>Version of fastp software used</td>
 </tr>
 <tr>
 <td>read1_clean</td>
@@ -6973,74 +7163,34 @@
 <td>Clean forward reads file</td>
 </tr>
 <tr>
+<td>read1_subsampled</td>
+<td>File</td>
+<td>Subsampled read1 file</td>
+</tr>
+<tr>
 <td>read2_clean</td>
 <td>File</td>
 <td>Clean reverse reads file</td>
 </tr>
 <tr>
-<td>num_reads_clean_pairs</td>
-<td>String</td>
-<td>Number of read pairs after cleaning</td>
+<td>read2_subsampled</td>
+<td>File</td>
+<td>Subsampled read2 file</td>
 </tr>
 <tr>
-<td>num_reads_clean1</td>
-<td>Int</td>
-<td>Number of forward reads after cleaning</td>
-</tr>
-<tr>
-<td>num_reads_clean2</td>
-<td>Int</td>
-<td>Number of reverse reads after cleaning</td>
-</tr>
-<tr>
-<td>num_reads_raw_pairs</td>
-<td>String</td>
-<td>Number of input read pairs</td>
-</tr>
-<tr>
-<td>num_reads_raw1</td>
-<td>Int</td>
-<td>Number of input forward reads</td>
-</tr>
-<tr>
-<td>num_reads_raw2</td>
-<td>Int</td>
-<td>Number of input reverse reads</td>
-</tr>
-<tr>
-<td>trimmomatic_version</td>
-<td>String</td>
-<td>Version of trimmomatic used</td>
-</tr>
-<tr>
-<td>clean_read_screen</td>
+<td>read_screen_clean</td>
 <td>String</td>
 <td>PASS or FAIL result from clean read screening; FAIL accompanied by the reason for failure</td>
 </tr>
 <tr>
-<td>raw_read_screen</td>
+<td>read_screen_raw</td>
 <td>String</td>
 <td>PASS or FAIL result from raw read screening; FAIL accompanied by thereason for failure</td>
 </tr>
 <tr>
-<td>assembly_fasta</td>
-<td>File</td>
-<td><a href="https://github.com/tseemann/shovill#contigsfa">https://github.com/tseemann/shovill#contigsfa</a></td>
-</tr>
-<tr>
-<td>contigs_fastg</td>
-<td>File</td>
-<td>Assembly graph if megahit used for genome assembly</td>
-</tr>
-<tr>
-<td>contigs_gfa</td>
-<td>File</td>
-<td>Assembly graph if spades used for genome assembly</td>
-</tr>
-<tr>
-<td>contigs_lastgraph</td>
-<td>File</td>
-<td>Assembly graph if velvet used for genome assembly</td>
+<td>seq_platform</td>
+<td>String</td>
+<td>Sequencing platform input by the user</td>
 </tr>
 <tr>
 <td>shovill_pe_version</td>
@@ -7048,9 +7198,29 @@
 <td>Shovill version used</td>
 </tr>
 <tr>
+<td>theiaeuk_illumina_pe_analysis_date</td>
+<td>String</td>
+<td>Date of TheiaEuk PE workflow execution</td>
+</tr>
+<tr>
+<td>theiaeuk_illumina_pe_version</td>
+<td>String</td>
+<td>TheiaEuk PE workflow version used</td>
+</tr>
+<tr>
+<td>theiaeuk_snippy_variants_bai</td>
+<td>String</td>
+<td>BAI file produced by the snippy module</td>
+</tr>
+<tr>
 <td>theiaeuk_snippy_variants_bam</td>
-<td>File</td>
+<td>String</td>
 <td>BAM file produced by the snippy module</td>
+</tr>
+<tr>
+<td>theiaeuk_snippy_variants_coverage_tsv</td>
+<td>String</td>
+<td>TSV file containing coverage information for each base in the reference genome</td>
 </tr>
 <tr>
 <td>theiaeuk_snippy_variants_gene_query_results</td>
@@ -7063,9 +7233,24 @@
 <td>String of all variant file entries matching gene query term</td>
 </tr>
 <tr>
+<td>theiaeuk_snippy_variants_num_reads_aligned</td>
+<td>String</td>
+<td>Number of reads aligned by snippy</td>
+</tr>
+<tr>
+<td>theiaeuk_snippy_variants_num_variants</td>
+<td>Int</td>
+<td>Number of variants detected by snippy</td>
+</tr>
+<tr>
 <td>theiaeuk_snippy_variants_outdir_tarball</td>
 <td>File</td>
 <td>Tar compressed file containing full snippy output directory</td>
+</tr>
+<tr>
+<td>theiaeuk_snippy_variants_percent_ref_coverage</td>
+<td>String</td>
+<td>Percent of reference genome covered by snippy</td>
 </tr>
 <tr>
 <td>theiaeuk_snippy_variants_query</td>
@@ -7098,19 +7283,14 @@
 <td>The version of the snippy_variants module being used</td>
 </tr>
 <tr>
-<td>seq_platform</td>
+<td>trimmomatic_docker</td>
 <td>String</td>
-<td>Sequencing platform inout by the user</td>
+<td>Docker image used for trimmomatic</td>
 </tr>
 <tr>
-<td>theiaeuk_illumina_pe_analysis_date</td>
+<td>trimmomatic_version</td>
 <td>String</td>
-<td>Date of TheiaProk workflow execution</td>
-</tr>
-<tr>
-<td>theiaeuk_illumina_pe_version</td>
-<td>String</td>
-<td>TheiaProk workflow version used</td>
+<td>Version of trimmomatic used</td>
 </tr>
 </tbody>
 </table>

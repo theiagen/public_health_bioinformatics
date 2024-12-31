@@ -1625,6 +1625,15 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      References
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -2719,6 +2728,15 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      References
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -3476,6 +3494,15 @@
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      References
+    </span>
+  </a>
   
 </li>
       
@@ -4432,6 +4459,15 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      References
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -4451,10 +4487,6 @@
 
 
 <h1 id="cauris_cladetyper">Cauris_CladeTyper<a class="headerlink" href="#cauris_cladetyper" title="Permanent link">&para;</a></h1>
-<div class="admonition warning">
-<p class="admonition-title">NEEDS WORK!!!!</p>
-<p>This page is under construction and will be updated soon.</p>
-</div>
 <h2 id="quick-facts">Quick Facts<a class="headerlink" href="#quick-facts" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -4470,18 +4502,319 @@
 <tr>
 <td><a href="../../../workflows_overview/workflows_type/#standalone">Standalone</a></td>
 <td><a href="../../../workflows_overview/workflows_kingdom/#mycotics">Mycotics</a></td>
-<td>PHB v1.0.0</td>
+<td>PHB vX.X.X</td>
 <td>Yes</td>
 <td>Sample-level</td>
 </tr>
 </tbody>
 </table>
 <h2 id="cauris_cladetyper_phb">Cauris_CladeTyper_PHB<a class="headerlink" href="#cauris_cladetyper_phb" title="Permanent link">&para;</a></h2>
-<p>The Cauris_CladeTyper_PHB Workflow is designed to assign clade to <em>Candida auris</em> Whole Genome Sequencing assemblies based on their genomic sequence similarity to the five clade-specific reference files. Clade typing is essential for understanding the epidemiology and evolutionary dynamics of this emerging multidrug-resistant fungal pathogen.</p>
+<p>The Cauris_CladeTyper_PHB Workflow is designed to assign the clade to <em>Candida auris</em> (also known as <em>Candidozyma auris</em>) WGS assemblies based on their genomic sequence similarity to the five clade-specific reference files. Clade typing is essential for understanding the epidemiology and evolutionary dynamics of this emerging multidrug-resistant fungal pathogen.</p>
 <h3 id="inputs">Inputs<a class="headerlink" href="#inputs" title="Permanent link">&para;</a></h3>
+<div class="searchable-table">
+<table>
+<thead>
+<tr>
+<th><strong>Terra Task Name</strong></th>
+<th><strong>Variable</strong></th>
+<th><strong>Type</strong></th>
+<th><strong>Description</strong></th>
+<th><strong>Default Value</strong></th>
+<th><strong>Terra Status</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>cauris_cladetyper</td>
+<td><strong>assembly_fasta</strong></td>
+<td>File</td>
+<td>The input assembly file in FASTA format</td>
+<td></td>
+<td>Required</td>
+</tr>
+<tr>
+<td>cauris_cladetyper</td>
+<td><strong>samplename</strong></td>
+<td>String</td>
+<td>The name of the sample being analyzed</td>
+<td></td>
+<td>Required</td>
+</tr>
+<tr>
+<td>cladetyper</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>8</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>cladetyper</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>100</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>cladetyper</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>"us-docker.pkg.dev/general-theiagen/biocontainers/hesslab-gambit:0.5.1--py37h8902056_0"</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>cladetyper</td>
+<td><strong>kmer_size</strong></td>
+<td>Int</td>
+<td>The kmer size to use for generating the GAMBIT signatures file; see GAMBIT documentation for more details</td>
+<td>11</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>cladetyper</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>16</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>cladetyper</td>
+<td><strong>ref_clade1</strong></td>
+<td>File</td>
+<td>The reference assembly for clade 1</td>
+<td>gs://theiagen-public-files/terra/candida_auris_refs/Cauris_Clade1_GCA_002759435.2_Cand_auris_B8441_V2_genomic.fasta</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>cladetyper</td>
+<td><strong>ref_clade1_annotated</strong></td>
+<td>String</td>
+<td>The path to the annotated reference for clade 1</td>
+<td>"gs://theiagen-public-files/terra/candida_auris_refs/Cauris_Clade1_GCA_002759435_Cauris_B8441_V2_genomic.gbff"</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>cladetyper</td>
+<td><strong>ref_clade2</strong></td>
+<td>File</td>
+<td>The reference assembly for clade 2</td>
+<td>gs://theiagen-public-files/terra/candida_auris_refs/Cauris_Clade2_GCA_003013715.2_ASM301371v2_genomic.fasta</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>cladetyper</td>
+<td><strong>ref_clade2_annotated</strong></td>
+<td>String</td>
+<td>The path to the annotated reference for clade 2</td>
+<td>"gs://theiagen-public-files/terra/candida_auris_refs/Cauris_Clade2_GCA_003013715.2_ASM301371v2_genomic.gbff"</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>cladetyper</td>
+<td><strong>ref_clade3</strong></td>
+<td>File</td>
+<td>The reference assembly for clade 3</td>
+<td>gs://theiagen-public-files/terra/candida_auris_refs/Cauris_Clade3_reference.fasta</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>cladetyper</td>
+<td><strong>ref_clade3_annotated</strong></td>
+<td>String</td>
+<td>The path to the annotated reference for clade 3</td>
+<td>"gs://theiagen-public-files/terra/candida_auris_refs/Cauris_Clade3_GCF_002775015.1_Cand_auris_B11221_V1_genomic.gbff"</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>cladetyper</td>
+<td><strong>ref_clade4</strong></td>
+<td>File</td>
+<td>The reference assembly for clade 4</td>
+<td>gs://theiagen-public-files/terra/candida_auris_refs/Cauris_Clade4_reference.fasta</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>cladetyper</td>
+<td><strong>ref_clade4_annotated</strong></td>
+<td>String</td>
+<td>The path to the annotated reference for clade 4</td>
+<td>"gs://theiagen-public-files/terra/candida_auris_refs/Cauris_Clade4_GCA_003014415.1_Cand_auris_B11243_genomic.gbff"</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>cladetyper</td>
+<td><strong>ref_clade5</strong></td>
+<td>File</td>
+<td>The reference assembly for clade 5</td>
+<td>gs://theiagen-public-files/terra/candida_auris_refs/Cauris_Clade5_GCA_016809505.1_ASM1680950v1_genomic.fasta</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>cladetyper</td>
+<td><strong>ref_clade5_annotated</strong></td>
+<td>String</td>
+<td>The path to the annotated reference for clade 5</td>
+<td>"gs://theiagen-public-files/terra/candida_auris_refs/Cauris_Clade5_GCA_016809505.1_ASM1680950v1_genomic.gbff"</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>version_capture</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>"us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0"</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>version_capture</td>
+<td><strong>timezone</strong></td>
+<td>String</td>
+<td>Set the time zone to get an accurate date of analysis (uses UTC by default)</td>
+<td></td>
+<td>Optional</td>
+</tr>
+</tbody>
+</table>
+</div>
 <h3 id="workflow-tasks">Workflow Tasks<a class="headerlink" href="#workflow-tasks" title="Permanent link">&para;</a></h3>
-<p>The Cauris_Cladetyper Workflow for <em>Candida auris</em> employs GAMBIT for taxonomic identification, comparing whole genome sequencing data against reference databases to accurately classify <em>Candida auris</em> isolates. A custom database featuring five clade-specific <em>Candida auris</em> reference genomes facilitates clade typing. Sequences undergo genomic signature comparison against the custom database, enabling assignment to one of the five <em>Candida auris</em> clades (Clade I to Clade V) based on sequence similarity and phylogenetic relationships. This integrated approach ensures precise clade assignments, crucial for understanding the genetic diversity and epidemiology of <em>Candida auris</em>.</p>
+<details class="task">
+<summary>Cauris_Cladetyper</summary>
+<p>The Cauris_Cladetyper Workflow for <em>Candida auris</em> employs GAMBIT for taxonomic identification, comparing whole genome sequencing data against reference databases to accurately classify <em>Candida auris</em> isolates.</p>
+<p>A custom GAMBIT database is created using five clade-specific <em>Candida auris</em> reference genomes. Sequences undergo genomic signature comparison against this database, which then enables assignment to one of the five <em>Candida auris</em> clades (Clade I to Clade V) based on sequence similarity and phylogenetic relationships. This integrated approach ensures precise clade assignments, crucial for understanding the genetic diversity and epidemiology of <em>Candida auris</em>.</p>
+<p>See more information on the reference information for the five clades below:</p>
+<table>
+<thead>
+<tr>
+<th>Clade</th>
+<th>Genome Accession</th>
+<th>Assembly Name</th>
+<th>Strain</th>
+<th>BioSample Accession</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Clade I</td>
+<td>GCA_002759435.2</td>
+<td>Cand_auris_B8441_V2</td>
+<td>B8441</td>
+<td>SAMN05379624</td>
+</tr>
+<tr>
+<td>Clade II</td>
+<td>GCA_003013715.2</td>
+<td>ASM301371v2</td>
+<td>B11220</td>
+<td>SAMN05379608</td>
+</tr>
+<tr>
+<td>Clade III</td>
+<td>GCA_002775015.1</td>
+<td>Cand_auris_B11221_V1</td>
+<td>B11221</td>
+<td>SAMN05379609</td>
+</tr>
+<tr>
+<td>Clade IV</td>
+<td>GCA_003014415.1</td>
+<td>Cand_auris_B11243</td>
+<td>B11243</td>
+<td>SAMN05379619</td>
+</tr>
+<tr>
+<td>Clade V</td>
+<td>GCA_016809505.1</td>
+<td>ASM1680950v1</td>
+<td>IFRC2087</td>
+<td>SAMN11570381</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition techdetails">
+<p class="admonition-title">Cauris_Cladetyper Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/candida/task_cauris_cladetyper.wdl">task_cauris_cladetyper.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/jlumpe/gambit">GAMBIT on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://theiagen.notion.site/GAMBIT-7c1376b861d0486abfbc316480046bdc?pvs=4">GAMBIT Overview</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0277575">GAMBIT (Genomic Approximation Method for Bacterial Identification and Tracking): A methodology to rapidly leverage whole genome sequencing of bacterial isolates for clinical identification</a> <br> <a href="https://doi.org/10.3389/fpubh.2023.1198213">TheiaEuk: a species-agnostic bioinformatics workflow for fungal genomic characterization</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
 <h3 id="outputs">Outputs<a class="headerlink" href="#outputs" title="Permanent link">&para;</a></h3>
+<div class="searchable-table">
+<table>
+<thead>
+<tr>
+<th><strong>Variable</strong></th>
+<th><strong>Type</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>cauris_cladetyper_wf_analysis_date</td>
+<td>String</td>
+<td>Date of analysis</td>
+</tr>
+<tr>
+<td>cauris_cladetyper_wf_version</td>
+<td>String</td>
+<td>Version of PHB used for the analysis</td>
+</tr>
+<tr>
+<td>cladetyper_annotated_reference</td>
+<td>String</td>
+<td>The annotated reference file for the identified clade, "None" if no clade was identified</td>
+</tr>
+<tr>
+<td>cladetyper_clade</td>
+<td>String</td>
+<td>The clade assigned to the input assembly</td>
+</tr>
+<tr>
+<td>cladetyper_docker_image</td>
+<td>String</td>
+<td>The Docker container used for the task</td>
+</tr>
+<tr>
+<td>cladetyper_gambit_version</td>
+<td>String</td>
+<td>The version of GAMBIT used for the analysis</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>Lumpe J, Gumbleton L, Gorzalski A, Libuit K, Varghese V, Lloyd T, et al. (2023) GAMBIT (Genomic Approximation Method for Bacterial Identification and Tracking): A methodology to rapidly leverage whole genome sequencing of bacterial isolates for clinical identification. PLoS ONE 18(2): e0277575. <a href="https://doi.org/10.1371/journal.pone.0277575">https://doi.org/10.1371/journal.pone.0277575</a></p>
+</blockquote>
+<!-- -->
+<blockquote>
+<p>Ambrosio, Frank, Michelle Scribner, Sage Wright, James Otieno, Emma Doughty, Andrew Gorzalski, Danielle Siao, et al. 2023. "TheiaEuk: A Species-Agnostic Bioinformatics Workflow for Fungal Genomic Characterization." Frontiers in Public Health 11. <a href="https://doi.org/10.3389/fpubh.2023.1198213">https://doi.org/10.3389/fpubh.2023.1198213</a>.</p>
+</blockquote>
 
 
 
@@ -4504,7 +4837,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2024-09-11</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2024-12-31</span>
   </span>
 
     
