@@ -601,7 +601,6 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
 | assembly_fasta | File | _De novo_ genome assembly in FASTA format |
 | assembly_length | Int | Length of assembly (total number of nucleotides) as determined by QUAST |
 | bbduk_docker| String | BBDuk docker image used |
-| bbduk_docker | String | BBDuk docker image used |
 | busco_database | String | BUSCO database used |
 | busco_docker | String | BUSCO docker image used |
 | busco_report | File | A plain text summary of the results in BUSCO notation |
@@ -617,8 +616,6 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
 | combined_mean_q_raw | Float | Mean quality score for the combined raw reads |
 | combined_mean_readlength_clean | Float | Mean read length for the combined clean reads |
 | combined_mean_readlength_raw | Float | Mean read length for the combined raw reads |
-| est_coverage_clean | Float | Estimated coverage calculated from   clean reads and genome length |
-| est_coverage_raw | Float | Estimated coverage calculated from  raw reads and genome length |
 | contigs_fastg | File | Assembly graph if megahit used for genome assembly |
 | contigs_gfa | File | Assembly graph if spades used for genome assembly |
 | contigs_lastgraph | File | Assembly graph if velvet used for genome assembly |
