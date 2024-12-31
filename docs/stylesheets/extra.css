@@ -173,6 +173,7 @@
 table {
   overflow-y: scroll;
   max-height: 500px;
+  max-width: 100vw;
   display: block;
 }
 th {
@@ -183,6 +184,7 @@ th {
 }
 td {
   word-break: break-all;
+  overflow-wrap: anywhere;
 }
 /* Base styles for the search box */
 div.searchable-table input.table-search-input {
