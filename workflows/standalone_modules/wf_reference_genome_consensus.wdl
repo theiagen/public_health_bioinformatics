@@ -16,6 +16,7 @@ workflow reference_genome_consensus {
     File fastq_file               # input FASTQ file
     File reference_file           # Reference genome file
     String sample_name            # Sample name for output file naming
+    String? medaka_model_override
     Int? left_trim           
     Int? right_trim
     Int? min_length
@@ -67,6 +68,7 @@ workflow reference_genome_consensus {
     input:
       unpolished_fasta = filter_coverage.scaffolds_fasta,
       samplename = sample_name,
+      medaka_model_override = medaka_model_override,
       read1 = fastq_file
   }
   output {
