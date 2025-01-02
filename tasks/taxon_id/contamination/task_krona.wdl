@@ -6,7 +6,7 @@ task krona {
     String samplename
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/krona:2.8.1"
     Int memory = 8
-    Int cpu = 4
+    Int cpu = 2
     Int disk_size = 100
   }
   command <<<
