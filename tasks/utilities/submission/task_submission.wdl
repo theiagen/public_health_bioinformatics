@@ -51,12 +51,6 @@ task prune_table {
   # Debug: Check column names after mapping
   print("Updated column names:", table.columns.tolist())
 
-  # Validate required columns - consider this if we need to validate the certain columns
-  # required_columns = ["submission_id", "organism", "collection_date", "geo_loc_name"]
-  # missing_columns = [col for col in required_columns if col not in table.columns]
-  # if missing_columns:
-  #     raise ValueError(f"Missing required columns after mapping: {', '.join(missing_columns)}")
-
   # Save updated table
   table.to_csv("~{table_name}-data-renamed.tsv", sep="\t", index=False)
   CODE
@@ -71,7 +65,7 @@ task prune_table {
         export skip_bio="false"
       fi
 
-      # Additional metadata  Processing (e.g., removing NA values, validating metadata)
+      # Additional metadata Processing (e.g., removing NA values, validating metadata)
       python3 <<CODE 
   import pandas as pd
   import numpy as np
@@ -103,7 +97,7 @@ task prune_table {
   sample_names = "~{sep='*' sample_names}".split("*")
   table = table[table[expected_column].isin(sample_names)]
 
-  # Debugging output sample anmes and column  names
+  # Debugging output sample names and column names
   print("Sample names:", sample_names)
   print("Column names:", table.columns.tolist())
 
