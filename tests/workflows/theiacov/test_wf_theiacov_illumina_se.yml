@@ -93,9 +93,9 @@
       md5sum: cb58af9eb139d109b55ce65d6d2344d6
     # clean read screen
     - path: miniwdl_run/call-clean_check_reads/command
-      md5sum: 80a361915a627e86743baacfc383b2b5
+      md5sum: 12b45a751d777ab7b936a0740aba3827
     - path: miniwdl_run/call-clean_check_reads/inputs.json
-      contains: ["read1", "organism"]
+      contains: ["read1"]
     - path: miniwdl_run/call-clean_check_reads/outputs.json
       contains: ["check_reads_se", "genome_length", "read_screen"]
     - path: miniwdl_run/call-clean_check_reads/stderr.txt
