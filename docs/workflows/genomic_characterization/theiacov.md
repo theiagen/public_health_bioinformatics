@@ -55,15 +55,15 @@ Additionally, the **TheiaCoV_FASTA_Batch** workflow is available to process seve
 
 ### Supported Organisms
 
-These workflows currently support the following organisms:
+These workflows currently support the following organisms. The first option in the list (bolded) is what our workflows use as the _standardized_ organism name:
 
-- **SARS-CoV-2** (`"sars-cov-2"`, `"SARS-CoV-2"`) - ==_default organism input_==
-- **Monkeypox virus** (`"MPXV"`, `"mpox"`, `"monkeypox"`, `"Monkeypox virus"`, `"Mpox"`)
-- **Human Immunodeficiency Virus** (`"HIV"`)
-- **West Nile Virus** (`"WNV"`, `"wnv"`, `"West Nile virus"`)
-- **Influenza** (`"flu"`, `"influenza"`, `"Flu"`, `"Influenza"`)
-- **RSV-A** (`"rsv_a"`, `"rsv-a"`, `"RSV-A"`, `"RSV_A"`)
-- **RSV-B** (`"rsv_b"`, `"rsv-b"`, `"RSV-B"`, `"RSV_B"`)
+- **SARS-CoV-2** (**`"sars-cov-2"`**, `"SARS-CoV-2"`) - ==_default organism input_==
+- **Monkeypox virus** (**`"MPXV"`**, `"mpox"`, `"monkeypox"`, `"Monkeypox virus"`, `"Mpox"`)
+- **Human Immunodeficiency Virus** (**`"HIV"`**)
+- **West Nile Virus** (**`"WNV"`**, `"wnv"`, `"West Nile virus"`)
+- **Influenza** (**`"flu"`**, `"influenza"`, `"Flu"`, `"Influenza"`)
+- **RSV-A** (**`"rsv_a"`**, `"rsv-a"`, `"RSV-A"`, `"RSV_A"`)
+- **RSV-B** (**`"rsv_b"`**, `"rsv-b"`, `"RSV-B"`, `"RSV_B"`)
 
 The compatibility of each workflow with each pathogen is shown below:
 
@@ -170,7 +170,7 @@ All TheiaCoV Workflows (not TheiaCoV_FASTA_Batch)
 | flu_track | **genoflu_cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional | FASTA, ONT, PE | flu |
 | flu_track | **genoflu_cross_reference** | File | An Excel file to cross-reference BLAST findings; probably useful if novel genotypes are not in the default file used by genoflu.py | | Optional | FASTA, ONT, PE | |
 | flu_track | **genoflu_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 25 | Optional | FASTA, ONT, PE | |
-| flu_track | **genoflu_docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/genoflu:1.03 | Optional | FASTA, ONT, PE | |
+| flu_track | **genoflu_docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/genoflu:1.05 | Optional | FASTA, ONT, PE | |
 | flu_track | **genoflu_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 2 | Optional | FASTA, ONT, PE | |
 | flu_track | **irma_cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional | ONT, PE | flu |
 | flu_track | **irma_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | ONT, PE | flu |
@@ -836,6 +836,30 @@ All input reads are processed through "core tasks" in the TheiaCoV Illumina, ONT
         | Software Source Code | [NCBI Scrub on GitHub](https://github.com/ncbi/sra-human-scrubber)<br>[Artic on GitHub](https://github.com/artic-network/fieldbioinformatics)<br>[Kraken2 on GitHub](https://github.com/DerrickWood/kraken2/) |
         | Software Documentation | [NCBI Scrub](<https://github.com/ncbi/sra-human-scrubber/blob/master/README.md>)<br>[Artic pipeline](https://artic.readthedocs.io/en/latest/?badge=latest)<br>[Kraken2](https://github.com/DerrickWood/kraken2/wiki) |
         | Original Publication(s) | [STAT: a fast, scalable, MinHash-based *k*-mer tool to assess Sequence Read Archive next-generation sequence submissions](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-021-02490-0)<br>[Improved metagenomic analysis with Kraken 2](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1891-0)  |
+
+??? task "`qc_check`: Check QC Metrics Against User-Defined Thresholds (optional)"
+
+    The `qc_check` task compares generated QC metrics against user-defined thresholds for each metric. This task will run if the user provides a `qc_check_table` TSV file. If all QC metrics meet the threshold, the `qc_check` output variable will read `QC_PASS`. Otherwise, the output will read `QC_NA` if the task could not proceed or `QC_ALERT` followed by a string indicating what metric failed.
+
+    The `qc_check` task applies quality thresholds according to the specified organism, which should match the _standardized_ `organism` input in the TheiaCoV workflows.
+
+    ??? toggle "Formatting the _qc_check_table.tsv_"
+
+        - The first column of the qc_check_table lists the `organism` that the task will assess and the header of this column must be "**taxon**".
+        - Each subsequent column indicates a QC metric and lists a threshold for each organism that will be checked. **The column names must exactly match expected values, so we highly recommend copy and pasting the header from the template file below as a starting place.**
+    
+    ??? toggle "Template _qc_check_table.tsv_ files"    
+        
+        - TheiaCoV_Illumina_PE: [TheiaCoV_Illumina_PE_qc_check_template.tsv](../../assets/files/TheiaCoV_Illumina_PE_qc_check_template.tsv)
+
+        !!! warning "Example Purposes Only"
+            The QC threshold values shown in the file above are for example purposes only and should not be presumed to be sufficient for every dataset.
+
+    !!! techdetails "`qc_check` Technical Details"
+    
+        |  | Links |
+        | --- | --- |
+        | Task | [task_qc_check.wdl](https://github.com/theiagen/public_health_bioinformatiocs/blob/main/tasks/quality_control/comparisons/task_qc_check.wdl) |
 
 #### Assembly tasks
 
