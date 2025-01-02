@@ -147,6 +147,51 @@ This workflow runs on set-level data tables.
 
 </div>
 
+??? task "Customizing Column Names in Terra Tables"
+
+    In some cases, users may have data tables in Terra with column names that differ from the default expected by the workflow. The `Terra_2_NCBI` workflow allows users to supply a **custom column mapping file**, enabling them to specify how their columns map to the required workflow variables.
+
+    #### Adding a Custom Column Mapping File
+
+    To use a custom column mapping file:
+
+    1. **Create a tab-delimited `.tsv` file** with the following structure:
+        - **First column**: Default column names expected by the workflow (`workflow_column`).
+        - **Second column**: Actual column names in your Terra data table (`table_column`).
+
+        Example:
+        ```
+        workflow_column    table_column
+        read1_column       custom_read1_name
+        read2_column       custom_read2_name
+        organism_column    custom_organism_name
+        ```
+
+        Replace `custom_read1_name`, `custom_read2_name`, etc., with the actual column names in your Terra table.
+
+    2. **Upload the file** to your Terra workspace and reference it in the `input_table` parameter when running the workflow.
+
+    3. Ensure the mapping file includes all required workflow columns. Missing mappings may result in errors during execution.
+
+    #### Example Mapping File
+
+    ```plaintext
+    workflow_column    table_column
+    read1_column       my_read1_column
+    read2_column       my_read2_column
+    organism_column    organism_field
+    country_column     location_field
+    ```
+
+    #### Using the Custom Mapping File
+
+    To use the custom mapping file:
+    1. Provide the mapping file in the `input_table` parameter when configuring the workflow.
+    2. The workflow will automatically map the specified column names from your Terra table to the required workflow variables.
+
+    ---
+    For further assistance in setting up a custom column mapping file, please contact Theiagen at [support@theiagen.com](mailto:support@theiagen.com).
+
 ??? task "Workflow Tasks"
 
     ##### Workflow Tasks {#workflow-tasks}
