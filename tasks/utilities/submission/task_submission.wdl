@@ -24,179 +24,179 @@ task prune_table {
     volatile: true
   }
   command <<<
-    set -euo pipefail
+      set -euo pipefail
 
-    # Export table from Terra (when not running locally)
-    # when running on terra, comment out all input_table mentions
-    #python3 /scripts/export_large_tsv/export_large_tsv.py --project "~{project_name}" --workspace "~{workspace_name}" --entity_type ~{table_name} --tsv_filename ~{table_name}-data.tsv
-    
-    # Uncomment the following for local testing:
-    cp ~{input_table} ~{table_name}-data.tsv
+      # Export table from Terra (when not running locally)
+      # when running on terra, comment out all input_table mentions
+      python3 /scripts/export_large_tsv/export_large_tsv.py --project "~{project_name}" --workspace "~{workspace_name}" --entity_type ~{table_name} --tsv_filename ~{table_name}-data.tsv
+      
+      # Uncomment the following for local testing:
+      #cp ~{input_table} ~{table_name}-data.tsv
 
-      # Load optional column mappings file and apply them
-    if [ -n "~{column_mapping_file}" ]; then
-       python3 <<-CODE
-import pandas as pd
+        # Load optional column mappings file and apply them
+      if [ -n "~{column_mapping_file}" ]; then
+        python3 <<-CODE
+  import pandas as pd
 
-# Load the table
-table = pd.read_csv("~{table_name}-data.tsv", sep="\t")
+  # Load the table
+  table = pd.read_csv("~{table_name}-data.tsv", sep="\t")
 
-# Load column mapping file
-mapping = pd.read_csv("~{column_mapping_file}", sep="\t", header=0)
-column_mapping = dict(zip(mapping["Custom-column-name"], mapping["Required-column-names"]))
+  # Load column mapping file
+  mapping = pd.read_csv("~{column_mapping_file}", sep="\t", header=0)
+  column_mapping = dict(zip(mapping["Custom-column-name"], mapping["Required-column-names"]))
 
-print("Column names before mapping:", table.columns.tolist())
-# Rename columns
-table.rename(columns=column_mapping, inplace=True)
-# Debug: Check column names after mapping
-print("Updated column names:", table.columns.tolist())
+  print("Column names before mapping:", table.columns.tolist())
+  # Rename columns
+  table.rename(columns=column_mapping, inplace=True)
+  # Debug: Check column names after mapping
+  print("Updated column names:", table.columns.tolist())
 
-# Validate required columns - consider this if we need to validate the certain columns
-# required_columns = ["submission_id", "organism", "collection_date", "geo_loc_name"]
-# missing_columns = [col for col in required_columns if col not in table.columns]
-# if missing_columns:
-#     raise ValueError(f"Missing required columns after mapping: {', '.join(missing_columns)}")
+  # Validate required columns - consider this if we need to validate the certain columns
+  # required_columns = ["submission_id", "organism", "collection_date", "geo_loc_name"]
+  # missing_columns = [col for col in required_columns if col not in table.columns]
+  # if missing_columns:
+  #     raise ValueError(f"Missing required columns after mapping: {', '.join(missing_columns)}")
 
-# Save updated table
-table.to_csv("~{table_name}-data-renamed.tsv", sep="\t", index=False)
-CODE
-    else
-      cp "~{table_name}-data.tsv" "~{table_name}-data-renamed.tsv"
-    fi
+  # Save updated table
+  table.to_csv("~{table_name}-data-renamed.tsv", sep="\t", index=False)
+  CODE
+      else
+        cp "~{table_name}-data.tsv" "~{table_name}-data-renamed.tsv"
+      fi
 
-    # Transform boolean skip_biosample into string for Python comparison
-    if ~{skip_biosample}; then
-      export skip_bio="true"
-    else
-      export skip_bio="false"
-    fi
+      # Transform boolean skip_biosample into string for Python comparison
+      if ~{skip_biosample}; then
+        export skip_bio="true"
+      else
+        export skip_bio="false"
+      fi
 
-    # Additional metadata  Processing (e.g., removing NA values, validating metadata)
-    python3 <<CODE 
-import pandas as pd
-import numpy as np
-import os
+      # Additional metadata  Processing (e.g., removing NA values, validating metadata)
+      python3 <<CODE 
+  import pandas as pd
+  import numpy as np
+  import os
 
-# Helper function to remove NA values and return the cleaned table and a table of excluded samples
-def remove_nas(table, required_metadata):
-  table.replace(r'^\s+$', np.nan, regex=True) # replace blank cells with NaNs 
-  excluded_samples = table[table[required_metadata].isna().any(axis=1)] # write out all rows that are required with NaNs to a new table
-  excluded_samples.set_index("~{table_name}_id".lower(), inplace=True) # convert the sample names to the index so we can determine what samples are missing what
-  excluded_samples = excluded_samples[excluded_samples.columns.intersection(required_metadata)] # remove all optional columns so only required columns are shown
-  excluded_samples = excluded_samples.loc[:, excluded_samples.isna().any()] # remove all NON-NA columns so only columns with NAs remain; Shelly is a wizard and I love her 
-  table.dropna(subset=required_metadata, axis=0, how='any', inplace=True) # remove all rows that are required with NaNs from table
+  # Helper function to remove NA values and return the cleaned table and a table of excluded samples
+  def remove_nas(table, required_metadata):
+    table.replace(r'^\s+$', np.nan, regex=True) # replace blank cells with NaNs 
+    excluded_samples = table[table[required_metadata].isna().any(axis=1)] # write out all rows that are required with NaNs to a new table
+    excluded_samples.set_index("~{table_name}_id".lower(), inplace=True) # convert the sample names to the index so we can determine what samples are missing what
+    excluded_samples = excluded_samples[excluded_samples.columns.intersection(required_metadata)] # remove all optional columns so only required columns are shown
+    excluded_samples = excluded_samples.loc[:, excluded_samples.isna().any()] # remove all NON-NA columns so only columns with NAs remain; Shelly is a wizard and I love her 
+    table.dropna(subset=required_metadata, axis=0, how='any', inplace=True) # remove all rows that are required with NaNs from table
 
-  return table, excluded_samples
+    return table, excluded_samples
 
-# Read the table
-tablename = "~{table_name}-data-renamed.tsv"
-table = pd.read_csv(tablename, delimiter='\t', header=0, dtype={"~{table_name}_id": 'str', "collection_date": 'str'})
+  # Read the table
+  tablename = "~{table_name}-data-renamed.tsv"
+  table = pd.read_csv(tablename, delimiter='\t', header=0, dtype={"~{table_name}_id": 'str', "collection_date": 'str'})
 
-# Define the expected column
-expected_column = f"~{table_name}_id"
+  # Define the expected column
+  expected_column = f"~{table_name}_id"
 
-# Verify if the expected column exists
-if expected_column not in table.columns:
-    raise KeyError(f"Expected column '{expected_column}' not found in the table. Available columns: {list(table.columns)}")
+  # Verify if the expected column exists
+  if expected_column not in table.columns:
+      raise KeyError(f"Expected column '{expected_column}' not found in the table. Available columns: {list(table.columns)}")
 
-# Filter samples for upload
-sample_names = "~{sep='*' sample_names}".split("*")
-table = table[table[expected_column].isin(sample_names)]
+  # Filter samples for upload
+  sample_names = "~{sep='*' sample_names}".split("*")
+  table = table[table[expected_column].isin(sample_names)]
 
-# Debugging output sample anmes and column  names
-print("Sample names:", sample_names)
-print("Column names:", table.columns.tolist())
+  # Debugging output sample anmes and column  names
+  print("Sample names:", sample_names)
+  print("Column names:", table.columns.tolist())
 
-# Define required and optional metadata fields based on biosample_type
-if (os.environ["skip_bio"] == "false"):
-  if ("~{biosample_type}".lower() == "microbe"):
-    required_metadata = ["submission_id", "organism", "collection_date", "geo_loc_name", "sample_type"]
-    optional_metadata = ["sample_title", "bioproject_accession", "attribute_package", "strain", "isolate", "host", "isolation_source", "altitude", "biomaterial_provider", "collected_by", "depth", "env_broad_scale", "genotype", "host_tissue_sampled", "identified_by", "lab_host", "lat_lon", "mating_type", "passage_history", "samp_size", "serotype", "serovar", "specimen_voucher", "temp", "description", "MLST"]
-    table["attribute_package"] = "Microbe.1.0"
-  elif ("~{biosample_type}".lower() == "wastewater"):
-    required_metadata = ["submission_id", "organism", "collection_date", "geo_loc_name", "isolation_source", "ww_population", "ww_sample_duration", "ww_sample_matrix", "ww_sample_type", "ww_surv_target_1", "ww_surv_target_1_known_present"]
-    optional_metadata = ["sample_title", "bioproject_accession", "attribute_package", "collected_by", "purpose_of_ww_sampling","purpose_of_ww_sequencing", "sequenced_by", "ww_endog_control_1", "ww_endog_control_1_conc", "ww_endog_control_1_protocol", "ww_endog_control_1_units", "ww_endog_control_2", "ww_endog_control_2_conc", "ww_endog_control_2_protocol", "ww_endog_control_2_units", "ww_flow", "ww_industrial_effluent_percent", "ww_ph", "ww_population_source", "ww_pre_treatment", "ww_primary_sludge_retention_time", "ww_processing_protocol", "ww_sample_salinity", "ww_sample_site", "ww_surv_jurisdiction", "ww_surv_system_sample_id", "ww_surv_target_1_conc", "ww_surv_target_1_conc_unit", "ww_surv_target_1_extract", "ww_surv_target_1_extract_unit", "ww_surv_target_1_gene", "ww_surv_target_1_protocol", "ww_surv_target_2", "ww_surv_target_2_conc", "ww_surv_target_2_conc_unit", "ww_surv_target_2_extract", "ww_surv_target_2_extract_unit", "ww_surv_target_2_gene", "ww_surv_target_2_known_present", "ww_surv_target_2_protocol", "ww_temperature", "ww_total_suspended_solids", "description"]
-    table["attribute_package"] = "SARS-CoV-2.wwsurv.1.0"
-  elif ("~{biosample_type}".lower() == "pathogen") or ("pathogen.cl" in "~{biosample_type}".lower()):
-    required_metadata = ["submission_id", "organism", "collected_by", "collection_date", "geo_loc_name", "host", "host_disease", "isolation_source", "lat_lon"]
-    optional_metadata = ["sample_title", "isolation_type", "bioproject_accession", "attribute_package", "strain", "isolate", "culture_collection", "genotype", "host_age", "host_description", "host_disease_outcome", "host_disease_stage", "host_health_state", "host_sex", "host_subject_id", "host_tissue_sampled", "passage_history", "pathotype", "serotype", "serovar", "specimen_voucher", "subgroup", "subtype", "description"] 
-    table["attribute_package"] = "Pathogen.cl"
-  elif ("pathogen.env" in "~{biosample_type}".lower()):
-    required_metadata = ["submission_id", "organism", "collected_by", "collection_date", "geo_loc_name", "isolation_source", "lat_lon"]
-    optional_metadata = ["host", "host_disease", "isolation_type", "sample_title", "bioproject_accession", "attribute_package", "strain", "isolate", "culture_collection", "genotype", "host_age", "host_description", "host_disease_outcome", "host_disease_stage", "host_health_state", "host_sex", "host_subject_id", "host_tissue_sampled", "passage_history", "pathotype", "serotype", "serovar", "specimen_voucher", "subgroup", "subtype", "description"] 
-    table["attribute_package"] = "Pathogen.env.1.0"
-  elif ("~{biosample_type}".lower() == "virus"):
-    required_metadata = ["submission_id", "organism", "isolate", "collection_date", "geo_loc_name", "isolation_source"]
-    optional_metadata = ["sample_title", "bioprojection_accession","attribute_package", "host", "lab_host", "altitude", "biomaterial_provider", "collected_by", "culture_collection", "depth", "disease", "env_broad_scale", "genotype", "host_tissue_sampled", "identified_by", "lat_lon", "passage_history", "samp_size", "serotype", "specimen_voucher", "strain", "temp", "description"]
-    table["attribute_package"] = "Virus.1.0"
+  # Define required and optional metadata fields based on biosample_type
+  if (os.environ["skip_bio"] == "false"):
+    if ("~{biosample_type}".lower() == "microbe"):
+      required_metadata = ["submission_id", "organism", "collection_date", "geo_loc_name", "sample_type"]
+      optional_metadata = ["sample_title", "bioproject_accession", "attribute_package", "strain", "isolate", "host", "isolation_source", "altitude", "biomaterial_provider", "collected_by", "depth", "env_broad_scale", "genotype", "host_tissue_sampled", "identified_by", "lab_host", "lat_lon", "mating_type", "passage_history", "samp_size", "serotype", "serovar", "specimen_voucher", "temp", "description", "MLST"]
+      table["attribute_package"] = "Microbe.1.0"
+    elif ("~{biosample_type}".lower() == "wastewater"):
+      required_metadata = ["submission_id", "organism", "collection_date", "geo_loc_name", "isolation_source", "ww_population", "ww_sample_duration", "ww_sample_matrix", "ww_sample_type", "ww_surv_target_1", "ww_surv_target_1_known_present"]
+      optional_metadata = ["sample_title", "bioproject_accession", "attribute_package", "collected_by", "purpose_of_ww_sampling","purpose_of_ww_sequencing", "sequenced_by", "ww_endog_control_1", "ww_endog_control_1_conc", "ww_endog_control_1_protocol", "ww_endog_control_1_units", "ww_endog_control_2", "ww_endog_control_2_conc", "ww_endog_control_2_protocol", "ww_endog_control_2_units", "ww_flow", "ww_industrial_effluent_percent", "ww_ph", "ww_population_source", "ww_pre_treatment", "ww_primary_sludge_retention_time", "ww_processing_protocol", "ww_sample_salinity", "ww_sample_site", "ww_surv_jurisdiction", "ww_surv_system_sample_id", "ww_surv_target_1_conc", "ww_surv_target_1_conc_unit", "ww_surv_target_1_extract", "ww_surv_target_1_extract_unit", "ww_surv_target_1_gene", "ww_surv_target_1_protocol", "ww_surv_target_2", "ww_surv_target_2_conc", "ww_surv_target_2_conc_unit", "ww_surv_target_2_extract", "ww_surv_target_2_extract_unit", "ww_surv_target_2_gene", "ww_surv_target_2_known_present", "ww_surv_target_2_protocol", "ww_temperature", "ww_total_suspended_solids", "description"]
+      table["attribute_package"] = "SARS-CoV-2.wwsurv.1.0"
+    elif ("~{biosample_type}".lower() == "pathogen") or ("pathogen.cl" in "~{biosample_type}".lower()):
+      required_metadata = ["submission_id", "organism", "collected_by", "collection_date", "geo_loc_name", "host", "host_disease", "isolation_source", "lat_lon"]
+      optional_metadata = ["sample_title", "isolation_type", "bioproject_accession", "attribute_package", "strain", "isolate", "culture_collection", "genotype", "host_age", "host_description", "host_disease_outcome", "host_disease_stage", "host_health_state", "host_sex", "host_subject_id", "host_tissue_sampled", "passage_history", "pathotype", "serotype", "serovar", "specimen_voucher", "subgroup", "subtype", "description"] 
+      table["attribute_package"] = "Pathogen.cl"
+    elif ("pathogen.env" in "~{biosample_type}".lower()):
+      required_metadata = ["submission_id", "organism", "collected_by", "collection_date", "geo_loc_name", "isolation_source", "lat_lon"]
+      optional_metadata = ["host", "host_disease", "isolation_type", "sample_title", "bioproject_accession", "attribute_package", "strain", "isolate", "culture_collection", "genotype", "host_age", "host_description", "host_disease_outcome", "host_disease_stage", "host_health_state", "host_sex", "host_subject_id", "host_tissue_sampled", "passage_history", "pathotype", "serotype", "serovar", "specimen_voucher", "subgroup", "subtype", "description"] 
+      table["attribute_package"] = "Pathogen.env.1.0"
+    elif ("~{biosample_type}".lower() == "virus"):
+      required_metadata = ["submission_id", "organism", "isolate", "collection_date", "geo_loc_name", "isolation_source"]
+      optional_metadata = ["sample_title", "bioprojection_accession","attribute_package", "host", "lab_host", "altitude", "biomaterial_provider", "collected_by", "culture_collection", "depth", "disease", "env_broad_scale", "genotype", "host_tissue_sampled", "identified_by", "lat_lon", "passage_history", "samp_size", "serotype", "specimen_voucher", "strain", "temp", "description"]
+      table["attribute_package"] = "Virus.1.0"
+    else:
+      raise Exception('Unsupported biosample type: ~{biosample_type}. Only "Microbe", "Virus", "Pathogen" and "Wastewater" are supported as acceptable input for the \`biosample_type\` variable at this time.')
   else:
-    raise Exception('Unsupported biosample type: ~{biosample_type}. Only "Microbe", "Virus", "Pathogen" and "Wastewater" are supported as acceptable input for the \`biosample_type\` variable at this time.')
-else:
-  print("Skipping biosample metadata upload")
-  required_metadata = []
-  optional_metadata = []
+    print("Skipping biosample metadata upload")
+    required_metadata = []
+    optional_metadata = []
 
-# sra metadata is the same regardless of biosample_type package, but I'm separating it out in case we find out this is incorrect
-sra_required = ["~{table_name}_id", "submission_id", "library_ID", "title", "library_strategy", "library_source", "library_selection", "library_layout", "platform", "instrument_model", "design_description", "filetype", "~{read1_column_name}"]
-sra_optional = ["~{read2_column_name}"]
+  # sra metadata is the same regardless of biosample_type package, but I'm separating it out in case we find out this is incorrect
+  sra_required = ["~{table_name}_id", "submission_id", "library_ID", "title", "library_strategy", "library_source", "library_selection", "library_layout", "platform", "instrument_model", "design_description", "filetype", "~{read1_column_name}"]
+  sra_optional = ["~{read2_column_name}"]
 
-# if biosample accessions are provided, add those to the end of the sra_required field
-if (os.environ["skip_bio"] == "true"):
-  sra_required.append("biosample_accession")
-# combine all required fields into one array for easy removal of NaN cells
-required_fields = required_metadata + sra_required
+  # if biosample accessions are provided, add those to the end of the sra_required field
+  if (os.environ["skip_bio"] == "true"):
+    sra_required.append("biosample_accession")
+  # combine all required fields into one array for easy removal of NaN cells
+  required_fields = required_metadata + sra_required
 
-# remove required rows with blank cells from table
-table, excluded_samples = remove_nas(table, required_fields)
-with open("excluded_samples.tsv", "a") as exclusions:
-  exclusions.write("Samples excluded for missing required metadata (will have empty values in indicated columns):\n")
-excluded_samples.to_csv("excluded_samples.tsv", mode='a', sep='\t')
+  # remove required rows with blank cells from table
+  table, excluded_samples = remove_nas(table, required_fields)
+  with open("excluded_samples.tsv", "a") as exclusions:
+    exclusions.write("Samples excluded for missing required metadata (will have empty values in indicated columns):\n")
+  excluded_samples.to_csv("excluded_samples.tsv", mode='a', sep='\t')
 
-# add bioproject_accesion to table
-table["bioproject_accession"] = "~{bioproject}"
-    
-# extract the required metadata from the table
-biosample_metadata = table[required_metadata].copy()
+  # add bioproject_accesion to table
+  table["bioproject_accession"] = "~{bioproject}"
+      
+  # extract the required metadata from the table
+  biosample_metadata = table[required_metadata].copy()
 
-# add optional metadata fields if present; rename first column
-for column in optional_metadata:
-  if column in table.columns:
-    biosample_metadata[column] = table[column]
-biosample_metadata.rename(columns={"submission_id" : "sample_name"}, inplace=True)
+  # add optional metadata fields if present; rename first column
+  for column in optional_metadata:
+    if column in table.columns:
+      biosample_metadata[column] = table[column]
+  biosample_metadata.rename(columns={"submission_id" : "sample_name"}, inplace=True)
 
-# extract the required metadata from the table; rename first column 
-sra_metadata = table[sra_required].copy()
-for column in sra_optional:
-  if column in table.columns:
-    sra_metadata[column] = table[column]
-sra_metadata.rename(columns={"submission_id" : "sample_name"}, inplace=True)
+  # extract the required metadata from the table; rename first column 
+  sra_metadata = table[sra_required].copy()
+  for column in sra_optional:
+    if column in table.columns:
+      sra_metadata[column] = table[column]
+  sra_metadata.rename(columns={"submission_id" : "sample_name"}, inplace=True)
 
-# prettify the filenames and rename them to be sra compatible
-sra_metadata["~{read1_column_name}"] = sra_metadata["~{read1_column_name}"].map(lambda filename: filename.split('/').pop())
-sra_metadata.rename(columns={"~{read1_column_name}" : "filename"}, inplace=True)
-table["~{read1_column_name}"].to_csv("filepaths.tsv", index=False, header=False) # make a file that contains the names of all the reads so we can use gsutil -m cp
-if "~{read2_column_name}" in sra_metadata.columns:
-  sra_metadata["~{read2_column_name}"] = sra_metadata["~{read2_column_name}"].map(lambda filename2: filename2.split('/').pop())   
-  sra_metadata.rename(columns={"~{read2_column_name}" : "filename2"}, inplace=True)
-  table["~{read2_column_name}"].to_csv("filepaths.tsv", mode='a', index=False, header=False)
-    
-# write metadata tables to tsv output files
-biosample_metadata.to_csv("biosample_table.tsv", sep='\t', index=False)
-sra_metadata.to_csv("sra_table_to_edit.tsv", sep='\t', index=False)
+  # prettify the filenames and rename them to be sra compatible
+  sra_metadata["~{read1_column_name}"] = sra_metadata["~{read1_column_name}"].map(lambda filename: filename.split('/').pop())
+  sra_metadata.rename(columns={"~{read1_column_name}" : "filename"}, inplace=True)
+  table["~{read1_column_name}"].to_csv("filepaths.tsv", index=False, header=False) # make a file that contains the names of all the reads so we can use gsutil -m cp
+  if "~{read2_column_name}" in sra_metadata.columns:
+    sra_metadata["~{read2_column_name}"] = sra_metadata["~{read2_column_name}"].map(lambda filename2: filename2.split('/').pop())   
+    sra_metadata.rename(columns={"~{read2_column_name}" : "filename2"}, inplace=True)
+    table["~{read2_column_name}"].to_csv("filepaths.tsv", mode='a', index=False, header=False)
+      
+  # write metadata tables to tsv output files
+  biosample_metadata.to_csv("biosample_table.tsv", sep='\t', index=False)
+  sra_metadata.to_csv("sra_table_to_edit.tsv", sep='\t', index=False)
 
-CODE
+  CODE
 
-    # prune the first two columns of sra_table_to_edit to remove the tablename_id and submission_id columns
-  cut -f3- sra_table_to_edit.tsv > sra_table.tsv
+      # prune the first two columns of sra_table_to_edit to remove the tablename_id and submission_id columns
+    cut -f3- sra_table_to_edit.tsv > sra_table.tsv
 
-  # copy the raw reads to the bucket specified by user
-  export CLOUDSDK_PYTHON=python2.7  # ensure python 2.7 for gsutil commands
-  # iterate through file created earlier to grab the uri for each read file
-  while read -r line; do
-    echo "running \`gsutil -m cp ${line} ~{gcp_bucket_uri}\`"
-    gsutil -m cp -n "${line}" "~{gcp_bucket_uri}"
-  done < filepaths.tsv
-  unset CLOUDSDK_PYTHON   # probably not necessary, but in case I do more things afterwards, this resets that env var
+    # copy the raw reads to the bucket specified by user
+    export CLOUDSDK_PYTHON=python2.7  # ensure python 2.7 for gsutil commands
+    # iterate through file created earlier to grab the uri for each read file
+    while read -r line; do
+      echo "running \`gsutil -m cp ${line} ~{gcp_bucket_uri}\`"
+      gsutil -m cp -n "${line}" "~{gcp_bucket_uri}"
+    done < filepaths.tsv
+    unset CLOUDSDK_PYTHON   # probably not necessary, but in case I do more things afterwards, this resets that env var
   >>>
   output {
     File biosample_table = "biosample_table.tsv"
