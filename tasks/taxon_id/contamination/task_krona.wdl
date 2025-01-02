@@ -17,7 +17,7 @@ task krona {
     python3 /KrakenTools/kreport2krona.py -r ~{kraken2_report} -o ~{samplename}_krona.txt
 
     # Run krona with taxonomy on krakren report
-    ktImportText ~{samplename}_krona.txt -o ~{samplename}_krona.htl
+    ktImportText ~{samplename}_krona.txt -o ~{samplename}_krona.html
   >>>
   output {
     String krona_version = read_string("VERSION")
