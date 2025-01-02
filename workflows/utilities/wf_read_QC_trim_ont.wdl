@@ -26,23 +26,71 @@ workflow read_QC_trim_ont {
     Int? min_length
     Int? max_length
     String? run_prefix
+    
+    # ncbi-scrub inputs
+    Int? ncbi_scrub_cpu
+    Int? ncbi_scrub_disk_size
+    String? ncbi_scrub_docker
+    Int? ncbi_scrub_memory
+
+    # artic guppyplex inputs
+    Int? artic_guppyplex_cpu
+    Int? artic_guppyplex_disk_size
+    String? artic_guppyplex_docker
+    Int? artic_guppyplex_memory
 
     # kraken inputs
     String? target_organism
     Boolean call_kraken = false
-    Int? kraken_disk_size
-    Int? kraken_memory
     Int? kraken_cpu
     File? kraken_db
-
-    # rasusa downsampling
+    Int? kraken_disk_size
+    String? kraken_docker_image
+    Int? kraken_memory
+  
+    # rasusa downsampling inputs
     Float downsampling_coverage = 150
+    Int? rasusa_cpu
+    Int? rasusa_disk_size
+    String? rasusa_docker
+    Int? rasusa_memory
+    String? rasusa_bases
+    Int? rasusa_seed
+    Float? rasusa_fraction_of_reads
+    Int? rasusa_number_of_reads
+
+    # tiptoft inputs
+    Int? tiptoft_cpu
+    Int? tiptoft_disk_size
+    String? tiptoft_docker
+    Int? tiptoft_memory
+    Int? tiptoft_kmer_size
+    Int? tiptoft_max_gap
+    Int? tiptoft_margin
+    Int? tiptoft_min_block_size
+    Int? tiptoft_min_fasta_hits
+    Int? tiptoft_min_kmers_for_onex_pass
+    Int? tiptoft_min_perc_coverage
+
+    # nanoq inputs
+    Int? nanoq_cpu
+    Int? nanoq_disk_size
+    String? nanoq_docker
+    Int? nanoq_memory
+    Int? nanoq_max_read_length
+    Int? nanoq_min_read_length
+    Int? nanoq_max_read_qual
+    Int? nanoq_min_read_qual  
   }
   if ("~{workflow_series}" == "theiacov") {
     call ncbi_scrub.ncbi_scrub_se {
       input:
         read1 = read1,
-        samplename = samplename
+        samplename = samplename,
+        cpu = ncbi_scrub_cpu,
+        disk_size = ncbi_scrub_disk_size,
+        docker = ncbi_scrub_docker,
+        memory = ncbi_scrub_memory
     }
     call artic_guppyplex.read_filtering {
       input:
@@ -50,7 +98,11 @@ workflow read_QC_trim_ont {
         samplename = samplename,
         min_length = min_length,
         max_length = max_length,
-        run_prefix = run_prefix
+        run_prefix = run_prefix,
+        cpu = artic_guppyplex_cpu,
+        disk_size = artic_guppyplex_disk_size,
+        docker = artic_guppyplex_docker,
+        memory = artic_guppyplex_memory
     }
     call kraken2.kraken2_theiacov as kraken2_raw {
       input:
@@ -60,7 +112,8 @@ workflow read_QC_trim_ont {
         kraken2_db = kraken_db,
         disk_size = kraken_disk_size,
         memory = kraken_memory,
-        cpu = kraken_cpu
+        cpu = kraken_cpu,
+        docker_image = kraken_docker_image
     }
     call kraken2.kraken2_parse_classified as kraken2_recalculate_abundances_raw {
       input:
@@ -77,7 +130,8 @@ workflow read_QC_trim_ont {
         kraken2_db = kraken_db,
         disk_size = kraken_disk_size,
         memory = kraken_memory,
-        cpu = kraken_cpu
+        cpu = kraken_cpu,
+        docker_image = kraken_docker_image
     }
     call kraken2.kraken2_parse_classified as kraken2_recalculate_abundances_dehosted {
       input:
@@ -96,7 +150,8 @@ workflow read_QC_trim_ont {
           kraken2_db = select_first([kraken_db]),
           disk_size = kraken_disk_size,
           memory = kraken_memory,
-          cpu = kraken_cpu
+          cpu = kraken_cpu,
+          docker = kraken_docker_image
       }
       call kraken2.kraken2_parse_classified as kraken2_recalculate_abundances {
         input:
@@ -107,26 +162,53 @@ workflow read_QC_trim_ont {
     } if ((call_kraken) && ! defined(kraken_db)) {
       String kraken_db_warning = "Kraken database not defined"
     }
-
     # rasusa for random downsampling
     call rasusa_task.rasusa {
       input:
         read1 = read1,
         samplename = samplename,
+        bases = rasusa_bases,
         coverage = downsampling_coverage,
-        genome_length = genome_length
+        cpu = rasusa_cpu,
+        disk_size = rasusa_disk_size,
+        docker = rasusa_docker,
+        frac = rasusa_fraction_of_reads,
+        genome_length = genome_length,
+        memory = rasusa_memory,
+        num = rasusa_number_of_reads,
+        seed = rasusa_seed
+
     }
     # tiptoft for plasmid detection
     call tiptoft_task.tiptoft {
       input:
         read1 = read1,
-        samplename = samplename
+        samplename = samplename,
+        cpu = tiptoft_cpu,
+        disk_size = tiptoft_disk_size,
+        docker = tiptoft_docker,
+        kmer_size = tiptoft_kmer_size,
+        margin = tiptoft_margin,
+        max_gap = tiptoft_max_gap,
+        memory = tiptoft_memory,
+        min_block_size = tiptoft_min_block_size,
+        min_fasta_hits = tiptoft_min_fasta_hits,
+        min_kmers_for_onex_pass = tiptoft_min_kmers_for_onex_pass,
+        min_perc_coverage = tiptoft_min_perc_coverage
     }  
     # nanoq/filtlong (default min length 500)
     call nanoq_task.nanoq {
       input:
         read1 = rasusa.read1_subsampled,
-        samplename = samplename
+        samplename = samplename,
+        cpu = nanoq_cpu,
+        disk_size = nanoq_disk_size,
+        docker = nanoq_docker,
+        max_read_length = nanoq_max_read_length,
+        min_read_length = nanoq_min_read_length,
+        max_read_qual = nanoq_max_read_qual,
+        min_read_qual = nanoq_min_read_qual,
+        memory = nanoq_memory        
     }
   }
   output { 

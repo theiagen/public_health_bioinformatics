@@ -6,6 +6,7 @@ task tiptoft {
     File read1 # intended for ONT data only
     Int disk_size = 100
     Int cpu = 2
+    Int memory = 8
     Int? kmer_size # default is 13
     Int? max_gap # default is 3
     Int? margin # default is 10
@@ -53,7 +54,7 @@ task tiptoft {
   }
   runtime {
     docker: docker
-    memory: "8 GB"
+    memory: memory + " GB"
     cpu: cpu
     disks:  "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB" # TES
