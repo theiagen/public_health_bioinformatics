@@ -43,7 +43,7 @@ task prune_table {
 
   # Load column mapping file
   mapping = pd.read_csv("~{column_mapping_file}", sep="\t", header=0)
-  column_mapping = dict(zip(mapping["Custom-column-name"], mapping["Required-column-names"]))
+  column_mapping = dict(zip(mapping["Custom"], mapping["Required"]))
 
   print("Column names before mapping:", table.columns.tolist())
   # Rename columns

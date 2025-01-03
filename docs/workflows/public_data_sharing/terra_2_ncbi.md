@@ -186,11 +186,11 @@ This workflow runs on set-level data tables.
 
         Example Mapping File:
         ```plaintext
-        Custom-column-name    Required-column-names
-        Collection-Date       collection_date
-        geo_location          geo_loc_name
-        bioproject_column     bioproject
-        sample_id_column      sample_names
+        Custom  Required
+        Collection-Date collection_date
+        geo_location    geo_loc_name
+        bioproject_column   bioproject
+        sample_id_column    sample_names
         ```
 
     2. **Upload the file** to your Terra workspace and reference it in the `column_mapping_file` parameter when running the workflow using Google Cloud Storage paths.
@@ -198,6 +198,56 @@ This workflow runs on set-level data tables.
     3. Ensure the mapping file includes all required columns with custom names. Columns that match the default workflow names do not need to be included. Missing mappings for renamed columns may result in errors during execution.
 
     The workflow will automatically map the specified column names from your Terra table to the required workflow variables using the 'custom_mapping_file'.
+
+    ### Metadata Requirements by Biosample Type
+
+    ??? info "Microbe Metadata"
+
+        | **Required** | **Optional** |
+        |---|---|
+        | submission_id | sample_title |
+        | organism | bioproject_accession |
+        | collection_date | attribute_package |
+        | geo_loc_name | strain |
+        | sample_type | isolate |
+        |  | host |
+        |  | isolation_source |
+        |  | altitude |
+        |  | biomaterial_provider |
+
+    ??? info "Wastewater Metadata"
+
+        | **Required** | **Optional** |
+        |---|---|
+        | submission_id | sample_title |
+        | organism | bioproject_accession |
+        | collection_date | purpose_of_ww_sampling |
+        | geo_loc_name | purpose_of_ww_sequencing |
+        | isolation_source | collected_by |
+        | ww_population | ww_sample_matrix |
+        | ww_sample_duration | ww_endog_control_1 |
+        | ww_sample_matrix | ww_flow |
+
+    ??? info "Pathogen Metadata"
+        | **Required** | **Optional** |
+        |---|---|
+        | submission_id | sample_title |
+        | organism | bioproject_accession |
+        | collected_by | attribute_package |
+        | collection_date | strain |
+        | geo_loc_name | isolate |
+        | host | serotype |
+        | host_disease | host_age |
+
+    ??? info "Virus Metadata"
+        | **Required** | **Optional** |
+        |---|---|
+        | submission_id | sample_title |
+        | organism | bioproject_accession |
+        | isolate | attribute_package |
+        | collection_date | strain |
+        | geo_loc_name | host |
+        | isolation_source | description |
 
     ---
     For further assistance in setting up a custom column mapping file, please contact Theiagen at [support@theiagen.com](mailto:support@theiagen.com).
