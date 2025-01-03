@@ -38,18 +38,32 @@ task prune_table {
         python3 <<-CODE
   import pandas as pd
 
-  # Load the table
+  # Load the Terra table
   table = pd.read_csv("~{table_name}-data.tsv", sep="\t")
+
+  # Debug: Print table column names before mapping
+  print("Original table column names:", table.columns.tolist())
 
   # Load column mapping file
   mapping = pd.read_csv("~{column_mapping_file}", sep="\t", header=0)
-  column_mapping = dict(zip(mapping["Custom"], mapping["Required"]))
+ 
+  # Debug: Print the content of the column mapping file
+  print("Column mapping file content:\n", mapping)
 
-  print("Column names before mapping:", table.columns.tolist())
+  # Verify the presence of required headers
+  if not set(["Custom", "Required"]).issubset(mapping.columns):
+      raise KeyError("Column mapping file must contain 'Custom' and 'Required' headers.")
+
+
+  # Create a dictionary to map custom column names to required column names
+  column_mapping = dict(zip(mapping["Custom"], mapping["Required"]))
+  print("Column mapping dictionary:", column_mapping)
+
   # Rename columns
   table.rename(columns=column_mapping, inplace=True)
-  # Debug: Check column names after mapping
-  print("Updated column names:", table.columns.tolist())
+
+  # Debug: Print updated column names
+  print("Updated table column names:", table.columns.tolist())
 
   # Save updated table
   table.to_csv("~{table_name}-data-renamed.tsv", sep="\t", index=False)
