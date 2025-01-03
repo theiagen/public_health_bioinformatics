@@ -19,40 +19,40 @@ A workflow for reference-guided genome assembly, read trimming, alignment, cover
 | reference_genome_consensus | **fastq_file** | File | Input ONT basecalled FASTQ file | N/A | Required |
 | reference_genome_consensus | **reference_file** | File | A file containing one or more reference genomes in FASTA format. Each genome must be properly formatted, with unique and descriptive headers. | N/A | Required |
 | reference_genome_consensus | **sample_name** | String | Sample name for output file naming | N/A | Required |
-| reference_genome_consensus | **left_trim** | Int | Number of bases to trim from the left | N/A | Optional |
-| reference_genome_consensus | **right_trim** | Int | Number of bases to trim from the right | N/A | Optional |
-| reference_genome_consensus | **min_length** | Int | Minimum read length to retain | N/A | Optional |
+| reference_genome_consensus | **left_trim** | Int | Number of bases to trim from the left | 25 | Optional |
+| reference_genome_consensus | **right_trim** | Int | Number of bases to trim from the right | 25 | Optional |
+| reference_genome_consensus | **min_length** | Int | Minimum read length to retain | 50 | Optional |
 | reference_genome_consensus | **min_coverage** | Int | Minimum coverage for filtering regions | 10 | Optional |
 | reference_genome_consensus | **medaka_model_override** | String | Override for Medaka model selection (optional) | N/A | Optional |
-| fastqc_se | **cpu** | Int | Number of CPUs allocated for FastQC task | N/A | Optional |
-| fastqc_se | **disk_size** | Int | Disk size allocated for FastQC task | N/A | Optional |
-| fastqc_se | **docker** | String | Docker container for FastQC task | N/A | Optional |
-| fastqc_se | **memory** | Int | Memory allocated for FastQC task | N/A | Optional |
-| seqtk_trim | **cpu** | Int | Number of CPUs allocated for Seqtk trimming task | N/A | Optional |
-| seqtk_trim | **disk_size** | Int | Disk size allocated for Seqtk trimming task | N/A | Optional |
-| seqtk_trim | **docker** | String | Docker container for Seqtk trimming task | N/A | Optional |
-| seqtk_trim | **memory** | Int | Memory allocated for Seqtk trimming task | N/A | Optional |
-| plot_read_length_distribution | **cpu** | Int | Number of CPUs allocated for plotting read lengths | N/A | Optional |
-| plot_read_length_distribution | **disk_size** | Int | Disk size allocated for plotting read lengths | N/A | Optional |
-| plot_read_length_distribution | **docker** | String | Docker container for plotting read lengths | N/A | Optional |
-| plot_read_length_distribution | **memory** | Int | Memory allocated for plotting read lengths | N/A | Optional |
-| minimap2_align_ont | **cpu** | Int | Number of CPUs allocated for Minimap2 alignment | N/A | Optional |
-| minimap2_align_ont | **disk_size** | Int | Disk size allocated for Minimap2 alignment | N/A | Optional |
-| minimap2_align_ont | **docker** | String | Docker container for Minimap2 alignment | N/A | Optional |
-| minimap2_align_ont | **memory** | Int | Memory allocated for Minimap2 alignment | N/A | Optional |
-| filter_coverage | **cpu** | Int | Number of CPUs allocated for filtering coverage | N/A | Optional |
-| filter_coverage | **disk_size** | Int | Disk size allocated for filtering coverage | N/A | Optional |
-| filter_coverage | **docker** | String | Docker container for filtering coverage | N/A | Optional |
-| filter_coverage | **memory** | Int | Memory allocated for filtering coverage | N/A | Optional |
-| medaka_consensus | **auto_model** | Boolean | Automatically determine the Medaka model | N/A | Optional |
-| medaka_consensus | **cpu** | Int | Number of CPUs allocated for Medaka consensus generation | N/A | Optional |
-| medaka_consensus | **disk_size** | Int | Disk size allocated for Medaka consensus generation | N/A | Optional |
-| medaka_consensus | **docker** | String | Docker container for Medaka consensus generation | N/A | Optional |
-| medaka_consensus | **memory** | Int | Memory allocated for Medaka consensus generation | N/A | Optional |
-| samtools_process | **cpu** | Int | Number of CPUs allocated for Samtools processing | N/A | Optional |
-| samtools_process | **disk_size** | Int | Disk size allocated for Samtools processing | N/A | Optional |
-| samtools_process | **docker** | String | Docker container for Samtools processing | N/A | Optional |
-| samtools_process | **memory** | Int | Memory allocated for Samtools processing | N/A | Optional |
+| fastqc_se | **cpu** | Int | Number of CPUs allocated for FastQC task | 2 | Optional |
+| fastqc_se | **disk_size** | Int | Disk size allocated for FastQC task | 100 | Optional |
+| fastqc_se | **docker** | String | Docker container for FastQC task | us-docker.pkg.dev/general-theiagen/staphb/fastqc:0.12.1 | Optional |
+| fastqc_se | **memory** | Int | Memory allocated for FastQC task | 4 | Optional |
+| seqtk_trim | **cpu** | Int | Number of CPUs allocated for Seqtk trimming task | 2 | Optional |
+| seqtk_trim | **disk_size** | Int | Disk size allocated for Seqtk trimming task | 100 | Optional |
+| seqtk_trim | **docker** | String | Docker container for Seqtk trimming task | us-docker.pkg.dev/general-theiagen/staphb/seqtk:1.4 | Optional |
+| seqtk_trim | **memory** | Int | Memory allocated for Seqtk trimming task | 4 | Optional |
+| plot_read_length_distribution | **cpu** | Int | Number of CPUs allocated for plotting read lengths | 1 | Optional |
+| plot_read_length_distribution | **disk_size** | Int | Disk size allocated for plotting read lengths | 10 | Optional |
+| plot_read_length_distribution | **docker** | String | Docker container for plotting read lengths | us-docker.pkg.dev/general-theiagen/theiagen/utility:1.2 | Optional |
+| plot_read_length_distribution | **memory** | Int | Memory allocated for plotting read lengths | 4 | Optional |
+| minimap2_align_ont | **cpu** | Int | Number of CPUs allocated for Minimap2 alignment | 2 | Optional |
+| minimap2_align_ont | **disk_size** | Int | Disk size allocated for Minimap2 alignment | 100 | Optional |
+| minimap2_align_ont | **docker** | String | Docker container for Minimap2 alignment | us-docker.pkg.dev/general-theiagen/staphb/minimap2:2.22 | Optional |
+| minimap2_align_ont | **memory** | Int | Memory allocated for Minimap2 alignment | 8 | Optional |
+| filter_coverage | **cpu** | Int | Number of CPUs allocated for filtering coverage | 4 | Optional |
+| filter_coverage | **disk_size** | Int | Disk size allocated for filtering coverage | 50 | Optional |
+| filter_coverage | **docker** | String | Docker container for filtering coverage | us-docker.pkg.dev/general-theiagen/staphb/bedtools:2.31.1 | Optional |
+| filter_coverage | **memory** | Int | Memory allocated for filtering coverage | 8 | Optional |
+| medaka_consensus | **auto_model** | Boolean | Automatically determine the Medaka model | true | Optional |
+| medaka_consensus | **cpu** | Int | Number of CPUs allocated for Medaka consensus generation | 4 | Optional |
+| medaka_consensus | **disk_size** | Int | Disk size allocated for Medaka consensus generation | 100 | Optional |
+| medaka_consensus | **docker** | String | Docker container for Medaka consensus generation | us-docker.pkg.dev/general-theiagen/staphb/medaka:2.0.1 | Optional |
+| medaka_consensus | **memory** | Int | Memory allocated for Medaka consensus generation | 16 | Optional |
+| samtools_process | **cpu** | Int | Number of CPUs allocated for Samtools processing | 4 | Optional |
+| samtools_process | **disk_size** | Int | Disk size allocated for Samtools processing | 50 | Optional |
+| samtools_process | **docker** | String | Docker container for Samtools processing | us-docker.pkg.dev/general-theiagen/staphb/samtools:1.15 | Optional |
+| samtools_process | **memory** | Int | Memory allocated for Samtools processing | 16 | Optional |
 
 </div>
 
