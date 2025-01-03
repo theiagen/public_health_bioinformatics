@@ -4,27 +4,72 @@
 
 | **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
 |---|---|---|---|---|
-###update this table ###################################
-| [Standalone](../../workflows_overview/workflows_type.md/#link-to-workflow-type) | [Virus](../../workflows_overview/workflows_kingdom.md/#link-to-applicable-kingdom) | PHB vX.X.X | yes| Sample-level |
+| [Standalone](../../workflows_overview/workflows_type.md/#standalone) | [Viral](../../workflows_overview/workflows_kingdom.md/#viral) | PHB vX.X.X | yes| Sample-level |
 
-## Workflow_Name_On_Terra
+## Reference_Genome_Consensus_PHB
 
 A workflow for reference-guided genome assembly, read trimming, alignment, coverage filtering, and consensus sequence generation from ONT basecalled FASTQ files.
 
 ### Inputs
 
-Input should be ordered as they appear on Terra
+<div class="searchable-table" markdown="1">
 
 | **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
 |---|---|---|---|---|---|
-| fastqc_se | **fastq_file** | File | Input ONT basecalled FASTQ file | N/A | Required |
-| seqtk_trim | **left_trim** | Int | Number of bases to trim from the left (optional) | N/A | Optional |
-| seqtk_trim | **right_trim** | Int | Number of bases to trim from the right (optional) | N/A | Optional |
-| seqtk_trim | **min_length** | Int | Minimum read length to retain (optional) | N/A | Optional |
-| minimap2_align_ont | **reference_file** | File | Reference genome file for alignment | N/A | Required |
-| minimap2_align_ont | **sample_name** | String | Sample name for output file naming | N/A | Required |
-| filter_coverage | **min_coverage** | Int | Minimum coverage for filtering regions | 10 | Optional |
-| medaka_consensus | **medaka_model_override** | String | Override for Medaka model selection (optional) | N/A | Optional |
+| reference_genome_consensus | **fastq_file** | File | Input ONT basecalled FASTQ file | N/A | Required |
+| reference_genome_consensus | **reference_file** | File | A file containing one or more reference genomes in FASTA format. Each genome must be properly formatted, with unique and descriptive headers. | N/A | Required |
+| reference_genome_consensus | **sample_name** | String | Sample name for output file naming | N/A | Required |
+| reference_genome_consensus | **left_trim** | Int | Number of bases to trim from the left | N/A | Optional |
+| reference_genome_consensus | **right_trim** | Int | Number of bases to trim from the right | N/A | Optional |
+| reference_genome_consensus | **min_length** | Int | Minimum read length to retain | N/A | Optional |
+| reference_genome_consensus | **min_coverage** | Int | Minimum coverage for filtering regions | 10 | Optional |
+| reference_genome_consensus | **medaka_model_override** | String | Override for Medaka model selection (optional) | N/A | Optional |
+| fastqc_se | **cpu** | Int | Number of CPUs allocated for FastQC task | N/A | Optional |
+| fastqc_se | **disk_size** | Int | Disk size allocated for FastQC task | N/A | Optional |
+| fastqc_se | **docker** | String | Docker container for FastQC task | N/A | Optional |
+| fastqc_se | **memory** | Int | Memory allocated for FastQC task | N/A | Optional |
+| seqtk_trim | **cpu** | Int | Number of CPUs allocated for Seqtk trimming task | N/A | Optional |
+| seqtk_trim | **disk_size** | Int | Disk size allocated for Seqtk trimming task | N/A | Optional |
+| seqtk_trim | **docker** | String | Docker container for Seqtk trimming task | N/A | Optional |
+| seqtk_trim | **memory** | Int | Memory allocated for Seqtk trimming task | N/A | Optional |
+| plot_read_length_distribution | **cpu** | Int | Number of CPUs allocated for plotting read lengths | N/A | Optional |
+| plot_read_length_distribution | **disk_size** | Int | Disk size allocated for plotting read lengths | N/A | Optional |
+| plot_read_length_distribution | **docker** | String | Docker container for plotting read lengths | N/A | Optional |
+| plot_read_length_distribution | **memory** | Int | Memory allocated for plotting read lengths | N/A | Optional |
+| minimap2_align_ont | **cpu** | Int | Number of CPUs allocated for Minimap2 alignment | N/A | Optional |
+| minimap2_align_ont | **disk_size** | Int | Disk size allocated for Minimap2 alignment | N/A | Optional |
+| minimap2_align_ont | **docker** | String | Docker container for Minimap2 alignment | N/A | Optional |
+| minimap2_align_ont | **memory** | Int | Memory allocated for Minimap2 alignment | N/A | Optional |
+| filter_coverage | **cpu** | Int | Number of CPUs allocated for filtering coverage | N/A | Optional |
+| filter_coverage | **disk_size** | Int | Disk size allocated for filtering coverage | N/A | Optional |
+| filter_coverage | **docker** | String | Docker container for filtering coverage | N/A | Optional |
+| filter_coverage | **memory** | Int | Memory allocated for filtering coverage | N/A | Optional |
+| medaka_consensus | **auto_model** | Boolean | Automatically determine the Medaka model | N/A | Optional |
+| medaka_consensus | **cpu** | Int | Number of CPUs allocated for Medaka consensus generation | N/A | Optional |
+| medaka_consensus | **disk_size** | Int | Disk size allocated for Medaka consensus generation | N/A | Optional |
+| medaka_consensus | **docker** | String | Docker container for Medaka consensus generation | N/A | Optional |
+| medaka_consensus | **memory** | Int | Memory allocated for Medaka consensus generation | N/A | Optional |
+| samtools_process | **cpu** | Int | Number of CPUs allocated for Samtools processing | N/A | Optional |
+| samtools_process | **disk_size** | Int | Disk size allocated for Samtools processing | N/A | Optional |
+| samtools_process | **docker** | String | Docker container for Samtools processing | N/A | Optional |
+| samtools_process | **memory** | Int | Memory allocated for Samtools processing | N/A | Optional |
+
+</div>
+
+### Reference Genome File Format
+
+The reference genome file `reference_file` must be in **FASTA format**. Each genome must be properly formatted, with unique and descriptive headers. For example:
+
+```plaintext
+>Genome_1
+ATCGATCGATCG
+>Genome_2
+CGTAGCTAGCTA
+```
+
+The file must be in FASTA format (extensions such as .fa or .fasta).
+
+Ensure the reference genomes are suitable for alignment with ONT reads and compatible with downstream tools like Minimap2.
 
 ### Workflow Tasks
 
@@ -36,7 +81,6 @@ This workflow includes the following tasks:
     !!! techdetails "FastQC Technical Details"
         |  | Links |
         | --- | --- |
-        | Task | [fastqc_se](../../tasks/quality_control/basic_statistics/task_fastqc.wdl) |
         | Software Source Code | [FastQC](https://github.com/s-andrews/FastQC) |
         | Software Documentation | [FastQC Docs](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/) |
 
@@ -46,7 +90,6 @@ This workflow includes the following tasks:
     !!! techdetails "Seqtk Technical Details"
         |  | Links |
         | --- | --- |
-        | Task | [seqtk_trim](../../tasks/quality_control/read_filtering/task_seqtk_trim.wdl) |
         | Software Source Code | [Seqtk](https://github.com/lh3/seqtk) |
 
 ??? task "`minimap2`: Align Reads to Reference"
@@ -55,7 +98,6 @@ This workflow includes the following tasks:
     !!! techdetails "Minimap2 Technical Details"
         |  | Links |
         | --- | --- |
-        | Task | [minimap2_align_ont](../../tasks/alignment/task_minimap2.wdl) |
         | Software Source Code | [Minimap2](https://github.com/lh3/minimap2) |
         | Original Publication(s) | [Li 2018](https://doi.org/10.1093/bioinformatics/bty191) |
 
@@ -65,7 +107,6 @@ This workflow includes the following tasks:
     !!! techdetails "Samtools Technical Details"
         |  | Links |
         | --- | --- |
-        | Task | [samtools_process](../../tasks/utilities/file_handling/task_samtools_process.wdl) |
         | Software Source Code | [Samtools](http://www.htslib.org/) |
 
 ??? task "`filter_coverage`: Extract Regions with Sufficient Coverage"
@@ -74,7 +115,6 @@ This workflow includes the following tasks:
     !!! techdetails "Filter Coverage Technical Details"
         |  | Links |
         | --- | --- |
-        | Task | [filter_coverage](../../tasks/utilities/file_handling/task_filter_coverage.wdl) |
         | Software Source Code | [Bedtools](https://bedtools.readthedocs.io/) |
 
 ??? task "`medaka`: Generate Polished Consensus Sequence"
@@ -83,7 +123,6 @@ This workflow includes the following tasks:
     !!! techdetails "Medaka Technical Details"
         |  | Links |
         | --- | --- |
-        | Task | [medaka_consensus](../../tasks/polishing/task_medaka.wdl) |
         | Software Source Code | [Medaka](https://github.com/nanoporetech/medaka) |
         | Software Documentation | [Medaka Docs](https://nanoporetech.github.io/medaka/) |
 
@@ -102,4 +141,5 @@ This workflow includes the following tasks:
 ## References
 
 > Li, H. (2018). Minimap2: pairwise alignment for nucleotide sequences. Bioinformatics, 34(18), 3094–3100. https://doi.org/10.1093/bioinformatics/bty191
+
 > Medaka: Nanoporetech's tool for consensus sequence generation. https://github.com/nanoporetech/medaka
