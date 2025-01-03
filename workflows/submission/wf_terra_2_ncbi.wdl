@@ -17,6 +17,7 @@ workflow Terra_2_NCBI {
     String sra_transfer_gcp_bucket # used to be gcp_bucket_uri
     Boolean submit_to_production = false # used to be path_on_ftp_server
     String bioproject
+    File? column_mapping_file # Optional file for column mappings
   }
   call versioning.version_capture {
     input:
@@ -31,7 +32,8 @@ workflow Terra_2_NCBI {
       biosample_type = biosample_package,
       bioproject = bioproject,
       gcp_bucket_uri = sra_transfer_gcp_bucket,
-      skip_biosample = skip_biosample
+      skip_biosample = skip_biosample,
+      column_mapping_file = column_mapping_file
   }
   if (skip_biosample == false) {
     call ncbi_tools.biosample_submit_tsv_ftp_upload {

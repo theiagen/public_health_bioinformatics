@@ -4,7 +4,7 @@
 
 | **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
 |---|---|---|---|---|
-| [Public Data Sharing](../../workflows_overview/workflows_type.md/#public-data-sharing) | [Bacteria](../../workflows_overview/workflows_kingdom.md#bacteria), [Mycotics](../../workflows_overview/workflows_kingdom.md#mycotics) [Viral](../../workflows_overview/workflows_kingdom.md/#viral) | PHB v2.3.0 | No | Set-level |
+| [Public Data Sharing](../../workflows_overview/workflows_type.md/#public-data-sharing) | [Bacteria](../../workflows_overview/workflows_kingdom.md#bacteria), [Mycotics](../../workflows_overview/workflows_kingdom.md#mycotics) [Viral](../../workflows_overview/workflows_kingdom.md/#viral) | PHB vX.X.X | No | Set-level |
 
 ## Terra_2_NCBI_PHB
 
@@ -171,6 +171,86 @@ This workflow runs on set-level data tables.
         2. `ncbi_sftp_upload` 
             1. uploads the SRA metadata to NCBI 
             2. returns any XML communications from NCBI.
+
+??? task "Using Customized Column Names in Terra Tables"
+
+    In some cases, users may have data tables in Terra with column names that differ from the default expected by the workflow. The `Terra_2_NCBI` workflow allows users to supply a **custom column mapping file**, enabling them to specify how their columns map to the required workflow variables.
+
+    #### Adding a Custom Column Mapping File
+
+    To use a custom column mapping file:
+
+    1. **Create a tab-delimited `.tsv` file** with the following structure:
+        - **First column**: Actual column names in your Terra table (`Custom-column-name`).
+        - **Second column**: Default column names expected by the workflow (`Required-column-names`).
+
+        Example Mapping File:
+        ```plaintext
+        Custom  Required
+        Collection-Date collection_date
+        geo_location    geo_loc_name
+        bioproject_column   bioproject
+        sample_id_column    sample_names
+        ```
+
+    2. **Upload the file** to your Terra workspace and reference it in the `column_mapping_file` parameter when running the workflow using Google Cloud Storage paths.
+
+    3. Ensure the mapping file includes all required columns with custom names. Columns that match the default workflow names do not need to be included. Missing mappings for renamed columns may result in errors during execution.
+
+    The workflow will automatically map the specified column names from your Terra table to the required workflow variables using the 'custom_mapping_file'.
+
+    ### Metadata Requirements by Biosample Type
+
+    ??? info "Microbe Metadata"
+
+        | **Required** | **Optional** |
+        |---|---|
+        | submission_id | sample_title |
+        | organism | bioproject_accession |
+        | collection_date | attribute_package |
+        | geo_loc_name | strain |
+        | sample_type | isolate |
+        |  | host |
+        |  | isolation_source |
+        |  | altitude |
+        |  | biomaterial_provider |
+
+    ??? info "Wastewater Metadata"
+
+        | **Required** | **Optional** |
+        |---|---|
+        | submission_id | sample_title |
+        | organism | bioproject_accession |
+        | collection_date | purpose_of_ww_sampling |
+        | geo_loc_name | purpose_of_ww_sequencing |
+        | isolation_source | collected_by |
+        | ww_population | ww_sample_matrix |
+        | ww_sample_duration | ww_endog_control_1 |
+        | ww_sample_matrix | ww_flow |
+
+    ??? info "Pathogen Metadata"
+        | **Required** | **Optional** |
+        |---|---|
+        | submission_id | sample_title |
+        | organism | bioproject_accession |
+        | collected_by | attribute_package |
+        | collection_date | strain |
+        | geo_loc_name | isolate |
+        | host | serotype |
+        | host_disease | host_age |
+
+    ??? info "Virus Metadata"
+        | **Required** | **Optional** |
+        |---|---|
+        | submission_id | sample_title |
+        | organism | bioproject_accession |
+        | isolate | attribute_package |
+        | collection_date | strain |
+        | geo_loc_name | host |
+        | isolation_source | description |
+
+    ---
+    For further assistance in setting up a custom column mapping file, please contact Theiagen at [support@theiagen.com](mailto:support@theiagen.com).
 
 #### Workflow Success
 
