@@ -63,7 +63,7 @@ Besides the data input types, there are minimal differences between these two wo
 | kraken2_pe or kraken2_se | **unclassified_out** | String | Allows user to rename unclassified FASTQ files output. Must include .fastq as the suffix | unclassified#.fastq | Optional | ONT, PE, SE |
 | krona | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional | PE, SE |
 | krona | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | PE, SE |
-| krona | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/biocontainers/krona:2.7.1--pl526_5 | Optional | PE, SE |
+| krona | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/krona:2.8.1 | Optional | PE, SE |
 | krona | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | PE, SE |
 | kraken2_recalculate_abundances | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional | ONT |
 | kraken2_recalculate_abundances | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | ONT |
