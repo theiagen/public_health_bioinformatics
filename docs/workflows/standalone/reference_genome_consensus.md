@@ -71,6 +71,53 @@ The file must be in FASTA format (extensions such as .fa or .fasta).
 
 Ensure the reference genomes are suitable for alignment with ONT reads and compatible with downstream tools like Minimap2.
 
+## Medaka Model Selection
+
+The Medaka task in this workflow is designed to polish consensus sequences generated from Oxford Nanopore Technologies (ONT) data. The workflow provides flexibility for model selection to ensure compatibility with different ONT data inputs to optimize results.
+
+### Model Selection Options
+
+| **Medaka Model Selection** | **Description** |
+|---|---|
+| **Automatic Model Selection (Default)** | By default, the workflow uses Medaka's `--auto_model` feature to automatically determine the best-suited model for polishing based on the input data. This ensures compatibility with the reads provided. |
+| **User-Provided Model Override** | The user can provide a specific Medaka model via the `medaka_model_override` input. If specified, this model will be used regardless of automatic detection. |
+| **Default Model** | If automatic model selection fails or is disabled, the workflow will default to the model `r1041_e82_400bps_sup_v5.0.0`. This is optimized for high-accuracy (SUP) consensus generation using 400bp reads from R10.4.1 flowcells with E8.2 pore chemistry. |
+
+### Medaka Model Selection Logic
+
+- If `auto_model` is set to `true` and `medaka_model_override` is not provided, Medaka will attempt to resolve the model automatically using `medaka tools resolve_model`.
+- If automatic model selection fails or returns empty, the workflow defaults to `r1041_e82_400bps_sup_v5.0.0` for reliability.
+- Users can explicitly specify a model using the `medaka_model_override` input for custom requirements.
+
+### Available Medaka Models for Consensus Generation
+
+The following models are available in Medaka for consensus sequencing polishing:
+
+```plaintext
+r103_fast_g507
+r103_hac_g507
+r103_sup_g507
+r1041_e82_260bps_fast_g632
+r1041_e82_260bps_hac_g632
+r1041_e82_260bps_sup_g632
+r1041_e82_400bps_fast_g615
+r1041_e82_400bps_fast_g632
+r1041_e82_400bps_hac_g615
+r1041_e82_400bps_hac_g632
+r1041_e82_400bps_hac_v5.0.0
+r1041_e82_400bps_sup_g615
+r1041_e82_400bps_sup_v5.0.0
+r941_min_fast_g507
+r941_min_hac_g507
+r941_min_sup_g507
+r941_prom_fast_g507
+r941_prom_hac_g507
+r941_prom_sup_g507
+r941_sup_plant_g610
+```
+
+These models are recommended for high-quality consensus sequence generation. Ensure the model you select aligns with your input data characteristics for optimal results.
+
 ### Workflow Tasks
 
 This workflow includes the following tasks:
