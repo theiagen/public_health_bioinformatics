@@ -14,7 +14,7 @@ task krona {
     ktImportText | grep "KronaTools" | cut -d' ' -f3 | tee VERSION
 
     # run KrakenTools kreport2krona.py to enable viral compatibility
-    python3 /KrakenTools/kreport2krona.py -r ~{kraken2_report} -o ~{samplename}_krona.txt
+    kreport2krona.py -r ~{kraken2_report} -o ~{samplename}_krona.txt
 
     # Run krona with taxonomy on krakren report
     ktImportText ~{samplename}_krona.txt -o ~{samplename}_krona.html
