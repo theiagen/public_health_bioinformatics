@@ -4,7 +4,7 @@
 
 | **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
 |---|---|---|---|---|
-| [Genomic Characterization](../../workflows_overview/workflows_type.md/#genomic-characterization) | [Bacteria](../../workflows_overview/workflows_kingdom.md/#bacteria) | PHB v2.3.0 | Yes, some optional features incompatible | Sample-level |
+| [Genomic Characterization](../../workflows_overview/workflows_type.md/#genomic-characterization) | [Bacteria](../../workflows_overview/workflows_kingdom.md/#bacteria) | PHB vX.X.X | Yes, some optional features incompatible | Sample-level |
 
 ## TheiaProk Workflows
 
@@ -524,6 +524,10 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 | raw_check_reads | **organism** | String | Internal component, do not modify |  | Do not modify, Optional | ONT, PE, SE |
 | raw_check_reads | **workflow_series** | String | Internal component, do not modify |  | Do not modify, Optional | ONT, PE, SE |
 | read_QC_trim | **adapters** | File | A file containing the sequence of the adapters used during library preparation, used in the BBDuk task |  | Optional | PE, SE |
+| read_QC_trim | **artic_guppyplex_cpu** | Int | Internal component, do not modify| 8 | Optional | ONT |
+| read_QC_trim | **artic_guppyplex_disk_size** | Int | Internal component, do not modify| 100 | Optional | ONT |
+| read_QC_trim | **artic_guppyplex_docker** | String | Internal component, do not modify| us-docker.pkg.dev/general-theiagen/staphb/artic-ncov2019:1.3.0-medaka-1.4.3 | Optional | ONT |
+| read_QC_trim | **artic_guppyplex_memory** | Int | Internal component, do not modify| 16 | Optional | ONT |
 | read_QC_trim | **bbduk_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | PE, SE |
 | read_QC_trim | **call_kraken** | Boolean | Set to true to launch Kraken2; if true, you must provide a kraken_db | FALSE | Optional | ONT, PE, SE |
 | read_QC_trim | **call_midas** | Boolean | Set to true to launch Midas | TRUE | Optional | PE, SE |
@@ -533,15 +537,47 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 | read_QC_trim | **kraken_cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional | ONT, PE, SE |
 | read_QC_trim | **kraken_db** | File | Kraken2 database file; must be provided in call_kraken is true |  | Optional | ONT, PE, SE |
 | read_QC_trim | **kraken_disk_size** | Int | GB of storage to request for VM used to run the kraken2 task. Increase this when using large (>30GB kraken2 databases such as the "k2_standard" database) | 100 | Optional | ONT, PE, SE |
+| read_QC_trim | **kraken_docker_image** | Int | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.1.2-no-db" | Optional | ONT |
 | read_QC_trim | **kraken_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | ONT, PE, SE |
 | read_QC_trim | **max_length** | Int | Internal component, do not modify |  | Do not modify, Optional | ONT |
-| read_QC_trim | **midas_db** | File | Midas database file | gs://theiagen-large-public-files-rp/terra/theiaprok-files/midas/midas_db_v1.2.tar.gz | Optional | PE, SE |
 | read_QC_trim | **min_length** | Int | Internal component, do not modify |  | Do not modify, Optional | ONT |
+| read_QC_trim | **midas_db** | File | Midas database file | gs://theiagen-large-public-files-rp/terra/theiaprok-files/midas/midas_db_v1.2.tar.gz | Optional | PE, SE |
 | read_QC_trim | **phix** | File | A file containing the phix used during Illumina sequencing; used in the BBDuk task |  | Optional | PE, SE |
+| read_QC_trim | **nanoq_cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional | ONT |
+| read_QC_trim | **nanoq_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | ONT |
+| read_QC_trim | **nanoq_docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/biocontainers/nanoq:0.9.0--hec16e2b_1" | Optional | ONT |
+| read_QC_trim | **nanoq_max_read_length** | Int | The maximum read length to keep after trimming | 100000 | Optional | ONT |
+| read_QC_trim | **nanoq_max_read_qual** | Int | The maximum read quality to keep after trimming | 40 | Optional | ONT |
+| read_QC_trim | **nanoq_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 2 | Optional | ONT |
+| read_QC_trim | **nanoq_min_read_length** | Int | The minimum read length to keep after trimming | 500 | Optional | ONT |
+| read_QC_trim | **nanoq_min_read_qual** | Int | The minimum read quality to keep after trimming | 10 | Optional | ONT |
+| read_QC_trim | **ncbi_scrub_cpu** | Int | Internal component, do not modify| 4 | Optional | ONT |
+| read_QC_trim | **ncbi_scrub_disk_size** | Int | Internal component, do not modify| 100 | Optional | ONT |
+| read_QC_trim | **ncbi_scrub_docker** | String | Internal component, do not modify| "us-docker.pkg.dev/general-theiagen/ncbi/sra-human-scrubber:2.2.1" | Optional | ONT |
+| read_QC_trim | **ncbi_scrub_memory** | Int | Internal component, do not modify| 8 | Optional | ONT |
+| read_QC_trim | **rasusa_bases** | String | Explicitly set the number of bases required e.g., 4.3kb, 7Tb, 9000, 4.1MB. If this option is given, --coverage and --genome-size are ignored | | Optional | ONT |
+| read_QC_trim | **rasusa_cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional | ONT |
+| read_QC_trim | **rasusa_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | ONT |
+| read_QC_trim | **rasusa_docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/staphb/rasusa:0.7.0" | Optional | ONT |
+| read_QC_trim | **rasusa_fraction_of_reads** | Float | Subsample to a fraction of the reads - e.g., 0.5 samples half the reads | | Optional | ONT |
+| read_QC_trim | **rasusa_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | ONT |
+| read_QC_trim | **rasusa_number_of_reads** | Int | Subsample to a specific number of reads | | Optional | ONT |
+| read_QC_trim | **rasusa_seed** | Int | Random seed to use | | Optional | ONT |
 | read_QC_trim | **read_processing** | String | Read trimming software to use, either "trimmomatic" or "fastp" | trimmomatic | Optional | PE, SE |
 | read_QC_trim | **read_qc** | String | Allows the user to decide between fastq_scan (default) and fastqc for the evaluation of read quality. | fastq_scan | Optional | PE, SE |
 | read_QC_trim | **run_prefix** | String | Internal component, do not modify |  | Do not modify, Optional | ONT |
 | read_QC_trim | **target_organism** | String | This string is searched for in the kraken2 outputs to extract the read percentage |  | Optional | ONT, PE, SE |
+| read_QC_trim | **tiptoft_cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional | ONT |
+| read_QC_trim | **tiptoft_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | ONT | 
+| read_QC_trim | **tiptoft_docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/staphb/tiptoft:1.0.2" | Optional | ONT |
+| read_QC_trim | **tiptoft_kmer_size** | String | The kmer size | | Optional | ONT |
+| read_QC_trim | **tiptoft_margin** | Int | Flanking region around a block to use for mapping | | Optional | ONT |
+| read_QC_trim | **tiptoft_max_gap** | Int | Maximum gap for blocks to be contiguous, measured in multiples of the kmer size | | Optional | ONT |
+| read_QC_trim | **tiptoft_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | ONT |
+| read_QC_trim | **tiptoft_min_block_size** | Int | Minimum block size in bases | | Optional | ONT |
+| read_QC_trim | **tiptoft_min_fasta_hits** | Int | Minimum number of kmers matching a read | | Optional | ONT
+| read_QC-trim | **tiptoft_min_kmers_for_onex_pass** | Int | Minimum number of kmers matching a read in 1st pass | | Optional | ONT |
+| read_QC_trim | **tiptoft_min_perc_coverage** | Int | Minimum percentage ocoverage o typing sequence to report | | Optional | ONT |
 | read_QC_trim | **trimmomatic_args** | String | Additional arguments to pass to trimmomatic. "-phred33" specifies the Phred Q score encoding which is almost always phred33 with modern sequence data. | -phred33 | Optional | PE, SE |
 | resfinder_task | **acquired** | Boolean | Set to true to tell ResFinder to identify acquired resistance genes | TRUE | Optional | FASTA, ONT, PE, SE |
 | resfinder_task | **call_pointfinder** | Boolean | Set to true to enable detection of point mutations. | FALSE | Optional | FASTA, ONT, PE, SE |
