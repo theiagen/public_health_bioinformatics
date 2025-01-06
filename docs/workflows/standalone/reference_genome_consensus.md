@@ -89,34 +89,34 @@ The Medaka task in this workflow is designed to polish consensus sequences gener
 - If automatic model selection fails or returns empty, the workflow defaults to `r1041_e82_400bps_sup_v5.0.0` for reliability.
 - Users can explicitly specify a model using the `medaka_model_override` input for custom requirements.
 
-### Available Medaka Models for Consensus Generation
+??? info "Available Medaka Models for Consensus Generation" 
 
-The following models are available in Medaka for consensus sequencing polishing:
+    The following models are available in Medaka for consensus sequencing polishing:
 
-```plaintext
-r103_fast_g507
-r103_hac_g507
-r103_sup_g507
-r1041_e82_260bps_fast_g632
-r1041_e82_260bps_hac_g632
-r1041_e82_260bps_sup_g632
-r1041_e82_400bps_fast_g615
-r1041_e82_400bps_fast_g632
-r1041_e82_400bps_hac_g615
-r1041_e82_400bps_hac_g632
-r1041_e82_400bps_hac_v5.0.0
-r1041_e82_400bps_sup_g615
-r1041_e82_400bps_sup_v5.0.0
-r941_min_fast_g507
-r941_min_hac_g507
-r941_min_sup_g507
-r941_prom_fast_g507
-r941_prom_hac_g507
-r941_prom_sup_g507
-r941_sup_plant_g610
-```
+        ```plaintext
+        r103_fast_g507
+        r103_hac_g507
+        r103_sup_g507
+        r1041_e82_260bps_fast_g632
+        r1041_e82_260bps_hac_g632
+        r1041_e82_260bps_sup_g632
+        r1041_e82_400bps_fast_g615
+        r1041_e82_400bps_fast_g632
+        r1041_e82_400bps_hac_g615
+        r1041_e82_400bps_hac_g632
+        r1041_e82_400bps_hac_v5.0.0
+        r1041_e82_400bps_sup_g615
+        r1041_e82_400bps_sup_v5.0.0
+        r941_min_fast_g507
+        r941_min_hac_g507
+        r941_min_sup_g507
+        r941_prom_fast_g507
+        r941_prom_hac_g507
+        r941_prom_sup_g507
+        r941_sup_plant_g610
+        ```
 
-These models are recommended for high-quality consensus sequence generation. Ensure the model you select aligns with your input data characteristics for optimal results.
+    These models are recommended for high-quality consensus sequence generation. Ensure the model you select aligns with your input data characteristics for optimal results.
 
 ### Workflow Tasks
 
