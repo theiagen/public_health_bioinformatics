@@ -5162,7 +5162,7 @@
 <tr>
 <td><a href="../../../workflows_overview/workflows_type/#genomic-characterization">Genomic Characterization</a></td>
 <td><a href="../../../workflows_overview/workflows_kingdom/#bacteria">Bacteria</a></td>
-<td>PHB v2.3.0</td>
+<td>PHB vX.X.X</td>
 <td>Yes, some optional features incompatible</td>
 <td>Sample-level</td>
 </tr>
@@ -9494,6 +9494,42 @@
 </tr>
 <tr>
 <td>read_QC_trim</td>
+<td><strong>artic_guppyplex_cpu</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td>8</td>
+<td>Optional</td>
+<td>ONT</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>artic_guppyplex_disk_size</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td>100</td>
+<td>Optional</td>
+<td>ONT</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>artic_guppyplex_docker</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/artic-ncov2019:1.3.0-medaka-1.4.3</td>
+<td>Optional</td>
+<td>ONT</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>artic_guppyplex_memory</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td>16</td>
+<td>Optional</td>
+<td>ONT</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
 <td><strong>bbduk_memory</strong></td>
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
@@ -9575,6 +9611,15 @@
 </tr>
 <tr>
 <td>read_QC_trim</td>
+<td><strong>kraken_docker_image</strong></td>
+<td>Int</td>
+<td>The Docker container to use for the task</td>
+<td>"us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.1.2-no-db"</td>
+<td>Optional</td>
+<td>ONT</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
 <td><strong>kraken_memory</strong></td>
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
@@ -9593,15 +9638,6 @@
 </tr>
 <tr>
 <td>read_QC_trim</td>
-<td><strong>midas_db</strong></td>
-<td>File</td>
-<td>Midas database file</td>
-<td>gs://theiagen-large-public-files-rp/terra/theiaprok-files/midas/midas_db_v1.2.tar.gz</td>
-<td>Optional</td>
-<td>PE, SE</td>
-</tr>
-<tr>
-<td>read_QC_trim</td>
 <td><strong>min_length</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
@@ -9611,12 +9647,201 @@
 </tr>
 <tr>
 <td>read_QC_trim</td>
+<td><strong>midas_db</strong></td>
+<td>File</td>
+<td>Midas database file</td>
+<td>gs://theiagen-large-public-files-rp/terra/theiaprok-files/midas/midas_db_v1.2.tar.gz</td>
+<td>Optional</td>
+<td>PE, SE</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
 <td><strong>phix</strong></td>
 <td>File</td>
 <td>A file containing the phix used during Illumina sequencing; used in the BBDuk task</td>
 <td></td>
 <td>Optional</td>
 <td>PE, SE</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>nanoq_cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>2</td>
+<td>Optional</td>
+<td>ONT</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>nanoq_disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>100</td>
+<td>Optional</td>
+<td>ONT</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>nanoq_docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>"us-docker.pkg.dev/general-theiagen/biocontainers/nanoq:0.9.0--hec16e2b_1"</td>
+<td>Optional</td>
+<td>ONT</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>nanoq_max_read_length</strong></td>
+<td>Int</td>
+<td>The maximum read length to keep after trimming</td>
+<td>100000</td>
+<td>Optional</td>
+<td>ONT</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>nanoq_max_read_qual</strong></td>
+<td>Int</td>
+<td>The maximum read quality to keep after trimming</td>
+<td>40</td>
+<td>Optional</td>
+<td>ONT</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>nanoq_memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>2</td>
+<td>Optional</td>
+<td>ONT</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>nanoq_min_read_length</strong></td>
+<td>Int</td>
+<td>The minimum read length to keep after trimming</td>
+<td>500</td>
+<td>Optional</td>
+<td>ONT</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>nanoq_min_read_qual</strong></td>
+<td>Int</td>
+<td>The minimum read quality to keep after trimming</td>
+<td>10</td>
+<td>Optional</td>
+<td>ONT</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>ncbi_scrub_cpu</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td>4</td>
+<td>Optional</td>
+<td>ONT</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>ncbi_scrub_disk_size</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td>100</td>
+<td>Optional</td>
+<td>ONT</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>ncbi_scrub_docker</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td>"us-docker.pkg.dev/general-theiagen/ncbi/sra-human-scrubber:2.2.1"</td>
+<td>Optional</td>
+<td>ONT</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>ncbi_scrub_memory</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td>8</td>
+<td>Optional</td>
+<td>ONT</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>rasusa_bases</strong></td>
+<td>String</td>
+<td>Explicitly set the number of bases required e.g., 4.3kb, 7Tb, 9000, 4.1MB. If this option is given, --coverage and --genome-size are ignored</td>
+<td></td>
+<td>Optional</td>
+<td>ONT</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>rasusa_cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>4</td>
+<td>Optional</td>
+<td>ONT</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>rasusa_disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>100</td>
+<td>Optional</td>
+<td>ONT</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>rasusa_docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>"us-docker.pkg.dev/general-theiagen/staphb/rasusa:0.7.0"</td>
+<td>Optional</td>
+<td>ONT</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>rasusa_fraction_of_reads</strong></td>
+<td>Float</td>
+<td>Subsample to a fraction of the reads - e.g., 0.5 samples half the reads</td>
+<td></td>
+<td>Optional</td>
+<td>ONT</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>rasusa_memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>8</td>
+<td>Optional</td>
+<td>ONT</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>rasusa_number_of_reads</strong></td>
+<td>Int</td>
+<td>Subsample to a specific number of reads</td>
+<td></td>
+<td>Optional</td>
+<td>ONT</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>rasusa_seed</strong></td>
+<td>Int</td>
+<td>Random seed to use</td>
+<td></td>
+<td>Optional</td>
+<td>ONT</td>
 </tr>
 <tr>
 <td>read_QC_trim</td>
@@ -9653,6 +9878,105 @@
 <td></td>
 <td>Optional</td>
 <td>ONT, PE, SE</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>tiptoft_cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>2</td>
+<td>Optional</td>
+<td>ONT</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>tiptoft_disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>100</td>
+<td>Optional</td>
+<td>ONT</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>tiptoft_docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>"us-docker.pkg.dev/general-theiagen/staphb/tiptoft:1.0.2"</td>
+<td>Optional</td>
+<td>ONT</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>tiptoft_kmer_size</strong></td>
+<td>String</td>
+<td>The kmer size</td>
+<td></td>
+<td>Optional</td>
+<td>ONT</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>tiptoft_margin</strong></td>
+<td>Int</td>
+<td>Flanking region around a block to use for mapping</td>
+<td></td>
+<td>Optional</td>
+<td>ONT</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>tiptoft_max_gap</strong></td>
+<td>Int</td>
+<td>Maximum gap for blocks to be contiguous, measured in multiples of the kmer size</td>
+<td></td>
+<td>Optional</td>
+<td>ONT</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>tiptoft_memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>8</td>
+<td>Optional</td>
+<td>ONT</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>tiptoft_min_block_size</strong></td>
+<td>Int</td>
+<td>Minimum block size in bases</td>
+<td></td>
+<td>Optional</td>
+<td>ONT</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>tiptoft_min_fasta_hits</strong></td>
+<td>Int</td>
+<td>Minimum number of kmers matching a read</td>
+<td></td>
+<td>Optional</td>
+<td>ONT</td>
+</tr>
+<tr>
+<td>read_QC-trim</td>
+<td><strong>tiptoft_min_kmers_for_onex_pass</strong></td>
+<td>Int</td>
+<td>Minimum number of kmers matching a read in 1st pass</td>
+<td></td>
+<td>Optional</td>
+<td>ONT</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>tiptoft_min_perc_coverage</strong></td>
+<td>Int</td>
+<td>Minimum percentage ocoverage o typing sequence to report</td>
+<td></td>
+<td>Optional</td>
+<td>ONT</td>
 </tr>
 <tr>
 <td>read_QC_trim</td>
@@ -14814,7 +15138,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2024-12-31</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2025-01-06</span>
   </span>
 
     
