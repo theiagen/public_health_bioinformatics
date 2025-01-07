@@ -82,8 +82,9 @@ task consensus {
     samtools fastq -F4 ~{samplename}.primertrimmed.rg.sorted.bam | gzip > ~{samplename}.fastq.gz  
   >>>
   output {
-    File artic_consensus_fasta = "~{samplename}.consensus.fasta"
+    File consensus_seq = "~{samplename}.consensus.fasta"
     File artic_clair3_pass_vcf = "~{samplename}.pass.vcf"
+    String artic_clair3_model = clair3_model
     String artic_pipeline_reference = read_string("REFERENCE_GENOME")
     String artic_pipeline_version = read_string("VERSION")
     String artic_pipeline_docker = docker
