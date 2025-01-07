@@ -58,7 +58,8 @@ task consensus {
         exit 1
       fi
 
-      # Copy reference files to working directory
+      # Copy reference files to working directory, this is neccessary for fiadx to work
+      # which is a requirement of clair3, we run into similar issues in the clair3_variants task
       cp "~{reference_genome}" reference.fasta
       # Run ARTIC with user provided files
       artic minion --model ~{clair3_model} \
