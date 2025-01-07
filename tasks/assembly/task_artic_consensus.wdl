@@ -58,12 +58,14 @@ task consensus {
         exit 1
       fi
 
+      # Copy reference files to working directory
+      cp "~{reference_genome}" reference.fasta
       # Run ARTIC with user provided files
       artic minion --model ~{clair3_model} \
         --normalise ~{normalise} \
         --threads ~{cpu} \
         --bed ~{primer_bed} \
-        --ref ~{reference_genome} \
+        --ref reference.fasta \
         --read-file ~{read1} \
         ~{samplename}
 
