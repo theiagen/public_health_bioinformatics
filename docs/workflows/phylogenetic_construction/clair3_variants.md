@@ -4,18 +4,31 @@
 
 | **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
 |---|---|---|---|---|
-| [Phylogenetic Construction](../../workflows_overview/workflows_type.md/#phylogenetic-construction) | [Bacteria](../../workflows_overview/workflows_kingdom.md/#bacteria), [Mycotics](../../workflows_overview/workflows_kingdom.md#mycotics), [Viral](../../workflows_overview/workflows_kingdom.md/#viral) | PHB v2.3.0 | Yes | Sample-level |
+| [Phylogenetic Construction](../../workflows_overview/workflows_type.md/#phylogenetic-construction) | [Bacteria](../../workflows_overview/workflows_kingdom.md/#bacteria), [Mycotics](../../workflows_overview/workflows_kingdom.md#mycotics), [Viral](../../workflows_overview/workflows_kingdom.md/#viral) | PHB vx.x.x | Yes | Sample-level |
 
 ## Clair3_Variants_ONT
 
 The `Clair3_Variants` workflow processes Oxford Nanopore Technologies (ONT) sequencing data to identify genetic variations compared to a reference genome. It combines minimap2's long-read alignment capabilities with Clair3's deep learning-based variant calling, designed specifically for ONT data characteristics. The workflow first aligns raw reads to a reference genome using ONT-optimized parameters, processes these alignments into sorted and indexed BAM files, and then employs Clair3's specialized models to detect variants including single nucleotide polymorphisms (SNPs) and insertions/deletions (indels). If enabled, the workflow can also identify longer indels and generate genome-wide variant calls in gVCF format for downstream analysis.
 
-PHB `Clair3_Variants` also supports 10 model configuration for `clair3` ONT. 3 pretrained models included in the 1.0.10 release (`r941_prom_sup_g5014`, `r941_prom_hac_g360+g422`, `r941_prom_hac_g238`), and 4 models from the latest available in the research release repository [nanoporetech/rerio](https://github.com/nanoporetech/rerio?tab=readme-ov-file#clair3-models) (`r1041_e82_400bps_sup_v500`, `r1041_e82_400bps_hac_v500`, `r1041_e82_400bps_sup_v410`, `r1041_e82_400bps_hac_v410`). The first part of the model represents the flowcell version, where r941 corresponds to `R9.4.1` and r1041 corresponds to `R10.4.1`. Models from older releases are available as well, where model `ont` is recommended for Guppy3 and Guppy4 data. Model `ont_guppy2` for Guppy2 data, and Model `ont_guppy5` for Guppy5 data. 
-
 !!! tip "Example Use Cases"
    - **Variant Discovery**: Identify genetic variations in ONT sequencing data compared to a reference genome
    - **SNP and Indel Detection**: Accurately detect both small variants and longer indels
    - **Population Studies**: Generate standardized variant calls suitable for population-level analyses
+
+PHB `Clair3_Variants` also supports 10 model configuration for `clair3` ONT:
+
+| Model | Chemistry | Source |
+|-------|-----------|---------|
+| `r941_prom_sup_g5014` | R9.4.1 | Clair3 1.0.10 Release |
+| `r941_prom_hac_g360+g422` | R9.4.1 | Clair3 1.0.10 Release |
+| `r941_prom_hac_g238` | R9.4.1 | Clair3 1.0.10 Release |
+| `r1041_e82_400bps_sup_v500` | R10.4.1 | [nanoporetech/rerio](https://github.com/nanoporetech/rerio?tab=readme-ov-file#clair3-models) |
+| `r1041_e82_400bps_hac_v500` | R10.4.1 | [nanoporetech/rerio](https://github.com/nanoporetech/rerio?tab=readme-ov-file#clair3-models) |
+| `r1041_e82_400bps_sup_v410` | R10.4.1 | [nanoporetech/rerio](https://github.com/nanoporetech/rerio?tab=readme-ov-file#clair3-models) |
+| `r1041_e82_400bps_hac_v410` | R10.4.1 | [nanoporetech/rerio](https://github.com/nanoporetech/rerio?tab=readme-ov-file#clair3-models) |
+| `ont` | Various | Legacy (Recommended for Guppy3 and Guppy4) |
+| `ont_guppy2` | Various | Legacy (For Guppy2 data) |
+| `ont_guppy5` | Various | Legacy (For Guppy5 data) |
 
 ### Inputs
 
@@ -102,10 +115,8 @@ PHB `Clair3_Variants` also supports 10 model configuration for `clair3` ONT. 3 p
 | aligned_fai | File | Index file for the reference genome |
 | clair3_docker_image | String | Version of the Docker container used for Clair3 variant calling |
 | clair3_model_used | String | Name of the Clair3 model used for variant calling |
-| clair3_variants_final_vcf | File | Final merged VCF file containing high-confidence variant calls, combining results from both pileup and full-alignment approaches |
-| clair3_variants_full_alignment_vcf | File | VCF file containing variants identified using the full-alignment analysis |
+| clair3_variants_vcf | File | Final merged VCF file containing high-confidence variant calls, combining results from both pileup and full-alignment approaches |
 | clair3_variants_gvcf | File | Optional genome VCF file containing information about all genomic positions, including non-variant sites |
-| clair3_variants_pileup_vcf | File | VCF file containing variants identified using the pileup-based approach |
 | clair3_variants_wf_version | String | Version of the PHB workflow used |
 | clair3_version | String | Clair3 Version being used |
 | samtools_version | String | Version of samtools used for BAM processing |

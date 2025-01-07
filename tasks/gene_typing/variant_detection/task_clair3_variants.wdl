@@ -56,8 +56,6 @@ task clair3_variants {
         ~{true="--gvcf" false="" enable_gvcf}
 
     mv "~{samplename}/merge_output.vcf.gz" ~{samplename}_merge_output.vcf.gz
-    mv "~{samplename}/pileup.vcf.gz" ~{samplename}_pileup.vcf.gz
-    mv "~{samplename}/full_alignment.vcf.gz" ~{samplename}_full_alignment.vcf.gz
 
     # If gvcf is enabled, move the gvcf file to the output directory
     if [ "~{enable_gvcf}" == "true" ]; then
@@ -66,9 +64,7 @@ task clair3_variants {
   >>>
   output {
     String clair3_version = read_string("VERSION")
-    File clair3_variants_final_vcf = "~{samplename}_merge_output.vcf.gz"
-    File clair3_variants_full_alignment_vcf = "~{samplename}_full_alignment.vcf.gz"
-    File clair3_variants_pileup_vcf = "~{samplename}_pileup.vcf.gz"
+    File clair3_variants_vcf = "~{samplename}_merge_output.vcf.gz"
     File? clair3_variants_gvcf = "~{samplename}_merge_output.gvcf.gz"
     String clair3_variants_docker_image = docker
     String clair3_model_used = clair3_model
@@ -79,6 +75,6 @@ task clair3_variants {
     cpu: cpu
     disks: "local-disk ~{disk_size} SSD"
     preemptible: 0
-    maxRetries: 0
+    maxRetries: 3
   }
 }

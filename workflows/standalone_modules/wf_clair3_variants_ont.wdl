@@ -82,9 +82,7 @@ workflow clair3_variants_ont {
     #Clair3 variant calling
     String clair3_variants_wf_version = version_capture.phb_version
     String clair3_version = clair3_variants.clair3_version
-    File clair3_variants_final_vcf = clair3_variants.clair3_variants_final_vcf
-    File clair3_variants_pileup_vcf = clair3_variants.clair3_variants_pileup_vcf
-    File clair3_variants_full_alignment_vcf = clair3_variants.clair3_variants_full_alignment_vcf
+    File clair3_variants_vcf = clair3_variants.clair3_variants_vcf
     File? clair3_variants_gvcf = clair3_variants.clair3_variants_gvcf
     String clair3_docker_image = clair3_variants.clair3_variants_docker_image
     String clair3_model_used = clair3_variants.clair3_model_used
