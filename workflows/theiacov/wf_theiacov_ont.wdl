@@ -305,7 +305,6 @@ workflow theiacov_ont {
     File? aligned_bai = consensus.trim_sorted_bai
     File? clair3_vcf = consensus.artic_clair3_pass_vcf
     File? read1_aligned = consensus.reads_aligned
-    File? read1_trimmed = consensus.trim_fastq
     # Read Alignment - Artic consensus versioning outputs
     String? artic_version = consensus.artic_pipeline_version
     String? artic_docker = consensus.artic_pipeline_docker

@@ -11,8 +11,8 @@ task consensus {
     Int cpu = 8
     Int memory = 16
     Int disk_size = 100
-    String clair3_model = "r941_prom_hac_g360+g422"
-    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/artic:1.6.0"
+    String clair3_model = "r1041_e82_400bps_hac_v420"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/artic:1.6.0_rerio"
   }
   command <<<
     set -euo pipefail
@@ -26,9 +26,6 @@ task consensus {
       if [[ "~{organism}" == "sars-cov-2" ]]; then
         scheme_name="sars-cov-2"
         scheme_version="v4.0.0"
-      elif [[ "~{organism}" == "MPXV" ]]; then
-        scheme_name="mpox"
-        scheme_version="v1.0.0"
       else
         echo "Error: Unsupported organism for remote schemes: ~{organism}" >&2
         echo "Please provide primer bed and reference genome for custom organisms" >&2
@@ -79,7 +76,8 @@ task consensus {
     echo "Artic Pipeline Version $(artic -v)" > VERSION
 
     # Grab reads from alignment - cdph wants this
-    samtools fastq -F4 ~{samplename}.primertrimmed.rg.sorted.bam | gzip > ~{samplename}.fastq.gz  
+    # 0x904 means we are now filtering out unaligned, secondary, and supplemental alignments - thanks Curtis
+    samtools fastq -F0x904 ~{samplename}.primertrimmed.rg.sorted.bam | gzip > ~{samplename}.fastq.gz  
   >>>
   output {
     File consensus_seq = "~{samplename}.consensus.fasta"
