@@ -130,7 +130,7 @@ workflow theiacov_ont {
             clair3_model = clair3_model,
             primer_bed = organism_parameters.primer_bed,
             normalise = normalise,
-            reference_genome = organism_parameters.reference,
+            reference_genome = organism_parameters.reference
         }
         call assembly_metrics.stats_n_coverage {
           input:

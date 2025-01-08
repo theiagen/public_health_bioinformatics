@@ -29,6 +29,7 @@ workflow theiacov_clearlabs {
     Int normalise = 20000
     # artic clair 3 model
     String? clair3_model
+    String? artic_docker_image
     # reference values
     File? reference_genome
     # nextclade inputs
@@ -80,7 +81,8 @@ workflow theiacov_clearlabs {
       normalise = normalise,
       clair3_model = clair3_model,
       reference_genome = organism_parameters.reference,
-      organism = organism
+      organism = organism,
+      docker = artic_docker_image
   }
   call assembly_metrics.stats_n_coverage {
     input:

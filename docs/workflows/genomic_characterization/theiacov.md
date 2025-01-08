@@ -128,8 +128,8 @@ All TheiaCoV Workflows (not TheiaCoV_FASTA_Batch)
 | clean_check_reads | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 2 | Optional | ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | consensus | **cpu** | Int | Number of CPUs to allocate to the task | 8 | Optional | CL, ONT | sars-cov-2 |
 | consensus | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | CL, ONT | sars-cov-2 |
-| consensus | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/artic-ncov2019-epi2me | Optional | ONT | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
-| consensus | **medaka_model** | String | In order to obtain the best results, the appropriate model must be set to match the sequencer's basecaller model; this string takes the format of {pore}_{device}_{caller variant}_{caller_version}. See also https://github.com/nanoporetech/medaka?tab=readme-ov-file#models. | r941_min_high_g360 | Optional | CL, ONT | sars-cov-2 |
+| consensus | **docker** | String | The Docker container to use for the task |  us-docker.pkg.dev/general-theiagen/theiagen/artic:1.6.0_rerio | Optional | ONT | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
+| consensus | **clair3_model** | String | In order to obtain the best results, the appropriate model must be set to match the sequencer's basecaller model, Clair includes these: https://github.com/HKU-BAL/Clair3?tab=readme-ov-file#pre-trained-models . More models also found here: https://github.com/nanoporetech/rerio?tab=readme-ov-file#clair3-models. | r1041_e82_400bps_hac_v420 | Optional | CL, ONT | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | consensus | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 16 | Optional | CL, ONT | sars-cov-2 |
 | consensus_qc | **cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2 |
 | consensus_qc | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2 |
@@ -377,7 +377,7 @@ All TheiaCoV Workflows (not TheiaCoV_FASTA_Batch)
 | workflow name | **genome_length** | Int | Use to specify the expected genome length | | Optional | FASTA, ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | workflow name | **max_genome_length** | Int | Maximum genome length able to pass read screening | 2673870 | Optional | ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | workflow name | **max_length** | Int | Maximum length for a read based on the SARS-CoV-2 primer scheme | 700 | Optional | ONT | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
-| workflow name | **medaka_docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/artic-ncov2019:1.3.0-medaka-1.4.3 | Optional | CL | |
+| workflow name | **artic_docker_image** | String | The Docker container to use for the task | | Optional | CL | |
 | workflow name | **min_basepairs** | Int | Minimum base pairs to pass read screening | 34000 | Optional | ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | workflow name | **min_coverage** | Int | Minimum coverage to pass read screening | 10 | Optional | ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | workflow name | **min_depth** | Int | Minimum depth of reads required to call variants and generate a consensus genome. This value is passed to the iVar software. | 100 | Optional | ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
@@ -828,7 +828,7 @@ All input reads are processed through "core tasks" in the TheiaCoV Illumina, ONT
 
 ??? toggle "`artic_consensus`: Alignment, Primer Trimming, Variant Detection, and Consensus ==_for non-flu organisms in ONT & ClearLabs workflows_=="
 
-    Briefly, input reads are aligned to the appropriate reference with [minimap2](https://github.com/lh3/minimap2) to generate a Binary Alignment Mapping ([BAM](https://en.wikipedia.org/wiki/Binary_Alignment_Map)) file. Primer sequences are then removed from the BAM file and a consensus assembly file is generated using the [Artic minion](https://artic.readthedocs.io/en/latest/commands/#basecaller) Medaka argument.
+    Briefly, input reads are aligned to the appropriate reference with [minimap2](https://github.com/lh3/minimap2) to generate a Binary Alignment Mapping ([BAM](https://en.wikipedia.org/wiki/Binary_Alignment_Map)) file. Primer sequences are then removed from the BAM file and a consensus assembly file is generated using the [Artic minion](https://artic.readthedocs.io/en/latest/commands/#basecaller) argument. Variant calling is done using [Clair3](https://github.com/HKU-BAL/Clair3).
 
     !!! info ""
         Read-trimming is performed on raw read data generated on the ClearLabs instrument and thus not a required step in the TheiaCoV_ClearLabs workflow.
@@ -994,6 +994,7 @@ All TheiaCoV Workflows (not TheiaCoV_FASTA_Batch)
 | aligned_bai | File | Index companion file to the bam file generated during the consensus assembly process | CL, ONT, PE, SE |
 | aligned_bam | File | Primer-trimmed BAM file; generated during consensus assembly process | CL, ONT, PE, SE |
 | artic_docker | String | Docker image utilized for read trimming and consensus genome assembly | CL, ONT |
+| artic_reference | String | Reference file used in artic pipeline | CL, ONT |
 | artic_version | String | Version of the Artic software utilized for read trimming and conesnsus genome assembly | CL, ONT |
 | assembly_fasta | File | Consensus genome assembly; for lower quality flu samples, the output may state "Assembly could not be generated" when there is too little and/or too low quality data for IRMA to produce an assembly. Contigs will be ordered from largest to smallest when IRMA is used. | CL, ONT, PE, SE |
 | assembly_length_unambiguous | Int | Number of unambiguous basecalls within the consensus assembly | CL, FASTA, ONT, PE, SE |
@@ -1005,6 +1006,7 @@ All TheiaCoV Workflows (not TheiaCoV_FASTA_Batch)
 | bbduk_docker | String | Docker image used to run BBDuk | PE, SE |
 | bwa_version | String | Version of BWA used to map read data to the reference genome | PE, SE |
 | consensus_flagstat | File | Output from the SAMtools flagstat command to assess quality of the alignment file (BAM) | CL, ONT, PE, SE |
+|clair3_vcf| File | Clair3 VCF output by artic containing all passing variants | ONT |
 | consensus_n_variant_min_depth | Int | Minimum read depth to call variants for iVar consensus and iVar variants | PE, SE |
 | consensus_stats | File | Output from the SAMtools stats command to assess quality of the alignment file (BAM) | CL, ONT, PE, SE |
 | est_coverage_clean | Float | Estimated coverage of the clean reads | ONT |
@@ -1087,8 +1089,6 @@ All TheiaCoV Workflows (not TheiaCoV_FASTA_Batch)
 | kraken_version | String | Version of Kraken software used | CL, ONT, PE, SE |
 | meanbaseq_trim | Float | Mean quality of the nucleotide basecalls aligned to the reference genome after primer trimming | CL, ONT, PE, SE |
 | meanmapq_trim | Float | Mean quality of the mapped reads to the reference genome after primer trimming | CL, ONT, PE, SE |
-| medaka_reference | String | Reference sequence used in medaka task | CL, ONT |
-| medaka_vcf | File | A VCF file containing the identified variants | ONT |
 | nanoplot_docker | String | Docker image used to run Nanoplot | ONT |
 | nanoplot_html_clean | File | An HTML report describing the clean reads | ONT |
 | nanoplot_html_raw | File | An HTML report describing the raw reads | ONT |
