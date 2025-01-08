@@ -5,7 +5,7 @@ task read_filtering {
     File read1
     String samplename
     String run_prefix = "artic_ncov2019"
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/artic-ncov2019:1.3.0-medaka-1.4.3"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/artic:1.6.0_rerio"
     Int min_length = 400
     Int max_length = 700
     Int cpu = 8
