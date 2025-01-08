@@ -16,7 +16,7 @@ task read_filtering {
     # date and version control
     mkdir ~{samplename}
     cp ~{read1} ~{samplename}/
-    echo "DIRNAME: $(dirname)"
+    echo "DIRNAME: ~{samplename}"
 
     # run artic guppyplex 
     artic guppyplex --min-length ~{min_length} --max-length ~{max_length} --directory ~{samplename} --prefix ~{run_prefix}
