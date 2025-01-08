@@ -19,19 +19,26 @@ task consensus {
 
     # Determine if we're using provided or local schemes - most of the time will be provided
     # But with newer versions of ARTIC, we can use remote schemes from https://github.com/quick-lab/primerschemes
-    if [[ -z "~{primer_bed}" && -z "~{reference_genome}" ]]; then
+    # Check if primer_bed is empty OR its file is empty/nonexistent AND reference_genome is empty/nonexistent
+    if [[ -z "~{primer_bed}" || ! -s "~{primer_bed}" ]] && [[ -z "~{reference_genome}" || ! -s "~{reference_genome}" ]]; then
       echo "Using remote scheme..."
       
       # Set scheme parameters based on organism
       if [[ "~{organism}" == "sars-cov-2" ]]; then
         scheme_name="sars-cov-2"
         scheme_version="v4.0.0"
+        scheme_length="400"
+      elif [[ "~{organism}" == "MPXV" ]]; then
+        scheme_name="artic-inrb-mpox"
+        scheme_version="v1.0.0"
+        scheme_length="400"
       else
         echo "Error: Unsupported organism for remote schemes: ~{organism}" >&2
         echo "Please provide primer bed and reference genome for custom organisms" >&2
         exit 1
       fi
-
+      
+      echo "Using scheme: ${scheme_name} ${scheme_version} ${scheme_length}"
       # Run ARTIC with remote scheme per newer versions of ARTIC
       artic minion --model ~{clair3_model} \
         --normalise ~{normalise} \
@@ -39,6 +46,7 @@ task consensus {
         --scheme-directory /data/primer-schemes \
         --scheme-name ${scheme_name} \
         --scheme-version ${scheme_version} \
+        --scheme-length ${scheme_length} \
         --read-file ~{read1} \
         ~{samplename}
 
