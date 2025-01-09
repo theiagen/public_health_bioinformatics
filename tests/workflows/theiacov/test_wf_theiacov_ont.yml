@@ -77,7 +77,7 @@
     - path: miniwdl_run/call-consensus/work/ont.trimmed.rg.sorted.bam
     - path: miniwdl_run/call-consensus/work/ont.trimmed.rg.sorted.bam.bai
     - path: miniwdl_run/call-consensus_qc/command
-      md5sum: 11ad9f5b0130528f5f2f77a7ea048333
+      md5sum: 31dfee1552f68e5c6f72431458a33535
     - path: miniwdl_run/call-consensus_qc/inputs.json
       contains: ["assembly_fasta"]
     - path: miniwdl_run/call-consensus_qc/outputs.json
@@ -151,7 +151,7 @@
     - path: miniwdl_run/call-nextclade_v3/work/ont.consensus.nextclade.json
     - path: miniwdl_run/call-nextclade_v3/work/ont.consensus.nextclade.tsv
     - path: miniwdl_run/call-nextclade_output_parser/command
-      md5sum: 6b2d20d9df7c656a76755a4048acf3ec
+      md5sum: 11ad9f5b0130528f5f2f77a7ea048333
     - path: miniwdl_run/call-nextclade_output_parser/inputs.json
       contains: ["nextclade_tsv", "tsv"]
     - path: miniwdl_run/call-nextclade_output_parser/outputs.json
