@@ -71,18 +71,16 @@ task variant_call {
     cut -f 1-14 ~{samplename}.variants.tsv | awk '!seen[$0]++ {print}' > unique_variants.tsv
 
     # filter variants that pass fisher's exact test
-    grep "TRUE" unique_variants.tsv > passed_variants.tsv
+    grep "TRUE" unique_variants.tsv > passed_variants.tsv || touch passed_variants.tsv
 
     # calculate total number of variants
-    variants_num=$(cat passed_variants.tsv | wc -l)
-    if [ -z "$variants_num" ] ; then variants_num="0" ; fi
+    variants_num=$(wc -l < passed_variants.tsv || echo 0)
     echo $variants_num | tee VARIANT_NUM
 
     # calculate proportion of variants with allele frequencies between 0.6 and 0.9
     # find number of variants at intermediate frequencies 
     awk -F "\t" '{ if(($11 >= 0.6) && ($11 <= 0.9)) {print }}' passed_variants.tsv > intermediate_variants.tsv
-    intermediates_num=$(cat intermediate_variants.tsv | wc -l)
-    if [ -z "$intermediates_num" ] ; then intermediates_num="0" ; fi
+    intermediates_num=$(wc -l < intermediate_variants.tsv || echo 0)
 
     # if number of total variants is not zero, divide number of intermediate variants by total number of variants
     if [[ "$variants_num" -eq "0" ]]; then
