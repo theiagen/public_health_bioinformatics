@@ -217,7 +217,7 @@
     - path: miniwdl_run/call-nextclade_v3/work/nextclade.cds_translation.N.fasta
       md5sum: 22756e66f3b0fe8a00d685fc145edaf5
     - path: miniwdl_run/call-nextclade_v3/work/nextclade.cds_translation.ORF1a.fasta
-      md5sum: 397e034fe525d393a8b5b500df0c75c0
+      md5sum: 8d49bc37ee2d3506cd7bf67cc98d9070
     - path: miniwdl_run/call-nextclade_v3/work/nextclade.cds_translation.ORF1b.fasta
       md5sum: 9827745ec4fe4976ad6c063b0f097cb3
     - path: miniwdl_run/call-nextclade_v3/work/nextclade.cds_translation.ORF3a.fasta
@@ -348,7 +348,7 @@
       md5sum: f5d6f96c87d96ebe60358948d310f223
     - path: miniwdl_run/call-stats_n_coverage_primtrim/work/clearlabs.stats.txt
     - path: miniwdl_run/call-vadr/command
-      md5sum: f7dbfd3d59316546682133d7aae17fad
+      md5sum: 7423ff35f0c469bb4390496eafc2320e
     - path: miniwdl_run/call-vadr/inputs.json
       contains: ["assembly_length_unambiguous", "genome_fasta", "fasta"]
     - path: miniwdl_run/call-vadr/outputs.json
@@ -387,7 +387,6 @@
     - path: miniwdl_run/call-vadr/work/clearlabs.consensus/clearlabs.consensus.vadr.dcr
       md5sum: d9b5295b718f16cf523fa42c69c67f7f
     - path: miniwdl_run/call-vadr/work/clearlabs.consensus/clearlabs.consensus.vadr.fail.fa
-      md5sum: 2ad8aee5a998d9f4cef4bbe9a60f6f44
     - path: miniwdl_run/call-vadr/work/clearlabs.consensus/clearlabs.consensus.vadr.fail.list
       md5sum: 7b7182529739b37ce90f7eb74301fe1f
     - path: miniwdl_run/call-vadr/work/clearlabs.consensus/clearlabs.consensus.vadr.fail.tbl
@@ -395,7 +394,6 @@
     - path: miniwdl_run/call-vadr/work/clearlabs.consensus/clearlabs.consensus.vadr.filelist
       md5sum: 8736d943b1e4b18906cf0cad4be881f9
     - path: miniwdl_run/call-vadr/work/clearlabs.consensus/clearlabs.consensus.vadr.ftr
-      md5sum: d4809c38b77c7ba477ef58090fb32f86
     - path: miniwdl_run/call-vadr/work/clearlabs.consensus/clearlabs.consensus.vadr.log
     - path: miniwdl_run/call-vadr/work/clearlabs.consensus/clearlabs.consensus.vadr.mdl
       md5sum: 43735aaecb85b313c6b6c9789b324337
