@@ -5,84 +5,103 @@ task consensus {
     String samplename
     String? organism
     File read1
-    File primer_bed
+    File? primer_bed
     File? reference_genome
     Int normalise = 20000
     Int cpu = 8
     Int memory = 16
     Int disk_size = 100
-    String medaka_model = "r941_min_high_g360"
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/artic-ncov2019-epi2me"
+    String clair3_model = "r1041_e82_400bps_hac_v420"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/artic:1.6.0_rerio"
   }
-  String primer_name = basename(primer_bed)
   command <<<
-    # HIV
-    if [[ ~{organism} == "HIV" ]]; then
-      # setup custom primer scheme (/V is required by Artic)
-      mkdir -p ./primer-schemes/HIV/Vuser
+    set -euo pipefail
 
-      ## set reference genome
-      ref_genome="~{reference_genome}"
-
-      head -n1 "${ref_genome}" | sed 's/>//' | tee REFERENCE_GENOME
-      cp "${ref_genome}" ./primer-schemes/HIV/Vuser/HIV.reference.fasta
-
-      ## set primers
-      #cp ~{primer_bed} ./primer-schemes/SARS-CoV-2/Vuser/SARS-CoV-2.scheme.bed
-      #p_bed="~{primer_bed}"
-      cp "~{primer_bed}" ./primer-schemes/HIV/Vuser/HIV.scheme.bed
-      scheme_name="HIV/Vuser"
-    # Add other viruses here
-    # Default is SARS-CoV-2
-    else
-      # setup custom primer scheme (/V is required by Artic)
-      mkdir -p ./primer-schemes/SARS-CoV-2/Vuser
-
-      ## set reference genome
-      if [[ ! -z "~{reference_genome}" ]]; then
-        ref_genome="~{reference_genome}"
+    # Determine if we're using provided or local schemes - most of the time will be provided
+    # But with newer versions of ARTIC, we can use remote schemes from https://github.com/quick-lab/primerschemes
+    # Check if primer_bed is empty OR its file is empty/nonexistent AND reference_genome is empty/nonexistent
+    if [[ -z "~{primer_bed}" || ! -s "~{primer_bed}" ]] && [[ -z "~{reference_genome}" || ! -s "~{reference_genome}" ]]; then
+      echo "Using remote scheme..."
+      
+      # Set scheme parameters based on organism
+      if [[ "~{organism}" == "sars-cov-2" ]]; then
+        scheme_name="sars-cov-2"
+        scheme_version="v4.0.0"
+        scheme_length="400"
+      elif [[ "~{organism}" == "MPXV" ]]; then
+        scheme_name="artic-inrb-mpox"
+        scheme_version="v1.0.0"
+        scheme_length="400"
       else
-        # use reference file in docker--different paths depending on image specified 
-        if [[ -d "/fieldbioinformatics" ]]; then
-          ref_genome=$(find /fieldbioinformatics/*/primer*schemes/nCoV-2019/V3/ -name "nCoV-2019.reference.fasta")
-        else
-          ref_genome=$(find /wf-artic*/data/primer_schemes/SARS-CoV-2/V4/ -name "SARS-CoV-2.reference.fasta")
-        fi
-        echo "No user-defined reference genome; setting reference to ${ref_genome}"
+        echo "Error: Unsupported organism for remote schemes: ~{organism}" >&2
+        echo "Please provide primer bed and reference genome for custom organisms" >&2
+        exit 1
       fi
-      head -n1 "${ref_genome}" | sed 's/>//' | tee REFERENCE_GENOME
-      cp "${ref_genome}" ./primer-schemes/SARS-CoV-2/Vuser/SARS-CoV-2.reference.fasta
+      
+      echo "Using scheme: ${scheme_name} ${scheme_version} ${scheme_length}"
+      # Run ARTIC with remote scheme per newer versions of ARTIC
+      artic minion --model ~{clair3_model} \
+        --normalise ~{normalise} \
+        --threads ~{cpu} \
+        --scheme-directory /data/primer-schemes \
+        --scheme-name ${scheme_name} \
+        --scheme-version ${scheme_version} \
+        --scheme-length ${scheme_length} \
+        --read-file ~{read1} \
+        ~{samplename}
 
-      ## set primers
-      cp ~{primer_bed} ./primer-schemes/SARS-CoV-2/Vuser/SARS-CoV-2.scheme.bed
-      scheme_name="SARS-CoV-2/Vuser"
+      # Set output file contents for remote scheme
+      echo "${scheme_name}" > REFERENCE_GENOME
+      echo "${scheme_name}_${scheme_version}" > PRIMER_NAME
+
+    else
+      # Newer version of Artic use a different command to launch the pipeline
+      # when using user provided files for bed and reference genome are provided, 
+      # we can now provide the bed and reference genome files to the pipeline directly 
+      # instead of using the --scheme-directory and --scheme-name flags
+      echo "Using user provided files..."
+      
+      if [[ -z "~{primer_bed}" || -z "~{reference_genome}" ]]; then
+        echo "Error: Both primer bed and reference genome must be provided for local scheme" >&2
+        exit 1
+      fi
+
+      # Copy reference files to working directory, this is neccessary for fiadx to work
+      # which is a requirement of clair3, we run into similar issues in the clair3_variants task
+      cp "~{reference_genome}" reference.fasta
+      # Run ARTIC with user provided files
+      artic minion --model ~{clair3_model} \
+        --normalise ~{normalise} \
+        --threads ~{cpu} \
+        --bed ~{primer_bed} \
+        --ref reference.fasta \
+        --read-file ~{read1} \
+        ~{samplename}
+
+      # Set output file contents for local scheme
+      head -n1 "~{reference_genome}" | sed 's/>//' > REFERENCE_GENOME
+      basename "~{primer_bed}" > PRIMER_NAME
     fi
 
-    # version control
-    echo "Medaka via $(artic -v)" | tee VERSION
-    echo "~{primer_name}" | tee PRIMER_NAME
-    artic minion --medaka --medaka-model ~{medaka_model} --normalise ~{normalise} --threads ~{cpu} --scheme-directory ./primer-schemes --read-file ~{read1} ${scheme_name} ~{samplename}
-    gunzip -f ~{samplename}.pass.vcf.gz
+    # Capture ARTIC version
+    echo "Artic Pipeline Version $(artic -v)" > VERSION
 
-    # clean up fasta header
-    echo ">~{samplename}" > ~{samplename}.medaka.consensus.fasta
-    grep -v ">" ~{samplename}.consensus.fasta >> ~{samplename}.medaka.consensus.fasta
-
-    # grab reads from alignment
-    samtools fastq -F4 ~{samplename}.primertrimmed.rg.sorted.bam | gzip > ~{samplename}.fastq.gz  
+    # Grab reads from alignment - cdph wants this
+    # 0x904 means we are now filtering out unaligned, secondary, and supplemental alignments - thanks Curtis
+    samtools fastq -F0x904 ~{samplename}.primertrimmed.rg.sorted.bam | gzip > ~{samplename}.fastq.gz  
   >>>
   output {
-    File consensus_seq = "~{samplename}.medaka.consensus.fasta"
+    File consensus_seq = "~{samplename}.consensus.fasta"
+    File artic_clair3_pass_vcf = "~{samplename}.pass.vcf"
+    String artic_clair3_model = clair3_model
+    String artic_pipeline_reference = read_string("REFERENCE_GENOME")
+    String artic_pipeline_version = read_string("VERSION")
+    String artic_pipeline_docker = docker
     File sorted_bam = "~{samplename}.trimmed.rg.sorted.bam"
     File trim_sorted_bam = "~{samplename}.primertrimmed.rg.sorted.bam"
     File trim_sorted_bai = "~{samplename}.primertrimmed.rg.sorted.bam.bai"
-    File medaka_pass_vcf = "~{samplename}.pass.vcf"
     File? reads_aligned = "~{samplename}.fastq.gz"
-    String medaka_reference = read_string("REFERENCE_GENOME")
-    String artic_pipeline_version = read_string("VERSION")
-    String artic_pipeline_docker = docker
     String primer_bed_name = read_string("PRIMER_NAME")
-    File? trim_fastq = "~{samplename}.primertrimmed.rg.fastq"
   }
   runtime {
     docker: "~{docker}"

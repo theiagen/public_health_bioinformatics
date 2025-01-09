@@ -31,6 +31,8 @@ workflow theiacov_ont {
     Int normalise = 200
     Int max_length = 700
     Int min_length = 400
+    # artic clair 3 model
+    String? clair3_model
     # nextclade inputs
     String? nextclade_dataset_tag
     String? nextclade_dataset_name
@@ -125,9 +127,10 @@ workflow theiacov_ont {
             samplename = samplename,
             organism = organism_parameters.standardized_organism,
             read1 = read_qc_trim.read1_clean,
+            clair3_model = clair3_model,
             primer_bed = organism_parameters.primer_bed,
             normalise = normalise,
-            reference_genome = organism_parameters.reference,
+            reference_genome = organism_parameters.reference
         }
         call assembly_metrics.stats_n_coverage {
           input:
@@ -300,13 +303,12 @@ workflow theiacov_ont {
     String assembly_fasta = select_first([consensus.consensus_seq, flu_track.irma_assembly_fasta, "Assembly could not be generated"])
     File? aligned_bam = consensus.trim_sorted_bam
     File? aligned_bai = consensus.trim_sorted_bai
-    File? medaka_vcf = consensus.medaka_pass_vcf
+    File? clair3_vcf = consensus.artic_clair3_pass_vcf
     File? read1_aligned = consensus.reads_aligned
-    File? read1_trimmed = consensus.trim_fastq
     # Read Alignment - Artic consensus versioning outputs
     String? artic_version = consensus.artic_pipeline_version
     String? artic_docker = consensus.artic_pipeline_docker
-    String? medaka_reference = consensus.medaka_reference
+    String? artic_reference = consensus.artic_pipeline_reference
     String? primer_bed_name = consensus.primer_bed_name
     String assembly_method = "TheiaCoV (~{version_capture.phb_version}): " + select_first([consensus.artic_pipeline_version, flu_track.irma_version, ""])
     # Assembly QC - consensus assembly qc outputs
