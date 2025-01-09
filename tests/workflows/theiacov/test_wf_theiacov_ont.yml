@@ -31,7 +31,7 @@
     - path: miniwdl_run/call-clean_check_reads/work/_miniwdl_inputs/0/artic_ncov2019_ont.fastq
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     - path: miniwdl_run/call-consensus/command
-      md5sum: 056563d18294928fef5238bac7213791
+      md5sum: 0f2dae4a90b19d6b1e39e435894629a6
     - path: miniwdl_run/call-consensus/inputs.json
       contains: ["read1_clean", "samplename", "fastq"]
     - path: miniwdl_run/call-consensus/outputs.json
@@ -77,7 +77,7 @@
     - path: miniwdl_run/call-consensus/work/ont.trimmed.rg.sorted.bam
     - path: miniwdl_run/call-consensus/work/ont.trimmed.rg.sorted.bam.bai
     - path: miniwdl_run/call-consensus_qc/command
-      md5sum: 31dfee1552f68e5c6f72431458a33535
+      md5sum: 11ad9f5b0130528f5f2f77a7ea048333
     - path: miniwdl_run/call-consensus_qc/inputs.json
       contains: ["assembly_fasta"]
     - path: miniwdl_run/call-consensus_qc/outputs.json
@@ -175,7 +175,7 @@
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     - path: miniwdl_run/call-nextclade_output_parser/work/input.tsv
     - path: miniwdl_run/call-pangolin4/command
-      md5sum: c1c714d97c9c01cd446da625f63e0391
+      md5sum: fd82f5a05984e29e490404c7b58b5d90
     - path: miniwdl_run/call-pangolin4/inputs.json
       contains: ["fasta", "samplename", "ont"]
     - path: miniwdl_run/call-pangolin4/outputs.json
@@ -228,7 +228,7 @@
     - path: miniwdl_run/call-stats_n_coverage/work/DATE
     - path: miniwdl_run/call-stats_n_coverage/work/DEPTH
     - path: miniwdl_run/call-stats_n_coverage/work/MEANBASEQ
-      md5sum: 68f06358611afb96787e55c81f8544e9
+      md5sum: 18ace91e015d5572acb4eaa7c0963713
     - path: miniwdl_run/call-stats_n_coverage/work/MEANMAPQ
       md5sum: ecf27a776cdfc771defab1c5d19de9ab
     - path: miniwdl_run/call-stats_n_coverage/work/VERSION
@@ -264,7 +264,7 @@
     - path: miniwdl_run/call-stats_n_coverage_primtrim/work/ont.flagstat.txt
     - path: miniwdl_run/call-stats_n_coverage_primtrim/work/ont.stats.txt
     - path: miniwdl_run/call-vadr/command
-      md5sum: 3228e4022462e882f5ac4ea8bca46f71
+      md5sum: 8d56010af0d8d91596f8d4eebc6158d3
     - path: miniwdl_run/call-vadr/inputs.json
       contains: ["assembly_length_unambiguous", "genome_fasta", "fasta"]
     - path: miniwdl_run/call-vadr/outputs.json
