@@ -434,25 +434,15 @@
       md5sum: 2ad8aee5a998d9f4cef4bbe9a60f6f44
     - path: miniwdl_run/call-vadr/work/clearlabs.consensus_vadr-fasta-files.zip
     - path: miniwdl_run/call-vadr/work/vadr_fasta_files/clearlabs.consensus.vadr.NC_045512.CDS.1.fa
-      md5sum: d7167d1728389a9a48fbdbdb1f0f1675
     - path: miniwdl_run/call-vadr/work/vadr_fasta_files/clearlabs.consensus.vadr.NC_045512.CDS.2.fa
-      md5sum: 37ae1c39a53eef5d26944228b531a478
     - path: miniwdl_run/call-vadr/work/vadr_fasta_files/clearlabs.consensus.vadr.NC_045512.gene.1.fa
-      md5sum: 5fe92e7fb7cf3fa33f74974e04faef48
     - path: miniwdl_run/call-vadr/work/vadr_fasta_files/clearlabs.consensus.vadr.NC_045512.gene.2.fa
-      md5sum: 293fb93b99a93927ffac6411a057799d
     - path: miniwdl_run/call-vadr/work/vadr_fasta_files/clearlabs.consensus.vadr.NC_045512.mat_peptide.1.fa
-      md5sum: a763652b87cea3fe5b361f6327419b07
     - path: miniwdl_run/call-vadr/work/vadr_fasta_files/clearlabs.consensus.vadr.NC_045512.mat_peptide.2.fa
-      md5sum: 2bf9f5aeef164c8bc9125fb7306cf20e
     - path: miniwdl_run/call-vadr/work/vadr_fasta_files/clearlabs.consensus.vadr.NC_045512.stem_loop.1.fa
-      md5sum: f55f1e6287a8d5a41ead5209059c1d2b
     - path: miniwdl_run/call-vadr/work/vadr_fasta_files/clearlabs.consensus.vadr.NC_045512.stem_loop.2.fa
-      md5sum: 4acfd69ec183f3a9374fbb4c3cce491f
     - path: miniwdl_run/call-vadr/work/vadr_fasta_files/clearlabs.consensus.vadr.fail.fa
-      md5sum: 2ad8aee5a998d9f4cef4bbe9a60f6f44
     - path: miniwdl_run/call-vadr/work/vadr_fasta_files/clearlabs.consensus.vadr.pass.fa
-      md5sum: d41d8cd98f00b204e9800998ecf8427e
     - path: miniwdl_run/call-version_capture/inputs.json
     - path: miniwdl_run/call-version_capture/task.log
       contains: ["wdl", "theiacov_clearlabs", "version_capture", "done"]
