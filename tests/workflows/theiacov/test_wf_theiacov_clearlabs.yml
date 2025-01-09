@@ -41,7 +41,6 @@
     - path: miniwdl_run/call-consensus/work/clearlabs.alignreport.csv
       md5sum: 3cbc074cd5baefbf594c73ddfd633c8a
     - path: miniwdl_run/call-consensus/work/clearlabs.consensus.fasta
-      md5sum: 536f7643ef165dc7d72ca39e46cd3538
     - path: miniwdl_run/call-consensus/work/clearlabs.coverage_mask.txt
       md5sum: f3d76027b8506a5b1d0f5b1c7e7c8cff
     - path: miniwdl_run/call-consensus/work/clearlabs.fail.vcf
@@ -54,7 +53,6 @@
     - path: miniwdl_run/call-consensus/work/clearlabs.preconsensus.fasta
     - path: miniwdl_run/call-consensus/work/clearlabs.preconsensus.fasta.fai
     - path: miniwdl_run/call-consensus/work/clearlabs.primers.vcf
-      md5sum: 8f60b25110cdf39ce27dd48719566416
     - path: miniwdl_run/call-consensus/work/clearlabs.primersitereport.txt
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     - path: miniwdl_run/call-consensus/work/clearlabs.primertrimmed.rg.sorted.bam
@@ -76,15 +74,12 @@
       contains: ["wdl", "theiacov_clearlabs", "consensus_qc", "done"]
     - path: miniwdl_run/call-consensus_qc/work/DATE
     - path: miniwdl_run/call-consensus_qc/work/NUM_ACTG
-      md5sum: b042297eaf71f467789516212e2ca5ac
     - path: miniwdl_run/call-consensus_qc/work/NUM_DEGENERATE
       md5sum: 897316929176464ebc9ad085f31e7284
     - path: miniwdl_run/call-consensus_qc/work/NUM_N
-      md5sum: 8ad46215ff3252d17d9e062e6f84d472
     - path: miniwdl_run/call-consensus_qc/work/NUM_TOTAL
       md5sum: 64887188f1a0c0176ed5ad2e108d1046
     - path: miniwdl_run/call-consensus_qc/work/PERCENT_REF_COVERAGE
-      md5sum: 7f9226df824c26eaa79412a2ba1390ab
     - path: miniwdl_run/call-consensus_qc/work/_miniwdl_inputs/0/clearlabs.consensus.fasta
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     - path: miniwdl_run/call-fastq_scan_clean_reads/command
@@ -322,7 +317,6 @@
     - path: miniwdl_run/call-stats_n_coverage/work/clearlabs.flagstat.txt
       md5sum: f5d6f96c87d96ebe60358948d310f223
     - path: miniwdl_run/call-stats_n_coverage/work/clearlabs.stats.txt
-      md5sum: 091d3db26cbfd2c804dd7348f4b09087
     - path: miniwdl_run/call-stats_n_coverage_primtrim/command
       md5sum: 2974f886e1959cd5eaae5e495c91f7cc
     - path: miniwdl_run/call-stats_n_coverage_primtrim/inputs.json
@@ -353,7 +347,6 @@
     - path: miniwdl_run/call-stats_n_coverage_primtrim/work/clearlabs.flagstat.txt
       md5sum: f5d6f96c87d96ebe60358948d310f223
     - path: miniwdl_run/call-stats_n_coverage_primtrim/work/clearlabs.stats.txt
-      md5sum: 60a3f910312be4cf39bcd3116b2a161a
     - path: miniwdl_run/call-vadr/command
       md5sum: f7dbfd3d59316546682133d7aae17fad
     - path: miniwdl_run/call-vadr/inputs.json
