@@ -25,9 +25,9 @@ task dorado_demux {
     fastq_file_name="~{fastq_file_name}"
     kit_name="~{kit_name}"
 
-    # Check custom primer file
-    if [[ -n "~{custom_primers}" && ! -f "~{custom_primers}" ]]; then
-      echo "ERROR: Custom primer file ~{custom_primers} does not exist." >&2
+    # Validate custom primer file if provided
+    if [[ -n "~{default=''}custom_primers}" && ! -f "~{custom_primers}" ]]; then
+      echo "ERROR: Custom primer file ~{custom_primers} does not exist or is invalid." >&2
       exit 1
     fi
 
@@ -35,7 +35,7 @@ task dorado_demux {
     exec > >(tee -a dorado_demux_output.log) 2>&1
     echo "### Starting Dorado demux ###"
     date
-    
+
     echo "Input BAM files:"
     for bam_file in ~{sep=" " bam_files}; do echo "$bam_file"; done
 
@@ -58,22 +58,19 @@ task dorado_demux {
         ~{if defined(custom_primers) then "--primer-sequences " + custom_primers else ""} \
         ~{if notrim then "--notrim" else ""} \
         --verbose > "$demux_dir/demux_${base_name}.log" 2>&1 || {
-          echo "ERROR: Dorado demux failed for $bam_file" >&2
-          cat "$demux_dir/demux_${base_name}.log" >&2
+          echo "ERROR: Dorado demux failed for $bam_file. Check $demux_dir/demux_${base_name}.log for details." >&2
           exit 1
       }
 
       echo "Demultiplexing completed for $bam_file"
     done
 
-    # Debugging merged output and merging logic
     echo "### Merging FASTQ files by barcode ###"
     mkdir -p merged_output
     for demux_dir in demux_output_*; do
       for fastq_file in "$demux_dir"/*.fastq; do
         echo "Processing $fastq_file in $demux_dir"
 
-        # Check if the file is "unclassified" or has a specific barcode
         if [[ "$fastq_file" == *"unclassified"* ]]; then
           final_fastq="merged_output/${fastq_file_name}-unclassified.fastq"
         else
@@ -81,26 +78,18 @@ task dorado_demux {
           final_fastq="merged_output/${fastq_file_name}-${barcode}.fastq"
         fi
 
-        # Verify if the merged file already exists
         if [ -f "$final_fastq" ]; then
-          echo "Appending to existing $final_fastq"
           cat "$fastq_file" >> "$final_fastq"
         else
-          echo "Creating new FASTQ file: $final_fastq"
           mv "$fastq_file" "$final_fastq"
         fi
       done
     done
 
-    # Compress the final merged FASTQ files
     echo "### Compressing merged FASTQ files ###"
     for final_fastq in merged_output/*.fastq; do
-      echo "Compressing $final_fastq"
       gzip -f "$final_fastq"
     done
-
-    echo "### Final Merged FASTQ Files ###"
-    ls -lh merged_output/*.fastq.gz || echo "No gzipped FASTQ files found."
 
     echo "### Dorado demux process completed successfully ###"
     date
