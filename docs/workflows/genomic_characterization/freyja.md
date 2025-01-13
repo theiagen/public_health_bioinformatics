@@ -10,8 +10,8 @@
 
 [Freyja](https://github.com/andersen-lab/Freyja) is a tool for analysing viral mixed sample genomic sequencing data. Developed by Joshua Levy from the [Andersen Lab](https://andersen-lab.com/), it performs two main steps:
 
-1. Variant Frequency Estimation: Freyja calculates the frequencies of single nucleotide variants (SNVs) in the genomic sequencing data.
-2. Depth-Weighted Demixing: It separates mixed populations of viral subtypes using a depth-weighted statistical approach, estimating the proportional abundance of each subtype in the sample based on the frequencies of subtype-defining variants.
+1. **Variant Frequency Estimation:** Freyja calculates the frequencies of single nucleotide variants (SNVs) in the genomic sequencing data.
+2. **Depth-Weighted Demixing:** It separates mixed populations of viral subtypes using a depth-weighted statistical approach, estimating the proportional abundance of each subtype in the sample based on the frequencies of subtype-defining variants.
 
 Additional post-processing steps can produce visualizations of aggregated samples.
 
@@ -34,8 +34,10 @@ Four workflows have been created that perform different parts of Freyja:
 - [**Freyja_Plot_PHB**](freyja.md#freyja_plot)
 - [**Freyja_Dashboard_PHB**](freyja.md#freyja_dashboard)
 
-The main workflow is **Freyja_FASTQ_PHB** ([Figure 1](freyja.md#figure1)). Depending on the type of input data (Illumina paired-end, Illumina single-end or ONT), it runs various QC modules before aligning the sample with either BWA (Illumina) or minimap2 (ONT) to the provided reference file, followed by iVar for primer trimming. After the preprocessing is completed, Freyja is run to generate relative lineage abundances (demix) from the sample. Optional bootstrapping may be performed.
-The choice of sequencing platform and the quality of the data directly influence Freyja's performance. High-accuracy platforms like Illumina provide reliable SNV detection, enhancing the precision of lineage abundance estimates. In contrast, platforms with higher error rates, such as Nanopore, may introduce uncertainties in variant calling, affecting the deconvolution process. Sequencing depth requirements will increase as the quality of the sequencing data decreases. A rational target depth is 100X coverage for sequencing data with Qscores in the range of 25-30.
+The main workflow is **Freyja_FASTQ_PHB** ([Figure 1](freyja.md#figure1)). Depending on the type of input data (Illumina paired-end, Illumina single-end or ONT), it runs various QC modules before aligning the sample with either [BWA](https://github.com/lh3/bwa) (Illumina) or [minimap2](https://github.com/lh3/minimap2) (ONT) to the provided reference file, followed by iVar for primer trimming. After the preprocessing is completed, [Freyja](https://github.com/andersen-lab/Freyja) is run to generate relative lineage abundances (demix) from the sample. Optional bootstrapping may be performed.
+
+The choice of sequencing platform and the quality of the data directly influence Freyja's performance. High-accuracy platforms like Illumina provide reliable SNV detection, enhancing the precision of lineage abundance estimates. In contrast, platforms with higher error rates, such as Nanopore, whislt it has improved greatly in the recent years, may introduce uncertainties in variant calling, affecting the deconvolution process. Sequencing depth requirements will increase as the quality of the sequencing data decreases. A rational target depth is 100X coverage for sequencing data with Q-scores in the range of 25-30.
+
 Additionally, inadequate sequencing depth can hinder Freyja's ability to differentiate between lineages, leading to potential misestimations. Sequencing depth requirements will increase with the complexity of the sample composition and the diversity of lineages present. For samples containing multiple closely related lineages, higher sequencing depth is necessary to resolve subtle differences in genetic variation and accurately estimate lineage abundances. This is particularly important for pathogens with high mutation rates or a large number of cocirculating lineages, such as influenza, where distinguishing between lineages relies on detecting specific single nucleotide variants (SNVs) with high confidence.
 
 !!! dna "Data Compatability"
@@ -50,9 +52,15 @@ Additionally, inadequate sequencing depth can hinder Freyja's ability to differe
 
 Two options are available to visualize the Freyja results: **Freyja_Plot_PHB** and **Freyja_Dashboard_PHB.** Freyja_Plot_PHB aggregates multiple samples using output from Freyja_FASTQ_PHB to generate a plot that shows fractional abundance estimates for all samples. including the option to plot sample collection date information. Alternatively, **Freyja_Dashboard_PHB** aggregates multiple samples using output from Freyja_FASTQ to generate an interactive visualization. This workflow requires an additional input field called viral load, which is the number of viral copies per liter.
 
+??? toggle "Freyja and Data Quality"
+
+    The choice of sequencing platform and the quality of the data directly influence Freyja's performance. High-accuracy platforms like Illumina provide reliable SNV detection, enhancing the precision of lineage abundance estimates. In contrast, platforms with higher error rates, such as Nanopore, whislt it has improved greatly in the recent years, may introduce uncertainties in variant calling, affecting the deconvolution process. Sequencing depth requirements will increase as the quality of the sequencing data decreases. A rational target depth is 100X coverage for sequencing data with Q-scores in the range of 25-30.
+
+    Additionally, inadequate sequencing depth can hinder Freyja's ability to differentiate between lineages, leading to potential misestimations. Sequencing depth requirements will increase with the complexity of the sample composition and the diversity of lineages present. For samples containing multiple closely related lineages, higher sequencing depth is necessary to resolve subtle differences in genetic variation and accurately estimate lineage abundances. This is particularly important for pathogens with high mutation rates or a large number of cocirculating lineages, such as influenza, where distinguishing between lineages relies on detecting specific single nucleotide variants (SNVs) with high confidence.
+
 ## Freyja_Update_PHB {#freyja_update}
 
-This workflow will copy the Freyja reference files (`usher_barcodes.feather` and `curated_lineages.json`) to a GCP URI of your choice for usage in Freyja_FASTQ_PHB.
+This workflow will copy the **SARS-CoV-2 reference files** (`curated_lineages.json` and `usher_barcodes.feather`) from [the source repository](https://github.com/andersen-lab/Freyja/tree/main/freyja/data) to a user-specific Google Cloud Storage (GCP) location (often a [Terra.bio](http://Terra.bio) workspace-associated bucket). These files can then be used as input for the [Freyja_FASTQ_PHB workflow](freyja.md#freyja_fastq).
 
 ### Inputs
 
