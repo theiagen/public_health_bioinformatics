@@ -1,7 +1,7 @@
 version 1.0
 
-import "../../tasks/gene_typing/task_snippy_variants.wdl" as snippy
-import "../../tasks/gene_typing/task_snippy_gene_query.wdl" as snippy_gene_query_task
+import "../../tasks/gene_typing/variant_detection/task_snippy_gene_query.wdl" as snippy_gene_query_task
+import "../../tasks/gene_typing/variant_detection/task_snippy_variants.wdl" as snippy
 import "../../tasks/task_versioning.wdl" as versioning
 
 workflow snippy_variants_wf {
@@ -10,14 +10,15 @@ workflow snippy_variants_wf {
   }
   input {
     File reference_genome_file
-    File read1
+    File? assembly_fasta
+    File? read1
     File? read2
     String samplename
     String? query_gene
     # optional inputs are exposed here so that they can be set by user in higher-level workflows. example: snippy_streamline
     # a bit of duplicate code, but done for a reason!
     String? docker
-    Int? cpus
+    Int? cpu
     Int? memory
     Int? map_qual
     Int? base_quality
@@ -29,11 +30,12 @@ workflow snippy_variants_wf {
   call snippy.snippy_variants {
     input:
       samplename = samplename,
+      assembly_fasta = assembly_fasta,
       read1 = read1,
       read2 = read2,
       reference_genome_file = reference_genome_file,
       docker = docker,
-      cpus = cpus,
+      cpu = cpu,
       memory = memory,
       map_qual = map_qual,
       base_quality = base_quality,
@@ -51,11 +53,12 @@ workflow snippy_variants_wf {
         query_gene = query_gene
     }
   }
-  call versioning.version_capture{
+  call versioning.version_capture {
     input:
   }
   output {
     String snippy_variants_wf_version = version_capture.phb_version
+    # snippy outputs
     String snippy_variants_version = snippy_variants.snippy_variants_version
     String snippy_variants_docker = snippy_variants.snippy_variants_docker
     File snippy_variants_results = snippy_variants.snippy_variants_results
@@ -63,6 +66,12 @@ workflow snippy_variants_wf {
     File snippy_variants_bai = snippy_variants.snippy_variants_bai
     File snippy_variants_summary = snippy_variants.snippy_variants_summary
     File snippy_variants_outdir_tarball = snippy_variants.snippy_variants_outdir_tarball
+    Int snippy_variants_num_reads_aligned = snippy_variants.snippy_variants_num_reads_aligned
+    File snippy_variants_coverage_tsv = snippy_variants.snippy_variants_coverage_tsv
+    Int snippy_variants_num_variants = snippy_variants.snippy_variants_num_variants
+    Float snippy_variants_percent_ref_coverage = snippy_variants.snippy_variants_percent_ref_coverage
+    File snippy_variants_qc_metrics = snippy_variants.snippy_variants_qc_metrics
+    Float snippy_variants_percent_reads_aligned  = snippy_variants.snippy_variants_percent_reads_aligned
     # snippy gene query outputs
     String? snippy_variants_query = snippy_gene_query.snippy_variants_query
     String? snippy_variants_query_check = snippy_gene_query.snippy_variants_query_check

@@ -38,18 +38,18 @@ jobs:
         # For every workflow, test it with MiniWDL and Cromwell
         tag: ["${{ fromJson(needs.changes.outputs.workflows) }}"]
         engine: ["miniwdl", "cromwell"]
-        exclude:
-          - tag: "wf_theiacov_illumina_pe"
-            engine: "miniwdl"
-          - tag: "wf_theiacov_illumina_se"
-            engine: "miniwdl"
+        #exclude:
+        #  - tag: "wf_theiacov_illumina_pe"
+        #    engine: "miniwdl"
+        #  - tag: "wf_theiacov_illumina_se"
+        #    engine: "miniwdl"
     defaults:
       run:
         # Play nicely with miniconda
         shell: bash -l {0}
     steps:
       # Checkout the repo
-      - name: Checkout theiagen/public_health_bacterial_genomics
+      - name: Checkout theiagen/public_health_bioinformatics
         uses: actions/checkout@v4
 
       # Import test data

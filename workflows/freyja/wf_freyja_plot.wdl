@@ -1,7 +1,7 @@
 version 1.0
 
-import "../../tasks/taxon_id/freyja_utilities/task_freyja_plot.wdl" as plot
 import "../../tasks/task_versioning.wdl" as versioning
+import "../../tasks/taxon_id/freyja/task_freyja_plot.wdl" as plot
 
 workflow freyja_plot {
   input {
@@ -10,14 +10,15 @@ workflow freyja_plot {
     Array[String]? collection_date
     String freyja_plot_name
   }
+  String freyja_plot_name_updated = sub(freyja_plot_name, " ", "_")
   call plot.freyja_plot_task {
     input:
       samplename = samplename,
       freyja_demixed = freyja_demixed,
       collection_date = collection_date,
-      freyja_plot_name = freyja_plot_name
+      freyja_plot_name = freyja_plot_name_updated
   }
-  call versioning.version_capture{
+  call versioning.version_capture {
     input:
   }
   output {

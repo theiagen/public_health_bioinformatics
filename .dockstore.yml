@@ -170,6 +170,11 @@ workflows:
    primaryDescriptorPath: /workflows/standalone_modules/wf_kraken2_se.wdl
    testParameterFiles:
     - /tests/inputs/empty.json
+ - name: Kraken2_ONT_PHB
+   subclass: WDL
+   primaryDescriptorPath: /workflows/standalone_modules/wf_kraken2_ont.wdl
+   testParameterFiles:
+    - /tests/inputs/empty.json
  - name: RASUSA_PHB
    subclass: WDL
    primaryDescriptorPath: /workflows/standalone_modules/wf_rasusa.wdl
@@ -190,9 +195,19 @@ workflows:
    primaryDescriptorPath: /workflows/utilities/data_import/wf_terra_2_bq.wdl
    testParameterFiles:
     - /tests/inputs/empty.json
+ - name: Fetch_SRR_Accession_PHB
+   subclass: WDL
+   primaryDescriptorPath: /workflows/utilities/data_import/wf_fetch_srr_accession.wdl
+   testParameterFiles:
+    - /tests/inputs/empty.json
  - name: Concatenate_Column_Content_PHB
    subclass: WDL
    primaryDescriptorPath: /workflows/utilities/file_handling/wf_concatenate_column.wdl
+   testParameterFiles:
+    - /tests/inputs/empty.json
+ - name: Find_Shared_Variants_PHB
+   subclass: WDL
+   primaryDescriptorPath: /workflows/phylogenetics/wf_find_shared_variants.wdl
    testParameterFiles:
     - /tests/inputs/empty.json
  - name: Transfer_Column_Content_PHB
@@ -248,8 +263,33 @@ workflows:
    primaryDescriptorPath: /workflows/utilities/wf_czgenepi_prep.wdl
    testParameterFiles:
     - /tests/inputs/empty.json
+ - name: TBProfiler_tNGS_PHB
+   subclass: WDL
+   primaryDescriptorPath: /workflows/standalone_modules/wf_tbprofiler_tngs.wdl
+   testParameterFiles:
+    - /tests/inputs/empty.json
  - name: Rename_FASTQ_PHB
    subclass: WDL
    primaryDescriptorPath: /workflows/utilities/file_handling/wf_rename_fastq_files.wdl
    testParameterFiles:
     - /tests/inputs/empty.json
+ - name: Gambit_Core_PHB
+   subclass: WDL
+   primaryDescriptorPath: /workflows/standalone_modules/wf_gambitcore.wdl
+   testParameterFiles:
+    - /tests/inputs/empty.json
+ - name: Create_Terra_Table_PHB
+   subclass: WDL
+   primaryDescriptorPath: /workflows/utilities/data_import/wf_create_terra_table.wdl
+   testParameterFiles:
+    - /tests/inputs/empty.json
+ - name: Snippy_Streamline_FASTA_PHB
+   subclass: WDL
+   primaryDescriptorPath: /workflows/phylogenetics/wf_snippy_streamline_fasta.wdl
+   testParameterFiles:
+    - /tests/inputs/empty.json
+ - name: Concatenate_Illumina_Lanes_PHB
+   subclass: WDL
+   primaryDescriptorPath: /workflows/utilities/file_handling/wf_concatenate_illumina_lanes.wdl
+   testParameterFiles:
+     - /tests/inputs/empty.json

@@ -1,5 +1,9 @@
 {
     "theiacov_clearlabs.samplename": "clearlabs",
-    "theiacov_clearlabs.clear_lab_fastq": "tests/data/theiacov/fastqs/clearlabs/clearlabs.fastq.gz",
-    "theiacov_clearlabs.primer_bed": "tests/data/theiacov/primers/artic-v3.primers.bed"
+    "theiacov_clearlabs.read1": "tests/data/theiacov/fastqs/clearlabs/clearlabs.fastq.gz",
+    "theiacov_clearlabs.primer_bed": "tests/data/theiacov/primers/artic-v3.primers.bed",
+    "theiacov_clearlabs.reference_genome": "tests/data/theiacov/reference/MN908947.fasta",
+    "theiacov_clearlabs.organism_parameters.gene_locations_bed_file": "tests/inputs/sc2_gene_locations.bed",
+    "theiacov_clearlabs.kraken2_raw.kraken2_db": "tests/data/theiacov/databases/github_kraken2_test_db.tar.gz",
+    "theiacov_clearlabs.kraken2_dehosted.kraken2_db": "tests/data/theiacov/databases/github_kraken2_test_db.tar.gz"
 }

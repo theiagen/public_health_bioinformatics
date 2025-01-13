@@ -1,0 +1,259 @@
+site_name: Public Health Bioinformatics
+site_author: Theiagen Genomics
+site_description: A collection of bioinformatics workflows for genomic characterization, submission preparation, and genomic epidemiology of pathogens of public health concern.
+site_url: https://theiagen.github.io/public_health_bioinformatics/
+
+repo_url: https://github.com/theiagen/public_health_bioinformatics
+
+nav:
+  - Public Health Bioinformatics: 
+     - Home: index.md
+     - Getting Started:
+        - With the Command-Line: getting_started/commandline.md
+        - With Terra.bio: getting_started/terra.md
+     - Workflows: 
+        - Workflows by Type: 
+            - Overview Table: workflows_overview/workflows_type.md
+            - Data Import:
+               - Assembly_Fetch: workflows/data_import/assembly_fetch.md
+               - BaseSpace_Fetch: workflows/data_import/basespace_fetch.md
+               - Create_Terra_Table: workflows/data_import/create_terra_table.md
+               - SRA_Fetch: workflows/data_import/sra_fetch.md
+            - Genomic Characterization:
+               - Freyja Workflow Series: workflows/genomic_characterization/freyja.md
+               - Pangolin_Update: workflows/genomic_characterization/pangolin_update.md
+               - TheiaCoV Workflow Series: workflows/genomic_characterization/theiacov.md
+               - TheiaEuk Workflow Series: workflows/genomic_characterization/theiaeuk.md
+               - TheiaMeta: workflows/genomic_characterization/theiameta.md
+               - TheiaProk Workflow Series: workflows/genomic_characterization/theiaprok.md
+               - VADR_Update: workflows/genomic_characterization/vadr_update.md
+            - Phylogenetic Construction:
+               - Augur: workflows/phylogenetic_construction/augur.md
+               - Core_Gene_SNP: workflows/phylogenetic_construction/core_gene_snp.md
+               - CZGenEpi_Prep: workflows/phylogenetic_construction/czgenepi_prep.md
+               - Find_Shared_Variants: workflows/phylogenetic_construction/find_shared_variants.md
+               - kSNP3: workflows/phylogenetic_construction/ksnp3.md
+               - Lyve_SET: workflows/phylogenetic_construction/lyve_set.md 
+               - MashTree_FASTA: workflows/phylogenetic_construction/mashtree_fasta.md
+               - Snippy_Streamline: workflows/phylogenetic_construction/snippy_streamline.md
+               - Snippy_Streamline_FASTA: workflows/phylogenetic_construction/snippy_streamline_fasta.md
+               - Snippy_Tree: workflows/phylogenetic_construction/snippy_tree.md
+               - Snippy_Variants: workflows/phylogenetic_construction/snippy_variants.md
+            - Phylogenetic Placement:
+               - Samples_to_Ref_Tree: workflows/phylogenetic_placement/samples_to_ref_tree.md
+               - Usher_PHB: workflows/phylogenetic_placement/usher.md
+            - Public Data Sharing:
+               - Fetch_SRR_Accession: workflows/public_data_sharing/fetch_srr_accession.md
+               - Mercury_Prep_N_Batch: workflows/public_data_sharing/mercury_prep_n_batch.md
+               - Terra_2_GISAID: workflows/public_data_sharing/terra_2_gisaid.md
+               - Terra_2_NCBI: workflows/public_data_sharing/terra_2_ncbi.md
+            - Exporting Data from Terra:
+               - Concatenate_Column_Content: workflows/data_export/concatenate_column_content.md
+               - Transfer_Column_Content: workflows/data_export/transfer_column_content.md
+               - Zip_Column_Content: workflows/data_export/zip_column_content.md
+            - Standalone:
+               - Cauris_CladeTyper: workflows/standalone/cauris_cladetyper.md
+               - Concatenate_Illumina_Lanes: workflows/standalone/concatenate_illumina_lanes.md
+               - GAMBIT_Query: workflows/standalone/gambit_query.md
+               - Kraken2: workflows/standalone/kraken2.md
+               - NCBI-AMRFinderPlus: workflows/standalone/ncbi_amrfinderplus.md
+               - NCBI-Scrub: workflows/standalone/ncbi_scrub.md
+               - RASUSA: workflows/standalone/rasusa.md
+               - Rename_FASTQ: workflows/standalone/rename_fastq.md
+               - TBProfiler_tNGS: workflows/standalone/tbprofiler_tngs.md
+               - TheiaValidate: workflows/standalone/theiavalidate.md
+        - Workflows by Kingdom: 
+            - Overview Table: workflows_overview/workflows_kingdom.md
+            - Any Taxa:
+               - Assembly_Fetch: workflows/data_import/assembly_fetch.md
+               - BaseSpace_Fetch: workflows/data_import/basespace_fetch.md
+               - Concatenate_Column_Content: workflows/data_export/concatenate_column_content.md               
+               - Concatenate_Illumina_Lanes: workflows/standalone/concatenate_illumina_lanes.md
+               - Create_Terra_Table: workflows/data_import/create_terra_table.md
+               - Kraken2: workflows/standalone/kraken2.md
+               - NCBI-Scrub: workflows/standalone/ncbi_scrub.md
+               - RASUSA: workflows/standalone/rasusa.md
+               - Rename_FASTQ: workflows/standalone/rename_fastq.md
+               - SRA_Fetch: workflows/data_import/sra_fetch.md
+               - TheiaMeta: workflows/genomic_characterization/theiameta.md
+               - TheiaValidate: workflows/standalone/theiavalidate.md
+               - Transfer_Column_Content: workflows/data_export/transfer_column_content.md
+               - Zip_Column_Content: workflows/data_export/zip_column_content.md
+            - Bacteria:
+               - Core_Gene_SNP: workflows/phylogenetic_construction/core_gene_snp.md
+               - Find_Shared_Variants: workflows/phylogenetic_construction/find_shared_variants.md
+               - GAMBIT_Query: workflows/standalone/gambit_query.md
+               - kSNP3: workflows/phylogenetic_construction/ksnp3.md
+               - Lyve_SET: workflows/phylogenetic_construction/lyve_set.md
+               - MashTree_FASTA: workflows/phylogenetic_construction/mashtree_fasta.md
+               - NCBI-AMRFinderPlus: workflows/standalone/ncbi_amrfinderplus.md
+               - Snippy_Streamline: workflows/phylogenetic_construction/snippy_streamline.md
+               - Snippy_Streamline_FASTA: workflows/phylogenetic_construction/snippy_streamline_fasta.md
+               - Snippy_Tree: workflows/phylogenetic_construction/snippy_tree.md
+               - Snippy_Variants: workflows/phylogenetic_construction/snippy_variants.md
+               - TBProfiler_tNGS: workflows/standalone/tbprofiler_tngs.md
+               - Terra_2_NCBI: workflows/public_data_sharing/terra_2_ncbi.md
+               - TheiaProk Workflow Series: workflows/genomic_characterization/theiaprok.md
+            - Mycotics:
+               - Cauris_CladeTyper: workflows/standalone/cauris_cladetyper.md
+               - Find_Shared_Variants: workflows/phylogenetic_construction/find_shared_variants.md
+               - GAMBIT_Query: workflows/standalone/gambit_query.md
+               - kSNP3: workflows/phylogenetic_construction/ksnp3.md
+               - MashTree_FASTA: workflows/phylogenetic_construction/mashtree_fasta.md
+               - NCBI-AMRFinderPlus: workflows/standalone/ncbi_amrfinderplus.md
+               - Snippy_Variants: workflows/phylogenetic_construction/snippy_variants.md
+               - Terra_2_NCBI: workflows/public_data_sharing/terra_2_ncbi.md
+               - TheiaEuk Workflow Series: workflows/genomic_characterization/theiaeuk.md
+            - Viral:
+               - Augur: workflows/phylogenetic_construction/augur.md
+               - CZGenEpi_Prep: workflows/phylogenetic_construction/czgenepi_prep.md
+               - Freyja Workflow Series: workflows/genomic_characterization/freyja.md
+               - kSNP3: workflows/phylogenetic_construction/ksnp3.md
+               - MashTree_FASTA: workflows/phylogenetic_construction/mashtree_fasta.md
+               - Mercury_Prep_N_Batch: workflows/public_data_sharing/mercury_prep_n_batch.md
+               - Pangolin_Update: workflows/genomic_characterization/pangolin_update.md
+               - Samples_to_Ref_Tree: workflows/phylogenetic_placement/samples_to_ref_tree.md
+               - Snippy_Variants: workflows/phylogenetic_construction/snippy_variants.md
+               - Terra_2_GISAID: workflows/public_data_sharing/terra_2_gisaid.md
+               - Terra_2_NCBI: workflows/public_data_sharing/terra_2_ncbi.md
+               - TheiaCoV Workflow Series: workflows/genomic_characterization/theiacov.md
+               - Usher_PHB: workflows/phylogenetic_placement/usher.md
+               - VADR_Update: workflows/genomic_characterization/vadr_update.md
+        - Workflows Alphabetically: 
+            - Overview Table: workflows_overview/workflows_alphabetically.md
+            - Assembly_Fetch: workflows/data_import/assembly_fetch.md
+            - Augur: workflows/phylogenetic_construction/augur.md
+            - BaseSpace_Fetch: workflows/data_import/basespace_fetch.md
+            - Cauris_CladeTyper: workflows/standalone/cauris_cladetyper.md
+            - Concatenate_Column_Content: workflows/data_export/concatenate_column_content.md
+            - Concatenate_Illumina_Lanes: workflows/standalone/concatenate_illumina_lanes.md
+            - Core_Gene_SNP: workflows/phylogenetic_construction/core_gene_snp.md
+            - Create_Terra_Table: workflows/data_import/create_terra_table.md
+            - CZGenEpi_Prep: workflows/phylogenetic_construction/czgenepi_prep.md
+            - Find_Shared_Variants: workflows/phylogenetic_construction/find_shared_variants.md
+            - Freyja Workflow Series: workflows/genomic_characterization/freyja.md
+            - GAMBIT_Query: workflows/standalone/gambit_query.md
+            - Kraken2: workflows/standalone/kraken2.md
+            - kSNP3: workflows/phylogenetic_construction/ksnp3.md
+            - Lyve_SET: workflows/phylogenetic_construction/lyve_set.md
+            - MashTree_FASTA: workflows/phylogenetic_construction/mashtree_fasta.md
+            - Mercury_Prep_N_Batch: workflows/public_data_sharing/mercury_prep_n_batch.md
+            - NCBI-AMRFinderPlus: workflows/standalone/ncbi_amrfinderplus.md
+            - NCBI-Scrub: workflows/standalone/ncbi_scrub.md
+            - Pangolin_Update: workflows/genomic_characterization/pangolin_update.md
+            - RASUSA: workflows/standalone/rasusa.md
+            - Rename_FASTQ: workflows/standalone/rename_fastq.md
+            - Samples_to_Ref_Tree: workflows/phylogenetic_placement/samples_to_ref_tree.md
+            - Snippy_Streamline: workflows/phylogenetic_construction/snippy_streamline.md
+            - Snippy_Streamline_FASTA: workflows/phylogenetic_construction/snippy_streamline_fasta.md
+            - Snippy_Tree: workflows/phylogenetic_construction/snippy_tree.md
+            - Snippy_Variants: workflows/phylogenetic_construction/snippy_variants.md
+            - SRA_Fetch: workflows/data_import/sra_fetch.md
+            - TBProfiler_tNGS: workflows/standalone/tbprofiler_tngs.md
+            - Terra_2_GISAID: workflows/public_data_sharing/terra_2_gisaid.md
+            - Terra_2_NCBI: workflows/public_data_sharing/terra_2_ncbi.md
+            - TheiaCoV Workflow Series: workflows/genomic_characterization/theiacov.md
+            - TheiaEuk Workflow Series: workflows/genomic_characterization/theiaeuk.md
+            - TheiaMeta: workflows/genomic_characterization/theiameta.md
+            - TheiaProk Workflow Series: workflows/genomic_characterization/theiaprok.md
+            - TheiaValidate: workflows/standalone/theiavalidate.md
+            - Transfer_Column_Content: workflows/data_export/transfer_column_content.md
+            - Usher_PHB: workflows/phylogenetic_placement/usher.md
+            - VADR_Update: workflows/genomic_characterization/vadr_update.md
+            - Zip_Column_Content: workflows/data_export/zip_column_content.md
+     - Contributing:
+        - Contributing to the Documentation: contributing/doc_contribution.md
+        - Contributing to the Code: contributing/code_contribution.md
+
+theme: 
+  name: material
+  logo: assets/logos/Theiagen-Logo-White.png
+  favicon: assets/logos/Theiagen-Symbol-Standard-01.png
+  custom_dir: docs/overrides
+  features:
+    - content.code.annotate
+    - content.code.copy
+    - content.tabs.link
+    - content.tooltips
+    #- navigation.expand
+    - navigation.instant
+    #- navigation.instant.preview
+    - navigation.path
+    - navigation.tabs
+    - navigation.top
+    - navigation.tracking
+    - search.highlight
+    - search.suggest
+    - toc.follow
+    #- toc.integrate
+  language: en
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: light 
+      toggle:
+        icon: material/weather-night
+        name: Switch to Dark Mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      accent: indigo
+      primary: black
+      toggle:
+        icon: material/white-balance-sunny
+        name: Switch to Light Mode
+
+markdown_extensions: 
+  - abbr
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - pymdownx.details
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.mark
+  - pymdownx.caret
+  - pymdownx.snippets
+  - pymdownx.superfences
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - toc:
+      permalink: true
+
+plugins:
+  - git-revision-date-localized:
+      enable_creation_date: true
+      type: iso_date
+  - search
+  - glightbox
+  - mike
+  # - section-index
+
+extra_javascript:
+  - https://unpkg.com/tablesort@5.3.0/dist/tablesort.min.js  
+  - javascripts/tablesort.js 
+  - javascripts/table-search.js                                     
+
+extra_css:
+  - stylesheets/extra.css                                         
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/theiagen
+    - icon: fontawesome/brands/twitter
+      link: https://twitter.com/theiagen
+    - icon: fontawesome/brands/linkedin
+      link: https://www.linkedin.com/company/theiagen
+  version:
+    provider: mike
+    default: latest
+    alias: true
+  homepage: https://www.theiagen.com
+
+copyright: |
+  &copy; 2022-2024 <a href="https://www.theiagen.com" target="_blank" rel="noopener">Theiagen Genomics</a>
