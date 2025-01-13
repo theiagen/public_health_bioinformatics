@@ -73,7 +73,6 @@ task basecall {
     String dorado_docker = docker
     String dorado_version = read_string("DORADO_VERSION")
     String dorado_model_used = read_string("DORADO_MODEL")
-    # keeping this dorado_log just for debugging purposes, not a wf output
     File dorado_log = "dorado_basecall.log"
   }
   runtime {

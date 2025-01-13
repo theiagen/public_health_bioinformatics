@@ -56,7 +56,7 @@ task dorado_demux {
         --emit-fastq \
         --emit-summary \
         ~{if defined(custom_primers) then "--primer-sequences " + custom_primers else ""} \
-        ~{if notrim then "--notrim" else ""} \
+        ~{if notrim then "--no-trim" else ""} \
         --verbose > "$demux_dir/demux_${base_name}.log" 2>&1 || {
           echo "ERROR: Dorado demux failed for $bam_file. Check $demux_dir/demux_${base_name}.log for details." >&2
           exit 1
