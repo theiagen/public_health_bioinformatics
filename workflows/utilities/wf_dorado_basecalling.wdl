@@ -23,7 +23,9 @@ workflow dorado_basecalling_workflow {
     String? file_ending
     String terra_project
     String terra_workspace
-    String fastq_file_name             
+    String fastq_file_name
+    Boolean notrim = false
+    File? custom_primers             
   }
   call versioning_task.version_capture {
     input:
@@ -49,7 +51,9 @@ workflow dorado_basecalling_workflow {
       bam_files = samtools_convert.bam_files,
       kit_name = kit_name,
       fastq_file_name = fastq_file_name,
-      dorado_model_used = dorado_basecall.dorado_model_used[0]
+      dorado_model_used = dorado_basecall.dorado_model_used[0],
+      notrim = notrim,
+      custom_primers = custom_primers
   }
   call transfer_fastq_files.transfer_files as transfer_files {
     input:

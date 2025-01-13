@@ -61,7 +61,9 @@ Users can configure the basecalling model by setting the `dorado_model` input pa
 | basecall_task.basecall | **gpuType** | String | Type of GPU (e.g., `nvidia-tesla-t4`) | "nvidia-tesla-t4" | Optional |
 | basecall_task.basecall | **memory** | Int | Amount of memory to allocate (GB) | 32 | Optional |
 | dorado_basecalling_workflow | **assembly_data** | Boolean | Indicates if the data is for assembly | false | Optional |
+| dorado_basecalling_workflow | **custom_primers** | String | Path to FASTA file containing custom primer sequences for PCR primer trimming during demultiplexing. | None | Optional |
 | dorado_basecalling_workflow | **file_ending** | String? | File extension pattern for identifying files (e.g., ".fastq.gz") | None | Optional |
+| dorado_basecalling_workflow | **notrim** | Boolean |Set to `true` to disable barcode trimming during demultiplexing. | false | Optional |
 | dorado_basecalling_workflow | **paired_end** | Boolean | Indicates if data is paired-end | false | Optional |
 
 ### Uploading Pod5 Files to Terra `pod5_bucket_path`"
@@ -107,11 +109,20 @@ This workflow is composed of several tasks to process, basecall, and analyze Oxf
 ??? task "`Dorado Basecalling`: Converts `POD5` files to 'SAM' files"
     The basecalling task takes `POD5` files as input and converts them into 'SAM' format using the specified model. This step leverages GPU acceleration for efficient processing.
 
+     !!! note "Barcode Trimming"
+        Barcode trimming is purposefully disabled during the basecalling step to ensure accurate demultiplexing in subsequent workflow steps.
+
 ??? task "`Samtools Convert`: Converts SAM to BAM"
     Once the SAM files are generated, this task converts them into BAM format, optimizing them for downstream applications and saving storage space.
 
 ??? task "`Dorado Demultiplexing`: Produces barcode-specific FASTQ files"
     This task demultiplexes the BAM files based on barcodes, generating individual FASTQ files for each barcode to support further analyses.
+
+    !!! info "Disabling Barcode Trimming"
+        Barcode trimming is enabled by default, but could be disabled by setting the optional input variable `notrim` to `true`. This allows users to retain untrimmed reads for troubleshooting, such as inspecting reads in the "unclassified" folder when mis-binned reads or other data issues arise.
+
+    !!! info "Custom Primer Trimming"
+        Users can specify a custom set of primers for trimming during demultiplexing by providing a FASTA file to the `custom_primers` input. This feature overrides Dorado's built-in primer sequences, and the custom primers will be used for trimming instead.
 
 ??? task "`FASTQ File Transfer`: Transfers files to Terra"
     After demultiplexing, the FASTQ files are uploaded to the Terra workspace bucket for storage and potential use in other workflows.

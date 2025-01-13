@@ -8,8 +8,10 @@ task dorado_demux {
     Int cpu = 4 
     Int memory = 16
     Int disk_size = 100
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/dorado:0.8.0"
+    Boolean notrim = false
     String dorado_model_used
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/dorado:0.8.0"
+    File? custom_primers
   }
   command <<< 
     set -euo pipefail
@@ -22,6 +24,12 @@ task dorado_demux {
 
     fastq_file_name="~{fastq_file_name}"
     kit_name="~{kit_name}"
+
+    # Check custom primer file
+    if [[ -n "~{custom_primers}" && ! -f "~{custom_primers}" ]]; then
+      echo "ERROR: Custom primer file ~{custom_primers} does not exist." >&2
+      exit 1
+    fi
 
     # Start the main log file for the entire task
     exec > >(tee -a dorado_demux_output.log) 2>&1
@@ -47,6 +55,8 @@ task dorado_demux {
         --kit-name "$kit_name" \
         --emit-fastq \
         --emit-summary \
+        ~{if defined(custom_primers) then "--primer-sequences " + custom_primers else ""} \
+        ~{if notrim then "--notrim" else ""} \
         --verbose > "$demux_dir/demux_${base_name}.log" 2>&1 || {
           echo "ERROR: Dorado demux failed for $bam_file" >&2
           cat "$demux_dir/demux_${base_name}.log" >&2
