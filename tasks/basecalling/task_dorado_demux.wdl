@@ -26,7 +26,7 @@ task dorado_demux {
     kit_name="~{kit_name}"
 
     # Validate custom primer file if provided
-    if [[ -n "~{default=''}custom_primers}" && ! -f "~{custom_primers}" ]]; then
+    if [[ -n "~{if defined(custom_primers) then custom_primers else ''}" && ! -f "~{custom_primers}" ]]; then
       echo "ERROR: Custom primer file ~{custom_primers} does not exist or is invalid." >&2
       exit 1
     fi
