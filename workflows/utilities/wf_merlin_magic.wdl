@@ -132,7 +132,6 @@ workflow merlin_magic {
     Int? emmtyper_min_good
     Int? emmtyper_max_size
     #hicap options
-    Boolean? hicap_output_full_sequence
     Float? hicap_gene_coverage
     Float? hicap_gene_identity
     Float? hicap_broken_gene_identity
@@ -607,7 +606,6 @@ workflow merlin_magic {
         assembly = assembly,
         samplename = samplename,
         docker = hicap_docker_image,
-        output_full_sequence = hicap_output_full_sequence,
         gene_coverage = hicap_gene_coverage,
         gene_identity = hicap_gene_identity,
         broken_gene_identity = hicap_broken_gene_identity,
