@@ -121,8 +121,8 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 | ani | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | FASTA, ONT, PE, SE |
 | ani | **percent_bases_aligned_threshold** | Float | Threshold regarding the proportion of bases aligned between the query genome and reference genome. If a genome does not surpass this threshold (and the ani_threshold) then the ani_top_species_match output String will show a warning instead of a genus & species. | 70 | Optional | FASTA, ONT, PE, SE |
 | ani | **ref_genome** | File | If not set, uses all 43 genomes in RGDv2 |  | Optional | FASTA, ONT, PE, SE |
-| bakta | **bakta_db** | File | Database of reference annotations (seehttps://github.com/oschwengers/bakta#database) | gs://theiagen-public-files-rp/terra/theiaprok-files/bakta_db_2022-08-29.tar.gz | Optional | FASTA, ONT, PE, SE |
-| bakta | **bakta_opts** | String | Parameters to pass to bakta from https://github.com/oschwengers/bakta#usage |  | Optional | FASTA, ONT, PE, SE |
+| bakta | **bakta_db** | File | Database of reference annotations (see <https://github.com/oschwengers/bakta#database>) | gs://theiagen-public-files-rp/terra/theiaprok-files/bakta_db_2022-08-29.tar.gz | Optional | FASTA, ONT, PE, SE |
+| bakta | **bakta_opts** | String | Parameters to pass to bakta from <https://github.com/oschwengers/bakta#usage> |  | Optional | FASTA, ONT, PE, SE |
 | bakta | **compliant** | Boolean | If true, forces Genbank/ENA/DDJB compliance | FALSE | Optional | FASTA, ONT, PE, SE |
 | bakta | **cpu** | Int | Number of CPUs to allocate to the task | 8 | Optional | FASTA, ONT, PE, SE |
 | bakta | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | FASTA, ONT, PE, SE |
@@ -470,8 +470,8 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 | prokka | **disk_size** | String | Amount of storage (in GB) to allocate to the PlasmidFinder task | 100 | Optional | FASTA, ONT, PE, SE |
 | prokka | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/prokka:1.14.5 | Optional | FASTA, ONT, PE, SE |
 | prokka | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 16 | Optional | FASTA, ONT, PE, SE |
-| prokka | **prodigal_tf** | File | https://github.com/tseemann/prokka#option---prodigaltf |  | Optional | FASTA, ONT, PE, SE |
-| prokka | **prokka_arguments** | String | Any additional https://github.com/tseemann/prokka#command-line-options |  | Optional | FASTA, ONT, PE, SE |
+| prokka | **prodigal_tf** | File | <https://github.com/tseemann/prokka#option---prodigaltf> |  | Optional | FASTA, ONT, PE, SE |
+| prokka | **prokka_arguments** | String | Any additional <https://github.com/tseemann/prokka#command-line-options> |  | Optional | FASTA, ONT, PE, SE |
 | prokka | **proteins** | Boolean | FASTA file of trusted proteins for Prokka to first use for annotations | FALSE | Optional | FASTA, ONT, PE, SE |
 | qc_check_task | **assembly_length_unambiguous** | Int | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE, SE |
 | qc_check_task | **assembly_mean_coverage** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE, SE |
@@ -551,44 +551,44 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 | resfinder_task | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | FASTA, ONT, PE, SE |
 | resfinder_task | **min_cov** | Float | Minimum coverage breadth of a gene for it to be identified | 0.5 | Optional | FASTA, ONT, PE, SE |
 | resfinder_task | **min_id** | Float | Minimum identity for ResFinder to identify a gene | 0.9 | Optional | FASTA, ONT, PE, SE |
-| shovill_pe | **assembler** | String | Assembler to use (spades, skesa, velvet or megahit), see https://github.com/tseemann/shovill#--assembler | skesa | Optional | PE |
-| shovill_pe | **assembler_options** | String | Assembler-specific options that you might choose, see https://github.com/tseemann/shovill#--opts |  | Optional | PE |
+| shovill_pe | **assembler** | String | Assembler to use (spades, skesa, velvet or megahit), see <https://github.com/tseemann/shovill#--assembler> | skesa | Optional | PE |
+| shovill_pe | **assembler_options** | String | Assembler-specific options that you might choose, see <https://github.com/tseemann/shovill#--opts> |  | Optional | PE |
 | shovill_pe | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional | PE |
-| shovill_pe | **depth** | Int | User specified depth of coverage for downsampling (see https://github.com/tseemann/shovill#--depth and https://github.com/tseemann/shovill#main-steps) | 150 | Optional | PE |
+| shovill_pe | **depth** | Int | User specified depth of coverage for downsampling (see <https://github.com/tseemann/shovill#--depth> and <https://github.com/tseemann/shovill#main-steps>) | 150 | Optional | PE |
 | shovill_pe | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | PE |
 | shovill_pe | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/shovill:1.1.0 | Optional | PE |
-| shovill_pe | **kmers** | String | User-specified Kmer length to override choice made by Shovill, see https://github.com/tseemann/shovill#--kmers | Auto | Optional | PE |
+| shovill_pe | **kmers** | String | User-specified Kmer length to override choice made by Shovill, see <https://github.com/tseemann/shovill#--kmers> | Auto | Optional | PE |
 | shovill_pe | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 16 | Optional | PE |
 | shovill_pe | **min_contig_length** | Int | Minimum contig length to keep in final assembly  | 200 | Optional | PE |
 | shovill_pe | **min_coverage** | Float | Minimum contig coverage to keep in final assembly | 2 | Optional | PE |
-| shovill_pe | **nocorr** | Boolean | Disable correction of minor assembly errors by Shovill (see https://github.com/tseemann/shovill#main-steps) | FALSE | Optional | PE |
-| shovill_pe | **noreadcorr** | Boolean | Disable correction of sequencing errors in reads by Shovill (seehttps://github.com/tseemann/shovill#main-steps) | FALSE | Optional | PE |
-| shovill_pe | **nostitch** | Boolean | Disable read stitching by Shovill (see https://github.com/tseemann/shovill#main-steps) | FALSE | Optional | PE |
-| shovill_pe | **trim** | Boolean | Enable adaptor trimming (see https://github.com/tseemann/shovill#main-steps) | FALSE | Optional | PE |
-| shovill_se | **assembler** | String | Assembler to use (spades, skesa, velvet or megahit), see https://github.com/tseemann/shovill#--assembler | skesa | Optional | SE |
-| shovill_se | **assembler_options** | String | Assembler-specific options that you might choose, see https://github.com/tseemann/shovill#--opts |  | Optional | SE |
+| shovill_pe | **nocorr** | Boolean | Disable correction of minor assembly errors by Shovill (see <https://github.com/tseemann/shovill#main-steps>) | FALSE | Optional | PE |
+| shovill_pe | **noreadcorr** | Boolean | Disable correction of sequencing errors in reads by Shovill (see <https://github.com/tseemann/shovill#main-steps>) | FALSE | Optional | PE |
+| shovill_pe | **nostitch** | Boolean | Disable read stitching by Shovill (see <https://github.com/tseemann/shovill#main-steps>) | FALSE | Optional | PE |
+| shovill_pe | **trim** | Boolean | Enable adaptor trimming (see <https://github.com/tseemann/shovill#main-steps>) | FALSE | Optional | PE |
+| shovill_se | **assembler** | String | Assembler to use (spades, skesa, velvet or megahit), see <https://github.com/tseemann/shovill#--assembler> | skesa | Optional | SE |
+| shovill_se | **assembler_options** | String | Assembler-specific options that you might choose, see <https://github.com/tseemann/shovill#--opts> |  | Optional | SE |
 | shovill_se | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional | SE |
-| shovill_se | **depth** | Int | User specified depth of coverage for downsampling (see https://github.com/tseemann/shovill#--depth and https://github.com/tseemann/shovill#main-steps) | 150 | Optional | SE |
+| shovill_se | **depth** | Int | User specified depth of coverage for downsampling (see <https://github.com/tseemann/shovill#--depth> and <https://github.com/tseemann/shovill#main-steps>) | 150 | Optional | SE |
 | shovill_se | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | SE |
 | shovill_se | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/shovill:1.1.0 | Optional | SE |
-| shovill_se | **kmers** | String | User-specified Kmer length to override choice made by Shovill, see https://github.com/tseemann/shovill#--kmers | auto | Optional | SE |
+| shovill_se | **kmers** | String | User-specified Kmer length to override choice made by Shovill, see <https://github.com/tseemann/shovill#--kmers> | auto | Optional | SE |
 | shovill_se | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 16 | Optional | SE |
 | shovill_se | **min_contig_length** | Int | Minimum contig length to keep in final assembly  | 200 | Optional | SE |
 | shovill_se | **min_coverage** | Float | Minimum contig coverage to keep in final assembly | 2 | Optional | SE |
-| shovill_se | **nocorr** | Boolean | Disable correction of minor assembly errors by Shovill (see https://github.com/tseemann/shovill#main-steps) | FALSE | Optional | SE |
-| shovill_se | **noreadcorr** | Boolean | Disable correction of sequencing errors in reads by Shovill (seehttps://github.com/tseemann/shovill#main-steps) | FALSE | Optional | SE |
-| shovill_se | **trim** | Boolean | Enable adaptor trimming (see https://github.com/tseemann/shovill#main-steps) | FALSE | Optional | SE |
+| shovill_se | **nocorr** | Boolean | Disable correction of minor assembly errors by Shovill (see <https://github.com/tseemann/shovill#main-steps>) | FALSE | Optional | SE |
+| shovill_se | **noreadcorr** | Boolean | Disable correction of sequencing errors in reads by Shovill (see <https://github.com/tseemann/shovill#main-steps>) | FALSE | Optional | SE |
+| shovill_se | **trim** | Boolean | Enable adaptor trimming (see <https://github.com/tseemann/shovill#main-steps>) | FALSE | Optional | SE |
 | ts_mlst | **cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional | FASTA, ONT, PE, SE |
 | ts_mlst | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 50 | Optional | FASTA, ONT, PE, SE |
 | ts_mlst | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/mlst:2.23.0-2024-08-01 | Optional | FASTA, ONT, PE, SE |
 | ts_mlst | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 2 | Optional | FASTA, ONT, PE, SE |
 | ts_mlst | **mincov** | Float | Minimum % breadth of coverage to report an MLST allele | 10 | Optional | FASTA, ONT, PE, SE |
 | ts_mlst | **minid** | Float | Minimum % identity to known MLST gene to report an MLST allele | 95 | Optional | FASTA, ONT, PE, SE |
-| ts_mlst | **minscore** | Float | Minimum https://github.com/tseemann/mlst#scoring-system to assign an MLST profile | 50 | Optional | FASTA, ONT, PE, SE |
+| ts_mlst | **minscore** | Float | Minimum <https://github.com/tseemann/mlst#scoring-system> to assign an MLST profile | 50 | Optional | FASTA, ONT, PE, SE |
 | ts_mlst | **nopath** | Boolean | true = use mlst --nopath. If set to false, filename paths are not stripped from FILE column in output TSV | TRUE | Optional | FASTA, ONT, PE, SE |
 | ts_mlst | **scheme** | String | Don’t autodetect the MLST scheme; force this scheme on all inputs (see <https://github.com/tseemann/mlst/blob/master/db/scheme_species_map.tab> for accepted strings) | None | Optional | FASTA, ONT, PE, SE |
 | version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional | FASTA, ONT, PE, SE |
-| version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) | FASTA, ONT, PE, SE |
+| version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) | | Optional | FASTA, ONT, PE, SE |
 
 </div>
 
@@ -1323,11 +1323,11 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
 ??? toggle "_Haemophilus influenzae_"
     ##### _Haemophilus influenzae_ {#haemophilus-influenzae}
     ??? task "`hicap`: Sequence typing"
-        Identification of *cap* locus serotype in *Haemophilus influenzae* assemblies with [hicap](https://github.com/scwatts/hicap). 
+        Identification of _cap_ locus serotype in _Haemophilus influenzae_ assemblies with [hicap](https://github.com/scwatts/hicap).
 
-        The *cap* locus of *H. influenzae* is categorised into 6 different groups based on serology (a-f). There are three functionally distinct regions of the *cap* locus, designated `region I`, `region II`, and `region III`. Genes within `region I` (`bexABCD`) and `region III` (`hcsAB`) are associated with transport and post-translation modification. The `region II` genes encode serotype-specific proteins, with each serotype (a-f) having a distinct set of genes. *cap* loci are often subject to structural changes (e.g. duplication, deletion) making the process of *in silico* typing and characterisation of loci difficult.
+        The _cap_ locus of _H. influenzae_ is categorised into 6 different groups based on serology (a-f). There are three functionally distinct regions of the _cap_ locus, designated `region I`, `region II`, and `region III`. Genes within `region I` (`bexABCD`) and `region III` (`hcsAB`) are associated with transport and post-translation modification. The `region II` genes encode serotype-specific proteins, with each serotype (a-f) having a distinct set of genes. _cap_ loci are often subject to structural changes (e.g. duplication, deletion) making the process of *in silico* typing and characterisation of loci difficult.
         
-        `hicap` automates the identification of the *cap* locus, describes the structural layout, and performs *in silico* serotyping.
+        `hicap` automates the identification of the _cap_ locus, describes the structural layout, and performs *in silico* serotyping.
         
         !!! techdetails "hicap Technical Details"
             
@@ -1342,7 +1342,7 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
     ##### _Klebsiella_ spp. {#klebsiella}
     ??? task "`Kleborate`: Species identification, MLST, serotyping, AMR and virulence characterization"
 
-        [Kleborate](https://github.com/katholt/Kleborate) is a tool to identify the *Klebsiella* species, MLST sequence type, serotype, virulence factors (ICE*Kp* and plasmid associated), and AMR genes and mutations. Serotyping is based on the capsular (K antigen) and lipopolysaccharide (LPS) (O antigen) genes. The resistance genes identified by Kleborate are described [here](https://github.com/katholt/Kleborate/wiki/Antimicrobial-resistance).
+        [Kleborate](https://github.com/katholt/Kleborate) is a tool to identify the *Klebsiella* species, MLST sequence type, serotype, virulence factors (ICE_Kp_ and plasmid associated), and AMR genes and mutations. Serotyping is based on the capsular (K antigen) and lipopolysaccharide (LPS) (O antigen) genes. The resistance genes identified by Kleborate are described [here](https://github.com/katholt/Kleborate/wiki/Antimicrobial-resistance).
         
         !!! techdetails "Kleborate Technical Details"
             
@@ -1371,7 +1371,7 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
     ##### _Listeria monocytogenes_ {#listeria-monocytogenes}
     ??? task "`LisSero`: Serogroup prediction"
 
-        [LisSero](https://github.com/MDU-PHL/LisSero) performs serogroup prediction (1/2a, 1/2b, 1/2c, or 4b) for *Listeria monocytogenes* based on the presence or absence of five genes, *lmo1118*, *lmo0737*, ORF2110, ORF2819, and *prs*. These do not predict somatic (O) or flagellar (H) biosynthesis.
+        [LisSero](https://github.com/MDU-PHL/LisSero) performs serogroup prediction (1/2a, 1/2b, 1/2c, or 4b) for _Listeria monocytogenes_ based on the presence or absence of five genes, _lmo1118_, _lmo0737_, ORF2110, ORF2819, and _prs_. These do not predict somatic (O) or flagellar (H) biosynthesis.
         
         !!! techdetails "LisSero Technical Details"
             
@@ -1384,7 +1384,7 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
 ??? toggle "_Mycobacterium tuberculosis_"
     ##### _Mycobacterium tuberculosis_ {#mycobacterium-tuberculosis}
     ??? task "`TBProfiler`: Lineage and drug susceptibility prediction ==_for Illumina and ONT only_=="
-    
+
         [TBProfiler](https://github.com/jodyphelan/TBProfiler) identifies *Mycobacterium tuberculosis* complex species, lineages, sub-lineages and drug resistance-associated mutations.
         
         !!! techdetails "TBProfiler Technical Details"
@@ -1671,13 +1671,13 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
 |---|---|---|---|
 | abricate_abaum_database | String | Database of reference A. baumannii plasmid typing genes used for plasmid typing | FASTA, ONT, PE, SE |
 | abricate_abaum_docker | String | Docker file used for running abricate | FASTA, ONT, PE, SE |
-| abricate_abaum_plasmid_tsv | File | https://github.com/tseemann/abricate#output containing a row for each A. baumannii plasmid type gene found in the sample | FASTA, ONT, PE, SE |
-| abricate_abaum_plasmid_type_genes | String | A. baumannii Plasmid typing genes found in the sample; from GENE column in https://github.com/tseemann/abricate#output | FASTA, ONT, PE, SE |
+| abricate_abaum_plasmid_tsv | File | <https://github.com/tseemann/abricate#output> containing a row for each A. baumannii plasmid type gene found in the sample | FASTA, ONT, PE, SE |
+| abricate_abaum_plasmid_type_genes | String | A. baumannii Plasmid typing genes found in the sample; from GENE column in <https://github.com/tseemann/abricate#output> | FASTA, ONT, PE, SE |
 | abricate_abaum_version | String | Version of abricate used for A. baumannii plasmid typing | FASTA, ONT, PE, SE |
 | abricate_database | String | Database of reference used with Abricate | FASTA, ONT, PE, SE |
 | abricate_docker | String | Docker file used for running abricate | FASTA, ONT, PE, SE |
-| abricate_genes | String | Genes found in the sample; from GENE column in https://github.com/tseemann/abricate#output | FASTA, ONT, PE, SE |
-| abricate_results_tsv | File | https://github.com/tseemann/abricate#output containing a row for each gene found in the sample | FASTA, ONT, PE, SE |
+| abricate_genes | String | Genes found in the sample; from GENE column in <https://github.com/tseemann/abricate#output> | FASTA, ONT, PE, SE |
+| abricate_results_tsv | File | <https://github.com/tseemann/abricate#output> containing a row for each gene found in the sample | FASTA, ONT, PE, SE |
 | abricate_version | String | Version of abricate used for A. baumannii plasmid typing | FASTA, ONT, PE, SE |
 | abricate_vibrio_biotype | String | Biotype classification according to tcpA gene sequence (Classical or ElTor) | FASTA, ONT, PE, SE |
 | abricate_vibrio_ctxA | String | Presence or absence of the ctxA gene | FASTA, ONT, PE, SE |
@@ -1695,7 +1695,7 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
 | agrvate_results | File | A gzipped tarball of all results | FASTA, ONT, PE, SE |
 | agrvate_summary | File | The summary file produced | FASTA, ONT, PE, SE |
 | agrvate_version | String | The version of AgrVATE used | FASTA, ONT, PE, SE |
-| amrfinderplus_all_report | File | Output TSV file from AMRFinderPlus (described https://github.com/ncbi/amr/wiki/Running-AMRFinderPlus#fields) | FASTA, ONT, PE, SE |
+| amrfinderplus_all_report | File | Output TSV file from AMRFinderPlus (described <https://github.com/ncbi/amr/wiki/Running-AMRFinderPlus#fields>) | FASTA, ONT, PE, SE |
 | amrfinderplus_amr_betalactam_betalactam_genes | String | Beta-lactam AMR genes identified by AMRFinderPlus that are known to confer resistance to beta-lactams  | FASTA, ONT, PE, SE |
 | amrfinderplus_amr_betalactam_carbapenem_genes | String | Beta-lactam AMR genes identified by AMRFinderPlus that are known to confer resistance to carbapenem  | FASTA, ONT, PE, SE |
 | amrfinderplus_amr_betalactam_cephalosporin_genes | String | Beta-lactam AMR genes identified by AMRFinderPlus that are known to confer resistance to cephalosporin | FASTA, ONT, PE, SE |
@@ -1719,7 +1719,7 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
 | ani_mummer_version | String | Version of MUMmer used | FASTA, ONT, PE, SE |
 | ani_output_tsv | File | Full output TSV from ani-m | FASTA, ONT, PE, SE |
 | ani_top_species_match | String | Species of genome with highest ANI to query FASTA | FASTA, ONT, PE, SE |
-| assembly_fasta | File | https://github.com/tseemann/shovill#contigsfa | ONT, PE, SE |
+| assembly_fasta | File | <https://github.com/tseemann/shovill#contigsfa> | ONT, PE, SE |
 | assembly_length | Int | Length of assembly (total contig length) as determined by QUAST | FASTA, ONT, PE, SE |
 | bakta_gbff | File | Genomic GenBank format annotation file | FASTA, ONT, PE, SE |
 | bakta_gff3 | File | Generic Feature Format Version 3 file | FASTA, ONT, PE, SE |
@@ -1746,7 +1746,7 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
 | contigs_lastgraph | File | Assembly graph if velvet used for genome assembly | PE |
 | dragonflye_version | String | Version of dragonflye used for de novo assembly | ONT |
 | ectyper_predicted_serotype | String | Serotype predicted by ECTyper | FASTA, ONT, PE, SE |
-| ectyper_results | File | TSV file of evidence for ECTyper predicted serotype (see https://github.com/phac-nml/ecoli_serotyping#report-format) | FASTA, ONT, PE, SE |
+| ectyper_results | File | TSV file of evidence for ECTyper predicted serotype (see <https://github.com/phac-nml/ecoli_serotyping#report-format>) | FASTA, ONT, PE, SE |
 | ectyper_version | String | Version of ECTyper used | FASTA, ONT, PE, SE |
 | emmtypingtool_docker | String | Docker image for emm-typing-tool | PE |
 | emmtypingtool_emm_type | String | emm-type predicted | PE |
@@ -1788,8 +1788,8 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
 | gambit_version | String | Version of GAMBIT software used | FASTA, ONT, PE, SE |
 | genotyphi_final_genotype | String | Final genotype call from GenoTyphi | ONT, PE, SE |
 | genotyphi_genotype_confidence | String | Confidence in the final genotype call made by GenoTyphi | ONT, PE, SE |
-| genotyphi_mykrobe_json | File | JSON file of GenoTyphi output, described https://github.com/katholt/genotyphi#explanation-of-columns-in-the-output | ONT, PE, SE |
-| genotyphi_report_tsv | File | TSV file of GenoTyphi output, described https://github.com/katholt/genotyphi#explanation-of-columns-in-the-output | ONT, PE, SE |
+| genotyphi_mykrobe_json | File | JSON file of GenoTyphi output, described <https://github.com/katholt/genotyphi#explanation-of-columns-in-the-output> | ONT, PE, SE |
+| genotyphi_report_tsv | File | TSV file of GenoTyphi output, described <https://github.com/katholt/genotyphi#explanation-of-columns-in-the-output> | ONT, PE, SE |
 | genotyphi_species | String | Species call from Mykrobe, used to run GenoTyphi | ONT, PE, SE |
 | genotyphi_st_probes_percent_coverage | Float | Percentage coverage to the Typhi MLST probes | ONT, PE, SE |
 | genotyphi_version | String | Version of GenoTyphi used | ONT, PE, SE |
@@ -1800,23 +1800,23 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
 | hicap_version | String | hicap version used | ONT, PE, SE |
 | kaptive_k_locus | String | Best matching K locus identified by Kaptive | FASTA, ONT, PE, SE |
 | kaptive_k_type | String | Best matching K type identified by Kaptive | FASTA, ONT, PE, SE |
-| kaptive_kl_confidence | String | Kaptive’s confidence in the KL match (see https://github.com/katholt/Kaptive/wiki/Interpreting-the-results) | FASTA, ONT, PE, SE |
+| kaptive_kl_confidence | String | Kaptive’s confidence in the KL match (see <https://github.com/katholt/Kaptive/wiki/Interpreting-the-results>) | FASTA, ONT, PE, SE |
 | kaptive_oc_locus | String | Best matching K locus identified by Kaptive | FASTA, ONT, PE, SE |
-| kaptive_ocl_confidence | String | Kaptive’s confidence in the OCL match (see https://github.com/katholt/Kaptive/wiki/Interpreting-the-results) | FASTA, ONT, PE, SE |
-| kaptive_output_file_k | File | TSV https://github.com/katholt/Kaptive/wiki/How-to-run#output-filesfrom the K locus from Kaptive | FASTA, ONT, PE, SE |
-| kaptive_output_file_oc | File | TSV https://github.com/katholt/Kaptive/wiki/How-to-run#output-filesfrom the OC locus from Kaptive | FASTA, ONT, PE, SE |
+| kaptive_ocl_confidence | String | Kaptive’s confidence in the OCL match (see <https://github.com/katholt/Kaptive/wiki/Interpreting-the-results>) | FASTA, ONT, PE, SE |
+| kaptive_output_file_k | File | TSV <https://github.com/katholt/Kaptive/wiki/How-to-run#output-filesfrom> the K locus from Kaptive | FASTA, ONT, PE, SE |
+| kaptive_output_file_oc | File | TSV <https://github.com/katholt/Kaptive/wiki/How-to-run#output-filesfrom> the OC locus from Kaptive | FASTA, ONT, PE, SE |
 | kaptive_version | String | Version of Kaptive used | FASTA, ONT, PE, SE |
 | kleborate_docker | String | Kleborate docker image used | FASTA, ONT, PE, SE |
 | kleborate_genomic_resistance_mutations | String | Genomic resistance mutations identifies by Kleborate | FASTA, ONT, PE, SE |
 | kleborate_key_resistance_genes | String | Key resistance genes identified by Kleborate | FASTA, ONT, PE, SE |
 | kleborate_klocus | String | Best matching K locus identified by  Kleborate via Kaptive | FASTA, ONT, PE, SE |
-| kleborate_klocus_confidence | String | Kaptive’s confidence in the KL match (see https://github.com/katholt/Kaptive/wiki/Interpreting-the-results) | FASTA, ONT, PE, SE |
+| kleborate_klocus_confidence | String | Kaptive’s confidence in the KL match (see <https://github.com/katholt/Kaptive/wiki/Interpreting-the-results>) | FASTA, ONT, PE, SE |
 | kleborate_ktype | String | Best matching K type identified by  Kleborate via Kaptive | FASTA, ONT, PE, SE |
-| kleborate_mlst_sequence_type | String | https://github.com/katholt/Kleborate/wiki/MLST#multi-locus-sequence-typing-mlst call by Kleborate | FASTA, ONT, PE, SE |
+| kleborate_mlst_sequence_type | String | <https://github.com/katholt/Kleborate/wiki/MLST#multi-locus-sequence-typing-mlst> call by Kleborate | FASTA, ONT, PE, SE |
 | kleborate_olocus | String | Best matching OC locus identified by  Kleborate via Kaptive | FASTA, ONT, PE, SE |
-| kleborate_olocus_confidence | String | Kaptive’s confidence in the KL match (see https://github.com/katholt/Kaptive/wiki/Interpreting-the-results) | FASTA, ONT, PE, SE |
+| kleborate_olocus_confidence | String | Kaptive’s confidence in the KL match (see <https://github.com/katholt/Kaptive/wiki/Interpreting-the-results>) | FASTA, ONT, PE, SE |
 | kleborate_otype | String | Best matching OC type identified by  Kleborate via Kaptive | FASTA, ONT, PE, SE |
-| kleborate_output_file | File | https://github.com/katholt/Kleborate/wiki/Scores-and-counts | FASTA, ONT, PE, SE |
+| kleborate_output_file | File | <https://github.com/katholt/Kleborate/wiki/Scores-and-counts> | FASTA, ONT, PE, SE |
 | kleborate_resistance_score | String | Resistance score as given by kleborate | FASTA, ONT, PE, SE |
 | kleborate_version | String | Version of Kleborate used | FASTA, ONT, PE, SE |
 | kleborate_virulence_score | String | Virulence score as given by kleborate | FASTA, ONT, PE, SE |
@@ -1831,9 +1831,9 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
 | kraken2_report | File | Report, in text format, of Kraken2 results | ONT, PE, SE |
 | kraken2_version | String | Kraken2 version | ONT, PE, SE |
 | legsta_predicted_sbt | String | Sequence based type predicted by Legsta | FASTA, ONT, PE, SE |
-| legsta_results | File | TSV file of legsta results (see https://github.com/tseemann/legsta#output) | FASTA, ONT, PE, SE |
+| legsta_results | File | TSV file of legsta results (see <https://github.com/tseemann/legsta#output>) | FASTA, ONT, PE, SE |
 | legsta_version | String | Version of legsta used | FASTA, ONT, PE, SE |
-| lissero_results | File | TSV results file from LisSero (see https://github.com/MDU-PHL/LisSero#example-output) | FASTA, ONT, PE, SE |
+| lissero_results | File | TSV results file from LisSero (see <https://github.com/MDU-PHL/LisSero#example-output>) | FASTA, ONT, PE, SE |
 | lissero_serotype | String | Serotype predicted by LisSero | FASTA, ONT, PE, SE |
 | lissero_version | String | Version of LisSero used | FASTA, ONT, PE, SE |
 | meningotype_BAST | String | BAST type | FASTA, ONT, PE, SE |
@@ -1890,17 +1890,17 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
 | ngmaster_tsv | File | TSV file with NG-MAST/NG-STAR typing | FASTA, ONT, PE, SE |
 | ngmaster_version | String | ngmaster version | FASTA, ONT, PE, SE |
 | number_contigs | Int | Total number of contigs in assembly | FASTA, ONT, PE, SE |
-| pasty_all_serogroups | File | TSV file with details of each serogroup from pasty (see https://github.com/rpetit3/pasty#example-prefixdetailstsv) | FASTA, ONT, PE, SE |
-| pasty_blast_hits | File | TSV file of BLAST hits from pasty (see https://github.com/rpetit3/pasty#example-prefixblastntsv) | FASTA, ONT, PE, SE |
+| pasty_all_serogroups | File | TSV file with details of each serogroup from pasty (see <https://github.com/rpetit3/pasty#example-prefixdetailstsv>) | FASTA, ONT, PE, SE |
+| pasty_blast_hits | File | TSV file of BLAST hits from pasty (see <https://github.com/rpetit3/pasty#example-prefixblastntsv>) | FASTA, ONT, PE, SE |
 | pasty_comment | String |  | FASTA, ONT, PE, SE |
 | pasty_docker | String | pasty docker image used | FASTA, ONT, PE, SE |
 | pasty_serogroup | String | Serogroup predicted by pasty | FASTA, ONT, PE, SE |
 | pasty_serogroup_coverage | Float | The breadth of coverage of the O-antigen by pasty | FASTA, ONT, PE, SE |
 | pasty_serogroup_fragments | Int | Number of BLAST hits included in the prediction (fewer is better) | FASTA, ONT, PE, SE |
-| pasty_summary_tsv | File | TSV summary file of pasty outputs (see https://github.com/rpetit3/pasty#example-prefixtsv) | FASTA, ONT, PE, SE |
+| pasty_summary_tsv | File | TSV summary file of pasty outputs (see <https://github.com/rpetit3/pasty#example-prefixtsv>) | FASTA, ONT, PE, SE |
 | pasty_version | String | Version of pasty used | FASTA, ONT, PE, SE |
 | pbptyper_docker | String | pbptyper docker image used | FASTA, ONT, PE, SE |
-| pbptyper_pbptype_predicted_tsv | File | TSV file of pbptyper results (see https://github.com/rpetit3/pbptyper#example-prefixtsv) | FASTA, ONT, PE, SE |
+| pbptyper_pbptype_predicted_tsv | File | TSV file of pbptyper results (see <https://github.com/rpetit3/pbptyper#example-prefixtsv>) | FASTA, ONT, PE, SE |
 | pbptyper_predicted_1A_2B_2X | String | PBP type predicted by pbptyper | FASTA, ONT, PE, SE |
 | pbptyper_version | String | Version of pbptyper used | FASTA, ONT, PE, SE |
 | plasmidfinder_db_version | String | Version of PlasmidFnder used | FASTA, ONT, PE, SE |
@@ -1966,11 +1966,11 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
 | serotypefinder_report | File | TSV report produced by SerotypeFinder | FASTA, ONT, PE, SE |
 | serotypefinder_serotype | String | Serotype predicted by SerotypeFinder | FASTA, ONT, PE, SE |
 | shigatyper_docker | String | ShigaTyper docker image used | ONT, PE, SE |
-| shigatyper_hits_tsv | File | Detailed TSV report from ShigaTyper (seehttps://github.com/CFSAN-Biostatistics/shigatyper#example-prefix-hitstsv) | ONT, PE, SE |
+| shigatyper_hits_tsv | File | Detailed TSV report from ShigaTyper (see <https://github.com/CFSAN-Biostatistics/shigatyper#example-prefix-hitstsv>) | ONT, PE, SE |
 | shigatyper_ipaB_presence_absence | String | Presence (+) or absence (-) of ipaB identified by ShigaTyper | ONT, PE, SE |
 | shigatyper_notes | String | Any notes output from ShigaTyper | ONT, PE, SE |
 | shigatyper_predicted_serotype | String | Serotype predicted by ShigaTyper | ONT, PE, SE |
-| shigatyper_summary_tsv | File | TSV summary report from ShigaTyper (see https://github.com/CFSAN-Biostatistics/shigatyper#example-prefixtsv) | ONT, PE, SE |
+| shigatyper_summary_tsv | File | TSV summary report from ShigaTyper (see <https://github.com/CFSAN-Biostatistics/shigatyper#example-prefixtsv>) | ONT, PE, SE |
 | shigatyper_version | String | Version of ShigaTyper used | ONT, PE, SE |
 | shigeifinder_cluster | String | Shigella/EIEC cluster identified by ShigEiFinder | FASTA, ONT, PE, SE |
 | shigeifinder_cluster_reads | String | Shigella/EIEC cluster identified by ShigEiFinder using read files as inputs | PE, SE |
@@ -1986,8 +1986,8 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
 | shigeifinder_num_virulence_plasmid_genes_reads | String | Number of virulence plasmid genes identified by ShigEiFinder using read files as inputs | PE, SE |
 | shigeifinder_O_antigen | String | O-antigen gene identified by ShigEiFinder | FASTA, ONT, PE, SE |
 | shigeifinder_O_antigen_reads | String | O-antigen gene identified by ShigEiFinder using read files as inputs | PE, SE |
-| shigeifinder_report | File | TSV report from ShigEiFinder (see https://github.com/LanLab/ShigEiFinder#shigeifinder) | FASTA, ONT, PE, SE |
-| shigeifinder_report_reads | File | TSV report from ShigEiFinder (see https://github.com/LanLab/ShigEiFinder#shigeifinder) using read files as inputs | PE, SE |
+| shigeifinder_report | File | TSV report from ShigEiFinder (see <https://github.com/LanLab/ShigEiFinder#shigeifinder>) | FASTA, ONT, PE, SE |
+| shigeifinder_report_reads | File | TSV report from ShigEiFinder (see <https://github.com/LanLab/ShigEiFinder#shigeifinder>) using read files as inputs | PE, SE |
 | shigeifinder_serotype | String | Serotype predicted by ShigEiFinder | FASTA, ONT, PE, SE |
 | shigeifinder_serotype_reads | String | Serotype predicted by ShigEiFinder using read files as inputs | PE, SE |
 | shigeifinder_version | String | ShigEiFinder version used | FASTA, ONT, PE, SE |
@@ -1995,18 +1995,18 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
 | shovill_pe_version | String | Shovill version used | PE |
 | shovill_se_version | String | Shovill version used | SE |
 | sistr_allele_fasta | File | FASTA file of novel cgMLST alleles from SISTR | FASTA, ONT, PE, SE |
-| sistr_allele_json | File | JSON file of cgMLST allele sequences and information (see https://github.com/phac-nml/sistr_cmd#cgmlst-allele-search-results) | FASTA, ONT, PE, SE |
-| sistr_cgmlst | File | CSV file of the cgMLST allelic profile from SISTR (see https://github.com/phac-nml/sistr_cmd#cgmlst-allelic-profiles-output---cgmlst-profiles-cgmlst-profilescsv) | FASTA, ONT, PE, SE |
+| sistr_allele_json | File | JSON file of cgMLST allele sequences and information (see <https://github.com/phac-nml/sistr_cmd#cgmlst-allele-search-results>) | FASTA, ONT, PE, SE |
+| sistr_cgmlst | File | CSV file of the cgMLST allelic profile from SISTR (see <https://github.com/phac-nml/sistr_cmd#cgmlst-allelic-profiles-output---cgmlst-profiles-cgmlst-profilescsv>) | FASTA, ONT, PE, SE |
 | sistr_predicted_serotype | String | Serotype predicted by SISTR | FASTA, ONT, PE, SE |
-| sistr_results | File | TSV results file produced by SISTR (see https://github.com/phac-nml/sistr_cmd#primary-results-output--o-sistr-results) | FASTA, ONT, PE, SE |
+| sistr_results | File | TSV results file produced by SISTR (see <https://github.com/phac-nml/sistr_cmd#primary-results-output--o-sistr-results>) | FASTA, ONT, PE, SE |
 | sistr_version | String | Version of SISTR used | FASTA, ONT, PE, SE |
 | sonneityping_final_genotype | String | Final genotype call from Mykrobe, via sonneityper | ONT, PE, SE |
-| sonneityping_final_report_tsv | File | Detailed TSV report from mykrobe, via sonneityper (see https://github.com/katholt/sonneityping#example-output) | ONT, PE, SE |
+| sonneityping_final_report_tsv | File | Detailed TSV report from mykrobe, via sonneityper (see <https://github.com/katholt/sonneityping#example-output>) | ONT, PE, SE |
 | sonneityping_genotype_confidence | String | Confidence in the final genotype call from sonneityper  | ONT, PE, SE |
 | sonneityping_genotype_name | String | Human readable alias for genotype, where available provided by sonneityper | ONT, PE, SE |
 | sonneityping_mykrobe_docker | String | sonneityping docker image used | ONT, PE, SE |
-| sonneityping_mykrobe_report_csv | File | CSV report from mykrobe via sonneityper (see https://github.com/Mykrobe-tools/mykrobe/wiki/AMR-prediction-output#csv-file) | ONT, PE, SE |
-| sonneityping_mykrobe_report_json | File | JSON report from mykrobe via sonneityper (see https://github.com/Mykrobe-tools/mykrobe/wiki/AMR-prediction-output#json-file) | ONT, PE, SE |
+| sonneityping_mykrobe_report_csv | File | CSV report from mykrobe via sonneityper (see <https://github.com/Mykrobe-tools/mykrobe/wiki/AMR-prediction-output#csv-file>) | ONT, PE, SE |
+| sonneityping_mykrobe_report_json | File | JSON report from mykrobe via sonneityper (see <https://github.com/Mykrobe-tools/mykrobe/wiki/AMR-prediction-output#json-file>) | ONT, PE, SE |
 | sonneityping_mykrobe_version | String | Version of sonneityping used | ONT, PE, SE |
 | sonneityping_species | String | Species call from Mykrobe via sonneityping | ONT, PE, SE |
 | spatyper_docker | String | spatyper docker image used  | FASTA, ONT, PE, SE |
@@ -2016,7 +2016,7 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
 | spatyper_version | String | spatyper version used | FASTA, ONT, PE, SE |
 | srst2_vibrio_biotype | String | Biotype classification according to tcpA gene sequence (Classical or ElTor) | PE, SE |
 | srst2_vibrio_ctxA | String | Presence or absence of the ctxA gene | PE, SE |
-| srst2_vibrio_detailed_tsv | File | Detailed https://github.com/katholt/srst2 output file | PE, SE |
+| srst2_vibrio_detailed_tsv | File | Detailed <https://github.com/katholt/srst2> output file | PE, SE |
 | srst2_vibrio_ompW | String | Presence or absence of the ompW gene | PE, SE |
 | srst2_vibrio_serogroup | String | Serotype classification as O1 (wbeN gene), O139 (wbfR gene) or not detected. | PE, SE |
 | srst2_vibrio_toxR | String | Presence or absence of the toxR gene | PE, SE |
@@ -2073,7 +2073,7 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
 | ts_mlst_novel_alleles | File | FASTA file containing nucleotide sequence of any alleles that are not in the MLST database used by TheiaProk | FASTA, ONT, PE, SE |
 | ts_mlst_predicted_st | String | ST predicted by MLST | FASTA, ONT, PE, SE |
 | ts_mlst_pubmlst_scheme | String | PubMLST scheme used byMLST | FASTA, ONT, PE, SE |
-| ts_mlst_results | File | TSV report with detailed MLST profile, including https://github.com/tseemann/mlst#missing-data | FASTA, ONT, PE, SE |
+| ts_mlst_results | File | TSV report with detailed MLST profile, including <https://github.com/tseemann/mlst#missing-data> | FASTA, ONT, PE, SE |
 | ts_mlst_version | String | Version of Torsten Seeman’s MLST tool used | FASTA, ONT, PE, SE |
 | virulencefinder_docker | String | VirulenceFinder docker image used | FASTA, ONT, PE, SE |
 | virulencefinder_hits | String | Virulence genes detected by VirulenceFinder | FASTA, ONT, PE, SE |
