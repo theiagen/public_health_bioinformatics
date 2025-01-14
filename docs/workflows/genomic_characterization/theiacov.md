@@ -133,7 +133,7 @@ All TheiaCoV Workflows (not TheiaCoV_FASTA_Batch)
 | consensus | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 16 | Optional | CL, ONT | sars-cov-2 |
 | consensus_qc | **cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2 |
 | consensus_qc | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2 |
-| consensus_qc | **docker** | String | The Docker container to use for the task | ngolin | Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2 |
+| consensus_qc | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1 | Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2 |
 | consensus_qc | **genome_length** | Int | Internal component, do not modify | | Do not modify, Optional | CL, SE | HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2 |
 | consensus_qc | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 2 | Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2 |
 | fastq_scan_clean_reads | **cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional | CL | sars-cov-2 |
