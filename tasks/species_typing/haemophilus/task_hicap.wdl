@@ -7,6 +7,13 @@ task hicap {
   input {
     File assembly
     String samplename
+
+    Boolean output_full_sequence = false
+    Float gene_coverage = 0.80
+    Float gene_identity = 0.70
+    Float broken_gene_identity = 0.80
+    Int broken_gene_length = 60
+
     String docker = "us-docker.pkg.dev/general-theiagen/biocontainers/hicap:1.0.3--py_0"
     Int cpu = 2
     Int memory = 8
@@ -36,8 +43,14 @@ task hicap {
 
     hicap \
       -q ~{assembly} \
-      -o output_dir
-
+      -o output_dir \
+      --gene_coverage ~{gene_coverage} \
+      --gene_identity ~{gene_identity} \
+      --broken_gene_length ~{broken_gene_length} \
+      --broken_gene_identity ~{broken_gene_identity} \
+      ~{true='--full_sequence' false='' output_full_sequence} \
+      --threads ~{cpu}
+      
     filename=$(basename ~{assembly})
 
     # if there are no hits for a cap locus, no file is produced
