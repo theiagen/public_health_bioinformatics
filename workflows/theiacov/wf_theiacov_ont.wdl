@@ -77,21 +77,21 @@ workflow theiacov_ont {
   if (organism_parameters.standardized_organism == "HIV") { # set HIV specific artic version
     String run_prefix = "artic_hiv"
   }
-  call screen.check_reads_se as raw_check_reads {
-    input:
-      read1 = read1,
-      min_reads = min_reads,
-      min_basepairs = min_basepairs,
-      min_genome_length = min_genome_length,
-      max_genome_length = max_genome_length,
-      min_coverage = min_coverage,
-      skip_screen = skip_screen,
-      skip_mash = skip_mash,
-      workflow_series = "theiacov",
-      organism = organism_parameters.standardized_organism,
-      expected_genome_length = organism_parameters.genome_length
+  if (! skip_screen) {
+    call screen.check_reads_se as raw_check_reads {
+      input:
+        read1 = read1,
+        min_reads = min_reads,
+        min_basepairs = min_basepairs,
+        min_genome_length = min_genome_length,
+        max_genome_length = max_genome_length,
+        min_coverage = min_coverage,
+        skip_mash = skip_mash,
+        workflow_series = "theiacov",
+        expected_genome_length = organism_parameters.genome_length
+    }
   }
-  if (raw_check_reads.read_screen == "PASS") {
+  if (select_first([raw_check_reads.read_screen, ""]) == "PASS" || skip_screen) {
     call read_qc_trim_workflow.read_QC_trim_ont as read_qc_trim {
       input:
         read1 = read1,
@@ -103,21 +103,21 @@ workflow theiacov_ont {
         target_organism = organism_parameters.kraken_target_organism,
         workflow_series = "theiacov"
     }
-    call screen.check_reads_se as clean_check_reads {
-      input:
-        read1 = read_qc_trim.read1_clean,
-        min_reads = min_reads,
-        min_basepairs = min_basepairs,
-        min_genome_length = min_genome_length,
-        max_genome_length = max_genome_length,
-        min_coverage = min_coverage,
-        skip_screen = skip_screen,
-        skip_mash = skip_mash,
-        workflow_series = "theiacov",
-        organism = organism_parameters.standardized_organism,
-        expected_genome_length = organism_parameters.genome_length
+    if (! skip_screen) {
+      call screen.check_reads_se as clean_check_reads {
+        input:
+          read1 = read_qc_trim.read1_clean,
+          min_reads = min_reads,
+          min_basepairs = min_basepairs,
+          min_genome_length = min_genome_length,
+          max_genome_length = max_genome_length,
+          min_coverage = min_coverage,
+          skip_mash = skip_mash,
+          workflow_series = "theiacov",
+            expected_genome_length = organism_parameters.genome_length
+      }
     }
-    if (clean_check_reads.read_screen == "PASS") {
+    if (select_first([clean_check_reads.read_screen, ""]) == "PASS" || skip_screen) {
       # assembly via artic_consensus for sars-cov-2 and HIV
       if (organism_parameters.standardized_organism != "flu") {
         call artic_consensus.consensus {
@@ -254,7 +254,7 @@ workflow theiacov_ont {
     # Read Metadata
     String seq_platform = seq_method
     # Sample Screening
-    String read_screen_raw = raw_check_reads.read_screen
+    String? read_screen_raw = raw_check_reads.read_screen
     String? read_screen_clean = clean_check_reads.read_screen
     # Read QC - dehosting outputs
     File? read1_dehosted = read_qc_trim.read1_dehosted
