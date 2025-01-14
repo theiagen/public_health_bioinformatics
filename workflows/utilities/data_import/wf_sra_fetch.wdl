@@ -26,7 +26,7 @@ workflow fetch_sra_to_fastq {
   }
   output {
     String sra_fetch_version = version_capture.phb_version
-    String sra_fetch_analysis_data = version_capture.date
+    String sra_fetch_analysis_date = version_capture.date
     File read1 = fastq_dl_sra.read1
     File? read2 = fastq_dl_sra.read2
     File fastq_dl_fastq_metadata = fastq_dl_sra.fastq_metadata
