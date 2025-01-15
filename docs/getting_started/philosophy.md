@@ -8,7 +8,7 @@ At Theiagen, **we believe our workflows should only fail because of technical is
 
 - **Your workflow will keep running, even with imperfect data**
 
-    _**Data quality shouldn't cause failures**_. Poor or incomplete data should never stop your workflow. Instead, the workflow will process it and (hopefully!) provide meaningful outputs.
+    _**Data quality shouldn't cause failures**_. Poor or incomplete data should never stop your workflow. Instead, the workflow will process it and (hopefully!) provide meaningful outputs, which can include blank results or messages indicating the value could not be generated.
 
 - **Your workflow will provide useful feedback, not errors**
 
