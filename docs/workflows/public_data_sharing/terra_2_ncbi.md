@@ -19,6 +19,7 @@
     - [Pathogen metadata formatter](../../assets/metadata_formatters/Terra_2_NCBI-PATHOGEN-metadata-2024-04-30.xlsx)
     - [Microbe metadata formatter](../../assets/metadata_formatters/Terra_2_NCBI-MICROBE-metadata-2022-07-11.xlsx)
     - [Virus metadata formatter](../../assets/metadata_formatters/Terra_2_NCBI-VIRUS-metadata-2022-09-09.xlsx)
+    - [SARS-CoV-2 Wastewater metadata formatter](../../assets/metadata_formatters/Terra_2_NCBI-SC2WW-metadata-2025-01-10.xlsx)
 
 The Terra_2_NCBI workflow is a programmatic data submission method to share metadata information with NCBI BioSample and paired-end Illumina reads with NCBI SRA directly from Terra without having to use the NCBI portal.
 
@@ -62,13 +63,14 @@ The Terra_2_NCBI workflow is a programmatic data submission method to share meta
 
 In order to create BioSamples, you need to choose the correct BioSample package and have the appropriate metadata included in your data table.
 
-Currently, Terra_2_NCBI only supports _Pathogen_, _Virus_, and _Microbe_ BioSample packages. **Most organisms should be submitted using the Pathogen package** unless you have been specifically directed otherwise (either through CDC communications or another reliable source). Definitions of packages supported by Terra_2_NCBI are listed below with more requirements provided via the links:
+Currently, Terra_2_NCBI only supports _Pathogen_, _Virus_, _Microbe_, and _SARS-CoV-2 Wastewater Surveillance_ BioSample packages. **Most organisms should be submitted using the Pathogen package** unless you have been specifically directed otherwise (either through CDC communications or another reliable source). Definitions of packages supported by Terra_2_NCBI are listed below with more requirements provided via the links:
 
 - [Pathogen.cl](https://www.ncbi.nlm.nih.gov/biosample/docs/packages/Pathogen.cl.1.0/) - any clinical or host-associated pathogen
 - [Pathogen.env](https://www.ncbi.nlm.nih.gov/biosample/docs/packages/Pathogen.env.1.0/) - environmental, food or other pathogen *(no metadata formatter available at this time)*
 - [Microbe](https://www.ncbi.nlm.nih.gov/biosample/docs/packages/Microbe.1.0/) - bacteria or other unicellular microbes that do not fit under the MIxS, Pathogen, or Virus packages.
 - [Virus](https://www.ncbi.nlm.nih.gov/biosample/docs/packages/Virus.1.0/) -  viruses **not** directly associated with disease
     - Viral pathogens should be submitted using the Pathogen: Clinical or host-associated pathogen package.
+- [SARS-CoV-2.wwsurv](https://www.ncbi.nlm.nih.gov/biosample/docs/packages/SARS-CoV-2.wwsurv.1.0/) - SARS-CoV-2 wastewater surveillance samples
 
 ### Metadata Formatters
 
@@ -79,6 +81,7 @@ Please note that the pathogen metadata formatter is for the _clinical_ pathogen 
 - [Terra_2_NCBI-PATHOGEN-metadata-2024-04-30.xlsx](../../assets/metadata_formatters/Terra_2_NCBI-PATHOGEN-metadata-2024-04-30.xlsx)
 - [Terra_2_NCBI-MICROBE-metadata-2022-07-11.xlsx](../../assets/metadata_formatters/Terra_2_NCBI-MICROBE-metadata-2022-07-11.xlsx)
 - [Terra_2_NCBI-VIRUS-metadata-2022-09-09.xlsx](../../assets/metadata_formatters/Terra_2_NCBI-VIRUS-metadata-2022-09-09.xlsx)
+- [Terra_2_NCBI-SC2WW-metadata-2025-01-10.xlsx](../../assets/metadata_formatters/Terra_2_NCBI-SC2WW-metadata-2025-01-10.xlsx)
 
 We are constantly working on improving these spreadsheets and they will be updated in due course.
 

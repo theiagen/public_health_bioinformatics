@@ -170,7 +170,7 @@ All input reads are processed through "core tasks" in each workflow. The core ta
 | theiaeuk_pe | **min_genome_size** | Int | Minimum genome size able to pass read screening | 100000 | Optional |
 | theiaeuk_pe | **min_proportion** | Int | Minimum proportion of total reads in each read file to pass read screening | 50 | Optional |
 | theiaeuk_pe | **min_reads** | Int | Minimum number of reads to pass read screening | 10000 | Optional |
-| theiaeuk_pe | **skip_screen** | Boolean | Option to skip the read screening prior to analysis | FALSE | Optional |
+| theiaeuk_pe | **skip_screen** | Boolean | Option to skip the read screening prior to analysis; if setting to true, please provide a value for the theiaeuk_pe `genome_length` optional input, OR set `call_rasusa` to false. Otherwise RASUSA will attempt to downsample to an expected genome size of 0 bp, and the workflow will fail. | FALSE | Optional |
 | theiaeuk_pe | **subsample_coverage** | Float | Read depth for RASUSA task to subsample reads to | 150 | Optional |
 | version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
 | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
@@ -212,7 +212,7 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
     
     | Variable  | Rationale |
     | --- | --- |
-    | `skip_screen` | Prevent the read screen from running |
+    | `skip_screen` | Prevent the read screen from running. If you set this value to true, please provide a value for the theiaeuk_pe `genome_length` optional input, OR set the theiaeuk_pe `call_rasusa` optional input to false. Otherwise RASUSA will attempt to downsample to an expected genome size of 0 bp, and the workflow will fail. |
     | `min_reads` | Minimum number of base pairs for 20x coverage of _Hansenula polymorpha_  divided by 300 (longest Illumina read length) |
     | `min_basepairs` | Greater than 10x coverage of _Hansenula polymorpha_  |
     | `min_genome_size` | Based on the _Hansenula polymorpha_  genome - the smallest fungal genome as of 2015-04-02 (8.97 Mbp) |
