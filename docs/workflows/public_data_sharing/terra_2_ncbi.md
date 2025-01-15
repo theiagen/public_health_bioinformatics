@@ -63,7 +63,7 @@ The Terra_2_NCBI workflow is a programmatic data submission method to share meta
 
 In order to create BioSamples, you need to choose the correct BioSample package and have the appropriate metadata included in your data table.
 
-Currently, Terra_2_NCBI only supports _Pathogen_, _Virus_, and _Microbe_ BioSample packages. **Most organisms should be submitted using the Pathogen package** unless you have been specifically directed otherwise (either through CDC communications or another reliable source). Definitions of packages supported by Terra_2_NCBI are listed below with more requirements provided via the links:
+Currently, Terra_2_NCBI only supports _Pathogen_, _Virus_, _Microbe_, and _SARS-CoV-2 Wastewater Surveillance_ BioSample packages. **Most organisms should be submitted using the Pathogen package** unless you have been specifically directed otherwise (either through CDC communications or another reliable source). Definitions of packages supported by Terra_2_NCBI are listed below with more requirements provided via the links:
 
 - [Pathogen.cl](https://www.ncbi.nlm.nih.gov/biosample/docs/packages/Pathogen.cl.1.0/) - any clinical or host-associated pathogen
 - [Pathogen.env](https://www.ncbi.nlm.nih.gov/biosample/docs/packages/Pathogen.env.1.0/) - environmental, food or other pathogen *(no metadata formatter available at this time)*
