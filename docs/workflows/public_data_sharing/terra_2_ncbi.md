@@ -81,6 +81,7 @@ Please note that the pathogen metadata formatter is for the _clinical_ pathogen 
 - [Terra_2_NCBI-PATHOGEN-metadata-2024-04-30.xlsx](../../assets/metadata_formatters/Terra_2_NCBI-PATHOGEN-metadata-2024-04-30.xlsx)
 - [Terra_2_NCBI-MICROBE-metadata-2022-07-11.xlsx](../../assets/metadata_formatters/Terra_2_NCBI-MICROBE-metadata-2022-07-11.xlsx)
 - [Terra_2_NCBI-VIRUS-metadata-2022-09-09.xlsx](../../assets/metadata_formatters/Terra_2_NCBI-VIRUS-metadata-2022-09-09.xlsx)
+- [Terra_2_NCBI-SC2WW-metadata-2025-01-10.xlsx](../../assets/metadata_formatters/Terra_2_NCBI-SC2WW-metadata-2025-01-10.xlsx)
 
 We are constantly working on improving these spreadsheets and they will be updated in due course.
 
