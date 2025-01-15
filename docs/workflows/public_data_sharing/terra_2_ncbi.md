@@ -19,6 +19,7 @@
     - [Pathogen metadata formatter](../../assets/metadata_formatters/Terra_2_NCBI-PATHOGEN-metadata-2024-04-30.xlsx)
     - [Microbe metadata formatter](../../assets/metadata_formatters/Terra_2_NCBI-MICROBE-metadata-2022-07-11.xlsx)
     - [Virus metadata formatter](../../assets/metadata_formatters/Terra_2_NCBI-VIRUS-metadata-2022-09-09.xlsx)
+    - [SARS-CoV-2 Wastewater metadata formatter](../../assets/metadata_formatters/Terra_2_NCBI-SC2WW-metadata-2025-01-10.xlsx)
 
 The Terra_2_NCBI workflow is a programmatic data submission method to share metadata information with NCBI BioSample and paired-end Illumina reads with NCBI SRA directly from Terra without having to use the NCBI portal.
 
