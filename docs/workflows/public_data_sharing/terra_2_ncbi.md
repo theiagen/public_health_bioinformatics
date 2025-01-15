@@ -70,7 +70,7 @@ Currently, Terra_2_NCBI only supports _Pathogen_, _Virus_, and _Microbe_ BioSamp
 - [Microbe](https://www.ncbi.nlm.nih.gov/biosample/docs/packages/Microbe.1.0/) - bacteria or other unicellular microbes that do not fit under the MIxS, Pathogen, or Virus packages.
 - [Virus](https://www.ncbi.nlm.nih.gov/biosample/docs/packages/Virus.1.0/) -  viruses **not** directly associated with disease
     - Viral pathogens should be submitted using the Pathogen: Clinical or host-associated pathogen package.
-- [SARS-CoV-2.wwsurve](https://www.ncbi.nlm.nih.gov/biosample/docs/packages/SARS-CoV-2.wwsurv.1.0/) - SARS-CoV-2 wastewater surveillance samples
+- [SARS-CoV-2.wwsurv](https://www.ncbi.nlm.nih.gov/biosample/docs/packages/SARS-CoV-2.wwsurv.1.0/) - SARS-CoV-2 wastewater surveillance samples
 
 ### Metadata Formatters
 
