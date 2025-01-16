@@ -74,13 +74,13 @@ task variant_call {
     grep "TRUE" unique_variants.tsv > passed_variants.tsv || touch passed_variants.tsv
 
     # calculate total number of variants
-    variants_num=$(wc -l < passed_variants.tsv || echo 0)
+    variants_num=$(wc -l < passed_variants.tsv)
     echo $variants_num | tee VARIANT_NUM
 
     # calculate proportion of variants with allele frequencies between 0.6 and 0.9
     # find number of variants at intermediate frequencies 
     awk -F "\t" '{ if(($11 >= 0.6) && ($11 <= 0.9)) {print }}' passed_variants.tsv > intermediate_variants.tsv
-    intermediates_num=$(wc -l < intermediate_variants.tsv || echo 0)
+    intermediates_num=$(wc -l < intermediate_variants.tsv)
 
     # if number of total variants is not zero, divide number of intermediate variants by total number of variants
     if [[ "$variants_num" -eq "0" ]]; then
