@@ -13,7 +13,7 @@ task snp_sites {
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/snp-sites:2.5.1"
     Int disk_size = 100
     Int cpu = 1
-    Int memory = 4
+    Int memory = 2
   }
   command <<< 
     snp-sites -V > VERSION
