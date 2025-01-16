@@ -77,10 +77,10 @@ workflow flye_denovo {
     Int racon_disk_size = 100
 
     # Contig filter-specific inputs
-    Int filtercontigs_min_length = 1000
-    Int filtercontigs_cpu = 4
-    Int filtercontigs_memory = 16
-    Int filtercontigs_disk_size = 100
+    Int filter_contigs_min_length = 1000
+    Int filter_contigs_cpu = 4
+    Int filter_contigs_memory = 16
+    Int filter_contigs_disk_size = 100
 
     # Dnaapler inputs
     String dnaapler_mode = "all"
@@ -90,7 +90,7 @@ workflow flye_denovo {
   }
   # Optional Porechop trimming before Flye
   if (!skip_trim_reads) {
-    call task_porechop.porechop as porechop {
+    call task_porechop.porechop {
       input:
         read1 = read1,
         samplename = samplename,
@@ -101,7 +101,7 @@ workflow flye_denovo {
     }
   }
   # Call Flye using either trimmed reads or raw reads
-  call task_flye.flye as flye {
+  call task_flye.flye {
     input:
       read1 = select_first([porechop.trimmed_reads, read1]), # Use trimmed reads if available
       samplename = samplename,
@@ -137,7 +137,7 @@ workflow flye_denovo {
        read2 = select_first([illumina_read2]),
        samplename = samplename
     }
-    call task_polypolish.polypolish as polypolish {
+    call task_polypolish.polypolish {
       input:
         assembly_fasta = flye.assembly_fasta,
         read1_sam = bwa.read1_sam,
@@ -160,7 +160,7 @@ workflow flye_denovo {
   # ONT-only Polishing Path: Medaka or Racon
   if (!skip_polishing) {
     if (polisher == "medaka") {
-      call task_medaka.medaka as medaka {
+      call task_medaka.medaka {
         input:
           unpolished_fasta = flye.assembly_fasta,
           samplename = samplename,
@@ -173,7 +173,7 @@ workflow flye_denovo {
       }
     }
     if (polisher == "racon") {
-      call task_racon.racon as racon {
+      call task_racon.racon {
         input:
           unpolished_fasta = flye.assembly_fasta,
           read1 = select_first([porechop.trimmed_reads, read1]),
@@ -186,17 +186,17 @@ workflow flye_denovo {
     }
   }
   # Contig Filtering and Final Assembly orientation
-  call task_filter_contigs.filter_contigs as filter_contigs {
+  call task_filter_contigs.filter_contigs {
     input:
       assembly_fasta = select_first([polypolish.polished_assembly, medaka.medaka_fasta, racon.polished_fasta, flye.assembly_fasta]), # Use Flye assembly if no polishing
-      min_length = filtercontigs_min_length,
-      cpu = filtercontigs_cpu,
-      memory = filtercontigs_memory,
-      disk_size = filtercontigs_disk_size
+      min_length = filter_contigs_min_length,
+      cpu = filter_contigs_cpu,
+      memory = filter_contigs_memory,
+      disk_size = filter_contigs_disk_size
   }
-  call task_dnaapler.dnaapler as dnaapler {
+  call task_dnaapler.dnaapler {
     input:
-      input_fasta = contig_filter.filtered_fasta,
+      input_fasta = filter_contigs.filtered_fasta,   
       samplename = samplename,
       dnaapler_mode = dnaapler_mode,
       cpu = dnaapler_cpu,
