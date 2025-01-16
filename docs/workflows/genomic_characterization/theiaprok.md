@@ -1010,7 +1010,7 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
             1. Download the assembly file from Terra for your sample with the novel allele or ST
             2. Go to the [PubMLST webpage for the organism of interest](https://pubmlst.org/organisms) 
             3. Navigate to the organism "Typing" page 
-            4. Under "Query a sequence" choose "Single sequence" (e.g., [this](https://pubmlst.org/bigsdb?db=pubmlst_hinfluenzae_seqdef&page=sequenceQuery) is the page for *H. influenzae*), select the MLST scheme under "Please select locus/scheme", upload the assembly fasta file, and click submit.
+            4. Under "Query a sequence" choose "Single sequence" (e.g., [this](https://pubmlst.org/bigsdb?db=pubmlst_hinfluenzae_seqdef&page=sequenceQuery) is the page for _H. influenzae_), select the MLST scheme under "Please select locus/scheme", upload the assembly fasta file, and click submit.
             5. Results will be returned lower on the page.
         2. If the allele or ST has not been typed previously on the PubMLST website (step 1), new allele or ST numbers can be assigned using instructions [here](https://pubmlst.org/submit-data).
         
@@ -1166,7 +1166,7 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
         
     ??? task "`AcinetobacterPlasmidTyping`: Acinetobacter plasmid detection"
         
-        *Acinetobacter* plasmids are not included in the PlasmidFinder (see the relevant toggle in [this block]([https://theiagen.github.io/public_health_bioinformatics/latest/workflows/genomic_characterization/theiaprok/#post-assembly-tasks-performed-for-all-taxa])) database. Instead, the [AcinetobacterPlasmidTyping](https://github.com/MehradHamidian/AcinetobacterPlasmidTyping) database contains variants of the plasmid *rep* gene for *A. baumannii* plasmid identification. When matched with >/= 95 % identity, this represents a typing scheme for *Acinetobacter baumannii* plasmids. In TheiaProk, we use the tool [abricate](https://github.com/tseemann/abricate) to query our assemblies against this database.
+        *Acinetobacter* plasmids are not included in the PlasmidFinder (see the relevant toggle in [this block](https://theiagen.github.io/public_health_bioinformatics/latest/workflows/genomic_characterization/theiaprok/#post-assembly-tasks-performed-for-all-taxa)) database. Instead, the [AcinetobacterPlasmidTyping](https://github.com/MehradHamidian/AcinetobacterPlasmidTyping) database contains variants of the plasmid *rep* gene for *A. baumannii* plasmid identification. When matched with >/= 95 % identity, this represents a typing scheme for *Acinetobacter baumannii* plasmids. In TheiaProk, we use the tool [abricate](https://github.com/tseemann/abricate) to query our assemblies against this database.
             
         The bioinformatics software for querying sample assemblies against the AcinetobacterPlasmidTyping database is [Abricate](https://github.com/tseemann/abricate). The WDL task simply runs abricate, and the Acinetobacter Plasmid database and default setting of 95% minimum identity are set in the [merlin magic sub-workflow](https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_merlin_magic.wdl).
 
