@@ -49,6 +49,8 @@ Given the lack of usefulness of SRA Lite formatted FASTQ files, we try to avoid 
 
 | **Variable** | **Type** | **Description** | **Production Status** |
 |---|---|---|---|
+| sra_fetch_version | String | The version of the repository SRA_Fetch is run in | Always produced |
+| sra_fetch_analysis_date | String | Date of SRA_Fetch download | Always produced |
 | read1 | File | File containing the forward reads | Always produced |
 | read2 | File | File containing the reverse reads (not availablae for single-end or ONT data) | Produced only for paired-end data |
 | fastq_dl_date | String | The date of download | Always produced |
