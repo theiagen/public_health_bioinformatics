@@ -865,91 +865,88 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
     `Flye_denovo` is a sub-workflow that performs _de novo_ assembly using Flye for ONT data and supports additional polishing and visualization steps. The detailed steps and tasks are as follows:
 
     ??? toggle "`Porechop`: Optional Read Trimming"
-        - Trims input reads if trimming is enabled using `task_porechop.wdl`.
+        Trims input reads if trimming is enabled using `task_porechop.wdl`.
 
-        !!! techdetails "Technical Details: Porechop"
-            - **Purpose**: Ensures high-quality reads by removing adapters and other unwanted sequences.
-            - **WDL Task**: [task_porechop.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_porechop.wdl)
-            - **Software Source Code**: [Porechop on GitHub](https://github.com/rrwick/Porechop)
-            - **Software Documentation**: [Porechop Documentation](https://github.com/rrwick/Porechop#porechop)
+        | **Technical Details: Porechop** | |
+        | --- | --- |
+        | **WDL Task** | [task_porechop.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_porechop.wdl) |
+        | **Software Source Code** | [Porechop on GitHub](https://github.com/rrwick/Porechop) |
+        | **Software Documentation** | [https://github.com/rrwick/Porechop#porechop](https://github.com/rrwick/Porechop#porechop) |
 
     ??? toggle "`Flye`: De novo_ Assembly"
-        - Assembles long reads into contigs using `task_flye.wdl`.
+        Assembles long reads into contigs using `task_flye.wdl`.
 
-        !!! techdetails "Technical Details: Flye"
-            - **Purpose**: Assembles raw reads into contiguous sequences (contigs) for further analysis.
-            - **WDL Task**: [task_flye.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_flye.wdl)
-            - **Software Source Code**: [Flye on GitHub](https://github.com/fenderglass/Flye)
-            - **Software Documentation**: [Flye Documentation](https://github.com/fenderglass/Flye/blob/flye/docs/USAGE.md)
+        | **Technical Details: Flye** | |
+        | --- | --- |
+        | **WDL Task** | [task_flye.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_flye.wdl) |
+        | **Software Source Code** | [Flye on GitHub](https://github.com/fenderglass/Flye) |
+        | **Software Documentation** | [https://github.com/fenderglass/Flye/blob/flye/docs/USAGE.md](https://github.com/fenderglass/Flye/blob/flye/docs/USAGE.md) |
 
     ??? toggle "`Bandage`: Graph Visualization"
-        - Visualizes the assembly graph output from `Flye` using `task_bandageplot.wdl`.
+        Visualizes the assembly graph output from `Flye` using `task_bandageplot.wdl`.
 
         !!! techdetails "Technical Details: Bandage"
-            - **Purpose**: Generates a graphical representation of the assembly to aid visualization and quality checks.
-            - **WDL Task**: [task_bandageplot.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_bandageplot.wdl)
-            - **Software Source Code**: [Bandage on GitHub](https://github.com/rrwick/Bandage)
-            - **Software Documentation**: [Bandage Documentation](https://github.com/rrwick/Bandage#bandage)
-
-    ??? toggle "`BWA`: Index and align data for Hybrid Assembly Alignment ==_for ONT and Illumina data_=="
-        - Indexes and creates SAM files for input to Polypolish using `task_bwaall.wdl`.
-
-        !!! techdetails "Technical Details: BWA"
-            - **Purpose**: Aligns Illumina reads to the draft assembly and produces SAM files for hybrid polishing.
-            - **WDL Task**: [task_bwaall.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/alignment/task_bwa.wdl)
-            - **Software Source Code**: [BWA on GitHub](https://github.com/lh3/bwa)
-            - **Software Documentation**: [BWA Documentation](http://bio-bwa.sourceforge.net/)
+            |  | Links |
+            | --- | --- |
+            | WDL Task | [task_bandageplot.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_bandageplot.wdl) |
+            | Software Source Code | [Bandage on GitHub](https://github.com/rrwick/Bandage) |
+            | Software Documentation | [Bandage Documentation](https://github.com/rrwick/Bandage#bandage) |
 
     ??? toggle "`Polypolish`: Hybrid Assembly Polishing ==_for ONT and Illumina data_=="
-        - Polishes assemblies with hybrid ONT and Illumina data using `task_polypolish.wdl`.
-
+        Polishes assemblies with hybrid ONT and Illumina data using `task_polypolish.wdl`.
+    
         !!! techdetails "Technical Details: Polypolish"
-            - **Purpose**: Enhances hybrid assemblies by leveraging short-read data for fine-tuning.
-            - **WDL Task**: [task_polypolish.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/polishing/task_polypolish.wdl)
-            - **Software Source Code**: [Polypolish on GitHub](https://github.com/rrwick/Polypolish)
-            - **Software Documentation**: [Polypolish Documentation](https://github.com/rrwick/Polypolish#polypolish)
+            
+            |  | Links |
+            | --- | --- |
+            | Task | [task_polypolish.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/polishing/task_polypolish.wdl) |
+            | Software Source Code | [Polypolish on GitHub](https://github.com/rrwick/Polypolish) |
+            | Software Documentation | [Polypolish Documentation](https://github.com/rrwick/Polypolish#polypolish) |
+            | Original Publication(s) | [Wick RR, Holt KE. Polypolish: short-read polishing of long-read bacterial genome assemblies. PLOS Computational Biology. 2022.](https://doi.org/10.1371/journal.pcbi.1009802) |
 
     ??? toggle "`Medaka`: Polishing of Flye assembly"
-        - Polishes the Flye assembly using `task_medaka.wdl`.
+        Polishes the Flye assembly using `task_medaka.wdl`.
 
         - Automatic Model Selection: Automatically determines the most appropriate Medaka model based on the input data, ensuring optimal polishing results without manual intervention. 
         - User-Specified Model Override: Allows users to specify a particular Medaka model if automatic selection does not yield the desired outcome or for specialized use cases.
         - Default Model: If both automatic model selection fails and no user-specified model is provided, Medaka defaults to the predefined fallback model `r1041_e82_400bps_sup_v5.0.0`. 
 
-        !! note "Medaka Model Resolution Process" Medaka's automatic model selection leverages the medaka tools `resolve_model` command to analyze the input reads and identify the most suitable model for polishing. This process examines the error profiles and characteristics of the sequencing data to ensure that the selected model aligns well with the data's specific needs. If the automatic selection fails to identify a suitable model, Medaka gracefully falls back to the default model to maintain workflow continuity. Users should verify the chosen model and consider specifying a model override if necessary.
+        !!! note "Medaka Model Resolution Process" 
+        
+            Medaka's automatic model selection leverages the medaka tools `resolve_model` command to analyze the input reads and identify the most suitable model for polishing. This process examines the error profiles and characteristics of the sequencing data to ensure that the selected model aligns well with the data's specific needs. If the automatic selection fails to identify a suitable model, Medaka gracefully falls back to the default model to maintain workflow continuity. Users should verify the chosen model and consider specifying a model override if necessary.
 
         !!! techdetails "Technical Details: Medaka"
-            - **Purpose**: Refines assembly accuracy for ONT data by incorporating error corrections.
-            - **WDL Task**: [task_medaka.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/polishing/task_medaka.wdl)
-            - **Software Source Code**: [Medaka on GitHub](https://github.com/nanoporetech/medaka)
-            - **Software Documentation**: [Medaka Documentation](https://github.com/nanoporetech/medaka#medaka)
+            
+            |  | Links |
+            | --- | --- |
+            | WDL Task | [task_medaka.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/polishing/task_medaka.wdl) |
+            | Software Source Code | [Medaka on GitHub](https://github.com/nanoporetech/medaka) |
+            | Software Documentation | [https://github.com/nanoporetech/medaka#medaka](https://github.com/nanoporetech/medaka#medaka) |
 
     ??? toggle "`Racon`: Polishing"
-        - Offers an alternative polishing approach using `task_racon.wdl`.
+        Offers an alternative polishing approach using `task_racon.wdl`.
 
         !!! techdetails "Technical Details: Racon"
-            - **Purpose**: Improves assembly accuracy for long-read data using sequence alignments.
-            - **WDL Task**: [task_racon.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/polishing/task_racon.wdl)
-            - **Software Source Code**: [Racon on GitHub](https://github.com/lbcb-sci/racon)
-            - **Software Documentation**: [Racon Documentation](https://github.com/lbcb-sci/racon#racon)
+        
+        |  | Links |
+        | --- | --- |
+        | WDL Task | [task_racon.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/polishing/task_racon.wdl) |
+        | Software Source Code | [Racon on GitHub](https://github.com/lbcb-sci/racon) |
+        | Software Documentation | [https://github.com/lbcb-sci/racon#racon](https://github.com/lbcb-sci/racon#racon) |
 
-    ??? toggle "`Filter Contigs`: filter contigs below a threshold length and remove homopolymer contigs"
-        - Filters contigs based on user-defined criteria using `task_filtercontigs.wdl`.
+    ??? toggle "`Filter Contigs`: Filter contigs below a threshold length and remove homopolymer contigs"
+        Filters contigs based on user-defined criteria using `task_filtercontigs.wdl` and removes homopolymer contigs.
 
-        !!! techdetails "Technical Details: Filter Contigs"
-            - **Purpose**: Removes low-quality or short contigs to improve downstream analyses.
-            - **WDL Task**: [task_filtercontigs.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_filtercontigs.wdl)
-            - **Software Source Code**: [FilterContigs on GitHub](https://github.com/your-organization/filtercontigs) (replace with actual link)
-            - **Software Documentation**: [FilterContigs Documentation](https://github.com/your-organization/filtercontigs#readme) (replace with actual link)
+    ??? toggle "`Dnaapler`: Final Assembly Orientation"
+        Reorients contigs to start at a standard reference point using `task_dnaapler.wdl`.
 
-    ??? toggle "`DnaApler`: Final Assembly Orientation"
-        - Reorients contigs to start at a standard reference point using `task_dnaapler.wdl`.
-
-        !!! techdetails "Technical Details: DnaApler"
-            - **Purpose**: Ensures consistent starting positions for assemblies based on reference standards.
-            - **WDL Task**: [task_dnaapler.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_dnaapler.wdl)
-            - **Software Source Code**: [DnaApler on GitHub](https://github.com/your-organization/dnaapler) (replace with actual link)
-            - **Software Documentation**: [DnaApler Documentation](https://github.com/your-organization/dnaapler#readme) (replace with actual link)
+        !!! techdetails "Technical Details: Dnaapler"
+            
+            |  | Links |
+            | --- | --- |
+            | WDL Task | [task_dnaapler.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_dnaapler.wdl) |
+            | Software Source Code | [Dnaapler on GitHub](https://github.com/gbouras13/dnaapler) |
+            | Software Documentation | [Dnaapler Documentation](https://github.com/gbouras13/dnaapler?tab=readme-ov-file#dnaapler) |
 
 #### Post-Assembly Tasks (performed for all taxa)
 
@@ -1856,15 +1853,15 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
 | bakta_summary | File | Bakta summary output TXT file | FASTA, ONT, PE, SE |
 | bakta_tsv | File | Annotations as simple human readable TSV | FASTA, ONT, PE, SE |
 | bakta_version | String | Bakta version used | FASTA, ONT, PE, SE |
-| bandage_plot | File | Image file (PNG) visualizing the Flye assembly graph generated by Bandage | FASTA, ONT, PE, SE |
-| bandage_version | String | Version of Bandage used | FASTA, ONT, PE, SE |
+| bandage_plot | File | Image file (PNG) visualizing the Flye assembly graph generated by Bandage | ONT |
+| bandage_version | String | Version of Bandage used | ONT |
 | bbduk_docker | String | BBDuk docker image used  | PE, SE |
 | busco_database | String | BUSCO database used | FASTA, ONT, PE, SE |
 | busco_docker | String | BUSCO docker image used | FASTA, ONT, PE, SE |
 | busco_report | File | A plain text summary of the results in BUSCO notation | FASTA, ONT, PE, SE |
 | busco_results | String | BUSCO results (see https://www.notion.so/TheiaProk-Workflow-Series-68c34aca2a0240ef94fef0acd33651b9?pvs=21) | ONT |
 | busco_version | String | BUSCO software version used | FASTA, ONT, PE, SE |
-| bwa_version | String | Version of BWA software used | FASTA, ONT, PE, SE |
+| bwa_version | String | Version of BWA software used | FASTA, ONT, PE, S |
 | cg_pipeline_docker | String | Docker file used for running CG-Pipeline on cleaned reads | PE, SE |
 | cg_pipeline_report_clean | File | TSV file of read metrics from clean reads, including average read length, number of reads, and estimated genome coverage | PE, SE |
 | cg_pipeline_report_raw | File | TSV file of read metrics from raw reads, including average read length, number of reads, and estimated genome coverage | PE, SE |
@@ -1875,9 +1872,9 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
 | combined_mean_readlength_clean | Float | Mean read length for the combined clean reads | PE |
 | combined_mean_readlength_raw | Float | Mean read length for the combined raw reads | PE |
 | contigs_fastg | File | Assembly graph if megahit used for genome assembly | PE |
-| contigs_gfa | File | Assembly graph if spades or Flye is used for genome assembly | ONT, PE, SE |
-| contigs_lastgraph | File | Assemb7ly graph if velvet used for genome assembly | PE |
-| dnaapler_version | String | Version of dnaAplER used | FASTA, ONT, PE, SE |
+| contigs_gfa | File | Assembly graph output generated by SPAdes (Illumina: PE, SE) or Flye (ONT), used to visualize and evaluate genome assembly results. | ONT, PE, SE |
+| contigs_lastgraph | File | Assembly graph if velvet used for genome assembly | PE |
+| dnaapler_version | String | Version of dnaapler used | ONT |
 | ectyper_predicted_serotype | String | Serotype predicted by ECTyper | FASTA, ONT, PE, SE |
 | ectyper_results | File | TSV file of evidence for ECTyper predicted serotype (see https://github.com/phac-nml/ecoli_serotyping#report-format) | FASTA, ONT, PE, SE |
 | ectyper_version | String | Version of ECTyper used | FASTA, ONT, PE, SE |
@@ -2045,7 +2042,7 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
 | plasmidfinder_plasmids | String | Names of plasmids identified by PlasmidFinder | FASTA, ONT, PE, SE |
 | plasmidfinder_results | File | Output file from PlasmidFinder in TSV format | FASTA, ONT, PE, SE |
 | plasmidfinder_seqs | File | Hit_in_genome_seq.fsa file produced by PlasmidFinder | FASTA, ONT, PE, SE |
-| polypolish_version | String | Version of Polypolish used | FASTA, ONT, PE, SE |
+| polypolish_version | String | Version of Polypolish used | ONT|
 | poppunk_docker | String | PopPUNK docker image with GPSC database used | FASTA, ONT, PE, SE |
 | poppunk_gps_cluster | String | GPS cluster predicted by PopPUNK  | FASTA, ONT, PE, SE |
 | poppunk_GPS_db_version | String | Version of GPSC database used | FASTA, ONT, PE, SE |

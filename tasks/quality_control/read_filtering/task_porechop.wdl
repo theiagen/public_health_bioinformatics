@@ -2,12 +2,12 @@ version 1.0
 
 task porechop {
   input {
-    File read1               # Raw read input file
+    File read1 # Raw read input file
     String samplename
-    String? trimopts             # Optional trimming options
+    String? trimopts # Optional trimming options
     Int cpu = 4
-    Int memory = 8
-    Int disk_size = 50
+    Int memory = 16
+    Int disk_size = 100
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/porechop:0.2.4"
   }
   command <<< 
@@ -36,7 +36,7 @@ task porechop {
     docker: "~{docker}"
     cpu: cpu
     memory: "~{memory} GB"
-    disks: "local-disk " + disk_size + " HDD"
+    disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
     maxRetries: 3
     preemptible: 0

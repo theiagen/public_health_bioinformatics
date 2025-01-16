@@ -52,8 +52,8 @@ task racon {
   }
   runtime {
     docker: "~{docker}"
-    memory: memory + " GB"
     cpu: cpu
+    memory: "~{memory} GB"
     disks: "local-disk " + disk_size + " SSD"
     maxRetries: 1
     preemptible: 0

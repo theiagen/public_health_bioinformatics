@@ -4,7 +4,7 @@ task bandage_plot {
     input {
       File assembly_graph_gfa
       String samplename
-      Int cpu = 2
+      Int cpu = 1
       Int memory = 4
       Int disk_size = 10
       String docker = "us-docker.pkg.dev/general-theiagen/staphb/bandage:0.8.1"

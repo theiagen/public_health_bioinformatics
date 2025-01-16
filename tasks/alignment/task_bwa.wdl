@@ -12,6 +12,7 @@ task bwa {
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/ivar:1.3.1-titan"
   }
   command <<<
+    set -euo pipefail
     # date and version control
     date | tee DATE
     echo "BWA $(bwa 2>&1 | grep Version )" | tee BWA_VERSION
@@ -168,6 +169,8 @@ task bwa_all {
     Int memory = 16
   }
   command <<<
+    set -euo pipefail
+
     bwa &> BWA_HELP
     grep "Version" BWA_HELP | cut -d" " -f2 > BWA_VERSION
 

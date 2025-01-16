@@ -67,8 +67,8 @@ task polypolish {
   }
   runtime {
     docker: "~{docker}"
+    cpu: cpu
     memory: "~{memory} GB"
-    cpu: "~{cpu}"
     disks:  "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
     maxRetries: 3
