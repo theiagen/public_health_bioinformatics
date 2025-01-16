@@ -277,7 +277,7 @@ workflow theiaprok_ont {
               tiptoft_plasmid_replicon_genes = read_qc_trim.tiptoft_plasmid_replicon_genes,
               tiptoft_version = read_qc_trim.tiptoft_version,
               assembly_fasta = flye_denovo.assembly_fasta,
-              bandage_plot = flye_denovo.bandage.plot,
+              bandage_plot = flye_denovo.bandage_plot,
               contigs_gfa = flye_denovo.contigs_gfa,
               filtered_contigs_metrics = flye_denovo.filtered_contigs_metrics,
               flye_assembly_info = flye_denovo.flye_assembly_info,
