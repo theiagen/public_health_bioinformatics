@@ -939,6 +939,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#reference-alignment-contig-filtering" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reference Alignment &amp; Contig Filtering
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#assembly-qc" class="md-nav__link">
     <span class="md-ellipsis">
       Assembly QC
@@ -951,6 +960,15 @@
   <a href="#binning" class="md-nav__link">
     <span class="md-ellipsis">
       Binning
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#additional-outputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Additional Outputs
     </span>
   </a>
   
@@ -2327,6 +2345,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#reference-alignment-contig-filtering" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reference Alignment &amp; Contig Filtering
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#assembly-qc" class="md-nav__link">
     <span class="md-ellipsis">
       Assembly QC
@@ -2339,6 +2366,15 @@
   <a href="#binning" class="md-nav__link">
     <span class="md-ellipsis">
       Binning
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#additional-outputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Additional Outputs
     </span>
   </a>
   
@@ -4238,6 +4274,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#reference-alignment-contig-filtering" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reference Alignment &amp; Contig Filtering
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#assembly-qc" class="md-nav__link">
     <span class="md-ellipsis">
       Assembly QC
@@ -4250,6 +4295,15 @@
   <a href="#binning" class="md-nav__link">
     <span class="md-ellipsis">
       Binning
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#additional-outputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Additional Outputs
     </span>
   </a>
   
@@ -4612,6 +4666,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#reference-alignment-contig-filtering" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reference Alignment &amp; Contig Filtering
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#assembly-qc" class="md-nav__link">
     <span class="md-ellipsis">
       Assembly QC
@@ -4624,6 +4687,15 @@
   <a href="#binning" class="md-nav__link">
     <span class="md-ellipsis">
       Binning
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#additional-outputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Additional Outputs
     </span>
   </a>
   
@@ -5383,7 +5455,7 @@
 <td>semibin</td>
 <td><strong>environment</strong></td>
 <td>String</td>
-<td>Environment model to use. Options: • human_gut<br>• dog_gut<br>• ocean<br>• soil<br>• cat_gut<br>• human_oral<br>• mouse_gut<br>• pig_gut<br>• built_environment<br>• wastewater<br>• chicken_caecum<br>- global</td>
+<td>Environment model to use. Options:<br>• human_gut<br>• dog_gut<br>• ocean<br>• soil<br>• cat_gut<br>• human_oral<br>• mouse_gut<br>• pig_gut<br>• built_environment<br>• wastewater<br>• chicken_caecum<br>• global</td>
 <td>global</td>
 <td>Optional</td>
 </tr>
@@ -5747,12 +5819,10 @@
 </div>
 </details>
 <details class="task">
-<summary><code>minimap2</code>: Assembly Alignment and Contig Filtering</summary>
-<p>If a reference genome is provided through the <strong><code>reference</code></strong> optional input, the assembly produced with <code>metaspades</code> will be mapped to the reference genome with <code>minimap2</code>. The contigs which align to the reference are retrieved and returned in the <strong><code>assembly_fasta</code></strong> output.</p>
+<summary><code>minimap2</code>: Assembly Correction</summary>
 <p><code>minimap2</code> is a popular aligner that is used for correcting the assembly produced by metaSPAdes. This is done by aligning the reads back to the generated assembly or a reference genome.</p>
-<p>In minimap2, "modes" are a group of preset options. Two different modes are used in this task depending on whether a reference genome is provided.</p>
-<p>If a reference genome is <em>not</em> provided, the only mode used in this task is <code>sr</code> which is intended for "short single-end reads without splicing". The <code>sr</code> mode indicates the following parameters should be used: <code>-k21 -w11 --sr --frag=yes -A2 -B8 -O12,32 -E2,1 -b0 -r100 -p.5 -N20 -f1000,5000 -n2 -m20 -s40 -g100 -2K50m --heap-sort=yes --secondary=no</code>. The output file is in SAM format.</p>
-<p>If a reference genome is provided, then after the draft assembly polishing with <code>pilon</code>, this task runs again with the mode set to <code>asm20</code> which is intended for "long assembly to reference mapping". The <code>asm20</code> mode indicates the following parameters should be used: <code>-k19 -w10 -U50,500 --rmq -r100k -g10k -A1 -B4 -O6,26 -E2,1 -s200 -z200 -N50</code>. The output file is in PAF format.</p>
+<p>In minimap2, "modes" are a group of preset options.</p>
+<p>The mode used in this task is <code>sr</code> which is intended for "short single-end reads without splicing". The <code>sr</code> mode indicates the following parameters should be used: <code>-k21 -w11 --sr --frag=yes -A2 -B8 -O12,32 -E2,1 -b0 -r100 -p.5 -N20 -f1000,5000 -n2 -m20 -s40 -g100 -2K50m --heap-sort=yes --secondary=no</code>. The output file is in SAM format.</p>
 <p>For more information, please see the <a href="https://lh3.github.io/minimap2/minimap2.html">minimap2 manpage</a></p>
 <div class="admonition techdetails">
 <p class="admonition-title">minimap2 Technical Details</p>
@@ -5850,7 +5920,87 @@
 </table>
 </div>
 </details>
+<h4 id="reference-alignment-contig-filtering">Reference Alignment &amp; Contig Filtering<a class="headerlink" href="#reference-alignment-contig-filtering" title="Permanent link">&para;</a></h4>
+<div class="admonition hint">
+<p>These tasks only run if a reference is provided through the <code>reference</code> optional input.</p>
+</div>
+<details class="task">
+<summary><code>minimap2</code>: Assembly Alignment and Contig Filtering</summary>
+<p><code>minimap2</code> is a popular aligner that is used here to to map the Pilon-polished assembly to the reference genome. Any aligned contigs are retrieved and returned.</p>
+<p>In minimap2, "modes" are a group of preset options. </p>
+<p>The mode used in this task is <code>asm20</code> which is intended for "long assembly to reference mapping". The <code>asm20</code> mode indicates the following parameters should be used: <code>-k19 -w10 -U50,500 --rmq -r100k -g10k -A1 -B4 -O6,26 -E2,1 -s200 -z200 -N50</code>. The output file is in PAF format.</p>
+<p>For more information, please see the <a href="https://lh3.github.io/minimap2/minimap2.html">minimap2 manpage</a></p>
+<div class="admonition techdetails">
+<p class="admonition-title">minimap2 Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/alignment/task_minimap2.wdl">task_minimap2.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/lh3/minimap2">minimap2 on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://lh3.github.io/minimap2">minimap2</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://academic.oup.com/bioinformatics/article/34/18/3094/4994778">Minimap2: pairwise alignment for nucleotide sequences</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<details class="task">
+<summary>Parsing the PAF file into a FASTA file</summary>
+<p>Following the <code>minimap2</code> alignment, the output PAF file is parsed into a FASTA file using <code>seqkit</code> and then coverage is calculated using <code>awk</code>.</p>
+<div class="admonition techdetails">
+<p class="admonition-title"><code>parse_mapping</code> Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/69223caab616070ab92cf1abedc78c9f92e95f6b/tasks/utilities/data_handling/task_parse_mapping.wdl#L3">task_parse_mapping.wdl#retrieve_aligned_contig_paf</a><br><a href="https://github.com/theiagen/public_health_bioinformatics/blob/69223caab616070ab92cf1abedc78c9f92e95f6b/tasks/utilities/data_handling/task_parse_mapping.wdl#L48">task_parse_mapping.wdl#calculate_coverage_paf</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/shenwei356/seqkit">seqkit on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://bioinf.shenwei.me/seqkit/">seqkit</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://doi.org/10.1371/journal.pone.0163962">SeqKit: A Cross-Platform and Ultrafast Toolkit for FASTA/Q File Manipulation</a><br><a href="https://doi.org/10.1002/imt2.191">SeqKit2: A Swiss army knife for sequence and alignment processing</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
 <h4 id="assembly-qc">Assembly QC<a class="headerlink" href="#assembly-qc" title="Permanent link">&para;</a></h4>
+<div class="admonition hint">
+<p>This task is run on either:</p>
+<ul>
+<li>the reference-aligned contigs (if a reference was provided), or </li>
+<li>the Pilon-polished assembly_fasta (if no reference was provided).</li>
+</ul>
+</div>
 <details class="task">
 <summary><code>quast</code>: Assembly Quality Assessment</summary>
 <p>QUAST stands for QUality ASsessment Tool. It evaluates genome/metagenome assemblies by computing various metrics without a reference being necessary. It includes useful metrics such as number of contigs, length of the largest contig and N50. </p>
@@ -5885,9 +6035,186 @@
 </div>
 </details>
 <h4 id="binning">Binning<a class="headerlink" href="#binning" title="Permanent link">&para;</a></h4>
+<div class="admonition hint">
+<p>These tasks only run if a reference is <em>not</em> provided.</p>
+</div>
 <details class="task">
-<summary><code>semibin2</code>: Metagenomic binning (if a reference is NOT provided)</summary>
-<p>If no reference genome is provided through the <strong><code>reference</code></strong> optional input, the assembly produced with <code>metaspades</code> will be binned with <code>semibin2</code>, a a command tool for metagenomic binning with deep learning. </p>
+<summary><code>bwa</code>: Read alignment to the assembly</summary>
+<p><mark>If a reference is <em>not</em> provided</mark>, BWA (Burrow-Wheeler Aligner) is used to align the clean reads to the Pilon-polished assembly_fasta.</p>
+<div class="admonition techdetails">
+<p class="admonition-title">BWA Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/alignment/task_bwa.wdl">task_bwa.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/lh3/bwa">BWA on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://bio-bwa.sourceforge.net/">BWA Manual</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://arxiv.org/abs/1303.3997">Aligning sequence reads, clone sequences and assembly contigs with BWA-MEM</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<details class="task">
+<summary><code>semibin2</code>: Metagenomic binning</summary>
+<p>After the alignment, the resulting BAM file and index and the Pilon-polished assembly_fasta will be binned with <code>semibin2</code>, a command-line tool for metagenomic binning with deep learning. Specifically, it uses a semi-supervised siamese neural network that uses knowledge from reference genomes while maintaining reference-exclusive bins. By default, the <code>global</code> environemnt model is used, though a variety of options that may be better suited for your sample are available, and are listed in the relevant inputs section.</p>
+<div class="admonition techdetails">
+<p class="admonition-title">SemiBin2 Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_semibin.wdl">task_semibin2.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/BigDataBiology/SemiBin">SemiBin2 on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documenttation</td>
+<td><a href="https://semibin.readthedocs.io/en/stable/usage/">SemiBin2 ReadTheDocs</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://doi.org/10.1038/s41467-022-29843-y">A deep siamese neural network improves metagenome-assembled genomes in microbiome datasets across different environments</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<h4 id="additional-outputs">Additional Outputs<a class="headerlink" href="#additional-outputs" title="Permanent link">&para;</a></h4>
+<div class="admonition hint">
+<p>These tasks only run if <code>output_additional_files</code> is set to <code>true</code> (default is <code>false</code>).</p>
+</div>
+<details class="task">
+<summary><code>minimap2</code>: Read Alignment to the Assembly</summary>
+<p><code>minimap2</code> is a popular aligner that is used here to align the clean reads to the final assembly. This is done to provide additional information about the assembly.</p>
+<p>In minimap2, "modes" are a group of preset options.</p>
+<p>The mode used in this task is <code>sr</code> which is intended for "short single-end reads without splicing". The <code>sr</code> mode indicates the following parameters should be used: <code>-k21 -w11 --sr --frag=yes -A2 -B8 -O12,32 -E2,1 -b0 -r100 -p.5 -N20 -f1000,5000 -n2 -m20 -s40 -g100 -2K50m --heap-sort=yes --secondary=no</code>. The output file is in SAM format.</p>
+<p>For more information, please see the <a href="https://lh3.github.io/minimap2/minimap2.html">minimap2 manpage</a></p>
+<div class="admonition techdetails">
+<p class="admonition-title">minimap2 Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/alignment/task_minimap2.wdl">task_minimap2.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/lh3/minimap2">minimap2 on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://lh3.github.io/minimap2">minimap2</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://academic.oup.com/bioinformatics/article/34/18/3094/4994778">Minimap2: pairwise alignment for nucleotide sequences</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<details class="task">
+<summary><code>samtools</code>: SAM File Conversion (Round 2)</summary>
+<p>This task converts the output SAM file from minimap2 and converts it to a BAM file. It then sorts the BAM based on the read names, and then generates an index file.</p>
+<div class="admonition techdetails">
+<p class="admonition-title">samtools Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/data_handling/task_parse_mapping.wdl">task_samtools.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/samtools/samtools">samtools on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://www.htslib.org/doc/samtools.html">samtools</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://doi.org/10.1093/bioinformatics/btp352">The Sequence Alignment/Map format and SAMtools</a><br><a href="https://doi.org/10.1093/gigascience/giab008">Twelve Years of SAMtools and BCFtools</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<details class="task">
+<summary>Parsing the BAM file</summary>
+<p>Several tasks follow that perform the following functions:</p>
+<ol>
+<li>Calculates the average depth of coverage of the assembly using <code>bedtools</code>.</li>
+<li>Retrieves from the BAM file any unaligned reads using <code>samtools</code>.</li>
+<li>Retrieves from the BAM file any aligned reads using <code>samtools</code>.</li>
+<li>Calculates the percentage of reads that were assembled using <code>samtools</code>.</li>
+</ol>
+<div class="admonition techdetails">
+<p class="admonition-title"><code>parse_mapping</code> Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/69223caab616070ab92cf1abedc78c9f92e95f6b/tasks/utilities/data_handling/task_parse_mapping.wdl#L159">task_parse_mapping.wdl#calculate_coverage</a><br><a href="https://github.com/theiagen/public_health_bioinformatics/blob/69223caab616070ab92cf1abedc78c9f92e95f6b/tasks/utilities/data_handling/task_parse_mapping.wdl#L125">task_parse_mapping.wdl#retrieve_pe_reads_bam</a><br><a href="https://github.com/theiagen/public_health_bioinformatics/blob/69223caab616070ab92cf1abedc78c9f92e95f6b/tasks/utilities/data_handling/task_parse_mapping.wdl#L206">task_parse_mapping.wdl#assembled_reads_percent</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/arq5x/bedtools2">bedtools on GitHub</a><br><a href="https://github.com/samtools/samtools">samtools on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://bedtools.readthedocs.io/en/latest/">bedtools ReadTheDocs</a><br><a href="https://www.htslib.org/doc/samtools.html">samtools</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://doi.org/10.1093/bioinformatics/btq033">BEDTools: a flexible suite of utilities for comparing genomic features</a><br><a href="https://doi.org/10.1093/bioinformatics/btp352">The Sequence Alignment/Map format and SAMtools</a><br><a href="https://doi.org/10.1093/gigascience/giab008">Twelve Years of SAMtools and BCFtools</a></td>
+</tr>
+</tbody>
+</table>
+</div>
 </details>
 <h3 id="outputs">Outputs<a class="headerlink" href="#outputs" title="Permanent link">&para;</a></h3>
 <div class="searchable-table">
@@ -5903,207 +6230,207 @@
 <tr>
 <td>assembly_fasta</td>
 <td>File</td>
-<td>Final assembly (MAG)</td>
+<td>The final recovered metagenome-assembled genome (MAG). <em>"A MAG represents a microbial genome by a group of sequences from genome assembly with similar characteristics. It enables [the identification of] novel species [to] understand their potential functions in a dynamic ecosystem"</em><sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup></td>
 </tr>
 <tr>
 <td>assembly_length</td>
 <td>Int</td>
-<td>Length of final assembly in basepairs</td>
+<td>The length of the assembly_fasta (see description for <code>assembly_fasta</code>) in basepairs</td>
 </tr>
 <tr>
 <td>assembly_mean_coverage</td>
 <td>Float</td>
-<td>Mean depth of coverage of the final assembly</td>
+<td>The mean depth of coverage of the assembly_fasta (see description for <code>assembly_fasta</code>)</td>
 </tr>
 <tr>
 <td>average_read_length</td>
 <td>Float</td>
-<td>Average read length of the clean reads</td>
+<td>The average read length of the clean reads</td>
 </tr>
 <tr>
 <td>bbduk_docker</td>
 <td>String</td>
-<td>Docker image for bbduk</td>
+<td>The Docker image for bbduk, which was used to remove the adapters from the sequences</td>
 </tr>
 <tr>
 <td>bedtools_docker</td>
 <td>String</td>
-<td>Docker image for bedtools</td>
+<td>The Docker image for bedtools, which was used to calculate coverage</td>
 </tr>
 <tr>
 <td>bedtools_version</td>
 <td>String</td>
-<td>Version of bedtools</td>
+<td>The version of bedtools, which was used to calculate coverage</td>
 </tr>
 <tr>
 <td>contig number</td>
 <td>Int</td>
-<td>Number of contigs in final assembly</td>
+<td>The number of contigs in the assembly_fasta (see description for <code>assembly_fasta</code>)</td>
 </tr>
 <tr>
 <td>fastp_html_report</td>
 <td>File</td>
-<td>Report file for fastp in HTML format</td>
+<td>The report file for fastp in HTML format</td>
 </tr>
 <tr>
 <td>fastp_version</td>
 <td>String</td>
-<td>Version of fastp used</td>
+<td>The version of fastp used</td>
 </tr>
 <tr>
 <td>fastq_scan_docker</td>
 <td>String</td>
-<td>Docker image of fastq_scan</td>
+<td>The Docker image of fastq_scan</td>
 </tr>
 <tr>
 <td>fastq_scan_clean1_json</td>
 <td>File</td>
-<td>JSON file output from <code>fastq-scan</code> containing summary stats about clean forward read quality and length</td>
+<td>The JSON file output from <code>fastq-scan</code> containing summary stats about clean forward read quality and length</td>
 </tr>
 <tr>
 <td>fastq_scan_clean2_json</td>
 <td>File</td>
-<td>JSON file output from <code>fastq-scan</code> containing summary stats about clean reverse read quality and length</td>
+<td>The JSON file output from <code>fastq-scan</code> containing summary stats about clean reverse read quality and length</td>
 </tr>
 <tr>
 <td>fastq_scan_num_reads_clean_pairs</td>
 <td>String</td>
-<td>Number of read pairs after cleaning as calculated by fastq_scan</td>
+<td>The number of read pairs after cleaning as calculated by fastq_scan</td>
 </tr>
 <tr>
 <td>fastq_scan_num_reads_clean1</td>
 <td>Int</td>
-<td>Number of forward reads after cleaning as calculated by fastq_scan</td>
+<td>The number of forward reads after cleaning as calculated by fastq_scan</td>
 </tr>
 <tr>
 <td>fastq_scan_num_reads_clean2</td>
 <td>Int</td>
-<td>Number of reverse reads after cleaning as calculated by fastq_scan</td>
+<td>The number of reverse reads after cleaning as calculated by fastq_scan</td>
 </tr>
 <tr>
 <td>fastq_scan_num_reads_raw_pairs</td>
 <td>String</td>
-<td>Number of input read pairs as calculated by fastq_scan</td>
+<td>The number of input read pairs as calculated by fastq_scan</td>
 </tr>
 <tr>
 <td>fastq_scan_num_reads_raw1</td>
 <td>Int</td>
-<td>Number of input forward reads as calculated by fastq_scan</td>
+<td>The number of input forward reads as calculated by fastq_scan</td>
 </tr>
 <tr>
 <td>fastq_scan_num_reads_raw2</td>
 <td>Int</td>
-<td>Number of input reserve reads as calculated by fastq_scan</td>
+<td>The number of input reserve reads as calculated by fastq_scan</td>
 </tr>
 <tr>
 <td>fastq_scan_raw1_json</td>
 <td>File</td>
-<td>JSON file output from <code>fastq-scan</code> containing summary stats about raw forward read quality and length</td>
+<td>The JSON file output from <code>fastq-scan</code> containing summary stats about raw forward read quality and length</td>
 </tr>
 <tr>
 <td>fastq_scan_raw2_json</td>
 <td>File</td>
-<td>JSON file output from <code>fastq-scan</code> containing summary stats about raw reverse read quality and length</td>
+<td>The JSON file output from <code>fastq-scan</code> containing summary stats about raw reverse read quality and length</td>
 </tr>
 <tr>
 <td>fastq_scan_version</td>
 <td>String</td>
-<td>fastq_scan version</td>
+<td>The version of fastq_scan</td>
 </tr>
 <tr>
 <td>fastqc_clean1_html</td>
 <td>File</td>
-<td>Graphical visualization of clean forward read quality from fastqc to open in an internet browser</td>
+<td>An HTML file that provides a graphical visualization of clean forward read quality from fastqc to open in an internet browser</td>
 </tr>
 <tr>
 <td>fastqc_clean2_html</td>
 <td>File</td>
-<td>Graphical visualization of clean reverse read quality from fastqc to open in an internet browser</td>
+<td>An HTML file that provides a graphical visualization of clean reverse read quality from fastqc to open in an internet browser</td>
 </tr>
 <tr>
 <td>fastqc_docker</td>
 <td>String</td>
-<td>Docker container used for fastqc</td>
+<td>The Docker container used for fastqc</td>
 </tr>
 <tr>
 <td>fastqc_num_reads_clean_pairs</td>
 <td>String</td>
-<td>Number of read pairs after cleaning by fastqc</td>
+<td>The number of read pairs after cleaning by fastqc</td>
 </tr>
 <tr>
 <td>fastqc_num_reads_clean1</td>
 <td>Int</td>
-<td>Number of forward reads after cleaning by fastqc</td>
+<td>The number of forward reads after cleaning by fastqc</td>
 </tr>
 <tr>
 <td>fastqc_num_reads_clean2</td>
 <td>Int</td>
-<td>Number of reverse reads after cleaning by fastqc</td>
+<td>The number of reverse reads after cleaning by fastqc</td>
 </tr>
 <tr>
 <td>fastqc_num_reads_raw_pairs</td>
 <td>String</td>
-<td>Number of input read pairs by fastqc</td>
+<td>The number of input read pairs by fastqc before cleaning</td>
 </tr>
 <tr>
 <td>fastqc_num_reads_raw1</td>
 <td>Int</td>
-<td>Number of input forward reads by fastqc</td>
+<td>The number of input forward reads by fastqc before cleaning</td>
 </tr>
 <tr>
 <td>fastqc_num_reads_raw2</td>
 <td>Int</td>
-<td>Number of input reverse reads by fastqc</td>
+<td>The number of input reverse reads by fastqc before cleaning</td>
 </tr>
 <tr>
 <td>fastqc_raw1_html</td>
 <td>File</td>
-<td>Graphical visualization of raw forward read quality from fastqc to open in an internet browser</td>
+<td>An HTML file that provides a graphical visualization of raw forward read quality from fastqc to open in an internet browser</td>
 </tr>
 <tr>
 <td>fastqc_raw2_html</td>
 <td>File</td>
-<td>Graphical visualization of raw reverse read qualityfrom fastqc to open in an internet browser</td>
+<td>An HTML file that provides a graphical visualization of raw reverse read quality from fastqc to open in an internet browser</td>
 </tr>
 <tr>
 <td>fastqc_version</td>
 <td>String</td>
-<td>Version of fastqc software used</td>
+<td>The version of fastqc software used</td>
 </tr>
 <tr>
 <td>kraken2_docker</td>
 <td>String</td>
-<td>Docker image of kraken2</td>
+<td>The Docker image of kraken2</td>
 </tr>
 <tr>
 <td>kraken2_percent_human_clean</td>
 <td>Float</td>
-<td>Percentage of human-classified reads in the sample's clean reads</td>
+<td>The percentage of human-classified reads in the sample's clean reads</td>
 </tr>
 <tr>
 <td>kraken2_percent_human_raw</td>
 <td>Float</td>
-<td>Percentage of human-classified reads in the sample's raw reads</td>
+<td>The percentage of human-classified reads in the sample's raw reads</td>
 </tr>
 <tr>
 <td>kraken2_report_clean</td>
 <td>File</td>
-<td>Full Kraken report for the sample's clean reads</td>
+<td>The full Kraken report for the sample's clean reads</td>
 </tr>
 <tr>
 <td>kraken2_report_raw</td>
 <td>File</td>
-<td>Full Kraken report for the sample's raw reads</td>
+<td>The full Kraken report for the sample's raw reads</td>
 </tr>
 <tr>
 <td>kraken2_version</td>
 <td>String</td>
-<td>Version of kraken</td>
+<td>The version of kraken</td>
 </tr>
 <tr>
 <td>krona_docker</td>
 <td>String</td>
-<td>Docker image of Krona</td>
+<td>The docker image of Krona</td>
 </tr>
 <tr>
 <td>krona_html_clean</td>
@@ -6118,162 +6445,162 @@
 <tr>
 <td>krona_version</td>
 <td>String</td>
-<td>Version of Krona</td>
+<td>The version of Krona</td>
 </tr>
 <tr>
 <td>largest_contig</td>
 <td>Int</td>
-<td>Largest contig size</td>
+<td>The size of the largest contig in basepairs</td>
 </tr>
 <tr>
 <td>metaspades_docker</td>
 <td>String</td>
-<td>Docker image of metaspades</td>
+<td>The Docker image of metaspades</td>
 </tr>
 <tr>
 <td>metaspades_version</td>
 <td>String</td>
-<td>Version of metaspades</td>
+<td>The version of metaspades</td>
 </tr>
 <tr>
 <td>midas_primary_genus</td>
 <td>String</td>
-<td>Primary genus detected by MIDAS</td>
+<td>The primary genus detected by MIDAS</td>
 </tr>
 <tr>
 <td>midas_report</td>
 <td>File</td>
-<td>MIDAS report file tsv file</td>
+<td>The MIDAS report file tsv file</td>
 </tr>
 <tr>
 <td>minimap2_docker</td>
 <td>String</td>
-<td>Docker image of minimap2</td>
+<td>The Docker image of minimap2</td>
 </tr>
 <tr>
 <td>minimap2_version</td>
 <td>String</td>
-<td>Version of minimap2</td>
+<td>The version of minimap2</td>
 </tr>
 <tr>
 <td>ncbi_scrub_docker</td>
 <td>String</td>
-<td>Docker image for NCBI's HRRT</td>
+<td>The Docker image for NCBI's HRRT (human read removal tool)</td>
 </tr>
 <tr>
 <td>percent_coverage</td>
 <td>Float</td>
-<td>Percentage coverage of the reference genome provided</td>
+<td>The percentage coverage of the reference genome provided if one was provided</td>
 </tr>
 <tr>
 <td>percentage_mapped_reads</td>
 <td>Float</td>
-<td>Percentage of mapped reads to the assembly</td>
+<td>The percentage of mapped reads to the assembly_fasta</td>
 </tr>
 <tr>
 <td>pilon_docker</td>
 <td>String</td>
-<td>Docker image for pilon</td>
+<td>The Docker image for pilon</td>
 </tr>
 <tr>
 <td>pilon_version</td>
 <td>String</td>
-<td>Version of pilon</td>
+<td>The version of pilon</td>
 </tr>
 <tr>
 <td>quast_docker</td>
 <td>String</td>
-<td>Docker image of QUAST</td>
+<td>The Docker image of QUAST</td>
 </tr>
 <tr>
 <td>quast_version</td>
 <td>String</td>
-<td>Version of QUAST</td>
+<td>The version of QUAST</td>
 </tr>
 <tr>
 <td>read1_clean</td>
 <td>File</td>
-<td>Clean forward reads file</td>
+<td>The clean forward reads file</td>
 </tr>
 <tr>
 <td>read1_dehosted</td>
 <td>File</td>
-<td>Dehosted forward reads file</td>
+<td>The dehosted forward reads file</td>
 </tr>
 <tr>
 <td>read1_mapped</td>
 <td>File</td>
-<td>Mapped forward reads to the assembly</td>
+<td>The mapped forward reads to the assembly</td>
 </tr>
 <tr>
 <td>read1_unmapped</td>
 <td>File</td>
-<td>Unmapped forwards reads to the assembly</td>
+<td>The unmapped forwards reads to the assembly</td>
 </tr>
 <tr>
 <td>read2_clean</td>
 <td>File</td>
-<td>Clean reverse reads file</td>
+<td>The clean reverse reads file</td>
 </tr>
 <tr>
 <td>read2_dehosted</td>
 <td>File</td>
-<td>Dehosted reverse reads file</td>
+<td>The dehosted reverse reads file</td>
 </tr>
 <tr>
 <td>read2_mapped</td>
 <td>File</td>
-<td>Mapped reverse reads to the assembly</td>
+<td>The mapped reverse reads to the assembly</td>
 </tr>
 <tr>
 <td>read2_unmapped</td>
 <td>File</td>
-<td>Unmapped reverse reads to the assembly</td>
+<td>The unmapped reverse reads to the assembly</td>
 </tr>
 <tr>
 <td>samtools_docker</td>
 <td>String</td>
-<td>Docker image of samtools</td>
+<td>The Docker image of samtools</td>
 </tr>
 <tr>
 <td>samtools_version</td>
 <td>String</td>
-<td>Version of samtools</td>
+<td>The version of samtools</td>
 </tr>
 <tr>
 <td>semibin_bins</td>
 <td>Array[File]</td>
-<td>Array of binned metagenomic assembled genome files</td>
+<td>An array of binned metagenomic assembled genome files</td>
 </tr>
 <tr>
 <td>semibin_docker</td>
 <td>String</td>
-<td>Docker image of semibin</td>
+<td>The Docker image of semibin</td>
 </tr>
 <tr>
 <td>semibin_version</td>
 <td>String</td>
-<td>Semibin version used</td>
+<td>The version of Semibin used</td>
 </tr>
 <tr>
 <td>theiameta_illumina_pe_analysis_date</td>
 <td>String</td>
-<td>Date of analysis</td>
+<td>The date of analysis</td>
 </tr>
 <tr>
 <td>theiameta_illumina_pe_version</td>
 <td>String</td>
-<td>Version of workflow</td>
+<td>The version of TheiaMeta used during execution</td>
 </tr>
 <tr>
 <td>trimmomatic_docker</td>
 <td>String</td>
-<td>Docker image of trimmomatic</td>
+<td>The Docker image of trimmomatic</td>
 </tr>
 <tr>
 <td>trimmomatic_version</td>
 <td>String</td>
-<td>Version of trimmomatic used</td>
+<td>The version of trimmomatic</td>
 </tr>
 </tbody>
 </table>
@@ -6308,7 +6635,11 @@
 </blockquote>
 <!-- -->
 <blockquote>
-<p><strong>Samtools:</strong> Li, Heng, Bob Handsaker, Alec Wysoker, Tim Fennell, Jue Ruan, Nils Homer, Gabor Marth, Goncalo Abecasis, Richard Durbin, and 1000 Genome Project Data Processing Subgroup. 2009. The Sequence Alignment/Map format and SAMtools. Bioinformatics 25(16): 2078-2079.</p>
+<p><strong>Samtools:</strong> Li, Heng, Bob Handsaker, Alec Wysoker, Tim Fennell, Jue Ruan, Nils Homer, Gabor Marth, Goncalo Abecasis, Richard Durbin, and 1000 Genome Project Data Processing Subgroup. 2009. The Sequence Alignment/Map format and SAMtools. Bioinformatics 25(16): 2078-2079. <a href="https://doi.org/10.1093/bioinformatics/btp352">https://doi.org/10.1093/bioinformatics/btp352</a></p>
+</blockquote>
+<!-- -->
+<blockquote>
+<p><strong>BEDtools:</strong> Quinlan AR and Hall IM, 2010. BEDTools: a flexible suite of utilities for comparing genomic features. Bioinformatics. 26, 6, pp. 841–842. <a href="https://doi.org/10.1093/bioinformatics/btq033">https://doi.org/10.1093/bioinformatics/btq033</a></p>
 </blockquote>
 <!-- -->
 <blockquote>
@@ -6318,6 +6649,14 @@
 <blockquote>
 <p><strong>Semibin2:</strong> Shaojun Pan, Xing-Ming Zhao, Luis Pedro Coelho, SemiBin2: self-supervised contrastive learning leads to better MAGs for short- and long-read sequencing, <em>Bioinformatics</em>, Volume 39, Issue Supplement_1, June 2023, Pages i21–i29, <a href="https://doi.org/10.1093/bioinformatics/btad209">https://doi.org/10.1093/bioinformatics/btad209</a></p>
 </blockquote>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p>Direct quote from the abstract of <em>Yang C, Chowdhury D, Zhang Z, Cheung WK, Lu A, Bian Z, Zhang L. A review of computational tools for generating metagenome-assembled genomes from metagenomic sequencing data. Comput Struct Biotechnol J. 2021;19:6301-14. doi: 10.1016/j.csbj.2021.11.028.</em> This is a paper from 2021 that reviews some of the tools used in this workflow, though not all.&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
 
 
 
@@ -6340,7 +6679,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2024-12-13</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2025-01-16</span>
   </span>
 
     
