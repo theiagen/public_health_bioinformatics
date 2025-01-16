@@ -15,37 +15,33 @@ workflow flye_denovo {
     description: "This workflow assembles long-read sequencing data using Flye, optionally trims reads with Porechop, and generates an assembly graph visualization with Bandage. It supports consensus polishing with Medaka or Racon for long reads, or Polypolish for hybrid assemblies with Illumina short reads. The workflow concludes by reorienting contigs with Dnaapler for a final assembly."
   }
   input {
-    File read1                           # raw input reads
-    File? illumina_read1                 # Optional Illumina short-read R1 for hybrid assembly
-    File? illumina_read2                 # Optional Illumina short-read R2 for hybrid assembly
+    File read1 
+    File? illumina_read1                   
+    File? illumina_read2                  
     String samplename
     String polisher = "medaka"
-    Int polish_rounds = 1                # Optional number of polishing rounds
-    Boolean skip_trim_reads = true           # Default: No trimming
-    Boolean skip_polishing = false           # Default: Polishing enabled
+    Int polish_rounds = 1                   
+    Boolean skip_trim_reads = true # Default: No trimming
+    Boolean skip_polishing = false # Default: Polishing enabled
     
     # Porechop inputs
     Int porechop_cpu = 4
     Int porechop_memory = 8
     Int porechop_disk_size = 50
-    String? porechop_trimopts            # Optional Porechop trimming options
+    String? porechop_trimopts # Optional Porechop trimming options
 
     # Flye inputs
-    Boolean flye_ont_corrected = false
-    Boolean flye_ont_high_quality = false
-    Boolean flye_pacbio_raw = false
-    Boolean flye_pacbio_corrected = false
-    Boolean flye_pacbio_hifi = false
-    Int? flye_genome_length                     # Requires `asm_coverage`
-    Int? flye_asm_coverage                      # Reduced coverage for initial disjointig assembly
-    Int flye_polishing_iterations = 1           # Default polishing iterations
-    Int? flye_minimum_overlap                   # Minimum overlap between reads
-    Float? flye_read_error_rate                 # Maximum expected read error rate
+    String read_type = "--nano-raw"  
+    Int? flye_genome_length # Requires `asm_coverage`
+    Int? flye_asm_coverage # Reduced coverage for initial disjointig assembly
+    Int flye_polishing_iterations = 1 # Default polishing iterations
+    Int? flye_minimum_overlap # Minimum overlap between reads
+    Float? flye_read_error_rate # Maximum expected read error rate
     Boolean flye_uneven_coverage_mode = false
     Boolean flye_keep_haplotypes = false
     Boolean flye_no_alt_contigs = false
     Boolean flye_scaffold = false
-    String? flye_additional_parameters          # Any extra Flye-specific parameters
+    String? flye_additional_parameters # Any extra Flye-specific parameters
     Int flye_cpu = 4
     Int flye_memory = 32
     Int flye_disk_size = 100
@@ -69,8 +65,8 @@ workflow flye_denovo {
     Int polypolish_disk_size = 100
 
     # Medaka inputs
-    Boolean auto_medaka_model = true           # Enable automatic Medaka model selection
-    String? medaka_model                       # Optional user-specified Medaka model
+    Boolean auto_medaka_model = true # Enable automatic Medaka model selection
+    String? medaka_model # Optional user-specified Medaka model
     Int medaka_cpu = 4
     Int medaka_memory = 16
     Int medaka_disk_size = 100
@@ -82,7 +78,6 @@ workflow flye_denovo {
 
     # Contig filter-specific inputs
     Int filtercontigs_min_length = 1000
-    Boolean filtercontigs_homopolymers = true
     Int filtercontigs_cpu = 4
     Int filtercontigs_memory = 16
     Int filtercontigs_disk_size = 100
@@ -200,7 +195,6 @@ workflow flye_denovo {
     input:
       assembly_fasta = select_first([polypolish.polished_assembly, medaka.medaka_fasta, racon.polished_fasta, flye.assembly_fasta]), # Use Flye assembly if no polishing
       min_length = filtercontigs_min_length,
-      filter_homopolymers = filtercontigs_homopolymers,
       cpu = filtercontigs_cpu,
       memory = filtercontigs_memory,
       disk_size = filtercontigs_disk_size

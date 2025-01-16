@@ -4,14 +4,7 @@ task flye {
   input {
     File read1
     String samplename
-
-    # data type options; by default, uses --nano-raw
-    Boolean ont_corrected = false
-    Boolean ont_high_quality = false
-    Boolean pacbio_raw = false
-    Boolean pacbio_corrected = false
-    Boolean pacbio_hifi = false
-    
+    String read_type = "--nano-raw" # Default read type
     Int? genome_length # requires `asm_coverage`
     Int? asm_coverage # reduced coverage for initial disjointig assembly
 
@@ -34,25 +27,10 @@ task flye {
   command <<<
     set -euo pipefail
     flye --version | tee VERSION
-
-    # determine read type
-    if ~{ont_corrected}; then
-      READ_TYPE="--nano-corr"
-    elif ~{ont_high_quality}; then
-      READ_TYPE="--nano-hq"
-    elif ~{pacbio_raw}; then
-      READ_TYPE="--pacbio-raw"
-    elif ~{pacbio_corrected}; then
-      READ_TYPE="--pacbio-corr"
-    elif ~{pacbio_hifi}; then
-      READ_TYPE="--pacbio-hifi"
-    else
-      READ_TYPE="--nano-raw"
-    fi
-
+    
     # genome size parameter requires asm_coverage
     flye \
-      ${READ_TYPE} ~{read1} \
+      "~{read_type}" "~{read1}" \
       --iterations ~{flye_polishing_iterations} \
       ~{"--min-overlap" + minimum_overlap} \
       ~{if defined(asm_coverage) then "--genome-size " + genome_length else ""} \

@@ -157,20 +157,15 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 | flye_denovo | **bandage_cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional | ONT |
 | flye_denovo | **bandage_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 10 | Optional | ONT |
 | flye_denovo | **bandage_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 4 | Optional | ONT |
-| flye_denovo | **dnaapler_cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional | ONT |
+| flye_denovo | **dnaapler_cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional | ONT |
 | flye_denovo | **dnaapler_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | ONT |
 | flye_denovo | **dnaapler_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 16 | Optional | ONT |
 | flye_denovo | **dnaapler_mode** | String | Dnaapler-specific inputs | all | Optional | ONT |
-| flye_denovo | **filtercontigs_cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional | ONT |
-| flye_denovo | **filtercontigs_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | ONT |
-| flye_denovo | **filtercontigs_homopolymers** | Boolean | If true, filters out homopolymers | TRUE | Optional | ONT |
-| flye_denovo | **filtercontigs_min_len** | Int | Minimum contig length to keep | 1000 | Optional | ONT |
+| flye_denovo | **filtercontigs_cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional | ONT |
+| flye_denovo | **filtercontigs_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 10 | Optional | ONT |
+| flye_denovo | **filtercontigs_min_length** | Int | Minimum contig length to keep | 1000 | Optional | ONT |
 | flye_denovo | **filtercontigs_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 16 | Optional | ONT |
-| flye_denovo | **flye_ont_corrected** | File | If true, uses ONT corrected reads for assembly | FALSE | Optional | ONT |
-| flye_denovo | **flye_ont_high_quality** | File | If true, uses ONT high-quality reads for assembly | FALSE | Optional | ONT |
-| flye_denovo | **flye_pacbio_raw** | File | If true, uses PacBio raw reads for assembly | FALSE | Optional | ONT |
-| flye_denovo | **flye_pacbio_corrected** | File | If true, uses PacBio corrected reads for assembly | FALSE | Optional | ONT |
-| flye_denovo | **flye_pacbio_hifi** | File | If true, uses PacBio HiFi reads for assembly | FALSE | Optional | ONT |
+| flye_denovo    | **flye_read_type**   | String | Specifies the type of sequencing reads. Options: `--nano-raw` (default), `--nano-corr`, `--nano-hq`, `--pacbio-raw`, `--pacbio-corr`, `--pacbio-hifi`. Refer to Flye documentation for details on each type. | `--nano-raw`        | Optional | `--nano-raw`   |
 | flye_denovo | **flye_genome_length** | Int | User-specified expected genome length to be used in genome statistics calculations |  | Optional | ONT |
 | flye_denovo | **flye_asm_coverage** | Int | Reduced coverage for initial disjointig assembly |  | Optional | ONT |
 | flye_denovo | **flye_polishing_iterations** | Int | Default polishing iterations | 1 | Optional | ONT |
@@ -186,15 +181,15 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 | flye_denovo | **flye_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | ONT |
 | flye_denovo | **illumina_read1** | File | If Illumina reads are provided, flye_denovo subworkflow will perform Illumina polishing |  | Optional | ONT |
 | flye_denovo | **illumina_read2** | File | If Illumina reads are provided, flye_denovo subworflow will perform Illumina polishing |  | Optional | ONT |
-| flye_denovo | **medaka_model_override** | String | The model of medaka to use for assembly | r1041_e82_400bps_sup_v5.0.0 | Optional | ONT |
+| flye_denovo | **medaka_model** | String | The model of medaka to use for assembly | r1041_e82_400bps_sup_v5.0.0 | Optional | ONT |
 | flye_denovo | **medaka_cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional | ONT |
 | flye_denovo | **medaka_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 16 | Optional | ONT |
 | flye_denovo | **medaka_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | ONT |
 | flye_denovo | **polisher** | String | The polishing tool to use for assembly | medaka | Optional | ONT |
 | flye_denovo | **polishing_rounds** | Int | The number of polishing rounds to conduct for medaka or racon (without Illumina) | 1 | Optional | ONT |
-| flye_denovo | **porechop_cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional | ONT |
+| flye_denovo | **porechop_cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional | ONT |
 | flye_denovo | **porechop_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | ONT |
-| flye_denovo | **porechop_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | ONT |
+| flye_denovo | **porechop_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 16 | Optional | ONT |
 | flye_denovo | **porechop_trimopts** | String | Options to pass to Porechop for trimming |  | Optional | ONT |
 | flye_denovo | **polypolish_pair_orientation** | String | Polypolish-specific inputs |  | Optional | ONT |
 | flye_denovo | **polypolish_low_percentile_threshold** | Float | Polypolish-specific inputs |  | Optional | ONT |

@@ -47,12 +47,16 @@ retained_contigs = len(filtered_records)
 retained_bases = sum(len(record) for record in filtered_records)
 
 with open("filtering_metrics.txt", "w") as metrics_file:
-    metrics_file.write(f"Total contigs: {total_contigs}\\n")
-    metrics_file.write(f"Total bases: {total_bases}\\n")
-    metrics_file.write(f"Contigs retained: {retained_contigs}\\n")
-    metrics_file.write(f"Bases retained: {retained_bases}\\n")
+    metrics_file.write("Contig Filtering Metrics\\n")
+    metrics_file.write("========================\\n")
+    metrics_file.write(f"Total contigs before filtering: {total_contigs}\\n")
+    metrics_file.write(f"Total sequence length before filtering: {total_bases} bases\\n")
+    metrics_file.write(f"Total contigs after filtering: {retained_contigs}\\n")
+    metrics_file.write(f"Total sequence length after filtering: {retained_bases} bases\\n")
     metrics_file.write(f"Contigs removed (short length): {total_contigs - len(length_filtered)}\\n")
     metrics_file.write(f"Contigs removed (homopolymers): {len(length_filtered) - retained_contigs}\\n")
+    metrics_file.write("========================\\n")
+    metrics_file.write("Filtering completed successfully.\\n")
 EOF
   >>>
   output {

@@ -2,7 +2,7 @@ version 1.0
 
 task porechop {
   input {
-    File read1 # Raw read input file
+    File read1
     String samplename
     String? trimopts # Optional trimming options
     Int cpu = 4
