@@ -17,11 +17,11 @@
     - wf_theiacov_clearlabs_miniwdl
   files:
     - path: miniwdl_run/call-consensus/command
-      md5sum: a8e200703dedf732b45dd92b0af15f1c
+      md5sum: 788e48441f357bdd0fc9eac5a13b77b5
     - path: miniwdl_run/call-consensus/inputs.json
       contains: ["read1", "samplename", "fastq"]
     - path: miniwdl_run/call-consensus/outputs.json
-      contains: ["consensus", "medaka_pass_vcf", "trim_sorted_bam"]
+      contains: ["consensus", "artic_clair3_pass_vcf", "trim_sorted_bam"]
     - path: miniwdl_run/call-consensus/stderr.txt
     - path: miniwdl_run/call-consensus/stderr.txt.offset
     - path: miniwdl_run/call-consensus/stdout.txt
@@ -32,44 +32,27 @@
     - path: miniwdl_run/call-consensus/work/REFERENCE_GENOME
       md5sum: 0e6efd549c8773f9a2f7a3e82619ee61
     - path: miniwdl_run/call-consensus/work/VERSION
-      md5sum: f3528ff85409c70100063c55ad75612b
+      md5sum: b50a846b8b57f344bcedad5c6962b2c7
     - path: miniwdl_run/call-consensus/work/_miniwdl_inputs/0/artic-v3.primers.bed
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     - path: miniwdl_run/call-consensus/work/_miniwdl_inputs/0/clearlabs_R1_dehosted.fastq.gz
-    - path: miniwdl_run/call-consensus/work/clearlabs.1.hdf
     - path: miniwdl_run/call-consensus/work/clearlabs.1.vcf
-    - path: miniwdl_run/call-consensus/work/clearlabs.2.hdf
     - path: miniwdl_run/call-consensus/work/clearlabs.2.vcf
-    - path: miniwdl_run/call-consensus/work/clearlabs.alignreport.er
-      md5sum: a5cdc705c76b0ed04da5aba852b457fa
-    - path: miniwdl_run/call-consensus/work/clearlabs.alignreport.txt
-      md5sum: 866acd50ae51abddd4471d8d4148189b
-    - path: miniwdl_run/call-consensus/work/clearlabs.amplicon_plot_data_mqc.json
-      md5sum: 0569d0088a0042c473aa761df08bc4c6
-    - path: miniwdl_run/call-consensus/work/clearlabs.amplicon_stats_data_mqc.json
-      md5sum: 84cde1c25041ec4592ff46641353bb4a
+    - path: miniwdl_run/call-consensus/work/clearlabs.alignreport.csv
+      md5sum: 3cbc074cd5baefbf594c73ddfd633c8a
     - path: miniwdl_run/call-consensus/work/clearlabs.consensus.fasta
-      md5sum: adb04dc7e733a9018981243df7df3666
     - path: miniwdl_run/call-consensus/work/clearlabs.coverage_mask.txt
       md5sum: f3d76027b8506a5b1d0f5b1c7e7c8cff
     - path: miniwdl_run/call-consensus/work/clearlabs.fail.vcf
     - path: miniwdl_run/call-consensus/work/clearlabs.fastq.gz
-    - path: miniwdl_run/call-consensus/work/clearlabs.medaka.consensus.fasta
-      md5sum: 0cfde305a06ac76d858bc38e03b8e43e
     - path: miniwdl_run/call-consensus/work/clearlabs.merged.vcf.gz
     - path: miniwdl_run/call-consensus/work/clearlabs.merged.vcf.gz.tbi
     - path: miniwdl_run/call-consensus/work/clearlabs.minion.log.txt
-    - path: miniwdl_run/call-consensus/work/clearlabs.muscle.in.fasta
-      md5sum: ba7fb9dfbad227cf71eca71960684da3
-    - path: miniwdl_run/call-consensus/work/clearlabs.muscle.out.fasta
-      md5sum: 4e82a0f38a81e73994d2c18e9aa828e8
     - path: miniwdl_run/call-consensus/work/clearlabs.pass.vcf
     - path: miniwdl_run/call-consensus/work/clearlabs.pass.vcf.gz.tbi
     - path: miniwdl_run/call-consensus/work/clearlabs.preconsensus.fasta
-      md5sum: f1976dc2b5e9e604c2c3588c19503709
     - path: miniwdl_run/call-consensus/work/clearlabs.preconsensus.fasta.fai
     - path: miniwdl_run/call-consensus/work/clearlabs.primers.vcf
-      md5sum: 173f73f55d32f99544af48f3544467cf
     - path: miniwdl_run/call-consensus/work/clearlabs.primersitereport.txt
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     - path: miniwdl_run/call-consensus/work/clearlabs.primertrimmed.rg.sorted.bam
@@ -78,18 +61,10 @@
     - path: miniwdl_run/call-consensus/work/clearlabs.sorted.bam.bai
     - path: miniwdl_run/call-consensus/work/clearlabs.trimmed.rg.sorted.bam
     - path: miniwdl_run/call-consensus/work/clearlabs.trimmed.rg.sorted.bam.bai
-    - path: miniwdl_run/call-consensus/work/clearlabs.vcfcheck.log
-    - path: miniwdl_run/call-consensus/work/clearlabs.vcfreport.txt
-      md5sum: e08ab2cbd80de1e9c31e128e8e449652
-    - path: miniwdl_run/call-consensus/work/primer-schemes/SARS-CoV-2/Vuser/SARS-CoV-2.reference.fasta
-      md5sum: b9b67235a2d9d0b0d7f531166ffefd41
-    - path: miniwdl_run/call-consensus/work/primer-schemes/SARS-CoV-2/Vuser/SARS-CoV-2.reference.fasta.fai
-    - path: miniwdl_run/call-consensus/work/primer-schemes/SARS-CoV-2/Vuser/SARS-CoV-2.scheme.bed
-      md5sum: d5ad850f8c610dc45162957ab84530d6
     - path: miniwdl_run/call-consensus_qc/command
-      md5sum: f3962bd094641b408205378dc683e87e
+      md5sum: c0322c2bf5843b932d3d1236728d1fb8
     - path: miniwdl_run/call-consensus_qc/inputs.json
-      contains: ["assembly_fasta", "medaka"]
+      contains: ["assembly_fasta"]
     - path: miniwdl_run/call-consensus_qc/outputs.json
       contains: ["consensus_qc", "number_N", "percent_reference_coverage"]
     - path: miniwdl_run/call-consensus_qc/stderr.txt
@@ -99,16 +74,13 @@
       contains: ["wdl", "theiacov_clearlabs", "consensus_qc", "done"]
     - path: miniwdl_run/call-consensus_qc/work/DATE
     - path: miniwdl_run/call-consensus_qc/work/NUM_ACTG
-      md5sum: c51cafa417f1fc0caa49cb98b1ea8a65
     - path: miniwdl_run/call-consensus_qc/work/NUM_DEGENERATE
       md5sum: 897316929176464ebc9ad085f31e7284
     - path: miniwdl_run/call-consensus_qc/work/NUM_N
-      md5sum: 274b28c15b0a21efb78323a00cf4e8f2
     - path: miniwdl_run/call-consensus_qc/work/NUM_TOTAL
       md5sum: 64887188f1a0c0176ed5ad2e108d1046
     - path: miniwdl_run/call-consensus_qc/work/PERCENT_REF_COVERAGE
-      md5sum: 31d0a19a3d1a6b809db3bb3b393f0d95
-    - path: miniwdl_run/call-consensus_qc/work/_miniwdl_inputs/0/clearlabs.medaka.consensus.fasta
+    - path: miniwdl_run/call-consensus_qc/work/_miniwdl_inputs/0/clearlabs.consensus.fasta
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     - path: miniwdl_run/call-fastq_scan_clean_reads/command
       contains: ["read", "fastq", "zcat"]
@@ -222,13 +194,12 @@
       contains: ["wdl", "theiacov_clearlabs", "nextclade", "done"]
     - path: miniwdl_run/call-nextclade_v3/work/NEXTCLADE_VERSION
       md5sum: 70aa6879bf9f0e8ba2b9953b0d4a2216
-    - path: miniwdl_run/call-nextclade_v3/work/_miniwdl_inputs/0/clearlabs.medaka.consensus.fasta
+    - path: miniwdl_run/call-nextclade_v3/work/_miniwdl_inputs/0/clearlabs.consensus.fasta
       md5sum: d41d8cd98f00b204e9800998ecf8427e
-    - path: miniwdl_run/call-nextclade_v3/work/clearlabs.medaka.consensus.nextclade.auspice.json
-    - path: miniwdl_run/call-nextclade_v3/work/clearlabs.medaka.consensus.nextclade.json
-    - path: miniwdl_run/call-nextclade_v3/work/clearlabs.medaka.consensus.nextclade.tsv
+    - path: miniwdl_run/call-nextclade_v3/work/clearlabs.consensus.nextclade.auspice.json
+    - path: miniwdl_run/call-nextclade_v3/work/clearlabs.consensus.nextclade.json
+    - path: miniwdl_run/call-nextclade_v3/work/clearlabs.consensus.nextclade.tsv
     - path: miniwdl_run/call-nextclade_v3/work/nextclade.aligned.fasta
-      md5sum: eb18c508f26125851279f2c03d4a336c
     - path: miniwdl_run/call-nextclade_v3/work/nextclade.csv
     - path: miniwdl_run/call-nextclade_v3/work/nextclade.ndjson
     - path: miniwdl_run/call-nextclade_v3/work/nextclade_dataset_dir/genome_annotation.gff3
@@ -240,31 +211,31 @@
     - path: miniwdl_run/call-nextclade_v3/work/nextclade_dataset_dir/sequences.fasta
     - path: miniwdl_run/call-nextclade_v3/work/nextclade_dataset_dir/tree.json
     - path: miniwdl_run/call-nextclade_v3/work/nextclade.cds_translation.E.fasta
-      md5sum: 14808ad8b34c8bac7de500707400250e
+      md5sum: a5f39d648125d093265909fec5d8c796
     - path: miniwdl_run/call-nextclade_v3/work/nextclade.cds_translation.M.fasta
-      md5sum: 4799e5af880d2005da56342d6a9d64ab
+      md5sum: 3d1e1d721639861a261f37e7777bead5
     - path: miniwdl_run/call-nextclade_v3/work/nextclade.cds_translation.N.fasta
-      md5sum: bbc46cedb153b3213a9cf8f425dd906c
+      md5sum: 22756e66f3b0fe8a00d685fc145edaf5
     - path: miniwdl_run/call-nextclade_v3/work/nextclade.cds_translation.ORF1a.fasta
-      md5sum: 0c1b1bbcbcfe86d10c466bf63fca5c11
+      md5sum: 8d49bc37ee2d3506cd7bf67cc98d9070
     - path: miniwdl_run/call-nextclade_v3/work/nextclade.cds_translation.ORF1b.fasta
-      md5sum: bea75a83074a11fa74c316e4df6a3d9f
+      md5sum: 9827745ec4fe4976ad6c063b0f097cb3
     - path: miniwdl_run/call-nextclade_v3/work/nextclade.cds_translation.ORF3a.fasta
-      md5sum: 692b2c314c4ff6584a40273dc239cb78
+      md5sum: 20973e57a94f101e505aa5b32e8a6318
     - path: miniwdl_run/call-nextclade_v3/work/nextclade.cds_translation.ORF6.fasta
-      md5sum: c1d610f9e45acd3915e40f0d643f0188
+      md5sum: a634b9f1f79b1ee1fd647a4ddaadd25d
     - path: miniwdl_run/call-nextclade_v3/work/nextclade.cds_translation.ORF7a.fasta
-      md5sum: a655a6c325b0bc9ad69842fcf2e927a7
+      md5sum: fa51f9e1f5963888f4a03e1689fea283
     - path: miniwdl_run/call-nextclade_v3/work/nextclade.cds_translation.ORF7b.fasta
-      md5sum: 27fd219bb6d18731898a9ddfdee27f67
+      md5sum: d489f9864522a1d4fef7050d83c3daaf
     - path: miniwdl_run/call-nextclade_v3/work/nextclade.cds_translation.ORF8.fasta
-      md5sum: 398798980c482562e7c5b21b205e0445
+      md5sum: 900c8d5cd319c58a8c83a069dca56d28
     - path: miniwdl_run/call-nextclade_v3/work/nextclade.cds_translation.ORF9b.fasta
-      md5sum: 3d6a949bdcecaf70e9d123651a7a7c5e
+      md5sum: 1de0599c935243b9eb42afba07374645
     - path: miniwdl_run/call-nextclade_v3/work/nextclade.cds_translation.S.fasta
-      md5sum: 0ce44a0a8e2784ca4b3e8d8f03211813
+      md5sum: 80652d7864028a48bf20917851ba9d92
     - path: miniwdl_run/call-nextclade_output_parser/command
-      md5sum: f377fb9fc901d440fa35b1b05317a0e1
+      md5sum: e642f66a6a1447868c2d98a2d0044762
     - path: miniwdl_run/call-nextclade_output_parser/inputs.json
       contains: ["nextclade_tsv", "tsv"]
     - path: miniwdl_run/call-nextclade_output_parser/outputs.json
@@ -277,18 +248,18 @@
     - path: miniwdl_run/call-nextclade_output_parser/work/NEXTCLADE_AADELS
       md5sum: 9d4c759e1c177be4e5942816848c3cb1
     - path: miniwdl_run/call-nextclade_output_parser/work/NEXTCLADE_AASUBS
-      md5sum: 62ff3d35d7bb1bc431b8201c616a55c0
+      md5sum: bff3612e4142d3cd0b6bd7fb70a0f910
     - path: miniwdl_run/call-nextclade_output_parser/work/NEXTCLADE_CLADE
       md5sum: 96d3cf337be2f7948d6f6df5c1ab69a4
     - path: miniwdl_run/call-nextclade_output_parser/work/NEXTCLADE_LINEAGE
       md5sum: 717da6cd0df2d2f1d00461f3498aaca9
     - path: miniwdl_run/call-nextclade_output_parser/work/TAMIFLU_AASUBS
       md5sum: d41d8cd98f00b204e9800998ecf8427e
-    - path: miniwdl_run/call-nextclade_output_parser/work/_miniwdl_inputs/0/clearlabs.medaka.consensus.nextclade.tsv
+    - path: miniwdl_run/call-nextclade_output_parser/work/_miniwdl_inputs/0/clearlabs.consensus.nextclade.tsv
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     - path: miniwdl_run/call-nextclade_output_parser/work/input.tsv
     - path: miniwdl_run/call-pangolin4/command
-      md5sum: 822d5c5276870d28971ca5d134193114
+      md5sum: 466ab567c6dad8a7411a84b6ea7ba197
     - path: miniwdl_run/call-pangolin4/inputs.json
       contains: ["fasta", "samplename", "clearlabs"]
     - path: miniwdl_run/call-pangolin4/outputs.json
@@ -311,10 +282,10 @@
       md5sum: 36f64a1cd7c6844309e8ad2121358088
     - path: miniwdl_run/call-pangolin4/work/VERSION_PANGOLIN_ALL
       md5sum: dfd90750c8776f46bad1de214c1d1a57
-    - path: miniwdl_run/call-pangolin4/work/_miniwdl_inputs/0/clearlabs.medaka.consensus.fasta
+    - path: miniwdl_run/call-pangolin4/work/_miniwdl_inputs/0/clearlabs.consensus.fasta
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     - path: miniwdl_run/call-pangolin4/work/clearlabs.pangolin_report.csv
-      md5sum: 0370f24c270c44f6023dd98af79501e7
+      md5sum: 81aa24ad56cd7e0f45cb317ccfcdbb62
     - path: miniwdl_run/call-stats_n_coverage/command
       md5sum: ac020678f99ac145b11d3dbc7b9fe9ba
     - path: miniwdl_run/call-stats_n_coverage/inputs.json
@@ -330,23 +301,22 @@
       md5sum: 74f46f4a356cce9074878a617f07a91b
     - path: miniwdl_run/call-stats_n_coverage/work/DATE
     - path: miniwdl_run/call-stats_n_coverage/work/DEPTH
-      md5sum: 259558c0ddfe059337bda4ad62967a5d
+      md5sum: 4fc8230861db115aa3ec767a9e61a10c
     - path: miniwdl_run/call-stats_n_coverage/work/MEANBASEQ
-      md5sum: 2ebbb627df13f6457dca15e655093eb6
+      md5sum: 96d5add61fe1362be0a14eca5dc18a5c
     - path: miniwdl_run/call-stats_n_coverage/work/MEANMAPQ
-      md5sum: 43ab305877efbc03639d3a97adacff8c
+      md5sum: 682f8d1495a65f5049f9c2b5feef0ba5
     - path: miniwdl_run/call-stats_n_coverage/work/VERSION
       md5sum: 53be85d2ed9fa57ab45424fe071a6672
     - path: miniwdl_run/call-stats_n_coverage/work/_miniwdl_inputs/0/clearlabs.trimmed.rg.sorted.bam
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     - path: miniwdl_run/call-stats_n_coverage/work/clearlabs.cov.hist
-      md5sum: 244232adb475973961575c9428961e34
+      md5sum: a5e82bf6a8eb701be88343b33b1b3ab8
     - path: miniwdl_run/call-stats_n_coverage/work/clearlabs.cov.txt
-      md5sum: 72596e3153e78a00e46533db3c1ed863
+      md5sum: a3b9fb3593c7ef13aed261867f308e59
     - path: miniwdl_run/call-stats_n_coverage/work/clearlabs.flagstat.txt
-      md5sum: e0b5f095ba646f1a697acd6d8ec5a54c
+      md5sum: f5d6f96c87d96ebe60358948d310f223
     - path: miniwdl_run/call-stats_n_coverage/work/clearlabs.stats.txt
-      md5sum: bfed5344c91ce6f4db1f688cac0a3ab9
     - path: miniwdl_run/call-stats_n_coverage_primtrim/command
       md5sum: 2974f886e1959cd5eaae5e495c91f7cc
     - path: miniwdl_run/call-stats_n_coverage_primtrim/inputs.json
@@ -362,24 +332,23 @@
       md5sum: b8f1c75b54620ff2391bc8b2273e6f12
     - path: miniwdl_run/call-stats_n_coverage_primtrim/work/DATE
     - path: miniwdl_run/call-stats_n_coverage_primtrim/work/DEPTH
-      md5sum: 271fea9642e2e43a5b89a9b84cc39c17
+      md5sum: b74588802b7c2771353045deada86ad9
     - path: miniwdl_run/call-stats_n_coverage_primtrim/work/MEANBASEQ
-      md5sum: 2ebbb627df13f6457dca15e655093eb6
+      md5sum: 96d5add61fe1362be0a14eca5dc18a5c
     - path: miniwdl_run/call-stats_n_coverage_primtrim/work/MEANMAPQ
-      md5sum: 43ab305877efbc03639d3a97adacff8c
+      md5sum: 682f8d1495a65f5049f9c2b5feef0ba5
     - path: miniwdl_run/call-stats_n_coverage_primtrim/work/VERSION
       md5sum: 53be85d2ed9fa57ab45424fe071a6672
     - path: miniwdl_run/call-stats_n_coverage_primtrim/work/_miniwdl_inputs/0/clearlabs.primertrimmed.rg.sorted.bam
     - path: miniwdl_run/call-stats_n_coverage_primtrim/work/clearlabs.cov.hist
-      md5sum: 9857b51b88673b8b17722f7673c08a24
+      md5sum: 1a117a41e848387eadb48e5dcf1523b8
     - path: miniwdl_run/call-stats_n_coverage_primtrim/work/clearlabs.cov.txt
-      md5sum: 7939c5298ffba56c5898eec17e72b2a1
+      md5sum: 49131b634e04d4f6cd81f7969802c8ec
     - path: miniwdl_run/call-stats_n_coverage_primtrim/work/clearlabs.flagstat.txt
-      md5sum: e0b5f095ba646f1a697acd6d8ec5a54c
+      md5sum: f5d6f96c87d96ebe60358948d310f223
     - path: miniwdl_run/call-stats_n_coverage_primtrim/work/clearlabs.stats.txt
-      md5sum: 6ad40bcca227c92fdfec23fe9a03c344
     - path: miniwdl_run/call-vadr/command
-      md5sum: 1f49b0fa676b3ea67201305139f2568c
+      md5sum: 7423ff35f0c469bb4390496eafc2320e
     - path: miniwdl_run/call-vadr/inputs.json
       contains: ["assembly_length_unambiguous", "genome_fasta", "fasta"]
     - path: miniwdl_run/call-vadr/outputs.json
@@ -391,90 +360,67 @@
       contains: ["wdl", "theiacov_clearlabs", "vadr", "done"]
     - path: miniwdl_run/call-vadr/work/NUM_ALERTS
       md5sum: 1dcca23355272056f04fe8bf20edfce0
-    - path: miniwdl_run/call-vadr/work/_miniwdl_inputs/0/clearlabs.medaka.consensus.fasta
+    - path: miniwdl_run/call-vadr/work/_miniwdl_inputs/0/clearlabs.consensus.fasta
       md5sum: d41d8cd98f00b204e9800998ecf8427e
-    - path: miniwdl_run/call-vadr/work/clearlabs.medaka.consensus.vadr.alerts.tsv
+    - path: miniwdl_run/call-vadr/work/clearlabs.consensus.vadr.alerts.tsv
       md5sum: 2562e7c1fd77507231c7059bb7f09a93
-    - path: miniwdl_run/call-vadr/work/clearlabs.medaka.consensus.vadr.tar.gz
-    - path: miniwdl_run/call-vadr/work/clearlabs.medaka.consensus/clearlabs.medaka.consensus.vadr.NC_045512.CDS.1.fa
-      md5sum: ef14be0f59dc55c666797ef3a3b40e62
-    - path: miniwdl_run/call-vadr/work/clearlabs.medaka.consensus/clearlabs.medaka.consensus.vadr.NC_045512.CDS.2.fa
-      md5sum: ab2261fb93f30902350cca9f4b47d39f
-    - path: miniwdl_run/call-vadr/work/clearlabs.medaka.consensus/clearlabs.medaka.consensus.vadr.NC_045512.gene.1.fa
-      md5sum: cda43f921f578dce1fde4bc08cf17934
-    - path: miniwdl_run/call-vadr/work/clearlabs.medaka.consensus/clearlabs.medaka.consensus.vadr.NC_045512.gene.2.fa
-      md5sum: b1f6d78381a5b97da1be035512c357c8
-    - path: miniwdl_run/call-vadr/work/clearlabs.medaka.consensus/clearlabs.medaka.consensus.vadr.NC_045512.mat_peptide.1.fa
-      md5sum: 83c9e63df3f7029fb2003391867de0fe
-    - path: miniwdl_run/call-vadr/work/clearlabs.medaka.consensus/clearlabs.medaka.consensus.vadr.NC_045512.mat_peptide.2.fa
-      md5sum: 3fad94cf6baa4c18bb6efe5bd0e6f0a8
-    - path: miniwdl_run/call-vadr/work/clearlabs.medaka.consensus/clearlabs.medaka.consensus.vadr.NC_045512.stem_loop.1.fa
-      md5sum: d9b9c6fb8be9278cd55270af26f8012f
-    - path: miniwdl_run/call-vadr/work/clearlabs.medaka.consensus/clearlabs.medaka.consensus.vadr.NC_045512.stem_loop.2.fa
-      md5sum: b927b16fb069f0b506f037ef48178dd9
-    - path: miniwdl_run/call-vadr/work/clearlabs.medaka.consensus/clearlabs.medaka.consensus.vadr.alc
+    - path: miniwdl_run/call-vadr/work/clearlabs.consensus.vadr.tar.gz
+    - path: miniwdl_run/call-vadr/work/clearlabs.consensus/clearlabs.consensus.vadr.NC_045512.CDS.1.fa
+    - path: miniwdl_run/call-vadr/work/clearlabs.consensus/clearlabs.consensus.vadr.NC_045512.CDS.2.fa
+    - path: miniwdl_run/call-vadr/work/clearlabs.consensus/clearlabs.consensus.vadr.NC_045512.gene.1.fa
+    - path: miniwdl_run/call-vadr/work/clearlabs.consensus/clearlabs.consensus.vadr.NC_045512.gene.2.fa
+    - path: miniwdl_run/call-vadr/work/clearlabs.consensus/clearlabs.consensus.vadr.NC_045512.mat_peptide.1.fa
+      md5sum: a763652b87cea3fe5b361f6327419b07
+    - path: miniwdl_run/call-vadr/work/clearlabs.consensus/clearlabs.consensus.vadr.NC_045512.mat_peptide.2.fa
+      md5sum: 2bf9f5aeef164c8bc9125fb7306cf20e
+    - path: miniwdl_run/call-vadr/work/clearlabs.consensus/clearlabs.consensus.vadr.NC_045512.stem_loop.1.fa
+      md5sum: f55f1e6287a8d5a41ead5209059c1d2b
+    - path: miniwdl_run/call-vadr/work/clearlabs.consensus/clearlabs.consensus.vadr.NC_045512.stem_loop.2.fa
+      md5sum: 4acfd69ec183f3a9374fbb4c3cce491f
+    - path: miniwdl_run/call-vadr/work/clearlabs.consensus/clearlabs.consensus.vadr.alc
       md5sum: 462c3764417b6650584adf6925f8483b
-    - path: miniwdl_run/call-vadr/work/clearlabs.medaka.consensus/clearlabs.medaka.consensus.vadr.alt
-      md5sum: 8e475411b9a0a94338e7fd6d50d09dc3
-    - path: miniwdl_run/call-vadr/work/clearlabs.medaka.consensus/clearlabs.medaka.consensus.vadr.alt.list
-      md5sum: e5131b7a38776bffed73e87e0802addc
-    - path: miniwdl_run/call-vadr/work/clearlabs.medaka.consensus/clearlabs.medaka.consensus.vadr.cmd
-    - path: miniwdl_run/call-vadr/work/clearlabs.medaka.consensus/clearlabs.medaka.consensus.vadr.dcr
+    - path: miniwdl_run/call-vadr/work/clearlabs.consensus/clearlabs.consensus.vadr.alt
+      md5sum: edc2687c2e82b2426921e0e537edc075
+    - path: miniwdl_run/call-vadr/work/clearlabs.consensus/clearlabs.consensus.vadr.alt.list
+      md5sum: 6a252b77d6c37949f00f8c3629350be7
+    - path: miniwdl_run/call-vadr/work/clearlabs.consensus/clearlabs.consensus.vadr.cmd
+    - path: miniwdl_run/call-vadr/work/clearlabs.consensus/clearlabs.consensus.vadr.dcr
       md5sum: d9b5295b718f16cf523fa42c69c67f7f
-    - path: miniwdl_run/call-vadr/work/clearlabs.medaka.consensus/clearlabs.medaka.consensus.vadr.fail.fa
-      md5sum: df3a832ffbced8719506279648c968af
-    - path: miniwdl_run/call-vadr/work/clearlabs.medaka.consensus/clearlabs.medaka.consensus.vadr.fail.list
-      md5sum: 56f45c5bc5bb8cd5af69419e0a18486f
-    - path: miniwdl_run/call-vadr/work/clearlabs.medaka.consensus/clearlabs.medaka.consensus.vadr.fail.tbl
-      md5sum: 3138cb2f9d51a7f33e25d60567f90154
-    - path: miniwdl_run/call-vadr/work/clearlabs.medaka.consensus/clearlabs.medaka.consensus.vadr.filelist
-      md5sum: e927a45c88281953bcae932bbe412d72
-    - path: miniwdl_run/call-vadr/work/clearlabs.medaka.consensus/clearlabs.medaka.consensus.vadr.ftr
-      md5sum: 09cbb3709dddad2ae7e1895be2f2c0d6
-    - path: miniwdl_run/call-vadr/work/clearlabs.medaka.consensus/clearlabs.medaka.consensus.vadr.log
-    - path: miniwdl_run/call-vadr/work/clearlabs.medaka.consensus/clearlabs.medaka.consensus.vadr.mdl
+    - path: miniwdl_run/call-vadr/work/clearlabs.consensus/clearlabs.consensus.vadr.fail.fa
+    - path: miniwdl_run/call-vadr/work/clearlabs.consensus/clearlabs.consensus.vadr.fail.list
+      md5sum: 7b7182529739b37ce90f7eb74301fe1f
+    - path: miniwdl_run/call-vadr/work/clearlabs.consensus/clearlabs.consensus.vadr.fail.tbl
+      md5sum: ceee7788ffea5737bfc99a51905cc8fc
+    - path: miniwdl_run/call-vadr/work/clearlabs.consensus/clearlabs.consensus.vadr.filelist
+      md5sum: 8736d943b1e4b18906cf0cad4be881f9
+    - path: miniwdl_run/call-vadr/work/clearlabs.consensus/clearlabs.consensus.vadr.ftr
+    - path: miniwdl_run/call-vadr/work/clearlabs.consensus/clearlabs.consensus.vadr.log
+    - path: miniwdl_run/call-vadr/work/clearlabs.consensus/clearlabs.consensus.vadr.mdl
       md5sum: 43735aaecb85b313c6b6c9789b324337
-    - path: miniwdl_run/call-vadr/work/clearlabs.medaka.consensus/clearlabs.medaka.consensus.vadr.pass.fa
+    - path: miniwdl_run/call-vadr/work/clearlabs.consensus/clearlabs.consensus.vadr.pass.fa
       md5sum: d41d8cd98f00b204e9800998ecf8427e
-    - path: miniwdl_run/call-vadr/work/clearlabs.medaka.consensus/clearlabs.medaka.consensus.vadr.pass.list
+    - path: miniwdl_run/call-vadr/work/clearlabs.consensus/clearlabs.consensus.vadr.pass.list
       md5sum: d41d8cd98f00b204e9800998ecf8427e
-    - path: miniwdl_run/call-vadr/work/clearlabs.medaka.consensus/clearlabs.medaka.consensus.vadr.pass.tbl
+    - path: miniwdl_run/call-vadr/work/clearlabs.consensus/clearlabs.consensus.vadr.pass.tbl
       md5sum: d41d8cd98f00b204e9800998ecf8427e
-    - path: miniwdl_run/call-vadr/work/clearlabs.medaka.consensus/clearlabs.medaka.consensus.vadr.rpn
-      md5sum: a5adc1532dabada4737a0be6664187e3
-    - path: miniwdl_run/call-vadr/work/clearlabs.medaka.consensus/clearlabs.medaka.consensus.vadr.sda
-      md5sum: 474051475b970e16c0355aa4a864f947
-    - path: miniwdl_run/call-vadr/work/clearlabs.medaka.consensus/clearlabs.medaka.consensus.vadr.seqstat
-      md5sum: e7f072c85a7348a8b562db1a5c61cf76
-    - path: miniwdl_run/call-vadr/work/clearlabs.medaka.consensus/clearlabs.medaka.consensus.vadr.sgm
-      md5sum: 2fb190ba11ba66fc637584bb0dbbf2da
-    - path: miniwdl_run/call-vadr/work/clearlabs.medaka.consensus/clearlabs.medaka.consensus.vadr.sqa
-      md5sum: 6d241df46baa9164f1cb688c80570357
-    - path: miniwdl_run/call-vadr/work/clearlabs.medaka.consensus/clearlabs.medaka.consensus.vadr.sqc.txt
-      md5sum: 2c726dac7c46f957e40ccd6b76da32f6
-    - path: miniwdl_run/call-vadr/work/clearlabs.medaka.consensus_trimmed.fasta
-      md5sum: df3a832ffbced8719506279648c968af
-    - path: miniwdl_run/call-vadr/work/clearlabs.medaka.consensus_vadr-fasta-files.zip
-    - path: miniwdl_run/call-vadr/work/vadr_fasta_files/clearlabs.medaka.consensus.vadr.NC_045512.CDS.1.fa
-      md5sum: ef14be0f59dc55c666797ef3a3b40e62
-    - path: miniwdl_run/call-vadr/work/vadr_fasta_files/clearlabs.medaka.consensus.vadr.NC_045512.CDS.2.fa
-      md5sum: ab2261fb93f30902350cca9f4b47d39f
-    - path: miniwdl_run/call-vadr/work/vadr_fasta_files/clearlabs.medaka.consensus.vadr.NC_045512.gene.1.fa
-      md5sum: cda43f921f578dce1fde4bc08cf17934
-    - path: miniwdl_run/call-vadr/work/vadr_fasta_files/clearlabs.medaka.consensus.vadr.NC_045512.gene.2.fa
-      md5sum: b1f6d78381a5b97da1be035512c357c8
-    - path: miniwdl_run/call-vadr/work/vadr_fasta_files/clearlabs.medaka.consensus.vadr.NC_045512.mat_peptide.1.fa
-      md5sum: 83c9e63df3f7029fb2003391867de0fe
-    - path: miniwdl_run/call-vadr/work/vadr_fasta_files/clearlabs.medaka.consensus.vadr.NC_045512.mat_peptide.2.fa
-      md5sum: 3fad94cf6baa4c18bb6efe5bd0e6f0a8
-    - path: miniwdl_run/call-vadr/work/vadr_fasta_files/clearlabs.medaka.consensus.vadr.NC_045512.stem_loop.1.fa
-      md5sum: d9b9c6fb8be9278cd55270af26f8012f
-    - path: miniwdl_run/call-vadr/work/vadr_fasta_files/clearlabs.medaka.consensus.vadr.NC_045512.stem_loop.2.fa
-      md5sum: b927b16fb069f0b506f037ef48178dd9
-    - path: miniwdl_run/call-vadr/work/vadr_fasta_files/clearlabs.medaka.consensus.vadr.fail.fa
-      md5sum: df3a832ffbced8719506279648c968af
-    - path: miniwdl_run/call-vadr/work/vadr_fasta_files/clearlabs.medaka.consensus.vadr.pass.fa
-      md5sum: d41d8cd98f00b204e9800998ecf8427e
+    - path: miniwdl_run/call-vadr/work/clearlabs.consensus/clearlabs.consensus.vadr.rpn
+    - path: miniwdl_run/call-vadr/work/clearlabs.consensus/clearlabs.consensus.vadr.sda
+    - path: miniwdl_run/call-vadr/work/clearlabs.consensus/clearlabs.consensus.vadr.seqstat
+    - path: miniwdl_run/call-vadr/work/clearlabs.consensus/clearlabs.consensus.vadr.sgm
+    - path: miniwdl_run/call-vadr/work/clearlabs.consensus/clearlabs.consensus.vadr.sqa
+    - path: miniwdl_run/call-vadr/work/clearlabs.consensus/clearlabs.consensus.vadr.sqc.txt
+    - path: miniwdl_run/call-vadr/work/clearlabs.consensus_trimmed.fasta
+    - path: miniwdl_run/call-vadr/work/clearlabs.consensus_vadr-fasta-files.zip
+    - path: miniwdl_run/call-vadr/work/vadr_fasta_files/clearlabs.consensus.vadr.NC_045512.CDS.1.fa
+    - path: miniwdl_run/call-vadr/work/vadr_fasta_files/clearlabs.consensus.vadr.NC_045512.CDS.2.fa
+    - path: miniwdl_run/call-vadr/work/vadr_fasta_files/clearlabs.consensus.vadr.NC_045512.gene.1.fa
+    - path: miniwdl_run/call-vadr/work/vadr_fasta_files/clearlabs.consensus.vadr.NC_045512.gene.2.fa
+    - path: miniwdl_run/call-vadr/work/vadr_fasta_files/clearlabs.consensus.vadr.NC_045512.mat_peptide.1.fa
+    - path: miniwdl_run/call-vadr/work/vadr_fasta_files/clearlabs.consensus.vadr.NC_045512.mat_peptide.2.fa
+    - path: miniwdl_run/call-vadr/work/vadr_fasta_files/clearlabs.consensus.vadr.NC_045512.stem_loop.1.fa
+    - path: miniwdl_run/call-vadr/work/vadr_fasta_files/clearlabs.consensus.vadr.NC_045512.stem_loop.2.fa
+    - path: miniwdl_run/call-vadr/work/vadr_fasta_files/clearlabs.consensus.vadr.fail.fa
+    - path: miniwdl_run/call-vadr/work/vadr_fasta_files/clearlabs.consensus.vadr.pass.fa
     - path: miniwdl_run/call-version_capture/inputs.json
     - path: miniwdl_run/call-version_capture/task.log
       contains: ["wdl", "theiacov_clearlabs", "version_capture", "done"]

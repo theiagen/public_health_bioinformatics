@@ -27,7 +27,9 @@ workflow theiacov_clearlabs {
     File primer_bed
     # assembly parameters
     Int normalise = 20000
-    String medaka_docker = "us-docker.pkg.dev/general-theiagen/staphb/artic-ncov2019:1.3.0-medaka-1.4.3"
+    # artic clair 3 model
+    String? clair3_model
+    String? artic_docker_image
     # reference values
     File? reference_genome
     # nextclade inputs
@@ -77,9 +79,10 @@ workflow theiacov_clearlabs {
       read1 = ncbi_scrub_se.read1_dehosted,
       primer_bed = primer_bed,
       normalise = normalise,
-      docker = medaka_docker,
+      clair3_model = clair3_model,
       reference_genome = organism_parameters.reference,
-      organism = organism
+      organism = organism,
+      docker = artic_docker_image
   }
   call assembly_metrics.stats_n_coverage {
     input:
@@ -187,13 +190,13 @@ workflow theiacov_clearlabs {
     # Read Alignment - Artic consensus outputs
     File aligned_bam = consensus.trim_sorted_bam
     File aligned_bai = consensus.trim_sorted_bai
-    File variants_from_ref_vcf = consensus.medaka_pass_vcf
+    File variants_from_ref_vcf = consensus.artic_clair3_pass_vcf
     File assembly_fasta = consensus.consensus_seq
     File? read1_aligned = consensus.reads_aligned
     # Read Alignment - Artic consensus versioning outputs
     String artic_version = consensus.artic_pipeline_version
     String artic_docker = consensus.artic_pipeline_docker
-    String medaka_reference = consensus.medaka_reference
+    String artic_reference = consensus.artic_pipeline_reference
     String primer_bed_name = consensus.primer_bed_name
     String assembly_method = "TheiaCoV (~{version_capture.phb_version}): ~{consensus.artic_pipeline_version}"
     # Read Alignment - consensus assembly qc outputs
