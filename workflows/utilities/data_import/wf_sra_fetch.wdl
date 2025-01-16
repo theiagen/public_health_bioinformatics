@@ -1,6 +1,7 @@
 version 1.0
 
 import "../../../tasks/utilities/data_import/task_sra_fetch.wdl" as sra_fetch
+import "../../../tasks/task_versioning.wdl" as versioning
 
 workflow fetch_sra_to_fastq {
   input {
@@ -10,6 +11,9 @@ workflow fetch_sra_to_fastq {
     Int? memory
     Int? cpu
     String? fastq_dl_opts
+  }
+  call versioning.version_capture {
+    input:
   }
   call sra_fetch.fastq_dl_sra {
     input:
@@ -21,6 +25,8 @@ workflow fetch_sra_to_fastq {
       fastq_dl_opts = fastq_dl_opts
   }
   output {
+    String sra_fetch_version = version_capture.phb_version
+    String sra_fetch_analysis_date = version_capture.date
     File read1 = fastq_dl_sra.read1
     File? read2 = fastq_dl_sra.read2
     File fastq_dl_fastq_metadata = fastq_dl_sra.fastq_metadata
