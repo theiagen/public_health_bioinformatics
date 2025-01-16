@@ -97,7 +97,7 @@ workflow theiaprok_ont {
         expected_genome_length = genome_length
     }
     if (clean_check_reads.read_screen == "PASS") {
-       call flye_workflow.flye_denovo as flye_denovo {
+       call flye_workflow.flye_denovo {
        input:
          read1 = read_qc_trim.read1_clean,
          samplename = samplename
@@ -277,7 +277,10 @@ workflow theiaprok_ont {
               tiptoft_plasmid_replicon_genes = read_qc_trim.tiptoft_plasmid_replicon_genes,
               tiptoft_version = read_qc_trim.tiptoft_version,
               assembly_fasta = flye_denovo.assembly_fasta,
+              bandage_plot = bandage.bandage_plot,
               contigs_gfa = flye_denovo.contigs_gfa,
+              filtered_contigs_metrics = flye_denovo.filtered_contigs_metrics,
+              flye_assembly_info = flye_denovo.flye_assembly_info,
               quast_report = quast.quast_report,
               quast_version = quast.version,
               assembly_length = quast.genome_length,
@@ -593,6 +596,8 @@ workflow theiaprok_ont {
     File? assembly_fasta = flye_denovo.assembly_fasta
     File? contigs_gfa = flye_denovo.contigs_gfa
     File? bandage_plot = flye_denovo.bandage_plot
+    File? filtered_contigs_metrics = flye_denovo.filtered_contigs_metrics
+    String? flye_assembly_info = flye_denovo.flye_assembly_info
     String? medaka_model = flye_denovo.medaka_model
     String? porechop_version = flye_denovo.porechop_version
     String? flye_version = flye_denovo.flye_version

@@ -4,7 +4,7 @@ task flye {
   input {
     File read1
     String samplename
-    String read_type = "--nano-raw" # Default read type
+    String read_type = "--nano-hq" # Default read type
     Int? genome_length # requires `asm_coverage`
     Int? asm_coverage # reduced coverage for initial disjointig assembly
 

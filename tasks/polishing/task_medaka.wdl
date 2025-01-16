@@ -5,8 +5,8 @@ task medaka {
     File unpolished_fasta
     String samplename
     File read1
-    Boolean auto_model = true       # Automatically resolve model by inspecting input
-    String? medaka_model            # Optional user-specified model
+    Boolean auto_model = true # Automatically resolve model by inspecting input
+    String? medaka_model # Optional user-specified model
     Int cpu = 4
     Int memory = 16
     Int disk_size = 100

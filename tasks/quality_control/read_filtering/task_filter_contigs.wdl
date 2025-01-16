@@ -1,6 +1,6 @@
 version 1.0
 
-task contig_filter {
+task filter_contigs {
   input {
     File assembly_fasta
     Int min_length = 1000
@@ -11,6 +11,7 @@ task contig_filter {
   }
   command <<< 
     set -euo pipefail
+    
     echo "Filtering contigs from ~{assembly_fasta}" >&2
 
     # Install Biopython if not pre-installed

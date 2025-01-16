@@ -31,7 +31,7 @@ workflow flye_denovo {
     String? porechop_trimopts # Optional Porechop trimming options
 
     # Flye inputs
-    String read_type = "--nano-raw"  
+    String flye_read_type = "--nano-hq" 
     Int? flye_genome_length # Requires `asm_coverage`
     Int? flye_asm_coverage # Reduced coverage for initial disjointig assembly
     Int flye_polishing_iterations = 1 # Default polishing iterations
@@ -105,11 +105,6 @@ workflow flye_denovo {
     input:
       read1 = select_first([porechop.trimmed_reads, read1]), # Use trimmed reads if available
       samplename = samplename,
-      ont_corrected = flye_ont_corrected,
-      pacbio_corrected = flye_pacbio_corrected,
-      pacbio_hifi = flye_pacbio_hifi,
-      pacbio_raw = flye_pacbio_raw,
-      ont_high_quality = flye_ont_high_quality,
       genome_length = flye_genome_length,
       asm_coverage = flye_asm_coverage,
       flye_polishing_iterations = flye_polishing_iterations,
@@ -191,7 +186,7 @@ workflow flye_denovo {
     }
   }
   # Contig Filtering and Final Assembly orientation
-  call task_filter_contigs.contig_filter as contig_filter {
+  call task_filter_contigs.filter_contigs as filter_contigs {
     input:
       assembly_fasta = select_first([polypolish.polished_assembly, medaka.medaka_fasta, racon.polished_fasta, flye.assembly_fasta]), # Use Flye assembly if no polishing
       min_length = filtercontigs_min_length,
@@ -212,6 +207,8 @@ workflow flye_denovo {
     File assembly_fasta = dnaapler.reoriented_fasta
     File bandage_plot = bandage.plot
     File contigs_gfa = flye.assembly_graph_gfa
+    File filtered_contigs_metrics = filter_contigs.assembly_filtering_metrics
+    File flye_assembly_info = flye.assembly_info
     String? medaka_model_used = medaka.resolved_medaka_model
     String? porechop_version = porechop.porechop_version
     String flye_version = flye.flye_version
