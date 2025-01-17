@@ -117,7 +117,7 @@ All input reads are processed through "core tasks" in each workflow. The core ta
 | rasusa_task | **bases** | String | Explicitly set the number of bases required e.g., 4.3kb, 7Tb, 9000, 4.1MB |  | Optional |
 | rasusa_task | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional |
 | rasusa_task | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
-| rasusa_task | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/rasusa:0.7.0 | Optional |
+| rasusa_task | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/rasusa:2.1.0 | Optional |
 | rasusa_task | **frac** | Float | Subsample to a fraction of the reads |  | Optional |
 | rasusa_task | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional |
 | rasusa_task | **num** | Int | Subsample to a specific number of reads |  | Optional |
