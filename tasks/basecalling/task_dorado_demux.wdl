@@ -4,11 +4,11 @@ task dorado_demux {
   input {
     Array[File] bam_files
     String kit_name
-    String fastq_file_name
+    String output_file_prefix 
     Int cpu = 4 
     Int memory = 16
     Int disk_size = 100
-    Boolean notrim = false
+    Boolean demux_notrim = false
     String dorado_model_used
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/dorado:0.9.0-cuda12.2.0"
   }
@@ -21,7 +21,7 @@ task dorado_demux {
     # Output the Dorado model used
     echo "~{dorado_model_used}" > DORADO_MODEL_USED
 
-    fastq_file_name="~{fastq_file_name}"
+    output_file_prefix="~{output_file_prefix}"
     kit_name="~{kit_name}"
 
     # Start the main log file for the entire task
@@ -47,8 +47,9 @@ task dorado_demux {
         --output-dir "$demux_dir" \
         --kit-name "$kit_name" \
         --emit-fastq \
+        --threads ~{cpu} \
         --emit-summary \
-        ~{if notrim then "--no-trim" else ""} \
+        ~{if demux_notrim then "--no-trim" else ""} \
         --verbose > "$demux_dir/demux_${base_name}.log" 2>&1 || {
           echo "ERROR: Dorado demux failed for $bam_file. Check $demux_dir/demux_${base_name}.log for details." >&2
           exit 1
@@ -64,10 +65,10 @@ task dorado_demux {
         echo "Processing $fastq_file in $demux_dir"
 
         if [[ "$fastq_file" == *"unclassified"* ]]; then
-          final_fastq="merged_output/${fastq_file_name}-unclassified.fastq"
+          final_fastq="merged_output/${output_file_prefix }-unclassified.fastq"
         else
           barcode=$(echo "$fastq_file" | sed -E 's/.*_(barcode[0-9]+)\.fastq/\1/')
-          final_fastq="merged_output/${fastq_file_name}-${barcode}.fastq"
+          final_fastq="merged_output/${output_file_prefix }-${barcode}.fastq"
         fi
 
         if [ -f "$final_fastq" ]; then
@@ -84,7 +85,6 @@ task dorado_demux {
     done
 
     echo "### Dorado demux process completed successfully ###"
-    date
   >>>
   output {
     Array[File] fastq_files = glob("merged_output/*.fastq.gz")

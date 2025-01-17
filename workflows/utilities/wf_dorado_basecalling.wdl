@@ -18,13 +18,10 @@ workflow dorado_basecalling_workflow {
     String kit_name
     String new_table_name
     String fastq_upload_path
-    Boolean paired_end = false
-    Boolean assembly_data = false
-    String? file_ending
     String terra_project
     String terra_workspace
-    String fastq_file_name
-    Boolean notrim = false
+    String output_file_prefix 
+    Boolean demux_notrim = false
     File? custom_primers
   }
 
@@ -50,9 +47,9 @@ workflow dorado_basecalling_workflow {
     input:
       bam_files = flatten(dorado_basecall.bam_files),
       kit_name = kit_name,
-      fastq_file_name = fastq_file_name,
+      output_file_prefix = output_file_prefix,
       dorado_model_used = dorado_basecall.dorado_model_used[0],
-      notrim = notrim
+      demux_notrim = demux_notrim
   }
 
   # Optional trimming step
@@ -74,14 +71,13 @@ workflow dorado_basecalling_workflow {
       input:
         new_table_name = new_table_name,
         data_location_path = fastq_upload_path,
-        paired_end = paired_end,
-        assembly_data = assembly_data,
-        file_ending = file_ending,
+        paired_end = false,                  
+        assembly_data = false,  
+        file_ending = ".fastq.gz",         
         terra_project = terra_project,
         terra_workspace = terra_workspace
     }
   }
-
   output {
     # Version Captures
     String dorado_phb_version = version_capture.phb_version

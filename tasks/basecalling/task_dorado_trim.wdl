@@ -10,12 +10,22 @@ task dorado_trim {
     Int disk_size = 100
   }
   command <<< 
-    mkdir -p trimmed_fastqs
+    # Create output directory for trimmed FASTQ files
+    output_dir="trimmed_fastqs"
+    mkdir -p "$output_dir"
+
+    # Loop through each FASTQ file and apply Dorado trim
     for fq in ~{sep=" " fastq_files}; do
-      filename=$(basename "$fq")
-      dorado trim "$fq" --primer-sequences "~{custom_primers}" --emit-fastq > trimmed_fastqs/"$filename"
+        # Extract the base filename from the path
+        filename=$(basename "$fq")
+        
+        # Perform primer trimming and save output in the designated directory
+        dorado trim "$fq" \
+            --primer-sequences "~{custom_primers}" \
+            --threads ~{cpu} \
+            --emit-fastq > "$output_dir/$filename"
     done
-  >>>
+>>>
   output {
     Array[File] trimmed_fastq_files = glob("trimmed_fastqs/*.fastq.gz")
   }

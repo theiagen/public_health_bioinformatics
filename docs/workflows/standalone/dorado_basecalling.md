@@ -42,13 +42,13 @@ Users can configure the basecalling model by setting the `dorado_model` input pa
 
 **Manual Model Input:** Users can specify the full path or name of a specific model (e.g. `dna_r10.4.1_e8.2_400bps_hac@v4.2.0`).
 
-### Example Manual Models:
+#### Example Manual Models:
 
 - `dna_r10.4.1_e8.2_400bps_sup@v4.2.0`
 - `dna_r10.4.1_e8.2_400bps_hac@v4.2.0`
 - `dna_r10.4.1_e8.2_400bps_fast@v4.2.0`
 
-??? Info "Supported Kit Names"
+### Supported Kit Names:
 
     Ensure you use an accepted kit name in the `kit_name` parameter. The following kit names are supported in Dorado:
 
@@ -77,40 +77,38 @@ Users can configure the basecalling model by setting the `dorado_model` input pa
 | dorado_basecalling_workflow | **dorado_model** | String | Model speed for basecalling ('sup' for super accuracy, 'hac' for high accuracy, or 'fast' for high speed). Users may also specify a full model name. | "sup" | Optional |
 | dorado_basecalling_workflow | **assembly_data** | Boolean | Indicates if the data is for assembly | false | Optional |
 | dorado_basecalling_workflow | **custom_primers** | String | Path to FASTA file containing custom primer sequences for PCR primer trimming during demultiplexing. | None | Optional |
-| dorado_basecalling_workflow | **file_ending** | String? | File extension pattern for identifying files (e.g., ".fastq.gz") | None | Optional |
-| dorado_basecalling_workflow | **notrim** | Boolean |Set to `true` to disable barcode trimming during demultiplexing. | false | Optional |
-| dorado_basecalling_workflow | **paired_end** | Boolean | Indicates if data is paired-end | false | Optional |
-| create_terra_table | **cpu** | Int | Number of CPUs allocated | 8 | Optional |
-| create_terra_table | **disk_size** | Int | Disk size to allocate (GB) | 100 | Optional |
-| create_terra_table | **memory** | Int | Amount of memory to allocate (GB) | 32 | Optional |
-| create_terra_table | **docker** | String | Docker image to use | us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-06-21 | Optional |
-| dorado_basecall | **cpu** | Int | Number of CPUs allocated | 8 | Optional |
+| dorado_basecalling_workflow | **demux_notrim** | Boolean |Set to `true` to disable barcode trimming during demultiplexing. | false | Optional |
+| create_terra_table | **cpu** | Int | Number of CPUs to allocate to the task | 8 | Optional |
+| create_terra_table | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
+| create_terra_table | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 32 | Optional |
+| create_terra_table | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-06-21 | Optional |
+| dorado_basecall | **cpu** | Int | Number of CPUs to allocate to the task | 8 | Optional |
 | dorado_basecall | **gpuCount** | Int | Number of GPUs to use | 1 | Optional |
 | dorado_basecall | **gpuType** | String | Type of GPU (e.g., `nvidia-tesla-t4`) | "nvidia-tesla-t4" | Optional |
-| dorado_basecall | **memory** | Int | Amount of memory to allocate (GB) | 32 | Optional |
-| dorado_basecall | **disk_size** | Int | Disk size to allocate (GB) | 100 | Optional |
-| dorado_demux | **cpu** | Int | Number of CPUs allocated | 4 | Optional |
-| dorado_demux | **memory** | Int | Amount of memory to allocate (GB) | 16 | Optional |
-| dorado_demux | **disk_size** | Int | Disk size to allocate (GB) | 100 | Optional |
-| dorado_demux | **docker** | String | Docker image to use | us-docker.pkg.dev/general-theiagen/staphb/dorado:0.9.0-cuda12.2.0 | Optional |
-| dorado_trim | **cpu** | Int | Number of CPUs allocated | 4 | Optional |
-| dorado_trim | **disk_size** | Int | Disk size to allocate (GB) | 100 | Optional |
-| dorado_trim | **docker** | String | Docker image to use | us-docker.pkg.dev/general-theiagen/staphb/dorado:0.9.0-cuda12.2.0 | Optional |
-| dorado_trim | **memory** | Int | Amount of memory to allocate (GB) | 16 | Optional |
-| list_pod5 | **cpu** | Int | Number of CPUs allocated | 8 | Optional |
-| list_pod5 | **disk_size** | Int | Disk size to allocate (GB) | 100 | Optional |
-| list_pod5 | **memory** | Int | Amount of memory to allocate (GB) | 32 | Optional |
-| list_pod5 | **docker** | String | Docker image to use | us-docker.pkg.dev/general-theiagen/cloudsdktool/google-cloud-cli:427.0.0-alpine | Optional |
-| transfer_files | **cpu** | Int | Number of CPUs allocated | 4 | Optional |
-| transfer_files | **disk_size** | Int | Disk size to allocate (GB) | 100 | Optional |
-| transfer_files | **docker** | String | Docker image to use | us-docker.pkg.dev/general-theiagen/cloudsdktool/google-cloud-cli:427.0.0-alpine | Optional |
-| transfer_files | **memory** | Int | Amount of memory to allocate (GB) | 8 | Optional |
+| dorado_basecall | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 32 | Optional |
+| dorado_basecall | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
+| dorado_demux | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional |
+| dorado_demux | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 16 | Optional |
+| dorado_demux | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
+| dorado_demux | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/dorado:0.9.0-cuda12.2.0 | Optional |
+| dorado_trim | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional |
+| dorado_trim | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
+| dorado_trim | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/dorado:0.9.0-cuda12.2.0 | Optional |
+| dorado_trim | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 16 | Optional |
+| list_pod5 | **cpu** | Int | Number of CPUs to allocate to the task | 8 | Optional |
+| list_pod5 | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
+| list_pod5 | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 32 | Optional |
+| list_pod5 | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/cloudsdktool/google-cloud-cli:427.0.0-alpine | Optional |
+| transfer_files | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional |
+| transfer_files | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
+| transfer_files | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/cloudsdktool/google-cloud-cli:427.0.0-alpine | Optional |
+| transfer_files | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional |
 | version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
 | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) | | Optional |
 
 !!! info "Detailed Input Information"
     - **dorado_model**: If set to 'sup', 'hac', or 'fast', the workflow will run with automatic model selection. If a full model name is provided, Dorado will use that model directly.
-    - **fastq_file_name**: This will serve as a prefix for the output FASTQ files. For example, if you provide `project001-`, the resulting files will be named `project001-barcodeXX.fastq.gz`.
+    - **fastq_file_name**: This will serve as a prefix for the output FASTQ files. For example, if you provide `project001`, the resulting files will be named `project001-barcodeXX.fastq.gz`.
     - **kit_name**: Ensure the correct kit name is provided, as it determines the barcoding and adapter trimming behavior.
     - **fastq_upload_path**: This is the folder path in Terra where the final FASTQ files will be transferred for further analysis. Ensure the path matches your Terra workspace bucket GSURI. Please visit the "Dashboard" tab of your Terra workspace which provides a link to the bucket in the "Cloud Information" drop-down panel. The root GSURI for Terra workspace buckets generally start with `gs://fc-` followed by a unique identifier.
 
@@ -120,8 +118,10 @@ Users can configure the basecalling model by setting the `dorado_model` input pa
 
     ### Examples:
 
-    - **Accepted Prefix**: `projectname-barcode01.fastq.gz`
-    - **Not Recommended**: `projectname_2024_test-barcode01.fastq.gz` (would recognize only `projectname` as the sample name, leading to ambiguity with multiple files).
+    - **Accepted Prefix**: `project001`  
+      - **Resulting Output File Names**: `project001-barcode01.fastq.gz`, `project001-barcode02.fastq.gz`, etc.
+    - **Not Recommended**: `projectname_2024_test`  
+      - **Resulting Output File Names**: `projectname_2024_test-barcode01.fastq.gz` (only `projectname_2024_test` is used as the sample name, leading to ambiguity when multiple files are present).
 
 ### Workflow Tasks
 
@@ -136,15 +136,40 @@ This workflow is composed of several tasks to process, basecall, and analyze Oxf
      !!! note "Barcode Trimming"
         Barcode trimming is purposefully disabled during the basecalling step to ensure accurate demultiplexing in subsequent workflow steps.
 
+    !!! techdetails "Dorado Basecalling Technical Details"
+
+    |  | Links |
+    | --- | --- |
+    | Task | [task_dorado_basecall.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/basecalling/task_dorado_basecall.wdl) |
+    | Software Source Code | [Dorado on GitHub](https://github.com/nanoporetech/dorado/) |
+    | Software Documentation | <https://github.com/nanoporetech/dorado> |
+
 ??? task "`Dorado Demultiplexing`: Produces barcode-specific FASTQ files"
     This task demultiplexes the BAM files based on barcodes, generating individual FASTQ files for each barcode to support further analyses.
 
     !!! info "Disabling Barcode Trimming"
-        Barcode trimming is enabled by default, but could be disabled by setting the optional input variable `notrim` to `true`. This allows users to retain untrimmed reads for troubleshooting, such as inspecting reads in the "unclassified" folder when mis-binned reads or other data issues arise.
+        Barcode trimming is enabled by default, but could be disabled by setting the optional input variable `demux_notrim` to `true`. This allows users to retain untrimmed reads for troubleshooting, such as inspecting reads in the "unclassified" folder when mis-binned reads or other data issues arise.
+
+    !!! techdetails "Dorado Basecalling Technical Details"
+
+        |  | Links |
+        | --- | --- |
+        | Task | [task_dorado_demux.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/basecalling/task_dorado_demux.wdl) |
+        | Software Source Code | [Dorado on GitHub](https://github.com/nanoporetech/dorado/) |
+        | Software Documentation | <https://github.com/nanoporetech/dorado> |
+
 
 ??? task "`Dorado Trimming`: Trims PCR primers from FASTQ files"
     !!! info "Custom Primer Trimming"
         When a FASTA file is provided via the custom_primers input, the workflow calls the dorado_trim task to trim reads using the specified primer sequences. This step is optional and can be omitted if no custom primers are required.
+
+        !!! techdetails "Dorado trim Technical Details"
+
+        |  | Links |
+        | --- | --- |
+        | Task | [task_dorado_trim.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/basecalling/task_dorado_trimm.wdl) |
+        | Software Source Code | [Dorado on GitHub](https://github.com/nanoporetech/dorado/) |
+        | Software Documentation | <https://github.com/nanoporetech/dorado> |
 
 ??? task "`FASTQ File Transfer`: Transfers files to Terra"
     After demultiplexing, the FASTQ files are uploaded to the Terra workspace bucket for storage and potential use in other workflows.

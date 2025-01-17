@@ -6,10 +6,10 @@ workflow create_terra_table {
   input {
     String new_table_name
     String data_location_path
-    Boolean paired_end
-    Boolean assembly_data
+    Boolean paired_end = false
+    Boolean assembly_data = false
 
-    String? file_ending
+    String file_ending = ".fastq.gz"
 
     String terra_project
     String terra_workspace
