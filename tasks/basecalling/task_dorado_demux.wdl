@@ -11,7 +11,6 @@ task dorado_demux {
     Boolean notrim = false
     String dorado_model_used
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/dorado:0.8.0"
-    File? custom_primers
   }
   command <<< 
     set -euo pipefail
@@ -24,12 +23,6 @@ task dorado_demux {
 
     fastq_file_name="~{fastq_file_name}"
     kit_name="~{kit_name}"
-
-    # Validate custom primer file if provided
-    if [[ -n "~{if defined(custom_primers) then custom_primers else ''}" && ! -f "~{custom_primers}" ]]; then
-      echo "ERROR: Custom primer file ~{custom_primers} does not exist or is invalid." >&2
-      exit 1
-    fi
 
     # Start the main log file for the entire task
     exec > >(tee -a dorado_demux_output.log) 2>&1
@@ -55,7 +48,6 @@ task dorado_demux {
         --kit-name "$kit_name" \
         --emit-fastq \
         --emit-summary \
-        ~{if defined(custom_primers) then "--primer-sequences " + custom_primers else ""} \
         ~{if notrim then "--no-trim" else ""} \
         --verbose > "$demux_dir/demux_${base_name}.log" 2>&1 || {
           echo "ERROR: Dorado demux failed for $bam_file. Check $demux_dir/demux_${base_name}.log for details." >&2
@@ -102,11 +94,12 @@ task dorado_demux {
     String dorado_model_name = read_string("DORADO_MODEL_USED")
   }
   runtime {
-    docker: docker
-    cpu: cpu
+    docker: "~{docker}"
     memory: "~{memory} GB"
-    disks: "local-disk ~{disk_size} SSD"
+    cpu: cpu
+    disks: "local-disk " + disk_size + " SSD"
+    disk: disk_size + " GB"
+    maxRetries: 3
     preemptible: 0
-    maxRetries: 1
   }
 }

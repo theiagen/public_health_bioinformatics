@@ -40,11 +40,12 @@ task samtools_convert {
     String samtools_docker = docker
   }
   runtime {
-    docker: docker
-    cpu: cpu
+    docker: "~{docker}"
     memory: "~{memory} GB"
-    disks: "local-disk ~{disk_size} SSD"
+    cpu: cpu
+    disks: "local-disk " + disk_size + " SSD"
+    disk: disk_size + " GB"
+    maxRetries: 3
     preemptible: 0
-    maxRetries: 1
   }
 }

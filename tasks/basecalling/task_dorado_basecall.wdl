@@ -76,9 +76,9 @@ task basecall {
     File dorado_log = "dorado_basecall.log"
   }
   runtime {
-    docker: docker
-    cpu: cpu
+    docker: "~{docker}"
     memory: "~{memory} GB"
+    cpu: cpu
     disks: "local-disk " + disk_size + " SSD"
     gpuCount: 1
     gpuType: "nvidia-tesla-t4"  
