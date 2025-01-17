@@ -29,26 +29,23 @@ task basecall {
 
     # Create a unique output directory for each scatter job
     base_name=$(basename "~{input_file}" .pod5)
-    sam_output="output/sam_${base_name}/"
-    mkdir -p "$sam_output"
+    bam_output="output/bam_${base_name}/"
+    mkdir -p "$bam_output"
 
     echo "### Starting basecalling for ~{input_file} ###" | tee -a dorado_basecall.log
 
-    # Set SAM file path with unique naming based on POD5 basename
-    sam_file="$sam_output/${base_name}.sam"
+     # Set BAM file path with unique naming based on POD5 basename
+    bam_file="$bam_output/${base_name}.bam"
 
-    echo "Processing ~{input_file}, expected output: $sam_file" | tee -a dorado_basecall.log
+    echo "Processing ~{input_file}, expected output: $bam_file" | tee -a dorado_basecall.log
 
     # Run Dorado basecaller and log output
-    # This part "2> >(tee -a log.txt >&2)" is used to redirect STDERR to the screen AND to append the STDERR to log.txt file. 
-    # Useful for troubleshooting in Terra and for parsing for important information.
     dorado basecaller \
       "${dorado_model_variable}" \
       "~{input_file}" \
       --kit-name ~{kit_name} \
-      --emit-sam \
       --no-trim \
-      --output-dir "$sam_output" \
+      --output-dir "$bam_output" \
       --verbose 2> >(tee -a dorado_basecall.log >&2) || { echo "ERROR: Dorado basecaller failed for ~{input_file}"; exit 1; }
 
     # Log the resolved model name
@@ -56,20 +53,18 @@ task basecall {
     if [ "~{dorado_model}" == "fast" ] || [ "~{dorado_model}" == "hac" ] || [ "~{dorado_model}" == "sup" ]; then
       echo "DEBUG: User provided either fast, hac, or sup as input for dorado_model variable, parsing log for explicit model name now..."
       grep -m 1 'downloading' dorado_basecall.log | sed -e 's/.*downloading //' -e 's/ with.*//' | tr -d '\n' | tee DORADO_MODEL
-
-    # (else) if user provides explicit model name, just output that string, no parsing involved
     else
       echo "~{dorado_model}" | tee DORADO_MODEL
     fi
 
-    # Rename the generated SAM file to the unique name based on input_file
-    generated_sam=$(find "$sam_output" -name "*.sam" | head -n 1)
-    mv "$generated_sam" "$sam_file"
+    # Rename the generated BAM file to the unique name based on input_file
+    generated_bam=$(find "$bam_output" -name "*.bam" | head -n 1)
+    mv "$generated_bam" "$bam_file"
 
-    echo "Basecalling completed for ~{input_file}. SAM file renamed to: $sam_file" | tee -a "dorado_basecall.log"
+    echo "Basecalling completed for ~{input_file}. BAM file renamed to: $bam_file" | tee -a "dorado_basecall.log"
   >>>
   output {
-    Array[File] sam_files = glob("output/sam_*/*.sam")
+    Array[File] bam_files = glob("output/bam_*/*.bam")
     String dorado_docker = docker
     String dorado_version = read_string("DORADO_VERSION")
     String dorado_model_used = read_string("DORADO_MODEL")

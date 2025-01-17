@@ -1,7 +1,6 @@
 version 1.0
 
 import "../../tasks/basecalling/task_dorado_basecall.wdl" as basecall_task
-import "../../tasks/basecalling/task_samtools_convert.wdl" as samtools_convert_task
 import "../../tasks/basecalling/task_dorado_demux.wdl" as dorado_demux_task
 import "../../tasks/utilities/file_handling/task_transfer_files.wdl" as transfer_fastq_files
 import "../../tasks/utilities/data_import/task_create_terra_table.wdl" as terra_fastq_table
@@ -11,7 +10,7 @@ import "../../tasks/basecalling/task_dorado_trim.wdl" as task_dorado_trim
 
 workflow dorado_basecalling_workflow {
   meta {
-    description: "GPU-accelerated workflow for basecalling Oxford Nanopore POD5 files, generating SAM outputs and supporting downstream demultiplexing and FASTQ output."
+    description: "GPU-accelerated workflow for basecalling Oxford Nanopore POD5 files, generating BAM outputs and supporting downstream demultiplexing and FASTQ output."
   }
   input {
     String pod5_bucket_path  # GCS bucket path containing POD5 files
@@ -47,14 +46,9 @@ workflow dorado_basecalling_workflow {
     }
   }
 
-  call samtools_convert_task.samtools_convert {
-    input:
-      sam_files = flatten(dorado_basecall.sam_files)
-  }
-
   call dorado_demux_task.dorado_demux {
     input:
-      bam_files = samtools_convert.bam_files,
+      bam_files = flatten(dorado_basecall.bam_files),
       kit_name = kit_name,
       fastq_file_name = fastq_file_name,
       dorado_model_used = dorado_basecall.dorado_model_used[0],
@@ -99,7 +93,6 @@ workflow dorado_basecalling_workflow {
 
     # Versions and model used 
     String dorado_version = dorado_demux.dorado_version
-    String samtools_version = samtools_convert.samtools_version
     String dorado_model_used = dorado_demux.dorado_model_name
   }
 }

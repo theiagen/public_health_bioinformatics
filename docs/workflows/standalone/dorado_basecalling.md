@@ -4,11 +4,29 @@
 
 | **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
 |---|---|---|---|---|
-| [Standalone](../../workflows_overview/workflows_type.md/#standalone) | [Any Taxa](../../workflows_overview/workflows_kingdom.md/#any-taxa) | v2.3.0 | Yes | Sample-level |
+| [Standalone](../../workflows_overview/workflows_type.md/#standalone) | [Any Taxa](../../workflows_overview/workflows_kingdom.md/#any-taxa) | vX.X.X | Yes | Sample-level |
 
 ## Dorado_Basecalling_PHB
 
-The Dorado Basecalling workflow is used to convert Oxford Nanopore `POD5` sequencing files into `FASTQ` format by utilizing a GPU-accelerated environment. This workflow is ideal for high-throughput applications where fast and accurate basecalling is essential. The workflow utilizes the Terra Data Uploader to add `POD5` files to a Google Cloud Storage (GCS) bucket and provide the bucket path `(gs://...)` as an input to the workflow, and output final `fastq` files to a user designated terra table for downstream analysis.
+The Dorado Basecalling workflow is used to convert Oxford Nanopore `POD5` sequencing files into `FASTQ` format by utilizing a GPU-accelerated environment. This workflow is ideal for high-throughput applications where fast and accurate basecalling is essential. Users provide the path to POD5 files stored in a Google Cloud Storage (GCS) bucket, and the workflow uses the provided path (gs://...) as an input to locate the data and output final FASTQ files to a user-designated Terra table for downstream analysis.
+
+### Uploading POD5 Files to Terra `pod5_bucket_path`
+
+??? toggle "Click for more information"
+    To run the Dorado Basecalling Workflow, you must first upload your `POD5 files` to a Google Cloud Storage (GCS) bucket within your Terra workspace. Follow these steps:
+
+    **Step 1: Use the Terra Data Uploader**
+    Go to the **"Data"** tab in your Terra workspace. Click **"Upload Files"** and select your `POD5` files for upload. Confirm the upload process and wait for the files to be uploaded.
+
+    **Step 2: Copy the GCS Path**
+    After the upload is complete, Right-click the collection name and select "Copy link address."
+
+    ![Data uploader](../../assets/figures/dorado_pod5_data_upload.png)
+
+    **Step 3: Paste the GCS Path into the Workflow Input**
+    Open the workflow configuration screen in Terra. Paste the copied GCS path into the `pod5_bucket_path` input field for the Dorado Basecalling Workflow.
+    
+    ![Data uploader](../../assets/figures/dorado_input_selection.png)
 
 ### Model Type Selection
 
@@ -83,34 +101,12 @@ Users can configure the basecalling model by setting the `dorado_model` input pa
 | list_pod5 | **disk_size** | Int | Disk size to allocate (GB) | 100 | Optional |
 | list_pod5 | **memory** | Int | Amount of memory to allocate (GB) | 32 | Optional |
 | list_pod5 | **docker** | String | Docker image to use | us-docker.pkg.dev/general-theiagen/cloudsdktool/google-cloud-cli:427.0.0-alpine | Optional |
-| samtools_convert | **cpu** | Int | Number of CPUs allocated | 4 | Optional |
-| samtools_convert | **disk_size** | Int | Disk size to allocate (GB) | 100 | Optional |
-| samtools_convert | **docker** | String | Docker image to use | us-docker.pkg.dev/general-theiagen/staphb/samtools:1.15 | Optional |
-| samtools_convert | **memory** | Int | Amount of memory to allocate (GB) | 16 | Optional |
 | transfer_files | **cpu** | Int | Number of CPUs allocated | 4 | Optional |
 | transfer_files | **disk_size** | Int | Disk size to allocate (GB) | 100 | Optional |
 | transfer_files | **docker** | String | Docker image to use | us-docker.pkg.dev/general-theiagen/cloudsdktool/google-cloud-cli:427.0.0-alpine | Optional |
 | transfer_files | **memory** | Int | Amount of memory to allocate (GB) | 8 | Optional |
 | version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
 | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) | | Optional |
-
-### Uploading Pod5 Files to Terra `pod5_bucket_path`"
-
-??? toggle "Click for more information"
-    To run the Dorado Basecalling Workflow, you must first upload your `POD5 files` to a Google Cloud Storage (GCS) bucket within your Terra workspace. Follow these steps:
-
-    **Step 1: Use the Terra Data Uploader**
-    Go to the **"Data"** tab in your Terra workspace. Click **"Upload Files"** and select your `POD5` files for upload. Confirm the upload process and wait for the files to be uploaded.
-
-    **Step 2: Copy the GCS Path**
-    After the upload is complete, Right-click the collection name and select "Copy link address."
-
-    ![Data uploader](../../assets/figures/dorado_pod5_data_upload.png)
-
-    **Step 3: Paste the GCS Path into the Workflow Input**
-    Open the workflow configuration screen in Terra. Paste the copied GCS path into the `pod5_bucket_path` input field for the Dorado Basecalling Workflow.
-    
-    ![Data uploader](../../assets/figures/dorado_input_seelction.png)
 
 !!! info "Detailed Input Information"
     - **dorado_model**: If set to 'sup', 'hac', or 'fast', the workflow will run with automatic model selection. If a full model name is provided, Dorado will use that model directly.
@@ -134,14 +130,11 @@ This workflow is composed of several tasks to process, basecall, and analyze Oxf
 ??? task "`Transfer POD5 Files`: Transfers `POD5` files to Terra"
     Lists `.pod5` files in the specified GCS bucket and passes their paths to the basecalling task.
 
-??? task "`Dorado Basecalling`: Converts `POD5` files to 'SAM' files"
-    The basecalling task takes `POD5` files as input and converts them into 'SAM' format using the specified model. This step leverages GPU acceleration for efficient processing.
+??? task "`Dorado Basecalling`: Converts `POD5` files to 'BAM' files"
+    The basecalling task takes `POD5` files as input and converts them into 'BAM' format using the specified model. This step leverages GPU acceleration for efficient processing.
 
      !!! note "Barcode Trimming"
         Barcode trimming is purposefully disabled during the basecalling step to ensure accurate demultiplexing in subsequent workflow steps.
-
-??? task "`Samtools Convert`: Converts SAM to BAM"
-    Once the SAM files are generated, this task converts them into BAM format, optimizing them for downstream applications and saving storage space.
 
 ??? task "`Dorado Demultiplexing`: Produces barcode-specific FASTQ files"
     This task demultiplexes the BAM files based on barcodes, generating individual FASTQ files for each barcode to support further analyses.
@@ -167,7 +160,6 @@ This workflow is composed of several tasks to process, basecall, and analyze Oxf
 | **terra_table_tsv** | File | TSV file for Terra table upload |
 | **dorado_version** | String | Version of Dorado used in the workflow |
 | **dorado_model_used** | String | Model used for basecalling |
-|  **samtools_version** | String | Version of Samtools used in the workflow |
 |  **dorado_analysis_date** | String | Date of Dorado analysis |
 |  **dorado_phb_version** | String | Version of Dorado PHB workflow |
 
