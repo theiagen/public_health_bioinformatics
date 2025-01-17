@@ -55,16 +55,44 @@ Users can configure the basecalling model by setting the `dorado_model` input pa
 | dorado_basecalling_workflow | **fastq_upload_path** | String | Terra folder path for uploading FASTQ files | None | Required |
 | dorado_basecalling_workflow | **terra_project** | String | Terra project ID for FASTQ file upload | None | Required |
 | dorado_basecalling_workflow | **terra_workspace** | String | Terra workspace for final FASTQ file upload | None | Required |
+| dorado_basecalling_workflow | **terra_table_name** | String | Name of the new Terra table to create | None | Required |
 | dorado_basecalling_workflow | **dorado_model** | String | Model speed for basecalling ('sup' for super accuracy, 'hac' for high accuracy, or 'fast' for high speed). Users may also specify a full model name. | "sup" | Optional |
-| basecall_task.basecall | **cpu** | Int | Number of CPUs allocated | 8 | Optional |
-| basecall_task.basecall | **gpuCount** | Int | Number of GPUs to use | 1 | Optional |
-| basecall_task.basecall | **gpuType** | String | Type of GPU (e.g., `nvidia-tesla-t4`) | "nvidia-tesla-t4" | Optional |
-| basecall_task.basecall | **memory** | Int | Amount of memory to allocate (GB) | 32 | Optional |
 | dorado_basecalling_workflow | **assembly_data** | Boolean | Indicates if the data is for assembly | false | Optional |
 | dorado_basecalling_workflow | **custom_primers** | String | Path to FASTA file containing custom primer sequences for PCR primer trimming during demultiplexing. | None | Optional |
 | dorado_basecalling_workflow | **file_ending** | String? | File extension pattern for identifying files (e.g., ".fastq.gz") | None | Optional |
 | dorado_basecalling_workflow | **notrim** | Boolean |Set to `true` to disable barcode trimming during demultiplexing. | false | Optional |
 | dorado_basecalling_workflow | **paired_end** | Boolean | Indicates if data is paired-end | false | Optional |
+| create_terra_table | **cpu** | Int | Number of CPUs allocated | 8 | Optional |
+| create_terra_table | **disk_size** | Int | Disk size to allocate (GB) | 100 | Optional |
+| create_terra_table | **memory** | Int | Amount of memory to allocate (GB) | 32 | Optional |
+| create_terra_table | **docker** | String | Docker image to use | us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-06-21 | Optional |
+| dorado_basecall | **cpu** | Int | Number of CPUs allocated | 8 | Optional |
+| dorado_basecall | **gpuCount** | Int | Number of GPUs to use | 1 | Optional |
+| dorado_basecall | **gpuType** | String | Type of GPU (e.g., `nvidia-tesla-t4`) | "nvidia-tesla-t4" | Optional |
+| dorado_basecall | **memory** | Int | Amount of memory to allocate (GB) | 32 | Optional |
+| dorado_basecall | **disk_size** | Int | Disk size to allocate (GB) | 100 | Optional |
+| dorado_demux | **cpu** | Int | Number of CPUs allocated | 4 | Optional |
+| dorado_demux | **memory** | Int | Amount of memory to allocate (GB) | 16 | Optional |
+| dorado_demux | **disk_size** | Int | Disk size to allocate (GB) | 100 | Optional |
+| dorado_demux | **docker** | String | Docker image to use | us-docker.pkg.dev/general-theiagen/staphb/dorado:0.9.0-cuda12.2.0 | Optional |
+| dorado_trim | **cpu** | Int | Number of CPUs allocated | 4 | Optional |
+| dorado_trim | **disk_size** | Int | Disk size to allocate (GB) | 100 | Optional |
+| dorado_trim | **docker** | String | Docker image to use | us-docker.pkg.dev/general-theiagen/staphb/dorado:0.9.0-cuda12.2.0 | Optional |
+| dorado_trim | **memory** | Int | Amount of memory to allocate (GB) | 16 | Optional |
+| list_pod5 | **cpu** | Int | Number of CPUs allocated | 8 | Optional |
+| list_pod5 | **disk_size** | Int | Disk size to allocate (GB) | 100 | Optional |
+| list_pod5 | **memory** | Int | Amount of memory to allocate (GB) | 32 | Optional |
+| list_pod5 | **docker** | String | Docker image to use | us-docker.pkg.dev/general-theiagen/cloudsdktool/google-cloud-cli:427.0.0-alpine | Optional |
+| samtools_convert | **cpu** | Int | Number of CPUs allocated | 4 | Optional |
+| samtools_convert | **disk_size** | Int | Disk size to allocate (GB) | 100 | Optional |
+| samtools_convert | **docker** | String | Docker image to use | us-docker.pkg.dev/general-theiagen/staphb/samtools:1.15 | Optional |
+| samtools_convert | **memory** | Int | Amount of memory to allocate (GB) | 16 | Optional |
+| transfer_files | **cpu** | Int | Number of CPUs allocated | 4 | Optional |
+| transfer_files | **disk_size** | Int | Disk size to allocate (GB) | 100 | Optional |
+| transfer_files | **docker** | String | Docker image to use | us-docker.pkg.dev/general-theiagen/cloudsdktool/google-cloud-cli:427.0.0-alpine | Optional |
+| transfer_files | **memory** | Int | Amount of memory to allocate (GB) | 8 | Optional |
+| version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
+| version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) | | Optional |
 
 ### Uploading Pod5 Files to Terra `pod5_bucket_path`"
 
@@ -121,8 +149,9 @@ This workflow is composed of several tasks to process, basecall, and analyze Oxf
     !!! info "Disabling Barcode Trimming"
         Barcode trimming is enabled by default, but could be disabled by setting the optional input variable `notrim` to `true`. This allows users to retain untrimmed reads for troubleshooting, such as inspecting reads in the "unclassified" folder when mis-binned reads or other data issues arise.
 
+??? task "`Dorado Trimming`: Trims PCR primers from FASTQ files"
     !!! info "Custom Primer Trimming"
-        Users can specify a custom set of primers for trimming during demultiplexing by providing a FASTA file to the `custom_primers` input. This feature overrides Dorado's built-in primer sequences, and the custom primers will be used for trimming instead.
+        When a FASTA file is provided via the custom_primers input, the workflow calls the dorado_trim task to trim reads using the specified primer sequences. This step is optional and can be omitted if no custom primers are required.
 
 ??? task "`FASTQ File Transfer`: Transfers files to Terra"
     After demultiplexing, the FASTQ files are uploaded to the Terra workspace bucket for storage and potential use in other workflows.
@@ -137,7 +166,7 @@ This workflow is composed of several tasks to process, basecall, and analyze Oxf
 | **fastq_files** | Array[File] | FASTQ files produced from basecalling and demultiplexing |
 | **terra_table_tsv** | File | TSV file for Terra table upload |
 | **dorado_version** | String | Version of Dorado used in the workflow |
-| **dorado_model** | String | Model used for basecalling |
+| **dorado_model_used** | String | Model used for basecalling |
 |  **samtools_version** | String | Version of Samtools used in the workflow |
 |  **dorado_analysis_date** | String | Date of Dorado analysis |
 |  **dorado_phb_version** | String | Version of Dorado PHB workflow |

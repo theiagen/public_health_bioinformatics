@@ -10,7 +10,7 @@ task dorado_demux {
     Int disk_size = 100
     Boolean notrim = false
     String dorado_model_used
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/dorado:0.8.0"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/dorado:0.9.0-cuda12.2.0"
   }
   command <<< 
     set -euo pipefail
