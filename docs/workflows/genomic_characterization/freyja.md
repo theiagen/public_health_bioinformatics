@@ -552,8 +552,6 @@ The main requirement to run Freyja on other pathogens is **the existence of a ba
 
 The appropriate barcode file and reference sequence need to be downloaded and uploaded to your [Terra.bio](http://Terra.bio) workspace.
 
-
-
 When running **Freyja_FASTQ_PHB**, the appropriate reference and barcodes file need to be passed as inputs. The first is a required input and will show up at the top of the workflows inputs page on [Terra.bio](http://Terra.bio) ([Figure 2](freyja.md/#figure2)).
 
 !!! caption "Figure 2:  Required input for Freyja_FASTQ_PHB to provide the reference genome to be used by Freyja"
