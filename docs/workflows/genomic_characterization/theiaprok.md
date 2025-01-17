@@ -470,7 +470,7 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 | plasmidfinder | **min_cov** | Float | Threshold for minimum coverage, default threshold from PlasmidFinder CLI tool is used (0.60) | 0.6 | Optional | FASTA, ONT, PE, SE |
 | plasmidfinder | **threshold** | Float | Threshold for mininum blast identity, default threshold from PlasmidFinder CLI tool is used (0.90). This default differs from the default of the PlasmidFinder webtool (0.95) | 0.9 | Optional | FASTA, ONT, PE, SE |
 | prokka | **compliant** | Boolean | Forces Genbank/ENA/DDJB compliant headers in Prokka output files | TRUE | Optional | FASTA, ONT, PE, SE |
-| prokka | **cpu** | Int | Number of CPUs to allocate to the task | 8 | Optional | FASTA, ONT, PE, SE |
+| prokka | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional | FASTA, ONT, PE, SE |
 | prokka | **disk_size** | String | Amount of storage (in GB) to allocate to the PlasmidFinder task | 100 | Optional | FASTA, ONT, PE, SE |
 | prokka | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/prokka:1.14.5 | Optional | FASTA, ONT, PE, SE |
 | prokka | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 16 | Optional | FASTA, ONT, PE, SE |
