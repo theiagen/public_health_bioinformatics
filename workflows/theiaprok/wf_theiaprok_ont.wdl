@@ -76,6 +76,7 @@ workflow theiaprok_ont {
         skip_mash = skip_mash,
         expected_genome_length = genome_length
     }
+  }
   if (select_first([raw_check_reads.read_screen, ""]) == "PASS" || skip_screen) {
     call read_qc_workflow.read_QC_trim_ont as read_qc_trim {
       input:
@@ -98,7 +99,6 @@ workflow theiaprok_ont {
       }
     }
     if (select_first([clean_check_reads.read_screen, ""]) == "PASS" || skip_screen) {
-       if (clean_check_reads.read_screen == "PASS") {
        call flye_workflow.flye_denovo {
        input:
          read1 = read_qc_trim.read1_clean,
