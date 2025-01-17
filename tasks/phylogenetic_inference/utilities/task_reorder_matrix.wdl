@@ -56,7 +56,7 @@ task reorder_matrix {
     snps_out2.index.name = ""
 
     # write out the reordered matrix to a file
-    snps_out2.to_csv("~{cluster_name}_snp_matrix.csv", sep=",")
+    snps_out2.to_csv("~{cluster_name}_distance_matrix.csv", sep=",")
 
     # write tree to a file (same as input tree if not midpoint rooted)
     Phylo.write(tree, "~{cluster_name}_tree.nwk", "newick")
@@ -64,7 +64,7 @@ task reorder_matrix {
     CODE
   >>>
   output {
-    File ordered_matrix = "~{cluster_name}_snp_matrix.csv"
+    File ordered_matrix = "~{cluster_name}_distance_matrix.csv"
     File tree = "~{cluster_name}_tree.nwk"
   }
   runtime {
