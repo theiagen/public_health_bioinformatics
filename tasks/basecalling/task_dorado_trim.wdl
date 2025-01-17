@@ -10,10 +10,14 @@ task dorado_trim {
     Int disk_size = 100
   }
   command <<< 
-    dorado trim ~{sep=" " fastq_files} --primer-sequences ~{custom_primers} --emit-fastq
+    mkdir -p trimmed_fastqs
+    for fq in ~{sep=" " fastq_files}; do
+      filename=$(basename "$fq")
+      dorado trim "$fq" --primer-sequences "~{custom_primers}" --emit-fastq > trimmed_fastqs/"$filename"
+    done
   >>>
   output {
-    Array[File] trimmed_fastq_files = glob("*.fastq.gz")
+    Array[File] trimmed_fastq_files = glob("trimmed_fastqs/*.fastq.gz")
   }
   runtime {
     docker: "~{docker}"
