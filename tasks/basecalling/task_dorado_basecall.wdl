@@ -8,7 +8,7 @@ task basecall {
     Int disk_size = 100
     Int memory = 32
     Int cpu = 8
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/dorado:0.8.3"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/dorado:0.9.0-cuda12.2.0"
   }
   command <<< 
     set -euo pipefail
