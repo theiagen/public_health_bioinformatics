@@ -64,19 +64,20 @@ workflow theiaprok_ont {
   call versioning_task.version_capture {
     input:
   }
-  call screen_task.check_reads_se as raw_check_reads {
-    input:
-      read1 = read1,
-      min_reads = min_reads,
-      min_basepairs = min_basepairs,
-      min_genome_length = min_genome_length,
-      max_genome_length = max_genome_length,
-      min_coverage = min_coverage,
-      skip_screen = skip_screen,
-      skip_mash = skip_mash,
-      expected_genome_length = genome_length
+  if (! skip_screen) {
+    call screen_task.check_reads_se as raw_check_reads {
+      input:
+        read1 = read1,
+        min_reads = min_reads,
+        min_basepairs = min_basepairs,
+        min_genome_length = min_genome_length,
+        max_genome_length = max_genome_length,
+        min_coverage = min_coverage,
+        skip_mash = skip_mash,
+        expected_genome_length = genome_length
+    }
   }
-  if (raw_check_reads.read_screen == "PASS") {
+  if (select_first([raw_check_reads.read_screen, ""]) == "PASS" || skip_screen) {
     call read_qc_workflow.read_QC_trim_ont as read_qc_trim {
       input:
         samplename = samplename,
@@ -84,23 +85,24 @@ workflow theiaprok_ont {
         genome_length = genome_length,
         workflow_series = "theiaprok"
     }
-    call screen_task.check_reads_se as clean_check_reads {
-      input:
-        read1 = read_qc_trim.read1_clean,
-        min_reads = min_reads,
-        min_basepairs = min_basepairs,
-        min_genome_length = min_genome_length,
-        max_genome_length = max_genome_length,
-        min_coverage = min_coverage,
-        skip_screen = skip_screen,
-        skip_mash = skip_mash,
-        expected_genome_length = genome_length
+    if (! skip_screen) {
+      call screen_task.check_reads_se as clean_check_reads {
+        input:
+          read1 = read_qc_trim.read1_clean,
+          min_reads = min_reads,
+          min_basepairs = min_basepairs,
+          min_genome_length = min_genome_length,
+          max_genome_length = max_genome_length,
+          min_coverage = min_coverage,
+          skip_mash = skip_mash,
+          expected_genome_length = genome_length
+      }
     }
-    if (clean_check_reads.read_screen == "PASS") {
+    if (select_first([clean_check_reads.read_screen, ""]) == "PASS" || skip_screen) {
        call dragonflye_task.dragonflye {
          input:
            read1 = read_qc_trim.read1_clean,
-           genome_length = select_first([genome_length, read_qc_trim.est_genome_length]),
+           genome_length = select_first([genome_length, read_qc_trim.est_genome_length, 0]),
            samplename = samplename
        }
       call quast_task.quast {
@@ -550,7 +552,7 @@ workflow theiaprok_ont {
     # Read Metadata
     String seq_platform = seq_method
     # Sample Screening
-    String read_screen_raw = raw_check_reads.read_screen
+    String? read_screen_raw = raw_check_reads.read_screen
     String? read_screen_clean = clean_check_reads.read_screen
     # Read QC - nanoq outputs
     File? read1_clean = read_qc_trim.read1_clean
@@ -848,7 +850,7 @@ workflow theiaprok_ont {
     String? tbprofiler_sub_lineage = merlin_magic.tbprofiler_sub_lineage
     String? tbprofiler_dr_type = merlin_magic.tbprofiler_dr_type
     String? tbprofiler_resistance_genes = merlin_magic.tbprofiler_resistance_genes
-    Int? tbprofiler_median_coverage = merlin_magic.tbprofiler_median_coverage
+    Float? tbprofiler_median_depth = merlin_magic.tbprofiler_median_depth
     Float? tbprofiler_pct_reads_mapped = merlin_magic.tbprofiler_pct_reads_mapped
     String? tbp_parser_version = merlin_magic.tbp_parser_version
     String? tbp_parser_docker = merlin_magic.tbp_parser_docker

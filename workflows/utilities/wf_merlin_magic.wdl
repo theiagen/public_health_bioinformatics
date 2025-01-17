@@ -57,7 +57,7 @@ workflow merlin_magic {
     # activating tool logic
     Boolean call_poppunk = true
     Boolean call_shigeifinder_reads_input = false
-    Boolean tbprofiler_additional_outputs = false # set to true to run tbp-parser
+    Boolean call_tbp_parser = false
     # docker options
     String? abricate_abaum_docker_image
     String? abricate_vibrio_docker_image
@@ -131,6 +131,11 @@ workflow merlin_magic {
     Int? emmtyper_min_perfect
     Int? emmtyper_min_good
     Int? emmtyper_max_size
+    #hicap options
+    Float? hicap_gene_coverage
+    Float? hicap_gene_identity
+    Float? hicap_broken_gene_identity
+    Int? hicap_broken_gene_length
     # kaptive options
     Int? kaptive_start_end_margin
     Float? kaptive_min_identity
@@ -197,14 +202,14 @@ workflow merlin_magic {
     Int srst2_gene_max_mismatch = 2000
     # tbprofiler options
     Boolean tbprofiler_run_custom_db = false
+    Boolean tbprofiler_run_cdph_db = false
     File? tbprofiler_custom_db
-    Int? tbprofiler_cov_frac_threshold
     Float? tbprofiler_min_af
-    Float? tbprofiler_min_af_pred
     Int? tbprofiler_min_depth
     String? tbprofiler_mapper
     String? tbprofiler_variant_caller
     String? tbprofiler_variant_calling_params
+    String? tbprofiler_additional_parameters
     # tbp-parser options
     String tbp_parser_output_seq_method_type = "WGS"
     String? tbp_parser_operator
@@ -215,6 +220,14 @@ workflow merlin_magic {
     File? tbp_parser_coverage_regions_bed
     Boolean? tbp_parser_debug
     Boolean? tbp_parser_add_cs_lims
+    Boolean? tbp_parser_tngs_data
+    Float? tbp_parser_rrs_frequency
+    Int? tbp_parser_rrs_read_support
+    Float? tbp_parser_rrl_frequency
+    Int? tbp_parser_rrl_read_support
+    Float? tbp_parser_rpob449_frequency
+    Float? tbp_parser_etha237_frequency
+    File? tbp_parser_expert_rule_regions_bed
     # virulencefinder options
     Float? virulencefinder_coverage_threshold
     Float? virulencefinder_identity_threshold
@@ -448,18 +461,18 @@ workflow merlin_magic {
           read2 = select_first([clockwork_decon_reads.clockwork_cleaned_read2, read2, "gs://theiagen-public-files/terra/theiaprok-files/no-read2.txt"]),
           samplename = samplename,
           ont_data = ont_data,
-          tbprofiler_run_custom_db = tbprofiler_run_custom_db,
-          tbprofiler_custom_db = tbprofiler_custom_db,
-          cov_frac_threshold = tbprofiler_cov_frac_threshold,
-          min_af = tbprofiler_min_af,
-          min_af_pred = tbprofiler_min_af_pred,
-          min_depth = tbprofiler_min_depth,
           mapper = tbprofiler_mapper,
           variant_caller = tbprofiler_variant_caller,
           variant_calling_params = tbprofiler_variant_calling_params,
+          additional_parameters = tbprofiler_additional_parameters,
+          min_depth = tbprofiler_min_depth,
+          min_af = tbprofiler_min_af,
+          tbprofiler_custom_db = tbprofiler_custom_db,
+          tbprofiler_run_custom_db = tbprofiler_run_custom_db,
+          tbprofiler_run_cdph_db = tbprofiler_run_cdph_db,
           docker = tbprofiler_docker_image
       }
-      if (tbprofiler_additional_outputs) {
+      if (call_tbp_parser) {
         call tbp_parser_task.tbp_parser {
           input:
             tbprofiler_json = tbprofiler.tbprofiler_output_json,
@@ -468,13 +481,21 @@ workflow merlin_magic {
             samplename = samplename, 
             sequencing_method = tbp_parser_output_seq_method_type,
             operator = tbp_parser_operator,
-            coverage_threshold = tbp_parser_coverage_threshold,
-            coverage_regions_bed = tbp_parser_coverage_regions_bed,
             min_depth = tbp_parser_min_depth,
             min_frequency = tbp_parser_min_frequency,
             min_read_support = tbp_parser_min_read_support,
-            tbp_parser_debug = tbp_parser_debug,
+            coverage_threshold = tbp_parser_coverage_threshold,
+            coverage_regions_bed = tbp_parser_coverage_regions_bed,
             add_cycloserine_lims = tbp_parser_add_cs_lims,
+            tbp_parser_debug = tbp_parser_debug,
+            tngs_data = tbp_parser_tngs_data,
+            rrs_frequency = tbp_parser_rrs_frequency,
+            rrs_read_support = tbp_parser_rrs_read_support,
+            rrl_frequency = tbp_parser_rrl_frequency,
+            rrl_read_support = tbp_parser_rrl_read_support,
+            rpob449_frequency = tbp_parser_rpob449_frequency,
+            etha237_frequency = tbp_parser_etha237_frequency,
+            expert_rule_regions_bed = tbp_parser_expert_rule_regions_bed,
             docker = tbp_parser_docker_image
         }
       }
@@ -584,7 +605,11 @@ workflow merlin_magic {
       input:
         assembly = assembly,
         samplename = samplename,
-        docker = hicap_docker_image
+        docker = hicap_docker_image,
+        gene_coverage = hicap_gene_coverage,
+        gene_identity = hicap_gene_identity,
+        broken_gene_identity = hicap_broken_gene_identity,
+        broken_gene_length = hicap_broken_gene_length
     }
   }
   if (merlin_tag == "Vibrio" || merlin_tag == "Vibrio cholerae") {
@@ -594,11 +619,11 @@ workflow merlin_magic {
           read1 = select_first([read1]),
           read2 = read2,
           samplename = samplename,
-          srst2_min_cov = srst2_min_cov,
-          srst2_max_divergence = srst2_max_divergence,
-          srst2_min_depth = srst2_min_depth,
-          srst2_min_edge_depth = srst2_min_edge_depth,
-          srst2_gene_max_mismatch = srst2_gene_max_mismatch,
+          min_cov = srst2_min_cov,
+          max_divergence = srst2_max_divergence,
+          min_depth = srst2_min_depth,
+          min_edge_depth = srst2_min_edge_depth,
+          gene_max_mismatch = srst2_gene_max_mismatch,
           docker = srst2_docker_image
       }
     }
@@ -635,7 +660,7 @@ workflow merlin_magic {
       if (!assembly_only && !ont_data) {
         call snippy.snippy_variants as snippy_cauris { # no ONT support right now
           input:
-            reference_genome_file = cladetyper.clade_spec_ref,
+            reference_genome_file = cladetyper.annotated_reference,
             read1 = select_first([read1]),
             read2 = read2,
             samplename = samplename,
@@ -651,7 +676,7 @@ workflow merlin_magic {
           input:
             samplename = samplename,
             snippy_variants_results = snippy_cauris.snippy_variants_results,
-            reference = cladetyper.clade_spec_ref,
+            reference = cladetyper.annotated_reference,
             query_gene = select_first([snippy_query_gene, "FKS1,lanosterol.14-alpha.demethylase,uracil.phosphoribosyltransferase,B9J08_005340,B9J08_000401,B9J08_003102,B9J08_003737,B9J08_005343"]),
             docker = snippy_gene_query_docker_image
         }
@@ -896,7 +921,7 @@ workflow merlin_magic {
     String? tbprofiler_sub_lineage = tbprofiler.tbprofiler_sub_lineage
     String? tbprofiler_dr_type = tbprofiler.tbprofiler_dr_type
     String? tbprofiler_resistance_genes = tbprofiler.tbprofiler_resistance_genes
-    Int? tbprofiler_median_coverage = tbprofiler.tbprofiler_median_coverage
+    Float? tbprofiler_median_depth = tbprofiler.tbprofiler_median_depth
     Float? tbprofiler_pct_reads_mapped = tbprofiler.tbprofiler_pct_reads_mapped
     String? tbp_parser_version = tbp_parser.tbp_parser_version
     String? tbp_parser_docker = tbp_parser.tbp_parser_docker
@@ -989,10 +1014,9 @@ workflow merlin_magic {
     # theiaeuk
     # c auris 
     String? clade_type = cladetyper.gambit_cladetype
-    String? cladetyper_analysis_date = cladetyper.date
-    String? cladetyper_version = cladetyper.version
+    String? cladetyper_version = cladetyper.gambit_version
     String? cladetyper_docker_image = cladetyper.gambit_cladetyper_docker_image
-    String? cladetype_annotated_ref = cladetyper.clade_spec_ref
+    String? cladetype_annotated_ref = cladetyper.annotated_reference
     # snippy variants
     String snippy_variants_reference_genome = select_first([snippy_cauris.snippy_variants_reference_genome, snippy_afumigatus.snippy_variants_reference_genome, snippy_crypto.snippy_variants_reference_genome, "gs://theiagen-public-files/terra/theiaeuk_files/no_match_detected.txt"])
     String snippy_variants_version = select_first([snippy_cauris.snippy_variants_version, snippy_afumigatus.snippy_variants_version, snippy_crypto.snippy_variants_version, "No matching taxon detected"])

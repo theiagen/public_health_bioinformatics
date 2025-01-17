@@ -356,7 +356,7 @@ Sequencing data used in the Snippy_Tree workflow must:
 | snippy_filtered_metadata | File | TSV recording the columns of the Terra data table that were used in the summarize_data task |
 | snippy_final_alignment | File | Final alignment (FASTA file) used to generate the tree (either after snippy alignment, gubbins recombination removal, and/or core site selection with SNP-sites) |
 | snippy_final_tree | File | Newick tree produced from the final alignment. Depending on user input for core_genome, the tree could be a core genome tree (default when core_genome is true) or whole genome tree (if core_genome is false) |
-| snippy_gubbins_branch_stats | File | CSV file showing https://github.com/nickjcroucher/gubbins/blob/master/docs/gubbins_manual.md#output-statistics for each branch of the tree   |
+| snippy_gubbins_branch_stats | File | CSV file showing <https://github.com/nickjcroucher/gubbins/blob/master/docs/gubbins_manual.md#output-statistics> for each branch of the tree   |
 | snippy_gubbins_docker | String | Docker file used for running Gubbins |
 | snippy_gubbins_recombination_gff | File | Recombination statistics in GFF format; these can be viewed in Phandango against the phylogenetic tree |
 | snippy_gubbins_version | String | Gubbins version used |

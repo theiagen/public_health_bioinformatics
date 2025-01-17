@@ -55,7 +55,6 @@ You can expect a careful review of every PR and feedback as needed before mergin
 * **Michal Babinski** ([@Michal-Babins](https://github.com/Michal-Babins)) - Software, Validation
 * **Andrew Lang** ([@AndrewLangVt](https://github.com/AndrewLangVt)) - Software, Supervision
 * **Kelsey Kropp** ([@kelseykropp](https://github.com/kelseykropp)) - Validation
-* **Emily Smith** ([@emily-smith1](https://github.com/emily-smith1)) - Validation
 * **Joel Sevinsky** ([@sevinsky](https://github.com/sevinsky)) - Conceptualization, Project Administration, Supervision
 
 ### External Contributors
@@ -68,6 +67,7 @@ We would like to gratefully acknowledge the following individuals from the publi
 * **Ash O'Farrel** ([@aofarrel](https://github.com/aofarrel))
 * **Sam Baird** ([@sam-baird](https://github.com/sam-baird))
 * **Holly Halstead** ([@HNHalstead](https://github.com/HNHalstead))
+* **Emily Smith** ([@emily-smith1](https://github.com/emily-smith1))
 
 ### Maintaining PHB Pipelines
 

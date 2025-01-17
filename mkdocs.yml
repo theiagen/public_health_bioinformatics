@@ -11,6 +11,7 @@ nav:
      - Getting Started:
         - With the Command-Line: getting_started/commandline.md
         - With Terra.bio: getting_started/terra.md
+        - Workflow Failure Philosophy: getting_started/philosophy.md
      - Workflows: 
         - Workflows by Type: 
             - Overview Table: workflows_overview/workflows_type.md
@@ -53,6 +54,7 @@ nav:
                - Zip_Column_Content: workflows/data_export/zip_column_content.md
             - Standalone:
                - Cauris_CladeTyper: workflows/standalone/cauris_cladetyper.md
+               - Concatenate_Illumina_Lanes: workflows/standalone/concatenate_illumina_lanes.md
                - GAMBIT_Query: workflows/standalone/gambit_query.md
                - Kraken2: workflows/standalone/kraken2.md
                - NCBI-AMRFinderPlus: workflows/standalone/ncbi_amrfinderplus.md
@@ -66,7 +68,8 @@ nav:
             - Any Taxa:
                - Assembly_Fetch: workflows/data_import/assembly_fetch.md
                - BaseSpace_Fetch: workflows/data_import/basespace_fetch.md
-               - Concatenate_Column_Content: workflows/data_export/concatenate_column_content.md
+               - Concatenate_Column_Content: workflows/data_export/concatenate_column_content.md               
+               - Concatenate_Illumina_Lanes: workflows/standalone/concatenate_illumina_lanes.md
                - Create_Terra_Table: workflows/data_import/create_terra_table.md
                - Kraken2: workflows/standalone/kraken2.md
                - NCBI-Scrub: workflows/standalone/ncbi_scrub.md
@@ -124,6 +127,7 @@ nav:
             - BaseSpace_Fetch: workflows/data_import/basespace_fetch.md
             - Cauris_CladeTyper: workflows/standalone/cauris_cladetyper.md
             - Concatenate_Column_Content: workflows/data_export/concatenate_column_content.md
+            - Concatenate_Illumina_Lanes: workflows/standalone/concatenate_illumina_lanes.md
             - Core_Gene_SNP: workflows/phylogenetic_construction/core_gene_snp.md
             - Create_Terra_Table: workflows/data_import/create_terra_table.md
             - CZGenEpi_Prep: workflows/phylogenetic_construction/czgenepi_prep.md

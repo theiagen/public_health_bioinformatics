@@ -45,7 +45,8 @@ This PR uses an element that could cause duplicate runs to have different result
 - [ ] The workflow/task has been tested and results, including file contents, are as anticipated
 - [ ] The CI/CD has been adjusted and tests are passing (Theiagen developers)
 - [ ] Code changes follow the [style guide](https://theiagen.notion.site/Style-Guide-WDL-Workflow-Development-51b66a47dde54c798f35d673fff80249)
-- [ ] Documentation and/or workflow diagrams have been updated if applicable (Theiagen developers only)
+- [ ] Documentation and/or workflow diagrams have been updated if applicable
+  - [ ] You have updated the "Last Known Changes" field for any affected workflows in the respective workflow documentation page and for every entry in the three `workflows_overview` tables to be the tag for the next upcoming release. If you do not know the tag, please put "vX.X.X"
 
 ## 🎯 Reviewer Checklist
 <!--  Indicate NA when not applicable  -->
