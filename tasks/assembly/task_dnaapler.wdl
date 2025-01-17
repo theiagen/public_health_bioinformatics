@@ -21,7 +21,7 @@ task dnaapler {
     mkdir -p "$output_dir"
     echo "Output directory created: $output_dir"
 
-    # Run dnaapler with the 'all' subcommand
+    # Run dnaapler subcommand
     echo "Running dnaapler..."
     dnaapler ~{dnaapler_mode} \
       -i ~{input_fasta} \

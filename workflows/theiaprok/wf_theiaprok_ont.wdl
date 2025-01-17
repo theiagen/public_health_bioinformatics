@@ -279,8 +279,6 @@ workflow theiaprok_ont {
               assembly_fasta = flye_denovo.assembly_fasta,
               bandage_plot = flye_denovo.bandage_plot,
               contigs_gfa = flye_denovo.contigs_gfa,
-              filtered_contigs_metrics = flye_denovo.filtered_contigs_metrics,
-              flye_assembly_info = flye_denovo.flye_assembly_info,
               quast_report = quast.quast_report,
               quast_version = quast.version,
               assembly_length = quast.genome_length,
@@ -598,7 +596,7 @@ workflow theiaprok_ont {
     File? bandage_plot = flye_denovo.bandage_plot
     File? filtered_contigs_metrics = flye_denovo.filtered_contigs_metrics
     String? flye_assembly_info = flye_denovo.flye_assembly_info
-    String? medaka_model = flye_denovo.medaka_model
+    String? medaka_model = flye_denovo.medaka_model_used
     String? porechop_version = flye_denovo.porechop_version
     String? flye_version = flye_denovo.flye_version
     String? bandage_version = flye_denovo.bandage_version

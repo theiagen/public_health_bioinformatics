@@ -871,11 +871,22 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
     ??? toggle "`Flye`: De novo_ Assembly"
         Assembles long reads into contigs using `task_flye.wdl`.
 
+        `flye_read_type)`specifies the type of sequencing reads being used for assembly. This parameter significantly impacts the assembly process and should match the characteristics of your input data. Below are the available options:
+
+        - `--nano-hq` (default): Optimized for ONT high-quality reads, such as Guppy5+ SUP or Q20 (<5% error). Recommended for ONT reads processed with Guppy5 or newer.
+        - `--nano-raw`: For ONT regular reads, pre-Guppy5 (<20% error).
+        - `--nano-corr`: ONT reads corrected with other methods (<3% error).
+        - `--pacbio-raw`: PacBio regular CLR reads (<20% error).
+        - `--pacbio-corr`: PacBio reads corrected with other methods (<3% error).
+        - `--pacbio-hifi`: PacBio HiFi reads (<1% error). 
+        
+        Refer to the Flye documentation for detailed guidance on selecting the appropriate read_type based on your sequencing data and additional optional paramaters.
+
         | **Technical Details: Flye** | |
         | --- | --- |
         | **WDL Task** | [task_flye.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_flye.wdl) |
         | **Software Source Code** | [Flye on GitHub](https://github.com/fenderglass/Flye) |
-        | **Software Documentation** | [https://github.com/fenderglass/Flye/blob/flye/docs/USAGE.md](https://github.com/fenderglass/Flye/blob/flye/docs/USAGE.md) |
+        | **Software Documentation** | [Flye Documentation](https://github.com/fenderglass/Flye/blob/flye/docs/USAGE.md) |
 
     ??? toggle "`Bandage`: Graph Visualization"
         Visualizes the de novo assembly graphs output from `Flye` using `task_bandageplot.wdl`.
@@ -916,18 +927,18 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
             | --- | --- |
             | WDL Task | [task_medaka.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/polishing/task_medaka.wdl) |
             | Software Source Code | [Medaka on GitHub](https://github.com/nanoporetech/medaka) |
-            | Software Documentation | [https://github.com/nanoporetech/medaka#medaka](https://github.com/nanoporetech/medaka#medaka) |
+            | Software Documentation | [Medaka Documentation](https://github.com/nanoporetech/medaka#medaka) |
 
     ??? toggle "`Racon`: Polishing"
         Provides an alternative polishing method via task_racon.wdl. Racon is a consensus algorithm designed for refining raw de novo DNA assemblies generated from long, uncorrected sequencing reads.
 
         !!! techdetails "Technical Details: Racon"
         
-        |  | Links |
-        | --- | --- |
-        | WDL Task | [task_racon.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/polishing/task_racon.wdl) |
-        | Software Source Code | [Racon on GitHub](https://github.com/lbcb-sci/racon) |
-        | Software Documentation | [https://github.com/lbcb-sci/racon#racon](https://github.com/lbcb-sci/racon#racon) |
+            |  | Links |
+            | --- | --- |
+            | WDL Task | [task_racon.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/polishing/task_racon.wdl) |
+            | Software Source Code | [Racon on GitHub](https://github.com/lbcb-sci/racon) |
+            | Software Documentation | [Racon Documentation](https://github.com/lbcb-sci/racon#racon) |
 
     ??? toggle "`Filter Contigs`: Filter contigs below a threshold length and remove homopolymer contigs"
         Filters contigs based on a user-defined minimum length threshold and eliminates homopolymer contigs using task_filtercontigs.wdl. This ensures high-quality assemblies by retaining only contigs that meet specified criteria. Detailed metrics on contig counts and sequence lengths before and after filtering are provided in the output.
@@ -935,7 +946,7 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
     ??? toggle "`Dnaapler`: Final Assembly Orientation"
          Reorients contigs to start at specific reference points using `task_dnaapler.wdl`. Dnaapler supports the following modes:
 
-        - **all**: Reorients contigs to start with `dnaA`, `terL`, `repA`, or `COG1474`. Default and most practical for general use.
+        - **all**: Reorients contigs to start with `dnaA`, `terL`, `repA`, or `COG1474`. (Default)
         - **chromosome**: Reorients to begin with the `dnaA` chromosomal replication initiator gene, commonly used for bacterial chromosome assemblies.
         - **plasmid**: Reorients to start with the `repA` plasmid replication initiation gene, ideal for plasmid assemblies.
         - **phage**: Reorients to start with the `terL` large terminase subunit gene, used for bacteriophage assemblies.
@@ -1916,8 +1927,7 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
 | fastqc_raw1_html | File | Graphical visualization of raw forward read quality from fastqc to open in an internet browser | PE, SE |
 | fastqc_raw2_html | File | Graphical visualization of raw reverse read qualityfrom fastqc to open in an internet browser | PE |
 | fastqc_version | String | Version of fastqc software used | PE, SE |
-| final_assembly | File | Final assembly file output from flye_denovo assembly| FASTA, ONT, PE, SE |
-| flye_version | String | Version of Flye software used | FASTA, ONT, PE, SE |
+| flye_version | String | Version of Flye software used | ONT |
 | gambit_closest_genomes | File | CSV file listing genomes in the GAMBIT database that are most similar to the query assembly | FASTA, ONT, PE, SE |
 | gambit_db_version | String | Version of GAMBIT used | FASTA, ONT, PE, SE |
 | gambit_docker | String | GAMBIT docker file used | FASTA, ONT, PE, SE |

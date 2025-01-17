@@ -4,7 +4,7 @@ task racon {
   input {
     File unpolished_fasta
     File read1
-    Int polishing_rounds = 1      # Default: 1 polishing round
+    Int polishing_rounds = 1 # Default: 1 polishing round
     Int cpu = 8                  
     Int memory = 32            
     Int disk_size = 100   

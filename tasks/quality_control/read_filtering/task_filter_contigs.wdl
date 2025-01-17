@@ -43,7 +43,7 @@ filtered_records = [record for record in length_filtered if not has_homopolymers
 # Output results
 SeqIO.write(filtered_records, "filtered_contigs.fasta", "fasta")
 
-# Metrics
+# Metrics output
 retained_contigs = len(filtered_records)
 retained_bases = sum(len(record) for record in filtered_records)
 
@@ -69,7 +69,7 @@ EOF
     cpu: cpu
     memory: "~{memory} GB"
     disks: "local-disk " + disk_size + " SSD"
-    maxRetries: 0
+    maxRetries: 3
     preemptible: 0
   }
 }

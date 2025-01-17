@@ -17,7 +17,7 @@ task flye {
     Boolean no_alt_contigs = false
     Boolean scaffold = false
       
-    String? additional_parameters    # Any extra Flye-specific parameters
+    String? additional_parameters # Any extra Flye-specific parameters
 
     Int cpu = 4
     Int disk_size = 100
