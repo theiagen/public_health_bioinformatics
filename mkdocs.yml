@@ -11,6 +11,7 @@ nav:
      - Getting Started:
         - With the Command-Line: getting_started/commandline.md
         - With Terra.bio: getting_started/terra.md
+        - Workflow Failure Philosophy: getting_started/philosophy.md
      - Workflows: 
         - Workflows by Type: 
             - Overview Table: workflows_overview/workflows_type.md

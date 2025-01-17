@@ -8,6 +8,9 @@ Style guide inspired by Scott Frazer’s [WDL Best Practices Style Guide](http
 
 ## General Guidelines
 
+!!! tip "Please ensure your code adheres to our philosophy of failures"
+    At Theiagen, we believe our workflows should only fail because of technical issues, not because of poor quality data. Our goal is to create workflows that can handle data in any condition and still provide meaningful results, especially if that data isn’t perfect. For more information, see our [Workflow Failure Philosophy](../getting_started/philosophy.md).
+
 ***Modularity and Metadata***
 
 - **Best Practice:** Place tasks and workflows in separate files to maintain modularity and clarity.

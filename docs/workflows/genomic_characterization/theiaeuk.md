@@ -170,7 +170,7 @@ All input reads are processed through "core tasks" in each workflow. The core ta
 | theiaeuk_pe | **min_genome_size** | Int | Minimum genome size able to pass read screening | 100000 | Optional |
 | theiaeuk_pe | **min_proportion** | Int | Minimum proportion of total reads in each read file to pass read screening | 50 | Optional |
 | theiaeuk_pe | **min_reads** | Int | Minimum number of reads to pass read screening | 10000 | Optional |
-| theiaeuk_pe | **skip_screen** | Boolean | Option to skip the read screening prior to analysis | FALSE | Optional |
+| theiaeuk_pe | **skip_screen** | Boolean | Option to skip the read screening prior to analysis; if setting to true, please provide a value for the theiaeuk_pe `genome_length` optional input, OR set `call_rasusa` to false. Otherwise RASUSA will attempt to downsample to an expected genome size of 0 bp, and the workflow will fail. | FALSE | Optional |
 | theiaeuk_pe | **subsample_coverage** | Float | Read depth for RASUSA task to subsample reads to | 150 | Optional |
 | version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
 | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
@@ -212,7 +212,7 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
     
     | Variable  | Rationale |
     | --- | --- |
-    | `skip_screen` | Prevent the read screen from running |
+    | `skip_screen` | Prevent the read screen from running. If you set this value to true, please provide a value for the theiaeuk_pe `genome_length` optional input, OR set the theiaeuk_pe `call_rasusa` optional input to false. Otherwise RASUSA will attempt to downsample to an expected genome size of 0 bp, and the workflow will fail. |
     | `min_reads` | Minimum number of base pairs for 20x coverage of _Hansenula polymorpha_  divided by 300 (longest Illumina read length) |
     | `min_basepairs` | Greater than 10x coverage of _Hansenula polymorpha_  |
     | `min_genome_size` | Based on the _Hansenula polymorpha_  genome - the smallest fungal genome as of 2015-04-02 (8.97 Mbp) |
@@ -322,8 +322,8 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
 
     De Novo assembly will be undertaken only for samples that have sufficient read quantity and quality, as determined by the `screen` task assessment of clean reads. 
 
-    In TheiaEuk, assembly is performed using the [Shovill](https://github.com/tseemann/shovill) pipeline. This undertakes the assembly with one of four assemblers ([SKESA](https://github.com/ncbi/SKESA) (default), [SPAdes](https://github.com/ablab/spades), [Velvet](https://github.com/dzerbino/velvet/), [Megahit](https://github.com/voutcn/megahit)), but also performs [a number of pre- and post-processing steps](https://github.com/tseemann/shovill#main-steps) to improve the resulting genome assembly. Shovill uses an estimated genome size (see [here](https://github.com/tseemann/shovill#--gsize)). If this is not provided by the user as an optional input, Shovill will estimate the genome size using [mash](https://mash.readthedocs.io/en/latest/index.html). Adaptor trimming can be undertaken with Shovill by setting the `trim` option to "true", but this is set to "false" by default as [alternative adapter trimming](https://www.notion.so/TheiaProk-Workflow-Series-89b9c08406094ec78d08a578fe861626?pvs=21) is undertaken in the TheiaEuk workflow.
-
+    In TheiaEuk, assembly is performed using the [Shovill](https://github.com/tseemann/shovill) pipeline. This undertakes the assembly with one of four assemblers ([SKESA](https://github.com/ncbi/SKESA) (default), [SPAdes](https://github.com/ablab/spades), [Velvet](https://github.com/dzerbino/velvet/), [Megahit](https://github.com/voutcn/megahit)), but also performs [a number of pre- and post-processing steps](https://github.com/tseemann/shovill#main-steps) to improve the resulting genome assembly. Shovill uses an estimated genome size (see [here](https://github.com/tseemann/shovill#--gsize)). If this is not provided by the user as an optional input, Shovill will estimate the genome size using [mash](https://mash.readthedocs.io/en/latest/index.html). Adaptor trimming can be undertaken with Shovill by setting the `trim` option to "true", but this is set to "false" by default as alternative adapter trimming performed by bbduk is undertaken in the TheiaEuk workflow.
+    
     ??? toggle "What is _de novo_  assembly?"
         _De novo_  assembly is the process or product of attempting to reconstruct a genome from scratch (without prior knowledge of the genome) using sequence reads. Assembly of fungal genomes from short-reads will produce multiple contigs per chromosome rather than a single contiguous sequence for each chromosome.
         
