@@ -131,6 +131,11 @@ workflow merlin_magic {
     Int? emmtyper_min_perfect
     Int? emmtyper_min_good
     Int? emmtyper_max_size
+    #hicap options
+    Float? hicap_gene_coverage
+    Float? hicap_gene_identity
+    Float? hicap_broken_gene_identity
+    Int? hicap_broken_gene_length
     # kaptive options
     Int? kaptive_start_end_margin
     Float? kaptive_min_identity
@@ -600,7 +605,11 @@ workflow merlin_magic {
       input:
         assembly = assembly,
         samplename = samplename,
-        docker = hicap_docker_image
+        docker = hicap_docker_image,
+        gene_coverage = hicap_gene_coverage,
+        gene_identity = hicap_gene_identity,
+        broken_gene_identity = hicap_broken_gene_identity,
+        broken_gene_length = hicap_broken_gene_length
     }
   }
   if (merlin_tag == "Vibrio" || merlin_tag == "Vibrio cholerae") {

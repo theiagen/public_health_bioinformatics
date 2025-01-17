@@ -330,7 +330,11 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 | merlin_magic | **ectyper_verify** | Boolean | Set to true to enable E. coli species verification | False  | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **emmtypingtool_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/emmtypingtool:0.0.1 | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **genotyphi_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/mykrobe:0.11.0 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **hicap_broken_gene_identity** | Float | Minimum percentage identity to consider a broken gene | 0.80 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **hicap_broken_gene_length** | Int | Minimum length to consider a broken gene | 60 | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **hicap_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/biocontainers/hicap:1.0.3--py_0 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **hicap_gene_coverage** | Float | Minimum percentage coverage to consider a single gene complete | 0.80 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **hicap_gene_identity** | Float | Minimum percentage identity to consider a single gene complete | 0.70 | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **kaptive_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/kaptive:2.0.3 | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **kaptive_low_gene_id** | Float | Percent identity threshold for what counts as a low identity match in the gene BLAST search | 95 | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **kaptive_min_coverage** | Float | Minimum required percent identity for the gene BLAST search via tBLASTn | 80 | Optional | FASTA, ONT, PE, SE |
