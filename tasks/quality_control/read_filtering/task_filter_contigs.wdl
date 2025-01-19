@@ -4,7 +4,7 @@ task filter_contigs {
   input {
     File assembly_fasta
     Int min_length = 1000
-    Int disk_size = 10
+    Int disk_size = 50
     Int memory = 8
     Int cpu = 1
     String docker = "us-docker.pkg.dev/general-theiagen/theiagen/utility:1.2"

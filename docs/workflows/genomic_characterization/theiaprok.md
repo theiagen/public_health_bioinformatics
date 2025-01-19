@@ -898,16 +898,17 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
     ??? toggle "`Porechop`: Optional Read Trimming"
         Trims input reads if trimming is enabled using `task_porechop.wdl`.
 
-        | **Technical Details: Porechop** | |
-        | --- | --- |
-        | **WDL Task** | [task_porechop.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_porechop.wdl) |
-        | **Software Source Code** | [Porechop on GitHub](https://github.com/rrwick/Porechop) |
-        | **Software Documentation** | [https://github.com/rrwick/Porechop#porechop](https://github.com/rrwick/Porechop#porechop) |
+        !!! techdetails "Technical Details: Porechop"
+           |  | Links |
+           | --- | --- |
+           | **WDL Task** | [task_porechop.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_porechop.wdl) |
+           | **Software Source Code** | [Porechop on GitHub](https://github.com/rrwick/Porechop) |
+           | **Software Documentation** | [https://github.com/rrwick/Porechop#porechop](https://github.com/rrwick/Porechop#porechop) |
 
     ??? toggle "`Flye`: De novo_ Assembly"
         Assembles long reads into contigs using `task_flye.wdl`.
 
-        `flye_read_type)`specifies the type of sequencing reads being used for assembly. This parameter significantly impacts the assembly process and should match the characteristics of your input data. Below are the available options:
+        `flye_read_type`specifies the type of sequencing reads being used for assembly. This parameter significantly impacts the assembly process and should match the characteristics of your input data. Below are the available options:
 
         - `--nano-hq` (default): Optimized for ONT high-quality reads, such as Guppy5+ SUP or Q20 (<5% error). Recommended for ONT reads processed with Guppy5 or newer.
         - `--nano-raw`: For ONT regular reads, pre-Guppy5 (<20% error).
@@ -918,11 +919,12 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
         
         Refer to the Flye documentation for detailed guidance on selecting the appropriate read_type based on your sequencing data and additional optional paramaters.
 
-        | **Technical Details: Flye** | |
-        | --- | --- |
-        | **WDL Task** | [task_flye.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_flye.wdl) |
-        | **Software Source Code** | [Flye on GitHub](https://github.com/fenderglass/Flye) |
-        | **Software Documentation** | [Flye Documentation](https://github.com/fenderglass/Flye/blob/flye/docs/USAGE.md) |
+        !!! techdetails "Technical Details: Flye"
+            |  | Links |
+            | --- | --- |
+            | **WDL Task** | [task_flye.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_flye.wdl) |
+            | **Software Source Code** | [Flye on GitHub](https://github.com/fenderglass/Flye) |
+            | **Software Documentation** | [Flye Documentation](https://github.com/fenderglass/Flye/blob/flye/docs/USAGE.md) |
 
     ??? toggle "`Bandage`: Graph Visualization"
         Visualizes the de novo assembly graphs output from `Flye` using `task_bandageplot.wdl`.
@@ -1915,7 +1917,7 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
 | busco_report | File | A plain text summary of the results in BUSCO notation | FASTA, ONT, PE, SE |
 | busco_results | String | BUSCO results (see relevant toggle in [this block](https://theiagen.github.io/public_health_bioinformatics/latest/workflows/genomic_characterization/theiaprok/#post-assembly-tasks-performed-for-all-taxa)) | FASTA, ONT, PE, SE |
 | busco_version | String | BUSCO software version used | FASTA, ONT, PE, SE |
-| bwa_version | String | Version of BWA software used | FASTA, ONT, PE, S |
+| bwa_version | String | Version of BWA software used | ONT |
 | cg_pipeline_docker | String | Docker file used for running CG-Pipeline on cleaned reads | PE, SE |
 | cg_pipeline_report_clean | File | TSV file of read metrics from clean reads, including average read length, number of reads, and estimated genome coverage | PE, SE |
 | cg_pipeline_report_raw | File | TSV file of read metrics from raw reads, including average read length, number of reads, and estimated genome coverage | PE, SE |

@@ -4,11 +4,11 @@ task racon {
   input {
     File unpolished_fasta
     File read1
+    String samplename
     Int polishing_rounds = 1 # Default: 1 polishing round
     Int cpu = 8                  
     Int memory = 32            
-    Int disk_size = 100   
-    String samplename
+    Int disk_size = 100 
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/racon:1.5.0-minimap2-generic-v3"
   }
   command <<< 
