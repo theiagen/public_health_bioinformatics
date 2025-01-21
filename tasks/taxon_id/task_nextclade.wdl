@@ -83,7 +83,6 @@ task nextclade_output_parser {
     String? organism
   }
   command <<<
-    # Parse outputs using python3
     python3 <<CODE
     import csv
 

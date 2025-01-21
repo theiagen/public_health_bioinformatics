@@ -26,6 +26,7 @@ workflow flu_track {
     # optional inputs to the tasks are available here due to Terra hiding them since they're within a subworkflow
     # IRMA inputs
     Boolean? irma_keep_ref_deletions
+    Int? irma_minimum_consensus_support
     String? irma_docker_image
     Int? irma_memory
     Int? irma_cpu
@@ -84,6 +85,7 @@ workflow flu_track {
       read2 = read2,
       samplename = samplename,
       seq_method = seq_method,
+      minimum_consensus_support = irma_minimum_consensus_support,
       keep_ref_deletions = irma_keep_ref_deletions,
       docker = irma_docker_image,
       memory = irma_memory,
