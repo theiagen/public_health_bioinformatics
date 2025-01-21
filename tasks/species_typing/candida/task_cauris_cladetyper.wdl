@@ -6,10 +6,10 @@ task cauris_cladetyper {
     String samplename
     Int kmer_size = 11
     
-    String docker = "us-docker.pkg.dev/general-theiagen/biocontainers/hesslab-gambit:0.5.1--py37h8902056_0"
-    Int memory = 16
     Int cpu = 8
     Int disk_size = 100
+    String docker = "us-docker.pkg.dev/general-theiagen/biocontainers/hesslab-gambit:0.5.1--py37h8902056_0"
+    Int memory = 16
 
     File ref_clade1 = "gs://theiagen-public-files/terra/candida_auris_refs/Cauris_Clade1_GCA_002759435.2_Cand_auris_B8441_V2_genomic.fasta"
     String ref_clade1_annotated = "gs://theiagen-public-files/terra/candida_auris_refs/Cauris_Clade1_GCA_002759435_Cauris_B8441_V2_genomic.gbff"
@@ -23,20 +23,20 @@ task cauris_cladetyper {
     String ref_clade5_annotated = "gs://theiagen-public-files/terra/candida_auris_refs/Cauris_Clade5_GCA_016809505.1_ASM1680950v1_genomic.gbff"
     }
   command <<<
-    # date and version control
-    date | tee DATE
     gambit --version | tee VERSION
+
     # create gambit signature file for five clades + input assembly
     gambit signatures create -o my-signatures.h5 -k ~{kmer_size} -p ATGAC ~{ref_clade1} ~{ref_clade2} ~{ref_clade3} ~{ref_clade4} ~{ref_clade5} ~{assembly_fasta}
     # calculate distance matrix for all six signatures
     gambit dist --qs my-signatures.h5 --square -o ~{samplename}_matrix.csv
+
     # parse matrix to see closest clade to input assembly
     ## sort by 7th column (distance against input sequence)
     ## take top three columns: header, header, top hit
     ## take bottom of these three rows (top hit)
-    ## grab only file name
+    ## grab only file name (top_clade)
     top_clade=$(sort -k7 -t ',' "~{samplename}_matrix.csv" | head -3 | tail -n-1 | awk -F',' '{print$1}')
-    #clade_type=$(cat CLADETYPE)
+
     if [ "${top_clade}" == "~{ref_clade1}" ] ; then
       echo "~{ref_clade1_annotated}" > CLADEREF
       echo "Clade1" > CLADETYPE
@@ -54,14 +54,14 @@ task cauris_cladetyper {
       echo "Clade5" > CLADETYPE
     else
       echo "None" > CLADEREF
+      echo "" > CLADETYPE
     fi
 
   >>>
   output {
+    String gambit_version = read_string("VERSION")
     String gambit_cladetype = read_string("CLADETYPE")
-    String clade_spec_ref = read_string("CLADEREF")
-    String date = read_string("DATE")
-    String version = read_string("VERSION")
+    String annotated_reference = read_string("CLADEREF")
     String gambit_cladetyper_docker_image = docker
   }
   runtime {

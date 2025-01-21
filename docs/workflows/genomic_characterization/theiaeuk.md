@@ -4,7 +4,7 @@
 
 | **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibliity** | **Workflow Level** |
 |---|---|---|---|---|
-| [Genomic Characterization](../../workflows_overview/workflows_type.md/#genomic-characterization) | [Mycotics](../../workflows_overview/workflows_kingdom.md/#mycotics) | PHB v2.3.0 | Yes | Sample-level |
+| [Genomic Characterization](../../workflows_overview/workflows_type.md/#genomic-characterization) | [Mycotics](../../workflows_overview/workflows_kingdom.md/#mycotics) | PHB vX.X.X | Yes | Sample-level |
 
 ## TheiaEuk Workflows
 
@@ -170,7 +170,7 @@ All input reads are processed through "core tasks" in each workflow. The core ta
 | theiaeuk_pe | **min_genome_size** | Int | Minimum genome size able to pass read screening | 100000 | Optional |
 | theiaeuk_pe | **min_proportion** | Int | Minimum proportion of total reads in each read file to pass read screening | 50 | Optional |
 | theiaeuk_pe | **min_reads** | Int | Minimum number of reads to pass read screening | 10000 | Optional |
-| theiaeuk_pe | **skip_screen** | Boolean | Option to skip the read screening prior to analysis | FALSE | Optional |
+| theiaeuk_pe | **skip_screen** | Boolean | Option to skip the read screening prior to analysis; if setting to true, please provide a value for the theiaeuk_pe `genome_length` optional input, OR set `call_rasusa` to false. Otherwise RASUSA will attempt to downsample to an expected genome size of 0 bp, and the workflow will fail. | FALSE | Optional |
 | theiaeuk_pe | **subsample_coverage** | Float | Read depth for RASUSA task to subsample reads to | 150 | Optional |
 | version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
 | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
@@ -212,7 +212,7 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
     
     | Variable  | Rationale |
     | --- | --- |
-    | `skip_screen` | Prevent the read screen from running |
+    | `skip_screen` | Prevent the read screen from running. If you set this value to true, please provide a value for the theiaeuk_pe `genome_length` optional input, OR set the theiaeuk_pe `call_rasusa` optional input to false. Otherwise RASUSA will attempt to downsample to an expected genome size of 0 bp, and the workflow will fail. |
     | `min_reads` | Minimum number of base pairs for 20x coverage of _Hansenula polymorpha_  divided by 300 (longest Illumina read length) |
     | `min_basepairs` | Greater than 10x coverage of _Hansenula polymorpha_  |
     | `min_genome_size` | Based on the _Hansenula polymorpha_  genome - the smallest fungal genome as of 2015-04-02 (8.97 Mbp) |
@@ -322,8 +322,8 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
 
     De Novo assembly will be undertaken only for samples that have sufficient read quantity and quality, as determined by the `screen` task assessment of clean reads. 
 
-    In TheiaEuk, assembly is performed using the [Shovill](https://github.com/tseemann/shovill) pipeline. This undertakes the assembly with one of four assemblers ([SKESA](https://github.com/ncbi/SKESA) (default), [SPAdes](https://github.com/ablab/spades), [Velvet](https://github.com/dzerbino/velvet/), [Megahit](https://github.com/voutcn/megahit)), but also performs [a number of pre- and post-processing steps](https://github.com/tseemann/shovill#main-steps) to improve the resulting genome assembly. Shovill uses an estimated genome size (see [here](https://github.com/tseemann/shovill#--gsize)). If this is not provided by the user as an optional input, Shovill will estimate the genome size using [mash](https://mash.readthedocs.io/en/latest/index.html). Adaptor trimming can be undertaken with Shovill by setting the `trim` option to "true", but this is set to "false" by default as [alternative adapter trimming](https://www.notion.so/TheiaProk-Workflow-Series-89b9c08406094ec78d08a578fe861626?pvs=21) is undertaken in the TheiaEuk workflow.
-
+    In TheiaEuk, assembly is performed using the [Shovill](https://github.com/tseemann/shovill) pipeline. This undertakes the assembly with one of four assemblers ([SKESA](https://github.com/ncbi/SKESA) (default), [SPAdes](https://github.com/ablab/spades), [Velvet](https://github.com/dzerbino/velvet/), [Megahit](https://github.com/voutcn/megahit)), but also performs [a number of pre- and post-processing steps](https://github.com/tseemann/shovill#main-steps) to improve the resulting genome assembly. Shovill uses an estimated genome size (see [here](https://github.com/tseemann/shovill#--gsize)). If this is not provided by the user as an optional input, Shovill will estimate the genome size using [mash](https://mash.readthedocs.io/en/latest/index.html). Adaptor trimming can be undertaken with Shovill by setting the `trim` option to "true", but this is set to "false" by default as alternative adapter trimming performed by bbduk is undertaken in the TheiaEuk workflow.
+    
     ??? toggle "What is _de novo_  assembly?"
         _De novo_  assembly is the process or product of attempting to reconstruct a genome from scratch (without prior knowledge of the genome) using sequence reads. Assembly of fungal genomes from short-reads will produce multiple contigs per chromosome rather than a single contiguous sequence for each chromosome.
         
@@ -407,7 +407,7 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
         | Software Documentation | https://busco.ezlab.org/ |
         | Orginal publication | [BUSCO: assessing genome assembly and annotation completeness with single-copy orthologs](https://academic.oup.com/bioinformatics/article/31/19/3210/211866) |
 
-??? task "`QC_check`: Check QC Metrics Against User-Defined Thresholds (optional)"
+??? task "`qc_check`: Check QC Metrics Against User-Defined Thresholds (optional)"
 
     The `qc_check` task compares generated QC metrics against user-defined thresholds for each metric. This task will run if the user provides a `qc_check_table` .tsv file. If all QC metrics meet the threshold, the `qc_check` output variable will read `QC_PASS`. Otherwise, the output will read `QC_NA` if the task could not proceed or `QC_ALERT` followed by a string indicating what metric failed.
 
@@ -598,19 +598,55 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
 
 | **Variable** | **Type** | **Description** |
 |---|---|---|
+| assembly_fasta | File | _De novo_ genome assembly in FASTA format |
+| assembly_length | Int | Length of assembly (total number of nucleotides) as determined by QUAST |
+| bbduk_docker| String | BBDuk docker image used |
+| busco_database | String | BUSCO database used |
+| busco_docker | String | BUSCO docker image used |
+| busco_report | File | A plain text summary of the results in BUSCO notation |
+| busco_results | String | BUSCO results (see above for explanation of BUSCO notation) |
+| busco_version | String | BUSCO software version used |
 | cg_pipeline_docker | String | Docker file used for running CG-Pipeline on cleaned reads |
 | cg_pipeline_report | File | TSV file of read metrics from raw reads, including average read length, number of reads, and estimated genome coverage |
-| est_coverage_clean | Float | Estimated coverage calculated from   clean reads and genome length |
-| est_coverage_raw | Float | Estimated coverage calculated from  raw reads and genome length |
+| cladetyper_annotated_reference | String | The annotated reference file for the identified clade, "None" if no clade was identified |
+| cladetyper_clade | String | The clade assigned to the input assembly |
+| cladetyper_docker_image | String | The Docker container used for the task |
+| cladetyper_gambit_version | String | The version of GAMBIT used for the analysis |
+| combined_mean_q_clean | Float | Mean quality score for the combined clean reads |
+| combined_mean_q_raw | Float | Mean quality score for the combined raw reads |
+| combined_mean_readlength_clean | Float | Mean read length for the combined clean reads |
+| combined_mean_readlength_raw | Float | Mean read length for the combined raw reads |
+| contigs_fastg | File | Assembly graph if megahit used for genome assembly |
+| contigs_gfa | File | Assembly graph if spades used for genome assembly |
+| contigs_lastgraph | File | Assembly graph if velvet used for genome assembly |
+| est_coverage_clean | Float | Estimated coverage calculated from clean reads and genome length |
+| est_coverage_raw | Float | Estimated coverage calculated from raw reads and genome length |
+| fastp_html_report | File | The HTML report made with fastp |
+| fastp_version | String | Version of fastp software used |
 | fastq_scan_clean1_json | File | JSON file output from `fastq-scan` containing summary stats about clean forward read quality and length |
 | fastq_scan_clean2_json | File | JSON file output from `fastq-scan` containing summary stats about clean reverse read quality and length |
+ fastq_scan_num_reads_clean_pairs | String | Number of read pairs after cleaning as calculated by fastq_scan |
+| fastq_scan_num_reads_clean1 | Int | Number of forward reads after cleaning as calculated by fastq_scan |
+| fastq_scan_num_reads_clean2 | Int | Number of reverse reads after cleaning as calculated by fastq_scan |
+| fastq_scan_num_reads_raw_pairs | String | Number of input read pairs calculated by fastq_scan |
+| fastq_scan_num_reads_raw1 | Int | Number of input forward reads calculated by fastq_scan |
+| fastq_scan_num_reads_raw2 | Int | Number of input reverse reads calculated by fastq_scan |
+| fastq_scan_num_reads_raw_pairs | String | Number of input read pairs calculated by fastq_scan |
 | fastq_scan_raw1_json | File | JSON file output from `fastq-scan` containing summary stats about raw forward read quality and length |
 | fastq_scan_raw2_json | File | JSON file output from `fastq-scan` containing summary stats about raw reverse read quality and length |
-| r1_mean_q_clean | Float | Mean quality score of clean forward reads |
-| r1_mean_q_raw | Float | Mean quality score of raw forward reads |
-| r2_mean_q_clean | Float | Mean quality score of clean reverse reads |
-| r2_mean_q_raw | Float | Mean quality score of raw reverse reads |
 | fastq_scan_version | String | Version of fastq-scan software used |
+| fastqc_clean1_html | File | Graphical visualization of clean forward read quality from fastqc to open in an internet browser |
+| fastqc_clean2_html | File | Graphical visualization of clean reverse read quality from fastqc to open in an internet browser |
+| fastqc_docker | String | Docker container used with fastqc |
+| fastqc_num_reads_clean1 | Int | Number of forward reads after cleaning by fastqc |
+| fastqc_num_reads_clean2 | Int | Number of reverse reads after cleaning by fastqc |
+| fastqc_num_reads_clean_pairs | String | Number of read pairs after cleaning by fastqc |
+| fastqc_num_reads_raw1 | Int | Number of input reverse reads by fastqc |
+| fastqc_num_reads_raw2 | Int | Number of input reverse reads by fastqc |
+| fastqc_num_reads_raw_pairs | String | Number of input read pairs by fastqc |
+| fastqc_raw1_html | File | Graphical visualization of raw forward read quality from fastqc to open in an internet browser |
+| fastqc_raw2_html | File | Graphical visualization of raw reverse read qualityfrom fastqc to open in an internet browser |
+| fastqc_version | String | Version of fastqc software used |
 | gambit_closest_genomes | File | CSV file listing genomes in the GAMBIT database that are most similar to the query assembly |
 | gambit_db_version | String | Version of GAMBIT used |
 | gambit_docker | String | GAMBIT docker file used |
@@ -618,44 +654,44 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
 | gambit_predicted_taxon_rank | String | Taxon rank of GAMBIT taxon prediction |
 | gambit_report | File | GAMBIT report in a machine-readable format |
 | gambit_version | String | Version of GAMBIT software used |
-| assembly_length | Int | Length of assembly (total contig length) as determined by QUAST |
 | n50_value | Int | N50 of assembly calculated by QUAST |
 | number_contigs | Int | Total number of contigs in assembly |
+| qc_check | String | A string that indicates whether or not the sample passes a set of pre-determined and user-provided QC thresholds |
+| qc_standard | File | The user-provided file that contains the QC thresholds used for the QC check |
+| quast_gc_percent | Float | The GC percent of your sample |
 | quast_report | File | TSV report from QUAST |
 | quast_version | String | Software version of QUAST used |
+| r1_mean_q_raw | Float | Mean quality score of raw forward reads |
+| r1_mean_readlength_raw | Float | Mean read length of raw forward reads |
+| r2_mean_q_raw | Float | Mean quality score of raw reverse reads |
+| r2_mean_readlength_clean | Float | Mean read length of clean reverse reads |
 | rasusa_version | String | Version of rasusa used |
-| read1_subsampled | File | Subsampled read1 file |
-| read2_subsampled | File | Subsampled read2 file |
-| bbduk_docker | String | BBDuk docker image used  |
-| fastp_version | String | Version of fastp software used |
 | read1_clean | File | Clean forward reads file |
+| read1_subsampled | File | Subsampled read1 file |
 | read2_clean | File | Clean reverse reads file |
-| num_reads_clean_pairs | String | Number of read pairs after cleaning |
-| num_reads_clean1 | Int | Number of forward reads after cleaning |
-| num_reads_clean2 | Int | Number of reverse reads after cleaning |
-| num_reads_raw_pairs | String | Number of input read pairs |
-| num_reads_raw1 | Int | Number of input forward reads |
-| num_reads_raw2 | Int | Number of input reverse reads |
-| trimmomatic_version | String | Version of trimmomatic used |
-| clean_read_screen | String | PASS or FAIL result from clean read screening; FAIL accompanied by the reason for failure |
-| raw_read_screen | String | PASS or FAIL result from raw read screening; FAIL accompanied by thereason for failure |
-| assembly_fasta | File | <https://github.com/tseemann/shovill#contigsfa> |
-| contigs_fastg | File | Assembly graph if megahit used for genome assembly |
-| contigs_gfa | File | Assembly graph if spades used for genome assembly |
-| contigs_lastgraph | File | Assembly graph if velvet used for genome assembly |
+| read2_subsampled | File | Subsampled read2 file |
+| read_screen_clean | String | PASS or FAIL result from clean read screening; FAIL accompanied by the reason for failure | ONT, PE, SE |
+| read_screen_raw | String | PASS or FAIL result from raw read screening; FAIL accompanied by thereason for failure |
+| seq_platform | String | Sequencing platform input by the user |
 | shovill_pe_version | String | Shovill version used |
-| theiaeuk_snippy_variants_bam | File | BAM file produced by the snippy module |
+| theiaeuk_illumina_pe_analysis_date | String | Date of TheiaEuk PE workflow execution |
+| theiaeuk_illumina_pe_version | String | TheiaEuk PE workflow version used |
+| theiaeuk_snippy_variants_bai | String | BAI file produced by the snippy module |
+| theiaeuk_snippy_variants_bam | String | BAM file produced by the snippy module |
+| theiaeuk_snippy_variants_coverage_tsv | String | TSV file containing coverage information for each base in the reference genome |
 | theiaeuk_snippy_variants_gene_query_results | File | File containing all lines from variants file matching gene query terms |
 | theiaeuk_snippy_variants_hits | String | String of all variant file entries matching gene query term |
+| theiaeuk_snippy_variants_num_reads_aligned | String | Number of reads aligned by snippy |
+| theiaeuk_snippy_variants_num_variants | Int | Number of variants detected by snippy |
 | theiaeuk_snippy_variants_outdir_tarball | File | Tar compressed file containing full snippy output directory |
+| theiaeuk_snippy_variants_percent_ref_coverage | String | Percent of reference genome covered by snippy |
 | theiaeuk_snippy_variants_query | String | The gene query term(s) used to search variant |
 | theiaeuk_snippy_variants_query_check | String | Were the gene query terms present in the refence annotated genome file |
 | theiaeuk_snippy_variants_reference_genome | File | The reference genome used in the alignment and variant calling |
 | theiaeuk_snippy_variants_results | File | The variants file produced by snippy |
 | theiaeuk_snippy_variants_summary | File | A file summarizing the variants detected by snippy |
 | theiaeuk_snippy_variants_version | String | The version of the snippy_variants module being used |
-| seq_platform | String | Sequencing platform inout by the user |
-| theiaeuk_illumina_pe_analysis_date | String | Date of TheiaProk workflow execution |
-| theiaeuk_illumina_pe_version | String | TheiaProk workflow version used |
+| trimmomatic_docker | String | Docker image used for trimmomatic |
+| trimmomatic_version | String | Version of trimmomatic used |
 
 </div>
