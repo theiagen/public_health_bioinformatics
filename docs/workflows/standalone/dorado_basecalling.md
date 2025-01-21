@@ -50,18 +50,18 @@ Users can configure the basecalling model by setting the `dorado_model` input pa
 
 ### Supported Kit Names:
 
-    Ensure you use an accepted kit name in the `kit_name` parameter. The following kit names are supported in Dorado:
+Ensure you use an accepted kit name in the `kit_name` parameter. The following kit names are supported in Dorado:
 
-    ```
-    EXP-NBD103, EXP-NBD104, EXP-NBD114, EXP-NBD114-24, EXP-NBD196, EXP-PBC001, EXP-PBC096, 
-    SQK-16S024, SQK-16S114-24, SQK-LWB001, SQK-MLK111-96-XL, SQK-MLK114-96-XL, SQK-NBD111-24, 
-    SQK-NBD111-96, SQK-NBD114-24, SQK-NBD114-96, SQK-PBK004, SQK-PCB109, SQK-PCB110, SQK-PCB111-24, 
-    SQK-PCB114-24, SQK-RAB201, SQK-RAB204, SQK-RBK001, SQK-RBK004, SQK-RBK110-96, SQK-RBK111-24, 
-    SQK-RBK111-96, SQK-RBK114-24, SQK-RBK114-96, SQK-RLB001, SQK-RPB004, SQK-RPB114-24, 
-    TWIST-16-UDI, TWIST-96A-UDI, VSK-PTC001, VSK-VMK001, VSK-VMK004, VSK-VPS001
-    ```
+```
+EXP-NBD103, EXP-NBD104, EXP-NBD114, EXP-NBD114-24, EXP-NBD196, EXP-PBC001, EXP-PBC096, 
+SQK-16S024, SQK-16S114-24, SQK-LWB001, SQK-MLK111-96-XL, SQK-MLK114-96-XL, SQK-NBD111-24, 
+SQK-NBD111-96, SQK-NBD114-24, SQK-NBD114-96, SQK-PBK004, SQK-PCB109, SQK-PCB110, SQK-PCB111-24, 
+SQK-PCB114-24, SQK-RAB201, SQK-RAB204, SQK-RBK001, SQK-RBK004, SQK-RBK110-96, SQK-RBK111-24, 
+SQK-RBK111-96, SQK-RBK114-24, SQK-RBK114-96, SQK-RLB001, SQK-RPB004, SQK-RPB114-24, 
+TWIST-16-UDI, TWIST-96A-UDI, VSK-PTC001, VSK-VMK001, VSK-VMK004, VSK-VPS001
+```
 
-    Select from these options to avoid input errors.
+Select from these options to avoid input errors.
 
 ### Inputs
 
@@ -133,16 +133,15 @@ This workflow is composed of several tasks to process, basecall, and analyze Oxf
 ??? task "`Dorado Basecalling`: Converts `POD5` files to 'BAM' files"
     The basecalling task takes `POD5` files as input and converts them into 'BAM' format using the specified model. This step leverages GPU acceleration for efficient processing.
 
-     !!! note "Barcode Trimming"
+    !!! note "Barcode Trimming"
         Barcode trimming is purposefully disabled during the basecalling step to ensure accurate demultiplexing in subsequent workflow steps.
 
     !!! techdetails "Dorado Basecalling Technical Details"
-
-    |  | Links |
-    | --- | --- |
-    | Task | [task_dorado_basecall.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/basecalling/task_dorado_basecall.wdl) |
-    | Software Source Code | [Dorado on GitHub](https://github.com/nanoporetech/dorado/) |
-    | Software Documentation | <https://github.com/nanoporetech/dorado> |
+        |  | Links |
+        | --- | --- |
+        | Task | [task_dorado_basecall.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/basecalling/task_dorado_basecall.wdl) |
+        | Software Source Code | [Dorado on GitHub](https://github.com/nanoporetech/dorado/) |
+        | Software Documentation | <https://github.com/nanoporetech/dorado> |
 
 ??? task "`Dorado Demultiplexing`: Produces barcode-specific FASTQ files"
     This task demultiplexes the BAM files based on barcodes, generating individual FASTQ files for each barcode to support further analyses.
@@ -150,24 +149,21 @@ This workflow is composed of several tasks to process, basecall, and analyze Oxf
     !!! info "Disabling Barcode Trimming"
         Barcode trimming is enabled by default, but could be disabled by setting the optional input variable `demux_notrim` to `true`. This allows users to retain untrimmed reads for troubleshooting, such as inspecting reads in the "unclassified" folder when mis-binned reads or other data issues arise.
 
-    !!! techdetails "Dorado Basecalling Technical Details"
-
+    !!! techdetails "Dorado Demultiplexing Technical Details"
         |  | Links |
         | --- | --- |
         | Task | [task_dorado_demux.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/basecalling/task_dorado_demux.wdl) |
         | Software Source Code | [Dorado on GitHub](https://github.com/nanoporetech/dorado/) |
         | Software Documentation | <https://github.com/nanoporetech/dorado> |
 
-
 ??? task "`Dorado Trimming`: Trims PCR primers from FASTQ files"
     !!! info "Custom Primer Trimming"
         When a FASTA file is provided via the custom_primers input, the workflow calls the dorado_trim task to trim reads using the specified primer sequences. This step is optional and can be omitted if no custom primers are required.
 
-        !!! techdetails "Dorado trim Technical Details"
-
+    !!! techdetails "Dorado Trimming Technical Details"
         |  | Links |
         | --- | --- |
-        | Task | [task_dorado_trim.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/basecalling/task_dorado_trimm.wdl) |
+        | Task | [task_dorado_trim.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/basecalling/task_dorado_trim.wdl) |
         | Software Source Code | [Dorado on GitHub](https://github.com/nanoporetech/dorado/) |
         | Software Documentation | <https://github.com/nanoporetech/dorado> |
 
