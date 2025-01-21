@@ -103,7 +103,7 @@ task irma {
       
       echo "DEBUG: creating a smushed and hacky concatenated copy of the IRMA FASTA file..."
       # remove all newlines from the FASTA file to create a single line FASTA file and remove all headers and create a new headerline
-      cat ~{samplename}.irma.consensus.fasta | grep -v "^>" | tr -d '\n' | sed '1i >~{samplename}.irma.concatenated' > ~{samplename}.irma.consensus.concatenated.fasta
+      grep -v "^>" ~{samplename}.irma.consensus.fasta | tr -d '\n' | sed '1i >~{samplename}.irma.concatenated' > ~{samplename}.irma.consensus.concatenated.fasta
       # really hacky way to add an EOF newline but i couldn't be bothered to figure out a better way atm  
       echo "" >> ~{samplename}.irma.consensus.concatenated.fasta
 
