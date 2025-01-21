@@ -13,10 +13,12 @@ task version_capture {
     ~{default='' 'export TZ=' + timezone}
     date +"%Y-%m-%d" > TODAY
     echo "$PHB_Version" > PHB_VERSION
+    env > ENVIRONMENT_VARIABLES
   }
   output {
     String date = read_string("TODAY")
     String phb_version = read_string("PHB_VERSION")
+    File environment_variables = "ENVIRONMENT_VARIABLES"
   }
   runtime {
     memory: "1 GB"
