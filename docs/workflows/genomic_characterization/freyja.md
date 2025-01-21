@@ -50,7 +50,7 @@ Two options are available to visualize the Freyja results: [**Freyja_Plot_PHB**]
 
 ### Freyja, Sequencing Platforms and Data Quality
 
-The choice of sequencing platform and the quality of the data directly influence Freyja's performance. High-accuracy platforms like Illumina provide reliable SNV detection, enhancing the precision of lineage abundance estimates. In contrast, platforms with higher error rates, such as Nanopore, whislt it has improved greatly in the recent years, may introduce uncertainties in variant calling, affecting the deconvolution process. Sequencing depth requirements will increase as the quality of the sequencing data decreases. A rational target depth is 100X coverage for sequencing data with Q-scores in the range of 25-30.
+The choice of sequencing platform and the quality of the data directly influence Freyja's performance. High-accuracy platforms like Illumina provide reliable SNV detection, enhancing the precision of lineage abundance estimates. In contrast, platforms with higher error rates, such as Nanopore, whilst it has improved greatly in the recent years, may introduce uncertainties in variant calling, affecting the deconvolution process. Sequencing depth requirements will increase as the quality of the sequencing data decreases. A rational target depth is 100X coverage for sequencing data with Q-scores in the range of 25-30.
 
 Additionally, inadequate sequencing depth can hinder Freyja's ability to differentiate between lineages, leading to potential misestimations. Sequencing depth requirements will increase with the complexity of the sample composition and the diversity of lineages present. For samples containing multiple closely related lineages, higher sequencing depth is necessary to resolve subtle differences in genetic variation and accurately estimate lineage abundances. This is particularly important for pathogens with high mutation rates or a large number of cocirculating lineages, such as influenza, where distinguishing between lineages relies on detecting specific single nucleotide variants (SNVs) with high confidence.
 
@@ -219,7 +219,7 @@ This workflow runs on the sample level.
 
 ??? task "`read_QC_trim_pe` Details"
 
-    ##### `read_QC_trim_pe` {#read_QC_trim_pe}
+    `read_QC_trim_pe` {#read_QC_trim_pe}
 
     This task runs a sub-workflow that gathers basic QC information, trimming (either with trimmomatic or fastp), human read scrubbing, and taxonomic identification (Kraken2). Optional parameters do not need to be modified. For information regarding the individual tasks performed during this, please visit the [TheiaCoV documentation](../genomic_characterization/theiacov.md).
 
@@ -231,7 +231,7 @@ This workflow runs on the sample level.
 
 ??? task "`read_QC_trim_se` Details"
 
-    ##### `read_QC_trim_se` {#read_QC_trim_se}
+    `read_QC_trim_se` {#read_QC_trim_se}
 
     This task runs a sub-workflow that gathers basic QC information, trimming (either with trimmomatic or fastp), human read scrubbing, and taxonomic identification (Kraken2). Optional parameters do not need to be modified. For information regarding the individual tasks performed during this, please visit the [TheiaCoV documentation](../genomic_characterization/theiacov.md).
 
@@ -243,7 +243,7 @@ This workflow runs on the sample level.
 
 ??? task "`read_QC_trim_ont` Details"
 
-    ##### `read_QC_trim_ont` {#read_QC_trim_ont}
+    `read_QC_trim_ont` {#read_QC_trim_ont}
 
     This task runs a sub-workflow that gathers basic QC information, trimming (nanoplot), human read scrubbing, and taxonomic identification (Kraken2). Optional parameters do not need to be modified. For information regarding the individual tasks performed during this, please visit the [TheiaCoV documentation](../genomic_characterization/theiacov.md).
 
@@ -255,7 +255,7 @@ This workflow runs on the sample level.
 
 ??? task "`bwa` Details"
 
-    ##### `bwa` {#bwa}
+    `bwa` {#bwa}
 
     This task aligns the cleaned short reads (Illumina) to the reference genome provided by the user.
 
@@ -270,7 +270,7 @@ This workflow runs on the sample level.
 
 ??? task "`minimap2` Details"
 
-    ##### `minimap2` {#minimap2}
+    `minimap2` {#minimap2}
 
     This task aligns the cleaned long reads (Oxford Nanopore) to the reference genome provided by the user.
 
@@ -285,7 +285,7 @@ This workflow runs on the sample level.
 
 ??? task "`primer_trim` Details"
 
-    ##### `primer_trim` {#primer_trim}
+    `primer_trim` {#primer_trim}
 
     This task trims the primer sequences from the aligned bam file with iVar. The optional input, `keep_noprimer_reads`, does not have to be modified.
 
@@ -300,7 +300,7 @@ This workflow runs on the sample level.
 
 ??? task "`freyja` Details"
 
-    ##### `freyja` {#freyja}
+    `freyja` {#freyja}
 
     The Freyja task will call variants and capture sequencing depth information to identify the relative abundance of lineages present. Optionally, if `bootstrap` is set to true, bootstrapping will be performed. After the optional bootstrapping step, the variants are demixed.
 
@@ -463,7 +463,7 @@ This workflow runs on the set level.
 
 ??? task "`freyja_plot_task` Details"
 
-    ##### `freyja_plot_task` {#freyja_plot_task}
+    `freyja_plot_task` {#freyja_plot_task}
 
     This task will aggregate multiple samples together, and then creates a plot. Several optional inputs dictate the plot appearance (see each variable's description for more information).
 
