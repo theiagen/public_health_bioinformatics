@@ -14,6 +14,9 @@ task busco {
     Boolean eukaryote = false
   }
   command <<<
+
+    gcloud config get-value project
+
     # get version
     busco --version | tee "VERSION"
  
