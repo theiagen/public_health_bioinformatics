@@ -3,28 +3,33 @@ version 1.0
 task bakta {
   input {
     File assembly
-    File bakta_db = "gs://theiagen-public-files-rp/terra/theiaprok-files/bakta_db_2022-08-29.tar.gz"
     String samplename
+    String db_type = "light" # User choice for database type: "light" (default) or "full"
     Int cpu = 8
     Int memory = 16
-    String docker = "us-docker.pkg.dev/general-theiagen/biocontainers/bakta:1.5.1--pyhdfd78af_0"
     Int disk_size = 100
-    # Parameters 
-    #  proteins: Fasta file of trusted protein sequences for CDS annotation
-    #  prodigal_tf: Prodigal training file to use for CDS prediction
-    # bakta_opts: any additional bakta arguments
-    Boolean proteins = false
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/bakta:1.10.3"
+    File bakta_light_db = "gs://theiagen-public-files-rp/terra/theiaprok-files/bakta_light_db_2024-01-20.tar.gz"
+    File bakta_full_db = "gs://theiagen-public-files-rp/terra/theiaprok-files/bakta_full_db_2024-01-20.tar.gz"
+    Boolean proteins = false #  proteins: Fasta file of trusted protein sequences for CDS annotation
     Boolean compliant = false
-    File? prodigal_tf
-    String? bakta_opts
+    File? prodigal_tf # prodigal_tf: Prodigal training file to use for CDS prediction
+    String? bakta_opts # bakta_opts: any additional bakta arguments
   }
   command <<<
   date | tee DATE
   bakta --version | tee BAKTA_VERSION
   
+  # Determine which database to use
+  if [[ "~{db_type}" == "light" ]]; then
+    cp ~{bakta_light_db} db.tar.gz
+  else
+    cp ~{bakta_full_db} db.tar.gz
+  fi
+
   # Extract Bakta DB
   mkdir db
-  time tar xzvf ~{bakta_db} --strip-components=1 -C ./db
+  time tar xzvf db.tar.gz --strip-components=1 -C ./db
 
   # Install amrfinderplus db
   amrfinder_update --database db/amrfinderplus-db
