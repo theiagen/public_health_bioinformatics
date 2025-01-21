@@ -82,7 +82,7 @@ nav:
                - Transfer_Column_Content: workflows/data_export/transfer_column_content.md
                - Zip_Column_Content: workflows/data_export/zip_column_content.md
             - Bacteria:
-                - Clair3_Variants_ONT: workflows/phylogenetic_construction/clair3_variants.md
+               - Clair3_Variants_ONT: workflows/phylogenetic_construction/clair3_variants.md
                - Core_Gene_SNP: workflows/phylogenetic_construction/core_gene_snp.md
                - Find_Shared_Variants: workflows/phylogenetic_construction/find_shared_variants.md
                - GAMBIT_Query: workflows/standalone/gambit_query.md
