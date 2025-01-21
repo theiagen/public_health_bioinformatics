@@ -25,6 +25,7 @@ workflow organism_parameters {
     # set default nextclade information as NA
     String? nextclade_dataset_tag_input
     String? nextclade_dataset_name_input
+    String? nextclade_custom_input_dataset_input
 
     # vadr parameters
     Int? vadr_max_length
@@ -156,6 +157,7 @@ workflow organism_parameters {
       }
       if (flu_subtype == "H5N1") {
         # H5N1 is a special case where the dataset used is the h5nx all clades dataset 
+        String h5n1_nextclade_custom_input_dataset = "gs://theiagen-public-files-rp/terra/flu-avian-H5N1-references/avian-flu_h5n1-cattle-outbreak_genome.json"
         String h5n1_ha_reference = "gs://theiagen-public-files-rp/terra/flu-references/reference_h5n1_ha.fasta"
         String h5n1_ha_reference_gbk = "gs://theiagen-public-files-rp/terra/flu-references/reference_h5n1_ha.gb"
         String h5n1_ha_nextclade_ds_tag = "2024-12-04--17-05-31Z"
@@ -272,6 +274,7 @@ workflow organism_parameters {
     # nextclade information
     String nextclade_dataset_tag = select_first([nextclade_dataset_tag_input, sc2_nextclade_ds_tag, mpox_nextclade_ds_tag, wnv_nextclade_ds_tag, h1n1_ha_nextclade_ds_tag, h3n2_ha_nextclade_ds_tag, vic_ha_nextclade_ds_tag, yam_ha_nextclade_ds_tag, h5n1_ha_nextclade_ds_tag, h1n1_na_nextclade_ds_tag, h3n2_na_nextclade_ds_tag, vic_na_nextclade_ds_tag, yam_na_nextclade_ds_tag, rsv_a_nextclade_ds_tag, rsv_b_nextclade_ds_tag, "NA"])
     String nextclade_dataset_name = select_first([nextclade_dataset_name_input, sc2_nextclade_ds_name, mpox_nextclade_ds_name, wnv_nextclade_ds_name, h1n1_ha_nextclade_ds_name, h3n2_ha_nextclade_ds_name, vic_ha_nextclade_ds_name, yam_ha_nextclade_ds_name, h5n1_ha_nextclade_ds_name, h1n1_na_nextclade_ds_name, h3n2_na_nextclade_ds_name, vic_na_nextclade_ds_name, yam_na_nextclade_ds_name, rsv_a_nextclade_ds_name, rsv_b_nextclade_ds_name, "NA"])
+    String nextclade_custom_input_dataset = select_first([nextclade_custom_input_dataset_input, h5n1_nextclade_custom_input_dataset, ""])
     # pangolin options
     String pangolin_docker = select_first([pangolin_docker_image, sc2_pangolin_docker, ""])
     # vadr options

@@ -100,6 +100,13 @@ task irma {
 
       echo "DEBUG: editing IRMA FASTA file to include sample name in FASTA headers...."
       sed -i "s/>/>~{samplename}_/g" ~{samplename}.irma.consensus.fasta
+      
+      echo "DEBUG: creating a smushed and hacky concatenated copy of the IRMA FASTA file..."
+      # remove all newlines from the FASTA file to create a single line FASTA file and remove all headers and create a new headerline
+      cat ~{samplename}.irma.consensus.fasta | grep -v "^>" | tr -d '\n' | sed '1i >~{samplename}.irma.concatenated' > ~{samplename}.irma.consensus.concatenated.fasta
+      # really hacky way to add an EOF newline but i couldn't be bothered to figure out a better way atm  
+      echo "" >> ~{samplename}.irma.consensus.concatenated.fasta
+
 
       echo "DEBUG: creating copy of consensus FASTA with periods replaced by Ns...."
       # use sed to create copy of FASTA file where periods are replaced by Ns, except in the FASTA header lines that begin with '>'
@@ -182,6 +189,7 @@ task irma {
   >>>
   output {
     File? irma_assembly_fasta = "~{samplename}.irma.consensus.fasta"
+    File? irma_assembly_fasta_concatenated = "~{samplename}.irma.consensus.concatenated.fasta"
     File? seg_ha_assembly = "~{samplename}_HA.fasta"
     File? seg_na_assembly = "~{samplename}_NA.fasta"
     File? seg_pa_assembly = "~{samplename}_PA.fasta"

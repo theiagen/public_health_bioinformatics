@@ -152,6 +152,7 @@ workflow theiacov_illumina_pe {
             read2 = read_QC_trim.read2_clean,
             samplename = samplename,
             standardized_organism = organism_parameters.standardized_organism,
+            nextclade_custom_input_dataset = organism_parameters.nextclade_custom_input_dataset,
             seq_method = seq_method
         }
       }

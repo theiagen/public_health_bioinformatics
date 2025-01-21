@@ -1,79 +1,20 @@
 version 1.0
 
-task nextclade {
-  meta {
-    description: "Nextclade classification of one sample. Leaving optional inputs unspecified will use SARS-CoV-2 defaults."
-  }
-  input {
-    File genome_fasta
-    File? root_sequence
-    File? auspice_reference_tree_json
-    File? qc_config_json
-    File? gene_annotations_gff
-    File? pcr_primers_csv
-    File? virus_properties
-    String docker = "us-docker.pkg.dev/general-theiagen/nextstrain/nextclade:2.14.0"
-    String dataset_name
-    String dataset_reference
-    String dataset_tag
-    Int disk_size = 50
-    Int memory = 4
-    Int cpu = 2
-  }
-  String basename = basename(genome_fasta, ".fasta")
-  command <<<
-    NEXTCLADE_VERSION="$(nextclade --version)"
-    echo $NEXTCLADE_VERSION > NEXTCLADE_VERSION
-
-    nextclade dataset get --name="~{dataset_name}" --reference="~{dataset_reference}" --tag="~{dataset_tag}" -o nextclade_dataset_dir --verbose
-    set -e
-    nextclade run \
-        --input-dataset=nextclade_dataset_dir/ \
-        ~{"--input-root-seq " + root_sequence} \
-        ~{"--input-tree " + auspice_reference_tree_json} \
-        ~{"--input-qc-config " + qc_config_json} \
-        ~{"--input-gene-map " + gene_annotations_gff} \
-        ~{"--input-pcr-primers " + pcr_primers_csv} \
-        ~{"--input-virus-properties " + virus_properties}  \
-        --output-json "~{basename}".nextclade.json \
-        --output-tsv  "~{basename}".nextclade.tsv \
-        --output-tree "~{basename}".nextclade.auspice.json \
-        --output-all=. \
-        "~{genome_fasta}"
-  >>>
-  runtime {
-    docker: "~{docker}"
-    memory: "~{memory} GB"
-    cpu: cpu
-    disks:  "local-disk " + disk_size + " SSD"
-    disk: disk_size + " GB" # TES
-    dx_instance_type: "mem1_ssd1_v2_x2"
-    maxRetries: 3 
-  }
-  output {
-    String nextclade_version = read_string("NEXTCLADE_VERSION")
-    File nextclade_json = "~{basename}.nextclade.json"
-    File auspice_json = "~{basename}.nextclade.auspice.json"
-    File nextclade_tsv = "~{basename}.nextclade.tsv"
-    String nextclade_docker = docker
-    String nextclade_dataset_tag = "~{dataset_tag}"
-  }
-}
-
 task nextclade_v3 {
   meta {
     description: "Nextclade classification of one sample. Leaving optional inputs unspecified will use SARS-CoV-2 defaults."
   }
   input {
     File genome_fasta
+    File? custom_input_dataset
     File? auspice_reference_tree_json
     File? gene_annotations_gff
     File? nextclade_pathogen_json
     File? input_ref
-    String docker = "us-docker.pkg.dev/general-theiagen/nextstrain/nextclade:3.3.1" 
-    String dataset_name
+    String docker = "us-docker.pkg.dev/general-theiagen/nextstrain/nextclade:3.9.1" 
+    String? dataset_name
     String verbosity = "warn" # other options are: "off" "error" "info" "debug" and "trace"
-    String dataset_tag
+    String? dataset_tag
     Int disk_size = 50
     Int memory = 4
     Int cpu = 2
@@ -84,18 +25,21 @@ task nextclade_v3 {
     nextclade --version | tee NEXTCLADE_VERSION
 
     # --reference no longer used in v3. consolidated into --name and --tag
-    nextclade dataset get \
-      --name="~{dataset_name}" \
-      --tag="~{dataset_tag}" \
-      -o nextclade_dataset_dir \
-      --verbosity ~{verbosity}
+    # if a custom input dataset is not provided, then use the dataset name and tag
+    if [ -e "~{custom_input_dataset}" ]; then
+      nextclade dataset get \
+        --name="~{dataset_name}" \
+        --tag="~{dataset_tag}" \
+        -o nextclade_dataset_dir \
+        --verbosity ~{verbosity}
+    fi
 
     # exit script/task upon error
     set -e
 
     # not necessary to include `--jobs <jobs>` in v3. Nextclade will use all available CPU threads by default. It's fast so I don't think we will need to change unless we see errors
     nextclade run \
-      --input-dataset nextclade_dataset_dir/ \
+      --input-dataset ~{default="nextclade_dataset_dir/" custom_input_dataset} \
       ~{"--input-ref " + input_ref} \
       ~{"--input-tree " + auspice_reference_tree_json} \
       ~{"--input-pathogen-json " + nextclade_pathogen_json} \
@@ -184,37 +128,6 @@ task nextclade_output_parser {
 
       write_field_to_file('NEXTCLADE_QC', 'qc.overallStatus')
 
-      if ("~{organism}" == "flu"):
-        # split the amino acid mutations by segment
-        segments=["PB2", "PB1", "PA", "HA", "NP", "NA", "MP", "NS"]
-
-        def process_nc_aa_string(input_file_name):
-          segments_dict = {segment: [] for segment in segments}
-
-          with open(input_file_name, 'r') as input_file:
-            nc_aa_string = input_file.read().strip()
-
-          mutation_list = nc_aa_string.split(',')
-
-          for single_mutation in mutation_list:
-            segment, change = single_mutation.split(':')
-            if segment in segments_dict and change != '':
-              segments_dict[segment].append(single_mutation)
-
-        if nc_aa_subs != '' and nc_aa_subs != 'NA':
-          process_nc_aa_string("NEXTCLADE_AASUBS")
-
-        if nc_aa_dels != '' and nc_aa_dels != 'NA':
-          process_nc_aa_string("NEXTCLADE_AADELS")
-
-        write_field_to_file
-        for segment, values in segments_dict.items():
-          with open(f"NEXTCLADE_AA_FLU_{segment}", 'w') as nextclade_aa_flu:
-            nextclade_aa_flu.write(','.join(values))])
-      else:
-       # prevent WDL failures
-       touch NEXTCLADE_AA_FLU_PB2 NEXTCLADE_AA_FLU_PB1 NEXTCLADE_AA_FLU_PA NEXTCLADE_AA_FLU_HA NEXTCLADE_AA_FLU_NP NEXTCLADE_AA_FLU_NA NEXTCLADE_AA_FLU_MP NEXTCLADE_AA_FLU_NS
-
     CODE
   >>>
   runtime {
@@ -232,15 +145,6 @@ task nextclade_output_parser {
     String nextclade_aa_dels = read_string("NEXTCLADE_AADELS")
     String nextclade_lineage = read_string("NEXTCLADE_LINEAGE")
     String nextclade_qc = read_string("NEXTCLADE_QC")
-    # flu fields only
-    String nextclade_aa_flu_pb2 = read_string("NEXTCLADE_AA_FLU_PB2")
-    String nextclade_aa_flu_pb1 = read_string("NEXTCLADE_AA_FLU_PB1")
-    String nextclade_aa_flu_pa = read_string("NEXTCLADE_AA_FLU_PA")
-    String nextclade_aa_flu_ha = read_string("NEXTCLADE_AA_FLU_HA")
-    String nextclade_aa_flu_np = read_string("NEXTCLADE_AA_FLU_NP")
-    String nextclade_aa_flu_na = read_string("NEXTCLADE_AA_FLU_NA")
-    String nextclade_aa_flu_mp = read_string("NEXTCLADE_AA_FLU_MP")
-    String nextclade_aa_flu_ns = read_string("NEXTCLADE_AA_FLU_NS")
   }
 }
 
