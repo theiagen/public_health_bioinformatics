@@ -166,7 +166,6 @@ workflow flu_track {
           memory = nextclade_output_parser_memory,
           disk_size = nextclade_output_parser_disk_size
       }
-
     }
     call set_organism_defaults.organism_parameters as set_flu_na_nextclade_values {
       input:
@@ -295,6 +294,14 @@ workflow flu_track {
     # Nextclade outputs
     String? nextclade_version = nextclade_flu_ha.nextclade_version
     String? nextclade_docker = nextclade_flu_ha.nextclade_docker
+    # Nextclade H5N1 outputs
+    String? nextclade_json_flu_h5n1 = nextclade_flu_h5n1.nextclade_json
+    File? auspice_json_flu_h5n1 = nextclade_flu_h5n1.auspice_json
+    File? nextclade_tsv_flu_h5n1 = nextclade_flu_h5n1.nextclade_tsv
+    String? nextclade_aa_subs_flu_h5n1 = nextclade_output_parser_flu_h5n1.nextclade_aa_subs
+    String? nextclade_aa_dels_flu_h5n1 = nextclade_output_parser_flu_h5n1.nextclade_aa_dels
+    String? nextclade_clade_flu_h5n1 = nextclade_output_parser_flu_h5n1.nextclade_clade
+    String? nextclade_qc_flu_h5n1 = nextclade_output_parser_flu_h5n1.nextclade_qc
     # Nextclade HA outputs
     File? nextclade_json_flu_ha = nextclade_flu_ha.nextclade_json
     File? auspice_json_flu_ha =  nextclade_flu_ha.auspice_json

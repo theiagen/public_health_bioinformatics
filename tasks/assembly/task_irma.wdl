@@ -182,9 +182,9 @@ task irma {
     # this loop looks in the PWD for files ending in .fasta, and creates a copy of the file with periods replaced by Ns and dashes are deleted (since they represent gaps)
     for FASTA in ./*.fasta; do
       # if the renamed file ends in .fasta; then create copy of the file with periods replaced by Ns and dashes removed in all lines except FASTA headers that begin with '>'
-        echo "DEBUG: creating padded FASTA file for ${FASTA}...."
-        sed '/^>/! s/\./N/g' "${FASTA}" > "${FASTA%.fasta}.temp.fasta"
-        sed '/^>/! s/-//g' "${FASTA%.fasta}.temp.fasta" > "${FASTA%.fasta}.pad.fasta"
+      echo "DEBUG: creating padded FASTA file for ${FASTA}...."
+      sed '/^>/! s/\./N/g' "${FASTA}" > "${FASTA%.fasta}.temp.fasta"
+      sed '/^>/! s/-//g' "${FASTA%.fasta}.temp.fasta" > "${FASTA%.fasta}.pad.fasta"
     done
   >>>
   output {
@@ -219,7 +219,6 @@ task irma {
     Array[File] irma_bams = glob("~{samplename}*.bam")
     String irma_docker = docker
     String irma_version = read_string("VERSION")
-    String irma_pipeline_date = read_string("DATE")
     # for now just adding bams for these segments for mean coverage calculation
     File? seg_ha_bam = "~{samplename}_HA.bam"
     File? seg_na_bam = "~{samplename}_NA.bam"
