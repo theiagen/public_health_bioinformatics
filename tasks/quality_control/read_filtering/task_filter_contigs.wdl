@@ -7,15 +7,13 @@ task filter_contigs {
     Int disk_size = 50
     Int memory = 8
     Int cpu = 1
-    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/utility:1.2"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/kaptive:2.03" # Staph-b docker image with Biopython
   }
   command <<< 
     set -euo pipefail
     
     echo "Filtering contigs from ~{assembly_fasta}" >&2
 
-    # Install Biopython if not pre-installed
-    pip3 install biopython --quiet
 
     # Run Biopython script for filtering
     python3 <<EOF
