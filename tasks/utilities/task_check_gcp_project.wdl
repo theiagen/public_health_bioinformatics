@@ -5,14 +5,15 @@ task check_gcp_project {
         String docker = "us-docker.pkg.dev/general-theiagen/theiagen/cloud-sdk:dev"
     }
     command <<<
-        bash /scripts/check_project.sh > gcp_project.txt
+        project_id=$(gcloud config get-value project)
+        echo "$project_id" > PROJECT_ID
     >>>
     output {
-        File gcp_project = "gcp_project.txt"
+        String gcp_project = read_string("PROJECT_ID")
     }
     runtime {
         docker: docker
-        memory: "2 GB"
+        memory: "1 GB"
         cpu: 1
         disks: "local-disk 10 SSD"
     }

@@ -30,7 +30,7 @@ workflow fetch_sra_to_fastq {
   }
   output {
     # Test the output of the check_gcp_project task
-    File gcp_project = check_gcp_project.gcp_project
+    String gcp_project = check_gcp_project.gcp_project
     String sra_fetch_version = version_capture.phb_version
     String sra_fetch_analysis_date = version_capture.date
     File read1 = fastq_dl_sra.read1
