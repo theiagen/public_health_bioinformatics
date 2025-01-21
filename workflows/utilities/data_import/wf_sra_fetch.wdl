@@ -2,7 +2,7 @@ version 1.0
 
 import "../../../tasks/utilities/data_import/task_sra_fetch.wdl" as sra_fetch
 import "../../../tasks/task_versioning.wdl" as versioning
-
+import "../../../tasks/utilities/task_check_gcp_project.wdl" as check_project
 workflow fetch_sra_to_fastq {
   input {
     String accession
@@ -11,6 +11,10 @@ workflow fetch_sra_to_fastq {
     Int? memory
     Int? cpu
     String? fastq_dl_opts
+  }
+  call check_project.check_gcp_project {
+    input:
+      docker = docker
   }
   call versioning.version_capture {
     input:
@@ -25,6 +29,8 @@ workflow fetch_sra_to_fastq {
       fastq_dl_opts = fastq_dl_opts
   }
   output {
+    # Test the output of the check_gcp_project task
+    File gcp_project = check_gcp_project.gcp_project
     String sra_fetch_version = version_capture.phb_version
     String sra_fetch_analysis_date = version_capture.date
     File read1 = fastq_dl_sra.read1
