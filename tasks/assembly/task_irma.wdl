@@ -8,7 +8,7 @@ task irma {
     String samplename
     Boolean keep_ref_deletions = true
     Int minimum_consensus_support = 50
-    String docker = "us-docker.pkg.dev/general-theiagen/cdcgov/irma:v1.1.5"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/irma:1.2.0"
     Int memory = 16
     Int cpu = 4
     Int disk_size = 100
@@ -18,6 +18,7 @@ task irma {
     # capture irma vesion
     IRMA | head -n1 | awk -F' ' '{ print "IRMA " $5 }' | tee VERSION
 
+    ### IRMA configuration ###
     num_cpus_actual=$(nproc)
     echo "DEBUG: Number of CPUs available: ${num_cpus_actual}. Setting this in irma_config.sh file..."
     echo "SINGLE_LOCAL_PROC=${num_cpus_actual}" > irma_config.sh
@@ -31,17 +32,18 @@ task irma {
     echo "DEBUG: creating an optional IRMA configuration file to set TMP directory to $(pwd)"
     echo "TMP=$(pwd)" >> irma_config.sh
 
-    # capture reads as bash variables 
-    read1=~{read1}
-    if [ -f ~{read2} ]; then 
-      read2=~{read2}
-    fi
-
     # set config if needed
     if ~{keep_ref_deletions}; then 
       touch irma_config.sh
       echo 'DEL_TYPE="NNN"' >> irma_config.sh
       echo 'ALIGN_PROG="BLAT"' >> irma_config.sh
+    fi
+    ### END IRMA CONFIG ###
+
+    # capture reads as bash variables 
+    read1=~{read1}
+    if [ -f ~{read2} ]; then 
+      read2=~{read2}
     fi
 
     # format reads, if needed
@@ -62,6 +64,7 @@ task irma {
 
     echo "DEBUG: Custom irma_config.sh file contents:"
     cat irma_config.sh
+    echo "DEBUG: End of custom irma_config.sh file contents"
 
     # run IRMA
     # set IRMA module depending on sequencing technology
