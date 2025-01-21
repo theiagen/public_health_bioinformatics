@@ -150,16 +150,16 @@ workflow flu_track {
       }
       call nextclade_task.nextclade_v3 as nextclade_flu_h5n1 {
         input:
-          genome_fasta = select_first([irma.concatenated_assembly_fasta]),
+          genome_fasta = select_first([irma.irma_assembly_fasta_concatenated]),
           custom_input_dataset = nextclade_custom_input_dataset,
           docker = nextclade_docker_image,
           cpu = nextclade_cpu,
           memory = nextclade_memory,
           disk_size = nextclade_disk_size
       }
-      call nextclade_task.nextclade_output_parser as nextclade_output_parser_flu_ha {
+      call nextclade_task.nextclade_output_parser as nextclade_output_parser_flu_h5n1 {
         input:
-          nextclade_tsv = nextclade_flu_ha.nextclade_tsv,
+          nextclade_tsv = nextclade_flu_h5n1.nextclade_tsv,
           organism = standardized_organism,
           docker = nextclade_output_parser_docker,
           cpu = nextclade_output_parser_cpu,
