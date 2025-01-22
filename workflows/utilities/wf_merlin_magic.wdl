@@ -630,7 +630,7 @@ workflow merlin_magic {
   
   # theiaeuk
   if (theiaeuk) {
-    if (merlin_tag == "Candida auris") {
+    if (merlin_tag == "Candidozyma auris") {
       call cauris_cladetyper.cauris_cladetyper as cladetyper {
         input: 
           assembly_fasta = assembly,
