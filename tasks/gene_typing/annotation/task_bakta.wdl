@@ -4,37 +4,49 @@ task bakta {
   input {
     File assembly
     String samplename
-    String db_type = "light" # User choice for database type: "light" (default) or "full"
-    Int cpu = 8
+    String db_type = "light" # User choice for database type: light (default) or full
+    Int cpu = 4
     Int memory = 16
     Int disk_size = 100
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/bakta:1.10.3"
-    File bakta_light_db = "gs://theiagen-public-files-rp/terra/theiaprok-files/bakta_light_db_2024-01-20.tar.gz"
-    File bakta_full_db = "gs://theiagen-public-files-rp/terra/theiaprok-files/bakta_full_db_2024-01-20.tar.gz"
-    Boolean proteins = false #  proteins: Fasta file of trusted protein sequences for CDS annotation
+    String docker = "bakta:1.10.3-local"
+    String bakta_light_db_url = "gs://theiagen-public-files-rp/terra/theiaprok-files/bakta_light_db_2024-01-20.tar.gz"
+    String bakta_full_db_url = "gs://theiagen-public-files-rp/terra/theiaprok-files/bakta_full_db_2024-01-20.tar.gz"
+    Boolean proteins = false # Proteins: Fasta file of trusted protein sequences for CDS annotation
     Boolean compliant = false
-    File? prodigal_tf # prodigal_tf: Prodigal training file to use for CDS prediction
-    String? bakta_opts # bakta_opts: any additional bakta arguments
+    File? prodigal_tf # Prodigal_tf: Prodigal training file to use for CDS prediction
+    String? bakta_opts # Additional Bakta arguments
   }
-  command <<<
+  command <<<  
+  set -euo pipefail
   date | tee DATE
   bakta --version | tee BAKTA_VERSION
-  
-  # Determine which database to use
+
+   # Define database URLs
+  BAKTA_LIGHT_DB_URL="gs://theiagen-public-files-rp/terra/theiaprok-files/bakta_light_db_2024-01-20.tar.gz"
+  BAKTA_FULL_DB_URL="gs://theiagen-public-files-rp/terra/theiaprok-files/bakta_full_db_2024-01-20.tar.gz"
+
+  # Debug statement for database type
+  echo "Using database type: ~{db_type}" | tee DB_TYPE
+
+  # Determine database URL
   if [[ "~{db_type}" == "light" ]]; then
-    cp ~{bakta_light_db} db.tar.gz
+    echo "Using light database" | tee DB_DOWNLOAD_LOG
+    DB_URL="$BAKTA_LIGHT_DB_URL"
   else
-    cp ~{bakta_full_db} db.tar.gz
+    echo "Using full database" | tee DB_DOWNLOAD_LOG
+    DB_URL="$BAKTA_FULL_DB_URL"
   fi
+
+  # Download the selected database
+  echo "Downloading database from: $DB_URL" | tee -a DB_DOWNLOAD_LOG
+  gcloud storage cp $DB_URL db.tar.gz
+
 
   # Extract Bakta DB
   mkdir db
   time tar xzvf db.tar.gz --strip-components=1 -C ./db
 
-  # Install amrfinderplus db
-  amrfinder_update --database db/amrfinderplus-db
-  amrfinder --database_version | tee AMRFINDER_DATABASE_VERSION
-
+  # Run Bakta
   bakta \
     ~{bakta_opts} \
     --db db/ \
@@ -45,10 +57,9 @@ task bakta {
     ~{true='--proteins' false='' proteins} \
     ~{'--prodigal-tf ' + prodigal_tf} \
     ~{assembly}
-  
-  # rename gff3 to gff for compatibility with downstream analysis (pirate)
+
+  # Rename gff3 to gff for compatibility with downstream analysis
   mv "~{samplename}/~{samplename}.gff3" "~{samplename}/~{samplename}.gff"
-  
   >>>
   output {
     File bakta_embl = "~{samplename}/~{samplename}.embl"
@@ -69,6 +80,6 @@ task bakta {
     docker: docker
     disks:  "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
-    maxRetries: 3
+    maxRetries: 0
   }
 }
