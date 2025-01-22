@@ -26,6 +26,7 @@ task snippy_variants {
     Int? maxsoft
   }
   command <<<
+    set -euo pipefail
     snippy --version | head -1 | tee VERSION
 
     # set input variable
