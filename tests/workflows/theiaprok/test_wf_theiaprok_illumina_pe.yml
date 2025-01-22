@@ -516,7 +516,7 @@
     - path: miniwdl_run/wdl/workflows/theiaprok/wf_theiaprok_illumina_pe.wdl
       md5sum: 9b8e2da62c8572a369c786a9bbc3a36e
     - path: miniwdl_run/wdl/workflows/utilities/wf_merlin_magic.wdl
-      md5sum: 3c9c727d4a40ca936f58446103becb34
+      md5sum: 7321d08caf180b41aa6f6d77ea4b1fff
     - path: miniwdl_run/wdl/workflows/utilities/wf_read_QC_trim_pe.wdl
       contains: ["version", "QC", "output"]
     - path: miniwdl_run/workflow.log
