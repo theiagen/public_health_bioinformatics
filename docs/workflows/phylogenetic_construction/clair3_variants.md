@@ -19,7 +19,7 @@ The `Clair3_Variants` workflow processes Oxford Nanopore Technologies (ONT) sequ
    - **Population Studies**: Generate standardized variant calls suitable for population-level analyses
 
 
-PHB `Clair3_Variants` supports 10 model configuration for `clair3` ONT:
+### Supported Clair3 Models {#supported-clair3-models}
 
 | Model | Chemistry | Source |
 |-------|-----------|---------|
@@ -34,14 +34,17 @@ PHB `Clair3_Variants` supports 10 model configuration for `clair3` ONT:
 | `ont_guppy2` | Various | Legacy (For Guppy2 data) |
 | `ont_guppy5` | Various | Legacy (For Guppy5 data) |
 
+!!! hint ""
+    The latest models for ONT are downloaded from the [nanoporetech/rerio github](https://github.com/nanoporetech/rerio?tab=readme-ov-file#clair3-models). Please let us know if there is a model not included you would like to see added. 
+
 ### Inputs
 
 !!! warning "Note on Haploid Settings"
-   Several parameters are set by default for haploid genome analysis:
+    Several parameters are set by default for haploid genome analysis:
 
-   - clair3_disable_phasing is set to `true` since phasing is not relevant for haploid genomes
-   - clair3_include_all_contigs is set to `true` to ensure complete genome coverage
-   - clair3_enable_haploid_precise is set to `true` to only consider homozygous variants (1/1), which is appropriate for haploid genomes
+    - clair3_disable_phasing is set to `true` since phasing is not relevant for haploid genomes
+    - clair3_include_all_contigs is set to `true` to ensure complete genome coverage
+    - clair3_enable_haploid_precise is set to `true` to only consider homozygous variants (1/1), which is appropriate for haploid genomes
 
 <div class="searchable-table" markdown="1">
 
@@ -56,7 +59,7 @@ PHB `Clair3_Variants` supports 10 model configuration for `clair3` ONT:
 | clair3_variants_ont | **clair3_enable_long_indel** | Boolean | Enable long indel calling | false | Optional |
 | clair3_variants_ont | **clair3_include_all_contigs** | Boolean | Call variants on all contigs, should always be true for non-human samples | true | Optional |
 | clair3_variants_ont | **clair3_memory** | Int | Memory allocation in GB | 8 | Optional |
-| clair3_variants_ont | **clair3_model** | String | Model name for variant calling, see latest models: https://github.com/nanoporetech/rerio?tab=readme-ov-file#clair3-models | r941_prom_hac_g360+g422 | Optional |
+| clair3_variants_ont | **clair3_model** | String | Model name for variant calling (see [supported models](#supported-clair3-models) for available options) | r941_prom_hac_g360+g422 | Optional |
 | clair3_variants_ont | **clair3_variant_quality** | Int | Minimum variant quality score | 2 | Optional |
 | clair3_variants_ont | **read1** | File | ONT sequencing reads in FASTQ format | | Required |
 | clair3_variants_ont | **reference_genome_file** | File | Reference genome in FASTA format | | Required |
@@ -81,40 +84,60 @@ PHB `Clair3_Variants` supports 10 model configuration for `clair3` ONT:
 
 ### Workflow Tasks
 
-`Clair3_Variants` executes several key tasks in sequence to process ONT reads and identify variants:
+??? task "`minimap2`: Read Alignment"
 
-1. **Minimap2 Alignment**: Uses minimap2 with long read specific parameters (-L --cs --MD flags) to align reads to the reference genome. These specialized parameters are essential for:
-  - Proper handling of long read error profiles
-  - Generation of detailed alignment information
-  - Improved mapping accuracy for long reads
+    `minimap2` is used with long read specific parameters (-L --cs --MD flags) to align ONT reads to the reference genome. These specialized parameters are essential for proper handling of long read error profiles, generation of detailed alignment information, and improved mapping accuracy for long reads.
 
-2. **SAM/BAM Processing**: Converts and processes alignment files through several steps:
-  - Converts SAM format to BAM 
-  - Sorts BAM file by coordinate
-  - Creates BAM index file
-  - This processed BAM is required for Clair3's variant calling
+    !!! techdetails "minimap2 Technical Details"
+      | | Links |
+      |---|---|
+      | Task | [task_minimap2.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/alignment/task_minimap2.wdl) |
+      | Software Source Code | [minimap2 on GitHub](https://github.com/lh3/minimap2) |
+      | Software Documentation | [minimap2](https://lh3.github.io/minimap2) |
+      | Original Publication(s) | [Minimap2: pairwise alignment for nucleotide sequences](https://academic.oup.com/bioinformatics/article/34/18/3094/4994778) |
 
-3. **Reference Genome Indexing**: Creates necessary index files for the reference genome using samtools faidx
+??? task "`samtools`: BAM Processing"
 
-4. **Clair3 Variant Calling**: Performs deep learning-based variant detection using:
-  - Pileup-based calling for initial variant identification
-  - Full-alignment analysis for comprehensive variant detection
-  - Merges results into final high-confidence call set
+    The bam processing step aligns files through several coordinate-based steps to prepare for variant calling. The task converts SAM format to BAM, sorts the BAM file by coordinate, and creates a BAM index file. This processed BAM is required for Clair3's variant calling pipeline.
 
-!!! techdetails "Technical Details"
-   |  | Links |
-   | --- | --- |
-   | Task | [task_clair3_variants.wdl](../tasks/gene_typing/variant_detection/task_clair3_variants.wdl) |
-   | Software Source Code | [Clair3 on GitHub](https://github.com/HKU-BAL/Clair3) |
-   | Software Documentation | [Clair3 Documentation](https://github.com/HKU-BAL/Clair3#clair3-documentation) |
+    !!! techdetails "samtools Technical Details"
+      | | Links |
+      |---|---|
+      | Task | [task_samtools.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/data_handling/task_parse_mapping.wdl) |
+      | Software Source Code | [samtools on GitHub](https://github.com/samtools/samtools) |
+      | Software Documentation | [samtools](https://www.htslib.org/doc/samtools.html) |
+      | Original Publication(s) | [The Sequence Alignment/Map format and SAMtools](https://doi.org/10.1093/bioinformatics/btp352)<br>[Twelve Years of SAMtools and BCFtools](https://doi.org/10.1093/gigascience/giab008) |
+
+??? task "`samtools faidx`: Reference Genome Indexing"
+
+    `samtools faidx` creates necessary index files for the reference. This indexing step is    essential for enabling efficient random access to the reference sequence during variant calling.
+
+    !!! techdetails "samtools Technical Details"
+      | | Links |
+      |---|---|
+      | Task | [task_samtools.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/data_handling/task_parse_mapping.wdl) |
+      | Software Source Code | [samtools on GitHub](https://github.com/samtools/samtools) |
+      | Software Documentation | [samtools](https://www.htslib.org/doc/samtools.html) |
+      | Original Publication(s) | [The Sequence Alignment/Map format and SAMtools](https://doi.org/10.1093/bioinformatics/btp352)<br>[Twelve Years of SAMtools and BCFtools](https://doi.org/10.1093/gigascience/giab008) |
+
+??? task "`Clair3`: Variant Calling"
+
+    `Clair3` performs deep learning-based variant detection using a multi-stage approach. The process begins with pileup-based calling for initial variant identification, followed by full-alignment analysis for comprehensive variant detection. Results are merged into a final high-confidence call set.
+
+    The variant calling pipeline employs specialized neural networks trained on ONT data to accurately identify:
+    - Single nucleotide variants (SNVs)
+    - Small insertions and deletions (indels)
+    - Structural variants
+
+    !!! techdetails "Clair3 Technical Details"
+      |  | Links |
+      | --- | --- |
+      | Task | [task_clair3.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/variant_calling/task_clair3.wdl) |
+      | Software Source Code | [Clair3 on GitHub](https://github.com/HKU-BAL/Clair3) |
+      | Software Documentation | [Clair3 Documentation](https://github.com/HKU-BAL/Clair3?tab=readme-ov-file#usage) |
+      | Original Publication | [Symphonizing pileup and full-alignment for deep learning-based long-read variant calling](https://doi.org/10.1101/2021.12.29.474431) |
 
 ### Outputs
-
-!!! warning "Note on VCF Outputs"
-   The workflow produces multiple VCF files with different levels of filtering and analysis:
-   - The `clair3_variants_vcf` represents the most confident calls and should be used for most analyses
-   - The `pileup` and `full_alignment` VCFs can be useful for investigating specific variants or debugging
-   - The gVCF output (if enabled) provides complete genomic context including non-variant positions
 
 <div class="searchable-table" markdown="1">
 
