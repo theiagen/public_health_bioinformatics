@@ -33,24 +33,25 @@ task rasusa {
     rasusa --version | tee VERSION
     # set single-end or paired-end outputs
     if [ -z "~{read2}" ]; then
-      OUTPUT_FILES="~{samplename}_subsampled_R1.fastq.gz"
+      OUTPUT_FILES="-o ~{samplename}_subsampled_R1.fastq.gz"
     else
-      OUTPUT_FILES="~{samplename}_subsampled_R1.fastq.gz ~{samplename}_subsampled_R2.fastq.gz"
+      OUTPUT_FILES="-o ~{samplename}_subsampled_R1.fastq.gz -o ~{samplename}_subsampled_R2.fastq.gz"
     fi
-    # ignore coverage values if frac input provided
+    # ignore coverage and genome length if frac input provided
     if [ -z "~{frac}" ]; then
       COVERAGE="--coverage ~{coverage} --genome-size ~{genome_length}"
     else
       COVERAGE=""
     fi
+
     # run rasusa for read sampling
     rasusa reads \
-      -c ${COVERAGE} \
-      -s ~{'--seed ' + seed} \
-      -b ~{'--bases ' + bases} \
-      -f ~{'--frac ' + frac} \
-      -n ~{'--num ' + num} \
-      -o ${OUTPUT_FILES} \
+      ${COVERAGE} \
+      ~{'--seed ' + seed} \
+      ~{'--bases ' + bases} \
+      ~{'--frac ' + frac} \
+      ~{'--num ' + num} \
+      ${OUTPUT_FILES} \
       ~{read1} ~{read2}
   >>>
   output {
