@@ -19,6 +19,9 @@ task irma {
     # capture irma vesion
     IRMA | head -n1 | awk -F' ' '{ print "IRMA " $5 }' | tee VERSION
 
+    # set -euo pipefail to avoid silent failure; must happen AFTER running "IRMA" since it throws exit code 1
+    set -euo pipefail
+
     ### IRMA configuration ###
     # CPU config
     num_cpus_actual=$(nproc)
@@ -52,35 +55,13 @@ task irma {
     echo "DEBUG: End of custom irma_config.sh file contents"
     ### END IRMA CONFIG ###
 
-    # capture reads as bash variables 
-    read1=~{read1}
-    if [ -f ~{read2} ]; then 
-      read2=~{read2}
-    fi
-
-    # format reads, if needed
-    read_header=$(zcat -f ~{read1} | head -n1)
-    if ! [[ "${read_header}" =~ @(.+?)[_[:space:]][123]:.+ ]]; then
-      echo "DEBUG: Read headers may lead to IRMA failure; reformatting to meet IRMA input requirements"
-      read_basename=$(echo "~{read_basename}" | awk -F "_" '{ print $1 }')
-      
-      eval "zcat -f ~{read1}" | awk '{print (NR%4 == 1) ? "@'${read_basename}'-" ++i " 1:1" : $0}' | gzip -c > "${read_basename}-irmafix_R1.fastq.gz"
-      read1="${read_basename}-irmafix_R1.fastq.gz"
-      if [ -f ~{read2} ]; then 
-        eval "zcat -f ~{read2}" | awk '{print (NR%4 == 1) ? "@'${read_basename}'-" ++i " 2:2" : $0}' | gzip -c > "${read_basename}-irmafix_R2.fastq.gz"
-        read2="${read_basename}-irmafix_R2.fastq.gz"
-      fi     
-    else
-      echo "DEBUG: Read headers match IRMA formatting requirements"
-    fi
-
     # run IRMA
     # set IRMA module depending on sequencing technology
     if [[ ~{seq_method} == "OXFORD_NANOPORE" ]]; then
-      IRMA "FLU-minion" "${read1}" ~{samplename} --external-config irma_config.sh
+      IRMA "FLU-minion" "~{read1}" ~{samplename} --external-config irma_config.sh
     else
       # else, assume Illumina paired-end data as input
-      IRMA "FLU" "${read1}" "${read2}" ~{samplename} --external-config irma_config.sh
+      IRMA "FLU" "~{read1}" "~{read2}" ~{samplename} --external-config irma_config.sh
     fi
 
     # capture some IRMA log & config files; rename to use .tsv suffix instead of .txt
@@ -97,19 +78,46 @@ task irma {
       # flu segments from largest to smallest
       segments=("PB2" "PB1" "PA" "HA" "NP" "NA" "MP" "NS")
 
+      # Thank you Molly H. for this code block!
+      # declare associative arrays for segment numbers
+      # declare formatted name assoicate array which will be [seg_num] = [A_HA-H1] or [seg_num] = [B_MP]
+      # and will be filled in during the loop
+      # formatted_name_dict: [segment number] = header name
+      declare -A FluA=(["PB2"]="1" ["PB1"]="2" ["PA"]="3" ["HA"]="4" ["NP"]="5" ["NA"]="6" ["MP"]="7" ["NS"]="8" )
+      declare -A FluB=(["PB1"]="1" ["PB2"]="2" ["PA"]="3" ["HA"]="4" ["NP"]="5" ["NA"]="6" ["MP"]="7" ["NS"]="8" )
+      declare -A formatted_name_dict
+
       echo "DEBUG: creating IRMA FASTA file containing all segments in order (largest to smallest)...."
       
       # initialize an empty file
       touch ~{samplename}.irma.consensus.fasta
 
+      # (for each segment that was assembled) for file in <outdir>/amended_consensus/*fasta; do CAT to multi-fasta
+
       # concatenate files in the order of the segments array
-      for segment in "${segments[@]}"; do
-        segment_file=$(find "~{samplename}/amended_consensus" -name "*${segment}*.fasta")
+      for SEGMENT_NUM in "${FluA[@]}"; do
+        segment_file=$(find "~{samplename}/amended_consensus" -name "*_${SEGMENT_NUM}.fa")
+        echo "DEBUG: segment_file is set to: $segment_file"
+        # if the segment file exists, rename it and added to the final multi FASTA file "~{samplename}.irma.consensus.fasta"
         if [ -n "$segment_file" ]; then
-          echo "DEBUG: Adding $segment_file to consensus FASTA"
-          cat "$segment_file" >> ~{samplename}.irma.consensus.fasta
+          # craziness so we can use the segment number to get the segment string
+          for SEGMENT_STR in "${!FluA[@]}"; do
+            if [[ ${FluA[$SEGMENT_STR]} == "$SEGMENT_NUM" ]]; then
+              echo ""
+              echo "DEBUG: Renaming ${segment_file} to include segment abbreviation...."
+              # final filename should be: ~{samplename}/amended_consensus/~{samplename}_HA.fasta
+              mv -v "${segment_file}" "~{samplename}/amended_consensus/~{samplename}_${SEGMENT_STR}.fasta"
+              # reassign segment_file bash variable to the new filename
+              segment_file="~{samplename}/amended_consensus/~{samplename}_${SEGMENT_STR}.fasta"
+            else
+              echo "DEBUG: ${FluA[$SEGMENT_STR]} does not match ${SEGMENT_NUM}. Moving on..."
+            fi
+          done
+
+          echo "DEBUG: Adding ${segment_file} to consensus FASTA"
+          cat "${segment_file}" >> ~{samplename}.irma.consensus.fasta
         else
-          echo "WARNING: No file containing ${segment} found for ~{samplename}"
+          echo "WARNING: No file containing ${SEGMENT_NUM} found for ~{samplename}"
         fi
       done
 
