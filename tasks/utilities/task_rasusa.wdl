@@ -28,6 +28,8 @@ task rasusa {
     Int? num 
   }
   command <<<
+    # fail hard
+    set -euo pipefail
     rasusa --version | tee VERSION
     # set single-end or paired-end outputs
     if [ -z "~{read2}" ]; then
@@ -41,15 +43,15 @@ task rasusa {
     else
       COVERAGE=""
     fi
-    # run rasusa
-    rasusa \
-      -i ~{read1} ~{read2} \
-      ${COVERAGE} \
-      ~{'--seed ' + seed} \
-      ~{'--bases ' + bases} \
-      ~{'--frac ' + frac} \
-      ~{'--num ' + num} \
-      -o ${OUTPUT_FILES}
+    # run rasusa for read sampling
+    rasusa reads \
+      -c ${COVERAGE} \
+      -s ~{'--seed ' + seed} \
+      -b ~{'--bases ' + bases} \
+      -f ~{'--frac ' + frac} \
+      -n ~{'--num ' + num} \
+      -o ${OUTPUT_FILES} \
+      ~{read1} ~{read2}
   >>>
   output {
     File read1_subsampled = "~{samplename}_subsampled_R1.fastq.gz"
