@@ -5,7 +5,7 @@ import "../../tasks/basecalling/task_dorado_demux.wdl" as dorado_demux_task
 import "../../tasks/utilities/file_handling/task_transfer_files.wdl" as transfer_fastq_files
 import "../../tasks/utilities/data_import/task_create_terra_table.wdl" as terra_fastq_table
 import "../../tasks/task_versioning.wdl" as versioning_task
-import "../../tasks/utilities/file_handling/task_list_pod5_files.wdl" as list_pod5_files_task    
+import "../../tasks/utilities/file_handling/task_list_files_by_extension.wdl" as list_files_by_extension
 import "../../tasks/basecalling/task_dorado_trim.wdl" as task_dorado_trim     
 
 workflow dorado_basecalling_workflow {
@@ -29,15 +29,16 @@ workflow dorado_basecalling_workflow {
     input:
   }
 
-  call list_pod5_files_task.list_pod5_files as list_pod5 {
+  call list_files_by_extension.list_files_by_extension {
     input:
-      pod5_bucket_path = pod5_bucket_path
+      bucket_path = pod5_bucket_path,
+      file_extension = ".pod5"
   }
 
-  scatter (pod5_path in list_pod5.pod5_file_paths) {
+  scatter (file_path in list_files_by_extension.file_paths) {
     call basecall_task.basecall as dorado_basecall {
       input:
-        input_file = pod5_path,
+        input_file = file_path,
         dorado_model = dorado_model,
         kit_name = kit_name
     }
@@ -79,15 +80,10 @@ workflow dorado_basecalling_workflow {
     }
   }
   output {
-    # Version Captures
     String dorado_phb_version = version_capture.phb_version
     String dorado_analysis_date = version_capture.date
-
-    # Outputs from the main steps
     Array[File] fastq_files = select_first([dorado_trim.trimmed_fastq_files, dorado_demux.fastq_files])
     File? terra_table_tsv = create_terra_table.terra_table_to_upload
-
-    # Versions and model used 
     String dorado_version = dorado_demux.dorado_version
     String dorado_model_used = dorado_demux.dorado_model_name
   }

@@ -65,6 +65,25 @@ Select from these options to avoid input errors.
 
 ### Inputs
 
+!!! info "Detailed Input Information"
+    - **dorado_model**: If set to 'sup', 'hac', or 'fast', the workflow will run with automatic model selection. If a full model name is provided, Dorado will use that model directly.
+    - **fastq_file_name**: This will serve as a prefix for the output FASTQ files. For example, if you provide `project001`, the resulting files will be named `project001-barcodeXX.fastq.gz`.
+    - **kit_name**: Ensure the correct kit name is provided, as it determines the barcoding and adapter trimming behavior.
+    - **fastq_upload_path**: This is the folder path in Terra where the final FASTQ files will be transferred for further analysis. Ensure the path matches your Terra workspace bucket GSURI. Please visit the "Dashboard" tab of your Terra workspace which provides a link to the bucket in the "Cloud Information" drop-down panel. The root GSURI for Terra workspace buckets generally start with `gs://fc-` followed by a unique identifier.
+
+!!! tip "File Naming Guidelines"
+    - **Avoid special characters**: Do not include special characters such as underscores (`_`), periods (`.`), or any non-alphanumeric symbols in the `fastq_file_name` prefix, as these can interfere with proper file parsing and sample name recognition.
+    - **Use a clear, simple prefix**: The prefix `projectname` will automatically append identifiers like `-barcodeXX.fastq.gz` or `-unclassified.fastq.gz` to name each output file, ensuring each one is distinct.
+
+    ### Examples:
+
+    - **Accepted Prefix**: `project001`  
+      - **Resulting Output File Names**: `project001-barcode01.fastq.gz`, `project001-barcode02.fastq.gz`, etc.
+    - **Not Recommended**: `projectname_2024_test`  
+      - **Resulting Output File Names**: `projectname_2024_test-barcode01.fastq.gz` (only `projectname_2024_test` is used as the sample name, leading to ambiguity when multiple files are present).
+
+<div class="searchable-table" markdown="1">
+
 | **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
 |---|---|---|---|---|---|
 | dorado_basecalling_workflow | **pod5_bucket_path** | String | GCS path of the bucket containing POD5 files. | None | Required |
@@ -95,10 +114,11 @@ Select from these options to avoid input errors.
 | dorado_trim | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
 | dorado_trim | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/dorado:0.9.0-cuda12.2.0 | Optional |
 | dorado_trim | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 16 | Optional |
-| list_pod5 | **cpu** | Int | Number of CPUs to allocate to the task | 8 | Optional |
-| list_pod5 | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
-| list_pod5 | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 32 | Optional |
-| list_pod5 | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/cloudsdktool/google-cloud-cli:427.0.0-alpine | Optional |
+| list_files_by_extension | **cpu** | Int | Number of CPUs to allocate to the task | 8 | Optional |
+| list_files_by_extension | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
+| list_files_by_extension | **file_extension** | String | File extension to search for in the GCS bucket | ".pod5" | Optional |
+| list_files_by_extension | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 32 | Optional |
+| list_files_by_extension | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/cloudsdktool/google-cloud-cli:427.0.0-alpine | Optional |
 | transfer_files | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional |
 | transfer_files | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
 | transfer_files | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/cloudsdktool/google-cloud-cli:427.0.0-alpine | Optional |
@@ -106,29 +126,20 @@ Select from these options to avoid input errors.
 | version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
 | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) | | Optional |
 
-!!! info "Detailed Input Information"
-    - **dorado_model**: If set to 'sup', 'hac', or 'fast', the workflow will run with automatic model selection. If a full model name is provided, Dorado will use that model directly.
-    - **fastq_file_name**: This will serve as a prefix for the output FASTQ files. For example, if you provide `project001`, the resulting files will be named `project001-barcodeXX.fastq.gz`.
-    - **kit_name**: Ensure the correct kit name is provided, as it determines the barcoding and adapter trimming behavior.
-    - **fastq_upload_path**: This is the folder path in Terra where the final FASTQ files will be transferred for further analysis. Ensure the path matches your Terra workspace bucket GSURI. Please visit the "Dashboard" tab of your Terra workspace which provides a link to the bucket in the "Cloud Information" drop-down panel. The root GSURI for Terra workspace buckets generally start with `gs://fc-` followed by a unique identifier.
-
-!!! tip "File Naming Guidelines"
-    - **Avoid special characters**: Do not include special characters such as underscores (`_`), periods (`.`), or any non-alphanumeric symbols in the `fastq_file_name` prefix, as these can interfere with proper file parsing and sample name recognition.
-    - **Use a clear, simple prefix**: The prefix `projectname` will automatically append identifiers like `-barcodeXX.fastq.gz` or `-unclassified.fastq.gz` to name each output file, ensuring each one is distinct.
-
-    ### Examples:
-
-    - **Accepted Prefix**: `project001`  
-      - **Resulting Output File Names**: `project001-barcode01.fastq.gz`, `project001-barcode02.fastq.gz`, etc.
-    - **Not Recommended**: `projectname_2024_test`  
-      - **Resulting Output File Names**: `projectname_2024_test-barcode01.fastq.gz` (only `projectname_2024_test` is used as the sample name, leading to ambiguity when multiple files are present).
+</div>
 
 ### Workflow Tasks
 
 This workflow is composed of several tasks to process, basecall, and analyze Oxford Nanopore `POD5` files:
 
-??? task "`Transfer POD5 Files`: Transfers `POD5` files to Terra"
-    Lists `.pod5` files in the specified GCS bucket and passes their paths to the basecalling task.
+??? task "`List Files By Extension`: Identifies and Lists Files in a GCS Bucket"
+    Searches for files with a specified extension in a provided GCS bucket and passes their paths to subsequent tasks. By default, this task is configured to search for `.pod5` files.
+
+    !!! techdetails "List Files by Extension Technical Details"
+        |  | Links |
+        | --- | --- |
+        | Task | [task_list_files_by_extension.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/file_handling/task_list_files_by_extension.wdl) |
+
 
 ??? task "`Dorado Basecalling`: Converts `POD5` files to 'BAM' files"
     The basecalling task takes `POD5` files as input and converts them into 'BAM' format using the specified model. This step leverages GPU acceleration for efficient processing.
@@ -170,9 +181,19 @@ This workflow is composed of several tasks to process, basecall, and analyze Oxf
 ??? task "`FASTQ File Transfer`: Transfers files to Terra"
     After demultiplexing, the FASTQ files are uploaded to the Terra workspace bucket for storage and potential use in other workflows.
 
+    !!! techdetails "FASTQ File Transfer Technical Details"
+        |  | Links |
+        | --- | --- |
+        | Task | [task_transfer_files.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/file_handling/task_transfer_files.wdl) |
+
 ??? task "`Terra Table Creation`: Creates a Terra table with FASTQ files"
     A Terra table is created to index the uploaded FASTQ files, enabling easy access and integration with other workflows for downstream analyses.
 
+    !!! techdetails "Terra Table Creation Technical Details"
+        |  | Links |
+        | --- | --- |
+        | Task | [task_create_terra_table.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/data_import/task_create_terra_table.wdl) |
+        
 ### Outputs
 
 | **Variable** | **Type** | **Description** |

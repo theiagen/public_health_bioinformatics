@@ -16,16 +16,17 @@ task dorado_trim {
 
     # Loop through each FASTQ file and apply Dorado trim
     for fq in ~{sep=" " fastq_files}; do
-        # Extract the base filename from the path
-        filename=$(basename "$fq")
+
+      # Extract the base filename from the path
+      filename=$(basename "$fq")
         
-        # Perform primer trimming and save output in the designated directory
-        dorado trim "$fq" \
-            --primer-sequences "~{custom_primers}" \
-            --threads ~{cpu} \
-            --emit-fastq > "$output_dir/$filename"
+      # Perform primer trimming and save output in the designated directory
+      dorado trim "$fq" \
+        --primer-sequences "~{custom_primers}" \
+        --threads ~{cpu} \
+        --emit-fastq > "$output_dir/$filename"
     done
->>>
+  >>>
   output {
     Array[File] trimmed_fastq_files = glob("trimmed_fastqs/*.fastq.gz")
   }
