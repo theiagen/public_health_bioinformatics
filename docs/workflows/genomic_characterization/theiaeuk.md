@@ -437,8 +437,8 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
 !!! tip ""
     The TheiaEuk workflow automatically activates taxa-specific tasks after identification of the relevant taxa using `GAMBIT`. Many of these taxa-specific tasks do not require any additional inputs from the user.
 
-??? toggle "_Candida auris_"
-    Two tools are deployed when _Candida auris_ is  identified.
+??? toggle "_Candidozyma auris_ (also known as _Candida auris_)"
+    Two tools are deployed when _Candidozyma auris_/_Candida auris_ is  identified.
 
     ??? task "Cladetyping: clade determination"
         GAMBIT is used to determine the clade of the specimen by comparing the sequence to five clade-specific reference files. The output of the clade typing task will be used to specify the reference genome for the antifungal resistance detection tool.
