@@ -6,8 +6,9 @@ task irma {
     File? read2
     String seq_method
     String samplename
-    Boolean keep_ref_deletions = true
+    Boolean keep_ref_deletions = false # set DEL_TYPE config in irma_config.sh to "DEL" if false, "NNN" if true
     Int minimum_consensus_support = 50
+    Int minimum_read_length = 75 # matching default for TheiaCoV_Illumina_PE; NOTE: IRMA's default is 125 bp
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/irma:1.2.0"
     Int memory = 16
     Int cpu = 4
@@ -19,6 +20,7 @@ task irma {
     IRMA | head -n1 | awk -F' ' '{ print "IRMA " $5 }' | tee VERSION
 
     ### IRMA configuration ###
+    # CPU config
     num_cpus_actual=$(nproc)
     echo "DEBUG: Number of CPUs available: ${num_cpus_actual}. Setting this in irma_config.sh file..."
     echo "SINGLE_LOCAL_PROC=${num_cpus_actual}" > irma_config.sh
@@ -32,12 +34,22 @@ task irma {
     echo "DEBUG: creating an optional IRMA configuration file to set TMP directory to $(pwd)"
     echo "TMP=$(pwd)" >> irma_config.sh
 
-    # set config if needed
+    # set how to handle deletions
     if ~{keep_ref_deletions}; then 
-      touch irma_config.sh
       echo 'DEL_TYPE="NNN"' >> irma_config.sh
       echo 'ALIGN_PROG="BLAT"' >> irma_config.sh
+    else # default in WDL and IRMA
+      # IRMA docs state: If sites are completely missing during read gathering use the reference seed (REF), delete by ambiguation (NNN), or just remove (DEL)
+      echo 'DEL_TYPE="DEL"' >> irma_config.sh
+      echo 'ALIGN_PROG="BLAT"' >> irma_config.sh
     fi
+
+    # set the minimum read length; matching default for TheiaCoV_Illumina_PE which is 75 bp
+    echo 'MIN_LEN=~{minimum_read_length}' >> irma_config.sh
+
+    echo "DEBUG: Custom irma_config.sh file contents:"
+    cat irma_config.sh
+    echo "DEBUG: End of custom irma_config.sh file contents"
     ### END IRMA CONFIG ###
 
     # capture reads as bash variables 
@@ -62,10 +74,6 @@ task irma {
       echo "DEBUG: Read headers match IRMA formatting requirements"
     fi
 
-    echo "DEBUG: Custom irma_config.sh file contents:"
-    cat irma_config.sh
-    echo "DEBUG: End of custom irma_config.sh file contents"
-
     # run IRMA
     # set IRMA module depending on sequencing technology
     if [[ ~{seq_method} == "OXFORD_NANOPORE" ]]; then
@@ -74,6 +82,10 @@ task irma {
       # else, assume Illumina paired-end data as input
       IRMA "FLU" "${read1}" "${read2}" ~{samplename} --external-config irma_config.sh
     fi
+
+    # capture some IRMA log & config files; rename to use .tsv suffix instead of .txt
+    mv -v ~{samplename}/tables/READ_COUNTS.txt ~{samplename}/tables/READ_COUNTS.tsv
+    mv -v ~{samplename}/logs/run_info.txt ~{samplename}/logs/run_info.tsv
 
     # capture IRMA type
     if compgen -G "~{samplename}/*fasta"; then
@@ -222,6 +234,9 @@ task irma {
     Array[File] irma_bams = glob("~{samplename}*.bam")
     String irma_docker = docker
     String irma_version = read_string("VERSION")
+    File irma_read_counts_tsv = "~{samplename}/tables/READ_COUNTS.tsv"
+    File irma_run_info_tsv = "~{samplename}/logs/run_info.tsv"
+    File irma_nr_read_counts = "~{samplename}/logs/NR_COUNTS_log.txt"
     # for now just adding bams for these segments for mean coverage calculation
     File? seg_ha_bam = "~{samplename}_HA.bam"
     File? seg_na_bam = "~{samplename}_NA.bam"
