@@ -65,10 +65,10 @@ task dorado_demux {
         echo "Processing $fastq_file in $demux_dir"
 
         if [[ "$fastq_file" == *"unclassified"* ]]; then
-          final_fastq="merged_output/${output_file_prefix }-unclassified.fastq"
+          final_fastq="merged_output/${output_file_prefix}-unclassified.fastq"
         else
           barcode=$(echo "$fastq_file" | sed -E 's/.*_(barcode[0-9]+)\.fastq/\1/')
-          final_fastq="merged_output/${output_file_prefix }-${barcode}.fastq"
+          final_fastq="merged_output/${output_file_prefix}-${barcode}.fastq"
         fi
 
         if [ -f "$final_fastq" ]; then

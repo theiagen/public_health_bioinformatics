@@ -7,8 +7,10 @@ workflow create_terra_table {
     String new_table_name
     String data_location_path
     Boolean paired_end
-    Boolean? assembly_data
-    String file_ending
+    Boolean assembly_data
+
+    String? file_ending
+
     String terra_project
     String terra_workspace
   }
