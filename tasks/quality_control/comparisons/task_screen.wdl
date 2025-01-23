@@ -23,7 +23,9 @@ task check_reads {
   command <<<
     # just in case anything fails, throw an error
     set -euo pipefail
-    
+
+    # populate column headers for metrics and init failure log
+    metrics="read1_count\tread2_count\test_genome_length\test_coverage"
     fail_log=""
 
     # initalize estimated genome length
@@ -45,9 +47,8 @@ task check_reads {
     echo "DEBUG: Number of reads total in R1 and R2: ${reads_total}"
 
     if [ "${reads_total}" -le "~{min_reads}" ]; then
-      fail_log+="; the total number of reads is below the minimum of ~{min_reads};"
+      fail_log+="; the total number of reads is below the minimum of ~{min_reads}"
     fi
-
 
     # count number of basepairs
     # using fastq-scan to count the number of basepairs in each fastq
@@ -126,6 +127,7 @@ task check_reads {
       estimated_coverage=0
     fi
 
+    # check if estimated genome length is within bounds
     if [ "${estimated_genome_length}" -ge "~{max_genome_length}" ] && [ "~{workflow_series}" == "theiaprok" ] ; then
       fail_log+="; the estimated genome length (${estimated_genome_length}) is larger than the maximum of ~{max_genome_length} bps"
     elif [ "${estimated_genome_length}" -le "~{min_genome_length}" ] && [ "~{workflow_series}" == "theiaprok" ] ; then
@@ -138,13 +140,17 @@ task check_reads {
       echo "DEBUG: estimated_genome_length: ${estimated_genome_length}" 
     fi 
 
-    # finish populating a failure log
+    # populate metrics values
+    metrics+="\n${read1_num}\t${read2_num}\t${estimated_genome_length}\t${estimated_coverage}"
+
+    # finish populating failure log
     if [ -z "$fail_log" ]; then
       fail_log="PASS"
     else
       fail_log="FAIL${fail_log}"
     fi
-    
+
+    echo $metrics > read_screen.tsv
     echo $fail_log | tee FLAG
     echo $estimated_genome_length | tee EST_GENOME_LENGTH
   >>>
@@ -186,11 +192,12 @@ task check_reads_se {
     # just in case anything fails, throw an error
     set -euo pipefail
 
+    # populate column headers for metrics and init failure log
+    metrics="read1_count\test_genome_length"
     fail_log=""
 
     # initalize estimated genome length
     estimated_genome_length=0
-
   
     # set cat command based on compression
     if [[ "~{read1}" == *".gz" ]] ; then
@@ -221,6 +228,8 @@ task check_reads_se {
 
     #checks four and five: estimated genome length and coverage
     if [ "~{skip_mash}" == "false" ]; then
+      # add a coverage column to the metrics
+      metrics+="\tcoverage"
       # estimate genome length if theiaprok AND expected_genome_length was not provided
       if [ "~{workflow_series}" == "theiaprok" ] && [[ -z "~{expected_genome_length}" ]]; then
         # First Pass; assuming average depth
@@ -286,18 +295,25 @@ task check_reads_se {
       else
         echo $estimated_genome_length | tee EST_GENOME_LENGTH 
       fi
+      # populate metrics values with coverage
+      metrics+="\n${read1_num\t${estimated_genome_length}\t${estimated_coverage}"
+    else
+      # populate metrics values without coverage
+      metrics+="\n${read1_num}\t${estimated_genome_length}"
     fi 
 
-    # finish populating a failure log
+    # finish populating failure log
     if [ -z "$fail_log" ]; then
       fail_log="PASS"
     else
       fail_log="FAIL${fail_log}"
     fi
 
+    echo $metrics > read_screen.tsv
     echo $fail_log | tee FLAG
     echo ${estimated_genome_length} | tee EST_GENOME_LENGTH
     echo "DEBUG: estimated_genome_length: ${estimated_genome_length}"
+  
   >>>
   output {
     String read_screen = read_string("FLAG")
