@@ -130,7 +130,6 @@ task irma {
       # really hacky way to add an EOF newline but i couldn't be bothered to figure out a better way atm  
       echo "" >> ~{samplename}.irma.consensus.concatenated.fasta
 
-
       echo "DEBUG: creating copy of consensus FASTA with periods replaced by Ns...."
       # use sed to create copy of FASTA file where periods are replaced by Ns, except in the FASTA header lines that begin with '>'
       sed '/^>/! s/\./N/g' ~{samplename}.irma.consensus.fasta > ~{samplename}.irma.consensus.pad.fasta

@@ -99,12 +99,16 @@ task nextclade_output_parser {
       # function to write a field in the tsv_dict to a file for output
       def write_field_to_file(output_file_name, item_to_parse):
         with open(output_file_name, 'wt') as output_file:
-          item = tsv_dict[item_to_parse]
-          if item == '':
+          try:
+            item = tsv_dict[item_to_parse]
+            if item == '':
+              item = 'NA'
+          except:
             item = 'NA'
           output_file.write(item)
 
       # combine 'clade_nextstrain' and 'clade_who' column if sars-cov-2
+      # this one is slightly more complicated so the function doesn't apply
       if ("~{organism}" == "sars-cov-2"):
         with open("NEXTCLADE_CLADE", 'wt') as nextclade_clade:
           nc_clade = tsv_dict['clade_nextstrain']
@@ -114,20 +118,15 @@ task nextclade_output_parser {
           if nc_clade == '':
             nc_clade = 'NA'
           nextclade_clade.write(nc_clade)
-
       else:
         write_field_to_file("NEXTCLADE_CLADE", 'clade')
 
       write_field_to_file('NEXTCLADE_AASUBS', 'aaSubstitutions')
       write_field_to_file('NEXTCLADE_AADELS', 'aaDeletions')
 
-      if 'lineage' in tsv_dict:
-        write_field_to_file('NEXTCLADE_LINEAGE', 'lineage')
-      elif 'Nextclade_pango' in tsv_dict:
+      write_field_to_file('NEXTCLADE_LINEAGE', 'lineage')
+      if 'Nextclade_pango' in tsv_dict:
         write_field_to_file('NEXTCLADE_LINEAGE', 'Nextclade_pango')
-      else:
-        with open('NEXTCLADE_LINEAGE', 'wt') as output_file:
-          output_file.write('NA')
 
       write_field_to_file('NEXTCLADE_QC', 'qc.overallStatus')
 
