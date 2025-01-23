@@ -8,8 +8,7 @@ task busco {
     File assembly
     String samplename
     String gcp_bucket = "gs://theiagen-large-public-files-rp/terra/databases/busco"
-    String gcp_project
-    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/busco:dev"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/busco:gcp_dev"
     Int memory = 8
     Int cpu = 2
     Int disk_size = 100
@@ -18,6 +17,8 @@ task busco {
   command <<<
     # get version
     busco --version | tee "VERSION"
+
+    project_id=$(gcloud config get-value project)
  
     # run busco
     # -i input assembly
@@ -31,7 +32,7 @@ task busco {
       -m geno \
       -o ~{samplename} \
       --gcp_bucket ~{gcp_bucket} \
-      --gcp_project ~{gcp_project} \
+      --gcp_project ${project_id} \
       ~{true='--auto-lineage-euk' false='--auto-lineage-prok' eukaryote}
 
     # check for existence of output file; otherwise display a string that says the output was not created

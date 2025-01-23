@@ -21,7 +21,6 @@ import "../../tasks/utilities/data_export/task_broad_terra_tools.wdl" as terra_t
 import "../utilities/file_handling/wf_concatenate_illumina_lanes.wdl" as concatenate_lanes_workflow
 import "../utilities/wf_merlin_magic.wdl" as merlin_magic_workflow
 import "../utilities/wf_read_QC_trim_pe.wdl" as read_qc
-import "../../tasks/utilities/task_check_gcp_project.wdl" as check_project
 
 workflow theiaprok_illumina_pe {
   meta {
@@ -77,9 +76,6 @@ workflow theiaprok_illumina_pe {
     File? qc_check_table
   }
   call versioning.version_capture {
-    input:
-  }
-  call check_project.check_gcp_project {
     input:
   }
   if (defined(read1_lane2)) {
@@ -165,8 +161,7 @@ workflow theiaprok_illumina_pe {
       call busco_task.busco {
         input:
           assembly = shovill_pe.assembly_fasta,
-          samplename = samplename,
-          gcp_project = check_gcp_project.gcp_project
+          samplename = samplename
       }
       if (perform_characterization) {
         call gambit_task.gambit {
