@@ -297,7 +297,7 @@ workflow flu_track {
     String? nextclade_version = nextclade_flu_ha.nextclade_version
     String? nextclade_docker = nextclade_flu_ha.nextclade_docker
     # Nextclade H5N1 outputs
-    String? nextclade_json_flu_h5n1 = nextclade_flu_h5n1.nextclade_json
+    File? nextclade_json_flu_h5n1 = nextclade_flu_h5n1.nextclade_json
     File? auspice_json_flu_h5n1 = nextclade_flu_h5n1.auspice_json
     File? nextclade_tsv_flu_h5n1 = nextclade_flu_h5n1.nextclade_tsv
     String? nextclade_aa_subs_flu_h5n1 = nextclade_output_parser_flu_h5n1.nextclade_aa_subs
