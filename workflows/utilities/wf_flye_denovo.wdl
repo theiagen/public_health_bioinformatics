@@ -25,31 +25,31 @@ workflow flye_denovo {
     Boolean skip_polishing = false # Default: Polishing enabled
     
     # Porechop inputs
-    Int porechop_cpu = 4
-    Int porechop_memory = 8
-    Int porechop_disk_size = 50
+    Int? porechop_cpu
+    Int? porechop_memory
+    Int? porechop_disk_size
     String? porechop_trimopts # Optional Porechop trimming options
 
     # Flye inputs
-    String flye_read_type
+    String? flye_read_type
     Int? flye_genome_length # Requires `asm_coverage`
     Int? flye_asm_coverage # Reduced coverage for initial disjointig assembly
     Int flye_polishing_iterations = 1 # Default polishing iterations
     Int? flye_minimum_overlap # Minimum overlap between reads
     Float? flye_read_error_rate # Maximum expected read error rate
-    Boolean flye_uneven_coverage_mode
-    Boolean flye_keep_haplotypes
-    Boolean flye_no_alt_contigs
-    Boolean flye_scaffold
+    Boolean? flye_uneven_coverage_mode
+    Boolean? flye_keep_haplotypes
+    Boolean? flye_no_alt_contigs
+    Boolean? flye_scaffold
     String? flye_additional_parameters # Any extra Flye-specific parameters
-    Int flye_cpu
-    Int flye_memory
-    Int flye_disk_size
+    Int? flye_cpu
+    Int? flye_memory
+    Int? flye_disk_size
 
     # Bandage inputs
-    Int bandage_cpu
-    Int bandage_memory
-    Int bandage_disk_size
+    Int? bandage_cpu
+    Int? bandage_memory
+    Int? bandage_disk_size
 
     # Polypolish inputs
     String? polypolish_pair_orientation
@@ -59,34 +59,34 @@ workflow flye_denovo {
     Float? polypolish_fraction_valid
     Int? polypolish_maximum_errors
     Int? polypolish_minimum_depth
-    Boolean polypolish_careful
-    Int polypolish_cpu
-    Int polypolish_memory
-    Int polypolish_disk_size
+    Boolean? polypolish_careful
+    Int? polypolish_cpu
+    Int? polypolish_memory
+    Int? polypolish_disk_size
 
     # Medaka inputs
-    Boolean auto_medaka_model
+    Boolean? auto_medaka_model
     String? medaka_model # Optional user-specified Medaka model
-    Int medaka_cpu
-    Int medaka_memory
-    Int medaka_disk_size
+    Int? medaka_cpu
+    Int? medaka_memory
+    Int? medaka_disk_size
 
      # Racon inputs
-    Int racon_cpu
-    Int racon_memory
-    Int racon_disk_size
+    Int? racon_cpu
+    Int? racon_memory
+    Int? racon_disk_size
 
     # Contig filter-specific inputs
-    Int filter_contigs_min_length
-    Int filter_contigs_cpu
-    Int filter_contigs_memory
-    Int filter_contigs_disk_size
+    Int? filter_contigs_min_length
+    Int? filter_contigs_cpu
+    Int? filter_contigs_memory
+    Int? filter_contigs_disk_size
 
     # Dnaapler inputs
-    String dnaapler_mode
-    Int dnaapler_cpu
-    Int dnaapler_memory
-    Int dnaapler_disk_size
+    String? dnaapler_mode
+    Int? dnaapler_cpu
+    Int? dnaapler_memory
+    Int? dnaapler_disk_size
   }
   # Optional Porechop trimming before Flye
   if (!skip_trim_reads) {
@@ -105,6 +105,7 @@ workflow flye_denovo {
     input:
       read1 = select_first([porechop.trimmed_reads, read1]), # Use trimmed reads if available
       samplename = samplename,
+      read_type = flye_read_type,
       genome_length = flye_genome_length,
       asm_coverage = flye_asm_coverage,
       flye_polishing_iterations = flye_polishing_iterations,
