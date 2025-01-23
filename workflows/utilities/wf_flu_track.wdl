@@ -122,7 +122,7 @@ workflow flu_track {
   String ha_na_percentage_mapped_reads = "HA: " + select_first([ha_assembly_coverage.percentage_mapped_reads, ""]) + ", NA: " + select_first([na_assembly_coverage.percentage_mapped_reads, ""])
 
   # ABRICATE will run if assembly is provided, or was generated with IRMA
-  if (defined(irma.irma_assemblies) && defined(irma.irma_assembly_fasta)){
+  if (defined(irma.irma_plurality_consensus_assemblies) && defined(irma.irma_assembly_fasta)){
     call abricate.abricate_flu {
       input:
         assembly = select_first([irma.irma_assembly_fasta]),
@@ -192,7 +192,7 @@ workflow flu_track {
   }       
   # if IRMA was run successfully, run the flu_antiviral substitutions task 
   # this block must be placed beneath the previous block because it is used in this subworkflow
-  if (defined(irma.irma_assemblies)) {
+  if (defined(irma.irma_plurality_consensus_assemblies)) {
     call flu_antiviral.flu_antiviral_substitutions {
       input:
         na_segment_assembly = irma.seg_na_assembly_padded,
@@ -274,7 +274,7 @@ workflow flu_track {
     File? irma_mp_segment_fasta = irma.seg_mp_assembly
     File? irma_np_segment_fasta = irma.seg_np_assembly
     File? irma_ns_segment_fasta = irma.seg_ns_assembly
-    Array[File] irma_assemblies = irma.irma_assemblies
+    Array[File] irma_assemblies = irma.irma_plurality_consensus_assemblies
     Array[File] irma_vcfs = irma.irma_vcfs
     Array[File] irma_bams = irma.irma_bams
     File? irma_ha_bam = irma.seg_ha_bam
