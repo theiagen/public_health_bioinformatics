@@ -15,11 +15,18 @@ task busco {
     Boolean eukaryote = false
   }
   command <<<
+    set -e
     # get version
     busco --version | tee "VERSION"
 
+
     project_id=$(gcloud config get-value project)
     echo "Project ID: ${project_id}"
+
+    # Test bucket access (will fail if permissions are incorrect)
+    echo "Testing bucket access..."
+    gsutil -u ${project_id} ls ~{gcp_bucket} || echo "Warning: Unable to list bucket contents"
+
     # run busco
     # -i input assembly
     # -m geno for genome input
