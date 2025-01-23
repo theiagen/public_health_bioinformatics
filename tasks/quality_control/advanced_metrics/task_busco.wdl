@@ -19,7 +19,7 @@ task busco {
     busco --version | tee "VERSION"
 
     project_id=$(gcloud config get-value project)
- 
+    echo "Project ID: ${project_id}"
     # run busco
     # -i input assembly
     # -m geno for genome input
