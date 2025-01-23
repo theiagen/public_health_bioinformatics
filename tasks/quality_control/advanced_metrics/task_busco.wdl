@@ -8,7 +8,7 @@ task busco {
     File assembly
     String samplename
     String gcp_bucket = "gs://theiagen-large-public-files-rp/terra/databases/busco"
-    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/busco:gcp_dev3"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/busco:gcp_dev4"
     Int memory = 8
     Int cpu = 2
     Int disk_size = 100
