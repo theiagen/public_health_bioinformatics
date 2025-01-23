@@ -26,7 +26,8 @@ task nextclade_v3 {
 
     # --reference no longer used in v3. consolidated into --name and --tag
     # if a custom input dataset is not provided, then use the dataset name and tag
-    if [ -e "~{custom_input_dataset}" ]; then
+    # ! -s (if file is not empty) is used to check if the file exists and is not empty
+    if [ ! -s "~{custom_input_dataset}" ]; then
       nextclade dataset get \
         --name="~{dataset_name}" \
         --tag="~{dataset_tag}" \
@@ -124,6 +125,9 @@ task nextclade_output_parser {
         write_field_to_file('NEXTCLADE_LINEAGE', 'lineage')
       elif 'Nextclade_pango' in tsv_dict:
         write_field_to_file('NEXTCLADE_LINEAGE', 'Nextclade_pango')
+      else:
+        with open('NEXTCLADE_LINEAGE', 'wt') as output_file:
+          output_file.write('NA')
 
       write_field_to_file('NEXTCLADE_QC', 'qc.overallStatus')
 
