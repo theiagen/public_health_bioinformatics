@@ -21,12 +21,15 @@ task nextclade_v3 {
   }
   String basename = basename(genome_fasta, ".fasta")
   command <<<
+    # exit script/task upon error
+    set -euo pipefail
+
     # track version & print to log
     nextclade --version | tee NEXTCLADE_VERSION
 
     # --reference no longer used in v3. consolidated into --name and --tag
     # if a custom input dataset is not provided, then use the dataset name and tag
-    # ! -s (if file is not empty) is used to check if the file exists and is not empty
+    # ! -s (if file is not empty) is used to check if that dataset exists and is not empty
     if [ ! -s "~{custom_input_dataset}" ]; then
       nextclade dataset get \
         --name="~{dataset_name}" \
@@ -34,9 +37,6 @@ task nextclade_v3 {
         -o nextclade_dataset_dir \
         --verbosity ~{verbosity}
     fi
-
-    # exit script/task upon error
-    set -e
 
     # not necessary to include `--jobs <jobs>` in v3. Nextclade will use all available CPU threads by default. It's fast so I don't think we will need to change unless we see errors
     nextclade run \
@@ -73,7 +73,7 @@ task nextclade_v3 {
 
 task nextclade_output_parser {
   meta {
-    description: "Python and bash codeblocks for parsing the output files from Nextclade."
+    description: "Python codeblocks for parsing the output files from Nextclade."
   }
   input {
     File nextclade_tsv
