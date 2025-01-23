@@ -73,7 +73,8 @@ workflow dorado_basecalling_workflow {
         new_table_name = new_table_name,
         data_location_path = fastq_upload_path,
         paired_end = false,                  
-        file_ending = ".fastq.gz",         
+        file_ending = ".fastq.gz", 
+        assembly_data = false,        
         terra_project = terra_project,
         terra_workspace = terra_workspace
     }
