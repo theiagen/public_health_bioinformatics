@@ -46,6 +46,11 @@ workflow flye_denovo {
     Int? flye_memory
     Int? flye_disk_size
 
+    # Bandage inputs
+    Int? bandage_cpu
+    Int? bandage_memory
+    Int? bandage_disk_size
+
     # Polypolish inputs
     String? polypolish_pair_orientation
     Float? polypolish_low_percentile_threshold
@@ -119,7 +124,10 @@ workflow flye_denovo {
   call task_bandage.bandage_plot as bandage {
     input:
       assembly_graph_gfa = flye.assembly_graph_gfa,
-      samplename = samplename
+      samplename = samplename,
+      cpu = bandage_cpu,
+      memory = bandage_memory,
+      disk_size = bandage_disk_size
   }
   # Polypolish for hybrid assembly
   if (defined(illumina_read1) && defined(illumina_read2)) {
