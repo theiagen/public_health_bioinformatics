@@ -50,7 +50,7 @@ We continuously work to improve our codebase and usability of our workflows by t
 
 ## Contributing to the PHB Repository
 
-We warmly welcome contributions to this repository! Our style guide may be found [here](contributing/code_contribution.md) for convenience of formatting.
+We warmly welcome contributions to this repository! Our code style guide may be found [here](contributing/code_contribution.md) for convenience of formatting and our documentation style guide may be found [here](contributing/doc_contribution.md).
 
 If you would like to submit suggested code changes to our workflows, you may add or modify the WDL files and submit pull requests to the [PHB GitHub](https://github.com/theiagen/public_health_bioinformatics) repository.
 
@@ -73,6 +73,9 @@ You can expect a careful review of every PR and feedback as needed before mergin
 - **Michal Babinski** ([@Michal-Babins](https://github.com/Michal-Babins)) - Software, Validation
 - **Andrew Lang** ([@AndrewLangVt](https://github.com/AndrewLangVt)) - Software, Supervision
 - **Kelsey Kropp** ([@kelseykropp](https://github.com/kelseykropp)) - Validation
+- **Theron James** ([@MrTheronJ](https://github.com/MrTheronJ)) - Software, Validation
+- **Andrew Hale** ([@awh082834](https://github.com/awh082834)) - Software, Validation
+- **Zachary Konkel** ([@xonq](https://github.com/xonq)) - Software, Validation
 - **Joel Sevinsky** ([@sevinsky](https://github.com/sevinsky)) - Conceptualization, Project Administration, Supervision
 
 ### External Contributors
