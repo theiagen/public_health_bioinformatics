@@ -12,13 +12,13 @@
         <meta name="author" content="Theiagen Genomics">
       
       
-        <link rel="canonical" href="https://theiagen.github.io/public_health_bioinformatics/main/workflows/standalone/cauris_cladetyper/">
+        <link rel="canonical" href="https://theiagen.github.io/public_health_bioinformatics/main/workflows/phylogenetic_construction/clair3_variants/">
       
       
-        <link rel="prev" href="../../data_import/basespace_fetch/">
+        <link rel="prev" href="../../standalone/cauris_cladetyper/">
       
       
-        <link rel="next" href="../../phylogenetic_construction/clair3_variants/">
+        <link rel="next" href="../../data_export/concatenate_column_content/">
       
       
       <link rel="icon" href="../../../assets/logos/Theiagen-Symbol-Standard-01.png">
@@ -26,7 +26,7 @@
     
     
       
-        <title>Cauris_CladeTyper - Public Health Bioinformatics</title>
+        <title>Clair3_Variants_ONT - Public Health Bioinformatics</title>
       
     
     
@@ -89,7 +89,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#cauris_cladetyper" class="md-skip">
+        <a href="#clair3-variants" class="md-skip">
           Skip to content
         </a>
       
@@ -138,7 +138,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Cauris_CladeTyper
+              Clair3_Variants_ONT
             
           </span>
         </div>
@@ -946,7 +946,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_construction/augur/" class="md-nav__link">
+      <a href="../augur/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -967,7 +967,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_construction/core_gene_snp/" class="md-nav__link">
+      <a href="../core_gene_snp/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -985,10 +985,30 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../phylogenetic_construction/clair3_variants/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Clair3_Variants_ONT
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -997,6 +1017,86 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#quick-facts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quick Facts
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#clair3_variants_ont" class="md-nav__link">
+    <span class="md-ellipsis">
+      Clair3_Variants_ONT
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Clair3_Variants_ONT">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#supported-clair3-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      Supported Clair3 Models
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Inputs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#workflow-tasks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Workflow Tasks
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#outputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Outputs
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1009,7 +1109,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_construction/czgenepi_prep/" class="md-nav__link">
+      <a href="../czgenepi_prep/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1030,7 +1130,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_construction/find_shared_variants/" class="md-nav__link">
+      <a href="../find_shared_variants/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1051,7 +1151,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_construction/ksnp3/" class="md-nav__link">
+      <a href="../ksnp3/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1072,7 +1172,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_construction/lyve_set/" class="md-nav__link">
+      <a href="../lyve_set/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1093,7 +1193,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_construction/mashtree_fasta/" class="md-nav__link">
+      <a href="../mashtree_fasta/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1114,7 +1214,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_construction/snippy_streamline/" class="md-nav__link">
+      <a href="../snippy_streamline/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1135,7 +1235,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_construction/snippy_streamline_fasta/" class="md-nav__link">
+      <a href="../snippy_streamline_fasta/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1156,7 +1256,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_construction/snippy_tree/" class="md-nav__link">
+      <a href="../snippy_tree/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1177,7 +1277,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_construction/snippy_variants/" class="md-nav__link">
+      <a href="../snippy_variants/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1568,30 +1668,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  <span class="md-ellipsis">
-    Cauris_CladeTyper
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../standalone/cauris_cladetyper/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1600,86 +1680,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#quick-facts" class="md-nav__link">
-    <span class="md-ellipsis">
-      Quick Facts
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#cauris_cladetyper_phb" class="md-nav__link">
-    <span class="md-ellipsis">
-      Cauris_CladeTyper_PHB
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Cauris_CladeTyper_PHB">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#inputs" class="md-nav__link">
-    <span class="md-ellipsis">
-      Inputs
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#workflow-tasks" class="md-nav__link">
-    <span class="md-ellipsis">
-      Workflow Tasks
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#outputs" class="md-nav__link">
-    <span class="md-ellipsis">
-      Outputs
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#references" class="md-nav__link">
-    <span class="md-ellipsis">
-      References
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1692,7 +1692,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../concatenate_illumina_lanes/" class="md-nav__link">
+      <a href="../../standalone/concatenate_illumina_lanes/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1713,7 +1713,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../gambit_query/" class="md-nav__link">
+      <a href="../../standalone/gambit_query/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1734,7 +1734,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../kraken2/" class="md-nav__link">
+      <a href="../../standalone/kraken2/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1755,7 +1755,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../ncbi_amrfinderplus/" class="md-nav__link">
+      <a href="../../standalone/ncbi_amrfinderplus/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1776,7 +1776,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../ncbi_scrub/" class="md-nav__link">
+      <a href="../../standalone/ncbi_scrub/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1797,7 +1797,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../rasusa/" class="md-nav__link">
+      <a href="../../standalone/rasusa/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1818,7 +1818,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../rename_fastq/" class="md-nav__link">
+      <a href="../../standalone/rename_fastq/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1839,7 +1839,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../tbprofiler_tngs/" class="md-nav__link">
+      <a href="../../standalone/tbprofiler_tngs/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1860,7 +1860,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../theiavalidate/" class="md-nav__link">
+      <a href="../../standalone/theiavalidate/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2033,10 +2033,30 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../phylogenetic_construction/clair3_variants/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Clair3_Variants_ONT
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -2045,6 +2065,86 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#quick-facts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quick Facts
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#clair3_variants_ont" class="md-nav__link">
+    <span class="md-ellipsis">
+      Clair3_Variants_ONT
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Clair3_Variants_ONT">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#supported-clair3-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      Supported Clair3 Models
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Inputs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#workflow-tasks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Workflow Tasks
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#outputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Outputs
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -2078,7 +2178,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../concatenate_illumina_lanes/" class="md-nav__link">
+      <a href="../../standalone/concatenate_illumina_lanes/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2120,7 +2220,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../kraken2/" class="md-nav__link">
+      <a href="../../standalone/kraken2/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2141,7 +2241,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../ncbi_scrub/" class="md-nav__link">
+      <a href="../../standalone/ncbi_scrub/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2162,7 +2262,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../rasusa/" class="md-nav__link">
+      <a href="../../standalone/rasusa/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2183,7 +2283,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../rename_fastq/" class="md-nav__link">
+      <a href="../../standalone/rename_fastq/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2246,7 +2346,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../theiavalidate/" class="md-nav__link">
+      <a href="../../standalone/theiavalidate/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2355,7 +2455,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_construction/core_gene_snp/" class="md-nav__link">
+      <a href="../core_gene_snp/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2376,7 +2476,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_construction/find_shared_variants/" class="md-nav__link">
+      <a href="../find_shared_variants/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2397,7 +2497,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../gambit_query/" class="md-nav__link">
+      <a href="../../standalone/gambit_query/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2418,7 +2518,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_construction/ksnp3/" class="md-nav__link">
+      <a href="../ksnp3/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2439,7 +2539,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_construction/lyve_set/" class="md-nav__link">
+      <a href="../lyve_set/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2460,7 +2560,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_construction/mashtree_fasta/" class="md-nav__link">
+      <a href="../mashtree_fasta/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2481,7 +2581,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../ncbi_amrfinderplus/" class="md-nav__link">
+      <a href="../../standalone/ncbi_amrfinderplus/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2502,7 +2602,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_construction/snippy_streamline/" class="md-nav__link">
+      <a href="../snippy_streamline/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2523,7 +2623,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_construction/snippy_streamline_fasta/" class="md-nav__link">
+      <a href="../snippy_streamline_fasta/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2544,7 +2644,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_construction/snippy_tree/" class="md-nav__link">
+      <a href="../snippy_tree/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2565,7 +2665,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_construction/snippy_variants/" class="md-nav__link">
+      <a href="../snippy_variants/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2586,7 +2686,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../tbprofiler_tngs/" class="md-nav__link">
+      <a href="../../standalone/tbprofiler_tngs/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2692,30 +2792,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  <span class="md-ellipsis">
-    Cauris_CladeTyper
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../standalone/cauris_cladetyper/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2724,86 +2804,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#quick-facts" class="md-nav__link">
-    <span class="md-ellipsis">
-      Quick Facts
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#cauris_cladetyper_phb" class="md-nav__link">
-    <span class="md-ellipsis">
-      Cauris_CladeTyper_PHB
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Cauris_CladeTyper_PHB">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#inputs" class="md-nav__link">
-    <span class="md-ellipsis">
-      Inputs
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#workflow-tasks" class="md-nav__link">
-    <span class="md-ellipsis">
-      Workflow Tasks
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#outputs" class="md-nav__link">
-    <span class="md-ellipsis">
-      Outputs
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#references" class="md-nav__link">
-    <span class="md-ellipsis">
-      References
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -2816,7 +2816,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_construction/find_shared_variants/" class="md-nav__link">
+      <a href="../find_shared_variants/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2837,7 +2837,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../gambit_query/" class="md-nav__link">
+      <a href="../../standalone/gambit_query/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2858,7 +2858,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_construction/ksnp3/" class="md-nav__link">
+      <a href="../ksnp3/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2879,7 +2879,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_construction/mashtree_fasta/" class="md-nav__link">
+      <a href="../mashtree_fasta/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2900,7 +2900,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../ncbi_amrfinderplus/" class="md-nav__link">
+      <a href="../../standalone/ncbi_amrfinderplus/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2921,7 +2921,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_construction/snippy_variants/" class="md-nav__link">
+      <a href="../snippy_variants/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3030,7 +3030,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_construction/augur/" class="md-nav__link">
+      <a href="../augur/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3051,7 +3051,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_construction/czgenepi_prep/" class="md-nav__link">
+      <a href="../czgenepi_prep/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3093,7 +3093,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_construction/ksnp3/" class="md-nav__link">
+      <a href="../ksnp3/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3114,7 +3114,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_construction/mashtree_fasta/" class="md-nav__link">
+      <a href="../mashtree_fasta/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3198,7 +3198,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_construction/snippy_variants/" class="md-nav__link">
+      <a href="../snippy_variants/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3422,7 +3422,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_construction/augur/" class="md-nav__link">
+      <a href="../augur/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3461,6 +3461,27 @@
                 
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href="../../standalone/cauris_cladetyper/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Cauris_CladeTyper
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
     
   
   
@@ -3477,7 +3498,7 @@
           
   
   <span class="md-ellipsis">
-    Cauris_CladeTyper
+    Clair3_Variants_ONT
   </span>
   
 
@@ -3488,7 +3509,7 @@
         
   
   <span class="md-ellipsis">
-    Cauris_CladeTyper
+    Clair3_Variants_ONT
   </span>
   
 
@@ -3519,14 +3540,23 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#cauris_cladetyper_phb" class="md-nav__link">
+  <a href="#clair3_variants_ont" class="md-nav__link">
     <span class="md-ellipsis">
-      Cauris_CladeTyper_PHB
+      Clair3_Variants_ONT
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Cauris_CladeTyper_PHB">
+    <nav class="md-nav" aria-label="Clair3_Variants_ONT">
       <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#supported-clair3-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      Supported Clair3 Models
+    </span>
+  </a>
+  
+</li>
         
           <li class="md-nav__item">
   <a href="#inputs" class="md-nav__link">
@@ -3560,40 +3590,10 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#references" class="md-nav__link">
-    <span class="md-ellipsis">
-      References
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
       
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../phylogenetic_construction/clair3_variants/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Clair3_Variants_ONT
-  </span>
-  
-
-      </a>
     </li>
   
 
@@ -3627,7 +3627,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../concatenate_illumina_lanes/" class="md-nav__link">
+      <a href="../../standalone/concatenate_illumina_lanes/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3648,7 +3648,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_construction/core_gene_snp/" class="md-nav__link">
+      <a href="../core_gene_snp/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3690,7 +3690,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_construction/czgenepi_prep/" class="md-nav__link">
+      <a href="../czgenepi_prep/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3711,7 +3711,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_construction/find_shared_variants/" class="md-nav__link">
+      <a href="../find_shared_variants/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3753,7 +3753,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../gambit_query/" class="md-nav__link">
+      <a href="../../standalone/gambit_query/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3774,7 +3774,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../kraken2/" class="md-nav__link">
+      <a href="../../standalone/kraken2/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3795,7 +3795,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_construction/ksnp3/" class="md-nav__link">
+      <a href="../ksnp3/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3816,7 +3816,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_construction/lyve_set/" class="md-nav__link">
+      <a href="../lyve_set/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3837,7 +3837,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_construction/mashtree_fasta/" class="md-nav__link">
+      <a href="../mashtree_fasta/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3879,7 +3879,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../ncbi_amrfinderplus/" class="md-nav__link">
+      <a href="../../standalone/ncbi_amrfinderplus/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3900,7 +3900,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../ncbi_scrub/" class="md-nav__link">
+      <a href="../../standalone/ncbi_scrub/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3942,7 +3942,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../rasusa/" class="md-nav__link">
+      <a href="../../standalone/rasusa/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3963,7 +3963,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../rename_fastq/" class="md-nav__link">
+      <a href="../../standalone/rename_fastq/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -4005,7 +4005,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_construction/snippy_streamline/" class="md-nav__link">
+      <a href="../snippy_streamline/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -4026,7 +4026,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_construction/snippy_streamline_fasta/" class="md-nav__link">
+      <a href="../snippy_streamline_fasta/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -4047,7 +4047,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_construction/snippy_tree/" class="md-nav__link">
+      <a href="../snippy_tree/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -4068,7 +4068,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_construction/snippy_variants/" class="md-nav__link">
+      <a href="../snippy_variants/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -4110,7 +4110,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../tbprofiler_tngs/" class="md-nav__link">
+      <a href="../../standalone/tbprofiler_tngs/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -4257,7 +4257,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../theiavalidate/" class="md-nav__link">
+      <a href="../../standalone/theiavalidate/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -4502,14 +4502,23 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#cauris_cladetyper_phb" class="md-nav__link">
+  <a href="#clair3_variants_ont" class="md-nav__link">
     <span class="md-ellipsis">
-      Cauris_CladeTyper_PHB
+      Clair3_Variants_ONT
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Cauris_CladeTyper_PHB">
+    <nav class="md-nav" aria-label="Clair3_Variants_ONT">
       <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#supported-clair3-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      Supported Clair3 Models
+    </span>
+  </a>
+  
+</li>
         
           <li class="md-nav__item">
   <a href="#inputs" class="md-nav__link">
@@ -4543,15 +4552,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#references" class="md-nav__link">
-    <span class="md-ellipsis">
-      References
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -4570,7 +4570,7 @@
   
 
 
-<h1 id="cauris_cladetyper">Cauris_CladeTyper<a class="headerlink" href="#cauris_cladetyper" title="Permanent link">&para;</a></h1>
+<h1 id="clair3-variants">Clair3 Variants<a class="headerlink" href="#clair3-variants" title="Permanent link">&para;</a></h1>
 <h2 id="quick-facts">Quick Facts<a class="headerlink" href="#quick-facts" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -4584,17 +4584,103 @@
 </thead>
 <tbody>
 <tr>
-<td><a href="../../../workflows_overview/workflows_type/#standalone">Standalone</a></td>
-<td><a href="../../../workflows_overview/workflows_kingdom/#mycotics">Mycotics</a></td>
+<td><a href="../../../workflows_overview/workflows_type/#phylogenetic-construction">Phylogenetic Construction</a></td>
+<td><a href="../../../workflows_overview/workflows_kingdom/#any-taxa">Any taxa</a></td>
 <td>PHB vX.X.X</td>
 <td>Yes</td>
 <td>Sample-level</td>
 </tr>
 </tbody>
 </table>
-<h2 id="cauris_cladetyper_phb">Cauris_CladeTyper_PHB<a class="headerlink" href="#cauris_cladetyper_phb" title="Permanent link">&para;</a></h2>
-<p>The Cauris_CladeTyper_PHB Workflow is designed to assign the clade to <em>Candida auris</em> (also known as <em>Candidozyma auris</em>) WGS assemblies based on their genomic sequence similarity to the five clade-specific reference files. Clade typing is essential for understanding the epidemiology and evolutionary dynamics of this emerging multidrug-resistant fungal pathogen.</p>
+<h2 id="clair3_variants_ont">Clair3_Variants_ONT<a class="headerlink" href="#clair3_variants_ont" title="Permanent link">&para;</a></h2>
+<p>The <code>Clair3_Variants</code> workflow processes Oxford Nanopore Technologies (ONT) sequencing data to identify genetic variations compared to a reference genome. It combines minimap2's long-read alignment capabilities with Clair3's deep learning-based variant calling, designed specifically for ONT data characteristics. The workflow first aligns raw reads to a reference genome using ONT-optimized parameters, processes these alignments into sorted and indexed BAM files, and then employs Clair3's specialized models to detect variants including single nucleotide polymorphisms (SNPs) and insertions/deletions (indels). If enabled, the workflow can also identify longer indels and generate genome-wide variant calls in gVCF format for downstream analysis.</p>
+<div class="admonition caption">
+<p class="admonition-title">Clair3_Variants Workflow Diagram</p>
+<p><a class="glightbox" href="../../../assets/figures/Clair3_Variants_WF_Diagram.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Clair3_Variants Workflow Diagram" src="../../../assets/figures/Clair3_Variants_WF_Diagram.png" /></a></p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Example Use Cases</p>
+</div>
+<ul>
+<li><strong>Variant Discovery</strong>: Identify genetic variations in ONT sequencing data compared to a reference genome</li>
+<li><strong>SNP and Indel Detection</strong>: Accurately detect both small variants and longer indels</li>
+<li><strong>Population Studies</strong>: Generate standardized variant calls suitable for population-level analyses</li>
+</ul>
+<h3 id="supported-clair3-models">Supported Clair3 Models<a class="headerlink" href="#supported-clair3-models" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Chemistry</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>r941_prom_sup_g5014</code></td>
+<td>R9.4.1</td>
+<td>Clair3 1.0.10 Release</td>
+</tr>
+<tr>
+<td><code>r941_prom_hac_g360+g422</code></td>
+<td>R9.4.1</td>
+<td>Clair3 1.0.10 Release</td>
+</tr>
+<tr>
+<td><code>r941_prom_hac_g238</code></td>
+<td>R9.4.1</td>
+<td>Clair3 1.0.10 Release</td>
+</tr>
+<tr>
+<td><code>r1041_e82_400bps_sup_v500</code></td>
+<td>R10.4.1</td>
+<td><a href="https://github.com/nanoporetech/rerio?tab=readme-ov-file#clair3-models">nanoporetech/rerio</a></td>
+</tr>
+<tr>
+<td><code>r1041_e82_400bps_hac_v500</code></td>
+<td>R10.4.1</td>
+<td><a href="https://github.com/nanoporetech/rerio?tab=readme-ov-file#clair3-models">nanoporetech/rerio</a></td>
+</tr>
+<tr>
+<td><code>r1041_e82_400bps_sup_v410</code></td>
+<td>R10.4.1</td>
+<td><a href="https://github.com/nanoporetech/rerio?tab=readme-ov-file#clair3-models">nanoporetech/rerio</a></td>
+</tr>
+<tr>
+<td><code>r1041_e82_400bps_hac_v410</code></td>
+<td>R10.4.1</td>
+<td><a href="https://github.com/nanoporetech/rerio?tab=readme-ov-file#clair3-models">nanoporetech/rerio</a></td>
+</tr>
+<tr>
+<td><code>ont</code></td>
+<td>Various</td>
+<td>Legacy (Recommended for Guppy3 and Guppy4)</td>
+</tr>
+<tr>
+<td><code>ont_guppy2</code></td>
+<td>Various</td>
+<td>Legacy (For Guppy2 data)</td>
+</tr>
+<tr>
+<td><code>ont_guppy5</code></td>
+<td>Various</td>
+<td>Legacy (For Guppy5 data)</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition hint">
+<p>The latest models for ONT are downloaded from the <a href="https://github.com/nanoporetech/rerio?tab=readme-ov-file#clair3-models">nanoporetech/rerio github</a>. Please let us know if there is a model not included you would like to see added. </p>
+</div>
 <h3 id="inputs">Inputs<a class="headerlink" href="#inputs" title="Permanent link">&para;</a></h3>
+<div class="admonition warning">
+<p class="admonition-title">Note on Haploid Settings</p>
+<p>Several parameters are set by default for haploid genome analysis:</p>
+<ul>
+<li>clair3_disable_phasing is set to <code>true</code> since phasing is not relevant for haploid genomes</li>
+<li>clair3_include_all_contigs is set to <code>true</code> to ensure complete genome coverage</li>
+<li>clair3_enable_haploid_precise is set to <code>true</code> to only consider homozygous variants (1/1), which is appropriate for haploid genomes</li>
+</ul>
+</div>
 <div class="searchable-table">
 <table>
 <thead>
@@ -4609,31 +4695,127 @@
 </thead>
 <tbody>
 <tr>
-<td>cauris_cladetyper</td>
-<td><strong>assembly_fasta</strong></td>
-<td>File</td>
-<td>The input assembly file in FASTA format</td>
-<td></td>
-<td>Required</td>
-</tr>
-<tr>
-<td>cauris_cladetyper</td>
-<td><strong>samplename</strong></td>
-<td>String</td>
-<td>The name of the sample being analyzed</td>
-<td></td>
-<td>Required</td>
-</tr>
-<tr>
-<td>cladetyper</td>
-<td><strong>cpu</strong></td>
+<td>clair3_variants_ont</td>
+<td><strong>clair3_cpu</strong></td>
 <td>Int</td>
-<td>Number of CPUs to allocate to the task</td>
+<td>Number of CPUs to use</td>
+<td>4</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>clair3_variants_ont</td>
+<td><strong>clair3_disable_phasing</strong></td>
+<td>Boolean</td>
+<td>Disable whatshap phasing</td>
+<td>true</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>clair3_variants_ont</td>
+<td><strong>clair3_disk_size</strong></td>
+<td>Int</td>
+<td>Disk size in GB</td>
+<td>100</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>clair3_variants_ont</td>
+<td><strong>clair3_docker</strong></td>
+<td>String</td>
+<td>Docker container for task</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/clair3:1.0.10</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>clair3_variants_ont</td>
+<td><strong>clair3_enable_gvcf</strong></td>
+<td>Boolean</td>
+<td>Output gVCF format</td>
+<td>false</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>clair3_variants_ont</td>
+<td><strong>clair3_enable_haploid_precise</strong></td>
+<td>Boolean</td>
+<td>Enable haploid precise calling, only 1/1 is considered as a variant</td>
+<td>true</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>clair3_variants_ont</td>
+<td><strong>clair3_enable_long_indel</strong></td>
+<td>Boolean</td>
+<td>Enable long indel calling</td>
+<td>false</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>clair3_variants_ont</td>
+<td><strong>clair3_include_all_contigs</strong></td>
+<td>Boolean</td>
+<td>Call variants on all contigs, should always be true for non-human samples</td>
+<td>true</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>clair3_variants_ont</td>
+<td><strong>clair3_memory</strong></td>
+<td>Int</td>
+<td>Memory allocation in GB</td>
 <td>8</td>
 <td>Optional</td>
 </tr>
 <tr>
-<td>cladetyper</td>
+<td>clair3_variants_ont</td>
+<td><strong>clair3_model</strong></td>
+<td>String</td>
+<td>Model name for variant calling (see <a href="#supported-clair3-models">supported models</a> for available options)</td>
+<td>r941_prom_hac_g360+g422</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>clair3_variants_ont</td>
+<td><strong>clair3_variant_quality</strong></td>
+<td>Int</td>
+<td>Minimum variant quality score</td>
+<td>2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>clair3_variants_ont</td>
+<td><strong>read1</strong></td>
+<td>File</td>
+<td>ONT sequencing reads in FASTQ format</td>
+<td></td>
+<td>Required</td>
+</tr>
+<tr>
+<td>clair3_variants_ont</td>
+<td><strong>reference_genome_file</strong></td>
+<td>File</td>
+<td>Reference genome in FASTA format</td>
+<td></td>
+<td>Required</td>
+</tr>
+<tr>
+<td>clair3_variants_ont</td>
+<td><strong>samplename</strong></td>
+<td>String</td>
+<td>Name of Samples</td>
+<td></td>
+<td>Required</td>
+</tr>
+<tr>
+<td>minimap2</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>minimap2</td>
 <td><strong>disk_size</strong></td>
 <td>Int</td>
 <td>Amount of storage (in GB) to allocate to the task</td>
@@ -4641,115 +4823,99 @@
 <td>Optional</td>
 </tr>
 <tr>
-<td>cladetyper</td>
+<td>minimap2</td>
 <td><strong>docker</strong></td>
 <td>String</td>
-<td>The Docker container to use for the task</td>
-<td>"us-docker.pkg.dev/general-theiagen/biocontainers/hesslab-gambit:0.5.1--py37h8902056_0"</td>
+<td>Docker image used for this task.</td>
+<td>"us-docker.pkg.dev/general-theiagen/staphb/minimap2:2.22"</td>
 <td>Optional</td>
 </tr>
 <tr>
-<td>cladetyper</td>
-<td><strong>kmer_size</strong></td>
-<td>Int</td>
-<td>The kmer size to use for generating the GAMBIT signatures file; see GAMBIT documentation for more details</td>
-<td>11</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>cladetyper</td>
+<td>minimap2</td>
 <td><strong>memory</strong></td>
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>16</td>
+<td>8</td>
 <td>Optional</td>
 </tr>
 <tr>
-<td>cladetyper</td>
-<td><strong>ref_clade1</strong></td>
+<td>minimap2</td>
+<td><strong>query2</strong></td>
 <td>File</td>
-<td>The reference assembly for clade 1</td>
-<td>gs://theiagen-public-files/terra/candida_auris_refs/Cauris_Clade1_GCA_002759435.2_Cand_auris_B8441_V2_genomic.fasta</td>
+<td>Internal component. Do not modify</td>
+<td>None</td>
+<td>Do not modify, Optional</td>
+</tr>
+<tr>
+<td>sam_to_sorted_bam</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>2</td>
 <td>Optional</td>
 </tr>
 <tr>
-<td>cladetyper</td>
-<td><strong>ref_clade1_annotated</strong></td>
+<td>sam_to_sorted_bam</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>100</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>sam_to_sorted_bam</td>
+<td><strong>docker</strong></td>
 <td>String</td>
-<td>The path to the annotated reference for clade 1</td>
-<td>"gs://theiagen-public-files/terra/candida_auris_refs/Cauris_Clade1_GCA_002759435_Cauris_B8441_V2_genomic.gbff"</td>
+<td>Docker image used for this task.</td>
+<td>"us-docker.pkg.dev/general-theiagen/staphb/samtools:1.17"</td>
 <td>Optional</td>
 </tr>
 <tr>
-<td>cladetyper</td>
-<td><strong>ref_clade2</strong></td>
-<td>File</td>
-<td>The reference assembly for clade 2</td>
-<td>gs://theiagen-public-files/terra/candida_auris_refs/Cauris_Clade2_GCA_003013715.2_ASM301371v2_genomic.fasta</td>
+<td>sam_to_sorted_bam</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>8</td>
 <td>Optional</td>
 </tr>
 <tr>
-<td>cladetyper</td>
-<td><strong>ref_clade2_annotated</strong></td>
+<td>samtools_faidx</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>1</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>samtools_faidx</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>100</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>samtools_faidx</td>
+<td><strong>docker</strong></td>
 <td>String</td>
-<td>The path to the annotated reference for clade 2</td>
-<td>"gs://theiagen-public-files/terra/candida_auris_refs/Cauris_Clade2_GCA_003013715.2_ASM301371v2_genomic.gbff"</td>
+<td>Docker image used for this task.</td>
+<td>"us-docker.pkg.dev/general-theiagen/staphb/samtools:1.17"</td>
 <td>Optional</td>
 </tr>
 <tr>
-<td>cladetyper</td>
-<td><strong>ref_clade3</strong></td>
-<td>File</td>
-<td>The reference assembly for clade 3</td>
-<td>gs://theiagen-public-files/terra/candida_auris_refs/Cauris_Clade3_reference.fasta</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>cladetyper</td>
-<td><strong>ref_clade3_annotated</strong></td>
-<td>String</td>
-<td>The path to the annotated reference for clade 3</td>
-<td>"gs://theiagen-public-files/terra/candida_auris_refs/Cauris_Clade3_GCF_002775015.1_Cand_auris_B11221_V1_genomic.gbff"</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>cladetyper</td>
-<td><strong>ref_clade4</strong></td>
-<td>File</td>
-<td>The reference assembly for clade 4</td>
-<td>gs://theiagen-public-files/terra/candida_auris_refs/Cauris_Clade4_reference.fasta</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>cladetyper</td>
-<td><strong>ref_clade4_annotated</strong></td>
-<td>String</td>
-<td>The path to the annotated reference for clade 4</td>
-<td>"gs://theiagen-public-files/terra/candida_auris_refs/Cauris_Clade4_GCA_003014415.1_Cand_auris_B11243_genomic.gbff"</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>cladetyper</td>
-<td><strong>ref_clade5</strong></td>
-<td>File</td>
-<td>The reference assembly for clade 5</td>
-<td>gs://theiagen-public-files/terra/candida_auris_refs/Cauris_Clade5_GCA_016809505.1_ASM1680950v1_genomic.fasta</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>cladetyper</td>
-<td><strong>ref_clade5_annotated</strong></td>
-<td>String</td>
-<td>The path to the annotated reference for clade 5</td>
-<td>"gs://theiagen-public-files/terra/candida_auris_refs/Cauris_Clade5_GCA_016809505.1_ASM1680950v1_genomic.gbff"</td>
+<td>samtools_faidx</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>8</td>
 <td>Optional</td>
 </tr>
 <tr>
 <td>version_capture</td>
 <td><strong>docker</strong></td>
 <td>String</td>
-<td>The Docker container to use for the task</td>
-<td>"us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0"</td>
+<td>Docker container for versioning</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -4765,60 +4931,11 @@
 </div>
 <h3 id="workflow-tasks">Workflow Tasks<a class="headerlink" href="#workflow-tasks" title="Permanent link">&para;</a></h3>
 <details class="task">
-<summary>Cauris_Cladetyper</summary>
-<p>The Cauris_Cladetyper Workflow for <em>Candida auris</em> employs GAMBIT for taxonomic identification, comparing whole genome sequencing data against reference databases to accurately classify <em>Candida auris</em> isolates.</p>
-<p>A custom GAMBIT database is created using five clade-specific <em>Candida auris</em> reference genomes. Sequences undergo genomic signature comparison against this database, which then enables assignment to one of the five <em>Candida auris</em> clades (Clade I to Clade V) based on sequence similarity and phylogenetic relationships. This integrated approach ensures precise clade assignments, crucial for understanding the genetic diversity and epidemiology of <em>Candida auris</em>.</p>
-<p>See more information on the reference information for the five clades below:</p>
-<table>
-<thead>
-<tr>
-<th>Clade</th>
-<th>Genome Accession</th>
-<th>Assembly Name</th>
-<th>Strain</th>
-<th>BioSample Accession</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Clade I</td>
-<td>GCA_002759435.2</td>
-<td>Cand_auris_B8441_V2</td>
-<td>B8441</td>
-<td>SAMN05379624</td>
-</tr>
-<tr>
-<td>Clade II</td>
-<td>GCA_003013715.2</td>
-<td>ASM301371v2</td>
-<td>B11220</td>
-<td>SAMN05379608</td>
-</tr>
-<tr>
-<td>Clade III</td>
-<td>GCA_002775015.1</td>
-<td>Cand_auris_B11221_V1</td>
-<td>B11221</td>
-<td>SAMN05379609</td>
-</tr>
-<tr>
-<td>Clade IV</td>
-<td>GCA_003014415.1</td>
-<td>Cand_auris_B11243</td>
-<td>B11243</td>
-<td>SAMN05379619</td>
-</tr>
-<tr>
-<td>Clade V</td>
-<td>GCA_016809505.1</td>
-<td>ASM1680950v1</td>
-<td>IFRC2087</td>
-<td>SAMN11570381</td>
-</tr>
-</tbody>
-</table>
+<summary><code>minimap2</code>: Read Alignment</summary>
+<p><code>minimap2</code> is used with long read specific parameters (-L --cs --MD flags) to align ONT reads to the reference genome. These specialized parameters are essential for proper handling of long read error profiles, generation of detailed alignment information, and improved mapping accuracy for long reads.</p>
 <div class="admonition techdetails">
-<p class="admonition-title">Cauris_Cladetyper Technical Details</p>
+<p class="admonition-title">minimap2 Technical Details</p>
+</div>
 <table>
 <thead>
 <tr>
@@ -4829,23 +4946,125 @@
 <tbody>
 <tr>
 <td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/candida/task_cauris_cladetyper.wdl">task_cauris_cladetyper.wdl</a></td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/alignment/task_minimap2.wdl">task_minimap2.wdl</a></td>
 </tr>
 <tr>
 <td>Software Source Code</td>
-<td><a href="https://github.com/jlumpe/gambit">GAMBIT on GitHub</a></td>
+<td><a href="https://github.com/lh3/minimap2">minimap2 on GitHub</a></td>
 </tr>
 <tr>
 <td>Software Documentation</td>
-<td><a href="https://theiagen.notion.site/GAMBIT-7c1376b861d0486abfbc316480046bdc?pvs=4">GAMBIT Overview</a></td>
+<td><a href="https://lh3.github.io/minimap2">minimap2</a></td>
 </tr>
 <tr>
 <td>Original Publication(s)</td>
-<td><a href="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0277575">GAMBIT (Genomic Approximation Method for Bacterial Identification and Tracking): A methodology to rapidly leverage whole genome sequencing of bacterial isolates for clinical identification</a> <br> <a href="https://doi.org/10.3389/fpubh.2023.1198213">TheiaEuk: a species-agnostic bioinformatics workflow for fungal genomic characterization</a></td>
+<td><a href="https://academic.oup.com/bioinformatics/article/34/18/3094/4994778">Minimap2: pairwise alignment for nucleotide sequences</a></td>
 </tr>
 </tbody>
 </table>
+</details>
+<details class="task">
+<summary><code>samtools</code>: BAM Processing</summary>
+<p>The bam processing step aligns files through several coordinate-based steps to prepare for variant calling. The task converts SAM format to BAM, sorts the BAM file by coordinate, and creates a BAM index file. This processed BAM is required for Clair3's variant calling pipeline.</p>
+<div class="admonition techdetails">
+<p class="admonition-title">samtools Technical Details</p>
 </div>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/data_handling/task_parse_mapping.wdl">task_samtools.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/samtools/samtools">samtools on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://www.htslib.org/doc/samtools.html">samtools</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://doi.org/10.1093/bioinformatics/btp352">The Sequence Alignment/Map format and SAMtools</a><br><a href="https://doi.org/10.1093/gigascience/giab008">Twelve Years of SAMtools and BCFtools</a></td>
+</tr>
+</tbody>
+</table>
+</details>
+<details class="task">
+<summary><code>samtools faidx</code>: Reference Genome Indexing</summary>
+<p><code>samtools faidx</code> creates necessary index files for the reference. This indexing step is    essential for enabling efficient random access to the reference sequence during variant calling.</p>
+<div class="admonition techdetails">
+<p class="admonition-title">samtools Technical Details</p>
+</div>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/data_handling/task_parse_mapping.wdl">task_samtools.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/samtools/samtools">samtools on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://www.htslib.org/doc/samtools.html">samtools</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://doi.org/10.1093/bioinformatics/btp352">The Sequence Alignment/Map format and SAMtools</a><br><a href="https://doi.org/10.1093/gigascience/giab008">Twelve Years of SAMtools and BCFtools</a></td>
+</tr>
+</tbody>
+</table>
+</details>
+<details class="task">
+<summary><code>Clair3</code>: Variant Calling</summary>
+<p><code>Clair3</code> performs deep learning-based variant detection using a multi-stage approach. The process begins with pileup-based calling for initial variant identification, followed by full-alignment analysis for comprehensive variant detection. Results are merged into a final high-confidence call set.</p>
+<p>The variant calling pipeline employs specialized neural networks trained on ONT data to accurately identify:
+- Single nucleotide variants (SNVs)
+- Small insertions and deletions (indels)
+- Structural variants</p>
+<div class="admonition techdetails">
+<p class="admonition-title">Clair3 Technical Details</p>
+</div>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/variant_calling/task_clair3.wdl">task_clair3.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/HKU-BAL/Clair3">Clair3 on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://github.com/HKU-BAL/Clair3?tab=readme-ov-file#usage">Clair3 Documentation</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://doi.org/10.1101/2021.12.29.474431">Symphonizing pileup and full-alignment for deep learning-based long-read variant calling</a></td>
+</tr>
+</tbody>
+</table>
 </details>
 <h3 id="outputs">Outputs<a class="headerlink" href="#outputs" title="Permanent link">&para;</a></h3>
 <div class="searchable-table">
@@ -4859,46 +5078,58 @@
 </thead>
 <tbody>
 <tr>
-<td>cauris_cladetyper_wf_analysis_date</td>
-<td>String</td>
-<td>Date of analysis</td>
+<td>aligned_bam</td>
+<td>File</td>
+<td>Sorted BAM file containing the minimap2 alignments of reads to the reference genome</td>
 </tr>
 <tr>
-<td>cauris_cladetyper_wf_version</td>
-<td>String</td>
-<td>Version of PHB used for the analysis</td>
+<td>aligned_bai</td>
+<td>File</td>
+<td>Index file for the aligned BAM</td>
 </tr>
 <tr>
-<td>cladetyper_annotated_reference</td>
-<td>String</td>
-<td>The annotated reference file for the identified clade, "None" if no clade was identified</td>
+<td>aligned_fai</td>
+<td>File</td>
+<td>Index file for the reference genome</td>
 </tr>
 <tr>
-<td>cladetyper_clade</td>
+<td>clair3_docker_image</td>
 <td>String</td>
-<td>The clade assigned to the input assembly</td>
+<td>Version of the Docker container used for Clair3 variant calling</td>
 </tr>
 <tr>
-<td>cladetyper_docker_image</td>
+<td>clair3_model_used</td>
 <td>String</td>
-<td>The Docker container used for the task</td>
+<td>Name of the Clair3 model used for variant calling</td>
 </tr>
 <tr>
-<td>cladetyper_gambit_version</td>
+<td>clair3_variants_vcf</td>
+<td>File</td>
+<td>Final merged VCF file containing high-confidence variant calls, combining results from both pileup and full-alignment approaches</td>
+</tr>
+<tr>
+<td>clair3_variants_gvcf</td>
+<td>File</td>
+<td>Optional genome VCF file containing information about all genomic positions, including non-variant sites</td>
+</tr>
+<tr>
+<td>clair3_variants_wf_version</td>
 <td>String</td>
-<td>The version of GAMBIT used for the analysis</td>
+<td>Version of the PHB workflow used</td>
+</tr>
+<tr>
+<td>clair3_version</td>
+<td>String</td>
+<td>Clair3 Version being used</td>
+</tr>
+<tr>
+<td>samtools_version</td>
+<td>String</td>
+<td>Version of samtools used for BAM processing</td>
 </tr>
 </tbody>
 </table>
 </div>
-<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
-<blockquote>
-<p>Lumpe J, Gumbleton L, Gorzalski A, Libuit K, Varghese V, Lloyd T, et al. (2023) GAMBIT (Genomic Approximation Method for Bacterial Identification and Tracking): A methodology to rapidly leverage whole genome sequencing of bacterial isolates for clinical identification. PLoS ONE 18(2): e0277575. <a href="https://doi.org/10.1371/journal.pone.0277575">https://doi.org/10.1371/journal.pone.0277575</a></p>
-</blockquote>
-<!-- -->
-<blockquote>
-<p>Ambrosio, Frank, Michelle Scribner, Sage Wright, James Otieno, Emma Doughty, Andrew Gorzalski, Danielle Siao, et al. 2023. "TheiaEuk: A Species-Agnostic Bioinformatics Workflow for Fungal Genomic Characterization." Frontiers in Public Health 11. <a href="https://doi.org/10.3389/fpubh.2023.1198213">https://doi.org/10.3389/fpubh.2023.1198213</a>.</p>
-</blockquote>
 
 
 
@@ -4921,7 +5152,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2024-12-31</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2025-01-24</span>
   </span>
 
     
@@ -4931,7 +5162,7 @@
     <span class="md-icon" title="Created">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2024-09-11</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2025-01-24</span>
   </span>
 
     
