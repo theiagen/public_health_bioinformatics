@@ -58,7 +58,7 @@ workflow theiaprok_ont {
     String abricate_db = "vfdb"
     String genome_annotation = "prokka" # options: "prokka" or "bakta"
     File? bakta_custom_db # Optional custom Bakta database path
-    String bakta_db = "light" # Default: "light" or "full"
+    String bakta_db = "full" # Default: "light" or "full"
     String? expected_taxon # allow user to provide organism (e.g. "Clostridioides_difficile") string to amrfinder. Useful when gambit does not predict the correct species
     
     
