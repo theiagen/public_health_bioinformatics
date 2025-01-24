@@ -291,13 +291,14 @@ task check_reads_se {
         fail_log+="; the estimated genome length (${estimated_genome_length}) is larger than the maximum of ~{max_genome_length} bps"
       elif [ "${estimated_genome_length}" -le "~{min_genome_length}" ] ; then
         fail_log+="; the estimated genome length (${estimated_genome_length}) is smaller than the minimum of ~{min_genome_length} bps"
+      fi
       if [ "${estimated_coverage}" -lt "~{min_coverage}" ] ; then
         fail_log+="; the estimated coverage (${estimated_coverage}) is less than the minimum of ~{min_coverage}x"
       else
         echo $estimated_genome_length | tee EST_GENOME_LENGTH 
       fi
       # populate metrics values with coverage
-      metrics+="\n${read1_num\t${estimated_genome_length}\t${estimated_coverage}"
+      metrics+="\n${read1_num}\t${estimated_genome_length}\t${estimated_coverage}"
     else
       # populate metrics values without coverage
       metrics+="\n${read1_num}\t${estimated_genome_length}"
