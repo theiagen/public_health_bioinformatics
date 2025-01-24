@@ -180,10 +180,10 @@ workflow theiaprok_ont {
         }
         if (genome_annotation == "bakta") {
           if(bakta_db == "light") {
-            String bakta_db_light = "gs://theiagen-public-files-rp/terra/theiaprok-files/bakta_light_db_2024-01-20.tar.gz"
+            String bakta_db_light = "gs://theiagen-public-files-rp/terra/theiaprok-files/bakta_db_light_2025-01-23.tar.gz"
           }
           if (bakta_db == "full") {
-            String bakta_db_full = "gs://theiagen-public-files-rp/terra/theiaprok-files/bakta_full_db_2024-01-20.tar.gz"            
+            String bakta_db_full = "gs://theiagen-public-files-rp/terra/theiaprok-files/bakta_db_full_2024-01-23.tar.gz"            
           }
           call bakta_task.bakta {
             input:
