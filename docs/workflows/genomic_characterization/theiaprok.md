@@ -1970,8 +1970,10 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
 | r2_mean_readlength_clean | Float | Mean read length of clean reverse reads | PE |
 | r2_mean_readlength_raw | Float | Mean read length of raw reverse reads | PE |
 | rasusa_version | String | Version of RASUSA used for analysis | ONT |
+| read_screen_raw | String | PASS or FAIL result from raw read screening; FAIL accompanied by the reason for failure | ONT, PE, SE |
+| read_screen_raw_stats | File | Raw read screening report TSV depicting read counts, estimated coverage, and estimated genome length | ONT, PE, SE |
 | read_screen_clean | String | PASS or FAIL result from clean read screening; FAIL accompanied by the reason for failure | ONT, PE, SE |
-| read_screen_raw | String | PASS or FAIL result from raw read screening; FAIL accompanied by thereason for failure | ONT, PE, SE |
+| read_screen_clean_stats | File | Clean read screening report TSV depicting read counts, estimated coverage, and estimated genome length | ONT, PE, SE |
 | read1_clean | File | Clean forward reads file | ONT, PE, SE |
 | read2_clean | File | Clean reverse reads file | PE |
 | resfinder_db_version | String | Version of ResFinder database | FASTA, ONT, PE, SE |

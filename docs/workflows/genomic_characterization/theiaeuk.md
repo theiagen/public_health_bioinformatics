@@ -670,8 +670,10 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
 | read1_subsampled | File | Subsampled read1 file |
 | read2_clean | File | Clean reverse reads file |
 | read2_subsampled | File | Subsampled read2 file |
-| read_screen_clean | String | PASS or FAIL result from clean read screening; FAIL accompanied by the reason for failure | ONT, PE, SE |
-| read_screen_raw | String | PASS or FAIL result from raw read screening; FAIL accompanied by thereason for failure |
+| read_screen_raw | String | PASS or FAIL result from raw read screening; FAIL accompanied by the reason for failure |
+| read_screen_raw_stats | File | Raw read screening report TSV depicting read counts, estimated coverage, and estimated genome length |
+| read_screen_clean | String | PASS or FAIL result from clean read screening; FAIL accompanied by the reason for failure |
+| read_screen_clean_stats | File | Clean read screening report TSV depicting read counts, estimated coverage, and estimated genome length |
 | seq_platform | String | Sequencing platform input by the user |
 | shovill_pe_version | String | Shovill version used |
 | theiaeuk_illumina_pe_analysis_date | String | Date of TheiaEuk PE workflow execution |
