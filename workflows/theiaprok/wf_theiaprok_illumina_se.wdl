@@ -68,6 +68,8 @@ workflow theiaprok_illumina_se {
     Boolean call_abricate = false
     String abricate_db = "vfdb"
     String genome_annotation = "prokka" # options: "prokka" or "bakta"
+    File? bakta_custom_db # Optional custom Bakta database path
+    String bakta_db = "light" # Default: "light" or "full"
     String? expected_taxon # allow user to provide organism (e.g. "Clostridioides_difficile") string to amrfinder. Useful when gambit does not predict the correct species
     # qc check parameters
     File? qc_check_table
@@ -197,10 +199,17 @@ workflow theiaprok_illumina_se {
           }
         }
         if (genome_annotation == "bakta") {
+          if(bakta_db == "light") {
+            File bakta_db_light = "gs://theiagen-public-files-rp/terra/theiaprok-files/bakta_db_light_2025-01-23.tar.gz"
+          }
+          if (bakta_db == "full") {
+            File bakta_db_full = "gs://theiagen-public-files-rp/terra/theiaprok-files/bakta_db_full_2024-01-23.tar.gz"            
+          }
           call bakta_task.bakta {
             input:
               assembly = shovill_se.assembly_fasta,
-              samplename = samplename
+              samplename = samplename,
+              bakta_db_selected = select_first([bakta_custom_db, bakta_db_light, bakta_db_full])
           }
         }
         if (call_plasmidfinder) {
@@ -728,6 +737,7 @@ workflow theiaprok_illumina_se {
     File? bakta_gff3 = bakta.bakta_gff3
     File? bakta_tsv = bakta.bakta_tsv
     File? bakta_summary = bakta.bakta_txt
+    File? bakta_plot = bakta.bakta_plot
     String? bakta_version = bakta.bakta_version
     # Plasmidfinder Results
     String? plasmidfinder_plasmids = plasmidfinder.plasmidfinder_plasmids

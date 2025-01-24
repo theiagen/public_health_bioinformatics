@@ -339,6 +339,7 @@ task export_taxon_tables {
     File? bakta_gff3
     File? bakta_tsv
     File? bakta_summary
+    File? bakta_plot
     String? bakta_version
     String? pasty_serogroup
     Float? pasty_serogroup_coverage
@@ -755,6 +756,7 @@ task export_taxon_tables {
       "bakta_gff3": "~{bakta_gff3}",
       "bakta_tsv": "~{bakta_tsv}",
       "bakta_summary": "~{bakta_summary}",
+      "bakta_plot": "~{bakta_plot}",
       "bakta_version": "~{bakta_version}",
       "pasty_serogroup": "~{pasty_serogroup}",
       "pasty_serogroup_coverage": "~{pasty_serogroup_coverage}",

@@ -56,6 +56,8 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 | theiaprok_illumina_se | **read1** | File | Illumina forward read file in FASTQ file format (compression optional) |  | Required | SE |
 | theiaprok_ont | **read1** | File | Base-called ONT read file in FASTQ file format (compression optional) |  | Required | ONT |
 | *workflow name | **abricate_db** | String | Database to use with the Abricate tool. Options: NCBI, CARD, ARG-ANNOT, Resfinder, MEGARES, EcOH, PlasmidFinder, Ecoli_VF and VFDB | vfdb | Optional | FASTA, ONT, PE, SE |
+| *workflow name | **bakta_db** | File | Database selection for Bakta annotation, supports "light" or "full" options. The appropriate database file will be selected and extracted based on the choice. | full | Optional | FASTA, ONT, PE, SE |
+| *workflow name | **bakta_custom_db** | File |Path to a custom Bakta-compatible database file, provided by the user. If specified, this file overrides the bakta_db selection. |  | Optional | FASTA, ONT, PE, SE |
 | *workflow name | **call_abricate** | Boolean | Set to true to enable the Abricate task | FALSE | Optional | FASTA, ONT, PE, SE |
 | *workflow name | **call_ani** | Boolean | Set to true to enable the ANI task | FALSE | Optional | FASTA, ONT, PE, SE |
 | *workflow name | **call_kmerfinder** | Boolean | Set to true to enable the kmerfinder task | FALSE | Optional | FASTA, ONT, PE, SE |
@@ -121,7 +123,6 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 | ani | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | FASTA, ONT, PE, SE |
 | ani | **percent_bases_aligned_threshold** | Float | Threshold regarding the proportion of bases aligned between the query genome and reference genome. If a genome does not surpass this threshold (and the ani_threshold) then the ani_top_species_match output String will show a warning instead of a genus & species. | 70 | Optional | FASTA, ONT, PE, SE |
 | ani | **ref_genome** | File | If not set, uses all 43 genomes in RGDv2 |  | Optional | FASTA, ONT, PE, SE |
-| bakta | **bakta_db** | File | Database of reference annotations (see <https://github.com/oschwengers/bakta#database>) | gs://theiagen-public-files-rp/terra/theiaprok-files/bakta_db_2022-08-29.tar.gz | Optional | FASTA, ONT, PE, SE |
 | bakta | **bakta_opts** | String | Parameters to pass to bakta from <https://github.com/oschwengers/bakta#usage> |  | Optional | FASTA, ONT, PE, SE |
 | bakta | **compliant** | Boolean | If true, forces Genbank/ENA/DDJB compliance | FALSE | Optional | FASTA, ONT, PE, SE |
 | bakta | **cpu** | Int | Number of CPUs to allocate to the task | 8 | Optional | FASTA, ONT, PE, SE |
@@ -1087,9 +1088,21 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 
 ??? task "`Bakta`: Assembly Annotation (alternative)"
 
-    Assembly annotation is available via Bakta as an alternative to Prokka. When Bakta annotation is used, Prokka is not.
+    Assembly annotation is available via `Bakta` as an alternative to `Prokka`. When `Bakta` annotation is used, `Prokka` is not.
 
-    Bakta is intended for annotation of Bacteria and plasmids only, and is best described [here](https://github.com/oschwengers/bakta#description)!
+    `Bakta` is intended for annotation of Bacteria and plasmids only, and is best described [here](https://github.com/oschwengers/bakta#description)!
+
+    In addition to the standard annotation outputs, `Bakta` also provides a plot summarizing the annotation results, which can be useful for visualizing genome features.
+
+    **Bakta Database Options**
+
+    `Bakta` supports three database configurations:
+
+    **Light** Database: Optimized for faster performance and lower resource usage, with a focused set of core reference data for most bacterial genome annotations. Recommended for quick annotations or limited computational resources. Specify "light" for the `bakta_db` input.
+
+    **Full** Database (default): Comprehensive with extensive reference annotations, suitable for detailed and accurate annotations. Specify "full" for the `bakta_db` input.
+
+    **Custom** Database: Allows users to provide a Bakta-compatible database for specialized use cases. The database must follow the Bakta format, include a valid version.json, and be specified via the `bakta_custom_db` parameter, which overrides the light and full options.
 
     !!! techdetails "Bakta Technical Details"
         
@@ -1763,6 +1776,7 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
 | assembly_length | Int | Length of assembly (total contig length) as determined by QUAST | FASTA, ONT, PE, SE |
 | bakta_gbff | File | Genomic GenBank format annotation file | FASTA, ONT, PE, SE |
 | bakta_gff3 | File | Generic Feature Format Version 3 file | FASTA, ONT, PE, SE |
+| bakta_plot | File | Bakta plot output PNG file summarizing annotated genome features such as coding sequences, RNA genes, and hypothetical proteins. | FASTA, ONT, PE, SE |
 | bakta_summary | File | Bakta summary output TXT file | FASTA, ONT, PE, SE |
 | bakta_tsv | File | Annotations as simple human readable TSV | FASTA, ONT, PE, SE |
 | bakta_version | String | Bakta version used | FASTA, ONT, PE, SE |
