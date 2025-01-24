@@ -553,9 +553,9 @@ workflow theiaprok_ont {
     String seq_platform = seq_method
     # Sample Screening
     String? read_screen_raw = raw_check_reads.read_screen
-    File? read_screen_raw_stats = raw_check_reads.read_screen_tsv
+    File? read_screen_raw_tsv = raw_check_reads.read_screen_tsv
     String? read_screen_clean = clean_check_reads.read_screen
-    File? read_screen_clean_stats = clean_check_reads.read_screen_tsv
+    File? read_screen_clean_tsv = clean_check_reads.read_screen_tsv
     # Read QC - nanoq outputs
     File? read1_clean = read_qc_trim.read1_clean
     String? nanoq_version = read_qc_trim.nanoq_version
