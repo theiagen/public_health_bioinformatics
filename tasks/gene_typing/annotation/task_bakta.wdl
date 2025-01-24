@@ -5,7 +5,7 @@ task bakta {
     File assembly
     String samplename
     Int cpu = 8
-    Int memory = 32 
+    Int memory = 16 
     Int disk_size = 100
     File bakta_db_selected
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/bakta:1.10.3"
