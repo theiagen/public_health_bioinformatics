@@ -157,6 +157,7 @@ task check_reads {
   output {
     String read_screen = read_string("FLAG")
     Int est_genome_length = read_int("EST_GENOME_LENGTH")
+    File read_screen_metrics = "read_screen.tsv"
   }
   runtime {
     docker: docker
@@ -318,6 +319,7 @@ task check_reads_se {
   output {
     String read_screen = read_string("FLAG")
     Int est_genome_length = read_int("EST_GENOME_LENGTH")
+    File read_screen_tsv = "read_screen.tsv"
   }
   runtime {
     docker: docker
