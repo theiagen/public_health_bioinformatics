@@ -4,8 +4,8 @@ task bakta {
   input {
     File assembly
     String samplename
-    Int cpu = 4
-    Int memory = 16 # reset to previous value after local testing
+    Int cpu = 8
+    Int memory = 32 
     Int disk_size = 100
     File bakta_db_selected
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/bakta:1.10.3"
@@ -50,7 +50,7 @@ task bakta {
     File bakta_hypotheticals_tsv = "~{samplename}/~{samplename}.hypotheticals.tsv"
     File bakta_tsv = "~{samplename}/~{samplename}.tsv"
     File bakta_txt = "~{samplename}/~{samplename}.txt"
-    File bakta_plots = "~{samplename}/~{samplename}.png"
+    File bakta_plot = "~{samplename}/~{samplename}.png"
     String bakta_version = read_string("BAKTA_VERSION")
   }
   runtime {
