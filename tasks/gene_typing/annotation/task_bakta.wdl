@@ -50,6 +50,7 @@ task bakta {
     File bakta_hypotheticals_tsv = "~{samplename}/~{samplename}.hypotheticals.tsv"
     File bakta_tsv = "~{samplename}/~{samplename}.tsv"
     File bakta_txt = "~{samplename}/~{samplename}.txt"
+    File bakta_plots = "~{samplename}/~{samplename}.png"
     String bakta_version = read_string("BAKTA_VERSION")
   }
   runtime {
