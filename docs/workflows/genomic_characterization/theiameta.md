@@ -4,7 +4,7 @@
 
 | **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
 |---|---|---|---|---|
-| [Genomic Characterization](../../workflows_overview/workflows_type.md/#genomic-characterization) | [Any Taxa](../../workflows_overview/workflows_kingdom.md/#any-taxa) | PHB v2.3.0 | Yes | Sample-level |
+| [Genomic Characterization](../../workflows_overview/workflows_type.md/#genomic-characterization) | [Any Taxa](../../workflows_overview/workflows_kingdom.md/#any-taxa) | PHB vX.X.X | Yes | Sample-level |
 
 ## TheiaMeta Workflows
 
@@ -57,11 +57,11 @@ The TheiaMeta_Illumina_PE workflow processes Illumina paired-end (PE) reads ge
 | kraken2_raw | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 16 | Optional |
 | krona_clean | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional |
 | krona_clean | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
-| krona_clean | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/biocontainers/krona:2.7.1--pl526_5 | Optional |
+| krona_clean | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/krona:2.8.1 | Optional |
 | krona_clean | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional |
 | krona_raw | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional |
 | krona_raw | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
-| krona_raw | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/biocontainers/krona:2.7.1--pl526_5 | Optional |
+| krona_raw | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/krona:2.8.1 | Optional |
 | krona_raw | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional |
 | metaspades | **kmers** | String | Kmer list to use with metaspades. If not provided metaspades automatically sets this value |  | Optional |
 | metaspades | **metaspades_opts** | String | Additional arguments to pass to metaspades task |  | Optional |
