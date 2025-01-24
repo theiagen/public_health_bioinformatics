@@ -131,6 +131,11 @@ workflow merlin_magic {
     Int? emmtyper_min_perfect
     Int? emmtyper_min_good
     Int? emmtyper_max_size
+    #hicap options
+    Float? hicap_gene_coverage
+    Float? hicap_gene_identity
+    Float? hicap_broken_gene_identity
+    Int? hicap_broken_gene_length
     # kaptive options
     Int? kaptive_start_end_margin
     Float? kaptive_min_identity
@@ -600,7 +605,11 @@ workflow merlin_magic {
       input:
         assembly = assembly,
         samplename = samplename,
-        docker = hicap_docker_image
+        docker = hicap_docker_image,
+        gene_coverage = hicap_gene_coverage,
+        gene_identity = hicap_gene_identity,
+        broken_gene_identity = hicap_broken_gene_identity,
+        broken_gene_length = hicap_broken_gene_length
     }
   }
   if (merlin_tag == "Vibrio" || merlin_tag == "Vibrio cholerae") {
@@ -610,11 +619,11 @@ workflow merlin_magic {
           read1 = select_first([read1]),
           read2 = read2,
           samplename = samplename,
-          srst2_min_cov = srst2_min_cov,
-          srst2_max_divergence = srst2_max_divergence,
-          srst2_min_depth = srst2_min_depth,
-          srst2_min_edge_depth = srst2_min_edge_depth,
-          srst2_gene_max_mismatch = srst2_gene_max_mismatch,
+          min_cov = srst2_min_cov,
+          max_divergence = srst2_max_divergence,
+          min_depth = srst2_min_depth,
+          min_edge_depth = srst2_min_edge_depth,
+          gene_max_mismatch = srst2_gene_max_mismatch,
           docker = srst2_docker_image
       }
     }
