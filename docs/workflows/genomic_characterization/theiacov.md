@@ -371,17 +371,6 @@ All TheiaCoV Workflows (not TheiaCoV_FASTA_Batch)
 | read_QC_trim | **rasusa_memory** | Int | Internal component, do not modify | 8 | Optional | ONT | |
 | read_QC_trim | **rasusa_number_of_reads** | Int | Internal component, do not modify | | Optional | ONT | |
 | read_QC_trim | **rasusa_seed** | Int | Internal component, do not modify | | Optional | ONT | |
-| read_QC_trim | **tiptoft_cpu** | Int | Internal component, do not modify | 2 | Optional | ONT | |
-| read_QC_trim | **tiptoft_disk_size** | Int | Internal component, do not modify | 100 | Optional | ONT | |
-| read_QC_trim | **tiptoft_docker** | String | Internal component, do not modify | "us-docker.pkg.dev/general-theiagen/staphb/tiptoft:1.0.2" | Optional | ONT | |
-| read_QC_trim | **tiptoft_kmer_size** | String | Internal component, do not modify | | Optional | ONT | |
-| read_QC_trim | **tiptoft_margin** | Int | Internal component, do not modify | | Optional | ONT | |
-| read_QC_trim | **tiptoft_max_gap** | Int | Internal component, do not modify | | Optional | ONT | |
-| read_QC_trim | **tiptoft_memory** | Int | Internal component, do not modify | 8 | Optional | ONT | |
-| read_QC_trim | **tiptoft_min_block_size** | Int | Internal component, do not modify | | Optional | ONT | |
-| read_QC_trim | **tiptoft_min_fasta_hits** | Int | Internal component, do not modify | | Optional | ONT | |
-| read_QC-trim | **tiptoft_min_kmers_for_onex_pass** | Int | Internal component, do not modify | | Optional | ONT | |
-| read_QC_trim | **tiptoft_min_perc_coverage** | Int | Internal component, do not modify | | Optional | ONT | |
 | read_QC_trim | **read_processing** | String | The name of the tool to perform basic read processing; options: "trimmomatic" or "fastp" | trimmomatic | Optional | PE, SE | |
 | read_QC_trim | **read_qc** | String | The tool used for quality control (QC) of reads. Options are fastq_scan and fastqc | fastq_scan | Optional | PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | read_QC_trim | **target_organism** | String | Organism to search for in Kraken | | Optional | PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
