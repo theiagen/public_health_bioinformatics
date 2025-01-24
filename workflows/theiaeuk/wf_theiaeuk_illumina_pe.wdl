@@ -201,7 +201,9 @@ workflow theiaeuk_illumina_pe {
     String seq_platform = seq_method
     # Sample Screening
     String? read_screen_raw = raw_check_reads.read_screen
+    File? read_screen_raw_stats = raw_check_reads.read_screen_tsv
     String? read_screen_clean = clean_check_reads.read_screen
+    File? read_screen_clean_stats = clean_check_reads.read_screen_tsv
     # Read QC - fastq_scan outputs
     Int? fastq_scan_num_reads_raw1 = read_QC_trim.fastq_scan_raw1
     Int? fastq_scan_num_reads_raw2 = read_QC_trim.fastq_scan_raw2
