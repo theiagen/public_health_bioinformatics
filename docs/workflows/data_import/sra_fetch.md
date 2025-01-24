@@ -26,6 +26,8 @@ This workflow runs on the sample level.
 | fetch_sra_to_fastq | **docker_image** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/biocontainers/fastq-dl:2.0.4--pyhdfd78af_0" | Optional |
 | fetch_sra_to_fastq | **fastq_dl_options** | String | Additional parameters to pass to fastq_dl from [here](https://github.com/rpetit3/fastq-dl?tab=readme-ov-file#usage) | "--provider sra" | Optional |
 | fetch_sra_to_fastq | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional |
+| version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
+| version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) | | Optional |
 
 </div>
 
@@ -49,6 +51,8 @@ Given the lack of usefulness of SRA Lite formatted FASTQ files, we try to avoid 
 
 | **Variable** | **Type** | **Description** | **Production Status** |
 |---|---|---|---|
+| sra_fetch_version | String | The version of the repository SRA_Fetch is run in | Always produced |
+| sra_fetch_analysis_date | String | Date of SRA_Fetch download | Always produced |
 | read1 | File | File containing the forward reads | Always produced |
 | read2 | File | File containing the reverse reads (not availablae for single-end or ONT data) | Produced only for paired-end data |
 | fastq_dl_date | String | The date of download | Always produced |
