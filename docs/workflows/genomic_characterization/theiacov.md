@@ -1218,9 +1218,9 @@ All TheiaCoV Workflows (not TheiaCoV_FASTA_Batch)
 | quasitools_hydra_vcf | File | The VCF created by Quasitools HyDRA | ONT, PE |
 | quasitools_mutations_report | File | The mutation report created by Quasitools HyDRA | ONT, PE |
 | quasitools_version | String | Version of Quasitools used | ONT, PE |
-| read_screen_raw | String | PASS or FAIL result from raw read screening; FAIL accompanied by the reason for failure | ONT, PE, SE |
+| read_screen_raw | String | PASS or FAIL result from raw read screening; FAIL accompanied by the reason(s) for failure | ONT, PE, SE |
 | read_screen_raw_stats | File | Raw read screening report TSV depicting read counts, estimated coverage, and estimated genome length | ONT, PE, SE |
-| read_screen_clean | String | PASS or FAIL result from clean read screening; FAIL accompanied by the reason for failure | ONT, PE, SE |
+| read_screen_clean | String | PASS or FAIL result from clean read screening; FAIL accompanied by the reason(s) for failure | ONT, PE, SE |
 | read_screen_clean_stats | File | Clean read screening report TSV depicting read counts, estimated coverage, and estimated genome length | ONT, PE, SE |
 | read1_aligned | File | Forward read file of only aligned reads | CL, ONT, PE, SE |
 | read1_clean | File | Forward read file after quality trimming and adapter removal | PE, SE |
