@@ -27,6 +27,9 @@ workflow flu_track {
     # IRMA inputs
     Boolean? irma_keep_ref_deletions
     Int? irma_minimum_consensus_support
+    Int? irma_minimum_read_length
+    Int? irma_mimium_average_consensus_allele_quality
+    Float? irma_minimum_ambiguous_threshold
     String? irma_docker_image
     Int? irma_memory
     Int? irma_cpu
@@ -86,6 +89,9 @@ workflow flu_track {
       samplename = samplename,
       seq_method = seq_method,
       minimum_consensus_support = irma_minimum_consensus_support,
+      minimum_read_length = irma_minimum_read_length,
+      minimum_average_consensus_allele_quality = irma_mimium_average_consensus_allele_quality,
+      minimum_ambiguous_threshold = irma_minimum_ambiguous_threshold,
       keep_ref_deletions = irma_keep_ref_deletions,
       docker = irma_docker_image,
       memory = irma_memory,
@@ -265,7 +271,9 @@ workflow flu_track {
     String irma_subtype = irma.irma_subtype
     String irma_subtype_notes = irma.irma_subtype_notes
     File? irma_assembly_fasta = irma.irma_assembly_fasta
+    File? irma_assembly_fasta_concatenated = irma.irma_assembly_fasta_concatenated
     File? irma_assembly_fasta_padded = irma.irma_assembly_fasta_padded
+    File? irma_assembly_fasta_concatenated_padded = irma.irma_assembly_fasta_concatenated_padded
     File? irma_ha_segment_fasta = irma.seg_ha_assembly
     File? irma_na_segment_fasta = irma.seg_na_assembly
     File? irma_pa_segment_fasta = irma.seg_pa_assembly

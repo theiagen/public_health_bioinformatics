@@ -10,6 +10,7 @@ task irma {
     Int minimum_consensus_support = 50
     Int minimum_read_length = 75 # matching default for TheiaCoV_Illumina_PE; NOTE: IRMA's default is 125 bp
     Int minimum_average_consensus_allele_quality = 10 # IRMA default is 0, we are matching MIRA standards for both ONT and ILMN: https://cdcgov.github.io/MIRA/articles/sequence-qc.html
+    Float minimum_ambiguous_threshold = 0.20
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/irma:1.2.0"
     Int memory = 16
     Int cpu = 4
@@ -35,6 +36,9 @@ task irma {
     echo "MIN_CONS_SUPPORT=~{minimum_consensus_support}" >> irma_config.sh
     # any base with less than the minimum quality will be called N
     echo "MIN_CONS_QUALITY=~{minimum_average_consensus_allele_quality}" >> irma_config.sh
+
+    # minimum called SNV frequency for mixe base calls in amended consensus
+    echo "MIN_AMBIG=~{minimum_ambiguous_threshold}" >> irma_config.sh
 
     # this is done so that IRMA used PWD as the TMP directory instead of /tmp/root that it tries by default; cromwell doesn't allocate much disk space here (64MB or some small amount)
     echo "DEBUG: creating an optional IRMA configuration file to set TMP directory to $(pwd)"
@@ -125,15 +129,13 @@ task irma {
               mv -v "${segment_file}" "~{samplename}/amended_consensus/~{samplename}_${SEGMENT_STR}.fasta"
               # reassign segment_file bash variable to the new filename
               segment_file="~{samplename}/amended_consensus/~{samplename}_${SEGMENT_STR}.fasta"
-            else
-              echo "WARNING: No file containing ${SEGMENT_STR} found for ~{samplename}"
             fi
           done
 
           echo "DEBUG: Adding ${segment_file} to consensus FASTA"
           cat "${segment_file}" >> ~{samplename}/amended_consensus/~{samplename}.irma.consensus.fasta
         else
-          echo "WARNING: No file containing ${SEGMENT_NUM} found for ~{samplename}"
+          echo "WARNING: No file containing segment number ${SEGMENT_NUM} found for ~{samplename}"
         fi
       done
       
