@@ -489,7 +489,6 @@ workflow theiaprok_ont {
               bakta_tsv = bakta.bakta_tsv,
               bakta_summary = bakta.bakta_txt,
               bakta_version = bakta.bakta_version,
-              bakta_plot = bakta.bakta_plot,
               plasmidfinder_plasmids = plasmidfinder.plasmidfinder_plasmids,
               plasmidfinder_results = plasmidfinder.plasmidfinder_results,
               plasmidfinder_seqs = plasmidfinder.plasmidfinder_seqs,
@@ -701,6 +700,7 @@ workflow theiaprok_ont {
     File? bakta_gff3 = bakta.bakta_gff3
     File? bakta_tsv = bakta.bakta_tsv
     File? bakta_summary = bakta.bakta_txt
+    File bakta_plots = bakta.bakta_plot
     String? bakta_version = bakta.bakta_version
     # Plasmidfinder Results
     String? plasmidfinder_plasmids = plasmidfinder.plasmidfinder_plasmids
