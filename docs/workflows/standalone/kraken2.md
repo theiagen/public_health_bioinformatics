@@ -147,7 +147,7 @@ When assessing the taxonomic identity of a single isolate's sequence, it is norm
 
 ??? toggle "Example Krona report"
 
-    Below is an example of the `krona_html` for a metagenomic sample. Taxonomic rank is organised from the centre of the pie chart to the edge, with each slice representing the relative abundance of a given taxa in the sample.
+    Below is an example of the `krona_html` for a bacterial sample. Taxonomic rank is organised from the centre of the pie chart to the edge, with each slice representing the relative abundance of a given taxa in the sample.
     
     ![Example Krona Report](../../assets/figures/example_krona_report.png)
 
