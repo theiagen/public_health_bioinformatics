@@ -1102,7 +1102,7 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 
     **Full** Database (default): Comprehensive with extensive reference annotations, suitable for detailed and accurate annotations. Specify "full" for the `bakta_db` input.
 
-    **Custom** Database: Allows users to provide a Bakta-compatible database for specialized use cases. The database must follow the Bakta format, include a valid version.json, and be specified via the `bakta_custom_db` parameter, which overrides the light and full options.
+    **Custom** Database: Allows users to provide a Bakta-compatible database for specialized use cases. The database must follow the Bakta format, include a valid version.json, and be specified via the `bakta_custom_db` parameter, which overrides the light and full options. Follow the [Bakta database documentation](https://github.com/oschwengers/bakta#database) for detailed formatting requirements.
 
     !!! techdetails "Bakta Technical Details"
         
