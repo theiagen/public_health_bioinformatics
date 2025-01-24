@@ -26,11 +26,11 @@ workflow flu_track {
     # optional inputs to the tasks are available here due to Terra hiding them since they're within a subworkflow
     # IRMA inputs
     Boolean? irma_keep_ref_deletions
-    Int? irma_minimum_consensus_support
-    Int? irma_minimum_read_length
+    Int? irma_min_consensus_support
+    Int? irma_min_read_length
     Int? irma_min_avg_consensus_allele_quality
-    Float? irma_minimum_ambiguous_threshold
-    String? irma_docker
+    Float? irma_min_ambiguous_threshold
+    String? irma_docker_image
     Int? irma_memory
     Int? irma_cpu
     Int? irma_disk_size
@@ -88,12 +88,12 @@ workflow flu_track {
       read2 = read2,
       samplename = samplename,
       seq_method = seq_method,
-      minimum_consensus_support = irma_minimum_consensus_support,
-      minimum_read_length = irma_minimum_read_length,
+      minimum_consensus_support = irma_min_consensus_support,
+      minimum_read_length = irma_min_read_length,
       minimum_average_consensus_allele_quality = irma_min_avg_consensus_allele_quality,
-      minimum_ambiguous_threshold = irma_minimum_ambiguous_threshold,
+      minimum_ambiguous_threshold = irma_min_ambiguous_threshold,
       keep_ref_deletions = irma_keep_ref_deletions,
-      docker = irma_docker,
+      docker = irma_docker_image,
       memory = irma_memory,
       cpu = irma_cpu,
       disk_size = irma_disk_size
