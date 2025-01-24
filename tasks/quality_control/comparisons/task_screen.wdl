@@ -29,7 +29,7 @@ task check_reads {
     fail_log=""
 
     # initalize estimated genome length
-    estimated_genome_length=0     
+    estimated_genome_length=0
     # set cat command based on compression
     if [[ "~{read1}" == *".gz" ]] ; then
       cat_reads="zcat"
@@ -157,7 +157,7 @@ task check_reads {
   output {
     String read_screen = read_string("FLAG")
     Int est_genome_length = read_int("EST_GENOME_LENGTH")
-    File read_screen_metrics = "read_screen.tsv"
+    File read_screen_tsv = "read_screen.tsv"
   }
   runtime {
     docker: docker
