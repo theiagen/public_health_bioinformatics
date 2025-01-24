@@ -150,7 +150,7 @@ task check_reads {
       fail_log="FAIL${fail_log}"
     fi
 
-    echo $metrics > read_screen.tsv
+    echo -e $metrics > read_screen.tsv
     echo $fail_log | tee FLAG
     echo $estimated_genome_length | tee EST_GENOME_LENGTH
   >>>
@@ -309,7 +309,7 @@ task check_reads_se {
       fail_log="FAIL${fail_log}"
     fi
 
-    echo $metrics > read_screen.tsv
+    echo -e $metrics > read_screen.tsv
     echo $fail_log | tee FLAG
     echo ${estimated_genome_length} | tee EST_GENOME_LENGTH
     echo "DEBUG: estimated_genome_length: ${estimated_genome_length}"
