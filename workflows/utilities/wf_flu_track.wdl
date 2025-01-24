@@ -28,9 +28,9 @@ workflow flu_track {
     Boolean? irma_keep_ref_deletions
     Int? irma_minimum_consensus_support
     Int? irma_minimum_read_length
-    Int? irma_mimium_average_consensus_allele_quality
+    Int? irma_min_avg_consensus_allele_quality
     Float? irma_minimum_ambiguous_threshold
-    String? irma_docker_image
+    String? irma_docker
     Int? irma_memory
     Int? irma_cpu
     Int? irma_disk_size
@@ -90,10 +90,10 @@ workflow flu_track {
       seq_method = seq_method,
       minimum_consensus_support = irma_minimum_consensus_support,
       minimum_read_length = irma_minimum_read_length,
-      minimum_average_consensus_allele_quality = irma_mimium_average_consensus_allele_quality,
+      minimum_average_consensus_allele_quality = irma_min_avg_consensus_allele_quality,
       minimum_ambiguous_threshold = irma_minimum_ambiguous_threshold,
       keep_ref_deletions = irma_keep_ref_deletions,
-      docker = irma_docker_image,
+      docker = irma_docker,
       memory = irma_memory,
       cpu = irma_cpu,
       disk_size = irma_disk_size
