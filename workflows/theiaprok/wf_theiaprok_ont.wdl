@@ -700,7 +700,7 @@ workflow theiaprok_ont {
     File? bakta_gff3 = bakta.bakta_gff3
     File? bakta_tsv = bakta.bakta_tsv
     File? bakta_summary = bakta.bakta_txt
-    File bakta_plots = bakta.bakta_plot
+    File? bakta_plot = bakta.bakta_plot
     String? bakta_version = bakta.bakta_version
     # Plasmidfinder Results
     String? plasmidfinder_plasmids = plasmidfinder.plasmidfinder_plasmids
