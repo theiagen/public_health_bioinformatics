@@ -69,7 +69,7 @@ task check_reads {
       fail_log+="; more than ~{min_proportion} percent of the total sequence is found in R1 (BP: $read1_bp; PERCENT: $percent_read1) compared to R2 (BP: $read2_bp; PERCENT: $percent_read2)"
     fi
 
-  # check total number of basepairs 
+    # check total number of basepairs 
     bp_total=$(expr $read1_bp + $read2_bp)
     if [ "${bp_total}" -le "~{min_basepairs}" ]; then
       fail_log+="; the total number of basepairs is below the minimum of ~{min_basepairs}"
