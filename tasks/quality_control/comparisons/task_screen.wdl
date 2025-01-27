@@ -25,7 +25,7 @@ task check_reads {
     set -euo pipefail
 
     # populate column headers for metrics and init failure log
-    metrics="read1_count\tread2_count\test_genome_length\test_coverage"
+    metrics="read1_count\tread2_count\tread_bp\test_genome_length\test_coverage"
     fail_log=""
 
     # initalize estimated genome length
@@ -141,7 +141,7 @@ task check_reads {
     fi 
 
     # populate metrics values
-    metrics+="\n${read1_num}\t${read2_num}\t${estimated_genome_length}\t${estimated_coverage}"
+    metrics+="\n${read1_num}\t${read2_num}\t${bp_total}\t${estimated_genome_length}\t${estimated_coverage}"
 
     # finish populating failure log
     if [ -z "$fail_log" ]; then
@@ -194,7 +194,7 @@ task check_reads_se {
     set -euo pipefail
 
     # populate column headers for metrics and init failure log
-    metrics="read1_count\test_genome_length"
+    metrics="read1_count\tread_bp\test_genome_length"
     fail_log=""
 
     # initalize estimated genome length
@@ -298,10 +298,10 @@ task check_reads_se {
         echo $estimated_genome_length | tee EST_GENOME_LENGTH 
       fi
       # populate metrics values with coverage
-      metrics+="\n${read1_num}\t${estimated_genome_length}\t${estimated_coverage}"
+      metrics+="\n${read1_num}\t${read1_bp}\t${estimated_genome_length}\t${estimated_coverage}"
     else
       # populate metrics values without coverage
-      metrics+="\n${read1_num}\t${estimated_genome_length}"
+      metrics+="\n${read1_num}\t${read1_bp}\t${estimated_genome_length}"
     fi 
 
     # finish populating failure log
