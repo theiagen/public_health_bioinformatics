@@ -156,23 +156,25 @@ workflow flu_track {
           docker = genoflu_docker,
           memory = genoflu_memory
       }
-      call nextclade_task.nextclade_v3 as nextclade_flu_h5n1 {
-        input:
-          genome_fasta = select_first([irma.irma_assembly_fasta_concatenated]),
-          custom_input_dataset = nextclade_custom_input_dataset,
-          docker = nextclade_docker_image,
-          cpu = nextclade_cpu,
-          memory = nextclade_memory,
-          disk_size = nextclade_disk_size
-      }
-      call nextclade_task.nextclade_output_parser as nextclade_output_parser_flu_h5n1 {
-        input:
-          nextclade_tsv = nextclade_flu_h5n1.nextclade_tsv,
-          organism = standardized_organism,
-          docker = nextclade_output_parser_docker,
-          cpu = nextclade_output_parser_cpu,
-          memory = nextclade_output_parser_memory,
-          disk_size = nextclade_output_parser_disk_size
+      if (genoflu.genoflu_genotype == "B3.13") {
+        call nextclade_task.nextclade_v3 as nextclade_flu_h5n1 {
+          input:
+            genome_fasta = select_first([irma.irma_assembly_fasta_concatenated]),
+            custom_input_dataset = nextclade_custom_input_dataset,
+            docker = nextclade_docker_image,
+            cpu = nextclade_cpu,
+            memory = nextclade_memory,
+            disk_size = nextclade_disk_size
+        }
+        call nextclade_task.nextclade_output_parser as nextclade_output_parser_flu_h5n1 {
+          input:
+            nextclade_tsv = nextclade_flu_h5n1.nextclade_tsv,
+            organism = standardized_organism,
+            docker = nextclade_output_parser_docker,
+            cpu = nextclade_output_parser_cpu,
+            memory = nextclade_output_parser_memory,
+            disk_size = nextclade_output_parser_disk_size
+        }
       }
     }
     call set_organism_defaults.organism_parameters as set_flu_na_nextclade_values {
