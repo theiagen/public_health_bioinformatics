@@ -25,7 +25,7 @@ task check_reads {
     set -euo pipefail
 
     # populate column headers for metrics and init failure log
-    metrics="read1_count\tread2_count\tread_bp\test_genome_length\test_coverage"
+    metrics="read1_count\tread2_count\tread_bp\test_genome_length"
     fail_log=""
 
     # initalize estimated genome length
@@ -141,7 +141,7 @@ task check_reads {
     fi 
 
     # populate metrics values
-    metrics+="\n${read1_num}\t${read2_num}\t${bp_total}\t${estimated_genome_length}\t${estimated_coverage}"
+    metrics+="\n${read1_num}\t${read2_num}\t${bp_total}\t${estimated_genome_length}"
 
     # finish populating failure log
     if [ -z "$fail_log" ]; then
@@ -226,11 +226,8 @@ task check_reads_se {
       fail_log+="; the number of basepairs (${read1_bp}) is below the minimum of ~{min_basepairs}"
     fi  
 
-
     #checks four and five: estimated genome length and coverage
     if [ "~{skip_mash}" == "false" ]; then
-      # add a coverage column to the metrics
-      metrics+="\tcoverage"
       # estimate genome length if theiaprok AND expected_genome_length was not provided
       if [ "~{workflow_series}" == "theiaprok" ] && [[ -z "~{expected_genome_length}" ]]; then
         # First Pass; assuming average depth
@@ -297,12 +294,9 @@ task check_reads_se {
       else
         echo $estimated_genome_length | tee EST_GENOME_LENGTH 
       fi
-      # populate metrics values with coverage
-      metrics+="\n${read1_num}\t${read1_bp}\t${estimated_genome_length}\t${estimated_coverage}"
-    else
-      # populate metrics values without coverage
-      metrics+="\n${read1_num}\t${read1_bp}\t${estimated_genome_length}"
     fi 
+
+    metrics+="\n${read1_num}\t${read1_bp}\t${estimated_genome_length}"
 
     # finish populating failure log
     if [ -z "$fail_log" ]; then
