@@ -435,7 +435,7 @@
     - path: miniwdl_run/wdl/tasks/quality_control/basic_statistics/task_quast.wdl
       contains: ["version", "quast", "output"]
     - path: miniwdl_run/wdl/tasks/quality_control/comparisons/task_screen.wdl
-      md5sum: 0260cb91843d2bafdeeb54c3346694ff
+      md5sum: e92ece64467b751a158c949cd638e6f6
     - path: miniwdl_run/wdl/tasks/quality_control/read_filtering/task_trimmomatic.wdl
       contains: ["version", "trimmomatic", "output"]
     - path: miniwdl_run/wdl/tasks/species_typing/escherichia_shigella/task_ectyper.wdl
@@ -485,7 +485,7 @@
     - path: miniwdl_run/wdl/tasks/utilities/data_export/task_broad_terra_tools.wdl
       md5sum: 8c97c5bd65e2787239f12ef425d479ae
     - path: miniwdl_run/wdl/workflows/theiaprok/wf_theiaprok_illumina_se.wdl
-      md5sum: 02dc0075bf28d557d7b81aa2dc61feab
+      md5sum: c019ebbd2d88234d580a83d776de0d4a
     - path: miniwdl_run/wdl/workflows/utilities/wf_merlin_magic.wdl
       md5sum: 1bcb64a5e28d26e3603f456e99bfa7b6
     - path: miniwdl_run/wdl/workflows/utilities/wf_read_QC_trim_se.wdl
