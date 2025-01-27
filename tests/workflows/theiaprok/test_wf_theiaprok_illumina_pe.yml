@@ -436,7 +436,7 @@
     - path: miniwdl_run/wdl/tasks/gene_typing/drug_resistance/task_amrfinderplus.wdl
       md5sum: b45d8f05cf21e4e431072e354b6b3284
     - path: miniwdl_run/wdl/tasks/gene_typing/annotation/task_bakta.wdl
-      md5sum: 0bed8fb60786095843a67b1ad03051dc
+      md5sum: 96f6cb7f0c8716513a0ca74b083a745f
     - path: miniwdl_run/wdl/tasks/gene_typing/plasmid_detection/task_plasmidfinder.wdl
       md5sum: 8730e07b1c7ab9d2434a7838ddb1fc72
     - path: miniwdl_run/wdl/tasks/gene_typing/annotation/task_prokka.wdl
@@ -512,9 +512,9 @@
     - path: miniwdl_run/wdl/tasks/taxon_id/contamination/task_midas.wdl
       md5sum: 64caaaff5910ac0036e2659434500962
     - path: miniwdl_run/wdl/tasks/utilities/data_export/task_broad_terra_tools.wdl
-      md5sum: 8c97c5bd65e2787239f12ef425d479ae
+      md5sum: 9222f5dfe5e21170ad27983533f7b4fa
     - path: miniwdl_run/wdl/workflows/theiaprok/wf_theiaprok_illumina_pe.wdl
-      md5sum: 9b8e2da62c8572a369c786a9bbc3a36e
+      md5sum: 397b385cee545e175149a3400ba6355a
     - path: miniwdl_run/wdl/workflows/utilities/wf_merlin_magic.wdl
       md5sum: 1bcb64a5e28d26e3603f456e99bfa7b6
     - path: miniwdl_run/wdl/workflows/utilities/wf_read_QC_trim_pe.wdl
