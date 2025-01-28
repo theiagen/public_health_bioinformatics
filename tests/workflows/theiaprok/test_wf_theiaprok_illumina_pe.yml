@@ -512,7 +512,7 @@
     - path: miniwdl_run/wdl/tasks/taxon_id/contamination/task_midas.wdl
       md5sum: 64caaaff5910ac0036e2659434500962
     - path: miniwdl_run/wdl/tasks/utilities/data_export/task_broad_terra_tools.wdl
-      md5sum: 8c97c5bd65e2787239f12ef425d479ae
+      md5sum: 59e18911ba07c16e01df38abe0e70477
     - path: miniwdl_run/wdl/workflows/theiaprok/wf_theiaprok_illumina_pe.wdl
       md5sum: 9b8e2da62c8572a369c786a9bbc3a36e
     - path: miniwdl_run/wdl/workflows/utilities/wf_merlin_magic.wdl
