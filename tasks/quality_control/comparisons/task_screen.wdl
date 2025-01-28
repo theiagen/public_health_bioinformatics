@@ -77,7 +77,7 @@ task check_reads {
 
     #checks four and five: estimated genome length and coverage
     # estimate genome length if theiaprok AND expected_genome_length was not provided
-    if [ "~{workflow_series}" == "theiaprok" ] && [[ -z "~{expected_genome_length}" ]]; then
+    if ( [ "~{workflow_series}" == "theiaprok" ] || [ "~{workflow_series}" == "theiaeuk"] ) && [[ -z "~{expected_genome_length}" ]]; then
       # First Pass; assuming average depth
       mash sketch -o test -k 31 -m 3 -r ~{read1} ~{read2} > mash-output.txt 2>&1
       grep "Estimated genome size:" mash-output.txt | \
@@ -89,25 +89,27 @@ task check_reads {
       estimated_genome_length=`head -n1 genome_length_output`
       estimated_coverage=`head -n1 coverage_output`
 
-      # Check if second pass is needed
-      if [ ${estimated_genome_length} -gt "~{max_genome_length}" ] || [ ${estimated_genome_length} -lt "~{min_genome_length}" ] ; then
-        # Probably high coverage, try increasing number of kmer copies to 10
-        M="-m 10"
-        if [ ${estimated_genome_length} -lt "~{min_genome_length}" ]; then
-          # Probably low coverage, try decreasing the number of kmer copies to 1
-          M="-m 1"
+      # Check if second pass is needed in theiaprok
+      if [ "{~workflow_series}" == "theiaprok" ]; then
+        if [ ${estimated_genome_length} -gt "~{max_genome_length}" ] || [ ${estimated_genome_length} -lt "~{min_genome_length}" ] ; then
+          # Probably high coverage, try increasing number of kmer copies to 10
+          M="-m 10"
+          if [ ${estimated_genome_length} -lt "~{min_genome_length}" ]; then
+            # Probably low coverage, try decreasing the number of kmer copies to 1
+            M="-m 1"
+          fi
+          mash sketch -o test -k 31 ${M} -r ~{read1} ~{read2} > mash-output.txt 2>&1
+          grep "Estimated genome size:" mash-output.txt | \
+            awk '{if($4){printf("%5.0f\n", $4)}} END {if (!NR) print "0"}' > genome_length_output
+          grep "Estimated coverage:" mash-output.txt | \
+            awk '{if($3){printf("%d", $3)}} END {if (!NR) print "0"}' > coverage_output
+          rm -rf test.msh
+          rm -rf mash-output.txt
+
+          estimated_genome_length=`head -n1 genome_length_output`
+          estimated_coverage=`head -n1 coverage_output`
         fi
-        mash sketch -o test -k 31 ${M} -r ~{read1} ~{read2} > mash-output.txt 2>&1
-        grep "Estimated genome size:" mash-output.txt | \
-          awk '{if($4){printf("%5.0f\n", $4)}} END {if (!NR) print "0"}' > genome_length_output
-        grep "Estimated coverage:" mash-output.txt | \
-          awk '{if($3){printf("%d", $3)}} END {if (!NR) print "0"}' > coverage_output
-        rm -rf test.msh
-        rm -rf mash-output.txt
       fi
-        
-      estimated_genome_length=`head -n1 genome_length_output`
-      estimated_coverage=`head -n1 coverage_output`
       
     # estimate coverage if theiacov OR expected_genome_length was provided
     elif [ "~{workflow_series}" == "theiacov" ] || [ "~{expected_genome_length}" ]; then
@@ -128,9 +130,9 @@ task check_reads {
     fi
 
     # check if estimated genome length is within bounds
-    if [ "${estimated_genome_length}" -ge "~{max_genome_length}" ] && [ "~{workflow_series}" == "theiaprok" ] ; then
+    if [ "${estimated_genome_length}" -ge "~{max_genome_length}" ] && ( [ "~{workflow_series}" == "theiaprok" ] || [ "~{workflow_series}" == "theiaeuk" ] ) ; then
       fail_log+="; the estimated genome length (${estimated_genome_length}) is larger than the maximum of ~{max_genome_length} bps"
-    elif [ "${estimated_genome_length}" -le "~{min_genome_length}" ] && [ "~{workflow_series}" == "theiaprok" ] ; then
+    elif [ "${estimated_genome_length}" -le "~{min_genome_length}" ] && ( [ "~{workflow_series}" == "theiaprok" ] || [ "~{workflow_series}" == "theiaeuk" ] ) ; then
       fail_log+="; the estimated genome length (${estimated_genome_length}) is smaller than the minimum of ~{min_genome_length} bps"
     fi
     if [ "${estimated_coverage}" -lt "~{min_coverage}" ] ; then
