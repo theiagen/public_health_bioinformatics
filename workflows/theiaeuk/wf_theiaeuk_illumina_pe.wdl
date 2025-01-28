@@ -59,6 +59,7 @@ workflow theiaeuk_illumina_pe {
         max_genome_length = max_genome_length,
         min_coverage = min_coverage,
         min_proportion = min_proportion,
+        workflow_series = "theiaeuk",
         expected_genome_length = genome_length
     }
   }
@@ -93,6 +94,7 @@ workflow theiaeuk_illumina_pe {
           max_genome_length = max_genome_length,
           min_coverage = min_coverage,
           min_proportion = min_proportion,
+          workflow_series = "theiaeuk",
           expected_genome_length = genome_length
       }
     }
