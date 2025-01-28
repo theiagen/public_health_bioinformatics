@@ -682,7 +682,7 @@ All input reads are processed through "core tasks" in the TheiaCoV Illumina, ONT
 
 ??? task "`screen`: Total Raw Read Quantification and Genome Size Estimation"
 
-    The [`screen`](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/comparisons/task_screen.wdl) task ensures the quantity of sequence data is sufficient to undertake genomic analysis. It uses [`fastq-scan`](https://github.com/rpetit3/fastq-scan) and bash commands for quantification of reads and base pairs, and [mash](https://mash.readthedocs.io/en/latest/index.html) sketching to estimate the genome size and its coverage. At each step, the results are assessed relative to pass/fail criteria and thresholds that may be defined by optional user inputs. Samples that do not meet these criteria will not be processed further by the workflow:
+    The [`screen`](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/comparisons/task_screen.wdl) task ensures the quantity of sequence data is sufficient to undertake genomic analysis. It uses [`fastq-scan`](https://github.com/rpetit3/fastq-scan) and bash commands for quantification of reads and base pairs, and [mash](https://mash.readthedocs.io/en/latest/index.html) sketching to estimate the genome size and its coverage. At each step, the results are assessed relative to pass/fail criteria and thresholds that may be defined by optional user inputs. Samples that do not meet these criteria will be processed through completion of the `screen` task:
 
     1. Total number of reads: A sample will fail the read screening task if its total number of reads is less than or equal to `min_reads`.
     2. The proportion of basepairs reads in the forward and reverse read files: A sample will fail the read screening if fewer than `min_proportion` basepairs are in either the reads1 or read2 files.
@@ -1219,9 +1219,9 @@ All TheiaCoV Workflows (not TheiaCoV_FASTA_Batch)
 | quasitools_mutations_report | File | The mutation report created by Quasitools HyDRA | ONT, PE |
 | quasitools_version | String | Version of Quasitools used | ONT, PE |
 | read_screen_raw | String | PASS or FAIL result from raw read screening; FAIL accompanied by the reason(s) for failure | ONT, PE, SE |
-| read_screen_raw_tsv | File | Raw read screening report TSV depicting read counts, estimated coverage, and estimated genome length | ONT, PE, SE |
+| read_screen_raw_tsv | File | Raw read screening report TSV depicting read counts, total read base pairs, and estimated genome length | ONT, PE, SE |
 | read_screen_clean | String | PASS or FAIL result from clean read screening; FAIL accompanied by the reason(s) for failure | ONT, PE, SE |
-| read_screen_clean_tsv | File | Clean read screening report TSV depicting read counts, estimated coverage, and estimated genome length | ONT, PE, SE |
+| read_screen_clean_tsv | File | Clean read screening report TSV depicting read counts, total read base pairs, and estimated genome length | ONT, PE, SE |
 | read1_aligned | File | Forward read file of only aligned reads | CL, ONT, PE, SE |
 | read1_clean | File | Forward read file after quality trimming and adapter removal | PE, SE |
 | read1_dehosted | File | Dehosted forward reads; suggested read file for SRA submission | CL, ONT, PE |
