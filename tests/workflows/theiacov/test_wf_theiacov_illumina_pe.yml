@@ -164,7 +164,7 @@
       contains: ["wdl", "theiacov_illumina_pe", "done"]
     # bwa
     - path: miniwdl_run/call-ivar_consensus/call-bwa/command
-      md5sum: 70e3fa781ee885cab4d8c911c035a09b
+      md5sum: f276d2744e2647aebd640d9c3e943b74
     - path: miniwdl_run/call-ivar_consensus/call-bwa/inputs.json
       contains: ["read1", "read2", "samplename"]
     - path: miniwdl_run/call-ivar_consensus/call-bwa/outputs.json
