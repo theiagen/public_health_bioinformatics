@@ -99,15 +99,15 @@ workflow theiaprok_ont {
       }
     }
     if (select_first([clean_check_reads.read_screen, ""]) == "PASS" || skip_screen) {
-       call flye_workflow.flye_denovo {
-       input:
-         read1 = read_qc_trim.read1_clean,
-         samplename = samplename
-       }
+      call flye_workflow.flye_denovo {
+        input:
+          read1 = read_qc_trim.read1_clean,
+          samplename = samplename
+      }
       call quast_task.quast {
-      input:
-        assembly = flye_denovo.assembly_fasta,
-        samplename = samplename
+        input:
+          assembly = flye_denovo.assembly_fasta,
+          samplename = samplename
       }
       # nanoplot for basic QC metrics
       call nanoplot_task.nanoplot as nanoplot_raw {
