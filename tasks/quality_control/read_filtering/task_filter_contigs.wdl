@@ -7,7 +7,7 @@ task filter_contigs {
     Int disk_size = 50
     Int memory = 8
     Int cpu = 1
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/kaptive:2.03" # Staph-b docker image with Biopython
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/kaptive:2.0.3" # Staph-b docker image with Biopython
   }
   command <<< 
     set -euo pipefail
