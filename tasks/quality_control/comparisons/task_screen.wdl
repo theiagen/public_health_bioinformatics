@@ -248,7 +248,7 @@ task check_reads_se {
 
         # Check if second pass is needed
         if [ "${workflow_series}" == "theiaprok" ]; then
-          if [ ${estimated_genome_length} -gt "~{max_genome_length}" ] || [ ${estimated_genome_length} -lt "~{min_genome_length}" ] ; then
+          if [ ${estimated_genome_length} -gt "~{max_genome_length}" ] || [ ${estimated_genome_length} -lt "~{min_genome_length}" ]; then
             # Probably high coverage, try increasing number of kmer copies to 10
             M="-m 10"
             if [ ${estimated_genome_length} -lt "~{min_genome_length}" ]; then
