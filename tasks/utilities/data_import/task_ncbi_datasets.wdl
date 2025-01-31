@@ -53,7 +53,7 @@ task ncbi_datasets_download_genome_accession {
     File ncbi_datasets_assembly_fasta = "~{ncbi_accession}.fasta"
     File? ncbi_datasets_gff3 = "~{ncbi_accession}.gff"
     File? ncbi_datasets_gbff = "~{ncbi_accession}.gbff"
-    File ncbi_datasets_assembly_data_report_json = "~{ncbi_accession}.data_report.jsonl"
+    File _assembly_data_report_json = "~{ncbi_accession}.data_report.jsonl"
     String ncbi_datasets_version = read_string("DATASETS_VERSION")
     String ncbi_datasets_docker = docker
   }
