@@ -822,6 +822,7 @@ task export_taxon_tables {
     else
       echo "Table not defined for ~{sample_taxon}" > STATUS
     fi
+
   >>>
   runtime {
     docker: docker
