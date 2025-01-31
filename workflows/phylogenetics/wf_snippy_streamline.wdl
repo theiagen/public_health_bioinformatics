@@ -41,7 +41,7 @@ workflow snippy_streamline {
       input:
         read1 = triplet.left.left, # access the left-most object (read 1)
         read2 = triplet.left.right, # access the right-side object on the left (read 2)
-        reference_genome_file = select_first([reference_genome_file, ncbi_datasets_download_genome_accession.ncbi_datasets_gbff. ncbi_datasets_download_genome_accession.ncbi_datasets_assembly_fasta]),
+        reference_genome_file = select_first([reference_genome_file, ncbi_datasets_download_genome_accession.ncbi_datasets_gbff, ncbi_datasets_download_genome_accession.ncbi_datasets_assembly_fasta]),
         samplename = triplet.right # access the right-most object (samplename)
     }
   }
