@@ -24,6 +24,7 @@ task amr_search {
   >>>
   output {
     File json_output = "~{samplename}_paarsnp_results.jsn"
+    String amr_search_docker = docker
   }
 
   runtime {

@@ -33,6 +33,7 @@ import "../../tasks/species_typing/streptococcus/task_poppunk_streppneumo.wdl" a
 import "../../tasks/species_typing/streptococcus/task_seroba.wdl" as seroba
 import "../../tasks/species_typing/vibrio/task_srst2_vibrio.wdl" as srst2_vibrio_task
 import "../../tasks/species_typing/vibrio/task_abricate_vibrio.wdl" as abricate_vibrio_task
+import "wf_amr_search.wdl" as amr_search_workflow
 
 # theiaeuk
 import "../../tasks/gene_typing/variant_detection/task_snippy_gene_query.wdl" as snippy_gene_query
@@ -424,6 +425,11 @@ workflow merlin_magic {
         assembly = assembly,
         samplename = samplename,
         docker = ngmaster_docker_image
+    }
+    call amr_search_workflow.amr_search_workflow {
+      input:
+        input_fasta = assembly,
+        samplename = samplename
     }
   }
   if (merlin_tag == "Neisseria meningitidis") {
@@ -884,6 +890,10 @@ workflow merlin_magic {
     String? ngmaster_ngstar_gyrA_allele = ngmaster.ngmaster_ngstar_gyrA_allele
     String? ngmaster_ngstar_parC_allele = ngmaster.ngmaster_ngstar_parC_allele
     String? ngmaster_ngstar_23S_allele = ngmaster.ngmaster_ngstar_23S_allele
+    # Neisseria gonorrhoeae AMR
+    File? amr_search_results = amr_search_workflow.amr_search_results
+    String? amr_search_version = amr_search_workflow.amr_search_version
+    String? amr_search_docker = amr_search_workflow.amr_search_docker
     # Neisseria meningitidis Typing
     File? meningotype_tsv = meningotype.meningotype_tsv
     String? meningotype_version = meningotype.meningotype_version
