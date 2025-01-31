@@ -6,7 +6,7 @@ import "../../tasks/utilities/data_handling/parse_amr_json.wdl" as parse_amr_jso
 workflow amr_search_workflow {
   input {
     File input_fasta
-    String database
+    String? database
     String samplename
   }
 

@@ -153,6 +153,8 @@ workflow merlin_magic {
     # lissero options
     Float? lissero_min_id
     Float? lissero_min_cov
+    # Neisseria gonorrhoeae options
+    String? database 
     # pasty options
     Int? pasty_min_pident
     Int? pasty_min_coverage      
@@ -429,7 +431,8 @@ workflow merlin_magic {
     call amr_search_workflow.amr_search_workflow {
       input:
         input_fasta = assembly,
-        samplename = samplename
+        samplename = samplename,
+        database = database
     }
   }
   if (merlin_tag == "Neisseria meningitidis") {
