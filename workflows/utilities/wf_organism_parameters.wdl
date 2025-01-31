@@ -284,7 +284,6 @@ workflow organism_parameters {
     # augur options
     Int augur_min_num_unambig = select_first([min_num_unambig, mpox_min_num_unambig, flu_min_num_unambig, rsv_a_min_num_unambig, rsv_b_min_num_unambig, 0])
     File augur_clades_tsv = select_first([clades_tsv, h1n1_ha_clades_tsv, h3n2_ha_clades_tsv, vic_ha_clades_tsv, yam_ha_clades_tsv, h5n1_ha_clades_tsv, rsv_a_clades_tsv, rsv_b_clades_tsv, mpox_clades_tsv, "gs://theiagen-public-files-rp/terra/augur-defaults/minimal-clades.tsv"])
-    Float augur_clades_tsv_file_size = size(augur_clades_tsv)
     File augur_lat_longs_tsv = select_first([lat_longs_tsv, flu_lat_longs_tsv, mpox_lat_longs_tsv, rsv_a_lat_longs_tsv, rsv_b_lat_longs_tsv, "gs://theiagen-public-files-rp/terra/augur-defaults/minimal-lat-longs.tsv"])
     File reference_gbk = select_first([reference_genbank, h1n1_ha_reference_gbk, h3n2_ha_reference_gbk, vic_ha_reference_gbk, yam_ha_reference_gbk, h5n1_ha_reference_gbk, h1n1_na_reference_gbk, h3n2_na_reference_gbk, vic_na_reference_gbk, yam_na_reference_gbk, rsv_a_reference_gbk, rsv_b_reference_gbk, mpox_reference_gbk, "gs://theiagen-public-files/terra/theiacov-files/empty.gbk"])
     File augur_auspice_config = select_first([auspice_config, h1n1_ha_auspice_config, h3n2_ha_auspice_config, vic_ha_auspice_config, yam_ha_auspice_config, h5n1_ha_auspice_config, h1n1_na_auspice_config, h3n2_na_auspice_config, vic_na_auspice_config, yam_na_auspice_config, rsv_a_auspice_config, rsv_b_auspice_config, mpox_auspice_config, "gs://theiagen-public-files-rp/terra/augur-defaults/minimal-auspice-config.json"])

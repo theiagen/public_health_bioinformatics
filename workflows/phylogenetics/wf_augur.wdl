@@ -150,7 +150,7 @@ workflow augur {
         }
       }
       if (! run_traits) {
-        if (defined(clades_tsv) && organism_parameters.augur_clades_tsv_file_size > 20) { # must be present and not the empty minimal-clades.tsv file (size = 20 Bytes)
+        if (defined(clades_tsv) || defined(sc2_defaults.clades_tsv) || (defined(organism_parameters.augur_clades_tsv) && (size(organism_parameters.augur_clades_tsv) > 20))) { # one must be present and not the empty "minimal-clades.tsv" file (20 Bytes)
           call clades_task.augur_clades { # assign clades to nodes based on amino-acid or nucleotide signatures
             input:
               refined_tree = augur_refine.refined_tree,
