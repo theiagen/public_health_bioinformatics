@@ -17,7 +17,7 @@
     - wf_theiacov_ont_miniwdl
   files:
     - path: miniwdl_run/call-clean_check_reads/command
-      md4sum: 4ffdec7602b4df7a73b8fef1cace59ab
+      md5sum: 4ffdec7602b4df7a73b8fef1cace59ab
     - path: miniwdl_run/call-clean_check_reads/inputs.json
     - path: miniwdl_run/call-clean_check_reads/outputs.json
     - path: miniwdl_run/call-clean_check_reads/stderr.txt
