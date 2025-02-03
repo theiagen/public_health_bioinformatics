@@ -4,7 +4,7 @@ task amr_search {
   input {
     File input_fasta
     String samplename
-    String database = "485"
+    String amr_search_database = "485"
     String docker = "us-docker.pkg.dev/general-theiagen/theiagen/amrsearch:0.1.0"
     Int cpu = 2
     Int disk_size = 50
@@ -17,7 +17,7 @@ task amr_search {
     # Run the tool
     java -jar /paarsnp/paarsnp.jar \
         -i ~{input_fasta} \
-        -s ~{database}
+        -s ~{amr_search_database}
 
     # Move the output file from the input directory to the working directory
     mv $(dirname ~{input_fasta})/${input_base}_paarsnp.jsn ./~{samplename}_paarsnp_results.jsn
