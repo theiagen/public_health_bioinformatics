@@ -15,7 +15,7 @@ workflow amr_search_workflow {
     input:
       input_fasta = input_fasta,
       samplename = samplename,
-      database = database
+      amr_search_database = amr_search_database
   }
 
   # Call parse_amr_json task to process the output JSON
