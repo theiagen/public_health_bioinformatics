@@ -23,6 +23,10 @@ Assembly_Fetch requires the input samplename, and either the accession for a ref
 
 This workflow runs on the sample level.
 
+!!! warning "Note on Downloading Viral Assemblies"
+
+    If downloading viral assemblies, set `use_ncbi_virus` to true.
+
 <div class="searchable-table" markdown="1">
 
 | **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
@@ -33,9 +37,10 @@ This workflow runs on the sample level.
 | ncbi_datasets_download_genome_accession | **cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional |
 | ncbi_datasets_download_genome_accession | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 50 | Optional |
 | ncbi_datasets_download_genome_accession | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/staphb/ncbi-datasets:14.13.2" | Optional |
-| ncbi_datasets_download_genome_accession | **include_gbff** | Boolean | set to true if you would like the GenBank Flat File (GBFF) file included in the output. It contains nucleotide sequence, metadata, and annotations. | FALSE | Optional |
-| ncbi_datasets_download_genome_accession | **include_gff3** | Boolean | set to true if you would like the Genomic Feature File v3 (GFF3) file included in the output. It contains nucleotide sequence, metadata, and annotations | FALSE | Optional |
+| ncbi_datasets_download_genome_accession | **include_gbff** | Boolean | Set to true if you would like the GenBank Flat File (GBFF) file included in the output. It contains nucleotide sequence, metadata, and annotations. | FALSE | Optional |
+| ncbi_datasets_download_genome_accession | **include_gff3** | Boolean | Set to true if you would like the Genomic Feature File v3 (GFF3) file included in the output. It contains nucleotide sequence, metadata, and annotations | FALSE | Optional |
 | ncbi_datasets_download_genome_accession | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 4 | Optional |
+| ncbi_datasets_download_genome_accession | **use_ncbi_virus** | Boolean | Set to true when downloading from NCBI Virus Datasets | FALSE | Optional |
 | referenceseeker | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional |
 | referenceseeker | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 200 | Optional |
 | referenceseeker | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/biocontainers/referenceseeker:1.8.0--pyhdfd78af_0" | Optional |
