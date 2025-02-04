@@ -5,7 +5,7 @@ task ncbi_datasets_download_genome_accession {
     String ncbi_accession
     Int cpu = 1
     Int memory = 4
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/ncbi-datasets:15.11.0" # not the latest version, but it's hard to keep up w/ the frequent releases
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/ncbi-datasets:16.38.1" # not the latest version, but it's hard to keep up w/ the frequent releases
     Int disk_size = 50
     Boolean include_gbff = false
     Boolean include_gff3 = false
@@ -46,7 +46,7 @@ task ncbi_datasets_download_genome_accession {
       # only include gbff or gff3 files if user sets booleans to true
       # FYI: currently removing this option "--assembly-version latest" since it's not yet available for downloading from ncbi virus
       # may be necessary to add back in later (for non-viruses) to ensure ONLY the latest version is downloaded and not all versions. Not clear to me what the default is.
-      datasets download ~{true="virus" false="" use_ncbi_virus} genome accession \
+      datasets download genome accession \
         ~{ncbi_accession} \
         --filename ~{ncbi_accession}.zip \
         --include genome \
