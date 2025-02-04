@@ -40,7 +40,7 @@ workflow theiacov_illumina_pe {
     Int trim_quality_min_score = 30
     Int trim_window_size = 4
     # assembly parameters
-    Int min_depth = 100  # the minimum depth to use for consensus and variant calling
+    Int? min_depth # minimum depth to use for consensus and variant calling; default is 100 for non-flu (default value set below in call block for ivar consensus subwf), flu default is 30 for illumina (default set below in flu_track call block)
     Float consensus_min_freq = 0.6 # minimum frequency for a variant to be called as SNP in consensus genome
     Float variant_min_freq = 0.6 # minimum frequency for a variant to be reported in ivar outputs
     # nextclade inputs
@@ -138,7 +138,7 @@ workflow theiacov_illumina_pe {
             reference_genome = organism_parameters.reference,
             primer_bed = organism_parameters.primer_bed,
             reference_gff = organism_parameters.reference_gff,
-            min_depth = min_depth,
+            min_depth = select_first([min_depth, 100]),
             consensus_min_freq = consensus_min_freq,
             variant_min_freq = variant_min_freq,
             trim_primers = trim_primers
@@ -152,7 +152,8 @@ workflow theiacov_illumina_pe {
             read2 = read_QC_trim.read2_clean,
             samplename = samplename,
             standardized_organism = organism_parameters.standardized_organism,
-            seq_method = seq_method
+            seq_method = seq_method,
+            irma_min_consensus_support = select_first([min_depth, 30])
         }
       }
       if (defined(ivar_consensus.assembly_fasta) || defined(flu_track.irma_assembly_fasta)) {
@@ -328,7 +329,8 @@ workflow theiacov_illumina_pe {
     String? ivar_version_consensus = ivar_consensus.ivar_version_consensus
     String? samtools_version_consensus = ivar_consensus.samtools_version_consensus
     # Read Alignment - consensus assembly qc outputs
-    Int consensus_n_variant_min_depth = min_depth
+    # this is the minimum depth used for consensus and variant calling in EITHER iVar or IRMA
+    Int consensus_n_variant_min_depth = select_first([min_depth, flu_track.irma_minimum_consensus_support, 100])
     File? consensus_stats = ivar_consensus.consensus_stats
     File? consensus_flagstat = ivar_consensus.consensus_flagstat
     String meanbaseq_trim = select_first([ivar_consensus.meanbaseq_trim, ""])

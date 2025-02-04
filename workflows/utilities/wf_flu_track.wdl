@@ -26,6 +26,7 @@ workflow flu_track {
     # optional inputs to the tasks are available here due to Terra hiding them since they're within a subworkflow
     # IRMA inputs
     Boolean? irma_keep_ref_deletions
+    # irma_min_consensus_support is defaulted to 30 for ILMN PE, 50 for ONT and both are set at workflow level WDLs and passed into flu_track subwf
     Int? irma_min_consensus_support
     Int? irma_min_read_length
     Int? irma_min_avg_consensus_allele_quality
@@ -269,6 +270,7 @@ workflow flu_track {
     # IRMA outputs 
     String irma_version = irma.irma_version
     String irma_docker = irma.irma_docker
+    Int irma_minimum_consensus_support = irma.irma_minimum_consensus_support
     String irma_type = irma.irma_type
     String irma_subtype = irma.irma_subtype
     String irma_subtype_notes = irma.irma_subtype_notes

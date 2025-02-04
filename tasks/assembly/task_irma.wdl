@@ -268,6 +268,8 @@ task irma {
     Array[File] irma_bams = glob("~{samplename}*.bam")
     String irma_docker = docker
     String irma_version = read_string("VERSION")
+    # tracking this for outputting min depth threshold used for calling consensus nucleotides in IRMA
+    Int irma_minimum_consensus_support = minimum_consensus_support
     File irma_read_counts_tsv = "~{samplename}/tables/READ_COUNTS.tsv"
     File irma_run_info_tsv = "~{samplename}/logs/run_info.tsv"
     File irma_nr_read_counts = "~{samplename}/logs/NR_COUNTS_log.txt"
