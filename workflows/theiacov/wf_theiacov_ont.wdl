@@ -57,6 +57,9 @@ workflow theiacov_ont {
     String? pangolin_docker_image
     # qc check parameters
     File? qc_check_table
+    ## flu specific inputs
+    # default set to 50 for ONT data in call block below, following CDC MIRA standards
+    Int? irma_min_consensus_support
   }
   call set_organism_defaults.organism_parameters {
     input:
@@ -147,7 +150,8 @@ workflow theiacov_ont {
             read1 = read_qc_trim.read1_clean,
             samplename = samplename,
             standardized_organism = organism_parameters.standardized_organism,
-            seq_method = seq_method
+            seq_method = seq_method,
+            irma_min_consensus_support = select_first([irma_min_consensus_support, 50])
         }
       }
       # nanoplot for basic QC metrics
@@ -389,9 +393,12 @@ workflow theiacov_ont {
     # Flu IRMA Outputs
     String? irma_version = flu_track.irma_version
     String? irma_docker = flu_track.irma_docker
+    Int? irma_min_consensus_support_threshold = flu_track.irma_minimum_consensus_support
     String? irma_type = flu_track.irma_type
     String? irma_subtype = flu_track.irma_subtype
     String? irma_subtype_notes = flu_track.irma_subtype_notes
+    File? irma_assembly_fasta_concatenated = flu_track.irma_assembly_fasta_concatenated
+    File? irma_assembly_fasta_concatenated_padded = flu_track.irma_assembly_fasta_concatenated_padded
     File? irma_ha_segment_fasta = flu_track.irma_ha_segment_fasta
     File? irma_na_segment_fasta = flu_track.irma_na_segment_fasta
     File? irma_pa_segment_fasta = flu_track.irma_pa_segment_fasta
