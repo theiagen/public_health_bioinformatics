@@ -101,7 +101,8 @@ workflow theiameta_illumina_pe {
           reference = select_first([reference]),
           samplename = samplename,
           mode = "asm20",
-          output_sam = false
+          output_sam = false,
+          long_read_flags = false
       }
       call parse_mapping_task.retrieve_aligned_contig_paf {
         input:
@@ -128,7 +129,8 @@ workflow theiameta_illumina_pe {
           reference = select_first([retrieve_aligned_contig_paf.final_assembly, pilon.assembly_fasta]),
           samplename = samplename,
           mode = "sr",
-          output_sam = true
+          output_sam = true,
+          long_read_flags = false
       }
       call parse_mapping_task.sam_to_sorted_bam {
         input:
