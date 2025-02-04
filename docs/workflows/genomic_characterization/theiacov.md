@@ -366,7 +366,7 @@ All TheiaCoV Workflows (not TheiaCoV_FASTA_Batch)
 | read_QC_trim | **rasusa_bases** | String | Internal component, do not modify | | Optional | ONT | |
 | read_QC_trim | **rasusa_cpu** | Int | Internal component, do not modify | 4 | Optional | ONT | |
 | read_QC_trim | **rasusa_disk_size** | Int | Internal component, do not modify | 100 | Optional | ONT | |
-| read_QC_trim | **rasusa_docker** | String | Internal component, do not modify | "us-docker.pkg.dev/general-theiagen/staphb/rasusa:0.7.0" | Optional | ONT | |
+| read_QC_trim | **rasusa_docker** | String | Internal component, do not modify | "us-docker.pkg.dev/general-theiagen/staphb/rasusa:2.1.0" | Optional | ONT | |
 | read_QC_trim | **rasusa_fraction_of_reads** | Float | Internal component, do not modify | | Optional | ONT | |
 | read_QC_trim | **rasusa_memory** | Int | Internal component, do not modify | 8 | Optional | ONT | |
 | read_QC_trim | **rasusa_number_of_reads** | Int | Internal component, do not modify | | Optional | ONT | |
