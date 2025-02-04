@@ -7,8 +7,7 @@ task irma {
     String seq_method
     String samplename
     Boolean keep_ref_deletions = false # set DEL_TYPE config in irma_config.sh to "DEL" if false, "NNN" if true
-    # TODO: CHANGE THIS SO IT'S DEFAULTED TO 50 FOR ONT AND 30 FOR ILMN, BUT STILL ALLOWS USER TO CONTROL VIA TOP-LEVEL "min_depth" OPTIONAL INPUT PARAMETER
-    Int minimum_consensus_support = 50 # IRMA default is 1, but matching MIRA standards for ONT = 50 and ILMN = 30 via defaults at theiacov workflow level WDL: https://cdcgov.github.io/MIRA/articles/sequence-qc.html
+    Int minimum_consensus_support = 50 # IRMA default is 1, but matching MIRA standards for ONT = 50 and ILMN = 30 via defaults at theiacov workflow level WDLs: https://cdcgov.github.io/MIRA/articles/sequence-qc.html
     Int minimum_read_length = 75 # matching default for TheiaCoV_Illumina_PE; NOTE: IRMA's default is 125 bp
     Int minimum_average_consensus_allele_quality = 10 # IRMA default is 0, we are matching MIRA standards for both ONT and ILMN: https://cdcgov.github.io/MIRA/articles/sequence-qc.html
     Float minimum_ambiguous_threshold = 0.20
@@ -84,13 +83,8 @@ task irma {
       irma_type=$(cat IRMA_TYPE)
       
       # flu segments from largest to smallest
-      segments=("PB2" "PB1" "PA" "HA" "NP" "NA" "MP" "NS")
-
       # Thank you Molly H. for this code block!
       # declare associative arrays for segment numbers
-      # declare formatted name assoicate array which will be [seg_num] = [A_HA-H1] or [seg_num] = [B_MP]
-      # and will be filled in during the loop
-      # formatted_name_dict: [segment number] = header name
       declare -A FluA=(["PB2"]="1" ["PB1"]="2" ["PA"]="3" ["HA"]="4" ["NP"]="5" ["NA"]="6" ["MP"]="7" ["NS"]="8" )
       declare -A FluB=(["PB1"]="1" ["PB2"]="2" ["PA"]="3" ["HA"]="4" ["NP"]="5" ["NA"]="6" ["MP"]="7" ["NS"]="8" )
       # create new array SEGMENT_DICT based on Flu Type (either A or B) to use in the loop below
