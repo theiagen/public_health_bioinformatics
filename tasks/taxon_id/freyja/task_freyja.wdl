@@ -116,6 +116,8 @@ task freyja_one_sample {
   #Output QC values to the Terra data table
   python <<CODE
   import csv
+  import pandas as pd
+  
   #Want coverage output from freyja_demixed tsv file
   with open("~{samplename}_freyja_demixed.tsv",'r') as tsv_file:
     tsv_reader = csv.reader(tsv_file, delimiter="\t")
@@ -123,9 +125,37 @@ task freyja_one_sample {
       if "coverage" in line[0]:
         with open("COVERAGE", 'wt') as coverage:
           coverage.write(line[1])
-
+      if "lineages" in line[0]:
+              with open("LINEAGES", 'wt') as lineages:
+                lineages.write(line[1].replace(" ", ","))
+      if "abundances" in line[0]:
+        with open("ABUNDANCES", 'wt') as abundances:
+          abundances.write(line[1].replace(" ", ","))
+      if "resid" in line[0]:
+        with open("RESID", 'wt') as resid:
+          resid.write(line[1])
+      if "summarized" in line[0]:
+        with open("SUMMARIZED", 'wt') as summarized:
+          summarized.write(line[1])
+  
+  dataf = pd.read_csv("~{samplename}_freyja_demixed.tsv", sep="\t", header=None)
+  dataf.columns = ["Attribute", "~{samplename}"]
+  print(dataf)
+  # Initialize a list to store output rows
+  output_data = []
+  parsed_data = {
+    "LIMS_ID": "~{samplename}",
+    "summarized": dataf.loc[dataf['Attribute'] == "summarized", "~{samplename}"].values[0],
+    "lineages": dataf.loc[dataf['Attribute'] == "lineages", "~{samplename}"].values[0],
+    "abundances": dataf.loc[dataf['Attribute'] == "abundances", "~{samplename}"].values[0],
+    "resid": dataf.loc[dataf['Attribute'] == "resid", "~{samplename}"].values[0],
+    "coverage": dataf.loc[dataf['Attribute'] == "coverage", "~{samplename}"].values[0],
+  }
+  output_data.append(parsed_data)
+  output_df = pd.DataFrame(output_data)
+  output_df.to_csv("~{samplename}_freyja_demixed_parsed.tsv", sep='\t', index=False)
+  
   CODE
-
   >>>
   runtime {
     memory: "~{memory} GB"
@@ -151,5 +181,10 @@ task freyja_one_sample {
     String freyja_barcode_version = read_string("FREYJA_BARCODES")
     String freyja_metadata_version = read_string("FREYJA_METADATA")
     String freyja_version = read_string("FREYJA_VERSION")
+    File freyja_demixed_parsed = "~{samplename}_freyja_demixed_parsed.tsv"
+    String freyja_resid = read_string("RESID")
+    String freyja_summarized = read_string("SUMMARIZED")
+    String freyja_lineages = read_string("LINEAGES")
+    String freyja_abundances = read_string("ABUNDANCES")
   }
 }
