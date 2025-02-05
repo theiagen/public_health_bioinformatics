@@ -5736,10 +5736,6 @@
 <td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/phylogenetic_inference/utilities/task_snippy_core.wdl">task_snippy_core.wdl</a></td>
 </tr>
 <tr>
-<td>Default software version</td>
-<td>v4.6.0 (us-docker.pkg.dev/general-theiagen/staphb/snippy:4.6.0)</td>
-</tr>
-<tr>
 <td>Software Source Code</td>
 <td><a href="https://github.com/tseemann/snippy">Snippy on GitHub</a></td>
 </tr>
@@ -5754,9 +5750,9 @@
 <details class="task">
 <summary>Gubbins (optional)</summary>
 <h5 id="gubbins_task">Gubbins (optional)<a class="headerlink" href="#gubbins_task" title="Permanent link">&para;</a></h5>
-<div class="admonition info">
-<p class="admonition-title">Optional</p>
-<p>Gubbins is used when <code>use_gubbins</code> is set to <code>true</code> (default=true).</p>
+<div class="admonition tip">
+<p class="admonition-title">Turn on Gubbins with <code>use_gubbins</code></p>
+<p>Gubbins runs when the <code>use_gubbins</code> option is set to <code>true</code> (default=true).</p>
 </div>
 <p><strong>G</strong>enealogies <strong>U</strong>nbiased <strong>B</strong>y recom<strong>B</strong>inations <strong>I</strong>n <strong>N</strong>ucleotide <strong>S</strong>equences (Gubbins) identifies and masks genomic regions that are predicted to have arisen via recombination. It works by iteratively identifying loci containing elevated densities of SNPs and constructing phylogenies based on the putative single nucleotide variants outside these regions (for more details, see <a href="https://github.com/nickjcroucher/gubbins/blob/v3.3/docs/gubbins_manual.md#description-of-the-algorithm">here</a>). By default, these phylogenies are constructed using RaxML and a GTR-GAMMA nucleotide substitution model, which will be the most suitable model for most bacterial phylogenetics, though this can be modified with the <code>tree_builder</code> and <code>nuc_subst_model</code> inputs.</p>
 <p>Gubbins is the industry standard for masking recombination from bacterial genomes when building phylogenies, but limitations to recombination removal exist. Gubbins cannot distinguish recombination from high densities of SNPs that may result from assembly or alignment errors, mutational hotspots, or regions of the genome with relaxed selection. The tool is also intended only to find recombinant regions that are short relative to the length of the genome, so large regions of recombination may not be masked. These factors should be considered when interpreting resulting phylogenetic trees, but overwhelmingly Gubbins improves our ability to understand ancestral relationships between bacterial genomes.</p>
@@ -5792,10 +5788,6 @@
 <td>Original Publication(s)</td>
 <td><a href="https://academic.oup.com/nar/article/43/3/e15/2410982">Rapid phylogenetic analysis of large samples of recombinant bacterial whole genome sequences using Gubbins</a></td>
 </tr>
-<tr>
-<td>Default software version</td>
-<td>us-docker.pkg.dev/general-theiagen/biocontainers/gubbins:3.3--py310pl5321h8472f5a_0</td>
-</tr>
 </tbody>
 </table>
 </div>
@@ -5821,10 +5813,6 @@
 <tr>
 <td>Task</td>
 <td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/phylogenetic_inference/utilities/task_snp_sites.wdl">task_snp_sites.wdl</a></td>
-</tr>
-<tr>
-<td>Default software version</td>
-<td>2.5.1 (us-docker.pkg.dev/general-theiagen/biocontainers/snp-sites:2.5.1--hed695b0_0)</td>
 </tr>
 <tr>
 <td>Software Source Code</td>
@@ -5877,19 +5865,7 @@
 </tr>
 <tr>
 <td>Original Publication(s)</td>
-<td><a href="https://academic.oup.com/mbe/article/37/5/1530/5721363">IQ-TREE 2: New Models and Efficient Methods for Phylogenetic Inference in the Genomic Era</a></td>
-</tr>
-<tr>
-<td>Publication for the SH-alRT test</td>
-<td><a href="https://academic.oup.com/sysbio/article/59/3/307/1702850?login=false">New Algorithms and Methods to Estimate Maximum-Likelihood Phylogenies: Assessing the Performance of PhyML 3.0</a></td>
-</tr>
-<tr>
-<td>Publication for ultrafast bootstrapping integration to IQTree</td>
-<td><a href="https://academic.oup.com/mbe/article/30/5/1188/997508?login=false">Ultrafast Approximation for Phylogenetic Bootstrap</a>; <a href="https://academic.oup.com/mbe/article/35/2/518/4565479?login=false">UFBoot2: Improving the Ultrafast Bootstrap Approximation</a></td>
-</tr>
-<tr>
-<td>Publication for ModelFinder</td>
-<td><a href="https://www.nature.com/articles/nmeth.4285">ModelFinder: fast model selection for accurate phylogenetic estimates</a></td>
+<td><a href="https://academic.oup.com/mbe/article/37/5/1530/5721363">IQ-TREE 2: New Models and Efficient Methods for Phylogenetic Inference in the Genomic Era</a><br><a href="https://academic.oup.com/sysbio/article/59/3/307/1702850?login=false">New Algorithms and Methods to Estimate Maximum-Likelihood Phylogenies: Assessing the Performance of PhyML 3.0</a><br><a href="https://academic.oup.com/mbe/article/30/5/1188/997508?login=false">Ultrafast Approximation for Phylogenetic Bootstrap</a><br> <a href="https://academic.oup.com/mbe/article/35/2/518/4565479?login=false">UFBoot2: Improving the Ultrafast Bootstrap Approximation</a><br><a href="https://www.nature.com/articles/nmeth.4285">ModelFinder: fast model selection for accurate phylogenetic estimates</a></td>
 </tr>
 </tbody>
 </table>
@@ -5899,7 +5875,7 @@
 <summary>SNP-dists</summary>
 <h5 id="snp_dists_task">SNP-dists<a class="headerlink" href="#snp_dists_task" title="Permanent link">&para;</a></h5>
 <p><code>SNP-dists</code> computes pairwise SNP distances between genomes. It takes the same alignment of genomes used to generate your phylogenetic tree and produces a matrix of pairwise SNP distances between sequences. This means that if you generated pairwise core-genome phylogeny, the output will consist of pairwise core-genome SNP (cgSNP) distances. Otherwise, these will be whole-genome SNP distances. Regardless of whether core-genome or whole-genome SNPs, this SNP distance matrix will exclude all SNPs in masked regions (i.e. masked with a bed file or gubbins). </p>
-<p>The SNP-distance output can be visualized using software such as <a href="http://jameshadfield.github.io/phandango/#/main">Phandango</a> to explore the relationships between the genomic sequences. The task adds a Phandango coloring tag (:c1) to the column names in the output matrix to ensure that all columns are colored with the same color scheme throughout.</p>
+<p>The SNP-distance output can be visualized using software such as <a href="http://jameshadfield.github.io/phandango/#/main">Phandango</a> to explore the relationships between the genomic sequences. The task can optionally add a Phandango coloring tag (:c1) to the column names in the output matrix to ensure that all columns are colored with the same color scheme throughout by setting <code>phandango_coloring</code> to <code>true</code>.</p>
 <div class="admonition techdetails">
 <p class="admonition-title">SNP-dists Technical Details</p>
 <table>
@@ -5915,20 +5891,12 @@
 <td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/phylogenetic_inference/utilities/task_snp_dists.wdl">task_snp_dists.wdl</a></td>
 </tr>
 <tr>
-<td>Default software version</td>
-<td>0.8.2 (us-docker.pkg.dev/general-theiagen/staphb/snp-dists:0.8.2)</td>
-</tr>
-<tr>
 <td>Software Source Code</td>
 <td><a href="https://github.com/tseemann/snp-dists">SNP-dists on GitHub</a></td>
 </tr>
 <tr>
 <td>Software Documentation</td>
 <td><a href="https://github.com/tseemann/snp-dists">SNP-dists on GitHub</a></td>
-</tr>
-<tr>
-<td>Original Publication(s)</td>
-<td>Not known to be published</td>
 </tr>
 </tbody>
 </table>
@@ -5937,7 +5905,7 @@
 <details class="task">
 <summary>Data summary (optional)</summary>
 <h5 id="data_summary_task">Data Summary (optional)<a class="headerlink" href="#data_summary_task" title="Permanent link">&para;</a></h5>
-<p>If you fill out the <code>data_summary_*</code> and <code>sample_names</code> optional variables, you can use the optional <code>summarize_data</code> task. The task takes a comma-separated list of column names from the Terra data table, which should each contain a list of comma-separated items. For example, <code>"amrfinderplus_virulence_genes,amrfinderplus_stress_genes"</code> (with quotes, comma separated, no spaces) for these output columns from running TheiaProk. The task checks whether those comma-separated items are present in each row of the data table (sample), then creates a CSV file of these results. The CSV file indicates presence (TRUE) or absence (empty) for each item. By default, the task adds a Phandango coloring tag to group items from the same column, but you can turn this off by setting <code>phandango_coloring</code> to <code>false</code>.</p>
+<p>If you fill out the <code>data_summary_*</code> and <code>sample_names</code> optional variables, you can use the optional <code>summarize_data</code> task. The task takes a comma-separated list of column names from the Terra data table, which should each contain a list of comma-separated items. For example, <code>"amrfinderplus_virulence_genes,amrfinderplus_stress_genes"</code> (with quotes, comma separated, no spaces) for these output columns from running TheiaProk. The task checks whether those comma-separated items are present in each row of the data table (sample), then creates a CSV file of these results. The CSV file indicates presence (TRUE) or absence (empty) for each item. By default, the task does not add a Phandango coloring tag to group items from the same column, but you can turn this on by setting <code>phandango_coloring</code> to <code>true</code>.</p>
 <details class="toggle">
 <summary><strong>Example output CSV</strong></summary>
 <div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span>
@@ -5978,6 +5946,7 @@
 <details class="task">
 <summary>Concatenate Variants (optional)</summary>
 <h5 id="concatenate_variants_task">Concatenate Variants (optional)<a class="headerlink" href="#concatenate_variants_task" title="Permanent link">&para;</a></h5>
+<p><mark>This task activates when <code>call_shared_variants</code> is true.</mark></p>
 <p>The <code>cat_variants</code> task concatenates variant data from multiple samples into a single file <code>concatenated_variants</code>. It is very similar to the <code>cat_files</code> task, but also adds a column to the output file that indicates the sample associated with each row of data.</p>
 <p>The <code>concatenated_variants</code> file will be in the following format:</p>
 <table>
@@ -6066,10 +6035,6 @@
 <tbody>
 <tr>
 <td>Task</td>
-<td>/tasks/utilities/file_handling/task_cat_files.wdl</td>
-</tr>
-<tr>
-<td>Software Source Code</td>
 <td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/file_handling/task_cat_files.wdl">task_cat_files.wdl</a></td>
 </tr>
 </tbody>
@@ -6079,6 +6044,7 @@
 <details class="task">
 <summary>Shared Variants Task (Optional)</summary>
 <h5 id="shared_variants_task">Shared Variants (optional)<a class="headerlink" href="#shared_variants_task" title="Permanent link">&para;</a></h5>
+<p><mark>This task activates when <code>call_shared_variants</code> is true.</mark></p>
 <p>The <code>shared_variants</code> task takes in the <code>concatenated_variants</code> output from the <code>cat_variants</code> task and reshapes the data so that variants are rows and samples are columns. For each variant, samples where the variant was detected are populated with a "1" and samples were <strong>either the variant was not detected or there was insufficient coverage to call variants</strong> are populated with a "0". The resulting table is available as the <code>shared_variants_table</code> output.</p>
 <p>The <code>shared_variants_table</code> file will be in the following format:</p>
 <table>
@@ -6171,10 +6137,6 @@
 <tbody>
 <tr>
 <td>Task</td>
-<td>task_shared_variants.wdl</td>
-</tr>
-<tr>
-<td>Software Source Code</td>
 <td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/phylogenetic_inference/utilities/task_shared_variants.wdl">task_shared_variants.wdl</a></td>
 </tr>
 </tbody>
@@ -6208,7 +6170,7 @@
 <p>These QC metrics provide valuable insights into the quality and coverage of your sequencing data relative to the reference genome. Monitoring these metrics can help identify samples with low coverage, poor alignment, or potential issues that may affect downstream analyses, and we recommend examining them before proceeding with phylogenetic analysis if performing Snippy_Variants and Snippy_Tree separately.</p>
 </div>
 <div class="admonition techdetails">
-<p class="admonition-title">Snippy Variants Technical Details</p>
+<p class="admonition-title">Technical Details</p>
 <table>
 <thead>
 <tr>
@@ -6219,15 +6181,7 @@
 <tbody>
 <tr>
 <td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/variant_detection/task_snippy_variants.wdl">task_snippy_variants.wdl</a></td>
-</tr>
-<tr>
-<td>Software Source Code</td>
-<td><a href="https://github.com/tseemann/snippy">Snippy on GitHub</a></td>
-</tr>
-<tr>
-<td>Software Documentation</td>
-<td><a href="https://github.com/tseemann/snippy">Snippy on GitHub</a></td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/file_handling/task_cat_files.wdl">task_cat_files.wdl</a></td>
 </tr>
 </tbody>
 </table>
@@ -6411,7 +6365,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2025-01-24</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2025-02-05</span>
   </span>
 
     
