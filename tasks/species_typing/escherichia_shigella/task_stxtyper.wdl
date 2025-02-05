@@ -5,7 +5,7 @@ task stxtyper {
     File assembly
     String samplename
     Boolean enable_debugging = false # Additional messages are printed and files in $TMPDIR are not removed after running
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/stxtyper:1.0.24"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/stxtyper:1.0.31"
     Int disk_size = 50
     Int cpu = 1
     Int memory = 4
@@ -87,6 +87,20 @@ task stxtyper {
       # if no frameshifts or internal stop codons found, write "None" to file for output string
       if [ "$(grep --silent -E 'FRAMESHIFT|INTERNAL_STOP' ~{samplename}_stxtyper.tsv; echo $?)" -gt 0 ]; then
         echo "None" > stxtyper_stx_frameshifts_or_internal_stop_hits.txt
+      fi
+
+      ### extended operons
+      echo "DEBUG: Parsing extended operons..."
+      awk -F'\t' -v OFS=, '$4 == "EXTENDED" {print $3}' ~{samplename}_stxtyper.tsv | paste -sd, - | tee stxtyper_extended_operons.txt
+      if [ "$(grep --silent 'EXTENDED' ~{samplename}_stxtyper.tsv; echo $?)" -gt 0 ]; then
+        echo "None" > stxtyper_extended_operons.txt
+      fi
+
+      ### ambiguous hits
+      echo "DEBUG: Parsing ambiguous hits..."
+      awk -F'\t' -v OFS=, '$4 == "AMBIGUOUS" {print $3}' ~{samplename}_stxtyper.tsv | paste -sd, - | tee stxtyper_ambiguous_hits.txt
+      if [ "$(grep --silent 'AMBIGUOUS' ~{samplename}_stxtyper.tsv; echo $?)" -gt 0 ]; then
+        echo "None" > stxtyper_ambiguous_hits.txt
       fi
       
       echo "DEBUG: generating stx_type_all string output now..."
