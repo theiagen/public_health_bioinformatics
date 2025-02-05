@@ -4867,6 +4867,10 @@
 <h3 id="inputs">Inputs<a class="headerlink" href="#inputs" title="Permanent link">&para;</a></h3>
 <p>Assembly_Fetch requires the input samplename, and either the accession for a reference genome to download (ncbi_accession) or an assembly that can be used to query RefSeq for the closest reference genome to download (assembly_fasta).</p>
 <p>This workflow runs on the sample level.</p>
+<div class="admonition warning">
+<p class="admonition-title">Note on Downloading Viral Assemblies</p>
+<p>If downloading viral assemblies, set <code>use_ncbi_virus</code> to true.</p>
+</div>
 <div class="searchable-table">
 <table>
 <thead>
@@ -4932,7 +4936,7 @@
 <td>ncbi_datasets_download_genome_accession</td>
 <td><strong>include_gbff</strong></td>
 <td>Boolean</td>
-<td>set to true if you would like the GenBank Flat File (GBFF) file included in the output. It contains nucleotide sequence, metadata, and annotations.</td>
+<td>Set to true if you would like the GenBank Flat File (GBFF) file included in the output. It contains nucleotide sequence, metadata, and annotations.</td>
 <td>FALSE</td>
 <td>Optional</td>
 </tr>
@@ -4940,7 +4944,7 @@
 <td>ncbi_datasets_download_genome_accession</td>
 <td><strong>include_gff3</strong></td>
 <td>Boolean</td>
-<td>set to true if you would like the Genomic Feature File v3 (GFF3) file included in the output. It contains nucleotide sequence, metadata, and annotations</td>
+<td>Set to true if you would like the Genomic Feature File v3 (GFF3) file included in the output. It contains nucleotide sequence, metadata, and annotations</td>
 <td>FALSE</td>
 <td>Optional</td>
 </tr>
@@ -4950,6 +4954,14 @@
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>4</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>ncbi_datasets_download_genome_accession</td>
+<td><strong>use_ncbi_virus</strong></td>
+<td>Boolean</td>
+<td>Set to true when downloading from NCBI Virus Datasets</td>
+<td>FALSE</td>
 <td>Optional</td>
 </tr>
 <tr>
