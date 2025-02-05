@@ -31,6 +31,7 @@ nav:
             - Phylogenetic Construction:
                - Augur: workflows/phylogenetic_construction/augur.md
                - Core_Gene_SNP: workflows/phylogenetic_construction/core_gene_snp.md
+               - Clair3_Variants_ONT: workflows/phylogenetic_construction/clair3_variants.md
                - CZGenEpi_Prep: workflows/phylogenetic_construction/czgenepi_prep.md
                - Find_Shared_Variants: workflows/phylogenetic_construction/find_shared_variants.md
                - kSNP3: workflows/phylogenetic_construction/ksnp3.md
@@ -69,6 +70,7 @@ nav:
             - Any Taxa:
                - Assembly_Fetch: workflows/data_import/assembly_fetch.md
                - BaseSpace_Fetch: workflows/data_import/basespace_fetch.md
+               - Clair3_Variants_ONT: workflows/phylogenetic_construction/clair3_variants.md
                - Concatenate_Column_Content: workflows/data_export/concatenate_column_content.md               
                - Concatenate_Illumina_Lanes: workflows/standalone/concatenate_illumina_lanes.md
                - Create_Terra_Table: workflows/data_import/create_terra_table.md
@@ -128,6 +130,7 @@ nav:
             - Augur: workflows/phylogenetic_construction/augur.md
             - BaseSpace_Fetch: workflows/data_import/basespace_fetch.md
             - Cauris_CladeTyper: workflows/standalone/cauris_cladetyper.md
+            - Clair3_Variants_ONT: workflows/phylogenetic_construction/clair3_variants.md
             - Concatenate_Column_Content: workflows/data_export/concatenate_column_content.md
             - Concatenate_Illumina_Lanes: workflows/standalone/concatenate_illumina_lanes.md
             - Core_Gene_SNP: workflows/phylogenetic_construction/core_gene_snp.md
