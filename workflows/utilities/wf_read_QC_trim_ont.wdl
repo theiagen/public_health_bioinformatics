@@ -1,6 +1,5 @@
 version 1.0
 
-import "../../tasks/gene_typing/plasmid_detection/task_tiptoft.wdl" as tiptoft_task
 import "../../tasks/quality_control/read_filtering/task_artic_guppyplex.wdl" as artic_guppyplex
 import "../../tasks/quality_control/read_filtering/task_nanoq.wdl" as nanoq_task
 import "../../tasks/quality_control/read_filtering/task_ncbi_scrub.wdl" as ncbi_scrub
@@ -9,7 +8,7 @@ import "../../tasks/utilities/task_rasusa.wdl" as rasusa_task
 
 workflow read_QC_trim_ont {
   meta {
-    description: "Runs basic QC on Oxford Nanopore (ONT) reads with nanoplot, rasusa downsampling, tiptoft plasmid detection, and nanoq filtering"
+    description: "Runs basic QC on Oxford Nanopore (ONT) reads with nanoplot, rasusa downsampling, and nanoq filtering"
   }
   input {
     String samplename
@@ -58,19 +57,6 @@ workflow read_QC_trim_ont {
     Int? rasusa_seed
     Float? rasusa_fraction_of_reads
     Int? rasusa_number_of_reads
-
-    # tiptoft inputs
-    Int? tiptoft_cpu
-    Int? tiptoft_disk_size
-    String? tiptoft_docker
-    Int? tiptoft_memory
-    Int? tiptoft_kmer_size
-    Int? tiptoft_max_gap
-    Int? tiptoft_margin
-    Int? tiptoft_min_block_size
-    Int? tiptoft_min_fasta_hits
-    Int? tiptoft_min_kmers_for_onex_pass
-    Int? tiptoft_min_perc_coverage
 
     # nanoq inputs
     Int? nanoq_cpu
@@ -179,23 +165,6 @@ workflow read_QC_trim_ont {
         seed = rasusa_seed
 
     }
-    # tiptoft for plasmid detection
-    call tiptoft_task.tiptoft {
-      input:
-        read1 = read1,
-        samplename = samplename,
-        cpu = tiptoft_cpu,
-        disk_size = tiptoft_disk_size,
-        docker = tiptoft_docker,
-        kmer_size = tiptoft_kmer_size,
-        margin = tiptoft_margin,
-        max_gap = tiptoft_max_gap,
-        memory = tiptoft_memory,
-        min_block_size = tiptoft_min_block_size,
-        min_fasta_hits = tiptoft_min_fasta_hits,
-        min_kmers_for_onex_pass = tiptoft_min_kmers_for_onex_pass,
-        min_perc_coverage = tiptoft_min_perc_coverage
-    }  
     # nanoq/filtlong (default min length 500)
     call nanoq_task.nanoq {
       input:
@@ -239,11 +208,5 @@ workflow read_QC_trim_ont {
 
     # rasusa outputs
     String? rasusa_version = rasusa.rasusa_version  
-
-    # tiptoft outputs
-    File? tiptoft_plasmid_replicon_fastq = tiptoft.tiptoft_plasmid_replicon_fastq
-    File? tiptoft_result_tsv = tiptoft.tiptoft_tsv
-    String? tiptoft_plasmid_replicon_genes = tiptoft.plasmid_replicon_genes
-    String? tiptoft_version = tiptoft.tiptoft_version
   }
 }
