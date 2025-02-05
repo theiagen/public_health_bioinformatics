@@ -106,7 +106,7 @@ task stxtyper {
       echo "DEBUG: generating stx_type_all string output now..."
       # sort and uniq so there are no duplicates; then paste into a single comma-separated line with commas
       # sed is to remove any instances of "None" from the output
-      cat stxtyper_complete_operons.txt stxtyper_partial_hits.txt stxtyper_stx_frameshifts_or_internal_stop_hits.txt stx_novel_hits.txt | sed '/None/d' | sort | uniq | paste -sd, - > stxtyper_all_hits.txt
+      cat stxtyper_complete_operons.txt stxtyper_partial_hits.txt stxtyper_stx_frameshifts_or_internal_stop_hits.txt stx_novel_hits.txt stxtyper_extended_operons.txt stxtyper_ambiguous_hits.txt | sed '/None/d' | sort | uniq | paste -sd, - > stxtyper_all_hits.txt
 
     fi
     echo "DEBUG: Finished parsing StxTyper output TSV."
@@ -123,6 +123,8 @@ task stxtyper {
     String stxtyper_partial_hits = read_string("stxtyper_partial_hits.txt")
     String stxtyper_frameshifts_or_internal_stop_hits =  read_string("stxtyper_stx_frameshifts_or_internal_stop_hits.txt")
     String stxtyper_novel_hits = read_string("stx_novel_hits.txt")
+    String stxtyper_extended_operons = read_string("stxtyper_extended_operons.txt")
+    String stxtyper_ambiguous_hits = read_string("stxtyper_ambiguous_hits.txt")
   }
   runtime {
     docker: "~{docker}"
