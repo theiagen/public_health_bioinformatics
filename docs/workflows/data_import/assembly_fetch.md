@@ -48,7 +48,7 @@ This workflow runs on the sample level.
 
 </div>
 
-### Analysis Tasks
+### Workflow Tasks
 
 ??? task "ReferenceSeeker (optional) Details"
 
@@ -71,7 +71,6 @@ This workflow runs on the sample level.
         |  | Links |
         | --- | --- |
         | Task | [task_referenceseeker.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/phylogenetic_inference/utilities/task_referenceseeker.wdl) |
-        | Software version | 1.8.0 ("us-docker.pkg.dev/general-theiagen/biocontainers/referenceseeker:1.8.0--pyhdfd78af_0") |
         | Software Source Code | https://github.com/oschwengers/referenceseeker |
         | Software Documentation | https://github.com/oschwengers/referenceseeker |
         | Original Publication(s) | [ReferenceSeeker: rapid determination of appropriate reference genomes](https://joss.theoj.org/papers/10.21105/joss.01994) |
@@ -87,7 +86,6 @@ This workflow runs on the sample level.
         |  | Links |
         | --- | --- |
         | Task | [task_ncbi_datasets.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/data_import/task_ncbi_datasets.wdl) |
-        | Software version | 14.13.2 (us-docker.pkg.dev/general-theiagen/staphb/ncbi-datasets:14.13.2) |
         | Software Source Code | https://github.com/ncbi/datasets |
         | Software Documentation | https://github.com/ncbi/datasets |
         | Original Publication(s) | Not known to be published |
