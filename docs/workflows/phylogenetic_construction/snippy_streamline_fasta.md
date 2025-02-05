@@ -90,6 +90,7 @@ The `Snippy_Streamline_FASTA` workflow is an all-in-one approach to generating a
 | ncbi_datasets_download_genome_accession | **include_gff3** | Boolean | When set to true, outputs a gff3 file (Genbank file) | FALSE | Optional |
 | ncbi_datasets_download_genome_accession | **include_gbff** | Boolean | When set to true, outputs a gbff file (Annotation file); if true, this file will be used as the reference for Snippy_Variants and Snippy_Tree | FALSE | Optional |
 | ncbi_datasets_download_genome_accession | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 4 | Optional |
+| ncbi_datasets_download_genome_accession | **use_ncbi_virus** | Boolean | When set to true will download from NCBI Virus Datasets | FALSE | Optional |
 | referenceseeker | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional |
 | referenceseeker | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 200 | Optional |
 | referenceseeker | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/biocontainers/referenceseeker:1.8.0--pyhdfd78af_0 | Optional |
