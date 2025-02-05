@@ -17,14 +17,13 @@ The `Snippy_Streamline` workflow is an all-in-one approach to generating a refer
 
 !!! dna "Reference Genome Options"
 
-    ==In order to generate a phylogenetic tree, a reference genome is required.== This can be
+    ==In order to generate a phylogenetic tree, a reference genome is required.== This can be:
 
-    1. Provided by the user
-    2. Automatically selected using the `Centroid` task and `Assembly_Fetch` sub-workflow to find a close reference genome to your dataset
+    1. provided by the user
+    2. automatically selected using the `centroid` task and `reference_seeker` task to find a close reference genome to your dataset
 
     !!! warning "Automatic Reference Selection"
         If no reference genome is provided, then the user MUST fill in the `assembly_fasta` field for automatic reference genome selection.
-
 
 !!! dna "Phylogenetic Tree Construction Options"
     There are several options that can be used to customize the phylogenetic tree, including:
@@ -473,7 +472,7 @@ To run Snippy_Streamline, either a reference genome must be provided (`reference
 | snippy_ref_metadata_json | File | Metadata associated with the refence genome used by Snippy, in JSON format |
 | snippy_referenceseeker_database | String | ReferenceSeeker database used |
 | snippy_referenceseeker_docker | String | Docker file used for ReferenceSeeker |
-| snippy_referenceseeker_top_hit_ncbi_accession | String | NCBI Accession for the top it identified by Assembly_Fetch |
+| snippy_referenceseeker_top_hit_ncbi_accession | String | NCBI Accession for the top hit identified by referenceseeker |
 | snippy_referenceseeker_tsv | File | TSV file of the top hits between the query genome and the Reference Seeker database |
 | snippy_referenceseeker_version | String | ReferenceSeeker version used |
 | snippy_snp_dists_docker | String | Docker file used for SNP-dists |
