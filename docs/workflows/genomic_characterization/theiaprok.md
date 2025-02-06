@@ -239,9 +239,6 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 | export_taxon_tables | **terra_workspace** | String | Internal component, do not modify | | Do not modify, Optional | FASTA, ONT, PE, SE |
 | export_taxon_tables | **theiaprok_ont_analysis_date** | String | Internal component, do not modify | | Do not modify, Optional | FASTA, PE, SE |
 | export_taxon_tables | **theiaprok_ont_version** | String | Internal component, do not modify | | Do not modify, Optional | FASTA, PE, SE |
-| export_taxon_tables | **tiptoft_plasmid_replicon_fastq** | File | Internal component, do not modify | | Do not modify, Optional | FASTA, PE, SE |
-| export_taxon_tables | **tiptoft_plasmid_replicon_genes** | String | Internal component, do not modify | | Do not modify, Optional | FASTA, PE, SE |
-| export_taxon_tables | **tiptoft_version** | String | Internal component, do not modify | | Do not modify, Optional | FASTA, PE, SE |
 | export_taxon_tables | **zip** | String | Internal component, do not modify | | Do not modify, Optional | FASTA, ONT, PE, SE |
 | gambit | **cpu** | Int | Number of CPUs to allocate to the task | 8 | Optional | FASTA, ONT, PE, SE |
 | gambit | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | FASTA, ONT, PE, SE |
@@ -531,16 +528,6 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 | read_QC_trim | **read_qc** | String | Allows the user to decide between fastq_scan (default) and fastqc for the evaluation of read quality. | fastq_scan | Optional | PE, SE |
 | read_QC_trim | **run_prefix** | String | Internal component, do not modify |  | Do not modify, Optional | ONT |
 | read_QC_trim | **target_organism** | String | This string is searched for in the kraken2 outputs to extract the read percentage |  | Optional | ONT, PE, SE |
-| read_QC_trim | **tiptoft_cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional | ONT |
-| read_QC_trim | **tiptoft_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | ONT | 
-| read_QC_trim | **tiptoft_docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/staphb/tiptoft:1.0.2" | Optional | ONT |
-| read_QC_trim | **tiptoft_kmer_size** | String | The kmer size | | Optional | ONT |
-| read_QC_trim | **tiptoft_margin** | Int | Flanking region around a block to use for mapping | | Optional | ONT |
-| read_QC_trim | **tiptoft_max_gap** | Int | Maximum gap for blocks to be contiguous, measured in multiples of the kmer size | | Optional | ONT |
-| read_QC_trim | **tiptoft_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | ONT |
-| read_QC_trim | **tiptoft_min_block_size** | Int | Minimum block size in bases | | Optional | ONT |
-| read_QC-trim | **tiptoft_min_kmers_for_onex_pass** | Int | Minimum number of kmers matching a read in 1st pass | | Optional | ONT |
-| read_QC_trim | **tiptoft_min_perc_coverage** | Int | Minimum percentage ocoverage o typing sequence to report | | Optional | ONT |
 | read_QC_trim | **trimmomatic_args** | String | Additional arguments to pass to trimmomatic. "-phred33" specifies the Phred Q score encoding which is almost always phred33 with modern sequence data. | -phred33 | Optional | PE, SE |
 | resfinder_task | **acquired** | Boolean | Set to true to tell ResFinder to identify acquired resistance genes | TRUE | Optional | FASTA, ONT, PE, SE |
 | resfinder_task | **call_pointfinder** | Boolean | Set to true to enable detection of point mutations. | FALSE | Optional | FASTA, ONT, PE, SE |
