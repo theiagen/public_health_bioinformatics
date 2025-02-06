@@ -166,123 +166,83 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 | dragonflye | **polishing_rounds** | Int | The number of polishing rounds to conduct (without Illumina) | 1 | Optional | ONT |
 | dragonflye | **use_pilon_illumina_polisher** | Boolean | Set to true to use Pilon to polish Illumina reads | FALSE | Optional | ONT |
 | dragonflye | **use_racon** | Boolean | Set to true to use Racon to polish instead of Medaka | FALSE | Optional | ONT |
-| export_taxon_tables | **asembly_fasta** | File | Internal component, do not modify |  | Do not modify, Optional | FASTA |
-| export_taxon_tables | **bbduk_docker** | String | The Docker container to use for the task |  | Do not modify, Optional | FASTA, ONT |
-| export_taxon_tables | **cg_pipeline_docker** | String | The Docker container to use for the task |  | Do not modify, Optional | FASTA, ONT |
-| export_taxon_tables | **cg_pipeline_report_clean** | File | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT |
-| export_taxon_tables | **cg_pipeline_report_raw** | File | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT |
-| export_taxon_tables | **combined_mean_q_clean** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, SE |
-| export_taxon_tables | **combined_mean_q_raw** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, SE |
-| export_taxon_tables | **combined_mean_readlength_clean** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, SE |
-| export_taxon_tables | **combined_mean_readlength_raw** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, SE |
-| export_taxon_tables | **contigs_gfa** | File | Internal component, do not modify |  | Do not modify, Optional | FASTA |
+| export_taxon_tables | **abricate_db** | String | Internal component, do not modify | | Do not modify, Optional | FASTA, ONT, PE, SE |
+| export_taxon_tables | **assembly_fasta** | File | Internal component, do not modify | | Do not modify, Optional | FASTA |
+| export_taxon_tables | **call_abricate** | Boolean | Internal component, do not modify | | Do not modify, Optional | FASTA, ONT, PE, SE |
+| export_taxon_tables | **call_ani** | Boolean | Internal component, do not modify | | Do not modify, Optional | FASTA, ONT, PE, SE |
+| export_taxon_tables | **call_kmerfinder** | Boolean | Internal component, do not modify | | Do not modify, Optional | FASTA, ONT, PE, SE |
+| export_taxon_tables | **call_plasmidfinder** | Boolean | Internal component, do not modify | | Do not modify, Optional | FASTA, ONT, PE, SE |
+| export_taxon_tables | **call_resfinder** | Boolean | Internal component, do not modify | | Do not modify, Optional | FASTA, ONT, PE, SE |
+| export_taxon_tables | **city** | String | Internal component, do not modify | | Do not modify, Optional | FASTA, ONT, PE, SE |
+| export_taxon_tables | **collection_date** | String | Internal component, do not modify | | Do not modify, Optional | FASTA, ONT, PE, SE |
+| export_taxon_tables | **contigs_gfa** | File | Internal component, do not modify | | Do not modify, Optional | FASTA |
+| export_taxon_tables | **county** | String | Internal component, do not modify | | Do not modify, Optional | FASTA, ONT, PE, SE |
 | export_taxon_tables | **cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional | FASTA, ONT, PE, SE |
 | export_taxon_tables | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | FASTA, ONT, PE, SE |
 | export_taxon_tables | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-03-16 | Optional | FASTA, ONT, PE, SE |
-| export_taxon_tables | **dragonflye_version** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, PE, SE |
-| export_taxon_tables | **emmtypingtool_docker** | String | The Docker container to use for the task |  | Do not modify, Optional | FASTA, ONT, SE |
-| export_taxon_tables | **emmtypingtool_emm_type** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, SE |
-| export_taxon_tables | **emmtypingtool_results_xml** | File | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, SE |
-| export_taxon_tables | **emmtypingtool_version** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, SE |
-| export_taxon_tables | **est_coverage_clean** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA |
-| export_taxon_tables | **est_coverage_raw** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA |
-| export_taxon_tables | **fastp_version** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT |
-| export_taxon_tables | **fastq_scan_version** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT |
-| export_taxon_tables | **hicap_docker** | String | The Docker container to use for the task |  | Do not modify, Optional | FASTA, ONT |
-| export_taxon_tables | **hicap_genes** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT |
-| export_taxon_tables | **hicap_results_tsv** | File | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT |
-| export_taxon_tables | **hicap_serotype** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT |
-| export_taxon_tables | **hicap_version** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT |
-| export_taxon_tables | **kmc_est_genome_length** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, PE, SE |
-| export_taxon_tables | **kmc_kmer_stats** | File | Internal component, do not modify |  | Do not modify, Optional | FASTA, PE, SE |
-| export_taxon_tables | **kmc_version** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, PE, SE |
-| export_taxon_tables | **kraken2_docker** | String | The Docker container to use for the task |  | Do not modify, Optional | FASTA, ONT, PE |
-| export_taxon_tables | **kraken2_report** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT |
-| export_taxon_tables | **kraken2_version** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT |
+| export_taxon_tables | **dragonflye_version** | String | Internal component, do not modify | | Do not modify, Optional | FASTA, PE, SE |
+| export_taxon_tables | **est_coverage_clean** | Float | Internal component, do not modify | | Do not modify, Optional | FASTA |
+| export_taxon_tables | **est_coverage_raw** | Float | Internal component, do not modify | | Do not modify, Optional | FASTA |
+| export_taxon_tables | **expected_taxon** | String | Internal component, do not modify | | Do not modify, Optional | FASTA, ONT, PE, SE |
+| export_taxon_tables | **genome_annotation** | String | Internal component, do not modify | | Do not modify, Optional | FASTA, ONT, PE, SE |
+| export_taxon_tables | **genome_length** | Int | Internal component, do not modify | | Do not modify, Optional | ONT, PE, SE |
+| export_taxon_tables | **hicap_docker** | String | The Docker container to use for the task | | Do not modify, Optional | FASTA, ONT |
+| export_taxon_tables | **hicap_genes** | String | Internal component, do not modify | | Do not modify, Optional | FASTA, ONT |
+| export_taxon_tables | **hicap_results_tsv** | File | Internal component, do not modify | | Do not modify, Optional | FASTA, ONT |
+| export_taxon_tables | **hicap_serotype** | String | Internal component, do not modify | | Do not modify, Optional | FASTA, ONT |
+| export_taxon_tables | **hicap_version** | String | Internal component, do not modify | | Do not modify, Optional | FASTA, ONT |
+| export_taxon_tables | **kraken2_report** | String | Internal component, do not modify | | Do not modify, Optional | FASTA, ONT |
+| export_taxon_tables | **kraken2_version** | String | Internal component, do not modify | | Do not modify, Optional | FASTA, ONT |
+| export_taxon_tables | **max_genome_length** | Int | Internal component, do not modify | | Do not modify, Optional | ONT, PE, SE |
 | export_taxon_tables | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | FASTA, ONT, PE, SE |
-| export_taxon_tables | **midas_docker** | String | The Docker container to use for the task |  | Do not modify, Optional | FASTA, ONT |
-| export_taxon_tables | **midas_primary_genus** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT |
-| export_taxon_tables | **midas_report** | File | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT |
-| export_taxon_tables | **midas_secondary_genus** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT |
-| export_taxon_tables | **midas_secondary_genus_abundance** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT |
-| export_taxon_tables | **midas_secondary_genus_coverage** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT |
-| export_taxon_tables | **nanoplot_docker** | String | The Docker container to use for the task |  | Do not modify, Optional | FASTA, PE, SE |
-| export_taxon_tables | **nanoplot_html_clean** | File | Internal component, do not modify |  | Do not modify, Optional | FASTA, PE, SE |
-| export_taxon_tables | **nanoplot_html_raw** | File | Internal component, do not modify |  | Do not modify, Optional | FASTA, PE, SE |
-| export_taxon_tables | **nanoplot_num_reads_clean1** | Int | Internal component, do not modify |  | Do not modify, Optional | FASTA, PE, SE |
-| export_taxon_tables | **nanoplot_num_reads_raw1** | Int | Internal component, do not modify |  | Do not modify, Optional | FASTA, PE, SE |
-| export_taxon_tables | **nanoplot_r1_est_coverage_clean** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA, PE, SE |
-| export_taxon_tables | **nanoplot_r1_est_coverage_raw** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA, PE, SE |
-| export_taxon_tables | **nanoplot_r1_mean_q_clean** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA, PE, SE |
-| export_taxon_tables | **nanoplot_r1_mean_q_raw** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA, PE, SE |
-| export_taxon_tables | **nanoplot_r1_mean_readlength_clean** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA, PE, SE |
-| export_taxon_tables | **nanoplot_r1_mean_readlength_raw** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA, PE, SE |
-| export_taxon_tables | **nanoplot_r1_median_q_clean** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA, PE, SE |
-| export_taxon_tables | **nanoplot_r1_median_q_raw** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA, PE, SE |
-| export_taxon_tables | **nanoplot_r1_median_readlength_clean** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA, PE, SE |
-| export_taxon_tables | **nanoplot_r1_median_readlength_raw** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA, PE, SE |
-| export_taxon_tables | **nanoplot_r1_n50_clean** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA, PE, SE |
-| export_taxon_tables | **nanoplot_r1_n50_raw** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA, PE, SE |
-| export_taxon_tables | **nanoplot_r1_stdev_readlength_clean** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA, PE, SE |
-| export_taxon_tables | **nanoplot_r1_stdev_readlength_raw** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA, PE, SE |
-| export_taxon_tables | **nanoplot_tsv_clean** | File | Internal component, do not modify |  | Do not modify, Optional | FASTA, PE, SE |
-| export_taxon_tables | **nanoplot_tsv_raw** | File | Internal component, do not modify |  | Do not modify, Optional | FASTA, PE, SE |
-| export_taxon_tables | **nanoplot_version** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, PE, SE |
-| export_taxon_tables | **nanoq_version** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, PE, SE |
-| export_taxon_tables | **num_reads_clean_pairs** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, SE |
-| export_taxon_tables | **num_reads_clean1** | Int | Internal component, do not modify |  | Do not modify, Optional | FASTA |
-| export_taxon_tables | **num_reads_clean2** | Int | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, SE |
-| export_taxon_tables | **num_reads_raw_pairs** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, SE |
-| export_taxon_tables | **num_reads_raw1** | Int | Internal component, do not modify |  | Do not modify, Optional | FASTA |
-| export_taxon_tables | **num_reads_raw2** | Int | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, SE |
-| export_taxon_tables | **r1_mean_q_clean** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE |
-| export_taxon_tables | **r1_mean_q_raw** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA |
-| export_taxon_tables | **r1_mean_readlength_clean** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE |
-| export_taxon_tables | **r1_mean_readlength_raw** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA |
-| export_taxon_tables | **r2_mean_q_raw** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, SE |
-| export_taxon_tables | **r2_mean_readlength_raw** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, SE |
-| export_taxon_tables | **rasusa_version** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, PE, SE |
-| export_taxon_tables | **read1** | File | Internal component, do not modify |  | Do not modify, Optional | FASTA |
-| export_taxon_tables | **read1_clean** | File | Internal component, do not modify |  | Do not modify, Optional | FASTA |
-| export_taxon_tables | **read2** | File | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, SE |
-| export_taxon_tables | **read2_clean** | File | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, SE |
-| export_taxon_tables | **seroba_ariba_identity** | String | Internal component, do not modify |  | Do not modify, Optional | ONT, SE |
-| export_taxon_tables | **seroba_ariba_serotype** | String | Internal component, do not modify |  | Do not modify, Optional | ONT, SE |
-| export_taxon_tables | **seroba_details** | File | Internal component, do not modify |  | Do not modify, Optional | ONT, SE |
-| export_taxon_tables | **seroba_docker** | String | The Docker container to use for the task |  | Do not modify, Optional | ONT, SE |
-| export_taxon_tables | **seroba_serotype** | String | Internal component, do not modify |  | Do not modify, Optional | ONT, SE |
-| export_taxon_tables | **seroba_version** | String | Internal component, do not modify |  | Do not modify, Optional | ONT, SE |
-| export_taxon_tables | **shigeifinder_cluster_reads** | String | Internal component, do not modify |  | Do not modify, Optional | ONT |
-| export_taxon_tables | **shigeifinder_docker_reads** | String | Internal component, do not modify |  | Do not modify, Optional | ONT |
-| export_taxon_tables | **shigeifinder_H_antigen_reads** | String | Internal component, do not modify |  | Do not modify, Optional | ONT |
-| export_taxon_tables | **shigeifinder_ipaH_presence_absence_reads** | String | Internal component, do not modify |  | Do not modify, Optional | ONT |
-| export_taxon_tables | **shigeifinder_notes_reads** | String | Internal component, do not modify |  | Do not modify, Optional | ONT |
-| export_taxon_tables | **shigeifinder_num_virulence_plasmid_genes** | String | Internal component, do not modify |  | Do not modify, Optional | ONT |
-| export_taxon_tables | **shigeifinder_O_antigen_reads** | String | Internal component, do not modify |  | Do not modify, Optional | ONT |
-| export_taxon_tables | **shigeifinder_report_reads** | String | Internal component, do not modify |  | Do not modify, Optional | ONT |
-| export_taxon_tables | **shigeifinder_serotype_reads** | String | Internal component, do not modify |  | Do not modify, Optional | ONT |
-| export_taxon_tables | **shigeifinder_version_reads** | String | Internal component, do not modify |  | Do not modify, Optional | ONT |
-| export_taxon_tables | **shovill_pe_version** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, SE |
-| export_taxon_tables | **shovill_se_version** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE |
-| export_taxon_tables | **srst2_vibrio_biotype** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT |
-| export_taxon_tables | **srst2_vibrio_ctxA** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT |
-| export_taxon_tables | **srst2_vibrio_detailed_tsv** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT |
-| export_taxon_tables | **srst2_vibrio_ompW** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT |
-| export_taxon_tables | **srst2_vibrio_serogroup** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT |
-| export_taxon_tables | **srst2_vibrio_toxR** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT |
-| export_taxon_tables | **srst2_vibrio_version** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT |
-| export_taxon_tables | **theiaprok_fasta_analysis_date** | String | Internal component, do not modify |  | Do not modify, Optional | ONT, PE, SE |
-| export_taxon_tables | **theiaprok_fasta_version** | String | Internal component, do not modify |  | Do not modify, Optional | ONT, PE, SE |
-| export_taxon_tables | **theiaprok_illumina_pe_analysis_date** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, SE |
-| export_taxon_tables | **theiaprok_illumina_pe_version** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, SE |
-| export_taxon_tables | **theiaprok_illumina_se_analysis_date** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE |
-| export_taxon_tables | **theiaprok_illumina_se_version** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE |
-| export_taxon_tables | **theiaprok_ont_analysis_date** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, PE, SE |
-| export_taxon_tables | **theiaprok_ont_version** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, PE, SE |
-| export_taxon_tables | **tiptoft_plasmid_replicon_fastq** | File | Internal component, do not modify |  | Do not modify, Optional | FASTA, PE, SE |
-| export_taxon_tables | **tiptoft_plasmid_replicon_genes** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, PE, SE |
-| export_taxon_tables | **tiptoft_version** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, PE, SE |
-| export_taxon_tables | **trimmomatic_version** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT |
+| export_taxon_tables | **min_basepairs** | Int | Internal component, do not modify | | Do not modify, Optional | ONT, PE, SE |
+| export_taxon_tables | **min_coverage** | Int | Internal component, do not modify | | Do not modify, Optional | PE, SE |
+| export_taxon_tables | **min_genome_length** | Int | Internal component, do not modify | | Do not modify, Optional | ONT, PE, SE |
+| export_taxon_tables | **min_reads** | Int | Internal component, do not modify | | Do not modify, Optional | PE, SE |
+| export_taxon_tables | **nanoplot_docker** | String | The Docker container to use for the task | | Do not modify, Optional | FASTA, PE, SE |
+| export_taxon_tables | **nanoplot_html_clean** | File | Internal component, do not modify | | Do not modify, Optional | FASTA, PE, SE |
+| export_taxon_tables | **nanoplot_html_raw** | File | Internal component, do not modify | | Do not modify, Optional | FASTA, PE, SE |
+| export_taxon_tables | **nanoplot_num_reads_clean1** | Int | Internal component, do not modify | | Do not modify, Optional | FASTA, PE, SE |
+| export_taxon_tables | **nanoplot_num_reads_raw1** | Int | Internal component, do not modify | | Do not modify, Optional | FASTA, PE, SE |
+| export_taxon_tables | **nanoplot_r1_est_coverage_clean** | Float | Internal component, do not modify | | Do not modify, Optional | FASTA, PE, SE |
+| export_taxon_tables | **nanoplot_r1_est_coverage_raw** | Float | Internal component, do not modify | | Do not modify, Optional | FASTA, PE, SE |
+| export_taxon_tables | **nanoplot_r1_mean_q_clean** | Float | Internal component, do not modify | | Do not modify, Optional | FASTA, PE, SE |
+| export_taxon_tables | **nanoplot_r1_mean_q_raw** | Float | Internal component, do not modify | | Do not modify, Optional | FASTA, PE, SE |
+| export_taxon_tables | **nanoplot_r1_mean_readlength_clean** | Float | Internal component, do not modify | | Do not modify, Optional | FASTA, PE, SE |
+| export_taxon_tables | **nanoplot_r1_mean_readlength_raw** | Float | Internal component, do not modify | | Do not modify, Optional | FASTA, PE, SE |
+| export_taxon_tables | **nanoplot_r1_median_q_clean** | Float | Internal component, do not modify | | Do not modify, Optional | FASTA, PE, SE |
+| export_taxon_tables | **nanoplot_r1_median_q_raw** | Float | Internal component, do not modify | | Do not modify, Optional | FASTA, PE, SE |
+| export_taxon_tables | **nanoplot_r1_median_readlength_clean** | Float | Internal component, do not modify | | Do not modify, Optional | FASTA, PE, SE |
+| export_taxon_tables | **nanoplot_r1_median_readlength_raw** | Float | Internal component, do not modify | | Do not modify, Optional | FASTA, PE, SE |
+| export_taxon_tables | **nanoplot_r1_n50_clean** | Float | Internal component, do not modify | | Do not modify, Optional | FASTA, PE, SE |
+| export_taxon_tables | **nanoplot_r1_n50_raw** | Float | Internal component, do not modify | | Do not modify, Optional | FASTA, PE, SE |
+| export_taxon_tables | **nanoplot_r1_stdev_readlength_clean** | Float | Internal component, do not modify | | Do not modify, Optional | FASTA, PE, SE |
+| export_taxon_tables | **nanoplot_r1_stdev_readlength_raw** | Float | Internal component, do not modify | | Do not modify, Optional | FASTA, PE, SE |
+| export_taxon_tables | **nanoplot_tsv_clean** | File | Internal component, do not modify | | Do not modify, Optional | FASTA, PE, SE |
+| export_taxon_tables | **nanoplot_tsv_raw** | File | Internal component, do not modify | | Do not modify, Optional | FASTA, PE, SE |
+| export_taxon_tables | **nanoplot_version** | String | Internal component, do not modify | | Do not modify, Optional | FASTA, PE, SE |
+| export_taxon_tables | **nanoq_version** | String | Internal component, do not modify | | Do not modify, Optional | FASTA, PE, SE |
+| export_taxon_tables | **originating_lab** | String | Internal component, do not modify | | Do not modify, Optional | FASTA, ONT, PE, SE |
+| export_taxon_tables | **perform_characterization** | Boolean | Internal component, do not modify | | Do not modify, Optional | FASTA, ONT, PE, SE |
+| export_taxon_tables | **qc_check_table** | File | Internal component, do not modify | | Do not modify, Optional | FASTA, ONT, PE, SE |
+| export_taxon_tables | **rasusa_version** | String | Internal component, do not modify | | Do not modify, Optional | FASTA, PE, SE |
+| export_taxon_tables | **read1** | File | Internal component, do not modify | | Do not modify, Optional | FASTA |
+| export_taxon_tables | **read1_clean** | File | Internal component, do not modify | | Do not modify, Optional | FASTA |
+| export_taxon_tables | **run_id** | String | Internal component, do not modify | | Do not modify, Optional | FASTA, ONT, PE, SE |
+| export_taxon_tables | **samplename** | String | Internal component, do not modify | | Do not modify, Optional | FASTA, ONT, PE, SE |
+| export_taxon_tables | **seq_method** | String | Internal component, do not modify | | Do not modify, Optional | FASTA, ONT, PE, SE |
+| export_taxon_tables | **shigeifinder_num_virulence_plasmid_genes** | String | Internal component, do not modify | | Do not modify, Optional | ONT |
+| export_taxon_tables | **skip_mash** | Boolean | Internal component, do not modify | | Do not modify, Optional | ONT, SE |
+| export_taxon_tables | **skip_screen** | Boolean | Internal component, do not modify | | Do not modify, Optional | ONT, PE, SE |
+| export_taxon_tables | **taxon_tables** | File | Internal component, do not modify | | Do not modify, Optional | FASTA, ONT, PE, SE |
+| export_taxon_tables | **terra_project** | String | Internal component, do not modify | | Do not modify, Optional | FASTA, ONT, PE, SE |
+| export_taxon_tables | **terra_workspace** | String | Internal component, do not modify | | Do not modify, Optional | FASTA, ONT, PE, SE |
+| export_taxon_tables | **theiaprok_ont_analysis_date** | String | Internal component, do not modify | | Do not modify, Optional | FASTA, PE, SE |
+| export_taxon_tables | **theiaprok_ont_version** | String | Internal component, do not modify | | Do not modify, Optional | FASTA, PE, SE |
+| export_taxon_tables | **tiptoft_plasmid_replicon_fastq** | File | Internal component, do not modify | | Do not modify, Optional | FASTA, PE, SE |
+| export_taxon_tables | **tiptoft_plasmid_replicon_genes** | String | Internal component, do not modify | | Do not modify, Optional | FASTA, PE, SE |
+| export_taxon_tables | **tiptoft_version** | String | Internal component, do not modify | | Do not modify, Optional | FASTA, PE, SE |
+| export_taxon_tables | **zip** | String | Internal component, do not modify | | Do not modify, Optional | FASTA, ONT, PE, SE |
 | gambit | **cpu** | Int | Number of CPUs to allocate to the task | 8 | Optional | FASTA, ONT, PE, SE |
 | gambit | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | FASTA, ONT, PE, SE |
 | gambit | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/gambit:1.0.0 | Optional | FASTA, ONT, PE, SE |
@@ -579,7 +539,6 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 | read_QC_trim | **tiptoft_max_gap** | Int | Maximum gap for blocks to be contiguous, measured in multiples of the kmer size | | Optional | ONT |
 | read_QC_trim | **tiptoft_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | ONT |
 | read_QC_trim | **tiptoft_min_block_size** | Int | Minimum block size in bases | | Optional | ONT |
-| read_QC_trim | **tiptoft_min_fasta_hits** | Int | Minimum number of kmers matching a read | | Optional | ONT
 | read_QC-trim | **tiptoft_min_kmers_for_onex_pass** | Int | Minimum number of kmers matching a read in 1st pass | | Optional | ONT |
 | read_QC_trim | **tiptoft_min_perc_coverage** | Int | Minimum percentage ocoverage o typing sequence to report | | Optional | ONT |
 | read_QC_trim | **trimmomatic_args** | String | Additional arguments to pass to trimmomatic. "-phred33" specifies the Phred Q score encoding which is almost always phred33 with modern sequence data. | -phred33 | Optional | PE, SE |
