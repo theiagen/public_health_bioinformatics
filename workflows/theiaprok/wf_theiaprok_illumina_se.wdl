@@ -262,6 +262,8 @@ workflow theiaprok_illumina_se {
               read1 = select_first([concatenate_illumina_lanes.read1_concatenated, read1]),
               read1_clean = read_QC_trim.read1_clean,
               run_id = run_id,
+              read_screen_clean_tsv = clean_check_reads.read_screen_tsv,
+              read_screen_raw_tsv = raw_check_reads.read_screen_tsv,
               collection_date = collection_date,
               originating_lab = originating_lab,
               city = city,

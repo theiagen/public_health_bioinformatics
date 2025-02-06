@@ -436,6 +436,8 @@ task export_taxon_tables {
     File? tbprofiler_output_vcf
     Float? tbprofiler_pct_reads_mapped
     String? trimmomatic_docker
+    File? read_screen_clean_tsv
+    File? read_screen_raw_tsv
   }
   meta {
     # added so that call caching is always turned off
@@ -755,7 +757,9 @@ task export_taxon_tables {
       "read2_clean": "~{read2_clean}",
       "read2_concatenated": "~{read2_concatenated}",
       "read_screen_clean": "~{read_screen_clean}",
+      "read_screen_clean_tsv": "~{read_screen_clean_tsv}",
       "read_screen_raw": "~{read_screen_raw}",
+      "read_screen_raw_tsv": "~{read_screen_raw_tsv}",
       "resfinder_db_version": "~{resfinder_db_version}",
       "resfinder_docker": "~{resfinder_docker}",
       "resfinder_pheno_table": "~{resfinder_pheno_table}",
@@ -904,7 +908,7 @@ task export_taxon_tables {
       "virulencefinder_hits": "~{virulencefinder_hits}",
       "virulencefinder_report_tsv": "~{virulencefinder_report_tsv}",
       "zip": "~{zip}"
-    }    
+    }
 
     with open("~{samplename}_terra_table.tsv", "w") as outfile:
       writer = csv.DictWriter(outfile, new_table.keys(), delimiter='\t')

@@ -238,6 +238,8 @@ workflow theiaprok_ont {
               read1 = read1,
               read1_clean = read_qc_trim.read1_clean,
               run_id = run_id,
+              read_screen_clean_tsv = clean_check_reads.read_screen_tsv,
+              read_screen_raw_tsv = raw_check_reads.read_screen_tsv,
               collection_date = collection_date,
               originating_lab = originating_lab,
               city = city,

@@ -672,7 +672,9 @@ workflow theiaprok_illumina_pe {
               tbprofiler_median_depth = merlin_magic.tbprofiler_median_depth,
               tbprofiler_output_vcf = merlin_magic.tbprofiler_output_vcf,
               tbprofiler_pct_reads_mapped = merlin_magic.tbprofiler_pct_reads_mapped,
-              trimmomatic_docker = read_QC_trim.trimmomatic_docker
+              trimmomatic_docker = read_QC_trim.trimmomatic_docker,
+              read_screen_clean_tsv = clean_check_reads.read_screen_tsv,
+              read_screen_raw_tsv = raw_check_reads.read_screen_tsv
           }
         }
       }
