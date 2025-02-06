@@ -586,6 +586,8 @@ workflow theiaprok_fasta {
     String? stxtyper_partial_hits = merlin_magic.stxtyper_partial_hits
     String? stxtyper_stx_frameshifts_or_internal_stop_hits =  merlin_magic.stxtyper_stx_frameshifts_or_internal_stop_hits
     String? stxtyper_novel_hits = merlin_magic.stxtyper_novel_hits
+    String? stxtyper_extended_operons = merlin_magic.stxtyper_extended_operon_hits
+    String? stxtyper_ambiguous_hits = merlin_magic.stxtyper_ambiguous_hits
     # Listeria Typing
     File? lissero_results = merlin_magic.lissero_results
     String? lissero_version = merlin_magic.lissero_version
