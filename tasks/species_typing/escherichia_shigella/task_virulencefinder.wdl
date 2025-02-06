@@ -12,7 +12,7 @@ task virulencefinder {
     Int memory = 8
     Int cpu = 2
     Float? coverage_threshold
-    Float? identity_threshold
+    Float? min_percent_identity
     String database = "virulence_ecoli"
     # determine what version of the software to run
     #Boolean paired_end
@@ -42,7 +42,7 @@ task virulencefinder {
       -o . \
       -tmp tmp \
       ~{'-l ' + coverage_threshold} \
-      ~{'-t ' + identity_threshold} \
+      ~{'-t ' + min_percent_identity} \
       ~{'-d' + database} \
       -x 
     # else 
@@ -52,7 +52,7 @@ task virulencefinder {
     #     -o . \
     #     -tmp tmp \
     #     ~{'-l ' + coverage_threshold} \
-    #     ~{'-t ' + identity_threshold} \
+    #     ~{'-t ' + min_percent_identity} \
     #     ~{'-d' + database} \
     #     -x
     # fi

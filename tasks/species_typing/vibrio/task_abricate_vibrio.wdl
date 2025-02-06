@@ -5,7 +5,7 @@ task abricate_vibrio {
     File assembly
     String samplename
     String database = "vibrio"
-    Int minid
+    Int min_percent_identity
     Int mincov
     Int cpu = 2
     Int memory = 4
@@ -18,7 +18,7 @@ task abricate_vibrio {
     # run abricate
     abricate \
       --db ~{database} \
-      ~{'--minid ' + minid} \
+      ~{'--minid ' + min_percent_identity} \
       ~{'--mincov ' + mincov} \
       --threads ~{cpu} \
       --nopath \

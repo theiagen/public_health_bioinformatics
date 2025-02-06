@@ -8,7 +8,7 @@ task abricate {
     # Parameters 
     #  --minid Minimum DNA %identity [80]
     # --mincov Minimum DNA %coverage [80]
-    Int? minid
+    Int? min_percent_identity
     Int? mincov
     Int cpu = 2
     Int memory = 8
@@ -23,7 +23,7 @@ task abricate {
     
     abricate \
       --db ~{database} \
-      ~{'--minid ' + minid} \
+      ~{'--minid ' + min_percent_identity} \
       ~{'--mincov ' + mincov} \
       --threads ~{cpu} \
       --nopath \
@@ -61,7 +61,7 @@ task abricate_flu {
     File assembly
     String samplename
     String database = "insaflu"
-    Int minid = 70
+    Int min_percent_identity = 70
     Int mincov = 60
     Int cpu = 2
     Int memory = 4
@@ -74,7 +74,7 @@ task abricate_flu {
     # run abricate
     abricate \
       --db ~{database} \
-      ~{'--minid ' + minid} \
+      ~{'--minid ' + min_percent_identity} \
       ~{'--mincov ' + mincov} \
       --threads ~{cpu} \
       --nopath \

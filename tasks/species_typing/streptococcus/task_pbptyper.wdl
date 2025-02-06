@@ -8,7 +8,7 @@ task pbptyper {
     File assembly # An assembly in FASTA format (compressed with gzip, or uncompressed) to predict the PBP type on.
     String samplename
     String? db # A path to a directory containing FASTA files for 1A, 2B, and 2X proteins. In most cases using the default value will be all that is needed.
-    Int min_pident = 95 # Minimum percent identity to count a hit [default: 95]
+    Int min_percent_identity = 95 # Minimum percent identity to count a hit [default: 95]
     Int min_coverage = 95 # Minimum percent coverage to count a hit [default: 95]  
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/pbptyper:1.0.4"
     Int disk_size = 100
@@ -23,7 +23,7 @@ task pbptyper {
     pbptyper \
       --assembly ~{assembly} \
       ~{'--db ' + db} \
-      ~{'--min_pident ' + min_pident} \
+      ~{'--min_pident ' + min_percent_identity} \
       ~{'--min_coverage ' + min_coverage} \
       --prefix "~{samplename}" \
       --outdir ./ 

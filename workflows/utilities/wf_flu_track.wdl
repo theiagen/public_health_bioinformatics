@@ -45,7 +45,7 @@ workflow flu_track {
     Int? genoflu_memory
 
     # Abricate inputs
-    Int? abricate_flu_minid
+    Int? abricate_flu_min_percent_identity
     Int? abricate_flu_mincov
     String? abricate_flu_docker
     Int? abricate_flu_memory
@@ -124,7 +124,7 @@ workflow flu_track {
       input:
         assembly = select_first([irma.irma_assembly_fasta]),
         samplename = samplename,
-        minid = abricate_flu_minid,
+        min_percent_identity = abricate_flu_min_percent_identity,
         mincov = abricate_flu_mincov,
         cpu = abricate_flu_cpu,
         memory = abricate_flu_memory,
