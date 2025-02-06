@@ -95,10 +95,10 @@ workflow merlin_magic {
     String? virulencefinder_docker_image
     # abricate abaum options
     Int abricate_abaum_min_percent_identity = 95 # strict threshold of 95% identity for typing purposes
-    Int? abricate_abaum_mincov
+    Int? abricate_abaum_min_coverage
     # abricate vibrio options
     Int abricate_vibrio_min_percent_identity = 80
-    Int abricate_vibrio_mincov = 80
+    Int abricate_vibrio_min_coverage = 80
     # agrvate options
     Boolean? agrvate_agr_typing_only
     # cladetyper options - primarily files we host
@@ -116,8 +116,8 @@ workflow merlin_magic {
     # ectyper options
     Int? ectyper_o_min_percent_identity
     Int? ectyper_h_min_percent_identity
-    Int? ectyper_opcov
-    Int? ectyper_hpcov
+    Int? ectyper_o_min_coverage
+    Int? ectyper_h_min_coverage
     Boolean? ectyper_verify
     Boolean? ectyper_print_alleles
     # emmtyper options
@@ -151,7 +151,7 @@ workflow merlin_magic {
     String? kleborate_min_kaptive_confidence
     # lissero options
     Float? lissero_min_percent_identity
-    Float? lissero_min_cov
+    Float? lissero_min_coverage
     # pasty options
     Int? pasty_min_percent_identity
     Int? pasty_min_coverage      
@@ -195,7 +195,7 @@ workflow merlin_magic {
     # spatyper options
     Boolean? spatyper_do_enrich
     # srst2 options
-    Int srst2_min_cov = 80
+    Int srst2_min_coverage = 80
     Int srst2_max_divergence = 20
     Int srst2_min_depth = 5
     Int srst2_min_edge_depth = 2
@@ -216,7 +216,7 @@ workflow merlin_magic {
     Int? tbp_parser_min_depth
     Int? tbp_parser_min_frequency
     Int? tbp_parser_min_read_support
-    Int? tbp_parser_coverage_threshold
+    Int? tbp_parser_min_coverage
     File? tbp_parser_coverage_regions_bed
     Boolean? tbp_parser_debug
     Boolean? tbp_parser_add_cs_lims
@@ -229,7 +229,7 @@ workflow merlin_magic {
     Float? tbp_parser_etha237_frequency
     File? tbp_parser_expert_rule_regions_bed
     # virulencefinder options
-    Float? virulencefinder_coverage_threshold
+    Float? virulencefinder_min_coverage
     Float? virulencefinder_min_percent_identity
     String? virulencefinder_database
     # stxtyper options
@@ -258,7 +258,7 @@ workflow merlin_magic {
         samplename = samplename,
         database = "AcinetobacterPlasmidTyping",
         min_percent_identity = abricate_abaum_min_percent_identity, 
-        mincov = abricate_abaum_mincov,
+        min_coverage = abricate_abaum_min_coverage,
         docker = abricate_abaum_docker_image
     }
   }
@@ -292,8 +292,8 @@ workflow merlin_magic {
         samplename = samplename,
         o_min_percent_identity = ectyper_o_min_percent_identity,
         h_min_percent_identity = ectyper_h_min_percent_identity,
-        opcov = ectyper_opcov,
-        hpcov = ectyper_hpcov,
+        o_min_coverage = ectyper_o_min_coverage,
+        h_min_coverage = ectyper_h_min_coverage,
         verify = ectyper_verify,
         print_alleles = ectyper_print_alleles,
         docker = ectyper_docker_image
@@ -333,7 +333,7 @@ workflow merlin_magic {
       #  paired_end = paired_end,
       #  assembly_only = assembly_only,
       #  ont_data = ont_data,
-        coverage_threshold = virulencefinder_coverage_threshold,
+        min_coverage = virulencefinder_min_coverage,
         min_percent_identity = virulencefinder_min_percent_identity,
         database = virulencefinder_database,
         docker = virulencefinder_docker_image
@@ -358,7 +358,7 @@ workflow merlin_magic {
         assembly = assembly,
         samplename = samplename,
         min_percent_identity = lissero_min_percent_identity,
-        min_cov = lissero_min_cov,
+        min_coverage = lissero_min_coverage,
         docker = lissero_docker_image
     }
   }
@@ -484,7 +484,7 @@ workflow merlin_magic {
             min_depth = tbp_parser_min_depth,
             min_frequency = tbp_parser_min_frequency,
             min_read_support = tbp_parser_min_read_support,
-            coverage_threshold = tbp_parser_coverage_threshold,
+            min_coverage = tbp_parser_min_coverage,
             coverage_regions_bed = tbp_parser_coverage_regions_bed,
             add_cycloserine_lims = tbp_parser_add_cs_lims,
             tbp_parser_debug = tbp_parser_debug,
@@ -619,7 +619,7 @@ workflow merlin_magic {
           read1 = select_first([read1]),
           read2 = read2,
           samplename = samplename,
-          min_cov = srst2_min_cov,
+          min_coverage = srst2_min_coverage,
           max_divergence = srst2_max_divergence,
           min_depth = srst2_min_depth,
           min_edge_depth = srst2_min_edge_depth,
@@ -632,7 +632,7 @@ workflow merlin_magic {
         assembly = assembly,
         samplename = samplename,
         min_percent_identity = abricate_vibrio_min_percent_identity,
-        mincov = abricate_vibrio_mincov,
+        min_coverage = abricate_vibrio_min_coverage,
         docker = abricate_vibrio_docker_image
     }
   }
