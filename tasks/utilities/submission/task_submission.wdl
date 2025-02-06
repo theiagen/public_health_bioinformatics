@@ -33,45 +33,6 @@ task prune_table {
       # Uncomment the following for local testing:
       #cp ~{input_table} ~{table_name}-data.tsv
 
-        # Load optional column mappings file and apply them
-      if [ -n "~{column_mapping_file}" ]; then
-        python3 <<-CODE
-  import pandas as pd
-
-  # Load the Terra table
-  table = pd.read_csv("~{table_name}-data.tsv", sep="\t")
-
-  # Debug: Print table column names before mapping
-  print("Original table column names:", table.columns.tolist())
-
-  # Load column mapping file
-  mapping = pd.read_csv("~{column_mapping_file}", sep="\t", header=0)
- 
-  # Debug: Print the content of the column mapping file
-  print("Column mapping file content:\n", mapping)
-
-  # Verify the presence of required headers
-  if not set(["Custom", "Required"]).issubset(mapping.columns):
-      raise KeyError("Column mapping file must contain 'Custom' and 'Required' headers.")
-
-
-  # Create a dictionary to map custom column names to required column names
-  column_mapping = dict(zip(mapping["Custom"], mapping["Required"]))
-  print("Column mapping dictionary:", column_mapping)
-
-  # Rename columns
-  table.rename(columns=column_mapping, inplace=True)
-
-  # Debug: Print updated column names
-  print("Updated table column names:", table.columns.tolist())
-
-  # Save updated table
-  table.to_csv("~{table_name}-data-renamed.tsv", sep="\t", index=False)
-  CODE
-      else
-        cp "~{table_name}-data.tsv" "~{table_name}-data-renamed.tsv"
-      fi
-
       # Transform boolean skip_biosample into string for Python comparison
       if ~{skip_biosample}; then
         export skip_bio="true"
@@ -79,11 +40,28 @@ task prune_table {
         export skip_bio="false"
       fi
 
-      # Additional metadata Processing (e.g., removing NA values, validating metadata)
+      # Apply optional column mappings Additional metadata Processing (e.g., removing NA values, validating metadata)
       python3 <<CODE 
   import pandas as pd
   import numpy as np
   import os
+
+   # Load the exported Terra table.
+  table = pd.read_csv("~{table_name}-data.tsv", sep="\t")
+  print("Original table column names:", table.columns.tolist())
+
+  # If a column mapping file is provided, load it and apply the mappings.
+  if "~{column_mapping_file}" != "":
+      mapping = pd.read_csv("~{column_mapping_file}", sep="\t", header=0)
+      print("Column mapping file content:\n", mapping)
+      if not set(["Custom", "Required"]).issubset(mapping.columns):
+          raise KeyError("Column mapping file must contain 'Custom' and 'Required' headers.")
+      column_mapping = dict(zip(mapping["Custom"], mapping["Required"]))
+      print("Column mapping dictionary:", column_mapping)
+      table.rename(columns=column_mapping, inplace=True)
+      print("Updated table column names:", table.columns.tolist())
+  else:
+      print("No column mapping file provided; proceeding without renaming.") 
 
   # Helper function to remove NA values and return the cleaned table and a table of excluded samples
   def remove_nas(table, required_metadata):
@@ -95,10 +73,6 @@ task prune_table {
     table.dropna(subset=required_metadata, axis=0, how='any', inplace=True) # remove all rows that are required with NaNs from table
 
     return table, excluded_samples
-
-  # Read the table
-  tablename = "~{table_name}-data-renamed.tsv"
-  table = pd.read_csv(tablename, delimiter='\t', header=0, dtype={"~{table_name}_id": 'str', "collection_date": 'str'})
 
   # Define the expected column
   expected_column = f"~{table_name}_id"
