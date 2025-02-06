@@ -4,7 +4,7 @@ task prokka {
   input {
     File assembly
     String samplename
-    Int cpu = 8
+    Int cpu = 4
     Int memory = 16
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/prokka:1.14.5"
     Int disk_size = 100

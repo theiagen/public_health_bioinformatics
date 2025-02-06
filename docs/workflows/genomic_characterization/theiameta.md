@@ -4,7 +4,7 @@
 
 | **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
 |---|---|---|---|---|
-| [Genomic Characterization](../../workflows_overview/workflows_type.md/#genomic-characterization) | [Any Taxa](../../workflows_overview/workflows_kingdom.md/#any-taxa) | PHB v2.3.0 | Yes | Sample-level |
+| [Genomic Characterization](../../workflows_overview/workflows_type.md/#genomic-characterization) | [Any Taxa](../../workflows_overview/workflows_kingdom.md/#any-taxa) | PHB vX.X.X | Yes | Sample-level |
 
 ## TheiaMeta Workflows
 
@@ -57,11 +57,11 @@ The TheiaMeta_Illumina_PE workflow processes Illumina paired-end (PE) reads ge
 | kraken2_raw | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 16 | Optional |
 | krona_clean | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional |
 | krona_clean | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
-| krona_clean | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/biocontainers/krona:2.7.1--pl526_5 | Optional |
+| krona_clean | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/krona:2.8.1 | Optional |
 | krona_clean | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional |
 | krona_raw | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional |
 | krona_raw | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
-| krona_raw | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/biocontainers/krona:2.7.1--pl526_5 | Optional |
+| krona_raw | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/krona:2.8.1 | Optional |
 | krona_raw | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional |
 | metaspades | **kmers** | String | Kmer list to use with metaspades. If not provided metaspades automatically sets this value |  | Optional |
 | metaspades | **metaspades_opts** | String | Additional arguments to pass to metaspades task |  | Optional |
@@ -109,7 +109,7 @@ The TheiaMeta_Illumina_PE workflow processes Illumina paired-end (PE) reads ge
 | semibin | **cpu** | Int | Number of CPUs to allocate to the task | 6 | Optional |
 | semibin | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
 | semibin | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/biocontainers/semibin:2.0.2--pyhdfd78af_0 | Optional |
-| semibin | **environment** | String | Environment model to use. Options: • human_gut<br>• dog_gut<br>• ocean<br>• soil<br>• cat_gut<br>• human_oral<br>• mouse_gut<br>• pig_gut<br>• built_environment<br>• wastewater<br>• chicken_caecum<br>- global | global | Optional |
+| semibin | **environment** | String | Environment model to use. Options:<br>• human_gut<br>• dog_gut<br>• ocean<br>• soil<br>• cat_gut<br>• human_oral<br>• mouse_gut<br>• pig_gut<br>• built_environment<br>• wastewater<br>• chicken_caecum<br>• global | global | Optional |
 | semibin | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional |
 | semibin | **min_length** | Int | Minimum contig length for binning | 1000 | Optional |
 | semibin | **ratio** | Float | If the ratio of the number of base pairs of contigs between 1000-2500 bp smaller than this value, the minimal length will be set as 1000bp, otherwise 2500bp. | 0.05 | Optional |
@@ -128,9 +128,8 @@ The TheiaMeta_Illumina_PE workflow processes Illumina paired-end (PE) reads ge
 ### Workflow Tasks
 
 ??? task "`versioning`: Version Capture for TheiaMeta"
-
     The `versioning` task captures the workflow version from the GitHub (code repository) version.
-        
+
     !!! techdetails "Version Capture Technical details"
         
         |  | Links |
@@ -255,17 +254,13 @@ The TheiaMeta_Illumina_PE workflow processes Illumina paired-end (PE) reads ge
         | Software Documentation | [SPAdes Manual](https://ablab.github.io/spades/index.html) |
         | Original Publication(s) | [metaSPAdes: a new versatile metagenomic assembler](http://www.genome.org/cgi/doi/10.1101/gr.213959.116) |
 
-??? task "`minimap2`: Assembly Alignment and Contig Filtering"
-
-    If a reference genome is provided through the **`reference`** optional input, the assembly produced with `metaspades` will be mapped to the reference genome with `minimap2`. The contigs which align to the reference are retrieved and returned in the **`assembly_fasta`** output.
+??? task "`minimap2`: Assembly Correction"
 
     `minimap2` is a popular aligner that is used for correcting the assembly produced by metaSPAdes. This is done by aligning the reads back to the generated assembly or a reference genome.
 
-    In minimap2, "modes" are a group of preset options. Two different modes are used in this task depending on whether a reference genome is provided.
-
-    If a reference genome is _not_ provided, the only mode used in this task is `sr` which is intended for "short single-end reads without splicing". The `sr` mode indicates the following parameters should be used: `-k21 -w11 --sr --frag=yes -A2 -B8 -O12,32 -E2,1 -b0 -r100 -p.5 -N20 -f1000,5000 -n2 -m20 -s40 -g100 -2K50m --heap-sort=yes --secondary=no`. The output file is in SAM format.
-
-    If a reference genome is provided, then after the draft assembly polishing with `pilon`, this task runs again with the mode set to `asm20` which is intended for "long assembly to reference mapping". The `asm20` mode indicates the following parameters should be used: `-k19 -w10 -U50,500 --rmq -r100k -g10k -A1 -B4 -O6,26 -E2,1 -s200 -z200 -N50`. The output file is in PAF format.
+    In minimap2, "modes" are a group of preset options.
+    
+    The mode used in this task is `sr` which is intended for "short single-end reads without splicing". The `sr` mode indicates the following parameters should be used: `-k21 -w11 --sr --frag=yes -A2 -B8 -O12,32 -E2,1 -b0 -r100 -p.5 -N20 -f1000,5000 -n2 -m20 -s40 -g100 -2K50m --heap-sort=yes --secondary=no`. The output file is in SAM format.
 
     For more information, please see the [minimap2 manpage](https://lh3.github.io/minimap2/minimap2.html)
 
@@ -298,12 +293,53 @@ The TheiaMeta_Illumina_PE workflow processes Illumina paired-end (PE) reads ge
         | Software Source Code | [Pilon on GitHub](https://github.com/broadinstitute/pilon) |
         | Software Documentation | [Pilon Wiki](https://github.com/broadinstitute/pilon/wiki) |
         | Original Publication(s) | [Pilon: An Integrated Tool for Comprehensive Microbial Variant Detection and Genome Assembly Improvement](https://doi.org/10.1371/journal.pone.0112963) |
+
+#### Reference Alignment & Contig Filtering
+
+!!! hint ""
+    These tasks only run if a reference is provided through the `reference` optional input.
+
+??? task "`minimap2`: Assembly Alignment and Contig Filtering"
+    `minimap2` is a popular aligner that is used here to to map the Pilon-polished assembly to the reference genome. Any aligned contigs are retrieved and returned.
+
+    In minimap2, "modes" are a group of preset options. 
+
+    The mode used in this task is `asm20` which is intended for "long assembly to reference mapping". The `asm20` mode indicates the following parameters should be used: `-k19 -w10 -U50,500 --rmq -r100k -g10k -A1 -B4 -O6,26 -E2,1 -s200 -z200 -N50`. The output file is in PAF format.
+
+    For more information, please see the [minimap2 manpage](https://lh3.github.io/minimap2/minimap2.html)
+
+    !!! techdetails "minimap2 Technical Details"
+        | | Links |
+        |---|---|
+        | Task | [task_minimap2.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/alignment/task_minimap2.wdl) |
+        | Software Source Code | [minimap2 on GitHub](https://github.com/lh3/minimap2) |
+        | Software Documentation | [minimap2](https://lh3.github.io/minimap2) |
+        | Original Publication(s) | [Minimap2: pairwise alignment for nucleotide sequences](https://academic.oup.com/bioinformatics/article/34/18/3094/4994778) |
+
+??? task "Parsing the PAF file into a FASTA file"
+
+    Following the `minimap2` alignment, the output PAF file is parsed into a FASTA file using `seqkit` and then coverage is calculated using `awk`.
+
+    !!! techdetails "`parse_mapping` Technical Details"
+        | | Links |
+        |---|---|
+        | Task | [task_parse_mapping.wdl#retrieve_aligned_contig_paf](https://github.com/theiagen/public_health_bioinformatics/blob/69223caab616070ab92cf1abedc78c9f92e95f6b/tasks/utilities/data_handling/task_parse_mapping.wdl#L3)<br>[task_parse_mapping.wdl#calculate_coverage_paf](https://github.com/theiagen/public_health_bioinformatics/blob/69223caab616070ab92cf1abedc78c9f92e95f6b/tasks/utilities/data_handling/task_parse_mapping.wdl#L48) |
+        | Software Source Code | [seqkit on GitHub](https://github.com/shenwei356/seqkit)
+        | Software Documentation | [seqkit](https://bioinf.shenwei.me/seqkit/) |
+        | Original Publication(s) | [SeqKit: A Cross-Platform and Ultrafast Toolkit for FASTA/Q File Manipulation](https://doi.org/10.1371/journal.pone.0163962)<br>[SeqKit2: A Swiss army knife for sequence and alignment processing](https://doi.org/10.1002/imt2.191) |
+
 #### Assembly QC
+
+!!! hint ""
+    This task is run on either:
+
+    - the reference-aligned contigs (if a reference was provided), or 
+    - the Pilon-polished assembly_fasta (if no reference was provided).
 
 ??? task  "`quast`: Assembly Quality Assessment"
 
     QUAST stands for QUality ASsessment Tool. It evaluates genome/metagenome assemblies by computing various metrics without a reference being necessary. It includes useful metrics such as number of contigs, length of the largest contig and N50. 
-
+    
     !!! techdetails "QUAST Technical Details"
         
         |  | Links |
@@ -315,9 +351,82 @@ The TheiaMeta_Illumina_PE workflow processes Illumina paired-end (PE) reads ge
 
 #### Binning
 
-??? task "`semibin2`: Metagenomic binning (if a reference is NOT provided)"
+!!! hint ""
+    These tasks only run if a reference is _not_ provided.
 
-    If no reference genome is provided through the **`reference`** optional input, the assembly produced with `metaspades` will be binned with `semibin2`, a a command tool for metagenomic binning with deep learning. 
+??? task "`bwa`: Read alignment to the assembly"
+    ==If a reference is _not_ provided==, BWA (Burrow-Wheeler Aligner) is used to align the clean reads to the Pilon-polished assembly_fasta.
+
+    !!! techdetails "BWA Technical Details"
+        
+        |  | Links |
+        | --- | --- |
+        | Task | [task_bwa.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/alignment/task_bwa.wdl) |
+        | Software Source Code | [BWA on GitHub](https://github.com/lh3/bwa) |
+        | Software Documentation | [BWA Manual](https://bio-bwa.sourceforge.net/) |
+        | Original Publication(s) | [Aligning sequence reads, clone sequences and assembly contigs with BWA-MEM](https://arxiv.org/abs/1303.3997) |
+
+??? task "`semibin2`: Metagenomic binning"
+
+    After the alignment, the resulting BAM file and index and the Pilon-polished assembly_fasta will be binned with `semibin2`, a command-line tool for metagenomic binning with deep learning. Specifically, it uses a semi-supervised siamese neural network that uses knowledge from reference genomes while maintaining reference-exclusive bins. By default, the `global` environemnt model is used, though a variety of options that may be better suited for your sample are available, and are listed in the relevant inputs section.
+
+    !!! techdetails "SemiBin2 Technical Details"
+        
+        |  | Links |
+        | --- | --- |
+        | Task | [task_semibin2.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_semibin.wdl) |
+        | Software Source Code | [SemiBin2 on GitHub](https://github.com/BigDataBiology/SemiBin) |
+        | Software Documenttation | [SemiBin2 ReadTheDocs](https://semibin.readthedocs.io/en/stable/usage/) |
+        | Original Publication(s) | [A deep siamese neural network improves metagenome-assembled genomes in microbiome datasets across different environments](https://doi.org/10.1038/s41467-022-29843-y) |
+
+#### Additional Outputs
+
+!!! hint ""
+    These tasks only run if `output_additional_files` is set to `true` (default is `false`).
+
+??? task "`minimap2`: Read Alignment to the Assembly"
+    `minimap2` is a popular aligner that is used here to align the clean reads to the final assembly. This is done to provide additional information about the assembly.
+
+    In minimap2, "modes" are a group of preset options.
+    
+    The mode used in this task is `sr` which is intended for "short single-end reads without splicing". The `sr` mode indicates the following parameters should be used: `-k21 -w11 --sr --frag=yes -A2 -B8 -O12,32 -E2,1 -b0 -r100 -p.5 -N20 -f1000,5000 -n2 -m20 -s40 -g100 -2K50m --heap-sort=yes --secondary=no`. The output file is in SAM format.
+
+    For more information, please see the [minimap2 manpage](https://lh3.github.io/minimap2/minimap2.html)
+
+    !!! techdetails "minimap2 Technical Details"
+        | | Links |
+        |---|---|
+        | Task | [task_minimap2.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/alignment/task_minimap2.wdl) |
+        | Software Source Code | [minimap2 on GitHub](https://github.com/lh3/minimap2) |
+        | Software Documentation | [minimap2](https://lh3.github.io/minimap2) |
+        | Original Publication(s) | [Minimap2: pairwise alignment for nucleotide sequences](https://academic.oup.com/bioinformatics/article/34/18/3094/4994778) |
+
+??? task "`samtools`: SAM File Conversion (Round 2)"
+    This task converts the output SAM file from minimap2 and converts it to a BAM file. It then sorts the BAM based on the read names, and then generates an index file.
+
+    !!! techdetails "samtools Technical Details"
+        | | Links |
+        |---|---|
+        | Task | [task_samtools.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/data_handling/task_parse_mapping.wdl) |
+        | Software Source Code | [samtools on GitHub](https://github.com/samtools/samtools) |
+        | Software Documentation | [samtools](https://www.htslib.org/doc/samtools.html) |
+        | Original Publication(s) | [The Sequence Alignment/Map format and SAMtools](https://doi.org/10.1093/bioinformatics/btp352)<br>[Twelve Years of SAMtools and BCFtools](https://doi.org/10.1093/gigascience/giab008) |
+
+??? task "Parsing the BAM file"
+    Several tasks follow that perform the following functions:
+
+    1. Calculates the average depth of coverage of the assembly using `bedtools`.
+    2. Retrieves from the BAM file any unaligned reads using `samtools`.
+    3. Retrieves from the BAM file any aligned reads using `samtools`.
+    4. Calculates the percentage of reads that were assembled using `samtools`.
+
+    !!! techdetails "`parse_mapping` Technical Details"
+        | | Links |
+        |---|---|
+        | Task | [task_parse_mapping.wdl#calculate_coverage](https://github.com/theiagen/public_health_bioinformatics/blob/69223caab616070ab92cf1abedc78c9f92e95f6b/tasks/utilities/data_handling/task_parse_mapping.wdl#L159)<br>[task_parse_mapping.wdl#retrieve_pe_reads_bam](https://github.com/theiagen/public_health_bioinformatics/blob/69223caab616070ab92cf1abedc78c9f92e95f6b/tasks/utilities/data_handling/task_parse_mapping.wdl#L125)<br>[task_parse_mapping.wdl#assembled_reads_percent](https://github.com/theiagen/public_health_bioinformatics/blob/69223caab616070ab92cf1abedc78c9f92e95f6b/tasks/utilities/data_handling/task_parse_mapping.wdl#L206) |
+        | Software Source Code | [bedtools on GitHub](https://github.com/arq5x/bedtools2)<br>[samtools on GitHub](https://github.com/samtools/samtools) |
+        | Software Documentation | [bedtools ReadTheDocs](https://bedtools.readthedocs.io/en/latest/)<br>[samtools](https://www.htslib.org/doc/samtools.html) |
+        | Original Publication(s) | [BEDTools: a flexible suite of utilities for comparing genomic features](https://doi.org/10.1093/bioinformatics/btq033)<br>[The Sequence Alignment/Map format and SAMtools](https://doi.org/10.1093/bioinformatics/btp352)<br>[Twelve Years of SAMtools and BCFtools](https://doi.org/10.1093/gigascience/giab008) |
 
 ### Outputs
 
@@ -325,102 +434,106 @@ The TheiaMeta_Illumina_PE workflow processes Illumina paired-end (PE) reads ge
 
 | **Variable** | **Type** | **Description** |
 |---|---|---|
-| assembly_fasta | File | Final assembly (MAG) |
-| assembly_length | Int | Length of final assembly in basepairs |
-| assembly_mean_coverage | Float | Mean depth of coverage of the final assembly |
-| average_read_length | Float | Average read length of the clean reads |
-| bbduk_docker | String | Docker image for bbduk |
-| bedtools_docker | String | Docker image for bedtools |
-| bedtools_version | String | Version of bedtools |
-| contig number | Int | Number of contigs in final assembly |
-| fastp_html_report | File | Report file for fastp in HTML format |
-| fastp_version | String | Version of fastp used |
-| fastq_scan_docker | String | Docker image of fastq_scan |
-| fastq_scan_clean1_json | File | JSON file output from `fastq-scan` containing summary stats about clean forward read quality and length |
-| fastq_scan_clean2_json | File | JSON file output from `fastq-scan` containing summary stats about clean reverse read quality and length |
-| fastq_scan_num_reads_clean_pairs | String | Number of read pairs after cleaning as calculated by fastq_scan |
-| fastq_scan_num_reads_clean1 | Int | Number of forward reads after cleaning as calculated by fastq_scan |
-| fastq_scan_num_reads_clean2 | Int | Number of reverse reads after cleaning as calculated by fastq_scan |
-| fastq_scan_num_reads_raw_pairs | String | Number of input read pairs as calculated by fastq_scan |
-| fastq_scan_num_reads_raw1 | Int | Number of input forward reads as calculated by fastq_scan |
-| fastq_scan_num_reads_raw2 | Int | Number of input reserve reads as calculated by fastq_scan |
-| fastq_scan_raw1_json | File | JSON file output from `fastq-scan` containing summary stats about raw forward read quality and length |
-| fastq_scan_raw2_json | File | JSON file output from `fastq-scan` containing summary stats about raw reverse read quality and length |
-| fastq_scan_version | String | fastq_scan version |
-| fastqc_clean1_html | File | Graphical visualization of clean forward read quality from fastqc to open in an internet browser |
-| fastqc_clean2_html | File | Graphical visualization of clean reverse read quality from fastqc to open in an internet browser |
-| fastqc_docker | String | Docker container used for fastqc |
-| fastqc_num_reads_clean_pairs | String | Number of read pairs after cleaning by fastqc |
-| fastqc_num_reads_clean1 | Int | Number of forward reads after cleaning by fastqc |
-| fastqc_num_reads_clean2 | Int | Number of reverse reads after cleaning by fastqc |
-| fastqc_num_reads_raw_pairs | String | Number of input read pairs by fastqc |
-| fastqc_num_reads_raw1 | Int | Number of input forward reads by fastqc |
-| fastqc_num_reads_raw2 | Int | Number of input reverse reads by fastqc |
-| fastqc_raw1_html | File | Graphical visualization of raw forward read quality from fastqc to open in an internet browser |
-| fastqc_raw2_html | File | Graphical visualization of raw reverse read qualityfrom fastqc to open in an internet browser |
-| fastqc_version | String | Version of fastqc software used |
-| kraken2_docker | String | Docker image of kraken2 |
-| kraken2_percent_human_clean | Float | Percentage of human-classified reads in the sample's clean reads |
-| kraken2_percent_human_raw | Float | Percentage of human-classified reads in the sample's raw reads |
-| kraken2_report_clean | File | Full Kraken report for the sample's clean reads |
-| kraken2_report_raw | File | Full Kraken report for the sample's raw reads |
-| kraken2_version | String | Version of kraken |
-| krona_docker | String | Docker image of Krona |
+| assembly_fasta | File | The final recovered metagenome-assembled genome (MAG). _"A MAG represents a microbial genome by a group of sequences from genome assembly with similar characteristics. It enables [the identification of] novel species [to] understand their potential functions in a dynamic ecosystem"_[^1] |
+| assembly_length | Int | The length of the assembly_fasta (see description for `assembly_fasta`) in basepairs |
+| assembly_mean_coverage | Float | The mean depth of coverage of the assembly_fasta (see description for `assembly_fasta`) |
+| average_read_length | Float | The average read length of the clean reads |
+| bbduk_docker | String | The Docker image for bbduk, which was used to remove the adapters from the sequences |
+| bedtools_docker | String | The Docker image for bedtools, which was used to calculate coverage |
+| bedtools_version | String | The version of bedtools, which was used to calculate coverage |
+| contig number | Int | The number of contigs in the assembly_fasta (see description for `assembly_fasta`) |
+| fastp_html_report | File | The report file for fastp in HTML format |
+| fastp_version | String | The version of fastp used |
+| fastq_scan_docker | String | The Docker image of fastq_scan |
+| fastq_scan_clean1_json | File | The JSON file output from `fastq-scan` containing summary stats about clean forward read quality and length |
+| fastq_scan_clean2_json | File | The JSON file output from `fastq-scan` containing summary stats about clean reverse read quality and length |
+| fastq_scan_num_reads_clean_pairs | String | The number of read pairs after cleaning as calculated by fastq_scan |
+| fastq_scan_num_reads_clean1 | Int | The number of forward reads after cleaning as calculated by fastq_scan |
+| fastq_scan_num_reads_clean2 | Int | The number of reverse reads after cleaning as calculated by fastq_scan |
+| fastq_scan_num_reads_raw_pairs | String | The number of input read pairs as calculated by fastq_scan |
+| fastq_scan_num_reads_raw1 | Int | The number of input forward reads as calculated by fastq_scan |
+| fastq_scan_num_reads_raw2 | Int | The number of input reserve reads as calculated by fastq_scan |
+| fastq_scan_raw1_json | File | The JSON file output from `fastq-scan` containing summary stats about raw forward read quality and length |
+| fastq_scan_raw2_json | File | The JSON file output from `fastq-scan` containing summary stats about raw reverse read quality and length |
+| fastq_scan_version | String | The version of fastq_scan |
+| fastqc_clean1_html | File | An HTML file that provides a graphical visualization of clean forward read quality from fastqc to open in an internet browser |
+| fastqc_clean2_html | File | An HTML file that provides a graphical visualization of clean reverse read quality from fastqc to open in an internet browser |
+| fastqc_docker | String | The Docker container used for fastqc |
+| fastqc_num_reads_clean_pairs | String | The number of read pairs after cleaning by fastqc |
+| fastqc_num_reads_clean1 | Int | The number of forward reads after cleaning by fastqc |
+| fastqc_num_reads_clean2 | Int | The number of reverse reads after cleaning by fastqc |
+| fastqc_num_reads_raw_pairs | String | The number of input read pairs by fastqc before cleaning |
+| fastqc_num_reads_raw1 | Int | The number of input forward reads by fastqc before cleaning |
+| fastqc_num_reads_raw2 | Int | The number of input reverse reads by fastqc before cleaning |
+| fastqc_raw1_html | File | An HTML file that provides a graphical visualization of raw forward read quality from fastqc to open in an internet browser |
+| fastqc_raw2_html | File | An HTML file that provides a graphical visualization of raw reverse read quality from fastqc to open in an internet browser |
+| fastqc_version | String | The version of fastqc software used |
+| kraken2_docker | String | The Docker image of kraken2 |
+| kraken2_percent_human_clean | Float | The percentage of human-classified reads in the sample's clean reads |
+| kraken2_percent_human_raw | Float | The percentage of human-classified reads in the sample's raw reads |
+| kraken2_report_clean | File | The full Kraken report for the sample's clean reads |
+| kraken2_report_raw | File | The full Kraken report for the sample's raw reads |
+| kraken2_version | String | The version of kraken |
+| krona_docker | String | The docker image of Krona |
 | krona_html_clean | File | The KronaPlot after reads are cleaned |
 | krona_html_raw | File | The KronaPlot before reads are cleaned |
-| krona_version | String | Version of Krona |
-| largest_contig | Int | Largest contig size |
-| metaspades_docker | String | Docker image of metaspades |
-| metaspades_version | String | Version of metaspades |
-| midas_primary_genus | String | Primary genus detected by MIDAS |
-| midas_report | File | MIDAS report file tsv file|
-| minimap2_docker | String | Docker image of minimap2 |
-| minimap2_version | String | Version of minimap2 |
-| ncbi_scrub_docker | String | Docker image for NCBI's HRRT |
-| percent_coverage | Float | Percentage coverage of the reference genome provided |
-| percentage_mapped_reads | Float | Percentage of mapped reads to the assembly |
-| pilon_docker | String | Docker image for pilon |
-| pilon_version | String | Version of pilon |
-| quast_docker | String | Docker image of QUAST |
-| quast_version | String | Version of QUAST |
-| read1_clean | File | Clean forward reads file |
-| read1_dehosted | File | Dehosted forward reads file |
-| read1_mapped | File | Mapped forward reads to the assembly |
-| read1_unmapped | File | Unmapped forwards reads to the assembly |
-| read2_clean | File | Clean reverse reads file |
-| read2_dehosted | File | Dehosted reverse reads file |
-| read2_mapped | File | Mapped reverse reads to the assembly |
-| read2_unmapped | File | Unmapped reverse reads to the assembly |
-| samtools_docker | String | Docker image of samtools |
-| samtools_version | String | Version of samtools |
-| semibin_bins | Array[File] | Array of binned metagenomic assembled genome files |
-| semibin_docker | String | Docker image of semibin |
-| semibin_version | String | Semibin version used |
-| theiameta_illumina_pe_analysis_date | String | Date of analysis |
-| theiameta_illumina_pe_version | String | Version of workflow |
-| trimmomatic_docker | String | Docker image of trimmomatic |
-| trimmomatic_version | String | Version of trimmomatic used |
+| krona_version | String | The version of Krona |
+| largest_contig | Int | The size of the largest contig in basepairs |
+| metaspades_docker | String | The Docker image of metaspades |
+| metaspades_version | String | The version of metaspades |
+| midas_primary_genus | String | The primary genus detected by MIDAS |
+| midas_report | File | The MIDAS report file tsv file |
+| minimap2_docker | String | The Docker image of minimap2 |
+| minimap2_version | String | The version of minimap2 |
+| ncbi_scrub_docker | String | The Docker image for NCBI's HRRT (human read removal tool) |
+| percent_coverage | Float | The percentage coverage of the reference genome provided if one was provided |
+| percentage_mapped_reads | Float | The percentage of mapped reads to the assembly_fasta |
+| pilon_docker | String | The Docker image for pilon |
+| pilon_version | String | The version of pilon |
+| quast_docker | String | The Docker image of QUAST |
+| quast_version | String | The version of QUAST |
+| read1_clean | File | The clean forward reads file |
+| read1_dehosted | File | The dehosted forward reads file |
+| read1_mapped | File | The mapped forward reads to the assembly |
+| read1_unmapped | File | The unmapped forwards reads to the assembly |
+| read2_clean | File | The clean reverse reads file |
+| read2_dehosted | File | The dehosted reverse reads file |
+| read2_mapped | File | The mapped reverse reads to the assembly |
+| read2_unmapped | File | The unmapped reverse reads to the assembly |
+| samtools_docker | String | The Docker image of samtools |
+| samtools_version | String | The version of samtools |
+| semibin_bins | Array[File] | An array of binned metagenomic assembled genome files |
+| semibin_docker | String | The Docker image of semibin |
+| semibin_version | String | The version of Semibin used |
+| theiameta_illumina_pe_analysis_date | String | The date of analysis |
+| theiameta_illumina_pe_version | String | The version of TheiaMeta used during execution |
+| trimmomatic_docker | String | The Docker image of trimmomatic |
+| trimmomatic_version | String | The version of trimmomatic |
 
 </div>
+
+[^1]: Direct quote from the abstract of _Yang C, Chowdhury D, Zhang Z, Cheung WK, Lu A, Bian Z, Zhang L. A review of computational tools for generating metagenome-assembled genomes from metagenomic sequencing data. Comput Struct Biotechnol J. 2021;19:6301-14. doi: 10.1016/j.csbj.2021.11.028._ This is a paper from 2021 that reviews some of the tools used in this workflow, though not all.
 
 ## References
 
 > **Human read removal tool (HRRT)**: <https://github.com/ncbi/sra-human-scrubber>
 <!-- -->
->**Trimmomatic:** Anthony M. Bolger and others, Trimmomatic: a flexible trimmer for Illumina sequence data, *Bioinformatics*, Volume 30, Issue 15, August 2014, Pages 2114–2120, <https://doi.org/10.1093/bioinformatics/btu170>
+>**Trimmomatic:** Anthony M. Bolger and others, Trimmomatic: a flexible trimmer for Illumina sequence data, _Bioinformatics_, Volume 30, Issue 15, August 2014, Pages 2114–2120, <https://doi.org/10.1093/bioinformatics/btu170>
 <!-- -->
 >**Fastq-Scan:** <https://github.com/rpetit3/fastq-scan>
 <!-- -->
->**metaSPAdes:** Sergey Nurk and others, metaSPAdes: a new versatile metagenomic assembler, *Genome Res.* 2017 May; 27(5): 824–834., <https://doi.org/10.1101%2Fgr.213959.116>
+>**metaSPAdes:** Sergey Nurk and others, metaSPAdes: a new versatile metagenomic assembler, _Genome Res._ 2017 May; 27(5): 824–834., <https://doi.org/10.1101%2Fgr.213959.116>
 <!-- -->
->**Pilon:** Bruce J. Walker and others. Pilon: An Integrated Tool for Comprehensive Microbial Variant Detection and Genome Assembly Improvement. *Plos One.* November 19, 2014. <https://doi.org/10.1371/journal.pone.0112963>
+>**Pilon:** Bruce J. Walker and others. Pilon: An Integrated Tool for Comprehensive Microbial Variant Detection and Genome Assembly Improvement. _Plos One._ November 19, 2014. <https://doi.org/10.1371/journal.pone.0112963>
 <!-- -->
->**Minimap2:** Heng Li, Minimap2: pairwise alignment for nucleotide sequences, *Bioinformatics*, Volume 34, Issue 18, September 2018, Pages 3094–3100, <https://doi.org/10.1093/bioinformatics/bty191>
+>**Minimap2:** Heng Li, Minimap2: pairwise alignment for nucleotide sequences, _Bioinformatics_, Volume 34, Issue 18, September 2018, Pages 3094–3100, <https://doi.org/10.1093/bioinformatics/bty191>
 <!-- -->
->**QUAST:** Alexey Gurevich and others, QUAST: quality assessment tool for genome assemblies, *Bioinformatics*, Volume 29, Issue 8, April 2013, Pages 1072–1075, <https://doi.org/10.1093/bioinformatics/btt086>
+>**QUAST:** Alexey Gurevich and others, QUAST: quality assessment tool for genome assemblies, _Bioinformatics_, Volume 29, Issue 8, April 2013, Pages 1072–1075, <https://doi.org/10.1093/bioinformatics/btt086>
 <!-- -->
->**Samtools:** Li, Heng, Bob Handsaker, Alec Wysoker, Tim Fennell, Jue Ruan, Nils Homer, Gabor Marth, Goncalo Abecasis, Richard Durbin, and 1000 Genome Project Data Processing Subgroup. 2009. The Sequence Alignment/Map format and SAMtools. Bioinformatics 25(16): 2078-2079.
+>**Samtools:** Li, Heng, Bob Handsaker, Alec Wysoker, Tim Fennell, Jue Ruan, Nils Homer, Gabor Marth, Goncalo Abecasis, Richard Durbin, and 1000 Genome Project Data Processing Subgroup. 2009. The Sequence Alignment/Map format and SAMtools. Bioinformatics 25(16): 2078-2079. <https://doi.org/10.1093/bioinformatics/btp352>
+<!-- -->
+>**BEDtools:** Quinlan AR and Hall IM, 2010. BEDTools: a flexible suite of utilities for comparing genomic features. Bioinformatics. 26, 6, pp. 841–842. <https://doi.org/10.1093/bioinformatics/btq033>
 <!-- -->
 >**Bcftools:** Petr Danecek, James K Bonfield, Jennifer Liddle, John Marshall, Valeriu Ohan, Martin O Pollard, Andrew Whitwham, Thomas Keane, Shane A McCarthy, Robert M Davies, Heng Li. Twelve years of SAMtools and BCFtools. GigaScience, Volume 10, Issue 2, February 2021, giab008, <https://doi.org/10.1093/gigascience/giab008>
 <!-- -->
->**Semibin2:** Shaojun Pan, Xing-Ming Zhao, Luis Pedro Coelho, SemiBin2: self-supervised contrastive learning leads to better MAGs for short- and long-read sequencing, *Bioinformatics*, Volume 39, Issue Supplement_1, June 2023, Pages i21–i29, <https://doi.org/10.1093/bioinformatics/btad209>
+>**Semibin2:** Shaojun Pan, Xing-Ming Zhao, Luis Pedro Coelho, SemiBin2: self-supervised contrastive learning leads to better MAGs for short- and long-read sequencing, _Bioinformatics_, Volume 39, Issue Supplement_1, June 2023, Pages i21–i29, <https://doi.org/10.1093/bioinformatics/btad209>

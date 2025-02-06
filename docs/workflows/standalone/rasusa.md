@@ -4,7 +4,7 @@
 
 | **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
 |---|---|---|---|---|
-| [Standalone](../../workflows_overview/workflows_type.md/#standalone) | [Any Taxa](../../workflows_overview/workflows_kingdom.md/#any-taxa) | PHB v2.0.0 | Yes | Sample-level |
+| [Standalone](../../workflows_overview/workflows_type.md/#standalone) | [Any Taxa](../../workflows_overview/workflows_kingdom.md/#any-taxa) | PHB vX.X.X | Yes | Sample-level |
 
 ## RASUSA_PHB
 
@@ -39,7 +39,7 @@ RASUSA functions to randomly downsample the number of raw reads to a user-define
 | rasusa_task | **bases** | String | Explicitly define the number of bases required in the downsampled reads in quotations; when used, genome size and coverage are ignored; acceptable metric suffixes include: `b`, `k`, `m`, `g`, and `t` for base, kilo, mega, giga, and tera, respectively | | Optional |
 | rasusa_task | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional |
 | rasusa_task | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
-| rasusa_task | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/staphb/rasusa:0.7.0" | Optional |
+| rasusa_task | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/staphb/rasusa:2.1.0" | Optional |
 | rasusa_task | **frac** | Float | Explicitly define the fraction of reads to keep in the subsample; when used, genome size and coverage are ignored; acceptable inputs include whole numbers and decimals, e.g. 50.0 will leave 50% of the reads in the subsample | | Optional |
 | rasusa_task | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional |
 | rasusa_task | **num** | Int | Optional: explicitly define the number of reads in the subsample; when used, genome size and coverage are ignored; acceptable metric suffixes include: `b`, `k`, `m`, `g`, and `t` for base, kilo, mega, giga, and tera, respectively | | Optional |

@@ -11,7 +11,7 @@ task genoflu {
 
     Int cpu = 1
     Int disk_size = 25
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/genoflu:1.03"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/genoflu:1.05"
     Int memory = 2
   }
   command <<<
