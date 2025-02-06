@@ -8,6 +8,8 @@ task dorado_trim {
     Int cpu = 4
     Int memory = 16
     Int disk_size = 100
+    String sequencing_kit   # Name of the sequencing kit
+
   }
   command <<< 
     # Create output directory for trimmed FASTQ files
@@ -22,6 +24,7 @@ task dorado_trim {
         
       # Perform primer trimming and save output in the designated directory
       dorado trim "$fq" \
+        --sequencing-kit "~{sequencing_kit}" \
         --primer-sequences "~{custom_primers}" \
         --threads ~{cpu} \
         --emit-fastq > "$output_dir/$filename"

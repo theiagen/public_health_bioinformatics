@@ -58,6 +58,7 @@ workflow dorado_basecalling_workflow {
     call task_dorado_trim.dorado_trim as dorado_trim {
       input:
         fastq_files = dorado_demux.fastq_files,
+        sequencing_kit = kit_name,
         custom_primers = select_first([custom_primers])
     }
   }
