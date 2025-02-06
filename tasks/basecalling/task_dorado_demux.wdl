@@ -80,9 +80,7 @@ task dorado_demux {
     done
 
     echo "### Compressing merged FASTQ files ###"
-    for final_fastq in merged_output/*.fastq; do
-      gzip -f "$final_fastq"
-    done
+    pigz merged_output/*.fastq
 
     echo "### Dorado demux process completed successfully ###"
   >>>
