@@ -56,8 +56,7 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 | theiaprok_illumina_se | **read1** | File | Illumina forward read file in FASTQ file format (compression optional) |  | Required | SE |
 | theiaprok_ont | **read1** | File | Base-called ONT read file in FASTQ file format (compression optional) |  | Required | ONT |
 | *workflow name | **abricate_db** | String | Database to use with the Abricate tool. Options: NCBI, CARD, ARG-ANNOT, Resfinder, MEGARES, EcOH, PlasmidFinder, Ecoli_VF and VFDB | vfdb | Optional | FASTA, ONT, PE, SE |
-| *workflow name | **bakta_db** | File | Database selection for Bakta annotation, supports "light" or "full" options. The appropriate database file will be selected and extracted based on the choice. | full | Optional | FASTA, ONT, PE, SE |
-| *workflow name | **bakta_custom_db** | File |Path to a custom Bakta-compatible database file, provided by the user. If specified, this file overrides the bakta_db selection. |  | Optional | FASTA, ONT, PE, SE |
+| *workflow name | **bakta_db** | File |Database selection for Bakta annotation. Options: "light" (smaller, faster), "full" (more comprehensive), or a Google Storage URI (gs://...) pointing to a custom Bakta database archive (.tar.gz). The selected database will be extracted before annotation. | full | Optional | FASTA, ONT, PE, SE |
 | *workflow name | **call_abricate** | Boolean | Set to true to enable the Abricate task | FALSE | Optional | FASTA, ONT, PE, SE |
 | *workflow name | **call_ani** | Boolean | Set to true to enable the ANI task | FALSE | Optional | FASTA, ONT, PE, SE |
 | *workflow name | **call_kmerfinder** | Boolean | Set to true to enable the kmerfinder task | FALSE | Optional | FASTA, ONT, PE, SE |
@@ -1102,7 +1101,7 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 
     **Full** Database (default): Comprehensive with extensive reference annotations, suitable for detailed and accurate annotations. Specify "full" for the `bakta_db` input.
 
-    **Custom** Database: Allows users to provide a Bakta-compatible database for specialized use cases. The database must follow the Bakta format, include a valid version.json, and be specified via the `bakta_custom_db` parameter, which overrides the light and full options. Follow the [Bakta database documentation](https://github.com/oschwengers/bakta#database) for detailed formatting requirements.
+    **Custom** Database: Allows users to provide a Bakta-compatible database stored in Google Cloud Storage Must be a .tar.gz archive containing a properly formatted Bakta database with a valid version.json Follow the [Bakta database documentation](https://github.com/oschwengers/bakta#database) for detailed formatting requirements. Example: `"bakta_db": "gs://my-bucket/custom_bakta_db.tar.gz"`
 
     !!! techdetails "Bakta Technical Details"
         

@@ -57,7 +57,6 @@ workflow theiaprok_ont {
     Boolean call_abricate = false
     String abricate_db = "vfdb"
     String genome_annotation = "prokka" # options: "prokka" or "bakta"
-    File? bakta_custom_db # Optional custom Bakta database path
     String bakta_db = "full" # Default: "light" or "full"
     String? expected_taxon # allow user to provide organism (e.g. "Clostridioides_difficile") string to amrfinder. Useful when gambit does not predict the correct species
     
@@ -178,13 +177,16 @@ workflow theiaprok_ont {
               samplename = samplename
           }
         }
-        if (genome_annotation == "bakta") {
-          if(bakta_db == "light") {
-            File bakta_db_light = "gs://theiagen-public-files-rp/terra/theiaprok-files/bakta_db_light_2025-01-23.tar.gz"
-          }
-          if (bakta_db == "full") {
+        if (genome_annotation == "bakta") {  
+          if (bakta_db == "light") {  
+            File bakta_db_light = "gs://theiagen-public-files-rp/terra/theiaprok-files/bakta_db_light_2025-01-23.tar.gz"  
+          }  
+          if (bakta_db == "full") {  
             File bakta_db_full = "gs://theiagen-public-files-rp/terra/theiaprok-files/bakta_db_full_2024-01-23.tar.gz"            
-          }
+          }  
+          if (!(bakta_db == "light" || bakta_db == "full")) {  
+              File bakta_custom_db = bakta_db  
+          } 
           call bakta_task.bakta {
             input:
               assembly = dragonflye.assembly_fasta,
