@@ -131,7 +131,7 @@ workflow merlin_magic {
     Int? emmtyper_min_perfect
     Int? emmtyper_min_good
     Int? emmtyper_max_size
-    #hicap options
+    # hicap options
     Float? hicap_gene_coverage
     Float? hicap_gene_identity
     Float? hicap_broken_gene_identity

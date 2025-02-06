@@ -279,9 +279,6 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 | export_taxon_tables | **theiaprok_illumina_se_version** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE |
 | export_taxon_tables | **theiaprok_ont_analysis_date** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, PE, SE |
 | export_taxon_tables | **theiaprok_ont_version** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, PE, SE |
-| export_taxon_tables | **tiptoft_plasmid_replicon_fastq** | File | Internal component, do not modify |  | Do not modify, Optional | FASTA, PE, SE |
-| export_taxon_tables | **tiptoft_plasmid_replicon_genes** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, PE, SE |
-| export_taxon_tables | **tiptoft_version** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, PE, SE |
 | export_taxon_tables | **trimmomatic_version** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT |
 | gambit | **cpu** | Int | Number of CPUs to allocate to the task | 8 | Optional | FASTA, ONT, PE, SE |
 | gambit | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | FASTA, ONT, PE, SE |
@@ -562,7 +559,7 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 | read_QC_trim | **rasusa_bases** | String | Explicitly set the number of bases required e.g., 4.3kb, 7Tb, 9000, 4.1MB. If this option is given, --coverage and --genome-size are ignored | | Optional | ONT |
 | read_QC_trim | **rasusa_cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional | ONT |
 | read_QC_trim | **rasusa_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | ONT |
-| read_QC_trim | **rasusa_docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/staphb/rasusa:0.7.0" | Optional | ONT |
+| read_QC_trim | **rasusa_docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/staphb/rasusa:2.1.0" | Optional | ONT |
 | read_QC_trim | **rasusa_fraction_of_reads** | Float | Subsample to a fraction of the reads - e.g., 0.5 samples half the reads | | Optional | ONT |
 | read_QC_trim | **rasusa_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | ONT |
 | read_QC_trim | **rasusa_number_of_reads** | Int | Subsample to a specific number of reads | | Optional | ONT |
@@ -571,17 +568,6 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 | read_QC_trim | **read_qc** | String | Allows the user to decide between fastq_scan (default) and fastqc for the evaluation of read quality. | fastq_scan | Optional | PE, SE |
 | read_QC_trim | **run_prefix** | String | Internal component, do not modify |  | Do not modify, Optional | ONT |
 | read_QC_trim | **target_organism** | String | This string is searched for in the kraken2 outputs to extract the read percentage |  | Optional | ONT, PE, SE |
-| read_QC_trim | **tiptoft_cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional | ONT |
-| read_QC_trim | **tiptoft_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | ONT | 
-| read_QC_trim | **tiptoft_docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/staphb/tiptoft:1.0.2" | Optional | ONT |
-| read_QC_trim | **tiptoft_kmer_size** | String | The kmer size | | Optional | ONT |
-| read_QC_trim | **tiptoft_margin** | Int | Flanking region around a block to use for mapping | | Optional | ONT |
-| read_QC_trim | **tiptoft_max_gap** | Int | Maximum gap for blocks to be contiguous, measured in multiples of the kmer size | | Optional | ONT |
-| read_QC_trim | **tiptoft_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | ONT |
-| read_QC_trim | **tiptoft_min_block_size** | Int | Minimum block size in bases | | Optional | ONT |
-| read_QC_trim | **tiptoft_min_fasta_hits** | Int | Minimum number of kmers matching a read | | Optional | ONT
-| read_QC-trim | **tiptoft_min_kmers_for_onex_pass** | Int | Minimum number of kmers matching a read in 1st pass | | Optional | ONT |
-| read_QC_trim | **tiptoft_min_perc_coverage** | Int | Minimum percentage ocoverage o typing sequence to report | | Optional | ONT |
 | read_QC_trim | **trimmomatic_args** | String | Additional arguments to pass to trimmomatic. "-phred33" specifies the Phred Q score encoding which is almost always phred33 with modern sequence data. | -phred33 | Optional | PE, SE |
 | resfinder_task | **acquired** | Boolean | Set to true to tell ResFinder to identify acquired resistance genes | TRUE | Optional | FASTA, ONT, PE, SE |
 | resfinder_task | **call_pointfinder** | Boolean | Set to true to enable detection of point mutations. | FALSE | Optional | FASTA, ONT, PE, SE |
@@ -660,7 +646,7 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 
 ??? task "`screen`: Total Raw Read Quantification and Genome Size Estimation"
 
-    The [`screen`](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/comparisons/task_screen.wdl) task ensures the quantity of sequence data is sufficient to undertake genomic analysis. It uses [`fastq-scan`](https://github.com/rpetit3/fastq-scan) and bash commands for quantification of reads and base pairs, and [mash](https://mash.readthedocs.io/en/latest/index.html) sketching to estimate the genome size and its coverage. At each step, the results are assessed relative to pass/fail criteria and thresholds that may be defined by optional user inputs. Samples that do not meet these criteria will not be processed further by the workflow:
+    The [`screen`](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/comparisons/task_screen.wdl) task ensures the quantity of sequence data is sufficient to undertake genomic analysis. It uses [`fastq-scan`](https://github.com/rpetit3/fastq-scan) and bash commands for quantification of reads and base pairs, and [mash](https://mash.readthedocs.io/en/latest/index.html) sketching to estimate the genome size and its coverage. At each step, the results are assessed relative to pass/fail criteria and thresholds that may be defined by optional user inputs. Samples are run through all threshold checks, regardless of failures, and the workflow will terminate after the `screen` task if any thresholds are not met:
 
     1. Total number of reads: A sample will fail the read screening task if its total number of reads is less than or equal to `min_reads`.
     2. The proportion of basepairs reads in the forward and reverse read files: A sample will fail the read screening if fewer than `min_proportion` basepairs are in either the reads1 or read2 files.
@@ -838,7 +824,7 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 
     **Read subsampling:** Samples are automatically randomly subsampled to 150X coverage using `RASUSA`.
 
-    **Plasmid prediction:** `tiptoft`  is used to predict plasmid sequences directly from uncorrected long-read data. Plasmids are identified using replicon sequences used for typing from [PlasmidFinder](https://cge.food.dtu.dk/services/PlasmidFinder/).
+    **Plasmid prediction:** Plasmids are identified using replicon sequences used for typing from [PlasmidFinder](https://cge.food.dtu.dk/services/PlasmidFinder/).
 
     **Read filtering:** Reads are filtered by length and quality using `nanoq`. By default, sequences with less than 500 basepairs and quality score lower than 10 are filtered out to improve assembly accuracy.
 
@@ -849,9 +835,9 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
         | Workflow | **TheiaProk_ONT** |
         | --- | --- |
         | Sub-workflow | [wf_read_QC_trim_ont.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_read_QC_trim_ont.wdl) |
-        | Tasks | [task_nanoplot.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_nanoplot.wdl) [task_fastq_scan.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_fastq_scan.wdl) [task_rasusa.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/task_rasusa.wdl) [task_nanoq.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_nanoq.wdl) [task_tiptoft.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/plasmid_detection/task_tiptoft.wdl) |
-        | Software Source Code | [fastq-scan](https://github.com/rpetit3/fastq-scan), [NanoPlot](https://github.com/wdecoster/NanoPlot), [RASUSA](https://github.com/mbhall88/rasusa), [tiptoft](https://github.com/andrewjpage/tiptoft), [nanoq](https://github.com/esteinig/nanoq) |
-        | Original Publication(s) | [NanoPlot paper](https://academic.oup.com/bioinformatics/article/39/5/btad311/7160911)<br>[RASUSA paper](https://doi.org/10.21105/joss.03941)<br>[Nanoq Paper](https://doi.org/10.21105/joss.02991)<br>[Tiptoft paper](https://doi.org/10.21105/joss.01021) |
+        | Tasks | [task_nanoplot.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_nanoplot.wdl) [task_fastq_scan.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_fastq_scan.wdl) [task_rasusa.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/task_rasusa.wdl) [task_nanoq.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_nanoq.wdl)
+        | Software Source Code | [fastq-scan](https://github.com/rpetit3/fastq-scan), [NanoPlot](https://github.com/wdecoster/NanoPlot), [RASUSA](https://github.com/mbhall88/rasusa), [nanoq](https://github.com/esteinig/nanoq) |
+        | Original Publication(s) | [NanoPlot paper](https://academic.oup.com/bioinformatics/article/39/5/btad311/7160911)<br>[RASUSA paper](https://doi.org/10.21105/joss.03941)<br>[Nanoq Paper](https://doi.org/10.21105/joss.02991)<br> |
 
 ??? task "`dragonflye`: _De novo_ Assembly"
     !!! techdetails "dragonflye Technical Details"
@@ -1970,8 +1956,10 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
 | r2_mean_readlength_clean | Float | Mean read length of clean reverse reads | PE |
 | r2_mean_readlength_raw | Float | Mean read length of raw reverse reads | PE |
 | rasusa_version | String | Version of RASUSA used for analysis | ONT |
-| read_screen_clean | String | PASS or FAIL result from clean read screening; FAIL accompanied by the reason for failure | ONT, PE, SE |
-| read_screen_raw | String | PASS or FAIL result from raw read screening; FAIL accompanied by thereason for failure | ONT, PE, SE |
+| read_screen_raw | String | PASS or FAIL result from raw read screening; FAIL accompanied by the reason(s) for failure | ONT, PE, SE |
+| read_screen_raw_tsv | File | Raw read screening report TSV depicting read counts, total read base pairs, and estimated genome length | ONT, PE, SE |
+| read_screen_clean | String | PASS or FAIL result from clean read screening; FAIL accompanied by the reason(s) for failure | ONT, PE, SE |
+| read_screen_clean_tsv | File | Clean read screening report TSV depicting read counts, total read base pairs, and estimated genome length | ONT, PE, SE |
 | read1_clean | File | Clean forward reads file | ONT, PE, SE |
 | read2_clean | File | Clean reverse reads file | PE |
 | resfinder_db_version | String | Version of ResFinder database | FASTA, ONT, PE, SE |
@@ -2103,9 +2091,6 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
 | theiaprok_illumina_se_version | String | Version of TheiaProk SE workflow execution | SE |
 | theiaprok_ont_analysis_date | String | Date of TheiaProk ONT workflow execution | ONT |
 | theiaprok_ont_version | String | Version of TheiaProk ONT workflow execution | ONT |
-| tiptoft_plasmid_replicon_fastq | File | File produced by tiptoft that contains reads containing plasmid rep/inc genes | ONT |
-| tiptoft_plasmid_replicon_genes | String | Rep/inc genes found in sample | ONT |
-| tiptoft_version | String | Version of tiptoft used for analysis | ONT |
 | trimmomatic_docker | String | Docker image used for trimmomatic | PE, SE |
 | trimmomatic_version | String | Version of trimmomatic used | PE, SE |
 | ts_mlst_allelic_profile | String | Profile of MLST loci and allele numbers predicted by MLST | FASTA, ONT, PE, SE |
