@@ -9593,7 +9593,7 @@
 </details>
 <details class="task">
 <summary><code>screen</code>: Total Raw Read Quantification and Genome Size Estimation</summary>
-<p>The <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/comparisons/task_screen.wdl"><code>screen</code></a> task ensures the quantity of sequence data is sufficient to undertake genomic analysis. It uses <a href="https://github.com/rpetit3/fastq-scan"><code>fastq-scan</code></a> and bash commands for quantification of reads and base pairs, and <a href="https://mash.readthedocs.io/en/latest/index.html">mash</a> sketching to estimate the genome size and its coverage. At each step, the results are assessed relative to pass/fail criteria and thresholds that may be defined by optional user inputs. Samples that do not meet these criteria will not be processed further by the workflow:</p>
+<p>The <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/comparisons/task_screen.wdl"><code>screen</code></a> task ensures the quantity of sequence data is sufficient to undertake genomic analysis. It uses <a href="https://github.com/rpetit3/fastq-scan"><code>fastq-scan</code></a> and bash commands for quantification of reads and base pairs, and <a href="https://mash.readthedocs.io/en/latest/index.html">mash</a> sketching to estimate the genome size and its coverage. At each step, the results are assessed relative to pass/fail criteria and thresholds that may be defined by optional user inputs. Samples are run through all threshold checks, regardless of failures, and the workflow will terminate after the <code>screen</code> task if any thresholds are not met:</p>
 <ol>
 <li>Total number of reads: A sample will fail the read screening task if its total number of reads is less than or equal to <code>min_reads</code>.</li>
 <li>The proportion of basepairs reads in the forward and reverse read files: A sample will fail the read screening if fewer than <code>min_proportion</code> basepairs are in either the reads1 or read2 files.</li>
@@ -11485,15 +11485,27 @@
 <td>ONT, PE</td>
 </tr>
 <tr>
-<td>read_screen_clean</td>
+<td>read_screen_raw</td>
 <td>String</td>
-<td>A PASS or FAIL flag for input reads after cleaning</td>
+<td>PASS or FAIL result from raw read screening; FAIL accompanied by the reason(s) for failure</td>
 <td>ONT, PE, SE</td>
 </tr>
 <tr>
-<td>read_screen_raw</td>
+<td>read_screen_raw_tsv</td>
+<td>File</td>
+<td>Raw read screening report TSV depicting read counts, total read base pairs, and estimated genome length</td>
+<td>ONT, PE, SE</td>
+</tr>
+<tr>
+<td>read_screen_clean</td>
 <td>String</td>
-<td>A PASS or FAIL flag for input reads</td>
+<td>PASS or FAIL result from clean read screening; FAIL accompanied by the reason(s) for failure</td>
+<td>ONT, PE, SE</td>
+</tr>
+<tr>
+<td>read_screen_clean_tsv</td>
+<td>File</td>
+<td>Clean read screening report TSV depicting read counts, total read base pairs, and estimated genome length</td>
 <td>ONT, PE, SE</td>
 </tr>
 <tr>
@@ -11804,7 +11816,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2025-02-05</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2025-02-06</span>
   </span>
 
     
