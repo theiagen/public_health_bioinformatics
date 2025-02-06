@@ -72,7 +72,7 @@ task check_reads {
     # check total number of basepairs 
     bp_total=$(expr $read1_bp + $read2_bp)
     if [ "${bp_total}" -le "~{min_basepairs}" ]; then
-      fail_log+="; ${bp_total} read basepairs is below the minimum of ~{min_basepairs}"
+      fail_log+="; the number of basepairs (${bp_total}) is below the minimum of ~{min_basepairs}"
     fi
 
     #checks four and five: estimated genome length and coverage
