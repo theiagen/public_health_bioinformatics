@@ -40,9 +40,9 @@ task stxtyper {
       echo "DEBUG: No hits found in StxTyper output TSV. Exiting task with exit code 0 now."
       
       # create empty output files
-      touch stxtyper_all_hits.txt stxtyper_complete_operons.txt stxtyper_partial_hits.txt stxtyper_stx_frameshifts_or_internal_stop_hits.txt  stx_novel_hits.txt
+      touch stxtyper_all_hits.txt stxtyper_complete_operons.txt stxtyper_partial_hits.txt stxtyper_stx_frameshifts_or_internal_stop_hits.txt  stx_novel_hits.txt stxtyper_extended_operons.txt stxtyper_ambiguous_hits.txt
       # put "none" into all of them so task does not fail
-      echo "None" | tee stxtyper_all_hits.txt stxtyper_complete_operons.txt stxtyper_partial_hits.txt stxtyper_stx_frameshifts_or_internal_stop_hits.txt stx_novel_hits.txt 
+      echo "None" | tee stxtyper_all_hits.txt stxtyper_complete_operons.txt stxtyper_partial_hits.txt stxtyper_stx_frameshifts_or_internal_stop_hits.txt stx_novel_hits.txt stxtyper_extended_operons.txt stxtyper_ambiguous_hits.txt
       exit 0
     fi
     
