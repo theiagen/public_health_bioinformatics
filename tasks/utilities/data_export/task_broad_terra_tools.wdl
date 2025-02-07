@@ -81,9 +81,6 @@ task export_taxon_tables {
     Float? nanoplot_r1_median_q_clean
     Float? nanoplot_r1_est_coverage_clean
     String? rasusa_version
-    File? tiptoft_plasmid_replicon_fastq
-    String? tiptoft_plasmid_replicon_genes
-    String? tiptoft_version
     File? assembly_fasta
     File? contigs_gfa
     String? dragonflye_version
@@ -498,9 +495,6 @@ task export_taxon_tables {
       "nanoplot_r1_median_q_clean": "~{nanoplot_r1_median_q_clean}",
       "nanoplot_r1_est_coverage_clean": "~{nanoplot_r1_est_coverage_clean}",
       "rasusa_version": "~{rasusa_version}",
-      "tiptoft_plasmid_replicon_fastq": "~{tiptoft_plasmid_replicon_fastq}",
-      "tiptoft_plasmid_replicon_genes": "~{tiptoft_plasmid_replicon_genes}",
-      "tiptoft_version": "~{tiptoft_version}",
       "assembly_fasta": "~{assembly_fasta}",
       "contigs_gfa": "~{contigs_gfa}",
       "dragonflye_version": "~{dragonflye_version}",

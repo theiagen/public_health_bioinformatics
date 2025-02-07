@@ -75,7 +75,8 @@ workflow freyja_fastq {
         reference = reference_genome,
         query1 = read_QC_trim_ont.read1_clean,
         output_sam = true,
-        mode = "map-ont"
+        mode = "map-ont",
+        long_read_flags = false
     }
     call task_parse_mapping.sam_to_sorted_bam {
       input:

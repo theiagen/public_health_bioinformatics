@@ -39,7 +39,7 @@ workflow snippy_streamline_fasta {
       call snippy_variants_workflow.snippy_variants_wf {
         input:
             assembly_fasta = duplet.left,
-            reference_genome_file = select_first([reference_genome_file, ncbi_datasets_download_genome_accession.ncbi_datasets_assembly_fasta]),
+            reference_genome_file = select_first([reference_genome_file, ncbi_datasets_download_genome_accession.ncbi_datasets_gbff, ncbi_datasets_download_genome_accession.ncbi_datasets_assembly_fasta]),
             samplename = duplet.right
         }
     }
@@ -48,7 +48,7 @@ workflow snippy_streamline_fasta {
       tree_name = tree_name_updated,
       snippy_variants_outdir_tarball = snippy_variants_wf.snippy_variants_outdir_tarball,
       samplenames = samplenames,
-      reference_genome_file = select_first([reference_genome_file, ncbi_datasets_download_genome_accession.ncbi_datasets_assembly_fasta]),
+      reference_genome_file = select_first([reference_genome_file, ncbi_datasets_download_genome_accession.ncbi_datasets_gbff, ncbi_datasets_download_genome_accession.ncbi_datasets_assembly_fasta]),
       snippy_variants_qc_metrics = snippy_variants_wf.snippy_variants_qc_metrics
   }
   call versioning.version_capture {
@@ -91,7 +91,7 @@ workflow snippy_streamline_fasta {
     String snippy_iqtree2_model_used = snippy_tree_wf.snippy_iqtree2_model_used
     File snippy_final_alignment = snippy_tree_wf.snippy_final_alignment
     File snippy_final_tree = snippy_tree_wf.snippy_final_tree
-    File snippy_ref = select_first([snippy_tree_wf.snippy_ref, ncbi_datasets_download_genome_accession.ncbi_datasets_assembly_fasta])
+    File snippy_ref = select_first([snippy_tree_wf.snippy_ref, ncbi_datasets_download_genome_accession.ncbi_datasets_gbff, ncbi_datasets_download_genome_accession.ncbi_datasets_assembly_fasta])
     File snippy_msa_snps_summary = snippy_tree_wf.snippy_msa_snps_summary
     String? snippy_snp_sites_version = snippy_tree_wf.snippy_snp_sites_version
     String? snippy_snp_sites_docker = snippy_tree_wf.snippy_snp_sites_docker

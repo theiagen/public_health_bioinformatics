@@ -34,7 +34,7 @@ If you would like to provide feedback, please raise a [GitHub issue](https://git
 
 ### Contributing to the PHB workflows
 
-We warmly welcome contributions to this repository! Our style guide may be found [here](https://theiagen.notion.site/Style-Guide-WDL-Workflow-Development-51b66a47dde54c798f35d673fff80249) for convenience of formatting.
+We warmly welcome contributions to this repository! Our code style guide may be found [here](https://theiagen.github.io/public_health_bioinformatics/latest/contributing/code_contribution/) for convenience of formatting and our documentation style guide may be found [here](https://theiagen.github.io/public_health_bioinformatics/latest/contributing/doc_contribution/)
 
 You can expect a careful review of every PR and feedback as needed before merging, just like we do for PRs submitted by the Theiagen team. Our PR template can help prepare you for the review process. As always, reach out with any questions! We love recieving feedback and contributions from the community. When your PR is merged, we'll add your name to the contributors list below!
 
@@ -55,6 +55,9 @@ You can expect a careful review of every PR and feedback as needed before mergin
 * **Michal Babinski** ([@Michal-Babins](https://github.com/Michal-Babins)) - Software, Validation
 * **Andrew Lang** ([@AndrewLangVt](https://github.com/AndrewLangVt)) - Software, Supervision
 * **Kelsey Kropp** ([@kelseykropp](https://github.com/kelseykropp)) - Validation
+* **Theron James** ([@MrTheronJ](https://github.com/MrTheronJ)) - Software, Validation
+* **Andrew Hale** ([@awh082834](https://github.com/awh082834)) - Software, Validation
+* **Zachary Konkel** ([@xonq](https://github.com/xonq)) - Software, Validation
 * **Joel Sevinsky** ([@sevinsky](https://github.com/sevinsky)) - Conceptualization, Project Administration, Supervision
 
 ### External Contributors

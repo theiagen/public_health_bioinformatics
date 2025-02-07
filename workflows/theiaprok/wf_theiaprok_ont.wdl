@@ -289,9 +289,6 @@ workflow theiaprok_ont {
               nanoplot_r1_median_q_clean = nanoplot_clean.median_q,
               nanoplot_r1_est_coverage_clean = nanoplot_clean.est_coverage,
               rasusa_version = read_qc_trim.rasusa_version,
-              tiptoft_plasmid_replicon_fastq = read_qc_trim.tiptoft_plasmid_replicon_fastq,
-              tiptoft_plasmid_replicon_genes = read_qc_trim.tiptoft_plasmid_replicon_genes,
-              tiptoft_version = read_qc_trim.tiptoft_version,
               assembly_fasta = dragonflye.assembly_fasta,
               contigs_gfa = dragonflye.contigs_gfa,
               dragonflye_version = dragonflye.dragonflye_version,
@@ -566,7 +563,9 @@ workflow theiaprok_ont {
     String seq_platform = seq_method
     # Sample Screening
     String? read_screen_raw = raw_check_reads.read_screen
+    File? read_screen_raw_tsv = raw_check_reads.read_screen_tsv
     String? read_screen_clean = clean_check_reads.read_screen
+    File? read_screen_clean_tsv = clean_check_reads.read_screen_tsv
     # Read QC - nanoq outputs
     File? read1_clean = read_qc_trim.read1_clean
     String? nanoq_version = read_qc_trim.nanoq_version
@@ -602,10 +601,6 @@ workflow theiaprok_ont {
     String? kraken_docker = read_qc_trim.kraken_docker
     # Read QC - rasusa outputs
     String? rasusa_version = read_qc_trim.rasusa_version
-    # Read QC - tiptoft outputs
-    File? tiptoft_plasmid_replicon_fastq = read_qc_trim.tiptoft_plasmid_replicon_fastq
-    String? tiptoft_plasmid_replicon_genes = read_qc_trim.tiptoft_plasmid_replicon_genes
-    String? tiptoft_version = read_qc_trim.tiptoft_version
     # Assembly - dragonflye outputs
     File? assembly_fasta = dragonflye.assembly_fasta
     File? contigs_gfa = dragonflye.contigs_gfa
