@@ -5,7 +5,7 @@ task stxtyper {
     File assembly
     String samplename
     Boolean enable_debugging = false # Additional messages are printed and files in $TMPDIR are not removed after running
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/stxtyper:1.0.31"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/stxtyper:1.0.40"
     Int disk_size = 50
     Int cpu = 1
     Int memory = 4
@@ -27,6 +27,7 @@ task stxtyper {
       --nucleotide ~{assembly} \
       --name ~{samplename} \
       --output ~{samplename}_stxtyper.tsv \
+      --threads ~{cpu} \
       ~{true='--debug' false='' enable_debugging} \
       --log ~{samplename}_stxtyper.log
 
