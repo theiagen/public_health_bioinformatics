@@ -788,7 +788,6 @@ workflow theiaprok_illumina_se {
     String? shigeifinder_version_reads = merlin_magic.shigeifinder_version
     String? shigeifinder_ipaH_presence_absence_reads = merlin_magic.shigeifinder_ipaH_presence_absence
     String? shigeifinder_num_virulence_plasmid_genes_reads = merlin_magic.shigeifinder_num_virulence_plasmid_genes
-    String? shigeifinder_num_virulence_plasmid_genes_reads = merlin_magic.shigeifinder_num_virulence_plasmid_genes
     String? shigeifinder_cluster_reads = merlin_magic.shigeifinder_cluster
     String? shigeifinder_serotype_reads = merlin_magic.shigeifinder_serotype
     String? shigeifinder_O_antigen_reads = merlin_magic.shigeifinder_O_antigen
