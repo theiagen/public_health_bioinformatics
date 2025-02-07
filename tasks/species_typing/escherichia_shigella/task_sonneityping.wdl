@@ -8,7 +8,7 @@ task sonneityping {
     Boolean ont_data = false
     String samplename
     String? mykrobe_opts
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/mykrobe:0.12.1-parser-7d18a7c"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/mykrobe:0.12.1-sonneityping"
     Int disk_size = 100
     Int cpu = 4
     Int memory = 8
