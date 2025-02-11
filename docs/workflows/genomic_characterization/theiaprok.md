@@ -56,7 +56,7 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 | theiaprok_illumina_se | **read1** | File | Illumina forward read file in FASTQ file format (compression optional) |  | Required | SE |
 | theiaprok_ont | **read1** | File | Base-called ONT read file in FASTQ file format (compression optional) |  | Required | ONT |
 | *workflow name | **abricate_db** | String | Database to use with the Abricate tool. Options: NCBI, CARD, ARG-ANNOT, Resfinder, MEGARES, EcOH, PlasmidFinder, Ecoli_VF and VFDB | vfdb | Optional | FASTA, ONT, PE, SE |
-| *workflow name | **bakta_db** | File |Database selection for Bakta annotation. Options: "light" (smaller, faster), "full" (more comprehensive), or a Google Storage URI (gs://...) pointing to a custom Bakta database archive (.tar.gz). The selected database will be extracted before annotation. | full | Optional | FASTA, ONT, PE, SE |
+| *workflow name | **bakta_db** | String |Database selection for Bakta annotation. Options: "light" (smaller, faster), "full" (more comprehensive), or a Google Storage URI (gs://...) pointing to a custom Bakta database archive (.tar.gz). The selected database will be extracted before annotation. | full | Optional | FASTA, ONT, PE, SE |
 | *workflow name | **call_abricate** | Boolean | Set to true to enable the Abricate task | FALSE | Optional | FASTA, ONT, PE, SE |
 | *workflow name | **call_ani** | Boolean | Set to true to enable the ANI task | FALSE | Optional | FASTA, ONT, PE, SE |
 | *workflow name | **call_kmerfinder** | Boolean | Set to true to enable the kmerfinder task | FALSE | Optional | FASTA, ONT, PE, SE |
