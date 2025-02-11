@@ -3,7 +3,6 @@ version 1.0
 task dorado_trim {
   input {
     Array[File] fastq_files
-    String kit_name
     File custom_primers # Custom primers in FASTA format
     
     Int cpu = 4
@@ -26,7 +25,6 @@ task dorado_trim {
       # Perform primer trimming and save output in the designated directory
       dorado trim "$fq" \
         --primer-sequences "~{custom_primers}" \
-        --sequencing-kit ~{kit_name} \
         --threads ~{cpu} \
         --emit-fastq > "$output_dir/$filename"
     done
