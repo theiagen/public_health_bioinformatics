@@ -27,7 +27,6 @@ task mercury {
     String library_selection = ""
     String library_source = ""
     String library_strategy = ""
-    String organism = ""
     String purpose_of_sequencing = ""
     String state = ""
     String submitting_lab = ""
@@ -39,7 +38,6 @@ task mercury {
     String seq_platform = ""
     String gisaid_submitter = ""
     String submitter_email = ""
-
 
     # runtime parameters
     Int cpu = 2
