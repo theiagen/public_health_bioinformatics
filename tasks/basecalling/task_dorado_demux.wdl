@@ -37,7 +37,7 @@ task dorado_demux {
       mkdir -p "$demux_dir"
 
       echo "Processing BAM file: $bam_file into directory $demux_dir"
-      echo "Running dorado demux for kit: ~kit_name"
+      echo "Running dorado demux for kit: ~{kit_name}"
 
       # Run Dorado demux command
       dorado demux \

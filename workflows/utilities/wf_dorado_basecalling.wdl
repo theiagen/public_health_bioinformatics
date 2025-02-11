@@ -17,7 +17,6 @@ workflow dorado_basecalling {
     String dorado_model = "sup" 
     String kit_name
     String new_table_name
-    String fastq_upload_path
     String terra_project
     String terra_workspace
     String output_file_prefix 
@@ -52,6 +51,7 @@ workflow dorado_basecalling {
     call dorado_trim_task.dorado_trim {
       input:
         fastq_files = dorado_demux.fastq_files,
+        kit_name = kit_name,
         custom_primers = select_first([custom_primers])
     }
   }
