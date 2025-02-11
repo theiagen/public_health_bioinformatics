@@ -8,7 +8,8 @@ task dorado_trim {
     
     Int cpu = 4
     Int disk_size = 100
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/dorado:0.9.0-cuda12.2.0"
+    # this is not the most up-to-date docker image because dorado trim in v0.9.0-cuda12.2.0 is bugged
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/dorado:0.8.3"
     Int memory = 16
   }
   command <<< 
