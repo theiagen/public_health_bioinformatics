@@ -61,12 +61,14 @@ workflow dorado_basecalling {
       file_ending = ".fastq.gz",
       output_file_column_name = "read1",
       data_source = "Dorado_Basecalling_PHB",
+      additional_columns_content = [dorado_demux.dorado_version, dorado_demux.dorado_model_name, version_capture.phb_version, version_capture.date],
+      additional_columns_names = ["dorado_version", "dorado_model_name", "dorado_basecalling_phb_version", "dorado_basecalling_analysis_date"],
       terra_project = terra_project,
       terra_workspace = terra_workspace
   }
   output {
-    String dorado_phb_version = version_capture.phb_version
-    String dorado_analysis_date = version_capture.date
+    String dorado_basecalling_phb_version = version_capture.phb_version
+    String dorado_basecalling_analysis_date = version_capture.date
     Array[File] fastq_files = select_first([dorado_trim.trimmed_fastq_files, dorado_demux.fastq_files])
     File terra_table_tsv = create_table_from_array.terra_table_to_upload
     String dorado_version = dorado_demux.dorado_version
