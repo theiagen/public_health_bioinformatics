@@ -18,7 +18,29 @@ task mercury {
     Boolean single_end = false
     Int vadr_alert_limit = 0
     Int number_N_threshold = 5000
-    
+    String authors = ""
+    String bioproject_accession = ""
+    String continent = ""
+    String country = ""
+    String host_disease = ""
+    String isolation_source = ""
+    String library_selection = ""
+    String library_source = ""
+    String library_strategy = ""
+    String organism = ""
+    String purpose_of_sequencing = ""
+    String state = ""
+    String submitting_lab = ""
+    String submitting_lab_address = ""
+    String amplicon_primer_scheme = ""
+    String amplicon_size = ""
+    String instrument_model = ""
+    String library_layout = ""
+    String seq_platform = ""
+    String gisaid_submitter = ""
+    String submitter_email = ""
+
+
     # runtime parameters
     Int cpu = 2
     Int disk_size = 100
@@ -34,7 +56,6 @@ task mercury {
 
     python3 /mercury/mercury/mercury.py -v | tee VERSION
 
-    # THIS IS WHERE WE EXPOSE NEW INPUTS
     python3 /mercury/mercury/mercury.py \
       ~{data_table} "~{table_name}_id" ~{sep=',' samplenames} \
       --gcp_bucket_uri ~{gcp_bucket_uri} \
@@ -48,6 +69,26 @@ task mercury {
       ~{true="--single_end" false="" single_end} \
       ~{"--vadr_alert_limit " + vadr_alert_limit} \
       ~{"--number_n_threshold " + number_N_threshold} \
+      ~{"--authors " + authors} \
+      ~{"--bioproject_accession " + bioproject_accession} \
+      ~{"--continent " + continent} \
+      ~{"--country " + country} \
+      ~{"--host_disease " + host_disease} \
+      ~{"--isolation_source " + isolation_source} \
+      ~{"--library_selection " + library_selection} \
+      ~{"--library_source " + library_source} \
+      ~{"--library_strategy " + library_strategy} \
+      ~{"--purpose_of_sequencing " + purpose_of_sequencing} \
+      ~{"--state " + state} \
+      ~{"--submitting_lab " + submitting_lab} \
+      ~{"--submitting_lab_address " + submitting_lab_address} \
+      ~{"--amplicon_primer_scheme " + amplicon_primer_scheme} \
+      ~{"--amplicon_size " + amplicon_size} \
+      ~{"--instrument_model " + instrument_model} \
+      ~{"--library_layout " + library_layout} \
+      ~{"--seq_platform " + seq_platform} \
+      ~{"--gisaid_submitter " + gisaid_submitter} \
+      ~{"--submitter_email " + submitter_email} \ 
       --debug
 
     # write out excluded samples file to the stdout
