@@ -1,21 +1,21 @@
 version 1.0
 
-task basecall {
+task dorado_basecall {
   input {
-    File input_file                    # Single POD5 file for scatter processing
-    String dorado_model = "sup"         # Default model to 'sup', can be overridden with full model name see docs
-    String kit_name                    # Sequencing kit name
-    Int disk_size = 100
-    Int memory = 32
+    File pod5_file # single POD5 file
+    String dorado_model = "sup" # options: "fast", "hac", "sup", or explicit model name
+    String kit_name
+
     Int cpu = 8
+    Int disk_size = 100
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/dorado:0.9.0-cuda12.2.0"
+    Int memory = 32
   }
   command <<< 
     set -euo pipefail
 
-    # Capture Dorado version and log it
     dorado --version > DORADO_VERSION 2>&1
-    echo "Captured Dorado version:" $(cat DORADO_VERSION)
+    echo "Captured Dorado version: " $(cat DORADO_VERSION)
  
     # if user provides fast, hac, or sup, pass those strings to dorado basecaller command
     if [ "~{dorado_model}" == "fast" ] || [ "~{dorado_model}" == "hac" ] || [ "~{dorado_model}" == "sup" ]; then
@@ -28,25 +28,25 @@ task basecall {
     fi
 
     # Create a unique output directory for each scatter job
-    base_name=$(basename "~{input_file}" .pod5)
+    base_name=$(basename "~{pod5_file}" .pod5)
     bam_output="output/bam_${base_name}/"
     mkdir -p "$bam_output"
 
-    echo "### Starting basecalling for ~{input_file} ###" | tee -a dorado_basecall.log
+    echo "### Starting basecalling for ~{pod5_file} ###" | tee -a dorado_basecall.log
 
-     # Set BAM file path with unique naming based on POD5 basename
+    # Set BAM file path with unique naming based on POD5 basename
     bam_file="$bam_output/${base_name}.bam"
 
-    echo "Processing ~{input_file}, expected output: $bam_file" | tee -a dorado_basecall.log
+    echo "Processing ~{pod5_file}, expected output: $bam_file" | tee -a dorado_basecall.log
 
     # Run Dorado basecaller and log output
     dorado basecaller \
       "${dorado_model_variable}" \
-      "~{input_file}" \
+      "~{pod5_file}" \
       --kit-name ~{kit_name} \
       --no-trim \
       --output-dir "$bam_output" \
-      --verbose 2> >(tee -a dorado_basecall.log >&2) || { echo "ERROR: Dorado basecaller failed for ~{input_file}"; exit 1; }
+      --verbose 2> >(tee -a dorado_basecall.log >&2) || { echo "ERROR: Dorado basecaller failed for ~{pod5_file}"; exit 1; }
 
     # Log the resolved model name
     echo "DEBUG: Parsing model name from dorado log or capturing string from user input..."
@@ -57,11 +57,11 @@ task basecall {
       echo "~{dorado_model}" | tee DORADO_MODEL
     fi
 
-    # Rename the generated BAM file to the unique name based on input_file
+    # Rename the generated BAM file to the unique name based on pod5_file
     generated_bam=$(find "$bam_output" -name "*.bam" | head -n 1)
     mv "$generated_bam" "$bam_file"
 
-    echo "Basecalling completed for ~{input_file}. BAM file renamed to: $bam_file" | tee -a "dorado_basecall.log"
+    echo "Basecalling completed for ~{pod5_file}. BAM file renamed to: $bam_file" | tee -a "dorado_basecall.log"
   >>>
   output {
     Array[File] bam_files = glob("output/bam_*/*.bam")
@@ -75,6 +75,7 @@ task basecall {
     memory: "~{memory} GB"
     cpu: cpu
     disks: "local-disk " + disk_size + " SSD"
+    disk: disk_size + " GB"
     gpuCount: 1
     gpuType: "nvidia-tesla-t4"  
     preemptible: 0

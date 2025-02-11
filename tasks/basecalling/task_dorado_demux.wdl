@@ -4,13 +4,15 @@ task dorado_demux {
   input {
     Array[File] bam_files
     String kit_name
-    String output_file_prefix 
-    Int cpu = 4 
-    Int memory = 16
-    Int disk_size = 100
+    String output_file_prefix
+
     Boolean demux_notrim = false
     String dorado_model_used
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/dorado:0.9.0-cuda12.2.0"
+
+    Int cpu = 4 
+    Int disk_size = 100
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/dorado:0.9.0-cuda12.2.0"    
+    Int memory = 16
   }
   command <<< 
     set -euo pipefail
@@ -21,13 +23,9 @@ task dorado_demux {
     # Output the Dorado model used
     echo "~{dorado_model_used}" > DORADO_MODEL_USED
 
-    output_file_prefix="~{output_file_prefix}"
-    kit_name="~{kit_name}"
-
     # Start the main log file for the entire task
     exec > >(tee -a dorado_demux_output.log) 2>&1
     echo "### Starting Dorado demux ###"
-    date
 
     echo "Input BAM files:"
     for bam_file in ~{sep=" " bam_files}; do echo "$bam_file"; done
@@ -39,13 +37,13 @@ task dorado_demux {
       mkdir -p "$demux_dir"
 
       echo "Processing BAM file: $bam_file into directory $demux_dir"
-      echo "Running dorado demux for kit: $kit_name"
+      echo "Running dorado demux for kit: ~kit_name"
 
       # Run Dorado demux command
       dorado demux \
         "$bam_file" \
         --output-dir "$demux_dir" \
-        --kit-name "$kit_name" \
+        --kit-name ~{kit_name} \
         --emit-fastq \
         --threads ~{cpu} \
         --emit-summary \
@@ -65,10 +63,10 @@ task dorado_demux {
         echo "Processing $fastq_file in $demux_dir"
 
         if [[ "$fastq_file" == *"unclassified"* ]]; then
-          final_fastq="merged_output/${output_file_prefix}-unclassified.fastq"
+          final_fastq="merged_output/~{output_file_prefix}-unclassified.fastq"
         else
           barcode=$(echo "$fastq_file" | sed -E 's/.*_(barcode[0-9]+)\.fastq/\1/')
-          final_fastq="merged_output/${output_file_prefix}-${barcode}.fastq"
+          final_fastq="merged_output/~{output_file_prefix}-${barcode}.fastq"
         fi
 
         if [ -f "$final_fastq" ]; then
