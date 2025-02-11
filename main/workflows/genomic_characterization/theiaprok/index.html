@@ -5532,6 +5532,15 @@
 </tr>
 <tr>
 <td>*workflow name</td>
+<td><strong>bakta_db</strong></td>
+<td>String</td>
+<td>Database selection for Bakta annotation. Options: "light" (smaller, faster), "full" (more comprehensive), or a Google Storage URI (gs://...) pointing to a custom Bakta database archive (.tar.gz). The selected database will be extracted before annotation.</td>
+<td>full</td>
+<td>Optional</td>
+<td>FASTA, ONT, PE, SE</td>
+</tr>
+<tr>
+<td>*workflow name</td>
 <td><strong>call_abricate</strong></td>
 <td>Boolean</td>
 <td>Set to true to enable the Abricate task</td>
@@ -6112,15 +6121,6 @@
 <td>File</td>
 <td>If not set, uses all 43 genomes in RGDv2</td>
 <td></td>
-<td>Optional</td>
-<td>FASTA, ONT, PE, SE</td>
-</tr>
-<tr>
-<td>bakta</td>
-<td><strong>bakta_db</strong></td>
-<td>File</td>
-<td>Database of reference annotations (see <a href="https://github.com/oschwengers/bakta#database">https://github.com/oschwengers/bakta#database</a>)</td>
-<td>gs://theiagen-public-files-rp/terra/theiaprok-files/bakta_db_2022-08-29.tar.gz</td>
 <td>Optional</td>
 <td>FASTA, ONT, PE, SE</td>
 </tr>
@@ -11397,8 +11397,14 @@
 </details>
 <details class="task">
 <summary><code>Bakta</code>: Assembly Annotation (alternative)</summary>
-<p>Assembly annotation is available via Bakta as an alternative to Prokka. When Bakta annotation is used, Prokka is not.</p>
-<p>Bakta is intended for annotation of Bacteria and plasmids only, and is best described <a href="https://github.com/oschwengers/bakta#description">here</a>!</p>
+<p>Assembly annotation is available via <code>Bakta</code> as an alternative to <code>Prokka</code>. When <code>Bakta</code> annotation is used, <code>Prokka</code> is not.</p>
+<p><code>Bakta</code> is intended for annotation of Bacteria and plasmids only, and is best described <a href="https://github.com/oschwengers/bakta#description">here</a>!</p>
+<p>In addition to the standard annotation outputs, <code>Bakta</code> also provides a plot summarizing the annotation results, which can be useful for visualizing genome features.</p>
+<p><strong>Bakta Database Options</strong></p>
+<p><code>Bakta</code> supports three database configurations:</p>
+<p><strong>Light</strong> Database: Optimized for faster performance and lower resource usage, with a focused set of core reference data for most bacterial genome annotations. Recommended for quick annotations or limited computational resources. Specify "light" for the <code>bakta_db</code> input.</p>
+<p><strong>Full</strong> Database (default): Comprehensive with extensive reference annotations, suitable for detailed and accurate annotations. Specify "full" for the <code>bakta_db</code> input.</p>
+<p><strong>Custom</strong> Database: Allows users to provide a Bakta-compatible database stored in Google Cloud Storage Must be a .tar.gz archive containing a properly formatted Bakta database with a valid version.json Follow the <a href="https://github.com/oschwengers/bakta#database">Bakta database documentation</a> for detailed formatting requirements. Example: <code>"bakta_db": "gs://my-bucket/custom_bakta_db.tar.gz"</code></p>
 <div class="admonition techdetails">
 <p class="admonition-title">Bakta Technical Details</p>
 <table>
@@ -13141,6 +13147,12 @@
 <td>bakta_gff3</td>
 <td>File</td>
 <td>Generic Feature Format Version 3 file</td>
+<td>FASTA, ONT, PE, SE</td>
+</tr>
+<tr>
+<td>bakta_plot</td>
+<td>File</td>
+<td>Bakta plot output PNG file summarizing annotated genome features such as coding sequences, RNA genes, and hypothetical proteins.</td>
 <td>FASTA, ONT, PE, SE</td>
 </tr>
 <tr>
@@ -15292,7 +15304,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2025-02-06</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2025-02-11</span>
   </span>
 
     
