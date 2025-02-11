@@ -68,7 +68,7 @@ workflow dorado_basecalling {
     String dorado_phb_version = version_capture.phb_version
     String dorado_analysis_date = version_capture.date
     Array[File] fastq_files = select_first([dorado_trim.trimmed_fastq_files, dorado_demux.fastq_files])
-    File? terra_table_tsv = create_table_from_array.terra_table_to_upload
+    File terra_table_tsv = create_table_from_array.terra_table_to_upload
     String dorado_version = dorado_demux.dorado_version
     String dorado_model_used = dorado_demux.dorado_model_name
   }
