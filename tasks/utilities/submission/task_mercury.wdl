@@ -67,7 +67,7 @@ task mercury {
       ~{true="--single_end" false="" single_end} \
       ~{"--vadr_alert_limit " + vadr_alert_limit} \
       ~{"--number_n_threshold " + number_N_threshold} \
-      ~{"--authors " + authors} \
+      ~{"--authors '" + authors + "'"} \
       ~{"--bioproject_accession " + bioproject_accession} \
       ~{"--continent " + continent} \
       ~{"--country " + country} \
@@ -79,13 +79,13 @@ task mercury {
       ~{"--purpose_of_sequencing " + purpose_of_sequencing} \
       ~{"--state " + state} \
       ~{"--submitting_lab " + submitting_lab} \
-      ~{"--submitting_lab_address " + submitting_lab_address} \
+      ~{"--submitting_lab_address '" + submitting_lab_address + "'"} \
       ~{"--amplicon_primer_scheme " + amplicon_primer_scheme} \
       ~{"--amplicon_size " + amplicon_size} \
-      ~{"--instrument_model " + instrument_model} \
+      ~{"--instrument_model '" + instrument_model + "'"} \
       ~{"--library_layout " + library_layout} \
-      ~{"--seq_platform " + seq_platform} \
-      ~{"--gisaid_submitter " + gisaid_submitter} \
+      ~{"--seq_platform '" + seq_platform + "'"} \
+      ~{"--gisaid_submitter '" + gisaid_submitter + "'"} \
       ~{"--submitter_email " + submitter_email} \ 
       --debug
 
