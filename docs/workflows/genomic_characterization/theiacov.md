@@ -1016,6 +1016,7 @@ All input reads are processed through "core tasks" in the TheiaCoV Illumina, ONT
         |  | Links |
         | --- | --- |
         | Workflow | [wf_influenza_antiviral_substitutions.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_influenza_antiviral_substitutions.wdl) |
+        | Task | [task_flu_antiviral_subs.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/drug_resistance/task_flu_antiviral_subs.wdl) |
 
 ??? task "`genoflu`"
 
