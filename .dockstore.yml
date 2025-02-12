@@ -290,7 +290,7 @@ workflows:
     - /tests/inputs/empty.json
  - name: Dorado_Basecalling_PHB
    subclass: WDL
-   primaryDescriptorPath: /workflows/utilities/wf_dorado_basecalling.wdl
+   primaryDescriptorPath: /workflows/standalone_modules/wf_dorado_basecalling.wdl
    testParameterFiles:
     - /tests/inputs/empty.json
  - name: Concatenate_Illumina_Lanes_PHB
