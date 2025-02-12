@@ -4,9 +4,8 @@ import "../../tasks/basecalling/task_dorado_basecall.wdl" as dorado_basecall_tas
 import "../../tasks/basecalling/task_dorado_demux.wdl" as dorado_demux_task
 import "../../tasks/basecalling/task_dorado_trim.wdl" as dorado_trim_task
 import "../../tasks/task_versioning.wdl" as versioning
-import "../../tasks/utilities/data_import/task_create_terra_table_from_array.wdl" as fastq_upload_table
+import "../../tasks/utilities/data_import/task_array_to_terra.wdl" as create_fastq_table
 import "../../tasks/utilities/file_handling/task_find_files.wdl" as find_files_task
-
 
 workflow dorado_basecalling {
   meta {
@@ -54,24 +53,31 @@ workflow dorado_basecalling {
         custom_primers = select_first([custom_primers])
     }
   }
-  call fastq_upload_table.create_table_from_array {
+  call create_fastq_table.create_table_from_array {
     input:
       new_table_name = new_table_name,
       file_paths = select_first([dorado_trim.trimmed_fastq_files, dorado_demux.fastq_files]),
       file_ending = ".fastq.gz",
       output_file_column_name = "read1",
       data_source = "Dorado_Basecalling_PHB",
-      additional_columns_content = [dorado_demux.dorado_version, dorado_demux.dorado_model_name, version_capture.phb_version, version_capture.date],
+      additional_columns_content = [dorado_basecall.dorado_version[0], dorado_demux.dorado_model_name, version_capture.phb_version, version_capture.date],
       additional_columns_names = ["dorado_version", "dorado_model_name", "dorado_basecalling_phb_version", "dorado_basecalling_analysis_date"],
       terra_project = terra_project,
       terra_workspace = terra_workspace
   }
   output {
+    # final outputs
+    Array[File] fastq_files = select_first([dorado_trim.trimmed_fastq_files, dorado_demux.fastq_files])
+    String dorado_model_used = dorado_demux.dorado_model_name
+    # task versioning
+    String dorado_basecall_version = dorado_basecall.dorado_version[0]
+    String dorado_demux_version = dorado_demux.dorado_version
+    String? dorado_trim_version = dorado_trim.dorado_version
+    # uploaded table
+    File terra_table_tsv = create_table_from_array.terra_table_to_upload
+    # workflow versioning
     String dorado_basecalling_phb_version = version_capture.phb_version
     String dorado_basecalling_analysis_date = version_capture.date
-    Array[File] fastq_files = select_first([dorado_trim.trimmed_fastq_files, dorado_demux.fastq_files])
-    File terra_table_tsv = create_table_from_array.terra_table_to_upload
-    String dorado_version = dorado_demux.dorado_version
-    String dorado_model_used = dorado_demux.dorado_model_name
+    
   }
 }

@@ -12,6 +12,11 @@ task dorado_trim {
     Int memory = 16
   }
   command <<< 
+    set -euo pipefail
+    
+    # Capture Dorado version
+    dorado --version 2>&1 | head -n1 | tee DORADO_VERSION
+
     # Create output directory for trimmed FASTQ files
     output_dir="trimmed_fastqs"
     mkdir -p "$output_dir"
@@ -30,6 +35,8 @@ task dorado_trim {
     done
   >>>
   output {
+    String dorado_docker = docker
+    String dorado_version = read_string("DORADO_VERSION")
     Array[File] trimmed_fastq_files = glob("trimmed_fastqs/*.fastq.gz")
   }
   runtime {
