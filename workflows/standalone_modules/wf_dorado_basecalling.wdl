@@ -60,8 +60,8 @@ workflow dorado_basecalling {
       file_ending = ".fastq.gz",
       output_file_column_name = "read1",
       data_source = "Dorado_Basecalling_PHB",
-      additional_columns_content = [dorado_basecall.dorado_version[0], dorado_demux.dorado_model_name, version_capture.phb_version, version_capture.date],
-      additional_columns_names = ["dorado_version", "dorado_model_name", "dorado_basecalling_phb_version", "dorado_basecalling_analysis_date"],
+      additional_columns_content = [dorado_basecall.dorado_docker[0], dorado_basecall.dorado_version[0], dorado_demux.dorado_model_name, version_capture.phb_version, version_capture.date],
+      additional_columns_names = ["dorado_docker", "dorado_version", "dorado_model_name", "dorado_basecalling_phb_version", "dorado_basecalling_analysis_date"],
       terra_project = terra_project,
       terra_workspace = terra_workspace
   }
@@ -71,6 +71,7 @@ workflow dorado_basecalling {
     String dorado_model_used = dorado_demux.dorado_model_name
     # task versioning
     String dorado_basecall_version = dorado_basecall.dorado_version[0]
+    String dorado_basecall_docker = dorado_basecall.dorado_docker[0]
     String dorado_demux_version = dorado_demux.dorado_version
     String? dorado_trim_version = dorado_trim.dorado_version
     # uploaded table

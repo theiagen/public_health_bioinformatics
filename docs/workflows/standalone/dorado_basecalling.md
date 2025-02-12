@@ -128,7 +128,7 @@ Ensure you use an accepted barcoding kit name in the `kit_name` parameter. Check
 | dorado_basecall | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 32 | Optional |
 | dorado_basecalling | **custom_primers** | File | A FASTA file containing custom primer sequences for PCR primer trimming during demultiplexing. |  | Optional |
 | dorado_basecalling | **demux_notrim** | Boolean | Set to `true` to disable barcode trimming during demultiplexing. | false | Optional |
-| dorado_basecalling | **dorado_model** | String | Model speed for basecalling ('sup' for super accuracy, 'hac' for high accuracy, or 'fast' for high speed). Users may also specify a full model name (see [above](#model-type-selection) for more details). | "sup" | Optional |
+| dorado_basecalling | **dorado_model** | String | The model to use during basecalling ('sup' for super accuracy, 'hac' for high accuracy, or 'fast' for high speed). Users may also specify a full model name (see [above](#model-type-selection) for more details). | "sup" | Optional |
 | dorado_demux | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional |
 | dorado_demux | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
 | dorado_demux | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/dorado:0.9.0-cuda12.2.0 | Optional |
@@ -217,6 +217,7 @@ This workflow is composed of several tasks to process, basecall, and analyze Oxf
 
     - `dorado_basecalling_analysis_date`: Date of Dorado analysis
     - `dorado_basecalling_phb_version`: Version of PHB used for the analysis
+    - `dorado_docker`: Docker image used in the `dorado_basecall` task
     - `dorado_version`: Version of Dorado used in the `dorado_basecall` task
     - `dorado_model_name`: Model used for basecalling
     - `read1`: the FASTQ file containing the read name
@@ -238,6 +239,7 @@ Please note that if you run this workflow with the `"Run workflow with inputs de
 |---|---|---|
 | **dorado_basecalling_analysis_date** | String | Date of Dorado analysis |
 | **dorado_basecalling_phb_version** | String | Version of PHB used for the analysis |
+| **dorado_basecall_docker** | String | Docker image used in the `dorado_basecall` task |
 | **dorado_basecall_version** | String | Version of Dorado used in the `dorado_basecall` task |
 | **dorado_demux_version** | String | Version of Dorado used in the `dorado_demux` task |
 | **dorado_model_used** | String | Model used for basecalling |
