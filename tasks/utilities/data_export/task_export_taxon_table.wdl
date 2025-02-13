@@ -24,8 +24,8 @@ task export_taxon_table {
     touch STATUS
 
     # capture taxon and corresponding table names from input taxon_table
-    taxon_array=($(cut -d, -f1 ~{taxon_table} | tail +2))
-    table_array=($(cut -d, -f2 ~{taxon_table} | tail +2))
+    taxon_array=($(cut -f1 ~{taxon_table} | tail +2))
+    table_array=($(cut -f2 ~{taxon_table} | tail +2))
 
     # replace whitespace from gambit_predicted_taxon with an underscore
     sample_taxon=$(echo ~{gambit_predicted_taxon} | tr ' ' '_')
