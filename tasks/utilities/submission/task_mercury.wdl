@@ -65,28 +65,28 @@ task mercury {
       ~{true="--using_reads_dehosted" false="" using_reads_dehosted} \
       ~{true="--usa_territory" false="" usa_territory} \
       ~{true="--single_end" false="" single_end} \
-      ~{"--vadr_alert_limit " + vadr_alert_limit} \
-      ~{"--number_n_threshold " + number_N_threshold} \
+      ~{"--vadr_alert_limit '" + vadr_alert_limit + "'"} \
+      ~{"--number_n_threshold '" + number_N_threshold + "'"} \
       ~{"--authors '" + authors + "'"} \
-      ~{"--bioproject_accession " + bioproject_accession} \
-      ~{"--continent " + continent} \
-      ~{"--country " + country} \
-      ~{"--host_disease " + host_disease} \
-      ~{"--isolation_source " + isolation_source} \
-      ~{"--library_selection " + library_selection} \
-      ~{"--library_source " + library_source} \
-      ~{"--library_strategy " + library_strategy} \
-      ~{"--purpose_of_sequencing " + purpose_of_sequencing} \
-      ~{"--state " + state} \
-      ~{"--submitting_lab " + submitting_lab} \
+      ~{"--bioproject_accession '" + bioproject_accession + "'"} \
+      ~{"--continent '" + continent + "'"} \
+      ~{"--country '" + country + "'"} \
+      ~{"--host_disease '" + host_disease + "'"} \
+      ~{"--isolation_source '" + isolation_source + "'"} \
+      ~{"--library_selection '" + library_selection + "'"} \
+      ~{"--library_source '" + library_source + "'"} \
+      ~{"--library_strategy '" + library_strategy + "'"} \
+      ~{"--purpose_of_sequencing '" + purpose_of_sequencing + "'"} \
+      ~{"--state '" + state + "'"} \
+      ~{"--submitting_lab '" + submitting_lab + "'"} \
       ~{"--submitting_lab_address '" + submitting_lab_address + "'"} \
-      ~{"--amplicon_primer_scheme " + amplicon_primer_scheme} \
-      ~{"--amplicon_size " + amplicon_size} \
+      ~{"--amplicon_primer_scheme '" + amplicon_primer_scheme + "'"} \
+      ~{"--amplicon_size '" + amplicon_size + "'"} \
       ~{"--instrument_model '" + instrument_model + "'"} \
-      ~{"--library_layout " + library_layout} \
+      ~{"--library_layout '" + library_layout + "'"} \
       ~{"--seq_platform '" + seq_platform + "'"} \
       ~{"--gisaid_submitter '" + gisaid_submitter + "'"} \
-      ~{"--submitter_email " + submitter_email} \ 
+      ~{"--submitter_email '" + submitter_email + "'"} \ 
       --debug
 
     # write out excluded samples file to the stdout
