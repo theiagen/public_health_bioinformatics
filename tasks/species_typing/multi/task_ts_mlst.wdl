@@ -19,8 +19,8 @@ task ts_mlst {
     # --minscore [n.n]  Minumum score out of 100 to match a scheme (when auto --scheme) (default '50')
     Boolean nopath = true
     String? scheme
-    Float? minid
-    Float? mincov
+    Float? min_percent_identity
+    Float? min_coverage
     Float? minscore
   }
   command <<<
@@ -33,8 +33,8 @@ task ts_mlst {
       --threads ~{cpu} \
       ~{true="--nopath" false="" nopath} \
       ~{'--scheme ' + scheme} \
-      ~{'--minid ' + minid} \
-      ~{'--mincov ' + mincov} \
+      ~{'--minid ' + min_percent_identity} \
+      ~{'--mincov ' + min_coverage} \
       ~{'--minscore ' + minscore} \
       --novel ~{samplename}_novel_mlst_alleles.fasta \
       ~{assembly} \

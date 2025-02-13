@@ -29,7 +29,7 @@ task emmtyper {
 
     String wf = "blast"
     Int cluster_distance = 500
-    Int percid = 95
+    Int min_percent_identity = 95
     Int culling_limit = 5
     Int mismatch = 4
     Int align_diff = 5
@@ -44,7 +44,7 @@ task emmtyper {
     emmtyper \
       ~{'--workflow ' + wf} \
       ~{'--cluster-distance ' + cluster_distance} \
-      ~{'--percent-identity ' + percid} \
+      ~{'--percent-identity ' + min_percent_identity} \
       ~{'--culling-limit ' + culling_limit} \
       ~{'--mismatch ' + mismatch} \
       ~{'--align-diff ' + align_diff} \

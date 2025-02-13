@@ -12,7 +12,7 @@ task plasmidfinder {
     String? database_path
     String? method_path
     # minimum coverage threshold
-    Float? min_cov 
+    Float? min_coverage 
     # minimum blast identity threshold
     Float? threshold
   }
@@ -34,7 +34,7 @@ task plasmidfinder {
   ~{'-d ' + database} \
   ~{'-p ' + database_path} \
   ~{'-mp ' + method_path} \
-  ~{'-l ' + min_cov} \
+  ~{'-l ' + min_coverage} \
   ~{'-t ' + threshold} 
 
   # parse outputs
