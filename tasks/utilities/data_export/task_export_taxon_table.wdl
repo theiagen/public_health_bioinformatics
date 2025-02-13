@@ -59,7 +59,7 @@ task export_taxon_table {
     fi
   >>>
   output {
-    File terra_table_to_upload = "terra_table_to_upload.tsv"
+    File? terra_table_to_upload = "terra_table_to_upload.tsv"
     String status = read_string("STATUS")
   }
   runtime {
