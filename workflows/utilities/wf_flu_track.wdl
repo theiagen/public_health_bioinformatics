@@ -43,6 +43,7 @@ workflow flu_track {
     String? assembly_metrics_docker
 
     # GenoFLU inputs
+    Float? genoflu_min_percent_identity
     File? genoflu_cross_reference
     Int? genoflu_cpu
     Int? genoflu_disk_size
@@ -151,6 +152,7 @@ workflow flu_track {
         input:
           assembly_fasta = select_first([irma.irma_assembly_fasta]),
           samplename = samplename,
+          min_percent_identity = genoflu_min_percent_identity,
           cross_reference = genoflu_cross_reference,
           cpu = genoflu_cpu,
           disk_size = genoflu_disk_size,
