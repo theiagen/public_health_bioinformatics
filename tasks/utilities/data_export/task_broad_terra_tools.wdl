@@ -816,7 +816,7 @@ task export_taxon_tables {
 
       echo "~{samplename} was added to the ${sample_table} table" > STATUS
     else
-      echo "Table not defined for ~{sample_taxon}" > STATUS
+      echo "Table not defined for ~{gambit_predicted_taxon}" > STATUS
     fi
   >>>
   runtime {

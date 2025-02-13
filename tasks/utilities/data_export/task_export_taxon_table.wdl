@@ -2,7 +2,7 @@ version 1.0
 
 task export_taxon_table {
   input {
-    File? taxon_tables
+    File? taxon_table
     String? gambit_predicted_taxon
     String? terra_project
     String? terra_workspace
@@ -21,10 +21,11 @@ task export_taxon_table {
   }
   command <<<
     set -euo pipefail
+    touch STATUS
 
-    # capture taxon and corresponding table names from input taxon_tables
-    taxon_array=($(cut -d, -f1 ~{taxon_tables} | tail +2))
-    table_array=($(cut -d, -f2 ~{taxon_tables} | tail +2))
+    # capture taxon and corresponding table names from input taxon_table
+    taxon_array=($(cut -d, -f1 ~{taxon_table} | tail +2))
+    table_array=($(cut -d, -f2 ~{taxon_table} | tail +2))
 
     # replace whitespace from gambit_predicted_taxon with an underscore
     sample_taxon=$(echo ~{gambit_predicted_taxon} | tr ' ' '_')
@@ -53,10 +54,14 @@ task export_taxon_table {
       awk -v date="$UPLOAD_DATE" -v samplename="~{samplename}" 'NR > 1 {print samplename"\t"date"\texport_taxon_table\t" $0}' exported_columns.tsv >> terra_table_to_upload.tsv
 
       python3 /scripts/import_large_tsv/import_large_tsv.py --project "~{terra_project}" --workspace "~{terra_workspace}" --tsv terra_table_to_upload.tsv
+      echo "~{samplename} was added to the ${sample_table} table" > STATUS
+    else
+      echo "Table not defined for ~{gambit_predicted_taxon}" > STATUS
     fi
   >>>
   output {
     File terra_table_to_upload = "terra_table_to_upload.tsv"
+    String status = read_string("STATUS")
   }
   runtime {
     docker: docker
