@@ -81,9 +81,6 @@ task export_taxon_tables {
     Float? nanoplot_r1_median_q_clean
     Float? nanoplot_r1_est_coverage_clean
     String? rasusa_version
-    File? tiptoft_plasmid_replicon_fastq
-    String? tiptoft_plasmid_replicon_genes
-    String? tiptoft_version
     File? assembly_fasta
     File? contigs_gfa
     String? dragonflye_version
@@ -339,6 +336,7 @@ task export_taxon_tables {
     File? bakta_gff3
     File? bakta_tsv
     File? bakta_summary
+    File? bakta_plot
     String? bakta_version
     String? pasty_serogroup
     Float? pasty_serogroup_coverage
@@ -497,9 +495,6 @@ task export_taxon_tables {
       "nanoplot_r1_median_q_clean": "~{nanoplot_r1_median_q_clean}",
       "nanoplot_r1_est_coverage_clean": "~{nanoplot_r1_est_coverage_clean}",
       "rasusa_version": "~{rasusa_version}",
-      "tiptoft_plasmid_replicon_fastq": "~{tiptoft_plasmid_replicon_fastq}",
-      "tiptoft_plasmid_replicon_genes": "~{tiptoft_plasmid_replicon_genes}",
-      "tiptoft_version": "~{tiptoft_version}",
       "assembly_fasta": "~{assembly_fasta}",
       "contigs_gfa": "~{contigs_gfa}",
       "dragonflye_version": "~{dragonflye_version}",
@@ -755,6 +750,7 @@ task export_taxon_tables {
       "bakta_gff3": "~{bakta_gff3}",
       "bakta_tsv": "~{bakta_tsv}",
       "bakta_summary": "~{bakta_summary}",
+      "bakta_plot": "~{bakta_plot}",
       "bakta_version": "~{bakta_version}",
       "pasty_serogroup": "~{pasty_serogroup}",
       "pasty_serogroup_coverage": "~{pasty_serogroup_coverage}",

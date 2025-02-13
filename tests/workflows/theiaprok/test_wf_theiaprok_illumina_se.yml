@@ -409,7 +409,7 @@
     - path: miniwdl_run/wdl/tasks/gene_typing/drug_resistance/task_amrfinderplus.wdl
       md5sum: 8a711bfb7eb1be7ed928cfa1391a1765
     - path: miniwdl_run/wdl/tasks/gene_typing/annotation/task_bakta.wdl
-      md5sum: 0bed8fb60786095843a67b1ad03051dc
+      md5sum: 96f6cb7f0c8716513a0ca74b083a745f
     - path: miniwdl_run/wdl/tasks/gene_typing/plasmid_detection/task_plasmidfinder.wdl
       md5sum: 172b167110ba32caf277e1a34bfd4989
     - path: miniwdl_run/wdl/tasks/gene_typing/annotation/task_prokka.wdl
@@ -435,7 +435,7 @@
     - path: miniwdl_run/wdl/tasks/quality_control/basic_statistics/task_quast.wdl
       contains: ["version", "quast", "output"]
     - path: miniwdl_run/wdl/tasks/quality_control/comparisons/task_screen.wdl
-      md5sum: 0260cb91843d2bafdeeb54c3346694ff
+      md5sum: 56fecaf6cd714658b63eda7789bcea63
     - path: miniwdl_run/wdl/tasks/quality_control/read_filtering/task_trimmomatic.wdl
       contains: ["version", "trimmomatic", "output"]
     - path: miniwdl_run/wdl/tasks/species_typing/escherichia_shigella/task_ectyper.wdl
@@ -469,7 +469,7 @@
     - path: miniwdl_run/wdl/tasks/species_typing/salmonella/task_sistr.wdl
       md5sum: 62a5b13e28599907560a70f2e75d7d29
     - path: miniwdl_run/wdl/tasks/species_typing/escherichia_shigella/task_sonneityping.wdl
-      md5sum: 3357a36f11992a0ca00c61d7bfccb44b
+      md5sum: 9e069c6ed95805fae7f13c1883bca9a6
     - path: miniwdl_run/wdl/tasks/species_typing/mycobacterium/task_tbprofiler.wdl
       md5sum: a4d6d24a04a453227b4fa320ff79e45f
     - path: miniwdl_run/wdl/tasks/species_typing/multi/task_ts_mlst.wdl
@@ -483,9 +483,9 @@
     - path: miniwdl_run/wdl/tasks/taxon_id/contamination/task_midas.wdl
       md5sum: 64caaaff5910ac0036e2659434500962
     - path: miniwdl_run/wdl/tasks/utilities/data_export/task_broad_terra_tools.wdl
-      md5sum: 8c97c5bd65e2787239f12ef425d479ae
+      md5sum: 1b556cd5fd334375b50a71856ab658e1
     - path: miniwdl_run/wdl/workflows/theiaprok/wf_theiaprok_illumina_se.wdl
-      md5sum: 02dc0075bf28d557d7b81aa2dc61feab
+      md5sum: a1cccaa6b863ec3279fb2b21b7277190
     - path: miniwdl_run/wdl/workflows/utilities/wf_merlin_magic.wdl
       md5sum: e797bbc7ceb4f62728f7ef315d9a4e40
     - path: miniwdl_run/wdl/workflows/utilities/wf_read_QC_trim_se.wdl
