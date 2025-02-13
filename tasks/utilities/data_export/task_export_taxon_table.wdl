@@ -8,7 +8,7 @@ task export_taxon_table {
     String? terra_workspace
     String? samplename
 
-    Map[String, String]? columns_to_export
+    Map[String, String?] columns_to_export
 
     Int cpu = 1
     Int disk_size = 25
