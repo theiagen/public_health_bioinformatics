@@ -86,7 +86,7 @@ task mercury {
       ~{"--library_layout '" + library_layout + "'"} \
       ~{"--seq_platform '" + seq_platform + "'"} \
       ~{"--gisaid_submitter '" + gisaid_submitter + "'"} \
-      ~{"--submitter_email '" + submitter_email + "'"} \ 
+      ~{"--submitter_email '" + submitter_email + "'"} \
       --debug
 
     # write out excluded samples file to the stdout
