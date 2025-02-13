@@ -30,6 +30,8 @@ task export_taxon_table {
     # replace whitespace from gambit_predicted_taxon with an underscore
     sample_taxon=$(echo ~{gambit_predicted_taxon} | tr ' ' '_')
   
+    # prevent failures
+    sample_table=""
     # set taxon and table vars
     echo "Checking if sample taxon should be exported to user-specified taxon table..."
     for index in "${!taxon_array[@]}"; do
