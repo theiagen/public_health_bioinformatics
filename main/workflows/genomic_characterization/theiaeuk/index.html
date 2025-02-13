@@ -22,7 +22,7 @@
       
       
       <link rel="icon" href="../../../assets/logos/Theiagen-Symbol-Standard-01.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.3">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.4">
     
     
       
@@ -30,7 +30,7 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.d7758b05.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.8608ea7d.min.css">
       
         
         <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
@@ -4891,11 +4891,11 @@
 </tbody>
 </table>
 <h2 id="theiaeuk-workflows">TheiaEuk Workflows<a class="headerlink" href="#theiaeuk-workflows" title="Permanent link">&para;</a></h2>
-<p><strong>The TheiaEuk_Illumina_PE workflow is for the assembly, quality assessment, and characterization of fungal genomes.</strong> It is designed to accept Illumina paired-end sequencing data as the primary input. <strong>It is currently intended only for <mark>haploid</mark> fungal genomes like <em>Candida auris</em>.</strong> Analyzing diploid genomes using TheiaEuk should be attempted only with expert attention to the resulting genome quality.</p>
+<p><strong>The TheiaEuk_Illumina_PE workflow is for the assembly, quality assessment, and characterization of fungal genomes.</strong> It is designed to accept Illumina paired-end sequencing data as the primary input. <strong>It is currently intended only for <mark>haploid</mark> fungal genomes like <em>Candidozyma auris</em>.</strong> Analyzing diploid genomes using TheiaEuk should be attempted only with expert attention to the resulting genome quality.</p>
 <p>All input reads are processed through "core tasks" in each workflow. The core tasks include raw read quality assessment, read cleaning (quality trimming and adapter removal), de novo assembly, assembly quality assessment, and species taxon identification. For some taxa identified, taxa-specific sub-workflows will be automatically activated, undertaking additional taxa-specific characterization steps, including clade-typing and/or antifungal resistance detection.</p>
 <div class="admonition caption">
 <p class="admonition-title">TheiaEuk Workflow Diagram</p>
-<p><a class="glightbox" href="../../../assets/figures/TheiaEuk_Illumina_PHB_20241106.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="TheiaEuk Workflow Diagram" src="../../../assets/figures/TheiaEuk_Illumina_PHB_20241106.png" width="75%" /></a></p>
+<p><a class="glightbox" href="../../../assets/figures/TheiaEuk_Illumina_PHB_2025123.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="TheiaEuk Workflow Diagram" src="../../../assets/figures/TheiaEuk_Illumina_PHB_2025123.png" width="75%" /></a></p>
 </div>
 <h3 id="inputs">Inputs<a class="headerlink" href="#inputs" title="Permanent link">&para;</a></h3>
 <div class="admonition info">
@@ -5073,7 +5073,7 @@
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/gambit:0.5.0</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/gambit:1.0.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -5993,7 +5993,7 @@
 <td><strong>gambit_db_genomes</strong></td>
 <td>File</td>
 <td>User-provided database of assembled query genomes; requires complementary signatures file. If not provided, uses default database, "/gambit-db"</td>
-<td>gs://gambit-databases-rp/1.3.0/gambit-metadata-1.3-231016.gdb</td>
+<td>gs://gambit-databases-rp/fungal-version/1.0.0/gambit-fungal-metadata-1.0.0-20241213.gdb</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6001,7 +6001,7 @@
 <td><strong>gambit_db_signatures</strong></td>
 <td>File</td>
 <td>User-provided signatures file; requires complementary genomes file. If not specified, the file from the docker container will be used.</td>
-<td>gs://gambit-databases-rp/1.3.0/gambit-signatures-1.3-231016.gs</td>
+<td>gs://gambit-databases-rp/fungal-version/1.0.0/gambit-fungal-signatures-1.0.0-20241213.gs</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6591,8 +6591,8 @@
 <p>The TheiaEuk workflow automatically activates taxa-specific tasks after identification of the relevant taxa using <code>GAMBIT</code>. Many of these taxa-specific tasks do not require any additional inputs from the user.</p>
 </div>
 <details class="toggle">
-<summary><em>Candida auris</em></summary>
-<p>Two tools are deployed when <em>Candida auris</em> is  identified.</p>
+<summary><em>Candidozyma auris</em> (also known as <em>Candida auris</em>)</summary>
+<p>Two tools are deployed when <em>Candidozyma auris</em>/<em>Candida auris</em> is  identified.</p>
 <details class="task">
 <summary>Cladetyping: clade determination</summary>
 <p>GAMBIT is used to determine the clade of the specimen by comparing the sequence to five clade-specific reference files. The output of the clade typing task will be used to specify the reference genome for the antifungal resistance detection tool.</p>
@@ -6611,7 +6611,7 @@
 </thead>
 <tbody>
 <tr>
-<td><em>Candida auris</em> Clade I</td>
+<td><em>Candidozyma auris</em> Clade I</td>
 <td>GCA_002759435.2</td>
 <td>Cand_auris_B8441_V2</td>
 <td>B8441</td>
@@ -6619,7 +6619,7 @@
 <td></td>
 </tr>
 <tr>
-<td><em>Candida auris</em> Clade II</td>
+<td><em>Candidozyma auris</em> Clade II</td>
 <td>GCA_003013715.2</td>
 <td>ASM301371v2</td>
 <td>B11220</td>
@@ -6627,7 +6627,7 @@
 <td></td>
 </tr>
 <tr>
-<td><em>Candida auris</em> Clade III</td>
+<td><em>Candidozyma auris</em> Clade III</td>
 <td>GCA_002775015.1</td>
 <td>Cand_auris_B11221_V1</td>
 <td>B11221</td>
@@ -6635,7 +6635,7 @@
 <td><em>ERG11</em> V125A/F126L</td>
 </tr>
 <tr>
-<td><em>Candida auris</em> Clade IV</td>
+<td><em>Candidozyma auris</em> Clade IV</td>
 <td>GCA_003014415.1</td>
 <td>Cand_auris_B11243</td>
 <td>B11243</td>
@@ -6643,7 +6643,7 @@
 <td><em>ERG11</em> Y132F</td>
 </tr>
 <tr>
-<td><em>Candida auris</em> Clade V</td>
+<td><em>Candidozyma auris</em> Clade V</td>
 <td>GCA_016809505.1</td>
 <td>ASM1680950v1</td>
 <td>IFRC2087</td>
@@ -6740,7 +6740,7 @@
 </span></code></pre></div>
 <p>Based on this, we can tell that ERG11 has a missense variant at position 143 (Lysine to Arginine) and B9J08_000401 (which is FLO8) has a stop-gained variant at position 142 (Glutamine to Stop).</p>
 <details class="toggle">
-<summary>Known resistance-conferring mutations for <em>Candida auris</em></summary>
+<summary>Known resistance-conferring mutations for <em>Candidozyma auris</em></summary>
 <p>Mutations in these genes that are known to confer resistance are shown below</p>
 <table>
 <thead>
@@ -6756,7 +6756,7 @@
 </thead>
 <tbody>
 <tr>
-<td><strong>Candida auris</strong></td>
+<td><strong>Candidozyma auris</strong></td>
 <td><strong>Human</strong></td>
 <td><strong>ERG11</strong></td>
 <td></td>
@@ -6765,7 +6765,7 @@
 <td><a href="https://academic.oup.com/cid/article/64/2/134/2706620/Simultaneous-Emergence-of-Multidrug-Resistant">Simultaneous Emergence of Multidrug-Resistant <em>Candida auris</em> on 3 Continents Confirmed by Whole-Genome Sequencing and Epidemiological Analyses</a></td>
 </tr>
 <tr>
-<td><strong>Candida auris</strong></td>
+<td><strong>Candidozyma auris</strong></td>
 <td><strong>Human</strong></td>
 <td><strong>ERG11</strong></td>
 <td></td>
@@ -6774,7 +6774,7 @@
 <td><a href="https://academic.oup.com/cid/article/64/2/134/2706620/Simultaneous-Emergence-of-Multidrug-Resistant">Simultaneous Emergence of Multidrug-Resistant <em>Candida auris</em> on 3 Continents Confirmed by Whole-Genome Sequencing and Epidemiological Analyses</a></td>
 </tr>
 <tr>
-<td><strong>Candida auris</strong></td>
+<td><strong>Candidozyma auris</strong></td>
 <td><strong>Human</strong></td>
 <td><strong>ERG11</strong></td>
 <td></td>
@@ -6783,7 +6783,7 @@
 <td><a href="https://academic.oup.com/cid/article/64/2/134/2706620/Simultaneous-Emergence-of-Multidrug-Resistant">Simultaneous Emergence of Multidrug-Resistant <em>Candida auris</em> on 3 Continents Confirmed by Whole-Genome Sequencing and Epidemiological Analyses</a></td>
 </tr>
 <tr>
-<td><strong>Candida auris</strong></td>
+<td><strong>Candidozyma auris</strong></td>
 <td><strong>Human</strong></td>
 <td><strong>FKS1</strong></td>
 <td></td>
@@ -6792,7 +6792,7 @@
 <td><a href="https://www.sciencedirect.com/science/article/pii/S0732889317303498">Activity of CD101, a long-acting echinocandin, against clinical isolates of Candida auris</a></td>
 </tr>
 <tr>
-<td><strong>Candida auris</strong></td>
+<td><strong>Candidozyma auris</strong></td>
 <td><strong>Human</strong></td>
 <td><strong>FKS1</strong></td>
 <td></td>
@@ -6801,7 +6801,7 @@
 <td><a href="https://www.sciencedirect.com/science/article/pii/S0732889317303498">Activity of CD101, a long-acting echinocandin, against clinical isolates of Candida auris</a></td>
 </tr>
 <tr>
-<td><strong>Candida auris</strong></td>
+<td><strong>Candidozyma auris</strong></td>
 <td><strong>Human</strong></td>
 <td><strong>FKS1</strong></td>
 <td></td>
@@ -6810,7 +6810,7 @@
 <td><a href="https://www.sciencedirect.com/science/article/pii/S0732889317303498">Activity of CD101, a long-acting echinocandin, against clinical isolates of Candida auris</a></td>
 </tr>
 <tr>
-<td><strong>Candida auris</strong></td>
+<td><strong>Candidozyma auris</strong></td>
 <td><strong>Human</strong></td>
 <td><strong>FKS1</strong></td>
 <td></td>
@@ -6819,7 +6819,7 @@
 <td><a href="https://academic.oup.com/jac/advance-article/doi/10.1093/jac/dkx480/4794718">A multicentre study of antifungal susceptibility patterns among 350 <em>Candida auris</em> isolates (2009–17) in India: role of the ERG11 and FKS1 genes in azole and echinocandin resistance</a></td>
 </tr>
 <tr>
-<td><strong>Candida auris</strong></td>
+<td><strong>Candidozyma auris</strong></td>
 <td><strong>Human</strong></td>
 <td><strong>FKS1</strong></td>
 <td></td>
@@ -6828,7 +6828,7 @@
 <td><a href="https://academic.oup.com/jac/advance-article/doi/10.1093/jac/dkx480/4794718">A multicentre study of antifungal susceptibility patterns among 350 <em>Candida auris</em> isolates (2009–17) in India: role of the ERG11 and FKS1 genes in azole and echinocandin resistance</a></td>
 </tr>
 <tr>
-<td><strong>Candida auris</strong></td>
+<td><strong>Candidozyma auris</strong></td>
 <td><strong>Human</strong></td>
 <td><strong>FKS1</strong></td>
 <td></td>
@@ -6837,7 +6837,7 @@
 <td><a href="https://academic.oup.com/jac/advance-article/doi/10.1093/jac/dkx480/4794718">A multicentre study of antifungal susceptibility patterns among 350 <em>Candida auris</em> isolates (2009–17) in India: role of the ERG11 and FKS1 genes in azole and echinocandin resistance</a></td>
 </tr>
 <tr>
-<td><strong>Candida auris</strong></td>
+<td><strong>Candidozyma auris</strong></td>
 <td><strong>Human</strong></td>
 <td><strong>FUR1</strong></td>
 <td><strong>CAMJ_004922</strong></td>
@@ -7577,7 +7577,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2025-02-06</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2025-02-13</span>
   </span>
 
     
