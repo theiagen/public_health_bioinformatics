@@ -57,7 +57,10 @@ workflow theiaprok_ont {
     Boolean call_abricate = false
     String abricate_db = "vfdb"
     String genome_annotation = "prokka" # options: "prokka" or "bakta"
+    String bakta_db = "full" # Default: "light" or "full"
     String? expected_taxon # allow user to provide organism (e.g. "Clostridioides_difficile") string to amrfinder. Useful when gambit does not predict the correct species
+    
+    
     # qc check parameters
     File? qc_check_table
   }
@@ -174,11 +177,21 @@ workflow theiaprok_ont {
               samplename = samplename
           }
         }
-        if (genome_annotation == "bakta") {
+        if (genome_annotation == "bakta") {  
+          if (bakta_db == "light") {  
+            File bakta_db_light = "gs://theiagen-public-files-rp/terra/theiaprok-files/bakta_db_light_2025-01-23.tar.gz"  
+          }  
+          if (bakta_db == "full") {  
+            File bakta_db_full = "gs://theiagen-public-files-rp/terra/theiaprok-files/bakta_db_full_2024-01-23.tar.gz"            
+          }  
+          if (!(bakta_db == "light" || bakta_db == "full")) {  
+              File bakta_custom_db = bakta_db  
+          } 
           call bakta_task.bakta {
             input:
               assembly = dragonflye.assembly_fasta,
-              samplename = samplename
+              samplename = samplename,
+              bakta_db_selected = select_first([bakta_custom_db, bakta_db_light, bakta_db_full])
           }
         }
         if (call_plasmidfinder) {
@@ -276,9 +289,6 @@ workflow theiaprok_ont {
               nanoplot_r1_median_q_clean = nanoplot_clean.median_q,
               nanoplot_r1_est_coverage_clean = nanoplot_clean.est_coverage,
               rasusa_version = read_qc_trim.rasusa_version,
-              tiptoft_plasmid_replicon_fastq = read_qc_trim.tiptoft_plasmid_replicon_fastq,
-              tiptoft_plasmid_replicon_genes = read_qc_trim.tiptoft_plasmid_replicon_genes,
-              tiptoft_version = read_qc_trim.tiptoft_version,
               assembly_fasta = dragonflye.assembly_fasta,
               contigs_gfa = dragonflye.contigs_gfa,
               dragonflye_version = dragonflye.dragonflye_version,
@@ -553,7 +563,9 @@ workflow theiaprok_ont {
     String seq_platform = seq_method
     # Sample Screening
     String? read_screen_raw = raw_check_reads.read_screen
+    File? read_screen_raw_tsv = raw_check_reads.read_screen_tsv
     String? read_screen_clean = clean_check_reads.read_screen
+    File? read_screen_clean_tsv = clean_check_reads.read_screen_tsv
     # Read QC - nanoq outputs
     File? read1_clean = read_qc_trim.read1_clean
     String? nanoq_version = read_qc_trim.nanoq_version
@@ -589,10 +601,6 @@ workflow theiaprok_ont {
     String? kraken_docker = read_qc_trim.kraken_docker
     # Read QC - rasusa outputs
     String? rasusa_version = read_qc_trim.rasusa_version
-    # Read QC - tiptoft outputs
-    File? tiptoft_plasmid_replicon_fastq = read_qc_trim.tiptoft_plasmid_replicon_fastq
-    String? tiptoft_plasmid_replicon_genes = read_qc_trim.tiptoft_plasmid_replicon_genes
-    String? tiptoft_version = read_qc_trim.tiptoft_version
     # Assembly - dragonflye outputs
     File? assembly_fasta = dragonflye.assembly_fasta
     File? contigs_gfa = dragonflye.contigs_gfa
@@ -689,6 +697,7 @@ workflow theiaprok_ont {
     File? bakta_gff3 = bakta.bakta_gff3
     File? bakta_tsv = bakta.bakta_tsv
     File? bakta_summary = bakta.bakta_txt
+    File? bakta_plot = bakta.bakta_plot
     String? bakta_version = bakta.bakta_version
     # Plasmidfinder Results
     String? plasmidfinder_plasmids = plasmidfinder.plasmidfinder_plasmids
