@@ -44,7 +44,7 @@ Users can configure the basecalling model by setting the `dorado_model` input pa
 - **`hac`** (high-accuracy): This model provides a balance between speed and accuracy. This model basecalls faster than `sup`, but those basecalls will be less accurate. It is recommended for most users by the Dorado developers.
 - **`fast`** (fast model): This model is the fastest and least accurate and is recommended when speed is prioritized over accuracy, such as for initial analyses or non-critical applications.
 
-**Manual Model Input:** Alternatively, users can specify either a simplex mdel path or a model complex (e.g.`dna_r10.4.1_e8.2_400bps_hac@v4.2.0` or `hac,5mCG_5hmCG`). Please see the [Dorado documentation](https://dorado-docs.readthedocs.io/en/latest/models/models/) for more details on the manual model naming conventions. You can also find the [full list of available simplex and modified basecalling models here](https://dorado-docs.readthedocs.io/en/latest/models/list/).
+**Manual Model Input:** Alternatively, users can specify either a simplex model path or a model complex (e.g.`dna_r10.4.1_e8.2_400bps_hac@v4.2.0` or `hac,5mCG_5hmCG`). Please see the [Dorado documentation](https://dorado-docs.readthedocs.io/en/latest/models/models/) for more details on the manual model naming conventions. You can also find the [full list of available simplex and modified basecalling models here](https://dorado-docs.readthedocs.io/en/latest/models/list/).
 
 !!! tip "Example Manual Models"
     - `sup,5mCG_5hmCG,6mA`
