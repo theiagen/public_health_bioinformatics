@@ -166,6 +166,10 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 | dragonflye | **polishing_rounds** | Int | The number of polishing rounds to conduct (without Illumina) | 1 | Optional | ONT |
 | dragonflye | **use_pilon_illumina_polisher** | Boolean | Set to true to use Pilon to polish Illumina reads | FALSE | Optional | ONT |
 | dragonflye | **use_racon** | Boolean | Set to true to use Racon to polish instead of Medaka | FALSE | Optional | ONT |
+| export_taxon_table | **cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional | FASTA, ONT, PE, SE |
+| export_taxon_table | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 25 | Optional | FASTA, ONT, PE, SE |
+| export_taxon_table | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-06-21 | Optional | FASTA, ONT, PE, SE |
+| export_taxon_table | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 2 | Optional | FASTA, ONT, PE, SE |
 | gambit | **cpu** | Int | Number of CPUs to allocate to the task | 8 | Optional | FASTA, ONT, PE, SE |
 | gambit | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | FASTA, ONT, PE, SE |
 | gambit | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/gambit:1.0.0 | Optional | FASTA, ONT, PE, SE |
