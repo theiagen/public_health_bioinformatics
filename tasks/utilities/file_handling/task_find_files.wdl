@@ -22,7 +22,7 @@ task find_files {
     fi
   >>>
   output {
-    Array[File] file_paths = read_lines("file_list.txt")
+    Array[String] file_paths = read_lines("file_list.txt")
   }
    runtime {
     docker: docker
