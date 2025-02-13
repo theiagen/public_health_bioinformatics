@@ -45,9 +45,8 @@ task export_taxon_table {
 
     if [ -n "${sample_table}" ]; then
 
-      jq -r 'to_entries | map(.key) | join("\t")' ~{columns_to_export_json} > exported_columns.tsv
-      jq -r 'to_entries | map(.value) | join("\t")' ~{columns_to_export_json} >> exported_columns.tsv
-
+      jq -r '[.[] | .left], [.[] | .right] | @tsv' ~{columns_to_export_json} > exported_columns.tsv
+     
       UPLOAD_DATE=$(date -I)
     
       echo -e "entity:${sample_table}_id\tupload_date\ttable_created_by\t$(head -n1 exported_columns.tsv)" > terra_table_to_upload.tsv
