@@ -196,38 +196,6 @@ task prune_table {
   }
 }
 
-#moved here biosample type future work
-  #if ("~{biosample_type}".lower() == "microbe"):
-      # add a column for biosample package -- required for XML submission
-    #table["attribute_package"] = "Microbe.1.0"
-      # future qc checks:
-      #   q-score >= 30
-      #   reads > 50 bp
-        #   trailing/leading bases removed
-        #   similar GC content to expected genome
-        #   assembled genome ratio ~1.0
-        #   200 contigs or less
-  #elif ("~{biosample_type}".lower() == "wastewater"):
-        # add a column for biosample package -- required for XML submission   
-  #elif ("~{biosample_type}".lower() == "pathogen") or ("pathogen.cl" in "~{biosample_type}".lower()):
-        # add a column for biosample package -- required for XML submission
-    #table["attribute_package"] = "Pathogen.cl"
-        # future qc checks:
-        #   gc after trimming 42-47.5%
-        #   average phred after trimming >= 28
-        #   coverage after trimming >= 20X
-        #if "mean_coverage_depth" in table.columns:
-        #  table = table[(table.mean_coverage_depth > 20)]
-  #elif ("pathogen.env" in "~{biosample_type}".lower()):
-      # add a column for biosample package -- required for XML submission
-    #table["attribute_package"] = "Pathogen.env.1.0"
-        # future qc checks:
-        #   gc after trimming 42-47.5%
-        #   average phred after trimming >= 28    
-        #   coverage after trimming >= 20X
-        #if "mean_coverage_depth" in table.columns:
-        #  table = table[(table.mean_coverage_depth > 20)]
-
 task add_biosample_accessions {
   input {
     File generated_accessions
