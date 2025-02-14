@@ -5404,7 +5404,7 @@
 <tr>
 <td><a href="../../../workflows_overview/workflows_type/#public-data-sharing">Public Data Sharing</a></td>
 <td><a href="../../../workflows_overview/workflows_kingdom/#bacteria">Bacteria</a>, <a href="../../../workflows_overview/workflows_kingdom/#mycotics">Mycotics</a> <a href="../../../workflows_overview/workflows_kingdom/#viral">Viral</a></td>
-<td>PHB v2.3.0</td>
+<td>PHB vX.X.X</td>
 <td>No</td>
 <td>Set-level</td>
 </tr>
@@ -5509,6 +5509,97 @@
 <p class="admonition-title">Production Submissions</p>
 <p>Please note that an optional Boolean variable, <code>submit_to_production</code>, is <strong>required</strong> for a production submission.</p>
 </div>
+<details class="tip" open="open">
+<summary>Using Customized Column Names in Terra Tables</summary>
+<p>In some cases, users may have data tables in Terra with column names that differ from the default expected by the workflow. The <code>Terra_2_NCBI</code> workflow allows users to supply a <strong>custom column mapping file</strong>, enabling them to specify how their columns map to the required workflow variables.</p>
+<p>To use a custom column mapping file:</p>
+<ol>
+<li>
+<p>Create a tab-delimited <code>.tsv</code> file with the following structure:</p>
+<p>A header including "Custom" and "Required" should be included in the first row.
+The "Custom" column should contain the actual column names in your Terra table (e.g., 'collection-date'), and the "Required" column should contain the column names expected by the workflow (e.g., 'collection_date').</p>
+<p>Example Mapping File:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Custom  Required
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>Collection-Date collection_date
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>geo_location    geo_loc_name
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>bioproject_column   bioproject
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>sample_id_column    sample_names
+</span></code></pre></div></p>
+</li>
+<li>
+<p>Upload the file to your Terra workspace and reference it in the <code>column_mapping_file</code> parameter when running the workflow using Google Cloud Storage paths.</p>
+</li>
+</ol>
+<p>Ensure the mapping file includes all columns with custom names. Columns that match the default workflow names do not need to be included. Missing mappings for renamed columns may result in errors during execution if the column is required, and will not be found if the column is optional.</p>
+<p>The workflow will automatically map the specified column names from your Terra table to the required workflow variables using the 'custom_mapping_file'.</p>
+<p>To find a list of the expected required and optional column names, <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/submission/task_submission.wdl#L65">please refer to the code blocks that can be found here</a>. The required and optional metadata fields are organized by the BioSample type.</p>
+<p>Below, you can find the required metadata fields for the currently supported BioSample types:</p>
+<details class="toggle">
+<summary>Microbe Required Metadata</summary>
+<ul>
+<li>submission_id</li>
+<li>organism</li>
+<li>collection_date</li>
+<li>geo_loc_name</li>
+<li>sample_type</li>
+</ul>
+</details>
+<details class="toggle">
+<summary>Wastewater Required Metadata</summary>
+<ul>
+<li>submission_id</li>
+<li>organism</li>
+<li>collection_date</li>
+<li>geo_loc_name</li>
+<li>isolation_source</li>
+<li>ww_population</li>
+<li>ww_sample_duration</li>
+<li>ww_sample_matrix</li>
+<li>ww_sample_type</li>
+<li>ww_surv_target_1</li>
+<li>ww_surv_target_1_known_present</li>
+</ul>
+</details>
+<details class="toggle">
+<summary>Pathogen.cl Required Metadata</summary>
+<ul>
+<li>submission_id</li>
+<li>organism</li>
+<li>collected_by</li>
+<li>collection_date</li>
+<li>geo_loc_name</li>
+<li>host</li>
+<li>host_disease</li>
+<li>isolation_source</li>
+<li>lat_lon</li>
+</ul>
+</details>
+<details class="toggle">
+<summary>Pathogen.env Required Metadata</summary>
+<ul>
+<li>submission_id</li>
+<li>organism</li>
+<li>collected_by</li>
+<li>collection_date</li>
+<li>geo_loc_name</li>
+<li>isolation_source</li>
+<li>lat_lon</li>
+</ul>
+</details>
+<details class="toggle">
+<summary>Virus Required Metadata</summary>
+<ul>
+<li>submission_id</li>
+<li>organism</li>
+<li>isolate</li>
+<li>collection_date</li>
+<li>geo_loc_name</li>
+<li>isolation_source</li>
+</ul>
+</details>
+<hr />
+<p>For further assistance in setting up a custom column mapping file, please contact Theiagen at <a href="mailto:support@theiagen.com">support@theiagen.com</a>.</p>
+</details>
 <div class="searchable-table">
 <table>
 <thead>
@@ -5943,16 +6034,16 @@
 <h5 id="example-excluded-samples">An example excluded_samples.tsv file<a class="headerlink" href="#example-excluded-samples" title="Permanent link">&para;</a></h5>
 <p>Due to the nature of tsv files, it may be easier to download and open this file in Excel. </p>
 <p><a href="../../../assets/files/example_excluded_samples.tsv">example_excluded_samples.tsv</a></p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Samples excluded for quality thresholds:
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>sample_name message 
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>sample2 VADR skipped due to poor assembly
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>sample3 VADR number alerts too high: 3 greater than limit of 0
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>sample4 Number of Ns was too high: 10000 greater than limit of 5000
-</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
-</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>Samples excluded for missing required metadata (will have empty values in indicated columns):
-</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>tablename_id    organism    country library_layout
-</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>sample5         paired
-</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>sample6 SARS-CoV-2  USA
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Samples excluded for quality thresholds:
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>sample_name message 
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>sample2 VADR skipped due to poor assembly
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>sample3 VADR number alerts too high: 3 greater than limit of 0
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>sample4 Number of Ns was too high: 10000 greater than limit of 5000
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>Samples excluded for missing required metadata (will have empty values in indicated columns):
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>tablename_id    organism    country library_layout
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>sample5         paired
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>sample6 SARS-CoV-2  USA
 </span></code></pre></div>
 <p>This example informs the user that samples 2-4 were excluded for quality reasons (the exact reason is listed in the <code>message</code> column), and that samples 5 and 6 were excluded because they were missing required metadata fields (sample5 was missing the <code>organism</code> and <code>country</code> fields, and sample6 was missing the <code>library_layout</code> field).</p>
 </details>
@@ -5985,7 +6076,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2025-01-15</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2025-02-14</span>
   </span>
 
     
