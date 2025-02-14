@@ -4,7 +4,7 @@
 
 | **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
 |---|---|---|---|---|
-| [Public Data Sharing](../../workflows_overview/workflows_type.md/#public-data-sharing) | [Bacteria](../../workflows_overview/workflows_kingdom.md#bacteria), [Mycotics](../../workflows_overview/workflows_kingdom.md#mycotics) [Viral](../../workflows_overview/workflows_kingdom.md/#viral) | PHB v2.3.0 | No | Set-level |
+| [Public Data Sharing](../../workflows_overview/workflows_type.md/#public-data-sharing) | [Bacteria](../../workflows_overview/workflows_kingdom.md#bacteria), [Mycotics](../../workflows_overview/workflows_kingdom.md#mycotics) [Viral](../../workflows_overview/workflows_kingdom.md/#viral) | PHB vX.X.X | No | Set-level |
 
 ## Terra_2_NCBI_PHB
 
@@ -105,6 +105,87 @@ This workflow runs on set-level data tables.
 
 !!! info "Production Submissions"
     Please note that an optional Boolean variable, `submit_to_production`, is **required** for a production submission.
+
+???+ tip "Using Customized Column Names in Terra Tables"
+
+    In some cases, users may have data tables in Terra with column names that differ from the default expected by the workflow. The `Terra_2_NCBI` workflow allows users to supply a **custom column mapping file**, enabling them to specify how their columns map to the required workflow variables.
+
+    To use a custom column mapping file:
+
+    1. Create a tab-delimited `.tsv` file with the following structure:
+   
+        A header including "Custom" and "Required" should be included in the first row.
+        The "Custom" column should contain the actual column names in your Terra table (e.g., 'collection-date'), and the "Required" column should contain the column names expected by the workflow (e.g., 'collection_date').
+
+        Example Mapping File:
+        ```plaintext
+        Custom  Required
+        Collection-Date collection_date
+        geo_location    geo_loc_name
+        bioproject_column   bioproject
+        sample_id_column    sample_names
+        ```
+
+    2. Upload the file to your Terra workspace and reference it in the `column_mapping_file` parameter when running the workflow using Google Cloud Storage paths.
+
+    Ensure the mapping file includes all columns with custom names. Columns that match the default workflow names do not need to be included. Missing mappings for renamed columns may result in errors during execution if the column is required, and will not be found if the column is optional.
+
+    The workflow will automatically map the specified column names from your Terra table to the required workflow variables using the 'custom_mapping_file'.
+
+    To find a list of the expected required and optional column names, [please refer to the code blocks that can be found here](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/submission/task_submission.wdl#L65). The required and optional metadata fields are organized by the BioSample type.
+
+    Below, you can find the required metadata fields for the currently supported BioSample types:
+
+    ??? toggle "Microbe Required Metadata"
+        - submission_id
+        - organism
+        - collection_date
+        - geo_loc_name
+        - sample_type
+
+    ??? toggle "Wastewater Required Metadata"
+        - submission_id
+        - organism
+        - collection_date
+        - geo_loc_name
+        - isolation_source
+        - ww_population
+        - ww_sample_duration
+        - ww_sample_matrix
+        - ww_sample_type
+        - ww_surv_target_1
+        - ww_surv_target_1_known_present
+
+    ??? toggle "Pathogen.cl Required Metadata"
+        - submission_id
+        - organism
+        - collected_by
+        - collection_date
+        - geo_loc_name
+        - host
+        - host_disease
+        - isolation_source
+        - lat_lon
+    
+    ??? toggle "Pathogen.env Required Metadata"
+        - submission_id
+        - organism
+        - collected_by
+        - collection_date
+        - geo_loc_name
+        - isolation_source
+        - lat_lon
+
+    ??? toggle "Virus Required Metadata"
+        - submission_id
+        - organism
+        - isolate
+        - collection_date
+        - geo_loc_name
+        - isolation_source
+
+    ---
+    For further assistance in setting up a custom column mapping file, please contact Theiagen at [support@theiagen.com](mailto:support@theiagen.com).
 
 <div class="searchable-table" markdown="1">
 
