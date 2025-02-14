@@ -5,7 +5,7 @@ import "../../tasks/gene_typing/drug_resistance/task_amr_search.wdl" as run_amr_
 workflow amr_search_workflow {
   input {
     File input_fasta
-    String? amr_search_database
+    String amr_search_database
     String samplename
   }
 
