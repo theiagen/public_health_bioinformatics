@@ -21,11 +21,12 @@ task dorado_trim {
     output_dir="trimmed_fastqs"
     mkdir -p "$output_dir"
 
+    echo "DEBUG: running dorado trim on the input FASTQ files..."
     # Loop through each FASTQ file and apply Dorado trim
     for fq in ~{sep=" " fastq_files}; do
 
-      # Extract the base filename from the path
-      filename=$(basename "$fq")
+      # Extract the base filename from the path, and remove .gz extension since dorado trim outputs uncompressed FASTQs
+      filename=$(basename "$fq" | sed 's|.gz||')
         
       # Perform primer trimming and save output in the designated directory
       dorado trim "$fq" \
@@ -33,6 +34,16 @@ task dorado_trim {
         --threads ~{cpu} \
         --emit-fastq > "$output_dir/$filename"
     done
+    echo "DEBUG: dorado trim completed on all FASTQ files."
+
+    echo "DEBUG: listing contents of $output_dir:"
+    ls -lh "$output_dir"
+
+    # compress FASTQs since dorado trim emits uncompressed FASTQs
+    pigz -f  ${output_dir}/*.fastq
+
+    echo "DEBUG: listing contents of $output_dir after pigz compression:"
+    ls -lh "$output_dir"
   >>>
   output {
     String dorado_docker = docker
@@ -45,7 +56,7 @@ task dorado_trim {
     cpu: cpu
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
-    maxRetries: 3
+    maxRetries: 0
     preemptible: 0
   }
 }
