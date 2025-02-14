@@ -26,7 +26,6 @@ task prune_table {
   command <<<
     set -euo pipefail
 
-    # Export table from Terra (when not running locally)
     # when running on terra, comment out all input_table mentions
     python3 /scripts/export_large_tsv/export_large_tsv.py --project "~{project_name}" --workspace "~{workspace_name}" --entity_type ~{table_name} --tsv_filename ~{table_name}-data.tsv
     
@@ -40,7 +39,6 @@ task prune_table {
       export skip_bio="false"
     fi
 
-    # Apply optional column mappings Additional metadata Processing (e.g., removing NA values, validating metadata)
     python3 <<CODE 
     import pandas as pd
     import numpy as np
@@ -52,16 +50,16 @@ task prune_table {
 
     # If a column mapping file is provided, load it and apply the mappings.
     if "~{column_mapping_file}" != "":
-        mapping = pd.read_csv("~{column_mapping_file}", sep="\t", header=0)
-        print("Column mapping file content:\n", mapping)
-        if not set(["Custom", "Required"]).issubset(mapping.columns):
-            raise KeyError("Column mapping file must contain 'Custom' and 'Required' headers.")
-        column_mapping = dict(zip(mapping["Custom"], mapping["Required"]))
-        print("Column mapping dictionary:", column_mapping)
-        table.rename(columns=column_mapping, inplace=True)
-        print("Updated table column names:", table.columns.tolist())
+      mapping = pd.read_csv("~{column_mapping_file}", sep="\t", header=0)
+      print("Column mapping file content:\n", mapping)
+      if not set(["Custom", "Required"]).issubset(mapping.columns):
+        raise KeyError("Column mapping file must contain 'Custom' and 'Required' headers.")
+      column_mapping = dict(zip(mapping["Custom"], mapping["Required"]))
+      print("Column mapping dictionary:", column_mapping)
+      table.rename(columns=column_mapping, inplace=True)
+      print("Updated table column names:", table.columns.tolist())
     else:
-        print("No column mapping file provided; proceeding without renaming.") 
+      print("No column mapping file provided; proceeding without renaming.") 
 
     # Helper function to remove NA values and return the cleaned table and a table of excluded samples
     def remove_nas(table, required_metadata):
@@ -79,7 +77,7 @@ task prune_table {
 
     # Verify if the expected column exists
     if expected_column not in table.columns:
-        raise KeyError(f"Expected column '{expected_column}' not found in the table. Available columns: {list(table.columns)}")
+      raise KeyError(f"Expected column '{expected_column}' not found in the table. Available columns: {list(table.columns)}")
 
     # Filter samples for upload
     sample_names = "~{sep='*' sample_names}".split("*")
