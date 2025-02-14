@@ -51,11 +51,10 @@ task prune_table {
     # If a column mapping file is provided, load it and apply the mappings.
     if "~{column_mapping_file}" != "":
       mapping = pd.read_csv("~{column_mapping_file}", sep="\t", header=0)
+
       if not set(["Custom", "Required"]).issubset(mapping.columns):
         raise KeyError("Column mapping file must contain 'Custom' and 'Required' headers.")
-
-      column_mapping = dict(zip(mapping["Custom"], mapping["Required"]))
-      table.rename(columns=column_mapping, inplace=True)
+      table = table.rename(columns=dict(zip(mapping["Custom"], mapping["Required"])))
     else:
       print("No column mapping file provided; proceeding without renaming.") 
 
