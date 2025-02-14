@@ -45,8 +45,7 @@ task prune_table {
     import os
 
     # Load the exported Terra table.
-    table = pd.read_csv("~{table_name}-data.tsv", sep="\t")
-    print("Original table column names:", table.columns.tolist())
+    table = pd.read_csv("~{table_name}-data.tsv", sep="\t", header=0, dtype=str)
 
     # If a column mapping file is provided, load it and apply the mappings.
     if "~{column_mapping_file}" != "":
@@ -69,17 +68,9 @@ task prune_table {
 
       return table, excluded_samples
 
-    # Define the expected column
-    expected_column = f"~{table_name}_id"
-
-    # Verify if the expected column exists
-    if expected_column not in table.columns:
-      raise KeyError(f"Expected column '{expected_column}' not found in the table. Available columns: {list(table.columns)}")
-
-    # Filter samples for upload
-    sample_names = "~{sep='*' sample_names}".split("*")
-    table = table[table[expected_column].isin(sample_names)]
-
+    # extract the samples for upload from the entire table	
+    table = table[table["~{table_name}_id"].isin("~{sep='*' sample_names}".split("*"))]
+    
     # Define required and optional metadata fields based on biosample_type
     if (os.environ["skip_bio"] == "false"):
       if ("~{biosample_type}".lower() == "microbe"):
