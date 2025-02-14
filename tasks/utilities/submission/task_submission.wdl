@@ -28,7 +28,7 @@ task prune_table {
 
     # when running on terra, comment out all input_table mentions
     python3 /scripts/export_large_tsv/export_large_tsv.py --project "~{project_name}" --workspace "~{workspace_name}" --entity_type ~{table_name} --tsv_filename ~{table_name}-data.tsv
-    
+
     # Uncomment the following for local testing:
     #cp ~{input_table} ~{table_name}-data.tsv
 
@@ -51,13 +51,11 @@ task prune_table {
     # If a column mapping file is provided, load it and apply the mappings.
     if "~{column_mapping_file}" != "":
       mapping = pd.read_csv("~{column_mapping_file}", sep="\t", header=0)
-      print("Column mapping file content:\n", mapping)
       if not set(["Custom", "Required"]).issubset(mapping.columns):
         raise KeyError("Column mapping file must contain 'Custom' and 'Required' headers.")
+
       column_mapping = dict(zip(mapping["Custom"], mapping["Required"]))
-      print("Column mapping dictionary:", column_mapping)
       table.rename(columns=column_mapping, inplace=True)
-      print("Updated table column names:", table.columns.tolist())
     else:
       print("No column mapping file provided; proceeding without renaming.") 
 
@@ -82,10 +80,6 @@ task prune_table {
     # Filter samples for upload
     sample_names = "~{sep='*' sample_names}".split("*")
     table = table[table[expected_column].isin(sample_names)]
-
-    # Debugging output sample names and column names
-    print("Sample names:", sample_names)
-    print("Column names:", table.columns.tolist())
 
     # Define required and optional metadata fields based on biosample_type
     if (os.environ["skip_bio"] == "false"):
@@ -134,7 +128,7 @@ task prune_table {
 
     # add bioproject_accesion to table
     table["bioproject_accession"] = "~{bioproject}"
-        
+    
     # extract the required metadata from the table
     biosample_metadata = table[required_metadata].copy()
 
@@ -159,7 +153,7 @@ task prune_table {
       sra_metadata["~{read2_column_name}"] = sra_metadata["~{read2_column_name}"].map(lambda filename2: filename2.split('/').pop())   
       sra_metadata.rename(columns={"~{read2_column_name}" : "filename2"}, inplace=True)
       table["~{read2_column_name}"].to_csv("filepaths.tsv", mode='a', index=False, header=False)
-        
+
     # write metadata tables to tsv output files
     biosample_metadata.to_csv("biosample_table.tsv", sep='\t', index=False)
     sra_metadata.to_csv("sra_table_to_edit.tsv", sep='\t', index=False)
