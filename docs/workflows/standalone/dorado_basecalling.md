@@ -13,26 +13,32 @@ The Dorado Basecalling workflow is used to convert Oxford Nanopore `POD5` sequen
 !!! caption "Dorado_Basecalling_PHB Workflow Diagram"
     ![Dorado_Basecalling_PHB Workflow Diagram](../../assets/figures/Dorado_Basecalling_PHB.png)
 
-### Uploading POD5 Files to Terra `pod5_bucket_path`
+### Configuring Workflow in Terra
 
-??? toggle "Click for more information"
+We recommend running this workflow with **"Run workflow with inputs defined by file paths"** selected in Terra. This allows the user to skip the step of creating a Terra table for the POD5 files. The user will only need to provide the GCS path of the POD5 files, and the workflow will automatically find and basecall all POD5 files in that location. The resulting FASTQ files will be added to a Terra table of your choice.
+
+???+ dna "Uploading POD5 Files to Terra `pod5_bucket_path`"
     To run the Dorado Basecalling Workflow, you must first upload your `POD5 files` to a Google Cloud Storage (GCS) bucket within your Terra workspace. Follow these steps:
 
-    1. Use the Terra Data Uploader
+    1. **Use the Terra Data Uploader**
         
         Go to the **"Data"** tab in your Terra workspace. Click **"Upload Files"** and select your `POD5` files for upload. Confirm the upload process and wait for the files to be uploaded.
 
-    2. Copy the GCS Path
+    2. **Copy the GCS Path**
         
         After the upload is complete, right-click the collection name and select "Copy link address"
 
-        ![Data Uploader](../../assets/figures/dorado_pod5_bucket_path.png)
+        !!! caption "Copy link address"
+            ![Data Uploader](../../assets/figures/dorado_pod5_bucket_path.png)
 
-    3. Paste the GCS Path into the Workflow Input
+    3. **Paste the GCS Path into the Workflow Input**
         
-        Open the workflow configuration screen in Terra. Paste the copied GCS path into the `pod5_bucket_path` input field for the Dorado Basecalling Workflow.
+        Open the workflow configuration screen in Terra. Paste the copied GCS path into the `pod5_bucket_path` input field for the Dorado Basecalling Workflow. 
+        
+        Make sure the select the `"Run workflow with inputs defined by file paths"` option, as shown.
     
-        ![Workflow Inputs](../../assets/figures/dorado_workflow_inputs.png)
+        !!! caption "Workflow Inputs"
+            ![Workflow Inputs](../../assets/figures/dorado_workflow_inputs.png)
 
 ### Model Type Selection
 
@@ -135,13 +141,13 @@ Ensure you use an accepted barcoding kit name in the `kit_name` parameter. Check
 | dorado_demux | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 16 | Optional |
 | dorado_trim | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional |
 | dorado_trim | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
-| dorado_trim | **docker** | String | The Docker container to use for the task. This is not the most up-to-date image since there is a bug with this Dorado subcommand in v0.9.0-cuda12.2.0 | us-docker.pkg.dev/general-theiagen/staphb/dorado:0.8.3 | Optional |
+| dorado_trim | **docker** | String | The Docker container to use for the task. This is not the most up-to-date image since there is a bug with this Dorado subcommand in v0.9.0 | us-docker.pkg.dev/general-theiagen/staphb/dorado:0.8.3 | Optional |
 | dorado_trim | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 16 | Optional |
-| find_files | **cpu** | Int | Number of CPUs to allocate to the task |  | Optional |
+| find_files | **cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional |
 | find_files | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 25 | Optional |
 | find_files | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 2 | Optional |
 | find_files | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/cloudsdktool/google-cloud-cli:427.0.0-alpine | Optional |
-| version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
+| version_capture | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0 | Optional |
 | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) | | Optional |
 
 </div>
@@ -203,7 +209,7 @@ This workflow is composed of several tasks to process, basecall, and analyze Oxf
     To determine how to format the FASTA file that is expected in `custom_primers` please see the [Dorado documentation](https://dorado-docs.readthedocs.io/en/latest/barcoding/custom_primers/), specifically the section on "Custom adapter/primer file format".
 
     !!! tip "Older Dorado Version Used"
-        The Dorado version used in this task is not the most up-to-date version (set to v0.8.3) due to a bug in the Dorado subcommand in the latest version (v0.9.0-cuda12.2.0). This will be updated in the future when the bug has been resolved by the Dorado developers. 
+        The Dorado version used in this task is not the most up-to-date version (set to v0.8.3) due to a bug in the Dorado subcommand in the latest version (v0.9.0). This will be updated in the future when the bug has been resolved by the Dorado developers. 
 
     !!! techdetails "Dorado Trimming Technical Details"
         |  | Links |
