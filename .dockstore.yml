@@ -120,6 +120,11 @@ workflows:
    primaryDescriptorPath: /workflows/phylogenetics/wf_ksnp3.wdl
    testParameterFiles:
     - /tests/inputs/empty.json
+ - name: kSNP4_PHB
+   subclass: WDL
+   primaryDescriptorPath: /workflows/phylogenetics/wf_ksnp4.wdl
+   testParameterFiles:
+    - /tests/inputs/empty.json
  - name: MashTree_FASTA_PHB
    subclass: WDL
    primaryDescriptorPath: /workflows/phylogenetics/wf_mashtree_fasta.wdl
