@@ -19,7 +19,7 @@ workflow ksnp4_workflow {
     String? data_summary_column_names # string of comma delimited column names
     Boolean midpoint_root_tree = true
     Boolean phandango_coloring = false
-	}
+  }
   call ksnp4.ksnp4 as ksnp4_task {
     input:
       assembly_fasta = assembly_fasta,
