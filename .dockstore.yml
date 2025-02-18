@@ -120,7 +120,7 @@ workflows:
    primaryDescriptorPath: /workflows/phylogenetics/wf_ksnp3.wdl
    testParameterFiles:
     - /tests/inputs/empty.json
- - name: kSNP4_PHB
+ - name: please_open_docstore_kSNP4_PHB
    subclass: WDL
    primaryDescriptorPath: /workflows/phylogenetics/wf_please_open_docstore_ksnp4.wdl
    testParameterFiles:
