@@ -327,6 +327,7 @@ workflow theiaprok_illumina_se {
                 "assembly_length": quast.genome_length,
                 "bakta_gbff": bakta.bakta_gbff,
                 "bakta_gff3": bakta.bakta_gff3,
+                "bakta_plot": bakta.bakta_plot,
                 "bakta_summary": bakta.bakta_txt,
                 "bakta_tsv": bakta.bakta_tsv,
                 "bakta_version": bakta.bakta_version,
