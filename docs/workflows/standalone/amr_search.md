@@ -8,7 +8,7 @@
 
 ## AMR_Search_PHB
 
-The AMR_Search workflow is a standalone version of Pathogenwatchs AMR profiling functionality utilizing `AMRsearch` tool from Pathogenwatch.
+The AMR_Search workflow is a standalone version of Pathogenwatch's AMR profiling functionality utilizing `AMRsearch` tool from Pathogenwatch.
 
 A limited number of species are currently supported and are listed below. NCBI codes are needed from this table to select the correct library.
 
@@ -34,13 +34,13 @@ Input should be ordered as they appear on Terra
 
 | **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
 |---|---|---|---|---|---|
+| amr_search_workflow | **amr_search_database** | String | NCBI taxon code of samples known taxonomy, see above supported species || Required |
 | amr_search_workflow | **input_fasta** | File | A microbial assembly file || Required |
 | amr_search_workflow | **samplename** | String | Identifier user wants prefixed to output files || Required |
 | amr_search | **cpu** | Integer | Number of CPUs to allocate to the task |2| Optional |
 | amr_search | **disk_size** | Integer | Amount of storage (in GB) to allocate to the task |50| Optional |
 | amr_search | **docker** | String | The docker container to use for the task |us-docker.pkg.dev/general-theiagen/theiagen/amrsearch:0.2.0| Optional |
 | amr_search | **memory** | Integer | Amount of memory/RAM (in GB) to allocate to the task |8| Optional |
-| amr_search_workflow | **amr_search_database** | String | NCBI taxon code of samples known taxonomy, see above supported species || Required |
 
 ### Workflow Tasks
 
@@ -50,7 +50,7 @@ Description of the workflow tasks
 
     This task performs *in silico* antimicrobial resistance (AMR) profiling for supported species using **AMRsearch**, the primary tool used by [Pathogenwatch](https://pathogen.watch/) to genotype and infer antimicrobial resistance (AMR) phenotypes from assembled microbial genomes.
 
-    **AMRsearch** screens against an in-house library of curated genotypes and inferred phenotypes, developed in collaboration with community experts. Resistance phenotypes are determined based on both **resistance genes** and **mutations**, and the system accounts for interactions between multiple SNPs, genes, and suppressors. Predictions follow **S/I/R classification** (*Sensitive, Intermediate, Resistant*).
+    **AMRsearch** screens against Pathogenwatch's library of curated genotypes and inferred phenotypes, developed in collaboration with community experts. Resistance phenotypes are determined based on both **resistance genes** and **mutations**, and the system accounts for interactions between multiple SNPs, genes, and suppressors. Predictions follow **S/I/R classification** (*Sensitive, Intermediate, Resistant*).
 
     **Outputs:**
 
@@ -77,7 +77,7 @@ Description of the workflow tasks
 | amr_search_docker | String | Docker image used to run AMR_Search |
 | amr_search_version | String | Version of AMR_Search libraries used |
 
-## References (if applicable)
+## References
 
 > [Pathogenwatch AMRsearch](https://github.com/pathogenwatch-oss/amr-search)
 <!-- -->

@@ -12,7 +12,6 @@ task amr_search {
   }
   command <<< 
     # Extract base name without path or extension
-    # Added suffix strip to handle cases of differing FASTA extensions. Was hard coded to .fasta
     input_base=$(basename ~{input_fasta})
     input_base=${input_base%.*}
     echo "DEBUG: input_base = $input_base"
@@ -25,6 +24,7 @@ task amr_search {
     # Move the output file from the input directory to the working directory
     mv $(dirname ~{input_fasta})/${input_base}_paarsnp.jsn ./~{samplename}_paarsnp_results.jsn
 
+    # Script housed within the image; https://github.com/theiagen/theiagen_docker_builds/tree/awh-amrsearch-image/amrsearch/0.0.20
     python3 /scripts/parse_amr_json.py \
         ./~{samplename}_paarsnp_results.jsn \
         ~{samplename}
