@@ -163,18 +163,21 @@ A brief description of the documentation structure is as follows:
 
 ### Adding a Page for a New Workflow {#new-page}
 
+!!! tip "Hey, we've got a template for that!"
+    Please see our template [here](../assets/new_workflow_template.md) for ease of use. Please remove all italicized text and replace with the appropriate information. If in doubt, please refer to existing documentation.
+
 If you are adding a new workflow, there are a number of things to do in order to include the page in the documentation:
 
-1. Add a page with the title of the workflow to appropriate subdirectory in `docs/workflows/`. Feel free to use the template found in the `assets/` folder.
+1. Add a page with the title of the workflow to appropriate subdirectory in `docs/workflows/`. Please use [the template](../assets/new_workflow_template.md) found in the `assets/` folder.
 2. Collect the following information for your new workflow:
      - Workflow Name - Link the name with a relative path to the workflow page in appropriate `docs/workflows/` subdirectory
      - Workflow Description - Brief description of the workflow
      - Applicable Kingdom - Options: "Any taxa", "Bacteria", "Mycotics", "Viral"
-     - Workflow Level (_on Terra_) - Options: "Sample-level", "Set-level", or neither
+     - Workflow Level (_on Terra_) - Options: "Sample-level", "Set-level", or ""
      - Command-line compatibility - Options: "Yes", "No", and/or "Some optional features incompatible"
-     - The version where the last known changes occurred (likely the upcoming version if it is a new workflow)
+     - The version where the last known changes occurred (likely the upcoming version if it is a new workflow -- if the upcoming version number is currently unknown, please use **vX.X.X**)
      - Link to the workflow on Dockstore (if applicable) - Workflow name linked to the information tab on Dockstore.
-3. Format this information in a table.
+3. Format this information in a table (see template).
 4. Copy the previously gathered information to ==**ALL THREE**== overview tables in `docs/workflows_overview/`:
      - `workflows_alphabetically.md` - Add the workflow in the appropriate spot based on the workflow name.
      - `workflows_kingdom.md` - Add the workflow in the appropriate spot(s) based on the kingdom(s) the workflow is applicable to. Make sure it is added alphabetically within the appropriate subsection(s).
