@@ -8,7 +8,7 @@
 
 ## Cauris_CladeTyper_PHB
 
-The Cauris_CladeTyper_PHB Workflow is designed to assign the clade to _Candida auris_ (also known as _Candidozyma auris_) WGS assemblies based on their genomic sequence similarity to the five clade-specific reference files. Clade typing is essential for understanding the epidemiology and evolutionary dynamics of this emerging multidrug-resistant fungal pathogen.
+The Cauris_CladeTyper_PHB Workflow is designed to assign the clade to _Candidozyma auris_ (also known as _Candida auris_) WGS assemblies based on their genomic sequence similarity to the five clade-specific reference files. Clade typing is essential for understanding the epidemiology and evolutionary dynamics of this emerging multidrug-resistant fungal pathogen.
 
 ### Inputs
 
@@ -41,9 +41,9 @@ The Cauris_CladeTyper_PHB Workflow is designed to assign the clade to _Candida a
 ### Workflow Tasks
 
 ??? task "Cauris_Cladetyper"
-    The Cauris_Cladetyper Workflow for _Candida auris_ employs GAMBIT for taxonomic identification, comparing whole genome sequencing data against reference databases to accurately classify _Candida auris_ isolates.
+    The Cauris_Cladetyper Workflow for _Candidozyma auris_ employs GAMBIT for taxonomic identification, comparing whole genome sequencing data against reference databases to accurately classify _Candidozyma auris_ isolates.
 
-    A custom GAMBIT database is created using five clade-specific _Candida auris_ reference genomes. Sequences undergo genomic signature comparison against this database, which then enables assignment to one of the five _Candida auris_ clades (Clade I to Clade V) based on sequence similarity and phylogenetic relationships. This integrated approach ensures precise clade assignments, crucial for understanding the genetic diversity and epidemiology of _Candida auris_.
+    A custom GAMBIT database is created using five clade-specific _Candidozyma auris_ reference genomes. Sequences undergo genomic signature comparison against this database, which then enables assignment to one of the five _Candidozyma auris_ clades (Clade I to Clade V) based on sequence similarity and phylogenetic relationships. This integrated approach ensures precise clade assignments, crucial for understanding the genetic diversity and epidemiology of _Candidozyma auris_.
 
     See more information on the reference information for the five clades below:
 
