@@ -41,7 +41,7 @@ task tbp_parser {
 
     # run tbp-parser
     python3 /tbp-parser/tbp_parser/tbp_parser.py ~{tbprofiler_json} ~{tbprofiler_bam} \
-      ~{"--config" + config} \
+      ~{"--config " + config} \
       ~{"--sequencing_method " + sequencing_method} \
       ~{"--operator " + operator} \
       ~{"--min_depth " + min_depth} \
