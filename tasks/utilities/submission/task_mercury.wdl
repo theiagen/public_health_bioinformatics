@@ -39,6 +39,10 @@ task mercury {
     String gisaid_submitter = ""
     String submitter_email = ""
 
+    # Terra reupload parameters
+    String? terra_project_name
+    String? terra_workspace_name
+
     # runtime parameters
     Int cpu = 2
     Int disk_size = 100
@@ -91,6 +95,14 @@ task mercury {
 
     # write out excluded samples file to the stdout
     cat ~{output_name}_excluded_samples.tsv
+
+    # output to the initial Terra table with the updated metadata
+    if [ -n "~{terra_project_name}" ] && [ -n "~{terra_workspace_name}" ]; then
+      TERRA_TABLE_TO_UPLOAD="terra_table_to_upload.tsv"
+      python3 /scripts/import_large_tsv/import_large_tsv.py --project "~{terra_project_name}" --workspace "~{terra_workspace_name}" --tsv ~{terra_table_to_upload}
+    else
+      TERRA_TABLE_TO_UPLOAD=""
+    fi
   >>>
   output {
     String mercury_version = read_string("VERSION")
@@ -103,6 +115,7 @@ task mercury {
     File? gisaid_fasta = "~{output_name}_gisaid_combined.fasta"
     File? gisaid_metadata = "~{output_name}_gisaid_metadata.csv"
     File? sra_metadata = "~{output_name}_sra_metadata.tsv"
+    File? terra_table = read_string("TERRA_TABLE_TO_UPLOAD")
   }
   runtime {
     cpu: cpu
