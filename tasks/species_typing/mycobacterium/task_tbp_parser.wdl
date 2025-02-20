@@ -7,6 +7,7 @@ task tbp_parser {
     File tbprofiler_bai
     String samplename
 
+    File? config
     String? sequencing_method
     String? operator
 
@@ -31,7 +32,7 @@ task tbp_parser {
     
     Int cpu = 1
     Int disk_size = 100   
-    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:2.2.2"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:2.4.0"
     Int memory = 4
   }
   command <<<
@@ -40,6 +41,7 @@ task tbp_parser {
 
     # run tbp-parser
     python3 /tbp-parser/tbp_parser/tbp_parser.py ~{tbprofiler_json} ~{tbprofiler_bam} \
+      ~{"--config" + config} \
       ~{"--sequencing_method " + sequencing_method} \
       ~{"--operator " + operator} \
       ~{"--min_depth " + min_depth} \

@@ -211,6 +211,7 @@ workflow merlin_magic {
     String? tbprofiler_variant_calling_params
     String? tbprofiler_additional_parameters
     # tbp-parser options
+    File? tbp_parser_config
     String tbp_parser_output_seq_method_type = "WGS"
     String? tbp_parser_operator
     Int? tbp_parser_min_depth
@@ -479,6 +480,7 @@ workflow merlin_magic {
             tbprofiler_bam = tbprofiler.tbprofiler_output_bam,
             tbprofiler_bai = tbprofiler.tbprofiler_output_bai,
             samplename = samplename, 
+            config = tbp_parser_config,
             sequencing_method = tbp_parser_output_seq_method_type,
             operator = tbp_parser_operator,
             min_depth = tbp_parser_min_depth,
