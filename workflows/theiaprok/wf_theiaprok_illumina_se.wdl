@@ -847,6 +847,8 @@ workflow theiaprok_illumina_se {
     String? stxtyper_partial_hits = merlin_magic.stxtyper_partial_hits
     String? stxtyper_stx_frameshifts_or_internal_stop_hits =  merlin_magic.stxtyper_stx_frameshifts_or_internal_stop_hits
     String? stxtyper_novel_hits = merlin_magic.stxtyper_novel_hits
+    String? stxtyper_extended_operons = merlin_magic.stxtyper_extended_operons
+    String? stxtyper_ambiguous_hits = merlin_magic.stxtyper_ambiguous_hits
     # Shigella sonnei Typing
     File? sonneityping_mykrobe_report_csv = merlin_magic.sonneityping_mykrobe_report_csv
     File? sonneityping_mykrobe_report_json = merlin_magic.sonneityping_mykrobe_report_json
