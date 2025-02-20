@@ -150,8 +150,8 @@ All TheiaCoV Workflows (not TheiaCoV_FASTA_Batch)
 | flu_track | **abricate_flu_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | FASTA, ONT, PE | flu |
 | flu_track | **abricate_flu_docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/abricate:1.0.1-insaflu-220727 | Optional | FASTA, ONT, PE | flu |
 | flu_track | **abricate_flu_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 4 | Optional | FASTA, ONT, PE | flu |
-| flu_track | **abricate_flu_mincov** | Int | Minimum DNA % coverage | 60 | Optional | FASTA, ONT, PE | flu |
-| flu_track | **abricate_flu_minid** | Int | Minimum DNA % identity | 70 | Optional | FASTA, ONT, PE | flu |
+| flu_track | **abricate_flu_min_coverage_** | Int | Minimum DNA % coverage | 60 | Optional | FASTA, ONT, PE | flu |
+| flu_track | **abricate_flu_min_percent_identity** | Int | Minimum DNA % identity | 70 | Optional | FASTA, ONT, PE | flu |
 | flu_track | **antiviral_aa_subs** | String | Additional list of antiviral resistance associated amino acid substitutions of interest to be searched against those called on the sample segments. They take the format of <protein>:<AA><Pos><AA>, e.g. NA:A26V | | Optional | ONT, PE | flu |
 | flu_track | **assembly_metrics_cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional | PE | flu |
 | flu_track | **assembly_metrics_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | PE | flu |
@@ -1009,12 +1009,15 @@ All input reads are processed through "core tasks" in the TheiaCoV Illumina, ONT
 
     This sub-workflow determines which, if any, antiviral mutations are present in the sample. 
     
-    The assembled HA, NA, PA, PB1 and PB2 segments are compared against [a list of known amino-acid substitutions associated with resistance](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/drug_resistance/task_flu_antiviral_subs.wdl) to the antivirals  A_315675, compound_367, Favipiravir, Fludase, L_742_001, Laninamivir, Oseltamivir (tamiflu), Peramivir, Pimodivir, Xofluza, and Zanamivir. The list of known antiviral amino acid substitutions can be expanded via optional user input `antiviral_aa_subs` in the format "`NA:V95A,HA:I97V`", i.e. `Protein:AAPositionAA`. 
+    The assembled HA, NA, PA, PB1 and PB2 segments are compared against [a list of known amino-acid substitutions associated with resistance](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/drug_resistance/task_flu_antiviral_subs.wdl) to the antivirals  A_315675, Amantadine, compound_367, Favipiravir, Fludase, L_742_001, Laninamivir, Oseltamivir (tamiflu), Peramivir, Pimodivir, Rimantadine, Xofluza, and Zanamivir. The list of known amino-acid substitutions associated with resistance can be expanded via optional user input `antiviral_aa_subs` in the format "`NA:V95A,HA:I97V`", i.e. `Protein:AAPositionAA`. 
+    The list of amino-acid substitutions associated with antiviral resistance includes both substitutions reported to confer antiviral resistance in the scientific literature and those inferred to potentially cause antiviral resistance based on an analogous mutation reported to confer antiviral resistance in another flu subtype. A table with the explanation for each amino-acid substitution in the antiviral resistance task is available [here](../../assets/files/antiviral_resistance_flu_aa_substitutions_explanations.xlsx).
 
     !!! techdetails "Antiviral Substitutions Technical Details"        
         |  | Links |
         | --- | --- |
         | Workflow | [wf_influenza_antiviral_substitutions.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_influenza_antiviral_substitutions.wdl) |
+        | Task | [task_flu_antiviral_subs.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/drug_resistance/task_flu_antiviral_subs.wdl) |
+        | Publication | [Next-Generation Sequencing: An Eye-Opener for the Surveillance of Antiviral Resistance in Influenza](https://doi.org/10.1016/j.tibtech.2019.09.009)
 
 ??? task "`genoflu`"
 

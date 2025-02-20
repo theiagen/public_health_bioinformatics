@@ -35,6 +35,7 @@ nav:
                - CZGenEpi_Prep: workflows/phylogenetic_construction/czgenepi_prep.md
                - Find_Shared_Variants: workflows/phylogenetic_construction/find_shared_variants.md
                - kSNP3: workflows/phylogenetic_construction/ksnp3.md
+               - kSNP4: workflows/phylogenetic_construction/ksnp4.md
                - Lyve_SET: workflows/phylogenetic_construction/lyve_set.md 
                - MashTree_FASTA: workflows/phylogenetic_construction/mashtree_fasta.md
                - Snippy_Streamline: workflows/phylogenetic_construction/snippy_streamline.md
@@ -87,6 +88,7 @@ nav:
                - Find_Shared_Variants: workflows/phylogenetic_construction/find_shared_variants.md
                - GAMBIT_Query: workflows/standalone/gambit_query.md
                - kSNP3: workflows/phylogenetic_construction/ksnp3.md
+               - kSNP4: workflows/phylogenetic_construction/ksnp4.md
                - Lyve_SET: workflows/phylogenetic_construction/lyve_set.md
                - MashTree_FASTA: workflows/phylogenetic_construction/mashtree_fasta.md
                - NCBI-AMRFinderPlus: workflows/standalone/ncbi_amrfinderplus.md
@@ -102,6 +104,7 @@ nav:
                - Find_Shared_Variants: workflows/phylogenetic_construction/find_shared_variants.md
                - GAMBIT_Query: workflows/standalone/gambit_query.md
                - kSNP3: workflows/phylogenetic_construction/ksnp3.md
+               - kSNP4: workflows/phylogenetic_construction/ksnp4.md
                - MashTree_FASTA: workflows/phylogenetic_construction/mashtree_fasta.md
                - NCBI-AMRFinderPlus: workflows/standalone/ncbi_amrfinderplus.md
                - Snippy_Variants: workflows/phylogenetic_construction/snippy_variants.md
@@ -112,6 +115,7 @@ nav:
                - CZGenEpi_Prep: workflows/phylogenetic_construction/czgenepi_prep.md
                - Freyja Workflow Series: workflows/genomic_characterization/freyja.md
                - kSNP3: workflows/phylogenetic_construction/ksnp3.md
+               - kSNP4: workflows/phylogenetic_construction/ksnp4.md
                - MashTree_FASTA: workflows/phylogenetic_construction/mashtree_fasta.md
                - Mercury_Prep_N_Batch: workflows/public_data_sharing/mercury_prep_n_batch.md
                - Pangolin_Update: workflows/genomic_characterization/pangolin_update.md
@@ -139,6 +143,7 @@ nav:
             - GAMBIT_Query: workflows/standalone/gambit_query.md
             - Kraken2: workflows/standalone/kraken2.md
             - kSNP3: workflows/phylogenetic_construction/ksnp3.md
+            - kSNP4: workflows/phylogenetic_construction/ksnp4.md
             - Lyve_SET: workflows/phylogenetic_construction/lyve_set.md
             - MashTree_FASTA: workflows/phylogenetic_construction/mashtree_fasta.md
             - Mercury_Prep_N_Batch: workflows/public_data_sharing/mercury_prep_n_batch.md
