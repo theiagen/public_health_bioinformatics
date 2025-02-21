@@ -98,10 +98,7 @@ task mercury {
 
     # output to the initial Terra table with the updated metadata
     if [ -n "~{terra_project_name}" ] && [ -n "~{terra_workspace_name}" ]; then
-      TERRA_TABLE_TO_UPLOAD="terra_table_to_upload.tsv"
-      python3 /scripts/import_large_tsv/import_large_tsv.py --project "~{terra_project_name}" --workspace "~{terra_workspace_name}" --tsv ~{terra_table_to_upload}
-    else
-      TERRA_TABLE_TO_UPLOAD=""
+      python3 /scripts/import_large_tsv/import_large_tsv.py --project "~{terra_project_name}" --workspace "~{terra_workspace_name}" --tsv ~{output_name}_terra_table_to_upload.tsv
     fi
   >>>
   output {
@@ -115,7 +112,7 @@ task mercury {
     File? gisaid_fasta = "~{output_name}_gisaid_combined.fasta"
     File? gisaid_metadata = "~{output_name}_gisaid_metadata.csv"
     File? sra_metadata = "~{output_name}_sra_metadata.tsv"
-    File? terra_table = read_string("TERRA_TABLE_TO_UPLOAD")
+    File? terra_table = "~{output_name}_terra_table_to_upload.tsv"
   }
   runtime {
     cpu: cpu
