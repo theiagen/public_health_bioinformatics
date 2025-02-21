@@ -40,8 +40,8 @@ task mercury {
     String submitter_email = ""
 
     # Terra reupload parameters
-    String? terra_project_name
-    String? terra_workspace_name
+    String terra_project_name
+    String terra_workspace_name
 
     # runtime parameters
     Int cpu = 2
@@ -97,9 +97,7 @@ task mercury {
     cat ~{output_name}_excluded_samples.tsv
 
     # output to the initial Terra table with the updated metadata
-    if [ -n "~{terra_project_name}" ] && [ -n "~{terra_workspace_name}" ]; then
-      python3 /scripts/import_large_tsv/import_large_tsv.py --project "~{terra_project_name}" --workspace "~{terra_workspace_name}" --tsv ~{output_name}_terra_table_to_upload.tsv
-    fi
+    python3 /scripts/import_large_tsv/import_large_tsv.py --project "~{terra_project_name}" --workspace "~{terra_workspace_name}" --tsv ~{output_name}_terra_table_to_upload.tsv
   >>>
   output {
     String mercury_version = read_string("VERSION")
