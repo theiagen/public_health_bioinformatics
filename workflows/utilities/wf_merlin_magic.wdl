@@ -217,7 +217,7 @@ workflow merlin_magic {
     Int? tbp_parser_min_depth
     Int? tbp_parser_min_frequency
     Int? tbp_parser_min_read_support
-    Int? tbp_parser_min_coverage
+    Int? tbp_parser_min_percent_coverage
     File? tbp_parser_coverage_regions_bed
     Boolean? tbp_parser_debug
     Boolean? tbp_parser_add_cs_lims
@@ -486,7 +486,7 @@ workflow merlin_magic {
             min_depth = tbp_parser_min_depth,
             min_frequency = tbp_parser_min_frequency,
             min_read_support = tbp_parser_min_read_support,
-            min_coverage = tbp_parser_min_coverage,
+            min_percent_coverage = tbp_parser_min_percent_coverage,
             coverage_regions_bed = tbp_parser_coverage_regions_bed,
             add_cycloserine_lims = tbp_parser_add_cs_lims,
             tbp_parser_debug = tbp_parser_debug,
