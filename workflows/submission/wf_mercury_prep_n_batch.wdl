@@ -28,13 +28,13 @@ workflow mercury_prep_n_batch {
     input:
       samplenames = sample_names,
       gcp_bucket_uri = gcp_bucket_uri,
+      terra_project_name = terra_project_name,
+      terra_workspace_name = terra_workspace_name,
       data_table = download_terra_table.terra_table,
       table_name = terra_table_name,
       organism = organism,
       output_name = output_name_updated,
-      skip_ncbi = skip_ncbi,
-      terra_project_name = terra_project_name,
-      terra_workspace_name = terra_workspace_name
+      skip_ncbi = skip_ncbi
   }
   if (organism == "sars-cov-2" && skip_ncbi == false) {
     call submission_utilities.trim_genbank_fastas {

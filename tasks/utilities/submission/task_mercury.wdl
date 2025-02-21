@@ -6,6 +6,8 @@ task mercury {
     String table_name
     Array[String] samplenames
     String gcp_bucket_uri
+    String terra_project_name
+    String terra_workspace_name
 
     # optional parameters
     String organism = "sars-cov-2"
@@ -38,11 +40,7 @@ task mercury {
     String seq_platform = ""
     String gisaid_submitter = ""
     String submitter_email = ""
-
-    # Terra reupload parameters
-    String terra_project_name
-    String terra_workspace_name
-
+  
     # runtime parameters
     Int cpu = 2
     Int disk_size = 100
