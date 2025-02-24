@@ -10,7 +10,7 @@ task vibecheck_vibrio {
 		File? lineage_barcodes
 		Float? subsampling_fraction
 		Boolean skip_subsampling = false
-    String docker = "watronfire/vibecheck:latest"
+    String docker = "watronfire/vibecheck:2025.02.24"
     Int disk_size = 16
     Int cpu = 2
     Int memory = 3

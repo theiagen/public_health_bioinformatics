@@ -339,7 +339,7 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 | merlin_magic | **vibecheck_lineage_barcodes**           | String   | Feather formatted lineage barcodes to use instead of default O1 barcodes |  | Optional | PE |
 | merlin_magic | **vibecheck_subsampling_fraction**       | Float   | Fraction of reads to use in classification. | 0.2  | Optional | PE |
 | merlin_magic | **vibecheck_skip_subsampling**           | Boolean   | When enabled, will not subsample reads prior to classification. Will increase computation time | False | Optional | PE |
-| merlin_magic | **vibecheck_docker_image**               | String   | The Docker container to use for the task | watronfire/vibecheck:latest | Optional | PE |
+| merlin_magic | **vibecheck_docker_image**               | String   | The Docker container to use for the task | watronfire/vibecheck:2025.02.24 | Optional | PE |
 | nanoplot_clean | **cpu**                                  | Int      | Number of CPUs to allocate to the task | 4 | Optional | ONT |
 | nanoplot_clean | **disk_size**                            | Int      | Amount of storage (in GB) to allocate to the task | 100 | Optional | ONT |
 | nanoplot_clean | **docker**                               | String   | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/nanoplot:1.40.0 | Optional | ONT |
