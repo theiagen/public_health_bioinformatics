@@ -33,6 +33,7 @@ import "../../tasks/species_typing/streptococcus/task_poppunk_streppneumo.wdl" a
 import "../../tasks/species_typing/streptococcus/task_seroba.wdl" as seroba
 import "../../tasks/species_typing/vibrio/task_srst2_vibrio.wdl" as srst2_vibrio_task
 import "../../tasks/species_typing/vibrio/task_abricate_vibrio.wdl" as abricate_vibrio_task
+import "../../tasks/species_typing/vibrio/task_vibecheck_vibrio.wdl" as vibecheck_vibrio_task
 
 # theiaeuk
 import "../../tasks/gene_typing/variant_detection/task_snippy_gene_query.wdl" as snippy_gene_query
@@ -92,6 +93,7 @@ workflow merlin_magic {
     String? staphopia_sccmec_docker_image
     String? tbprofiler_docker_image
     String? tbp_parser_docker_image
+    String? vibecheck_docker_image
     String? virulencefinder_docker_image
     # abricate abaum options
     Int abricate_abaum_min_percent_identity = 95 # strict threshold of 95% identity for typing purposes
@@ -228,6 +230,10 @@ workflow merlin_magic {
     Float? tbp_parser_rpob449_frequency
     Float? tbp_parser_etha237_frequency
     File? tbp_parser_expert_rule_regions_bed
+    # Vibecheck options
+    File? vibecheck_lineage_barcodes
+		Float? vibecheck_subsampling_fraction
+		Boolean? vibecheck_skip_subsampling
     # virulencefinder options
     Float? virulencefinder_min_coverage
     Float? virulencefinder_min_percent_identity
@@ -626,6 +632,15 @@ workflow merlin_magic {
           gene_max_mismatch = srst2_gene_max_mismatch,
           docker = srst2_docker_image
       }
+      call vibecheck_vibrio_task.vibecheck_vibrio {
+        input:
+          read1 = select_first([read1]),
+          read2 = read2,
+          lineage_barcodes = vibecheck_lineage_barcodes,
+          subsampling_fraction = vibecheck_subsampling_fraction,
+          skip_subsampling = vibecheck_skip_subsampling,
+          docker = vibecheck_docker_image
+      }
     }
     call abricate_vibrio_task.abricate_vibrio {
       input:
@@ -1010,6 +1025,12 @@ workflow merlin_magic {
     String? abricate_vibrio_toxR = abricate_vibrio.abricate_vibrio_toxR
     String? abricate_vibrio_biotype = abricate_vibrio.abricate_vibrio_biotype
     String? abricate_vibrio_serogroup = abricate_vibrio.abricate_vibrio_serogroup
+    File? vibecheck_lineage_report = vibecheck_vibrio.vibecheck_lineage_report
+	  String? vibecheck_top_lineage = vibecheck_vibrio.vibecheck_top_lineage
+	  Float? vibecheck_confidence = vibecheck_vibrio.vibecheck_confidence
+	  String? vibecheck_classification_notes = vibecheck_vibrio.vibecheck_classification_notes
+	  String? vibecheck_version = vibecheck_vibrio.vibecheck_version
+	  String? vibecheck_docker = vibecheck_vibrio.vibecheck_docker
     
     # theiaeuk
     # c auris 
