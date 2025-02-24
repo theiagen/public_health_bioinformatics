@@ -3,31 +3,41 @@ version 1.0
 task version_capture {
   input {
     String? timezone
-    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0"
-    String logging_api_url = "https://wdl-logger-ki7cuiofna-uc.a.run.app/log-task"  # Replace with actual URL
-    String task_id = "version_capture_1.0"  # Unique Task ID
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash-curl:3.20.0"
+    String logging_api_url = "https://wdl-logger-ki7cuiofna-uc.a.run.app/log-task"
+    String task_id = "version_capture_1.0"
   }
   meta {
     volatile: true
   }
-  command <<<
+  command <<< 
     PHB_Version="PHB v2.3.0"
-    ~{default='' 'export TZ=' + timezone}
+
+    # Ensure timezone is properly set (avoid empty variable issue)
+    if [[ -n "${timezone}" ]]; then
+      export TZ="${timezone}"
+    fi
+
     date +"%Y-%m-%d" > TODAY
     echo "$PHB_Version" > PHB_VERSION
 
-    # Send log to Cloud Run API
-    curl -X POST "${logging_api_url}" \
-      -H "Content-Type: application/json" \
-      -d '{
-        "task_id": "'${task_id}'",
-        "timestamp": "'$(date -u +%Y-%m-%dT%H:%M:%SZ)'",
-        "status": "completed",
-        "metadata": {
-          "date": "'$(cat TODAY)'",
-          "phb_version": "'$(cat PHB_VERSION)'"
-        }
-      }'
+    # Validate variables before calling curl
+    if [[ -s "TODAY" && -s "PHB_VERSION" ]]; then
+      curl -X POST "${logging_api_url}" \
+        -H "Content-Type: application/json" \
+        -d '{
+          "task_id": "'${task_id}'",
+          "timestamp": "'$(date -u +%Y-%m-%dT%H:%M:%SZ)'",
+          "status": "completed",
+          "metadata": {
+            "date": "'$(cat TODAY)'",
+            "phb_version": "'$(cat PHB_VERSION)'"
+          }
+        }'
+    else
+      echo "Error: TODAY or PHB_VERSION file is empty!" >&2
+      exit 1
+    fi
   >>>
   output {
     String date = read_string("TODAY")
