@@ -103,7 +103,7 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 | abricate | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | FASTA, ONT, PE, SE |
 | abricate | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/abricate:1.0.1-abaum-plasmid | Optional | FASTA, ONT, PE, SE |
 | abricate | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | FASTA, ONT, PE, SE |
-| abricate | **min_coverage** | Int | Minimum DNA %coverage for the Abricate task | 80 | Optional | FASTA, ONT, PE, SE |
+| abricate | **min_percent_coverage** | Int | Minimum DNA %coverage for the Abricate task | 80 | Optional | FASTA, ONT, PE, SE |
 | abricate | **min_percent_identity** | Int | Minimum DNA %identity for the Abricate task | 80 | Optional | FASTA, ONT, PE, SE |
 | amrfinderplus_task | **cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional | FASTA, ONT, PE, SE |
 | amrfinderplus_task | **detailed_drug_class** | Boolean | If set to true, amrfinderplus_amr_classes and amrfinderplus_amr_subclasses outputs will be created | FALSE | Optional | FASTA, ONT, PE, SE |
@@ -111,8 +111,8 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 | amrfinderplus_task | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/ncbi-amrfinderplus:3.12.8-2024-07-22.1 | Optional | FASTA, ONT, PE, SE |
 | amrfinderplus_task | **hide_point_mutations** | Boolean | If set to true, point mutations are not reported | FALSE | Optional | FASTA, ONT, PE, SE |
 | amrfinderplus_task | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | FASTA, ONT, PE, SE |
-| amrfinderplus_task | **min_coverage** | Float | Minimum proportion of reference gene covered for a BLAST-based hit (Methods BLAST or PARTIAL)." Attribute should be a float ranging from 0-1, such as 0.6 (equal to 60% coverage) | 0.5 | Optional| FASTA, ONT, PE, SE |
-| amrfinderplus_task | **min_identity** | Float | "Minimum identity for a blast-based hit hit (Methods BLAST or PARTIAL). -1 means use a curated threshold if it exists and 0.9 otherwise. Setting this value to something other than -1 will override any curated similarity cutoffs." Attribute should be a float ranging from 0-1, such as 0.95 (equal to 95% identity) | 0.9 | Optional | FASTA, ONT, PE, SE |
+| amrfinderplus_task | **min_percent_coverage** | Float | Minimum proportion of reference gene covered for a BLAST-based hit (Methods BLAST or PARTIAL)." Attribute should be a float ranging from 0-1, such as 0.6 (equal to 60% coverage) | 0.5 | Optional| FASTA, ONT, PE, SE |
+| amrfinderplus_task | **min_percent_identity** | Float | "Minimum identity for a blast-based hit hit (Methods BLAST or PARTIAL). -1 means use a curated threshold if it exists and 0.9 otherwise. Setting this value to something other than -1 will override any curated similarity cutoffs." Attribute should be a float ranging from 0-1, such as 0.95 (equal to 95% identity) | 0.9 | Optional | FASTA, ONT, PE, SE |
 | amrfinderplus_task | **separate_betalactam_genes**  | Boolean | Report beta-Lactam AMR genes separated out by all beta-lactam and the respective beta-lactam subclasses | FALSE | Optional | FASTA, ONT, PE, SE |
 | ani | **ani_threshold** | Float | ANI value threshold must be surpassed in order to output the ani_top_species_match. If a genome does not surpass this threshold (and the percent_bases_aligned_threshold) then the ani_top_species_match output String will show a warning instead of a genus & species. | 80 | Optional | FASTA, ONT, PE, SE |
 | ani | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional | FASTA, ONT, PE, SE |
@@ -183,10 +183,10 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 | kmerfinder | **kmerfinder_db** | String | Bacterial database for KmerFinder | gs://theiagen-public-files-rp/terra/theiaprok-files/kmerfinder_bacteria_20230911.tar.gz | Optional | FASTA, ONT, PE, SE |
 | kmerfinder | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 32 | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **abricate_abaum_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/abricate:1.0.1-abaum-plasmid | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **abricate_abaum_min_coverage** | Int | Minimum DNA percent coverage |  | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **abricate_abaum_min_percent_coverage** | Int | Minimum DNA percent coverage |  | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **abricate_abaum_min_percent_identity** | Int | Minimum DNA percent identity; set to 95 because there is a strict threshold of 95% identity for typing purposes | 95 | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **abricate_vibrio_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/abricate:1.0.1-abaum-plasmid | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **abricate_vibrio_min_coverage** | Int | Minimum DNA percent coverage  | 80 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **abricate_vibrio_min_percent_coverage** | Int | Minimum DNA percent coverage  | 80 | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **abricate_vibrio_min_percent_identity** | Int | Minimum DNA percent identity | 80 | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **agrvate_agr_typing_only** | Boolean | Set to true to skip agr operon extraction and frameshift detection | False  | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **agrvate_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/biocontainers/agrvate:1.0.2--hdfd78af_0 | Optional | FASTA, ONT, PE, SE |
@@ -209,21 +209,21 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 | merlin_magic | **cladetyper_ref_clade5_annotated** | File | *Provide an empty file if running TheiaProk on the command-line |  | Do not modify, Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **clockwork_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/cdcgov/varpipe_wgs_with_refs:2bc7234074bd53d9e92a1048b0485763cd9bbf6f4d12d5a1cc82bfec8ca7d75e | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **ectyper_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/biocontainers/ectyper:1.0.0--pyhdfd78af_1 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **ectyper_h_min_coverage** | Int | Minumum percent coverage required for an H antigen allele match | 50 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **ectyper_h_min_percent_coverage** | Int | Minumum percent coverage required for an H antigen allele match | 50 | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **ectyper_h_min_percent_identity** | Int | Percent identity required for an H antigen allele match | 95 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **ectyper_o_min_coverage** | Int | Minumum percent coverage required for an O antigen allele match | 90 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **ectyper_o_min_percent_coverage** | Int | Minumum percent coverage required for an O antigen allele match | 90 | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **ectyper_o_min_percent_identity** | Int | Percent identity required for an O antigen allele match | 90 | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **ectyper_print_alleles** | Boolean | Set to true to print the allele sequences as the final column | False  | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **ectyper_verify** | Boolean | Set to true to enable E. coli species verification | False  | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **emmtypingtool_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/emmtypingtool:0.0.1 | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **genotyphi_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/mykrobe:0.11.0 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **hicap_broken_gene_identity** | Float | Minimum percentage identity to consider a broken gene | 0.80 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **hicap_min_broken_gene_percent_identity** | Float | Minimum percentage identity to consider a broken gene | 0.80 | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **hicap_broken_gene_length** | Int | Minimum length to consider a broken gene | 60 | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **hicap_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/biocontainers/hicap:1.0.3--py_0 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **hicap_gene_coverage** | Float | Minimum percentage coverage to consider a single gene complete | 0.80 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **hicap_gene_identity** | Float | Minimum percentage identity to consider a single gene complete | 0.70 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **hicap_min_gene_percent_coverage** | Float | Minimum percentage coverage to consider a single gene complete | 0.80 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **hicap_min_gene_percent_identity** | Float | Minimum percentage identity to consider a single gene complete | 0.70 | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **kaptive_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/kaptive:2.0.3 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **kaptive_low_gene_id** | Float | Percent identity threshold for what counts as a low identity match in the gene BLAST search | 95 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **kaptive_low_gene_percent_identity** | Float | Percent identity threshold for what counts as a low identity match in the gene BLAST search | 95 | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **kaptive_min_coverage** | Float | Minimum required percent identity for the gene BLAST search via tBLASTn | 80 | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **kaptive_min_percent_identity** | Float | Minimum required percent coverage for the gene BLAST search via tBLASTn | 90 | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **kaptive_start_end_margin** | Int | Determines flexibility in identifying the start and end of a locus - if this value is 10, a locus match that is missing the first 8 base pairs will still count as capturing the start of the locus | 10 | Optional | FASTA, ONT, PE, SE |
@@ -333,7 +333,7 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 | merlin_magic | **tbprofiler_variant_caller** | String | Select a different variant caller for TBProfiler to use by writing it in this block; see TBProfiler’s original documentation for available options. | GATK | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **tbprofiler_variant_calling_params** | String | Enter additional variant calling parameters in this free text input to customize how the variant caller works in TBProfiler | | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **theiaeuk** | Boolean | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **virulencefinder_min_coverage** | Float | The threshold for minimum coverage |  | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **virulencefinder_min_percent_coverage** | Float | The threshold for minimum coverage |  | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **virulencefinder_database** | String | The specific database to use | virulence_ecoli | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **virulencefinder_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/virulencefinder:2.0.4 | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **virulencefinder_min_percent_identity** | Float | The threshold for minimum blast identity |  | Optional | FASTA, ONT, PE, SE |
@@ -354,8 +354,8 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 | plasmidfinder | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/plasmidfinder:2.1.6 | Optional | FASTA, ONT, PE, SE |
 | plasmidfinder | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | FASTA, ONT, PE, SE |
 | plasmidfinder | **method_path** | String | Path to files for a user-specified method to use (blast or kma) |  | Optional | FASTA, ONT, PE, SE |
-| plasmidfinder | **min_coverage** | Float | Threshold for minimum coverage, default threshold from PlasmidFinder CLI tool is used (0.60) | 0.6 | Optional | FASTA, ONT, PE, SE |
-| plasmidfinder | **threshold** | Float | Threshold for mininum blast identity, default threshold from PlasmidFinder CLI tool is used (0.90). This default differs from the default of the PlasmidFinder webtool (0.95) | 0.9 | Optional | FASTA, ONT, PE, SE |
+| plasmidfinder | **min_percent_coverage** | Float | Threshold for minimum coverage, default threshold from PlasmidFinder CLI tool is used (0.60) | 0.6 | Optional | FASTA, ONT, PE, SE |
+| plasmidfinder | **min_percent_identity** | Float | Threshold for mininum blast identity, default threshold from PlasmidFinder CLI tool is used (0.90). This default differs from the default of the PlasmidFinder webtool (0.95) | 0.9 | Optional | FASTA, ONT, PE, SE |
 | prokka | **compliant** | Boolean | Forces Genbank/ENA/DDJB compliant headers in Prokka output files | TRUE | Optional | FASTA, ONT, PE, SE |
 | prokka | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional | FASTA, ONT, PE, SE |
 | prokka | **disk_size** | String | Amount of storage (in GB) to allocate to the PlasmidFinder task | 100 | Optional | FASTA, ONT, PE, SE |
@@ -465,8 +465,8 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 | resfinder_task | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | FASTA, ONT, PE, SE |
 | resfinder_task | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/resfinder:4.1.11 | Optional | FASTA, ONT, PE, SE |
 | resfinder_task | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | FASTA, ONT, PE, SE |
-| resfinder_task | **min_coverage** | Float | Minimum coverage breadth of a gene for it to be identified | 0.5 | Optional | FASTA, ONT, PE, SE |
-| resfinder_task | **min_id** | Float | Minimum identity for ResFinder to identify a gene | 0.9 | Optional | FASTA, ONT, PE, SE |
+| resfinder_task | **min_percent_coverage** | Float | Minimum coverage breadth of a gene for it to be identified | 0.5 | Optional | FASTA, ONT, PE, SE |
+| resfinder_task | **min_percent_identity** | Float | Minimum identity for ResFinder to identify a gene | 0.9 | Optional | FASTA, ONT, PE, SE |
 | shovill_pe | **assembler** | String | Assembler to use (spades, skesa, velvet or megahit), see <https://github.com/tseemann/shovill#--assembler> | skesa | Optional | PE |
 | shovill_pe | **assembler_options** | String | Assembler-specific options that you might choose, see <https://github.com/tseemann/shovill#--opts> |  | Optional | PE |
 | shovill_pe | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional | PE |
@@ -498,7 +498,7 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 | ts_mlst | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 50 | Optional | FASTA, ONT, PE, SE |
 | ts_mlst | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/mlst:2.23.0-2024-08-01 | Optional | FASTA, ONT, PE, SE |
 | ts_mlst | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 2 | Optional | FASTA, ONT, PE, SE |
-| ts_mlst | **min_coverage** | Float | Minimum % breadth of coverage to report an MLST allele | 10 | Optional | FASTA, ONT, PE, SE |
+| ts_mlst | **min_percent_coverage** | Float | Minimum % breadth of coverage to report an MLST allele | 10 | Optional | FASTA, ONT, PE, SE |
 | ts_mlst | **min_percent_identity** | Float | Minimum % identity to known MLST gene to report an MLST allele | 95 | Optional | FASTA, ONT, PE, SE |
 | ts_mlst | **minscore** | Float | Minimum <https://github.com/tseemann/mlst#scoring-system> to assign an MLST profile | 50 | Optional | FASTA, ONT, PE, SE |
 | ts_mlst | **nopath** | Boolean | true = use mlst --nopath. If set to false, filename paths are not stripped from FILE column in output TSV | TRUE | Optional | FASTA, ONT, PE, SE |

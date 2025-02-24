@@ -9,7 +9,7 @@ task abricate {
     #  --minid Minimum DNA %identity [80]
     # --mincov Minimum DNA %coverage [80]
     Int? min_percent_identity
-    Int? min_coverage
+    Int? min_percent_coverage
     Int cpu = 2
     Int memory = 8
     Int disk_size = 100
@@ -24,7 +24,7 @@ task abricate {
     abricate \
       --db ~{database} \
       ~{'--minid ' + min_percent_identity} \
-      ~{'--mincov ' + min_coverage} \
+      ~{'--mincov ' + min_percent_coverage} \
       --threads ~{cpu} \
       --nopath \
       ~{assembly} > ~{samplename}_abricate_hits.tsv
@@ -62,7 +62,7 @@ task abricate_flu {
     String samplename
     String database = "insaflu"
     Int min_percent_identity = 70
-    Int min_coverage = 60
+    Int min_percent_coverage = 60
     Int cpu = 2
     Int memory = 4
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/abricate:1.0.1-insaflu-220727"
@@ -75,7 +75,7 @@ task abricate_flu {
     abricate \
       --db ~{database} \
       ~{'--minid ' + min_percent_identity} \
-      ~{'--mincov ' + min_coverage} \
+      ~{'--mincov ' + min_percent_coverage} \
       --threads ~{cpu} \
       --nopath \
       ~{assembly} > ~{samplename}_abricate_hits.tsv
