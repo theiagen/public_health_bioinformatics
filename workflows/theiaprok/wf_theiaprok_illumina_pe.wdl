@@ -684,6 +684,12 @@ workflow theiaprok_illumina_pe {
                 "ts_mlst_pubmlst_scheme": ts_mlst.ts_mlst_pubmlst_scheme,
                 "ts_mlst_results": ts_mlst.ts_mlst_results,
                 "ts_mlst_version": ts_mlst.ts_mlst_version,
+                "vibecheck_lineage_report": merlin_magic.vibecheck_lineage_report,
+                "vibecheck_top_lineage": merlin_magic.vibecheck_top_lineage,
+                "vibecheck_confidence": merlin_magic.vibecheck_confidence,
+                "vibecheck_classification_notes": merlin_magic.vibecheck_classification_notes,
+                "vibecheck_version": merlin_magic.vibecheck_version,
+                "vibecheck_docker": merlin_magic.vibecheck_docker,
                 "virulencefinder_docker": merlin_magic.virulencefinder_docker,
                 "virulencefinder_hits": merlin_magic.virulencefinder_hits,
                 "virulencefinder_report_tsv": merlin_magic.virulencefinder_report_tsv,
@@ -1129,6 +1135,12 @@ workflow theiaprok_illumina_pe {
     String? abricate_vibrio_toxR = merlin_magic.abricate_vibrio_toxR
     String? abricate_vibrio_biotype = merlin_magic.abricate_vibrio_biotype
     String? abricate_vibrio_serogroup = merlin_magic.abricate_vibrio_serogroup
+    File? vibecheck_lineage_report = merlin_magic.vibecheck_lineage_report
+    String? vibecheck_top_lineage = merlin_magic.vibecheck_top_lineage
+    Float? vibecheck_confidence = merlin_magic.vibecheck_confidence
+    String? vibecheck_classification_notes = merlin_magic.vibecheck_classification_notes
+    String? vibecheck_version = merlin_magic.vibecheck_version
+    String? vibecheck_docker = merlin_magic.vibecheck_docker
     # export taxon table output
     String? taxon_table_status = export_taxon_table.status
   }
