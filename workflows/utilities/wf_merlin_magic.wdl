@@ -151,13 +151,13 @@ workflow merlin_magic {
     String? kleborate_min_kaptive_confidence
     # lissero options
     Float? lissero_min_percent_identity
-    Float? lissero_min_coverage
+    Float? lissero_min_percent_coverage
     # pasty options
     Int? pasty_min_percent_identity
-    Int? pasty_min_coverage      
+    Int? pasty_min_percent_coverage      
     # pbptyper options 
     Int? pbptyper_min_percent_identity
-    Int? pbptyper_min_coverage
+    Int? pbptyper_min_percent_coverage
     # popppunk options - primarily files we host
     File? poppunk_gps_dists_npy
     File? poppunk_gps_dists_pkl
@@ -358,7 +358,7 @@ workflow merlin_magic {
         assembly = assembly,
         samplename = samplename,
         min_percent_identity = lissero_min_percent_identity,
-        min_coverage = lissero_min_coverage,
+        min_percent_coverage = lissero_min_percent_coverage,
         docker = lissero_docker_image
     }
   }
@@ -440,7 +440,7 @@ workflow merlin_magic {
         assembly = assembly,
         samplename = samplename,
         min_percent_identity = pasty_min_percent_identity,
-        min_coverage = pasty_min_coverage,
+        min_percent_coverage = pasty_min_percent_coverage,
         docker = pasty_docker_image
     }
   }
@@ -546,7 +546,7 @@ workflow merlin_magic {
         assembly = assembly,
         samplename = samplename,
         min_percent_identity = pbptyper_min_percent_identity,
-        min_coverage = pbptyper_min_coverage,
+        min_percent_coverage = pbptyper_min_percent_coverage,
         docker = pbptyper_docker_image
     }      
     if (call_poppunk) {

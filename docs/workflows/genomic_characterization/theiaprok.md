@@ -84,7 +84,7 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 | *workflow name | **read1_lane4** | File | If provided, the Concatenate_Illumina_Lanes subworkflow will concatenate all files from the same lane before doing any subsequent analysis |  | Optional | PE, SE |
 | *workflow name | **read2_lane2** | File | If provided, the Concatenate_Illumina_Lanes subworkflow will concatenate all files from the same lane before doing any subsequent analysis |  | Optional | PE, SE |
 | *workflow name | **read2_lane3** | File | If provided, the Concatenate_Illumina_Lanes subworkflow will concatenate all files from the same lane before doing any subsequent analysis |  | Optional | PE, SE |
-| *workflow name | **read2_lane4** | File | If provided, the Concatenate_Illumina_Lanes subworkflow will concatenate all files from the same lane before doing any subsequent analysis |  | Optional | PE, SE | 
+| *workflow name | **read2_lane4** | File | If provided, the Concatenate_Illumina_Lanes subworkflow will concatenate all files from the same lane before doing any subsequent analysis |  | Optional | PE, SE |
 | *workflow name | **run_id** | String | Will be used in the "run_id" column in any taxon-specific tables created in the Export Taxon Tables task |  | Optional | FASTA, ONT, PE, SE |
 | *workflow name | **seq_method** | String | Will be used in the "seq_id" column in any taxon-specific tables created in the Export Taxon Tables task |  | Optional | FASTA, ONT, PE, SE |
 | *workflow name | **skip_mash** | Boolean | If true, skips estimation of genome size and coverage in read screening steps. As a result, providing true also prevents screening using these parameters. | TRUE | Optional | ONT, SE |
@@ -228,26 +228,26 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 | merlin_magic | **kaptive_min_percent_identity** | Float | Minimum required percent coverage for the gene BLAST search via tBLASTn | 90 | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **kaptive_start_end_margin** | Int | Determines flexibility in identifying the start and end of a locus - if this value is 10, a locus match that is missing the first 8 base pairs will still count as capturing the start of the locus | 10 | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **kleborate_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/kleborate:2.2.0 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **kleborate_min_coverage** | Float | Minimum alignment percent coverage for main results | 80 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **kleborate_min_percent_coverage** | Float | Minimum alignment percent coverage for main results | 80 | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **kleborate_min_percent_identity** | Float | Minimum alignment percent identity for main results | 90 | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **kleborate_min_kaptive_confidence** | String | {None,Low,Good,High,Very_high,Perfect} Minimum Kaptive confidence to call K/O loci - confidence levels below this will be reported as unknown | Good | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **kleborate_min_spurious_coverage** | Float | Minimum alignment percent coverage for spurious results | 40 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **kleborate_min_spurious_identity** | Float | Minimum alignment percent identity for spurious results | 80 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **kleborate_min_spurious_percent_coverage** | Float | Minimum alignment percent coverage for spurious results | 40 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **kleborate_min_spurious_percent_identity** | Float | Minimum alignment percent identity for spurious results | 80 | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **kleborate_skip_kaptive** | Boolean | Equivalent to --kaptive_k --kaptive_ | False  | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **kleborate_skip_resistance** | Boolean | Set to true to turn on resistance genes screening (default: no resistance gene screening) | False  | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **legsta_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/biocontainers/legsta:0.5.1--hdfd78af_2 | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **lissero_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/biocontainers/lissero:0.4.9--py_0 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **lissero_min_coverage** | Float | Minimum coverage of the gene to accept a match | 95 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **lissero_min_percent_coverage** | Float | Minimum percent coverage of the gene to accept a match | 95 | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **lissero_min_percent_identity** | Float | Minimum percent identity to accept a match | 95 | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **meningotype_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/biocontainers/meningotype:0.8.5--pyhdfd78af_0 | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **ngmaster_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/ngmaster:1.0.0 | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **ont_data** | Boolean | Internal component, do not modify |  | Do not modify, Optional | FASTA, PE, SE |
 | merlin_magic | **paired_end** | Boolean | Internal component, do not modify |  | Do not modify, Optional | ONT, PE |
 | merlin_magic | **pasty_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/pasty:1.0.3 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **pasty_min_coverage** | Int | Minimum coverage of a O-antigen to be considered for serogrouping by pasty | 95 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **pasty_min_percent_coverage** | Int | Minimum coverage of a O-antigen to be considered for serogrouping by pasty | 95 | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **pasty_min_percent_identity** | Int | Minimum percent identity for a blast hit to be considered for serogrouping | 95 | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **pbptyper_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/pbptyper:1.0.4 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **pbptyper_min_coverage** | Int | Minimum percent coverage to count a hit | 90 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **pbptyper_min_percent_coverage** | Int | Minimum percent coverage to count a hit | 90 | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **pbptyper_min_percent_identity** | Int | Minimum percent identity to count a hit | 90 | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **poppunk_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/poppunk:2.4.0 | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **poppunk_gps_clusters_csv** | File | Poppunk database file *Provide an empty or local file if running TheiaProk on the command-line | gs://theiagen-public-files-rp/terra/theiaprok-files/GPS_v6/GPS_v6_clusters.csv | Optional | FASTA, ONT, PE, SE |
