@@ -23,20 +23,17 @@ task version_capture {
 
     # Validate variables before calling curl
     if [[ -s "TODAY" && -s "PHB_VERSION" ]]; then
-      curl -X POST "${logging_api_url}" \
-        -H "Content-Type: application/json" \
-        -d '{
-          "task_id": "'${task_id}'",
-          "timestamp": "'$(date -u +%Y-%m-%dT%H:%M:%SZ)'",
-          "status": "completed",
-          "metadata": {
-            "date": "'$(cat TODAY)'",
-            "phb_version": "'$(cat PHB_VERSION)'"
-          }
-        }'
+
+        IDENTITY_TOKEN=$(curl -s -X GET -H "Metadata-Flavor: Google" \
+  "http://metadata/computeMetadata/v1/instance/service-accounts/default/identity?audience=${logging_api_url}")
+
+        curl -X POST "${logging_api_url}" \
+          -H "Authorization: Bearer ${IDENTITY_TOKEN}" \
+          -H "Content-Type: application/json" \
+          -d '{ "task_id": "${task_id}", "timestamp": "'$(date -u +%Y-%m-%dT%H:%M:%SZ)'", "status": "completed" }'
+
     else
       echo "Error: TODAY or PHB_VERSION file is empty!" >&2
-      exit 1
     fi
   >>>
   output {
