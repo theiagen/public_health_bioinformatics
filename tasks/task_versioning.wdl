@@ -4,7 +4,7 @@ task version_capture {
   input {
     String? timezone
     String docker = "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash-curl:3.20.0"
-    String logging_api_url = "https://wdl-logger-ki7cuiofna-uc.a.run.app/log-task"
+    String logging_api_url = "https://wdl-logger-932099266299.us-central1.run.app/log-task"
     String task_id = "version_capture_1.0"
   }
   meta {
