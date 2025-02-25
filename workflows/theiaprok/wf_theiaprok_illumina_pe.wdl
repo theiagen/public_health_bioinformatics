@@ -1136,11 +1136,11 @@ workflow theiaprok_illumina_pe {
     String? abricate_vibrio_biotype = merlin_magic.abricate_vibrio_biotype
     String? abricate_vibrio_serogroup = merlin_magic.abricate_vibrio_serogroup
     File? vibecheck_lineage_report = merlin_magic.vibecheck_lineage_report
-	  String? vibecheck_top_lineage = merlin_magic.vibecheck_top_lineage
-	  Float? vibecheck_confidence = merlin_magic.vibecheck_confidence
-	  String? vibecheck_classification_notes = merlin_magic.vibecheck_classification_notes
-	  String? vibecheck_version = merlin_magic.vibecheck_version
-	  String? vibecheck_docker = merlin_magic.vibecheck_docker
+    String? vibecheck_top_lineage = merlin_magic.vibecheck_top_lineage
+    Float? vibecheck_confidence = merlin_magic.vibecheck_confidence
+    String? vibecheck_classification_notes = merlin_magic.vibecheck_classification_notes
+    String? vibecheck_version = merlin_magic.vibecheck_version
+    String? vibecheck_docker = merlin_magic.vibecheck_docker
     # export taxon table output
     String? taxon_table_status = export_taxon_table.status
   }
