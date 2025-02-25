@@ -78,6 +78,7 @@ workflow theiaprok_illumina_pe {
   }
   call versioning.version_capture {
     input:
+        workflow_name = "theiaprok_illumina_pe"
   }
   if (defined(read1_lane2)) {
     call concatenate_lanes_workflow.concatenate_illumina_lanes {
