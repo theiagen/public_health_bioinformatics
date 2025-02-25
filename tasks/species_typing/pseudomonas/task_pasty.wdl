@@ -5,7 +5,7 @@ task pasty {
     File assembly
     String samplename
     Int min_percent_identity = 95
-    Int min_coverage = 95
+    Int min_percent_coverage = 95
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/pasty:1.0.3"
     Int disk_size = 100
     Int memory = 4
@@ -18,9 +18,10 @@ task pasty {
     pasty \
     --assembly ~{assembly} \
     --min_pident ~{min_percent_identity} \
-    --min_coverage ~{min_coverage} \
+    --min_coverage ~{min_percent_coverage} \
     --prefix ~{samplename} \
     --outdir .  
+    
     awk 'FNR==2' "~{samplename}.tsv" | cut -d$'\t' -f2 > SEROGROUP
     awk 'FNR==2' "~{samplename}.tsv" | cut -d$'\t' -f3 > COVERAGE
     awk 'FNR==2' "~{samplename}.tsv" | cut -d$'\t' -f4 > FRAGMENTS

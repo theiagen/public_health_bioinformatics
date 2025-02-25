@@ -57,7 +57,7 @@ All input reads are processed through "core tasks" in each workflow. The core ta
 | merlin_magic | **paired_end** | Boolean | Internal component, do not modify |  | Do Not Modify, Optional |
 | merlin_magic | **pasty_docker_image** | String | Internal component, do not modify | us-docker.pkg.dev/general-theiagen/staphb/pasty:1.0.3 | Do Not Modify, Optional |
 | merlin_magic | **pasty_min_coverage** | Int | Internal component, do not modify | 95 | Do Not Modify, Optional |
-| merlin_magic | **pasty_min_pident** | Int | Internal component, do not modify | 95 | Do Not Modify, Optional |
+| merlin_magic | **pasty_min_percent_identity** | Int | Internal component, do not modify | 95 | Do Not Modify, Optional |
 | merlin_magic | **shigatyper_docker_image** | String | Internal component, do not modify | us-docker.pkg.dev/general-theiagen/staphb/shigatyper:2.0.5 | Do Not Modify, Optional |
 | merlin_magic | **shigeifinder_docker_image** | String | Internal component, do not modify | us-docker.pkg.dev/general-theiagen/staphb/shigeifinder:1.3.5 | Do Not Modify, Optional |
 | merlin_magic | **snippy_query_gene** | String | Internal component, do not modify |  | Do Not Modify, Optional |
@@ -67,7 +67,7 @@ All input reads are processed through "core tasks" in each workflow. The core ta
 | merlin_magic | **srst2_min_depth** | Int | Internal component, do not modify | 5 | Do Not Modify, Optional |
 | merlin_magic | **srst2_min_edge_depth** | Int | Internal component, do not modify | 2 | Do Not Modify, Optional |
 | merlin_magic | **staphopia_sccmec_docker_image** | String | Internal component, do not modify | us-docker.pkg.dev/general-theiagen/biocontainers/staphopia-sccmec:1.0.0--hdfd78af_0 | Do Not Modify, Optional |
-| merlin_magic | **tbp_parser_coverage_threshold** | Int | Internal component, do not modify | 100 | Do Not Modify, Optional |
+| merlin_magic | **tbp_parser_min_percent_coverage** | Int | Internal component, do not modify | 100 | Do Not Modify, Optional |
 | merlin_magic | **tbp_parser_debug** | Boolean | Internal component, do not modify | FALSE | Do Not Modify, Optional |
 | merlin_magic | **tbp_parser_docker_image** | String | Internal component, do not modify | us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:2.2.2 | Do Not Modify, Optional |
 | merlin_magic | **tbp_parser_min_depth** | Int | Internal component, do not modify | 10 | Do Not Modify, Optional |
@@ -84,10 +84,10 @@ All input reads are processed through "core tasks" in each workflow. The core ta
 | merlin_magic | **tbprofiler_run_custom_db** | Boolean | Internal component, do not modify | FALSE | Do Not Modify, Optional |
 | merlin_magic | **tbprofiler_variant_caller** | String | Internal component, do not modify | freebayes | Do Not Modify, Optional |
 | merlin_magic | **tbprofiler_variant_calling_params** | String | Internal component, do not modify | None | Do Not Modify, Optional |
-| merlin_magic | **virulencefinder_coverage_threshold** | Float | Internal component, do not modify |  | Do Not Modify, Optional |
 | merlin_magic | **virulencefinder_database** | String | Internal component, do not modify | "virulence_ecoli" | Do Not Modify, Optional |
 | merlin_magic | **virulencefinder_docker_image** | String | Internal component, do not modify | us-docker.pkg.dev/general-theiagen/staphb/virulencefinder:2.0.4 | Do Not Modify, Optional |
-| merlin_magic | **virulencefinder_identity_threshold** | Float | Internal component, do not modify |  | Do Not Modify, Optional |
+| merlin_magic | **virulencefinder_min_percent_coverage** | Float | Internal component, do not modify |  | Do Not Modify, Optional |
+| merlin_magic | **virulencefinder_min_percent_identity** | Float | Internal component, do not modify |  | Do Not Modify, Optional |
 | qc_check_task | **ani_highest_percent** | Float | Internal component, do not modify |  | Do Not Modify, Optional |
 | qc_check_task | **ani_highest_percent_bases_aligned** | Float | Internal component, do not modify |  | Do Not Modify, Optional |
 | qc_check_task | **assembly_length_unambiguous** | Int | Internal component, do not modify |  | Do Not Modify, Optional |
