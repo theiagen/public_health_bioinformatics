@@ -232,8 +232,8 @@ workflow merlin_magic {
     File? tbp_parser_expert_rule_regions_bed
     # Vibecheck options
     File? vibecheck_lineage_barcodes
-		Float? vibecheck_subsampling_fraction
-		Boolean? vibecheck_skip_subsampling
+    Float? vibecheck_subsampling_fraction
+    Boolean? vibecheck_skip_subsampling
     # virulencefinder options
     Float? virulencefinder_min_coverage
     Float? virulencefinder_min_percent_identity
@@ -1026,11 +1026,11 @@ workflow merlin_magic {
     String? abricate_vibrio_biotype = abricate_vibrio.abricate_vibrio_biotype
     String? abricate_vibrio_serogroup = abricate_vibrio.abricate_vibrio_serogroup
     File? vibecheck_lineage_report = vibecheck_vibrio.vibecheck_lineage_report
-	  String? vibecheck_top_lineage = vibecheck_vibrio.vibecheck_top_lineage
-	  Float? vibecheck_confidence = vibecheck_vibrio.vibecheck_confidence
-	  String? vibecheck_classification_notes = vibecheck_vibrio.vibecheck_classification_notes
-	  String? vibecheck_version = vibecheck_vibrio.vibecheck_version
-	  String? vibecheck_docker = vibecheck_vibrio.vibecheck_docker
+    String? vibecheck_top_lineage = vibecheck_vibrio.vibecheck_top_lineage
+    Float? vibecheck_confidence = vibecheck_vibrio.vibecheck_confidence
+    String? vibecheck_classification_notes = vibecheck_vibrio.vibecheck_classification_notes
+    String? vibecheck_version = vibecheck_vibrio.vibecheck_version
+    String? vibecheck_docker = vibecheck_vibrio.vibecheck_docker
     
     # theiaeuk
     # c auris 
