@@ -133,7 +133,6 @@ workflow merlin_magic {
     Int? emmtyper_max_size
     # hicap options
     Float? hicap_min_gene_percent_identity
-    Float? hicap_min_gene_percent_identity
     Float? hicap_min_broken_gene_percent_identity
     Int? hicap_broken_gene_length
     # kaptive options
