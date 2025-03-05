@@ -2,8 +2,7 @@ version 1.0
 
 task freyja_one_sample {
   input {
-    File? primer_trimmed_bam
-    File? bamfile
+    File bamfile
     String samplename
     File reference_genome
     File? reference_gff
@@ -67,9 +66,9 @@ task freyja_one_sample {
   echo ${freyja_metadata_version} | tee FREYJA_METADATA
   
   # Call variants and capture sequencing depth information
-  echo "Running: freyja variants ~{primer_trimmed_bam} --variants ~{samplename}_freyja_variants.tsv --depths ~{samplename}_freyja_depths.tsv --ref ~{reference_genome}"
+  echo "Running: freyja variants ~{bamfile} --variants ~{samplename}_freyja_variants.tsv --depths ~{samplename}_freyja_depths.tsv --ref ~{reference_genome}"
   freyja variants \
-    ~{select_first([primer_trimmed_bam, bamfile])} \
+    ~{bamfile} \
     ~{"--annot " + reference_gff} \
     --variants ~{samplename}_freyja_variants.tsv \
     --depths ~{samplename}_freyja_depths.tsv \

@@ -103,27 +103,17 @@ workflow freyja_fastq {
         primer_bed = select_first([primer_bed]),
         bamfile = select_first([sam_to_sorted_bam.bam, bwa.sorted_bam])
     }
-    call freyja_task.freyja_one_sample as freyja {
-      input:
-        primer_trimmed_bam = primer_trim.trim_sorted_bam,
-        samplename = samplename,
-        reference_genome = reference_genome,
-        reference_gff = reference_gff,
-        depth_cutoff = depth_cutoff
-    }
   }
 
-  # When primer_bed is not present. Sorted bam is passed to freyja passing trimming process.
-  if (!defined(primer_bed)){
-    call freyja_task.freyja_one_sample as freyja_no_primer_trim {
-      input:
-        bamfile = select_first([sam_to_sorted_bam.bam, bwa.sorted_bam]),
-        samplename = samplename,
-        reference_genome = reference_genome,
-        reference_gff = reference_gff,
-        depth_cutoff = depth_cutoff
-    }
+  call freyja_task.freyja_one_sample as freyja {
+    input:
+      bamfile = select_first([primer_trim.trim_sorted_bam, sam_to_sorted_bam.bam, bwa.sorted_bam]),
+      samplename = samplename,
+      reference_genome = reference_genome,
+      reference_gff = reference_gff,
+      depth_cutoff = depth_cutoff
   }
+
 
   call versioning.version_capture {
     input:
@@ -223,23 +213,23 @@ workflow freyja_fastq {
     String? samtools_version_primtrim = primer_trim.samtools_version
     String? primer_bed_name = primer_trim.primer_bed_name
     # Freyja Analysis outputs
-    String freyja_version = select_first([freyja.freyja_version,freyja_no_primer_trim.freyja_version])
-    File freyja_variants = select_first([freyja.freyja_variants, freyja_no_primer_trim.freyja_variants])
-    File freyja_depths = select_first([freyja.freyja_depths, freyja_no_primer_trim.freyja_depths])
-    File freyja_demixed = select_first([freyja.freyja_demixed, freyja_no_primer_trim.freyja_demixed]) 
-    Float freyja_coverage = select_first([freyja.freyja_coverage, freyja_no_primer_trim.freyja_coverage]) 
-    File freyja_barcode_file = select_first([freyja.freyja_barcode_file, freyja_no_primer_trim.freyja_barcode_file])  
-    File freyja_lineage_metadata_file = select_first([freyja.freyja_lineage_metadata_file, freyja_no_primer_trim.freyja_lineage_metadata_file]) 
-    String freyja_barcode_version = select_first([freyja.freyja_barcode_version, freyja_no_primer_trim.freyja_barcode_version])
-    String freyja_metadata_version = select_first([freyja.freyja_metadata_version, freyja_no_primer_trim.freyja_metadata_version])
-    String? freyja_bootstrap_lineages = select_first([freyja.freyja_bootstrap_lineages, freyja_no_primer_trim.freyja_bootstrap_lineages,""])
-    String? freyja_bootstrap_lineages_pdf = select_first([freyja.freyja_bootstrap_lineages_pdf, freyja_no_primer_trim.freyja_bootstrap_lineages_pdf,""])
-    String? freyja_bootstrap_summary = select_first([freyja.freyja_bootstrap_summary, freyja_no_primer_trim.freyja_bootstrap_summary,""])
-    String? freyja_bootstrap_summary_pdf = select_first([freyja.freyja_bootstrap_summary_pdf, freyja_no_primer_trim.freyja_bootstrap_summary_pdf,""])
-    File freyja_demixed_parsed = select_first([freyja.freyja_demixed_parsed, freyja_no_primer_trim.freyja_demixed_parsed])
-    String freyja_resid = select_first([freyja.freyja_resid, freyja_no_primer_trim.freyja_resid])
-    String freyja_summarized = select_first([freyja.freyja_summarized, freyja_no_primer_trim.freyja_summarized])
-    String freyja_lineages = select_first([freyja.freyja_lineages, freyja_no_primer_trim.freyja_lineages])
-    String freyja_abundances = select_first([freyja.freyja_abundances, freyja_no_primer_trim.freyja_abundances])
+    String freyja_version = freyja.freyja_version
+    File freyja_variants = freyja.freyja_variants
+    File freyja_depths = freyja.freyja_depths
+    File freyja_demixed = freyja.freyja_demixed 
+    Float freyja_coverage = freyja.freyja_coverage
+    File freyja_barcode_file = freyja.freyja_barcode_file  
+    File freyja_lineage_metadata_file = freyja.freyja_lineage_metadata_file 
+    String freyja_barcode_version = freyja.freyja_barcode_version
+    String freyja_metadata_version = freyja.freyja_metadata_version
+    String? freyja_bootstrap_lineages = freyja.freyja_bootstrap_lineages
+    String? freyja_bootstrap_lineages_pdf = freyja.freyja_bootstrap_lineages_pdf
+    String? freyja_bootstrap_summary = freyja.freyja_bootstrap_summary
+    String? freyja_bootstrap_summary_pdf = freyja.freyja_bootstrap_summary_pdf
+    File freyja_demixed_parsed = freyja.freyja_demixed_parsed
+    String freyja_resid = freyja.freyja_resid
+    String freyja_summarized = freyja.freyja_summarized
+    String freyja_lineages = freyja.freyja_lineages
+    String freyja_abundances = freyja.freyja_abundances
   }
 }
