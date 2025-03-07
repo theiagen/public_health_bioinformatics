@@ -2,9 +2,10 @@ version 1.0
 
 task freyja_one_sample {
   input {
-    File primer_trimmed_bam
+    File bamfile
     String samplename
     File reference_genome
+    File? reference_gff
     String? freyja_pathogen
     File? freyja_barcodes
     File? freyja_lineage_metadata
@@ -17,7 +18,7 @@ task freyja_one_sample {
     Int? depth_cutoff
     Int memory = 8
     Int cpu = 2
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/freyja:1.5.2-11_30_2024-02-00-2024-12-02"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/freyja:1.5.3"
     Int disk_size = 100
   }
   command <<<
@@ -65,9 +66,10 @@ task freyja_one_sample {
   echo ${freyja_metadata_version} | tee FREYJA_METADATA
   
   # Call variants and capture sequencing depth information
-  echo "Running: freyja variants ~{primer_trimmed_bam} --variants ~{samplename}_freyja_variants.tsv --depths ~{samplename}_freyja_depths.tsv --ref ~{reference_genome}"
+  echo "Running: freyja variants ~{bamfile} --variants ~{samplename}_freyja_variants.tsv --depths ~{samplename}_freyja_depths.tsv --ref ~{reference_genome}"
   freyja variants \
-    ~{primer_trimmed_bam} \
+    ~{bamfile} \
+    ~{"--annot " + reference_gff} \
     --variants ~{samplename}_freyja_variants.tsv \
     --depths ~{samplename}_freyja_depths.tsv \
     --ref ~{reference_genome}
