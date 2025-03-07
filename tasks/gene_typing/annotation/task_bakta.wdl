@@ -3,33 +3,28 @@ version 1.0
 task bakta {
   input {
     File assembly
-    File bakta_db = "gs://theiagen-public-files-rp/terra/theiaprok-files/bakta_db_2022-08-29.tar.gz"
     String samplename
     Int cpu = 8
-    Int memory = 16
-    String docker = "us-docker.pkg.dev/general-theiagen/biocontainers/bakta:1.5.1--pyhdfd78af_0"
-    Int disk_size = 100
-    # Parameters 
-    #  proteins: Fasta file of trusted protein sequences for CDS annotation
-    #  prodigal_tf: Prodigal training file to use for CDS prediction
-    # bakta_opts: any additional bakta arguments
-    Boolean proteins = false
+    Int memory = 24 
+    Int disk_size = 200
+    File bakta_db_selected
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/bakta:1.10.3"
+    Boolean proteins = false # Proteins: Fasta file of trusted protein sequences for CDS annotation
     Boolean compliant = false
-    File? prodigal_tf
-    String? bakta_opts
+    File? prodigal_tf # Prodigal_tf: Prodigal training file to use for CDS prediction
+    String? bakta_opts # Additional Bakta arguments
   }
-  command <<<
+  command <<<  
+  set -euo pipefail
+
   date | tee DATE
   bakta --version | tee BAKTA_VERSION
-  
+
   # Extract Bakta DB
-  mkdir db
-  time tar xzvf ~{bakta_db} --strip-components=1 -C ./db
+  mkdir -p db
+  tar xzvf ~{bakta_db_selected} --strip-components=1 -C ./db
 
-  # Install amrfinderplus db
-  amrfinder_update --database db/amrfinderplus-db
-  amrfinder --database_version | tee AMRFINDER_DATABASE_VERSION
-
+  # Run Bakta
   bakta \
     ~{bakta_opts} \
     --db db/ \
@@ -40,10 +35,9 @@ task bakta {
     ~{true='--proteins' false='' proteins} \
     ~{'--prodigal-tf ' + prodigal_tf} \
     ~{assembly}
-  
-  # rename gff3 to gff for compatibility with downstream analysis (pirate)
+
+  # Rename gff3 to gff for compatibility with downstream analysis
   mv "~{samplename}/~{samplename}.gff3" "~{samplename}/~{samplename}.gff"
-  
   >>>
   output {
     File bakta_embl = "~{samplename}/~{samplename}.embl"
@@ -56,6 +50,7 @@ task bakta {
     File bakta_hypotheticals_tsv = "~{samplename}/~{samplename}.hypotheticals.tsv"
     File bakta_tsv = "~{samplename}/~{samplename}.tsv"
     File bakta_txt = "~{samplename}/~{samplename}.txt"
+    File bakta_plot = "~{samplename}/~{samplename}.png"
     String bakta_version = read_string("BAKTA_VERSION")
   }
   runtime {
@@ -64,6 +59,6 @@ task bakta {
     docker: docker
     disks:  "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
-    maxRetries: 3
+    maxRetries: 0
   }
 }

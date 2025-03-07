@@ -33,6 +33,7 @@ import "../../tasks/species_typing/streptococcus/task_poppunk_streppneumo.wdl" a
 import "../../tasks/species_typing/streptococcus/task_seroba.wdl" as seroba
 import "../../tasks/species_typing/vibrio/task_srst2_vibrio.wdl" as srst2_vibrio_task
 import "../../tasks/species_typing/vibrio/task_abricate_vibrio.wdl" as abricate_vibrio_task
+import "../../tasks/species_typing/vibrio/task_vibecheck_vibrio.wdl" as vibecheck_vibrio_task
 
 # theiaeuk
 import "../../tasks/gene_typing/variant_detection/task_snippy_gene_query.wdl" as snippy_gene_query
@@ -92,13 +93,14 @@ workflow merlin_magic {
     String? staphopia_sccmec_docker_image
     String? tbprofiler_docker_image
     String? tbp_parser_docker_image
+    String? vibecheck_docker_image
     String? virulencefinder_docker_image
     # abricate abaum options
-    Int abricate_abaum_minid = 95 # strict threshold of 95% identity for typing purposes
-    Int? abricate_abaum_mincov
+    Int abricate_abaum_min_percent_identity = 95 # strict threshold of 95% identity for typing purposes
+    Int? abricate_abaum_min_coverage
     # abricate vibrio options
-    Int abricate_vibrio_minid = 80
-    Int abricate_vibrio_mincov = 80
+    Int abricate_vibrio_min_percent_identity = 80
+    Int abricate_vibrio_min_coverage = 80
     # agrvate options
     Boolean? agrvate_agr_typing_only
     # cladetyper options - primarily files we host
@@ -114,16 +116,16 @@ workflow merlin_magic {
     File? cladetyper_ref_clade5
     File? cladetyper_ref_clade5_annotated
     # ectyper options
-    Int? ectyper_opid
-    Int? ectyper_hpid
-    Int? ectyper_opcov
-    Int? ectyper_hpcov
+    Int? ectyper_o_min_percent_identity
+    Int? ectyper_h_min_percent_identity
+    Int? ectyper_o_min_coverage
+    Int? ectyper_h_min_coverage
     Boolean? ectyper_verify
     Boolean? ectyper_print_alleles
     # emmtyper options
     String? emmtyper_wf
     Int? emmtyper_cluster_distance
-    Int? emmtyper_percid
+    Int? emmtyper_min_percent_identity
     Int? emmtyper_culling_limit
     Int? emmtyper_mismatch
     Int? emmtyper_align_diff
@@ -138,25 +140,25 @@ workflow merlin_magic {
     Int? hicap_broken_gene_length
     # kaptive options
     Int? kaptive_start_end_margin
-    Float? kaptive_min_identity
+    Float? kaptive_min_percent_identity
     Float? kaptive_min_coverage
     Float? kaptive_low_gene_id
     # kleborate options
     Boolean? kleborate_skip_resistance
     Boolean? kleborate_skip_kaptive
-    Float? kleborate_min_identity
+    Float? kleborate_min_percent_identity
     Float? kleborate_min_coverage
     Float? kleborate_min_spurious_identity
     Float? kleborate_min_spurious_coverage
     String? kleborate_min_kaptive_confidence
     # lissero options
-    Float? lissero_min_id
-    Float? lissero_min_cov
+    Float? lissero_min_percent_identity
+    Float? lissero_min_coverage
     # pasty options
-    Int? pasty_min_pident
+    Int? pasty_min_percent_identity
     Int? pasty_min_coverage      
     # pbptyper options 
-    Int? pbptyper_min_pident
+    Int? pbptyper_min_percent_identity
     Int? pbptyper_min_coverage
     # popppunk options - primarily files we host
     File? poppunk_gps_dists_npy
@@ -195,7 +197,7 @@ workflow merlin_magic {
     # spatyper options
     Boolean? spatyper_do_enrich
     # srst2 options
-    Int srst2_min_cov = 80
+    Int srst2_min_coverage = 80
     Int srst2_max_divergence = 20
     Int srst2_min_depth = 5
     Int srst2_min_edge_depth = 2
@@ -216,7 +218,7 @@ workflow merlin_magic {
     Int? tbp_parser_min_depth
     Int? tbp_parser_min_frequency
     Int? tbp_parser_min_read_support
-    Int? tbp_parser_coverage_threshold
+    Int? tbp_parser_min_coverage
     File? tbp_parser_coverage_regions_bed
     Boolean? tbp_parser_debug
     Boolean? tbp_parser_add_cs_lims
@@ -228,9 +230,13 @@ workflow merlin_magic {
     Float? tbp_parser_rpob449_frequency
     Float? tbp_parser_etha237_frequency
     File? tbp_parser_expert_rule_regions_bed
+    # Vibecheck options
+    File? vibecheck_lineage_barcodes
+    Float? vibecheck_subsampling_fraction
+    Boolean? vibecheck_skip_subsampling
     # virulencefinder options
-    Float? virulencefinder_coverage_threshold
-    Float? virulencefinder_identity_threshold
+    Float? virulencefinder_min_coverage
+    Float? virulencefinder_min_percent_identity
     String? virulencefinder_database
     # stxtyper options
     Boolean call_stxtyper = false # set to true to run stxtyper on any bacterial sample
@@ -247,7 +253,7 @@ workflow merlin_magic {
         assembly = assembly,
         samplename = samplename,
         start_end_margin = kaptive_start_end_margin,
-        min_identity = kaptive_min_identity,
+        min_percent_identity = kaptive_min_percent_identity,
         min_coverage = kaptive_min_coverage,
         low_gene_id = kaptive_low_gene_id,
         docker = kaptive_docker_image
@@ -257,8 +263,8 @@ workflow merlin_magic {
         assembly = assembly,
         samplename = samplename,
         database = "AcinetobacterPlasmidTyping",
-        minid = abricate_abaum_minid, 
-        mincov = abricate_abaum_mincov,
+        min_percent_identity = abricate_abaum_min_percent_identity, 
+        min_coverage = abricate_abaum_min_coverage,
         docker = abricate_abaum_docker_image
     }
   }
@@ -290,10 +296,10 @@ workflow merlin_magic {
       input:
         assembly = assembly,
         samplename = samplename,
-        opid = ectyper_opid,
-        hpid = ectyper_hpid,
-        opcov = ectyper_opcov,
-        hpcov = ectyper_hpcov,
+        o_min_percent_identity = ectyper_o_min_percent_identity,
+        h_min_percent_identity = ectyper_h_min_percent_identity,
+        o_min_coverage = ectyper_o_min_coverage,
+        h_min_coverage = ectyper_h_min_coverage,
         verify = ectyper_verify,
         print_alleles = ectyper_print_alleles,
         docker = ectyper_docker_image
@@ -333,8 +339,8 @@ workflow merlin_magic {
       #  paired_end = paired_end,
       #  assembly_only = assembly_only,
       #  ont_data = ont_data,
-        coverage_threshold = virulencefinder_coverage_threshold,
-        identity_threshold = virulencefinder_identity_threshold,
+        min_coverage = virulencefinder_min_coverage,
+        min_percent_identity = virulencefinder_min_percent_identity,
         database = virulencefinder_database,
         docker = virulencefinder_docker_image
     }
@@ -357,8 +363,8 @@ workflow merlin_magic {
       input:
         assembly = assembly,
         samplename = samplename,
-        min_id = lissero_min_id,
-        min_cov = lissero_min_cov,
+        min_percent_identity = lissero_min_percent_identity,
+        min_coverage = lissero_min_coverage,
         docker = lissero_docker_image
     }
   }
@@ -410,7 +416,7 @@ workflow merlin_magic {
         samplename = samplename,
         skip_resistance = kleborate_skip_resistance,
         skip_kaptive = kleborate_skip_kaptive,
-        min_identity = kleborate_min_identity,
+        min_percent_identity = kleborate_min_percent_identity,
         min_coverage = kleborate_min_coverage,
         min_spurious_identity = kleborate_min_spurious_identity,
         min_spurious_coverage = kleborate_min_spurious_coverage,
@@ -439,7 +445,7 @@ workflow merlin_magic {
       input:
         assembly = assembly,
         samplename = samplename,
-        min_pident = pasty_min_pident,
+        min_percent_identity = pasty_min_percent_identity,
         min_coverage = pasty_min_coverage,
         docker = pasty_docker_image
     }
@@ -484,7 +490,7 @@ workflow merlin_magic {
             min_depth = tbp_parser_min_depth,
             min_frequency = tbp_parser_min_frequency,
             min_read_support = tbp_parser_min_read_support,
-            coverage_threshold = tbp_parser_coverage_threshold,
+            min_coverage = tbp_parser_min_coverage,
             coverage_regions_bed = tbp_parser_coverage_regions_bed,
             add_cycloserine_lims = tbp_parser_add_cs_lims,
             tbp_parser_debug = tbp_parser_debug,
@@ -545,7 +551,7 @@ workflow merlin_magic {
       input:
         assembly = assembly,
         samplename = samplename,
-        min_pident = pbptyper_min_pident,
+        min_percent_identity = pbptyper_min_percent_identity,
         min_coverage = pbptyper_min_coverage,
         docker = pbptyper_docker_image
     }      
@@ -580,7 +586,7 @@ workflow merlin_magic {
         samplename = samplename,
         wf = emmtyper_wf,
         cluster_distance = emmtyper_cluster_distance,
-        percid = emmtyper_percid,
+        min_percent_identity = emmtyper_min_percent_identity,
         culling_limit = emmtyper_culling_limit,
         mismatch = emmtyper_mismatch,
         align_diff = emmtyper_align_diff,
@@ -619,27 +625,36 @@ workflow merlin_magic {
           read1 = select_first([read1]),
           read2 = read2,
           samplename = samplename,
-          min_cov = srst2_min_cov,
+          min_coverage = srst2_min_coverage,
           max_divergence = srst2_max_divergence,
           min_depth = srst2_min_depth,
           min_edge_depth = srst2_min_edge_depth,
           gene_max_mismatch = srst2_gene_max_mismatch,
           docker = srst2_docker_image
       }
+      call vibecheck_vibrio_task.vibecheck_vibrio {
+        input:
+          read1 = select_first([read1]),
+          read2 = read2,
+          lineage_barcodes = vibecheck_lineage_barcodes,
+          subsampling_fraction = vibecheck_subsampling_fraction,
+          skip_subsampling = vibecheck_skip_subsampling,
+          docker = vibecheck_docker_image
+      }
     }
     call abricate_vibrio_task.abricate_vibrio {
       input:
         assembly = assembly,
         samplename = samplename,
-        minid = abricate_vibrio_minid,
-        mincov = abricate_vibrio_mincov,
+        min_percent_identity = abricate_vibrio_min_percent_identity,
+        min_coverage = abricate_vibrio_min_coverage,
         docker = abricate_vibrio_docker_image
     }
   }
   
   # theiaeuk
   if (theiaeuk) {
-    if (merlin_tag == "Candida auris") {
+    if (merlin_tag == "Candidozyma auris" || merlin_tag == "Candida auris") {
       call cauris_cladetyper.cauris_cladetyper as cladetyper {
         input: 
           assembly_fasta = assembly,
@@ -1010,6 +1025,12 @@ workflow merlin_magic {
     String? abricate_vibrio_toxR = abricate_vibrio.abricate_vibrio_toxR
     String? abricate_vibrio_biotype = abricate_vibrio.abricate_vibrio_biotype
     String? abricate_vibrio_serogroup = abricate_vibrio.abricate_vibrio_serogroup
+    File? vibecheck_lineage_report = vibecheck_vibrio.vibecheck_lineage_report
+    String? vibecheck_top_lineage = vibecheck_vibrio.vibecheck_top_lineage
+    Float? vibecheck_confidence = vibecheck_vibrio.vibecheck_confidence
+    String? vibecheck_classification_notes = vibecheck_vibrio.vibecheck_classification_notes
+    String? vibecheck_version = vibecheck_vibrio.vibecheck_version
+    String? vibecheck_docker = vibecheck_vibrio.vibecheck_docker
     
     # theiaeuk
     # c auris 

@@ -217,5 +217,10 @@ workflow freyja_fastq {
     File? freyja_bootstrap_lineages_pdf = freyja.freyja_bootstrap_lineages_pdf
     File? freyja_bootstrap_summary = freyja.freyja_bootstrap_summary
     File? freyja_bootstrap_summary_pdf = freyja.freyja_bootstrap_summary_pdf
+    File freyja_demixed_parsed = freyja.freyja_demixed_parsed
+    String freyja_resid = freyja.freyja_resid
+    String freyja_summarized = freyja.freyja_summarized
+    String freyja_lineages = freyja.freyja_lineages
+    String freyja_abundances = freyja.freyja_abundances
   }
 }

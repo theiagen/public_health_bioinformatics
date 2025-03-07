@@ -19,20 +19,20 @@ task ectyper {
     #  --hpcov          [integer] Minumum percent coverage required for an H antigen allele match [default: 50]
     #  --verify         [boolean] Enable E. coli species verification
     #  --print_alleles  [boolean] Prints the allele sequences if enabled as the final column
-    Int opid = 90
-    Int hpid = 95
-    Int opcov = 90
-    Int hpcov = 50
+    Int o_min_percent_identity = 90
+    Int h_min_percent_identity = 95
+    Int o_min_coverage = 90
+    Int h_min_coverage = 50
     Boolean verify = false
     Boolean print_alleles = false
   }
   command <<<
     echo $(ectyper --version 2>&1) | sed 's/.*ectyper //; s/ .*\$//' | tee VERSION
     ectyper \
-      ~{'-opid ' + opid} \
-      ~{'-hpid ' + hpid} \
-      ~{'-opcov ' + opcov} \
-      ~{'-hpcov ' + hpcov} \
+      ~{'-opid ' + o_min_percent_identity} \
+      ~{'-hpid ' + h_min_percent_identity} \
+      ~{'-opcov ' + o_min_coverage} \
+      ~{'-hpcov ' + h_min_coverage} \
       ~{true="--verify" false="" verify} \
       ~{true="-s" false="" print_alleles} \
       --cores ~{cpu} \

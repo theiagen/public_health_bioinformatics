@@ -47,588 +47,467 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 
 <div class="searchable-table" markdown="1">
 
-| **Terra Task name** | **Variable** | **Type** | **Description** | **Default value** | **Terra Status** | **Workflow** |
-|---|---|---|---|---|---|---|
-| *workflow name | **samplename** | String | Name of sample to be analyzed |  | Required | FASTA, ONT, PE, SE |
-| theiaprok_fasta | **assembly_fasta** | File | Assembly file in fasta format |  | Required | FASTA |
-| theiaprok_illumina_pe | **read1** | File | Illumina forward read file in FASTQ file format (compression optional) |  | Required | PE |
-| theiaprok_illumina_pe | **read2** | File | Illumina reverse read file in FASTQ file format (compression optional) |  | Required | PE |
-| theiaprok_illumina_se | **read1** | File | Illumina forward read file in FASTQ file format (compression optional) |  | Required | SE |
-| theiaprok_ont | **read1** | File | Base-called ONT read file in FASTQ file format (compression optional) |  | Required | ONT |
-| *workflow name | **abricate_db** | String | Database to use with the Abricate tool. Options: NCBI, CARD, ARG-ANNOT, Resfinder, MEGARES, EcOH, PlasmidFinder, Ecoli_VF and VFDB | vfdb | Optional | FASTA, ONT, PE, SE |
-| *workflow name | **call_abricate** | Boolean | Set to true to enable the Abricate task | FALSE | Optional | FASTA, ONT, PE, SE |
-| *workflow name | **call_ani** | Boolean | Set to true to enable the ANI task | FALSE | Optional | FASTA, ONT, PE, SE |
-| *workflow name | **call_kmerfinder** | Boolean | Set to true to enable the kmerfinder task | FALSE | Optional | FASTA, ONT, PE, SE |
-| *workflow name | **call_plasmidfinder** | Boolean | Set to true to enable the plasmidfinder task | TRUE | Optional | FASTA, ONT, PE, SE |
-| *workflow name | **call_resfinder** | Boolean | Set to true to enable the ResFinder task | FALSE | Optional | FASTA, ONT, PE, SE |
-| *workflow name | **city** | String | Will be used in the "city" column in any taxon-specific tables created in the Export Taxon Tables task |  | Optional | FASTA, ONT, PE, SE |
-| *workflow name | **collection_date** | String | Will be used in the "collection_date" column in any taxon-specific tables created in the Export Taxon Tables task |  | Optional | FASTA, ONT, PE, SE |
-| *workflow name | **county** | String | Will be used in the "county" column in any taxon-specific tables created in the Export Taxon Tables task |  | Optional | FASTA, ONT, PE, SE |
-| *workflow name | **expected_taxon** | String | If provided, this input will override the taxonomic assignment made by GAMBIT and launch the relevant taxon-specific submodules. It will also modify the organism flag used by AMRFinderPlus. Example format: "Salmonella enterica" |  | Optional | FASTA, ONT, PE, SE |
-| *workflow name | **genome_annotation** | String | If set to "bakta", TheiaProk will use Bakta rather than Prokka to annotate the genome | prokka | Optional | FASTA, ONT, PE, SE |
-| *workflow name | **genome_length** | Int | User-specified expected genome length to be used in genome statistics calculations |  | Optional | ONT, PE, SE |
-| *workflow name | **max_genome_length** | Int | Maximum genome length able to pass read screening. For TheiaProk_ONT, screening using max_genome_length is skipped by default. | 18040666 | Optional | ONT, PE, SE |
-| *workflow name | **min_basepairs** | Int | Minimum number of base pairs able to pass read screening | 2241820 | Optional | ONT, PE, SE |
-| *workflow name | **min_coverage** | Int | Minimum genome coverage able to pass read screening. Screening using min_coverage is skipped by default. | 5 | Optional | ONT |
-| *workflow name | **min_coverage** | Int | Minimum genome coverage able to pass read screening | 10 | Optional | PE, SE |
-| *workflow name | **min_genome_length** | Int | Minimum genome length able to pass read screening. For TheiaProk_ONT, screening using min_genome_length is skipped by default. | 100000 | Optional | ONT, PE, SE |
-| *workflow name | **min_proportion** | Int | Minimum proportion of total reads in each read file to pass read screening | 40 | Optional | PE |
-| *workflow name | **min_reads** | Int | Minimum number of reads to pass read screening | 5000 | Optional | ONT |
-| *workflow name | **min_reads** | Int | Minimum number of reads to pass read screening | 7472 | Optional | PE, SE |
-| *workflow name | **originating_lab** | String | Will be used in the "originating_lab" column in any taxon-specific tables created in the Export Taxon Tables task |  | Optional | FASTA, ONT, PE, SE |
-| *workflow name | **perform_characterization** | Boolean | Set to "false" if you want to only generate an assembly and relevant QC metrics and skip all characterization tasks | TRUE | Optional | FASTA, ONT, PE, SE |
-| *workflow name | **qc_check_table** | File | TSV value with taxons for rows and QC values for columns; internal cells represent user-determined QC thresholds; if provided, turns on the QC Check task.<br>Click on the variable name for an example QC Check table |  | Optional | FASTA, ONT, PE, SE |
-| *workflow name | **read1_lane2** | File | If provided, the Concatenate_Illumina_Lanes subworkflow will concatenate all files from the same lane before doing any subsequent analysis |  | Optional | PE, SE |
-| *workflow name | **read1_lane3** | File | If provided, the Concatenate_Illumina_Lanes subworkflow will concatenate all files from the same lane before doing any subsequent analysis |  | Optional | PE, SE |
-| *workflow name | **read1_lane4** | File | If provided, the Concatenate_Illumina_Lanes subworkflow will concatenate all files from the same lane before doing any subsequent analysis |  | Optional | PE, SE |
-| *workflow name | **read2_lane2** | File | If provided, the Concatenate_Illumina_Lanes subworkflow will concatenate all files from the same lane before doing any subsequent analysis |  | Optional | PE, SE |
-| *workflow name | **read2_lane3** | File | If provided, the Concatenate_Illumina_Lanes subworkflow will concatenate all files from the same lane before doing any subsequent analysis |  | Optional | PE, SE |
-| *workflow name | **read2_lane4** | File | If provided, the Concatenate_Illumina_Lanes subworkflow will concatenate all files from the same lane before doing any subsequent analysis |  | Optional | PE, SE | 
-| *workflow name | **run_id** | String | Will be used in the "run_id" column in any taxon-specific tables created in the Export Taxon Tables task |  | Optional | FASTA, ONT, PE, SE |
-| *workflow name | **seq_method** | String | Will be used in the "seq_id" column in any taxon-specific tables created in the Export Taxon Tables task |  | Optional | FASTA, ONT, PE, SE |
-| *workflow name | **skip_mash** | Boolean | If true, skips estimation of genome size and coverage in read screening steps. As a result, providing true also prevents screening using these parameters. | TRUE | Optional | ONT, SE |
-| *workflow name | **skip_screen** | Boolean | Option to skip the read screening prior to analysis | FALSE | Optional | ONT, PE, SE |
-| *workflow name | **taxon_tables** | File | File indicating data table names to copy samples of a particular taxon to |  | Optional | FASTA, ONT, PE, SE |
-| *workflow name | **terra_project** | String | The name of the Terra Project where you want the taxon tables written to |  | Optional | FASTA, ONT, PE, SE |
-| *workflow name | **terra_workspace** | String | The name of the Terra Workspace where you want the taxon tables written to |  | Optional | FASTA, ONT, PE, SE |
-| *workflow name | **trim_min_length** | Int | Specifies minimum length of each read after trimming to be kept | 25 | Optional | SE |
-| *workflow name | **trim_min_length** | Int | Specifies minimum length of each read after trimming to be kept | 75 | Optional | PE |
-| *workflow name | **trim_quality_min_score** | Int | Specifies the minimum average quality of bases in a sliding window to be kept | 20 | Optional | PE |
-| *workflow name | **trim_quality_trim_score** | Int | Specifies the average quality of bases in a sliding window to be kept | 30 | Optional | SE |
-| *workflow name | **trim_window_size** | Int | Specifies window size for trimming (the number of bases to average the quality across) | 4 | Optional | SE |
-| *workflow name | **trim_window_size** | Int | Specifies window size for trimming (the number of bases to average the quality across) | 4 | Optional | PE |
-| *workflow name | **zip** | String | Will be used in the "zip" column in any taxon-specific tables created in the Export Taxon Tables task |  | Optional | FASTA, ONT, PE, SE |
-| abricate | **cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional | FASTA, ONT, PE, SE |
-| abricate | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | FASTA, ONT, PE, SE |
-| abricate | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/abricate:1.0.1-abaum-plasmid | Optional | FASTA, ONT, PE, SE |
-| abricate | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | FASTA, ONT, PE, SE |
-| abricate | **mincov** | Int | Minimum DNA %coverage for the Abricate task | 80 | Optional | FASTA, ONT, PE, SE |
-| abricate | **minid** | Int | Minimum DNA %identity for the Abricate task | 80 | Optional | FASTA, ONT, PE, SE |
-| amrfinderplus_task | **cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional | FASTA, ONT, PE, SE |
-| amrfinderplus_task | **detailed_drug_class** | Boolean | If set to true, amrfinderplus_amr_classes and amrfinderplus_amr_subclasses outputs will be created | FALSE | Optional | FASTA, ONT, PE, SE |
-| amrfinderplus_task | **disk_size** | Boolean | Amount of storage (in GB) to allocate to the AMRFinderPlus task | 50 | Optional | FASTA, ONT, PE, SE |
-| amrfinderplus_task | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/ncbi-amrfinderplus:3.12.8-2024-07-22.1 | Optional | FASTA, ONT, PE, SE |
-| amrfinderplus_task | **hide_point_mutations** | Boolean | If set to true, point mutations are not reported | FALSE | Optional | FASTA, ONT, PE, SE |
-| amrfinderplus_task | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | FASTA, ONT, PE, SE |
-| amrfinderplus_task | **mincov** | Float | Minimum proportion of reference gene covered for a BLAST-based hit (Methods BLAST or PARTIAL)." Attribute should be a float ranging from 0-1, such as 0.6 (equal to 60% coverage) | 0.5 | Optional| FASTA, ONT, PE, SE |
-| amrfinderplus_task | **minid** | Float | "Minimum identity for a blast-based hit hit (Methods BLAST or PARTIAL). -1 means use a curated threshold if it exists and 0.9 otherwise. Setting this value to something other than -1 will override any curated similarity cutoffs." Attribute should be a float ranging from 0-1, such as 0.95 (equal to 95% identity) | 0.9 | Optional | FASTA, ONT, PE, SE |
-| amrfinderplus_task | **separate_betalactam_genes**  | Boolean | Report beta-Lactam AMR genes separated out by all beta-lactam and the respective beta-lactam subclasses | FALSE | Optional | FASTA, ONT, PE, SE |
-| ani | **ani_threshold** | Float | ANI value threshold must be surpassed in order to output the ani_top_species_match. If a genome does not surpass this threshold (and the percent_bases_aligned_threshold) then the ani_top_species_match output String will show a warning instead of a genus & species. | 80 | Optional | FASTA, ONT, PE, SE |
-| ani | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional | FASTA, ONT, PE, SE |
-| ani | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | FASTA, ONT, PE, SE |
-| ani | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/staphb/mummer:4.0.0-rgdv2 | Optional | FASTA, ONT, PE, SE |
-| ani | **mash_filter** | Float | Mash distance threshold over which ANI is not calculated  | 0.9 | Optional | FASTA, ONT, PE, SE |
-| ani | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | FASTA, ONT, PE, SE |
-| ani | **percent_bases_aligned_threshold** | Float | Threshold regarding the proportion of bases aligned between the query genome and reference genome. If a genome does not surpass this threshold (and the ani_threshold) then the ani_top_species_match output String will show a warning instead of a genus & species. | 70 | Optional | FASTA, ONT, PE, SE |
-| ani | **ref_genome** | File | If not set, uses all 43 genomes in RGDv2 |  | Optional | FASTA, ONT, PE, SE |
-| bakta | **bakta_db** | File | Database of reference annotations (see <https://github.com/oschwengers/bakta#database>) | gs://theiagen-public-files-rp/terra/theiaprok-files/bakta_db_2022-08-29.tar.gz | Optional | FASTA, ONT, PE, SE |
-| bakta | **bakta_opts** | String | Parameters to pass to bakta from <https://github.com/oschwengers/bakta#usage> |  | Optional | FASTA, ONT, PE, SE |
-| bakta | **compliant** | Boolean | If true, forces Genbank/ENA/DDJB compliance | FALSE | Optional | FASTA, ONT, PE, SE |
-| bakta | **cpu** | Int | Number of CPUs to allocate to the task | 8 | Optional | FASTA, ONT, PE, SE |
-| bakta | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | FASTA, ONT, PE, SE |
-| bakta | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/biocontainers/bakta:1.5.1--pyhdfd78af_0 | Optional | FASTA, ONT, PE, SE |
-| bakta | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 16 | Optional | FASTA, ONT, PE, SE |
-| bakta | **prodigal_tf** | File | Prodigal training file to use for CDS prediction by bakta |  | Optional | FASTA, ONT, PE, SE |
-| bakta | **proteins** | Boolean |  | FALSE | Optional | FASTA, ONT, PE, SE |
-| busco | **cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional | FASTA, ONT, PE, SE |
-| busco | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | FASTA, ONT, PE, SE |
-| busco | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/ezlabgva/busco:v5.7.1_cv1 | Optional | FASTA, ONT, PE, SE |
-| busco | **eukaryote** | Boolean | Assesses eukaryotic organisms, rather than prokaryotic organisms | FALSE | Optional | FASTA, ONT, PE, SE |
-| busco | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | FASTA, ONT, PE, SE |
-| cg_pipeline_clean | **cg_pipe_opts** | String | Options to pass to CG-Pipeline for clean read assessment  | --fast | Optional | PE, SE |
-| cg_pipeline_clean | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional | PE, SE |
-| cg_pipeline_clean | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | PE, SE |
-| cg_pipeline_clean | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/lyveset:1.1.4f | Optional | PE, SE |
-| cg_pipeline_clean | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | PE, SE |
-| cg_pipeline_clean | **read2** | File | Internal component, do not modify |  | Do not modify, Optional | SE |
-| cg_pipeline_raw | **cg_pipe_opts** | String | Options to pass to CG-Pipeline for raw read assessment  | --fast | Optional | PE, SE |
-| cg_pipeline_raw | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional | PE, SE |
-| cg_pipeline_raw | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | PE, SE |
-| cg_pipeline_raw | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/lyveset:1.1.4f | Optional | PE, SE |
-| cg_pipeline_raw | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | PE, SE |
-| cg_pipeline_raw | **read2** | File | Internal component, do not modify |  | Do not modify, Optional | SE |
-| clean_check_reads | **cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional | ONT, PE, SE |
-| clean_check_reads | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | ONT, PE, SE |
-| clean_check_reads | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/bactopia/gather_samples:2.0.2 | Optional | ONT, PE, SE |
-| clean_check_reads | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 2 | Optional | ONT, PE, SE |
-| clean_check_reads | **organism** | String | Internal component, do not modify |  | Do not modify, Optional | ONT, PE, SE |
-| clean_check_reads | **workflow_series** | String | Internal component, do not modify |  | Do not modify, Optional | ONT, PE, SE |
-| dragonflye | **assembler** | String | The assembler to use in dragonflye. Three options: raven, miniasm, flye | flye | Optional | ONT |
-| dragonflye | **assembler_options** | String | Enables extra assembler options in quote |  | Optional | ONT |
-| dragonflye | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional | ONT |
-| dragonflye | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | ONT |
-| dragonflye | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/biocontainers/dragonflye:1.0.14--hdfd78af_0 | Optional | ONT |
-| dragonflye | **illumina_polishing_rounds** | Int | Number of polishing rounds to conduct with Illumina data | 1 | Optional | ONT |
-| dragonflye | **illumina_read1** | File | If Illumina reads are provided, Dragonflye will perform Illumina polishing |  | Optional | ONT |
-| dragonflye | **illumina_read2** | File | If Illumina reads are provided, Dragonflye will perform Illumina polishing |  | Optional | ONT |
-| dragonflye | **medaka_model** | String | The model of medaka to use for assembly | r941_min_hac_g507 | Optional | ONT |
-| dragonflye | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 32 | Optional | ONT |
-| dragonflye | **polishing_rounds** | Int | The number of polishing rounds to conduct (without Illumina) | 1 | Optional | ONT |
-| dragonflye | **use_pilon_illumina_polisher** | Boolean | Set to true to use Pilon to polish Illumina reads | FALSE | Optional | ONT |
-| dragonflye | **use_racon** | Boolean | Set to true to use Racon to polish instead of Medaka | FALSE | Optional | ONT |
-| export_taxon_tables | **asembly_fasta** | File | Internal component, do not modify |  | Do not modify, Optional | FASTA |
-| export_taxon_tables | **bbduk_docker** | String | The Docker container to use for the task |  | Do not modify, Optional | FASTA, ONT |
-| export_taxon_tables | **cg_pipeline_docker** | String | The Docker container to use for the task |  | Do not modify, Optional | FASTA, ONT |
-| export_taxon_tables | **cg_pipeline_report_clean** | File | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT |
-| export_taxon_tables | **cg_pipeline_report_raw** | File | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT |
-| export_taxon_tables | **combined_mean_q_clean** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, SE |
-| export_taxon_tables | **combined_mean_q_raw** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, SE |
-| export_taxon_tables | **combined_mean_readlength_clean** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, SE |
-| export_taxon_tables | **combined_mean_readlength_raw** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, SE |
-| export_taxon_tables | **contigs_gfa** | File | Internal component, do not modify |  | Do not modify, Optional | FASTA |
-| export_taxon_tables | **cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional | FASTA, ONT, PE, SE |
-| export_taxon_tables | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | FASTA, ONT, PE, SE |
-| export_taxon_tables | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-03-16 | Optional | FASTA, ONT, PE, SE |
-| export_taxon_tables | **dragonflye_version** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, PE, SE |
-| export_taxon_tables | **emmtypingtool_docker** | String | The Docker container to use for the task |  | Do not modify, Optional | FASTA, ONT, SE |
-| export_taxon_tables | **emmtypingtool_emm_type** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, SE |
-| export_taxon_tables | **emmtypingtool_results_xml** | File | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, SE |
-| export_taxon_tables | **emmtypingtool_version** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, SE |
-| export_taxon_tables | **est_coverage_clean** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA |
-| export_taxon_tables | **est_coverage_raw** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA |
-| export_taxon_tables | **fastp_version** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT |
-| export_taxon_tables | **fastq_scan_version** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT |
-| export_taxon_tables | **hicap_docker** | String | The Docker container to use for the task |  | Do not modify, Optional | FASTA, ONT |
-| export_taxon_tables | **hicap_genes** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT |
-| export_taxon_tables | **hicap_results_tsv** | File | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT |
-| export_taxon_tables | **hicap_serotype** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT |
-| export_taxon_tables | **hicap_version** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT |
-| export_taxon_tables | **kmc_est_genome_length** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, PE, SE |
-| export_taxon_tables | **kmc_kmer_stats** | File | Internal component, do not modify |  | Do not modify, Optional | FASTA, PE, SE |
-| export_taxon_tables | **kmc_version** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, PE, SE |
-| export_taxon_tables | **kraken2_docker** | String | The Docker container to use for the task |  | Do not modify, Optional | FASTA, ONT, PE |
-| export_taxon_tables | **kraken2_report** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT |
-| export_taxon_tables | **kraken2_version** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT |
-| export_taxon_tables | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | FASTA, ONT, PE, SE |
-| export_taxon_tables | **midas_docker** | String | The Docker container to use for the task |  | Do not modify, Optional | FASTA, ONT |
-| export_taxon_tables | **midas_primary_genus** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT |
-| export_taxon_tables | **midas_report** | File | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT |
-| export_taxon_tables | **midas_secondary_genus** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT |
-| export_taxon_tables | **midas_secondary_genus_abundance** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT |
-| export_taxon_tables | **midas_secondary_genus_coverage** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT |
-| export_taxon_tables | **nanoplot_docker** | String | The Docker container to use for the task |  | Do not modify, Optional | FASTA, PE, SE |
-| export_taxon_tables | **nanoplot_html_clean** | File | Internal component, do not modify |  | Do not modify, Optional | FASTA, PE, SE |
-| export_taxon_tables | **nanoplot_html_raw** | File | Internal component, do not modify |  | Do not modify, Optional | FASTA, PE, SE |
-| export_taxon_tables | **nanoplot_num_reads_clean1** | Int | Internal component, do not modify |  | Do not modify, Optional | FASTA, PE, SE |
-| export_taxon_tables | **nanoplot_num_reads_raw1** | Int | Internal component, do not modify |  | Do not modify, Optional | FASTA, PE, SE |
-| export_taxon_tables | **nanoplot_r1_est_coverage_clean** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA, PE, SE |
-| export_taxon_tables | **nanoplot_r1_est_coverage_raw** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA, PE, SE |
-| export_taxon_tables | **nanoplot_r1_mean_q_clean** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA, PE, SE |
-| export_taxon_tables | **nanoplot_r1_mean_q_raw** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA, PE, SE |
-| export_taxon_tables | **nanoplot_r1_mean_readlength_clean** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA, PE, SE |
-| export_taxon_tables | **nanoplot_r1_mean_readlength_raw** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA, PE, SE |
-| export_taxon_tables | **nanoplot_r1_median_q_clean** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA, PE, SE |
-| export_taxon_tables | **nanoplot_r1_median_q_raw** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA, PE, SE |
-| export_taxon_tables | **nanoplot_r1_median_readlength_clean** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA, PE, SE |
-| export_taxon_tables | **nanoplot_r1_median_readlength_raw** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA, PE, SE |
-| export_taxon_tables | **nanoplot_r1_n50_clean** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA, PE, SE |
-| export_taxon_tables | **nanoplot_r1_n50_raw** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA, PE, SE |
-| export_taxon_tables | **nanoplot_r1_stdev_readlength_clean** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA, PE, SE |
-| export_taxon_tables | **nanoplot_r1_stdev_readlength_raw** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA, PE, SE |
-| export_taxon_tables | **nanoplot_tsv_clean** | File | Internal component, do not modify |  | Do not modify, Optional | FASTA, PE, SE |
-| export_taxon_tables | **nanoplot_tsv_raw** | File | Internal component, do not modify |  | Do not modify, Optional | FASTA, PE, SE |
-| export_taxon_tables | **nanoplot_version** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, PE, SE |
-| export_taxon_tables | **nanoq_version** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, PE, SE |
-| export_taxon_tables | **num_reads_clean_pairs** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, SE |
-| export_taxon_tables | **num_reads_clean1** | Int | Internal component, do not modify |  | Do not modify, Optional | FASTA |
-| export_taxon_tables | **num_reads_clean2** | Int | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, SE |
-| export_taxon_tables | **num_reads_raw_pairs** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, SE |
-| export_taxon_tables | **num_reads_raw1** | Int | Internal component, do not modify |  | Do not modify, Optional | FASTA |
-| export_taxon_tables | **num_reads_raw2** | Int | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, SE |
-| export_taxon_tables | **r1_mean_q_clean** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE |
-| export_taxon_tables | **r1_mean_q_raw** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA |
-| export_taxon_tables | **r1_mean_readlength_clean** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE |
-| export_taxon_tables | **r1_mean_readlength_raw** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA |
-| export_taxon_tables | **r2_mean_q_raw** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, SE |
-| export_taxon_tables | **r2_mean_readlength_raw** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, SE |
-| export_taxon_tables | **rasusa_version** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, PE, SE |
-| export_taxon_tables | **read1** | File | Internal component, do not modify |  | Do not modify, Optional | FASTA |
-| export_taxon_tables | **read1_clean** | File | Internal component, do not modify |  | Do not modify, Optional | FASTA |
-| export_taxon_tables | **read2** | File | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, SE |
-| export_taxon_tables | **read2_clean** | File | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, SE |
-| export_taxon_tables | **seroba_ariba_identity** | String | Internal component, do not modify |  | Do not modify, Optional | ONT, SE |
-| export_taxon_tables | **seroba_ariba_serotype** | String | Internal component, do not modify |  | Do not modify, Optional | ONT, SE |
-| export_taxon_tables | **seroba_details** | File | Internal component, do not modify |  | Do not modify, Optional | ONT, SE |
-| export_taxon_tables | **seroba_docker** | String | The Docker container to use for the task |  | Do not modify, Optional | ONT, SE |
-| export_taxon_tables | **seroba_serotype** | String | Internal component, do not modify |  | Do not modify, Optional | ONT, SE |
-| export_taxon_tables | **seroba_version** | String | Internal component, do not modify |  | Do not modify, Optional | ONT, SE |
-| export_taxon_tables | **shigeifinder_cluster_reads** | String | Internal component, do not modify |  | Do not modify, Optional | ONT |
-| export_taxon_tables | **shigeifinder_docker_reads** | String | Internal component, do not modify |  | Do not modify, Optional | ONT |
-| export_taxon_tables | **shigeifinder_H_antigen_reads** | String | Internal component, do not modify |  | Do not modify, Optional | ONT |
-| export_taxon_tables | **shigeifinder_ipaH_presence_absence_reads** | String | Internal component, do not modify |  | Do not modify, Optional | ONT |
-| export_taxon_tables | **shigeifinder_notes_reads** | String | Internal component, do not modify |  | Do not modify, Optional | ONT |
-| export_taxon_tables | **shigeifinder_num_virulence_plasmid_genes** | String | Internal component, do not modify |  | Do not modify, Optional | ONT |
-| export_taxon_tables | **shigeifinder_O_antigen_reads** | String | Internal component, do not modify |  | Do not modify, Optional | ONT |
-| export_taxon_tables | **shigeifinder_report_reads** | String | Internal component, do not modify |  | Do not modify, Optional | ONT |
-| export_taxon_tables | **shigeifinder_serotype_reads** | String | Internal component, do not modify |  | Do not modify, Optional | ONT |
-| export_taxon_tables | **shigeifinder_version_reads** | String | Internal component, do not modify |  | Do not modify, Optional | ONT |
-| export_taxon_tables | **shovill_pe_version** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, SE |
-| export_taxon_tables | **shovill_se_version** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE |
-| export_taxon_tables | **srst2_vibrio_biotype** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT |
-| export_taxon_tables | **srst2_vibrio_ctxA** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT |
-| export_taxon_tables | **srst2_vibrio_detailed_tsv** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT |
-| export_taxon_tables | **srst2_vibrio_ompW** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT |
-| export_taxon_tables | **srst2_vibrio_serogroup** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT |
-| export_taxon_tables | **srst2_vibrio_toxR** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT |
-| export_taxon_tables | **srst2_vibrio_version** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT |
-| export_taxon_tables | **theiaprok_fasta_analysis_date** | String | Internal component, do not modify |  | Do not modify, Optional | ONT, PE, SE |
-| export_taxon_tables | **theiaprok_fasta_version** | String | Internal component, do not modify |  | Do not modify, Optional | ONT, PE, SE |
-| export_taxon_tables | **theiaprok_illumina_pe_analysis_date** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, SE |
-| export_taxon_tables | **theiaprok_illumina_pe_version** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, SE |
-| export_taxon_tables | **theiaprok_illumina_se_analysis_date** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE |
-| export_taxon_tables | **theiaprok_illumina_se_version** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE |
-| export_taxon_tables | **theiaprok_ont_analysis_date** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, PE, SE |
-| export_taxon_tables | **theiaprok_ont_version** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, PE, SE |
-| export_taxon_tables | **tiptoft_plasmid_replicon_fastq** | File | Internal component, do not modify |  | Do not modify, Optional | FASTA, PE, SE |
-| export_taxon_tables | **tiptoft_plasmid_replicon_genes** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, PE, SE |
-| export_taxon_tables | **tiptoft_version** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, PE, SE |
-| export_taxon_tables | **trimmomatic_version** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT |
-| gambit | **cpu** | Int | Number of CPUs to allocate to the task | 8 | Optional | FASTA, ONT, PE, SE |
-| gambit | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | FASTA, ONT, PE, SE |
-| gambit | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/gambit:1.0.0 | Optional | FASTA, ONT, PE, SE |
-| gambit | **gambit_db_genomes** | File | User-provided database of assembled query genomes; requires complementary signatures file. If not provided, uses default database, "/gambit-db" | gs://gambit-databases-rp/2.0.0/gambit-metadata-2.0.0-20240628.gdb | Optional | FASTA, ONT, PE, SE |
-| gambit | **gambit_db_signatures** | File | User-provided signatures file; requires complementary genomes file. If not specified, the file from the docker container will be used.  | gs://gambit-databases-rp/2.0.0/gambit-signatures-2.0.0-20240628.gs | Optional | FASTA, ONT, PE, SE |
-| gambit | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 16 | Optional | FASTA, ONT, PE, SE |
-| kmerfinder | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional | FASTA, ONT, PE, SE |
-| kmerfinder | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | FASTA, ONT, PE, SE |
-| kmerfinder | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/biocontainers/kmerfinder:3.0.2--hdfd78af_0 | Optional | FASTA, ONT, PE, SE |
-| kmerfinder | **kmerfinder_args** | String | Kmerfinder additional arguments |  | Optional | FASTA, ONT, PE, SE |
-| kmerfinder | **kmerfinder_db** | String | Bacterial database for KmerFinder | gs://theiagen-public-files-rp/terra/theiaprok-files/kmerfinder_bacteria_20230911.tar.gz | Optional | FASTA, ONT, PE, SE |
-| kmerfinder | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 32 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **abricate_abaum_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/abricate:1.0.1-abaum-plasmid | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **abricate_abaum_mincov** | Int | Minimum DNA percent coverage |  | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **abricate_abaum_minid** | Int | Minimum DNA percent identity; set to 95 because there is a strict threshold of 95% identity for typing purposes | 95 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **abricate_vibrio_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/abricate:1.0.1-abaum-plasmid | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **abricate_vibrio_mincov** | Int | Minimum DNA percent coverage  | 80 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **abricate_vibrio_minid** | Int | Minimum DNA percent identity | 80 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **agrvate_agr_typing_only** | Boolean | Set to true to skip agr operon extraction and frameshift detection | False  | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **agrvate_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/biocontainers/agrvate:1.0.2--hdfd78af_0 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **assembly_only** | Boolean | Internal component, do not modify |  | Do not modify, Optional | ONT, PE, SE |
-| merlin_magic | **call_poppunk** | Boolean | If "true", runs PopPUNK for GPSC cluster designation for S. pneumoniae | TRUE | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **call_shigeifinder_reads_input** | Boolean | If set to "true", the ShigEiFinder task will run again but using read files as input instead of the assembly file. Input is shown but not used for TheiaProk_FASTA. | FALSE | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **call_stxtyper** | Boolean | If set to "true", the StxTyper task will run on all samples regardless of the `gambit_predicted_taxon` output. Useful if you suspect a non-E.coli or non-Shigella sample contains stx genes. | FALSE | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **call_tbp_parser** | Boolean | If set to "true", activates the tbp_parser module and results in more outputs, including tbp_parser_looker_report_csv, tbp_parser_laboratorian_report_csv,  tbp_parser_lims_report_csv, tbp_parser_coverage_report, and tbp_parser_genome_percent_coverage | FALSE | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **cauris_cladetyper_docker_image** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **cladetyper_kmer_size** | Int | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **cladetyper_ref_clade1** | File | *Provide an empty file if running TheiaProk on the command-line |  | Do not modify, Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **cladetyper_ref_clade1_annotated** | File | *Provide an empty file if running TheiaProk on the command-line |  | Do not modify, Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **cladetyper_ref_clade2** | File | *Provide an empty file if running TheiaProk on the command-line |  | Do not modify, Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **cladetyper_ref_clade2_annotated** | File | *Provide an empty file if running TheiaProk on the command-line |  | Do not modify, Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **cladetyper_ref_clade3** | File | *Provide an empty file if running TheiaProk on the command-line |  | Do not modify, Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **cladetyper_ref_clade3_annotated** | File | *Provide an empty file if running TheiaProk on the command-line |  | Do not modify, Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **cladetyper_ref_clade4** | File | *Provide an empty file if running TheiaProk on the command-line |  | Do not modify, Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **cladetyper_ref_clade4_annotated** | File | *Provide an empty file if running TheiaProk on the command-line |  | Do not modify, Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **cladetyper_ref_clade5** | File | *Provide an empty file if running TheiaProk on the command-line |  | Do not modify, Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **cladetyper_ref_clade5_annotated** | File | *Provide an empty file if running TheiaProk on the command-line |  | Do not modify, Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **clockwork_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/cdcgov/varpipe_wgs_with_refs:2bc7234074bd53d9e92a1048b0485763cd9bbf6f4d12d5a1cc82bfec8ca7d75e | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **ectyper_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/biocontainers/ectyper:1.0.0--pyhdfd78af_1 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **ectyper_hpcov** | Int | Minumum percent coverage required for an H antigen allele match | 50 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **ectyper_hpid** | Int | Percent identity required for an H antigen allele match | 95 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **ectyper_opcov** | Int | Minumum percent coverage required for an O antigen allele match | 90 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **ectyper_opid** | Int | Percent identity required for an O antigen allele match | 90 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **ectyper_print_alleles** | Boolean | Set to true to print the allele sequences as the final column | False  | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **ectyper_verify** | Boolean | Set to true to enable E. coli species verification | False  | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **emmtypingtool_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/emmtypingtool:0.0.1 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **genotyphi_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/mykrobe:0.11.0 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **hicap_broken_gene_identity** | Float | Minimum percentage identity to consider a broken gene | 0.80 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **hicap_broken_gene_length** | Int | Minimum length to consider a broken gene | 60 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **hicap_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/biocontainers/hicap:1.0.3--py_0 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **hicap_gene_coverage** | Float | Minimum percentage coverage to consider a single gene complete | 0.80 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **hicap_gene_identity** | Float | Minimum percentage identity to consider a single gene complete | 0.70 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **kaptive_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/kaptive:2.0.3 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **kaptive_low_gene_id** | Float | Percent identity threshold for what counts as a low identity match in the gene BLAST search | 95 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **kaptive_min_coverage** | Float | Minimum required percent identity for the gene BLAST search via tBLASTn | 80 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **kaptive_min_identity** | Float | Minimum required percent coverage for the gene BLAST search via tBLASTn | 90 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **kaptive_start_end_margin** | Int | Determines flexibility in identifying the start and end of a locus - if this value is 10, a locus match that is missing the first 8 base pairs will still count as capturing the start of the locus | 10 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **kleborate_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/kleborate:2.2.0 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **kleborate_min_coverage** | Float | Minimum alignment percent coverage for main results | 80 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **kleborate_min_identity** | Float | Minimum alignment percent identity for main results | 90 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **kleborate_min_kaptive_confidence** | String | {None,Low,Good,High,Very_high,Perfect} Minimum Kaptive confidence to call K/O loci - confidence levels below this will be reported as unknown | Good | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **kleborate_min_spurious_coverage** | Float | Minimum alignment percent coverage for spurious results | 40 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **kleborate_min_spurious_identity** | Float | Minimum alignment percent identity for spurious results | 80 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **kleborate_skip_kaptive** | Boolean | Equivalent to --kaptive_k --kaptive_ | False  | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **kleborate_skip_resistance** | Boolean | Set to true to turn on resistance genes screening (default: no resistance gene screening) | False  | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **legsta_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/biocontainers/legsta:0.5.1--hdfd78af_2 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **lissero_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/biocontainers/lissero:0.4.9--py_0 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **lissero_min_cov** | Float | Minimum coverage of the gene to accept a match | 95 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **lissero_min_id** | Float | Minimum percent identity to accept a match | 95 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **meningotype_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/biocontainers/meningotype:0.8.5--pyhdfd78af_0 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **ngmaster_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/ngmaster:1.0.0 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **ont_data** | Boolean | Internal component, do not modify |  | Do not modify, Optional | FASTA, PE, SE |
-| merlin_magic | **paired_end** | Boolean | Internal component, do not modify |  | Do not modify, Optional | ONT, PE |
-| merlin_magic | **pasty_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/pasty:1.0.3 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **pasty_min_coverage** | Int | Minimum coverage of a O-antigen to be considered for serogrouping by pasty | 95 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **pasty_min_pident** | Int | Minimum percent identity for a blast hit to be considered for serogrouping | 95 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **pbptyper_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/pbptyper:1.0.4 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **pbptyper_min_coverage** | Int | Minimum percent coverage to count a hit | 90 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **pbptyper_min_pident** | Int | Minimum percent identity to count a hit | 90 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **poppunk_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/poppunk:2.4.0 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **poppunk_gps_clusters_csv** | File | Poppunk database file *Provide an empty or local file if running TheiaProk on the command-line | gs://theiagen-public-files-rp/terra/theiaprok-files/GPS_v6/GPS_v6_clusters.csv | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **poppunk_gps_dists_npy** | File | Poppunk database file *Provide an empty or local file if running TheiaProk on the command-line | gs://theiagen-public-files-rp/terra/theiaprok-files/GPS_v6/GPS_v6.dists.npy | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **poppunk_gps_dists_pkl** | File | Poppunk database file *Provide an empty or local file if running TheiaProk on the command-line | gs://theiagen-public-files-rp/terra/theiaprok-files/GPS_v6/GPS_v6.dists.pkl | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **poppunk_gps_external_clusters_csv** | File | Poppunk database file *Provide an empty or local file if running TheiaProk on the command-line | gs://theiagen-public-files-rp/terra/theiaprok-files/GPS_v6/GPS_v6_external_clusters.csv | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **poppunk_gps_fit_npz** | File | Poppunk database file *Provide an empty or local file if running TheiaProk on the command-line | gs://theiagen-public-files-rp/terra/theiaprok-files/GPS_v6/GPS_v6_fit.npz | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **poppunk_gps_fit_pkl** | File | Poppunk database file *Provide an empty or local file if running TheiaProk on the command-line | gs://theiagen-public-files-rp/terra/theiaprok-files/GPS_v6/GPS_v6_fit.pkl | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **poppunk_gps_graph_gt** | File | Poppunk database file *Provide an empty or local file if running TheiaProk on the command-line | gs://theiagen-public-files-rp/terra/theiaprok-files/GPS_v6/GPS_v6_graph.gt | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **poppunk_gps_h5** | File | Poppunk database file *Provide an empty or local file if running TheiaProk on the command-line | gs://theiagen-public-files-rp/terra/theiaprok-files/GPS_v6/GPS_v6.h5 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **poppunk_gps_qcreport_txt** | File | Poppunk database file *Provide an empty or local file if running TheiaProk on the command-line | gs://theiagen-public-files-rp/terra/theiaprok-files/GPS_v6/GPS_v6_qcreport.txt | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **poppunk_gps_refs** | File | Poppunk database file *Provide an empty or local file if running TheiaProk on the command-line | gs://theiagen-public-files-rp/terra/theiaprok-files/GPS_v6/GPS_v6.refs | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **poppunk_gps_refs_dists_npy** | File | Poppunk database file *Provide an empty or local file if running TheiaProk on the command-line | gs://theiagen-public-files-rp/terra/theiaprok-files/GPS_v6/GPS_v6.refs.dists.npy | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **poppunk_gps_refs_dists_pkl** | File | Poppunk database file *Provide an empty or local file if running TheiaProk on the command-line | gs://theiagen-public-files-rp/terra/theiaprok-files/GPS_v6/GPS_v6.refs.dists.pkl | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **poppunk_gps_refs_graph_gt** | File | Poppunk database file *Provide an empty or local file if running TheiaProk on the command-line | gs://theiagen-public-files-rp/terra/theiaprok-files/GPS_v6/GPS_v6refs_graph.gt | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **poppunk_gps_refs_h5** | File | Poppunk database file *Provide an empty or local file if running TheiaProk on the command-line | gs://theiagen-public-files-rp/terra/theiaprok-files/GPS_v6/GPS_v6.refs.h5 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **poppunk_gps_unword_clusters_csv** | File | Poppunk database file *Provide an empty or local file if running TheiaProk on the command-line | gs://theiagen-public-files-rp/terra/theiaprok-files/GPS_v6/GPS_v6_unword_clusters.csv | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **read1** | File | Internal component, do not modify |  | Do not modify, Optional | FASTA |
-| merlin_magic | **read2** | File | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, SE |
-| merlin_magic | **seqsero2_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/seqsero2:1.2.1 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **seroba_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/seroba:1.0.2 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **serotypefinder_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/serotypefinder:2.0.1 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **shigatyper_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/shigatyper:2.0.5 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **shigeifinder_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/shigeifinder:1.3.5 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **sistr_cpu** | Int | The number of CPU cores to allocate for the task | 8 | Optional | FASTA, ONT, PE, SE  |
-| merlin_magic | **sistr_disk_size** | Int | The disk size (in GB) to allocate for the task  | 100 | Optional | FASTA, ONT, PE, SE  |
-| merlin_magic | **sistr_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/biocontainers/sistr_cmd:1.1.1--pyh864c0ab_2 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **sistr_memory** | Int | The amount of memory (in GB) to allocate for the task. | 32 | Optional | FASTA, ONT, PE, SE  |
-| merlin_magic | **sistr_use_full_cgmlst_db** | Boolean | Set to true to use the full set of cgMLST alleles which can include highly similar alleles. By default the smaller "centroid" alleles or representative alleles are used for each marker | False  | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **snippy_base_quality** | Int | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **snippy_gene_query_docker_image** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **snippy_map_qual** | Int | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **snippy_maxsoft** | Int | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **snippy_min_coverage** | Int | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **snippy_min_frac** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **snippy_min_quality** | Int | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **snippy_query_gene** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, PE, SE |
-| merlin_magic | **snippy_reference_afumigatus** | File | *Provide an empty file if running TheiaProk on the command-line |  | Do not modify, Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **snippy_reference_calbicans** | File | *Provide an empty file if running TheiaProk on the command-line |  | Do not modify, Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **snippy_reference_cryptoneo** | File | *Provide an empty file if running TheiaProk on the command-line |  | Do not modify, Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **snippy_variants_docker_image** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **sonneityping_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/mykrobe:0.12.1 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **sonneityping_mykrobe_opts** | String | Additional options for mykrobe in sonneityping |  | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **spatyper_do_enrich** | Boolean | Set to true to enable PCR product enrichment | False  | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **spatyper_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/biocontainers/spatyper:0.3.3--pyhdfd78af_3 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **srst2_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/srst2:0.2.0-vcholerae | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **srst2_gene_max_mismatch** | Int | Maximum number of mismatches for SRST2 to call a gene as present | 2000 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **srst2_max_divergence** | Int | Maximum divergence, in percentage, for SRST2 to call a gene as present | 20 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **srst2_min_cov** | Int | Minimum breadth of coverage for SRST2 to call a gene as present | 80 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **srst2_min_depth** | Int | Minimum depth of coverage for SRST2 to call a gene as present  | 5 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **srst2_min_edge_depth** | Int | Minimum edge depth for SRST2 to call a gene as present  | 2 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **stxtyper_cpu** | Int | The number of CPU cores to allocate for the task. | 1 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **stxtyper_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 50 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **stxtyper_docker_image** | String | The Docker container to use for the task | `us-docker.pkg.dev/general-theiagen/staphb/stxtyper:1.0.24` | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **stxtyper_enable_debug** | Boolean | When enabled, additional messages are printed and files in `$TMPDIR` are not removed after running | FALSE | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **stxtyper_memory** | Int | Amount of memory (in GB) to allocate to the task | 4 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **staphopia_sccmec_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/biocontainers/staphopia-sccmec:1.0.0--hdfd78af_0 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **tbp_parser_add_cs_lims** | Boolean | Set to true add cycloserine results to the LIMS report | FALSE | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **tbp_parser_coverage_regions_bed** | File | A bed file that lists the regions to be considered for QC |  | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **tbp_parser_coverage_threshold** | Int | The minimum coverage for a region to pass QC in tbp_parser | 100 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **tbp_parser_debug** | Boolean | Activate the debug mode on tbp_parser; increases logging outputs | TRUE | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **tbp_parser_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:2.2.2 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **tbp_parser_etha237_frequency** | Float | Minimum frequency for a mutation in ethA at protein position 237 to pass QC in tbp-parser | 0.1 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **tbp_parser_expert_rule_regions_bed** | File | A file that contains the regions where R mutations and expert rules are applied |  | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **tbp_parser_min_depth** | Int | Minimum depth for a variant to pass QC in tbp_parser | 10 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **tbp_parser_min_frequency** | Int | The minimum frequency for a mutation to pass QC | 0.1 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **tbp_parser_min_read_support** | Int | The minimum read support for a mutation to pass QC | 10 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **tbp_parser_operator** | String | Fills the "operator" field in the tbp_parser output files | Operator not provided | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **tbp_parser_output_seq_method_type** | String | Fills out the "seq_method" field in the tbp_parser output files | Sequencing method not provided | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **tbp_parser_rpob449_frequency** | Float | Minimum frequency for a mutation at protein position 449 to pass QC in tbp-parser | 0.1 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **tbp_parser_rrl_frequency** | Float | Minimum frequency for a mutation in rrl to pass QC in tbp-parser | 0.1 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **tbp_parser_rrl_read_support** | Int | Minimum read support for a mutation in rrl to pass QC in tbp-parser | 10 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **tbp_parser_rrs_frequency** | Float | Minimum frequency for a mutation in rrs to pass QC in tbp-parser | 0.1 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **tbp_parser_rrs_read_support** | Int | Minimum read support for a mutation in rrs to pass QC in tbp-parser | 10 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **tbp_parser_tngs_data** | Boolean | Set to true to enable tNGS-specific parameters and runs in tbp-parser | FALSE | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **tbprofiler_custom_db** | File | TBProfiler uses by default the TBDB database; if you have a custom database you wish to use, you must provide a custom database in this field and set tbprofiler_run_custom_db to true |  | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **tbprofiler_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/tbprofiler:4.4.2 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **tbprofiler_mapper** | String | The mapping tool used in TBProfiler to align the reads to the reference genome; see TBProfiler’s original documentation for available options. | bwa | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **tbprofiler_min_af** | Float | The minimum allele frequency to call a variant | 0.1 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **tbprofiler_min_depth** | Int | The minimum depth for a variant to be called. | 10 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **tbprofiler_run_cdph_db** | Boolean | TBProfiler uses by default the TBDB database; set this value to "true" to use the WHO v2 database with customizations for CDPH | FALSE | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **tbprofiler_run_custom_db** | Boolean | TBProfiler uses by default the TBDB database; if you have a custom database you wish to use, you must set this value to true and provide a custom database in the tbprofiler_custom_db field | FALSE | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **tbprofiler_variant_caller** | String | Select a different variant caller for TBProfiler to use by writing it in this block; see TBProfiler’s original documentation for available options. | GATK | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **tbprofiler_variant_calling_params** | String | Enter additional variant calling parameters in this free text input to customize how the variant caller works in TBProfiler | | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **theiaeuk** | Boolean | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **virulencefinder_coverage_threshold** | Float | The threshold for minimum coverage |  | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **virulencefinder_database** | String | The specific database to use | virulence_ecoli | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **virulencefinder_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/virulencefinder:2.0.4 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **virulencefinder_identity_threshold** | Float | The threshold for minimum blast identity |  | Optional | FASTA, ONT, PE, SE |
-| nanoplot_clean | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional | ONT |
-| nanoplot_clean | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | ONT |
-| nanoplot_clean | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/nanoplot:1.40.0 | Optional | ONT |
-| nanoplot_clean | **max_length** | Int | Maximum read length for nanoplot | 100000 | Optional | ONT |
-| nanoplot_clean | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 16 | Optional | ONT |
-| nanoplot_raw | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional | ONT |
-| nanoplot_raw | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | ONT |
-| nanoplot_raw | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/nanoplot:1.40.0 | Optional | ONT |
-| nanoplot_raw | **max_length** | Int | Maximum read length for nanoplot | 100000 | Optional | ONT |
-| nanoplot_raw | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 16 | Optional | ONT |
-| plasmidfinder | **cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional | FASTA, ONT, PE, SE |
-| plasmidfinder | **database** | String | User-specified database |  | Optional | FASTA, ONT, PE, SE |
-| plasmidfinder | **database_path** | String | Path to user-specified database |  | Optional | FASTA, ONT, PE, SE |
-| plasmidfinder | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 50 | Optional | FASTA, ONT, PE, SE |
-| plasmidfinder | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/plasmidfinder:2.1.6 | Optional | FASTA, ONT, PE, SE |
-| plasmidfinder | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | FASTA, ONT, PE, SE |
-| plasmidfinder | **method_path** | String | Path to files for a user-specified method to use (blast or kma) |  | Optional | FASTA, ONT, PE, SE |
-| plasmidfinder | **min_cov** | Float | Threshold for minimum coverage, default threshold from PlasmidFinder CLI tool is used (0.60) | 0.6 | Optional | FASTA, ONT, PE, SE |
-| plasmidfinder | **threshold** | Float | Threshold for mininum blast identity, default threshold from PlasmidFinder CLI tool is used (0.90). This default differs from the default of the PlasmidFinder webtool (0.95) | 0.9 | Optional | FASTA, ONT, PE, SE |
-| prokka | **compliant** | Boolean | Forces Genbank/ENA/DDJB compliant headers in Prokka output files | TRUE | Optional | FASTA, ONT, PE, SE |
-| prokka | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional | FASTA, ONT, PE, SE |
-| prokka | **disk_size** | String | Amount of storage (in GB) to allocate to the PlasmidFinder task | 100 | Optional | FASTA, ONT, PE, SE |
-| prokka | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/prokka:1.14.5 | Optional | FASTA, ONT, PE, SE |
-| prokka | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 16 | Optional | FASTA, ONT, PE, SE |
-| prokka | **prodigal_tf** | File | <https://github.com/tseemann/prokka#option---prodigaltf> |  | Optional | FASTA, ONT, PE, SE |
-| prokka | **prokka_arguments** | String | Any additional <https://github.com/tseemann/prokka#command-line-options> |  | Optional | FASTA, ONT, PE, SE |
-| prokka | **proteins** | Boolean | FASTA file of trusted proteins for Prokka to first use for annotations | FALSE | Optional | FASTA, ONT, PE, SE |
-| qc_check_task | **assembly_length_unambiguous** | Int | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE, SE |
-| qc_check_task | **assembly_mean_coverage** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE, SE |
-| qc_check_task | **combined_mean_q_clean** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, SE |
-| qc_check_task | **combined_mean_q_raw** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, SE |
-| qc_check_task | **combined_mean_readlength_clean** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, SE |
-| qc_check_task | **combined_mean_readlength_raw** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, SE |
-| qc_check_task | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional | FASTA, ONT, PE, SE |
-| qc_check_task | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | FASTA, ONT, PE, SE |
-| qc_check_task | **docker** | String | The Docker container to use for the task |  "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-03-16" | Optional | FASTA, ONT, PE, SE |
-| qc_check_task | **est_coverage_clean** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA |
-| qc_check_task | **est_coverage_raw** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA |
-| qc_check_task | **kraken_human** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE, SE |
-| qc_check_task | **kraken_human_dehosted** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE, SE |
-| qc_check_task | **kraken_sc2** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE, SE |
-| qc_check_task | **kraken_sc2_dehosted** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE, SE |
-| qc_check_task | **kraken_target_organism** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE, SE |
-| qc_check_task | **kraken_target_organism_dehosted** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE, SE |
-| qc_check_task | **meanbaseq_trim** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE, SE |
-| qc_check_task | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | FASTA, ONT, PE, SE |
-| qc_check_task | **midas_secondary_genus_abundance** | Int | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT |
-| qc_check_task | **midas_secondary_genus_coverage** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT |
-| qc_check_task | **num_reads_clean1** | Int | Internal component, do not modify |  | Do not modify, Optional | FASTA |
-| qc_check_task | **num_reads_clean2** | Int | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, SE |
-| qc_check_task | **num_reads_raw1** | Int | Internal component, do not modify |  | Do not modify, Optional | FASTA |
-| qc_check_task | **num_reads_raw2** | Int | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, SE |
-| qc_check_task | **number_Degenerate** | Int | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE, SE |
-| qc_check_task | **number_N** | Int | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE, SE |
-| qc_check_task | **percent_reference_coverage** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE, SE |
-| qc_check_task | **r1_mean_q_clean** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA |
-| qc_check_task | **r1_mean_q_raw** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA |
-| qc_check_task | **r1_mean_readlength_clean** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA |
-| qc_check_task | **r1_mean_readlength_raw** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA |
-| qc_check_task | **r2_mean_q_clean** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, SE |
-| qc_check_task | **r2_mean_q_raw** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, SE |
-| qc_check_task | **r2_mean_readlength_clean** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, SE |
-| qc_check_task | **r2_mean_readlength_raw** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, SE |
-| qc_check_task | **sc2_s_gene_mean_coverage** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE, SE |
-| qc_check_task | **sc2_s_gene_percent_coverage** | Float | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE, SE |
-| qc_check_task | **vadr_num_alerts** | String | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE, SE |
-| quast | **cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional | FASTA, ONT, PE, SE |
-| quast | **disk_size** | String | Amount of storage (in GB) to allocate to the Quast task | 100 | Optional | FASTA, ONT, PE, SE |
-| quast | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/quast:5.0.2 | Optional | FASTA, ONT, PE, SE |
-| quast | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 2 | Optional | FASTA, ONT, PE, SE |
-| quast | **min_contig_length** | Int | Lower threshold for a contig length in bp. Shorter contigs won’t be taken into account | 500 | Optional | FASTA, ONT, PE, SE |
-| raw_check_reads | **cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional | ONT, PE, SE |
-| raw_check_reads | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | ONT, PE, SE |
-| raw_check_reads | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/bactopia/gather_samples:2.0.2 | Optional | ONT, PE, SE |
-| raw_check_reads | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 2 | Optional | ONT, PE, SE |
-| raw_check_reads | **organism** | String | Internal component, do not modify |  | Do not modify, Optional | ONT, PE, SE |
-| raw_check_reads | **workflow_series** | String | Internal component, do not modify |  | Do not modify, Optional | ONT, PE, SE |
-| read_QC_trim | **adapters** | File | A file containing the sequence of the adapters used during library preparation, used in the BBDuk task |  | Optional | PE, SE |
-| read_QC_trim | **artic_guppyplex_cpu** | Int | Internal component, do not modify| 8 | Optional | ONT |
-| read_QC_trim | **artic_guppyplex_disk_size** | Int | Internal component, do not modify| 100 | Optional | ONT |
-| read_QC_trim | **artic_guppyplex_docker** | String | Internal component, do not modify| us-docker.pkg.dev/general-theiagen/staphb/artic-ncov2019:1.3.0-medaka-1.4.3 | Optional | ONT |
-| read_QC_trim | **artic_guppyplex_memory** | Int | Internal component, do not modify| 16 | Optional | ONT |
-| read_QC_trim | **bbduk_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | PE, SE |
-| read_QC_trim | **call_kraken** | Boolean | Set to true to launch Kraken2; if true, you must provide a kraken_db | FALSE | Optional | ONT, PE, SE |
-| read_QC_trim | **call_midas** | Boolean | Set to true to launch Midas | TRUE | Optional | PE, SE |
-| read_QC_trim | **downsampling_coverage** | Float | The depth to downsample to with Rasusa | 150 | Optional | ONT |
-| read_QC_trim | **fastp_args** | String | Additional arguments to pass to fastp | -g -5 20 -3 20 | Optional | SE |
-| read_QC_trim | **fastp_args** | String | Additional arguments to pass to fastp | "--detect_adapter_for_pe -g -5 20 -3 20 | Optional | PE |
-| read_QC_trim | **kraken_cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional | ONT, PE, SE |
-| read_QC_trim | **kraken_db** | File | Kraken2 database file; must be provided in call_kraken is true |  | Optional | ONT, PE, SE |
-| read_QC_trim | **kraken_disk_size** | Int | GB of storage to request for VM used to run the kraken2 task. Increase this when using large (>30GB kraken2 databases such as the "k2_standard" database) | 100 | Optional | ONT, PE, SE |
-| read_QC_trim | **kraken_docker_image** | Int | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.1.2-no-db" | Optional | ONT |
-| read_QC_trim | **kraken_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | ONT, PE, SE |
-| read_QC_trim | **max_length** | Int | Internal component, do not modify |  | Do not modify, Optional | ONT |
-| read_QC_trim | **min_length** | Int | Internal component, do not modify |  | Do not modify, Optional | ONT |
-| read_QC_trim | **midas_db** | File | Midas database file | gs://theiagen-large-public-files-rp/terra/theiaprok-files/midas/midas_db_v1.2.tar.gz | Optional | PE, SE |
-| read_QC_trim | **phix** | File | A file containing the phix used during Illumina sequencing; used in the BBDuk task |  | Optional | PE, SE |
-| read_QC_trim | **nanoq_cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional | ONT |
-| read_QC_trim | **nanoq_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | ONT |
-| read_QC_trim | **nanoq_docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/biocontainers/nanoq:0.9.0--hec16e2b_1" | Optional | ONT |
-| read_QC_trim | **nanoq_max_read_length** | Int | The maximum read length to keep after trimming | 100000 | Optional | ONT |
-| read_QC_trim | **nanoq_max_read_qual** | Int | The maximum read quality to keep after trimming | 40 | Optional | ONT |
-| read_QC_trim | **nanoq_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 2 | Optional | ONT |
-| read_QC_trim | **nanoq_min_read_length** | Int | The minimum read length to keep after trimming | 500 | Optional | ONT |
-| read_QC_trim | **nanoq_min_read_qual** | Int | The minimum read quality to keep after trimming | 10 | Optional | ONT |
-| read_QC_trim | **ncbi_scrub_cpu** | Int | Internal component, do not modify| 4 | Optional | ONT |
-| read_QC_trim | **ncbi_scrub_disk_size** | Int | Internal component, do not modify| 100 | Optional | ONT |
-| read_QC_trim | **ncbi_scrub_docker** | String | Internal component, do not modify| "us-docker.pkg.dev/general-theiagen/ncbi/sra-human-scrubber:2.2.1" | Optional | ONT |
-| read_QC_trim | **ncbi_scrub_memory** | Int | Internal component, do not modify| 8 | Optional | ONT |
-| read_QC_trim | **rasusa_bases** | String | Explicitly set the number of bases required e.g., 4.3kb, 7Tb, 9000, 4.1MB. If this option is given, --coverage and --genome-size are ignored | | Optional | ONT |
-| read_QC_trim | **rasusa_cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional | ONT |
-| read_QC_trim | **rasusa_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | ONT |
-| read_QC_trim | **rasusa_docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/staphb/rasusa:2.1.0" | Optional | ONT |
-| read_QC_trim | **rasusa_fraction_of_reads** | Float | Subsample to a fraction of the reads - e.g., 0.5 samples half the reads | | Optional | ONT |
-| read_QC_trim | **rasusa_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | ONT |
-| read_QC_trim | **rasusa_number_of_reads** | Int | Subsample to a specific number of reads | | Optional | ONT |
-| read_QC_trim | **rasusa_seed** | Int | Random seed to use | | Optional | ONT |
-| read_QC_trim | **read_processing** | String | Read trimming software to use, either "trimmomatic" or "fastp" | trimmomatic | Optional | PE, SE |
-| read_QC_trim | **read_qc** | String | Allows the user to decide between fastq_scan (default) and fastqc for the evaluation of read quality. | fastq_scan | Optional | PE, SE |
-| read_QC_trim | **run_prefix** | String | Internal component, do not modify |  | Do not modify, Optional | ONT |
-| read_QC_trim | **target_organism** | String | This string is searched for in the kraken2 outputs to extract the read percentage |  | Optional | ONT, PE, SE |
-| read_QC_trim | **tiptoft_cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional | ONT |
-| read_QC_trim | **tiptoft_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | ONT | 
-| read_QC_trim | **tiptoft_docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/staphb/tiptoft:1.0.2" | Optional | ONT |
-| read_QC_trim | **tiptoft_kmer_size** | String | The kmer size | | Optional | ONT |
-| read_QC_trim | **tiptoft_margin** | Int | Flanking region around a block to use for mapping | | Optional | ONT |
-| read_QC_trim | **tiptoft_max_gap** | Int | Maximum gap for blocks to be contiguous, measured in multiples of the kmer size | | Optional | ONT |
-| read_QC_trim | **tiptoft_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | ONT |
-| read_QC_trim | **tiptoft_min_block_size** | Int | Minimum block size in bases | | Optional | ONT |
-| read_QC_trim | **tiptoft_min_fasta_hits** | Int | Minimum number of kmers matching a read | | Optional | ONT
-| read_QC-trim | **tiptoft_min_kmers_for_onex_pass** | Int | Minimum number of kmers matching a read in 1st pass | | Optional | ONT |
-| read_QC_trim | **tiptoft_min_perc_coverage** | Int | Minimum percentage ocoverage o typing sequence to report | | Optional | ONT |
-| read_QC_trim | **trimmomatic_args** | String | Additional arguments to pass to trimmomatic. "-phred33" specifies the Phred Q score encoding which is almost always phred33 with modern sequence data. | -phred33 | Optional | PE, SE |
-| resfinder_task | **acquired** | Boolean | Set to true to tell ResFinder to identify acquired resistance genes | TRUE | Optional | FASTA, ONT, PE, SE |
-| resfinder_task | **call_pointfinder** | Boolean | Set to true to enable detection of point mutations. | FALSE | Optional | FASTA, ONT, PE, SE |
-| resfinder_task | **cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional | FASTA, ONT, PE, SE |
-| resfinder_task | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | FASTA, ONT, PE, SE |
-| resfinder_task | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/resfinder:4.1.11 | Optional | FASTA, ONT, PE, SE |
-| resfinder_task | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | FASTA, ONT, PE, SE |
-| resfinder_task | **min_cov** | Float | Minimum coverage breadth of a gene for it to be identified | 0.5 | Optional | FASTA, ONT, PE, SE |
-| resfinder_task | **min_id** | Float | Minimum identity for ResFinder to identify a gene | 0.9 | Optional | FASTA, ONT, PE, SE |
-| shovill_pe | **assembler** | String | Assembler to use (spades, skesa, velvet or megahit), see <https://github.com/tseemann/shovill#--assembler> | skesa | Optional | PE |
-| shovill_pe | **assembler_options** | String | Assembler-specific options that you might choose, see <https://github.com/tseemann/shovill#--opts> |  | Optional | PE |
-| shovill_pe | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional | PE |
-| shovill_pe | **depth** | Int | User specified depth of coverage for downsampling (see <https://github.com/tseemann/shovill#--depth> and <https://github.com/tseemann/shovill#main-steps>) | 150 | Optional | PE |
-| shovill_pe | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | PE |
-| shovill_pe | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/shovill:1.1.0 | Optional | PE |
-| shovill_pe | **kmers** | String | User-specified Kmer length to override choice made by Shovill, see <https://github.com/tseemann/shovill#--kmers> | Auto | Optional | PE |
-| shovill_pe | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 16 | Optional | PE |
-| shovill_pe | **min_contig_length** | Int | Minimum contig length to keep in final assembly  | 200 | Optional | PE |
-| shovill_pe | **min_coverage** | Float | Minimum contig coverage to keep in final assembly | 2 | Optional | PE |
-| shovill_pe | **nocorr** | Boolean | Disable correction of minor assembly errors by Shovill (see <https://github.com/tseemann/shovill#main-steps>) | FALSE | Optional | PE |
-| shovill_pe | **noreadcorr** | Boolean | Disable correction of sequencing errors in reads by Shovill (see <https://github.com/tseemann/shovill#main-steps>) | FALSE | Optional | PE |
-| shovill_pe | **nostitch** | Boolean | Disable read stitching by Shovill (see <https://github.com/tseemann/shovill#main-steps>) | FALSE | Optional | PE |
-| shovill_pe | **trim** | Boolean | Enable adaptor trimming (see <https://github.com/tseemann/shovill#main-steps>) | FALSE | Optional | PE |
-| shovill_se | **assembler** | String | Assembler to use (spades, skesa, velvet or megahit), see <https://github.com/tseemann/shovill#--assembler> | skesa | Optional | SE |
-| shovill_se | **assembler_options** | String | Assembler-specific options that you might choose, see <https://github.com/tseemann/shovill#--opts> |  | Optional | SE |
-| shovill_se | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional | SE |
-| shovill_se | **depth** | Int | User specified depth of coverage for downsampling (see <https://github.com/tseemann/shovill#--depth> and <https://github.com/tseemann/shovill#main-steps>) | 150 | Optional | SE |
-| shovill_se | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | SE |
-| shovill_se | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/shovill:1.1.0 | Optional | SE |
-| shovill_se | **kmers** | String | User-specified Kmer length to override choice made by Shovill, see <https://github.com/tseemann/shovill#--kmers> | auto | Optional | SE |
-| shovill_se | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 16 | Optional | SE |
-| shovill_se | **min_contig_length** | Int | Minimum contig length to keep in final assembly  | 200 | Optional | SE |
-| shovill_se | **min_coverage** | Float | Minimum contig coverage to keep in final assembly | 2 | Optional | SE |
-| shovill_se | **nocorr** | Boolean | Disable correction of minor assembly errors by Shovill (see <https://github.com/tseemann/shovill#main-steps>) | FALSE | Optional | SE |
-| shovill_se | **noreadcorr** | Boolean | Disable correction of sequencing errors in reads by Shovill (see <https://github.com/tseemann/shovill#main-steps>) | FALSE | Optional | SE |
-| shovill_se | **trim** | Boolean | Enable adaptor trimming (see <https://github.com/tseemann/shovill#main-steps>) | FALSE | Optional | SE |
-| ts_mlst | **cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional | FASTA, ONT, PE, SE |
-| ts_mlst | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 50 | Optional | FASTA, ONT, PE, SE |
-| ts_mlst | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/mlst:2.23.0-2024-08-01 | Optional | FASTA, ONT, PE, SE |
-| ts_mlst | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 2 | Optional | FASTA, ONT, PE, SE |
-| ts_mlst | **mincov** | Float | Minimum % breadth of coverage to report an MLST allele | 10 | Optional | FASTA, ONT, PE, SE |
-| ts_mlst | **minid** | Float | Minimum % identity to known MLST gene to report an MLST allele | 95 | Optional | FASTA, ONT, PE, SE |
-| ts_mlst | **minscore** | Float | Minimum <https://github.com/tseemann/mlst#scoring-system> to assign an MLST profile | 50 | Optional | FASTA, ONT, PE, SE |
-| ts_mlst | **nopath** | Boolean | true = use mlst --nopath. If set to false, filename paths are not stripped from FILE column in output TSV | TRUE | Optional | FASTA, ONT, PE, SE |
-| ts_mlst | **scheme** | String | Don’t autodetect the MLST scheme; force this scheme on all inputs (see <https://github.com/tseemann/mlst/blob/master/db/scheme_species_map.tab> for accepted strings) | None | Optional | FASTA, ONT, PE, SE |
-| version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional | FASTA, ONT, PE, SE |
-| version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) | | Optional | FASTA, ONT, PE, SE |
+| **Terra Task name** | **Variable**                             | **Type** | **Description** | **Default value** | **Terra Status** | **Workflow** |
+|---|------------------------------------------|----------|---|---|---|---|
+| *workflow name | **samplename**                           | String   | Name of sample to be analyzed |  | Required | FASTA, ONT, PE, SE |
+| theiaprok_fasta | **assembly_fasta**                       | File     | Assembly file in fasta format |  | Required | FASTA |
+| theiaprok_illumina_pe | **read1**                                | File     | Illumina forward read file in FASTQ file format (compression optional) |  | Required | PE |
+| theiaprok_illumina_pe | **read2**                                | File     | Illumina reverse read file in FASTQ file format (compression optional) |  | Required | PE |
+| theiaprok_illumina_se | **read1**                                | File     | Illumina forward read file in FASTQ file format (compression optional) |  | Required | SE |
+| theiaprok_ont | **read1**                                | File     | Base-called ONT read file in FASTQ file format (compression optional) |  | Required | ONT |
+| *workflow name | **abricate_db**                          | String   | Database to use with the Abricate tool. Options: NCBI, CARD, ARG-ANNOT, Resfinder, MEGARES, EcOH, PlasmidFinder, Ecoli_VF and VFDB | vfdb | Optional | FASTA, ONT, PE, SE |
+| *workflow name | **bakta_db**                             | String   |Database selection for Bakta annotation. Options: "light" (smaller, faster), "full" (more comprehensive), or a Google Storage URI (gs://...) pointing to a custom Bakta database archive (.tar.gz). The selected database will be extracted before annotation. | full | Optional | FASTA, ONT, PE, SE |
+| *workflow name | **call_abricate**                        | Boolean  | Set to true to enable the Abricate task | FALSE | Optional | FASTA, ONT, PE, SE |
+| *workflow name | **call_ani**                             | Boolean  | Set to true to enable the ANI task | FALSE | Optional | FASTA, ONT, PE, SE |
+| *workflow name | **call_kmerfinder**                      | Boolean  | Set to true to enable the kmerfinder task | FALSE | Optional | FASTA, ONT, PE, SE |
+| *workflow name | **call_plasmidfinder**                   | Boolean  | Set to true to enable the plasmidfinder task | TRUE | Optional | FASTA, ONT, PE, SE |
+| *workflow name | **call_resfinder**                       | Boolean  | Set to true to enable the ResFinder task | FALSE | Optional | FASTA, ONT, PE, SE |
+| *workflow name | **city**                                 | String   | Will be used in the "city" column in any taxon-specific tables created in the Export Taxon Tables task |  | Optional | FASTA, ONT, PE, SE |
+| *workflow name | **collection_date**                      | String   | Will be used in the "collection_date" column in any taxon-specific tables created in the Export Taxon Tables task |  | Optional | FASTA, ONT, PE, SE |
+| *workflow name | **county**                               | String   | Will be used in the "county" column in any taxon-specific tables created in the Export Taxon Tables task |  | Optional | FASTA, ONT, PE, SE |
+| *workflow name | **expected_taxon**                       | String   | If provided, this input will override the taxonomic assignment made by GAMBIT and launch the relevant taxon-specific submodules. It will also modify the organism flag used by AMRFinderPlus. Example format: "Salmonella enterica" |  | Optional | FASTA, ONT, PE, SE |
+| *workflow name | **genome_annotation**                    | String   | If set to "bakta", TheiaProk will use Bakta rather than Prokka to annotate the genome | prokka | Optional | FASTA, ONT, PE, SE |
+| *workflow name | **genome_length**                        | Int      | User-specified expected genome length to be used in genome statistics calculations |  | Optional | ONT, PE, SE |
+| *workflow name | **max_genome_length**                    | Int      | Maximum genome length able to pass read screening. For TheiaProk_ONT, screening using max_genome_length is skipped by default. | 18040666 | Optional | ONT, PE, SE |
+| *workflow name | **min_basepairs**                        | Int      | Minimum number of base pairs able to pass read screening | 2241820 | Optional | ONT, PE, SE |
+| *workflow name | **min_coverage**                         | Int      | Minimum genome coverage able to pass read screening. Screening using min_coverage is skipped by default. | 5 | Optional | ONT |
+| *workflow name | **min_coverage**                         | Int      | Minimum genome coverage able to pass read screening | 10 | Optional | PE, SE |
+| *workflow name | **min_genome_length**                    | Int      | Minimum genome length able to pass read screening. For TheiaProk_ONT, screening using min_genome_length is skipped by default. | 100000 | Optional | ONT, PE, SE |
+| *workflow name | **min_proportion**                       | Int      | Minimum proportion of total reads in each read file to pass read screening | 40 | Optional | PE |
+| *workflow name | **min_reads**                            | Int      | Minimum number of reads to pass read screening | 5000 | Optional | ONT |
+| *workflow name | **min_reads**                            | Int      | Minimum number of reads to pass read screening | 7472 | Optional | PE, SE |
+| *workflow name | **originating_lab**                      | String   | Will be used in the "originating_lab" column in any taxon-specific tables created in the Export Taxon Tables task |  | Optional | FASTA, ONT, PE, SE |
+| *workflow name | **perform_characterization**             | Boolean  | Set to "false" if you want to only generate an assembly and relevant QC metrics and skip all characterization tasks | TRUE | Optional | FASTA, ONT, PE, SE |
+| *workflow name | **qc_check_table**                       | File     | TSV value with taxons for rows and QC values for columns; internal cells represent user-determined QC thresholds; if provided, turns on the QC Check task.<br>Click on the variable name for an example QC Check table |  | Optional | FASTA, ONT, PE, SE |
+| *workflow name | **read1_lane2**                          | File     | If provided, the Concatenate_Illumina_Lanes subworkflow will concatenate all files from the same lane before doing any subsequent analysis |  | Optional | PE, SE |
+| *workflow name | **read1_lane3**                          | File     | If provided, the Concatenate_Illumina_Lanes subworkflow will concatenate all files from the same lane before doing any subsequent analysis |  | Optional | PE, SE |
+| *workflow name | **read1_lane4**                          | File     | If provided, the Concatenate_Illumina_Lanes subworkflow will concatenate all files from the same lane before doing any subsequent analysis |  | Optional | PE, SE |
+| *workflow name | **read2_lane2**                          | File     | If provided, the Concatenate_Illumina_Lanes subworkflow will concatenate all files from the same lane before doing any subsequent analysis |  | Optional | PE, SE |
+| *workflow name | **read2_lane3**                          | File     | If provided, the Concatenate_Illumina_Lanes subworkflow will concatenate all files from the same lane before doing any subsequent analysis |  | Optional | PE, SE |
+| *workflow name | **read2_lane4**                          | File     | If provided, the Concatenate_Illumina_Lanes subworkflow will concatenate all files from the same lane before doing any subsequent analysis |  | Optional | PE, SE | 
+| *workflow name | **run_id**                               | String   | Will be used in the "run_id" column in any taxon-specific tables created in the Export Taxon Tables task |  | Optional | FASTA, ONT, PE, SE |
+| *workflow name | **seq_method**                           | String   | Will be used in the "seq_id" column in any taxon-specific tables created in the Export Taxon Tables task |  | Optional | FASTA, ONT, PE, SE |
+| *workflow name | **skip_mash**                            | Boolean  | If true, skips estimation of genome size and coverage in read screening steps. As a result, providing true also prevents screening using these parameters. | TRUE | Optional | ONT, SE |
+| *workflow name | **skip_screen**                          | Boolean  | Option to skip the read screening prior to analysis | FALSE | Optional | ONT, PE, SE |
+| *workflow name | **taxon_tables**                         | File     | File indicating data table names to copy samples of a particular taxon to |  | Optional | FASTA, ONT, PE, SE |
+| *workflow name | **terra_project**                        | String   | The name of the Terra Project where you want the taxon tables written to |  | Optional | FASTA, ONT, PE, SE |
+| *workflow name | **terra_workspace**                      | String   | The name of the Terra Workspace where you want the taxon tables written to |  | Optional | FASTA, ONT, PE, SE |
+| *workflow name | **trim_min_length**                      | Int      | Specifies minimum length of each read after trimming to be kept | 25 | Optional | SE |
+| *workflow name | **trim_min_length**                      | Int      | Specifies minimum length of each read after trimming to be kept | 75 | Optional | PE |
+| *workflow name | **trim_quality_min_score**               | Int      | Specifies the minimum average quality of bases in a sliding window to be kept | 20 | Optional | PE |
+| *workflow name | **trim_quality_trim_score**              | Int      | Specifies the average quality of bases in a sliding window to be kept | 30 | Optional | SE |
+| *workflow name | **trim_window_size**                     | Int      | Specifies window size for trimming (the number of bases to average the quality across) | 4 | Optional | SE |
+| *workflow name | **trim_window_size**                     | Int      | Specifies window size for trimming (the number of bases to average the quality across) | 4 | Optional | PE |
+| *workflow name | **zip**                                  | String   | Will be used in the "zip" column in any taxon-specific tables created in the Export Taxon Tables task |  | Optional | FASTA, ONT, PE, SE |
+| abricate | **cpu**                                  | Int      | Number of CPUs to allocate to the task | 2 | Optional | FASTA, ONT, PE, SE |
+| abricate | **disk_size**                            | Int      | Amount of storage (in GB) to allocate to the task | 100 | Optional | FASTA, ONT, PE, SE |
+| abricate | **docker**                               | String   | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/abricate:1.0.1-abaum-plasmid | Optional | FASTA, ONT, PE, SE |
+| abricate | **memory**                               | Int      | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | FASTA, ONT, PE, SE |
+| abricate | **min_coverage**                         | Int      | Minimum DNA %coverage for the Abricate task | 80 | Optional | FASTA, ONT, PE, SE |
+| abricate | **min_percent_identity**                 | Int      | Minimum DNA %identity for the Abricate task | 80 | Optional | FASTA, ONT, PE, SE |
+| amrfinderplus_task | **cpu**                                  | Int      | Number of CPUs to allocate to the task | 2 | Optional | FASTA, ONT, PE, SE |
+| amrfinderplus_task | **detailed_drug_class**                  | Boolean  | If set to true, amrfinderplus_amr_classes and amrfinderplus_amr_subclasses outputs will be created | FALSE | Optional | FASTA, ONT, PE, SE |
+| amrfinderplus_task | **disk_size**                            | Boolean  | Amount of storage (in GB) to allocate to the AMRFinderPlus task | 50 | Optional | FASTA, ONT, PE, SE |
+| amrfinderplus_task | **docker**                               | String   | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/ncbi-amrfinderplus:3.12.8-2024-07-22.1 | Optional | FASTA, ONT, PE, SE |
+| amrfinderplus_task | **hide_point_mutations**                 | Boolean  | If set to true, point mutations are not reported | FALSE | Optional | FASTA, ONT, PE, SE |
+| amrfinderplus_task | **memory**                               | Int      | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | FASTA, ONT, PE, SE |
+| amrfinderplus_task | **min_coverage**                         | Float    | Minimum proportion of reference gene covered for a BLAST-based hit (Methods BLAST or PARTIAL)." Attribute should be a float ranging from 0-1, such as 0.6 (equal to 60% coverage) | 0.5 | Optional| FASTA, ONT, PE, SE |
+| amrfinderplus_task | **min_identity**                         | Float    | "Minimum identity for a blast-based hit hit (Methods BLAST or PARTIAL). -1 means use a curated threshold if it exists and 0.9 otherwise. Setting this value to something other than -1 will override any curated similarity cutoffs." Attribute should be a float ranging from 0-1, such as 0.95 (equal to 95% identity) | 0.9 | Optional | FASTA, ONT, PE, SE |
+| amrfinderplus_task | **separate_betalactam_genes**            | Boolean  | Report beta-Lactam AMR genes separated out by all beta-lactam and the respective beta-lactam subclasses | FALSE | Optional | FASTA, ONT, PE, SE |
+| ani | **ani_threshold**                        | Float    | ANI value threshold must be surpassed in order to output the ani_top_species_match. If a genome does not surpass this threshold (and the percent_bases_aligned_threshold) then the ani_top_species_match output String will show a warning instead of a genus & species. | 80 | Optional | FASTA, ONT, PE, SE |
+| ani | **cpu**                                  | Int      | Number of CPUs to allocate to the task | 4 | Optional | FASTA, ONT, PE, SE |
+| ani | **disk_size**                            | Int      | Amount of storage (in GB) to allocate to the task | 100 | Optional | FASTA, ONT, PE, SE |
+| ani | **docker**                               | String   | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/staphb/mummer:4.0.0-rgdv2 | Optional | FASTA, ONT, PE, SE |
+| ani | **mash_filter**                          | Float    | Mash distance threshold over which ANI is not calculated  | 0.9 | Optional | FASTA, ONT, PE, SE |
+| ani | **memory**                               | Int      | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | FASTA, ONT, PE, SE |
+| ani | **percent_bases_aligned_threshold**      | Float    | Threshold regarding the proportion of bases aligned between the query genome and reference genome. If a genome does not surpass this threshold (and the ani_threshold) then the ani_top_species_match output String will show a warning instead of a genus & species. | 70 | Optional | FASTA, ONT, PE, SE |
+| ani | **ref_genome**                           | File     | If not set, uses all 43 genomes in RGDv2 |  | Optional | FASTA, ONT, PE, SE |
+| bakta | **bakta_opts**                           | String   | Parameters to pass to bakta from <https://github.com/oschwengers/bakta#usage> |  | Optional | FASTA, ONT, PE, SE |
+| bakta | **compliant**                            | Boolean  | If true, forces Genbank/ENA/DDJB compliance | FALSE | Optional | FASTA, ONT, PE, SE |
+| bakta | **cpu**                                  | Int      | Number of CPUs to allocate to the task | 8 | Optional | FASTA, ONT, PE, SE |
+| bakta | **disk_size**                            | Int      | Amount of storage (in GB) to allocate to the task | 100 | Optional | FASTA, ONT, PE, SE |
+| bakta | **docker**                               | String   | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/biocontainers/bakta:1.5.1--pyhdfd78af_0 | Optional | FASTA, ONT, PE, SE |
+| bakta | **memory**                               | Int      | Amount of memory/RAM (in GB) to allocate to the task | 16 | Optional | FASTA, ONT, PE, SE |
+| bakta | **prodigal_tf**                          | File     | Prodigal training file to use for CDS prediction by bakta |  | Optional | FASTA, ONT, PE, SE |
+| bakta | **proteins**                             | Boolean  |  | FALSE | Optional | FASTA, ONT, PE, SE |
+| busco | **cpu**                                  | Int      | Number of CPUs to allocate to the task | 2 | Optional | FASTA, ONT, PE, SE |
+| busco | **disk_size**                            | Int      | Amount of storage (in GB) to allocate to the task | 100 | Optional | FASTA, ONT, PE, SE |
+| busco | **docker**                               | String   | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/ezlabgva/busco:v5.7.1_cv1 | Optional | FASTA, ONT, PE, SE |
+| busco | **eukaryote**                            | Boolean  | Assesses eukaryotic organisms, rather than prokaryotic organisms | FALSE | Optional | FASTA, ONT, PE, SE |
+| busco | **memory**                               | Int      | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | FASTA, ONT, PE, SE |
+| cg_pipeline_clean | **cg_pipe_opts**                         | String   | Options to pass to CG-Pipeline for clean read assessment  | --fast | Optional | PE, SE |
+| cg_pipeline_clean | **cpu**                                  | Int      | Number of CPUs to allocate to the task | 4 | Optional | PE, SE |
+| cg_pipeline_clean | **disk_size**                            | Int      | Amount of storage (in GB) to allocate to the task | 100 | Optional | PE, SE |
+| cg_pipeline_clean | **docker**                               | String   | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/lyveset:1.1.4f | Optional | PE, SE |
+| cg_pipeline_clean | **memory**                               | Int      | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | PE, SE |
+| cg_pipeline_clean | **read2**                                | File     | Internal component, do not modify |  | Do not modify, Optional | SE |
+| cg_pipeline_raw | **cg_pipe_opts**                         | String   | Options to pass to CG-Pipeline for raw read assessment  | --fast | Optional | PE, SE |
+| cg_pipeline_raw | **cpu**                                  | Int      | Number of CPUs to allocate to the task | 4 | Optional | PE, SE |
+| cg_pipeline_raw | **disk_size**                            | Int      | Amount of storage (in GB) to allocate to the task | 100 | Optional | PE, SE |
+| cg_pipeline_raw | **docker**                               | String   | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/lyveset:1.1.4f | Optional | PE, SE |
+| cg_pipeline_raw | **memory**                               | Int      | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | PE, SE |
+| cg_pipeline_raw | **read2**                                | File     | Internal component, do not modify |  | Do not modify, Optional | SE |
+| clean_check_reads | **cpu**                                  | Int      | Number of CPUs to allocate to the task | 2 | Optional | ONT, PE, SE |
+| clean_check_reads | **disk_size**                            | Int      | Amount of storage (in GB) to allocate to the task | 100 | Optional | ONT, PE, SE |
+| clean_check_reads | **docker**                               | String   | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/bactopia/gather_samples:2.0.2 | Optional | ONT, PE, SE |
+| clean_check_reads | **memory**                               | Int      | Amount of memory/RAM (in GB) to allocate to the task | 2 | Optional | ONT, PE, SE |
+| clean_check_reads | **organism**                             | String   | Internal component, do not modify |  | Do not modify, Optional | ONT, PE, SE |
+| clean_check_reads | **workflow_series**                      | String   | Internal component, do not modify |  | Do not modify, Optional | ONT, PE, SE |
+| dragonflye | **assembler**                            | String   | The assembler to use in dragonflye. Three options: raven, miniasm, flye | flye | Optional | ONT |
+| dragonflye | **assembler_options**                    | String   | Enables extra assembler options in quote |  | Optional | ONT |
+| dragonflye | **cpu**                                  | Int      | Number of CPUs to allocate to the task | 4 | Optional | ONT |
+| dragonflye | **disk_size**                            | Int      | Amount of storage (in GB) to allocate to the task | 100 | Optional | ONT |
+| dragonflye | **docker**                               | String   | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/biocontainers/dragonflye:1.0.14--hdfd78af_0 | Optional | ONT |
+| dragonflye | **illumina_polishing_rounds**            | Int      | Number of polishing rounds to conduct with Illumina data | 1 | Optional | ONT |
+| dragonflye | **illumina_read1**                       | File     | If Illumina reads are provided, Dragonflye will perform Illumina polishing |  | Optional | ONT |
+| dragonflye | **illumina_read2**                       | File     | If Illumina reads are provided, Dragonflye will perform Illumina polishing |  | Optional | ONT |
+| dragonflye | **medaka_model**                         | String   | The model of medaka to use for assembly | r941_min_hac_g507 | Optional | ONT |
+| dragonflye | **memory**                               | Int      | Amount of memory/RAM (in GB) to allocate to the task | 32 | Optional | ONT |
+| dragonflye | **polishing_rounds**                     | Int      | The number of polishing rounds to conduct (without Illumina) | 1 | Optional | ONT |
+| dragonflye | **use_pilon_illumina_polisher**          | Boolean  | Set to true to use Pilon to polish Illumina reads | FALSE | Optional | ONT |
+| dragonflye | **use_racon**                            | Boolean  | Set to true to use Racon to polish instead of Medaka | FALSE | Optional | ONT |
+| export_taxon_table | **cpu**                                  | Int      | Number of CPUs to allocate to the task | 1 | Optional | FASTA, ONT, PE, SE |
+| export_taxon_table | **disk_size**                            | Int      | Amount of storage (in GB) to allocate to the task | 25 | Optional | FASTA, ONT, PE, SE |
+| export_taxon_table | **docker**                               | String   | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-06-21 | Optional | FASTA, ONT, PE, SE |
+| export_taxon_table | **memory**                               | Int      | Amount of memory/RAM (in GB) to allocate to the task | 2 | Optional | FASTA, ONT, PE, SE |
+| gambit | **cpu**                                  | Int      | Number of CPUs to allocate to the task | 8 | Optional | FASTA, ONT, PE, SE |
+| gambit | **disk_size**                            | Int      | Amount of storage (in GB) to allocate to the task | 100 | Optional | FASTA, ONT, PE, SE |
+| gambit | **docker**                               | String   | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/gambit:1.0.0 | Optional | FASTA, ONT, PE, SE |
+| gambit | **gambit_db_genomes**                    | File     | User-provided database of assembled query genomes; requires complementary signatures file. If not provided, uses default database, "/gambit-db" | gs://gambit-databases-rp/2.0.0/gambit-metadata-2.0.0-20240628.gdb | Optional | FASTA, ONT, PE, SE |
+| gambit | **gambit_db_signatures**                 | File     | User-provided signatures file; requires complementary genomes file. If not specified, the file from the docker container will be used.  | gs://gambit-databases-rp/2.0.0/gambit-signatures-2.0.0-20240628.gs | Optional | FASTA, ONT, PE, SE |
+| gambit | **memory**                               | Int      | Amount of memory/RAM (in GB) to allocate to the task | 16 | Optional | FASTA, ONT, PE, SE |
+| kmerfinder | **cpu**                                  | Int      | Number of CPUs to allocate to the task | 4 | Optional | FASTA, ONT, PE, SE |
+| kmerfinder | **disk_size**                            | Int      | Amount of storage (in GB) to allocate to the task | 100 | Optional | FASTA, ONT, PE, SE |
+| kmerfinder | **docker**                               | String   | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/biocontainers/kmerfinder:3.0.2--hdfd78af_0 | Optional | FASTA, ONT, PE, SE |
+| kmerfinder | **kmerfinder_args**                      | String   | Kmerfinder additional arguments |  | Optional | FASTA, ONT, PE, SE |
+| kmerfinder | **kmerfinder_db**                        | String   | Bacterial database for KmerFinder | gs://theiagen-public-files-rp/terra/theiaprok-files/kmerfinder_bacteria_20230911.tar.gz | Optional | FASTA, ONT, PE, SE |
+| kmerfinder | **memory**                               | Int      | Amount of memory/RAM (in GB) to allocate to the task | 32 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **abricate_abaum_docker_image**          | String   | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/abricate:1.0.1-abaum-plasmid | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **abricate_abaum_min_coverage**          | Int      | Minimum DNA percent coverage |  | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **abricate_abaum_min_percent_identity**  | Int      | Minimum DNA percent identity; set to 95 because there is a strict threshold of 95% identity for typing purposes | 95 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **abricate_vibrio_docker_image**         | String   | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/abricate:1.0.1-abaum-plasmid | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **abricate_vibrio_min_coverage**         | Int      | Minimum DNA percent coverage  | 80 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **abricate_vibrio_min_percent_identity** | Int      | Minimum DNA percent identity | 80 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **agrvate_agr_typing_only**              | Boolean  | Set to true to skip agr operon extraction and frameshift detection | False  | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **agrvate_docker_image**                 | String   | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/biocontainers/agrvate:1.0.2--hdfd78af_0 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **assembly_only**                        | Boolean  | Internal component, do not modify |  | Do not modify, Optional | ONT, PE, SE |
+| merlin_magic | **call_poppunk**                         | Boolean  | If "true", runs PopPUNK for GPSC cluster designation for S. pneumoniae | TRUE | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **call_shigeifinder_reads_input**        | Boolean  | If set to "true", the ShigEiFinder task will run again but using read files as input instead of the assembly file. Input is shown but not used for TheiaProk_FASTA. | FALSE | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **call_stxtyper**                        | Boolean  | If set to "true", the StxTyper task will run on all samples regardless of the `gambit_predicted_taxon` output. Useful if you suspect a non-E.coli or non-Shigella sample contains stx genes. | FALSE | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **call_tbp_parser**                      | Boolean  | If set to "true", activates the tbp_parser module and results in more outputs, including tbp_parser_looker_report_csv, tbp_parser_laboratorian_report_csv,  tbp_parser_lims_report_csv, tbp_parser_coverage_report, and tbp_parser_genome_percent_coverage | FALSE | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **cauris_cladetyper_docker_image**       | String   | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **cladetyper_kmer_size**                 | Int      | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **cladetyper_ref_clade1**                | File     | *Provide an empty file if running TheiaProk on the command-line |  | Do not modify, Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **cladetyper_ref_clade1_annotated**      | File     | *Provide an empty file if running TheiaProk on the command-line |  | Do not modify, Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **cladetyper_ref_clade2**                | File     | *Provide an empty file if running TheiaProk on the command-line |  | Do not modify, Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **cladetyper_ref_clade2_annotated**      | File     | *Provide an empty file if running TheiaProk on the command-line |  | Do not modify, Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **cladetyper_ref_clade3**                | File     | *Provide an empty file if running TheiaProk on the command-line |  | Do not modify, Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **cladetyper_ref_clade3_annotated**      | File     | *Provide an empty file if running TheiaProk on the command-line |  | Do not modify, Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **cladetyper_ref_clade4**                | File     | *Provide an empty file if running TheiaProk on the command-line |  | Do not modify, Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **cladetyper_ref_clade4_annotated**      | File     | *Provide an empty file if running TheiaProk on the command-line |  | Do not modify, Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **cladetyper_ref_clade5**                | File     | *Provide an empty file if running TheiaProk on the command-line |  | Do not modify, Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **cladetyper_ref_clade5_annotated**      | File     | *Provide an empty file if running TheiaProk on the command-line |  | Do not modify, Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **clockwork_docker_image**               | String   | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/cdcgov/varpipe_wgs_with_refs:2bc7234074bd53d9e92a1048b0485763cd9bbf6f4d12d5a1cc82bfec8ca7d75e | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **ectyper_docker_image**                 | String   | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/biocontainers/ectyper:1.0.0--pyhdfd78af_1 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **ectyper_h_min_coverage**               | Int      | Minumum percent coverage required for an H antigen allele match | 50 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **ectyper_h_min_percent_identity**       | Int      | Percent identity required for an H antigen allele match | 95 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **ectyper_o_min_coverage**               | Int      | Minumum percent coverage required for an O antigen allele match | 90 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **ectyper_o_min_percent_identity**       | Int      | Percent identity required for an O antigen allele match | 90 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **ectyper_print_alleles**                | Boolean  | Set to true to print the allele sequences as the final column | False  | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **ectyper_verify**                       | Boolean  | Set to true to enable E. coli species verification | False  | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **emmtypingtool_docker_image**           | String   | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/emmtypingtool:0.0.1 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **genotyphi_docker_image**               | String   | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/mykrobe:0.11.0 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **hicap_broken_gene_identity**           | Float    | Minimum percentage identity to consider a broken gene | 0.80 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **hicap_broken_gene_length**             | Int      | Minimum length to consider a broken gene | 60 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **hicap_docker_image**                   | String   | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/biocontainers/hicap:1.0.3--py_0 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **hicap_gene_coverage**                  | Float    | Minimum percentage coverage to consider a single gene complete | 0.80 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **hicap_gene_identity**                  | Float    | Minimum percentage identity to consider a single gene complete | 0.70 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **kaptive_docker_image**                 | String   | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/kaptive:2.0.3 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **kaptive_low_gene_id**                  | Float    | Percent identity threshold for what counts as a low identity match in the gene BLAST search | 95 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **kaptive_min_coverage**                 | Float    | Minimum required percent identity for the gene BLAST search via tBLASTn | 80 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **kaptive_min_percent_identity**         | Float    | Minimum required percent coverage for the gene BLAST search via tBLASTn | 90 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **kaptive_start_end_margin**             | Int      | Determines flexibility in identifying the start and end of a locus - if this value is 10, a locus match that is missing the first 8 base pairs will still count as capturing the start of the locus | 10 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **kleborate_docker_image**               | String   | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/kleborate:2.2.0 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **kleborate_min_coverage**               | Float    | Minimum alignment percent coverage for main results | 80 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **kleborate_min_percent_identity**       | Float    | Minimum alignment percent identity for main results | 90 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **kleborate_min_kaptive_confidence**     | String   | {None,Low,Good,High,Very_high,Perfect} Minimum Kaptive confidence to call K/O loci - confidence levels below this will be reported as unknown | Good | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **kleborate_min_spurious_coverage**      | Float    | Minimum alignment percent coverage for spurious results | 40 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **kleborate_min_spurious_identity**      | Float    | Minimum alignment percent identity for spurious results | 80 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **kleborate_skip_kaptive**               | Boolean  | Equivalent to --kaptive_k --kaptive_ | False  | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **kleborate_skip_resistance**            | Boolean  | Set to true to turn on resistance genes screening (default: no resistance gene screening) | False  | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **legsta_docker_image**                  | String   | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/biocontainers/legsta:0.5.1--hdfd78af_2 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **lissero_docker_image**                 | String   | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/biocontainers/lissero:0.4.9--py_0 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **lissero_min_coverage**                 | Float    | Minimum coverage of the gene to accept a match | 95 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **lissero_min_percent_identity**         | Float    | Minimum percent identity to accept a match | 95 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **meningotype_docker_image**             | String   | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/biocontainers/meningotype:0.8.5--pyhdfd78af_0 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **ngmaster_docker_image**                | String   | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/ngmaster:1.0.0 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **ont_data**                             | Boolean  | Internal component, do not modify |  | Do not modify, Optional | FASTA, PE, SE |
+| merlin_magic | **paired_end**                           | Boolean  | Internal component, do not modify |  | Do not modify, Optional | ONT, PE |
+| merlin_magic | **pasty_docker_image**                   | String   | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/pasty:1.0.3 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **pasty_min_coverage**                   | Int      | Minimum coverage of a O-antigen to be considered for serogrouping by pasty | 95 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **pasty_min_percent_identity**           | Int      | Minimum percent identity for a blast hit to be considered for serogrouping | 95 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **pbptyper_docker_image**                | String   | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/pbptyper:1.0.4 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **pbptyper_min_coverage**                | Int      | Minimum percent coverage to count a hit | 90 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **pbptyper_min_percent_identity**        | Int      | Minimum percent identity to count a hit | 90 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **poppunk_docker_image**                 | String   | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/poppunk:2.4.0 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **poppunk_gps_clusters_csv**             | File     | Poppunk database file *Provide an empty or local file if running TheiaProk on the command-line | gs://theiagen-public-files-rp/terra/theiaprok-files/GPS_v6/GPS_v6_clusters.csv | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **poppunk_gps_dists_npy**                | File     | Poppunk database file *Provide an empty or local file if running TheiaProk on the command-line | gs://theiagen-public-files-rp/terra/theiaprok-files/GPS_v6/GPS_v6.dists.npy | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **poppunk_gps_dists_pkl**                | File     | Poppunk database file *Provide an empty or local file if running TheiaProk on the command-line | gs://theiagen-public-files-rp/terra/theiaprok-files/GPS_v6/GPS_v6.dists.pkl | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **poppunk_gps_external_clusters_csv**    | File     | Poppunk database file *Provide an empty or local file if running TheiaProk on the command-line | gs://theiagen-public-files-rp/terra/theiaprok-files/GPS_v6/GPS_v6_external_clusters.csv | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **poppunk_gps_fit_npz**                  | File     | Poppunk database file *Provide an empty or local file if running TheiaProk on the command-line | gs://theiagen-public-files-rp/terra/theiaprok-files/GPS_v6/GPS_v6_fit.npz | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **poppunk_gps_fit_pkl**                  | File     | Poppunk database file *Provide an empty or local file if running TheiaProk on the command-line | gs://theiagen-public-files-rp/terra/theiaprok-files/GPS_v6/GPS_v6_fit.pkl | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **poppunk_gps_graph_gt**                 | File     | Poppunk database file *Provide an empty or local file if running TheiaProk on the command-line | gs://theiagen-public-files-rp/terra/theiaprok-files/GPS_v6/GPS_v6_graph.gt | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **poppunk_gps_h5**                       | File     | Poppunk database file *Provide an empty or local file if running TheiaProk on the command-line | gs://theiagen-public-files-rp/terra/theiaprok-files/GPS_v6/GPS_v6.h5 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **poppunk_gps_qcreport_txt**             | File     | Poppunk database file *Provide an empty or local file if running TheiaProk on the command-line | gs://theiagen-public-files-rp/terra/theiaprok-files/GPS_v6/GPS_v6_qcreport.txt | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **poppunk_gps_refs**                     | File     | Poppunk database file *Provide an empty or local file if running TheiaProk on the command-line | gs://theiagen-public-files-rp/terra/theiaprok-files/GPS_v6/GPS_v6.refs | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **poppunk_gps_refs_dists_npy**           | File     | Poppunk database file *Provide an empty or local file if running TheiaProk on the command-line | gs://theiagen-public-files-rp/terra/theiaprok-files/GPS_v6/GPS_v6.refs.dists.npy | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **poppunk_gps_refs_dists_pkl**           | File     | Poppunk database file *Provide an empty or local file if running TheiaProk on the command-line | gs://theiagen-public-files-rp/terra/theiaprok-files/GPS_v6/GPS_v6.refs.dists.pkl | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **poppunk_gps_refs_graph_gt**            | File     | Poppunk database file *Provide an empty or local file if running TheiaProk on the command-line | gs://theiagen-public-files-rp/terra/theiaprok-files/GPS_v6/GPS_v6refs_graph.gt | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **poppunk_gps_refs_h5**                  | File     | Poppunk database file *Provide an empty or local file if running TheiaProk on the command-line | gs://theiagen-public-files-rp/terra/theiaprok-files/GPS_v6/GPS_v6.refs.h5 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **poppunk_gps_unword_clusters_csv**      | File     | Poppunk database file *Provide an empty or local file if running TheiaProk on the command-line | gs://theiagen-public-files-rp/terra/theiaprok-files/GPS_v6/GPS_v6_unword_clusters.csv | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **read1**                                | File     | Internal component, do not modify |  | Do not modify, Optional | FASTA |
+| merlin_magic | **read2**                                | File     | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, SE |
+| merlin_magic | **seqsero2_docker_image**                | String   | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/seqsero2:1.2.1 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **seroba_docker_image**                  | String   | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/seroba:1.0.2 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **serotypefinder_docker_image**          | String   | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/serotypefinder:2.0.1 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **shigatyper_docker_image**              | String   | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/shigatyper:2.0.5 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **shigeifinder_docker_image**            | String   | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/shigeifinder:1.3.5 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **sistr_cpu**                            | Int      | The number of CPU cores to allocate for the task | 8 | Optional | FASTA, ONT, PE, SE  |
+| merlin_magic | **sistr_disk_size**                      | Int      | The disk size (in GB) to allocate for the task  | 100 | Optional | FASTA, ONT, PE, SE  |
+| merlin_magic | **sistr_docker_image**                   | String   | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/biocontainers/sistr_cmd:1.1.1--pyh864c0ab_2 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **sistr_memory**                         | Int      | The amount of memory (in GB) to allocate for the task. | 32 | Optional | FASTA, ONT, PE, SE  |
+| merlin_magic | **sistr_use_full_cgmlst_db**             | Boolean  | Set to true to use the full set of cgMLST alleles which can include highly similar alleles. By default the smaller "centroid" alleles or representative alleles are used for each marker | False  | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **snippy_base_quality**                  | Int      | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **snippy_gene_query_docker_image**       | String   | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **snippy_map_qual**                      | Int      | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **snippy_maxsoft**                       | Int      | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **snippy_min_coverage**                  | Int      | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **snippy_min_frac**                      | Float    | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **snippy_min_quality**                   | Int      | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **snippy_query_gene**                    | String   | Internal component, do not modify |  | Do not modify, Optional | FASTA, PE, SE |
+| merlin_magic | **snippy_reference_afumigatus**          | File     | *Provide an empty file if running TheiaProk on the command-line |  | Do not modify, Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **snippy_reference_calbicans**           | File     | *Provide an empty file if running TheiaProk on the command-line |  | Do not modify, Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **snippy_reference_cryptoneo**           | File     | *Provide an empty file if running TheiaProk on the command-line |  | Do not modify, Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **snippy_variants_docker_image**         | String   | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **sonneityping_docker_image**            | String   | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/mykrobe:0.12.1 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **sonneityping_mykrobe_opts**            | String   | Additional options for mykrobe in sonneityping |  | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **spatyper_do_enrich**                   | Boolean  | Set to true to enable PCR product enrichment | False  | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **spatyper_docker_image**                | String   | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/biocontainers/spatyper:0.3.3--pyhdfd78af_3 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **srst2_docker_image**                   | String   | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/srst2:0.2.0-vcholerae | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **srst2_gene_max_mismatch**              | Int      | Maximum number of mismatches for SRST2 to call a gene as present | 2000 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **srst2_max_divergence**                 | Int      | Maximum divergence, in percentage, for SRST2 to call a gene as present | 20 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **srst2_min_coverage**                   | Int      | Minimum breadth of coverage for SRST2 to call a gene as present | 80 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **srst2_min_depth**                      | Int      | Minimum depth of coverage for SRST2 to call a gene as present  | 5 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **srst2_min_edge_depth**                 | Int      | Minimum edge depth for SRST2 to call a gene as present  | 2 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **stxtyper_cpu**                         | Int      | The number of CPU cores to allocate for the task. | 1 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **stxtyper_disk_size**                   | Int      | Amount of storage (in GB) to allocate to the task | 50 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **stxtyper_docker_image**                | String   | The Docker container to use for the task | `us-docker.pkg.dev/general-theiagen/staphb/stxtyper:1.0.24` | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **stxtyper_enable_debug**                | Boolean  | When enabled, additional messages are printed and files in `$TMPDIR` are not removed after running | FALSE | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **stxtyper_memory**                      | Int      | Amount of memory (in GB) to allocate to the task | 4 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **staphopia_sccmec_docker_image**        | String   | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/biocontainers/staphopia-sccmec:1.0.0--hdfd78af_0 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **tbp_parser_add_cs_lims**               | Boolean  | Set to true add cycloserine results to the LIMS report | FALSE | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **tbp_parser_coverage_regions_bed**      | File     | A bed file that lists the regions to be considered for QC |  | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **tbp_parser_min_coverage**              | Int      | The minimum coverage for a region to pass QC in tbp_parser | 100 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **tbp_parser_debug**                     | Boolean  | Activate the debug mode on tbp_parser; increases logging outputs | TRUE | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **tbp_parser_docker_image**              | String   | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:2.2.2 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **tbp_parser_etha237_frequency**         | Float    | Minimum frequency for a mutation in ethA at protein position 237 to pass QC in tbp-parser | 0.1 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **tbp_parser_expert_rule_regions_bed**   | File     | A file that contains the regions where R mutations and expert rules are applied |  | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **tbp_parser_min_depth**                 | Int      | Minimum depth for a variant to pass QC in tbp_parser | 10 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **tbp_parser_min_frequency**             | Int      | The minimum frequency for a mutation to pass QC | 0.1 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **tbp_parser_min_read_support**          | Int      | The minimum read support for a mutation to pass QC | 10 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **tbp_parser_operator**                  | String   | Fills the "operator" field in the tbp_parser output files | Operator not provided | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **tbp_parser_output_seq_method_type**    | String   | Fills out the "seq_method" field in the tbp_parser output files | Sequencing method not provided | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **tbp_parser_rpob449_frequency**         | Float    | Minimum frequency for a mutation at protein position 449 to pass QC in tbp-parser | 0.1 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **tbp_parser_rrl_frequency**             | Float    | Minimum frequency for a mutation in rrl to pass QC in tbp-parser | 0.1 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **tbp_parser_rrl_read_support**          | Int      | Minimum read support for a mutation in rrl to pass QC in tbp-parser | 10 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **tbp_parser_rrs_frequency**             | Float    | Minimum frequency for a mutation in rrs to pass QC in tbp-parser | 0.1 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **tbp_parser_rrs_read_support**          | Int      | Minimum read support for a mutation in rrs to pass QC in tbp-parser | 10 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **tbp_parser_tngs_data**                 | Boolean  | Set to true to enable tNGS-specific parameters and runs in tbp-parser | FALSE | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **tbprofiler_custom_db**                 | File     | TBProfiler uses by default the TBDB database; if you have a custom database you wish to use, you must provide a custom database in this field and set tbprofiler_run_custom_db to true |  | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **tbprofiler_docker_image**              | String   | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/tbprofiler:4.4.2 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **tbprofiler_mapper**                    | String   | The mapping tool used in TBProfiler to align the reads to the reference genome; see TBProfiler’s original documentation for available options. | bwa | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **tbprofiler_min_af**                    | Float    | The minimum allele frequency to call a variant | 0.1 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **tbprofiler_min_depth**                 | Int      | The minimum depth for a variant to be called. | 10 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **tbprofiler_run_cdph_db**               | Boolean  | TBProfiler uses by default the TBDB database; set this value to "true" to use the WHO v2 database with customizations for CDPH | FALSE | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **tbprofiler_run_custom_db**             | Boolean  | TBProfiler uses by default the TBDB database; if you have a custom database you wish to use, you must set this value to true and provide a custom database in the tbprofiler_custom_db field | FALSE | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **tbprofiler_variant_caller**            | String   | Select a different variant caller for TBProfiler to use by writing it in this block; see TBProfiler’s original documentation for available options. | GATK | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **tbprofiler_variant_calling_params**    | String   | Enter additional variant calling parameters in this free text input to customize how the variant caller works in TBProfiler | | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **theiaeuk**                             | Boolean  | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **virulencefinder_min_coverage**         | Float    | The threshold for minimum coverage |  | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **virulencefinder_database**             | String   | The specific database to use | virulence_ecoli | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **virulencefinder_docker_image**         | String   | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/virulencefinder:2.0.4 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **vibecheck_lineage_barcodes**           | String   | Feather formatted lineage barcodes to use instead of default O1 barcodes |  | Optional | PE |
+| merlin_magic | **vibecheck_subsampling_fraction**       | Float   | Fraction of reads to use in classification. | 0.2  | Optional | PE |
+| merlin_magic | **vibecheck_skip_subsampling**           | Boolean   | When enabled, will not subsample reads prior to classification. Will increase computation time | False | Optional | PE |
+| merlin_magic | **vibecheck_docker_image**               | String   | The Docker container to use for the task | watronfire/vibecheck:2025.02.24 | Optional | PE |
+| nanoplot_clean | **cpu**                                  | Int      | Number of CPUs to allocate to the task | 4 | Optional | ONT |
+| nanoplot_clean | **disk_size**                            | Int      | Amount of storage (in GB) to allocate to the task | 100 | Optional | ONT |
+| nanoplot_clean | **docker**                               | String   | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/nanoplot:1.40.0 | Optional | ONT |
+| nanoplot_clean | **max_length**                           | Int      | Maximum read length for nanoplot | 100000 | Optional | ONT |
+| nanoplot_clean | **memory**                               | Int      | Amount of memory/RAM (in GB) to allocate to the task | 16 | Optional | ONT |
+| nanoplot_raw | **cpu**                                  | Int      | Number of CPUs to allocate to the task | 4 | Optional | ONT |
+| nanoplot_raw | **disk_size**                            | Int      | Amount of storage (in GB) to allocate to the task | 100 | Optional | ONT |
+| nanoplot_raw | **docker**                               | String   | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/nanoplot:1.40.0 | Optional | ONT |
+| nanoplot_raw | **max_length**                           | Int      | Maximum read length for nanoplot | 100000 | Optional | ONT |
+| nanoplot_raw | **memory**                               | Int      | Amount of memory/RAM (in GB) to allocate to the task | 16 | Optional | ONT |
+| plasmidfinder | **cpu**                                  | Int      | Number of CPUs to allocate to the task | 2 | Optional | FASTA, ONT, PE, SE |
+| plasmidfinder | **database**                             | String   | User-specified database |  | Optional | FASTA, ONT, PE, SE |
+| plasmidfinder | **database_path**                        | String   | Path to user-specified database |  | Optional | FASTA, ONT, PE, SE |
+| plasmidfinder | **disk_size**                            | Int      | Amount of storage (in GB) to allocate to the task | 50 | Optional | FASTA, ONT, PE, SE |
+| plasmidfinder | **docker**                               | String   | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/plasmidfinder:2.1.6 | Optional | FASTA, ONT, PE, SE |
+| plasmidfinder | **memory**                               | Int      | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | FASTA, ONT, PE, SE |
+| plasmidfinder | **method_path**                          | String   | Path to files for a user-specified method to use (blast or kma) |  | Optional | FASTA, ONT, PE, SE |
+| plasmidfinder | **min_coverage**                         | Float    | Threshold for minimum coverage, default threshold from PlasmidFinder CLI tool is used (0.60) | 0.6 | Optional | FASTA, ONT, PE, SE |
+| plasmidfinder | **threshold**                            | Float    | Threshold for mininum blast identity, default threshold from PlasmidFinder CLI tool is used (0.90). This default differs from the default of the PlasmidFinder webtool (0.95) | 0.9 | Optional | FASTA, ONT, PE, SE |
+| prokka | **compliant**                            | Boolean  | Forces Genbank/ENA/DDJB compliant headers in Prokka output files | TRUE | Optional | FASTA, ONT, PE, SE |
+| prokka | **cpu**                                  | Int      | Number of CPUs to allocate to the task | 4 | Optional | FASTA, ONT, PE, SE |
+| prokka | **disk_size**                            | String   | Amount of storage (in GB) to allocate to the PlasmidFinder task | 100 | Optional | FASTA, ONT, PE, SE |
+| prokka | **docker**                               | String   | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/prokka:1.14.5 | Optional | FASTA, ONT, PE, SE |
+| prokka | **memory**                               | Int      | Amount of memory/RAM (in GB) to allocate to the task | 16 | Optional | FASTA, ONT, PE, SE |
+| prokka | **prodigal_tf**                          | File     | <https://github.com/tseemann/prokka#option---prodigaltf> |  | Optional | FASTA, ONT, PE, SE |
+| prokka | **prokka_arguments**                     | String   | Any additional <https://github.com/tseemann/prokka#command-line-options> |  | Optional | FASTA, ONT, PE, SE |
+| prokka | **proteins**                             | Boolean  | FASTA file of trusted proteins for Prokka to first use for annotations | FALSE | Optional | FASTA, ONT, PE, SE |
+| qc_check_task | **assembly_length_unambiguous**          | Int      | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE, SE |
+| qc_check_task | **assembly_mean_coverage**               | Float    | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE, SE |
+| qc_check_task | **combined_mean_q_clean**                | Float    | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, SE |
+| qc_check_task | **combined_mean_q_raw**                  | Float    | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, SE |
+| qc_check_task | **combined_mean_readlength_clean**       | Float    | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, SE |
+| qc_check_task | **combined_mean_readlength_raw**         | Float    | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, SE |
+| qc_check_task | **cpu**                                  | Int      | Number of CPUs to allocate to the task | 4 | Optional | FASTA, ONT, PE, SE |
+| qc_check_task | **disk_size**                            | Int      | Amount of storage (in GB) to allocate to the task | 100 | Optional | FASTA, ONT, PE, SE |
+| qc_check_task | **docker**                               | String   | The Docker container to use for the task |  "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-03-16" | Optional | FASTA, ONT, PE, SE |
+| qc_check_task | **est_coverage_clean**                   | Float    | Internal component, do not modify |  | Do not modify, Optional | FASTA |
+| qc_check_task | **est_coverage_raw**                     | Float    | Internal component, do not modify |  | Do not modify, Optional | FASTA |
+| qc_check_task | **kraken_human**                         | Float    | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE, SE |
+| qc_check_task | **kraken_human_dehosted**                | Float    | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE, SE |
+| qc_check_task | **kraken_sc2**                           | Float    | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE, SE |
+| qc_check_task | **kraken_sc2_dehosted**                  | Float    | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE, SE |
+| qc_check_task | **kraken_target_organism**               | Float    | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE, SE |
+| qc_check_task | **kraken_target_organism_dehosted**      | Float    | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE, SE |
+| qc_check_task | **meanbaseq_trim**                       | String   | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE, SE |
+| qc_check_task | **memory**                               | Int      | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | FASTA, ONT, PE, SE |
+| qc_check_task | **midas_secondary_genus_abundance**      | Int      | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT |
+| qc_check_task | **midas_secondary_genus_coverage**       | Float    | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT |
+| qc_check_task | **num_reads_clean1**                     | Int      | Internal component, do not modify |  | Do not modify, Optional | FASTA |
+| qc_check_task | **num_reads_clean2**                     | Int      | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, SE |
+| qc_check_task | **num_reads_raw1**                       | Int      | Internal component, do not modify |  | Do not modify, Optional | FASTA |
+| qc_check_task | **num_reads_raw2**                       | Int      | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, SE |
+| qc_check_task | **number_Degenerate**                    | Int      | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE, SE |
+| qc_check_task | **number_N**                             | Int      | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE, SE |
+| qc_check_task | **percent_reference_coverage**           | Float    | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE, SE |
+| qc_check_task | **r1_mean_q_clean**                      | Float    | Internal component, do not modify |  | Do not modify, Optional | FASTA |
+| qc_check_task | **r1_mean_q_raw**                        | Float    | Internal component, do not modify |  | Do not modify, Optional | FASTA |
+| qc_check_task | **r1_mean_readlength_clean**             | Float    | Internal component, do not modify |  | Do not modify, Optional | FASTA |
+| qc_check_task | **r1_mean_readlength_raw**               | Float    | Internal component, do not modify |  | Do not modify, Optional | FASTA |
+| qc_check_task | **r2_mean_q_clean**                      | Float    | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, SE |
+| qc_check_task | **r2_mean_q_raw**                        | Float    | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, SE |
+| qc_check_task | **r2_mean_readlength_clean**             | Float    | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, SE |
+| qc_check_task | **r2_mean_readlength_raw**               | Float    | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, SE |
+| qc_check_task | **sc2_s_gene_mean_coverage**             | Float    | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE, SE |
+| qc_check_task | **sc2_s_gene_percent_coverage**          | Float    | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE, SE |
+| qc_check_task | **vadr_num_alerts**                      | String   | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE, SE |
+| quast | **cpu**                                  | Int      | Number of CPUs to allocate to the task | 2 | Optional | FASTA, ONT, PE, SE |
+| quast | **disk_size**                            | String   | Amount of storage (in GB) to allocate to the Quast task | 100 | Optional | FASTA, ONT, PE, SE |
+| quast | **docker**                               | String   | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/quast:5.0.2 | Optional | FASTA, ONT, PE, SE |
+| quast | **memory**                               | Int      | Amount of memory/RAM (in GB) to allocate to the task | 2 | Optional | FASTA, ONT, PE, SE |
+| quast | **min_contig_length**                    | Int      | Lower threshold for a contig length in bp. Shorter contigs won’t be taken into account | 500 | Optional | FASTA, ONT, PE, SE |
+| raw_check_reads | **cpu**                                  | Int      | Number of CPUs to allocate to the task | 2 | Optional | ONT, PE, SE |
+| raw_check_reads | **disk_size**                            | Int      | Amount of storage (in GB) to allocate to the task | 100 | Optional | ONT, PE, SE |
+| raw_check_reads | **docker**                               | String   | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/bactopia/gather_samples:2.0.2 | Optional | ONT, PE, SE |
+| raw_check_reads | **memory**                               | Int      | Amount of memory/RAM (in GB) to allocate to the task | 2 | Optional | ONT, PE, SE |
+| raw_check_reads | **organism**                             | String   | Internal component, do not modify |  | Do not modify, Optional | ONT, PE, SE |
+| raw_check_reads | **workflow_series**                      | String   | Internal component, do not modify |  | Do not modify, Optional | ONT, PE, SE |
+| read_QC_trim | **adapters**                             | File     | A file containing the sequence of the adapters used during library preparation, used in the BBDuk task |  | Optional | PE, SE |
+| read_QC_trim | **artic_guppyplex_cpu**                  | Int      | Internal component, do not modify| 8 | Optional | ONT |
+| read_QC_trim | **artic_guppyplex_disk_size**            | Int      | Internal component, do not modify| 100 | Optional | ONT |
+| read_QC_trim | **artic_guppyplex_docker**               | String   | Internal component, do not modify| us-docker.pkg.dev/general-theiagen/staphb/artic-ncov2019:1.3.0-medaka-1.4.3 | Optional | ONT |
+| read_QC_trim | **artic_guppyplex_memory**               | Int      | Internal component, do not modify| 16 | Optional | ONT |
+| read_QC_trim | **bbduk_memory**                         | Int      | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | PE, SE |
+| read_QC_trim | **call_kraken**                          | Boolean  | Set to true to launch Kraken2; if true, you must provide a kraken_db | FALSE | Optional | ONT, PE, SE |
+| read_QC_trim | **call_midas**                           | Boolean  | Set to true to launch Midas | TRUE | Optional | PE, SE |
+| read_QC_trim | **downsampling_coverage**                | Float    | The depth to downsample to with Rasusa | 150 | Optional | ONT |
+| read_QC_trim | **fastp_args**                           | String   | Additional arguments to pass to fastp | -g -5 20 -3 20 | Optional | SE |
+| read_QC_trim | **fastp_args**                           | String   | Additional arguments to pass to fastp | "--detect_adapter_for_pe -g -5 20 -3 20 | Optional | PE |
+| read_QC_trim | **kraken_cpu**                           | Int      | Number of CPUs to allocate to the task | 4 | Optional | ONT, PE, SE |
+| read_QC_trim | **kraken_db**                            | File     | Kraken2 database file; must be provided in call_kraken is true |  | Optional | ONT, PE, SE |
+| read_QC_trim | **kraken_disk_size**                     | Int      | GB of storage to request for VM used to run the kraken2 task. Increase this when using large (>30GB kraken2 databases such as the "k2_standard" database) | 100 | Optional | ONT, PE, SE |
+| read_QC_trim | **kraken_docker_image**                  | Int      | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.1.2-no-db" | Optional | ONT |
+| read_QC_trim | **kraken_memory**                        | Int      | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | ONT, PE, SE |
+| read_QC_trim | **max_length**                           | Int      | Internal component, do not modify |  | Do not modify, Optional | ONT |
+| read_QC_trim | **min_length**                           | Int      | Internal component, do not modify |  | Do not modify, Optional | ONT |
+| read_QC_trim | **midas_db**                             | File     | Midas database file | gs://theiagen-large-public-files-rp/terra/theiaprok-files/midas/midas_db_v1.2.tar.gz | Optional | PE, SE |
+| read_QC_trim | **phix**                                 | File     | A file containing the phix used during Illumina sequencing; used in the BBDuk task |  | Optional | PE, SE |
+| read_QC_trim | **nanoq_cpu**                            | Int      | Number of CPUs to allocate to the task | 2 | Optional | ONT |
+| read_QC_trim | **nanoq_disk_size**                      | Int      | Amount of storage (in GB) to allocate to the task | 100 | Optional | ONT |
+| read_QC_trim | **nanoq_docker**                         | String   | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/biocontainers/nanoq:0.9.0--hec16e2b_1" | Optional | ONT |
+| read_QC_trim | **nanoq_max_read_length**                | Int      | The maximum read length to keep after trimming | 100000 | Optional | ONT |
+| read_QC_trim | **nanoq_max_read_qual**                  | Int      | The maximum read quality to keep after trimming | 40 | Optional | ONT |
+| read_QC_trim | **nanoq_memory**                         | Int      | Amount of memory/RAM (in GB) to allocate to the task | 2 | Optional | ONT |
+| read_QC_trim | **nanoq_min_read_length**                | Int      | The minimum read length to keep after trimming | 500 | Optional | ONT |
+| read_QC_trim | **nanoq_min_read_qual**                  | Int      | The minimum read quality to keep after trimming | 10 | Optional | ONT |
+| read_QC_trim | **ncbi_scrub_cpu**                       | Int      | Internal component, do not modify| 4 | Optional | ONT |
+| read_QC_trim | **ncbi_scrub_disk_size**                 | Int      | Internal component, do not modify| 100 | Optional | ONT |
+| read_QC_trim | **ncbi_scrub_docker**                    | String   | Internal component, do not modify| "us-docker.pkg.dev/general-theiagen/ncbi/sra-human-scrubber:2.2.1" | Optional | ONT |
+| read_QC_trim | **ncbi_scrub_memory**                    | Int      | Internal component, do not modify| 8 | Optional | ONT |
+| read_QC_trim | **rasusa_bases**                         | String   | Explicitly set the number of bases required e.g., 4.3kb, 7Tb, 9000, 4.1MB. If this option is given, --coverage and --genome-size are ignored | | Optional | ONT |
+| read_QC_trim | **rasusa_cpu**                           | Int      | Number of CPUs to allocate to the task | 4 | Optional | ONT |
+| read_QC_trim | **rasusa_disk_size**                     | Int      | Amount of storage (in GB) to allocate to the task | 100 | Optional | ONT |
+| read_QC_trim | **rasusa_docker**                        | String   | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/staphb/rasusa:2.1.0" | Optional | ONT |
+| read_QC_trim | **rasusa_fraction_of_reads**             | Float    | Subsample to a fraction of the reads - e.g., 0.5 samples half the reads | | Optional | ONT |
+| read_QC_trim | **rasusa_memory**                        | Int      | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | ONT |
+| read_QC_trim | **rasusa_number_of_reads**               | Int      | Subsample to a specific number of reads | | Optional | ONT |
+| read_QC_trim | **rasusa_seed**                          | Int      | Random seed to use | | Optional | ONT |
+| read_QC_trim | **read_processing**                      | String   | Read trimming software to use, either "trimmomatic" or "fastp" | trimmomatic | Optional | PE, SE |
+| read_QC_trim | **read_qc**                              | String   | Allows the user to decide between fastq_scan (default) and fastqc for the evaluation of read quality. | fastq_scan | Optional | PE, SE |
+| read_QC_trim | **run_prefix**                           | String   | Internal component, do not modify |  | Do not modify, Optional | ONT |
+| read_QC_trim | **target_organism**                      | String   | This string is searched for in the kraken2 outputs to extract the read percentage |  | Optional | ONT, PE, SE |
+| read_QC_trim | **trimmomatic_args**                     | String   | Additional arguments to pass to trimmomatic. "-phred33" specifies the Phred Q score encoding which is almost always phred33 with modern sequence data. | -phred33 | Optional | PE, SE |
+| resfinder_task | **acquired**                             | Boolean  | Set to true to tell ResFinder to identify acquired resistance genes | TRUE | Optional | FASTA, ONT, PE, SE |
+| resfinder_task | **call_pointfinder**                     | Boolean  | Set to true to enable detection of point mutations. | FALSE | Optional | FASTA, ONT, PE, SE |
+| resfinder_task | **cpu**                                  | Int      | Number of CPUs to allocate to the task | 2 | Optional | FASTA, ONT, PE, SE |
+| resfinder_task | **disk_size**                            | Int      | Amount of storage (in GB) to allocate to the task | 100 | Optional | FASTA, ONT, PE, SE |
+| resfinder_task | **docker**                               | String   | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/resfinder:4.1.11 | Optional | FASTA, ONT, PE, SE |
+| resfinder_task | **memory**                               | Int      | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | FASTA, ONT, PE, SE |
+| resfinder_task | **min_coverage**                         | Float    | Minimum coverage breadth of a gene for it to be identified | 0.5 | Optional | FASTA, ONT, PE, SE |
+| resfinder_task | **min_id**                               | Float    | Minimum identity for ResFinder to identify a gene | 0.9 | Optional | FASTA, ONT, PE, SE |
+| shovill_pe | **assembler**                            | String   | Assembler to use (spades, skesa, velvet or megahit), see <https://github.com/tseemann/shovill#--assembler> | skesa | Optional | PE |
+| shovill_pe | **assembler_options**                    | String   | Assembler-specific options that you might choose, see <https://github.com/tseemann/shovill#--opts> |  | Optional | PE |
+| shovill_pe | **cpu**                                  | Int      | Number of CPUs to allocate to the task | 4 | Optional | PE |
+| shovill_pe | **depth**                                | Int      | User specified depth of coverage for downsampling (see <https://github.com/tseemann/shovill#--depth> and <https://github.com/tseemann/shovill#main-steps>) | 150 | Optional | PE |
+| shovill_pe | **disk_size**                            | Int      | Amount of storage (in GB) to allocate to the task | 100 | Optional | PE |
+| shovill_pe | **docker**                               | String   | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/shovill:1.1.0 | Optional | PE |
+| shovill_pe | **kmers**                                | String   | User-specified Kmer length to override choice made by Shovill, see <https://github.com/tseemann/shovill#--kmers> | Auto | Optional | PE |
+| shovill_pe | **memory**                               | Int      | Amount of memory/RAM (in GB) to allocate to the task | 16 | Optional | PE |
+| shovill_pe | **min_contig_length**                    | Int      | Minimum contig length to keep in final assembly  | 200 | Optional | PE |
+| shovill_pe | **min_coverage**                         | Float    | Minimum contig coverage to keep in final assembly | 2 | Optional | PE |
+| shovill_pe | **nocorr**                               | Boolean  | Disable correction of minor assembly errors by Shovill (see <https://github.com/tseemann/shovill#main-steps>) | FALSE | Optional | PE |
+| shovill_pe | **noreadcorr**                           | Boolean  | Disable correction of sequencing errors in reads by Shovill (see <https://github.com/tseemann/shovill#main-steps>) | FALSE | Optional | PE |
+| shovill_pe | **nostitch**                             | Boolean  | Disable read stitching by Shovill (see <https://github.com/tseemann/shovill#main-steps>) | FALSE | Optional | PE |
+| shovill_pe | **trim**                                 | Boolean  | Enable adaptor trimming (see <https://github.com/tseemann/shovill#main-steps>) | FALSE | Optional | PE |
+| shovill_se | **assembler**                            | String   | Assembler to use (spades, skesa, velvet or megahit), see <https://github.com/tseemann/shovill#--assembler> | skesa | Optional | SE |
+| shovill_se | **assembler_options**                    | String   | Assembler-specific options that you might choose, see <https://github.com/tseemann/shovill#--opts> |  | Optional | SE |
+| shovill_se | **cpu**                                  | Int      | Number of CPUs to allocate to the task | 4 | Optional | SE |
+| shovill_se | **depth**                                | Int      | User specified depth of coverage for downsampling (see <https://github.com/tseemann/shovill#--depth> and <https://github.com/tseemann/shovill#main-steps>) | 150 | Optional | SE |
+| shovill_se | **disk_size**                            | Int      | Amount of storage (in GB) to allocate to the task | 100 | Optional | SE |
+| shovill_se | **docker**                               | String   | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/shovill:1.1.0 | Optional | SE |
+| shovill_se | **kmers**                                | String   | User-specified Kmer length to override choice made by Shovill, see <https://github.com/tseemann/shovill#--kmers> | auto | Optional | SE |
+| shovill_se | **memory**                               | Int      | Amount of memory/RAM (in GB) to allocate to the task | 16 | Optional | SE |
+| shovill_se | **min_contig_length**                    | Int      | Minimum contig length to keep in final assembly  | 200 | Optional | SE |
+| shovill_se | **min_coverage**                         | Float    | Minimum contig coverage to keep in final assembly | 2 | Optional | SE |
+| shovill_se | **nocorr**                               | Boolean  | Disable correction of minor assembly errors by Shovill (see <https://github.com/tseemann/shovill#main-steps>) | FALSE | Optional | SE |
+| shovill_se | **noreadcorr**                           | Boolean  | Disable correction of sequencing errors in reads by Shovill (see <https://github.com/tseemann/shovill#main-steps>) | FALSE | Optional | SE |
+| shovill_se | **trim**                                 | Boolean  | Enable adaptor trimming (see <https://github.com/tseemann/shovill#main-steps>) | FALSE | Optional | SE |
+| ts_mlst | **cpu**                                  | Int      | Number of CPUs to allocate to the task | 1 | Optional | FASTA, ONT, PE, SE |
+| ts_mlst | **disk_size**                            | Int      | Amount of storage (in GB) to allocate to the task | 50 | Optional | FASTA, ONT, PE, SE |
+| ts_mlst | **docker**                               | String   | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/mlst:2.23.0-2024-08-01 | Optional | FASTA, ONT, PE, SE |
+| ts_mlst | **memory**                               | Int      | Amount of memory/RAM (in GB) to allocate to the task | 2 | Optional | FASTA, ONT, PE, SE |
+| ts_mlst | **min_coverage**                         | Float    | Minimum % breadth of coverage to report an MLST allele | 10 | Optional | FASTA, ONT, PE, SE |
+| ts_mlst | **min_percent_identity**                 | Float    | Minimum % identity to known MLST gene to report an MLST allele | 95 | Optional | FASTA, ONT, PE, SE |
+| ts_mlst | **minscore**                             | Float    | Minimum <https://github.com/tseemann/mlst#scoring-system> to assign an MLST profile | 50 | Optional | FASTA, ONT, PE, SE |
+| ts_mlst | **nopath**                               | Boolean  | true = use mlst --nopath. If set to false, filename paths are not stripped from FILE column in output TSV | TRUE | Optional | FASTA, ONT, PE, SE |
+| ts_mlst | **scheme**                               | String   | Don’t autodetect the MLST scheme; force this scheme on all inputs (see <https://github.com/tseemann/mlst/blob/master/db/scheme_species_map.tab> for accepted strings) | None | Optional | FASTA, ONT, PE, SE |
+| version_capture | **docker**                               | String   | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional | FASTA, ONT, PE, SE |
+| version_capture | **timezone**                             | String   | Set the time zone to get an accurate date of analysis (uses UTC by default) | | Optional | FASTA, ONT, PE, SE |
 
 </div>
 
@@ -660,7 +539,7 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 
 ??? task "`screen`: Total Raw Read Quantification and Genome Size Estimation"
 
-    The [`screen`](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/comparisons/task_screen.wdl) task ensures the quantity of sequence data is sufficient to undertake genomic analysis. It uses [`fastq-scan`](https://github.com/rpetit3/fastq-scan) and bash commands for quantification of reads and base pairs, and [mash](https://mash.readthedocs.io/en/latest/index.html) sketching to estimate the genome size and its coverage. At each step, the results are assessed relative to pass/fail criteria and thresholds that may be defined by optional user inputs. Samples that do not meet these criteria will not be processed further by the workflow:
+    The [`screen`](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/comparisons/task_screen.wdl) task ensures the quantity of sequence data is sufficient to undertake genomic analysis. It uses [`fastq-scan`](https://github.com/rpetit3/fastq-scan) and bash commands for quantification of reads and base pairs, and [mash](https://mash.readthedocs.io/en/latest/index.html) sketching to estimate the genome size and its coverage. At each step, the results are assessed relative to pass/fail criteria and thresholds that may be defined by optional user inputs. Samples are run through all threshold checks, regardless of failures, and the workflow will terminate after the `screen` task if any thresholds are not met:
 
     1. Total number of reads: A sample will fail the read screening task if its total number of reads is less than or equal to `min_reads`.
     2. The proportion of basepairs reads in the forward and reverse read files: A sample will fail the read screening if fewer than `min_proportion` basepairs are in either the reads1 or read2 files.
@@ -838,7 +717,7 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 
     **Read subsampling:** Samples are automatically randomly subsampled to 150X coverage using `RASUSA`.
 
-    **Plasmid prediction:** `tiptoft`  is used to predict plasmid sequences directly from uncorrected long-read data. Plasmids are identified using replicon sequences used for typing from [PlasmidFinder](https://cge.food.dtu.dk/services/PlasmidFinder/).
+    **Plasmid prediction:** Plasmids are identified using replicon sequences used for typing from [PlasmidFinder](https://cge.food.dtu.dk/services/PlasmidFinder/).
 
     **Read filtering:** Reads are filtered by length and quality using `nanoq`. By default, sequences with less than 500 basepairs and quality score lower than 10 are filtered out to improve assembly accuracy.
 
@@ -849,9 +728,9 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
         | Workflow | **TheiaProk_ONT** |
         | --- | --- |
         | Sub-workflow | [wf_read_QC_trim_ont.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_read_QC_trim_ont.wdl) |
-        | Tasks | [task_nanoplot.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_nanoplot.wdl) [task_fastq_scan.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_fastq_scan.wdl) [task_rasusa.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/task_rasusa.wdl) [task_nanoq.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_nanoq.wdl) [task_tiptoft.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/plasmid_detection/task_tiptoft.wdl) |
-        | Software Source Code | [fastq-scan](https://github.com/rpetit3/fastq-scan), [NanoPlot](https://github.com/wdecoster/NanoPlot), [RASUSA](https://github.com/mbhall88/rasusa), [tiptoft](https://github.com/andrewjpage/tiptoft), [nanoq](https://github.com/esteinig/nanoq) |
-        | Original Publication(s) | [NanoPlot paper](https://academic.oup.com/bioinformatics/article/39/5/btad311/7160911)<br>[RASUSA paper](https://doi.org/10.21105/joss.03941)<br>[Nanoq Paper](https://doi.org/10.21105/joss.02991)<br>[Tiptoft paper](https://doi.org/10.21105/joss.01021) |
+        | Tasks | [task_nanoplot.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_nanoplot.wdl) [task_fastq_scan.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_fastq_scan.wdl) [task_rasusa.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/task_rasusa.wdl) [task_nanoq.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_nanoq.wdl)
+        | Software Source Code | [fastq-scan](https://github.com/rpetit3/fastq-scan), [NanoPlot](https://github.com/wdecoster/NanoPlot), [RASUSA](https://github.com/mbhall88/rasusa), [nanoq](https://github.com/esteinig/nanoq) |
+        | Original Publication(s) | [NanoPlot paper](https://academic.oup.com/bioinformatics/article/39/5/btad311/7160911)<br>[RASUSA paper](https://doi.org/10.21105/joss.03941)<br>[Nanoq Paper](https://doi.org/10.21105/joss.02991)<br> |
 
 ??? task "`dragonflye`: _De novo_ Assembly"
     !!! techdetails "dragonflye Technical Details"
@@ -1087,9 +966,21 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 
 ??? task "`Bakta`: Assembly Annotation (alternative)"
 
-    Assembly annotation is available via Bakta as an alternative to Prokka. When Bakta annotation is used, Prokka is not.
+    Assembly annotation is available via `Bakta` as an alternative to `Prokka`. When `Bakta` annotation is used, `Prokka` is not.
 
-    Bakta is intended for annotation of Bacteria and plasmids only, and is best described [here](https://github.com/oschwengers/bakta#description)!
+    `Bakta` is intended for annotation of Bacteria and plasmids only, and is best described [here](https://github.com/oschwengers/bakta#description)!
+
+    In addition to the standard annotation outputs, `Bakta` also provides a plot summarizing the annotation results, which can be useful for visualizing genome features.
+
+    **Bakta Database Options**
+
+    `Bakta` supports three database configurations:
+
+    **Light** Database: Optimized for faster performance and lower resource usage, with a focused set of core reference data for most bacterial genome annotations. Recommended for quick annotations or limited computational resources. Specify "light" for the `bakta_db` input.
+
+    **Full** Database (default): Comprehensive with extensive reference annotations, suitable for detailed and accurate annotations. Specify "full" for the `bakta_db` input.
+
+    **Custom** Database: Allows users to provide a Bakta-compatible database stored in Google Cloud Storage Must be a .tar.gz archive containing a properly formatted Bakta database with a valid version.json Follow the [Bakta database documentation](https://github.com/oschwengers/bakta#database) for detailed formatting requirements. Example: `"bakta_db": "gs://my-bucket/custom_bakta_db.tar.gz"`
 
     !!! techdetails "Bakta Technical Details"
         
@@ -1702,6 +1593,18 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
             | Software Source Code | [abricate](https://github.com/tseemann/abricate) |
             | Software Documentation | [abricate](https://github.com/tseemann/abricate) |
             | Database Description | [Docker container](https://github.com/StaPH-B/docker-builds/tree/master/build-files/abricate/1.0.1-vibrio-cholera) |
+    
+    ??? task "`Vibecheck`: Vibrio cholerae classificaiton"
+        
+        The `Vibecheck` task classifies _V. cholerae_ sequences into canonical lineages (T1-T17) using variant frequency demixing. 
+        
+        !!! techdetails "Vibecheck Technical Details"
+            |  | Links |
+            | --- | --- |
+            | Task | [task_vibecheck_vibrio.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/vibrio/task_vibecheck_vibrio.wdl) |
+            | Software Source Code | [Vibecheck](https://github.com/CholGen/Vibecheck) |
+            | Software Documentation | [Vibecheck](https://github.com/CholGen/Vibecheck) |
+            | Database Description | [Docker container](https://hub.docker.com/r/watronfire/vibecheck) |
 
 ### Outputs
 
@@ -1763,6 +1666,7 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
 | assembly_length | Int | Length of assembly (total contig length) as determined by QUAST | FASTA, ONT, PE, SE |
 | bakta_gbff | File | Genomic GenBank format annotation file | FASTA, ONT, PE, SE |
 | bakta_gff3 | File | Generic Feature Format Version 3 file | FASTA, ONT, PE, SE |
+| bakta_plot | File | Bakta plot output PNG file summarizing annotated genome features such as coding sequences, RNA genes, and hypothetical proteins. | FASTA, ONT, PE, SE |
 | bakta_summary | File | Bakta summary output TXT file | FASTA, ONT, PE, SE |
 | bakta_tsv | File | Annotations as simple human readable TSV | FASTA, ONT, PE, SE |
 | bakta_version | String | Bakta version used | FASTA, ONT, PE, SE |
@@ -1970,8 +1874,10 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
 | r2_mean_readlength_clean | Float | Mean read length of clean reverse reads | PE |
 | r2_mean_readlength_raw | Float | Mean read length of raw reverse reads | PE |
 | rasusa_version | String | Version of RASUSA used for analysis | ONT |
-| read_screen_clean | String | PASS or FAIL result from clean read screening; FAIL accompanied by the reason for failure | ONT, PE, SE |
-| read_screen_raw | String | PASS or FAIL result from raw read screening; FAIL accompanied by thereason for failure | ONT, PE, SE |
+| read_screen_raw | String | PASS or FAIL result from raw read screening; FAIL accompanied by the reason(s) for failure | ONT, PE, SE |
+| read_screen_raw_tsv | File | Raw read screening report TSV depicting read counts, total read base pairs, and estimated genome length | ONT, PE, SE |
+| read_screen_clean | String | PASS or FAIL result from clean read screening; FAIL accompanied by the reason(s) for failure | ONT, PE, SE |
+| read_screen_clean_tsv | File | Clean read screening report TSV depicting read counts, total read base pairs, and estimated genome length | ONT, PE, SE |
 | read1_clean | File | Clean forward reads file | ONT, PE, SE |
 | read2_clean | File | Clean reverse reads file | PE |
 | resfinder_db_version | String | Version of ResFinder database | FASTA, ONT, PE, SE |
@@ -2103,9 +2009,6 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
 | theiaprok_illumina_se_version | String | Version of TheiaProk SE workflow execution | SE |
 | theiaprok_ont_analysis_date | String | Date of TheiaProk ONT workflow execution | ONT |
 | theiaprok_ont_version | String | Version of TheiaProk ONT workflow execution | ONT |
-| tiptoft_plasmid_replicon_fastq | File | File produced by tiptoft that contains reads containing plasmid rep/inc genes | ONT |
-| tiptoft_plasmid_replicon_genes | String | Rep/inc genes found in sample | ONT |
-| tiptoft_version | String | Version of tiptoft used for analysis | ONT |
 | trimmomatic_docker | String | Docker image used for trimmomatic | PE, SE |
 | trimmomatic_version | String | Version of trimmomatic used | PE, SE |
 | ts_mlst_allelic_profile | String | Profile of MLST loci and allele numbers predicted by MLST | FASTA, ONT, PE, SE |
@@ -2118,5 +2021,11 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
 | virulencefinder_docker | String | VirulenceFinder docker image used | FASTA, ONT, PE, SE |
 | virulencefinder_hits | String | Virulence genes detected by VirulenceFinder | FASTA, ONT, PE, SE |
 | virulencefinder_report_tsv | File | Output TSV file created by VirulenceFinder | FASTA, ONT, PE, SE |
+| vibecheck_lineage_report | File | Output CSV file created by Vibecheck | PE |
+| vibecheck_top_lineage | String | Most likely lineage assigned by Vibecheck | PE |
+| vibecheck_confidence | Float | How confidence lineage assignment is. 0 - uncertain; 100 - Very certain | PE |
+| vibecheck_classification_notes | String | Additional information provided by Vibecheck during classification | PE |
+| vibecheck_version | String | Version of Vibecheck used | PE |
+| vibecheck_docker | String | Docker image used by Vibecheck task | PE |
 
 </div>

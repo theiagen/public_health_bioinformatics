@@ -4,7 +4,7 @@ task pasty {
   input {
     File assembly
     String samplename
-    Int min_pident = 95
+    Int min_percent_identity = 95
     Int min_coverage = 95
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/pasty:1.0.3"
     Int disk_size = 100
@@ -17,7 +17,7 @@ task pasty {
     pasty --version > VERSION && sed -i -e 's/pasty\, version //' VERSION  
     pasty \
     --assembly ~{assembly} \
-    --min_pident ~{min_pident} \
+    --min_pident ~{min_percent_identity} \
     --min_coverage ~{min_coverage} \
     --prefix ~{samplename} \
     --outdir .  
