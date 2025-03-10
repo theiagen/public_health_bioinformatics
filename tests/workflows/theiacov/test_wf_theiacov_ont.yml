@@ -188,7 +188,6 @@
       md5sum: dc20c75a91e9d9de3d98af59d035f17c
     - path: miniwdl_run/call-nextclade_output_parser/work/_miniwdl_inputs/0/ont.medaka.consensus.nextclade.tsv
       md5sum: d41d8cd98f00b204e9800998ecf8427e
-    - path: miniwdl_run/call-nextclade_output_parser/work/input.tsv
     - path: miniwdl_run/call-pangolin4/command
       md5sum: c1c714d97c9c01cd446da625f63e0391
     - path: miniwdl_run/call-pangolin4/inputs.json
