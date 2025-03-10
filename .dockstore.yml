@@ -293,6 +293,11 @@ workflows:
    primaryDescriptorPath: /workflows/phylogenetics/wf_snippy_streamline_fasta.wdl
    testParameterFiles:
     - /tests/inputs/empty.json
+ - name: Dorado_Basecalling_PHB
+   subclass: WDL
+   primaryDescriptorPath: /workflows/standalone_modules/wf_dorado_basecalling.wdl
+   testParameterFiles:
+    - /tests/inputs/empty.json
  - name: Concatenate_Illumina_Lanes_PHB
    subclass: WDL
    primaryDescriptorPath: /workflows/utilities/file_handling/wf_concatenate_illumina_lanes.wdl
