@@ -37,7 +37,7 @@
       md5sum: 6808ca805661622ad65ae014a4b2a094
     - path: miniwdl_run/call-consensus_qc/work/_miniwdl_inputs/0/clearlabs.fasta.gz
     - path: miniwdl_run/call-nextclade_v3/command
-      md5sum: 5f142285394dd5432eeda69c8db06444
+      md5sum: 88d92a433d30adac00c441c3506cafca
     - path: miniwdl_run/call-nextclade_v3/inputs.json
     - path: miniwdl_run/call-nextclade_v3/outputs.json
     - path: miniwdl_run/call-nextclade_v3/stderr.txt
@@ -45,16 +45,16 @@
     - path: miniwdl_run/call-nextclade_v3/stdout.txt
     - path: miniwdl_run/call-nextclade_v3/task.log
     - path: miniwdl_run/call-nextclade_v3/work/NEXTCLADE_VERSION
-      md5sum: 70aa6879bf9f0e8ba2b9953b0d4a2216
+      md5sum: b3d7ad74134ea350622437af70eb8a17
     - path: miniwdl_run/call-nextclade_v3/work/_miniwdl_inputs/0/clearlabs.fasta.gz
     - path: miniwdl_run/call-nextclade_v3/work/clearlabs.fasta.gz.nextclade.auspice.json
     - path: miniwdl_run/call-nextclade_v3/work/clearlabs.fasta.gz.nextclade.json
     - path: miniwdl_run/call-nextclade_v3/work/clearlabs.fasta.gz.nextclade.tsv
-      md5sum: 6f73969f56007a50f230d9768d95daf1
+      md5sum: 129dc67df21aedd2d40ba3b5e8fbc76b
     - path: miniwdl_run/call-nextclade_v3/work/nextclade.aligned.fasta
       md5sum: bf487271d506418ea23fe30fc033e44d
     - path: miniwdl_run/call-nextclade_v3/work/nextclade.csv
-      md5sum: d03e4ca908ab966f2a5c4e6a2a346c74
+      md5sum: 3cd5634464db3e293858b1f84edc7e92
     - path: miniwdl_run/call-nextclade_v3/work/nextclade.ndjson
     - path: miniwdl_run/call-nextclade_v3/work/nextclade_dataset_dir/genome_annotation.gff3
       md5sum: 4dff84d2d6ada820e0e3a8bc6798d402
@@ -91,7 +91,7 @@
     - path: miniwdl_run/call-nextclade_v3/work/nextclade.cds_translation.S.fasta
       md5sum: e630a638abbb2c8ab4a8b74455e9668f
     - path: miniwdl_run/call-nextclade_output_parser/command
-      md5sum: 0805cf58414b2ffaf3ea5e53f85a5f3d
+      md5sum: 3e788062764d23f592dd7dadc059c911
     - path: miniwdl_run/call-nextclade_output_parser/inputs.json
     - path: miniwdl_run/call-nextclade_output_parser/outputs.json
     - path: miniwdl_run/call-nextclade_output_parser/stderr.txt
