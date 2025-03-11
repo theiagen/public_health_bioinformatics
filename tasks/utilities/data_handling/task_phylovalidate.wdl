@@ -1,12 +1,12 @@
 version 1.0
 
-task phylovalidate {
+task phylocompare {
   input {
     File tree1_path
     File tree2_path
 
-    Float? rf_max_distance = 0.0
     Boolean? unrooted = true
+    Float? rf_max_distance
     
     String docker = "us-docker.pkg.dev/general-theiagen/theiagen/theiavalidate:0.1.0"  # update!!!
     Int disk_size = 10
@@ -30,6 +30,13 @@ task phylovalidate {
 
     # extract the RF distance
     tail -1 phylocompare.txt | cut -f 5 -d '|' | tr -d ' ' > PHYLOCOMPARE_RF_DISTANCE
+
+    # run the comparison
+    if [ -z ~{rf_max_distance} ]; then
+      echo "NA" > PHYLOVALIDATE
+    else
+      python3 -c "if float(open('PHYLOCOMPARE_RF_DISTANCE', 'r').read().strip()) > ~{rf_max_distance}: open('PHYLOVALIDATE', 'w').write('FAIL'); else: open('PHYLOVALIDATE', 'w').write('PASS')"
+    fi
   >>>
   runtime {
     docker: docker 
@@ -43,5 +50,6 @@ task phylovalidate {
     String ete3_version = read_string("VERSION")
     File summary_report = "phylocompare.txt"
     Float rf_distance = read_float("PHYLOCOMPARE_RF_DISTANCE")
+    Boolean phylovalidate = read_string("PHYLOVALIDATE") == "PASS"
   }
 }
