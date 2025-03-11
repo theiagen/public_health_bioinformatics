@@ -50,6 +50,6 @@ task phylocompare {
     String ete3_version = read_string("VERSION")
     File summary_report = "phylocompare.txt"
     Float rf_distance = read_float("PHYLOCOMPARE_RF_DISTANCE")
-    Boolean phylovalidate = read_string("PHYLOVALIDATE") == "PASS"
+    String phylovalidate = read_string("PHYLOVALIDATE")
   }
 }
