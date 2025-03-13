@@ -235,7 +235,7 @@ workflow flu_track {
         disk_size = nextclade_output_parser_disk_size
     }
   }
-  # only run GenoFLU and custom nextclade dataset if the subtype is H5N1 and the clade is 2.3.3.4b as they are specific to this subtype and clade.
+  # only run GenoFLU and custom nextclade dataset if the subtype is H5N1 and the clade is 2.3.4.4b as they are specific to this subtype and clade.
   if (select_first([flu_subtype, algorithmic_flu_subtype, abricate_flu.abricate_flu_subtype, "N/A"]) == "H5N1" && nextclade_output_parser_flu_ha.nextclade_clade == "2.3.4.4b") {
     call genoflu_task.genoflu {
       input:
