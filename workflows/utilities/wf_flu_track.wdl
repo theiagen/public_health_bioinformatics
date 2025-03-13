@@ -147,39 +147,6 @@ workflow flu_track {
       # if IRMA cannot predict a subtype (like with Flu B samples), then set the flu_subtype to the abricate_flu_subtype String output (e.g. "Victoria" for Flu B)
       String algorithmic_flu_subtype = if irma.irma_subtype == "No subtype predicted by IRMA" then abricate_flu.abricate_flu_subtype else irma.irma_subtype
     }
-    if (select_first([flu_subtype, algorithmic_flu_subtype, abricate_flu.abricate_flu_subtype, "N/A"]) == "H5N1") {
-      call genoflu_task.genoflu {
-        input:
-          assembly_fasta = select_first([irma.irma_assembly_fasta]),
-          samplename = samplename,
-          min_percent_identity = genoflu_min_percent_identity,
-          cross_reference = genoflu_cross_reference,
-          cpu = genoflu_cpu,
-          disk_size = genoflu_disk_size,
-          docker = genoflu_docker,
-          memory = genoflu_memory
-      }
-      if (genoflu.genoflu_genotype == "B3.13") {
-        call nextclade_task.nextclade_v3 as nextclade_flu_h5n1 {
-          input:
-            genome_fasta = select_first([irma.irma_assembly_fasta_concatenated]),
-            custom_input_dataset = nextclade_custom_input_dataset,
-            docker = nextclade_docker_image,
-            cpu = nextclade_cpu,
-            memory = nextclade_memory,
-            disk_size = nextclade_disk_size
-        }
-        call nextclade_task.nextclade_output_parser as nextclade_output_parser_flu_h5n1 {
-          input:
-            nextclade_tsv = nextclade_flu_h5n1.nextclade_tsv,
-            organism = standardized_organism,
-            docker = nextclade_output_parser_docker,
-            cpu = nextclade_output_parser_cpu,
-            memory = nextclade_output_parser_memory,
-            disk_size = nextclade_output_parser_disk_size
-        }
-      }
-    }
     call set_organism_defaults.organism_parameters as set_flu_na_nextclade_values {
       input:
         organism = standardized_organism,
@@ -266,6 +233,40 @@ workflow flu_track {
         cpu = nextclade_output_parser_cpu,
         memory = nextclade_output_parser_memory,
         disk_size = nextclade_output_parser_disk_size
+    }
+  }
+  # only run GenoFLU and custom nextclade dataset if the subtype is H5N1 and the clade is 2.3.3.4b as they are specific to this subtype and clade.
+  if (select_first([flu_subtype, algorithmic_flu_subtype, abricate_flu.abricate_flu_subtype, "N/A"]) == "H5N1" && nextclade_output_parser_flu_ha.nextclade_clade == "2.3.4.4b") {
+    call genoflu_task.genoflu {
+      input:
+        assembly_fasta = select_first([irma.irma_assembly_fasta]),
+        samplename = samplename,
+        min_percent_identity = genoflu_min_percent_identity,
+        cross_reference = genoflu_cross_reference,
+        cpu = genoflu_cpu,
+        disk_size = genoflu_disk_size,
+        docker = genoflu_docker,
+        memory = genoflu_memory
+    }
+    if (genoflu.genoflu_genotype == "B3.13") {
+      call nextclade_task.nextclade_v3 as nextclade_flu_h5n1 {
+        input:
+          genome_fasta = select_first([irma.irma_assembly_fasta_concatenated]),
+          custom_input_dataset = nextclade_custom_input_dataset,
+          docker = nextclade_docker_image,
+          cpu = nextclade_cpu,
+          memory = nextclade_memory,
+          disk_size = nextclade_disk_size
+      }
+      call nextclade_task.nextclade_output_parser as nextclade_output_parser_flu_h5n1 {
+        input:
+          nextclade_tsv = nextclade_flu_h5n1.nextclade_tsv,
+          organism = standardized_organism,
+          docker = nextclade_output_parser_docker,
+          cpu = nextclade_output_parser_cpu,
+          memory = nextclade_output_parser_memory,
+          disk_size = nextclade_output_parser_disk_size
+      }
     }
   }
   output {
