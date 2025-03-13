@@ -23,9 +23,9 @@ task phylovalidate {
 
     # run ete3 compare
     if ~{unrooted}; then
-      ete3 compare -t ~{tree1_path} -r ~{tree2_path} --unrooted --show_mismatches > phylocompare.txt
+      ete3 compare -t ~{tree1_path} -r ~{tree2_path} --unrooted > phylocompare.txt
     else
-      ete3 compare -t ~{tree1_path} -r ~{tree2_path} --show_mismatches > phylocompare.txt
+      ete3 compare -t ~{tree1_path} -r ~{tree2_path} > phylocompare.txt
     fi
 
     # extract the RF distance
