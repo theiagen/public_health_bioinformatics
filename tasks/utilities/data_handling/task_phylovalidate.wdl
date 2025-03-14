@@ -5,7 +5,7 @@ task phylovalidate {
     File tree1_path
     File tree2_path
 
-    Boolean? unrooted = true
+    String? outgroup
     Float? rf_max_distance
     
     String docker = "us-docker.pkg.dev/general-theiagen/theiagen/theiavalidate:0.1.0"  # update!!!
@@ -21,12 +21,12 @@ task phylovalidate {
     # grab the ete3 version
     ete3 --version > VERSION
 
-    # run ete3 compare
-    if ~{unrooted}; then
-      ete3 compare -t ~{tree1_path} -r ~{tree2_path} --unrooted > phylocompare.txt
-    else
-      ete3 compare -t ~{tree1_path} -r ~{tree2_path} > phylocompare.txt
-    fi
+    # run ete3 compare; unrooted trees are not considered
+    if ~{outgroup}  "None":
+      ete3 compare -t ~{tree1_path} -r ~{tree2_path} --src_tree_format 1 --ref_tree_format 1 > phylocompare.txt
+    else:
+      ete3 compare -t ~{tree1_path} -r ~{tree2_path} --src_tree_format 1 --ref_tree_format 1 --unrooted --outgroup ~{outgroup} > phylocompare.txt
+    ete3 compare -t ~{tree1_path} -r ~{tree2_path} --src_tree_format 1 --ref_tree_format 1 > phylocompare.txt
 
     # extract the RF distance
     tail -1 phylocompare.txt | cut -f 5 -d '|' | tr -d ' ' > PHYLOCOMPARE_RF_DISTANCE
