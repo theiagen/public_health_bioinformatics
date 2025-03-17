@@ -112,9 +112,10 @@ This workflow runs on the sample level.
 
 | **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
 |---|---|---|---|---|---|
-| freyja_fastq | **primer_bed** | File | The bed file containing the primers used when sequencing was performed |  | Required |
+| freyja_fastq | **primer_bed** | File | The bed file containing the primers used when sequencing was performed |  | Optional |
 | freyja_fastq | **read1** | File | The raw forward-facing FASTQ file (Illumina or ONT) |  | Required |
 | freyja_fastq | **reference_genome** | File | The reference genome to use; should match the reference used for alignment (Wuhan-Hu-1)  |  | Required |
+| freyja_fastq | **reference_gff** | File | The GFF file for reference; should match the reference used for alignment (Wuhan-Hu-1) |  | Optional |
 | freyja_fastq | **samplename** | String | The name of the sample |  | Required |
 | bwa | **cpu** | Int | Number of CPUs to allocate to the task | 6 | Optional |
 | bwa | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
