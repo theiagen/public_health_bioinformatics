@@ -32,7 +32,7 @@ workflow dorado_basecalling {
   }
   call dorado_basecall_task.dorado_basecall {
     input:
-      pod5_file = file_paths,
+      pod5_files = file_paths,
       dorado_model = dorado_model,
       kit_name = kit_name
   }
