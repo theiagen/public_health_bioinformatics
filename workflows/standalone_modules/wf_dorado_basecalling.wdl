@@ -30,17 +30,15 @@ workflow dorado_basecalling {
       bucket_path = pod5_bucket_path,
       file_extension = ".pod5"
   }
-  scatter (file_path in find_files.file_paths) {
-    call dorado_basecall_task.dorado_basecall {
-      input:
-        pod5_file = file_path,
-        dorado_model = dorado_model,
-        kit_name = kit_name
-    }
+  call dorado_basecall_task.dorado_basecall {
+    input:
+      pod5_file = file_paths,
+      dorado_model = dorado_model,
+      kit_name = kit_name
   }
   call dorado_demux_task.dorado_demux {
     input:
-      bam_files = flatten(dorado_basecall.bam_files),
+      bam_files = dorado_basecall.bam_files,
       kit_name = kit_name,
       output_file_prefix = output_file_prefix,
       dorado_model_used = dorado_basecall.dorado_model_used[0],
