@@ -8,8 +8,7 @@ task create_table_from_array {
     String output_file_column_name
     String? data_source
 
-    Array[String]? additional_columns_content
-    Array[String]? additional_columns_names
+    Map[String, String?] columns_to_export
 
     String terra_project
     String terra_workspace
@@ -19,6 +18,7 @@ task create_table_from_array {
     String docker = "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-06-21"
     Int memory = 2
   }
+    File columns_to_export_json = write_json(columns_to_export)
   meta {
     volatile: true
   }
@@ -33,9 +33,11 @@ task create_table_from_array {
     echo "DEBUG: data_source: ~{data_source}" >&2
     
     # add additional columns to the terra table
-    column_names="~{sep="\t" additional_columns_names}"
-    column_content="~{sep="\t" additional_columns_content}"
+    jq -r '[.[] | .left], [.[] | .right] | @tsv' ~{columns_to_export_json} > exported_columns.tsv
 
+    column_names=$(head -n1 exported_columns.tsv)
+    column_content=$(tail -n1 exported_columns.tsv)
+ 
     echo -e "entity:~{new_table_name_updated}_id\t~{output_file_column_name}\tupload_date\ttable_created_by\t${column_names}" > terra_table_to_upload.tsv
 
     UPLOAD_DATE=$(date -I)

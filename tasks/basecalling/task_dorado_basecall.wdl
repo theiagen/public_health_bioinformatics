@@ -29,24 +29,12 @@ task dorado_basecall {
 
     # get path to localized pod5 files
     pod5s=(~{sep=" " pod5_files})
-    pod5_dir=$(dirname pod5s[1])
-
-    # # Create a unique output directory for each scatter job
-    # base_name=$(basename "~{pod5_files}" .pod5)
-    # bam_output="output/bam_${base_name}/"
-    # mkdir -p "$bam_output"
-
-    # echo "### Starting basecalling for ~{pod5_files} ###" | tee -a dorado_basecall.log
-
-    # # Set BAM file path with unique naming based on POD5 basename
-    # bam_file="$bam_output/${base_name}.bam"
-
-    # echo "Processing ~{pod5_files}, expected output: $bam_file" | tee -a dorado_basecall.log
+    pod5_dir=$(dirname ${pod5s[1]})
 
     # Run Dorado basecaller and log output
     dorado basecaller \
       "${dorado_model_variable}" \
-      pod5_dir/ \
+      ${pod5_dir}/ \
       --kit-name ~{kit_name} \
       --no-trim \
       --output-dir "output/" \
@@ -61,11 +49,7 @@ task dorado_basecall {
       echo "~{dorado_model}" | tee DORADO_MODEL
     fi
 
-    # # Rename the generated BAM file to the unique name based on pod5_file
-    # generated_bam=$(find "$bam_output" -name "*.bam" | head -n 1)
-    # mv "$generated_bam" "$bam_file"
-
-    echo "Basecalling completed. BAM file renamed to: $bam_file" | tee -a "dorado_basecall.log"
+    echo "Basecalling completed. BAM file renamed to:" | tee -a "dorado_basecall.log"
   >>>
   output {
     Array[File] bam_files = glob("output/*.bam")

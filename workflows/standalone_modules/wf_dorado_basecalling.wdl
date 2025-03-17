@@ -32,7 +32,7 @@ workflow dorado_basecalling {
   }
   call dorado_basecall_task.dorado_basecall {
     input:
-      pod5_files = file_paths,
+      pod5_files = find_files.file_paths,
       dorado_model = dorado_model,
       kit_name = kit_name
   }
@@ -41,7 +41,7 @@ workflow dorado_basecalling {
       bam_files = dorado_basecall.bam_files,
       kit_name = kit_name,
       output_file_prefix = output_file_prefix,
-      dorado_model_used = dorado_basecall.dorado_model_used[0],
+      dorado_model_used = dorado_basecall.dorado_model_used,
       demux_notrim = demux_notrim
   }
   if (defined(custom_primers)) {
@@ -58,8 +58,13 @@ workflow dorado_basecalling {
       file_ending = ".fastq.gz",
       output_file_column_name = "read1",
       data_source = "Dorado_Basecalling_PHB",
-      additional_columns_content = [dorado_basecall.dorado_docker[0], dorado_basecall.dorado_version[0], dorado_demux.dorado_model_name, version_capture.phb_version, version_capture.date],
-      additional_columns_names = ["dorado_docker", "dorado_version", "dorado_model_name", "dorado_basecalling_phb_version", "dorado_basecalling_analysis_date"],
+      columns_to_export = {
+        "dorado_docker": dorado_basecall.dorado_docker, 
+        "dorado_version": dorado_basecall.dorado_version,
+        "dorado_model_name": dorado_demux.dorado_model_name, 
+        "dorado_basecalling_phb_verrsion": version_capture.phb_version, 
+        "dorado_basecalling_analysis_date": version_capture.date
+      },
       terra_project = terra_project,
       terra_workspace = terra_workspace
   }
@@ -68,8 +73,8 @@ workflow dorado_basecalling {
     Array[File] fastq_files = select_first([dorado_trim.trimmed_fastq_files, dorado_demux.fastq_files])
     String dorado_model_used = dorado_demux.dorado_model_name
     # task versioning
-    String dorado_basecall_version = dorado_basecall.dorado_version[0]
-    String dorado_basecall_docker = dorado_basecall.dorado_docker[0]
+    String dorado_basecall_version = dorado_basecall.dorado_version
+    String dorado_basecall_docker = dorado_basecall.dorado_docker
     String dorado_demux_version = dorado_demux.dorado_version
     String? dorado_trim_version = dorado_trim.dorado_version
     # uploaded table
