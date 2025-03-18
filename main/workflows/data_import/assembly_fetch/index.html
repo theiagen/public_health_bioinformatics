@@ -4970,9 +4970,9 @@
 <li>You can provide an accession for the specific assembly that you want to download, and <code>Assembly_Fetch</code> will run only the NCBI genome download task to download this assembly,</li>
 <li>You can provide an assembly, and <code>Assembly_Fetch</code> will first use the <code>ReferenceSeeker</code> task to first find the closest reference genome in RefSeq to your query assembly and then will run the NCBI genome download task to download that reference assembly.</li>
 </ol>
-<div class="admonition tip">
-<p class="admonition-title">Tip</p>
-<p>NOTE: If using Assembly_Fetch workflow version 1.3.0 or higher, the call-caching feature of Terra has been DISABLED to ensure that the workflow is run from the beginning and data is downloaded fresh. Call-caching will not be enabled, even if the user checks the box ✅ in the Terra workflow interface.</p>
+<div class="admonition info">
+<p class="admonition-title">Call-Caching Disabled</p>
+<p>If using Assembly_Fetch workflow version 1.3.0 or higher, the call-caching feature of Terra has been DISABLED to ensure that the workflow is run from the beginning and data is downloaded fresh. Call-caching will not be enabled, even if the user checks the box ✅ in the Terra workflow interface.</p>
 </div>
 <h3 id="inputs">Inputs<a class="headerlink" href="#inputs" title="Permanent link">&para;</a></h3>
 <p>Assembly_Fetch requires the input samplename, and either the accession for a reference genome to download (ncbi_accession) or an assembly that can be used to query RefSeq for the closest reference genome to download (assembly_fasta).</p>
@@ -4998,7 +4998,7 @@
 <td>reference_fetch</td>
 <td><strong>samplename</strong></td>
 <td>String</td>
-<td>Your sample's name</td>
+<td>The name of your sample</td>
 <td></td>
 <td>Required</td>
 </tr>
@@ -5006,7 +5006,7 @@
 <td>reference_fetch</td>
 <td><strong>assembly_fasta</strong></td>
 <td>File</td>
-<td>Assembly FASTA file of your sample</td>
+<td>Assembly FASTA file for your sample</td>
 <td></td>
 <td>Optional</td>
 </tr>
@@ -5039,7 +5039,7 @@
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>"us-docker.pkg.dev/general-theiagen/staphb/ncbi-datasets:14.13.2"</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/ncbi-datasets:14.13.2</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -5047,7 +5047,7 @@
 <td><strong>include_gbff</strong></td>
 <td>Boolean</td>
 <td>Set to true if you would like the GenBank Flat File (GBFF) file included in the output. It contains nucleotide sequence, metadata, and annotations.</td>
-<td>FALSE</td>
+<td>false</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -5055,7 +5055,7 @@
 <td><strong>include_gff3</strong></td>
 <td>Boolean</td>
 <td>Set to true if you would like the Genomic Feature File v3 (GFF3) file included in the output. It contains nucleotide sequence, metadata, and annotations</td>
-<td>FALSE</td>
+<td>false</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -5071,7 +5071,7 @@
 <td><strong>use_ncbi_virus</strong></td>
 <td>Boolean</td>
 <td>Set to true when downloading from NCBI Virus Datasets</td>
-<td>FALSE</td>
+<td>false</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -5095,7 +5095,7 @@
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>"us-docker.pkg.dev/general-theiagen/biocontainers/referenceseeker:1.8.0--pyhdfd78af_0"</td>
+<td>us-docker.pkg.dev/general-theiagen/biocontainers/referenceseeker:1.8.0--pyhdfd78af_0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -5126,8 +5126,8 @@
 <td>referenceseeker</td>
 <td><strong>referenceseeker_db</strong></td>
 <td>File</td>
-<td>Database used by the referenceseeker tool that contains bacterial genomes from RefSeq release 205. Downloaded from referenceseeker GitHub repo.</td>
-<td>"gs://theiagen-public-files-rp/terra/theiaprok-files/referenceseeker-bacteria-refseq-205.v20210406.tar.gz"</td>
+<td>Database used by the referenceseeker tool that contains bacterial genomes from RefSeq release 205. Downloaded from the referenceseeker GitHub repository.</td>
+<td>gs://theiagen-public-files-rp/terra/theiaprok-files/referenceseeker-bacteria-refseq-205.v20210406.tar.gz</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -5135,7 +5135,7 @@
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>"us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0"</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -5151,10 +5151,10 @@
 </div>
 <h3 id="workflow-tasks">Workflow Tasks<a class="headerlink" href="#workflow-tasks" title="Permanent link">&para;</a></h3>
 <details class="task">
-<summary>ReferenceSeeker (optional) Details</summary>
+<summary>ReferenceSeeker Details (Optional)</summary>
 <h5 id="referenceseeker">ReferenceSeeker<a class="headerlink" href="#referenceseeker" title="Permanent link">&para;</a></h5>
 <p><code>ReferenceSeeker</code> uses your draft assembly to identify closely related bacterial, viral, fungal, or plasmid genome assemblies in <a href="https://www.ncbi.nlm.nih.gov/refseq/">RefSeq</a>.</p>
-<p>Databases for use with ReferenceSeeker are as follows, and can be used by pasting the gs uri in double quotation marks <code>" "</code> into the <code>referenceseeker_db</code> optional input:</p>
+<p>Databases that can be used with ReferenceSeeker are as follows:</p>
 <ul>
 <li>archea:  <code>gs://theiagen-public-files-rp/terra/theiaprok-files/referenceseeker-archaea-refseq-205.v20210406.tar.gz</code></li>
 <li>bacterial (<strong>default</strong>): <code>gs://theiagen-public-files-rp/terra/theiaprok-files/referenceseeker-bacteria-refseq-205.v20210406.tar.gz</code></li>
@@ -5162,7 +5162,8 @@
 <li>plasmids: <code>gs://theiagen-public-files-rp/terra/theiaprok-files/referenceseeker-plasmids-refseq-205.v20210406.tar.gz</code></li>
 <li>viral: <code>gs://theiagen-public-files-rp/terra/theiaprok-files/referenceseeker-viral-refseq-205.v20210406.tar.gz</code></li>
 </ul>
-<p>For ReferenceSeeker to identify a genome, it must meet user-specified thresholds for sequence coverage (<code>referenceseeker_conserved_dna_threshold</code>) and identity (<code>referenceseeker_ani_threshold</code>). The default values for these are set according to community standards (conserved DNA &gt;= 69 % and ANI &gt;= 95 %). A list of closely related genomes is provided in <code>referenceseeker_tsv</code>. The reference genome that ranks highest according to ANI and conserved DNA values is considered the closest match and will be downloaded, with information about this provided in the <code>assembly_fetch_referenceseeker_top_hit_ncbi_accession</code> output.</p>
+<p>For ReferenceSeeker to identify a genome, it must meet user-specified thresholds for sequence coverage (<code>referenceseeker_conserved_dna_threshold</code>; default &gt;= 0.69) and identity (<code>referenceseeker_ani_threshold</code>; default &gt;= 0.95 ). </p>
+<p>A list of closely related genomes is provided in <code>referenceseeker_tsv</code>. The reference genome that ranks highest according to ANI and conserved DNA values is considered the closest match and will be downloaded, with information about this provided in the <code>assembly_fetch_referenceseeker_top_hit_ncbi_accession</code> output.</p>
 <div class="admonition techdetails">
 <p class="admonition-title">ReferenceSeeker Technical Details</p>
 <table>
@@ -5179,11 +5180,11 @@
 </tr>
 <tr>
 <td>Software Source Code</td>
-<td>https://github.com/oschwengers/referenceseeker</td>
+<td><a href="https://github.com/oschwengers/referenceseeker">ReferenceSeeker on GitHub</a></td>
 </tr>
 <tr>
 <td>Software Documentation</td>
-<td>https://github.com/oschwengers/referenceseeker</td>
+<td><a href="https://github.com/oschwengers/referenceseeker">ReferenceSeeker on GitHub</a></td>
 </tr>
 <tr>
 <td>Original Publication(s)</td>
@@ -5213,15 +5214,15 @@
 </tr>
 <tr>
 <td>Software Source Code</td>
-<td>https://github.com/ncbi/datasets</td>
+<td><a href="https://github.com/ncbi/datasets">NCBI Datasets on GitHub</a></td>
 </tr>
 <tr>
 <td>Software Documentation</td>
-<td>https://github.com/ncbi/datasets</td>
+<td><a href="https://www.ncbi.nlm.nih.gov/datasets/docs/v2/">NCBI Datasets Documentation on NCBI</a></td>
 </tr>
 <tr>
 <td>Original Publication(s)</td>
-<td>Not known to be published</td>
+<td><a href="https://doi.org/10.1038/s41597-024-03571-y">Exploring and retrieving sequence and metadata for species across the tree of life with NCBI Datasets</a></td>
 </tr>
 </tbody>
 </table>
@@ -5241,7 +5242,7 @@
 <tr>
 <td>assembly_fetch_analysis_date</td>
 <td>String</td>
-<td>Date of assembly download</td>
+<td>The date the workflow was run</td>
 </tr>
 <tr>
 <td>assembly_fetch_ncbi_datasets_assembly_data_report_json</td>
@@ -5312,7 +5313,7 @@
 </blockquote>
 <!-- -->
 <blockquote>
-<p><strong>NCBI datasets: datasets:</strong> NCBI Datasets is an experimental resource for finding and building datasets [Internet]. Github; [cited 2023 Apr 19]. Available from: <a href="https://github.com/ncbi/datasets">https://github.com/ncbi/datasets</a></p>
+<p><strong>NCBI Datasets:</strong> O’Leary NA, Cox E, Holmes JB, et al. Exploring and retrieving sequence and metadata for species across the tree of life with NCBI Datasets. Sci Data 11, 732 (2024).</p>
 </blockquote>
 
 
@@ -5336,7 +5337,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="February 5, 2025 21:42:39">2025-02-05</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="March 18, 2025 14:48:15">2025-03-18</span>
   </span>
 
     
@@ -5383,7 +5384,7 @@
       <div class="md-copyright">
   
     <div class="md-copyright__highlight">
-      &copy; 2022-2024 <a href="https://www.theiagen.com" target="_blank" rel="noopener">Theiagen Genomics</a>
+      &copy; 2022-2025 <a href="https://www.theiagen.com" target="_blank" rel="noopener">Theiagen Genomics</a>
 
     </div>
   
