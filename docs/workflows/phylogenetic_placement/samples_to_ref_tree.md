@@ -25,7 +25,7 @@ However, nextclade can be used on any organism as long as an an existing, high-q
 | nextclade_addToRefTree | **nextclade_dataset_name** | String | What nextclade dataset name to run nextclade on; the options are: "sars-cov-2", "flu_h1n1pdm_ha", "flu_h1n1pdm_na", "flu_h3n2_ha", "flu_h3n2_na", "flu_vic_ha", "flu_vic_na", "flu_yam_ha", "hMPXV", "hMPXV_B1", "MPXV", "rsv_a" and "rsv_b"  |  | Required |
 | nextclade_add_ref | **cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional |
 | nextclade_add_ref | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
-| nextclade_add_ref | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/nextstrain/nextclade:3.3.1 | Optional |
+| nextclade_add_ref | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/nextstrain/nextclade:3.10.2 | Optional |
 | nextclade_add_ref | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 4 | Optional |
 | nextclade_add_ref | **verbosity** | String | Set the nextclade output verbosity level. Options: off, error, warn, info, debug, trace | "warn" | Optional |
 | nextclade_addToRefTree | **dataset_tag** | String | nextclade dataset tag | Uses the dataset tag associated with the nextclade docker image version | Optional |
