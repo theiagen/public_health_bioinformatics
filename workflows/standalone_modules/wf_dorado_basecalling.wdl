@@ -6,6 +6,7 @@ import "../../tasks/basecalling/task_dorado_trim.wdl" as dorado_trim_task
 import "../../tasks/task_versioning.wdl" as versioning
 import "../../tasks/utilities/data_import/task_array_to_terra.wdl" as create_fastq_table
 import "../../tasks/utilities/file_handling/task_find_files.wdl" as find_files_task
+import "../../tasks/utilities/file_handling/task_make_file_chunk.wdl" as chunk_file
 
 workflow dorado_basecalling {
   meta {
@@ -21,6 +22,8 @@ workflow dorado_basecalling {
     String output_file_prefix 
     Boolean demux_notrim = false
     File? custom_primers
+
+    Int number_chunks = 4
   }
   call versioning.version_capture {
     input:
@@ -30,18 +33,30 @@ workflow dorado_basecalling {
       bucket_path = pod5_bucket_path,
       file_extension = ".pod5"
   }
-  call dorado_basecall_task.dorado_basecall {
-    input:
-      pod5_files = find_files.file_paths,
-      dorado_model = dorado_model,
-      kit_name = kit_name
+  Int chunk_size = length(find_files.file_paths) / number_chunks
+  scatter (i in range(number_chunks)) {
+    Int start_line = (i * chunk_size + 1)
+    Int end_line = if (i == number_chunks - 1) then length(find_files.file_paths) else (i + 1) * chunk_size
+    
+    call chunk_file.make_file_chunk {
+      input:
+        file_list = write_lines(find_files.file_paths),
+        start_line = start_line,
+        end_line = end_line
+    }
+    call dorado_basecall_task.dorado_basecall {
+      input:
+        pod5_files = read_lines(make_file_chunk.chunk),
+        dorado_model = dorado_model,
+        kit_name = kit_name
+    }
   }
   call dorado_demux_task.dorado_demux {
     input:
-      bam_files = dorado_basecall.bam_files,
+      bam_files = flatten(dorado_basecall.bam_files),
       kit_name = kit_name,
       output_file_prefix = output_file_prefix,
-      dorado_model_used = dorado_basecall.dorado_model_used,
+      dorado_model_used = dorado_basecall.dorado_model_used[0],
       demux_notrim = demux_notrim
   }
   if (defined(custom_primers)) {
@@ -59,8 +74,8 @@ workflow dorado_basecalling {
       output_file_column_name = "read1",
       data_source = "Dorado_Basecalling_PHB",
       columns_to_export = {
-        "dorado_docker": dorado_basecall.dorado_docker, 
-        "dorado_version": dorado_basecall.dorado_version,
+        "dorado_docker": dorado_basecall.dorado_docker[0], 
+        "dorado_version": dorado_basecall.dorado_version[0],
         "dorado_model_name": dorado_demux.dorado_model_name, 
         "dorado_basecalling_phb_verrsion": version_capture.phb_version, 
         "dorado_basecalling_analysis_date": version_capture.date
@@ -73,8 +88,8 @@ workflow dorado_basecalling {
     Array[File] fastq_files = select_first([dorado_trim.trimmed_fastq_files, dorado_demux.fastq_files])
     String dorado_model_used = dorado_demux.dorado_model_name
     # task versioning
-    String dorado_basecall_version = dorado_basecall.dorado_version
-    String dorado_basecall_docker = dorado_basecall.dorado_docker
+    String dorado_basecall_version = dorado_basecall.dorado_version[0]
+    String dorado_basecall_docker = dorado_basecall.dorado_docker[0]
     String dorado_demux_version = dorado_demux.dorado_version
     String? dorado_trim_version = dorado_trim.dorado_version
     # uploaded table
