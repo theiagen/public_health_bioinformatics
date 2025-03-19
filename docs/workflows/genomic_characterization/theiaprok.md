@@ -333,6 +333,10 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 | merlin_magic | **tbprofiler_variant_caller** | String | Select a different variant caller for TBProfiler to use by writing it in this block; see TBProfiler’s original documentation for available options. | GATK | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **tbprofiler_variant_calling_params** | String | Enter additional variant calling parameters in this free text input to customize how the variant caller works in TBProfiler | | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **theiaeuk** | Boolean | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **vibecheck_lineage_barcodes** | String   | Feather formatted lineage barcodes to use instead of default O1 barcodes |  | Optional | PE |
+| merlin_magic | **vibecheck_subsampling_fraction** | Float | Fraction of reads to use in classification. | 0.2  | Optional | PE |
+| merlin_magic | **vibecheck_skip_subsampling**  | Boolean | When enabled, will not subsample reads prior to classification. Will increase computation time | False | Optional | PE |
+| merlin_magic | **vibecheck_docker_image** | String | The Docker container to use for the task | watronfire/vibecheck:2025.02.24 | Optional | PE |
 | merlin_magic | **virulencefinder_min_percent_coverage** | Float | The threshold for minimum coverage |  | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **virulencefinder_database** | String | The specific database to use | virulence_ecoli | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **virulencefinder_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/virulencefinder:2.0.4 | Optional | FASTA, ONT, PE, SE |
@@ -505,7 +509,6 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 | ts_mlst | **scheme** | String | Don’t autodetect the MLST scheme; force this scheme on all inputs (see <https://github.com/tseemann/mlst/blob/master/db/scheme_species_map.tab> for accepted strings) | None | Optional | FASTA, ONT, PE, SE |
 | version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional | FASTA, ONT, PE, SE |
 | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) | | Optional | FASTA, ONT, PE, SE |
-
 </div>
 
 !!! tip "Skip Characterization"
@@ -1237,7 +1240,7 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
         
         The `stxtyper_report` output TSV is provided in [this output format.](https://github.com/ncbi/stxtyper/tree/v1.0.24?tab=readme-ov-file#output)
 
-        Eventually this tool will be incorporated into AMRFinderPlus and will run behind-the-scenes when the user (or in this case, the TheiaProk workflow) provides the `amrfinder --organism Escherichia` option.
+        This tool has been incorporated into v4.0.3 of AMRFinderPlus and runs behind-the-scenes when the user (or in this case, the TheiaProk workflow) provides the `amrfinder --organism Escherichia --plus` options.
 
         !!! techdetails "StxTyper Technical Details"
 
@@ -1590,6 +1593,18 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
             | Software Source Code | [abricate](https://github.com/tseemann/abricate) |
             | Software Documentation | [abricate](https://github.com/tseemann/abricate) |
             | Database Description | [Docker container](https://github.com/StaPH-B/docker-builds/tree/master/build-files/abricate/1.0.1-vibrio-cholera) |
+    
+    ??? task "`Vibecheck`: Vibrio cholerae classificaiton"
+        
+        The `Vibecheck` task classifies _V. cholerae_ sequences into canonical lineages (T1-T17) using variant frequency demixing. 
+        
+        !!! techdetails "Vibecheck Technical Details"
+            |  | Links |
+            | --- | --- |
+            | Task | [task_vibecheck_vibrio.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/vibrio/task_vibecheck_vibrio.wdl) |
+            | Software Source Code | [Vibecheck](https://github.com/CholGen/Vibecheck) |
+            | Software Documentation | [Vibecheck](https://github.com/CholGen/Vibecheck) |
+            | Database Description | [Docker container](https://hub.docker.com/r/watronfire/vibecheck) |
 
 ### Outputs
 
@@ -1958,8 +1973,10 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
 | staphopiasccmec_types_and_mecA_presence | String | staphopia-sccmec Hamming distance file | FASTA, ONT, PE, SE |
 | staphopiasccmec_version | String | staphopia-sccmec presence and absence TSV file | FASTA, ONT, PE, SE |
 | stxtyper_all_hits | String | Comma-separated list of matches of all types. Includes complete, partial, frameshift, internal stop, and novel hits. List is de-duplicated so multiple identical hits are only listed once. For example if 5 partial stx2 hits are detected in the genome, only 1 "stx2" will be listed in this field. To view the potential subtype for each partial hit, the user will need to view the stxtyper_report TSV file. | FASTA, ONT, PE, SE |
+| stxtyper_ambiguous_hits | String | Comma-separated list of matches that have the OPERON output of "AMBIGUOUS". Ambiguous bases found in the query sequence (e.g., N) | FASTA, ONT, PE, SE |
 | stxtyper_complete_operons | String | Comma-separated list of all COMPLETE operons detected by StxTyper. Show multiple hits if present in results. | FASTA, ONT, PE, SE |
 | stxtyper_docker | String | Name of docker image used by the stxtyper task. | FASTA, ONT, PE, SE |
+| stxtyper_extended_operons | String | Comma-separated list of all EXTENDED operons detected by StxTyper if coding sequence extends beyond the reference stop codon for one or both of the reference proteins. | FASTA, ONT, PE, SE |
 | stxtyper_novel_hits | String | Comma-separated list of matches that have the OPERON output of "COMPLETE_NOVEL". Possible outputs "stx1", "stx2", or "stx1,stx2" | FASTA, ONT, PE, SE |
 | stxtyper_num_hits | Int | Number of "hits" or rows present in the `stxtyper_report` TSV file | FASTA, ONT, PE, SE |
 | stxtyper_partial_hits | String | Possible outputs "stx1", "stx2", or "stx1,stx2". Tells the user that there was a partial hit to either the A or B subunit, but does not describe which subunit, only the possible types from the PARTIAL matches. | FASTA, ONT, PE, SE |
@@ -2006,5 +2023,11 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
 | virulencefinder_docker | String | VirulenceFinder docker image used | FASTA, ONT, PE, SE |
 | virulencefinder_hits | String | Virulence genes detected by VirulenceFinder | FASTA, ONT, PE, SE |
 | virulencefinder_report_tsv | File | Output TSV file created by VirulenceFinder | FASTA, ONT, PE, SE |
+| vibecheck_lineage_report | File | Output CSV file created by Vibecheck | PE |
+| vibecheck_top_lineage | String | Most likely lineage assigned by Vibecheck | PE |
+| vibecheck_confidence | Float | How confidence lineage assignment is. 0 - uncertain; 100 - Very certain | PE |
+| vibecheck_classification_notes | String | Additional information provided by Vibecheck during classification | PE |
+| vibecheck_version | String | Version of Vibecheck used | PE |
+| vibecheck_docker | String | Docker image used by Vibecheck task | PE |
 
 </div>
