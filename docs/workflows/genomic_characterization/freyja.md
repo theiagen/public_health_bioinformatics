@@ -591,6 +591,7 @@ Allowed options:
 - MPXV
 - H5NX
 - H1N1pdm
+- H3N2
 - FLU-B-VIC
 - MEASLESN450
 - MEASLES
