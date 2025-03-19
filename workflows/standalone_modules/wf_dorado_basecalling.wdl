@@ -102,6 +102,7 @@ workflow dorado_basecalling {
     String dorado_basecall_docker = dorado_basecall.dorado_docker[0]
     String dorado_demux_version = dorado_demux.dorado_version
     String? dorado_trim_version = dorado_trim.dorado_version
+    String? pod5_channel_splitting_version = subset_pod5s.pod5_version
     # uploaded table
     File terra_table_tsv = create_table_from_array.terra_table_to_upload
     # workflow versioning

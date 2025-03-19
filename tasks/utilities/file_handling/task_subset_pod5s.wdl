@@ -17,7 +17,7 @@ task subset_pod5s {
   >>>
   output {
     Array[File] pod5s_by_channel = glob("split_by_channel/*pod5")
-    Stirng pod5_version = read_string("VERSION")
+    String pod5_version = read_string("VERSION")
   }
   runtime {
     docker: "~{docker}"
