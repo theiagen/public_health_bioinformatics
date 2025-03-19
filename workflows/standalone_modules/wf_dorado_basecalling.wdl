@@ -6,7 +6,7 @@ import "../../tasks/basecalling/task_dorado_trim.wdl" as dorado_trim_task
 import "../../tasks/task_versioning.wdl" as versioning
 import "../../tasks/utilities/data_import/task_array_to_terra.wdl" as create_fastq_table
 import "../../tasks/utilities/file_handling/task_find_files.wdl" as find_files_task
-import "../../tasks/utilities/file_handling/task_make_file_chunk.wdl" as chunk_file
+import "../../tasks/utilities/file_handling/task_chunk_files.wdl" as chunk_file
 
 workflow dorado_basecalling {
   meta {
@@ -33,12 +33,17 @@ workflow dorado_basecalling {
       bucket_path = pod5_bucket_path,
       file_extension = ".pod5"
   }
-  Int chunk_size = length(find_files.file_paths) / number_chunks
-  scatter (i in range(number_chunks)) {
+  Int number_of_files = length(find_files.file_paths)
+  Int chunk_size = number_of_files / number_chunks
+  if (number_chunks > number_of_files) {
+    # if this condition is true, the scatter would be sad
+    Int alt_number_chunks = number_of_files
+  }
+  scatter (i in range(select_first([alt_number_chunks, number_chunks]))) {
     Int start_line = (i * chunk_size + 1)
-    Int end_line = if (i == number_chunks - 1) then length(find_files.file_paths) else (i + 1) * chunk_size
-    
-    call chunk_file.make_file_chunk {
+    Int end_line = if (i == number_chunks - 1) then number_of_files else (i + 1) * chunk_size
+    # since wdl v1 doesn't do array splicing (:sob:), we have to mimic that behavior with line splicing out of a file 
+    call chunk_file.chunk_files {
       input:
         file_list = write_lines(find_files.file_paths),
         start_line = start_line,
@@ -46,7 +51,7 @@ workflow dorado_basecalling {
     }
     call dorado_basecall_task.dorado_basecall {
       input:
-        pod5_files = read_lines(make_file_chunk.chunk),
+        pod5_files = read_lines(chunk_files.chunk),
         dorado_model = dorado_model,
         kit_name = kit_name
     }
@@ -97,6 +102,5 @@ workflow dorado_basecalling {
     # workflow versioning
     String dorado_basecalling_phb_version = version_capture.phb_version
     String dorado_basecalling_analysis_date = version_capture.date
-    
   }
 }

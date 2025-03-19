@@ -114,6 +114,13 @@ Ensure you use an accepted barcoding kit name in the `kit_name` parameter. Check
   
     - **kit_name**: Ensure the correct kit name is provided, as it determines the barcoding and adapter trimming behavior. See the [Supported Kit Names](#supported-kit-names) section for a list of accepted kit names.
 
+!!! tip "Increasing Chunk Size"
+    The POD5 files present in the `pod5_bucket_path` will be split into four groups (or the number indicated by `number_chunks` ) for basecalling. You can decrease runtime by raising the number of chunks with the `number_chunks` variable.
+    
+    We recommend keeping the number of chunks relatively low in order to prevent VM allocation times from drastically increasing, as this can negatively impact the speed of the analysis due to wait times reaching upwards of days (e.g., if chunk size > 100).
+
+    Make sure the number of chunks is LESS than the number of files in the `pod5_bucket_path` location, else the number of chunks will be set to the number of files in the `pod5_bucket_path`.
+
 <div class="searchable-table" markdown="1">
 
 | **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
@@ -124,6 +131,10 @@ Ensure you use an accepted barcoding kit name in the `kit_name` parameter. Check
 | dorado_basecalling | **pod5_bucket_path** | String | GCS path of the bucket containing POD5 files. |  | Required |
 | dorado_basecalling | **terra_project** | String | The name of your Terra project. You can find this information in the URL of the webpage of your Terra dashboard. For example, if your URL contains `#workspaces/example/my_workspace/` then your project name is `example` |  | Required |
 | dorado_basecalling | **terra_workspace** | String | The name of your Terra workspace where your samples can be found. For example, if your URL contains `#workspaces/example/my_workspace/` then your workspace name is `my_workspace` |  | Required |
+| chunk_files | **cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional |
+| chunk_files | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 25 | Optional |
+| chunk_files | **docker** | Int | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1 | Optional |
+| chunk_files | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 2 | Optional |
 | create_table_from_array | **cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional |
 | create_table_from_array | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 25 | Optional |
 | create_table_from_array | **docker** | Int | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-06-21 | Optional |
@@ -135,6 +146,7 @@ Ensure you use an accepted barcoding kit name in the `kit_name` parameter. Check
 | dorado_basecalling | **custom_primers** | File | A FASTA file containing custom primer sequences for PCR primer trimming during demultiplexing. |  | Optional |
 | dorado_basecalling | **demux_notrim** | Boolean | Set to `true` to disable barcode trimming during demultiplexing. | false | Optional |
 | dorado_basecalling | **dorado_model** | String | The model to use during basecalling ('sup' for super accuracy, 'hac' for high accuracy, or 'fast' for high speed). Users may also specify a full model name (see [above](#model-type-selection) for more details). | "sup" | Optional |
+| dorado_basecalling | **number_chunks** | Int | The number of chunks to split the input files into for basecalling; increasing chunk size can decrease runtime, though too high of a chunk size will be detrimental instead of beneficial due to resource allocation and quota limits | 4 | Optional |
 | dorado_demux | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional |
 | dorado_demux | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
 | dorado_demux | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/dorado:0.9.0-cuda12.2.0 | Optional |

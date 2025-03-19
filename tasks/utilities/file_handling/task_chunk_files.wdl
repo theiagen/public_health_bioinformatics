@@ -1,6 +1,6 @@
 version 1.0
 
-task make_file_chunk {
+task chunk_files {
   input {
     File file_list
 
