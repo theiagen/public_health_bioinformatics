@@ -5,7 +5,7 @@ task amr_search {
     File input_fasta
     String samplename
     String amr_search_database = "485"
-    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/amrsearch:0.2.0"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/amrsearch:0.2.1"
     Int cpu = 2
     Int disk_size = 50
     Int memory = 8
@@ -32,7 +32,7 @@ task amr_search {
   output {
     File json_output = "~{samplename}_paarsnp_results.jsn"
     File output_csv = "~{samplename}_amr_results.csv"
-    File output_png = "~{samplename}_amr_results.png"
+    File output_pdf = "~{samplename}_amr_results.pdf"
     File output_version = "output_amr_version.txt"
     String amr_search_docker = docker
   }

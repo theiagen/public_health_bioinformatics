@@ -20,7 +20,7 @@ workflow amr_search_workflow {
   output {
     File amr_search_results = amr_search.json_output
     File amr_results_csv = amr_search.output_csv
-    File amr_results_png = amr_search.output_png
+    File amr_results_pdf = amr_search.output_pdf
     String amr_search_docker = amr_search.amr_search_docker
     String amr_search_version = read_string(amr_search.output_version)
   }

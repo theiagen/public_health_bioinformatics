@@ -56,7 +56,7 @@ Description of the workflow tasks
 
     - **JSON Output:** Contains the complete AMR profile, including detailed **resistance state**, detected **resistance genes/mutations**, and supporting **BLAST results**.
 
-    - **CSV & PNG Tables:** An incorprated Python script, `parse_amr_json.py`, extracts and formats results into a **CSV file** and **PNG summary table** for easier visualization.
+    - **CSV & PDF Tables:** An incorprated Python script, `parse_amr_json.py`, extracts and formats results into a **CSV file** and **PDF summary table** for easier visualization.
 
     !!! techdetails "amr_search Technical Details"    
 
@@ -72,7 +72,7 @@ Description of the workflow tasks
 | **Variable** | **Type** | **Description** |
 |---|---|---|
 | amr_results_csv | File | CSV formatted AMR profile |
-| amr_results_png | File | PNG formatted AMR profile |
+| amr_results_pdf | File | PDF formatted AMR profile |
 | amr_search_results | File | JSON formatted AMR profile including BLAST results |
 | amr_search_docker | String | Docker image used to run AMR_Search |
 | amr_search_version | String | Version of AMR_Search libraries used |
