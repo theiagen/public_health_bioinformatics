@@ -115,7 +115,7 @@ Ensure you use an accepted barcoding kit name in the `kit_name` parameter. Check
     - **kit_name**: Ensure the correct kit name is provided, as it determines the barcoding and adapter trimming behavior. See the [Supported Kit Names](#supported-kit-names) section for a list of accepted kit names.
 
 !!! tip "Increasing Chunk Size"
-    The pod5 files generated after sorting the data into their respective channels will further be split into four groups (or the number indicated by `number_chunks` ) for basecalling. You can decrease runtime by raising the number of chunks with the `number_chunks` variable.
+    The pod5 files generated after sorting the data into their respective channels (see the `subset_pod5s` section below the inputs) will further be split into four groups (or the number indicated by `number_chunks` ) for basecalling. You can decrease runtime by raising the number of chunks with the `number_chunks` variable.
     
     We recommend keeping the number of chunks relatively low (under 20) in order to prevent VM allocation times from drastically increasing, as this can negatively impact the speed of the analysis due to wait times reaching upwards of days (e.g., if chunk size > 100). We have observed that as the number of chunks nears 20, walltime begins to increase.
 
@@ -175,6 +175,9 @@ This workflow is composed of several tasks to process, basecall, and analyze Oxf
         |  | Links |
         | --- | --- |
         | Task | [task_find_files.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/file_handling/task_find_files.wdl) |
+
+??? task "`subset_pod5s`: Sorting POD5 files into separate channels"
+    Due to the nature of basecalling, 
 
 ??? task "`dorado_basecall`: Basecalling POD5 files"
     The basecalling task takes POD5 files as input and converts each individual POD5 into 'BAM' format using the either the default or user-specified model. This step leverages GPU acceleration for efficient processing.
