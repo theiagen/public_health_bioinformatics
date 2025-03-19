@@ -7,6 +7,7 @@ import "../../tasks/task_versioning.wdl" as versioning
 import "../../tasks/utilities/data_import/task_array_to_terra.wdl" as create_fastq_table
 import "../../tasks/utilities/file_handling/task_find_files.wdl" as find_files_task
 import "../../tasks/utilities/file_handling/task_chunk_files.wdl" as chunk_file
+import "../../tasks/utilities/file_handling/task_subset_pod5s.wdl" as split_pod5s_by_channel
 
 workflow dorado_basecalling {
   meta {
@@ -33,7 +34,10 @@ workflow dorado_basecalling {
       bucket_path = pod5_bucket_path,
       file_extension = ".pod5"
   }
-  Int number_of_files = length(find_files.file_paths)
+  call split_pod5s_by_channel.subset_pod5s {
+    pod5_files = find_files.file_paths
+  }
+  Int number_of_files = length(subset_pod5s.pod5s_by_channel)
   Int chunk_size = number_of_files / number_chunks
   if (number_chunks > number_of_files) {
     # if this condition is true, the scatter would be sad
@@ -45,7 +49,7 @@ workflow dorado_basecalling {
     # since wdl v1 doesn't do array splicing (:sob:), we have to mimic that behavior with line splicing out of a file 
     call chunk_file.chunk_files {
       input:
-        file_list = write_lines(find_files.file_paths),
+        file_list = write_lines(subset_pod5s.pod5s_by_channel),
         start_line = start_line,
         end_line = end_line
     }
