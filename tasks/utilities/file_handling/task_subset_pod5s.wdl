@@ -3,6 +3,7 @@ version 1.0
 task subset_pod5s {
   input {
     Array[File] pod5_files
+    String pod5_bucket_path
 
     Int cpu = 1
     Int disk_size = 100
@@ -12,8 +13,12 @@ task subset_pod5s {
   command <<<
     pod5 --version | tee VERSION
 
-    pod5 view <data_path> --include "read_id, channel" --output summary.tsv
-    pod5 subset <data_path> --summary summary.tsv --columns channel --output split_by_channel
+    # rename the pod5_bucket path to match the localization path
+    # gs://bucket_path
+    localized_path=$(echo "~{pod5_bucket_path}" | cut -d'/' -f3-)
+
+    pod5 view /cromwell_root/${localized_path}/ --include "read_id, channel" --output summary.tsv
+    pod5 subset /cromwell_root/${localized_path}/ --summary summary.tsv --columns channel --output split_by_channel
   >>>
   output {
     Array[File] pod5s_by_channel = glob("split_by_channel/*pod5")
