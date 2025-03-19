@@ -35,7 +35,8 @@ workflow dorado_basecalling {
       file_extension = ".pod5"
   }
   call split_pod5s_by_channel.subset_pod5s {
-    pod5_files = find_files.file_paths
+    input:
+      pod5_files = find_files.file_paths
   }
   Int number_of_files = length(subset_pod5s.pod5s_by_channel)
   Int chunk_size = number_of_files / number_chunks
