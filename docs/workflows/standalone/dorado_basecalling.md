@@ -115,11 +115,11 @@ Ensure you use an accepted barcoding kit name in the `kit_name` parameter. Check
     - **kit_name**: Ensure the correct kit name is provided, as it determines the barcoding and adapter trimming behavior. See the [Supported Kit Names](#supported-kit-names) section for a list of accepted kit names.
 
 !!! tip "Increasing Chunk Size"
-    The POD5 files present in the `pod5_bucket_path` will be split into four groups (or the number indicated by `number_chunks` ) for basecalling. You can decrease runtime by raising the number of chunks with the `number_chunks` variable.
+    The pod5 files generated after sorting the data into their respective channels will further be split into four groups (or the number indicated by `number_chunks` ) for basecalling. You can decrease runtime by raising the number of chunks with the `number_chunks` variable.
     
-    We recommend keeping the number of chunks relatively low in order to prevent VM allocation times from drastically increasing, as this can negatively impact the speed of the analysis due to wait times reaching upwards of days (e.g., if chunk size > 100).
+    We recommend keeping the number of chunks relatively low (under 20) in order to prevent VM allocation times from drastically increasing, as this can negatively impact the speed of the analysis due to wait times reaching upwards of days (e.g., if chunk size > 100). We have observed that as the number of chunks nears 20, walltime begins to increase.
 
-    Make sure the number of chunks is LESS than the number of files in the `pod5_bucket_path` location, else the number of chunks will be set to the number of files in the `pod5_bucket_path`.
+    If the number of chunks is MORE than the number of channels identified in the pod5 data, the number of chunks will be set to the number of identified channels.
 
 <div class="searchable-table" markdown="1">
 
