@@ -835,6 +835,8 @@ workflow merlin_magic {
     String? stxtyper_partial_hits = stxtyper.stxtyper_partial_hits
     String? stxtyper_stx_frameshifts_or_internal_stop_hits =  stxtyper.stxtyper_frameshifts_or_internal_stop_hits
     String? stxtyper_novel_hits = stxtyper.stxtyper_novel_hits
+    String? stxtyper_extended_operons = stxtyper.stxtyper_extended_operons
+    String? stxtyper_ambiguous_hits = stxtyper.stxtyper_ambiguous_hits
     # Shigella sonnei Typing
     File? sonneityping_mykrobe_report_csv = sonneityping.sonneityping_mykrobe_report_csv
     File? sonneityping_mykrobe_report_json = sonneityping.sonneityping_mykrobe_report_json
