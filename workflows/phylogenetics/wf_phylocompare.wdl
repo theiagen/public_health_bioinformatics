@@ -5,11 +5,12 @@ import "../../tasks/utilities/data_handling/task_phylovalidate.wdl" as phylovali
 
 workflow phylocompare {
   input {
-    String tree1_path # consider using NEWICK as name
+    String tree1_path
     String tree2_path
 
-    Boolean? unrooted = true
-    Float? rf_max_distance
+    String? root_tips
+    Boolean? unrooted = false 
+    Float? lrm_max_dist = 0.0
   }
   call versioning.version_capture {
     input:
@@ -18,14 +19,15 @@ workflow phylocompare {
     input:
         tree1_path = tree1_path,
         tree2_path = tree2_path,
-        rf_max_distance = rf_max_distance,
+        root_tips = root_tips,
+        lrm_max_dist = lrm_max_dist,
         unrooted = unrooted
   }
   output {
-    String phylovalidate_version = version_capture.phb_version
-    String ete3_version = phylovalidate.ete3_version
+    String phb_version = version_capture.phb_version
+    String phylocompare_version = phylovalidate.phylocompare_version
     File phylocompare_report = phylovalidate.summary_report
-    Float rf_distance = phylovalidate.rf_distance
+    Float lrm_distance = phylovalidate.lrm_distance
     String validation = phylovalidate.phylovalidate
   }
 }
