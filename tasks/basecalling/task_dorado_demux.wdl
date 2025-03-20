@@ -36,7 +36,7 @@ task dorado_demux {
       --threads ~{cpu} \
       --emit-summary \
       ~{if demux_no_trim then "--no-trim" else ""} \
-      --verbose > "demuxed_fastqs/demux_${base_name}.log" 2>&1
+      --verbose 2>&1
 
     echo "DEBUG: demultiplexing should've finished"
 
@@ -54,7 +54,6 @@ task dorado_demux {
     Array[File] fastq_files = glob("renamed_fastqs/*.fastq.gz")
     String dorado_docker = docker
     String dorado_version = read_string("DORADO_VERSION")
-    File dorado_demux_log = "dorado_demux_output.log" 
     String dorado_model_name = read_string("DORADO_MODEL_USED")
   }
   runtime {
