@@ -6,7 +6,7 @@ task dorado_demux {
     String kit_name
     String output_file_prefix
 
-    Boolean demux_notrim = false
+    Boolean demux_no_trim = false
     String dorado_model_used
 
     Int cpu = 4 
@@ -17,73 +17,41 @@ task dorado_demux {
   command <<< 
     set -euo pipefail
 
-    # Capture Dorado version
     dorado --version 2>&1 | head -n1 | tee DORADO_VERSION
-
-    # Output the Dorado model used
     echo "~{dorado_model_used}" > DORADO_MODEL_USED
 
-    # Start the main log file for the entire task
-    exec > >(tee -a dorado_demux_output.log) 2>&1
-    echo "### Starting Dorado demux ###"
-
-    echo "Input BAM files:"
-    for bam_file in ~{sep=" " bam_files}; do echo "$bam_file"; done
-
-    # Process each BAM file in a unique output directory
-    for bam_file in ~{sep=" " bam_files}; do
-      base_name=$(basename "$bam_file" .bam)
-      demux_dir="demux_output_${base_name}"
-      mkdir -p "$demux_dir"
-
-      echo "Processing BAM file: $bam_file into directory $demux_dir"
-      echo "Running dorado demux for kit: ~{kit_name}"
-
-      # Run Dorado demux command
-      dorado demux \
-        "$bam_file" \
-        --output-dir "$demux_dir" \
-        --kit-name ~{kit_name} \
-        --emit-fastq \
-        --threads ~{cpu} \
-        --emit-summary \
-        ~{if demux_notrim then "--no-trim" else ""} \
-        --verbose > "$demux_dir/demux_${base_name}.log" 2>&1 || {
-          echo "ERROR: Dorado demux failed for $bam_file. Check $demux_dir/demux_${base_name}.log for details." >&2
-          exit 1
-      }
-
-      echo "Demultiplexing completed for $bam_file"
+    echo "DEBUG: moving bam files"
+    mkdir input_bams
+    for bam_file in ~{sep=" " bam_files}; do 
+      echo "$bam_file" 
+      mv $bam_file input_bams/
     done
 
-    echo "### Merging FASTQ files by barcode ###"
-    mkdir -p merged_output
-    for demux_dir in demux_output_*; do
-      for fastq_file in "$demux_dir"/*.fastq; do
-        echo "Processing $fastq_file in $demux_dir"
+    # Run Dorado demux command
+    dorado demux \
+      input_bams/ \
+      --output-dir demuxed_fastqs \
+      --kit-name ~{kit_name} \
+      --emit-fastq \
+      --threads ~{cpu} \
+      --emit-summary \
+      ~{if demux_no_trim then "--no-trim" else ""} \
+      --verbose > "demuxed_fastqs/demux_${base_name}.log" 2>&1
 
-        if [[ "$fastq_file" == *"unclassified"* ]]; then
-          final_fastq="merged_output/~{output_file_prefix}-unclassified.fastq"
-        else
-          barcode=$(echo "$fastq_file" | sed -E 's/.*_(barcode[0-9]+)\.fastq/\1/')
-          final_fastq="merged_output/~{output_file_prefix}-${barcode}.fastq"
-        fi
+    echo "DEBUG: demultiplexing should've finished"
 
-        if [ -f "$final_fastq" ]; then
-          cat "$fastq_file" >> "$final_fastq"
-        else
-          mv "$fastq_file" "$final_fastq"
-        fi
-      done
+    mkdir renamed_fastqs
+    for file in demux_fastqs/*.fastq; do
+      mv $file renamed_fastqs/~{output_file_prefix}-${file}.fastq
     done
 
     echo "### Compressing merged FASTQ files ###"
-    pigz merged_output/*.fastq
+    pigz renamed_fastqs/*.fastq
 
     echo "### Dorado demux process completed successfully ###"
   >>>
   output {
-    Array[File] fastq_files = glob("merged_output/*.fastq.gz")
+    Array[File] fastq_files = glob("renamed_fastqs/*.fastq.gz")
     String dorado_docker = docker
     String dorado_version = read_string("DORADO_VERSION")
     File dorado_demux_log = "dorado_demux_output.log" 
