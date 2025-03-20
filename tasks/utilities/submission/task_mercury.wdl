@@ -67,8 +67,8 @@ task mercury {
       ~{true="--using_reads_dehosted" false="" using_reads_dehosted} \
       ~{true="--usa_territory" false="" usa_territory} \
       ~{true="--single_end" false="" single_end} \
-      ~{"--vadr_alert_limit '" + vadr_alert_limit + "'"} \
-      ~{"--number_n_threshold '" + number_N_threshold + "'"} \
+      ~{"--vadr_alert_limit " + vadr_alert_limit} \
+      ~{"--number_n_threshold " + number_N_threshold} \
       ~{"--authors '" + authors + "'"} \
       ~{"--bioproject_accession '" + bioproject_accession + "'"} \
       ~{"--continent '" + continent + "'"} \
