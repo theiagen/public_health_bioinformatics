@@ -5,10 +5,11 @@ task phylovalidate {
     File tree1_path
     File tree2_path
 
-    String? outgroup
-    Float? rf_max_distance
+    String? root_tips
+    Boolean? unrooted
+    Float? lrm_max_dist
     
-    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/theiavalidate:0.1.0"  # update!!!
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/theiaphylo:0.1.0"  # update!!!
     Int disk_size = 10
     Int memory = 4
     Int cpu = 1
@@ -18,24 +19,31 @@ task phylovalidate {
     volatile: true
   }
   command <<<
+    # set -euo pipefail to avoid silent failure
+    set -euo pipefail
+
     # grab the ete3 version
-    ete3 --version > VERSION
-
-    # run ete3 compare; unrooted trees are not considered
-    if ~{outgroup}  "None":
-      ete3 compare -t ~{tree1_path} -r ~{tree2_path} --src_tree_format 1 --ref_tree_format 1 > phylocompare.txt
-    else:
-      ete3 compare -t ~{tree1_path} -r ~{tree2_path} --src_tree_format 1 --ref_tree_format 1 --unrooted --outgroup ~{outgroup} > phylocompare.txt
-    ete3 compare -t ~{tree1_path} -r ~{tree2_path} --src_tree_format 1 --ref_tree_format 1 > phylocompare.txt
-
-    # extract the RF distance
-    tail -1 phylocompare.txt | cut -f 5 -d '|' | tr -d ' ' > PHYLOCOMPARE_RF_DISTANCE
+    phylocompare.py --version | tee VERSION
 
     # run the comparison
-    if [ -z ~{rf_max_distance} ]; then
+    if [[ -z ~{root_tips} ]]; then
+      phylocompare.py ~{tree1_path} ~{tree2_path} \
+        ~{true="--unrooted" false="" unrooted} \
+        --debug > phylocompare.txt
+    else
+      phylocompare.py ~{tree1_path} ~{tree2_path} \
+        --root-tips ~{root_tips} \
+        --debug > phylocompare.txt
+    fi
+
+    # extract the RF distance
+    tail -1 phylocompare.txt | cut -f 3 | tr -d ' ' > PHYLOCOMPARE_RF_DISTANCE
+
+    # run the comparison
+    if [ -z ~{lrm_max_distance} ]; then
       echo "NA" > PHYLOVALIDATE
     else
-      python3 -c "if float(open('PHYLOCOMPARE_RF_DISTANCE', 'r').read().strip()) > ~{rf_max_distance}: open('PHYLOVALIDATE', 'w').write('FAIL'); else: open('PHYLOVALIDATE', 'w').write('PASS')"
+      python3 -c "if float(open('PHYLOCOMPARE_LRM_DISTANCE', 'r').read().strip()) > ~{lrm_max_distance}: open('PHYLOVALIDATE', 'w').write('FAIL'); else: open('PHYLOVALIDATE', 'w').write('PASS')"
     fi
   >>>
   runtime {
@@ -47,9 +55,9 @@ task phylovalidate {
     dx_instance_type: "mem1_ssd1_v2_x2"
   }
   output {
-    String ete3_version = read_string("VERSION")
+    String phylocompare_version = read_string("VERSION")
     File summary_report = "phylocompare.txt"
-    Float rf_distance = read_float("PHYLOCOMPARE_RF_DISTANCE")
+    Float lrm_distance = read_float("PHYLOCOMPARE_LRM_DISTANCE")
     String phylovalidate = read_string("PHYLOVALIDATE")
   }
 }
