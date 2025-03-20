@@ -6065,7 +6065,7 @@
 </tr>
 <tr>
 <td>abricate</td>
-<td><strong>min_coverage</strong></td>
+<td><strong>min_percent_coverage</strong></td>
 <td>Int</td>
 <td>Minimum DNA %coverage for the Abricate task</td>
 <td>80</td>
@@ -6137,7 +6137,7 @@
 </tr>
 <tr>
 <td>amrfinderplus_task</td>
-<td><strong>min_coverage</strong></td>
+<td><strong>min_percent_coverage</strong></td>
 <td>Float</td>
 <td>Minimum proportion of reference gene covered for a BLAST-based hit (Methods BLAST or PARTIAL)." Attribute should be a float ranging from 0-1, such as 0.6 (equal to 60% coverage)</td>
 <td>0.5</td>
@@ -6146,7 +6146,7 @@
 </tr>
 <tr>
 <td>amrfinderplus_task</td>
-<td><strong>min_identity</strong></td>
+<td><strong>min_percent_identity</strong></td>
 <td>Float</td>
 <td>"Minimum identity for a blast-based hit hit (Methods BLAST or PARTIAL). -1 means use a curated threshold if it exists and 0.9 otherwise. Setting this value to something other than -1 will override any curated similarity cutoffs." Attribute should be a float ranging from 0-1, such as 0.95 (equal to 95% identity)</td>
 <td>0.9</td>
@@ -6785,7 +6785,7 @@
 </tr>
 <tr>
 <td>merlin_magic</td>
-<td><strong>abricate_abaum_min_coverage</strong></td>
+<td><strong>abricate_abaum_min_percent_coverage</strong></td>
 <td>Int</td>
 <td>Minimum DNA percent coverage</td>
 <td></td>
@@ -6812,7 +6812,7 @@
 </tr>
 <tr>
 <td>merlin_magic</td>
-<td><strong>abricate_vibrio_min_coverage</strong></td>
+<td><strong>abricate_vibrio_min_percent_coverage</strong></td>
 <td>Int</td>
 <td>Minimum DNA percent coverage</td>
 <td>80</td>
@@ -7019,7 +7019,7 @@
 </tr>
 <tr>
 <td>merlin_magic</td>
-<td><strong>ectyper_h_min_coverage</strong></td>
+<td><strong>ectyper_h_min_percent_coverage</strong></td>
 <td>Int</td>
 <td>Minumum percent coverage required for an H antigen allele match</td>
 <td>50</td>
@@ -7037,7 +7037,7 @@
 </tr>
 <tr>
 <td>merlin_magic</td>
-<td><strong>ectyper_o_min_coverage</strong></td>
+<td><strong>ectyper_o_min_percent_coverage</strong></td>
 <td>Int</td>
 <td>Minumum percent coverage required for an O antigen allele match</td>
 <td>90</td>
@@ -7091,7 +7091,7 @@
 </tr>
 <tr>
 <td>merlin_magic</td>
-<td><strong>hicap_broken_gene_identity</strong></td>
+<td><strong>hicap_min_broken_gene_percent_identity</strong></td>
 <td>Float</td>
 <td>Minimum percentage identity to consider a broken gene</td>
 <td>0.80</td>
@@ -7118,7 +7118,7 @@
 </tr>
 <tr>
 <td>merlin_magic</td>
-<td><strong>hicap_gene_coverage</strong></td>
+<td><strong>hicap_min_gene_percent_coverage</strong></td>
 <td>Float</td>
 <td>Minimum percentage coverage to consider a single gene complete</td>
 <td>0.80</td>
@@ -7127,7 +7127,7 @@
 </tr>
 <tr>
 <td>merlin_magic</td>
-<td><strong>hicap_gene_identity</strong></td>
+<td><strong>hicap_min_gene_percent_identity</strong></td>
 <td>Float</td>
 <td>Minimum percentage identity to consider a single gene complete</td>
 <td>0.70</td>
@@ -7145,7 +7145,7 @@
 </tr>
 <tr>
 <td>merlin_magic</td>
-<td><strong>kaptive_low_gene_id</strong></td>
+<td><strong>kaptive_low_gene_percent_identity</strong></td>
 <td>Float</td>
 <td>Percent identity threshold for what counts as a low identity match in the gene BLAST search</td>
 <td>95</td>
@@ -7190,7 +7190,7 @@
 </tr>
 <tr>
 <td>merlin_magic</td>
-<td><strong>kleborate_min_coverage</strong></td>
+<td><strong>kleborate_min_percent_coverage</strong></td>
 <td>Float</td>
 <td>Minimum alignment percent coverage for main results</td>
 <td>80</td>
@@ -7217,7 +7217,7 @@
 </tr>
 <tr>
 <td>merlin_magic</td>
-<td><strong>kleborate_min_spurious_coverage</strong></td>
+<td><strong>kleborate_min_spurious_percent_coverage</strong></td>
 <td>Float</td>
 <td>Minimum alignment percent coverage for spurious results</td>
 <td>40</td>
@@ -7226,7 +7226,7 @@
 </tr>
 <tr>
 <td>merlin_magic</td>
-<td><strong>kleborate_min_spurious_identity</strong></td>
+<td><strong>kleborate_min_spurious_percent_identity</strong></td>
 <td>Float</td>
 <td>Minimum alignment percent identity for spurious results</td>
 <td>80</td>
@@ -7271,9 +7271,9 @@
 </tr>
 <tr>
 <td>merlin_magic</td>
-<td><strong>lissero_min_coverage</strong></td>
+<td><strong>lissero_min_percent_coverage</strong></td>
 <td>Float</td>
-<td>Minimum coverage of the gene to accept a match</td>
+<td>Minimum percent coverage of the gene to accept a match</td>
 <td>95</td>
 <td>Optional</td>
 <td>FASTA, ONT, PE, SE</td>
@@ -7334,7 +7334,7 @@
 </tr>
 <tr>
 <td>merlin_magic</td>
-<td><strong>pasty_min_coverage</strong></td>
+<td><strong>pasty_min_percent_coverage</strong></td>
 <td>Int</td>
 <td>Minimum coverage of a O-antigen to be considered for serogrouping by pasty</td>
 <td>95</td>
@@ -7361,7 +7361,7 @@
 </tr>
 <tr>
 <td>merlin_magic</td>
-<td><strong>pbptyper_min_coverage</strong></td>
+<td><strong>pbptyper_min_percent_coverage</strong></td>
 <td>Int</td>
 <td>Minimum percent coverage to count a hit</td>
 <td>90</td>
@@ -8135,33 +8135,6 @@
 </tr>
 <tr>
 <td>merlin_magic</td>
-<td><strong>virulencefinder_min_coverage</strong></td>
-<td>Float</td>
-<td>The threshold for minimum coverage</td>
-<td></td>
-<td>Optional</td>
-<td>FASTA, ONT, PE, SE</td>
-</tr>
-<tr>
-<td>merlin_magic</td>
-<td><strong>virulencefinder_database</strong></td>
-<td>String</td>
-<td>The specific database to use</td>
-<td>virulence_ecoli</td>
-<td>Optional</td>
-<td>FASTA, ONT, PE, SE</td>
-</tr>
-<tr>
-<td>merlin_magic</td>
-<td><strong>virulencefinder_docker_image</strong></td>
-<td>String</td>
-<td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/virulencefinder:2.0.4</td>
-<td>Optional</td>
-<td>FASTA, ONT, PE, SE</td>
-</tr>
-<tr>
-<td>merlin_magic</td>
 <td><strong>vibecheck_lineage_barcodes</strong></td>
 <td>String</td>
 <td>Feather formatted lineage barcodes to use instead of default O1 barcodes</td>
@@ -8195,6 +8168,42 @@
 <td>watronfire/vibecheck:2025.02.24</td>
 <td>Optional</td>
 <td>PE</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>virulencefinder_min_percent_coverage</strong></td>
+<td>Float</td>
+<td>The threshold for minimum coverage</td>
+<td></td>
+<td>Optional</td>
+<td>FASTA, ONT, PE, SE</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>virulencefinder_database</strong></td>
+<td>String</td>
+<td>The specific database to use</td>
+<td>virulence_ecoli</td>
+<td>Optional</td>
+<td>FASTA, ONT, PE, SE</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>virulencefinder_docker_image</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/virulencefinder:2.0.4</td>
+<td>Optional</td>
+<td>FASTA, ONT, PE, SE</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>virulencefinder_min_percent_identity</strong></td>
+<td>Float</td>
+<td>The threshold for minimum blast identity</td>
+<td></td>
+<td>Optional</td>
+<td>FASTA, ONT, PE, SE</td>
 </tr>
 <tr>
 <td>nanoplot_clean</td>
@@ -8351,7 +8360,7 @@
 </tr>
 <tr>
 <td>plasmidfinder</td>
-<td><strong>min_coverage</strong></td>
+<td><strong>min_percent_coverage</strong></td>
 <td>Float</td>
 <td>Threshold for minimum coverage, default threshold from PlasmidFinder CLI tool is used (0.60)</td>
 <td>0.6</td>
@@ -8360,7 +8369,7 @@
 </tr>
 <tr>
 <td>plasmidfinder</td>
-<td><strong>threshold</strong></td>
+<td><strong>min_percent_identity</strong></td>
 <td>Float</td>
 <td>Threshold for mininum blast identity, default threshold from PlasmidFinder CLI tool is used (0.90). This default differs from the default of the PlasmidFinder webtool (0.95)</td>
 <td>0.9</td>
@@ -9350,7 +9359,7 @@
 </tr>
 <tr>
 <td>resfinder_task</td>
-<td><strong>min_coverage</strong></td>
+<td><strong>min_percent_coverage</strong></td>
 <td>Float</td>
 <td>Minimum coverage breadth of a gene for it to be identified</td>
 <td>0.5</td>
@@ -9359,7 +9368,7 @@
 </tr>
 <tr>
 <td>resfinder_task</td>
-<td><strong>min_id</strong></td>
+<td><strong>min_percent_identity</strong></td>
 <td>Float</td>
 <td>Minimum identity for ResFinder to identify a gene</td>
 <td>0.9</td>
@@ -9647,7 +9656,7 @@
 </tr>
 <tr>
 <td>ts_mlst</td>
-<td><strong>min_coverage</strong></td>
+<td><strong>min_percent_coverage</strong></td>
 <td>Float</td>
 <td>Minimum % breadth of coverage to report an MLST allele</td>
 <td>10</td>
@@ -14532,7 +14541,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="March 7, 2025 19:10:49">2025-03-07</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="March 20, 2025 14:22:24">2025-03-20</span>
   </span>
 
     
