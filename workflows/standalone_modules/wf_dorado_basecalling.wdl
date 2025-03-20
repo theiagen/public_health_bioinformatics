@@ -20,7 +20,7 @@ workflow dorado_basecalling {
     String terra_project
     String terra_workspace
     String output_file_prefix 
-    Boolean demux_notrim = false
+    Boolean demux_no_trim = false
     File? custom_primers
 
     Int number_chunks = 4
@@ -62,7 +62,7 @@ workflow dorado_basecalling {
       kit_name = kit_name,
       output_file_prefix = output_file_prefix,
       dorado_model_used = dorado_basecall.dorado_model_used[0],
-      demux_notrim = demux_notrim
+      demux_no_trim = demux_no_trim
   }
   if (defined(custom_primers)) {
     call dorado_trim_task.dorado_trim {
