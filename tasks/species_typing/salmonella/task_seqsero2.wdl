@@ -7,7 +7,7 @@ task seqsero2 {
     File? read2
     String samplename
     String mode = "a"
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/seqsero2:1.2.1"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/seqsero2:1.3.1"
     Int disk_size = 100
     Int memory = 16
     Int cpu = 4
