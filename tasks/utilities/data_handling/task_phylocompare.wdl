@@ -26,15 +26,21 @@ task phylovalidate {
     # grab the ete3 version
     phylocompare.py --version | tee VERSION
 
-    # run the comparison
-    if [[ -n ~{root_tips} ]]; then
+    # set bash variables to check them for population in conditionals
+    root_tips=~{root_tips}
+    max_distance=~{max_distance}
+
+    # root if outgroups are provided
+    if [[ -n ${root_tips} ]]; then
       phylocompare.py ~{tree1_path} ~{tree2_path} \
         --outgroup ~{root_tips} \
         --debug
-    elif [[ -n ~{true="true" false = "" midpoint} ]]; then
+    # root at the midpoint
+    elif ~{true="true" false = "false" midpoint}; then
       phylocompare.py ~{tree1_path} ~{tree2_path} \
         --midpoint \
         --debug
+    # append unrooted if provided, otherwise assume tree is prerooted
     else
       phylocompare.py ~{tree1_path} ~{tree2_path} \
         ~{true="--unrooted" false="" unrooted} \
@@ -45,7 +51,7 @@ task phylovalidate {
     tail -1 phylo_distances.txt | cut -f 2 | tr -d ' ' > PHYLOCOMPARE_DISTANCE
 
     # run the comparison
-    if [ -z ~{max_distance} ]; then
+    if [[ -z ${max_distance} ]]; then
       echo "NA" > phylovalidate
     else
       python3 -c "if float(open('PHYLOCOMPARE_DISTANCE', 'r').read().strip()) > ~{max_distance}: open('phylovalidate', 'w').write('FAIL'); else: open('phylovalidate', 'w').write('PASS')"
