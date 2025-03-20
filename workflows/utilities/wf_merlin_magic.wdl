@@ -859,6 +859,11 @@ workflow merlin_magic {
     File? sistr_cgmlst = sistr.sistr_cgmlst
     String? sistr_version = sistr.sistr_version
     String? sistr_predicted_serotype = sistr.sistr_predicted_serotype
+    String? sistr_serogroup = sistr.sistr_serogroup
+    String? sistr_h1_antigens = sistr.sistr_h1_antigens
+    String? sistr_h2_antigens = sistr.sistr_h2_antigens
+    String? sistr_o_antigens = sistr.sistr_o_antigens
+    String? sistr_serotype_cgmlst = sistr.sistr_serotype_cgmlst
     String seqsero2_report = select_first([seqsero2.seqsero2_report, seqsero2_assembly.seqsero2_report, ""])
     String seqsero2_version = select_first([seqsero2.seqsero2_version, seqsero2_assembly.seqsero2_version, ""])
     String seqsero2_predicted_antigenic_profile = select_first([seqsero2.seqsero2_predicted_antigenic_profile, seqsero2_assembly.seqsero2_predicted_antigenic_profile, ""])
