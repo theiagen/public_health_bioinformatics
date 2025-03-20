@@ -10,12 +10,11 @@ task seqsero2 {
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/seqsero2:1.2.1"
     Int disk_size = 100
     Int memory = 16
-    Int cpu = 8
+    Int cpu = 4
     Boolean paired_end
   }
   command <<<
-    # Print and save date
-    date | tee DATE
+    set -euo pipefail
     
     # Print and save version
     SeqSero2_package.py --version | tee VERSION
@@ -61,6 +60,12 @@ task seqsero2 {
           if not cont_detect:
             cont_detect = "None"
           Contamination_Detected.write(cont_detect)
+
+        with open ("NOTE", 'wt') as Note:
+          note=line['Note']
+          if not note:
+            note = "None"
+          Note.write(note)
     CODE
   >>>
   output {
@@ -69,6 +74,7 @@ task seqsero2 {
     String seqsero2_predicted_antigenic_profile = read_string("PREDICTED_ANTIGENIC_PROFILE")
     String seqsero2_predicted_serotype = read_string("PREDICTED_SEROTYPE")
     String seqsero2_predicted_contamination = read_string("CONTAMINATION")
+    String seqsero2_note = read_string("NOTE")
   }
   runtime {
     docker: "~{docker}"

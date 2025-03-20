@@ -869,6 +869,8 @@ workflow merlin_magic {
     String seqsero2_predicted_antigenic_profile = select_first([seqsero2.seqsero2_predicted_antigenic_profile, seqsero2_assembly.seqsero2_predicted_antigenic_profile, ""])
     String seqsero2_predicted_serotype = select_first([seqsero2.seqsero2_predicted_serotype, seqsero2_assembly.seqsero2_predicted_serotype, ""])
     String? seqsero2_predicted_contamination = seqsero2.seqsero2_predicted_contamination
+    # if this new output is added to seqsero2 assembly task, will need to update this to a select_first()
+    String? seqsero2_note = seqsero2.seqsero2_note
     # Salmonella serotype Typhi typing
     File? genotyphi_report_tsv = genotyphi_task.genotyphi_report_tsv 
     File? genotyphi_mykrobe_json = genotyphi_task.genotyphi_mykrobe_json

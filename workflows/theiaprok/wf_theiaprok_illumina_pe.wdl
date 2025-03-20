@@ -984,6 +984,7 @@ workflow theiaprok_illumina_pe {
     String? seqsero2_predicted_antigenic_profile = merlin_magic.seqsero2_predicted_antigenic_profile
     String? seqsero2_predicted_serotype = merlin_magic.seqsero2_predicted_serotype
     String? seqsero2_predicted_contamination = merlin_magic.seqsero2_predicted_contamination
+    String? seqsero2_note = merlin_magic.seqsero2_note
     # Salmonella serotype Typhi Typing
     File? genotyphi_report_tsv = merlin_magic.genotyphi_report_tsv 
     File? genotyphi_mykrobe_json = merlin_magic.genotyphi_mykrobe_json
