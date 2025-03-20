@@ -589,8 +589,9 @@ Allowed options:
 
 - SARS-CoV-2 (default)
 - MPXV
-- H5NX
 - H1N1pdm
+- H3N2
+- H5NX
 - FLU-B-VIC
 - MEASLESN450
 - MEASLES
