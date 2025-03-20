@@ -10,7 +10,7 @@ workflow phylocompare {
 
     String? root_tips
     Boolean? unrooted = false 
-    Float? lrm_max_dist = 0.0
+    Float? lrm_max_distance = 0.0
   }
   call versioning.version_capture {
     input:
@@ -20,7 +20,7 @@ workflow phylocompare {
         tree1_path = tree1_path,
         tree2_path = tree2_path,
         root_tips = root_tips,
-        lrm_max_dist = lrm_max_dist,
+        lrm_max_distance = lrm_max_distance,
         unrooted = unrooted
   }
   output {
@@ -28,6 +28,6 @@ workflow phylocompare {
     String phylocompare_version = phylovalidate.phylocompare_version
     File phylocompare_report = phylovalidate.summary_report
     Float lrm_distance = phylovalidate.lrm_distance
-    String validation = phylovalidate.phylovalidate
+    String validation = phylovalidate.validation
   }
 }
