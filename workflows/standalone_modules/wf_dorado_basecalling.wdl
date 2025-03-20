@@ -7,7 +7,6 @@ import "../../tasks/task_versioning.wdl" as versioning
 import "../../tasks/utilities/data_import/task_array_to_terra.wdl" as create_fastq_table
 import "../../tasks/utilities/file_handling/task_find_files.wdl" as find_files_task
 import "../../tasks/utilities/file_handling/task_chunk_files.wdl" as chunk_file
-import "../../tasks/utilities/file_handling/task_subset_pod5s.wdl" as split_pod5s_by_channel
 
 workflow dorado_basecalling {
   meta {
@@ -34,11 +33,6 @@ workflow dorado_basecalling {
       bucket_path = pod5_bucket_path,
       file_extension = ".pod5"
   }
-  # call split_pod5s_by_channel.subset_pod5s {
-  #   input:
-  #     pod5_files = find_files.file_paths,
-  #     pod5_bucket_path = pod5_bucket_path
-  # }
   Int number_of_files = length(find_files.file_paths)
   Int chunk_size = number_of_files / number_chunks
   if (number_chunks > number_of_files) {
@@ -103,7 +97,6 @@ workflow dorado_basecalling {
     String dorado_basecall_docker = dorado_basecall.dorado_docker[0]
     String dorado_demux_version = dorado_demux.dorado_version
     String? dorado_trim_version = dorado_trim.dorado_version
-    String? pod5_version = subset_pod5s.pod5_version
     # uploaded table
     File terra_table_tsv = create_table_from_array.terra_table_to_upload
     # workflow versioning
