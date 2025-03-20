@@ -42,7 +42,8 @@ task dorado_demux {
 
     mkdir renamed_fastqs
     for file in demuxed_fastqs/*.fastq; do
-      mv $file renamed_fastqs/~{output_file_prefix}-${file}.fastq
+      filename=$(basename $file | rev | cut -d"_" -f1 | rev)
+      mv $file renamed_fastqs/~{output_file_prefix}-${filename}.fastq
     done
 
     echo "### Compressing merged FASTQ files ###"
