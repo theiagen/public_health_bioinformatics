@@ -16,17 +16,20 @@ task metabuli {
     Float? min_score # metabuli: Min. sequence similarity score (0.0-1.0) [0.000]
     Float? min_sp_score # metabuli: Min. score for species- or lower-level classification. [0.000]
     Float? min_cov # metabuli: Min. query coverage (0.0-1.0) [0.000]
-    Int cpu = 2
-    Int memory = 4
+    Int cpu = 2 #***increase this***
+    Int memory = 4 #***increase this***
     Int disk_size = 100
-    String docker_image = "us-docker.pkg.dev/general-theiagen/theiagen/metabuli:1.1.0"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/metabuli:1.1.0"
   }
   command <<<
     set -euo pipefail
 
+    # get version (there is no --version flag for metabuli)
+    echo $(metabuli --help) | awk -F'Version: ' '{print $2}' | awk '{print $1}' | tee VERSION
+
     # Decompress additional taxonomy files necessary for ncbi ref_seq database search
     mkdir taxdump
-    tar -C taxdump/ -xzvf ~{taxonomy_path}
+    tar -C taxdump/ -xzf ~{taxonomy_path}
 
     # Decompress/extract the ref_seq viral database
     mkdir db
@@ -62,11 +65,12 @@ task metabuli {
     File metabuli_report = "output_dir/~{samplename}_report.tsv"
     File metabuli_classified = "output_dir/~{samplename}_classifications.tsv"
     File metabuli_read1_extract = "~{read1_basename}_~{taxon_of_interest}.fq"
-    String metabuli_docker = "~{docker_image}"
-    String metabuli_database = "~{metabuli_db}"
+    String metabuli_version = read_string("VERSION")
+    String metabuli_docker = docker
+    String metabuli_database = metabuli_db
   }
   runtime {
-    docker: docker_image
+    docker: "~{docker}"
     memory: "~{memory} GB"
     cpu: cpu
     disks:  "local-disk " + disk_size + " SSD"
