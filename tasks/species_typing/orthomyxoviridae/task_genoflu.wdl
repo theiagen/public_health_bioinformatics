@@ -4,25 +4,28 @@ task genoflu {
   input {
     File assembly_fasta
     String samplename
-
+    Float? min_percent_identity # genoflu default is 98
     # excel file to cross-reference BLAST findings; probably useful if novel
     #  genotypes are not in the default file used by genoflu.py
     File? cross_reference
-
     Int cpu = 1
     Int disk_size = 25
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/genoflu:1.05"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/genoflu:1.06"
     Int memory = 2
   }
   command <<<
-   
+    set -euo pipefail
+
     cp ~{assembly_fasta} .
 
-    genoflu.py -v | sed -e 's/genoflu.py:\ version\ //' > VERSION
+    echo "DEBUG: capturing genoflu version..."
+    genoflu.py -v | sed -e 's/genoflu.py:\ version\ //' | tee VERSION
 
+    echo "DEBUG: running genoflu.py..."
     genoflu.py \
       --fasta ~{assembly_fasta} \
       --sample_name ~{samplename} \
+      ~{"--pident_threshold " + min_percent_identity} \
       ~{"--cross_reference" + cross_reference} > genoflu.output.txt
 
     GENOTYPE=$(grep "~{samplename} Genotype" genoflu.output.txt | cut -d ">" -f2 | cut -d " " -f2 | cut -d ":" -f1)
@@ -30,15 +33,16 @@ task genoflu {
 
     # If genotype unable to be assigned ("Not"), then parse out the expected text
     if [[ "$GENOTYPE" == "Not" ]]; then
-      grep "~{samplename} Genotype" genoflu.output.txt | cut -d ">" -f2- | cut -d " " -f2- | cut -d ":" -f1 > GENOTYPE
-      grep "~{samplename} Genotype" genoflu.output.txt | cut -d ">" -f2- | cut -d " " -f4- | cut -d ":" -f1 > ALL_SEGMENTS
+      echo "DEBUG: parsing out genotype and all segments..."
+      grep "~{samplename} Genotype" genoflu.output.txt | cut -d ">" -f2- | cut -d " " -f2- | cut -d ":" -f1 | tee GENOTYPE
+      grep "~{samplename} Genotype" genoflu.output.txt | cut -d ">" -f2- | cut -d " " -f4- | cut -d ":" -f1 | tee ALL_SEGMENTS
     else
-      echo "$GENOTYPE" > GENOTYPE
-      echo "$ALL_SEGMENTS" > ALL_SEGMENTS
+      echo "DEBUG: saving genotype and all segments..."
+      echo "$GENOTYPE" | tee GENOTYPE
+      echo "$ALL_SEGMENTS" | tee ALL_SEGMENTS
     fi
-
     
-    mv ~{samplename}_*_stats.tsv ~{samplename}_stats.tsv
+    mv -v ~{samplename}_*_stats.tsv ~{samplename}_stats.tsv
   >>>
   output {
     String genoflu_version = read_string("VERSION")

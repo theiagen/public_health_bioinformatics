@@ -170,15 +170,19 @@ All TheiaCoV Workflows (not TheiaCoV_FASTA_Batch)
 | flu_track | **flu_pb2_ref** | File | Internal component, do not modify | | Do not modify, Optional | ONT, PE | flu |
 | flu_track | **flu_subtype** | String | The influenza subtype being analyzed. Used for picking nextclade datasets. Options: "Yamagata", "Victoria", "H1N1", "H3N2", "H5N1". Only use to override the subtype call from IRMA and ABRicate. | | Optional | CL, ONT, PE, SE | flu |
 | flu_track | **genoflu_cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional | FASTA, ONT, PE | flu |
-| flu_track | **genoflu_cross_reference** | File | An Excel file to cross-reference BLAST findings; probably useful if novel genotypes are not in the default file used by genoflu.py | | Optional | FASTA, ONT, PE | |
-| flu_track | **genoflu_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 25 | Optional | FASTA, ONT, PE | |
-| flu_track | **genoflu_docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/genoflu:1.05 | Optional | FASTA, ONT, PE | |
-| flu_track | **genoflu_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 2 | Optional | FASTA, ONT, PE | |
+| flu_track | **genoflu_cross_reference** | File | An Excel file to cross-reference BLAST findings; probably useful if novel genotypes are not in the default file used by genoflu.py | | Optional | FASTA, ONT, PE | flu |
+| flu_track | **genoflu_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 25 | Optional | FASTA, ONT, PE | flu |
+| flu_track | **genoflu_docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/genoflu:1.06 | Optional | FASTA, ONT, PE | flu |
+| flu_track | **genoflu_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 2 | Optional | FASTA, ONT, PE | flu |
+| flu_track | **genoflu_min_percent_identity** | Float | Percent identity threshold used for calling matches for each genome segment that make up the final GenoFlu genotype | 98.0 | Optional | FASTA, ONT, PE | flu |
 | flu_track | **irma_cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional | ONT, PE | flu |
 | flu_track | **irma_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | ONT, PE | flu |
 | flu_track | **irma_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/cdcgov/irma:v1.1.5 | Optional | ONT, PE | flu |
-| flu_track | **irma_keep_ref_deletions** | Boolean | True/False variable that determines if sites missed during read gathering should be deleted by ambiguation. | TRUE | Optional | ONT, PE | flu |
+| flu_track | **irma_keep_ref_deletions** | Boolean | True/False variable that determines if sites missed during read gathering should be deleted by ambiguation. False sets this IRMA paramater to `"DEL"` and true set it to `"NNN"` | False | Optional | ONT, PE | flu |
 | flu_track | **irma_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 16 | Optional | ONT, PE | flu |
+| flu_track | **irma_min_ambiguous_threshold** | Float | Minimum called Single Nucleotide Variant (SNV) frequency for mixed based calls in the output consensus assembly (AKA amended consensus).  | 0.20 | Optional | ONT, PE | flu |
+| flu_track | **irma_min_avg_consensus_allele_quality** | Int | Minimum allele coverage depth to call plurality consensus, otherwise calls "N". Setting this value too high can negatively impact final amended consensus. | 10 | Optional | ONT, PE | flu |
+| flu_track | **irma_min_read_length** | Int | Minimum read length to include reads in read gathering step in IRMA. This value should not be greater than the typical read length. | 75 | Optional | ONT, PE | flu |
 | flu_track | **nextclade_cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional | ONT, PE | flu |
 | flu_track | **nextclade_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 50 | Optional | ONT, PE | flu |
 | flu_track | **nextclade_docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/nextstrain/nextclade:3.3.1 | Optional | ONT, PE | flu |
@@ -896,7 +900,14 @@ All input reads are processed through "core tasks" in the TheiaCoV Illumina, ONT
 
 ??? toggle "`irma`: Assembly and Characterization ==_for flu in TheiaCoV_Illumina_PE & TheiaCoV_ONT_=="
 
-    Cleaned reads are assembled using `irma` which does not use a reference due to the rapid evolution and high variability of influenza. Assemblies produced by `irma` will be orderd from largest to smallest assembled flu segment. `irma` also performs typing and subtyping as part of the assembly process.
+    Cleaned reads are assembled using `irma` which stands for Iterative Refinement Meta-Assembler. IRMA first sorts reads to Flu genome segments using LABEL, then iteratively maps read to collection of reference sequences (in this case for Influenza virus) and iteratively edits the references to account for high population diversity and mutational rates that are characteristic of Influenza genomes. Assemblies produced by `irma` will be ordered from largest to smallest assembled flu segment. `irma` also performs typing and subtyping as part of the assembly process. Note: IRMA does not differentiate between Flu B Victoria and Yamagata lineages. For determining this information, please review the `abricate` task outputs which will provide this information.
+
+    Due to the segmented nature of the Influenza genome and the various downstream bioinformatics tools that required the genome assembly, the IRMA task & TheiaCoV workflows output various genome assembly files. Briefly they are:
+
+    - `assembly_fasta` - The full genome assembly in FASTA format, with 1 FASTA entry per genome segment. There should be 8 segments in total, but depending on the quality and depth of sequence data, some segments may not be assembled and thus present in this output file.
+    - `irma_assembly_fasta_concatenated` - The full genome assembly in FASTA format, but with all segments concatenated into a single FASTA entry. This is not your typical FASTA file and is purposely created to be used with a custom Nextclade dataset for the H5N1 B3.13 genotype that is based on a concatenated reference genome.
+    - `irma_assembly_fasta_concatenated_padded` - This is the same as the concatenated FASTA mentioned above, but with any `.`'s in the sequence converted to `N`'s and `-`'s deleted since they represent gaps.
+    - `irma_<segment-abbreviation>_segment_fasta` - Individual FASTA files that only contain the sequence for 1 segment, for example the HA segment. There are 8 of these in total.
 
     General statistics about the assembly are generated with the `consensus_qc` task ([task_assembly_metrics.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_assembly_metrics.wdl)).
 
