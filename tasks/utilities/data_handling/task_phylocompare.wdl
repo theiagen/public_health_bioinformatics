@@ -7,7 +7,8 @@ task phylovalidate {
 
     String? root_tips
     Boolean? unrooted
-    Float? lrm_max_distance
+    Boolean? midpoint
+    Float? max_distance
     
     String docker = "us-docker.pkg.dev/general-theiagen/theiagen/theiaphylo:0.1.0"  # update!!!
     Int disk_size = 10
@@ -26,24 +27,28 @@ task phylovalidate {
     phylocompare.py --version | tee VERSION
 
     # run the comparison
-    if [[ -z ~{root_tips} ]]; then
+    if [[ -n ~{root_tips} ]]; then
+      phylocompare.py ~{tree1_path} ~{tree2_path} \
+        --outgroup ~{root_tips} \
+        --debug
+    elif [[ -n ~{true="true" false = "" midpoint} ]]; then
+      phylocompare.py ~{tree1_path} ~{tree2_path} \
+        --midpoint \
+        --debug
+    else
       phylocompare.py ~{tree1_path} ~{tree2_path} \
         ~{true="--unrooted" false="" unrooted} \
-        --debug > phylocompare.txt
-    else
-      phylocompare.py ~{tree1_path} ~{tree2_path} \
-        --root-tips ~{root_tips} \
-        --debug > phylocompare.txt
+        --debug
     fi
 
-    # extract the RF distance
-    tail -1 phylocompare.txt | cut -f 3 | tr -d ' ' > PHYLOCOMPARE_RF_DISTANCE
+    # extract the distance
+    tail -1 phylo_distances.txt | cut -f 2 | tr -d ' ' > PHYLOCOMPARE_DISTANCE
 
     # run the comparison
-    if [ -z ~{lrm_max_distance} ]; then
+    if [ -z ~{max_distance} ]; then
       echo "NA" > phylovalidate
     else
-      python3 -c "if float(open('PHYLOCOMPARE_LRM_DISTANCE', 'r').read().strip()) > ~{lrm_max_distance}: open('phylovalidate', 'w').write('FAIL'); else: open('phylovalidate', 'w').write('PASS')"
+      python3 -c "if float(open('PHYLOCOMPARE_DISTANCE', 'r').read().strip()) > ~{max_distance}: open('phylovalidate', 'w').write('FAIL'); else: open('phylovalidate', 'w').write('PASS')"
     fi
   >>>
   runtime {
@@ -56,8 +61,8 @@ task phylovalidate {
   }
   output {
     String phylocompare_version = read_string("VERSION")
-    File summary_report = "phylocompare.txt"
-    Float lrm_distance = read_float("PHYLOCOMPARE_LRM_DISTANCE")
+    File summary_report = "phylo_distances.txt"
+    Float phylo_distance = read_float("PHYLOCOMPARE_DISTANCE")
     String validation = read_string("phylovalidate")
   }
 }
