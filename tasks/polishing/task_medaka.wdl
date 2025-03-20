@@ -6,7 +6,7 @@ task medaka {
     String samplename
     File read1
     Boolean auto_model = true # Enable automatic Medaka model selection
-    String medaka_model = "r1041_e82_400bps_sup_v5.0.0" # Default model if auto_model is disabled or no model is resolved
+    String medaka_model = "r941_min_hac_g507" # Default model if auto_model is disabled or no model is resolved
     Int cpu = 4
     Int memory = 16
     Int disk_size = 100
