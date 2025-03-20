@@ -59,6 +59,11 @@ workflow theiaviral_ont {
   call nanoplot_task.nanoplot as nanoplot_raw {
     input:
       read1 = read1,
+      samplename = samplename
+  }
+  call metabuli_task.metabuli as metabuli {
+    input:
+      read1 = nanoq.filtered_read1,
       samplename = samplename,
       est_genome_length = select_first([genome_length, ncbi_identify.avg_genome_length])
   }
