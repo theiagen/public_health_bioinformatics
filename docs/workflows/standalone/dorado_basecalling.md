@@ -115,7 +115,7 @@ Ensure you use an accepted barcoding kit name in the `kit_name` parameter. Check
     - **kit_name**: Ensure the correct kit name is provided, as it determines the barcoding and adapter trimming behavior. See the [Supported Kit Names](#supported-kit-names) section for a list of accepted kit names.
 
 !!! tip "Increasing Chunk Size"
-    The pod5 files generated after sorting the data into their respective channels (see the `subset_pod5s` section below the inputs) will further be split into four groups (or the number indicated by `number_chunks` ) for basecalling. You can decrease runtime by raising the number of chunks with the `number_chunks` variable.
+    The identified pod5 files will be split into four groups (or the number indicated by `number_chunks` ) for basecalling. You can decrease runtime by raising the number of chunks with the `number_chunks` variable.
     
     We recommend keeping the number of chunks relatively low (under 20) in order to prevent VM allocation times from drastically increasing, as this can negatively impact the speed of the analysis due to wait times reaching upwards of days (e.g., if chunk size > 100). We have observed that as the number of chunks nears 20, walltime begins to increase.
 
@@ -144,7 +144,7 @@ Ensure you use an accepted barcoding kit name in the `kit_name` parameter. Check
 | dorado_basecall | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/dorado:0.9.0-cuda12.2.0 | Optional |
 | dorado_basecall | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 32 | Optional |
 | dorado_basecalling | **custom_primers** | File | A FASTA file containing custom primer sequences for PCR primer trimming during demultiplexing. |  | Optional |
-| dorado_basecalling | **demux_notrim** | Boolean | Set to `true` to disable barcode trimming during demultiplexing. | false | Optional |
+| dorado_basecalling | **demux_no_trim** | Boolean | Set to `true` to disable barcode trimming during demultiplexing. | false | Optional |
 | dorado_basecalling | **dorado_model** | String | The model to use during basecalling ('sup' for super accuracy, 'hac' for high accuracy, or 'fast' for high speed). Users may also specify a full model name (see [above](#model-type-selection) for more details). | "sup" | Optional |
 | dorado_basecalling | **number_chunks** | Int | The number of chunks to split the input files into for basecalling; increasing chunk size can decrease runtime, though too high of a chunk size will be detrimental instead of beneficial due to resource allocation and quota limits | 4 | Optional |
 | dorado_demux | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional |
@@ -176,9 +176,6 @@ This workflow is composed of several tasks to process, basecall, and analyze Oxf
         | --- | --- |
         | Task | [task_find_files.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/file_handling/task_find_files.wdl) |
 
-??? task "`subset_pod5s`: Sorting POD5 files into separate channels"
-    Due to the nature of basecalling, 
-
 ??? task "`dorado_basecall`: Basecalling POD5 files"
     The basecalling task takes POD5 files as input and converts each individual POD5 into 'BAM' format using the either the default or user-specified model. This step leverages GPU acceleration for efficient processing.
 
@@ -209,7 +206,7 @@ This workflow is composed of several tasks to process, basecall, and analyze Oxf
     !!! info "Disabling Barcode Trimming"
         By default, barcodes are trimmed during demultiplexing. 
 
-        This can be disabled by setting the optional input variable `demux_notrim` to `true`. This allows users to retain untrimmed reads for troubleshooting, such as inspecting reads in the "unclassified" folder when reads are mis-binned or other data issues occur.
+        This can be disabled by setting the optional input variable `demux_no_trim` to `true`. This allows users to retain untrimmed reads for troubleshooting, such as inspecting reads in the "unclassified" folder when reads are mis-binned or other data issues occur.
 
     !!! techdetails "Dorado Demultiplexing Technical Details"
         |  | Links |
