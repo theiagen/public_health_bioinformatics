@@ -1,7 +1,7 @@
 version 1.0
 
 import "../../tasks/task_versioning.wdl" as versioning
-import "../../tasks/utilities/data_handling/task_phylovalidate.wdl" as phylovalidate
+import "../../tasks/utilities/data_handling/task_phylovalidate.wdl" as phylocompare
 
 workflow phylocompare {
   input {
@@ -15,7 +15,7 @@ workflow phylocompare {
   call versioning.version_capture {
     input:
   }
-  call phylovalidate.phylovalidate {
+  call phylocompare.phylocompare {
     input:
         tree1_path = tree1_path,
         tree2_path = tree2_path,
@@ -25,9 +25,9 @@ workflow phylocompare {
   }
   output {
     String phb_version = version_capture.phb_version
-    String phylocompare_version = phylovalidate.phylocompare_version
-    File phylocompare_report = phylovalidate.summary_report
-    Float lrm_distance = phylovalidate.lrm_distance
-    String validation = phylovalidate.phylovalidate
+    String phylocompare_version = phylocompare.phylocompare_version
+    File phylocompare_report = phylocompare.summary_report
+    Float lrm_distance = phylocompare.lrm_distance
+    String validation = phylocompare.phylovalidate
   }
 }
