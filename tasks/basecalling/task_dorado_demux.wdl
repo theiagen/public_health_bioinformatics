@@ -41,7 +41,7 @@ task dorado_demux {
     echo "DEBUG: demultiplexing should've finished"
 
     mkdir renamed_fastqs
-    for file in demux_fastqs/*.fastq; do
+    for file in demuxed_fastqs/*.fastq; do
       mv $file renamed_fastqs/~{output_file_prefix}-${file}.fastq
     done
 
