@@ -245,6 +245,11 @@ workflows:
    primaryDescriptorPath: /workflows/utilities/wf_theiavalidate.wdl
    testParameterFiles:
     - /tests/inputs/empty.json
+ - name: Phylocompare_PHB
+   subclass: WDL
+   primaryDescriptorPath: /workflows/phylogenetics/wf_phylocompare.wdl
+   testParameterFiles:
+    - /tests/inputs/empty.json
  - name: Samples_to_Ref_Tree_PHB
    subclass: WDL
    primaryDescriptorPath: /workflows/phylogenetics/wf_nextclade_addToRefTree.wdl
