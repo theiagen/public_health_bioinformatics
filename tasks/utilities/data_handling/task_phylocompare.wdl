@@ -1,6 +1,6 @@
 version 1.0
 
-task phylocompare {
+task phylovalidate {
   input {
     File tree1_path
     File tree2_path
