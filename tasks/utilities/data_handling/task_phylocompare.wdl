@@ -1,6 +1,6 @@
 version 1.0
 
-task phylovalidate {
+task phylocompare {
   input {
     File tree1_path
     File tree2_path
@@ -41,9 +41,9 @@ task phylovalidate {
 
     # run the comparison
     if [ -z ~{lrm_max_dist} ]; then
-      echo "NA" > PHYLOVALIDATE
+      echo "NA" > phylovalidate
     else
-      python3 -c "if float(open('PHYLOCOMPARE_LRM_DISTANCE', 'r').read().strip()) > ~{lrm_max_dist}: open('PHYLOVALIDATE', 'w').write('FAIL'); else: open('PHYLOVALIDATE', 'w').write('PASS')"
+      python3 -c "if float(open('PHYLOCOMPARE_LRM_DISTANCE', 'r').read().strip()) > ~{lrm_max_dist}: open('phylovalidate', 'w').write('FAIL'); else: open('phylovalidate', 'w').write('PASS')"
     fi
   >>>
   runtime {
@@ -58,6 +58,6 @@ task phylovalidate {
     String phylocompare_version = read_string("VERSION")
     File summary_report = "phylocompare.txt"
     Float lrm_distance = read_float("PHYLOCOMPARE_LRM_DISTANCE")
-    String phylovalidate = read_string("PHYLOVALIDATE")
+    String phylocompare = read_string("phylovalidate")
   }
 }
