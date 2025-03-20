@@ -40,10 +40,10 @@ task phylovalidate {
     tail -1 phylocompare.txt | cut -f 3 | tr -d ' ' > PHYLOCOMPARE_RF_DISTANCE
 
     # run the comparison
-    if [ -z ~{lrm_max_distance} ]; then
+    if [ -z ~{lrm_max_dist} ]; then
       echo "NA" > PHYLOVALIDATE
     else
-      python3 -c "if float(open('PHYLOCOMPARE_LRM_DISTANCE', 'r').read().strip()) > ~{lrm_max_distance}: open('PHYLOVALIDATE', 'w').write('FAIL'); else: open('PHYLOVALIDATE', 'w').write('PASS')"
+      python3 -c "if float(open('PHYLOCOMPARE_LRM_DISTANCE', 'r').read().strip()) > ~{lrm_max_dist}: open('PHYLOVALIDATE', 'w').write('FAIL'); else: open('PHYLOVALIDATE', 'w').write('PASS')"
     fi
   >>>
   runtime {
