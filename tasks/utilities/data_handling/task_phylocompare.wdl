@@ -7,7 +7,7 @@ task phylovalidate {
 
     String? root_tips
     Boolean? unrooted
-    Float? lrm_max_dist
+    Float? lrm_max_distance
     
     String docker = "us-docker.pkg.dev/general-theiagen/theiagen/theiaphylo:0.1.0"  # update!!!
     Int disk_size = 10
@@ -40,10 +40,10 @@ task phylovalidate {
     tail -1 phylocompare.txt | cut -f 3 | tr -d ' ' > PHYLOCOMPARE_RF_DISTANCE
 
     # run the comparison
-    if [ -z ~{lrm_max_dist} ]; then
+    if [ -z ~{lrm_max_distance} ]; then
       echo "NA" > phylovalidate
     else
-      python3 -c "if float(open('PHYLOCOMPARE_LRM_DISTANCE', 'r').read().strip()) > ~{lrm_max_dist}: open('phylovalidate', 'w').write('FAIL'); else: open('phylovalidate', 'w').write('PASS')"
+      python3 -c "if float(open('PHYLOCOMPARE_LRM_DISTANCE', 'r').read().strip()) > ~{lrm_max_distance}: open('phylovalidate', 'w').write('FAIL'); else: open('phylovalidate', 'w').write('PASS')"
     fi
   >>>
   runtime {
@@ -58,6 +58,6 @@ task phylovalidate {
     String phylocompare_version = read_string("VERSION")
     File summary_report = "phylocompare.txt"
     Float lrm_distance = read_float("PHYLOCOMPARE_LRM_DISTANCE")
-    String phylocompare = read_string("phylovalidate")
+    String validation = read_string("phylovalidate")
   }
 }
