@@ -1,7 +1,7 @@
 version 1.0
 
 import "../../tasks/task_versioning.wdl" as versioning
-import "../../tasks/utilities/data_handling/task_phylovalidate.wdl" as phylocompare
+import "../../tasks/utilities/data_handling/task_phylocompare.wdl" as phylocompare
 
 workflow phylocompare {
   input {
