@@ -35,7 +35,7 @@ Please note that all string inputs **must** be enclosed in quotation marks; for 
 | phylocompare | **unrooted** | Boolean | Interpret the phylogenies as unrooted | false | Optional |
 | task_phylocompare | **cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional |
 | task_phylocompare | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
-| task_phylocompare | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/theiagen/phylocompare:0.1.0 | Optional |
+| task_phylocompare | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/theiagen/theiaphylo:0.1.0 | Optional |
 | task_phylocompare | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 4 | Optional |
 | version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
 | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
