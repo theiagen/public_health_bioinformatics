@@ -23,7 +23,7 @@ task phylovalidate {
     # set -euo pipefail to avoid silent failure
     set -euo pipefail
 
-    # grab the ete3 version
+    # grab the phylocompare version
     phylocompare.py --version | tee VERSION
 
     # set bash variables to check them for population in conditionals
@@ -32,17 +32,20 @@ task phylovalidate {
 
     # root if outgroups are provided
     if [[ -n ${root_tips} ]]; then
-      phylocompare.py ~{tree1_path} ~{tree2_path} \
+      phylocompare.py ~{tree1_path} \
+        ~{tree2_path} \
         --outgroup ~{root_tips} \
         --debug
     # root at the midpoint
     elif ~{midpoint}; then
-      phylocompare.py ~{tree1_path} ~{tree2_path} \
+      phylocompare.py ~{tree1_path} \
+        ~{tree2_path} \
         --midpoint \
         --debug
     # append unrooted if provided, otherwise assume tree is prerooted
     else
-      phylocompare.py ~{tree1_path} ~{tree2_path} \
+      phylocompare.py ~{tree1_path} \
+        ~{tree2_path} \
         ~{true="--unrooted" false="" unrooted} \
         --debug
     fi
@@ -57,13 +60,18 @@ task phylovalidate {
       python3 <<CODE
       try:
         # check if the distance is greater than the max distance
-        if float(open('PHYLOCOMPARE_DISTANCE', 'r').read().strip()) > ~{max_distance}:
-          open('phylovalidate', 'w').write('FAIL')
+        with open('PHYLOCOMPARE_DISTANCE', 'r') as f:
+          observed_distance = float(f.read().strip())
+        if observed_distance > ~{max_distance}:
+          with open('phylovalidate', 'w') as out:
+            out.write('FAIL')
         else:
-          open('phylovalidate', 'w').write('PASS')
+          with open('phylovalidate', 'w') as out:
+            out.write('PASS')
       # indicates that the distance is not a float, likely a None
       except ValueError:
-        open('phylovalidate', 'w').write('FAIL')
+        with open('phylovalidate', 'w') as out:
+          out.write('FAIL')
       CODE
     fi
   >>>
