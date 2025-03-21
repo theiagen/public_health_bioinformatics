@@ -859,10 +859,6 @@ workflow theiaprok_ont {
     String? ngmaster_ngstar_gyrA_allele = merlin_magic.ngmaster_ngstar_gyrA_allele
     String? ngmaster_ngstar_parC_allele = merlin_magic.ngmaster_ngstar_parC_allele
     String? ngmaster_ngstar_23S_allele = merlin_magic.ngmaster_ngstar_23S_allele
-    # Neisseria gonorrhoeae AMR
-    # File? amr_search_results = merlin_magic.amr_search_results
-    # String? amr_search_version = merlin_magic.amr_search_version
-    # String? amr_search_docker = merlin_magic.amr_search_docker
     # Neisseria meningitidis Typing
     File? meningotype_tsv = merlin_magic.meningotype_tsv
     String? meningotype_version = merlin_magic.meningotype_version
