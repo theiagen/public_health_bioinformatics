@@ -21,6 +21,7 @@ workflow phylocompare {
         tree1_path = tree1_path,
         tree2_path = tree2_path,
         root_tips = root_tips,
+        midpoint = midpoint,
         max_distance = max_distance,
         unrooted = unrooted
   }
