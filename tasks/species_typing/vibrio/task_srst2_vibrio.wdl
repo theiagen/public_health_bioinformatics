@@ -8,7 +8,7 @@ task srst2_vibrio {
     File read1
     File? read2
     String samplename
-    Int min_coverage
+    Int min_percent_coverage
     Int max_divergence
     Int min_depth
     Int min_edge_depth
@@ -32,7 +32,7 @@ task srst2_vibrio {
       ${INPUT_READS} \
       --gene_db /vibrio-cholerae-db/vibrio_230224.fasta \
       --output ~{samplename} \
-      --min_coverage ~{min_coverage} \
+      --min_coverage ~{min_percent_coverage} \
       --max_divergence ~{max_divergence} \
       --min_depth ~{min_depth} \
       --min_edge_depth ~{min_edge_depth} \

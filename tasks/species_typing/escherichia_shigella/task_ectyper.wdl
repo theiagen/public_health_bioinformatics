@@ -21,8 +21,8 @@ task ectyper {
     #  --print_alleles  [boolean] Prints the allele sequences if enabled as the final column
     Int o_min_percent_identity = 90
     Int h_min_percent_identity = 95
-    Int o_min_coverage = 90
-    Int h_min_coverage = 50
+    Int o_min_percent_coverage = 90
+    Int h_min_percent_coverage = 50
     Boolean verify = false
     Boolean print_alleles = false
   }
@@ -31,8 +31,8 @@ task ectyper {
     ectyper \
       ~{'-opid ' + o_min_percent_identity} \
       ~{'-hpid ' + h_min_percent_identity} \
-      ~{'-opcov ' + o_min_coverage} \
-      ~{'-hpcov ' + h_min_coverage} \
+      ~{'-opcov ' + o_min_percent_coverage} \
+      ~{'-hpcov ' + h_min_percent_coverage} \
       ~{true="--verify" false="" verify} \
       ~{true="-s" false="" print_alleles} \
       --cores ~{cpu} \
