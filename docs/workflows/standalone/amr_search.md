@@ -8,6 +8,9 @@
 
 ## AMR_Search_PHB
 
+!!! caption "AMR_Search Workflow Diagram"
+    ![AMR_Search Workflow Diagram](../../assets/figures/AMR_Search.png)
+
 The AMR_Search workflow is a standalone version of Pathogenwatch's AMR profiling functionality utilizing `AMRsearch` tool from Pathogenwatch.
 
 A limited number of species are currently supported and are listed below. NCBI codes are needed from this table to select the correct library.
@@ -24,9 +27,6 @@ A limited number of species are currently supported and are listed below. NCBI c
 | _Candida auris_              | 498019    |
 | _Vibrio cholerae_            | 666       |
 | _Campylobacter_              | 194       |
-
-!!! caption "AMR_Search Workflow Diagram"
-    ![AMR_Search Workflow Diagram](../../assets/figures/AMR_Search.png)
 
 ### Inputs
 
