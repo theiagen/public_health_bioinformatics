@@ -86,7 +86,7 @@ task phylovalidate {
   output {
     String phylocompare_version = read_string("VERSION")
     File summary_report = "phylo_distances.txt"
-    Float phylo_distance = read_float("PHYLOCOMPARE_DISTANCE")
+    String phylo_distance = read_float("PHYLOCOMPARE_DISTANCE")
     String validation = read_string("phylovalidate")
   }
 }

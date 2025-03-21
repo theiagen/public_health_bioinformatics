@@ -29,7 +29,7 @@ workflow phylocompare {
     String phb_version = version_capture.phb_version
     String phylocompare_version = phylovalidate.phylocompare_version
     File phylocompare_report = phylovalidate.summary_report
-    Float phylo_distance = phylovalidate.phylo_distance
+    String phylo_distance = phylovalidate.phylo_distance
     String validation = phylovalidate.validation
   }
 }
