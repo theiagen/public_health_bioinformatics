@@ -1,7 +1,7 @@
 version 1.0
 
 import "../../tasks/task_versioning.wdl" as versioning
-import "../../tasks/utilities/data_handling/task_phylocompare.wdl" as phylovalidate
+import "../../tasks/utilities/data_handling/task_phylocompare.wdl" as task_phylocompare
 
 workflow phylocompare {
   input {
@@ -16,7 +16,7 @@ workflow phylocompare {
   call versioning.version_capture {
     input:
   }
-  call phylovalidate.phylovalidate {
+  call task_phylocompare.phylovalidate {
     input:
         tree1_path = tree1_path,
         tree2_path = tree2_path,
