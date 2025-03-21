@@ -99,6 +99,7 @@ title: Workflows by Type
 
 | **Name** | **Description** | **Applicable Kingdom** | **Workflow Level** | **Command-line Compatibility**[^1] | **Last Known Changes** | **Dockstore** |
 |---|---|---|---|---|---|---|
+| [**AMR_Search**](../workflows/standalone/amr_search.md) | Perform AMR profiling on microbial assemblies mimicing Pathogenwatch | Any taxa | Sample-level | Yes | vX.X.X | [AMR_Search_PHB](https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/AMR_Search_PHB:fc-amr-search-dev?tab=info) |
 | [**Cauris_CladeTyper**](../workflows/standalone/cauris_cladetyper.md)| C. auris clade assignment | Mycotics | Sample-level | Yes | vX.X.X | [Cauris_CladeTyper_PHB](https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Cauris_CladeTyper_PHB:main?tab=info) |
 | [**Concatenate_Illumina_Lanes**](../workflows/standalone/concatenate_illumina_lanes.md)| Concatenate Illumina lanes for a single sample | Any taxa | Sample-level | Yes | v2.3.0 | [Concatenate_Illumina_Lanes_PHB](https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Concatenate_Illumina_Lanes_PHB:main?tab=info) |
 | [**GAMBIT_Query**](../workflows/standalone/gambit_query.md)| Taxon identification of genome assembly using GAMBIT | Bacteria, Mycotics | Sample-level | Yes | v2.0.0 | [Gambit_Query_PHB](https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Gambit_Query_PHB:main?tab=info) |

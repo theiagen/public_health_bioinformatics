@@ -12,6 +12,7 @@ title: Workflows by Kingdom
 
 | **Name** | **Description** | **Taxa** | **Workflow Level** | **Command-line Compatible**[^1] | **Last known changes** | **Dockstore** |
 |---|---|---|---|---|---|---|
+| [**AMR_Search**](../workflows/standalone/amr_search.md) | Perform AMR profiling on microbial assemblies mimicing Pathogenwatch | Any taxa | Sample-level | Yes | vX.X.X | [AMR_Search_PHB](https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/AMR_Search_PHB:fc-amr-search-dev?tab=info) |
 | [**Assembly_Fetch**](../workflows/data_import/assembly_fetch.md) | Download assemblies from NCBI, after optionally identifying the closest RefSeq reference genome to your own draft assembly | Any taxa | Sample-level | Yes | v1.3.0 | [Assembly_Fetch_PHB](https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Assembly_Fetch_PHB:main?tab=info) |
 | [**BaseSpace_Fetch**](../workflows/data_import/basespace_fetch.md)| Import data from BaseSpace into Terra | Any taxa | Sample-level | Yes | v2.0.0 | [BaseSpace_Fetch_PHB](https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/BaseSpace_Fetch_PHB:main?tab=info) |
 | [**Clair3_Variants**](../workflows/phylogenetic_construction/clair3_variants.md)| ONT Variant Caller | Any taxa | Sample-level | Yes | vX.X.X | [Clair3_Variants_ONT_PHB](https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Clair3_Variants_ONT_PHB:mb-clair3-variant-dev?tab=info) |
