@@ -8,9 +8,8 @@ workflow phylocompare {
     String tree1_path
     String tree2_path
 
-    String? root_tips
+    String? outgroups
     Boolean? midpoint = false
-    Boolean? unrooted = false 
     Float? max_distance = 0.0
   }
   call versioning.version_capture {
@@ -20,10 +19,9 @@ workflow phylocompare {
     input:
         tree1_path = tree1_path,
         tree2_path = tree2_path,
-        root_tips = root_tips,
+        outgroups = outgroups,
         midpoint = midpoint,
-        max_distance = max_distance,
-        unrooted = unrooted
+        max_distance = max_distance
   }
   output {
     String phb_version = version_capture.phb_version

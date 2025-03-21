@@ -5,8 +5,7 @@ task phylovalidate {
     File tree1_path
     File tree2_path
 
-    String? root_tips
-    Boolean? unrooted = false
+    String? outgroups
     Boolean? midpoint = false
     Float? max_distance
     
@@ -27,14 +26,14 @@ task phylovalidate {
     phylocompare.py --version | tee VERSION
 
     # set bash variables to check them for population in conditionals
-    root_tips=~{root_tips}
+    outgroups=~{outgroups}
     max_distance=~{max_distance}
 
     # root if outgroups are provided
-    if [[ -n ${root_tips} ]]; then
+    if [[ -n ${outgroups} ]]; then
       phylocompare.py ~{tree1_path} \
         ~{tree2_path} \
-        --outgroup ~{root_tips} \
+        --outgroup ~{outgroups} \
         --debug
     # root at the midpoint
     elif ~{midpoint}; then
@@ -42,11 +41,10 @@ task phylovalidate {
         ~{tree2_path} \
         --midpoint \
         --debug
-    # append unrooted if provided, otherwise assume tree is prerooted
+    # root is not specified, allow phylocompare.py to determine
     else
       phylocompare.py ~{tree1_path} \
         ~{tree2_path} \
-        ~{true="--unrooted" false="" unrooted} \
         --debug
     fi
 
