@@ -26,7 +26,7 @@ workflow snippy_streamline {
         assembly_fasta = select_first([assembly_fasta])
     }
     if (! use_centroid_as_reference) {
-    call referenceseeker_task.referenceseeker {
+      call referenceseeker_task.referenceseeker {
         input:
           assembly_fasta = centroid.centroid_genome_fasta,
           samplename = centroid.centroid_genome_samplename
