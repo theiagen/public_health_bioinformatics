@@ -115,11 +115,11 @@ Ensure you use an accepted barcoding kit name in the `kit_name` parameter. Check
     - **kit_name**: Ensure the correct kit name is provided, as it determines the barcoding and adapter trimming behavior. See the [Supported Kit Names](#supported-kit-names) section for a list of accepted kit names.
 
 !!! tip "Increasing Chunk Size"
-    The identified pod5 files will be split into four groups (or the number indicated by `number_chunks` ) for basecalling. You can decrease runtime by raising the number of chunks with the `number_chunks` variable.
+    The identified pod5 files will be split into four groups (or the number indicated by `number_chunks`) for basecalling. You can decrease runtime by raising the number of chunks with the `number_chunks` variable.
     
     We recommend keeping the number of chunks relatively low (under 20) in order to prevent VM allocation times from drastically increasing, as this can negatively impact the speed of the analysis due to wait times reaching upwards of days (e.g., if chunk size > 100). We have observed that as the number of chunks nears 20, walltime begins to increase.
 
-    If the number of chunks is MORE than the number of channels identified in the pod5 data, the number of chunks will be set to the number of identified channels.
+    If the number of chunks is MORE than the number of pod5 files identified, the number of chunks will be set to the number of identified channels.
 
 <div class="searchable-table" markdown="1">
 
@@ -176,6 +176,14 @@ This workflow is composed of several tasks to process, basecall, and analyze Oxf
         | --- | --- |
         | Task | [task_find_files.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/file_handling/task_find_files.wdl) |
 
+??? task "`chunk_files`: Splitting POD5 files into groups for parallel basecalling"
+    In order to improve runtime, POD5 files are split into groups or "chunks" for basecalling. The number of chunks can be indicated by providing a value for the `number_chunks` value. By default, the number of chunks is four.
+
+    !!! techdetails "Chunk Files Technical Details"
+        |  | Links |
+        | --- | --- |
+        | Task | [task_chunk_files.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/file_handling/task_chunk_files.wdl) |
+
 ??? task "`dorado_basecall`: Basecalling POD5 files"
     The basecalling task takes POD5 files as input and converts each individual POD5 into 'BAM' format using the either the default or user-specified model. This step leverages GPU acceleration for efficient processing.
 
@@ -204,7 +212,7 @@ This workflow is composed of several tasks to process, basecall, and analyze Oxf
     This task takes every basecalled BAM files and demultiplexes them based on the identified barcodes found during basecalling. An individual FASTQ file is generated for each barcode found per BAM file. All FASTQ files that are associated with a single barcode are then merged.
 
     !!! info "Disabling Barcode Trimming"
-        By default, barcodes are trimmed during demultiplexing. 
+        By default, barcodes _are_ trimmed during demultiplexing. 
 
         This can be disabled by setting the optional input variable `demux_no_trim` to `true`. This allows users to retain untrimmed reads for troubleshooting, such as inspecting reads in the "unclassified" folder when reads are mis-binned or other data issues occur.
 
@@ -251,14 +259,14 @@ This workflow is composed of several tasks to process, basecall, and analyze Oxf
         
 ### Outputs
 
-Please note that if you run this workflow with the `"Run workflow with inputs defined by file paths"` option selected in Terra, these outputs will not be visible in a Terra table, but can be identified in the Job Manager.
+Please note that if you run this workflow with the `"Run workflow with inputs defined by file paths"` option selected in Terra, these outputs will not be visible in a Terra table, but can be found in the Job Manager.
 
 | **Variable** | **Type** | **Description** |
 |---|---|---|
-| **dorado_basecalling_analysis_date** | String | Date of Dorado analysis |
-| **dorado_basecalling_phb_version** | String | Version of PHB used for the analysis |
 | **dorado_basecall_docker** | String | Docker image used in the `dorado_basecall` task |
 | **dorado_basecall_version** | String | Version of Dorado used in the `dorado_basecall` task |
+| **dorado_basecalling_analysis_date** | String | Date of Dorado analysis |
+| **dorado_basecalling_phb_version** | String | Version of PHB used for the analysis |
 | **dorado_demux_version** | String | Version of Dorado used in the `dorado_demux` task |
 | **dorado_model_used** | String | Model used for basecalling |
 | **dorado_trim_version** | String | Version of Dorado used in the `dorado_trim` task |
