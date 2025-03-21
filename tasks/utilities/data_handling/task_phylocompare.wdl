@@ -55,7 +55,7 @@ task phylovalidate {
 
     # run the comparison
     if [[ -z ${max_distance} ]]; then
-      echo "NA" > phylovalidate
+      echo "NA" > PHYLOVALIDATE
     else
       python3 <<CODE
     try:
@@ -63,14 +63,14 @@ task phylovalidate {
       with open('PHYLOCOMPARE_DISTANCE', 'r') as f:
         observed_distance = float(f.read().strip())
       if observed_distance > ~{max_distance}:
-        with open('phylovalidate', 'w') as out:
+        with open('PHYLOVALIDATE', 'w') as out:
           out.write('FAIL')
       else:
-        with open('phylovalidate', 'w') as out:
+        with open('PHYLOVALIDATE', 'w') as out:
           out.write('PASS')
     # indicates that the distance is not a float, likely a None
     except ValueError:
-      with open('phylovalidate', 'w') as out:
+      with open('PHYLOVALIDATE', 'w') as out:
         out.write('FAIL')
     CODE
     fi
@@ -87,6 +87,6 @@ task phylovalidate {
     String phylocompare_version = read_string("VERSION")
     File summary_report = "phylo_distances.txt"
     String phylo_distance = read_float("PHYLOCOMPARE_DISTANCE")
-    String validation = read_string("phylovalidate")
+    String validation = read_string("PHYLOVALIDATE")
   }
 }
