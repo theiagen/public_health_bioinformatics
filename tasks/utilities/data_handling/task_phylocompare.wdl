@@ -72,7 +72,7 @@ task phylovalidate {
       except ValueError:
         with open('phylovalidate', 'w') as out:
           out.write('FAIL')
-      CODE
+    CODE
     fi
   >>>
   runtime {
