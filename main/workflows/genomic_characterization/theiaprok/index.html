@@ -1907,6 +1907,28 @@
   
   
     <li class="md-nav__item">
+      <a href="../../standalone/amr_search/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    AMR_Search
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../standalone/cauris_cladetyper/" class="md-nav__link">
         
   
@@ -2235,6 +2257,28 @@
             Any Taxa
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../standalone/amr_search/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    AMR_Search
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
             
               
                 
@@ -3922,6 +3966,28 @@
   
   <span class="md-ellipsis">
     Overview Table
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../standalone/amr_search/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    AMR_Search
     
   </span>
   
@@ -11353,6 +11419,50 @@
 <summary><em>Neisseria</em> spp.</summary>
 <h5 id="neisseria"><em>Neisseria</em> spp.<a class="headerlink" href="#neisseria" title="Permanent link">&para;</a></h5>
 <details class="task">
+<summary><code>amr_search</code>: <em>Neisseria gonorrhoeae</em> antimicrobial resistance profiling</summary>
+<p>This task performs <em>in silico</em> antimicrobial resistance (AMR) profiling for <em>Neisseria gonorrhoeae</em> using <strong>AMRsearch</strong>, the primary tool used by <a href="https://pathogen.watch/">Pathogenwatch</a> to genotype and infer antimicrobial resistance (AMR) phenotypes from assembled microbial genomes.</p>
+<p><strong>AMRsearch</strong> screens against Pathogenwatch's library of curated genotypes and inferred phenotypes, developed in collaboration with community experts. Resistance phenotypes are determined based on both <strong>resistance genes</strong> and <strong>mutations</strong>, and the system accounts for interactions between multiple SNPs, genes, and suppressors. Predictions follow <strong>S/I/R classification</strong> (<em>Sensitive, Intermediate, Resistant</em>).</p>
+<p>The AMR search is conducted when <em>Neisseria gonorrhoeae</em> is identified as the taxon in <em>TheiaProk</em> workflows. The default database for <em>N. gonorrhoeae</em> is <strong>485</strong>.</p>
+<p><strong>Outputs:</strong></p>
+<ul>
+<li>
+<p><strong>JSON Output:</strong> Contains the complete AMR profile, including detailed <strong>resistance state</strong>, detected <strong>resistance genes/mutations</strong>, and supporting <strong>BLAST results</strong>.</p>
+</li>
+<li>
+<p><strong>CSV &amp; PNG Tables:</strong> A downstream task, <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/data_handling/parse_amr_json.wdl"><code>parse_amr_json.wdl</code></a>, extracts and formats results into a <strong>CSV file</strong> and <strong>PNG summary table</strong> for easier visualization.</p>
+</li>
+</ul>
+<div class="admonition techdetails">
+<p class="admonition-title">amr_search Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/drug_resistance/task_amr_search.wdl">task_amr_search.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/pathogenwatch-oss/amr-search">AMRsearch</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://cgps.gitbook.io/pathogenwatch">Pathogenwatch</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7545138/">PAARSNP: <em>rapid genotypic resistance prediction for </em>Neisseria gonorrhoeae*</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<details class="task">
 <summary><code>ngmaster</code>: <em>Neisseria gonorrhoeae</em> sequence typing</summary>
 <p>NG-MAST is currently the most widely used method for epidemiological surveillance of <em>Neisseria gonorrhoea.</em> This tool is targeted at clinical and research microbiology laboratories that have performed WGS of <em>N. gonorrhoeae</em> isolates and wish to understand the molecular context of their data in comparison to previously published epidemiological studies. As WGS becomes more routinely performed, <em>NGMASTER</em>
  has been developed to completely replace PCR-based NG-MAST, reducing time and labour costs. </p>
@@ -14541,7 +14651,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="March 20, 2025 14:22:24">2025-03-20</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="March 21, 2025 17:00:05">2025-03-21</span>
   </span>
 
     

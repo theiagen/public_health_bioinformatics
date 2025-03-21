@@ -12,13 +12,13 @@
         <meta name="author" content="Theiagen Genomics">
       
       
-        <link rel="canonical" href="https://theiagen.github.io/public_health_bioinformatics/main/workflows/phylogenetic_construction/mashtree_fasta/">
+        <link rel="canonical" href="https://theiagen.github.io/public_health_bioinformatics/main/workflows/standalone/amr_search/">
       
       
-        <link rel="prev" href="../lyve_set/">
+        <link rel="prev" href="../../../workflows_overview/workflows_alphabetically/">
       
       
-        <link rel="next" href="../../public_data_sharing/mercury_prep_n_batch/">
+        <link rel="next" href="../../data_import/assembly_fetch/">
       
       
       <link rel="icon" href="../../../assets/logos/Theiagen-Symbol-Standard-01.png">
@@ -26,7 +26,7 @@
     
     
       
-        <title>MashTree_FASTA - Public Health Bioinformatics</title>
+        <title>AMR_Search - Public Health Bioinformatics</title>
       
     
     
@@ -89,7 +89,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#mashtree_fasta" class="md-skip">
+        <a href="#amr-search" class="md-skip">
           Skip to content
         </a>
       
@@ -138,7 +138,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              MashTree_FASTA
+              AMR_Search
             
           </span>
         </div>
@@ -969,7 +969,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../augur/" class="md-nav__link">
+      <a href="../../phylogenetic_construction/augur/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -991,7 +991,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../core_gene_snp/" class="md-nav__link">
+      <a href="../../phylogenetic_construction/core_gene_snp/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1013,7 +1013,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../clair3_variants/" class="md-nav__link">
+      <a href="../../phylogenetic_construction/clair3_variants/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1035,7 +1035,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../czgenepi_prep/" class="md-nav__link">
+      <a href="../../phylogenetic_construction/czgenepi_prep/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1057,7 +1057,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../find_shared_variants/" class="md-nav__link">
+      <a href="../../phylogenetic_construction/find_shared_variants/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1079,7 +1079,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../ksnp3/" class="md-nav__link">
+      <a href="../../phylogenetic_construction/ksnp3/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1101,7 +1101,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../ksnp4/" class="md-nav__link">
+      <a href="../../phylogenetic_construction/ksnp4/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1123,7 +1123,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../lyve_set/" class="md-nav__link">
+      <a href="../../phylogenetic_construction/lyve_set/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1142,31 +1142,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  <span class="md-ellipsis">
-    MashTree_FASTA
-    
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../phylogenetic_construction/mashtree_fasta/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1176,86 +1155,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#quick-facts" class="md-nav__link">
-    <span class="md-ellipsis">
-      Quick Facts
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#mashtree_fasta_phb" class="md-nav__link">
-    <span class="md-ellipsis">
-      MashTree_FASTA_PHB
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="MashTree_FASTA_PHB">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#inputs" class="md-nav__link">
-    <span class="md-ellipsis">
-      Inputs
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#workflow-actions" class="md-nav__link">
-    <span class="md-ellipsis">
-      Workflow Actions
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#outputs" class="md-nav__link">
-    <span class="md-ellipsis">
-      Outputs
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#references" class="md-nav__link">
-    <span class="md-ellipsis">
-      References
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1268,7 +1167,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../snippy_streamline/" class="md-nav__link">
+      <a href="../../phylogenetic_construction/snippy_streamline/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1290,7 +1189,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../snippy_streamline_fasta/" class="md-nav__link">
+      <a href="../../phylogenetic_construction/snippy_streamline_fasta/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1312,7 +1211,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../snippy_tree/" class="md-nav__link">
+      <a href="../../phylogenetic_construction/snippy_tree/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1334,7 +1233,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../snippy_variants/" class="md-nav__link">
+      <a href="../../phylogenetic_construction/snippy_variants/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1739,10 +1638,31 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../standalone/amr_search/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    AMR_Search
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -1752,6 +1672,86 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#quick-facts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quick Facts
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#amr_search_phb" class="md-nav__link">
+    <span class="md-ellipsis">
+      AMR_Search_PHB
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="AMR_Search_PHB">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#inputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Inputs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#workflow-tasks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Workflow Tasks
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#outputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Outputs
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      References
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1764,7 +1764,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/cauris_cladetyper/" class="md-nav__link">
+      <a href="../cauris_cladetyper/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1786,7 +1786,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/concatenate_illumina_lanes/" class="md-nav__link">
+      <a href="../concatenate_illumina_lanes/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1808,7 +1808,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/gambit_query/" class="md-nav__link">
+      <a href="../gambit_query/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1830,7 +1830,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/kraken2/" class="md-nav__link">
+      <a href="../kraken2/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1852,7 +1852,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/ncbi_amrfinderplus/" class="md-nav__link">
+      <a href="../ncbi_amrfinderplus/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1874,7 +1874,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/ncbi_scrub/" class="md-nav__link">
+      <a href="../ncbi_scrub/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1896,7 +1896,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/rasusa/" class="md-nav__link">
+      <a href="../rasusa/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1918,7 +1918,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/rename_fastq/" class="md-nav__link">
+      <a href="../rename_fastq/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1940,7 +1940,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/tbprofiler_tngs/" class="md-nav__link">
+      <a href="../tbprofiler_tngs/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1962,7 +1962,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/theiavalidate/" class="md-nav__link">
+      <a href="../theiavalidate/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2097,10 +2097,31 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../standalone/amr_search/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    AMR_Search
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -2110,6 +2131,86 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#quick-facts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quick Facts
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#amr_search_phb" class="md-nav__link">
+    <span class="md-ellipsis">
+      AMR_Search_PHB
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="AMR_Search_PHB">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#inputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Inputs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#workflow-tasks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Workflow Tasks
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#outputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Outputs
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      References
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -2166,7 +2267,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../clair3_variants/" class="md-nav__link">
+      <a href="../../phylogenetic_construction/clair3_variants/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2210,7 +2311,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/concatenate_illumina_lanes/" class="md-nav__link">
+      <a href="../concatenate_illumina_lanes/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2254,7 +2355,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/kraken2/" class="md-nav__link">
+      <a href="../kraken2/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2276,7 +2377,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/ncbi_scrub/" class="md-nav__link">
+      <a href="../ncbi_scrub/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2298,7 +2399,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/rasusa/" class="md-nav__link">
+      <a href="../rasusa/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2320,7 +2421,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/rename_fastq/" class="md-nav__link">
+      <a href="../rename_fastq/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2386,7 +2487,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/theiavalidate/" class="md-nav__link">
+      <a href="../theiavalidate/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2499,7 +2600,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../core_gene_snp/" class="md-nav__link">
+      <a href="../../phylogenetic_construction/core_gene_snp/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2521,7 +2622,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../find_shared_variants/" class="md-nav__link">
+      <a href="../../phylogenetic_construction/find_shared_variants/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2543,7 +2644,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/gambit_query/" class="md-nav__link">
+      <a href="../gambit_query/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2565,7 +2666,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../ksnp3/" class="md-nav__link">
+      <a href="../../phylogenetic_construction/ksnp3/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2587,7 +2688,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../ksnp4/" class="md-nav__link">
+      <a href="../../phylogenetic_construction/ksnp4/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2609,7 +2710,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../lyve_set/" class="md-nav__link">
+      <a href="../../phylogenetic_construction/lyve_set/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2628,31 +2729,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  <span class="md-ellipsis">
-    MashTree_FASTA
-    
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../phylogenetic_construction/mashtree_fasta/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2662,86 +2742,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#quick-facts" class="md-nav__link">
-    <span class="md-ellipsis">
-      Quick Facts
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#mashtree_fasta_phb" class="md-nav__link">
-    <span class="md-ellipsis">
-      MashTree_FASTA_PHB
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="MashTree_FASTA_PHB">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#inputs" class="md-nav__link">
-    <span class="md-ellipsis">
-      Inputs
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#workflow-actions" class="md-nav__link">
-    <span class="md-ellipsis">
-      Workflow Actions
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#outputs" class="md-nav__link">
-    <span class="md-ellipsis">
-      Outputs
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#references" class="md-nav__link">
-    <span class="md-ellipsis">
-      References
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -2754,7 +2754,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/ncbi_amrfinderplus/" class="md-nav__link">
+      <a href="../ncbi_amrfinderplus/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2776,7 +2776,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../snippy_streamline/" class="md-nav__link">
+      <a href="../../phylogenetic_construction/snippy_streamline/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2798,7 +2798,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../snippy_streamline_fasta/" class="md-nav__link">
+      <a href="../../phylogenetic_construction/snippy_streamline_fasta/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2820,7 +2820,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../snippy_tree/" class="md-nav__link">
+      <a href="../../phylogenetic_construction/snippy_tree/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2842,7 +2842,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../snippy_variants/" class="md-nav__link">
+      <a href="../../phylogenetic_construction/snippy_variants/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2864,7 +2864,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/tbprofiler_tngs/" class="md-nav__link">
+      <a href="../tbprofiler_tngs/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2977,7 +2977,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/cauris_cladetyper/" class="md-nav__link">
+      <a href="../cauris_cladetyper/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2999,7 +2999,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../find_shared_variants/" class="md-nav__link">
+      <a href="../../phylogenetic_construction/find_shared_variants/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3021,7 +3021,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/gambit_query/" class="md-nav__link">
+      <a href="../gambit_query/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3043,7 +3043,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../ksnp3/" class="md-nav__link">
+      <a href="../../phylogenetic_construction/ksnp3/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3065,7 +3065,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../ksnp4/" class="md-nav__link">
+      <a href="../../phylogenetic_construction/ksnp4/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3084,31 +3084,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  <span class="md-ellipsis">
-    MashTree_FASTA
-    
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../phylogenetic_construction/mashtree_fasta/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3118,86 +3097,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#quick-facts" class="md-nav__link">
-    <span class="md-ellipsis">
-      Quick Facts
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#mashtree_fasta_phb" class="md-nav__link">
-    <span class="md-ellipsis">
-      MashTree_FASTA_PHB
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="MashTree_FASTA_PHB">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#inputs" class="md-nav__link">
-    <span class="md-ellipsis">
-      Inputs
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#workflow-actions" class="md-nav__link">
-    <span class="md-ellipsis">
-      Workflow Actions
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#outputs" class="md-nav__link">
-    <span class="md-ellipsis">
-      Outputs
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#references" class="md-nav__link">
-    <span class="md-ellipsis">
-      References
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -3210,7 +3109,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/ncbi_amrfinderplus/" class="md-nav__link">
+      <a href="../ncbi_amrfinderplus/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3232,7 +3131,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../snippy_variants/" class="md-nav__link">
+      <a href="../../phylogenetic_construction/snippy_variants/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3345,7 +3244,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../augur/" class="md-nav__link">
+      <a href="../../phylogenetic_construction/augur/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3367,7 +3266,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../czgenepi_prep/" class="md-nav__link">
+      <a href="../../phylogenetic_construction/czgenepi_prep/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3411,7 +3310,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../ksnp3/" class="md-nav__link">
+      <a href="../../phylogenetic_construction/ksnp3/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3433,7 +3332,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../ksnp4/" class="md-nav__link">
+      <a href="../../phylogenetic_construction/ksnp4/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3452,31 +3351,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  <span class="md-ellipsis">
-    MashTree_FASTA
-    
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../phylogenetic_construction/mashtree_fasta/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3486,86 +3364,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#quick-facts" class="md-nav__link">
-    <span class="md-ellipsis">
-      Quick Facts
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#mashtree_fasta_phb" class="md-nav__link">
-    <span class="md-ellipsis">
-      MashTree_FASTA_PHB
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="MashTree_FASTA_PHB">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#inputs" class="md-nav__link">
-    <span class="md-ellipsis">
-      Inputs
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#workflow-actions" class="md-nav__link">
-    <span class="md-ellipsis">
-      Workflow Actions
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#outputs" class="md-nav__link">
-    <span class="md-ellipsis">
-      Outputs
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#references" class="md-nav__link">
-    <span class="md-ellipsis">
-      References
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -3644,7 +3442,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../snippy_variants/" class="md-nav__link">
+      <a href="../../phylogenetic_construction/snippy_variants/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3852,402 +3650,6 @@
                 
   
   
-  
-  
-    <li class="md-nav__item">
-      <a href="../../standalone/amr_search/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    AMR_Search
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../data_import/assembly_fetch/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Assembly_Fetch
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../augur/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Augur
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../data_import/basespace_fetch/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    BaseSpace_Fetch
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../standalone/cauris_cladetyper/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Cauris_CladeTyper
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../clair3_variants/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Clair3_Variants_ONT
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../data_export/concatenate_column_content/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Concatenate_Column_Content
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../standalone/concatenate_illumina_lanes/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Concatenate_Illumina_Lanes
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../core_gene_snp/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Core_Gene_SNP
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../data_import/create_terra_table/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Create_Terra_Table
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../czgenepi_prep/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    CZGenEpi_Prep
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../find_shared_variants/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Find_Shared_Variants
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../genomic_characterization/freyja/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Freyja Workflow Series
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../standalone/gambit_query/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    GAMBIT_Query
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../standalone/kraken2/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Kraken2
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../ksnp3/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    kSNP3
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../ksnp4/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    kSNP4
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../lyve_set/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Lyve_SET
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
     
   
   
@@ -4264,7 +3666,7 @@
           
   
   <span class="md-ellipsis">
-    MashTree_FASTA
+    AMR_Search
     
   </span>
   
@@ -4276,7 +3678,7 @@
         
   
   <span class="md-ellipsis">
-    MashTree_FASTA
+    AMR_Search
     
   </span>
   
@@ -4308,13 +3710,13 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#mashtree_fasta_phb" class="md-nav__link">
+  <a href="#amr_search_phb" class="md-nav__link">
     <span class="md-ellipsis">
-      MashTree_FASTA_PHB
+      AMR_Search_PHB
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="MashTree_FASTA_PHB">
+    <nav class="md-nav" aria-label="AMR_Search_PHB">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -4327,9 +3729,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#workflow-actions" class="md-nav__link">
+  <a href="#workflow-tasks" class="md-nav__link">
     <span class="md-ellipsis">
-      Workflow Actions
+      Workflow Tasks
     </span>
   </a>
   
@@ -4374,6 +3776,402 @@
   
   
     <li class="md-nav__item">
+      <a href="../../data_import/assembly_fetch/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Assembly_Fetch
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phylogenetic_construction/augur/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Augur
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data_import/basespace_fetch/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    BaseSpace_Fetch
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cauris_cladetyper/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Cauris_CladeTyper
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phylogenetic_construction/clair3_variants/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Clair3_Variants_ONT
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data_export/concatenate_column_content/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Concatenate_Column_Content
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../concatenate_illumina_lanes/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Concatenate_Illumina_Lanes
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phylogenetic_construction/core_gene_snp/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Core_Gene_SNP
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data_import/create_terra_table/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Create_Terra_Table
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phylogenetic_construction/czgenepi_prep/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    CZGenEpi_Prep
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phylogenetic_construction/find_shared_variants/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Find_Shared_Variants
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../genomic_characterization/freyja/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Freyja Workflow Series
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gambit_query/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    GAMBIT_Query
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../kraken2/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Kraken2
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phylogenetic_construction/ksnp3/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    kSNP3
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phylogenetic_construction/ksnp4/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    kSNP4
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phylogenetic_construction/lyve_set/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lyve_SET
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phylogenetic_construction/mashtree_fasta/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    MashTree_FASTA
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../public_data_sharing/mercury_prep_n_batch/" class="md-nav__link">
         
   
@@ -4396,7 +4194,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/ncbi_amrfinderplus/" class="md-nav__link">
+      <a href="../ncbi_amrfinderplus/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -4418,7 +4216,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/ncbi_scrub/" class="md-nav__link">
+      <a href="../ncbi_scrub/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -4462,7 +4260,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/rasusa/" class="md-nav__link">
+      <a href="../rasusa/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -4484,7 +4282,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/rename_fastq/" class="md-nav__link">
+      <a href="../rename_fastq/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -4528,7 +4326,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../snippy_streamline/" class="md-nav__link">
+      <a href="../../phylogenetic_construction/snippy_streamline/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -4550,7 +4348,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../snippy_streamline_fasta/" class="md-nav__link">
+      <a href="../../phylogenetic_construction/snippy_streamline_fasta/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -4572,7 +4370,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../snippy_tree/" class="md-nav__link">
+      <a href="../../phylogenetic_construction/snippy_tree/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -4594,7 +4392,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../snippy_variants/" class="md-nav__link">
+      <a href="../../phylogenetic_construction/snippy_variants/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -4638,7 +4436,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/tbprofiler_tngs/" class="md-nav__link">
+      <a href="../tbprofiler_tngs/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -4792,7 +4590,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/theiavalidate/" class="md-nav__link">
+      <a href="../theiavalidate/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -5045,13 +4843,13 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#mashtree_fasta_phb" class="md-nav__link">
+  <a href="#amr_search_phb" class="md-nav__link">
     <span class="md-ellipsis">
-      MashTree_FASTA_PHB
+      AMR_Search_PHB
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="MashTree_FASTA_PHB">
+    <nav class="md-nav" aria-label="AMR_Search_PHB">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -5064,9 +4862,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#workflow-actions" class="md-nav__link">
+  <a href="#workflow-tasks" class="md-nav__link">
     <span class="md-ellipsis">
-      Workflow Actions
+      Workflow Tasks
     </span>
   </a>
   
@@ -5114,7 +4912,7 @@
   
 
 
-<h1 id="mashtree_fasta">MashTree_FASTA<a class="headerlink" href="#mashtree_fasta" title="Permanent link">&para;</a></h1>
+<h1 id="amr-search">AMR Search<a class="headerlink" href="#amr-search" title="Permanent link">&para;</a></h1>
 <h2 id="quick-facts">Quick Facts<a class="headerlink" href="#quick-facts" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -5128,20 +4926,73 @@
 </thead>
 <tbody>
 <tr>
-<td><a href="../../../workflows_overview/workflows_type/#phylogenetic-construction">Phylogenetic Construction</a></td>
-<td><a href="../../../workflows_overview/workflows_kingdom/#bacteria">Bacteria</a></td>
-<td>PHB vX.X.X</td>
+<td><a href="../../../workflows_overview/workflows_type/#standalone">Standalone</a></td>
+<td><a href="../../../workflows_overview/workflows_kingdom/#any-taxa">Any Taxa</a></td>
+<td>vX.X.X</td>
 <td>Yes</td>
-<td>Set-level</td>
+<td>Sample-level</td>
 </tr>
 </tbody>
 </table>
-<h2 id="mashtree_fasta_phb">MashTree_FASTA_PHB<a class="headerlink" href="#mashtree_fasta_phb" title="Permanent link">&para;</a></h2>
-<p><code>MashTree_FASTA</code> creates a phylogenetic tree using Mash distances.</p>
-<p>Mash distances are representations of how many kmers two sequences have in common. These distances are generated by transforming all kmers from a sequence into an integer value with hashing and Bloom filters. The hashed kmers are sorted and a "sketch" is created by only using the kmers that appear at the top of the sorted list. These sketches can be compared by counting the number of hashed kmers they have in common. Mashtree uses a neighbor-joining algorithm to cluster these "distances" into phylogenetic trees.</p>
-<p>This workflow also features an optional module, <code>summarize_data</code>, that creates a presence/absence matrix for the analyzed samples from a list of indicated columns (such as AMR genes, etc.) that can be used in Phandango.</p>
+<h2 id="amr_search_phb">AMR_Search_PHB<a class="headerlink" href="#amr_search_phb" title="Permanent link">&para;</a></h2>
+<div class="admonition caption">
+<p class="admonition-title">AMR_Search Workflow Diagram</p>
+<p><a class="glightbox" href="../../../assets/figures/AMR_Search.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="AMR_Search Workflow Diagram" src="../../../assets/figures/AMR_Search.png" /></a></p>
+</div>
+<p>The AMR_Search workflow is a standalone version of Pathogenwatch's AMR profiling functionality utilizing <code>AMRsearch</code> tool from Pathogenwatch.</p>
+<p>A limited number of species are currently supported and are listed below. NCBI codes are needed from this table to select the correct library.</p>
+<table>
+<thead>
+<tr>
+<th>Species</th>
+<th>NCBI Code</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><em>Neisseria gonorrhoeae</em></td>
+<td>485</td>
+</tr>
+<tr>
+<td><em>Staphylococcus aureus</em></td>
+<td>1280</td>
+</tr>
+<tr>
+<td><em>Salmonella</em> Typhi</td>
+<td>90370</td>
+</tr>
+<tr>
+<td><em>Streptococcus pneumoniae</em></td>
+<td>1313</td>
+</tr>
+<tr>
+<td><em>Klebisiella</em></td>
+<td>570</td>
+</tr>
+<tr>
+<td><em>Escherichia</em></td>
+<td>561</td>
+</tr>
+<tr>
+<td><em>Mycobacterium tuberculosis</em></td>
+<td>1773</td>
+</tr>
+<tr>
+<td><em>Candida auris</em></td>
+<td>498019</td>
+</tr>
+<tr>
+<td><em>Vibrio cholerae</em></td>
+<td>666</td>
+</tr>
+<tr>
+<td><em>Campylobacter</em></td>
+<td>194</td>
+</tr>
+</tbody>
+</table>
 <h3 id="inputs">Inputs<a class="headerlink" href="#inputs" title="Permanent link">&para;</a></h3>
-<div class="searchable-table">
+<p>Input should be ordered as they appear on Terra</p>
 <table>
 <thead>
 <tr>
@@ -5155,259 +5006,109 @@
 </thead>
 <tbody>
 <tr>
-<td>mashtree_fasta</td>
-<td><strong>assembly_fasta</strong></td>
-<td>Array[File]</td>
-<td>The set of assembly fastas</td>
+<td>amr_search_workflow</td>
+<td><strong>amr_search_database</strong></td>
+<td>String</td>
+<td>NCBI taxon code of samples known taxonomy, see above supported species</td>
 <td></td>
 <td>Required</td>
 </tr>
 <tr>
-<td>mashtree_fasta</td>
-<td><strong>cluster_name</strong></td>
-<td>String</td>
-<td>Free text string used to label output files</td>
+<td>amr_search_workflow</td>
+<td><strong>input_fasta</strong></td>
+<td>File</td>
+<td>A microbial assembly file</td>
 <td></td>
 <td>Required</td>
 </tr>
 <tr>
-<td>mashtree_fasta</td>
-<td><strong>data_summary_column_names</strong></td>
+<td>amr_search_workflow</td>
+<td><strong>samplename</strong></td>
 <td>String</td>
-<td>A comma-separated list of the column names from the sample-level data table for generating a data summary (presence/absence .csv matrix); e.g., "amrfinderplus_amr_genes,amrfinderplus_virulence_genes"</td>
+<td>Identifier user wants prefixed to output files</td>
 <td></td>
-<td>Optional</td>
+<td>Required</td>
 </tr>
 <tr>
-<td>mashtree_fasta</td>
-<td><strong>data_summary_terra_project</strong></td>
-<td>String</td>
-<td>The billing project for your current workspace. This can be found after the "#workspaces/" section in the workspace's URL</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>mashtree_fasta</td>
-<td><strong>data_summary_terra_table</strong></td>
-<td>String</td>
-<td>The name of the sample-level Terra data table that will be used for generating a data summary</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>mashtree_fasta</td>
-<td><strong>data_summary_terra_workspace</strong></td>
-<td>String</td>
-<td>The name of the Terra workspace you are in. This can be found at the top of the webpage, or in the URL after the billing project.</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>mashtree_fasta</td>
-<td><strong>midpoint_root_tree</strong></td>
-<td>Boolean</td>
-<td>If true, midpoint root the final tree</td>
-<td>FALSE</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>mashtree_fasta</td>
-<td><strong>phandango_coloring</strong></td>
-<td>Boolean</td>
-<td>Boolean variable that tells the data summary task and the reorder matrix task to include a suffix that enables consistent coloring on Phandango; by default, this suffix is not added. To add this suffix set this variable to true.</td>
-<td>FALSE</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>mashtree_fasta</td>
-<td><strong>sample_names</strong></td>
-<td>Array[String]</td>
-<td>The list of samples</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>mashtree_task</td>
+<td>amr_search</td>
 <td><strong>cpu</strong></td>
-<td>Int</td>
+<td>Integer</td>
 <td>Number of CPUs to allocate to the task</td>
-<td>16</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>mashtree_task</td>
-<td><strong>disk_size</strong></td>
-<td>Int</td>
-<td>Amount of storage (in GB) to allocate to the task</td>
-<td>100</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>mashtree_task</td>
-<td><strong>docker</strong></td>
-<td>String</td>
-<td>The Docker container to use for the task</td>
-<td>"us-docker.pkg.dev/general-theiagen/staphb/mashtree:1.2.0"</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>mashtree_task</td>
-<td><strong>genomesize</strong></td>
-<td>Int</td>
-<td>Genome size of the input samples</td>
-<td>5000000</td>
-<td>Ooptional</td>
-</tr>
-<tr>
-<td>mashtree_task</td>
-<td><strong>kmerlength</strong></td>
-<td>Int</td>
-<td>Hashes will be based on strings of this many nucleotides</td>
-<td>21</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>mashtree_task</td>
-<td><strong>mindepth</strong></td>
-<td>Int</td>
-<td>If set to zero, mashtree will run in "accurate" mode as it will chose a mindepth by itself in a slower method; this value otherwise indicates the minimum number of times a kmer must appear in order to be included</td>
-<td>5</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>mashtree_task</td>
-<td><strong>memory</strong></td>
-<td>Int</td>
-<td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>64</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>mashtree_task</td>
-<td><strong>sketchsize</strong></td>
-<td>Int</td>
-<td>Each sketch will have at most this many non-redundant min-hashes</td>
-<td>10000</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>mashtree_task</td>
-<td><strong>sort_order</strong></td>
-<td>String</td>
-<td>For neighbor-joining, the sort order can make a difference. Options include: "ABC" (alphabetical), "random", "input-order"</td>
-<td>"ABC"</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>mashtree_task</td>
-<td><strong>truncLength</strong></td>
-<td>Int</td>
-<td>How many characters to keep in a filename</td>
-<td>250</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>reorder_matrix</td>
-<td><strong>cpu</strong></td>
-<td>Int</td>
-<td>Number of CPUs to allocate to the task</td>
-<td>100</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>reorder_matrix</td>
-<td><strong>disk_size</strong></td>
-<td>Int</td>
-<td>Amount of storage (in GB) to allocate to the task</td>
 <td>2</td>
 <td>Optional</td>
 </tr>
 <tr>
-<td>reorder_matrix</td>
-<td><strong>docker</strong></td>
-<td>String</td>
-<td>The Docker container to use for the task</td>
-<td>100</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>reorder_matrix</td>
-<td><strong>memory</strong></td>
-<td>Int</td>
-<td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/mykrobe:0.12.1</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>summarize_data</td>
-<td><strong>cpu</strong></td>
-<td>Int</td>
-<td>Number of CPUs to allocate to the task</td>
-<td>8</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>summarize_data</td>
+<td>amr_search</td>
 <td><strong>disk_size</strong></td>
-<td>Int</td>
+<td>Integer</td>
 <td>Amount of storage (in GB) to allocate to the task</td>
-<td>100</td>
+<td>50</td>
 <td>Optional</td>
 </tr>
 <tr>
-<td>summarize_data</td>
+<td>amr_search</td>
 <td><strong>docker</strong></td>
 <td>String</td>
-<td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-03-16</td>
+<td>The docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/amrsearch:0.2.0</td>
 <td>Optional</td>
 </tr>
 <tr>
-<td>summarize_data</td>
-<td><strong>id_column_name</strong></td>
-<td>String</td>
-<td>If the sample IDs are in a different column to samplenames, it can be passed here and it will be used instead.</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>summarize_data</td>
+<td>amr_search</td>
 <td><strong>memory</strong></td>
-<td>Int</td>
+<td>Integer</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>8</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>version_capture</td>
-<td><strong>docker</strong></td>
-<td>String</td>
-<td>The Docker container to use for the task</td>
-<td>"us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0"</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>version_capture</td>
-<td><strong>timezone</strong></td>
-<td>String</td>
-<td>Set the time zone to get an accurate date of analysis (uses UTC by default)</td>
-<td></td>
 <td>Optional</td>
 </tr>
 </tbody>
 </table>
+<h3 id="workflow-tasks">Workflow Tasks<a class="headerlink" href="#workflow-tasks" title="Permanent link">&para;</a></h3>
+<p>Description of the workflow tasks</p>
+<details class="task">
+<summary><code>amr_search</code>: Antimicrobial resistance profiling</summary>
+<p>This task performs <em>in silico</em> antimicrobial resistance (AMR) profiling for supported species using <strong>AMRsearch</strong>, the primary tool used by <a href="https://pathogen.watch/">Pathogenwatch</a> to genotype and infer antimicrobial resistance (AMR) phenotypes from assembled microbial genomes.</p>
+<p><strong>AMRsearch</strong> screens against Pathogenwatch's library of curated genotypes and inferred phenotypes, developed in collaboration with community experts. Resistance phenotypes are determined based on both <strong>resistance genes</strong> and <strong>mutations</strong>, and the system accounts for interactions between multiple SNPs, genes, and suppressors. Predictions follow <strong>S/I/R classification</strong> (<em>Sensitive, Intermediate, Resistant</em>).</p>
+<p><strong>Outputs:</strong></p>
+<ul>
+<li>
+<p><strong>JSON Output:</strong> Contains the complete AMR profile, including detailed <strong>resistance state</strong>, detected <strong>resistance genes/mutations</strong>, and supporting <strong>BLAST results</strong>.</p>
+</li>
+<li>
+<p><strong>CSV &amp; PDF Tables:</strong> An incorprated Python script, <code>parse_amr_json.py</code>, extracts and formats results into a <strong>CSV file</strong> and <strong>PDF summary table</strong> for easier visualization.</p>
+</li>
+</ul>
+<div class="admonition techdetails">
+<p class="admonition-title">amr_search Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/fc-amr-search-dev/tasks/gene_typing/drug_resistance/task_amr_search.wdl">task_amr_search.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/pathogenwatch-oss/amr-search">AMRsearch</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://cgps.gitbook.io/pathogenwatch">Pathogenwatch</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7545138/">PAARSNP: <em>rapid genotypic resistance prediction for </em>Neisseria gonorrhoeae*</a></td>
+</tr>
+</tbody>
+</table>
 </div>
-<h3 id="workflow-actions">Workflow Actions<a class="headerlink" href="#workflow-actions" title="Permanent link">&para;</a></h3>
-<p><code>MashTree_Fasta</code> is run on a set of assembly fastas and creates a phylogenetic tree and matrix. These outputs are passed to a task that will rearrange the matrix to match the order of the terminal ends in the phylogenetic tree.</p>
-<p>The optional <code>summarize_data</code> task performs the following only if all of the <code>data_summary_*</code> and <code>sample_names</code> optional variables are filled out:</p>
-<ol>
-<li>Digests a <em>comma-separated</em>  list of column names, such as <code>"amrfinderplus_virulence_genes,amrfinderplus_stress_genes"</code>, etc. that can be found within the origin Terra data table.</li>
-<li>It will then parse through those column contents and extract each value; for example, if the <code>amrfinder_amr_genes</code> column for a sample contains these values: <code>"aph(3')-IIIa,tet(O),blaOXA-193"</code>, the <code>summarize_data</code> task will check each sample in the set to see if they also have those AMR genes detected.</li>
-<li>Outputs a .csv file that indicates presence (TRUE) or absence (empty) for each item in those columns; that is, it will check each sample in the set against the detected items in each column to see if that value was also detected.</li>
-</ol>
-<p>By default, this task appends a Phandango coloring tag to color all items from the same column the same; this can be turned off by setting the optional <code>phandango_coloring</code> variable to <code>false</code>.</p>
+</details>
 <h3 id="outputs">Outputs<a class="headerlink" href="#outputs" title="Permanent link">&para;</a></h3>
-<div class="searchable-table">
 <table>
 <thead>
 <tr>
@@ -5418,55 +5119,39 @@
 </thead>
 <tbody>
 <tr>
-<td>mashtree_docker</td>
-<td>String</td>
-<td>The Docker image used to run the mashtree task</td>
-</tr>
-<tr>
-<td>mashtree_filtered_metadata</td>
+<td>amr_results_csv</td>
 <td>File</td>
-<td>Optional output file with filtered metadata that is only produced if the optional <code>summarize_data</code> task is used</td>
+<td>CSV formatted AMR profile</td>
 </tr>
 <tr>
-<td>mashtree_matrix</td>
+<td>amr_results_pdf</td>
 <td>File</td>
-<td>The distance matrix made</td>
+<td>PDF formatted AMR profile</td>
 </tr>
 <tr>
-<td>mashtree_summarized_data</td>
+<td>amr_search_results</td>
 <td>File</td>
-<td>CSV presence/absence matrix generated by the <code>summarize_data</code> task from the list of columns provided; formatted for Phandango if <code>phandango_coloring</code> input is <code>true</code></td>
+<td>JSON formatted AMR profile including BLAST results</td>
 </tr>
 <tr>
-<td>mashtree_tree</td>
-<td>File</td>
-<td>The phylogenetic tree made</td>
-</tr>
-<tr>
-<td>mashtree_version</td>
+<td>amr_search_docker</td>
 <td>String</td>
-<td>The version of mashtree used in the workflow</td>
+<td>Docker image used to run AMR_Search</td>
 </tr>
 <tr>
-<td>mashtree_wf_analysis_date</td>
+<td>amr_search_version</td>
 <td>String</td>
-<td>The date the workflow was run</td>
-</tr>
-<tr>
-<td>mashtree_wf_version</td>
-<td>String</td>
-<td>The version of PHB the workflow is hosted in</td>
+<td>Version of AMR_Search libraries used</td>
 </tr>
 </tbody>
 </table>
-</div>
 <h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
 <blockquote>
-<p>Katz, L. S., Griswold, T., Morrison, S., Caravas, J., Zhang, S., den Bakker, H.C., Deng, X., and Carleton, H. A., (2019). Mashtree: a rapid comparison of whole genome sequence files. Journal of Open Source Software, 4(44), 1762, <a href="https://doi.org/10.21105/joss.01762">https://doi.org/10.21105/joss.01762</a></p>
+<p><a href="https://github.com/pathogenwatch-oss/amr-search">Pathogenwatch AMRsearch</a></p>
 </blockquote>
 <!-- -->
 <blockquote>
-<p>Ondov, B. D., Treangen, T. J., Melsted, P., Mallonee, A. B., Bergman, N. H., Koren, S., &amp; Phillippy, A. M. (2016). Mash: Fast genome and metagenome distance estimation using minhash. Genome Biology, 17(1), 132. doi:10.1186/s13059-016-0997-x</p>
+<p><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7545138/">PAARSNP</a></p>
 </blockquote>
 
 
@@ -5490,7 +5175,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="January 24, 2025 15:12:38">2025-01-24</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="March 21, 2025 17:00:05">2025-03-21</span>
   </span>
 
     
@@ -5500,7 +5185,7 @@
     <span class="md-icon" title="Created">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="September 11, 2024 17:48:55">2024-09-11</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="March 21, 2025 17:00:05">2025-03-21</span>
   </span>
 
     
