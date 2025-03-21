@@ -33,10 +33,10 @@ Please note that all string inputs **must** be enclosed in quotation marks; for 
 | phylocompare | **midpoint** | Boolean | Root phylogenies at their midpoint | false | Optional |
 | phylocompare | **root_tips** | String | Comma-delimited list of outgroup tip(s) to root upon. Multiple outgroup tips will root on the branch descended from their most recent common ancestor | | Optional |
 | phylocompare | **unrooted** | Boolean | Interpret the phylogenies as unrooted | false | Optional |
-| task_phylocompare | **cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional |
-| task_phylocompare | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
-| task_phylocompare | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/theiagen/theiaphylo:0.1.0 | Optional |
-| task_phylocompare | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 4 | Optional |
+| phylovalidate | **cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional |
+| phylovalidate | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
+| phylovalidate | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/theiagen/theiaphylo:0.1.0 | Optional |
+| phylovalidate | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 4 | Optional |
 | version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
 | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
 
