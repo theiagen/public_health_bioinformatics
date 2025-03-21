@@ -58,20 +58,20 @@ task phylovalidate {
       echo "NA" > phylovalidate
     else
       python3 <<CODE
-      try:
-        # check if the distance is greater than the max distance
-        with open('PHYLOCOMPARE_DISTANCE', 'r') as f:
-          observed_distance = float(f.read().strip())
-        if observed_distance > ~{max_distance}:
-          with open('phylovalidate', 'w') as out:
-            out.write('FAIL')
-        else:
-          with open('phylovalidate', 'w') as out:
-            out.write('PASS')
-      # indicates that the distance is not a float, likely a None
-      except ValueError:
+    try:
+      # check if the distance is greater than the max distance
+      with open('PHYLOCOMPARE_DISTANCE', 'r') as f:
+        observed_distance = float(f.read().strip())
+      if observed_distance > ~{max_distance}:
         with open('phylovalidate', 'w') as out:
           out.write('FAIL')
+      else:
+        with open('phylovalidate', 'w') as out:
+          out.write('PASS')
+    # indicates that the distance is not a float, likely a None
+    except ValueError:
+      with open('phylovalidate', 'w') as out:
+        out.write('FAIL')
     CODE
     fi
   >>>
