@@ -70,7 +70,7 @@ task nextclade_v3 {
     File? gene_annotations_gff
     File? nextclade_pathogen_json
     File? input_ref
-    String docker = "us-docker.pkg.dev/general-theiagen/nextstrain/nextclade:3.3.1" 
+    String docker = "us-docker.pkg.dev/general-theiagen/nextstrain/nextclade:3.10.2" 
     String dataset_name
     String verbosity = "warn" # other options are: "off" "error" "info" "debug" and "trace"
     String dataset_tag
@@ -233,7 +233,7 @@ task nextclade_add_ref {
     File? nextclade_pathogen_json
     File? gene_annotations_gff
     File? input_ref
-    String docker = "us-docker.pkg.dev/general-theiagen/nextstrain/nextclade:3.3.1"
+    String docker = "us-docker.pkg.dev/general-theiagen/nextstrain/nextclade:3.10.2"
     String dataset_name
     String? dataset_tag
     String verbosity = "warn" # other options are: "off" "error" "info" "debug" and "trace"

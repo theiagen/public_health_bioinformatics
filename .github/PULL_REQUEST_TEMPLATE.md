@@ -44,15 +44,15 @@ This PR uses an element that could cause duplicate runs to have different result
 <!-- Please mark boxes [X] -->
 - [ ] The workflow/task has been tested and results, including file contents, are as anticipated
 - [ ] The CI/CD has been adjusted and tests are passing (Theiagen developers)
-- [ ] Code changes follow the [style guide](https://theiagen.notion.site/Style-Guide-WDL-Workflow-Development-51b66a47dde54c798f35d673fff80249)
-- [ ] Documentation and/or workflow diagrams have been updated if applicable
+- [ ] Code changes follow the [style guide](https://theiagen.github.io/public_health_bioinformatics/main/contributing/code_contribution/)
+- [ ] Documentation and/or workflow diagrams have been updated if applicable and follow the [documentation style guide](https://theiagen.github.io/public_health_bioinformatics/main/contributing/doc_contribution/)
   - [ ] You have updated the "Last Known Changes" field for any affected workflows in the respective workflow documentation page and for every entry in the three `workflows_overview` tables to be the tag for the next upcoming release. If you do not know the tag, please put "vX.X.X"
 
 ## 🎯 Reviewer Checklist
 <!--  Indicate NA when not applicable  -->
 - [ ] All changed results have been confirmed
 - [ ] You have tested the PR appropriately (see the [testing guide](https://theiagen.notion.site/PR-Testing-Guide-Determining-Appropriate-Levels-of-Testing-4764e98a6aeb460185039c0896714590) for more information)
-- [ ] All code adheres to the [style guide](https://theiagen.notion.site/Style-Guide-WDL-Workflow-Development-51b66a47dde54c798f35d673fff80249)
+- [ ] All code adheres to the [style guide](https://theiagen.github.io/public_health_bioinformatics/main/contributing/code_contribution/)
 - [ ] MD5 sums have been updated
 - [ ] The PR author has addressed all comments
-- [ ] The documentation has been updated
+- [ ] The documentation has been updated and adheres to the [documentation style guide](https://theiagen.github.io/public_health_bioinformatics/main/contributing/doc_contribution/)
