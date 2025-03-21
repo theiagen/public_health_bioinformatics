@@ -6,8 +6,8 @@ task phylovalidate {
     File tree2_path
 
     String? root_tips
-    Boolean? unrooted
-    Boolean? midpoint
+    Boolean? unrooted = false
+    Boolean? midpoint = false
     Float? max_distance
     
     String docker = "us-docker.pkg.dev/general-theiagen/theiagen/theiaphylo:0.1.0"  # update!!!
