@@ -7,9 +7,9 @@ task hicap {
   input {
     File assembly
     String samplename
-    Float gene_coverage = 0.80 #Minimum percentage coverage to consider a single gene complete. [default: 0.80]
-    Float gene_identity = 0.70 #Minimum percentage identity to consider a single gene complete. [default: 0.70]
-    Float broken_gene_identity = 0.80 #Minimum percentage identity to consider a broken gene. [default: 0.80]
+    Float min_gene_percent_coverage = 0.80 #Minimum percentage coverage to consider a single gene complete. [default: 0.80]
+    Float min_gene_percent_identity = 0.70 #Minimum percentage identity to consider a single gene complete. [default: 0.70]
+    Float min_broken_gene_percent_identity = 0.80 #Minimum percentage identity to consider a broken gene. [default: 0.80]
     Int broken_gene_length = 60 #Minimum length to consider a broken gene. [default: 60]
     String docker = "us-docker.pkg.dev/general-theiagen/biocontainers/hicap:1.0.3--py_0"
     Int cpu = 2
@@ -24,10 +24,10 @@ task hicap {
     hicap \
       -q ~{assembly} \
       -o output_dir \
-      --gene_coverage ~{gene_coverage} \
-      --gene_identity ~{gene_identity} \
+      --gene_coverage ~{min_gene_percent_coverage} \
+      --gene_identity ~{min_gene_percent_identity} \
       --broken_gene_length ~{broken_gene_length} \
-      --broken_gene_identity ~{broken_gene_identity} \
+      --broken_gene_identity ~{min_broken_gene_percent_identity} \
       --threads ~{cpu}
       
     filename=$(basename ~{assembly})

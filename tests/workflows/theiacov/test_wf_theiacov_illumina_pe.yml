@@ -371,7 +371,7 @@
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     # nextclade
     - path: miniwdl_run/call-nextclade_v3/command
-      md5sum: 113378e9114fde0abcf359fda49de568
+      md5sum: ac68d980cebe4b121a83b334f289074f
     - path: miniwdl_run/call-nextclade_v3/inputs.json
       contains: ["dataset_name", "dataset_tag", "genome_fasta"]
     - path: miniwdl_run/call-nextclade_v3/outputs.json
@@ -385,7 +385,7 @@
     - path: miniwdl_run/call-nextclade_v3/work/SRR13687078.ivar.consensus.nextclade.json
     - path: miniwdl_run/call-nextclade_v3/work/SRR13687078.ivar.consensus.nextclade.tsv
     - path: miniwdl_run/call-nextclade_v3/work/NEXTCLADE_VERSION
-      md5sum: 70aa6879bf9f0e8ba2b9953b0d4a2216
+      md5sum: 72e36f488d0291ef87e547a0aef4a784
     - path: miniwdl_run/call-nextclade_v3/work/nextclade.aligned.fasta
       md5sum: 59893fd3ef32062d50ded18300024734
     - path: miniwdl_run/call-nextclade_v3/work/nextclade.csv
