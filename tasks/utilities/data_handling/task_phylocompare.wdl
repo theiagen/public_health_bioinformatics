@@ -54,7 +54,17 @@ task phylovalidate {
     if [[ -z ${max_distance} ]]; then
       echo "NA" > phylovalidate
     else
-      python3 -c "if float(open('PHYLOCOMPARE_DISTANCE', 'r').read().strip()) > ~{max_distance}: open('phylovalidate', 'w').write('FAIL'); else: open('phylovalidate', 'w').write('PASS')"
+      python3 <<CODE
+      try:
+        # check if the distance is greater than the max distance
+        if float(open('PHYLOCOMPARE_DISTANCE', 'r').read().strip()) > ~{max_distance}:
+          open('phylovalidate', 'w').write('FAIL')
+        else:
+          open('phylovalidate', 'w').write('PASS')
+      # indicates that the distance is not a float, likely a None
+      except ValueError:
+        open('phylovalidate', 'w').write('FAIL')
+      CODE
     fi
   >>>
   runtime {
