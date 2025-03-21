@@ -36,7 +36,7 @@ task phylovalidate {
         --outgroup ~{root_tips} \
         --debug
     # root at the midpoint
-    elif ~{true="true" false="false" midpoint}; then
+    elif ~{midpoint}; then
       phylocompare.py ~{tree1_path} ~{tree2_path} \
         --midpoint \
         --debug
