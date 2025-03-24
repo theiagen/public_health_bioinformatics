@@ -1897,11 +1897,12 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
 | resfinder_results | File | Predicted resistance genes grouped by antibiotic class | FASTA, ONT, PE, SE |
 | resfinder_seqs | File | FASTA of resistance gene sequences from user’s input sequence | FASTA, ONT, PE, SE |
 | seq_platform | String | Sequencing platform input by the user | FASTA, ONT, PE, SE |
-| seqsero2_predicted_antigenic_profile | String | Antigenic profile predicted for Salmonella spp. by SeqSero2 | ONT, PE, SE |
-| seqsero2_predicted_contamination | String | Indicates whether contamination between Salmonella with different serotypes was predicted by SeqSero2 | ONT, PE, SE |
-| seqsero2_predicted_serotype | String | Serotype predicted by SeqSero2 | ONT, PE, SE |
-| seqsero2_report | File | TSV report produced by SeqSero2 | ONT, PE, SE |
-| seqsero2_version | String | Version of SeqSero2 used | ONT, PE, SE |
+| seqsero2_note | String | Additional notes produced by SeqSero2 | FASTA, ONT, PE, SE |
+| seqsero2_predicted_antigenic_profile | String | Antigenic profile predicted for Salmonella spp. by SeqSero2 | FASTA, ONT, PE, SE |
+| seqsero2_predicted_contamination | String | Indicates whether contamination between Salmonella with different serotypes was predicted by SeqSero2 | FASTA, ONT, PE, SE |
+| seqsero2_predicted_serotype | String | Serotype predicted by SeqSero2 | FASTA, ONT, PE, SE |
+| seqsero2_report | File | TSV report produced by SeqSero2 | FASTA, ONT, PE, SE |
+| seqsero2_version | String | Version of SeqSero2 used | FASTA, ONT, PE, SE |
 | seroba_ariba_identity | String | Percentage identity between the query sequence and ARIBA-predicted serotype | PE |
 | seroba_ariba_serotype | String | Serotype predicted by ARIBA, via SeroBA | PE |
 | seroba_details | File | Detailed TSV file from SeroBA | PE |
@@ -1943,8 +1944,13 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
 | sistr_allele_fasta | File | FASTA file of novel cgMLST alleles from SISTR | FASTA, ONT, PE, SE |
 | sistr_allele_json | File | JSON file of cgMLST allele sequences and information (see <https://github.com/phac-nml/sistr_cmd#cgmlst-allele-search-results>) | FASTA, ONT, PE, SE |
 | sistr_cgmlst | File | CSV file of the cgMLST allelic profile from SISTR (see <https://github.com/phac-nml/sistr_cmd#cgmlst-allelic-profiles-output---cgmlst-profiles-cgmlst-profilescsv>) | FASTA, ONT, PE, SE |
+| sistr_h1_antigens | String | The predicted H1 antigen | FASTA, ONT, PE, SE |
+| sistr_h2_antigens | String | The predicted H2 antigen | FASTA, ONT, PE, SE |
+| sistr_o_antigens | String | The predicted O antigen | FASTA, ONT, PE, SE |
 | sistr_predicted_serotype | String | Serotype predicted by SISTR | FASTA, ONT, PE, SE |
 | sistr_results | File | TSV results file produced by SISTR (see <https://github.com/phac-nml/sistr_cmd#primary-results-output--o-sistr-results>) | FASTA, ONT, PE, SE |
+| sistr_serogroup | String | Serogroup predicted by SISTR | FASTA, ONT, PE, SE |
+| sistr_serotype_cgmlst | String | cgMLST of the serogroup prediicted by SISTR | FASTA, ONT, PE, SE |
 | sistr_version | String | Version of SISTR used | FASTA, ONT, PE, SE |
 | sonneityping_final_genotype | String | Final genotype call from Mykrobe, via sonneityper | ONT, PE, SE |
 | sonneityping_final_report_tsv | File | Detailed TSV report from mykrobe, via sonneityper (see <https://github.com/katholt/sonneityping#example-output>) | ONT, PE, SE |
