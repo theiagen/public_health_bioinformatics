@@ -569,7 +569,7 @@ workflow theiaprok_illumina_pe {
                 "resfinder_seqs": resfinder_task.resfinder_hit_in_genome_seq,
                 "run_id": run_id,
                 "seq_platform": seq_method,
-                "seqsero2_note": seqsero2_note,              
+                "seqsero2_note": merlin_magic.seqsero2_note,              
                 "seqsero2_predicted_antigenic_profile": merlin_magic.seqsero2_predicted_antigenic_profile,
                 "seqsero2_predicted_contamination": merlin_magic.seqsero2_predicted_contamination,
                 "seqsero2_predicted_serotype": merlin_magic.seqsero2_predicted_serotype,
