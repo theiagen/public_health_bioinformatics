@@ -4928,7 +4928,7 @@
 <tr>
 <td><a href="../../../workflows_overview/workflows_type/#standalone">Standalone</a></td>
 <td><a href="../../../workflows_overview/workflows_kingdom/#any-taxa">Any Taxa</a></td>
-<td>PHB v2.0.0</td>
+<td>PHB vX.X.X</td>
 <td>No</td>
 <td></td>
 </tr>
@@ -4947,6 +4947,7 @@
 <p>In order to enable this workflow to function for different workflow series, we require users to provide a list of columns they want to compare between the two tables. Feel free to use the information below that Theiagen uses to compare versions of the three main workflow series as a <em><strong>starting point</strong></em> for your own validations:</p>
 <div class="admonition tool">
 <p class="admonition-title">Validation Starting Points</p>
+<p>Please ensure that you adjust these values to make sense for your own validation. Please see the <a href="https://github.com/theiagen/theiavalidate/blob/main/README.md">theiavalidate README</a> for more information as well.</p>
 <table>
 <thead>
 <tr>
@@ -4981,6 +4982,8 @@
 <li><strong>SET</strong> checks list items (such as <code>amrfinder_plus_genes</code> which is a comma-delimited list of genes) for identical content — order does not matter; that is, <code>mdsA,mdsB</code> is determined to be same as <code>mdsB,mdsA</code>. The EXACT match does not consider these to be the same, but the SET match does.</li>
 <li><strong>&lt;PERCENT_DIFF&gt;</strong>, which is an actual decimal value such as <strong>0.02</strong>, calculates the percent difference between <em>numerical</em> columns. If the columns are not numerical, this function will <strong>not</strong> work and will lead to workflow failure. For example, if the decimal percentage is 0.02, the test will indicate a failure if the values in the two columns are more than 2% different.</li>
 <li>Dates, integers, and object-type values are ignored and indicate 0 failures.</li>
+<li><strong><RANGE></strong>, which is an actual integer value such as <strong>10</strong>, calculates the numerical difference between <em>numerical</em> columns. If the columns are not numerical, this function will <strong>not</strong> work and will lead to workflow failure. For example, if the range is 10, the test will indicate a failure if the values in the two columns are more than 10 apart (units ignored).</li>
+<li><strong>CRITERIA1,CRITERIA2,...</strong> checks the values for the two columns with CRITERIA1 (which must be one of the above) and <em>then</em> with CRITERIA2, etc.; values will pass if at least one criteria is met; the separate criteria <strong>must</strong> be comma-delimited.</li>
 </ul>
 <h3 id="file-comparisons">File Comparisons<a class="headerlink" href="#file-comparisons" title="Permanent link">&para;</a></h3>
 <p>If a column consists of only GCP URIs (Google Cloud file paths), the files will be localized and compared with either an EXACT match or a SET match. In the SET match, the lines in the file are ordered before comparison. Results are returned to the summary table as expected. The results of each file comparison can be found in the <code>theiavalidate_diffs</code>  output column.</p>
@@ -5108,7 +5111,7 @@
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/theiagen/theiavalidate:0.1.0</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/theiavalidate:1.0.1</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -5158,22 +5161,16 @@
 </span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5"></a>columnE EXACT
 </span></code></pre></div></td></tr></table></div>
 <p>Please see above for a description of all available criteria options (EXACT, IGNORE, SET, <PERCENT_DIFF>).</p>
-<p>The optional <code>column_translation_tsv</code> file takes the following format (tab-delimited; <em>there can be <strong>no</strong> header line</em>):</p>
+<p>The optional <code>column_translation_tsv</code> file takes the following format (tab-delimited; <em>a header line is required</em>):</p>
 <div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span>
 <span class="normal"><a href="#__codelineno-1-2">2</a></span>
-<span class="normal"><a href="#__codelineno-1-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1"></a>column_name_in_table1   column_name_in_table2
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2"></a>column_name_in_table2   column_name_in_table1
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3"></a>internal_column_name    display_column_name
+<span class="normal"><a href="#__codelineno-1-3">3</a></span>
+<span class="normal"><a href="#__codelineno-1-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1"></a>old_name    new_name
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2"></a>column_name_in_table1   column_name_in_table2
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3"></a>column_name_in_table2   column_name_in_table1
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4"></a>internal_column_name    display_column_name
 </span></code></pre></div></td></tr></table></div>
 <p>Please note that the name in the <strong>second column</strong> will be displayed and used in all output files.</p>
-<div class="admonition warning">
-<p class="admonition-title">Known Bug</p>
-<p>There must be <em><strong>more</strong></em> than one line in the <code>column_translation_tsv</code> file or else this error will appear: <code>AttributeError: 'str' object has no attribute 'to_dict'</code>. To fix this error, add an additional line in the <code>column_translation_tsv</code> file, like the following: <code>columnA columnA</code></p>
-</div>
-<div class="admonition warning">
-<p class="admonition-title">Known Bug</p>
-<p>If performing a <PERCENT_DIFF> comparison, all samples must have values for that column.</p>
-</div>
 <div class="admonition info">
 <p class="admonition-title">Call Caching Disabled</p>
 <p>If using TheiaValidate workflow version 1.3.0 or higher, the call-caching feature of Terra has been DISABLED to ensure that the workflow is run from the beginning and data is compared fresh. Call-caching will not be enabled, even if the user checks the box ✅ in the Terra workflow interface.</p>
@@ -5433,7 +5430,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="January 16, 2025 20:33:17">2025-01-16</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="March 24, 2025 21:01:42">2025-03-24</span>
   </span>
 
     
