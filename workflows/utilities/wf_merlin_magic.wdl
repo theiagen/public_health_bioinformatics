@@ -858,6 +858,7 @@ workflow merlin_magic {
     File? sistr_allele_fasta = sistr.sistr_allele_fasta
     File? sistr_cgmlst = sistr.sistr_cgmlst
     String? sistr_version = sistr.sistr_version
+    String? sistr_antigenic_formula = sistr.sistr_antigenic_formula
     String? sistr_predicted_serotype = sistr.sistr_predicted_serotype
     String? sistr_serogroup = sistr.sistr_serogroup
     String? sistr_h1_antigens = sistr.sistr_h1_antigens

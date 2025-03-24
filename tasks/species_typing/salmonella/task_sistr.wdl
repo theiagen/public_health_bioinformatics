@@ -36,12 +36,13 @@ task sistr {
     mv ~{samplename}.tab ~{samplename}.tsv
     
     # parse sistr TSV
-    cut -f 15 ~{samplename}.tsv | tail -n 1 | tee PREDICTED_SEROTYPE
-    cut -f 14 ~{samplename}.tsv | tail -n 1 | tee PREDICTED_SEROGROUP
+    cut -f 16 ~{samplename}.tsv | tail -n 1 | tee PREDICTED_SEROTYPE
+    cut -f 15 ~{samplename}.tsv | tail -n 1 | tee PREDICTED_SEROGROUP
     cut -f 10 ~{samplename}.tsv | tail -n 1 | tee PREDICTED_H1_ANTIGEN
     cut -f 11 ~{samplename}.tsv | tail -n 1 | tee PREDICTED_H2_ANTIGEN
     cut -f 12 ~{samplename}.tsv | tail -n 1 | tee PREDICTED_O_ANTIGEN
     cut -f 18 ~{samplename}.tsv | tail -n 1 | tee PREDICTED_SEROTYPE_CGMLST
+    cut -f 1 ~{samplename}.tsv | tail -n 1 | tee ANTIGENIC_FORMULA
     
   >>>
   output {
@@ -50,6 +51,7 @@ task sistr {
     File sistr_allele_fasta = "~{samplename}-allele.fasta"
     File sistr_cgmlst = "~{samplename}-cgmlst.csv"
     String sistr_version = read_string("VERSION")
+    String sistr_antigenic_formula = read_string("ANTIGENIC_FORMULA")
     String sistr_predicted_serotype = read_string("PREDICTED_SEROTYPE")
     String sistr_serogroup = read_string("PREDICTED_SEROGROUP")
     String sistr_h1_antigens = read_string("PREDICTED_H1_ANTIGEN")

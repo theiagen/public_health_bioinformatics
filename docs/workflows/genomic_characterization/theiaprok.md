@@ -1967,6 +1967,7 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
 | shovill_se_version | String | Shovill version used | SE |
 | sistr_allele_fasta | File | FASTA file of novel cgMLST alleles from SISTR | FASTA, ONT, PE, SE |
 | sistr_allele_json | File | JSON file of cgMLST allele sequences and information (see <https://github.com/phac-nml/sistr_cmd#cgmlst-allele-search-results>) | FASTA, ONT, PE, SE |
+| sistr_antigenic_formula | String | A field that aggregates the O, H1, and H2, antigen values in a single location for convenience | FASTA, ONT, PE, SE |
 | sistr_cgmlst | File | CSV file of the cgMLST allelic profile from SISTR (see <https://github.com/phac-nml/sistr_cmd#cgmlst-allelic-profiles-output---cgmlst-profiles-cgmlst-profilescsv>) | FASTA, ONT, PE, SE |
 | sistr_h1_antigens | String | The predicted H1 antigen | FASTA, ONT, PE, SE |
 | sistr_h2_antigens | String | The predicted H2 antigen | FASTA, ONT, PE, SE |

@@ -615,6 +615,7 @@ workflow theiaprok_illumina_pe {
                 "sistr_allele_fasta": merlin_magic.sistr_allele_fasta,
                 "sistr_allele_json": merlin_magic.sistr_allele_json,
                 "sistr_cgmlst": merlin_magic.sistr_cgmlst,
+                "sistr_antigenic_formula": merlin_magic.sistr_antigenic_formula,
                 "sistr_h1_antigens": merlin_magic.sistr_h1_antigens,
                 "sistr_h2_antigens": merlin_magic.sistr_h2_antigens,
                 "sistr_o_antigens": merlin_magic.sistr_o_antigens,
@@ -979,6 +980,7 @@ workflow theiaprok_illumina_pe {
     File? sistr_allele_fasta = merlin_magic.sistr_allele_fasta
     File? sistr_cgmlst = merlin_magic.sistr_cgmlst
     String? sistr_version = merlin_magic.sistr_version
+    String? sistr_antigenic_formula = merlin_magic.sistr_antigenic_formula
     String? sistr_predicted_serotype = merlin_magic.sistr_predicted_serotype
     String? sistr_serogroup = merlin_magic.sistr_serogroup
     String? sistr_h1_antigens = merlin_magic.sistr_h1_antigens
