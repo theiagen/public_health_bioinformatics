@@ -55,6 +55,7 @@ nav:
                - Transfer_Column_Content: workflows/data_export/transfer_column_content.md
                - Zip_Column_Content: workflows/data_export/zip_column_content.md
             - Standalone:
+               - AMR_Search: workflows/standalone/amr_search.md
                - Cauris_CladeTyper: workflows/standalone/cauris_cladetyper.md
                - Concatenate_Illumina_Lanes: workflows/standalone/concatenate_illumina_lanes.md
                - GAMBIT_Query: workflows/standalone/gambit_query.md
@@ -68,6 +69,7 @@ nav:
         - Workflows by Kingdom: 
             - Overview Table: workflows_overview/workflows_kingdom.md
             - Any Taxa:
+               - AMR_Search: workflows/standalone/amr_search.md
                - Assembly_Fetch: workflows/data_import/assembly_fetch.md
                - BaseSpace_Fetch: workflows/data_import/basespace_fetch.md
                - Clair3_Variants_ONT: workflows/phylogenetic_construction/clair3_variants.md
@@ -128,6 +130,7 @@ nav:
                - VADR_Update: workflows/genomic_characterization/vadr_update.md
         - Workflows Alphabetically: 
             - Overview Table: workflows_overview/workflows_alphabetically.md
+            - AMR_Search: workflows/standalone/amr_search.md
             - Assembly_Fetch: workflows/data_import/assembly_fetch.md
             - Augur: workflows/phylogenetic_construction/augur.md
             - BaseSpace_Fetch: workflows/data_import/basespace_fetch.md
@@ -265,4 +268,4 @@ extra:
   homepage: https://www.theiagen.com
 
 copyright: |
-  &copy; 2022-2024 <a href="https://www.theiagen.com" target="_blank" rel="noopener">Theiagen Genomics</a>
+  &copy; 2022-2025 <a href="https://www.theiagen.com" target="_blank" rel="noopener">Theiagen Genomics</a>

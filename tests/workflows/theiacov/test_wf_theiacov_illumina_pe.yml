@@ -364,9 +364,9 @@
     - path: miniwdl_run/call-pangolin4/work/PANGOLIN_NOTES
       md5sum: e98d2fc28664c0622f6b490433286e32
     - path: miniwdl_run/call-pangolin4/work/PANGO_ASSIGNMENT_VERSION
-      md5sum: 36f64a1cd7c6844309e8ad2121358088
+      md5sum: dc16291a6b3fff215c4f86ab8debb8fd
     - path: miniwdl_run/call-pangolin4/work/VERSION_PANGOLIN_ALL
-      md5sum: dfd90750c8776f46bad1de214c1d1a57
+      md5sum: 89257604b335f49f2284b8c1c4ab58a3
     - path: miniwdl_run/call-pangolin4/work/_miniwdl_inputs/0/SRR13687078.ivar.consensus.fasta
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     # nextclade
@@ -385,7 +385,7 @@
     - path: miniwdl_run/call-nextclade_v3/work/SRR13687078.ivar.consensus.nextclade.json
     - path: miniwdl_run/call-nextclade_v3/work/SRR13687078.ivar.consensus.nextclade.tsv
     - path: miniwdl_run/call-nextclade_v3/work/NEXTCLADE_VERSION
-      md5sum: b3d7ad74134ea350622437af70eb8a17
+      md5sum: 72e36f488d0291ef87e547a0aef4a784
     - path: miniwdl_run/call-nextclade_v3/work/nextclade.aligned.fasta
       md5sum: 59893fd3ef32062d50ded18300024734
     - path: miniwdl_run/call-nextclade_v3/work/nextclade.csv
