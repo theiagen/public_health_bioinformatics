@@ -103,8 +103,8 @@ task check_reads {
             awk '{if($4){printf("%5.0f\n", $4)}} END {if (!NR) print "0"}' > genome_length_output
           grep "Estimated coverage:" mash-output.txt | \
             awk '{if($3){printf("%d", $3)}} END {if (!NR) print "0"}' > coverage_output
-          rm -rf test.msh
-          rm -rf mash-output.txt
+          #rm -rf test.msh
+          #rm -rf mash-output.txt
 
           estimated_genome_length=`head -n1 genome_length_output`
           estimated_coverage=`head -n1 coverage_output`
@@ -240,8 +240,8 @@ task check_reads_se {
           awk '{if($3){printf("%d", $3)}} END {if (!NR) print "0"}' > coverage_output
         
         # remove mash outputs
-        rm -rf test.msh
-        rm -rf mash-output.txt
+        #rm -rf test.msh
+        #rm -rf mash-output.txt
         
         estimated_genome_length=`head -n1 genome_length_output`
         estimated_coverage=`head -n1 coverage_output`
@@ -263,8 +263,8 @@ task check_reads_se {
               awk '{if($3){printf("%d", $3)}} END {if (!NR) print "0"}' > coverage_output
               
             # remove mash outputs
-            rm -rf test.msh
-            rm -rf mash-output.txt
+            # rm -rf test.msh
+            # rm -rf mash-output.txt
           fi
             
           estimated_genome_length=`head -n1 genome_length_output`
@@ -319,6 +319,7 @@ task check_reads_se {
     String read_screen = read_string("FLAG")
     Int est_genome_length = read_int("EST_GENOME_LENGTH")
     File read_screen_tsv = "read_screen.tsv"
+    File mash_output = "mash-output.txt"
   }
   runtime {
     docker: docker
