@@ -323,7 +323,7 @@
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     # nextclade
     - path: miniwdl_run/call-nextclade_v3/command
-      md5sum: 85f70a5b1d2e28d7200ff25f52b85c3a
+      md5sum: 97d5264464fac1ff2ce9cb0ce54fe91d
     - path: miniwdl_run/call-nextclade_v3/inputs.json
       contains: ["dataset_name", "dataset_tag", "genome_fasta"]
     - path: miniwdl_run/call-nextclade_v3/outputs.json
