@@ -7,7 +7,7 @@ task sistr {
   input {
     File assembly
     String samplename
-    String docker = "us-docker.pkg.dev/general-theiagen/biocontainers/sistr_cmd:1.1.1--pyh864c0ab_2"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/sistr:1.1.3"
     Int cpu = 2
     Int memory = 8
     Int disk_size = 100

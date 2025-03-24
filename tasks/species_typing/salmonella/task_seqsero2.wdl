@@ -88,19 +88,17 @@ task seqsero2 {
 }
 
 task seqsero2_assembly {
-  # Inputs
   input {
     File assembly_fasta
     String samplename
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/seqsero2:1.2.1"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/seqsero2:1.3.1"
     Int disk_size = 100
     Int memory = 16
-    Int cpu = 8
+    Int cpu = 4
   }
   command <<<
-    # Print and save date
-    date | tee DATE
-    
+    set -euo pipefail
+
     # Print and save version
     SeqSero2_package.py --version | tee VERSION
 
@@ -139,6 +137,12 @@ task seqsero2_assembly {
           if not pred_sero:
             pred_sero = "None"
           Predicted_Sero.write(pred_sero)
+          
+        with open ("NOTE", 'wt') as Note:
+          note=line['Note']
+          if not note:
+            note = "None"
+          Note.write(note)
 
     CODE
   >>>
@@ -147,6 +151,7 @@ task seqsero2_assembly {
     String seqsero2_version = read_string("VERSION")
     String seqsero2_predicted_antigenic_profile = read_string("PREDICTED_ANTIGENIC_PROFILE")
     String seqsero2_predicted_serotype = read_string("PREDICTED_SEROTYPE")
+    String seqsero2_note = read_string("NOTE")
   }
   runtime {
     docker: "~{docker}"
