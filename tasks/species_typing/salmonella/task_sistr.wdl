@@ -38,10 +38,10 @@ task sistr {
     # parse sistr TSV
     cut -f 15 ~{samplename}.tsv | tail -n 1 | tee PREDICTED_SEROTYPE
     cut -f 14 ~{samplename}.tsv | tail -n 1 | tee PREDICTED_SEROGROUP
-    cut -f 9 ~{samplename}.tsv | tail -n 1 | tee PREDICTED_H1_ANTIGEN
-    cut -f 10 ~{samplename}.tsv | tail -n 1 | tee PREDICTED_H2_ANTIGEN
-    cut -f 11 ~{samplename}.tsv | tail -n 1 | tee PREDICTED_O_ANTIGEN
-    cut -f 17 ~{samplename}.tsv | tail -n 1 | tee PREDICTED_SEROTYPE_CGMLST
+    cut -f 10 ~{samplename}.tsv | tail -n 1 | tee PREDICTED_H1_ANTIGEN
+    cut -f 11 ~{samplename}.tsv | tail -n 1 | tee PREDICTED_H2_ANTIGEN
+    cut -f 12 ~{samplename}.tsv | tail -n 1 | tee PREDICTED_O_ANTIGEN
+    cut -f 18 ~{samplename}.tsv | tail -n 1 | tee PREDICTED_SEROTYPE_CGMLST
     
   >>>
   output {
