@@ -496,7 +496,7 @@
     - path: miniwdl_run/wdl/tasks/species_typing/escherichia_shigella/task_shigeifinder.wdl
       md5sum: 5a24623416f2ac9a0a177c01c5db2501
     - path: miniwdl_run/wdl/tasks/species_typing/salmonella/task_sistr.wdl
-      md5sum: 78890b8544823fcd1b0956ac200ea7e1
+      md5sum: be21c5970bf8afc34e30cdc28954e7a2
     - path: miniwdl_run/wdl/tasks/species_typing/escherichia_shigella/task_sonneityping.wdl
       md5sum: 9e069c6ed95805fae7f13c1883bca9a6
     - path: miniwdl_run/wdl/tasks/species_typing/mycobacterium/task_tbprofiler.wdl
@@ -512,9 +512,9 @@
     - path: miniwdl_run/wdl/tasks/taxon_id/contamination/task_midas.wdl
       md5sum: 64caaaff5910ac0036e2659434500962
     - path: miniwdl_run/wdl/workflows/theiaprok/wf_theiaprok_illumina_pe.wdl
-      md5sum: 11faa62fc3e647ecdfcdb3fc0e079d51
+      md5sum: 50567b96a920295f81b0178a00baaeed
     - path: miniwdl_run/wdl/workflows/utilities/wf_merlin_magic.wdl
-      md5sum: 4dd86506857735a0f1a56d6f3be53885
+      md5sum: 555f6f108a9574d502e0ca12ab3c30aa
     - path: miniwdl_run/wdl/workflows/utilities/wf_read_QC_trim_pe.wdl
       contains: ["version", "QC", "output"]
     - path: miniwdl_run/workflow.log
