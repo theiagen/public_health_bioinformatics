@@ -181,7 +181,7 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 | flye_denovo | **flye_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | ONT |
 | flye_denovo | **illumina_read1** | File | If Illumina reads are provided, flye_denovo subworkflow will perform Illumina polishing |  | Optional | ONT |
 | flye_denovo | **illumina_read2** | File | If Illumina reads are provided, flye_denovo subworflow will perform Illumina polishing |  | Optional | ONT |
-| flye_denovo | **medaka_model** | String | The model of medaka to use for assembly | r1041_e82_400bps_sup_v5.0.0 | Optional | ONT |
+| flye_denovo | **medaka_model** | String | In order to obtain the best results, the appropriate model must be set to match the sequencer's basecaller model; this string takes the format of {pore}_{device}_{caller variant}_{caller_version}. See also <https://github.com/nanoporetech/medaka?tab=readme-ov-file#models>. If this is being run on legacy data it is likely to be r941_min_hac_g507.  |   r1041_e82_400bps_sup_v5.0.0 | Optional | ONT |
 | flye_denovo | **medaka_cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional | ONT |
 | flye_denovo | **medaka_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 16 | Optional | ONT |
 | flye_denovo | **medaka_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | ONT |
