@@ -6,7 +6,7 @@ Phylogenetics is an approach to understanding evolutionary relationships among o
 
 <div class="grid cards" markdown>
 
--   :simple-gumtree:{ .lg .middle } **Phylogenetic tree construction**
+-   :simple-gumtree: **Phylogenetic tree construction**
 
     ---
 
