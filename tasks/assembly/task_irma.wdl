@@ -6,7 +6,7 @@ task irma {
     File? read2
     String seq_method
     String samplename
-    Boolean keep_ref_deletions = false # set DEL_TYPE config in irma_config.sh to "DEL" if false, "NNN" if true
+    Boolean keep_ref_deletions = true # set DEL_TYPE config in irma_config.sh to "DEL" if false, "NNN" if true
     Int minimum_consensus_support = 50 # IRMA default is 1, but matching MIRA standards for ONT = 50 and ILMN = 30 via defaults at theiacov workflow level WDLs: https://cdcgov.github.io/MIRA/articles/sequence-qc.html
     Int minimum_read_length = 75 # matching default for TheiaCoV_Illumina_PE; NOTE: IRMA's default is 125 bp
     Int minimum_average_consensus_allele_quality = 10 # IRMA default is 0, we are matching MIRA standards for both ONT and ILMN: https://cdcgov.github.io/MIRA/articles/sequence-qc.html
@@ -37,7 +37,7 @@ task irma {
     # any base with less than the minimum quality will be called N
     echo "MIN_CONS_QUALITY=~{minimum_average_consensus_allele_quality}" >> irma_config.sh
 
-    # minimum called SNV frequency for mixe base calls in amended consensus
+    # minimum called SNV frequency for mixed base calls in amended consensus
     echo "MIN_AMBIG=~{minimum_ambiguous_threshold}" >> irma_config.sh
 
     # this is done so that IRMA used PWD as the TMP directory instead of /tmp/root that it tries by default; cromwell doesn't allocate much disk space here (64MB or some small amount)
