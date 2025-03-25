@@ -325,7 +325,7 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 | merlin_magic | **tbp_parser_rrs_read_support** | Int | Minimum read support for a mutation in rrs to pass QC in tbp-parser | 10 | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **tbp_parser_tngs_data** | Boolean | Set to true to enable tNGS-specific parameters and runs in tbp-parser | FALSE | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **tbprofiler_custom_db** | File | TBProfiler uses by default the TBDB database; if you have a custom database you wish to use, you must provide a custom database in this field and set tbprofiler_run_custom_db to true |  | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **tbprofiler_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/tbprofiler:6.6.2 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **tbprofiler_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/tbprofiler:6.6.3 | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **tbprofiler_mapper** | String | The mapping tool used in TBProfiler to align the reads to the reference genome; see TBProfiler’s original documentation for available options. | bwa | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **tbprofiler_min_af** | Float | The minimum allele frequency to call a variant | 0.1 | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **tbprofiler_min_depth** | Int | The minimum depth for a variant to be called. | 10 | Optional | FASTA, ONT, PE, SE |

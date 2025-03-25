@@ -49,7 +49,7 @@ This workflow is still in experimental research stages. Documentation is minimal
 | tbprofiler | **min_depth** | Int | The minimum depth for a variant to be called. | 10 | Optional |
 | tbprofiler | **ont_data** | Boolean | Internal component; do not modify |  | Do not modify, Optional |
 | tbprofiler | **tbprofiler_custom_db** | File | TBProfiler uses by default the TBDB database; if you have a custom database you wish to use, you must provide a custom database in this field and set tbprofiler_run_custom_db to true |  | Optional |
-| tbprofiler | **tbprofiler_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/tbprofiler:6.6.2 | Optional |
+| tbprofiler | **tbprofiler_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/tbprofiler:6.6.3 | Optional |
 | tbprofiler | **tbprofiler_run_custom_db** | Boolean |  | FALSE | Optional |
 | tbprofiler | **variant_caller** | String | Select a different variant caller for TBProfiler to use by writing it in this block; see TBProfiler's original documentation for available options. | freebayes | Optional |
 | tbprofiler | **variant_calling_params** | String | Enter additional variant calling parameters in this free text input to customize how the variant caller works in TBProfiler |  | Optional |
