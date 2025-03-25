@@ -12,13 +12,13 @@
         <meta name="author" content="Theiagen Genomics">
       
       
-        <link rel="canonical" href="https://theiagen.github.io/public_health_bioinformatics/main/workflows/data_export/transfer_column_content/">
+        <link rel="canonical" href="https://theiagen.github.io/public_health_bioinformatics/main/workflows/standalone/dorado_basecalling/">
       
       
-        <link rel="prev" href="../../standalone/theiavalidate/">
+        <link rel="prev" href="../../phylogenetic_construction/czgenepi_prep/">
       
       
-        <link rel="next" href="../../phylogenetic_placement/usher/">
+        <link rel="next" href="../../phylogenetic_construction/find_shared_variants/">
       
       
       <link rel="icon" href="../../../assets/logos/Theiagen-Symbol-Standard-01.png">
@@ -26,7 +26,7 @@
     
     
       
-        <title>Transfer_Column_Content - Public Health Bioinformatics</title>
+        <title>Dorado_Basecalling - Public Health Bioinformatics</title>
       
     
     
@@ -89,7 +89,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#quick-facts" class="md-skip">
+        <a href="#dorado-basecalling" class="md-skip">
           Skip to content
         </a>
       
@@ -138,7 +138,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Transfer_Column_Content
+              Dorado_Basecalling
             
           </span>
         </div>
@@ -1528,7 +1528,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../concatenate_column_content/" class="md-nav__link">
+      <a href="../../data_export/concatenate_column_content/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1547,29 +1547,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  <span class="md-ellipsis">
-    Transfer_Column_Content
-    
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../data_export/transfer_column_content/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1579,66 +1560,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#quick-facts" class="md-nav__link">
-    <span class="md-ellipsis">
-      Quick Facts
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#transfer_column_content_phb" class="md-nav__link">
-    <span class="md-ellipsis">
-      Transfer_Column_Content_PHB
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Transfer_Column_Content_PHB">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#inputs" class="md-nav__link">
-    <span class="md-ellipsis">
-      Inputs
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#outputs" class="md-nav__link">
-    <span class="md-ellipsis">
-      Outputs
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1651,7 +1572,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../zip_column_content/" class="md-nav__link">
+      <a href="../../data_export/zip_column_content/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1720,7 +1641,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/amr_search/" class="md-nav__link">
+      <a href="../amr_search/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1742,7 +1663,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/cauris_cladetyper/" class="md-nav__link">
+      <a href="../cauris_cladetyper/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1761,10 +1682,31 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../standalone/dorado_basecalling/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Dorado_Basecalling
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -1774,6 +1716,113 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#quick-facts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quick Facts
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dorado_basecalling_phb" class="md-nav__link">
+    <span class="md-ellipsis">
+      Dorado_Basecalling_PHB
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Dorado_Basecalling_PHB">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#configuring-workflow-in-terra" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuring Workflow in Terra
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#model-type-selection" class="md-nav__link">
+    <span class="md-ellipsis">
+      Model Type Selection
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#supported-kit-names" class="md-nav__link">
+    <span class="md-ellipsis">
+      Supported Kit Names
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Inputs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#workflow-tasks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Workflow Tasks
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#outputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Outputs
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      References
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1786,7 +1835,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/concatenate_illumina_lanes/" class="md-nav__link">
+      <a href="../concatenate_illumina_lanes/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1808,7 +1857,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/gambit_query/" class="md-nav__link">
+      <a href="../gambit_query/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1830,7 +1879,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/kraken2/" class="md-nav__link">
+      <a href="../kraken2/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1852,7 +1901,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/ncbi_amrfinderplus/" class="md-nav__link">
+      <a href="../ncbi_amrfinderplus/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1874,7 +1923,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/ncbi_scrub/" class="md-nav__link">
+      <a href="../ncbi_scrub/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1896,7 +1945,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/rasusa/" class="md-nav__link">
+      <a href="../rasusa/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1918,7 +1967,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/rename_fastq/" class="md-nav__link">
+      <a href="../rename_fastq/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1940,7 +1989,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/tbprofiler_tngs/" class="md-nav__link">
+      <a href="../tbprofiler_tngs/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1962,7 +2011,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/theiavalidate/" class="md-nav__link">
+      <a href="../theiavalidate/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2100,7 +2149,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/amr_search/" class="md-nav__link">
+      <a href="../amr_search/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2188,7 +2237,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../concatenate_column_content/" class="md-nav__link">
+      <a href="../../data_export/concatenate_column_content/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2210,7 +2259,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/concatenate_illumina_lanes/" class="md-nav__link">
+      <a href="../concatenate_illumina_lanes/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2251,10 +2300,31 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../standalone/dorado_basecalling/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Dorado_Basecalling
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -2264,6 +2334,113 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#quick-facts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quick Facts
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dorado_basecalling_phb" class="md-nav__link">
+    <span class="md-ellipsis">
+      Dorado_Basecalling_PHB
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Dorado_Basecalling_PHB">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#configuring-workflow-in-terra" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuring Workflow in Terra
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#model-type-selection" class="md-nav__link">
+    <span class="md-ellipsis">
+      Model Type Selection
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#supported-kit-names" class="md-nav__link">
+    <span class="md-ellipsis">
+      Supported Kit Names
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Inputs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#workflow-tasks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Workflow Tasks
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#outputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Outputs
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      References
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -2276,7 +2453,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/kraken2/" class="md-nav__link">
+      <a href="../kraken2/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2298,7 +2475,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/ncbi_scrub/" class="md-nav__link">
+      <a href="../ncbi_scrub/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2320,7 +2497,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/rasusa/" class="md-nav__link">
+      <a href="../rasusa/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2342,7 +2519,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/rename_fastq/" class="md-nav__link">
+      <a href="../rename_fastq/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2408,7 +2585,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/theiavalidate/" class="md-nav__link">
+      <a href="../theiavalidate/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2427,29 +2604,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  <span class="md-ellipsis">
-    Transfer_Column_Content
-    
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../data_export/transfer_column_content/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2459,66 +2617,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#quick-facts" class="md-nav__link">
-    <span class="md-ellipsis">
-      Quick Facts
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#transfer_column_content_phb" class="md-nav__link">
-    <span class="md-ellipsis">
-      Transfer_Column_Content_PHB
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Transfer_Column_Content_PHB">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#inputs" class="md-nav__link">
-    <span class="md-ellipsis">
-      Inputs
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#outputs" class="md-nav__link">
-    <span class="md-ellipsis">
-      Outputs
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -2531,7 +2629,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../zip_column_content/" class="md-nav__link">
+      <a href="../../data_export/zip_column_content/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2644,7 +2742,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/gambit_query/" class="md-nav__link">
+      <a href="../gambit_query/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2754,7 +2852,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/ncbi_amrfinderplus/" class="md-nav__link">
+      <a href="../ncbi_amrfinderplus/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2864,7 +2962,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/tbprofiler_tngs/" class="md-nav__link">
+      <a href="../tbprofiler_tngs/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2977,7 +3075,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/cauris_cladetyper/" class="md-nav__link">
+      <a href="../cauris_cladetyper/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3021,7 +3119,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/gambit_query/" class="md-nav__link">
+      <a href="../gambit_query/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3109,7 +3207,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/ncbi_amrfinderplus/" class="md-nav__link">
+      <a href="../ncbi_amrfinderplus/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3653,7 +3751,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/amr_search/" class="md-nav__link">
+      <a href="../amr_search/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3741,7 +3839,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/cauris_cladetyper/" class="md-nav__link">
+      <a href="../cauris_cladetyper/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3785,7 +3883,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../concatenate_column_content/" class="md-nav__link">
+      <a href="../../data_export/concatenate_column_content/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3807,7 +3905,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/concatenate_illumina_lanes/" class="md-nav__link">
+      <a href="../concatenate_illumina_lanes/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3892,10 +3990,31 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../standalone/dorado_basecalling/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Dorado_Basecalling
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -3905,6 +4024,113 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#quick-facts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quick Facts
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dorado_basecalling_phb" class="md-nav__link">
+    <span class="md-ellipsis">
+      Dorado_Basecalling_PHB
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Dorado_Basecalling_PHB">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#configuring-workflow-in-terra" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuring Workflow in Terra
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#model-type-selection" class="md-nav__link">
+    <span class="md-ellipsis">
+      Model Type Selection
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#supported-kit-names" class="md-nav__link">
+    <span class="md-ellipsis">
+      Supported Kit Names
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Inputs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#workflow-tasks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Workflow Tasks
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#outputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Outputs
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      References
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -3961,7 +4187,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/gambit_query/" class="md-nav__link">
+      <a href="../gambit_query/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3983,7 +4209,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/kraken2/" class="md-nav__link">
+      <a href="../kraken2/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -4115,7 +4341,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/ncbi_amrfinderplus/" class="md-nav__link">
+      <a href="../ncbi_amrfinderplus/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -4137,7 +4363,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/ncbi_scrub/" class="md-nav__link">
+      <a href="../ncbi_scrub/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -4181,7 +4407,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/rasusa/" class="md-nav__link">
+      <a href="../rasusa/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -4203,7 +4429,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/rename_fastq/" class="md-nav__link">
+      <a href="../rename_fastq/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -4357,7 +4583,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/tbprofiler_tngs/" class="md-nav__link">
+      <a href="../tbprofiler_tngs/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -4511,7 +4737,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../standalone/theiavalidate/" class="md-nav__link">
+      <a href="../theiavalidate/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -4530,29 +4756,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  <span class="md-ellipsis">
-    Transfer_Column_Content
-    
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../data_export/transfer_column_content/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -4562,66 +4769,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#quick-facts" class="md-nav__link">
-    <span class="md-ellipsis">
-      Quick Facts
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#transfer_column_content_phb" class="md-nav__link">
-    <span class="md-ellipsis">
-      Transfer_Column_Content_PHB
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Transfer_Column_Content_PHB">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#inputs" class="md-nav__link">
-    <span class="md-ellipsis">
-      Inputs
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#outputs" class="md-nav__link">
-    <span class="md-ellipsis">
-      Outputs
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -4678,7 +4825,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../zip_column_content/" class="md-nav__link">
+      <a href="../../data_export/zip_column_content/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -4824,6 +4971,8 @@
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -4841,19 +4990,55 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#transfer_column_content_phb" class="md-nav__link">
+  <a href="#dorado_basecalling_phb" class="md-nav__link">
     <span class="md-ellipsis">
-      Transfer_Column_Content_PHB
+      Dorado_Basecalling_PHB
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Transfer_Column_Content_PHB">
+    <nav class="md-nav" aria-label="Dorado_Basecalling_PHB">
       <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#configuring-workflow-in-terra" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuring Workflow in Terra
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#model-type-selection" class="md-nav__link">
+    <span class="md-ellipsis">
+      Model Type Selection
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#supported-kit-names" class="md-nav__link">
+    <span class="md-ellipsis">
+      Supported Kit Names
+    </span>
+  </a>
+  
+</li>
         
           <li class="md-nav__item">
   <a href="#inputs" class="md-nav__link">
     <span class="md-ellipsis">
       Inputs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#workflow-tasks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Workflow Tasks
     </span>
   </a>
   
@@ -4870,6 +5055,15 @@
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      References
+    </span>
+  </a>
   
 </li>
       
@@ -4892,8 +5086,7 @@
   
 
 
-  <h1>Transfer_Column_Content</h1>
-
+<h1 id="dorado-basecalling">Dorado Basecalling<a class="headerlink" href="#dorado-basecalling" title="Permanent link">&para;</a></h1>
 <h2 id="quick-facts">Quick Facts<a class="headerlink" href="#quick-facts" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -4907,69 +5100,273 @@
 </thead>
 <tbody>
 <tr>
-<td><a href="../../../workflows_overview/workflows_type/#exporting-data-from-terra">Exporting Data From Terra</a></td>
-<td><a href="../../../workflows_overview/workflows_kingdom/#any-taxa">Any taxa</a></td>
-<td>PHB v1.3.0</td>
+<td><a href="../../../workflows_overview/workflows_type/#standalone">Standalone</a></td>
+<td><a href="../../../workflows_overview/workflows_kingdom/#any-taxa">Any Taxa</a></td>
+<td>vX.X.X</td>
 <td>Yes</td>
-<td>Set-level</td>
+<td>Sample-level</td>
 </tr>
 </tbody>
 </table>
-<h2 id="transfer_column_content_phb">Transfer_Column_Content_PHB<a class="headerlink" href="#transfer_column_content_phb" title="Permanent link">&para;</a></h2>
-<p>This set-level workflow will transfer all of the files from a given column in a Terra Data Table to a single Google Cloud Platform (GCP) storage bucket location. This is useful when you want to transfer many files to another GCP storage bucket (this can be a Terra workspace storage bucket or a non-Terra storage bucket).</p>
-<div class="admonition tip">
-<p class="admonition-title">Ensure Proper Permissions</p>
-<p>This workflow requires that the user's Terra pet-service account has sufficient privileges to read and write to the target storage bucket.</p>
+<h2 id="dorado_basecalling_phb">Dorado_Basecalling_PHB<a class="headerlink" href="#dorado_basecalling_phb" title="Permanent link">&para;</a></h2>
+<p>The Dorado Basecalling workflow is used to convert Oxford Nanopore <code>POD5</code> sequencing files into <code>FASTQ</code> format by using a GPU-accelerated environment. This workflow is ideal for high-throughput applications where fast and accurate basecalling is essential. Users upload POD5 files to a Google Cloud Storage (GCS) bucket, and then provide that directory's path as a workflow input. The workflow basecalls all POD5 files in the provided location, and then outputs final FASTQ files to a user-designated Terra table for downstream analysis.</p>
+<div class="admonition caption">
+<p class="admonition-title">Dorado_Basecalling_PHB Workflow Diagram</p>
+<p><a class="glightbox" href="../../../assets/figures/Dorado_Basecalling_PHB.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Dorado_Basecalling_PHB Workflow Diagram" src="../../../assets/figures/Dorado_Basecalling_PHB.png" /></a></p>
+</div>
+<h3 id="configuring-workflow-in-terra">Configuring Workflow in Terra<a class="headerlink" href="#configuring-workflow-in-terra" title="Permanent link">&para;</a></h3>
+<p>We recommend running this workflow with <strong>"Run workflow with inputs defined by file paths"</strong> selected in Terra. This allows the user to skip the step of creating a Terra table for the POD5 files. The user will only need to provide the GCS path of the POD5 files, and the workflow will automatically find and basecall all POD5 files in that location. The resulting FASTQ files will be added to a Terra table of your choice.</p>
+<details class="dna" open="open">
+<summary>Uploading POD5 Files to Terra <code>pod5_bucket_path</code></summary>
+<p>To run the Dorado Basecalling Workflow, you must first upload your <code>POD5 files</code> to a Google Cloud Storage (GCS) bucket within your Terra workspace. Follow these steps:</p>
+<ol>
+<li>
+<p><strong>Use the Terra Data Uploader</strong></p>
+<p>Go to the <strong>"Data"</strong> tab in your Terra workspace. Click <strong>"Upload Files"</strong> and select your <code>POD5</code> files for upload. Confirm the upload process and wait for the files to be uploaded.</p>
+</li>
+<li>
+<p><strong>Copy the GCS Path</strong></p>
+<p>After the upload is complete, right-click the collection name and select "Copy link address"</p>
+<div class="admonition caption">
+<p class="admonition-title">Copy link address</p>
+<p><a class="glightbox" href="../../../assets/figures/dorado_pod5_bucket_path.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Data Uploader" src="../../../assets/figures/dorado_pod5_bucket_path.png" /></a></p>
+</div>
+</li>
+<li>
+<p><strong>Paste the GCS Path into the Workflow Input</strong></p>
+<p>Open the workflow configuration screen in Terra. Paste the copied GCS path into the <code>pod5_bucket_path</code> input field for the Dorado Basecalling Workflow. </p>
+<p>Make sure the select the <code>"Run workflow with inputs defined by file paths"</code> option, as shown.</p>
+<div class="admonition caption">
+<p class="admonition-title">Workflow Inputs</p>
+<p><a class="glightbox" href="../../../assets/figures/dorado_workflow_inputs.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Workflow Inputs" src="../../../assets/figures/dorado_workflow_inputs.png" /></a></p>
+</div>
+</li>
+</ol>
+</details>
+<h3 id="model-type-selection">Model Type Selection<a class="headerlink" href="#model-type-selection" title="Permanent link">&para;</a></h3>
+<p>Users can configure the basecalling model by setting the <code>dorado_model</code> input parameter.</p>
+<p><strong>Automatic Model Detection:</strong> When <code>dorado_model</code> is set to either <code>sup</code>, <code>hac</code>, or <code>fast</code>, Dorado will automatically select the appropriate model version if available.</p>
 <ul>
-<li>If the target bucket <strong>is associated with a Terra workspace</strong>, the workspace OWNER/administrator must grant you WRITER privileges to the Terra workspace.</li>
-<li>If the target bucket <strong>is not associated with a Terra workspace</strong> (i.e. GCP storage bucket), the user's Terra pet-service account (or their Terra PROXY account) must be granted the ability to read and write to the bucket (Storage Object Admin Google privileges)</li>
+<li><strong><code>sup</code></strong> (super-accurate): This model is the most accurate and is recommended for applications requiring the highest basecall accuracy. It is the slowest of the three model types and requires the most computational resources. <em>This is the default model for this workflow.</em></li>
+<li><strong><code>hac</code></strong> (high-accuracy): This model provides a balance between speed and accuracy. This model basecalls faster than <code>sup</code>, but those basecalls will be less accurate. It is recommended for most users by the Dorado developers.</li>
+<li><strong><code>fast</code></strong> (fast model): This model is the fastest and least accurate and is recommended when speed is prioritized over accuracy, such as for initial analyses or non-critical applications.</li>
+</ul>
+<p><strong>Manual Model Input:</strong> Alternatively, users can specify either a simplex model path or a model complex (e.g.<code>dna_r10.4.1_e8.2_400bps_hac@v4.2.0</code> or <code>hac,5mCG_5hmCG</code>). Please see the <a href="https://dorado-docs.readthedocs.io/en/latest/models/models/">Dorado documentation</a> for more details on the manual model naming conventions. You can also find the <a href="https://dorado-docs.readthedocs.io/en/latest/models/list/">full list of available simplex and modified basecalling models here</a>.</p>
+<div class="admonition tip">
+<p class="admonition-title">Example Manual Models</p>
+<ul>
+<li><code>sup,5mCG_5hmCG,6mA</code></li>
+<li><code>dna_r10.4.1_e8.2_400bps_hac@v4.3.0_6mA@v1</code></li>
+<li><code>sup@v4.2.0,6mA@v1</code></li>
 </ul>
 </div>
-<div class="admonition info">
-<p class="admonition-title">Call-Caching Disabled</p>
-<p>If using Transfer_Column_Content workflow version 1.3.0 or higher, the call-caching feature of Terra has been DISABLED to ensure that the workflow is run from the beginning and data is transferred fresh. Call-caching will not be enabled, even if the user checks the box ✅ in the Terra workflow interface.</p>
-</div>
+<h3 id="supported-kit-names">Supported Kit Names<a class="headerlink" href="#supported-kit-names" title="Permanent link">&para;</a></h3>
+<p>Ensure you use an accepted barcoding kit name in the <code>kit_name</code> parameter. Check if your barcoding kit is supported by the Dorado workflow by clicking the toggle below. If not, please contact <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#117;&#112;&#112;&#111;&#114;&#116;&#64;&#116;&#104;&#101;&#105;&#97;&#103;&#101;&#110;&#46;&#99;&#111;&#109;">&#115;&#117;&#112;&#112;&#111;&#114;&#116;&#64;&#116;&#104;&#101;&#105;&#97;&#103;&#101;&#110;&#46;&#99;&#111;&#109;</a> for assistance</p>
+<details class="toggle">
+<summary>Click to see a list of currently accepted kit names</summary>
+<ul>
+<li>EXP-NBD103</li>
+<li>EXP-NBD104</li>
+<li>EXP-NBD114</li>
+<li>EXP-NBD114-24</li>
+<li>EXP-NBD196</li>
+<li>EXP-PBC001</li>
+<li>EXP-PBC096</li>
+<li>SQK-16S024</li>
+<li>SQK-16S114-24</li>
+<li>SQK-LWB001</li>
+<li>SQK-MLK111-96-XL</li>
+<li>SQK-MLK114-96-XL</li>
+<li>SQK-NBD111-24</li>
+<li>SQK-NBD111-96</li>
+<li>SQK-NBD114-24</li>
+<li>SQK-NBD114-96</li>
+<li>SQK-PBK004</li>
+<li>SQK-PCB109</li>
+<li>SQK-PCB110</li>
+<li>SQK-PCB111-24</li>
+<li>SQK-PCB114-24</li>
+<li>SQK-RAB201</li>
+<li>SQK-RAB204</li>
+<li>SQK-RBK001</li>
+<li>SQK-RBK004</li>
+<li>SQK-RBK110-96</li>
+<li>SQK-RBK111-24</li>
+<li>SQK-RBK111-96</li>
+<li>SQK-RBK114-24</li>
+<li>SQK-RBK114-96</li>
+<li>SQK-RLB001</li>
+<li>SQK-RPB004</li>
+<li>SQK-RPB114-24</li>
+<li>TWIST-16-UDI</li>
+<li>TWIST-96A-UDI</li>
+<li>VSK-PTC001</li>
+<li>VSK-VMK001</li>
+<li>VSK-VMK004</li>
+<li>VSK-VPS001</li>
+</ul>
+</details>
 <h3 id="inputs">Inputs<a class="headerlink" href="#inputs" title="Permanent link">&para;</a></h3>
-<p>This workflow runs on the <em>set</em> level.</p>
+<div class="admonition info">
+<p class="admonition-title">Detailed Input Information</p>
+<ul>
+<li><strong>dorado_model</strong>: If set to 'sup', 'hac', or 'fast', the workflow will run with automatic model selection. If a full model name is provided, Dorado will use that model directly. See the <a href="#model-type-selection">Model Type Selection</a> section for more details.</li>
+<li>
+<p><strong>output_file_prefix</strong>: This will serve as a prefix for the output FASTQ files. For example, if you provide <code>project001</code>, the resulting files will be named <code>project001-barcodeXX.fastq.gz</code>.</p>
+<div class="admonition tip">
+<p class="admonition-title"><code>output_file_prefix</code> suggestions</p>
+<ul>
+<li><em>Avoid special characters</em>: Do not include special characters (such as <code>/</code>, or <code>&amp;</code>) or whitespace in the <code>output_file_prefix</code> variable</li>
+<li><em>Use a clear, simple prefix</em>: The prefix <code>projectname</code> will be automatically prepended to identifiers like <code>-barcodeXX.fastq.gz</code> or <code>-unclassified.fastq.gz</code> to name each output file, ensuring each one is distinct.</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>kit_name</strong>: Ensure the correct kit name is provided, as it determines the barcoding and adapter trimming behavior. See the <a href="#supported-kit-names">Supported Kit Names</a> section for a list of accepted kit names.</p>
+</li>
+</ul>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Increasing Chunk Size</p>
+<p>The identified pod5 files will be split into four groups (or the number indicated by <code>number_chunks</code>) for basecalling. You can decrease runtime by raising the number of chunks with the <code>number_chunks</code> variable.</p>
+<p>We recommend keeping the number of chunks relatively low (under 20) in order to prevent VM allocation times from drastically increasing, as this can negatively impact the speed of the analysis due to wait times reaching upwards of days (e.g., if chunk size &gt; 100). We have observed that as the number of chunks nears 20, walltime begins to increase.</p>
+<p>If the number of chunks is MORE than the number of pod5 files identified, the number of chunks will be set to the number of identified channels.</p>
+</div>
 <div class="searchable-table">
 <table>
 <thead>
 <tr>
-<th><strong>Terra Task name</strong></th>
-<th><strong>input_variable</strong></th>
+<th><strong>Terra Task Name</strong></th>
+<th><strong>Variable</strong></th>
 <th><strong>Type</strong></th>
 <th><strong>Description</strong></th>
-<th><strong>Default attribute</strong></th>
-<th><strong>Status</strong></th>
+<th><strong>Default Value</strong></th>
+<th><strong>Terra Status</strong></th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>transfer_column_content</td>
-<td><strong>files_to_transfer</strong></td>
-<td>Array[File]</td>
-<td>The column that has the files you want to concatenate.</td>
-<td></td>
-<td>Required</td>
-</tr>
-<tr>
-<td>transfer_column_content</td>
-<td><strong>target_bucket</strong></td>
+<td>dorado_basecalling</td>
+<td><strong>kit_name</strong></td>
 <td>String</td>
-<td>The GS URI<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup> of the target storage bucket. Note: <strong>Do not include spaces</strong>, but <strong>do</strong> include the <code>gs://</code> at the beginning of the bucket URI</td>
+<td>Sequencing kit name used (e.g., <code>SQK-RPB114-24</code>); see <a href="#supported-kit-names">above</a> for all available options.</td>
 <td></td>
 <td>Required</td>
 </tr>
 <tr>
-<td>transfer_files</td>
+<td>dorado_basecalling</td>
+<td><strong>new_table_name</strong></td>
+<td>String</td>
+<td>The desired name for a newly created Terra table that will contain the basecalled FASTQ files. This value should be the name as you want the table to appear as in the sidebar on the lefthand side of the Terra Data tab.</td>
+<td></td>
+<td>Required</td>
+</tr>
+<tr>
+<td>dorado_basecalling</td>
+<td><strong>output_file_prefix</strong></td>
+<td>String</td>
+<td>Prefix for naming output FASTQ files</td>
+<td></td>
+<td>Required</td>
+</tr>
+<tr>
+<td>dorado_basecalling</td>
+<td><strong>pod5_bucket_path</strong></td>
+<td>String</td>
+<td>GCS path of the bucket containing POD5 files.</td>
+<td></td>
+<td>Required</td>
+</tr>
+<tr>
+<td>dorado_basecalling</td>
+<td><strong>terra_project</strong></td>
+<td>String</td>
+<td>The name of your Terra project. You can find this information in the URL of the webpage of your Terra dashboard. For example, if your URL contains <code>#workspaces/example/my_workspace/</code> then your project name is <code>example</code></td>
+<td></td>
+<td>Required</td>
+</tr>
+<tr>
+<td>dorado_basecalling</td>
+<td><strong>terra_workspace</strong></td>
+<td>String</td>
+<td>The name of your Terra workspace where your samples can be found. For example, if your URL contains <code>#workspaces/example/my_workspace/</code> then your workspace name is <code>my_workspace</code></td>
+<td></td>
+<td>Required</td>
+</tr>
+<tr>
+<td>chunk_files</td>
 <td><strong>cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
-<td>4</td>
+<td>1</td>
 <td>Optional</td>
 </tr>
 <tr>
-<td>transfer_files</td>
+<td>chunk_files</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>25</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>chunk_files</td>
+<td><strong>docker</strong></td>
+<td>Int</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>chunk_files</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>create_table_from_array</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>1</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>create_table_from_array</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>25</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>create_table_from_array</td>
+<td><strong>docker</strong></td>
+<td>Int</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-06-21</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>create_table_from_array</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>dorado_basecall</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>8</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>dorado_basecall</td>
 <td><strong>disk_size</strong></td>
 <td>Int</td>
 <td>Amount of storage (in GB) to allocate to the task</td>
@@ -4977,19 +5374,147 @@
 <td>Optional</td>
 </tr>
 <tr>
-<td>transfer_files</td>
-<td><strong>docker_image</strong></td>
+<td>dorado_basecall</td>
+<td><strong>docker</strong></td>
 <td>String</td>
-<td>The docker image used to perform the file transfer.</td>
-<td>us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/dorado:0.9.0-cuda12.2.0</td>
 <td>Optional</td>
 </tr>
 <tr>
-<td>transfer_files</td>
+<td>dorado_basecall</td>
 <td><strong>memory</strong></td>
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>8</td>
+<td>32</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>dorado_basecalling</td>
+<td><strong>custom_primers</strong></td>
+<td>File</td>
+<td>A FASTA file containing custom primer sequences for PCR primer trimming during demultiplexing.</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>dorado_basecalling</td>
+<td><strong>demux_no_trim</strong></td>
+<td>Boolean</td>
+<td>Set to <code>true</code> to disable barcode trimming during demultiplexing.</td>
+<td>false</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>dorado_basecalling</td>
+<td><strong>dorado_model</strong></td>
+<td>String</td>
+<td>The model to use during basecalling ('sup' for super accuracy, 'hac' for high accuracy, or 'fast' for high speed). Users may also specify a full model name (see <a href="#model-type-selection">above</a> for more details).</td>
+<td>"sup"</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>dorado_basecalling</td>
+<td><strong>number_chunks</strong></td>
+<td>Int</td>
+<td>The number of chunks to split the input files into for basecalling; increasing chunk size can decrease runtime, though too high of a chunk size will be detrimental instead of beneficial due to resource allocation and quota limits</td>
+<td>4</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>dorado_demux</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>4</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>dorado_demux</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>100</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>dorado_demux</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/dorado:0.9.0-cuda12.2.0</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>dorado_demux</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>16</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>dorado_trim</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>4</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>dorado_trim</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>100</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>dorado_trim</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task. This is not the most up-to-date image since there is a bug with this Dorado subcommand in v0.9.0</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/dorado:0.8.3</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>dorado_trim</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>16</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>find_files</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>1</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>find_files</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>25</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>find_files</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>find_files</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/cloudsdktool/google-cloud-cli:427.0.0-alpine</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -5011,7 +5536,198 @@
 </tbody>
 </table>
 </div>
+<h3 id="workflow-tasks">Workflow Tasks<a class="headerlink" href="#workflow-tasks" title="Permanent link">&para;</a></h3>
+<p>This workflow is composed of several tasks to process, basecall, and analyze Oxford Nanopore <code>POD5</code> files.</p>
+<details class="task">
+<summary><code>find_files</code>: Identifying all POD5 files in the <code>pod5_bucket_path</code></summary>
+<p>Since this workflow only recieves a location for the POD5 files, this task was created to search the <code>pod5_bucket_path</code> location in order to create a list of all included POD5 files so that later tasks can perform basecalling on them. By default, this task is configured to search for <code>.pod5</code> files.</p>
+<div class="admonition techdetails">
+<p class="admonition-title">Find Files Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/file_handling/task_find_files.wdl">task_find_files.wdl</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<details class="task">
+<summary><code>chunk_files</code>: Splitting POD5 files into groups for parallel basecalling</summary>
+<p>In order to improve runtime, POD5 files are split into groups or "chunks" for basecalling. The number of chunks can be indicated by providing a value for the <code>number_chunks</code> value. By default, the number of chunks is four.</p>
+<div class="admonition techdetails">
+<p class="admonition-title">Chunk Files Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/file_handling/task_chunk_files.wdl">task_chunk_files.wdl</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<details class="task">
+<summary><code>dorado_basecall</code>: Basecalling POD5 files</summary>
+<p>The basecalling task takes POD5 files as input and converts each individual POD5 into 'BAM' format using the either the default or user-specified model. This step leverages GPU acceleration for efficient processing.</p>
+<p>Please see the <a href="https://dorado-docs.readthedocs.io/en/latest/basecaller/basecall_overview/">Dorado documentation</a> for more details, but what follows is a brief overview of the basecalling process:</p>
+<ol>
+<li>POD5 files are pre-processed via signal scaling and normalization.</li>
+<li>The machine learning algorithm decodes the sequence signals into nucleotide base calls. There are different machine learning models that can be specified as input; more details can be found above <a href="#model-type-selection">here</a>.</li>
+<li>
+<p><a href="https://dorado-docs.readthedocs.io/en/latest/barcoding/barcoding/">Barcode classification</a> is performed based on the indicated kit name to enable downstream demultiplexing. </p>
+<div class="admonition info">
+<p class="admonition-title">Barcode Trimming</p>
+<p>Barcode trimming is purposefully <strong>disabled</strong> during the basecalling step to ensure accurate demultiplexing in subsequent workflow steps.</p>
+</div>
+</li>
+<li>
+<p>Modified basecalling can be performed if indicated through <a href="https://dorado-docs.readthedocs.io/en/latest/basecaller/mods/">modification to the model name</a>.</p>
+</li>
+<li><a href="https://dorado-docs.readthedocs.io/en/latest/basecaller/read_splitting/">Reads are split</a> when a single read contains multiple concatenated reads.</li>
+</ol>
+<p>Other options are available, but currently Dorado_Basecalling_PHB does not support them. Please contact <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#117;&#112;&#112;&#111;&#114;&#116;&#64;&#116;&#104;&#101;&#105;&#97;&#103;&#101;&#110;&#46;&#99;&#111;&#109;">&#115;&#117;&#112;&#112;&#111;&#114;&#116;&#64;&#116;&#104;&#101;&#105;&#97;&#103;&#101;&#110;&#46;&#99;&#111;&#109;</a> if you would like additional options.</p>
+<div class="admonition techdetails">
+<p class="admonition-title">Dorado Basecalling Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/basecalling/task_dorado_basecall.wdl">task_dorado_basecall.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/nanoporetech/dorado/">Dorado on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://dorado-docs.readthedocs.io/en/latest/">Dorado ReadTheDocs</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<details class="task">
+<summary><code>dorado_demux</code>: Produces barcode-specific FASTQ files</summary>
+<p>This task takes every basecalled BAM files and demultiplexes them based on the identified barcodes found during basecalling. An individual FASTQ file is generated for each barcode found per BAM file. All FASTQ files that are associated with a single barcode are then merged.</p>
+<div class="admonition info">
+<p class="admonition-title">Disabling Barcode Trimming</p>
+<p>By default, barcodes <em>are</em> trimmed during demultiplexing. </p>
+<p>This can be disabled by setting the optional input variable <code>demux_no_trim</code> to <code>true</code>. This allows users to retain untrimmed reads for troubleshooting, such as inspecting reads in the "unclassified" folder when reads are mis-binned or other data issues occur.</p>
+</div>
+<div class="admonition techdetails">
+<p class="admonition-title">Dorado Demultiplexing Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/basecalling/task_dorado_demux.wdl">task_dorado_demux.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/nanoporetech/dorado/">Dorado on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://dorado-docs.readthedocs.io/en/latest/">Dorado ReadTheDocs</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<details class="task">
+<summary><code>dorado_trim</code>: Custom Primer Trimming (optional)</summary>
+<p>If a the optional input <code>custom_primers</code> is provided, this task is activated that will trim the primer sequences from the beginning and end of the demultiplexed reads.</p>
+<p>To determine how to format the FASTA file that is expected in <code>custom_primers</code> please see the <a href="https://dorado-docs.readthedocs.io/en/latest/barcoding/custom_primers/">Dorado documentation</a>, specifically the section on "Custom adapter/primer file format".</p>
+<div class="admonition tip">
+<p class="admonition-title">Older Dorado Version Used</p>
+<p>The Dorado version used in this task is not the most up-to-date version (set to v0.8.3) due to a bug in the Dorado subcommand in the latest version (v0.9.0). This will be updated in the future when the bug has been resolved by the Dorado developers. </p>
+</div>
+<div class="admonition techdetails">
+<p class="admonition-title">Dorado Trimming Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/basecalling/task_dorado_trim.wdl">task_dorado_trim.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/nanoporetech/dorado/">Dorado on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://dorado-docs.readthedocs.io/en/latest/">Dorado ReadTheDocs</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<details class="task">
+<summary><code>create_table_from_array</code>: Creates a Terra table with FASTQ files</summary>
+<p>The final task in this workflow will create a Terra table using the array of generated FASTQ files. This table will be named according to the <code>new_table_name</code> input variable and will contain all the FASTQ files generated during the workflow. The new table will contain the following columns with a row for each identified barcode and a single row for any unclassified reads.</p>
+<ul>
+<li><code>dorado_basecalling_analysis_date</code>: Date of Dorado analysis</li>
+<li><code>dorado_basecalling_phb_version</code>: Version of PHB used for the analysis</li>
+<li><code>dorado_docker</code>: Docker image used in the <code>dorado_basecall</code> task</li>
+<li><code>dorado_version</code>: Version of Dorado used in the <code>dorado_basecall</code> task</li>
+<li><code>dorado_model_name</code>: Model used for basecalling</li>
+<li><code>read1</code>: the FASTQ file containing the read name</li>
+<li><code>table_created_by</code>: this column will indicate that this table was created by "Dorado_Basecalling_PHB"</li>
+<li><code>upload_date</code>: the date the table was uploaded to Terra</li>
+</ul>
+<p>This table will be uploaded to the Terra workspace as indicated through the <code>terra_project</code> and <code>terra_workspace</code> input variables.</p>
+<div class="admonition techdetails">
+<p class="admonition-title">Create Table from Array Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/data_import/task_array_to_terra.wdl">task_create_terra_table.wdl</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
 <h3 id="outputs">Outputs<a class="headerlink" href="#outputs" title="Permanent link">&para;</a></h3>
+<p>Please note that if you run this workflow with the <code>"Run workflow with inputs defined by file paths"</code> option selected in Terra, these outputs will not be visible in a Terra table, but can be found in the Job Manager.</p>
 <table>
 <thead>
 <tr>
@@ -5022,30 +5738,56 @@
 </thead>
 <tbody>
 <tr>
-<td>transferred_files</td>
+<td><strong>dorado_basecall_docker</strong></td>
+<td>String</td>
+<td>Docker image used in the <code>dorado_basecall</code> task</td>
+</tr>
+<tr>
+<td><strong>dorado_basecall_version</strong></td>
+<td>String</td>
+<td>Version of Dorado used in the <code>dorado_basecall</code> task</td>
+</tr>
+<tr>
+<td><strong>dorado_basecalling_analysis_date</strong></td>
+<td>String</td>
+<td>Date of Dorado analysis</td>
+</tr>
+<tr>
+<td><strong>dorado_basecalling_phb_version</strong></td>
+<td>String</td>
+<td>Version of PHB used for the analysis</td>
+</tr>
+<tr>
+<td><strong>dorado_demux_version</strong></td>
+<td>String</td>
+<td>Version of Dorado used in the <code>dorado_demux</code> task</td>
+</tr>
+<tr>
+<td><strong>dorado_model_used</strong></td>
+<td>String</td>
+<td>Model used for basecalling</td>
+</tr>
+<tr>
+<td><strong>dorado_trim_version</strong></td>
+<td>String</td>
+<td>Version of Dorado used in the <code>dorado_trim</code> task</td>
+</tr>
+<tr>
+<td><strong>fastq_files</strong></td>
+<td>Array[File]</td>
+<td>FASTQ files produced from basecalling and demultiplexing</td>
+</tr>
+<tr>
+<td><strong>terra_table_tsv</strong></td>
 <td>File</td>
-<td>A list of all of the files now located at the target bucket location (GSURI)</td>
-</tr>
-<tr>
-<td>transfer_column_content_version</td>
-<td>String</td>
-<td>The version of the repository the workflow is hosted in</td>
-</tr>
-<tr>
-<td>transfer_column_content_analysis_date</td>
-<td>String</td>
-<td>The date the workflow was run</td>
+<td>TSV file used when uploading the Terra table of FASTQ files</td>
 </tr>
 </tbody>
 </table>
-<div class="footnote">
-<hr />
-<ol>
-<li id="fn:1">
-<p>GS URI: Google Storage Uniform Resource Identifier. This is <strong>not</strong> the same as a URL, which typically begins with http:// or https://. A GS URI begins with <code>gs://</code> and is used to reference a location in a Google Cloud Storage Bucket. For example, <code>gs://bucket-name/folder-name/file-name</code>. Other cloud storage providers have their own URIs, such as <code>s3://</code> for Amazon S3, although this workflow only supports Google Cloud Storage URIs.&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
-</li>
-</ol>
-</div>
+<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p><a href="https://github.com/nanoporetech/dorado/">https://github.com/nanoporetech/dorado/</a></p>
+</blockquote>
 
 
 
@@ -5068,7 +5810,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="March 18, 2025 14:48:15">2025-03-18</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="March 25, 2025 14:57:06">2025-03-25</span>
   </span>
 
     
@@ -5078,7 +5820,7 @@
     <span class="md-icon" title="Created">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="September 11, 2024 17:48:55">2024-09-11</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="March 25, 2025 14:57:06">2025-03-25</span>
   </span>
 
     
