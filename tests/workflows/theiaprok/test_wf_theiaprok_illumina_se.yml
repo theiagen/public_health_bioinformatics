@@ -457,7 +457,7 @@
     - path: miniwdl_run/wdl/tasks/species_typing/streptococcus/task_poppunk_streppneumo.wdl
       md5sum: 4456c190a338fde9de3d898a902d903b
     - path: miniwdl_run/wdl/tasks/species_typing/salmonella/task_seqsero2.wdl
-      md5sum: 497edbeff242ccde33da9b2afd121779
+      md5sum: e476e906c183692ecb401c35e70afc14
     - path: miniwdl_run/wdl/tasks/species_typing/streptococcus/task_seroba.wdl
       md5sum: 5931ecf20a6f04e44cfd9f43fd5bae73
     - path: miniwdl_run/wdl/tasks/species_typing/escherichia_shigella/task_serotypefinder.wdl
@@ -467,7 +467,7 @@
     - path: miniwdl_run/wdl/tasks/species_typing/escherichia_shigella/task_shigeifinder.wdl
       md5sum: 5a24623416f2ac9a0a177c01c5db2501
     - path: miniwdl_run/wdl/tasks/species_typing/salmonella/task_sistr.wdl
-      md5sum: 62a5b13e28599907560a70f2e75d7d29
+      md5sum: be21c5970bf8afc34e30cdc28954e7a2
     - path: miniwdl_run/wdl/tasks/species_typing/escherichia_shigella/task_sonneityping.wdl
       md5sum: 9e069c6ed95805fae7f13c1883bca9a6
     - path: miniwdl_run/wdl/tasks/species_typing/mycobacterium/task_tbprofiler.wdl
@@ -483,9 +483,9 @@
     - path: miniwdl_run/wdl/tasks/taxon_id/contamination/task_midas.wdl
       md5sum: 64caaaff5910ac0036e2659434500962
     - path: miniwdl_run/wdl/workflows/theiaprok/wf_theiaprok_illumina_se.wdl
-      md5sum: f25a7a3fc751a303e06420b1038dbb38
+      md5sum: cb9654cfdfd763824bbe4e84d85e5346
     - path: miniwdl_run/wdl/workflows/utilities/wf_merlin_magic.wdl
-      md5sum: 947cdd9b73fb69bdf7e644dcdaae2fcb
+      md5sum: 555f6f108a9574d502e0ca12ab3c30aa
     - path: miniwdl_run/wdl/workflows/utilities/wf_read_QC_trim_se.wdl
       md5sum: 09d9f68b9ca8bf94b6145ff9bed2edd1
     - path: miniwdl_run/workflow.log
