@@ -213,12 +213,13 @@ workflow merlin_magic {
     String? tbprofiler_variant_calling_params
     String? tbprofiler_additional_parameters
     # tbp-parser options
+    File? tbp_parser_config
     String tbp_parser_output_seq_method_type = "WGS"
     String? tbp_parser_operator
     Int? tbp_parser_min_depth
     Int? tbp_parser_min_frequency
     Int? tbp_parser_min_read_support
-    Int? tbp_parser_min_coverage
+    Int? tbp_parser_min_percent_coverage
     File? tbp_parser_coverage_regions_bed
     Boolean? tbp_parser_debug
     Boolean? tbp_parser_add_cs_lims
@@ -485,12 +486,13 @@ workflow merlin_magic {
             tbprofiler_bam = tbprofiler.tbprofiler_output_bam,
             tbprofiler_bai = tbprofiler.tbprofiler_output_bai,
             samplename = samplename, 
+            config = tbp_parser_config,
             sequencing_method = tbp_parser_output_seq_method_type,
             operator = tbp_parser_operator,
             min_depth = tbp_parser_min_depth,
             min_frequency = tbp_parser_min_frequency,
             min_read_support = tbp_parser_min_read_support,
-            min_coverage = tbp_parser_min_coverage,
+            min_percent_coverage = tbp_parser_min_percent_coverage,
             coverage_regions_bed = tbp_parser_coverage_regions_bed,
             add_cycloserine_lims = tbp_parser_add_cs_lims,
             tbp_parser_debug = tbp_parser_debug,
