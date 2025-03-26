@@ -31,9 +31,11 @@ nav:
             - Phylogenetic Construction:
                - Augur: workflows/phylogenetic_construction/augur.md
                - Core_Gene_SNP: workflows/phylogenetic_construction/core_gene_snp.md
+               - Clair3_Variants_ONT: workflows/phylogenetic_construction/clair3_variants.md
                - CZGenEpi_Prep: workflows/phylogenetic_construction/czgenepi_prep.md
                - Find_Shared_Variants: workflows/phylogenetic_construction/find_shared_variants.md
                - kSNP3: workflows/phylogenetic_construction/ksnp3.md
+               - kSNP4: workflows/phylogenetic_construction/ksnp4.md
                - Lyve_SET: workflows/phylogenetic_construction/lyve_set.md 
                - MashTree_FASTA: workflows/phylogenetic_construction/mashtree_fasta.md
                - Snippy_Streamline: workflows/phylogenetic_construction/snippy_streamline.md
@@ -53,7 +55,9 @@ nav:
                - Transfer_Column_Content: workflows/data_export/transfer_column_content.md
                - Zip_Column_Content: workflows/data_export/zip_column_content.md
             - Standalone:
+               - AMR_Search: workflows/standalone/amr_search.md
                - Cauris_CladeTyper: workflows/standalone/cauris_cladetyper.md
+               - Dorado_Basecalling: workflows/standalone/dorado_basecalling.md
                - Concatenate_Illumina_Lanes: workflows/standalone/concatenate_illumina_lanes.md
                - GAMBIT_Query: workflows/standalone/gambit_query.md
                - Kraken2: workflows/standalone/kraken2.md
@@ -66,11 +70,14 @@ nav:
         - Workflows by Kingdom: 
             - Overview Table: workflows_overview/workflows_kingdom.md
             - Any Taxa:
+               - AMR_Search: workflows/standalone/amr_search.md
                - Assembly_Fetch: workflows/data_import/assembly_fetch.md
                - BaseSpace_Fetch: workflows/data_import/basespace_fetch.md
+               - Clair3_Variants_ONT: workflows/phylogenetic_construction/clair3_variants.md
                - Concatenate_Column_Content: workflows/data_export/concatenate_column_content.md               
                - Concatenate_Illumina_Lanes: workflows/standalone/concatenate_illumina_lanes.md
                - Create_Terra_Table: workflows/data_import/create_terra_table.md
+               - Dorado_Basecalling: workflows/standalone/dorado_basecalling.md
                - Kraken2: workflows/standalone/kraken2.md
                - NCBI-Scrub: workflows/standalone/ncbi_scrub.md
                - RASUSA: workflows/standalone/rasusa.md
@@ -85,6 +92,7 @@ nav:
                - Find_Shared_Variants: workflows/phylogenetic_construction/find_shared_variants.md
                - GAMBIT_Query: workflows/standalone/gambit_query.md
                - kSNP3: workflows/phylogenetic_construction/ksnp3.md
+               - kSNP4: workflows/phylogenetic_construction/ksnp4.md
                - Lyve_SET: workflows/phylogenetic_construction/lyve_set.md
                - MashTree_FASTA: workflows/phylogenetic_construction/mashtree_fasta.md
                - NCBI-AMRFinderPlus: workflows/standalone/ncbi_amrfinderplus.md
@@ -100,6 +108,7 @@ nav:
                - Find_Shared_Variants: workflows/phylogenetic_construction/find_shared_variants.md
                - GAMBIT_Query: workflows/standalone/gambit_query.md
                - kSNP3: workflows/phylogenetic_construction/ksnp3.md
+               - kSNP4: workflows/phylogenetic_construction/ksnp4.md
                - MashTree_FASTA: workflows/phylogenetic_construction/mashtree_fasta.md
                - NCBI-AMRFinderPlus: workflows/standalone/ncbi_amrfinderplus.md
                - Snippy_Variants: workflows/phylogenetic_construction/snippy_variants.md
@@ -110,6 +119,7 @@ nav:
                - CZGenEpi_Prep: workflows/phylogenetic_construction/czgenepi_prep.md
                - Freyja Workflow Series: workflows/genomic_characterization/freyja.md
                - kSNP3: workflows/phylogenetic_construction/ksnp3.md
+               - kSNP4: workflows/phylogenetic_construction/ksnp4.md
                - MashTree_FASTA: workflows/phylogenetic_construction/mashtree_fasta.md
                - Mercury_Prep_N_Batch: workflows/public_data_sharing/mercury_prep_n_batch.md
                - Pangolin_Update: workflows/genomic_characterization/pangolin_update.md
@@ -122,20 +132,24 @@ nav:
                - VADR_Update: workflows/genomic_characterization/vadr_update.md
         - Workflows Alphabetically: 
             - Overview Table: workflows_overview/workflows_alphabetically.md
+            - AMR_Search: workflows/standalone/amr_search.md
             - Assembly_Fetch: workflows/data_import/assembly_fetch.md
             - Augur: workflows/phylogenetic_construction/augur.md
             - BaseSpace_Fetch: workflows/data_import/basespace_fetch.md
             - Cauris_CladeTyper: workflows/standalone/cauris_cladetyper.md
+            - Clair3_Variants_ONT: workflows/phylogenetic_construction/clair3_variants.md
             - Concatenate_Column_Content: workflows/data_export/concatenate_column_content.md
             - Concatenate_Illumina_Lanes: workflows/standalone/concatenate_illumina_lanes.md
             - Core_Gene_SNP: workflows/phylogenetic_construction/core_gene_snp.md
             - Create_Terra_Table: workflows/data_import/create_terra_table.md
             - CZGenEpi_Prep: workflows/phylogenetic_construction/czgenepi_prep.md
+            - Dorado_Basecalling: workflows/standalone/dorado_basecalling.md
             - Find_Shared_Variants: workflows/phylogenetic_construction/find_shared_variants.md
             - Freyja Workflow Series: workflows/genomic_characterization/freyja.md
             - GAMBIT_Query: workflows/standalone/gambit_query.md
             - Kraken2: workflows/standalone/kraken2.md
             - kSNP3: workflows/phylogenetic_construction/ksnp3.md
+            - kSNP4: workflows/phylogenetic_construction/ksnp4.md
             - Lyve_SET: workflows/phylogenetic_construction/lyve_set.md
             - MashTree_FASTA: workflows/phylogenetic_construction/mashtree_fasta.md
             - Mercury_Prep_N_Batch: workflows/public_data_sharing/mercury_prep_n_batch.md
@@ -257,4 +271,4 @@ extra:
   homepage: https://www.theiagen.com
 
 copyright: |
-  &copy; 2022-2024 <a href="https://www.theiagen.com" target="_blank" rel="noopener">Theiagen Genomics</a>
+  &copy; 2022-2025 <a href="https://www.theiagen.com" target="_blank" rel="noopener">Theiagen Genomics</a>

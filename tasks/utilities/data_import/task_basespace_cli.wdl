@@ -37,20 +37,20 @@ task fetch_bs {
     echo "bs_command: ${bs_command}"
 
     #Grab BaseSpace Run_ID from given BaseSpace Run Name
-    run_id=$(${bs_command} list run | grep "~{basespace_collection_id}" | awk -F "|" '{ print $3 }' | awk '{$1=$1;print}' )
+    run_id=$(${bs_command} list run --retry | grep "~{basespace_collection_id}" | awk -F "|" '{ print $3 }' | awk '{$1=$1;print}' )
     echo "run_id: ${run_id}" 
     if [[ ! -z "${run_id}" ]]; then 
       #Grab BaseSpace Dataset ID from dataset lists within given run 
-      dataset_id_array=($(${bs_command} list dataset --input-run=${run_id} | grep "${dataset_name}" | awk -F "|" '{ print $3 }' )) 
+      dataset_id_array=($(${bs_command} list dataset --retry --input-run=${run_id} | grep "${dataset_name}" | awk -F "|" '{ print $3 }' )) 
       echo "dataset_id: ${dataset_id_array[*]}"
     else 
       #Try Grabbing BaseSpace Dataset ID from project name
       echo "Could not locate a run_id via Basespace runs, attempting to search Basespace projects now..."
-      project_id=$(${bs_command} list project | grep "~{basespace_collection_id}" | awk -F "|" '{ print $3 }' | awk '{$1=$1;print}' )
+      project_id=$(${bs_command} list project --retry | grep "~{basespace_collection_id}" | awk -F "|" '{ print $3 }' | awk '{$1=$1;print}' )
       echo "project_id: ${project_id}" 
       if [[ ! -z "${project_id}" ]]; then 
         echo "project_id identified via Basespace, now searching for dataset_id within project_id ${project_id}..."
-        dataset_id_array=($(${bs_command} list dataset --project-id=${project_id} | grep "${dataset_name}" | awk -F "|" '{ print $3 }' )) 
+        dataset_id_array=($(${bs_command} list dataset --retry --project-id=${project_id} | grep "${dataset_name}" | awk -F "|" '{ print $3 }' )) 
         echo "dataset_id: ${dataset_id_array[*]}"
       else       
         echo "No run or project id found associated with input basespace_collection_id: ~{basespace_collection_id}" >&2
@@ -63,7 +63,7 @@ task fetch_bs {
       dataset_id=${dataset_id_array[$index]}
       mkdir ./dataset_${dataset_id} && cd ./dataset_${dataset_id}
       echo "dataset download: ${bs_command} download dataset -i ${dataset_id} -o . --retry"
-      ${bs_command} download dataset -i ${dataset_id} -o . --retry && cd ..
+      ${bs_command} download dataset --retry -i ${dataset_id} -o . --retry && cd ..
       echo -e "downloaded data: \n $(ls ./dataset_*/*)"
     done
 

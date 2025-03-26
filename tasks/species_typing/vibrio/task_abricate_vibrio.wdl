@@ -5,8 +5,8 @@ task abricate_vibrio {
     File assembly
     String samplename
     String database = "vibrio"
-    Int minid
-    Int mincov
+    Int min_percent_identity
+    Int min_percent_coverage
     Int cpu = 2
     Int memory = 4
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/abricate:1.0.1-vibrio-cholera"
@@ -18,8 +18,8 @@ task abricate_vibrio {
     # run abricate
     abricate \
       --db ~{database} \
-      ~{'--minid ' + minid} \
-      ~{'--mincov ' + mincov} \
+      ~{'--minid ' + min_percent_identity} \
+      ~{'--mincov ' + min_percent_coverage} \
       --threads ~{cpu} \
       --nopath \
       ~{assembly} > ~{samplename}_abricate_hits.tsv

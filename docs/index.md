@@ -50,7 +50,7 @@ We continuously work to improve our codebase and usability of our workflows by t
 
 ## Contributing to the PHB Repository
 
-We warmly welcome contributions to this repository! Our style guide may be found [here](contributing/code_contribution.md) for convenience of formatting.
+We warmly welcome contributions to this repository! Our code style guide may be found [here](contributing/code_contribution.md) for convenience of formatting and our documentation style guide may be found [here](contributing/doc_contribution.md).
 
 If you would like to submit suggested code changes to our workflows, you may add or modify the WDL files and submit pull requests to the [PHB GitHub](https://github.com/theiagen/public_health_bioinformatics) repository.
 
@@ -60,7 +60,7 @@ You can expect a careful review of every PR and feedback as needed before mergin
 
 ### Authorship
 
-(Ordered by contribution [# of lines changed] as of 2024-12-04)
+(Ordered by contribution [# of lines changed] as of 2025-02-12)
 
 - **Sage Wright** ([@sage-wright](https://github.com/sage-wright)) - Conceptualization, Software, Validation, Supervision
 - **Inês Mendes** ([@cimendes](https://github.com/cimendes)) - Software, Validation
@@ -68,9 +68,11 @@ You can expect a careful review of every PR and feedback as needed before mergin
 - **Frank Ambrosio** ([@frankambrosio3](https://github.com/frankambrosio3)) - Conceptualization, Software, Validation
 - **Michelle Scribner** ([@michellescribner](https://github.com/michellescribner)) - Software, Validation
 - **Kevin Libuit** ([@kevinlibuit](https://github.com/kevinlibuit)) - Conceptualization, Project Administration, Software, Validation, Supervision
-- **Fraser Combe** ([@fraser-combe](https://github.com/fraser-combe)) - Software, Validation
-- **Andrew Page** ([@andrewjpage](https://github.com/andrewjpage)) - Project Administration, Software, Supervision
 - **Michal Babinski** ([@Michal-Babins](https://github.com/Michal-Babins)) - Software, Validation
+- **Andrew Page** ([@andrewjpage](https://github.com/andrewjpage)) - Project Administration, Software, Supervision
+- **Zachary Konkel** ([@xonq](https://github.com/xonq)) - Software, Validation
+- **Theron James** ([@MrTheronJ](https://github.com/MrTheronJ)) - Software, Validation
+- **Andrew Hale** ([@awh082834](https://github.com/awh082834)) - Software, Validation
 - **Andrew Lang** ([@AndrewLangVt](https://github.com/AndrewLangVt)) - Software, Supervision
 - **Kelsey Kropp** ([@kelseykropp](https://github.com/kelseykropp)) - Validation
 - **Joel Sevinsky** ([@sevinsky](https://github.com/sevinsky)) - Conceptualization, Project Administration, Supervision
@@ -81,6 +83,7 @@ We would like to gratefully acknowledge the following individuals from the publi
 
 - **James Otieno** ([@jrotieno](https://github.com/jrotieno))
 - **Robert Petit** ([@rpetit3](https://github.com/rpetit3))
+- **Fraser Combe** ([@fraser-combe](https://github.com/fraser-combe))
 - **Emma Doughty** ([@emmadoughty](https://github.com/emmadoughty))
 - **Ash O'Farrel** ([@aofarrel](https://github.com/aofarrel))
 - **Sam Baird** ([@sam-baird](https://github.com/sam-baird))

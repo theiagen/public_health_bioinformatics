@@ -26,6 +26,8 @@ Additionally, the **TheiaCoV_FASTA_Batch** workflow is available to process seve
 
     [**Reference Materials for Mpox**](https://www.notion.so/Workspace-Reference-Materials-for-MPXV-Genomic-Characterization-a34f355c68c54c0a82e926d4de607bca?pvs=21)
 
+    [**Reference Materials for non-default viruses**](https://www.notion.so/theiagen/Guide-to-Running-Custom-Organisms-on-TheiaCoV-18ccb013bc9380bcad47dbeb3cca0a53)
+
     ??? toggle "HIV Input JSONs"
         - [TheiaCoV_Illumina_PE_HIV_v1_2024-04-19.json](../../assets/files/input_jsons/TheiaCoV_Illumina_PE_HIV_v1_2024-04-19.json)
         - [TheiaCoV_Illumina_PE_HIV_v2_2024-04-19.json](../../assets/files/input_jsons/TheiaCoV_Illumina_PE_HIV_v2_2024-04-19.json)
@@ -150,8 +152,8 @@ All TheiaCoV Workflows (not TheiaCoV_FASTA_Batch)
 | flu_track | **abricate_flu_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | FASTA, ONT, PE | flu |
 | flu_track | **abricate_flu_docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/abricate:1.0.1-insaflu-220727 | Optional | FASTA, ONT, PE | flu |
 | flu_track | **abricate_flu_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 4 | Optional | FASTA, ONT, PE | flu |
-| flu_track | **abricate_flu_mincov** | Int | Minimum DNA % coverage | 60 | Optional | FASTA, ONT, PE | flu |
-| flu_track | **abricate_flu_minid** | Int | Minimum DNA % identity | 70 | Optional | FASTA, ONT, PE | flu |
+| flu_track | **abricate_flu_min_percent_coverage** | Int | Minimum DNA % coverage | 60 | Optional | FASTA, ONT, PE | flu |
+| flu_track | **abricate_flu_min_percent_identity** | Int | Minimum DNA % identity | 70 | Optional | FASTA, ONT, PE | flu |
 | flu_track | **antiviral_aa_subs** | String | Additional list of antiviral resistance associated amino acid substitutions of interest to be searched against those called on the sample segments. They take the format of <protein>:<AA><Pos><AA>, e.g. NA:A26V | | Optional | ONT, PE | flu |
 | flu_track | **assembly_metrics_cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional | PE | flu |
 | flu_track | **assembly_metrics_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | PE | flu |
@@ -179,7 +181,7 @@ All TheiaCoV Workflows (not TheiaCoV_FASTA_Batch)
 | flu_track | **irma_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 16 | Optional | ONT, PE | flu |
 | flu_track | **nextclade_cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional | ONT, PE | flu |
 | flu_track | **nextclade_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 50 | Optional | ONT, PE | flu |
-| flu_track | **nextclade_docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/nextstrain/nextclade:3.3.1 | Optional | ONT, PE | flu |
+| flu_track | **nextclade_docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/nextstrain/nextclade:3.10.2 | Optional | ONT, PE | flu |
 | flu_track | **nextclade_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 4 | Optional | ONT, PE | flu |
 | flu_track | **nextclade_output_parser_cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | flu_track | **nextclade_output_parser_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 50 | Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
@@ -253,7 +255,7 @@ All TheiaCoV Workflows (not TheiaCoV_FASTA_Batch)
 | nextclade_v3 | **auspice_reference_tree_json** | File | An Auspice JSON phylogenetic reference tree which serves as a target for phylogenetic placement. | Inherited from nextclade dataset | Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | nextclade_v3 | **cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | nextclade_v3 | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 50 | Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
-| nextclade_v3 | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/nextstrain/nextclade:3.3.1 | Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
+| nextclade_v3 | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/nextstrain/nextclade:3.10.2 | Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | nextclade_v3 | **gene_annotations_gff** | File | A genome annotation to specify how to translate the nucleotide sequence to proteins (genome_annotation.gff3). specifying this enables codon-informed alignment and protein alignments. See here for more info: <https://docs.nextstrain.org/projects/nextclade/en/latest/user/input-files/03-genome-annotation.html> | Inherited from nextclade dataset | Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | nextclade_v3 | **input_ref** | File | A nucleotide sequence which serves as a reference for the pairwise alignment of all input sequences. This is also the sequence which defines the coordinate system of the genome annotation. See here for more info: <https://docs.nextstrain.org/projects/nextclade/en/latest/user/input-files/02-reference-sequence.html> | Inherited from nextclade dataset | Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | nextclade_v3 | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 4 | Optional | CL, FASTA, ONT, PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
@@ -366,22 +368,11 @@ All TheiaCoV Workflows (not TheiaCoV_FASTA_Batch)
 | read_QC_trim | **rasusa_bases** | String | Internal component, do not modify | | Optional | ONT | |
 | read_QC_trim | **rasusa_cpu** | Int | Internal component, do not modify | 4 | Optional | ONT | |
 | read_QC_trim | **rasusa_disk_size** | Int | Internal component, do not modify | 100 | Optional | ONT | |
-| read_QC_trim | **rasusa_docker** | String | Internal component, do not modify | "us-docker.pkg.dev/general-theiagen/staphb/rasusa:0.7.0" | Optional | ONT | |
+| read_QC_trim | **rasusa_docker** | String | Internal component, do not modify | "us-docker.pkg.dev/general-theiagen/staphb/rasusa:2.1.0" | Optional | ONT | |
 | read_QC_trim | **rasusa_fraction_of_reads** | Float | Internal component, do not modify | | Optional | ONT | |
 | read_QC_trim | **rasusa_memory** | Int | Internal component, do not modify | 8 | Optional | ONT | |
 | read_QC_trim | **rasusa_number_of_reads** | Int | Internal component, do not modify | | Optional | ONT | |
 | read_QC_trim | **rasusa_seed** | Int | Internal component, do not modify | | Optional | ONT | |
-| read_QC_trim | **tiptoft_cpu** | Int | Internal component, do not modify | 2 | Optional | ONT | |
-| read_QC_trim | **tiptoft_disk_size** | Int | Internal component, do not modify | 100 | Optional | ONT | |
-| read_QC_trim | **tiptoft_docker** | String | Internal component, do not modify | "us-docker.pkg.dev/general-theiagen/staphb/tiptoft:1.0.2" | Optional | ONT | |
-| read_QC_trim | **tiptoft_kmer_size** | String | Internal component, do not modify | | Optional | ONT | |
-| read_QC_trim | **tiptoft_margin** | Int | Internal component, do not modify | | Optional | ONT | |
-| read_QC_trim | **tiptoft_max_gap** | Int | Internal component, do not modify | | Optional | ONT | |
-| read_QC_trim | **tiptoft_memory** | Int | Internal component, do not modify | 8 | Optional | ONT | |
-| read_QC_trim | **tiptoft_min_block_size** | Int | Internal component, do not modify | | Optional | ONT | |
-| read_QC_trim | **tiptoft_min_fasta_hits** | Int | Internal component, do not modify | | Optional | ONT | |
-| read_QC-trim | **tiptoft_min_kmers_for_onex_pass** | Int | Internal component, do not modify | | Optional | ONT | |
-| read_QC_trim | **tiptoft_min_perc_coverage** | Int | Internal component, do not modify | | Optional | ONT | |
 | read_QC_trim | **read_processing** | String | The name of the tool to perform basic read processing; options: "trimmomatic" or "fastp" | trimmomatic | Optional | PE, SE | |
 | read_QC_trim | **read_qc** | String | The tool used for quality control (QC) of reads. Options are fastq_scan and fastqc | fastq_scan | Optional | PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | read_QC_trim | **target_organism** | String | Organism to search for in Kraken | | Optional | PE, SE | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
@@ -473,7 +464,7 @@ All TheiaCoV Workflows (not TheiaCoV_FASTA_Batch)
     | nextclade_v3 | **auspice_reference_tree_json** | File | The phylogenetic reference tree which serves as a target for phylogenetic placement | default is inherited from NextClade dataset | Optional |
     | nextclade_v3 | **cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional |
     | nextclade_v3 | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 50 | Optional |
-    | nextclade_v3 | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/nextstrain/nextclade:3.3.1 | Optional |
+    | nextclade_v3 | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/nextstrain/nextclade:3.10.2 | Optional |
     | nextclade_v3 | **gene_annotations_gff** | File | A genome annotation to specify how to translate the nucleotide sequence to proteins (genome_annotation.gff3). specifying this enables codon-informed alignment and protein alignments. See here for more info: https://docs.nextstrain.org/projects/nextclade/en/latest/user/input-files/03-genome-annotation.html | None | Optional |
     | nextclade_v3 | **input_ref** | File | A nucleotide sequence which serves as a reference for the pairwise alignment of all input sequences. This is also the sequence which defines the coordinate system of the genome annotation. See here for more info: https://docs.nextstrain.org/projects/nextclade/en/latest/user/input-files/02-reference-sequence.html | None | Optional |
     | nextclade_v3 | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 4 | Optional |
@@ -526,8 +517,8 @@ The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflo
         | genome_length_input | sars-cov-2 | `29903` |
         | kraken_target_organism_input | sars-cov-2 | `"Severe acute respiratory syndrome coronavirus 2"` |
         | nextclade_dataset_name_input | sars-cov-2 | `"nextstrain/sars-cov-2/wuhan-hu-1/orfs"` |
-        | nextclade_dataset_tag_input | sars-cov-2 | `"2024-11-19--14-18-53Z"` |
-        | pangolin_docker_image | sars-cov-2 | `"us-docker.pkg.dev/general-theiagen/staphb/pangolin:4.3.1-pdata-1.31 "`|
+        | pangolin_docker_image | sars-cov-2 | `"us-docker.pkg.dev/general-theiagen/staphb/pangolin:4.3.1-pdata-1.32 "`|
+        | nextclade_dataset_tag_input | sars-cov-2 | `"2025-03-04--17-31-25Z"` |
         | reference_genome | sars-cov-2 | `"gs://theiagen-public-files-rp/terra/augur-sars-cov-2-references/MN908947.fasta"` |
         | vadr_max_length | sars-cov-2 | `30000` |
         | vadr_mem | sars-cov-2 | `8` |
@@ -583,28 +574,28 @@ The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflo
         | vadr_mem | flu | all | all | `8` |  |
         | vadr_options | flu | all | all | `"--atgonly --xnocomp --nomisc --alt_fail extrant5,extrant3 --mkey flu"` |  |
         | nextclade_dataset_name_input | flu | ha | h1n1 | `"nextstrain/flu/h1n1pdm/ha/MW626062"` |  |
-        | nextclade_dataset_tag_input | flu | ha | h1n1 | `"2024-11-27--02-51-00Z"` |  |
+        | nextclade_dataset_tag_input | flu | ha | h1n1 | `"2025-01-22--09-54-14Z"` |  |
         | reference_genome | flu | ha | h1n1 | `"gs://theiagen-public-files-rp/terra/flu-references/reference_h1n1pdm_ha.fasta"` |  |
         | nextclade_dataset_name_input | flu | ha | h3n2 | `"nextstrain/flu/h3n2/ha/EPI1857216"` |  |
-        | nextclade_dataset_tag_input | flu | ha | h3n2 | `"2024-11-27--02-51-00Z"` |  |
+        | nextclade_dataset_tag_input | flu | ha | h3n2 | `"2025-01-22--09-54-14Z"` |  |
         | reference_genome | flu | ha | h3n2 | `"gs://theiagen-public-files-rp/terra/flu-references/reference_h3n2_ha.fasta"` |  |
         | nextclade_dataset_name_input | flu | ha | victoria | `"nextstrain/flu/vic/ha/KX058884"` |  |
-        | nextclade_dataset_tag_input | flu | ha | victoria | `"2024-11-05--09-19-52Z"` |  |
+        | nextclade_dataset_tag_input | flu | ha | victoria | `"2025-01-22--09-54-14Z"` |  |
         | reference_genome | flu | ha | victoria | `"gs://theiagen-public-files-rp/terra/flu-references/reference_vic_ha.fasta"` |  |
         | nextclade_dataset_name_input | flu | ha | yamagata | `"nextstrain/flu/yam/ha/JN993010"` |  |
         | nextclade_dataset_tag_input | flu | ha | yamagata | `"2024-01-30--16-34-55Z"` |  |
         | reference_genome | flu | ha | yamagata | `"gs://theiagen-public-files-rp/terra/flu-references/reference_yam_ha.fasta"` |  |
         | nextclade_dataset_name_input | flu | ha | h5n1 | `"community/moncla-lab/iav-h5/ha/all-clades"` |  |
-        | nextclade_dataset_tag_input | flu | ha | h5n1 | `"2024-12-04--17-05-31Z"` |  |
+        | nextclade_dataset_tag_input | flu | ha | h5n1 | `"2025-01-30--18-05-53Z"` |  |
         | reference_genome | flu | ha | h5n1 | `"gs://theiagen-public-files-rp/terra/flu-references/reference_h5n1_ha.fasta"` |  |
         | nextclade_dataset_name_input | flu | na | h1n1 | `"nextstrain/flu/h1n1pdm/na/MW626056"` |  |
-        | nextclade_dataset_tag_input | flu | na | h1n1 | `"2024-11-05--09-19-52Z"` |  |
+        | nextclade_dataset_tag_input | flu | na | h1n1 | `"2025-01-22--09-54-14Z"` |  |
         | reference_genome | flu | na | h1n1 | `"gs://theiagen-public-files-rp/terra/flu-references/reference_h1n1pdm_na.fasta"` |  |
         | nextclade_dataset_name_input | flu | na | h3n2 | `"nextstrain/flu/h3n2/na/EPI1857215"` |  |
-        | nextclade_dataset_tag_input | flu | na | h3n2 | `"2024-11-05--09-19-52Z"` |  |
+        | nextclade_dataset_tag_input | flu | na | h3n2 | `"2025-01-22--09-54-14Z"` |  |
         | reference_genome | flu | na | h3n2 | `"gs://theiagen-public-files-rp/terra/flu-references/reference_h3n2_na.fasta"` |  |
         | nextclade_dataset_name_input | flu | na | victoria | `"nextstrain/flu/vic/na/CY073894"` |  |
-        | nextclade_dataset_tag_input | flu | na | victoria | `"2024-11-05--09-19-52Z"` |  |
+        | nextclade_dataset_tag_input | flu | na | victoria | `"2025-01-22--09-54-14Z"` |  |
         | reference_genome | flu | na | victoria | `"gs://theiagen-public-files-rp/terra/flu-references/reference_vic_na.fasta"` |  |
         | nextclade_dataset_name_input | flu | na | yamagata | `"NA"` |  |
         | nextclade_dataset_tag_input | flu | na | yamagata | `"NA"` |  |
@@ -636,7 +627,7 @@ The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflo
         | genome_length_input | rsv_b | 16000 |
         | kraken_target_organism | rsv_b |  "human respiratory syncytial virus" |
         | nextclade_dataset_name_input | rsv_b | nextstrain/rsv/b/EPI_ISL_1653999 |
-        | nextclade_dataset_tag_input | rsv_b | "2024-11-27--02-51-00Z" |
+        | nextclade_dataset_tag_input | rsv_b | "2025-03-04--17-31-25Z" |
         | reference_genome | rsv_b | gs://theiagen-public-files-rp/terra/rsv_references/reference_rsv_b.fasta |
         | vadr_max_length | rsv_b | 15500 |
         | vadr_mem | rsv_b | 32 |
@@ -682,7 +673,7 @@ All input reads are processed through "core tasks" in the TheiaCoV Illumina, ONT
 
 ??? task "`screen`: Total Raw Read Quantification and Genome Size Estimation"
 
-    The [`screen`](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/comparisons/task_screen.wdl) task ensures the quantity of sequence data is sufficient to undertake genomic analysis. It uses [`fastq-scan`](https://github.com/rpetit3/fastq-scan) and bash commands for quantification of reads and base pairs, and [mash](https://mash.readthedocs.io/en/latest/index.html) sketching to estimate the genome size and its coverage. At each step, the results are assessed relative to pass/fail criteria and thresholds that may be defined by optional user inputs. Samples that do not meet these criteria will not be processed further by the workflow:
+    The [`screen`](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/comparisons/task_screen.wdl) task ensures the quantity of sequence data is sufficient to undertake genomic analysis. It uses [`fastq-scan`](https://github.com/rpetit3/fastq-scan) and bash commands for quantification of reads and base pairs, and [mash](https://mash.readthedocs.io/en/latest/index.html) sketching to estimate the genome size and its coverage. At each step, the results are assessed relative to pass/fail criteria and thresholds that may be defined by optional user inputs. Samples are run through all threshold checks, regardless of failures, and the workflow will terminate after the `screen` task if any thresholds are not met:
 
     1. Total number of reads: A sample will fail the read screening task if its total number of reads is less than or equal to `min_reads`.
     2. The proportion of basepairs reads in the forward and reverse read files: A sample will fail the read screening if fewer than `min_proportion` basepairs are in either the reads1 or read2 files.
@@ -1020,12 +1011,15 @@ All input reads are processed through "core tasks" in the TheiaCoV Illumina, ONT
 
     This sub-workflow determines which, if any, antiviral mutations are present in the sample. 
     
-    The assembled HA, NA, PA, PB1 and PB2 segments are compared against [a list of known amino-acid substitutions associated with resistance](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/drug_resistance/task_flu_antiviral_subs.wdl) to the antivirals  A_315675, compound_367, Favipiravir, Fludase, L_742_001, Laninamivir, Oseltamivir (tamiflu), Peramivir, Pimodivir, Xofluza, and Zanamivir. The list of known antiviral amino acid substitutions can be expanded via optional user input `antiviral_aa_subs` in the format "`NA:V95A,HA:I97V`", i.e. `Protein:AAPositionAA`. 
+    The assembled HA, NA, PA, PB1 and PB2 segments are compared against [a list of known amino-acid substitutions associated with resistance](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/drug_resistance/task_flu_antiviral_subs.wdl) to the antivirals  A_315675, Amantadine, compound_367, Favipiravir, Fludase, L_742_001, Laninamivir, Oseltamivir (tamiflu), Peramivir, Pimodivir, Rimantadine, Xofluza, and Zanamivir. The list of known amino-acid substitutions associated with resistance can be expanded via optional user input `antiviral_aa_subs` in the format "`NA:V95A,HA:I97V`", i.e. `Protein:AAPositionAA`. 
+    The list of amino-acid substitutions associated with antiviral resistance includes both substitutions reported to confer antiviral resistance in the scientific literature and those inferred to potentially cause antiviral resistance based on an analogous mutation reported to confer antiviral resistance in another flu subtype. A table with the explanation for each amino-acid substitution in the antiviral resistance task is available [here](../../assets/files/antiviral_resistance_flu_aa_substitutions_explanations.xlsx).
 
     !!! techdetails "Antiviral Substitutions Technical Details"        
         |  | Links |
         | --- | --- |
         | Workflow | [wf_influenza_antiviral_substitutions.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_influenza_antiviral_substitutions.wdl) |
+        | Task | [task_flu_antiviral_subs.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/drug_resistance/task_flu_antiviral_subs.wdl) |
+        | Publication | [Next-Generation Sequencing: An Eye-Opener for the Surveillance of Antiviral Resistance in Influenza](https://doi.org/10.1016/j.tibtech.2019.09.009)
 
 ??? task "`genoflu`"
 
@@ -1218,8 +1212,10 @@ All TheiaCoV Workflows (not TheiaCoV_FASTA_Batch)
 | quasitools_hydra_vcf | File | The VCF created by Quasitools HyDRA | ONT, PE |
 | quasitools_mutations_report | File | The mutation report created by Quasitools HyDRA | ONT, PE |
 | quasitools_version | String | Version of Quasitools used | ONT, PE |
-| read_screen_clean | String | A PASS or FAIL flag for input reads after cleaning | ONT, PE, SE |
-| read_screen_raw | String | A PASS or FAIL flag for input reads | ONT, PE, SE |
+| read_screen_raw | String | PASS or FAIL result from raw read screening; FAIL accompanied by the reason(s) for failure | ONT, PE, SE |
+| read_screen_raw_tsv | File | Raw read screening report TSV depicting read counts, total read base pairs, and estimated genome length | ONT, PE, SE |
+| read_screen_clean | String | PASS or FAIL result from clean read screening; FAIL accompanied by the reason(s) for failure | ONT, PE, SE |
+| read_screen_clean_tsv | File | Clean read screening report TSV depicting read counts, total read base pairs, and estimated genome length | ONT, PE, SE |
 | read1_aligned | File | Forward read file of only aligned reads | CL, ONT, PE, SE |
 | read1_clean | File | Forward read file after quality trimming and adapter removal | PE, SE |
 | read1_dehosted | File | Dehosted forward reads; suggested read file for SRA submission | CL, ONT, PE |

@@ -4,7 +4,7 @@
 
 | **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
 |---|---|---|---|---|
-| [Standalone](../../workflows_overview/workflows_type.md/#standalone) | [Any Taxa](../../workflows_overview/workflows_kingdom.md/#any-taxa) | PHB v2.3.0 | Yes | Sample-level |
+| [Standalone](../../workflows_overview/workflows_type.md/#standalone) | [Any Taxa](../../workflows_overview/workflows_kingdom.md/#any-taxa) | PHB vX.X.X | Yes | Sample-level |
 
 ## Kraken2 Workflows
 
@@ -63,7 +63,7 @@ Besides the data input types, there are minimal differences between these two wo
 | kraken2_pe or kraken2_se | **unclassified_out** | String | Allows user to rename unclassified FASTQ files output. Must include .fastq as the suffix | unclassified#.fastq | Optional | ONT, PE, SE |
 | krona | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional | PE, SE |
 | krona | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | PE, SE |
-| krona | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/biocontainers/krona:2.7.1--pl526_5 | Optional | PE, SE |
+| krona | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/krona:2.8.1 | Optional | PE, SE |
 | krona | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | PE, SE |
 | kraken2_recalculate_abundances | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional | ONT |
 | kraken2_recalculate_abundances | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | ONT |
@@ -145,11 +145,9 @@ When assessing the taxonomic identity of a single isolate's sequence, it is norm
 
 [Krona](https://github.com/marbl/Krona) produces an interactive report that allows hierarchical data, such as the one from Kraken2, to be explored with zooming, multi-layered pie charts. These pie charts are intuitive and highly responsive.
 
-Krona will only output hierarchical results for bacterial organisms in its current implementation.
-
 ??? toggle "Example Krona report"
 
-    Below is an example of the `krona_html` for a metagenomic sample. Taxonomic rank is organised from the centre of the pie chart to the edge, with each slice representing the relative abundance of a given taxa in the sample. 
+    Below is an example of the `krona_html` for a bacterial sample. Taxonomic rank is organised from the centre of the pie chart to the edge, with each slice representing the relative abundance of a given taxa in the sample.
     
     ![Example Krona Report](../../assets/figures/example_krona_report.png)
 

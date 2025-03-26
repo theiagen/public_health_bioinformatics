@@ -93,7 +93,7 @@
       md5sum: cb58af9eb139d109b55ce65d6d2344d6
     # clean read screen
     - path: miniwdl_run/call-clean_check_reads/command
-      md5sum: 12b45a751d777ab7b936a0740aba3827
+      md5sum: db983d80e050c7ead598e8a0cc214b5d
     - path: miniwdl_run/call-clean_check_reads/inputs.json
       contains: ["read1"]
     - path: miniwdl_run/call-clean_check_reads/outputs.json
@@ -187,7 +187,7 @@
     - path: miniwdl_run/call-ivar_consensus/call-stats_n_coverage_primtrim/work/_miniwdl_inputs/0/ERR6319327.primertrim.sorted.bam
     # variant call
     - path: miniwdl_run/call-ivar_consensus/call-variant_call/command
-      md5sum: 0e927e531c7c66c130fbb69e4fece330
+      md5sum: 8e31a46ca086b193dd72acabf87e7ee2
     - path: miniwdl_run/call-ivar_consensus/call-variant_call/inputs.json
       contains: ["bamfile", "variant_min_freq", "samplename"]
     - path: miniwdl_run/call-ivar_consensus/call-variant_call/outputs.json
@@ -316,14 +316,14 @@
     - path: miniwdl_run/call-pangolin4/work/PANGOLIN_NOTES
       md5sum: 0b1f8fb5b938fe71631f61234cbf7ab3
     - path: miniwdl_run/call-pangolin4/work/PANGO_ASSIGNMENT_VERSION
-      md5sum: 36f64a1cd7c6844309e8ad2121358088
+      md5sum: dc16291a6b3fff215c4f86ab8debb8fd
     - path: miniwdl_run/call-pangolin4/work/VERSION_PANGOLIN_ALL
-      md5sum: dfd90750c8776f46bad1de214c1d1a57
+      md5sum: 89257604b335f49f2284b8c1c4ab58a3
     - path: miniwdl_run/call-pangolin4/work/_miniwdl_inputs/0/ERR6319327.ivar.consensus.fasta
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     # nextclade
     - path: miniwdl_run/call-nextclade_v3/command
-      md5sum: c5d644127d8eae3f8fb3e3eaecb7fd2e
+      md5sum: 1d9de7b3ae174a001d1e9d165c38998b
     - path: miniwdl_run/call-nextclade_v3/inputs.json
       contains: ["dataset_name", "dataset_tag", "genome_fasta"]
     - path: miniwdl_run/call-nextclade_v3/outputs.json
@@ -337,7 +337,7 @@
     - path: miniwdl_run/call-nextclade_v3/work/ERR6319327.ivar.consensus.nextclade.json
     - path: miniwdl_run/call-nextclade_v3/work/ERR6319327.ivar.consensus.nextclade.tsv
     - path: miniwdl_run/call-nextclade_v3/work/NEXTCLADE_VERSION
-      md5sum: 70aa6879bf9f0e8ba2b9953b0d4a2216
+      md5sum: 72e36f488d0291ef87e547a0aef4a784
     - path: miniwdl_run/call-nextclade_v3/work/nextclade.aligned.fasta
       md5sum: 2e3156ddefcdf94930edd98bdd6c19c6
     - path: miniwdl_run/call-nextclade_v3/work/nextclade.csv
@@ -372,7 +372,7 @@
     - path: miniwdl_run/call-nextclade_v3/work/nextclade_dataset_dir/sequences.fasta
     - path: miniwdl_run/call-nextclade_v3/work/nextclade_dataset_dir/tree.json
     - path: miniwdl_run/call-nextclade_v3/work/nextclade_dataset_dir/pathogen.json
-      md5sum: 32f20640f926d5b59fed6b954541792d
+      md5sum: df0da980cf380e4b7cb4b739c742d162
     - path: miniwdl_run/call-nextclade_v3/work/_miniwdl_inputs/0/ERR6319327.ivar.consensus.fasta
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     # nextclade output parsing
