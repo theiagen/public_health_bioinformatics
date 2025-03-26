@@ -178,7 +178,7 @@ All TheiaCoV Workflows (not TheiaCoV_FASTA_Batch)
 | flu_track | **irma_cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional | ONT, PE | flu |
 | flu_track | **irma_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | ONT, PE | flu |
 | flu_track | **irma_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/irma:1.2.0 | Optional | ONT, PE | flu |
-| flu_track | **irma_keep_ref_deletions** | Boolean | True/False variable that determines if sites missed during read gathering should be deleted by ambiguation. False sets this IRMA paramater to `"DEL"` and true sets it to `"NNN"` | False | Optional | ONT, PE | flu |
+| flu_track | **irma_keep_ref_deletions** | Boolean | True/False variable that determines if sites missed (i.e. 0 reads for a site in the reference genome) during read gathering should be deleted by ambiguation by inserting `N`'s or deleting the sequence entirely. False sets this IRMA paramater to `"DEL"` and true sets it to `"NNN"` | True | Optional | ONT, PE | flu |
 | flu_track | **irma_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 16 | Optional | ONT, PE | flu |
 | flu_track | **irma_min_ambiguous_threshold** | Float | Minimum called Single Nucleotide Variant (SNV) frequency for mixed based calls in the output consensus assembly (AKA amended consensus).  | 0.20 | Optional | ONT, PE | flu |
 | flu_track | **irma_min_avg_consensus_allele_quality** | Int | Minimum allele coverage depth to call plurality consensus, otherwise calls "N". Setting this value too high can negatively impact final amended consensus. | 10 | Optional | ONT, PE | flu |
