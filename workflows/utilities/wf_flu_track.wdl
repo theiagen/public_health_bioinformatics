@@ -248,7 +248,7 @@ workflow flu_track {
         docker = genoflu_docker,
         memory = genoflu_memory
     }
-    if (genoflu.genoflu_genotype == "B3.13") {
+    if (genoflu.genoflu_genotype == "B3.13" && definied(nextclade_custom_input_dataset)) {
       call nextclade_task.nextclade_v3 as nextclade_flu_h5n1 {
         input:
           genome_fasta = select_first([irma.irma_assembly_fasta_concatenated]),
