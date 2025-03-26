@@ -41,7 +41,7 @@ task skani {
       { echo "$new_header"; cat -; } > ~{samplename}_skani_results_sorted.tsv
 
     # get the file name for the top hit in sorted skani results: 1st column, 2nd line in file
-    top_hit_name=$(awk 'NR == 2 {print $1}' ~{samplename}_skani_results_sorted.tsv)
+    top_hit_name=$(basename $(awk 'NR == 2 {print $1}' ~{samplename}_skani_results_sorted.tsv))
 
     if [ -z "$top_hit_name" ]; then
       echo "ERROR: No hits found in skani results"
