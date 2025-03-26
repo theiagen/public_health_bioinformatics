@@ -26,7 +26,7 @@ Additionally, the **TheiaCoV_FASTA_Batch** workflow is available to process seve
 
     [**Reference Materials for Mpox**](https://www.notion.so/Workspace-Reference-Materials-for-MPXV-Genomic-Characterization-a34f355c68c54c0a82e926d4de607bca?pvs=21)
 
-    [**Reference Materials for non-default viruses**](https://www.notion.so/theiagen/Guide-to-Running-Custom-Organisms-on-TheiaCoV-18ccb013bc9380bcad47dbeb3cca0a53)
+    [**Reference Materials for non-default viruses**](../../guides/custom_organisms.md)
 
     ??? toggle "HIV Input JSONs"
         - [TheiaCoV_Illumina_PE_HIV_v1_2024-04-19.json](../../assets/files/input_jsons/TheiaCoV_Illumina_PE_HIV_v1_2024-04-19.json)
