@@ -42,7 +42,7 @@ The [**GAMBIT_Query_PHB**](https://dockstore.org/workflows/github.com/theiagen/p
 Two inputs are required for the **GAMBIT_Query_PHB** workflow: a genome assembly and a sample name associated with the genome assembly. The default GAMBIT database used for taxonomic identification is the Prokaryotic [GAMBIT Database GTDB v2.0.0](#gambit-gtdb-database-v200), but alternate GAMBIT databases can be provided.
 
 !!! dna "Gambit_Query_PHB"
-    More information on **GAMBIT_Query_PHB** is available [**here**](../workflows/standalone/gambit_query/).
+    More information on **GAMBIT_Query_PHB** is available [**here**](../workflows/standalone/gambit_query.md).
 
 !!! tip inline end "Import workflows to [Terra.bio](https://terra.bio/):"
     **GAMBIT_Query_PHB**
@@ -67,8 +67,8 @@ In both, GAMBIT is responsible for performing the taxonomic identification of th
 !!! dna "TheiaProk and TheiaEuk"
     More information on TheiaProk and TheiaEuk is available on the following pages:
 
-    - [**TheiaProk Workflow Series**](../workflows/genomic_characterization/theiaprok/)
-    - [**TheiaEuk Workflow Series**](../workflows/genomic_characterization/theiaeuk/)
+    - [**TheiaProk Workflow Series**](../workflows/genomic_characterization/theiaprok.md)
+    - [**TheiaEuk Workflow Series**](../workflows/genomic_characterization/theiaeuk.md)
 
 ---
 
@@ -116,7 +116,7 @@ pip install .
 
 ### Usage
 
-Positional arguments are one or more FASTA files containing query genome assemblies. You must provide the path to the directory containing the database files using either the `-d` option (*before* the `query` subcommand) or by setting the `GAMBIT_DB_PATH` environment variable. The results can be optionally outputted to a file, but by default, they are written to the terminal. 
+Positional arguments are one or more FASTA files containing query genome assemblies. You must provide the path to the directory containing the database files using either the `-d` option (*before* the `query` subcommand) or by setting the `GAMBIT_DB_PATH` environment variable. The results can be optionally outputted to a file, but by default, they are written to the terminal.
 
 ```bash
 gambit [-d </path/to/database/>] query [-o results.csv] genome1.fasta genome2.fasta ...
@@ -174,9 +174,6 @@ Options:
 #### GAMBIT GTDB Database v2.0.0
 
 ??? toggle "Database Details"
-    
-    ##### Database Overview {#gtdb-v2.0.0-overview}
-
     This database is a **major update** to the Curated v1.3.0 database. This iteration of the GAMBIT database relies upon the [Genome Taxonomy Database](https://gtdb.ecogenomic.org/) (GTDB), an initiative to establish a standardised microbial taxonomy based on genome phylogeny. The genomes used to construct the phylogeny are obtained from [RefSeq](https://www.ncbi.nlm.nih.gov/refseq/) and [GenBank](https://www.ncbi.nlm.nih.gov/genbank/), independently quality-controlled using [CheckM](https://github.com/Ecogenomics/CheckM/wiki) before inclusion in GTDB. 
 
     This database was computed from [GTDB Release 214.1](https://gtdb.ecogenomic.org/stats/r214) as of April 28th, 2023. 
@@ -223,9 +220,6 @@ Options:
 #### GAMBIT RefSeq Curated Database v1.3.0
 
 ??? toggle "Database Details"
-
-    ##### Database Overview {#refseq-v1.3.0-overview}
-
     This database is a **patch update** to the Curated v1.2.0 database. In addition to all of the species included in the v1.2.0 database below, this database replaces all species in the ***Mycobacterium, Mycolicibacterium, Mycobacteroides*, and *Mycolicibacter*** genera with the available genomes in RefSeq as of October 16th, 2023. 
 
     - **Manual curation efforts**
@@ -260,8 +254,6 @@ Options:
 #### GAMBIT RefSeq Curated Database v1.2.0
 
 ??? toggle "Database Details"
-    ##### Database Overview {#refseq-v1.2.0-overview}
-
     This database is a **patch update** to the RefSeq Curated v1.1.0 database. In addition to all of the species included in the v1.1.0 database below, this database includes new species that were under-represented as of August 11th, 2023.
 
     - **Automated curation efforts**
@@ -304,8 +296,6 @@ Options:
 #### GAMBIT RefSeq Curated Database v1.1.0
 
 ??? toggle "Database Details"
-    ##### Database Overview {#refseq-v1.1.0-overview}
-
     This database is a **patch update** to the RefSeq Curated v1.0.0 database. In addition to all of the species included in the v1.0.0 database below, this database replaces all species in the **Enterobacter, Legionella, and Vibrio genera** with the available genomes in RefSeq as of April 17th, 2023. 
 
     **Database Files**
@@ -333,8 +323,6 @@ Options:
 #### GAMBIT RefSeq Curated Database v1.0.0
 
 ??? toggle "Database Details"
-    ##### Database Overview {#refseq-v1.0.0-overview}
-
     The GAMBIT RefSeq Curated v1.0.0 database was used for the analysis described in the [GAMBIT publication](https://doi.org/10.1371/journal.pone.0277575). This database was constructed based on the available genomes in RefSeq as of July 1st, 2016.  Genomes that did not have associated genus and/or species were removed. Additionally, at least two separate sequenced isolates for a given species were required in order to determine the classification threshold.  
 
     - **Manual curation efforts**
@@ -374,8 +362,6 @@ Options:
 #### GAMBIT Fungal Database v1.0.0
 
 ??? toggle "Database Details"
-    ##### Database Overview {#fungal-v1.0.0-overview}
-
     The GAMBIT Fungal Database v1.0.0 database was constructed based on the available genomes in RefSeq/GenBank as of December 13th, 2024. For inclusion in the database, species were required to have at least two genomes in GenBank and at least one genome representing the species in RefSeq. 
 
     1. Species with a diameter of zero were excluded;
@@ -411,9 +397,7 @@ Options:
 #### GAMBIT Fungal Database v0.2.0
 
 ??? toggle "Database Details"
-    ##### Database Overview {#fungal-v0.2.0-overview}
-
-    The GAMBIT Fungal Database v0.2.0 database was used for the analysis described in the [TheiaEuk publication](https://doi.org/10.3389/fpubh.2023.1198213). This database was constructed based on the available genomes in GenBank as of November 30th, 2022. For inclusion in the database, species were required to have at least two genomes in GenBank and at least one genome representing the species in RefSeq. 
+    The GAMBIT Fungal Database v0.2.0 database was used for the analysis described in the [TheiaEuk publication](https://doi.org/10.3389/fpubh.2023.1198213). This database was constructed based on the available genomes in GenBank as of November 30th, 2022. For inclusion in the database, species were required to have at least two genomes in GenBank and at least one genome representing the species in RefSeq.
 
     1. Species with a diameter of zero were excluded;
     2. Species with three or fewer genomes and a diameter greater than 0.75 were excluded.

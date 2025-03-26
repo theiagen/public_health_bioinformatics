@@ -22,7 +22,7 @@ The [**TheiaCoV Workflow Series**](../workflows/genomic_characterization/theiaco
     - **RSV-A** (`"rsv_a"`, `"rsv-a"`, `"RSV-A"`, `"RSV_A"`)
     - **RSV-B** (`"rsv_b"`, `"rsv-b"`, `"RSV-B"`, `"RSV_B"`)
 
-These workflows currently support seven organisms (see above). The workflows are adaptable, with parameters that can be customized for specific organisms. Input JSON files with preset configurations for each supported virus are provided [here](../workflows/genomic_characterization/theiacov/#theiacov-workflows), streamlining the setup process.
+These workflows currently support seven organisms (see above). The workflows are adaptable, with parameters that can be customized for specific organisms. Input JSON files with preset configurations for each supported virus are provided [here](../workflows/genomic_characterization/theiacov.md#theiacov-workflows), streamlining the setup process.
 
 Except for influenza, which follows a different process in TheiaCoV, **all organisms are assembled through consensus from a reference genome** (see Figure 2 below).
 
