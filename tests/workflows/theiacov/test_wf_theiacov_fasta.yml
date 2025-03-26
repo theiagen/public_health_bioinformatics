@@ -37,7 +37,7 @@
       md5sum: 6808ca805661622ad65ae014a4b2a094
     - path: miniwdl_run/call-consensus_qc/work/_miniwdl_inputs/0/clearlabs.fasta.gz
     - path: miniwdl_run/call-nextclade_v3/command
-      md5sum: 0c40304f417d8135c3322e2a24b2fda3
+      md5sum: 574c3c6638cdcbb8c6f0a763bafa2f2f
     - path: miniwdl_run/call-nextclade_v3/inputs.json
     - path: miniwdl_run/call-nextclade_v3/outputs.json
     - path: miniwdl_run/call-nextclade_v3/stderr.txt
@@ -57,9 +57,9 @@
       md5sum: b0221b714cb3647a5e88fcf45208c8b0
     - path: miniwdl_run/call-nextclade_v3/work/nextclade.ndjson
     - path: miniwdl_run/call-nextclade_v3/work/nextclade_dataset_dir/genome_annotation.gff3
-      md5sum: 4dff84d2d6ada820e0e3a8bc6798d402
+      md5sum: ca7fb34cad6558bc07fcef587743b934
     - path: miniwdl_run/call-nextclade_v3/work/nextclade_dataset_dir/pathogen.json
-      md5sum: df0da980cf380e4b7cb4b739c742d162
+      md5sum: ba38cbbfac4c2d962cff8e3090cd4b3f
     - path: miniwdl_run/call-nextclade_v3/work/nextclade_dataset_dir/reference.fasta
       md5sum: c7ce05f28e4ec0322c96f24e064ef55c
     - path: miniwdl_run/call-nextclade_v3/work/nextclade_dataset_dir/sequences.fasta
@@ -91,7 +91,7 @@
     - path: miniwdl_run/call-nextclade_v3/work/nextclade.cds_translation.S.fasta
       md5sum: e630a638abbb2c8ab4a8b74455e9668f
     - path: miniwdl_run/call-nextclade_output_parser/command
-      md5sum: 0805cf58414b2ffaf3ea5e53f85a5f3d
+      md5sum: 3e788062764d23f592dd7dadc059c911
     - path: miniwdl_run/call-nextclade_output_parser/inputs.json
     - path: miniwdl_run/call-nextclade_output_parser/outputs.json
     - path: miniwdl_run/call-nextclade_output_parser/stderr.txt
@@ -106,12 +106,8 @@
       md5sum: 96d3cf337be2f7948d6f6df5c1ab69a4
     - path: miniwdl_run/call-nextclade_output_parser/work/NEXTCLADE_LINEAGE
       md5sum: 717da6cd0df2d2f1d00461f3498aaca9
-    - path: miniwdl_run/call-nextclade_output_parser/work/TAMIFLU_AASUBS
-      md5sum: d41d8cd98f00b204e9800998ecf8427e
     - path: miniwdl_run/call-nextclade_output_parser/work/_miniwdl_inputs/0/clearlabs.fasta.gz.nextclade.tsv
       md5sum: d41d8cd98f00b204e9800998ecf8427e
-    - path: miniwdl_run/call-nextclade_output_parser/work/input.tsv
-      md5sum: 8d77a542e0ffce197d9495f07c60b521
     - path: miniwdl_run/call-pangolin4/command
       md5sum: b9c36681b77c5e007bf7e890265d70eb
     - path: miniwdl_run/call-pangolin4/inputs.json

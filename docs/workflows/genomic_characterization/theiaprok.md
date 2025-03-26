@@ -305,11 +305,12 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 | merlin_magic | **stxtyper_enable_debug** | Boolean | When enabled, additional messages are printed and files in `$TMPDIR` are not removed after running | FALSE | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **stxtyper_memory** | Int | Amount of memory (in GB) to allocate to the task | 4 | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **staphopia_sccmec_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/biocontainers/staphopia-sccmec:1.0.0--hdfd78af_0 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **tbp_parser_config** | File | The configuration file to use, in YAML format (overrides all other arguments except input_json and input_bam) |  | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **tbp_parser_add_cs_lims** | Boolean | Set to true add cycloserine results to the LIMS report | FALSE | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **tbp_parser_coverage_regions_bed** | File | A bed file that lists the regions to be considered for QC |  | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **tbp_parser_min_coverage** | Int | The minimum coverage for a region to pass QC in tbp_parser | 100 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **tbp_parser_min_percent_coverage** | Int | The minimum coverage for a region to pass QC in tbp_parser | 100 | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **tbp_parser_debug** | Boolean | Activate the debug mode on tbp_parser; increases logging outputs | TRUE | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **tbp_parser_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:2.2.2 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **tbp_parser_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:2.4.4 | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **tbp_parser_etha237_frequency** | Float | Minimum frequency for a mutation in ethA at protein position 237 to pass QC in tbp-parser | 0.1 | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **tbp_parser_expert_rule_regions_bed** | File | A file that contains the regions where R mutations and expert rules are applied |  | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **tbp_parser_min_depth** | Int | Minimum depth for a variant to pass QC in tbp_parser | 10 | Optional | FASTA, ONT, PE, SE |
@@ -324,7 +325,7 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 | merlin_magic | **tbp_parser_rrs_read_support** | Int | Minimum read support for a mutation in rrs to pass QC in tbp-parser | 10 | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **tbp_parser_tngs_data** | Boolean | Set to true to enable tNGS-specific parameters and runs in tbp-parser | FALSE | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **tbprofiler_custom_db** | File | TBProfiler uses by default the TBDB database; if you have a custom database you wish to use, you must provide a custom database in this field and set tbprofiler_run_custom_db to true |  | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **tbprofiler_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/tbprofiler:4.4.2 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **tbprofiler_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/tbprofiler:6.6.3 | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **tbprofiler_mapper** | String | The mapping tool used in TBProfiler to align the reads to the reference genome; see TBProfiler’s original documentation for available options. | bwa | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **tbprofiler_min_af** | Float | The minimum allele frequency to call a variant | 0.1 | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **tbprofiler_min_depth** | Int | The minimum depth for a variant to be called. | 10 | Optional | FASTA, ONT, PE, SE |
@@ -1921,11 +1922,12 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
 | resfinder_results | File | Predicted resistance genes grouped by antibiotic class | FASTA, ONT, PE, SE |
 | resfinder_seqs | File | FASTA of resistance gene sequences from user’s input sequence | FASTA, ONT, PE, SE |
 | seq_platform | String | Sequencing platform input by the user | FASTA, ONT, PE, SE |
-| seqsero2_predicted_antigenic_profile | String | Antigenic profile predicted for Salmonella spp. by SeqSero2 | ONT, PE, SE |
-| seqsero2_predicted_contamination | String | Indicates whether contamination between Salmonella with different serotypes was predicted by SeqSero2 | ONT, PE, SE |
-| seqsero2_predicted_serotype | String | Serotype predicted by SeqSero2 | ONT, PE, SE |
-| seqsero2_report | File | TSV report produced by SeqSero2 | ONT, PE, SE |
-| seqsero2_version | String | Version of SeqSero2 used | ONT, PE, SE |
+| seqsero2_note | String | Additional notes produced by SeqSero2 | FASTA, ONT, PE, SE |
+| seqsero2_predicted_antigenic_profile | String | Antigenic profile predicted for Salmonella spp. by SeqSero2 | FASTA, ONT, PE, SE |
+| seqsero2_predicted_contamination | String | Indicates whether contamination between Salmonella with different serotypes was predicted by SeqSero2 | FASTA, ONT, PE, SE |
+| seqsero2_predicted_serotype | String | Serotype predicted by SeqSero2 | FASTA, ONT, PE, SE |
+| seqsero2_report | File | TSV report produced by SeqSero2 | FASTA, ONT, PE, SE |
+| seqsero2_version | String | Version of SeqSero2 used | FASTA, ONT, PE, SE |
 | seroba_ariba_identity | String | Percentage identity between the query sequence and ARIBA-predicted serotype | PE |
 | seroba_ariba_serotype | String | Serotype predicted by ARIBA, via SeroBA | PE |
 | seroba_details | File | Detailed TSV file from SeroBA | PE |
@@ -1966,9 +1968,15 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
 | shovill_se_version | String | Shovill version used | SE |
 | sistr_allele_fasta | File | FASTA file of novel cgMLST alleles from SISTR | FASTA, ONT, PE, SE |
 | sistr_allele_json | File | JSON file of cgMLST allele sequences and information (see <https://github.com/phac-nml/sistr_cmd#cgmlst-allele-search-results>) | FASTA, ONT, PE, SE |
+| sistr_antigenic_formula | String | A field that aggregates the O, H1, and H2, antigen values in a single location for convenience | FASTA, ONT, PE, SE |
 | sistr_cgmlst | File | CSV file of the cgMLST allelic profile from SISTR (see <https://github.com/phac-nml/sistr_cmd#cgmlst-allelic-profiles-output---cgmlst-profiles-cgmlst-profilescsv>) | FASTA, ONT, PE, SE |
+| sistr_h1_antigens | String | The predicted H1 antigen | FASTA, ONT, PE, SE |
+| sistr_h2_antigens | String | The predicted H2 antigen | FASTA, ONT, PE, SE |
+| sistr_o_antigens | String | The predicted O antigen | FASTA, ONT, PE, SE |
 | sistr_predicted_serotype | String | Serotype predicted by SISTR | FASTA, ONT, PE, SE |
 | sistr_results | File | TSV results file produced by SISTR (see <https://github.com/phac-nml/sistr_cmd#primary-results-output--o-sistr-results>) | FASTA, ONT, PE, SE |
+| sistr_serogroup | String | Serogroup predicted by SISTR | FASTA, ONT, PE, SE |
+| sistr_serotype_cgmlst | String | cgMLST of the serogroup prediicted by SISTR | FASTA, ONT, PE, SE |
 | sistr_version | String | Version of SISTR used | FASTA, ONT, PE, SE |
 | sonneityping_final_genotype | String | Final genotype call from Mykrobe, via sonneityper | ONT, PE, SE |
 | sonneityping_final_report_tsv | File | Detailed TSV report from mykrobe, via sonneityper (see <https://github.com/katholt/sonneityping#example-output>) | ONT, PE, SE |

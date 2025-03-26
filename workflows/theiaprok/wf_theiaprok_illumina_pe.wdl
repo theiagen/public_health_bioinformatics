@@ -569,6 +569,7 @@ workflow theiaprok_illumina_pe {
                 "resfinder_seqs": resfinder_task.resfinder_hit_in_genome_seq,
                 "run_id": run_id,
                 "seq_platform": seq_method,
+                "seqsero2_note": merlin_magic.seqsero2_note,              
                 "seqsero2_predicted_antigenic_profile": merlin_magic.seqsero2_predicted_antigenic_profile,
                 "seqsero2_predicted_contamination": merlin_magic.seqsero2_predicted_contamination,
                 "seqsero2_predicted_serotype": merlin_magic.seqsero2_predicted_serotype,
@@ -614,8 +615,14 @@ workflow theiaprok_illumina_pe {
                 "sistr_allele_fasta": merlin_magic.sistr_allele_fasta,
                 "sistr_allele_json": merlin_magic.sistr_allele_json,
                 "sistr_cgmlst": merlin_magic.sistr_cgmlst,
+                "sistr_antigenic_formula": merlin_magic.sistr_antigenic_formula,
+                "sistr_h1_antigens": merlin_magic.sistr_h1_antigens,
+                "sistr_h2_antigens": merlin_magic.sistr_h2_antigens,
+                "sistr_o_antigens": merlin_magic.sistr_o_antigens,
                 "sistr_predicted_serotype": merlin_magic.sistr_predicted_serotype,
                 "sistr_results": merlin_magic.sistr_results,
+                "sistr_serogroup": merlin_magic.sistr_serogroup,
+                "sistr_serotype_cgmlst": merlin_magic.sistr_serotype_cgmlst,
                 "sistr_version": merlin_magic.sistr_version,
                 "sonneityping_final_genotype": merlin_magic.sonneityping_final_genotype,
                 "sonneityping_final_report_tsv": merlin_magic.sonneityping_final_report_tsv,
@@ -973,12 +980,19 @@ workflow theiaprok_illumina_pe {
     File? sistr_allele_fasta = merlin_magic.sistr_allele_fasta
     File? sistr_cgmlst = merlin_magic.sistr_cgmlst
     String? sistr_version = merlin_magic.sistr_version
+    String? sistr_antigenic_formula = merlin_magic.sistr_antigenic_formula
     String? sistr_predicted_serotype = merlin_magic.sistr_predicted_serotype
+    String? sistr_serogroup = merlin_magic.sistr_serogroup
+    String? sistr_h1_antigens = merlin_magic.sistr_h1_antigens
+    String? sistr_h2_antigens = merlin_magic.sistr_h2_antigens
+    String? sistr_o_antigens = merlin_magic.sistr_o_antigens
+    String? sistr_serotype_cgmlst = merlin_magic.sistr_serotype_cgmlst
     String? seqsero2_report = merlin_magic.seqsero2_report
     String? seqsero2_version = merlin_magic.seqsero2_version
     String? seqsero2_predicted_antigenic_profile = merlin_magic.seqsero2_predicted_antigenic_profile
     String? seqsero2_predicted_serotype = merlin_magic.seqsero2_predicted_serotype
     String? seqsero2_predicted_contamination = merlin_magic.seqsero2_predicted_contamination
+    String? seqsero2_note = merlin_magic.seqsero2_note
     # Salmonella serotype Typhi Typing
     File? genotyphi_report_tsv = merlin_magic.genotyphi_report_tsv 
     File? genotyphi_mykrobe_json = merlin_magic.genotyphi_mykrobe_json
