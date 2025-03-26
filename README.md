@@ -4,7 +4,7 @@ The Public Health Bioinformatics Bioinformatics repository contains workflows fo
 
 ## Introduction
 
-**More information about the steps undertaken in these workflows is available via the [Theiagen Public Resources Documentation](https://theiagen.github.io/public_health_bioinformatics/latest/).**
+**[Find the extensive documentation for this repository here](https://theiagen.github.io/public_health_bioinformatics/latest/)!**
 
 Support for running these workflows can be sought by raising a [GitHub issue](https://github.com/theiagen/public_health_bioinformatics/issues/new) or by contacting Theiagen at <support@theiagen.com>.
 
@@ -42,39 +42,42 @@ You can expect a careful review of every PR and feedback as needed before mergin
 
 ### Authorship
 
-(Ordered by contribution [# of lines changed] as of 2025-02-12)
+(Ordered by contribution [# of lines changed] as of 2025-03-26)
 
-* **Sage Wright** ([@sage-wright](https://github.com/sage-wright)) - Conceptualization, Software, Validation, Supervision
-* **Inês Mendes** ([@cimendes](https://github.com/cimendes)) - Software, Validation
-* **Curtis Kapsak** ([@kapsakcj](https://github.com/kapsakcj)) - Conceptualization, Software, Validation
-* **Frank Ambrosio** ([@frankambrosio3](https://github.com/frankambrosio3)) - Conceptualization, Software, Validation
-* **Michelle Scribner** ([@michellescribner](https://github.com/michellescribner)) - Software, Validation
-* **Kevin Libuit** ([@kevinlibuit](https://github.com/kevinlibuit)) - Conceptualization, Project Administration, Software, Validation, Supervision
-* **Michal Babinski** ([@Michal-Babins](https://github.com/Michal-Babins)) - Software, Validation
-* **Andrew Page** ([@andrewjpage](https://github.com/andrewjpage)) - Project Administration, Software, Supervision
-* **Zachary Konkel** ([@xonq](https://github.com/xonq)) - Software, Validation
-* **Theron James** ([@MrTheronJ](https://github.com/MrTheronJ)) - Software, Validation
-* **Andrew Hale** ([@awh082834](https://github.com/awh082834)) - Software, Validation
-* **Andrew Lang** ([@AndrewLangVt](https://github.com/AndrewLangVt)) - Software, Supervision
-* **Kelsey Kropp** ([@kelseykropp](https://github.com/kelseykropp)) - Validation
-* **Joel Sevinsky** ([@sevinsky](https://github.com/sevinsky)) - Conceptualization, Project Administration, Supervision
+- **Sage Wright** ([@sage-wright](https://github.com/sage-wright)) - Conceptualization, Software, Validation, Supervision
+- **Inês Mendes** ([@cimendes](https://github.com/cimendes)) - Software, Validation
+- **Curtis Kapsak** ([@kapsakcj](https://github.com/kapsakcj)) - Conceptualization, Software, Validation
+- **Michelle Scribner** ([@michellescribner](https://github.com/michellescribner)) - Software, Validation
+- **Kevin Libuit** ([@kevinlibuit](https://github.com/kevinlibuit)) - Conceptualization, Project Administration, Software, Validation, Supervision
+- **Michal Babinski** ([@Michal-Babins](https://github.com/Michal-Babins)) - Software, Validation
+- **Andrew Hale** ([@awh082834](https://github.com/awh082834)) - Software, Validation
+- **Andrew Page** ([@andrewjpage](https://github.com/andrewjpage)) - Project Administration, Software, Supervision
+- **Theron James** ([@MrTheronJ](https://github.com/MrTheronJ)) - Software, Validation
+- **Zachary Konkel** ([@xonq](https://github.com/xonq)) - Software, Validation
+- **Andrew Lang** ([@AndrewLangVt](https://github.com/AndrewLangVt)) - Software, Supervision
+- **Kelsey Kropp** ([@kelseykropp](https://github.com/kelseykropp)) - Validation
+- **Joel Sevinsky** ([@sevinsky](https://github.com/sevinsky)) - Conceptualization, Project Administration, Supervision
 
 ### External Contributors
 
 We would like to gratefully acknowledge the following individuals from the public health community for their contributions to the PHB repository:
 
-* **James Otieno** ([@jrotieno](https://github.com/jrotieno))
-* **Robert Petit** ([@rpetit3](https://github.com/rpetit3))
-* **Fraser Combe** ([@fraser-combe](https://github.com/fraser-combe))
-* **Emma Doughty** ([@emmadoughty](https://github.com/emmadoughty))
-* **Ash O'Farrel** ([@aofarrel](https://github.com/aofarrel))
-* **Sam Baird** ([@sam-baird](https://github.com/sam-baird))
-* **Holly Halstead** ([@HNHalstead](https://github.com/HNHalstead))
-* **Emily Smith** ([@emily-smith1](https://github.com/emily-smith1))
+- **Frank Ambrosio** ([@frankambrosio3](https://github.com/frankambrosio3))*
+- **James Otieno** ([@jrotieno](https://github.com/jrotieno))*
+- **Robert Petit** ([@rpetit3](https://github.com/rpetit3))*
+- **Fraser Combe** ([@fraser-combe](https://github.com/fraser-combe))*
+- **Emma Doughty** ([@emmadoughty](https://github.com/emmadoughty))*
+- **Nate Matteson** ([@watronfire](https://github.com/watronfire))
+- **Ash O'Farrel** ([@aofarrel](https://github.com/aofarrel))
+- **Sam Baird** ([@sam-baird](https://github.com/sam-baird))
+- **Holly Halstead** ([@HNHalstead](https://github.com/HNHalstead))
+- **Emily Smith** ([@emily-smith1](https://github.com/emily-smith1))*
+
+\* Former member of Theiagen
 
 ### Maintaining PHB Pipelines
 
-Theiagen Genomics has committed to maintaining these workflows for the forseeable future. These workflows are written using a standard workflow language (WDL) and uses Docker images based on the [StaPHB-B Docker Builds](https://github.com/StaPH-B/docker-builds). New versions that include bug fixes and additional features are released on a quarterly bases, with urgent bug fixes released as needed. Each version is accompanied by detailed release notes to lower the barrier of pipeline upkeep from the public health community at large.
+Theiagen Genomics has committed to maintaining these workflows for the forseeable future. These workflows are written using a standard workflow language (WDL) and uses Docker images based on the [StaPB-B Docker Builds](https://github.com/StaPH-B/docker-builds). New versions that include bug fixes and additional features are released on a quarterly bases, with urgent bug fixes released as needed. Each version is accompanied by detailed release notes to lower the barrier of pipeline upkeep from the public health community at large.
 
 ### Point of Contact
 
@@ -93,3 +96,7 @@ Please cite this paper if publishing work using any workflows:
 Alternatively, please cite this paper if using the TheiaEuk workflow:
 
 > Ambrosio, Frank, Michelle Scribner, Sage Wright, James Otieno, Emma Doughty, Andrew Gorzalski, Danielle Siao, et al. 2023. "TheiaEuk: A Species-Agnostic Bioinformatics Workflow for Fungal Genomic Characterization." Frontiers in Public Health 11. <https://doi.org/10.3389/fpubh.2023.1198213>.
+
+## About Theiagen
+
+Theiagen develops bioinformatics solutions for public health labs, and then trains and supports scientists to use these. If you would like to work with Theiagen, please [get in contact](https://theiagen.com/team-up-with-theiagen/).

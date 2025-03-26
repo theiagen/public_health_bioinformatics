@@ -12,17 +12,17 @@ All workflows in the PHB repository end with `_PHB` in order to differentiate th
 
 <div class="grid cards " markdown>
 
--   <center>[Command-line Users](getting_started/commandline.md){ .md-button .md-button--secondary }</center>
+-   <center>[Command-line Users](getting_started/commandline.md){ .md-button .md-button--secondary }
 
     ---
 
-    Learn how to use our workflows on the command-line!
+    Learn how to use our workflows on the command-line!</center>
 
--   <center>[Terra Users](getting_started/terra.md){ .md-button .md-button--secondary }</centered>
+-   <center>[Terra Users](getting_started/terra.md){ .md-button .md-button--secondary }
 
     ---
 
-    Learn how to use our workflows on Terra!
+    Learn how to use our workflows on Terra!</center>
 
 </div>
 
@@ -46,7 +46,7 @@ When undertaking genomic analysis using the command-line, via Terra, or other da
 We continuously work to improve our codebase and usability of our workflows by the public health community, so changes from version to version are expected.  This documentation page reflects the state of the workflow at the version stated in the title.
 
 !!! dna "What's new?"
-    You can see the changes since PHB v2.2.1 [**here**](https://theiagen.notion.site/public-health-bioinformatics-v2-3-0-minor-release-notes?pvs=4)!
+    You can see the changes since PHB v2.3.0 [**here**](https://theiagen.notion.site/public-health-bioinformatics-v3-0-0-major-release-notes?pvs=4)!
 
 ## Contributing to the PHB Repository
 
@@ -60,19 +60,18 @@ You can expect a careful review of every PR and feedback as needed before mergin
 
 ### Authorship
 
-(Ordered by contribution [# of lines changed] as of 2025-02-12)
+(Ordered by contribution [# of lines changed] as of 2025-03-26)
 
 - **Sage Wright** ([@sage-wright](https://github.com/sage-wright)) - Conceptualization, Software, Validation, Supervision
 - **Inês Mendes** ([@cimendes](https://github.com/cimendes)) - Software, Validation
 - **Curtis Kapsak** ([@kapsakcj](https://github.com/kapsakcj)) - Conceptualization, Software, Validation
-- **Frank Ambrosio** ([@frankambrosio3](https://github.com/frankambrosio3)) - Conceptualization, Software, Validation
 - **Michelle Scribner** ([@michellescribner](https://github.com/michellescribner)) - Software, Validation
 - **Kevin Libuit** ([@kevinlibuit](https://github.com/kevinlibuit)) - Conceptualization, Project Administration, Software, Validation, Supervision
 - **Michal Babinski** ([@Michal-Babins](https://github.com/Michal-Babins)) - Software, Validation
-- **Andrew Page** ([@andrewjpage](https://github.com/andrewjpage)) - Project Administration, Software, Supervision
-- **Zachary Konkel** ([@xonq](https://github.com/xonq)) - Software, Validation
-- **Theron James** ([@MrTheronJ](https://github.com/MrTheronJ)) - Software, Validation
 - **Andrew Hale** ([@awh082834](https://github.com/awh082834)) - Software, Validation
+- **Andrew Page** ([@andrewjpage](https://github.com/andrewjpage)) - Project Administration, Software, Supervision
+- **Theron James** ([@MrTheronJ](https://github.com/MrTheronJ)) - Software, Validation
+- **Zachary Konkel** ([@xonq](https://github.com/xonq)) - Software, Validation
 - **Andrew Lang** ([@AndrewLangVt](https://github.com/AndrewLangVt)) - Software, Supervision
 - **Kelsey Kropp** ([@kelseykropp](https://github.com/kelseykropp)) - Validation
 - **Joel Sevinsky** ([@sevinsky](https://github.com/sevinsky)) - Conceptualization, Project Administration, Supervision
@@ -81,14 +80,18 @@ You can expect a careful review of every PR and feedback as needed before mergin
 
 We would like to gratefully acknowledge the following individuals from the public health community for their contributions to the PHB repository:
 
-- **James Otieno** ([@jrotieno](https://github.com/jrotieno))
-- **Robert Petit** ([@rpetit3](https://github.com/rpetit3))
-- **Fraser Combe** ([@fraser-combe](https://github.com/fraser-combe))
-- **Emma Doughty** ([@emmadoughty](https://github.com/emmadoughty))
+- **Frank Ambrosio** ([@frankambrosio3](https://github.com/frankambrosio3))*
+- **James Otieno** ([@jrotieno](https://github.com/jrotieno))*
+- **Robert Petit** ([@rpetit3](https://github.com/rpetit3))*
+- **Fraser Combe** ([@fraser-combe](https://github.com/fraser-combe))*
+- **Emma Doughty** ([@emmadoughty](https://github.com/emmadoughty))*
+- **Nate Matteson** ([@watronfire](https://github.com/watronfire))
 - **Ash O'Farrel** ([@aofarrel](https://github.com/aofarrel))
 - **Sam Baird** ([@sam-baird](https://github.com/sam-baird))
 - **Holly Halstead** ([@HNHalstead](https://github.com/HNHalstead))
-- **Emily Smith** ([@emily-smith1](https://github.com/emily-smith1))
+- **Emily Smith** ([@emily-smith1](https://github.com/emily-smith1))*
+
+\* Former member of Theiagen
 
 ### On the Shoulder of Giants
 
@@ -100,7 +103,7 @@ If you would like to provide feedback, please raise a [GitHub issue](https://git
 
 ### Maintaining PHB Pipelines
 
-Theiagen Genomics has committed to maintaining these workflows for the forseeable future. These workflows are written using a standard workflow language (WDL) and uses Docker images based on the [StaPHB-B Docker Builds](https://github.com/StaPH-B/docker-builds). New versions that include bug fixes and additional features are released on a quarterly bases, with urgent bug fixes released as needed. Each version is accompanied by detailed release notes to lower the barrier of pipeline upkeep from the public health community at large.
+Theiagen Genomics has committed to maintaining these workflows for the forseeable future. These workflows are written using a standard workflow language (WDL) and uses Docker images based on the [StaPH-B Docker Builds](https://github.com/StaPH-B/docker-builds). New versions that include bug fixes and additional features are released on a quarterly bases, with urgent bug fixes released as needed. Each version is accompanied by detailed release notes to lower the barrier of pipeline upkeep from the public health community at large.
 
 ### Point of Contact
 
