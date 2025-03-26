@@ -10,19 +10,19 @@ task skani {
     Int cpu = 2
     Int memory = 4
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/skani:0.2.2"
-    String skani_db_name = basename(basename(skani_db, ".gz"), ".tar")
   }
   command <<<
     set -euo pipefail
 
     # extract skani db
-    tar -xzf ~{skani_db}
+    tar -xf ~{skani_db}
+    untarred_skani_db=$(basename ~{skani_db} .tar)
 
     # get version
     skani --version | tee VERSION
 
     skani search \
-      -d ~{skani_db_name} \
+      -d ${untarred_skani_db} \
       -q ~{assembly_fasta} \
       -s 50 \
       --no-learned-ani \
