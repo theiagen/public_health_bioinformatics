@@ -372,7 +372,7 @@
     - path: miniwdl_run/call-nextclade_v3/work/nextclade_dataset_dir/sequences.fasta
     - path: miniwdl_run/call-nextclade_v3/work/nextclade_dataset_dir/tree.json
     - path: miniwdl_run/call-nextclade_v3/work/nextclade_dataset_dir/pathogen.json
-      md5sum: df0da980cf380e4b7cb4b739c742d162
+      md5sum: ba38cbbfac4c2d962cff8e3090cd4b3f
     - path: miniwdl_run/call-nextclade_v3/work/_miniwdl_inputs/0/ERR6319327.ivar.consensus.fasta
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     # nextclade output parsing
