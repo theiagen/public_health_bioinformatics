@@ -7,6 +7,7 @@ task checkv {
   input {
     File assembly
     String samplename
+    File checkv_db = "gs://theiagen-large-public-files-rp/terra/databases/checkv/checkv-db-v1.5.tar"
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/checkv:1.0.3"
     Boolean? end_to_end = false
     Int memory = 8
@@ -17,16 +18,22 @@ task checkv {
     # get version
     checkv -h | grep -Po "^CheckV [^:]+" | sed -e "s/CheckV //" | tee "VERSION"
 
+    # extract CheckV DB
+    tar -xf ~{checkv_db}
+    untarred_checkv_db=$(basename ~{checkv_db} .tar)
+
     # run CheckV referencing the CheckV DB delineated by $CHECKVDB
     if [ ~{end_to_end} ]; then
       # run CheckV end-to-end mode
       checkv end_to_end \
         ~{assembly} checkv_results/ \
-        -t ~{cpu}
+        -d ${untarred_checkv_db} \
+        -t ~{cpu} 
     else
       # run CheckV completeness 
       checkv completeness \
         ~{assembly} checkv_results/ \
+        -d ${untarred_checkv_db} \
         -t ~{cpu}
 
   >>>
