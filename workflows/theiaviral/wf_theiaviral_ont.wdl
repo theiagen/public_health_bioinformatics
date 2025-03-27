@@ -9,6 +9,7 @@ import "../../tasks/utilities/data_handling/task_parse_mapping.wdl" as parse_map
 import "../../tasks/assembly/task_ivar_consensus.wdl" as ivar_consensus_task
 import "../../tasks/task_versioning.wdl" as versioning
 import "../../tasks/quality_control/advanced_metrics/task_checkv.wdl" as checkv_task
+import "../../tasks/quality_control/basic_statistics/task_consensus_qc.wdl" as consensus_qc_task
 
 workflow theiaviral_ont{
   meta {
@@ -42,24 +43,31 @@ workflow theiaviral_ont{
       asm_coverage = 50,
       genome_length = 12000
   }
-  # NEED to make optional for de novo assembly
-  call checkv_task.checkv as checkv_denovo {
-    input:
-      assembly = flye.assembly_fasta,
-      samplename = samplename
-  }
   call skani_task.skani as skani {
     input:
       assembly_fasta = flye.assembly_fasta,
       samplename = samplename,
       skani_db = skani_db
   }
-  # need to download the best reference - cannot extract from skani database
+  # download the best reference determined from skani
   call ncbi_datasets_task.ncbi_datasets_download_genome_accession as ncbi_datasets {
     input:
       ncbi_accession = skani.skani_top_ani_accession,
       use_ncbi_virus = true
   }
+
+  # NEED to make QC optional for de novo assembly
+  call checkv_task.checkv as checkv_denovo {
+    input:
+      assembly = flye.assembly_fasta,
+      samplename = samplename
+  }
+  call consensus_qc_task.consensus_qc as consensus_qc_denovo {
+    input:
+      assembly_fasta = flye.assembly_fasta,
+      reference_genome = ncbi_datasets.ncbi_datasets_assembly_fasta
+  }
+
   call minimap2_task.minimap2 as minimap2 {
     input:
       query1 = read1,
@@ -85,6 +93,12 @@ workflow theiaviral_ont{
       assembly = ivar.consensus_seq,
       samplename = samplename
   }
+  call consensus_qc_task.consensus_qc as consensus_qc_consensus {
+    input:
+      assembly_fasta = ivar.assembly_fasta,
+      reference_genome = ncbi_datasets.ncbi_datasets_assembly_fasta
+  }
+
   call versioning.version_capture {
     input:
   }
@@ -133,8 +147,17 @@ workflow theiaviral_ont{
     String theiaviral_ont_date = version_capture.date
     # checkv outputs - quality control
     File? checkv_denovo_summary = checkv_denovo.checkv_summary
-    File checkv_consensus_summary = checkv_consensus.checkv_summary
     String? checkv_denovo_version = checkv_denovo.checkv_version
+    File checkv_consensus_summary = checkv_consensus.checkv_summary
     String checkv_consensus_version = checkv_consensus.checkv_version
+    # basic assembly statistics
+    Int? denovo_number_N = consensus_qc_denovo.number_N
+    Int? denovo_assembly_length_unambiguous = consensus_qc_denovo.number_ATCG
+    Int? denovo_number_Degenerate = consensus_qc_denovo.number_Degenerate
+    Int? denovo_number_Total = consensus_qc_denovo.number_Total
+    Int? consensus_number_N = consensus_qc_consensus.number_N
+    Int? consensus_assembly_length_unambiguous = consensus_qc_consensus.number_ATCG
+    Int? consensus_number_Degenerate = consensus_qc_consensus.number_Degenerate
+    Int? consensus_number_Total = consensus_qc_consensus.number_Total
   }
 }
