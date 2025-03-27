@@ -8,6 +8,7 @@ import "../../tasks/alignment/task_minimap2.wdl" as minimap2_task
 import "../../tasks/utilities/data_handling/task_parse_mapping.wdl" as parse_mapping_task
 import "../../tasks/assembly/task_ivar_consensus.wdl" as ivar_consensus_task
 import "../../tasks/task_versioning.wdl" as versioning
+import "../../tasks/quality_control/advanced_metrics/task_checkv.wdl" as checkv_task
 
 workflow theiaviral_ont{
   meta {
@@ -41,6 +42,12 @@ workflow theiaviral_ont{
       asm_coverage = 50,
       genome_length = 12000
   }
+  # NEED to make optional for de novo assembly
+  call checkv_task.checkv as checkv_denovo {
+    input:
+      assembly = flye.assembly_fasta,
+      samplename = samplename
+  }
   call skani_task.skani as skani {
     input:
       assembly_fasta = flye.assembly_fasta,
@@ -72,6 +79,11 @@ workflow theiaviral_ont{
       bamfile = parse_mapping.bam,
       samplename = samplename,
       reference_genome = ncbi_datasets.ncbi_datasets_assembly_fasta
+  }
+  call checkv_task.checkv as checkv_consensus {
+    input:
+      assembly = ivar.consensus_seq,
+      samplename = samplename
   }
   call versioning.version_capture {
     input:
@@ -119,5 +131,10 @@ workflow theiaviral_ont{
     # versioning outputs
     String theiaviral_ont_version = version_capture.phb_version
     String theiaviral_ont_date = version_capture.date
+    # checkv outputs - quality control
+    File? checkv_denovo_summary = checkv_denovo.checkv_summary
+    File checkv_consensus_summary = checkv_consensus.checkv_summary
+    String? checkv_denovo_version = checkv_denovo.checkv_version
+    String checkv_consensus_version = checkv_consensus.checkv_version
   }
 }
