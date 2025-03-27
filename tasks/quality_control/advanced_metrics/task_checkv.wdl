@@ -9,7 +9,6 @@ task checkv {
     String samplename
     File checkv_db = "gs://theiagen-public-resources-rp/reference_data/databases/checkv/checkv-db-v1.5.tar.gz"
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/checkv:1.0.3"
-    Boolean? end_to_end = false
     Int memory = 8
     Int cpu = 2
     Int disk_size = 100
