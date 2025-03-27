@@ -315,7 +315,7 @@ workflow theiaprok_ont {
                 "busco_version": busco.busco_version,
                 "city": city,
                 "collection_date": collection_date,
-                "contigs_gfa": flye_denovo.assembly_graph_gfa,
+                "contigs_gfa": flye_denovo.contigs_gfa,
                 "county": county,
                 "flye_version": flye_denovo.flye_version,
                 "ectyper_predicted_serotype": merlin_magic.ectyper_predicted_serotype,
