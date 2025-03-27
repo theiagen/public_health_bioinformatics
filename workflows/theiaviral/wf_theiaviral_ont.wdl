@@ -10,6 +10,7 @@ import "../../tasks/assembly/task_ivar_consensus.wdl" as ivar_consensus_task
 import "../../tasks/task_versioning.wdl" as versioning
 import "../../tasks/quality_control/advanced_metrics/task_checkv.wdl" as checkv_task
 import "../../tasks/quality_control/basic_statistics/task_consensus_qc.wdl" as consensus_qc_task
+import "../../tasks/utilities/task_rasusa.wdl" as rasusa_task
 
 workflow theiaviral_ont{
   meta {
@@ -22,6 +23,15 @@ workflow theiaviral_ont{
     File metabuli_db # delete this later only used for miniwdl testing
     File taxonomy_path # delete this later only used for miniwdl testing
     File skani_db # delete this later only used for miniwdl testing
+
+    # rasusa downsampling inputs
+    Float downsampling_coverage = 150
+    String? rasusa_bases
+    Int? rasusa_seed
+    Float? rasusa_fraction_of_reads
+    Int? rasusa_number_of_reads
+    Int? genome_length # required for RASUSA, could be optional otherwise
+
   }
   call nanoq_task.nanoq as nanoq {
     input:
@@ -36,6 +46,20 @@ workflow theiaviral_ont{
       metabuli_db = metabuli_db,
       taxonomy_path = taxonomy_path
   }
+
+  # NEED to determine when to run RASUSA
+  call rasusa_task.rasusa {
+    input:
+      read1 = read1,
+      samplename = samplename,
+      coverage = downsampling_coverage,
+      genome_length = genome_length,
+      num = rasusa_number_of_reads,
+      frac = rasusa_fraction_of_reads,
+      seed = rasusa_seed,
+      bases = rasusa_bases
+  }  
+
   call flye_task.flye as flye {
     input:
       read1 = metabuli.metabuli_read1_extract,
@@ -159,5 +183,7 @@ workflow theiaviral_ont{
     Int? consensus_assembly_length_unambiguous = consensus_qc_consensus.number_ATCG
     Int? consensus_number_Degenerate = consensus_qc_consensus.number_Degenerate
     Int? consensus_number_Total = consensus_qc_consensus.number_Total
+    # rasusa outputs
+    String? rasusa_version = rasusa.rasusa_version
   }
 }
