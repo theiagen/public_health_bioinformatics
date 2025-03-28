@@ -2,6 +2,7 @@ version 1.0
 import "../../tasks/quality_control/read_filtering/task_nanoq.wdl" as nanoq_task
 import "../../tasks/taxon_id/contamination/task_metabuli.wdl" as metabuli_task
 import "../../tasks/assembly/task_flye.wdl" as flye_task
+import "../../tasks/assembly/task_raven.wdl" as raven_task
 import "../../tasks/phylogenetic_inference/utilities/task_skani.wdl" as skani_task
 import "../../tasks/utilities/data_import/task_ncbi_datasets.wdl" as ncbi_datasets_task
 import "../../tasks/alignment/task_minimap2.wdl" as minimap2_task
@@ -23,15 +24,18 @@ workflow theiaviral_ont{
     File metabuli_db # delete this later only used for miniwdl testing
     File taxonomy_path # delete this later only used for miniwdl testing
     File skani_db # delete this later only used for miniwdl testing
+    File checkv_db # delete this later only used for miniwdl testing
 
     # rasusa downsampling inputs
-    Float downsampling_coverage = 150
-    String? rasusa_bases
-    Int? rasusa_seed
+    Float downsampling_coverage = 0
+    String? rasusa_bases # delete after miniwdl testing
+    Int? rasusa_seed # delete after
     Float? rasusa_fraction_of_reads
     Int? rasusa_number_of_reads
-    String genome_length # required for RASUSA, could be optional otherwise
+    String? genome_length # required for RASUSA, could be optional otherwise
 
+    # assembler inputs
+    Boolean run_raven = false
   }
   call nanoq_task.nanoq as nanoq {
     input:
@@ -47,29 +51,39 @@ workflow theiaviral_ont{
       taxonomy_path = taxonomy_path
   }
 
-  # NEED to determine when to run RASUSA
-  call rasusa_task.rasusa {
-    input:
-      read1 = read1,
-      samplename = samplename,
-      coverage = downsampling_coverage,
-      genome_length = genome_length,
-      num = rasusa_number_of_reads,
-      frac = rasusa_fraction_of_reads,
-      seed = rasusa_seed,
-      bases = rasusa_bases
-  }  
-
-  call flye_task.flye as flye {
-    input:
-      read1 = metabuli.metabuli_read1_extract,
-      samplename = samplename,
-      asm_coverage = 50,
-      genome_length = 12000
+  if (downsampling_coverage > 0.0) {
+    call rasusa_task.rasusa {
+      input:
+        read1 = metabuli.metabuli_read1_extract,
+        samplename = samplename,
+        coverage = downsampling_coverage,
+        genome_length = select_first([genome_length, ""]),
+        num = rasusa_number_of_reads,
+        frac = rasusa_fraction_of_reads,
+        seed = rasusa_seed,
+        bases = rasusa_bases
+    }  
   }
+  if (run_raven) {
+    call raven_task.raven as raven {
+      input:
+        read1 = select_first([rasusa.read1_subsampled, metabuli.metabuli_read1_extract]),
+        samplename = samplename
+    }
+  } 
+  if (!run_raven) {
+    call flye_task.flye as flye {
+      input:
+        read1 = select_first([rasusa.read1_subsampled, metabuli.metabuli_read1_extract]),
+        samplename = samplename,
+        asm_coverage = 50,
+        genome_length = select_first([genome_length, ""])
+    }
+  }
+
   call skani_task.skani as skani {
     input:
-      assembly_fasta = flye.assembly_fasta,
+      assembly_fasta = select_first([raven.assembly_fasta, flye.assembly_fasta]),
       samplename = samplename,
       skani_db = skani_db
   }
@@ -83,12 +97,13 @@ workflow theiaviral_ont{
   # NEED to make QC optional for de novo assembly
   call checkv_task.checkv as checkv_denovo {
     input:
-      assembly = flye.assembly_fasta,
-      samplename = samplename
+      assembly = select_first([raven.assembly_fasta, flye.assembly_fasta]),
+      samplename = samplename,
+      checkv_db = checkv_db
   }
   call consensus_qc_task.consensus_qc as consensus_qc_denovo {
     input:
-      assembly_fasta = flye.assembly_fasta,
+      assembly_fasta = select_first([raven.assembly_fasta, flye.assembly_fasta]),
       reference_genome = ncbi_datasets.ncbi_datasets_assembly_fasta
   }
 
@@ -115,7 +130,8 @@ workflow theiaviral_ont{
   call checkv_task.checkv as checkv_consensus {
     input:
       assembly = ivar.consensus_seq,
-      samplename = samplename
+      samplename = samplename,
+      checkv_db = checkv_db
   }
   call consensus_qc_task.consensus_qc as consensus_qc_consensus {
     input:
@@ -126,6 +142,7 @@ workflow theiaviral_ont{
   call versioning.version_capture {
     input:
   }
+
   output {
     # nanoq outputs - read filtering
     File nanoq_filtered_read1 = nanoq.filtered_read1
@@ -137,12 +154,16 @@ workflow theiaviral_ont{
     String metabuli_database = metabuli.metabuli_database
     String metabuli_version = metabuli.metabuli_version
     String metabuli_docker = metabuli.metabuli_docker
+    # raven outputs - denovo genome assembly
+    File? raven_assembly = raven.assembly_fasta
+    String? raven_version = raven.raven_version
+    String? raven_docker = raven.raven_docker
     # flye outputs - denovo genome assembly
-    File flye_assembly = flye.assembly_fasta
-    File flye_assembly_graph = flye.assembly_graph_gfa
-    File flye_assembly_info = flye.assembly_info
-    String flye_version = flye.flye_version
-    String flye_docker = flye.flye_docker
+    File? flye_assembly = flye.assembly_fasta
+    File? flye_assembly_graph = flye.assembly_graph_gfa
+    File? flye_assembly_info = flye.assembly_info
+    String? flye_version = flye.flye_version
+    String? flye_docker = flye.flye_docker
     # skani outputs - ANI-based reference genome selection
     File skani_report = skani.skani_report
     String skani_top_ani_accession = skani.skani_top_ani_accession
