@@ -7,7 +7,7 @@ task checkv {
   input {
     File assembly
     String samplename
-    File checkv_db = "gs://theiagen-large-public-files-rp/terra/databases/checkv/checkv-db-v1.5.tar"
+    File checkv_db = "gs://theiagen-large-public-files-rp/terra/databases/checkv/checkv-db-v1.5.tar.gz"
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/checkv:1.0.3"
     Int memory = 8
     Int cpu = 2
@@ -18,8 +18,8 @@ task checkv {
     checkv -h | grep -Po "^CheckV [^:]+" | sed -e "s/CheckV //" | tee "VERSION"
 
     # extract CheckV DB
-    tar -xf ~{checkv_db}
-    untarred_checkv_db=$(basename ~{checkv_db} .tar)
+    tar -xzf ~{checkv_db}
+    untarred_checkv_db=$(basename ~{checkv_db} .tar.gz)
 
     # run CheckV referencing the CheckV DB delineated by $CHECKVDB
     checkv end_to_end \
