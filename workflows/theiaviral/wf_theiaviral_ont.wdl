@@ -30,7 +30,7 @@ workflow theiaviral_ont{
     Int? rasusa_seed
     Float? rasusa_fraction_of_reads
     Int? rasusa_number_of_reads
-    String? genome_length # required for RASUSA, could be optional otherwise
+    String genome_length # required for RASUSA, could be optional otherwise
 
   }
   call nanoq_task.nanoq as nanoq {
