@@ -93,6 +93,7 @@ task freyja_one_sample {
   # Demix variants 
   echo "Running: freyja demix --eps ~{eps} ${freyja_barcode} ${freyja_metadata} ~{samplename}_freyja_variants.tsv ~{samplename}_freyja_depths.tsv --output ~{samplename}_freyja_demixed.tmp"
   freyja demix \
+    ~{"--pathogen" + freyja_pathogen} \
     ~{'--eps ' + eps} \
     ~{'--meta ' + freyja_lineage_metadata} \
     ~{'--barcodes ' + freyja_barcodes} \
