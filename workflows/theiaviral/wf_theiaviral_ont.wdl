@@ -80,6 +80,14 @@ workflow theiaviral_ont{
         genome_length = select_first([genome_length, ""])
     }
   }
+  # NEED to make QC optional for de novo assembly
+  call checkv_task.checkv as checkv_denovo {
+    input:
+      assembly = select_first([raven.assembly_fasta, flye.assembly_fasta]),
+      samplename = samplename,
+      checkv_db = checkv_db
+  }
+
 
   call skani_task.skani as skani {
     input:
@@ -94,13 +102,7 @@ workflow theiaviral_ont{
       use_ncbi_virus = true
   }
 
-  # NEED to make QC optional for de novo assembly
-  call checkv_task.checkv as checkv_denovo {
-    input:
-      assembly = select_first([raven.assembly_fasta, flye.assembly_fasta]),
-      samplename = samplename,
-      checkv_db = checkv_db
-  }
+  # NEED a de novo qc task/option
   call consensus_qc_task.consensus_qc as consensus_qc_denovo {
     input:
       assembly_fasta = select_first([raven.assembly_fasta, flye.assembly_fasta]),
