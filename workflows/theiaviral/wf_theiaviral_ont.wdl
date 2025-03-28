@@ -119,7 +119,7 @@ workflow theiaviral_ont{
   }
   call consensus_qc_task.consensus_qc as consensus_qc_consensus {
     input:
-      assembly_fasta = ivar.assembly_fasta,
+      assembly_fasta = ivar.consensus_seq,
       reference_genome = ncbi_datasets.ncbi_datasets_assembly_fasta
   }
 
