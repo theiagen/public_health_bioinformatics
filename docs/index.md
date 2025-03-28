@@ -12,17 +12,23 @@ All workflows in the PHB repository end with `_PHB` in order to differentiate th
 
 <div class="grid cards " markdown>
 
--   <center>[Command-line Users](getting_started/commandline.md){ .md-button .md-button--secondary }
-
-    ---
-
-    Learn how to use our workflows on the command-line!</center>
-
 -   <center>[Terra Users](getting_started/terra.md){ .md-button .md-button--secondary }
 
     ---
 
     Learn how to use our workflows on Terra!</center>
+
+-   <center>[v3.0.0 Release Notes](https://theiagen.notion.site/public-health-bioinformatics-v3-0-0-major-release-notes){ .md-button .md-button--secondary }
+
+    ---
+
+    Learn about the latest changes to our workflows!</center>
+
+-   <center>[Command-line Users](getting_started/commandline.md){ .md-button .md-button--secondary }
+
+    ---
+
+    Learn how to use our workflows on the command-line!</center>
 
 </div>
 
@@ -43,10 +49,7 @@ When undertaking genomic analysis using the command-line, via Terra, or other da
 
 ### PHB development is a cycle
 
-We continuously work to improve our codebase and usability of our workflows by the public health community, so changes from version to version are expected.  This documentation page reflects the state of the workflow at the version stated in the title.
-
-!!! dna "What's new?"
-    You can see the changes since PHB v2.3.0 [**here**](https://theiagen.notion.site/public-health-bioinformatics-v3-0-0-major-release-notes)!
+We continuously work to improve our codebase and usability of our workflows by the public health community, so changes from version to version are expected. This documentation page reflects the state of the repository at the version stated in the header.
 
 ## Contributing to the PHB Repository
 
