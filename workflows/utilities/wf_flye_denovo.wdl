@@ -21,7 +21,7 @@ workflow flye_denovo {
     String samplename
     String polisher = "medaka"
     Int polish_rounds = 1                   
-    Boolean run_porechop = true # Default: Run Porechop
+    Boolean run_porechop = false # Default: Run Porechop
     Boolean skip_polishing = false # Default: Polishing enabled
     
     # Porechop inputs
