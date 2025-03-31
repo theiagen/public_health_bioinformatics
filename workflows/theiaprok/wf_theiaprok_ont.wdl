@@ -588,8 +588,19 @@ workflow theiaprok_ont {
                 "virulencefinder_docker": merlin_magic.virulencefinder_docker,
                 "virulencefinder_hits": merlin_magic.virulencefinder_hits,
                 "virulencefinder_report_tsv": merlin_magic.virulencefinder_report_tsv,
-                "zip": zip
-              }
+                "zip": zip,
+                "bandage_plot": flye_denovo.bandage_plot,
+                "bandage_version": flye_denovo.bandage_version,
+                "bwa_version": flye_denovo.bwa_version,
+                "dnaapler_version": flye_denovo.dnaapler_version,
+                "filtered_contigs_metrics": flye_denovo.filtered_contigs_metrics,
+                "flye_assembly_info": flye_denovo.flye_assembly_info,
+                "medaka_model": flye_denovo.medaka_model_used,
+                "medaka_version": flye_denovo.medaka_version,
+                "polypolish_version": flye_denovo.polypolish_version,
+                "porechop_version": flye_denovo.porechop_version,
+                "racon_version": flye_denovo.racon_version
+                              }
               
           }
         }
