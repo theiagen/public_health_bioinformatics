@@ -21,9 +21,7 @@ task porechop {
       --input ~{read1} \
       --output ~{samplename}.trimmed.fastq \
       --threads ~{cpu} \
-      ~{trimopts} || {
-        echo "Porechop failed."; exit 1;
-      }
+      ~{trimopts}
 
     echo "Compressing trimmed reads..."
     gzip -f ~{samplename}.trimmed.fastq

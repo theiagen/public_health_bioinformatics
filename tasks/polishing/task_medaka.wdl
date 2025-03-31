@@ -20,21 +20,21 @@ task medaka {
 
     # Attempt automatic model resolution if enabled
     if [[ "~{auto_model}" == "true" ]]; then
-      echo "Attempting automatic model selection..."
-      medaka tools resolve_model --auto_model consensus ~{read1} > auto_model.txt || true
-      resolved_model=$(cat auto_model.txt || echo "")
-      medaka_model="${resolved_model:-~{medaka_model}}"
+      resolved_model=$(medaka tools resolve_model --auto_model consensus ~{read1} 2>/dev/null || echo "~{medaka_model}")
+      echo "Using model: $resolved_model"
+    else
+      resolved_model="~{medaka_model}"
+      echo "Using specified model: $resolved_model"
     fi
 
-    echo "Using Medaka model for polishing: $medaka_model"
-    echo "$medaka_model" > MEDAKA_MODEL
+    echo "$resolved_model" > MEDAKA_MODEL
 
     # Perform Medaka polishing
     medaka_consensus \
       -i "~{read1}" \
       -d "~{unpolished_fasta}" \
       -o . \
-      -m "$medaka_model" \
+      -m "$resolved_model" \
       -t "~{cpu}"
 
     mv consensus.fasta ~{samplename}.polished.fasta
