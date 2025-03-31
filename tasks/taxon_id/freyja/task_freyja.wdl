@@ -160,14 +160,6 @@ task freyja_one_sample {
   
   CODE
   >>>
-  runtime {
-    memory: "~{memory} GB"
-    cpu: cpu
-    docker: "~{docker}"
-    disks:  "local-disk " + disk_size + " SSD"
-    disk: disk_size + " GB" # TES
-    maxRetries: 3
-  }
   output {
     File freyja_variants = "~{samplename}_freyja_variants.tsv"
     File freyja_depths = "~{samplename}_freyja_depths.tsv"
@@ -189,5 +181,13 @@ task freyja_one_sample {
     String freyja_summarized = read_string("SUMMARIZED")
     String freyja_lineages = read_string("LINEAGES")
     String freyja_abundances = read_string("ABUNDANCES")
+  }
+  runtime {
+    memory: "~{memory} GB"
+    cpu: cpu
+    docker: "~{docker}"
+    disks:  "local-disk " + disk_size + " SSD"
+    disk: disk_size + " GB" # TES
+    maxRetries: 3
   }
 }
