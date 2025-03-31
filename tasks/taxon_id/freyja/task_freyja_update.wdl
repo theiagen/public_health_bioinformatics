@@ -4,7 +4,7 @@ task freyja_update_refs {
   input {
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/freyja:1.5.3"
     Int disk_size = 25
-    Int memory = 4
+    Int memory = 2
     Int cpu = 1
     String? freyja_pathogen
   }

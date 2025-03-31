@@ -15,8 +15,8 @@ task freyja_dashboard_task {
     File? dashboard_intro_text
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/freyja:1.5.3"
     Int disk_size = 100
-    Int memory = 4
-    Int cpu = 2
+    Int memory = 2
+    Int cpu = 1
   }
   command <<<
   # capture version

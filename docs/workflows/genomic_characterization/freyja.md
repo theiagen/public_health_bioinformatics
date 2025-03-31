@@ -75,14 +75,14 @@ We recommend running this workflow with **"Run inputs defined by file paths"** s
 | **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
 |---|---|---|---|---|---|
 | freyja_update | **gcp_uri** | String | The path where you want the Freyja reference files to be stored. Include gs:// at the beginning of the string. Full example with a Terra workspace bucket: "gs://fc-87ddd67a-c674-45a8-9651-f91e3d2f6bb7" | | Required |
-| freyja_update_refs | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional |
-| freyja_update_refs | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
-| freyja_update_refs | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/staphb/freyja:1.5.2-11_30_2024-02-00-2024-12-02" | Optional |
-| freyja_update_refs | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 16 | Optional |
-| transfer_files | **cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional |
-| transfer_files | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
+| freyja_update_refs | **cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional |
+| freyja_update_refs | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 25 | Optional |
+| freyja_update_refs | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/staphb/freyja:1.5.3" | Optional |
+| freyja_update_refs | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 2 | Optional |
+| transfer_files | **cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional |
+| transfer_files | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 25 | Optional |
 | transfer_files | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1" | Optional |
-| transfer_files | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 4 | Optional |
+| transfer_files | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 2 | Optional |
 
 </div>
 
@@ -125,7 +125,7 @@ This workflow runs on the sample level.
 | freyja | **confirmed_only** | Boolean | Include only confirmed SARS-CoV-2 lineages | false | Optional |
 | freyja | **cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional |
 | freyja | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
-| freyja | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/staphb/freyja:1.5.2-11_30_2024-02-00-2024-12-02" | Optional |
+| freyja | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/staphb/freyja:1.5.3" | Optional |
 | freyja | **eps** | Float | The minimum lineage abundance cut-off value | 0.001 | Optional |
 | freyja | **freyja_barcodes** | String | Custom barcode file. Does not need to be provided if update_db is true if the freyja_pathogen is provided. |  | Optional |
 | freyja | **freyja_lineage_metadata** | File | File containing the lineage metadata; the "curated_lineages.json" file found <https://github.com/andersen-lab/Freyja/tree/main/freyja/data> can be used for this variable. Does not need to be provided if update_db is true or if the freyja_pathogen is provided. |  | Optional, Required |
@@ -450,10 +450,10 @@ This workflow runs on the set level.
 | freyja_plot | **freyja_plot_name** | String | The name of the plot to be produced. Example: "my-freyja-plot" |  | Required |
 | freyja_plot | **samplename** | Array[String] | An array containing the names of the samples |  | Required |
 | freyja_plot | **collection_date** | Array[String] | An array containing the collection dates for the sample (YYYY-MM-DD format) |  | Optional |
-| freyja_plot_task | **cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional |
+| freyja_plot_task | **cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional |
 | freyja_plot_task | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
-| freyja_plot_task | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/freyja:1.5.2-11_30_2024-02-00-2024-12-02 | Optional |
-| freyja_plot_task | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 4 | Optional |
+| freyja_plot_task | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/freyja:1.5.3 | Optional |
+| freyja_plot_task | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 2 | Optional |
 | freyja_plot_task | **mincov** | Int | The minimum genome coverage used as a cut-off of data to include in the plot | 60 | Optional |
 | freyja_plot_task | **plot_day_window** | Int | The width of the rolling average window; only used if plot_time_interval is "D" | 14 | Optional |
 | freyja_plot_task | **plot_lineages** | Boolean | If true, will plot a lineage-specific breakdown | false | Optional |
@@ -514,10 +514,11 @@ This workflow runs on the set level.
 | freyja_dashboard | **viral_load** | Array[String] | An array containing the number of viral copies per liter |  | Required |
 | freyja_dashboard | **dashboard_intro_text** | File | A file containing the text to be contained at the top of the dashboard. | SARS-CoV-2 lineage de-convolution performed by the Freyja workflow (<https://github.com/andersen-lab/Freyja>). | Optional |
 | freyja_dashboard_task | **config** | File | (found in the optional section, but is required) A yaml file that applies various configurations to the dashboard, such as grouping lineages together, applying colorings, etc. See also <https://github.com/andersen-lab/Freyja/blob/main/freyja/data/plot_config.yml>. |  | Optional, Required |
-| freyja_dashboard_task | **cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional |
-| freyja_dashboard_task | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/freyja:1.5.2-11_30_2024-02-00-2024-12-02 | Optional |
+| freyja_dashboard_task | **cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional |
+| freyja_dashboard_task | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
+| freyja_dashboard_task | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/freyja:1.5.3 | Optional |
 | freyja_dashboard_task | **headerColor** | String | A hex color code to change the color of the header |  | Optional |
-| freyja_dashboard_task | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 4 | Optional |
+| freyja_dashboard_task | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 2 | Optional |
 | freyja_dashboard_task | **mincov** | Float | The minimum genome coverage used as a cut-off of data to include in the dashboard. Default is set to 60 by the freyja command-line tool (not a WDL task default, per se) | | Optional |
 | freyja_dashboard_task | **scale_by_viral_load** | Boolean | If set to true, averages samples taken the same day while taking viral load into account | false | Optional |
 | freyja_dashboard_task | **thresh** | Float | The minimum lineage abundance cut-off value | | Optional |
