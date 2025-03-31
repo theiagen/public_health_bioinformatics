@@ -52,7 +52,7 @@ workflow organism_parameters {
     String sc2_org_name = "sars-cov-2"
     String sc2_reference_genome = "gs://theiagen-public-files-rp/terra/augur-sars-cov-2-references/MN908947.fasta"
     String sc2_gene_locations_bed = "gs://theiagen-public-files-rp/terra/sars-cov-2-files/sc2_gene_locations.bed"
-    String sc2_nextclade_ds_tag = "2025-03-04--17-31-25Z"
+    String sc2_nextclade_ds_tag = "2025-03-26--11-47-13Z"
     String sc2_nextclade_ds_name = "nextstrain/sars-cov-2/wuhan-hu-1/orfs"
     String sc2_kraken_target_organism = "Severe acute respiratory syndrome coronavirus 2"
     String sc2_pangolin_docker = "us-docker.pkg.dev/general-theiagen/staphb/pangolin:4.3.1-pdata-1.32"
@@ -168,7 +168,7 @@ workflow organism_parameters {
       if (flu_subtype == "H1N1") {
         String h1n1_na_reference = "gs://theiagen-public-files-rp/terra/flu-references/reference_h1n1pdm_na.fasta"
         String h1n1_na_reference_gbk = "gs://theiagen-public-files-rp/terra/flu-references/reference_h1n1pdm_na.gb"
-        String h1n1_na_nextclade_ds_tag = "2025-01-22--09-54-14Z"
+        String h1n1_na_nextclade_ds_tag = "2025-03-26--11-47-13Z"
         String h1n1_na_nextclade_ds_name = "nextstrain/flu/h1n1pdm/na/MW626056"
         String h1n1_na_auspice_config = "gs://theiagen-public-files-rp/terra/flu-references/auspice_config_h1n1pdm.json"
       }
@@ -182,7 +182,7 @@ workflow organism_parameters {
       if (flu_subtype == "Victoria") {
         String vic_na_reference = "gs://theiagen-public-files-rp/terra/flu-references/reference_vic_na.fasta"
         String vic_na_reference_gbk = "gs://theiagen-public-files-rp/terra/flu-references/reference_yam_na.gb"
-        String vic_na_nextclade_ds_tag = "2025-01-22--09-54-14Z"
+        String vic_na_nextclade_ds_tag = "2025-03-26--11-47-13Z"
         String vic_na_nextclade_ds_name = "nextstrain/flu/vic/na/CY073894"
         String vic_na_auspice_config = "gs://theiagen-public-files-rp/terra/flu-references/auspice_config_vic.json"
       }

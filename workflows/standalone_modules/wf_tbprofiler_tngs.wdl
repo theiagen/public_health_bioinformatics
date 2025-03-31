@@ -13,7 +13,7 @@ workflow tbprofiler_tngs {
     File read1
     File read2
     String samplename
-    Int bases_to_crop = 30
+    Int bases_to_crop = 0
   }
   call versioning.version_capture {
     input:

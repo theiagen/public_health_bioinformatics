@@ -26,7 +26,7 @@ Additionally, the **TheiaCoV_FASTA_Batch** workflow is available to process seve
 
     [**Reference Materials for Mpox**](https://www.notion.so/Workspace-Reference-Materials-for-MPXV-Genomic-Characterization-a34f355c68c54c0a82e926d4de607bca?pvs=21)
 
-    [**Reference Materials for non-default viruses**](https://www.notion.so/theiagen/Guide-to-Running-Custom-Organisms-on-TheiaCoV-18ccb013bc9380bcad47dbeb3cca0a53)
+    [**Reference Materials for non-default viruses**](../../guides/custom_organisms.md)
 
     ??? toggle "HIV Input JSONs"
         - [TheiaCoV_Illumina_PE_HIV_v1_2024-04-19.json](../../assets/files/input_jsons/TheiaCoV_Illumina_PE_HIV_v1_2024-04-19.json)
@@ -170,15 +170,19 @@ All TheiaCoV Workflows (not TheiaCoV_FASTA_Batch)
 | flu_track | **flu_pb2_ref** | File | Internal component, do not modify | | Do not modify, Optional | ONT, PE | flu |
 | flu_track | **flu_subtype** | String | The influenza subtype being analyzed. Used for picking nextclade datasets. Options: "Yamagata", "Victoria", "H1N1", "H3N2", "H5N1". Only use to override the subtype call from IRMA and ABRicate. | | Optional | CL, ONT, PE, SE | flu |
 | flu_track | **genoflu_cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional | FASTA, ONT, PE | flu |
-| flu_track | **genoflu_cross_reference** | File | An Excel file to cross-reference BLAST findings; probably useful if novel genotypes are not in the default file used by genoflu.py | | Optional | FASTA, ONT, PE | |
-| flu_track | **genoflu_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 25 | Optional | FASTA, ONT, PE | |
-| flu_track | **genoflu_docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/genoflu:1.05 | Optional | FASTA, ONT, PE | |
-| flu_track | **genoflu_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 2 | Optional | FASTA, ONT, PE | |
+| flu_track | **genoflu_cross_reference** | File | An Excel file to cross-reference BLAST findings; probably useful if novel genotypes are not in the default file used by genoflu.py | | Optional | FASTA, ONT, PE | flu |
+| flu_track | **genoflu_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 25 | Optional | FASTA, ONT, PE | flu |
+| flu_track | **genoflu_docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/genoflu:1.06 | Optional | FASTA, ONT, PE | flu |
+| flu_track | **genoflu_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 2 | Optional | FASTA, ONT, PE | flu |
+| flu_track | **genoflu_min_percent_identity** | Float | Percent identity threshold used for calling matches for each genome segment that make up the final GenoFlu genotype | 98.0 | Optional | FASTA, ONT, PE | flu |
 | flu_track | **irma_cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional | ONT, PE | flu |
 | flu_track | **irma_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | ONT, PE | flu |
-| flu_track | **irma_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/cdcgov/irma:v1.1.5 | Optional | ONT, PE | flu |
-| flu_track | **irma_keep_ref_deletions** | Boolean | True/False variable that determines if sites missed during read gathering should be deleted by ambiguation. | TRUE | Optional | ONT, PE | flu |
+| flu_track | **irma_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/irma:1.2.0 | Optional | ONT, PE | flu |
+| flu_track | **irma_keep_ref_deletions** | Boolean | True/False variable that determines if sites missed (i.e. 0 reads for a site in the reference genome) during read gathering should be deleted by ambiguation by inserting `N`'s or deleting the sequence entirely. False sets this IRMA paramater to `"DEL"` and true sets it to `"NNN"` | True | Optional | ONT, PE | flu |
 | flu_track | **irma_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 16 | Optional | ONT, PE | flu |
+| flu_track | **irma_min_ambiguous_threshold** | Float | Minimum called Single Nucleotide Variant (SNV) frequency for mixed based calls in the output consensus assembly (AKA amended consensus).  | 0.20 | Optional | ONT, PE | flu |
+| flu_track | **irma_min_avg_consensus_allele_quality** | Int | Minimum allele coverage depth to call plurality consensus, otherwise calls "N". Setting this value too high can negatively impact final amended consensus. | 10 | Optional | ONT, PE | flu |
+| flu_track | **irma_min_read_length** | Int | Minimum read length to include reads in read gathering step in IRMA. This value should not be greater than the typical read length. | 75 | Optional | ONT, PE | flu |
 | flu_track | **nextclade_cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional | ONT, PE | flu |
 | flu_track | **nextclade_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 50 | Optional | ONT, PE | flu |
 | flu_track | **nextclade_docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/nextstrain/nextclade:3.10.2 | Optional | ONT, PE | flu |
@@ -896,7 +900,13 @@ All input reads are processed through "core tasks" in the TheiaCoV Illumina, ONT
 
 ??? toggle "`irma`: Assembly and Characterization ==_for flu in TheiaCoV_Illumina_PE & TheiaCoV_ONT_=="
 
-    Cleaned reads are assembled using `irma` which does not use a reference due to the rapid evolution and high variability of influenza. Assemblies produced by `irma` will be orderd from largest to smallest assembled flu segment. `irma` also performs typing and subtyping as part of the assembly process.
+    Cleaned reads are assembled using `irma` which stands for Iterative Refinement Meta-Assembler. IRMA first sorts reads to Flu genome segments using LABEL, then iteratively maps read to collection of reference sequences (in this case for Influenza virus) and iteratively edits the references to account for high population diversity and mutational rates that are characteristic of Influenza genomes. Assemblies produced by `irma` will be ordered from largest to smallest assembled flu segment. `irma` also performs typing and subtyping as part of the assembly process. Note: IRMA does not differentiate between Flu B Victoria and Yamagata lineages. For determining this information, please review the `abricate` task outputs which will provide this information.
+
+    Due to the segmented nature of the Influenza genome and the various downstream bioinformatics tools that require the genome assembly, the IRMA task & TheiaCoV workflows output various genome assembly files. Briefly they are:
+
+    - `assembly_fasta` - The full genome assembly in FASTA format, with 1 FASTA entry per genome segment. There should be 8 segments in total, but depending on the quality and depth of sequence data, some segments may not be assembled and nor present in this output file.
+    - `irma_assembly_fasta_concatenated` - The full genome assembly in FASTA format, but with all segments concatenated into a single FASTA entry. This is not your typical FASTA file and is purposely created to be used with a custom Nextclade dataset for the H5N1 B3.13 genotype that is based on a concatenated reference genome.
+    - `irma_<segment-abbreviation>_segment_fasta` - Individual FASTA files that only contain the sequence for 1 segment, for example the HA segment. There are 8 of these in total.
 
     General statistics about the assembly are generated with the `consensus_qc` task ([task_assembly_metrics.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_assembly_metrics.wdl)).
 
@@ -1056,10 +1066,11 @@ All TheiaCoV Workflows (not TheiaCoV_FASTA_Batch)
 | auspice_json | File | Auspice-compatable JSON output generated from Nextclade analysis that includes the Nextclade default samples for clade-typing and the single sample placed on this tree | CL, FASTA, ONT, PE, SE |
 | auspice_json_flu_ha | File | Auspice-compatable JSON output generated from Nextclade analysis on Influenza HA segment that includes the Nextclade default samples for clade-typing and the single sample placed on this tree | ONT, PE |
 | auspice_json_flu_na | File | Auspice-compatable JSON output generated from Nextclade analysis on Influenza NA segment that includes the Nextclade default samples for clade-typing and the single sample placed on this tree | ONT, PE |
+| auspice_json_flu_h5n1 | File | Auspice-compatable JSON output generated from Nextclade analysis on Influenza H5N1 whole genome that includes the samples included in the "avian-flu/h5n1-cattle-outbreak" nextstrain build that is focused on B3.13 genotype and the single sample placed on this tree | ONT, PE |
 | bbduk_docker | String | Docker image used to run BBDuk | PE, SE |
 | bwa_version | String | Version of BWA used to map read data to the reference genome | PE, SE |
 | consensus_flagstat | File | Output from the SAMtools flagstat command to assess quality of the alignment file (BAM) | CL, ONT, PE, SE |
-| consensus_n_variant_min_depth | Int | Minimum read depth to call variants for iVar consensus and iVar variants | PE, SE |
+| consensus_n_variant_min_depth | Int | Minimum read depth to call variants for iVar consensus and iVar variants. Also represents the minimum consensus support threshold used by IRMA with Illumina Influenza data. | PE, SE |
 | consensus_stats | File | Output from the SAMtools stats command to assess quality of the alignment file (BAM) | CL, ONT, PE, SE |
 | est_coverage_clean | Float | Estimated coverage of the clean reads | ONT |
 | est_coverage_raw | Float | Estimated coverage of the raw reads | ONT |
@@ -1110,8 +1121,10 @@ All TheiaCoV Workflows (not TheiaCoV_FASTA_Batch)
 | genoflu_genotype | String | The genotype of the whole genome, based off of the individual segments types | FASTA, ONT, PE |
 | genoflu_output_tsv | File | The output file from GenoFLU | FASTA, ONT, PE |
 | genoflu_version | String | The version of GenoFLU used | FASTA, ONT, PE |
+| irma_assembly_fasta_concatenated | File | Assembly FASTA file of all Influenza genome segments concatenated into one sequence/FASTA entry | ONT, PE |
 | irma_docker | String | Docker image used to run IRMA | ONT, PE |
 | irma_ha_segment_fasta | File | HA (Haemagglutinin) assembly fasta file | ONT, PE |
+| irma_min_consensus_support_threshold | Int | Minimum consensus support threshold used by IRMA with ONT data. For illumina data, see output called `consensus_n_variant_min_depth` for this value | ONT |
 | irma_mp_segment_fasta | File | MP (Matrix Protein) assembly fasta file | ONT, PE |
 | irma_na_segment_fasta | File | NA (Neuraminidase) assembly fasta file | ONT, PE |
 | irma_np_segment_fasta | File | NP (Nucleoprotein) assembly fasta file | ONT, PE |
@@ -1166,12 +1179,15 @@ All TheiaCoV Workflows (not TheiaCoV_FASTA_Batch)
 | nanoplot_tsv_raw | File | A TSV report describing the raw reads | ONT |
 | nanoplot_version | String | Version of nanoplot tool used | ONT |
 | nextclade_aa_dels | String | Amino-acid deletions as detected by NextClade. Will be blank for Flu | CL, FASTA, ONT, PE, SE |
+| nextclade_aa_dels_flu_h5n1 | String | Amino-acid deletions as detected by NextClade. Specific to flu; it includes deletions for H5N1 whole genome | ONT, PE |
 | nextclade_aa_dels_flu_ha | String | Amino-acid deletions as detected by NextClade. Specific to flu; it includes deletions for HA segment | ONT, PE |
 | nextclade_aa_dels_flu_na | String | Amino-acid deletions as detected by NextClade. Specific to Flu; it includes deletions for NA segment | ONT, PE |
 | nextclade_aa_subs | String | Amino-acid substitutions as detected by Nextclade. Will be blank for Flu | CL, FASTA, ONT, PE, SE |
-| nextclade_aa_subs_flu_ha | String | Amino-acid substitutions as detected by Nextclade. Specific to Flu; it includes substitutions for NA segment | ONT, PE |
+| nextclade_aa_subs_flu_h5n1 | String | Amino-acid substitutions as detected by Nextclade. Specific to Flu; it includes substitutions for H5N1 whole genome | ONT, PE |
+| nextclade_aa_subs_flu_ha | String | Amino-acid substitutions as detected by Nextclade. Specific to Flu; it includes substitutions for HA segment | ONT, PE |
 | nextclade_aa_subs_flu_na | String | Amino-acid substitutions as detected by Nextclade. Specific to Flu; it includes substitutions for NA segment | ONT, PE |
 | nextclade_clade | String | Nextclade clade designation, will be blank for Flu. | CL, FASTA, ONT, PE, SE |
+| nextclade_clade_flu_h5n1 | String | Nextclade clade designation, specific to Flu 5N1 whole genome. NOTE: Output will be blank or `NA` since this nextclade dataset does assign clades | ONT, PE |
 | nextclade_clade_flu_ha | String | Nextclade clade designation, specific to Flu NA segment | ONT, PE |
 | nextclade_clade_flu_na | String | Nextclade clade designation, specific to Flu HA segment | ONT, PE |
 | nextclade_docker | String | Docker image used to run Nextclade | CL, FASTA, ONT, PE, SE |
@@ -1179,13 +1195,16 @@ All TheiaCoV Workflows (not TheiaCoV_FASTA_Batch)
 | nextclade_ds_tag_flu_ha | String | Dataset tag used to run Nextclade, specific to Flu HA segment | ONT, PE |
 | nextclade_ds_tag_flu_na | String | Dataset tag used to run Nextclade, specific to Flu NA segment | ONT, PE |
 | nextclade_json | File | Nextclade output in JSON file format. Will be blank for Flu | CL, FASTA, ONT, PE, SE |
+| nextclade_json_flu_h5n1 | File | Nextclade output in JSON file format, specific to Flu H5N1 whole genome | ONT, PE |
 | nextclade_json_flu_ha | File | Nextclade output in JSON file format, specific to Flu HA segment | ONT, PE |
 | nextclade_json_flu_na | File | Nextclade output in JSON file format, specific to Flu NA segment | ONT, PE |
 | nextclade_lineage | String | Nextclade lineage designation | CL, FASTA, ONT, PE, SE |
 | nextclade_qc | String | QC metric as determined by Nextclade. Will be blank for Flu | CL, FASTA, ONT, PE, SE |
+| nextclade_qc_flu_h5n1 | String | QC metric as determined by Nextclade, specific to Flu H5N1 whole genome | ONT, PE |
 | nextclade_qc_flu_ha | String | QC metric as determined by Nextclade, specific to Flu HA segment | ONT, PE |
 | nextclade_qc_flu_na | String | QC metric as determined by Nextclade, specific to Flu NA segment | ONT, PE |
 | nextclade_tsv | File | Nextclade output in TSV file format. Will be blank for Flu | CL, FASTA, ONT, PE, SE |
+| nextclade_tsv_flu_h5n1 | File | Nextclade output in TSV file format, specific to Flu H5N1 whole genome | ONT, PE |
 | nextclade_tsv_flu_ha | File | Nextclade output in TSV file format, specific to Flu HA segment | ONT, PE |
 | nextclade_tsv_flu_na | File | Nextclade output in TSV file format, specific to Flu NA segment | ONT, PE |
 | nextclade_version | String | The version of Nextclade software used | CL, FASTA, ONT, PE, SE |
