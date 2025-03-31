@@ -206,7 +206,7 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 | flye_denovo | **racon_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 16 | Optional | ONT |
 | flye_denovo | **racon_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | ONT |
 | flye_denovo | **read1** | File | ONT read file in FASTQ file format (compression optional) |  | Optional | ONT |
-| flye_denovo | **skip_trim_reads** | Boolean | If true, trims reads before assembly | FALSE | Optional | ONT |
+| flye_denovo | **run_porechop** | Boolean | If true, trims reads before assembly using Porechop | TRUE | Optional | ONT |
 | flye_denovo | **skip_polishing** | Boolean | If true, skips polishing | FALSE | Optional | ONT |
 | export_taxon_tables | **cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional | FASTA, ONT, PE, SE |
 | export_taxon_tables | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 25 | Optional | FASTA, ONT, PE, SE |
@@ -783,8 +783,8 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 
     The detailed steps and tasks are as follows:
 
-    ??? toggle "`Porechop`: Read Trimming (optional; off by default)"
-        Read trimming is optional and can be enabled by setting the `skip_trim_reads` input variable to false.
+    ??? toggle "`Porechop`: Read Trimming (optional; on by default)"
+        Read trimming is optional and can be enabled by setting the `run_porchop` input variable to true.
 
         Porechop is a tool for finding and removing adapters from ONT data. Adapters on the ends of reads are trimmed, and when a read has an adapter in the middle, the read is split into two.
 

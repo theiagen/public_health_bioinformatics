@@ -21,7 +21,7 @@ workflow flye_denovo {
     String samplename
     String polisher = "medaka"
     Int polish_rounds = 1                   
-    Boolean skip_trim_reads = true # Default: No trimming
+    Boolean run_porechop = true # Default: Run Porechop
     Boolean skip_polishing = false # Default: Polishing enabled
     
     # Porechop inputs
@@ -89,7 +89,7 @@ workflow flye_denovo {
     Int? dnaapler_disk_size
   }
   # Optional Porechop trimming before Flye
-  if (!skip_trim_reads) {
+  if (run_porechop) {
     call task_porechop.porechop {
       input:
         read1 = read1,
