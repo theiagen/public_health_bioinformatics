@@ -27,7 +27,7 @@ task freyja_one_sample {
   
   # update freyja reference files if specified
   if ~{update_db}; then 
-      freyja update 2>&1 | tee freyja_update.log
+      freyja update ~{"--pathogen " + freyja_pathogen} 2>&1 | tee freyja_update.log
       # check log files to ensure update did not fail
       if grep "FileNotFoundError.*lineagePaths.*" freyja_update.log
       then 
