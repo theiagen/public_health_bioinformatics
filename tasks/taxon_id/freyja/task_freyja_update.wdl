@@ -2,7 +2,7 @@ version 1.0
 
 task freyja_update_refs {
   input {
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/freyja:1.5.2-11_30_2024-02-00-2024-12-02"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/freyja:1.5.3"
     Int disk_size = 25
     Int memory = 4
     Int cpu = 1
