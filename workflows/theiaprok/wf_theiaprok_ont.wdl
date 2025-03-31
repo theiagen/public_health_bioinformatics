@@ -600,8 +600,7 @@ workflow theiaprok_ont {
                 "polypolish_version": flye_denovo.polypolish_version,
                 "porechop_version": flye_denovo.porechop_version,
                 "racon_version": flye_denovo.racon_version
-                              }
-              
+              }
           }
         }
       }
