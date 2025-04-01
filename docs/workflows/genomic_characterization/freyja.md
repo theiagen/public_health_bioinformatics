@@ -369,7 +369,7 @@ The main output file used in subsequent Freyja workflows is found under the `fre
 | fastqc_raw2_html | File | Graphical visualization of raw reverse read qualityfrom fastqc to open in an internet browser | PE |
 | fastqc_version | String | Version of fastqc software used | PE, SE |
 | freyja_abundances | String | Abundances estimates identified by Freyja and parsed from freyja_demixed file | ONT, PE, SE |
-| freyja_barcode_file | File | Barcode feather file used. Can be the one provided as input or downloaded by Freyja if update_db is true | ONT, PE, SE |
+| freyja_sc2_barcode_file | File | Barcode feather file used for SARS-CoV-2. Can be the one provided as input or downloaded by Freyja if update_db is true | ONT, PE, SE |
 | freyja_barcode_version | String | Name of barcode file used, or the date if update_db is true | ONT, PE, SE |
 | freyja_bootstrap_lineages | File | A CSV that contains the 0.025, 0.05, 0.25, 0.5 (median), 0.75, 0.95, and 0.975 percentiles for each lineage | ONT, PE, SE |
 | freyja_bootstrap_lineages_pdf | File | A boxplot of the bootstrap lineages CSV file | ONT, PE, SE |
@@ -381,7 +381,7 @@ The main output file used in subsequent Freyja workflows is found under the `fre
 | freyja_depths | File | A TSV listing the depth of every position | ONT, PE, SE |
 | freyja_fastq_wf_analysis_date | String | Date of analysis | ONT, PE, SE |
 | freyja_fastq_wf_version | String | The version of the Public Health Bioinformatics (PHB) repository used | ONT, PE, SE |
-| freyja_lineage_metadata_file | File | Lineage metadata JSON file used. Can be the one provided as input or downloaded by Freyja if update_db is true | ONT, PE, SE |
+| freyja_sc2_lineage_metadata_file | File | Lineage metadata JSON file used for SARS-CoV-2. Can be the one provided as input or downloaded by Freyja if update_db is true | ONT, PE, SE |
 | freyja_lineages | String |  Lineages in descending order identified by Freyja and parsed from freyja_demixed file | ONT, PE, SE |
 | freyja_metadata_version | String | Name of lineage metadata file used, or the date if update_db is true | ONT, PE, SE |
 | freyja_resid | String | Residual of the weighted least absolute deviation problem used to estimate lineage abundances identified by Freyja and parsed from freyja_demixed file | ONT, PE, SE |

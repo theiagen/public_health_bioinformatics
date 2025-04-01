@@ -219,7 +219,7 @@ workflow freyja_fastq {
     File freyja_demixed = freyja.freyja_demixed 
     Float freyja_coverage = freyja.freyja_coverage
     String freyja_barcode_file = ([freyja_barcodes, freyja.freyja_sc2_barcode_file, ""])
-    String freyja_lineage_metadata_file = select_first([freyja_lineage_metadata, freyja.freyja_sc_lineage_metadata_file, ""]) 
+    String freyja_lineage_metadata_file = select_first([freyja_lineage_metadata, freyja.freyja_sc2_lineage_metadata_file, ""]) 
     String freyja_barcode_version = freyja.freyja_barcode_version
     String freyja_metadata_version = freyja.freyja_metadata_version
     String? freyja_bootstrap_lineages = freyja.freyja_bootstrap_lineages
