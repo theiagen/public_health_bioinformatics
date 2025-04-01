@@ -13,10 +13,10 @@ task freyja_dashboard_task {
     Boolean scale_by_viral_load = false
     String freyja_dashboard_title
     File? dashboard_intro_text
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/freyja:1.5.2-11_30_2024-02-00-2024-12-02"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/freyja:1.5.3"
     Int disk_size = 100
-    Int memory = 4
-    Int cpu = 2
+    Int memory = 2
+    Int cpu = 1
   }
   command <<<
   # capture version
