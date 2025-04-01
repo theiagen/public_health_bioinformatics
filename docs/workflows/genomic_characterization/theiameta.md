@@ -4,7 +4,7 @@
 
 | **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
 |---|---|---|---|---|
-| [Genomic Characterization](../../workflows_overview/workflows_type.md/#genomic-characterization) | [Any Taxa](../../workflows_overview/workflows_kingdom.md/#any-taxa) | PHB vX.X.X | Yes | Sample-level |
+| [Genomic Characterization](../../workflows_overview/workflows_type.md/#genomic-characterization) | [Any Taxa](../../workflows_overview/workflows_kingdom.md/#any-taxa) | PHB v3.0.0 | Yes | Sample-level |
 
 ## TheiaMeta Workflows
 
