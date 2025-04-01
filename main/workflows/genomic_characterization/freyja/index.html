@@ -6300,7 +6300,7 @@
 <p>The typical use case of Freyja is to <strong>analyze mixed SARS-CoV-2 samples</strong> from a sequencing dataset, most often <strong>wastewater</strong>, but the tool is not limited to this context. With the appropriate reference genomes and barcode files, Freyja can be adapted for other pathogens, including MPXV, Influenza, RSV, and Measles.</p>
 <div class="admonition warning">
 <p class="admonition-title">Default Values</p>
-<p>The defaults included in the Freyja workflows reflect this use case but <strong>can be adjusted for other pathogens</strong>. See the <a href="./#running-freyja-on-other-pathogens"><strong>Running Freyja on other pathogens</strong></a> section for more information.</p>
+<p>The defaults included in the Freyja workflows reflect this use case but <strong>can be adjusted for other pathogens</strong>. See the <a href="./#running-freyja-on-other-pathogens"><strong>Running Freyja on other pathogens</strong></a> section for more information. Please be aware this is an <mark><em>experimental feature</em></mark> and we cannot guarantee complete functionality at this time.</p>
 </div>
 </div>
 <div class="admonition caption">
@@ -6366,7 +6366,7 @@
 <td><strong>cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
-<td>4</td>
+<td>1</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6374,7 +6374,7 @@
 <td><strong>disk_size</strong></td>
 <td>Int</td>
 <td>Amount of storage (in GB) to allocate to the task</td>
-<td>100</td>
+<td>25</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6382,7 +6382,7 @@
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>"us-docker.pkg.dev/general-theiagen/staphb/freyja:1.5.2-11_30_2024-02-00-2024-12-02"</td>
+<td>"us-docker.pkg.dev/general-theiagen/staphb/freyja:1.5.3"</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6390,7 +6390,7 @@
 <td><strong>memory</strong></td>
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>16</td>
+<td>10</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6398,7 +6398,7 @@
 <td><strong>cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
-<td>2</td>
+<td>1</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6406,7 +6406,7 @@
 <td><strong>disk_size</strong></td>
 <td>Int</td>
 <td>Amount of storage (in GB) to allocate to the task</td>
-<td>100</td>
+<td>25</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6422,7 +6422,7 @@
 <td><strong>memory</strong></td>
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>4</td>
+<td>2</td>
 <td>Optional</td>
 </tr>
 </tbody>
@@ -6588,7 +6588,7 @@
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>"us-docker.pkg.dev/general-theiagen/staphb/freyja:1.5.2-11_30_2024-02-00-2024-12-02"</td>
+<td>"us-docker.pkg.dev/general-theiagen/staphb/freyja:1.5.3"</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6597,30 +6597,6 @@
 <td>Float</td>
 <td>The minimum lineage abundance cut-off value</td>
 <td>0.001</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>freyja</td>
-<td><strong>freyja_barcodes</strong></td>
-<td>String</td>
-<td>Custom barcode file. Does not need to be provided if update_db is true if the freyja_pathogen is provided.</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>freyja</td>
-<td><strong>freyja_lineage_metadata</strong></td>
-<td>File</td>
-<td>File containing the lineage metadata; the "curated_lineages.json" file found <a href="https://github.com/andersen-lab/Freyja/tree/main/freyja/data">https://github.com/andersen-lab/Freyja/tree/main/freyja/data</a> can be used for this variable. Does not need to be provided if update_db is true or if the freyja_pathogen is provided.</td>
-<td></td>
-<td>Optional, Required</td>
-</tr>
-<tr>
-<td>freyja</td>
-<td><strong>freyja_pathogen</strong></td>
-<td>String</td>
-<td>Pathogen of interest, used if not providing the barcodes and lineage metadata files. Options: SARS-CoV-2, MPXV, H5NX, H1N1pdm, FLU-B-VIC, MEASLESN450, MEASLES, RSVa, RSVb</td>
-<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6651,8 +6627,32 @@
 <td>freyja_fastq</td>
 <td><strong>depth_cutoff</strong></td>
 <td>Int</td>
-<td>The minimum coverage depth with which to exclude sites below this value and group identical barcodes</td>
+<td>The minimum coverage depth with which to exclude sites below this value and group identical barcodes -- THIS MAY NOT WORK FOR NON-SARS-COV-2 ORGANISMS!</td>
 <td>10</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>freyja_fastq</td>
+<td><strong>freyja_barcodes</strong></td>
+<td>String</td>
+<td>Custom barcode file. Does not need to be provided if update_db is true if the freyja_pathogen is provided.</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>freyja_fastq</td>
+<td><strong>freyja_lineage_metadata</strong></td>
+<td>File</td>
+<td>File containing the lineage metadata; the "curated_lineages.json" file found <a href="https://github.com/andersen-lab/Freyja/tree/main/freyja/data">https://github.com/andersen-lab/Freyja/tree/main/freyja/data</a> can be used for this variable. Does not need to be provided if update_db is true or if the freyja_pathogen is provided.</td>
+<td></td>
+<td>Optional, Required</td>
+</tr>
+<tr>
+<td>freyja_fastq</td>
+<td><strong>freyja_pathogen</strong></td>
+<td>String</td>
+<td>Pathogen of interest, used if not providing the barcodes and lineage metadata files. Options: SARS-CoV-2, MPXV, H5NX, H1N1pdm, FLU-B-VIC, MEASLESN450, MEASLES, RSVa, RSVb</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7730,9 +7730,9 @@
 <td>ONT, PE, SE</td>
 </tr>
 <tr>
-<td>freyja_barcode_file</td>
+<td>freyja_sc2_barcode_file</td>
 <td>File</td>
-<td>Barcode feather file used. Can be the one provided as input or downloaded by Freyja if update_db is true</td>
+<td>Barcode feather file used for SARS-CoV-2. Can be the one provided as input or downloaded by Freyja if update_db is true</td>
 <td>ONT, PE, SE</td>
 </tr>
 <tr>
@@ -7802,9 +7802,9 @@
 <td>ONT, PE, SE</td>
 </tr>
 <tr>
-<td>freyja_lineage_metadata_file</td>
+<td>freyja_sc2_lineage_metadata_file</td>
 <td>File</td>
-<td>Lineage metadata JSON file used. Can be the one provided as input or downloaded by Freyja if update_db is true</td>
+<td>Lineage metadata JSON file used for SARS-CoV-2. Can be the one provided as input or downloaded by Freyja if update_db is true</td>
 <td>ONT, PE, SE</td>
 </tr>
 <tr>
@@ -8147,7 +8147,7 @@
 <td><strong>cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
-<td>2</td>
+<td>1</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8163,7 +8163,7 @@
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/freyja:1.5.2-11_30_2024-02-00-2024-12-02</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/freyja:1.5.3</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8171,7 +8171,7 @@
 <td><strong>memory</strong></td>
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>4</td>
+<td>2</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8388,7 +8388,15 @@
 <td><strong>cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
-<td>2</td>
+<td>1</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>freyja_dashboard_task</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>100</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8396,7 +8404,7 @@
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/freyja:1.5.2-11_30_2024-02-00-2024-12-02</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/freyja:1.5.3</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8412,7 +8420,7 @@
 <td><strong>memory</strong></td>
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>4</td>
+<td>2</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8531,6 +8539,10 @@
 </tbody>
 </table>
 <h2 id="running-freyja-on-other-pathogens">Running Freyja on other pathogens<a class="headerlink" href="#running-freyja-on-other-pathogens" title="Permanent link">&para;</a></h2>
+<div class="admonition warning">
+<p class="admonition-title">Experimental Feature</p>
+<p>Please be aware this is an <em>experimental feature</em> and we cannot guarantee complete functionality at this time.</p>
+</div>
 <p>The main requirement to run Freyja on other pathogens is <strong>the existence of a barcode file for your pathogen of interest</strong>. Currently, barcodes exist for the following organisms:</p>
 <ul>
 <li>SARS-CoV-2 (default)</li>
@@ -8625,7 +8637,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="March 26, 2025 19:00:08">2025-03-26</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="April 1, 2025 15:26:51">2025-04-01</span>
   </span>
 
     
