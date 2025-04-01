@@ -634,14 +634,16 @@ workflow merlin_magic {
           gene_max_mismatch = srst2_gene_max_mismatch,
           docker = srst2_docker_image
       }
-      call vibecheck_vibrio_task.vibecheck_vibrio {
-        input:
-          read1 = select_first([read1]),
-          read2 = read2,
-          lineage_barcodes = vibecheck_lineage_barcodes,
-          subsampling_fraction = vibecheck_subsampling_fraction,
-          skip_subsampling = vibecheck_skip_subsampling,
-          docker = vibecheck_docker_image
+      if (paired_end) {
+        call vibecheck_vibrio_task.vibecheck_vibrio {
+          input:
+            read1 = select_first([read1]),
+            read2 = read2,
+            lineage_barcodes = vibecheck_lineage_barcodes,
+            subsampling_fraction = vibecheck_subsampling_fraction,
+            skip_subsampling = vibecheck_skip_subsampling,
+            docker = vibecheck_docker_image
+        }
       }
     }
     call abricate_vibrio_task.abricate_vibrio {
