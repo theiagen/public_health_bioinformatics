@@ -130,7 +130,7 @@ This workflow runs on the sample level.
 | freyja | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 4 | Optional |
 | freyja | **number_bootstraps** | Int | The number of bootstraps to perform (only used if bootstrap = true) | 100 | Optional |
 | freyja | **update_db** | Boolean | Updates the Freyja reference files (the usher barcodes and lineage metadata files) but will not save them as output (use Freyja_Update for that purpose). If set to true, the `freyja_lineage_metadata` and `freyja_barcodes` files are not required. | false | Optional |
-| freyja_fastq | **depth_cutoff** | Int | The minimum coverage depth with which to exclude sites below this value and group identical barcodes | 10 | Optional |
+| freyja_fastq | **depth_cutoff** | Int | The minimum coverage depth with which to exclude sites below this value and group identical barcodes -- THIS MAY NOT WORK FOR NON-SARS-COV-2 ORGANISMS! | 10 | Optional |
 | freyja_fastq | **freyja_barcodes** | String | Custom barcode file. Does not need to be provided if update_db is true if the freyja_pathogen is provided. |  | Optional |
 | freyja_fastq | **freyja_lineage_metadata** | File | File containing the lineage metadata; the "curated_lineages.json" file found <https://github.com/andersen-lab/Freyja/tree/main/freyja/data> can be used for this variable. Does not need to be provided if update_db is true or if the freyja_pathogen is provided. |  | Optional, Required |
 | freyja_fastq | **freyja_pathogen** | String | Pathogen of interest, used if not providing the barcodes and lineage metadata files. Options: SARS-CoV-2, MPXV, H5NX, H1N1pdm, FLU-B-VIC, MEASLESN450, MEASLES, RSVa, RSVb |  | Optional |
