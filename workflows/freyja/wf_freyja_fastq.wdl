@@ -21,6 +21,9 @@ workflow freyja_fastq {
     File? reference_gff
     Int trimmomatic_min_length = 25
     String samplename
+    String freyja_pathogen = "SARS-CoV-2"
+    File? freyja_barcodes
+    File? freyja_lineage_metadata
     Int? depth_cutoff
     Boolean ont = false
     String kraken2_target_organism = "Severe acute respiratory syndrome coronavirus 2"
@@ -94,7 +97,6 @@ workflow freyja_fastq {
         read2 = select_first([read_QC_trim_pe.read2_clean])
     }
   }
-
   # Called when the primer_bed file is present, primers are trimmed and trimmed bam is passed to freyja
   if (defined(primer_bed)){
     call trim_primers.primer_trim {
@@ -104,24 +106,22 @@ workflow freyja_fastq {
         bamfile = select_first([sam_to_sorted_bam.bam, bwa.sorted_bam])
     }
   }
-
   call freyja_task.freyja_one_sample as freyja {
     input:
       bamfile = select_first([primer_trim.trim_sorted_bam, sam_to_sorted_bam.bam, bwa.sorted_bam]),
+      freyja_pathogen = freyja_pathogen,
+      freyja_barcodes = freyja_barcodes,
+      freyja_lineage_metadata = freyja_lineage_metadata,
       samplename = samplename,
       reference_genome = reference_genome,
       reference_gff = reference_gff,
       depth_cutoff = depth_cutoff
   }
-
-
   call versioning.version_capture {
     input:
   }
-  
   # capture correct alignment method
   String alignment_method_technology = if ont then "minimap2 ~{minimap2.minimap2_version}; ~{primer_trim.ivar_version}" else "~{bwa.bwa_version}; ~{primer_trim.ivar_version}"
-
   output {
     # Version Capture
     String freyja_fastq_wf_version = version_capture.phb_version
@@ -218,8 +218,8 @@ workflow freyja_fastq {
     File freyja_depths = freyja.freyja_depths
     File freyja_demixed = freyja.freyja_demixed 
     Float freyja_coverage = freyja.freyja_coverage
-    File freyja_barcode_file = freyja.freyja_barcode_file  
-    File freyja_lineage_metadata_file = freyja.freyja_lineage_metadata_file 
+    String? freyja_barcode_file = ([freyja_barcodes, freyja.freyja_sc2_barcode_file, ""])
+    String? freyja_lineage_metadata_file = select_first([freyja_lineage_metadata, freyja.freyja_lineage_metadata_file, ""]) 
     String freyja_barcode_version = freyja.freyja_barcode_version
     String freyja_metadata_version = freyja.freyja_metadata_version
     String? freyja_bootstrap_lineages = freyja.freyja_bootstrap_lineages

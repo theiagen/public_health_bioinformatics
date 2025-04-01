@@ -4,9 +4,8 @@ task freyja_update_refs {
   input {
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/freyja:1.5.3"
     Int disk_size = 25
-    Int memory = 2
+    Int memory = 10
     Int cpu = 1
-    String? freyja_pathogen
   }
   meta {
     volatile: true
@@ -14,7 +13,7 @@ task freyja_update_refs {
   command <<<
   # Create updated reference files
   mkdir freyja_update_refs 
-  freyja update ~{"--pathogen " + freyja_pathogen} --outdir freyja_update_refs
+  freyja update --outdir freyja_update_refs
     
   echo "Freyja reference files created using the freyja update command; Freyja Docker Image utilized: ~{docker}. More information can be found at https://github.com/andersen-lab/Freyja" > freyja_update_refs/update_log.txt
 
