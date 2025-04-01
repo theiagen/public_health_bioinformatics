@@ -547,8 +547,10 @@ workflow theiaprok_ont {
                 "staphopiasccmec_types_and_mecA_presence": merlin_magic.staphopiasccmec_types_and_mecA_presence,
                 "staphopiasccmec_version": merlin_magic.staphopiasccmec_version,
                 "stxtyper_all_hits": merlin_magic.stxtyper_all_hits,
+                "stxtyper_ambiguous_hits": merlin_magic.stxtyper_ambiguous_hits,
                 "stxtyper_complete_operons": merlin_magic.stxtyper_complete_operon_hits,
                 "stxtyper_docker": merlin_magic.stxtyper_docker,
+                "stxtyper_extended_operons": merlin_magic.stxtyper_extended_operons,
                 "stxtyper_novel_hits": merlin_magic.stxtyper_novel_hits,
                 "stxtyper_num_hits": merlin_magic.stxtyper_num_hits,
                 "stxtyper_partial_hits": merlin_magic.stxtyper_partial_hits,
@@ -586,9 +588,19 @@ workflow theiaprok_ont {
                 "virulencefinder_docker": merlin_magic.virulencefinder_docker,
                 "virulencefinder_hits": merlin_magic.virulencefinder_hits,
                 "virulencefinder_report_tsv": merlin_magic.virulencefinder_report_tsv,
-                "zip": zip
+                "zip": zip,
+                "bandage_plot": flye_denovo.bandage_plot,
+                "bandage_version": flye_denovo.bandage_version,
+                "bwa_version": flye_denovo.bwa_version,
+                "dnaapler_version": flye_denovo.dnaapler_version,
+                "filtered_contigs_metrics": flye_denovo.filtered_contigs_metrics,
+                "flye_assembly_info": flye_denovo.flye_assembly_info,
+                "medaka_model": flye_denovo.medaka_model_used,
+                "medaka_version": flye_denovo.medaka_version,
+                "polypolish_version": flye_denovo.polypolish_version,
+                "porechop_version": flye_denovo.porechop_version,
+                "racon_version": flye_denovo.racon_version
               }
-              
           }
         }
       }
