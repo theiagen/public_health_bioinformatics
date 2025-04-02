@@ -63,7 +63,7 @@ Please note that all string inputs **must** be enclosed in quotation marks; for 
 | compare_two_tsvs | **cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional |
 | compare_two_tsvs | **debug_output** | Boolean | Set to true to enable more outputs; useful when debugging | FALSE | Optional |
 | compare_two_tsvs | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
-| compare_two_tsvs | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/theiagen/theiavalidate:1.0.1 | Optional |
+| compare_two_tsvs | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/theiagen/theiavalidate:1.1.1 | Optional |
 | compare_two_tsvs | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 4 | Optional |
 | compare_two_tsvs | **na_values** | String | If the user knows a particular value in either table that they would like to be considered N/A, they can indicate those values in a comma-separated list here. Any changes here will overwrite the default and not append to the default list. Do not include whitespace. | -1.#IND,1.#QNAN,1.#IND,-1.#QNAN,#N/A,N/A,n/a,,#NA,NULL,null,NaN,-NaN,nan,-nan,None | Optional |
 | export_two_tsvs | **cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional |
