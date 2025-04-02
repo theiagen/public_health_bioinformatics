@@ -791,8 +791,7 @@ workflow merlin_magic {
       "Typhi" : "90370",
       "Streptococcus pneumoniae" : "1313",
       "Klebsiella" : "570",
-      "Escherichia" : "561",
-      "Mycobacterium tuberculosis" : "1773",
+      "Klebsiella pneumoniae" : "573",
       "Candida auris" : "498019",
       "Vibrio cholerae" : "666"
     }
