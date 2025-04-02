@@ -25,26 +25,34 @@ task phylovalidate {
     # grab the phylocompare version
     phylocompare.py --version | tee VERSION
 
+    # clean the trees
+    Rscript /theiaphylo/theiaphylo/clean_phylo.R ~{tree1_path}
+    Rscript /theiaphylo/theiaphylo/clean_phylo.R ~{tree2_path}
+
+    # set new tree PATHs
+    tree1_path=~{tree1_path}_clean
+    tree2_path=~{tree2_path}_clean
+
     # set bash variables to check them for population in conditionals
     outgroups=~{outgroups}
     max_distance=~{max_distance}
 
     # root if outgroups are provided
     if [[ -n ${outgroups} ]]; then
-      phylocompare.py ~{tree1_path} \
-        ~{tree2_path} \
+      phylocompare.py ${tree1_path} \
+        ${tree2_path} \
         --outgroup ~{outgroups} \
         --debug
     # root at the midpoint
     elif ~{midpoint}; then
-      phylocompare.py ~{tree1_path} \
-        ~{tree2_path} \
+      phylocompare.py ${tree1_path} \
+        ${tree2_path} \
         --midpoint \
         --debug
     # root is not specified, allow phylocompare.py to determine
     else
-      phylocompare.py ~{tree1_path} \
-        ~{tree2_path} \
+      phylocompare.py ${tree1_path} \
+        ${tree2_path} \
         --debug
     fi
 
@@ -85,6 +93,6 @@ task phylovalidate {
     String phylocompare_version = read_string("VERSION")
     File summary_report = "phylo_distances.txt"
     String phylo_distance = read_float("PHYLOCOMPARE_DISTANCE")
-    String validation = read_string("PHYLOVALIDATE")
+    String phylo_validation = read_string("PHYLOVALIDATE")
   }
 }
