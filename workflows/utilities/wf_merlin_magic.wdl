@@ -795,13 +795,27 @@ workflow merlin_magic {
       "Candida auris" : "498019",
       "Vibrio cholerae" : "666"
     }
+    Array[String] taxon_keys = [
+      "Neisseria gonorrhoeae",
+      "Staphylococcus aureus", 
+      "Typhi", 
+      "Streptococcus pneumoniae", 
+      "Klebsiella", 
+      "Klebsiella pneumoniae", 
+      "Candida auris", 
+      "Vibrio cholerae"
+    ]
 
     # Check for Salmonella typing first then default to merlin_tag
     String taxon = select_first([seqsero2.seqsero2_predicted_serotype, 
       seqsero2_assembly.seqsero2_predicted_serotype,sistr.sistr_predicted_serotype,merlin_tag])
     
+    scatter (species in taxon_keys){
+      Boolean match = species == taxon
+    }
+
     # Check if the taxon code is defined in the map prior to running AMR Search
-    if (defined(taxon_code[taxon]) && taxon != "NA") {
+    if (select_first(match) && taxon != "NA") {
       call amr_search.amr_search_workflow {
         input:
           input_fasta = assembly,
