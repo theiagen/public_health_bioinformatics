@@ -28,6 +28,6 @@ workflow phylocompare {
     String phylocompare_version = phylovalidate.phylocompare_version
     File phylocompare_report = phylovalidate.summary_report
     String phylo_distance = phylovalidate.phylo_distance
-    String validation = phylovalidate.validation
+    String phylo_validation = phylovalidate.phylo_validation
   }
 }
