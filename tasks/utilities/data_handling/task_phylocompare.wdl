@@ -25,9 +25,9 @@ task phylovalidate {
     # grab the phylocompare version
     phylocompare.py --version | tee VERSION
 
-    # clean the trees
-    Rscript /theiaphylo/theiaphylo/clean_phylo.R ~{tree1_path}
-    Rscript /theiaphylo/theiaphylo/clean_phylo.R ~{tree2_path}
+    # clean the trees, report if they are bifurcating
+    Rscript /theiaphylo/theiaphylo/clean_phylo.R ~{tree1_path} | cut -f 2 -d ' ' > TREE1_BIFURCATING
+    Rscript /theiaphylo/theiaphylo/clean_phylo.R ~{tree2_path} | cut -f 2 -d ' ' > TREE2_BIFURCATING
 
     # set new tree PATHs
     tree1_path=~{tree1_path}_clean
@@ -78,6 +78,16 @@ task phylovalidate {
     except ValueError:
       with open('PHYLOVALIDATE', 'w') as out:
         out.write('FAIL')
+    with open('TREE1_BIFURCATING', 'r') as f:
+      tree1_bifurcating = f.read().strip()
+    with open('TREE2_BIFURCATING', 'r') as f:
+      tree2_bifurcating = f.read().strip()
+    if tree1_bifurcating == 'FALSE' or tree2_bifurcating == 'FALSE':
+      with open('PHYLOCOMPARE_FLAG', 'a') as out:
+        out.write('polytomy detected')
+    else:
+      with open('PHYLOCOMPARE_FLAG', 'a') as out:
+        out.write('')
     CODE
     fi
   >>>
@@ -94,5 +104,6 @@ task phylovalidate {
     File summary_report = "phylo_distances.txt"
     String phylo_distance = read_float("PHYLOCOMPARE_DISTANCE")
     String phylo_validation = read_string("PHYLOVALIDATE")
+    String phylo_flag = read_string("PHYLOCOMPARE_FLAG")
   }
 }

@@ -29,5 +29,6 @@ workflow phylocompare {
     File phylocompare_report = phylovalidate.summary_report
     String phylo_distance = phylovalidate.phylo_distance
     String phylo_validation = phylovalidate.phylo_validation
+    String phylo_flag = phylovalidate.phylo_flag
   }
 }
