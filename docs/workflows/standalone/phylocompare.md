@@ -19,6 +19,9 @@ PhyloCompare can automatically root upon outgroup tips or the midpoint. If more 
 
     `outgroups` and `midpoint` are incompatible options and the `outgroups` input will take precedence.
 
+!!! warning
+    The `phylo_flag` flags information that may confound distance calculation; e.g. "polytomy" can confound tree comparison if there are non-0 length branches descending from a polytomy, which may lead to erroneous distances if tips are reported in different order.  
+
 ### Inputs
 
 <div class="searchable-table" markdown="1">
@@ -49,9 +52,10 @@ Please note that all string inputs **must** be enclosed in quotation marks; for 
 |---|---|---|
 | phb_version | String | PHB version |
 | phylo_distance | String | Distance between the phylogenies, or "None" if distance was unable to be calculated |
+| phylo_flag | String | Flags raised that may confound distance calculation |
 | phylocompare_report | File | Text file of the calculated distances |
 | phylocompare_version | String | Version of PhyloCompare python script |
-| validation | String | "PASS" if distance < `max_distance` and "FAIL" if distance > `max_distance` or could not be calculated |
+| phylo_validation | String | "PASS" if distance < `max_distance` and "FAIL" if distance > `max_distance` or could not be calculated |
 
 </div>
 
