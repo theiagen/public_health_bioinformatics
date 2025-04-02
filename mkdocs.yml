@@ -12,6 +12,11 @@ nav:
         - With the Command-Line: getting_started/commandline.md
         - With Terra.bio: getting_started/terra.md
         - Workflow Failure Philosophy: getting_started/philosophy.md
+     - Guides:
+        - Guide to GAMBIT: guides/gambit.md
+        - Guide to GAMBIT Database Creation: guides/gambit_database.md
+        - Guide to Phylogenetics: guides/phylogenetics.md
+        - Guide to Running Custom Organisms on TheiaCoV: guides/custom_organisms.md
      - Workflows: 
         - Workflows by Type: 
             - Overview Table: workflows_overview/workflows_type.md
@@ -234,10 +239,14 @@ markdown_extensions:
   - pymdownx.caret
   - pymdownx.snippets
   - pymdownx.superfences
+  - pymdownx.blocks.html
   - pymdownx.tasklist:
       custom_checkbox: true
   - toc:
       permalink: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
 
 plugins:
   - git-revision-date-localized:

@@ -4,7 +4,7 @@
 
 | **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
 |---|---|---|---|---|
-| [Standalone](../../workflows_overview/workflows_type.md/#standalone) | [Any Taxa](../../workflows_overview/workflows_kingdom.md/#any-taxa) | vX.X.X | Yes | Sample-level |
+| [Standalone](../../workflows_overview/workflows_type.md/#standalone) | [Any Taxa](../../workflows_overview/workflows_kingdom.md/#any-taxa) | v3.0.0 | Yes | Sample-level |
 
 ## AMR_Search_PHB
 
@@ -30,8 +30,6 @@ A limited number of species are currently supported and are listed below. NCBI c
 
 ### Inputs
 
-Input should be ordered as they appear on Terra
-
 | **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
 |---|---|---|---|---|---|
 | amr_search_workflow | **amr_search_database** | String | NCBI taxon code of samples known taxonomy, see above supported species || Required |
@@ -43,8 +41,6 @@ Input should be ordered as they appear on Terra
 | amr_search | **memory** | Integer | Amount of memory/RAM (in GB) to allocate to the task |8| Optional |
 
 ### Workflow Tasks
-
-Description of the workflow tasks
 
 ??? task "`amr_search`: Antimicrobial resistance profiling"
 

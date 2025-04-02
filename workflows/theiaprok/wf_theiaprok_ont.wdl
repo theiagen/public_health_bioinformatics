@@ -1,6 +1,5 @@
 version 1.0
 
-import "../../tasks/assembly/task_dragonflye.wdl" as dragonflye_task
 import "../../tasks/gene_typing/annotation/task_bakta.wdl" as bakta_task
 import "../../tasks/gene_typing/annotation/task_prokka.wdl" as prokka_task
 import "../../tasks/gene_typing/drug_resistance/task_amrfinderplus.wdl" as amrfinderplus
@@ -20,6 +19,7 @@ import "../../tasks/taxon_id/task_gambit.wdl" as gambit_task
 import "../../tasks/utilities/data_export/task_export_taxon_table.wdl" as export_taxon_table_task
 import "../utilities/wf_merlin_magic.wdl" as merlin_magic_workflow
 import "../utilities/wf_read_QC_trim_ont.wdl" as read_qc_workflow
+import "../utilities/wf_flye_denovo.wdl" as flye_workflow
 
 workflow theiaprok_ont {
   meta {
@@ -102,15 +102,14 @@ workflow theiaprok_ont {
       }
     }
     if (select_first([clean_check_reads.read_screen, ""]) == "PASS" || skip_screen) {
-       call dragonflye_task.dragonflye {
-         input:
-           read1 = read_qc_trim.read1_clean,
-           genome_length = select_first([genome_length, read_qc_trim.est_genome_length, 0]),
-           samplename = samplename
-       }
+      call flye_workflow.flye_denovo {
+        input:
+          read1 = read_qc_trim.read1_clean,
+          samplename = samplename
+      }
       call quast_task.quast {
         input:
-          assembly = dragonflye.assembly_fasta,
+          assembly = flye_denovo.assembly_fasta,
           samplename = samplename
       }
       # nanoplot for basic QC metrics
@@ -128,52 +127,52 @@ workflow theiaprok_ont {
       }
       call busco_task.busco {
         input:
-          assembly = dragonflye.assembly_fasta,
+          assembly = flye_denovo.assembly_fasta,
           samplename = samplename
       }
       if (perform_characterization) {
         call gambit_task.gambit {
           input:
-            assembly = dragonflye.assembly_fasta,
+            assembly = flye_denovo.assembly_fasta,
             samplename = samplename
         }
         if (call_ani) {
           call ani_task.animummer as ani {
             input:
-              assembly = dragonflye.assembly_fasta,
+              assembly = flye_denovo.assembly_fasta,
               samplename = samplename
           }
         }
         if (call_kmerfinder) {
           call kmerfinder_task.kmerfinder_bacteria as kmerfinder {
             input:
-              assembly = dragonflye.assembly_fasta,
+              assembly = flye_denovo.assembly_fasta,
               samplename = samplename
           }
         }
         call amrfinderplus.amrfinderplus_nuc as amrfinderplus_task {
           input:
-            assembly = dragonflye.assembly_fasta,
+            assembly = flye_denovo.assembly_fasta,
             samplename = samplename,
             organism = select_first([expected_taxon, gambit.gambit_predicted_taxon])
         }
         if (call_resfinder) {
           call resfinder_task.resfinder as resfinder_task {
             input:
-              assembly = dragonflye.assembly_fasta,
+              assembly = flye_denovo.assembly_fasta,
               samplename = samplename,
               organism = select_first([expected_taxon, gambit.gambit_predicted_taxon])
           }
         }
         call ts_mlst_task.ts_mlst {
           input: 
-            assembly = dragonflye.assembly_fasta,
+            assembly = flye_denovo.assembly_fasta,
             samplename = samplename
         }
         if (genome_annotation == "prokka") {
           call prokka_task.prokka {
             input:
-              assembly = dragonflye.assembly_fasta,
+              assembly = flye_denovo.assembly_fasta,
               samplename = samplename
           }
         }
@@ -189,7 +188,7 @@ workflow theiaprok_ont {
           } 
           call bakta_task.bakta {
             input:
-              assembly = dragonflye.assembly_fasta,
+              assembly = flye_denovo.assembly_fasta,
               samplename = samplename,
               bakta_db_selected = select_first([bakta_custom_db, bakta_db_light, bakta_db_full])
           }
@@ -197,14 +196,14 @@ workflow theiaprok_ont {
         if (call_plasmidfinder) {
           call plasmidfinder_task.plasmidfinder {
             input:
-              assembly = dragonflye.assembly_fasta,
+              assembly = flye_denovo.assembly_fasta,
               samplename = samplename
           }
         }
         if (call_abricate) {
           call abricate_task.abricate {
             input:
-              assembly = dragonflye.assembly_fasta,
+              assembly = flye_denovo.assembly_fasta,
               samplename = samplename,
               database = abricate_db
           }
@@ -235,7 +234,7 @@ workflow theiaprok_ont {
         call merlin_magic_workflow.merlin_magic {
           input:
             merlin_tag = select_first([expected_taxon, gambit.merlin_tag]),
-            assembly = dragonflye.assembly_fasta,
+            assembly = flye_denovo.assembly_fasta,
             samplename = samplename,
             read1 = read_qc_trim.read1_clean,
             ont_data = true
@@ -301,7 +300,7 @@ workflow theiaprok_ont {
                 "ani_mummer_version": ani.ani_mummer_version,
                 "ani_output_tsv": ani.ani_output_tsv,
                 "ani_top_species_match": ani.ani_top_species_match,
-                "assembly_fasta": dragonflye.assembly_fasta,
+                "assembly_fasta": flye_denovo.assembly_fasta,
                 "assembly_length": quast.genome_length,
                 "bakta_gbff": bakta.bakta_gbff,
                 "bakta_gff3": bakta.bakta_gff3,
@@ -316,9 +315,9 @@ workflow theiaprok_ont {
                 "busco_version": busco.busco_version,
                 "city": city,
                 "collection_date": collection_date,
-                "contigs_gfa": dragonflye.contigs_gfa,
+                "contigs_gfa": flye_denovo.contigs_gfa,
                 "county": county,
-                "dragonflye_version": dragonflye.dragonflye_version,
+                "flye_version": flye_denovo.flye_version,
                 "ectyper_predicted_serotype": merlin_magic.ectyper_predicted_serotype,
                 "ectyper_results": merlin_magic.ectyper_results,
                 "ectyper_version": merlin_magic.ectyper_version,
@@ -548,8 +547,10 @@ workflow theiaprok_ont {
                 "staphopiasccmec_types_and_mecA_presence": merlin_magic.staphopiasccmec_types_and_mecA_presence,
                 "staphopiasccmec_version": merlin_magic.staphopiasccmec_version,
                 "stxtyper_all_hits": merlin_magic.stxtyper_all_hits,
+                "stxtyper_ambiguous_hits": merlin_magic.stxtyper_ambiguous_hits,
                 "stxtyper_complete_operons": merlin_magic.stxtyper_complete_operon_hits,
                 "stxtyper_docker": merlin_magic.stxtyper_docker,
+                "stxtyper_extended_operons": merlin_magic.stxtyper_extended_operons,
                 "stxtyper_novel_hits": merlin_magic.stxtyper_novel_hits,
                 "stxtyper_num_hits": merlin_magic.stxtyper_num_hits,
                 "stxtyper_partial_hits": merlin_magic.stxtyper_partial_hits,
@@ -587,9 +588,19 @@ workflow theiaprok_ont {
                 "virulencefinder_docker": merlin_magic.virulencefinder_docker,
                 "virulencefinder_hits": merlin_magic.virulencefinder_hits,
                 "virulencefinder_report_tsv": merlin_magic.virulencefinder_report_tsv,
-                "zip": zip
+                "zip": zip,
+                "bandage_plot": flye_denovo.bandage_plot,
+                "bandage_version": flye_denovo.bandage_version,
+                "bwa_version": flye_denovo.bwa_version,
+                "dnaapler_version": flye_denovo.dnaapler_version,
+                "filtered_contigs_metrics": flye_denovo.filtered_contigs_metrics,
+                "flye_assembly_info": flye_denovo.flye_assembly_info,
+                "medaka_model": flye_denovo.medaka_model_used,
+                "medaka_version": flye_denovo.medaka_version,
+                "polypolish_version": flye_denovo.polypolish_version,
+                "porechop_version": flye_denovo.porechop_version,
+                "racon_version": flye_denovo.racon_version
               }
-              
           }
         }
       }
@@ -641,10 +652,21 @@ workflow theiaprok_ont {
     String? kraken_docker = read_qc_trim.kraken_docker
     # Read QC - rasusa outputs
     String? rasusa_version = read_qc_trim.rasusa_version
-    # Assembly - dragonflye outputs
-    File? assembly_fasta = dragonflye.assembly_fasta
-    File? contigs_gfa = dragonflye.contigs_gfa
-    String? dragonflye_version = dragonflye.dragonflye_version
+    # Assembly - flye_denovo outputs
+    File? assembly_fasta = flye_denovo.assembly_fasta
+    File? contigs_gfa = flye_denovo.contigs_gfa
+    File? bandage_plot = flye_denovo.bandage_plot
+    File? filtered_contigs_metrics = flye_denovo.filtered_contigs_metrics
+    String? flye_assembly_info = flye_denovo.flye_assembly_info
+    String? medaka_model = flye_denovo.medaka_model_used
+    String? porechop_version = flye_denovo.porechop_version
+    String? flye_version = flye_denovo.flye_version
+    String? bandage_version = flye_denovo.bandage_version
+    String? medaka_version = flye_denovo.medaka_version
+    String? racon_version = flye_denovo.racon_version
+    String? bwa_version = flye_denovo.bwa_version
+    String? polypolish_version = flye_denovo.polypolish_version
+    String? dnaapler_version = flye_denovo.dnaapler_version
     # Assembly QC - quast outputs
     File? quast_report = quast.quast_report
     String? quast_version = quast.version
