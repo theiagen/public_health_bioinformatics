@@ -899,6 +899,12 @@ workflow theiaprok_illumina_pe {
     # QC_Check Results
     String? qc_check = qc_check_task.qc_check
     File? qc_standard = qc_check_task.qc_standard
+    # AMR_Search
+    File? amr_search_results = merlin_magic.amr_search_results
+    File? amr_search_csv = merlin_magic.amr_results_csv
+    File? amr_results_pdf = merlin_magic.amr_results_pdf
+    String? amr_search_docker = merlin_magic.amr_search_docker
+    String? amr_search_version = merlin_magic.amr_search_version
     # Ecoli Typing
     File? serotypefinder_report = merlin_magic.serotypefinder_report
     String? serotypefinder_docker = merlin_magic.serotypefinder_docker

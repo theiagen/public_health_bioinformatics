@@ -34,6 +34,7 @@ import "../../tasks/species_typing/streptococcus/task_seroba.wdl" as seroba
 import "../../tasks/species_typing/vibrio/task_srst2_vibrio.wdl" as srst2_vibrio_task
 import "../../tasks/species_typing/vibrio/task_abricate_vibrio.wdl" as abricate_vibrio_task
 import "../../tasks/species_typing/vibrio/task_vibecheck_vibrio.wdl" as vibecheck_vibrio_task
+import "wf_amr_search.wdl" as amr_search
 
 # theiaeuk
 import "../../tasks/gene_typing/variant_detection/task_snippy_gene_query.wdl" as snippy_gene_query
@@ -55,6 +56,7 @@ workflow merlin_magic {
     Boolean ont_data = false
     Boolean paired_end = true
     Boolean theiaeuk = false
+    Boolean amr_search = false
     # activating tool logic
     Boolean call_poppunk = true
     Boolean call_shigeifinder_reads_input = false
@@ -775,8 +777,44 @@ workflow merlin_magic {
       }
     }
   }
+  # Running AMR Search
+  if (amr_search){
+    # Map containing the taxon tag reported by typing paired with its 
+    # taxon code for AMR search. 
+    Map[String, String] taxon_code = {
+      "Neisseria gonorrhoeae" : "485",
+      "Staphylococcus aureus" : "1280",
+      "Typhi" : "90370",
+      "Streptococcus pneumoniae" : "1313",
+      "Klebsiella" : "570",
+      "Escherichia" : "561",
+      "Mycobacterium tuberculosis" : "1773",
+      "Candida auris" : "498019",
+      "Vibrio cholerae" : "666"
+    }
+
+    # Check for Salmonella typing first then default to merlin_tag
+    String taxon = select_first([seqsero2.seqsero2_predicted_serotype, 
+      seqsero2_assembly.seqsero2_predicted_serotype,sistr.sistr_predicted_serotype,merlin_tag])
+    
+    # Check if the taxon code is defined in the map prior to running AMR Search
+    if (defined(taxon_code[taxon])) {
+      call amr_search.amr_search_workflow {
+        input:
+          input_fasta = assembly,
+          samplename = samplename,
+          amr_search_database = taxon_code[taxon]
+      }
+    }
+  }
   output {
     # theiaprok
+    # AMR_Search 
+    File? amr_search_results = amr_search_workflow.amr_search_results
+    File? amr_results_csv = amr_search_workflow.amr_results_csv
+    File? amr_results_pdf = amr_search_workflow.amr_results_pdf
+    String? amr_search_docker = amr_search_workflow.amr_search_docker
+    String? amr_search_version = amr_search_workflow.amr_search_version
     # Ecoli Typing
     File? serotypefinder_report = serotypefinder.serotypefinder_report
     String? serotypefinder_docker = serotypefinder.serotypefinder_docker
