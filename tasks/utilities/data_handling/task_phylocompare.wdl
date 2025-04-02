@@ -84,7 +84,7 @@ task phylovalidate {
       tree2_bifurcating = f.read().strip()
     if tree1_bifurcating == 'FALSE' or tree2_bifurcating == 'FALSE':
       with open('PHYLOCOMPARE_FLAG', 'a') as out:
-        out.write('polytomy detected')
+        out.write('polytomy')
     else:
       with open('PHYLOCOMPARE_FLAG', 'a') as out:
         out.write('')
