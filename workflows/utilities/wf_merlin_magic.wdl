@@ -798,7 +798,7 @@ workflow merlin_magic {
       seqsero2_assembly.seqsero2_predicted_serotype,sistr.sistr_predicted_serotype,merlin_tag])
     
     # Check if the taxon code is defined in the map prior to running AMR Search
-    if (defined(taxon_code[taxon])) {
+    if (defined(taxon_code[taxon]) && taxon != "NA") {
       call amr_search.amr_search_workflow {
         input:
           input_fasta = assembly,
