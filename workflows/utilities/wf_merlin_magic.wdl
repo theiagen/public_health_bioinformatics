@@ -810,12 +810,14 @@ workflow merlin_magic {
     String taxon = select_first([seqsero2.seqsero2_predicted_serotype, 
       seqsero2_assembly.seqsero2_predicted_serotype,sistr.sistr_predicted_serotype,merlin_tag])
     
+    # Block required to check if the taxon code is defined in the map
     scatter (species in taxon_keys){
       Boolean match = species == taxon
     }
+    Int taxon_match = sum(scatter(match in match) { if match then 1 else 0 })
 
-    # Check if the taxon code is defined in the map prior to running AMR Search
-    if (select_first(match) && taxon != "NA") {
+    # Check how many matches there are in the map and if taxon is not NA
+    if (taxon_match > 0 && taxon != "NA") {
       call amr_search.amr_search_workflow {
         input:
           input_fasta = assembly,
