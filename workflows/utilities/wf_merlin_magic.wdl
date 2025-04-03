@@ -812,9 +812,9 @@ workflow merlin_magic {
     
     # Block required to check if the taxon code is defined in the map
     scatter (species in taxon_keys){
-      Boolean match = species == taxon
+      Int count = if (species == taxon) then 1 else 0
     }
-    Int taxon_match = sum(scatter(match in match) { if match then 1 else 0 })
+    Int taxon_match = length(select_all(count))
 
     # Check how many matches there are in the map and if taxon is not NA
     if (taxon_match > 0 && taxon != "NA") {
