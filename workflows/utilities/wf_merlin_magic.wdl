@@ -795,19 +795,20 @@ workflow merlin_magic {
       "Vibrio cholerae" : "666"
     }
     # Check for Salmonella typing first then default to merlin_tag
-    String typhi_taxon = select_first([seqsero2.seqsero2_predicted_serotype, 
-      seqsero2_assembly.seqsero2_predicted_serotype,sistr.sistr_predicted_serotype])
+    String taxon = select_first([seqsero2.seqsero2_predicted_serotype, 
+      seqsero2_assembly.seqsero2_predicted_serotype,sistr.sistr_predicted_serotype, merlin_tag])
+
     # Checks for a match to the AMR_Search available taxon codes
-    if (merlin_tag == "Neisseria gonorrhoeae" || merlin_tag == "Staphylococcus aureus" || 
-        merlin_tag == "Streptococcus pneumoniae" || 
-        merlin_tag == "Klebsiella" || merlin_tag == "Klebsiella pneumoniae" || 
-        merlin_tag == "Candida auris" || merlin_tag == "Vibrio cholerae" || typhi_taxon == "Typhi") 
+    if (taxon == "Neisseria gonorrhoeae" || taxon == "Staphylococcus aureus" || 
+        taxon == "Streptococcus pneumoniae" || 
+        taxon == "Klebsiella" || taxon == "Klebsiella pneumoniae" || 
+        taxon == "Candida auris" || taxon == "Vibrio cholerae" || taxon == "Typhi") 
     {
       call amr_search.amr_search_workflow {
         input:
           input_fasta = assembly,
           samplename = samplename,
-          amr_search_database = taxon_code[select_first([typhi_taxon,merlin_tag])]
+          amr_search_database = taxon_code[taxon]
       }
     }
   }
