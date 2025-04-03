@@ -2,11 +2,8 @@ version 1.0
 
 task phylovalidate {
   input {
-    File tree1_path
-    File tree2_path
-
-    String? outgroups
-    Boolean? midpoint = false
+    File tree1
+    File tree2
     Float? max_distance
     
     String docker = "us-docker.pkg.dev/general-theiagen/theiagen/theiaphylo:0.1.0"  # update!!!
@@ -26,35 +23,21 @@ task phylovalidate {
     phylocompare.py --version | tee VERSION
 
     # clean the trees, report if they are bifurcating
-    Rscript /theiaphylo/theiaphylo/clean_phylo.R ~{tree1_path} | cut -f 2 -d ' ' > TREE1_BIFURCATING
-    Rscript /theiaphylo/theiaphylo/clean_phylo.R ~{tree2_path} | cut -f 2 -d ' ' > TREE2_BIFURCATING
+    Rscript /theiaphylo/theiaphylo/clean_phylo.R ~{tree1} | cut -f 2 -d ' ' > TREE1_BIFURCATING
+    Rscript /theiaphylo/theiaphylo/clean_phylo.R ~{tree2} | cut -f 2 -d ' ' > TREE2_BIFURCATING
 
     # set new tree PATHs
-    tree1_path=~{tree1_path}_clean
-    tree2_path=~{tree2_path}_clean
+    tree1_clean=$(sed -Ee 's/(.*)\.([^\.]+)$/\1.clean.\2/' <<< ~{tree1})
+    tree2_clean=$(sed -Ee 's/(.*)\.([^\.]+)$/\1.clean.\2/' <<< ~{tree2})
+    echo ${tree1_clean} > TREE1_CLEAN
+    echo ${tree2_clean} > TREE2_CLEAN
 
     # set bash variables to check them for population in conditionals
-    outgroups=~{outgroups}
     max_distance=~{max_distance}
 
-    # root if outgroups are provided
-    if [[ -n ${outgroups} ]]; then
-      phylocompare.py ${tree1_path} \
-        ${tree2_path} \
-        --outgroup ~{outgroups} \
+    # run comparison
+    phylocompare.py ${tree1_clean} ${tree2_clean} \
         --debug
-    # root at the midpoint
-    elif ~{midpoint}; then
-      phylocompare.py ${tree1_path} \
-        ${tree2_path} \
-        --midpoint \
-        --debug
-    # root is not specified, allow phylocompare.py to determine
-    else
-      phylocompare.py ${tree1_path} \
-        ${tree2_path} \
-        --debug
-    fi
 
     # extract the distance
     tail -1 phylo_distances.txt | cut -f 2 | tr -d ' ' > PHYLOCOMPARE_DISTANCE
@@ -102,6 +85,8 @@ task phylovalidate {
   output {
     String phylocompare_version = read_string("VERSION")
     File summary_report = "phylo_distances.txt"
+    File tree1_clean = read_string("TREE1_CLEAN")
+    File tree2_clean = read_string("TREE2_CLEAN")
     String phylo_distance = read_float("PHYLOCOMPARE_DISTANCE")
     String phylo_validation = read_string("PHYLOVALIDATE")
     String phylo_flag = read_string("PHYLOCOMPARE_FLAG")
