@@ -539,7 +539,7 @@ workflow merlin_magic {
         samplename = samplename,
         typing_only = agrvate_agr_typing_only,
         docker = agrvate_docker_image
-     }
+    }
   }
   if (merlin_tag == "Streptococcus pneumoniae") {
     if (paired_end && !ont_data) {
@@ -783,8 +783,7 @@ workflow merlin_magic {
   }
   # Running AMR Search
   if (amr_search){
-    # Map containing the taxon tag reported by typing paired with its 
-    # taxon code for AMR search. 
+    # Map containing the taxon tag reported by typing paired with it's taxon code for AMR search. 
     Map[String, String] taxon_code = {
       "Neisseria gonorrhoeae" : "485",
       "Staphylococcus aureus" : "1280",
@@ -795,34 +794,20 @@ workflow merlin_magic {
       "Candida auris" : "498019",
       "Vibrio cholerae" : "666"
     }
-    Array[String] taxon_keys = [
-      "Neisseria gonorrhoeae",
-      "Staphylococcus aureus", 
-      "Typhi", 
-      "Streptococcus pneumoniae", 
-      "Klebsiella", 
-      "Klebsiella pneumoniae", 
-      "Candida auris", 
-      "Vibrio cholerae"
-    ]
-
     # Check for Salmonella typing first then default to merlin_tag
-    String taxon = select_first([seqsero2.seqsero2_predicted_serotype, 
-      seqsero2_assembly.seqsero2_predicted_serotype,sistr.sistr_predicted_serotype,merlin_tag])
-    
-    # Block required to check if the taxon code is defined in the map
-    scatter (species in taxon_keys){
-      Int count = if (species == taxon) then 1 else 0
-    }
-    Int taxon_match = length(select_all(count))
-
-    # Check how many matches there are in the map and if taxon is not NA
-    if (taxon_match > 0 && taxon != "NA") {
+    String typhi_taxon = select_first([seqsero2.seqsero2_predicted_serotype, 
+      seqsero2_assembly.seqsero2_predicted_serotype,sistr.sistr_predicted_serotype])
+    # Checks for a match to the AMR_Search available taxon codes
+    if (merlin_tag == "Neisseria gonorrhoeae" || merlin_tag == "Staphylococcus aureus" || 
+        merlin_tag == "Streptococcus pneumoniae" || 
+        merlin_tag == "Klebsiella" || merlin_tag == "Klebsiella pneumoniae" || 
+        merlin_tag == "Candida auris" || merlin_tag == "Vibrio cholerae" || typhi_taxon == "Typhi") 
+    {
       call amr_search.amr_search_workflow {
         input:
           input_fasta = assembly,
           samplename = samplename,
-          amr_search_database = taxon_code[taxon]
+          amr_search_database = taxon_code[select_first([typhi_taxon,merlin_tag])]
       }
     }
   }
