@@ -904,7 +904,7 @@ workflow theiaprok_illumina_pe {
     # AMR_Search
     File? amr_search_results = merlin_magic.amr_search_results
     File? amr_search_csv = merlin_magic.amr_results_csv
-    File? amr_results_pdf = merlin_magic.amr_results_pdf
+    File? amr_search_results_pdf = merlin_magic.amr_results_pdf
     String? amr_search_docker = merlin_magic.amr_search_docker
     String? amr_search_version = merlin_magic.amr_search_version
     # Ecoli Typing
