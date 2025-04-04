@@ -1,4 +1,5 @@
 version 1.0
+import "../../tasks/quality_control/read_filtering/task_porechop.wdl" as porechop_task
 import "../../tasks/quality_control/read_filtering/task_nanoq.wdl" as nanoq_task
 import "../../tasks/taxon_id/contamination/task_metabuli.wdl" as metabuli_task
 import "../../tasks/utilities/task_rasusa.wdl" as rasusa_task
@@ -22,9 +23,17 @@ workflow theiaviral_ont {
     File read1
     String taxon_of_interest
     String samplename
+    Boolean trim_adapters = false
     Boolean call_rasusa = false
     String? genome_length # required for RASUSA, could be optional otherwise # delete later
     Float downsampling_coverage = 150
+  }
+  if (trim_adapters) {
+    call porechop_task.porechop as porechop {
+      input:
+        read1 = nanoq.filtered_read1,
+        samplename = samplename
+    }
   }
   call nanoq_task.nanoq as nanoq {
     input:
@@ -33,7 +42,7 @@ workflow theiaviral_ont {
   }
   call metabuli_task.metabuli as metabuli {
     input:
-      read1 = nanoq.filtered_read1,
+      read1 = select_first([porechop.trimmed_reads, nanoq.filtered_read1]),
       samplename = samplename,
       taxon_of_interest = taxon_of_interest
   }
@@ -126,6 +135,9 @@ workflow theiaviral_ont {
     input:
   }
   output {
+    # porechop outputs - adapter trimming
+    File? porechop_trimmed_read1 = porechop.trimmed_reads
+    String? porechop_version = porechop.porechop_version
     # nanoq outputs - read filtering
     File nanoq_filtered_read1 = nanoq.filtered_read1
     String nanoq_version = nanoq.version
