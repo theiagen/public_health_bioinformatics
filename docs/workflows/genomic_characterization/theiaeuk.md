@@ -48,6 +48,7 @@ All input reads are processed through "core tasks" in each workflow. The core ta
 | gambit | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
 | gambit | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/gambit:1.0.0 | Optional |
 | merlin_magic | **agrvate_docker_image** | String | Internal component, do not modify | "us-docker.pkg.dev/general-theiagen/biocontainers/agrvate:1.0.2--hdfd78af_0" | Do Not Modify, Optional |
+| merlin_magic | **amr_search** | Boolean | If set to true AMR_Search workflow will be run if species is part of supported taxon, see AMR_Search docs. | False | Optional |
 | merlin_magic | **assembly_only** | Boolean | Internal component, do not modify |  | Do Not Modify, Optional |
 | merlin_magic | **call_poppunk** | Boolean | Internal component, do not modify | TRUE | Do Not Modify, Optional |
 | merlin_magic | **call_shigeifinder_reads_input** | Boolean | Internal component, do not modify | FALSE | Do Not Modify, Optional |
