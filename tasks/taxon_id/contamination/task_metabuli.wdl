@@ -6,13 +6,8 @@ task metabuli {
     String read1_basename = basename(basename(basename(read1, ".gz"), ".fastq"), ".fq")
     String samplename
     String taxon_of_interest
-
-    #File metabuli_db = "gs://theiagen-large-public-files-rp/terra/databases/metabuli/refseq_virus-v223.tar.gz"
-    File metabuli_db
-
-    #File taxonomy_path = "gs://theiagen-large-public-files-rp/terra/databases/metabuli/new_taxdump.tar.gz"
-    File taxonomy_path
-
+    File metabuli_db = "gs://theiagen-large-public-files-rp/terra/databases/metabuli/refseq_virus-v223.tar.gz"
+    File taxonomy_path = "gs://theiagen-large-public-files-rp/terra/databases/metabuli/new_taxdump.tar.gz"
     Float? min_score # metabuli: Min. sequence similarity score (0.0-1.0) [0.000]
     Float? min_sp_score # metabuli: Min. score for species- or lower-level classification. [0.000]
     Float? min_cov # metabuli: Min. query coverage (0.0-1.0) [0.000]

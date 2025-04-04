@@ -4,8 +4,7 @@ task skani {
   input{
     File assembly_fasta
     String samplename
-    #File skani_db = "gs://theiagen-large-public-files-rp/terra/databases/skani/skani_20250314.tar.gz"
-    File skani_db
+    File skani_db = "gs://theiagen-large-public-files-rp/terra/databases/skani/skani_20250314.tar"
     Int disk_size = 100
     Int cpu = 2
     Int memory = 4
