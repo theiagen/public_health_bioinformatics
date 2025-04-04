@@ -63,7 +63,7 @@ workflow theiaviral_ont {
   }
   call metabuli_task.metabuli as metabuli {
     input:
-      read1 = nanoq.filtered_read1,
+      read1 = select_first([porechop.trimmed_reads, nanoq.filtered_read1]),
       samplename = samplename,
       est_genome_length = select_first([genome_length, ncbi_identify.avg_genome_length])
   }
