@@ -213,12 +213,13 @@ workflow merlin_magic {
     String? tbprofiler_variant_calling_params
     String? tbprofiler_additional_parameters
     # tbp-parser options
+    File? tbp_parser_config
     String tbp_parser_output_seq_method_type = "WGS"
     String? tbp_parser_operator
     Int? tbp_parser_min_depth
     Int? tbp_parser_min_frequency
     Int? tbp_parser_min_read_support
-    Int? tbp_parser_min_coverage
+    Int? tbp_parser_min_percent_coverage
     File? tbp_parser_coverage_regions_bed
     Boolean? tbp_parser_debug
     Boolean? tbp_parser_add_cs_lims
@@ -485,12 +486,13 @@ workflow merlin_magic {
             tbprofiler_bam = tbprofiler.tbprofiler_output_bam,
             tbprofiler_bai = tbprofiler.tbprofiler_output_bai,
             samplename = samplename, 
+            config = tbp_parser_config,
             sequencing_method = tbp_parser_output_seq_method_type,
             operator = tbp_parser_operator,
             min_depth = tbp_parser_min_depth,
             min_frequency = tbp_parser_min_frequency,
             min_read_support = tbp_parser_min_read_support,
-            min_coverage = tbp_parser_min_coverage,
+            min_percent_coverage = tbp_parser_min_percent_coverage,
             coverage_regions_bed = tbp_parser_coverage_regions_bed,
             add_cycloserine_lims = tbp_parser_add_cs_lims,
             tbp_parser_debug = tbp_parser_debug,
@@ -632,14 +634,16 @@ workflow merlin_magic {
           gene_max_mismatch = srst2_gene_max_mismatch,
           docker = srst2_docker_image
       }
-      call vibecheck_vibrio_task.vibecheck_vibrio {
-        input:
-          read1 = select_first([read1]),
-          read2 = read2,
-          lineage_barcodes = vibecheck_lineage_barcodes,
-          subsampling_fraction = vibecheck_subsampling_fraction,
-          skip_subsampling = vibecheck_skip_subsampling,
-          docker = vibecheck_docker_image
+      if (paired_end) {
+        call vibecheck_vibrio_task.vibecheck_vibrio {
+          input:
+            read1 = select_first([read1]),
+            read2 = read2,
+            lineage_barcodes = vibecheck_lineage_barcodes,
+            subsampling_fraction = vibecheck_subsampling_fraction,
+            skip_subsampling = vibecheck_skip_subsampling,
+            docker = vibecheck_docker_image
+        }
       }
     }
     call abricate_vibrio_task.abricate_vibrio {
@@ -858,12 +862,19 @@ workflow merlin_magic {
     File? sistr_allele_fasta = sistr.sistr_allele_fasta
     File? sistr_cgmlst = sistr.sistr_cgmlst
     String? sistr_version = sistr.sistr_version
+    String? sistr_antigenic_formula = sistr.sistr_antigenic_formula
     String? sistr_predicted_serotype = sistr.sistr_predicted_serotype
+    String? sistr_serogroup = sistr.sistr_serogroup
+    String? sistr_h1_antigens = sistr.sistr_h1_antigens
+    String? sistr_h2_antigens = sistr.sistr_h2_antigens
+    String? sistr_o_antigens = sistr.sistr_o_antigens
+    String? sistr_serotype_cgmlst = sistr.sistr_serotype_cgmlst
     String seqsero2_report = select_first([seqsero2.seqsero2_report, seqsero2_assembly.seqsero2_report, ""])
     String seqsero2_version = select_first([seqsero2.seqsero2_version, seqsero2_assembly.seqsero2_version, ""])
     String seqsero2_predicted_antigenic_profile = select_first([seqsero2.seqsero2_predicted_antigenic_profile, seqsero2_assembly.seqsero2_predicted_antigenic_profile, ""])
     String seqsero2_predicted_serotype = select_first([seqsero2.seqsero2_predicted_serotype, seqsero2_assembly.seqsero2_predicted_serotype, ""])
     String? seqsero2_predicted_contamination = seqsero2.seqsero2_predicted_contamination
+    String seqsero2_note = select_first([seqsero2.seqsero2_note, seqsero2_assembly.seqsero2_note, ""])
     # Salmonella serotype Typhi typing
     File? genotyphi_report_tsv = genotyphi_task.genotyphi_report_tsv 
     File? genotyphi_mykrobe_json = genotyphi_task.genotyphi_mykrobe_json

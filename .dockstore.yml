@@ -293,6 +293,11 @@ workflows:
    primaryDescriptorPath: /workflows/phylogenetics/wf_snippy_streamline_fasta.wdl
    testParameterFiles:
     - /tests/inputs/empty.json
+ - name: Dorado_Basecalling_PHB
+   subclass: WDL
+   primaryDescriptorPath: /workflows/standalone_modules/wf_dorado_basecalling.wdl
+   testParameterFiles:
+    - /tests/inputs/empty.json
  - name: Concatenate_Illumina_Lanes_PHB
    subclass: WDL
    primaryDescriptorPath: /workflows/utilities/file_handling/wf_concatenate_illumina_lanes.wdl
@@ -301,5 +306,10 @@ workflows:
  - name: Clair3_Variants_ONT_PHB
    subclass: WDL
    primaryDescriptorPath: /workflows/standalone_modules/wf_clair3_variants_ont.wdl
+   testParameterFiles:
+     - /tests/inputs/empty.json
+ - name: AMR_Search_PHB 
+   subclass: WDL
+   primaryDescriptorPath: /workflows/utilities/wf_amr_search.wdl
    testParameterFiles:
      - /tests/inputs/empty.json

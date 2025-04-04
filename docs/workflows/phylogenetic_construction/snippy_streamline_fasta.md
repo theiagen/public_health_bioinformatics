@@ -4,7 +4,7 @@
 
 | **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
 |---|---|---|---|---|
-| [Phylogenetic Construction](../../workflows_overview/workflows_type.md/#phylogenetic-construction) | [Bacteria](../../workflows_overview/workflows_kingdom.md/#bacteria) | PHB vX.X.X | Yes; some optional features incompatible | Set-level |
+| [Phylogenetic Construction](../../workflows_overview/workflows_type.md/#phylogenetic-construction) | [Bacteria](../../workflows_overview/workflows_kingdom.md/#bacteria) | PHB v3.0.0 | Yes; some optional features incompatible | Set-level |
 
 ## Snippy_Streamline_FASTA_PHB
 
@@ -21,8 +21,10 @@ The `Snippy_Streamline_FASTA` workflow is an all-in-one approach to generating a
 
     ==In order to generate a phylogenetic tree, a reference genome is required.== This can be:
 
-    1. provided by the user
-    2. automatically selected using the `centroid` task and `reference_seeker` task to find a close reference genome to your dataset
+    1. provided by the user by filling the `reference_genome_file` input variable
+    2. the identified `centroid` genome by setting `use_centroid_as_reference` to true
+    3. automatically selected using the `centroid` task and `reference_seeker` task to find a close reference genome to your dataset by leaving the `reference_genome_file` and `use_centroid_as_reference` fields blank
+    
 
 !!! dna "Phylogenetic Tree Construction Options"
     There are several options that can be used to customize the phylogenetic tree, including:
@@ -79,7 +81,6 @@ The `Snippy_Streamline_FASTA` workflow is an all-in-one approach to generating a
 | snippy_streamline_fasta | **assembly_fasta** | Array[File] | The assembly files for your samples |  | Required |
 | snippy_streamline_fasta | **samplenames** | Array[String] | The names of your samples |  | Required |
 | snippy_streamline_fasta | **tree_name** | String | String of your choice to prefix output files |  | Required |
-| snippy_streamline_fasta | **reference_genome_file** | File | Reference genome in FASTA or GENBANK format (must be the same reference used in Snippy_Variants workflow); provide this if you want to skip the detection of a suitable reference |  | Optional |
 | centroid | **cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional |
 | centroid | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 50 | Optional |
 | centroid | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/theiagen/centroid:0.1.0 | Optional |
@@ -98,6 +99,8 @@ The `Snippy_Streamline_FASTA` workflow is an all-in-one approach to generating a
 | referenceseeker | **referenceseeker_ani_threshold** | Float | Bidirectional average nucleotide identity to use as a cut off for identifying reference assemblies with ReferenceSeeker; default value set according to <https://github.com/oschwengers/referenceseeker#description> | 0.95 | Optional |
 | referenceseeker | **referenceseeker_conserved_dna_threshold** | Float | Conserved DNA % to use as a cut off for identifying reference assemblies with ReferenceSeeker; default value set according to <https://github.com/oschwengers/referenceseeker#description> | 0.69 | Optional |
 | referenceseeker | **referenceseeker_db** | File | Database to use with ReferenceSeeker | gs://theiagen-public-files-rp/terra/theiaprok-files/referenceseeker-bacteria-refseq-205.v20210406.tar.gz | Optional |
+| snippy_streamline_fasta | **reference_genome_file** | File | Reference genome in FASTA or GENBANK format (must be the same reference used in Snippy_Variants workflow); provide this if you want to skip the detection of a suitable reference |  | Optional |
+| snippy_streamline_fasta | **use_centroid_as_reference** | Booolean | Set to true if you want to use the centroid sample as the reference sample instead of using the centroid to detect a suitable one | false  | Optional |
 | snippy_tree_wf | **call_shared_variants** | Boolean | Activates the shared variants analysis task | TRUE | Optional |
 | snippy_tree_wf | **core_genome** | Boolean | When "true", workflow generates core genome phylogeny; when "false", whole genome is used | TRUE | Optional |
 | snippy_tree_wf | **data_summary_column_names** | String | A comma-separated list of the column names from the sample-level data table for generating a data summary (presence/absence .csv matrix) |  | Optional |

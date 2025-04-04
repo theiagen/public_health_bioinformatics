@@ -12,7 +12,7 @@ task theiavalidate {
     String? na_values
     Boolean debug_output = false
     
-    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/theiavalidate:0.1.0"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/theiavalidate:1.1.2"
     Int disk_size = 10
     Int memory = 4
     Int cpu = 2

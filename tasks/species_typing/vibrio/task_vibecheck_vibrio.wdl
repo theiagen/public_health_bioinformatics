@@ -22,7 +22,7 @@ task vibecheck_vibrio {
     vibecheck -v | tee VERSION
 
     # Unclear if this will work with single-reads, will explore and update.
-    vibecheck "~{read1}" "~{read2}"  \
+    vibecheck ~{read1} ~{read2} \
         --outdir . \
         ~{"--barcodes " + lineage_barcodes} \
         ~{"--subsampling_fraction " + subsampling_fraction} \

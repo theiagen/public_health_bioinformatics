@@ -16,6 +16,7 @@ workflow snippy_streamline {
     String tree_name
     # this input file can be a FASTA or GBK
     File? reference_genome_file
+    Boolean use_centroid_as_reference = false
   }
   String tree_name_updated = sub(tree_name, " ", "_")
   # if user does not provide reference genome fasta, determine one for the user by running centroid, referenceseeker, and ncbi datasets to acquire one
@@ -24,14 +25,16 @@ workflow snippy_streamline {
       input:
         assembly_fasta = select_first([assembly_fasta])
     }
-    call referenceseeker_task.referenceseeker {
-      input:
-        assembly_fasta = centroid.centroid_genome_fasta,
-        samplename = centroid.centroid_genome_samplename
-    }
-    call ncbi_datasets_task.ncbi_datasets_download_genome_accession {
-      input:
-        ncbi_accession = referenceseeker.referenceseeker_top_hit_ncbi_accession
+    if (! use_centroid_as_reference) {
+      call referenceseeker_task.referenceseeker {
+        input:
+          assembly_fasta = centroid.centroid_genome_fasta,
+          samplename = centroid.centroid_genome_samplename
+      }
+      call ncbi_datasets_task.ncbi_datasets_download_genome_accession {
+        input:
+          ncbi_accession = referenceseeker.referenceseeker_top_hit_ncbi_accession
+      }
     }
   }
   # see https://github.com/openwdl/wdl/issues/279 for syntax explanation
@@ -41,7 +44,7 @@ workflow snippy_streamline {
       input:
         read1 = triplet.left.left, # access the left-most object (read 1)
         read2 = triplet.left.right, # access the right-side object on the left (read 2)
-        reference_genome_file = select_first([reference_genome_file, ncbi_datasets_download_genome_accession.ncbi_datasets_gbff, ncbi_datasets_download_genome_accession.ncbi_datasets_assembly_fasta]),
+        reference_genome_file = select_first([reference_genome_file, ncbi_datasets_download_genome_accession.ncbi_datasets_gbff, ncbi_datasets_download_genome_accession.ncbi_datasets_assembly_fasta, centroid.centroid_genome_fasta]),
         samplename = triplet.right # access the right-most object (samplename)
     }
   }
@@ -50,7 +53,7 @@ workflow snippy_streamline {
       tree_name = tree_name_updated,
       snippy_variants_outdir_tarball = snippy_variants_wf.snippy_variants_outdir_tarball,
       samplenames = samplenames,
-      reference_genome_file = select_first([reference_genome_file, ncbi_datasets_download_genome_accession.ncbi_datasets_gbff, ncbi_datasets_download_genome_accession.ncbi_datasets_assembly_fasta]),
+      reference_genome_file = select_first([reference_genome_file, ncbi_datasets_download_genome_accession.ncbi_datasets_gbff, ncbi_datasets_download_genome_accession.ncbi_datasets_assembly_fasta, centroid.centroid_genome_fasta]),
       snippy_variants_qc_metrics = snippy_variants_wf.snippy_variants_qc_metrics
   }
   call versioning.version_capture {
@@ -95,7 +98,7 @@ workflow snippy_streamline {
     String snippy_iqtree2_model_used = snippy_tree_wf.snippy_iqtree2_model_used
     File snippy_final_alignment = snippy_tree_wf.snippy_final_alignment
     File snippy_final_tree = snippy_tree_wf.snippy_final_tree
-    File snippy_ref = select_first([snippy_tree_wf.snippy_ref, ncbi_datasets_download_genome_accession.ncbi_datasets_gbff, ncbi_datasets_download_genome_accession.ncbi_datasets_assembly_fasta])
+    File snippy_ref = select_first([snippy_tree_wf.snippy_ref, ncbi_datasets_download_genome_accession.ncbi_datasets_gbff, ncbi_datasets_download_genome_accession.ncbi_datasets_assembly_fasta, centroid.centroid_genome_fasta])
     File snippy_msa_snps_summary = snippy_tree_wf.snippy_msa_snps_summary
     String? snippy_snp_sites_version = snippy_tree_wf.snippy_snp_sites_version
     String? snippy_snp_sites_docker = snippy_tree_wf.snippy_snp_sites_docker

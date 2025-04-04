@@ -4,7 +4,7 @@
 
 | **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
 |---|---|---|---|---|
-| [Public Data Sharing](../../workflows_overview/workflows_type.md/#public-data-sharing) | [Bacteria](../../workflows_overview/workflows_kingdom.md#bacteria), [Mycotics](../../workflows_overview/workflows_kingdom.md#mycotics) [Viral](../../workflows_overview/workflows_kingdom.md/#viral) | PHB vX.X.X | No | Set-level |
+| [Public Data Sharing](../../workflows_overview/workflows_type.md/#public-data-sharing) | [Bacteria](../../workflows_overview/workflows_kingdom.md#bacteria), [Mycotics](../../workflows_overview/workflows_kingdom.md#mycotics) [Viral](../../workflows_overview/workflows_kingdom.md/#viral) | PHB v3.0.0 | No | Set-level |
 
 ## Terra_2_NCBI_PHB
 

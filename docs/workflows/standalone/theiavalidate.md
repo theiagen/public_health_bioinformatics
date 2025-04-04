@@ -4,7 +4,7 @@
 
 | **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
 |---|---|---|---|---|
-| [Standalone](../../workflows_overview/workflows_type.md/#standalone) | [Any Taxa](../../workflows_overview/workflows_kingdom.md/#any-taxa) | PHB v2.0.0 | No | |
+| [Standalone](../../workflows_overview/workflows_type.md/#standalone) | [Any Taxa](../../workflows_overview/workflows_kingdom.md/#any-taxa) | PHB v3.0.0 | No | |
 
 ## TheiaValidate_PHB
 
@@ -19,6 +19,8 @@ TheiaValidate performs basic comparisons between user-designated columns in two 
 In order to enable this workflow to function for different workflow series, we require users to provide a list of columns they want to compare between the two tables. Feel free to use the information below that Theiagen uses to compare versions of the three main workflow series as a _**starting point**_ for your own validations:
 
 !!! tool "Validation Starting Points"
+    Please ensure that you adjust these values to make sense for your own validation. Please see the [theiavalidate README](https://github.com/theiagen/theiavalidate/blob/main/README.md) for more information as well.
+
     | Workflow Series | Validation Criteria TSV | Columns to Compare |
     |---|---|---|
     | TheiaCoV Workflows | [TheiaCov Validation Criteria](../../assets/files/theiavalidate/theiacov-validation-criteria.txt) | abricate_flu_subtype,abricate_flu_type,assembly_length_unambiguous,assembly_mean_coverage,irma_subtype,irma_type,kraken_human,kraken_human_dehosted,kraken_sc2,kraken_sc2_dehosted,kraken_target_org,kraken_target_org_dehosted,nextclade_aa_dels,nextclade_aa_subs,nextclade_clade,nextclade_lineage,nextclade_tamiflu_resistance_aa_subs,num_reads_clean1,num_reads_clean2,number_N,pango_lineage,percent_reference_coverage,vadr_num_alerts |
@@ -32,6 +34,9 @@ If additional validation metrics are desired, the user has the ability to provid
 - **SET** checks list items (such as `amrfinder_plus_genes` which is a comma-delimited list of genes) for identical content — order does not matter; that is, `mdsA,mdsB` is determined to be same as `mdsB,mdsA`. The EXACT match does not consider these to be the same, but the SET match does.
 - **<PERCENT_DIFF\>**, which is an actual decimal value such as **0.02**, calculates the percent difference between _numerical_ columns. If the columns are not numerical, this function will **not** work and will lead to workflow failure. For example, if the decimal percentage is 0.02, the test will indicate a failure if the values in the two columns are more than 2% different.
 - Dates, integers, and object-type values are ignored and indicate 0 failures.
+- **<RANGE>**, which is an actual integer value such as **10**, calculates the numerical difference between _numerical_ columns. If the columns are not numerical, this function will **not** work and will lead to workflow failure. For example, if the range is 10, the test will indicate a failure if the values in the two columns are more than 10 apart (units ignored).
+- **CRITERIA1,CRITERIA2,...** checks the values for the two columns with CRITERIA1 (which must be one of the above) and _then_ with CRITERIA2, etc.; values will pass if at least one criteria is met; the separate criteria **must** be comma-delimited.
+
 
 ### File Comparisons
 
@@ -58,7 +63,7 @@ Please note that all string inputs **must** be enclosed in quotation marks; for 
 | compare_two_tsvs | **cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional |
 | compare_two_tsvs | **debug_output** | Boolean | Set to true to enable more outputs; useful when debugging | FALSE | Optional |
 | compare_two_tsvs | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
-| compare_two_tsvs | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/theiagen/theiavalidate:0.1.0 | Optional |
+| compare_two_tsvs | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/theiagen/theiavalidate:1.1.2 | Optional |
 | compare_two_tsvs | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 4 | Optional |
 | compare_two_tsvs | **na_values** | String | If the user knows a particular value in either table that they would like to be considered N/A, they can indicate those values in a comma-separated list here. Any changes here will overwrite the default and not append to the default list. Do not include whitespace. | -1.#IND,1.#QNAN,1.#IND,-1.#QNAN,#N/A,N/A,n/a,,#NA,NULL,null,NaN,-NaN,nan,-nan,None | Optional |
 | export_two_tsvs | **cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional |
@@ -78,21 +83,16 @@ columnE	EXACT
 
 Please see above for a description of all available criteria options (EXACT, IGNORE, SET, <PERCENT_DIFF>).
 
-The optional `column_translation_tsv` file takes the following format (tab-delimited; _there can be **no** header line_):
+The optional `column_translation_tsv` file takes the following format (tab-delimited; _a header line is required_):
 
 ```text linenums="1"
+old_name	new_name
 column_name_in_table1	column_name_in_table2
 column_name_in_table2	column_name_in_table1
 internal_column_name	display_column_name
 ```
 
 Please note that the name in the **second column** will be displayed and used in all output files.
-
-!!! warning "Known Bug"
-    There must be _**more**_ than one line in the `column_translation_tsv` file or else this error will appear: `AttributeError: 'str' object has no attribute 'to_dict'`. To fix this error, add an additional line in the `column_translation_tsv` file, like the following: `columnA	columnA`
-
-!!! warning "Known Bug"
-    If performing a <PERCENT_DIFF> comparison, all samples must have values for that column.
 
 !!! info "Call Caching Disabled"
     If using TheiaValidate workflow version 1.3.0 or higher, the call-caching feature of Terra has been DISABLED to ensure that the workflow is run from the beginning and data is compared fresh. Call-caching will not be enabled, even if the user checks the box ✅ in the Terra workflow interface.
