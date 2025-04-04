@@ -264,7 +264,6 @@ workflow theiaviral_ont {
       }
     }
   }
-
   output {
     # versioning outputs
     String theiaviral_ont_version = version_capture.phb_version
