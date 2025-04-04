@@ -88,3 +88,52 @@ task ncbi_datasets_download_genome_accession {
     maxRetries: 3
   }
 }
+
+task ncbi_datasets_viral_taxon_summary {
+  input {
+    String taxon_id # ideally this is SPECIES lvl taxon id
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/ncbi-datasets:16.38.1" # not the latest version, but it's hard to keep up w/ the frequent releases
+    Int cpu = 1
+    Int memory = 4
+    Int disk_size = 50
+  }
+  command <<<
+    set -euo pipefail
+
+    date | tee DATE
+    datasets --version | sed 's|datasets version: ||' | tee DATASETS_VERSION
+
+    datasets summary virus genome taxon ~{taxon_id} \
+      --limit 10 \
+      --complete-only \
+      --refseq \
+      --as-json-lines | \
+
+    dataformat tsv virus-genome \
+      --fields accession,completeness,is-annotated,length,sourcedb,virus-name,virus-tax-id \
+       > ~{taxon_id}.ncbi_summary.tsv
+
+    # take the average of of all genome lengths across each row if the tax id column matches the user's input
+    awk -F'\t' -v taxon_id=~{taxon_id} '{
+      if (NR > 1 && $NF == taxon_id) { sum += $4; count++ }
+    }
+    END {
+      if (count) { print int(sum / count) } else { print "No matching taxon id found" }
+    }' ~{taxon_id}.ncbi_summary.tsv > ~{taxon_id}.AVG_GENOME_LENGTH
+
+  >>>
+  output {
+    File ncbi_datasets_taxon_summary_tsv = "~{taxon_id}.ncbi_summary.tsv"
+    String ncbi_datasets_avg_genome_length = read_string("~{taxon_id}.AVG_GENOME_LENGTH")
+    String ncbi_datasets_version = read_string("DATASETS_VERSION")
+    String ncbi_datasets_docker = docker
+  }
+  runtime {
+    memory: "~{memory} GB"
+    cpu: cpu
+    docker: docker
+    disks:  "local-disk " + disk_size + " SSD"
+    disk: disk_size + " GB"
+    maxRetries: 3
+  }
+}
