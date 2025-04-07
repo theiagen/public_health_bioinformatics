@@ -803,7 +803,7 @@ workflow merlin_magic {
     if (taxon == "Neisseria gonorrhoeae" || taxon == "Staphylococcus aureus" || 
         taxon == "Streptococcus pneumoniae" || 
         taxon == "Klebsiella" || taxon == "Klebsiella pneumoniae" || 
-        taxon == "Candida auris" || taxon = "Candidozyma auris" || 
+        taxon == "Candida auris" || taxon == "Candidozyma auris" || 
         taxon == "Vibrio cholerae" || taxon == "Typhi") 
     {
       call amr_search.amr_search_workflow {
