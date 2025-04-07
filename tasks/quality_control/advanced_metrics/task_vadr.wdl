@@ -45,10 +45,13 @@ task vadr {
       cp -v ~{out_base}/*.fa vadr_fasta_files
       zip ~{out_base}_vadr-fasta-files.zip vadr_fasta_files/*.fa 
 
-      # prep alerts into a tsv file for parsing
-      cut -f 5 "~{out_base}/~{out_base}.vadr.alt.list" | tail -n +2 > "~{out_base}.vadr.alerts.tsv"
-      cat "~{out_base}.vadr.alerts.tsv" | wc -l > NUM_ALERTS
-
+      # Prep alerts into a tsv file for parsing - used for GCP Batch testing
+      if [ -f "~{out_base}/~{out_base}.vadr.alt.list" ]; then
+        cut -f 5 "~{out_base}/~{out_base}.vadr.alt.list" | tail -n +2 > "~{out_base}.vadr.alerts.tsv"
+        cat "~{out_base}.vadr.alerts.tsv" | wc -l > NUM_ALERTS
+      else
+        echo "0" > NUM_ALERTS
+      fi
       # rename sequence classification summary file to end in txt
       mv -v "~{out_base}/~{out_base}.vadr.sqc" "~{out_base}/~{out_base}.vadr.sqc.txt"
 
