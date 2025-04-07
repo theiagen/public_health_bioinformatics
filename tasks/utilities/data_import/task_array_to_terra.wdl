@@ -46,7 +46,7 @@ task create_table_from_array {
   for file in ~{sep=" " file_paths}; do
       file_basename=$(basename "$file" ~{file_ending})
 
-      echo -e "${file_basename}\t${file//\/cromwell_root/gs:\/}\t${UPLOAD_DATE}\t~{data_source}\t${column_content}" >> terra_table_to_upload.tsv
+      echo -e "${file_basename}\t${file//*\/cromwell_root/gs:\/}\t${UPLOAD_DATE}\t~{data_source}\t${column_content}" >> terra_table_to_upload.tsv
     done
     
     echo "DEBUG: terra_table_to_upload.tsv created"

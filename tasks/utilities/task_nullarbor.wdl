@@ -26,10 +26,10 @@ task nullarbor_tsv {
     nullarbor.pl --version | tee VERSION 
     # untar taxoner dbs
     mkdir k1_db
-    mkdir /cromwell_root/k2_db
+    mkdir k2_db
     mkdir cent_db
     tar -C k1_db -xzvf ~{kraken1_db}
-    tar -C /cromwell_root/k2_db/ -xzvf ~{kraken2_db}
+    tar -C k2_db -xzvf ~{kraken2_db}
     tar -C cent_db -xzvf ~{centrifuge_db}
     mv cent_db/p_compressed+h+v.1.cf cent_db.1.cf
     mv cent_db/p_compressed+h+v.2.cf cent_db.2.cf
@@ -37,8 +37,8 @@ task nullarbor_tsv {
     mv k1_db/minikraken_20171019_8GB/* k1_db/
     # assign dbs for taxoners
     export KRAKEN_DEFAULT_DB=k1_db
-    export KRAKEN2_DEFAULT_DB=/cromwell_root/k2_db/
-    export KRAKEN2_DB_PATH=/cromwell_root/k2_db/
+    export KRAKEN2_DEFAULT_DB=k2_db
+    export KRAKEN2_DB_PATH=k2_db
     export CENTRIFUGE_DEFAULT_DB=cent_db
     echo four
     read1_array=(~{sep=' ' read1})
@@ -91,7 +91,7 @@ task nullarbor_tsv {
     String nullarbor_version = read_string("VERSION")
     String nullarbor_docker = "~{docker}"
     String analysis_date = read_string("DATE")
-    File nullarbor_report = "/cromwell_root/nullarbor_outdir/report/index.html"
+    File nullarbor_report = "nullarbor_outdir/report/index.html"
     File nullarbor_output_dir = "~{run_name}.tar.gz"
   }
   runtime {
