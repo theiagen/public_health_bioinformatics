@@ -58,7 +58,7 @@ workflow theiaviral_ont {
   # raw read quality check
   call nanoplot_task.nanoplot as nanoplot_raw {
     input:
-      read1 = read1,
+      read1 = select_first([porechop.trimmed_reads, read1]),
       samplename = samplename
   }
   call metabuli_task.metabuli as metabuli {
