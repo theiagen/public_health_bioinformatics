@@ -48,6 +48,8 @@ task vadr {
       if [ -f "~{out_base}/~{out_base}.vadr.alt.list" ]; then
         cut -f 5 "~{out_base}/~{out_base}.vadr.alt.list" | tail -n +2 > "~{out_base}.vadr.alerts.tsv"
         cat "~{out_base}.vadr.alerts.tsv" | wc -l > NUM_ALERTS
+      else
+        echo "VADR skipped due to no alerts" > NUM_ALERTS
       fi
       
       # Test this for GCP Batch
