@@ -792,6 +792,7 @@ workflow merlin_magic {
       "Klebsiella" : "570",
       "Klebsiella pneumoniae" : "573",
       "Candida auris" : "498019",
+      "Candidozyma auris" : "498019",
       "Vibrio cholerae" : "666"
     }
     # Check for Salmonella typing first then default to merlin_tag
@@ -802,7 +803,8 @@ workflow merlin_magic {
     if (taxon == "Neisseria gonorrhoeae" || taxon == "Staphylococcus aureus" || 
         taxon == "Streptococcus pneumoniae" || 
         taxon == "Klebsiella" || taxon == "Klebsiella pneumoniae" || 
-        taxon == "Candida auris" || taxon == "Vibrio cholerae" || taxon == "Typhi") 
+        taxon == "Candida auris" || taxon = "Candidozyma auris" || 
+        taxon == "Vibrio cholerae" || taxon == "Typhi") 
     {
       call amr_search.amr_search_workflow {
         input:
