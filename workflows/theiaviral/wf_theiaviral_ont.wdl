@@ -61,6 +61,7 @@ workflow theiaviral_ont {
       read1 = select_first([porechop.trimmed_reads, read1]),
       samplename = samplename
   }
+  # taxonomic classification and read extraction
   call metabuli_task.metabuli as metabuli {
     input:
       read1 = select_first([porechop.trimmed_reads, nanoq.filtered_read1]),
