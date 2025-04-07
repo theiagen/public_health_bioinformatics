@@ -31,13 +31,13 @@ workflow theiaviral_ont {
   if (trim_adapters) {
     call porechop_task.porechop as porechop {
       input:
-        read1 = nanoq.filtered_read1,
+        read1 = read1,
         samplename = samplename
     }
   }
   call nanoq_task.nanoq as nanoq {
     input:
-      read1 = read1,
+      read1 = select_first([porechop.trimmed_reads, read1]),
       samplename = samplename
   }
   call metabuli_task.metabuli as metabuli {
