@@ -32,10 +32,10 @@ task skani {
       -o ~{samplename}_skani_results.tsv
 
     # add new column header
-    new_header=$(awk 'NR==1 {OFS="\t"; print $0, "ANI_x_Total_bases"}' ~{samplename}_skani_results.tsv)
+    new_header=$(awk 'NR==1 {OFS="\t"; print $0, "ANI_x_Ref_Coverage"}' ~{samplename}_skani_results.tsv)
 
-    # create a new column and sort by the product of ANI (col 3) and Total bases covered (col 20)
-    awk -F'\t' 'NR > 1 {OFS="\t"; new_col = sprintf("%.2f", $3 * $20); print $0, new_col}' ~{samplename}_skani_results.tsv | \
+    # create a new column and sort by the product of ANI (col 3) and Align_fraction_ref (col 4)
+    awk -F'\t' 'NR > 1 {OFS="\t"; new_col = sprintf("%.2f", $3 * $4); print $0, new_col}' ~{samplename}_skani_results.tsv | \
       sort -t$'\t' -k21,21nr | \
       { echo "$new_header"; cat -; } > ~{samplename}_skani_results_sorted.tsv
 
