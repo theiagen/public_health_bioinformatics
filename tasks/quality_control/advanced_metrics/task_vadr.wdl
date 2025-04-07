@@ -48,11 +48,12 @@ task vadr {
       if [ -f "~{out_base}/~{out_base}.vadr.alt.list" ]; then
         cut -f 5 "~{out_base}/~{out_base}.vadr.alt.list" | tail -n +2 > "~{out_base}.vadr.alerts.tsv"
         cat "~{out_base}.vadr.alerts.tsv" | wc -l > NUM_ALERTS
-      else
-        echo "0" > NUM_ALERTS
       fi
-      # rename sequence classification summary file to end in txt
-      mv -v "~{out_base}/~{out_base}.vadr.sqc" "~{out_base}/~{out_base}.vadr.sqc.txt"
+      
+      # Test this for GCP Batch
+      if [ -f "~{out_base}/~{out_base}.vadr.sqc" ]; then
+        mv -v "~{out_base}/~{out_base}.vadr.sqc" "~{out_base}/~{out_base}.vadr.sqc.txt"
+      fi
 
     else
       echo "VADR skipped due to poor assembly; assembly length (unambiguous) = ~{assembly_length_unambiguous}" > NUM_ALERTS
