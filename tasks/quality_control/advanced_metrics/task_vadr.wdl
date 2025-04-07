@@ -20,12 +20,10 @@ task vadr {
   command <<<
     set -e
 
-    ls -lha 
-
     if [ ~{assembly_length_unambiguous} -gt ~{skip_length} ]; then
 
       # remove terminal ambiguous nucleotides
-      opt/vadr/vadr/miniscripts/fasta-trim-terminal-ambigs.pl \
+      /opt/vadr/vadr/miniscripts/fasta-trim-terminal-ambigs.pl \
         "~{genome_fasta}" \
         --minlen ~{min_length} \
         --maxlen ~{max_length} \
