@@ -18,7 +18,6 @@ task vadr {
   }
   String out_base = basename(genome_fasta, '.fasta')
   command <<<
-    set -e
 
   if [ ~{assembly_length_unambiguous} -gt ~{skip_length} ]; then
 
