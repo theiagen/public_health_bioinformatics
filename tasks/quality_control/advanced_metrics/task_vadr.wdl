@@ -55,6 +55,10 @@ task vadr {
       # Test this for GCP Batch
       if [ -f "~{out_base}/~{out_base}.vadr.sqc" ]; then
         mv -v "~{out_base}/~{out_base}.vadr.sqc" "~{out_base}/~{out_base}.vadr.sqc.txt"
+      else
+        echo "The .sqc file was not found - creating empty one"
+        mkdir -p "~{out_base}"
+        echo "# Sequence classification file not generated due to VADR error" > "~{out_base}/~{out_base}.vadr.sqc.txt"
       fi
 
     else
