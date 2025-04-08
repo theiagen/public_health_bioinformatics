@@ -11,8 +11,8 @@ task metabuli {
     Float? min_score # metabuli: Min. sequence similarity score (0.0-1.0) [0.000]
     Float? min_sp_score # metabuli: Min. score for species- or lower-level classification. [0.000]
     Float? min_cov # metabuli: Min. query coverage (0.0-1.0) [0.000]
-    Int cpu = 2 #***increase this***
-    Int memory = 4 #***increase this***
+    Int cpu = 4 #***increase this***
+    Int memory = 8 #***increase this***
     Int disk_size = 100
     String docker = "us-docker.pkg.dev/general-theiagen/theiagen/metabuli:1.1.0"
   }
