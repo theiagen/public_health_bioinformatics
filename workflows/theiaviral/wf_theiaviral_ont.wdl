@@ -113,7 +113,7 @@ workflow theiaviral_ont {
     # download the best reference determined from skani
     call ncbi_datasets_task.ncbi_datasets_download_genome_accession as ncbi_datasets {
       input:
-        ncbi_accession = skani.skani_top_ani_accession,
+        ncbi_accession = skani.skani_top_accession,
         use_ncbi_virus = true
     }
   }
@@ -251,7 +251,9 @@ workflow theiaviral_ont {
     String? quast_denovo_docker = quast_denovo.quast_docker
     # skani outputs - ANI-based reference genome selection
     File? skani_report = skani.skani_report
-    String? skani_top_ani_accession = skani.skani_top_ani_accession
+    String? skani_top_accession = skani.skani_top_accession
+    Float? skani_top_ani = skani.skani_top_ani
+    Float? skani_top_ref_coverage = skani.skani_top_ref_coverage
     String? skani_database = skani.skani_database
     String? skani_version = skani.skani_version
     String? skani_docker = skani.skani_docker

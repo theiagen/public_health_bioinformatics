@@ -47,13 +47,17 @@ task skani {
       exit 1
     else
       # get accession number from file name (and version number if it exists)
-      echo $top_hit_name | awk -F'[.]' '{print $1 ($2 ~ /^[0-9]+$/ ? "."$2 : "")}' | tee TOP_ANI_ACCESSION
+      echo $top_hit_name | awk -F'[.]' '{print $1 ($2 ~ /^[0-9]+$/ ? "."$2 : "")}' | tee TOP_ACCESSION
+      head -n 2 ~{samplename}_skani_results_sorted.tsv | tail -n 1 | cut -f 3 | tee TOP_ANI
+      head -n 2 ~{samplename}_skani_results_sorted.tsv | tail -n 1 | cut -f 4 | tee TOP_REF_COVERAGE
     fi
 
   >>>
   output{
     File skani_report = "~{samplename}_skani_results_sorted.tsv"
-    String skani_top_ani_accession = read_string("TOP_ANI_ACCESSION")
+    String skani_top_accession = read_string("TOP_ACCESSION")
+    Float skani_top_ani = read_float("TOP_ANI")
+    Float skani_top_ref_coverage = read_float("TOP_REF_COVERAGE")
     String skani_database = skani_db
     String skani_version = read_string("VERSION")
     String skani_docker = docker
