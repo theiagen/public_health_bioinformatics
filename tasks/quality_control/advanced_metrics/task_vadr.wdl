@@ -1,6 +1,6 @@
 version 1.0
 
-task vadr {
+ttask vadr {
   meta {
     description: "Runs NCBI's Viral Annotation DefineR for annotation and QC. See https://github.com/ncbi/vadr/wiki/Coronavirus-annotation"
   }
@@ -12,12 +12,13 @@ task vadr {
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/vadr:1.6.3-hav-flu2"
     Int min_length = 50
     Int max_length = 30000
-    Int cpu = 2
-    Int memory = 8
+    Int cpu = 4
+    Int memory = 16
     Int disk_size = 100
   }
   String out_base = basename(genome_fasta, '.fasta')
   command <<<
+    set -e
 
   if [ ~{assembly_length_unambiguous} -gt ~{skip_length} ]; then
 
@@ -44,22 +45,12 @@ task vadr {
       cp -v ~{out_base}/*.fa vadr_fasta_files
       zip ~{out_base}_vadr-fasta-files.zip vadr_fasta_files/*.fa 
 
-      # Prep alerts into a tsv file for parsing - used for GCP Batch testing
-      if [ -f "~{out_base}/~{out_base}.vadr.alt.list" ]; then
-        cut -f 5 "~{out_base}/~{out_base}.vadr.alt.list" | tail -n +2 > "~{out_base}.vadr.alerts.tsv"
-        cat "~{out_base}.vadr.alerts.tsv" | wc -l > NUM_ALERTS
-      else
-        echo "VADR skipped due to no alerts" > NUM_ALERTS
-      fi
-      
-      # Test this for GCP Batch
-      if [ -f "~{out_base}/~{out_base}.vadr.sqc" ]; then
-        mv -v "~{out_base}/~{out_base}.vadr.sqc" "~{out_base}/~{out_base}.vadr.sqc.txt"
-      else
-        echo "The .sqc file was not found - creating empty one"
-        mkdir -p "~{out_base}"
-        echo "# Sequence classification file not generated due to VADR error" > "~{out_base}/~{out_base}.vadr.sqc.txt"
-      fi
+      # prep alerts into a tsv file for parsing
+      cut -f 5 "~{out_base}/~{out_base}.vadr.alt.list" | tail -n +2 > "~{out_base}.vadr.alerts.tsv"
+      cat "~{out_base}.vadr.alerts.tsv" | wc -l > NUM_ALERTS
+
+      # rename sequence classification summary file to end in txt
+      mv -v "~{out_base}/~{out_base}.vadr.sqc" "~{out_base}/~{out_base}.vadr.sqc.txt"
 
     else
       echo "VADR skipped due to poor assembly; assembly length (unambiguous) = ~{assembly_length_unambiguous}" > NUM_ALERTS
