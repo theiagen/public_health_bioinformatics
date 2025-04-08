@@ -8,7 +8,7 @@ import "../../tasks/quality_control/basic_statistics/task_nanoplot.wdl" as nanop
 import "../../tasks/assembly/task_raven.wdl" as raven_task
 import "../../tasks/quality_control/advanced_metrics/task_checkv.wdl" as checkv_task
 import "../../tasks/quality_control/basic_statistics/task_quast.wdl" as quast_task
-import "../../tasks/phylogenetic_inference/utilities/task_skani.wdl" as skani_task
+import "../../tasks/taxon_id/task_skani.wdl" as skani_task
 import "../../tasks/utilities/data_import/task_ncbi_datasets.wdl" as ncbi_datasets_task
 import "../../tasks/alignment/task_minimap2.wdl" as minimap2_task
 import "../../tasks/utilities/data_handling/task_parse_mapping.wdl" as parse_mapping_task
