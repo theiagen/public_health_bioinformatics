@@ -25,7 +25,7 @@ workflow theiaviral_ont {
   }
   input {
     File read1
-    String taxon_of_interest
+    String taxon_id
     String samplename
     Boolean trim_adapters = false
     Boolean call_rasusa = false
@@ -59,14 +59,14 @@ workflow theiaviral_ont {
     input:
       read1 = select_first([porechop.trimmed_reads, nanoq.filtered_read1, read1]),
       samplename = samplename,
-      taxon_of_interest = taxon_of_interest
+      taxon_id = taxon_id
   }
   if (call_rasusa) {
     if (! defined(genome_length)) {
       # use the average genome length found by ncbi datasets summary based on taxon of interest
       call ncbi_datasets_task.ncbi_datasets_viral_taxon_summary as ncbi_taxon_summary {
         input:
-          taxon_id = taxon_of_interest
+          taxon_id = taxon_id
     }
   }
     # rasusa downsampling reads to specified coverage level

@@ -5,7 +5,7 @@ task metabuli {
     File read1 # intended for ONT reads only (at this time)
     String read1_basename = basename(basename(basename(read1, ".gz"), ".fastq"), ".fq")
     String samplename
-    String taxon_of_interest
+    String taxon_id
     File metabuli_db = "gs://theiagen-large-public-files-rp/terra/databases/metabuli/refseq_virus-v223.tar.gz"
     File taxonomy_path = "gs://theiagen-large-public-files-rp/terra/databases/metabuli/new_taxdump.tar.gz"
     Float? min_score # metabuli: Min. sequence similarity score (0.0-1.0) [0.000]
@@ -49,7 +49,7 @@ task metabuli {
       ~{read1} \
       ./output_dir/~{samplename}_classifications.tsv \
       ${extracted_db} \
-      ~{"--tax-id " + taxon_of_interest}
+      ~{"--tax-id " + taxon_id}
 
     # the extracted reads are being output to the _miniwdl_input directory for some reason
     # my guess is metabuli is written in c++ and it's allocating memory for the output file before it's being executed
@@ -59,7 +59,7 @@ task metabuli {
   output {
     File metabuli_report = "output_dir/~{samplename}_report.tsv"
     File metabuli_classified = "output_dir/~{samplename}_classifications.tsv"
-    File metabuli_read1_extract = "~{read1_basename}_~{taxon_of_interest}.fq"
+    File metabuli_read1_extract = "~{read1_basename}_~{taxon_id}.fq"
     String metabuli_version = read_string("VERSION")
     String metabuli_docker = docker
     String metabuli_database = metabuli_db
