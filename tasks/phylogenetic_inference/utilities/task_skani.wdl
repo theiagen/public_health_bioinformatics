@@ -39,13 +39,13 @@ task skani {
       sort -t$'\t' -k21,21nr | \
       { echo "$new_header"; cat -; } > ~{samplename}_skani_results_sorted.tsv
 
-    # get the file name for the top hit in sorted skani results: 1st column, 2nd line in file
-    top_hit_name=$(basename $(awk 'NR == 2 {print $1}' ~{samplename}_skani_results_sorted.tsv))
-
-    if [ -z "$top_hit_name" ]; then
+    if if [[ $(wc -l < ~{samplename}_skani_results_sorted.tsv) -lt 2 ]]; then
       echo "ERROR: No hits found in skani results"
       exit 1
     else
+      # get the file name for the top hit in sorted skani results: 1st column, 2nd line in file
+      top_hit_name=$(basename $(awk 'NR == 2 {print $1}' ~{samplename}_skani_results_sorted.tsv))
+
       # get accession number from file name (and version number if it exists)
       echo $top_hit_name | awk -F'[.]' '{print $1 ($2 ~ /^[0-9]+$/ ? "."$2 : "")}' | tee TOP_ACCESSION
       head -n 2 ~{samplename}_skani_results_sorted.tsv | tail -n 1 | cut -f 3 | tee TOP_ANI
