@@ -4,6 +4,7 @@ import "../../tasks/assembly/task_shovill.wdl" as shovill
 import "../../tasks/gene_typing/annotation/task_bakta.wdl" as bakta_task
 import "../../tasks/gene_typing/annotation/task_prokka.wdl" as prokka_task
 import "../../tasks/gene_typing/drug_resistance/task_amrfinderplus.wdl" as amrfinderplus
+import "../../tasks/gene_typing/drug_resistance/task_gamma.wdl" as gamma_task
 import "../../tasks/gene_typing/drug_resistance/task_resfinder.wdl" as resfinder
 import "../../tasks/gene_typing/plasmid_detection/task_plasmidfinder.wdl" as plasmidfinder_task
 import "../../tasks/gene_typing/drug_resistance/task_abricate.wdl" as abricate_task
@@ -70,6 +71,7 @@ workflow theiaprok_illumina_pe {
     Boolean call_resfinder = false
     Boolean call_plasmidfinder = true
     Boolean call_abricate = false
+    Boolean call_gamma = false
     String abricate_db = "vfdb"
     String genome_annotation = "prokka" # options: "prokka" or "bakta"
     String bakta_db = "full" # Default: "light" or "full"
@@ -189,6 +191,13 @@ workflow theiaprok_illumina_pe {
             assembly = shovill_pe.assembly_fasta,
             samplename = samplename,
             organism = select_first([expected_taxon, gambit.gambit_predicted_taxon])
+        }
+        if (call_gamma){
+          call gamma_task.gamma as gamma_task {
+            input:
+              assembly = shovill_pe.assembly_fasta,
+              samplename = samplename
+          }
         }
         if (call_resfinder) {
           call resfinder.resfinder as resfinder_task {
@@ -850,6 +859,16 @@ workflow theiaprok_illumina_pe {
     String? amrfinderplus_amr_betalactam_cephalosporin_genes = amrfinderplus_task.amrfinderplus_amr_betalactam_cephalosporin_genes
     String? amrfinderplus_amr_betalactam_cephalothin_genes = amrfinderplus_task.amrfinderplus_amr_betalactam_cephalothin_genes
     String? amrfinderplus_amr_betalactam_methicillin_genes = amrfinderplus_task.amrfinderplus_amr_betalactam_methicillin_genes
+    # GAMMA Outputs
+    String? gamma_hv_results = gamma_task.gamma_hv_results
+    String? gamma_ar_results = gamma_task.gamma_ar_results
+    String? gamma_rep_results = gamma_task.gamma_rep_results
+    String? gamma_hv_gff = gamma_task.gamma_hv_gff
+    String? gamma_ar_gff = gamma_task.gamma_ar_gff
+    String? gamma_rep_gff = gamma_task.gamma_rep_gff
+    String? gamma_hv_fasta = gamma_task.gamma_hv_fasta
+    String? gamma_ar_fasta = gamma_task.gamma_ar_fasta
+    String? gamma_rep_fasta = gamma_task.gamma_rep_fasta
     # Resfinder Outputs
     File? resfinder_pheno_table = resfinder_task.resfinder_pheno_table
     File? resfinder_pheno_table_species = resfinder_task.resfinder_pheno_table_species
