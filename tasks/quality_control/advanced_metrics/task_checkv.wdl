@@ -33,16 +33,13 @@ task checkv {
   # col (2) is contig_length
   total_len=$(awk 'NR>1 {sum += $2} END {print sum}' checkv_results/quality_summary.tsv)
   # col (5) is gene_count
-  total_genes=$(awk 'NR>1 {sum += $5} END {print sum}' checkv_results/quality_summary.tsv)
-  echo $total_genes | tee TOTAL_GENES
+  awk 'NR>1 {sum += $5} END {print sum}' checkv_results/quality_summary.tsv | tee TOTAL_GENES
 
   # sum(col (2) contig_length * col (10) completeness) / total_len
-  per_base_completeness=$(awk -v total_len="$total_len" 'NR>1 {sum += $2 * $10} END {result = sprintf("%.2f", sum / total_len); print result}' checkv_results/quality_summary.tsv)
-  echo $per_base_completeness | tee PER_BASE_COMPLETENESS
+  awk -v total_len="$total_len" 'NR>1 {sum += $2 * $10} END {result = sprintf("%.2f", sum / total_len); print result}' checkv_results/quality_summary.tsv | tee PER_BASE_COMPLETENESS
 
   # sum(col (2) contig_length * col (12) contamination) / total_len
-  per_base_contamination=$(awk -v total_len="$total_len" 'NR>1 {sum += $2 * $12} END {result = sprintf("%.2f", sum / total_len); print result}' checkv_results/quality_summary.tsv)
-  echo $per_base_contamination | tee PER_BASE_CONTAMINATION
+  awk -v total_len="$total_len" 'NR>1 {sum += $2 * $12} END {result = sprintf("%.2f", sum / total_len); print result}' checkv_results/quality_summary.tsv | tee PER_BASE_CONTAMINATION
 
   >>>
   output {
