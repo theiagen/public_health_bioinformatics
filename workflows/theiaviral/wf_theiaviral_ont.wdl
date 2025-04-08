@@ -1,4 +1,5 @@
 version 1.0
+import "../../tasks/quality_control/comparisons/task_screen.wdl" as screen
 import "../../tasks/quality_control/read_filtering/task_porechop.wdl" as porechop_task
 import "../../tasks/quality_control/read_filtering/task_nanoq.wdl" as nanoq_task
 import "../../tasks/quality_control/basic_statistics/task_nanoplot.wdl" as nanoplot_task
