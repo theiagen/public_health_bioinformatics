@@ -33,7 +33,8 @@ workflow theiaviral_ont {
     File? reference_fasta # optional, if provided, will be used instead of dynamic reference selection
     Float downsampling_coverage = 150
   }
-  # raw read quality check, genome_length 1 spoofs coverage estimation
+  # raw read quality check, genome_length is not required for the rest of the workflow, so estimated coverage is not exposed to the outputs
+  # incorporating nanoplot's estimated coverage output without requiring genome_length would require a conditional within the task to skip coverage if no genome length is provided
   call nanoplot_task.nanoplot as nanoplot_raw {
     input:
       read1 = read1,
@@ -192,7 +193,6 @@ workflow theiaviral_ont {
     Float nanoplot_r1_n50_raw = nanoplot_raw.n50
     Float nanoplot_r1_mean_q_raw = nanoplot_raw.mean_q
     Float nanoplot_r1_median_q_raw = nanoplot_raw.median_q
-    Float nanoplot_r1_est_coverage_raw = nanoplot_raw.est_coverage
     # porechop outputs - adapter trimming
     File? porechop_trimmed_read1 = porechop.trimmed_reads
     String? porechop_version = porechop.porechop_version
@@ -225,7 +225,6 @@ workflow theiaviral_ont {
     Float nanoplot_r1_n50_clean = nanoplot_clean.n50
     Float nanoplot_r1_mean_q_clean = nanoplot_clean.mean_q
     Float nanoplot_r1_median_q_clean = nanoplot_clean.median_q
-    Float nanoplot_r1_est_coverage_clean = nanoplot_clean.est_coverage
     # raven outputs - denovo genome assembly
     File? raven_denovo_assembly = raven.assembly_fasta
     String? raven_denovo_version = raven.raven_version
