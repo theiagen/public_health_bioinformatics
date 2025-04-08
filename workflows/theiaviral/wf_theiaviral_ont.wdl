@@ -1,8 +1,10 @@
 version 1.0
+import "../../tasks/quality_control/comparisons/task_screen.wdl" as screen
 import "../../tasks/quality_control/read_filtering/task_porechop.wdl" as porechop_task
 import "../../tasks/quality_control/read_filtering/task_nanoq.wdl" as nanoq_task
 import "../../tasks/taxon_id/contamination/task_metabuli.wdl" as metabuli_task
 import "../../tasks/utilities/task_rasusa.wdl" as rasusa_task
+import "../../tasks/quality_control/basic_statistics/task_nanoplot.wdl" as nanoplot_task
 import "../../tasks/assembly/task_raven.wdl" as raven_task
 import "../../tasks/quality_control/advanced_metrics/task_checkv.wdl" as checkv_task
 import "../../tasks/quality_control/basic_statistics/task_quast.wdl" as quast_task
@@ -26,10 +28,18 @@ workflow theiaviral_ont {
     String taxon_of_interest
     String samplename
     Boolean trim_adapters = false
+    Boolean filter_reads = false
     Boolean call_rasusa = false
     String? genome_length # required for RASUSA, could be optional otherwise # delete later
     File? reference_fasta # optional, if provided, will be used instead of dynamic reference selection
     Float downsampling_coverage = 150
+  }
+  # raw read quality check, genome_length 1 spoofs coverage estimation
+  call nanoplot_task.nanoplot as nanoplot_raw {
+    input:
+      read1 = read1,
+      samplename = samplename,
+      est_genome_length = select_first([genome_length, 1])
   }
   if (trim_adapters) {
     call porechop_task.porechop as porechop {
@@ -47,7 +57,7 @@ workflow theiaviral_ont {
   # taxonomic classification and read extraction
   call metabuli_task.metabuli as metabuli {
     input:
-      read1 = select_first([porechop.trimmed_reads, nanoq.filtered_read1]),
+      read1 = select_first([porechop.trimmed_reads, nanoq.filtered_read1, read1]),
       samplename = samplename,
       taxon_of_interest = taxon_of_interest
   }
@@ -67,6 +77,13 @@ workflow theiaviral_ont {
         coverage = downsampling_coverage,
         genome_length = select_first([genome_length, ncbi_taxon_summary.ncbi_datasets_avg_genome_length])
     }
+  }
+  # clean read quality control
+  call nanoplot_task.nanoplot as nanoplot_clean {
+    input:
+      read1 = select_first([rasusa.read1_subsampled, metabuli.metabuli_read1_extract]),
+      samplename = samplename,
+      est_genome_length = select_first([genome_length, 1])
   }
   if (! defined(reference_fasta)) {
     # de novo assembly with raven
@@ -166,6 +183,17 @@ workflow theiaviral_ont {
     input:
   }
   output {
+    # raw read quality control
+    File nanoplot_html_raw = nanoplot_raw.nanoplot_html
+    File nanoplot_tsv_raw = nanoplot_raw.nanoplot_tsv
+    Int nanoplot_num_reads_raw1 = nanoplot_raw.num_reads
+    Float nanoplot_r1_median_readlength_raw = nanoplot_raw.median_readlength
+    Float nanoplot_r1_mean_readlength_raw = nanoplot_raw.mean_readlength
+    Float nanoplot_r1_stdev_readlength_raw = nanoplot_raw.stdev_readlength
+    Float nanoplot_r1_n50_raw = nanoplot_raw.n50
+    Float nanoplot_r1_mean_q_raw = nanoplot_raw.mean_q
+    Float nanoplot_r1_median_q_raw = nanoplot_raw.median_q
+    Float nanoplot_r1_est_coverage_raw = nanoplot_raw.est_coverage
     # porechop outputs - adapter trimming
     File? porechop_trimmed_read1 = porechop.trimmed_reads
     String? porechop_version = porechop.porechop_version
@@ -188,6 +216,17 @@ workflow theiaviral_ont {
     File? rasusa_read1_subsampled = rasusa.read1_subsampled
     File? rasusa_read2_subsampled = rasusa.read2_subsampled
     String? rasusa_version = rasusa.rasusa_version
+    # clean read quality control
+    File nanoplot_html_clean = nanoplot_clean.nanoplot_html
+    File nanoplot_tsv_clean = nanoplot_clean.nanoplot_tsv
+    Int nanoplot_num_reads_clean1 = nanoplot_clean.num_reads
+    Float nanoplot_r1_median_readlength_clean = nanoplot_clean.median_readlength
+    Float nanoplot_r1_mean_readlength_clean = nanoplot_clean.mean_readlength
+    Float nanoplot_r1_stdev_readlength_clean = nanoplot_clean.stdev_readlength
+    Float nanoplot_r1_n50_clean = nanoplot_clean.n50
+    Float nanoplot_r1_mean_q_clean = nanoplot_clean.mean_q
+    Float nanoplot_r1_median_q_clean = nanoplot_clean.median_q
+    Float nanoplot_r1_est_coverage_clean = nanoplot_clean.est_coverage
     # raven outputs - denovo genome assembly
     File? raven_denovo_assembly = raven.assembly_fasta
     String? raven_denovo_version = raven.raven_version
