@@ -1,6 +1,6 @@
 version 1.0
 
-ttask vadr {
+task vadr {
   meta {
     description: "Runs NCBI's Viral Annotation DefineR for annotation and QC. See https://github.com/ncbi/vadr/wiki/Coronavirus-annotation"
   }
