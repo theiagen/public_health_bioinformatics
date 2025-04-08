@@ -18,7 +18,7 @@ task checkv {
   set -euo pipefail
 
   # get version
-  checkv -h | grep -Po "^CheckV [^:]+" | sed -e "s/CheckV //" | tee "VERSION"
+  checkv -h | grep -Po "^CheckV [^:]+" | tee "VERSION"
 
   # extract CheckV DB
   tar -xzf ~{checkv_db}
