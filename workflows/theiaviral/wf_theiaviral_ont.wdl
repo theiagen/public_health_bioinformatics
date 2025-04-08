@@ -28,7 +28,6 @@ workflow theiaviral_ont {
     String taxon_of_interest
     String samplename
     Boolean trim_adapters = false
-    Boolean filter_reads = false
     Boolean call_rasusa = false
     String? genome_length # required for RASUSA, could be optional otherwise # delete later
     File? reference_fasta # optional, if provided, will be used instead of dynamic reference selection
