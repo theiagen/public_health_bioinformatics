@@ -14,7 +14,7 @@ task bcftools_consensus {
     set -euo pipefail
 
     # get version
-    bcftools --version | tee VERSION
+    bcftools --version | head -1 | tee VERSION
 
     # make sure input vcf is gzipped
     if [[ ! "~{input_vcf}" == *.gz ]]; then
