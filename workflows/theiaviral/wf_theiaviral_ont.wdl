@@ -203,6 +203,7 @@ workflow theiaviral_ont {
     File metabuli_report = metabuli.metabuli_report
     File metabuli_classified = metabuli.metabuli_classified
     File metabuli_read1_extract = metabuli.metabuli_read1_extract
+    File metabuli_krona_report = metabuli.metabuli_krona_report
     String metabuli_database = metabuli.metabuli_database
     String metabuli_version = metabuli.metabuli_version
     String metabuli_docker = metabuli.metabuli_docker

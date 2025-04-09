@@ -3,7 +3,6 @@ version 1.0
 task metabuli {
   input {
     File read1 # intended for ONT reads only (at this time)
-    String read1_basename = basename(basename(basename(read1, ".gz"), ".fastq"), ".fq")
     String samplename
     String taxon_id
     File metabuli_db = "gs://theiagen-large-public-files-rp/terra/databases/metabuli/refseq_virus-v223.tar.gz"
@@ -54,12 +53,17 @@ task metabuli {
     # the extracted reads are being output to the _miniwdl_input directory for some reason
     # my guess is metabuli is written in c++ and it's allocating memory for the output file before it's being executed
     # I don't think this will be needed when running on terra...
-    find . -type f -name "*.fq" -exec mv {} . \;
+    read1_basename=$(basename $(basename $(basename ~{read1}, .gz) .fastq) .fq)
+
+    find . -type f -name ${read1_basename}_~{taxon_id}.fq -exec mv {} . \;
+    echo "${read1_basename}_~{taxon_id}.fq" > EXTRACTED_FASTQ
+
   >>>
   output {
     File metabuli_report = "output_dir/~{samplename}_report.tsv"
     File metabuli_classified = "output_dir/~{samplename}_classifications.tsv"
-    File metabuli_read1_extract = "~{read1_basename}_~{taxon_id}.fq"
+    File metabuli_read1_extract = read_string("EXTRACTED_FASTQ")
+    File metabuli_krona_report = "output_dir/~{samplename}_krona.html"
     String metabuli_version = read_string("VERSION")
     String metabuli_docker = docker
     String metabuli_database = metabuli_db
