@@ -5,6 +5,7 @@ task metabuli {
     File read1 # intended for ONT reads only (at this time)
     String samplename
     String taxon_id
+    Boolean extract_unclassified = false
     File metabuli_db = "gs://theiagen-large-public-files-rp/terra/databases/metabuli/refseq_virus-v223.tar.gz"
     File taxonomy_path = "gs://theiagen-large-public-files-rp/terra/databases/metabuli/new_taxdump.tar.gz"
     Float? min_score # metabuli: Min. sequence similarity score (0.0-1.0) [0.000]
@@ -51,12 +52,28 @@ task metabuli {
       ~{"--tax-id " + taxon_id}
 
     # Metabuli extract removes the "gz" suffix, then the final file extension
-    read1_basename=$(sed -Ee 's/(.*)\.([^\.]+)$/\1/' <<< $(basename ~{read1} .gz))
+    read1_basename=$(sed -Ee 's/(.*)\.[^\.]+$/\1/' <<< $(basename ~{read1} .gz))
 
     # Metabuli extract will create a file in the input directory, which is variable between
     # miniwdl and Terra, so we have to dynamically find it -_-
     find . -type f -name ${read1_basename}_~{taxon_id}.fq -exec mv {} . \;
+
     echo "${read1_basename}_~{taxon_id}.fq" > EXTRACTED_FASTQ
+
+    # extract and concatenate unclassified reads
+    if [[ ~{extract_unclassified} == "true" ]]; then
+      metabuli extract \
+        --seq-mode 3 \
+        ~{read1} \
+        ./output_dir/~{samplename}_classifications.tsv \
+        ${extracted_db} \
+        --tax-id 0
+
+      # find and add the unclassified reads to the extracted taxon_id
+      find . -type f -name ${read1_basename}_0.fq -exec mv {} . \;
+      cat ${read1_basename}_0.fq >> ${read1_basename}_~{taxon_id}.fq
+    fi
+
   >>>
   output {
     File metabuli_report = "output_dir/~{samplename}_report.tsv"
