@@ -31,7 +31,6 @@ workflow theiaviral_ont {
     Boolean call_rasusa = false
     String? genome_length # required for RASUSA, could be optional otherwise # delete later
     File? reference_fasta # optional, if provided, will be used instead of dynamic reference selection
-    Float downsampling_coverage = 150
   }
   # raw read quality check, genome_length is not required for the rest of the workflow, so estimated coverage is not exposed to the outputs
   # incorporating nanoplot's estimated coverage output without requiring genome_length would require a conditional within the task to skip coverage if no genome length is provided
@@ -62,20 +61,12 @@ workflow theiaviral_ont {
       taxon_id = taxon_id
   }
   if (call_rasusa) {
-    if (! defined(genome_length)) {
-      # use the average genome length found by ncbi datasets summary based on taxon of interest
-      call ncbi_datasets_task.ncbi_datasets_viral_taxon_summary as ncbi_taxon_summary {
-        input:
-          taxon_id = taxon_id
-    }
-  }
     # rasusa downsampling reads to specified coverage level
     call rasusa_task.rasusa as rasusa {
       input:
         read1 = metabuli.metabuli_read1_extract,
         samplename = samplename,
-        coverage = downsampling_coverage,
-        genome_length = select_first([genome_length, ncbi_taxon_summary.ncbi_datasets_avg_genome_length])
+        genome_length = genome_length
     }
   }
   # clean read quality control
