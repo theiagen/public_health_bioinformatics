@@ -218,6 +218,17 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 | gambit | **gambit_db_genomes** | File | User-provided database of assembled query genomes; requires complementary signatures file. If not provided, uses default database, "/gambit-db" | gs://gambit-databases-rp/2.0.0/gambit-metadata-2.0.0-20240628.gdb | Optional | FASTA, ONT, PE, SE |
 | gambit | **gambit_db_signatures** | File | User-provided signatures file; requires complementary genomes file. If not specified, the file from the docker container will be used.  | gs://gambit-databases-rp/2.0.0/gambit-signatures-2.0.0-20240628.gs | Optional | FASTA, ONT, PE, SE |
 | gambit | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 16 | Optional | FASTA, ONT, PE, SE |
+| gamma | **cpu** | Int | Number of CPUS to allocate to the task | 2 | Optional | FASTA, ONT, PE, SE |
+| gamma | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 50 | Optional | FASTA, ONT, PE, SE |
+| gamma | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/gamma:2.2 | Optional | FASTA, ONT, PE, SE |
+| gamma | **extended_output** | Boolean | Returns all gene mutations, otherwise if there are more than 10 mutations present the count is given | False | Optional | FASTA, ONT, PE, SE |
+| gamma | **gamma_db** | File | User-provided multifasta utilized by GAMMA to call allele mutations and identify gene matches | | Required | FASTA, ONT, PE, SE|
+| gamma | **min_lenght_percent_gammas** | Int | The minimum length percent match for output, input as an integer (i.e., "-m 50" for a 50% minimum match length to be reported), not active if the -a/--all option is used default is 20, GAMMA-S Only | 20 | Optional | FASTA, ONT, PE, SE | 
+| gamma | **min_percent_identity** | Int | The minimum nucleotide sequence identity % used by the Blat search, input as an integer (i.e., "-i 95" for a 95% threshold), default is 90 | 90 | Optional | FASTA, ONT, PE, SE |
+| gamma | **output_fasta** | Boolean | Output matches in FASTA format | True | FASTA, ONT, PE, SE | 
+| gamma | **output_gff** | Boolean | Output matches in GFF format | True | FASTA, ONT, PE, SE |
+| gamma | **run_gammas** | Boolean | Run GAMMA-S which runs GAMMA without translating the given sequences. Nucleotide to nucleotide. | False | FASTA, ONT, PE, SE |
+| gamma | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | FASTA, ONT, PE, SE |
 | kmerfinder | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional | FASTA, ONT, PE, SE |
 | kmerfinder | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | FASTA, ONT, PE, SE |
 | kmerfinder | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/biocontainers/kmerfinder:3.0.2--hdfd78af_0 | Optional | FASTA, ONT, PE, SE |

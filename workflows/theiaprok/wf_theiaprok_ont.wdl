@@ -16,6 +16,7 @@ import "../../tasks/species_typing/multi/task_ts_mlst.wdl" as ts_mlst_task
 import "../../tasks/task_versioning.wdl" as versioning_task
 import "../../tasks/taxon_id/contamination/task_kmerfinder.wdl" as kmerfinder_task
 import "../../tasks/taxon_id/task_gambit.wdl" as gambit_task
+import "../../tasks/gene_typing/drug_resistance/task_gamma.wdl" as gamma_task
 import "../../tasks/utilities/data_export/task_export_taxon_table.wdl" as export_taxon_table_task
 import "../utilities/wf_merlin_magic.wdl" as merlin_magic_workflow
 import "../utilities/wf_read_QC_trim_ont.wdl" as read_qc_workflow
@@ -55,6 +56,7 @@ workflow theiaprok_ont {
     Boolean call_resfinder = false
     Boolean call_plasmidfinder = true
     Boolean call_abricate = false
+    Boolean call_gamma = false
     String abricate_db = "vfdb"
     String genome_annotation = "prokka" # options: "prokka" or "bakta"
     String bakta_db = "full" # Default: "light" or "full"
@@ -155,6 +157,13 @@ workflow theiaprok_ont {
             assembly = flye_denovo.assembly_fasta,
             samplename = samplename,
             organism = select_first([expected_taxon, gambit.gambit_predicted_taxon])
+        }
+        if (call_gamma){
+          call gamma_task.gamma{
+            input:
+              assembly = shovill_pe.assembly_fasta,
+              samplename = samplename
+          }
         }
         if (call_resfinder) {
           call resfinder_task.resfinder as resfinder_task {
@@ -725,6 +734,10 @@ workflow theiaprok_ont {
     String? amrfinderplus_amr_betalactam_cephalosporin_genes = amrfinderplus_task.amrfinderplus_amr_betalactam_cephalosporin_genes
     String? amrfinderplus_amr_betalactam_cephalothin_genes = amrfinderplus_task.amrfinderplus_amr_betalactam_cephalothin_genes
     String? amrfinderplus_amr_betalactam_methicillin_genes = amrfinderplus_task.amrfinderplus_amr_betalactam_methicillin_genes
+    # GAMMA Outputs
+    File? gamma_results = gamma.gamma_results
+    File? gamma_gff = gamma.gamma_gff
+    File? gamma_fasta = gamma.gamma_fasta    
     # Resfinder Outputs
     File? resfinder_pheno_table = resfinder_task.resfinder_pheno_table
     File? resfinder_pheno_table_species = resfinder_task.resfinder_pheno_table_species

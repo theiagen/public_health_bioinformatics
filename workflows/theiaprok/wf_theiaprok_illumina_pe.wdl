@@ -4,7 +4,6 @@ import "../../tasks/assembly/task_shovill.wdl" as shovill
 import "../../tasks/gene_typing/annotation/task_bakta.wdl" as bakta_task
 import "../../tasks/gene_typing/annotation/task_prokka.wdl" as prokka_task
 import "../../tasks/gene_typing/drug_resistance/task_amrfinderplus.wdl" as amrfinderplus
-import "../../tasks/gene_typing/drug_resistance/task_gamma.wdl" as gamma_task
 import "../../tasks/gene_typing/drug_resistance/task_resfinder.wdl" as resfinder
 import "../../tasks/gene_typing/plasmid_detection/task_plasmidfinder.wdl" as plasmidfinder_task
 import "../../tasks/gene_typing/drug_resistance/task_abricate.wdl" as abricate_task
@@ -18,6 +17,7 @@ import "../../tasks/species_typing/multi/task_ts_mlst.wdl" as ts_mlst_task
 import "../../tasks/task_versioning.wdl" as versioning
 import "../../tasks/taxon_id/contamination/task_kmerfinder.wdl" as kmerfinder_task
 import "../../tasks/taxon_id/task_gambit.wdl" as gambit_task
+import "../../tasks/gene_typing/drug_resistance/task_gamma.wdl" as gamma_task
 import "../../tasks/utilities/data_export/task_export_taxon_table.wdl" as export_taxon_table_task
 import "../utilities/file_handling/wf_concatenate_illumina_lanes.wdl" as concatenate_lanes_workflow
 import "../utilities/wf_merlin_magic.wdl" as merlin_magic_workflow
