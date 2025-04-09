@@ -50,7 +50,8 @@ task metabuli {
       ${extracted_db} \
       ~{"--tax-id " + taxon_id}
 
-    read1_basename=$(basename $(basename $(basename ~{read1} .gz) .fastq) .fq)
+    # Metabuli extract removes the "gz" suffix, then the final file extension
+    read1_basename=$(sed -Ee 's/(.*)\.([^\.]+)$/\1/' <<< $(basename ~{read1} .gz))
 
     # Metabuli extract will create a file in the input directory, which is variable between
     # miniwdl and Terra, so we have to dynamically find it -_-
