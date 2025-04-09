@@ -50,10 +50,9 @@ task metabuli {
       ${extracted_db} \
       ~{"--tax-id " + taxon_id}
 
-    # the extracted reads are being output to the _miniwdl_input directory for some reason
-    # my guess is metabuli is written in c++ and it's allocating memory for the output file before it's being executed
-    # I don't think this will be needed when running on terra...
-    read1_basename=$(basename $(basename $(basename ~{read1}, .gz) .fastq) .fq)
+    # Metabuli extract will create a file in the input directory, which is variable between
+    # miniwdl and Terra, so we have to dynamically find it -_-
+    read1_basename=$(basename $(basename $(basename ~{read1} .gz) .fastq) .fq)
 
     find . -type f -name ${read1_basename}_~{taxon_id}.fq -exec mv {} . \;
     echo "${read1_basename}_~{taxon_id}.fq" > EXTRACTED_FASTQ
