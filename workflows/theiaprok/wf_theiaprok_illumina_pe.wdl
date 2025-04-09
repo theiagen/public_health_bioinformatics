@@ -71,7 +71,7 @@ workflow theiaprok_illumina_pe {
     Boolean call_resfinder = false
     Boolean call_plasmidfinder = true
     Boolean call_abricate = false
-    Boolean call_gamma = false
+    Boolean call_gamma = true
     String abricate_db = "vfdb"
     String genome_annotation = "prokka" # options: "prokka" or "bakta"
     String bakta_db = "full" # Default: "light" or "full"
@@ -193,7 +193,7 @@ workflow theiaprok_illumina_pe {
             organism = select_first([expected_taxon, gambit.gambit_predicted_taxon])
         }
         if (call_gamma){
-          call gamma_task.gamma as gamma_task {
+          call gamma_task.gamma{
             input:
               assembly = shovill_pe.assembly_fasta,
               samplename = samplename
@@ -860,15 +860,9 @@ workflow theiaprok_illumina_pe {
     String? amrfinderplus_amr_betalactam_cephalothin_genes = amrfinderplus_task.amrfinderplus_amr_betalactam_cephalothin_genes
     String? amrfinderplus_amr_betalactam_methicillin_genes = amrfinderplus_task.amrfinderplus_amr_betalactam_methicillin_genes
     # GAMMA Outputs
-    String? gamma_hv_results = gamma_task.gamma_hv_results
-    String? gamma_ar_results = gamma_task.gamma_ar_results
-    String? gamma_rep_results = gamma_task.gamma_rep_results
-    String? gamma_hv_gff = gamma_task.gamma_hv_gff
-    String? gamma_ar_gff = gamma_task.gamma_ar_gff
-    String? gamma_rep_gff = gamma_task.gamma_rep_gff
-    String? gamma_hv_fasta = gamma_task.gamma_hv_fasta
-    String? gamma_ar_fasta = gamma_task.gamma_ar_fasta
-    String? gamma_rep_fasta = gamma_task.gamma_rep_fasta
+    String? gamma_results = gamma.gamma_results
+    String? gamma_gff = gamma.gamma_gff
+    String? gamma_fasta = gamma.gamma_fasta
     # Resfinder Outputs
     File? resfinder_pheno_table = resfinder_task.resfinder_pheno_table
     File? resfinder_pheno_table_species = resfinder_task.resfinder_pheno_table_species
