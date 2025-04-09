@@ -5,9 +5,11 @@ task gamma {
     File assembly
     File gamma_db
     Int min_percent_identity = 90
+    Int min_length_percent_gammas = 20
     Boolean run_gammas = false
     Boolean output_gff = true
     Boolean output_fasta = true
+    Boolean extended_output = false
     String samplename
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/gamma:2.2"
     Int cpu = 2
@@ -19,6 +21,8 @@ task gamma {
       GAMMA-S.py ~{assembly} \
         ~{gamma_db} \
         ~{samplename} \
+        $(if ~{extended_output}; then echo "-e"; fi) \
+        -m ~{min_length_percent_gammas} \
         -i ~{min_percent_identity}
     else
       GAMMA.py ~{assembly} \
@@ -26,6 +30,7 @@ task gamma {
         ~{samplename} \
         $(if ~{output_gff}; then echo "--gff"; fi) \
         $(if ~{output_fasta}; then echo "--fasta"; fi) \
+        $(if ~{extended_output}; then echo "-e"; fi) \
         -i ~{min_percent_identity} \
         --name 
     fi
