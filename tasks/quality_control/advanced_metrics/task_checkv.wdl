@@ -44,8 +44,8 @@ task checkv {
   >>>
   output {
     String checkv_version = read_string("VERSION")
-    Float per_base_contamination = read_float("PER_BASE_CONTAMINATION")
-    Float per_base_completeness = read_float("PER_BASE_COMPLETENESS")
+    Float total_contamination = read_float("TOTAL_CONTAMINATION")
+    Float total_completeness = read_float("TOTAL_COMPLETENESS")
     Int total_genes = read_int("TOTAL_GENES")
     File checkv_summary = "checkv_results/quality_summary.tsv"
     File checkv_contamination = "checkv_results/contamination.tsv"

@@ -233,8 +233,8 @@ workflow theiaviral_ont {
     # checkv_denovo outputs - denovo assembly quality control
     File? checkv_denovo_summary = checkv_denovo.checkv_summary
     File? checkv_denovo_contamination = checkv_denovo.checkv_contamination
-    Float? checkv_denovo_per_base_contamination = checkv_denovo.per_base_contamination
-    Float? checkv_denovo_per_base_completeness = checkv_denovo.per_base_completeness
+    Float? checkv_denovo_total_contamination = checkv_denovo.total_contamination
+    Float? checkv_denovo_total_completeness = checkv_denovo.total_completeness
     Int? checkv_denovo_total_genes = checkv_denovo.total_genes
     String? checkv_denovo_version = checkv_denovo.checkv_version
     # quast_denovo outputs - denovo assembly quality control
@@ -306,8 +306,8 @@ workflow theiaviral_ont {
     # checkv_consensus outputs - consensus assembly quality control
     File checkv_consensus_summary = checkv_consensus.checkv_summary
     File checkv_consensus_contamination = checkv_consensus.checkv_contamination
-    Float checkv_consensus_per_base_contamination = checkv_consensus.per_base_contamination
-    Float checkv_consensus_per_base_completeness = checkv_consensus.per_base_completeness
+    Float checkv_consensus_total_contamination = checkv_consensus.total_contamination
+    Float checkv_consensus_total_completeness = checkv_consensus.total_completeness
     Int checkv_consensus_total_genes = checkv_consensus.total_genes
     String checkv_consensus_version = checkv_consensus.checkv_version
     # quast_consensus outputs - consensus assembly quality control
