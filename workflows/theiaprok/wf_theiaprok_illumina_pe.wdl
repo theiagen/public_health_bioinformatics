@@ -860,9 +860,9 @@ workflow theiaprok_illumina_pe {
     String? amrfinderplus_amr_betalactam_cephalothin_genes = amrfinderplus_task.amrfinderplus_amr_betalactam_cephalothin_genes
     String? amrfinderplus_amr_betalactam_methicillin_genes = amrfinderplus_task.amrfinderplus_amr_betalactam_methicillin_genes
     # GAMMA Outputs
-    String? gamma_results = gamma.gamma_results
-    String? gamma_gff = gamma.gamma_gff
-    String? gamma_fasta = gamma.gamma_fasta
+    File? gamma_results = gamma.gamma_results
+    File? gamma_gff = gamma.gamma_gff
+    File? gamma_fasta = gamma.gamma_fasta
     # Resfinder Outputs
     File? resfinder_pheno_table = resfinder_task.resfinder_pheno_table
     File? resfinder_pheno_table_species = resfinder_task.resfinder_pheno_table_species

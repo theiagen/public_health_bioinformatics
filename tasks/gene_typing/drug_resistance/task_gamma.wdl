@@ -31,9 +31,9 @@ task gamma {
     fi
   >>>
   output {
-    String? gamma_results = "~{samplename}.gamma"
-    String? gamma_gff = "~{samplename}.gff"
-    String? gamma_fasta = "~{samplename}.fasta"
+    File? gamma_results = "~{samplename}.gamma"
+    File? gamma_gff = "~{samplename}.gff"
+    File? gamma_fasta = "~{samplename}.fasta"
     String gamma_docker = docker
   }
   runtime {
