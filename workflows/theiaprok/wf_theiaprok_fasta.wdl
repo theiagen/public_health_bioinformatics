@@ -93,7 +93,7 @@ workflow theiaprok_fasta {
     if (call_gamma){
       call gamma_task.gamma{
         input:
-          assembly = shovill_pe.assembly_fasta,
+          assembly = assembly_fasta,
           samplename = samplename
       }
     }

@@ -182,7 +182,7 @@ workflow theiaprok_illumina_se {
         if (call_gamma){
           call gamma_task.gamma{
             input:
-              assembly = shovill_pe.assembly_fasta,
+              assembly = shovill_se.assembly_fasta,
               samplename = samplename
           }
         }

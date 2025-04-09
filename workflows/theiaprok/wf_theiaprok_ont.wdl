@@ -161,7 +161,7 @@ workflow theiaprok_ont {
         if (call_gamma){
           call gamma_task.gamma{
             input:
-              assembly = shovill_pe.assembly_fasta,
+              assembly = flye_denovo.assembly_fasta,
               samplename = samplename
           }
         }
