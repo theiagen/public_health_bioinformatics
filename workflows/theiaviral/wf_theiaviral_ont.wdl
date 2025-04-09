@@ -21,7 +21,7 @@ import "../../tasks/task_versioning.wdl" as versioning
 
 workflow theiaviral_ont {
   meta {
-    description: "..."
+    description: "De novo assembly, dynamic reference selection, and reference-based consensus calling for viral metagenomic/genomic data generated on ONT NGS platforms."
   }
   input {
     File read1
