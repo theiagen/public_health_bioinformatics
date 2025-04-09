@@ -50,13 +50,12 @@ task metabuli {
       ${extracted_db} \
       ~{"--tax-id " + taxon_id}
 
-    # Metabuli extract will create a file in the input directory, which is variable between
-    # miniwdl and Terra, so we have to dynamically find it -_-
     read1_basename=$(basename $(basename $(basename ~{read1} .gz) .fastq) .fq)
 
+    # Metabuli extract will create a file in the input directory, which is variable between
+    # miniwdl and Terra, so we have to dynamically find it -_-
     find . -type f -name ${read1_basename}_~{taxon_id}.fq -exec mv {} . \;
     echo "${read1_basename}_~{taxon_id}.fq" > EXTRACTED_FASTQ
-
   >>>
   output {
     File metabuli_report = "output_dir/~{samplename}_report.tsv"
