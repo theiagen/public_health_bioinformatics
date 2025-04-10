@@ -237,6 +237,7 @@ task mask_low_coverage {
   >>>
   output {
     File low_coverage_regions_bed = "low_coverage_regions.bed"
+    File all_coverage_regions_bed = "all_coverage_regions.bed"
     File mask_reference_fasta = "masked_reference.fasta"
     String bedtools_version = read_string("VERSION")
     String bedtools_docker = docker
