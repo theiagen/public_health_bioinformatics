@@ -543,7 +543,7 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 | shovill_se | **trim** | Boolean | Enable adaptor trimming (see <https://github.com/tseemann/shovill#main-steps>) | FALSE | Optional | SE |
 | ts_mlst | **cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional | FASTA, ONT, PE, SE |
 | ts_mlst | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 50 | Optional | FASTA, ONT, PE, SE |
-| ts_mlst | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/mlst:2.23.0-2024-08-01 | Optional | FASTA, ONT, PE, SE |
+| ts_mlst | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/mlst:2.23.0-2024-12-31 | Optional | FASTA, ONT, PE, SE |
 | ts_mlst | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 2 | Optional | FASTA, ONT, PE, SE |
 | ts_mlst | **min_percent_coverage** | Float | Minimum % breadth of coverage to report an MLST allele | 10 | Optional | FASTA, ONT, PE, SE |
 | ts_mlst | **min_percent_identity** | Float | Minimum % identity to known MLST gene to report an MLST allele | 95 | Optional | FASTA, ONT, PE, SE |
