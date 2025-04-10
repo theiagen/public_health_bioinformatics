@@ -32,6 +32,10 @@ workflow theiaviral_ont {
     Float min_mask_depth = 20 # minimum depth for masking low coverage regions
     File? reference_fasta # optional, if provided, will be used instead of dynamic reference selection
   }
+  # get the PHB version
+  call versioning.version_capture {
+    input:
+  }
   # raw read quality check, genome_length is not required for the rest of the workflow, so estimated coverage is not exposed to the outputs
   # incorporating nanoplot's estimated coverage output without requiring genome_length would require a conditional within the task to skip coverage if no genome length is provided
   call nanoplot_task.nanoplot as nanoplot_raw {
@@ -39,6 +43,7 @@ workflow theiaviral_ont {
       read1 = read1,
       samplename = samplename,
   }
+  # adapter trimming
   if (trim_adapters) {
     call porechop_task.porechop as porechop {
       input:
@@ -59,6 +64,7 @@ workflow theiaviral_ont {
       samplename = samplename,
       taxon_id = taxon_id
   }
+  # downsample reads if the user wants, rasusa parameters are set in the task
   if (call_rasusa) {
     # rasusa downsampling reads to specified coverage level
     call rasusa_task.rasusa as rasusa {
@@ -73,6 +79,7 @@ workflow theiaviral_ont {
       read1 = select_first([rasusa.read1_subsampled, metabuli.metabuli_read1_extract]),
       samplename = samplename,
   }
+  # run de novo if no reference genome is provided so we can select a reference
   if (! defined(reference_fasta)) {
     # de novo assembly with raven
     call raven_task.raven as raven {
@@ -142,6 +149,7 @@ workflow theiaviral_ont {
       sequencing_platform = "ont",
       samplename = samplename
   }
+  # mask low coverage regions with Ns
   call parse_mapping_task.mask_low_coverage {
     input:
       bam = parse_mapping.bam,
@@ -173,9 +181,6 @@ workflow theiaviral_ont {
     input:
       assembly = bcftools_consensus.bcftools_consensus_fasta,
       samplename = samplename
-  }
-  call versioning.version_capture {
-    input:
   }
   output {
     # raw read quality control
