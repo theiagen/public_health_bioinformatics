@@ -29,7 +29,7 @@ workflow theiaviral_ont {
     String samplename
     Boolean trim_adapters = false
     Boolean call_rasusa = false
-    String? genome_length # required for RASUSA, could be optional otherwise # delete later
+    String genome_length = "0" # required for RASUSA, could be optional otherwise # delete later
     File? reference_fasta # optional, if provided, will be used instead of dynamic reference selection
   }
   # raw read quality check, genome_length is not required for the rest of the workflow, so estimated coverage is not exposed to the outputs
@@ -198,11 +198,6 @@ workflow theiaviral_ont {
     String metabuli_database = metabuli.metabuli_database
     String metabuli_version = metabuli.metabuli_version
     String metabuli_docker = metabuli.metabuli_docker
-    # ncbi_datasets outputs - taxon summary and average genome length
-    File? ncbi_taxon_summary_tsv = ncbi_taxon_summary.ncbi_datasets_taxon_summary_tsv
-    String? ncbi_taxon_summary_avg_genome_length = ncbi_taxon_summary.ncbi_datasets_avg_genome_length
-    String? ncbi_taxon_summary_version = ncbi_taxon_summary.ncbi_datasets_version
-    String? ncbi_taxon_summary_docker = ncbi_taxon_summary.ncbi_datasets_docker
     # rasusa outputs - downsampled reads
     File? rasusa_read1_subsampled = rasusa.read1_subsampled
     File? rasusa_read2_subsampled = rasusa.read2_subsampled
