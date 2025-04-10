@@ -29,7 +29,6 @@ workflow theiaviral_ont {
     String samplename
     Boolean trim_adapters = false
     Boolean call_rasusa = false
-    String genome_length = "0" # required for RASUSA, could be optional otherwise # delete later
     File? reference_fasta # optional, if provided, will be used instead of dynamic reference selection
   }
   # raw read quality check, genome_length is not required for the rest of the workflow, so estimated coverage is not exposed to the outputs
@@ -38,7 +37,6 @@ workflow theiaviral_ont {
     input:
       read1 = read1,
       samplename = samplename,
-      est_genome_length = select_first([genome_length, 1])
   }
   if (trim_adapters) {
     call porechop_task.porechop as porechop {
@@ -66,7 +64,6 @@ workflow theiaviral_ont {
       input:
         read1 = metabuli.metabuli_read1_extract,
         samplename = samplename,
-        genome_length = genome_length
     }
   }
   # clean read quality control
@@ -74,7 +71,6 @@ workflow theiaviral_ont {
     input:
       read1 = select_first([rasusa.read1_subsampled, metabuli.metabuli_read1_extract]),
       samplename = samplename,
-      est_genome_length = select_first([genome_length, 1])
   }
   if (! defined(reference_fasta)) {
     # de novo assembly with raven
