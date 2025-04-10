@@ -218,6 +218,8 @@ task mask_low_coverage {
     Int memory = 8
   }
   command <<<
+    set -euo pipefail
+
     # get version
     bedtools --version | cut -d' ' -f2 | tee VERSION
 
