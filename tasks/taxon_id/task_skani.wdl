@@ -39,7 +39,7 @@ task skani {
       sort -t$'\t' -k21,21nr | \
       { echo "$new_header"; cat -; } > ~{samplename}_skani_results_sorted.tsv
 
-    if if [[ $(wc -l < ~{samplename}_skani_results_sorted.tsv) -lt 2 ]]; then
+    if [[ $(wc -l < ~{samplename}_skani_results_sorted.tsv) -lt 2 ]]; then
       echo "ERROR: No hits found in skani results"
       exit 1
     else
