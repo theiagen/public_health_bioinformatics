@@ -805,7 +805,7 @@ workflow merlin_magic {
         taxon == "Streptococcus pneumoniae" || 
         taxon == "Klebsiella" || taxon == "Klebsiella pneumoniae" || 
         taxon == "Candida auris" || taxon == "Candidozyma auris" || 
-        taxon == "Vibrio cholerae" || taxon == "Typhi" || taxnon == "Salmonella typhi") {
+        taxon == "Vibrio cholerae" || taxon == "Typhi" || taxon == "Salmonella typhi") {
     {
       call amr_search.amr_search_workflow {
         input:
