@@ -24,10 +24,7 @@ task bcftools_consensus {
       ext=""
     fi
 
-    #https://github.com/artic-network/fieldbioinformatics/blob/master/artic/minion.py#L167
-    #https://samtools.github.io/bcftools/bcftools.html#consensus
-    #Add masking bef file step to populate "Ns" for low coverage regions?
-
+    # reproduce artic behavior for left-aligning and normalizing indels
     bcftools norm \
       ~{input_vcf}"${ext}" \
       --check-ref wx \
@@ -35,8 +32,10 @@ task bcftools_consensus {
       --output-type z \
       --output ~{samplename}_norm.vcf.gz
 
+    # index the vcf file
     bcftools index ~{samplename}_norm.vcf.gz
 
+    # create the consensus fasta file
     bcftools consensus \
       ~{samplename}_norm.vcf.gz \
       --fasta-ref ~{reference_fasta} \
