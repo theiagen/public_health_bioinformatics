@@ -203,6 +203,55 @@ task calculate_coverage {
   }
 }
 
+task mask_low_coverage {
+  meta {
+    description: "Use bedtools to create a coverage mask for low coverage regions in a BAM file"
+  }
+  input {
+    File bam
+    File bai
+    File reference_fasta
+    Int min_depth = 20
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/bedtools:2.31.0"
+    Int disk_size = 100
+    Int cpu = 2
+    Int memory = 8
+  }
+  command <<<
+    # get version
+    bedtools --version | cut -d' ' -f2 | tee VERSION
+
+    # make a temporary reference fasta and make sure the header is ONLY the ">" + reference accession number.
+    # bedtools maskfasta requires the header to be the same as the reference name in the bam file
+    awk '{if (/^>/) print $1; else print}' ~{reference_fasta} > mod_reference.fasta
+
+    # report depth at all regions of a genome including regions with 0 coverage
+    bedtools genomecov -bga -ibam ~{bam} > all_coverage_regions.bed
+
+    # filter out regions that have a coverage greater than {min_depth}. Only need low coverage regions here.
+    awk -v min_depth=~{min_depth} '$4 < min_depth' all_coverage_regions.bed > low_coverage_regions.bed
+
+    # mask the low coverage regions in the reference fasta file
+    bedtools maskfasta -fi mod_reference.fasta -bed low_coverage_regions.bed \
+      -fo masked_reference.fasta
+  >>>
+  output {
+    File low_coverage_regions_bed = "low_coverage_regions.bed"
+    File mask_reference_fasta = "masked_reference.fasta"
+    String bedtools_version = read_string("VERSION")
+    String bedtools_docker = docker
+  }
+  runtime {
+    docker: "~{docker}"
+    memory: memory + " GB"
+    cpu: cpu
+    disks: "local-disk " + disk_size + " SSD"
+    disk: disk_size + " GB"
+    maxRetries: 0
+    preemptible: 0
+  }
+}
+
 task assembled_reads_percent {
   input {
     File bam

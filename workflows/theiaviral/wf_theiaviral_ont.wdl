@@ -145,10 +145,16 @@ workflow theiaviral_ont {
       sequencing_platform = "ont",
       samplename = samplename
   }
+  call parse_mapping_task.mask_low_coverage as coverage_mask {
+    input:
+      bam = parse_mapping.bam,
+      bai = parse_mapping.bai,
+      reference_fasta = select_first([ncbi_datasets.ncbi_datasets_assembly_fasta, reference_fasta]),
+  }
   # create consensus genome based on variant calls
   call bcftools_consensus_task.bcftools_consensus as bcftools_consensus {
     input:
-      reference_fasta = select_first([ncbi_datasets.ncbi_datasets_assembly_fasta, reference_fasta]),
+      reference_fasta = coverage_mask.mask_reference_fasta,
       input_vcf = clair3.clair3_variants_vcf,
       samplename = samplename
   }
@@ -278,6 +284,11 @@ workflow theiaviral_ont {
     String clair3_model = clair3.clair3_model_used
     String clair3_version = clair3.clair3_version
     String clair3_docker = clair3.clair3_variants_docker_image
+    # coverage_mask outputs - low coverage regions
+    File coverage_mask_bed = coverage_mask.low_coverage_regions_bed
+    File coverage_mask_reference_fasta = coverage_mask.mask_reference_fasta
+    String coverage_mask_bedtools_version = coverage_mask.bedtools_version
+    String coverage_mask_bedtools_docker = coverage_mask.bedtools_docker
     # bcftools_consensus outputs - consensus genome
     File bcftools_consensus_fasta = bcftools_consensus.bcftools_consensus_fasta
     File bcftools_norm_vcf = bcftools_consensus.bcftools_norm_vcf
