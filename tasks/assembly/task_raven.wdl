@@ -15,13 +15,13 @@ task raven {
     Int memory = 16
   }
   command <<<
-    # Fail hard
+    # fail hard
     set -euo pipefail
 
-    # Date and version control
+    # date and version control
     raven --version | tee VERSION
 
-    # Run Raven 
+    # run Raven 
     raven \
       --polishing-rounds ~{raven_polishing_iterations} \
       ~{"--identity " + raven_identity} \
@@ -29,7 +29,7 @@ task raven {
       --threads ~{cpu} \
       ~{read1} > ~{samplename}.assembly.fasta
 
-    # Check if assembly was successful by checking for output file content
+    # check if assembly was successful by checking for output file content
     if [ ! -s ~{samplename}.assembly.fasta ]; then
       echo "Raven assembly failed. No output file generated."
       exit 1
