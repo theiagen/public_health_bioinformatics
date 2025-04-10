@@ -12,7 +12,7 @@ task raven {
     Int cpu = 4
     Int disk_size = 100
     String docker = "us-docker.pkg.dev/general-theiagen/theiagen/raven:1.8.3"
-    Int memory = 32
+    Int memory = 16
   }
   command <<<
     # Fail hard
