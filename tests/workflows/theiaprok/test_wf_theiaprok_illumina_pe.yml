@@ -29,9 +29,9 @@
     - path: miniwdl_run/call-amrfinderplus_task/task.log
       contains: ["wdl", "theiaprok_illumina_pe", "amrfinderplus", "done"]
     - path: miniwdl_run/call-amrfinderplus_task/work/AMRFINDER_DB_VERSION
-      md5sum: 672ea23e1ffc90b3c64a8468292cc5d2
+      md5sum: 4c8e8048490e4bf79a0f28be40aa277c
     - path: miniwdl_run/call-amrfinderplus_task/work/AMRFINDER_VERSION
-      md5sum: 326a7d8c0e1f7435f5ae5c9153171036
+      md5sum: 1241e128796f42e12f922fc45d434ab3
     - path: miniwdl_run/call-amrfinderplus_task/work/AMR_CLASSES
       md5sum: b6017eebef847ac2471107ca6197b5c5
     - path: miniwdl_run/call-amrfinderplus_task/work/AMR_CORE_GENES
@@ -48,13 +48,13 @@
     - path: miniwdl_run/call-amrfinderplus_task/work/_miniwdl_inputs/0/test_contigs.fasta
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     - path: miniwdl_run/call-amrfinderplus_task/work/test_amrfinder_all.tsv
-      md5sum: a5cc7b0baa9e11c9a31540800d0a740c
+      md5sum: 376a8991c8eb010ea64c796115fb9b8d
     - path: miniwdl_run/call-amrfinderplus_task/work/test_amrfinder_amr.tsv
-      md5sum: a5cc7b0baa9e11c9a31540800d0a740c
+      md5sum: 376a8991c8eb010ea64c796115fb9b8d
     - path: miniwdl_run/call-amrfinderplus_task/work/test_amrfinder_stress.tsv
-      md5sum: a5cc7b0baa9e11c9a31540800d0a740c
+      md5sum: 376a8991c8eb010ea64c796115fb9b8d
     - path: miniwdl_run/call-amrfinderplus_task/work/test_amrfinder_virulence.tsv
-      md5sum: a5cc7b0baa9e11c9a31540800d0a740c
+      md5sum: 376a8991c8eb010ea64c796115fb9b8d
     - path: miniwdl_run/call-busco/command
       md5sum: 8a4de431119daee0dfc4f2605413b095
     - path: miniwdl_run/call-busco/inputs.json
@@ -434,7 +434,7 @@
     - path: miniwdl_run/wdl/tasks/gene_typing/drug_resistance/task_abricate.wdl
       md5sum: c82025fcc1442b1c2a598a429cd9cdab
     - path: miniwdl_run/wdl/tasks/gene_typing/drug_resistance/task_amrfinderplus.wdl
-      md5sum: 43b52fb064f937a1357272445cd4f246
+      md5sum: 8713a10fdfaa99f0a4a4556e11623f53
     - path: miniwdl_run/wdl/tasks/gene_typing/annotation/task_bakta.wdl
       md5sum: 96f6cb7f0c8716513a0ca74b083a745f
     - path: miniwdl_run/wdl/tasks/gene_typing/plasmid_detection/task_plasmidfinder.wdl

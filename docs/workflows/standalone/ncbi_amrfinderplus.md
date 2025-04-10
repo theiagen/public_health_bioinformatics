@@ -4,7 +4,7 @@
 
 | **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
 |---|---|---|---|---|
-| [Standalone](../../workflows_overview/workflows_type.md/#standalone) | [Bacteria](../../workflows_overview/workflows_kingdom.md/#bacteria), [Mycotics](../../workflows_overview/workflows_kingdom.md#mycotics) | PHB v2.2.0 | Yes | Sample-level |
+| [Standalone](../../workflows_overview/workflows_type.md/#standalone) | [Bacteria](../../workflows_overview/workflows_kingdom.md/#bacteria), [Mycotics](../../workflows_overview/workflows_kingdom.md#mycotics) | PHB vX.X.X | Yes | Sample-level |
 
 ## NCBIAMRFinderPlus_PHB
 
@@ -28,7 +28,7 @@ You can check if a gene or point mutation is in the AMRFinderPlus database [here
 | amrfinderplus_nuc | **cpu** | Int | Number of CPUs to allocate to the task | 8 | Optional |
 | amrfinderplus_nuc | **detailed_drug_class** | Boolean | | False | Optional |
 | amrfinderplus_nuc | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
-| amrfinderplus_nuc | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/staphb/ncbi-amrfinderplus:3.11.20-2023-09-26.1" | Optional |
+| amrfinderplus_nuc | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/staphb/ncbi-amrfinderplus:4.0.19-2024-12-18.1" | Optional |
 | amrfinderplus_nuc | **hide_point_mutations** | Boolean | If set to true, the output File amrfinderplus_all_report will not include any POINT mutations identified by AMRFinderPlus. | False | Optional |
 | amrfinderplus_nuc | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 16 | Optional |
 | amrfinderplus_nuc | **mincov** | Float | "Minimum proportion of reference gene covered for a BLAST-based hit (Methods BLAST or PARTIAL)." Attribute should be a float ranging from 0-1, such as 0.6 (equal to 60% coverage) | 0.5 | Optional |
