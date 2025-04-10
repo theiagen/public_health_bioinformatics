@@ -788,6 +788,7 @@ workflow merlin_magic {
       "Neisseria gonorrhoeae" : "485",
       "Staphylococcus aureus" : "1280",
       "Typhi" : "90370",
+      "Salmonella typhi" : "90370",
       "Streptococcus pneumoniae" : "1313",
       "Klebsiella" : "570",
       "Klebsiella pneumoniae" : "573",
@@ -804,7 +805,7 @@ workflow merlin_magic {
         taxon == "Streptococcus pneumoniae" || 
         taxon == "Klebsiella" || taxon == "Klebsiella pneumoniae" || 
         taxon == "Candida auris" || taxon == "Candidozyma auris" || 
-        taxon == "Vibrio cholerae" || taxon == "Typhi") 
+        taxon == "Vibrio cholerae" || taxon == "Typhi" || taxnon == "Salmonella typhi") {
     {
       call amr_search.amr_search_workflow {
         input:
