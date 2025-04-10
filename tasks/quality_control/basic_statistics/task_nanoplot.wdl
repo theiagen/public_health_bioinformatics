@@ -5,7 +5,7 @@ task nanoplot {
     File read1 # intended for ONT data only
     String samplename
     Int max_length = 100000
-    Int est_genome_length
+    Int est_genome_length = 0
 
     Int disk_size = 100
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/nanoplot:1.40.0"
