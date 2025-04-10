@@ -29,6 +29,7 @@ workflow theiaviral_ont {
     String samplename
     Boolean trim_adapters = false
     Boolean call_rasusa = false
+    Float min_mask_depth = 20 # minimum depth for masking low coverage regions
     File? reference_fasta # optional, if provided, will be used instead of dynamic reference selection
   }
   # raw read quality check, genome_length is not required for the rest of the workflow, so estimated coverage is not exposed to the outputs
@@ -146,6 +147,7 @@ workflow theiaviral_ont {
       bam = parse_mapping.bam,
       bai = parse_mapping.bai,
       reference_fasta = select_first([ncbi_datasets.ncbi_datasets_assembly_fasta, reference_fasta]),
+      min_depth = min_mask_depth
   }
   # create consensus genome based on variant calls
   call bcftools_consensus_task.bcftools_consensus as bcftools_consensus {
