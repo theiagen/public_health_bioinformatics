@@ -137,8 +137,8 @@ workflow theiaviral_illumina_pe {
   }
   output {
     # versioning outputs
-    String theiaviral_ont_version = version_capture.phb_version
-    String theiaviral_ont_date = version_capture.date
+    String theiaviral_illumina_pe_version = version_capture.phb_version
+    String theiaviral_illumina_pe_date = version_capture.date
    
     # raw read quality control
 
