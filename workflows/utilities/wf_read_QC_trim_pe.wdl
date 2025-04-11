@@ -30,6 +30,9 @@ workflow read_QC_trim_pe {
     Int? kraken_cpu
     File? kraken_db
     String? target_organism
+    Int? taxon_id
+    Boolean exclusion_extraction = false
+    Boolean extract_unclassified = false
     File? adapters
     File? phix
     String? workflow_series
@@ -127,7 +130,7 @@ workflow read_QC_trim_pe {
         read2 = bbduk.read2_clean
     }
   }
-  if ("~{workflow_series}" == "theiaprok" || "~{workflow_series}" == "theiameta") {
+  if ("~{workflow_series}" == "theiaprok" || "~{workflow_series}" == "theiameta" || "~{workflow_series}" == "theiaviral") {
     if (call_midas) {
       call midas_task.midas {
         input:
@@ -159,6 +162,28 @@ workflow read_QC_trim_pe {
       input:
         read1 = bbduk.read1_clean,
         read2 = bbduk.read2_clean
+    }
+  }
+  if ("~{workflow_series}" == "theiaviral") {
+    call kraken.kraken2_standalone {
+      input:
+        samplename = samplename,
+        read1 = bbduk.read1_clean,
+        read2 = bbduk.read2_clean,
+        kraken2_db = select_first([kraken_db]),
+        disk_size = kraken_disk_size,
+        memory = kraken_memory,
+        cpu = kraken_cpu
+    call kraken.kraken2_extract 
+      input:
+        samplename = samplename,
+        read1 = bbduk.read1_clean,
+        read2 = bbduk.read2_clean,
+        taxon_id = taxon_id,
+        kraken_file = ...,
+        kraken_report = kraken2_standalone.kraken_report,
+        exclude = exclusion_extraction,
+        extract_unclassified = extract_unclassified
     }
   }
   output {

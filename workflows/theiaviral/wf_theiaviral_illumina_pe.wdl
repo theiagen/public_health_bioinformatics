@@ -1,7 +1,6 @@
 version 1.0
 import "../utilities/wf_read_QC_trim_pe.wdl" as read_qc
 import "../../tasks/quality_control/comparisons/task_screen.wdl" as screen
-import "../../tasks/quality_control/basic_statistics
 # assembly
 import "../../tasks/quality_control/advanced_metrics/task_checkv.wdl" as checkv_task
 import "../../tasks/quality_control/basic_statistics/task_quast.wdl" as quast_task
@@ -33,7 +32,14 @@ workflow theiaviral_illumina_pe {
     input:
   }
   # read QC, classification, extraction, and trimming
-
+  call read_qc.read_QC_trim_pe as read_QC_trim {
+    input:
+      read1 = read1,
+      read2 = read2,
+      samplename = samplename,
+      taxon_id = taxon_id,
+      workflow_series = "theiaviral"
+  } 
 
   # clean read quality control
 

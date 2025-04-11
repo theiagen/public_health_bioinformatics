@@ -269,3 +269,78 @@ task kraken2_parse_classified {
     maxRetries: 0
   }
 }
+
+task kraken2_extract {
+  input {
+    String samplename
+    File read1
+    File? read2
+    Int taxon_id
+    File kraken_file
+    File kraken_report
+    Boolean exclude = false
+    Boolean extract_unclassified = false
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/krona:2.8.1"
+    Int memory = 16
+    Int cpu = 2
+    Int disk_size = 100
+  }
+  command <<<
+    # prepare extraction variables
+    read1_extracted=~{samplename}_extracted_1.fq
+
+    if ! [ -z ~{read2} ]; then
+      read2_call="-s2 ~{read2}"
+      read2_extracted=~{samplename}_extracted_2.fq
+      read2_out ="-o2 ${read2_extracted}"
+    else
+      read2_call=""
+      read2_out=""
+    fi
+
+    if [[ ~{exclude} == "true" ]]; then
+      exclude="--exclude"
+    else
+      exclude=""
+    fi
+
+    # Run extract_kraken_reads.py
+    extract_kraken_reads.py \
+      -t ~{taxon_id} \
+      -k ~{kraken_file} \
+      -s1 ~{read1} \
+      ${read2_call} \
+      -o1 ${read1_extracted} \
+      ${read2_out} \
+      --include-children \
+      --report-file ~{kraken_report} \
+      ${exclude}
+
+  # compress outputs
+  gzip ${read1_extracted}
+  read1_extracted_compressed=${read1_extracted}.gz
+  if [ ! -z ~{read2} ]; then
+    gzip ${read2_extracted}
+    read2_extracted_compressed=${read2_extracted}.gz
+  else
+    read2_extracted_compressed=""
+  fi
+
+  # echo extracted files
+  echo ${read1_extracted_compressed} > EXTRACTED_READ1
+  echo ${read2_extracted_compressed} > EXTRACTED_READ2
+
+  >>>
+  output {
+    String kraken2_extract_docker = docker
+    File kraken2_extracted_read1 = read_string("EXTRACTED_READ1")
+    File? kraken2_extracted_read2 = read_string("EXTRACTED_READ2")
+  }
+  runtime {
+      docker: "~{docker}"
+      memory: "~{memory} GB"
+      cpu: cpu
+      disks: "local-disk " + disk_size + " SSD"
+      preemptible: 0
+  }
+}
