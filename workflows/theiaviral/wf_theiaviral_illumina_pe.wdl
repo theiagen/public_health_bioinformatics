@@ -52,6 +52,7 @@ workflow theiaviral_illumina_pe {
       rank = read_extraction_rank
   }
   # read QC, classification, extraction, and trimming
+  # NEED to expose theiaviral specific parameters, e.g. exclusion_extraction, extract_unclassified
   call read_qc.read_QC_trim_pe as read_QC_trim {
     input:
       read1 = read1,
