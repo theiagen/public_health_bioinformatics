@@ -1,9 +1,7 @@
 version 1.0
+import "../utilities/wf_read_QC_trim_pe.wdl" as read_qc
 import "../../tasks/quality_control/comparisons/task_screen.wdl" as screen
-# fastqc/screen
-# trimmomatic
-# kraken2
-# fastqc/screen
+import "../../tasks/quality_control/basic_statistics
 # assembly
 import "../../tasks/quality_control/advanced_metrics/task_checkv.wdl" as checkv_task
 import "../../tasks/quality_control/basic_statistics/task_quast.wdl" as quast_task
@@ -27,8 +25,6 @@ workflow theiaviral_illumina_pe {
     File read2
     String taxon_id
     String samplename
-    Boolean trim_adapters = false
-    Int? genome_length = 0 # set to 0 so it isn't used
     Float min_mask_depth = 20 # minimum depth for masking low coverage regions
     File? reference_fasta # optional, if provided, will be used instead of dynamic reference selection
   }
@@ -36,19 +32,8 @@ workflow theiaviral_illumina_pe {
   call versioning.version_capture {
     input:
   }
-  # raw read quality check, genome_length is not required for the rest of the workflow, so estimated coverage is not exposed to the outputs
-  # incorporating nanoplot's estimated coverage output without requiring genome_length would require a conditional within the task to skip coverage if no genome length is provided
+  # read QC, classification, extraction, and trimming
 
-  # trimming
-  if (trim_adapters) {
-    call porechop_task.porechop as porechop {
-      input:
-        read1 = read1,
-        samplename = samplename
-    }
-  }
-
-  # taxonomic classification and read extraction
 
   # clean read quality control
 
@@ -137,8 +122,8 @@ workflow theiaviral_illumina_pe {
   }
   output {
     # versioning outputs
-    String theiaviral_ont_version = version_capture.phb_version
-    String theiaviral_ont_date = version_capture.date
+    String theiaviral_illumina_pe_version = version_capture.phb_version
+    String theiaviral_illumina_pe_date = version_capture.date
    
     # raw read quality control
 
