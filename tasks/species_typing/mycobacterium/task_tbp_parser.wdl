@@ -11,9 +11,9 @@ task tbp_parser {
     String? sequencing_method
     String? operator
 
-    Float? min_depth # default 10
+    Int? min_depth # default 10
     Float? min_frequency # default 0.1
-    Float? min_read_support # default 10
+    Int? min_read_support # default 10
     
     Float? min_percent_coverage # default 100 (--min_percent_coverage)
     File? coverage_regions_bed
@@ -23,9 +23,9 @@ task tbp_parser {
     Boolean tngs_data = false    
 
     Float? rrs_frequency # default 0.1
-    Float? rrs_read_support # default 10
+    Int? rrs_read_support # default 10
     Float? rrl_frequency # default 0.1
-    Float? rrl_read_support # default 10
+    Int? rrl_read_support # default 10
     Float? rpob449_frequency # default 0.1
     Float? etha237_frequency # default 0.1
     File? expert_rule_regions_bed

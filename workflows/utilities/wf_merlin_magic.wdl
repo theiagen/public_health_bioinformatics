@@ -218,18 +218,18 @@ workflow merlin_magic {
     File? tbp_parser_config
     String tbp_parser_output_seq_method_type = "WGS"
     String? tbp_parser_operator
-    Float? tbp_parser_min_depth
+    Int? tbp_parser_min_depth
     Float? tbp_parser_min_frequency
-    Float? tbp_parser_min_read_support
+    Int? tbp_parser_min_read_support
     Float? tbp_parser_min_percent_coverage
     File? tbp_parser_coverage_regions_bed
     Boolean? tbp_parser_debug
     Boolean? tbp_parser_add_cs_lims
     Boolean? tbp_parser_tngs_data
     Float? tbp_parser_rrs_frequency
-    Float? tbp_parser_rrs_read_support
+    Int? tbp_parser_rrs_read_support
     Float? tbp_parser_rrl_frequency
-    Float? tbp_parser_rrl_read_support
+    Int? tbp_parser_rrl_read_support
     Float? tbp_parser_rpob449_frequency
     Float? tbp_parser_etha237_frequency
     File? tbp_parser_expert_rule_regions_bed

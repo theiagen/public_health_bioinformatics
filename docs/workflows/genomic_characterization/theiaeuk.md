@@ -69,7 +69,7 @@ All input reads are processed through "core tasks" in each workflow. The core ta
 | merlin_magic | **srst2_min_edge_depth** | Int | Internal component, do not modify | 2 | Do Not Modify, Optional |
 | merlin_magic | **staphopia_sccmec_docker_image** | String | Internal component, do not modify | us-docker.pkg.dev/general-theiagen/biocontainers/staphopia-sccmec:1.0.0--hdfd78af_0 | Do Not Modify, Optional |
 | merlin_magic | **tbp_parser_config** | File | Internal component, do not modify |  | Do Not Modify, Optional |
-| merlin_magic | **tbp_parser_min_percent_coverage** | Int | Internal component, do not modify | 100 | Do Not Modify, Optional |
+| merlin_magic | **tbp_parser_min_percent_coverage** | Float | Internal component, do not modify | 100 | Do Not Modify, Optional |
 | merlin_magic | **tbp_parser_debug** | Boolean | Internal component, do not modify | FALSE | Do Not Modify, Optional |
 | merlin_magic | **tbp_parser_docker_image** | String | Internal component, do not modify | us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:2.4.4 | Do Not Modify, Optional |
 | merlin_magic | **tbp_parser_min_depth** | Int | Internal component, do not modify | 10 | Do Not Modify, Optional |

@@ -21,7 +21,7 @@ This workflow is still in experimental research stages. Documentation is minimal
 | tbprofiler_tngs | **samplename** | String | Name of sample to be analyzed |  | Required |
 | tbp_parser | **config** | File | The configuration file to use, in YAML format (overrides all other arguments except input_json and input_bam) |  | Optional |
 | tbp_parser | **coverage_regions_bed** | File | A file that contains the regions to perform coverage analysis on |  | Optional |
-| tbp_parser | **min_percent_coverage** | Int | The minimum percentage of a region to exceed the minimum depth for a region to pass QC in tbp_parser | 100 | Optional |
+| tbp_parser | **min_percent_coverage** | Float | The minimum percentage of a region to exceed the minimum depth for a region to pass QC in tbp_parser | 100 | Optional |
 | tbp_parser | **cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional |
 | tbp_parser | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
 | tbp_parser | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:2.4.4 | Optional |
