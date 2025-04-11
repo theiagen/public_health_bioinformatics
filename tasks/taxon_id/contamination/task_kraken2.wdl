@@ -280,6 +280,8 @@ task kraken2_extract {
     File kraken_report
     Boolean exclude = false
     Boolean extract_unclassified = false
+    File? read1_unclassified
+    File? read2_unclassified
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/krona:2.8.1"
     Int memory = 16
     Int cpu = 2
@@ -293,15 +295,10 @@ task kraken2_extract {
       read2_call="-s2 ~{read2}"
       read2_extracted=~{samplename}_extracted_2.fq
       read2_out ="-o2 ${read2_extracted}"
-    else
-      read2_call=""
-      read2_out=""
     fi
 
     if [[ ~{exclude} == "true" ]]; then
       exclude="--exclude"
-    else
-      exclude=""
     fi
 
     # Run extract_kraken_reads.py
@@ -310,10 +307,10 @@ task kraken2_extract {
       -k ~{kraken_file} \
       -s1 ~{read1} \
       ${read2_call} \
-      -o1 ${read1_extracted} \
+      -o ${read1_extracted} \
       ${read2_out} \
       --include-children \
-      --report-file ~{kraken_report} \
+      --report ~{kraken_report} \
       ${exclude}
 
   # compress outputs
@@ -322,13 +319,21 @@ task kraken2_extract {
   if [ ! -z ~{read2} ]; then
     gzip ${read2_extracted}
     read2_extracted_compressed=${read2_extracted}.gz
-  else
-    read2_extracted_compressed=""
   fi
 
   # echo extracted files
-  echo ${read1_extracted_compressed} > EXTRACTED_READ1
-  echo ${read2_extracted_compressed} > EXTRACTED_READ2
+  if [ ~{extract_unclassified} == "true" ]; then
+    # concatenate unclassified and extracted reads
+    zcat ${read1_extracted_compressed} ~{read1_unclassified} > ${samplename}_combined_1.fq.gz
+    if [ ! -z ~{read2} ]; then
+      zcat ${read2_extracted_compressed} ~{read2_unclassified} > ${samplename}_combined_2.fq.gz
+    fi
+    echo "${samplename}_combined_1.fq.gz" > EXTRACTED_READ1
+    echo "${samplename}_combined_2.fq.gz" > EXTRACTED_READ2
+  else
+    echo ${read1_extracted_compressed} > EXTRACTED_READ1
+    echo ${read2_extracted_compressed} > EXTRACTED_READ2
+  fi
 
   >>>
   output {
