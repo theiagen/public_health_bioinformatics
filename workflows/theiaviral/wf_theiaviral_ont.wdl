@@ -28,8 +28,8 @@ workflow theiaviral_ont {
     String samplename
     Boolean trim_adapters = false
     Boolean call_rasusa = false
-    Int? genome_length = 0 # set to 0 so it isn't used
-    Float min_mask_depth = 20 # minimum depth for masking low coverage regions
+    String genome_length = 0 # set to 0 so it isn't used
+    Int min_mask_depth = 20 # minimum depth for masking low coverage regions
     File? reference_fasta # optional, if provided, will be used instead of dynamic reference selection
   }
   # get the PHB version
@@ -42,7 +42,7 @@ workflow theiaviral_ont {
     input:
       read1 = read1,
       samplename = samplename,
-      genome_length = genome_length
+      est_genome_length = genome_length
   }
   # adapter trimming
   if (trim_adapters) {
@@ -80,7 +80,7 @@ workflow theiaviral_ont {
     input:
       read1 = select_first([rasusa.read1_subsampled, metabuli.metabuli_read1_extract]),
       samplename = samplename,
-      genome_length = genome_length
+      est_genome_length = genome_length
   }
   # run de novo if no reference genome is provided so we can select a reference
   if (! defined(reference_fasta)) {
