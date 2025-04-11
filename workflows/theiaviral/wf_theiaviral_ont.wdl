@@ -186,6 +186,9 @@ workflow theiaviral_ont {
       samplename = samplename
   }
   output {
+    # versioning outputs
+    String theiaviral_ont_version = version_capture.phb_version
+    String theiaviral_ont_date = version_capture.date
     # raw read quality control
     File nanoplot_html_raw = nanoplot_raw.nanoplot_html
     File nanoplot_tsv_raw = nanoplot_raw.nanoplot_tsv
@@ -325,8 +328,5 @@ workflow theiaviral_ont {
     String quast_consensus_pipeline_date = quast_consensus.pipeline_date
     String quast_consensus_version = quast_consensus.version
     String quast_consensus_docker = quast_consensus.quast_docker
-    # versioning outputs
-    String theiaviral_ont_version = version_capture.phb_version
-    String theiaviral_ont_date = version_capture.date
   }
 }
