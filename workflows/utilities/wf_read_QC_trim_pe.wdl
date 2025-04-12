@@ -258,6 +258,10 @@ workflow read_QC_trim_pe {
     File? kraken_report_dehosted = kraken2_theiacov_dehosted.kraken_report
     String kraken_docker = select_first([kraken2_theiacov_raw.docker, kraken2_standalone.kraken2_docker, ""])
     String kraken_database = select_first([kraken2_theiacov_raw.database, kraken2_standalone.kraken2_database, kraken_db_warning, ""])
+
+    # kraken2 read extract - theiaviral
+    File? kraken2_extracted_read1 = kraken2_extract.kraken2_extracted_read1
+    File? kraken2_extracted_read2 = kraken2_extract.kraken2_extracted_read2
     
     # trimming versioning
     String? trimmomatic_version = trimmomatic_pe.version

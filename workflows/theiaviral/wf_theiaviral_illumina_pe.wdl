@@ -1,7 +1,9 @@
 version 1.0
 import "../utilities/wf_read_QC_trim_pe.wdl" as read_qc
-import "../../tasks/quality_control/comparisons/task_screen.wdl" as screen
+import "../../tasks/quality_control/comparisons/task_screen.wdl" as read_screen_task
 # assembly
+import "../../tasks/assembly/task_metaspades.wdl" as metaspades_task
+import "../../tasks/assembly/task_shovill.wdl" as shovill_task
 import "../../tasks/quality_control/advanced_metrics/task_checkv.wdl" as checkv_task
 import "../../tasks/quality_control/basic_statistics/task_quast.wdl" as quast_task
 import "../../tasks/taxon_id/task_skani.wdl" as skani_task
@@ -25,7 +27,12 @@ workflow theiaviral_illumina_pe {
     String taxon_id
     String samplename
     Float min_mask_depth = 20 # minimum depth for masking low coverage regions
+    Boolean call_screen = false # if true, run clean read screening
     File? reference_fasta # optional, if provided, will be used instead of dynamic reference selection
+
+    Boolean call_metaviralspades = false
+    Boolean call_metaspades = false
+    Boolean call_shovill = false
   }
   # get the PHB version
   call versioning.version_capture {
@@ -40,13 +47,42 @@ workflow theiaviral_illumina_pe {
       samplename = samplename,
       taxon_id = taxon_id,
       workflow_series = "theiaviral"
-  } 
-
-  # clean read quality control
-
+  }
+  # clean read screening
+  if (call_screen) {
+    call read_screen_task.screen as clean_read_screen {
+      input:
+        read1 = read_QC_trim.kraken2_extracted_read1,
+        read2 = read_QC_trim.kraken2_extracted_read2
+    }
+  }
   # run de novo if no reference genome is provided so we can select a reference
   if (! defined(reference_fasta)) {
-    # de novo assembly with raven
+    # de novo assembly benchmarking
+    if (call_metaviralspades) {
+      call metaspades_task.metaspades_pe {
+        input:
+          read1_cleaned = read_QC_trim.kraken2_extracted_read1,
+          read2_cleaned = read_QC_trim.kraken2_extracted_read2,
+          samplename = samplename
+      }
+    }
+    if (call_metaspades) {
+      call metaspades_task.metaspades_pe {
+        input:
+          read1_cleaned = read_QC_trim.kraken2_extracted_read1,
+          read2_cleaned = read_QC_trim.kraken2_extracted_read2,
+          samplename = samplename
+      }
+    }
+    if (call_shovill) {
+      call shovill_task.shovill_pe {
+        input:
+          read1_cleaned = read_QC_trim.kraken2_extracted_read1,
+          read2_cleaned = read_QC_trim.kraken2_extracted_read2,
+          samplename = samplename
+      }
+    }
 
     # quality control metrics for de novo assembly (ie. completeness, viral gene count, contamination)
     call checkv_task.checkv as checkv_denovo {

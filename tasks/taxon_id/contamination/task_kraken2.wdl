@@ -290,7 +290,6 @@ task kraken2_extract {
   command <<<
     # prepare extraction variables
     read1_extracted=~{samplename}_extracted_1.fq
-
     if ! [ -z ~{read2} ]; then
       read2_call="-s2 ~{read2}"
       read2_extracted=~{samplename}_extracted_2.fq
@@ -301,7 +300,7 @@ task kraken2_extract {
       exclude="--exclude"
     fi
 
-    # Run extract_kraken_reads.py
+    # Run extract_kraken_reads.py and include all descendants of a taxon ID(s)
     extract_kraken_reads.py \
       -t ~{taxon_id} \
       -k ~{kraken_file} \
