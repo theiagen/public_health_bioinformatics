@@ -2,8 +2,8 @@ version 1.0
 import "../utilities/wf_read_QC_trim_pe.wdl" as read_qc
 import "../../tasks/quality_control/comparisons/task_screen.wdl" as read_screen_task
 # assembly
-import "../../tasks/assembly/task_metaspades.wdl" as metaspades_task
-import "../../tasks/assembly/task_shovill.wdl" as shovill_task
+import "../../tasks/assembly/task_spades.wdl" as spades_task
+import "../../tasks/assembly/task_megahit.wdl" as megahit_task
 import "../../tasks/quality_control/advanced_metrics/task_checkv.wdl" as checkv_task
 import "../../tasks/quality_control/basic_statistics/task_quast.wdl" as quast_task
 import "../../tasks/taxon_id/task_skani.wdl" as skani_task
@@ -33,6 +33,7 @@ workflow theiaviral_illumina_pe {
     Boolean call_metaviralspades = false
     Boolean call_metaspades = false
     Boolean call_spades = false
+    Boolean call_megahit = false
   }
   # get the PHB version
   call versioning.version_capture {
@@ -77,6 +78,14 @@ workflow theiaviral_illumina_pe {
     }
     if (call_spades) {
       call spades_task.spades_pe {
+        input:
+          read1_cleaned = read_QC_trim.kraken2_extracted_read1,
+          read2_cleaned = read_QC_trim.kraken2_extracted_read2,
+          samplename = samplename
+      }
+    }
+    if (call megahit) {
+      call megahit_task.megahit_pe {
         input:
           read1_cleaned = read_QC_trim.kraken2_extracted_read1,
           read2_cleaned = read_QC_trim.kraken2_extracted_read2,
