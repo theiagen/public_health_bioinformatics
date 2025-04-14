@@ -132,7 +132,7 @@ workflow read_QC_trim_pe {
           read2 = bbduk.read2_clean
     }
   }
-  if ("~{workflow_series}" == "theiaprok" || "~{workflow_series}" == "theiameta" || "~{workflow_series}" == "theiaviral") {
+  if ("~{workflow_series}" == "theiaprok" || "~{workflow_series}" == "theiameta") {
     if (call_midas) {
       call midas_task.midas {
         input:
