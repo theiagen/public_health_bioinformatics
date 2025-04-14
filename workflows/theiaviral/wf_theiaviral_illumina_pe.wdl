@@ -1,4 +1,5 @@
 version 1.0
+
 import "../utilities/wf_read_QC_trim_pe.wdl" as read_qc
 import "../../tasks/quality_control/comparisons/task_screen.wdl" as read_screen_task
 # assembly
@@ -53,8 +54,8 @@ workflow theiaviral_illumina_pe {
   if (call_screen) {
     call read_screen_task.check_reads as clean_read_screen {
       input:
-        read1 = read_QC_trim.kraken2_extracted_read1,
-        read2 = read_QC_trim.kraken2_extracted_read2
+        read1 = select_first([read_QC_trim.kraken2_extracted_read1]),
+        read2 = select_first([read_QC_trim.kraken2_extracted_read2])
     }
   }
   # run de novo if no reference genome is provided so we can select a reference
@@ -63,32 +64,32 @@ workflow theiaviral_illumina_pe {
     if (call_metaviralspades) {
       call spades_task.metaviralspades_pe {
         input:
-          read1_cleaned = read_QC_trim.kraken2_extracted_read1,
-          read2_cleaned = read_QC_trim.kraken2_extracted_read2,
+          read1_cleaned = select_first([read_QC_trim.kraken2_extracted_read1]),
+          read2_cleaned = select_first([read_QC_trim.kraken2_extracted_read2]),
           samplename = samplename
       }
     }
     if (call_metaspades) {
       call spades_task.metaspades_pe {
         input:
-          read1_cleaned = read_QC_trim.kraken2_extracted_read1,
-          read2_cleaned = read_QC_trim.kraken2_extracted_read2,
+          read1_cleaned = select_first([read_QC_trim.kraken2_extracted_read1]),
+          read2_cleaned = select_first([read_QC_trim.kraken2_extracted_read2]),
           samplename = samplename
       }
     }
     if (call_spades) {
       call spades_task.spades_pe {
         input:
-          read1_cleaned = read_QC_trim.kraken2_extracted_read1,
-          read2_cleaned = read_QC_trim.kraken2_extracted_read2,
+          read1_cleaned = select_first([read_QC_trim.kraken2_extracted_read1]),
+          read2_cleaned = select_first([read_QC_trim.kraken2_extracted_read2]),
           samplename = samplename
       }
     }
     if (call_megahit) {
       call megahit_task.megahit_pe {
         input:
-          read1_cleaned = read_QC_trim.kraken2_extracted_read1,
-          read2_cleaned = read_QC_trim.kraken2_extracted_read2,
+          read1_cleaned = select_first([read_QC_trim.kraken2_extracted_read1]),
+          read2_cleaned = select_first([read_QC_trim.kraken2_extracted_read2]),
           samplename = samplename
       }
     }
@@ -96,19 +97,19 @@ workflow theiaviral_illumina_pe {
     # quality control metrics for de novo assembly (ie. completeness, viral gene count, contamination)
     call checkv_task.checkv as checkv_denovo {
       input:
-        assembly = raven.assembly_fasta,
+        assembly = select_first([metaviralspades_pe.assembly_fasta, metaspades_pe.assembly_fasta, spades_pe.assembly_fasta, megahit_pe.assembly_fasta]),
         samplename = samplename
     }
     # quality control metrics for de novo assembly (ie. contigs, n50, GC content, genome length)
     call quast_task.quast as quast_denovo {
       input:
-        assembly = raven.assembly_fasta,
+        assembly = select_first([metaviralspades_pe.assembly_fasta, metaspades_pe.assembly_fasta, spades_pe.assembly_fasta, megahit_pe.assembly_fasta]),
         samplename = samplename
     }
     # ANI-based reference genome selection
     call skani_task.skani as skani {
       input:
-        assembly_fasta = raven.assembly_fasta,
+        assembly_fasta = select_first([metaviralspades_pe.assembly_fasta, metaspades_pe.assembly_fasta, spades_pe.assembly_fasta, megahit_pe.assembly_fasta]),
         samplename = samplename
     }
     # download the best reference determined from skani
