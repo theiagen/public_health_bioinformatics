@@ -51,7 +51,7 @@ workflow theiaviral_illumina_pe {
   }
   # clean read screening
   if (call_screen) {
-    call read_screen_task.screen as clean_read_screen {
+    call read_screen_task.check_reads as clean_read_screen {
       input:
         read1 = read_QC_trim.kraken2_extracted_read1,
         read2 = read_QC_trim.kraken2_extracted_read2
