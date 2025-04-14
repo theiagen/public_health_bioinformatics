@@ -11,7 +11,7 @@ workflow seqsero1 {
   call versioning.version_capture {
     input:
   }
-  call seqsero1.seqsero`_assembly {
+  call seqsero1.seqsero1_assembly {
     input:
       samplename = samplename,
       assembly_fasta = assembly_fasta
@@ -19,10 +19,10 @@ workflow seqsero1 {
   output {
     String seqsero1_analysis_date = version_capture.date
     String seqsero1_wf_version = version_capture.phb_version
-    String seqsero1_report = seqsero1.seqsero_report
-    String seqsero1_version = seqsero1.seqsero_version
-    String seqsero1_predicted_antigenic_profile = seqsero1.seqsero_predicted_antigenic_profile
-    String seqsero1_predicted_serotype = seqsero1.seqsero_predicted_serotype
+    String seqsero1_report = seqsero1_assembly.seqsero_report
+    String seqsero1_version = seqsero1_assembly.seqsero_version
+    String seqsero1_predicted_antigenic_profile = seqsero1_assembly.seqsero_predicted_antigenic_profile
+    String seqsero1_predicted_serotype = seqsero1_assembly.seqsero_predicted_serotype
   }
 
 }
