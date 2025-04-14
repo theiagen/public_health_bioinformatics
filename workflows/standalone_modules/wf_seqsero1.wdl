@@ -24,5 +24,4 @@ workflow seqsero1 {
     String seqsero1_predicted_antigenic_profile = seqsero1_assembly.seqsero_predicted_antigenic_profile
     String seqsero1_predicted_serotype = seqsero1_assembly.seqsero_predicted_serotype
   }
-
 }
