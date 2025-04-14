@@ -30,7 +30,7 @@ workflow read_QC_trim_pe {
     Int? kraken_cpu
     File? kraken_db
     String? target_organism
-    Int? taxon_id
+    Int taxon_id = 0
     Boolean exclusion_extraction = false
     Boolean extract_unclassified = false
     File? adapters
