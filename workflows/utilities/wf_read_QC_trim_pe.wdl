@@ -41,7 +41,7 @@ workflow read_QC_trim_pe {
     String? trimmomatic_args
     String fastp_args = "--detect_adapter_for_pe -g -5 20 -3 20"
   }
-  if (("~{workflow_series}" == "theiacov") || ("~{workflow_series}" == "theiameta")) {
+  if (("~{workflow_series}" == "theiacov") || ("~{workflow_series}" == "theiameta") || ("~{workflow_series}" == "theiaviral")) {
     call ncbi_scrub.ncbi_scrub_pe {
       input:
         samplename = samplename,

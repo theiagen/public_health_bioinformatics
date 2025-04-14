@@ -185,6 +185,11 @@ workflow theiaviral_illumina_pe {
     String? fastq_scan_docker = read_QC_trim.fastq_scan_docker
     File? fastq_scan_raw1_json = read_QC_trim.fastq_scan_raw1_json
     File? fastq_scan_raw2_json = read_QC_trim.fastq_scan_raw2_json
+    # NCBI scrubbing
+    File? read1_dehosted = read_QC_trim.read1_dehosted
+    File? read2_dehosted = read_QC_trim.read2_dehosted
+    Int? ncbi_scrub_human_spots_removed = read_QC_trim.ncbi_scrub_human_spots_removed
+    String? ncbi_scrub_docker = read_QC_trim.ncbi_scrub_docker
     # trimming outputs - adapter trimming
     String? trimmomatic_version = read_QC_trim.trimmomatic_version
     String? trimmomatic_docker = read_QC_trim.trimmomatic_docker
