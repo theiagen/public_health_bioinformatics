@@ -106,20 +106,6 @@ workflow read_QC_trim_pe {
       adapters = adapters,
       phix = phix
   }
-  if (read_qc == "fastqc") {
-    call fastqc_task.fastqc as fastqc_raw {
-      input:
-        read1 = read1,
-        read2 = read2
-    }
-  }
-  if (read_qc == "fastq_scan") {
-    call fastq_scan.fastq_scan_pe as fastq_scan_raw {
-      input:
-        read1 = read1,
-        read2 = read2,
-    }
-  }
   if ("~{workflow_series}" == "theiaprok" || "~{workflow_series}" == "theiameta") {
     if (call_midas) {
       call midas_task.midas {
