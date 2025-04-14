@@ -219,6 +219,19 @@ workflow read_QC_trim_pe {
         read2 = select_first([cat_lanes.read2_concatenated, kraken2_extract.extracted_read2, bbduk.read2_clean])
     }
   }
+  if (read_qc == "fastq_scan") {
+    call fastq_scan.fastq_scan_pe as fastq_scan_raw {
+      input:
+        read1 = read1,
+        read2 = read2,
+    }
+    call fastq_scan.fastq_scan_pe as fastq_scan_clean {
+      input:
+        read1 = select_first([kraken2_extract.kraken2_extracted_read1, bbduk.read1_clean]),
+        read2 = select_first([kraken2_extract.kraken2_extracted_read2, bbduk.read2_clean])
+    }
+  }
+
   output {
     # NCBI scrubber
     File? read1_dehosted = ncbi_scrub_pe.read1_dehosted
