@@ -126,11 +126,12 @@ workflow read_QC_trim_pe {
         read1 = read1,
         read2 = read2,
     }
-    if (workflow_series != "theiaviral")
+    if (workflow_series != "theiaviral") {
       call fastq_scan.fastq_scan_pe as fastq_scan_clean {
         input:
           read1 = bbduk.read1_clean,
           read2 = bbduk.read2_clean
+      }
     }
   }
   if ("~{workflow_series}" == "theiaprok" || "~{workflow_series}" == "theiameta") {
