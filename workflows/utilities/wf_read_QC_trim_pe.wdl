@@ -192,21 +192,32 @@ workflow read_QC_trim_pe {
         read1_unclassified = kraken2_standalone.kraken2_unclassified_read1,
         read2_unclassified = kraken2_standalone.kraken2_unclassified_read2
     }
-    if (call_fastqc) {
-      call fastqc_task.fastqc as fastqc_clean {
-          input:
-            read1 = kraken2_extract.kraken2_extracted_read1,
-            read2 = kraken2_extract.kraken2_extracted_read2
-        }
+  }
+  if (read_qc == "fastqc") {
+    call fastqc_task.fastqc as fastqc_raw {
+      input:
+        read1 = read1,
+        read2 = read2
     }
-    if (call_fastq_scan) {
-      call fastq_scan.fastq_scan_pe as fastq_scan_clean {
-          input:
-            read1 = kraken2_extract.kraken2_extracted_read1,
-            read2 = kraken2_extract.kraken2_extracted_read2
-        }
+    call fastqc_task.fastqc as fastqc_clean {
+      input:
+        read1 = select_first([kraken2_extract.kraken2_extracted_read1, bbduk.read1_clean]),
+        read2 = select_first([kraken2_extract.kraken2_extracted_read2, bbduk.read2_clean])
     }
   }
+  if (read_qc == "fastq_scan") {
+    call fastq_scan.fastq_scan_pe as fastq_scan_raw {
+      input:
+        read1 = read1,
+        read2 = read2,
+    }
+    call fastq_scan.fastq_scan_pe as fastq_scan_clean {
+      input:
+        read1 = select_first([kraken2_extract.kraken2_extracted_read1, bbduk.read1_clean]),
+        read2 = select_first([kraken2_extract.kraken2_extracted_read2, bbduk.read2_clean])
+    }
+  }
+
   output {
     # NCBI scrubber
     File? read1_dehosted = ncbi_scrub_pe.read1_dehosted
