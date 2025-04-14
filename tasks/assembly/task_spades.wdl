@@ -1,5 +1,54 @@
 version 1.0
 
+task spades_pe {
+  input {
+    File read1_cleaned
+    File read2_cleaned
+    String samplename
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/spades:4.1.0"
+    Int disk_size = 100
+    Int cpu = 4
+    Int memory = 16
+    String? kmers
+    String? spades_opts
+    Int phred_offset = 33
+  }
+  command <<<
+    # fail hard
+    set -euo pipefail
+
+    # get version
+    spades.py --version | sed -Ee "s/SPAdes genome assembler ([^ ]+).*/\1/" | tee VERSION
+
+    spades.py \
+      -1 ~{read1_cleaned} \
+      -2 ~{read2_cleaned} \
+      ~{'-k ' + kmers} \
+      -m ~{memory} \
+      -t ~{cpu} \
+      -o spades \
+      --phred-offset ~{phred_offset} \
+      ~{spades_opts}
+
+    mv spades/contigs.fasta ~{samplename}_contigs.fasta
+
+  >>>
+  output {
+    File assembly_fasta = "~{samplename}_contigs.fasta"
+    String spades_version = read_string("VERSION")
+    String spades_docker = '~{docker}'
+  }
+  runtime {
+    docker: "~{docker}"
+    memory: "~{memory} GB"
+    cpu: "~{cpu}"
+    disks:  "local-disk " + disk_size + " SSD"
+    disk: disk_size + " GB"
+    maxRetries: 3
+    preemptible: 0
+  }
+}
+
 task metaspades_pe {
   input {
     File read1_cleaned
