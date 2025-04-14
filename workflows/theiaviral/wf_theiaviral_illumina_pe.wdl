@@ -191,7 +191,7 @@ workflow theiaviral_illumina_pe {
     String? fastp_version = read_QC_trim.fastp_version
     File? fastp_html_report = read_QC_trim.fastp_html_report
     # bbduk outputs
-    String bbduk_version = read_QC_trim.bbduk_version
+    String bbduk_docker = read_QC_trim.bbduk_docker
     File bbduk_read1_clean = read_QC_trim.read1_clean
     File bbduk_read2_clean = read_QC_trim.read2_clean
     # kraken2 outputs - taxonomic classification and read extraction
