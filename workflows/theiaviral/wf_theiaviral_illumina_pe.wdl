@@ -84,7 +84,7 @@ workflow theiaviral_illumina_pe {
           samplename = samplename
       }
     }
-    if (call megahit) {
+    if (call_megahit) {
       call megahit_task.megahit_pe {
         input:
           read1_cleaned = read_QC_trim.kraken2_extracted_read1,
