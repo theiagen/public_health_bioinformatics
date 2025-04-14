@@ -32,7 +32,7 @@ workflow theiaviral_illumina_pe {
 
     Boolean call_metaviralspades = false
     Boolean call_metaspades = false
-    Boolean call_shovill = false
+    Boolean call_spades = false
   }
   # get the PHB version
   call versioning.version_capture {
@@ -60,7 +60,7 @@ workflow theiaviral_illumina_pe {
   if (! defined(reference_fasta)) {
     # de novo assembly benchmarking
     if (call_metaviralspades) {
-      call metaspades_task.metaspades_pe {
+      call spades_task.metaviralspades_pe {
         input:
           read1_cleaned = read_QC_trim.kraken2_extracted_read1,
           read2_cleaned = read_QC_trim.kraken2_extracted_read2,
@@ -68,15 +68,15 @@ workflow theiaviral_illumina_pe {
       }
     }
     if (call_metaspades) {
-      call metaspades_task.metaspades_pe {
+      call spades_task.metaspades_pe {
         input:
           read1_cleaned = read_QC_trim.kraken2_extracted_read1,
           read2_cleaned = read_QC_trim.kraken2_extracted_read2,
           samplename = samplename
       }
     }
-    if (call_shovill) {
-      call shovill_task.shovill_pe {
+    if (call_spades) {
+      call spades_task.spades_pe {
         input:
           read1_cleaned = read_QC_trim.kraken2_extracted_read1,
           read2_cleaned = read_QC_trim.kraken2_extracted_read2,
