@@ -20,7 +20,7 @@ task megahit_pe {
     megahit --version | tee VERSION
 
     # get the memory required, assuming its input is GB
-    memory=$(python3 -c "~{memory} * 1000000000")
+    memory=$(python3 -c "print(~{memory} * 1000000000)")
 
     # run megathit
     megahit \
@@ -32,7 +32,7 @@ task megahit_pe {
       -o megahit/ \
       ~{megahit_opts}
 
-    mv megahit/contigs.fasta ~{samplename}_contigs.fasta
+    mv megahit/final.contigs.fa ~{samplename}_contigs.fasta
 
   >>>
   output {
