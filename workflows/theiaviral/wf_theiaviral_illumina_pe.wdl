@@ -31,6 +31,14 @@ workflow theiaviral_illumina_pe {
     Boolean call_screen = false # if true, run clean read screening
     File? reference_fasta # optional, if provided, will be used instead of dynamic reference selection
 
+    # read screen parameters
+    Int min_reads = 0
+    Int min_basepairs = 0
+    Int min_genome_length = 0
+    Int max_genome_length = 1000000
+    Int min_coverage = 0
+    Int min_proportion = 0
+
     Boolean call_metaviralspades = false
     Boolean call_metaspades = false
     Boolean call_spades = false
@@ -55,7 +63,13 @@ workflow theiaviral_illumina_pe {
     call read_screen_task.check_reads as clean_read_screen {
       input:
         read1 = select_first([read_QC_trim.kraken2_extracted_read1]),
-        read2 = select_first([read_QC_trim.kraken2_extracted_read2])
+        read2 = select_first([read_QC_trim.kraken2_extracted_read2]),
+        min_reads = min_reads,
+        min_basepairs = min_basepairs,
+        min_genome_length = min_genome_length,
+        max_genome_length = max_genome_length,
+        min_coverage = min_coverage,
+        min_proportion = min_proportion
     }
   }
   # run de novo if no reference genome is provided so we can select a reference
