@@ -31,14 +31,6 @@ workflow theiaviral_illumina_pe {
     Boolean skip_screen = true # if false, run clean read screening
     File? reference_fasta # optional, if provided, will be used instead of dynamic reference selection
 
-    # read screen parameters
-    Int min_reads = 0
-    Int min_basepairs = 0
-    Int min_genome_length = 0
-    Int max_genome_length = 1000000
-    Int min_coverage = 0
-    Int min_proportion = 0
-
     Boolean call_metaviralspades = false
     Boolean call_metaspades = false
     Boolean call_spades = false
@@ -60,137 +52,140 @@ workflow theiaviral_illumina_pe {
   }
   # clean read screening
   if (! skip_screen) {
-    call read_screen_task.check_reads as clean_read_screen {
+    call read_screen_task.check_reads as clean_check_reads {
       input:
         read1 = select_first([read_QC_trim.kraken2_extracted_read1]),
         read2 = select_first([read_QC_trim.kraken2_extracted_read2]),
-        min_reads = min_reads,
-        min_basepairs = min_basepairs,
-        min_genome_length = min_genome_length,
-        max_genome_length = max_genome_length,
-        min_coverage = min_coverage,
-        min_proportion = min_proportion
+        min_reads = 0,
+        min_basepairs = 0,
+        min_genome_length = 0,
+        max_genome_length = 10000000000,
+        min_coverage = 0,
+        min_proportion = 0
     }
   }
-  # run de novo if no reference genome is provided so we can select a reference
-  if (! defined(reference_fasta)) {
-    # de novo assembly benchmarking
-    if (call_metaviralspades) {
-      call spades_task.metaviralspades_pe {
-        input:
-          read1_cleaned = select_first([read_QC_trim.kraken2_extracted_read1]),
-          read2_cleaned = select_first([read_QC_trim.kraken2_extracted_read2]),
-          samplename = samplename
-      }
-    }
-    if (call_metaspades) {
-      call spades_task.metaspades_pe {
-        input:
-          read1_cleaned = select_first([read_QC_trim.kraken2_extracted_read1]),
-          read2_cleaned = select_first([read_QC_trim.kraken2_extracted_read2]),
-          samplename = samplename
-      }
-    }
-    if (call_spades) {
-      call spades_task.spades_pe {
-        input:
-          read1_cleaned = select_first([read_QC_trim.kraken2_extracted_read1]),
-          read2_cleaned = select_first([read_QC_trim.kraken2_extracted_read2]),
-          samplename = samplename
-      }
-    }
-    if (call_megahit) {
-      call megahit_task.megahit_pe {
-        input:
-          read1_cleaned = select_first([read_QC_trim.kraken2_extracted_read1]),
-          read2_cleaned = select_first([read_QC_trim.kraken2_extracted_read2]),
-          samplename = samplename
-      }
-    }
 
-    # quality control metrics for de novo assembly (ie. completeness, viral gene count, contamination)
-    call checkv_task.checkv as checkv_denovo {
-      input:
-        assembly = select_first([metaviralspades_pe.assembly_fasta, metaspades_pe.assembly_fasta, spades_pe.assembly_fasta, megahit_pe.assembly_fasta]),
-        samplename = samplename
+  if (select_first([clean_check_reads.read_screen, ""]) == "PASS" || skip_screen) {
+    # run de novo if no reference genome is provided so we can select a reference
+    if (! defined(reference_fasta)) {
+      # de novo assembly benchmarking
+      if (call_metaviralspades) {
+        call spades_task.metaviralspades_pe {
+          input:
+            read1_cleaned = select_first([read_QC_trim.kraken2_extracted_read1]),
+            read2_cleaned = select_first([read_QC_trim.kraken2_extracted_read2]),
+            samplename = samplename
+        }
+      }
+      if (call_metaspades) {
+        call spades_task.metaspades_pe {
+          input:
+            read1_cleaned = select_first([read_QC_trim.kraken2_extracted_read1]),
+            read2_cleaned = select_first([read_QC_trim.kraken2_extracted_read2]),
+            samplename = samplename
+        }
+      }
+      if (call_spades) {
+        call spades_task.spades_pe {
+          input:
+            read1_cleaned = select_first([read_QC_trim.kraken2_extracted_read1]),
+            read2_cleaned = select_first([read_QC_trim.kraken2_extracted_read2]),
+            samplename = samplename
+        }
+      }
+      if (call_megahit) {
+        call megahit_task.megahit_pe {
+          input:
+            read1_cleaned = select_first([read_QC_trim.kraken2_extracted_read1]),
+            read2_cleaned = select_first([read_QC_trim.kraken2_extracted_read2]),
+            samplename = samplename
+        }
+      }
+  
+      # quality control metrics for de novo assembly (ie. completeness, viral gene count, contamination)
+      call checkv_task.checkv as checkv_denovo {
+        input:
+          assembly = select_first([metaviralspades_pe.assembly_fasta, metaspades_pe.assembly_fasta, spades_pe.assembly_fasta, megahit_pe.assembly_fasta]),
+          samplename = samplename
+      }
+      # quality control metrics for de novo assembly (ie. contigs, n50, GC content, genome length)
+      call quast_task.quast as quast_denovo {
+        input:
+          assembly = select_first([metaviralspades_pe.assembly_fasta, metaspades_pe.assembly_fasta, spades_pe.assembly_fasta, megahit_pe.assembly_fasta]),
+          samplename = samplename
+      }
+      # ANI-based reference genome selection
+      call skani_task.skani as skani {
+        input:
+          assembly_fasta = select_first([metaviralspades_pe.assembly_fasta, metaspades_pe.assembly_fasta, spades_pe.assembly_fasta, megahit_pe.assembly_fasta]),
+          samplename = samplename
+      }
+      # download the best reference determined from skani
+      call ncbi_datasets_task.ncbi_datasets_download_genome_accession as ncbi_datasets {
+        input:
+          ncbi_accession = skani.skani_top_accession,
+          use_ncbi_virus = true
+      }
     }
-    # quality control metrics for de novo assembly (ie. contigs, n50, GC content, genome length)
-    call quast_task.quast as quast_denovo {
-      input:
-        assembly = select_first([metaviralspades_pe.assembly_fasta, metaspades_pe.assembly_fasta, spades_pe.assembly_fasta, megahit_pe.assembly_fasta]),
-        samplename = samplename
-    }
-    # ANI-based reference genome selection
-    call skani_task.skani as skani {
-      input:
-        assembly_fasta = select_first([metaviralspades_pe.assembly_fasta, metaspades_pe.assembly_fasta, spades_pe.assembly_fasta, megahit_pe.assembly_fasta]),
-        samplename = samplename
-    }
-    # download the best reference determined from skani
-    call ncbi_datasets_task.ncbi_datasets_download_genome_accession as ncbi_datasets {
-      input:
-        ncbi_accession = skani.skani_top_accession,
-        use_ncbi_virus = true
-    }
+    # align assembly to reference genome
+  
+    # generate bam file from sam output
+  #  call parse_mapping_task.sam_to_sorted_bam as parse_mapping {
+   #   input:
+    #    sam = minimap2.minimap2_out,
+     #   samplename = samplename
+    #}
+    # quality control metrics for reads mapping to reference (ie. coverage, depth, base/map quality)
+  #  call assembly_metrics_task.stats_n_coverage as assembly_metrics {
+   #   input:
+    #    bamfile = parse_mapping.bam,
+     #   samplename = samplename
+  #  }
+    # Index the reference genome for Clair3
+   # call fasta_utilities_task.samtools_faidx as fasta_utilities{
+    #  input:
+     #   fasta = select_first([ncbi_datasets.ncbi_datasets_assembly_fasta, reference_fasta])
+  #  }
+    # variant calling
+  
+    # mask low coverage regions with Ns
+  #  call parse_mapping_task.mask_low_coverage {
+   #   input:
+    #    bam = parse_mapping.bam,
+     #   bai = parse_mapping.bai,
+      #  reference_fasta = select_first([ncbi_datasets.ncbi_datasets_assembly_fasta, reference_fasta]),
+       # min_depth = min_mask_depth
+  #  }
+    # create consensus genome based on variant calls
+   # call bcftools_consensus_task.bcftools_consensus as bcftools_consensus {
+    #  input:
+     #   reference_fasta = mask_low_coverage.mask_reference_fasta,
+      #  input_vcf = clair3.clair3_variants_vcf,
+       # samplename = samplename
+  #  }
+    # quality control metrics for consensus (ie. number of bases, degenerate bases, genome length)
+   # call consensus_qc_task.consensus_qc as consensus_qc {
+    #  input:
+     #   assembly_fasta = bcftools_consensus.bcftools_consensus_fasta,
+      #  reference_genome = ncbi_datasets.ncbi_datasets_assembly_fasta
+  #  }
+    # quality control metrics for consensus (ie. completeness, viral gene count, contamination)
+  #  call checkv_task.checkv as checkv_consensus {
+   #   input:
+    #    assembly = bcftools_consensus.bcftools_consensus_fasta,
+     #   samplename = samplename
+  #  }
+    # quality control metrics for consensus (ie. contigs, n50, GC content, genome length)
+   # call quast_task.quast as quast_consensus {
+    #  input:
+     #   assembly = bcftools_consensus.bcftools_consensus_fasta,
+      #  samplename = samplename
+#  }
   }
-  # align assembly to reference genome
-
-  # generate bam file from sam output
-#  call parse_mapping_task.sam_to_sorted_bam as parse_mapping {
- #   input:
-  #    sam = minimap2.minimap2_out,
-   #   samplename = samplename
-  #}
-  # quality control metrics for reads mapping to reference (ie. coverage, depth, base/map quality)
-#  call assembly_metrics_task.stats_n_coverage as assembly_metrics {
- #   input:
-  #    bamfile = parse_mapping.bam,
-   #   samplename = samplename
-#  }
-  # Index the reference genome for Clair3
- # call fasta_utilities_task.samtools_faidx as fasta_utilities{
-  #  input:
-   #   fasta = select_first([ncbi_datasets.ncbi_datasets_assembly_fasta, reference_fasta])
-#  }
-  # variant calling
-
-  # mask low coverage regions with Ns
-#  call parse_mapping_task.mask_low_coverage {
- #   input:
-  #    bam = parse_mapping.bam,
-   #   bai = parse_mapping.bai,
-    #  reference_fasta = select_first([ncbi_datasets.ncbi_datasets_assembly_fasta, reference_fasta]),
-     # min_depth = min_mask_depth
-#  }
-  # create consensus genome based on variant calls
- # call bcftools_consensus_task.bcftools_consensus as bcftools_consensus {
-  #  input:
-   #   reference_fasta = mask_low_coverage.mask_reference_fasta,
-    #  input_vcf = clair3.clair3_variants_vcf,
-     # samplename = samplename
-#  }
-  # quality control metrics for consensus (ie. number of bases, degenerate bases, genome length)
- # call consensus_qc_task.consensus_qc as consensus_qc {
-  #  input:
-   #   assembly_fasta = bcftools_consensus.bcftools_consensus_fasta,
-    #  reference_genome = ncbi_datasets.ncbi_datasets_assembly_fasta
-#  }
-  # quality control metrics for consensus (ie. completeness, viral gene count, contamination)
-#  call checkv_task.checkv as checkv_consensus {
- #   input:
-  #    assembly = bcftools_consensus.bcftools_consensus_fasta,
-   #   samplename = samplename
-#  }
-  # quality control metrics for consensus (ie. contigs, n50, GC content, genome length)
- # call quast_task.quast as quast_consensus {
-  #  input:
-   #   assembly = bcftools_consensus.bcftools_consensus_fasta,
-    #  samplename = samplename
-#  }
   output {
     # versioning outputs
-    String theiaviral_illumina_pe_version = version_capture.phb_version
-    String theiaviral_illumina_pe_date = version_capture.date
+    String? theiaviral_illumina_pe_version = version_capture.phb_version
+    String? theiaviral_illumina_pe_date = version_capture.date
     # raw read quality control
     Int? fastq_scan_num_reads_raw1 = read_QC_trim.fastq_scan_raw1
     Int? fastq_scan_num_reads_raw2 = read_QC_trim.fastq_scan_raw2
@@ -210,14 +205,14 @@ workflow theiaviral_illumina_pe {
     String? fastp_version = read_QC_trim.fastp_version
     File? fastp_html_report = read_QC_trim.fastp_html_report
     # bbduk outputs
-    String bbduk_docker = read_QC_trim.bbduk_docker
-    File bbduk_read1_clean = read_QC_trim.read1_clean
-    File bbduk_read2_clean = read_QC_trim.read2_clean
+    String? bbduk_docker = read_QC_trim.bbduk_docker
+    File? bbduk_read1_clean = read_QC_trim.read1_clean
+    File? bbduk_read2_clean = read_QC_trim.read2_clean
     # kraken2 outputs - taxonomic classification and read extraction
-    String kraken_version = read_QC_trim.kraken_version
-    String kraken_docker = read_QC_trim.kraken_docker
-    String kraken_database = read_QC_trim.kraken_database
-    String kraken_report = read_QC_trim.kraken_report
+    String? kraken_version = read_QC_trim.kraken_version
+    String? kraken_docker = read_QC_trim.kraken_docker
+    String? kraken_database = read_QC_trim.kraken_database
+    String? kraken_report = read_QC_trim.kraken_report
     File? kraken2_extracted_read1 = read_QC_trim.kraken2_extracted_read1
     File? kraken2_extracted_read2 = read_QC_trim.kraken2_extracted_read2
     # clean read quality control
