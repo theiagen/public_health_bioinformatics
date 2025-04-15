@@ -19,12 +19,15 @@ task megahit_pe {
     # get version
     megahit --version | tee VERSION
 
+    # get the memory required, assuming its input is GB
+    memory=$(python3 -c "~{memory} * 1000000000")
+
     # run megathit
     megahit \
       -1 ~{read1_cleaned} \
       -2 ~{read2_cleaned} \
       ~{'--k-list ' + kmers} \
-      -m ~{memory} \
+      -m ${memory} \
       -t ~{cpu} \
       -o megahit/ \
       ~{megahit_opts}
