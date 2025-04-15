@@ -28,7 +28,7 @@ workflow theiaviral_illumina_pe {
     String taxon_id
     String samplename
     Float min_mask_depth = 20 # minimum depth for masking low coverage regions
-    Boolean call_screen = false # if true, run clean read screening
+    Boolean skip_screen = true # if false, run clean read screening
     File? reference_fasta # optional, if provided, will be used instead of dynamic reference selection
 
     # read screen parameters
@@ -59,7 +59,7 @@ workflow theiaviral_illumina_pe {
       workflow_series = "theiaviral"
   }
   # clean read screening
-  if (call_screen) {
+  if (! skip_screen) {
     call read_screen_task.check_reads as clean_read_screen {
       input:
         read1 = select_first([read_QC_trim.kraken2_extracted_read1]),
