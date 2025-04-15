@@ -3,11 +3,14 @@ version 1.0
 task amrfinderplus_nuc {
   input {
     File assembly
+    File? protein_fasta
+    File? gff
     String samplename
     # Parameters 
     # --indent_min Minimum DNA %identity [0-1]; default is 0.9 (90%) or curated threshold if it exists
     # --mincov Minimum DNA %coverage [0-1]; default is 0.5 (50%)
     String? organism 
+    String annotation_format
     Float? min_percent_identity
     Float? min_percent_coverage
     Boolean detailed_drug_class = false
@@ -61,7 +64,10 @@ task amrfinderplus_nuc {
         ~{'-o ' + samplename + '_amrfinder_all.tsv'} \
         ~{'--threads ' + cpu} \
         ~{'--coverage_min ' + min_percent_coverage} \
-        ~{'--ident_min ' + min_percent_identity}
+        ~{'--ident_min ' + min_percent_identity} \
+        ~{'--protein ' + protein_fasta} \
+        ~{'--gff ' + gff} \
+        ~{'--annotation_format '+ annotation_format}
     else 
       echo "Either the organism (~{organism}) is not recognized by NCBI-AMRFinderPlus or the user did not supply an organism as input."
       echo "Skipping the use of amrfinder --organism optional parameter."
@@ -72,7 +78,10 @@ task amrfinderplus_nuc {
         ~{'-o ' + samplename + '_amrfinder_all.tsv'} \
         ~{'--threads ' + cpu} \
         ~{'--coverage_min ' + min_percent_coverage} \
-        ~{'--ident_min ' + min_percent_identity}
+        ~{'--ident_min ' + min_percent_identity}        
+        ~{'--protein ' + protein_fasta} \
+        ~{'--gff ' + gff} \
+        ~{'--annotation_format '+ annotation_format}
     fi
 
     # remove mutations where Element subtype is "POINT"
