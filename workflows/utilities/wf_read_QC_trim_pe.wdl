@@ -8,6 +8,7 @@ import "../../tasks/quality_control/read_filtering/task_fastp.wdl" as fastp_task
 import "../../tasks/quality_control/read_filtering/task_ncbi_scrub.wdl" as ncbi_scrub
 import "../../tasks/quality_control/read_filtering/task_trimmomatic.wdl" as trimmomatic
 import "../../tasks/taxon_id/contamination/task_kraken2.wdl" as kraken
+import "../../tasks/taxon_id/task_krakentools.wdl" as krakentools
 import "../../tasks/taxon_id/contamination/task_midas.wdl" as midas_task
 
 workflow read_QC_trim_pe {
@@ -151,13 +152,12 @@ workflow read_QC_trim_pe {
         memory = kraken_memory,
         cpu = kraken_cpu
     }
-    call kraken.kraken2_extract {
+    call krakentools.extract_kraken_reads as kraken2_extract {
       input:
-        samplename = samplename,
         read1 = kraken2_standalone_theiaviral.kraken2_classified_read1,
         read2 = kraken2_standalone_theiaviral.kraken2_classified_read2,
         taxon_id = taxon_id,
-        kraken_file = kraken2_standalone_theiaviral.kraken2_classified_report,
+        kraken_output = kraken2_standalone_theiaviral.kraken2_classified_report,
         kraken_report = kraken2_standalone_theiaviral.kraken2_report,
         exclude = exclusion_extraction,
         extract_unclassified = extract_unclassified,
@@ -173,8 +173,8 @@ workflow read_QC_trim_pe {
     }
     call fastqc_task.fastqc as fastqc_clean {
       input:
-        read1 = select_first([kraken2_extract.kraken2_extracted_read1, bbduk.read1_clean]),
-        read2 = select_first([kraken2_extract.kraken2_extracted_read2, bbduk.read2_clean])
+        read1 = select_first([kraken2_extract.extracted_read1, bbduk.read1_clean]),
+        read2 = select_first([kraken2_extract.extracted_read2, bbduk.read2_clean])
     }
   }
   if (read_qc == "fastq_scan") {
@@ -185,8 +185,8 @@ workflow read_QC_trim_pe {
     }
     call fastq_scan.fastq_scan_pe as fastq_scan_clean {
       input:
-        read1 = select_first([kraken2_extract.kraken2_extracted_read1, bbduk.read1_clean]),
-        read2 = select_first([kraken2_extract.kraken2_extracted_read2, bbduk.read2_clean])
+        read1 = select_first([kraken2_extract.extracted_read1, bbduk.read1_clean]),
+        read2 = select_first([kraken2_extract.extracted_read2, bbduk.read2_clean])
     }
   }
 
@@ -245,8 +245,11 @@ workflow read_QC_trim_pe {
     String kraken_database = select_first([kraken2_theiacov_raw.database, kraken2_standalone.kraken2_database, kraken2_standalone_theiaviral.kraken2_database, kraken_db_warning, ""])
 
     # kraken2 read extract - theiaviral
-    File? kraken2_extracted_read1 = kraken2_extract.kraken2_extracted_read1
-    File? kraken2_extracted_read2 = kraken2_extract.kraken2_extracted_read2
+    File? kraken2_extracted_read1 = kraken2_extract.extracted_read1
+    File? kraken2_extracted_read2 = kraken2_extract.extracted_read2
+    String? kraken2_extracted_organism_name = kraken2_extract.organism_name
+    String? krakentools_docker = kraken2_extract.krakentools_docker
+    Boolean kraken2_success = kraken2_extract.success
     
     # trimming versioning
     String? trimmomatic_version = trimmomatic_pe.version
