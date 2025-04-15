@@ -31,7 +31,6 @@ task spades_pe {
       ~{spades_opts}
 
     mv spades/contigs.fasta ~{samplename}_contigs.fasta
-
   >>>
   output {
     File assembly_fasta = "~{samplename}_contigs.fasta"

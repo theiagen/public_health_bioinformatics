@@ -49,13 +49,14 @@ task extract_kraken_reads {
       gzip ~{taxon_id}_2.fastq
 
       # check if unclassified reads were extracted, will fail if read2_unclassified is not populated
-      if [ -s ~{read1_unclassified} ]; then
+      if [ ~{extract_unclassified} == "true" ]; then
         echo "DEBUG: Appending unclassified reads"
         if [[ ~{read1_unclassified} != *.gz ]]; then
           gzip ~{read1_unclassified}
           gzip ~{read2_unclassified}
-        zcat $(basename ~{read1_unclassified} .gz) >> ~{taxon_id}_1.fastq.gz
-        zcat $(basename ~{read2_unclassified} .gz) >> ~{taxon_id}_2.fastq.gz
+        fi
+        zcat $(basename ~{read1_unclassified} .gz).gz >> ~{taxon_id}_1.fastq.gz
+        zcat $(basename ~{read2_unclassified} .gz).gz >> ~{taxon_id}_2.fastq.gz
       fi
     else
       echo "DEBUG: No reads were extracted for taxon ~{taxon_id}, removing empty files"
@@ -63,7 +64,6 @@ task extract_kraken_reads {
     fi
     
     grep ~{taxon_id} ~{kraken2_report} | awk '{for (i=6; i <= NF; ++i) print $i}' | tr '\n' ' ' | xargs > ORGANISM_NAME
-
   >>>
   output {
     File? extracted_read1 = "~{taxon_id}_1.fastq.gz"

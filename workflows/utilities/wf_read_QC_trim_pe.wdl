@@ -155,14 +155,14 @@ workflow read_QC_trim_pe {
     call krakentools.extract_kraken_reads as kraken2_extract {
       input:
         read1 = kraken2_standalone_theiaviral.kraken2_classified_read1,
-        read2 = kraken2_standalone_theiaviral.kraken2_classified_read2,
+        read2 = select_first([kraken2_standalone_theiaviral.kraken2_classified_read2]),
         taxon_id = taxon_id,
-        kraken_output = kraken2_standalone_theiaviral.kraken2_classified_report,
-        kraken_report = kraken2_standalone_theiaviral.kraken2_report,
+        kraken2_output = kraken2_standalone_theiaviral.kraken2_classified_report,
+        kraken2_report = kraken2_standalone_theiaviral.kraken2_report,
         exclude = exclusion_extraction,
         extract_unclassified = extract_unclassified,
         read1_unclassified = kraken2_standalone_theiaviral.kraken2_unclassified_read1,
-        read2_unclassified = kraken2_standalone_theiaviral.kraken2_unclassified_read2
+        read2_unclassified = select_first([kraken2_standalone_theiaviral.kraken2_unclassified_read2])
     }
   }
   if (read_qc == "fastqc") {
@@ -249,7 +249,7 @@ workflow read_QC_trim_pe {
     File? kraken2_extracted_read2 = kraken2_extract.extracted_read2
     String? kraken2_extracted_organism_name = kraken2_extract.organism_name
     String? krakentools_docker = kraken2_extract.krakentools_docker
-    Boolean kraken2_success = kraken2_extract.success
+    Boolean? kraken2_success = kraken2_extract.success
     
     # trimming versioning
     String? trimmomatic_version = trimmomatic_pe.version
