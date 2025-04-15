@@ -243,6 +243,7 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 | merlin_magic | **abricate_vibrio_min_percent_identity** | Int | Minimum DNA percent identity | 80 | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **agrvate_agr_typing_only** | Boolean | Set to true to skip agr operon extraction and frameshift detection | False  | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **agrvate_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/biocontainers/agrvate:1.0.2--hdfd78af_0 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **amr_search** | Boolean | If set to true AMR_Search workflow will be run if species is part of supported taxon, see AMR_Search docs. | False | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **assembly_only** | Boolean | Internal component, do not modify |  | Do not modify, Optional | ONT, PE, SE |
 | merlin_magic | **call_poppunk** | Boolean | If "true", runs PopPUNK for GPSC cluster designation for S. pneumoniae | TRUE | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **call_shigeifinder_reads_input** | Boolean | If set to "true", the ShigEiFinder task will run again but using read files as input instead of the assembly file. Input is shown but not used for TheiaProk_FASTA. | FALSE | Optional | FASTA, ONT, PE, SE |
