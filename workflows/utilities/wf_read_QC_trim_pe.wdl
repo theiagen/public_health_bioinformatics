@@ -227,8 +227,8 @@ workflow read_QC_trim_pe {
     }
     call fastq_scan.fastq_scan_pe as fastq_scan_clean {
       input:
-        read1 = select_first([kraken2_extract.kraken2_extracted_read1, bbduk.read1_clean]),
-        read2 = select_first([kraken2_extract.kraken2_extracted_read2, bbduk.read2_clean])
+        read1 = select_first([kraken2_extract.extracted_read1, bbduk.read1_clean]),
+        read2 = select_first([kraken2_extract.extracted_read2, bbduk.read2_clean])
     }
   }
 
