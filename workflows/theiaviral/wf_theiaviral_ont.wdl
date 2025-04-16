@@ -9,7 +9,6 @@ import "../../tasks/quality_control/advanced_metrics/task_checkv.wdl" as checkv_
 import "../../tasks/quality_control/comparisons/task_screen.wdl" as screen_task
 import "../../tasks/taxon_id/contamination/task_metabuli.wdl" as metabuli_task
 import "../../tasks/taxon_id/task_skani.wdl" as skani_task
-import "../../tasks/utilities/task_rasusa.wdl" as rasusa_task
 import "../../tasks/utilities/data_import/task_ncbi_datasets.wdl" as ncbi_datasets_task
 import "../../tasks/taxon_id/task_identify_taxon_id.wdl" as identify_taxon_id_task
 import "../../tasks/utilities/data_handling/task_parse_mapping.wdl" as parse_mapping_task
@@ -118,7 +117,7 @@ workflow theiaviral_ont {
   # extracted/filtered clean read quality check.
   call nanoplot_task.nanoplot as nanoplot_clean {
     input:
-      read1 = select_first([rasusa.read1_subsampled, metabuli.metabuli_read1_extract]),
+      read1 = metabuli.metabuli_read1_extract,
       samplename = samplename,
       est_genome_length = select_first([genome_length, ncbi_identify.avg_genome_length])
   }
@@ -126,7 +125,7 @@ workflow theiaviral_ont {
   if (! skip_screen) {
     call screen_task.check_reads_se as clean_check_reads {
       input:
-        read1 = select_first([rasusa.read1_subsampled, metabuli.metabuli_read1_extract]),
+        read1 = metabuli.metabuli_read1_extract,
         workflow_series = "theiaviral",
         expected_genome_length = select_first([genome_length, ncbi_identify.avg_genome_length]),
         skip_mash = true
