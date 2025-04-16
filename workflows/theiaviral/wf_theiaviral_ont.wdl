@@ -31,6 +31,7 @@ workflow theiaviral_ont {
     Boolean call_rasusa = false
     Boolean skip_screen = false
     Int? genome_length
+    Float? downsampling_coverage
     Int min_mask_depth = 2 # minimum depth for masking low coverage regions
     File? reference_fasta # optional, if provided, will be used instead of dynamic reference selection
   }
@@ -73,6 +74,7 @@ workflow theiaviral_ont {
       input:
         read1 = metabuli.metabuli_read1_extract,
         samplename = samplename,
+        coverage = select_first([downsampling_coverage]),
         genome_length = select_first([genome_length])
     }
   }
