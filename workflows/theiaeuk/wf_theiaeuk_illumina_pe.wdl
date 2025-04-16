@@ -286,6 +286,12 @@ workflow theiaeuk_illumina_pe {
     # QC_Check Results
     String? qc_check = qc_check_task.qc_check
     File? qc_standard = qc_check_task.qc_standard
+    # AMR_Search
+    File? amr_search_results = merlin_magic.amr_search_results
+    File? amr_search_csv = merlin_magic.amr_results_csv
+    File? amr_search_results_pdf = merlin_magic.amr_results_pdf
+    String? amr_search_docker = merlin_magic.amr_search_docker
+    String? amr_search_version = merlin_magic.amr_search_version    
     # Cladetyper Outputs
     String? cladetyper_clade = merlin_magic.clade_type
     String? cladetyper_gambit_version = merlin_magic.cladetyper_version

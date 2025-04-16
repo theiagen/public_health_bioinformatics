@@ -756,6 +756,12 @@ workflow theiaprok_illumina_se {
     String? amrfinderplus_amr_betalactam_cephalosporin_genes = amrfinderplus_task.amrfinderplus_amr_betalactam_cephalosporin_genes
     String? amrfinderplus_amr_betalactam_cephalothin_genes = amrfinderplus_task.amrfinderplus_amr_betalactam_cephalothin_genes
     String? amrfinderplus_amr_betalactam_methicillin_genes = amrfinderplus_task.amrfinderplus_amr_betalactam_methicillin_genes
+    # AMR_Search
+    File? amr_search_results = merlin_magic.amr_search_results
+    File? amr_search_csv = merlin_magic.amr_results_csv
+    File? amr_search_results_pdf = merlin_magic.amr_results_pdf
+    String? amr_search_docker = merlin_magic.amr_search_docker
+    String? amr_search_version = merlin_magic.amr_search_version
     # Resfinder Outputs
     File? resfinder_pheno_table = resfinder_task.resfinder_pheno_table
     File? resfinder_pheno_table_species = resfinder_task.resfinder_pheno_table_species
