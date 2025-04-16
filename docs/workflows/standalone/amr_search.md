@@ -57,7 +57,7 @@ A limited number of species are currently supported and are listed below. NCBI c
 
         |  | Links |
         | --- | --- |
-        | Task | [task_amr_search.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/fc-amr-search-dev/tasks/gene_typing/drug_resistance/task_amr_search.wdl) |
+        | Task | [task_amr_search.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/drug_resistance/task_amr_search.wdl) |
         | Software Source Code | [AMRsearch](https://github.com/pathogenwatch-oss/amr-search) |
         | Software Documentation | [Pathogenwatch](https://cgps.gitbook.io/pathogenwatch) |
         | Original Publication(s) | [PAARSNP: *rapid genotypic resistance prediction for *Neisseria gonorrhoeae*](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7545138/) |

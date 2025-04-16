@@ -3,7 +3,7 @@
 **GAMBIT (Genomic Approximation Method for Bacterial Identification and Tracking)** determines the taxon of the query genome assembly using a ***k*-mer-based approach** to match the assembly sequence to the closest complete genome in a database.
 
 !!! dna "GAMBIT genomic distance metric correlates with sequence identity!"
-    GAMBIT uses an efficient genomic distance metric along with a curated database to identify genome assemblies in seconds. You can read more about how the distance metric is calculated in the [Technical Details](https://www.notion.so/GAMBIT-7c1376b861d0486abfbc316480046bdc?pvs=21) section!
+    GAMBIT uses an efficient genomic distance metric along with a curated database to identify genome assemblies in seconds. You can read more about how the distance metric is calculated in the [Technical Details](#technical-details) section!
 
 If the **distance between the query genome assembly and the closest genome in the database is within a built-in species threshold**, GAMBIT will assign the query genome to that species. Species thresholds are determined through a combination of automated and manual curation processes based on the diversity within the taxon.
 
@@ -264,7 +264,7 @@ Options:
             
         - Genomes added from GTDB include the following species:
           
-            [gambit-list-of-new-species-db-v1_2_0.txt](https://prod-files-secure.s3.us-west-2.amazonaws.com/be290196-9090-4f3c-a9ab-fe730ad213e0/6fb47ff9-c62a-4173-b929-1451120a23a3/gambit-list-of-new-species-db-v1_2_0.txt)
+            [gambit-list-of-new-species-db-v1_2_0.txt](../assets/files/gambit-list-of-new-species-db-v1_2_0.txt)
                 
     - **Manual curation efforts**
        
@@ -541,7 +541,7 @@ Because GAMBIT databases have built-in species thresholds, genomes are included 
     2. Utilizing a database that draws the genomes and their annotations from a specific source. For example, bacterial GAMBIT databases v1.0.0 through v1.3.0 draw their genome annotations predominantly from NCBI’s RefSeq database, whereas v2.0.0 draws all genome annotations from GTDB. Database v1.0.0 is also inclusive of all bacterial genomes that were available on RefSeq at the time of creation, whereas v2.0.0 excludes genomes that do not expand the diversity of their species.
 
 ??? toggle "How do I list taxa included in a GAMBIT database?"
-    There are several ways to retrieve the information regarding which taxa were included in a given GAMBIT database release. The easiest way is to download the taxa list file provided [on this documentation page](https://www.notion.so/GAMBIT-7c1376b861d0486abfbc316480046bdc?pvs=21) for every GAMBIT database release.
+    There are several ways to retrieve the information regarding which taxa were included in a given GAMBIT database release. The easiest way is to download the taxa list file provided [on this documentation page](./gambit_database.md) for every GAMBIT database release.
 
     Additionally, there are several programmatic ways to retrieve this information directly from the GAMBIT metadata file (which typically ends in ".gdb"). Here we present a few examples: using [SQLite3](https://www.sqlite.org/), [DBeaver](https://dbeaver.io/) or the [GAMBITtools](https://github.com/gambit-suite/gambittools) software.
     
