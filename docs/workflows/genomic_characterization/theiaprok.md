@@ -4,7 +4,7 @@
 
 | **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
 |---|---|---|---|---|
-| [Genomic Characterization](../../workflows_overview/workflows_type.md/#genomic-characterization) | [Bacteria](../../workflows_overview/workflows_kingdom.md/#bacteria) | PHB v3.0.0 | Yes, some optional features incompatible | Sample-level |
+| [Genomic Characterization](../../workflows_overview/workflows_type.md/#genomic-characterization) | [Bacteria](../../workflows_overview/workflows_kingdom.md/#bacteria) | PHB vX.X.X | Yes, some optional features incompatible | Sample-level |
 
 ## TheiaProk Workflows
 
@@ -364,7 +364,7 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 | merlin_magic | **tbp_parser_coverage_regions_bed** | File | A bed file that lists the regions to be considered for QC |  | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **tbp_parser_min_percent_coverage** | Int | The minimum coverage for a region to pass QC in tbp_parser | 100 | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **tbp_parser_debug** | Boolean | Activate the debug mode on tbp_parser; increases logging outputs | TRUE | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **tbp_parser_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:2.4.4 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **tbp_parser_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:2.4.5 | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **tbp_parser_etha237_frequency** | Float | Minimum frequency for a mutation in ethA at protein position 237 to pass QC in tbp-parser | 0.1 | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **tbp_parser_expert_rule_regions_bed** | File | A file that contains the regions where R mutations and expert rules are applied |  | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **tbp_parser_min_depth** | Int | Minimum depth for a variant to pass QC in tbp_parser | 10 | Optional | FASTA, ONT, PE, SE |
@@ -555,7 +555,7 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 | shovill_se | **trim** | Boolean | Enable adaptor trimming (see <https://github.com/tseemann/shovill#main-steps>) | FALSE | Optional | SE |
 | ts_mlst | **cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional | FASTA, ONT, PE, SE |
 | ts_mlst | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 50 | Optional | FASTA, ONT, PE, SE |
-| ts_mlst | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/mlst:2.23.0-2024-08-01 | Optional | FASTA, ONT, PE, SE |
+| ts_mlst | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/mlst:2.23.0-2024-12-31 | Optional | FASTA, ONT, PE, SE |
 | ts_mlst | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 2 | Optional | FASTA, ONT, PE, SE |
 | ts_mlst | **min_percent_coverage** | Float | Minimum % breadth of coverage to report an MLST allele | 10 | Optional | FASTA, ONT, PE, SE |
 | ts_mlst | **min_percent_identity** | Float | Minimum % identity to known MLST gene to report an MLST allele | 95 | Optional | FASTA, ONT, PE, SE |
@@ -836,7 +836,7 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
         !!! techdetails "Bandage Technical Details"
             |  | Links |
             | --- | --- |
-            | WDL Task | [task_bandageplot.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_bandageplot.wdl) |
+            | WDL Task | [task_bandage_plot.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_bandage_plot.wdl) |
             | Software Source Code | [Bandage on GitHub](https://github.com/rrwick/Bandage) |
             | Software Documentation | [Bandage Documentation](https://github.com/rrwick/Bandage#bandage) |
             | Original Publication(s) | [Bandage: interactive visualization of _de novo_ genome assemblies](https://academic.oup.com/bioinformatics/article/31/20/3350/196114) |
@@ -986,7 +986,7 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 
     [`GAMBIT`](https://github.com/jlumpe/gambit) determines the taxon of the genome assembly using a k-mer based approach to match the assembly sequence to the closest complete genome in a database, thereby predicting its identity. Sometimes, GAMBIT can confidently designate the organism to the species level. Other times, it is more conservative and assigns it to a higher taxonomic rank.
 
-    For additional details regarding the GAMBIT tool and a list of available GAMBIT databases for analysis, please consult the [GAMBIT](https://www.notion.so/GAMBIT-7c1376b861d0486abfbc316480046bdc?pvs=21) tool documentation.
+    For additional details regarding the GAMBIT tool and a list of available GAMBIT databases for analysis, please consult the [GAMBIT](../../guides/gambit.md) tool documentation.
 
     !!! techdetails "GAMBIT Technical Details"
 
@@ -1169,7 +1169,7 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 
 ??? task "`PlasmidFinder`: Plasmid Identification"
 
-    [`PlasmidFinder`](https://github.com/kcri-tz/plasmidfinder) detects plasmids in totally- or partially-sequenced genomes, and identifies the closest plasmid type in the database for typing purposes.
+    [`PlasmidFinder`](https://github.com/genomicepidemiology/plasmidfinder) detects plasmids in totally- or partially-sequenced genomes, and identifies the closest plasmid type in the database for typing purposes.
 
     ??? toggle "What are plasmids?"
         
@@ -1542,7 +1542,7 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
 
         - **JSON Output:** Contains the complete AMR profile, including detailed **resistance state**, detected **resistance genes/mutations**, and supporting **BLAST results**.
 
-        - **CSV & PNG Tables:** A downstream task, [`parse_amr_json.wdl`](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/data_handling/parse_amr_json.wdl), extracts and formats results into a **CSV file** and **PNG summary table** for easier visualization.
+        - **CSV & PNG Tables:* Results are formatted into a **CSV file** and **PNG summary table** for easier visualization.
 
         !!! techdetails "amr_search Technical Details"    
 
@@ -1642,7 +1642,7 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
             | Task | [task_genotyphi.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/salmonella/task_genotyphi.wdl) |
             | Software Source Code | [genotyphi](https://github.com/katholt/genotyphi) |
             | Software Documentation | https://github.com/katholt/genotyphi/blob/main/README.md#mykrobe-implementation |
-            | Orginal publication | [An extended genotyping framework for Salmonella enterica serovar Typhi, the cause of human typhoid](https://www.nature.com/articles/ncomms12827/)<br>[Five Years of GenoTyphi: Updates to the Global Salmonella Typhi Genotyping Framework](https://academic.oup.com/jid/article/224/Supplement_7/S775/6358992?login=false) |
+            | Orginal publication(s) | [An extended genotyping framework for Salmonella enterica serovar Typhi, the cause of human typhoid](https://www.nature.com/articles/ncomms12827/)<br>[Five Years of GenoTyphi: Updates to the Global Salmonella Typhi Genotyping Framework](https://academic.oup.com/jid/article/224/Supplement_7/S775/6358992?login=false) |
 
 ??? toggle "_Staphyloccocus aureus_"
     ##### _Staphyloccocus aureus_ {#staphyloccocus-aureus}
