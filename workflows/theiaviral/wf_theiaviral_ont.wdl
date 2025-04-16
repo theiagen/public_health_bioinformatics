@@ -18,6 +18,7 @@ import "../../tasks/assembly/task_bcftools_consensus.wdl" as bcftools_consensus_
 import "../../tasks/alignment/task_minimap2.wdl" as minimap2_task
 import "../../tasks/gene_typing/variant_detection/task_clair3_variants.wdl" as clair3_task
 import "../../tasks/task_versioning.wdl" as versioning
+import "../../tasks/quality_control/read_filtering/task_ncbi_scrub.wdl" as ncbi_scrub
 
 workflow theiaviral_ont {
   meta {
@@ -60,10 +61,16 @@ workflow theiaviral_ont {
       read1 = select_first([porechop.trimmed_reads, read1]),
       samplename = samplename
   }
+  # human read scrubbing
+  call ncbi_scrub.ncbi_scrub_se {
+    input:
+      read1 = nanoq.filtered_read1,
+      samplename = samplename,
+  }
   # taxonomic classification and read extraction
   call metabuli_task.metabuli as metabuli {
     input:
-      read1 = nanoq.filtered_read1,
+      read1 = ncbi_scrub_se.read1_dehosted,
       samplename = samplename,
       taxon_id = taxon_id
   }
@@ -227,6 +234,8 @@ workflow theiaviral_ont {
     # nanoq outputs - read filtering
     File nanoq_filtered_read1 = nanoq.filtered_read1
     String nanoq_version = nanoq.version
+    # scrubbed reads
+    File? read1_dehosted = ncbi_scrub_se.read1_dehosted
     # metabuli outputs - taxonomic classification and read extraction
     File metabuli_report = metabuli.metabuli_report
     File metabuli_classified = metabuli.metabuli_classified
