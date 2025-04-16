@@ -169,10 +169,10 @@ task bwa_all {
     Int memory = 16
   }
   command <<<
-    bwa &> BWA_HELP
-    grep "Version" BWA_HELP | cut -d" " -f2 > BWA_VERSION
-
     set -euo pipefail
+
+    # Get version
+    echo "BWA $(bwa 2>&1 | grep Version )" | tee BWA_VERSION
 
     if [[ ! -f "~{draft_assembly_fasta}.bwt" ]]; then
       echo "Indexing reference genome: ~{draft_assembly_fasta}"
