@@ -28,7 +28,7 @@ jobs:
           filters: "tests/config/pytest_filter.yml"
 
   check:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     name: ${{ matrix.tag }} ${{ matrix.engine }}
     needs: changes
     if: ${{ needs.changes.outputs.workflows != '[]' && needs.changes.outputs.workflows != '' }}
