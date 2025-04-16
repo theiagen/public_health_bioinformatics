@@ -30,6 +30,7 @@ workflow theiaviral_illumina_pe {
     Float min_mask_depth = 20 # minimum depth for masking low coverage regions
     Boolean skip_screen = true # if false, run clean read screening
     File? reference_fasta # optional, if provided, will be used instead of dynamic reference selection
+    Boolean extract_unclassified = true # if true, unclassified reads will be extracted from kraken2 output
 
     Boolean call_metaviralspades = false
     Boolean call_metaspades = false
@@ -48,6 +49,7 @@ workflow theiaviral_illumina_pe {
       read2 = read2,
       samplename = samplename,
       taxon_id = taxon_id,
+      extract_unclassified = extract_unclassified,
       workflow_series = "theiaviral"
   }
   # clean read screening

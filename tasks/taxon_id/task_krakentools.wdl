@@ -51,12 +51,13 @@ task extract_kraken_reads {
       # check if unclassified reads were extracted, will fail if read2_unclassified is not populated
       if [ ~{extract_unclassified} == "true" ]; then
         echo "DEBUG: Appending unclassified reads"
-        if [[ ~{read1_unclassified} != *.gz ]]; then
-          gzip ~{read1_unclassified}
-          gzip ~{read2_unclassified}
+        if [[ ! ~{read1_unclassified} =~ \.gz$ ]]; then
+          gzip ~{read1_unclassified} >> ~{taxon_id}_1.fastq.gz
+          gzip ~{read2_unclassified} >> ~{taxon_id}_2.fastq.gz
+        else
+          cat ~{read1_unclassified} >> ~{taxon_id}_1.fastq.gz
+          cat ~{read2_unclassified} >> ~{taxon_id}_2.fastq.gz
         fi
-        zcat $(basename ~{read1_unclassified} .gz).gz >> ~{taxon_id}_1.fastq.gz
-        zcat $(basename ~{read2_unclassified} .gz).gz >> ~{taxon_id}_2.fastq.gz
       fi
     else
       echo "DEBUG: No reads were extracted for taxon ~{taxon_id}, removing empty files"
