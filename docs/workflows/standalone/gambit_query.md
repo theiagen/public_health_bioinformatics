@@ -31,7 +31,7 @@ The GAMBIT_Query_PHB workflow performs taxon assignment of a genome assembly usi
 
 [`GAMBIT`](https://github.com/jlumpe/gambit) determines the taxon of the genome assembly using a k-mer based approach to match the assembly sequence to the closest complete genome in a database, thereby predicting its identity. Sometimes, GAMBIT can confidently designate the organism to the species level. Other times, it is more conservative and assigns it to a higher taxonomic rank.
 
-For additional details regarding the GAMBIT tool and a list of available GAMBIT databases for analysis, please consult the [GAMBIT](https://www.notion.so/GAMBIT-7c1376b861d0486abfbc316480046bdc?pvs=21) tool documentation.
+For additional details regarding the GAMBIT tool and a list of available GAMBIT databases for analysis, please consult the [GAMBIT](../../guides/gambit.md) tool documentation.
 
 !!! techdetails "GAMBIT Technical Details"
 

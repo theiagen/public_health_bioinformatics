@@ -116,10 +116,10 @@ Ensure you use an accepted barcoding kit name in the `kit_name` parameter. Check
 
 !!! tip "Increasing Chunk Size"
     The identified pod5 files will be split into four groups (or the number indicated by `number_chunks`) for basecalling. You can decrease runtime by raising the number of chunks with the `number_chunks` variable.
-    
-    We recommend keeping the number of chunks relatively low (under 20) in order to prevent VM allocation times from drastically increasing, as this can negatively impact the speed of the analysis due to wait times reaching upwards of days (e.g., if chunk size > 100). We have observed that as the number of chunks nears 20, walltime begins to increase.
 
-    If the number of chunks is MORE than the number of pod5 files identified, the number of chunks will be set to the number of identified channels.
+    We recommend keeping the number of chunks under 20 if running this workflow on Terra in order to prevent VM allocation times from drastically increasing. Walltime drastically increases as the number of chunks nears 20 (upwards of hours to days longer) despite relatively low CPU time.
+
+    If the number of chunks is MORE than the number of pod5 files identified, the number of chunks will be set to the number of identified pod5 files.
 
 <div class="searchable-table" markdown="1">
 

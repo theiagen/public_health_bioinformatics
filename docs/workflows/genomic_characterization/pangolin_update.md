@@ -8,7 +8,7 @@
 
 ## Pangolin_Update_PHB
 
-The Pangolin_Update workflow re-runs Pangolin updating prior lineage calls from one docker image to meet the lineage calls specified in an alternative docker image. The most common use case for this is updating lineage calls to be up-to-date with the latest Pangolin nomenclature by using the latest available Pangolin docker image ([found here](https://www.notion.so/theiagen/Docker-Image-and-Reference-Materials-for-SARS-CoV-2-Genomic-Characterization-98328c61f5cb4f77975f512b55d09108)).
+The Pangolin_Update workflow re-runs Pangolin updating prior lineage calls from one docker image to meet the lineage calls specified in an alternative docker image. The most common use case for this is updating lineage calls to be up-to-date with the latest Pangolin nomenclature by using the latest available Pangolin docker image ([found here](https://theiagen.notion.site/Docker-Image-and-Reference-Materials-for-SARS-CoV-2-Genomic-Characterization-98328c61f5cb4f77975f512b55d09108?pvs=74)).
 
 ### Inputs
 
