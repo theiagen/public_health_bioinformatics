@@ -211,7 +211,7 @@ task mask_low_coverage {
     File bam
     File bai
     File reference_fasta
-    Int min_depth = 20
+    Int min_depth
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/bedtools:2.31.0"
     Int disk_size = 100
     Int cpu = 2

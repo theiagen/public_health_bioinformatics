@@ -1,21 +1,22 @@
 version 1.0
 import "../../tasks/quality_control/read_filtering/task_porechop.wdl" as porechop_task
 import "../../tasks/quality_control/read_filtering/task_nanoq.wdl" as nanoq_task
-import "../../tasks/taxon_id/contamination/task_metabuli.wdl" as metabuli_task
-import "../../tasks/utilities/task_rasusa.wdl" as rasusa_task
 import "../../tasks/quality_control/basic_statistics/task_nanoplot.wdl" as nanoplot_task
-import "../../tasks/assembly/task_raven.wdl" as raven_task
-import "../../tasks/quality_control/advanced_metrics/task_checkv.wdl" as checkv_task
 import "../../tasks/quality_control/basic_statistics/task_quast.wdl" as quast_task
-import "../../tasks/taxon_id/task_skani.wdl" as skani_task
-import "../../tasks/utilities/data_import/task_ncbi_datasets.wdl" as ncbi_datasets_task
-import "../../tasks/alignment/task_minimap2.wdl" as minimap2_task
-import "../../tasks/utilities/data_handling/task_parse_mapping.wdl" as parse_mapping_task
 import "../../tasks/quality_control/basic_statistics/task_assembly_metrics.wdl" as assembly_metrics_task
-import "../../tasks/utilities/data_handling/task_fasta_utilities.wdl" as fasta_utilities_task
-import "../../tasks/gene_typing/variant_detection/task_clair3_variants.wdl" as clair3_task
-import "../../tasks/assembly/task_bcftools_consensus.wdl" as bcftools_consensus_task
 import "../../tasks/quality_control/basic_statistics/task_consensus_qc.wdl" as consensus_qc_task
+import "../../tasks/quality_control/advanced_metrics/task_checkv.wdl" as checkv_task
+import "../../tasks/quality_control/comparisons/task_screen.wdl" as screen_task
+import "../../tasks/taxon_id/contamination/task_metabuli.wdl" as metabuli_task
+import "../../tasks/taxon_id/task_skani.wdl" as skani_task
+import "../../tasks/utilities/task_rasusa.wdl" as rasusa_task
+import "../../tasks/utilities/data_import/task_ncbi_datasets.wdl" as ncbi_datasets_task
+import "../../tasks/utilities/data_handling/task_parse_mapping.wdl" as parse_mapping_task
+import "../../tasks/utilities/data_handling/task_fasta_utilities.wdl" as fasta_utilities_task
+import "../../tasks/assembly/task_raven.wdl" as raven_task
+import "../../tasks/assembly/task_bcftools_consensus.wdl" as bcftools_consensus_task
+import "../../tasks/alignment/task_minimap2.wdl" as minimap2_task
+import "../../tasks/gene_typing/variant_detection/task_clair3_variants.wdl" as clair3_task
 import "../../tasks/task_versioning.wdl" as versioning
 
 workflow theiaviral_ont {
@@ -26,26 +27,26 @@ workflow theiaviral_ont {
     File read1
     String taxon_id
     String samplename
-    Boolean trim_adapters = false
+    Boolean call_porechop = false
     Boolean call_rasusa = false
-    String genome_length = 0 # set to 0 so it isn't used
-    Int min_mask_depth = 20 # minimum depth for masking low coverage regions
+    Boolean skip_screen = false
+    Int? genome_length
+    Int min_mask_depth = 2 # minimum depth for masking low coverage regions
     File? reference_fasta # optional, if provided, will be used instead of dynamic reference selection
   }
   # get the PHB version
   call versioning.version_capture {
     input:
   }
-  # raw read quality check, genome_length is not required for the rest of the workflow, so estimated coverage is not exposed to the outputs
-  # incorporating nanoplot's estimated coverage output without requiring genome_length would require a conditional within the task to skip coverage if no genome length is provided
+  # raw read quality check. est_genome_length is only required for nanoplot to determine estimated coverage - but this isn't used.
   call nanoplot_task.nanoplot as nanoplot_raw {
     input:
       read1 = read1,
       samplename = samplename,
-      est_genome_length = genome_length
+      est_genome_length = select_first([genome_length, 1])
   }
   # adapter trimming
-  if (trim_adapters) {
+  if (call_porechop) {
     call porechop_task.porechop as porechop {
       input:
         read1 = read1,
@@ -61,7 +62,7 @@ workflow theiaviral_ont {
   # taxonomic classification and read extraction
   call metabuli_task.metabuli as metabuli {
     input:
-      read1 = select_first([porechop.trimmed_reads, nanoq.filtered_read1, read1]),
+      read1 = nanoq.filtered_read1,
       samplename = samplename,
       taxon_id = taxon_id
   }
@@ -72,118 +73,137 @@ workflow theiaviral_ont {
       input:
         read1 = metabuli.metabuli_read1_extract,
         samplename = samplename,
-        genome_length = genome_length
+        genome_length = select_first([genome_length])
     }
   }
-  # clean read quality control
+  # raw read quality check. est_genome_length is only required for nanoplot to determine estimated coverage - but this isn't used.
   call nanoplot_task.nanoplot as nanoplot_clean {
     input:
       read1 = select_first([rasusa.read1_subsampled, metabuli.metabuli_read1_extract]),
       samplename = samplename,
-      est_genome_length = genome_length
+      est_genome_length = select_first([genome_length, 1])
   }
-  # run de novo if no reference genome is provided so we can select a reference
-  if (! defined(reference_fasta)) {
-    # de novo assembly with raven
-    call raven_task.raven as raven {
+  # check for minimum number of reads, basepairs, coverage, etc
+  if (! skip_screen) {
+    # im sorry for this - setting bare minimum values here. trying to avoid overcrowding top level workflow level parameters.
+    call screen_task.check_reads_se as clean_check_reads {
       input:
         read1 = select_first([rasusa.read1_subsampled, metabuli.metabuli_read1_extract]),
+        workflow_series = "theiaviral",
+        min_reads = 1,
+        min_basepairs = 1,
+        min_genome_length = 1,
+        max_genome_length = 100000000,
+        min_coverage = 1,
+        skip_mash = true,
+        expected_genome_length = select_first([genome_length, 1])
+    }
+  }
+  if (select_first([clean_check_reads.read_screen, ""]) == "PASS" || skip_screen) {
+    # run de novo if no reference genome is provided so we can select a reference
+    if (! defined(reference_fasta)) {
+      # de novo assembly with raven
+      call raven_task.raven as raven {
+        input:
+          read1 = select_first([rasusa.read1_subsampled, metabuli.metabuli_read1_extract]),
+          samplename = samplename
+      }
+      # quality control metrics for de novo assembly (ie. completeness, viral gene count, contamination)
+      call checkv_task.checkv as checkv_denovo {
+        input:
+          assembly = raven.assembly_fasta,
+          samplename = samplename
+      }
+      # quality control metrics for de novo assembly (ie. contigs, n50, GC content, genome length)
+      call quast_task.quast as quast_denovo {
+        input:
+          assembly = raven.assembly_fasta,
+          samplename = samplename
+      }
+      # ANI-based reference genome selection
+      call skani_task.skani as skani {
+        input:
+          assembly_fasta = raven.assembly_fasta,
+          samplename = samplename
+      }
+      # download the best reference determined from skani
+      call ncbi_datasets_task.ncbi_datasets_download_genome_accession as ncbi_datasets {
+        input:
+          ncbi_accession = skani.skani_top_accession,
+          use_ncbi_virus = true
+      }
+    }
+    # align assembly to reference genome
+    call minimap2_task.minimap2 as minimap2 {
+      input:
+        query1 = select_first([rasusa.read1_subsampled, metabuli.metabuli_read1_extract]),
+        reference = select_first([ncbi_datasets.ncbi_datasets_assembly_fasta, reference_fasta]),
+        samplename = samplename,
+        mode = "map-ont",
+        output_sam = true,
+        long_read_flags = true
+    }
+    # generate bam file from sam output
+    call parse_mapping_task.sam_to_sorted_bam as parse_mapping {
+      input:
+        sam = minimap2.minimap2_out,
         samplename = samplename
     }
-    # quality control metrics for de novo assembly (ie. completeness, viral gene count, contamination)
-    call checkv_task.checkv as checkv_denovo {
+    # quality control metrics for reads mapping to reference (ie. coverage, depth, base/map quality)
+    call assembly_metrics_task.stats_n_coverage as assembly_metrics {
       input:
-        assembly = raven.assembly_fasta,
+        bamfile = parse_mapping.bam,
         samplename = samplename
     }
-    # quality control metrics for de novo assembly (ie. contigs, n50, GC content, genome length)
-    call quast_task.quast as quast_denovo {
+    # Index the reference genome for Clair3
+    call fasta_utilities_task.samtools_faidx as fasta_utilities{
       input:
-        assembly = raven.assembly_fasta,
+        fasta = select_first([ncbi_datasets.ncbi_datasets_assembly_fasta, reference_fasta])
+    }
+    # variant calling with Clair3
+    call clair3_task.clair3_variants as clair3 {
+      input:
+        alignment_bam_file = parse_mapping.bam,
+        alignment_bam_file_index = parse_mapping.bai,
+        reference_genome_file = select_first([ncbi_datasets.ncbi_datasets_assembly_fasta, reference_fasta]),
+        reference_genome_file_index = fasta_utilities.fai,
+        sequencing_platform = "ont",
+        enable_long_indel = true,
         samplename = samplename
     }
-    # ANI-based reference genome selection
-    call skani_task.skani as skani {
+    # mask low coverage regions with Ns
+    call parse_mapping_task.mask_low_coverage {
       input:
-        assembly_fasta = raven.assembly_fasta,
+        bam = parse_mapping.bam,
+        bai = parse_mapping.bai,
+        reference_fasta = select_first([ncbi_datasets.ncbi_datasets_assembly_fasta, reference_fasta]),
+        min_depth = min_mask_depth
+    }
+    # create consensus genome based on variant calls
+    call bcftools_consensus_task.bcftools_consensus as bcftools_consensus {
+      input:
+        reference_fasta = mask_low_coverage.mask_reference_fasta,
+        input_vcf = clair3.clair3_variants_vcf,
         samplename = samplename
     }
-    # download the best reference determined from skani
-    call ncbi_datasets_task.ncbi_datasets_download_genome_accession as ncbi_datasets {
+    # quality control metrics for consensus (ie. number of bases, degenerate bases, genome length)
+    call consensus_qc_task.consensus_qc as consensus_qc {
       input:
-        ncbi_accession = skani.skani_top_accession,
-        use_ncbi_virus = true
+        assembly_fasta = bcftools_consensus.bcftools_consensus_fasta,
+        reference_genome = ncbi_datasets.ncbi_datasets_assembly_fasta
     }
-  }
-  # align assembly to reference genome
-  call minimap2_task.minimap2 as minimap2 {
-    input:
-      query1 = select_first([rasusa.read1_subsampled, metabuli.metabuli_read1_extract]),
-      reference = select_first([ncbi_datasets.ncbi_datasets_assembly_fasta, reference_fasta]),
-      samplename = samplename,
-      mode = "map-ont",
-      output_sam = true,
-      long_read_flags = true
-  }
-  # generate bam file from sam output
-  call parse_mapping_task.sam_to_sorted_bam as parse_mapping {
-    input:
-      sam = minimap2.minimap2_out,
-      samplename = samplename
-  }
-  # quality control metrics for reads mapping to reference (ie. coverage, depth, base/map quality)
-  call assembly_metrics_task.stats_n_coverage as assembly_metrics {
-    input:
-      bamfile = parse_mapping.bam,
-      samplename = samplename
-  }
-  # Index the reference genome for Clair3
-  call fasta_utilities_task.samtools_faidx as fasta_utilities{
-    input:
-      fasta = select_first([ncbi_datasets.ncbi_datasets_assembly_fasta, reference_fasta])
-  }
-  # variant calling with Clair3
-  call clair3_task.clair3_variants as clair3 {
-    input:
-      alignment_bam_file = parse_mapping.bam,
-      alignment_bam_file_index = parse_mapping.bai,
-      reference_genome_file = select_first([ncbi_datasets.ncbi_datasets_assembly_fasta, reference_fasta]),
-      reference_genome_file_index = fasta_utilities.fai,
-      sequencing_platform = "ont",
-      samplename = samplename
-  }
-  # mask low coverage regions with Ns
-  call parse_mapping_task.mask_low_coverage {
-    input:
-      bam = parse_mapping.bam,
-      bai = parse_mapping.bai,
-      reference_fasta = select_first([ncbi_datasets.ncbi_datasets_assembly_fasta, reference_fasta]),
-      min_depth = min_mask_depth
-  }
-  # create consensus genome based on variant calls
-  call bcftools_consensus_task.bcftools_consensus as bcftools_consensus {
-    input:
-      reference_fasta = mask_low_coverage.mask_reference_fasta,
-      input_vcf = clair3.clair3_variants_vcf,
-      samplename = samplename
-  }
-  # quality control metrics for consensus (ie. number of bases, degenerate bases, genome length)
-  call consensus_qc_task.consensus_qc as consensus_qc {
-    input:
-      assembly_fasta = bcftools_consensus.bcftools_consensus_fasta,
-      reference_genome = ncbi_datasets.ncbi_datasets_assembly_fasta
-  }
-  # quality control metrics for consensus (ie. completeness, viral gene count, contamination)
-  call checkv_task.checkv as checkv_consensus {
-    input:
-      assembly = bcftools_consensus.bcftools_consensus_fasta,
-      samplename = samplename
-  }
-  # quality control metrics for consensus (ie. contigs, n50, GC content, genome length)
-  call quast_task.quast as quast_consensus {
-    input:
-      assembly = bcftools_consensus.bcftools_consensus_fasta,
-      samplename = samplename
+    # quality control metrics for consensus (ie. completeness, viral gene count, contamination)
+    call checkv_task.checkv as checkv_consensus {
+      input:
+        assembly = bcftools_consensus.bcftools_consensus_fasta,
+        samplename = samplename
+    }
+    # quality control metrics for consensus (ie. contigs, n50, GC content, genome length)
+    call quast_task.quast as quast_consensus {
+      input:
+        assembly = bcftools_consensus.bcftools_consensus_fasta,
+        samplename = samplename
+    }
   }
   output {
     # versioning outputs
@@ -227,6 +247,9 @@ workflow theiaviral_ont {
     Float nanoplot_r1_n50_clean = nanoplot_clean.n50
     Float nanoplot_r1_mean_q_clean = nanoplot_clean.mean_q
     Float nanoplot_r1_median_q_clean = nanoplot_clean.median_q
+    # clean read screen outputs
+    String? read_screen_clean = clean_check_reads.read_screen
+    File? read_screen_clean_tsv = clean_check_reads.read_screen_tsv
     # raven outputs - denovo genome assembly
     File? raven_denovo_assembly = raven.assembly_fasta
     String? raven_denovo_version = raven.raven_version
@@ -262,71 +285,71 @@ workflow theiaviral_ont {
     String? ncbi_datasets_version = ncbi_datasets.ncbi_datasets_version
     String? ncbi_datasets_docker = ncbi_datasets.ncbi_datasets_docker
     # minimap2 outputs - reads aligned to best reference
-    File minimap2_out = minimap2.minimap2_out
-    String minimap2_version = minimap2.minimap2_version
-    String minimap2_docker = minimap2.minimap2_docker
+    File? minimap2_out = minimap2.minimap2_out
+    String? minimap2_version = minimap2.minimap2_version
+    String? minimap2_docker = minimap2.minimap2_docker
     # parse_mapping outputs - sam to sorted bam conversion
-    File assembly_to_ref_bam = parse_mapping.bam
-    File assembly_to_ref_bai = parse_mapping.bai
-    String parse_mapping_samtools_version = parse_mapping.samtools_version
-    String parse_mapping_samtools_docker = parse_mapping.samtools_docker
+    File? assembly_to_ref_bam = parse_mapping.bam
+    File? assembly_to_ref_bai = parse_mapping.bai
+    String? parse_mapping_samtools_version = parse_mapping.samtools_version
+    String? parse_mapping_samtools_docker = parse_mapping.samtools_docker
     # assembly_metrics outputs - read mapping quality control
-    File assembly_metrics_report = assembly_metrics.metrics_txt
-    File assembly_metrics_stats = assembly_metrics.stats
-    File assembly_metrics_cov_hist = assembly_metrics.cov_hist
-    File assembly_metrics_cov_stats = assembly_metrics.cov_stats
-    File assembly_metrics_flagstat = assembly_metrics.flagstat
-    Float assembly_metrics_coverage = assembly_metrics.coverage
-    Float assembly_metrics_depth = assembly_metrics.depth
-    Float assembly_metrics_meanbaseq = assembly_metrics.meanbaseq
-    Float assembly_metrics_meanmapq = assembly_metrics.meanmapq
-    Float assembly_metrics_percentage_mapped_reads = assembly_metrics.percentage_mapped_reads
-    String assembly_metrics_date = assembly_metrics.date
-    String assembly_metrics_samtools_version = assembly_metrics.samtools_version
+    File? assembly_metrics_report = assembly_metrics.metrics_txt
+    File? assembly_metrics_stats = assembly_metrics.stats
+    File? assembly_metrics_cov_hist = assembly_metrics.cov_hist
+    File? assembly_metrics_cov_stats = assembly_metrics.cov_stats
+    File? assembly_metrics_flagstat = assembly_metrics.flagstat
+    Float? assembly_metrics_coverage = assembly_metrics.coverage
+    Float? assembly_metrics_depth = assembly_metrics.depth
+    Float? assembly_metrics_meanbaseq = assembly_metrics.meanbaseq
+    Float? assembly_metrics_meanmapq = assembly_metrics.meanmapq
+    Float? assembly_metrics_percentage_mapped_reads = assembly_metrics.percentage_mapped_reads
+    String? assembly_metrics_date = assembly_metrics.date
+    String? assembly_metrics_samtools_version = assembly_metrics.samtools_version
     # fasta_utilities outputs - samtools faidx reference genome
-    File fasta_utilities_fai = fasta_utilities.fai
-    String fasta_utilities_samtools_version = fasta_utilities.samtools_version
-    String fasta_utilities_samtools_docker = fasta_utilities.samtools_docker
+    File? fasta_utilities_fai = fasta_utilities.fai
+    String? fasta_utilities_samtools_version = fasta_utilities.samtools_version
+    String? fasta_utilities_samtools_docker = fasta_utilities.samtools_docker
     # clair3 outputs - variant calling
-    File clair3_vcf = clair3.clair3_variants_vcf
+    File? clair3_vcf = clair3.clair3_variants_vcf
     File? clair3_gvcf = clair3.clair3_variants_gvcf
-    String clair3_model = clair3.clair3_model_used
-    String clair3_version = clair3.clair3_version
-    String clair3_docker = clair3.clair3_variants_docker_image
+    String? clair3_model = clair3.clair3_model_used
+    String? clair3_version = clair3.clair3_version
+    String? clair3_docker = clair3.clair3_variants_docker_image
     # coverage_mask outputs - low coverage regions
-    File mask_low_coverage_bed = mask_low_coverage.low_coverage_regions_bed
-    File mask_low_coverage_all_coverage_bed = mask_low_coverage.all_coverage_regions_bed
-    File mask_low_coverage_reference_fasta = mask_low_coverage.mask_reference_fasta
-    String mask_low_coverage_bedtools_version = mask_low_coverage.bedtools_version
-    String mask_low_coverage_bedtools_docker = mask_low_coverage.bedtools_docker
+    File? mask_low_coverage_bed = mask_low_coverage.low_coverage_regions_bed
+    File? mask_low_coverage_all_coverage_bed = mask_low_coverage.all_coverage_regions_bed
+    File? mask_low_coverage_reference_fasta = mask_low_coverage.mask_reference_fasta
+    String? mask_low_coverage_bedtools_version = mask_low_coverage.bedtools_version
+    String? mask_low_coverage_bedtools_docker = mask_low_coverage.bedtools_docker
     # bcftools_consensus outputs - consensus genome
-    File bcftools_consensus_fasta = bcftools_consensus.bcftools_consensus_fasta
-    File bcftools_norm_vcf = bcftools_consensus.bcftools_norm_vcf
-    String bcftools_version = bcftools_consensus.bcftools_version
-    String bcftools_docker = bcftools_consensus.bcftools_docker
+    File? bcftools_consensus_fasta = bcftools_consensus.bcftools_consensus_fasta
+    File? bcftools_norm_vcf = bcftools_consensus.bcftools_norm_vcf
+    String? bcftools_version = bcftools_consensus.bcftools_version
+    String? bcftools_docker = bcftools_consensus.bcftools_docker
     # consensus assembly statistics
-    Int consensus_qc_number_N = consensus_qc.number_N
-    Int consensus_qc_assembly_length_unambiguous = consensus_qc.number_ATCG
-    Int consensus_qc_number_Degenerate = consensus_qc.number_Degenerate
-    Int consensus_qc_number_Total = consensus_qc.number_Total
-    Float consensus_qc_percent_reference_coverage = consensus_qc.percent_reference_coverage
+    Int? consensus_qc_number_N = consensus_qc.number_N
+    Int? consensus_qc_assembly_length_unambiguous = consensus_qc.number_ATCG
+    Int? consensus_qc_number_Degenerate = consensus_qc.number_Degenerate
+    Int? consensus_qc_number_Total = consensus_qc.number_Total
+    Float? consensus_qc_percent_reference_coverage = consensus_qc.percent_reference_coverage
     # checkv_consensus outputs - consensus assembly quality control
-    File checkv_consensus_summary = checkv_consensus.checkv_summary
-    File checkv_consensus_contamination = checkv_consensus.checkv_contamination
-    Float checkv_consensus_total_contamination = checkv_consensus.total_contamination
-    Float checkv_consensus_total_completeness = checkv_consensus.total_completeness
-    Int checkv_consensus_total_genes = checkv_consensus.total_genes
-    String checkv_consensus_version = checkv_consensus.checkv_version
+    File? checkv_consensus_summary = checkv_consensus.checkv_summary
+    File? checkv_consensus_contamination = checkv_consensus.checkv_contamination
+    Float? checkv_consensus_total_contamination = checkv_consensus.total_contamination
+    Float? checkv_consensus_total_completeness = checkv_consensus.total_completeness
+    Int? checkv_consensus_total_genes = checkv_consensus.total_genes
+    String? checkv_consensus_version = checkv_consensus.checkv_version
     # quast_consensus outputs - consensus assembly quality control
-    File quast_consensus_report = quast_consensus.quast_report
-    Int quast_consensus_genome_length = quast_consensus.genome_length
-    Int quast_consensus_number_contigs = quast_consensus.number_contigs
-    Int quast_consensus_n50_value = quast_consensus.n50_value
-    Int quast_consensus_largest_contig = quast_consensus.largest_contig
-    Float quast_consensus_gc_percent = quast_consensus.gc_percent
-    Float quast_consensus_uncalled_bases = quast_consensus.uncalled_bases
-    String quast_consensus_pipeline_date = quast_consensus.pipeline_date
-    String quast_consensus_version = quast_consensus.version
-    String quast_consensus_docker = quast_consensus.quast_docker
+    File? quast_consensus_report = quast_consensus.quast_report
+    Int? quast_consensus_genome_length = quast_consensus.genome_length
+    Int? quast_consensus_number_contigs = quast_consensus.number_contigs
+    Int? quast_consensus_n50_value = quast_consensus.n50_value
+    Int? quast_consensus_largest_contig = quast_consensus.largest_contig
+    Float? quast_consensus_gc_percent = quast_consensus.gc_percent
+    Float? quast_consensus_uncalled_bases = quast_consensus.uncalled_bases
+    String? quast_consensus_pipeline_date = quast_consensus.pipeline_date
+    String? quast_consensus_version = quast_consensus.version
+    String? quast_consensus_docker = quast_consensus.quast_docker
   }
 }
