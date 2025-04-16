@@ -399,7 +399,7 @@
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     # vadr
     - path: miniwdl_run/call-vadr/command
-      md5sum: 6d439792568a3cc87cb3262553f6f7c0
+      md5sum: 59ad63651b22a3f7d51f5230bf441c93
     - path: miniwdl_run/call-vadr/inputs.json
       contains: ["assembly_length_unambiguous", "genome_fasta", "fasta"]
     - path: miniwdl_run/call-vadr/outputs.json
