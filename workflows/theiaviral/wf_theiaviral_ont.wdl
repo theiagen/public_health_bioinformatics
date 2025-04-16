@@ -9,6 +9,7 @@ import "../../tasks/quality_control/advanced_metrics/task_checkv.wdl" as checkv_
 import "../../tasks/quality_control/comparisons/task_screen.wdl" as screen_task
 import "../../tasks/taxon_id/contamination/task_metabuli.wdl" as metabuli_task
 import "../../tasks/taxon_id/task_skani.wdl" as skani_task
+import "../../tasks/utilities/task_rasusa.wdl" as rasusa_task
 import "../../tasks/utilities/data_import/task_ncbi_datasets.wdl" as ncbi_datasets_task
 import "../../tasks/utilities/data_handling/task_parse_mapping.wdl" as parse_mapping_task
 import "../../tasks/utilities/data_handling/task_fasta_utilities.wdl" as fasta_utilities_task
@@ -28,9 +29,10 @@ workflow theiaviral_ont {
     String taxon_id
     String samplename
     Boolean call_porechop = false
+    Boolean call_rasusa = false
     Boolean skip_screen = false
     Int? genome_length
-    Float? downsampling_coverage
+    Float downsampling_coverage = 150
     Int min_mask_depth = 2 # minimum depth for masking low coverage regions
     File? reference_fasta # optional, if provided, will be used instead of dynamic reference selection
   }
@@ -72,10 +74,21 @@ workflow theiaviral_ont {
       samplename = samplename,
       taxon_id = taxon_id
   }
+  # downsample reads if the user wants, rasusa parameters are set in the task
+  if (call_rasusa) {
+    # rasusa downsampling reads to specified coverage level
+    call rasusa_task.rasusa as rasusa {
+      input:
+        read1 = metabuli.metabuli_read1_extract,
+        samplename = samplename,
+        coverage = select_first([downsampling_coverage]),
+        genome_length = select_first([genome_length])
+    }
+  }
   # raw read quality check. est_genome_length is only required for nanoplot to determine estimated coverage - but this isn't used.
   call nanoplot_task.nanoplot as nanoplot_clean {
     input:
-      read1 = metabuli.metabuli_read1_extract,
+      read1 = select_first([rasusa.read1_subsampled, metabuli.metabuli_read1_extract]),
       samplename = samplename,
       est_genome_length = select_first([genome_length, 1])
   }
@@ -84,7 +97,7 @@ workflow theiaviral_ont {
     # im sorry for this - setting bare minimum values here. trying to avoid overcrowding top level workflow level parameters.
     call screen_task.check_reads_se as clean_check_reads {
       input:
-        read1 = metabuli.metabuli_read1_extract,
+        read1 = select_first([rasusa.read1_subsampled, metabuli.metabuli_read1_extract]),
         workflow_series = "theiaviral",
         min_reads = 1,
         min_basepairs = 1,
@@ -101,7 +114,7 @@ workflow theiaviral_ont {
       # de novo assembly with raven
       call raven_task.raven as raven {
         input:
-          read1 = metabuli.metabuli_read1_extract,
+          read1 = select_first([rasusa.read1_subsampled, metabuli.metabuli_read1_extract]),
           samplename = samplename
       }
       # quality control metrics for de novo assembly (ie. completeness, viral gene count, contamination)
@@ -132,7 +145,7 @@ workflow theiaviral_ont {
     # align assembly to reference genome
     call minimap2_task.minimap2 as minimap2 {
       input:
-        query1 = metabuli.metabuli_read1_extract,
+        query1 = select_first([rasusa.read1_subsampled, metabuli.metabuli_read1_extract]),
         reference = select_first([ncbi_datasets.ncbi_datasets_assembly_fasta, reference_fasta]),
         samplename = samplename,
         mode = "map-ont",
@@ -232,6 +245,10 @@ workflow theiaviral_ont {
     String metabuli_database = metabuli.metabuli_database
     String metabuli_version = metabuli.metabuli_version
     String metabuli_docker = metabuli.metabuli_docker
+    # rasusa outputs - downsampled reads
+    File? rasusa_read1_subsampled = rasusa.read1_subsampled
+    File? rasusa_read2_subsampled = rasusa.read2_subsampled
+    String? rasusa_version = rasusa.rasusa_version
     # clean read quality control
     File nanoplot_html_clean = nanoplot_clean.nanoplot_html
     File nanoplot_tsv_clean = nanoplot_clean.nanoplot_tsv
