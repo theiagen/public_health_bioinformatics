@@ -1,6 +1,7 @@
 version 1.0
 
 import "../../tasks/assembly/task_shovill.wdl" as shovill
+import "../../tasks/assembly/task_spades.wdl" as spades
 import "../../tasks/gene_typing/annotation/task_bakta.wdl" as bakta_task
 import "../../tasks/gene_typing/annotation/task_prokka.wdl" as prokka_task
 import "../../tasks/gene_typing/drug_resistance/task_amrfinderplus.wdl" as amrfinderplus
@@ -65,6 +66,7 @@ workflow theiaprok_illumina_pe {
     Int trim_quality_min_score = 20
     Int trim_window_size = 10
     # module options
+    Boolean use_spades = false # by default use shovill
     Boolean perform_characterization = true # by default run all characterization steps
     Boolean call_ani = false # by default do not call ANI task, but user has ability to enable this task if working with enteric pathogens or supply their own high-quality reference genome
     Boolean call_kmerfinder = false 
@@ -135,16 +137,27 @@ workflow theiaprok_illumina_pe {
       }
     }
     if (select_first([clean_check_reads.read_screen, ""]) == "PASS" || skip_screen) {
-      call shovill.shovill_pe {
-        input:
-          samplename = samplename,
-          read1_cleaned = read_QC_trim.read1_clean,
-          read2_cleaned = read_QC_trim.read2_clean,
-          genome_length = select_first([genome_length, clean_check_reads.est_genome_length, 0])
+      if (!use_spades) {
+        call shovill.shovill_pe {
+          input:
+            samplename = samplename,
+            read1_cleaned = read_QC_trim.read1_clean,
+            read2_cleaned = read_QC_trim.read2_clean,
+            genome_length = select_first([genome_length, clean_check_reads.est_genome_length, 0])
+        }
+      }
+      
+      if (use_spades) {
+        call spades.spades_pe {
+          input:
+            samplename = samplename,
+            read1_cleaned = read_QC_trim.read1_clean,
+            read2_cleaned = read_QC_trim.read2_clean
+        }
       }
       call quast_task.quast {
         input:
-          assembly = shovill_pe.assembly_fasta,
+          assembly = select_first([spades_pe.assembly_fasta,shovill_pe.assembly_fasta]),
           samplename = samplename
       }
       call cg_pipeline.cg_pipeline as cg_pipeline_raw {
@@ -163,32 +176,32 @@ workflow theiaprok_illumina_pe {
       }
       call busco_task.busco {
         input:
-          assembly = shovill_pe.assembly_fasta,
+          assembly = select_first([spades_pe.assembly_fasta,shovill_pe.assembly_fasta]),
           samplename = samplename
       }
       if (perform_characterization) {
         call gambit_task.gambit {
           input:
-            assembly = shovill_pe.assembly_fasta,
+            assembly = select_first([spades_pe.assembly_fasta,shovill_pe.assembly_fasta]),
             samplename = samplename
         }
         if (call_ani) {
           call ani_task.animummer as ani {
             input:
-              assembly = shovill_pe.assembly_fasta,
+              assembly = select_first([spades_pe.assembly_fasta,shovill_pe.assembly_fasta]),
               samplename = samplename
           }
         }
         if (call_kmerfinder) {
           call kmerfinder_task.kmerfinder_bacteria as kmerfinder {
             input:
-              assembly = shovill_pe.assembly_fasta,
+              assembly = select_first([spades_pe.assembly_fasta,shovill_pe.assembly_fasta]),
               samplename = samplename
           }
         }
         call amrfinderplus.amrfinderplus_nuc as amrfinderplus_task {
           input:
-            assembly = select_first([prokka.prokka_fna, bakta.bakta_fna, shovill_pe.assembly_fasta]),
+            assembly = select_first([prokka.prokka_fna, bakta.bakta_fna, spades_pe.assembly_fasta, shovill_pe.assembly_fasta]),
             samplename = samplename,
             protein_fasta = select_first([prokka.prokka_faa,bakta.bakta_faa]),
             gff = select_first([prokka.prokka_gff,bakta.bakta_gff3]),
@@ -198,27 +211,27 @@ workflow theiaprok_illumina_pe {
         if (call_gamma){
           call gamma_task.gamma{
             input:
-              assembly = shovill_pe.assembly_fasta,
+              assembly = select_first([spades_pe.assembly_fasta,shovill_pe.assembly_fasta]),
               samplename = samplename
           }
         }
         if (call_resfinder) {
           call resfinder.resfinder as resfinder_task {
             input:
-              assembly = shovill_pe.assembly_fasta,
+              assembly = select_first([spades_pe.assembly_fasta,shovill_pe.assembly_fasta]),
               samplename = samplename,
               organism = select_first([expected_taxon, gambit.gambit_predicted_taxon])
           }
         }
         call ts_mlst_task.ts_mlst {
           input: 
-            assembly = shovill_pe.assembly_fasta,
+            assembly = select_first([spades_pe.assembly_fasta,shovill_pe.assembly_fasta]),
             samplename = samplename
         }
         if (genome_annotation == "prokka") {
           call prokka_task.prokka {
             input:
-              assembly = shovill_pe.assembly_fasta,
+              assembly = select_first([spades_pe.assembly_fasta,shovill_pe.assembly_fasta]),
               samplename = samplename
           }
         }
@@ -234,7 +247,7 @@ workflow theiaprok_illumina_pe {
           } 
           call bakta_task.bakta {
             input:
-              assembly = shovill_pe.assembly_fasta,
+              assembly = select_first([spades_pe.assembly_fasta,shovill_pe.assembly_fasta]),
               samplename = samplename,
               bakta_db_selected = select_first([bakta_custom_db, bakta_db_light, bakta_db_full])
           }
@@ -242,14 +255,14 @@ workflow theiaprok_illumina_pe {
         if (call_plasmidfinder) {
           call plasmidfinder_task.plasmidfinder {
             input:
-              assembly = shovill_pe.assembly_fasta,
+              assembly = select_first([spades_pe.assembly_fasta,shovill_pe.assembly_fasta]),
               samplename = samplename
           }
         }
         if (call_abricate) {
           call abricate_task.abricate {
             input:
-              assembly = shovill_pe.assembly_fasta,
+              assembly = select_first([spades_pe.assembly_fasta,shovill_pe.assembly_fasta]),
               samplename = samplename,
               database = abricate_db
           }
@@ -292,7 +305,7 @@ workflow theiaprok_illumina_pe {
         call merlin_magic_workflow.merlin_magic {
           input:
             merlin_tag = select_first([expected_taxon, gambit.merlin_tag]),
-            assembly = shovill_pe.assembly_fasta,
+            assembly = select_first([spades_pe.assembly_fasta,shovill_pe.assembly_fasta]),
             samplename = samplename,
             read1 = read_QC_trim.read1_clean,
             read2 = read_QC_trim.read2_clean
@@ -358,7 +371,7 @@ workflow theiaprok_illumina_pe {
                 "ani_mummer_version": ani.ani_mummer_version,
                 "ani_output_tsv": ani.ani_output_tsv,
                 "ani_top_species_match": ani.ani_top_species_match,
-                "assembly_fasta": shovill_pe.assembly_fasta,
+                "assembly_fasta": select_first([spades_pe.assembly_fasta,shovill_pe.assembly_fasta]),
                 "assembly_length": quast.genome_length,
                 "bakta_gbff": bakta.bakta_gbff,
                 "bakta_gff3": bakta.bakta_gff3,
@@ -796,7 +809,7 @@ workflow theiaprok_illumina_pe {
     String? kraken2_database = read_QC_trim.kraken_database
     String? kraken_docker = read_QC_trim.kraken_docker
     # Assembly - shovill outputs 
-    File? assembly_fasta = shovill_pe.assembly_fasta
+    File? assembly_fasta = select_first([spades_pe.assembly_fasta,shovill_pe.assembly_fasta])
     File? contigs_gfa = shovill_pe.contigs_gfa
     File? contigs_fastg = shovill_pe.contigs_fastg
     File? contigs_lastgraph = shovill_pe.contigs_lastgraph
