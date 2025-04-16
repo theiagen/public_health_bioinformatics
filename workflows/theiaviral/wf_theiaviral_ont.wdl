@@ -85,7 +85,7 @@ workflow theiaviral_ont {
   # human read scrubbing
   call ncbi_scrub_task.ncbi_scrub_se {
     input:
-      read1 = nanoq.filtered_read1,
+      read1 = ncbi_scrub_se.read1_dehosted,
       samplename = samplename,
   }
   # decontaminate host reads if a host genome is provided
