@@ -22,9 +22,9 @@ Additionally, the **TheiaCoV_FASTA_Batch** workflow is available to process seve
 
 !!! dna inline end "Key Resources"
 
-    [**Reference Materials for SARS-CoV-2**](https://www.notion.so/Docker-Image-and-Reference-Materials-for-SARS-CoV-2-Genomic-Characterization-98328c61f5cb4f77975f512b55d09108?pvs=21)
+    [**Reference Materials for SARS-CoV-2**](https://theiagen.notion.site/Docker-Image-and-Reference-Materials-for-SARS-CoV-2-Genomic-Characterization-98328c61f5cb4f77975f512b55d09108?pvs=74)
 
-    [**Reference Materials for Mpox**](https://www.notion.so/Workspace-Reference-Materials-for-MPXV-Genomic-Characterization-a34f355c68c54c0a82e926d4de607bca?pvs=21)
+    [**Reference Materials for Mpox**](https://theiagen.notion.site/Workspace-Reference-Materials-for-MPXV-Genomic-Characterization-a34f355c68c54c0a82e926d4de607bca)
 
     [**Reference Materials for non-default viruses**](../../guides/custom_organisms.md)
 
@@ -392,11 +392,11 @@ All TheiaCoV Workflows (not TheiaCoV_FASTA_Batch)
 | stats_n_coverage_primtrim | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | CL, ONT | |
 | stats_n_coverage_primtrim | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/samtools:1.15 | Optional | CL, ONT | |
 | stats_n_coverage_primtrim | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | CL, ONT | |
-| vadr | **cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional | CL, FASTA, ONT, PE, SE | MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
+| vadr | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional | CL, FASTA, ONT, PE, SE | MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | vadr | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | CL, FASTA, ONT, PE, SE | MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | vadr | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/vadr:1.5.1 | Optional | CL, FASTA, ONT, PE, SE | MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | vadr | **max_length** | Int | Maximum length of contig allowed to run VADR | | Optional | CL | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
-| vadr | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 32 (RSV-A and RSV-B) and 8 (all other TheiaCoV organisms) | Optional | CL | MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
+| vadr | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 32 (RSV-A and RSV-B) and 16 (all other TheiaCoV organisms) | Optional | CL | MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | vadr | **min_length** | Int | Minimum length subsequence to possibly replace Ns for the `fasta-trim-terminal-ambigs.pl` VADR script | 50 | Optional | CL, FASTA, ONT, PE, SE | MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | vadr | **skip_length** | Int | Minimum assembly length (unambiguous) to run VADR | 10000 | Optional | CL | MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | vadr | **vadr_opts** | String | Additional options to provide to VADR | | Optional | CL | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
@@ -854,7 +854,7 @@ All input reads are processed through "core tasks" in the TheiaCoV Illumina, ONT
     
         |  | Links |
         | --- | --- |
-        | Task | [task_qc_check.wdl](https://github.com/theiagen/public_health_bioinformatiocs/blob/main/tasks/quality_control/comparisons/task_qc_check.wdl) |
+        | Task | [task_qc_check.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/comparisons/task_qc_check_phb.wdl) |
 
 #### Assembly tasks
 

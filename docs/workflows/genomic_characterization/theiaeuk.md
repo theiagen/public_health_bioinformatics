@@ -69,9 +69,9 @@ All input reads are processed through "core tasks" in each workflow. The core ta
 | merlin_magic | **srst2_min_edge_depth** | Int | Internal component, do not modify | 2 | Do Not Modify, Optional |
 | merlin_magic | **staphopia_sccmec_docker_image** | String | Internal component, do not modify | us-docker.pkg.dev/general-theiagen/biocontainers/staphopia-sccmec:1.0.0--hdfd78af_0 | Do Not Modify, Optional |
 | merlin_magic | **tbp_parser_config** | File | Internal component, do not modify |  | Do Not Modify, Optional |
-| merlin_magic | **tbp_parser_min_percent_coverage** | Int | Internal component, do not modify | 100 | Do Not Modify, Optional |
+| merlin_magic | **tbp_parser_min_percent_coverage** | Float | Internal component, do not modify | 100.0 | Do Not Modify, Optional |
 | merlin_magic | **tbp_parser_debug** | Boolean | Internal component, do not modify | FALSE | Do Not Modify, Optional |
-| merlin_magic | **tbp_parser_docker_image** | String | Internal component, do not modify | us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:2.4.4 | Do Not Modify, Optional |
+| merlin_magic | **tbp_parser_docker_image** | String | Internal component, do not modify | us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:2.4.5 | Do Not Modify, Optional |
 | merlin_magic | **tbp_parser_min_depth** | Int | Internal component, do not modify | 10 | Do Not Modify, Optional |
 | merlin_magic | **tbp_parser_operator** | String | Internal component, do not modify | "Operator not provided" | Do Not Modify, Optional |
 | merlin_magic | **tbp_parser_output_seq_method_type** | String | Internal component, do not modify | "WGS" | Do Not Modify, Optional |
@@ -372,7 +372,7 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
 
     [`GAMBIT`](https://github.com/jlumpe/gambit) determines the taxon of the genome assembly using a k-mer based approach to match the assembly sequence to the closest complete genome in a database, thereby predicting its identity. Sometimes, GAMBIT can confidently designate the organism to the species level. Other times, it is more conservative and assigns it to a higher taxonomic rank.
 
-    For additional details regarding the GAMBIT tool and a list of available GAMBIT databases for analysis, please consult the [GAMBIT](https://www.notion.so/GAMBIT-7c1376b861d0486abfbc316480046bdc?pvs=21) tool documentation.
+    For additional details regarding the GAMBIT tool and a list of available GAMBIT databases for analysis, please consult the [GAMBIT](../../guides/gambit.md) tool documentation.
 
     !!! techdetails "GAMBIT Technical Details"
 

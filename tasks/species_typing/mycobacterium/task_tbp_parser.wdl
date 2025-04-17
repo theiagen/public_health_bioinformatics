@@ -15,7 +15,7 @@ task tbp_parser {
     Float? min_frequency # default 0.1
     Int? min_read_support # default 10
     
-    Int? min_percent_coverage # default 100 (--min_percent_coverage)
+    Float? min_percent_coverage # default 100 (--min_percent_coverage)
     File? coverage_regions_bed
   
     Boolean add_cycloserine_lims = false
@@ -32,7 +32,7 @@ task tbp_parser {
     
     Int cpu = 1
     Int disk_size = 100   
-    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:2.4.4"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:2.4.5"
     Int memory = 4
   }
   command <<<

@@ -29,7 +29,7 @@ task dorado_basecall {
 
     # get path to localized pod5 files
     pod5s=(~{sep=" " pod5_files})
-    pod5_dir=$(dirname ${pod5s[1]})
+    pod5_dir=$(dirname ${pod5s[0]})
 
     # Run Dorado basecaller and log output
     dorado basecaller \
