@@ -1,7 +1,7 @@
 version 1.0
 
 import "../../tasks/gene_typing/drug_resistance/task_amr_search.wdl" as run_amr_search
-import "../../task/task_versioning.wdl" as versioning
+import "../../tasks/task_versioning.wdl" as versioning
 
 workflow amr_search_workflow {
   meta {
