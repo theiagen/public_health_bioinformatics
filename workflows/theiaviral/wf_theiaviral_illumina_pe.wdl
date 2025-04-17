@@ -1,7 +1,9 @@
 version 1.0
 
+# read QC
 import "../utilities/wf_read_QC_trim_pe.wdl" as read_qc
 import "../../tasks/quality_control/comparisons/task_screen.wdl" as read_screen_task
+import "../../tasks/utilities/task_rasusa.wdl" as rasusa_task
 # assembly
 import "../../tasks/assembly/task_spades.wdl" as spades_task
 import "../../tasks/assembly/task_megahit.wdl" as megahit_task
@@ -32,6 +34,11 @@ workflow theiaviral_illumina_pe {
     File? reference_fasta # optional, if provided, will be used instead of dynamic reference selection
     Boolean extract_unclassified = true # if true, unclassified reads will be extracted from kraken2 output
 
+    # rasusa downsampling inputs
+    Boolean call_rasusa = false
+    Float downsampling_coverage = 500
+    Int genome_length = 10000
+
     Boolean call_metaviralspades = false
     Boolean call_metaspades = false
     Boolean call_spades = false
@@ -52,12 +59,23 @@ workflow theiaviral_illumina_pe {
       extract_unclassified = extract_unclassified,
       workflow_series = "theiaviral"
   }
+  if (call_rasusa) {
+    # downsample reads to a specific coverage
+    call rasusa_task.rasusa as rasusa {
+      input:
+        read1 = select_first([read_QC_trim.kraken2_extracted_read1]),
+        read2 = select_first([read_QC_trim.kraken2_extracted_read2]),
+        samplename = samplename,
+        coverage = downsampling_coverage,
+        genome_length = genome_length
+    }
+  }
   # clean read screening
   if (! skip_screen) {
     call read_screen_task.check_reads as clean_check_reads {
       input:
-        read1 = select_first([read_QC_trim.kraken2_extracted_read1]),
-        read2 = select_first([read_QC_trim.kraken2_extracted_read2]),
+        read1 = select_first([rasusa.read1_subsampled, read_QC_trim.kraken2_extracted_read1]),
+        read2 = select_first([rasusa.read2_subsampled, read_QC_trim.kraken2_extracted_read2]),
         min_reads = 0,
         min_basepairs = 0,
         min_genome_length = 0,
@@ -74,32 +92,24 @@ workflow theiaviral_illumina_pe {
       if (call_metaviralspades) {
         call spades_task.metaviralspades_pe {
           input:
-            read1_cleaned = select_first([read_QC_trim.kraken2_extracted_read1]),
-            read2_cleaned = select_first([read_QC_trim.kraken2_extracted_read2]),
+            read1_cleaned = select_first([rasusa.read1_subsampled, read_QC_trim.kraken2_extracted_read1]),
+            read2_cleaned = select_first([rasusa.read2_subsampled, read_QC_trim.kraken2_extracted_read2]),
             samplename = samplename
         }
       }
       if (call_metaspades) {
         call spades_task.metaspades_pe {
           input:
-            read1_cleaned = select_first([read_QC_trim.kraken2_extracted_read1]),
-            read2_cleaned = select_first([read_QC_trim.kraken2_extracted_read2]),
-            samplename = samplename
-        }
-      }
-      if (call_spades) {
-        call spades_task.spades_pe {
-          input:
-            read1_cleaned = select_first([read_QC_trim.kraken2_extracted_read1]),
-            read2_cleaned = select_first([read_QC_trim.kraken2_extracted_read2]),
+            read1_cleaned = select_first([rasusa.read1_subsampled, read_QC_trim.kraken2_extracted_read1]),
+            read2_cleaned = select_first([rasusa.read2_subsampled, read_QC_trim.kraken2_extracted_read2]),
             samplename = samplename
         }
       }
       if (call_megahit) {
         call megahit_task.megahit_pe {
           input:
-            read1_cleaned = select_first([read_QC_trim.kraken2_extracted_read1]),
-            read2_cleaned = select_first([read_QC_trim.kraken2_extracted_read2]),
+            read1_cleaned = select_first([rasusa.read1_subsampled, read_QC_trim.kraken2_extracted_read1]),
+            read2_cleaned = select_first([rasusa.read2_subsampled, read_QC_trim.kraken2_extracted_read2]),
             samplename = samplename
         }
       }
@@ -107,19 +117,19 @@ workflow theiaviral_illumina_pe {
       # quality control metrics for de novo assembly (ie. completeness, viral gene count, contamination)
       call checkv_task.checkv as checkv_denovo {
         input:
-          assembly = select_first([metaviralspades_pe.assembly_fasta, metaspades_pe.assembly_fasta, spades_pe.assembly_fasta, megahit_pe.assembly_fasta]),
+          assembly = select_first([metaviralspades_pe.assembly_fasta, metaspades_pe.assembly_fasta, megahit_pe.assembly_fasta]),
           samplename = samplename
       }
       # quality control metrics for de novo assembly (ie. contigs, n50, GC content, genome length)
       call quast_task.quast as quast_denovo {
         input:
-          assembly = select_first([metaviralspades_pe.assembly_fasta, metaspades_pe.assembly_fasta, spades_pe.assembly_fasta, megahit_pe.assembly_fasta]),
+          assembly = select_first([metaviralspades_pe.assembly_fasta, metaspades_pe.assembly_fasta, megahit_pe.assembly_fasta]),
           samplename = samplename
       }
       # ANI-based reference genome selection
       call skani_task.skani as skani {
         input:
-          assembly_fasta = select_first([metaviralspades_pe.assembly_fasta, metaspades_pe.assembly_fasta, spades_pe.assembly_fasta, megahit_pe.assembly_fasta]),
+          assembly_fasta = select_first([metaviralspades_pe.assembly_fasta, metaspades_pe.assembly_fasta, megahit_pe.assembly_fasta]),
           samplename = samplename
       }
       # download the best reference determined from skani
@@ -224,7 +234,7 @@ workflow theiaviral_illumina_pe {
     File? fastq_scan_clean1_json = read_QC_trim.fastq_scan_clean1_json
     File? fastq_scan_clean2_json = read_QC_trim.fastq_scan_clean2_json
     # denovo genome assembly
-    File? assembly_fasta = select_first([spades_pe.assembly_fasta, metaspades_pe.assembly_fasta, metaviralspades_pe.assembly_fasta, megahit_pe.assembly_fasta])
+    File? assembly_fasta = select_first([metaspades_pe.assembly_fasta, metaviralspades_pe.assembly_fasta, megahit_pe.assembly_fasta])
     # checkv_denovo outputs - denovo assembly quality control
     File? checkv_denovo_summary = checkv_denovo.checkv_summary
     File? checkv_denovo_contamination = checkv_denovo.checkv_contamination
