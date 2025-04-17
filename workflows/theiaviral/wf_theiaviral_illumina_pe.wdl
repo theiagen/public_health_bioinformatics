@@ -1,5 +1,6 @@
 version 1.0
 
+# read QC
 import "../utilities/wf_read_QC_trim_pe.wdl" as read_qc
 import "../../tasks/quality_control/comparisons/task_screen.wdl" as read_screen_task
 import "../../tasks/utilities/task_rasusa.wdl" as rasusa_task
@@ -72,6 +73,17 @@ workflow theiaviral_illumina_pe {
         read2 = select_first([read_QC_trim.kraken2_extracted_read2]),
         samplename = samplename,
         genome_length = select_first([genome_length, ncbi_identify.avg_genome_length])
+    }
+  }
+  if (call_rasusa) {
+    # downsample reads to a specific coverage
+    call rasusa_task.rasusa as rasusa {
+      input:
+        read1 = select_first([read_QC_trim.kraken2_extracted_read1]),
+        read2 = select_first([read_QC_trim.kraken2_extracted_read2]),
+        samplename = samplename,
+        coverage = downsampling_coverage,
+        genome_length = genome_length
     }
   }
   # clean read screening
