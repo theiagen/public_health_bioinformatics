@@ -1,6 +1,5 @@
 version 1.0
 
-# read QC
 import "../utilities/wf_read_QC_trim_pe.wdl" as read_qc
 import "../../tasks/quality_control/comparisons/task_screen.wdl" as read_screen_task
 import "../../tasks/utilities/task_rasusa.wdl" as rasusa_task
@@ -213,60 +212,27 @@ workflow theiaviral_illumina_pe {
         }
       }
     }
-    # align assembly to reference genome
-  
-    # generate bam file from sam output
-  #  call parse_mapping_task.sam_to_sorted_bam as parse_mapping {
-   #   input:
-    #    sam = minimap2.minimap2_out,
-     #   samplename = samplename
-    #}
-    # quality control metrics for reads mapping to reference (ie. coverage, depth, base/map quality)
-  #  call assembly_metrics_task.stats_n_coverage as assembly_metrics {
-   #   input:
-    #    bamfile = parse_mapping.bam,
-     #   samplename = samplename
-  #  }
-    # Index the reference genome for Clair3
-   # call fasta_utilities_task.samtools_faidx as fasta_utilities{
-    #  input:
-     #   fasta = select_first([ncbi_datasets.ncbi_datasets_assembly_fasta, reference_fasta])
-  #  }
-    # variant calling
-  
-    # mask low coverage regions with Ns
-  #  call parse_mapping_task.mask_low_coverage {
-   #   input:
-    #    bam = parse_mapping.bam,
-     #   bai = parse_mapping.bai,
-      #  reference_fasta = select_first([ncbi_datasets.ncbi_datasets_assembly_fasta, reference_fasta]),
-       # min_depth = min_mask_depth
-  #  }
-    # create consensus genome based on variant calls
-   # call bcftools_consensus_task.bcftools_consensus as bcftools_consensus {
-    #  input:
-     #   reference_fasta = mask_low_coverage.mask_reference_fasta,
-      #  input_vcf = clair3.clair3_variants_vcf,
-       # samplename = samplename
-  #  }
+    # align reads and generate consensus assembly via ivar
+    call ivar_consensus.ivar_consensus {
+      input:
+        samplename = samplename,
+        reference_genome = select_first([reference_fasta, ncbi_datasets.ncbi_datasets_assembly_fasta]),
+        min_depth = select_first([min_depth, 20]),
+        consensus_min_freq = consensus_min_freq,
+        variant_min_freq = variant_min_freq
+    }
     # quality control metrics for consensus (ie. number of bases, degenerate bases, genome length)
-   # call consensus_qc_task.consensus_qc as consensus_qc {
-    #  input:
-     #   assembly_fasta = bcftools_consensus.bcftools_consensus_fasta,
-      #  reference_genome = ncbi_datasets.ncbi_datasets_assembly_fasta
-  #  }
+    call consensus_qc_task.consensus_qc as consensus_qc {
+      input:
+        assembly_fasta = ivar_consensus.assembly_fasta,
+        reference_genome = select_first([reference_fasta, ncbi_datasets.ncbi_datasets_assembly_fasta])
+    }
     # quality control metrics for consensus (ie. completeness, viral gene count, contamination)
-  #  call checkv_task.checkv as checkv_consensus {
-   #   input:
-    #    assembly = bcftools_consensus.bcftools_consensus_fasta,
-     #   samplename = samplename
-  #  }
-    # quality control metrics for consensus (ie. contigs, n50, GC content, genome length)
-   # call quast_task.quast as quast_consensus {
-    #  input:
-     #   assembly = bcftools_consensus.bcftools_consensus_fasta,
-      #  samplename = samplename
-#  }
+    call checkv_task.checkv as checkv_consensus {
+      input:
+        assembly = ivar_consensus.assembly_fasta,
+        samplename = samplename
+    }
   }
   output {
     # versioning outputs
