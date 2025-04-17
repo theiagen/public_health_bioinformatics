@@ -17,7 +17,7 @@ workflow amr_search_workflow {
     input:
       input_fasta = input_fasta,
       samplename = samplename,
-      amr_search_database = amr_search_database
+      amr_search_database = amr_search_database,
       docker = amr_search_docker
   }
   call versioning.version_capture {
