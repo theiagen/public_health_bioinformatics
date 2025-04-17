@@ -1,7 +1,7 @@
 version 1.0
 
 import "../../tasks/phylogenetic_inference/task_ksnp3.wdl" as ksnp3
-import "../../tasks/phylogenetic_inference/utilities/task_ksnp3_shared_snps.wdl" as ksnp3_shared_snps
+import "../../tasks/phylogenetic_inference/utilities/task_ksnp_shared_snps.wdl" as ksnp_shared_snps
 import "../../tasks/phylogenetic_inference/utilities/task_reorder_matrix.wdl" as reorder_matrix
 import "../../tasks/phylogenetic_inference/utilities/task_snp_dists.wdl" as snp_dists
 import "../../tasks/task_versioning.wdl" as versioning
@@ -40,9 +40,9 @@ workflow ksnp3_workflow {
         midpoint_root_tree = midpoint_root_tree,
         phandango_coloring = phandango_coloring
     }
-    call ksnp3_shared_snps.ksnp3_shared_snps as core_ksnp3_shared_snps_task {
+    call ksnp_shared_snps.ksnp_shared_snps as core_ksnp3_shared_snps_task {
       input:
-        ksnp3_vcf_ref_genome = ksnp3_task.ksnp3_vcf_ref_genome,
+        ksnp_vcf_ref_genome = ksnp3_task.ksnp3_vcf_ref_genome,
         samplename = samplename,
         cluster_name = cluster_name_updated
     }

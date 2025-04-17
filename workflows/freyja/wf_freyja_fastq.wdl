@@ -16,12 +16,17 @@ workflow freyja_fastq {
   input {
     File read1
     File? read2
-    File primer_bed
+    File? primer_bed
     File reference_genome
+    File? reference_gff
     Int trimmomatic_min_length = 25
     String samplename
+    String freyja_pathogen = "SARS-CoV-2"
+    File? freyja_barcodes
+    File? freyja_lineage_metadata
     Int? depth_cutoff
     Boolean ont = false
+    String kraken2_target_organism = "Severe acute respiratory syndrome coronavirus 2"
   }
   if (defined(read2)) {
     call read_qc_pe.read_QC_trim_pe as read_QC_trim_pe {
@@ -30,7 +35,8 @@ workflow freyja_fastq {
         read1  = read1,
         read2  = select_first([read2]),
         trim_min_length = trimmomatic_min_length,
-        workflow_series = "theiacov"
+        workflow_series = "theiacov",
+        target_organism = kraken2_target_organism
     }
   }
   if (! defined(read2) && ! ont) {
@@ -39,7 +45,8 @@ workflow freyja_fastq {
         samplename = samplename,
         read1  = read1,
         trim_min_length = trimmomatic_min_length,
-        workflow_series = "theiacov"
+        workflow_series = "theiacov",
+        target_organism = kraken2_target_organism
     }
   }
   if (ont) {
@@ -57,7 +64,8 @@ workflow freyja_fastq {
       input:
         samplename = samplename,
         read1 = read1,
-        workflow_series = "theiacov"
+        workflow_series = "theiacov",
+        target_organism = kraken2_target_organism
     }
     call nanoplot_task.nanoplot as nanoplot_clean {
       input:
@@ -71,7 +79,8 @@ workflow freyja_fastq {
         reference = reference_genome,
         query1 = read_QC_trim_ont.read1_clean,
         output_sam = true,
-        mode = "map-ont"
+        mode = "map-ont",
+        long_read_flags = false
     }
     call task_parse_mapping.sam_to_sorted_bam {
       input:
@@ -88,26 +97,31 @@ workflow freyja_fastq {
         read2 = select_first([read_QC_trim_pe.read2_clean])
     }
   }
-  call trim_primers.primer_trim {
-    input:
-      samplename = samplename,
-      primer_bed = primer_bed,
-      bamfile = select_first([sam_to_sorted_bam.bam, bwa.sorted_bam])
+  # Called when the primer_bed file is present, primers are trimmed and trimmed bam is passed to freyja
+  if (defined(primer_bed)){
+    call trim_primers.primer_trim {
+      input:
+        samplename = samplename,
+        primer_bed = select_first([primer_bed]),
+        bamfile = select_first([sam_to_sorted_bam.bam, bwa.sorted_bam])
+    }
   }
   call freyja_task.freyja_one_sample as freyja {
     input:
-      primer_trimmed_bam = primer_trim.trim_sorted_bam,
+      bamfile = select_first([primer_trim.trim_sorted_bam, sam_to_sorted_bam.bam, bwa.sorted_bam]),
+      freyja_pathogen = freyja_pathogen,
+      freyja_barcodes = freyja_barcodes,
+      freyja_lineage_metadata = freyja_lineage_metadata,
       samplename = samplename,
       reference_genome = reference_genome,
+      reference_gff = reference_gff,
       depth_cutoff = depth_cutoff
   }
   call versioning.version_capture {
     input:
   }
-  
   # capture correct alignment method
   String alignment_method_technology = if ont then "minimap2 ~{minimap2.minimap2_version}; ~{primer_trim.ivar_version}" else "~{bwa.bwa_version}; ~{primer_trim.ivar_version}"
-
   output {
     # Version Capture
     String freyja_fastq_wf_version = version_capture.phb_version
@@ -116,10 +130,14 @@ workflow freyja_fastq {
     String fastq_scan_num_reads_raw1 = select_first([read_QC_trim_pe.fastq_scan_raw1, read_QC_trim_se.fastq_scan_raw1, ""])
     Int? fastq_scan_num_reads_raw2 = read_QC_trim_pe.fastq_scan_raw2
     String? fastq_scan_num_reads_raw_pairs = read_QC_trim_pe.fastq_scan_raw_pairs
+    String fastq_scan_raw1_json = select_first([read_QC_trim_pe.fastq_scan_raw1_json, read_QC_trim_se.fastq_scan_raw1_json, ""])
+    File? fastq_scan_raw2_json = read_QC_trim_pe.fastq_scan_raw2_json
     String fastq_scan_version = select_first([read_QC_trim_pe.fastq_scan_version, read_QC_trim_se.fastq_scan_version, ""])
     String fastq_scan_num_reads_clean1 = select_first([read_QC_trim_pe.fastq_scan_clean1, read_QC_trim_se.fastq_scan_clean1, ""])
     Int? fastq_scan_num_reads_clean2 = read_QC_trim_pe.fastq_scan_clean2
     String? fastq_scan_num_reads_clean_pairs = read_QC_trim_pe.fastq_scan_clean_pairs
+    String fastq_scan_clean1_json = select_first([read_QC_trim_pe.fastq_scan_clean1_json, read_QC_trim_se.fastq_scan_clean1_json, ""])
+    File? fastq_scan_clean2_json = read_QC_trim_pe.fastq_scan_clean2_json
     # Read QC - fastqc outputs - Illumina PE and SE
     String fastqc_num_reads_raw1 = select_first([read_QC_trim_pe.fastqc_raw1, read_QC_trim_se.fastqc_raw1, ""])
     Int? fastqc_num_reads_raw2 = read_QC_trim_pe.fastqc_raw2
@@ -173,10 +191,10 @@ workflow freyja_fastq {
     # Read QC - kraken outputs - all
     String kraken_version = select_first([read_QC_trim_pe.kraken_version, read_QC_trim_se.kraken_version, read_QC_trim_ont.kraken_version])
     Float kraken_human = select_first([read_QC_trim_pe.kraken_human, read_QC_trim_se.kraken_human, read_QC_trim_ont.kraken_human])
-    Float kraken_sc2 = select_first([read_QC_trim_pe.kraken_sc2, read_QC_trim_se.kraken_sc2, read_QC_trim_ont.kraken_sc2])
+    String kraken_sc2 = select_first([read_QC_trim_pe.kraken_sc2, read_QC_trim_se.kraken_sc2, read_QC_trim_ont.kraken_sc2])
     String kraken_report = select_first([read_QC_trim_pe.kraken_report, read_QC_trim_se.kraken_report, read_QC_trim_ont.kraken_report])
     Float kraken_human_dehosted = select_first([read_QC_trim_pe.kraken_human_dehosted, read_QC_trim_se.kraken_human_dehosted, read_QC_trim_ont.kraken_human_dehosted])
-    Float kraken_sc2_dehosted = select_first([read_QC_trim_pe.kraken_sc2_dehosted, read_QC_trim_se.kraken_sc2_dehosted, read_QC_trim_ont.kraken_sc2_dehosted])
+    String kraken_sc2_dehosted = select_first([read_QC_trim_pe.kraken_sc2_dehosted, read_QC_trim_se.kraken_sc2_dehosted, read_QC_trim_ont.kraken_sc2_dehosted])
     File kraken_report_dehosted = select_first([read_QC_trim_pe.kraken_report_dehosted, read_QC_trim_se.kraken_report_dehosted, read_QC_trim_ont.kraken_report_dehosted])
     # Read Alignment - bwa outputs
     String? bwa_version = bwa.bwa_version
@@ -187,26 +205,31 @@ workflow freyja_fastq {
     # Read Alignment - samtools
     String samtools_version = select_first([sam_to_sorted_bam.samtools_version, bwa.sam_version])
     # Read Alignment - bam and bai files
-    File aligned_bam = select_first([sam_to_sorted_bam.bam, primer_trim.trim_sorted_bam])
-    File aligned_bai = select_first([sam_to_sorted_bam.bai, primer_trim.trim_sorted_bai])
+    String aligned_bam = select_first([sam_to_sorted_bam.bam, primer_trim.trim_sorted_bam,""])
+    String aligned_bai = select_first([sam_to_sorted_bam.bai, primer_trim.trim_sorted_bai,""])
     # Read Alignment - primer trimming outputs
-    Float primer_trimmed_read_percent = primer_trim.primer_trimmed_read_percent
-    String ivar_version_primtrim = primer_trim.ivar_version
-    String samtools_version_primtrim = primer_trim.samtools_version
-    String primer_bed_name = primer_trim.primer_bed_name
+    Float? primer_trimmed_read_percent = primer_trim.primer_trimmed_read_percent
+    String? ivar_version_primtrim = primer_trim.ivar_version
+    String? samtools_version_primtrim = primer_trim.samtools_version
+    String? primer_bed_name = primer_trim.primer_bed_name
     # Freyja Analysis outputs
     String freyja_version = freyja.freyja_version
     File freyja_variants = freyja.freyja_variants
     File freyja_depths = freyja.freyja_depths
-    File freyja_demixed = freyja.freyja_demixed
+    File freyja_demixed = freyja.freyja_demixed 
     Float freyja_coverage = freyja.freyja_coverage
-    File freyja_usher_barcode_file = freyja.freyja_usher_barcode_file
-    File freyja_lineage_metadata_file = freyja.freyja_lineage_metadata_file
+    String freyja_barcode_file = select_first([freyja_barcodes, freyja.freyja_sc2_barcode_file, ""])
+    String freyja_lineage_metadata_file = select_first([freyja_lineage_metadata, freyja.freyja_sc2_lineage_metadata_file, ""]) 
     String freyja_barcode_version = freyja.freyja_barcode_version
     String freyja_metadata_version = freyja.freyja_metadata_version
-    File? freyja_bootstrap_lineages = freyja.freyja_bootstrap_lineages
-    File? freyja_bootstrap_lineages_pdf = freyja.freyja_bootstrap_lineages_pdf
-    File? freyja_bootstrap_summary = freyja.freyja_bootstrap_summary
-    File? freyja_bootstrap_summary_pdf = freyja.freyja_bootstrap_summary_pdf
+    String? freyja_bootstrap_lineages = freyja.freyja_bootstrap_lineages
+    String? freyja_bootstrap_lineages_pdf = freyja.freyja_bootstrap_lineages_pdf
+    String? freyja_bootstrap_summary = freyja.freyja_bootstrap_summary
+    String? freyja_bootstrap_summary_pdf = freyja.freyja_bootstrap_summary_pdf
+    File freyja_demixed_parsed = freyja.freyja_demixed_parsed
+    String freyja_resid = freyja.freyja_resid
+    String freyja_summarized = freyja.freyja_summarized
+    String freyja_lineages = freyja.freyja_lineages
+    String freyja_abundances = freyja.freyja_abundances
   }
 }

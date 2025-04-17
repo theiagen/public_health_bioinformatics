@@ -13,16 +13,16 @@ task lissero {
     Int memory = 8
 
     # Parameters
-    # --min_id     Minimum percent identity to accept a match [Default 95.0]
+    # --min_percent_identity     Minimum percent identity to accept a match [Default 95.0]
     # --min_cov    Minimum coverage of the gene to accept a match [Default 95.0]
-    Float min_id = 95.0
-    Float min_cov = 95.0
+    Float min_percent_identity = 95.0
+    Float min_percent_coverage = 95.0
   }
   command <<<
     echo $(lissero --version 2>&1) | sed 's/^.*LisSero //' | tee VERSION
     lissero \
-      ~{'--min_id ' + min_id} \
-      ~{'--min_cov ' + min_cov} \
+      ~{'--min_id ' + min_percent_identity} \
+      ~{'--min_cov ' + min_percent_coverage} \
       ~{assembly} \
       > ~{samplename}.tsv
 

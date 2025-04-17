@@ -101,7 +101,8 @@ workflow theiameta_illumina_pe {
           reference = select_first([reference]),
           samplename = samplename,
           mode = "asm20",
-          output_sam = false
+          output_sam = false,
+          long_read_flags = false
       }
       call parse_mapping_task.retrieve_aligned_contig_paf {
         input:
@@ -128,7 +129,8 @@ workflow theiameta_illumina_pe {
           reference = select_first([retrieve_aligned_contig_paf.final_assembly, pilon.assembly_fasta]),
           samplename = samplename,
           mode = "sr",
-          output_sam = true
+          output_sam = true,
+          long_read_flags = false
       }
       call parse_mapping_task.sam_to_sorted_bam {
         input:
@@ -207,6 +209,10 @@ workflow theiameta_illumina_pe {
     Int? fastq_scan_num_reads_clean1 = read_QC_trim.fastq_scan_clean1
     Int? fastq_scan_num_reads_clean2 = read_QC_trim.fastq_scan_clean2
     String? fastq_scan_num_reads_clean_pairs = read_QC_trim.fastq_scan_clean_pairs
+    File? fastq_scan_raw1_json = read_QC_trim.fastq_scan_raw1_json
+    File? fastq_scan_raw2_json = read_QC_trim.fastq_scan_raw2_json
+    File? fastq_scan_clean1_json = read_QC_trim.fastq_scan_clean1_json
+    File? fastq_scan_clean2_json = read_QC_trim.fastq_scan_clean2_json
     # Read QC - fastqc outputs
     Int? fastqc_num_reads_raw1 = read_QC_trim.fastqc_raw1
     Int? fastqc_num_reads_raw2 = read_QC_trim.fastqc_raw2

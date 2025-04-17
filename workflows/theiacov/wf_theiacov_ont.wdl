@@ -57,6 +57,9 @@ workflow theiacov_ont {
     String? pangolin_docker_image
     # qc check parameters
     File? qc_check_table
+    ## flu specific inputs
+    # default set to 50 for ONT data in call block below, following CDC MIRA standards
+    Int? irma_min_consensus_support
   }
   call set_organism_defaults.organism_parameters {
     input:
@@ -77,21 +80,21 @@ workflow theiacov_ont {
   if (organism_parameters.standardized_organism == "HIV") { # set HIV specific artic version
     String run_prefix = "artic_hiv"
   }
-  call screen.check_reads_se as raw_check_reads {
-    input:
-      read1 = read1,
-      min_reads = min_reads,
-      min_basepairs = min_basepairs,
-      min_genome_length = min_genome_length,
-      max_genome_length = max_genome_length,
-      min_coverage = min_coverage,
-      skip_screen = skip_screen,
-      skip_mash = skip_mash,
-      workflow_series = "theiacov",
-      organism = organism_parameters.standardized_organism,
-      expected_genome_length = organism_parameters.genome_length
+  if (! skip_screen) {
+    call screen.check_reads_se as raw_check_reads {
+      input:
+        read1 = read1,
+        min_reads = min_reads,
+        min_basepairs = min_basepairs,
+        min_genome_length = min_genome_length,
+        max_genome_length = max_genome_length,
+        min_coverage = min_coverage,
+        skip_mash = skip_mash,
+        workflow_series = "theiacov",
+        expected_genome_length = organism_parameters.genome_length
+    }
   }
-  if (raw_check_reads.read_screen == "PASS") {
+  if (select_first([raw_check_reads.read_screen, ""]) == "PASS" || skip_screen) {
     call read_qc_trim_workflow.read_QC_trim_ont as read_qc_trim {
       input:
         read1 = read1,
@@ -103,21 +106,21 @@ workflow theiacov_ont {
         target_organism = organism_parameters.kraken_target_organism,
         workflow_series = "theiacov"
     }
-    call screen.check_reads_se as clean_check_reads {
-      input:
-        read1 = read_qc_trim.read1_clean,
-        min_reads = min_reads,
-        min_basepairs = min_basepairs,
-        min_genome_length = min_genome_length,
-        max_genome_length = max_genome_length,
-        min_coverage = min_coverage,
-        skip_screen = skip_screen,
-        skip_mash = skip_mash,
-        workflow_series = "theiacov",
-        organism = organism_parameters.standardized_organism,
-        expected_genome_length = organism_parameters.genome_length
+    if (! skip_screen) {
+      call screen.check_reads_se as clean_check_reads {
+        input:
+          read1 = read_qc_trim.read1_clean,
+          min_reads = min_reads,
+          min_basepairs = min_basepairs,
+          min_genome_length = min_genome_length,
+          max_genome_length = max_genome_length,
+          min_coverage = min_coverage,
+          skip_mash = skip_mash,
+          workflow_series = "theiacov",
+            expected_genome_length = organism_parameters.genome_length
+      }
     }
-    if (clean_check_reads.read_screen == "PASS") {
+    if (select_first([clean_check_reads.read_screen, ""]) == "PASS" || skip_screen) {
       # assembly via artic_consensus for sars-cov-2 and HIV
       if (organism_parameters.standardized_organism != "flu") {
         call artic_consensus.consensus {
@@ -147,9 +150,10 @@ workflow theiacov_ont {
             read1 = read_qc_trim.read1_clean,
             samplename = samplename,
             standardized_organism = organism_parameters.standardized_organism,
-            seq_method = seq_method
+            seq_method = seq_method,
+            irma_min_consensus_support = select_first([irma_min_consensus_support, 50])
         }
-      }              
+      }
       # nanoplot for basic QC metrics
       call nanoplot_task.nanoplot as nanoplot_raw {
         input:
@@ -254,8 +258,10 @@ workflow theiacov_ont {
     # Read Metadata
     String seq_platform = seq_method
     # Sample Screening
-    String read_screen_raw = raw_check_reads.read_screen
+    String? read_screen_raw = raw_check_reads.read_screen
+    File? read_screen_raw_tsv = raw_check_reads.read_screen_tsv
     String? read_screen_clean = clean_check_reads.read_screen
+    File? read_screen_clean_tsv = clean_check_reads.read_screen_tsv
     # Read QC - dehosting outputs
     File? read1_dehosted = read_qc_trim.read1_dehosted
     # Read QC - nanoplot outputs    
@@ -288,12 +294,12 @@ workflow theiacov_ont {
     String? kraken_target_organism_name = read_qc_trim.kraken_target_organism_name
     # Read QC - kraken outputs raw
     Float? kraken_human = read_qc_trim.kraken_human
-    Float? kraken_sc2 = read_qc_trim.kraken_sc2
+    String? kraken_sc2 = read_qc_trim.kraken_sc2
     String? kraken_target_organism = read_qc_trim.kraken_target_organism
     File? kraken_report = read_qc_trim.kraken_report
     # Read QC - kraken outputs dehosted
     Float? kraken_human_dehosted = read_qc_trim.kraken_human_dehosted
-    Float? kraken_sc2_dehosted = read_qc_trim.kraken_sc2_dehosted
+    String? kraken_sc2_dehosted = read_qc_trim.kraken_sc2_dehosted
     String? kraken_target_organism_dehosted = read_qc_trim.kraken_target_organism_dehosted
     File? kraken_report_dehosted = read_qc_trim.kraken_report_dehosted
     # Read Alignment - Artic consensus outputs
@@ -351,6 +357,14 @@ workflow theiacov_ont {
     String? nextclade_clade = nextclade_output_parser.nextclade_clade
     String? nextclade_lineage = nextclade_output_parser.nextclade_lineage
     String? nextclade_qc = nextclade_output_parser.nextclade_qc
+    # Nextclade outputs for flu H5N1
+    File? nextclade_json_flu_h5n1 = flu_track.nextclade_json_flu_h5n1
+    File? auspice_json_flu_h5n1 = flu_track.auspice_json_flu_h5n1
+    File? nextclade_tsv_flu_h5n1 = flu_track.nextclade_tsv_flu_h5n1
+    String? nextclade_aa_subs_flu_h5n1 = flu_track.nextclade_aa_subs_flu_h5n1
+    String? nextclade_aa_dels_flu_h5n1 = flu_track.nextclade_aa_dels_flu_h5n1
+    String? nextclade_clade_flu_h5n1 = flu_track.nextclade_clade_flu_h5n1
+    String? nextclade_qc_flu_h5n1 = flu_track.nextclade_qc_flu_h5n1
     # Nextclade outputs for flu HA
     File? nextclade_json_flu_ha = flu_track.nextclade_json_flu_ha
     File? auspice_json_flu_ha = flu_track.auspice_json_flu_ha
@@ -381,9 +395,11 @@ workflow theiacov_ont {
     # Flu IRMA Outputs
     String? irma_version = flu_track.irma_version
     String? irma_docker = flu_track.irma_docker
+    Int? irma_min_consensus_support_threshold = flu_track.irma_minimum_consensus_support
     String? irma_type = flu_track.irma_type
     String? irma_subtype = flu_track.irma_subtype
     String? irma_subtype_notes = flu_track.irma_subtype_notes
+    File? irma_assembly_fasta_concatenated = flu_track.irma_assembly_fasta_concatenated
     File? irma_ha_segment_fasta = flu_track.irma_ha_segment_fasta
     File? irma_na_segment_fasta = flu_track.irma_na_segment_fasta
     File? irma_pa_segment_fasta = flu_track.irma_pa_segment_fasta
@@ -427,5 +443,7 @@ workflow theiacov_ont {
     # QC_Check Results
     String? qc_check = qc_check_task.qc_check
     File? qc_standard = qc_check_task.qc_standard
+    # Non-flu specific outputs
+    String percentage_mapped_reads = select_first([stats_n_coverage_primtrim.percentage_mapped_reads, stats_n_coverage.percentage_mapped_reads, flu_track.percentage_mapped_reads, ""])
   }
 }

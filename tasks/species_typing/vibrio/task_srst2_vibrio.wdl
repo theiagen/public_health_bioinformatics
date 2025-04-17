@@ -8,11 +8,11 @@ task srst2_vibrio {
     File read1
     File? read2
     String samplename
-    Int srst2_min_cov
-    Int srst2_max_divergence
-    Int srst2_min_depth
-    Int srst2_min_edge_depth
-    Int srst2_gene_max_mismatch
+    Int min_percent_coverage
+    Int max_divergence
+    Int min_depth
+    Int min_edge_depth
+    Int gene_max_mismatch
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/srst2:0.2.0-vcholerae"
     Int disk_size = 100
     Int cpu = 4
@@ -32,11 +32,11 @@ task srst2_vibrio {
       ${INPUT_READS} \
       --gene_db /vibrio-cholerae-db/vibrio_230224.fasta \
       --output ~{samplename} \
-      --min_coverage ~{srst2_min_cov} \
-      --max_divergence ~{srst2_max_divergence} \
-      --min_depth ~{srst2_min_depth} \
-      --min_edge_depth ~{srst2_min_edge_depth} \
-      --gene_max_mismatch ~{srst2_gene_max_mismatch}
+      --min_coverage ~{min_percent_coverage} \
+      --max_divergence ~{max_divergence} \
+      --min_depth ~{min_depth} \
+      --min_edge_depth ~{min_edge_depth} \
+      --gene_max_mismatch ~{gene_max_mismatch}
     
     # capture output TSV
     mv ~{samplename}__genes__*__results.txt ~{samplename}.tsv

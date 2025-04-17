@@ -91,7 +91,6 @@ wf_theiaprok_illumina_pe:
   - tasks/gene_typing/annotation/task_prokka.wdl
   - tasks/gene_typing/plasmid_detection/task_plasmidfinder.wdl
   - tasks/task_versioning.wdl
-  - tasks/utilities/data_export/task_broad_terra_tools.wdl
   - workflows/utilities/wf_read_QC_trim_pe.wdl
   - tasks/quality_control/read_filtering/task_bbduk.wdl
   - tasks/quality_control/advanced_metrics/task_busco.wdl
@@ -137,7 +136,6 @@ wf_theiaprok_illumina_se:
   - tasks/gene_typing/annotation/task_prokka.wdl
   - tasks/gene_typing/plasmid_detection/task_plasmidfinder.wdl
   - tasks/task_versioning.wdl
-  - tasks/utilities/data_export/task_broad_terra_tools.wdl
   - workflows/utilities/wf_read_QC_trim_se.wdl
   - tasks/quality_control/read_filtering/task_bbduk.wdl
   - tasks/quality_control/advanced_metrics/task_busco.wdl

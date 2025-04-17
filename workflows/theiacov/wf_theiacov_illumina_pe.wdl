@@ -40,7 +40,7 @@ workflow theiacov_illumina_pe {
     Int trim_quality_min_score = 30
     Int trim_window_size = 4
     # assembly parameters
-    Int min_depth = 100  # the minimum depth to use for consensus and variant calling
+    Int? min_depth # minimum depth to use for consensus and variant calling; default is 100 for non-flu (default value set below in call block for ivar consensus subwf), flu default is 30 for illumina (default set below in flu_track call block)
     Float consensus_min_freq = 0.6 # minimum frequency for a variant to be called as SNP in consensus genome
     Float variant_min_freq = 0.6 # minimum frequency for a variant to be reported in ivar outputs
     # nextclade inputs
@@ -83,22 +83,22 @@ workflow theiacov_illumina_pe {
       pangolin_docker_image = pangolin_docker_image,
       kraken_target_organism_input = target_organism
   }
-  call screen.check_reads as raw_check_reads {
-    input:
-      read1 = read1,
-      read2 = read2,
-      min_reads = min_reads,
-      min_basepairs = min_basepairs,
-      min_genome_length = min_genome_length,
-      max_genome_length = max_genome_length,
-      min_coverage = min_coverage,
-      min_proportion = min_proportion,
-      skip_screen = skip_screen,
-      workflow_series = "theiacov",
-      organism = organism_parameters.standardized_organism,
-      expected_genome_length = organism_parameters.genome_length
+  if (! skip_screen) {
+    call screen.check_reads as raw_check_reads {
+      input:
+        read1 = read1,
+        read2 = read2,
+        min_reads = min_reads,
+        min_basepairs = min_basepairs,
+        min_genome_length = min_genome_length,
+        max_genome_length = max_genome_length,
+        min_coverage = min_coverage,
+        min_proportion = min_proportion,
+        workflow_series = "theiacov",
+        expected_genome_length = organism_parameters.genome_length
+    }
   }
-  if (raw_check_reads.read_screen == "PASS") {
+  if (select_first([raw_check_reads.read_screen, ""]) == "PASS" || skip_screen) {
     call read_qc.read_QC_trim_pe as read_QC_trim {
       input:
         samplename = samplename,
@@ -112,22 +112,22 @@ workflow theiacov_illumina_pe {
         trim_window_size = trim_window_size,
         target_organism = organism_parameters.kraken_target_organism
     }
-    call screen.check_reads as clean_check_reads {
-      input:
-        read1 = read_QC_trim.read1_clean,
-        read2 = read_QC_trim.read2_clean,
-        min_reads = min_reads,
-        min_basepairs = min_basepairs,
-        min_genome_length = min_genome_length,
-        max_genome_length = max_genome_length,
-        min_coverage = min_coverage,
-        min_proportion = min_proportion,
-        skip_screen = skip_screen,
-        workflow_series = "theiacov",
-        organism = organism_parameters.standardized_organism,
-        expected_genome_length = organism_parameters.genome_length
+    if (! skip_screen) {
+      call screen.check_reads as clean_check_reads {
+        input:
+          read1 = read_QC_trim.read1_clean,
+          read2 = read_QC_trim.read2_clean,
+          min_reads = min_reads,
+          min_basepairs = min_basepairs,
+          min_genome_length = min_genome_length,
+          max_genome_length = max_genome_length,
+          min_coverage = min_coverage,
+          min_proportion = min_proportion,
+          workflow_series = "theiacov",
+          expected_genome_length = organism_parameters.genome_length
+      }
     }
-    if (clean_check_reads.read_screen == "PASS") {
+    if (select_first([clean_check_reads.read_screen, ""]) == "PASS" || skip_screen) {
       # assembly via bwa and ivar for non-flu data
       if (organism_parameters.standardized_organism != "flu") {
         call consensus_call.ivar_consensus {
@@ -138,13 +138,13 @@ workflow theiacov_illumina_pe {
             reference_genome = organism_parameters.reference,
             primer_bed = organism_parameters.primer_bed,
             reference_gff = organism_parameters.reference_gff,
-            min_depth = min_depth,
+            min_depth = select_first([min_depth, 100]),
             consensus_min_freq = consensus_min_freq,
             variant_min_freq = variant_min_freq,
             trim_primers = trim_primers
         }
       }
-      # perform flu-specific tasks
+      # for flu organisms call flu_track
       if (organism_parameters.standardized_organism == "flu") {
         call run_flu_track.flu_track {
           input:
@@ -152,7 +152,8 @@ workflow theiacov_illumina_pe {
             read2 = read_QC_trim.read2_clean,
             samplename = samplename,
             standardized_organism = organism_parameters.standardized_organism,
-            seq_method = seq_method
+            seq_method = seq_method,
+            irma_min_consensus_support = select_first([min_depth, 30])
         }
       }
       if (defined(ivar_consensus.assembly_fasta) || defined(flu_track.irma_assembly_fasta)) {
@@ -250,8 +251,10 @@ workflow theiacov_illumina_pe {
     # Read Metadata
     String  seq_platform = seq_method
     # Sample Screening
-    String read_screen_raw = raw_check_reads.read_screen
+    String? read_screen_raw = raw_check_reads.read_screen
+    File? read_screen_raw_tsv = raw_check_reads.read_screen_tsv
     String? read_screen_clean = clean_check_reads.read_screen
+    File? read_screen_clean_tsv = clean_check_reads.read_screen_tsv
     # Read QC - fastq_scan outputs
     Int? fastq_scan_num_reads_raw1 = read_QC_trim.fastq_scan_raw1
     Int? fastq_scan_num_reads_raw2 = read_QC_trim.fastq_scan_raw2
@@ -260,6 +263,10 @@ workflow theiacov_illumina_pe {
     Int? fastq_scan_num_reads_clean1 = read_QC_trim.fastq_scan_clean1
     Int? fastq_scan_num_reads_clean2 = read_QC_trim.fastq_scan_clean2
     String? fastq_scan_num_reads_clean_pairs = read_QC_trim.fastq_scan_clean_pairs
+    File? fastq_scan_raw1_json = read_QC_trim.fastq_scan_raw1_json
+    File? fastq_scan_raw2_json = read_QC_trim.fastq_scan_raw2_json
+    File? fastq_scan_clean1_json = read_QC_trim.fastq_scan_clean1_json
+    File? fastq_scan_clean2_json = read_QC_trim.fastq_scan_clean2_json
     # Read QC - fastqc outputs
     Int? fastqc_num_reads_raw1 = read_QC_trim.fastqc_raw1
     Int? fastqc_num_reads_raw2 = read_QC_trim.fastqc_raw2
@@ -289,12 +296,12 @@ workflow theiacov_illumina_pe {
     # Read QC - kraken outputs
     String? kraken_version = read_QC_trim.kraken_version
     Float? kraken_human = read_QC_trim.kraken_human
-    Float? kraken_sc2 = read_QC_trim.kraken_sc2
+    String? kraken_sc2 = read_QC_trim.kraken_sc2
     String? kraken_target_organism = read_QC_trim.kraken_target_organism
     String? kraken_target_organism_name = read_QC_trim.kraken_target_organism_name
     File? kraken_report = read_QC_trim.kraken_report
     Float? kraken_human_dehosted = read_QC_trim.kraken_human_dehosted
-    Float? kraken_sc2_dehosted = read_QC_trim.kraken_sc2_dehosted
+    String? kraken_sc2_dehosted = read_QC_trim.kraken_sc2_dehosted
     String? kraken_target_organism_dehosted = read_QC_trim.kraken_target_organism_dehosted
     File? kraken_report_dehosted = read_QC_trim.kraken_report_dehosted
     # Read Alignment - bwa outputs
@@ -324,7 +331,8 @@ workflow theiacov_illumina_pe {
     String? ivar_version_consensus = ivar_consensus.ivar_version_consensus
     String? samtools_version_consensus = ivar_consensus.samtools_version_consensus
     # Read Alignment - consensus assembly qc outputs
-    Int consensus_n_variant_min_depth = min_depth
+    # this is the minimum depth used for consensus and variant calling in EITHER iVar or IRMA
+    Int consensus_n_variant_min_depth = select_first([min_depth, flu_track.irma_minimum_consensus_support, 100])
     File? consensus_stats = ivar_consensus.consensus_stats
     File? consensus_flagstat = ivar_consensus.consensus_flagstat
     String meanbaseq_trim = select_first([ivar_consensus.meanbaseq_trim, ""])
@@ -363,6 +371,14 @@ workflow theiacov_illumina_pe {
     String? nextclade_clade = nextclade_output_parser.nextclade_clade
     String? nextclade_lineage = nextclade_output_parser.nextclade_lineage
     String? nextclade_qc = nextclade_output_parser.nextclade_qc
+    # Nextclade outputs for flu H5N1
+    File? nextclade_json_flu_h5n1 = flu_track.nextclade_json_flu_h5n1
+    File? auspice_json_flu_h5n1 = flu_track.auspice_json_flu_h5n1
+    File? nextclade_tsv_flu_h5n1 = flu_track.nextclade_tsv_flu_h5n1
+    String? nextclade_aa_subs_flu_h5n1 = flu_track.nextclade_aa_subs_flu_h5n1
+    String? nextclade_aa_dels_flu_h5n1 = flu_track.nextclade_aa_dels_flu_h5n1
+    String? nextclade_clade_flu_h5n1 = flu_track.nextclade_clade_flu_h5n1
+    String? nextclade_qc_flu_h5n1 = flu_track.nextclade_qc_flu_h5n1
     # Nextclade outputs for flu HA
     File? nextclade_json_flu_ha = flu_track.nextclade_json_flu_ha
     File? auspice_json_flu_ha = flu_track.auspice_json_flu_ha
@@ -396,6 +412,7 @@ workflow theiacov_illumina_pe {
     String? irma_type = flu_track.irma_type
     String? irma_subtype = flu_track.irma_subtype
     String? irma_subtype_notes = flu_track.irma_subtype_notes
+    File? irma_assembly_fasta_concatenated = flu_track.irma_assembly_fasta_concatenated
     File? irma_ha_segment_fasta = flu_track.irma_ha_segment_fasta
     File? irma_na_segment_fasta = flu_track.irma_na_segment_fasta
     File? irma_pa_segment_fasta = flu_track.irma_pa_segment_fasta
@@ -439,6 +456,7 @@ workflow theiacov_illumina_pe {
     # QC_Check Results
     String? qc_check = qc_check_task.qc_check
     File? qc_standard = qc_check_task.qc_standard
- 
+    # Capture percentage_mapped_reads from ivar_consensus task or flu_track task
+    String percentage_mapped_reads = select_first([ivar_consensus.percentage_mapped_reads, flu_track.percentage_mapped_reads, ""])
   }
 }

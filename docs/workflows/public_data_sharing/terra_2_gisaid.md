@@ -28,6 +28,8 @@ The optional variable `frameshift_notification` has three options that correspon
 
 This workflow runs on the sample level.
 
+<div class="searchable-table" markdown="1">
+
 | **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
 |---|---|---|---|---|---|
 | Terra_2_GISAID | **client_id** | String | This value should be filled with the client-ID provided by GISAID | | Required |
@@ -43,7 +45,11 @@ This workflow runs on the sample level.
 | version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
 | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
 
+</div>
+
 ### Outputs
+
+<div class="searchable-table" markdown="1">
 
 | **Variable** | **Type** | **Description** |
 |---|---|---|
@@ -52,3 +58,5 @@ This workflow runs on the sample level.
 | gisaid_logs | File | The log files regarding the submission |
 | terra_2_gisaid_analysis_date | String | The date of the analysis |
 | terra_2_gisaid_version | String | The version of the PHB repository that this workflow is hosted in |
+
+</div>

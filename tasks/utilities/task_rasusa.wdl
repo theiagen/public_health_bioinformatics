@@ -9,7 +9,7 @@ task rasusa {
     File read1
     File? read2
     String samplename
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/rasusa:0.7.0"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/rasusa:2.1.0"
     Int disk_size = 100
     Int cpu = 4
     Int memory = 8
@@ -28,28 +28,31 @@ task rasusa {
     Int? num 
   }
   command <<<
+    # fail hard
+    set -euo pipefail
     rasusa --version | tee VERSION
     # set single-end or paired-end outputs
     if [ -z "~{read2}" ]; then
-      OUTPUT_FILES="~{samplename}_subsampled_R1.fastq.gz"
+      OUTPUT_FILES="-o ~{samplename}_subsampled_R1.fastq.gz"
     else
-      OUTPUT_FILES="~{samplename}_subsampled_R1.fastq.gz ~{samplename}_subsampled_R2.fastq.gz"
+      OUTPUT_FILES="-o ~{samplename}_subsampled_R1.fastq.gz -o ~{samplename}_subsampled_R2.fastq.gz"
     fi
-    # ignore coverage values if frac input provided
+    # ignore coverage and genome length if frac input provided
     if [ -z "~{frac}" ]; then
       COVERAGE="--coverage ~{coverage} --genome-size ~{genome_length}"
     else
       COVERAGE=""
     fi
-    # run rasusa
-    rasusa \
-      -i ~{read1} ~{read2} \
+
+    # run rasusa for read sampling
+    rasusa reads \
       ${COVERAGE} \
       ~{'--seed ' + seed} \
       ~{'--bases ' + bases} \
       ~{'--frac ' + frac} \
       ~{'--num ' + num} \
-      -o ${OUTPUT_FILES}
+      ${OUTPUT_FILES} \
+      ~{read1} ~{read2}
   >>>
   output {
     File read1_subsampled = "~{samplename}_subsampled_R1.fastq.gz"

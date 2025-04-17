@@ -1,27 +1,29 @@
-# TheiaEuk 
+# TheiaEuk Workflow Series
 
 ## Quick Facts
 
 | **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibliity** | **Workflow Level** |
 |---|---|---|---|---|
-| [Genomic Characterization](../../workflows_overview/workflows_type.md/#genomic-characterization) | [Mycotics](../../workflows_overview/workflows_kingdom.md/#mycotics) | PHB v2.2.0 | Yes | Sample-level |
+| [Genomic Characterization](../../workflows_overview/workflows_type.md/#genomic-characterization) | [Mycotics](../../workflows_overview/workflows_kingdom.md/#mycotics) | PHB v3.0.0 | Yes | Sample-level |
 
 ## TheiaEuk Workflows
 
-**The TheiaEuk_PE workflow is for the assembly, quality assessment, and characterization of fungal genomes.** It is designed to accept Illumina paired-end sequencing data as the primary input. **It is currently intended only for haploid fungal genomes like _Candida auris_.** Analyzing diploid genomes using TheiaEuk should be attempted only with expert attention to the resulting genome quality.
+**The TheiaEuk_Illumina_PE workflow is for the assembly, quality assessment, and characterization of fungal genomes.** It is designed to accept Illumina paired-end sequencing data as the primary input. **It is currently intended only for ==haploid== fungal genomes like _Candidozyma auris_.** Analyzing diploid genomes using TheiaEuk should be attempted only with expert attention to the resulting genome quality.
 
-All input reads are processed through "core tasks" in each workflow. The core tasks include raw-read quality assessment, read cleaning (quality trimming and adapter removal), de novo assembly, assembly quality assessment, and species taxon identification. For some taxa identified, "taxa-specific sub-workflows" will be automatically activated, undertaking additional taxa-specific characterization steps, including clade-typing and/or antifungal resistance detection.
+All input reads are processed through "core tasks" in each workflow. The core tasks include raw read quality assessment, read cleaning (quality trimming and adapter removal), de novo assembly, assembly quality assessment, and species taxon identification. For some taxa identified, taxa-specific sub-workflows will be automatically activated, undertaking additional taxa-specific characterization steps, including clade-typing and/or antifungal resistance detection.
 
 !!! caption "TheiaEuk Workflow Diagram"
-    ![TheiaEuk Workflow Diagram](../../assets/figures/TheiaEuk_Illumina_PE.png){width=75%}
+    ![TheiaEuk Workflow Diagram](../../assets/figures/TheiaEuk_Illumina_PHB_2025123.png){width=75%}
 
 ### Inputs
 
 !!! info "Input read data"
 
-    The TheiaEuk_PE workflow takes in Illumina paired-end read data. Read file names should end with `.fastq` or `.fq`, with the optional addition of `.gz`. When possible, Theiagen recommends zipping files with [gzip](https://www.gnu.org/software/gzip/) prior to Terra upload to minimize data upload time.
+    The TheiaEuk_Illumina_PE workflow takes in Illumina paired-end read data. Read file names should end with `.fastq` or `.fq`, with the optional addition of `.gz`. When possible, Theiagen recommends zipping files with [gzip](https://www.gnu.org/software/gzip/) prior to Terra upload to minimize data upload time.
 
     By default, the workflow anticipates 2 x 150bp reads (i.e. the input reads were generated using a 300-cycle sequencing kit). Modifications to the optional parameter for `trim_minlen` may be required to accommodate shorter read data, such as the 2 x 75bp reads generated using a 150-cycle sequencing kit.
+
+<div class="searchable-table" markdown="1">
 
 | **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
 |---|---|---|---|---|---|
@@ -44,8 +46,9 @@ All input reads are processed through "core tasks" in each workflow. The core ta
 | clean_check_reads | **organism** | String | Internal component, do not modify |  | Do Not Modify, Optional |
 | clean_check_reads | **workflow_series** | String | Internal component, do not modify |  | Do Not Modify, Optional |
 | gambit | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
-| gambit | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/gambit:0.5.0 | Optional |
+| gambit | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/gambit:1.0.0 | Optional |
 | merlin_magic | **agrvate_docker_image** | String | Internal component, do not modify | "us-docker.pkg.dev/general-theiagen/biocontainers/agrvate:1.0.2--hdfd78af_0" | Do Not Modify, Optional |
+| merlin_magic | **amr_search** | Boolean | If set to true AMR_Search workflow will be run if species is part of supported taxon, see AMR_Search docs. | False | Optional |
 | merlin_magic | **assembly_only** | Boolean | Internal component, do not modify |  | Do Not Modify, Optional |
 | merlin_magic | **call_poppunk** | Boolean | Internal component, do not modify | TRUE | Do Not Modify, Optional |
 | merlin_magic | **call_shigeifinder_reads_input** | Boolean | Internal component, do not modify | FALSE | Do Not Modify, Optional |
@@ -55,7 +58,7 @@ All input reads are processed through "core tasks" in each workflow. The core ta
 | merlin_magic | **paired_end** | Boolean | Internal component, do not modify |  | Do Not Modify, Optional |
 | merlin_magic | **pasty_docker_image** | String | Internal component, do not modify | us-docker.pkg.dev/general-theiagen/staphb/pasty:1.0.3 | Do Not Modify, Optional |
 | merlin_magic | **pasty_min_coverage** | Int | Internal component, do not modify | 95 | Do Not Modify, Optional |
-| merlin_magic | **pasty_min_pident** | Int | Internal component, do not modify | 95 | Do Not Modify, Optional |
+| merlin_magic | **pasty_min_percent_identity** | Int | Internal component, do not modify | 95 | Do Not Modify, Optional |
 | merlin_magic | **shigatyper_docker_image** | String | Internal component, do not modify | us-docker.pkg.dev/general-theiagen/staphb/shigatyper:2.0.5 | Do Not Modify, Optional |
 | merlin_magic | **shigeifinder_docker_image** | String | Internal component, do not modify | us-docker.pkg.dev/general-theiagen/staphb/shigeifinder:1.3.5 | Do Not Modify, Optional |
 | merlin_magic | **snippy_query_gene** | String | Internal component, do not modify |  | Do Not Modify, Optional |
@@ -65,13 +68,13 @@ All input reads are processed through "core tasks" in each workflow. The core ta
 | merlin_magic | **srst2_min_depth** | Int | Internal component, do not modify | 5 | Do Not Modify, Optional |
 | merlin_magic | **srst2_min_edge_depth** | Int | Internal component, do not modify | 2 | Do Not Modify, Optional |
 | merlin_magic | **staphopia_sccmec_docker_image** | String | Internal component, do not modify | us-docker.pkg.dev/general-theiagen/biocontainers/staphopia-sccmec:1.0.0--hdfd78af_0 | Do Not Modify, Optional |
-| merlin_magic | **tbp_parser_coverage_threshold** | Int | Internal component, do not modify | 100 | Do Not Modify, Optional |
+| merlin_magic | **tbp_parser_config** | File | Internal component, do not modify |  | Do Not Modify, Optional |
+| merlin_magic | **tbp_parser_min_percent_coverage** | Int | Internal component, do not modify | 100 | Do Not Modify, Optional |
 | merlin_magic | **tbp_parser_debug** | Boolean | Internal component, do not modify | FALSE | Do Not Modify, Optional |
-| merlin_magic | **tbp_parser_docker_image** | String | Internal component, do not modify | us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:1.3.6 | Do Not Modify, Optional |
+| merlin_magic | **tbp_parser_docker_image** | String | Internal component, do not modify | us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:2.4.4 | Do Not Modify, Optional |
 | merlin_magic | **tbp_parser_min_depth** | Int | Internal component, do not modify | 10 | Do Not Modify, Optional |
 | merlin_magic | **tbp_parser_operator** | String | Internal component, do not modify | "Operator not provided" | Do Not Modify, Optional |
 | merlin_magic | **tbp_parser_output_seq_method_type** | String | Internal component, do not modify | "WGS" | Do Not Modify, Optional |
-| merlin_magic | **tbp_parser_output_seq_method_type** | String | Internal component, do not modify | "Sequencing method not provided" | Do Not Modify, Optional |
 | merlin_magic | **tbprofiler_additional_outputs** | Boolean | Internal component, do not modify | FALSE | Do Not Modify, Optional |
 | merlin_magic | **tbprofiler_cov_frac_threshold** | Int | Internal component, do not modify | 1 | Do Not Modify, Optional |
 | merlin_magic | **tbprofiler_custom_db** | File | Internal component, do not modify |  | Do Not Modify, Optional |
@@ -82,10 +85,10 @@ All input reads are processed through "core tasks" in each workflow. The core ta
 | merlin_magic | **tbprofiler_run_custom_db** | Boolean | Internal component, do not modify | FALSE | Do Not Modify, Optional |
 | merlin_magic | **tbprofiler_variant_caller** | String | Internal component, do not modify | freebayes | Do Not Modify, Optional |
 | merlin_magic | **tbprofiler_variant_calling_params** | String | Internal component, do not modify | None | Do Not Modify, Optional |
-| merlin_magic | **virulencefinder_coverage_threshold** | Float | Internal component, do not modify |  | Do Not Modify, Optional |
 | merlin_magic | **virulencefinder_database** | String | Internal component, do not modify | "virulence_ecoli" | Do Not Modify, Optional |
 | merlin_magic | **virulencefinder_docker_image** | String | Internal component, do not modify | us-docker.pkg.dev/general-theiagen/staphb/virulencefinder:2.0.4 | Do Not Modify, Optional |
-| merlin_magic | **virulencefinder_identity_threshold** | Float | Internal component, do not modify |  | Do Not Modify, Optional |
+| merlin_magic | **virulencefinder_min_percent_coverage** | Float | Internal component, do not modify |  | Do Not Modify, Optional |
+| merlin_magic | **virulencefinder_min_percent_identity** | Float | Internal component, do not modify |  | Do Not Modify, Optional |
 | qc_check_task | **ani_highest_percent** | Float | Internal component, do not modify |  | Do Not Modify, Optional |
 | qc_check_task | **ani_highest_percent_bases_aligned** | Float | Internal component, do not modify |  | Do Not Modify, Optional |
 | qc_check_task | **assembly_length_unambiguous** | Int | Internal component, do not modify |  | Do Not Modify, Optional |
@@ -115,7 +118,7 @@ All input reads are processed through "core tasks" in each workflow. The core ta
 | rasusa_task | **bases** | String | Explicitly set the number of bases required e.g., 4.3kb, 7Tb, 9000, 4.1MB |  | Optional |
 | rasusa_task | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional |
 | rasusa_task | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
-| rasusa_task | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/rasusa:0.7.0 | Optional |
+| rasusa_task | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/rasusa:2.1.0 | Optional |
 | rasusa_task | **frac** | Float | Subsample to a fraction of the reads |  | Optional |
 | rasusa_task | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional |
 | rasusa_task | **num** | Int | Subsample to a specific number of reads |  | Optional |
@@ -146,7 +149,7 @@ All input reads are processed through "core tasks" in each workflow. The core ta
 | read_QC_trim | **workflow_series** | String | Internal component, do not modify |  | Do Not Modify, Optional |
 | shovill_pe | **assembler** | String | Assembler to use (spades, skesa, velvet or megahit), see <https://github.com/tseemann/shovill#--assembler> | "skesa" | Optional |
 | shovill_pe | **assembler_options** | String | Assembler-specific options that you might choose, see <https://github.com/tseemann/shovill#--opts> |  | Optional |
-| shovill_pe | **depth** | Int | User specified depth of coverage for downsampling (see <https://github.com/tseemann/shovill#--depth and https://github.com/tseemann/shovill#main-steps>) | 150 | Optional |
+| shovill_pe | **depth** | Int | User specified depth of coverage for downsampling (see <https://github.com/tseemann/shovill#--depth> and <https://github.com/tseemann/shovill#main-steps>) | 150 | Optional |
 | shovill_pe | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
 | shovill_pe | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/shovill:1.1.0 | Optional |
 | shovill_pe | **genome_length** | String | Internal component, do not modify |  | Do Not Modify, Optional |
@@ -159,8 +162,8 @@ All input reads are processed through "core tasks" in each workflow. The core ta
 | shovill_pe | **trim** | Boolean | Enable adaptor trimming (see <https://github.com/tseemann/shovill#main-step>s) | FALSE | Optional |
 | theiaeuk_pe | **busco_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional |
 | theiaeuk_pe | **call_rasusa** | Boolean | If true, launch rasusa task to subsample raw reads to read depth of 150X | TRUE | Optional |
-| theiaeuk_pe | **gambit_db_genomes** | File | User-provided database of assembled query genomes; requires complementary signatures file. If not provided, uses default database, "/gambit-db" | gs://gambit-databases-rp/1.3.0/gambit-metadata-1.3-231016.gdb | Optional |
-| theiaeuk_pe | **gambit_db_signatures** | File | User-provided signatures file; requires complementary genomes file. If not specified, the file from the docker container will be used.  | gs://gambit-databases-rp/1.3.0/gambit-signatures-1.3-231016.gs | Optional |
+| theiaeuk_pe | **gambit_db_genomes** | File | User-provided database of assembled query genomes; requires complementary signatures file. If not provided, uses default database, "/gambit-db" | gs://gambit-databases-rp/fungal-version/1.0.0/gambit-fungal-metadata-1.0.0-20241213.gdb | Optional |
+| theiaeuk_pe | **gambit_db_signatures** | File | User-provided signatures file; requires complementary genomes file. If not specified, the file from the docker container will be used.  | gs://gambit-databases-rp/fungal-version/1.0.0/gambit-fungal-signatures-1.0.0-20241213.gs | Optional |
 | theiaeuk_pe | **genome_length** | Int | User-specified expected genome size to be used in genome statistics calculations |  | Optional |
 | theiaeuk_pe | **max_genome_size** | Int | Maximum genome size able to pass read screening | 50000000 | Optional |
 | theiaeuk_pe | **min_basepairs** | Int | Minimum number of base pairs able to pass read screening | 2241820 | Optional |
@@ -168,12 +171,21 @@ All input reads are processed through "core tasks" in each workflow. The core ta
 | theiaeuk_pe | **min_genome_size** | Int | Minimum genome size able to pass read screening | 100000 | Optional |
 | theiaeuk_pe | **min_proportion** | Int | Minimum proportion of total reads in each read file to pass read screening | 50 | Optional |
 | theiaeuk_pe | **min_reads** | Int | Minimum number of reads to pass read screening | 10000 | Optional |
-| theiaeuk_pe | **skip_screen** | Boolean | Option to skip the read screening prior to analysis | FALSE | Optional |
+| theiaeuk_pe | **skip_screen** | Boolean | Option to skip the read screening prior to analysis; if setting to true, please provide a value for the theiaeuk_pe `genome_length` optional input, OR set `call_rasusa` to false. Otherwise RASUSA will attempt to downsample to an expected genome size of 0 bp, and the workflow will fail. | FALSE | Optional |
 | theiaeuk_pe | **subsample_coverage** | Float | Read depth for RASUSA task to subsample reads to | 150 | Optional |
 | version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
 | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
 
-### Workflow tasks (performed for all taxa)
+</div>
+
+### Workflow Tasks
+
+All input reads are processed through "core tasks" in the TheiaEuk workflows. These undertake read trimming and assembly appropriate to the input data type, currently only Illumina paired-end data. TheiaEuk workflow subsequently launch default genome characterization modules for quality assessment, and additional taxa-specific characterization steps. When setting up the workflow, users may choose to use "optional tasks" or alternatives to tasks run in the workflow by default.
+
+#### Core tasks
+
+!!! tip ""
+    These tasks are performed regardless of organism. They perform read trimming and various quality control steps.
 
 ??? task "`versioning`: Version capture for TheiaEuk"
 
@@ -185,9 +197,10 @@ All input reads are processed through "core tasks" in each workflow. The core ta
         | --- | --- |
         | Task | [task_versioning.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/task_versioning.wdl) |
 
-??? task "`screen`: Total Raw Read Quantification and Genome Size Estimation"
+??? task "`screen`: Total Raw Read Quantification and Genome Size Estimation (optional, on by default)"
 
-    The [`screen`](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/comparisons/task_screen.wdl) task ensures the quantity of sequence data is sufficient to undertake genomic analysis. It uses bash commands for quantification of reads and base pairs, and [mash](https://mash.readthedocs.io/en/latest/index.html) sketching to estimate the genome size and its coverage. At each step, the results are assessed relative to pass/fail criteria and thresholds that may be defined by optional user inputs. Samples that do not meet these criteria will not be processed further by the workflow:
+    The [`screen`](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/comparisons/task_screen.wdl) task ensures the quantity of sequence data is sufficient to undertake genomic analysis. It uses [`fastq-scan`](https://github.com/rpetit3/fastq-scan) and bash commands for quantification of reads and base pairs, and [mash](https://mash.readthedocs.io/en/latest/index.html) sketching to estimate the genome size and its coverage. At each step, the results are assessed relative to pass/fail criteria and thresholds that may be defined by optional user inputs. Samples are run through all threshold checks, regardless of failures, and the workflow will terminate after the `screen` task if any thresholds are not met:
+
 
     1. Total number of reads: A sample will fail the read screening task if its total number of reads is less than or equal to `min_reads`.
     2. The proportion of basepairs reads in the forward and reverse read files: A sample will fail the read screening if fewer than `min_proportion` basepairs are in either the reads1 or read2 files.
@@ -201,7 +214,7 @@ All input reads are processed through "core tasks" in each workflow. The core ta
     
     | Variable  | Rationale |
     | --- | --- |
-    | `skip_screen` | Prevent the read screen from running |
+    | `skip_screen` | Prevent the read screen from running. If you set this value to true, please provide a value for the theiaeuk_pe `genome_length` optional input, OR set the theiaeuk_pe `call_rasusa` optional input to false. Otherwise RASUSA will attempt to downsample to an expected genome size of 0 bp, and the workflow will fail. |
     | `min_reads` | Minimum number of base pairs for 20x coverage of _Hansenula polymorpha_  divided by 300 (longest Illumina read length) |
     | `min_basepairs` | Greater than 10x coverage of _Hansenula polymorpha_  |
     | `min_genome_size` | Based on the _Hansenula polymorpha_  genome - the smallest fungal genome as of 2015-04-02 (8.97 Mbp) |
@@ -215,19 +228,22 @@ All input reads are processed through "core tasks" in each workflow. The core ta
         
         |  | Links |
         | --- | --- |
-        | Task | [task_screen.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/task_screen.wdl)  |
+        | Task | [task_screen.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/comparisons/task_screen.wdl)  |
 
-??? task "`rasusa`: Read subsampling"
+??? task "`Rasusa`: Read subsampling (optional, on by default)"
 
-    The RASUSA task performs subsampling of the raw reads. By default, this task will subsample reads to a depth of 150X using the estimated genome length produced during the preceding raw read screen. The user can prevent the task from being launched by setting the `call_rasusa`variable to false. 
+    The Rasusa task performs subsampling of the raw reads. By default, this task will subsample reads to a depth of 150X using the estimated genome length produced during the preceding raw read screen. The user can prevent the task from being launched by setting the `call_rasusa`variable to false. 
 
     The user can also provide an estimated genome length for the task to use for subsampling using the `genome_size` variable. In addition, the read depth can be modified using the `subsample_coverage` variable.
         
-    !!! techdetails "RASUSA Technical Details"
+    !!! techdetails "Rasusa Technical Details"
 
-        |  | TheiaEuk_Illumina_PE_PHB |
+        |  | Links |
         | --- | --- |
         | Task | [task_rasusa.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/task_rasusa.wdl) |
+        | Software Source Code | [Rasusa on GitHub](https://github.com/mbhall88/rasusa) |
+        | Software Documentation | [Rasusa on GitHub](https://github.com/mbhall88/rasusa) |
+        | Original Publication(s) | [Rasusa: Randomly subsample sequencing reads to a specified coverage](https://doi.org/10.21105/joss.03941) |
 
 ??? task "`read_QC_trim`: Read Quality Trimming, Adapter Removal, Quantification, and Identification"
 
@@ -293,18 +309,23 @@ All input reads are processed through "core tasks" in each workflow. The core ta
                 
         |  | Links |
         | --- | --- |
-        | Sub-workflow | [wf_read_QC_trim.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_read_QC_trim.wdl) |
+        | Sub-workflow | [wf_read_QC_trim_pe.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_read_QC_trim_pe.wdl) |
         | Tasks | [task_fastp.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_fastp.wdl)<br>[task_trimmomatic.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_trimmomatic.wdl)<br>[task_bbduk.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_bbduk.wdl)<br>[task_fastq_scan.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_fastq_scan.wdl)<br>[task_midas.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/contamination/task_midas.wdl)<br>[task_kraken2.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/contamination/task_kraken2.wdl)|
         | Software Source Code | [fastp](https://github.com/OpenGene/fastp); [Trimmomatic](https://github.com/usadellab/Trimmomatic); [fastq-scan](https://github.com/rpetit3/fastq-scan); [MIDAS](https://github.com/snayfach/MIDAS); [Kraken2](https://github.com/DerrickWood/kraken2)|
         | Software Documentation | [fastp](https://github.com/OpenGene/fastp); [Trimmomatic](http://www.usadellab.org/cms/?page=trimmomatic); [BBDuk](https://jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/bbduk-guide/); [fastq-scan](https://github.com/rpetit3/fastq-scan); [MIDAS](https://github.com/snayfach/MIDAS); [Kraken2](https://github.com/DerrickWood/kraken2/wiki) |
         | Original Publication(s) | [Trimmomatic: a flexible trimmer for Illumina sequence data](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4103590/)<br>[fastp: an ultra-fast all-in-one FASTQ preprocessor](https://academic.oup.com/bioinformatics/article/34/17/i884/5093234?login=false)<br>[An integrated metagenomics pipeline for strain profiling reveals novel patterns of bacterial transmission and biogeography](https://pubmed.ncbi.nlm.nih.gov/27803195/)<br>[Improved metagenomic analysis with Kraken 2](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1891-0) |
 
+#### Assembly tasks
+
+!!! tip ""
+    These tasks assemble the reads into a _de novo_ assembly and assess the quality of the assembly.
+
 ??? task "`shovill`: _De novo_ Assembly"
 
     De Novo assembly will be undertaken only for samples that have sufficient read quantity and quality, as determined by the `screen` task assessment of clean reads. 
 
-    In TheiaEuk, assembly is performed using the [Shovill](https://github.com/tseemann/shovill) pipeline. This undertakes the assembly with one of four assemblers ([SKESA](https://github.com/ncbi/SKESA) (default), [SPAdes](https://github.com/ablab/spades), [Velvet](https://github.com/dzerbino/velvet/), [Megahit](https://github.com/voutcn/megahit)), but also performs [a number of pre- and post-processing steps](https://github.com/tseemann/shovill#main-steps) to improve the resulting genome assembly. Shovill uses an estimated genome size (see [here](https://github.com/tseemann/shovill#--gsize)). If this is not provided by the user as an optional input, Shovill will estimate the genome size using [mash](https://mash.readthedocs.io/en/latest/index.html). Adaptor trimming can be undertaken with Shovill by setting the `trim` option to "true", but this is set to "false" by default as [alternative adapter trimming](https://www.notion.so/TheiaProk-Workflow-Series-89b9c08406094ec78d08a578fe861626?pvs=21) is undertaken in the TheiaEuk workflow.
-
+    In TheiaEuk, assembly is performed using the [Shovill](https://github.com/tseemann/shovill) pipeline. This undertakes the assembly with one of four assemblers ([SKESA](https://github.com/ncbi/SKESA) (default), [SPAdes](https://github.com/ablab/spades), [Velvet](https://github.com/dzerbino/velvet/), [Megahit](https://github.com/voutcn/megahit)), but also performs [a number of pre- and post-processing steps](https://github.com/tseemann/shovill#main-steps) to improve the resulting genome assembly. Shovill uses an estimated genome size (see [here](https://github.com/tseemann/shovill#--gsize)). If this is not provided by the user as an optional input, Shovill will estimate the genome size using [mash](https://mash.readthedocs.io/en/latest/index.html). Adaptor trimming can be undertaken with Shovill by setting the `trim` option to "true", but this is set to "false" by default as alternative adapter trimming performed by bbduk is undertaken in the TheiaEuk workflow.
+    
     ??? toggle "What is _de novo_  assembly?"
         _De novo_  assembly is the process or product of attempting to reconstruct a genome from scratch (without prior knowledge of the genome) using sequence reads. Assembly of fungal genomes from short-reads will produce multiple contigs per chromosome rather than a single contiguous sequence for each chromosome.
         
@@ -312,7 +333,8 @@ All input reads are processed through "core tasks" in each workflow. The core ta
         |  | Links |
         | --- | --- |
         | TheiaEuk WDL Task | [task_shovill.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_shovill.wdl#L3) |
-        | Software code repository and documentation | [Shovill on GitHub](https://github.com/tseemann/shovill) |
+        | Software Source Code | [Shovill on GitHub](https://github.com/tseemann/shovill) |
+        | Software Documentation | [Shovill on GitHub](https://github.com/tseemann/shovill) |
 
 ??? task "`QUAST`: Assembly Quality Assessment"
 
@@ -322,7 +344,7 @@ All input reads are processed through "core tasks" in each workflow. The core ta
         
         |  | Links |
         | --- | --- |
-        | Task | [task_quast.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/task_quast.wdl) |
+        | Task | [task_quast.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_quast.wdl) |
         | Software Source Code | [QUAST on GitHub](https://github.com/ablab/quast) |
         | Software Documentation | https://quast.sourceforge.net/docs/manual.html |
         | Orginal publication | [QUAST: quality assessment tool for genome assemblies](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3624806/) |
@@ -336,10 +358,15 @@ All input reads are processed through "core tasks" in each workflow. The core ta
         
         |  | Links |
         | --- | --- |
-        | Task | [task_cg_pipeline.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/task_cg_pipeline.wdl) |
+        | Task | [task_cg_pipeline.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_cg_pipeline.wdl) |
         | Software Source Code | [CG-Pipeline on GitHub](https://github.com/lskatz/CG-Pipeline/) |
         | Software Documentation | [CG-Pipeline on GitHub](https://github.com/lskatz/CG-Pipeline/) |
         | Original Publication(s) | [A computational genomics pipeline for prokaryotic sequencing projects](https://academic.oup.com/bioinformatics/article/26/15/1819/188418) |
+
+#### Organism-agnostic characterization
+
+!!! tip ""
+    These tasks are performed regardless of the organism and provide quality control and taxonomic assignment.
 
 ??? task "`GAMBIT`: **Taxon Assignment**"
 
@@ -356,7 +383,33 @@ All input reads are processed through "core tasks" in each workflow. The core ta
         | Software Documentation | [GAMBIT ReadTheDocs](https://gambit-genomics.readthedocs.io/en/latest/) |
         | Original Publication(s) | [GAMBIT (Genomic Approximation Method for Bacterial Identification and Tracking): A methodology to rapidly leverage whole genome sequencing of bacterial isolates for clinical identification](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0277575) |
 
-??? task "**`QC_check`: Check QC Metrics Against User-Defined Thresholds (optional)**"
+??? task "`BUSCO`: Assembly Quality Assessment"
+
+    BUSCO (**B**enchmarking **U**niversal **S**ingle-**C**opy **O**rthologue) attempts to quantify the completeness and contamination of an assembly to generate quality assessment metrics. It uses taxa-specific databases containing genes that are all expected to occur in the given taxa, each in a single copy. BUSCO examines the presence or absence of these genes, whether they are fragmented, and whether they are duplicated (suggestive that additional copies came from contaminants).
+
+    **BUSCO notation** 
+    
+    Here is an example of BUSCO notation: `C:99.1%[S:98.9%,D:0.2%],F:0.0%,M:0.9%,n:440`. There are several abbreviations used in this output:
+    
+    - Complete (C) - genes are considered "complete" when their lengths are within two standard deviations of the BUSCO group mean length.
+    - Single-copy (S) - genes that are complete and have only one copy.
+    - Duplicated (D) - genes that are complete and have more than one copy.
+    - Fragmented (F) - genes that are only partially recovered.
+    - Missing (M) - genes that were not recovered at all.
+    - Number of genes examined (n) - the number of genes examined.
+    
+    A high equity assembly will use the appropriate database for the taxa, have high complete (C) and single-copy (S) percentages, and low duplicated (D), fragmented (F) and missing (M) percentages. 
+  
+    !!! techdetails "BUSCO Technical Details"
+        
+        |  | Links |
+        | --- | --- |
+        | Task | [task_busco.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/advanced_metrics/task_busco.wdl) |
+        | Software Source Code | [BUSCO on GitLab](https://gitlab.com/ezlab/busco) |
+        | Software Documentation | https://busco.ezlab.org/ |
+        | Orginal publication | [BUSCO: assessing genome assembly and annotation completeness with single-copy orthologs](https://academic.oup.com/bioinformatics/article/31/19/3210/211866) |
+
+??? task "`qc_check`: Check QC Metrics Against User-Defined Thresholds (optional)"
 
     The `qc_check` task compares generated QC metrics against user-defined thresholds for each metric. This task will run if the user provides a `qc_check_table` .tsv file. If all QC metrics meet the threshold, the `qc_check` output variable will read `QC_PASS`. Otherwise, the output will read `QC_NA` if the task could not proceed or `QC_ALERT` followed by a string indicating what metric failed.
 
@@ -379,89 +432,223 @@ All input reads are processed through "core tasks" in each workflow. The core ta
         
         |  | Links |
         | --- | --- |
-        | Task | [task_qc_check.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/comparisons/task_qc_check.wdl) |
+        | Task | [task_qc_check_phb.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/comparisons/task_qc_check_phb.wdl) |
 
-### Organism-specific Characterization
+#### Organism-specific characterization
 
-The TheiaEuk workflow automatically activates taxa-specific tasks after identification of relevant taxa using `GAMBIT`. Many of these taxa-specific tasks do not require any additional workflow tasks from the user.
+!!! tip ""
+    The TheiaEuk workflow automatically activates taxa-specific tasks after identification of the relevant taxa using `GAMBIT`. Many of these taxa-specific tasks do not require any additional inputs from the user.
 
-??? toggle "_Candida auris_"
+??? toggle "_Candidozyma auris_ (also known as _Candida auris_)"
+    Two tools are deployed when _Candidozyma auris_/_Candida auris_ is  identified.
 
-    Two tools are deployed when _Candida auris is_  identified. First, the Cladetyping tool is launched to determine the clade of the specimen by comparing the sequence to five clade-specific reference files. The output of the clade typing task will be used to specify the reference genome for the antifungal resistance detection tool. To detect mutations that may confer antifungal resistance, `Snippy` is used to find all variants relative to the clade-specific reference, then these variants are queried for product names associated with resistance according to the MARDy database (<http://mardy.dide.ic.ac.uk/index.php>).
+    ??? task "Cladetyping: clade determination"
+        GAMBIT is used to determine the clade of the specimen by comparing the sequence to five clade-specific reference files. The output of the clade typing task will be used to specify the reference genome for the antifungal resistance detection tool.
 
-    **Default reference genomes used for clade typing and antimicrobial resistance gene detection of C. auris**
+        ??? toggle "Default reference genomes used for clade typing and antimicrobial resistance gene detection of _C. auris_"
+            | Clade | Genome Accession | Assembly Name | Strain | NCBI Submitter | Included mutations in AMR genes (not comprehensive) |
+            | --- | --- | --- | --- | --- | --- |
+            | _Candidozyma auris_ Clade I | GCA_002759435.2 | Cand_auris_B8441_V2 | B8441 | Centers for Disease Control and Prevention |  |
+            | _Candidozyma auris_ Clade II | GCA_003013715.2 | ASM301371v2 | B11220 | Centers for Disease Control and Prevention |  |
+            | _Candidozyma auris_ Clade III | GCA_002775015.1 | Cand_auris_B11221_V1 | B11221 | Centers for Disease Control and Prevention | _ERG11_ V125A/F126L |
+            | _Candidozyma auris_ Clade IV | GCA_003014415.1 | Cand_auris_B11243 | B11243 | Centers for Disease Control and Prevention | _ERG11_ Y132F |
+            | _Candidozyma auris_ Clade V | GCA_016809505.1 | ASM1680950v1 | IFRC2087 | Centers for Disease Control and Prevention |  |
 
-    | Clade | Genome Accession | Assembly Name | Strain | NCBI Submitter | Included mutations in AMR genes (not comprehensive) |
-    | --- | --- | --- | --- | --- | --- |
-    | Candida auris Clade I | GCA_002759435.2 | Cand_auris_B8441_V2 | B8441 | Centers for Disease Control and Prevention |  |
-    | Candida auris Clade II | GCA_003013715.2 | ASM301371v2 | B11220 | Centers for Disease Control and Prevention |  |
-    | Candida auris Clade III | GCA_002775015.1 | Cand_auris_B11221_V1 | B11221 | Centers for Disease Control and Prevention | _ERG11_ V125A/F126L |
-    | Candida auris Clade IV | GCA_003014415.1 | Cand_auris_B11243 | B11243 | Centers for Disease Control and Prevention | _ERG11_ Y132F |
-    | Candida auris Clade V | GCA_016809505.1 | ASM1680950v1 | IFRC2087 | Centers for Disease Control and Prevention |  |
+        !!! techdetails "Cladetyping Technical Details"
+            |  | Links |
+            | --- | --- |
+            | Task | [task_cauris_cladetyping.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/candida/task_cauris_cladetyper.wdl) |
+            | Software Source Code | [GAMBIT on GitHub](https://github.com/jlumpe/gambit) |
+            | Software Documentation | [GAMBIT Overview](https://theiagen.notion.site/GAMBIT-7c1376b861d0486abfbc316480046bdc?pvs=4)
+            | Original Publication(s) | [GAMBIT (Genomic Approximation Method for Bacterial Identification and Tracking): A methodology to rapidly leverage whole genome sequencing of bacterial isolates for clinical identification](https://doi.org/10.1371/journal.pone.0277575)<br> [TheiaEuk: a species-agnostic bioinformatics workflow for fungal genomic characterization](https://doi.org/10.3389/fpubh.2023.1198213) |
 
-    The genes in which there are known resistance-conferring mutations for this pathogen are:
+    ??? task "Snippy Variants: antifungal resistance detection"
+        To detect mutations that may confer antifungal resistance, `Snippy` is used to find all variants relative to the clade-specific reference, then these variants are queried for product names associated with resistance.
+    
+        The genes in which there are known resistance-conferring mutations for this pathogen are:
 
-    - FKS1
-    - ERG11 (lanosterol 14-alpha demethylase)
-    - FUR1 (uracil phosphoribosyltransferase)
+        - FKS1
+        - ERG11 (lanosterol 14-alpha demethylase)
+        - FUR1 (uracil phosphoribosyltransferase)
 
-    Mutations in these genes that are known to confer resistance are shown below (source: MARDy database http://mardy.dide.ic.ac.uk/index.php)
+        We query `Snippy` results to see if any mutations were identified in those genes. By default, we automatically check for the following loci (which can be overwritten by the user). You will find the mutations next to the locus tag in the `theiaeuk_snippy_variants_hits` column corresponding gene name (see below):
 
-    | **Organism** | **Found in** | **Gene name** | **Gene locus** | **AA mutation** | **Drug** | **Tandem repeat name** | **Tandem repeat sequence** | **Reference** |
-    | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-    | **Candida auris** | **Human** | **ERG11** |  | **Y132F** | **Fluconazole** |  |  | [**10.1093/cid/ciw691**](https://academic.oup.com/cid/article/64/2/134/2706620/Simultaneous-Emergence-of-Multidrug-Resistant) |
-    | **Candida auris** | **Human** | **ERG11** |  | **K143R** | **Fluconazole** |  |  | [**10.1093/cid/ciw691**](https://academic.oup.com/cid/article/64/2/134/2706620/Simultaneous-Emergence-of-Multidrug-Resistant) |
-    | **Candida auris** | **Human** | **ERG11** |  | **F126T** | **Fluconazole** |  |  | [**10.1093/cid/ciw691**](https://academic.oup.com/cid/article/64/2/134/2706620/Simultaneous-Emergence-of-Multidrug-Resistant) |
-    | **Candida auris** | **Human** | **FKS1** |  | **S639P** | **Micafungin** |  |  | [**10.1016/j.diagmicrobio.2017.10.021**](https://www.sciencedirect.com/science/article/pii/S0732889317303498) |
-    | **Candida auris** | **Human** | **FKS1** |  | **S639P** | **Caspofungin** |  |  | [**10.1016/j.diagmicrobio.2017.10.021**](https://www.sciencedirect.com/science/article/pii/S0732889317303498) |
-    | **Candida auris** | **Human** | **FKS1** |  | **S639P** | **Anidulafungin** |  |  | [**10.1016/j.diagmicrobio.2017.10.021**](https://www.sciencedirect.com/science/article/pii/S0732889317303498) |
-    | **Candida auris** | **Human** | **FKS1** |  | **S639F** | **Micafungin** |  |  | [**10.1093/jac/dkx480**](https://academic.oup.com/jac/advance-article/doi/10.1093/jac/dkx480/4794718) |
-    | **Candida auris** | **Human** | **FKS1** |  | **S639F** | **Caspofungin** |  |  | [**10.1093/jac/dkx480**](https://academic.oup.com/jac/advance-article/doi/10.1093/jac/dkx480/4794718) |
-    | **Candida auris** | **Human** | **FKS1** |  | **S639F** | **Anidulafungin** |  |  | [**10.1093/jac/dkx480**](https://academic.oup.com/jac/advance-article/doi/10.1093/jac/dkx480/4794718) |
-    | **Candida auris** | **Human** | **FUR1** | **CAMJ_004922** | **F211I** | **5-flucytosine** |  |  | [**https://doi.org/10.1038/s41426-018-0045-x**](https://www.nature.com/articles/s41426-018-0045-x) |
+        | **TheiaEuk Search Term** | **Corresponding Gene Name** |
+        |---|---|
+        | B9J08_005340 | ERG6 |
+        | B9J08_000401 | FLO8 |
+        | B9J08_005343 | Hypothetical protein (PSK74852) |
+        | B9J08_003102 | MEC3 |
+        | B9J08_003737 | ERG3 |
+        | lanosterol.14-alpha.demethylase | ERG11 |
+        | uracil.phosphoribosyltransferase | FUR1 |
+        | FKS1 | FKS1 |    
 
+        For example, one sample may have the following output for the `theiaeuk_snippy_variants_hits` column:
+
+        ```plaintext
+        lanosterol.14-alpha.demethylase: lanosterol 14-alpha demethylase (missense_variant c.428A>G p.Lys143Arg; C:266 T:0),B9J08_000401: hypothetical protein (stop_gained c.424C>T p.Gln142*; A:70 G:0)
+        ```
+
+        Based on this, we can tell that ERG11 has a missense variant at position 143 (Lysine to Arginine) and B9J08_000401 (which is FLO8) has a stop-gained variant at position 142 (Glutamine to Stop).
+
+        ??? toggle "Known resistance-conferring mutations for _Candidozyma auris_"
+            Mutations in these genes that are known to confer resistance are shown below
+
+            | **Organism** | **Found in** | **Gene name** | **Gene locus** | **AA mutation** | **Drug** | **Reference** |
+            | --- | --- | --- | --- | --- | --- | --- |
+            | **Candidozyma auris** | **Human** | **ERG11** |  | **Y132F** | **Fluconazole** | [Simultaneous Emergence of Multidrug-Resistant _Candida auris_ on 3 Continents Confirmed by Whole-Genome Sequencing and Epidemiological Analyses](https://academic.oup.com/cid/article/64/2/134/2706620/Simultaneous-Emergence-of-Multidrug-Resistant) |
+            | **Candidozyma auris** | **Human** | **ERG11** |  | **K143R** | **Fluconazole** | [Simultaneous Emergence of Multidrug-Resistant _Candida auris_ on 3 Continents Confirmed by Whole-Genome Sequencing and Epidemiological Analyses](https://academic.oup.com/cid/article/64/2/134/2706620/Simultaneous-Emergence-of-Multidrug-Resistant) |
+            | **Candidozyma auris** | **Human** | **ERG11** |  | **F126T** | **Fluconazole** | [Simultaneous Emergence of Multidrug-Resistant _Candida auris_ on 3 Continents Confirmed by Whole-Genome Sequencing and Epidemiological Analyses](https://academic.oup.com/cid/article/64/2/134/2706620/Simultaneous-Emergence-of-Multidrug-Resistant) |
+            | **Candidozyma auris** | **Human** | **FKS1** |  | **S639P** | **Micafungin**  | [Activity of CD101, a long-acting echinocandin, against clinical isolates of Candida auris](https://www.sciencedirect.com/science/article/pii/S0732889317303498) |
+            | **Candidozyma auris** | **Human** | **FKS1** |  | **S639P** | **Caspofungin** | [Activity of CD101, a long-acting echinocandin, against clinical isolates of Candida auris](https://www.sciencedirect.com/science/article/pii/S0732889317303498) |
+            | **Candidozyma auris** | **Human** | **FKS1** |  | **S639P** | **Anidulafungin** | [Activity of CD101, a long-acting echinocandin, against clinical isolates of Candida auris](https://www.sciencedirect.com/science/article/pii/S0732889317303498) |
+            | **Candidozyma auris** | **Human** | **FKS1** |  | **S639F** | **Micafungin** | [A multicentre study of antifungal susceptibility patterns among 350 _Candida auris_ isolates (2009–17) in India: role of the ERG11 and FKS1 genes in azole and echinocandin resistance](https://academic.oup.com/jac/advance-article/doi/10.1093/jac/dkx480/4794718) |
+            | **Candidozyma auris** | **Human** | **FKS1** |  | **S639F** | **Caspofungin** | [A multicentre study of antifungal susceptibility patterns among 350 _Candida auris_ isolates (2009–17) in India: role of the ERG11 and FKS1 genes in azole and echinocandin resistance](https://academic.oup.com/jac/advance-article/doi/10.1093/jac/dkx480/4794718) |
+            | **Candidozyma auris** | **Human** | **FKS1** |  | **S639F** | **Anidulafungin** | [A multicentre study of antifungal susceptibility patterns among 350 _Candida auris_ isolates (2009–17) in India: role of the ERG11 and FKS1 genes in azole and echinocandin resistance](https://academic.oup.com/jac/advance-article/doi/10.1093/jac/dkx480/4794718) |
+            | **Candidozyma auris** | **Human** | **FUR1** | **CAMJ_004922** | **F211I** | **5-flucytosine** | [Genomic epidemiology of the UK outbreak of the emerging human fungal pathogen Candida auris](https://doi.org/10.1038/s41426-018-0045-x) |
+
+        !!! techdetails "Snippy Variants Technical Details"
+            |  | Links |
+            | --- | --- |
+            | Task | [task_snippy_variants.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/variant_detection/task_snippy_variants.wdl)<br>[task_snippy_gene_query.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/variant_detection/task_snippy_gene_query.wdl) |
+            | Software Source Code | [Snippy on GitHub](https://github.com/tseemann/snippy) |
+            | Software Documentation | [Snippy on GitHub](https://github.com/tseemann/snippy) |
+            
 ??? toggle "_Candida albicans_"
+    When this species is detected by the taxon ID tool, an antifungal resistance detection task is deployed.
 
-    When this species is detected by the taxon ID tool, an antifungal resistance detection task is deployed. To detect mutations that may confer antifungal resistance, `Snippy` is used to find all variants relative to the clade-specific reference, and these variants are queried for product names associated with resistance according to the MARDy database (<http://mardy.dide.ic.ac.uk/index.php>).
+    ??? task "Snippy Variants: antifungal resistance detection"
+        To detect mutations that may confer antifungal resistance, `Snippy` is used to find all variants relative to the clade-specific reference, and these variants are queried for product names associated with resistance.
 
-    The genes in which there are known resistance-conferring mutations for this pathogen are:
+        The genes in which there are known resistance-conferring mutations for this pathogen are:
 
-    - ERG11
-    - GCS1 (FKS1)
-    - FUR1
-    - RTA2
+        - ERG11
+        - GCS1 (FKS1)
+        - FUR1
+        - RTA2
+
+        We query `Snippy` results to see if any mutations were identified in those genes. By default, we automatically check for the following loci (which can be overwritten by the user). You will find the mutations next to the locus tag in the `theiaeuk_snippy_variants_hits` column corresponding gene name (see below):
+
+        | **TheiaEuk Search Term** | **Corresponding Gene Name** |
+        |---|---|
+        | ERG11 | ERG11 |
+        | GCS1 | FKS1 |
+        | FUR1 | FUR1 |
+        | RTA2 | RTA2 |
+
+        !!! techdetails "Snippy Variants Technical Details"
+            |  | Links |
+            | --- | --- |
+            | Task | [task_snippy_variants.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/variant_detection/task_snippy_variants.wdl)<br>[task_snippy_gene_query.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/variant_detection/task_snippy_gene_query.wdl) |
+            | Software Source Code | [Snippy on GitHub](https://github.com/tseemann/snippy) |
+            | Software Documentation | [Snippy on GitHub](https://github.com/tseemann/snippy) |
 
 ??? toggle "_Aspergillus fumigatus_"
+    When this species is detected by the taxon ID tool an antifungal resistance detection task is deployed.
 
-    When this species is detected by the taxon ID tool an antifungal resistance detection task is deployed. To detect mutations that may confer antifungal resistance, `Snippy` is used to find all variants relative to the clade-specific reference, and these variants are queried for product names associated with resistance according to the MARDy database (<http://mardy.dide.ic.ac.uk/index.php>).
+    ??? task "Snippy Variants: antifungal resistance detection"
+        To detect mutations that may confer antifungal resistance, `Snippy` is used to find all variants relative to the clade-specific reference, and these variants are queried for product names associated with resistance.
 
-    The genes in which there are known resistance-conferring mutations for this pathogen are:
+        The genes in which there are known resistance-conferring mutations for this pathogen are:
 
-    - Cyp51A
-    - HapE
-    - COX10 (AFUA_4G08340)
+        - Cyp51A
+        - HapE
+        - COX10 (AFUA_4G08340)
+ 
+        We query `Snippy` results to see if any mutations were identified in those genes. By default, we automatically check for the following loci (which can be overwritten by the user). You will find the mutations next to the locus tag in the `theiaeuk_snippy_variants_hits` column corresponding gene name (see below):
+
+        | **TheiaEuk Search Term** | **Corresponding Gene Name** |
+        |---|---|
+        | Cyp51A | Cyp51A |
+        | HapE | HapE |
+        | AFUA_4G08340 | COX10 |
+
+        !!! techdetails "Snippy Variants Technical Details"
+            |  | Links |
+            | --- | --- |
+            | Task | [task_snippy_variants.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/variant_detection/task_snippy_variants.wdl)<br>[task_snippy_gene_query.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/variant_detection/task_snippy_gene_query.wdl) |
+            | Software Source Code | [Snippy on GitHub](https://github.com/tseemann/snippy) |
+            | Software Documentation | [Snippy on GitHub](https://github.com/tseemann/snippy) |
 
 ??? toggle "_Cryptococcus neoformans_"
+    When this species is detected by the taxon ID tool an antifungal resistance detection task is deployed.
 
-    When this species is detected by the taxon ID tool an antifungal resistance detection task is deployed. To detect mutations that may confer antifungal resistance, `Snippy` is used to find all variants relative to the clade-specific reference, and these variants are queried for product names associated with resistance according to the MARDy database (<http://mardy.dide.ic.ac.uk/index.php>).
+    ??? task "Snippy Variants: antifungal resistance detection"
+        To detect mutations that may confer antifungal resistance, `Snippy` is used to find all variants relative to the clade-specific reference, and these variants are queried for product names associated with resistance.
 
-    The gene in which there are known resistance-conferring mutations for this pathogen is:
+        The genes in which there are known resistance-conferring mutations for this pathogen are:
 
-    - ERG11 (CNA00300)
+        - ERG11 (CNA00300)
+        
+        We query `Snippy` results to see if any mutations were identified in those genes. By default, we automatically check for the following loci (which can be overwritten by the user). You will find the mutations next to the locus tag in the `theiaeuk_snippy_variants_hits` column corresponding gene name (see below):
+
+        | **TheiaEuk Search Term** | **Corresponding Gene Name** |
+        |---|---|
+        | CNA00300 | ERG11 |
+    
+        !!! techdetails "Snippy Variants Technical Details"
+            |  | Links |
+            | --- | --- |
+            | Task | [task_snippy_variants.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/variant_detection/task_snippy_variants.wdl)<br>[task_snippy_gene_query.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/variant_detection/task_snippy_gene_query.wdl) |
+            | Software Source Code | [Snippy on GitHub](https://github.com/tseemann/snippy) |
+            | Software Documentation | [Snippy on GitHub](https://github.com/tseemann/snippy) |
 
 ### Outputs
 
+<div class="searchable-table" markdown="1">
+
 | **Variable** | **Type** | **Description** |
 |---|---|---|
+| assembly_fasta | File | _De novo_ genome assembly in FASTA format |
+| assembly_length | Int | Length of assembly (total number of nucleotides) as determined by QUAST |
+| bbduk_docker| String | BBDuk docker image used |
+| busco_database | String | BUSCO database used |
+| busco_docker | String | BUSCO docker image used |
+| busco_report | File | A plain text summary of the results in BUSCO notation |
+| busco_results | String | BUSCO results (see above for explanation of BUSCO notation) |
+| busco_version | String | BUSCO software version used |
 | cg_pipeline_docker | String | Docker file used for running CG-Pipeline on cleaned reads |
 | cg_pipeline_report | File | TSV file of read metrics from raw reads, including average read length, number of reads, and estimated genome coverage |
-| est_coverage_clean | Float | Estimated coverage calculated from   clean reads and genome length |
-| est_coverage_raw | Float | Estimated coverage calculated from  raw reads and genome length |
-| r1_mean_q_clean | Float | Mean quality score of clean forward reads |
-| r1_mean_q_raw | Float | Mean quality score of raw forward reads |
-| r2_mean_q_clean | Float | Mean quality score of clean reverse reads |
-| r2_mean_q_raw | Float | Mean quality score of raw reverse reads |
+| cladetyper_annotated_reference | String | The annotated reference file for the identified clade, "None" if no clade was identified |
+| cladetyper_clade | String | The clade assigned to the input assembly |
+| cladetyper_docker_image | String | The Docker container used for the task |
+| cladetyper_gambit_version | String | The version of GAMBIT used for the analysis |
+| combined_mean_q_clean | Float | Mean quality score for the combined clean reads |
+| combined_mean_q_raw | Float | Mean quality score for the combined raw reads |
+| combined_mean_readlength_clean | Float | Mean read length for the combined clean reads |
+| combined_mean_readlength_raw | Float | Mean read length for the combined raw reads |
+| contigs_fastg | File | Assembly graph if megahit used for genome assembly |
+| contigs_gfa | File | Assembly graph if spades used for genome assembly |
+| contigs_lastgraph | File | Assembly graph if velvet used for genome assembly |
+| est_coverage_clean | Float | Estimated coverage calculated from clean reads and genome length |
+| est_coverage_raw | Float | Estimated coverage calculated from raw reads and genome length |
+| fastp_html_report | File | The HTML report made with fastp |
+| fastp_version | String | Version of fastp software used |
+| fastq_scan_clean1_json | File | JSON file output from `fastq-scan` containing summary stats about clean forward read quality and length |
+| fastq_scan_clean2_json | File | JSON file output from `fastq-scan` containing summary stats about clean reverse read quality and length |
+ fastq_scan_num_reads_clean_pairs | String | Number of read pairs after cleaning as calculated by fastq_scan |
+| fastq_scan_num_reads_clean1 | Int | Number of forward reads after cleaning as calculated by fastq_scan |
+| fastq_scan_num_reads_clean2 | Int | Number of reverse reads after cleaning as calculated by fastq_scan |
+| fastq_scan_num_reads_raw_pairs | String | Number of input read pairs calculated by fastq_scan |
+| fastq_scan_num_reads_raw1 | Int | Number of input forward reads calculated by fastq_scan |
+| fastq_scan_num_reads_raw2 | Int | Number of input reverse reads calculated by fastq_scan |
+| fastq_scan_num_reads_raw_pairs | String | Number of input read pairs calculated by fastq_scan |
+| fastq_scan_raw1_json | File | JSON file output from `fastq-scan` containing summary stats about raw forward read quality and length |
+| fastq_scan_raw2_json | File | JSON file output from `fastq-scan` containing summary stats about raw reverse read quality and length |
 | fastq_scan_version | String | Version of fastq-scan software used |
+| fastqc_clean1_html | File | Graphical visualization of clean forward read quality from fastqc to open in an internet browser |
+| fastqc_clean2_html | File | Graphical visualization of clean reverse read quality from fastqc to open in an internet browser |
+| fastqc_docker | String | Docker container used with fastqc |
+| fastqc_num_reads_clean1 | Int | Number of forward reads after cleaning by fastqc |
+| fastqc_num_reads_clean2 | Int | Number of reverse reads after cleaning by fastqc |
+| fastqc_num_reads_clean_pairs | String | Number of read pairs after cleaning by fastqc |
+| fastqc_num_reads_raw1 | Int | Number of input reverse reads by fastqc |
+| fastqc_num_reads_raw2 | Int | Number of input reverse reads by fastqc |
+| fastqc_num_reads_raw_pairs | String | Number of input read pairs by fastqc |
+| fastqc_raw1_html | File | Graphical visualization of raw forward read quality from fastqc to open in an internet browser |
+| fastqc_raw2_html | File | Graphical visualization of raw reverse read qualityfrom fastqc to open in an internet browser |
+| fastqc_version | String | Version of fastqc software used |
 | gambit_closest_genomes | File | CSV file listing genomes in the GAMBIT database that are most similar to the query assembly |
 | gambit_db_version | String | Version of GAMBIT used |
 | gambit_docker | String | GAMBIT docker file used |
@@ -469,42 +656,46 @@ The TheiaEuk workflow automatically activates taxa-specific tasks after identifi
 | gambit_predicted_taxon_rank | String | Taxon rank of GAMBIT taxon prediction |
 | gambit_report | File | GAMBIT report in a machine-readable format |
 | gambit_version | String | Version of GAMBIT software used |
-| assembly_length | Int | Length of assembly (total contig length) as determined by QUAST |
 | n50_value | Int | N50 of assembly calculated by QUAST |
 | number_contigs | Int | Total number of contigs in assembly |
+| qc_check | String | A string that indicates whether or not the sample passes a set of pre-determined and user-provided QC thresholds |
+| qc_standard | File | The user-provided file that contains the QC thresholds used for the QC check |
+| quast_gc_percent | Float | The GC percent of your sample |
 | quast_report | File | TSV report from QUAST |
 | quast_version | String | Software version of QUAST used |
+| r1_mean_q_raw | Float | Mean quality score of raw forward reads |
+| r1_mean_readlength_raw | Float | Mean read length of raw forward reads |
+| r2_mean_q_raw | Float | Mean quality score of raw reverse reads |
+| r2_mean_readlength_clean | Float | Mean read length of clean reverse reads |
 | rasusa_version | String | Version of rasusa used |
-| read1_subsampled | File | Subsampled read1 file |
-| read2_subsampled | File | Subsampled read2 file |
-| bbduk_docker | String | BBDuk docker image used  |
-| fastp_version | String | Version of fastp software used |
 | read1_clean | File | Clean forward reads file |
+| read1_subsampled | File | Subsampled read1 file |
 | read2_clean | File | Clean reverse reads file |
-| num_reads_clean_pairs | String | Number of read pairs after cleaning |
-| num_reads_clean1 | Int | Number of forward reads after cleaning |
-| num_reads_clean2 | Int | Number of reverse reads after cleaning |
-| num_reads_raw_pairs | String | Number of input read pairs |
-| num_reads_raw1 | Int | Number of input forward reads |
-| num_reads_raw2 | Int | Number of input reverse reads |
-| trimmomatic_version | String | Version of trimmomatic used |
-| clean_read_screen | String | PASS or FAIL result from clean read screening; FAIL accompanied by the reason for failure |
-| raw_read_screen | String | PASS or FAIL result from raw read screening; FAIL accompanied by thereason for failure |
-| assembly_fasta | File | <https://github.com/tseemann/shovill#contigsfa> |
-| contigs_fastg | File | Assembly graph if megahit used for genome assembly |
-| contigs_gfa | File | Assembly graph if spades used for genome assembly |
-| contigs_lastgraph | File | Assembly graph if velvet used for genome assembly |
+| read2_subsampled | File | Subsampled read2 file |
+| read_screen_raw | String | PASS or FAIL result from raw read screening; FAIL accompanied by the reason(s) for failure |
+| read_screen_raw_tsv | File | Raw read screening report TSV depicting read counts, total read base pairs, and estimated genome length |
+| read_screen_clean | String | PASS or FAIL result from clean read screening; FAIL accompanied by the reason(s) for failure |
+| read_screen_clean_tsv | File | Clean read screening report TSV depicting read counts, total read base pairs, and estimated genome length |
+| seq_platform | String | Sequencing platform input by the user |
 | shovill_pe_version | String | Shovill version used |
-| theiaeuk_snippy_variants_bam | File | BAM file produced by the snippy module |
+| theiaeuk_illumina_pe_analysis_date | String | Date of TheiaEuk PE workflow execution |
+| theiaeuk_illumina_pe_version | String | TheiaEuk PE workflow version used |
+| theiaeuk_snippy_variants_bai | String | BAI file produced by the snippy module |
+| theiaeuk_snippy_variants_bam | String | BAM file produced by the snippy module |
+| theiaeuk_snippy_variants_coverage_tsv | String | TSV file containing coverage information for each base in the reference genome |
 | theiaeuk_snippy_variants_gene_query_results | File | File containing all lines from variants file matching gene query terms |
 | theiaeuk_snippy_variants_hits | String | String of all variant file entries matching gene query term |
+| theiaeuk_snippy_variants_num_reads_aligned | String | Number of reads aligned by snippy |
+| theiaeuk_snippy_variants_num_variants | Int | Number of variants detected by snippy |
 | theiaeuk_snippy_variants_outdir_tarball | File | Tar compressed file containing full snippy output directory |
+| theiaeuk_snippy_variants_percent_ref_coverage | String | Percent of reference genome covered by snippy |
 | theiaeuk_snippy_variants_query | String | The gene query term(s) used to search variant |
 | theiaeuk_snippy_variants_query_check | String | Were the gene query terms present in the refence annotated genome file |
 | theiaeuk_snippy_variants_reference_genome | File | The reference genome used in the alignment and variant calling |
 | theiaeuk_snippy_variants_results | File | The variants file produced by snippy |
 | theiaeuk_snippy_variants_summary | File | A file summarizing the variants detected by snippy |
 | theiaeuk_snippy_variants_version | String | The version of the snippy_variants module being used |
-| seq_platform | String | Sequencing platform inout by the user |
-| theiaeuk_illumina_pe_analysis_date | String | Date of TheiaProk workflow execution |
-| theiaeuk_illumina_pe_version | String | TheiaProk workflow version used |
+| trimmomatic_docker | String | Docker image used for trimmomatic |
+| trimmomatic_version | String | Version of trimmomatic used |
+
+</div>

@@ -4,7 +4,7 @@
 
 | **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
 |---|---|---|---|---|
-| [Public Data Sharing](../../workflows_overview/workflows_type.md/#public-data-sharing) | [Bacteria](../../workflows_overview/workflows_kingdom.md#bacteria), [Mycotics](../../workflows_overview/workflows_kingdom.md#mycotics) [Viral](../../workflows_overview/workflows_kingdom.md/#viral) | PHB v2.1.0 | No | Set-level |
+| [Public Data Sharing](../../workflows_overview/workflows_type.md/#public-data-sharing) | [Bacteria](../../workflows_overview/workflows_kingdom.md#bacteria), [Mycotics](../../workflows_overview/workflows_kingdom.md#mycotics) [Viral](../../workflows_overview/workflows_kingdom.md/#viral) | PHB v3.0.0 | No | Set-level |
 
 ## Terra_2_NCBI_PHB
 
@@ -19,6 +19,7 @@
     - [Pathogen metadata formatter](../../assets/metadata_formatters/Terra_2_NCBI-PATHOGEN-metadata-2024-04-30.xlsx)
     - [Microbe metadata formatter](../../assets/metadata_formatters/Terra_2_NCBI-MICROBE-metadata-2022-07-11.xlsx)
     - [Virus metadata formatter](../../assets/metadata_formatters/Terra_2_NCBI-VIRUS-metadata-2022-09-09.xlsx)
+    - [SARS-CoV-2 Wastewater metadata formatter](../../assets/metadata_formatters/Terra_2_NCBI-SC2WW-metadata-2025-01-10.xlsx)
 
 The Terra_2_NCBI workflow is a programmatic data submission method to share metadata information with NCBI BioSample and paired-end Illumina reads with NCBI SRA directly from Terra without having to use the NCBI portal.
 
@@ -62,13 +63,14 @@ The Terra_2_NCBI workflow is a programmatic data submission method to share meta
 
 In order to create BioSamples, you need to choose the correct BioSample package and have the appropriate metadata included in your data table.
 
-Currently, Terra_2_NCBI only supports _Pathogen_, _Virus_, and _Microbe_ BioSample packages. **Most organisms should be submitted using the Pathogen package** unless you have been specifically directed otherwise (either through CDC communications or another reliable source). Definitions of packages supported by Terra_2_NCBI are listed below with more requirements provided via the links:
+Currently, Terra_2_NCBI only supports _Pathogen_, _Virus_, _Microbe_, and _SARS-CoV-2 Wastewater Surveillance_ BioSample packages. **Most organisms should be submitted using the Pathogen package** unless you have been specifically directed otherwise (either through CDC communications or another reliable source). Definitions of packages supported by Terra_2_NCBI are listed below with more requirements provided via the links:
 
 - [Pathogen.cl](https://www.ncbi.nlm.nih.gov/biosample/docs/packages/Pathogen.cl.1.0/) - any clinical or host-associated pathogen
 - [Pathogen.env](https://www.ncbi.nlm.nih.gov/biosample/docs/packages/Pathogen.env.1.0/) - environmental, food or other pathogen *(no metadata formatter available at this time)*
 - [Microbe](https://www.ncbi.nlm.nih.gov/biosample/docs/packages/Microbe.1.0/) - bacteria or other unicellular microbes that do not fit under the MIxS, Pathogen, or Virus packages.
 - [Virus](https://www.ncbi.nlm.nih.gov/biosample/docs/packages/Virus.1.0/) -  viruses **not** directly associated with disease
     - Viral pathogens should be submitted using the Pathogen: Clinical or host-associated pathogen package.
+- [SARS-CoV-2.wwsurv](https://www.ncbi.nlm.nih.gov/biosample/docs/packages/SARS-CoV-2.wwsurv.1.0/) - SARS-CoV-2 wastewater surveillance samples
 
 ### Metadata Formatters
 
@@ -79,6 +81,7 @@ Please note that the pathogen metadata formatter is for the _clinical_ pathogen 
 - [Terra_2_NCBI-PATHOGEN-metadata-2024-04-30.xlsx](../../assets/metadata_formatters/Terra_2_NCBI-PATHOGEN-metadata-2024-04-30.xlsx)
 - [Terra_2_NCBI-MICROBE-metadata-2022-07-11.xlsx](../../assets/metadata_formatters/Terra_2_NCBI-MICROBE-metadata-2022-07-11.xlsx)
 - [Terra_2_NCBI-VIRUS-metadata-2022-09-09.xlsx](../../assets/metadata_formatters/Terra_2_NCBI-VIRUS-metadata-2022-09-09.xlsx)
+- [Terra_2_NCBI-SC2WW-metadata-2025-01-10.xlsx](../../assets/metadata_formatters/Terra_2_NCBI-SC2WW-metadata-2025-01-10.xlsx)
 
 We are constantly working on improving these spreadsheets and they will be updated in due course.
 
@@ -102,6 +105,89 @@ This workflow runs on set-level data tables.
 
 !!! info "Production Submissions"
     Please note that an optional Boolean variable, `submit_to_production`, is **required** for a production submission.
+
+???+ tip "Using Customized Column Names in Terra Tables"
+
+    In some cases, users may have data tables in Terra with column names that differ from the default expected by the workflow. The `Terra_2_NCBI` workflow allows users to supply a **custom column mapping file**, enabling them to specify how their columns map to the required workflow variables.
+
+    To use a custom column mapping file:
+
+    1. Create a tab-delimited `.tsv` file with the following structure:
+   
+        A header including "Custom" and "Required" should be included in the first row.
+        The "Custom" column should contain the actual column names in your Terra table (e.g., 'collection-date'), and the "Required" column should contain the column names expected by the workflow (e.g., 'collection_date').
+
+        Example Mapping File:
+        ```plaintext
+        Custom  Required
+        Collection-Date collection_date
+        geo_location    geo_loc_name
+        bioproject_column   bioproject
+        sample_id_column    sample_names
+        ```
+
+    2. Upload the file to your Terra workspace and reference it in the `column_mapping_file` parameter when running the workflow using Google Cloud Storage paths.
+
+    Ensure the mapping file includes all columns with custom names. Columns that match the default workflow names do not need to be included. Missing mappings for renamed columns may result in errors during execution if the column is required, and will not be found if the column is optional.
+
+    The workflow will automatically map the specified column names from your Terra table to the required workflow variables using the 'custom_mapping_file'.
+
+    To find a list of the expected required and optional column names, [please refer to the code blocks that can be found here](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/submission/task_submission.wdl#L65). The required and optional metadata fields are organized by the BioSample type.
+
+    Below, you can find the required metadata fields for the currently supported BioSample types:
+
+    ??? toggle "Microbe Required Metadata"
+        - submission_id
+        - organism
+        - collection_date
+        - geo_loc_name
+        - sample_type
+
+    ??? toggle "Wastewater Required Metadata"
+        - submission_id
+        - organism
+        - collection_date
+        - geo_loc_name
+        - isolation_source
+        - ww_population
+        - ww_sample_duration
+        - ww_sample_matrix
+        - ww_sample_type
+        - ww_surv_target_1
+        - ww_surv_target_1_known_present
+
+    ??? toggle "Pathogen.cl Required Metadata"
+        - submission_id
+        - organism
+        - collected_by
+        - collection_date
+        - geo_loc_name
+        - host
+        - host_disease
+        - isolation_source
+        - lat_lon
+    
+    ??? toggle "Pathogen.env Required Metadata"
+        - submission_id
+        - organism
+        - collected_by
+        - collection_date
+        - geo_loc_name
+        - isolation_source
+        - lat_lon
+
+    ??? toggle "Virus Required Metadata"
+        - submission_id
+        - organism
+        - isolate
+        - collection_date
+        - geo_loc_name
+        - isolation_source
+
+    ---
+    For further assistance in setting up a custom column mapping file, please contact Theiagen at [support@theiagen.com](mailto:support@theiagen.com).
+
+<div class="searchable-table" markdown="1">
 
 | **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
 | --- | --- | --- | --- | --- | --- |
@@ -143,6 +229,8 @@ This workflow runs on set-level data tables.
 | version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
 | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
 
+</div>
+
 ??? task "Workflow Tasks"
 
     ##### Workflow Tasks {#workflow-tasks}
@@ -178,6 +266,8 @@ If the workflow ends unsuccessfully, no outputs will be shown on Terra and the `
 
 The output files contain information mostly for debugging purposes. Additionally, if your submission is successful, the point of contact for the submission should also receive an email from NCBI notifying them of their submission success.
 
+<div class="searchable-table" markdown="1">
+
 | Variable | Description | Type |
 | --- | --- | --- |
 | biosample_failures | Text file listing samples that failed BioSample submission | File |
@@ -192,6 +282,8 @@ The output files contain information mostly for debugging purposes. Additionally
 | sra_submission_xml | XML file that was used to submit your SRA reads to NCBI | File |
 | terra_2_ncbi_analysis_date | Date that the workflow was run | String |
 | terra_2_ncbi_version | Version of the PHB repository where the workflow is hosted | String |
+
+</div>
 
 ???+ toggle "An example excluded_samples.tsv file"
 

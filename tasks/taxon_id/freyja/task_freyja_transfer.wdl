@@ -6,9 +6,9 @@ task transfer_files {
     File updated_barcodes
     File updated_lineages
     File update_log
-    Int disk_size = 100
-    Int memory = 4
-    Int cpu = 2
+    Int disk_size = 25
+    Int memory = 2
+    Int cpu = 1
     String docker = "us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1"
   }
   command <<<

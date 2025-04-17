@@ -171,15 +171,17 @@ workflow theiacov_clearlabs {
     Int fastq_scan_num_reads_raw1 = fastq_scan_raw_reads.read1_seq
     Int fastq_scan_num_reads_clean1 = fastq_scan_clean_reads.read1_seq
     String fastq_scan_version = fastq_scan_raw_reads.version
+    File fastq_scan_raw1_json = fastq_scan_raw_reads.fastq_scan_json
+    File fastq_scan_clean1_json = fastq_scan_clean_reads.fastq_scan_json
     # Read QC - kraken outputs
     String kraken_version = kraken2_raw.version
     Float kraken_human = kraken2_raw.percent_human
-    Float kraken_sc2 = kraken2_raw.percent_sc2
+    String kraken_sc2 = kraken2_raw.percent_sc2
     String kraken_target_organism = kraken2_raw.percent_target_organism
     String kraken_target_organism_name = organism_parameters.kraken_target_organism
     File kraken_report = kraken2_raw.kraken_report
     Float kraken_human_dehosted = kraken2_dehosted.percent_human
-    Float kraken_sc2_dehosted = kraken2_dehosted.percent_sc2
+    String kraken_sc2_dehosted = kraken2_dehosted.percent_sc2
     String kraken_target_organism_dehosted = kraken2_dehosted.percent_target_organism
     File kraken_report_dehosted = kraken2_dehosted.kraken_report
     # Read Alignment - Artic consensus outputs
@@ -207,6 +209,8 @@ workflow theiacov_clearlabs {
     Int number_Degenerate = consensus_qc.number_Degenerate
     Int number_Total = consensus_qc.number_Total
     Float percent_reference_coverage = consensus_qc.percent_reference_coverage
+    # Percentage mapped reads
+    Float percentage_mapped_reads = stats_n_coverage.percentage_mapped_reads
     # SC2 specific coverage outputs
     Float? sc2_s_gene_mean_coverage = gene_coverage.sc2_s_gene_depth
     Float? sc2_s_gene_percent_coverage = gene_coverage.sc2_s_gene_percent_coverage

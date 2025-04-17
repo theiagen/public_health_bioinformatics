@@ -139,7 +139,7 @@ workflow augur {
           build_name = build_name_updated
       }
     }
-    if (flu_segment == "HA") { # we only have clade information for HA segments (but SC2 defaults will be selected first)
+    if (flu_segment != "NA") { # we have clade information for all "standard" species except for NA flu segments (SC2 defaults should be selected first)
       if (run_traits && defined(tsv_join.out_tsv)) { # by default do not run traits and clades will be assigned based on the clades_tsv
         call traits_task.augur_traits {
           input:
@@ -150,7 +150,7 @@ workflow augur {
         }
       }
       if (! run_traits) {
-        if (defined(clades_tsv) || defined(sc2_defaults.clades_tsv) || defined(organism_parameters.augur_clades_tsv)) { # one of these must be present
+        if (defined(clades_tsv) || defined(sc2_defaults.clades_tsv) || (defined(organism_parameters.augur_clades_tsv) && (basename(organism_parameters.augur_clades_tsv) != "minimal-clades.tsv"))) { # one must be present and not the empty "minimal-clades.tsv" file
           call clades_task.augur_clades { # assign clades to nodes based on amino-acid or nucleotide signatures
             input:
               refined_tree = augur_refine.refined_tree,
@@ -200,9 +200,14 @@ workflow augur {
     String augur_version = augur_tree.augur_version
 
     # augur outputs
+    String? augur_mafft_version = augur_align.mafft_version
     File? auspice_input_json = augur_export.auspice_json
     File? time_tree = augur_refine.refined_tree
     File distance_tree = augur_tree.aligned_tree
+    String augur_iqtree_model_used = augur_tree.iqtree_model_used
+    String augur_iqtree_version = augur_tree.iqtree_version
+    String augur_fasttree_version = augur_tree.fasttree_version
+    String augur_raxml_version = augur_tree.raxml_version
     File aligned_fastas = select_first([augur_align.aligned_fasta, alignment_fasta])
     File combined_assemblies = filter_sequences_by_length.filtered_fasta
     File? metadata_merged = tsv_join.out_tsv

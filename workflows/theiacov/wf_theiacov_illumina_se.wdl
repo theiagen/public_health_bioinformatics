@@ -76,21 +76,21 @@ workflow theiacov_illumina_se {
       primer_bed_file = primer_bed,
       pangolin_docker_image = pangolin_docker_image  
   }
-  call screen.check_reads_se as raw_check_reads {
-    input:
-      read1 = read1,
-      min_reads = min_reads,
-      min_basepairs = min_basepairs,
-      min_genome_length = min_genome_length,
-      max_genome_length = max_genome_length,
-      min_coverage = min_coverage,
-      skip_screen = skip_screen,
-      workflow_series = "theiacov",
-      organism = organism_parameters.standardized_organism,
-      skip_mash = skip_mash,
-      expected_genome_length = organism_parameters.genome_length
+  if (! skip_screen) {
+    call screen.check_reads_se as raw_check_reads {
+      input:
+        read1 = read1,
+        min_reads = min_reads,
+        min_basepairs = min_basepairs,
+        min_genome_length = min_genome_length,
+        max_genome_length = max_genome_length,
+        min_coverage = min_coverage,
+        workflow_series = "theiacov",
+        skip_mash = skip_mash,
+        expected_genome_length = organism_parameters.genome_length
+    }
   }
-  if (raw_check_reads.read_screen == "PASS") {
+  if (select_first([raw_check_reads.read_screen, ""]) == "PASS" || skip_screen) {
     call read_qc.read_QC_trim_se as read_QC_trim {
       input:
         samplename = samplename,
@@ -103,21 +103,21 @@ workflow theiacov_illumina_se {
         workflow_series = "theiacov",
         target_organism = organism_parameters.kraken_target_organism
     }
-    call screen.check_reads_se as clean_check_reads {
-      input:
-        read1 = read_QC_trim.read1_clean,
-        min_reads = min_reads,
-        min_basepairs = min_basepairs,
-        min_genome_length = min_genome_length,
-        max_genome_length = max_genome_length,
-        min_coverage = min_coverage,
-        skip_screen = skip_screen,
-        workflow_series = "theiacov",
-        organism = organism_parameters.standardized_organism,
-        skip_mash = skip_mash,
-        expected_genome_length = organism_parameters.genome_length
+    if (! skip_screen) {
+      call screen.check_reads_se as clean_check_reads {
+        input:
+          read1 = read_QC_trim.read1_clean,
+          min_reads = min_reads,
+          min_basepairs = min_basepairs,
+          min_genome_length = min_genome_length,
+          max_genome_length = max_genome_length,
+          min_coverage = min_coverage,
+          workflow_series = "theiacov",
+          skip_mash = skip_mash,
+          expected_genome_length = organism_parameters.genome_length
+      }
     }
-    if (clean_check_reads.read_screen == "PASS") {     
+    if (select_first([clean_check_reads.read_screen, ""]) == "PASS" || skip_screen) {
       call consensus_call.ivar_consensus {
         input:
           samplename = samplename,
@@ -158,14 +158,14 @@ workflow theiacov_illumina_se {
         # tasks specific to either MPXV or sars-cov-2
         call nextclade_task.nextclade_v3 {
           input:
-          genome_fasta = ivar_consensus.assembly_fasta,
-          dataset_name = organism_parameters.nextclade_dataset_name,
-          dataset_tag = organism_parameters.nextclade_dataset_tag
+            genome_fasta = ivar_consensus.assembly_fasta,
+            dataset_name = organism_parameters.nextclade_dataset_name,
+            dataset_tag = organism_parameters.nextclade_dataset_tag
         }
         call nextclade_task.nextclade_output_parser {
           input:
-          nextclade_tsv = nextclade_v3.nextclade_tsv,
-          organism = organism_parameters.standardized_organism
+            nextclade_tsv = nextclade_v3.nextclade_tsv,
+            organism = organism_parameters.standardized_organism
         }
       }
       if (organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "WNV" || organism_parameters.standardized_organism == "rsv_a" || organism_parameters.standardized_organism == "rsv_b"){ 
@@ -209,12 +209,16 @@ workflow theiacov_illumina_se {
     # Read Metadata
     String seq_platform = seq_method
     # Sample Screening
-    String read_screen_raw = raw_check_reads.read_screen
+    String? read_screen_raw = raw_check_reads.read_screen
+    File? read_screen_raw_tsv = raw_check_reads.read_screen_tsv
     String? read_screen_clean = clean_check_reads.read_screen
+    File? read_screen_clean_tsv = clean_check_reads.read_screen_tsv
     # Read QC - fastq_scan outputs
     Int? fastq_scan_num_reads_raw1 = read_QC_trim.fastq_scan_raw1
     String? fastq_scan_version = read_QC_trim.fastq_scan_version
     Int? fastq_scan_num_reads_clean1 = read_QC_trim.fastq_scan_clean1
+    File? fastq_scan_raw1_json = read_QC_trim.fastq_scan_raw1_json
+    File? fastq_scan_clean1_json = read_QC_trim.fastq_scan_clean1_json
     # Read QC - fastqc outputs
     Int? fastqc_num_reads_raw1 = read_QC_trim.fastqc_raw1
     Int? fastqc_num_reads_clean1 = read_QC_trim.fastqc_clean1
@@ -234,12 +238,12 @@ workflow theiacov_illumina_se {
     # Read QC - kraken outputs
     String? kraken_version = read_QC_trim.kraken_version
     Float? kraken_human = read_QC_trim.kraken_human
-    Float? kraken_sc2 = read_QC_trim.kraken_sc2
+    String? kraken_sc2 = read_QC_trim.kraken_sc2
     String? kraken_target_organism = read_QC_trim.kraken_target_organism
     String? kraken_target_organism_name = read_QC_trim.kraken_target_organism_name
     File? kraken_report = read_QC_trim.kraken_report
     Float? kraken_human_dehosted = read_QC_trim.kraken_human_dehosted
-    Float? kraken_sc2_dehosted = read_QC_trim.kraken_sc2_dehosted
+    String? kraken_sc2_dehosted = read_QC_trim.kraken_sc2_dehosted
     String? kraken_target_organism_dehosted = read_QC_trim.kraken_target_organism_dehosted
     File? kraken_report_dehosted = read_QC_trim.kraken_report_dehosted
     # Read Alignment - bwa outputs
@@ -317,5 +321,7 @@ workflow theiacov_illumina_se {
     # QC_Check Results
     String? qc_check = qc_check_task.qc_check
     File? qc_standard = qc_check_task.qc_standard
+    # Capture percentage_mapped_reads from ivar_consensus task
+    String? percentage_mapped_reads = ivar_consensus.percentage_mapped_reads
   }
 }

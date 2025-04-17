@@ -26,6 +26,9 @@ task snippy_variants {
     Int? maxsoft
   }
   command <<<
+    # set -euo pipefail to avoid silent failure
+    set -euo pipefail
+
     snippy --version | head -1 | tee VERSION
 
     # set input variable
@@ -89,18 +92,51 @@ task snippy_variants {
     if [ "$reference_length" -eq 0 ]; then
       echo "Could not compute percent reference coverage: reference length is 0" > PERCENT_REF_COVERAGE
     else
-      # compute percent reference coverage
-      echo $reference_length_passed_depth $reference_length | awk '{ print ($1/$2)*100 }' > PERCENT_REF_COVERAGE
+      echo $reference_length_passed_depth $reference_length | awk '{ printf("%.2f", ($1/$2)*100) }' > PERCENT_REF_COVERAGE
     fi
 
     # Compute percentage of reads aligned
     reads_aligned=$(cat READS_ALIGNED_TO_REFERENCE)
     total_reads=$(samtools view -c "~{samplename}/~{samplename}.bam")
+    echo $total_reads > TOTAL_READS
     if [ "$total_reads" -eq 0 ]; then
       echo "Could not compute percent reads aligned: total reads is 0" > PERCENT_READS_ALIGNED
     else
-      echo $reads_aligned $total_reads | awk '{ print ($1/$2)*100 }' > PERCENT_READS_ALIGNED
+      echo $reads_aligned $total_reads | awk '{ printf("%.2f", ($1/$2)*100) }' > PERCENT_READS_ALIGNED
     fi
+
+    # Create QC metrics file
+    line_count=$(wc -l < "~{samplename}/~{samplename}_coverage.tsv")
+    # Check the number of lines in the coverage file, to consider scenarios e.g. for V. cholerae that has two chromosomes and therefore coverage metrics per chromosome
+    if [ "$line_count" -eq 2 ]; then
+      head -n 1 "~{samplename}/~{samplename}_coverage.tsv" | tr ' ' '\t' > COVERAGE_HEADER
+      sed -n '2p' "~{samplename}/~{samplename}_coverage.tsv" | tr ' ' '\t' > COVERAGE_VALUES
+    elif [ "$line_count" -gt 2 ]; then
+      # Multiple chromosomes (header + multiple data lines)
+      header=$(head -n 1 "~{samplename}/~{samplename}_coverage.tsv")
+      output_header=""
+      output_values=""
+      # while loop to iterate over each line in the coverage file
+      while read -r line; do
+        if [ -z "$output_header" ]; then
+          output_header="$header"
+          output_values="$line"
+        else
+          output_header="$output_header\t$header"
+          output_values="$output_values\t$line"
+        fi
+      done < <(tail -n +2 "~{samplename}/~{samplename}_coverage.tsv")
+      echo "$output_header" | tr ' ' '\t' > COVERAGE_HEADER
+      echo "$output_values" | tr ' ' '\t' > COVERAGE_VALUES
+    else
+      # Coverage file has insufficient data
+      echo "Coverage file has insufficient data." > COVERAGE_HEADER
+      echo "" > COVERAGE_VALUES
+    fi
+
+    # Build the QC metrics file
+    echo -e "samplename\treads_aligned_to_reference\ttotal_reads\tpercent_reads_aligned\tvariants_total\tpercent_ref_coverage\t$(cat COVERAGE_HEADER)" > "~{samplename}/~{samplename}_qc_metrics.tsv"
+    echo -e "~{samplename}\t$reads_aligned\t$total_reads\t$(cat PERCENT_READS_ALIGNED)\t$(cat VARIANTS_TOTAL)\t$(cat PERCENT_REF_COVERAGE)\t$(cat COVERAGE_VALUES)" >> "~{samplename}/~{samplename}_qc_metrics.tsv"
 
   >>>
   output {
@@ -120,6 +156,7 @@ task snippy_variants {
     String snippy_variants_ref_length = read_string("REFERENCE_LENGTH")
     String snippy_variants_ref_length_passed_depth = read_string("REFERENCE_LENGTH_PASSED_DEPTH")
     String snippy_variants_percent_ref_coverage = read_string("PERCENT_REF_COVERAGE")
+    File snippy_variants_qc_metrics = "~{samplename}/~{samplename}_qc_metrics.tsv"
     String snippy_variants_percent_reads_aligned = read_string("PERCENT_READS_ALIGNED")
   }
   runtime {

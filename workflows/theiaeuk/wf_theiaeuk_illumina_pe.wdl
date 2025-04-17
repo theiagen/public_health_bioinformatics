@@ -42,36 +42,38 @@ workflow theiaeuk_illumina_pe {
     Int cpu = 8
     Int memory = 16
     # default gambit outputs
-    File gambit_db_genomes = "gs://theiagen-public-files-rp/terra/theiaeuk-files/gambit/221130-theiagen-fungal-v0.2.db"
-    File gambit_db_signatures = "gs://theiagen-public-files-rp/terra/theiaeuk-files/gambit/221130-theiagen-fungal-v0.2.h5"
+    File gambit_db_genomes = "gs://gambit-databases-rp/fungal-version/1.0.0/gambit-fungal-metadata-1.0.0-20241213.gdb"
+    File gambit_db_signatures = "gs://gambit-databases-rp/fungal-version/1.0.0/gambit-fungal-signatures-1.0.0-20241213.gs"
   }
   call versioning.version_capture {
     input:
   } 
-  call screen.check_reads as raw_check_reads {
-    input:
-      read1 = read1,
-      read2 = read2,
-      min_reads = min_reads,
-      min_basepairs = min_basepairs,
-      min_genome_length = min_genome_length,
-      max_genome_length = max_genome_length,
-      min_coverage = min_coverage,
-      min_proportion = min_proportion,
-      skip_screen = skip_screen,
-      expected_genome_length = genome_length
-  }
-  if (call_rasusa) {
-    call rasusa.rasusa as rasusa_task {
+  if (! skip_screen) {
+    call screen.check_reads as raw_check_reads {
       input:
         read1 = read1,
         read2 = read2,
-        samplename = samplename,
-        genome_length = select_first([genome_length, raw_check_reads.est_genome_length]),
-        coverage = subsample_coverage
+        min_reads = min_reads,
+        min_basepairs = min_basepairs,
+        min_genome_length = min_genome_length,
+        max_genome_length = max_genome_length,
+        min_coverage = min_coverage,
+        min_proportion = min_proportion,
+        workflow_series = "theiaeuk",
+        expected_genome_length = genome_length
     }
-  }  
-  if (raw_check_reads.read_screen=="PASS") {
+  }
+  if (select_first([raw_check_reads.read_screen, ""]) == "PASS" || skip_screen) {
+    if (call_rasusa) {
+      call rasusa.rasusa as rasusa_task {
+        input:
+          read1 = read1,
+          read2 = read2,
+          samplename = samplename,
+          genome_length = select_first([genome_length, raw_check_reads.est_genome_length, 0]),
+          coverage = subsample_coverage
+      }
+    }  
     call read_qc.read_QC_trim_pe as read_QC_trim {
       input:
         samplename = samplename,
@@ -81,20 +83,22 @@ workflow theiaeuk_illumina_pe {
         trim_quality_min_score = trim_quality_min_score,
         trim_window_size = trim_window_size
     }
-    call screen.check_reads as clean_check_reads {
-      input:
-        read1 = read_QC_trim.read1_clean,
-        read2 = read_QC_trim.read2_clean,
-        min_reads = min_reads,
-        min_basepairs = min_basepairs,
-        min_genome_length = min_genome_length,
-        max_genome_length = max_genome_length,
-        min_coverage = min_coverage,
-        min_proportion = min_proportion,
-        skip_screen = skip_screen,
-        expected_genome_length = genome_length
+    if (! skip_screen) {
+      call screen.check_reads as clean_check_reads {
+        input:
+          read1 = read_QC_trim.read1_clean,
+          read2 = read_QC_trim.read2_clean,
+          min_reads = min_reads,
+          min_basepairs = min_basepairs,
+          min_genome_length = min_genome_length,
+          max_genome_length = max_genome_length,
+          min_coverage = min_coverage,
+          min_proportion = min_proportion,
+          workflow_series = "theiaeuk",
+          expected_genome_length = genome_length
+      }
     }
-    if (clean_check_reads.read_screen=="PASS") {
+    if (select_first([clean_check_reads.read_screen, ""]) == "PASS" || skip_screen) {
       call shovill.shovill_pe {
         input:
           samplename = samplename,
@@ -198,8 +202,10 @@ workflow theiaeuk_illumina_pe {
     # Read Metadata
     String seq_platform = seq_method
     # Sample Screening
-    String read_screen_raw = raw_check_reads.read_screen
+    String? read_screen_raw = raw_check_reads.read_screen
+    File? read_screen_raw_tsv = raw_check_reads.read_screen_tsv
     String? read_screen_clean = clean_check_reads.read_screen
+    File? read_screen_clean_tsv = clean_check_reads.read_screen_tsv
     # Read QC - fastq_scan outputs
     Int? fastq_scan_num_reads_raw1 = read_QC_trim.fastq_scan_raw1
     Int? fastq_scan_num_reads_raw2 = read_QC_trim.fastq_scan_raw2
@@ -208,6 +214,10 @@ workflow theiaeuk_illumina_pe {
     Int? fastq_scan_num_reads_clean1 = read_QC_trim.fastq_scan_clean1
     Int? fastq_scan_num_reads_clean2 = read_QC_trim.fastq_scan_clean2
     String? fastq_scan_num_reads_clean_pairs = read_QC_trim.fastq_scan_clean_pairs
+    File? fastq_scan_raw1_json = read_QC_trim.fastq_scan_raw1_json
+    File? fastq_scan_raw2_json = read_QC_trim.fastq_scan_raw2_json
+    File? fastq_scan_clean1_json = read_QC_trim.fastq_scan_clean1_json
+    File? fastq_scan_clean2_json = read_QC_trim.fastq_scan_clean2_json
     # Read QC - trimmomatic outputs
     String? trimmomatic_version = read_QC_trim.trimmomatic_version
     String? trimmomatic_docker = read_QC_trim.trimmomatic_docker
@@ -276,12 +286,17 @@ workflow theiaeuk_illumina_pe {
     # QC_Check Results
     String? qc_check = qc_check_task.qc_check
     File? qc_standard = qc_check_task.qc_standard
+    # AMR_Search
+    File? amr_search_results = merlin_magic.amr_search_results
+    File? amr_search_csv = merlin_magic.amr_results_csv
+    File? amr_search_results_pdf = merlin_magic.amr_results_pdf
+    String? amr_search_docker = merlin_magic.amr_search_docker
+    String? amr_search_version = merlin_magic.amr_search_version    
     # Cladetyper Outputs
-    String? clade_type = merlin_magic.clade_type
-    String? cladetyper_analysis_date = merlin_magic.cladetyper_analysis_date
-    String? cladetyper_version = merlin_magic.cladetyper_version
+    String? cladetyper_clade = merlin_magic.clade_type
+    String? cladetyper_gambit_version = merlin_magic.cladetyper_version
     String? cladetyper_docker_image = merlin_magic.cladetyper_docker_image
-    String? cladetype_annotated_ref = merlin_magic.cladetype_annotated_ref
+    String? cladetyper_annotated_reference = merlin_magic.cladetype_annotated_ref
     # Snippy Outputs
     String? theiaeuk_snippy_variants_version = merlin_magic.snippy_variants_version
     String? theiaeuk_snippy_variants_query = merlin_magic.snippy_variants_query

@@ -169,10 +169,18 @@
   max-width: initial;
 }
 
+.md-typeset .admonition.narrow {
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  display: inline-block; /* make the admonition width fit the content */
+}
+
 /* scrollbar and resizable columns in tables */
 table {
   overflow-y: scroll;
   max-height: 500px;
+  max-width: 100vw;
   display: block;
 }
 th {
@@ -183,6 +191,45 @@ th {
 }
 td {
   word-break: break-all;
+  overflow-wrap: anywhere;
+}
+/* Base styles for the search box */
+div.searchable-table input.table-search-input {
+  width: 25%;
+  padding: 10px;
+  margin-bottom: 12px;
+  font-size: 12px;
+  box-sizing: border-box;
+  border-radius: 2px; 
 }
 
+/* Light mode styles */
+[data-md-color-scheme="light"] div.searchable-table input.table-search-input {
+  background-color: #fff;
+  color: #000;
+  border: 1px solid #E0E1E1;
+}
+[data-md-color-scheme="light"] div.searchable-table input.table-search-input::placeholder {
+  color: #888;
+  font-style: italic;
+}
 
+/* Dark mode styles */
+[data-md-color-scheme="slate"] div.searchable-table input.table-search-input {
+  background-color: #1d2125;
+  color: #fff;
+  border: 1px solid #373B40;
+}
+[data-md-color-scheme="slate"] div.searchable-table input.table-search-input::placeholder {
+  color: #bbb;
+  font-style: italic;
+}
+
+/* modify heading level 5 appearance */
+.md-content h5 {
+  all: unset;
+  margin: px2em(16px, 12.8px) 0;
+  font-weight: 500;
+  font-size: px2em(12.8px);
+  letter-spacing: -0.01em;
+}
