@@ -219,9 +219,9 @@ workflow merlin_magic {
     String tbp_parser_output_seq_method_type = "WGS"
     String? tbp_parser_operator
     Int? tbp_parser_min_depth
-    Float? tbp_parser_min_frequency
+    Int? tbp_parser_min_frequency
     Int? tbp_parser_min_read_support
-    Float? tbp_parser_min_percent_coverage
+    Int? tbp_parser_min_percent_coverage
     File? tbp_parser_coverage_regions_bed
     Boolean? tbp_parser_debug
     Boolean? tbp_parser_add_cs_lims
@@ -693,70 +693,35 @@ workflow merlin_magic {
             maxsoft = snippy_maxsoft,
             docker = snippy_variants_docker_image
         }
-        call snippy_gene_query.snippy_gene_query as snippy_gene_query_cauris {
+      }
+      if (assembly_only && ont_data) {
+        call snippy.snippy_variants as snippy_cauris_ont {
           input:
+            reference_genome_file = cladetyper.annotated_reference,
+            assembly_fasta = assembly,
             samplename = samplename,
-            snippy_variants_results = snippy_cauris.snippy_variants_results,
-            reference = cladetyper.annotated_reference,
-            query_gene = select_first([snippy_query_gene, "FKS1,lanosterol.14-alpha.demethylase,uracil.phosphoribosyltransferase,B9J08_005340,B9J08_000401,B9J08_003102,B9J08_003737,B9J08_005343"]),
-            docker = snippy_gene_query_docker_image
+            map_qual = snippy_map_qual,
+            base_quality = snippy_base_quality,
+            min_coverage = snippy_min_coverage,
+            min_frac = snippy_min_frac,
+            min_quality = snippy_min_quality,
+            maxsoft = snippy_maxsoft,
+            docker = snippy_variants_docker_image
         }
       }
-    }
-
-    if (assembly_only && ont_data) {
-      call snippy.snippy_variants as snippy_cauris_ont {
+      call snippy_gene_query.snippy_gene_query as snippy_gene_query_cauris {
         input:
-          reference_genome_file = cladetyper.clade_spec_ref,
-          assembly_fasta = assembly,
           samplename = samplename,
-          map_qual = snippy_map_qual,
-          base_quality = snippy_base_quality,
-          min_coverage = snippy_min_coverage,
-          min_frac = snippy_min_frac,
-          min_quality = snippy_min_quality,
-          maxsoft = snippy_maxsoft,
-          docker = snippy_variants_docker_image
+          snippy_variants_results = select_first([snippy_cauris.snippy_variants_results, snippy_cauris_ont.snippy_variants_results]),
+          reference = cladetyper.annotated_reference,
+          query_gene = select_first([
+            snippy_query_gene,
+            if (assembly_only && ont_data) then "FKS1,ERG11,FUR1" 
+            else "FKS1,lanosterol.14-alpha.demethylase,uracil.phosphoribosyltransferase"
+          ]),
+          docker = snippy_gene_query_docker_image
       }
     }
-    call snippy_gene_query.snippy_gene_query as snippy_gene_query_cauris {
-      input:
-        samplename = samplename,
-        snippy_variants_results = select_first([snippy_cauris.snippy_variants_results, snippy_cauris_ont.snippy_variants_results]),
-        reference = cladetyper.clade_spec_ref,
-        query_gene = select_first([
-          snippy_query_gene,
-          if (assembly_only && ont_data) then "FKS1,ERG11,FUR1" 
-          else "FKS1,lanosterol.14-alpha.demethylase,uracil.phosphoribosyltransferase"
-        ]),
-        docker = snippy_gene_query_docker_image
-    }
-  }
-    # Removing C.albicans subworkflow for now as current workflows not designed for diploid assembly
-    # if (merlin_tag == "Candida albicans") {
-    #   if (!assembly_only && !ont_data) {
-    #     call snippy.snippy_variants as snippy_calbicans {
-    #       input:
-    #         reference_genome_file = snippy_reference_calbicans,
-    #         read1 = select_first([read1]),
-    #         read2 = read2,
-            # map_qual = snippy_map_qual,
-            # base_quality = snippy_base_quality,
-            # min_coverage = snippy_min_coverage,
-            # min_frac = snippy_min_frac,
-            # min_quality = snippy_min_quality,
-            # maxsoft = snippy_maxsoft,
-    #         samplename = samplename
-    #     }
-    #     call snippy_gene_query.snippy_gene_query as snippy_gene_query_calbicans {
-    #       input:
-    #         samplename = samplename,
-    #         snippy_variants_results = snippy_calbicans.snippy_variants_results,
-    #         reference = snippy_reference_calbicans,
-    #         query_gene = select_first([snippy_query_gene,"GCS1,ERG11,FUR1,RTA2"]), # GCS1 is another name for FKS1
-    #     }
-    #   }
-    # }
     if (merlin_tag == "Aspergillus fumigatus") {
       if (!assembly_only && !ont_data) {
         call snippy.snippy_variants as snippy_afumigatus {
@@ -773,23 +738,21 @@ workflow merlin_magic {
             maxsoft = snippy_maxsoft,
             docker = snippy_variants_docker_image
         }
-      }
-
-      if (assembly_only && ont_data) {
-        call snippy.snippy_variants as snippy_afumigatus_ont {
-          input:
-            reference_genome_file = snippy_reference_afumigatus,
-            assembly_fasta = assembly,
-            samplename = samplename,
-            map_qual = snippy_map_qual,
-            base_quality = snippy_base_quality,
-            min_coverage = snippy_min_coverage,
-            min_frac = snippy_min_frac,
-            min_quality = snippy_min_quality,
-            maxsoft = snippy_maxsoft,
-            docker = snippy_variants_docker_image
+        if (assembly_only && ont_data) {
+          call snippy.snippy_variants as snippy_afumigatus_ont {
+            input:
+              reference_genome_file = snippy_reference_afumigatus,
+              assembly_fasta = assembly,
+              samplename = samplename,
+              map_qual = snippy_map_qual,
+              base_quality = snippy_base_quality,
+              min_coverage = snippy_min_coverage,
+              min_frac = snippy_min_frac,
+              min_quality = snippy_min_quality,
+              maxsoft = snippy_maxsoft,
+              docker = snippy_variants_docker_image
+          }
         }
-      }
         call snippy_gene_query.snippy_gene_query as snippy_gene_query_afumigatus {
           input:
             samplename = samplename,
@@ -799,6 +762,7 @@ workflow merlin_magic {
             docker = snippy_gene_query_docker_image
         }
       }
+    }
     if (merlin_tag == "Cryptococcus neoformans") {
       if (!assembly_only && !ont_data) {
         call snippy.snippy_variants as snippy_crypto {
@@ -840,7 +804,7 @@ workflow merlin_magic {
             docker = snippy_gene_query_docker_image
         }
       }
-  }
+    }
   # Running AMR Search
   if (amr_search){
     # Map containing the taxon tag reported by typing paired with it's taxon code for AMR search. 

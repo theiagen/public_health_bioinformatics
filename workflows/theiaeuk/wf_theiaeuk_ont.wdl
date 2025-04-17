@@ -1,7 +1,7 @@
 version 1.0
 
 import "../utilities/wf_read_QC_trim_ont.wdl" as read_qc
-import "../../tasks/assembly/task_dragonflye.wdl" as dragonflye
+import "../utilities/wf_flye_denovo.wdl" as flye_workflow
 import "../../tasks/taxon_id/task_gambit.wdl" as gambit
 import "../utilities/wf_merlin_magic.wdl" as merlin_magic_workflow
 import "../../tasks/task_versioning.wdl" as versioning
@@ -36,23 +36,15 @@ workflow theiaeuk_ont {
       genome_length = genome_length,
       workflow_series = workflow_series
   }
-
-  call dragonflye.dragonflye {
+  call flye_workflow.flye_denovo {
     input:
       read1 = read_qc.read1_clean,
-      samplename = samplename,
-      assembler = assembler,
-      assembler_options = assembler_options,
-      genome_length = genome_length,
-      medaka_model = medaka_model,
-      cpu = dragonflye_cpu,
-      memory = dragonflye_memory,
-      disk_size = dragonflye_disk_size
+      samplename = samplename
   }
   #call quast on the assembly
   call quast_task.quast {
     input:
-      assembly = dragonflye.assembly_fasta,
+      assembly = flye_denovo.assembly_fasta,
       samplename = samplename
   }
   # nanoplot for raw reads
@@ -72,13 +64,13 @@ workflow theiaeuk_ont {
   # busco on the assembly
   call busco_task.busco {
     input:
-      assembly = dragonflye.assembly_fasta,
+      assembly = flye_denovo.assembly_fasta,
       samplename = samplename
   }
 
   call gambit.gambit {
     input:
-      assembly = dragonflye.assembly_fasta,
+      assembly = flye_denovo.assembly_fasta,
       samplename = samplename,
       gambit_db_genomes = gambit_db_genomes,
       gambit_db_signatures = gambit_db_signatures
@@ -88,7 +80,7 @@ workflow theiaeuk_ont {
     input:
       samplename = samplename,
       merlin_tag = gambit.merlin_tag,
-      assembly = dragonflye.assembly_fasta,
+      assembly = flye_denovo.assembly_fasta,
       assembly_only = true,
       ont_data = true,
       theiaeuk = true
@@ -102,10 +94,21 @@ workflow theiaeuk_ont {
     File read1_clean = read_qc.read1_clean
     String? nanoq_version = read_qc.nanoq_version
     Int est_genome_length = read_qc.est_genome_length
-    # Assembly outputs
-    File assembly_fasta = dragonflye.assembly_fasta
-    File contigs_gfa = dragonflye.contigs_gfa
-    String dragonflye_version = dragonflye.dragonflye_version
+    # Assembly - flye_denovo outputs
+    File assembly_fasta = flye_denovo.assembly_fasta
+    File? contigs_gfa = flye_denovo.contigs_gfa
+    File? bandage_plot = flye_denovo.bandage_plot
+    File? filtered_contigs_metrics = flye_denovo.filtered_contigs_metrics
+    String? flye_assembly_info = flye_denovo.flye_assembly_info
+    String? medaka_model = flye_denovo.medaka_model_used
+    String? porechop_version = flye_denovo.porechop_version
+    String? flye_version = flye_denovo.flye_version
+    String? bandage_version = flye_denovo.bandage_version
+    String? medaka_version = flye_denovo.medaka_version
+    String? racon_version = flye_denovo.racon_version
+    String? bwa_version = flye_denovo.bwa_version
+    String? polypolish_version = flye_denovo.polypolish_version
+    String? dnaapler_version = flye_denovo.dnaapler_version
     # Read QC - nanoplot raw outputs
     File? nanoplot_html_raw = nanoplot_raw.nanoplot_html
     File? nanoplot_tsv_raw = nanoplot_raw.nanoplot_tsv
@@ -160,7 +163,6 @@ workflow theiaeuk_ont {
     String gambit_docker = gambit.gambit_docker
     # C. auris specific outputs for cladetyper
     String? clade_type = merlin_magic.clade_type
-    String? cladetyper_analysis_date = merlin_magic.cladetyper_analysis_date
     String? cladetyper_version = merlin_magic.cladetyper_version
     String? cladetyper_docker_image = merlin_magic.cladetyper_docker_image
     String? cladetype_annotated_ref = merlin_magic.cladetype_annotated_ref
