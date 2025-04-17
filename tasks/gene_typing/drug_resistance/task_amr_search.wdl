@@ -34,7 +34,7 @@ task amr_search {
     File amr_search_output_csv = "~{samplename}_amr_results.csv"
     File amr_search_output_pdf = "~{samplename}_amr_results.pdf"
     String amr_search_version = read_string("output_amr_version.txt")
-    String amr_search_docker = docker
+    String amr_search_docker_image = docker
   }
 
   runtime {
