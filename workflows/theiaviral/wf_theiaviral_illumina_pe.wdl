@@ -1,18 +1,16 @@
 version 1.0
 
-# read QC
 import "../utilities/wf_read_QC_trim_pe.wdl" as read_qc
 import "../../tasks/quality_control/comparisons/task_screen.wdl" as read_screen_task
 import "../../tasks/utilities/task_rasusa.wdl" as rasusa_task
-# assembly
 import "../../tasks/assembly/task_spades.wdl" as spades_task
 import "../../tasks/assembly/task_megahit.wdl" as megahit_task
 import "../../tasks/quality_control/advanced_metrics/task_checkv.wdl" as checkv_task
 import "../../tasks/quality_control/basic_statistics/task_quast.wdl" as quast_task
 import "../../tasks/taxon_id/task_skani.wdl" as skani_task
 import "../../tasks/utilities/data_import/task_ncbi_datasets.wdl" as ncbi_datasets_task
-# bwa
-import "../../tasks/utilities/data_handling/task_parse_mapping.wdl" as parse_mapping_task
+import "../../tasks/alignment/task_bwa.wdl" as bwa_task
+import "../utilities/wf_ivar_consensus.wdl" as ivar_consensus
 import "../../tasks/quality_control/basic_statistics/task_assembly_metrics.wdl" as assembly_metrics_task
 import "../../tasks/utilities/data_handling/task_fasta_utilities.wdl" as fasta_utilities_task
 # consensus module
@@ -33,10 +31,12 @@ workflow theiaviral_illumina_pe {
     Boolean skip_screen = true # if false, run clean read screening
     File? reference_fasta # optional, if provided, will be used instead of dynamic reference selection
     Boolean extract_unclassified = true # if true, unclassified reads will be extracted from kraken2 output
-
+    Float min_depth = 20
+    Float consensus_min_freq = 0.6
+    Float variant_min_freq = 0.6
     # rasusa downsampling inputs
     Boolean call_rasusa = false
-    Float downsampling_coverage = 500
+    Float downsampling_coverage = 400
     Int genome_length = 10000
 
     Boolean call_metaviralspades = false
@@ -139,60 +139,27 @@ workflow theiaviral_illumina_pe {
           use_ncbi_virus = true
       }
     }
-    # align assembly to reference genome
-  
-    # generate bam file from sam output
-  #  call parse_mapping_task.sam_to_sorted_bam as parse_mapping {
-   #   input:
-    #    sam = minimap2.minimap2_out,
-     #   samplename = samplename
-    #}
-    # quality control metrics for reads mapping to reference (ie. coverage, depth, base/map quality)
-  #  call assembly_metrics_task.stats_n_coverage as assembly_metrics {
-   #   input:
-    #    bamfile = parse_mapping.bam,
-     #   samplename = samplename
-  #  }
-    # Index the reference genome for Clair3
-   # call fasta_utilities_task.samtools_faidx as fasta_utilities{
-    #  input:
-     #   fasta = select_first([ncbi_datasets.ncbi_datasets_assembly_fasta, reference_fasta])
-  #  }
-    # variant calling
-  
-    # mask low coverage regions with Ns
-  #  call parse_mapping_task.mask_low_coverage {
-   #   input:
-    #    bam = parse_mapping.bam,
-     #   bai = parse_mapping.bai,
-      #  reference_fasta = select_first([ncbi_datasets.ncbi_datasets_assembly_fasta, reference_fasta]),
-       # min_depth = min_mask_depth
-  #  }
-    # create consensus genome based on variant calls
-   # call bcftools_consensus_task.bcftools_consensus as bcftools_consensus {
-    #  input:
-     #   reference_fasta = mask_low_coverage.mask_reference_fasta,
-      #  input_vcf = clair3.clair3_variants_vcf,
-       # samplename = samplename
-  #  }
+    # align reads and generate consensus assembly via ivar
+    call ivar_consensus.ivar_consensus {
+      input:
+        samplename = samplename,
+        reference_genome = select_first([reference_fasta, ncbi_datasets.ncbi_datasets_assembly_fasta]),
+        min_depth = select_first([min_depth, 20]),
+        consensus_min_freq = consensus_min_freq,
+        variant_min_freq = variant_min_freq
+    }
     # quality control metrics for consensus (ie. number of bases, degenerate bases, genome length)
-   # call consensus_qc_task.consensus_qc as consensus_qc {
-    #  input:
-     #   assembly_fasta = bcftools_consensus.bcftools_consensus_fasta,
-      #  reference_genome = ncbi_datasets.ncbi_datasets_assembly_fasta
-  #  }
+    call consensus_qc_task.consensus_qc as consensus_qc {
+      input:
+        assembly_fasta = ivar_consensus.assembly_fasta,
+        reference_genome = select_first([reference_fasta, ncbi_datasets.ncbi_datasets_assembly_fasta])
+    }
     # quality control metrics for consensus (ie. completeness, viral gene count, contamination)
-  #  call checkv_task.checkv as checkv_consensus {
-   #   input:
-    #    assembly = bcftools_consensus.bcftools_consensus_fasta,
-     #   samplename = samplename
-  #  }
-    # quality control metrics for consensus (ie. contigs, n50, GC content, genome length)
-   # call quast_task.quast as quast_consensus {
-    #  input:
-     #   assembly = bcftools_consensus.bcftools_consensus_fasta,
-      #  samplename = samplename
-#  }
+    call checkv_task.checkv as checkv_consensus {
+      input:
+        assembly = ivar_consensus.assembly_fasta,
+        samplename = samplename
+    }
   }
   output {
     # versioning outputs
@@ -266,65 +233,53 @@ workflow theiaviral_illumina_pe {
     String? ncbi_datasets_version = ncbi_datasets.ncbi_datasets_version
     String? ncbi_datasets_docker = ncbi_datasets.ncbi_datasets_docker
     # bwa outputs - reads aligned to best reference
-
-    # parse_mapping outputs - sam to sorted bam conversion
-  #  File assembly_to_ref_bam = parse_mapping.bam
-   # File assembly_to_ref_bai = parse_mapping.bai
-    #String parse_mapping_samtools_version = parse_mapping.samtools_version
-#    String parse_mapping_samtools_docker = parse_mapping.samtools_docker
-    # assembly_metrics outputs - read mapping quality control
- #   File assembly_metrics_report = assembly_metrics.metrics_txt
-  #  File assembly_metrics_stats = assembly_metrics.stats
-   # File assembly_metrics_cov_hist = assembly_metrics.cov_hist
-    #File assembly_metrics_cov_stats = assembly_metrics.cov_stats
-#    File assembly_metrics_flagstat = assembly_metrics.flagstat
- #   Float assembly_metrics_coverage = assembly_metrics.coverage
-  #  Float assembly_metrics_depth = assembly_metrics.depth
-   # Float assembly_metrics_meanbaseq = assembly_metrics.meanbaseq
-    #Float assembly_metrics_meanmapq = assembly_metrics.meanmapq
-#    Float assembly_metrics_percentage_mapped_reads = assembly_metrics.percentage_mapped_reads
- #   String assembly_metrics_date = assembly_metrics.date
-  #  String assembly_metrics_samtools_version = assembly_metrics.samtools_version
-    # fasta_utilities outputs - samtools faidx reference genome
-   # File fasta_utilities_fai = fasta_utilities.fai
-    #String fasta_utilities_samtools_version = fasta_utilities.samtools_version
-#    String fasta_utilities_samtools_docker = fasta_utilities.samtools_docker
-    # variant calling
-
-    # coverage_mask outputs - low coverage regions
-#    File mask_low_coverage_bed = mask_low_coverage.low_coverage_regions_bed
- #   File mask_low_coverage_all_coverage_bed = mask_low_coverage.all_coverage_regions_bed
-  #  File mask_low_coverage_reference_fasta = mask_low_coverage.mask_reference_fasta
-   # String mask_low_coverage_bedtools_version = mask_low_coverage.bedtools_version
-    #String mask_low_coverage_bedtools_docker = mask_low_coverage.bedtools_docker
-    # bcftools_consensus outputs - consensus genome
-#    File bcftools_consensus_fasta = bcftools_consensus.bcftools_consensus_fasta
- #   File bcftools_norm_vcf = bcftools_consensus.bcftools_norm_vcf
-  #  String bcftools_version = bcftools_consensus.bcftools_version
-   # String bcftools_docker = bcftools_consensus.bcftools_docker
-    # consensus assembly statistics
-    #Int consensus_qc_number_N = consensus_qc.number_N
-#    Int consensus_qc_assembly_length_unambiguous = consensus_qc.number_ATCG
- #   Int consensus_qc_number_Degenerate = consensus_qc.number_Degenerate
-  #  Int consensus_qc_number_Total = consensus_qc.number_Total
-   # Float consensus_qc_percent_reference_coverage = consensus_qc.percent_reference_coverage
+    String? bwa_version = ivar_consensus.bwa_version
+    String? samtools_version = ivar_consensus.samtools_version
+    File? read1_aligned = ivar_consensus.read1_aligned
+    File? read2_aligned = ivar_consensus.read2_aligned
+    String aligned_bam = select_first([ivar_consensus.aligned_bam, ""])
+    String aligned_bai = select_first([ivar_consensus.aligned_bai, ""])
+    File? read1_unaligned = ivar_consensus.read1_unaligned
+    File? read2_unaligned = ivar_consensus.read2_unaligned
+    File? sorted_bam_unaligned = ivar_consensus.sorted_bam_unaligned
+    File? sorted_bam_unaligned_bai = ivar_consensus.sorted_bam_unaligned_bai
+    # Read Alignment - variant call outputs
+    File? ivar_tsv = ivar_consensus.ivar_tsv
+    File? ivar_vcf = ivar_consensus.ivar_vcf
+    String? ivar_variant_proportion_intermediate = ivar_consensus.ivar_variant_proportion_intermediate
+    String? ivar_variant_version = ivar_consensus.ivar_variant_version
+    # Read Alignment - assembly outputs
+    String assembly_method = "TheiaCoV (~{version_capture.phb_version}): " + select_first([ivar_consensus.assembly_method_nonflu, flu_track.irma_version, ""])
+    String assembly_fasta = select_first([ivar_consensus.assembly_fasta, flu_track.irma_assembly_fasta, "Assembly could not be generated"])
+    String? ivar_version_consensus = ivar_consensus.ivar_version_consensus
+    String? samtools_version_consensus = ivar_consensus.samtools_version_consensus
+    # Read Alignment - consensus assembly qc outputs
+    # this is the minimum depth used for consensus and variant calling in EITHER iVar or IRMA
+    Int consensus_n_variant_min_depth = select_first([min_depth, 20])
+    File? consensus_stats = ivar_consensus.consensus_stats
+    File? consensus_flagstat = ivar_consensus.consensus_flagstat
+    String meanbaseq_trim = select_first([ivar_consensus.meanbaseq_trim, ""])
+    String meanmapq_trim = select_first([ivar_consensus.meanmapq_trim, ""])
+    String assembly_mean_coverage = select_first([ivar_consensus.assembly_mean_coverage, flu_track.ha_na_assembly_coverage , ""])
+    String? samtools_version_stats = ivar_consensus.samtools_version_stats
+    # Read Alignment - consensus assembly summary outputs
+    Int? number_N = consensus_qc.number_N
+    Int? assembly_length_unambiguous = consensus_qc.number_ATCG
+    Int? number_Degenerate = consensus_qc.number_Degenerate
+    Int? number_Total = consensus_qc.number_Total
+    Float? percent_reference_coverage =  consensus_qc.percent_reference_coverage
+    # Consensus QC
+    Int consensus_qc_number_N = consensus_qc.number_N
+    Int consensus_qc_assembly_length_unambiguous = consensus_qc.number_ATCG
+    Int consensus_qc_number_Degenerate = consensus_qc.number_Degenerate
+    Int consensus_qc_number_Total = consensus_qc.number_Total
+    Float consensus_qc_percent_reference_coverage = consensus_qc.percent_reference_coverage
     # checkv_consensus outputs - consensus assembly quality control
-    #File checkv_consensus_summary = checkv_consensus.checkv_summary
-#    File checkv_consensus_contamination = checkv_consensus.checkv_contamination
- #   Float checkv_consensus_total_contamination = checkv_consensus.total_contamination
-  #  Float checkv_consensus_total_completeness = checkv_consensus.total_completeness
-   # Int checkv_consensus_total_genes = checkv_consensus.total_genes
-    #String checkv_consensus_version = checkv_consensus.checkv_version
-    # quast_consensus outputs - consensus assembly quality control
-#    File quast_consensus_report = quast_consensus.quast_report
- #   Int quast_consensus_genome_length = quast_consensus.genome_length
-  #  Int quast_consensus_number_contigs = quast_consensus.number_contigs
-   # Int quast_consensus_n50_value = quast_consensus.n50_value
-    #Int quast_consensus_largest_contig = quast_consensus.largest_contig
-#    Float quast_consensus_gc_percent = quast_consensus.gc_percent
- #   Float quast_consensus_uncalled_bases = quast_consensus.uncalled_bases
-  #  String quast_consensus_pipeline_date = quast_consensus.pipeline_date
-   # String quast_consensus_version = quast_consensus.version
-    #String quast_consensus_docker = quast_consensus.quast_docker
+    File checkv_consensus_summary = checkv_consensus.checkv_summary
+    File checkv_consensus_contamination = checkv_consensus.checkv_contamination
+    Float checkv_consensus_total_contamination = checkv_consensus.total_contamination
+    Float checkv_consensus_total_completeness = checkv_consensus.total_completeness
+    Int checkv_consensus_total_genes = checkv_consensus.total_genes
+    String checkv_consensus_version = checkv_consensus.checkv_version
   }
 }
