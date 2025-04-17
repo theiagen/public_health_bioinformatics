@@ -36,14 +36,14 @@ workflow mercury_prep_n_batch {
       output_name = output_name_updated,
       skip_ncbi = skip_ncbi
   }
-  if (organism == "sars-cov-2" && skip_ncbi == false) {
+  if (mercury.organism_name == "sars-cov-2" && skip_ncbi == false) {
     call submission_utilities.trim_genbank_fastas {
       input:
         genbank_untrimmed_fasta = select_first([mercury.genbank_fasta]),
         output_name = output_name_updated
     }
   }
-  if (organism == "mpox" && skip_ncbi == false) {
+  if (mercury.organism_name == "mpox" && skip_ncbi == false) {
     call submission_utilities.table2asn {
       input:
         authors_sbt = select_first([authors_sbt]),
