@@ -22,9 +22,9 @@ Additionally, the **TheiaCoV_FASTA_Batch** workflow is available to process seve
 
 !!! dna inline end "Key Resources"
 
-    [**Reference Materials for SARS-CoV-2**](https://www.notion.so/Docker-Image-and-Reference-Materials-for-SARS-CoV-2-Genomic-Characterization-98328c61f5cb4f77975f512b55d09108?pvs=21)
+    [**Reference Materials for SARS-CoV-2**](https://theiagen.notion.site/Docker-Image-and-Reference-Materials-for-SARS-CoV-2-Genomic-Characterization-98328c61f5cb4f77975f512b55d09108?pvs=74)
 
-    [**Reference Materials for Mpox**](https://www.notion.so/Workspace-Reference-Materials-for-MPXV-Genomic-Characterization-a34f355c68c54c0a82e926d4de607bca?pvs=21)
+    [**Reference Materials for Mpox**](https://theiagen.notion.site/Workspace-Reference-Materials-for-MPXV-Genomic-Characterization-a34f355c68c54c0a82e926d4de607bca)
 
     [**Reference Materials for non-default viruses**](../../guides/custom_organisms.md)
 
@@ -854,7 +854,7 @@ All input reads are processed through "core tasks" in the TheiaCoV Illumina, ONT
     
         |  | Links |
         | --- | --- |
-        | Task | [task_qc_check.wdl](https://github.com/theiagen/public_health_bioinformatiocs/blob/main/tasks/quality_control/comparisons/task_qc_check.wdl) |
+        | Task | [task_qc_check.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/comparisons/task_qc_check_phb.wdl) |
 
 #### Assembly tasks
 
