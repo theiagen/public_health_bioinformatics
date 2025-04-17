@@ -62,9 +62,12 @@ task metabuli {
     # Metabuli extract will create a file in the input directory, which is variable between
     # miniwdl and Terra, so we have to dynamically find it -_-
     find . -type f -name ${read1_basename}_~{taxon_id}.fq -exec mv {} . \;
-    # Compress the extracted reads
+
+    # Output file name of metabuli extract is static. Compress the extracted reads
     gzip ${read1_basename}_~{taxon_id}.fq
-    echo "${read1_basename}_~{taxon_id}.fq.gz" > EXTRACTED_FASTQ
+
+    # Update the final extracted reads output file name
+    cp ${read1_basename}_~{taxon_id}.fq.gz ~{samplename}_~{taxon_id}_extracted.fq.gz
 
     # Output file name of metabuli extract is static. Compress the extracted reads
     gzip ${read1_basename}_~{taxon_id}.fq
