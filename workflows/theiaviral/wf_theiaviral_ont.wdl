@@ -26,12 +26,13 @@ workflow theiaviral_ont {
   }
   input {
     File read1
-    String taxon_id
+    String taxon #taxon id OR organism name (both work)
+    String taxon_rank = "family"
     String samplename
     Boolean call_porechop = false
     Boolean call_rasusa = false
     Boolean skip_screen = false
-    Int genome_length = 10000 # spoof genome lengths
+    Int? genome_length
     Float downsampling_coverage = 150
     Int min_mask_depth = 2 # minimum depth for masking low coverage regions
     File? reference_fasta # optional, if provided, will be used instead of dynamic reference selection
@@ -40,12 +41,25 @@ workflow theiaviral_ont {
   call versioning.version_capture {
     input:
   }
+  # get the taxon id, taxon name, and taxon rank from the user provided taxon
+  call ncbi_datasets_task.ncbi_datasets_identify as ncbi_identify {
+    input:
+      taxon = taxon,
+      rank = taxon_rank
+  }
+  # estimate the average genome length for user provided taxon
+  if (! defined(genome_length)) {
+      call ncbi_datasets_task.ncbi_datasets_viral_taxon_summary as ncbi_taxon_summary {
+        input:
+          taxon_id = ncbi_identify.taxon_id
+    }
+  }
   # raw read quality check. est_genome_length is only required for nanoplot to determine estimated coverage - but this isn't used.
   call nanoplot_task.nanoplot as nanoplot_raw {
     input:
       read1 = read1,
       samplename = samplename,
-      est_genome_length = genome_length
+      est_genome_length = select_first([genome_length, ncbi_taxon_summary.avg_genome_length])
   }
   # adapter trimming
   if (call_porechop) {
@@ -72,7 +86,7 @@ workflow theiaviral_ont {
     input:
       read1 = ncbi_scrub_se.read1_dehosted,
       samplename = samplename,
-      taxon_id = taxon_id
+      taxon_id = ncbi_identify.taxon_id
   }
   # downsample reads if the user wants, rasusa parameters are set in the task
   if (call_rasusa) {
@@ -82,7 +96,7 @@ workflow theiaviral_ont {
         read1 = metabuli.metabuli_read1_extract,
         samplename = samplename,
         coverage = downsampling_coverage,
-        genome_length = genome_length
+        genome_length = select_first([genome_length, ncbi_taxon_summary.avg_genome_length])
     }
   }
   # raw read quality check. est_genome_length is only required for nanoplot to determine estimated coverage - but this isn't used.
@@ -90,7 +104,7 @@ workflow theiaviral_ont {
     input:
       read1 = select_first([rasusa.read1_subsampled, metabuli.metabuli_read1_extract]),
       samplename = samplename,
-      est_genome_length = select_first([genome_length, 1])
+      est_genome_length = select_first([genome_length, ncbi_taxon_summary.avg_genome_length])
   }
   # check for minimum number of reads, basepairs, coverage, etc
   if (! skip_screen) {
@@ -105,7 +119,7 @@ workflow theiaviral_ont {
         max_genome_length = 100000000,
         min_coverage = 1,
         skip_mash = true,
-        expected_genome_length = select_first([genome_length, 1])
+        expected_genome_length = select_first([genome_length, ncbi_taxon_summary.avg_genome_length])
     }
   }
   if (select_first([clean_check_reads.read_screen, ""]) == "PASS" || skip_screen) {
@@ -200,7 +214,7 @@ workflow theiaviral_ont {
       input:
         assembly_fasta = bcftools_consensus.bcftools_consensus_fasta,
         reference_genome = ncbi_datasets.ncbi_datasets_assembly_fasta,
-        genome_length = genome_length
+        genome_length = select_first([genome_length, ncbi_taxon_summary.avg_genome_length])
     }
     # quality control metrics for consensus (ie. completeness, viral gene count, contamination)
     call checkv_task.checkv as checkv_consensus {
@@ -219,6 +233,17 @@ workflow theiaviral_ont {
     # versioning outputs
     String theiaviral_ont_version = version_capture.phb_version
     String theiaviral_ont_date = version_capture.date
+    # ncbi datasets - taxon summary
+    File? ncbi_taxon_summary_tsv = ncbi_taxon_summary.taxon_summary_tsv
+    Int? ncbi_taxon_summary_avg_genome_length = ncbi_taxon_summary.avg_genome_length
+    String? ncbi_taxon_summary_version = ncbi_taxon_summary.ncbi_datasets_version
+    String? ncbi_taxon_summary_docker = ncbi_taxon_summary.ncbi_datasets_docker
+    # ncbi datasets - taxon identification
+    String ncbi_identify_taxon_id = ncbi_identify.taxon_id
+    String ncbi_identify_taxon_name = ncbi_identify.taxon_name
+    String ncbi_identify_taxon_rank = ncbi_identify.taxon_rank
+    String ncbi_identify_version = ncbi_identify.ncbi_datasets_version
+    String ncbi_identify_docker = ncbi_identify.ncbi_datasets_docker
     # raw read quality control
     File nanoplot_html_raw = nanoplot_raw.nanoplot_html
     File nanoplot_tsv_raw = nanoplot_raw.nanoplot_tsv
@@ -236,7 +261,9 @@ workflow theiaviral_ont {
     File nanoq_filtered_read1 = nanoq.filtered_read1
     String nanoq_version = nanoq.version
     # scrubbed reads
-    File? read1_dehosted = ncbi_scrub_se.read1_dehosted
+    File ncbi_scrub_read1_dehosted = ncbi_scrub_se.read1_dehosted
+    Int ncbi_scrub_human_spots_removed = ncbi_scrub_se.human_spots_removed
+    String ncbi_scrub_docker = ncbi_scrub_se.ncbi_scrub_docker
     # metabuli outputs - taxonomic classification and read extraction
     File metabuli_report = metabuli.metabuli_report
     File metabuli_classified = metabuli.metabuli_classified
