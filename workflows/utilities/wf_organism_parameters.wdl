@@ -98,7 +98,7 @@ workflow organism_parameters {
     String wnv_vadr_options = "--mkey flavi --mdir /opt/vadr/vadr-models-flavi/ --nomisc --noprotid --out_allfasta"    
     Int wnv_vadr_max_length = 11000
     Int wnv_vadr_skip_length = 3000
-    Int wnv_vadr_memory = 8
+    Int wnv_vadr_memory = 16
     String wnv_nextclade_ds_tag = "NA"
     String wnv_nextclade_ds_name = "NA"
   }
