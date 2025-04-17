@@ -11,7 +11,6 @@ workflow amr_search_workflow {
     File input_fasta
     String amr_search_database
     String samplename
-    String? amr_search_docker
   }
   call run_amr_search.amr_search {
     input:
