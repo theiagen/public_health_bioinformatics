@@ -56,7 +56,7 @@ workflow merlin_magic {
     Boolean ont_data = false
     Boolean paired_end = true
     Boolean theiaeuk = false
-    Boolean amr_search = false
+    Boolean run_amr_search = false
     # activating tool logic
     Boolean call_poppunk = true
     Boolean call_shigeifinder_reads_input = false
@@ -787,7 +787,7 @@ workflow merlin_magic {
     }
   }
   # Running AMR Search
-  if (amr_search){
+  if (run_amr_search) {
     # Map containing the taxon tag reported by typing paired with it's taxon code for AMR search. 
     Map[String, String] taxon_code = {
       "Neisseria gonorrhoeae" : "485",
