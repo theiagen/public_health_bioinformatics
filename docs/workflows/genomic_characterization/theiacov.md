@@ -392,11 +392,11 @@ All TheiaCoV Workflows (not TheiaCoV_FASTA_Batch)
 | stats_n_coverage_primtrim | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | CL, ONT | |
 | stats_n_coverage_primtrim | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/samtools:1.15 | Optional | CL, ONT | |
 | stats_n_coverage_primtrim | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | CL, ONT | |
-| vadr | **cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional | CL, FASTA, ONT, PE, SE | MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
+| vadr | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional | CL, FASTA, ONT, PE, SE | MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | vadr | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | CL, FASTA, ONT, PE, SE | MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | vadr | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/vadr:1.5.1 | Optional | CL, FASTA, ONT, PE, SE | MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | vadr | **max_length** | Int | Maximum length of contig allowed to run VADR | | Optional | CL | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
-| vadr | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 32 (RSV-A and RSV-B) and 8 (all other TheiaCoV organisms) | Optional | CL | MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
+| vadr | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 32 (RSV-A and RSV-B) and 16 (all other TheiaCoV organisms) | Optional | CL | MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | vadr | **min_length** | Int | Minimum length subsequence to possibly replace Ns for the `fasta-trim-terminal-ambigs.pl` VADR script | 50 | Optional | CL, FASTA, ONT, PE, SE | MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | vadr | **skip_length** | Int | Minimum assembly length (unambiguous) to run VADR | 10000 | Optional | CL | MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |
 | vadr | **vadr_opts** | String | Additional options to provide to VADR | | Optional | CL | HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2 |

@@ -133,7 +133,7 @@
     - path: miniwdl_run/call-pangolin4/work/fasta.pangolin_report.csv
       md5sum: 015b81f7172bf7298a95664d1ee00d95
     - path: miniwdl_run/call-vadr/command
-      md5sum: 4b3fd493a568f21578954b30e0feb1d8
+      md5sum: d9da56853d40ba6ad394ed4c3e6b4c75
     - path: miniwdl_run/call-vadr/inputs.json
     - path: miniwdl_run/call-vadr/outputs.json
       md5sum: 2c3f4a10237310b40ceb46c6b05d1bf1
