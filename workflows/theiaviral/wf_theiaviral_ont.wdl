@@ -29,13 +29,19 @@ workflow theiaviral_ont {
     String taxon #taxon id OR organism name (both work)
     String taxon_rank = "family"
     String samplename
+    File? reference_fasta
+    Int? genome_length
+    Int min_mask_depth = 2 # minimum depth for masking low coverage regions
     Boolean call_porechop = false
     Boolean call_rasusa = false
+    # read screen parameters
     Boolean skip_screen = false
-    Int? genome_length
-    Float downsampling_coverage = 150
-    Int min_mask_depth = 2 # minimum depth for masking low coverage regions
-    File? reference_fasta # optional, if provided, will be used instead of dynamic reference selection
+    Int min_reads = 1
+    Int min_basepairs = 17000 # 10x coverage of hepatitis delta virus
+    Int min_genome_length = 1700 # size of hepatitis delta virus
+    Int max_genome_length = 2673870 # size of Pandoravirus salinus + 200 kb
+    Int min_coverage = 10
+    Boolean skip_mash = true # skip mash screen
   }
   # get the PHB version
   call versioning.version_capture {
@@ -54,7 +60,7 @@ workflow theiaviral_ont {
           taxon_id = ncbi_identify.taxon_id
     }
   }
-  # raw read quality check. est_genome_length is only required for nanoplot to determine estimated coverage - but this isn't used.
+  # raw read quality check
   call nanoplot_task.nanoplot as nanoplot_raw {
     input:
       read1 = read1,
@@ -95,11 +101,10 @@ workflow theiaviral_ont {
       input:
         read1 = metabuli.metabuli_read1_extract,
         samplename = samplename,
-        coverage = downsampling_coverage,
         genome_length = select_first([genome_length, ncbi_taxon_summary.avg_genome_length])
     }
   }
-  # raw read quality check. est_genome_length is only required for nanoplot to determine estimated coverage - but this isn't used.
+  # extracted/filtered clean read quality check.
   call nanoplot_task.nanoplot as nanoplot_clean {
     input:
       read1 = select_first([rasusa.read1_subsampled, metabuli.metabuli_read1_extract]),
@@ -108,17 +113,16 @@ workflow theiaviral_ont {
   }
   # check for minimum number of reads, basepairs, coverage, etc
   if (! skip_screen) {
-    # im sorry for this - setting bare minimum values here. trying to avoid overcrowding top level workflow level parameters.
     call screen_task.check_reads_se as clean_check_reads {
       input:
         read1 = select_first([rasusa.read1_subsampled, metabuli.metabuli_read1_extract]),
         workflow_series = "theiaviral",
-        min_reads = 1,
-        min_basepairs = 1,
-        min_genome_length = 1,
-        max_genome_length = 100000000,
-        min_coverage = 1,
-        skip_mash = true,
+        min_reads = min_reads,
+        min_basepairs = min_basepairs,
+        min_genome_length = min_genome_length,
+        max_genome_length = max_genome_length,
+        min_coverage = min_coverage,
+        skip_mash = skip_mash,
         expected_genome_length = select_first([genome_length, ncbi_taxon_summary.avg_genome_length])
     }
   }
