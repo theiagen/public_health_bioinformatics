@@ -42,7 +42,6 @@ workflow theiaviral_illumina_pe {
     Int min_genome_length = 1700 # size of hepatitis delta virus
     Int max_genome_length = 2673870 # size of Pandoravirus salinus + 200 kb
     Int min_coverage = 10
-    Boolean skip_mash = true # if true, skip mash
   }
   # get the PHB version
   call versioning.version_capture {
@@ -81,7 +80,6 @@ workflow theiaviral_illumina_pe {
         min_genome_length = min_genome_length,
         max_genome_length = max_genome_length,
         min_coverage = min_coverage,
-        skip_mash = skip_mash,
         expected_genome_length = genome_length
     }
   }
