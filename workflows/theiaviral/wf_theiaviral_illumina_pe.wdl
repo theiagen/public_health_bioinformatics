@@ -36,13 +36,8 @@ workflow theiaviral_illumina_pe {
     Float variant_min_freq = 0.6
     # rasusa downsampling inputs
     Boolean call_rasusa = false
-    Float downsampling_coverage = 400
+    Float downsampling_coverage = 300
     Int genome_length = 10000
-
-    Boolean call_metaviralspades = false
-    Boolean call_metaspades = false
-    Boolean call_spades = false
-    Boolean call_megahit = false
   }
   # get the PHB version
   call versioning.version_capture {
@@ -88,24 +83,15 @@ workflow theiaviral_illumina_pe {
   if (select_first([clean_check_reads.read_screen, ""]) == "PASS" || skip_screen) {
     # run de novo if no reference genome is provided so we can select a reference
     if (! defined(reference_fasta)) {
-      # de novo assembly benchmarking
-      if (call_metaviralspades) {
-        call spades_task.metaviralspades_pe {
-          input:
-            read1_cleaned = select_first([rasusa.read1_subsampled, read_QC_trim.kraken2_extracted_read1]),
-            read2_cleaned = select_first([rasusa.read2_subsampled, read_QC_trim.kraken2_extracted_read2]),
-            samplename = samplename
-        }
+      # de novo assembly - prioritize metaviralspades
+      call spades_task.metaviralspades_pe {
+        input:
+          read1_cleaned = select_first([rasusa.read1_subsampled, read_QC_trim.kraken2_extracted_read1]),
+          read2_cleaned = select_first([rasusa.read2_subsampled, read_QC_trim.kraken2_extracted_read2]),
+          samplename = samplename
+      # fallback to megahit if metaviralspades fails to identify a complete virus
       }
-      if (call_metaspades) {
-        call spades_task.metaspades_pe {
-          input:
-            read1_cleaned = select_first([rasusa.read1_subsampled, read_QC_trim.kraken2_extracted_read1]),
-            read2_cleaned = select_first([rasusa.read2_subsampled, read_QC_trim.kraken2_extracted_read2]),
-            samplename = samplename
-        }
-      }
-      if (call_megahit) {
+      if (metaviralspades_pe.status == "FAIL") {
         call megahit_task.megahit_pe {
           input:
             read1_cleaned = select_first([rasusa.read1_subsampled, read_QC_trim.kraken2_extracted_read1]),
@@ -113,23 +99,22 @@ workflow theiaviral_illumina_pe {
             samplename = samplename
         }
       }
-  
       # quality control metrics for de novo assembly (ie. completeness, viral gene count, contamination)
       call checkv_task.checkv as checkv_denovo {
         input:
-          assembly = select_first([metaviralspades_pe.assembly_fasta, metaspades_pe.assembly_fasta, megahit_pe.assembly_fasta]),
+          assembly = select_first([metaviralspades_pe.assembly_fasta, megahit_pe.assembly_fasta]),
           samplename = samplename
       }
       # quality control metrics for de novo assembly (ie. contigs, n50, GC content, genome length)
       call quast_task.quast as quast_denovo {
         input:
-          assembly = select_first([metaviralspades_pe.assembly_fasta, metaspades_pe.assembly_fasta, megahit_pe.assembly_fasta]),
+          assembly = select_first([metaviralspades_pe.assembly_fasta, megahit_pe.assembly_fasta]),
           samplename = samplename
       }
       # ANI-based reference genome selection
       call skani_task.skani as skani {
         input:
-          assembly_fasta = select_first([metaviralspades_pe.assembly_fasta, metaspades_pe.assembly_fasta, megahit_pe.assembly_fasta]),
+          assembly_fasta = select_first([metaviralspades_pe.assembly_fasta, megahit_pe.assembly_fasta]),
           samplename = samplename
       }
       # download the best reference determined from skani
@@ -201,7 +186,8 @@ workflow theiaviral_illumina_pe {
     File? fastq_scan_clean1_json = read_QC_trim.fastq_scan_clean1_json
     File? fastq_scan_clean2_json = read_QC_trim.fastq_scan_clean2_json
     # denovo genome assembly
-    File? assembly_fasta = select_first([metaspades_pe.assembly_fasta, metaviralspades_pe.assembly_fasta, megahit_pe.assembly_fasta])
+    File? denovo_assembly_fasta = select_first([metaviralspades_pe.assembly_fasta, megahit_pe.assembly_fasta])
+    String? metaviralspades_status = metaviralspades_pe.metaviralspades_status
     # checkv_denovo outputs - denovo assembly quality control
     File? checkv_denovo_summary = checkv_denovo.checkv_summary
     File? checkv_denovo_contamination = checkv_denovo.checkv_contamination
@@ -249,8 +235,7 @@ workflow theiaviral_illumina_pe {
     String? ivar_variant_proportion_intermediate = ivar_consensus.ivar_variant_proportion_intermediate
     String? ivar_variant_version = ivar_consensus.ivar_variant_version
     # Read Alignment - assembly outputs
-    String assembly_method = "TheiaCoV (~{version_capture.phb_version}): " + select_first([ivar_consensus.assembly_method_nonflu, flu_track.irma_version, ""])
-    String assembly_fasta = select_first([ivar_consensus.assembly_fasta, flu_track.irma_assembly_fasta, "Assembly could not be generated"])
+    String assembly_fasta = ivar_consensus.assembly_fasta
     String? ivar_version_consensus = ivar_consensus.ivar_version_consensus
     String? samtools_version_consensus = ivar_consensus.samtools_version_consensus
     # Read Alignment - consensus assembly qc outputs
@@ -260,7 +245,7 @@ workflow theiaviral_illumina_pe {
     File? consensus_flagstat = ivar_consensus.consensus_flagstat
     String meanbaseq_trim = select_first([ivar_consensus.meanbaseq_trim, ""])
     String meanmapq_trim = select_first([ivar_consensus.meanmapq_trim, ""])
-    String assembly_mean_coverage = select_first([ivar_consensus.assembly_mean_coverage, flu_track.ha_na_assembly_coverage , ""])
+    String assembly_mean_coverage = select_first([ivar_consensus.assembly_mean_coverage, ""])
     String? samtools_version_stats = ivar_consensus.samtools_version_stats
     # Read Alignment - consensus assembly summary outputs
     Int? number_N = consensus_qc.number_N
