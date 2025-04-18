@@ -19,6 +19,7 @@ task ts_mlst {
     # --minscore [n.n]  Minumum score out of 100 to match a scheme (when auto --scheme) (default '50')
     Boolean nopath = true
     String? scheme
+    String? taxonomy
     Float? min_percent_identity
     Float? min_percent_coverage
     Float? minscore
@@ -29,17 +30,63 @@ task ts_mlst {
     #create output header
     echo -e "Filename\tPubMLST_Scheme_name\tSequence_Type_(ST)\tAllele_IDs" > ~{samplename}_ts_mlst.tsv
     
+    read genus species <<< "${taxonomy}"
+
     mlst \
+    --threads ~{cpu} \
+    ~{true="--nopath" false="" nopath} \
+    ~{'--scheme ' + scheme} \
+    ~{'--minid ' + min_percent_identity} \
+    ~{'--mincov ' + min_percent_coverage} \
+    ~{'--minscore ' + minscore} \
+    --novel ~{samplename}_novel_mlst_alleles.fasta \
+    ~{assembly} \
+    >> ~{samplename}_ts_mlst.tsv
+
+    cp ~{samplename}_ts_mlst.tsv ~{samplename}_1.tsv
+    scheme=$(tail -n1 | cut -d $'\t' -f2 ~{samplename}_1.tsv)
+    secondary_scheme=$(if [[ "$scheme" == *_2 ]]; then echo "${scheme%_2}"; else echo "${scheme}_2"; fi)
+
+    if [ "$scheme" == "ecoli", "$scheme" == "ecoli_2", "$scheme" == "abaumannii", "$scheme" == "abaumannii_2" ]; then
+      mlst \
       --threads ~{cpu} \
       ~{true="--nopath" false="" nopath} \
-      ~{'--scheme ' + scheme} \
+      --scheme $secondary_scheme \
       ~{'--minid ' + min_percent_identity} \
       ~{'--mincov ' + min_percent_coverage} \
       ~{'--minscore ' + minscore} \
       --novel ~{samplename}_novel_mlst_alleles.fasta \
       ~{assembly} \
-      >> ~{samplename}_ts_mlst.tsv
-      
+      >> ~{samplename}_2.tsv
+
+      cat ~{samplename}_1.tsv ~{samplename}_2.tsv > ~{samplename}_ts_mlst.tsv
+    elif [ ~{taxonomy} == "Escherichia" ]; then
+      if [ "$scheme" == "aeromonas", "$scheme" == "cfreundii", "$scheme" == "senterica" ]; then
+          mlst \
+          --threads ~{cpu} \
+          ~{true="--nopath" false="" nopath} \
+          --scheme ecoli \
+          ~{'--minid ' + min_percent_identity} \
+          ~{'--mincov ' + min_percent_coverage} \
+          ~{'--minscore ' + minscore} \
+          --novel ~{samplename}_novel_mlst_alleles.fasta \
+          ~{assembly} \
+          >> ~{samplename}_1.tsv
+
+          mlst \
+          --threads ~{cpu} \
+          ~{true="--nopath" false="" nopath} \
+          --scheme ecoli_2 \
+          ~{'--minid ' + min_percent_identity} \
+          ~{'--mincov ' + min_percent_coverage} \
+          ~{'--minscore ' + minscore} \
+          --novel ~{samplename}_novel_mlst_alleles.fasta \
+          ~{assembly} \
+          >> ~{samplename}_2.tsv
+
+          cat ~{samplename}_1.tsv ~{samplename}_2.tsv > ~{samplename}_ts_mlst.tsv
+      fi
+    fi
     # parse ts mlst tsv for relevant outputs
     # if output TSV only contains one line (header line); no ST predicted
     if [ $(wc -l ~{samplename}_ts_mlst.tsv | awk '{ print $1 }') -eq 1 ]; then
@@ -66,7 +113,8 @@ task ts_mlst {
     echo "$allelic_profile" | tee ALLELIC_PROFILE.txt
   >>>
   output {
-    File ts_mlst_results = "~{samplename}_ts_mlst.tsv"
+    File? ts_mlst_results = "~{samplename}_ts_mlst.tsv"
+    File? ts_mlst_results_arln = "~{samplename}_arln_ts_mlst.tsv"
     String ts_mlst_predicted_st = read_string("PREDICTED_MLST")
     String ts_mlst_pubmlst_scheme = read_string("PUBMLST_SCHEME")
     String ts_mlst_allelic_profile = read_string("ALLELIC_PROFILE.txt")
