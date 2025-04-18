@@ -134,8 +134,8 @@ workflow theiaviral_illumina_pe {
     call ivar_consensus.ivar_consensus {
       input:
         samplename = samplename,
-        read1_cleaned = select_first([rasusa.read1_subsampled, read_QC_trim.kraken2_extracted_read1]),
-        read2_cleaned = select_first([rasusa.read2_subsampled, read_QC_trim.kraken2_extracted_read2]),
+        read1 = select_first([rasusa.read1_subsampled, read_QC_trim.kraken2_extracted_read1]),
+        read2 = select_first([rasusa.read2_subsampled, read_QC_trim.kraken2_extracted_read2]),
         reference_genome = select_first([reference_fasta, ncbi_datasets.ncbi_datasets_assembly_fasta]),
         min_depth = select_first([min_depth, 20]),
         consensus_min_freq = consensus_min_freq,
