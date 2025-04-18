@@ -108,7 +108,7 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 | amrfinderplus_task | **cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional | FASTA, ONT, PE, SE |
 | amrfinderplus_task | **detailed_drug_class** | Boolean | If set to true, amrfinderplus_amr_classes and amrfinderplus_amr_subclasses outputs will be created | FALSE | Optional | FASTA, ONT, PE, SE |
 | amrfinderplus_task | **disk_size** | Boolean | Amount of storage (in GB) to allocate to the AMRFinderPlus task | 50 | Optional | FASTA, ONT, PE, SE |
-| amrfinderplus_task | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/ncbi-amrfinderplus:3.12.8-2024-07-22.1 | Optional | FASTA, ONT, PE, SE |
+| amrfinderplus_task | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/ncbi-amrfinderplus:4.0.19-2024-12-18.1 | Optional | FASTA, ONT, PE, SE |
 | amrfinderplus_task | **hide_point_mutations** | Boolean | If set to true, point mutations are not reported | FALSE | Optional | FASTA, ONT, PE, SE |
 | amrfinderplus_task | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | FASTA, ONT, PE, SE |
 | amrfinderplus_task | **min_percent_coverage** | Float | Minimum proportion of reference gene covered for a BLAST-based hit (Methods BLAST or PARTIAL)." Attribute should be a float ranging from 0-1, such as 0.6 (equal to 60% coverage) | 0.5 | Optional| FASTA, ONT, PE, SE |
@@ -232,7 +232,10 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 | merlin_magic | **abricate_vibrio_min_percent_identity** | Int | Minimum DNA percent identity | 80 | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **agrvate_agr_typing_only** | Boolean | Set to true to skip agr operon extraction and frameshift detection | False  | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **agrvate_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/biocontainers/agrvate:1.0.2--hdfd78af_0 | Optional | FASTA, ONT, PE, SE |
-| merlin_magic | **run_amr_search** | Boolean | If set to true AMR_Search workflow will be run if species is part of supported taxon, see AMR_Search docs. | False | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **amr_search_cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **amr_search_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 50 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **amr_search_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/theiagen/amrsearch:0.2.1 | Optional | FASTA, ONT, PE, SE |
+| merlin_magic | **amr_search_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **assembly_only** | Boolean | Internal component, do not modify |  | Do not modify, Optional | ONT, PE, SE |
 | merlin_magic | **call_poppunk** | Boolean | If "true", runs PopPUNK for GPSC cluster designation for S. pneumoniae | TRUE | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **call_shigeifinder_reads_input** | Boolean | If set to "true", the ShigEiFinder task will run again but using read files as input instead of the assembly file. Input is shown but not used for TheiaProk_FASTA. | FALSE | Optional | FASTA, ONT, PE, SE |
@@ -309,7 +312,8 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 | merlin_magic | **poppunk_gps_refs_h5** | File | Poppunk database file *Provide an empty or local file if running TheiaProk on the command-line | gs://theiagen-public-files-rp/terra/theiaprok-files/GPS_v6/GPS_v6.refs.h5 | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **poppunk_gps_unword_clusters_csv** | File | Poppunk database file *Provide an empty or local file if running TheiaProk on the command-line | gs://theiagen-public-files-rp/terra/theiaprok-files/GPS_v6/GPS_v6_unword_clusters.csv | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **read1** | File | Internal component, do not modify |  | Do not modify, Optional | FASTA |
-| merlin_magic | **read2** | File | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, SE |
+| merlin_magic | **read2** | File | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, SE 
+| merlin_magic | **run_amr_search** | Boolean | If set to true AMR_Search workflow will be run if species is part of supported taxon, see AMR_Search docs. | False | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **seqsero2_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/seqsero2:1.2.1 | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **seroba_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/seroba:1.0.2 | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **serotypefinder_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/serotypefinder:2.0.1 | Optional | FASTA, ONT, PE, SE |
@@ -1827,6 +1831,11 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
 | agrvate_results | File | A gzipped tarball of all results | FASTA, ONT, PE, SE |
 | agrvate_summary | File | The summary file produced | FASTA, ONT, PE, SE |
 | agrvate_version | String | The version of AgrVATE used | FASTA, ONT, PE, SE |
+| amr_results_csv | File | CSV formatted AMR profile |
+| amr_results_pdf | File | PDF formatted AMR profile |
+| amr_search_results | File | JSON formatted AMR profile including BLAST results |
+| amr_search_docker | String | Docker image used to run AMR_Search |
+| amr_search_version | String | Version of AMR_Search libraries used |
 | amrfinderplus_all_report | File | Output TSV file from AMRFinderPlus (described <https://github.com/ncbi/amr/wiki/Running-AMRFinderPlus#fields>) | FASTA, ONT, PE, SE |
 | amrfinderplus_amr_betalactam_betalactam_genes | String | Beta-lactam AMR genes identified by AMRFinderPlus that are known to confer resistance to beta-lactams  | FASTA, ONT, PE, SE |
 | amrfinderplus_amr_betalactam_carbapenem_genes | String | Beta-lactam AMR genes identified by AMRFinderPlus that are known to confer resistance to carbapenem  | FASTA, ONT, PE, SE |

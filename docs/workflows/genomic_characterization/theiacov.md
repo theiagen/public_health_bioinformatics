@@ -501,7 +501,7 @@ All TheiaCoV Workflows (not TheiaCoV_FASTA_Batch)
     | theiacov_fasta_batch | **nextclade_dataset_name** | String | Nextclade organism dataset name. Options: "nextstrain/sars-cov-2/wuhan-hu-1/orfs" However, if organism input is set correctly, this input will be automatically assigned the corresponding dataset name. | sars-cov-2 | Optional |
     | theiacov_fasta_batch | **nextclade_dataset_tag** | String | Nextclade dataset tag. Used for pulling up-to-date reference genomes and associated information specific to nextclade datasets (QC thresholds, organism-specific information like SARS-CoV-2 clade & lineage information, etc.) that is required for running the Nextclade tool.  | 2024-06-13--23-42-47Z | Optional |
     | theiacov_fasta_batch | **organism** | String | The organism that is being analyzed. Options: "sars-cov-2" | sars-cov-2 | Optional |
-    | theiacov_fasta_batch | **pangolin_docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/pangolin:4.3.1-pdata-1.27 | Optional |
+    | theiacov_fasta_batch | **pangolin_docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/pangolin:4.3.1-pdata-1.33 | Optional |
     | version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
     | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
 
