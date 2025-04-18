@@ -130,11 +130,19 @@ task metaviralspades_pe {
       --phred-offset ~{phred_offset} \
       ~{metaviralspades_opts}
 
-    mv metaspades/contigs.fasta ~{samplename}_contigs.fasta
+    if [ -f metaspades/contigs.fasta ]; then
+      echo "Metaviralspades successfully identified a complete virus"
+      mv metaspades/contigs.fasta ~{samplename}_metaviralspades.fasta
+      echo "PASS" > STATUS
+    else
+      echo "Metaviralspades could not idnentify a complete virus"
+      echo "FAIL" > STATUS
+    fi
 
   >>>
   output {
-    File assembly_fasta = "~{samplename}_contigs.fasta"
+    File? assembly_fasta = "~{samplename}_metaviralspades.fasta"
+    String metaviralspades_status = read_string("STATUS")
     String metaviralspades_version = read_string("VERSION")
     String metaviralspades_docker = '~{docker}'
   }

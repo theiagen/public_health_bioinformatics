@@ -32,11 +32,11 @@ task megahit_pe {
       -o megahit/ \
       ~{megahit_opts}
 
-    mv megahit/final.contigs.fa ~{samplename}_contigs.fasta
+    mv megahit/final.contigs.fa ~{samplename}_megahit.fasta
 
   >>>
   output {
-    File assembly_fasta = "~{samplename}_contigs.fasta"
+    File assembly_fasta = "~{samplename}_megahit.fasta"
     String megahit_version = read_string("VERSION")
     String megahit_docker = '~{docker}'
   }
