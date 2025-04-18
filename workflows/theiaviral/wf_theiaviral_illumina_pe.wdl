@@ -27,11 +27,10 @@ workflow theiaviral_illumina_pe {
     File read2
     String taxon_id
     String samplename
-    Float min_mask_depth = 20 # minimum depth for masking low coverage regions
     Boolean skip_screen = true # if false, run clean read screening
     File? reference_fasta # optional, if provided, will be used instead of dynamic reference selection
     Boolean extract_unclassified = true # if true, unclassified reads will be extracted from kraken2 output
-    Float min_depth = 20
+    Int min_depth = 20
     Float consensus_min_freq = 0.6
     Float variant_min_freq = 0.6
     # rasusa downsampling inputs
@@ -235,7 +234,7 @@ workflow theiaviral_illumina_pe {
     String? ivar_variant_proportion_intermediate = ivar_consensus.ivar_variant_proportion_intermediate
     String? ivar_variant_version = ivar_consensus.ivar_variant_version
     # Read Alignment - assembly outputs
-    String assembly_fasta = ivar_consensus.assembly_fasta
+    File? assembly_fasta = ivar_consensus.assembly_fasta
     String? ivar_version_consensus = ivar_consensus.ivar_version_consensus
     String? samtools_version_consensus = ivar_consensus.samtools_version_consensus
     # Read Alignment - consensus assembly qc outputs
@@ -254,17 +253,17 @@ workflow theiaviral_illumina_pe {
     Int? number_Total = consensus_qc.number_Total
     Float? percent_reference_coverage =  consensus_qc.percent_reference_coverage
     # Consensus QC
-    Int consensus_qc_number_N = consensus_qc.number_N
-    Int consensus_qc_assembly_length_unambiguous = consensus_qc.number_ATCG
-    Int consensus_qc_number_Degenerate = consensus_qc.number_Degenerate
-    Int consensus_qc_number_Total = consensus_qc.number_Total
-    Float consensus_qc_percent_reference_coverage = consensus_qc.percent_reference_coverage
+    Int? consensus_qc_number_N = consensus_qc.number_N
+    Int? consensus_qc_assembly_length_unambiguous = consensus_qc.number_ATCG
+    Int? consensus_qc_number_Degenerate = consensus_qc.number_Degenerate
+    Int? consensus_qc_number_Total = consensus_qc.number_Total
+    Float? consensus_qc_percent_reference_coverage = consensus_qc.percent_reference_coverage
     # checkv_consensus outputs - consensus assembly quality control
-    File checkv_consensus_summary = checkv_consensus.checkv_summary
-    File checkv_consensus_contamination = checkv_consensus.checkv_contamination
-    Float checkv_consensus_total_contamination = checkv_consensus.total_contamination
-    Float checkv_consensus_total_completeness = checkv_consensus.total_completeness
-    Int checkv_consensus_total_genes = checkv_consensus.total_genes
-    String checkv_consensus_version = checkv_consensus.checkv_version
+    File? checkv_consensus_summary = checkv_consensus.checkv_summary
+    File? checkv_consensus_contamination = checkv_consensus.checkv_contamination
+    Float? checkv_consensus_total_contamination = checkv_consensus.total_contamination
+    Float? checkv_consensus_total_completeness = checkv_consensus.total_completeness
+    Int? checkv_consensus_total_genes = checkv_consensus.total_genes
+    String? checkv_consensus_version = checkv_consensus.checkv_version
   }
 }
