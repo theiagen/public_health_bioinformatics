@@ -1831,11 +1831,11 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
 | agrvate_results | File | A gzipped tarball of all results | FASTA, ONT, PE, SE |
 | agrvate_summary | File | The summary file produced | FASTA, ONT, PE, SE |
 | agrvate_version | String | The version of AgrVATE used | FASTA, ONT, PE, SE |
-| amr_results_csv | File | CSV formatted AMR profile |
-| amr_results_pdf | File | PDF formatted AMR profile |
-| amr_search_results | File | JSON formatted AMR profile including BLAST results |
-| amr_search_docker | String | Docker image used to run AMR_Search |
-| amr_search_version | String | Version of AMR_Search libraries used |
+| amr_results_csv | File | CSV formatted AMR profile | FASTA, ONT, PE, SE |
+| amr_results_pdf | File | PDF formatted AMR profile |  FASTA, ONT, PE, SE |
+| amr_search_results | File | JSON formatted AMR profile including BLAST results | FASTA, ONT, PE, SE |
+| amr_search_docker | String | Docker image used to run AMR_Search | FASTA, ONT, PE, SE |
+| amr_search_version | String | Version of AMR_Search libraries used | FASTA, ONT, PE, SE |
 | amrfinderplus_all_report | File | Output TSV file from AMRFinderPlus (described <https://github.com/ncbi/amr/wiki/Running-AMRFinderPlus#fields>) | FASTA, ONT, PE, SE |
 | amrfinderplus_amr_betalactam_betalactam_genes | String | Beta-lactam AMR genes identified by AMRFinderPlus that are known to confer resistance to beta-lactams  | FASTA, ONT, PE, SE |
 | amrfinderplus_amr_betalactam_carbapenem_genes | String | Beta-lactam AMR genes identified by AMRFinderPlus that are known to confer resistance to carbapenem  | FASTA, ONT, PE, SE |
