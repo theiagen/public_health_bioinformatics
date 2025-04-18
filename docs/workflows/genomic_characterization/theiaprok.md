@@ -312,7 +312,7 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 | merlin_magic | **poppunk_gps_refs_h5** | File | Poppunk database file *Provide an empty or local file if running TheiaProk on the command-line | gs://theiagen-public-files-rp/terra/theiaprok-files/GPS_v6/GPS_v6.refs.h5 | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **poppunk_gps_unword_clusters_csv** | File | Poppunk database file *Provide an empty or local file if running TheiaProk on the command-line | gs://theiagen-public-files-rp/terra/theiaprok-files/GPS_v6/GPS_v6_unword_clusters.csv | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **read1** | File | Internal component, do not modify |  | Do not modify, Optional | FASTA |
-| merlin_magic | **read2** | File | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, SE 
+| merlin_magic | **read2** | File | Internal component, do not modify |  | Do not modify, Optional | FASTA, ONT, SE |
 | merlin_magic | **run_amr_search** | Boolean | If set to true AMR_Search workflow will be run if species is part of supported taxon, see AMR_Search docs. | False | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **seqsero2_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/seqsero2:1.2.1 | Optional | FASTA, ONT, PE, SE |
 | merlin_magic | **seroba_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/seroba:1.0.2 | Optional | FASTA, ONT, PE, SE |
