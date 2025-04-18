@@ -42,6 +42,7 @@ workflow theiaviral_illumina_pe {
     Int min_genome_length = 1700 # size of hepatitis delta virus
     Int max_genome_length = 2673870 # size of Pandoravirus salinus + 200 kb
     Int min_coverage = 10
+    Int min_proportion = 0
   }
   # get the PHB version
   call versioning.version_capture {
@@ -80,7 +81,8 @@ workflow theiaviral_illumina_pe {
         min_genome_length = min_genome_length,
         max_genome_length = max_genome_length,
         min_coverage = min_coverage,
-        expected_genome_length = genome_length
+        expected_genome_length = genome_length,
+        min_proportion = min_proportion
     }
   }
 
@@ -132,10 +134,13 @@ workflow theiaviral_illumina_pe {
     call ivar_consensus.ivar_consensus {
       input:
         samplename = samplename,
+        read1_cleaned = select_first([rasusa.read1_subsampled, read_QC_trim.kraken2_extracted_read1]),
+        read2_cleaned = select_first([rasusa.read2_subsampled, read_QC_trim.kraken2_extracted_read2]),
         reference_genome = select_first([reference_fasta, ncbi_datasets.ncbi_datasets_assembly_fasta]),
         min_depth = select_first([min_depth, 20]),
         consensus_min_freq = consensus_min_freq,
-        variant_min_freq = variant_min_freq
+        variant_min_freq = variant_min_freq,
+        trim_primers = false
     }
     # quality control metrics for consensus (ie. number of bases, degenerate bases, genome length)
     call consensus_qc_task.consensus_qc as consensus_qc {
