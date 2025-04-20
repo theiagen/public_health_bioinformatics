@@ -52,7 +52,6 @@ workflow theiaviral_illumina_pe {
       rank = read_extraction_rank
   }
   # read QC, classification, extraction, and trimming
-  # NEED to expose theiaviral specific parameters, e.g. exclusion_extraction, extract_unclassified
   call read_qc.read_QC_trim_pe as read_QC_trim {
     input:
       read1 = read1,
@@ -75,6 +74,13 @@ workflow theiaviral_illumina_pe {
     }
   }
   if (call_rasusa) {
+    # get genome length if it is not provided
+    if (! defined(genome_length)) {
+      call ncbi_datasets_task.ncbi_datasets_viral_taxon_summary as ncbi_taxon_summary {
+        input:
+          taxon_id = ncbi_identify.taxon_id,
+      }
+    }
     # downsample reads to a specific coverage
     call rasusa_task.rasusa as rasusa {
       input:
@@ -82,7 +88,7 @@ workflow theiaviral_illumina_pe {
         read2 = select_first([read_QC_trim.kraken2_extracted_read2]),
         samplename = samplename,
         coverage = downsampling_coverage,
-        genome_length = genome_length
+        genome_length = select_first([genome_length, ncbi_taxon_summary.avg_genome_length])
     }
   }
   # clean read screening
