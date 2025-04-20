@@ -255,7 +255,7 @@ workflow read_QC_trim_pe {
 
     # kraken2 read extract - theiaviral
     File? kraken2_extracted_read1 = select_first([cat_lanes.read1_concatenated, kraken2_extract.extracted_read1])
-    File? kraken2_extracted_read2 = select_first{[cat_lanes.read2_concatenated, kraken2_extract.extracted_read2])
+    File? kraken2_extracted_read2 = select_first([cat_lanes.read2_concatenated, kraken2_extract.extracted_read2])
     String? kraken2_extracted_organism_name = kraken2_extract.organism_name
     String? krakentools_docker = kraken2_extract.krakentools_docker
     Boolean? kraken2_success = kraken2_extract.success
