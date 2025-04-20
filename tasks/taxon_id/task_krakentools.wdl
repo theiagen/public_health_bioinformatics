@@ -9,6 +9,7 @@ task extract_kraken_reads {
     Int taxon_id
 
     Boolean exclude = false
+    Boolean include_parents = true # set to true for previous default behavior
 
     Int cpu = 1
     Int disk_size = 100
@@ -23,14 +24,13 @@ task extract_kraken_reads {
     gunzip -c ~{kraken2_output} > kraken2_output_unzipped.txt
 
     # add exclusion tag
-
     python3 /KrakenTools/extract_kraken_reads.py \
       -k kraken2_output_unzipped.txt \
       -s1 ~{read1} \
       -s2 ~{read2} \
       --taxid ~{taxon_id} \
       --report ~{kraken2_report} \
-      --include-parents \
+      ~{true="--include-parents" false="" include_parents} \
       --include-children \
       --fastq-output \
       --output ~{taxon_id}_1.fastq \

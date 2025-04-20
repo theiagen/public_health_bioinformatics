@@ -161,6 +161,7 @@ workflow read_QC_trim_pe {
         kraken2_output = kraken2_standalone_theiaviral.kraken2_classified_report,
         kraken2_report = kraken2_standalone_theiaviral.kraken2_report,
         exclude = exclusion_extraction,
+        include_parents = false
     }
     if (extract_unclassified) {
       call cat_lanes.cat_lanes {
