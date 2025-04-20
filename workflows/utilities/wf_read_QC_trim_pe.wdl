@@ -168,9 +168,9 @@ workflow read_QC_trim_pe {
         input:
           samplename = samplename,
           read1_lane1 = kraken2_standalone_theiaviral.kraken2_unclassified_read1,
-          read1_lane2 = kraken2_extract.extracted_read1,
+          read1_lane2 = select_first([kraken2_extract.extracted_read1]),
           read2_lane1 = kraken2_standalone_theiaviral.kraken2_unclassified_read2,
-          read2_lane2 = kraken2_extract.extracted_read2
+          read2_lane2 = select_first([kraken2_extract.extracted_read2])
       }
     }
   }
