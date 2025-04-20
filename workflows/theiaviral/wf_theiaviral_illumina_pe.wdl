@@ -26,6 +26,7 @@ workflow theiaviral_illumina_pe {
     String taxon # taxon id OR organism name
     String read_extraction_rank = "family"
     String samplename
+    File kraken_db = "gs://theiagen-large-public-files-rp/terra/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz"
     Boolean skip_screen = true # if false, run clean read screening
     File? reference_fasta # optional, if provided, will be used instead of dynamic reference selection
     Boolean extract_unclassified = true # if true, unclassified reads will be extracted from kraken2 output
@@ -61,6 +62,7 @@ workflow theiaviral_illumina_pe {
       samplename = samplename,
       taxon_id = ncbi_identify.taxon_id,
       extract_unclassified = extract_unclassified,
+      kraken_db = kraken_db,
       workflow_series = "theiaviral"
   }
   if (call_rasusa) {
@@ -173,13 +175,11 @@ workflow theiaviral_illumina_pe {
     String ncbi_identify_taxon_id = ncbi_identify.taxon_id
     String ncbi_identify_taxon_name = ncbi_identify.taxon_name
     String ncbi_identify_read_extraction_rank = ncbi_identify.taxon_rank
-    String ncbi_identify_version = ncbi_identify.ncbi_datasets_version
-    String ncbi_identify_docker = ncbi_identify.ncbi_datasets_docker    
+    String ncbi_datasets_version = ncbi_identify.ncbi_datasets_version
+    String ncbi_datasets_docker = ncbi_identify.ncbi_datasets_docker    
     # ncbi datasets - taxon summary
     File? ncbi_taxon_summary_tsv = ncbi_taxon_summary.taxon_summary_tsv
     Int? ncbi_taxon_summary_avg_genome_length = ncbi_taxon_summary.avg_genome_length
-    String? ncbi_taxon_summary_version = ncbi_taxon_summary.ncbi_datasets_version
-    String? ncbi_taxon_summary_docker = ncbi_taxon_summary.ncbi_datasets_docker
     # raw read quality control
     Int? fastq_scan_num_reads_raw1 = read_QC_trim.fastq_scan_raw1
     Int? fastq_scan_num_reads_raw2 = read_QC_trim.fastq_scan_raw2
@@ -246,8 +246,6 @@ workflow theiaviral_illumina_pe {
     String? skani_docker = skani.skani_docker
     # ncbi_datasets outputs - download reference genome
     File? skani_top_ani_fasta = ncbi_datasets.ncbi_datasets_assembly_fasta
-    String? ncbi_datasets_version = ncbi_datasets.ncbi_datasets_version
-    String? ncbi_datasets_docker = ncbi_datasets.ncbi_datasets_docker
     # bwa outputs - reads aligned to best reference
     String? bwa_version = ivar_consensus.bwa_version
     String? samtools_version = ivar_consensus.samtools_version
