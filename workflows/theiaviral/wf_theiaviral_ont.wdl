@@ -27,7 +27,7 @@ workflow theiaviral_ont {
   input {
     File read1
     String taxon #taxon id OR organism name (both work)
-    String taxon_rank = "family"
+    String read_extraction_rank = "family"
     String samplename
     File? reference_fasta
     Int? genome_length
@@ -51,7 +51,7 @@ workflow theiaviral_ont {
   call ncbi_datasets_task.ncbi_datasets_identify as ncbi_identify {
     input:
       taxon = taxon,
-      rank = taxon_rank
+      rank = read_extraction_rank
   }
   # estimate the average genome length for user provided taxon
   if (! defined(genome_length)) {
@@ -245,7 +245,7 @@ workflow theiaviral_ont {
     # ncbi datasets - taxon identification
     String ncbi_identify_taxon_id = ncbi_identify.taxon_id
     String ncbi_identify_taxon_name = ncbi_identify.taxon_name
-    String ncbi_identify_taxon_rank = ncbi_identify.taxon_rank
+    String ncbi_identify_read_extraction_rank = ncbi_identify.taxon_rank
     String ncbi_identify_version = ncbi_identify.ncbi_datasets_version
     String ncbi_identify_docker = ncbi_identify.ncbi_datasets_docker
     # raw read quality control

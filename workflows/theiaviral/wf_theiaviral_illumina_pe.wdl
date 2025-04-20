@@ -13,8 +13,6 @@ import "../../tasks/alignment/task_bwa.wdl" as bwa_task
 import "../utilities/wf_ivar_consensus.wdl" as ivar_consensus
 import "../../tasks/quality_control/basic_statistics/task_assembly_metrics.wdl" as assembly_metrics_task
 import "../../tasks/utilities/data_handling/task_fasta_utilities.wdl" as fasta_utilities_task
-# consensus module
-import "../../tasks/assembly/task_bcftools_consensus.wdl" as bcftools_consensus_task
 import "../../tasks/quality_control/basic_statistics/task_consensus_qc.wdl" as consensus_qc_task
 import "../../tasks/task_versioning.wdl" as versioning
 
@@ -25,7 +23,8 @@ workflow theiaviral_illumina_pe {
   input {
     File read1
     File read2
-    String taxon_id
+    String taxon # taxon id OR organism name
+    String read_extraction_rank = "family"
     String samplename
     Boolean skip_screen = true # if false, run clean read screening
     File? reference_fasta # optional, if provided, will be used instead of dynamic reference selection
@@ -36,7 +35,7 @@ workflow theiaviral_illumina_pe {
     # rasusa downsampling inputs
     Boolean call_rasusa = false
     Float downsampling_coverage = 300
-    Int genome_length = 10000
+    Int? genome_length
     Int min_reads = 1
     Int min_basepairs = 17000 # 10x coverage of hepatitis delta virus
     Int min_genome_length = 1700 # size of hepatitis delta virus
@@ -48,18 +47,30 @@ workflow theiaviral_illumina_pe {
   call versioning.version_capture {
     input:
   }
+  # get the taxon id
+  call ncbi_datasets.ncbi_datasets_identify as ncbi_identify {
+    input:
+      taxon = taxon,
+      rank = read_extraction_rank
+  }
   # read QC, classification, extraction, and trimming
-  # NEED to expose theiaviral specific parameters, e.g. exclusion_extraction, extract_unclassified
   call read_qc.read_QC_trim_pe as read_QC_trim {
     input:
       read1 = read1,
       read2 = read2,
       samplename = samplename,
-      taxon_id = taxon_id,
+      taxon_id = ncbi_identify.taxon_id,
       extract_unclassified = extract_unclassified,
       workflow_series = "theiaviral"
   }
   if (call_rasusa) {
+    # get genome length if it is not provided
+    if (! defined(genome_length)) {
+      call ncbi_datasets_task.ncbi_datasets_viral_taxon_summary as ncbi_taxon_summary {
+        input:
+          taxon_id = ncbi_identify.taxon_id,
+      }
+    }
     # downsample reads to a specific coverage
     call rasusa_task.rasusa as rasusa {
       input:
@@ -67,7 +78,7 @@ workflow theiaviral_illumina_pe {
         read2 = select_first([read_QC_trim.kraken2_extracted_read2]),
         samplename = samplename,
         coverage = downsampling_coverage,
-        genome_length = genome_length
+        genome_length = select_first([genome_length, ncbi_taxon_summary.avg_genome_length])
     }
   }
   # clean read screening
@@ -85,7 +96,6 @@ workflow theiaviral_illumina_pe {
         min_proportion = min_proportion
     }
   }
-
   if (select_first([clean_check_reads.read_screen, ""]) == "PASS" || skip_screen) {
     # run de novo if no reference genome is provided so we can select a reference
     if (! defined(reference_fasta)) {
@@ -159,6 +169,17 @@ workflow theiaviral_illumina_pe {
     # versioning outputs
     String? theiaviral_illumina_pe_version = version_capture.phb_version
     String? theiaviral_illumina_pe_date = version_capture.date
+    # ncbi datasets - taxon identification
+    String ncbi_identify_taxon_id = ncbi_identify.taxon_id
+    String ncbi_identify_taxon_name = ncbi_identify.taxon_name
+    String ncbi_identify_read_extraction_rank = ncbi_identify.taxon_rank
+    String ncbi_identify_version = ncbi_identify.ncbi_datasets_version
+    String ncbi_identify_docker = ncbi_identify.ncbi_datasets_docker    
+    # ncbi datasets - taxon summary
+    File? ncbi_taxon_summary_tsv = ncbi_taxon_summary.taxon_summary_tsv
+    Int? ncbi_taxon_summary_avg_genome_length = ncbi_taxon_summary.avg_genome_length
+    String? ncbi_taxon_summary_version = ncbi_taxon_summary.ncbi_datasets_version
+    String? ncbi_taxon_summary_docker = ncbi_taxon_summary.ncbi_datasets_docker
     # raw read quality control
     Int? fastq_scan_num_reads_raw1 = read_QC_trim.fastq_scan_raw1
     Int? fastq_scan_num_reads_raw2 = read_QC_trim.fastq_scan_raw2
