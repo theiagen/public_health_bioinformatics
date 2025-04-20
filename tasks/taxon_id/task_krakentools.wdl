@@ -9,10 +9,6 @@ task extract_kraken_reads {
     Int taxon_id
 
     Boolean exclude = false
-    Boolean extract_unclassified = false
-
-    File? read1_unclassified
-    File? read2_unclassified
 
     Int cpu = 1
     Int disk_size = 100
@@ -47,18 +43,6 @@ task extract_kraken_reads {
 
       gzip ~{taxon_id}_1.fastq 
       gzip ~{taxon_id}_2.fastq
-
-      # check if unclassified reads were extracted, will fail if read2_unclassified is not populated
-      if [ ~{extract_unclassified} == "true" ]; then
-        echo "DEBUG: Appending unclassified reads"
-        if [[ ! ~{read1_unclassified} =~ \.gz$ ]]; then
-          gzip ~{read1_unclassified} >> ~{taxon_id}_1.fastq.gz
-          gzip ~{read2_unclassified} >> ~{taxon_id}_2.fastq.gz
-        else
-          cat ~{read1_unclassified} >> ~{taxon_id}_1.fastq.gz
-          cat ~{read2_unclassified} >> ~{taxon_id}_2.fastq.gz
-        fi
-      fi
     else
       echo "DEBUG: No reads were extracted for taxon ~{taxon_id}, removing empty files"
       echo "false" > CONTINUE

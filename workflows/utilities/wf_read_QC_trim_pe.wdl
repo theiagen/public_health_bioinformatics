@@ -10,6 +10,7 @@ import "../../tasks/quality_control/read_filtering/task_trimmomatic.wdl" as trim
 import "../../tasks/taxon_id/contamination/task_kraken2.wdl" as kraken
 import "../../tasks/taxon_id/task_krakentools.wdl" as krakentools
 import "../../tasks/taxon_id/contamination/task_midas.wdl" as midas_task
+import "../../tasks/utilities/file_handling/task_cat_lanes.wdl" as cat_lanes
 
 workflow read_QC_trim_pe {
   meta {
@@ -160,9 +161,16 @@ workflow read_QC_trim_pe {
         kraken2_output = kraken2_standalone_theiaviral.kraken2_classified_report,
         kraken2_report = kraken2_standalone_theiaviral.kraken2_report,
         exclude = exclusion_extraction,
-        extract_unclassified = extract_unclassified,
-        read1_unclassified = kraken2_standalone_theiaviral.kraken2_unclassified_read1,
-        read2_unclassified = select_first([kraken2_standalone_theiaviral.kraken2_unclassified_read2])
+    }
+    if (extract_unclassified) {
+      call cat_lanes.cat_lanes {
+        input:
+          samplename = samplename,
+          read1_lane1 = kraken2_standalone_theiaviral.kraken2_unclassified_read1,
+          read1_lane2 = kraken2_extract.extracted_read1,
+          read2_lane1 = kraken2_standalone_theiaviral.kraken2_unclassified_read2,
+          read2_lane2 = kraken2_extract.extracted_read2
+      }
     }
   }
   if (read_qc == "fastqc") {
@@ -245,8 +253,8 @@ workflow read_QC_trim_pe {
     String kraken_database = select_first([kraken2_theiacov_raw.database, kraken2_standalone.kraken2_database, kraken2_standalone_theiaviral.kraken2_database, kraken_db_warning, ""])
 
     # kraken2 read extract - theiaviral
-    File? kraken2_extracted_read1 = kraken2_extract.extracted_read1
-    File? kraken2_extracted_read2 = kraken2_extract.extracted_read2
+    File? kraken2_extracted_read1 = select_first([cat_lanes.read1_concatenated, kraken2_extract.extracted_read1])
+    File? kraken2_extracted_read2 = select_first{[cat_lanes.read2_concatenated, kraken2_extract.extracted_read2])
     String? kraken2_extracted_organism_name = kraken2_extract.organism_name
     String? krakentools_docker = kraken2_extract.krakentools_docker
     Boolean? kraken2_success = kraken2_extract.success
