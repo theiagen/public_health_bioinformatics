@@ -51,7 +51,7 @@ task variant_call {
       ~{true = "-B" false = "" disable_baq} \
       -Q ~{min_bq} \
       --reference ${ref_genome} \
-      ~{true = "-aa" false = "" all_positions}
+      ~{true = "-aa" false = "" all_positions} \
       ~{bamfile} \
       > ~{samplename}.mpileup
 
