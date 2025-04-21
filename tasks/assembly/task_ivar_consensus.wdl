@@ -37,7 +37,6 @@ task consensus {
   output {
     File consensus_seq = "~{samplename}.ivar.consensus.fasta"
     String ivar_version = read_string("IVAR_VERSION")
-    String samtools_version = read_string("SAMTOOLS_VERSION")
     String pipeline_date = read_string("DATE")
   }
   runtime {

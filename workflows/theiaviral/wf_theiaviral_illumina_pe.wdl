@@ -30,8 +30,8 @@ workflow theiaviral_illumina_pe {
     Boolean skip_screen = true # if false, run clean read screening
     File? reference_fasta # optional, if provided, will be used instead of dynamic reference selection
     Boolean extract_unclassified = true # if true, unclassified reads will be extracted from kraken2 output
-    Int min_depth = 20
-    Float consensus_min_freq = 0.6
+    Int min_depth = 10
+    Int min_qual = 20
     Float variant_min_freq = 0.6
     # rasusa downsampling inputs
     Boolean call_rasusa = false
@@ -149,9 +149,10 @@ workflow theiaviral_illumina_pe {
         read1 = select_first([rasusa.read1_subsampled, read_QC_trim.kraken2_extracted_read1]),
         read2 = select_first([rasusa.read2_subsampled, read_QC_trim.kraken2_extracted_read2]),
         reference_genome = select_first([reference_fasta, ncbi_datasets.ncbi_datasets_assembly_fasta]),
-        min_depth = select_first([min_depth, 20]),
-        consensus_min_freq = consensus_min_freq,
+        min_depth = select_first([min_depth, 10]),
+        consensus_min_freq = variant_min_freq,
         variant_min_freq = variant_min_freq,
+        min_qual = min_qual,
         trim_primers = false,
         all_positions = true,
         max_depth = 0

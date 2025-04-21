@@ -22,6 +22,7 @@ workflow ivar_consensus {
     Float consensus_min_freq 
     Boolean all_positions = false
     Int max_depth = 600000
+    Int min_qual = 20
     File? primer_bed
     Boolean? skip_N
     Int? ivar_bwa_cpu
@@ -89,6 +90,7 @@ workflow ivar_consensus {
       reference_genome = reference_genome,
       variant_min_depth = min_depth,
       variant_min_freq = variant_min_freq,
+      min_qual = min_qual,
       all_positions = all_positions,
       max_depth = max_depth,
       cpu = ivar_variant_cpu,
@@ -102,6 +104,7 @@ workflow ivar_consensus {
       mpileup = variant_call.sample_mpileup,
       consensus_min_depth = min_depth,
       consensus_min_freq = consensus_min_freq,
+      min_qual = min_qual,
       skip_N = skip_N,
       cpu = ivar_consensus_cpu,
       memory = ivar_consensus_memory,
@@ -141,12 +144,12 @@ workflow ivar_consensus {
     File ivar_vcf = variant_call.sample_variants_vcf
     String ivar_variant_proportion_intermediate = variant_call.variant_proportion_intermediate
     String ivar_variant_version = variant_call.ivar_version
+    String ivar_variant_samtools_version = variant_call.samtools_version
 
     # assembly outputs
     String assembly_method_nonflu = "~{bwa.bwa_version}; ~{primer_trim.ivar_version}"
     File assembly_fasta = consensus.consensus_seq
     String ivar_version_consensus = consensus.ivar_version
-    String samtools_version_consensus = consensus.samtools_version
 
     # consensus qc outputs
     Int consensus_n_variant_min_depth = min_depth
