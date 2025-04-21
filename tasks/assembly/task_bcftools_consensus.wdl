@@ -42,7 +42,7 @@ task bcftools_consensus {
       --output ~{samplename}_consensus.fasta
   >>>
   output {
-    File bcftools_consensus_fasta = "~{samplename}_consensus.fasta"
+    File assembly_fasta = "~{samplename}_consensus.fasta"
     File bcftools_norm_vcf = "~{samplename}_norm.vcf.gz"
     String bcftools_version = read_string("VERSION")
     String bcftools_docker = docker

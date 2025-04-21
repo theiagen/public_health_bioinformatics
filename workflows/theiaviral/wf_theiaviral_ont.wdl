@@ -216,20 +216,20 @@ workflow theiaviral_ont {
     # quality control metrics for consensus (ie. number of bases, degenerate bases, genome length)
     call consensus_qc_task.consensus_qc as consensus_qc {
       input:
-        assembly_fasta = bcftools_consensus.bcftools_consensus_fasta,
+        assembly_fasta = bcftools_consensus.assembly_fasta,
         reference_genome = ncbi_datasets.ncbi_datasets_assembly_fasta,
         genome_length = select_first([genome_length, ncbi_taxon_summary.avg_genome_length])
     }
     # quality control metrics for consensus (ie. completeness, viral gene count, contamination)
     call checkv_task.checkv as checkv_consensus {
       input:
-        assembly = bcftools_consensus.bcftools_consensus_fasta,
+        assembly = bcftools_consensus.assembly_fasta,
         samplename = samplename
     }
     # quality control metrics for consensus (ie. contigs, n50, GC content, genome length)
     call quast_task.quast as quast_consensus {
       input:
-        assembly = bcftools_consensus.bcftools_consensus_fasta,
+        assembly = bcftools_consensus.assembly_fasta,
         samplename = samplename
     }
   }
@@ -294,7 +294,7 @@ workflow theiaviral_ont {
     String? read_screen_clean = clean_check_reads.read_screen
     File? read_screen_clean_tsv = clean_check_reads.read_screen_tsv
     # raven outputs - denovo genome assembly
-    File? raven_denovo_assembly = raven.assembly_fasta
+    File? denovo_assembly_fasta = raven.assembly_fasta
     String? raven_denovo_version = raven.raven_version
     String? raven_denovo_docker = raven.raven_docker
     # checkv_denovo outputs - denovo assembly quality control
@@ -366,7 +366,7 @@ workflow theiaviral_ont {
     String? mask_low_coverage_bedtools_version = mask_low_coverage.bedtools_version
     String? mask_low_coverage_bedtools_docker = mask_low_coverage.bedtools_docker
     # bcftools_consensus outputs - consensus genome
-    File? bcftools_consensus_fasta = bcftools_consensus.bcftools_consensus_fasta
+    File? consensus_assembly_fasta = bcftools_consensus.assembly_fasta
     File? bcftools_norm_vcf = bcftools_consensus.bcftools_norm_vcf
     String? bcftools_version = bcftools_consensus.bcftools_version
     String? bcftools_docker = bcftools_consensus.bcftools_docker
