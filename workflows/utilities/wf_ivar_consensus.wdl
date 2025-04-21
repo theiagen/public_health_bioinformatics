@@ -144,7 +144,7 @@ workflow ivar_consensus {
     File ivar_vcf = variant_call.sample_variants_vcf
     String ivar_variant_proportion_intermediate = variant_call.variant_proportion_intermediate
     String ivar_variant_version = variant_call.ivar_version
-    String ivar_variant_samtools_version = variant_call.samtools_version
+    String samtools_version = variant_call.samtools_version
 
     # assembly outputs
     String assembly_method_nonflu = "~{bwa.bwa_version}; ~{primer_trim.ivar_version}"
