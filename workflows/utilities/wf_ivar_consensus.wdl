@@ -22,6 +22,7 @@ workflow ivar_consensus {
     Float consensus_min_freq 
     Boolean all_positions = false
     Int max_depth = 600000
+    Int min_qual = 20
     File? primer_bed
     Boolean? skip_N
     Int? ivar_bwa_cpu
@@ -87,6 +88,7 @@ workflow ivar_consensus {
       mpileup = variant_call.sample_mpileup,
       consensus_min_depth = min_depth,
       consensus_min_freq = consensus_min_freq,
+      min_qual = min_qual,
       skip_N = skip_N,
       cpu = ivar_consensus_cpu,
       memory = ivar_consensus_memory,

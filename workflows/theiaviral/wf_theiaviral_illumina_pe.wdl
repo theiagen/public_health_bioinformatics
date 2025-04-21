@@ -225,9 +225,10 @@ workflow theiaviral_illumina_pe {
         read1 = select_first([rasusa.read1_subsampled, read_QC_trim.kraken2_extracted_read1]),
         read2 = select_first([rasusa.read2_subsampled, read_QC_trim.kraken2_extracted_read2]),
         reference_genome = select_first([reference_fasta, ncbi_datasets.ncbi_datasets_assembly_fasta]),
-        min_depth = select_first([min_depth, 20]),
-        consensus_min_freq = consensus_min_freq,
+        min_depth = select_first([min_depth, 10]),
+        consensus_min_freq = variant_min_freq,
         variant_min_freq = variant_min_freq,
+        min_qual = min_qual,
         trim_primers = false,
         all_positions = true,
         max_depth = 0
