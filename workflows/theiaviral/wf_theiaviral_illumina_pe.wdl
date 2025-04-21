@@ -265,10 +265,10 @@ workflow theiaviral_illumina_pe {
     File? ivar_vcf = ivar_consensus.ivar_vcf
     String? ivar_variant_proportion_intermediate = ivar_consensus.ivar_variant_proportion_intermediate
     String? ivar_variant_version = ivar_consensus.ivar_variant_version
+    String? samtools_version_variants = ivar_consensus.samtools_version_variants
     # Read Alignment - assembly outputs
     File? assembly_fasta = ivar_consensus.assembly_fasta
     String? ivar_version_consensus = ivar_consensus.ivar_version_consensus
-    String? samtools_version_consensus = ivar_consensus.samtools_version_consensus
     # Read Alignment - consensus assembly qc outputs
     # this is the minimum depth used for consensus and variant calling in EITHER iVar or IRMA
     Int consensus_n_variant_min_depth = select_first([min_depth, 20])
