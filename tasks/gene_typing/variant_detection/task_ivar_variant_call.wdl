@@ -9,6 +9,7 @@ task variant_call {
     Boolean count_orphans = true
     Int max_depth = "600000"
     Boolean disable_baq = true
+    Boolean all_positions = false
     Int min_bq = "0"
     Int min_qual = "20"
     Float? variant_min_freq 
@@ -57,7 +58,8 @@ task variant_call {
     -t ~{variant_min_freq} \
     -m ~{variant_min_depth} \
     -r ${ref_genome} \
-    -g ${ref_gff}
+    -g ${ref_gff} \
+    ~{true = "-aa" false = "" all_positions}
 
     # Convert TSV to VCF
     ivar_variants_to_vcf.py ~{samplename}.variants.tsv ~{samplename}.variants.vcf

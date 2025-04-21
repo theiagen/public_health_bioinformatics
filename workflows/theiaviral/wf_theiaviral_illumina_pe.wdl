@@ -152,7 +152,9 @@ workflow theiaviral_illumina_pe {
         min_depth = select_first([min_depth, 20]),
         consensus_min_freq = consensus_min_freq,
         variant_min_freq = variant_min_freq,
-        trim_primers = false
+        trim_primers = false,
+        all_positions = true,
+        max_depth = 0
     }
     # quality control metrics for consensus (ie. number of bases, degenerate bases, genome length)
     call consensus_qc_task.consensus_qc as consensus_qc {

@@ -20,6 +20,8 @@ workflow ivar_consensus {
     Int min_depth
     Float variant_min_freq 
     Float consensus_min_freq 
+    Boolean all_positions = false
+    Int max_depth = 600000
     File? primer_bed
     Boolean? skip_N
     Int? ivar_bwa_cpu
@@ -87,6 +89,8 @@ workflow ivar_consensus {
       reference_genome = reference_genome,
       variant_min_depth = min_depth,
       variant_min_freq = variant_min_freq,
+      all_positions = all_positions,
+      max_depth = max_depth,
       cpu = ivar_variant_cpu,
       memory = ivar_variant_memory,
       disk_size = ivar_variant_disk_size,
