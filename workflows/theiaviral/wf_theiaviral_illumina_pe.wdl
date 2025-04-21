@@ -251,7 +251,7 @@ workflow theiaviral_illumina_pe {
     File? skani_top_ani_fasta = ncbi_datasets.ncbi_datasets_assembly_fasta
     # bwa outputs - reads aligned to best reference
     String? bwa_version = ivar_consensus.bwa_version
-    String? samtools_version = ivar_consensus.samtools_version
+    String? samtools_version = ivar_consensus.samtools_version_variants
     File? read1_aligned = ivar_consensus.read1_aligned
     File? read2_aligned = ivar_consensus.read2_aligned
     String aligned_bam = select_first([ivar_consensus.aligned_bam, ""])
