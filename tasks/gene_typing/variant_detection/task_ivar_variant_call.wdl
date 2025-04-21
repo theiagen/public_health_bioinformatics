@@ -46,20 +46,23 @@ task variant_call {
     
     # call variants
     samtools mpileup \
-    ~{true = "-A" false = "" count_orphans} \
-    -d ~{max_depth} \
-    ~{true = "-B" false = "" disable_baq} \
-    -Q ~{min_bq} \
-    --reference ${ref_genome} \
-    ~{bamfile} | \
+      ~{true = "-A" false = "" count_orphans} \
+      -d ~{max_depth} \
+      ~{true = "-B" false = "" disable_baq} \
+      -Q ~{min_bq} \
+      --reference ${ref_genome} \
+      ~{true = "-aa" false = "" all_positions}
+      ~{bamfile} \
+      > ~{samplename}.mpileup
+
+    cat ~{samplename}.mpileup | \
     ivar variants \
-    -p ~{samplename}.variants \
-    -q ~{min_qual} \
-    -t ~{variant_min_freq} \
-    -m ~{variant_min_depth} \
-    -r ${ref_genome} \
-    -g ${ref_gff} \
-    ~{true = "-aa" false = "" all_positions}
+      -p ~{samplename}.variants \
+      -q ~{min_qual} \
+      -t ~{variant_min_freq} \
+      -m ~{variant_min_depth} \
+      -r ${ref_genome} \
+      -g ${ref_gff} \
 
     # Convert TSV to VCF
     ivar_variants_to_vcf.py ~{samplename}.variants.tsv ~{samplename}.variants.vcf
@@ -96,6 +99,7 @@ task variant_call {
     String variant_proportion_intermediate = read_string("PROPORTION_INTERMEDIATE")
     File sample_variants_tsv = "~{samplename}.variants.tsv"
     File sample_variants_vcf = "~{samplename}.variants.vcf"
+    File sample_mpileup = "~{samplename}.mpileup"
     String ivar_version = read_string("IVAR_VERSION")
     String samtools_version = read_string("SAMTOOLS_VERSION")
   }

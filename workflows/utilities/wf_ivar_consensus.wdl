@@ -96,11 +96,27 @@ workflow ivar_consensus {
       disk_size = ivar_variant_disk_size,
       docker = ivar_variant_docker
   }
+  if (variant_min_freq != consensus_min_freq) {
+    call variant_call_task.variant_call as consensus_variant_call {
+      input:
+        samplename = samplename,
+        bamfile = select_first([primer_trim.trim_sorted_bam, bwa.sorted_bam]),
+        reference_gff = reference_gff,
+        reference_genome = reference_genome,
+        variant_min_depth = min_depth,
+        variant_min_freq = consensus_min_freq,
+        all_positions = all_positions,
+        max_depth = max_depth,
+        cpu = ivar_variant_cpu,
+        memory = ivar_variant_memory,
+        disk_size = ivar_variant_disk_size,
+        docker = ivar_variant_docker
+    }
+  }
   call consensus_task.consensus {
     input:
       samplename = samplename,
-      bamfile = select_first([primer_trim.trim_sorted_bam, bwa.sorted_bam]),
-      reference_genome = reference_genome,
+      mpileup = select_first([consensus_variant_call.sample_mpileup, variant_call.sample_mpileup]),
       consensus_min_depth = min_depth,
       consensus_min_freq = consensus_min_freq,
       skip_N = skip_N,

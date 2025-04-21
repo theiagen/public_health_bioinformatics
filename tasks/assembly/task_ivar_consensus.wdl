@@ -2,13 +2,8 @@ version 1.0
 
 task consensus {
   input {
-    File bamfile
+    File mpileup
     String samplename
-    File? reference_genome
-    Boolean count_orphans = true
-    Int max_depth = "600000"
-    Boolean disable_baq = true
-    Int min_bq = "0"
     Int min_qual = "20"
     Float? consensus_min_freq 
     Int? consensus_min_depth
@@ -25,26 +20,8 @@ task consensus {
     # date and version control
     date | tee DATE
     ivar version | head -n1 | tee IVAR_VERSION
-    samtools --version | head -n1 | tee SAMTOOLS_VERSION
 
-    # set reference genome
-    if [[ ! -z "~{reference_genome}" ]]; then
-      echo "User reference identified; ~{reference_genome} will be utilized for alignement"
-      ref_genome="~{reference_genome}"
-      bwa index "~{reference_genome}"
-      # move to primer_schemes dir; bwa fails if reference file not in this location
-    else
-      ref_genome="/artic-ncov2019/primer_schemes/nCoV-2019/V3/nCoV-2019.reference.fasta"  
-    fi
-    
-    # call consensus
-    samtools mpileup \
-      ~{true = "--count-orphans" false = "" count_orphans} \
-      -d ~{max_depth} \
-      ~{true = "--no-BAQ" false = "" disable_baq} \
-      -Q ~{min_bq} \
-      --reference ${ref_genome} \
-      ~{bamfile} | \
+    cat ~{mpileup} | \
     ivar consensus \
       -p ~{samplename}.consensus \
       -q ~{min_qual} \
