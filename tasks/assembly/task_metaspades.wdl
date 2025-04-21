@@ -1,6 +1,6 @@
 version 1.0
 
-task spades_pe {
+task metaspades_pe {
   input {
     File read1_cleaned
     File read2_cleaned
@@ -10,7 +10,7 @@ task spades_pe {
     Int cpu = 4
     Int memory = 16
     String? kmers
-    String? spades_opts
+    String? metaspades_opts
     Int phred_offset = 33
   }
   command <<<
@@ -18,24 +18,26 @@ task spades_pe {
     set -euo pipefail
 
     # get version
-    spades.py --version | sed -Ee "s/SPAdes genome assembler ([^ ]+).*/\1/" | tee VERSION
+    spades.py --meta --version | sed -Ee "s/SPAdes genome assembler ([^ ]+).*/\1/" | tee VERSION
 
     spades.py \
+      --meta \
       -1 ~{read1_cleaned} \
       -2 ~{read2_cleaned} \
       ~{'-k ' + kmers} \
       -m ~{memory} \
       -t ~{cpu} \
-      -o spades \
+      -o metaspades \
       --phred-offset ~{phred_offset} \
-      ~{spades_opts}
+      ~{metaspades_opts}
 
-    mv spades/contigs.fasta ~{samplename}_contigs.fasta
+    mv metaspades/contigs.fasta ~{samplename}_contigs.fasta
+
   >>>
   output {
     File assembly_fasta = "~{samplename}_contigs.fasta"
-    String spades_version = read_string("VERSION")
-    String spades_docker = '~{docker}'
+    String metaspades_version = read_string("VERSION")
+    String metaspades_docker = '~{docker}'
   }
   runtime {
     docker: "~{docker}"

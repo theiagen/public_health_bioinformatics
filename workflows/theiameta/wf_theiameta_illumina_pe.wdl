@@ -8,7 +8,7 @@ import "../../tasks/task_versioning.wdl" as versioning
 import "../../tasks/taxon_id/contamination/task_kraken2.wdl" as kraken_task
 import "../../tasks/taxon_id/contamination/task_krona.wdl" as krona_task
 import "../../tasks/utilities/data_handling/task_parse_mapping.wdl" as parse_mapping_task
-import "../../tasks/assembly/task_spades.wdl" as spades_task
+import "../../tasks/assembly/task_metaspades.wdl" as metaspades_task
 import "../../tasks/quality_control/read_filtering/task_pilon.wdl" as pilon_task
 import "../utilities/wf_read_QC_trim_pe.wdl" as read_qc_wf
 
@@ -65,7 +65,7 @@ workflow theiameta_illumina_pe {
       kraken2_report = kraken2_clean.kraken2_report,
       samplename = samplename
   }
-  call spades_task.metaspades_pe {
+  call metaspades_task.metaspades_pe {
     input:
       read1_cleaned = read_QC_trim.read1_clean,
       read2_cleaned = read_QC_trim.read2_clean,
