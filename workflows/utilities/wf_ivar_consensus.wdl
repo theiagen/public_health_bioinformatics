@@ -20,6 +20,8 @@ workflow ivar_consensus {
     Int min_depth
     Float variant_min_freq 
     Float consensus_min_freq 
+    Boolean all_positions = false
+    Int max_depth = 600000
     File? primer_bed
     Boolean? skip_N
     Int? ivar_bwa_cpu

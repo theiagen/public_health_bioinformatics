@@ -14,6 +14,8 @@ task metaviralspades_pe {
     Int phred_offset = 33
   }
   command <<<
+    # we do not want this to fail hard, so we can fallback if it does
+    
     # get version
     spades.py --metaviral --version | sed -Ee "s/SPAdes genome assembler ([^ ]+).*/\1/" | tee VERSION
 
