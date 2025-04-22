@@ -90,14 +90,7 @@ workflow theiaviral_illumina_pe {
     call read_screen_task.check_reads as clean_check_reads {
       input:
         read1 = select_first([rasusa.read1_subsampled, read_QC_trim.kraken2_extracted_read1]),
-        read2 = select_first([rasusa.read2_subsampled, read_QC_trim.kraken2_extracted_read2]),
-        min_reads = min_reads,
-        min_basepairs = min_basepairs,
-        min_genome_length = min_genome_length,
-        max_genome_length = max_genome_length,
-        min_coverage = min_coverage,
-        expected_genome_length = genome_length,
-        min_proportion = min_proportion
+        read2 = select_first([rasusa.read2_subsampled, read_QC_trim.kraken2_extracted_read2])
     }
   }
   if (select_first([clean_check_reads.read_screen, ""]) == "PASS" || skip_screen) {
