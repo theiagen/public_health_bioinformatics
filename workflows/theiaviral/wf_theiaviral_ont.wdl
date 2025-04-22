@@ -205,7 +205,7 @@ workflow theiaviral_ont {
         bam = parse_mapping.bam,
         bai = parse_mapping.bai,
         reference_fasta = select_first([ncbi_datasets.ncbi_datasets_assembly_fasta, reference_fasta]),
-        min_depth = min_mask_depth
+        min_depth = min_depth
     }
     # create consensus genome based on variant calls
     call bcftools_consensus_task.bcftools_consensus as bcftools_consensus {
