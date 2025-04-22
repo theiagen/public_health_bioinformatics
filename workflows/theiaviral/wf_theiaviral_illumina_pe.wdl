@@ -84,7 +84,8 @@ workflow theiaviral_illumina_pe {
     call read_screen_task.check_reads as clean_check_reads {
       input:
         read1 = select_first([rasusa.read1_subsampled, read_QC_trim.kraken2_extracted_read1]),
-        read2 = select_first([rasusa.read2_subsampled, read_QC_trim.kraken2_extracted_read2])
+        read2 = select_first([rasusa.read2_subsampled, read_QC_trim.kraken2_extracted_read2]),
+        workflow_series = "theiaviral"
     }
   }
   if (select_first([clean_check_reads.read_screen, ""]) == "PASS" || skip_screen) {
