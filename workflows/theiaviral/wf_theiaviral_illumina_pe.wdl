@@ -8,7 +8,6 @@ import "../../tasks/assembly/task_megahit.wdl" as megahit_task
 import "../../tasks/quality_control/advanced_metrics/task_checkv.wdl" as checkv_task
 import "../../tasks/quality_control/basic_statistics/task_quast.wdl" as quast_task
 import "../../tasks/taxon_id/task_skani.wdl" as skani_task
-import "../../tasks/taxon_id/task_datasets_identify.wdl" as datasets_identify_task
 import "../../tasks/utilities/data_import/task_ncbi_datasets.wdl" as ncbi_datasets_task
 import "../../tasks/taxon_id/task_identify_taxon_id.wdl" as identify_taxon_id_task
 import "../../tasks/alignment/task_bwa.wdl" as bwa_task
