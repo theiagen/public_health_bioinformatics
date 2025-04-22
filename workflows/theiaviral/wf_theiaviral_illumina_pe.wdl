@@ -157,6 +157,12 @@ workflow theiaviral_illumina_pe {
         all_positions = true,
         max_depth = 0
     }
+    # quality control metrics for reads mapping to reference (ie. coverage, depth, base/map quality)
+    call assembly_metrics_task.stats_n_coverage as read_mapping_stats {
+      input:
+        bamfile = ivar_consensus.aligned_bam,
+        samplename = samplename
+    }
     # quality control metrics for consensus (ie. number of bases, degenerate bases, genome length)
     call consensus_qc_task.consensus_qc as consensus_qc {
       input:
@@ -260,6 +266,19 @@ workflow theiaviral_illumina_pe {
     File? read2_unaligned = ivar_consensus.read2_unaligned
     File? sorted_bam_unaligned = ivar_consensus.sorted_bam_unaligned
     File? sorted_bam_unaligned_bai = ivar_consensus.sorted_bam_unaligned_bai
+    # Read mapping stats
+    File? read_mapping_report = read_mapping_stats.metrics_txt
+    File? read_mapping_stats = read_mapping_stats.stats
+    File? read_mapping_cov_hist = read_mapping_stats.cov_hist
+    File? read_mapping_cov_stats = read_mapping_stats.cov_stats
+    File? read_mapping_flagstat = read_mapping_stats.flagstat
+    Float? read_mapping_coverage = read_mapping_stats.coverage
+    Float? read_mapping_depth = read_mapping_stats.depth
+    Float? read_mapping_meanbaseq = read_mapping_stats.meanbaseq
+    Float? read_mapping_meanmapq = read_mapping_stats.meanmapq
+    Float? read_mapping_percentage_mapped_reads = read_mapping_stats.percentage_mapped_reads
+    String? read_mapping_date = read_mapping_stats.date
+    String? read_mapping_samtools_version = read_mapping_stats.samtools_version
     # Read Alignment - variant call outputs
     File? ivar_tsv = ivar_consensus.ivar_tsv
     File? ivar_vcf = ivar_consensus.ivar_vcf

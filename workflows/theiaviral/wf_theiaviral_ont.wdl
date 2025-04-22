@@ -177,7 +177,7 @@ workflow theiaviral_ont {
         samplename = samplename
     }
     # quality control metrics for reads mapping to reference (ie. coverage, depth, base/map quality)
-    call assembly_metrics_task.stats_n_coverage as assembly_metrics {
+    call assembly_metrics_task.stats_n_coverage as read_mapping_stats {
       input:
         bamfile = parse_mapping.bam,
         samplename = samplename
@@ -337,18 +337,18 @@ workflow theiaviral_ont {
     String? parse_mapping_samtools_version = parse_mapping.samtools_version
     String? parse_mapping_samtools_docker = parse_mapping.samtools_docker
     # assembly_metrics outputs - read mapping quality control
-    File? assembly_metrics_report = assembly_metrics.metrics_txt
-    File? assembly_metrics_stats = assembly_metrics.stats
-    File? assembly_metrics_cov_hist = assembly_metrics.cov_hist
-    File? assembly_metrics_cov_stats = assembly_metrics.cov_stats
-    File? assembly_metrics_flagstat = assembly_metrics.flagstat
-    Float? assembly_metrics_coverage = assembly_metrics.coverage
-    Float? assembly_metrics_depth = assembly_metrics.depth
-    Float? assembly_metrics_meanbaseq = assembly_metrics.meanbaseq
-    Float? assembly_metrics_meanmapq = assembly_metrics.meanmapq
-    Float? assembly_metrics_percentage_mapped_reads = assembly_metrics.percentage_mapped_reads
-    String? assembly_metrics_date = assembly_metrics.date
-    String? assembly_metrics_samtools_version = assembly_metrics.samtools_version
+    File? read_mapping_report = read_mapping_stats.metrics_txt
+    File? read_mapping_stats = read_mapping_stats.stats
+    File? read_mapping_cov_hist = read_mapping_stats.cov_hist
+    File? read_mapping_cov_stats = read_mapping_stats.cov_stats
+    File? read_mapping_flagstat = read_mapping_stats.flagstat
+    Float? read_mapping_coverage = read_mapping_stats.coverage
+    Float? read_mapping_depth = read_mapping_stats.depth
+    Float? read_mapping_meanbaseq = read_mapping_stats.meanbaseq
+    Float? read_mapping_meanmapq = read_mapping_stats.meanmapq
+    Float? read_mapping_percentage_mapped_reads = read_mapping_stats.percentage_mapped_reads
+    String? read_mapping_date = read_mapping_stats.date
+    String? read_mapping_samtools_version = read_mapping_stats.samtools_version
     # fasta_utilities outputs - samtools faidx reference genome
     File? fasta_utilities_fai = fasta_utilities.fai
     String? fasta_utilities_samtools_version = fasta_utilities.samtools_version
