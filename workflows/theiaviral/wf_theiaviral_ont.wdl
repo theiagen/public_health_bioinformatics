@@ -318,6 +318,7 @@ workflow theiaviral_ont {
     # skani outputs - ANI-based reference genome selection
     File? skani_report = skani.skani_report
     String? skani_top_accession = skani.skani_top_accession
+    Float? skani_top_score = skani.skani_top_score
     Float? skani_top_ani = skani.skani_top_ani
     Float? skani_top_ref_coverage = skani.skani_top_ref_coverage
     String? skani_database = skani.skani_database

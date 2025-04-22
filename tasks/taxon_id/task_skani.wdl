@@ -35,7 +35,7 @@ task skani {
     new_header=$(awk 'NR==1 {OFS="\t"; print $0, "ANI_x_Ref_Coverage"}' ~{samplename}_skani_results.tsv)
 
     # create a new column and sort by the product of ANI (col 3) and Align_fraction_ref (col 4)
-    awk -F'\t' 'NR > 1 {OFS="\t"; new_col = sprintf("%.2f", $3 * $4); print $0, new_col}' ~{samplename}_skani_results.tsv | \
+    awk -F'\t' 'NR > 1 {OFS="\t"; new_col = sprintf("%.2f", $3 * $4 / 100); print $0, new_col}' ~{samplename}_skani_results.tsv | \
       sort -t$'\t' -k21,21nr | \
       { echo "$new_header"; cat -; } > ~{samplename}_skani_results_sorted.tsv
 
@@ -50,6 +50,7 @@ task skani {
       echo $top_hit_name | awk -F'[.]' '{print $1 ($2 ~ /^[0-9]+$/ ? "."$2 : "")}' | tee TOP_ACCESSION
       head -n 2 ~{samplename}_skani_results_sorted.tsv | tail -n 1 | cut -f 3 | tee TOP_ANI
       head -n 2 ~{samplename}_skani_results_sorted.tsv | tail -n 1 | cut -f 4 | tee TOP_REF_COVERAGE
+      head -n 2 ~{samplename}_skani_results_sorted.tsv | tail -n 1 | cut -f 21 | tee TOP_SCORE
     fi
 
   >>>
@@ -58,6 +59,7 @@ task skani {
     String skani_top_accession = read_string("TOP_ACCESSION")
     Float skani_top_ani = read_float("TOP_ANI")
     Float skani_top_ref_coverage = read_float("TOP_REF_COVERAGE")
+    Float skani_top_score = read_float("TOP_SCORE")
     String skani_database = skani_db
     String skani_version = read_string("VERSION")
     String skani_docker = docker

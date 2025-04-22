@@ -28,6 +28,7 @@ workflow theiaviral_illumina_pe {
     String samplename
     File kraken_db = "gs://theiagen-large-public-files-rp/terra/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz"
     Boolean skip_screen = true # if false, run clean read screening
+    Boolean skip_metaviralspades = false # if true, move to megahit immediately
     File? reference_fasta # optional, if provided, will be used instead of dynamic reference selection
     Boolean extract_unclassified = true # if true, unclassified reads will be extracted from kraken2 output
     Int min_depth = 10
@@ -102,14 +103,24 @@ workflow theiaviral_illumina_pe {
     # run de novo if no reference genome is provided so we can select a reference
     if (! defined(reference_fasta)) {
       # de novo assembly - prioritize metaviralspades
-      call metaviralspades_task.metaviralspades_pe {
-        input:
-          read1_cleaned = select_first([rasusa.read1_subsampled, read_QC_trim.kraken2_extracted_read1]),
-          read2_cleaned = select_first([rasusa.read2_subsampled, read_QC_trim.kraken2_extracted_read2]),
-          samplename = samplename
-      # fallback to megahit if metaviralspades fails to identify a complete virus
-      }
-      if (metaviralspades_pe.metaviralspades_status == "FAIL") {
+      if (! skip_metaviralspades) {
+        call metaviralspades_task.metaviralspades_pe {
+          input:
+            read1_cleaned = select_first([rasusa.read1_subsampled, read_QC_trim.kraken2_extracted_read1]),
+            read2_cleaned = select_first([rasusa.read2_subsampled, read_QC_trim.kraken2_extracted_read2]),
+            samplename = samplename
+        }
+        # fallback to megahit if metaviralspades fails to identify a complete virus
+        if (metaviralspades_pe.metaviralspades_status == "FAIL") {
+          call megahit_task.megahit_pe {
+            input:
+              read1_cleaned = select_first([rasusa.read1_subsampled, read_QC_trim.kraken2_extracted_read1]),
+              read2_cleaned = select_first([rasusa.read2_subsampled, read_QC_trim.kraken2_extracted_read2]),
+              samplename = samplename
+          }
+        }
+      # go direct to megahit
+      if (skip_metaviralspades) {
         call megahit_task.megahit_pe {
           input:
             read1_cleaned = select_first([rasusa.read1_subsampled, read_QC_trim.kraken2_extracted_read1]),
@@ -248,6 +259,7 @@ workflow theiaviral_illumina_pe {
     # skani outputs - ANI-based reference genome selection
     File? skani_report = skani.skani_report
     String? skani_top_accession = skani.skani_top_accession
+    Float? skani_top_score = skani.skani_top_score
     Float? skani_top_ani = skani.skani_top_ani
     Float? skani_top_ref_coverage = skani.skani_top_ref_coverage
     String? skani_database = skani.skani_database
