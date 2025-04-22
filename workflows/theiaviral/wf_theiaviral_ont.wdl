@@ -11,7 +11,6 @@ import "../../tasks/taxon_id/contamination/task_metabuli.wdl" as metabuli_task
 import "../../tasks/taxon_id/task_skani.wdl" as skani_task
 import "../../tasks/utilities/task_rasusa.wdl" as rasusa_task
 import "../../tasks/utilities/data_import/task_ncbi_datasets.wdl" as ncbi_datasets_task
-import "../../tasks/taxon_id/task_datasets_identify.wdl" as datasets_identify_task
 import "../../tasks/utilities/data_handling/task_parse_mapping.wdl" as parse_mapping_task
 import "../../tasks/utilities/data_handling/task_fasta_utilities.wdl" as fasta_utilities_task
 import "../../tasks/assembly/task_raven.wdl" as raven_task
@@ -49,7 +48,7 @@ workflow theiaviral_ont {
     input:
   }
   # get the taxon id, taxon name, and taxon rank from the user provided taxon
-  call datasets_identify_task.ncbi_datasets_identify as ncbi_identify {
+  call ncbi_datasets_task.ncbi_datasets_identify as ncbi_identify {
     input:
       taxon = taxon,
       rank = read_extraction_rank
