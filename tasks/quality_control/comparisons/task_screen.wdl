@@ -5,7 +5,7 @@ task check_reads {
     File read1
     File read2
 
-    Int min_reads
+    Int min_reads = 0
     Int min_basepairs = 0
     Int min_genome_length = 0
     Int max_genome_length = 1000000000
