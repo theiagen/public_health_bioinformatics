@@ -3,7 +3,7 @@ version 1.0
 import "../utilities/wf_read_QC_trim_pe.wdl" as read_qc
 import "../../tasks/quality_control/comparisons/task_screen.wdl" as read_screen_task
 import "../../tasks/utilities/task_rasusa.wdl" as rasusa_task
-import "../../tasks/assembly/task_metaviralspades.wdl" as metaviralspades_task
+import "../../tasks/assembly/task_spades.wdl" as spades_task
 import "../../tasks/assembly/task_megahit.wdl" as megahit_task
 import "../../tasks/quality_control/advanced_metrics/task_checkv.wdl" as checkv_task
 import "../../tasks/quality_control/basic_statistics/task_quast.wdl" as quast_task
@@ -105,7 +105,7 @@ workflow theiaviral_illumina_pe {
     if (! defined(reference_fasta)) {
       # de novo assembly - prioritize metaviralspades
       if (! skip_metaviralspades) {
-        call metaviralspades_task.metaviralspades_pe {
+        call spades_task.spades {
           input:
             read1_cleaned = select_first([rasusa.read1_subsampled, read_QC_trim.kraken2_extracted_read1]),
             read2_cleaned = select_first([rasusa.read2_subsampled, read_QC_trim.kraken2_extracted_read2]),
