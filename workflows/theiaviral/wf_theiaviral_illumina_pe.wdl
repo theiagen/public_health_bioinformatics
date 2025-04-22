@@ -228,7 +228,7 @@ workflow theiaviral_illumina_pe {
         min_depth = select_first([min_depth, 10]),
         consensus_min_freq = variant_min_freq,
         variant_min_freq = variant_min_freq,
-        min_qual = min_qual,
+        min_qual = min_mapping_quality,
         trim_primers = false,
         all_positions = true,
         max_depth = 0
