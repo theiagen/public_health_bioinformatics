@@ -36,16 +36,16 @@ task checkv {
   awk 'NR>1 {sum += $5} END {print sum}' checkv_results/quality_summary.tsv | tee TOTAL_GENES
 
   # sum(col (2) contig_length * col (10) completeness) / total_len
-  awk -v total_len="$total_len" 'NR>1 {sum += $2 * $10} END {result = sprintf("%.2f", sum / total_len); print result}' checkv_results/quality_summary.tsv | tee TOTAL_COMPLETENESS
+  awk -v total_len="$total_len" 'NR>1 {sum += $2 * $10} END {result = sprintf("%.2f", sum / total_len); print result}' checkv_results/quality_summary.tsv | tee weighted_completeness
 
   # sum(col (2) contig_length * col (12) contamination) / total_len
-  awk -v total_len="$total_len" 'NR>1 {sum += $2 * $12} END {result = sprintf("%.2f", sum / total_len); print result}' checkv_results/quality_summary.tsv | tee TOTAL_CONTAMINATION
+  awk -v total_len="$total_len" 'NR>1 {sum += $2 * $12} END {result = sprintf("%.2f", sum / total_len); print result}' checkv_results/quality_summary.tsv | tee weighted_contamination
 
   >>>
   output {
     String checkv_version = read_string("VERSION")
-    Float total_contamination = read_float("TOTAL_CONTAMINATION")
-    Float total_completeness = read_float("TOTAL_COMPLETENESS")
+    Float weighted_contamination = read_float("WEIGHTED_CONTAMINATION")
+    Float weighted_completeness = read_float("WEIGTHTED_COMPLETENESS")
     Int total_genes = read_int("TOTAL_GENES")
     File checkv_summary = "checkv_results/quality_summary.tsv"
     File checkv_contamination = "checkv_results/contamination.tsv"
