@@ -24,6 +24,11 @@ task bcftools_consensus {
       ~{input_vcf} \
       > ~{samplename}_cov_filtered_prefinal.vcf
 
+    # remove low coverage variants (this is where you would remove quality too, e.g. & MIN(FMT/GQ > MIN_QUAL))
+    bcftools view -i ~{input_vcf}${ext} \
+      'MIN(FMT/DP>~{min_depth})' \
+      > ~{samplename}_cov_filtered.vcf.gz
+
     # reproduce artic behavior for left-aligning and normalizing indels
     echo "Left-normalizing indels"
     bcftools norm \
