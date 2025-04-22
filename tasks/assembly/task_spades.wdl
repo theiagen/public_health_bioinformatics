@@ -5,6 +5,7 @@ task spades_pe {
     File read1_cleaned
     File read2_cleaned
     String samplename
+    String? spades_type
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/spades:4.1.0"
     Int disk_size = 100
     Int cpu = 4
@@ -14,13 +15,16 @@ task spades_pe {
     Int phred_offset = 33
   }
   command <<<
-    # fail hard
-    set -euo pipefail
+    # fail hard if not metaviralspades
+    if [ ! ~{spades_type} == "metaviral" ]; then
+      set -euo pipefail
+    fi
 
     # get version
-    spades.py --version | sed -Ee "s/SPAdes genome assembler ([^ ]+).*/\1/" | tee VERSION
+    spades.py ${spades_call} --version | sed -Ee "s/SPAdes genome assembler ([^ ]+).*/\1/" | tee VERSION
 
     spades.py \
+      ~{'--' + spades_type} \
       -1 ~{read1_cleaned} \
       -2 ~{read2_cleaned} \
       ~{'-k ' + kmers} \
@@ -30,10 +34,25 @@ task spades_pe {
       --phred-offset ~{phred_offset} \
       ~{spades_opts}
 
-    mv spades/contigs.fasta ~{samplename}_contigs.fasta
+    if [ ~{spades_type} == "metaviral" ]; then
+      # if metaviralspades fails, or fails to output a contigs.fasta, we want to report that for falling back
+      if [ -f spades/contigs.fasta ]; then
+        echo "Metaviralspades successfully identified a complete virus"
+        mv spades/contigs.fasta ~{samplename}~{'_' + spades_type}_contigs.fasta
+        echo "PASS" > STATUS
+      else
+        echo "Metaviralspades could not identify a complete virus"
+        echo "FAIL" > STATUS
+      fi
+    else
+      # all other spades types should fail via the pipefail, so they pass by default
+      echo "PASS" > STATUS
+      mv spades/contigs.fasta ~{samplename}~{'_' + spades_type}_contigs.fasta
+    fi
   >>>
   output {
-    File assembly_fasta = "~{samplename}_contigs.fasta"
+    File assembly_fasta = "~{samplename}~{' ' + spades_type}_contigs.fasta"
+    String spades_status = read_string("STATUS")
     String spades_version = read_string("VERSION")
     String spades_docker = '~{docker}'
   }
