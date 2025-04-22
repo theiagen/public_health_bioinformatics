@@ -32,7 +32,7 @@ workflow theiaviral_ont {
     String samplename
     File? reference_fasta
     Int? genome_length
-    Int min_mask_depth = 2 # minimum depth for masking low coverage regions
+    Int min_depth = 2 # minimum depth for masking low coverage regions
     Boolean call_porechop = false
     Boolean call_rasusa = false
     # read screen parameters
@@ -212,6 +212,7 @@ workflow theiaviral_ont {
       input:
         reference_fasta = mask_low_coverage.mask_reference_fasta,
         input_vcf = clair3.clair3_variants_vcf,
+        min_depth = min_depth,
         samplename = samplename
     }
     # quality control metrics for consensus (ie. number of bases, degenerate bases, genome length)

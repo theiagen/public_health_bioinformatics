@@ -5,6 +5,7 @@ task bcftools_consensus {
     File reference_fasta
     File input_vcf
     String samplename
+    Int min_depth = 0
     Int disk_size = 100
     Int cpu = 2
     Int memory = 4
@@ -24,9 +25,14 @@ task bcftools_consensus {
       ext=""
     fi
 
+    # remove low coverage variants (this is where you would remove quality too, e.g. & MIN(FMT/GQ > MIN_QUAL))
+    bcftools view -i ~{input_vcf}${ext} \
+      'MIN(FMT/DP>~{min_depth})' \
+      > ~{samplename}_cov_filtered.vcf.gz
+
     # reproduce artic behavior for left-aligning and normalizing indels
     bcftools norm \
-      ~{input_vcf}"${ext}" \
+      ~{samplename}_cov_filtered.vcf.gz \
       --check-ref wx \
       --fasta-ref ~{reference_fasta} \
       --output-type z \
