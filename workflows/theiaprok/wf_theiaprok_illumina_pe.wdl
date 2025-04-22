@@ -879,6 +879,8 @@ workflow theiaprok_illumina_pe {
     File? gamma_results = gamma.gamma_results
     File? gamma_gff = gamma.gamma_gff
     File? gamma_fasta = gamma.gamma_fasta
+    String? gamma_version = gamma.gamma_version
+    String? gamma_docker = gamma.gamma_docker
     # Resfinder Outputs
     File? resfinder_pheno_table = resfinder_task.resfinder_pheno_table
     File? resfinder_pheno_table_species = resfinder_task.resfinder_pheno_table_species

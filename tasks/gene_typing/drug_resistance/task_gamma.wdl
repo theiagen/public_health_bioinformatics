@@ -17,6 +17,9 @@ task gamma {
     Int memory = 8
   }
   command <<<
+    set -euo pipefail
+    echo "~{docker}" | sed 's/.*://' | tee VERSION
+
     if [ ~{run_gammas} == true ]; then
       GAMMA-S.py ~{assembly} \
         ~{gamma_db} \
@@ -40,6 +43,7 @@ task gamma {
     File? gamma_gff = "~{samplename}.gff"
     File? gamma_fasta = "~{samplename}.fasta"
     String gamma_docker = docker
+    String gamma_version = read_string("VERSION")
   }
   runtime {
     memory: "~{memory} GB"
