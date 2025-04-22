@@ -7,7 +7,7 @@ task raven {
 
     Int raven_polishing_iterations = 2
     Float? raven_identity = 0
-    String? additional_parameters # Any extra Raven-specific parameters
+    String? raven_opts # Any extra Raven-specific parameters
 
     Int cpu = 4
     Int disk_size = 100
