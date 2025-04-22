@@ -25,7 +25,7 @@ task bcftools_consensus {
       > ~{samplename}_cov_filtered_prefinal.vcf
 
     # remove low coverage variants (this is where you would remove quality too, e.g. & MIN(FMT/GQ > MIN_QUAL))
-    bcftools view -i 'MIN(FMT/DP>~{min_depth})' \
+    bcftools view -i 'MIN(FMT/DP)>~{min_depth}' \
       ~{input_vcf}${ext} \
       > ~{samplename}_cov_filtered.vcf.gz
 
