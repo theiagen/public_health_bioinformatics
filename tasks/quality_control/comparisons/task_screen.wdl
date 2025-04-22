@@ -5,12 +5,12 @@ task check_reads {
     File read1
     File read2
 
-    Int min_reads
-    Int min_basepairs
-    Int min_genome_length
-    Int max_genome_length
-    Int min_coverage
-    Int min_proportion
+    Int min_reads = 0
+    Int min_basepairs = 0
+    Int min_genome_length = 0
+    Int max_genome_length = 1000000000
+    Int min_coverage = 0
+    Int min_proportion = 0
     
     String workflow_series = "theiaprok" # default to theiaprok so we don't have to change those workflows
     Int? expected_genome_length # user-provided
@@ -176,14 +176,14 @@ task check_reads_se {
   input {
     File read1
 
-    Int min_reads
-    Int min_basepairs
-    Int min_genome_length
-    Int max_genome_length
-    Int min_coverage
+    Int min_reads = 0
+    Int min_basepairs = 0
+    Int min_genome_length = 0
+    Int max_genome_length = 1000000000
+    Int min_coverage = 0
     Int? expected_genome_length
 
-    Boolean skip_mash
+    Boolean skip_mash = true
     String workflow_series = "theiaprok" # default to theiaprok so we don't have to change those workflows
     
     Int cpu = 1

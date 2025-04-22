@@ -36,14 +36,7 @@ workflow theiaviral_ont {
     Int min_map_quality = 20 # minimum read mapping quality
     Boolean call_porechop = false
     Boolean call_rasusa = false
-    # read screen parameters
     Boolean skip_screen = false
-    Int min_reads = 1
-    Int min_basepairs = 17000 # 10x coverage of hepatitis delta virus
-    Int min_genome_length = 1700 # size of hepatitis delta virus
-    Int max_genome_length = 2673870 # size of Pandoravirus salinus + 200 kb
-    Int min_coverage = 10
-    Boolean skip_mash = true # skip mash screen
   }
   # get the PHB version
   call versioning.version_capture {
@@ -119,12 +112,12 @@ workflow theiaviral_ont {
       input:
         read1 = select_first([rasusa.read1_subsampled, metabuli.metabuli_read1_extract]),
         workflow_series = "theiaviral",
-        min_reads = min_reads,
-        min_basepairs = min_basepairs,
-        min_genome_length = min_genome_length,
-        max_genome_length = max_genome_length,
-        min_coverage = min_coverage,
-        skip_mash = skip_mash,
+        min_reads = 1,
+        min_basepairs = 17000, # 10x coverage of hepatitis delta virus
+        min_genome_length = 1700, # size of hepatitis delta virus
+        max_genome_length = 2673870, # size of Pandoravirus salinus + 200 kb
+        min_coverage = 10,
+        skip_mash = true,
         expected_genome_length = select_first([genome_length, ncbi_taxon_summary.avg_genome_length])
     }
   }
