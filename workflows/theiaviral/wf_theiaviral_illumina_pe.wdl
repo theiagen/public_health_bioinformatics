@@ -33,18 +33,12 @@ workflow theiaviral_illumina_pe {
     File? reference_fasta # optional, if provided, will be used instead of dynamic reference selection
     Boolean extract_unclassified = true # if true, unclassified reads will be extracted from kraken2 output
     Int min_depth = 10
-    Int min_qual = 20
+    Int min_mapping_quality = 20
     Float variant_min_freq = 0.6
     # rasusa downsampling inputs
     Boolean call_rasusa = false
     Float downsampling_coverage = 300
     Int? genome_length
-    Int min_reads = 1
-    Int min_basepairs = 17000 # 10x coverage of hepatitis delta virus
-    Int min_genome_length = 1700 # size of hepatitis delta virus
-    Int max_genome_length = 2673870 # size of Pandoravirus salinus + 200 kb
-    Int min_coverage = 10
-    Int min_proportion = 0
   }
   # get the PHB version
   call versioning.version_capture {
@@ -90,14 +84,7 @@ workflow theiaviral_illumina_pe {
     call read_screen_task.check_reads as clean_check_reads {
       input:
         read1 = select_first([rasusa.read1_subsampled, read_QC_trim.kraken2_extracted_read1]),
-        read2 = select_first([rasusa.read2_subsampled, read_QC_trim.kraken2_extracted_read2]),
-        min_reads = min_reads,
-        min_basepairs = min_basepairs,
-        min_genome_length = min_genome_length,
-        max_genome_length = max_genome_length,
-        min_coverage = min_coverage,
-        expected_genome_length = genome_length,
-        min_proportion = min_proportion
+        read2 = select_first([rasusa.read2_subsampled, read_QC_trim.kraken2_extracted_read2])
     }
   }
   if (select_first([clean_check_reads.read_screen, ""]) == "PASS" || skip_screen) {
@@ -157,7 +144,7 @@ workflow theiaviral_illumina_pe {
         min_depth = select_first([min_depth, 10]),
         consensus_min_freq = variant_min_freq,
         variant_min_freq = variant_min_freq,
-        min_qual = min_qual,
+        min_qual = min_mapping_quality,
         trim_primers = false,
         all_positions = true,
         max_depth = 0
