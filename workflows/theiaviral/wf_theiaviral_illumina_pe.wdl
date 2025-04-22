@@ -219,7 +219,7 @@ workflow theiaviral_illumina_pe {
     File? fastq_scan_clean1_json = read_QC_trim.fastq_scan_clean1_json
     File? fastq_scan_clean2_json = read_QC_trim.fastq_scan_clean2_json
     # denovo genome assembly
-    File? denovo_assembly_fasta = select_first([metaviralspades_pe.assembly_fasta, megahit_pe.assembly_fasta])
+    File? assembly_denovo_fasta = select_first([metaviralspades_pe.assembly_fasta, megahit_pe.assembly_fasta])
     String? metaviralspades_status = metaviralspades_pe.metaviralspades_status
     # checkv_denovo outputs - denovo assembly quality control
     File? checkv_denovo_summary = checkv_denovo.checkv_summary
@@ -267,10 +267,9 @@ workflow theiaviral_illumina_pe {
     String? ivar_variant_version = ivar_consensus.ivar_variant_version
     String? samtools_version_variants = ivar_consensus.samtools_version_variants
     # Read Alignment - assembly outputs
-    File? assembly_fasta = ivar_consensus.assembly_fasta
+    File? assembly_consensus_fasta = ivar_consensus.assembly_fasta
     String? ivar_version_consensus = ivar_consensus.ivar_version_consensus
     # Read Alignment - consensus assembly qc outputs
-    # this is the minimum depth used for consensus and variant calling in EITHER iVar or IRMA
     Int consensus_n_variant_min_depth = select_first([min_depth, 20])
     File? consensus_stats = ivar_consensus.consensus_stats
     File? consensus_flagstat = ivar_consensus.consensus_flagstat
@@ -278,12 +277,6 @@ workflow theiaviral_illumina_pe {
     String meanmapq_trim = select_first([ivar_consensus.meanmapq_trim, ""])
     String assembly_mean_coverage = select_first([ivar_consensus.assembly_mean_coverage, ""])
     String? samtools_version_stats = ivar_consensus.samtools_version_stats
-    # Read Alignment - consensus assembly summary outputs
-    Int? number_N = consensus_qc.number_N
-    Int? assembly_length_unambiguous = consensus_qc.number_ATCG
-    Int? number_Degenerate = consensus_qc.number_Degenerate
-    Int? number_Total = consensus_qc.number_Total
-    Float? percent_reference_coverage =  consensus_qc.percent_reference_coverage
     # Consensus QC
     Int? consensus_qc_number_N = consensus_qc.number_N
     Int? consensus_qc_assembly_length_unambiguous = consensus_qc.number_ATCG

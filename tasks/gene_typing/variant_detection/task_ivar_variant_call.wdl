@@ -62,7 +62,7 @@ task variant_call {
       -t ~{variant_min_freq} \
       -m ~{variant_min_depth} \
       -r ${ref_genome} \
-      -g ${ref_gff} \
+      -g ${ref_gff}
 
     # Convert TSV to VCF
     ivar_variants_to_vcf.py ~{samplename}.variants.tsv ~{samplename}.variants.vcf
