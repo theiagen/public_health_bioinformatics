@@ -233,6 +233,12 @@ workflow theiaviral_illumina_pe {
         all_positions = true,
         max_depth = 0
     }
+    # quality control metrics for reads mapping to reference (ie. coverage, depth, base/map quality)
+    call assembly_metrics_task.stats_n_coverage as read_mapping_stats {
+      input:
+        bamfile = ivar_consensus.aligned_bam,
+        samplename = samplename
+    }
     # quality control metrics for consensus (ie. number of bases, degenerate bases, genome length)
     call consensus_qc_task.consensus_qc as consensus_qc {
       input:
