@@ -32,7 +32,8 @@ workflow theiaviral_ont {
     String samplename
     File? reference_fasta
     Int? genome_length
-    Int min_depth = 2 # minimum depth for masking low coverage regions
+    Int min_depth = 10 # minimum depth for masking low coverage regions
+    Int min_map_quality = 10 # minimum read mapping quality
     Boolean call_porechop = false
     Boolean call_rasusa = false
     # read screen parameters
@@ -175,7 +176,8 @@ workflow theiaviral_ont {
     call parse_mapping_task.sam_to_sorted_bam as parse_mapping {
       input:
         sam = minimap2.minimap2_out,
-        samplename = samplename
+        samplename = samplename,
+        min_map_quality = min_map_quality
     }
     # quality control metrics for reads mapping to reference (ie. coverage, depth, base/map quality)
     call assembly_metrics_task.stats_n_coverage as read_mapping_stats {
