@@ -112,12 +112,6 @@ workflow theiaviral_ont {
       input:
         read1 = select_first([rasusa.read1_subsampled, metabuli.metabuli_read1_extract]),
         workflow_series = "theiaviral",
-        min_reads = 1,
-        min_basepairs = 17000, # 10x coverage of hepatitis delta virus
-        min_genome_length = 1700, # size of hepatitis delta virus
-        max_genome_length = 2673870, # size of Pandoravirus salinus + 200 kb
-        min_coverage = 10,
-        skip_mash = true,
         expected_genome_length = select_first([genome_length, ncbi_taxon_summary.avg_genome_length])
     }
   }
