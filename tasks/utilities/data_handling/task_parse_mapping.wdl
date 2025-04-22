@@ -89,6 +89,7 @@ task sam_to_sorted_bam {
   input {
     File sam
     String samplename
+    Int? min_qual
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/samtools:1.17"
     Int disk_size = 100
     Int cpu = 2
@@ -99,7 +100,7 @@ task sam_to_sorted_bam {
     samtools --version | head -n1 | cut -d' ' -f2 | tee VERSION
 
     # Convert SAM to BAM, and sort it based on read name
-    samtools view -Sb ~{sam} > "~{samplename}".bam
+    samtools view ~{"-q " + min_qual} -Sb ~{sam} > "~{samplename}".bam
     samtools sort "~{samplename}".bam -o "~{samplename}".sorted.bam
 
     # index sorted BAM
