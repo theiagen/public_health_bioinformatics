@@ -110,17 +110,9 @@ workflow theiaviral_illumina_pe {
             read2_cleaned = select_first([rasusa.read2_subsampled, read_QC_trim.kraken2_extracted_read2]),
             samplename = samplename
         }
-        # fallback to megahit if metaviralspades fails to identify a complete virus
-        if (metaviralspades_pe.metaviralspades_status == "FAIL") {
-          call megahit_task.megahit_pe {
-            input:
-              read1_cleaned = select_first([rasusa.read1_subsampled, read_QC_trim.kraken2_extracted_read1]),
-              read2_cleaned = select_first([rasusa.read2_subsampled, read_QC_trim.kraken2_extracted_read2]),
-              samplename = samplename
-          }
-        }
-      # go direct to megahit
-      if (skip_metaviralspades) {
+      }
+      # fallback to megahit if metaviralspades fails to identify a complete virus
+      if (skip_metaviralspades && select_first([metaviralspades_pe.metaviralspades_status, "FAIL"]) == "FAIL") {
         call megahit_task.megahit_pe {
           input:
             read1_cleaned = select_first([rasusa.read1_subsampled, read_QC_trim.kraken2_extracted_read1]),
@@ -280,7 +272,7 @@ workflow theiaviral_illumina_pe {
     File? sorted_bam_unaligned_bai = ivar_consensus.sorted_bam_unaligned_bai
     # Read mapping stats
     File? read_mapping_report = read_mapping_stats.metrics_txt
-    File? read_mapping_stats = read_mapping_stats.stats
+    File? read_mapping_statistics = read_mapping_stats.stats
     File? read_mapping_cov_hist = read_mapping_stats.cov_hist
     File? read_mapping_cov_stats = read_mapping_stats.cov_stats
     File? read_mapping_flagstat = read_mapping_stats.flagstat

@@ -339,7 +339,7 @@ workflow theiaviral_ont {
     String? parse_mapping_samtools_docker = parse_mapping.samtools_docker
     # assembly_metrics outputs - read mapping quality control
     File? read_mapping_report = read_mapping_stats.metrics_txt
-    File? read_mapping_stats = read_mapping_stats.stats
+    File? read_mapping_statistics = read_mapping_stats.stats
     File? read_mapping_cov_hist = read_mapping_stats.cov_hist
     File? read_mapping_cov_stats = read_mapping_stats.cov_stats
     File? read_mapping_flagstat = read_mapping_stats.flagstat
