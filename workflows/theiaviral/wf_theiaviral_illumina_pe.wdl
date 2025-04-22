@@ -51,7 +51,7 @@ workflow theiaviral_illumina_pe {
     input:
   }
   # get the taxon id
-  call identify_taxon_id_task.ncbi_identify_taxon_id as ncbi_identify {
+  call identify_taxon_id_task.identify_taxon_id as ncbi_identify {
     input:
       taxon = taxon,
       rank = read_extraction_rank

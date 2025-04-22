@@ -1,6 +1,6 @@
 version 1.0
 
-task ncbi_datasets_identify {
+task identify_taxon_id {
   input {
     String taxon # can be taxon id (int) or organism name (string)
     String? rank # limit input taxon to the user specified rank
