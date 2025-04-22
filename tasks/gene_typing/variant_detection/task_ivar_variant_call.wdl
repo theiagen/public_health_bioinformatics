@@ -4,6 +4,7 @@ task variant_call {
   input {
     File bamfile
     String samplename
+    String organism="sars-cov-2" # default to sars-cov-2 to maintain previous behavior
     File? reference_genome
     File? reference_gff 
     Boolean count_orphans = true
@@ -37,11 +38,16 @@ task variant_call {
     
     # set reference gff
     if [[ ! -z "~{reference_gff}" ]]; then
-      echo "User reference identified; ~{reference_genome} will be utilized for alignement"
+      echo "User reference identified; ~{reference_gff} will be utilized for alignement"
       ref_gff="~{reference_gff}"
+      ref_gff_call="-g ${ref_gff}"
       # move to primer_schemes dir; bwa fails if reference file not in this location
+    elif [[ ! -f ~{organism} ]]; then
+      # default to sars-cov-2 reference gff to emulate initial theiacov behavior
+      ref_gff="/reference/GCF_009858895.2_ASM985889v3_genomic.gff"
+      ref_gff_call="-g ${ref_gff}"
     else
-      ref_gff="/reference/GCF_009858895.2_ASM985889v3_genomic.gff"  
+      ref_gff_call=""
     fi
     
     # call variants
@@ -62,7 +68,7 @@ task variant_call {
       -t ~{variant_min_freq} \
       -m ~{variant_min_depth} \
       -r ${ref_genome} \
-      -g ${ref_gff}
+      ${ref_gff_call}
 
     # Convert TSV to VCF
     ivar_variants_to_vcf.py ~{samplename}.variants.tsv ~{samplename}.variants.vcf
