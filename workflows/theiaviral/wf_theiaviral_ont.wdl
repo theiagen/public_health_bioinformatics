@@ -121,13 +121,14 @@ workflow theiaviral_ont {
   if (select_first([clean_check_reads.read_screen, ""]) == "PASS" || skip_screen) {
     # run de novo if no reference genome is provided so we can select a reference
     if (! defined(reference_fasta)) {
-      if (! skip_raven) 
+      if (! skip_raven) {
         # de novo assembly with raven
         call raven_task.raven {
           input:
             read1 = select_first([rasusa.read1_subsampled, metabuli.metabuli_read1_extract]),
             samplename = samplename
         }
+      }
       if (skip_raven && select_first([raven.raven_status, "FAIL"]) == "FAIL") {
         call flye_task.flye {
           input:

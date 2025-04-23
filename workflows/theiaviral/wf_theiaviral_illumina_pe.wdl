@@ -65,7 +65,7 @@ workflow theiaviral_illumina_pe {
     if (! defined(genome_length)) {
       call ncbi_datasets_task.ncbi_datasets_viral_taxon_summary as ncbi_taxon_summary {
         input:
-          taxon_id = ncbi_identify.taxon_id
+          taxon = ncbi_identify.taxon_id
       }
     }
     # downsample reads to a specific coverage

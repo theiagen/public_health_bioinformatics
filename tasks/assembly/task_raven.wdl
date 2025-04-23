@@ -16,7 +16,6 @@ task raven {
   }
   command <<<
     # fail hard
-    set -euo pipefail
 
     # date and version control
     raven --version | tee VERSION
@@ -27,16 +26,20 @@ task raven {
       ~{"--identity " + raven_identity} \
       ~{"--extra-params " + raven_opts} \
       --threads ~{cpu} \
-      ~{read1} > ~{samplename}.assembly.fasta
+      ~{read1} > ~{samplename}_contigs.fasta
 
     # check if assembly was successful by checking for output file content
-    if [ ! -s ~{samplename}.assembly.fasta ]; then
-      echo "DEBUG: Raven assembly failed. No output file generated."
-      exit 1
+    if [ ! -s ~{samplename}_contigs.fasta ]; then
+      echo "DEBUG: Raven assembly failed. No output generated."
+      echo "FAIL" > STATUS
+    else
+      echo "DEBUG: Raven assembly completed successfully."
+      echo "PASS" > STATUS
     fi
   >>>
   output {
-    File assembly_fasta = "~{samplename}.assembly.fasta"
+    File assembly_fasta = "~{samplename}_contigs.fasta"
+    String raven_status = read_string("STATUS")
     String raven_version = read_string("VERSION")
     String raven_docker = "~{docker}"
   }
