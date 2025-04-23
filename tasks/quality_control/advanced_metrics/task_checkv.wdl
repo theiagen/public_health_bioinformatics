@@ -50,6 +50,7 @@ task checkv {
     -d ${untarred_checkv_db} \
     -t ~{cpu} 
 
+  echo "DEBUG: Extracting statistics"
   # col (2) is contig_length
   total_len=$(awk 'NR>1 {sum += $2} END {print sum}' checkv_results/quality_summary.tsv)
   # col (5) is gene_count
