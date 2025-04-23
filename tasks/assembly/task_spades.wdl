@@ -52,7 +52,7 @@ task spades {
     fi
   >>>
   output {
-    File assembly_fasta = "~{samplename}~{' ' + spades_type}_contigs.fasta"
+    File assembly_fasta = "~{samplename}~{'_' + spades_type}_contigs.fasta"
     String spades_status = read_string("STATUS")
     String spades_version = read_string("VERSION")
     String spades_docker = '~{docker}'

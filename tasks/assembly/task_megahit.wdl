@@ -23,6 +23,7 @@ task megahit_pe {
     memory=$(python3 -c "print(~{memory} * 1000000000)")
 
     # run megathit
+    # may consider "--no-mercy" to increase quality in >30x samples https://github.com/voutcn/megahit/wiki/Assembly-Tips#choosing-k
     megahit \
       -1 ~{read1} \
       -2 ~{read2} \
@@ -33,7 +34,6 @@ task megahit_pe {
       ~{megahit_opts}
 
     mv megahit/final.contigs.fa ~{samplename}_megahit.fasta
-
   >>>
   output {
     File assembly_fasta = "~{samplename}_megahit.fasta"
