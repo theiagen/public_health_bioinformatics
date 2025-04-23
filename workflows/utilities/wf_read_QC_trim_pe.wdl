@@ -33,7 +33,6 @@ workflow read_QC_trim_pe {
     File? kraken_db
     String? target_organism
     Int taxon_id = 0
-    Boolean inverse_extraction = false
     Boolean extract_unclassified = false
     File? adapters
     File? phix
@@ -160,7 +159,6 @@ workflow read_QC_trim_pe {
         taxon_id = taxon_id,
         kraken2_output = kraken2_standalone_theiaviral.kraken2_classified_report,
         kraken2_report = kraken2_standalone_theiaviral.kraken2_report,
-        exclude = inverse_extraction,
         include_parents = false
     }
     if (extract_unclassified) {

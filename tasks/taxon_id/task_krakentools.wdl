@@ -8,8 +8,6 @@ task extract_kraken_reads {
     File read2
     Int taxon_id
 
-    Boolean exclude = false
-
     Int cpu = 1
     Int disk_size = 100
     String docker = "us-docker.pkg.dev/general-theiagen/theiagen/krakentools:d4a2fbe"
@@ -34,7 +32,6 @@ task extract_kraken_reads {
       --fastq-output \
       --output ~{taxon_id}_1.fastq \
       --output2 ~{taxon_id}_2.fastq \
-      ~{true="--exclude" false="" exclude}
 
     if [ -s ~{taxon_id}_1.fastq ]; then
       echo "DEBUG: Taxon ~{taxon_id} reads extracted"
