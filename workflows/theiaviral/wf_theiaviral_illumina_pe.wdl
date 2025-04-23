@@ -73,7 +73,7 @@ workflow theiaviral_illumina_pe {
         genome_length = select_first([genome_length, ncbi_identify.avg_genome_length])
     }
   }
-  if (call_rasusa) {
+  if (! skip_rasusa) {
     # get genome length if it is not provided
     if (! defined(genome_length)) {
       call ncbi_datasets_task.ncbi_datasets_viral_taxon_summary as ncbi_taxon_summary {
