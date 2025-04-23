@@ -2,8 +2,8 @@ version 1.0
 
 task megahit_pe {
   input {
-    File read1_cleaned
-    File read2_cleaned
+    File read1
+    File read2
     String samplename
     String docker = "us-docker.pkg.dev/general-theiagen/theiagen/megahit:1.2.9"
     Int disk_size = 100
@@ -24,8 +24,8 @@ task megahit_pe {
 
     # run megathit
     megahit \
-      -1 ~{read1_cleaned} \
-      -2 ~{read2_cleaned} \
+      -1 ~{read1} \
+      -2 ~{read2} \
       ~{'--k-list ' + kmers} \
       -m ${memory} \
       -t ~{cpu} \

@@ -93,8 +93,8 @@ workflow theiaviral_illumina_pe {
       if (! skip_metaviralspades) {
         call spades_task.spades {
           input:
-            read1_cleaned = select_first([rasusa.read1_subsampled, read_QC_trim.kraken2_extracted_read1]),
-            read2_cleaned = select_first([rasusa.read2_subsampled, read_QC_trim.kraken2_extracted_read2]),
+            read1 = select_first([rasusa.read1_subsampled, read_QC_trim.kraken2_extracted_read1]),
+            read2 = select_first([rasusa.read2_subsampled, read_QC_trim.kraken2_extracted_read2]),
             samplename = samplename,
             spades_type = "metaviral"
         }
@@ -103,8 +103,8 @@ workflow theiaviral_illumina_pe {
       if (skip_metaviralspades && select_first([spades.spades_status, "FAIL"]) == "FAIL") {
         call megahit_task.megahit_pe {
           input:
-            read1_cleaned = select_first([rasusa.read1_subsampled, read_QC_trim.kraken2_extracted_read1]),
-            read2_cleaned = select_first([rasusa.read2_subsampled, read_QC_trim.kraken2_extracted_read2]),
+            read1 = select_first([rasusa.read1_subsampled, read_QC_trim.kraken2_extracted_read1]),
+            read2 = select_first([rasusa.read2_subsampled, read_QC_trim.kraken2_extracted_read2]),
             samplename = samplename
         }
       }

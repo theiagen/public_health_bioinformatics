@@ -2,8 +2,8 @@ version 1.0
 
 task spades {
   input {
-    File read1_cleaned
-    File? read2_cleaned
+    File read1
+    File? read2
     String samplename
     String? spades_type
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/spades:4.1.0"
@@ -26,8 +26,8 @@ task spades {
     echo "DEBUG: Running SPAdes"
     spades.py \
       ~{'--' + spades_type} \
-      -1 ~{read1_cleaned} \
-      ~{'-2 ' + read2_cleaned} \
+      -1 ~{read1} \
+      ~{'-2 ' + read2} \
       ~{'-k ' + kmers} \
       -m ~{memory} \
       -t ~{cpu} \

@@ -67,8 +67,8 @@ workflow theiameta_illumina_pe {
   }
   call spades_task.spades {
     input:
-      read1_cleaned = read_QC_trim.read1_clean,
-      read2_cleaned = select_first([read_QC_trim.read2_clean]),
+      read1 = read_QC_trim.read1_clean,
+      read2 = read_QC_trim.read2_clean,
       samplename = samplename,
       spades_type = 'meta'
   }
