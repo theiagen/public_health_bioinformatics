@@ -9,7 +9,6 @@ task extract_kraken_reads {
     Int taxon_id
 
     Boolean exclude = false
-    Boolean include_parents = false
 
     Int cpu = 1
     Int disk_size = 100
@@ -31,7 +30,6 @@ task extract_kraken_reads {
       -s2 ~{read2} \
       --taxid ~{taxon_id} \
       --report ~{kraken2_report} \
-      ~{true="--include-parents" false="" include_parents} \
       --include-children \
       --fastq-output \
       --output ~{taxon_id}_1.fastq \
