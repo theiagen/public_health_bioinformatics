@@ -42,6 +42,20 @@ workflow read_QC_trim_pe {
     String? trimmomatic_args
     String fastp_args = "--detect_adapter_for_pe -g -5 20 -3 20"
   }
+  if (read_qc == "fastqc") {
+    call fastqc_task.fastqc as fastqc_raw {
+      input:
+        read1 = read1,
+        read2 = read2
+    }
+  }
+  if (read_qc == "fastq_scan") {
+    call fastq_scan.fastq_scan_pe as fastq_scan_raw {
+      input:
+        read1 = read1,
+        read2 = read2,
+    }
+  }
   if (("~{workflow_series}" == "theiacov") || ("~{workflow_series}" == "theiameta") || ("~{workflow_series}" == "theiaviral")) {
     call ncbi_scrub.ncbi_scrub_pe {
       input:
@@ -173,11 +187,6 @@ workflow read_QC_trim_pe {
     }
   }
   if (read_qc == "fastqc") {
-    call fastqc_task.fastqc as fastqc_raw {
-      input:
-        read1 = read1,
-        read2 = read2
-    }
     call fastqc_task.fastqc as fastqc_clean {
       input:
         read1 = select_first([kraken2_extract.extracted_read1, bbduk.read1_clean]),
@@ -185,18 +194,12 @@ workflow read_QC_trim_pe {
     }
   }
   if (read_qc == "fastq_scan") {
-    call fastq_scan.fastq_scan_pe as fastq_scan_raw {
-      input:
-        read1 = read1,
-        read2 = read2,
-    }
     call fastq_scan.fastq_scan_pe as fastq_scan_clean {
       input:
         read1 = select_first([kraken2_extract.extracted_read1, bbduk.read1_clean]),
         read2 = select_first([kraken2_extract.extracted_read2, bbduk.read2_clean])
     }
   }
-
   output {
     # NCBI scrubber
     File? read1_dehosted = ncbi_scrub_pe.read1_dehosted
