@@ -33,6 +33,7 @@ workflow theiaviral_ont {
     File? reference_fasta
     Int? genome_length
     Int min_depth = 10 # minimum depth for masking low coverage regions
+    Float min_allele_freq = 0.6 # minimum allele frequency for consensus calling
     Int min_map_quality = 20 # minimum read mapping quality
     Boolean call_porechop = false
     Boolean skip_rasusa = false
@@ -202,6 +203,8 @@ workflow theiaviral_ont {
         reference_fasta = mask_low_coverage.mask_reference_fasta,
         input_vcf = clair3.clair3_variants_vcf,
         min_depth = min_depth,
+        min_freq = min_allele_freq,
+        decompress = true,
         samplename = samplename
     }
     # quality control metrics for consensus (ie. number of bases, degenerate bases, genome length)
@@ -285,7 +288,7 @@ workflow theiaviral_ont {
     String? read_screen_clean = clean_check_reads.read_screen
     File? read_screen_clean_tsv = clean_check_reads.read_screen_tsv
     # raven outputs - denovo genome assembly
-    File? denovo_assembly_fasta = raven.assembly_fasta
+    File? assembly_denovo_fasta = raven.assembly_fasta
     String? raven_denovo_version = raven.raven_version
     String? raven_denovo_docker = raven.raven_docker
     # checkv_denovo outputs - denovo assembly quality control
@@ -358,8 +361,8 @@ workflow theiaviral_ont {
     String? mask_low_coverage_bedtools_version = mask_low_coverage.bedtools_version
     String? mask_low_coverage_bedtools_docker = mask_low_coverage.bedtools_docker
     # bcftools_consensus outputs - consensus genome
-    File? consensus_assembly_fasta = bcftools_consensus.assembly_fasta
-    File? bcftools_norm_vcf = bcftools_consensus.bcftools_norm_vcf
+    File? assembly_consensus_fasta = bcftools_consensus.assembly_fasta
+    File? bcftools_filtered_vcf = bcftools_consensus.bcftools_filtered_decompressed_vcf
     String? bcftools_version = bcftools_consensus.bcftools_version
     String? bcftools_docker = bcftools_consensus.bcftools_docker
     # consensus assembly statistics

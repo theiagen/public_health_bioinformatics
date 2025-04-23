@@ -6,7 +6,9 @@ task bcftools_consensus {
     File input_vcf
     String samplename
     Int min_depth = 0
+    Float min_freq = 0.0
     Int disk_size = 100
+    Boolean decompress = false
     Int cpu = 2
     Int memory = 4
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/bcftools:1.20"
@@ -26,34 +28,40 @@ task bcftools_consensus {
     fi
 
     # remove low coverage variants (this is where you would remove quality too, e.g. & MIN(FMT/GQ)>MIN_QUAL)
-    echo "Filtering variants with low coverage"
-    bcftools view -i 'MIN(FMT/DP)>~{min_depth}' \
+    echo "DEBUG: Filtering variants with low coverage: ~{min_depth} and low frequency: ~{min_freq}"
+    bcftools view -i 'MIN(FMT/DP)>~{min_depth} && MIN(FMT/AF)>~{min_freq}' \
       ~{input_vcf}${ext} \
-      > ~{samplename}_cov_filtered.vcf.gz
+      > ~{samplename}_cov_filtered_prefinal.vcf.gz
 
     # reproduce artic behavior for left-aligning and normalizing indels
     echo "Left-normalizing indels"
     bcftools norm \
-      ~{samplename}_cov_filtered.vcf.gz \
+      ~{samplename}_cov_filtered_prefinal.vcf.gz \
       --check-ref wx \
       --fasta-ref ~{reference_fasta} \
       --output-type z \
-      --output ~{samplename}_norm.vcf.gz
+      --output ~{samplename}_filtered.vcf.gz
 
     # index the vcf file
     echo "Indexing VCF"
-    bcftools index ~{samplename}_norm.vcf.gz
+    bcftools index ~{samplename}_filtered.vcf.gz
 
     # create the consensus fasta file
     echo "Generating consensus sequence"
     bcftools consensus \
-      ~{samplename}_norm.vcf.gz \
+      ~{samplename}_filtered.vcf.gz \
       --fasta-ref ~{reference_fasta} \
       --output ~{samplename}_consensus.fasta
+
+    if [ "~{decompress}" == "true" ]; then
+      echo "DEBUG: Decompressing VCF"
+      gunzip ~{samplename}_filtered.vcf.gz
+    fi
   >>>
   output {
     File assembly_fasta = "~{samplename}_consensus.fasta"
-    File bcftools_norm_vcf = "~{samplename}_norm.vcf.gz"
+    File bcftools_filtered_vcf = "~{samplename}_filtered.vcf.gz"
+    File? bcftools_filtered_decompressed_vcf = "~{samplename}_filtered.vcf"
     String bcftools_version = read_string("VERSION")
     String bcftools_docker = docker
   }

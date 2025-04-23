@@ -34,7 +34,7 @@ workflow theiaviral_illumina_pe {
     Boolean extract_unclassified = true # if true, unclassified reads will be extracted from kraken2 output
     Int min_depth = 10
     Int min_map_quality = 20
-    Float min_variant_proportion = 0.6
+    Float min_allele_freq = 0.6
     # rasusa downsampling inputs
     Boolean call_rasusa = false
     Int? genome_length
@@ -141,8 +141,7 @@ workflow theiaviral_illumina_pe {
         read2 = select_first([rasusa.read2_subsampled, read_QC_trim.kraken2_extracted_read2]),
         reference_genome = select_first([reference_fasta, ncbi_datasets.ncbi_datasets_assembly_fasta]),
         min_depth = select_first([min_depth, 10]),
-        consensus_min_freq = min_variant_proportion,
-        variant_min_freq = min_variant_proportion,
+        consensus_min_freq = min_allele_freq,
         min_qual = min_map_quality,
         trim_primers = false,
         all_positions = true,
