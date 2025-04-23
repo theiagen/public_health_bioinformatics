@@ -37,7 +37,6 @@ workflow theiaviral_illumina_pe {
     Float variant_min_freq = 0.6
     # rasusa downsampling inputs
     Boolean call_rasusa = false
-    Float downsampling_coverage = 300
     Int? genome_length
   }
   # get the PHB version
@@ -75,7 +74,6 @@ workflow theiaviral_illumina_pe {
         read1 = select_first([read_QC_trim.kraken2_extracted_read1]),
         read2 = select_first([read_QC_trim.kraken2_extracted_read2]),
         samplename = samplename,
-        coverage = downsampling_coverage,
         genome_length = select_first([genome_length, ncbi_taxon_summary.avg_genome_length])
     }
   }
