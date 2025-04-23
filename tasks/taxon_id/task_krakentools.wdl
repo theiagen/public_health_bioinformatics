@@ -9,7 +9,7 @@ task extract_kraken_reads {
     Int taxon_id
 
     Boolean exclude = false
-    Boolean include_parents = true # set to true for previous default behavior
+    Boolean include_parents = false
 
     Int cpu = 1
     Int disk_size = 100
