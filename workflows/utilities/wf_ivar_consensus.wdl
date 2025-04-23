@@ -86,7 +86,7 @@ workflow ivar_consensus {
   call consensus_task.consensus {
     input:
       samplename = samplename,
-      mpileup = variant_call.sample_mpileup,
+      bamfile = select_first([primer_trim.trim_sorted_bam, bwa.sorted_bam]),
       consensus_min_depth = min_depth,
       consensus_min_freq = consensus_min_freq,
       min_qual = min_qual,

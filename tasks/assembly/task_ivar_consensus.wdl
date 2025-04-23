@@ -2,7 +2,7 @@ version 1.0
 
 task consensus {
   input {
-    File mpileup
+    File bamfile 
     String samplename
     File? reference_genome
     Boolean count_orphans = true
@@ -26,6 +26,7 @@ task consensus {
     # date and version control
     date | tee DATE
     ivar version | head -n1 | tee IVAR_VERSION
+    samtools --version | head -n1 | tee SAMTOOLS_VERSION
 
     # set reference genome
     if [[ ! -z "~{reference_genome}" ]]; then

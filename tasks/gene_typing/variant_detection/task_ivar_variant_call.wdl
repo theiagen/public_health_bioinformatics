@@ -89,7 +89,6 @@ task variant_call {
     String variant_proportion_intermediate = read_string("PROPORTION_INTERMEDIATE")
     File sample_variants_tsv = "~{samplename}.variants.tsv"
     File sample_variants_vcf = "~{samplename}.variants.vcf"
-    File sample_mpileup = "~{samplename}.mpileup"
     String ivar_version = read_string("IVAR_VERSION")
   }
   runtime {
