@@ -2,16 +2,11 @@ version 1.0
 
 task variant_call {
   input {
-    File bamfile
+    File mpileup
     String samplename
     String organism = "sars-cov-2" # default to sars-cov-2 to maintain previous behavior
     File? reference_genome
     File? reference_gff 
-    Boolean count_orphans = true
-    Int max_depth = "600000"
-    Boolean disable_baq = true
-    Boolean all_positions = false
-    Int min_bq = "0"
     Int min_qual = "20"
     Float? variant_min_freq 
     Int? variant_min_depth 
@@ -24,7 +19,6 @@ task variant_call {
     set -euo pipefail
     # version control
     ivar version | head -n1 | tee IVAR_VERSION
-    samtools --version | head -n1 | tee SAMTOOLS_VERSION
 
     # set reference genome
     if [[ ! -z "~{reference_genome}" ]]; then
@@ -43,7 +37,7 @@ task variant_call {
       ref_gff_call="-g ${ref_gff}"
       # move to primer_schemes dir; bwa fails if reference file not in this location
     elif [[ ! -z "~{organism}" ]]; then
-      # default to sars-cov-2 reference gff to emulate initial theiacov behavior
+      # default to sars-cov-2 reference gff to preserve initial theiacov behavior
       ref_gff="/reference/GCF_009858895.2_ASM985889v3_genomic.gff"
       ref_gff_call="-g ${ref_gff}"
     else
@@ -51,17 +45,7 @@ task variant_call {
     fi
     
     # call variants
-    samtools mpileup \
-      ~{true = "-A" false = "" count_orphans} \
-      -d ~{max_depth} \
-      ~{true = "-B" false = "" disable_baq} \
-      -Q ~{min_bq} \
-      --reference ${ref_genome} \
-      ~{true = "-aa" false = "" all_positions} \
-      ~{bamfile} \
-      > ~{samplename}.mpileup
-
-    cat ~{samplename}.mpileup | \
+    cat ~{mpileup} | \
     ivar variants \
       -p ~{samplename}.variants \
       -q ~{min_qual} \
@@ -105,7 +89,6 @@ task variant_call {
     String variant_proportion_intermediate = read_string("PROPORTION_INTERMEDIATE")
     File sample_variants_tsv = "~{samplename}.variants.tsv"
     File sample_variants_vcf = "~{samplename}.variants.vcf"
-    File sample_mpileup = "~{samplename}.mpileup"
     String ivar_version = read_string("IVAR_VERSION")
     String samtools_version = read_string("SAMTOOLS_VERSION")
   }

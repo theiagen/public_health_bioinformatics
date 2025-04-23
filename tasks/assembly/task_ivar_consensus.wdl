@@ -2,8 +2,15 @@ version 1.0
 
 task consensus {
   input {
-    File mpileup
+    File bamfile 
     String samplename
+    File? reference_genome
+    File? reference_gff 
+    Boolean count_orphans = true
+    Int max_depth = "600000"
+    Boolean disable_baq = true
+    Boolean all_positions = false
+    Int min_bq = "0"
     Int min_qual = "20"
     Float? consensus_min_freq 
     Int? consensus_min_depth
@@ -20,8 +27,30 @@ task consensus {
     # date and version control
     date | tee DATE
     ivar version | head -n1 | tee IVAR_VERSION
+    samtools --version | head -n1 | tee SAMTOOLS_VERSION
 
-    cat ~{mpileup} | \
+    # set reference genome
+    if [[ ! -z "~{reference_genome}" ]]; then
+      echo "User reference identified; ~{reference_genome} will be utilized for alignement"
+      ref_genome="~{reference_genome}"
+      bwa index "~{reference_genome}"
+      # move to primer_schemes dir; bwa fails if reference file not in this location
+    else
+      ref_genome="/artic-ncov2019/primer_schemes/nCoV-2019/V3/nCoV-2019.reference.fasta"  
+    fi
+
+    # call variants
+    samtools mpileup \
+      ~{true = "-A" false = "" count_orphans} \
+      -d ~{max_depth} \
+      ~{true = "-B" false = "" disable_baq} \
+      -Q ~{min_bq} \
+      --reference ${ref_genome} \
+      ~{true = "-aa" false = "" all_positions} \
+      ~{bamfile} \
+      > ~{samplename}.mpileup
+
+    cat ~{samplename}.mpileup | \
     ivar consensus \
       -p ~{samplename}.consensus \
       -q ~{min_qual} \
@@ -36,6 +65,7 @@ task consensus {
   >>>
   output {
     File consensus_seq = "~{samplename}.ivar.consensus.fasta"
+    File sample_mpileup = "~{samplename}.mpileup"
     String ivar_version = read_string("IVAR_VERSION")
     String pipeline_date = read_string("DATE")
   }

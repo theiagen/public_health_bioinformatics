@@ -83,27 +83,10 @@ workflow ivar_consensus {
       docker = stats_n_coverage_primtrim_docker
     }
   }
-  call variant_call_task.variant_call {
-    input:
-      samplename = samplename,
-      bamfile = select_first([primer_trim.trim_sorted_bam, bwa.sorted_bam]),
-      reference_gff = reference_gff,
-      reference_genome = reference_genome,
-      variant_min_depth = min_depth,
-      variant_min_freq = variant_min_freq,
-      min_qual = min_qual,
-      all_positions = all_positions,
-      max_depth = max_depth,
-      organism = organism,
-      cpu = ivar_variant_cpu,
-      memory = ivar_variant_memory,
-      disk_size = ivar_variant_disk_size,
-      docker = ivar_variant_docker
-  }
   call consensus_task.consensus {
     input:
       samplename = samplename,
-      mpileup = variant_call.sample_mpileup,
+      bamfile = select_first([primer_trim.trim_sorted_bam, bwa.sorted_bam]),
       consensus_min_depth = min_depth,
       consensus_min_freq = consensus_min_freq,
       min_qual = min_qual,
@@ -112,6 +95,21 @@ workflow ivar_consensus {
       memory = ivar_consensus_memory,
       disk_size = ivar_consensus_disk_size,
       docker = ivar_consensus_docker
+  }
+  call variant_call_task.variant_call {
+    input:
+      samplename = samplename,
+      mpileup = consensus.sample_mpileup,
+      reference_gff = reference_gff,
+      reference_genome = reference_genome,
+      variant_min_depth = min_depth,
+      variant_min_freq = variant_min_freq,
+      min_qual = min_qual,
+      organism = organism,
+      cpu = ivar_variant_cpu,
+      memory = ivar_variant_memory,
+      disk_size = ivar_variant_disk_size,
+      docker = ivar_variant_docker
   }
   call assembly_metrics.stats_n_coverage {
     input:
