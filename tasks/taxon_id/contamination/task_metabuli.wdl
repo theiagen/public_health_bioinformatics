@@ -22,15 +22,18 @@ task metabuli {
     # get version (there is no --version flag for metabuli)
     echo $(metabuli --help) | awk -F'Version: ' '{print $2}' | awk '{print $1}' | tee VERSION
 
-    # Decompress additional taxonomy files necessary for ncbi ref_seq database search
+    # Decompress additional taxonomy files necessary for database search
+    echo "Decompressing Metabuli DB"
     mkdir taxdump
     tar -C taxdump/ -xzf ~{taxonomy_path}
 
-    # Decompress/extract the ref_seq viral database
+    # Decompress/extract the database
     mkdir db
     tar -C db/ -xzvf ~{metabuli_db}
     extracted_db=$(ls -d db/*/ | head -n 1)
 
+    # Classify the reads
+    echo "Classifying reads"
     metabuli classify \
       --seq-mode 3 \
       ~{read1} \
@@ -44,6 +47,8 @@ task metabuli {
       --threads ~{cpu} \
       --max-ram ~{memory}
 
+    # Extract the reads
+    echo "Extracting reads"
     metabuli extract \
       --seq-mode 3 \
       ~{read1} \
@@ -66,6 +71,7 @@ task metabuli {
 
     # Metabuli doesn't have a built-in option for extracting unclassified reads
     if [[ ~{extract_unclassified} == "true" ]]; then
+      echo "Extracting unclassified reads"
       grep -P "^0\t" output_dir/~{samplename}_classifications.tsv | cut -f 2 > unclassified_reads.txt
       seqkit grep -f unclassified_reads.txt ~{read1} | gzip > ~{samplename}_unclassified.fq.gz
       zcat ${read1_basename}_~{taxon_id}.fq.gz ~{samplename}_unclassified.fq.gz | gzip > ~{samplename}_~{taxon_id}_extracted.fq.gz
