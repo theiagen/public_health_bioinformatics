@@ -4,7 +4,7 @@ task variant_call {
   input {
     File bamfile
     String samplename
-    String organism="sars-cov-2" # default to sars-cov-2 to maintain previous behavior
+    String organism = "sars-cov-2" # default to sars-cov-2 to maintain previous behavior
     File? reference_genome
     File? reference_gff 
     Boolean count_orphans = true

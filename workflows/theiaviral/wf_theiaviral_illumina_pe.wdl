@@ -147,7 +147,7 @@ workflow theiaviral_illumina_pe {
         trim_primers = false,
         all_positions = true,
         max_depth = 0,
-        organism = taxon # placeholder for nothing
+        organism = "" # placeholder for nothing
     }
     # quality control metrics for reads mapping to reference (ie. coverage, depth, base/map quality)
     call assembly_metrics_task.stats_n_coverage as read_mapping_stats {
