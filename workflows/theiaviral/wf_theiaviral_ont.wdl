@@ -134,6 +134,7 @@ workflow theiaviral_ont {
           input:
             read1 = select_first([rasusa.read1_subsampled, metabuli.metabuli_read1_extract]),
             samplename = samplename,
+            uneven_coverage_mode = true,
             genome_length = select_first([genome_length, ncbi_taxon_summary.avg_genome_length])
         }
       }
