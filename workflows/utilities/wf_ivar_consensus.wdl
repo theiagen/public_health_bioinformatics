@@ -49,6 +49,7 @@ workflow ivar_consensus {
     Int? stats_n_coverage_memory
     Int? stats_n_coverage_disk_size
     String? stats_n_coverage_docker
+    String organism = "sars-cov-2"
   }
   call bwa_task.bwa {
     input:
@@ -93,6 +94,7 @@ workflow ivar_consensus {
       min_qual = min_qual,
       all_positions = all_positions,
       max_depth = max_depth,
+      organism = organism,
       cpu = ivar_variant_cpu,
       memory = ivar_variant_memory,
       disk_size = ivar_variant_disk_size,
