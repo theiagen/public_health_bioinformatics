@@ -172,8 +172,7 @@ workflow read_QC_trim_pe {
         read2 = select_first([kraken2_standalone_theiaviral.kraken2_classified_read2]),
         taxon_id = taxon_id,
         kraken2_output = kraken2_standalone_theiaviral.kraken2_classified_report,
-        kraken2_report = kraken2_standalone_theiaviral.kraken2_report,
-        include_parents = false
+        kraken2_report = kraken2_standalone_theiaviral.kraken2_report
     }
     if (extract_unclassified) {
       call cat_lanes.cat_lanes {
