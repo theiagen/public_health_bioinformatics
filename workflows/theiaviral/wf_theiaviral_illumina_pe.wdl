@@ -142,6 +142,7 @@ workflow theiaviral_illumina_pe {
         reference_genome = select_first([reference_fasta, ncbi_datasets.ncbi_datasets_assembly_fasta]),
         min_depth = select_first([min_depth, 10]),
         consensus_min_freq = min_allele_freq,
+        variant_min_freq = min_allele_freq,
         min_qual = min_map_quality,
         trim_primers = false,
         all_positions = true,
