@@ -14,12 +14,15 @@ task skani {
     set -euo pipefail
 
     # extract skani db
+    echo "DEBUG: Decompressing Skani DB"
     tar -xf ~{skani_db}
     untarred_skani_db=$(basename ~{skani_db} .tar)
 
     # get version
     skani --version | tee VERSION
 
+    # run skani
+    echo "DEBUG: Running Skani"
     skani search \
       -d ${untarred_skani_db} \
       -q ~{assembly_fasta} \
@@ -32,6 +35,7 @@ task skani {
       -o ~{samplename}_skani_results.tsv
 
     # add new column header
+    echo "DEBUG: Extracting Skani results"
     new_header=$(awk 'NR==1 {OFS="\t"; print $0, "ANI_x_Ref_Coverage"}' ~{samplename}_skani_results.tsv)
 
     # create a new column and sort by the product of ANI (col 3) and Align_fraction_ref (col 4)

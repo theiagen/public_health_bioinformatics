@@ -16,10 +16,12 @@ task identify_taxon_id {
     date | tee DATE
     datasets --version | sed 's|datasets version: ||' | tee DATASETS_VERSION
 
+    echo "DEBUG: Obtaining taxon report for taxon: ~{taxon}"
     datasets summary taxonomy taxon ~{taxon} \
       ~{"--rank " + rank} \
       --as-json-lines | \
 
+    echo "DEBUG: Extracting taxon ID for rank: ~{rank}"
     dataformat tsv taxonomy \
       --template tax-summary > ncbi_taxon_summary.tsv
 
@@ -32,7 +34,7 @@ task identify_taxon_id {
     # check if ncbi_taxon_summary.tsv is longer than 2 lines (header + 1 data line)
     # if so, then the taxon rank (either calculated or provided) is too specific and we need to exit with an error
     if [ $(wc -l < ncbi_taxon_summary.tsv) -gt 2 ]; then
-      echo echo "Error: input taxon rank '~{rank}' is not valid (too specific) for taxon: '~{taxon}'." 1>&2
+      echo "ERROR: input taxon rank '~{rank}' is not valid (too specific) for taxon: '~{taxon}'." 1>&2
       exit 1
     fi
   >>>

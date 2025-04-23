@@ -24,6 +24,7 @@ task extract_kraken_reads {
     gunzip -c ~{kraken2_output} > kraken2_output_unzipped.txt
 
     # add exclusion tag
+    echo "DEBUG: Extracting reads"
     python3 /KrakenTools/extract_kraken_reads.py \
       -k kraken2_output_unzipped.txt \
       -s1 ~{read1} \

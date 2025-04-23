@@ -31,7 +31,7 @@ task raven {
 
     # check if assembly was successful by checking for output file content
     if [ ! -s ~{samplename}.assembly.fasta ]; then
-      echo "Raven assembly failed. No output file generated."
+      echo "DEBUG: Raven assembly failed. No output file generated."
       exit 1
     fi
   >>>

@@ -23,6 +23,7 @@ task spades {
     # get version
     spades.py ${spades_call} --version | sed -Ee "s/SPAdes genome assembler ([^ ]+).*/\1/" | tee VERSION
 
+    echo "DEBUG: Running SPAdes"
     spades.py \
       ~{'--' + spades_type} \
       -1 ~{read1_cleaned} \
@@ -37,17 +38,17 @@ task spades {
     if [ ~{spades_type} == "metaviral" ]; then
       # if metaviralspades fails, or fails to output a contigs.fasta, we want to report that for falling back
       if [ -f spades/contigs.fasta ]; then
-        echo "Metaviralspades successfully identified a complete virus"
+        echo "DEBUG: Metaviralspades successfully identified a complete virus"
         mv spades/contigs.fasta ~{samplename}~{'_' + spades_type}_contigs.fasta
         echo "PASS" > STATUS
       else
-        echo "Metaviralspades could not identify a complete virus"
+        echo "DEBUG: Metaviralspades could not identify a complete virus"
         echo "FAIL" > STATUS
       fi
     else
       # all other spades types should fail via the pipefail, so they pass by default
-      echo "PASS" > STATUS
       mv spades/contigs.fasta ~{samplename}~{'_' + spades_type}_contigs.fasta
+      echo "PASS" > STATUS
     fi
   >>>
   output {

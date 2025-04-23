@@ -21,15 +21,18 @@ task checkv {
   checkv -h | grep -Po "^CheckV [^:]+" | tee "VERSION"
 
   # extract CheckV DB
+  echo "DEBUG: Extracting CheckV DB"
   tar -xzf ~{checkv_db}
   untarred_checkv_db=$(basename ~{checkv_db} .tar.gz)
 
   # run CheckV referencing the CheckV DB delineated by $CHECKVDB
+  echo "DEBUG: Running CheckV end_to_end"
   checkv end_to_end \
     ~{assembly} checkv_results/ \
     -d ${untarred_checkv_db} \
     -t ~{cpu} 
 
+  echo "DEBUG: Extracting statistics"
   # col (2) is contig_length
   total_len=$(awk 'NR>1 {sum += $2} END {print sum}' checkv_results/quality_summary.tsv)
   # col (5) is gene_count

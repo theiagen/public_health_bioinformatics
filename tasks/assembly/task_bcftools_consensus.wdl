@@ -25,12 +25,14 @@ task bcftools_consensus {
       ext=""
     fi
 
-    # remove low coverage variants (this is where you would remove quality too, e.g. & MIN(FMT/GQ > MIN_QUAL))
+    # remove low coverage variants (this is where you would remove quality too, e.g. & MIN(FMT/GQ)>MIN_QUAL)
+    echo "Filtering variants with low coverage"
     bcftools view -i 'MIN(FMT/DP)>~{min_depth}' \
       ~{input_vcf}${ext} \
       > ~{samplename}_cov_filtered.vcf.gz
 
     # reproduce artic behavior for left-aligning and normalizing indels
+    echo "Left-normalizing indels"
     bcftools norm \
       ~{samplename}_cov_filtered.vcf.gz \
       --check-ref wx \
@@ -39,9 +41,11 @@ task bcftools_consensus {
       --output ~{samplename}_norm.vcf.gz
 
     # index the vcf file
+    echo "Indexing VCF"
     bcftools index ~{samplename}_norm.vcf.gz
 
     # create the consensus fasta file
+    echo "Generating consensus sequence"
     bcftools consensus \
       ~{samplename}_norm.vcf.gz \
       --fasta-ref ~{reference_fasta} \
