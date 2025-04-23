@@ -52,7 +52,7 @@ workflow theiaviral_ont {
   if (! defined(genome_length)) {
     call ncbi_datasets_task.ncbi_datasets_viral_taxon_summary as ncbi_taxon_summary {
       input:
-        taxon_id = ncbi_identify.taxon_id
+        taxon = taxon
     }
   }
   # raw read quality check

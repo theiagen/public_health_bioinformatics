@@ -91,7 +91,7 @@ task ncbi_datasets_download_genome_accession {
 
 task ncbi_datasets_viral_taxon_summary {
   input {
-    String taxon_id # ideally this is SPECIES lvl taxon id
+    String taxon # can be taxon id (int) or organism name (string)
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/ncbi-datasets:16.38.1" # not the latest version, but it's hard to keep up w/ the frequent releases
     Int cpu = 1
     Int memory = 4
@@ -103,7 +103,7 @@ task ncbi_datasets_viral_taxon_summary {
     date | tee DATE
     datasets --version | sed 's|datasets version: ||' | tee DATASETS_VERSION
 
-    datasets summary virus genome taxon ~{taxon_id} \
+    datasets summary virus genome taxon ~{taxon} \
       --limit 100 \
       --complete-only \
       --refseq \
@@ -111,7 +111,7 @@ task ncbi_datasets_viral_taxon_summary {
 
     dataformat tsv virus-genome \
       --fields accession,completeness,is-annotated,length,sourcedb,virus-name,virus-tax-id \
-       > ~{taxon_id}.ncbi_viral_genome_summary.tsv
+       > ncbi_viral_genome_summary.tsv
 
     # take the average of of all genome lengths across each row
     awk -F'\t' '{
@@ -119,12 +119,12 @@ task ncbi_datasets_viral_taxon_summary {
     }
     END {
       if (count) { print int(sum / count) } else { print "No matching taxon id found" }
-    }' ~{taxon_id}.ncbi_viral_genome_summary.tsv > ~{taxon_id}.AVG_GENOME_LENGTH
+    }' ncbi_viral_genome_summary.tsv > AVG_GENOME_LENGTH
 
   >>>
   output {
-    File taxon_summary_tsv = "~{taxon_id}.ncbi_viral_genome_summary.tsv"
-    Int avg_genome_length = read_string("~{taxon_id}.AVG_GENOME_LENGTH")
+    File taxon_summary_tsv = "ncbi_viral_genome_summary.tsv"
+    Int avg_genome_length = read_string("AVG_GENOME_LENGTH")
     String ncbi_datasets_version = read_string("DATASETS_VERSION")
     String ncbi_datasets_docker = docker
   }
