@@ -35,7 +35,7 @@ workflow theiaviral_ont {
     Int min_depth = 10 # minimum depth for masking low coverage regions
     Int min_map_quality = 20 # minimum read mapping quality
     Boolean call_porechop = false
-    Boolean call_rasusa = false
+    Boolean skip_rasusa = false
     Boolean skip_screen = false
   }
   # get the PHB version
@@ -90,7 +90,7 @@ workflow theiaviral_ont {
       taxon_id = ncbi_identify.taxon_id
   }
   # downsample reads if the user wants, rasusa parameters are set in the task
-  if (call_rasusa) {
+  if (skip_rasusa) {
     # rasusa downsampling reads to specified coverage level
     call rasusa_task.rasusa as rasusa {
       input:
