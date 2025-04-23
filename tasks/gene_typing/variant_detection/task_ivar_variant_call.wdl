@@ -42,7 +42,7 @@ task variant_call {
       ref_gff="~{reference_gff}"
       ref_gff_call="-g ${ref_gff}"
       # move to primer_schemes dir; bwa fails if reference file not in this location
-    elif [[ ! -f ~{organism} ]]; then
+    elif [[ ! -z "~{organism}" ]]; then
       # default to sars-cov-2 reference gff to emulate initial theiacov behavior
       ref_gff="/reference/GCF_009858895.2_ASM985889v3_genomic.gff"
       ref_gff_call="-g ${ref_gff}"
