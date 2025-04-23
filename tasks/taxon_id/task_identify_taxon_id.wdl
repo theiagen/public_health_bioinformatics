@@ -16,12 +16,10 @@ task identify_taxon_id {
     date | tee DATE
     datasets --version | sed 's|datasets version: ||' | tee DATASETS_VERSION
 
-    echo "DEBUG: Obtaining taxon report for taxon: ~{taxon}"
-    datasets summary taxonomy taxon ~{taxon} \
+    echo "DEBUG: Obtaining taxon report for taxon: ~{taxon} and rank: ~{rank}"
+    datasets summary taxonomy taxon ~{'"' + taxon + '"'} \ # <- im sorry
       ~{"--rank " + rank} \
       --as-json-lines | \
-
-    echo "DEBUG: Extracting taxon ID for rank: ~{rank}"
     dataformat tsv taxonomy \
       --template tax-summary > ncbi_taxon_summary.tsv
 
