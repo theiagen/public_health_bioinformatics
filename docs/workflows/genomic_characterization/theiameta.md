@@ -82,7 +82,7 @@ The TheiaMeta_Illumina_PE workflow processes Illumina paired-end (PE) reads ge
 | read_QC_trim | **bbduck_mem** | Int | Memory to use with bbduck | 8 | Optional |
 | read_QC_trim | **call_midas** | Boolean | Optional to run Midas on input data | FALSE | Optional |
 | read_QC_trim | **fastp_args** | String | Fastp-specific options that you might choose, see <https://github.com/OpenGene/fastp> |  | Optional |
-| read_QC_trim | **midas_db** | File | A Midas database in .tar.gz format | gs://theiagen-public-files-rp/terra/theiaprok-files/midas/midas_db_v1.2.tar.gz | Optional |
+| read_QC_trim | **midas_db** | File | A Midas database in .tar.gz format | gs://theiagen-public-resources-rp/reference_data/databases/midas/midas_db_v1.2.tar.gz | Optional |
 | read_QC_trim | **phix** | File |  |  | Optional |
 | read_QC_trim | **read_processing** | String |  |  | Optional |
 | read_QC_trim | **read_qc** | String | Allows the user to decide between fastq_scan (default) and fastqc for the evaluation of read quality. | fastq_scan | Optional |
@@ -117,7 +117,7 @@ The TheiaMeta_Illumina_PE workflow processes Illumina paired-end (PE) reads ge
 | sort_bam_assembly_correction | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
 | sort_bam_assembly_correction | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/samtools:1.17 | Optional |
 | sort_bam_assembly_correction | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional |
-| theiameta_illumina_pe | **kraken2_db** | File | A Kraken2 database in .tar.gz format | gs://theiagen-public-files-rp/terra/theiaprok-files/k2_standard_08gb_20230605.tar.gz | Optional |
+| theiameta_illumina_pe | **kraken2_db** | File | A Kraken2 database in .tar.gz format | gs://theiagen-public-resources-rp/reference_data/databases/kraken2/k2_standard_08gb_20230605.tar.gz | Optional |
 | theiameta_illumina_pe | **output_additional_files** | Boolean | Output additional files such as aligned and unaligned reads to reference | FALSE | Optional |
 | theiameta_illumina_pe | **reference** | File | Reference file for consensus calling, in FASTA format |  | Optional |
 | version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |

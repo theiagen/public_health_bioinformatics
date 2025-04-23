@@ -47,7 +47,7 @@ This workflow runs on the sample level.
 | referenceseeker | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 16 | Optional |
 | referenceseeker | **referenceseeker_ani_threshold** | Float | ANI threshold used to exclude ref genomes when ANI value less than this value. | 0.95 | Optional |
 | referenceseeker | **referenceseeker_conserved_dna_threshold** | Float | Conserved DNA threshold used to exclude ref genomes when conserved DNA value is less than this value. | 0.69 | Optional |
-| referenceseeker | **referenceseeker_db** | File | Database used by the referenceseeker tool that contains bacterial genomes from RefSeq release 205. Downloaded from the referenceseeker GitHub repository. | gs://theiagen-public-files-rp/terra/theiaprok-files/referenceseeker-bacteria-refseq-205.v20210406.tar.gz | Optional |
+| referenceseeker | **referenceseeker_db** | File | Database used by the referenceseeker tool that contains bacterial genomes from RefSeq release 205. Downloaded from the referenceseeker GitHub repository. | gs://theiagen-public-resources-rp/reference_data/databases/referenceseeker/referenceseeker-bacteria-refseq-205.v20210406.tar.gz | Optional |
 | version_capture | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0 | Optional |
 | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
 
@@ -63,11 +63,11 @@ This workflow runs on the sample level.
 
     Databases that can be used with ReferenceSeeker are as follows:
 
-      - archea:  `gs://theiagen-public-files-rp/terra/theiaprok-files/referenceseeker-archaea-refseq-205.v20210406.tar.gz`
-      - bacterial (**default**): `gs://theiagen-public-files-rp/terra/theiaprok-files/referenceseeker-bacteria-refseq-205.v20210406.tar.gz`
-      - fungi: `gs://theiagen-public-files-rp/terra/theiaprok-files/referenceseeker-fungi-refseq-205.v20210406.tar.gz`
-      - plasmids: `gs://theiagen-public-files-rp/terra/theiaprok-files/referenceseeker-plasmids-refseq-205.v20210406.tar.gz`
-      - viral: `gs://theiagen-public-files-rp/terra/theiaprok-files/referenceseeker-viral-refseq-205.v20210406.tar.gz`
+      - archea:  `gs://theiagen-public-resources-rp/reference_data/databases/referenceseeker/referenceseeker-archaea-refseq-205.v20210406.tar.gz`
+      - bacterial (**default**): `gs://theiagen-public-resources-rp/reference_data/databases/referenceseeker/referenceseeker-bacteria-refseq-205.v20210406.tar.gz`
+      - fungi: `gs://theiagen-public-resources-rp/reference_data/databases/referenceseeker/referenceseeker-fungi-refseq-205.v20210406.tar.gz`
+      - plasmids: `gs://theiagen-public-resources-rp/reference_data/databases/referenceseeker/referenceseeker-plasmids-refseq-205.v20210406.tar.gz`
+      - viral: `gs://theiagen-public-resources-rp/reference_data/databases/referenceseeker/referenceseeker-viral-refseq-205.v20210406.tar.gz`
 
     For ReferenceSeeker to identify a genome, it must meet user-specified thresholds for sequence coverage (`referenceseeker_conserved_dna_threshold`; default >= 0.69) and identity (`referenceseeker_ani_threshold`; default >= 0.95 ). 
     

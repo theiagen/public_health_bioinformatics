@@ -68,9 +68,9 @@ To run Snippy_Streamline, either a reference genome must be provided (`reference
         Phylogenies of MTBC are typically constructed with the following options:
         
         - Using the H37Rv reference genome
-            - `reference_genome_file` = `"gs://theiagen-public-files-rp/terra/theiaprok-files/Mtb_NC_000962.3.fasta"`
+            - `reference_genome_file` = `"gs://theiagen-public-resources-rp/reference_data/bacterial/mycobacterium/MTB-NC_000962.3.fasta"`
         - Masking repetitive regions of the genome (e.g. PE/PPE genes) that are often misaligned
-            - `snippy_core_bed` = `"gs://theiagen-public-files/terra/theiaprok-files/Mtb_NC_000962.3.bed"`
+            - `snippy_core_bed` = `"gs://theiagen-public-resources-rp/reference_data/bacterial/mycobacterium/MTB-NC_000962.3.bed"`
         - Without masking recombination because TB can be considered non-recombinant
             - `use_gubbins` = false
         - Using the core genome
@@ -104,7 +104,7 @@ To run Snippy_Streamline, either a reference genome must be provided (`reference
 | referenceseeker | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 16 | Optional |
 | referenceseeker | **referenceseeker_ani_threshold** | Float | Bidirectional average nucleotide identity to use as a cut off for identifying reference assemblies with ReferenceSeeker; default value set according to <https://github.com/oschwengers/referenceseeker#description> | 0.95 | Optional |
 | referenceseeker | **referenceseeker_conserved_dna_threshold** | Float | Conserved DNA % to use as a cut off for identifying reference assemblies with ReferenceSeeker; default value set according to <https://github.com/oschwengers/referenceseeker#description> | 0.69 | Optional |
-| referenceseeker | **referenceseeker_db** | File | Database to use with ReferenceSeeker | gs://theiagen-public-files-rp/terra/theiaprok-files/referenceseeker-bacteria-refseq-205.v20210406.tar.gz | Optional |
+| referenceseeker | **referenceseeker_db** | File | Database to use with ReferenceSeeker | gs://theiagen-public-resources-rp/reference_data/databases/referenceseeker/referenceseeker-bacteria-refseq-205.v20210406.tar.gz | Optional |
 | snippy_tree_wf | **call_shared_variants** | Boolean | Activates the shared variants analysis task | TRUE | Optional |
 | snippy_tree_wf | **core_genome** | Boolean | When "true", workflow generates core genome phylogeny; when "false", whole genome is used | TRUE | Optional |
 | snippy_tree_wf | **data_summary_column_names** | String | A comma-separated list of the column names from the sample-level data table for generating a data summary (presence/absence .csv matrix) |  | Optional |
@@ -176,11 +176,11 @@ To run Snippy_Streamline, either a reference genome must be provided (`reference
 
     Databases for use with ReferenceSeeker are as follows, and can be used by pasting the gs uri in double quotation marks `" "` into the `referenceseeker_db` optional input:
 
-    - archea:  `gs://theiagen-public-files-rp/terra/theiaprok-files/referenceseeker-archaea-refseq-205.v20210406.tar.gz`
-    - bacterial (**default**): `gs://theiagen-public-files-rp/terra/theiaprok-files/referenceseeker-bacteria-refseq-205.v20210406.tar.gz`
-    - fungi: `gs://theiagen-public-files-rp/terra/theiaprok-files/referenceseeker-fungi-refseq-205.v20210406.tar.gz`
-    - plasmids: `gs://theiagen-public-files-rp/terra/theiaprok-files/referenceseeker-plasmids-refseq-205.v20210406.tar.gz`
-    - viral: `gs://theiagen-public-files-rp/terra/theiaprok-files/referenceseeker-viral-refseq-205.v20210406.tar.gz`
+    - archea:  `gs://theiagen-public-resources-rp/reference_data/databases/referenceseeker/referenceseeker-archaea-refseq-205.v20210406.tar.gz`
+    - bacterial (**default**): `gs://theiagen-public-resources-rp/reference_data/databases/referenceseeker/referenceseeker-bacteria-refseq-205.v20210406.tar.gz`
+    - fungi: `gs://theiagen-public-resources-rp/reference_data/databases/referenceseeker/referenceseeker-fungi-refseq-205.v20210406.tar.gz`
+    - plasmids: `gs://theiagen-public-resources-rp/reference_data/databases/referenceseeker/referenceseeker-plasmids-refseq-205.v20210406.tar.gz`
+    - viral: `gs://theiagen-public-resources-rp/reference_data/databases/referenceseeker/referenceseeker-viral-refseq-205.v20210406.tar.gz`
 
     For ReferenceSeeker to identify a genome, it must meet user-specified thresholds for sequence coverage (`referenceseeker_conserved_dna_threshold`) and identity (`referenceseeker_ani_threshold`). The default values for these are set according to community standards (conserved DNA >= 69 % and ANI >= 95 %). A list of closely related genomes is provided in `referenceseeker_tsv`. The reference genome that ranks highest according to ANI and conserved DNA values is considered the closest match and will be downloaded, with information about this provided in the `snippy_referenceseeker_top_hit_ncbi_accession` output.
 

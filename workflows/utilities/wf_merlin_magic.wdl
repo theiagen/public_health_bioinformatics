@@ -190,15 +190,15 @@ workflow merlin_magic {
     Int? sistr_disk_size
     # snippy options - mostly files we host
     String? snippy_query_gene
-    File snippy_reference_afumigatus = "gs://theiagen-public-files/terra/theiaeuk_files/Aspergillus_fumigatus_GCF_000002655.1_ASM265v1_genomic.gbff"
-    File snippy_reference_cryptoneo = "gs://theiagen-public-files/terra/theiaeuk_files/Cryptococcus_neoformans_GCF_000091045.1_ASM9104v1_genomic.gbff"
+    File snippy_reference_afumigatus = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/aspergillus/Aspergillus_fumigatus_GCF_000002655.1_ASM265v1_genomic.gbff"
+    File snippy_reference_cryptoneo = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/cryptococcus/Cryptococcus_neoformans_GCF_000091045.1_ASM9104v1_genomic.gbff"
     Int? snippy_map_qual
     Int? snippy_base_quality
     Int? snippy_min_coverage
     Float? snippy_min_frac
     Int? snippy_min_quality
     Int? snippy_maxsoft
-    #File snippy_reference_calbicans = "gs://theiagen-public-files/terra/theiaeuk_files/Candida_albicans_GCF_000182965.3_ASM18296v3_genomic.gbff"
+    #File snippy_reference_calbicans = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Candida_albicans_GCF_000182965.3_ASM18296v3_genomic.gbff"
     # sonneityping options
     String? sonneityping_mykrobe_opts
     # spatyper options

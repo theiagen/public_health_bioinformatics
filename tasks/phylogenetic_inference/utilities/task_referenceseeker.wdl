@@ -4,7 +4,7 @@ task referenceseeker {
   input {
     File assembly_fasta
     String samplename
-    File referenceseeker_db = "gs://theiagen-public-files-rp/terra/theiaprok-files/referenceseeker-bacteria-refseq-205.v20210406.tar.gz"
+    File referenceseeker_db = "gs://theiagen-public-resources-rp/reference_data/databases/referenceseeker/referenceseeker-bacteria-refseq-205.v20210406.tar.gz"
     Float referenceseeker_ani_threshold = 0.95
     Float referenceseeker_conserved_dna_threshold = 0.69
     Int disk_size = 200 

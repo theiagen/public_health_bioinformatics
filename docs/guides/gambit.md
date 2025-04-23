@@ -415,8 +415,8 @@ Options:
 
     **GS URI (for [Terra.bio](https://terra.bio) usage):**
 
-    - `gs://theiagen-public-files/terra/theiaeuk_files/gambit/221130-theiagen-fungal-v0.2.db`
-    - `gs://theiagen-public-files/terra/theiaeuk_files/gambit/221130-theiagen-fungal-v0.2.h5`
+    - `gs://gambit-databases-rp/fungal-version/0.2/221130-theiagen-fungal-v0.2.db`
+    - `gs://gambit-databases-rp/fungal-version/0.2/221130-theiagen-fungal-v0.2.h5`
 
     **HTTPS URL (for local download):**
 
