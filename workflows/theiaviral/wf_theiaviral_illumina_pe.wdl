@@ -87,7 +87,6 @@ workflow theiaviral_illumina_pe {
         read1 = select_first([read_QC_trim.kraken2_extracted_read1]),
         read2 = select_first([read_QC_trim.kraken2_extracted_read2]),
         samplename = samplename,
-        coverage = downsampling_coverage,
         genome_length = select_first([genome_length, ncbi_taxon_summary.avg_genome_length])
     }
   }
