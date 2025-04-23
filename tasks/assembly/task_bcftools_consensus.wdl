@@ -8,6 +8,7 @@ task bcftools_consensus {
     Int min_depth = 0
     Float min_freq = 0.0
     Int disk_size = 100
+    Boolean decompress = false
     Int cpu = 2
     Int memory = 4
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/bcftools:1.20"
@@ -25,10 +26,10 @@ task bcftools_consensus {
       > ~{samplename}_cov_filtered_prefinal.vcf
 
     # remove low coverage variants (this is where you would remove quality too, e.g. & MIN(FMT/GQ)>MIN_QUAL)
-    echo "Filtering variants with low coverage"
-    bcftools view -i 'MIN(FMT/DP)>~{min_depth}' \
+    echo "DEBUG: Filtering variants with low coverage: ~{min_depth} and low frequency: ~{min_freq}"
+    bcftools view -i 'MIN(FMT/DP)>~{min_depth} && MIN(FMT/AF)>~{min_freq}' \
       ~{input_vcf}${ext} \
-      > ~{samplename}_cov_filtered.vcf.gz
+      > ~{samplename}_cov_filtered_prefinal.vcf.gz
 
     # reproduce artic behavior for left-aligning and normalizing indels
     echo "Left-normalizing indels"
