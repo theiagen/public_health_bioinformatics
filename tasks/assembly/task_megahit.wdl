@@ -1,6 +1,6 @@
 version 1.0
 
-task megahit_pe {
+task megahit {
   input {
     File read1
     File read2

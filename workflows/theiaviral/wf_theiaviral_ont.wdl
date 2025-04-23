@@ -15,6 +15,7 @@ import "../../tasks/taxon_id/task_identify_taxon_id.wdl" as identify_taxon_id_ta
 import "../../tasks/utilities/data_handling/task_parse_mapping.wdl" as parse_mapping_task
 import "../../tasks/utilities/data_handling/task_fasta_utilities.wdl" as fasta_utilities_task
 import "../../tasks/assembly/task_raven.wdl" as raven_task
+import "../../tasks/assembly/task_flye.wdl" as flye_task
 import "../../tasks/assembly/task_bcftools_consensus.wdl" as bcftools_consensus_task
 import "../../tasks/alignment/task_minimap2.wdl" as minimap2_task
 import "../../tasks/gene_typing/variant_detection/task_clair3_variants.wdl" as clair3_task
@@ -38,6 +39,7 @@ workflow theiaviral_ont {
     Boolean call_porechop = false
     Boolean skip_rasusa = false
     Boolean skip_screen = false
+    Boolean skip_raven = false
   }
   # get the PHB version
   call versioning.version_capture {
@@ -91,7 +93,7 @@ workflow theiaviral_ont {
       taxon_id = ncbi_identify.taxon_id
   }
   # downsample reads if the user wants, rasusa parameters are set in the task
-  if (skip_rasusa) {
+  if (! skip_rasusa) {
     # rasusa downsampling reads to specified coverage level
     call rasusa_task.rasusa as rasusa {
       input:
@@ -119,28 +121,37 @@ workflow theiaviral_ont {
   if (select_first([clean_check_reads.read_screen, ""]) == "PASS" || skip_screen) {
     # run de novo if no reference genome is provided so we can select a reference
     if (! defined(reference_fasta)) {
-      # de novo assembly with raven
-      call raven_task.raven as raven {
-        input:
-          read1 = select_first([rasusa.read1_subsampled, metabuli.metabuli_read1_extract]),
-          samplename = samplename
+      if (! skip_raven) 
+        # de novo assembly with raven
+        call raven_task.raven {
+          input:
+            read1 = select_first([rasusa.read1_subsampled, metabuli.metabuli_read1_extract]),
+            samplename = samplename
+        }
+      if (skip_raven && select_first([raven.raven_status, "FAIL"]) == "FAIL") {
+        call flye_task.flye {
+          input:
+            read1 = select_first([rasusa.read1_subsampled, metabuli.metabuli_read1_extract]),
+            samplename = samplename,
+            genome_length = select_first([genome_length, ncbi_taxon_summary.avg_genome_length])
+        }
       }
       # quality control metrics for de novo assembly (ie. completeness, viral gene count, contamination)
       call checkv_task.checkv as checkv_denovo {
         input:
-          assembly = raven.assembly_fasta,
+          assembly = select_first([flye.assembly_fasta, raven.assembly_fasta]),
           samplename = samplename
       }
       # quality control metrics for de novo assembly (ie. contigs, n50, GC content, genome length)
       call quast_task.quast as quast_denovo {
         input:
-          assembly = raven.assembly_fasta,
+          assembly = select_first([flye.assembly_fasta, raven.assembly_fasta]),
           samplename = samplename
       }
       # ANI-based reference genome selection
       call skani_task.skani as skani {
         input:
-          assembly_fasta = raven.assembly_fasta,
+          assembly_fasta = select_first([flye.assembly_fasta, raven.assembly_fasta]),
           samplename = samplename
       }
       # download the best reference determined from skani
@@ -289,9 +300,12 @@ workflow theiaviral_ont {
     String? read_screen_clean = clean_check_reads.read_screen
     File? read_screen_clean_tsv = clean_check_reads.read_screen_tsv
     # raven outputs - denovo genome assembly
-    File? assembly_denovo_fasta = raven.assembly_fasta
+    File? assembly_denovo_fasta = select_first([flye.assembly_fasta, raven.assembly_fasta])
     String? raven_denovo_version = raven.raven_version
     String? raven_denovo_docker = raven.raven_docker
+    String? flye_denovo_version = flye.flye_version
+    String? flye_denovo_docker = flye.flye_docker
+    File? flye_denovo_info = flye.assembly_info
     # checkv_denovo outputs - denovo assembly quality control
     File? checkv_denovo_summary = checkv_denovo.checkv_summary
     File? checkv_denovo_contamination = checkv_denovo.checkv_contamination

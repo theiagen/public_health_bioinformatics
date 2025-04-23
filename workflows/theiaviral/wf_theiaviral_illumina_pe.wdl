@@ -30,13 +30,13 @@ workflow theiaviral_illumina_pe {
     File kraken_db = "gs://theiagen-large-public-files-rp/terra/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz"
     Boolean skip_screen = true # if false, run clean read screening
     Boolean skip_metaviralspades = false # if true, move to megahit immediately
+    Boolean skip_rasusa = false
     File? reference_fasta # optional, if provided, will be used instead of dynamic reference selection
     Boolean extract_unclassified = true # if true, unclassified reads will be extracted from kraken2 output
     Int min_depth = 10
     Int min_map_quality = 20
     Float min_allele_freq = 0.6
     # rasusa downsampling inputs
-    Boolean call_rasusa = false
     Int? genome_length
   }
   # get the PHB version
@@ -60,7 +60,7 @@ workflow theiaviral_illumina_pe {
       kraken_db = kraken_db,
       workflow_series = "theiaviral"
   }
-  if (call_rasusa) {
+  if (! skip_rasusa) {
     # get genome length if it is not provided
     if (! defined(genome_length)) {
       call ncbi_datasets_task.ncbi_datasets_viral_taxon_summary as ncbi_taxon_summary {
@@ -101,7 +101,7 @@ workflow theiaviral_illumina_pe {
       }
       # fallback to megahit if metaviralspades fails to identify a complete virus
       if (skip_metaviralspades && select_first([spades.spades_status, "FAIL"]) == "FAIL") {
-        call megahit_task.megahit_pe {
+        call megahit_task.megahit {
           input:
             read1 = select_first([rasusa.read1_subsampled, read_QC_trim.kraken2_extracted_read1]),
             read2 = select_first([rasusa.read2_subsampled, read_QC_trim.kraken2_extracted_read2]),
@@ -111,19 +111,19 @@ workflow theiaviral_illumina_pe {
       # quality control metrics for de novo assembly (ie. completeness, viral gene count, contamination)
       call checkv_task.checkv as checkv_denovo {
         input:
-          assembly = select_first([spades.assembly_fasta, megahit_pe.assembly_fasta]),
+          assembly = select_first([spades.assembly_fasta, megahit.assembly_fasta]),
           samplename = samplename
       }
       # quality control metrics for de novo assembly (ie. contigs, n50, GC content, genome length)
       call quast_task.quast as quast_denovo {
         input:
-          assembly = select_first([spades.assembly_fasta, megahit_pe.assembly_fasta]),
+          assembly = select_first([spades.assembly_fasta, megahit.assembly_fasta]),
           samplename = samplename
       }
       # ANI-based reference genome selection
       call skani_task.skani as skani {
         input:
-          assembly_fasta = select_first([spades.assembly_fasta, megahit_pe.assembly_fasta]),
+          assembly_fasta = select_first([spades.assembly_fasta, megahit.assembly_fasta]),
           samplename = samplename
       }
       # download the best reference determined from skani
@@ -216,8 +216,12 @@ workflow theiaviral_illumina_pe {
     File? fastq_scan_clean1_json = read_QC_trim.fastq_scan_clean1_json
     File? fastq_scan_clean2_json = read_QC_trim.fastq_scan_clean2_json
     # denovo genome assembly
-    File? assembly_denovo_fasta = select_first([spades.assembly_fasta, megahit_pe.assembly_fasta])
+    File? assembly_denovo_fasta = select_first([spades.assembly_fasta, megahit.assembly_fasta])
     String? metaviralspades_status = spades.spades_status
+    String? metaviralspades_version = spades.spades_version
+    String? metaviralspades_docker = spades.spades_docker
+    String? megahit_version = megahit.megahit_version
+    String? megahit_docker = megahit.megahit_docker
     # checkv_denovo outputs - denovo assembly quality control
     File? checkv_denovo_summary = checkv_denovo.checkv_summary
     File? checkv_denovo_contamination = checkv_denovo.checkv_contamination
