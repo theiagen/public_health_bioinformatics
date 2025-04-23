@@ -17,7 +17,7 @@ task identify_taxon_id {
     datasets --version | sed 's|datasets version: ||' | tee DATASETS_VERSION
 
     echo "DEBUG: Obtaining taxon report for taxon: ~{taxon} and rank: ~{rank}"
-    datasets summary taxonomy taxon ~{'"' + taxon + '"'} \ # <- im sorry
+    datasets summary taxonomy taxon ~{'"' + taxon + '"'} \
       ~{"--rank " + rank} \
       --as-json-lines | \
     dataformat tsv taxonomy \

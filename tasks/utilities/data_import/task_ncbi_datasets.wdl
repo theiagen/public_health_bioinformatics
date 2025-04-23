@@ -103,7 +103,7 @@ task ncbi_datasets_viral_taxon_summary {
     date | tee DATE
     datasets --version | sed 's|datasets version: ||' | tee DATASETS_VERSION
 
-    datasets summary virus genome taxon ~{'"' + taxon + '"'} \ # <- im sorry
+    datasets summary virus genome taxon ~{'"' + taxon + '"'} \
       --limit 100 \
       --complete-only \
       --refseq \
