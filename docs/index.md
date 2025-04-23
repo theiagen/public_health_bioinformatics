@@ -10,7 +10,7 @@ All workflows in the PHB repository end with `_PHB` in order to differentiate th
 
 <center>[Explore our workflows](workflows_overview/workflows_type.md){ .md-button .md-button--primary }</center>
 
-<div class="grid cards " markdown>
+<div class="grid cards" markdown>
 
 -   <center>[Terra Users](getting_started/terra.md){ .md-button .md-button--secondary }
 
