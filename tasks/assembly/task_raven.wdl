@@ -25,7 +25,7 @@ task raven {
     raven \
       --polishing-rounds ~{raven_polishing_iterations} \
       ~{"--identity " + raven_identity} \
-      ~{"--extra-params " + additional_parameters } \
+      ~{"--extra-params " + raven_opts} \
       --threads ~{cpu} \
       ~{read1} > ~{samplename}.assembly.fasta
 
