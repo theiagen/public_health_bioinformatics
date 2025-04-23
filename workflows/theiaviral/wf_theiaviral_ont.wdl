@@ -187,6 +187,7 @@ workflow theiaviral_ont {
         reference_genome_file_index = fasta_utilities.fai,
         sequencing_platform = "ont",
         enable_long_indel = true,
+        decompress = true,
         samplename = samplename
     }
     # mask low coverage regions with Ns
@@ -349,7 +350,7 @@ workflow theiaviral_ont {
     String? fasta_utilities_samtools_version = fasta_utilities.samtools_version
     String? fasta_utilities_samtools_docker = fasta_utilities.samtools_docker
     # clair3 outputs - variant calling
-    File? clair3_vcf = clair3.clair3_variants_vcf
+    File? clair3_vcf = clair3.clair3_variants_decompressed_vcf
     File? clair3_gvcf = clair3.clair3_variants_gvcf
     String? clair3_model = clair3.clair3_model_used
     String? clair3_version = clair3.clair3_version
