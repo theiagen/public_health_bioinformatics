@@ -9,7 +9,6 @@ task clair3_variants {
     String sequencing_platform
     String samplename
     String clair3_model = "r941_prom_hac_g360+g422"
-    Boolean decompress = false
     String docker = "us-docker.pkg.dev/general-theiagen/theiagen/clair3-extra-models:1.0.10"
     Int memory = 8
     Int cpu = 4
@@ -61,10 +60,6 @@ task clair3_variants {
         ~{true="--gvcf" false="" enable_gvcf}
 
     mv "~{samplename}/merge_output.vcf.gz" ~{samplename}_merge_output.vcf.gz
-    if [ ~{decompress} == "true" ]; then
-        echo "DEBUG: Decompressing VCF"
-        gunzip ~{samplename}_merge_output.vcf.gz
-    fi
 
     # If gvcf is enabled, move the gvcf file to the output directory
     if [ "~{enable_gvcf}" == "true" ]; then
@@ -73,7 +68,7 @@ task clair3_variants {
   >>>
   output {
     String clair3_version = read_string("VERSION")
-    File clair3_variants_vcf = "~{samplename}_merge_output.vcf~{true = "" false = ".gz" decompress}"
+    File clair3_variants_vcf = "~{samplename}_merge_output.vcf.gz"
     File? clair3_variants_gvcf = "~{samplename}_merge_output.gvcf.gz"
     String clair3_variants_docker_image = docker
     String clair3_model_used = clair3_model

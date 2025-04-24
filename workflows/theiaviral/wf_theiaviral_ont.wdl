@@ -200,7 +200,6 @@ workflow theiaviral_ont {
         reference_genome_file_index = fasta_utilities.fai,
         sequencing_platform = "ont",
         enable_long_indel = true,
-        decompress = true,
         samplename = samplename
     }
     # mask low coverage regions with Ns
@@ -218,7 +217,6 @@ workflow theiaviral_ont {
         input_vcf = clair3.clair3_variants_vcf,
         min_depth = min_depth,
         min_freq = min_allele_freq,
-        decompress = true,
         samplename = samplename
     }
     # quality control metrics for consensus (ie. number of bases, degenerate bases, genome length)

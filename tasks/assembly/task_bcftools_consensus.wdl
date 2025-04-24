@@ -8,7 +8,6 @@ task bcftools_consensus {
     Int min_depth = 0
     Float min_freq = 0.0
     Int disk_size = 100
-    Boolean decompress = false
     Int cpu = 2
     Int memory = 4
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/bcftools:1.20"
@@ -52,15 +51,10 @@ task bcftools_consensus {
       ~{samplename}_filtered.vcf.gz \
       --fasta-ref ~{reference_fasta} \
       --output ~{samplename}_consensus.fasta
-
-    if [ "~{decompress}" == "true" ]; then
-      echo "DEBUG: Decompressing VCF"
-      gunzip ~{samplename}_filtered.vcf.gz
-    fi
   >>>
   output {
     File assembly_fasta = "~{samplename}_consensus.fasta"
-    File bcftools_filtered_vcf = "~{samplename}_filtered.vcf~{true = "" false = ".gz" decompress}"
+    File bcftools_filtered_vcf = "~{samplename}_filtered.vcf.gz"
     String bcftools_version = read_string("VERSION")
     String bcftools_docker = docker
   }
