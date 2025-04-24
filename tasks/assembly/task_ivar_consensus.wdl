@@ -40,9 +40,9 @@ task consensus {
 
     # call variants
     samtools mpileup \
-      ~{true = "-A" false = "" count_orphans} \
+      ~{true = "--count-orphans" false = "" count_orphans} \
       -d ~{max_depth} \
-      ~{true = "-B" false = "" disable_baq} \
+      ~{true = "-no-BAQ" false = "" disable_baq} \
       -Q ~{min_bq} \
       --reference ${ref_genome} \
       ~{true = "-aa" false = "" all_positions} \
@@ -66,8 +66,8 @@ task consensus {
     File consensus_seq = "~{samplename}.ivar.consensus.fasta"
     File sample_mpileup = "~{samplename}.mpileup"
     String ivar_version = read_string("IVAR_VERSION")
-    String pipeline_date = read_string("DATE")
     String samtools_version = read_string("SAMTOOLS_VERSION")
+    String pipeline_date = read_string("DATE")
   }
   runtime {
     docker: docker
