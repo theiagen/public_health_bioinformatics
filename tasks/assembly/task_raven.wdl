@@ -38,7 +38,7 @@ task raven {
     fi
   >>>
   output {
-    File assembly_fasta = "~{samplename}_contigs.fasta"
+    File? assembly_fasta = "~{samplename}_contigs.fasta"
     String raven_status = read_string("STATUS")
     String raven_version = read_string("VERSION")
     String raven_docker = "~{docker}"
