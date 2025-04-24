@@ -8,7 +8,6 @@ task bcftools_consensus {
     Int min_depth = 0
     Float min_freq = 0.0
     Int disk_size = 100
-    Boolean decompress = false
     Int cpu = 2
     Int memory = 4
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/bcftools:1.20"
