@@ -5,7 +5,6 @@ task consensus {
     File bamfile 
     String samplename
     File? reference_genome
-    File? reference_gff 
     Boolean count_orphans = true
     Int max_depth = "600000"
     Boolean disable_baq = true
