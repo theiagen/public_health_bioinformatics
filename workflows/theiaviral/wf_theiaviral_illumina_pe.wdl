@@ -102,7 +102,7 @@ workflow theiaviral_illumina_pe {
         }
       }
       # fallback to megahit if metaviralspades fails to identify a complete virus
-      if (skip_metaviralspades && select_first([spades.spades_status, "FAIL"]) == "FAIL") {
+      if (select_first([spades.spades_status, "FAIL"]) == "FAIL") {
         call megahit_task.megahit {
           input:
             read1 = select_first([rasusa.read1_subsampled, read_QC_trim.kraken2_extracted_read1]),

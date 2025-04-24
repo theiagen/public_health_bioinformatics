@@ -129,13 +129,12 @@ workflow theiaviral_ont {
             samplename = samplename
         }
       }
-      if (skip_raven && select_first([raven.raven_status, "FAIL"]) == "FAIL") {
+      if (select_first([raven.raven_status, "FAIL"]) == "FAIL") {
         call flye_task.flye {
           input:
             read1 = select_first([rasusa.read1_subsampled, metabuli.metabuli_read1_extract]),
             samplename = samplename,
             uneven_coverage_mode = true,
-            genome_length = select_first([genome_length, ncbi_taxon_summary.avg_genome_length])
         }
       }
       # quality control metrics for de novo assembly (ie. completeness, viral gene count, contamination)
@@ -167,7 +166,7 @@ workflow theiaviral_ont {
     call minimap2_task.minimap2 as minimap2 {
       input:
         query1 = select_first([rasusa.read1_subsampled, metabuli.metabuli_read1_extract]),
-        reference = select_first([ncbi_datasets.ncbi_datasets_assembly_fasta, reference_fasta]),
+        reference = select_first([reference_fasta, ncbi_datasets.ncbi_datasets_assembly_fasta]),
         samplename = samplename,
         mode = "map-ont",
         output_sam = true,
@@ -189,14 +188,14 @@ workflow theiaviral_ont {
     # Index the reference genome for Clair3
     call fasta_utilities_task.samtools_faidx as fasta_utilities{
       input:
-        fasta = select_first([ncbi_datasets.ncbi_datasets_assembly_fasta, reference_fasta])
+        fasta = select_first([reference_fasta, ncbi_datasets.ncbi_datasets_assembly_fasta])
     }
     # variant calling with Clair3
     call clair3_task.clair3_variants as clair3 {
       input:
         alignment_bam_file = parse_mapping.bam,
         alignment_bam_file_index = parse_mapping.bai,
-        reference_genome_file = select_first([ncbi_datasets.ncbi_datasets_assembly_fasta, reference_fasta]),
+        reference_genome_file = select_first([reference_fasta, ncbi_datasets.ncbi_datasets_assembly_fasta]),
         reference_genome_file_index = fasta_utilities.fai,
         sequencing_platform = "ont",
         enable_long_indel = true,
@@ -207,7 +206,7 @@ workflow theiaviral_ont {
       input:
         bam = parse_mapping.bam,
         bai = parse_mapping.bai,
-        reference_fasta = select_first([ncbi_datasets.ncbi_datasets_assembly_fasta, reference_fasta]),
+        reference_fasta = select_first([reference_fasta, ncbi_datasets.ncbi_datasets_assembly_fasta]),
         min_depth = min_depth
     }
     # create consensus genome based on variant calls

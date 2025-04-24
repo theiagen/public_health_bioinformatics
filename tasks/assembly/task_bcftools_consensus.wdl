@@ -19,7 +19,7 @@ task bcftools_consensus {
     bcftools --version | head -1 | tee VERSION
 
     # make sure input vcf is gzipped
-    if [[ ! "~{input_vcf}" == *.gz ]]; then
+    if [[ ! "~{input_vcf}" != *.gz ]]; then
       ext=".gz"
       gzip ~{input_vcf}
     else
@@ -51,10 +51,13 @@ task bcftools_consensus {
       ~{samplename}_filtered.vcf.gz \
       --fasta-ref ~{reference_fasta} \
       --output ~{samplename}_consensus.fasta
+
+    # decompress the vcf file
+    gunzip ~{samplename}_filtered.vcf.gz
   >>>
   output {
     File assembly_fasta = "~{samplename}_consensus.fasta"
-    File bcftools_filtered_vcf = "~{samplename}_filtered.vcf.gz"
+    File bcftools_filtered_vcf = "~{samplename}_filtered.vcf"
     String bcftools_version = read_string("VERSION")
     String bcftools_docker = docker
   }
