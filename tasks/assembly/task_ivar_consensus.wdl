@@ -38,7 +38,7 @@ task consensus {
       ref_genome="/artic-ncov2019/primer_schemes/nCoV-2019/V3/nCoV-2019.reference.fasta"  
     fi
 
-    # call variants
+    # call mpileup 
     samtools mpileup \
       ~{true = "--count-orphans" false = "" count_orphans} \
       -d ~{max_depth} \
@@ -49,6 +49,7 @@ task consensus {
       ~{bamfile} \
       > ~{samplename}.mpileup
 
+    # call consensus
     cat ~{samplename}.mpileup | \
     ivar consensus \
       -p ~{samplename}.consensus \
