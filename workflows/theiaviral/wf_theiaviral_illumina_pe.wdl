@@ -18,6 +18,7 @@ import "../../tasks/quality_control/basic_statistics/task_consensus_qc.wdl" as c
 import "../../tasks/task_versioning.wdl" as versioning_task
 import "../utilities/wf_morgana_magic.wdl" as morgana_magic_wf
 
+
 workflow theiaviral_illumina_pe {
   meta {
     description: "De novo assembly, dynamic reference selection, and reference-based consensus calling for viral metagenomic/genomic data generated on Illumina paired-end NGS platforms."
@@ -217,38 +218,52 @@ workflow theiaviral_illumina_pe {
         }
       }
     }
-    # align reads and generate consensus assembly via ivar
-    call ivar_consensus.ivar_consensus {
+    # align reads to reference
+    call bwa_task.bwa {
       input:
         samplename = samplename,
         read1 = select_first([rasusa.read1_subsampled, read_QC_trim.kraken2_extracted_read1]),
         read2 = select_first([rasusa.read2_subsampled, read_QC_trim.kraken2_extracted_read2]),
+        reference_genome = select_first([reference_fasta, ncbi_datasets.ncbi_datasets_assembly_fasta])
+    }
+    # consensus calling via ivar
+    call ivar_consensus.consensus {
+      input:
+        bamfile = bwa.sorted_bam,
+        samplename = samplename,
         reference_genome = select_first([reference_fasta, ncbi_datasets.ncbi_datasets_assembly_fasta]),
-        min_depth = select_first([min_depth, 10]),
-        consensus_min_freq = min_allele_freq,
-        variant_min_freq = min_allele_freq,
         min_qual = min_map_quality,
-        trim_primers = false,
-        all_positions = true,
-        max_depth = 0,
-        organism = "" # placeholder for nothing
+        consensus_min_depth = select_first([min_depth, 10]),
+        consensus_min_freq = min_allele_freq,
+        all_positions = true
+    }
+    # variant calling via ivar
+    call variant_call_task.variant_call as ivar_variants {
+      input:
+        mpileup = consensus.sample_mpileup,
+        samplename = samplename,
+        reference_genome = select_first([reference_fasta, ncbi_datasets.ncbi_datasets_assembly_fasta]),
+        min_qual = min_map_quality,
+        organism = "",
+        variant_min_freq = min_allele_freq,
+        variant_min_depth = select_first([min_depth, 10])
     }
     # quality control metrics for reads mapping to reference (ie. coverage, depth, base/map quality)
     call assembly_metrics_task.stats_n_coverage as read_mapping_stats {
       input:
-        bamfile = ivar_consensus.aligned_bam,
+        bamfile = bwa.sorted_bam,
         samplename = samplename
     }
     # quality control metrics for consensus (ie. number of bases, degenerate bases, genome length)
     call consensus_qc_task.consensus_qc as consensus_qc {
       input:
-        assembly_fasta = ivar_consensus.assembly_fasta,
+        assembly_fasta = consensus.consensus_seq,
         reference_genome = select_first([reference_fasta, ncbi_datasets.ncbi_datasets_assembly_fasta])
     }
     # quality control metrics for consensus (ie. completeness, viral gene count, contamination)
     call checkv_task.checkv as checkv_consensus {
       input:
-        assembly = ivar_consensus.assembly_fasta,
+        assembly = consensus.consensus_seq,
         samplename = samplename
     }
   }
