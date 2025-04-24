@@ -13,6 +13,7 @@ task clair3_variants {
     Int memory = 8
     Int cpu = 4
     Int disk_size = 100
+    Boolean decompress = true
     Boolean include_all_contigs = true # Haploid calling option, default true
     Boolean enable_haploid_precise = true # Haploid calling option, default true
     Boolean disable_phasing = true # Haploid calling option, default true
@@ -59,17 +60,19 @@ task clair3_variants {
         ~{true="--enable_long_indel" false="" enable_long_indel} \
         ~{true="--gvcf" false="" enable_gvcf}
 
-    mv "~{samplename}/merge_output.vcf.gz" ~{samplename}_merge_output.vcf.gz
+    gunzip ~{samplename}/merge_output.vcf.gz
+    mv "~{samplename}/merge_output.vcf" ~{samplename}_merge_output.vcf
 
     # If gvcf is enabled, move the gvcf file to the output directory
     if [ "~{enable_gvcf}" == "true" ]; then
-        mv "~{samplename}/merge_output.gvcf.gz" ~{samplename}_merge_output.gvcf.gz
+      gunzip ~{samplename}/merge_output.gvcf.gz
+      mv "~{samplename}/merge_output.gvcf" ~{samplename}_merge_output.gvcf
     fi
   >>>
   output {
     String clair3_version = read_string("VERSION")
-    File clair3_variants_vcf = "~{samplename}_merge_output.vcf.gz"
-    File? clair3_variants_gvcf = "~{samplename}_merge_output.gvcf.gz"
+    File clair3_variants_vcf = "~{samplename}_merge_output.vcf"
+    File? clair3_variants_gvcf = "~{samplename}_merge_output.gvcf"
     String clair3_variants_docker_image = docker
     String clair3_model_used = clair3_model
   }
