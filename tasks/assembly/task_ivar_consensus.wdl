@@ -2,7 +2,7 @@ version 1.0
 
 task consensus {
   input {
-    File bamfile 
+    File bamfile
     String samplename
     File? reference_genome
     Boolean count_orphans = true
