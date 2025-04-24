@@ -20,9 +20,6 @@ workflow ivar_consensus {
     Int min_depth
     Float variant_min_freq 
     Float consensus_min_freq 
-    Boolean all_positions = false
-    Int max_depth = 600000
-    Int min_qual = 20
     File? primer_bed
     Boolean? skip_N
     Int? ivar_bwa_cpu
@@ -49,7 +46,6 @@ workflow ivar_consensus {
     Int? stats_n_coverage_memory
     Int? stats_n_coverage_disk_size
     String? stats_n_coverage_docker
-    String organism = "sars-cov-2"
   }
   call bwa_task.bwa {
     input:
@@ -89,7 +85,6 @@ workflow ivar_consensus {
       bamfile = select_first([primer_trim.trim_sorted_bam, bwa.sorted_bam]),
       consensus_min_depth = min_depth,
       consensus_min_freq = consensus_min_freq,
-      min_qual = min_qual,
       skip_N = skip_N,
       cpu = ivar_consensus_cpu,
       memory = ivar_consensus_memory,
