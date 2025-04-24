@@ -132,25 +132,21 @@ workflow ivar_consensus {
     File? read2_unaligned = bwa.read2_unaligned
     File sorted_bam_unaligned = bwa.sorted_bam_unaligned
     File sorted_bam_unaligned_bai = bwa.sorted_bam_unaligned_bai
-    
     # primer trimming outputs
     Float? primer_trimmed_read_percent = primer_trim.primer_trimmed_read_percent
     String? ivar_version_primtrim = primer_trim.ivar_version
     String? samtools_version_primtrim = primer_trim.samtools_version
     String? primer_bed_name = primer_trim.primer_bed_name
-    
     # variant call outputs
     File ivar_tsv = variant_call.sample_variants_tsv
     File ivar_vcf = variant_call.sample_variants_vcf
     String ivar_variant_proportion_intermediate = variant_call.variant_proportion_intermediate
     String ivar_variant_version = variant_call.ivar_version
-    String samtools_version_variants = variant_call.samtools_version
-
     # assembly outputs
     String assembly_method_nonflu = "~{bwa.bwa_version}; ~{primer_trim.ivar_version}"
     File assembly_fasta = consensus.consensus_seq
     String ivar_version_consensus = consensus.ivar_version
-
+    String samtools_version_consensus = consensus.samtools_version
     # consensus qc outputs
     Int consensus_n_variant_min_depth = min_depth
     File consensus_stats = stats_n_coverage.stats
@@ -159,7 +155,6 @@ workflow ivar_consensus {
     String meanmapq_trim = select_first([stats_n_coverage_primtrim.meanmapq, stats_n_coverage.meanmapq,""])
     String assembly_mean_coverage = select_first([stats_n_coverage_primtrim.depth, stats_n_coverage.depth,""])
     String samtools_version_stats = stats_n_coverage.samtools_version
-
     # Assembly metrics
     String percentage_mapped_reads = select_first([stats_n_coverage_primtrim.percentage_mapped_reads, stats_n_coverage.percentage_mapped_reads,""])
   }

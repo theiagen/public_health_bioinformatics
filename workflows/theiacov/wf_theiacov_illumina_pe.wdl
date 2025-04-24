@@ -325,7 +325,7 @@ workflow theiacov_illumina_pe {
     File? ivar_vcf = ivar_consensus.ivar_vcf
     String? ivar_variant_proportion_intermediate = ivar_consensus.ivar_variant_proportion_intermediate
     String? ivar_variant_version = ivar_consensus.ivar_variant_version
-    String? samtools_version_variants = ivar_consensus.samtools_version_variants
+    String? samtools_version_consensus = ivar_consensus.samtools_version_consensus
     # Read Alignment - assembly outputs
     String assembly_method = "TheiaCoV (~{version_capture.phb_version}): " + select_first([ivar_consensus.assembly_method_nonflu, flu_track.irma_version, ""])
     String assembly_fasta = select_first([ivar_consensus.assembly_fasta, flu_track.irma_assembly_fasta, "Assembly could not be generated"])

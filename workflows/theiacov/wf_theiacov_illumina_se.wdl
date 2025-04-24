@@ -266,7 +266,7 @@ workflow theiacov_illumina_se {
     File? ivar_vcf = ivar_consensus.ivar_vcf
     String? ivar_variant_proportion_intermediate = ivar_consensus.ivar_variant_proportion_intermediate
     String? ivar_variant_version = ivar_consensus.ivar_variant_version
-    String? samtools_version_variants = ivar_consensus.samtools_version_variants
+    String? samtools_version_consensus = ivar_consensus.samtools_version_consensus
     # Read Alignment - assembly outputs
     File? assembly_fasta = ivar_consensus.assembly_fasta
     String? ivar_version_consensus = ivar_consensus.ivar_version_consensus

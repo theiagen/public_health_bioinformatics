@@ -90,7 +90,6 @@ task variant_call {
     File sample_variants_tsv = "~{samplename}.variants.tsv"
     File sample_variants_vcf = "~{samplename}.variants.vcf"
     String ivar_version = read_string("IVAR_VERSION")
-    String samtools_version = read_string("SAMTOOLS_VERSION")
   }
   runtime {
     docker: docker

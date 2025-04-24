@@ -11,11 +11,13 @@ import "../../tasks/taxon_id/task_skani.wdl" as skani_task
 import "../../tasks/utilities/data_import/task_ncbi_datasets.wdl" as ncbi_datasets_task
 import "../../tasks/taxon_id/task_identify_taxon_id.wdl" as identify_taxon_id_task
 import "../../tasks/alignment/task_bwa.wdl" as bwa_task
-import "../utilities/wf_ivar_consensus.wdl" as ivar_consensus
+import "../../tasks/assembly/task_ivar_consensus.wdl" as ivar_consensus
+import "../../tasks/gene_typing/variant_detection/task_ivar_variant_call.wdl" as variant_call_task
 import "../../tasks/quality_control/basic_statistics/task_assembly_metrics.wdl" as assembly_metrics_task
 import "../../tasks/utilities/data_handling/task_fasta_utilities.wdl" as fasta_utilities_task
 import "../../tasks/quality_control/basic_statistics/task_consensus_qc.wdl" as consensus_qc_task
 import "../../tasks/task_versioning.wdl" as versioning
+
 
 workflow theiaviral_illumina_pe {
   meta {
@@ -133,38 +135,52 @@ workflow theiaviral_illumina_pe {
           use_ncbi_virus = true
       }
     }
-    # align reads and generate consensus assembly via ivar
-    call ivar_consensus.ivar_consensus {
+    # align reads to reference
+    call bwa_task.bwa {
       input:
         samplename = samplename,
         read1 = select_first([rasusa.read1_subsampled, read_QC_trim.kraken2_extracted_read1]),
         read2 = select_first([rasusa.read2_subsampled, read_QC_trim.kraken2_extracted_read2]),
+        reference_genome = select_first([reference_fasta, ncbi_datasets.ncbi_datasets_assembly_fasta])
+    }
+    # consensus calling via ivar
+    call ivar_consensus.consensus {
+      input:
+        bamfile = bwa.sorted_bam,
+        samplename = samplename,
         reference_genome = select_first([reference_fasta, ncbi_datasets.ncbi_datasets_assembly_fasta]),
-        min_depth = select_first([min_depth, 10]),
-        consensus_min_freq = min_allele_freq,
-        variant_min_freq = min_allele_freq,
         min_qual = min_map_quality,
-        trim_primers = false,
-        all_positions = true,
-        max_depth = 0,
-        organism = "" # placeholder for nothing
+        consensus_min_depth = select_first([min_depth, 10]),
+        consensus_min_freq = min_allele_freq,
+        all_positions = true
+    }
+    # variant calling via ivar
+    call variant_call_task.variant_call as ivar_variants {
+      input:
+        mpileup = consensus.sample_mpileup,
+        samplename = samplename,
+        reference_genome = select_first([reference_fasta, ncbi_datasets.ncbi_datasets_assembly_fasta]),
+        min_qual = min_map_quality,
+        organism = "",
+        variant_min_freq = min_allele_freq,
+        variant_min_depth = select_first([min_depth, 10])
     }
     # quality control metrics for reads mapping to reference (ie. coverage, depth, base/map quality)
     call assembly_metrics_task.stats_n_coverage as read_mapping_stats {
       input:
-        bamfile = ivar_consensus.aligned_bam,
+        bamfile = bwa.sorted_bam,
         samplename = samplename
     }
     # quality control metrics for consensus (ie. number of bases, degenerate bases, genome length)
     call consensus_qc_task.consensus_qc as consensus_qc {
       input:
-        assembly_fasta = ivar_consensus.assembly_fasta,
+        assembly_fasta = consensus.consensus_seq,
         reference_genome = select_first([reference_fasta, ncbi_datasets.ncbi_datasets_assembly_fasta])
     }
     # quality control metrics for consensus (ie. completeness, viral gene count, contamination)
     call checkv_task.checkv as checkv_consensus {
       input:
-        assembly = ivar_consensus.assembly_fasta,
+        assembly = consensus.consensus_seq,
         samplename = samplename
     }
   }
@@ -253,16 +269,16 @@ workflow theiaviral_illumina_pe {
     # ncbi_datasets outputs - download reference genome
     File? skani_top_ani_fasta = ncbi_datasets.ncbi_datasets_assembly_fasta
     # bwa outputs - reads aligned to best reference
-    String? bwa_version = ivar_consensus.bwa_version
-    String? samtools_version = ivar_consensus.samtools_version_variants
-    File? read1_aligned = ivar_consensus.read1_aligned
-    File? read2_aligned = ivar_consensus.read2_aligned
-    String aligned_bam = select_first([ivar_consensus.aligned_bam, ""])
-    String aligned_bai = select_first([ivar_consensus.aligned_bai, ""])
-    File? read1_unaligned = ivar_consensus.read1_unaligned
-    File? read2_unaligned = ivar_consensus.read2_unaligned
-    File? sorted_bam_unaligned = ivar_consensus.sorted_bam_unaligned
-    File? sorted_bam_unaligned_bai = ivar_consensus.sorted_bam_unaligned_bai
+    String? bwa_version = bwa.bwa_version
+    String? bwa_samtools_version = bwa.sam_version
+    File? bwa_read1_aligned = bwa.read1_aligned
+    File? bwa_read2_aligned = bwa.read2_aligned
+    File? bwa_sorted_bam = bwa.sorted_bam
+    File? bwa_aligned_bai = bwa.sorted_bai
+    File? bwa_read1_unaligned = bwa.read1_unaligned
+    File? bwa_read2_unaligned = bwa.read2_unaligned
+    File? sorted_bam_unaligned = bwa.sorted_bam_unaligned
+    File? sorted_bam_unaligned_bai = bwa.sorted_bam_unaligned_bai
     # Read mapping stats
     File? read_mapping_report = read_mapping_stats.metrics_txt
     File? read_mapping_statistics = read_mapping_stats.stats
@@ -277,22 +293,14 @@ workflow theiaviral_illumina_pe {
     String? read_mapping_date = read_mapping_stats.date
     String? read_mapping_samtools_version = read_mapping_stats.samtools_version
     # Read Alignment - variant call outputs
-    File? ivar_tsv = ivar_consensus.ivar_tsv
-    File? ivar_vcf = ivar_consensus.ivar_vcf
-    String? ivar_variant_proportion_intermediate = ivar_consensus.ivar_variant_proportion_intermediate
-    String? ivar_variant_version = ivar_consensus.ivar_variant_version
-    String? samtools_version_variants = ivar_consensus.samtools_version_variants
-    # Read Alignment - assembly outputs
-    File? assembly_consensus_fasta = ivar_consensus.assembly_fasta
-    String? ivar_version_consensus = ivar_consensus.ivar_version_consensus
-    # Read Alignment - consensus assembly qc outputs
+    File? ivar_tsv = ivar_variants.sample_variants_tsv
+    File? ivar_vcf = ivar_variants.sample_variants_vcf
+    String? ivar_variant_proportion_intermediate = ivar_variants.variant_proportion_intermediate
+    String? ivar_variant_version = ivar_variants.ivar_version
+    # Consensus assembly outputs
+    File? assembly_consensus_fasta = consensus.consensus_seq
     Int consensus_n_variant_min_depth = select_first([min_depth, 20])
-    File? consensus_stats = ivar_consensus.consensus_stats
-    File? consensus_flagstat = ivar_consensus.consensus_flagstat
-    String meanbaseq_trim = select_first([ivar_consensus.meanbaseq_trim, ""])
-    String meanmapq_trim = select_first([ivar_consensus.meanmapq_trim, ""])
-    String assembly_mean_coverage = select_first([ivar_consensus.assembly_mean_coverage, ""])
-    String? samtools_version_stats = ivar_consensus.samtools_version_stats
+    String? ivar_version_consensus = consensus.ivar_version
     # Consensus QC
     Int? consensus_qc_number_N = consensus_qc.number_N
     Int? consensus_qc_assembly_length_unambiguous = consensus_qc.number_ATCG
