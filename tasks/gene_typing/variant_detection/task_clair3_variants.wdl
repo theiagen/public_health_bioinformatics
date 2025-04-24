@@ -73,9 +73,8 @@ task clair3_variants {
   >>>
   output {
     String clair3_version = read_string("VERSION")
-    File clair3_variants_vcf = "~{samplename}_merge_output.vcf.gz"
+    File clair3_variants_vcf = "~{samplename}_merge_output.vcf~{true = "" false = ".gz" decompress}"
     File? clair3_variants_gvcf = "~{samplename}_merge_output.gvcf.gz"
-    File? clair3_variants_decompressed_vcf = "~{samplename}_merge_output.vcf"
     String clair3_variants_docker_image = docker
     String clair3_model_used = clair3_model
   }

@@ -60,8 +60,7 @@ task bcftools_consensus {
   >>>
   output {
     File assembly_fasta = "~{samplename}_consensus.fasta"
-    File bcftools_filtered_vcf = "~{samplename}_filtered.vcf.gz"
-    File? bcftools_filtered_decompressed_vcf = "~{samplename}_filtered.vcf"
+    File bcftools_filtered_vcf = "~{samplename}_filtered.vcf~{true = "" false = ".gz" decompress}"
     String bcftools_version = read_string("VERSION")
     String bcftools_docker = docker
   }

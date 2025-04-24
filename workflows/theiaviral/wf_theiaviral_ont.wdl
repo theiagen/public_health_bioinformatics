@@ -360,7 +360,7 @@ workflow theiaviral_ont {
     String? fasta_utilities_samtools_version = fasta_utilities.samtools_version
     String? fasta_utilities_samtools_docker = fasta_utilities.samtools_docker
     # clair3 outputs - variant calling
-    File? clair3_vcf = clair3.clair3_variants_decompressed_vcf
+    File? clair3_vcf = clair3.clair3_variants_vcf
     File? clair3_gvcf = clair3.clair3_variants_gvcf
     String? clair3_model = clair3.clair3_model_used
     String? clair3_version = clair3.clair3_version
@@ -373,7 +373,7 @@ workflow theiaviral_ont {
     String? mask_low_coverage_bedtools_docker = mask_low_coverage.bedtools_docker
     # bcftools_consensus outputs - consensus genome
     File? assembly_consensus_fasta = bcftools_consensus.assembly_fasta
-    File? bcftools_filtered_vcf = bcftools_consensus.bcftools_filtered_decompressed_vcf
+    File? bcftools_filtered_vcf = bcftools_consensus.bcftools_filtered_vcf
     String? bcftools_version = bcftools_consensus.bcftools_version
     String? bcftools_docker = bcftools_consensus.bcftools_docker
     # consensus assembly statistics
