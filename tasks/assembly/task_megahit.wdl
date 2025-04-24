@@ -33,7 +33,7 @@ task megahit {
       -o megahit/ \
       ~{megahit_opts}
 
-    mv megahit/final.contigs.fa ~{samplename}_megahit.fasta
+    mv megahit/final.contigs.fa ~{samplename}_megahit_contigs.fasta
   >>>
   output {
     File assembly_fasta = "~{samplename}_megahit_contigs.fasta"
