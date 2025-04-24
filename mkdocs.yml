@@ -32,6 +32,7 @@ nav:
                - TheiaEuk Workflow Series: workflows/genomic_characterization/theiaeuk.md
                - TheiaMeta: workflows/genomic_characterization/theiameta.md
                - TheiaProk Workflow Series: workflows/genomic_characterization/theiaprok.md
+               - TheiaViral Workflow Series: workflows/genomic_characterization/theiaviral.md
                - VADR_Update: workflows/genomic_characterization/vadr_update.md
             - Phylogenetic Construction:
                - Augur: workflows/phylogenetic_construction/augur.md
@@ -133,6 +134,7 @@ nav:
                - Terra_2_GISAID: workflows/public_data_sharing/terra_2_gisaid.md
                - Terra_2_NCBI: workflows/public_data_sharing/terra_2_ncbi.md
                - TheiaCoV Workflow Series: workflows/genomic_characterization/theiacov.md
+               - TheiaViral Workflow Series: workflows/genomic_characterization/theiaviral.md
                - Usher_PHB: workflows/phylogenetic_placement/usher.md
                - VADR_Update: workflows/genomic_characterization/vadr_update.md
         - Workflows Alphabetically: 
@@ -177,6 +179,7 @@ nav:
             - TheiaMeta: workflows/genomic_characterization/theiameta.md
             - TheiaProk Workflow Series: workflows/genomic_characterization/theiaprok.md
             - TheiaValidate: workflows/standalone/theiavalidate.md
+            - TheiaViral Workflow Series: workflows/genomic_characterization/theiaviral.md
             - Transfer_Column_Content: workflows/data_export/transfer_column_content.md
             - Usher_PHB: workflows/phylogenetic_placement/usher.md
             - VADR_Update: workflows/genomic_characterization/vadr_update.md
