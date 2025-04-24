@@ -100,7 +100,6 @@ workflow ivar_consensus {
       reference_genome = reference_genome,
       variant_min_depth = min_depth,
       variant_min_freq = variant_min_freq,
-      min_qual = min_qual,
       organism = organism,
       cpu = ivar_variant_cpu,
       memory = ivar_variant_memory,
