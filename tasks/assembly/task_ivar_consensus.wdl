@@ -42,7 +42,7 @@ task consensus {
     samtools mpileup \
       ~{true = "--count-orphans" false = "" count_orphans} \
       -d ~{max_depth} \
-      ~{true = "-no-BAQ" false = "" disable_baq} \
+      ~{true = "--no-BAQ" false = "" disable_baq} \
       -Q ~{min_bq} \
       --reference ${ref_genome} \
       ~{true = "-aa" false = "" all_positions} \
