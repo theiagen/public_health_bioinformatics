@@ -118,8 +118,8 @@ task consensus {
     File consensus_seq = "~{samplename}.ivar.consensus.fasta"
     File sample_mpileup = "~{samplename}.mpileup"
     String ivar_version = read_string("IVAR_VERSION")
-    String pipeline_date = read_string("DATE")
     String samtools_version = read_string("SAMTOOLS_VERSION")
+    String pipeline_date = read_string("DATE")
   }
   runtime {
     docker: docker
