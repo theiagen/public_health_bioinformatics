@@ -13,6 +13,7 @@ task clair3_variants {
     Int memory = 8
     Int cpu = 4
     Int disk_size = 100
+    Boolean decompress = true
     Boolean include_all_contigs = true # Haploid calling option, default true
     Boolean enable_haploid_precise = true # Haploid calling option, default true
     Boolean disable_phasing = true # Haploid calling option, default true
