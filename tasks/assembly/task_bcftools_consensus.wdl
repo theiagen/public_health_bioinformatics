@@ -28,7 +28,7 @@ task bcftools_consensus {
 
     # remove low coverage variants (this is where you would remove quality too, e.g. & MIN(FMT/GQ)>MIN_QUAL)
     echo "DEBUG: Filtering variants with low coverage: ~{min_depth} and low frequency: ~{min_freq}"
-    bcftools view -i 'MIN(FMT/DP)>~{min_depth} && MIN(FMT/AF)>~{min_freq}' \
+    bcftools view -i 'MIN(FMT/DP)>=~{min_depth} && MIN(FMT/AF)>=~{min_freq}' \
       ~{input_vcf}${ext} \
       > ~{samplename}_cov_filtered_prefinal.vcf.gz
 
