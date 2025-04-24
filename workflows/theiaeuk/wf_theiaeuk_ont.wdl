@@ -21,6 +21,8 @@ workflow theiaeuk_ont {
     Int dragonflye_memory = 32
     Int dragonflye_disk_size = 100
     String medaka_model = "r941_min_hac_g507"
+    Int busco_memory = 24
+    String busco_docker_image = "us-docker.pkg.dev/general-theiagen/ezlabgva/busco:v5.3.2_cv1"
     File gambit_db_genomes = "gs://gambit-databases-rp/fungal-version/1.0.0/gambit-fungal-metadata-1.0.0-20241213.gdb"
     File gambit_db_signatures = "gs://gambit-databases-rp/fungal-version/1.0.0/gambit-fungal-signatures-1.0.0-20241213.gs"
   }
@@ -65,7 +67,10 @@ workflow theiaeuk_ont {
   call busco_task.busco {
     input:
       assembly = flye_denovo.assembly_fasta,
-      samplename = samplename
+      samplename = samplename,
+      eukaryote = true,
+      memory = busco_memory,
+      docker = busco_docker_image
   }
 
   call gambit.gambit {
