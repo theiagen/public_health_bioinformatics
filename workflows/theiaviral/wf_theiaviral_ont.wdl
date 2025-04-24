@@ -234,12 +234,6 @@ workflow theiaviral_ont {
         assembly = bcftools_consensus.assembly_fasta,
         samplename = samplename
     }
-    # quality control metrics for consensus (ie. contigs, n50, GC content, genome length)
-    call quast_task.quast as quast_consensus {
-      input:
-        assembly = bcftools_consensus.assembly_fasta,
-        samplename = samplename
-    }
   }
   output {
     # versioning outputs
@@ -395,16 +389,5 @@ workflow theiaviral_ont {
     Float? checkv_consensus_weighted_completeness = checkv_consensus.weighted_completeness
     Int? checkv_consensus_total_genes = checkv_consensus.total_genes
     String? checkv_consensus_version = checkv_consensus.checkv_version
-    # quast_consensus outputs - consensus assembly quality control
-    File? quast_consensus_report = quast_consensus.quast_report
-    Int? quast_consensus_genome_length = quast_consensus.genome_length
-    Int? quast_consensus_number_contigs = quast_consensus.number_contigs
-    Int? quast_consensus_n50_value = quast_consensus.n50_value
-    Int? quast_consensus_largest_contig = quast_consensus.largest_contig
-    Float? quast_consensus_gc_percent = quast_consensus.gc_percent
-    Float? quast_consensus_uncalled_bases = quast_consensus.uncalled_bases
-    String? quast_consensus_pipeline_date = quast_consensus.pipeline_date
-    String? quast_consensus_version = quast_consensus.version
-    String? quast_consensus_docker = quast_consensus.quast_docker
   }
 }
