@@ -134,7 +134,7 @@ workflow theiaviral_ont {
           input:
             read1 = select_first([rasusa.read1_subsampled, metabuli.metabuli_read1_extract]),
             samplename = samplename,
-            uneven_coverage_mode = true,
+            uneven_coverage_mode = true
         }
       }
       # quality control metrics for de novo assembly (ie. completeness, viral gene count, contamination)
