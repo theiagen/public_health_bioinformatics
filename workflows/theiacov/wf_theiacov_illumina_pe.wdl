@@ -249,7 +249,7 @@ workflow theiacov_illumina_pe {
     String theiacov_illumina_pe_version = version_capture.phb_version
     String theiacov_illumina_pe_analysis_date = version_capture.date
     # Read Metadata
-    String  seq_platform = seq_method
+    String seq_platform = seq_method
     # Sample Screening
     String? read_screen_raw = raw_check_reads.read_screen
     File? read_screen_raw_tsv = raw_check_reads.read_screen_tsv
