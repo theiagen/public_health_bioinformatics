@@ -294,6 +294,7 @@ workflow theiaviral_ont {
     File? read_screen_clean_tsv = clean_check_reads.read_screen_tsv
     # raven outputs - denovo genome assembly
     File assembly_denovo_fasta = select_first([flye.assembly_fasta, raven.assembly_fasta, "gs://theiagen-public-resources-rp/empty_files/empty.fasta"])
+    String? raven_denovo_status = raven.raven_status
     String? raven_denovo_version = raven.raven_version
     String? raven_denovo_docker = raven.raven_docker
     String? flye_denovo_version = flye.flye_version
