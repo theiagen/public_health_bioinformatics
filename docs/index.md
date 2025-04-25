@@ -18,7 +18,7 @@ All workflows in the PHB repository end with `_PHB` in order to differentiate th
 
     Learn how to use our workflows on Terra!</center>
 
--   <center>[v3.0.0 Release Notes](https://theiagen.notion.site/public-health-bioinformatics-v3-0-0-major-release-notes){ .md-button .md-button--secondary }
+-   <center>[v3.0.1 Release Notes](https://theiagen.notion.site/public-health-bioinformatics-v3-0-1-patch-release-notes){ .md-button .md-button--secondary }
 
     ---
 

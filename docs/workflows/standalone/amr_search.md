@@ -4,7 +4,7 @@
 
 | **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
 |---|---|---|---|---|
-| [Standalone](../../workflows_overview/workflows_type.md/#standalone) | [Any Taxa](../../workflows_overview/workflows_kingdom.md/#any-taxa) | v3.0.0 | Yes | Sample-level |
+| [Standalone](../../workflows_overview/workflows_type.md/#standalone) | [Any Taxa](../../workflows_overview/workflows_kingdom.md/#any-taxa) | v3.0.1 | Yes | Sample-level |
 
 ## AMR_Search_PHB
 
@@ -31,9 +31,9 @@ A limited number of species are currently supported and are listed below. NCBI c
 
 | **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
 |---|---|---|---|---|---|
-| amr_search_workflow | **amr_search_database** | String | NCBI taxon code of samples known taxonomy, see above supported species || Required |
+| amr_search_workflow | **amr_search_database** | String | NCBI taxon code of samples known taxonomy, see above supported species | | Required |
 | amr_search_workflow | **input_fasta** | File | A microbial assembly file || Required |
-| amr_search_workflow | **samplename** | String | Identifier user wants prefixed to output files || Required |
+| amr_search_workflow | **samplename** | String | Identifier user wants prefixed to output files | | Required |
 | amr_search | **cpu** | Integer | Number of CPUs to allocate to the task |2| Optional |
 | amr_search | **disk_size** | Integer | Amount of storage (in GB) to allocate to the task |50| Optional |
 | amr_search | **docker** | String | The docker container to use for the task |us-docker.pkg.dev/general-theiagen/theiagen/amrsearch:0.2.0| Optional |

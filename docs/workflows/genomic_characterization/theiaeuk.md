@@ -4,7 +4,7 @@
 
 | **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibliity** | **Workflow Level** |
 |---|---|---|---|---|
-| [Genomic Characterization](../../workflows_overview/workflows_type.md/#genomic-characterization) | [Mycotics](../../workflows_overview/workflows_kingdom.md/#mycotics) | PHB v3.0.0 | Yes | Sample-level |
+| [Genomic Characterization](../../workflows_overview/workflows_type.md/#genomic-characterization) | [Mycotics](../../workflows_overview/workflows_kingdom.md/#mycotics) | PHB v3.0.1 | Yes | Sample-level |
 
 ## TheiaEuk Workflows
 
@@ -48,8 +48,11 @@ All input reads are processed through "core tasks" in each workflow. The core ta
 | gambit | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
 | gambit | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/gambit:1.0.0 | Optional |
 | merlin_magic | **agrvate_docker_image** | String | Internal component, do not modify | "us-docker.pkg.dev/general-theiagen/biocontainers/agrvate:1.0.2--hdfd78af_0" | Do Not Modify, Optional |
-| merlin_magic | **amr_search** | Boolean | If set to true AMR_Search workflow will be run if species is part of supported taxon, see AMR_Search docs. | False | Optional |
 | merlin_magic | **assembly_only** | Boolean | Internal component, do not modify |  | Do Not Modify, Optional |
+| merlin_magic | **amr_search_cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional |
+| merlin_magic | **amr_search_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 50 | Optional |
+| merlin_magic | **amr_search_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/theiagen/amrsearch:0.2.1 | Optional |
+| merlin_magic | **amr_search_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional |
 | merlin_magic | **call_poppunk** | Boolean | Internal component, do not modify | TRUE | Do Not Modify, Optional |
 | merlin_magic | **call_shigeifinder_reads_input** | Boolean | Internal component, do not modify | FALSE | Do Not Modify, Optional |
 | merlin_magic | **emmtypingtool_docker_image** | String | Internal component, do not modify | us-docker.pkg.dev/general-theiagen/staphb/emmtypingtool:0.0.1 | Do Not Modify, Optional |
@@ -59,6 +62,7 @@ All input reads are processed through "core tasks" in each workflow. The core ta
 | merlin_magic | **pasty_docker_image** | String | Internal component, do not modify | us-docker.pkg.dev/general-theiagen/staphb/pasty:1.0.3 | Do Not Modify, Optional |
 | merlin_magic | **pasty_min_coverage** | Int | Internal component, do not modify | 95 | Do Not Modify, Optional |
 | merlin_magic | **pasty_min_percent_identity** | Int | Internal component, do not modify | 95 | Do Not Modify, Optional |
+| merlin_magic | **run_amr_search** | Boolean | If set to true AMR_Search workflow will be run if species is part of supported taxon, see AMR_Search docs. | False | Optional |
 | merlin_magic | **shigatyper_docker_image** | String | Internal component, do not modify | us-docker.pkg.dev/general-theiagen/staphb/shigatyper:2.0.5 | Do Not Modify, Optional |
 | merlin_magic | **shigeifinder_docker_image** | String | Internal component, do not modify | us-docker.pkg.dev/general-theiagen/staphb/shigeifinder:1.3.5 | Do Not Modify, Optional |
 | merlin_magic | **snippy_query_gene** | String | Internal component, do not modify |  | Do Not Modify, Optional |
@@ -602,6 +606,11 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
 |---|---|---|
 | assembly_fasta | File | _De novo_ genome assembly in FASTA format |
 | assembly_length | Int | Length of assembly (total number of nucleotides) as determined by QUAST |
+| amr_results_csv | File | CSV formatted AMR profile |
+| amr_results_pdf | File | PDF formatted AMR profile |
+| amr_search_results | File | JSON formatted AMR profile including BLAST results |
+| amr_search_docker | String | Docker image used to run AMR_Search |
+| amr_search_version | String | Version of AMR_Search libraries used |
 | bbduk_docker| String | BBDuk docker image used |
 | busco_database | String | BUSCO database used |
 | busco_docker | String | BUSCO docker image used |
