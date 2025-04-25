@@ -39,7 +39,7 @@ task spades {
       # if metaviralspades fails, or fails to output a contigs.fasta, we want to report that for falling back
       if [ -f spades/contigs.fasta ]; then
         echo "DEBUG: Metaviralspades successfully identified a complete virus"
-        mv spades/contigs.fasta ~{samplename}~{'_' + spades_type}_contigs.fasta
+        mv spades/contigs.fasta ~{samplename}~{'_' + spades_type + 'spades'}_contigs.fasta
         echo "PASS" > STATUS
       else
         echo "DEBUG: Metaviralspades could not identify a complete virus"
