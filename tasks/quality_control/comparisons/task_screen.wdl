@@ -5,12 +5,12 @@ task check_reads {
     File read1
     File read2
 
-    Int min_reads = 0
-    Int min_basepairs = 0
-    Int min_genome_length = 0
-    Int max_genome_length = 1000000000
-    Int min_coverage = 0
-    Int min_proportion = 0
+    Int? min_reads
+    Int? min_basepairs
+    Int? min_genome_length
+    Int? max_genome_length
+    Int? min_coverage
+    Int? min_proportion
     
     String workflow_series = "theiaprok" # default to theiaprok so we don't have to change those workflows
     Int? expected_genome_length # user-provided
@@ -23,6 +23,28 @@ task check_reads {
   command <<<
     # just in case anything fails, throw an error
     set -euo pipefail
+
+    # set defaults if they are not provided
+    if [ ~{workflow_series} == "theiaviral" ]; then
+      if [ -z ~{min_reads} ]; then
+        min_reads=50 # approximately min basepairs / 300 (which is the longest available Illumina product)
+      fi
+      if [ -z ~{min_basepairs} ]; then
+        min_basepairs=15000 # approximately 10x coverage of hepatitis delta virus
+      fi
+      if [ -z ~{min_genome_length} ]; then
+        min_genome_length=1500 # approximate size of hepatitis delta virus
+      fi
+      if [ -z ~{max_genome_length} ]; then
+        max_genome_length=2673870 # size of Pandoravirus salinus + 200 kb
+      fi
+      if [ -z ~{min_coverage} ]; then
+        min_coverage=10 # 10x coverage
+      fi
+      if [ -z ~{min_proportion} ]; then
+        min_proportion=40 # 40% of the total sequence in one read
+      fi
+    fi
 
     # populate column headers for metrics and init failure log
     metrics="read1_count\tread2_count\tread_bp\test_genome_length"
@@ -176,11 +198,11 @@ task check_reads_se {
   input {
     File read1
 
-    Int min_reads = 0
-    Int min_basepairs = 0
-    Int min_genome_length = 0
-    Int max_genome_length = 1000000000
-    Int min_coverage = 0
+    Int? min_reads
+    Int? min_basepairs
+    Int? min_genome_length
+    Int? max_genome_length
+    Int? min_coverage
     Int? expected_genome_length
 
     Boolean skip_mash = true
@@ -194,6 +216,25 @@ task check_reads_se {
   command <<<
     # just in case anything fails, throw an error
     set -euo pipefail
+
+    # set defaults if they are not provided
+    if [ ~{workflow_series} == "theiaviral" ]; then
+      if [ -z ~{min_reads} ]; then
+        min_reads=50
+      fi
+      if [ -z ~{min_basepairs} ]; then
+        min_basepairs=15000 # approximately 10x coverage of hepatitis delta virus
+      fi
+      if [ -z ~{min_genome_length} ]; then
+        min_genome_length=1500 # approximate size of hepatitis delta virus
+      fi
+      if [ -z ~{max_genome_length} ]; then
+        max_genome_length=2673870 # size of Pandoravirus salinus + 200 kb
+      fi
+      if [ -z ~{min_coverage} ]; then
+        min_coverage=10 # 10x coverage
+      fi
+    fi
 
     # populate column headers for metrics and init failure log
     metrics="read1_count\tread_bp\test_genome_length"
