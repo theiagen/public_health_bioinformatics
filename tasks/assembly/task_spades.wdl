@@ -47,12 +47,12 @@ task spades {
       fi
     else
       # all other spades types should fail via the pipefail, so they pass by default
-      mv spades/contigs.fasta ~{samplename}~{'_' + spades_type}_contigs.fasta
+      mv spades/contigs.fasta ~{samplename}~{'_' + spades_type + 'spades'}_contigs.fasta
       echo "PASS" > STATUS
     fi
   >>>
   output {
-    File? assembly_fasta = "~{samplename}~{'_' + spades_type}_contigs.fasta"
+    File? assembly_fasta = "~{samplename}~{'_' + spades_type + 'spades'}_contigs.fasta"
     String spades_status = read_string("STATUS")
     String spades_version = read_string("VERSION")
     String spades_docker = '~{docker}'
