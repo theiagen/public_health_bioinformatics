@@ -24,7 +24,7 @@ task check_reads {
     # just in case anything fails, throw an error
     set -euo pipefail
 
-    # convert WDL variables to bash variables
+    # convert WDL variables to bash variables so defaults can be set
     min_reads=~{min_reads}
     min_basepairs=~{min_basepairs}
     min_genome_length=~{min_genome_length}
@@ -225,7 +225,7 @@ task check_reads_se {
     # just in case anything fails, throw an error
     set -euo pipefail
 
-    # convert WDL variables to bash variables
+    # convert WDL variables to bash variables so defaults can be set
     min_reads=~{min_reads}
     min_basepairs=~{min_basepairs}
     min_genome_length=~{min_genome_length}
