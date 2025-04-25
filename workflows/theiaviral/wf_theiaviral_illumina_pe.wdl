@@ -233,7 +233,7 @@ workflow theiaviral_illumina_pe {
     File? fastq_scan_clean1_json = read_QC_trim.fastq_scan_clean1_json
     File? fastq_scan_clean2_json = read_QC_trim.fastq_scan_clean2_json
     # denovo genome assembly
-    File? assembly_denovo_fasta = select_first([spades.assembly_fasta, megahit.assembly_fasta])
+    File assembly_denovo_fasta = select_first([spades.assembly_fasta, megahit.assembly_fasta, "gs://theiagen-public-resources-rp/empty_files/empty.fasta"])
     String? metaviralspades_status = spades.spades_status
     String? metaviralspades_version = spades.spades_version
     String? metaviralspades_docker = spades.spades_docker
