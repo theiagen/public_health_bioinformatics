@@ -15,6 +15,8 @@ task arln_stats {
         File read2_raw
         File read1_clean
         File read2_clean
+        File kraken2_report
+        Float quast_gc_percent
 
         Int cpu = 2
         Int memory = 5
@@ -32,6 +34,22 @@ task arln_stats {
         echo "~{cg_bases_cleaned_r1}" | tee cg_bases_cleaned_r1_out
         echo "~{cg_bases_cleaned_r2}" | tee cg_bases_cleaned_r2_out
 
+        # Parse Kraken2 report
+        awk '/~{taxon}/ {printf "%.2f\n", $1; exit}' ~{kraken2_report} > classified_reads
+        awk '/U/ {printf "%.2f\n", $1; exit}' ~{kraken2_report} > unclassified_reads
+
+        # Check for contamination 
+        awk '$1 > 25.00 && $4 == "G"' ~{kraken2_report} > contamination_check
+        wc -l contamination_check | awk '{print $1}' > contamination_check_count
+
+        # Quast GC percent, check if within standard deviation of mean
+        mean_gc=$(grep "~{taxon}" /data/NCBI_Assembly_stats_20240124.txt | awk '{print $12}')
+        echo "${mean_gc}"
+        stdev_gc=$(grep "~{taxon}" /data/NCBI_Assembly_stats_20240124.txt | awk '{print $13}' | xargs printf "%.6f\n")
+        echo "${stdev_gc}"
+        stdevs=$(python3 -c "print('{:.4f}'.format(abs(float('~{quast_gc_percent}') - float('${mean_gc}')) / float('${stdev_gc}')))")
+        echo "${stdevs}x(${stdev_gc})" > gc_stdev_from_mean
+
         # Generate Q30 statistics raw reads
         python /scripts/q30.py -i ~{read1_raw} ~{read2_raw} > RAW_Q30
         awk '/read1/ {printf "%.2f\n", $2}' RAW_Q30 > read1_raw_q30
@@ -43,10 +61,11 @@ task arln_stats {
 
         # Calculate Assembly Ratio
         assem_mean=$(grep "~{taxon}" /data/NCBI_Assembly_stats_20240124.txt | awk '{print $6}')
-        st_dev=$(grep "~{taxon}" /data/NCBI_Assembly_stats_20240124.txt | awk '{print $7}' | xargs printf "%.4f\n")
+        echo "${assem_mean}"
+        st_dev=$(grep "~{taxon}" /data/NCBI_Assembly_stats_20240124.txt | awk '{print $7}' | xargs printf "%.5f\n")
+        echo "${st_dev}"
         assem_ratio=$(python3 -c "print('{:.4f}'.format((float('${assem_mean}') * 1000000)/ ~{genome_length}))")
         echo "${assem_ratio}x(${st_dev})" > assem_ratio_with_stdev
-
     >>>
     
     output {
@@ -58,7 +77,11 @@ task arln_stats {
         Float read2_raw_q30 = read_float("read2_raw_q30")
         Float read1_clean_q30 = read_float("read1_clean_q30")
         Float read2_clean_q30 = read_float("read2_clean_q30")
+        Float classified_reads = read_float("classified_reads")
+        Float unclassified_reads = read_float("unclassified_reads")
+        Int contamination_check_count = read_int("contamination_check_count")
         String assem_ratio = read_string("assem_ratio_with_stdev")
+        String gc_stdev = read_string("gc_stdev_from_mean")
         String docker_version = docker
     }
     
