@@ -6540,7 +6540,7 @@
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/ivar:1.3.1-titan</td>
+<td>"us-docker.pkg.dev/general-theiagen/staphb/ivar:1.3.1-titan"</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6907,7 +6907,7 @@
 <td>read_QC_trim_pe</td>
 <td><strong>call_midas</strong></td>
 <td>Boolean</td>
-<td>By default this is set to true to run MIDAS; set to false to skip MIDAS</td>
+<td>By default this is set to false; set to true to run MIDAS</td>
 <td>false</td>
 <td>Optional</td>
 </tr>
@@ -7260,7 +7260,7 @@
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>Docker image used for this task.</td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/samtools:1.17</td>
+<td>"us-docker.pkg.dev/general-theiagen/staphb/samtools:1.17"</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8163,7 +8163,7 @@
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/freyja:1.5.3</td>
+<td>"us-docker.pkg.dev/general-theiagen/staphb/freyja:1.5.3"</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8404,7 +8404,7 @@
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/freyja:1.5.3</td>
+<td>"us-docker.pkg.dev/general-theiagen/staphb/freyja:1.5.3"</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8562,11 +8562,11 @@
 <p>Data for various pathogens can be found in the following repository: <a href="https://github.com/gp201/Freyja-barcodes">Freyja Barcodes</a></p>
 <p>Folders are organized by pathogen, with each subfolder named after the date the barcode was generated, using the format YYYY-MM-DD, as well as a "latest" folder. Barcode files are named <code>barcode.csv</code>, and reference genome files are named <code>reference.fasta</code>.</p>
 </div>
-<p>There's two ways to run <a href="./#freyja_fastq"><strong>Freyja_FASTQ_PHB</strong></a> for non-SARS-CoV-2 organisms:
-- Using the <code>freyja_pathogen</code> optional input
-- Providing the appropriate barcode file through the <code>freyja_barcodes</code> optional input</p>
+<p>There are two ways to run <a href="./#freyja_fastq"><strong>Freyja_FASTQ_PHB</strong></a> for non-SARS-CoV-2 organisms:
+- Using the <code>freyja_pathogen</code> optional input (limited set of allowable organisms)
+- Providing the appropriate barcode file through the <code>freyja_barcodes</code> optional input (any organism for which barcodes are supplied)</p>
 <h3 id="using-the-freyja_pathogen-flag">Using the <code>freyja_pathogen</code> flag<a class="headerlink" href="#using-the-freyja_pathogen-flag" title="Permanent link">&para;</a></h3>
-<p>When using the <code>freyja_pathogen</code> flag, the latest version of the barcode file is automatically downloaded by Freyja. </p>
+<p>When using the <code>freyja_pathogen</code> flag, the user must set the optional <code>update_db</code> flag to <em>true</em>, so that the latest version of the barcode file is automatically downloaded by Freyja. </p>
 <div class="admonition caption">
 <p class="admonition-title">Figure 2:  Optional input for Freyja_FASTQ_PHB to provide the pathogen to be used by Freyja</p>
 <h5 id="figure2">Figure 2<a class="headerlink" href="#figure2" title="Permanent link">&para;</a></h5>
@@ -8577,7 +8577,6 @@
 <li>SARS-CoV-2 (default)</li>
 <li>MPXV</li>
 <li>H1N1pdm</li>
-<li>H3N2</li>
 <li>H5NX</li>
 <li>FLU-B-VIC</li>
 <li>MEASLESN450</li>
@@ -8587,7 +8586,7 @@
 </ul>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>The <code>freyja_pathogen</code> flag is not used if barcodes (and lineage metadata) file is provided. This means that this option is ignored if <code>update_db</code> is set to <code>true</code> or if a barcode (or lineage) file is provided through <code>freyja_barcodes</code> (and <code>freyja_lineage_metadata</code>).</p>
+<p>The <code>freyja_pathogen</code> flag is not used if a barcodes file is provided. This means that this option is ignored if a barcode file is provided through <code>freyja_barcodes</code>.</p>
 </div>
 <h3 id="providing-the-appropriate-barcode-file">Providing the appropriate barcode file<a class="headerlink" href="#providing-the-appropriate-barcode-file" title="Permanent link">&para;</a></h3>
 <p>The appropriate barcode file for your organism of interest and reference sequence need to be downloaded and uploaded to your <a href="http://Terra.bio">Terra.bio</a> workspace. When running <a href="./#freyja_fastq"><strong>Freyja_FASTQ_PHB</strong></a>, the appropriate reference and barcodes file need to be passed as inputs. The first is a required input and will show up at the top of the workflows inputs page on <a href="http://Terra.bio">Terra.bio</a> (<a href="./#figure3">Figure 3</a>).</p>
@@ -8637,7 +8636,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="April 1, 2025 15:36:51">2025-04-01</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="April 28, 2025 16:50:34">2025-04-28</span>
   </span>
 
     
