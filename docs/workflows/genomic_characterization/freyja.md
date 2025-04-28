@@ -119,7 +119,7 @@ This workflow runs on the sample level.
 | freyja_fastq | **samplename** | String | The name of the sample |  | Required |
 | bwa | **cpu** | Int | Number of CPUs to allocate to the task | 6 | Optional |
 | bwa | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
-| bwa | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/ivar:1.3.1-titan | Optional |
+| bwa | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/staphb/ivar:1.3.1-titan" | Optional |
 | bwa | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 16 | Optional |
 | freyja | **bootstrap** | Boolean | Perform bootstrapping | false | Optional |
 | freyja | **confirmed_only** | Boolean | Include only confirmed SARS-CoV-2 lineages | false | Optional |
@@ -165,7 +165,7 @@ This workflow runs on the sample level.
 | read_QC_trim_pe | **adapters** | File | A FASTA file containing adapter sequence |  | Optional |
 | read_QC_trim_pe | **bbduk_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional |
 | read_QC_trim_pe | **call_kraken** | Boolean | By default this is set to false to skip kraken2; set to true to run kraken2 but a database must be also provided via the kraken_db input parameter for this to run successfully | false | Optional |
-| read_QC_trim_pe | **call_midas** | Boolean | By default this is set to true to run MIDAS; set to false to skip MIDAS | false | Optional |
+| read_QC_trim_pe | **call_midas** | Boolean | By default this is set to false; set to true to run MIDAS | false | Optional |
 | read_QC_trim_pe | **fastp_args** | String | Additional arguments to use with fastp | "--detect_adapter_for_pe -g -5 20 -3 20" | Optional |
 | read_QC_trim_pe | **kraken_cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional |
 | read_QC_trim_pe | **kraken_db** | File | A kraken2 database to use with the kraken2 optional task. The file must be a .tar.gz kraken2 database. |  | Optional, Sometimes required |
@@ -209,7 +209,7 @@ This workflow runs on the sample level.
 | read_QC_trim_se | **trimmomatic_args** | String | Additional command-line arguments to use with trimmomatic |  | Optional |
 | sam_to_sorted_bam | **cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional |
 | sam_to_sorted_bam | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
-| sam_to_sorted_bam | **docker** | String | Docker image used for this task. | us-docker.pkg.dev/general-theiagen/staphb/samtools:1.17 | Optional |
+| sam_to_sorted_bam | **docker** | String | Docker image used for this task. | "us-docker.pkg.dev/general-theiagen/staphb/samtools:1.17" | Optional |
 | sam_to_sorted_bam | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional |
 | version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
 | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
@@ -452,7 +452,7 @@ This workflow runs on the set level.
 | freyja_plot | **collection_date** | Array[String] | An array containing the collection dates for the sample (YYYY-MM-DD format) |  | Optional |
 | freyja_plot_task | **cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional |
 | freyja_plot_task | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
-| freyja_plot_task | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/freyja:1.5.3 | Optional |
+| freyja_plot_task | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/staphb/freyja:1.5.3" | Optional |
 | freyja_plot_task | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 2 | Optional |
 | freyja_plot_task | **mincov** | Int | The minimum genome coverage used as a cut-off of data to include in the plot | 60 | Optional |
 | freyja_plot_task | **plot_day_window** | Int | The width of the rolling average window; only used if plot_time_interval is "D" | 14 | Optional |
@@ -516,7 +516,7 @@ This workflow runs on the set level.
 | freyja_dashboard_task | **config** | File | (found in the optional section, but is required) A yaml file that applies various configurations to the dashboard, such as grouping lineages together, applying colorings, etc. See also <https://github.com/andersen-lab/Freyja/blob/main/freyja/data/plot_config.yml>. |  | Optional, Required |
 | freyja_dashboard_task | **cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional |
 | freyja_dashboard_task | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
-| freyja_dashboard_task | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/freyja:1.5.3 | Optional |
+| freyja_dashboard_task | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/staphb/freyja:1.5.3" | Optional |
 | freyja_dashboard_task | **headerColor** | String | A hex color code to change the color of the header |  | Optional |
 | freyja_dashboard_task | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 2 | Optional |
 | freyja_dashboard_task | **mincov** | Float | The minimum genome coverage used as a cut-off of data to include in the dashboard. Default is set to 60 by the freyja command-line tool (not a WDL task default, per se) | | Optional |
@@ -577,13 +577,13 @@ The main requirement to run Freyja on other pathogens is **the existence of a ba
 
     Folders are organized by pathogen, with each subfolder named after the date the barcode was generated, using the format YYYY-MM-DD, as well as a "latest" folder. Barcode files are named `barcode.csv`, and reference genome files are named `reference.fasta`.
 
-There's two ways to run [**Freyja_FASTQ_PHB**](freyja.md#freyja_fastq) for non-SARS-CoV-2 organisms:
-- Using the `freyja_pathogen` optional input
-- Providing the appropriate barcode file through the `freyja_barcodes` optional input
+There are two ways to run [**Freyja_FASTQ_PHB**](freyja.md#freyja_fastq) for non-SARS-CoV-2 organisms:
+- Using the `freyja_pathogen` optional input (limited set of allowable organisms)
+- Providing the appropriate barcode file through the `freyja_barcodes` optional input (any organism for which barcodes are supplied)
 
 ### Using the `freyja_pathogen` flag
 
-When using the `freyja_pathogen` flag, the latest version of the barcode file is automatically downloaded by Freyja. 
+When using the `freyja_pathogen` flag, the user must set the optional `update_db` flag to _true_, so that the latest version of the barcode file is automatically downloaded by Freyja. 
 
 !!! caption "Figure 2:  Optional input for Freyja_FASTQ_PHB to provide the pathogen to be used by Freyja"
     ##### Figure 2 { #figure2 }
@@ -594,7 +594,6 @@ Allowed options:
 - SARS-CoV-2 (default)
 - MPXV
 - H1N1pdm
-- H3N2
 - H5NX
 - FLU-B-VIC
 - MEASLESN450
@@ -604,7 +603,7 @@ Allowed options:
 
 !!! warning
 
-    The `freyja_pathogen` flag is not used if barcodes (and lineage metadata) file is provided. This means that this option is ignored if `update_db` is set to `true` or if a barcode (or lineage) file is provided through `freyja_barcodes` (and `freyja_lineage_metadata`).
+    The `freyja_pathogen` flag is not used if a barcodes file is provided. This means that this option is ignored if a barcode file is provided through `freyja_barcodes`.
 
 ### Providing the appropriate barcode file
 

@@ -45,7 +45,7 @@ In order to maintain cohesive documentation, the following language and formatti
 The following language conventions should be followed when writing documentation:
 
 - The documentation should be written in American English (sorry to our friends across the pond!)
-- **The following variables should recieve the following descriptions**:
+- **The following variables should receive the following descriptions**:
     - `cpu` - Number of CPUs to allocate to the task
     - `disk_size` - Amount of storage (in GB) to allocate to the task
     - `docker` or `docker_image` - The Docker container to use for the task
