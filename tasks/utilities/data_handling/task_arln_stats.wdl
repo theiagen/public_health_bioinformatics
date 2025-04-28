@@ -21,7 +21,7 @@ task arln_stats {
         Int cpu = 2
         Int memory = 5
         Int disk_size = 10
-        String docker = "arln_stats:0.1.0"
+        String docker = "arln_stats:1.0.0"
     }
     
     command <<<
