@@ -44,7 +44,7 @@ task ts_mlst {
     scheme=$(head -n 2 ~{samplename}_ts_mlst.tsv | tail -n 1 | cut -f2)
     echo "Scheme Initial Run: $scheme"
 
-    if [[ "$scheme" == "abaumannii" || "$scheme" == "abaumannii_2" ]]; then
+    if [[ "$scheme" == "ecoli", "$scheme" == "ecoli_2", "$scheme" == "abaumannii" || "$scheme" == "abaumannii_2" ]]; then
       mv ~{samplename}_ts_mlst.tsv ~{samplename}_1.tsv
       secondary_scheme=$(if [[ "$scheme" == *_2 ]]; then echo "${scheme%_2}"; else echo "${scheme}_2"; fi)
 
