@@ -90,7 +90,7 @@ task mercury {
       ~{"--seq_platform '" + seq_platform + "'"} \
       ~{"--gisaid_submitter '" + gisaid_submitter + "'"} \
       ~{"--submitter_email '" + submitter_email + "'"} \
-      ~{"--metadata_organism '" + metadata_organism + "'"}
+      ~{"--metadata_organism '" + metadata_organism + "'"} \
       --debug
 
     # write out excluded samples file to the stdout
