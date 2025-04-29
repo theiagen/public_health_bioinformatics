@@ -29,8 +29,6 @@ task ts_mlst {
     
     #create output header
     echo -e "Filename\tPubMLST_Scheme_name\tSequence_Type_(ST)\tAllele_IDs" > ~{samplename}_ts_mlst.tsv
-    
-    read genus species <<< "${taxonomy}"
 
     mlst \
     --threads ~{cpu} \
@@ -43,11 +41,13 @@ task ts_mlst {
     ~{assembly} \
     >> ~{samplename}_ts_mlst.tsv
 
-    cp ~{samplename}_ts_mlst.tsv ~{samplename}_1.tsv
-    scheme=$(tail -n1 | cut -d $'\t' -f2 ~{samplename}_1.tsv)
-    secondary_scheme=$(if [[ "$scheme" == *_2 ]]; then echo "${scheme%_2}"; else echo "${scheme}_2"; fi)
+    scheme=$(head -n 2 ~{samplename}_ts_mlst.tsv | tail -n 1 | cut -f2)
+    echo "Scheme Initial Run: $scheme"
 
-    if [ "$scheme" == "ecoli", "$scheme" == "ecoli_2", "$scheme" == "abaumannii", "$scheme" == "abaumannii_2" ]; then
+    if [[ "$scheme" == "abaumannii" || "$scheme" == "abaumannii_2" ]]; then
+      mv ~{samplename}_ts_mlst.tsv ~{samplename}_1.tsv
+      secondary_scheme=$(if [[ "$scheme" == *_2 ]]; then echo "${scheme%_2}"; else echo "${scheme}_2"; fi)
+
       mlst \
       --threads ~{cpu} \
       ~{true="--nopath" false="" nopath} \
@@ -55,13 +55,19 @@ task ts_mlst {
       ~{'--minid ' + min_percent_identity} \
       ~{'--mincov ' + min_percent_coverage} \
       ~{'--minscore ' + minscore} \
-      --novel ~{samplename}_novel_mlst_alleles.fasta \
+      --novel ~{samplename}_novel_mlst_alleles_${secondary_scheme}.fasta \
       ~{assembly} \
       >> ~{samplename}_2.tsv
 
-      cat ~{samplename}_1.tsv ~{samplename}_2.tsv > ~{samplename}_ts_mlst.tsv
-    elif [ ~{taxonomy} == "Escherichia" ]; then
-      if [ "$scheme" == "aeromonas", "$scheme" == "cfreundii", "$scheme" == "senterica" ]; then
+      #create output header
+
+      cat ~{samplename}_1.tsv ~{samplename}_2.tsv >> ~{samplename}_ts_mlst.tsv
+      cat ~{samplename}_novel_mlst_alleles_${secondary_scheme}.fasta ~{samplename}_novel_mlst_alleles.fasta > ~{samplename}_novel_mlst_alleles.fasta
+
+    elif [[ "~{taxonomy}" == "Escherichia" || "~{taxonomy}" == "Escherichia coli" ]]; then
+      if [[ "$scheme" == "aeromonas" || "$scheme" == "cfreundii" ||  "$scheme" == "senterica" ]]; then
+          echo "Taxonomy is reported as Escherichia, but scheme is not. Running ecoli schemes."
+
           mlst \
           --threads ~{cpu} \
           ~{true="--nopath" false="" nopath} \
@@ -69,7 +75,7 @@ task ts_mlst {
           ~{'--minid ' + min_percent_identity} \
           ~{'--mincov ' + min_percent_coverage} \
           ~{'--minscore ' + minscore} \
-          --novel ~{samplename}_novel_mlst_alleles.fasta \
+          --novel ~{samplename}_novel_mlst_alleles_ecoli.fasta \
           ~{assembly} \
           >> ~{samplename}_1.tsv
 
@@ -80,11 +86,15 @@ task ts_mlst {
           ~{'--minid ' + min_percent_identity} \
           ~{'--mincov ' + min_percent_coverage} \
           ~{'--minscore ' + minscore} \
-          --novel ~{samplename}_novel_mlst_alleles.fasta \
+          --novel ~{samplename}_novel_mlst_alleles_ecoli_2.fasta \
           ~{assembly} \
           >> ~{samplename}_2.tsv
 
-          cat ~{samplename}_1.tsv ~{samplename}_2.tsv > ~{samplename}_ts_mlst.tsv
+          #create output header
+          echo -e "Filename\tPubMLST_Scheme_name\tSequence_Type_(ST)\tAllele_IDs" > ~{samplename}_ts_mlst.tsv
+
+          cat ~{samplename}_1.tsv ~{samplename}_2.tsv >> ~{samplename}_ts_mlst.tsv
+          cat ~{samplename}_novel_mlst_alleles_ecoli.fasta ~{samplename}_novel_mlst_alleles_ecoli_2.fasta > ~{samplename}_novel_mlst_alleles.fasta
       fi
     fi
     # parse ts mlst tsv for relevant outputs
@@ -114,7 +124,6 @@ task ts_mlst {
   >>>
   output {
     File? ts_mlst_results = "~{samplename}_ts_mlst.tsv"
-    File? ts_mlst_results_arln = "~{samplename}_arln_ts_mlst.tsv"
     String ts_mlst_predicted_st = read_string("PREDICTED_MLST")
     String ts_mlst_pubmlst_scheme = read_string("PUBMLST_SCHEME")
     String ts_mlst_allelic_profile = read_string("ALLELIC_PROFILE.txt")
