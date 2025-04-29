@@ -29,7 +29,7 @@ workflow theiaviral_illumina_pe {
     String taxon # taxon id OR organism name
     String read_extraction_rank = "family"
     String samplename
-    File kraken_db = "gs://theiagen-large-public-files-rp/terra/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz"
+    File kraken_db = "gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz"
     Boolean skip_screen = true # if false, run clean read screening
     Boolean skip_metaviralspades = false # if true, move to megahit immediately
     Boolean skip_rasusa = false

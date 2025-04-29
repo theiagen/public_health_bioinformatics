@@ -6,8 +6,8 @@ task metabuli {
     String samplename
     String taxon_id
     Boolean extract_unclassified = false
-    File metabuli_db = "gs://theiagen-large-public-files-rp/terra/databases/metabuli/refseq_virus-v223.tar.gz"
-    File taxonomy_path = "gs://theiagen-large-public-files-rp/terra/databases/metabuli/new_taxdump.tar.gz"
+    File metabuli_db = "gs://theiagen-public-resources-rp/reference_data/databases/metabuli/refseq_virus-v223.tar.gz"
+    File taxonomy_path = "gs://theiagen-public-resources-rp/reference_data/databases/metabuli/new_taxdump.tar.gz"
     Float? min_score # metabuli: Min. sequence similarity score (0.0-1.0) [0.000]
     Float? min_sp_score # metabuli: Min. score for species- or lower-level classification. [0.000]
     Float? min_cov # metabuli: Min. query coverage (0.0-1.0) [0.000]
