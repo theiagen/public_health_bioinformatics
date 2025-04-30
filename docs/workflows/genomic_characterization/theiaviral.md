@@ -8,228 +8,877 @@
 
 ## TheiaViral Workflows
 
-The **TheiaViral** workflows are designed for the assembly, quality assessment, and characterization of **non-amplicon-based** viral genomes. The TheiaViral workflows are particularly well-suited for handling diverse or recombinant pathogens, such as rabies virus and norovirus, which often pose challenges for traditional reference-based assembly methods. This is because existing references often fail to  adequately capture the genetic diversity present within a given sample. To address this, TheiaViral incorporates an unbiased reference selection step based on Average Nucleotide Identity (ANI). This step compares a de novo assembly of the sample against a comprehensive database of over 270,000 viral genomes, enabling selection of the most closely related reference. Currently, TheiaViral workflows perform variant calling and generate a consensus sequence, but additional downstream analyses are not yet implemented.
+The **TheiaViral** workflows are designed for the assembly, quality assessment, and characterization of **non-amplicon-based** viral genomes. The TheiaViral workflows are particularly well-suited for handling diverse or recombinant pathogens, such as rabies virus and norovirus, which often pose challenges for traditional reference-based assembly methods. This is because existing references often fail to adequately capture the genetic diversity present within a given sample. To address this, TheiaViral incorporates an unbiased reference selection step based on Average Nucleotide Identity (ANI). This step compares a de novo assembly of the sample against a comprehensive database of over 270,000 viral genomes, enabling selection of the most closely related reference. Currently, TheiaViral workflows perform variant calling and generate a consensus sequence, but additional downstream analyses are not yet implemented.
 
-**What are the main differences between the TheiaViral and TheiaCov workflows?**
+??? question "What are the main differences between the TheiaViral and TheiaCov workflows?"
 
-<div class="grid cards" markdown>
+    <div class="grid cards" markdown>
 
--   :material-database: **TheiaViral Workflows**
+    -   :material-database: **TheiaViral Workflows**
+
+        ---
+
+        * For non-amplicon-based viral genomes.
+        * Supports relatively diverse and recombinant pathogens.
+        * Utilizes an ANI-based reference selection from a *de novo* assembled genome.
+
+
+    -   :material-database: **TheiaCov Workflows**
+
+        ---
+
+        * For tiled PCR - amplicon-based viral genomes.
+        * Supports a limited number of [pathogens](../../workflows/genomic_characterization/theiacov.md/#supported-organisms).
+        * Utilizes a preselected manually curated reference genome.
+
+    </div>
+
+## TheiaViral Workflows for Different Input Types
+
+<div class="grid cards " markdown>
+
+-   <center> **TheiaViral_Illumina_PE** </center>
 
     ---
 
-    * For non-amplicon-based viral genomes.
-    * Supports relatively diverse and recombinant pathogens.
-    * Utilizes an ANI-based reference selection from a *de novo* assembled genome.
-    
-
--   :material-database: **TheiaCov Workflows**
-
-    ---
-
-    * For tiled PCR - amplicon-based viral genomes.
-    * Supports a limited number of [pathogens](../../workflows/genomic_characterization/theiacov.md/#supported-organisms).
-    * Utilizes a preselected manually curated reference genome.
-
-</div>
-
-
-There are currently two TheiaViral workflows designed to accommodate different kinds of input data:
-
-1. Illumina paired-end sequencing (**TheiaViral_Illumina_PE**)
-2. ONT sequencing (**TheiaViral_ONT**)
-
-
-### Inputs
-
-!!! dna ""
-    ??? toggle "TheiaViral_Illumina_PE Input Read Data"
+    !!! dna "Illumina_PE Input Read Data"
 
         The TheiaViral_Illumina_PE workflow takes in Illumina paired-end read data. Read file names should end with `.fastq` or `.fq`, with the optional addition of `.gz`. When possible, Theiagen recommends zipping files with [gzip](https://www.gnu.org/software/gzip/) before Terra uploads to minimize data upload time.
 
         By default, the workflow anticipates 2 x 150bp reads (i.e. the input reads were generated using a 300-cycle sequencing kit). Modifications to the optional parameter for `trim_minlen` may be required to accommodate shorter read data, such as the 2 x 75bp reads generated using a 150-cycle sequencing kit.
 
-    ??? toggle "TheiaViral_ONT Input Read Data"
+-   <center> **TheiaViral_ONT** </center>
 
-        The TheiaCoV_ONT workflow takes in base-called ONT read data. Read file names should end with `.fastq` or `.fq`, with the optional addition of `.gz`. When possible, Theiagen recommends zipping files with [gzip](https://www.gnu.org/software/gzip/) before uploading to Terra to minimize data upload time.
+    ---
 
-        **The ONT sequencing kit and base-calling approach can produce substantial variability in the amount and quality of read data. Genome assemblies produced by the TheiaCoV_ONT workflow must be quality assessed before reporting results.**
+    !!! dna_blue "ONT Input Read Data"
 
-<div class="searchable-table" markdown="1">
+        The TheiaViral_ONT workflow takes in base-called ONT read data. Read file names should end with `.fastq` or `.fq`, with the optional addition of `.gz`. When possible, Theiagen recommends zipping files with [gzip](https://www.gnu.org/software/gzip/) before uploading to Terra to minimize data upload time.
 
-| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** | **Workflow** |
-|---|---|---|---|---|---|---|
-| theiaviral_ont | **read1** | File | Base-called ONT read file in FASTQ file format (compression optional) | | Required | ONT |
-| theiaviral_ont | **samplename** | String | Name of the sample being analyzed | | Required | ONT |
-| theiaviral_ont | **taxon** | String | Taxon ID or organism name of interest | | Required | ONT |
-| bcftools_consensus | **cpu** | Int | Number of CPUs allocated for the task | 2 | Optional | ONT |
-| bcftools_consensus | **disk_size** | Int | Disk size allocated for the task (in GB) | 100 | Optional | ONT |
-| bcftools_consensus | **docker** | String | Docker image used for the task | "us-docker.pkg.dev/general-theiagen/staphb/bcftools:1.20" | Optional | ONT |
-| bcftools_consensus | **memory** | Int | Memory allocated for the task (in GB) | 4 | Optional | ONT |
-| checkv_consensus | **checkv_db** | File | CheckV database file | "gs://theiagen-large-public-files-rp/terra/databases/checkv/checkv-db-v1.5.tar.gz" | Optional | ONT |
-| checkv_consensus | **cpu** | Int | Number of CPUs allocated for the task | 2 | Optional | ONT |
-| checkv_consensus | **disk_size** | Int | Disk size allocated for the task (in GB) | 100 | Optional | ONT |
-| checkv_consensus | **docker** | String | Docker image used for the task | "us-docker.pkg.dev/general-theiagen/staphb/checkv:1.0.3" | Optional | ONT |
-| checkv_consensus | **memory** | Int | Memory allocated for the task (in GB) | 8 | Optional | ONT |
-| checkv_denovo | **checkv_db** | File | CheckV database file | "gs://theiagen-large-public-files-rp/terra/databases/checkv/checkv-db-v1.5.tar.gz" | Optional | ONT |
-| checkv_denovo | **cpu** | Int | Number of CPUs allocated for the task | 2 | Optional | ONT |
-| checkv_denovo | **disk_size** | Int | Disk size allocated for the task (in GB) | 100 | Optional | ONT |
-| checkv_denovo | **docker** | String | Docker image used for the task | "us-docker.pkg.dev/general-theiagen/staphb/checkv:1.0.3" | Optional | ONT |
-| checkv_denovo | **memory** | Int | Memory allocated for the task (in GB) | 8 | Optional | ONT |
-| clair3 | **clair3_model** | String | Model to be used by Clair3 | "r941_prom_hac_g360+g422" | Optional | ONT |
-| clair3 | **cpu** | Int | Number of CPUs allocated for the task | 4 | Optional | ONT |
-| clair3 | **disable_phasing** | Boolean | True/False that determines if variants should be called without whatshap phasing in full alignment calling | TRUE | Optional | ONT |
-| clair3 | **disk_size** | Int | Disk size allocated for the task (in GB) | 100 | Optional | ONT |
-| clair3 | **docker** | String | Docker image used for the task | "us-docker.pkg.dev/general-theiagen/theiagen/clair3-extra-models:1.0.10" | Optional | ONT |
-| clair3 | **enable_gvcf** | Boolean | True/False that determines if an additional GVCF output should generated | FALSE | Optional | ONT |
-| clair3 | **enable_haploid_precise** | Boolean | True/False that determines haploid calling mode where only 1/1 is considered as a variant | TRUE | Optional | ONT |
-| clair3 | **include_all_contigs** | Boolean | True/False that determines if all contigs should be included in the output | TRUE | Optional | ONT |
-| clair3 | **indel_min_af** | Float | Minimum Indel AF required for a candidate variant | 0.08 | Optional | ONT |
-| clair3 | **memory** | Int | Memory allocated for the task (in GB) | 8 | Optional | ONT |
-| clair3 | **snp_min_af** | Float | Minimum SNP AF required for a candidate variant | 0.08 | Optional | ONT |
-| clair3 | **variant_quality** | Int | If set, variants with >$qual will be marked PASS, or LowQual otherwise | 2 | Optional | ONT |
-| clean_check_reads | **cpu** | Int | Number of CPUs allocated for the task | 1 | Optional | ONT |
-| clean_check_reads | **disk_size** | Int | Disk size allocated for the task (in GB) | 100 | Optional | ONT |
-| clean_check_reads | **docker** | String | Docker image used for the task | "us-docker.pkg.dev/general-theiagen/bactopia/gather_samples:2.0.2" | Optional | ONT |
-| clean_check_reads | **memory** | Int | Memory allocated for the task (in GB) | 2 | Optional | ONT |
-| consensus_qc | **cpu** | Int | Number of CPUs allocated for the task | 1 | Optional | ONT |
-| consensus_qc | **disk_size** | Int | Disk size allocated for the task (in GB) | 100 | Optional | ONT |
-| consensus_qc | **docker** | String | Docker image used for the task | "us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1" | Optional | ONT |
-| consensus_qc | **memory** | Int | Memory allocated for the task (in GB) | 2 | Optional | ONT |
-| fasta_utilities | **cpu** | Int | Number of CPUs allocated for the task | 1 | Optional | ONT |
-| fasta_utilities | **disk_size** | Int | Disk size allocated for the task (in GB) | 10 | Optional | ONT |
-| fasta_utilities | **docker** | String | Docker image used for the task | "us-docker.pkg.dev/general-theiagen/biocontainers/seqkit:2.4.0--h9ee0642_0" | Optional | ONT |
-| fasta_utilities | **memory** | Int | Memory allocated for the task (in GB) | 2 | Optional | ONT |
-| flye | **additional_parameters** | String | Additional parameters for Flye assembler | | Optional | ONT |
-| flye | **asm_coverage** | Int | Reduced coverage for initial disjointig assembly | | Optional | ONT |
-| flye | **cpu** | Int | Number of CPUs allocated for the task | 4 | Optional | ONT |
-| flye | **disk_size** | Int | Disk size allocated for the task (in GB) | 100 | Optional | ONT |
-| flye | **docker** | String | Docker image used for the task | "us-docker.pkg.dev/general-theiagen/staphb/flye:2.9.4" | Optional | ONT |
-| flye | **flye_polishing_iterations** | Int | Number of polishing iterations | 1 | Optional | ONT |
-| flye | **genome_length** | Int | Expected genome length for assembly - requires `asm_coverage` | | Optional | ONT |
-| flye | **keep_haplotypes** | Boolean | True/False to prevent collapsing alternative haplotypes | FALSE | Optional | ONT |
-| flye | **memory** | Int | Memory allocated for the task (in GB) | 32 | Optional | ONT |
-| flye | **minimum_overlap** | Int | Minimum overlap between reads | | Optional | ONT |
-| flye | **no_alt_contigs** | Boolean | True/False to disable alternative contig generation | FALSE | Optional | ONT |
-| flye | **read_error_rate** | Float | Expected error rate in reads | | Optional | ONT |
-| flye | **read_type** | String | Type of read data for Flye | "--nano-hq" | Optional | ONT |
-| flye | **scaffold** | Boolean | True/False to enable scaffolding using graph | FALSE | Optional | ONT |
-| mask_low_coverage | **cpu** | Int | Number of CPUs allocated for the task | 2 | Optional | ONT |
-| mask_low_coverage | **disk_size** | Int | Disk size allocated for the task (in GB) | 100 | Optional | ONT |
-| mask_low_coverage | **docker** | String | Docker image used for the task | "us-docker.pkg.dev/general-theiagen/staphb/bedtools:2.31.0" | Optional | ONT |
-| mask_low_coverage | **memory** | Int | Memory allocated for the task (in GB) | 8 | Optional | ONT |
-| metabuli | **cpu** | Int | Number of CPUs allocated for the task | 4 | Optional | ONT |
-| metabuli | **disk_size** | Int | Disk size allocated for the task (in GB) | 100 | Optional | ONT |
-| metabuli | **docker** | String | Docker image used for the task | "us-docker.pkg.dev/general-theiagen/theiagen/metabuli:1.1.0" | Optional | ONT |
-| metabuli | **extract_unclassified** | Boolean | True/False that determines if unclassified reads should be extracted and combined with the taxon specific extracted reads | FALSE | Optional | ONT |
-| metabuli | **memory** | Int | Memory allocated for the task (in GB) | 8 | Optional | ONT |
-| metabuli | **metabuli_db** | File | Metabuli database file | "gs://theiagen-large-public-files-rp/terra/databases/metabuli/refseq_virus-v223.tar.gz" | Optional | ONT |
-| metabuli | **min_cov** | Float | Minimum query coverage threshold (0.0 - 1.0) | 0.0 | Optional | ONT |
-| metabuli | **min_score** | Float | Minimum sequenece similarity score (0.0 - 1.0) | 0.0 | Optional | ONT |
-| metabuli | **min_sp_score** | Float | Minimum score for species- or lower-level classification | 0.0 | Optional | ONT |
-| metabuli | **taxonomy_path** | File | Path to taxonomy file | "gs://theiagen-large-public-files-rp/terra/databases/metabuli/new_taxdump.tar.gz" | Optional | ONT |
-| minimap2 | **cpu** | Int | Number of CPUs allocated for the task | 2 | Optional | ONT |
-| minimap2 | **disk_size** | Int | Disk size allocated for the task (in GB) | 100 | Optional | ONT |
-| minimap2 | **docker** | String | Docker image used for the task | "us-docker.pkg.dev/general-theiagen/staphb/minimap2:2.22" | Optional | ONT |
-| minimap2 | **memory** | Int | Memory allocated for the task (in GB) | 8 | Optional | ONT |
-| minimap2 | **query2** | File | Internal component. Do not modify | | Optional | ONT |
-| nanoplot_clean | **cpu** | Int | Number of CPUs allocated for the task | 4 | Optional | ONT |
-| nanoplot_clean | **disk_size** | Int | Disk size allocated for the task (in GB) | 100 | Optional | ONT |
-| nanoplot_clean | **docker** | String | Docker image used for the task | "us-docker.pkg.dev/general-theiagen/staphb/nanoplot:1.40.0" | Optional | ONT |
-| nanoplot_clean | **max_length** | Int | Maximum read length for plotting | 100000 | Optional | ONT |
-| nanoplot_clean | **memory** | Int | Memory allocated for the task (in GB) | 16 | Optional | ONT |
-| nanoplot_raw | **cpu** | Int | Number of CPUs allocated for the task | 4 | Optional | ONT |
-| nanoplot_raw | **disk_size** | Int | Disk size allocated for the task (in GB) | 100 | Optional | ONT |
-| nanoplot_raw | **docker** | String | Docker image used for the task | "us-docker.pkg.dev/general-theiagen/staphb/nanoplot:1.40.0" | Optional | ONT |
-| nanoplot_raw | **max_length** | Int | Maximum read length for plotting | 100000 | Optional | ONT |
-| nanoplot_raw | **memory** | Int | Memory allocated for the task (in GB) | 16 | Optional | ONT |
-| nanoq | **cpu** | Int | Number of CPUs allocated for the task | 2 | Optional | ONT |
-| nanoq | **disk_size** | Int | Disk size allocated for the task (in GB) | 100 | Optional | ONT |
-| nanoq | **docker** | String | Docker image used for the task | "us-docker.pkg.dev/general-theiagen/biocontainers/nanoq:0.9.0--hec16e2b_1" | Optional | ONT |
-| nanoq | **max_read_length** | Int | Maximum read length to keep | 100000 | Optional | ONT |
-| nanoq | **max_read_qual** | Int | Maximum read quality to keep | 10 | Optional | ONT |
-| nanoq | **memory** | Int | Memory allocated for the task (in GB) | 2 | Optional | ONT |
-| nanoq | **min_read_length** | Int | Minimum read length to keep | 500 | Optional | ONT |
-| nanoq | **min_read_qual** | Int | Minimum read quality to keep | 10 | Optional | ONT |
-| ncbi_datasets | **cpu** | Int | Number of CPUs allocated for the task | 1 | Optional | ONT |
-| ncbi_datasets | **disk_size** | Int | Disk size allocated for the task (in GB) | 50 | Optional | ONT |
-| ncbi_datasets | **docker** | String | Docker image used for the task | "us-docker.pkg.dev/general-theiagen/staphb/ncbi-datasets:16.38.1" | Optional | ONT |
-| ncbi_datasets | **include_gbff** | Boolean | True/False to include gbff files in the output | FALSE | Optional | ONT |
-| ncbi_datasets | **include_gff3** | Boolean | True/False to include gff3 files in the output | FALSE | Optional | ONT |
-| ncbi_datasets | **memory** | Int | Memory allocated for the task (in GB) | 4 | Optional | ONT |
-| ncbi_identify | **cpu** | Int | Number of CPUs allocated for the task | 1 | Optional | ONT |
-| ncbi_identify | **disk_size** | Int | Disk size allocated for the task (in GB) | 50 | Optional | ONT |
-| ncbi_identify | **docker** | String | Docker image used for the task | "us-docker.pkg.dev/general-theiagen/staphb/ncbi-datasets:16.38.1" | Optional | ONT |
-| ncbi_identify | **memory** | Int | Memory allocated for the task (in GB) | 4 | Optional | ONT |
-| ncbi_scrub_se | **cpu** | Int | Number of CPUs allocated for the task | 4 | Optional | ONT |
-| ncbi_scrub_se | **disk_size** | Int | Disk size allocated for the task (in GB) | 100 | Optional | ONT |
-| ncbi_scrub_se | **docker** | String | Docker image used for the task | "us-docker.pkg.dev/general-theiagen/ncbi/sra-human-scrubber:2.2.1" | Optional | ONT |
-| ncbi_scrub_se | **memory** | Int | Memory allocated for the task (in GB) | 8 | Optional | ONT |
-| ncbi_taxon_summary | **cpu** | Int | Number of CPUs allocated for the task | 1 | Optional | ONT |
-| ncbi_taxon_summary | **disk_size** | Int | Disk size allocated for the task (in GB) | 50 | Optional | ONT |
-| ncbi_taxon_summary | **docker** | String | Docker image used for the task | "us-docker.pkg.dev/general-theiagen/staphb/ncbi-datasets:16.38.1" | Optional | ONT |
-| ncbi_taxon_summary | **memory** | Int | Memory allocated for the task (in GB) | 4 | Optional | ONT |
-| parse_mapping | **cpu** | Int | Number of CPUs allocated for the task | 2 | Optional | ONT |
-| parse_mapping | **disk_size** | Int | Disk size allocated for the task (in GB) | 100 | Optional | ONT |
-| parse_mapping | **docker** | String | Docker image used for the task | "us-docker.pkg.dev/general-theiagen/staphb/samtools:1.17" | Optional | ONT |
-| parse_mapping | **memory** | Int | Memory allocated for the task (in GB) | 8 | Optional | ONT |
-| porechop | **cpu** | Int | Number of CPUs allocated for the task | 4 | Optional | ONT |
-| porechop | **disk_size** | Int | Disk size allocated for the task (in GB) | 100 | Optional | ONT |
-| porechop | **docker** | String | Docker image used for the task | "us-docker.pkg.dev/general-theiagen/staphb/porechop:0.2.4" | Optional | ONT |
-| porechop | **memory** | Int | Memory allocated for the task (in GB) | 16 | Optional | ONT |
-| porechop | **trimopts** | String | Additional trimming options for Porechop | | Optional | ONT |
-| quast_denovo | **cpu** | Int | Number of CPUs allocated for the task | 2 | Optional | ONT |
-| quast_denovo | **disk_size** | Int | Disk size allocated for the task (in GB) | 100 | Optional | ONT |
-| quast_denovo | **docker** | String | Docker image used for the task | "us-docker.pkg.dev/general-theiagen/staphb/quast:5.0.2" | Optional | ONT |
-| quast_denovo | **memory** | Int | Memory allocated for the task (in GB) | 2 | Optional | ONT |
-| quast_denovo | **min_contig_length** | Int | Lower threshold for a contig length in bp. Shorter contigs won’t be taken into account | 500 | Optional | ONT |
-| rasusa | **bases** | String | Explicitly set the number of bases required e.g., 4.3kb, 7Tb, 9000, 4.1MB. If this option is given, --coverage and --genome-size are ignored | | Optional | ONT |
-| rasusa | **coverage** | Float | The desired coverage to sub-sample the reads to. If --bases is not provided, this option and --genome-size are required | 250 | Optional | ONT |
-| rasusa | **cpu** | Int | Number of CPUs allocated for the task | 4 | Optional | ONT |
-| rasusa | **disk_size** | Int | Disk size allocated for the task (in GB) | 100 | Optional | ONT |
-| rasusa | **docker** | String | Docker image used for the task | "us-docker.pkg.dev/general-theiagen/staphb/rasusa:2.1.0" | Optional | ONT |
-| rasusa | **frac** | Float | Subsample to a fraction of the reads - e.g., 0.5 samples half the reads | | Optional | ONT |
-| rasusa | **memory** | Int | Memory allocated for the task (in GB) | 8 | Optional | ONT |
-| rasusa | **num** | Int | Subsample to a specific number of reads | | Optional | ONT |
-| rasusa | **read2** | File | Second read file for paired-end data | | Optional | PE |
-| rasusa | **seed** | Int | Random seed for reproducibility | | Optional | ONT |
-| raven | **cpu** | Int | Number of CPUs allocated for the task | 4 | Optional | ONT |
-| raven | **disk_size** | Int | Disk size allocated for the task (in GB) | 100 | Optional | ONT |
-| raven | **docker** | String | Docker image used for the task | "us-docker.pkg.dev/general-theiagen/theiagen/raven:1.8.3" | Optional | ONT |
-| raven | **memory** | Int | Memory allocated for the task (in GB) | 16 | Optional | ONT |
-| raven | **raven_identity** | Float | Threshold for overlap between two reads in order to construct an edge between them | 0.0 | Optional | ONT |
-| raven | **raven_opts** | Int | Additional parameters for Raven assembler | | Optional | ONT |
-| raven | **raven_polishing_iterations** | Int | Number of polishing iterations | 2 | Optional | ONT |
-| read_mapping_stats | **cpu** | Int | Number of CPUs allocated for the task | 2 | Optional | ONT |
-| read_mapping_stats | **disk_size** | Int | Disk size allocated for the task (in GB) | 100 | Optional | ONT |
-| read_mapping_stats | **docker** | String | Docker image used for the task | "us-docker.pkg.dev/general-theiagen/staphb/samtools:1.15" | Optional | ONT |
-| read_mapping_stats | **memory** | Int | Memory allocated for the task (in GB) | 8 | Optional | ONT |
-| skani | **cpu** | Int | Number of CPUs allocated for the task | 2 | Optional | ONT |
-| skani | **disk_size** | Int | Disk size allocated for the task (in GB) | 100 | Optional | ONT |
-| skani | **docker** | String | Docker image used for the task | "us-docker.pkg.dev/general-theiagen/staphb/skani:0.2.2" | Optional | ONT |
-| skani | **memory** | Int | Memory allocated for the task (in GB) | 4 | Optional | ONT |
-| skani | **skani_db** | File | Skani database file | "gs://theiagen-large-public-files-rp/terra/databases/skani/skani_db_20250325.tar" | Optional | ONT |
-| theiaviral_ont | **call_porechop** | Boolean | True/False to trim adapters with porechop | FALSE | Optional | ONT |
-| theiaviral_ont | **genome_length** | Int | Expected genome length of taxon of interest | | Optional | ONT |
-| theiaviral_ont | **min_allele_freq** | Float | Minimum allele frequency required for a variant to populate the consensus sequence | 0.6 | Optional | ONT |
-| theiaviral_ont | **min_depth** | Int | Minimum read depth required for a variant to populate the consensus sequence | 10 | Optional | ONT |
-| theiaviral_ont | **min_map_quality** | Int | Minimum mapping quality required for read alignments | 20 | Optional | ONT |
-| theiaviral_ont | **read_extraction_rank** | String | Taxonomic rank to use for read extraction | "family" | Optional | ONT |
-| theiaviral_ont | **reference_fasta** | File | Reference genome in FASTA format | | Optional | ONT |
-| theiaviral_ont | **skip_rasusa** | Boolean | True/False to skip read subsampling with Rasusa | FALSE | Optional | ONT |
-| theiaviral_ont | **skip_raven** | Boolean | True/False to skip assembly with Raven and instead use Flye | FALSE | Optional | ONT |
-| theiaviral_ont | **skip_screen** | Boolean | True/False to skip read screening check prior to analysis | FALSE | Optional | ONT |
-| version_capture | **docker** | String | Docker image used for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional | ONT |
-| version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) | | Optional | ONT |
+        **The ONT sequencing kit and base-calling approach can produce substantial variability in the amount and quality of read data. Genome assemblies produced by the TheiaViral_ONT workflow must be quality assessed before reporting results.**
 
+</div>
+
+### Inputs
+
+=== "Illumina_PE"
+
+    <div class="searchable-table" markdown="1">
+
+    | **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** | **Workflow** |
+    |---|---|---|---|---|---|---|
+    | theiaviral_ont | **read1** | File | Base-called ONT read file in FASTQ file format (compression optional) | | Required | ONT |
+
+    </div>
+
+=== "ONT"
+
+    <div class="searchable-table" markdown="1">
+
+    | **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** | **Workflow** |
+    |---|---|---|---|---|---|---|
+    | theiaviral_ont | **read1** | File | Base-called ONT read file in FASTQ file format (compression optional) | | Required | ONT |
+    | theiaviral_ont | **samplename** | String | Name of the sample being analyzed | | Required | ONT |
+    | theiaviral_ont | **taxon** | String | Taxon ID or organism name of interest | | Required | ONT |
+    | bcftools_consensus | **cpu** | Int | Number of CPUs allocated for the task | 2 | Optional | ONT |
+    | bcftools_consensus | **disk_size** | Int | Disk size allocated for the task (in GB) | 100 | Optional | ONT |
+    | bcftools_consensus | **docker** | String | Docker image used for the task | "us-docker.pkg.dev/general-theiagen/staphb/bcftools:1.20" | Optional | ONT |
+    | bcftools_consensus | **memory** | Int | Memory allocated for the task (in GB) | 4 | Optional | ONT |
+    | checkv_consensus | **checkv_db** | File | CheckV database file | "gs://theiagen-large-public-files-rp/terra/databases/checkv/checkv-db-v1.5.tar.gz" | Optional | ONT |
+    | checkv_consensus | **cpu** | Int | Number of CPUs allocated for the task | 2 | Optional | ONT |
+    | checkv_consensus | **disk_size** | Int | Disk size allocated for the task (in GB) | 100 | Optional | ONT |
+    | checkv_consensus | **docker** | String | Docker image used for the task | "us-docker.pkg.dev/general-theiagen/staphb/checkv:1.0.3" | Optional | ONT |
+    | checkv_consensus | **memory** | Int | Memory allocated for the task (in GB) | 8 | Optional | ONT |
+    | checkv_denovo | **checkv_db** | File | CheckV database file | "gs://theiagen-large-public-files-rp/terra/databases/checkv/checkv-db-v1.5.tar.gz" | Optional | ONT |
+    | checkv_denovo | **cpu** | Int | Number of CPUs allocated for the task | 2 | Optional | ONT |
+    | checkv_denovo | **disk_size** | Int | Disk size allocated for the task (in GB) | 100 | Optional | ONT |
+    | checkv_denovo | **docker** | String | Docker image used for the task | "us-docker.pkg.dev/general-theiagen/staphb/checkv:1.0.3" | Optional | ONT |
+    | checkv_denovo | **memory** | Int | Memory allocated for the task (in GB) | 8 | Optional | ONT |
+    | clair3 | **clair3_model** | String | Model to be used by Clair3 | "r941_prom_hac_g360+g422" | Optional | ONT |
+    | clair3 | **cpu** | Int | Number of CPUs allocated for the task | 4 | Optional | ONT |
+    | clair3 | **disable_phasing** | Boolean | True/False that determines if variants should be called without whatshap phasing in full alignment calling | TRUE | Optional | ONT |
+    | clair3 | **disk_size** | Int | Disk size allocated for the task (in GB) | 100 | Optional | ONT |
+    | clair3 | **docker** | String | Docker image used for the task | "us-docker.pkg.dev/general-theiagen/theiagen/clair3-extra-models:1.0.10" | Optional | ONT |
+    | clair3 | **enable_gvcf** | Boolean | True/False that determines if an additional GVCF output should generated | FALSE | Optional | ONT |
+    | clair3 | **enable_haploid_precise** | Boolean | True/False that determines haploid calling mode where only 1/1 is considered as a variant | TRUE | Optional | ONT |
+    | clair3 | **include_all_contigs** | Boolean | True/False that determines if all contigs should be included in the output | TRUE | Optional | ONT |
+    | clair3 | **indel_min_af** | Float | Minimum Indel AF required for a candidate variant | 0.08 | Optional | ONT |
+    | clair3 | **memory** | Int | Memory allocated for the task (in GB) | 8 | Optional | ONT |
+    | clair3 | **snp_min_af** | Float | Minimum SNP AF required for a candidate variant | 0.08 | Optional | ONT |
+    | clair3 | **variant_quality** | Int | If set, variants with >$qual will be marked PASS, or LowQual otherwise | 2 | Optional | ONT |
+    | clean_check_reads | **cpu** | Int | Number of CPUs allocated for the task | 1 | Optional | ONT, PE |
+    | clean_check_reads | **disk_size** | Int | Disk size allocated for the task (in GB) | 100 | Optional | ONT, PE |
+    | clean_check_reads | **docker** | String | Docker image used for the task | "us-docker.pkg.dev/general-theiagen/bactopia/gather_samples:2.0.2" | Optional | ONT, PE |
+    | clean_check_reads | **max_genome_length** | Int | Maximum genome length able to pass read screening | 2673870 | Optional | ONT, PE |
+    | clean_check_reads | **memory** | Int | Memory allocated for the task (in GB) | 2 | Optional | ONT, PE |
+    | clean_check_reads | **min_basepairs** | Int | Minimum base pairs to pass read screening | 15000 | Optional | ONT, PE |
+    | clean_check_reads | **min_coverage** | Int | Minimum coverage to pass read screening | 10 | Optional | ONT, PE |
+    | clean_check_reads | **min_genome_length** | Int | Minimum genome length to pass read screening | 1500 | Optional | ONT, PE |
+    | clean_check_reads | **min_reads** | Int | Minimum reads to pass read screening | 50 | Optional | ONT, PE |
+    | clean_check_reads | **min_proportion** | Int | Minimum read proportion to pass read screening | 40 | Optional | PE |
+    | clean_check_reads | **skip_mash** | Boolean | A True/False option that determines if mash should be skipped in the screen task. | TRUE | Optional | ONT |
+    | consensus_qc | **cpu** | Int | Number of CPUs allocated for the task | 1 | Optional | ONT |
+    | consensus_qc | **disk_size** | Int | Disk size allocated for the task (in GB) | 100 | Optional | ONT |
+    | consensus_qc | **docker** | String | Docker image used for the task | "us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1" | Optional | ONT |
+    | consensus_qc | **memory** | Int | Memory allocated for the task (in GB) | 2 | Optional | ONT |
+    | fasta_utilities | **cpu** | Int | Number of CPUs allocated for the task | 1 | Optional | ONT |
+    | fasta_utilities | **disk_size** | Int | Disk size allocated for the task (in GB) | 10 | Optional | ONT |
+    | fasta_utilities | **docker** | String | Docker image used for the task | "us-docker.pkg.dev/general-theiagen/biocontainers/seqkit:2.4.0--h9ee0642_0" | Optional | ONT |
+    | fasta_utilities | **memory** | Int | Memory allocated for the task (in GB) | 2 | Optional | ONT |
+    | flye | **additional_parameters** | String | Additional parameters for Flye assembler | | Optional | ONT |
+    | flye | **asm_coverage** | Int | Reduced coverage for initial disjointig assembly | | Optional | ONT |
+    | flye | **cpu** | Int | Number of CPUs allocated for the task | 4 | Optional | ONT |
+    | flye | **disk_size** | Int | Disk size allocated for the task (in GB) | 100 | Optional | ONT |
+    | flye | **docker** | String | Docker image used for the task | "us-docker.pkg.dev/general-theiagen/staphb/flye:2.9.4" | Optional | ONT |
+    | flye | **flye_polishing_iterations** | Int | Number of polishing iterations | 1 | Optional | ONT |
+    | flye | **genome_length** | Int | Expected genome length for assembly - requires `asm_coverage` | | Optional | ONT |
+    | flye | **keep_haplotypes** | Boolean | True/False to prevent collapsing alternative haplotypes | FALSE | Optional | ONT |
+    | flye | **memory** | Int | Memory allocated for the task (in GB) | 32 | Optional | ONT |
+    | flye | **minimum_overlap** | Int | Minimum overlap between reads | | Optional | ONT |
+    | flye | **no_alt_contigs** | Boolean | True/False to disable alternative contig generation | FALSE | Optional | ONT |
+    | flye | **read_error_rate** | Float | Expected error rate in reads | | Optional | ONT |
+    | flye | **read_type** | String | Type of read data for Flye | "--nano-hq" | Optional | ONT |
+    | flye | **scaffold** | Boolean | True/False to enable scaffolding using graph | FALSE | Optional | ONT |
+    | mask_low_coverage | **cpu** | Int | Number of CPUs allocated for the task | 2 | Optional | ONT |
+    | mask_low_coverage | **disk_size** | Int | Disk size allocated for the task (in GB) | 100 | Optional | ONT |
+    | mask_low_coverage | **docker** | String | Docker image used for the task | "us-docker.pkg.dev/general-theiagen/staphb/bedtools:2.31.0" | Optional | ONT |
+    | mask_low_coverage | **memory** | Int | Memory allocated for the task (in GB) | 8 | Optional | ONT |
+    | metabuli | **cpu** | Int | Number of CPUs allocated for the task | 4 | Optional | ONT |
+    | metabuli | **disk_size** | Int | Disk size allocated for the task (in GB) | 100 | Optional | ONT |
+    | metabuli | **docker** | String | Docker image used for the task | "us-docker.pkg.dev/general-theiagen/theiagen/metabuli:1.1.0" | Optional | ONT |
+    | metabuli | **extract_unclassified** | Boolean | True/False that determines if unclassified reads should be extracted and combined with the taxon specific extracted reads | FALSE | Optional | ONT |
+    | metabuli | **memory** | Int | Memory allocated for the task (in GB) | 8 | Optional | ONT |
+    | metabuli | **metabuli_db** | File | Metabuli database file | "gs://theiagen-large-public-files-rp/terra/databases/metabuli/refseq_virus-v223.tar.gz" | Optional | ONT |
+    | metabuli | **min_cov** | Float | Minimum query coverage threshold (0.0 - 1.0) | 0.0 | Optional | ONT |
+    | metabuli | **min_score** | Float | Minimum sequenece similarity score (0.0 - 1.0) | 0.0 | Optional | ONT |
+    | metabuli | **min_sp_score** | Float | Minimum score for species- or lower-level classification | 0.0 | Optional | ONT |
+    | metabuli | **taxonomy_path** | File | Path to taxonomy file | "gs://theiagen-large-public-files-rp/terra/databases/metabuli/new_taxdump.tar.gz" | Optional | ONT |
+    | minimap2 | **cpu** | Int | Number of CPUs allocated for the task | 2 | Optional | ONT |
+    | minimap2 | **disk_size** | Int | Disk size allocated for the task (in GB) | 100 | Optional | ONT |
+    | minimap2 | **docker** | String | Docker image used for the task | "us-docker.pkg.dev/general-theiagen/staphb/minimap2:2.22" | Optional | ONT |
+    | minimap2 | **memory** | Int | Memory allocated for the task (in GB) | 8 | Optional | ONT |
+    | minimap2 | **query2** | File | Internal component. Do not modify | | Optional | ONT |
+    | nanoplot_clean | **cpu** | Int | Number of CPUs allocated for the task | 4 | Optional | ONT |
+    | nanoplot_clean | **disk_size** | Int | Disk size allocated for the task (in GB) | 100 | Optional | ONT |
+    | nanoplot_clean | **docker** | String | Docker image used for the task | "us-docker.pkg.dev/general-theiagen/staphb/nanoplot:1.40.0" | Optional | ONT |
+    | nanoplot_clean | **max_length** | Int | Maximum read length for plotting | 100000 | Optional | ONT |
+    | nanoplot_clean | **memory** | Int | Memory allocated for the task (in GB) | 16 | Optional | ONT |
+    | nanoplot_raw | **cpu** | Int | Number of CPUs allocated for the task | 4 | Optional | ONT |
+    | nanoplot_raw | **disk_size** | Int | Disk size allocated for the task (in GB) | 100 | Optional | ONT |
+    | nanoplot_raw | **docker** | String | Docker image used for the task | "us-docker.pkg.dev/general-theiagen/staphb/nanoplot:1.40.0" | Optional | ONT |
+    | nanoplot_raw | **max_length** | Int | Maximum read length for plotting | 100000 | Optional | ONT |
+    | nanoplot_raw | **memory** | Int | Memory allocated for the task (in GB) | 16 | Optional | ONT |
+    | nanoq | **cpu** | Int | Number of CPUs allocated for the task | 2 | Optional | ONT |
+    | nanoq | **disk_size** | Int | Disk size allocated for the task (in GB) | 100 | Optional | ONT |
+    | nanoq | **docker** | String | Docker image used for the task | "us-docker.pkg.dev/general-theiagen/biocontainers/nanoq:0.9.0--hec16e2b_1" | Optional | ONT |
+    | nanoq | **max_read_length** | Int | Maximum read length to keep | 100000 | Optional | ONT |
+    | nanoq | **max_read_qual** | Int | Maximum read quality to keep | 10 | Optional | ONT |
+    | nanoq | **memory** | Int | Memory allocated for the task (in GB) | 2 | Optional | ONT |
+    | nanoq | **min_read_length** | Int | Minimum read length to keep | 500 | Optional | ONT |
+    | nanoq | **min_read_qual** | Int | Minimum read quality to keep | 10 | Optional | ONT |
+    | ncbi_datasets | **cpu** | Int | Number of CPUs allocated for the task | 1 | Optional | ONT |
+    | ncbi_datasets | **disk_size** | Int | Disk size allocated for the task (in GB) | 50 | Optional | ONT |
+    | ncbi_datasets | **docker** | String | Docker image used for the task | "us-docker.pkg.dev/general-theiagen/staphb/ncbi-datasets:16.38.1" | Optional | ONT |
+    | ncbi_datasets | **include_gbff** | Boolean | True/False to include gbff files in the output | FALSE | Optional | ONT |
+    | ncbi_datasets | **include_gff3** | Boolean | True/False to include gff3 files in the output | FALSE | Optional | ONT |
+    | ncbi_datasets | **memory** | Int | Memory allocated for the task (in GB) | 4 | Optional | ONT |
+    | ncbi_identify | **cpu** | Int | Number of CPUs allocated for the task | 1 | Optional | ONT |
+    | ncbi_identify | **disk_size** | Int | Disk size allocated for the task (in GB) | 50 | Optional | ONT |
+    | ncbi_identify | **docker** | String | Docker image used for the task | "us-docker.pkg.dev/general-theiagen/staphb/ncbi-datasets:16.38.1" | Optional | ONT |
+    | ncbi_identify | **memory** | Int | Memory allocated for the task (in GB) | 4 | Optional | ONT |
+    | ncbi_scrub_se | **cpu** | Int | Number of CPUs allocated for the task | 4 | Optional | ONT |
+    | ncbi_scrub_se | **disk_size** | Int | Disk size allocated for the task (in GB) | 100 | Optional | ONT |
+    | ncbi_scrub_se | **docker** | String | Docker image used for the task | "us-docker.pkg.dev/general-theiagen/ncbi/sra-human-scrubber:2.2.1" | Optional | ONT |
+    | ncbi_scrub_se | **memory** | Int | Memory allocated for the task (in GB) | 8 | Optional | ONT |
+    | ncbi_taxon_summary | **cpu** | Int | Number of CPUs allocated for the task | 1 | Optional | ONT |
+    | ncbi_taxon_summary | **disk_size** | Int | Disk size allocated for the task (in GB) | 50 | Optional | ONT |
+    | ncbi_taxon_summary | **docker** | String | Docker image used for the task | "us-docker.pkg.dev/general-theiagen/staphb/ncbi-datasets:16.38.1" | Optional | ONT |
+    | ncbi_taxon_summary | **memory** | Int | Memory allocated for the task (in GB) | 4 | Optional | ONT |
+    | parse_mapping | **cpu** | Int | Number of CPUs allocated for the task | 2 | Optional | ONT |
+    | parse_mapping | **disk_size** | Int | Disk size allocated for the task (in GB) | 100 | Optional | ONT |
+    | parse_mapping | **docker** | String | Docker image used for the task | "us-docker.pkg.dev/general-theiagen/staphb/samtools:1.17" | Optional | ONT |
+    | parse_mapping | **memory** | Int | Memory allocated for the task (in GB) | 8 | Optional | ONT |
+    | porechop | **cpu** | Int | Number of CPUs allocated for the task | 4 | Optional | ONT |
+    | porechop | **disk_size** | Int | Disk size allocated for the task (in GB) | 100 | Optional | ONT |
+    | porechop | **docker** | String | Docker image used for the task | "us-docker.pkg.dev/general-theiagen/staphb/porechop:0.2.4" | Optional | ONT |
+    | porechop | **memory** | Int | Memory allocated for the task (in GB) | 16 | Optional | ONT |
+    | porechop | **trimopts** | String | Additional trimming options for Porechop | | Optional | ONT |
+    | quast_denovo | **cpu** | Int | Number of CPUs allocated for the task | 2 | Optional | ONT |
+    | quast_denovo | **disk_size** | Int | Disk size allocated for the task (in GB) | 100 | Optional | ONT |
+    | quast_denovo | **docker** | String | Docker image used for the task | "us-docker.pkg.dev/general-theiagen/staphb/quast:5.0.2" | Optional | ONT |
+    | quast_denovo | **memory** | Int | Memory allocated for the task (in GB) | 2 | Optional | ONT |
+    | quast_denovo | **min_contig_length** | Int | Lower threshold for a contig length in bp. Shorter contigs won’t be taken into account | 500 | Optional | ONT |
+    | rasusa | **bases** | String | Explicitly set the number of bases required e.g., 4.3kb, 7Tb, 9000, 4.1MB. If this option is given, --coverage and --genome-size are ignored | | Optional | ONT |
+    | rasusa | **coverage** | Float | The desired coverage to sub-sample the reads to. If --bases is not provided, this option and --genome-size are required | 250 | Optional | ONT |
+    | rasusa | **cpu** | Int | Number of CPUs allocated for the task | 4 | Optional | ONT |
+    | rasusa | **disk_size** | Int | Disk size allocated for the task (in GB) | 100 | Optional | ONT |
+    | rasusa | **docker** | String | Docker image used for the task | "us-docker.pkg.dev/general-theiagen/staphb/rasusa:2.1.0" | Optional | ONT |
+    | rasusa | **frac** | Float | Subsample to a fraction of the reads - e.g., 0.5 samples half the reads | | Optional | ONT |
+    | rasusa | **memory** | Int | Memory allocated for the task (in GB) | 8 | Optional | ONT |
+    | rasusa | **num** | Int | Subsample to a specific number of reads | | Optional | ONT |
+    | rasusa | **read2** | File | Second read file for paired-end data | | Optional | PE |
+    | rasusa | **seed** | Int | Random seed for reproducibility | | Optional | ONT |
+    | raven | **cpu** | Int | Number of CPUs allocated for the task | 4 | Optional | ONT |
+    | raven | **disk_size** | Int | Disk size allocated for the task (in GB) | 100 | Optional | ONT |
+    | raven | **docker** | String | Docker image used for the task | "us-docker.pkg.dev/general-theiagen/theiagen/raven:1.8.3" | Optional | ONT |
+    | raven | **memory** | Int | Memory allocated for the task (in GB) | 16 | Optional | ONT |
+    | raven | **raven_identity** | Float | Threshold for overlap between two reads in order to construct an edge between them | 0.0 | Optional | ONT |
+    | raven | **raven_opts** | Int | Additional parameters for Raven assembler | | Optional | ONT |
+    | raven | **raven_polishing_iterations** | Int | Number of polishing iterations | 2 | Optional | ONT |
+    | read_mapping_stats | **cpu** | Int | Number of CPUs allocated for the task | 2 | Optional | ONT |
+    | read_mapping_stats | **disk_size** | Int | Disk size allocated for the task (in GB) | 100 | Optional | ONT |
+    | read_mapping_stats | **docker** | String | Docker image used for the task | "us-docker.pkg.dev/general-theiagen/staphb/samtools:1.15" | Optional | ONT |
+    | read_mapping_stats | **memory** | Int | Memory allocated for the task (in GB) | 8 | Optional | ONT |
+    | skani | **cpu** | Int | Number of CPUs allocated for the task | 2 | Optional | ONT |
+    | skani | **disk_size** | Int | Disk size allocated for the task (in GB) | 100 | Optional | ONT |
+    | skani | **docker** | String | Docker image used for the task | "us-docker.pkg.dev/general-theiagen/staphb/skani:0.2.2" | Optional | ONT |
+    | skani | **memory** | Int | Memory allocated for the task (in GB) | 4 | Optional | ONT |
+    | skani | **skani_db** | File | Skani database file | "gs://theiagen-large-public-files-rp/terra/databases/skani/skani_db_20250325.tar" | Optional | ONT |
+    | theiaviral_ont | **call_porechop** | Boolean | True/False to trim adapters with porechop | FALSE | Optional | ONT |
+    | theiaviral_ont | **genome_length** | Int | Expected genome length of taxon of interest | | Optional | ONT |
+    | theiaviral_ont | **min_allele_freq** | Float | Minimum allele frequency required for a variant to populate the consensus sequence | 0.6 | Optional | ONT |
+    | theiaviral_ont | **min_depth** | Int | Minimum read depth required for a variant to populate the consensus sequence | 10 | Optional | ONT |
+    | theiaviral_ont | **min_map_quality** | Int | Minimum mapping quality required for read alignments | 20 | Optional | ONT |
+    | theiaviral_ont | **read_extraction_rank** | String | Taxonomic rank to use for read extraction - limits taxons to only those within the specified ranks. | "family" | Optional | ONT |
+    | theiaviral_ont | **reference_fasta** | File | Reference genome in FASTA format | | Optional | ONT |
+    | theiaviral_ont | **skip_rasusa** | Boolean | True/False to skip read subsampling with Rasusa | FALSE | Optional | ONT |
+    | theiaviral_ont | **skip_raven** | Boolean | True/False to skip assembly with Raven and instead use Flye | FALSE | Optional | ONT |
+    | theiaviral_ont | **skip_screen** | Boolean | True/False to skip read screening check prior to analysis | FALSE | Optional | ONT |
+    | version_capture | **docker** | String | Docker image used for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional | ONT |
+    | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) | | Optional | ONT |
+
+    </div>
 
 ### Core Tasks
 
-#### Illumina Data Core Tasks
+=== "Illumina_PE"
 
-#### ONT Data Core Tasks
+    ??? toggle "Versioning"
+
+        <div class="grid cards" markdown>
+
+        -   ??? task "`versioning`"
+
+                The `versioning` task captures the workflow version from the GitHub (code repository) version.
+
+                ??? techdetails "Version Capture Technical details"
+                    |  | Links |
+                    | --- | --- |
+                    | Task | [task_versioning.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/task_versioning.wdl) |
+
+        </div>
+
+    ??? toggle "Taxonomic Identification"
+
+        <div class="grid cards" markdown>
+
+        -   ??? task "`ncbi_identify`"
+
+                The `ncbi_identify` task utilizes the [`NCBI Datasets`](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/data-packages/taxonomy/) package to search the NCBI Viral Genome Database to acquire metadata based on a user's taxonomic input. This task will always return a taxon ID, name, and rank, and it facilitates multiple downstream functions, including **read classification and targeted read extraction**.
+
+                ??? dna "`taxon`"
+                    This parameter accepts either a NCBI taxon ID (e.g. `11292`) or an organism name (e.g. `Lyssavirus rabies`).
+
+                ??? dna "`rank` a.k.a `read_extraction_rank`"
+                    Valid options include: `"species"`, `"genus"`, `"family"`, `"order"`, `"class"`, `"phylum"`, `"kingdom"`, or `"domain"`. By default it is set to `"family"`. This parameter filters metadata to report information only at the taxonomic `rank` specified by the user, regardless of the taxonomic level implied by the original input `taxon`.
+
+                ???+ warning "Important"
+                    - The `rank` parameter must specify a taxonomic level that is equal to or broader than the input organism's taxonomic level.
+
+                    **Examples:**
+
+                    - If your input `taxon` is `"Lyssavirus rabies"` (species level) with `rank` set to `"family"`, the task will return the family-level information: taxon ID for *Rhabdoviridae*, name "Rhabdoviridae", and rank "family".
+                    - If your input `taxon` is `"Lyssavirus"` (genus level) with `rank` set to `"species"`, the task will fail because it cannot determine species-level information from a genus-level input.
+
+                ??? techdetails "NCBI Datasets Technical Details"
+                    |  | Links |
+                    | --- | --- |
+                    | Task | [task_identify_taxon_id.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/task_identify_taxon_id.wdl) |
+                    | Software Source Code | [NCBI Datasets on GitHub](https://github.com/ncbi/datasets) |
+                    | Software Documentation | [NCBI Datasets Documentation on NCBI](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/) |
+                    | Original Publication(s) | [Exploring and retrieving sequence and metadata for species across the tree of life with NCBI Datasets](https://doi.org/10.1038/s41597-024-03571-y) |
+
+        </div>
+
+        <div class="grid cards" markdown>
+
+        -   ??? task "`ncbi_taxon_summary`"
+
+                The `ncbi_taxon_summary` task utilizes the [`NCBI Datasets`](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/data-packages/virus-genome/) package to search the NCBI Viral Genome Database to acquire metadata based on a user's taxonomic input. This task generates a comprehensive summary file of all successful hits to the input `taxon`, which includes each taxon's accession number, completeness status, genome length, source, and other relevant metadata. Based on this summary, the task also calculates the average expected genome size for the input `taxon`.
+
+                ??? dna_blue "`taxon`"
+                    This parameter accepts either a NCBI taxon ID (e.g. `11292`) or an organism name (e.g. `Lyssavirus rabies`).
+
+                ???+ warning "Important"
+
+                    - The implied taxonomic level of the input `taxon` directly affects the number of taxa reported in the summary file and the average genome size calculation.
+
+                    **Examples:**
+
+                    - If your input `taxon` is `"Lyssavirus rabies"` or taxon ID `11292` (species level), the task will retrieve genomes only for that specific species, and return the genome length for that species.
+                    - If your input `taxon` is `"Rhabdoviridae"` or taxon ID `11270` (family level), the task will retrieve genomes for all species within that family and calculate an average genome length across all those species.
+
+                This flexibility allows users to run the workflow without requiring precise knowledge of their organism's genome length. The average genome length calculation is only used to estimate coverage levels for downsampling and minor read QC steps. The average genome length is used only to estimate coverage levels for downsampling and to guide minor read quality control steps. It does not significantly affect the quality of the consensus genome or the choice of reference sequences.
+
+                ??? techdetails "NCBI Datasets Technical Details"
+                  |  | Links |
+                  | --- | --- |
+                  | Task | [task_ncbi_datasets.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/data_import/task_ncbi_datasets.wdl) |
+                  | Software Source Code | [NCBI Datasets on GitHub](https://github.com/ncbi/datasets) |
+                  | Software Documentation | [NCBI Datasets Documentation on NCBI](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/) |
+                  | Original Publication(s) | [Exploring and retrieving sequence and metadata for species across the tree of life with NCBI Datasets](https://doi.org/10.1038/s41597-024-03571-y) |
+
+        </div>
+
+    ??? toggle "Read Quality Control, Trimming, Filtering, Classification and Extraction"
+
+        <div class="grid cards" markdown>
+
+        -   ??? task "`read_QC_trim`"
+
+                `read_QC_trim` is a sub-workflow within TheiaMeta that removes low-quality reads, low-quality regions of reads, and sequencing adapters to improve data quality. It uses a number of tasks, described below.
+
+                ??? task "`fastq-scan` or `fastqc`"
+
+                    There are two methods for read quantification to choose from: [`fastq-scan`](https://github.com/rpetit3/fastq-scan) (default) or [`fastqc`](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/). Both quantify the forward and reverse reads in FASTQ files. In TheiaViral_Illumina_PE, they also provide the total number of read pairs. This task is run once with raw reads as input and once with clean reads as input. If QC has been performed correctly, you should expect **fewer** clean reads than raw reads. `fastqc` also provides a graphical visualization of the read quality.
+
+                    ??? techdetails "`fastq-scan` and `fastqc` Technical Details"
+                        |  | Links |
+                        | --- | --- |
+                        | Task | [task_fastq_scan.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_fastq_scan.wdl)<br>[task_fastqc.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_fastqc.wdl") |
+                        | Software Source Code | [fastq-scan on Github](https://github.com/rpetit3/fastq-scan)<br>[fastqc on Github](https://github.com/s-andrews/FastQC) |
+                        | Software Documentation | [fastq-scan](https://github.com/rpetit3/fastq-scan/blob/master/README.md)<br>[fastqc](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/) |
+
+                ??? task "`ncbi_scrub_pe`"
+
+                    All reads of human origin **are removed**, including their mates, by using NCBI's [**human read removal tool (HRRT)**](https://github.com/ncbi/sra-human-scrubber). HRRT is based on the [SRA Taxonomy Analysis Tool](https://doi.org/10.1186/s13059-021-02490-0) and employs a k-mer database constructed of k-mers from Eukaryota derived from all human RefSeq records with any k-mers found in non-Eukaryota RefSeq records subtracted from the database.
+
+                    ??? techdetails "NCBI-Scrub Technical Details"
+                        |  | Links |
+                        | --- | --- |
+                        | Task | [task_ncbi_scrub.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_ncbi_scrub.wdl) |
+                        | Software Source Code | [NCBI Scrub on GitHub](https://github.com/ncbi/sra-human-scrubber) |
+                        | Software Documentation | <https://github.com/ncbi/sra-human-scrubber/blob/master/README.md> |
+
+                ??? quote "**Read quality trimming**"
+
+                    Either `trimmomatic` or `fastp` can be used for read-quality trimming. Trimmomatic is used by default. Both tools trim low-quality regions of reads with a sliding window (with a window size of `trim_window_size`), cutting once the average quality within the window falls below `trim_quality_trim_score`. They will both discard the read if it is trimmed below `trim_minlen`.
+
+                    If fastp is selected for analysis, fastp also implements the additional read-trimming steps indicated below:
+
+                    | **Parameter** | **Explanation** |
+                    | --- | --- |
+                    | -g | enables polyG tail trimming |
+                    | -5 20 | enables read end-trimming |
+                    | -3 20 | enables read end-trimming |
+                    | --detect_adapter_for_pe | enables adapter-trimming **only for paired-end reads** |
+
+                ??? quote "**Adapter removal**"
+
+                    The `BBDuk` task removes adapters from sequence reads. To do this:
+
+                    - [Repair](https://jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/repair-guide/) from the [BBTools](https://jgi.doe.gov/data-and-tools/software-tools/bbtools/) package reorders reads in paired fastq files to ensure the forward and reverse reads of a pair are in the same position in the two fastq files.
+                    - [BBDuk](https://jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/bbduk-guide/)  (*"Bestus Bioinformaticus" Decontamination Using Kmers*) is then used to trim the adapters and filter out all reads that have a 31-mer match to [PhiX](https://emea.illumina.com/products/by-type/sequencing-kits/cluster-gen-sequencing-reagents/phix-control-v3.html), which is commonly added to Illumina sequencing runs to monitor and/or improve overall run quality.
+
+                    ??? question "What are adapters and why do they need to be removed?"
+                        Adapters are manufactured oligonucleotide sequences attached to DNA fragments during the library preparation process. In Illumina sequencing, these adapter sequences are required for attaching reads to flow cells. You can read more about Illumina adapters [here](https://emea.support.illumina.com/bulletins/2020/06/illumina-adapter-portfolio.html). For genome analysis, it's important to remove these sequences since they're not actually from your sample. If you don't remove them, the downstream analysis may be affected.
+
+                ??? techdetails "read_QC_trim Technical Details"
+
+                    |  | Links |
+                    | --- | --- |
+                    | Sub-workflow | [wf_read_QC_trim_pe.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_read_QC_trim_pe.wdl) |
+                    | Tasks | [task_fastp.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_fastp.wdl)<br>[task_trimmomatic.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_trimmomatic.wdl)<br>[task_bbduk.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_bbduk.wdl)<br>[task_fastq_scan.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_fastq_scan.wdl)<br>[task_midas.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/contamination/task_midas.wdl)<br>[task_kraken2.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/contamination/task_kraken2.wdl)|
+                    | Software Source Code | [fastp](https://github.com/OpenGene/fastp); [Trimmomatic](https://github.com/usadellab/Trimmomatic); [fastq-scan](https://github.com/rpetit3/fastq-scan); [MIDAS](https://github.com/snayfach/MIDAS); [Kraken2](https://github.com/DerrickWood/kraken2)|
+                    | Software Documentation | [fastp](https://github.com/OpenGene/fastp); [Trimmomatic](http://www.usadellab.org/cms/?page=trimmomatic); [BBDuk](https://jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/bbduk-guide/); [fastq-scan](https://github.com/rpetit3/fastq-scan); [MIDAS](https://github.com/snayfach/MIDAS); [Kraken2](https://github.com/DerrickWood/kraken2/wiki) |
+                    | Original Publication(s) | [Trimmomatic: a flexible trimmer for Illumina sequence data](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4103590/)<br>[fastp: an ultra-fast all-in-one FASTQ preprocessor](https://academic.oup.com/bioinformatics/article/34/17/i884/5093234?login=false)<br>[An integrated metagenomics pipeline for strain profiling reveals novel patterns of bacterial transmission and biogeography](https://pubmed.ncbi.nlm.nih.gov/27803195/)<br>[Improved metagenomic analysis with Kraken 2](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1891-0) |
+
+
+    ??? toggle "De novo Assembly and Reference Selection"
+
+
+    ??? toggle "Reference Mapping"
+
+
+    ??? toggle "Variant Calling and Consensus Generation"
+
+
+    ??? toggle "Assembly Evaluation and Consensus Quality Control"
+
+    <!-- ============================================================================================================================= -->
+
+=== "ONT"
+
+    ??? toggle "Versioning"
+
+        <div class="grid cards" markdown>
+
+        -   ??? task "`versioning`"
+
+                The `versioning` task captures the workflow version from the GitHub (code repository) version.
+
+                ??? techdetails "Version Capture Technical details"
+                    |  | Links |
+                    | --- | --- |
+                    | Task | [task_versioning.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/task_versioning.wdl) |
+
+        </div>
+
+    ??? toggle "Taxonomic Identification"
+
+        <div class="grid cards" markdown>
+
+        -   ??? task "`ncbi_identify`"
+
+                The `ncbi_identify` task utilizes the [`NCBI Datasets`](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/data-packages/taxonomy/) package to search the NCBI Viral Genome Database to acquire metadata based on a user's taxonomic input. This task will always return a taxon ID, name, and rank, and it facilitates multiple downstream functions, including **read classification and targeted read extraction**.
+
+                ??? dna_blue "`taxon`"
+                    This parameter accepts either a NCBI taxon ID (e.g. `11292`) or an organism name (e.g. `Lyssavirus rabies`).
+
+                ??? dna_blue "`rank` a.k.a `read_extraction_rank`"
+                    Valid options include: `"species"`, `"genus"`, `"family"`, `"order"`, `"class"`, `"phylum"`, `"kingdom"`, or `"domain"`. By default it is set to `"family"`. This parameter filters metadata to report information only at the taxonomic `rank` specified by the user, regardless of the taxonomic level implied by the original input `taxon`.
+
+                ???+ warning "Important"
+                    - The `rank` parameter must specify a taxonomic level that is equal to or broader than the input organism's taxonomic level.
+
+                    **Examples:**
+
+                    - If your input `taxon` is `"Lyssavirus rabies"` (species level) with `rank` set to `"family"`, the task will return the family-level information: taxon ID for *Rhabdoviridae*, name "Rhabdoviridae", and rank "family".
+                    - If your input `taxon` is `"Lyssavirus"` (genus level) with `rank` set to `"species"`, the task will fail because it cannot determine species-level information from a genus-level input.
+
+                ??? techdetails "NCBI Datasets Technical Details"
+                    |  | Links |
+                    | --- | --- |
+                    | Task | [task_identify_taxon_id.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/task_identify_taxon_id.wdl) |
+                    | Software Source Code | [NCBI Datasets on GitHub](https://github.com/ncbi/datasets) |
+                    | Software Documentation | [NCBI Datasets Documentation on NCBI](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/) |
+                    | Original Publication(s) | [Exploring and retrieving sequence and metadata for species across the tree of life with NCBI Datasets](https://doi.org/10.1038/s41597-024-03571-y) |
+
+        </div>
+
+        <div class="grid cards" markdown>
+
+        -   ??? task "`ncbi_taxon_summary`"
+
+                The `ncbi_taxon_summary` task utilizes the [`NCBI Datasets`](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/data-packages/virus-genome/) package to search the NCBI Viral Genome Database to acquire metadata based on a user's taxonomic input. This task generates a comprehensive summary file of all successful hits to the input `taxon`, which includes each taxon's accession number, completeness status, genome length, source, and other relevant metadata. Based on this summary, the task also calculates the average expected genome size for the input `taxon`.
+
+                ??? dna_blue "`taxon`"
+                    This parameter accepts either a NCBI taxon ID (e.g. `11292`) or an organism name (e.g. `Lyssavirus rabies`).
+
+                ???+ warning "Important"
+
+                    - The implied taxonomic level of the input `taxon` directly affects the number of taxa reported in the summary file and the average genome size calculation.
+
+                    **Examples:**
+
+                    - If your input `taxon` is `"Lyssavirus rabies"` or taxon ID `11292` (species level), the task will retrieve genomes only for that specific species, and return the genome length for that species.
+                    - If your input `taxon` is `"Rhabdoviridae"` or taxon ID `11270` (family level), the task will retrieve genomes for all species within that family and calculate an average genome length across all those species.
+
+                This flexibility allows users to run the workflow without requiring precise knowledge of their organism's genome length. The average genome length calculation is only used to estimate coverage levels for downsampling and minor read QC steps. The average genome length is used only to estimate coverage levels for downsampling and to guide minor read quality control steps. It does not significantly affect the quality of the consensus genome or the choice of reference sequences.
+
+                ??? techdetails "NCBI Datasets Technical Details"
+                  |  | Links |
+                  | --- | --- |
+                  | Task | [task_ncbi_datasets.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/data_import/task_ncbi_datasets.wdl) |
+                  | Software Source Code | [NCBI Datasets on GitHub](https://github.com/ncbi/datasets) |
+                  | Software Documentation | [NCBI Datasets Documentation on NCBI](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/) |
+                  | Original Publication(s) | [Exploring and retrieving sequence and metadata for species across the tree of life with NCBI Datasets](https://doi.org/10.1038/s41597-024-03571-y) |
+
+        </div>
+
+    ??? toggle "Read Quality Control, Trimming, and Filtering"
+
+        <div class="grid cards" markdown>
+
+        -   ??? task "`nanoplot_raw` & `nanoplot_clean`"
+
+                Nanoplot is used for the determination of mean quality scores, read lengths, and number of reads. This task is run once with raw reads as input and once with clean reads as input. If QC has been performed correctly, you should expect **fewer** clean reads than raw reads.
+
+                ??? techdetails "Nanoplot Technical Details"
+                    |  | Links |
+                    | --- | --- |
+                    | Task | [task_nanoplot.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_nanoplot.wdl) |
+                    | Software Source Code | [NanoPlot](https://github.com/wdecoster/NanoPlot) |
+                    | Software Documentation | [NanoPlot Documentation](https://github.com/wdecoster/NanoPlot/blob/master/README.md)
+                    | Original Publication(s) | [NanoPlot paper](https://academic.oup.com/bioinformatics/article/39/5/btad311/7160911)
+
+        </div>
+
+        <div class="grid cards" markdown>
+
+        -   ??? task "`porechop`"
+
+                Porechop is a tool for finding and removing adapters from ONT data. Adapters on the ends of reads are trimmed, and when a read has an adapter in the middle, the read is split into two. The `porechop` task is optional and is turned off by default. It can be enabled by setting the `call_porechop` parameter to `true`.
+
+                ??? techdetails "Porechop Technical Details"
+                    |  | Links |
+                    | --- | --- |
+                    | WDL Task | [task_porechop.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_porechop.wdl) |
+                    | Software Source Code | [Porechop on GitHub](https://github.com/rrwick/Porechop) |
+                    | Software Documentation | [https://github.com/rrwick/Porechop#porechop](https://github.com/rrwick/Porechop#porechop) |
+
+        </div>
+
+        <div class="grid cards" markdown>
+
+        -   ??? task "`nanoq`"
+
+                Reads are filtered by length and quality using `nanoq`. By default, sequences with less than 500 basepairs and quality score lower than 10 are filtered out to improve assembly accuracy.
+
+                ??? techdetails "Nanoq Technical Details"
+                    |  | Links |
+                    | --- | --- |
+                    | Task | [task_nanoq.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_nanoq.wdl) |
+                    | Software Source Code | [Nanoq](https://github.com/esteinig/nanoq) |
+                    | Software Documentation | [Nanoq Documentation](https://github.com/esteinig/nanoq/blob/master/README.md)
+                    | Original Publication(s) | [Nanoq Paper](https://doi.org/10.21105/joss.02991)
+
+        </div>
+
+        <div class="grid cards" markdown>
+
+        -   ??? task "`ncbi_scrub_se`"
+
+                All reads of human origin **are removed**, including their mates, by using NCBI's [**human read removal tool (HRRT)**](https://github.com/ncbi/sra-human-scrubber). HRRT is based on the [SRA Taxonomy Analysis Tool](https://doi.org/10.1186/s13059-021-02490-0) and employs a k-mer database constructed of k-mers from Eukaryota derived from all human RefSeq records with any k-mers found in non-Eukaryota RefSeq records subtracted from the database.
+
+                ??? techdetails "NCBI-Scrub Technical Details"
+                    |  | Links |
+                    | --- | --- |
+                    | Task | [task_ncbi_scrub.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_ncbi_scrub.wdl) |
+                    | Software Source Code | [NCBI Scrub on GitHub](https://github.com/ncbi/sra-human-scrubber) |
+                    | Software Documentation | <https://github.com/ncbi/sra-human-scrubber/blob/master/README.md> |
+
+        </div>
+
+        <div class="grid cards" markdown>
+
+        -   ??? task "`rasusa`"
+
+                The `rasusa` task performs subsampling on the input raw reads. By default, it subsamples reads to a target depth of 250X, using the estimated genome length either generated by the `ncbi_taxon_summary` task or provided directly by the user. Although enabled by default, this task is optional; users can disable it by setting the `skip_rasusa` variable to `true`. The target subsampling depth can also be adjusted by modifying the `coverage` variable.
+
+                ??? techdetails "Rasusa Technical Details"
+                    |  | Links |
+                    | --- | --- |
+                    | Task | [task_rasusa.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/task_rasusa.wdl) |
+                    | Software Source Code | [Rasusa on GitHub](https://github.com/mbhall88/rasusa) |
+                    | Software Documentation | [Rasusa on GitHub](https://github.com/mbhall88/rasusa) |
+                    | Original Publication(s) | [Rasusa: Randomly subsample sequencing reads to a specified coverage](https://doi.org/10.21105/joss.03941) |
+
+        </div>
+
+        <div class="grid cards" markdown>
+
+        -   ??? task "`clean_check_reads`"
+
+                The [`screen`](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/comparisons/task_screen.wdl) task ensures the quantity of sequence data is sufficient to undertake genomic analysis. It uses [`fastq-scan`](https://github.com/rpetit3/fastq-scan) and bash commands for quantification of reads and base pairs, and [mash](https://mash.readthedocs.io/en/latest/index.html) sketching to estimate the genome size and its coverage. At each step, the results are assessed relative to pass/fail criteria and thresholds that may be defined by optional user inputs. Samples are run through all threshold checks, regardless of failures, and the workflow will terminate after the `screen` task if any thresholds are not met:
+
+                1. Total number of reads: A sample will fail the read screening task if its total number of reads is less than or equal to `min_reads`.
+                2. The proportion of basepairs reads in the forward and reverse read files: A sample will fail the read screening if fewer than `min_proportion` basepairs are in either the reads1 or read2 files.
+                3. Number of basepairs: A sample will fail the read screening if there are fewer than `min_basepairs` basepairs
+                4. Estimated genome size:  A sample will fail the read screening if the estimated genome size is smaller than `min_genome_size` or bigger than `max_genome_size`.
+                5. Estimated genome coverage: A sample will fail the read screening if the estimated genome coverage is less than the `min_coverage`.
+
+                Read screening is performed only on the cleaned reads. The task may be skipped by setting the `skip_screen` variable to `true`. Default values vary between the ONT and PE workflow. The rationale for these default values can be found below:
+
+                | Variable  | Default Value | Rationale |
+                | --- | --- | --- |
+                | `min_reads` | 50 | Minimum number of base pairs for 10x coverage of the Hepatitis delta (of the *Deltavirus* genus) virus divided by 300 (longest Illumina read length) |
+                | `min_basepairs` | 15000 | Greater than 10x coverage of the Hepatitis delta (of the *Deltavirus* genus) virus |
+                | `min_genome_size` | 1500 | Based on the Hepatitis delta (of the *Deltavirus* genus) genome- the smallest viral genome as of 2024-04-11 (1,700 bp) |
+                | `max_genome_size` | 2673870 | Based on the *Pandoravirus salinus* genome, the biggest viral genome, (2,673,870 bp) with 2 Mbp added |
+                | `min_coverage` | 10 | A bare-minimum coverage for genome characterization. Higher coverage would be required for high-quality phylogenetics. |
+                | `min_proportion` | 40 | Greater than 50% reads are in the read1 file; others are in the read2 file. (PE workflow only) |
+
+                ??? techdetails "`clean_check_reads` Technical Details"
+                    |  | Links |
+                    | --- | --- |
+                    | Task | [task_screen.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/comparisons/task_screen.wdl)  |
+
+        </div>
+
+    ??? toggle "Read Classification and Extraction"
+
+        <div class="grid cards" markdown>
+
+        -   ??? task "`metabuli`"
+
+                The `metabuli` task is used to classify and extract reads against a reference database. Metabuli uses a novel k-mer structure, called metamer, to analyze both amino acid (AA) and DNA sequences. It leverages AA conservation for sensitive homology detection and DNA mutations for specific differentiation between closely related taxa.
+
+                ??? dna_blue "`extract_unclassified`"
+                    This parameter determines whether unclassified reads should also be extracted and combined with the `taxon`-specific extracted reads. By default, this is set to `false`, meaning that only reads classified to the specified input `taxon` will be extracted.
+
+                ???+ warning "Important"
+                    - This task will extract reads classified to the input `taxon` and **all of its descendant taxa**. The `rank` input parameter controls the extraction of reads classified at the specified `rank` and all suboridante taxonomic levels. See task `ncbi_identify` under the **Taxonomic Identification** section for more details on the `rank` input parameter.
+
+                ??? techdetails "Metabuli Technical Details"
+                    |  | Links |
+                    | --- | --- |
+                    | Task | [task_metabuli.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/contamination/task_metabuli.wdl) |
+                    | Software Source Code | [Metabuli on GitHub](https://github.com/steineggerlab/Metabuli) |
+                    | Software Documentation | [Metabuli Documentation](https://github.com/steineggerlab/Metabuli/blob/master/README.md) |
+                    | Original Publication(s) | [Metabuli Paper](https://doi.org/10.1038/s41592-024-02273-y) |
+
+        </div>
+
+    ??? toggle "De novo Assembly and Reference Selection"
+
+        <div class="grid cards" markdown>
+
+        -   ??? task "`raven`"
+
+                The `raven` task is used to create a de novo assembly from cleaned reads . Raven is an overlap-layout-consensus based assembler that accelerates the overlap step, constructs an assembly graph from reads pre-processed with pile-o-grams, applies a novel and robust graph simplification method based on graph drawings, and polishes unambiguous graph paths using Racon. Based on comprehensive benchmarking against Flye and results reported by [Cook et al. (2024)](https://pmc.ncbi.nlm.nih.gov/articles/PMC11092197/), Raven is faster, produces more contiguous assemblies, and yields more complete genomes according to CheckV metrics (see task `checkv` for technical details).
+
+                ???+ warning "Important"
+                    In this workflow, de novo assembly is used solely to facilitate the selection of a closely related reference genome. If the user provides an input `reference_fasta`, all subsequent assembly and reference selections tasks will be skipped, including:
+                    - `raven`
+                    - `flye`
+                    - `checkv_denovo`
+                    - `quast_denovo`
+                    - `skani`
+                    - `ncbi_datasets`
+
+                ??? dna_blue "`skip_raven`"
+                    This parameter controls whether or not the `raven` task is skipped by the workflow. By default, `skip_raven` is set to `false` because Raven is used as the primary assembler. Raven is generally recommended for most users, but it might not perform optimally on all datasets. If users encounter issues with Raven, they can set the `skip_raven` variable to `true` to bypass the `raven` task and instead de novo assemble using Flye (see task `flye` for details). Additionally, if the raven task ever fails during execution, the workflow will automatically fall back to using Flye for de novo assembly.
+
+                ??? techdetails "Raven Technical Details"
+                    |  | Links |
+                    | --- | --- |
+                    | Task | [task_raven.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_raven.wdl) |
+                    | Software Source Code | [Raven on GitHub](https://github.com/lbcb-sci/raven)
+                    | Software Documentation | [Raven Documentation](https://github.com/lbcb-sci/raven/blob/master/README.md)
+                    | Original Publication(s) | [Raven Paper](https://doi.org/10.1038/s43588-021-00073-4) |
+
+        </div>
+
+        <div class="grid cards" markdown>
+
+        -   ??? task "`flye`"
+
+                The `flye` task is used to create a de novo assembly from cleaned reads. This task is optional and is turned off by default. It can be enabled by setting the `skip_raven` parameter to `true`. The `flye` task is used as a fallback option if the `raven` task fails during execution (see task `raven` for more details).
+
+                ??? techdetails "Flye Technical Details"
+                    |  | Links |
+                    | --- | --- |
+                    | Task | [task_flye.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_flye.wdl) |
+                    | Software Source Code | [Flye on GitHub](https://github.com/fenderglass/Flye) |
+                    | Software Documentation | [Flye Documentation](https://github.com/fenderglass/Flye/blob/flye/docs/USAGE.md)
+                    | Original Publication(s) | [Assembly of long, error-prone reads using repeat graphs](https://www.nature.com/articles/s41587-019-0072-8) |
+
+        </div>
+
+        <div class="grid cards" markdown>
+
+        -   ??? task "`skani`"
+
+                The `skani` task is used to identify and select the most closely related reference genome to the input assembly generated from the `raven` or `flye` tasks. This reference genome is selected from a comprehensive database of over 270,000 viral genomes. Skani uses an approximate mapping method without base-level alignment to get ANI. It is magnitudes faster than BLAST-based methods and almost as accurate.
+
+                ??? techdetails "Skani Technical Details"
+                    |  | Links |
+                    | --- | --- |
+                    | Task | [task_skani.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/task_skani.wdl) |
+                    | Software Source Code | [Skani on GitHub](https://github.com/bluenote-1577/skani) |
+                    | Software Documentation | [Skani Documentation](https://github.com/bluenote-1577/skani/blob/main/README.md) |
+                    | Original Publication(s) | [Skani Paper](https://doi.org/10.1038/s41592-023-02018-3) |
+
+        </div>
+
+        <div class="grid cards" markdown>
+
+        -   ??? task "`ncbi_datasets`"
+
+                The [`NCBI Datasets`](https://www.ncbi.nlm.nih.gov/datasets/) task downloads specified assemblies from NCBI using either the [virus](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/data-packages/virus-genome/) or [genome](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/data-packages/genome/) (for all other genome types) package as appropriate.
+
+                ??? techdetails "NCBI Datasets Technical Details"
+                    |  | Links |
+                    | --- | --- |
+                    | Task | [task_ncbi_datasets.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/data_import/task_ncbi_datasets.wdl) |
+                    | Software Source Code | [NCBI Datasets on GitHub](https://github.com/ncbi/datasets) |
+                    | Software Documentation | [NCBI Datasets Documentation on NCBI](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/) |
+                    | Original Publication(s) | [Exploring and retrieving sequence and metadata for species across the tree of life with NCBI Datasets](https://doi.org/10.1038/s41597-024-03571-y) |
+
+        </div>
+
+    ??? toggle "Reference Mapping"
+
+        <div class="grid cards" markdown>
+
+        -   ??? task "`minimap2`"
+
+                The `minimap2` task aligns the cleaned/subsampled reads to the reference genome, either selected by the `skani` task or provided by the user input `reference_fasta`. It is a versatile pairwise aligner for nucleotide sequences, commonly used to map long reads to a reference genome and generates alignments for downstream variant calling. The `minimap2` task is run with the `-x map-ont` option, which is optimized for ONT data.
+
+                ??? techdetails "Minimap2 Technical Details"
+                    |  | Links |
+                    | --- | --- |
+                    | Task | [task_minimap2.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/alignment/task_minimap2.wdl) |
+                    | Software Source Code | [minimap2 on GitHub](https://github.com/lh3/minimap2) |
+                    | Software Documentation | [minimap2](https://lh3.github.io/minimap2) |
+                    | Original Publication(s) | [Minimap2: pairwise alignment for nucleotide sequences](https://academic.oup.com/bioinformatics/article/34/18/3094/4994778) |
+
+        </div>
+
+        <div class="grid cards" markdown>
+
+        -   ??? task "`parse_mapping`"
+
+                This task converts the output SAM file from the `minimap2` task and converts it to a BAM file. It then sorts the BAM file by coordinate, and creates a BAM index file. This processed BAM is required for the `clair3` variant calling task.
+
+                ??? techdetails "`parse_mapping` Technical Details"
+                    | | Links |
+                    |---|---|
+                    | Task | [task_samtools.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/data_handling/task_parse_mapping.wdl) |
+                    | Software Source Code | [samtools on GitHub](https://github.com/samtools/samtools) |
+                    | Software Documentation | [samtools](https://www.htslib.org/doc/samtools.html) |
+                    | Original Publication(s) | [The Sequence Alignment/Map format and SAMtools](https://doi.org/10.1093/bioinformatics/btp352)<br>[Twelve Years of SAMtools and BCFtools](https://doi.org/10.1093/gigascience/giab008) |
+
+        </div>
+
+        <div class="grid cards" markdown>
+
+        -   ??? task "`read_mapping_stats`"
+
+                The `read_mapping_stats` task generates mapping statistics from the BAM file generated by the `parse_mapping` task. It uses samtools to generate a summary of the mapping statistics, which includes coverage, depth, average base quality, average mapping quality, and other relevant metrics.
+
+                ??? techdetails "`read_mapping_stats` Technical Details"
+                    |  | Links |
+                    | --- | --- |
+                    | Task | [task_read_mapping_stats.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_assembly_metrics.wdl) |
+                    | Software Source Code | [samtools on GitHub](https://github.com/samtools/samtools) |
+                    | Software Documentation | [samtools](https://www.htslib.org/doc/samtools.html) |
+                    | Original Publication(s) | [The Sequence Alignment/Map format and SAMtools](https://doi.org/10.1093/bioinformatics/btp352)<br>[Twelve Years of SAMtools and BCFtools](https://doi.org/10.1093/gigascience/giab008) |
+
+        </div>
+
+        <div class="grid cards" markdown>
+
+        -   ??? task "`fasta_utilities`"
+
+                The `fasta_utilities` task utilizes samtools to index the `reference_fasta` file, either selected by the `skani` task or provided by the user input `reference_fasta`. This indexed reference genome is used for downstream variant calling and consensus generation tasks.
+
+                ??? techdetails "`fasta_utilities` Technical Details"
+                    |  | Links |
+                    | --- | --- |
+                    | Task | [task_fasta_utilities.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/data_handling/task_fasta_utilities.wdl) |
+                    | Software Source Code | [samtools on GitHub](https://github.com/samtools/samtools) |
+                    | Software Documentation | [samtools](https://www.htslib.org/doc/samtools.html) |
+                    | Original Publication(s) | [The Sequence Alignment/Map format and SAMtools](https://doi.org/10.1093/bioinformatics/btp352)<br>[Twelve Years of SAMtools and BCFtools](https://doi.org/10.1093/gigascience/giab008) |
+
+        </div>
+
+    ??? toggle "Variant Calling and Consensus Generation"
+
+        <div class="grid cards" markdown>
+
+        -   ??? task "`clair3`"
+
+                `Clair3` performs deep learning-based variant detection using a multi-stage approach. The process begins with pileup-based calling for initial variant identification, followed by full-alignment analysis for comprehensive variant detection. Results are merged into a final high-confidence call set.
+
+                The variant calling pipeline employs specialized neural networks trained on ONT data to accurately identify:
+                - Single nucleotide variants (SNVs)
+                - Small insertions and deletions (indels)
+                - Structural variants
+
+                ???+ warning "Important"
+
+                    In this workflow, `clair3` is run with nearly all default parameters. Note that the VCF file produced by the `clair3` task is **unfiltered** and does not represent the final set of variants that will be included in the final consensus genome. A filtered vcf file is generated by the `bcftools_consensus` task. The filtering parameters are as follows:
+                    - The `min_map_quality` parameter is applied before calling variants.
+                    - The `min_depth` and `min_allele_freq` parameters are applied after variant calling during consensus genome cnstruction.
+
+                ??? techdetails "Clair3 Technical Details"
+                  |  | Links |
+                  | --- | --- |
+                  | Task | [task_clair3.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/variant_calling/task_clair3.wdl) |
+                  | Software Source Code | [Clair3 on GitHub](https://github.com/HKU-BAL/Clair3) |
+                  | Software Documentation | [Clair3 Documentation](https://github.com/HKU-BAL/Clair3?tab=readme-ov-file#usage) |
+                  | Original Publication(s) | [Symphonizing pileup and full-alignment for deep learning-based long-read variant calling](https://doi.org/10.1101/2021.12.29.474431) |
+
+        </div>
+
+        <div class="grid cards" markdown>
+
+        -   ??? task "`mask_low_coverage`"
+
+                The `mask_low_coverage` task is used to mask low coverage regions in the `reference_fasta` file to improve the accuracy of the final consensus genome. Coverage thresholds are defined by the `min_depth` parameter, which specifies the minimum read depth required for a base to be retained. Bases falling below this threshold are replaced with "N"s to clearly mark low confidence regions. The masked reference is then combined with variants from the `clair3` task to produce the final consensus genome.
+
+                ??? techdetails "`mask_low_coverage` Technical Details"
+                    |  | Links |
+                    | --- | --- |
+                    | Task | [task_mask_low_coverage.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/data_handling/task_parse_mapping.wdl) |
+                    | Software Source Code | [bedtools on GitHub](https://github.com/arq5x/bedtools2) |
+                    | Software Documentation | [bedtools ReadTheDocs](https://bedtools.readthedocs.io/en/latest/) |
+                    | Original Publication(s) | [BEDTools: a flexible suite of utilities for comparing genomic features](https://doi.org/10.1093/bioinformatics/btq033) |
+
+        </div>
+
+        <div class="grid cards" markdown>
+
+        -   ??? task "`bcftools_consensus`"
+
+                The `bcftools_consensus` task generates a consensus genome by applying variants from the `clair3` task to a masked reference genome. It uses bcftools to filter variants based on the `min_depth` and `min_allele_freq` input parameter, left align and normalize indels, index the VCF file, and generate a consensus genome in FASTA format. Reference bases are substituted with filtered variants where applicable, preserved in regions without variant calls, and replaced with "N"s in areas masked by the `mask_low_coverage` task.
+
+                ??? techdetails "`bcftools_consensus` Technical Details"
+                    |  | Links |
+                    | --- | --- |
+                    | Task | [task_bcftools_consensus.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_bcftools_consensus.wdl) |
+                    | Software Source Code | [bcftools on GitHub](https://github.com/samtools/bcftools) |
+                    | Software Documentation | [bcftools Manual Page](https://samtools.github.io/bcftools/bcftools.html) |
+                    | Original Publication(s) | [Twelve Years of SAMtools and BCFtools](https://doi.org/10.1093/gigascience/giab008) |
+
+        </div>
+
+    ??? toggle "Assembly Evaluation and Consensus Quality Control"
+
+        <div class="grid cards" markdown>
+
+        -   ??? task "`quast_denovo`"
+
+                QUAST stands for QUality ASsessment Tool. It evaluates genome/metagenome assemblies by computing various metrics without a reference being necessary. It includes useful metrics such as number of contigs, length of the largest contig and N50. The `quast_denovo` task evaluates the assembly generated by the `raven` or `flye` tasks.
+
+                ??? techdetails "QUAST Technical Details"
+
+                    |  | Links |
+                    | --- | --- |
+                    | Task | [task_quast.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_quast.wdl) |
+                    | Software Source Code | [QUAST on GitHub](https://github.com/ablab/quast) |
+                    | Software Documentation | <https://quast.sourceforge.net/> |
+                    | Original Publication(s) | [QUAST: quality assessment tool for genome assemblies](https://academic.oup.com/bioinformatics/article/29/8/1072/228832) |
+
+        </div>
+
+        <div class="grid cards" markdown>
+
+        -   ??? task "`checkv_denovo` & checkv_consensus`"
+
+                CheckV is a fully automated command-line pipeline for assessing the quality of single-contig viral genomes, including identification of host contamination for integrated proviruses, estimating completeness for genome fragments, and identification of closed genomes. The `checkv_denovo` task evaluates the assembly generated by the `raven` or `flye` tasks, while the `checkv_consensus` task evaluates the consensus genome generated by the `bcftools_consensus` task.
+
+                ??? techdetails "CheckV Technical Details"
+                    |  | Links |
+                    | --- | --- |
+                    | Task | [task_checkv.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/advanced_metrics/task_checkv.wdl) |
+                    | Software Source Code | [CheckV on Bitbucket](https://bitbucket.org/berkeleylab/checkv/src/master/) |
+                    | Software Documentation | [CheckV Documentation](https://bitbucket.org/berkeleylab/checkv/src/master/README.md) |
+                    | Original Publication(s) | [CheckV assesses the quality and completeness of metagenome-assembled viral genomes](https://doi.org/10.1038/s41587-020-00774-7) |
+
+        </div>
+
+        <div class="grid cards" markdown>
+
+        -   ??? task "`consensus_qc`"
+
+                The consensus_qc task generates a summary of genomic statistics from the consensus genome produced by the `bcftools_consensus` task. This includes the total number of bases, "N" bases, degenerate bases, and an estimate of the percent coverage to the reference genome.
+
+                ??? techdetails "`consensus_qc` Technical Details"
+                    |  | Links |
+                    | --- | --- |
+                    | Task | [task_consensus_qc.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_consensus_qc.wdl) |
+                    | Software Source Docker Image | [Theiagen Docker Builds: utility:1.1](https://github.com/theiagen/theiagen_docker_builds/blob/main/utility/1.1/Dockerfile) |
+
+        </div>
 
 ### Outputs
 
-!!! caption "TEMP PLACEHOLDER: TheiaViral_ONT Workflow Diagram"
-    ![TheiaViral Workflow Diagram](../../assets/figures/TheiaViral_ONT.png)
+=== "Illumina_PE"
+
+=== "ONT"
+
+    !!! caption "TEMP PLACEHOLDER: TheiaViral_ONT Workflow Diagram"
+        ![TheiaViral Workflow Diagram](../../assets/figures/TheiaViral_ONT.png)
