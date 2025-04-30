@@ -261,7 +261,7 @@ plugins:
   - glightbox
   - mike
   - macros:
-      include_dir: macros
+      module_name: macros/main
   # - section-index
 
 extra_javascript:

@@ -21,8 +21,6 @@ This workflow runs on the _set_ level.
 
     Please note that this workflow **cannot** produce Excel files. If you need an Excel file, you can convert the output file to Excel using a program like Microsoft Excel or Google Sheets.
 
-{{ hello_world() }}
-
 <div class="searchable-table" markdown="1">
 
 {{ input_table("docs/assets/input_tables/concatenate_column_content_in.tsv", input_table=True) }}

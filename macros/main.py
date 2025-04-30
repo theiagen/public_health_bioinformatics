@@ -7,10 +7,6 @@ import fnmatch
 
 def define_env(env):
   @env.macro
-  def hello_world():
-    return "Hello, world!"
-  
-  @env.macro
   def input_table(filename=None, filter_column=None, filter_values=None, columns=None, sort_by=None, input_table=False, indent=0):
     if not filename:
       return "**Error:** `filename` is required."
