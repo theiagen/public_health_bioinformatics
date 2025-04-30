@@ -131,7 +131,7 @@ Sequencing data used in the Snippy_Tree workflow must:
 
 ??? task "Snippy"
 
-    ##### Snippy {#snippy_task}
+    ##### Snippy {% raw %} {#snippy_task} {% endraw %}
 
     Snippy is a pipeline for calling SNPs and INDELs in haploid genomes. Before running `Snippy_Tree`, you must run `Snippy_Variants`, another workflow that uses the Snippy tool to align reads against a reference genome for individual samples. In `Snippy_Tree`, the snippy tool is used again to generate a whole-genome multiple sequence alignment (fasta file) of reads from all the samples we'd like in our tree. 
 
@@ -150,7 +150,7 @@ Sequencing data used in the Snippy_Tree workflow must:
 
 ??? task "Gubbins (optional)"
 
-    ##### Gubbins (optional) {#gubbins_task}
+    ##### Gubbins (optional) {% raw %} {#gubbins_task} {% endraw %}
 
     !!! tip "Turn on Gubbins with `use_gubbins`"
         Gubbins runs when the `use_gubbins` option is set to `true` (default=true).
@@ -176,7 +176,7 @@ Sequencing data used in the Snippy_Tree workflow must:
 
 ??? task "SNP-sites (optional)"
 
-    ##### SNP-sites (optional) {#snp_sites_task}
+    ##### SNP-sites (optional) {% raw %} {#snp_sites_task} {% endraw %}
 
     !!! tip "Turn on SNP-Sites with `core_genome`"
         SNP-sites runs when the `core_genome` option is set to true.
@@ -194,7 +194,7 @@ Sequencing data used in the Snippy_Tree workflow must:
 
 ??? task "IQTree2"
 
-    ##### IQTree2 {#iqtree2_task}
+    ##### IQTree2 {% raw %} {#iqtree2_task} {% endraw %}
 
     IQTree2 is used to build the final phylogeny. It uses the alignment generated in the previous steps of the workflow. The contents of this alignment will depend on whether any sites were masked with recombination.
 
@@ -218,7 +218,7 @@ Sequencing data used in the Snippy_Tree workflow must:
 
 ??? task "SNP-dists"
 
-    ##### SNP-dists {#snp_dists_task}
+    ##### SNP-dists {% raw %} {#snp_dists_task} {% endraw %}
 
     `SNP-dists` computes pairwise SNP distances between genomes. It takes the same alignment of genomes used to generate your phylogenetic tree and produces a matrix of pairwise SNP distances between sequences. This means that if you generated pairwise core-genome phylogeny, the output will consist of pairwise core-genome SNP (cgSNP) distances. Otherwise, these will be whole-genome SNP distances. Regardless of whether core-genome or whole-genome SNPs, this SNP distance matrix will exclude all SNPs in masked regions (i.e. masked with a bed file or gubbins). 
 
@@ -234,7 +234,7 @@ Sequencing data used in the Snippy_Tree workflow must:
 
 ??? task "Data summary (optional)"
 
-    ##### Data Summary (optional) {#data_summary_task}
+    ##### Data Summary (optional) {% raw %} {#data_summary_task} {% endraw %}
 
     If you fill out the `data_summary_*` and `sample_names` optional variables, you can use the optional `summarize_data` task. The task takes a comma-separated list of column names from the Terra data table, which should each contain a list of comma-separated items. For example, `"amrfinderplus_virulence_genes,amrfinderplus_stress_genes"` (with quotes, comma separated, no spaces) for these output columns from running TheiaProk. The task checks whether those comma-separated items are present in each row of the data table (sample), then creates a CSV file of these results. The CSV file indicates presence (TRUE) or absence (empty) for each item. By default, the task does not add a Phandango coloring tag to group items from the same column, but you can turn this on by setting `phandango_coloring` to `true`.
 
@@ -262,7 +262,7 @@ Sequencing data used in the Snippy_Tree workflow must:
 
 ??? task "Concatenate Variants (optional)"
 
-    ##### Concatenate Variants (optional) {#concatenate_variants_task}
+    ##### Concatenate Variants (optional) {% raw %} {#concatenate_variants_task} {% endraw %}
 
     ==This task activates when `call_shared_variants` is true.==
 
@@ -284,7 +284,7 @@ Sequencing data used in the Snippy_Tree workflow must:
 
 ??? task "Shared Variants Task (Optional)"
 
-    ##### Shared Variants (optional) {#shared_variants_task}
+    ##### Shared Variants (optional) {% raw %} {#shared_variants_task} {% endraw %}
 
     ==This task activates when `call_shared_variants` is true.==
 
@@ -305,7 +305,7 @@ Sequencing data used in the Snippy_Tree workflow must:
 
 ??? task "Snippy_Variants QC Metrics Concatenation (optional)"
 
-    ##### Snippy_Variants QC Metric Concatenation (optional) {#snippy_variants}
+    ##### Snippy_Variants QC Metric Concatenation (optional) {% raw %} {#snippy_variants} {% endraw %}
 
     Optionally, the user can provide the `snippy_variants_qc_metrics` file produced by the Snippy_Variants workflow as input to the workflow to concatenate the reports for each sample in the tree. These per-sample QC metrics include the following columns:
 

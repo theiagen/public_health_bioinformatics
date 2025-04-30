@@ -56,7 +56,7 @@ Additionally, inadequate sequencing depth can hinder Freyja's ability to differe
 
 ## Freyja Workflows
 
-### Freyja_Update_PHB {#freyja_update}
+### Freyja_Update_PHB {% raw %} {#freyja_update} {% endraw %}
 
 This workflow will copy the **SARS-CoV-2 reference files** (`curated_lineages.json` and `usher_barcodes.feather`) from [the source repository](https://github.com/andersen-lab/Freyja/tree/main/freyja/data) to a user-specific Google Cloud Storage (GCP) location (often a [Terra.bio](http://Terra.bio) workspace-associated bucket). These files can then be used as input for the [Freyja_FASTQ_PHB workflow](freyja.md#freyja_fastq).
 
@@ -90,7 +90,7 @@ We recommend running this workflow with **"Run inputs defined by file paths"** s
 
 This workflow does not produce any outputs that appear in a Terra data table. The reference files will appear at the location specified with the `gcp_uri` input variable.
 
-### Freyja_FASTQ_PHB {#freyja_fastq}
+### Freyja_FASTQ_PHB {% raw %} {#freyja_fastq} {% endraw %}
 
 Freyja measures SNV frequency and sequencing depth at each position in the genome to return an estimate of the true lineage abundances in the sample. The method uses lineage-defining "barcodes" that, for SARS-CoV-2, are derived from the UShER global phylogenetic tree as a base set for demixing. **Freyja_FASTQ_PHB** returns as output a TSV file that includes the lineages present and their corresponding abundances, along with other values.
 
@@ -220,7 +220,7 @@ This workflow runs on the sample level.
 
 ??? task "`read_QC_trim_pe` Details"
 
-    `read_QC_trim_pe` {#read_QC_trim_pe}
+    `read_QC_trim_pe` {% raw %} {#read_QC_trim_pe} {% endraw %}
 
     This task runs a sub-workflow that gathers basic QC information, trimming (either with trimmomatic or fastp), human read scrubbing, and taxonomic identification (Kraken2). Optional parameters do not need to be modified. For information regarding the individual tasks performed during this, please visit the [TheiaCoV documentation](../genomic_characterization/theiacov.md).
 
@@ -232,7 +232,7 @@ This workflow runs on the sample level.
 
 ??? task "`read_QC_trim_se` Details"
 
-    `read_QC_trim_se` {#read_QC_trim_se}
+    `read_QC_trim_se` {% raw %} {#read_QC_trim_se} {% endraw %}
 
     This task runs a sub-workflow that gathers basic QC information, trimming (either with trimmomatic or fastp), human read scrubbing, and taxonomic identification (Kraken2). Optional parameters do not need to be modified. For information regarding the individual tasks performed during this, please visit the [TheiaCoV documentation](../genomic_characterization/theiacov.md).
 
@@ -244,7 +244,7 @@ This workflow runs on the sample level.
 
 ??? task "`read_QC_trim_ont` Details"
 
-    `read_QC_trim_ont` {#read_QC_trim_ont}
+    `read_QC_trim_ont` {% raw %} {#read_QC_trim_ont} {% endraw %}
 
     This task runs a sub-workflow that gathers basic QC information, trimming (nanoplot), human read scrubbing, and taxonomic identification (Kraken2). Optional parameters do not need to be modified. For information regarding the individual tasks performed during this, please visit the [TheiaCoV documentation](../genomic_characterization/theiacov.md).
 
@@ -256,7 +256,7 @@ This workflow runs on the sample level.
 
 ??? task "`bwa` Details"
 
-    `bwa` {#bwa}
+    `bwa` {% raw %} {#bwa} {% endraw %}
 
     This task aligns the cleaned short reads (Illumina) to the reference genome provided by the user.
 
@@ -271,7 +271,7 @@ This workflow runs on the sample level.
 
 ??? task "`minimap2` Details"
 
-    `minimap2` {#minimap2}
+    `minimap2` {% raw %} {#minimap2} {% endraw %}
 
     This task aligns the cleaned long reads (Oxford Nanopore) to the reference genome provided by the user.
 
@@ -286,7 +286,7 @@ This workflow runs on the sample level.
 
 ??? task "`primer_trim` Details"
 
-    `primer_trim` {#primer_trim}
+    `primer_trim` {% raw %} {#primer_trim} {% endraw %}
 
     This task trims the primer sequences from the aligned bam file with iVar. The optional input, `keep_noprimer_reads`, does not have to be modified.
 
@@ -301,7 +301,7 @@ This workflow runs on the sample level.
 
 ??? task "`freyja` Details"
 
-    `freyja` {#freyja}
+    `freyja` {% raw %} {#freyja} {% endraw %}
 
     The Freyja task will call variants and capture sequencing depth information to identify the relative abundance of lineages present. Optionally, if `bootstrap` is set to true, bootstrapping will be performed. After the optional bootstrapping step, the variants are demixed.
 
@@ -432,7 +432,7 @@ The main output file used in subsequent Freyja workflows is found under the `fre
 
 </div>
 
-### Freyja_Plot_PHB {#freyja_plot}
+### Freyja_Plot_PHB {% raw %} {#freyja_plot} {% endraw %}
 
 This workflow visualizes aggregated freyja_demixed output files produced by [Freyja_FASTQ_PHB](freyja.md#freyja_fastq) in a single plot (pdf format) which provides fractional abundance estimates for all aggregated samples.
 
@@ -468,7 +468,7 @@ This workflow runs on the set level.
 
 ??? task "`freyja_plot_task` Details"
 
-    `freyja_plot_task` {#freyja_plot_task}
+    `freyja_plot_task` {% raw %} {#freyja_plot_task} {% endraw %}
 
     This task will aggregate multiple samples together, and then creates a plot. Several optional inputs dictate the plot appearance (see each variable's description for more information).
 
@@ -491,7 +491,7 @@ This workflow runs on the set level.
 | **freyja_plot_wf_analysis_date** | String | The date of analysis |
 | **freyja_plot_wf_version** | String | The version of the Public Health Bioinformatics (PHB) repository used |
 
-### Freyja_Dashboard_PHB {#freyja_dashboard}
+### Freyja_Dashboard_PHB {% raw %} {#freyja_dashboard} {% endraw %}
 
 This workflow creates a group of interactive visualizations based off of the aggregated freyja_demixed output files produced by [Freyja_FASTQ_PHB](freyja.md#freyja_fastq) called a "dashboard". Creating this dashboard requires knowing the viral load of your samples (viral copies/litre).
 
@@ -610,13 +610,13 @@ Allowed options:
 The appropriate barcode file for your organism of interest and reference sequence need to be downloaded and uploaded to your [Terra.bio](http://Terra.bio) workspace. When running [**Freyja_FASTQ_PHB**](freyja.md#freyja_fastq), the appropriate reference and barcodes file need to be passed as inputs. The first is a required input and will show up at the top of the workflows inputs page on [Terra.bio](http://Terra.bio) ([Figure 3](freyja.md/#figure3)).
 
 !!! caption "Figure 3:  Required input for Freyja_FASTQ_PHB to provide the reference genome to be used by Freyja"
-    ##### Figure 3 {#figure3}
+    ##### Figure 3 {% raw %} {#figure3} {% endraw %}
     ![**Figure 3:  Required input for Freyja_FASTQ_PHB to provide the reference genome to be used by Freyja.**](../../assets/figures/Freyja_figure3.png)
 
 The barcodes file can be passed directly to Freyja by the `freyja_barcodes` optional input ([Figure 4](freyja.md/#figure4)).
 
 !!! caption "Figure 4: Optional input for Freyja_FASTQ_PHB to provide the barcodes file to be used by Freyja"
-    ##### Figure 4 {#figure4}
+    ##### Figure 4 {% raw %} {#figure4} {% endraw %}
     ![**Figure 4: Optional input for Freyja_FASTQ_PHB to provide the barcodes file to be used by Freyja.**](../../assets/figures/Freyja_figure4.png)
 
 ## References

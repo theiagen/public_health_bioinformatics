@@ -46,7 +46,7 @@ To help users collect all required metadata, we have created the following Excel
 
 !!! dna "Usage on Terra"
 
-    ##### Usage on Terra {#usage-on-terra}
+    ##### Usage on Terra {% raw %} {#usage-on-terra} {% endraw %}
 
     **A note on the `using_clearlabs_data` & `using_reads_dehosted` optional input parameters**
 
@@ -150,7 +150,7 @@ This workflow runs on the set-level.
 
 ???+ toggle "An example excluded_samples.tsv file"
 
-    ##### An example excluded_samples.tsv file {#example-excluded-samples}
+    ##### An example excluded_samples.tsv file {% raw %} {#example-excluded-samples} {% endraw %}
 
     Due to the nature of tsv files, it may be easier to download and open this file in Excel. 
     

@@ -19,7 +19,7 @@ The `Clair3_Variants` workflow processes Oxford Nanopore Technologies (ONT) sequ
    - **Population Studies**: Generate standardized variant calls suitable for population-level analyses
 
 
-### Supported Clair3 Models {#supported-clair3-models}
+### Supported Clair3 Models {% raw %} {#supported-clair3-models} {% endraw %}
 
 | Model | Chemistry | Source |
 |-------|-----------|---------|

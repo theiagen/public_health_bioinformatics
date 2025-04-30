@@ -1241,7 +1241,7 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 The TheiaProk workflows automatically activate taxa-specific sub-workflows after the identification of relevant taxa using `GAMBIT`. Alternatively, the user can provide the expected taxa in the `expected_taxon` workflow input to override the taxonomic assignment made by GAMBIT. Modules are launched for all TheiaProk workflows unless otherwise indicated.
 
 ??? toggle "_Acinetobacter baumannii_"
-    ##### _Acinetobacter baumannii_ {#acinetobacter-baumannii}
+    ##### _Acinetobacter baumannii_ {% raw %} {#acinetobacter-baumannii} {% endraw %}
 
     A number of approaches are available in TheiaProk for *A. baumannii* characterization.
 
@@ -1290,7 +1290,7 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
         NCBI's AMRFinderPlus, which is implemented as a core module in TheiaProk, detects the *bla*OXA-51-like genes. This may be used to confirm the species, in addition to the GAMBIT taxon identification. The *bla*OXA-51-like genes act as carbapenemases when an IS*Aba1* is found 7 bp upstream of the gene. Detection of this IS is not currently undertaken in TheiaProk.
 
 ??? toggle "_Escherichia_ or _Shigella_ spp."
-    ##### _Escherichia_ or _Shigella_ spp. {#escherichia-or-shigella}
+    ##### _Escherichia_ or _Shigella_ spp. {% raw %} {#escherichia-or-shigella} {% endraw %}
 
     The *Escherichia* and *Shigella* genera are [difficult to differentiate as they do not comply with genomic definitions of genera and species](https://www.sciencedirect.com/science/article/abs/pii/S1286457902016374). Consequently, when either _Escherichia_ or _Shigella_ are identified by GAMBIT, all tools intended for these taxa are used. 
 
@@ -1421,7 +1421,7 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
             | Original Publication(s) | No publication currently available, as this is a new tool. One will be available in the future. |
 
 ??? toggle "_Haemophilus influenzae_"
-    ##### _Haemophilus influenzae_ {#haemophilus-influenzae}
+    ##### _Haemophilus influenzae_ {% raw %} {#haemophilus-influenzae} {% endraw %}
     ??? task "`hicap`: Sequence typing"
         Identification of _cap_ locus serotype in _Haemophilus influenzae_ assemblies with [hicap](https://github.com/scwatts/hicap).
 
@@ -1439,7 +1439,7 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
             | Original Publication(s) | [hicap: In Silico Serotyping of the Haemophilus influenzae Capsule Locus](https://doi.org/10.7717/peerj.5261) |
 
 ??? toggle "_Klebsiella_ spp."
-    ##### _Klebsiella_ spp. {#klebsiella}
+    ##### _Klebsiella_ spp. {% raw %} {#klebsiella} {% endraw %}
     ??? task "`Kleborate`: Species identification, MLST, serotyping, AMR and virulence characterization"
 
         [Kleborate](https://github.com/katholt/Kleborate) is a tool to identify the *Klebsiella* species, MLST sequence type, serotype, virulence factors (ICE_Kp_ and plasmid associated), and AMR genes and mutations. Serotyping is based on the capsular (K antigen) and lipopolysaccharide (LPS) (O antigen) genes. The resistance genes identified by Kleborate are described [here](https://github.com/katholt/Kleborate/wiki/Antimicrobial-resistance).
@@ -1454,7 +1454,7 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
             | Orginal publication | [A genomic surveillance framework and genotyping tool for Klebsiella pneumoniae and its related species complex](https://www.nature.com/articles/s41467-021-24448-3)<br>[Identification of Klebsiella capsule synthesis loci from whole genome data](https://www.microbiologyresearch.org/content/journal/mgen/10.1099/mgen.0.000102) |
 
 ??? toggle "_Legionella pneumophila_"
-    ##### _Legionella pneumophila_ {#legionella-pneumophila}
+    ##### _Legionella pneumophila_ {% raw %} {#legionella-pneumophila} {% endraw %}
     ??? task "`Legsta`: Sequence-based typing"
 
         [Legsta](https://github.com/tseemann/legsta) performs a sequence-based typing of *Legionella pneumophila*, with the intention of being used for outbreak investigations.
@@ -1468,7 +1468,7 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
             | Software Documentation | [Legsta](https://github.com/tseemann/legsta) |
 
 ??? toggle "_Listeria monocytogenes_"
-    ##### _Listeria monocytogenes_ {#listeria-monocytogenes}
+    ##### _Listeria monocytogenes_ {% raw %} {#listeria-monocytogenes} {% endraw %}
     ??? task "`LisSero`: Serogroup prediction"
 
         [LisSero](https://github.com/MDU-PHL/LisSero) performs serogroup prediction (1/2a, 1/2b, 1/2c, or 4b) for _Listeria monocytogenes_ based on the presence or absence of five genes, _lmo1118_, _lmo0737_, ORF2110, ORF2819, and _prs_. These do not predict somatic (O) or flagellar (H) biosynthesis.
@@ -1482,7 +1482,7 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
             | Software Documentation | [LisSero](https://github.com/MDU-PHL/LisSero) |
 
 ??? toggle "_Mycobacterium tuberculosis_"
-    ##### _Mycobacterium tuberculosis_ {#mycobacterium-tuberculosis}
+    ##### _Mycobacterium tuberculosis_ {% raw %} {#mycobacterium-tuberculosis} {% endraw %}
     ??? task "`TBProfiler`: Lineage and drug susceptibility prediction ==_for Illumina and ONT only_=="
 
         [TBProfiler](https://github.com/jodyphelan/TBProfiler) identifies *Mycobacterium tuberculosis* complex species, lineages, sub-lineages and drug resistance-associated mutations.
@@ -1521,7 +1521,7 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
             | Software Documentation | <https://github.com/iqbal-lab-org/clockwork/wiki> |
 
 ??? toggle "_Neisseria_ spp."
-    ##### _Neisseria_ spp. {#neisseria}
+    ##### _Neisseria_ spp. {% raw %} {#neisseria} {% endraw %}
 
     ??? task "`amr_search`: _Neisseria gonorrhoeae_ antimicrobial resistance profiling"
 
@@ -1577,7 +1577,7 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
             | Software Documentation | [meningotype](https://github.com/MDU-PHL/meningotype) |
 
 ??? toggle "_Pseudomonas aeruginosa_"
-    ##### _Pseudomonas aeruginosa_ {#pseudomonas-aeruginosa}
+    ##### _Pseudomonas aeruginosa_ {% raw %} {#pseudomonas-aeruginosa} {% endraw %}
 
     ??? task "`pasty`: Serotyping"
         
@@ -1593,7 +1593,7 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
             | Original Publication(s) | [Application of Whole-Genome Sequencing Data for O-Specific Antigen Analysis and In Silico Serotyping of Pseudomonas aeruginosa Isolates.](https://journals.asm.org/doi/10.1128/JCM.00349-16) |
 
 ??? toggle "_Salmonella_ spp."
-    ##### _Salmonella_ spp. {#salmonella}
+    ##### _Salmonella_ spp. {% raw %} {#salmonella} {% endraw %}
 
     Both SISTR and SeqSero2 are used for serotyping all *Salmonella* spp. Occasionally, the predicted serotypes may differ between SISTR and SeqSero2. When this occurs, differences are typically small and analogous, and are likely as a result of differing source databases. More information about Salmonella serovar nomenclature can be found [here](https://www.happykhan.com/posts/binfie-guide-serovar/). For *Salmonella* Typhi, genotyphi is additionally run for further typing.
 
@@ -1638,7 +1638,7 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
             | Orginal publication(s) | [An extended genotyping framework for Salmonella enterica serovar Typhi, the cause of human typhoid](https://www.nature.com/articles/ncomms12827/)<br>[Five Years of GenoTyphi: Updates to the Global Salmonella Typhi Genotyping Framework](https://academic.oup.com/jid/article/224/Supplement_7/S775/6358992?login=false) |
 
 ??? toggle "_Staphyloccocus aureus_"
-    ##### _Staphyloccocus aureus_ {#staphyloccocus-aureus}
+    ##### _Staphyloccocus aureus_ {% raw %} {#staphyloccocus-aureus} {% endraw %}
 
     ??? task "`spatyper`: Sequence typing"
         
@@ -1679,7 +1679,7 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
             | Original Publication(s) | [Species-Wide Phylogenomics of the *Staphylococcus aureus Agr* Operon Revealed Convergent Evolution of Frameshift Mutations](https://doi.org/10.1128/spectrum.01334-21) |
 
 ??? toggle "_Streptococcus pneumoniae_"
-    ##### _Streptococcus pneumoniae_ {#streptococcus-pneumoniae}
+    ##### _Streptococcus pneumoniae_ {% raw %} {#streptococcus-pneumoniae} {% endraw %}
 
     ??? task "`PopPUNK`: Global Pneumococcal Sequence Cluster typing"
         
@@ -1728,7 +1728,7 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
             | Original Publication(s) | [Penicillin-binding protein transpeptidase signatures for tracking and predicting β-lactam resistance levels in Streptococcus pneumoniae](https://journals.asm.org/doi/full/10.1128/mBio.00756-16) |
 
 ??? toggle "_Streptococcus pyogenes_"
-    ##### _Streptococcus pyogenes_ {#streptococcus-pyogenes}
+    ##### _Streptococcus pyogenes_ {% raw %} {#streptococcus-pyogenes} {% endraw %}
     ??? task "`emm-typing-tool`: Sequence typing ==_for Illumina_PE only_=="
 
         emm-typing of *Streptococcus pyogenes* raw reads. Assign emm type and subtype by querying the CDC M-type specific database. 
@@ -1741,7 +1741,7 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
             | Software Documentation | [emm-typing-tool](https://github.com/ukhsa-collaboration/emm-typing-tool) |
 
 ??? toggle "_Vibrio_ spp."
-    ##### _Vibrio_ spp. {#vibrio}
+    ##### _Vibrio_ spp. {% raw %} {#vibrio} {% endraw %}
     ??? task "`SRST2`: Vibrio characterization ==_for Illumina only_=="
 
         The `SRST2 Vibrio characterization` task detects sequences for *Vibrio* spp. characterization using Illumina sequence reads and a database of target sequence that are traditionally used in PCR methods. The sequences included in the database are as follows:

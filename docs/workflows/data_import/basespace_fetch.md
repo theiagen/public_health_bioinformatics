@@ -20,7 +20,7 @@ This process must be performed on a command-line before using the `BaseSpace_Fet
 
 _If you already have a command-line environment available_, you can skip ahead to [Step 2](#install-bs-cli).
 
-##### Step 1: Create a command-line environment {#create-environment}
+##### Step 1: Create a command-line environment {% raw %} {#create-environment} {% endraw %}
 
 ??? toggle "Click for more information"
 
@@ -47,7 +47,7 @@ _If you already have a command-line environment available_, you can skip ahead t
         !!! caption narrow "Environment creation in progress"
             ![environment creation](../../assets/figures/basespace_fetch/info3-creation-in-progress.png)
 
-##### Step 2: Install the BaseSpace Command-Line Tool to Retrieve the Access Token and API Server Address {#install-bs-cli}
+##### Step 2: Install the BaseSpace Command-Line Tool to Retrieve the Access Token and API Server Address {% raw %} {#install-bs-cli} {% endraw %}
 
 ??? toggle "Click for more information"
 
@@ -94,7 +94,7 @@ _If you already have a command-line environment available_, you can skip ahead t
         
 #### Preparing to retrieve a run with BaseSpace_Fetch
 
-##### Step 1: Create a Metadata Sheet from the BaseSpace SampleSheet {#prep-metadata}
+##### Step 1: Create a Metadata Sheet from the BaseSpace SampleSheet {% raw %} {#prep-metadata} {% endraw %}
 
 ??? toggle "Click for more information"
 
@@ -123,7 +123,7 @@ _If you already have a command-line environment available_, you can skip ahead t
             !!! caption narrow "Example Metadata Sheet"
                 ![example metadata sheet](../../assets/figures/basespace_fetch/step7-metadata-sheet.png)
 
-##### Step 2: Upload the metadata spreadsheet to the destination workspace in Terra.bio {#upload-metadata}
+##### Step 2: Upload the metadata spreadsheet to the destination workspace in Terra.bio {% raw %} {#upload-metadata} {% endraw %}
 
 ??? toggle "Click for more information"
 

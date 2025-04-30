@@ -57,7 +57,7 @@ This workflow runs on the sample level.
 
 ??? task "ReferenceSeeker Details (Optional)"
 
-    ##### ReferenceSeeker {#referenceseeker}
+    ##### ReferenceSeeker {% raw %} {#referenceseeker} {% endraw %}
 
     `ReferenceSeeker` uses your draft assembly to identify closely related bacterial, viral, fungal, or plasmid genome assemblies in [RefSeq](https://www.ncbi.nlm.nih.gov/refseq/).
 
@@ -84,7 +84,7 @@ This workflow runs on the sample level.
 
 ??? task "NCBI Datasets Details"
 
-    ##### NCBI Datasets {#ncbi-datasets}
+    ##### NCBI Datasets {% raw %} {#ncbi-datasets} {% endraw %}
 
     The [`NCBI Datasets`](https://www.ncbi.nlm.nih.gov/datasets/) task downloads specified assemblies from NCBI using either the [virus](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/data-packages/virus-genome/) or [genome](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/data-packages/genome/) (for all other genome types) package as appropriate.
 

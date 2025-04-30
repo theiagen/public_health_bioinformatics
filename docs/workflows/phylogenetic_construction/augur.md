@@ -244,7 +244,7 @@ This workflow runs on the set level. Please note that for every task, runtime pa
 </div>
 
 ??? task "Workflow Tasks"
-    ##### Augur Workflow Tasks {#augur-tasks}
+    ##### Augur Workflow Tasks {% raw %} {#augur-tasks} {% endraw %}
 
     The Augur_PHB workflow uses the inputs to generate a phylogenetic tree in JSON format that is compatible with phylogenetic tree visualization software.
     

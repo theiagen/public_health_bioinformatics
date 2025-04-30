@@ -21,7 +21,7 @@ We recommend running this workflow with **"Run workflow with inputs defined by f
 
     **_This can be changed_** by providing information in the `file_ending` optional input parameter. See below for more information.
 
-#### Finding the `data_location_path` {#data-location}
+#### Finding the `data_location_path` {% raw %} {#data-location} {% endraw %}
 
 ??? toggle "Using the Terra data uploader"
     Once you have named your new collection, you will see the collection name directly above where you can drag-and-drop your data files, or on the same line as the Upload button. Right-click the collection name and select "Copy link address." Paste the copied link into the data_location_path variable, remembering to enclose it in quotes.
@@ -42,7 +42,7 @@ We recommend running this workflow with **"Run workflow with inputs defined by f
     !!! caption narrow "Using the Files section"
         ![Data tab](../../assets/figures/Create_Terra_Table_example2.png)
 
-#### How to determine the appropriate `file_ending` for your data {#file-ending}
+#### How to determine the appropriate `file_ending` for your data {% raw %} {#file-ending} {% endraw %}
 
 The `file_ending` should be a substring of your file names that is held in common. To include multiple file endings, please separate them with commas, as shown in the "No elements in common" section. Click on the toggles below for examples:
 

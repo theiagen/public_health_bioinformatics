@@ -152,7 +152,7 @@ gambit dist --qs signatures.gs --square -o pw_dists.csv
 ```
 
 !!! caption narrow "GAMBIT Metadata Database Scheme"
-    ##### Figure 1 {#figure1}
+    ##### Figure 1 {% raw %} {#figure1} {% endraw %}
     ![**Figure 1:** Scheme for GAMBIT’s metadata database.](../assets/figures/GAMBIT-metadata-database.png)
 
     **Figure 1:** Scheme for GAMBIT’s metadata database

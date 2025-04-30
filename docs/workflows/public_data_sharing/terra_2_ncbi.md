@@ -233,7 +233,7 @@ This workflow runs on set-level data tables.
 
 ??? task "Workflow Tasks"
 
-    ##### Workflow Tasks {#workflow-tasks}
+    ##### Workflow Tasks {% raw %} {#workflow-tasks} {% endraw %}
 
     The workflow will perform the following tasks, each highlighted as `code`
 
@@ -287,7 +287,7 @@ The output files contain information mostly for debugging purposes. Additionally
 
 ???+ toggle "An example excluded_samples.tsv file"
 
-    ##### An example excluded_samples.tsv file {#example-excluded-samples}
+    ##### An example excluded_samples.tsv file {% raw %} {#example-excluded-samples} {% endraw %}
 
     Due to the nature of tsv files, it may be easier to download and open this file in Excel. 
     

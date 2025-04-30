@@ -161,7 +161,7 @@ A brief description of the documentation structure is as follows:
     - `workflows_overview/` - Contains the Markdown files for the overview tables for each display type: alphabetically, by applicable kingdom, and by workflow type.
     - `index.md` - The home/landing page for our documentation.
 
-### Adding a Page for a New Workflow {#new-page}
+### Adding a Page for a New Workflow {% raw %} {#new-page} {% endraw %}
 
 !!! tip "Hey, we've got a template for that!"
     Please see our template [here](../assets/new_workflow_template.md) for ease of use. Please remove all italicized text and replace with the appropriate information. If in doubt, please refer to existing documentation.

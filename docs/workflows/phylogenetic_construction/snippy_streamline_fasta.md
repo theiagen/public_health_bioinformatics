@@ -156,7 +156,7 @@ The `Snippy_Streamline_FASTA` workflow is an all-in-one approach to generating a
     The following tasks perform automatic reference selection (if no reference genome is provided by the user and `assembly_fasta` is provided).
 
 ??? task "Centroid"
-    ##### Centroid {#centroid}
+    ##### Centroid {% raw %} {#centroid} {% endraw %}
 
     Centroid selects the most central genome among a list of assemblies by computing pairwise mash distances. In `Snippy_Streamline`, this centroid assembly is then used to find a closely related reference genome that can be used to generate the tree.  In order to use `Centroid`, should complete the `samplenames` input. 
 
@@ -168,7 +168,7 @@ The `Snippy_Streamline_FASTA` workflow is an all-in-one approach to generating a
         | Software Documentation | <https://github.com/theiagen/centroid> |
 
 ??? task "ReferenceSeeker"
-    ##### ReferenceSeeker {#referenceseeker}
+    ##### ReferenceSeeker {% raw %} {#referenceseeker} {% endraw %}
 
     `ReferenceSeeker` uses your draft assembly to identify closely related bacterial, viral, fungal, or plasmid genome assemblies in [RefSeq](https://www.ncbi.nlm.nih.gov/refseq/).
 
@@ -191,7 +191,7 @@ The `Snippy_Streamline_FASTA` workflow is an all-in-one approach to generating a
         | Original Publication(s) | [ReferenceSeeker: rapid determination of appropriate reference genomes](https://joss.theoj.org/papers/10.21105/joss.01994) |
 
 ??? task "NCBI Datasets"
-    ##### NCBI Datasets {#ncbi-datasets}
+    ##### NCBI Datasets {% raw %} {#ncbi-datasets} {% endraw %}
 
     The [`NCBI Datasets`](https://www.ncbi.nlm.nih.gov/datasets/) task downloads specified assemblies from NCBI using either the [virus](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/data-packages/virus-genome/) or [genome](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/data-packages/genome/) (for all other genome types) package as appropriate.
 
@@ -213,7 +213,7 @@ The `Snippy_Streamline_FASTA` workflow is an all-in-one approach to generating a
     **Please see the full documentation for [Snippy_Variants](./snippy_variants.md) for more information.**
 
 ??? task "Snippy_Variants"
-    ##### Snippy_Variants {#snippy_variants}
+    ##### Snippy_Variants {% raw %} {#snippy_variants} {% endraw %}
 
     `Snippy_Variants` aligns the assemblies for each sample against the reference genome to call SNPs, MNPs and INDELs according to optional input parameters. 
 
@@ -260,7 +260,7 @@ The `Snippy_Streamline_FASTA` workflow is an all-in-one approach to generating a
 
 ??? task "Snippy"
 
-    ##### Snippy {#snippy_task}
+    ##### Snippy {% raw %} {#snippy_task} {% endraw %}
 
     Snippy is used to generate a whole-genome multiple sequence alignment (fasta file) of reads from all the samples we'd like in our tree. 
 
@@ -279,7 +279,7 @@ The `Snippy_Streamline_FASTA` workflow is an all-in-one approach to generating a
 
 ??? task "Gubbins (optional)"
 
-    ##### Gubbins (optional) {#gubbins_task}
+    ##### Gubbins (optional) {% raw %} {#gubbins_task} {% endraw %}
 
     **_Most optional inputs are hidden in Snippy_Streamline for simplification of the workflow. If you would like to use Gubbins with additional options, please use the `Snippy_Tree` workflow._**
 
@@ -304,7 +304,7 @@ The `Snippy_Streamline_FASTA` workflow is an all-in-one approach to generating a
 
 ??? task "SNP-sites (optional)"
 
-    ##### SNP-sites (optional) {#snp_sites_task}
+    ##### SNP-sites (optional) {% raw %} {#snp_sites_task} {% endraw %}
 
     !!! tip "Turn on SNP-Sites with `core_genome`"
         SNP-sites runs when the `core_genome` option is set to true.
@@ -322,7 +322,7 @@ The `Snippy_Streamline_FASTA` workflow is an all-in-one approach to generating a
 
 ??? task "IQTree2"
 
-    ##### IQTree2 {#iqtree2_task}
+    ##### IQTree2 {% raw %} {#iqtree2_task} {% endraw %}
 
     IQTree2 is used to build the final phylogeny. It uses the alignment generated in the previous steps of the workflow. The contents of this alignment will depend on whether any sites were masked with recombination.
 
@@ -346,7 +346,7 @@ The `Snippy_Streamline_FASTA` workflow is an all-in-one approach to generating a
 
 ??? task "SNP-dists"
 
-    ##### SNP-dists {#snp_dists_task}
+    ##### SNP-dists {% raw %} {#snp_dists_task} {% endraw %}
 
     `SNP-dists` computes pairwise SNP distances between genomes. It takes the same alignment of genomes used to generate your phylogenetic tree and produces a matrix of pairwise SNP distances between sequences. This means that if you generated pairwise core-genome phylogeny, the output will consist of pairwise core-genome SNP (cgSNP) distances. Otherwise, these will be whole-genome SNP distances. Regardless of whether core-genome or whole-genome SNPs, this SNP distance matrix will exclude all SNPs in masked regions (i.e. masked with a bed file or gubbins). 
 
@@ -362,7 +362,7 @@ The `Snippy_Streamline_FASTA` workflow is an all-in-one approach to generating a
 
 ??? task "Data summary (optional)"
 
-    ##### Data Summary (optional) {#data_summary_task}
+    ##### Data Summary (optional) {% raw %} {#data_summary_task} {% endraw %}
 
     If you fill out the `data_summary_*` and `sample_names` optional variables, you can use the optional `summarize_data` task. The task takes a comma-separated list of column names from the Terra data table, which should each contain a list of comma-separated items. For example, `"amrfinderplus_virulence_genes,amrfinderplus_stress_genes"` (with quotes, comma separated, no spaces) for these output columns from running TheiaProk. The task checks whether those comma-separated items are present in each row of the data table (sample), then creates a CSV file of these results. The CSV file indicates presence (TRUE) or absence (empty) for each item. By default, the task does not add a Phandango coloring tag to group items from the same column, but you can turn this on by setting `phandango_coloring` to `true`.
 
@@ -390,7 +390,7 @@ The `Snippy_Streamline_FASTA` workflow is an all-in-one approach to generating a
 
 ??? task "Concatenate Variants (optional)"
 
-    ##### Concatenate Variants (optional) {#concatenate_variants_task}
+    ##### Concatenate Variants (optional) {% raw %} {#concatenate_variants_task} {% endraw %}
 
     ==This task activates when `call_shared_variants` is true.==
 
@@ -412,7 +412,7 @@ The `Snippy_Streamline_FASTA` workflow is an all-in-one approach to generating a
 
 ??? task "Shared Variants Task (Optional)"
 
-    ##### Shared Variants (optional) {#shared_variants_task}
+    ##### Shared Variants (optional) {% raw %} {#shared_variants_task} {% endraw %}
 
     ==This task activates when `call_shared_variants` is true.==
 

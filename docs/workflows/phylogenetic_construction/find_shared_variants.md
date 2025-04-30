@@ -41,7 +41,7 @@ All variant data included in the sample set should be generated from aligning se
 
 ??? task "Concatenate Variants"
 
-    ##### Concatenate Variants Task {#concatenate_variants_task}
+    ##### Concatenate Variants Task {% raw %} {#concatenate_variants_task} {% endraw %}
 
     The `cat_variants` task concatenates variant data from multiple samples into a single file `concatenated_variants`. It is very similar to the `cat_files` task, but also adds a column to the output file that indicates the sample associated with each row of data.
 
@@ -62,7 +62,7 @@ All variant data included in the sample set should be generated from aligning se
 
 ??? task "Shared Variants Task"
 
-    ##### Shared Variants Task {#shared_variants_task}
+    ##### Shared Variants Task {% raw %} {#shared_variants_task} {% endraw %}
 
     The `shared_variants` task takes in the `concatenated_variants` output from the `cat_variants` task and reshapes the data so that variants are rows and samples are columns. For each variant, samples where the variant was detected are populated with a "1" and samples were **either the variant was not detected or there was insufficient coverage to call variants** are populated with a "0". The resulting table is available as the `shared_variants_table` output.
 
