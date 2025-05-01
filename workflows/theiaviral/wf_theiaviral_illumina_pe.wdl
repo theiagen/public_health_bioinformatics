@@ -85,7 +85,8 @@ workflow theiaviral_illumina_pe {
       input:
         read1 = select_first([rasusa.read1_subsampled, read_QC_trim.kraken2_extracted_read1]),
         read2 = select_first([rasusa.read2_subsampled, read_QC_trim.kraken2_extracted_read2]),
-        workflow_series = "theiaviral"
+        workflow_series = "theiaviral",
+        expected_genome_length = select_first([genome_length, ncbi_taxon_summary.avg_genome_length])
     }
   }
   if (select_first([clean_check_reads.read_screen, ""]) == "PASS" || skip_screen) {
@@ -175,7 +176,8 @@ workflow theiaviral_illumina_pe {
     call consensus_qc_task.consensus_qc as consensus_qc {
       input:
         assembly_fasta = consensus.consensus_seq,
-        reference_genome = select_first([reference_fasta, ncbi_datasets.ncbi_datasets_assembly_fasta])
+        reference_genome = select_first([reference_fasta, ncbi_datasets.ncbi_datasets_assembly_fasta]),
+        genome_length = select_first([genome_length, ncbi_taxon_summary.avg_genome_length])
     }
     # quality control metrics for consensus (ie. completeness, viral gene count, contamination)
     call checkv_task.checkv as checkv_consensus {
