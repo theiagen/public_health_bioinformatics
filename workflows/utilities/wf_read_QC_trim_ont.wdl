@@ -106,7 +106,9 @@ workflow read_QC_trim_ont {
         samplename = samplename,
         kraken2_report = kraken2_raw.kraken_report,
         kraken2_classified_report = kraken2_raw.kraken2_classified_report,
-        target_organism = target_organism
+        target_organism = target_organism,
+        memory = kraken_memory,
+        cpu = kraken_cpu
     }  
     call kraken2.kraken2_theiacov as kraken2_dehosted {
       input:
@@ -124,7 +126,9 @@ workflow read_QC_trim_ont {
         samplename = samplename,
         kraken2_report = kraken2_dehosted.kraken_report,
         kraken2_classified_report = kraken2_dehosted.kraken2_classified_report,
-        target_organism = target_organism
+        target_organism = target_organism,
+        memory = kraken_memory,
+        cpu = kraken_cpu
     } 
   }
   if ("~{workflow_series}" == "theiaprok") {
@@ -143,7 +147,9 @@ workflow read_QC_trim_ont {
         input:
           samplename = samplename,
           kraken2_report = kraken2_se.kraken2_report,
-          kraken2_classified_report = kraken2_se.kraken2_classified_report
+          kraken2_classified_report = kraken2_se.kraken2_classified_report,
+          memory = kraken_memory,
+          cpu = kraken_cpu
       }
     } if ((call_kraken) && ! defined(kraken_db)) {
       String kraken_db_warning = "Kraken database not defined"

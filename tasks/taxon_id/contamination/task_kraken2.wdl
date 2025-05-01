@@ -190,7 +190,7 @@ task kraken2_parse_classified {
     Int cpu = 4
     Int disk_size = 100
     String docker = "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-08-28-v4"
-    Int memory = 8
+    Int memory = 32
   }
   command <<<
 
@@ -203,11 +203,11 @@ task kraken2_parse_classified {
     reads_table = pd.read_csv("~{samplename}.classifiedreads.txt", names=["classified_unclassified","read_id","taxon_id","read_len","other"], header=None, delimiter="\t")
     report_table = pd.read_csv("~{kraken2_report}", names=["percent","num_reads","num_reads_with_taxon","rank","taxon_id","name"], header=None, delimiter="\t")
 
+    # create dataframe to store results
+    results_table = pd.DataFrame(columns=["percent","num_basepairs","rank","taxon_id","name"])
+
     # calculate total basepairs
     total_basepairs = reads_table["read_len"].sum()
-
-    # create a list to store results
-    results_list = []
 
     # for each taxon_id in the report table, check if exists in the classified reads output and if so get the percent, num basepairs, rank, and name
     # write results to dataframe
@@ -219,10 +219,7 @@ task kraken2_parse_classified {
         taxon_basepairs = reads_table.loc[reads_table["taxon_id"] == taxon_id, "read_len"].sum()
         taxon_percent = taxon_basepairs / total_basepairs * 100
         
-        results_list.append({"percent":taxon_percent, "num_basepairs":taxon_basepairs, "rank":rank, "taxon_id":taxon_id, "name":taxon_name})
-
-    # create dataframe from results list
-    results_table = pd.DataFrame(results_list)
+        results_table = pd.concat([results_table, pd.DataFrame({"percent":taxon_percent, "num_basepairs":taxon_basepairs, "rank":rank, "taxon_id":taxon_id, "name":taxon_name}, index=[0])], ignore_index=True)
 
     # write results to file
     results_table.to_csv("~{samplename}.report_parsed.txt", sep="\t", index=False, header=False)
