@@ -7,7 +7,7 @@ task ts_mlst {
   input {
     File assembly
     String samplename
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/mlst:2.23.0-2024-12-31"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/mlst:2.23.0.cdc-24-12-01"
     Int disk_size = 50
     Int cpu = 1
     Int memory = 2
@@ -68,8 +68,7 @@ task ts_mlst {
         ~{assembly} \
         >> ~{samplename}_2.tsv
 
-        #create output header
-        cat ~{samplename}_1.tsv ~{samplename}_2.tsv >> ~{samplename}_ts_mlst.tsv
+        cat ~{samplename}_1.tsv ~{samplename}_2.tsv > ~{samplename}_ts_mlst.tsv
         cat ~{samplename}_novel_mlst_alleles_${secondary_scheme}.fasta ~{samplename}_novel_mlst_alleles.fasta > ~{samplename}_novel_mlst_alleles.fasta
       fi
 
