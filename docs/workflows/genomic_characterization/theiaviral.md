@@ -369,11 +369,10 @@ The **TheiaViral** workflows are designed for the assembly, quality assessment, 
 
                 The `ncbi_taxon_summary` task utilizes the [`NCBI Datasets`](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/data-packages/virus-genome/) package to search the NCBI Viral Genome Database to acquire metadata based on a user's taxonomic input. This task generates a comprehensive summary file of all successful hits to the input `taxon`, which includes each taxon's accession number, completeness status, genome length, source, and other relevant metadata. Based on this summary, the task also calculates the average expected genome size for the input `taxon`.
 
-                ??? dna_blue "`taxon`"
+                ??? dna "`taxon`"
                     This parameter accepts either a NCBI taxon ID (e.g. `11292`) or an organism name (e.g. `Lyssavirus rabies`).
 
                 ???+ warning "Important"
-
                     - The implied taxonomic level of the input `taxon` directly affects the number of taxa reported in the summary file and the average genome size calculation.
 
                     **Examples:**
@@ -381,15 +380,15 @@ The **TheiaViral** workflows are designed for the assembly, quality assessment, 
                     - If your input `taxon` is `"Lyssavirus rabies"` or taxon ID `11292` (species level), the task will retrieve genomes only for that specific species, and return the genome length for that species.
                     - If your input `taxon` is `"Rhabdoviridae"` or taxon ID `11270` (family level), the task will retrieve genomes for all species within that family and calculate an average genome length across all those species.
 
-                This flexibility allows users to run the workflow without requiring precise knowledge of their organism's genome length. The average genome length calculation is only used to estimate coverage levels for downsampling and minor read QC steps. The average genome length is used only to estimate coverage levels for downsampling and to guide minor read quality control steps. It does not significantly affect the quality of the consensus genome or the choice of reference sequences.
+                    This flexibility allows users to run the workflow without requiring precise knowledge of their organism's genome length. The average genome length calculation is only used to estimate coverage levels for downsampling and minor read QC steps. The average genome length is used only to estimate coverage levels for downsampling and to guide minor read quality control steps. It does not significantly affect the quality of the consensus genome or the choice of reference sequences.
 
                 ??? techdetails "NCBI Datasets Technical Details"
-                  |  | Links |
-                  | --- | --- |
-                  | Task | [task_ncbi_datasets.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/data_import/task_ncbi_datasets.wdl) |
-                  | Software Source Code | [NCBI Datasets on GitHub](https://github.com/ncbi/datasets) |
-                  | Software Documentation | [NCBI Datasets Documentation on NCBI](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/) |
-                  | Original Publication(s) | [Exploring and retrieving sequence and metadata for species across the tree of life with NCBI Datasets](https://doi.org/10.1038/s41597-024-03571-y) |
+                    |  | Links |
+                    | --- | --- |
+                    | Task | [task_ncbi_datasets.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/data_import/task_ncbi_datasets.wdl) |
+                    | Software Source Code | [NCBI Datasets on GitHub](https://github.com/ncbi/datasets) |
+                    | Software Documentation | [NCBI Datasets Documentation on NCBI](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/) |
+                    | Original Publication(s) | [Exploring and retrieving sequence and metadata for species across the tree of life with NCBI Datasets](https://doi.org/10.1038/s41597-024-03571-y) |
 
         </div>
 
@@ -399,76 +398,417 @@ The **TheiaViral** workflows are designed for the assembly, quality assessment, 
 
         -   ??? task "`read_QC_trim`"
 
-                `read_QC_trim` is a sub-workflow within TheiaMeta that removes low-quality reads, low-quality regions of reads, and sequencing adapters to improve data quality. It uses a number of tasks, described below.
+                `read_QC_trim` is a sub-workflow within TheiaMeta that removes low-quality reads, low-quality regions of reads, and sequencing adapters to improve data quality. This sub-workflow also performs read taxonomic classification and extraction. It uses a number of tasks, described below.
 
-                ??? task "`fastq-scan` or `fastqc`"
+                <div class="grid cards" markdown>
 
-                    There are two methods for read quantification to choose from: [`fastq-scan`](https://github.com/rpetit3/fastq-scan) (default) or [`fastqc`](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/). Both quantify the forward and reverse reads in FASTQ files. In TheiaViral_Illumina_PE, they also provide the total number of read pairs. This task is run once with raw reads as input and once with clean reads as input. If QC has been performed correctly, you should expect **fewer** clean reads than raw reads. `fastqc` also provides a graphical visualization of the read quality.
+                -   ??? quote "Read Quantification"
 
-                    ??? techdetails "`fastq-scan` and `fastqc` Technical Details"
-                        |  | Links |
-                        | --- | --- |
-                        | Task | [task_fastq_scan.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_fastq_scan.wdl)<br>[task_fastqc.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_fastqc.wdl") |
-                        | Software Source Code | [fastq-scan on Github](https://github.com/rpetit3/fastq-scan)<br>[fastqc on Github](https://github.com/s-andrews/FastQC) |
-                        | Software Documentation | [fastq-scan](https://github.com/rpetit3/fastq-scan/blob/master/README.md)<br>[fastqc](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/) |
+                        There are two tasks for read quantification, the `task_fastq_scan.wdl` task which wraps the [`fastq-scan`](https://github.com/rpetit3/fastq-scan) tool (default) and the `task_fastqc.wdl` task which wraps the [`fastqc`](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/) tool. Both quantify the forward and reverse reads in FASTQ files. In TheiaViral_Illumina_PE, they also provide the total number of read pairs. This task is run once with raw reads as input and once with clean reads as input. If QC has been performed correctly, you should expect **fewer** clean reads than raw reads. FastQC also provides a graphical visualization of the read quality.
 
-                ??? task "`ncbi_scrub_pe`"
+                        ??? dna "`read_qc`"
+                            This input parameter accepts either `"fastq_scan"` or `"fastqc"` as an input to determine which tool should be used for read quantification. This is set to `"fastq-scan"` by default.
 
-                    All reads of human origin **are removed**, including their mates, by using NCBI's [**human read removal tool (HRRT)**](https://github.com/ncbi/sra-human-scrubber). HRRT is based on the [SRA Taxonomy Analysis Tool](https://doi.org/10.1186/s13059-021-02490-0) and employs a k-mer database constructed of k-mers from Eukaryota derived from all human RefSeq records with any k-mers found in non-Eukaryota RefSeq records subtracted from the database.
+                        ??? techdetails "fastq-scan and FastQC Technical Details"
+                            |  | Links |
+                            | --- | --- |
+                            | Task | [task_fastq_scan.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_fastq_scan.wdl)<br>[task_fastqc.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_fastqc.wdl") |
+                            | Software Source Code | [fastq-scan on Github](https://github.com/rpetit3/fastq-scan)<br>[fastqc on Github](https://github.com/s-andrews/FastQC) |
+                            | Software Documentation | [fastq-scan](https://github.com/rpetit3/fastq-scan/blob/master/README.md)<br>[fastqc](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/) |
 
-                    ??? techdetails "NCBI-Scrub Technical Details"
-                        |  | Links |
-                        | --- | --- |
-                        | Task | [task_ncbi_scrub.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_ncbi_scrub.wdl) |
-                        | Software Source Code | [NCBI Scrub on GitHub](https://github.com/ncbi/sra-human-scrubber) |
-                        | Software Documentation | <https://github.com/ncbi/sra-human-scrubber/blob/master/README.md> |
+                </div>
 
-                ??? quote "**Read quality trimming**"
+                <div class="grid cards" markdown>
 
-                    Either `trimmomatic` or `fastp` can be used for read-quality trimming. Trimmomatic is used by default. Both tools trim low-quality regions of reads with a sliding window (with a window size of `trim_window_size`), cutting once the average quality within the window falls below `trim_quality_trim_score`. They will both discard the read if it is trimmed below `trim_minlen`.
+                -   ??? quote "Host removal"
 
-                    If fastp is selected for analysis, fastp also implements the additional read-trimming steps indicated below:
+                        In the `task_ncbi_scrub.wdl` task, all reads of human origin **are removed**, including their mates, by using NCBI's [**human read removal tool (HRRT)**](https://github.com/ncbi/sra-human-scrubber). HRRT is based on the [SRA Taxonomy Analysis Tool](https://doi.org/10.1186/s13059-021-02490-0) and employs a k-mer database constructed of k-mers from Eukaryota derived from all human RefSeq records with any k-mers found in non-Eukaryota RefSeq records subtracted from the database.
 
-                    | **Parameter** | **Explanation** |
-                    | --- | --- |
-                    | -g | enables polyG tail trimming |
-                    | -5 20 | enables read end-trimming |
-                    | -3 20 | enables read end-trimming |
-                    | --detect_adapter_for_pe | enables adapter-trimming **only for paired-end reads** |
+                        ??? techdetails "NCBI-Scrub Technical Details"
+                            |  | Links |
+                            | --- | --- |
+                            | Task | [task_ncbi_scrub.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_ncbi_scrub.wdl) |
+                            | Software Source Code | [NCBI Scrub on GitHub](https://github.com/ncbi/sra-human-scrubber) |
+                            | Software Documentation | <https://github.com/ncbi/sra-human-scrubber/blob/master/README.md> |
 
-                ??? quote "**Adapter removal**"
+                </div>
 
-                    The `BBDuk` task removes adapters from sequence reads. To do this:
+                <div class="grid cards" markdown>
 
-                    - [Repair](https://jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/repair-guide/) from the [BBTools](https://jgi.doe.gov/data-and-tools/software-tools/bbtools/) package reorders reads in paired fastq files to ensure the forward and reverse reads of a pair are in the same position in the two fastq files.
-                    - [BBDuk](https://jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/bbduk-guide/)  (*"Bestus Bioinformaticus" Decontamination Using Kmers*) is then used to trim the adapters and filter out all reads that have a 31-mer match to [PhiX](https://emea.illumina.com/products/by-type/sequencing-kits/cluster-gen-sequencing-reagents/phix-control-v3.html), which is commonly added to Illumina sequencing runs to monitor and/or improve overall run quality.
+                -   ??? quote "Read quality trimming"
 
-                    ??? question "What are adapters and why do they need to be removed?"
-                        Adapters are manufactured oligonucleotide sequences attached to DNA fragments during the library preparation process. In Illumina sequencing, these adapter sequences are required for attaching reads to flow cells. You can read more about Illumina adapters [here](https://emea.support.illumina.com/bulletins/2020/06/illumina-adapter-portfolio.html). For genome analysis, it's important to remove these sequences since they're not actually from your sample. If you don't remove them, the downstream analysis may be affected.
+                        Either the `task_trimmomatic.wdl` task or `task_fastp.wdl` task can be used for read-quality trimming. The `task_trimmomatic.wdl` task is the default option. Both tools trim low-quality regions of reads with a sliding window (with a window size of `trim_window_size`), cutting once the average quality within the window falls below `trim_quality_trim_score`. They will both discard the read if it is trimmed below `trim_minlen`.
 
-                ??? techdetails "read_QC_trim Technical Details"
+                        ??? dna "`read_processing`"
+                            This input parameter accepts either `"trimmomatic"` or `"fastp"` as an input to determine which tool should be used for read quality trimming. This is set to `"trimmomatic"` by default.
 
+                            If `"fastp"` is selected, the `task_fastp.wdl` task employs additional read-trimming parameters by default indicated below:
+
+                            ??? quote "Default parameters for `task_fastp.wdl`"
+                                | **Parameter** | **Explanation** |
+                                | --- | --- |
+                                | -g | enables polyG tail trimming |
+                                | -5 20 | enables read end-trimming |
+                                | -3 20 | enables read end-trimming |
+                                | --detect_adapter_for_pe | enables adapter-trimming **only for paired-end reads** |
+
+                            Additional arguments can be passed to `task_fastp.wdl` using the `fastp_args` parameter.
+
+                        ??? dna "`trim_window_size`"
+                            This input parameter accepts an integer value to set the sliding window size for trimming. The default value is `4`.
+
+                        ??? dna "`trim_quality_min_score`"
+                            This input parameter accepts an integer value to set the minimum quality score for trimming. The default value is `30`.
+
+                        ??? dna "`trim_min_length`"
+                            This input parameter accepts an integer value to set the minimum length of reads after trimming. The default value is `75`.
+
+                        ??? techdetails "Trimmomatic and fastp Technical Details"
+                            |  | Links |
+                            | --- | --- |
+                            | Task | [task_trimmomatic.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_trimmomatic.wdl)<br>[task_fastp.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_fastp.wdl) |
+                            | Software Source Code | [Trimmomatic](https://github.com/usadellab/Trimmomatic)<br>[fastp on Github](https://github.com/OpenGene/fastp) |
+                            | Software Documentation | [Trimmomatic](http://www.usadellab.org/cms/?page=trimmomatic)<br>[fastp](https://github.com/OpenGene/fastp)
+
+                </div>
+
+                <div class="grid cards" markdown>
+
+                -   ??? quote "Adapter removal"
+
+                        The `task_bbduk.wdl` task removes adapters from sequence reads. To do this:
+
+                        - [Repair](https://jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/repair-guide/) from the [BBTools](https://jgi.doe.gov/data-and-tools/software-tools/bbtools/) package reorders reads in paired fastq files to ensure the forward and reverse reads of a pair are in the same position in the two fastq files.
+                        - [BBDuk](https://jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/bbduk-guide/)  (*"Bestus Bioinformaticus" Decontamination Using Kmers*) is then used to trim the adapters and filter out all reads that have a 31-mer match to [PhiX](https://emea.illumina.com/products/by-type/sequencing-kits/cluster-gen-sequencing-reagents/phix-control-v3.html), which is commonly added to Illumina sequencing runs to monitor and/or improve overall run quality.
+
+                        ??? dna "`adapters`"
+                            This optional input parameter accepts a file path to a custom adapter file in FASTA format. If this parameter is not provided, the default adapter file will be used from the BBTools package.
+
+                        ??? dna "`phix`"
+                            This optional input parameter accepts a file path to a custom PhiX file in FASTA format. If this parameter is not provided, the default PhiX file will be used from the BBTools package.
+
+                        ??? question "What are adapters and why do they need to be removed?"
+                            Adapters are manufactured oligonucleotide sequences attached to DNA fragments during the library preparation process. In Illumina sequencing, these adapter sequences are required for attaching reads to flow cells. You can read more about Illumina adapters [here](https://emea.support.illumina.com/bulletins/2020/06/illumina-adapter-portfolio.html). For genome analysis, it's important to remove these sequences since they're not actually from your sample. If you don't remove them, the downstream analysis may be affected.
+
+                        ??? techdetails "BBDuk Technical Details"
+                            |  | Links |
+                            | --- | --- |
+                            | Task | [task_bbduk.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_bbduk.wdl) |
+                            | Software Source Code | [BBTools](https://jgi.doe.gov/data-and-tools/software-tools/bbtools/) |
+                            | Software Documentation | [BBDuk](https://jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/bbduk-guide/)
+
+                </div>
+
+                <div class="grid cards" markdown>
+
+                -   ??? quote "Read Classification"
+
+                        The `task_kraken2.wdl` task is a wrapper for the Kraken2 tool, which is used to classify reads based on their taxonomic origin. It uses exact k-mer matches to assign taxonomic labels to reads, allowing for the identification of potential contaminants in the data.
+
+                        The task runs on cleaned reads passed from the read_QC_trim subworkflow and outputs a Kraken2 report detailing taxonomic classifications. It also separates classified reads from unclassified ones.
+
+                        ???+ warning "Important"
+                            TheiaViral_Illumina_PE automatically uses a viral-specific Kraken2 database. This database was generated in-house from RefSeq's viral sequence collection and human genome GRCh38. It's available at `"gs://theiagen-large-public-files-rp/terra/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz"`.
+
+                        ??? techdetails "Kraken2 Technical Details"
+                            |  | Links |
+                            | --- | --- |
+                            | Task | [task_kraken2.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/contamination/task_kraken2.wdl) |
+                            | Software Source Code | [Kraken2 on GitHub](https://github.com/DerrickWood/kraken2/) |
+                            | Software Documentation | <https://github.com/DerrickWood/kraken2/wiki> |
+                            | Original Publication(s) | [Improved metagenomic analysis with Kraken 2](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1891-0) |
+
+                </div>
+
+                <div class="grid cards" markdown>
+
+                -   ??? quote "Read Extraction"
+
+                        The `task_krakentools.wdl` task extracts reads from the Kraken2 output file. It uses the KrakenTools package to extract reads classified at any user-specified taxon ID.
+
+                        ??? dna "`extract_unclassified`"
+                            This parameter determines whether unclassified reads should also be extracted and combined with the `taxon`-specific extracted reads. By default, this is set to `false`, meaning that only reads classified to the specified input `taxon` will be extracted. This is accomplished using the [`task_cat_lanes.wdl`](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/file_handling/task_cat_lanes.wdl) task to concatenate the classified and unclassified reads into a single output file.
+
+                        ???+ warning "Important"
+                            - This task will extract reads classified to the input `taxon` and **all of its descendant taxa**. The `rank` input parameter controls the extraction of reads classified at the specified `rank` and all suboridante taxonomic levels. See task `ncbi_identify` under the **Taxonomic Identification** section for more details on the `rank` input parameter.
+
+                        ??? techdetails "KrakenTools Technical Details"
+                            |  | Links |
+                            | --- | --- |
+                            | Task | [task_krakentools.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/task_krakentools.wdl) |
+                            | Software Source Code | [KrakenTools on GitHub](https://github.com/jenniferlu717/KrakenTools) |
+                            | Software Documentation | [KrakenTools](https://github.com/jenniferlu717/KrakenTools/blob/master/README.md) |
+                            | Original Publication(s) | [Metagenome analysis using the Kraken software suite](https://doi.org/10.1126/scitranslmed.aap9489) |
+
+                </div>
+
+        </div>
+
+        <div class="grid cards" markdown>
+
+        -   ??? task "`rasusa`"
+
+                The `rasusa` task performs subsampling on the input raw reads. By default, it subsamples reads to a target depth of 250X, using the estimated genome length either generated by the `ncbi_taxon_summary` task or provided directly by the user. Although enabled by default, this task is optional; users can disable it by setting the `skip_rasusa` variable to `true`. The target subsampling depth can also be adjusted by modifying the `coverage` variable.
+
+                ??? dna "`coverage`"
+                    This parameter specifies the target coverage for subsampling. The default value is `250`, but users can adjust it as needed.
+
+                ??? techdetails "Rasusa Technical Details"
                     |  | Links |
                     | --- | --- |
-                    | Sub-workflow | [wf_read_QC_trim_pe.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_read_QC_trim_pe.wdl) |
-                    | Tasks | [task_fastp.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_fastp.wdl)<br>[task_trimmomatic.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_trimmomatic.wdl)<br>[task_bbduk.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_bbduk.wdl)<br>[task_fastq_scan.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_fastq_scan.wdl)<br>[task_midas.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/contamination/task_midas.wdl)<br>[task_kraken2.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/contamination/task_kraken2.wdl)|
-                    | Software Source Code | [fastp](https://github.com/OpenGene/fastp); [Trimmomatic](https://github.com/usadellab/Trimmomatic); [fastq-scan](https://github.com/rpetit3/fastq-scan); [MIDAS](https://github.com/snayfach/MIDAS); [Kraken2](https://github.com/DerrickWood/kraken2)|
-                    | Software Documentation | [fastp](https://github.com/OpenGene/fastp); [Trimmomatic](http://www.usadellab.org/cms/?page=trimmomatic); [BBDuk](https://jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/bbduk-guide/); [fastq-scan](https://github.com/rpetit3/fastq-scan); [MIDAS](https://github.com/snayfach/MIDAS); [Kraken2](https://github.com/DerrickWood/kraken2/wiki) |
-                    | Original Publication(s) | [Trimmomatic: a flexible trimmer for Illumina sequence data](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4103590/)<br>[fastp: an ultra-fast all-in-one FASTQ preprocessor](https://academic.oup.com/bioinformatics/article/34/17/i884/5093234?login=false)<br>[An integrated metagenomics pipeline for strain profiling reveals novel patterns of bacterial transmission and biogeography](https://pubmed.ncbi.nlm.nih.gov/27803195/)<br>[Improved metagenomic analysis with Kraken 2](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1891-0) |
+                    | Task | [task_rasusa.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/task_rasusa.wdl) |
+                    | Software Source Code | [Rasusa on GitHub](https://github.com/mbhall88/rasusa) |
+                    | Software Documentation | [Rasusa on GitHub](https://github.com/mbhall88/rasusa) |
+                    | Original Publication(s) | [Rasusa: Randomly subsample sequencing reads to a specified coverage](https://doi.org/10.21105/joss.03941) |
 
+        </div>
+
+        <div class="grid cards" markdown>
+
+        -   ??? task "`clean_check_reads`"
+
+                The `clean_check_reads` task ensures the quantity of sequence data is sufficient to undertake genomic analysis. It uses [`fastq-scan`](https://github.com/rpetit3/fastq-scan) and bash commands for quantification of reads and base pairs, and [mash](https://mash.readthedocs.io/en/latest/index.html) sketching to estimate the genome size and its coverage. At each step, the results are assessed relative to pass/fail criteria and thresholds that may be defined by optional user inputs. Samples are run through all threshold checks, regardless of failures, and the workflow will terminate after the `screen` task if any thresholds are not met:
+
+                Read screening is performed only on the cleaned reads. The task may be skipped by setting the `skip_screen` variable to `true`. Default values vary between the ONT and PE workflow. The rationale for these default values can be found below:
+
+                ??? quote "Default Thresholds and Rationales"
+                    | Variable  | Description | Default Value | Rationale |
+                    | --- | --- | --- | --- |
+                    | `min_reads` | A sample will fail the read screening task if its total number of reads is less than or equal to `min_reads` | 50 | Minimum number of base pairs for 10x coverage of the Hepatitis delta (of the *Deltavirus* genus) virus divided by 300 (longest Illumina read length) |
+                    | `min_basepairs` | A sample will fail the read screening if there are fewer than `min_basepairs` basepairs | 15000 | Greater than 10x coverage of the Hepatitis delta (of the *Deltavirus* genus) virus |
+                    | `min_genome_size` | A sample will fail the read screening if the estimated genome size is smaller than `min_genome_size` | 1500 |  Based on the Hepatitis delta (of the *Deltavirus* genus) genome- the smallest viral genome as of 2024-04-11 (1,700 bp) |
+                    | `max_genome_size` | A sample will fail the read screening if the estimated genome size is smaller than `max_genome_size` |2673870 | Based on the *Pandoravirus salinus* genome, the biggest viral genome, (2,673,870 bp) with 2 Mbp added |
+                    | `min_coverage` | A sample will fail the read screening if the estimated genome coverage is less than the `min_coverage` | 10 | A bare-minimum coverage for genome characterization. Higher coverage would be required for high-quality phylogenetics. |
+                    | `min_proportion` | A sample will fail the read screening if fewer than `min_proportion` basepairs are in either the reads1 or read2 files | 40 | Greater than 50% reads are in the read1 file; others are in the read2 file. (PE workflow only) |
+
+                ??? techdetails "`clean_check_reads` Technical Details"
+                    |  | Links |
+                    | --- | --- |
+                    | Task | [task_screen.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/comparisons/task_screen.wdl) |
+
+        </div>
 
     ??? toggle "De novo Assembly and Reference Selection"
 
+        <div class="grid cards" markdown>
+
+        -   ??? task "`spades`"
+
+                The `spades` task is a wrapper for the SPAdes assembler, which is used for de novo assembly of the cleaned reads. It is run with the `--metaviral` option, which is recommended for viral genomes. MetaviralSPAdes pipeline consists of three independent steps, `ViralAssembly` for finding putative viral subgraphs in a metagenomic assembly graph and generating contigs in these graphs, `ViralVerify` for checking whether the resulting contigs have viral origin and `ViralComplete` for checking whether these contigs represent complete viral genomes. For more details, please see the original publication.
+
+                ??? dna "`skip_metaviralspades`"
+                    This parameter controls whether or not the `spades` task is skipped by the workflow. By default, `skip_metaviralspades` is set to `false` because MetaviralSPAdes is used as the primary assembler. MetaviralSPAdes is generally recommended for most users, but it might not perform optimally on all datasets. If users encounter issues with MetaviralSPAdes, they can set the `skip_metaviralspades` variable to `true` to bypass the `speades` task and instead de novo assemble using Megahit (see task `megahit` for details). Additionally, if the `spades` task ever fails during execution, the workflow will automatically fall back to using Megahit for de novo assembly.
+
+                ???+ warning "Important"
+                    In this workflow, de novo assembly is used solely to facilitate the selection of a closely related reference genome. If the user provides an input `reference_fasta`, all subsequent assembly and reference selections tasks will be skipped, including:
+
+                    - `spades`
+                    - `megahit`
+                    - `checkv_denovo`
+                    - `quast_denovo`
+                    - `skani`
+                    - `ncbi_datasets`
+
+                ??? techdetails "MetaviralSPAdes Technical Details"
+                    |  | Links |
+                    | --- | --- |
+                    | Task | [task_spades.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_spades.wdl) |
+                    | Software Source Code | [SPAdes on GitHub](https://github.com/ablab/spades) |
+                    | Software Documentation | [SPAdes Manual](https://ablab.github.io/spades/index.html) |
+                    | Original Publication(s) | [MetaviralSPAdes: assembly of viruses from metagenomic data](https://doi.org/10.1093/bioinformatics/btaa490) |
+
+          </div>
+
+          <div class="grid cards" markdown>
+
+          -   ??? task "`megahit`"
+
+                The `megahit` task is a wrapper for the MEGAHIT assembler, which is used for de novo assembly of the cleaned reads. MEGAHIT is a fast and memory-efficient de novo assembler that can handle large datasets. This task is optional and is turned off by default. It can be enabled by setting the `skip_metaviralspades` parameter to `true`. The `megahit` task is used as a fallback option if the `spades` task fails during execution (see task `spades` for more details).
+
+                ???+ warning "Important"
+                    In this workflow, de novo assembly is used solely to facilitate the selection of a closely related reference genome. If the user provides an input `reference_fasta`, all subsequent assembly and reference selections tasks will be skipped, including:
+
+                    - `megahit`
+                    - `checkv_denovo`
+                    - `quast_denovo`
+                    - `skani`
+                    - `ncbi_datasets`
+
+                ??? techdetails "MEGAHIT Technical Details"
+                    |  | Links |
+                    | --- | --- |
+                    | Task | [task_megahit.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_megahit.wdl) |
+                    | Software Source Code | [MEGAHIT on GitHub](https://github.com/voutcn/megahit) |
+                    | Software Documentation | [MEGAHIT](https://github.com/voutcn/megahit/blob/master/README.md) |
+                    | Original Publication(s) | [MEGAHIT: an ultra-fast single-node solution for large and complex metagenomics assembly via succinct de Bruijn graph](https://doi.org/10.1093/bioinformatics/btv033) |
+
+          </div>
+
+          <div class="grid cards" markdown>
+
+        -   ??? task "`skani`"
+
+                The `skani` task is used to identify and select the most closely related reference genome to the input assembly generated from the `spades` or `megahit` tasks. This reference genome is selected from a comprehensive database of over 270,000 viral genomes. Skani uses an approximate mapping method without base-level alignment to get ANI. It is magnitudes faster than BLAST-based methods and almost as accurate.
+
+                ??? techdetails "Skani Technical Details"
+                    |  | Links |
+                    | --- | --- |
+                    | Task | [task_skani.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/task_skani.wdl) |
+                    | Software Source Code | [Skani on GitHub](https://github.com/bluenote-1577/skani) |
+                    | Software Documentation | [Skani Documentation](https://github.com/bluenote-1577/skani/blob/main/README.md) |
+                    | Original Publication(s) | [Skani Paper](https://doi.org/10.1038/s41592-023-02018-3) |
+
+        </div>
+
+        <div class="grid cards" markdown>
+
+        -   ??? task "`ncbi_datasets`"
+
+                The [`NCBI Datasets`](https://www.ncbi.nlm.nih.gov/datasets/) task downloads specified assemblies from NCBI using either the [virus](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/data-packages/virus-genome/) or [genome](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/data-packages/genome/) (for all other genome types) package as appropriate. The task uses the accession ID output from the `skani` task to download the the most closely related reference genome to the input assembly. The downloaded reference is then used for downstream analysis, including variant calling and consensus generation.
+
+                ??? techdetails "NCBI Datasets Technical Details"
+                    |  | Links |
+                    | --- | --- |
+                    | Task | [task_ncbi_datasets.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/data_import/task_ncbi_datasets.wdl) |
+                    | Software Source Code | [NCBI Datasets on GitHub](https://github.com/ncbi/datasets) |
+                    | Software Documentation | [NCBI Datasets Documentation on NCBI](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/) |
+                    | Original Publication(s) | [Exploring and retrieving sequence and metadata for species across the tree of life with NCBI Datasets](https://doi.org/10.1038/s41597-024-03571-y) |
+
+        </div>
 
     ??? toggle "Reference Mapping"
 
+        <div class="grid cards" markdown>
+
+        -   ??? task "`bwa`"
+
+                The `bwa` task is a wrapper for the BWA alignment tool. It utilizes the BWA-MEM algorithm to map cleaned reads to the reference genome, either selected by the `skani` task or provided by the user input `reference_fasta`. This creates a BAM file which is then sorted using the command `samtools sort`.
+
+                ??? techdetails "BWA Technical Details"
+                    |  | Links |
+                    | --- | --- |
+                    | Task | [task_bwa.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/alignment/task_bwa.wdl) |
+                    | Software Source Code | https://github.com/lh3/bwa |
+                    | Software Documentation | https://bio-bwa.sourceforge.net/ |
+                    | Original Publication(s) | [Fast and accurate short read alignment with Burrows-Wheeler transform](https://doi.org/10.1093/bioinformatics/btp324) |
+
+        </div>
+
+        <div class="grid cards" markdown>
+
+        -   ??? task "`read_mapping_stats`"
+
+                The `read_mapping_stats` task generates mapping statistics from the BAM file generated by the `bwa` task. It uses samtools to generate a summary of the mapping statistics, which includes coverage, depth, average base quality, average mapping quality, and other relevant metrics.
+
+                ??? techdetails "`read_mapping_stats` Technical Details"
+                    |  | Links |
+                    | --- | --- |
+                    | Task | [task_read_mapping_stats.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_assembly_metrics.wdl) |
+                    | Software Source Code | [samtools on GitHub](https://github.com/samtools/samtools) |
+                    | Software Documentation | [samtools](https://www.htslib.org/doc/samtools.html) |
+                    | Original Publication(s) | [The Sequence Alignment/Map format and SAMtools](https://doi.org/10.1093/bioinformatics/btp352)<br>[Twelve Years of SAMtools and BCFtools](https://doi.org/10.1093/gigascience/giab008) |
+
+        </div>
 
     ??? toggle "Variant Calling and Consensus Generation"
 
+        <div class="grid cards" markdown>
+
+        -   ??? task "`ivar_variants`"
+
+                The `ivar_variants` task wraps the [iVar](https://andersen-lab.github.io/ivar/html/index.html) tool to call variants from the sorted BAM file produced by the `bwa` task. It uses the `ivar variants` command to identify and report variants based on the aligned reads. The `ivar_variants` task will filter all variant calls based on user-defined parameters, including `min_map_quality`, `min_depth`, and `min_allele_freq`. This task will return a VCF file containing the variant calls, along with the total number of variants, and the proportion of intermediate variant calls.
+
+                ??? dna "`min_depth`"
+                    This parameter accepts an integer value to set the minimum read depth for variant calling and subsequent consensus sequence generation. The default value is `10`.
+
+                ??? dna "`min_map_quality`"
+                    This parameter accepts an integer value to set the minimum mapping quality for variant calling and subsequent consensus sequence generation. The default value is `20`.
+
+                ??? dna "`min_allele_freq`"
+                    This parameter accepts a float value to set the minimum allele frequency for variant calling and subsequent consensus sequence generation. The default value is `0.6`.
+
+                ??? techdetails "iVar Technical Details"
+                    |  | Links |
+                    | --- | --- |
+                    | Task | [task_ivar_variant_call.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/variant_detection/task_ivar_variant_call.wdl) |
+                    | Software Source Code | [Ivar on GitHub](https://andersen-lab.github.io/ivar/html/) |
+                    | Software Documentation | [Ivar Documentation](https://andersen-lab.github.io/ivar/html/manualpage.html) |
+                    | Original Publication(s) | [An amplicon-based sequencing framework for accurately measuring intrahost virus diversity using PrimalSeq and iVar](http://dx.doi.org/10.1186/s13059-018-1618-7) |
+
+        </div>
+
+        <div class="grid cards" markdown>
+
+        -   ??? task "`consensus`"
+
+                The `consensus` task wraps the [iVar](https://andersen-lab.github.io/ivar/html/index.html) tool to generate a reference-based consensus assembly from the sorted BAM file produced by the `bwa` task. It uses the `ivar consensus` command to call variants and generate a consensus sequence based on those mapped reads. The `consensus` task will filter all variant calls based on user-defined parameters, including `min_map_quality`, `min_depth`, and `min_allele_freq`. This task will return a consensus sequence in FASTA format and the samtools mpileup output.
+
+                ??? dna "`min_depth`"
+                    This parameter accepts an integer value to set the minimum read depth for variant calling and subsequent consensus sequence generation. The default value is `10`.
+
+                ??? dna "`min_map_quality`"
+                    This parameter accepts an integer value to set the minimum mapping quality for variant calling and subsequent consensus sequence generation. The default value is `20`.
+
+                ??? dna "`min_allele_freq`"
+                    This parameter accepts a float value to set the minimum allele frequency for variant calling and subsequent consensus sequence generation. The default value is `0.6`.
+
+                ??? techdetails "iVar Technical Details"
+                    |  | Links |
+                    | --- | --- |
+                    | Task | [task_ivar_consensus.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_ivar_consensus.wdl) |
+                    | Software Source Code | [Ivar on GitHub](https://andersen-lab.github.io/ivar/html/) |
+                    | Software Documentation | [Ivar Documentation](https://andersen-lab.github.io/ivar/html/manualpage.html) |
+                    | Original Publication(s) | [An amplicon-based sequencing framework for accurately measuring intrahost virus diversity using PrimalSeq and iVar](http://dx.doi.org/10.1186/s13059-018-1618-7) |
+
+        </div>
 
     ??? toggle "Assembly Evaluation and Consensus Quality Control"
 
-    <!-- ============================================================================================================================= -->
+        <div class="grid cards" markdown>
+
+        -   ??? task "`quast_denovo`"
+
+                QUAST stands for QUality ASsessment Tool. It evaluates genome/metagenome assemblies by computing various metrics without a reference being necessary. It includes useful metrics such as number of contigs, length of the largest contig and N50. The `quast_denovo` task evaluates the assembly generated by the `spades` or `megahit` tasks.
+
+                ??? techdetails "QUAST Technical Details"
+                    |  | Links |
+                    | --- | --- |
+                    | Task | [task_quast.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_quast.wdl) |
+                    | Software Source Code | [QUAST on GitHub](https://github.com/ablab/quast) |
+                    | Software Documentation | <https://quast.sourceforge.net/> |
+                    | Original Publication(s) | [QUAST: quality assessment tool for genome assemblies](https://academic.oup.com/bioinformatics/article/29/8/1072/228832) |
+
+        </div>
+
+        <div class="grid cards" markdown>
+
+        -   ??? task "`checkv_denovo` & `checkv_consensus`"
+
+                CheckV is a fully automated command-line pipeline for assessing the quality of single-contig viral genomes, including identification of host contamination for integrated proviruses, estimating completeness for genome fragments, and identification of closed genomes. The `checkv_denovo` task evaluates the assembly generated by the `spades` or `megahit` tasks, while the `checkv_consensus` task evaluates the consensus genome generated by the `consensus` task.
+
+                ??? techdetails "CheckV Technical Details"
+                    |  | Links |
+                    | --- | --- |
+                    | Task | [task_checkv.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/advanced_metrics/task_checkv.wdl) |
+                    | Software Source Code | [CheckV on Bitbucket](https://bitbucket.org/berkeleylab/checkv/src/master/) |
+                    | Software Documentation | [CheckV Documentation](https://bitbucket.org/berkeleylab/checkv/src/master/README.md) |
+                    | Original Publication(s) | [CheckV assesses the quality and completeness of metagenome-assembled viral genomes](https://doi.org/10.1038/s41587-020-00774-7) |
+
+        </div>
+
+        <div class="grid cards" markdown>
+
+        -   ??? task "`consensus_qc`"
+
+                The consensus_qc task generates a summary of genomic statistics from the consensus genome produced by the `bcftools_consensus` task. This includes the total number of bases, "N" bases, degenerate bases, and an estimate of the percent coverage to the reference genome.
+
+                ??? techdetails "`consensus_qc` Technical Details"
+                    |  | Links |
+                    | --- | --- |
+                    | Task | [task_consensus_qc.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_consensus_qc.wdl) |
+                    | Software Source Docker Image | [Theiagen Docker Builds: utility:1.1](https://github.com/theiagen/theiagen_docker_builds/blob/main/utility/1.1/Dockerfile) |
+
+        </div>
 
 === "ONT"
 
@@ -537,15 +877,15 @@ The **TheiaViral** workflows are designed for the assembly, quality assessment, 
                     - If your input `taxon` is `"Lyssavirus rabies"` or taxon ID `11292` (species level), the task will retrieve genomes only for that specific species, and return the genome length for that species.
                     - If your input `taxon` is `"Rhabdoviridae"` or taxon ID `11270` (family level), the task will retrieve genomes for all species within that family and calculate an average genome length across all those species.
 
-                This flexibility allows users to run the workflow without requiring precise knowledge of their organism's genome length. The average genome length calculation is only used to estimate coverage levels for downsampling and minor read QC steps. The average genome length is used only to estimate coverage levels for downsampling and to guide minor read quality control steps. It does not significantly affect the quality of the consensus genome or the choice of reference sequences.
+                    This flexibility allows users to run the workflow without requiring precise knowledge of their organism's genome length. The average genome length calculation is only used to estimate coverage levels for downsampling and minor read QC steps. The average genome length is used only to estimate coverage levels for downsampling and to guide minor read quality control steps. It does not significantly affect the quality of the consensus genome or the choice of reference sequences.
 
                 ??? techdetails "NCBI Datasets Technical Details"
-                  |  | Links |
-                  | --- | --- |
-                  | Task | [task_ncbi_datasets.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/data_import/task_ncbi_datasets.wdl) |
-                  | Software Source Code | [NCBI Datasets on GitHub](https://github.com/ncbi/datasets) |
-                  | Software Documentation | [NCBI Datasets Documentation on NCBI](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/) |
-                  | Original Publication(s) | [Exploring and retrieving sequence and metadata for species across the tree of life with NCBI Datasets](https://doi.org/10.1038/s41597-024-03571-y) |
+                    |  | Links |
+                    | --- | --- |
+                    | Task | [task_ncbi_datasets.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/data_import/task_ncbi_datasets.wdl) |
+                    | Software Source Code | [NCBI Datasets on GitHub](https://github.com/ncbi/datasets) |
+                    | Software Documentation | [NCBI Datasets Documentation on NCBI](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/) |
+                    | Original Publication(s) | [Exploring and retrieving sequence and metadata for species across the tree of life with NCBI Datasets](https://doi.org/10.1038/s41597-024-03571-y) |
 
         </div>
 
@@ -602,7 +942,7 @@ The **TheiaViral** workflows are designed for the assembly, quality assessment, 
 
         -   ??? task "`ncbi_scrub_se`"
 
-                All reads of human origin **are removed**, including their mates, by using NCBI's [**human read removal tool (HRRT)**](https://github.com/ncbi/sra-human-scrubber). HRRT is based on the [SRA Taxonomy Analysis Tool](https://doi.org/10.1186/s13059-021-02490-0) and employs a k-mer database constructed of k-mers from Eukaryota derived from all human RefSeq records with any k-mers found in non-Eukaryota RefSeq records subtracted from the database.
+                In the `ncbi_scrub_se` task, all reads of human origin **are removed**, including their mates, by using NCBI's [**human read removal tool (HRRT)**](https://github.com/ncbi/sra-human-scrubber). HRRT is based on the [SRA Taxonomy Analysis Tool](https://doi.org/10.1186/s13059-021-02490-0) and employs a k-mer database constructed of k-mers from Eukaryota derived from all human RefSeq records with any k-mers found in non-Eukaryota RefSeq records subtracted from the database.
 
                 ??? techdetails "NCBI-Scrub Technical Details"
                     |  | Links |
@@ -619,6 +959,9 @@ The **TheiaViral** workflows are designed for the assembly, quality assessment, 
 
                 The `rasusa` task performs subsampling on the input raw reads. By default, it subsamples reads to a target depth of 250X, using the estimated genome length either generated by the `ncbi_taxon_summary` task or provided directly by the user. Although enabled by default, this task is optional; users can disable it by setting the `skip_rasusa` variable to `true`. The target subsampling depth can also be adjusted by modifying the `coverage` variable.
 
+                ??? dna_blue "`coverage`"
+                    This parameter specifies the target coverage for subsampling. The default value is `250`, but users can adjust it as needed.
+
                 ??? techdetails "Rasusa Technical Details"
                     |  | Links |
                     | --- | --- |
@@ -633,29 +976,23 @@ The **TheiaViral** workflows are designed for the assembly, quality assessment, 
 
         -   ??? task "`clean_check_reads`"
 
-                The [`screen`](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/comparisons/task_screen.wdl) task ensures the quantity of sequence data is sufficient to undertake genomic analysis. It uses [`fastq-scan`](https://github.com/rpetit3/fastq-scan) and bash commands for quantification of reads and base pairs, and [mash](https://mash.readthedocs.io/en/latest/index.html) sketching to estimate the genome size and its coverage. At each step, the results are assessed relative to pass/fail criteria and thresholds that may be defined by optional user inputs. Samples are run through all threshold checks, regardless of failures, and the workflow will terminate after the `screen` task if any thresholds are not met:
-
-                1. Total number of reads: A sample will fail the read screening task if its total number of reads is less than or equal to `min_reads`.
-                2. The proportion of basepairs reads in the forward and reverse read files: A sample will fail the read screening if fewer than `min_proportion` basepairs are in either the reads1 or read2 files.
-                3. Number of basepairs: A sample will fail the read screening if there are fewer than `min_basepairs` basepairs
-                4. Estimated genome size:  A sample will fail the read screening if the estimated genome size is smaller than `min_genome_size` or bigger than `max_genome_size`.
-                5. Estimated genome coverage: A sample will fail the read screening if the estimated genome coverage is less than the `min_coverage`.
+                The `clean_check_reads` task ensures the quantity of sequence data is sufficient to undertake genomic analysis. It uses [`fastq-scan`](https://github.com/rpetit3/fastq-scan) and bash commands for quantification of reads and base pairs, and [mash](https://mash.readthedocs.io/en/latest/index.html) sketching to estimate the genome size and its coverage. At each step, the results are assessed relative to pass/fail criteria and thresholds that may be defined by optional user inputs. Samples are run through all threshold checks, regardless of failures, and the workflow will terminate after the `screen` task if any thresholds are not met:
 
                 Read screening is performed only on the cleaned reads. The task may be skipped by setting the `skip_screen` variable to `true`. Default values vary between the ONT and PE workflow. The rationale for these default values can be found below:
 
-                | Variable  | Default Value | Rationale |
-                | --- | --- | --- |
-                | `min_reads` | 50 | Minimum number of base pairs for 10x coverage of the Hepatitis delta (of the *Deltavirus* genus) virus divided by 300 (longest Illumina read length) |
-                | `min_basepairs` | 15000 | Greater than 10x coverage of the Hepatitis delta (of the *Deltavirus* genus) virus |
-                | `min_genome_size` | 1500 | Based on the Hepatitis delta (of the *Deltavirus* genus) genome- the smallest viral genome as of 2024-04-11 (1,700 bp) |
-                | `max_genome_size` | 2673870 | Based on the *Pandoravirus salinus* genome, the biggest viral genome, (2,673,870 bp) with 2 Mbp added |
-                | `min_coverage` | 10 | A bare-minimum coverage for genome characterization. Higher coverage would be required for high-quality phylogenetics. |
-                | `min_proportion` | 40 | Greater than 50% reads are in the read1 file; others are in the read2 file. (PE workflow only) |
+                ??? quote "Default Thresholds and Rationales"
+                    | Variable  | Description | Default Value | Rationale |
+                    | --- | --- | --- | --- |
+                    | `min_reads` | A sample will fail the read screening task if its total number of reads is less than or equal to `min_reads` | 50 | Minimum number of base pairs for 10x coverage of the Hepatitis delta (of the *Deltavirus* genus) virus divided by 300 (longest Illumina read length) |
+                    | `min_basepairs` | A sample will fail the read screening if there are fewer than `min_basepairs` basepairs | 15000 | Greater than 10x coverage of the Hepatitis delta (of the *Deltavirus* genus) virus |
+                    | `min_genome_size` | A sample will fail the read screening if the estimated genome size is smaller than `min_genome_size` | 1500 |  Based on the Hepatitis delta (of the *Deltavirus* genus) genome- the smallest viral genome as of 2024-04-11 (1,700 bp) |
+                    | `max_genome_size` | A sample will fail the read screening if the estimated genome size is smaller than `max_genome_size` |2673870 | Based on the *Pandoravirus salinus* genome, the biggest viral genome, (2,673,870 bp) with 2 Mbp added |
+                    | `min_coverage` | A sample will fail the read screening if the estimated genome coverage is less than the `min_coverage` | 10 | A bare-minimum coverage for genome characterization. Higher coverage would be required for high-quality phylogenetics. |
 
                 ??? techdetails "`clean_check_reads` Technical Details"
                     |  | Links |
                     | --- | --- |
-                    | Task | [task_screen.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/comparisons/task_screen.wdl)  |
+                    | Task | [task_screen.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/comparisons/task_screen.wdl) |
 
         </div>
 
@@ -689,19 +1026,20 @@ The **TheiaViral** workflows are designed for the assembly, quality assessment, 
 
         -   ??? task "`raven`"
 
-                The `raven` task is used to create a de novo assembly from cleaned reads . Raven is an overlap-layout-consensus based assembler that accelerates the overlap step, constructs an assembly graph from reads pre-processed with pile-o-grams, applies a novel and robust graph simplification method based on graph drawings, and polishes unambiguous graph paths using Racon. Based on comprehensive benchmarking against Flye and results reported by [Cook et al. (2024)](https://pmc.ncbi.nlm.nih.gov/articles/PMC11092197/), Raven is faster, produces more contiguous assemblies, and yields more complete genomes according to CheckV metrics (see task `checkv` for technical details).
+                The `raven` task is used to create a de novo assembly from cleaned reads. Raven is an overlap-layout-consensus based assembler that accelerates the overlap step, constructs an assembly graph from reads pre-processed with pile-o-grams, applies a novel and robust graph simplification method based on graph drawings, and polishes unambiguous graph paths using Racon. Based on comprehensive benchmarking against Flye and results reported by [Cook et al. (2024)](https://pmc.ncbi.nlm.nih.gov/articles/PMC11092197/), Raven is faster, produces more contiguous assemblies, and yields more complete genomes according to CheckV metrics (see task `checkv` for technical details).
+
+                ??? dna_blue "`skip_raven`"
+                    This parameter controls whether or not the `raven` task is skipped by the workflow. By default, `skip_raven` is set to `false` because Raven is used as the primary assembler. Raven is generally recommended for most users, but it might not perform optimally on all datasets. If users encounter issues with Raven, they can set the `skip_raven` variable to `true` to bypass the `raven` task and instead de novo assemble using Flye (see task `flye` for details). Additionally, if the raven task ever fails during execution, the workflow will automatically fall back to using Flye for de novo assembly.
 
                 ???+ warning "Important"
                     In this workflow, de novo assembly is used solely to facilitate the selection of a closely related reference genome. If the user provides an input `reference_fasta`, all subsequent assembly and reference selections tasks will be skipped, including:
+
                     - `raven`
                     - `flye`
                     - `checkv_denovo`
                     - `quast_denovo`
                     - `skani`
                     - `ncbi_datasets`
-
-                ??? dna_blue "`skip_raven`"
-                    This parameter controls whether or not the `raven` task is skipped by the workflow. By default, `skip_raven` is set to `false` because Raven is used as the primary assembler. Raven is generally recommended for most users, but it might not perform optimally on all datasets. If users encounter issues with Raven, they can set the `skip_raven` variable to `true` to bypass the `raven` task and instead de novo assemble using Flye (see task `flye` for details). Additionally, if the raven task ever fails during execution, the workflow will automatically fall back to using Flye for de novo assembly.
 
                 ??? techdetails "Raven Technical Details"
                     |  | Links |
@@ -718,6 +1056,15 @@ The **TheiaViral** workflows are designed for the assembly, quality assessment, 
         -   ??? task "`flye`"
 
                 The `flye` task is used to create a de novo assembly from cleaned reads. This task is optional and is turned off by default. It can be enabled by setting the `skip_raven` parameter to `true`. The `flye` task is used as a fallback option if the `raven` task fails during execution (see task `raven` for more details).
+
+                ???+ warning "Important"
+                    In this workflow, de novo assembly is used solely to facilitate the selection of a closely related reference genome. If the user provides an input `reference_fasta`, all subsequent assembly and reference selections tasks will be skipped, including:
+
+                    - `flye`
+                    - `checkv_denovo`
+                    - `quast_denovo`
+                    - `skani`
+                    - `ncbi_datasets`
 
                 ??? techdetails "Flye Technical Details"
                     |  | Links |
@@ -749,7 +1096,7 @@ The **TheiaViral** workflows are designed for the assembly, quality assessment, 
 
         -   ??? task "`ncbi_datasets`"
 
-                The [`NCBI Datasets`](https://www.ncbi.nlm.nih.gov/datasets/) task downloads specified assemblies from NCBI using either the [virus](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/data-packages/virus-genome/) or [genome](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/data-packages/genome/) (for all other genome types) package as appropriate.
+                The [`NCBI Datasets`](https://www.ncbi.nlm.nih.gov/datasets/) task downloads specified assemblies from NCBI using either the [virus](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/data-packages/virus-genome/) or [genome](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/data-packages/genome/) (for all other genome types) package as appropriate. The task uses the accession ID output from the `skani` task to download the the most closely related reference genome to the input assembly. The downloaded reference is then used for downstream analysis, including variant calling and consensus generation.
 
                 ??? techdetails "NCBI Datasets Technical Details"
                     |  | Links |
@@ -784,6 +1131,9 @@ The **TheiaViral** workflows are designed for the assembly, quality assessment, 
         -   ??? task "`parse_mapping`"
 
                 This task converts the output SAM file from the `minimap2` task and converts it to a BAM file. It then sorts the BAM file by coordinate, and creates a BAM index file. This processed BAM is required for the `clair3` variant calling task.
+
+                ??? dna_blue "`min_map_quality`"
+                    This parameter accepts an integer value to set the minimum mapping quality for variant calling and subsequent consensus sequence generation. The default value is `20`.
 
                 ??? techdetails "`parse_mapping` Technical Details"
                     | | Links |
@@ -840,19 +1190,33 @@ The **TheiaViral** workflows are designed for the assembly, quality assessment, 
                 - Small insertions and deletions (indels)
                 - Structural variants
 
-                ???+ warning "Important"
+                ??? dna_blue "`clair3_model`"
+                    This parameter specifies the clair3 model to use for variant calling. The default is set to `"r941_prom_hac_g360+g422"`, but users may select from other available models that `clair3` was trained on, which may yield better results depending on the basecaller and data type. The following models are available:
 
+                    - `"ont"`
+                    - `"ont_guppy2"`
+                    - `"ont_guppy5"`
+                    - `"r941_prom_sup_g5014"`
+                    - `"r941_prom_hac_g360+g422"`
+                    - `"r941_prom_hac_g238"
+                    - `"r1041_e82_400bps_sup_v500"`
+                    - `"r1041_e82_400bps_hac_v500"`
+                    - `"r1041_e82_400bps_sup_v410"`
+                    - `"r1041_e82_400bps_hac_v410"`
+
+                ???+ warning "Important"
                     In this workflow, `clair3` is run with nearly all default parameters. Note that the VCF file produced by the `clair3` task is **unfiltered** and does not represent the final set of variants that will be included in the final consensus genome. A filtered vcf file is generated by the `bcftools_consensus` task. The filtering parameters are as follows:
+
                     - The `min_map_quality` parameter is applied before calling variants.
-                    - The `min_depth` and `min_allele_freq` parameters are applied after variant calling during consensus genome cnstruction.
+                    - The `min_depth` and `min_allele_freq` parameters are applied after variant calling during consensus genome construction.
 
                 ??? techdetails "Clair3 Technical Details"
-                  |  | Links |
-                  | --- | --- |
-                  | Task | [task_clair3.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/variant_calling/task_clair3.wdl) |
-                  | Software Source Code | [Clair3 on GitHub](https://github.com/HKU-BAL/Clair3) |
-                  | Software Documentation | [Clair3 Documentation](https://github.com/HKU-BAL/Clair3?tab=readme-ov-file#usage) |
-                  | Original Publication(s) | [Symphonizing pileup and full-alignment for deep learning-based long-read variant calling](https://doi.org/10.1101/2021.12.29.474431) |
+                    |  | Links |
+                    | --- | --- |
+                    | Task | [task_clair3.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/variant_calling/task_clair3.wdl) |
+                    | Software Source Code | [Clair3 on GitHub](https://github.com/HKU-BAL/Clair3) |
+                    | Software Documentation | [Clair3 Documentation](https://github.com/HKU-BAL/Clair3?tab=readme-ov-file#usage) |
+                    | Original Publication(s) | [Symphonizing pileup and full-alignment for deep learning-based long-read variant calling](https://doi.org/10.1101/2021.12.29.474431) |
 
         </div>
 
@@ -861,6 +1225,9 @@ The **TheiaViral** workflows are designed for the assembly, quality assessment, 
         -   ??? task "`mask_low_coverage`"
 
                 The `mask_low_coverage` task is used to mask low coverage regions in the `reference_fasta` file to improve the accuracy of the final consensus genome. Coverage thresholds are defined by the `min_depth` parameter, which specifies the minimum read depth required for a base to be retained. Bases falling below this threshold are replaced with "N"s to clearly mark low confidence regions. The masked reference is then combined with variants from the `clair3` task to produce the final consensus genome.
+
+                ??? dna "`min_depth`"
+                    This parameter accepts an integer value to set the minimum read depth for variant calling and subsequent consensus sequence generation. The default value is `10`.
 
                 ??? techdetails "`mask_low_coverage` Technical Details"
                     |  | Links |
@@ -877,6 +1244,12 @@ The **TheiaViral** workflows are designed for the assembly, quality assessment, 
         -   ??? task "`bcftools_consensus`"
 
                 The `bcftools_consensus` task generates a consensus genome by applying variants from the `clair3` task to a masked reference genome. It uses bcftools to filter variants based on the `min_depth` and `min_allele_freq` input parameter, left align and normalize indels, index the VCF file, and generate a consensus genome in FASTA format. Reference bases are substituted with filtered variants where applicable, preserved in regions without variant calls, and replaced with "N"s in areas masked by the `mask_low_coverage` task.
+
+                ??? dna "`min_depth`"
+                    This parameter accepts an integer value to set the minimum read depth for variant calling and subsequent consensus sequence generation. The default value is `10`.
+
+                ??? dna "`min_allele_freq`"
+                    This parameter accepts a float value to set the minimum allele frequency for variant calling and subsequent consensus sequence generation. The default value is `0.6`.
 
                 ??? techdetails "`bcftools_consensus` Technical Details"
                     |  | Links |
@@ -897,7 +1270,6 @@ The **TheiaViral** workflows are designed for the assembly, quality assessment, 
                 QUAST stands for QUality ASsessment Tool. It evaluates genome/metagenome assemblies by computing various metrics without a reference being necessary. It includes useful metrics such as number of contigs, length of the largest contig and N50. The `quast_denovo` task evaluates the assembly generated by the `raven` or `flye` tasks.
 
                 ??? techdetails "QUAST Technical Details"
-
                     |  | Links |
                     | --- | --- |
                     | Task | [task_quast.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_quast.wdl) |
@@ -909,7 +1281,7 @@ The **TheiaViral** workflows are designed for the assembly, quality assessment, 
 
         <div class="grid cards" markdown>
 
-        -   ??? task "`checkv_denovo` & checkv_consensus`"
+        -   ??? task "`checkv_denovo` & `checkv_consensus`"
 
                 CheckV is a fully automated command-line pipeline for assessing the quality of single-contig viral genomes, including identification of host contamination for integrated proviruses, estimating completeness for genome fragments, and identification of closed genomes. The `checkv_denovo` task evaluates the assembly generated by the `raven` or `flye` tasks, while the `checkv_consensus` task evaluates the consensus genome generated by the `bcftools_consensus` task.
 
