@@ -258,7 +258,8 @@ workflow theiaviral_illumina_pe {
     call consensus_qc_task.consensus_qc as consensus_qc {
       input:
         assembly_fasta = consensus.consensus_seq,
-        reference_genome = select_first([reference_fasta, ncbi_datasets.ncbi_datasets_assembly_fasta])
+        reference_genome = select_first([reference_fasta, ncbi_datasets.ncbi_datasets_assembly_fasta]),
+        genome_length = select_first([genome_length, ncbi_taxon_summary.avg_genome_length])
     }
     # quality control metrics for consensus (ie. completeness, viral gene count, contamination)
     call checkv_task.checkv as checkv_consensus {
