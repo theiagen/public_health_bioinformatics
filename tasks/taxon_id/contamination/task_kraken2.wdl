@@ -190,7 +190,7 @@ task kraken2_parse_classified {
     Int cpu = 4
     Int disk_size = 100
     String docker = "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-08-28-v4"
-    Int memory = 8
+    Int memory = 32
   }
   command <<<
 
