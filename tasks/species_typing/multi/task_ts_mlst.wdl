@@ -136,7 +136,7 @@ task ts_mlst {
     echo "$allelic_profile" | tee ALLELIC_PROFILE.txt
   >>>
   output {
-    File? ts_mlst_results = "~{samplename}_ts_mlst.tsv"
+    File ts_mlst_results = "~{samplename}_ts_mlst.tsv"
     String ts_mlst_predicted_st = read_string("PREDICTED_MLST")
     String ts_mlst_pubmlst_scheme = read_string("PUBMLST_SCHEME")
     String ts_mlst_allelic_profile = read_string("ALLELIC_PROFILE.txt")

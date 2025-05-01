@@ -555,6 +555,7 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 | ts_mlst | **minscore** | Float | Minimum <https://github.com/tseemann/mlst#scoring-system> to assign an MLST profile | 50 | Optional | FASTA, ONT, PE, SE |
 | ts_mlst | **nopath** | Boolean | true = use mlst --nopath. If set to false, filename paths are not stripped from FILE column in output TSV | TRUE | Optional | FASTA, ONT, PE, SE |
 | ts_mlst | **scheme** | String | Don’t autodetect the MLST scheme; force this scheme on all inputs (see <https://github.com/tseemann/mlst/blob/master/db/scheme_species_map.tab> for accepted strings) | None | Optional | FASTA, ONT, PE, SE |
+| ts_mlst | **taxonomy** | String | Taxonomy produced by GAMBIT or expected_taxon used to validate specifically if "ecoli" scheme needs to be run | None | Optional | FASTA, ONT, PE, SE |
 | version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional | FASTA, ONT, PE, SE |
 | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) | | Optional | FASTA, ONT, PE, SE |
 </div>
