@@ -24,20 +24,11 @@ Please see the [NCBI Metadata and Submission Overview](https://www.ncbi.nlm.nih.
 | EXPERIMENT | SRX# |
 | RUN  | SRR# |
 
-<div class="searchable-table" markdown="1">
+/// html | div[class="searchable-table"]
 
-| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
-|---|---|---|---|---|---|
-| fetch_sra_to_fastq | **sra_accession** | String | SRA, ENA, or DRA accession number | | Required |
-| fetch_sra_to_fastq | **cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional |
-| fetch_sra_to_fastq | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
-| fetch_sra_to_fastq | **docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/biocontainers/fastq-dl:2.0.4--pyhdfd78af_0 | Optional |
-| fetch_sra_to_fastq | **fastq_dl_options** | String | Additional parameters to pass to fastq_dl from [here](https://github.com/rpetit3/fastq-dl?tab=readme-ov-file#usage) | "--provider sra" | Optional |
-| fetch_sra_to_fastq | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional |
-| version_capture | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0 | Optional |
-| version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) | | Optional |
+{{ input_table("docs/assets/input_tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="SRA_Fetch", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"]) }}
 
-</div>
+///
 
 ### Outputs
 

@@ -27,31 +27,11 @@ This workflow runs on the sample level.
 
     If downloading viral assemblies, set `use_ncbi_virus` to true.
 
-<div class="searchable-table" markdown="1">
+/// html | div[class="searchable-table"]
 
-| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
-|---|---|---|---|---|---|
-| reference_fetch | **samplename** | String | The name of your sample |  | Required |
-| reference_fetch | **assembly_fasta** | File | Assembly FASTA file for your sample |  | Optional |
-| reference_fetch | **ncbi_accession** | String | NCBI accession passed to the NCBI datasets task to be downloaded. Example: GCF_000006945.2 (Salmonella enterica subsp. enterica, serovar Typhimurium str. LT2 reference genome) |  | Optional |
-| ncbi_datasets_download_genome_accession | **cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional |
-| ncbi_datasets_download_genome_accession | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 50 | Optional |
-| ncbi_datasets_download_genome_accession | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/ncbi-datasets:14.13.2 | Optional |
-| ncbi_datasets_download_genome_accession | **include_gbff** | Boolean | Set to true if you would like the GenBank Flat File (GBFF) file included in the output. It contains nucleotide sequence, metadata, and annotations. | false | Optional |
-| ncbi_datasets_download_genome_accession | **include_gff3** | Boolean | Set to true if you would like the Genomic Feature File v3 (GFF3) file included in the output. It contains nucleotide sequence, metadata, and annotations | false | Optional |
-| ncbi_datasets_download_genome_accession | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 4 | Optional |
-| ncbi_datasets_download_genome_accession | **use_ncbi_virus** | Boolean | Set to true when downloading from NCBI Virus Datasets | false | Optional |
-| referenceseeker | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional |
-| referenceseeker | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 200 | Optional |
-| referenceseeker | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/biocontainers/referenceseeker:1.8.0--pyhdfd78af_0 | Optional |
-| referenceseeker | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 16 | Optional |
-| referenceseeker | **referenceseeker_ani_threshold** | Float | ANI threshold used to exclude ref genomes when ANI value less than this value. | 0.95 | Optional |
-| referenceseeker | **referenceseeker_conserved_dna_threshold** | Float | Conserved DNA threshold used to exclude ref genomes when conserved DNA value is less than this value. | 0.69 | Optional |
-| referenceseeker | **referenceseeker_db** | File | Database used by the referenceseeker tool that contains bacterial genomes from RefSeq release 205. Downloaded from the referenceseeker GitHub repository. | gs://theiagen-public-files-rp/terra/theiaprok-files/referenceseeker-bacteria-refseq-205.v20210406.tar.gz | Optional |
-| version_capture | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0 | Optional |
-| version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
+{{ input_table("docs/assets/input_tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="Assembly_Fetch", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"]) }}
 
-</div>
+///
 
 ### Workflow Tasks
 
@@ -99,25 +79,11 @@ This workflow runs on the sample level.
 
 ### Outputs
 
-<div class="searchable-table" markdown="1">
+/// html | div[class="searchable-table"]
 
-| **Variable** | **Type** | **Description** |
-|---|---|---|
-| assembly_fetch_analysis_date | String | The date the workflow was run |
-| assembly_fetch_ncbi_datasets_assembly_data_report_json | File | JSON file containing report about assembly downloaded by Asembly_Fetch |
-| assembly_fetch_ncbi_datasets_assembly_fasta | File | FASTA file downloaded by Assembly_Fetch |
-| assembly_fetch_ncbi_datasets_docker | String | Docker file used for NCBI datasets |
-| assembly_fetch_ncbi_datasets_gff | File | Assembly downloaded by Assembly_Fetch in GFF3 format |
-| assembly_fetch_ncbi_datasets_gff3 | File | Assembly downloaded by Assembly_Fetch in GFF format |
-| assembly_fetch_ncbi_datasets_version | String | NCBI datasets version used |
-| assembly_fetch_referenceseeker_database | String | ReferenceSeeker database used |
-| assembly_fetch_referenceseeker_docker | String | Docker file used for ReferenceSeeker |
-| assembly_fetch_referenceseeker_top_hit_ncbi_accession | String | NCBI Accession for the top hit identified by Assembly_Fetch |
-| assembly_fetch_referenceseeker_tsv | File | TSV file of the top hits between the query genome and the Reference Seeker database |
-| assembly_fetch_referenceseeker_version | String | ReferenceSeeker version used |
-| assembly_fetch_version | String | The version of the repository the Assembly Fetch workflow is in |
+{{ input_table("docs/assets/output_tables/assembly_fetch_out.tsv", input_table=False) }}
 
-</div>
+///
 
 ## References
 

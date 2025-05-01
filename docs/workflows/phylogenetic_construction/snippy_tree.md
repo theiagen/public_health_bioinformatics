@@ -53,79 +53,11 @@ Sequencing data used in the Snippy_Tree workflow must:
         - Using the core genome
             - `core_genome` = true (as default)
 
-<div class="searchable-table" markdown="1">
+/// html | div[class="searchable-table"]
 
-| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
-|---|---|---|---|---|---|
-| snippy_tree_wf | **tree_name_updated** | String | Internal component, do not modify. Used for replacing spaces with underscores_ |  | Do not modify |
-| snippy_tree_wf | **reference_genome_file** | File | Reference genome in FASTA or GENBANK format (must be the same reference used in Snippy_Variants workflow) |  | Required |
-| snippy_tree_wf | **samplenames** | Array[String] | Samplenames for each input genome |  | Required |
-| snippy_tree_wf | **snippy_variants_outdir_tarball** | Array[File] | Output from the Snippy_Variants workflow |  | Required |
-| snippy_tree_wf | **tree_name** | String | String of your choice to prefix output files |  | Required |
-| cg_reorder_matrix | **cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional |
-| cg_reorder_matrix | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
-| cg_reorder_matrix | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/mykrobe:0.12.1 | Optional |
-| cg_reorder_matrix | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 2 | Optional |
-| cg_snp_dists | **cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional |
-| cg_snp_dists | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 50 | Optional |
-| cg_snp_dists | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 2 | Optional |
-| concatenate_variants | **docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1 | Optional |
-| gubbins | **filter_percent** | Int | Maximum % gaps to include a sample in gubbins analysis and downstream analyses | 25 | Optional |
-| gubbins | **iterations** | Int | Maximum number of trees to iteratively build to remove recombination | 5 | Optional |
-| gubbins | **nuc_subst_model** | String | Nucleotide substitution model to use with Gubbins: "JC", "K2P", "HKY", "GTR", "GTRGAMMA" or "GTRCAT" (see <https://github.com/nickjcroucher/gubbins/blob/v3.3/docs/gubbins_manual.md#nucleotide-substitution-model-options>) | GTRGAMMA | Optional |
-| gubbins | **tree_args** | String | Quoted string of further arguments passed to tree building algorithm |  | Optional |
-| gubbins | **tree_builder** | String | Application to use for Gubbins tree building algorithm: "raxml", "raxmlng", "iqtree", "iqtree-fast", "fasttree", "hybrid" (fasttree is used for the first tree, and raxml is used for later iterations), "rapidnj" | raxml | Optional |
-| iqtree2 | **alrt** | Int | Number of replicates to use for the SH-like approximate likelihood ratio test (Minimum recommended= 1000) | 1000 | Optional |
-| shared_variants | **cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional |
-| shared_variants | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
-| shared_variants | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-03-16 | Optional |
-| shared_variants | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional |
-| snippy_tree_wf | **call_shared_variants** | Boolean | When true, workflow generates table that combines variants across all samples and a table showing variants shared across samples | TRUE | Optional |
-| snippy_tree_wf | **core_genome** | Boolean | When true, workflow generates core genome phylogeny; when false, whole genome is used | TRUE | Optional |
-| snippy_tree_wf | **data_summary_column_names** | String | A comma-separated list of the column names from the sample-level data table for generating a data summary (presence/absence .csv matrix) |  | Optional |
-| snippy_tree_wf | **data_summary_terra_project** | String | The billing project for your current workspace. This can be found after the "#workspaces/" section in the workspace's URL |  | Optional |
-| snippy_tree_wf | **data_summary_terra_table** | String | The name of the sample-level Terra data table that will be used for generating a data summary |  | Optional |
-| snippy_tree_wf | **data_summary_terra_workspace** | String | The name of the Terra workspace you are in. This can be found at the top of the webpage, or in the URL after the billing project. |  | Optional |
-| snippy_tree_wf | **gubbins_cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional |
-| snippy_tree_wf | **gubbins_docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/biocontainers/gubbins:3.3--py310pl5321h8472f5a_0 | Optional |
-| snippy_tree_wf | **gubbins_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 32 | Optional |
-| snippy_tree_wf | **gubbins_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
-| snippy_tree_wf | **iqtree2_bootstraps** | String | Number of replicates for <http://www.iqtree.org/doc/Tutorial#assessing-branch-supports-with-ultrafast-bootstrap-approximation> (Minimum recommended= 1000) | 1000 | Optional |
-| snippy_tree_wf | **iqtree2_cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional |
-| snippy_tree_wf | **iqtree2_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
-| snippy_tree_wf | **iqtree2_docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/iqtree2:2.1.2 | Optional |
-| snippy_tree_wf | **iqtree2_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 32 | Optional |
-| snippy_tree_wf | **iqtree2_model** | String | Nucelotide substitution model to use when generating the final tree with IQTree2. By default, IQtree runs its ModelFinder algorithm to identify the model it thinks best fits your dataset |  | Optional |
-| snippy_tree_wf | **iqtree2_opts** | String | Additional options to pass to IQTree2 |  | Optional |
-| snippy_tree_wf | **midpoint_root_tree** | Boolean | If true, midpoint root the final tree |  | Optional |
-| snippy_tree_wf | **phandango_coloring** | Boolean | Boolean variable that tells the data summary task and the reorder matrix task to include a suffix that enables consistent coloring on Phandango; by default, this suffix is not added. To add this suffix set this variable to true. | FALSE | Optional |
-| snippy_tree_wf | **snippy_core_bed** | File | Bed file with locations to be masked from the core genome alignment |  | Optional |
-| snippy_tree_wf | **snippy_core_cpu** | Int | Number of CPUs to allocate to the task | 8 | Optional |
-| snippy_tree_wf | **snippy_core_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
-| snippy_tree_wf | **snippy_core_docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/snippy:4.6.0 | Optional |
-| snippy_tree_wf | **snippy_core_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 16 | Optional |
-| snippy_tree_wf | **snp_dists_docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/snp-dists:0.8.2 | Optional |
-| snippy_tree_wf | **snp_sites_cpus** | Int | CPUs to allocate to SNP-sites | 1 | Optional |
-| snippy_tree_wf | **snp_sites_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
-| snippy_tree_wf | **snp_sites_docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/snp-sites:2.5.1 | Optional |
-| snippy_tree_wf | **snp_sites_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 4 | Optional |
-| snippy_tree_wf | **use_gubbins** | Boolean | When "true", workflow removed recombination with gubbins tasks; when "false", gubbins is not used | true | Optional |
-| summarize_data | **cpu** | Int | Number of CPUs to allocate to the task | 8 | Optional |
-| summarize_data | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
-| summarize_data | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-03-16 | Optional |
-| summarize_data | **id_column_name** | String | Name of the column in the input table that contains the sample IDs, if different from default |  | Optional |
-| summarize_data | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 1 | Optional |
-| version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
-| version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
-| wg_reorder_matrix | **cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional |
-| wg_reorder_matrix | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
-| wg_reorder_matrix | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/mykrobe:0.12.1 | Optional |
-| wg_reorder_matrix | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 2 | Optional |
-| wg_snp_dists | **cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional |
-| wg_snp_dists | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 50 | Optional |
-| wg_snp_dists | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 2 | Optional |
+{{ input_table("docs/assets/input_tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="Snippy_Tree", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"]) }}
 
-</div>
+///
 
 ### Workflow Tasks
 

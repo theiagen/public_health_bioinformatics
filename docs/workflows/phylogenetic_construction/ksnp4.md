@@ -19,52 +19,11 @@ While kSNP4 introduces enhancements, much of the foundational information from k
 
 ### Inputs
 
-<div class="searchable-table" markdown="1">
+/// html | div[class="searchable-table"]
 
-| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
-|---|---|---|---|---|---|
-| ksnp4_workflow | **assembly_fasta** | Array[File] | The assembly files to be analyzed | | Required |
-| ksnp4_workflow | **cluster_name** | String | Free text string used to label output files | | Required |
-| ksnp4_workflow | **samplename** | Array[String] | The set of sample names | | Required |
-| core_ksnp4_shared_snps_task | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
-| core_reorder_matrix | **cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional |
-| core_reorder_matrix | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
-| core_reorder_matrix | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/mykrobe:0.12.1 | Optional |
-| core_reorder_matrix | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 2 | Optional |
-| core_snp_dists | **cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional |
-| core_snp_dists | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 50 | Optional |
-| core_snp_dists | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/snp-dists:0.8.2 | Optional |
-| core_snp_dists | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 2 | Optional |
-| ksnp4_task | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional |
-| ksnp4_task | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
-| ksnp4_task | **docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/ksnp4:4.1 | Optional |
-| ksnp4_task | **kmer_size** | Int | The length of kmer containing the SNP you want ksnp4 to use | 19 | Optional |
-| ksnp4_task | **ksnp4_args** | String | Additional arguments you want kSNP4 to use; e.g., "-ML" or "-NJ" |  | Optional |
-| ksnp4_task | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional |
-| ksnp4_task | **previous_ksnp4_snps** | File | File with existing SNPs for the current run to be appended to.  |  | Optional |
-| ksnp4_workflow | **data_summary_column_names** | String | A comma-separated list of the column names from the sample-level data table for generating a data summary (presence/absence .csv matrix); e.g., "amrfinderplus_amr_genes,amrfinderplus_virulence_genes" |  | Optional |
-| ksnp4_workflow | **data_summary_terra_project** | String | The billing project for your current workspace. This can be found after the "#workspaces/" section in the workspace's URL |  | Optional |
-| ksnp4_workflow | **data_summary_terra_table** | String | The name of the sample-level Terra data table that will be used for generating a data summary |  | Optional |
-| ksnp4_workflow | **data_summary_terra_workspace** | String | The name of the Terra workspace you are in. This can be found at the top of the webpage, or in the URL after the billing project. |  | Optional |
-| ksnp4_workflow | **midpoint_root_tree** | Boolean | If true, midpoint root the final tree | FALSE | Optional |
-| ksnp4_workflow | **phandango_coloring** | Boolean | Boolean variable that tells the data summary task and the reorder matrix task to include a suffix that enables consistent coloring on Phandango; by default, this suffix is not added. To add this suffix set this variable to true. | FALSE | Optional |
-| pan_reorder_matrix | **cpu** | Int | Number of CPUs to allocate to the task | 100 | Optional |
-| pan_reorder_matrix | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 2 | Optional |
-| pan_reorder_matrix | **docker** | String | The Docker container to use for the task | 100 | Optional |
-| pan_reorder_matrix | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | us-docker.pkg.dev/general-theiagen/staphb/mykrobe:0.12.1 | Optional |
-| pan_snp_dists | **cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional |
-| pan_snp_dists | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 50 | Optional |
-| pan_snp_dists | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/snp-dists:0.8.2 | Optional |
-| pan_snp_dists | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 2 | Optional |
-| summarize_data | **cpu** | Int | Number of CPUs to allocate to the task | 8 | Optional |
-| summarize_data | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
-| summarize_data | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-03-16 | Optional |
-| summarize_data | **id_column_name** | String | If the sample IDs are in a different column to samplenames, it can be passed here and it will be used instead. |  | Optional |
-| summarize_data | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional |
-| version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
-| version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
+{{ input_table("docs/assets/input_tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="kSNP4", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"]) }}
 
-</div>
+///
 
 ### Workflow Actions
 

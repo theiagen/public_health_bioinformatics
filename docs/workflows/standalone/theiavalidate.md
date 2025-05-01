@@ -44,32 +44,13 @@ If a column consists of only GCP URIs (Google Cloud file paths), the files will 
 
 ### Inputs
 
-<div class="searchable-table" markdown="1">
-
 Please note that all string inputs **must** be enclosed in quotation marks; for example, "column1,column2" or "workspace1"
 
-| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
-|---|---|---|---|---|---|
-| theiavalidate | **columns_to_compare** | String | A comma-separated list of the columns the user wants to compare. Do not include whitespace. |  | Required |
-| theiavalidate | **output_prefix** | String | The prefix for the output files |  | Required |
-| theiavalidate | **table1_name** | String | The name of the first table |  | Required |
-| theiavalidate | **table2_name** | String | The name of the second table |  | Required |
-| theiavalidate | **terra_project1_name** | String | The name of the Terra project where table1_name can be found |  | Required |
-| theiavalidate | **terra_workspace1_name** | String | The name of the Terra workspace where table1_name can be found |  | Required |
-| theiavalidate | **column_translation_tsv** | File | If the user wants to link two columns of different names, they may supply a TSV file that provides a "column translation" between the two files (see the section below this table). |  | Optional |
-| theiavalidate | **terra_project2_name** | String | If the table2_name is located in a different Terra project, indicate it here. Otherwise, the workflow will look for table2_name in the Terra project indicated in terra_project1_name. | value for `terra_project1_name` | Optional |
-| theiavalidate | **terra_workspace2_name** | String | If the table2_name is located in a different Terra workspace, indicate it here. Otherwise, the workflow will look for table2_name in the Terra workspace indicated in terra_workspace1_name. | value for `terra_workspace1_name` | Optional |
-| theiavalidate | **validation_criteria_tsv** | File | If the user wants to specify a different comparison than the default exact string match, they may supply a TSV file that indicates the different options (see the section below this table). |  | Optional |
-| compare_two_tsvs | **cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional |
-| compare_two_tsvs | **debug_output** | Boolean | Set to true to enable more outputs; useful when debugging | FALSE | Optional |
-| compare_two_tsvs | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
-| compare_two_tsvs | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/theiagen/theiavalidate:1.1.2 | Optional |
-| compare_two_tsvs | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 4 | Optional |
-| compare_two_tsvs | **na_values** | String | If the user knows a particular value in either table that they would like to be considered N/A, they can indicate those values in a comma-separated list here. Any changes here will overwrite the default and not append to the default list. Do not include whitespace. | -1.#IND,1.#QNAN,1.#IND,-1.#QNAN,#N/A,N/A,n/a,,#NA,NULL,null,NaN,-NaN,nan,-nan,None | Optional |
-| export_two_tsvs | **cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional |
-| export_two_tsvs | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 10 | Optional |
+/// html | div[class="searchable-table"]
 
-</div>
+{{ input_table("docs/assets/input_tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="TheiaValidate", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"]) }}
+
+///
 
 The optional `validation_criteria_tsv` file takes the following format (tab-delimited; _a header line is required_):
 

@@ -70,21 +70,11 @@ This workflow will copy the **SARS-CoV-2 reference files** (`curated_lineages.js
 
 We recommend running this workflow with **"Run inputs defined by file paths"** selected since no information from a Terra data table is actually being used. We also recommend turning off call caching so new information is retrieved every time.
 
-<div class="searchable-table" markdown="1">
+/// html | div[class="searchable-table"]
 
-| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
-|---|---|---|---|---|---|
-| freyja_update | **gcp_uri** | String | The path where you want the Freyja reference files to be stored. Include gs:// at the beginning of the string. Full example with a Terra workspace bucket: "gs://fc-87ddd67a-c674-45a8-9651-f91e3d2f6bb7" | | Required |
-| freyja_update_refs | **cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional |
-| freyja_update_refs | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 25 | Optional |
-| freyja_update_refs | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/staphb/freyja:1.5.3" | Optional |
-| freyja_update_refs | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 10 | Optional |
-| transfer_files | **cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional |
-| transfer_files | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 25 | Optional |
-| transfer_files | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1" | Optional |
-| transfer_files | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 2 | Optional |
+{{ input_table("docs/assets/input_tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="Freyja_Update", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"]) }}
 
-</div>
+///
 
 #### Outputs
 
@@ -108,113 +98,11 @@ The Freyja_FASTQ_PHB workflow is compatible with the multiple input data types: 
 
 This workflow runs on the sample level.
 
-<div class="searchable-table" markdown="1">
+/// html | div[class="searchable-table"]
 
-| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
-|---|---|---|---|---|---|
-| freyja_fastq | **primer_bed** | File | The bed file containing the primers used when sequencing was performed |  | Optional |
-| freyja_fastq | **read1** | File | The raw forward-facing FASTQ file (Illumina or ONT) |  | Required |
-| freyja_fastq | **reference_genome** | File | The reference genome to use; should match the reference used for alignment (Wuhan-Hu-1)  |  | Required |
-| freyja_fastq | **reference_gff** | File | The GFF file for reference; should match the reference used for alignment (Wuhan-Hu-1) |  | Optional |
-| freyja_fastq | **samplename** | String | The name of the sample |  | Required |
-| bwa | **cpu** | Int | Number of CPUs to allocate to the task | 6 | Optional |
-| bwa | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
-| bwa | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/staphb/ivar:1.3.1-titan" | Optional |
-| bwa | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 16 | Optional |
-| freyja | **bootstrap** | Boolean | Perform bootstrapping | false | Optional |
-| freyja | **confirmed_only** | Boolean | Include only confirmed SARS-CoV-2 lineages | false | Optional |
-| freyja | **cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional |
-| freyja | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
-| freyja | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/staphb/freyja:1.5.3" | Optional |
-| freyja | **eps** | Float | The minimum lineage abundance cut-off value | 0.001 | Optional |
-| freyja | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 4 | Optional |
-| freyja | **number_bootstraps** | Int | The number of bootstraps to perform (only used if bootstrap = true) | 100 | Optional |
-| freyja | **update_db** | Boolean | Updates the Freyja reference files (the usher barcodes and lineage metadata files) but will not save them as output (use Freyja_Update for that purpose). If set to true, the `freyja_lineage_metadata` and `freyja_barcodes` files are not required. | false | Optional |
-| freyja_fastq | **depth_cutoff** | Int | The minimum coverage depth with which to exclude sites below this value and group identical barcodes -- THIS MAY NOT WORK FOR NON-SARS-COV-2 ORGANISMS! | 10 | Optional |
-| freyja_fastq | **freyja_barcodes** | String | Custom barcode file. Does not need to be provided if update_db is true if the freyja_pathogen is provided. |  | Optional |
-| freyja_fastq | **freyja_lineage_metadata** | File | File containing the lineage metadata; the "curated_lineages.json" file found <https://github.com/andersen-lab/Freyja/tree/main/freyja/data> can be used for this variable. Does not need to be provided if update_db is true or if the freyja_pathogen is provided. |  | Optional, Required |
-| freyja_fastq | **freyja_pathogen** | String | Pathogen of interest, used if not providing the barcodes and lineage metadata files. Options: SARS-CoV-2, MPXV, H5NX, H1N1pdm, FLU-B-VIC, MEASLESN450, MEASLES, RSVa, RSVb |  | Optional |
-| freyja_fastq | **kraken2_target_organism** | String | The organism whose abundance the user wants to check in their reads. This should be a proper taxonomic name recognized by the Kraken database. | "Severe acute respiratory syndrome coronavirus 2" | Optional |
-| freyja_fastq | **ont** | Boolean | Indicates if the input data is derived from an ONT instrument.  | false | Optional |
-| freyja_fastq | **read2** | File | The raw reverse-facing FASTQ file (Illumina only) |  | Optional |
-| freyja_fastq | **trimmomatic_minlen** | Int | The minimum length cut-off when performing read cleaning | 25 | Optional |
-| get_fasta_genome_size | **cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional |
-| get_fasta_genome_size | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 10 | Optional |
-| get_fasta_genome_size | **docker** | String | Docker image used for this task. | "us-docker.pkg.dev/general-theiagen/biocontainers/seqkit:2.4.0--h9ee0642_0" | Optional |
-| get_fasta_genome_size | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 2 | Optional |
-| minimap2 | **cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional |
-| minimap2 | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
-| minimap2 | **docker** | String | Docker image used for this task. | "us-docker.pkg.dev/general-theiagen/staphb/minimap2:2.22" | Optional |
-| minimap2 | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional |
-| minimap2 | **query2** | File | Internal component. Do not modify |  | Do not modify, Optional |
-| nanoplot_clean | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional |
-| nanoplot_clean | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
-| nanoplot_clean | **docker** | String | Docker image used for this task. | "us-docker.pkg.dev/general-theiagen/staphb/nanoplot:1.40.0" | Optional |
-| nanoplot_clean | **max_length** | Int | Maximum read length for nanoplot | 100000 | Optional |
-| nanoplot_clean | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 16 | Optional |
-| nanoplot_raw | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional |
-| nanoplot_raw | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
-| nanoplot_raw | **docker** | String | Docker image used for this task. | "us-docker.pkg.dev/general-theiagen/staphb/nanoplot:1.40.0" | Optional |
-| nanoplot_raw | **max_length** | Int | Maximum read length for nanoplot | 100000 | Optional |
-| nanoplot_raw | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 16 | Optional |
-| primer_trim | **cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional |
-| primer_trim | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
-| primer_trim | **docker** | String | Docker image used for this task. | "us-docker.pkg.dev/general-theiagen/staphb/ivar:1.3.1-titan" | Optional |
-| primer_trim | **keep_noprimer_reads** | Boolean | Include reads with no primers | true | Optional |
-| primer_trim | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional |
-| read_QC_trim_pe | **adapters** | File | A FASTA file containing adapter sequence |  | Optional |
-| read_QC_trim_pe | **bbduk_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional |
-| read_QC_trim_pe | **call_kraken** | Boolean | By default this is set to false to skip kraken2; set to true to run kraken2 but a database must be also provided via the kraken_db input parameter for this to run successfully | false | Optional |
-| read_QC_trim_pe | **call_midas** | Boolean | By default this is set to false; set to true to run MIDAS | false | Optional |
-| read_QC_trim_pe | **fastp_args** | String | Additional arguments to use with fastp | "--detect_adapter_for_pe -g -5 20 -3 20" | Optional |
-| read_QC_trim_pe | **kraken_cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional |
-| read_QC_trim_pe | **kraken_db** | File | A kraken2 database to use with the kraken2 optional task. The file must be a .tar.gz kraken2 database. |  | Optional, Sometimes required |
-| read_QC_trim_pe | **kraken_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
-| read_QC_trim_pe | **kraken_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional |
-| read_QC_trim_pe | **midas_db** | File | Database to use with MIDAS. Not required as one will be auto-selected when running the MIDAS task. |  | Optional, Sometimes required |
-| read_QC_trim_pe | **phix** | File | The file containing the phix sequence to be used during bbduk task |  | Optional |
-| read_QC_trim_pe | **read_processing** | String | Options: "trimmomatic" or "fastp" to indicate which read trimming module to use | "trimmomatic" | Optional |
-| read_QC_trim_pe | **read_qc** | String | Allows the user to decide between fastq_scan (default) and fastqc for the evaluation of read quality. | fastq_scan | Optional |
-| read_QC_trim_pe | **target_organism** | String | The organism whose abundance the user wants to check in their reads. This should be a proper taxonomic name recognized by the Kraken database. |  | Optional |
-| read_QC_trim_pe | **trim_quality_trim_score** | Int | The minimum quality score to keep during trimming | 30 | Optional |
-| read_QC_trim_pe | **trim_window_size** | Int | The window size to use during trimming | 4 | Optional |
-| read_QC_trim_pe | **trimmomatic_args** | String | Additional command-line arguments to use with trimmomatic |  | Optional |
-| read_QC_trim_ont | **call_kraken** | Boolean | By default this is set to false to skip kraken2; set to true to run kraken2 but a database must be also provided via the kraken_db input parameter for this to run successfully | false | Optional |
-| read_QC_trim_ont | **downsampling_coverage** | Float | The depth to downsample to with Rasusa. Internal component. Do not modify. | 150 | Do not modify, Optional |
-| read_QC_trim_ont | **genome_length** | Int | Internal component. Do not modify |  | Do not modify, Optional |
-| read_QC_trim_ont | **kraken_cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional |
-| read_QC_trim_ont | **kraken_db** | File | A kraken2 database to use with the kraken2 optional task. The file must be a .tar.gz kraken2 database. |  | Optional |
-| read_QC_trim_ont | **kraken_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
-| read_QC_trim_ont | **kraken_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional |
-| read_QC_trim_ont | **max_length** | Int | Internal component, do not modify |  | Do not modify, Optional |
-| read_QC_trim_ont | **min_length** | Int | Internal component, do not modify |  | Do not modify, Optional |
-| read_QC_trim_ont | **run_prefix** | String | Internal component, do not modify |  | Do not modify, Optional |
-| read_QC_trim_ont | **target_organism** | String | This string is searched for in the kraken2 outputs to extract the read percentage |  | Optional |
-| read_QC_trim_se | **adapters** | File | A FASTA file containing adapter sequence |  | Optional |
-| read_QC_trim_se | **bbduk_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional |
-| read_QC_trim_se | **call_kraken** | Boolean | By default this is set to false to skip kraken2; set to true to run kraken2 but a database must be also provided via the kraken_db input parameter for this to run successfully | false | Optional |
-| read_QC_trim_se | **call_midas** | Boolean | By default this is set to true to run MIDAS; set to false to skip MIDAS | false | Optional |
-| read_QC_trim_se | **fastp_args** | String | Additional arguments to use with fastp | "--detect_adapter_for_pe -g -5 20 -3 20" | Optional |
-| read_QC_trim_se | **kraken_cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional |
-| read_QC_trim_se | **kraken_db** | File | A kraken2 database to use with the kraken2 optional task. The file must be a .tar.gz kraken2 database. |  | Optional |
-| read_QC_trim_se | **kraken_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
-| read_QC_trim_se | **kraken_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional |
-| read_QC_trim_se | **midas_db** | File | Database to use with MIDAS. Not required as one will be auto-selected when running the MIDAS task. |  | Optional, Sometimes required |
-| read_QC_trim_se | **phix** | File | The file containing the phix sequence to be used during bbduk task |  | Optional |
-| read_QC_trim_se | **read_processing** | String | Options: "trimmomatic" or "fastp" to indicate which read trimming module to use | "trimmomatic" | Optional |
-| read_QC_trim_se | **read_qc** | String | Allows the user to decide between fastq_scan (default) and fastqc for the evaluation of read quality. | fastq_scan | Optional |
-| read_QC_trim_se | **target_organism** | String | The organism whose abundance the user wants to check in their reads. This should be a proper taxonomic name recognized by the Kraken database. |  | Optional |
-| read_QC_trim_se | **trim_quality_min_score** | Int | The minimum quality score to keep during trimming | 30 | Optional |
-| read_QC_trim_se | **trim_window_size** | Int | The window size to use during trimming | 4 | Optional |
-| read_QC_trim_se | **trimmomatic_args** | String | Additional command-line arguments to use with trimmomatic |  | Optional |
-| sam_to_sorted_bam | **cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional |
-| sam_to_sorted_bam | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
-| sam_to_sorted_bam | **docker** | String | Docker image used for this task. | "us-docker.pkg.dev/general-theiagen/staphb/samtools:1.17" | Optional |
-| sam_to_sorted_bam | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional |
-| version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
-| version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
+{{ input_table("docs/assets/input_tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="Freyja_FASTQ", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"]) }}
 
-</div>
+///
 
 #### Analysis Tasks
 
@@ -442,27 +330,12 @@ Options exist to provide lineage-specific breakdowns and/or sample collection ti
 
 This workflow runs on the set level.
 
-<div class="searchable-table" markdown="1">
 
-| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
-|---|---|---|---|---|---|
-| freyja_plot | **freyja_demixed** | Array[File] | An array containing the output files (freyja_demixed) made by Freyja_FASTQ |  | Required |
-| freyja_plot | **freyja_plot_name** | String | The name of the plot to be produced. Example: "my-freyja-plot" |  | Required |
-| freyja_plot | **samplename** | Array[String] | An array containing the names of the samples |  | Required |
-| freyja_plot | **collection_date** | Array[String] | An array containing the collection dates for the sample (YYYY-MM-DD format) |  | Optional |
-| freyja_plot_task | **cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional |
-| freyja_plot_task | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
-| freyja_plot_task | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/staphb/freyja:1.5.3" | Optional |
-| freyja_plot_task | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 2 | Optional |
-| freyja_plot_task | **mincov** | Int | The minimum genome coverage used as a cut-off of data to include in the plot | 60 | Optional |
-| freyja_plot_task | **plot_day_window** | Int | The width of the rolling average window; only used if plot_time_interval is "D" | 14 | Optional |
-| freyja_plot_task | **plot_lineages** | Boolean | If true, will plot a lineage-specific breakdown | false | Optional |
-| freyja_plot_task | **plot_time** | Boolean | If true, will plot sample collection time information (requires the collection_date input variable) | false | Optional |
-| freyja_plot_task | **plot_time_interval** | String | Options: "MS" for month, "D" for day | MS | Optional |
-| version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
-| version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
+/// html | div[class="searchable-table"]
 
-</div>
+{{ input_table("docs/assets/input_tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="Freyja_Plot", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"]) }}
+
+///
 
 #### Analysis Tasks
 
@@ -503,29 +376,12 @@ This workflow creates a group of interactive visualizations based off of the agg
 
 This workflow runs on the set level.
 
-<div class="searchable-table" markdown="1">
 
-| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
-|---|---|---|---|---|---|
-| freyja_dashboard | **collection_date** | Array[String] | An array containing the collection dates for the sample (YYYY-MM-DD format) |  | Required |
-| freyja_dashboard | **freyja_dashboard_title** | String | The name of the dashboard to be produced. Example: "my-freyja-dashboard" |  | Required |
-| freyja_dashboard | **freyja_demixed** | Array[File] | An array containing the output files (freyja_demixed) made by Freyja_FASTQ workflow |  | Required |
-| freyja_dashboard | **samplename** | Array[String] | An array containing the names of the samples |  | Required |
-| freyja_dashboard | **viral_load** | Array[String] | An array containing the number of viral copies per liter |  | Required |
-| freyja_dashboard | **dashboard_intro_text** | File | A file containing the text to be contained at the top of the dashboard. | SARS-CoV-2 lineage de-convolution performed by the Freyja workflow (<https://github.com/andersen-lab/Freyja>). | Optional |
-| freyja_dashboard_task | **config** | File | (found in the optional section, but is required) A yaml file that applies various configurations to the dashboard, such as grouping lineages together, applying colorings, etc. See also <https://github.com/andersen-lab/Freyja/blob/main/freyja/data/plot_config.yml>. |  | Optional, Required |
-| freyja_dashboard_task | **cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional |
-| freyja_dashboard_task | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
-| freyja_dashboard_task | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/staphb/freyja:1.5.3" | Optional |
-| freyja_dashboard_task | **headerColor** | String | A hex color code to change the color of the header |  | Optional |
-| freyja_dashboard_task | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 2 | Optional |
-| freyja_dashboard_task | **mincov** | Float | The minimum genome coverage used as a cut-off of data to include in the dashboard. Default is set to 60 by the freyja command-line tool (not a WDL task default, per se) | | Optional |
-| freyja_dashboard_task | **scale_by_viral_load** | Boolean | If set to true, averages samples taken the same day while taking viral load into account | false | Optional |
-| freyja_dashboard_task | **thresh** | Float | The minimum lineage abundance cut-off value | | Optional |
-| version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
-| version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
+/// html | div[class="searchable-table"]
 
-</div>
+{{ input_table("docs/assets/input_tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="Freyja_Dashboard", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"]) }}
+
+///
 
 #### Analysis Tasks
 

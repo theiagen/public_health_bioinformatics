@@ -50,8 +50,17 @@ def define_env(env):
           rows.append(row)
 
     # Sort rows if requested
-    if sort_by and sort_by in all_headers:
-      rows.sort(key=lambda r: r.get(sort_by, '').lower())
+    if sort_by:
+      if isinstance(sort_by, str):
+        sort_by = [(sort_by, False)] # default to ascending sort order
+        
+      elif isinstance(sort_by, list):
+        # Normalize: convert ["col1", "col2"] → [("col1", False), ("col2", False)]
+        sort_by = [(col, False) if isinstance(col, str) else col for col in sort_by]
+
+      for col, reverse in reversed(sort_by):
+          rows.sort(key=lambda r: r.get(col, ''), reverse=reverse)
+
 
     indent_str = ' ' * indent
     # Build Markdown table

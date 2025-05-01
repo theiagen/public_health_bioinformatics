@@ -28,24 +28,11 @@ Please note the default values are for SARS-CoV-2.
 
 This workflow runs on the sample level.
 
-<div class="searchable-table" markdown="1">
+/// html | div[class="searchable-table"]
 
-| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
-|---|---|---|---|---|---|
-| vadr_update | **assembly_length_unambiguous** | Int | Number of unambiguous basecalls within the consensus assembly |  | Required |
-| vadr_update | **docker** | String | The Docker container to use for the task |  | Required |
-| vadr_update | **genome_fasta** | File | Consensus genome assembly |  | Required |
-| vadr | **cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional |
-| vadr | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
-| vadr | **max_length** | Int | Maximum length for the fasta-trim-terminal-ambigs.pl VADR script | 30000 | Optional |
-| vadr | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional |
-| vadr | **min_length** | Int | Minimum length subsequence to possibly replace Ns for the fasta-trim-terminal-ambigs.pl VADR script | 50 | Optional |
-| vadr | **skip_length** | Int | Minimum assembly length (unambiguous) to run vadr | 10000 | Optional |
-| vadr | **vadr_opts** | String | Options for the v-annotate.pl VADR script | ''--glsearch -s -r --nomisc --mkey sarscov2 --alt_fail lowscore,fstukcnf,insertnn,deletinn --mdir /opt/vadr/vadr-models/'' | Optional |
-| version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
-| version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
+{{ input_table("docs/assets/input_tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="VADR_Update", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"]) }}
 
-</div>
+///
 
 ### Outputs
 

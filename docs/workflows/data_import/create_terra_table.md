@@ -70,23 +70,11 @@ The `file_ending` should be a substring of your file names that is held in commo
 
     In this group, the desired sample names are "sample_01" and "sample_02". However, in this example, there is no common text following the sample name. Providing `"_"` would result in the same behavior as default. We can provide _two_ different patterns in the `file_ending` variable: `"_1,_2"` to capture all possible options. By doing this, "sample_01" and "sample_02" will appear in our table with the appropriate read files.
 
-<div class="searchable-table" markdown="1">
+/// html | div[class="searchable-table"]
 
-| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
-|---|---|---|---|---|---|
-| create_terra_table | **assembly_data** | Boolean | Set to true if your data is in FASTA format; set to false if your data is FASTQ format | | Required |
-| create_terra_table | **data_location_path** | String | The full path to your data's Google bucket folder location, including the gs://; can be easily copied by right-clicking and copying the link address in the header after navigating to the folder in the "Files" section of the "Data" tab on Terra (see [above](#data-location) for examples) | | Required |
-| create_terra_table | **new_table_name** | String | The name of the new Terra table you want to create | | Required |
-| create_terra_table | **paired_end** | Boolean | Set to true if your data is paired-end FASTQ files; set to false if not | | Required |
-| create_terra_table | **terra_project** | String | The name of the Terra project where your data table will be created | | Required |
-| create_terra_table | **terra_workspace** | String | The name of the Terra workspace where your data table will be created | | Required |
-| create_terra_table | **file_ending** | String | Use to provide file ending(s) to determine what should be dropped from the filename to determine the name of the sample (see [above](#file-ending) for more information) | | Optional |
-| make_table | **cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional |
-| make_table | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 25 | Optional |
-| make_table | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-06-21 | Optional |
-| make_table | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 4 | Optional |
+{{ input_table("docs/assets/input_tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="Create_Terra_Table", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"]) }}
 
-</div>
+///
 
 ### Outputs
 

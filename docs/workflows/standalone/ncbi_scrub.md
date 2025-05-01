@@ -16,29 +16,18 @@ There are three Kraken2 workflows:
 
 ### Inputs
 
-<div class="searchable-table" markdown="1">
+!!! caption ""
+    === "NCBI_Scrub_PE"
+        /// html | div[class="searchable-table"]
 
-| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** | **Workflow** |
-|---|---|---|---|---|---|---|
-| dehost_pe or dehost_se | **read1** | File | | | Required | PE, SE |
-| dehost_pe or dehost_se | **read2** | File | | | Required | PE |
-| dehost_pe or dehost_se | **samplename** | String | | | Required | PE, SE |
-| dehost_pe or dehost_se | **target_organism** | String | Target organism for Kraken2 reporting | "Severe acute respiratory syndrome coronavirus 2" | Optional | PE, SE |
-| kraken2 | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional | PE, SE |
-| kraken2 | **disk_size** | Int | Amount of storage (in GB) to allocate to the task. Increase this when using large (>30GB kraken2 databases such as the "k2_standard" database) | 100 | Optional | PE, SE |
-| kraken2 | **docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.0.8-beta_hv | Optional | PE, SE |
-| kraken2 | **kraken2_db** | String | The database used to run Kraken2 | /kraken2-db | Optional | PE, SE |
-| kraken2 | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | PE, SE |
-| kraken2 | **read2** | File | Internal component, do not modify | | Do not modify, Optional | SE |
-| kraken2 | **target_organism** | String | The organism whose abundance the user wants to check in their reads. This should be a proper taxonomic name recognized by the Kraken database. | | Optional | PE, SE |
-| ncbi_scrub_pe or ncbi_scrub_se | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional | PE, SE |
-| ncbi_scrub_pe or ncbi_scrub_se | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | PE, SE |
-| ncbi_scrub_pe or  | **docker** | Int | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/ncbi/sra-human-scrubber:2.2.1 | Optional | PE, SE |
-| ncbi_scrub_pe or ncbi_scrub_se | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | PE, SE |
-| version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional | PE, SE |
-| version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional | PE, SE |
+        {{ input_table("docs/assets/input_tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="NCBI_Scrub_PE", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
+        ///
 
-</div>
+    === "NCBI_Scrub_SE"
+        /// html | div[class="searchable-table"]
+
+        {{ input_table("docs/assets/input_tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="NCBI_Scrub_SE", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
+        ///
 
 ### Workflow Tasks
 

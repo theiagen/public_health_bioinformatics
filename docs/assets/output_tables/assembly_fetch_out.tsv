@@ -1,0 +1,14 @@
+Variable	Type	Description
+assembly_fetch_analysis_date	String	The date the workflow was run
+assembly_fetch_ncbi_datasets_assembly_data_report_json	File	JSON file containing report about assembly downloaded by Asembly_Fetch
+assembly_fetch_ncbi_datasets_assembly_fasta	File	FASTA file downloaded by Assembly_Fetch
+assembly_fetch_ncbi_datasets_docker	String	Docker file used for NCBI datasets
+assembly_fetch_ncbi_datasets_gff	File	Assembly downloaded by Assembly_Fetch in GFF3 format
+assembly_fetch_ncbi_datasets_gff3	File	Assembly downloaded by Assembly_Fetch in GFF format
+assembly_fetch_ncbi_datasets_version	String	NCBI datasets version used
+assembly_fetch_referenceseeker_database	String	ReferenceSeeker database used
+assembly_fetch_referenceseeker_docker	String	Docker file used for ReferenceSeeker
+assembly_fetch_referenceseeker_top_hit_ncbi_accession	String	NCBI Accession for the top hit identified by Assembly_Fetch
+assembly_fetch_referenceseeker_tsv	File	TSV file of the top hits between the query genome and the Reference Seeker database
+assembly_fetch_referenceseeker_version	String	ReferenceSeeker version used
+assembly_fetch_version	String	The version of the repository the Assembly Fetch workflow is in

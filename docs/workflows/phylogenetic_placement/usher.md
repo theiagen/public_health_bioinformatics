@@ -14,24 +14,11 @@
 
 While this workflow is technically a set-level workflow, it works on the sample-level too. When run on the set-level, the samples are placed with respect to each other.
 
-<div class="searchable-table" markdown="1">
+/// html | div[class="searchable-table"]
 
-| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
-|---|---|---|---|---|---|
-| usher_workflow | **assembly_fasta** | Array[File] | The assembly files for the samples you want to place on the pre-existing; can either be a set of samples, an individual sample, or multiple individual samples |  | Required |
-| usher_workflow | **organism** | String | What organism to run UShER on; the following organism have default global phylogenies and reference files provided: sars-cov-2, mpox, RSV-A, RSV-B.  |  | Required |
-| usher_workflow | **tree_name** | String | The output prefix for the uncondensed tree output and the clades output. |  | Required |
-| usher | **cpu** | Int | Number of CPUs to allocate to the task | 8 | Optional |
-| usher | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 200 | Optional |
-| usher | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/pathogengenomics/usher:0.6.2 | Optional |
-| usher | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 32 | Optional |
-| usher | **mutation_annotated_tree_pb** | File | Required for organisms other than sars-cov-2, mpox, RSV-A or RSV-B. This is the mutation-annotated global phylogeny upon which your samples will be placed  |  | Optional, Required |
-| usher | **reference_genome** | File | Required for organisms other than sars-cov-2, mpox, RSV-A or RSV-B. This is the reference genome used to determine your sequence's mutations to accurately place the sample on the phylogeny.  |  | Optional, Required |
-| usher | **subtree_size** | Int | Indicates how many of the closest-related samples you want to show in a subtree; more subtrees are made if there is more sequence diversity in the set of input samples (multiple subtrees are only generated if this workflow is run on the set level). | 20 | Optional |
-| version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
-| version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
+{{ input_table("docs/assets/input_tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="Usher", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"]) }}
 
-</div>
+///
 
 ### Outputs
 

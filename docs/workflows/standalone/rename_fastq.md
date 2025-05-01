@@ -12,21 +12,11 @@ This sample-level workflow receives a read file or a pair of read files (FASTQ),
 
 ### Inputs
 
-<div class="searchable-table" markdown="1">
+/// html | div[class="searchable-table"]
 
-| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
-|---|---|---|---|---|---|
-| rename_fastq_files | **new_filename** | String | New name for the FASTQ file(s) | | Required |
-| rename_fastq_files | **read1** | File | FASTQ file containing read1 sequences | | Required |
-| rename_fastq_files | **read2** | File | FASTQ file containing read2 sequences | | Optional |
-| rename_PE_files or rename_SE_files | **cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional |
-| rename_PE_files or rename_SE_files | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
-| rename_PE_files or rename_SE_files | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/ubuntu/ubuntu:jammy-20230816" | Optional |
-| rename_PE_files or rename_SE_files | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 2 | Optional |
-| version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
-| version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
+{{ input_table("docs/assets/input_tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="Rename_FASTQ", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"]) }}
 
-</div>
+///
 
 ### Outputs
 

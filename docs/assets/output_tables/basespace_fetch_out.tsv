@@ -1,0 +1,5 @@
+Variable	Type	Description
+basespace_fetch_analysis_date	String	The date the workflow was run
+basespace_fetch_version	String	The version of the repository the Basespace_Fetch workflow is in
+read1	File	File with forward-facing reads
+read2	File	File with reverse-facing read

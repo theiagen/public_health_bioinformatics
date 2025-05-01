@@ -29,34 +29,11 @@ The `Snippy_Variants` workflow aligns single-end or paired-end reads (in FASTQ f
 !!! info "Query String"
     The query string can be a gene or any other annotation that matches the GenBank file/output VCF **EXACTLY**
 
-<div class="searchable-table" markdown="1">
+/// html | div[class="searchable-table"]
 
-| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
-|---|---|---|---|---|---|
-| snippy_variants_wf | **reference_genome_file** | File | Reference genome (GenBank file or fasta) |  | Required |
-| snippy_variants_wf | **samplename** | String | Names of samples |  | Required |
-| snippy_gene_query | **cpu** | Int | Number of CPUs to allocate to the task | 8 | Optional  |
-| snippy_gene_query | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional  |
-| snippy_gene_query | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-06-21 | Optional  |
-| snippy_gene_query | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 32 | Optional  |
-| snippy_variants | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional  |
-| snippy_variants_wf | **assembly_fasta** | File | Assembly file |  | Optional  |
-| snippy_variants_wf | **base_quality** | Int | Minimum quality for a nucleotide to be used in variant calling | 13 | Optional  |
-| snippy_variants_wf | **cpus** | Int | Number of CPUs to use | 4 | Optional  |
-| snippy_variants_wf | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/snippy:4.6.0 | Optional  |
-| snippy_variants_wf | **map_qual** | Int | Minimum mapping quality to accept in variant calling, default from snippy tool is 60 |  | Optional  |
-| snippy_variants_wf | **maxsoft** | Int | Number of bases of alignment to soft-clip before discarding the alignment, default from snippy tool is 10 |  | Optional  |
-| snippy_variants_wf | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 16 | Optional  |
-| snippy_variants_wf | **min_coverage** | Int | Minimum read coverage of a position to identify a mutation | 10 | Optional  |
-| snippy_variants_wf | **min_frac** | Float | Minimum fraction of bases at a given position to identify a mutation, default from snippy tool is 0 | 0.9 | Optional  |
-| snippy_variants_wf | **min_quality** | Int | Minimum VCF variant call "quality" | 100 | Optional  |
-| snippy_variants_wf | **query_gene** | String | Comma-separated strings (e.g. gene names) in which to search for mutations to output to data table |  | Optional  |
-| snippy_variants_wf | **read1** | File | Forward read file |  | Optional  |
-| snippy_variants_wf | **read2** | File | Reverse read file |  | Optional  |
-| version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
-| version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
+{{ input_table("docs/assets/input_tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="Snippy_Variants", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"]) }}
 
-</div>
+///
 
 ### Workflow Tasks
 

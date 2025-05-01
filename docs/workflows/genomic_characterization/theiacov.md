@@ -113,41 +113,42 @@ We've provided the following information to help you set up the workflow for eac
 
         The TheiaCoV_FASTA_Batch workflow takes in a set of assembly files in FASTA format.
 
-=== "TheiaCoV_Illumina_PE"
-    /// html | div[class="searchable-table"]
+!!! caption ""
+    === "TheiaCoV_Illumina_PE"
+        /// html | div[class="searchable-table"]
 
-    {{ input_table("docs/assets/input_tables/theiacov_in.tsv", input_table=True, filter_column="Workflow", filter_values="PE", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status", "Organism"], indent=4) }}
-    ///
+        {{ input_table("docs/assets/input_tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="TheiaCoV_Illumina_PE", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status", "Organism"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
+        ///
 
-=== "TheiaCoV_Illumina_SE"
-    /// html | div[class="searchable-table"]
+    === "TheiaCoV_Illumina_SE"
+        /// html | div[class="searchable-table"]
 
-    {{ input_table("docs/assets/input_tables/theiacov_in.tsv", input_table=True, filter_column="Workflow", filter_values="SE", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status", "Organism"], indent=4) }}
-    ///
+        {{ input_table("docs/assets/input_tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="TheiaCoV_Illumina_SE", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status", "Organism"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
+        ///
 
-=== "TheiaCoV_ONT"
-    /// html | div[class="searchable-table"]
+    === "TheiaCoV_ONT"
+        /// html | div[class="searchable-table"]
 
-    {{ input_table("docs/assets/input_tables/theiacov_in.tsv", input_table=True, filter_column="Workflow", filter_values="ONT", indent=4) }}
-    ///
+        {{ input_table("docs/assets/input_tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="TheiaCoV_ONT", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status", "Organism"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
+        ///
 
-=== "TheiaCoV_FASTA"
-    /// html | div[class="searchable-table"]
+    === "TheiaCoV_FASTA"
+        /// html | div[class="searchable-table"]
 
-    {{ input_table("docs/assets/input_tables/theiacov_in.tsv", input_table=True, filter_column="Workflow", filter_values="FASTA", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status", "Organism"], indent=4) }}
-    ///
+        {{ input_table("docs/assets/input_tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="TheiaCoV_FASTA", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status", "Organism"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
+        ///
 
-=== "TheiaCoV_ClearLabs"
-    /// html | div[class="searchable-table"]
+    === "TheiaCoV_ClearLabs"
+        /// html | div[class="searchable-table"]
 
-    {{ input_table("docs/assets/input_tables/theiacov_in.tsv", input_table=True, filter_column="Workflow", filter_values="CL", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status", "Organism"], indent=4) }}
-    ///
+        {{ input_table("docs/assets/input_tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="TheiaCoV_ClearLabs", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status", "Organism"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
+        ///
 
-=== "TheiaCoV_FASTA_Batch"
-    /// html | div[class="searchable-table"]
+    === "TheiaCoV_FASTA_Batch"
+        /// html | div[class="searchable-table"]
 
-    {{ input_table("docs/assets/input_tables/theiacov_fasta_batch_in.tsv", input_table=True, columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], indent=4) }}
-    ///
+        {{ input_table("docs/assets/input_tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="TheiaCoV_FASTA_Batch", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
+        ///
 
 ### Organism-specific parameters and logic {% raw %} {#org-specific} {% endraw %}
 

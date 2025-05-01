@@ -22,71 +22,11 @@ For further detail regarding Pirate options, please see [PIRATE's documentation]
 
 This workflow runs on the set level.
 
-<div class="searchable-table" markdown="1">
+/// html | div[class="searchable-table"]
 
-| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
-|---|---|---|---|---|---|
-| core_gene_snp_workflow | **cluster_name** | String | Name of sample set | | Required |
-| core_gene_snp_workflow | **gff3** | Array[File] | Array of gff3 files to include in analysis, output gff files from both prokka and bakta using TheiaProk workflows are compatible | | Required |
-| core_gene_snp_workflow | **midpoint_root_tree** | Boolean | Boolean variable that will instruct the workflow to reroot the tree at the midpoint | FALSE | Optional |
-| core_gene_snp_workflow | **phandango_coloring** | Boolean | Boolean variable that tells the data summary task and the reorder matrix task to include a suffix that enables consistent coloring on Phandango; by default, this suffix is not added. To add this suffix set this variable to true. | FALSE | Optional |
-| core_gene_snp_workflow | **data_summary_terra_table** | String | The name of the Terra data table that you want data pulled from |  | Optional |
-| core_gene_snp_workflow | **data_summary_column_names** | String | A comma-delimited list of columns in the origin data table that contains contain that you would like a presence/absence .csv matrix generated for |  | Optional |
-| core_gene_snp_workflow | **core_tree** | Boolean | Boolean variable that instructs the workflow to create a phylogenetic tree and SNP distance matrix from the core gene alignment. Align must also be set to true. | TRUE | Optional |
-| core_gene_snp_workflow | **pan_tree** | Boolean | Boolean variable that instructs the workflow to create a phylogenetic tree and SNP distance matrix from the pangenome alignment. Align must also be set to true. | FALSE | Optional |
-| core_gene_snp_workflow | **data_summary_terra_workspace** | String | The name of the current Terra workspace you are in; this can be found at the top of the webpage, or in the URL after the billing project. |  | Optional |
-| core_gene_snp_workflow | **align** | Boolean | Boolean variable that instructs the workflow to generate core and pangenome alignments if "true". If "false", the workflow will produce only a pangenome summary. | TRUE | Optional |
-| core_gene_snp_workflow | **data_summary_terra_project** | String | The billing project for the current workspace; can be found after the "#workspaces/" section in the workflow's URL |  | Optional |
-| core_gene_snp_workflow | **sample_names** | Array[String] | Array of sample_ids from the data table used |  | Optional |
-| core_iqtree | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 32 | Optional |
-| core_iqtree | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
-| core_iqtree | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional |
-| core_iqtree | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/iqtree:1.6.7 | Optional |
-| core_iqtree | **iqtree_model** | String | Substitution model, frequency type (optional) and rate heterogeneity type (optional) used by IQ-TREE. This string follows the IQ-TREE "-m" option. For comparison to other tools use HKY for Bactopia, GTR+F+I for Grandeur, GTR+G4 for Nullarbor, GTR+G for Dryad | GTR+I+G | Optional |
-| core_iqtree | **iqtree_opts** | String | Additional options for IQ-TREE, see <http://www.iqtree.org/doc/Command-Reference> |  | Optional |
-| core_iqtree | **iqtree_bootstraps** | String | Number of ultrafast bootstrap replicates. Follows IQ-TREE "-bb" option. | 1000 | Optional |
-| core_iqtree | **alrt** | String | Number of replicates to perform SH-like approximate likelihood ratio test (SH-aLRT). Follows IQ-TREE "-alrt" option | 1000 | Optional |
-| core_reorder_matrix | **cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional |
-| core_reorder_matrix | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
-| core_reorder_matrix | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/mykrobe:0.12.1 | Optional |
-| core_reorder_matrix | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 2 | Optional |
-| core_snp_dists | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 2 | Optional |
-| core_snp_dists | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/snp-dists:0.8.2 | Optional |
-| core_snp_dists | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 50 | Optional |
-| core_snp_dists | **cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional |
-| pan_iqtree | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 32 | Optional |
-| pan_iqtree | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
-| pan_iqtree | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional |
-| pan_iqtree | **alrt** | String | Number of replicates to perform SH-like approximate likelihood ratio test (SH-aLRT). Follows IQ-TREE "-alrt" option | 1000 | Optional |
-| pan_iqtree | **iqtree_model** | String | Substitution model, frequency type (optional) and rate heterogeneity type (optional) used by IQ-TREE. This string follows the IQ-TREE "-m" option. For comparison to other tools use HKY for Bactopia, GTR+F+I for Grandeur, GTR+G4 for Nullarbor, GTR+G for Dryad | GTR+I+G | Optional |
-| pan_iqtree | **iqtree_bootstraps** | String | Number of ultrafast bootstrap replicates. Follows IQ-TREE "-bb" option. | 1000 | Optional |
-| pan_iqtree | **iqtree_opts** | String | Additional options for IQ-TREE, see <http://www.iqtree.org/doc/Command-Reference> |  | Optional |
-| pan_iqtree | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/iqtree:1.6.7 | Optional |
-| pan_reorder_matrix | **cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional |
-| pan_reorder_matrix | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
-| pan_reorder_matrix | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/mykrobe:0.12.1 | Optional |
-| pan_reorder_matrix | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 2 | Optional |
-| pan_snp_dists | **cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional |
-| pan_snp_dists | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 50 | Optional |
-| pan_snp_dists | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/snp-dists:0.8.2 | Optional |
-| pan_snp_dists | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 2 | Optional |
-| pirate | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
-| pirate | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional |
-| pirate | **nucl** | Boolean | Boolean variable that instructs pirate to create a pangenome on CDS features using nucleotide identity, rather than amino acid identity, if true.  | FALSE | Optional |
-| pirate | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 32 | Optional |
-| pirate | **panopt** | String | Additional arguments for Pirate |  | Optional |
-| pirate | **docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/biocontainers/pirate:1.0.5--hdfd78af_0 | Optional |
-| pirate | **features** | String | Features to use for pangenome construction [default: CDS] | CDS | Optional |
-| pirate | **steps** | String | Identity thresholds to use for pangenome construction | 50,60,70,80,90,95,98 | Optional |
-| summarize_data | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
-| summarize_data | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-03-16 | Optional |
-| summarize_data | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 1 | Optional |
-| summarize_data | **id_column_name** | String | Use in the case your sample IDs are not in the table ID column | 1 | Optional |
-| summarize_data | **cpu** | Int | Number of CPUs to allocate to the task | 8 | Optional |
-| version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
-| version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
+{{ input_table("docs/assets/input_tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="Core_Gene_SNP", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"]) }}
 
-</div>
+///
 
 ### Workflow Tasks
 

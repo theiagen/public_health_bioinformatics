@@ -46,41 +46,11 @@ The `Clair3_Variants` workflow processes Oxford Nanopore Technologies (ONT) sequ
     - clair3_include_all_contigs is set to `true` to ensure complete genome coverage
     - clair3_enable_haploid_precise is set to `true` to only consider homozygous variants (1/1), which is appropriate for haploid genomes
 
-<div class="searchable-table" markdown="1">
+/// html | div[class="searchable-table"]
 
-| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
-|---|---|---|---|---|---|
-| clair3_variants_ont | **clair3_cpu** | Int | Number of CPUs to use | 4 | Optional |
-| clair3_variants_ont | **clair3_disable_phasing** | Boolean | Disable whatshap phasing | true | Optional |
-| clair3_variants_ont | **clair3_disk_size** | Int | Disk size in GB | 100 | Optional |
-| clair3_variants_ont | **clair3_docker** | String | Docker container for task | us-docker.pkg.dev/general-theiagen/staphb/clair3:1.0.10 | Optional |
-| clair3_variants_ont | **clair3_enable_gvcf** | Boolean | Output gVCF format | false | Optional |
-| clair3_variants_ont | **clair3_enable_haploid_precise** | Boolean | Enable haploid precise calling, only 1/1 is considered as a variant | true | Optional |
-| clair3_variants_ont | **clair3_enable_long_indel** | Boolean | Enable long indel calling | false | Optional |
-| clair3_variants_ont | **clair3_include_all_contigs** | Boolean | Call variants on all contigs, should always be true for non-human samples | true | Optional |
-| clair3_variants_ont | **clair3_memory** | Int | Memory allocation in GB | 8 | Optional |
-| clair3_variants_ont | **clair3_model** | String | Model name for variant calling (see [supported models](#supported-clair3-models) for available options) | r941_prom_hac_g360+g422 | Optional |
-| clair3_variants_ont | **clair3_variant_quality** | Int | Minimum variant quality score | 2 | Optional |
-| clair3_variants_ont | **read1** | File | ONT sequencing reads in FASTQ format | | Required |
-| clair3_variants_ont | **reference_genome_file** | File | Reference genome in FASTA format | | Required |
-| clair3_variants_ont | **samplename** | String | Name of Samples | | Required |
-| minimap2 | **cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional |
-| minimap2 | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
-| minimap2 | **docker** | String | Docker image used for this task. | "us-docker.pkg.dev/general-theiagen/staphb/minimap2:2.22" | Optional |
-| minimap2 | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional |
-| minimap2 | **query2** | File | Internal component. Do not modify | None | Do not modify, Optional |
-| sam_to_sorted_bam | **cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional |
-| sam_to_sorted_bam | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
-| sam_to_sorted_bam | **docker** | String | Docker image used for this task. | "us-docker.pkg.dev/general-theiagen/staphb/samtools:1.17" | Optional |
-| sam_to_sorted_bam | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional |
-| samtools_faidx | **cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional |
-| samtools_faidx | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
-| samtools_faidx | **docker** | String | Docker image used for this task. | "us-docker.pkg.dev/general-theiagen/staphb/samtools:1.17" | Optional |
-| samtools_faidx | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional |
-| version_capture | **docker** | String | Docker container for versioning | us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0 | Optional |
-| version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
+{{ input_table("docs/assets/input_tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="Clair3_Variants_ONT", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"]) }}
 
-</div>
+///
 
 ### Workflow Tasks
 

@@ -76,79 +76,11 @@ To run Snippy_Streamline, either a reference genome must be provided (`reference
         - Using the core genome
             - `core_genome` = true (as default)
 
-<div class="searchable-table" markdown="1">
+/// html | div[class="searchable-table"]
 
-| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
-|---|---|---|---|---|---|
-| snippy_streamline | **read1** | Array[File] | The forward read files |  | Required |
-| snippy_streamline | **read2** | Array[File] | The reverse read files |  | Required |
-| snippy_streamline | **samplenames** | Array[String] | The names of your samples |  | Required |
-| snippy_streamline | **tree_name** | String | String of your choice to prefix output files |  | Required |
-| centroid | **cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional |
-| centroid | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 50 | Optional |
-| centroid | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/theiagen/centroid:0.1.0 | Optional |
-| centroid | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 4 | Optional |
-| snippy_streamline | **assembly_fasta** | Array[File] | The assembly files for your samples (Required if a reference genome is not provided) |  | Optional |
-| snippy_streamline | **reference_genome_file** | File | Reference genome in FASTA or GENBANK format (must be the same reference used in Snippy_Variants workflow); provide this if you want to skip the detection of a suitable reference |  | Optional |
-| snippy_streamline | **use_centroid_as_reference** | Booolean | Set to true if you want to use the centroid sample as the reference sample instead of using the centroid to detect a suitable one | false  | Optional |
-| ncbi_datasets_download_genome_accession | **cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional |
-| ncbi_datasets_download_genome_accession | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 50 | Optional |
-| ncbi_datasets_download_genome_accession | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/ncbi-datasets:14.13.2 | Optional |
-| ncbi_datasets_download_genome_accession | **include_gff3** | Boolean | When set to true, outputs a gff3 file (Annotation file) | FALSE | Optional |
-| ncbi_datasets_download_genome_accession | **include_gbff** | Boolean | When set to true, outputs a gbff file (GenBank file) | FALSE | Optional |
-| ncbi_datasets_download_genome_accession | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 4 | Optional |
-| ncbi_datasets_download_genome_accession | **use_ncbi_virus** | Boolean | When set to true will download from NCBI Virus Datasets | FALSE | Optional |
-| referenceseeker | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional |
-| referenceseeker | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 200 | Optional |
-| referenceseeker | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/biocontainers/referenceseeker:1.8.0--pyhdfd78af_0 | Optional |
-| referenceseeker | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 16 | Optional |
-| referenceseeker | **referenceseeker_ani_threshold** | Float | Bidirectional average nucleotide identity to use as a cut off for identifying reference assemblies with ReferenceSeeker; default value set according to <https://github.com/oschwengers/referenceseeker#description> | 0.95 | Optional |
-| referenceseeker | **referenceseeker_conserved_dna_threshold** | Float | Conserved DNA % to use as a cut off for identifying reference assemblies with ReferenceSeeker; default value set according to <https://github.com/oschwengers/referenceseeker#description> | 0.69 | Optional |
-| referenceseeker | **referenceseeker_db** | File | Database to use with ReferenceSeeker | gs://theiagen-public-files-rp/terra/theiaprok-files/referenceseeker-bacteria-refseq-205.v20210406.tar.gz | Optional |
-| snippy_tree_wf | **call_shared_variants** | Boolean | Activates the shared variants analysis task | TRUE | Optional |
-| snippy_tree_wf | **core_genome** | Boolean | When "true", workflow generates core genome phylogeny; when "false", whole genome is used | TRUE | Optional |
-| snippy_tree_wf | **data_summary_column_names** | String | A comma-separated list of the column names from the sample-level data table for generating a data summary (presence/absence .csv matrix) |  | Optional |
-| snippy_tree_wf | **data_summary_terra_project** | String | The billing project for your current workspace. This can be found after the "#workspaces/" section in the workspace's URL |  | Optional |
-| snippy_tree_wf | **data_summary_terra_table** | String | The name of the sample-level Terra data table that will be used for generating a data summary |  | Optional |
-| snippy_tree_wf | **data_summary_terra_workspace** | String | The name of the Terra workspace you are in. This can be found at the top of the webpage, or in the URL after the billing project. |  | Optional |
-| snippy_tree_wf | **gubbins_cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional |
-| snippy_tree_wf | **gubbins_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
-| snippy_tree_wf | **gubbins_docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/biocontainers/gubbins:3.3--py310pl5321h8472f5a_0 | Optional |
-| snippy_tree_wf | **gubbins_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 32 | Optional |
-| snippy_tree_wf | **iqtree2_bootstraps** | String | Number of replicates for <http://www.iqtree.org/doc/Tutorial#assessing-branch-supports-with-ultrafast-bootstrap-approximation> (Minimum recommended= 1000) | 1000 | Optional |
-| snippy_tree_wf | **iqtree2_cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional |
-| snippy_tree_wf | **iqtree2_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
-| snippy_tree_wf | **iqtree2_docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/iqtree2:2.1.2 | Optional |
-| snippy_tree_wf | **iqtree2_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 32 | Optional |
-| snippy_tree_wf | **iqtree2_model** | String | Nucelotide substitution model to use when generating the final tree with IQTree2. By default, IQtree runs its ModelFinder algorithm to identify the model it thinks best fits your dataset. See [here](http://www.iqtree.org/doc/Substitution-Models) for available models. |  | Optional |
-| snippy_tree_wf | **iqtree2_opts** | String | Additional options to pass to IQTree2 |  | Optional |
-| snippy_tree_wf | **midpoint_root_tree** | Boolean | A True/False option that determines whether the tree used in the SNP matrix re-ordering task should be re-rooted or not. Options: true of false | TRUE | Optional |
-| snippy_tree_wf | **phandango_coloring** | Boolean | Boolean variable that tells the data summary task and the reorder matrix task to include a suffix that enables consistent coloring on Phandango; by default, this suffix is not added. To add this suffix set this variable to true. | FALSE | Optional |
-| snippy_tree_wf | **snippy_core_bed** | File | User-provided bed file to mask out regions of the genome when creating multiple sequence alignments |  | Optional |
-| snippy_tree_wf | **snippy_core_cpu** | Int | Number of CPUs to allocate to the task | 8 | Optional |
-| snippy_tree_wf | **snippy_core_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
-| snippy_tree_wf | **snippy_core_docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/snippy:4.6.0 | Optional |
-| snippy_tree_wf | **snippy_core_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 16 | Optional |
-| snippy_tree_wf | **snp_dists_docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/snp-dists:0.8.2 | Optional |
-| snippy_tree_wf | **snp_sites_cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional |
-| snippy_tree_wf | **snp_sites_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
-| snippy_tree_wf | **snp_sites_docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/snp-sites:2.5.1 | Optional |
-| snippy_tree_wf | **snp_sites_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 4 | Optional |
-| snippy_tree_wf | **use_gubbins** | Boolean | When "true", workflow removes recombination with gubbins tasks; when "false", gubbins is not used | TRUE | Optional |
-| snippy_variants_wf | **base_quality** | Int | Minimum quality for a nucleotide to be used in variant calling | 13 | Optional |
-| snippy_variants_wf | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional |
-| snippy_variants_wf | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/snippy:4.6.0 | Optional |
-| snippy_variants_wf | **map_qual** | Int | Minimum mapping quality to accept in variant calling |  | Optional |
-| snippy_variants_wf | **maxsoft** | Int | Number of bases of alignment to soft-clip before discarding the alignment |  | Optional |
-| snippy_variants_wf | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 16 | Optional |
-| snippy_variants_wf | **min_coverage** | Int | Minimum read coverage of a position to identify a mutation | 10 | Optional |
-| snippy_variants_wf | **min_frac** | Float | Minimum fraction of bases at a given position to identify a mutation | 0.9 | Optional |
-| snippy_variants_wf | **min_quality** | Int | Minimum VCF variant call "quality" | 100 | Optional |
-| snippy_variants_wf | **query_gene** | String | Indicate a particular gene of interest |  | Optional |
-| version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
-| version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
+{{ input_table("docs/assets/input_tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="Snippy_Streamline", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"]) }}
 
-</div>
+///
 
 ### Workflow Tasks
 

@@ -14,15 +14,11 @@ The workflow uses the fastq-dl tool to fetch metadata from SRA and specifically 
 
 ### Inputs
 
-| **Terra Task Name** | **Variable** | **Type** | **Description**| **Default Value** | **Terra Status** |
-| --- | --- | --- | --- | --- | --- |
-| fetch_srr_metadata | **sample_accession** | String |  SRA-compatible accession, such as a **BioSample ID** (e.g., "SAMN00000000") or **SRA Experiment ID** (e.g., "SRX000000"), used to retrieve SRR metadata. | | Required |
-| fetch_srr_metadata | **cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional |
-| fetch_srr_metadata | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 10 | Optional |
-| fetch_srr_metadata | **docker**| String |  The Docker container to use for the task | `us-docker.pkg.dev/general-theiagen/biocontainers/fastq-dl:2.0.4--pyhdfd78af_0` | Optional |
-| fetch_srr_metadata | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional |
-| version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
-| version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) | | Optional |
+/// html | div[class="searchable-table"]
+
+{{ input_table("docs/assets/input_tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="Fetch_SRR_Accession", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"]) }}
+
+///
 
 ### Workflow Tasks
 
