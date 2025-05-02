@@ -45,7 +45,7 @@ task arln_stats {
         fi
 
         # Calculate Assembly Ratio
-        if [[ "~{taxon}" == "NA"]]; then
+        if [[ "~{taxon}" == "NA" ]]; then
             echo "Taxon (NA) not found in assembly stats file" > assem_ratio_with_stdev
 
         elif grep -q "~{taxon}" /data/NCBI_Assembly_stats_20240124.txt; then
