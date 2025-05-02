@@ -48,11 +48,14 @@ task spades {
     else
       # all other spades types should fail via the pipefail, so they pass by default
       mv spades/contigs.fasta ~{samplename}~{'_' + spades_type + 'spades'}_contigs.fasta
+      # Move the contigs.gfa file to the top level directory
+      mv spades/contigs.gfa ~{samplename}~{'_' + spades_type + 'spades'}_contigs.gfa
       echo "PASS" > STATUS
     fi
   >>>
   output {
-    File? assembly_fasta = "~{samplename}~{'_' + spades_type + 'spades'}_contigs.fasta"
+    File assembly_fasta = "~{samplename}~{'_' + spades_type + 'spades'}_contigs.fasta"
+    File? assembly_gfa = "~{samplename}~{'_' + spades_type + 'spades'}_contigs.gfa"
     String spades_status = read_string("STATUS")
     String spades_version = read_string("VERSION")
     String spades_docker = '~{docker}'

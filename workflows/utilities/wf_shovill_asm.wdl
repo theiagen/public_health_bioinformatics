@@ -112,6 +112,7 @@ workflow shovill_asm {
   }
   output {
     File final_assembly = select_first([pilon.assembly_fasta, spades.assembly_fasta, megahit.assembly_fasta, skesa.assembly_fasta])
+    File? final_gfa = spades.assembly_gfa
     File? pilon_changes = pilon.changes
     File? pilon_vcf = pilon.vcf
     String assembler_used = assembler
