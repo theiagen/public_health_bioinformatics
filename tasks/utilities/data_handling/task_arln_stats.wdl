@@ -29,12 +29,17 @@ task arln_stats {
         awk '/read2/ {printf "%.2f\n", $2}' CLEAN_Q30 > read2_clean_q30
 
         # Calculate Assembly Ratio
-        assem_mean=$(grep "~{taxon}" /data/NCBI_Assembly_stats_20240124.txt | awk '{print $6}')
-        echo "${assem_mean}"
-        st_dev=$(grep "~{taxon}" /data/NCBI_Assembly_stats_20240124.txt | awk '{print $7}' | xargs printf "%.5f\n")
-        echo "${st_dev}"
-        assem_ratio=$(python3 -c "print('{:.4f}'.format((float('${assem_mean}') * 1000000)/ ~{genome_length}))")
-        echo "${assem_ratio}x(${st_dev})" > assem_ratio_with_stdev
+        if grep -q "~{taxon}" /data/NCBI_Assembly_stats_20240124.txt; then
+            assem_mean=$(grep "~{taxon}" /data/NCBI_Assembly_stats_20240124.txt | awk '{print $6}')
+            echo "${assem_mean}"
+            st_dev=$(grep "~{taxon}" /data/NCBI_Assembly_stats_20240124.txt | awk '{print $7}' | xargs printf "%.5f\n")
+            echo "${st_dev}"
+            assem_ratio=$(python3 -c "print('{:.4f}'.format((float('${assem_mean}') * 1000000)/ ~{genome_length}))")
+            echo "${assem_ratio}x(${st_dev})" > assem_ratio_with_stdev
+        else
+            echo "Taxon not found in assembly stats file" > assem_ratio_with_stdev
+        fi
+
     >>>
     
     output {
