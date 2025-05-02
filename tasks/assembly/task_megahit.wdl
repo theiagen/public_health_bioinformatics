@@ -9,6 +9,7 @@ task megahit {
     Int disk_size = 100
     Int cpu = 4
     Int memory = 16
+    Int min_contig_length = 1
     String? kmers
     String? megahit_opts
   }
@@ -28,6 +29,7 @@ task megahit {
         -1 ~{read1} \
         -2 ~{read2} \
         ~{'--k-list ' + kmers} \
+        --min-contig-len ~{min_contig_length} \
         -m ${memory} \
         -t ~{cpu} \
         -o megahit/ \
@@ -37,6 +39,7 @@ task megahit {
       megahit \
         -r ~{read1} \
         ~{'--k-list ' + kmers} \
+        --min-contig-len ~{min_contig_length} \
         -m ${memory} \
         -t ~{cpu} \
         -o megahit/ \

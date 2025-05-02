@@ -21,7 +21,7 @@ task spades {
     fi
 
     # get version
-    spades.py ${spades_call} --version | sed -Ee "s/SPAdes genome assembler ([^ ]+).*/\1/" | tee VERSION
+    spades.py --version | sed -Ee "s/SPAdes genome assembler ([^ ]+).*/\1/" | tee VERSION
 
     echo "DEBUG: Running SPAdes"
     spades.py \
@@ -49,7 +49,7 @@ task spades {
       # all other spades types should fail via the pipefail, so they pass by default
       mv spades/contigs.fasta ~{samplename}~{'_' + spades_type + 'spades'}_contigs.fasta
       # Move the contigs.gfa file to the top level directory
-      mv spades/contigs.gfa ~{samplename}~{'_' + spades_type + 'spades'}_contigs.gfa
+      mv spades/assembly_graph_with_scaffolds.gfa ~{samplename}~{'_' + spades_type + 'spades'}_contigs.gfa
       echo "PASS" > STATUS
     fi
   >>>

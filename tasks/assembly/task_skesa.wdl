@@ -9,6 +9,7 @@ task skesa {
     Int disk_size = 100
     Int cpu = 4
     Int memory = 16
+    Int min_contig_length = 1
     String? skesa_opts
   }
   command <<<
@@ -23,7 +24,7 @@ task skesa {
         --fastq ~{read1},~{read2} \
         --use_paired_ends \
         --contigs_out ~{samplename}_skesa_contigs.fasta \
-        --min_contig 1 \
+        --min_contig ~{min_contig_length} \
         --memory ~{memory} \
         --cores ~{cpu} \
         --vector_percent 1 \
@@ -31,7 +32,7 @@ task skesa {
     else
       skesa --fastq ~{read1} \
         --contigs_out ~{samplename}_skesa_contigs.fasta \
-        --min_contig 1 \
+        --min_contig ~{min_contig_length} \
         --memory ~{memory} \
         --cores ~{cpu} \
         --vector_percent 1 \

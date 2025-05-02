@@ -12,33 +12,32 @@ workflow shovill_asm {
     File? read2
     String samplename
     String assembler = "spades" # Options: spades, skesa, megahit
+    Int min_contig_length = 200
     String? kmers
     Boolean use_pilon = false
     String? opts # Extra assembler options
-
-    # Optional parameters
+    # Optional parameters fir spades
     String? spades_type = "isolate"
     Int? spades_cpu
     Int? spades_memory
     Int? spades_disk_size
     String? spades_docker
-
+    # Optional parameters for skesa
     Int? skesa_cpu
     Int? skesa_memory
     Int? skesa_disk_size
     String? skesa_docker
-
+    # Optional parameters for megahit
     Int? megahit_cpu
     Int? megahit_memory
     Int? megahit_disk_size
     String? megahit_docker
-    
-    # bwa/pilon parameters
+    # Optional parameters for bwa
     Int? bwa_cpu
     Int? bwa_memory
     Int? bwa_disk_size
     String? bwa_docker
-
+    # Optional parameters for pilon
     Int? pilon_cpu
     Int? pilon_memory
     Int? pilon_disk_size
@@ -66,6 +65,7 @@ workflow shovill_asm {
         read2 = read2,
         samplename = samplename,
         kmers = kmers,
+        min_contig_length = min_contig_length,
         megahit_opts = opts,
         cpu = megahit_cpu,
         memory = megahit_memory,
@@ -79,6 +79,7 @@ workflow shovill_asm {
         read1 = read1,
         read2 = read2,
         samplename = samplename,
+        min_contig_length = min_contig_length,
         skesa_opts = opts,
         cpu = skesa_cpu,
         memory = skesa_memory,
