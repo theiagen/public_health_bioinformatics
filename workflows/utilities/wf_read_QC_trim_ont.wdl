@@ -46,6 +46,12 @@ workflow read_QC_trim_ont {
     Int? kraken_disk_size
     String? kraken_docker_image
     Int? kraken_memory
+
+    # parse classified reads inputs
+    Int? kraken2_recalculate_abundances_cpu
+    Int? kraken2_recalculate_abundances_disk_size
+    String? kraken2_recalculate_abundances_docker
+    Int? kraken2_recalculate_abundances_memory
   
     # rasusa downsampling inputs
     Float downsampling_coverage = 150
@@ -107,8 +113,10 @@ workflow read_QC_trim_ont {
         kraken2_report = kraken2_raw.kraken_report,
         kraken2_classified_report = kraken2_raw.kraken2_classified_report,
         target_organism = target_organism,
-        memory = kraken_memory,
-        cpu = kraken_cpu
+        disk_size = kraken2_recalculate_abundances_disk_size,
+        memory = kraken2_recalculate_abundances_memory,
+        cpu = kraken2_recalculate_abundances_cpu,
+        docker = kraken2_recalculate_abundances_docker
     }  
     call kraken2.kraken2_theiacov as kraken2_dehosted {
       input:
@@ -127,8 +135,10 @@ workflow read_QC_trim_ont {
         kraken2_report = kraken2_dehosted.kraken_report,
         kraken2_classified_report = kraken2_dehosted.kraken2_classified_report,
         target_organism = target_organism,
-        memory = kraken_memory,
-        cpu = kraken_cpu
+        disk_size = kraken2_recalculate_abundances_disk_size,
+        memory = kraken2_recalculate_abundances_memory,
+        cpu = kraken2_recalculate_abundances_cpu,
+        docker = kraken2_recalculate_abundances_docker
     } 
   }
   if ("~{workflow_series}" == "theiaprok") {
@@ -148,8 +158,10 @@ workflow read_QC_trim_ont {
           samplename = samplename,
           kraken2_report = kraken2_se.kraken2_report,
           kraken2_classified_report = kraken2_se.kraken2_classified_report,
-          memory = kraken_memory,
-          cpu = kraken_cpu
+          disk_size = kraken2_recalculate_abundances_disk_size,
+          memory = kraken2_recalculate_abundances_memory,
+          cpu = kraken2_recalculate_abundances_cpu,
+          docker = kraken2_recalculate_abundances_docker
       }
     } if ((call_kraken) && ! defined(kraken_db)) {
       String kraken_db_warning = "Kraken database not defined"
