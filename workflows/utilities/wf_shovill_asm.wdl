@@ -9,7 +9,7 @@ import "../../tasks/quality_control/read_filtering/task_pilon.wdl" as task_pilon
 workflow shovill_asm {
   input {
     File read1
-    File read2
+    File? read2
     String samplename
     String assembler = "spades" # Options: spades, skesa, megahit
     String? kmers
