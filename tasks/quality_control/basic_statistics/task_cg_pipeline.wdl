@@ -40,8 +40,6 @@ task cg_pipeline {
             r1_mean_q.write(line["avgQuality"])
           with open("R1_MEAN_LENGTH", 'wt') as r1_mean_length:
             r1_mean_length.write(line["avgReadLength"])
-          with open("R1_BASES", 'wt') as r1_bases:
-            r1_bases.write(line["totalBases"])
 
           # run_assembly_readMetrics can report coverage as '.'
           try:
@@ -55,8 +53,6 @@ task cg_pipeline {
             r2_mean_q.write(line["avgQuality"])
           with open("R2_MEAN_LENGTH", 'wt') as r2_mean_length:
             r2_mean_length.write(line["avgReadLength"])
-          with open("R2_BASES", 'wt') as r2_bases:
-            r2_bases.write(line["totalBases"]) 
           # run_assembly_readMetrics can report coverage as '.'
           try:
             coverage += float(line["coverage"])
@@ -92,8 +88,6 @@ task cg_pipeline {
     File cg_pipeline_report = "${samplename}_readMetrics.tsv"
     String cg_pipeline_docker = docker
     String pipeline_date = read_string("DATE")
-    Int r1_bases = read_int("R1_BASES")
-    Int r2_bases = read_int("R2_BASES")
     Float r1_mean_q = read_float("R1_MEAN_Q")
     Float r2_mean_q = read_float("R2_MEAN_Q")
     Float combined_mean_q = read_float("COMBINED_MEAN_Q")
