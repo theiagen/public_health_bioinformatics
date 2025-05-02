@@ -17,6 +17,7 @@ workflow shovill_asm {
     String? opts # Extra assembler options
 
     # Optional parameters
+    String? spades_type = "isolate"
     Int? spades_cpu
     Int? spades_memory
     Int? spades_disk_size
@@ -50,6 +51,7 @@ workflow shovill_asm {
         read2 = read2,
         samplename = samplename,
         kmers = kmers,
+        spades_type = spades_type,
         spades_opts = opts,
         cpu = spades_cpu,
         memory = spades_memory,
