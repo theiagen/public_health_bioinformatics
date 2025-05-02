@@ -42,7 +42,7 @@ task arln_stats {
         Float read2_raw_q30 = read_float("read2_raw_q30")
         Float read1_clean_q30 = read_float("read1_clean_q30")
         Float read2_clean_q30 = read_float("read2_clean_q30")
-        String assem_ratio = read_string("assem_ratio_with_stdev")
+        String assembly_ratio = read_string("assem_ratio_with_stdev")
         String docker_version = docker
     }
     
