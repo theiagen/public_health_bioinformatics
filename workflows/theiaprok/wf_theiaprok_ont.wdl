@@ -618,7 +618,7 @@ workflow theiaprok_ont {
               workflow_type = "ont",
               genome_length = quast.genome_length,
               read1_raw = read1,
-              read1_clean = read_QC_trim.read1_clean,
+              read1_clean = read_qc_trim.read1_clean,
           }
         }
       }
