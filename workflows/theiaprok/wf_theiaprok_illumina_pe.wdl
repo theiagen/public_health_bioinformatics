@@ -714,19 +714,21 @@ workflow theiaprok_illumina_pe {
               }
           }
         }
-      }
-      if (call_arln_stats) {
-        call arln_stats.arln_stats {
-          input:
-            samplename = samplename,
-            taxon = select_first([gambit.gambit_predicted_taxon, expected_taxon]),
-            genome_length = quast.genome_length,
-            read1_raw = select_first([concatenate_illumina_lanes.read1_concatenated, read1]),
-            read2_raw = select_first([concatenate_illumina_lanes.read1_concatenated, read2]),
-            read1_clean = read_QC_trim.read1_clean,
-            read2_clean = read_QC_trim.read2_clean,
+        if (call_arln_stats) {
+          call arln_stats.arln_stats {
+            input:
+              samplename = samplename,
+              taxon = select_first([gambit.gambit_predicted_taxon, expected_taxon]),
+              workflow_type = "pe",
+              genome_length = quast.genome_length,
+              read1_raw = select_first([concatenate_illumina_lanes.read1_concatenated, read1]),
+              read2_raw = select_first([concatenate_illumina_lanes.read1_concatenated, read2]),
+              read1_clean = read_QC_trim.read1_clean,
+              read2_clean = read_QC_trim.read2_clean,
+          }
         }
       }
+
     }
   }
   output {

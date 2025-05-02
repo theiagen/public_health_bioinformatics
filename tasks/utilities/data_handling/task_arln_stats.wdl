@@ -4,11 +4,13 @@ task arln_stats {
     input {
         String samplename
         String taxon
+        String workflow_type
+
         Int genome_length
-        File read1_raw
-        File read2_raw
-        File read1_clean
-        File read2_clean
+        File? read1_raw
+        File? read2_raw
+        File? read1_clean
+        File? read2_clean
 
         Int cpu = 2
         Int memory = 5
@@ -20,13 +22,27 @@ task arln_stats {
         set -euo pipefail
 
         # Generate Q30 statistics raw reads
-        python /scripts/q30.py -i ~{read1_raw} ~{read2_raw} > RAW_Q30
-        awk '/read1/ {printf "%.2f\n", $2}' RAW_Q30 > read1_raw_q30
-        awk '/read2/ {printf "%.2f\n", $2}' RAW_Q30 > read2_raw_q30
-        # Generate Q30 statistics cleaned reads
-        python /scripts/q30.py -i ~{read1_clean} ~{read2_clean} > CLEAN_Q30
-        awk '/read1/ {printf "%.2f\n", $2}' CLEAN_Q30 > read1_clean_q30
-        awk '/read2/ {printf "%.2f\n", $2}' CLEAN_Q30 > read2_clean_q30
+        if [[ ~{workflow_type} == "pe" ]]; then
+            python /scripts/q30.py -i ~{read1_raw} ~{read2_raw} > RAW_Q30
+            awk '/read1/ {printf "%.2f\n", $2}' RAW_Q30 > read1_raw_q30
+            awk '/read2/ {printf "%.2f\n", $2}' RAW_Q30 > read2_raw_q30
+            # Generate Q30 statistics cleaned reads
+            python /scripts/q30.py -i ~{read1_clean} ~{read2_clean} > CLEAN_Q30
+            awk '/read1/ {printf "%.2f\n", $2}' CLEAN_Q30 > read1_clean_q30
+            awk '/read2/ {printf "%.2f\n", $2}' CLEAN_Q30 > read2_clean_q30
+        elif [[ ~{workflow_type} == "se" || ~{workflow_type} == "ont" ]]; then
+            python /scripts/q30.py -i ~{read1_raw} > RAW_Q30
+            awk '/read1/ {printf "%.2f\n", $2}' RAW_Q30 > read1_raw_q30
+            echo "0.0" > read2_raw_q30
+            python /scripts/q30.py -i ~{read1_clean} > CLEAN_Q30
+            awk '/read1/ {printf "%.2f\n", $2}' CLEAN_Q30 > read1_clean_q30
+            echo "0.0" > read2_clean_q30
+        else
+            echo "0.0" > read1_raw_q30
+            echo "0.0" > read2_raw_q30
+            echo "0.0" > read1_clean_q30
+            echo "0.0" > read2_clean_q30
+        fi
 
         # Calculate Assembly Ratio
         if grep -q "~{taxon}" /data/NCBI_Assembly_stats_20240124.txt; then
@@ -43,10 +59,10 @@ task arln_stats {
     >>>
     
     output {
-        Float read1_raw_q30 = read_float("read1_raw_q30")
-        Float read2_raw_q30 = read_float("read2_raw_q30")
-        Float read1_clean_q30 = read_float("read1_clean_q30")
-        Float read2_clean_q30 = read_float("read2_clean_q30")
+        Float? read1_raw_q30 = read_float("read1_raw_q30")
+        Float? read2_raw_q30 = read_float("read2_raw_q30")
+        Float? read1_clean_q30 = read_float("read1_clean_q30")
+        Float? read2_clean_q30 = read_float("read2_clean_q30")
         String assembly_ratio = read_string("assem_ratio_with_stdev")
         String docker_version = docker
     }
