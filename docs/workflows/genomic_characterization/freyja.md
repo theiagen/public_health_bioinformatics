@@ -4,7 +4,7 @@
 
 | **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
 |---|---|---|---|---|
-| [Genomic Characterization](../../workflows_overview/workflows_type.md/#genomic-characterization) | [Viral](../../workflows_overview/workflows_kingdom.md/#viral) | PHB v3.0.0 | Yes | Sample-level, Set-level |
+| [Genomic Characterization](../../workflows_overview/workflows_type.md/#genomic-characterization) | [Viral](../../workflows_overview/workflows_kingdom.md/#viral) | PHB vX.X.X | Yes | Sample-level, Set-level |
 
 ## Freyja Overview
 
@@ -186,6 +186,10 @@ This workflow runs on the sample level.
 | read_QC_trim_ont | **kraken_db** | File | A kraken2 database to use with the kraken2 optional task. The file must be a .tar.gz kraken2 database. |  | Optional |
 | read_QC_trim_ont | **kraken_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
 | read_QC_trim_ont | **kraken_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional |
+| read_QC_trim_ont | **kraken2_recalculate_abundances_cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional |
+| read_QC_trim_ont | **kraken2_recalculate_abundances_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
+| read_QC_trim_ont | **kraken2_recalculate_abundances_docker** | Int | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-08-28-v4" | Optional |
+| read_QC_trim_ont | **kraken2_recalculate_abundances_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 32 | Optional |
 | read_QC_trim_ont | **max_length** | Int | Internal component, do not modify |  | Do not modify, Optional |
 | read_QC_trim_ont | **min_length** | Int | Internal component, do not modify |  | Do not modify, Optional |
 | read_QC_trim_ont | **run_prefix** | String | Internal component, do not modify |  | Do not modify, Optional |

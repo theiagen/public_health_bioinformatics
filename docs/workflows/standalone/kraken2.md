@@ -4,7 +4,7 @@
 
 | **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
 |---|---|---|---|---|
-| [Standalone](../../workflows_overview/workflows_type.md/#standalone) | [Any Taxa](../../workflows_overview/workflows_kingdom.md/#any-taxa) | PHB v3.0.0 | Yes | Sample-level |
+| [Standalone](../../workflows_overview/workflows_type.md/#standalone) | [Any Taxa](../../workflows_overview/workflows_kingdom.md/#any-taxa) | PHB vX.X.X | Yes | Sample-level |
 
 ## Kraken2 Workflows
 
@@ -68,7 +68,7 @@ Besides the data input types, there are minimal differences between these two wo
 | kraken2_recalculate_abundances | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional | ONT |
 | kraken2_recalculate_abundances | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | ONT |
 | kraken2_recalculate_abundances | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-08-28-v4 | Optional | ONT |
-| kraken2_recalculate_abundances | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | ONT |
+| kraken2_recalculate_abundances | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 32 | Optional | ONT |
 | kraken2_recalculate_abundances | **target_organism** | String | Target organism for the kraken2 abundance to be exported to the data table |  | Optional | ONT |
 | version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional | ONT, PE, SE |
 | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional | ONT, PE, SE |

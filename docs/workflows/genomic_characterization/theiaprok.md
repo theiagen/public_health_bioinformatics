@@ -4,7 +4,7 @@
 
 | **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
 |---|---|---|---|---|
-| [Genomic Characterization](../../workflows_overview/workflows_type.md/#genomic-characterization) | [Bacteria](../../workflows_overview/workflows_kingdom.md/#bacteria) | PHB v3.0.1 | Yes, some optional features incompatible | Sample-level |
+| [Genomic Characterization](../../workflows_overview/workflows_type.md/#genomic-characterization) | [Bacteria](../../workflows_overview/workflows_kingdom.md/#bacteria) | PHB vX.X.X | Yes, some optional features incompatible | Sample-level |
 
 ## TheiaProk Workflows
 
@@ -482,6 +482,10 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 | read_QC_trim | **kraken_disk_size** | Int | GB of storage to request for VM used to run the kraken2 task. Increase this when using large (>30GB kraken2 databases such as the "k2_standard" database) | 100 | Optional | ONT, PE, SE |
 | read_QC_trim | **kraken_docker_image** | Int | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.1.2-no-db" | Optional | ONT |
 | read_QC_trim | **kraken_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | ONT, PE, SE |
+| read_QC_trim | **kraken2_recalculate_abundances_cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional | ONT |
+| read_QC_trim | **kraken2_recalculate_abundances_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | ONT |
+| read_QC_trim | **kraken2_recalculate_abundances_docker** | Int | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-08-28-v4" | Optional | ONT |
+| read_QC_trim | **kraken2_recalculate_abundances_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 32 | Optional | ONT |
 | read_QC_trim | **max_length** | Int | Internal component, do not modify |  | Do not modify, Optional | ONT |
 | read_QC_trim | **min_length** | Int | Internal component, do not modify |  | Do not modify, Optional | ONT |
 | read_QC_trim | **midas_db** | File | Midas database file | gs://theiagen-large-public-files-rp/terra/theiaprok-files/midas/midas_db_v1.2.tar.gz | Optional | PE, SE |
