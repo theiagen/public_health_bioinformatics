@@ -5,50 +5,19 @@ task arln_stats {
         String samplename
         String taxon
         Int genome_length
-        Int cg_bases_r1
-        Int cg_bases_r2
-        Int cg_bases_cleaned_r1
-        Int cg_bases_cleaned_r2
-        File cg_report_raw 
-        File cg_report_cleaned
         File read1_raw
         File read2_raw
         File read1_clean
         File read2_clean
-        File kraken2_report
-        Float quast_gc_percent
 
         Int cpu = 2
         Int memory = 5
         Int disk_size = 10
-        String docker = "arln_stats:1.0.0"
+        String docker = "us-docker.pkg.dev/general-theiagen/theiagen/arln_stats:1.0.0"
     }
     
     command <<<
         set -euo pipefail
-        
-        # Relay CG Pipeline Basepair Stats
-        echo "Processing ARLN statistics"
-        echo "~{cg_bases_r1}" | tee cg_bases_r1_out
-        echo "~{cg_bases_r2}" | tee cg_bases_r2_out
-        echo "~{cg_bases_cleaned_r1}" | tee cg_bases_cleaned_r1_out
-        echo "~{cg_bases_cleaned_r2}" | tee cg_bases_cleaned_r2_out
-
-        # Parse Kraken2 report
-        awk '/~{taxon}/ {printf "%.2f\n", $1; exit}' ~{kraken2_report} > classified_reads
-        awk '/U/ {printf "%.2f\n", $1; exit}' ~{kraken2_report} > unclassified_reads
-
-        # Check for contamination 
-        awk '$1 > 25.00 && $4 == "G"' ~{kraken2_report} > contamination_check
-        wc -l contamination_check | awk '{print $1}' > contamination_check_count
-
-        # Quast GC percent, check if within standard deviation of mean
-        mean_gc=$(grep "~{taxon}" /data/NCBI_Assembly_stats_20240124.txt | awk '{print $12}')
-        echo "${mean_gc}"
-        stdev_gc=$(grep "~{taxon}" /data/NCBI_Assembly_stats_20240124.txt | awk '{print $13}' | xargs printf "%.6f\n")
-        echo "${stdev_gc}"
-        stdevs=$(python3 -c "print('{:.4f}'.format(abs(float('~{quast_gc_percent}') - float('${mean_gc}')) / float('${stdev_gc}')))")
-        echo "${stdevs}x(${stdev_gc})" > gc_stdev_from_mean
 
         # Generate Q30 statistics raw reads
         python /scripts/q30.py -i ~{read1_raw} ~{read2_raw} > RAW_Q30
@@ -69,19 +38,11 @@ task arln_stats {
     >>>
     
     output {
-        String cg_bases_r1_out = read_int("cg_bases_r1_out")
-        String cg_bases_r2_out = read_int("cg_bases_r2_out")
-        String cg_bases_cleaned_r1_out = read_int("cg_bases_cleaned_r1_out")
-        String cg_bases_cleaned_r2_out = read_int("cg_bases_cleaned_r2_out")
         Float read1_raw_q30 = read_float("read1_raw_q30")
         Float read2_raw_q30 = read_float("read2_raw_q30")
         Float read1_clean_q30 = read_float("read1_clean_q30")
         Float read2_clean_q30 = read_float("read2_clean_q30")
-        Float classified_reads = read_float("classified_reads")
-        Float unclassified_reads = read_float("unclassified_reads")
-        Int contamination_check_count = read_int("contamination_check_count")
         String assem_ratio = read_string("assem_ratio_with_stdev")
-        String gc_stdev = read_string("gc_stdev_from_mean")
         String docker_version = docker
     }
     

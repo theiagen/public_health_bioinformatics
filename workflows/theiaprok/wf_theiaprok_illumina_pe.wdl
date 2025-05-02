@@ -721,18 +721,10 @@ workflow theiaprok_illumina_pe {
             samplename = samplename,
             taxon = select_first([gambit.gambit_predicted_taxon, expected_taxon]),
             genome_length = quast.genome_length,
-            cg_bases_r1 = cg_pipeline_raw.r1_bases,
-            cg_bases_r2 = cg_pipeline_raw.r2_bases,
-            cg_bases_cleaned_r1 = cg_pipeline_clean.r1_bases,
-            cg_bases_cleaned_r2 = cg_pipeline_clean.r2_bases,
-            cg_report_raw = cg_pipeline_raw.cg_pipeline_report,
-            cg_report_cleaned = cg_pipeline_clean.cg_pipeline_report,
             read1_raw = select_first([concatenate_illumina_lanes.read1_concatenated, read1]),
             read2_raw = select_first([concatenate_illumina_lanes.read1_concatenated, read2]),
             read1_clean = read_QC_trim.read1_clean,
             read2_clean = read_QC_trim.read2_clean,
-            kraken2_report = read_QC_trim.kraken_report,
-            quast_gc_percent = quast.gc_percent
         }
       }
     }
@@ -1196,19 +1188,11 @@ workflow theiaprok_illumina_pe {
     # export taxon table output
     String? taxon_table_status = export_taxon_table.status
     # ARLN required outputs
-    String? arln_bases_r1 = arln_stats.cg_bases_r1_out
-    String? arln_bases_r2 = arln_stats.cg_bases_r2_out
-    String? arln_bases_cleaned_r1 = arln_stats.cg_bases_cleaned_r1_out
-    String? arln_bases_cleaned_r2 = arln_stats.cg_bases_cleaned_r2_out
     Float? arln_raw_q30_r1 = arln_stats.read1_raw_q30
     Float? arln_raw_q30_r2 = arln_stats.read2_raw_q30
     Float? arln_cleaned_q30_r1 = arln_stats.read1_clean_q30
     Float? arln_cleaned_q30_r2 = arln_stats.read2_clean_q30
-    Float? arln_classified_percent = arln_stats.classified_reads
-    Float? arln_unclassified_percent = arln_stats.unclassified_reads
-    Int? arln_kraken_genus_count = arln_stats.contamination_check_count
     String? arln_assembly_ratio = arln_stats.assem_ratio
-    String? arln_gc_stdev = arln_stats.gc_stdev
     String? arln_stats_docker_version = arln_stats.docker_version
   }
 }
