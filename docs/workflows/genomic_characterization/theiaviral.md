@@ -481,7 +481,7 @@ The **TheiaViral** workflows are designed for the assembly, quality assessment, 
 
                 <div class="grid cards" markdown>
 
-                -   ??? quote "Host removal"
+                -   ??? quote "Host Removal"
 
                         In the `task_ncbi_scrub.wdl` task, all reads of human origin **are removed**, including their mates, by using NCBI's [**human read removal tool (HRRT)**](https://github.com/ncbi/sra-human-scrubber). HRRT is based on the [SRA Taxonomy Analysis Tool](https://doi.org/10.1186/s13059-021-02490-0) and employs a k-mer database constructed of k-mers from Eukaryota derived from all human RefSeq records with any k-mers found in non-Eukaryota RefSeq records subtracted from the database.
 
@@ -496,7 +496,7 @@ The **TheiaViral** workflows are designed for the assembly, quality assessment, 
 
                 <div class="grid cards" markdown>
 
-                -   ??? quote "Read quality trimming"
+                -   ??? quote "Read Trimming"
 
                         Either the `task_trimmomatic.wdl` task or `task_fastp.wdl` task can be used for read-quality trimming. The `task_trimmomatic.wdl` task is the default option. Both tools trim low-quality regions of reads with a sliding window (with a window size of `trim_window_size`), cutting once the average quality within the window falls below `trim_quality_trim_score`. They will both discard the read if it is trimmed below `trim_minlen`.
 
@@ -535,7 +535,7 @@ The **TheiaViral** workflows are designed for the assembly, quality assessment, 
 
                 <div class="grid cards" markdown>
 
-                -   ??? quote "Adapter removal"
+                -   ??? quote "Adapter Removal"
 
                         The `task_bbduk.wdl` task removes adapters from sequence reads. To do this:
 
