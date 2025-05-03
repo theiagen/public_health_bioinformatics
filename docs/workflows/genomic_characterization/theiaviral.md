@@ -1374,7 +1374,270 @@ The **TheiaViral** workflows are designed for the assembly, quality assessment, 
 
 === "Illumina_PE"
 
+    <div class="searchable-table" markdown="1">
+
+    | **Variable** | **Type** | **Description** | **Workflow** |
+    |---|---|---|---|
+    | assembly_consensus_fasta | File | Final consensus assembly in FASTA format | PE |
+    | assembly_denovo_fasta | File | De novo assembly in FASTA format | PE |
+    | bbduk_docker | String | Docker image used for BBDuk | PE |
+    | bbduk_read1_clean | File | Clean forward reads after BBDuk processing | PE |
+    | bbduk_read2_clean | File | Clean reverse reads after BBDuk processing | PE |
+    | bwa_aligned_bai | File | BAM index file for reads aligned to reference | PE |
+    | bwa_read1_aligned | File | Forward reads aligned to reference | PE |
+    | bwa_read1_unaligned | File | Forward reads not aligned to reference | PE |
+    | bwa_read2_aligned | File | Reverse reads aligned to reference | PE |
+    | bwa_read2_unaligned | File | Reverse reads not aligned to reference | PE |
+    | bwa_samtools_version | String | Version of samtools used by BWA | PE |
+    | bwa_sorted_bam | File | Sorted BAM file of reads aligned to reference | PE |
+    | bwa_version | String | Version of BWA used | PE |
+    | checkv_consensus_contamination | Float | Contamination estimate for consensus assembly from CheckV | PE |
+    | checkv_consensus_summary | File | Summary report from CheckV for consensus assembly | PE |
+    | checkv_consensus_total_genes | Int | Number of genes detected in consensus assembly by CheckV | PE |
+    | checkv_consensus_version | String | Version of CheckV used for consensus assembly | PE |
+    | checkv_consensus_weighted_completeness | Float | Weighted completeness score for consensus assembly from CheckV | PE |
+    | checkv_consensus_weighted_contamination | Float | Weighted contamination score for consensus assembly from CheckV | PE |
+    | checkv_denovo_contamination | Float | Contamination estimate for de novo assembly from CheckV | PE |
+    | checkv_denovo_summary | File | Summary report from CheckV for de novo assembly | PE |
+    | checkv_denovo_total_genes | Int | Number of genes detected in de novo assembly by CheckV | PE |
+    | checkv_denovo_version | String | Version of CheckV used for de novo assembly | PE |
+    | checkv_denovo_weighted_completeness | Float | Weighted completeness score for de novo assembly from CheckV | PE |
+    | checkv_denovo_weighted_contamination | Float | Weighted contamination score for de novo assembly from CheckV | PE |
+    | consensus_n_variant_min_depth | Int | Minimum read depth for variant calling in consensus generation | PE |
+    | consensus_qc_assembly_length_unambiguous | Int | Length of consensus assembly excluding ambiguous bases | PE |
+    | consensus_qc_number_Degenerate | Int | Number of degenerate bases in consensus assembly | PE |
+    | consensus_qc_number_N | Int | Number of N bases in consensus assembly | PE |
+    | consensus_qc_number_Total | Int | Total number of bases in consensus assembly | PE |
+    | consensus_qc_percent_reference_coverage | Float | Percent of reference genome covered in consensus assembly | PE |
+    | fastp_html_report | File | HTML report from fastp processing | PE |
+    | fastp_version | String | Version of fastp used | PE |
+    | fastq_scan_clean1_json | File | JSON file with statistics for clean forward reads | PE |
+    | fastq_scan_clean2_json | File | JSON file with statistics for clean reverse reads | PE |
+    | fastq_scan_clean_pairs | Int | Number of read pairs after cleaning | PE |
+    | fastq_scan_docker | String | Docker image used for fastq_scan | PE |
+    | fastq_scan_num_reads_clean1 | Int | Number of forward reads after cleaning | PE |
+    | fastq_scan_num_reads_clean2 | Int | Number of reverse reads after cleaning | PE |
+    | fastq_scan_num_reads_raw1 | Int | Number of raw forward reads | PE |
+    | fastq_scan_num_reads_raw2 | Int | Number of raw reverse reads | PE |
+    | fastq_scan_raw1_json | File | JSON file with statistics for raw forward reads | PE |
+    | fastq_scan_raw2_json | File | JSON file with statistics for raw reverse reads | PE |
+    | fastq_scan_raw_pairs | Int | Number of raw read pairs | PE |
+    | fastq_scan_version | String | Version of fastq_scan used | PE |
+    | ivar_tsv | File | TSV file with variant calls from iVar | PE |
+    | ivar_variant_proportion_intermediate | Float | Proportion of intermediate variant calls from iVar | PE |
+    | ivar_variant_version | String | Version of iVar used for variant calling | PE |
+    | ivar_vcf | File | Variant calls in VCF format from iVar | PE |
+    | ivar_version_consensus | String | Version of iVar used for consensus generation | PE |
+    | kraken2_extracted_read1 | File | Forward reads extracted by taxonomic classification | PE |
+    | kraken2_extracted_read2 | File | Reverse reads extracted by taxonomic classification | PE |
+    | kraken_database | File | Database used for Kraken classification | PE |
+    | kraken_docker | String | Docker image used for Kraken | PE |
+    | kraken_report | File | Taxonomic classification report from Kraken | PE |
+    | kraken_version | String | Version of Kraken used | PE |
+    | megahit_docker | String | Docker image used for MEGAHIT | PE |
+    | megahit_version | String | Version of MEGAHIT used | PE |
+    | metaviralspades_docker | String | Docker image used for MetaviralSPAdes | PE |
+    | metaviralspades_status | String | Status of MetaviralSPAdes assembly | PE |
+    | metaviralspades_version | String | Version of MetaviralSPAdes used | PE |
+    | ncbi_datasets_docker | String | Docker image used for NCBI datasets | PE |
+    | ncbi_datasets_version | String | Version of NCBI datasets used | PE |
+    | ncbi_identify_read_extraction_rank | String | Taxonomic rank used for read extraction | PE |
+    | ncbi_identify_taxon_id | String | NCBI taxonomy ID of identified organism | PE |
+    | ncbi_identify_taxon_name | String | Name of identified taxon | PE |
+    | ncbi_scrub_docker | String | Docker image used for NCBI scrub | PE |
+    | ncbi_scrub_human_spots_removed | Int | Number of human spots removed by NCBI scrub | PE |
+    | ncbi_taxon_summary_avg_genome_length | Int | Average genome length from NCBI taxon summary | PE |
+    | ncbi_taxon_summary_tsv | File | TSV file with taxon summary from NCBI | PE |
+    | quast_denovo_docker | String | Docker image used for QUAST | PE |
+    | quast_denovo_gc_percent | Float | GC percentage of de novo assembly from QUAST | PE |
+    | quast_denovo_genome_length | Int | Genome length of de novo assembly from QUAST | PE |
+    | quast_denovo_largest_contig | Int | Size of largest contig in de novo assembly from QUAST | PE |
+    | quast_denovo_n50_value | Int | N50 value of de novo assembly from QUAST | PE |
+    | quast_denovo_number_contigs | Int | Number of contigs in de novo assembly from QUAST | PE |
+    | quast_denovo_pipeline_date | String | Date of QUAST analysis | PE |
+    | quast_denovo_report | File | QUAST report for de novo assembly | PE |
+    | quast_denovo_uncalled_bases | Int | Number of uncalled bases in de novo assembly from QUAST | PE |
+    | quast_denovo_version | String | Version of QUAST used | PE |
+    | read1_dehosted | File | Forward reads after host removal | PE |
+    | read2_dehosted | File | Reverse reads after host removal | PE |
+    | read_mapping_coverage | Float | Average coverage from read mapping | PE |
+    | read_mapping_cov_hist | File | Coverage histogram from read mapping | PE |
+    | read_mapping_cov_stats | File | Coverage statistics from read mapping | PE |
+    | read_mapping_date | String | Date of read mapping analysis | PE |
+    | read_mapping_depth | Float | Average depth from read mapping | PE |
+    | read_mapping_flagstat | File | Flagstat file from read mapping | PE |
+    | read_mapping_meanbaseq | Float | Mean base quality from read mapping | PE |
+    | read_mapping_meanmapq | Float | Mean mapping quality from read mapping | PE |
+    | read_mapping_percentage_mapped_reads | Float | Percentage of mapped reads | PE |
+    | read_mapping_report | File | Report file from read mapping | PE |
+    | read_mapping_samtools_version | String | Version of samtools used in read mapping | PE |
+    | read_mapping_statistics | File | Statistics file from read mapping | PE |
+    | skani_database | File | Database used for Skani | PE |
+    | skani_docker | String | Docker image used for Skani | PE |
+    | skani_report | File | Report from Skani | PE |
+    | skani_top_accession | String | Top accession ID from Skani | PE |
+    | skani_top_ani | Float | Top ANI score from Skani | PE |
+    | skani_top_ani_fasta | File | FASTA file of top ANI match from Skani | PE |
+    | skani_top_ref_coverage | Float | Reference coverage of top match from Skani | PE |
+    | skani_top_score | Float | Top score from Skani | PE |
+    | skani_version | String | Version of Skani used | PE |
+    | sorted_bam_unaligned | File | Sorted BAM file of unaligned reads | PE |
+    | sorted_bam_unaligned_bai | File | BAM index file for unaligned reads | PE |
+    | theiaviral_illumina_pe_date | String | Date of TheiaViral Illumina PE workflow run | PE |
+    | theiaviral_illumina_pe_version | String | Version of TheiaViral Illumina PE workflow | PE |
+    | trimmomatic_docker | String | Docker image used for Trimmomatic | PE |
+    | trimmomatic_version | String | Version of Trimmomatic used | PE |
+
+    </div>
+
 === "ONT"
 
-    !!! caption "TEMP PLACEHOLDER: TheiaViral_ONT Workflow Diagram"
-        ![TheiaViral Workflow Diagram](../../assets/figures/TheiaViral_ONT.png)
+    <div class="searchable-table" markdown="1">
+
+    | **Variable** | **Type** | **Description** | **Workflow** |
+    |---|---|---|---|
+    | assembly_consensus_fasta | File | Final consensus assembly in FASTA format | ONT |
+    | assembly_denovo_fasta | File | De novo assembly in FASTA format | ONT |
+    | assembly_to_ref_bai | File | BAM index file for reads aligned to reference | ONT |
+    | assembly_to_ref_bam | File | BAM file of reads aligned to reference | ONT |
+    | bcftools_docker | String | Docker image used for bcftools | ONT |
+    | bcftools_filtered_vcf | File | Filtered variant calls in VCF format from bcftools | ONT |
+    | bcftools_version | String | Version of bcftools used | ONT |
+    | checkv_consensus_contamination | Float | Contamination estimate for consensus assembly from CheckV | ONT |
+    | checkv_consensus_summary | File | Summary report from CheckV for consensus assembly | ONT |
+    | checkv_consensus_total_genes | Int | Number of genes detected in consensus assembly by CheckV | ONT |
+    | checkv_consensus_version | String | Version of CheckV used for consensus assembly | ONT |
+    | checkv_consensus_weighted_completeness | Float | Weighted completeness score for consensus assembly from CheckV | ONT |
+    | checkv_consensus_weighted_contamination | Float | Weighted contamination score for consensus assembly from CheckV | ONT |
+    | checkv_denovo_contamination | Float | Contamination estimate for de novo assembly from CheckV | ONT |
+    | checkv_denovo_summary | File | Summary report from CheckV for de novo assembly | ONT |
+    | checkv_denovo_total_genes | Int | Number of genes detected in de novo assembly by CheckV | ONT |
+    | checkv_denovo_version | String | Version of CheckV used for de novo assembly | ONT |
+    | checkv_denovo_weighted_completeness | Float | Weighted completeness score for de novo assembly from CheckV | ONT |
+    | checkv_denovo_weighted_contamination | Float | Weighted contamination score for de novo assembly from CheckV | ONT |
+    | clair3_docker | String | Docker image used for Clair3 | ONT |
+    | clair3_gvcf | File | Genomic VCF file from Clair3 | ONT |
+    | clair3_model | String | Model used for Clair3 variant calling | ONT |
+    | clair3_vcf | File | Variant calls in VCF format from Clair3 | ONT |
+    | clair3_version | String | Version of Clair3 used | ONT |
+    | consensus_qc_assembly_length_unambiguous | Int | Length of consensus assembly excluding ambiguous bases | ONT |
+    | consensus_qc_number_Degenerate | Int | Number of degenerate bases in consensus assembly | ONT |
+    | consensus_qc_number_N | Int | Number of N bases in consensus assembly | ONT |
+    | consensus_qc_number_Total | Int | Total number of bases in consensus assembly | ONT |
+    | consensus_qc_percent_reference_coverage | Float | Percent of reference genome covered in consensus assembly | ONT |
+    | fasta_utilities_fai | File | FASTA index file | ONT |
+    | fasta_utilities_samtools_docker | String | Docker image used for samtools in fasta utilities | ONT |
+    | fasta_utilities_samtools_version | String | Version of samtools used in fasta utilities | ONT |
+    | flye_denovo_docker | String | Docker image used for Flye | ONT |
+    | flye_denovo_info | File | Information file from Flye assembly | ONT |
+    | flye_denovo_version | String | Version of Flye used | ONT |
+    | mask_low_coverage_all_coverage_bed | File | BED file showing all coverage regions | ONT |
+    | mask_low_coverage_bed | File | BED file showing masked low coverage regions | ONT |
+    | mask_low_coverage_bedtools_docker | String | Docker image used for bedtools in masking | ONT |
+    | mask_low_coverage_bedtools_version | String | Version of bedtools used in masking | ONT |
+    | mask_low_coverage_reference_fasta | File | Reference FASTA with low coverage regions masked | ONT |
+    | metabuli_classified | File | Classified reads from Metabuli | ONT |
+    | metabuli_database | File | Database used for Metabuli | ONT |
+    | metabuli_docker | String | Docker image used for Metabuli | ONT |
+    | metabuli_krona_report | File | Krona visualization report from Metabuli | ONT |
+    | metabuli_read1_extract | File | Extracted reads from Metabuli | ONT |
+    | metabuli_report | File | Classification report from Metabuli | ONT |
+    | metabuli_version | String | Version of Metabuli used | ONT |
+    | minimap2_docker | String | Docker image used for Minimap2 | ONT |
+    | minimap2_out | File | Output file from Minimap2 alignment | ONT |
+    | minimap2_version | String | Version of Minimap2 used | ONT |
+    | nanoplot_html_clean | File | HTML report from NanoPlot on clean reads | ONT |
+    | nanoplot_html_raw | File | HTML report from NanoPlot on raw reads | ONT |
+    | nanoplot_num_reads_clean1 | Int | Number of clean reads from NanoPlot | ONT |
+    | nanoplot_num_reads_raw1 | Int | Number of raw reads from NanoPlot | ONT |
+    | nanoplot_r1_mean_q_clean | Float | Mean read quality of clean reads | ONT |
+    | nanoplot_r1_mean_q_raw | Float | Mean read quality of raw reads | ONT |
+    | nanoplot_r1_mean_readlength_clean | Float | Mean read length of clean reads | ONT |
+    | nanoplot_r1_mean_readlength_raw | Float | Mean read length of raw reads | ONT |
+    | nanoplot_r1_median_q_clean | Float | Median read quality of clean reads | ONT |
+    | nanoplot_r1_median_q_raw | Float | Median read quality of raw reads | ONT |
+    | nanoplot_r1_median_readlength_clean | Float | Median read length of clean reads | ONT |
+    | nanoplot_r1_median_readlength_raw | Float | Median read length of raw reads | ONT |
+    | nanoplot_r1_n50_clean | Float | N50 read length of clean reads | ONT |
+    | nanoplot_r1_n50_raw | Float | N50 read length of raw reads | ONT |
+    | nanoplot_r1_stdev_readlength_clean | Float | Standard deviation of clean read lengths | ONT |
+    | nanoplot_r1_stdev_readlength_raw | Float | Standard deviation of raw read lengths | ONT |
+    | nanoplot_tsv_clean | File | TSV report from NanoPlot on clean reads | ONT |
+    | nanoplot_tsv_raw | File | TSV report from NanoPlot on raw reads | ONT |
+    | nanoq_filtered_read1 | File | Filtered reads from NanoQ | ONT |
+    | nanoq_version | String | Version of NanoQ used | ONT |
+    | ncbi_datasets_docker | String | Docker image used for NCBI datasets | ONT |
+    | ncbi_datasets_version | String | Version of NCBI datasets used | ONT |
+    | ncbi_identify_docker | String | Docker image used for NCBI identify | ONT |
+    | ncbi_identify_read_extraction_rank | String | Taxonomic rank used for read extraction | ONT |
+    | ncbi_identify_taxon_id | String | NCBI taxonomy ID of identified organism | ONT |
+    | ncbi_identify_taxon_name | String | Name of identified taxon | ONT |
+    | ncbi_identify_version | String | Version of NCBI identify tool used | ONT |
+    | ncbi_scrub_docker | String | Docker image used for NCBI scrub | ONT |
+    | ncbi_scrub_human_spots_removed | Int | Number of human spots removed by NCBI scrub | ONT |
+    | ncbi_scrub_read1_dehosted | File | Dehosted reads after NCBI scrub | ONT |
+    | ncbi_taxon_summary_avg_genome_length | Int | Average genome length from NCBI taxon summary | ONT |
+    | ncbi_taxon_summary_docker | String | Docker image used for NCBI taxon summary | ONT |
+    | ncbi_taxon_summary_tsv | File | TSV file with taxon summary from NCBI | ONT |
+    | ncbi_taxon_summary_version | String | Version of NCBI taxon summary tool used | ONT |
+    | parse_mapping_samtools_docker | String | Docker image used for samtools in parse mapping | ONT |
+    | parse_mapping_samtools_version | String | Version of samtools used in parse mapping | ONT |
+    | porechop_trimmed_read1 | File | Trimmed reads from Porechop | ONT |
+    | porechop_version | String | Version of Porechop used | ONT |
+    | quast_denovo_docker | String | Docker image used for QUAST | ONT |
+    | quast_denovo_gc_percent | Float | GC percentage of de novo assembly from QUAST | ONT |
+    | quast_denovo_genome_length | Int | Genome length of de novo assembly from QUAST | ONT |
+    | quast_denovo_largest_contig | Int | Size of largest contig in de novo assembly from QUAST | ONT |
+    | quast_denovo_n50_value | Int | N50 value of de novo assembly from QUAST | ONT |
+    | quast_denovo_number_contigs | Int | Number of contigs in de novo assembly from QUAST | ONT |
+    | quast_denovo_pipeline_date | String | Date of QUAST analysis | ONT |
+    | quast_denovo_report | File | QUAST report for de novo assembly | ONT |
+    | quast_denovo_uncalled_bases | Int | Number of uncalled bases in de novo assembly from QUAST | ONT |
+    | quast_denovo_version | String | Version of QUAST used | ONT |
+    | rasusa_read1_subsampled | File | Subsampled read file from Rasusa | ONT |
+    | rasusa_read2_subsampled | File | Subsampled read file from Rasusa (paired file) | ONT |
+    | rasusa_version | String | Version of Rasusa used | ONT |
+    | raven_denovo_docker | String | Docker image used for Raven | ONT |
+    | raven_denovo_version | String | Version of Raven used | ONT |
+    | read_mapping_cov_hist | File | Coverage histogram from read mapping | ONT |
+    | read_mapping_cov_stats | File | Coverage statistics from read mapping | ONT |
+    | read_mapping_coverage | Float | Average coverage from read mapping | ONT |
+    | read_mapping_date | String | Date of read mapping analysis | ONT |
+    | read_mapping_depth | Float | Average depth from read mapping | ONT |
+    | read_mapping_flagstat | File | Flagstat file from read mapping | ONT |
+    | read_mapping_meanbaseq | Float | Mean base quality from read mapping | ONT |
+    | read_mapping_meanmapq | Float | Mean mapping quality from read mapping | ONT |
+    | read_mapping_percentage_mapped_reads | Float | Percentage of mapped reads | ONT |
+    | read_mapping_report | File | Report file from read mapping | ONT |
+    | read_mapping_samtools_version | String | Version of samtools used in read mapping | ONT |
+    | read_mapping_statistics | File | Statistics file from read mapping | ONT |
+    | read_screen_clean | String | Status of read screening (pass/fail) | ONT |
+    | read_screen_clean_tsv | File | TSV file with read screening results | ONT |
+    | skani_database | File | Database used for Skani | ONT |
+    | skani_docker | String | Docker image used for Skani | ONT |
+    | skani_report | File | Report from Skani | ONT |
+    | skani_top_accession | String | Top accession ID from Skani | ONT |
+    | skani_top_ani | Float | Top ANI score from Skani | ONT |
+    | skani_top_ani_fasta | File | FASTA file of top ANI match from Skani | ONT |
+    | skani_top_ref_coverage | Float | Reference coverage of top match from Skani | ONT |
+    | skani_top_score | Float | Top score from Skani | ONT |
+    | skani_version | String | Version of Skani used | ONT |
+    | theiaviral_ont_date | String | Date of TheiaViral ONT workflow run | ONT |
+    | theiaviral_ont_version | String | Version of TheiaViral ONT workflow | ONT |
+
+    </div>
+
+
+### Workflow Diagram
+
+=== "Illumina_PE"
+
+    !!! caption "TheiaViral_Illumina_PE Workflow Diagram"
+
+        ![TheiaViral_Illumina_PE Workflow Diagram](../../assets/figures/TheiaViral_Illumina_PE.png)
+
+=== "ONT"
+
+    !!! caption "TheiaViral_ONT Workflow Diagram"
+
+        ![TheiaViral_ONT Workflow Diagram](../../assets/figures/TheiaViral_ONT.png)
