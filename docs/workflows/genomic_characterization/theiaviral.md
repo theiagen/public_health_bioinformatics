@@ -67,6 +67,132 @@ The **TheiaViral** workflows are designed for the assembly, quality assessment, 
 
     | **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** | **Workflow** |
     |---|---|---|---|---|---|---|
+    | theiaviral_illumina_pe | **read1** | File | llumina forward read file in FASTQ file format (compression optional) | | Required | PE |
+    | theiaviral_illumina_pe | **read2** | File | Illumina reverse read file in FASTQ file format (compression optional) | | Required | PE |
+    | theiaviral_illumina_pe | **samplename** | String | Name of the sample being analyzed | | Required | PE |
+    | theiaviral_illumina_pe | **taxon** | String | Taxon ID or organism name of interest | | Required | PE |
+    | bwa | **cpu** | Int | Number of CPUs to allocate to the task | 6 | Optional | PE |
+    | bwa | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | PE |
+    | bwa | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/ivar:1.3.1-titan | Optional | PE |
+    | bwa | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 16 | Optional | PE |
+    | checkv_consensus | **checkv_db** | File | CheckV database file | "gs://theiagen-large-public-files-rp/terra/databases/checkv/checkv-db-v1.5.tar.gz" | Optional | PE, ONT |
+    | checkv_consensus | **cpu** | Int | Number of CPUs allocated for the task | 2 | Optional | PE, ONT |
+    | checkv_consensus | **disk_size** | Int | Disk size allocated for the task (in GB) | 100 | Optional | PE, ONT |
+    | checkv_consensus | **docker** | String | Docker image used for the task | "us-docker.pkg.dev/general-theiagen/staphb/checkv:1.0.3" | Optional | PE, ONT |
+    | checkv_consensus | **memory** | Int | Memory allocated for the task (in GB) | 8 | Optional | PE, ONT |
+    | checkv_denovo | **checkv_db** | File | CheckV database file | "gs://theiagen-large-public-files-rp/terra/databases/checkv/checkv-db-v1.5.tar.gz" | Optional | PE, ONT |
+    | checkv_denovo | **cpu** | Int | Number of CPUs allocated for the task | 2 | Optional | PE, ONT |
+    | checkv_denovo | **disk_size** | Int | Disk size allocated for the task (in GB) | 100 | Optional | PE, ONT |
+    | checkv_denovo | **docker** | String | Docker image used for the task | "us-docker.pkg.dev/general-theiagen/staphb/checkv:1.0.3" | Optional | PE, ONT |
+    | checkv_denovo | **memory** | Int | Memory allocated for the task (in GB) | 8 | Optional | PE, ONT |
+    | clean_check_reads | **cpu** | Int | Number of CPUs allocated for the task | 1 | Optional | PE, ONT |
+    | clean_check_reads | **disk_size** | Int | Disk size allocated for the task (in GB) | 100 | Optional | PE, ONT |
+    | clean_check_reads | **docker** | String | Docker image used for the task | "us-docker.pkg.dev/general-theiagen/bactopia/gather_samples:2.0.2" | Optional | PE, ONT |
+    | clean_check_reads | **max_genome_length** | Int | Maximum genome length able to pass read screening | 2673870 | Optional | PE, ONT |
+    | clean_check_reads | **memory** | Int | Memory allocated for the task (in GB) | 2 | Optional | PE, ONT |
+    | clean_check_reads | **min_basepairs** | Int | Minimum base pairs to pass read screening | 15000 | Optional | PE, ONT |
+    | clean_check_reads | **min_coverage** | Int | Minimum coverage to pass read screening | 10 | Optional | PE, ONT |
+    | clean_check_reads | **min_genome_length** | Int | Minimum genome length to pass read screening | 1500 | Optional | PE, ONT |
+    | clean_check_reads | **min_reads** | Int | Minimum reads to pass read screening | 50 | Optional | PE, ONT |
+    | clean_check_reads | **min_proportion** | Int | Minimum read proportion to pass read screening | 40 | Optional | PE |
+    | consensus | **char_unknown** | String | Character used to represent unknown bases in the consensus sequence | "N" | Optional | PE |
+    | consensus | **count_orphans** | Boolean | True/False that determines if anomalous read pairs are NOT skipped in variant calling. Anomalous read pairs are those marked in the FLAG field as paired in sequencing but without the properly-paired flag set. | TRUE | Optional | PE |
+    | consensus | **cpu** | Int | Number of CPUs allocated for the task | 2 | Optional | PE |
+    | consensus | **disable_baq** | Boolean | True/False that determines if base alignment quality (BAQ) computation should be disabled during samtools mpileup before consensus generation | TRUE | Optional | PE |
+    | consensus | **disk_size** | Int | Disk size allocated for the task (in GB) | 100 | Optional | PE |
+    | consensus | **docker** | String | Docker image used for the task | "us-docker.pkg.dev/general-theiagen/staphb/ivar:1.3.1-titan" | Optional | PE |
+    | consensus | **max_depth** | Int | For a given position, read at maximum INT number of reads per input file during samtools mpileup before consensus generation | 600000 | Optional | PE |
+    | consensus | **memory** | Int | Memory allocated for the task (in GB) | 8 | Optional | PE |
+    | consensus | **min_bq** | Int | Minimum base quality required for a base to be considered during samtools mpileup before consensus generation | 0 | Optional | PE |
+    | consensus | **skip_N** | Boolean | True/False that determines if "N" bases should be skipped in the consensus sequence | FALSE | Optional | PE |
+    | consensus_qc | **cpu** | Int | Number of CPUs allocated for the task | 1 | Optional | PE, ONT |
+    | consensus_qc | **disk_size** | Int | Disk size allocated for the task (in GB) | 100 | Optional | PE, ONT |
+    | consensus_qc | **docker** | String | Docker image used for the task | "us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1" | Optional | PE, ONT |
+    | consensus_qc | **memory** | Int | Memory allocated for the task (in GB) | 2 | Optional | PE, ONT |
+    | ivar_variants | **cpu** | Int | Number of CPUs allocated for the task | 2 | Optional | PE |
+    | ivar_variants | **disk_size** | Int | Disk size allocated for the task (in GB) | 100 | Optional | PE |
+    | ivar_variants | **docker** | String | Docker image used for the task | "us-docker.pkg.dev/general-theiagen/staphb/ivar:1.3.1-titan" | Optional | PE |
+    | ivar_variants | **memory** | Int | Memory allocated for the task (in GB) | 8 | Optional | PE |
+    | ivar_variants | **reference_gff** | File | A GFF file in the GFF3 format can be supplied to specify coordinates of open reading frames (ORFs) so iVar can identify codons and translate variants into amino acids | | Optional | PE |
+    | megahit | **cpu** | Int | Number of CPUs allocated for the task | 4 | Optional | PE |
+    | megahit | **disk_size** | Int | Disk size allocated for the task (in GB) | 100 | Optional | PE |
+    | megahit | **docker** | String | Docker image used for the task | "us-docker.pkg.dev/general-theiagen/theiagen/megahit:1.2.9" | Optional | PE |
+    | megahit | **kmers** | String | Comma-separated list of kmer sizes to use for assembly. All must be odd, in the range 15-255, increment <= 28 | "21,29,39,59,79,99,119,141" | Optional | PE |
+    | megahit | **megahit_opts** | String | Additional parameters for Megahit assembler | | Optional | PE |
+    | megahit | **memory** | Int | Memory allocated for the task (in GB) | 16 | Optional | PE |
+    | ncbi_datasets | **cpu** | Int | Number of CPUs allocated for the task | 1 | Optional | PE, ONT |
+    | ncbi_datasets | **disk_size** | Int | Disk size allocated for the task (in GB) | 50 | Optional | PE, ONT |
+    | ncbi_datasets | **docker** | String | Docker image used for the task | "us-docker.pkg.dev/general-theiagen/staphb/ncbi-datasets:16.38.1" | Optional | PE, ONT |
+    | ncbi_datasets | **include_gbff** | Boolean | True/False to include gbff files in the output | FALSE | Optional | PE, ONT |
+    | ncbi_datasets | **include_gff3** | Boolean | True/False to include gff3 files in the output | FALSE | Optional | PE, ONT |
+    | ncbi_datasets | **memory** | Int | Memory allocated for the task (in GB) | 4 | Optional | PE, ONT |
+    | ncbi_identify | **cpu** | Int | Number of CPUs allocated for the task | 1 | Optional | PE, ONT |
+    | ncbi_identify | **disk_size** | Int | Disk size allocated for the task (in GB) | 50 | Optional | PE, ONT |
+    | ncbi_identify | **docker** | String | Docker image used for the task | "us-docker.pkg.dev/general-theiagen/staphb/ncbi-datasets:16.38.1" | Optional | PE, ONT |
+    | ncbi_identify | **memory** | Int | Memory allocated for the task (in GB) | 4 | Optional | PE, ONT |
+    | ncbi_taxon_summary | **cpu** | Int | Number of CPUs allocated for the task | 1 | Optional | PE, ONT |
+    | ncbi_taxon_summary | **disk_size** | Int | Disk size allocated for the task (in GB) | 50 | Optional | PE, ONT |
+    | ncbi_taxon_summary | **docker** | String | Docker image used for the task | "us-docker.pkg.dev/general-theiagen/staphb/ncbi-datasets:16.38.1" | Optional | PE, ONT |
+    | ncbi_taxon_summary | **memory** | Int | Memory allocated for the task (in GB) | 4 | Optional | PE, ONT |
+    | quast_denovo | **cpu** | Int | Number of CPUs allocated for the task | 2 | Optional | PE, ONT |
+    | quast_denovo | **disk_size** | Int | Disk size allocated for the task (in GB) | 100 | Optional | PE, ONT |
+    | quast_denovo | **docker** | String | Docker image used for the task | "us-docker.pkg.dev/general-theiagen/staphb/quast:5.0.2" | Optional | PE, ONT |
+    | quast_denovo | **memory** | Int | Memory allocated for the task (in GB) | 2 | Optional | PE, ONT |
+    | quast_denovo | **min_contig_length** | Int | Lower threshold for a contig length in bp. Shorter contigs won’t be taken into account | 500 | Optional | PE, ONT |
+    | rasusa | **bases** | String | Explicitly set the number of bases required e.g., 4.3kb, 7Tb, 9000, 4.1MB. If this option is given, --coverage and --genome-size are ignored | | Optional | PE, ONT |
+    | rasusa | **coverage** | Float | The desired coverage to sub-sample the reads to. If --bases is not provided, this option and --genome-size are required | 250 | Optional | PE, ONT |
+    | rasusa | **cpu** | Int | Number of CPUs allocated for the task | 4 | Optional | PE, ONT |
+    | rasusa | **disk_size** | Int | Disk size allocated for the task (in GB) | 100 | Optional | PE, ONT |
+    | rasusa | **docker** | String | Docker image used for the task | "us-docker.pkg.dev/general-theiagen/staphb/rasusa:2.1.0" | Optional | PE, ONT |
+    | rasusa | **frac** | Float | Subsample to a fraction of the reads - e.g., 0.5 samples half the reads | | Optional | PE, ONT |
+    | rasusa | **memory** | Int | Memory allocated for the task (in GB) | 8 | Optional | PE, ONT |
+    | rasusa | **num** | Int | Subsample to a specific number of reads | | Optional | PE, ONT |
+    | rasusa | **seed** | Int | Random seed for reproducibility | | Optional | PE, ONT |
+    | read_mapping_stats | **cpu** | Int | Number of CPUs allocated for the task | 2 | Optional | PE, ONT |
+    | read_mapping_stats | **disk_size** | Int | Disk size allocated for the task (in GB) | 100 | Optional | PE, ONT |
+    | read_mapping_stats | **docker** | String | Docker image used for the task | "us-docker.pkg.dev/general-theiagen/staphb/samtools:1.15" | Optional | PE, ONT |
+    | read_mapping_stats | **memory** | Int | Memory allocated for the task (in GB) | 8 | Optional | PE, ONT |
+    | read_QC_trim | **adapters** | File | A file containing the sequence of the adapters used during library preparation, used in the BBDuk task |  | Optional | PE |
+    | read_QC_trim | **bbduk_memory** | Int | Memory allocated for the BBDuk task (in GB) | 8 | Optional | PE |
+    | read_QC_trim | **call_kraken** | Boolean | Internal component, do not modify | | Do not modify, Optional | PE |
+    | read_QC_trim | **call_midas** | Boolean | Internal component, do not modify | | Do not modify, Optional | PE |
+    | read_QC_trim | **fastp_args** | String | Additional parameters for fastp | | Optional | PE |
+    | read_QC_trim | **kraken_cpu** | Int | Number of CPUs allocated for the Kraken2 task | 4 | Optional | PE |
+    | read_QC_trim | **kraken_disk_size** | Int | Disk size allocated for the Kraken2 task (in GB) | 100 | Optional | PE |
+    | read_QC_trim | **kraken_memory** | Int | Memory allocated for the Kraken2 task (in GB) | 32 | Optional | PE |
+    | read_QC_trim | **midas_db** | File | Internal component, do not modify | | Do not modify, Optional | PE |
+    | read_QC_trim | **phix** | File | A file containing the phix used during Illumina sequencing; used in the BBDuk task |  | Optional | PE |
+    | read_QC_trim | **read_processing** | String | Read trimming software to use, either "trimmomatic" or "fastp" | "trimmomatic" | Optional | PE |
+    | read_QC_trim | **read_qc** | String | Allows the user to decide between "fastq_scan" (default) and "fastqc" for the evaluation of read quality. | "fastq_scan" | Optional | PE |
+    | read_QC_trim | **target_organism** | String | Internal component, do not modify | | Do not modify, Optional | PE |
+    | read_QC_trim | **trim_min_length** | Int | Specifies minimum length of each read after trimming to be kept | 75 | Optional | PE |
+    | read_QC_trim | **trim_quality_min_score** | Int | Specifies the minimum average quality of bases in a sliding window to be kept | 30 | Optional | PE |
+    | read_QC_trim | **trim_window_size** | Int | Specifies window size for trimming (the number of bases to average the quality across) | 4 | Optional | PE |
+    | read_QC_trim | **trimmomatic_args** | String | Additional arguments to pass to trimmomatic. "-phred33" specifies the Phred Q score encoding which is almost always phred33 with modern sequence data. | -phred33 | Optional | PE |
+    | skani | **cpu** | Int | Number of CPUs allocated for the task | 2 | Optional | PE, ONT |
+    | skani | **disk_size** | Int | Disk size allocated for the task (in GB) | 100 | Optional | PE, ONT |
+    | skani | **docker** | String | Docker image used for the task | "us-docker.pkg.dev/general-theiagen/staphb/skani:0.2.2" | Optional | PE, ONT |
+    | skani | **memory** | Int | Memory allocated for the task (in GB) | 4 | Optional | PE, ONT |
+    | skani | **skani_db** | File | Skani database file | "gs://theiagen-large-public-files-rp/terra/databases/skani/skani_db_20250325.tar" | Optional | PE, ONT |
+    | spades | **cpu** | Int | Number of CPUs allocated for the task | 4 | Optional | PE |
+    | spades | **disk_size** | Int | Disk size allocated for the task (in GB) | 100 | Optional | PE |
+    | spades | **docker** | String | Docker image used for the task | "us-docker.pkg.dev/general-theiagen/staphb/spades:4.1.0" | Optional | PE |
+    | spades | **kmers** | String | list of k-mer sizes (must be odd and less than 128) | "auto" | Optional | PE |
+    | spades | **memory** | Int | Memory allocated for the task (in GB) | 16 | Optional | PE |
+    | spades | **phred_offset** | Int | PHRED quality offset in the input reads (33 or 64) | 33 | Optional | PE |
+    | spades | **spades_opts** | String | Additional parameters for Spades assembler | | Optional | PE |
+    | theiaviral_illumina_pe | **extract_unclassified** | Boolean | True/False that determines if unclassified reads should be extracted and combined with the taxon specific extracted reads | FALSE | Optional | PE |
+    | theiaviral_illumina_pe | **genome_length** | Int | Expected genome length of taxon of interest | | Optional | PE |
+    | theiaviral_illumina_pe | **kraken_db** | File | Kraken2 database file | "gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz" | Optional | PE |
+    | theiaviral_illumina_pe | **min_allele_freq** | Float | Minimum allele frequency required for a variant to populate the consensus sequence | 0.6 | Optional | PE |
+    | theiaviral_illumina_pe | **min_depth** | Int | Minimum read depth required for a variant to populate the consensus sequence | 10 | Optional | PE |
+    | theiaviral_illumina_pe | **min_map_quality** | Int | Minimum mapping quality required for read alignments | 20 | Optional | PE |
+    | theiaviral_illumina_pe | **read_extraction_rank** | String | Taxonomic rank to use for read extraction - limits taxons to only those within the specified ranks. | "family" | Optional | PE |
+    | theiaviral_illumina_pe | **reference_fasta** | File | Reference genome in FASTA format | | Optional | PE |
+    | theiaviral_illumina_pe | **skip_metaviralspades** | Boolean | True/False to skip assembly with Metaviralspades and instead use Megahit | FALSE | Optional | PE |
+    | theiaviral_illumina_pe | **skip_rasusa** | Boolean | True/False to skip read subsampling with Rasusa | FALSE | Optional | PE |
+    | theiaviral_illumina_pe | **skip_screen** | Boolean | True/False to skip read screening check prior to analysis | FALSE | Optional | PE |
+    | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) | | Optional | PE, ONT |
 
     </div>
 
@@ -76,14 +202,6 @@ The **TheiaViral** workflows are designed for the assembly, quality assessment, 
 
     | **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** | **Workflow** |
     |---|---|---|---|---|---|---|
-    | theiaviral_illumina_pe | **read1** | File | llumina forward read file in FASTQ file format (compression optional) | | Required | PE |
-    | theiaviral_illumina_pe | **read2** | File | Illumina reverse read file in FASTQ file format (compression optional) | | Required | PE |
-    | theiaviral_illumina_pe | **samplename** | String | Name of the sample being analyzed | | Required | PE |
-    | theiaviral_illumina_pe | **taxon** | String | Taxon ID or organism name of interest | | Required | PE |
-    | bwa | **cpu** | Int | Number of CPUs to allocate to the task | 6 | Optional |
-    | bwa | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
-    | bwa | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/ivar:1.3.1-titan | Optional |
-    | bwa | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 16 | Optional |
     | theiaviral_ont | **read1** | File | Base-called ONT read file in FASTQ file format (compression optional) | | Required | ONT |
     | theiaviral_ont | **samplename** | String | Name of the sample being analyzed | | Required | ONT |
     | theiaviral_ont | **taxon** | String | Taxon ID or organism name of interest | | Required | ONT |
@@ -122,18 +240,7 @@ The **TheiaViral** workflows are designed for the assembly, quality assessment, 
     | clean_check_reads | **min_coverage** | Int | Minimum coverage to pass read screening | 10 | Optional | PE, ONT |
     | clean_check_reads | **min_genome_length** | Int | Minimum genome length to pass read screening | 1500 | Optional | PE, ONT |
     | clean_check_reads | **min_reads** | Int | Minimum reads to pass read screening | 50 | Optional | PE, ONT |
-    | clean_check_reads | **min_proportion** | Int | Minimum read proportion to pass read screening | 40 | Optional | PE |
     | clean_check_reads | **skip_mash** | Boolean | True/False that determines if mash should be skipped in the screen task. | TRUE | Optional | ONT |
-    | consensus | **char_unknown** | String | Character used to represent unknown bases in the consensus sequence | "N" | Optional | PE |
-    | consensus | **count_orphans** | Boolean | True/False that determines if anomalous read pairs are NOT skipped in variant calling. Anomalous read pairs are those marked in the FLAG field as paired in sequencing but without the properly-paired flag set. | TRUE | Optional | PE |
-    | consensus | **cpu** | Int | Number of CPUs allocated for the task | 2 | Optional | PE |
-    | consensus | **disable_baq** | Boolean | True/False that determines if base alignment quality (BAQ) computation should be disabled during samtools mpileup before consensus generation | TRUE | Optional | PE |
-    | consensus | **disk_size** | Int | Disk size allocated for the task (in GB) | 100 | Optional | PE |
-    | consensus | **docker** | String | Docker image used for the task | "us-docker.pkg.dev/general-theiagen/staphb/ivar:1.3.1-titan" | Optional | PE |
-    | consensus | **max_depth** | Int | For a given position, read at maximum INT number of reads per input file during samtools mpileup before consensus generation | 600000 | Optional | PE |
-    | consensus | **memory** | Int | Memory allocated for the task (in GB) | 8 | Optional | PE |
-    | consensus | **min_bq** | Int | Minimum base quality required for a base to be considered during samtools mpileup before consensus generation | 0 | Optional | PE |
-    | consensus | **skip_N** | Boolean | True/False that determines if "N" bases should be skipped in the consensus sequence | FALSE | Optional | PE |
     | consensus_qc | **cpu** | Int | Number of CPUs allocated for the task | 1 | Optional | PE, ONT |
     | consensus_qc | **disk_size** | Int | Disk size allocated for the task (in GB) | 100 | Optional | PE, ONT |
     | consensus_qc | **docker** | String | Docker image used for the task | "us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1" | Optional | PE, ONT |
@@ -156,21 +263,10 @@ The **TheiaViral** workflows are designed for the assembly, quality assessment, 
     | flye | **read_error_rate** | Float | Expected error rate in reads | | Optional | ONT |
     | flye | **read_type** | String | Type of read data for Flye | "--nano-hq" | Optional | ONT |
     | flye | **scaffold** | Boolean | True/False to enable scaffolding using graph | FALSE | Optional | ONT |
-    | ivar_variants | **cpu** | Int | Number of CPUs allocated for the task | 2 | Optional | PE |
-    | ivar_variants | **disk_size** | Int | Disk size allocated for the task (in GB) | 100 | Optional | PE |
-    | ivar_variants | **docker** | String | Docker image used for the task | "us-docker.pkg.dev/general-theiagen/staphb/ivar:1.3.1-titan" | Optional | PE |
-    | ivar_variants | **memory** | Int | Memory allocated for the task (in GB) | 8 | Optional | PE |
-    | ivar_variants | **reference_gff** | File | A GFF file in the GFF3 format can be supplied to specify coordinates of open reading frames (ORFs) so iVar can identify codons and translate variants into amino acids | | Optional | PE |
     | mask_low_coverage | **cpu** | Int | Number of CPUs allocated for the task | 2 | Optional | ONT |
     | mask_low_coverage | **disk_size** | Int | Disk size allocated for the task (in GB) | 100 | Optional | ONT |
     | mask_low_coverage | **docker** | String | Docker image used for the task | "us-docker.pkg.dev/general-theiagen/staphb/bedtools:2.31.0" | Optional | ONT |
     | mask_low_coverage | **memory** | Int | Memory allocated for the task (in GB) | 8 | Optional | ONT |
-    | megahit | **cpu** | Int | Number of CPUs allocated for the task | 4 | Optional | PE |
-    | megahit | **disk_size** | Int | Disk size allocated for the task (in GB) | 100 | Optional | PE |
-    | megahit | **docker** | String | Docker image used for the task | "us-docker.pkg.dev/general-theiagen/theiagen/megahit:1.2.9" | Optional | PE |
-    | megahit | **kmers** | String | Comma-separated list of kmer sizes to use for assembly. All must be odd, in the range 15-255, increment <= 28 | "21,29,39,59,79,99,119,141" | Optional | PE |
-    | megahit | **megahit_opts** | String | Additional parameters for Megahit assembler | | Optional | PE |
-    | megahit | **memory** | Int | Memory allocated for the task (in GB) | 16 | Optional | PE |
     | metabuli | **cpu** | Int | Number of CPUs allocated for the task | 4 | Optional | ONT |
     | metabuli | **disk_size** | Int | Disk size allocated for the task (in GB) | 100 | Optional | ONT |
     | metabuli | **docker** | String | Docker image used for the task | "us-docker.pkg.dev/general-theiagen/theiagen/metabuli:1.1.0" | Optional | ONT |
@@ -257,46 +353,11 @@ The **TheiaViral** workflows are designed for the assembly, quality assessment, 
     | read_mapping_stats | **disk_size** | Int | Disk size allocated for the task (in GB) | 100 | Optional | PE, ONT |
     | read_mapping_stats | **docker** | String | Docker image used for the task | "us-docker.pkg.dev/general-theiagen/staphb/samtools:1.15" | Optional | PE, ONT |
     | read_mapping_stats | **memory** | Int | Memory allocated for the task (in GB) | 8 | Optional | PE, ONT |
-    | read_QC_trim | **adapters** | File | A file containing the sequence of the adapters used during library preparation, used in the BBDuk task |  | Optional | PE |
-    | read_QC_trim | **bbduk_memory** | Int | Memory allocated for the BBDuk task (in GB) | 8 | Optional | PE |
-    | read_QC_trim | **call_kraken** | Boolean | Internal component, do not modify | | Do not modify, Optional | PE |
-    | read_QC_trim | **call_midas** | Boolean | Internal component, do not modify | | Do not modify, Optional | PE |
-    | read_QC_trim | **fastp_args** | String | Additional parameters for fastp | | Optional | PE |
-    | read_QC_trim | **kraken_cpu** | Int | Number of CPUs allocated for the Kraken2 task | 4 | Optional | PE |
-    | read_QC_trim | **kraken_disk_size** | Int | Disk size allocated for the Kraken2 task (in GB) | 100 | Optional | PE |
-    | read_QC_trim | **kraken_memory** | Int | Memory allocated for the Kraken2 task (in GB) | 32 | Optional | PE |
-    | read_QC_trim | **midas_db** | File | Internal component, do not modify | | Do not modify, Optional | PE |
-    | read_QC_trim | **phix** | File | A file containing the phix used during Illumina sequencing; used in the BBDuk task |  | Optional | PE |
-    | read_QC_trim | **read_processing** | String | Read trimming software to use, either "trimmomatic" or "fastp" | "trimmomatic" | Optional | PE |
-    | read_QC_trim | **read_qc** | String | Allows the user to decide between "fastq_scan" (default) and "fastqc" for the evaluation of read quality. | "fastq_scan" | Optional | PE |
-    | read_QC_trim | **target_organism** | String | Internal component, do not modify | | Do not modify, Optional | PE |
-    | read_QC_trim | **trim_min_length** | Int | Specifies minimum length of each read after trimming to be kept | 75 | Optional | PE |
-    | read_QC_trim | **trim_quality_min_score** | Int | Specifies the minimum average quality of bases in a sliding window to be kept | 30 | Optional | PE |
-    | read_QC_trim | **trim_window_size** | Int | Specifies window size for trimming (the number of bases to average the quality across) | 4 | Optional | PE |
-    | read_QC_trim | **trimmomatic_args** | String | Additional arguments to pass to trimmomatic. "-phred33" specifies the Phred Q score encoding which is almost always phred33 with modern sequence data. | -phred33 | Optional | PE |
     | skani | **cpu** | Int | Number of CPUs allocated for the task | 2 | Optional | PE, ONT |
     | skani | **disk_size** | Int | Disk size allocated for the task (in GB) | 100 | Optional | PE, ONT |
     | skani | **docker** | String | Docker image used for the task | "us-docker.pkg.dev/general-theiagen/staphb/skani:0.2.2" | Optional | PE, ONT |
     | skani | **memory** | Int | Memory allocated for the task (in GB) | 4 | Optional | PE, ONT |
     | skani | **skani_db** | File | Skani database file | "gs://theiagen-large-public-files-rp/terra/databases/skani/skani_db_20250325.tar" | Optional | PE, ONT |
-    | spades | **cpu** | Int | Number of CPUs allocated for the task | 4 | Optional | PE |
-    | spades | **disk_size** | Int | Disk size allocated for the task (in GB) | 100 | Optional | PE |
-    | spades | **docker** | String | Docker image used for the task | "us-docker.pkg.dev/general-theiagen/staphb/spades:4.1.0" | Optional | PE |
-    | spades | **kmers** | String | list of k-mer sizes (must be odd and less than 128) | "auto" | Optional | PE |
-    | spades | **memory** | Int | Memory allocated for the task (in GB) | 16 | Optional | PE |
-    | spades | **phred_offset** | Int | PHRED quality offset in the input reads (33 or 64) | 33 | Optional | PE |
-    | spades | **spades_opts** | String | Additional parameters for Spades assembler | | Optional | PE |
-    | theiaviral_illumina_pe | **extract_unclassified** | Boolean | True/False that determines if unclassified reads should be extracted and combined with the taxon specific extracted reads | FALSE | Optional | PE |
-    | theiaviral_illumina_pe | **genome_length** | Int | Expected genome length of taxon of interest | | Optional | PE |
-    | theiaviral_illumina_pe | **kraken_db** | File | Kraken2 database file | "gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz" | Optional | PE |
-    | theiaviral_illumina_pe | **min_allele_freq** | Float | Minimum allele frequency required for a variant to populate the consensus sequence | 0.6 | Optional | PE |
-    | theiaviral_illumina_pe | **min_depth** | Int | Minimum read depth required for a variant to populate the consensus sequence | 10 | Optional | PE |
-    | theiaviral_illumina_pe | **min_map_quality** | Int | Minimum mapping quality required for read alignments | 20 | Optional | PE |
-    | theiaviral_illumina_pe | **read_extraction_rank** | String | Taxonomic rank to use for read extraction - limits taxons to only those within the specified ranks. | "family" | Optional | PE |
-    | theiaviral_illumina_pe | **reference_fasta** | File | Reference genome in FASTA format | | Optional | PE |
-    | theiaviral_illumina_pe | **skip_metaviralspades** | Boolean | True/False to skip assembly with Metaviralspades and instead use Megahit | FALSE | Optional | PE |
-    | theiaviral_illumina_pe | **skip_rasusa** | Boolean | True/False to skip read subsampling with Rasusa | FALSE | Optional | PE |
-    | theiaviral_illumina_pe | **skip_screen** | Boolean | True/False to skip read screening check prior to analysis | FALSE | Optional | PE |
     | theiaviral_ont | **call_porechop** | Boolean | True/False to trim adapters with porechop | FALSE | Optional | ONT |
     | theiaviral_ont | **genome_length** | Int | Expected genome length of taxon of interest | | Optional | ONT |
     | theiaviral_ont | **min_allele_freq** | Float | Minimum allele frequency required for a variant to populate the consensus sequence | 0.6 | Optional | ONT |
@@ -308,7 +369,7 @@ The **TheiaViral** workflows are designed for the assembly, quality assessment, 
     | theiaviral_ont | **skip_raven** | Boolean | True/False to skip assembly with Raven and instead use Flye | FALSE | Optional | ONT |
     | theiaviral_ont | **skip_screen** | Boolean | True/False to skip read screening check prior to analysis | FALSE | Optional | ONT |
     | version_capture | **docker** | String | Docker image used for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional | ONT |
-    | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) | | Optional | ONT |
+    | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) | | Optional | PE, ONT |
 
     </div>
 
