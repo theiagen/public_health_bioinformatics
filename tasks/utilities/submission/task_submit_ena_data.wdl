@@ -1,8 +1,10 @@
 version 1.0
 
-task prepare_ena_data {
+task submit_ena_data {
   input{
     # Input arguments
+    String ena_username # ENA username
+    String ena_password # ENA password
 
     File metadata_accessions # Metadata spreadsheet (TSV format) with ENA accessions
 
@@ -65,6 +67,16 @@ task prepare_ena_data {
     localize_files.py \
       --file-paths "file_paths.json"
 
+    # Submit the data to ENA
+    bulk_webincli.py \
+      ~{"--username " + ena_username} \
+      ~{"--password " + ena_password} \
+      --webinCliPath /scripts/webin-cli.jar \
+      --geneticContext "reads" \
+      --spreadsheet "prepped_ena_data.tsv" \
+      --directory . \
+      --mode "submit" \
+      --test
   >>>
   output {
     File prepped_ena_data = "prepped_ena_data.tsv"
