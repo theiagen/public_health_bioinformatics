@@ -1,7 +1,7 @@
 version 1.0
 
 import "../../tasks/task_versioning.wdl" as versioning
-import "../../tasks/utilities/data_export/task_download_terra_table.wdl" as task_download_terra_table
+import "../../tasks/utilities/data_handling/task_summarize_data.wdl" as task_summarize_data
 import "../../tasks/utilities/submission/task_submit_ena_data.wdl" as task_submit_ena_data
 import "../../tasks/utilities/submission/task_register_ena_samples.wdl" as task_register_ena_samples
 
@@ -21,15 +21,18 @@ workflow Terra_2_ENA {
     String sample_type # must be "prokaryotic_pathogen" or "virus_pathogen"
     Boolean allow_missing = false # Allow missing metadata for some samples
   }
-  call task_download_terra_table.download_terra_table {
+  call task_summarize_data.summarize_data {
     input:
-      terra_project_name = terra_project_name,
-      terra_workspace_name = terra_workspace_name,
-      terra_table_name = terra_table_name
+      sample_names = samples,
+      terra_project = terra_project_name,
+      terra_workspace = terra_workspace_name,
+      terra_table = terra_table_name,
+      output_prefix = "ena",
+      id_column_name = sample_id_column
   }
   call task_register_ena_samples.register_ena_samples {
     input:
-      metadata = download_terra_table.terra_table,
+      metadata = summarize_data.filtered_metadata,
       ena_username = ena_username,
       ena_password = ena_password,
       study_accession = study_accession,
@@ -46,7 +49,6 @@ workflow Terra_2_ENA {
       study_accession = study_accession,
       column_mappings = column_mappings,
       sample_id_column = sample_id_column,
-      samples = samples,
       allow_missing = allow_missing
   }
   call versioning.version_capture {
@@ -54,7 +56,8 @@ workflow Terra_2_ENA {
   }
   output {
     # Downloaded Terra table output
-    File terra_table = download_terra_table.terra_table
+    File summarized_data = summarize_data.summarized_data
+    File filtered_metadata = summarize_data.filtered_metadata
     # ENA registration output
     File ena_accessions = register_ena_samples.accessions
     File ena_metadata_accessions = register_ena_samples.metadata_accessions
