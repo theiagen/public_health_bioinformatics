@@ -38,15 +38,15 @@ task ts_mlst {
     mlst --list > MLST_SCHEMES
 
     mlst \
-    --threads ~{cpu} \
-    ~{true="--nopath" false="" nopath} \
-    ~{'--scheme ' + scheme} \
-    ~{'--minid ' + min_percent_identity} \
-    ~{'--mincov ' + min_percent_coverage} \
-    ~{'--minscore ' + minscore} \
-    --novel ~{samplename}_novel_mlst_alleles.fasta \
-    ~{assembly} \
-    >> ~{samplename}_ts_mlst.tsv
+      --threads ~{cpu} \
+      ~{true="--nopath" false="" nopath} \
+      ~{'--scheme ' + scheme} \
+      ~{'--minid ' + min_percent_identity} \
+      ~{'--mincov ' + min_percent_coverage} \
+      ~{'--minscore ' + minscore} \
+      --novel ~{samplename}_novel_mlst_alleles.fasta \
+      ~{assembly} \
+      >> ~{samplename}_ts_mlst.tsv
 
     scheme=$(head -n 2 ~{samplename}_ts_mlst.tsv | tail -n 1 | cut -f2)
     echo "Scheme Initial Run: $scheme"
@@ -58,47 +58,47 @@ task ts_mlst {
       # Check if secondary scheme is in DB
       if grep -q "$secondary_scheme" MLST_SCHEMES; then
         mlst \
-        --threads ~{cpu} \
-        ~{true="--nopath" false="" nopath} \
-        --scheme $secondary_scheme \
-        ~{'--minid ' + min_percent_identity} \
-        ~{'--mincov ' + min_percent_coverage} \
-        ~{'--minscore ' + minscore} \
-        --novel ~{samplename}_novel_mlst_alleles_${secondary_scheme}.fasta \
-        ~{assembly} \
-        >> ~{samplename}_2.tsv
+          --threads ~{cpu} \
+          ~{true="--nopath" false="" nopath} \
+          --scheme $secondary_scheme \
+          ~{'--minid ' + min_percent_identity} \
+          ~{'--mincov ' + min_percent_coverage} \
+          ~{'--minscore ' + minscore} \
+          --novel ~{samplename}_novel_mlst_alleles_${secondary_scheme}.fasta \
+          ~{assembly} \
+          >> ~{samplename}_2.tsv
 
         cat ~{samplename}_1.tsv ~{samplename}_2.tsv > ~{samplename}_ts_mlst.tsv
         cat ~{samplename}_novel_mlst_alleles_${secondary_scheme}.fasta ~{samplename}_novel_mlst_alleles.fasta > ~{samplename}_novel_mlst_alleles.fasta
       fi
 
-    elif [[ "~{taxonomy}" == "Escherichia" || "~{taxonomy}" == "Escherichia coli" ]]; then
+    elif [[ "~{taxonomy}" == "Escherichia" || "~{taxonomy}" == "Escherichia coli" || "~{taxonomy}" = "Escherichia_coli" ]]; then
       if [[ "$scheme" == "aeromonas" || "$scheme" == "cfreundii" ||  "$scheme" == "senterica" ]]; then
           echo "Taxonomy is reported as Escherichia, but scheme is not. Running ecoli schemes."
 
           mlst \
-          --threads ~{cpu} \
-          ~{true="--nopath" false="" nopath} \
-          --scheme ecoli \
-          ~{'--minid ' + min_percent_identity} \
-          ~{'--mincov ' + min_percent_coverage} \
-          ~{'--minscore ' + minscore} \
-          --novel ~{samplename}_novel_mlst_alleles.fasta \
-          ~{assembly} \
-          >> ~{samplename}_1.tsv
+            --threads ~{cpu} \
+            ~{true="--nopath" false="" nopath} \
+            --scheme ecoli \
+            ~{'--minid ' + min_percent_identity} \
+            ~{'--mincov ' + min_percent_coverage} \
+            ~{'--minscore ' + minscore} \
+            --novel ~{samplename}_novel_mlst_alleles.fasta \
+            ~{assembly} \
+            >> ~{samplename}_1.tsv
 
           # Check if secondary scheme is in DB
           if grep -q ecoli_2 MLST_SCHEMES; then
             mlst \
-            --threads ~{cpu} \
-            ~{true="--nopath" false="" nopath} \
-            --scheme ecoli_2 \
-            ~{'--minid ' + min_percent_identity} \
-            ~{'--mincov ' + min_percent_coverage} \
-            ~{'--minscore ' + minscore} \
-            --novel ~{samplename}_novel_mlst_alleles_2.fasta \
-            ~{assembly} \
-            >> ~{samplename}_2.tsv
+              --threads ~{cpu} \
+              ~{true="--nopath" false="" nopath} \
+              --scheme ecoli_2 \
+              ~{'--minid ' + min_percent_identity} \
+              ~{'--mincov ' + min_percent_coverage} \
+              ~{'--minscore ' + minscore} \
+              --novel ~{samplename}_novel_mlst_alleles_2.fasta \
+              ~{assembly} \
+              >> ~{samplename}_2.tsv
 
             #create output header
             echo -e "Filename\tPubMLST_Scheme_name\tSequence_Type_(ST)\tAllele_IDs" > ~{samplename}_ts_mlst.tsv
