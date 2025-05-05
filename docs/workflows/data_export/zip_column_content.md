@@ -10,7 +10,7 @@ title: Zip_Column_Content
 
 ## Zip_Column_Content_PHB
 
-This workflow will create a zip file containing all of the items from a given column in a Terra Data Table. This is useful when you want to share a collection of result files. 
+This workflow will create a zip file containing all of the items from a given column in a Terra Data Table. This is useful when you want to share a collection of result files.
 
 ### Inputs
 
@@ -34,6 +34,6 @@ This workflow runs on the _set_ level.
 
 /// html | div[class="searchable-table"]
 
-{{ input_table("docs/assets/output_tables/zip_column_content_out.tsv", input_table=False) }}
+{{ input_table("docs/assets/tables/all_outputs.tsv", input_table=False, filter_column="Workflow", filter_values="Zip_Column_Content", columns=["Variable", "Type", "Description"], sort_by=["Variable"]) }}
 
 ///

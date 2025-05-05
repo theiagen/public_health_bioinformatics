@@ -31,7 +31,7 @@ A limited number of species are currently supported and are listed below. NCBI c
 
 /// html | div[class="searchable-table"]
 
-{{ input_table("docs/assets/input_tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="AMR_Search", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"]) }}
+{{ input_table("docs/assets/tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="AMR_Search", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"]) }}
 
 ///
 
@@ -60,13 +60,11 @@ A limited number of species are currently supported and are listed below. NCBI c
 
 ### Outputs
 
-| **Variable** | **Type** | **Description** |
-|---|---|---|
-| amr_results_csv | File | CSV formatted AMR profile |
-| amr_results_pdf | File | PDF formatted AMR profile |
-| amr_search_results | File | JSON formatted AMR profile including BLAST results |
-| amr_search_docker | String | Docker image used to run AMR_Search |
-| amr_search_version | String | Version of AMR_Search libraries used |
+/// html | div[class="searchable-table"]
+
+{{ input_table("docs/assets/tables/all_outputs.tsv", input_table=False, filter_column="Workflow", filter_values="AMR_Search", columns=["Variable", "Type", "Description"], sort_by=["Variable"]) }}
+
+///
 
 ## References
 

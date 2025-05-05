@@ -692,31 +692,36 @@ All input reads are processed through "core tasks" in the TheiaCoV Illumina, ONT
 === "TheiaCoV_Illumina_PE"
     /// html | div[class="searchable-table"]
 
-    {{ input_table("docs/assets/output_tables/theiacov_out.tsv", input_table=False, filter_column="Workflow", filter_values="PE", columns=["Variable", "Type", "Description"], indent=4) }}
+    {{ input_table("docs/assets/tables/all_outputs.tsv", input_table=False, filter_column="Workflow", filter_values="TheiaCoV_Illumina_PE", columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=4) }}
+
     ///
 
 === "TheiaCoV_Illumina_SE"
     /// html | div[class="searchable-table"]
 
-    {{ input_table("docs/assets/output_tables/theiacov_out.tsv", input_table=False, filter_column="Workflow", filter_values="SE", columns=["Variable", "Type", "Description"], indent=4) }}
+    {{ input_table("docs/assets/tables/all_outputs.tsv", input_table=False, filter_column="Workflow", filter_values="TheiaCoV_Illumina_SE", columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=4) }}
+
     ///
 
 === "TheiaCoV_ONT"
     /// html | div[class="searchable-table"]
 
-    {{ input_table("docs/assets/output_tables/theiacov_out.tsv", input_table=False, filter_column="Workflow", filter_values="ONT", columns=["Variable", "Type", "Description"], indent=4) }}
+    {{ input_table("docs/assets/tables/all_outputs.tsv", input_table=False, filter_column="Workflow", filter_values="TheiaCoV_ONT", columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=4) }}
+
     ///
 
 === "TheiaCoV_FASTA"
     /// html | div[class="searchable-table"]
 
-    {{ input_table("docs/assets/output_tables/theiacov_out.tsv", input_table=False, filter_column="Workflow", filter_values="FASTA", columns=["Variable", "Type", "Description"], indent=4) }}
+    {{ input_table("docs/assets/tables/all_outputs.tsv", input_table=False, filter_column="Workflow", filter_values="TheiaCoV_FASTA", columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=4) }}
+
     ///
 
 === "TheiaCoV_ClearLabs"
     /// html | div[class="searchable-table"]
 
-    {{ input_table("docs/assets/output_tables/theiacov_out.tsv", input_table=False, filter_column="Workflow", filter_values="CL", columns=["Variable", "Type", "Description"], indent=4) }}
+    {{ input_table("docs/assets/tables/all_outputs.tsv", input_table=False, filter_column="Workflow", filter_values="TheiaCoV_ClearLabs", columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=4) }}
+
     ///
 
 === "TheiaCoV_FASTA_Batch"
@@ -725,5 +730,6 @@ All input reads are processed through "core tasks" in the TheiaCoV Illumina, ONT
         **TheiaCoV_FASTA_Batch_PHB** workflow will **output results to the set-level data table in addition to overwriting the Pangolin & Nextclade output columns in the sample-level data table**. Users can view the set-level workflow output TSV file called `"Datatable"` to view exactly which columns were overwritten in the sample-level data table.
     /// html | div[class="searchable-table"]
 
-    {{ input_table("docs/assets/output_tables/theiacov_fasta_batch_out.tsv", input_table=False, columns=["Variable", "Type", "Description"], indent=4) }}
+    {{ input_table("docs/assets/tables/all_outputs.tsv", input_table=False, filter_column="Workflow", filter_values="TheiaCoV_FASTA_Batch", columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=4) }}
+
     ///

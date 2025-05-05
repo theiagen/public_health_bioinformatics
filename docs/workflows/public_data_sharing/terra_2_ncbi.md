@@ -228,24 +228,11 @@ If the workflow ends unsuccessfully, no outputs will be shown on Terra and the `
 
 The output files contain information mostly for debugging purposes. Additionally, if your submission is successful, the point of contact for the submission should also receive an email from NCBI notifying them of their submission success.
 
-<div class="searchable-table" markdown="1">
+/// html | div[class="searchable-table"]
 
-| Variable | Description | Type |
-| --- | --- | --- |
-| biosample_failures | Text file listing samples that failed BioSample submission | File |
-| biosample_metadata | Metadata used for BioSample submission in proper BioSample formatting | File |
-| biosample_report_xmls | One or more XML files that contain the response from NCBI regarding your BioSample submission. These can be pretty cryptic, but often contain information to determine  if anything went wrong | Array[File] |
-| biosample_status | String showing whether BioSample submission was successful | String |
-| biosample_submission_xml | XML file used to submit your BioSamples to NCBI | File |
-| excluded_samples | Text file listing samples that were excluded from BioSample submission for missing required metadata | File |
-| generated_accessions | Text file mapping the BioSample accession with its sample name. | File |
-| sra_metadata | Metadata used for SRA submission in proper SRA formatting | File |
-| sra_report_xmls | One or more XML files containing the response from NCBI regarding your SRA submission. These can be pretty cryptic, but often contain information to determine  if anything went wrong | Array[File] |
-| sra_submission_xml | XML file that was used to submit your SRA reads to NCBI | File |
-| terra_2_ncbi_analysis_date | Date that the workflow was run | String |
-| terra_2_ncbi_version | Version of the PHB repository where the workflow is hosted | String |
+{{ input_table("docs/assets/tables/all_outputs.tsv", input_table=False, filter_column="Workflow", filter_values="Terra_2_NCBI", columns=["Variable", "Type", "Description"], sort_by=["Variable"]) }}
 
-</div>
+///
 
 ???+ toggle "An example excluded_samples.tsv file"
 

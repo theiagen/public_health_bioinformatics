@@ -46,18 +46,11 @@ The Cauris_CladeTyper_PHB Workflow is designed to assign the clade to _Candidozy
     
 ### Outputs
 
-<div class="searchable-table" markdown="1">
+/// html | div[class="searchable-table"]
 
-| **Variable** | **Type** | **Description** |
-|---|---|---|
-| cauris_cladetyper_wf_analysis_date | String | Date of analysis |
-| cauris_cladetyper_wf_version | String | Version of PHB used for the analysis |
-| cladetyper_annotated_reference | String | The annotated reference file for the identified clade, "None" if no clade was identified |
-| cladetyper_clade | String | The clade assigned to the input assembly |
-| cladetyper_docker_image | String | The Docker container used for the task |
-| cladetyper_gambit_version | String | The version of GAMBIT used for the analysis |
+{{ input_table("docs/assets/tables/all_outputs.tsv", input_table=False, filter_column="Workflow", filter_values="Cauris_Cladetyper", columns=["Variable", "Type", "Description"], sort_by=["Variable"]) }}
 
-</div>
+///
 
 ## References
 

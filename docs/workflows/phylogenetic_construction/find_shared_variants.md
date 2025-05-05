@@ -74,9 +74,8 @@ All variant data included in the sample set should be generated from aligning se
 
 The outputs of this workflow are the `concatenated_variants` file and the `shared_variants_table` file.
 
-| **Variable** | **Type** | **Description** |
-| --- | --- | --- |
-| concatenated_variants | File | The concatenated variants without presence/absence |
-| shared_variants_analysis_date | String | The date the workflow was run |
-| shared_variants_table | File | The shared variants table listing presence/absence for each mutation identified in the samples |
-| shared_variants_version | String | The version of PHB the workflow is in |
+/// html | div[class="searchable-table"]
+
+{{ input_table("docs/assets/tables/all_outputs.tsv", input_table=False, filter_column="Workflow", filter_values="Find_Shared_Variants", columns=["Variable", "Type", "Description"], sort_by=["Variable"]) }}
+
+///

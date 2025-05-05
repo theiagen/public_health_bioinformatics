@@ -35,17 +35,11 @@ RASUSA functions to randomly downsample the number of raw reads to a user-define
 
 ### Outputs
 
-<div class="searchable-table" markdown="1">
+/// html | div[class="searchable-table"]
 
-| **Variable** | **Type** | **Description** |
-|---|---|---|
-| rasusa_version | String | Version of RASUSA used for the analysis |
-| rasusa_wf_analysis_date | String | Date of analysis |
-| rasusa_wf_version | String | Version of PHB used for the analysis |
-| read1_subsampled | File | New read1 FASTQ files downsampled to desired coverage |
-| read2_subsampled | File | New read2 FASTQ files downsampled to desired coverage |
+{{ input_table("docs/assets/tables/all_outputs.tsv", input_table=False, filter_column="Workflow", filter_values="RASUSA", columns=["Variable", "Type", "Description"], sort_by=["Variable"]) }}
 
-</div>
+///
 
 !!! tip "Don't Forget!"
     Remember to use the subsampled reads in downstream analyses with `this.read1_subsampled` and `this.read2_subsampled` inputs.

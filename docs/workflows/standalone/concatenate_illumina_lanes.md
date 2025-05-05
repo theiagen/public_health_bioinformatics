@@ -27,9 +27,8 @@ This workflow concatenates the Illumina lanes for forward and (if provided) reve
 
 ### Outputs
 
-| **Variable** | **Type** | **Description** |
-|---|---|---|
-| concatenate_illumina_lanes_analysis_date | String | Date of analysis |
-| concatenate_illumina_lanes_version | String | Version of PHB used for the analysis |
-| read1_concatenated | File | Concatenated forward reads |
-| read2_concatenated | File | Concatenated reverse reads |
+/// html | div[class="searchable-table"]
+
+{{ input_table("docs/assets/tables/all_outputs.tsv", input_table=False, filter_column="Workflow", filter_values="Concatenate_Illumina_Lanes", columns=["Variable", "Type", "Description"], sort_by=["Variable"]) }}
+
+///

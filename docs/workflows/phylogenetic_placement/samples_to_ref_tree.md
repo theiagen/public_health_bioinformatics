@@ -19,21 +19,14 @@ However, nextclade can be used on any organism as long as an an existing, high-q
 
 /// html | div[class="searchable-table"]
 
-{{ input_table("docs/assets/input_tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="Samples_to_Ref_Tree", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"]) }}
+{{ input_table("docs/assets/input_tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="Sample_to_Ref_Tree", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"]) }}
 
 ///
+
 ### Outputs
 
-<div class="searchable-table" markdown="1">
+/// html | div[class="searchable-table"]
 
-| **Variable** | **Type** | **Description** |
-|---|---|---|
-| treeUpdate_auspice_json | File | Phylogenetic tree with user placed samples |
-| treeUpdate_nextclade_docker | String | Nextclade docker image used |
-| treeUpdate_nextclade_json | File | JSON file with the results of the Nextclade analysis |
-| treeUpdate_nextclade_tsv | File | Tab-delimited file with Nextclade results |
-| treeUpdate_nextclade_version | String | Nextclade version used |
-| samples_to_ref_tree_analysis_date | String | Date of analysis |
-| samples_to_ref_tree_version | String | Version of the Public Health Bioinformatics (PHB) repository used |
+{{ input_table("docs/assets/tables/all_outputs.tsv", input_table=False, filter_column="Workflow", filter_values="Sample_to_Ref_Tree", columns=["Variable", "Type", "Description"], sort_by=["Variable"]) }}
 
-</div>
+///

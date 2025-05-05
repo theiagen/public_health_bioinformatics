@@ -32,4 +32,8 @@ This workflow runs on the _set_ level.
 !!! info "Prevent Output Overwriting"
     Please note that if you run this workflow on the _same_ Terra set, the results will overwrite each other. We recommend either (1) renaming the output variable, or (2) creating a new set every time you run the workflow. Multiple sets containing the same samples can be created as long as the set names are unique.
 
-{{ input_table("docs/assets/output_tables/concatenate_column_content_out.tsv", input_table=False) }}
+/// html | div[class="searchable-table"]
+
+{{ input_table("docs/assets/tables/all_outputs.tsv", input_table=False, filter_column="Workflow", filter_values="Concatenate_Column_Content", columns=["Variable", "Type", "Description"], sort_by=["Variable"]) }}
+
+///

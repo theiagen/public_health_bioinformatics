@@ -20,11 +20,10 @@ This sample-level workflow receives a read file or a pair of read files (FASTQ),
 
 ### Outputs
 
-If a reverse read (`read2`) is provided, the files get renamed to the provided `new_filename` input with the notation `<new_filename>_R1.fastq.gz` and `<new_filename>_R2.fastq.gz`. If only `read1` is provided, the file is renamed to `<new_filename>.fastq.gz`. 
+If a reverse read (`read2`) is provided, the files get renamed to the provided `new_filename` input with the notation `<new_filename>_R1.fastq.gz` and `<new_filename>_R2.fastq.gz`. If only `read1` is provided, the file is renamed to `<new_filename>.fastq.gz`.
 
-| **Variable** | **Type** | **Description** |
-|---|---|---|
-| read1_renamed | File | New read1 FASTQ file renamed to desired filename |
-| read2_renamed | File | New read2 FASTQ file renamed to desired filename |
-| rename_fastq_files_analysis_date | String | Date of analysis |
-| rename_fastq_files_version | String | Version of PHB used for the analysis |
+/// html | div[class="searchable-table"]
+
+{{ input_table("docs/assets/tables/all_outputs.tsv", input_table=False, filter_column="Workflow", filter_values="Rename_FASTQ", columns=["Variable", "Type", "Description"], sort_by=["Variable"]) }}
+
+///

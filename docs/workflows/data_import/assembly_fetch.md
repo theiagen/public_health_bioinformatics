@@ -81,7 +81,7 @@ This workflow runs on the sample level.
 
 /// html | div[class="searchable-table"]
 
-{{ input_table("docs/assets/output_tables/assembly_fetch_out.tsv", input_table=False) }}
+{{ input_table("docs/assets/tables/all_outputs.tsv", input_table=False, filter_column="Workflow", filter_values="Assembly_Fetch", columns=["Variable", "Type", "Description"], sort_by=["Variable"]) }}
 
 ///
 

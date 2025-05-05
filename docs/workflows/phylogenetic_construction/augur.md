@@ -32,17 +32,17 @@ This workflow runs on the sample level.
 
 /// html | div[class="searchable-table"]
 
-{{ input_table("docs/assets/input_tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="Augur_Prep_PHB", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"]) }}
+{{ input_table("docs/assets/input_tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="Augur_Prep", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"]) }}
 
 ///
 
 #### Augur_Prep Outputs
 
-| **Variable** | **Type** | **Description** |
-|---|---|---|
-| augur_metadata | File | TSV file of the metadata provided as input to the workflow in the proper format for Augur analysis |
-| augur_prep_phb_analysis_date | String | Date of analysis |
-| augur_prep_phb_version | String | Version of the Public Health Bioinformatics (PHB) repository used |
+/// html | div[class="searchable-table"]
+
+{{ input_table("docs/assets/tables/all_outputs.tsv", input_table=False, filter_column="Workflow", filter_values="Augur_Prep", columns=["Variable", "Type", "Description"], sort_by=["Variable"]) }}
+
+///
 
 ### Augur_PHB
 
@@ -160,7 +160,7 @@ This workflow runs on the set level. Please note that for every task, runtime pa
 
 /// html | div[class="searchable-table"]
 
-{{ input_table("docs/assets/input_tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="Augur_PHB", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"]) }}
+{{ input_table("docs/assets/input_tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="Augur", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"]) }}
 
 ///
 
@@ -202,25 +202,11 @@ The `auspice_input_json` is intended to be uploaded to [Auspice](https://auspic
 
 The Nextstrain team hosts documentation surrounding the Augur workflow → Auspice visualization here, which details the various components of the Auspice interface: [How data is exported by Augur for visualisation in Auspice](https://docs.nextstrain.org/en/latest/learn/augur-to-auspice.html).
 
-| **Variable** | **Type** | **Description** |
-| --- | --- | --- |
-| aligned_fastas | File | A FASTA file of the aligned genomes |
-| augur_fasttree_version | String | The fasttree version used, blank if other tree method used |
-| augur_iqtree_model_used | String | The iqtree model used during augur tree, blank if iqtree not used |
-| augur_iqtree_version | String | The iqtree version used during augur tree (defualt), blank if other tree method used |
-| augur_mafft_version | String | The mafft version used in augur align |
-| augur_phb_analysis_date | String | The date the analysis was run |
-| augur_phb_version | String | The version of the Public Health Bioinformatics (PHB) repository used |
-| augur_raxml_version | String | The version of raxml used during augur tree, blank if other tree method used |
-| augur_version | String | Version of Augur used |
-| auspice_input_json | File | JSON file used as input to Auspice |
-| combined_assemblies | File | Concatenated FASTA file containing all samples |
-| distance_tree | File | The distance tree created in Newick (.nwk) format |
-| keep_list | File | A list of samples included in the phylogenetic tree |
-| metadata_merged | File | Tab-delimited text file of the merged augur_metadata input files from all samples |
-| snp_matrix | File | The SNP distance matrix for all samples used in the phylogenetic tree |
-| time_tree | File | The time tree created in Newick (.nwk) format |
-| traits_json | File | A JSON file containing sample traits |
+/// html | div[class="searchable-table"]
+
+{{ input_table("docs/assets/tables/all_outputs.tsv", input_table=False, filter_column="Workflow", filter_values="Augur", columns=["Variable", "Type", "Description"], sort_by=["Variable"]) }}
+
+///
 
 #### Mpox-specific Auspice Output JSON
 

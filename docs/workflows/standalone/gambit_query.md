@@ -35,20 +35,10 @@ For additional details regarding the GAMBIT tool and a list of available GAMBIT 
 
 ### Outputs
 
-<div class="searchable-table" markdown="1">
+/// html | div[class="searchable-table"]
 
-| **Variable** | **Type** | **Description** |
-|---|---|---|
-| gambit_closest_genomes | File | CSV file listing genomes in the GAMBIT database that are most similar to the query assembly |
-| gambit_db_version | String | Version of the GAMBIT database used |
-| gambit_docker | String | GAMBIT Docker used |
-| gambit_predicted_taxon | String | Taxon predicted by GAMBIT |
-| gambit_predicted_taxon_rank | String | Taxon rank of GAMBIT taxon prediction |
-| gambit_query_wf_analysis_date | String | Date of analysis |
-| gambit_query_wf_version | String | PHB repository version |
-| gambit_report | File | GAMBIT report in a machine-readable format |
-| gambit_version | String | Version of gambit software used |
+{{ input_table("docs/assets/tables/all_outputs.tsv", input_table=False, filter_column="Workflow", filter_values="Gambit_Query", columns=["Variable", "Type", "Description"], sort_by=["Variable"]) }}
 
-</div>
+///
 
 > GAMBIT (Genomic Approximation Method for Bacterial Identification and Tracking): A methodology to rapidly leverage whole genome sequencing of bacterial isolates for clinical identification. Lumpe et al. PLOS ONE, 2022. DOI: [10.1371/journal.pone.0277575](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0277575)

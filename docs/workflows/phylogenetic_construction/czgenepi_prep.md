@@ -28,12 +28,11 @@ This workflow runs on the set level.
 
 The concatenated_czgenepi_fasta and concatenated_czgenepi_metadata files can be uploaded directly to CZ GEN EPI without any adjustments.
 
-| **Variable** | **Type** | **Description** |
-|---|---|---|
-| concatenate_czgenepi_fasta | File | The concatenated fasta file with the renamed headers (the headers are renamed to account for clearlabs data which has unique headers) |
-| concatenate_czgenepi_metadata | File | The concatenated metadata that was extracted from the terra table using the specified columns |
-| czgenepi_prep_version | String | The version of PHB the workflow is in |
-| czgenepi_prep_analysis_date | String | The date the workflow was run |
+/// html | div[class="searchable-table"]
+
+{{ input_table("docs/assets/tables/all_outputs.tsv", input_table=False, filter_column="Workflow", filter_values="CZGenEpi_Prep", columns=["Variable", "Type", "Description"], sort_by=["Variable"]) }}
+
+///
 
 ## References
 

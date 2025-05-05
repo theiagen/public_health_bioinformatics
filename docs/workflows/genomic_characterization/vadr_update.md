@@ -36,11 +36,8 @@ This workflow runs on the sample level.
 
 ### Outputs
 
-| **Variable** | **Type** | **Description** |
-|---|---|---|
-| vadr_alerts_list | File | File containing all of the fatal alerts as determined by VADR |
-| vadr_docker | String | Docker image used to run VADR |
-| vadr_fastas_zip_archive | File | Archive file (in zip format) of all VADR outputs |
-| vadr_num_alerts | String | Number of fatal alerts as determined by VADR |
-| vadr_update_analysis_date | String | Date of analysis |
-| vadr_update_version | String | Version of the Public Health Bioinformatics (PHB) repository used |
+/// html | div[class="searchable-table"]
+
+{{ input_table("docs/assets/tables/all_outputs.tsv", input_table=False, filter_column="Workflow", filter_values="VADR_Update", columns=["Variable", "Type", "Description"], sort_by=["Variable"]) }}
+
+///

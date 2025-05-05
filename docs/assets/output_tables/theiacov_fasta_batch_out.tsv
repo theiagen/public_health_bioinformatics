@@ -1,7 +1,0 @@
-Variable	Type	Description
-datatable	File	Sample-level data table TSV file that was used to update the original sample-level data table in the last step of the TheiaCoV_FASTA_Batch workflow.
-nextclade_json	File	Output Nextclade JSON file that contains results for all samples included in the workflow
-nextclade_tsv	File	Output Nextclade TSV file that contains results for all samples included in the workflow
-pango_lineage_report	File	Output Pangolin CSV file that contains results for all samples included in the workflow
-theiacov_fasta_batch_analysis_date	String	Date that the workflow was run.
-theiacov_fasta_batch_version	String	Version of the workflow that was used.

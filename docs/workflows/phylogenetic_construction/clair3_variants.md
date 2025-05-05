@@ -109,19 +109,8 @@ The `Clair3_Variants` workflow processes Oxford Nanopore Technologies (ONT) sequ
 
 ### Outputs
 
-<div class="searchable-table" markdown="1">
+/// html | div[class="searchable-table"]
 
-| **Variable** | **Type** | **Description** |
-|---|---|---|
-| aligned_bam | File | Sorted BAM file containing the minimap2 alignments of reads to the reference genome |
-| aligned_bai | File | Index file for the aligned BAM |
-| aligned_fai | File | Index file for the reference genome |
-| clair3_docker_image | String | Version of the Docker container used for Clair3 variant calling |
-| clair3_model_used | String | Name of the Clair3 model used for variant calling |
-| clair3_variants_vcf | File | Final merged VCF file containing high-confidence variant calls, combining results from both pileup and full-alignment approaches |
-| clair3_variants_gvcf | File | Optional genome VCF file containing information about all genomic positions, including non-variant sites |
-| clair3_variants_wf_version | String | Version of the PHB workflow used |
-| clair3_version | String | Clair3 Version being used |
-| samtools_version | String | Version of samtools used for BAM processing |
+{{ input_table("docs/assets/tables/all_outputs.tsv", input_table=False, filter_column="Workflow", filter_values="Clair3_Variants_ONT", columns=["Variable", "Type", "Description"], sort_by=["Variable"]) }}
 
-</div>
+///

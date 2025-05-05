@@ -80,22 +80,11 @@ Please note that the name in the **second column** will be displayed and used in
 
 ### Outputs
 
-<div class="searchable-table" markdown="1">
+/// html | div[class="searchable-table"]
 
-| **Variable** | **Type** | **Description** |
-|---|---|---|
-| theiavalidate_criteria_differences | File | A TSV file that lists only the differences that fail to meet the validation criteria |
-| theiavalidate_date | String | The date the analysis was run |
-| theiavalidate_diffs | Array[File] | An array of files with a single file for each file comparison performed; only has values if a column with files is compared |
-| theiavalidate_exact_differences | File | A TSV file that lists all exact string match differences between samples |
-| theiavalidate_filtered_input_table1 | File | The first data table used for validation after removing unexamined columns and translating column names |
-| theiavalidate_filtered_input_table2 | File | The second data table used for validation after removing unexamined columns and translating column names |
-| theiavalidate_report | File | A PDF summary report |
-| theiavalidate_status | String | Indicates whether or not validation was attempted |
-| theiavalidate_version | String | The version of the TheiaValidate Python Docker |
-| theiavalidate_wf_version | String | The version of the PHB repository |
+{{ input_table("docs/assets/tables/all_outputs.tsv", input_table=False, filter_column="Workflow", filter_values="TheiaValidate", columns=["Variable", "Type", "Description"], sort_by=["Variable"]) }}
 
-</div>
+///
 
 ### Example Data and Outputs
 

@@ -73,23 +73,11 @@ This workflow runs on the set-level.
 
 ### Outputs
 
-<div class="searchable-table" markdown="1">
+/// html | div[class="searchable-table"]
 
-| **Variable** | **Type** | **Description** |
-|---|---|---|
-| bankit_sqn_to_email | File | **Only for mpox submission**: the sqn file that you will use to submit mpox assembly files to NCBI via email |
-| biosample_metadata | File | BioSample metadata TSV file for upload to NCBI |
-| excluded_samples | File | A file that contains the names and reasons why a sample was excluded from submission. **For SARS-CoV-2**, there are two sections: First, a section for any samples that failed to meet pre-determined quality thresholds (`number_N` and `vadr_num_alert`). Second, a section that includes a table that describes any missing required metadata for each sample. This table has the sample name for rows and any columns that have missing metadata as headers. If a sample is missing a piece of required metadata, the corresponding cell will be blank. However, if a different sample does have metadata for that column, the associated value will appear in the corresponding cell. **For flu and mpox**, only the second section described above exists. _Please see the example below for more details_. |
-| genbank_fasta | File | **Only for SARS-CoV-2 submission**: GenBank fasta file for upload |
-| genbank_metadata | File | **Only for SARS-CoV-2 submission**: GenBank metadata for upload |
-| gisaid_fasta | File | **Only for mpox and SARS-CoV-2 submission**: GISAID fasta file for upload |
-| gisaid_metadata | File | **Only for mpox and SARS-CoV-2 submission**: GISAID metadata for upload |
-| mercury_prep_n_batch_analysis_date | String | Date analysis was run |
-| mercury_prep_n_batch_version | String | Version of the PHB repository that hosts this workflow |
-| mercury_script_version | String | Version of the Mercury tool that was used in this workflow |
-| sra_metadata | File | SRA metadata TSV file for upload |
+{{ input_table("docs/assets/tables/all_outputs.tsv", input_table=False, filter_column="Workflow", filter_values="Mercury_Prep_N_Batch", columns=["Variable", "Type", "Description"], sort_by=["Variable"]) }}
 
-</div>
+///
 
 ???+ toggle "An example excluded_samples.tsv file"
 

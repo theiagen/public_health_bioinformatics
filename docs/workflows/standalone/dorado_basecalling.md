@@ -224,17 +224,11 @@ This workflow is composed of several tasks to process, basecall, and analyze Oxf
 
 Please note that if you run this workflow with the `"Run workflow with inputs defined by file paths"` option selected in Terra, these outputs will not be visible in a Terra table, but can be found in the Job Manager.
 
-| **Variable** | **Type** | **Description** |
-|---|---|---|
-| **dorado_basecall_docker** | String | Docker image used in the `dorado_basecall` task |
-| **dorado_basecall_version** | String | Version of Dorado used in the `dorado_basecall` task |
-| **dorado_basecalling_analysis_date** | String | Date of Dorado analysis |
-| **dorado_basecalling_phb_version** | String | Version of PHB used for the analysis |
-| **dorado_demux_version** | String | Version of Dorado used in the `dorado_demux` task |
-| **dorado_model_used** | String | Model used for basecalling |
-| **dorado_trim_version** | String | Version of Dorado used in the `dorado_trim` task |
-| **fastq_files** | Array[File] | FASTQ files produced from basecalling and demultiplexing |
-| **terra_table_tsv** | File | TSV file used when uploading the Terra table of FASTQ files |
+/// html | div[class="searchable-table"]
+
+{{ input_table("docs/assets/tables/all_outputs.tsv", input_table=False, filter_column="Workflow", filter_values="Dorado_Basecalling", columns=["Variable", "Type", "Description"], sort_by=["Variable"]) }}
+
+///
 
 ## References
 

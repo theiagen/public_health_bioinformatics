@@ -27,26 +27,11 @@ You can check if a gene or point mutation is in the AMRFinderPlus database [here
 
 ### Outputs
 
-<div class="searchable-table" markdown="1">
+/// html | div[class="searchable-table"]
 
-| **Variable** | **Type** | **Description** |
-|---|---|---|
-| amrfinderplus_all_report | File | Output TSV file from AMRFinderPlus (described [here](https://github.com/ncbi/amr/wiki/Running-AMRFinderPlus#fields)) |
-| amrfinderplus_amr_classes | String | AMRFinderPlus predictions for classes of drugs that genes found in the reads are known to confer resistance to |
-| amrfinderplus_amr_core_genes | String | AMR genes identified by AMRFinderPlus where the scope is "core" |
-| amrfinderplus_amr_plus_genes | String | AMR genes identified by AMRFinderPlus where the scope is "plus" |
-| amrfinderplus_amr_report | File | TSV file detailing AMR genes only, from the amrfinderplus_all_report |
-| amrfinderplus_amr_subclasses | String | More specificity about the drugs that genes identified in the reads confer resistance to |
-| amrfinderplus_db_version | String | AMRFinderPlus database version used |
-| amrfinderplus_stress_genes | String | Stress genes identified by AMRFinderPlus |
-| amrfinderplus_stress_report | File | TSV file detailing stress genes only, from the amrfinderplus_all_report |
-| amrfinderplus_version | String | AMRFinderPlus software version used |
-| amrfinderplus_virulence_genes | String | Virulence genes identified by AMRFinderPlus |
-| amrfinderplus_virulence_report | File | TSV file detailing virulence genes only, from the amrfinderplus_all_report |
-| amrfinderplus_wf_analysis_date | String | Date of analysis |
-| amrfinderplus_wf_version | String | Version of PHB used for the analysis |
+{{ input_table("docs/assets/tables/all_outputs.tsv", input_table=False, filter_column="Workflow", filter_values="AMRFinderPlus", columns=["Variable", "Type", "Description"], sort_by=["Variable"]) }}
 
-</div>
+///
 
 ## References
 

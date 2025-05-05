@@ -334,87 +334,11 @@ The TheiaMeta_Illumina_PE workflow processes Illumina paired-end (PE) reads ge
 
 ### Outputs
 
-<div class="searchable-table" markdown="1">
+/// html | div[class="searchable-table"]
 
-| **Variable** | **Type** | **Description** |
-|---|---|---|
-| assembly_fasta | File | The final recovered metagenome-assembled genome (MAG). _"A MAG represents a microbial genome by a group of sequences from genome assembly with similar characteristics. It enables [the identification of] novel species [to] understand their potential functions in a dynamic ecosystem"_[^1] |
-| assembly_length | Int | The length of the assembly_fasta (see description for `assembly_fasta`) in basepairs |
-| assembly_mean_coverage | Float | The mean depth of coverage of the assembly_fasta (see description for `assembly_fasta`) |
-| average_read_length | Float | The average read length of the clean reads |
-| bbduk_docker | String | The Docker image for bbduk, which was used to remove the adapters from the sequences |
-| bedtools_docker | String | The Docker image for bedtools, which was used to calculate coverage |
-| bedtools_version | String | The version of bedtools, which was used to calculate coverage |
-| contig number | Int | The number of contigs in the assembly_fasta (see description for `assembly_fasta`) |
-| fastp_html_report | File | The report file for fastp in HTML format |
-| fastp_version | String | The version of fastp used |
-| fastq_scan_docker | String | The Docker image of fastq_scan |
-| fastq_scan_clean1_json | File | The JSON file output from `fastq-scan` containing summary stats about clean forward read quality and length |
-| fastq_scan_clean2_json | File | The JSON file output from `fastq-scan` containing summary stats about clean reverse read quality and length |
-| fastq_scan_num_reads_clean_pairs | String | The number of read pairs after cleaning as calculated by fastq_scan |
-| fastq_scan_num_reads_clean1 | Int | The number of forward reads after cleaning as calculated by fastq_scan |
-| fastq_scan_num_reads_clean2 | Int | The number of reverse reads after cleaning as calculated by fastq_scan |
-| fastq_scan_num_reads_raw_pairs | String | The number of input read pairs as calculated by fastq_scan |
-| fastq_scan_num_reads_raw1 | Int | The number of input forward reads as calculated by fastq_scan |
-| fastq_scan_num_reads_raw2 | Int | The number of input reserve reads as calculated by fastq_scan |
-| fastq_scan_raw1_json | File | The JSON file output from `fastq-scan` containing summary stats about raw forward read quality and length |
-| fastq_scan_raw2_json | File | The JSON file output from `fastq-scan` containing summary stats about raw reverse read quality and length |
-| fastq_scan_version | String | The version of fastq_scan |
-| fastqc_clean1_html | File | An HTML file that provides a graphical visualization of clean forward read quality from fastqc to open in an internet browser |
-| fastqc_clean2_html | File | An HTML file that provides a graphical visualization of clean reverse read quality from fastqc to open in an internet browser |
-| fastqc_docker | String | The Docker container used for fastqc |
-| fastqc_num_reads_clean_pairs | String | The number of read pairs after cleaning by fastqc |
-| fastqc_num_reads_clean1 | Int | The number of forward reads after cleaning by fastqc |
-| fastqc_num_reads_clean2 | Int | The number of reverse reads after cleaning by fastqc |
-| fastqc_num_reads_raw_pairs | String | The number of input read pairs by fastqc before cleaning |
-| fastqc_num_reads_raw1 | Int | The number of input forward reads by fastqc before cleaning |
-| fastqc_num_reads_raw2 | Int | The number of input reverse reads by fastqc before cleaning |
-| fastqc_raw1_html | File | An HTML file that provides a graphical visualization of raw forward read quality from fastqc to open in an internet browser |
-| fastqc_raw2_html | File | An HTML file that provides a graphical visualization of raw reverse read quality from fastqc to open in an internet browser |
-| fastqc_version | String | The version of fastqc software used |
-| kraken2_docker | String | The Docker image of kraken2 |
-| kraken2_percent_human_clean | Float | The percentage of human-classified reads in the sample's clean reads |
-| kraken2_percent_human_raw | Float | The percentage of human-classified reads in the sample's raw reads |
-| kraken2_report_clean | File | The full Kraken report for the sample's clean reads |
-| kraken2_report_raw | File | The full Kraken report for the sample's raw reads |
-| kraken2_version | String | The version of kraken |
-| krona_docker | String | The docker image of Krona |
-| krona_html_clean | File | The KronaPlot after reads are cleaned |
-| krona_html_raw | File | The KronaPlot before reads are cleaned |
-| krona_version | String | The version of Krona |
-| largest_contig | Int | The size of the largest contig in basepairs |
-| metaspades_docker | String | The Docker image of metaspades |
-| metaspades_version | String | The version of metaspades |
-| midas_primary_genus | String | The primary genus detected by MIDAS |
-| midas_report | File | The MIDAS report file tsv file |
-| minimap2_docker | String | The Docker image of minimap2 |
-| minimap2_version | String | The version of minimap2 |
-| ncbi_scrub_docker | String | The Docker image for NCBI's HRRT (human read removal tool) |
-| percent_coverage | Float | The percentage coverage of the reference genome provided if one was provided |
-| percentage_mapped_reads | Float | The percentage of mapped reads to the assembly_fasta |
-| pilon_docker | String | The Docker image for pilon |
-| pilon_version | String | The version of pilon |
-| quast_docker | String | The Docker image of QUAST |
-| quast_version | String | The version of QUAST |
-| read1_clean | File | The clean forward reads file |
-| read1_dehosted | File | The dehosted forward reads file |
-| read1_mapped | File | The mapped forward reads to the assembly |
-| read1_unmapped | File | The unmapped forwards reads to the assembly |
-| read2_clean | File | The clean reverse reads file |
-| read2_dehosted | File | The dehosted reverse reads file |
-| read2_mapped | File | The mapped reverse reads to the assembly |
-| read2_unmapped | File | The unmapped reverse reads to the assembly |
-| samtools_docker | String | The Docker image of samtools |
-| samtools_version | String | The version of samtools |
-| semibin_bins | Array[File] | An array of binned metagenomic assembled genome files |
-| semibin_docker | String | The Docker image of semibin |
-| semibin_version | String | The version of Semibin used |
-| theiameta_illumina_pe_analysis_date | String | The date of analysis |
-| theiameta_illumina_pe_version | String | The version of TheiaMeta used during execution |
-| trimmomatic_docker | String | The Docker image of trimmomatic |
-| trimmomatic_version | String | The version of trimmomatic |
+{{ input_table("docs/assets/tables/all_outputs.tsv", input_table=False, filter_column="Workflow", filter_values="TheiaMeta_Illumina_PE", columns=["Variable", "Type", "Description"], sort_by=["Variable"]) }}
 
-</div>
+///
 
 [^1]: Direct quote from the abstract of _Yang C, Chowdhury D, Zhang Z, Cheung WK, Lu A, Bian Z, Zhang L. A review of computational tools for generating metagenome-assembled genomes from metagenomic sequencing data. Comput Struct Biotechnol J. 2021;19:6301-14. doi: 10.1016/j.csbj.2021.11.028._ This is a paper from 2021 that reviews some of the tools used in this workflow, though not all.
 

@@ -19,7 +19,7 @@ The Lyve_SET WDL workflow runs the [Lyve-SET](https://github.com/lskatz/lyve-SET
 
 /// html | div[class="searchable-table"]
 
-{{ input_table("docs/assets/input_tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="LyveSet", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"]) }}
+{{ input_table("docs/assets/input_tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="Lyve_SET", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"]) }}
 
 ///
 
@@ -48,16 +48,11 @@ The following output files are populated to the Terra data table. However, pleas
 2. The workflow skipped an analysis step due to an issue with the input data
     1. For example, the workflow will not attempt to produce a phylogenetic tree if there are too few samples or if samples are too closely related
 
-| **Variable** | **Type** | **Description** | **Equivalent file from Lyve-SET pipeline** |
-| --- | --- | --- | --- |
-| lyveset_alignment_fasta | File | The output alignment file in fasta format | project/msa/out.aln.fasta |
-| lyveset_docker_image | String | Lyve_SET docker image used for analysis |  |
-| lyveset_log | File | Lyve_SET task log file |  |
-| lyveset_pairwise_matrix | File | Pairwise SNP distances matrix | project/msa/out.pairwiseMatrix.tsv |
-| lyveset_pooled_snps_vcf | File | SNPs vcf | project/msa/out.pooled.snps.vcf.gz |
-| lyveset_raxml_tree | File | RAxML-generated tree in newick format | project/msa/out.RAxML_bipartitions |
-| lyveset_wf_analysis_date | String | Date analysis was run |  |
-| lyveset_wf_version | String | Version of PHB used when running Lyveset_PHB |  |
+/// html | div[class="searchable-table"]
+
+{{ input_table("docs/assets/tables/all_outputs.tsv", input_table=False, filter_column="Workflow", filter_values="Lyve_SET", columns=["Variable", "Type", "Description"], sort_by=["Variable"]) }}
+
+///
 
 In addition to these outputs, all of the files produced by the Lyve-SET pipeline are available in the task-level outputs, including intermediate files and individual bam and vcf files for each sample. These files can be accessed viewing the execution directory for the run.
 

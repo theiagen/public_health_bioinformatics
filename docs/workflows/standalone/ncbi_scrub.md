@@ -63,19 +63,17 @@ This workflow is composed of two tasks, one to dehost the input reads and anothe
 
 ### Outputs
 
-<div class="searchable-table" markdown="1">
+!!! caption ""
+    === "NCBI_Scrub_PE"
+        /// html | div[class="searchable-table"]
 
-| **Variable** | **Type** | **Description** | **Workflow** |
-|---|---|---|---|
-| kraken_human_dehosted | Float | Percent of human read data detected using the Kraken2 software after host removal | PE, SE |
-| kraken_report_dehosted | File | Full Kraken report after host removal | PE, SE |
-| kraken_sc2_dehosted | Float | Percent of SARS-CoV-2 read data detected using the Kraken2 software after host removal | PE, SE |
-| kraken_version_dehosted | String | Version of Kraken2 software used | PE, SE |
-| ncbi_scrub_docker | String | Docker image used to run HRRT | PE, SE |
-| ncbi_scrub_human_spots_removed | Int | Number of spots removed (or masked) | PE, SE |
-| ncbi_scrub_pe_analysis_date | String | Date of analysis | PE, SE |
-| ncbi_scrub_pe_version | String | Version of HRRT software used | PE, SE |
-| read1_dehosted | File | Dehosted forward reads | PE, SE |
-| read2_dehosted | File | Dehosted reverse reads | PE |
+        {{ input_table("docs/assets/tables/all_outputs.tsv", input_table=False, filter_column="Workflow", filter_values="NCBI_Scrub_PE", columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=8) }}
 
-</div>
+        ///
+
+    === "NCBI_Scrub_SE"
+        /// html | div[class="searchable-table"]
+
+        {{ input_table("docs/assets/tables/all_outputs.tsv", input_table=False, filter_column="Workflow", filter_values="NCBI_Scrub_SE", columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=8) }}
+        
+        ///

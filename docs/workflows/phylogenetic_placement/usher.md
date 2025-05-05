@@ -22,17 +22,8 @@ While this workflow is technically a set-level workflow, it works on the sample-
 
 ### Outputs
 
-<div class="searchable-table" markdown="1">
+/// html | div[class="searchable-table"]
 
-| **Variable** | **Type** | **Description** |
-|---|---|---|
-| usher_clades | File | The clades predicted for the samples |
-| usher_phb_analysis_date | String | The date the analysis was run |
-| usher_phb_version | String | The version of PHB the workflow is from |
-| usher_protobuf_version | String | The version of the mutation-annotated protobuf tree (what day and what samples are included, if a default organism was used; otherwise, says it was user-provided) |
-| usher_subtree_mutations | Array[File] | An array of files showing the mutations at each internal node for the subtree |
-| usher_subtrees | Array[File] | An array of subtrees where your samples have been placed |
-| usher_uncondensed_tree | File | The entire global tree with your samples included (warning: may be a very large file if the organism is "sars-cov-2") |
-| usher_version | String | The version of UShER used |
+{{ input_table("docs/assets/tables/all_outputs.tsv", input_table=False, filter_column="Workflow", filter_values="Usher", columns=["Variable", "Type", "Description"], sort_by=["Variable"]) }}
 
-</div>
+///

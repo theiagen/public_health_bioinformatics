@@ -36,14 +36,8 @@ This workflow runs on the sample level.
 
 ### Outputs
 
-<div class="searchable-table" markdown="1">
+/// html | div[class="searchable-table"]
 
-| **Variable** | **Type** | **Description** |
-|---|---|---|
-| failed_uploads | Boolean | The metadata for any failed uploads |
-| gisaid_cli_version | String | The verison of the GISAID CLI tool |
-| gisaid_logs | File | The log files regarding the submission |
-| terra_2_gisaid_analysis_date | String | The date of the analysis |
-| terra_2_gisaid_version | String | The version of the PHB repository that this workflow is hosted in |
+{{ input_table("docs/assets/tables/all_outputs.tsv", input_table=False, filter_column="Workflow", filter_values="Terra_2_GISAID", columns=["Variable", "Type", "Description"], sort_by=["Variable"]) }}
 
-</div>
+///

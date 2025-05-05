@@ -1,4 +1,0 @@
-Variable	Type	Description
-transferred_files	File	A list of all of the files now located at the target bucket location (GSURI)
-transfer_column_content_version	String	The version of the repository the workflow is hosted in
-transfer_column_content_analysis_date	String	The date the workflow was run

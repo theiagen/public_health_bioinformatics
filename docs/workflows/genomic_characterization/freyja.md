@@ -98,99 +98,82 @@ The Freyja_FASTQ_PHB workflow is compatible with the multiple input data types: 
 
 This workflow runs on the sample level.
 
-/// html | div[class="searchable-table"]
+=== "Illumina paired-end input data"
+    /// html | div[class="searchable-table"]
 
-{{ input_table("docs/assets/input_tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="Freyja_FASTQ", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"]) }}
+    {{ input_table("docs/assets/input_tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="Freyja_FASTQ (PE)", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=4) }}
 
-///
+    ///
+
+=== "Illumina single-end input data"
+    /// html | div[class="searchable-table"]
+
+    {{ input_table("docs/assets/input_tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="Freyja_FASTQ (SE)", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=4) }}
+    
+    ///
+
+=== "ONT input data"
+    /// html | div[class="searchable-table"]
+
+    {{ input_table("docs/assets/input_tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="Freyja_FASTQ (ONT)", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=4) }}
+    
+    ///
 
 #### Analysis Tasks
 
-??? task "`read_QC_trim_pe` Details"
+=== "Illumina paired-end input data"
 
-    `read_QC_trim_pe` {% raw %} {#read_QC_trim_pe} {% endraw %}
+    ??? task "`read_QC_trim_pe` Details"
+        This task runs a sub-workflow that gathers basic QC information, trimming (either with trimmomatic or fastp), human read scrubbing, and taxonomic identification (Kraken2). Optional parameters do not need to be modified. For information regarding the individual tasks performed during this, please visit the [TheiaCoV documentation](../genomic_characterization/theiacov.md).
 
-    This task runs a sub-workflow that gathers basic QC information, trimming (either with trimmomatic or fastp), human read scrubbing, and taxonomic identification (Kraken2). Optional parameters do not need to be modified. For information regarding the individual tasks performed during this, please visit the [TheiaCoV documentation](../genomic_characterization/theiacov.md).
+        !!! techdetails "Read_QC_Trim_PE Technical Details"
 
-    !!! techdetails "Read_QC_Trim_PE Technical Details"
+            |  | Links |
+            | --- | --- |
+            | Task | [wf_read_QC_trim_pe.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_read_QC_trim_pe.wdl) |
 
-        |  | Links |
-        | --- | --- |
-        | Task | [wf_read_QC_trim_pe.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_read_QC_trim_pe.wdl) |
+{{ include_md("common_text/bwa.md", indent=4) }}
 
-??? task "`read_QC_trim_se` Details"
+{{ include_md("common_text/primer_trim.md", indent=4) }}
 
-    `read_QC_trim_se` {% raw %} {#read_QC_trim_se} {% endraw %}
+=== "Illumina single-end input data"
+    ??? task "`read_QC_trim_se` Details"
+        This task runs a sub-workflow that gathers basic QC information, trimming (either with trimmomatic or fastp), human read scrubbing, and taxonomic identification (Kraken2). Optional parameters do not need to be modified. For information regarding the individual tasks performed during this, please visit the [TheiaCoV documentation](../genomic_characterization/theiacov.md).
 
-    This task runs a sub-workflow that gathers basic QC information, trimming (either with trimmomatic or fastp), human read scrubbing, and taxonomic identification (Kraken2). Optional parameters do not need to be modified. For information regarding the individual tasks performed during this, please visit the [TheiaCoV documentation](../genomic_characterization/theiacov.md).
+        !!! techdetails "Read_QC_Trim_SE Technical Details"
 
-    !!! techdetails "Read_QC_Trim_SE Technical Details"
+            |  | Links |
+            | --- | --- |
+            | Task | [wf_read_QC_trim_se.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_read_QC_trim_se.wdl) |
 
-        |  | Links |
-        | --- | --- |
-        | Task | [wf_read_QC_trim_se.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_read_QC_trim_se.wdl) |
+{{ include_md("common_text/bwa.md", indent=4) }}
 
-??? task "`read_QC_trim_ont` Details"
+{{ include_md("common_text/primer_trim.md", indent=4) }}
 
-    `read_QC_trim_ont` {% raw %} {#read_QC_trim_ont} {% endraw %}
+=== "ONT input data"
 
-    This task runs a sub-workflow that gathers basic QC information, trimming (nanoplot), human read scrubbing, and taxonomic identification (Kraken2). Optional parameters do not need to be modified. For information regarding the individual tasks performed during this, please visit the [TheiaCoV documentation](../genomic_characterization/theiacov.md).
+    ??? task "`read_QC_trim_ont` Details"
+        This task runs a sub-workflow that gathers basic QC information, trimming (nanoplot), human read scrubbing, and taxonomic identification (Kraken2). Optional parameters do not need to be modified. For information regarding the individual tasks performed during this, please visit the [TheiaCoV documentation](../genomic_characterization/theiacov.md).
 
-    !!! techdetails "Read_QC_Trim_ONT Technical Details"
-    
-        |  | Links |
-        | --- | --- |
-        | Task | [wf_read_QC_trim_ont.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_read_QC_trim_ont.wdl) |
+        !!! techdetails "Read_QC_Trim_ONT Technical Details"
+        
+            |  | Links |
+            | --- | --- |
+            | Task | [wf_read_QC_trim_ont.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_read_QC_trim_ont.wdl) |
 
-??? task "`bwa` Details"
+    ??? task "`minimap2` Details"
+        This task aligns the cleaned long reads (Oxford Nanopore) to the reference genome provided by the user.
 
-    `bwa` {% raw %} {#bwa} {% endraw %}
-
-    This task aligns the cleaned short reads (Illumina) to the reference genome provided by the user.
-
-    !!! techdetails "BWA Technical Details"
-    
-        |  | Links |
-        | --- | --- |
-        | Task | [task_bwa.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/alignment/task_bwa.wdl) |
-        | Software Source Code | https://github.com/lh3/bwa |
-        | Software Documentation | https://bio-bwa.sourceforge.net/ |
-        | Original Publication(s) | [Fast and accurate short read alignment with Burrows-Wheeler transform](https://doi.org/10.1093/bioinformatics/btp324) |
-
-??? task "`minimap2` Details"
-
-    `minimap2` {% raw %} {#minimap2} {% endraw %}
-
-    This task aligns the cleaned long reads (Oxford Nanopore) to the reference genome provided by the user.
-
-    !!! techdetails "Minimap2 Technical Details"
-    
-        |  | Links |
-        | --- | --- |
-        | Task | [task_minimap2.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/alignment/task_minimap2.wdl) |
-        | Software Source Code | https://github.com/lh3/minimap2 |
-        | Software Documentation | https://lh3.github.io/minimap2/ |
-        | Original Publication(s) | [Minimap2: pairwise alignment for nucleotide sequences](https://doi.org/10.1093/bioinformatics/bty191) |
-
-??? task "`primer_trim` Details"
-
-    `primer_trim` {% raw %} {#primer_trim} {% endraw %}
-
-    This task trims the primer sequences from the aligned bam file with iVar. The optional input, `keep_noprimer_reads`, does not have to be modified.
-
-    !!! techdetails "Primer Trim Technical Details"
-    
-        |  | Links |
-        | --- | --- |
-        | Task | [task_ivar_primer_trim.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_ivar_primer_trim.wdl) |
-        | Software Source Code | https://github.com/andersen-lab/ivar |
-        | Software Documentation | https://andersen-lab.github.io/ivar/html/manualpage.html |
-        | Original Publication(s) | [An amplicon-based sequencing framework for accurately measuring intrahost virus diversity using PrimalSeq and iVar](https://doi.org/10.1186/s13059-018-1618-7) |
+        !!! techdetails "Minimap2 Technical Details"
+        
+            |  | Links |
+            | --- | --- |
+            | Task | [task_minimap2.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/alignment/task_minimap2.wdl) |
+            | Software Source Code | https://github.com/lh3/minimap2 |
+            | Software Documentation | https://lh3.github.io/minimap2/ |
+            | Original Publication(s) | [Minimap2: pairwise alignment for nucleotide sequences](https://doi.org/10.1093/bioinformatics/bty191) |
 
 ??? task "`freyja` Details"
-
-    `freyja` {% raw %} {#freyja} {% endraw %}
-
     The Freyja task will call variants and capture sequencing depth information to identify the relative abundance of lineages present. Optionally, if `bootstrap` is set to true, bootstrapping will be performed. After the optional bootstrapping step, the variants are demixed.
 
     !!! techdetails "Freyja Technical Details"
@@ -222,103 +205,26 @@ The main output file used in subsequent Freyja workflows is found under the `fre
 !!! tip "Click "Ignore empty outputs""
     When running the Freyja_FASTQ_PHB workflow, it is recommended to select the "Ignore empty outputs" option in the Terra UI. This will hide the output columns that will not be generated for your input data type.
 
-<div class="searchable-table" markdown="1">
+=== "Illumina paired-end input data"
+    /// html | div[class="searchable-table"]
 
-| **Variable** | **Type** | **Description** | **Input Data Type** |
-|---|---|---|---|
-| aligned_bai | File | Index companion file to the bam file generated during the consensus assembly process | ONT, PE, SE |
-| aligned_bam | File | Primer-trimmed BAM file; generated during consensus assembly process | ONT, PE, SE |
-| alignment_method | String | The method used to generate the alignment | ONT, PE, SE |
-| bbduk_docker | String | Docker image used to run BBDuk | PE, SE |
-| bwa_version | String | Version of BWA used to map read data to the reference genome | PE, SE |
-| fastp_html_report | File | The HTML report made with fastp | PE, SE |
-| fastp_version | String | Version of fastp software used | PE, SE |
-| fastq_scan_clean1_json | File | JSON file output from `fastq-scan` containing summary stats about clean forward read quality and length | PE, SE |
-| fastq_scan_clean2_json | File | JSON file output from `fastq-scan` containing summary stats about clean reverse read quality and length | PE |
-| fastq_scan_num_reads_clean_pairs | String | Number of clean read pairs | PE |
-| fastq_scan_num_reads_clean1 | Int | Number of clean forward reads | PE, SE |
-| fastq_scan_num_reads_clean2 | Int | Number of clean reverse reads | PE |
-| fastq_scan_num_reads_raw_pairs | String | Number of raw read pairs | PE |
-| fastq_scan_num_reads_raw1 | Int | Number of raw forward reads | PE, SE |
-| fastq_scan_num_reads_raw2 | Int | Number of raw reverse reads | PE |
-| fastq_scan_raw1_json | File | JSON file output from `fastq-scan` containing summary stats about raw forward read quality and length | PE, SE |
-| fastq_scan_raw2_json | File | JSON file output from `fastq-scan` containing summary stats about raw reverse read quality and length | PE |
-| fastq_scan_version | String | Version of fastq_scan used for read QC analysis | PE, SE |
-| fastqc_clean1_html | File | Graphical visualization of clean forward read quality from fastqc to open in an internet browser | PE, SE |
-| fastqc_clean2_html | File | Graphical visualization of clean reverse read quality from fastqc to open in an internet browser | PE |
-| fastqc_docker | String | Docker container used for fastqc | PE, SE |
-| fastqc_num_reads_clean_pairs | String | Number of read pairs after cleaning by fastqc | PE |
-| fastqc_num_reads_clean1 | Int | Number of forward reads after cleaning by fastqc | PE, SE |
-| fastqc_num_reads_clean2 | Int | Number of reverse reads after cleaning by fastqc | PE |
-| fastqc_num_reads_raw_pairs | String | Number of input read pairs by fastqc | PE |
-| fastqc_num_reads_raw1 | Int | Number of input forward reads by fastqc | PE, SE |
-| fastqc_num_reads_raw2 | Int | Number of input reverse reads by fastqc | PE |
-| fastqc_raw1_html | File | Graphical visualization of raw forward read quality from fastqc to open in an internet browser | PE, SE |
-| fastqc_raw2_html | File | Graphical visualization of raw reverse read qualityfrom fastqc to open in an internet browser | PE |
-| fastqc_version | String | Version of fastqc software used | PE, SE |
-| freyja_abundances | String | Abundances estimates identified by Freyja and parsed from freyja_demixed file | ONT, PE, SE |
-| freyja_sc2_barcode_file | File | Barcode feather file used for SARS-CoV-2. Can be the one provided as input or downloaded by Freyja if update_db is true | ONT, PE, SE |
-| freyja_barcode_version | String | Name of barcode file used, or the date if update_db is true | ONT, PE, SE |
-| freyja_bootstrap_lineages | File | A CSV that contains the 0.025, 0.05, 0.25, 0.5 (median), 0.75, 0.95, and 0.975 percentiles for each lineage | ONT, PE, SE |
-| freyja_bootstrap_lineages_pdf | File | A boxplot of the bootstrap lineages CSV file | ONT, PE, SE |
-| freyja_bootstrap_summary | File | A CSV that contains the 0.025, 0.05, 0.25, 0.5 (median), 0.75, 0.95, and 0.975 percentiles for each WHO designated VOI/VOC | ONT, PE, SE |
-| freyja_bootstrap_summary_pdf | File | A boxplot of the bootstrap summary CSV file | ONT, PE, SE |
-| freyja_coverage | Float | Coverage identified by Freyja and parsed from freyja_demixed file | ONT, PE, SE |
-| freyja_demixed | File | The main output TSV; see the section directly above this table for an explanation | ONT, PE, SE |
-| freyja_demixed_parsed | File | Parsed freyja_demixed file, containing the same information, for easy result concatenation | ONT, PE, SE |
-| freyja_depths | File | A TSV listing the depth of every position | ONT, PE, SE |
-| freyja_fastq_wf_analysis_date | String | Date of analysis | ONT, PE, SE |
-| freyja_fastq_wf_version | String | The version of the Public Health Bioinformatics (PHB) repository used | ONT, PE, SE |
-| freyja_sc2_lineage_metadata_file | File | Lineage metadata JSON file used for SARS-CoV-2. Can be the one provided as input or downloaded by Freyja if update_db is true | ONT, PE, SE |
-| freyja_lineages | String |  Lineages in descending order identified by Freyja and parsed from freyja_demixed file | ONT, PE, SE |
-| freyja_metadata_version | String | Name of lineage metadata file used, or the date if update_db is true | ONT, PE, SE |
-| freyja_resid | String | Residual of the weighted least absolute deviation problem used to estimate lineage abundances identified by Freyja and parsed from freyja_demixed file | ONT, PE, SE |
-| freyja_summarized | String | Sum of all lineage abundances in a particular WHO designation identified by Freyja and parsed from freyja_demixed file | ONT, PE, SE |
-| freyja_variants | File | The TSV file containing the variants identified by Freyja | ONT, PE, SE |
-| freyja_version | String | version of Freyja used | ONT, PE, SE |
-| ivar_version_primtrim | String | Version of iVar for running the iVar trim command | ONT, PE, SE |
-| kraken_human | Float | Percent of human read data detected using the Kraken2 software | ONT, PE, SE |
-| kraken_human_dehosted | Float | Percent of human read data detected using the Kraken2 software after host removal | ONT, PE, SE |
-| kraken_report | File | Full Kraken report | ONT, PE, SE |
-| kraken_report_dehosted | File | Full Kraken report after host removal | ONT, PE, SE |
-| kraken_sc2 | String | Percent of SARS-CoV-2 read data detected using the Kraken2 software | ONT, PE, SE |
-| kraken_sc2_dehosted | String | Percent of SARS-CoV-2 read data detected using the Kraken2 software after host removal | ONT, PE, SE |
-| kraken_version | String | Version of Kraken software used | ONT, PE, SE |
-| minimap2_docker | String | Docker image used to run minimap2 | ONT |
-| minimap2_version | String | Version of minimap2 used | ONT |
-| nanoplot_html_clean | File | Clean read file | ONT |
-| nanoplot_html_raw | File | Raw read file | ONT |
-| nanoplot_num_reads_clean1 | Int | Number of clean reads for the forward-facing file | ONT |
-| nanoplot_num_reads_raw1 | Int | Number of reads for the forward-facing file | ONT |
-| nanoplot_r1_est_coverage_clean | Float | Estimated coverage on the clean reads by nanoplot | ONT |
-| nanoplot_r1_est_coverage_raw | Float | Estimated coverage on the raw reads by nanoplot | ONT |
-| nanoplot_r1_mean_q_clean | Float | Mean quality score of clean forward reads | ONT |
-| nanoplot_r1_mean_q_raw | Float | Mean quality score of raw forward reads | ONT |
-| nanoplot_r1_mean_readlength_clean | Float | Mean read length of clean forward reads | ONT |
-| nanoplot_r1_mean_readlength_raw | Float | Mean read length of raw forward reads | ONT |
-| nanoplot_r1_median_q_clean | Float | Median quality score of clean forward reads | ONT |
-| nanoplot_r1_median_q_raw | Float | Median quality score of raw forward reads | ONT |
-| nanoplot_r1_median_readlength_clean | Float | Median read length of clean forward reads | ONT |
-| nanoplot_r1_median_readlength_raw | Float | Median read length of raw forward reads | ONT |
-| nanoplot_r1_n50_clean | Float | N50 of clean forward reads | ONT |
-| nanoplot_r1_n50_raw | Float | N50 of raw forward reads | ONT |
-| nanoplot_r1_stdev_readlength_clean | Float | Standard deviation read length of clean forward reads | ONT |
-| nanoplot_r1_stdev_readlength_raw | Float | Standard deviation read length of raw forward reads | ONT |
-| nanoplot_tsv_clean | File | Output TSV file created by nanoplot | ONT |
-| nanoplot_tsv_raw | File | Output TSV file created by nanoplot | ONT |
-| nanoq_version | String | Version of nanoq used in analysis | ONT |
-| primer_bed_name | String | Name of the primer bed file used for primer trimming | ONT, PE, SE |
-| primer_trimmed_read_percent | Float | Percentage of read data with primers trimmed as determined by iVar trim | ONT, PE, SE |
-| read1_clean | File | Forward read file after quality trimming and adapter removal | ONT, PE, SE |
-| read1_dehosted | File | Dehosted forward reads | ONT, PE, SE |
-| read2_clean | File | Reverse read file after quality trimming and adapter removal | PE |
-| read2_dehosted | File | Dehosted reverse reads | PE |
-| samtools_version | String | The version of SAMtools used to sort and index the alignment file | ONT, PE, SE |
-| samtools_version_primtrim | String | The version of SAMtools used to create the pileup before running iVar trim | ONT, PE, SE |
-| trimmomatic_docker | String | Docker container for Trimmomatic | PE, SE |
-| trimmomatic_version | String | The version of Trimmomatic used | PE, SE |
+    {{ input_table("docs/assets/tables/all_outputs.tsv", input_table=True, filter_column="Workflow", filter_values="Freyja (Illumina paired-end)", columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=4) }}
 
-</div>
+    ///
+
+=== "Illumina single-end input data"
+    /// html | div[class="searchable-table"]
+
+    {{ input_table("docs/assets/tables/all_outputs.tsv", input_table=True, filter_column="Workflow", filter_values="Freyja (Illumina single-end)", columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=4) }}
+
+    ///
+
+=== "ONT input data"
+    /// html | div[class="searchable-table"]
+
+    {{ input_table("docs/assets/tables/all_outputs.tsv", input_table=True, filter_column="Workflow", filter_values="Freyja (ONT)", columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=4) }}
+
+    ///
 
 ### Freyja_Plot_PHB {% raw %} {#freyja_plot} {% endraw %}
 
@@ -330,7 +236,6 @@ Options exist to provide lineage-specific breakdowns and/or sample collection ti
 
 This workflow runs on the set level.
 
-
 /// html | div[class="searchable-table"]
 
 {{ input_table("docs/assets/input_tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="Freyja_Plot", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"]) }}
@@ -340,9 +245,6 @@ This workflow runs on the set level.
 #### Analysis Tasks
 
 ??? task "`freyja_plot_task` Details"
-
-    `freyja_plot_task` {% raw %} {#freyja_plot_task} {% endraw %}
-
     This task will aggregate multiple samples together, and then creates a plot. Several optional inputs dictate the plot appearance (see each variable's description for more information).
 
     !!! techdetails "Freyja Plot Technical Details"
@@ -355,14 +257,11 @@ This workflow runs on the set level.
 
 #### Outputs
 
-| **Variable** | **Type** | **Description** |
-|---|---|---|
-| **freyja_demixed_aggregate** | File | A TSV file that summarizes the `freyja_demixed` otuputs for all samples |
-| **freyja_plot** | File | A PDF of the plot produced by the workflow |
-| **freyja_plot_metadata** | File | The metadata used to create the plot |
-| **freyja_plot_version** | String | The version of Freyja used |
-| **freyja_plot_wf_analysis_date** | String | The date of analysis |
-| **freyja_plot_wf_version** | String | The version of the Public Health Bioinformatics (PHB) repository used |
+/// html | div[class="searchable-table"]
+
+{{ input_table("docs/assets/tables/all_outputs.tsv", input_table=False, filter_column="Workflow", filter_values="Freyja_Plot", columns=["Variable", "Type", "Description"], sort_by=["Variable"]) }}
+
+///
 
 ### Freyja_Dashboard_PHB {% raw %} {#freyja_dashboard} {% endraw %}
 
@@ -375,7 +274,6 @@ This workflow creates a group of interactive visualizations based off of the agg
 #### Inputs
 
 This workflow runs on the set level.
-
 
 /// html | div[class="searchable-table"]
 
@@ -399,14 +297,11 @@ This workflow runs on the set level.
 
 #### Outputs
 
-| **Variable** | **Type** | **Description** |
-|---|---|---|
-| freyja_dashboard | File | The HTML file of the dashboard created |
-| freyja_dashboard_metadata | File | The metadata used to create the dashboard |
-| freyja_dashboard_version | String | The version of Freyja used |
-| freyja_dashboard_wf_analysis_date | String | The date of analysis |
-| freyja_dashboard_wf_version | String | The version of the Public Health Bioinformatics (PHB) repository used |
-| freyja_demixed_aggregate | File | A TSV file that summarizes the `freyja_demixed` outputs for all samples |
+/// html | div[class="searchable-table"]
+
+{{ input_table("docs/assets/tables/all_outputs.tsv", input_table=False, filter_column="Workflow", filter_values="Freyja_Dashboard", columns=["Variable", "Type", "Description"], sort_by=["Variable"]) }}
+
+///
 
 ## Running Freyja on other pathogens
 
@@ -434,6 +329,7 @@ The main requirement to run Freyja on other pathogens is **the existence of a ba
     Folders are organized by pathogen, with each subfolder named after the date the barcode was generated, using the format YYYY-MM-DD, as well as a "latest" folder. Barcode files are named `barcode.csv`, and reference genome files are named `reference.fasta`.
 
 There are two ways to run [**Freyja_FASTQ_PHB**](freyja.md#freyja_fastq) for non-SARS-CoV-2 organisms:
+
 - Using the `freyja_pathogen` optional input (limited set of allowable organisms)
 - Providing the appropriate barcode file through the `freyja_barcodes` optional input (any organism for which barcodes are supplied)
 

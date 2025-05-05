@@ -36,8 +36,8 @@ This workflow has a single task that performs metadata retrieval for the specifi
 
 ### Outputs
 
-| **Variable** | **Type** | **Description**|
-|---|---|---|
-| srr_accession| String | The SRR accession's associated with the input sample accession.|
-| fetch_srr_accession_version | String | The version of the fetch_srr_accession workflow. |
-| fetch_srr_accession_analysis_date | String | The date the fetch_srr_accession analysis was run. |
+/// html | div[class="searchable-table"]
+
+{{ input_table("docs/assets/tables/all_outputs.tsv", input_table=False, filter_column="Workflow", filter_values="Fetch_SRR_Accession", columns=["Variable", "Type", "Description"], sort_by=["Variable"]) }}
+
+///

@@ -67,25 +67,27 @@ Besides the data input types, there are minimal differences between these two wo
 
 ### Outputs
 
-<div class="searchable-table" markdown="1">
+!!! caption ""
+    === "Kraken_PE"
+        /// html | div[class="searchable-table"]
 
-| **Variable** | **Type** | **Description** |
-|---|---|---|
-| kraken2_classified_read1 | File | FASTQ file of classified forward/R1 reads |
-| kraken2_classified_read2 | File | FASTQ file of classified reverse/R2 reads (if PE) |
-| kraken2_classified_report | File | Standard Kraken2 output report. TXT filetype, but can be opened in Excel as a TSV file |
-| kraken2_docker | String | Docker image used to run kraken2 |
-| kraken2_*_wf_analysis_date | String | Date the workflow was run |
-| kraken2_*_wf_version | String | Workflow version |
-| kraken2_report | File | TXT document describing taxonomic prediction of every FASTQ record. This file is usually very large and cumbersome to open and view |
-| kraken2_unclassified_read1 | File | FASTQ file of unclassified forward/R1 reads |
-| kraken2_unclassified_read2 | File | FASTQ file of unclassified reverse/R2 reads (if PE) |
-| kraken2_version | String | kraken2 version |
-| krona_docker | String | Docker image used to run krona (if PE or SE) |
-| krona_html | File | HTML report of krona with visualisation of taxonomic classification of reads (if PE or SE) |
-| krona_version | String | krona version (if PE or SE) |
+        {{ input_table("docs/assets/tables/all_outputs.tsv", input_table=False, filter_column="Workflow", filter_values="Kraken_PE", columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=8) }}
 
-</div>
+        ///
+
+    === "Kraken_SE"
+        /// html | div[class="searchable-table"]
+
+        {{ input_table("docs/assets/tables/all_outputs.tsv", input_table=False, filter_column="Workflow", filter_values="Kraken_SE", columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=8) }}
+
+        ///
+
+    === "Kraken_ONT"
+        /// html | div[class="searchable-table"]
+
+        {{ input_table("docs/assets/tables/all_outputs.tsv", input_table=False, filter_column="Workflow", filter_values="Kraken_ONT", columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=8) }}
+
+        ///
 
 #### Interpretation of results
 

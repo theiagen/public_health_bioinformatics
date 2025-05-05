@@ -36,21 +36,11 @@ Read data are available either with full base quality scores (**SRA Normalized F
 
 Given the lack of usefulness of SRA Lite formatted FASTQ files, we try to avoid these by preferentially searching SRA directly (SRA-Lite is more probably to be the file synced to other repositories), but sometimes downloading these files is unavoidable. To make the user aware of this, a warning column is present that is populated when an SRA-Lite file is detected.
 
-<div class="searchable-table" markdown="1">
+/// html | div[class="searchable-table"]
 
-| **Variable** | **Type** | **Description** |
-|---|---|---|
-| sra_fetch_version | String | The version of the repository the SRA_Fetch workflow is in |
-| sra_fetch_analysis_date | String | The date the workflow was run |
-| read1 | File | File containing the forward reads |
-| read2 | File | File containing the reverse reads (not available for single-end or ONT data) |
-| fastq_dl_date | String | The date of the read data download |
-| fastq_dl_docker | String | The docker used |
-| fastq_dl_metadata | File | File containing metadata of the provided accession such as submission_accession, library_selection, instrument_platform, among others |
-| fastq_dl_version | String | The version of fastq-dl used |
-| fastq_dl_warning | String |  This warning field is populated if SRA-Lite files are detected. These files contain all quality encoding as Phred-30 or Phred-3. |
+{{ input_table("docs/assets/tables/all_outputs.tsv", input_table=False, filter_column="Workflow", filter_values="SRA_Fetch", columns=["Variable", "Type", "Description"], sort_by=["Variable"]) }}
 
-</div>
+///
 
 ## References
 

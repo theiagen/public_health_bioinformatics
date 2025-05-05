@@ -35,4 +35,8 @@ This workflow runs on the _set_ level.
 
 ### Outputs
 
-{{ input_table("docs/assets/output_tables/transfer_column_content_out.tsv", input_table=False) }}
+/// html | div[class="searchable-table"]
+
+{{ input_table("docs/assets/tables/all_outputs.tsv", input_table=False, filter_column="Workflow", filter_values="Transfer_Column_Content", columns=["Variable", "Type", "Description"], sort_by=["Variable"]) }}
+
+///
