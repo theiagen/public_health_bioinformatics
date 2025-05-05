@@ -59,6 +59,7 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 | *workflow name | **bakta_db** | String |Database selection for Bakta annotation. Options: "light" (smaller, faster), "full" (more comprehensive), or a Google Storage URI (gs://...) pointing to a custom Bakta database archive (.tar.gz). The selected database will be extracted before annotation. | full | Optional | FASTA, ONT, PE, SE |
 | *workflow name | **call_abricate** | Boolean | Set to true to enable the Abricate task | FALSE | Optional | FASTA, ONT, PE, SE |
 | *workflow name | **call_ani** | Boolean | Set to true to enable the ANI task | FALSE | Optional | FASTA, ONT, PE, SE |
+| *workflow name | **call_arln** | Boolean | Set to true to enable the return of ARLN required Auto PASS/FAIL outputs | FALSE | Optional | FASTA, ONT, PE, SE |
 | *workflow name | **call_kmerfinder** | Boolean | Set to true to enable the kmerfinder task | FALSE | Optional | FASTA, ONT, PE, SE |
 | *workflow name | **call_plasmidfinder** | Boolean | Set to true to enable the plasmidfinder task | TRUE | Optional | FASTA, ONT, PE, SE |
 | *workflow name | **call_resfinder** | Boolean | Set to true to enable the ResFinder task | FALSE | Optional | FASTA, ONT, PE, SE |
@@ -1236,6 +1237,10 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 
     The `abricate` module, if enabled, will run abricate with the database defined in `abricate_db` to perform mass screening of contigs for antimicrobial resistance or virulence genes. It comes bundled with multiple databases: NCBI, CARD, ARG-ANNOT, Resfinder, MEGARES, EcOH, PlasmidFinder, Ecoli_VF and VFDB. It only detects acquired resistance genes, **NOT** point mutations
 
+??? task "`ARLN_Stats`: Stats required by ARLN such as assembly ratio and Q30% scores (optional)"
+
+    The `arln_stats` task when enabled, will provide the user with not already provided ARLN compliant statistics such as assembly ratio and will calculate the Q30% scores of the raw and cleaned reads, provided that these are utilized by the run workflow. FASTA will not provide these results, only assembly ratio, and likewise SE and ONT will only provide R1 Q30% metrics.
+    
 ### Taxa-Specific Tasks
 
 The TheiaProk workflows automatically activate taxa-specific sub-workflows after the identification of relevant taxa using `GAMBIT`. Alternatively, the user can provide the expected taxa in the `expected_taxon` workflow input to override the taxonomic assignment made by GAMBIT. Modules are launched for all TheiaProk workflows unless otherwise indicated.
@@ -1860,6 +1865,12 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
 | ani_mummer_version | String | Version of MUMmer used | FASTA, ONT, PE, SE |
 | ani_output_tsv | File | Full output TSV from ani-m | FASTA, ONT, PE, SE |
 | ani_top_species_match | String | Species of genome with highest ANI to query FASTA | FASTA, ONT, PE, SE |
+| arln_raw_q30_r1 | Float | Q30% of the raw R1 FASTQ | ONT, PE, SE |
+| arln_raw_q30_r2 | Float | Q30% of the raw R2 FASTQ | PE |
+| arln_cleaned_q30_r1 | Float | Q30% of the cleaned R1 FASTQ | ONT, PE, SE |
+| arln_cleaned_q30_r2 | Float | Q30% of the cleaned R2 FASTQ | PE |
+| arln_assembly_ratio | String | Assembly ratio with standard deviation | FASTA, ONT, PE, SE |
+| arln_stats_docker_version | String | Docker version for task_arln_stats.wdl | FASTA, ONT, PE, SE |
 | assembly_fasta | File | Fasta file outputted from Flye or Shovill | ONT, PE, SE |
 | assembly_length | Int | Length of assembly (total contig length) as determined by QUAST | FASTA, ONT, PE, SE |
 | bakta_gbff | File | Genomic GenBank format annotation file | FASTA, ONT, PE, SE |
