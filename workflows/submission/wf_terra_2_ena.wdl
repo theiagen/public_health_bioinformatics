@@ -11,6 +11,7 @@ workflow Terra_2_ENA {
     String terra_project_name
     String terra_workspace_name
     String terra_table_name
+    Array[String] samples
 
     File? column_mappings # TSV file with column name mappings from Terra to ENA
     String sample_id_column # Column name containing sample IDs
@@ -45,6 +46,7 @@ workflow Terra_2_ENA {
       study_accession = study_accession,
       column_mappings = column_mappings,
       sample_id_column = sample_id_column,
+      samples = samples,
       allow_missing = allow_missing
   }
   call versioning.version_capture {

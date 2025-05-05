@@ -9,7 +9,7 @@ task submit_ena_data {
     File metadata_accessions # Metadata spreadsheet (TSV format) with ENA accessions
 
     String sample_id_column # Column name containing sample IDs
-    String? samples # Comma-separated list of sample IDs to include (default: all)
+    Array[String] samples # Comma-separated list of sample IDs to include (default: all)
 
     # Column mappings if user wants to map Terra columns to ENA columns
     File? column_mappings # TSV file containing mappings from Terra columns to ENA columns
