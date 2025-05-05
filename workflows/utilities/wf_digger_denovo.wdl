@@ -5,8 +5,9 @@ import "../../tasks/assembly/task_megahit.wdl" as task_megahit
 import "../../tasks/assembly/task_skesa.wdl" as task_skesa
 import "../../tasks/alignment/task_bwa.wdl" as task_bwa
 import "../../tasks/quality_control/read_filtering/task_pilon.wdl" as task_pilon
+import "../../tasks/quality_control/read_filtering/task_filter_contigs.wdl" as task_filter_contigs
 
-workflow shovill_asm {
+workflow digger_denovo {
   input {
     File read1
     File? read2
@@ -16,7 +17,8 @@ workflow shovill_asm {
     String? kmers
     Boolean use_pilon = false
     String? opts # Extra assembler options
-    # Optional parameters fir spades
+    Boolean post_asm_filter = true # Default: Filter contigs after assembly
+    # Optional parameters for spades
     String? spades_type = "isolate"
     Int? spades_cpu
     Int? spades_memory
@@ -42,6 +44,16 @@ workflow shovill_asm {
     Int? pilon_memory
     Int? pilon_disk_size
     String? pilon_docker
+    # Optional parameters for filtering
+    Int filter_contigs_min_length = 200
+    Float filter_contigs_min_coverage = 2.0
+    Boolean filter_contigs_skip_length_filter = false
+    Boolean filter_contigs_skip_coverage_filter = false
+    Boolean filter_contigs_skip_homopolymer_filter = false
+    Int? filter_contigs_cpu
+    Int? filter_contigs_memory
+    Int? filter_contigs_disk_size
+    String? filter_contigs_docker
   }
   if (assembler == "spades") {
     call task_spades.spades {
@@ -111,9 +123,26 @@ workflow shovill_asm {
         docker = pilon_docker
     }
   }
+  if (post_asm_filter) {
+    call task_filter_contigs.filter_contigs {
+      input:
+        samplename = samplename,
+        assembly_fasta = select_first([pilon.assembly_fasta, spades.assembly_fasta, megahit.assembly_fasta, skesa.assembly_fasta]),
+        min_length = filter_contigs_min_length,
+        min_coverage = filter_contigs_min_coverage,
+        skip_length_filter = filter_contigs_skip_length_filter,
+        skip_coverage_filter = filter_contigs_skip_coverage_filter,
+        skip_homopolymer_filter = filter_contigs_skip_homopolymer_filter,
+        cpu = filter_contigs_cpu,
+        memory = filter_contigs_memory,
+        disk_size = filter_contigs_disk_size,
+        docker = filter_contigs_docker
+      }
+    }
   output {
-    File final_assembly = select_first([pilon.assembly_fasta, spades.assembly_fasta, megahit.assembly_fasta, skesa.assembly_fasta])
-    File? final_gfa = spades.assembly_gfa
+    File assembly_fasta = select_first([filter_contigs.filtered_fasta, pilon.assembly_fasta, spades.assembly_fasta, megahit.assembly_fasta, skesa.assembly_fasta])
+    File? contigs_gfa = spades.assembly_gfa
+    File? filtered_contigs_metrics = filter_contigs.assembly_filtering_metrics
     File? pilon_changes = pilon.changes
     File? pilon_vcf = pilon.vcf
     String assembler_used = assembler

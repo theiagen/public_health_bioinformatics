@@ -23,7 +23,7 @@ task megahit {
     # get the memory required, assuming its input is GB
     memory=$(python3 -c "print(~{memory} * 1000000000)")
 
-    if [-n "~{read2}" ]; then
+    if [ -n "~{read2}" ]; then
       # if read2 is provided, use paired-end mode
       megahit \
         -1 ~{read1} \
