@@ -17,7 +17,7 @@ workflow digger_denovo {
     String? kmers
     Boolean use_pilon = false
     String? opts # Extra assembler options
-    Boolean post_asm_filter = true # Default: Filter contigs after assembly
+    Boolean run_filter_contigs = true # Default: Filter contigs after assembly
     # Optional parameters for spades
     String? spades_type = "isolate"
     Int? spades_cpu
@@ -123,7 +123,7 @@ workflow digger_denovo {
         docker = pilon_docker
     }
   }
-  if (post_asm_filter) {
+  if (run_filter_contigs) {
     call task_filter_contigs.filter_contigs {
       input:
         samplename = samplename,
