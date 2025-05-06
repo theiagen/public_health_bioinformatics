@@ -66,8 +66,6 @@ task quast {
   output {
     File quast_report = "~{samplename}_report.tsv"
     File? icarus_report = "~{samplename}_icarus_viewer.tgz"
-    File? misassembly_report = "contigs_reports/misassemblies_report.tsv"
-    File? unaligned_report = "contigs_reports/unaligned_report.tsv"
     String version = read_string("VERSION")
     String pipeline_date = read_string("DATE")
     Int genome_length = read_int("GENOME_LENGTH")
