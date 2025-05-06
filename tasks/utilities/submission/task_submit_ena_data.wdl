@@ -75,8 +75,7 @@ task submit_ena_data {
       --geneticContext "reads" \
       --spreadsheet "prepped_ena_data.tsv" \
       --directory . \
-      --mode "submit" \
-      --test
+      --mode "submit"
   >>>
   output {
     File prepped_ena_data = "prepped_ena_data.tsv"
