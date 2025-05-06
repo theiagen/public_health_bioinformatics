@@ -251,6 +251,7 @@ workflow theiaeuk_illumina_pe {
     # Assembly - digger_denovo outputs and Assembly QC
     File? assembly_fasta = digger_denovo.assembly_fasta
     File? contigs_gfa = digger_denovo.contigs_gfa
+    File? filtered_contigs_metrics = digger_denovo.filtered_contigs_metrics
     String? assembler = digger_denovo.assembler_used
     String? assembler_version = digger_denovo.assembler_version
     # Assembly QC - quast outputs
