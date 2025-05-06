@@ -32,7 +32,7 @@ task flye {
     flye \
       "~{read_type}" "~{read1}" \
       --iterations ~{flye_polishing_iterations} \
-      ~{"--min-overlap" + minimum_overlap} \
+      ~{"--min-overlap " + minimum_overlap} \
       ~{if defined(asm_coverage) then "--genome-size " + genome_length else ""} \
       ~{"--asm-coverage " + asm_coverage} \
       ~{"--read-error " + read_error_rate} \
