@@ -8,28 +8,28 @@
 
 ## TheiaViral Workflows
 
-The **TheiaViral** workflows are designed for the assembly, quality assessment, and characterization of **non-amplicon-based** viral genomes. The TheiaViral workflows are particularly well-suited for handling diverse or recombinant pathogens, such as rabies virus and norovirus, which often pose challenges for traditional reference-based assembly methods. This is because existing references often fail to adequately capture the genetic diversity present within a given sample. To address this, TheiaViral incorporates an unbiased reference selection step based on Average Nucleotide Identity (ANI). This step compares a de novo assembly of the sample against a comprehensive database of over 270,000 viral genomes, enabling selection of the most closely related reference. Currently, TheiaViral workflows perform variant calling and generate a consensus sequence, but additional downstream analyses are not yet implemented.
+The **TheiaViral** workflows are designed for the assembly, quality assessment, and characterization of viral genomes from a variety of data sources, including metagenomic samples. TheiaViral workflows are designed to assemble diverse or recombinant viruses, such as rabies virus and norovirus, by dynamically identifying the most similar reference genome from a database of 270,000+ complete viral genomes. TheiaViral accomplishes this generating an intermediate **de novo** assembly from taxonomy-filtered reads, selecting a best reference via average nucleotide identity, and generating a final consensus assembly by variant calling with respect to the selected reference. TheiaViral workflows have been tested with a variety of data sources, including metagenomic and amplicon-derived reads. While some sequencing methodologies, such as tiled amplicon sequencing, are incompatible with **de novo** assembly methods, TheiaViral may still be able to select a high-quality reference genome and generate a consensus assembly using these data sources. Implementation of targeted viral characterization is currently ongoing. 
 
 ??? question "What are the main differences between the TheiaViral and TheiaCov workflows?"
 
     <div class="grid cards" markdown>
 
-    -   :material-database: **TheiaViral Workflows**
-
-        ---
-
-        * For non-amplicon-based viral genomes.
-        * Supports relatively diverse and recombinant pathogens.
-        * Utilizes an ANI-based reference selection from a *de novo* assembled genome.
-
-
     -   :material-database: **TheiaCov Workflows**
 
         ---
 
-        * For tiled PCR - amplicon-based viral genomes.
-        * Supports a limited number of [pathogens](../../workflows/genomic_characterization/theiacov.md/#supported-organisms).
-        * Utilizes a preselected manually curated reference genome.
+        * For amplicon-derived viral sequencing methodologies
+        * Supports a limited number of [pathogens](../../workflows/genomic_characterization/theiacov.md/#supported-organisms)
+        * Uses manually curated, static reference genomes
+
+
+    -   :material-database: **TheiaViral Workflows**
+
+        ---
+
+        * Designed for metagenomic sequencing methodologies, though may accommodate other data sources
+        * Supports relatively diverse and recombinant pathogens
+        * Dynamically identifies the most similar reference genome for consensus assembly via an intermediate **de novo** assembly
 
     </div>
 
@@ -43,9 +43,9 @@ The **TheiaViral** workflows are designed for the assembly, quality assessment, 
 
     !!! dna "Illumina_PE Input Read Data"
 
-        The TheiaViral_Illumina_PE workflow takes in Illumina paired-end read data. Read file names should end with `.fastq` or `.fq`, with the optional addition of `.gz`. When possible, Theiagen recommends zipping files with [gzip](https://www.gnu.org/software/gzip/) before Terra uploads to minimize data upload time.
+        The TheiaViral_Illumina_PE workflow inputs Illumina paired-end read data. Read file extensions should be `.fastq` or `.fq`, and can optionally include the `.gz` compression extension. Theiagen recommends compressing files with [gzip](https://www.gnu.org/software/gzip/) before Terra uploads to minimize data upload time and storage costs.
 
-        By default, the workflow anticipates 2 x 150bp reads (i.e. the input reads were generated using a 300-cycle sequencing kit). Modifications to the optional parameter for `trim_minlen` may be required to accommodate shorter read data, such as the 2 x 75bp reads generated using a 150-cycle sequencing kit.
+        Modifications to the optional parameter for `trim_minlen` may be required to appropriately trim reads shorter than 2 x 150 bp (i.e. generated using a 300-cycle sequencing kit), such as the 2 x 75bp reads generated using a 150-cycle sequencing kit.
 
 -   <center> **TheiaViral_ONT** </center>
 
@@ -53,7 +53,9 @@ The **TheiaViral** workflows are designed for the assembly, quality assessment, 
 
     !!! dna_blue "ONT Input Read Data"
 
-        The TheiaViral_ONT workflow takes in base-called ONT read data. Read file names should end with `.fastq` or `.fq`, with the optional addition of `.gz`. When possible, Theiagen recommends zipping files with [gzip](https://www.gnu.org/software/gzip/) before uploading to Terra to minimize data upload time.
+        The TheiaViral_ONT workflow inputs base-called Oxford Nanopore Technology (ONT) read data. Read file extensions should be `.fastq` or `.fq`, and can optionally include the `.gz` compression extension. Theiagen recommends compressing files with [gzip](https://www.gnu.org/software/gzip/) before Terra uploads to minimize data upload time and storage costs.
+
+        It is recommended to trim adapter sequencings via `dorado` basecalling prior to running TheiaViral_ONT, though `porechop` can optionally be called to trim adapters within the workflow.
 
         **The ONT sequencing kit and base-calling approach can produce substantial variability in the amount and quality of read data. Genome assemblies produced by the TheiaViral_ONT workflow must be quality assessed before reporting results.**
 
@@ -398,7 +400,7 @@ The **TheiaViral** workflows are designed for the assembly, quality assessment, 
 
         -   ??? task "`ncbi_identify`"
 
-                The `ncbi_identify` task utilizes the [`NCBI Datasets`](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/data-packages/taxonomy/) package to search the NCBI Viral Genome Database to acquire metadata based on a user's taxonomic input. This task will always return a taxon ID, name, and rank, and it facilitates multiple downstream functions, including **read classification and targeted read extraction**.
+                The `ncbi_identify` task uses [`NCBI Datasets`](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/data-packages/taxonomy/) to search the NCBI Viral Genome Database and acquire taxonomic metadata from a user's inputted taxonomy and desired rank (e.g. Kingdom, phylum, class, order, family, genus, species). This task will always return a taxon ID, name, and rank, and it facilitates multiple downstream functions, including **read classification and targeted read extraction**.
 
                 ??? dna "`taxon`"
                     This parameter accepts either a NCBI taxon ID (e.g. `11292`) or an organism name (e.g. `Lyssavirus rabies`).
