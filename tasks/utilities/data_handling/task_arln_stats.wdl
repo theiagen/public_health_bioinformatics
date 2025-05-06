@@ -30,15 +30,15 @@ task arln_stats {
     elif [[ ~{workflow_type} == "se" || ~{workflow_type} == "ont" ]]; then
       python /scripts/q30.py -i ~{read1_raw} > RAW_Q30
       awk '/read1/ {printf "%.2f\n", $2}' RAW_Q30 > read1_raw_q30
-      echo "0.0" > read2_raw_q30
+      touch read2_raw_q30
       python /scripts/q30.py -i ~{read1_clean} > CLEAN_Q30
       awk '/read1/ {printf "%.2f\n", $2}' CLEAN_Q30 > read1_clean_q30
-      echo "0.0" > read2_clean_q30
+      touch read2_clean_q30
     else
-      echo "0.0" > read1_raw_q30
-      echo "0.0" > read2_raw_q30
-      echo "0.0" > read1_clean_q30
-      echo "0.0" > read2_clean_q30
+      touch read1_raw_q30
+      touch read2_raw_q30
+      touch read1_clean_q30
+      touch read2_clean_q30
     fi
 
     # Calculate Assembly Ratio
@@ -58,10 +58,10 @@ task arln_stats {
   >>>
     
   output {
-    Float? read1_raw_q30 = read_float("read1_raw_q30")
-    Float? read2_raw_q30 = read_float("read2_raw_q30")
-    Float? read1_clean_q30 = read_float("read1_clean_q30")
-    Float? read2_clean_q30 = read_float("read2_clean_q30")
+    String? read1_raw_q30 = read_string("read1_raw_q30")
+    String? read2_raw_q30 = read_string("read2_raw_q30")
+    String? read1_clean_q30 = read_string("read1_clean_q30")
+    String? read2_clean_q30 = read_string("read2_clean_q30")
     String assembly_ratio = read_string("assem_ratio_with_stdev")
     String docker_version = docker
   }

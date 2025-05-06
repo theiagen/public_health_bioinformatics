@@ -1865,10 +1865,10 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
 | ani_mummer_version | String | Version of MUMmer used | FASTA, ONT, PE, SE |
 | ani_output_tsv | File | Full output TSV from ani-m | FASTA, ONT, PE, SE |
 | ani_top_species_match | String | Species of genome with highest ANI to query FASTA | FASTA, ONT, PE, SE |
-| arln_raw_q30_r1 | Float | Q30% of the raw R1 FASTQ | ONT, PE, SE |
-| arln_raw_q30_r2 | Float | Q30% of the raw R2 FASTQ | PE |
-| arln_cleaned_q30_r1 | Float | Q30% of the cleaned R1 FASTQ | ONT, PE, SE |
-| arln_cleaned_q30_r2 | Float | Q30% of the cleaned R2 FASTQ | PE |
+| arln_raw_q30_r1 | String | Q30% of the raw R1 FASTQ | ONT, PE, SE |
+| arln_raw_q30_r2 | String | Q30% of the raw R2 FASTQ | PE |
+| arln_cleaned_q30_r1 | String | Q30% of the cleaned R1 FASTQ | ONT, PE, SE |
+| arln_cleaned_q30_r2 | String | Q30% of the cleaned R2 FASTQ | PE |
 | arln_assembly_ratio | String | Assembly ratio with standard deviation | FASTA, ONT, PE, SE |
 | arln_stats_docker_version | String | Docker version for task_arln_stats.wdl | FASTA, ONT, PE, SE |
 | assembly_fasta | File | Fasta file outputted from Flye or Shovill | ONT, PE, SE |
