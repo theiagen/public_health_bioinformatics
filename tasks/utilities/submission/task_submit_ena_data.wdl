@@ -32,6 +32,7 @@ task submit_ena_data {
     # Allow continuing even if some samples have missing metadata
     # Default is to fail if any samples are missing required metadata, unless this flag is set
     Boolean? allow_missing
+    Boolean? test_submit
 
     Int disk_size = 100
     Int cpu = 1
@@ -75,12 +76,20 @@ task submit_ena_data {
       --geneticContext "reads" \
       --spreadsheet "prepped_ena_data.tsv" \
       --directory . \
-      --mode "submit"
+      --mode "submit" \
+      ~{true="--test" false="" test_submit}
+
+    ls manifests/*
+    ls submissions/*
   >>>
   output {
     File prepped_ena_data = "prepped_ena_data.tsv"
     File file_paths_json = "file_paths.json"
     File excluded_samples = "excluded_samples.tsv"
+    Array[File] manifest_files = glob("manifests/Manifest_*.txt")
+    Array[File] manifest_log_err_files = glob("manifests/*-report/*.err")
+    Array[File] manifest_log_out_files = glob("manifests/*-report/*.out")
+    File manifest_all_errors = "failed_validation.txt"
     String docker_image = docker
   }
   runtime {
