@@ -4,6 +4,8 @@ task quast {
   input {
     File assembly
     String samplename
+    File? reference
+    File? reference_gff
     Int min_contig_length = 500
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/quast:5.0.2"
     Int disk_size = 100
@@ -15,9 +17,22 @@ task quast {
     date | tee DATE
     quast.py --version | grep QUAST | tee VERSION
 
-    quast.py ~{assembly} -o . --min-contig ~{min_contig_length}
+    quast.py \
+      ~{assembly} \
+      -o . \
+      --min-contig ~{min_contig_length} \
+      ~{'-r ' + reference} \
+      ~{'-g ' + reference_gff}
+
     mv report.tsv ~{samplename}_report.tsv
-    
+
+    mkdir ~{samplename}_icarus_viewer
+    mv icarus_viewers ~{samplename}_icarus_viewer/ && \
+      mv icarus.html ~{samplename}_icarus_viewer/ && 
+      mv report.html ~{samplename}_icarus_viewer/
+
+    tar -zcvf ~{samplename}_icarus_viewer.tgz ~{samplename}_icarus_viewer
+
     python <<CODE
     import csv
     #grab output genome length and number contigs by column header
@@ -48,6 +63,9 @@ task quast {
   >>>
   output {
     File quast_report = "${samplename}_report.tsv"
+    File icarus_report = "~{samplename}_icarus_viewer.tgz"
+    File? misassembly_report = "contigs_reports/misassemblies_report.tsv"
+    File? unaligned_report = "contigs_reports/unaligned_report.tsv"
     String version = read_string("VERSION")
     String pipeline_date = read_string("DATE")
     Int genome_length = read_int("GENOME_LENGTH")
