@@ -81,13 +81,17 @@ task submit_ena_data {
 
   >>>
   output {
+    # prepare_ena_data.py output
     File prepped_ena_data = "prepped_ena_data.tsv"
     File file_paths_json = "file_paths.json"
     File excluded_samples = "excluded_samples.tsv"
+    # bulk_webincli.py output
+    Array[File]? submission_report_files = glob("submission/*.report")
+    Array[File]? submission_reads = glob("submission/reads/*")
     Array[File]? manifest_files = glob("manifests/Manifest_*.txt")
     Array[File]? manifest_log_err_files = glob("manifests/*-report/*.err")
     Array[File]? manifest_log_out_files = glob("manifests/*-report/*.out")
-    File manifest_all_errors = "failed_validation.txt"
+    File? manifest_all_errors = "failed_validation.txt"
     String docker_image = docker
   }
   runtime {
