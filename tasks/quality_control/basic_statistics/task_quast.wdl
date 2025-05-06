@@ -26,11 +26,11 @@ task quast {
 
     mv report.tsv ~{samplename}_report.tsv
 
+    # Create tgz of files needed for Icarus HTML viewer
     mkdir ~{samplename}_icarus_viewer
     mv icarus_viewers ~{samplename}_icarus_viewer/ && \
       mv icarus.html ~{samplename}_icarus_viewer/ && 
       mv report.html ~{samplename}_icarus_viewer/
-
     tar -zcvf ~{samplename}_icarus_viewer.tgz ~{samplename}_icarus_viewer
 
     python <<CODE
