@@ -11,11 +11,11 @@ These tools support modular, consistent documentation across our repository.
 
 ## Usage
 
-### 1. `input_table(...)`
+### 1. `render_tsv_table(...)`
 
 This macro renders a TSV file as a Markdown table. It supports column filtering, wildcard selection, sorting, and optional formatting for inputs.
 
-#### `input_table()` Parameters
+#### `render_tsv_table()` Parameters
 
 | Name            | Type                  | Required | Description |
 |-----------------|-----------------------|----------|-------------|
@@ -27,7 +27,7 @@ This macro renders a TSV file as a Markdown table. It supports column filtering,
 | `input_table`   | `bool`                | No       | If `True`, bolds the second column (used for emphasizing input names). |
 | `indent`        | `int`                 | No       | Number of spaces to indent the output Markdown. This will likely be a multiple of 4. |
 
-#### `input_table()` Examples
+#### `render_tsv_table()` Examples
 
 The following code is how this function should be called for creating the Inputs table.
 
@@ -36,7 +36,7 @@ The `columns` and `sort_by` parameters should be used for all input tables, and 
 ```md
 /// html | div[class="searchable-table"]
 
-{{ input_table("docs/assets/tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="TheiaProk_Illumina_SE", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
+{{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="TheiaProk_Illumina_SE", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
 
 ///
 ```
@@ -48,7 +48,7 @@ The `columns` and `sort_by` parameters should be used for all output tables, and
 ```md
 /// html | div[class="searchable-table"]
 
-{{ input_table("docs/assets/tables/all_outputs.tsv", input_table=False, filter_column="Workflow", filter_values="TheiaProk_Illumina_PE", columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=4) }}
+{{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filter_column="Workflow", filter_values="TheiaProk_Illumina_PE", columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=4) }}
 
 ///
 ```
@@ -105,7 +105,7 @@ To use these macros in your workflow documentation:
 
 1. Ensure `mkdocs-macros-plugin` is installed and configured in your `mkdocs.yml`.
      - run `pip install mkdocs-macros-plugin` to install the plugin.
-2. Use `input_table()` to render TSV tables dynamically, avoiding copy-paste duplication.
+2. Use `render_tsv_table()` to render TSV tables dynamically, avoiding copy-paste duplication.
 3. Use `include_md()` to reuse content fragments, adjusting them per workflow with `condition` and `replacements`.
      - add new content fragments to `common_text/` 
 
@@ -123,7 +123,7 @@ Macros are defined in a `define_env(env)` function. This is the entry point that
 
 ### Macro Internals
 
-#### `input_table(...)`
+#### `render_tsv_table(...)`
 
 - Parses TSV files using `csv.DictReader`.
 - Filters rows by matching values in a specific column.

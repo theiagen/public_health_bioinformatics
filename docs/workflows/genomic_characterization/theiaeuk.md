@@ -25,7 +25,7 @@ All input reads are processed through "core tasks" in each workflow. The core ta
 
 /// html | div[class="searchable-table"]
 
-{{ input_table("docs/assets/tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="TheiaEuk_Illumina_PE", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"]) }}
+{{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="TheiaEuk_Illumina_PE", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"]) }}
 
 ///
 
@@ -279,6 +279,6 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
 
 /// html | div[class="searchable-table"]
 
-{{ input_table("docs/assets/tables/all_outputs.tsv", input_table=False, filter_column="Workflow", filter_values="TheiaEuk_Illumina_PE", columns=["Variable", "Type", "Description"], sort_by=["Variable"]) }}
+{{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filter_column="Workflow", filter_values="TheiaEuk_Illumina_PE", columns=["Variable", "Type", "Description"], sort_by=["Variable"]) }}
 
 ///

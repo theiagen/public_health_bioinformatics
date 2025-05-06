@@ -189,7 +189,7 @@ If you are adding a new workflow, there are a number of things to do in order to
 
 The documentation uses a few macros to help with the formatting of the documentation. These macros are defined in `macros/main.py` and are used in the documentation files. The following macros are available:
 
-- `input_table()` - This macro is used to create a table from a TSV file. The TSV file should be in the `docs/assets/` directory and should be formatted as a table. The macro will automatically create a table from the TSV file and insert it into the documentation.
+- `render_tsv_table()` - This macro is used to create a table from a TSV file. The TSV file should be in the `docs/assets/` directory and should be formatted as a table. The macro will automatically create a table from the TSV file and insert it into the documentation.
 - `include_md()` - This macro is used to include a Markdown file in the documentation. The macro will automatically adjust the heading levels, resolve relative links, and support conditional and nested includes.
 
 Please see the [macros README](https://github.com/theiagen/public_health_bioinformatics/blob/main/macros/README.md) for more information.

@@ -22,7 +22,7 @@ All variant data included in the sample set should be generated from aligning se
 
 /// html | div[class="searchable-table"]
 
-{{ input_table("docs/assets/tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="Find_Shared_Variants", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"]) }}
+{{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="Find_Shared_Variants", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"]) }}
 
 ///
 
@@ -76,6 +76,6 @@ The outputs of this workflow are the `concatenated_variants` file and the `share
 
 /// html | div[class="searchable-table"]
 
-{{ input_table("docs/assets/tables/all_outputs.tsv", input_table=False, filter_column="Workflow", filter_values="Find_Shared_Variants", columns=["Variable", "Type", "Description"], sort_by=["Variable"]) }}
+{{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filter_column="Workflow", filter_values="Find_Shared_Variants", columns=["Variable", "Type", "Description"], sort_by=["Variable"]) }}
 
 ///

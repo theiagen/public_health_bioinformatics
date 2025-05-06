@@ -18,7 +18,7 @@ def define_env(env):
   """
   
   @env.macro
-  def input_table(filename=None, filter_column=None, filter_values=None, columns=None, sort_by=None, input_table=False, indent=0):
+  def render_tsv_table(filename=None, filter_column=None, filter_values=None, columns=None, sort_by=None, input_table=False, indent=0):
     """
     Render a TSV file as a Markdown table with optional filtering, sorting, and column selection.
 

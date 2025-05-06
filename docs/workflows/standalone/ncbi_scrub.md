@@ -20,13 +20,13 @@ There are three Kraken2 workflows:
     === "NCBI_Scrub_PE"
         /// html | div[class="searchable-table"]
 
-        {{ input_table("docs/assets/tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="NCBI_Scrub_PE", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
+        {{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="NCBI_Scrub_PE", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
         ///
 
     === "NCBI_Scrub_SE"
         /// html | div[class="searchable-table"]
 
-        {{ input_table("docs/assets/tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="NCBI_Scrub_SE", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
+        {{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="NCBI_Scrub_SE", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
         ///
 
 ### Workflow Tasks
@@ -67,13 +67,13 @@ This workflow is composed of two tasks, one to dehost the input reads and anothe
     === "NCBI_Scrub_PE"
         /// html | div[class="searchable-table"]
 
-        {{ input_table("docs/assets/tables/all_outputs.tsv", input_table=False, filter_column="Workflow", filter_values="NCBI_Scrub_PE", columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=8) }}
+        {{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filter_column="Workflow", filter_values="NCBI_Scrub_PE", columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=8) }}
 
         ///
 
     === "NCBI_Scrub_SE"
         /// html | div[class="searchable-table"]
 
-        {{ input_table("docs/assets/tables/all_outputs.tsv", input_table=False, filter_column="Workflow", filter_values="NCBI_Scrub_SE", columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=8) }}
+        {{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filter_column="Workflow", filter_values="NCBI_Scrub_SE", columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=8) }}
         
         ///
