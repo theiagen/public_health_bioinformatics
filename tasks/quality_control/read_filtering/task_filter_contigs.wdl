@@ -13,14 +13,14 @@ task filter_contigs {
     Int memory = 8
     Int cpu = 1
     # Found in theiagen-docker-builds/assembly-filter
-    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/shovilter:0.1"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/shovilter:0.2"
   }
   command <<< 
     set -euo pipefail
     
     echo "Filtering contigs from ~{assembly_fasta}" >&2
 
-    python /scripts/assembly-shovilter.py \
+    python /scripts/assembly_shovilter.py \
       -i ~{assembly_fasta} \
       -o ~{samplename}_filtered_contigs.fasta \
       -m ~{samplename}_filtering_metrics.txt \
