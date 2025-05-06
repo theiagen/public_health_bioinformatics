@@ -16,7 +16,7 @@ workflow digger_denovo {
     Int min_contig_length = 200
     String? kmers
     Boolean use_pilon = false
-    String? opts # Extra assembler options
+    String? assembly_options # Extra assembler options
     Boolean run_filter_contigs = true # Default: Filter contigs after assembly
     # Optional parameters for spades
     String? spades_type = "isolate"
@@ -63,7 +63,7 @@ workflow digger_denovo {
         samplename = samplename,
         kmers = kmers,
         spades_type = spades_type,
-        spades_opts = opts,
+        spades_opts = assembly_options,
         cpu = spades_cpu,
         memory = spades_memory,
         disk_size = spades_disk_size,
@@ -78,7 +78,7 @@ workflow digger_denovo {
         samplename = samplename,
         kmers = kmers,
         min_contig_length = min_contig_length,
-        megahit_opts = opts,
+        megahit_opts = assembly_options,
         cpu = megahit_cpu,
         memory = megahit_memory,
         disk_size = megahit_disk_size,
@@ -92,7 +92,7 @@ workflow digger_denovo {
         read2 = read2,
         samplename = samplename,
         min_contig_length = min_contig_length,
-        skesa_opts = opts,
+        skesa_opts = assembly_options,
         cpu = skesa_cpu,
         memory = skesa_memory,
         disk_size = skesa_disk_size,
