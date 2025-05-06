@@ -26,12 +26,15 @@ task quast {
 
     mv report.tsv ~{samplename}_report.tsv
 
-    # Create tgz of files needed for Icarus HTML viewer
-    mkdir ~{samplename}_icarus_viewer
-    mv icarus_viewers ~{samplename}_icarus_viewer/ && \
-      mv icarus.html ~{samplename}_icarus_viewer/ && 
-      mv report.html ~{samplename}_icarus_viewer/
-    tar -zcvf ~{samplename}_icarus_viewer.tgz ~{samplename}_icarus_viewer
+    # Check if required files/directories for Icarus exist
+    if [[ -d "icarus_viewers" ]]; then
+      # Create tgz of files needed for Icarus HTML viewer
+      mkdir ~{samplename}_icarus_viewer
+      mv icarus_viewers ~{samplename}_icarus_viewer/ && \
+        mv icarus.html ~{samplename}_icarus_viewer/ && 
+        mv report.html ~{samplename}_icarus_viewer/
+      tar -zcvf ~{samplename}_icarus_viewer.tgz ~{samplename}_icarus_viewer
+    fi
 
     python <<CODE
     import csv
@@ -57,13 +60,12 @@ task quast {
           if "# N's per 100 kbp" in line[0]:
             with open("UNCALLED_BASES", "wt") as uncalled_bases:
               uncalled_bases.write(line[1])
-
     CODE
 
   >>>
   output {
-    File quast_report = "${samplename}_report.tsv"
-    File icarus_report = "~{samplename}_icarus_viewer.tgz"
+    File quast_report = "~{samplename}_report.tsv"
+    File? icarus_report = "~{samplename}_icarus_viewer.tgz"
     File? misassembly_report = "contigs_reports/misassemblies_report.tsv"
     File? unaligned_report = "contigs_reports/unaligned_report.tsv"
     String version = read_string("VERSION")
