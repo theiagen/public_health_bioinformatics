@@ -8,7 +8,7 @@
 
 ## TheiaViral Workflows
 
-The **TheiaViral** workflows are designed for the assembly, quality assessment, and characterization of viral genomes from a variety of data sources, including metagenomic samples. TheiaViral workflows are designed to assemble diverse or recombinant viruses, such as rabies virus and norovirus, by dynamically identifying the most similar reference genome from a database of 270,000+ complete viral genomes. TheiaViral accomplishes this generating an intermediate **de novo** assembly from taxonomy-filtered reads, selecting a best reference via average nucleotide identity, and generating a final consensus assembly by variant calling with respect to the selected reference. TheiaViral workflows have been tested with a variety of data sources, including metagenomic and amplicon-derived reads. While some sequencing methodologies, such as tiled amplicon sequencing, are incompatible with **de novo** assembly methods, TheiaViral may still be able to select a high-quality reference genome and generate a consensus assembly using these data sources. Implementation of targeted viral characterization is currently ongoing. 
+The **TheiaViral** workflows are designed for the assembly, quality assessment, and characterization of viral genomes from a variety of data sources, including metagenomic samples. TheiaViral workflows are designed to assemble diverse or recombinant viruses, such as rabies virus and norovirus, by dynamically identifying the most similar reference genome from a database of 270,000+ complete viral genomes. TheiaViral accomplishes this generating an intermediate *de novo* assembly from taxonomy-filtered reads, selecting a best reference via average nucleotide identity, and generating a final consensus assembly by variant calling with respect to the selected reference. TheiaViral workflows have been tested with a variety of data sources, including metagenomic and amplicon-derived reads. While some sequencing methodologies, such as tiled amplicon sequencing, are incompatible with *de novo* assembly methods, TheiaViral may still be able to select a high-quality reference genome and generate a consensus assembly using these data sources. Implementation of targeted viral characterization is currently ongoing. 
 
 ??? question "What are the main differences between the TheiaViral and TheiaCov workflows?"
 
@@ -29,7 +29,7 @@ The **TheiaViral** workflows are designed for the assembly, quality assessment, 
 
         * Designed for metagenomic sequencing methodologies, though may accommodate other data sources
         * Supports relatively diverse and recombinant pathogens
-        * Dynamically identifies the most similar reference genome for consensus assembly via an intermediate **de novo** assembly
+        * Dynamically identifies the most similar reference genome for consensus assembly via an intermediate *de novo* assembly
 
     </div>
 
@@ -120,7 +120,7 @@ The **TheiaViral** workflows are designed for the assembly, quality assessment, 
     | megahit | **disk_size** | Int | Disk size allocated for the task (in GB) | 100 | Optional | PE |
     | megahit | **docker** | String | Docker image used for the task | "us-docker.pkg.dev/general-theiagen/theiagen/megahit:1.2.9" | Optional | PE |
     | megahit | **kmers** | String | Comma-separated list of kmer sizes to use for assembly. All must be odd, in the range 15-255, increment <= 28 | "21,29,39,59,79,99,119,141" | Optional | PE |
-    | megahit | **megahit_opts** | String | Additional parameters for Megahit assembler | | Optional | PE |
+    | megahit | **megahit_opts** | String | Additional parameters for MEGAHIT assembler | | Optional | PE |
     | megahit | **memory** | Int | Memory allocated for the task (in GB) | 16 | Optional | PE |
     | ncbi_datasets | **cpu** | Int | Number of CPUs allocated for the task | 1 | Optional | PE, ONT |
     | ncbi_datasets | **disk_size** | Int | Disk size allocated for the task (in GB) | 50 | Optional | PE, ONT |
@@ -191,7 +191,7 @@ The **TheiaViral** workflows are designed for the assembly, quality assessment, 
     | theiaviral_illumina_pe | **min_map_quality** | Int | Minimum mapping quality required for read alignments | 20 | Optional | PE |
     | theiaviral_illumina_pe | **read_extraction_rank** | String | Taxonomic rank to use for read extraction - limits taxons to only those within the specified ranks. | "family" | Optional | PE |
     | theiaviral_illumina_pe | **reference_fasta** | File | Reference genome in FASTA format | | Optional | PE |
-    | theiaviral_illumina_pe | **skip_metaviralspades** | Boolean | True/False to skip assembly with Metaviralspades and instead use Megahit | FALSE | Optional | PE |
+    | theiaviral_illumina_pe | **skip_metaviralspades** | Boolean | True/False to skip assembly with Metaviralspades and instead use MEGAHIT | FALSE | Optional | PE |
     | theiaviral_illumina_pe | **skip_rasusa** | Boolean | True/False to skip read subsampling with Rasusa | FALSE | Optional | PE |
     | theiaviral_illumina_pe | **skip_screen** | Boolean | True/False to skip read screening check prior to analysis | FALSE | Optional | PE |
     | version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) | | Optional | PE, ONT |
@@ -400,10 +400,10 @@ The **TheiaViral** workflows are designed for the assembly, quality assessment, 
 
         -   ??? task "`ncbi_identify`"
 
-                The `ncbi_identify` task uses [`NCBI Datasets`](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/data-packages/taxonomy/) to search the NCBI Viral Genome Database and acquire taxonomic metadata from a user's inputted taxonomy and desired rank (e.g. Kingdom, phylum, class, order, family, genus, species). This task will always return a taxon ID, name, and rank, and it facilitates multiple downstream functions, including **read classification and targeted read extraction**.
+                The `ncbi_identify` task uses [`NCBI Datasets`](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/data-packages/taxonomy/) to search the NCBI Viral Genome Database and acquire taxonomic metadata from a user's inputted taxonomy and desired taxonomic rank. This task will always return a taxon ID, name, and rank, and it facilitates multiple downstream functions, including **read classification and targeted read extraction**.
 
                 ??? dna "`taxon`"
-                    This parameter accepts either a NCBI taxon ID (e.g. `11292`) or an organism name (e.g. `Lyssavirus rabies`).
+                    This parameter accepts either a NCBI taxon ID (e.g. `11292`) or an organism name (e.g. `*Lyssavirus rabies*`).
 
                 ??? dna "`rank` a.k.a `read_extraction_rank`"
                     Valid options include: `"species"`, `"genus"`, `"family"`, `"order"`, `"class"`, `"phylum"`, `"kingdom"`, or `"domain"`. By default it is set to `"family"`. This parameter filters metadata to report information only at the taxonomic `rank` specified by the user, regardless of the taxonomic level implied by the original input `taxon`.
@@ -413,8 +413,8 @@ The **TheiaViral** workflows are designed for the assembly, quality assessment, 
 
                     **Examples:**
 
-                    - If your input `taxon` is `"Lyssavirus rabies"` (species level) with `rank` set to `"family"`, the task will return the family-level information: taxon ID for *Rhabdoviridae*, name "Rhabdoviridae", and rank "family".
-                    - If your input `taxon` is `"Lyssavirus"` (genus level) with `rank` set to `"species"`, the task will fail because it cannot determine species-level information from a genus-level input.
+                    - If your input `taxon` is `"*Lyssavirus rabies*"` (species level) with `rank` set to `"family"`, the task will return the family-level information: taxon ID for Rhabdoviridae (11270), name "Rhabdoviridae", and rank "family".
+                    - If your input `taxon` is `"*Lyssavirus*"` (genus level) with `rank` set to `"species"`, the task will fail because it cannot determine species-level information from a genus-level input.
 
                 ??? techdetails "NCBI Datasets Technical Details"
                     |  | Links |
@@ -430,7 +430,7 @@ The **TheiaViral** workflows are designed for the assembly, quality assessment, 
 
         -   ??? task "`ncbi_taxon_summary`"
 
-                The `ncbi_taxon_summary` task utilizes the [`NCBI Datasets`](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/data-packages/virus-genome/) package to search the NCBI Viral Genome Database to acquire metadata based on a user's taxonomic input. This task generates a comprehensive summary file of all successful hits to the input `taxon`, which includes each taxon's accession number, completeness status, genome length, source, and other relevant metadata. Based on this summary, the task also calculates the average expected genome size for the input `taxon`.
+                The `ncbi_taxon_summary` task uses [`NCBI Datasets`](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/data-packages/virus-genome/) to search the NCBI Viral Genome Database and acquire metadata based on a user's taxonomic input. This task generates a comprehensive summary file of all successful hits to the input `taxon`, which includes each taxon's accession number, completeness status, genome length, source, and other relevant metadata. Based on this summary, the task also calculates the average expected genome size for the input `taxon`.
 
                 ??? dna "`taxon`"
                     This parameter accepts either a NCBI taxon ID (e.g. `11292`) or an organism name (e.g. `Lyssavirus rabies`).
@@ -440,8 +440,8 @@ The **TheiaViral** workflows are designed for the assembly, quality assessment, 
 
                     **Examples:**
 
-                    - If your input `taxon` is `"Lyssavirus rabies"` or taxon ID `11292` (species level), the task will retrieve genomes only for that specific species, and return the genome length for that species.
-                    - If your input `taxon` is `"Rhabdoviridae"` or taxon ID `11270` (family level), the task will retrieve genomes for all species within that family and calculate an average genome length across all those species.
+                    - If your input `taxon` is `"*Lyssavirus rabies*"` or taxon ID `11292` (species level), the task will retrieve genomes only for that specific species, and return the genome length for that species.
+                    - If your input `taxon` is `"Rhabdoviridae"` or taxon ID `11270` (family level), the task will retrieve genomes for all species within that family and calculate an average genome length across all retrieved species.
 
                     This flexibility allows users to run the workflow without requiring precise knowledge of their organism's genome length. The average genome length calculation is only used to estimate coverage levels for downsampling and minor read QC steps. The average genome length is used only to estimate coverage levels for downsampling and to guide minor read quality control steps. It does not significantly affect the quality of the consensus genome or the choice of reference sequences.
 
@@ -461,7 +461,7 @@ The **TheiaViral** workflows are designed for the assembly, quality assessment, 
 
         -   ??? task "`read_QC_trim`"
 
-                `read_QC_trim` is a sub-workflow within TheiaMeta that removes low-quality reads, low-quality regions of reads, and sequencing adapters to improve data quality. This sub-workflow also performs read taxonomic classification and extraction. It uses a number of tasks, described below.
+                `read_QC_trim` is a sub-workflow within TheiaViral_Illumina_PE that removes low-quality reads, low-quality regions of reads, and sequencing adapters to improve data quality. This sub-workflow also performs read taxonomic classification and extraction. It uses a number of tasks, described below.
 
                 <div class="grid cards" markdown>
 
@@ -571,7 +571,7 @@ The **TheiaViral** workflows are designed for the assembly, quality assessment, 
                         The task runs on cleaned reads passed from the read_QC_trim subworkflow and outputs a Kraken2 report detailing taxonomic classifications. It also separates classified reads from unclassified ones.
 
                         ???+ warning "Important"
-                            TheiaViral_Illumina_PE automatically uses a viral-specific Kraken2 database. This database was generated in-house from RefSeq's viral sequence collection and human genome GRCh38. It's available at `"gs://theiagen-large-public-files-rp/terra/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz"`.
+                            TheiaViral_Illumina_PE automatically uses a viral-specific Kraken2 database. This database was generated in-house from RefSeq's viral sequence collection and human genome GRCh38. It's available at `"gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz"`.
 
                         ??? techdetails "Kraken2 Technical Details"
                             |  | Links |
@@ -587,13 +587,13 @@ The **TheiaViral** workflows are designed for the assembly, quality assessment, 
 
                 -   ??? quote "Read Extraction"
 
-                        The `task_krakentools.wdl` task extracts reads from the Kraken2 output file. It uses the KrakenTools package to extract reads classified at any user-specified taxon ID.
+                        The `task_krakentools.wdl` task extracts reads from the Kraken2 output file. It uses the [KrakenTools](https://github.com/jenniferlu717/KrakenTools) package to extract reads classified at any user-specified taxon ID.
 
                         ??? dna "`extract_unclassified`"
-                            This parameter determines whether unclassified reads should also be extracted and combined with the `taxon`-specific extracted reads. By default, this is set to `false`, meaning that only reads classified to the specified input `taxon` will be extracted. This is accomplished using the [`task_cat_lanes.wdl`](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/file_handling/task_cat_lanes.wdl) task to concatenate the classified and unclassified reads into a single output file.
+                            This parameter determines whether unclassified reads should also be extracted and combined with the `taxon`-specific extracted reads. By default, this is set to `false`, meaning that only reads classified to the specified input `taxon` will be extracted.
 
                         ???+ warning "Important"
-                            - This task will extract reads classified to the input `taxon` and **all of its descendant taxa**. The `rank` input parameter controls the extraction of reads classified at the specified `rank` and all suboridante taxonomic levels. See task `ncbi_identify` under the **Taxonomic Identification** section for more details on the `rank` input parameter.
+                            - This task will extract reads classified as the input `taxon` and **all of its descendant taxa**. The `rank` input parameter within the TheiaViral_Illumina_PE workflow adjusts the inputted `taxon` to correspond to the specified `rank`. This `rank` is set to `family` by default because it may extract reads that cannot resolve to the species level. See task `ncbi_identify` under the **Taxonomic Identification** section for more details on the `rank` input parameter.
 
                         ??? techdetails "KrakenTools Technical Details"
                             |  | Links |
@@ -651,19 +651,19 @@ The **TheiaViral** workflows are designed for the assembly, quality assessment, 
 
         </div>
 
-    ??? toggle "De novo Assembly and Reference Selection"
+    ??? toggle "*De novo* Assembly and Reference Selection"
 
         <div class="grid cards" markdown>
 
         -   ??? task "`spades`"
 
-                The `spades` task is a wrapper for the SPAdes assembler, which is used for de novo assembly of the cleaned reads. It is run with the `--metaviral` option, which is recommended for viral genomes. MetaviralSPAdes pipeline consists of three independent steps, `ViralAssembly` for finding putative viral subgraphs in a metagenomic assembly graph and generating contigs in these graphs, `ViralVerify` for checking whether the resulting contigs have viral origin and `ViralComplete` for checking whether these contigs represent complete viral genomes. For more details, please see the original publication.
+                The `spades` task is a wrapper for the [SPAdes assembler](https://github.com/ablab/spades), which is used for de novo assembly of the cleaned reads. It is run with the `--metaviral` option, which is recommended for viral genomes. MetaviralSPAdes pipeline consists of three independent steps, `ViralAssembly` for finding putative viral subgraphs in a metagenomic assembly graph and generating contigs in these graphs, `ViralVerify` for checking whether the resulting contigs have viral origin and `ViralComplete` for checking whether these contigs represent complete viral genomes. For more details, please see the original publication.
 
                 ??? dna "`skip_metaviralspades`"
-                    This parameter controls whether or not the `spades` task is skipped by the workflow. By default, `skip_metaviralspades` is set to `false` because MetaviralSPAdes is used as the primary assembler. MetaviralSPAdes is generally recommended for most users, but it might not perform optimally on all datasets. If users encounter issues with MetaviralSPAdes, they can set the `skip_metaviralspades` variable to `true` to bypass the `speades` task and instead de novo assemble using Megahit (see task `megahit` for details). Additionally, if the `spades` task ever fails during execution, the workflow will automatically fall back to using Megahit for de novo assembly.
+                    This parameter controls whether or not the `spades` task is skipped by the workflow. By default, `skip_metaviralspades` is set to `false` because MetaviralSPAdes is used as the primary assembler. MetaviralSPAdes is generally recommended for most users, but it might not perform optimally on all datasets. If users encounter issues with MetaviralSPAdes, they can set the `skip_metaviralspades` variable to `true` to bypass the `spades` task and instead *de novo* assemble using [MEGAHIT](https://github.com/voutcn/megahit) (see task `megahit` for details). Additionally, if the `spades` task ever fails during execution, the workflow will automatically fall back to using MEGAHIT for *de novo* assembly.
 
                 ???+ warning "Important"
-                    In this workflow, de novo assembly is used solely to facilitate the selection of a closely related reference genome. If the user provides an input `reference_fasta`, all subsequent assembly and reference selections tasks will be skipped, including:
+                    In this workflow, *de novo* assembly is primarily used to facilitate the selection of a closely related reference genome, though high quality *de novo* assemblies can be used for downstream analysis. If the user provides an input `reference_fasta`, all subsequent assembly and reference selections tasks will be skipped, including:
 
                     - `spades`
                     - `megahit`
@@ -686,10 +686,10 @@ The **TheiaViral** workflows are designed for the assembly, quality assessment, 
 
           -   ??? task "`megahit`"
 
-                The `megahit` task is a wrapper for the MEGAHIT assembler, which is used for de novo assembly of the cleaned reads. MEGAHIT is a fast and memory-efficient de novo assembler that can handle large datasets. This task is optional and is turned off by default. It can be enabled by setting the `skip_metaviralspades` parameter to `true`. The `megahit` task is used as a fallback option if the `spades` task fails during execution (see task `spades` for more details).
+                The `megahit` task is a wrapper for the [MEGAHIT assembler](https://github.com/voutcn/megahit), which is used for *de novo* metagenomic assembly of the cleaned reads. MEGAHIT is a fast and memory-efficient *de novo* assembler that can handle large datasets. This task is optional, turned off by default, and will only be called if MetaviralSPAdes fails. It can be enabled by setting the `skip_metaviralspades` parameter to `true`. The `megahit` task is used as a fallback option if the `spades` task fails during execution (see task `spades` for more details).
 
                 ???+ warning "Important"
-                    In this workflow, de novo assembly is used solely to facilitate the selection of a closely related reference genome. If the user provides an input `reference_fasta`, all subsequent assembly and reference selections tasks will be skipped, including:
+                    In this workflow, *de novo* assembly is primarily used to facilitate the selection of a closely related reference genome, though high quality *de novo* assemblies can be used for downstream analysis. If the user provides an input `reference_fasta`, all subsequent assembly and reference selections tasks will be skipped, including:
 
                     - `megahit`
                     - `checkv_denovo`
@@ -711,7 +711,7 @@ The **TheiaViral** workflows are designed for the assembly, quality assessment, 
 
         -   ??? task "`skani`"
 
-                The `skani` task is used to identify and select the most closely related reference genome to the input assembly generated from the `spades` or `megahit` tasks. This reference genome is selected from a comprehensive database of over 270,000 viral genomes. Skani uses an approximate mapping method without base-level alignment to get ANI. It is magnitudes faster than BLAST-based methods and almost as accurate.
+                The `skani` task is used to identify and select the most closely related reference genome to the input assembly generated from the `spades` or `megahit` tasks. This reference genome is selected from a comprehensive database of over 270,000 complete viral genomes. Skani uses an approximate mapping method without base-level alignment to get ANI. It is magnitudes faster than BLAST-based methods and almost as accurate.
 
                 ??? techdetails "Skani Technical Details"
                     |  | Links |
@@ -847,7 +847,7 @@ The **TheiaViral** workflows are designed for the assembly, quality assessment, 
 
         -   ??? task "`checkv_denovo` & `checkv_consensus`"
 
-                CheckV is a fully automated command-line pipeline for assessing the quality of single-contig viral genomes, including identification of host contamination for integrated proviruses, estimating completeness for genome fragments, and identification of closed genomes. The `checkv_denovo` task evaluates the assembly generated by the `spades` or `megahit` tasks, while the `checkv_consensus` task evaluates the consensus genome generated by the `consensus` task.
+                CheckV is a fully automated command-line pipeline for assessing the quality of viral genomes, including identification of host contamination for integrated proviruses, estimating completeness for genome fragments, and identification of closed genomes. The `checkv_denovo` task evaluates the assembly generated by the `spades` or `megahit` tasks, while the `checkv_consensus` task evaluates the consensus genome generated by the `consensus` task.
 
                 ??? techdetails "CheckV Technical Details"
                     |  | Links |
@@ -909,8 +909,8 @@ The **TheiaViral** workflows are designed for the assembly, quality assessment, 
 
                     **Examples:**
 
-                    - If your input `taxon` is `"Lyssavirus rabies"` (species level) with `rank` set to `"family"`, the task will return the family-level information: taxon ID for *Rhabdoviridae*, name "Rhabdoviridae", and rank "family".
-                    - If your input `taxon` is `"Lyssavirus"` (genus level) with `rank` set to `"species"`, the task will fail because it cannot determine species-level information from a genus-level input.
+                    - If your input `taxon` is `"*Lyssavirus rabies*"` (species level) with `rank` set to `"family"`, the task will return the family-level information: taxon ID for Rhabdoviridae (11270), name "Rhabdoviridae", and rank "family".
+                    - If your input `taxon` is `"*Lyssavirus*"` (genus level) with `rank` set to `"species"`, the task will fail because it cannot determine species-level information from a genus-level input.
 
                 ??? techdetails "NCBI Datasets Technical Details"
                     |  | Links |
@@ -937,7 +937,7 @@ The **TheiaViral** workflows are designed for the assembly, quality assessment, 
 
                     **Examples:**
 
-                    - If your input `taxon` is `"Lyssavirus rabies"` or taxon ID `11292` (species level), the task will retrieve genomes only for that specific species, and return the genome length for that species.
+                    - If your input `taxon` is `"*Lyssavirus rabies*"` or taxon ID `11292` (species level), the task will retrieve genomes only for that specific species, and return the genome length for that species.
                     - If your input `taxon` is `"Rhabdoviridae"` or taxon ID `11270` (family level), the task will retrieve genomes for all species within that family and calculate an average genome length across all those species.
 
                     This flexibility allows users to run the workflow without requiring precise knowledge of their organism's genome length. The average genome length calculation is only used to estimate coverage levels for downsampling and minor read QC steps. The average genome length is used only to estimate coverage levels for downsampling and to guide minor read quality control steps. It does not significantly affect the quality of the consensus genome or the choice of reference sequences.
