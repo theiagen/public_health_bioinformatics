@@ -150,6 +150,7 @@ A brief description of the documentation structure is as follows:
         - `logos/` - Contains Theiagen logos and symbols used in the documentation.
         - `metadata_formatters/` - Contains the most up-to-date metadata formatters for our submission workflows.
         - `new_workflow_template.md` - A template for adding a new workflow page to the documentation. You can see this template [here](../assets/new_workflow_template.md)
+    - `common_text/` - Contains the Markdown files for common text used in the documentation. This includes task descriptions, workflow descriptions, and other common text. This is where you will put any new task descriptions or workflow descriptions that are not specific to a single workflow. This enables modular and reusable documentation.
     - `contributing/` - Contains the Markdown files for our contribution guides, such as this file
     - `javascripts/` - Contains JavaScript files used in the documentation.
         - `tablesort.js` - A JavaScript file used to enable table sorting in the documentation.
@@ -183,3 +184,12 @@ If you are adding a new workflow, there are a number of things to do in order to
      - `workflows_kingdom.md` - Add the workflow in the appropriate spot(s) based on the kingdom(s) the workflow is applicable to. Make sure it is added alphabetically within the appropriate subsection(s).
      - `workflows_type.md` - Add the workflow in the appropriate spot based on the workflow type. Make sure it is added alphabetically within the appropriate subsection.
 5. Copy the path to the workflow to ==**ALL**== of the appropriate locations in the `mkdocs.yml` file (under the `nav:` section) in the main directory of this repository. These should be the exact same spots as in the overview tables but without additional information. This ensures the workflow can be accessed from the navigation sidebar.
+
+### Macros
+
+The documentation uses a few macros to help with the formatting of the documentation. These macros are defined in `macros/main.py` and are used in the documentation files. The following macros are available:
+
+- `input_table()` - This macro is used to create a table from a TSV file. The TSV file should be in the `docs/assets/` directory and should be formatted as a table. The macro will automatically create a table from the TSV file and insert it into the documentation.
+- `include_md()` - This macro is used to include a Markdown file in the documentation. The macro will automatically adjust the heading levels, resolve relative links, and support conditional and nested includes.
+
+Please see the [macros README](https://github.com/theiagen/public_health_bioinformatics/blob/main/macros/README.md) for more information.
