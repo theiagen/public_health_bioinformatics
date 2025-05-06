@@ -153,6 +153,42 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 | clean_check_reads | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 2 | Optional | ONT, PE, SE |
 | clean_check_reads | **organism** | String | Internal component, do not modify |  | Do not modify, Optional | ONT, PE, SE |
 | clean_check_reads | **workflow_series** | String | Internal component, do not modify |  | Do not modify, Optional | ONT, PE, SE |
+| digger_denovo | **assembler** | String | Assembler to use (spades, skesa, megahit) | spades | Optional | PE, SE |
+| digger_denovo | **assembly_options** | String | String | Assembler-specific options that you might choose for the selected assembler | | Optional | PE, SE |
+| digger_denovo | **bwa_cpu** | Int | Number of CPU cores for BWA alignment | 6 | Optional | PE, SE |
+| digger_denovo | **bwa_disk_size** | Int | Disk space in GB for BWA alignment | 100 | Optional | PE, SE |
+| digger_denovo | **bwa_docker** | String | Docker image for BWA alignment | us-docker.pkg.dev/general-theiagen/staphb/ivar:1.3.1-titan | Optional | PE, SE |
+| digger_denovo | **bwa_memory** | Int | Memory in GB for BWA alignment | 16 | Optional | PE, SE |
+| digger_denovo | **filter_contigs_cpu** | Int | Number of CPU cores for contig filtering | 1 | Optional | PE, SE |
+| digger_denovo | **filter_contigs_disk_size** | Int | Disk space in GB for contig filtering | 50 | Optional | PE, SE |
+| digger_denovo | **filter_contigs_docker** | String | Docker image for contig filtering | us-docker.pkg.dev/general-theiagen/theiagen/shovilter:0.2 | Optional | PE, SE |
+| digger_denovo | **filter_contigs_memory** | Int | Memory in GB for contig filtering | 8 | Optional | PE, SE |
+| digger_denovo | **filter_contigs_min_coverage** | Float | Minimum coverage threshold for contig filtering | 2.0 | Optional | PE, SE |
+| digger_denovo | **filter_contigs_min_length** | Int | Minimum length threshold for contig filtering | 200 | Optional | PE, SE |
+| digger_denovo | **filter_contigs_skip_coverage_filter** | Boolean | Skip filtering contigs based on coverage | false | Optional | PE, SE |
+| digger_denovo | **filter_contigs_skip_homopolymer_filter** | Boolean | Skip filtering contigs containing homopolymers | false | Optional | PE, SE |
+| digger_denovo | **filter_contigs_skip_length_filter** | Boolean | Skip filtering contigs based on length | false | Optional | PE, SE |
+| digger_denovo | **kmers** | String | K-mer sizes for assembly (comma-separated) | | Optional | PE, SE |
+| digger_denovo | **megahit_cpu** | Int | Number of CPU cores for MEGAHIT assembler | 4 | Optional | PE, SE |
+| digger_denovo | **megahit_disk_size** | Int | Disk space in GB for MEGAHIT assembler | 100 | Optional | PE, SE |
+| digger_denovo | **megahit_docker** | String | Docker image for MEGAHIT assembler | us-docker.pkg.dev/general-theiagen/theiagen/megahit:1.2.9 | Optional | PE, SE |
+| digger_denovo | **megahit_memory** | Int | Memory in GB for MEGAHIT assembler | 16 | Optional | PE, SE |
+| digger_denovo | **min_contig_length** | Int | Minimum contig length to retain in final assembly | 200 | Optional | PE, SE |
+| digger_denovo | **pilon_cpu** | Int | Number of CPU cores for Pilon polishing | 8 | Optional | PE, SE |
+| digger_denovo | **pilon_disk_size** | Int | Disk space in GB for Pilon polishing | 100 | Optional | PE, SE |
+| digger_denovo | **pilon_docker** | String | Docker image for Pilon polishing | us-docker.pkg.dev/general-theiagen/biocontainers/pilon:1.24--hdfd78af_0 | Optional | PE, SE |
+| digger_denovo | **pilon_memory** | Int | Memory in GB for Pilon polishing | 32 | Optional | PE, SE |
+| digger_denovo | **run_filter_contigs** | Boolean | Whether to run contig filtering step | true | Optional | PE, SE |
+| digger_denovo | **skesa_cpu** | Int | Number of CPU cores for SKESA assembler | 4 | Optional | PE, SE |
+| digger_denovo | **skesa_disk_size** | Int | Disk space in GB for SKESA assembler | 50 | Optional | PE, SE |
+| digger_denovo | **skesa_docker** | String | Docker image for SKESA assembler | us-docker.pkg.dev/general-theiagen/staphb/skesa:2.4.0 | Optional | PE, SE |
+| digger_denovo | **skesa_memory** | Int | Memory in GB for SKESA assembler | 4 | Optional | PE, SE |
+| digger_denovo | **spades_cpu** | Int | Number of CPU cores for SPAdes assembler | 16 | Optional | PE, SE |
+| digger_denovo | **spades_disk_size** | Int | Disk space in GB for SPAdes assembler | 100 | Optional | PE, SE |
+| digger_denovo | **spades_docker** | String | Docker image for SPAdes assembler | us-docker.pkg.dev/general-theiagen/staphb/spades:4.1.0 | Optional | PE, SE |
+| digger_denovo | **spades_memory** | Int | Memory in GB for SPAdes assembler | 32 | Optional | PE, SE |
+| digger_denovo | **spades_type** | String | SPAdes assembly mode (isolate, meta, rna, etc.), more can be found [here](https://ablab.github.io/spades/running.html) | isolate | Optional | PE, SE |
+| digger_denovo | **use_pilon** | Boolean | Whether to run Pilon polishing after assembly | false | Optional | PE, SE |
 | flye_denovo | **auto_medaka_model** | Boolean | If true, medaka will automatically select the best Medaka model for assembly | TRUE | Optional | ONT |
 | flye_denovo | **bandage_cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional | ONT |
 | flye_denovo | **bandage_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 10 | Optional | ONT |
@@ -519,33 +555,6 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 | resfinder_task | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | FASTA, ONT, PE, SE |
 | resfinder_task | **min_percent_coverage** | Float | Minimum coverage breadth of a gene for it to be identified | 0.5 | Optional | FASTA, ONT, PE, SE |
 | resfinder_task | **min_percent_identity** | Float | Minimum identity for ResFinder to identify a gene | 0.9 | Optional | FASTA, ONT, PE, SE |
-| shovill_pe | **assembler** | String | Assembler to use (spades, skesa, velvet or megahit), see <https://github.com/tseemann/shovill#--assembler> | skesa | Optional | PE |
-| shovill_pe | **assembler_options** | String | Assembler-specific options that you might choose, see <https://github.com/tseemann/shovill#--opts> |  | Optional | PE |
-| shovill_pe | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional | PE |
-| shovill_pe | **depth** | Int | User specified depth of coverage for downsampling (see <https://github.com/tseemann/shovill#--depth> and <https://github.com/tseemann/shovill#main-steps>) | 150 | Optional | PE |
-| shovill_pe | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | PE |
-| shovill_pe | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/shovill:1.1.0 | Optional | PE |
-| shovill_pe | **kmers** | String | User-specified Kmer length to override choice made by Shovill, see <https://github.com/tseemann/shovill#--kmers> | Auto | Optional | PE |
-| shovill_pe | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 16 | Optional | PE |
-| shovill_pe | **min_contig_length** | Int | Minimum contig length to keep in final assembly  | 200 | Optional | PE |
-| shovill_pe | **min_coverage** | Float | Minimum contig coverage to keep in final assembly | 2 | Optional | PE |
-| shovill_pe | **nocorr** | Boolean | Disable correction of minor assembly errors by Shovill (see <https://github.com/tseemann/shovill#main-steps>) | FALSE | Optional | PE |
-| shovill_pe | **noreadcorr** | Boolean | Disable correction of sequencing errors in reads by Shovill (see <https://github.com/tseemann/shovill#main-steps>) | FALSE | Optional | PE |
-| shovill_pe | **nostitch** | Boolean | Disable read stitching by Shovill (see <https://github.com/tseemann/shovill#main-steps>) | FALSE | Optional | PE |
-| shovill_pe | **trim** | Boolean | Enable adaptor trimming (see <https://github.com/tseemann/shovill#main-steps>) | FALSE | Optional | PE |
-| shovill_se | **assembler** | String | Assembler to use (spades, skesa, velvet or megahit), see <https://github.com/tseemann/shovill#--assembler> | skesa | Optional | SE |
-| shovill_se | **assembler_options** | String | Assembler-specific options that you might choose, see <https://github.com/tseemann/shovill#--opts> |  | Optional | SE |
-| shovill_se | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional | SE |
-| shovill_se | **depth** | Int | User specified depth of coverage for downsampling (see <https://github.com/tseemann/shovill#--depth> and <https://github.com/tseemann/shovill#main-steps>) | 150 | Optional | SE |
-| shovill_se | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | SE |
-| shovill_se | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/shovill:1.1.0 | Optional | SE |
-| shovill_se | **kmers** | String | User-specified Kmer length to override choice made by Shovill, see <https://github.com/tseemann/shovill#--kmers> | auto | Optional | SE |
-| shovill_se | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 16 | Optional | SE |
-| shovill_se | **min_contig_length** | Int | Minimum contig length to keep in final assembly  | 200 | Optional | SE |
-| shovill_se | **min_coverage** | Float | Minimum contig coverage to keep in final assembly | 2 | Optional | SE |
-| shovill_se | **nocorr** | Boolean | Disable correction of minor assembly errors by Shovill (see <https://github.com/tseemann/shovill#main-steps>) | FALSE | Optional | SE |
-| shovill_se | **noreadcorr** | Boolean | Disable correction of sequencing errors in reads by Shovill (see <https://github.com/tseemann/shovill#main-steps>) | FALSE | Optional | SE |
-| shovill_se | **trim** | Boolean | Enable adaptor trimming (see <https://github.com/tseemann/shovill#main-steps>) | FALSE | Optional | SE |
 | ts_mlst | **cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional | FASTA, ONT, PE, SE |
 | ts_mlst | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 50 | Optional | FASTA, ONT, PE, SE |
 | ts_mlst | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/mlst:2.23.0-2024-12-31 | Optional | FASTA, ONT, PE, SE |
@@ -733,21 +742,20 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
         | Software Documentation | [CG-Pipeline on GitHub](https://github.com/lskatz/CG-Pipeline/) |
         | Original Publication(s) | [A computational genomics pipeline for prokaryotic sequencing projects](https://academic.oup.com/bioinformatics/article/26/15/1819/188418) |
 
-??? task "`shovill`: _De novo_ Assembly"
+??? task "`digger_denovo`: _De novo_ Assembly"
 
     De Novo assembly will be undertaken only for samples that have sufficient read quantity and quality, as determined by the `screen` task assessment of clean reads. 
 
-    In TheiaProk, assembly is performed using the [Shovill](https://github.com/tseemann/shovill) pipeline. This undertakes the assembly with one of four assemblers ([SKESA](https://github.com/ncbi/SKESA) (default), [SPAdes](https://github.com/ablab/spades), [Velvet](https://github.com/dzerbino/velvet/), [Megahit](https://github.com/voutcn/megahit)), but also performs [a number of pre- and post-processing steps](https://github.com/tseemann/shovill#main-steps) to improve the resulting genome assembly. Shovill uses an estimated genome size (see [here](https://github.com/tseemann/shovill#--gsize)). If this is not provided by the user as an optional input, Shovill will estimate the genome size using [mash](https://mash.readthedocs.io/en/latest/index.html). Adaptor trimming can be undertaken with Shovill by setting the `trim` option to "true", but this is set to "false" by default as alternative adapter trimming performed by bbduk is undertaken in the TheiaProk workflow.
-
+    In TheiaProk, assembly is performed using the [digger_denovo](https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_digger_denovo.wdl), which is a hat tip to [Shovill](https://github.com/tseemann/shovill) pipeline. This undertakes the assembly with one of three assemblers [SPAdes](https://github.com/ablab/spades) (default), ([SKESA](https://github.com/ncbi/SKESA), [Megahit](https://github.com/voutcn/megahit)), but also performs a number of post processing steps for assembly polishing and contig filtering. Pilon can optionally be run if `use_pilon` is set to true. On defualt, the contig filtering task is set to run, which will remove any homopolymers, contigs below a specificied length, and contigs with coverage below a specified minimum coverage. This can be turned off by setting `run_filter_contigs` to `false`. 
+    
     ??? toggle "What is _de novo_  assembly?"
         _De novo_  assembly is the process or product of attempting to reconstruct a genome from scratch (without prior knowledge of the genome) using sequence reads. Assembly of fungal genomes from short-reads will produce multiple contigs per chromosome rather than a single contiguous sequence for each chromosome.
         
-    !!! techdetails "Shovill Technical Details"
+    !!! techdetails "Digger-Denovo Technical Details"
         |  | Links |
         | --- | --- |
-        | TheiaEuk WDL Task | [task_shovill.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_shovill.wdl#L3) |
-        | Software Source Code | [Shovill on GitHub](https://github.com/tseemann/shovill) |
-        | Software Documentation | [Shovill on GitHub](https://github.com/tseemann/shovill) |
+        | TheiaEuk WDL SubWorkflow | [wf_digger_denovo.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_digger_denovo.wd) |
+        | Software Source Code | [digger_denovo on GitHub](https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_digger_denovo.wd) |
 
 #### ONT Data Core Tasks
 
@@ -1860,8 +1868,10 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
 | ani_mummer_version | String | Version of MUMmer used | FASTA, ONT, PE, SE |
 | ani_output_tsv | File | Full output TSV from ani-m | FASTA, ONT, PE, SE |
 | ani_top_species_match | String | Species of genome with highest ANI to query FASTA | FASTA, ONT, PE, SE |
-| assembly_fasta | File | Fasta file outputted from Flye or Shovill | ONT, PE, SE |
+| assembly_fasta | File | Fasta file outputted from Flye or digger_denovo (Spades, SKEKA, or Megahit) | ONT, PE, SE |
 | assembly_length | Int | Length of assembly (total contig length) as determined by QUAST | FASTA, ONT, PE, SE |
+| assembler | String | Assembler used in digger_denovo subworkflow | PE, SE | 
+| assembler_version | String | Version of the assembler used | PE, SE |
 | bakta_gbff | File | Genomic GenBank format annotation file | FASTA, ONT, PE, SE |
 | bakta_gff3 | File | Generic Feature Format Version 3 file | FASTA, ONT, PE, SE |
 | bakta_plot | File | Bakta plot output PNG file summarizing annotated genome features such as coding sequences, RNA genes, and hypothetical proteins. | FASTA, ONT, PE, SE |
@@ -2146,8 +2156,6 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
 | shigeifinder_serotype_reads | String | Serotype predicted by ShigEiFinder using read files as inputs | PE, SE |
 | shigeifinder_version | String | ShigEiFinder version used | FASTA, ONT, PE, SE |
 | shigeifinder_version_reads | String | ShigEiFinder version used using read files as inputs | PE, SE |
-| shovill_pe_version | String | Shovill version used | PE |
-| shovill_se_version | String | Shovill version used | SE |
 | sistr_allele_fasta | File | FASTA file of novel cgMLST alleles from SISTR | FASTA, ONT, PE, SE |
 | sistr_allele_json | File | JSON file of cgMLST allele sequences and information (see <https://github.com/phac-nml/sistr_cmd#cgmlst-allele-search-results>) | FASTA, ONT, PE, SE |
 | sistr_antigenic_formula | String | A field that aggregates the O, H1, and H2, antigen values in a single location for convenience | FASTA, ONT, PE, SE |
