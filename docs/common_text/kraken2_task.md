@@ -1,0 +1,27 @@
+<!-- if: theiaprok -->
+??? task "Read Identification with Kraken2 (optional)"
+<!-- endif -->
+<!-- if: theiacov|freyja -->
+??? task "Read Identification with Kraken2"
+<!-- endif -->
+    `Kraken2` is a bioinformatics tool originally designed for metagenomic applications. It has additionally proven valuable for validating taxonomic assignments and checking contamination of single-species (e.g. bacterial isolate, eukaryotic isolate, viral isolate, etc.) whole genome sequence data.
+
+<!-- if: theiacov|freyja -->
+    Kraken2 is run on both the raw and clean reads.
+
+    !!! info "Database-dependent"
+        This workflow automatically uses a viral-specific Kraken2 database. This database was generated in-house from RefSeq's viral sequence collection and human genome GRCh38. It's available at `gs://theiagen-large-public-files-rp/terra/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz`.
+<!-- endif -->
+  
+<!-- if: theiaprok -->
+    As an alternative to `MIDAS` (see above), the `Kraken2` task can also be turned on through setting the `call_kraken` input variable as `true` for the identification of reads to detect contamination with non-target taxa.
+
+    A database must be provided if this optional module is activated, through the kraken_db optional input. A list of suggested databases can be found on [Kraken2 standalone documentation](../standalone/kraken2.md#databases).
+<!-- endif -->
+
+    !!! techdetails "Kraken2 Technical Details"
+        |  | Links |
+        | --- | --- |
+        | Software Source Code | [Kraken2 on GitHub](https://github.com/DerrickWood/kraken2/)  |
+        | Software Documentation | <https://github.com/DerrickWood/kraken2/blob/master/docs/MANUAL.markdown> |
+        | Original Publication(s) | [Improved metagenomic analysis with Kraken 2](https://link.springer.com/article/10.1186/s13059-019-1891-0) |

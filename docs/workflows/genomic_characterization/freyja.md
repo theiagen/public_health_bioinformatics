@@ -72,7 +72,7 @@ We recommend running this workflow with **"Run inputs defined by file paths"** s
 
 /// html | div[class="searchable-table"]
 
-{{ input_table("docs/assets/input_tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="Freyja_Update", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"]) }}
+{{ input_table("docs/assets/tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="Freyja_Update", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"]) }}
 
 ///
 
@@ -101,21 +101,21 @@ This workflow runs on the sample level.
 === "Illumina paired-end input data"
     /// html | div[class="searchable-table"]
 
-    {{ input_table("docs/assets/input_tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="Freyja_FASTQ (PE)", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=4) }}
+    {{ input_table("docs/assets/tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="Freyja_FASTQ (PE)", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=4) }}
 
     ///
 
 === "Illumina single-end input data"
     /// html | div[class="searchable-table"]
 
-    {{ input_table("docs/assets/input_tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="Freyja_FASTQ (SE)", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=4) }}
+    {{ input_table("docs/assets/tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="Freyja_FASTQ (SE)", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=4) }}
     
     ///
 
 === "ONT input data"
     /// html | div[class="searchable-table"]
 
-    {{ input_table("docs/assets/input_tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="Freyja_FASTQ (ONT)", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=4) }}
+    {{ input_table("docs/assets/tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="Freyja_FASTQ (ONT)", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=4) }}
     
     ///
 
@@ -123,43 +123,19 @@ This workflow runs on the sample level.
 
 === "Illumina paired-end input data"
 
-    ??? task "`read_QC_trim_pe` Details"
-        This task runs a sub-workflow that gathers basic QC information, trimming (either with trimmomatic or fastp), human read scrubbing, and taxonomic identification (Kraken2). Optional parameters do not need to be modified. For information regarding the individual tasks performed during this, please visit the [TheiaCoV documentation](../genomic_characterization/theiacov.md).
-
-        !!! techdetails "Read_QC_Trim_PE Technical Details"
-
-            |  | Links |
-            | --- | --- |
-            | Task | [wf_read_QC_trim_pe.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_read_QC_trim_pe.wdl) |
-
+{{ include_md("common_text/read_qc_trim_illumina.md", indent=4, condition="freyja") }}
 {{ include_md("common_text/bwa.md", indent=4) }}
-
 {{ include_md("common_text/primer_trim.md", indent=4) }}
 
 === "Illumina single-end input data"
-    ??? task "`read_QC_trim_se` Details"
-        This task runs a sub-workflow that gathers basic QC information, trimming (either with trimmomatic or fastp), human read scrubbing, and taxonomic identification (Kraken2). Optional parameters do not need to be modified. For information regarding the individual tasks performed during this, please visit the [TheiaCoV documentation](../genomic_characterization/theiacov.md).
 
-        !!! techdetails "Read_QC_Trim_SE Technical Details"
-
-            |  | Links |
-            | --- | --- |
-            | Task | [wf_read_QC_trim_se.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_read_QC_trim_se.wdl) |
-
+{{ include_md("common_text/read_qc_trim_illumina.md", indent=4, condition="freyja") }}
 {{ include_md("common_text/bwa.md", indent=4) }}
-
 {{ include_md("common_text/primer_trim.md", indent=4) }}
 
 === "ONT input data"
 
-    ??? task "`read_QC_trim_ont` Details"
-        This task runs a sub-workflow that gathers basic QC information, trimming (nanoplot), human read scrubbing, and taxonomic identification (Kraken2). Optional parameters do not need to be modified. For information regarding the individual tasks performed during this, please visit the [TheiaCoV documentation](../genomic_characterization/theiacov.md).
-
-        !!! techdetails "Read_QC_Trim_ONT Technical Details"
-        
-            |  | Links |
-            | --- | --- |
-            | Task | [wf_read_QC_trim_ont.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_read_QC_trim_ont.wdl) |
+{{ include_md("common_text/read_qc_trim_ont.md", indent=4, condition="freyja") }}
 
     ??? task "`minimap2` Details"
         This task aligns the cleaned long reads (Oxford Nanopore) to the reference genome provided by the user.
@@ -169,8 +145,8 @@ This workflow runs on the sample level.
             |  | Links |
             | --- | --- |
             | Task | [task_minimap2.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/alignment/task_minimap2.wdl) |
-            | Software Source Code | https://github.com/lh3/minimap2 |
-            | Software Documentation | https://lh3.github.io/minimap2/ |
+            | Software Source Code | <https://github.com/lh3/minimap2> |
+            | Software Documentation | <https://lh3.github.io/minimap2/> |
             | Original Publication(s) | [Minimap2: pairwise alignment for nucleotide sequences](https://doi.org/10.1093/bioinformatics/bty191) |
 
 ??? task "`freyja` Details"
@@ -181,8 +157,8 @@ This workflow runs on the sample level.
         |  | Links |
         | --- | --- |
         | Task | [task_freyja_one_sample.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/freyja/task_freyja.wdl) |
-        | Software Source Code | https://github.com/andersen-lab/Freyja |
-        | Software Documentation | https://andersen-lab.github.io/Freyja/index.html# |
+        | Software Source Code | <https://github.com/andersen-lab/Freyja> |
+        | Software Documentation | <https://andersen-lab.github.io/Freyja/index.html#> |
 
 #### Outputs
 
@@ -238,7 +214,7 @@ This workflow runs on the set level.
 
 /// html | div[class="searchable-table"]
 
-{{ input_table("docs/assets/input_tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="Freyja_Plot", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"]) }}
+{{ input_table("docs/assets/tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="Freyja_Plot", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"]) }}
 
 ///
 
@@ -252,8 +228,8 @@ This workflow runs on the set level.
         |  | Links |
         | --- | --- |
         | Task | [wf_freyja_plot.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/freyja/task_freyja_plot.wdl) |
-        | Software Source Code | https://github.com/andersen-lab/Freyja |
-        | Software Documentation | https://github.com/andersen-lab/Freyja |
+        | Software Source Code | <https://github.com/andersen-lab/Freyja> |
+        | Software Documentation | <https://github.com/andersen-lab/Freyja> |
 
 #### Outputs
 
@@ -277,7 +253,7 @@ This workflow runs on the set level.
 
 /// html | div[class="searchable-table"]
 
-{{ input_table("docs/assets/input_tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="Freyja_Dashboard", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"]) }}
+{{ input_table("docs/assets/tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="Freyja_Dashboard", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"]) }}
 
 ///
 
@@ -292,8 +268,8 @@ This workflow runs on the set level.
         |  | Links |
         | --- | --- |
         | Task | [wf_freyja_dashboard.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/freyja/task_freyja_dashboard.wdl) |
-        | Software Source Code | https://github.com/andersen-lab/Freyja |
-        | Software Documentation | https://github.com/andersen-lab/Freyja |
+        | Software Source Code | <https://github.com/andersen-lab/Freyja> |
+        | Software Documentation | <https://github.com/andersen-lab/Freyja> |
 
 #### Outputs
 

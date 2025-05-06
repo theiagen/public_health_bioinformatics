@@ -1,21 +1,9 @@
 ??? task "`read_QC_trim`: Read Quality Trimming, Adapter Removal, Quantification, and Identification"
 
-    `read_QC_trim` is a sub-workflow that removes low-quality reads, low-quality regions of reads, and sequencing adapters to improve data quality. It uses a number of tasks, described below. The differences between the PE and SE version of the `read_QC_trim` sub-workflow lie in the default parameters, the use of two or one input read file(s), and the different output files.
+    `read_QC_trim` is a sub-workflow that removes low-quality reads, low-quality regions of reads, and sequencing adapters to improve data quality. It uses a number of tasks, described below. The differences between the PE and SE versions of the `read_QC_trim` sub-workflow lie in the default parameters, the use of two or one input read file(s), and the different output files.
 
-<!-- if: theiacov -->
-    ??? toggle "Host removal"
-    
-        All reads of human origin **are removed**, including their mates, by using NCBI's [**human read removal tool (HRRT)**](https://github.com/ncbi/sra-human-scrubber). 
-
-        HRRT is based on the [SRA Taxonomy Analysis Tool](https://doi.org/10.1186/s13059-021-02490-0) and employs a k-mer database constructed of k-mers from Eukaryota derived from all human RefSeq records with any k-mers found in non-Eukaryota RefSeq records subtracted from the database.
-
-        !!! techdetails "NCBI-Scrub Technical Details"
-            
-            |  | Links |
-            | --- | --- |
-            | Task | [task_ncbi_scrub.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_ncbi_scrub.wdl) |
-            | Software Source Code | [NCBI Scrub on GitHub](https://github.com/ncbi/sra-human-scrubber) |
-            | Software Documentation | <https://github.com/ncbi/sra-human-scrubber/blob/master/README.md> |
+<!-- if: theiacov|freyja -->
+{{ include_md("common_text/ncbi_scrub.md", indent=4)}}
 <!-- endif -->
 
     ??? toggle "Read quality trimming"
@@ -26,10 +14,10 @@
 
         | **Parameter** | **Explanation** |
         | --- | --- |
-        | -g | enables polyG tail trimming |
-        | -5 20 | enables read end-trimming |
-        | -3 20 | enables read end-trimming |
-        | --detect_adapter_for_pe | enables adapter-trimming **only for paired-end reads** |
+        | `-g` | enables polyG tail trimming |
+        | `-5 20` | enables read end-trimming |
+        | `-3 20` | enables read end-trimming |
+        | `--detect_adapter_for_pe` | enables adapter-trimming **only for paired-end reads** |
 
     ??? toggle "Adapter removal"
 
@@ -46,38 +34,7 @@
         There are two methods for read quantification to choose from: [`fastq-scan`](https://github.com/rpetit3/fastq-scan) (default) or [`fastqc`](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/). Both quantify the forward and reverse reads in FASTQ files. For paired-end data, they also provide the total number of read pairs. This task is run once with raw reads as input and once with clean reads as input. If QC has been performed correctly, you should expect **fewer** clean reads than raw reads. `fastqc` also provides a graphical visualization of the read quality.
 
 <!-- if: theiaprok -->
-    ??? toggle "Read Identification (optional)"
-<!-- endif -->
-<!-- if: theiacov -->
-    ??? toggle "Read Identification"
-<!-- endif -->
-        Kraken2 is a bioinformatics tool originally designed for metagenomic applications. It has additionally proven valuable for validating taxonomic assignments and checking contamination of single-species (e.g. bacterial isolate, eukaryotic isolate, viral isolate, etc.) whole genome sequence data.
-
-<!-- if: theiacov -->
-        Kraken2 is run on the set of raw reads, provided as input, as well as the set of clean reads that are resulted from the `read_QC_trim` workflow
-        
-        !!! info "Database-dependent"
-            TheiaCoV automatically uses a viral-specific Kraken2 database. This database was generated in-house from RefSeq's viral sequence collection and human genome GRCh38. It's available at `gs://theiagen-large-public-files-rp/terra/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz`
-<!-- endif -->
-<!-- if: theiaprok -->
-        As an alternative to `MIDAS` (see below), the `Kraken2` task can also be turned on through setting the `call_kraken` input variable as `true` for the identification of reads to detect contamination with non-target taxa.
-        
-        A database must be provided if this optional module is activated, through the kraken_db optional input. A list of suggested databases can be found on [Kraken2 standalone documentation](../standalone/kraken2.md).
-<!-- endif -->
-
-        !!! techdetails "Kraken2 Technical Details"    
-            
-            |  | Links |
-            | --- | --- |
-            | Task | [task_kraken2.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/contamination/task_kraken2.wdl) |
-            | Software Source Code | [Kraken2 on GitHub](https://github.com/DerrickWood/kraken2/) |
-            | Software Documentation | <https://github.com/DerrickWood/kraken2/wiki> |
-            | Original Publication(s) | [Improved metagenomic analysis with Kraken 2](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1891-0) |
-<!-- endif -->
-
-<!-- if: theiaprok -->
-    ??? toggle "Read Identification (optional)"
-
+    ??? toggle "Read Identification with MIDAS (optional)"
         The `MIDAS` task is for the identification of reads to detect contamination with non-target taxa. This task is optional and turned off by default. It can be used by setting the `call_midas` input variable to `true`.
 
         The MIDAS tool was originally designed for metagenomic sequencing data but has been co-opted for use with bacterial isolate WGS methods. It can be used to detect contamination present in raw sequencing data by estimating bacterial species abundance in bacterial isolate WGS data. If a secondary genus is detected above a relative frequency of 0.01 (1%), then the sample should fail QC and be investigated further for potential contamination.
@@ -109,33 +66,32 @@
 
         The **MIDAS reference database** is a comprehensive tool for identifying bacterial species in metagenomic and bacterial isolate WGS data. It includes several layers of genomic data, helping detect species abundance and potential contaminants.
 
-        **Key Components of the MIDAS Database**
+        !!! dna "Key Components of the MIDAS Database"
+            1. **Species Groups**: 
+                - MIDAS clusters bacterial genomes based on 96.5% sequence identity, forming over 5,950 species groups from 31,007 genomes. These groups align with the gold-standard species definition (95% ANI), ensuring highly accurate species identification.
 
-        1. **Species Groups**: 
-        - MIDAS clusters bacterial genomes based on 96.5% sequence identity, forming over 5,950 species groups from 31,007 genomes. These groups align with the gold-standard species definition (95% ANI), ensuring highly accurate species identification.
+            2. **Genomic Data Structure**:
+                - _Marker Genes_: Contains 15 universal single-copy genes used to estimate species abundance.
+                - _Representative Genome_: Each species group has a selected representative genome, which minimizes genetic variation and aids in accurate SNP identification.
+                - _Pan-genome_: The database includes clusters of non-redundant genes, with options for multi-level clustering (e.g., 99%, 95%, 90% identity), enabling MIDAS to identify gene content within strains at various clustering thresholds.
 
-        1. **Genomic Data Structure**:
-        - **Marker Genes**: Contains 15 universal single-copy genes used to estimate species abundance.
-        - **Representative Genome**: Each species group has a selected representative genome, which minimizes genetic variation and aids in accurate SNP identification.
-        - **Pan-genome**: The database includes clusters of non-redundant genes, with options for multi-level clustering (e.g., 99%, 95%, 90% identity), enabling MIDAS to identify gene content within strains at various clustering thresholds.
-
-        1. **Taxonomic Annotation**: 
-        - Genomes are annotated based on consensus Latin names. Discrepancies in name assignments may occur due to factors like unclassified genomes or genus-level ambiguities.
+            3. **Taxonomic Annotation**: 
+                - Genomes are annotated based on consensus Latin names. Discrepancies in name assignments may occur due to factors like unclassified genomes or genus-level ambiguities.
 
         ---
 
         **Using the Default MIDAS Database**
 
-        TheiaProk uses the pre-loaded MIDAS database in Terra (see input table for current version) by default for bacterial species detection in metagenomic data, requiring no additional setup.
+        TheiaProk and TheiaEuk use the pre-loaded MIDAS database in Terra (see input table for current version) by default for bacterial species detection in metagenomic data, requiring no additional setup.
 
-        **How to Set Up the Default MIDAS Database**
+        !!! tip "Create a Custom MIDAS Database"
+            Users can also build their own custom MIDAS database if they want to include specific genomes or configurations. This custom database can replace the default MIDAS database used in Terra. To build a custom MIDAS database, follow the [MIDAS GitHub guide on building a custom database](https://github.com/snayfach/MIDAS/blob/master/docs/build_db.md). Once the database is built, users can upload it to a Google Cloud Storage bucket or Terra workkspace and provide the link to the database in the `midas_db` input variable.
 
-        Users can also build their own custom MIDAS database if they want to include specific genomes or configurations. This custom database can replace the default MIDAS database used in Terra. To build a custom MIDAS database, follow the [MIDAS GitHub guide on building a custom database](https://github.com/snayfach/MIDAS/blob/master/docs/build_db.md). Once the database is built, users can upload it to a Google Cloud Storage bucket or Terra workkspace and provide the link to the database in the `midas_db` input variable.
-<!-- -->
-   
+        ---
+<!-- endif -->
+{{ include_md("common_text/kraken2_task.md", indent=4, replacements={"??? task": "??? toggle"}) }}
 
     !!! techdetails "read_QC_trim Technical Details"
-                
         |  | Links |
         | --- | --- |
         | Sub-workflow | [wf_read_QC_trim_pe.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_read_QC_trim_pe.wdl)<br>[wf_read_QC_trim_se.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_read_QC_trim_se.wdl) |

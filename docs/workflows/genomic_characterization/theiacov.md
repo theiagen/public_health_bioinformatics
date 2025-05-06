@@ -117,37 +117,37 @@ We've provided the following information to help you set up the workflow for eac
     === "TheiaCoV_Illumina_PE"
         /// html | div[class="searchable-table"]
 
-        {{ input_table("docs/assets/input_tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="TheiaCoV_Illumina_PE", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status", "Organism"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
+        {{ input_table("docs/assets/tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="TheiaCoV_Illumina_PE", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status", "Organism"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
         ///
 
     === "TheiaCoV_Illumina_SE"
         /// html | div[class="searchable-table"]
 
-        {{ input_table("docs/assets/input_tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="TheiaCoV_Illumina_SE", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status", "Organism"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
+        {{ input_table("docs/assets/tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="TheiaCoV_Illumina_SE", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status", "Organism"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
         ///
 
     === "TheiaCoV_ONT"
         /// html | div[class="searchable-table"]
 
-        {{ input_table("docs/assets/input_tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="TheiaCoV_ONT", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status", "Organism"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
+        {{ input_table("docs/assets/tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="TheiaCoV_ONT", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status", "Organism"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
         ///
 
     === "TheiaCoV_FASTA"
         /// html | div[class="searchable-table"]
 
-        {{ input_table("docs/assets/input_tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="TheiaCoV_FASTA", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status", "Organism"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
+        {{ input_table("docs/assets/tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="TheiaCoV_FASTA", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status", "Organism"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
         ///
 
     === "TheiaCoV_ClearLabs"
         /// html | div[class="searchable-table"]
 
-        {{ input_table("docs/assets/input_tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="TheiaCoV_ClearLabs", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status", "Organism"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
+        {{ input_table("docs/assets/tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="TheiaCoV_ClearLabs", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status", "Organism"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
         ///
 
     === "TheiaCoV_FASTA_Batch"
         /// html | div[class="searchable-table"]
 
-        {{ input_table("docs/assets/input_tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="TheiaCoV_FASTA_Batch", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
+        {{ input_table("docs/assets/tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="TheiaCoV_FASTA_Batch", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
         ///
 
 ### Organism-specific parameters and logic {% raw %} {#org-specific} {% endraw %}
@@ -310,196 +310,19 @@ All input reads are processed through "core tasks" in the TheiaCoV Illumina, ONT
 !!! tip ""
     These tasks are performed regardless of organism, and perform read trimming and various quality control steps.
 
-??? task "`versioning`: Version capture for TheiaCoV"
+{{ include_md("common_text/versioning_task.md") }}
 
-    The `versioning` task captures the workflow version from the GitHub (code repository) version.
-        
-    !!! techdetails "Version Capture Technical details"
-        
-        |  | Links |
-        | --- | --- |
-        | Task | [task_versioning.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/task_versioning.wdl) |
+!!! caption ""
+    === "TheiaCoV_Illumina_PE"
+{{ include_md("common_text/read_qc_trim_illumina.md", condition="theiacov", indent=8) }}
 
-??? task "`screen`: Total Raw Read Quantification and Genome Size Estimation"
+    === "TheiaCoV_Illumina_SE"
+{{ include_md("common_text/read_qc_trim_illumina.md", condition="theiacov", indent=8) }}
 
-    The [`screen`](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/comparisons/task_screen.wdl) task ensures the quantity of sequence data is sufficient to undertake genomic analysis. It uses [`fastq-scan`](https://github.com/rpetit3/fastq-scan) and bash commands for quantification of reads and base pairs, and [mash](https://mash.readthedocs.io/en/latest/index.html) sketching to estimate the genome size and its coverage. At each step, the results are assessed relative to pass/fail criteria and thresholds that may be defined by optional user inputs. Samples are run through all threshold checks, regardless of failures, and the workflow will terminate after the `screen` task if any thresholds are not met:
+    === "TheiaCoV_ONT"
+{{ include_md("common_text/read_qc_trim_ont.md", condition="theiacov", indent=8) }}
 
-    1. Total number of reads: A sample will fail the read screening task if its total number of reads is less than or equal to `min_reads`.
-    2. The proportion of basepairs reads in the forward and reverse read files: A sample will fail the read screening if fewer than `min_proportion` basepairs are in either the reads1 or read2 files.
-    3. Number of basepairs: A sample will fail the read screening if there are fewer than `min_basepairs` basepairs
-    4. Estimated genome size:  A sample will fail the read screening if the estimated genome size is smaller than `min_genome_size` or bigger than `max_genome_size`.
-    5. Estimated genome coverage: A sample will fail the read screening if the estimated genome coverage is less than the `min_coverage`.
-
-    Read screening is undertaken on both the raw and cleaned reads. The task may be skipped by setting the `skip_screen` variable to true.
-
-    Default values vary between the PE and SE workflow. The rationale for these default values can be found below.
-    
-    | Variable  | Rationale |
-    | --- | --- |
-    | `skip_screen` | Set to true to skip the read screen from running |
-    | `min_reads` | Minimum number of base pairs for 10x coverage of the Hepatitis delta (of the *Deltavirus* genus) virus divided by 300 (longest Illumina read length) |
-    | `min_basepairs` | Greater than 10x coverage of the Hepatitis delta (of the *Deltavirus* genus) virus |
-    | `min_genome_size` | Based on the Hepatitis delta (of the *Deltavirus* genus) genome- the smallest viral genome as of 2024-04-11 (1,700 bp) |
-    | `max_genome_size` | Based on the *Pandoravirus salinus* genome, the biggest viral genome, (2,673,870 bp) with 2 Mbp added |
-    | `min_coverage` | A bare-minimum coverage for genome characterization. Higher coverage would be required for high-quality phylogenetics. |
-    | `min_proportion` | Greater than 50% reads are in the read1 file; others are in the read2 file |
-
-    !!! techdetails "Screen Technical Details"
-        
-        There is a single WDL task for read screening. The `screen` task is run twice, once for raw reads and once for clean reads.
-        
-        |  | Links |
-        | --- | --- |
-        | Task | [task_screen.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/comparisons/task_screen.wdl)  |
-
-??? task "`read_QC_trim_pe` and `read_QC_trim_se`: Read Quality Trimming, Host and Adapter Removal, Quantification, and Identification ==_for Illumina workflows_=="
-
-    `read_QC_trim` is a sub-workflow within TheiaCoV that removes low-quality reads, low-quality regions of reads, and sequencing adapters to improve data quality. It uses a number of tasks, described below. The differences between TheiaCoV PE and SE in the `read_QC_trim` sub-workflow lie in the default parameters, the use of two or one input read file(s), and the different output files.
-
-    ??? toggle "Host removal"
-    
-        All reads of human origin **are removed**, including their mates, by using NCBI's [**human read removal tool (HRRT)**](https://github.com/ncbi/sra-human-scrubber). 
-
-        HRRT is based on the [SRA Taxonomy Analysis Tool](https://doi.org/10.1186/s13059-021-02490-0) and employs a k-mer database constructed of k-mers from Eukaryota derived from all human RefSeq records with any k-mers found in non-Eukaryota RefSeq records subtracted from the database.
-
-        !!! techdetails "NCBI-Scrub Technical Details"
-            
-            |  | Links |
-            | --- | --- |
-            | Task | [task_ncbi_scrub.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_ncbi_scrub.wdl) |
-            | Software Source Code | [NCBI Scrub on GitHub](https://github.com/ncbi/sra-human-scrubber) |
-            | Software Documentation | <https://github.com/ncbi/sra-human-scrubber/blob/master/README.md> |
-
-    ??? toggle "Read quality trimming"
-
-        Either `trimmomatic` or `fastp` can be used for read-quality trimming. Trimmomatic is used by default. Both tools trim low-quality regions of reads with a sliding window (with a window size of `trim_window_size`), cutting once the average quality within the window falls below `trim_quality_trim_score`. They will both discard the read if it is trimmed below `trim_minlen`. 
-
-        If fastp is selected for analysis, fastp also implements the additional read-trimming steps indicated below:
-
-        | **Parameter** | **Explanation** |
-        | --- | --- |
-        | -g | enables polyG tail trimming |
-        | -5 20 | enables read end-trimming |
-        | -3 20 | enables read end-trimming |
-        | --detect_adapter_for_pe | enables adapter-trimming **only for paired-end reads** |
-
-    ??? toggle "Adapter removal"
-
-        The `BBDuk` task removes adapters from sequence reads. To do this:
-
-        - [Repair](https://jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/repair-guide/) from the [BBTools](https://jgi.doe.gov/data-and-tools/software-tools/bbtools/) package reorders reads in paired fastq files to ensure the forward and reverse reads of a pair are in the same position in the two fastq files.
-        - [BBDuk](https://jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/bbduk-guide/)  (*"Bestus Bioinformaticus" Decontamination Using Kmers*) is then used to trim the adapters and filter out all reads that have a 31-mer match to [PhiX](https://emea.illumina.com/products/by-type/sequencing-kits/cluster-gen-sequencing-reagents/phix-control-v3.html), which is commonly added to Illumina sequencing runs to monitor and/or improve overall run quality.
-        
-        ??? toggle "What are adapters and why do they need to be removed?"
-            Adapters are manufactured oligonucleotide sequences attached to DNA fragments during the library preparation process. In Illumina sequencing, these adapter sequences are required for attaching reads to flow cells. You can read more about Illumina adapters [here](https://emea.support.illumina.com/bulletins/2020/06/illumina-adapter-portfolio.html). For genome analysis, it's important to remove these sequences since they're not actually from your sample. If you don't remove them, the downstream analysis may be affected.
-
-    ??? toggle "Read Quantification"
-
-        There are two methods for read quantification to choose from: [`fastq-scan`](https://github.com/rpetit3/fastq-scan) (default) or [`fastqc`](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/). Both quantify the forward and reverse reads in FASTQ files. In TheiaProk_Illumina_PE, they also provide the total number of read pairs. This task is run once with raw reads as input and once with clean reads as input. If QC has been performed correctly, you should expect **fewer** clean reads than raw reads. `fastqc` also provides a graphical visualization of the read quality.
-
-    ??? toggle "Read Identification"
-    
-        Kraken2 is a bioinformatics tool originally designed for metagenomic applications. It has additionally proven valuable for validating taxonomic assignments and checking contamination of single-species (e.g. bacterial isolate, eukaryotic isolate, viral isolate, etc.) whole genome sequence data.
-
-        Kraken2 is run on the set of raw reads, provided as input, as well as the set of clean reads that are resulted from the `read_QC_trim` workflow
-
-        !!! info "Database-dependent"
-            TheiaCoV automatically uses a viral-specific Kraken2 database. This database was generated in-house from RefSeq's viral sequence collection and human genome GRCh38. It's available at `gs://theiagen-large-public-files-rp/terra/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz`
-
-        !!! techdetails "Kraken2 Technical Details"    
-            
-            |  | Links |
-            | --- | --- |
-            | Task | [task_kraken2.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/contamination/task_kraken2.wdl) |
-            | Software Source Code | [Kraken2 on GitHub](https://github.com/DerrickWood/kraken2/) |
-            | Software Documentation | <https://github.com/DerrickWood/kraken2/wiki> |
-            | Original Publication(s) | [Improved metagenomic analysis with Kraken 2](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1891-0) |
-       
-    !!! techdetails "read_QC_trim Technical Details"
-                
-        |  | Links |
-        | --- | --- |
-        | Sub-workflow | [wf_read_QC_trim_pe.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_read_QC_trim_pe.wdl)<br>[wf_read_QC_trim_se.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_read_QC_trim_se.wdl) |
-        | Tasks | [task_fastp.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_fastp.wdl)<br>[task_trimmomatic.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_trimmomatic.wdl)<br>[task_bbduk.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_bbduk.wdl)<br>[task_fastq_scan.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_fastq_scan.wdl)<br>[task_midas.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/contamination/task_midas.wdl)<br>[task_kraken2.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/contamination/task_kraken2.wdl) |
-        | Software Source Code | [fastp](https://github.com/OpenGene/fastp); [Trimmomatic](https://github.com/usadellab/Trimmomatic); [fastq-scan](https://github.com/rpetit3/fastq-scan); [MIDAS](https://github.com/snayfach/MIDAS); [Kraken2](https://github.com/DerrickWood/kraken2)|
-        | Software Documentation | [fastp](https://github.com/OpenGene/fastp); [Trimmomatic](http://www.usadellab.org/cms/?page=trimmomatic); [BBDuk](https://jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/bbduk-guide/); [fastq-scan](https://github.com/rpetit3/fastq-scan); [MIDAS](https://github.com/snayfach/MIDAS); [Kraken2](https://github.com/DerrickWood/kraken2/wiki) |
-        | Original Publication(s) | *[Trimmomatic: a flexible trimmer for Illumina sequence data](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4103590/)<br>*[fastp: an ultra-fast all-in-one FASTQ preprocessor](https://academic.oup.com/bioinformatics/article/34/17/i884/5093234?login=false)<br>*[An integrated metagenomics pipeline for strain profiling reveals novel patterns of bacterial transmission and biogeography](https://pubmed.ncbi.nlm.nih.gov/27803195/)<br>*[Improved metagenomic analysis with Kraken 2](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1891-0) |
-
-??? task "`read_QC_trim_ONT`: Read Quality Trimming, Host Removal, and Identification ==_for ONT data_=="
-
-    `read_QC_trim` is a sub-workflow within TheiaCoV that removes low-quality reads, low-quality regions of reads, and sequencing adapters to improve data quality. It uses a number of tasks, described below.
-
-    ??? toggle "Host removal"
-    
-        All reads of human origin **are removed**, including their mates, by using NCBI's [**human read removal tool (HRRT)**](https://github.com/ncbi/sra-human-scrubber). 
-
-        HRRT is based on the [SRA Taxonomy Analysis Tool](https://doi.org/10.1186/s13059-021-02490-0) and employs a k-mer database constructed of k-mers from Eukaryota derived from all human RefSeq records with any k-mers found in non-Eukaryota RefSeq records subtracted from the database.
-
-        !!! techdetails "NCBI-Scrub Technical Details"
-            
-            |  | Links |
-            | --- | --- |
-            | Task | [task_ncbi_scrub.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_ncbi_scrub.wdl) |
-            | Software Source Code | [NCBI Scrub on GitHub](https://github.com/ncbi/sra-human-scrubber) |
-            | Software Documentation | <https://github.com/ncbi/sra-human-scrubber/blob/master/README.md> |
-
-    ??? toggle "Read quality filtering"
-        
-        Read filtering is performed using `artic guppyplex` which performs a quality check by filtering the reads by length to remove chimeric reads.
-        
-    ??? toggle "Read Identification"
-    
-        Kraken2 is a bioinformatics tool originally designed for metagenomic applications. It has additionally proven valuable for validating taxonomic assignments and checking contamination of single-species (e.g. bacterial isolate, eukaryotic isolate, viral isolate, etc.) whole genome sequence data.
-
-        Kraken2 is run on the set of raw reads, provided as input, as well as the set of clean reads that are resulted from the `read_QC_trim` workflow
-
-        !!! info "Database-dependent"
-            TheiaCoV automatically uses a viral-specific Kraken2 database. This database was generated in-house from RefSeq's viral sequence collection and human genome GRCh38. It's available at `gs://theiagen-large-public-files-rp/terra/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz`
-
-        !!! techdetails "Kraken2 Technical Details"    
-            
-            |  | Links |
-            | --- | --- |
-            | Task | [task_kraken2.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/contamination/task_kraken2.wdl) |
-            | Software Source Code | [Kraken2 on GitHub](https://github.com/DerrickWood/kraken2/) |
-            | Software Documentation | <https://github.com/DerrickWood/kraken2/wiki> |
-            | Original Publication(s) | [Improved metagenomic analysis with Kraken 2](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1891-0) |
-        
-    !!! techdetails "read_QC_trim Technical Details"
-        
-        Each TheiaCoV workflow calls a sub-workflow listed below, which then calls the individual tasks:
-        
-        | Workflow | TheiaCoV_ONT |
-        | --- | --- |
-        | Sub-workflow | [wf_read_QC_trim_ont.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_read_QC_trim_ont.wdl) |
-        | Tasks | [task_ncbi_scrub.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_ncbi_scrub.wdl#L68) (SE subtask)<br>[task_artic_guppyplex.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_artic_guppyplex.wdl)<br>[task_kraken2.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/contamination/task_kraken2.wdl#L3)|
-        | Software Source Code | [NCBI Scrub on GitHub](https://github.com/ncbi/sra-human-scrubber)<br>[Artic on GitHub](https://github.com/artic-network/fieldbioinformatics)<br>[Kraken2 on GitHub](https://github.com/DerrickWood/kraken2/) |
-        | Software Documentation | [NCBI Scrub](<https://github.com/ncbi/sra-human-scrubber/blob/master/README.md>)<br>[Artic pipeline](https://artic.readthedocs.io/en/latest/?badge=latest)<br>[Kraken2](https://github.com/DerrickWood/kraken2/wiki) |
-        | Original Publication(s) | [STAT: a fast, scalable, MinHash-based *k*-mer tool to assess Sequence Read Archive next-generation sequence submissions](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-021-02490-0)<br>[Improved metagenomic analysis with Kraken 2](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1891-0)  |
-
-??? task "`qc_check`: Check QC Metrics Against User-Defined Thresholds (optional)"
-
-    The `qc_check` task compares generated QC metrics against user-defined thresholds for each metric. This task will run if the user provides a `qc_check_table` TSV file. If all QC metrics meet the threshold, the `qc_check` output variable will read `QC_PASS`. Otherwise, the output will read `QC_NA` if the task could not proceed or `QC_ALERT` followed by a string indicating what metric failed.
-
-    The `qc_check` task applies quality thresholds according to the specified organism, which should match the _standardized_ `organism` input in the TheiaCoV workflows.
-
-    ??? toggle "Formatting the _qc_check_table.tsv_"
-
-        - The first column of the qc_check_table lists the `organism` that the task will assess and the header of this column must be "**taxon**".
-        - Each subsequent column indicates a QC metric and lists a threshold for each organism that will be checked. **The column names must exactly match expected values, so we highly recommend copy and pasting the header from the template file below as a starting place.**
-    
-    ??? toggle "Template _qc_check_table.tsv_ files"    
-        
-        - TheiaCoV_Illumina_PE: [TheiaCoV_Illumina_PE_qc_check_template.tsv](../../assets/files/TheiaCoV_Illumina_PE_qc_check_template.tsv)
-
-        !!! warning "Example Purposes Only"
-            The QC threshold values shown in the file above are for example purposes only and should not be presumed to be sufficient for every dataset.
-
-    !!! techdetails "`qc_check` Technical Details"
-    
-        |  | Links |
-        | --- | --- |
-        | Task | [task_qc_check.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/comparisons/task_qc_check_phb.wdl) |
+{{ include_md("common_text/qc_check_task.md", condition="theiacov")}}
 
 #### Assembly tasks
 

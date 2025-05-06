@@ -25,7 +25,7 @@ All input reads are processed through "core tasks" in each workflow. The core ta
 
 /// html | div[class="searchable-table"]
 
-{{ input_table("docs/assets/input_tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="TheiaEuk_Illumina_PE", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"]) }}
+{{ input_table("docs/assets/tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="TheiaEuk_Illumina_PE", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"]) }}
 
 ///
 
@@ -38,48 +38,8 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
 !!! tip ""
     These tasks are performed regardless of organism. They perform read trimming and various quality control steps.
 
-??? task "`versioning`: Version capture for TheiaEuk"
-
-    The `versioning` task captures the workflow version from the GitHub (code repository) version.
-        
-    !!! techdetails "Version Capture Technical details"
-        
-        |  | Links |
-        | --- | --- |
-        | Task | [task_versioning.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/task_versioning.wdl) |
-
-??? task "`screen`: Total Raw Read Quantification and Genome Size Estimation (optional, on by default)"
-
-    The [`screen`](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/comparisons/task_screen.wdl) task ensures the quantity of sequence data is sufficient to undertake genomic analysis. It uses [`fastq-scan`](https://github.com/rpetit3/fastq-scan) and bash commands for quantification of reads and base pairs, and [mash](https://mash.readthedocs.io/en/latest/index.html) sketching to estimate the genome size and its coverage. At each step, the results are assessed relative to pass/fail criteria and thresholds that may be defined by optional user inputs. Samples are run through all threshold checks, regardless of failures, and the workflow will terminate after the `screen` task if any thresholds are not met:
-
-
-    1. Total number of reads: A sample will fail the read screening task if its total number of reads is less than or equal to `min_reads`.
-    2. The proportion of basepairs reads in the forward and reverse read files: A sample will fail the read screening if fewer than `min_proportion` basepairs are in either the reads1 or read2 files.
-    3. Number of basepairs: A sample will fail the read screening if there are fewer than `min_basepairs` basepairs
-    4. Estimated genome size:  A sample will fail the read screening if the estimated genome size is smaller than `min_genome_size` or bigger than `max_genome_size`.
-    5. Estimated genome coverage: A sample will fail the read screening if the estimated genome coverage is less than the `min_coverage`.
-
-    Read screening is undertaken on both the raw and cleaned reads. The task may be skipped by setting the `skip_screen` variable to true.
-
-    Default values vary between the PE and SE workflow. The rationale for these default values can be found below.
-    
-    | Variable  | Rationale |
-    | --- | --- |
-    | `skip_screen` | Prevent the read screen from running. If you set this value to true, please provide a value for the theiaeuk_pe `genome_length` optional input, OR set the theiaeuk_pe `call_rasusa` optional input to false. Otherwise RASUSA will attempt to downsample to an expected genome size of 0 bp, and the workflow will fail. |
-    | `min_reads` | Minimum number of base pairs for 20x coverage of _Hansenula polymorpha_  divided by 300 (longest Illumina read length) |
-    | `min_basepairs` | Greater than 10x coverage of _Hansenula polymorpha_  |
-    | `min_genome_size` | Based on the _Hansenula polymorpha_  genome - the smallest fungal genome as of 2015-04-02 (8.97 Mbp) |
-    | `max_genome_size` | Based on the _Cenococcum geophilum_  genome, the biggest pathogenic fungal genome, (177.57 Mbp) |
-    | `min_coverage` | A bare-minimum coverage for genome characterization. Higher coverage would be required for high-quality phylogenetics. |
-    | `min_proportion` | Greater than 50% reads are in the read1 file; others are in the read2 file |
-
-    !!! techdetails "Screen Technical Details"
-        
-        There is a single WDL task for read screening. The `screen` task is run twice, once for raw reads and once for clean reads.
-        
-        |  | Links |
-        | --- | --- |
-        | Task | [task_screen.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/comparisons/task_screen.wdl)  |
+{{ include_md("common_text/versioning_task.md") }}
+{{ include_md("common_text/read_screen_task.md", condition="theiaeuk") }}
 
 ??? task "`Rasusa`: Read subsampling (optional, on by default)"
 
@@ -96,96 +56,14 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
         | Software Documentation | [Rasusa on GitHub](https://github.com/mbhall88/rasusa) |
         | Original Publication(s) | [Rasusa: Randomly subsample sequencing reads to a specified coverage](https://doi.org/10.21105/joss.03941) |
 
-??? task "`read_QC_trim`: Read Quality Trimming, Adapter Removal, Quantification, and Identification"
-
-    `read_QC_trim` is a sub-workflow within TheiaEuk that removes low-quality reads, low-quality regions of reads, and sequencing adapters to improve data quality. It uses a number of tasks, described below.
-
-    **Read quality trimming**
-
-    Either `trimmomatic` or `fastp` can be used for read-quality trimming. Trimmomatic is used by default. Both tools trim low-quality regions of reads with a sliding window (with a window size of `trim_window_size`), cutting once the average quality within the window falls below `trim_quality_trim_score`. They will both discard the read if it is trimmed below `trim_minlen`. 
-
-    If fastp is selected for analysis, fastp also implements the additional read-trimming steps indicated below:
-
-    | **Parameter** | **Explanation** |
-    | --- | --- |
-    | -g | enables polyG tail trimming |
-    | -5 20 | enables read end-trimming |
-    | -3 20 | enables read end-trimming |
-    | --detect_adapter_for_pe | enables adapter-trimming **only for paired-end reads** |
-
-    **Adapter removal**
-
-    The `BBDuk` task removes adapters from sequence reads. To do this:
-
-    - [Repair](https://jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/repair-guide/) from the [BBTools](https://jgi.doe.gov/data-and-tools/software-tools/bbtools/) package reorders reads in paired fastq files to ensure the forward and reverse reads of a pair are in the same position in the two fastq files.
-    - [BBDuk](https://jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/bbduk-guide/)  (*"Bestus Bioinformaticus" Decontamination Using Kmers*) is then used to trim the adapters and filter out all reads that have a 31-mer match to [PhiX](https://emea.illumina.com/products/by-type/sequencing-kits/cluster-gen-sequencing-reagents/phix-control-v3.html), which is commonly added to Illumina sequencing runs to monitor and/or improve overall run quality.
-    
-    ??? toggle "What are adapters and why do they need to be removed?"
-        Adapters are manufactured oligonucleotide sequences attached to DNA fragments during the library preparation process. In Illumina sequencing, these adapter sequences are required for attaching reads to flow cells. You can read more about Illumina adapters [here](https://emea.support.illumina.com/bulletins/2020/06/illumina-adapter-portfolio.html). For genome analysis, it's important to remove these sequences since they're not actually from your sample. If you don't remove them, the downstream analysis may be affected.
-        
-    **Read Quantification**
-
-    There are two methods for read quantification to choose from: [`fastq-scan`](https://github.com/rpetit3/fastq-scan) (default) or [`fastqc`](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/). Both quantify the forward and reverse reads in FASTQ files. In TheiaProk_Illumina_PE, they also provide the total number of read pairs. This task is run once with raw reads as input and once with clean reads as input. If QC has been performed correctly, you should expect **fewer** clean reads than raw reads. `fastqc` also provides a graphical visualization of the read quality.
-
-    **Read Identification (optional)**
-
-    The `MIDAS` task is for the identification of reads to detect contamination with non-target taxa. This task is optional and turned off by default. It can be used by setting the `call_midas` input variable to `true`.
-
-    The MIDAS tool was originally designed for metagenomic sequencing data but has been co-opted for use with bacterial isolate WGS methods. It can be used to detect contamination present in raw sequencing data by estimating bacterial species abundance in bacterial isolate WGS data. If a secondary genus is detected above a relative frequency of 0.01 (1%), then the sample should fail QC and be investigated further for potential contamination.
-
-    This task is similar to those used in commercial software, BioNumerics, for estimating secondary species abundance.
-
-    ??? toggle "How are the MIDAS output columns determined?"
-        
-        Example MIDAS report in the ****`midas_report` column:
-        
-        | species_id | count_reads | coverage | relative_abundance |
-        | --- | --- | --- | --- |
-        | Salmonella_enterica_58156 | 3309 | 89.88006645 | 0.855888033 |
-        | Salmonella_enterica_58266 | 501 | 11.60606061 | 0.110519371 |
-        | Salmonella_enterica_53987 | 99 | 2.232896237 | 0.021262881 |
-        | Citrobacter_youngae_61659 | 46 | 0.995216227 | 0.009477003 |
-        | Escherichia_coli_58110 | 5 | 0.123668877 | 0.001177644 |
-        
-        MIDAS report column descriptions:
-        
-        - species_id: species identifier
-        - count_reads: number of reads mapped to marker genes
-        - coverage: estimated genome-coverage (i.e. read-depth) of species in metagenome
-        - relative_abundance: estimated relative abundance of species in metagenome
-        
-        The value in the `midas_primary_genus` column is derived by ordering the rows in order of "relative_abundance" and identifying the genus of top species in the "species_id" column (Salmonella). The value in the `midas_secondary_genus` column is derived from the genus of the second-most prevalent genus in the "species_id" column (Citrobacter). The `midas_secondary_genus_abundance` column is the "relative_abundance" of the second-most prevalent genus (0.009477003). The `midas_secondary_genus_coverage` is the "coverage" of the second-most prevalent genus (0.995216227).
-        
-    !!! techdetails "read_QC_trim Technical Details"
-                
-        |  | Links |
-        | --- | --- |
-        | Sub-workflow | [wf_read_QC_trim_pe.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_read_QC_trim_pe.wdl) |
-        | Tasks | [task_fastp.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_fastp.wdl)<br>[task_trimmomatic.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_trimmomatic.wdl)<br>[task_bbduk.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_bbduk.wdl)<br>[task_fastq_scan.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_fastq_scan.wdl)<br>[task_midas.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/contamination/task_midas.wdl)<br>[task_kraken2.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/contamination/task_kraken2.wdl)|
-        | Software Source Code | [fastp](https://github.com/OpenGene/fastp); [Trimmomatic](https://github.com/usadellab/Trimmomatic); [fastq-scan](https://github.com/rpetit3/fastq-scan); [MIDAS](https://github.com/snayfach/MIDAS); [Kraken2](https://github.com/DerrickWood/kraken2)|
-        | Software Documentation | [fastp](https://github.com/OpenGene/fastp); [Trimmomatic](http://www.usadellab.org/cms/?page=trimmomatic); [BBDuk](https://jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/bbduk-guide/); [fastq-scan](https://github.com/rpetit3/fastq-scan); [MIDAS](https://github.com/snayfach/MIDAS); [Kraken2](https://github.com/DerrickWood/kraken2/wiki) |
-        | Original Publication(s) | [Trimmomatic: a flexible trimmer for Illumina sequence data](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4103590/)<br>[fastp: an ultra-fast all-in-one FASTQ preprocessor](https://academic.oup.com/bioinformatics/article/34/17/i884/5093234?login=false)<br>[An integrated metagenomics pipeline for strain profiling reveals novel patterns of bacterial transmission and biogeography](https://pubmed.ncbi.nlm.nih.gov/27803195/)<br>[Improved metagenomic analysis with Kraken 2](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1891-0) |
+{{ include_md("common_text/read_qc_trim_illumina.md", condition="theiaprok") }}
 
 #### Assembly tasks
 
 !!! tip ""
     These tasks assemble the reads into a _de novo_ assembly and assess the quality of the assembly.
 
-??? task "`shovill`: _De novo_ Assembly"
-
-    De Novo assembly will be undertaken only for samples that have sufficient read quantity and quality, as determined by the `screen` task assessment of clean reads. 
-
-    In TheiaEuk, assembly is performed using the [Shovill](https://github.com/tseemann/shovill) pipeline. This undertakes the assembly with one of four assemblers ([SKESA](https://github.com/ncbi/SKESA) (default), [SPAdes](https://github.com/ablab/spades), [Velvet](https://github.com/dzerbino/velvet/), [Megahit](https://github.com/voutcn/megahit)), but also performs [a number of pre- and post-processing steps](https://github.com/tseemann/shovill#main-steps) to improve the resulting genome assembly. Shovill uses an estimated genome size (see [here](https://github.com/tseemann/shovill#--gsize)). If this is not provided by the user as an optional input, Shovill will estimate the genome size using [mash](https://mash.readthedocs.io/en/latest/index.html). Adaptor trimming can be undertaken with Shovill by setting the `trim` option to "true", but this is set to "false" by default as alternative adapter trimming performed by bbduk is undertaken in the TheiaEuk workflow.
-    
-    ??? toggle "What is _de novo_  assembly?"
-        _De novo_  assembly is the process or product of attempting to reconstruct a genome from scratch (without prior knowledge of the genome) using sequence reads. Assembly of fungal genomes from short-reads will produce multiple contigs per chromosome rather than a single contiguous sequence for each chromosome.
-        
-    !!! techdetails "Shovill Technical Details"
-        |  | Links |
-        | --- | --- |
-        | TheiaEuk WDL Task | [task_shovill.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_shovill.wdl#L3) |
-        | Software Source Code | [Shovill on GitHub](https://github.com/tseemann/shovill) |
-        | Software Documentation | [Shovill on GitHub](https://github.com/tseemann/shovill) |
+{{ include_md("common_text/shovill_task.md") }}
 
 ??? task "`QUAST`: Assembly Quality Assessment"
 
@@ -200,39 +78,14 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
         | Software Documentation | https://quast.sourceforge.net/docs/manual.html |
         | Orginal publication | [QUAST: quality assessment tool for genome assemblies](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3624806/) |
 
-??? task "`CG-Pipeline`: Assessment of Read Quality, and Estimation of Genome Coverage"
-
-    The`cg_pipeline` task generates metrics about read quality and estimates the coverage of the genome using the "run_assembly_readMetrics.pl" script from [CG-Pipeline](https://github.com/lskatz/CG-Pipeline/). The genome coverage estimates are calculated using both using raw and cleaned reads, using either a user-provided `genome_size` or the estimated genome length generated by QUAST.
-
-    !!! techdetails "CG-Pipeline Technical Details"
-        The `cg_pipeline` task is run twice in TheiaEuk, once with raw reads, and once with clean reads.
-        
-        |  | Links |
-        | --- | --- |
-        | Task | [task_cg_pipeline.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_cg_pipeline.wdl) |
-        | Software Source Code | [CG-Pipeline on GitHub](https://github.com/lskatz/CG-Pipeline/) |
-        | Software Documentation | [CG-Pipeline on GitHub](https://github.com/lskatz/CG-Pipeline/) |
-        | Original Publication(s) | [A computational genomics pipeline for prokaryotic sequencing projects](https://academic.oup.com/bioinformatics/article/26/15/1819/188418) |
+{{ include_md("common_text/cg_pipeline_task.md") }}
 
 #### Organism-agnostic characterization
 
 !!! tip ""
     These tasks are performed regardless of the organism and provide quality control and taxonomic assignment.
 
-??? task "`GAMBIT`: **Taxon Assignment**"
-
-    [`GAMBIT`](https://github.com/jlumpe/gambit) determines the taxon of the genome assembly using a k-mer based approach to match the assembly sequence to the closest complete genome in a database, thereby predicting its identity. Sometimes, GAMBIT can confidently designate the organism to the species level. Other times, it is more conservative and assigns it to a higher taxonomic rank.
-
-    For additional details regarding the GAMBIT tool and a list of available GAMBIT databases for analysis, please consult the [GAMBIT](../../guides/gambit.md) tool documentation.
-
-    !!! techdetails "GAMBIT Technical Details"
-
-        |  | Links |
-        | --- | --- |
-        | Task | [task_gambit.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/task_gambit.wdl) |
-        | Software Source Code | [GAMBIT on GitHub](https://github.com/jlumpe/gambit) |
-        | Software Documentation | [GAMBIT ReadTheDocs](https://gambit-genomics.readthedocs.io/en/latest/) |
-        | Original Publication(s) | [GAMBIT (Genomic Approximation Method for Bacterial Identification and Tracking): A methodology to rapidly leverage whole genome sequencing of bacterial isolates for clinical identification](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0277575) |
+{{ include_md("common_text/gambit_task.md") }}
 
 ??? task "`BUSCO`: Assembly Quality Assessment"
 
@@ -260,30 +113,7 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
         | Software Documentation | https://busco.ezlab.org/ |
         | Orginal publication | [BUSCO: assessing genome assembly and annotation completeness with single-copy orthologs](https://academic.oup.com/bioinformatics/article/31/19/3210/211866) |
 
-??? task "`qc_check`: Check QC Metrics Against User-Defined Thresholds (optional)"
-
-    The `qc_check` task compares generated QC metrics against user-defined thresholds for each metric. This task will run if the user provides a `qc_check_table` .tsv file. If all QC metrics meet the threshold, the `qc_check` output variable will read `QC_PASS`. Otherwise, the output will read `QC_NA` if the task could not proceed or `QC_ALERT` followed by a string indicating what metric failed.
-
-    The `qc_check` task applies quality thresholds according to the sample taxa. The sample taxa is taken from the `gambit_predicted_taxon` value inferred by the GAMBIT module OR can be manually provided by the user using the `expected_taxon` workflow input.
-
-    ??? toggle "Formatting the _qc_check_table.tsv_"
-
-        - The first column of the qc_check_table lists the taxa that the task will assess and the header of this column must be "taxon".
-        - Any genus or species can be included as a row of the qc_check_table. However, these taxa must **uniquely** match the sample taxa, meaning that the file can include multiple species from the same genus (Vibrio_cholerae and Vibrio_vulnificus), but not both a genus row and species within that genus (Vibrio and Vibrio cholerae). **The taxa should be formatted with the first letter capitalized and underscores in lieu of spaces.**
-        - Each subsequent column indicates a QC metric and lists a threshold for each taxa that will be checked. **The column names must exactly match expected values, so we highly recommend copy and pasting from the template files below.**
-
-    ??? toggle "Template _qc_check_table.tsv_ files"
-
-        TheiaEuk_Illumina_PE_PHB: [theiaeuk_qc_check_template.tsv](../../assets/files/TheiaEuk_qc_check_template.tsv)
-
-        !!! warning "Example Purposes Only"
-            QC threshold values shown are for example purposes only and should not be presumed to be sufficient for every dataset.
-    
-    !!! techdetails "QC_Check Technical Details"    
-        
-        |  | Links |
-        | --- | --- |
-        | Task | [task_qc_check_phb.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/comparisons/task_qc_check_phb.wdl) |
+{{ include_md("common_text/qc_check_task.md", condition="theiaeuk")}}
 
 #### Organism-specific characterization
 

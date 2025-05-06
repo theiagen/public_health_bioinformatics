@@ -52,414 +52,80 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
     === "TheiaProk_Illumina_PE"
         /// html | div[class="searchable-table"]
 
-        {{ input_table("docs/assets/input_tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="TheiaProk_Illumina_PE", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
+        {{ input_table("docs/assets/tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="TheiaProk_Illumina_PE", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
         ///
 
     === "TheiaProk_Illumina_SE"
         /// html | div[class="searchable-table"]
 
-        {{ input_table("docs/assets/input_tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="TheiaProk_Illumina_SE", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
+        {{ input_table("docs/assets/tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="TheiaProk_Illumina_SE", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
         ///
 
     === "TheiaProk_ONT"
         /// html | div[class="searchable-table"]
 
-        {{ input_table("docs/assets/input_tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="TheiaProk_ONT", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
+        {{ input_table("docs/assets/tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="TheiaProk_ONT", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
         ///
 
     === "TheiaProk_FASTA"
         /// html | div[class="searchable-table"]
 
-        {{ input_table("docs/assets/input_tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="TheiaProk_FASTA", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
+        {{ input_table("docs/assets/tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="TheiaProk_FASTA", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
         ///
 
-### Core Tasks (performed for all taxa)
+### Core Tasks
 
-??? task "`versioning`: Version Capture for TheiaProk"
+!!! dna ""
+    These tasks are performed regardless of organism. They include tasks that are performed regardless of and specific for the input data type. They perform read trimming and assembly appropriate to the input data type.
 
-    The `versioning` task captures the workflow version from the GitHub (code repository) version.
-        
-    !!! techdetails "Version Capture Technical details"
-        
-        |  | Links |
-        | --- | --- |
-        | Task | [task_versioning.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/task_versioning.wdl) |
-
-??? task "`concatenate_illumina_lanes`: Concatenate Multi-Lane Illumina FASTQs ==_for Illumina only_=="
-
-    The `concatenate_illumina_lanes` task concatenates Illumina FASTQ files from multiple lanes into a single file. This task only runs if the `read1_lane2` input file has been provided. All read1 lanes are concatenated together and are used in subsequent tasks, as are the read2 lanes. These concatenated files are also provided as output.
-
-    !!! techdetails "Concatenate Illumina Lanes Technical Details"
-        The `concatenate_illumina_lanes` task is run before any downstream steps take place.
-        
-        |  | Links |
-        | --- | --- |
-        | Task | [wf_concatenate_illumina_lanes.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/file_handling/wf_concatenate_illumina_lanes.wdl)
+{{ include_md("common_text/versioning_task.md", condition="theiaprok") }}
 
-??? task "`screen`: Total Raw Read Quantification and Genome Size Estimation"
+!!! caption ""
+    === "TheiaProk_Illumina_PE"
 
-    The [`screen`](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/comparisons/task_screen.wdl) task ensures the quantity of sequence data is sufficient to undertake genomic analysis. It uses [`fastq-scan`](https://github.com/rpetit3/fastq-scan) and bash commands for quantification of reads and base pairs, and [mash](https://mash.readthedocs.io/en/latest/index.html) sketching to estimate the genome size and its coverage. At each step, the results are assessed relative to pass/fail criteria and thresholds that may be defined by optional user inputs. Samples are run through all threshold checks, regardless of failures, and the workflow will terminate after the `screen` task if any thresholds are not met:
+{{ include_md("common_text/concatenate_illumina_lanes_task.md", indent=8) }}
+{{ include_md("common_text/read_screen_task.md", condition="theiaprok", indent=8) }}
 
-    1. Total number of reads: A sample will fail the read screening task if its total number of reads is less than or equal to `min_reads`.
-    2. The proportion of basepairs reads in the forward and reverse read files: A sample will fail the read screening if fewer than `min_proportion` basepairs are in either the reads1 or read2 files.
-    3. Number of basepairs: A sample will fail the read screening if there are fewer than `min_basepairs` basepairs
-    4. Estimated genome size:  A sample will fail the read screening if the estimated genome size is smaller than `min_genome_size` or bigger than `max_genome_size`.
-    5. Estimated genome coverage: A sample will fail the read screening if the estimated genome coverage is less than the `min_coverage`.
+        !!! dna ""
+            These tasks assemble the reads into a _de novo_ assembly and assess the quality of the assembly.
 
-    Read screening is undertaken on both the raw and cleaned reads. The task may be skipped by setting the `skip_screen` variable to true.
+{{ include_md("common_text/read_qc_trim_illumina.md", condition="theiaprok", indent=8) }}
+{{ include_md("common_text/cg_pipeline_task.md", indent=8) }}
+{{ include_md("common_text/shovill_task.md", indent=8) }}
 
-    Default values vary between the PE and SE workflow. The rationale for these default values can be found below. If two default values are shown, the first is for Illumina workflows and the second is for ONT.
+    === "TheiaProk_Illumina_SE"
 
-    | Variable  | Default Value | Rationale |
-    | --- | --- | --- |
-    | `skip_screen` | false | Set to false to avoid waste of compute resources processing insufficient data |
-    | `min_reads` | 7472 or 5000 | Calculated from the minimum number of base pairs required for 20x coverage of Nasuia deltocephalinicola genome, the smallest known bacterial genome as of 2019-08-07 (112,091 bp), divided by 300 (the longest Illumina read length) or 5000 (estimate of ONT read length) |
-    | `min_basepairs` | 2241820 | Should be greater than 20x coverage of Nasuia deltocephalinicola, the smallest known bacterial genome (112,091 bp) |
-    | `min_genome_length` | 100000 | Based on the Nasuia deltocephalinicola genome - the smallest known bacterial genome (112,091 bp) |
-    | `max_genome_length` | 18040666 | Based on the Minicystis rosea genome, the biggest known bacterial genome (16,040,666 bp), plus an additional 2 Mbp to cater for potential extra genomic material |
-    | `min_coverage` | 10 or 5 | A bare-minimum average per base coverage across the genome required for genome characterization. Note, a higher per base coverage coverage would be required for high-quality phylogenetics. |
-    | `min_proportion` | 40 | Neither read1 nor read2 files should have less than 40% of the total number of reads. For paired-end data only |
-    
-    !!! techdetails "Screen Technical Details"    
-        There is a single WDL task for read screening that contains two separate sub-tasks, one used for PE data and the other for SE data. The `screen` task is run twice, once for raw reads and once for clean reads.
-        
-        |  | TheiaProk_Illumina_PE | TheiaProk_Illumina_SE and TheiaProk_ONT |
-        | --- | --- | --- |
-        | Task | [task_screen.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/comparisons/task_screen.wdl#L3) (PE sub-task) | [task_screen.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/comparisons/task_screen.wdl#L147) (SE sub-task) |
+{{ include_md("common_text/concatenate_illumina_lanes_task.md", indent=8) }}
+{{ include_md("common_text/read_screen_task.md", condition="theiaprok", indent=8) }}
 
-#### Illumina Data Core Tasks
+        !!! dna ""
+            These tasks assemble the reads into a _de novo_ assembly and assess the quality of the assembly.
 
-??? task "`read_QC_trim`: Read Quality Trimming, Adapter Removal, Quantification, and Identification"
+{{ include_md("common_text/read_qc_trim_illumina.md", condition="theiaprok", indent=8) }}
+{{ include_md("common_text/cg_pipeline_task.md", indent=8) }}
+{{ include_md("common_text/shovill_task.md", indent=8) }}
 
-    `read_QC_trim` is a sub-workflow within TheiaMeta that removes low-quality reads, low-quality regions of reads, and sequencing adapters to improve data quality. It uses a number of tasks, described below.
+    === "TheiaProk_ONT"
 
-    **Read quality trimming**
+{{ include_md("common_text/read_screen_task.md", condition="theiaprok", indent=8) }}
 
-    Either `trimmomatic` or `fastp` can be used for read-quality trimming. Trimmomatic is used by default. Both tools trim low-quality regions of reads with a sliding window (with a window size of `trim_window_size`), cutting once the average quality within the window falls below `trim_quality_trim_score`. They will both discard the read if it is trimmed below `trim_minlen`. 
+        !!! dna ""
+            These tasks assemble the reads into a _de novo_ assembly and assess the quality of the assembly.
 
-    If fastp is selected for analysis, fastp also implements the additional read-trimming steps indicated below:
+{{ include_md("common_text/read_qc_trim_ont.md", condition="theiaprok", indent=8) }}
+{{ include_md("common_text/flye_denovo_task.md", indent=8) }}
 
-    | **Parameter** | **Explanation** |
-    | --- | --- |
-    | -g | enables polyG tail trimming |
-    | -5 20 | enables read end-trimming |
-    | -3 20 | enables read end-trimming |
-    | --detect_adapter_for_pe | enables adapter-trimming **only for paired-end reads** |
+    === "TheiaProk_FASTA"
+        !!! dna ""
+            Since this workflow requires FASTA files as input, no assembly or read trimming is performed, and the workflow proceeds directly to the "post-assembly tasks" section below.
 
-    **Adapter removal**
+#### Post-Assembly Tasks
 
-    The `BBDuk` task removes adapters from sequence reads. To do this:
+!!! dna ""
+    The following tasks are performed for all taxa, regardless of the input data type. They include quality control, assembly characterization, and taxonomic identification.
 
-    - [Repair](https://jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/repair-guide/) from the [BBTools](https://jgi.doe.gov/data-and-tools/software-tools/bbtools/) package reorders reads in paired fastq files to ensure the forward and reverse reads of a pair are in the same position in the two fastq files.
-    - [BBDuk](https://jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/bbduk-guide/)  (*"Bestus Bioinformaticus" Decontamination Using Kmers*) is then used to trim the adapters and filter out all reads that have a 31-mer match to [PhiX](https://emea.illumina.com/products/by-type/sequencing-kits/cluster-gen-sequencing-reagents/phix-control-v3.html), which is commonly added to Illumina sequencing runs to monitor and/or improve overall run quality.
-    
-    ??? toggle "What are adapters and why do they need to be removed?"
-        Adapters are manufactured oligonucleotide sequences attached to DNA fragments during the library preparation process. In Illumina sequencing, these adapter sequences are required for attaching reads to flow cells. You can read more about Illumina adapters [here](https://emea.support.illumina.com/bulletins/2020/06/illumina-adapter-portfolio.html). For genome analysis, it's important to remove these sequences since they're not actually from your sample. If you don't remove them, the downstream analysis may be affected.
-        
-    **Read Quantification**
-
-    There are two methods for read quantification to choose from: [`fastq-scan`](https://github.com/rpetit3/fastq-scan) (default) or [`fastqc`](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/). Both quantify the forward and reverse reads in FASTQ files. In TheiaProk_Illumina_PE, they also provide the total number of read pairs. This task is run once with raw reads as input and once with clean reads as input. If QC has been performed correctly, you should expect **fewer** clean reads than raw reads. `fastqc` also provides a graphical visualization of the read quality.
-
-    **Read Identification (optional)**
-
-    The `MIDAS` task is for the identification of reads to detect contamination with non-target taxa. This task is optional and turned off by default. It can be used by setting the `call_midas` input variable to `true`.
-
-    The MIDAS tool was originally designed for metagenomic sequencing data but has been co-opted for use with bacterial isolate WGS methods. It can be used to detect contamination present in raw sequencing data by estimating bacterial species abundance in bacterial isolate WGS data. If a secondary genus is detected above a relative frequency of 0.01 (1%), then the sample should fail QC and be investigated further for potential contamination.
-
-    This task is similar to those used in commercial software, BioNumerics, for estimating secondary species abundance.
-
-    ??? toggle "How are the MIDAS output columns determined?"
-        
-        Example MIDAS report in the `midas_report` column:
-        
-        | species_id | count_reads | coverage | relative_abundance |
-        | --- | --- | --- | --- |
-        | Salmonella_enterica_58156 | 3309 | 89.88006645 | 0.855888033 |
-        | Salmonella_enterica_58266 | 501 | 11.60606061 | 0.110519371 |
-        | Salmonella_enterica_53987 | 99 | 2.232896237 | 0.021262881 |
-        | Citrobacter_youngae_61659 | 46 | 0.995216227 | 0.009477003 |
-        | Escherichia_coli_58110 | 5 | 0.123668877 | 0.001177644 |
-        
-        MIDAS report column descriptions:
-        
-        - species_id: species identifier
-        - count_reads: number of reads mapped to marker genes
-        - coverage: estimated genome-coverage (i.e. read-depth) of species in metagenome
-        - relative_abundance: estimated relative abundance of species in metagenome
-        
-        The value in the `midas_primary_genus` column is derived by ordering the rows in order of "relative_abundance" and identifying the genus of top species in the "species_id" column (Salmonella). The value in the `midas_secondary_genus` column is derived from the genus of the second-most prevalent genus in the "species_id" column (Citrobacter). The `midas_secondary_genus_abundance` column is the "relative_abundance" of the second-most prevalent genus (0.009477003). The `midas_secondary_genus_coverage` is the "coverage" of the second-most prevalent genus (0.995216227).
-
-    **MIDAS Reference Database Overview**
-
-    The **MIDAS reference database** is a comprehensive tool for identifying bacterial species in metagenomic and bacterial isolate WGS data. It includes several layers of genomic data, helping detect species abundance and potential contaminants.
-
-    **Key Components of the MIDAS Database**
-
-    1. **Species Groups**: 
-    - MIDAS clusters bacterial genomes based on 96.5% sequence identity, forming over 5,950 species groups from 31,007 genomes. These groups align with the gold-standard species definition (95% ANI), ensuring highly accurate species identification.
-
-    2. **Genomic Data Structure**:
-    - **Marker Genes**: Contains 15 universal single-copy genes used to estimate species abundance.
-    - **Representative Genome**: Each species group has a selected representative genome, which minimizes genetic variation and aids in accurate SNP identification.
-    - **Pan-genome**: The database includes clusters of non-redundant genes, with options for multi-level clustering (e.g., 99%, 95%, 90% identity), enabling MIDAS to identify gene content within strains at various clustering thresholds.
-
-    3. **Taxonomic Annotation**: 
-    - Genomes are annotated based on consensus Latin names. Discrepancies in name assignments may occur due to factors like unclassified genomes or genus-level ambiguities.
-
-    ---
-
-    **Using the Default MIDAS Database**
-
-    TheiaProk uses the pre-loaded MIDAS database in Terra (see input table for current version) by default for bacterial species detection in metagenomic data, requiring no additional setup.
-
-    **How to Set Up the Default MIDAS Database**
-
-    Users can also build their own custom MIDAS database if they want to include specific genomes or configurations. This custom database can replace the default MIDAS database used in Terra. To build a custom MIDAS database, follow the [MIDAS GitHub guide on building a custom database](https://github.com/snayfach/MIDAS/blob/master/docs/build_db.md). Once the database is built, users can upload it to a Google Cloud Storage bucket or Terra workkspace and provide the link to the database in the `midas_db` input variable.
-
-    Alternatively to `MIDAS`, the `Kraken2` task can also be turned on through setting the `call_kraken` input variable as `true` for the identification of reads to detect contamination with non-target taxa.
-
-    Kraken2 is a bioinformatics tool originally designed for metagenomic applications. It has additionally proven valuable for validating taxonomic assignments and checking contamination of single-species (e.g. bacterial isolate) whole genome sequence data. A database must be provided if this optional module is activated, through the kraken_db optional input. A list of suggested databases can be found on [Kraken2 standalone documentation](../standalone/kraken2.md).
-
-    !!! techdetails "read_QC_trim Technical Details"
-                
-        |  | Links |
-        | --- | --- |
-        | Sub-workflow | [wf_read_QC_trim_pe.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_read_QC_trim_pe.wdl)<br>[wf_read_QC_trim_se.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_read_QC_trim_se.wdl) |
-        | Tasks | [task_fastp.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_fastp.wdl)<br>[task_trimmomatic.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_trimmomatic.wdl)<br>[task_bbduk.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_bbduk.wdl)<br>[task_fastq_scan.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_fastq_scan.wdl)<br>[task_midas.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/contamination/task_midas.wdl)<br>[task_kraken2.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/contamination/task_kraken2.wdl)|
-        | Software Source Code | [fastp](https://github.com/OpenGene/fastp); [Trimmomatic](https://github.com/usadellab/Trimmomatic); [fastq-scan](https://github.com/rpetit3/fastq-scan); [MIDAS](https://github.com/snayfach/MIDAS); [Kraken2](https://github.com/DerrickWood/kraken2)|
-        | Software Documentation | [fastp](https://github.com/OpenGene/fastp); [Trimmomatic](http://www.usadellab.org/cms/?page=trimmomatic); [BBDuk](https://jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/bbduk-guide/); [fastq-scan](https://github.com/rpetit3/fastq-scan); [MIDAS](https://github.com/snayfach/MIDAS); [Kraken2](https://github.com/DerrickWood/kraken2/wiki) |
-        | Original Publication(s) | [Trimmomatic: a flexible trimmer for Illumina sequence data](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4103590/)<br>[fastp: an ultra-fast all-in-one FASTQ preprocessor](https://academic.oup.com/bioinformatics/article/34/17/i884/5093234?login=false)<br>[An integrated metagenomics pipeline for strain profiling reveals novel patterns of bacterial transmission and biogeography](https://pubmed.ncbi.nlm.nih.gov/27803195/)<br>[Improved metagenomic analysis with Kraken 2](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1891-0) |
-
-??? task "`CG-Pipeline`: Assessment of Read Quality, and Estimation of Genome Coverage"
-
-    The`cg_pipeline` task generates metrics about read quality and estimates the coverage of the genome using the "run_assembly_readMetrics.pl" script from [CG-Pipeline](https://github.com/lskatz/CG-Pipeline/). The genome coverage estimates are calculated using both using raw and cleaned reads, using either a user-provided `genome_size` or the estimated genome length generated by QUAST.
-
-    !!! techdetails "CG-Pipeline Technical Details"
-        The `cg_pipeline` task is run twice in TheiaProk, once with raw reads, and once with clean reads.
-        
-        |  | Links |
-        | --- | --- |
-        | Task | [task_cg_pipeline.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_cg_pipeline.wdl) |
-        | Software Source Code | [CG-Pipeline on GitHub](https://github.com/lskatz/CG-Pipeline/) |
-        | Software Documentation | [CG-Pipeline on GitHub](https://github.com/lskatz/CG-Pipeline/) |
-        | Original Publication(s) | [A computational genomics pipeline for prokaryotic sequencing projects](https://academic.oup.com/bioinformatics/article/26/15/1819/188418) |
-
-??? task "`shovill`: _De novo_ Assembly"
-
-    De Novo assembly will be undertaken only for samples that have sufficient read quantity and quality, as determined by the `screen` task assessment of clean reads. 
-
-    In TheiaProk, assembly is performed using the [Shovill](https://github.com/tseemann/shovill) pipeline. This undertakes the assembly with one of four assemblers ([SKESA](https://github.com/ncbi/SKESA) (default), [SPAdes](https://github.com/ablab/spades), [Velvet](https://github.com/dzerbino/velvet/), [Megahit](https://github.com/voutcn/megahit)), but also performs [a number of pre- and post-processing steps](https://github.com/tseemann/shovill#main-steps) to improve the resulting genome assembly. Shovill uses an estimated genome size (see [here](https://github.com/tseemann/shovill#--gsize)). If this is not provided by the user as an optional input, Shovill will estimate the genome size using [mash](https://mash.readthedocs.io/en/latest/index.html). Adaptor trimming can be undertaken with Shovill by setting the `trim` option to "true", but this is set to "false" by default as alternative adapter trimming performed by bbduk is undertaken in the TheiaProk workflow.
-
-    ??? toggle "What is _de novo_  assembly?"
-        _De novo_  assembly is the process or product of attempting to reconstruct a genome from scratch (without prior knowledge of the genome) using sequence reads. Assembly of fungal genomes from short-reads will produce multiple contigs per chromosome rather than a single contiguous sequence for each chromosome.
-        
-    !!! techdetails "Shovill Technical Details"
-        |  | Links |
-        | --- | --- |
-        | TheiaEuk WDL Task | [task_shovill.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_shovill.wdl#L3) |
-        | Software Source Code | [Shovill on GitHub](https://github.com/tseemann/shovill) |
-        | Software Documentation | [Shovill on GitHub](https://github.com/tseemann/shovill) |
-
-#### ONT Data Core Tasks
-
-??? task "`read_QC_trim_ont`: Read Quality Trimming, Quantification, and Identification"
-
-    `read_QC_trim_ont` is a sub-workflow within TheiaProk_ONT that filters low-quality reads and trims low-quality regions of reads. It uses several tasks, described below.
-
-    **Estimated genome length**:
-
-    By default, an estimated genome length is set to 5 Mb, which is around 0.7 Mb higher than the average bacterial genome length, according to the information collated [here](https://github.com/CDCgov/phoenix/blob/717d19c19338373fc0f89eba30757fe5cfb3e18a/assets/databases/NCBI_Assembly_stats_20240124.txt). This estimate can be overwritten by the user, and is used by `RASUSA`.
-
-    **Plotting and quantifying long-read sequencing data:** `nanoplot`
-
-    Nanoplot is used for the determination of mean quality scores, read lengths, and number of reads. This task is run once with raw reads as input and once with clean reads as input. If QC has been performed correctly, you should expect **fewer** clean reads than raw reads.
-
-    **Read subsampling:** Samples are automatically randomly subsampled to 150X coverage using `RASUSA`.
-
-    **Plasmid prediction:** Plasmids are identified using replicon sequences used for typing from [PlasmidFinder](https://cge.food.dtu.dk/services/PlasmidFinder/).
-
-    **Read filtering:** Reads are filtered by length and quality using `nanoq`. By default, sequences with less than 500 basepairs and quality score lower than 10 are filtered out to improve assembly accuracy.
-
-    !!! techdetails "read_QC_trim_ont Technical Details"
-        
-        TheiaProk_ONT calls a sub-workflow listed below, which then calls the individual tasks:
-        
-        | Workflow | **TheiaProk_ONT** |
-        | --- | --- |
-        | Sub-workflow | [wf_read_QC_trim_ont.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_read_QC_trim_ont.wdl) |
-        | Tasks | [task_nanoplot.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_nanoplot.wdl) [task_fastq_scan.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_fastq_scan.wdl) [task_rasusa.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/task_rasusa.wdl) [task_nanoq.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_nanoq.wdl)
-        | Software Source Code | [fastq-scan](https://github.com/rpetit3/fastq-scan), [NanoPlot](https://github.com/wdecoster/NanoPlot), [RASUSA](https://github.com/mbhall88/rasusa), [nanoq](https://github.com/esteinig/nanoq) |
-        | Original Publication(s) | [NanoPlot paper](https://academic.oup.com/bioinformatics/article/39/5/btad311/7160911)<br>[RASUSA paper](https://doi.org/10.21105/joss.03941)<br>[Nanoq Paper](https://doi.org/10.21105/joss.02991)<br> |
-
-??? task "`Flye`: _De novo_ Assembly"
-
-    `flye_denovo` is a sub-workflow that performs _de novo_ assembly using Flye for ONT data and supports additional polishing and visualization steps.
-    
-    !!! tip "Ensure correct medaka model is selected if performing medaka polishing"
-        In order to obtain the best results, the appropriate model must be set to match the sequencer's basecaller model; this string takes the format of {pore}\_{device}\_{caller variant}\_{caller_version}. See also <https://github.com/nanoporetech/medaka?tab=readme-ov-file#models>. If `flye` is being run on legacy data the medaka model will likely be `r941_min_hac_g507`. Recently generated data will likely be suited by the default model of `r1041_e82_400bps_sup_v5.0.0`.
-
-    The detailed steps and tasks are as follows:
-
-    ??? toggle "`Porechop`: Read Trimming (optional; off by default)"
-        Read trimming is optional and can be enabled by setting the `run_porchop` input variable to true.
-
-        Porechop is a tool for finding and removing adapters from ONT data. Adapters on the ends of reads are trimmed, and when a read has an adapter in the middle, the read is split into two.
-
-        !!! techdetails "Porechop Technical Details"
-            |  | Links |
-            | --- | --- |
-            | WDL Task | [task_porechop.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_porechop.wdl) |
-            | Software Source Code | [Porechop on GitHub](https://github.com/rrwick/Porechop) |
-            | Software Documentation | [https://github.com/rrwick/Porechop#porechop](https://github.com/rrwick/Porechop#porechop) |
-
-    ??? toggle "`Flye`: _De novo_ Assembly"
-        Flye is a _de novo_ assembler for long read data using repeat graphs. Compared to de Bruijn graphs, which require exact k-mer matches, repeat graphs can use approximate matches which better tolerates the error rate of ONT data.
-
-        `flye_read_type` specifies the type of sequencing reads being used for assembly. This parameter significantly impacts the assembly process and should match the characteristics of your input data. Below are the available options:
-
-        - `--nano-hq` (default): Optimized for ONT high-quality reads, such as Guppy5+ SUP or Q20 (<5% error). Recommended for ONT reads processed with Guppy5 or newer
-        - `--nano-raw`: For ONT regular reads, pre-Guppy5 (<20% error)
-        - `--nano-corr`: ONT reads corrected with other methods (<3% error)
-        - `--pacbio-raw`: PacBio regular CLR reads (<20% error)
-        - `--pacbio-corr`: PacBio reads corrected with other methods (<3% error)
-        - `--pacbio-hifi`: PacBio HiFi reads (<1% error)
-        
-        Refer to the Flye documentation for detailed guidance on selecting the appropriate `flye_read_type` based on your sequencing data and additional optional paramaters.
-
-        !!! techdetails "Flye Technical Details"
-            |  | Links |
-            | --- | --- |
-            | WDL Task | [task_flye.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_flye.wdl) |
-            | Software Source Code | [Flye on GitHub](https://github.com/fenderglass/Flye) |
-            | Software Documentation | [Flye Documentation](https://github.com/fenderglass/Flye/blob/flye/docs/USAGE.md) |
-            | Original Publication(s) | [Assembly of long, error-prone reads using repeat graphs](https://www.nature.com/articles/s41587-019-0072-8) |
-
-    ??? toggle "`Bandage`: Graph Visualization"
-        Bandage creates _de novo_ assembly graphs containing the assembled contigs and the connections between those contigs.
-
-        !!! techdetails "Bandage Technical Details"
-            |  | Links |
-            | --- | --- |
-            | WDL Task | [task_bandage_plot.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_bandage_plot.wdl) |
-            | Software Source Code | [Bandage on GitHub](https://github.com/rrwick/Bandage) |
-            | Software Documentation | [Bandage Documentation](https://github.com/rrwick/Bandage#bandage) |
-            | Original Publication(s) | [Bandage: interactive visualization of _de novo_ genome assemblies](https://academic.oup.com/bioinformatics/article/31/20/3350/196114) |
-
-    ??? toggle "`Polypolish`: Hybrid Assembly Polishing ==_for ONT and Illumina data_=="
-        If short reads are provided with the optional `illumina_read1` and `illumina_read2` inputs, Polypolish will use those short-reads to correct errors in the long-read assemblies. Uniquely, Polypolish uses the short-read alignments where each read is aligned to _all_ possible locations, meaning that repeat regions will have error correction.
-    
-        !!! techdetails "Polypolish Technical Details"
-            |  | Links |
-            | --- | --- |
-            | Task | [task_polypolish.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/polishing/task_polypolish.wdl) |
-            | Software Source Code | [Polypolish on GitHub](https://github.com/rrwick/Polypolish) |
-            | Software Documentation | [Polypolish Documentation](https://github.com/rrwick/Polypolish#polypolish) |
-            | Original Publication(s) | [Polypolish: short-read polishing of long-read bacterial genome assemblies](https://doi.org/10.1371/journal.pcbi.1009802)<br>[How low can you go? Short-read polishing of Oxford Nanopore bacterial genome assemblies](https://www.microbiologyresearch.org/content/journal/mgen/10.1099/mgen.0.001254) |
-
-    ??? toggle "`Medaka`: Polishing of Flye assembly (default; optional)"
-        Polishing is optional and can be skipped by setting the `skip_polishing` variable to true. If polishing is skipped, then neither Medaka or Racon will run.
-
-        Medaka is the default assembly polisher used in TheiaProk. Racon may be used alternatively, and if so, Medaka will not run. Medaka uses the raw reads to polish the assembly and generate a consensus sequence. 
-
-        Importantly, Medaka requires knowing the model that was used to generate the read data. There are several ways to provide this information:
-
-        - Automatic Model Selection: Automatically determines the most appropriate Medaka model based on the input data, ensuring optimal polishing results without manual intervention. 
-        - User-Specified Model Override: Allows users to specify a particular `Medaka model` if automatic selection does not yield the desired outcome or for specialized use cases.
-        - Default Model: If both automatic model selection fails and no user-specified model is provided, Medaka defaults to the predefined fallback model `r1041_e82_400bps_sup_v5.0.0`. 
-
-        !!! info "Medaka Model Resolution Process" 
-            Medaka's automatic model selection uses the `medaka tools resolve_model` command to identify the appropriate model for polishing. This process relies on metadata embedded in the input file, which is typically generated by the basecaller. If the automatic selection fails to identify a suitable model, Medaka gracefully falls back to the default model to maintain workflow continuity. **Users should verify the chosen model and consider specifying a model override if necessary.**
-
-        !!! techdetails "Medaka Technical Details"
-            |  | Links |
-            | --- | --- |
-            | WDL Task | [task_medaka.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/polishing/task_medaka.wdl) |
-            | Software Source Code | [Medaka on GitHub](https://github.com/nanoporetech/medaka) |
-            | Software Documentation | [Medaka Documentation](https://github.com/nanoporetech/medaka#medaka) |
-
-    ??? toggle "`Racon`: Polishing of Flye assembly (alternative; optional)"
-        Polishing is optional and can be skipped by setting the `skip_polishing` variable to true. If polishing is skipped, then neither Medaka or Racon will run.
-
-        `Racon` is an alternative to using `medaka` for assembly polishing, and can be run by setting the `polisher` input to "racon".  Racon is a consensus algorithm designed for refining raw de novo DNA assemblies generated from long, uncorrected sequencing reads.
-
-        !!! techdetails "Racon Technical Details"
-            |  | Links |
-            | --- | --- |
-            | WDL Task | [task_racon.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/polishing/task_racon.wdl) |
-            | Software Source Code | [Racon on GitHub](https://github.com/lbcb-sci/racon) |
-            | Software Documentation | [Racon Documentation](https://github.com/lbcb-sci/racon#racon) |
-            | Original Publication(s) | [Fast and accurate de novo genome assembly from long uncorrected reads](https://genome.cshlp.org/content/27/5/737) |
-
-    ??? toggle "`Filter Contigs`: Filter contigs below a threshold length and remove homopolymer contigs"
-        This task filters the created contigs based on a user-defined minimum length threshold (default of 1000) and eliminates homopolymer contigs (contigs of any length that consist of a single nucleotide). This ensures high-quality assemblies by retaining only contigs that meet specified criteria. Detailed metrics on contig counts and sequence lengths before and after filtering are provided in the output.
-
-        !!! techdetails "Filter Contigs Technical Details" 
-            |  | Links |
-            | --- | --- |
-            | WDL Task | [task_filter_contigs.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_filter_contigs.wdl) |
-        
-    ??? toggle "`Dnaapler`: Final Assembly Orientation"
-        Dnaapler reorients contigs to start at specific reference points. Dnaapler supports the following modes, which can be indicated by filling the `dnaapler_mode` input variable with the desired mode. The default is `all`, which reorients contigs to start with `dnaA`, `terL`, `repA`, or `COG1474`.
-
-        - **all**: Reorients contigs to start with `dnaA`, `terL`, `repA`, or `COG1474` (_Default_)
-        - **chromosome**: Reorients to begin with the `dnaA` chromosomal replication initiator gene, commonly used for bacterial chromosome assemblies.
-        - **plasmid**: Reorients to start with the `repA` plasmid replication initiation gene, ideal for plasmid assemblie
-        - **phage**: Reorients to start with the `terL` large terminase subunit gene, used for bacteriophage assemblies
-        - **archaea**: Reorients to start with the `COG1474` archaeal Orc1/cdc6 gene, relevant for archaeal assemblies
-        - **custom**: Reorients based on a user-specified gene in amino acid FASTA format for experimental or unique workflows
-        - **mystery**: Reorients to start with a random CDS for exploratory purposes
-        - **largest**: Reorients to start with the largest CDS in the assembly, often useful for poorly annotated genomes
-        - **nearest**: Reorients to start with the first CDS nearest to the sequence start, resolving CDS breakpoints
-        - **bulk**: Processes multiple contigs to start with the desired start gene (`dnaA`, `terL`, `repA`, or custom)
-
-        !!! techdetails "Dnaapler Technical Details"
-            |  | Links |
-            | --- | --- |
-            | WDL Task | [task_dnaapler.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_dnaapler.wdl) |
-            | Software Source Code | [Dnaapler on GitHub](https://github.com/gbouras13/dnaapler) |
-            | Software Documentation | [Dnaapler Documentation](https://github.com/gbouras13/dnaapler?tab=readme-ov-file#dnaapler) |
-            | Original Publication(s) | [Dnaapler: a tool to reorient circular microbial genomes](https://joss.theoj.org/papers/10.21105/joss.05968) |
-
-#### Post-Assembly Tasks (performed for all taxa)
-
-??? task  "`quast`: Assembly Quality Assessment"
-
-    QUAST stands for QUality ASsessment Tool. It evaluates genome/metagenome assemblies by computing various metrics without a reference being necessary. It includes useful metrics such as number of contigs, length of the largest contig and N50. 
-
-    !!! techdetails "QUAST Technical Details"
-        
-        |  | Links |
-        | --- | --- |
-        | Task | [task_quast.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_quast.wdl) |
-        | Software Source Code | [QUAST on GitHub](https://github.com/ablab/quast) |
-        | Software Documentation | <https://quast.sourceforge.net/> |
-        | Original Publication(s) | [QUAST: quality assessment tool for genome assemblies](https://academic.oup.com/bioinformatics/article/29/8/1072/228832) |
-
-??? task "`BUSCO`: Assembly Quality Assessment"
-
-    BUSCO (**B**enchmarking **U**niversal **S**ingle-**C**opy **O**rthologue) attempts to quantify the completeness and contamination of an assembly to generate quality assessment metrics. It uses taxa-specific databases containing genes that are all expected to occur in the given taxa, each in a single copy. BUSCO examines the presence or absence of these genes, whether they are fragmented, and whether they are duplicated (suggestive that additional copies came from contaminants).
-
-    **BUSCO notation** 
-    
-    Here is an example of BUSCO notation: `C:99.1%[S:98.9%,D:0.2%],F:0.0%,M:0.9%,n:440`. There are several abbreviations used in this output:
-    
-    - Complete (C) - genes are considered "complete" when their lengths are within two standard deviations of the BUSCO group mean length.
-    - Single-copy (S) - genes that are complete and have only one copy.
-    - Duplicated (D) - genes that are complete and have more than one copy.
-    - Fragmented (F) - genes that are only partially recovered.
-    - Missing (M) - genes that were not recovered at all.
-    - Number of genes examined (n) - the number of genes examined.
-    
-    A high equity assembly will use the appropriate database for the taxa, have high complete (C) and single-copy (S) percentages, and low duplicated (D), fragmented (F) and missing (M) percentages. 
-  
-    !!! techdetails "BUSCO Technical Details"
-        
-        |  | Links |
-        | --- | --- |
-        | Task | [task_busco.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/advanced_metrics/task_busco.wdl) |
-        | Software Source Code | [BUSCO on GitLab](https://gitlab.com/ezlab/busco) |
-        | Software Documentation | https://busco.ezlab.org/ |
-        | Orginal publication | [BUSCO: assessing genome assembly and annotation completeness with single-copy orthologs](https://academic.oup.com/bioinformatics/article/31/19/3210/211866) |
+{{ include_md("common_text/quast_task.md") }}
+{{ include_md("common_text/busco_task.md") }}
 
 ??? task "`MUMmer_ANI`: Average Nucleotide Identity (optional)"
 
@@ -486,20 +152,7 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
         | Original Publication(s) | [MUMmer4: A fast and versatile genome alignment system](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1005944) |
         | Publication about RGDv2 database | https://www.frontiersin.org/articles/10.3389/fmicb.2023.1225207/full |
 
-??? task "`GAMBIT`: **Taxon Assignment**"
-
-    [`GAMBIT`](https://github.com/jlumpe/gambit) determines the taxon of the genome assembly using a k-mer based approach to match the assembly sequence to the closest complete genome in a database, thereby predicting its identity. Sometimes, GAMBIT can confidently designate the organism to the species level. Other times, it is more conservative and assigns it to a higher taxonomic rank.
-
-    For additional details regarding the GAMBIT tool and a list of available GAMBIT databases for analysis, please consult the [GAMBIT](../../guides/gambit.md) tool documentation.
-
-    !!! techdetails "GAMBIT Technical Details"
-
-        |  | Links |
-        | --- | --- |
-        | Task | [task_gambit.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/task_gambit.wdl) |
-        | Software Source Code | [GAMBIT on GitHub](https://github.com/jlumpe/gambit) |
-        | Software Documentation | [GAMBIT ReadTheDocs](https://gambit-genomics.readthedocs.io/en/latest/) |
-        | Original Publication(s) | [GAMBIT (Genomic Approximation Method for Bacterial Identification and Tracking): A methodology to rapidly leverage whole genome sequencing of bacterial isolates for clinical identification](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0277575) |
+{{ include_md("common_text/gambit_task.md") }}
 
 ??? task "`KmerFinder`: Taxon Assignment (optional)"
 
@@ -688,31 +341,7 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
         | Software Documentation | https://bitbucket.org/genomicepidemiology/plasmidfinder/src/master/ |
         | Original Publication(s) | [In Silico Detection and Typing of Plasmids using PlasmidFinder and Plasmid Multilocus Sequence Typing](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4068535/) |
 
-??? task "**`qc_check`: Check QC Metrics Against User-Defined Thresholds (optional)**"
-
-    The `qc_check` task compares generated QC metrics against user-defined thresholds for each metric. This task will run if the user provides a `qc_check_table` .tsv file. If all QC metrics meet the threshold, the `qc_check` output variable will read `QC_PASS`. Otherwise, the output will read `QC_NA` if the task could not proceed or `QC_ALERT` followed by a string indicating what metric failed.
-
-    The `qc_check` task applies quality thresholds according to the sample taxa. The sample taxa is taken from the `gambit_predicted_taxon` value inferred by the GAMBIT module OR can be manually provided by the user using the `expected_taxon` workflow input.
-
-    ??? toggle "Formatting the _qc_check_table.tsv_"
-
-        - The first column of the qc_check_table lists the taxa that the task will assess and the header of this column must be "taxon".
-        - Any genus or species can be included as a row of the qc_check_table. However, these taxa must ^^**uniquely**^^ match the sample taxa, meaning that the file can include multiple species from the same genus (Vibrio_cholerae and Vibrio_vulnificus), but not both a genus row and species within that genus (Vibrio and Vibrio cholerae). **The taxa should be formatted with the first letter capitalized and underscores in lieu of spaces.**
-        - Each subsequent column indicates a QC metric and lists a threshold for each taxa that will be checked. **The column names must exactly match expected values, so we highly recommend copy and pasting from the template files below.**
-
-    ??? toggle "Template _qc_check_table.tsv_ files"
-
-        - TheiaProk_Illumina_PE: [theiaprok_illumina_pe_qc_check_template.tsv](../../assets/files/TheiaProk_Illumina_PE_qc_check_template.tsv)
-        - TheiaProk_FASTA: [theiaprok_fasta_qc_check_template.tsv](../../assets/files/TheiaProk_FASTA_qc_check_template.tsv)
-
-        !!! warning "Example Purposes Only"
-            QC threshold values shown are for example purposes only and should not be presumed to be sufficient for every dataset.
-
-    !!! techdetails "QC_Check Technical Details"    
-        
-        |  | Links |
-        | --- | --- |
-        | Task | [task_qc_check_phb.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/comparisons/task_qc_check_phb.wdl.wdl) |
+{{ include_md("common_text/qc_check_task.md", condition="theiaprok")}}
 
 ??? task "`Taxon Tables`: Copy outputs to new data tables based on taxonomic assignment (optional)"
 
@@ -749,7 +378,10 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 
 ### Taxa-Specific Tasks
 
-The TheiaProk workflows automatically activate taxa-specific sub-workflows after the identification of relevant taxa using `GAMBIT`. Alternatively, the user can provide the expected taxa in the `expected_taxon` workflow input to override the taxonomic assignment made by GAMBIT. Modules are launched for all TheiaProk workflows unless otherwise indicated.
+!!! dna ""
+    The TheiaProk workflows automatically activate taxa-specific sub-workflows after the identification of relevant taxa using `GAMBIT`. Alternatively, the user can provide the expected taxa in the `expected_taxon` workflow input to override the taxonomic assignment made by GAMBIT. Modules are launched for all TheiaProk workflows unless otherwise indicated.
+
+    Please note that some modules require specific input data that may render it incompatible with every workflow. For example, ShigaTyper (a _Shigella_/EIEC serotyping tool) is not available for TheiaProk_FASTA as it requires read data as input. We have made a note next to each module to indicate which workflows are compatible with the module if there are restrictions.
 
 ??? toggle "_Acinetobacter baumannii_"
     ##### _Acinetobacter baumannii_ {% raw %} {#acinetobacter-baumannii} {% endraw %}

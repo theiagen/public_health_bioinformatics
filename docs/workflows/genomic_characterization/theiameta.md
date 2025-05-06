@@ -25,20 +25,13 @@ The TheiaMeta_Illumina_PE workflow processes Illumina paired-end (PE) reads ge
 
 /// html | div[class="searchable-table"]
 
-{{ input_table("docs/assets/input_tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="TheiaMeta_Illumina_PE", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"]) }}
+{{ input_table("docs/assets/tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="TheiaMeta_Illumina_PE", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"]) }}
 
 ///
 
 ### Workflow Tasks
 
-??? task "`versioning`: Version Capture for TheiaMeta"
-    The `versioning` task captures the workflow version from the GitHub (code repository) version.
-
-    !!! techdetails "Version Capture Technical details"
-        
-        |  | Links |
-        | --- | --- |
-        | Task | [task_versioning.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/task_versioning.wdl) |
+{{ include_md("common_text/versioning_task.md") }}
 
 #### Read Cleaning and QC
 
