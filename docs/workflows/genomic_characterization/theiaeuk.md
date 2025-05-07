@@ -13,7 +13,7 @@
 All input reads are processed through "core tasks" in each workflow. The core tasks include raw read quality assessment, read cleaning (quality trimming and adapter removal), de novo assembly, assembly quality assessment, and species taxon identification. For some taxa identified, taxa-specific sub-workflows will be automatically activated, undertaking additional taxa-specific characterization steps, including clade-typing and/or antifungal resistance detection.
 
 !!! caption "TheiaEuk Workflow Diagram"
-    ![TheiaEuk Workflow Diagram](../../assets/figures/TheiaEuk_Illumina_PHB_2025123.png){width=75%}
+    ![TheiaEuk Workflow Diagram](../../assets/figures/TheiaEuk_Illumina_PHB_202557.png){width=75%}
 
 ### Inputs
 
