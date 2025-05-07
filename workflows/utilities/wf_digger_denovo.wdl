@@ -44,9 +44,13 @@ workflow digger_denovo {
     Int? pilon_memory
     Int? pilon_disk_size
     String? pilon_docker
-    # Optional parameters for filtering
-    Int filter_contigs_min_length = 200
-    Float filter_contigs_min_coverage = 2.0
+    Int? pilon_min_mapping_quality = 60 # Shovill default
+    Int? pilon_min_base_quality = 3 # Shovill default
+    Float? pilon_min_depth = 0.25 # Shovill default
+    String? pilon_fix = "bases" # Options: all, snps, indels, gaps
+    # Optional parameters for filtering 
+    Int filter_contigs_min_length = 200 # Default we set before
+    Float filter_contigs_min_coverage = 2.0 # Default we set before
     Boolean filter_contigs_skip_length_filter = false
     Boolean filter_contigs_skip_coverage_filter = false
     Boolean filter_contigs_skip_homopolymer_filter = false
@@ -117,6 +121,10 @@ workflow digger_denovo {
         bam = bwa.sorted_bam,
         bai = bwa.sorted_bai,
         samplename = samplename,
+        min_mapping_quality = pilon_min_mapping_quality,
+        min_base_quality = pilon_min_base_quality,
+        min_depth = pilon_min_depth,
+        fix = pilon_fix,
         cpu = pilon_cpu,
         memory = pilon_memory,
         disk_size = pilon_disk_size,
