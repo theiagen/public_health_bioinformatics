@@ -65,9 +65,9 @@ Besides the data input types, there are minimal differences between these two wo
         {{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="Kraken_ONT", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
         ///
 
-### Analysis Tasks
+### Workflow Tasks
 
-
+{{ include_md("common_text/kraken2_task.md", condition="kraken") }}
 
 ### Outputs
 

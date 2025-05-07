@@ -152,22 +152,7 @@ The TheiaMeta_Illumina_PE workflow processes Illumina paired-end (PE) reads ge
         | Original Publication(s) | [metaSPAdes: a new versatile metagenomic assembler](http://www.genome.org/cgi/doi/10.1101/gr.213959.116) |
 
 ??? task "`minimap2`: Assembly Correction"
-
-    `minimap2` is a popular aligner that is used for correcting the assembly produced by metaSPAdes. This is done by aligning the reads back to the generated assembly or a reference genome.
-
-    In minimap2, "modes" are a group of preset options.
-    
-    The mode used in this task is `sr` which is intended for "short single-end reads without splicing". The `sr` mode indicates the following parameters should be used: `-k21 -w11 --sr --frag=yes -A2 -B8 -O12,32 -E2,1 -b0 -r100 -p.5 -N20 -f1000,5000 -n2 -m20 -s40 -g100 -2K50m --heap-sort=yes --secondary=no`. The output file is in SAM format.
-
-    For more information, please see the [minimap2 manpage](https://lh3.github.io/minimap2/minimap2.html)
-
-    !!! techdetails "minimap2 Technical Details"
-        | | Links |
-        |---|---|
-        | Task | [task_minimap2.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/alignment/task_minimap2.wdl) |
-        | Software Source Code | [minimap2 on GitHub](https://github.com/lh3/minimap2) |
-        | Software Documentation | [minimap2](https://lh3.github.io/minimap2) |
-        | Original Publication(s) | [Minimap2: pairwise alignment for nucleotide sequences](https://academic.oup.com/bioinformatics/article/34/18/3094/4994778) |
+{{ include_md("common_text/minimap2_task.md", condition="sr_mode")}}
 
 ??? task "`samtools`: SAM File Conversion "
     This task converts the output SAM file from minimap2 and converts it to a BAM file. It then sorts the BAM based on the read names, and then generates an index file.
@@ -197,21 +182,7 @@ The TheiaMeta_Illumina_PE workflow processes Illumina paired-end (PE) reads ge
     These tasks only run if a reference is provided through the `reference` optional input.
 
 ??? task "`minimap2`: Assembly Alignment and Contig Filtering"
-    `minimap2` is a popular aligner that is used here to to map the Pilon-polished assembly to the reference genome. Any aligned contigs are retrieved and returned.
-
-    In minimap2, "modes" are a group of preset options. 
-
-    The mode used in this task is `asm20` which is intended for "long assembly to reference mapping". The `asm20` mode indicates the following parameters should be used: `-k19 -w10 -U50,500 --rmq -r100k -g10k -A1 -B4 -O6,26 -E2,1 -s200 -z200 -N50`. The output file is in PAF format.
-
-    For more information, please see the [minimap2 manpage](https://lh3.github.io/minimap2/minimap2.html)
-
-    !!! techdetails "minimap2 Technical Details"
-        | | Links |
-        |---|---|
-        | Task | [task_minimap2.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/alignment/task_minimap2.wdl) |
-        | Software Source Code | [minimap2 on GitHub](https://github.com/lh3/minimap2) |
-        | Software Documentation | [minimap2](https://lh3.github.io/minimap2) |
-        | Original Publication(s) | [Minimap2: pairwise alignment for nucleotide sequences](https://academic.oup.com/bioinformatics/article/34/18/3094/4994778) |
+{{ include_md("common_text/minimap2_task.md", condition="asm20_mode")}}
 
 ??? task "Parsing the PAF file into a FASTA file"
 
@@ -282,21 +253,7 @@ The TheiaMeta_Illumina_PE workflow processes Illumina paired-end (PE) reads ge
     These tasks only run if `output_additional_files` is set to `true` (default is `false`).
 
 ??? task "`minimap2`: Read Alignment to the Assembly"
-    `minimap2` is a popular aligner that is used here to align the clean reads to the final assembly. This is done to provide additional information about the assembly.
-
-    In minimap2, "modes" are a group of preset options.
-    
-    The mode used in this task is `sr` which is intended for "short single-end reads without splicing". The `sr` mode indicates the following parameters should be used: `-k21 -w11 --sr --frag=yes -A2 -B8 -O12,32 -E2,1 -b0 -r100 -p.5 -N20 -f1000,5000 -n2 -m20 -s40 -g100 -2K50m --heap-sort=yes --secondary=no`. The output file is in SAM format.
-
-    For more information, please see the [minimap2 manpage](https://lh3.github.io/minimap2/minimap2.html)
-
-    !!! techdetails "minimap2 Technical Details"
-        | | Links |
-        |---|---|
-        | Task | [task_minimap2.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/alignment/task_minimap2.wdl) |
-        | Software Source Code | [minimap2 on GitHub](https://github.com/lh3/minimap2) |
-        | Software Documentation | [minimap2](https://lh3.github.io/minimap2) |
-        | Original Publication(s) | [Minimap2: pairwise alignment for nucleotide sequences](https://academic.oup.com/bioinformatics/article/34/18/3094/4994778) |
+{{ include_md("common_text/minimap2_task.md", condition="sr_mode")}}
 
 ??? task "`samtools`: SAM File Conversion (Round 2)"
     This task converts the output SAM file from minimap2 and converts it to a BAM file. It then sorts the BAM based on the read names, and then generates an index file.

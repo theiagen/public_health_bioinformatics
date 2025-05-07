@@ -123,25 +123,7 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
 ??? toggle "_Candidozyma auris_ (also known as _Candida auris_)"
     Two tools are deployed when _Candidozyma auris_/_Candida auris_ is  identified.
 
-    ??? task "Cladetyping: clade determination"
-        GAMBIT is used to determine the clade of the specimen by comparing the sequence to five clade-specific reference files. The output of the clade typing task will be used to specify the reference genome for the antifungal resistance detection tool.
-
-        ??? toggle "Default reference genomes used for clade typing and antimicrobial resistance gene detection of _C. auris_"
-            | Clade | Genome Accession | Assembly Name | Strain | NCBI Submitter | Included mutations in AMR genes (not comprehensive) |
-            | --- | --- | --- | --- | --- | --- |
-            | _Candidozyma auris_ Clade I | GCA_002759435.2 | Cand_auris_B8441_V2 | B8441 | Centers for Disease Control and Prevention |  |
-            | _Candidozyma auris_ Clade II | GCA_003013715.2 | ASM301371v2 | B11220 | Centers for Disease Control and Prevention |  |
-            | _Candidozyma auris_ Clade III | GCA_002775015.1 | Cand_auris_B11221_V1 | B11221 | Centers for Disease Control and Prevention | _ERG11_ V125A/F126L |
-            | _Candidozyma auris_ Clade IV | GCA_003014415.1 | Cand_auris_B11243 | B11243 | Centers for Disease Control and Prevention | _ERG11_ Y132F |
-            | _Candidozyma auris_ Clade V | GCA_016809505.1 | ASM1680950v1 | IFRC2087 | Centers for Disease Control and Prevention |  |
-
-        !!! techdetails "Cladetyping Technical Details"
-            |  | Links |
-            | --- | --- |
-            | Task | [task_cauris_cladetyping.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/candida/task_cauris_cladetyper.wdl) |
-            | Software Source Code | [GAMBIT on GitHub](https://github.com/jlumpe/gambit) |
-            | Software Documentation | [GAMBIT Overview](https://theiagen.notion.site/GAMBIT-7c1376b861d0486abfbc316480046bdc?pvs=4)
-            | Original Publication(s) | [GAMBIT (Genomic Approximation Method for Bacterial Identification and Tracking): A methodology to rapidly leverage whole genome sequencing of bacterial isolates for clinical identification](https://doi.org/10.1371/journal.pone.0277575)<br> [TheiaEuk: a species-agnostic bioinformatics workflow for fungal genomic characterization](https://doi.org/10.3389/fpubh.2023.1198213) |
+{{ include_md("common_text/cauris_cladetyper.md", indent=4) }}
 
     ??? task "Snippy Variants: antifungal resistance detection"
         To detect mutations that may confer antifungal resistance, `Snippy` is used to find all variants relative to the clade-specific reference, then these variants are queried for product names associated with resistance.

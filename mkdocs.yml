@@ -185,6 +185,10 @@ nav:
         - Contributing to the Documentation: contributing/doc_contribution.md
         - Contributing to the Code: contributing/code_contribution.md
 
+not_in_nav: |
+  assets/* 
+  common_text/*
+
 theme: 
   name: material
   logo: assets/logos/Theiagen-Logo-White.png

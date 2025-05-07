@@ -136,18 +136,7 @@ This workflow runs on the sample level.
 === "ONT input data"
 
 {{ include_md("common_text/read_qc_trim_ont.md", indent=4, condition="freyja") }}
-
-    ??? task "`minimap2` Details"
-        This task aligns the cleaned long reads (Oxford Nanopore) to the reference genome provided by the user.
-
-        !!! techdetails "Minimap2 Technical Details"
-        
-            |  | Links |
-            | --- | --- |
-            | Task | [task_minimap2.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/alignment/task_minimap2.wdl) |
-            | Software Source Code | <https://github.com/lh3/minimap2> |
-            | Software Documentation | <https://lh3.github.io/minimap2/> |
-            | Original Publication(s) | [Minimap2: pairwise alignment for nucleotide sequences](https://doi.org/10.1093/bioinformatics/bty191) |
+{{ include_md("common_text/minimap2_task.md", condition="only_map_ont", indent=4) }}
 
 ??? task "`freyja` Details"
     The Freyja task will call variants and capture sequencing depth information to identify the relative abundance of lineages present. Optionally, if `bootstrap` is set to true, bootstrapping will be performed. After the optional bootstrapping step, the variants are demixed.

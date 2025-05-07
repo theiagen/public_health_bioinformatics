@@ -112,7 +112,6 @@ def define_env(env):
     Returns:
       str: Preprocessed Markdown content.
     """    
-
     docs_dir = Path(env.project_dir) / 'docs'
     include_path = (docs_dir / Path(path)).resolve()
 
@@ -123,7 +122,6 @@ def define_env(env):
     lines = content.split('\n')
     adjusted_lines = []
     include_block = True
-
 
     for line in lines:
       # Handle conditionals (<!-- if: condition --> and <!-- endif -->)
@@ -217,10 +215,14 @@ def define_env(env):
       docs_dir = (Path(env.project_dir) / 'docs').resolve()
       
       try:
-        resolved_path = os.path.relpath(absolute_path, start=Path(base_path).parent).replace(os.sep, '/')
+        relative_path = os.path.relpath(absolute_path, start=docs_dir).replace(os.sep, '/')
       except ValueError:
         return match.group(0)
       
+      resolved_path = os.path.relpath(absolute_path, start=Path(base_path).parent)
+      resolved_path = resolved_path.replace(os.sep, '/')
+      
+      # Return the correctly formatted link or image tag
       if is_image:
         return f'![{alt_text}]({resolved_path})'
       else:
@@ -245,8 +247,10 @@ def define_env(env):
         try:
           replacements_str = "=".join(token.split("=")[1:]).strip()
           replacements = ast.literal_eval(replacements_str)
+          
           if not isinstance(replacements, dict):
             raise ValueError("Replacements must be a dictionary.")
+          
           args["replacements"] = replacements
         except Exception as e:
           raise ValueError(f"Invalid replacements format: {e}")

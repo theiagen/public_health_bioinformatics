@@ -54,41 +54,31 @@ The `Clair3_Variants` workflow processes Oxford Nanopore Technologies (ONT) sequ
 
 ### Workflow Tasks
 
-??? task "`minimap2`: Read Alignment"
-
-    `minimap2` is used with long read specific parameters (-L --cs --MD flags) to align ONT reads to the reference genome. These specialized parameters are essential for proper handling of long read error profiles, generation of detailed alignment information, and improved mapping accuracy for long reads.
-
-    !!! techdetails "minimap2 Technical Details"
-      | | Links |
-      |---|---|
-      | Task | [task_minimap2.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/alignment/task_minimap2.wdl) |
-      | Software Source Code | [minimap2 on GitHub](https://github.com/lh3/minimap2) |
-      | Software Documentation | [minimap2](https://lh3.github.io/minimap2) |
-      | Original Publication(s) | [Minimap2: pairwise alignment for nucleotide sequences](https://academic.oup.com/bioinformatics/article/34/18/3094/4994778) |
+{{ include_md("common_text/minimap2_task.md", condition="long_read_flags")}}
 
 ??? task "`samtools`: BAM Processing"
 
     The bam processing step aligns files through several coordinate-based steps to prepare for variant calling. The task converts SAM format to BAM, sorts the BAM file by coordinate, and creates a BAM index file. This processed BAM is required for Clair3's variant calling pipeline.
 
     !!! techdetails "samtools Technical Details"
-      | | Links |
-      |---|---|
-      | Task | [task_samtools.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/data_handling/task_parse_mapping.wdl) |
-      | Software Source Code | [samtools on GitHub](https://github.com/samtools/samtools) |
-      | Software Documentation | [samtools](https://www.htslib.org/doc/samtools.html) |
-      | Original Publication(s) | [The Sequence Alignment/Map format and SAMtools](https://doi.org/10.1093/bioinformatics/btp352)<br>[Twelve Years of SAMtools and BCFtools](https://doi.org/10.1093/gigascience/giab008) |
+        | | Links |
+        |---|---|
+        | Task | [task_samtools.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/data_handling/task_parse_mapping.wdl) |
+        | Software Source Code | [samtools on GitHub](https://github.com/samtools/samtools) |
+        | Software Documentation | [samtools](https://www.htslib.org/doc/samtools.html) |
+        | Original Publication(s) | [The Sequence Alignment/Map format and SAMtools](https://doi.org/10.1093/bioinformatics/btp352)<br>[Twelve Years of SAMtools and BCFtools](https://doi.org/10.1093/gigascience/giab008) |
 
 ??? task "`samtools faidx`: Reference Genome Indexing"
 
     `samtools faidx` creates necessary index files for the reference. This indexing step is    essential for enabling efficient random access to the reference sequence during variant calling.
 
     !!! techdetails "samtools Technical Details"
-      | | Links |
-      |---|---|
-      | Task | [task_samtools.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/data_handling/task_parse_mapping.wdl) |
-      | Software Source Code | [samtools on GitHub](https://github.com/samtools/samtools) |
-      | Software Documentation | [samtools](https://www.htslib.org/doc/samtools.html) |
-      | Original Publication(s) | [The Sequence Alignment/Map format and SAMtools](https://doi.org/10.1093/bioinformatics/btp352)<br>[Twelve Years of SAMtools and BCFtools](https://doi.org/10.1093/gigascience/giab008) |
+        | | Links |
+        |---|---|
+        | Task | [task_samtools.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/data_handling/task_parse_mapping.wdl) |
+        | Software Source Code | [samtools on GitHub](https://github.com/samtools/samtools) |
+        | Software Documentation | [samtools](https://www.htslib.org/doc/samtools.html) |
+        | Original Publication(s) | [The Sequence Alignment/Map format and SAMtools](https://doi.org/10.1093/bioinformatics/btp352)<br>[Twelve Years of SAMtools and BCFtools](https://doi.org/10.1093/gigascience/giab008) |
 
 ??? task "`Clair3`: Variant Calling"
 
@@ -100,12 +90,12 @@ The `Clair3_Variants` workflow processes Oxford Nanopore Technologies (ONT) sequ
     - Structural variants
 
     !!! techdetails "Clair3 Technical Details"
-      |  | Links |
-      | --- | --- |
-      | Task | [task_clair3.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/variant_detection/task_clair3.wdl) |
-      | Software Source Code | [Clair3 on GitHub](https://github.com/HKU-BAL/Clair3) |
-      | Software Documentation | [Clair3 Documentation](https://github.com/HKU-BAL/Clair3?tab=readme-ov-file#usage) |
-      | Original Publication(s) | [Symphonizing pileup and full-alignment for deep learning-based long-read variant calling](https://doi.org/10.1101/2021.12.29.474431) |
+        |  | Links |
+        | --- | --- |
+        | Task | [task_clair3.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/variant_detection/task_clair3.wdl) |
+        | Software Source Code | [Clair3 on GitHub](https://github.com/HKU-BAL/Clair3) |
+        | Software Documentation | [Clair3 Documentation](https://github.com/HKU-BAL/Clair3?tab=readme-ov-file#usage) |
+        | Original Publication(s) | [Symphonizing pileup and full-alignment for deep learning-based long-read variant calling](https://doi.org/10.1101/2021.12.29.474431) |
 
 ### Outputs
 

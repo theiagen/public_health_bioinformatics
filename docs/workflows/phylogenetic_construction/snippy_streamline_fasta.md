@@ -114,9 +114,9 @@ The `Snippy_Streamline_FASTA` workflow is an all-in-one approach to generating a
 {{ include_md("common_text/gubbins_task.md", condition="snippy_streamline") }}
 {{ include_md("common_text/snp_sites_task.md")}}
 {{ include_md("common_text/iqtree2_task.md")}}
-{{ include_md("common_text/snp_dists_task.md")}}
-{{ include_md("common_text/data_summary_task.md")}}
-{{ include_md("common_text/shared_variants_task.md")}}
+{{ include_md("common_text/snp_dists_task.md", condition="snippy")}}
+{{ include_md("common_text/data_summary_task.md", condition="snippy")}}
+{{ include_md("common_text/shared_variants_task.md", condition="snippy")}}
 {{ include_md("common_text/snippy_qc_concatenation_task.md")}}
 
 ### Outputs

@@ -4,6 +4,9 @@
 <!-- if: theiacov|freyja -->
 ??? task "Read Identification with Kraken2"
 <!-- endif -->
+<!-- if: kraken -->
+??? task "Kraken2"
+<!-- endif -->
     `Kraken2` is a bioinformatics tool originally designed for metagenomic applications. It has additionally proven valuable for validating taxonomic assignments and checking contamination of single-species (e.g. bacterial isolate, eukaryotic isolate, viral isolate, etc.) whole genome sequence data.
 
 <!-- if: theiacov|freyja -->
@@ -19,9 +22,14 @@
     A database must be provided if this optional module is activated, through the kraken_db optional input. A list of suggested databases can be found on [Kraken2 standalone documentation](../standalone/kraken2.md#databases).
 <!-- endif -->
 
+<!-- if: kraken -->
+    This workflow is database dependent, and one is required to run this task. Please see above for a list of suggested databases to provide through the `kraken2_db` input variable.
+<!-- endif -->
+
     !!! techdetails "Kraken2 Technical Details"
         |  | Links |
         | --- | --- |
+        | Task | [task_kraken2.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/contamination/task_kraken2.wdl) |
         | Software Source Code | [Kraken2 on GitHub](https://github.com/DerrickWood/kraken2/)  |
         | Software Documentation | <https://github.com/DerrickWood/kraken2/blob/master/docs/MANUAL.markdown> |
         | Original Publication(s) | [Improved metagenomic analysis with Kraken 2](https://link.springer.com/article/10.1186/s13059-019-1891-0) |

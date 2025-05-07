@@ -1,8 +1,13 @@
+<!-- if: snippy -->
 ??? task "Concatenate Variants (optional)"
     ##### Concatenate Variants (optional)
 
     ==This task activates when `call_shared_variants` is true.==
-
+<!-- endif -->
+<!-- if: find_shared_variants -->
+??? task "Concatenate Variants"
+    ##### Concatenate Variants
+<!-- endif -->
     The `cat_variants` task concatenates variant data from multiple samples into a single file `concatenated_variants`. It is very similar to the `cat_files` task, but also adds a column to the output file that indicates the sample associated with each row of data.
 
     The `concatenated_variants` file will be in the following format:
@@ -19,10 +24,16 @@
         | --- | --- |
         | Task | [task_cat_files.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/file_handling/task_cat_files.wdl) |
 
-??? task "Shared Variants Task (Optional)"
+<!-- if: snippy -->
+??? task "Shared Variants (optional)"
     ##### Shared Variants (optional)
 
     ==This task activates when `call_shared_variants` is true.==
+<!-- endif -->
+<!-- if: find_shared_variants -->
+??? task "Shared Variants"
+    ##### Shared Variants
+<!-- endif -->
 
     The `shared_variants` task takes in the `concatenated_variants` output from the `cat_variants` task and reshapes the data so that variants are rows and samples are columns. For each variant, samples where the variant was detected are populated with a "1" and samples were **either the variant was not detected or there was insufficient coverage to call variants** are populated with a "0". The resulting table is available as the `shared_variants_table` output.
 
