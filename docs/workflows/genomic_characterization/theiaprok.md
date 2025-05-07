@@ -1869,7 +1869,7 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
 | arln_r2_q30_raw | String | Q30% of the raw R2 FASTQ | PE |
 | arln_r1_q30_clean | String | Q30% of the cleaned R1 FASTQ | ONT, PE, SE |
 | arln_r2_q30_clean | String | Q30% of the cleaned R2 FASTQ | PE |
-| arln_assembly_ratio | String | Assembly ratio with standard deviation | FASTA, ONT, PE, SE |
+| arln_assembly_ratio | String | Assembly ratio with standard deviation, for example, 1.0147x(0.35499) is 1.0147x away from a STD of 0.35499. These stats are gathered from a statistics file created by the CDC aggregating NCBI assembly data by taxon. | FASTA, ONT, PE, SE |
 | arln_stats_docker_version | String | Docker version for task_arln_stats.wdl | FASTA, ONT, PE, SE |
 | assembly_fasta | File | Fasta file outputted from Flye or Shovill | ONT, PE, SE |
 | assembly_length | Int | Length of assembly (total contig length) as determined by QUAST | FASTA, ONT, PE, SE |
