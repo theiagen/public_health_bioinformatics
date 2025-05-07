@@ -32,6 +32,7 @@ workflow theiaeuk_illumina_pe {
     Int trim_min_length = 75
     Int trim_quality_min_score = 20
     Int trim_window_size = 10
+    Int min_contig_length = 1000
     Int busco_memory = 24
     String busco_docker_image = "us-docker.pkg.dev/general-theiagen/ezlabgva/busco:v5.3.2_cv1"
     Boolean skip_screen = false 
@@ -103,7 +104,9 @@ workflow theiaeuk_illumina_pe {
         input:
           samplename = samplename,
           read1 = read_QC_trim.read1_clean,
-          read2 = read_QC_trim.read2_clean
+          read2 = read_QC_trim.read2_clean,
+          min_contig_length = min_contig_length,
+          filter_contigs_min_length = min_contig_length
       }
       call quast_task.quast {
         input:
