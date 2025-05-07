@@ -674,7 +674,7 @@ workflow theiaprok_ont {
     String? dnaapler_version = flye_denovo.dnaapler_version
     # Assembly QC - quast outputs
     File? quast_report = quast.quast_report
-    File? icarus_report = quast.icarus_report
+    File? quast_icarus_report = quast.icarus_report
     String? quast_version = quast.version
     Int? assembly_length = quast.genome_length
     Int? number_contigs = quast.number_contigs

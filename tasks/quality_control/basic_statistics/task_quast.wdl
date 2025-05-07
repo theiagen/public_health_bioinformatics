@@ -25,10 +25,10 @@ task quast {
       ~{'-g ' + reference_gff}
 
     mv report.tsv ~{samplename}_report.tsv
-
-    # Check if required files/directories for Icarus exist
-    if [[ -d "icarus_viewers" ]]; then
-      # Create tgz of files needed for Icarus HTML viewer
+    
+    # Provide Icarus Report if reference (FASTA or GFF) is provided
+    if [[ -n "~{reference}" || -n "~{reference_gff}" ]]; then
+      # Create tgz of files needed for Icarus HTML viewer for proper display
       mkdir ~{samplename}_icarus_viewer
       mv icarus_viewers ~{samplename}_icarus_viewer/ && \
         mv icarus.html ~{samplename}_icarus_viewer/ && 
