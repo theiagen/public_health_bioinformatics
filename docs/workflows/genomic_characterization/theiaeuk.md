@@ -69,7 +69,11 @@ All input reads are processed through "core tasks" in each workflow. The core ta
 | digger_denovo | **pilon_cpu** | Int | Number of CPU cores for Pilon polishing | 8 | Optional |
 | digger_denovo | **pilon_disk_size** | Int | Disk space in GB for Pilon polishing | 100 | Optional |
 | digger_denovo | **pilon_docker** | String | Docker image for Pilon polishing | us-docker.pkg.dev/general-theiagen/biocontainers/pilon:1.24--hdfd78af_0 | Optional |
+| digger_denovo | **pilon_fix** | String | Potential issues with assembly to try and automatically fix (snps, indels, gaps, local, all, bases, none) | "bases" | Optional |
 | digger_denovo | **pilon_memory** | Int | Memory in GB for Pilon polishing | 32 | Optional |
+| digger_denovo | **pilon_min_base_quality** | Int | Minimum base quality to keep | 3 | Optional |
+| digger_denovo | **pilon_min_depth** | Float | Minimum coverage threshold for variant calling: when set to a value ≥1, it requires that absolute depth of coverage; when set to a fraction <1, it requires coverage at least that fraction of the mean coverage for the region | 0.25 | Optional |
+| digger_denovo | **pilon_min_mapping_quality** | Int | Minimum mapping quality for a read to count in pileups | 60 |
 | digger_denovo | **run_filter_contigs** | Boolean | Whether to run contig filtering step | true | Optional |
 | digger_denovo | **skesa_cpu** | Int | Number of CPU cores for SKESA assembler | 4 | Optional |
 | digger_denovo | **skesa_disk_size** | Int | Disk space in GB for SKESA assembler | 50 | Optional |
