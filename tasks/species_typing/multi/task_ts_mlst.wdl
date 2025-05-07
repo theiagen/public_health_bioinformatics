@@ -7,7 +7,7 @@ task ts_mlst {
   input {
     File assembly
     String samplename
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/mlst:2.23.0-2024-12-31"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/mlst:2.23.0.cdc-24-12-01"
     Int disk_size = 50
     Int cpu = 1
     Int memory = 2
@@ -106,7 +106,8 @@ task ts_mlst {
             cat ~{samplename}_1.tsv ~{samplename}_2.tsv >> ~{samplename}_ts_mlst.tsv
             cat ~{samplename}_novel_mlst_alleles.fasta ~{samplename}_novel_mlst_alleles_2.fasta > ~{samplename}_novel_mlst_alleles.fasta
           else
-            mv ~{samplename}_1.tsv ~{samplename}_ts_mlst.tsv
+            echo -e "Filename\tPubMLST_Scheme_name\tSequence_Type_(ST)\tAllele_IDs" > ~{samplename}_ts_mlst.tsv
+            cat ~{samplename}_1.tsv >> ~{samplename}_ts_mlst.tsv
           fi
       fi
     fi
@@ -115,7 +116,16 @@ task ts_mlst {
     if [ $(wc -l ~{samplename}_ts_mlst.tsv | awk '{ print $1 }') -eq 1 ]; then
       predicted_mlst="No ST predicted"
       pubmlst_scheme="NA"
-    # else, TSV has more than one line, so parse outputs
+    # else, TSV has 3 lines, so parse outputs, occurs when two schemes were run and concatenated
+    elif [ $(wc -l ~{samplename}_ts_mlst.tsv | awk '{ print $1 }') -eq 3 ]; then
+      # Extract the schemes from both rows, excluding header, if not equal to "-" or "ST-", and join them with a comma
+      pubmlst_scheme="$(awk -F'\t' 'NR>1 && $2!="-" {print $2}' ~{samplename}_ts_mlst.tsv | paste -sd ', ' -)"
+      predicted_mlst="$(awk -F'\t' 'NR>1 && $3!="ST-" {print "ST" $3}' ~{samplename}_ts_mlst.tsv | paste -sd ', ' -)"
+      # Due alleles being on different columns, we need to pull all columns from the 4th column to the end, join with comma, 
+      # and replace tabs with commas as we iterate
+      allelic_profile="$(awk -F'\t' 'NR>1 {for(i=4; i<=NF; i++) printf("%s%s", $i, (i<NF ? "," : "\n"))}' ~{samplename}_ts_mlst.tsv | paste -sd ', ' -)"
+
+    # else, TSV has 2 lines, parse outputs
     else
       pubmlst_scheme="$(cut -f2 ~{samplename}_ts_mlst.tsv | tail -n 1)"
       predicted_mlst="ST$(cut -f3 ~{samplename}_ts_mlst.tsv | tail -n 1)"
@@ -128,12 +138,13 @@ task ts_mlst {
         if [ "$predicted_mlst" == "ST-" ]; then
         predicted_mlst="No ST predicted"
         fi
-      fi  
+      fi
     fi
     
     echo "$predicted_mlst" | tee PREDICTED_MLST
     echo "$pubmlst_scheme" | tee PUBMLST_SCHEME
     echo "$allelic_profile" | tee ALLELIC_PROFILE.txt
+
   >>>
   output {
     File ts_mlst_results = "~{samplename}_ts_mlst.tsv"
