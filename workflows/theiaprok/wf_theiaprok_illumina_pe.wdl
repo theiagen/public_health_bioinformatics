@@ -1190,10 +1190,10 @@ workflow theiaprok_illumina_pe {
     # export taxon table output
     String? taxon_table_status = export_taxon_table.status
     # ARLN required outputs
-    String? arln_raw_q30_r1 = arln_stats.read1_raw_q30
-    String? arln_raw_q30_r2 = arln_stats.read2_raw_q30
-    String? arln_cleaned_q30_r1 = arln_stats.read1_clean_q30
-    String? arln_cleaned_q30_r2 = arln_stats.read2_clean_q30
+    String? arln_r1_q30_raw = arln_stats.read1_raw_q30
+    String? arln_r2_q30_raw = arln_stats.read2_raw_q30
+    String? arln_r1_q30_clean = arln_stats.read1_clean_q30
+    String? arln_r2_q30_clean = arln_stats.read2_clean_q30
     String? arln_assembly_ratio = arln_stats.assembly_ratio
     String? arln_stats_docker_version = arln_stats.docker_version
   }
