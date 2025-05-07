@@ -56,7 +56,6 @@ All input reads are processed through "core tasks" in each workflow. The core ta
 | digger_denovo | **filter_contigs_docker** | String | Docker image for contig filtering | us-docker.pkg.dev/general-theiagen/theiagen/shovilter:0.2 | Optional |
 | digger_denovo | **filter_contigs_memory** | Int | Memory in GB for contig filtering | 8 | Optional |
 | digger_denovo | **filter_contigs_min_coverage** | Float | Minimum coverage threshold for contig filtering | 5.0 | Optional |
-| digger_denovo | **filter_contigs_min_length** | Int | Minimum length threshold for contig filtering | 200 | Optional |
 | digger_denovo | **filter_contigs_skip_coverage_filter** | Boolean | Skip filtering contigs based on coverage | false | Optional |
 | digger_denovo | **filter_contigs_skip_homopolymer_filter** | Boolean | Skip filtering contigs containing homopolymers | false | Optional |
 | digger_denovo | **filter_contigs_skip_length_filter** | Boolean | Skip filtering contigs based on length | false | Optional |
@@ -65,7 +64,6 @@ All input reads are processed through "core tasks" in each workflow. The core ta
 | digger_denovo | **megahit_disk_size** | Int | Disk space in GB for MEGAHIT assembler | 100 | Optional |
 | digger_denovo | **megahit_docker** | String | Docker image for MEGAHIT assembler | us-docker.pkg.dev/general-theiagen/theiagen/megahit:1.2.9 | Optional |
 | digger_denovo | **megahit_memory** | Int | Memory in GB for MEGAHIT assembler | 16 | Optional |
-| digger_denovo | **min_contig_length** | Int | Minimum contig length to retain in final assembly | 200 | Optional |
 | digger_denovo | **pilon_cpu** | Int | Number of CPU cores for Pilon polishing | 8 | Optional |
 | digger_denovo | **pilon_disk_size** | Int | Disk space in GB for Pilon polishing | 100 | Optional |
 | digger_denovo | **pilon_docker** | String | Docker image for Pilon polishing | us-docker.pkg.dev/general-theiagen/biocontainers/pilon:1.24--hdfd78af_0 | Optional |
@@ -198,6 +196,7 @@ All input reads are processed through "core tasks" in each workflow. The core ta
 | theiaeuk_pe | **genome_length** | Int | User-specified expected genome size to be used in genome statistics calculations |  | Optional |
 | theiaeuk_pe | **max_genome_size** | Int | Maximum genome size able to pass read screening | 50000000 | Optional |
 | theiaeuk_pe | **min_basepairs** | Int | Minimum number of base pairs able to pass read screening | 2241820 | Optional |
+| theiaeuk_pe | **min_contig_length** | Int | Minimum contig length to be output in final assembly | 1000 | Optional
 | theiaeuk_pe | **min_coverage** | Int | Minimum genome coverage able to pass read screening | 10 | Optional |
 | theiaeuk_pe | **min_genome_size** | Int | Minimum genome size able to pass read screening | 100000 | Optional |
 | theiaeuk_pe | **min_proportion** | Int | Minimum proportion of total reads in each read file to pass read screening | 50 | Optional |
