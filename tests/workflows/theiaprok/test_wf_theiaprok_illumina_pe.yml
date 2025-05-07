@@ -376,28 +376,8 @@
       contains: ["read_QC_trim", "fastq_scan_clean2", "fastq", "read1_clean"]
     - path: miniwdl_run/call-read_QC_trim/workflow.log
       contains: ["wdl", "theiaprok_illumina_pe", "NOTICE", "done"]
-    - path: miniwdl_run/call-shovill_pe/command
-      md5sum: 71a92c6eb22f77fa025eaf0bdd713dad
-    - path: miniwdl_run/call-shovill_pe/inputs.json
-      contains: ["assembler", "skesa", "fastq", "test"]
-    - path: miniwdl_run/call-shovill_pe/outputs.json
-      contains: ["shovill_pe", "assembly", "fasta", "gfa"]
-    - path: miniwdl_run/call-shovill_pe/stderr.txt
-      contains: ["shovill", "size", "total", "Done"]
-    - path: miniwdl_run/call-shovill_pe/stderr.txt.offset
-    - path: miniwdl_run/call-shovill_pe/stdout.txt
-      contains: ["kmc", "lighter", "FLASH", "pilon"]
-    - path: miniwdl_run/call-shovill_pe/task.log
-      contains: ["wdl", "theiaprok_illumina_pe", "shovill_pe", "done"]
-    - path: miniwdl_run/call-shovill_pe/work/VERSION
-      md5sum: aa587ff96ec9446114124a405f192173
-    - path: miniwdl_run/call-shovill_pe/work/_miniwdl_inputs/0/test_1.clean.fastq.gz
-    - path: miniwdl_run/call-shovill_pe/work/_miniwdl_inputs/0/test_2.clean.fastq.gz
-    - path: miniwdl_run/call-shovill_pe/work/out/shovill.corrections
-    - path: miniwdl_run/call-shovill_pe/work/out/shovill.log
-      contains: ["shovill", "size", "total", "Done"]
-    - path: miniwdl_run/call-shovill_pe/work/out/skesa.fasta
-    - path: miniwdl_run/call-shovill_pe/work/out/test_contigs.fasta
+    - path: miniwdl_run/call-digger_denovo/command
+    - path: miniwdl_run/call-digger_denovo/assembly.fasta
     - path: miniwdl_run/call-ts_mlst/command
       md5sum: c306b6501c0d41704cc559b09bd95e98
     - path: miniwdl_run/call-ts_mlst/inputs.json
