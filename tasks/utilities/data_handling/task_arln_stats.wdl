@@ -56,7 +56,6 @@ task arln_stats {
       echo "Taxon not found in assembly stats file" > assem_ratio_with_stdev
     fi
   >>>
-    
   output {
     String? read1_raw_q30 = read_string("read1_raw_q30")
     String? read2_raw_q30 = read_string("read2_raw_q30")
@@ -65,7 +64,6 @@ task arln_stats {
     String assembly_ratio = read_string("assem_ratio_with_stdev")
     String docker_version = docker
   }
-    
   runtime {
     cpu: cpu
     memory: "~{memory} GB"
