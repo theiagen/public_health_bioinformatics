@@ -3,7 +3,7 @@
     `read_QC_trim_ont` is a sub-workflow that filters low-quality reads and trims low-quality regions of reads. It uses several tasks, described below.
 
 <!-- if: theiacov|freyja -->
-{{ include_md("common_text/ncbi_scrub.md", indent=4)}}
+{{ include_md("common_text/ncbi_scrub_task.md", indent=4)}}
 
     ??? toggle "Read quality filtering"
       

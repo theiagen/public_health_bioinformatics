@@ -3,7 +3,7 @@
     `read_QC_trim` is a sub-workflow that removes low-quality reads, low-quality regions of reads, and sequencing adapters to improve data quality. It uses a number of tasks, described below. The differences between the PE and SE versions of the `read_QC_trim` sub-workflow lie in the default parameters, the use of two or one input read file(s), and the different output files.
 
 <!-- if: theiacov|freyja -->
-{{ include_md("common_text/ncbi_scrub.md", indent=4)}}
+{{ include_md("common_text/ncbi_scrub_task.md", indent=4, replacements={"??? task": "??? toggle"}) }}
 <!-- endif -->
 
     ??? toggle "Read quality trimming"
@@ -33,7 +33,7 @@
 
         There are two methods for read quantification to choose from: [`fastq-scan`](https://github.com/rpetit3/fastq-scan) (default) or [`fastqc`](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/). Both quantify the forward and reverse reads in FASTQ files. For paired-end data, they also provide the total number of read pairs. This task is run once with raw reads as input and once with clean reads as input. If QC has been performed correctly, you should expect **fewer** clean reads than raw reads. `fastqc` also provides a graphical visualization of the read quality.
 
-<!-- if: theiaprok -->
+<!-- if: theiaprok|theiameta -->
     ??? toggle "Read Identification with MIDAS (optional)"
         The `MIDAS` task is for the identification of reads to detect contamination with non-target taxa. This task is optional and turned off by default. It can be used by setting the `call_midas` input variable to `true`.
 
@@ -89,7 +89,9 @@
 
         ---
 <!-- endif -->
+<!-- if: theiacov -->
 {{ include_md("common_text/kraken2_task.md", indent=4, replacements={"??? task": "??? toggle"}) }}
+<!-- endif -->
 
     !!! techdetails "read_QC_trim Technical Details"
         |  | Links |

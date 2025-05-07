@@ -1,5 +1,11 @@
+<!-- if: theiameta -->
+??? task "`bwa`: Read alignment to the assembly"
+    ==If a reference is _not_ provided==, BWA (Burrow-Wheeler Aligner) is used to align the clean reads to the Pilon-polished assembly_fasta.
+<!-- endif -->
+<!-- if freyja -->
 ??? task "`bwa` Details"
     This task aligns the cleaned short reads (Illumina) to the reference genome provided by the user.
+<!-- endif -->
 
     !!! techdetails "BWA Technical Details"
     

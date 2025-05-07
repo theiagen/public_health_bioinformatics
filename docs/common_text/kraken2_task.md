@@ -26,6 +26,12 @@
     This workflow is database dependent, and one is required to run this task. Please see above for a list of suggested databases to provide through the `kraken2_db` input variable.
 <!-- endif -->
 
+<!-- if: theiameta -->
+    Kraken2 is run on the set of raw reads, provided as input, as well as the set of clean reads that are resulted from the `read_QC_trim` workflow
+
+    The Kraken2 software is database-dependent and **taxonomic assignments are highly sensitive to the database used**. An appropriate database should contain the expected organism(s) (e.g. _Escherichia coli_) and other taxa that may be present in the reads (e.g. _Citrobacter freundii_, a common contaminant).
+<!-- endif -->
+
     !!! techdetails "Kraken2 Technical Details"
         |  | Links |
         | --- | --- |

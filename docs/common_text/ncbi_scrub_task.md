@@ -1,4 +1,4 @@
-??? toggle "`HRRT`: Human Host Sequence Removal"
+??? task "`HRRT`: Human Host Sequence Removal"
 
     All reads of human origin **are removed**, including their mates, by using NCBI's [**human read removal tool (HRRT)**](https://github.com/ncbi/sra-human-scrubber). 
 
@@ -8,5 +8,5 @@
         |  | Links |
         | --- | --- |
         | Task | [task_ncbi_scrub.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_ncbi_scrub.wdl) |
-        | Software Source Code | [NCBI Scrub on GitHub](https://github.com/ncbi/sra-human-scrubber) |
-        | Software Documentation | <https://github.com/ncbi/sra-human-scrubber/blob/master/README.md> |
+        | Software Source Code | [HRRT on GitHub](https://github.com/ncbi/sra-human-scrubber) |
+        | Software Documentation |  [HRRT on NCBI](https://ncbiinsights.ncbi.nlm.nih.gov/2023/02/02/scrubbing-human-sequences-sra-submissions/) |

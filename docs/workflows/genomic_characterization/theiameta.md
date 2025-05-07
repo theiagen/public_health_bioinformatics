@@ -35,104 +35,9 @@ The TheiaMeta_Illumina_PE workflow processes Illumina paired-end (PE) reads ge
 
 #### Read Cleaning and QC
 
-??? task "`HRRT`: Human Host Sequence Removal"
-
-    All reads of human origin **are removed**, including their mates, by using NCBI's [**human read removal tool (HRRT)**](https://github.com/ncbi/sra-human-scrubber). 
-
-    HRRT is based on the [SRA Taxonomy Analysis Tool](https://doi.org/10.1186/s13059-021-02490-0) and employs a k-mer database constructed of k-mers from Eukaryota derived from all human RefSeq records with any k-mers found in non-Eukaryota RefSeq records subtracted from the database.
-
-    !!! techdetails "NCBI-Scrub Technical Details"
-        
-        |  | Links |
-        | --- | --- |
-        | Task | [task_ncbi_scrub.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_ncbi_scrub.wdl) |
-        | Software Source Code | [NCBI Scrub on GitHub](https://github.com/ncbi/sra-human-scrubber) |
-        | Software Documentation | <https://github.com/ncbi/sra-human-scrubber/blob/master/README.md> |
-
-??? task "`read_QC_trim`: Read Quality Trimming, Adapter Removal, Quantification, and Identification"
-
-    `read_QC_trim` is a sub-workflow within TheiaMeta that removes low-quality reads, low-quality regions of reads, and sequencing adapters to improve data quality. It uses a number of tasks, described below.
-
-    **Read quality trimming**
-
-    Either `trimmomatic` or `fastp` can be used for read-quality trimming. Trimmomatic is used by default. Both tools trim low-quality regions of reads with a sliding window (with a window size of `trim_window_size`), cutting once the average quality within the window falls below `trim_quality_trim_score`. They will both discard the read if it is trimmed below `trim_minlen`. 
-
-    If fastp is selected for analysis, fastp also implements the additional read-trimming steps indicated below:
-
-    | **Parameter** | **Explanation** |
-    | --- | --- |
-    | -g | enables polyG tail trimming |
-    | -5 20 | enables read end-trimming |
-    | -3 20 | enables read end-trimming |
-    | --detect_adapter_for_pe | enables adapter-trimming **only for paired-end reads** |
-
-    **Adapter removal**
-
-    The `BBDuk` task removes adapters from sequence reads. To do this:
-
-    - [Repair](https://jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/repair-guide/) from the [BBTools](https://jgi.doe.gov/data-and-tools/software-tools/bbtools/) package reorders reads in paired fastq files to ensure the forward and reverse reads of a pair are in the same position in the two fastq files.
-    - [BBDuk](https://jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/bbduk-guide/)  (*"Bestus Bioinformaticus" Decontamination Using Kmers*) is then used to trim the adapters and filter out all reads that have a 31-mer match to [PhiX](https://emea.illumina.com/products/by-type/sequencing-kits/cluster-gen-sequencing-reagents/phix-control-v3.html), which is commonly added to Illumina sequencing runs to monitor and/or improve overall run quality.
-    
-    ??? toggle "What are adapters and why do they need to be removed?"
-        Adapters are manufactured oligonucleotide sequences attached to DNA fragments during the library preparation process. In Illumina sequencing, these adapter sequences are required for attaching reads to flow cells. You can read more about Illumina adapters [here](https://emea.support.illumina.com/bulletins/2020/06/illumina-adapter-portfolio.html). For genome analysis, it's important to remove these sequences since they're not actually from your sample. If you don't remove them, the downstream analysis may be affected.
-        
-    **Read Quantification**
-
-    There are two methods for read quantification to choose from: [`fastq-scan`](https://github.com/rpetit3/fastq-scan) (default) or [`fastqc`](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/). Both quantify the forward and reverse reads in FASTQ files. In TheiaProk_Illumina_PE, they also provide the total number of read pairs. This task is run once with raw reads as input and once with clean reads as input. If QC has been performed correctly, you should expect **fewer** clean reads than raw reads. `fastqc` also provides a graphical visualization of the read quality.
-
-    **Read Identification (optional)**
-
-    The `MIDAS` task is for the identification of reads to detect contamination with non-target taxa. This task is optional and turned off by default. It can be used by setting the `call_midas` input variable to `true`.
-
-    The MIDAS reference database, located at **`gs://theiagen-large-public-files-rp/terra/theiaprok-files/midas/midas_db_v1.2.tar.gz`**, is provided as the default. It is possible to provide a custom database. More information is available [here](https://github.com/snayfach/MIDAS/blob/master/docs/ref_db.md).
-
-
-    ??? toggle "How are the MIDAS output columns determined?"
-        
-        Example MIDAS report in the ****`midas_report` column:
-        
-        | species_id | count_reads | coverage | relative_abundance |
-        | --- | --- | --- | --- |
-        | Salmonella_enterica_58156 | 3309 | 89.88006645 | 0.855888033 |
-        | Salmonella_enterica_58266 | 501 | 11.60606061 | 0.110519371 |
-        | Salmonella_enterica_53987 | 99 | 2.232896237 | 0.021262881 |
-        | Citrobacter_youngae_61659 | 46 | 0.995216227 | 0.009477003 |
-        | Escherichia_coli_58110 | 5 | 0.123668877 | 0.001177644 |
-        
-        MIDAS report column descriptions:
-        
-        - species_id: species identifier
-        - count_reads: number of reads mapped to marker genes
-        - coverage: estimated genome-coverage (i.e. read-depth) of species in metagenome
-        - relative_abundance: estimated relative abundance of species in metagenome
-        
-    !!! techdetails "read_QC_trim Technical Details"
-                
-        |  | Links |
-        | --- | --- |
-        | Sub-workflow | [wf_read_QC_trim_pe.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_read_QC_trim_pe.wdl)<br>[wf_read_QC_trim_se.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_read_QC_trim_se.wdl) |
-        | Tasks | [task_fastp.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_fastp.wdl)<br>[task_trimmomatic.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_trimmomatic.wdl)<br>[task_bbduk.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_bbduk.wdl)<br>[task_fastq_scan.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_fastq_scan.wdl)<br>[task_midas.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/contamination/task_midas.wdl)<br>[task_kraken2.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/contamination/task_kraken2.wdl)|
-        | Software Source Code | [fastp](https://github.com/OpenGene/fastp); [Trimmomatic](https://github.com/usadellab/Trimmomatic); [fastq-scan](https://github.com/rpetit3/fastq-scan); [MIDAS](https://github.com/snayfach/MIDAS); [Kraken2](https://github.com/DerrickWood/kraken2)|
-        | Software Documentation | [fastp](https://github.com/OpenGene/fastp); [Trimmomatic](http://www.usadellab.org/cms/?page=trimmomatic); [BBDuk](https://jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/bbduk-guide/); [fastq-scan](https://github.com/rpetit3/fastq-scan); [MIDAS](https://github.com/snayfach/MIDAS); [Kraken2](https://github.com/DerrickWood/kraken2/wiki) |
-        | Original Publication(s) | [Trimmomatic: a flexible trimmer for Illumina sequence data](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4103590/)<br>[fastp: an ultra-fast all-in-one FASTQ preprocessor](https://academic.oup.com/bioinformatics/article/34/17/i884/5093234?login=false)<br>[An integrated metagenomics pipeline for strain profiling reveals novel patterns of bacterial transmission and biogeography](https://pubmed.ncbi.nlm.nih.gov/27803195/)<br>[Improved metagenomic analysis with Kraken 2](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1891-0) |
-
-??? task "`kraken`: Taxonomic Classification"
-
-    Kraken2 is a bioinformatics tool originally designed for metagenomic applications. It has additionally proven valuable for validating taxonomic assignments and checking contamination of single-species (e.g. bacterial isolate, eukaryotic isolate, viral isolate, etc.) whole genome sequence data.
-
-    Kraken2 is run on the set of raw reads, provided as input, as well as the set of clean reads that are resulted from the `read_QC_trim` workflow
-
-    !!! info "Database-dependent"
-        The Kraken2 software is database-dependent and **taxonomic assignments are highly sensitive to the database used**. An appropriate database should contain the expected organism(s) (e.g. _Escherichia coli_) and other taxa that may be present in the reads (e.g. _Citrobacter freundii_, a common contaminant).
-
-    !!! techdetails "Kraken2 Technical Details"    
-        
-        |  | Links |
-        | --- | --- |
-        | Task | [task_kraken2.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/contamination/task_kraken2.wdl) |
-        | Software Source Code | [Kraken2 on GitHub](https://github.com/DerrickWood/kraken2/) |
-        | Software Documentation | <https://github.com/DerrickWood/kraken2/wiki> |
-        | Original Publication(s) | [Improved metagenomic analysis with Kraken 2](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1891-0) |
+{{ include_md("common_text/ncbi_scrub_task.md") }}
+{{ include_md("common_text/read_qc_trim_illumina.md", condition="theiameta") }}
+{{ include_md("common_text/kraken2_task.md", condition="theiameta") }}
 
 #### Assembly
 
@@ -222,17 +127,7 @@ The TheiaMeta_Illumina_PE workflow processes Illumina paired-end (PE) reads ge
 !!! hint ""
     These tasks only run if a reference is _not_ provided.
 
-??? task "`bwa`: Read alignment to the assembly"
-    ==If a reference is _not_ provided==, BWA (Burrow-Wheeler Aligner) is used to align the clean reads to the Pilon-polished assembly_fasta.
-
-    !!! techdetails "BWA Technical Details"
-        
-        |  | Links |
-        | --- | --- |
-        | Task | [task_bwa.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/alignment/task_bwa.wdl) |
-        | Software Source Code | [BWA on GitHub](https://github.com/lh3/bwa) |
-        | Software Documentation | [BWA Manual](https://bio-bwa.sourceforge.net/) |
-        | Original Publication(s) | [Aligning sequence reads, clone sequences and assembly contigs with BWA-MEM](https://arxiv.org/abs/1303.3997) |
+{{ include_md("common_text/bwa_task.md", condition="theiameta") }}
 
 ??? task "`semibin2`: Metagenomic binning"
 

@@ -80,7 +80,7 @@ This macro includes and optionally transforms a Markdown file. It adjusts headin
 This example shows how to include a Markdown file  without any additional parameters.
 
 ```jinja
-{{ include_md("common_text/bwa.md") }}
+{{ include_md("common_text/bwa_task.md") }}
 ```
 
 ##### Example 2: Adding Indentation, a Condition, and Replacements Dictionary

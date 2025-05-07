@@ -33,33 +33,8 @@ There are three Kraken2 workflows:
 
 This workflow is composed of two tasks, one to dehost the input reads and another to screen the clean reads with kraken2 and the viral+human database.
 
-??? task "`ncbi_scrub`: human read removal tool"
-    Briefly, the HRRT employs a k-mer database constructed of k-mers from Eukaryota derived from all human RefSeq records and subtracts any k-mers found in non-Eukaryota RefSeq records. The remaining set of k-mers compose the database used to identify human reads by the removal tool.
-
-    !!! techdetails "Tool Name Technical Details"
-        |  | Links | 
-        | --- | --- | 
-        | Task | [task_ncbi_scrub.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_ncbi_scrub.wdl) |
-        | Software Source Code | [HRRT on GitHub](https://github.com/ncbi/sra-human-scrubber) |
-        | Software Documentation | [HRRT on NCBI](https://ncbiinsights.ncbi.nlm.nih.gov/2023/02/02/scrubbing-human-sequences-sra-submissions/) |
-
-??? task "`kraken2`: taxonomic profiling"
-
-    Kraken2 is a bioinformatics tool originally designed for metagenomic applications. It has additionally proven valuable for validating taxonomic assignments and checking contamination of single-species (e.g. bacterial isolate, eukaryotic isolate, viral isolate, etc.) whole genome sequence data.
-
-    Kraken2 is run on the set of raw reads, provided as input, as well as the set of clean reads that are resulted from the `read_QC_trim` workflow
-
-    !!! info "Database-dependent"
-        TheiaCoV automatically uses a viral-specific Kraken2 database.
-
-    !!! techdetails "Kraken2 Technical Details"    
-        
-        |  | Links |
-        | --- | --- |
-        | Task | [task_kraken2.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/contamination/task_kraken2.wdl) |
-        | Software Source Code | [Kraken2 on GitHub](https://github.com/DerrickWood/kraken2/) |
-        | Software Documentation | <https://github.com/DerrickWood/kraken2/wiki> |
-        | Original Publication(s) | [Improved metagenomic analysis with Kraken 2](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1891-0) |
+{{ include_md("common_text/ncbi_scrub_task.md") }}
+{{ include_md("common_text/kraken2_task.md", condition="theiacov") }}
 
 ### Outputs
 

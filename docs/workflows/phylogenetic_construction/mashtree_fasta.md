@@ -24,15 +24,18 @@ This workflow also features an optional module, `summarize_data`, that creates a
 
 ### Workflow Actions
 
-`MashTree_Fasta` is run on a set of assembly fastas and creates a phylogenetic tree and matrix. These outputs are passed to a task that will rearrange the matrix to match the order of the terminal ends in the phylogenetic tree.
+??? task "MashTree_FASTA Details"
+    `MashTree_FASTA` is run on a set of assembly fastas and creates a phylogenetic tree and matrix.
 
-The optional `summarize_data` task performs the following only if all of the `data_summary_*` and `sample_names` optional variables are filled out:
-
-1. Digests a _comma-separated_  list of column names, such as `"amrfinderplus_virulence_genes,amrfinderplus_stress_genes"`, etc. that can be found within the origin Terra data table.
-2. It will then parse through those column contents and extract each value; for example, if the `amrfinder_amr_genes` column for a sample contains these values: `"aph(3')-IIIa,tet(O),blaOXA-193"`, the `summarize_data` task will check each sample in the set to see if they also have those AMR genes detected.
-3. Outputs a .csv file that indicates presence (TRUE) or absence (empty) for each item in those columns; that is, it will check each sample in the set against the detected items in each column to see if that value was also detected.
-
-By default, this task appends a Phandango coloring tag to color all items from the same column the same; this can be turned off by setting the optional `phandango_coloring` variable to `false`.
+    !!! techdetails "MashTree_FASTA Technical Details"
+        |  | Links |
+        | --- | --- |
+        | Task | [task_mashtree_fasta.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/phylogenetic_inference/task_mashtree_fasta.wdl) |
+        | Software Source Code | [Mashtree on GitHub](https://github.com/lskatz/mashtree) |
+        | Software Documentation | [Mashtree on GitHub](https://github.com/lskatz/mashtree) |
+        | Original Publication(s) | [Mashtree: a rapid comparison of whole genome sequence files](https://doi.org/10.21105/joss.01762) |
+        
+{{ include_md("common_text/data_summary_task.md") }}
 
 ### Outputs
 
