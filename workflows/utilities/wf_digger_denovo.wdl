@@ -12,7 +12,7 @@ workflow digger_denovo {
     File read1
     File? read2
     String samplename
-    String assembler = "spades" # Options: spades, skesa, megahit
+    String assembler = "skesa" # Options: spades, skesa, megahit
     Int min_contig_length = 200
     String? kmers
     Boolean use_pilon = false
