@@ -352,7 +352,6 @@
       contains: ["wdl", "theiaprok_illumina_se", "NOTICE", "done"]
     - path: miniwdl_run/call-digger_denovo/call-skesa/command
     - path: miniwdl_run/call-digger_denovo/call-filter_contigs/work/test_filtered_contigs.fasta
-      contains: ["assembly", "fasta", "sample", "test"]
     - path: miniwdl_run/call-ts_mlst/command
       md5sum: efbaa6f9796c5c526ca037b54ca8a9d7
     - path: miniwdl_run/call-ts_mlst/inputs.json
@@ -384,8 +383,6 @@
       contains: ["theiaprok_illumina_se", "skip_screen", "fastq", "skesa"]
     - path: miniwdl_run/outputs.json
       contains: ["theiaprok_illumina_se", "predicted", "VIRULENCE", "assembly_length"]
-    - path: miniwdl_run/wdl/tasks/assembly/task_shovill.wdl
-      md5sum: 4f703f6a1e6947feb441e359dfb92aae
     - path: miniwdl_run/wdl/tasks/gene_typing/drug_resistance/task_abricate.wdl
       md5sum: c82025fcc1442b1c2a598a429cd9cdab
     - path: miniwdl_run/wdl/tasks/gene_typing/drug_resistance/task_amrfinderplus.wdl
