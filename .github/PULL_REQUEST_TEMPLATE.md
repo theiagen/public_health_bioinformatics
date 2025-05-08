@@ -46,7 +46,7 @@ This PR uses an element that could cause duplicate runs to have different result
 - [ ] The CI/CD has been adjusted and tests are passing (Theiagen developers)
 - [ ] Code changes follow the [style guide](https://theiagen.github.io/public_health_bioinformatics/main/contributing/code_contribution/)
 - [ ] Documentation and/or workflow diagrams have been updated if applicable and follow the [documentation style guide](https://theiagen.github.io/public_health_bioinformatics/main/contributing/doc_contribution/)
-  - [ ] You have updated the "Last Known Changes" field for any affected workflows in the respective workflow documentation page and for every entry in the three `workflows_overview` tables to be the tag for the next upcoming release. If you do not know the tag, please put "vX.X.X"
+  - [ ] You have updated the "Last Known Changes" field for any affected workflows in the respective workflow documentation page and for the entry in the `docs/assets/tables/all_workflows.tsv` table to be the tag for the next upcoming release. If you do not know the tag, please put "vX.X.X"
 
 ## 🎯 Reviewer Checklist
 <!--  Indicate NA when not applicable  -->

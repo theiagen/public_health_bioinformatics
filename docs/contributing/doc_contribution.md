@@ -11,7 +11,7 @@ Since the documentation is built off of the `main` branch, it is highly recommen
 To test your documentation changes, you will need to have the following packages installed on your local VM:
 
 ```bash
-pip install mkdocs-material mkdocs-material-extensions mkdocs-git-revision-date-localized-plugin mike mkdocs-glightbox
+pip install mkdocs-material mkdocs-material-extensions mkdocs-git-revision-date-localized-plugin mike mkdocs-glightbox mkdocs-macros-plugin
 ```
 
 Once installed, navigate to the top directory in PHB. The live preview server can be activated by running the following command:
@@ -150,6 +150,7 @@ A brief description of the documentation structure is as follows:
         - `logos/` - Contains Theiagen logos and symbols used in the documentation.
         - `metadata_formatters/` - Contains the most up-to-date metadata formatters for our submission workflows.
         - `new_workflow_template.md` - A template for adding a new workflow page to the documentation. You can see this template [here](../assets/new_workflow_template.md)
+    - `common_text/` - Contains the Markdown files for common text used in the documentation. This includes task descriptions, workflow descriptions, and other common text. This is where you will put any new task descriptions or workflow descriptions that are not specific to a single workflow. This enables modular and reusable documentation.
     - `contributing/` - Contains the Markdown files for our contribution guides, such as this file
     - `javascripts/` - Contains JavaScript files used in the documentation.
         - `tablesort.js` - A JavaScript file used to enable table sorting in the documentation.
@@ -161,7 +162,7 @@ A brief description of the documentation structure is as follows:
     - `workflows_overview/` - Contains the Markdown files for the overview tables for each display type: alphabetically, by applicable kingdom, and by workflow type.
     - `index.md` - The home/landing page for our documentation.
 
-### Adding a Page for a New Workflow {#new-page}
+### Adding a Page for a New Workflow {% raw %} {#new-page} {% endraw %}
 
 !!! tip "Hey, we've got a template for that!"
     Please see our template [here](../assets/new_workflow_template.md) for ease of use. Please remove all italicized text and replace with the appropriate information. If in doubt, please refer to existing documentation.
@@ -183,3 +184,12 @@ If you are adding a new workflow, there are a number of things to do in order to
      - `workflows_kingdom.md` - Add the workflow in the appropriate spot(s) based on the kingdom(s) the workflow is applicable to. Make sure it is added alphabetically within the appropriate subsection(s).
      - `workflows_type.md` - Add the workflow in the appropriate spot based on the workflow type. Make sure it is added alphabetically within the appropriate subsection.
 5. Copy the path to the workflow to ==**ALL**== of the appropriate locations in the `mkdocs.yml` file (under the `nav:` section) in the main directory of this repository. These should be the exact same spots as in the overview tables but without additional information. This ensures the workflow can be accessed from the navigation sidebar.
+
+### Macros
+
+The documentation uses a few macros to help with the formatting of the documentation. These macros are defined in `macros/main.py` and are used in the documentation files. The following macros are available:
+
+- `render_tsv_table()` - This macro is used to create a table from a TSV file. The TSV file should be in the `docs/assets/` directory and should be formatted as a table. The macro will automatically create a table from the TSV file and insert it into the documentation.
+- `include_md()` - This macro is used to include a Markdown file in the documentation. The macro will automatically adjust the heading levels, resolve relative links, and support conditional and nested includes.
+
+Please see the [macros README](https://github.com/theiagen/public_health_bioinformatics/blob/main/macros/README.md) for more information.
